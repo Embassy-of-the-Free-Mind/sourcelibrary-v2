@@ -103,14 +103,30 @@ await withMongo(async (db) => {
 
   // Next step per book (draft rule #5469), summarised: books and pages per step, live/hidden; OCR backlog by language (live).
   const cur = books.find(WITH_PAGES, { projection: {
-    content_type: 1, pages_count: 1, pages_archived: 1, pages_ocr: 1, pages_blank: 1, pages_translated: 1, pages_translatable: 1, visible: 1, language: 1, translation_state: 1, summary: 1, chapters: { $slice: 1 },
+    content_type: 1, pages_count: 1, pages_archived: 1, pages_ocr: 1, pages_blank: 1, pages_translated: 1, pages_translatable: 1, visible: 1, language: 1, year: 1, translation_state: 1, summary: 1, chapters: { $slice: 1 },
     'pipeline_auto.status': 1, 'pipeline_auto.hold': 1, 'pipeline_auto.archive_verdict': 1, 'pipeline_auto.error': 1, 'pipeline_auto.summary_skipped_reason': 1, 'pipeline_auto.chapters_skipped_reason': 1 } }).batchSize(5000);
   const steps = {}; const ocrByLang = {};
+  // Per-book completion of LIVE books (what the totals hide): 20 bins of 5% for transcribed and translated share,
+  // and the same two shares averaged per language and per century, with the readable count (same predicate as the ladder).
+  const BINS = 20;
+  const hist = { ocr: new Array(BINS).fill(0), translated: new Array(BINS).fill(0), books: 0 };
+  const isReadable = (ts) => ts && (['readable', 'complete'].includes(ts.rung) || (ts.english_original === true && ['transcribed', 'translating'].includes(ts.rung)));
+  const grp = () => ({ books: 0, pages: 0, ocr: 0, translated: 0, sumOcrPct: 0, sumTrPct: 0, readable: 0, english: 0 });
+  const addTo = (g, b, pctO, pctT) => { g.books++; g.pages += b.pages_count; g.ocr += b.pages_ocr || 0; g.translated += b.pages_translated || 0; g.sumOcrPct += pctO; g.sumTrPct += pctT; if (isReadable(b.translation_state)) g.readable++; if (b.translation_state?.english_original) g.english++; };
+  const byLang = {}, byCent = {};
   for await (const b of cur) {
     const step = nextStep(b);
     const live = b.visible === true;
     const whole = Math.max(0, b.pages_count - (b.pages_blank || 0));
     const translatable = b.pages_translatable ?? whole;
+    if (live && b.content_type !== 'artwork') {
+      const pctO = whole ? Math.min(1, (b.pages_ocr || 0) / whole) : 0;
+      const pctT = translatable ? Math.min(1, (b.pages_translated || 0) / translatable) : 0;
+      hist.ocr[Math.min(BINS - 1, Math.floor(pctO * BINS))]++; hist.translated[Math.min(BINS - 1, Math.floor(pctT * BINS))]++; hist.books++;
+      const lang = (b.language || '(none)').trim() || '(none)';
+      addTo(byLang[lang] ??= grp(), b, pctO, pctT);
+      if (typeof b.year === 'number') { const k = b.year < 1000 ? 'before' : Math.floor(b.year / 100) * 100; addTo(byCent[k] ??= grp(), b, pctO, pctT); }
+    }
     let pages = 0;
     if (step === 'archive') pages = Math.max(0, b.pages_count - (b.pages_archived || 0));
     else if (step === 'ocr') pages = Math.max(0, whole - (b.pages_ocr || 0));
@@ -120,7 +136,11 @@ await withMongo(async (db) => {
     if (live && step === 'ocr') { const l = (b.language || 'unknown').split(/[ ,;(]/)[0]; ocrByLang[l] ??= { books: 0, pages: 0 }; ocrByLang[l].books++; ocrByLang[l].pages += pages; }
   }
   const ocrBacklog = Object.entries(ocrByLang).map(([name, v]) => ({ name, ...v })).sort((a, b) => b.pages - a.pages);
-  lap('next step');
+  const finish = (g) => ({ books: g.books, pages: g.pages, ocr: g.ocr, translated: g.translated, meanOcrPct: g.books ? Math.round((1000 * g.sumOcrPct) / g.books) / 10 : 0, meanTrPct: g.books ? Math.round((1000 * g.sumTrPct) / g.books) / 10 : 0, readable: g.readable, english: g.english });
+  const languagesAll = Object.entries(byLang).map(([name, g]) => ({ name, ...finish(g) })).sort((a, b) => b.books - a.books);
+  for (const row of byCentury) { const k = row.label === 'Before 1000' ? 'before' : [1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000][['11th c.', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st'].indexOf(row.label)]; Object.assign(row, byCent[k] ? finish(byCent[k]) : { ocr: 0, translated: 0, meanOcrPct: 0, meanTrPct: 0, readable: 0, english: 0 }); }
+  const completion = { bins: BINS, ocr: hist.ocr, translated: hist.translated, books: hist.books };
+  lap('next step, completion');
 
   // Pipeline history: last snapshot of each day since the record began (2026-02-19).
   // The hetzner-worker source writes snapshots with every counter at 0 (~30K rows); they only carry active_batch.
@@ -147,6 +167,7 @@ await withMongo(async (db) => {
     totals: { live: liveTotals, all: allTotals, readableLive: readable(ladderLive), readableAll: readable(ladderAll), held, feedbackOpen, visibleCollections },
     byLanguage, noLanguage, byCentury, yearMissing, ladder: { rungs: RUNGS, live: ladderLive, all: ladderAll }, statusLive, libraries, noLibrary, addedByMonth, collections,
     nextStep: { steps, ocrBacklog },
+    completion, languagesAll,
     pipeline: { days: pipelineDays, funnel: FUNNEL },
     gemini,
   };

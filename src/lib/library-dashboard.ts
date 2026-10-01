@@ -16,7 +16,12 @@ export const LIBRARY_DASHBOARD_STALE_AFTER_MS = 2 * 24 * 60 * 60 * 1000;
 
 export interface Totals { books: number; pages: number; ocr: number; translated: number; archived: number; blank: number }
 export interface LanguageRow { name: string; books: number; pages: number; ocr: number; translated: number }
-export interface CenturyRow { label: string; books: number; pages: number }
+/** Per-group completion of live books: page sums plus the mean per-book share transcribed / translated and the readable count (ladder predicate). */
+export interface CompletionGroup { books: number; pages: number; ocr: number; translated: number; meanOcrPct: number; meanTrPct: number; readable: number; english: number }
+export interface CenturyRow extends Partial<CompletionGroup> { label: string; books: number; pages: number }
+export interface LanguageAllRow extends CompletionGroup { name: string }
+/** 20 bins of 5%: how many live books have that share of pages transcribed / translated. */
+export interface Completion { bins: number; ocr: number[]; translated: number[]; books: number }
 export type Rung = 'no_text' | 'transcribing' | 'transcribed' | 'translating' | 'readable' | 'complete';
 export interface Ladder { en: Partial<Record<Rung, number>>; other: Partial<Record<Rung, number>>; unstamped: number }
 export interface StepRow { live: number; hidden: number; pages_live: number; pages_hidden: number }
@@ -38,6 +43,9 @@ export interface LibraryDashboard {
   addedByMonth: { month: string; books: number; pages: number }[];
   collections: { name: string; slug: string; texts: number; readable: number; art: number }[];
   nextStep: { steps: Record<string, StepRow>; ocrBacklog: { name: string; books: number; pages: number }[] };
+  /** Added 2026-10-01 (second snapshot version); absent on a doc written by the first. */
+  completion?: Completion;
+  languagesAll?: LanguageAllRow[];
   pipeline: { days: PipelineDay[]; funnel: string[] };
   gemini: GeminiDay[];
 }

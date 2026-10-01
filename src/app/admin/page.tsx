@@ -165,6 +165,7 @@ export default async function AdminDashboard() {
             <Panel title="Books by century" note={`By the numeric publication year. ${fmtFull(L.yearMissing)} live books have no year (most of the Chinese canon and many manuscripts) and are not on this chart.`}>
               <Bars labels={L.byCentury.map(c => c.label)} series={[{ name: 'Books', data: L.byCentury.map(c => c.books) }]} height={220} ariaLabel="Live books by century" />
             </Panel>
+            {L.completion && <Completion L={L} />}
             <Panel title="Where the scans come from" note={`Books with a named contributing library. ${fmtFull(L.noLibrary)} live books do not name one yet; /libraries is where institutions are credited.`}>
               <HBars rows={L.libraries.map(r => ({ label: r.name, values: [r.books] }))} labelWidth={200} />
             </Panel>
@@ -324,6 +325,61 @@ export default async function AdminDashboard() {
         </div>
       </Section>
     </main>
+  );
+}
+
+/** What the totals hide: how complete each live book is, and the same by century and by every language. */
+function Completion({ L }: { L: LibraryDashboard }) {
+  const C = L.completion!;
+  const binLabel = (i: number) => (i === 0 ? '0–5' : i === C.bins - 1 ? '95–100' : `${(100 * i) / C.bins}`);
+  const share = (arr: number[], from: number, to: number) => arr.slice(from, to).reduce((a, b) => a + b, 0);
+  const trNone = share(C.translated, 0, 1), trFull = share(C.translated, C.bins - 1, C.bins), trMid = C.books - trNone - trFull;
+  const ocrNone = share(C.ocr, 0, 1), ocrFull = share(C.ocr, C.bins - 1, C.bins);
+  const cents = L.byCentury.filter(c => c.books > 0 && c.meanOcrPct != null);
+  const langs = (L.languagesAll ?? []).filter(l => l.name !== '(none)');
+  const top = langs.slice(0, 25);
+  const th = 'py-1 px-2 font-medium whitespace-nowrap';
+  return (
+    <>
+      <div className="md:col-span-full min-w-0">
+        <Panel title="How complete each live book is" note={<>Each bar is a 5% band of a book’s pages. Translated: <b className="text-stone-900">{fmtFull(trNone)}</b> books have under 5% of their pages translated, <b className="text-stone-900">{fmtFull(trMid)}</b> are somewhere in between, and <b className="text-stone-900">{fmtFull(trFull)}</b> are at 95% or more. Transcribed: {fmtFull(ocrNone)} under 5%, {fmtFull(ocrFull)} at 95% or more. A book counts as readable only in the last two bands, which is why page totals run far ahead of book counts.</>}>
+          <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 440px), 1fr))' }}>
+            <div className="min-w-0 grid gap-1">
+              <div className="text-xs text-stone-600">Share of pages transcribed, per book ({fmtFull(C.books)} live books)</div>
+              <Bars labels={C.ocr.map((_, i) => binLabel(i))} series={[{ name: 'Books', data: C.ocr, color: SERIES[2] }]} height={220} ariaLabel="Histogram of per-book share of pages transcribed" />
+            </div>
+            <div className="min-w-0 grid gap-1">
+              <div className="text-xs text-stone-600">Share of translatable pages translated, per book</div>
+              <Bars labels={C.translated.map((_, i) => binLabel(i))} series={[{ name: 'Books', data: C.translated, color: SERIES[1] }]} height={220} ariaLabel="Histogram of per-book share of pages translated" />
+            </div>
+          </div>
+        </Panel>
+      </div>
+      <div className="md:col-span-full min-w-0">
+        <Panel title="Mean completion by century" note="Average per-book share of pages transcribed and translated, live books with a numeric year. Hover a century for the readable count.">
+          <Legend names={['Mean % transcribed', 'Mean % translated', 'Readable books, % of century']} colors={[SERIES[2], SERIES[1], SERIES[0]]} />
+          <Bars grouped unit="pct" w={1100} height={240} labels={cents.map(c => c.label)} series={[
+            { name: 'Mean % transcribed', color: SERIES[2], data: cents.map(c => c.meanOcrPct ?? 0) },
+            { name: 'Mean % translated', color: SERIES[1], data: cents.map(c => c.meanTrPct ?? 0) },
+            { name: 'Readable books, %', color: SERIES[0], data: cents.map(c => (c.books ? (100 * (c.readable ?? 0)) / c.books : 0)) },
+          ]} ariaLabel="Mean completion by century" />
+        </Panel>
+      </div>
+      <div className="md:col-span-full min-w-0">
+        <Panel title="Mean completion by language" note={`Top 25 languages by live books; the full table below has all ${fmtFull(langs.length)}. The number at the end of each bar is the mean share of pages translated per book; the grey text is readable books out of live books in that language.`}>
+          <HBars labelWidth={210} sub suffix="%" colors={[SERIES[1]]} rows={top.map(l => ({ label: l.name, sub: `${fmtFull(l.readable)} of ${fmtFull(l.books)} readable`, values: [l.meanTrPct], title: `${l.name}: mean ${l.meanTrPct}% translated, ${l.meanOcrPct}% transcribed per book; ${fmtFull(l.readable)} of ${fmtFull(l.books)} books readable` }))} />
+          <details className="text-sm">
+            <summary className="cursor-pointer text-stone-700">Every language ({fmtFull(langs.length)})</summary>
+            <div className="overflow-x-auto mt-2"><table className="text-xs min-w-[760px] w-full">
+              <thead><tr className="text-[11px] uppercase tracking-wider text-stone-500 text-right"><th className={`${th} text-left`}>Language</th><th className={th}>Books</th><th className={th}>Pages</th><th className={th}>Pages transcribed</th><th className={th}>Pages translated</th><th className={th}>Mean book transcribed</th><th className={th}>Mean book translated</th><th className={th}>Readable</th><th className={th}>Readable share</th><th className={th}>English originals</th></tr></thead>
+              <tbody>{langs.map(l => (
+                <tr key={l.name} className="border-t border-stone-100 text-right tabular-nums"><td className="py-0.5 px-2 text-left">{l.name}</td><td className="py-0.5 px-2">{fmtFull(l.books)}</td><td className="py-0.5 px-2">{fmtFull(l.pages)}</td><td className="py-0.5 px-2">{pct(l.ocr, l.pages)}</td><td className="py-0.5 px-2">{pct(l.translated, l.pages)}</td><td className="py-0.5 px-2">{l.meanOcrPct}%</td><td className="py-0.5 px-2">{l.meanTrPct}%</td><td className="py-0.5 px-2">{fmtFull(l.readable)}</td><td className="py-0.5 px-2">{pct(l.readable, l.books)}</td><td className="py-0.5 px-2">{l.english ? fmtFull(l.english) : '—'}</td></tr>
+              ))}</tbody>
+            </table></div>
+          </details>
+        </Panel>
+      </div>
+    </>
   );
 }
 
