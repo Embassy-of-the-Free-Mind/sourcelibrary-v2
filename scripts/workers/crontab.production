@@ -111,6 +111,10 @@
 45 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-metrics-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/analytics/snapshot-metrics.mjs" >> /var/log/sourcelibrary/metrics-snapshot.log 2>&1
 # Library dashboard breakdowns for /admin (#3943): languages, ladder, next step, pipeline series. ~70 s, read-only.
 55 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-library-dashboard.lock bash -c "set -a; source .env.production.local; set +a; node scripts/analytics/snapshot-library-dashboard.mjs" >> /var/log/sourcelibrary/library-dashboard.log 2>&1
+# Snapshots that only a button or a one-off seed used to write (#5501): /admin/canon daily; /timeline decades and /gallery facets weekly. Read-only apart from one system_config upsert each.
+5 6 * * * cd /root/sourcelibrary && flock -n /tmp/sl-canon-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/cron-caller.mjs /api/admin/canon" >> /var/log/sourcelibrary/canon-snapshot.log 2>&1
+15 6 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-timeline-overview.lock bash -c "set -a; source .env.production.local; set +a; node scripts/seed-timeline-filters.mjs" >> /var/log/sourcelibrary/timeline-overview.log 2>&1
+20 6 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-gallery-filters.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/refresh-gallery-filters.mjs" >> /var/log/sourcelibrary/gallery-filters.log 2>&1
 # On-mission acquisition: daily bounded batch (USTC gap -> IA/e-rara -> verify -> import hidden)
 # e-rara IIIF catalog refresh: weekly
 0 2 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-erara.lock bash -c "set -a; source .env.production.local; set +a; node scripts/catalog-coverage/harvest-erara-catalog.mjs" >> /var/log/sourcelibrary/erara-harvest.log 2>&1
