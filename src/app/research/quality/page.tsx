@@ -35,6 +35,8 @@ const SOURCES = [
   { path: 'scripts/eval/results/translation-corpus-audit-2026-09-30/items.jsonl', what: 'The transcription and translation of each audited page as served on the audit date (specimens in Figure 2).' },
   { path: '.claude/docs/eval-design.md', what: 'Measurement vocabulary (§2) and the reader’s chain table (§2.1) behind Figure 1.' },
   { path: 'scripts/eval/translation-corpus-audit/HUMAN-CALIBRATION.md', what: 'Protocol for the reader panel (§5 of this draft).' },
+  { path: '.claude/docs/ocr-memorization-paper.md', what: 'Working paper on the memorisation subsidy: matched canonical and non-canonical passages on pages of the same books.' },
+  { path: 'scripts/eval/experiments/2026-09-16-is-our-syriac-ocr-a-reading-of-the-page-4883.md', what: 'Syriac OCR against published Syriac and published English: wrong passages and text not in the Bible (#4883).' },
 ] as const;
 
 function N({ n }: { n: number }) {
@@ -746,6 +748,30 @@ export default function ResearchQualityPage() {
             <li><strong>The catalogue language is not always the page&rsquo;s.</strong> Two of the 20 hand-read pages were in a different language from their catalogue label, so per-language figures describe catalogue strata, not scripts on the page.<N n={7} /></li>
             <li><strong>Pages change.</strong> Served text is re-read and repaired. The specimen in Figure 2b has been fixed since the audit; every figure here is dated to the run that produced it.</li>
           </ul>
+
+          {/* Text from the #5495 comments, verbatim, with the canary correction applied. */}
+          <h3 className="text-lg text-primary font-semibold mb-3">Memorisation, recitation and training data</h3>
+          <P>
+            The reference texts we can score against are mostly famous, openly published texts, and those are the texts most likely to be in a model&rsquo;s training data. A model that has memorised Homer can reproduce the passage without reading the page. On matched pages from the same books, our working paper measures this &ldquo;memorisation subsidy&rdquo; at about 1 percentage point of accuracy for large models and about 5 for small ones.<N n={11} /> In its extreme form the output is fabrication: on Syriac manuscripts, Gemini returned fluent scripture that was not on the page.<N n={12} /> Accuracy cells built on canonical references therefore overstate how well an engine reads rare material, so we label each cell with the memorisation risk of its references.
+          </P>
+          <P>
+            Agreement shares the blind spot. Two reads that both recite the same text agree perfectly. The two-read screen can flag garble, but it cannot catch recitation.
+          </P>
+          <P>
+            Gemini sometimes refuses to output text that matches its training data (the <code>RECITATION</code> stop). These refusals cluster on the cleanest canonical print, so the pages they remove are the easiest ones. We report refusals per stratum as an outcome, and never drop them silently.
+          </P>
+          <P>
+            Translation has the same risk in two places. The translating model may reproduce a remembered published English translation instead of translating the page, and a modern published translation may be under copyright. We have not measured how often this happens. The judge may also know the canonical text and rate a translation against its memory rather than the transcription it was given. The swapped-page control shows that it reads the page it is given, but it does not rule out memory on famous texts. Readers holding the scan are the one check that is independent of any training data.
+          </P>
+          <P>
+            Publishing feeds future training. Once our pages and reference passages are public, later models may memorise them, and a benchmark built on our own corpus will drift upward without any real improvement. We keep a sealed reserve of benchmark pages whose reference text is never published, and we plan to mark the published dataset with a canary string so its presence in training data can be detected.
+          </P>
+          <P>
+            We can estimate, book by book, whether a model already knows a work. Our membership survey (<Link href="/blog/did-the-ai-read-this" className="text-accent-rust hover:underline">&ldquo;Did the AI Read This?&rdquo;</Link>) combines a bibliographic prior with behavioural probes of two models. The prior asks whether an English translation exists in any of twelve catalogues. The probes ask the model whether it recognises the work. The two are combined by Bayes&rsquo; rule into a posterior per book. On a random sample of 1,000 of 16,871 transcribed books, about 43% were confidently new to the models and about 21% were confidently known. The survey measures whether a model recognises the work, not whether it has seen our scan. That is the right quantity here, because a model that recognises a work can recite it. The posterior gives a book-level memorisation label. Accuracy and judge ratings can then be reported separately for known and unknown works, instead of relying on the canonical/non-canonical label alone.
+          </P>
+          <P>
+            Recognition also overrides the image. In <Link href="/blog/reciting-not-reading" className="text-accent-rust hover:underline">&ldquo;Reciting, Not Reading&rdquo;</Link> we covered four lines of Genesis on a 1566 Vulgate with an opaque grey box. The production model transcribed them anyway, correctly and without a warning. Four prompts asking it to mark what it could not read all failed. A transcription of a known work can therefore be right for the wrong reason, and an accuracy score cannot tell the two apart.
+          </P>
         </Section>
 
         {/* ── 7 ── */}
