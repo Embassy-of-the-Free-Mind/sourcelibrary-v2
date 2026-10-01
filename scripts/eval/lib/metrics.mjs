@@ -391,12 +391,26 @@ export const SCRIPT_DEFS = {
  * script's orthography folding, keep only the script's letters, collapse spaces.
  * Returns a space-separated string (word boundaries preserved).
  */
+// Version of normalizeForScript's text cleaning. Record it beside any score; a score computed under an
+// earlier version is not comparable (eval-design §5.2).
+//   1  stripWrappers only
+//   2  (#5522) also drops image/figure description blocks, strips every remaining tag (keeping its text),
+//      and decodes entities. Under v1, on 72 EEBO-TCP references, `imagedesc`, `nbsp`, `sizesmall`,
+//      `typedecoratiue`, `uuoodcut` and `langenglishlang` were among the top "OCR insertions".
+export const NORMALIZE_FOR_SCRIPT_VERSION = 2;
+const DESCRIPTION_BLOCKS = /<(image-desc|figure|detected-images)\b[^>]*>[\s\S]*?<\/\1>/gi;   // describe the page, not its text
+const cleanMarkup = s => stripWrappers(s || '')
+  .replace(DESCRIPTION_BLOCKS, ' ')
+  .replace(/<[^>]*>/g, ' ')                  // any other tag: drop the tag (and its attributes), keep the text
+  .replace(/&amp;/gi, '&')                   // the et-ligature is text; SCRIPT_DEFS.latin folds & to "et"
+  .replace(/&[a-z]{2,8};|&#\d+;/gi, ' ');    // nbsp and other entities are layout
+
 export function normalizeForScript(s, script) {
   const def = SCRIPT_DEFS[script];
   if (!def) throw new Error(`normalizeForScript: unknown script "${script}" (cjk uses normalizeCJK)`);
   // Rejoin words hyphenated across line breaks (early modern printing uses - or ¬)
   // BEFORE tokenizing, or each break splits one word into two mismatches.
-  const dehyphenated = stripWrappers(s || '').replace(/(\p{L})[-¬]\s*\n\s*/gu, '$1');
+  const dehyphenated = cleanMarkup(s).replace(/(\p{L})[-¬]\s*\n\s*/gu, '$1');
   const folded = def.fold(dehyphenated);
   return folded
     .split(/\s+/)
