@@ -63,7 +63,7 @@ Added 2026-10-01. A reader asks one thing of a served page: *does this English s
 
 What follows from the table:
 
-- **Only a human reader spans all three links.** The judge spans link 3 and a little of link 2. So the human study's main outcome is the whole-chain verdict; agreement with the judge on link 3 is the second use of the same replies.
+- **Only a human reader spans all three links.** The judge spans link 3 and a little of link 2. So the volunteer lane (`translation-corpus-audit/HUMAN-CALIBRATION.md`) asks readers the whole-chain question, and comparing their answers with the judge's ratings on the same pages is how the judge gets checked.
 - **The judge now gates publication.** Quality round 1 ships a stratum when the judge rates ≤ 10% of n ≥ 20 pages with a major defect. At that n, an observed 2 of 20 has a 95% interval of about 3–30%, before any judge error. Calibrating the judge is therefore on the critical path of what readers see, not an extra for the paper.
 - **"By eye" in these studies is a model reading the image** (labelled `read-from-image`). It is a stronger check than text alone, and it is still not a human reference.
 - Metadata (title, author, date against the title page) is a fourth link for the book rather than the page; round 1 checks it by eye on 5 books per stratum, and nothing else measures it.
