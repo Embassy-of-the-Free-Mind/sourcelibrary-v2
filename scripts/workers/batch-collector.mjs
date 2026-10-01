@@ -37,6 +37,7 @@ import { isTruncatedCandidate, truncationFailReason } from '../lib/truncated-res
 import { repairTexGreek, texGreekRepairEnabled } from '../lib/tex-greek.mjs';
 import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
+import { resolvePreviewStub, previewStubGuardEnforced, recordPreviewStubRefusal, GUARD_PROJECTION } from '../lib/preview-stub-guard.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
 import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
 import { SCAN_QUALITY_VERSION, parseImageExtractionResponse, computeBookScanQualityRollup } from '../lib/image-extraction-request.mjs';
@@ -1138,6 +1139,30 @@ async function updateParentJobProgress(db, parentJobId) {
 }
 
 /**
+ * The status a batch write-back may actually set (#4719). A post-OCR status on a book whose
+ * OCR is still the 25-page preview is turned into a requeue to `archive_complete`, or into
+ * `needs_attention` when OCR has stalled. It is the same guard `setPipelineStatus` applies
+ * in the orchestrator. This writer bypasses that helper, and on 2026-10-01 it wrote 69 of
+ * the 167 preview stubs that reached `images_complete`.
+ *
+ * Returns the `$set` fields for the status write: the target unchanged, or the redirect.
+ */
+async function guardedStatusSet(db, bookId, target, prevStatus) {
+  const book = await db.collection('books').findOne({ id: bookId }, { projection: { ...GUARD_PROJECTION, title: 1 } });
+  const stub = book ? await resolvePreviewStub(db, bookId, book, target) : null;
+  const plain = { 'pipeline_auto.status': target };
+  if (!stub) return plain;
+  const enforced = previewStubGuardEnforced();
+  await recordPreviewStubRefusal(db, bookId, { stub, attempted: target, prevStatus, title: book.title, source: 'batch-collector', enforced });
+  console.log(`  [preview-stub-guard] ${bookId}: ${stub.reason}${enforced ? ` → ${stub.status}` : ' (observe)'}`);
+  if (!enforced) return plain;
+  return {
+    'pipeline_auto.status': stub.status,
+    ...Object.fromEntries(Object.entries(stub.extra).map(([k, v]) => [`pipeline_auto.${k}`, v])),
+  };
+}
+
+/**
  * Update pipeline_auto status when batch jobs complete.
  * Transitions: ocr_submitted -> ocr_complete, translate_submitted -> translate_complete
  */
@@ -1158,18 +1183,19 @@ async function advancePipelineStatus(db, bookId, jobType) {
       status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
     });
     if (pendingOcr === 0) {
+      const statusSet = await guardedStatusSet(db, bookId, 'ocr_complete', status);
       // NOT_HELD: a batch write-back must never lift a pipeline hold (scripts/lib/pipeline-hold.mjs, #4790).
       await db.collection('books').updateOne(
         { id: bookId, ...NOT_HELD },
         {
           $set: {
-            'pipeline_auto.status': 'ocr_complete',
+            ...statusSet,
             'pipeline_auto.last_updated': new Date(),
             updated_at: new Date(),
           },
         }
       );
-      console.log(`  Pipeline: ${bookId} ocr_submitted -> ocr_complete`);
+      console.log(`  Pipeline: ${bookId} ocr_submitted -> ${statusSet['pipeline_auto.status']}`);
     }
   }
 
@@ -1180,17 +1206,18 @@ async function advancePipelineStatus(db, bookId, jobType) {
       status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
     });
     if (pendingTranslate === 0) {
+      const statusSet = await guardedStatusSet(db, bookId, 'translate_complete', status);
       await db.collection('books').updateOne(
         { id: bookId },
         {
           $set: {
-            'pipeline_auto.status': 'translate_complete',
+            ...statusSet,
             'pipeline_auto.last_updated': new Date(),
             updated_at: new Date(),
           },
         }
       );
-      console.log(`  Pipeline: ${bookId} translate_submitted -> translate_complete`);
+      console.log(`  Pipeline: ${bookId} translate_submitted -> ${statusSet['pipeline_auto.status']}`);
     }
   }
 
@@ -1214,19 +1241,22 @@ async function advancePipelineStatus(db, bookId, jobType) {
       let scanQualityRollup = null;
       try { scanQualityRollup = await computeBookScanQualityRollup(db, bookId); }
       catch (err) { console.error(`  scan_quality rollup failed for ${bookId}: ${err.message}`); }
+      // The extraction already ran and was paid for, so its counts are written even when
+      // the status is redirected.
+      const statusSet = await guardedStatusSet(db, bookId, 'images_complete', status);
       await db.collection('books').updateOne(
         { id: bookId },
         {
           $set: {
             detected_images_count: imgCount,
             ...(scanQualityRollup ? { scan_quality: scanQualityRollup } : {}),
-            'pipeline_auto.status': 'images_complete',
+            ...statusSet,
             'pipeline_auto.last_updated': new Date(),
             updated_at: new Date(),
           },
         }
       );
-      console.log(`  Pipeline: ${bookId} ${status} -> images_complete (${imgCount} images)`);
+      console.log(`  Pipeline: ${bookId} ${status} -> ${statusSet['pipeline_auto.status']} (${imgCount} images)`);
     }
   }
 }
