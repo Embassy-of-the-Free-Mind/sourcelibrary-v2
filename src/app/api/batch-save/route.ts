@@ -10,7 +10,7 @@ import { engineFromBatchJob, notRecorded, ocrProvenance, translationProvenance }
 
 /** Provenance identity of this route (#4613). */
 const ROUTE_CALL_SITE = 'src/app/api/batch-save/route.ts';
-import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
+import { CLEAR_STALE_UNSET, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON } from '@/lib/translate-write';
 
 export const maxDuration = 300;
 
@@ -154,6 +154,13 @@ export const POST = withAuth(async (request, session) => {
               }
             );
           } else {
+            // The page's text inside its continuity <meta> is text no reader sees (#5376).
+            if (hidesPageInMeta(text)) {
+              console.warn(`[batch-save] HIDDEN META: refusing page ${pageId} (${text.length} chars)`);
+              await recordRefusedTranslation(db, { id: pageId!, book_id: job.book_id }, text, HIDDEN_META_REASON, { jobId: job.id, model: job.model });
+              failed++;
+              continue;
+            }
             await createRevision(pageId!, 'translation', job.id);
             await db.collection('pages').updateOne(
               { id: pageId },

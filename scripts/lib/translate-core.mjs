@@ -29,7 +29,8 @@ import { loopVerdict } from './ocr-loop-guard.mjs';
 import { CLEAR_STALE_UNSET } from './stale-translation.mjs';
 import { resolvePageBreak, lookaheadSnippet, LOOKAHEAD_CLAUSE } from './page-break-devices.mjs';
 import { echoedSource } from './page-integrity.mjs';
-import { unwrapHiddenTranslation } from './hidden-translation.mjs';
+import { unwrapHiddenTranslation, hidesPageInMeta, HIDDEN_META_REASON, HIDDEN_META_MIN_WORDS } from './hidden-translation.mjs';
+export { hidesPageInMeta, HIDDEN_META_REASON, HIDDEN_META_MIN_WORDS };
 import { countLeafBreaks, leafBreakNote, leafUnitsHealth, dropLeafSeamBreaches } from './leaf-break.mjs';
 export { dropLeafSeamBreaches };
 
@@ -686,11 +687,17 @@ export function hasTranslatableSource(page) {
  * flagged ~20% false positives from oversized OCR denominators.)
  */
 export const COLLAPSE_ABS_CAP = 800;
+/**
+ * The continuity marker as the model writes it. The prompt asks for "continues from previous
+ * page"; older output says "continued from". The collapse check matched only the second, so its
+ * marker clause never fired on anything the current prompt produces (#5363).
+ */
+export const CONTINUITY_MARKER_RE = /continue[sd]?\s+from\s+(?:the\s+)?previous\s+page/i;
 export const isCollapsed = (ocr, tr) => {
   const ob = bodyLen(ocr), tb = bodyLen(tr);
   if (ob < 400) return false;
   if (tb >= COLLAPSE_ABS_CAP) return false;
-  return tb / ob < 0.3 || (/continued from previous page/i.test(tr || '') && tb < 60);
+  return tb / ob < 0.3 || (CONTINUITY_MARKER_RE.test(tr || '') && tb < 60);
 };
 
 /**
@@ -710,7 +717,10 @@ export const isExcess = (ocr, tr) => {
 /**
  * THE semantic health check for a freshly generated translation.
  *
- * Three refusals. `collapsed` and `runaway` need only the two texts. `echo` — the "translation"
+ * Four refusals. `hidden-meta` needs only the translation: the page's text is inside the
+ * continuity <meta>, which no reader surface shows (`hidesPageInMeta`, #5376). It is asked first
+ * so the refused text is filed under the reason that says it is recoverable — the words are
+ * there, in the wrong tag. `collapsed` and `runaway` need only the two texts. `echo` — the "translation"
  * is the source reproduced (#5103 round 4: flash-lite completed an oath from the next page and
  * then handed page 68's Latin back as its translation; the 2026-08 batch-lane repair echoed a
  * garbled index page) — needs the BOOK's language, because an English source is modernised, not
@@ -718,15 +728,16 @@ export const isExcess = (ocr, tr) => {
  * without it the echo tier is skipped, never guessed (page-integrity `echoedSource`, wholePage:
  * the shared run is at least half the translation's prose).
  *
- * A fourth and fifth refusal apply only to a source carrying `<leaf-break/>` (#5260): `leaf-seam`
+ * Two more refusals apply only to a source carrying `<leaf-break/>` (#5260): `leaf-seam`
  * — the translation does not carry the same number of markers (a bridged seam comes back as one
  * block; a dropped leaf as fewer) — and, on a page whose seams did come back, the echo and drift
  * guards run PER LEAF (`leaf-drift` = the translation of one leaf absorbed the next leaf's
  * opening). A page without the marker takes exactly the path it took before.
  *
- * @returns {{healthy: boolean, reason: 'collapsed'|'runaway'|'echo'|'leaf-seam'|'leaf-drift'|null}}
+ * @returns {{healthy: boolean, reason: 'hidden-meta'|'collapsed'|'runaway'|'echo'|'leaf-seam'|'leaf-drift'|null}}
  */
 export function assessTranslationHealth(ocrText, translationText, { lang } = {}) {
+  if (hidesPageInMeta(translationText)) return { healthy: false, reason: HIDDEN_META_REASON };
   if (isCollapsed(ocrText, translationText)) return { healthy: false, reason: 'collapsed' };
   if (isExcess(ocrText, translationText)) return { healthy: false, reason: 'runaway' };
   if (lang && !echoExempt(ocrText, lang)) {
@@ -886,6 +897,27 @@ export function isDegenerateSource(ocrText) {
   return loopVerdict(ocrText || '').refuse;
 }
 
+/**
+ * Record a refused translation on the page and keep its text — the two steps every health-gate
+ * refusal takes, for a writer that does not go through `writePageTranslation`. The stamp
+ * (`translation.health_blocked` + `_at`) is the recorded skip: the page stays untranslated and
+ * says why. The text goes to page_revisions (`persistRefusedTranslation`). Never throws.
+ */
+export async function recordRefusedTranslation(db, page, text, reason, { jobId, model } = {}) {
+  try {
+    const now = new Date();
+    // A dotted $set cannot descend into `translation: null`.
+    await db.collection('pages').updateOne({ id: page.id, translation: null }, { $set: { translation: {} } });
+    await db.collection('pages').updateOne(
+      { id: page.id },
+      { $set: { 'translation.health_blocked': reason, 'translation.health_blocked_at': now, updated_at: now } }
+    );
+  } catch (e) {
+    console.error(`[health-gate] Failed to stamp ${page?.id}: ${e.message?.slice(0, 80)}`);
+  }
+  await persistRefusedTranslation(db, page, text, reason, { jobId, model });
+}
+
 /** The reason value stamped on `translation.health_blocked` for a looping source. */
 export const SOURCE_LOOP_REASON = 'source_loop';
 
@@ -962,6 +994,9 @@ export function translatablePageFilter({ extraSkipTypes = [] } = {}) {
  *   refuse to write a collapsed/runaway result, returning
  *   {written:false, unhealthy:true, reason}. Deliberately NOT default-on —
  *   the production worker's behavior must not change silently (#3756).
+ *   One refusal is NOT opt-in: a page hidden in its continuity <meta>
+ *   (`hidesPageInMeta`, reason 'hidden-meta') is refused for every caller,
+ *   stamped `translation.health_blocked` and kept in page_revisions (#5376).
  * @returns {{written: boolean, protected: boolean, unhealthy?: boolean, reason?: string, text: string}}
  *   — when protected, `text` is the EXISTING human translation (use it for
  *   previous-page continuity); when written, it is the sanitized new text.
@@ -1017,6 +1052,15 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
   const isHumanEdited = !!existing && (existing.source === 'manual' || !!existing.edited_by);
   if (isHumanEdited && !overwriteHuman) {
     return { written: false, protected: true, text: existing.data };
+  }
+
+  // Always on, unlike the opt-in gate above (#5376): a translation whose continuity <meta> holds
+  // the page is never stored, whoever the caller is — the reader would be shown an empty page.
+  // The refusal is recorded on the page and the text kept, so the words can be put back in the
+  // body later without a second model call.
+  if (hidesPageInMeta(clean)) {
+    await recordRefusedTranslation(db, page, clean, HIDDEN_META_REASON, { jobId, model: resolvedModel });
+    return { written: false, protected: false, unhealthy: true, reason: HIDDEN_META_REASON, text: clean };
   }
 
   // Promise 3 delegates to the blessed revision helper (scripts/lib/

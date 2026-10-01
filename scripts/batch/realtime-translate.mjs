@@ -291,6 +291,15 @@ async function processBook(book, pages, prompts, db, globalStats) {
         previousTranslation = w.text;
         continue;
       }
+      if (w.unhealthy) {
+        // The door refused the text (e.g. the page hidden in its continuity <meta>, #5376) and
+        // recorded why on the page. Not a completed page, and not context for the next one.
+        console.log(`  [health-gate] p${page.page_number}: ${w.reason} — write refused, evidence kept`);
+        bookFailed++;
+        globalStats.failed++;
+        previousTranslation = null;
+        continue;
+      }
 
       previousTranslation = w.text;
       bookCompleted++;

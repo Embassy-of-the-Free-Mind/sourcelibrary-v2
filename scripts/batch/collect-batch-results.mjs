@@ -13,7 +13,7 @@
 
 import { MongoClient } from 'mongodb';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
-import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
+import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON } from '../lib/translate-core.mjs';
 import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
 
 /** Provenance identity of this collector (#4613): recorded on every page it writes as `run.collected_by`. */
@@ -293,6 +293,13 @@ async function processOneJob(db, job) {
 
         bulkOps.push({ updateOne: { filter: { id: pageId }, update: { $set: setObj } } });
       } else {
+        // The page's text inside its continuity <meta> is text no reader sees (#5376) — same
+        // refusal as batch-collector.mjs: write nothing, stamp the reason, keep the text.
+        if (hidesPageInMeta(text)) {
+          console.warn(`  HIDDEN META: refusing page ${pageId} — the translation is inside its continuity <meta>`);
+          if (!DRY_RUN) await recordRefusedTranslation(db, { id: pageId, book_id: job.book_id }, text, HIDDEN_META_REASON, { jobId: jobIdStr, model: job.model });
+          failCount++; continue;
+        }
         bulkOps.push({
           updateOne: {
             filter: { id: pageId },

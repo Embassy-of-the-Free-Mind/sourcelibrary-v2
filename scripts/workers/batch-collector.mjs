@@ -26,7 +26,7 @@ import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
 import { isTrivialGalleryDetection } from '../lib/gallery-image-types.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
-import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
+import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON } from '../lib/translate-core.mjs';
 import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
 
 /** Provenance identity of this collector (#4613): recorded on every page it writes as `run.collected_by`. */
@@ -750,6 +750,13 @@ async function processOneJob(db, job) {
           });
         }
       } else {
+        // The page's text inside its continuity <meta> is text no reader sees (#5376): write
+        // nothing, stamp the page with the reason and keep the refused text as evidence.
+        if (hidesPageInMeta(text)) {
+          if (!DRY_RUN) await recordRefusedTranslation(db, { id: pageId, book_id: job.book_id }, text, HIDDEN_META_REASON, { jobId: jobIdStr, model: job.model });
+          failCount++; noteFail(HIDDEN_META_REASON); failedPageIds.set(pageId, HIDDEN_META_REASON);
+          continue;
+        }
         bulkOps.push({
           updateOne: {
             filter: { id: pageId },

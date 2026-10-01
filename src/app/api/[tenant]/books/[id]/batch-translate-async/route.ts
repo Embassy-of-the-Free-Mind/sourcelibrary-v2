@@ -8,7 +8,7 @@ import { getTranslationPrompt } from '@/lib/prompts';
 import { PROMPT_VERSION, SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { createRevision } from '@/lib/page-revisions';
 import { isTruncatedCandidate } from '@/lib/truncated-response';
-import { findHumanEditedPageIds, findPendingBatchJob, CLEAR_STALE_UNSET, hasNoTranslatableBody } from '@/lib/translate-write';
+import { findHumanEditedPageIds, findPendingBatchJob, CLEAR_STALE_UNSET, hasNoTranslatableBody, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON } from '@/lib/translate-write';
 import { withAuth } from '@/lib/auth-helpers';
 import { batchJobProvenance, engineFromBatchJob, notRecorded, translationProvenance, contentHash, codeVersion, host } from '@/lib/write-provenance';
 
@@ -412,6 +412,15 @@ export const GET = withAuth(async (request, session, context) => {
           // page keeps no translation and is re-selected next pass.
           if (text && isTruncatedCandidate(candidate)) {
             console.warn(`[batch-translate] TRUNCATED (${candidate?.finishReason}): refusing page ${pageId} (${text.length} chars)`);
+            failCount++;
+            continue;
+          }
+
+          // The page's text inside its continuity <meta> is text no reader sees (#5376).
+          // Refuse it; the page is stamped with the reason and the text kept as evidence.
+          if (text && hidesPageInMeta(text)) {
+            console.warn(`[batch-translate] HIDDEN META: refusing page ${pageId} (${text.length} chars)`);
+            await recordRefusedTranslation(db, { id: pageId, book_id: bookId }, text, HIDDEN_META_REASON, { jobId: jobName, model: jobDoc.model });
             failCount++;
             continue;
           }

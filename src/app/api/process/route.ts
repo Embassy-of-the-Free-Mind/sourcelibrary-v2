@@ -5,7 +5,7 @@ import { performOCR, performOCRWithBuffer, performTranslation, generateSummary, 
 import { getOcrPrompt, getTranslationPrompt, getSummaryPrompt, type PromptLookupResult } from '@/lib/prompts';
 import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
-import { isHumanEditedTranslation } from '@/lib/translate-write';
+import { isHumanEditedTranslation, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON } from '@/lib/translate-write';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { getTriggerSource } from '@/lib/cron-auth';
 import { DEFAULT_MODEL, PROMPT_VERSION, extractPageType, extractColumns } from '@/lib/types';
@@ -362,6 +362,14 @@ export const POST = withAuth(async (request: NextRequest) => {
       });
     }
 
+    // The page's text inside its continuity <meta> is text no reader sees (#5376): the result
+    // goes back to the caller, flagged, but is not saved as the page's translation.
+    const translationRefused = !!results.translation && hidesPageInMeta(results.translation);
+    if (translationRefused && autoSave && pageId && !translationProtected) {
+      const refusedPage = await db.collection('pages').findOne({ id: pageId, tenantId }, { projection: { book_id: 1 } });
+      if (refusedPage) await recordRefusedTranslation(db, { id: pageId, book_id: refusedPage.book_id }, results.translation!, HIDDEN_META_REASON, { model });
+    }
+
     // Auto-save to database if requested
     if (autoSave && pageId) {
       const updateData: Record<string, unknown> = { updated_at: new Date() };
@@ -405,7 +413,7 @@ export const POST = withAuth(async (request: NextRequest) => {
         }
       }
 
-      if (results.translation && promptRefs.translation && !translationProtected) {
+      if (results.translation && promptRefs.translation && !translationProtected && !translationRefused) {
         const translationPromptRef = promptRefs.translation.reference;
         const translationEngine = geminiEngine({
           call_site: 'src/app/api/process/route.ts', api: 'realtime', model,
@@ -459,7 +467,7 @@ export const POST = withAuth(async (request: NextRequest) => {
       );
 
       // Update book counts if translation was processed
-      if (results.translation && !translationProtected) {
+      if (results.translation && !translationProtected && !translationRefused) {
         const page = await db.collection('pages').findOne({ id: pageId, tenantId });
         if (page?.book_id) {
           const bookId = page.book_id;
@@ -512,6 +520,7 @@ export const POST = withAuth(async (request: NextRequest) => {
       ...results,
       usage: totalUsage,
       ...(translationProtected && { translationProtected: true }),
+      ...(translationRefused && { translationRefused: HIDDEN_META_REASON }),
     });
   } catch (error) {
     console.error('Error processing:', error);
