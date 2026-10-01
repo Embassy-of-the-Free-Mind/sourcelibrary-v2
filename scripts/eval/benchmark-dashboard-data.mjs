@@ -75,7 +75,9 @@ for (const f of files) latest.set(f.replace(/-\d{4}-\d{2}-\d{2}\.json$/, ''), f)
 const REGISTRY_DIR = path.join(__dirname, 'benchmark');
 const registry = new Map();
 for (const f of fs.readdirSync(REGISTRY_DIR).filter(f => f.endsWith('.json'))) {
-  for (const p of JSON.parse(fs.readFileSync(path.join(REGISTRY_DIR, f), 'utf8')).pages || []) registry.set(p.slug, p);
+  // Not every file here is a page registry: numbers-en-5224.json keeps `pages` as a COUNT.
+  const pages = JSON.parse(fs.readFileSync(path.join(REGISTRY_DIR, f), 'utf8')).pages;
+  for (const p of Array.isArray(pages) ? pages : []) registry.set(p.slug, p);
 }
 // First named language only: "Japanese; Chinese" → Japanese, "Ancient Greek" → Greek.
 const cleanLanguage = l => { if (!l) return null; const first = String(l).split(/[;,]/)[0].trim().replace(/^Ancient /, ''); return first || null; };
