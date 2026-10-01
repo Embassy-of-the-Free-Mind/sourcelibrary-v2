@@ -1251,6 +1251,9 @@ async function advancePipelineStatus(db, bookId, jobType) {
             detected_images_count: imgCount,
             ...(scanQualityRollup ? { scan_quality: scanQualityRollup } : {}),
             ...statusSet,
+            // The `images` input of pipeline_next (#5477): extraction ran for this book, whatever the
+            // status guard decided above.
+            'pipeline_auto.images_done_at': new Date(),
             'pipeline_auto.last_updated': new Date(),
             updated_at: new Date(),
           },

@@ -22,6 +22,7 @@
 import { MongoClient, ObjectId } from 'mongodb';
 import { computeTranslationMetrics, computeTranslationState } from '../lib/page-counts.mjs';
 import { recordSweepActions } from '../lib/sweep-log.mjs';
+import { NEXT_STEP_PROJECTION, PIPELINE_NEXT_VERSION, buildPipelineNext, pipelineNextChanged, resolveOpenJobs } from '../lib/pipeline-next-step.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
@@ -140,13 +141,20 @@ async function syncPageCounts(db) {
 
   // Fetch all books' cached values
   const books = await db.collection('books')
-    .find({}, { projection: { _id: 1, id: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, pages_archived: 1, pages_translatable: 1, translation_pct: 1, is_fully_translated: 1, over_90_translated: 1, language: 1, content_type: 1, translation_state: 1 } })
+    .find({}, { projection: { ...NEXT_STEP_PROJECTION, pages_ocr: 1, pages_translated: 1, pages_blank: 1, pages_translatable: 1, translation_pct: 1, is_fully_translated: 1, over_90_translated: 1, language: 1 } })
     .toArray();
+
+  // `pipeline_next` (#5477, .claude/docs/pipeline-next-step.md) needs to know whether `book.job` names a
+  // job that is still OPEN — most pointers name a cancelled one — so resolve that once, in one query.
+  const openJobs = await resolveOpenJobs(db, books);
+  const runAt = new Date();
 
   // Build bulk updates for mismatches
   const bulkOps = [];
   let mismatchCount = 0;
   let stateMismatchCount = 0;
+  let nextMismatchCount = 0;
+  const stepTally = {};
   const stampedByRule = [];
 
   for (const book of books) {
@@ -198,9 +206,28 @@ async function syncPageCounts(db) {
     const stateStale = !stored ||
       Object.keys(translation_state).some((k) => stored[k] !== translation_state[k]);
 
-    if (countersStale || stateStale) {
+    // The next step (#5477), computed from the counters and rung just derived, so it is never a cycle
+    // behind them. OBSERVE ONLY: no phase or lane selects on it until that lane's cutover (#5469 step 5).
+    const pipeline_next = buildPipelineNext(
+      { ...book, ...actual, translation_state },
+      { now: runAt, openJob: openJobs.get(bookId) ?? null },
+    );
+    const nextStale = pipelineNextChanged(book.pipeline_next, pipeline_next);
+    const tallyKey = pipeline_next.step === 'blocked' ? `blocked:${pipeline_next.reason}` : pipeline_next.step;
+    stepTally[tallyKey] = (stepTally[tallyKey] || 0) + 1;
+    if (nextStale && (!book.pipeline_next || book.pipeline_next.version !== PIPELINE_NEXT_VERSION)) {
+      stampedByRule.push({
+        sweep: `pipeline-next-v${PIPELINE_NEXT_VERSION}`,
+        book_id: bookId,
+        action: book.pipeline_next ? 'pipeline-next-restamped' : 'pipeline-next-stamped',
+        detail: { step: pipeline_next.step, reason: pipeline_next.reason, ...(book.pipeline_next ? { from_version: book.pipeline_next.version, from_step: book.pipeline_next.step } : {}) },
+      });
+    }
+
+    if (countersStale || stateStale || nextStale) {
       mismatchCount++;
       if (stateStale) stateMismatchCount++;
+      if (nextStale) nextMismatchCount++;
       // A stamp the RULE caused (never stamped, or TRANSLATION_STATE_VERSION
       // moved) is a sweep and gets a sweep_log row (field-sprawl.md). A rung
       // that moved because a counter moved is routine and does not.
@@ -220,7 +247,9 @@ async function syncPageCounts(db) {
         // because sync-books-catalog.mjs syncs every book whose `updated_at`
         // moved — the first pass would otherwise re-upsert the whole catalog to
         // Supabase for a field that mirror does not carry yet (step 4).
-        // Both `$set`s are literal so scripts/audit/new-field-writes.mjs sees them.
+        // Both `$set`s are literal so scripts/audit/new-field-writes.mjs sees them. An unchanged
+        // translation_state / pipeline_next is written back as stored (a no-op for that field), so
+        // neither stamp's computed_at moves unless its own value did.
         const update = countersStale
           ? {
             $set: {
@@ -233,10 +262,16 @@ async function syncPageCounts(db) {
               is_fully_translated,
               over_90_translated,
               translation_state: stamped,
+              pipeline_next: nextStale ? pipeline_next : book.pipeline_next,
               updated_at: now,
             },
           }
-          : { $set: { translation_state: stamped } };
+          : {
+            $set: {
+              translation_state: stateStale ? stamped : book.translation_state,
+              pipeline_next: nextStale ? pipeline_next : book.pipeline_next,
+            },
+          };
         bulkOps.push({ updateOne: { filter: { _id: book._id }, update } });
       }
     }
@@ -251,13 +286,14 @@ async function syncPageCounts(db) {
   let sweepRows = 0;
   if (!DRY_RUN && stampedByRule.length > 0) {
     sweepRows = await recordSweepActions(db, stampedByRule);
-    console.log(`  translation_state stamped by rule: ${stampedByRule.length} (sweep_log rows: ${sweepRows})`);
+    console.log(`  translation_state / pipeline_next stamped by rule: ${stampedByRule.length} (sweep_log rows: ${sweepRows})`);
   }
+  console.log(`  pipeline_next (observe only): ${Object.entries(stepTally).sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k}=${n}`).join(' ')}`);
 
   const elapsed = ((Date.now() - start) / 1000).toFixed(1);
-  console.log(`  Books checked: ${books.length} | Mismatches: ${mismatchCount} (translation_state: ${stateMismatchCount}) | Updated: ${updated} | ${elapsed}s`);
+  console.log(`  Books checked: ${books.length} | Mismatches: ${mismatchCount} (translation_state: ${stateMismatchCount}, pipeline_next: ${nextMismatchCount}) | Updated: ${updated} | ${elapsed}s`);
 
-  return { books_checked: books.length, mismatches: mismatchCount, translation_state_mismatches: stateMismatchCount, updated };
+  return { books_checked: books.length, mismatches: mismatchCount, translation_state_mismatches: stateMismatchCount, pipeline_next_mismatches: nextMismatchCount, updated };
 }
 
 // ── Sync Collection Counts ──

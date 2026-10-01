@@ -5230,7 +5230,8 @@ Rules:
               }
 
               if (bookPages.length === 0) {
-                if (!DRY_RUN) await setPipelineStatus(db, book.id, 'images_complete');
+                // Recorded skip, so `pipeline_next` reads this book as past `images` (#5477).
+                if (!DRY_RUN) await setPipelineStatus(db, book.id, 'images_complete', { images_skipped_reason: 'no_candidates' });
                 log.images_advanced++;
                 console.log(`  No image candidates, skipped: ${book.title}`);
                 continue;
@@ -5342,7 +5343,8 @@ Rules:
               }
 
               if (bookPages.length === 0) {
-                if (!DRY_RUN) await setPipelineStatus(db, book.id, 'images_complete');
+                // Recorded skip, so `pipeline_next` reads this book as past `images` (#5477).
+                if (!DRY_RUN) await setPipelineStatus(db, book.id, 'images_complete', { images_skipped_reason: 'no_candidates' });
                 log.images_advanced++;
                 console.log(`  No image candidates, skipped: ${book.title}`);
                 continue;
@@ -5460,7 +5462,7 @@ Rules:
                 { id: book.id },
                 { $set: { detected_images_count: imgCount, ...(scanQualityRollup ? { scan_quality: scanQualityRollup } : {}) } }
               );
-              await setPipelineStatus(db, book.id, 'images_complete');
+              await setPipelineStatus(db, book.id, 'images_complete', { images_done_at: new Date() });
             }
             log.images_advanced++;
           }
@@ -5468,6 +5470,8 @@ Rules:
           // Lambda/SQS path: check jobs collection
           const imgJobId = book.pipeline_auto?.image_extraction_job_id;
           if (!imgJobId) {
+            // No job recorded, so nothing shows extraction ran: deliberately NO images_done_at, and
+            // `pipeline_next` keeps saying `images` for this book (#5477).
             if (!DRY_RUN) await setPipelineStatus(db, book.id, 'images_complete');
             log.images_advanced++;
             continue;
@@ -5488,7 +5492,7 @@ Rules:
                 { id: book.id },
                 { $set: { detected_images_count: imgCount } }
               );
-              await setPipelineStatus(db, book.id, 'images_complete');
+              await setPipelineStatus(db, book.id, 'images_complete', { images_done_at: new Date() });
             }
             log.images_advanced++;
           }
