@@ -235,7 +235,11 @@ async function importVolume(db, vol) {
   const manifest = await manifestFor(ig);
   const mlabel = (manifest.label || []).find?.((l) => l['@language'] === 'en')?.['@value'] || '';
   if (mlabel !== `volume ${vol}`) throw new Error(`I${ig}: manifest label "${mlabel}" is not "volume ${vol}"`);
-  const canvases = manifest.sequences[0].canvases;
+  // BDRC keeps a placeholder canvas for a leaf it never photographed ("134a (missing)", no image
+  // resource — I1489). It cannot become a page; its text side is reported as text without an image.
+  const allCanvases = manifest.sequences[0].canvases;
+  const canvases = allCanvases.filter((c) => c.images?.[0]?.resource);
+  v.missing_images = allCanvases.filter((c) => !c.images?.[0]?.resource).map((c) => (Array.isArray(c.label) ? c.label[0]?.['@value'] : c.label) || c['@id']);
   const pages = parseVolume(fs.readFileSync(path.join(ETEXT, 'text', file), 'utf8'));
   const labels = canvases.map(canvasFolioLabel);
   let claim;
