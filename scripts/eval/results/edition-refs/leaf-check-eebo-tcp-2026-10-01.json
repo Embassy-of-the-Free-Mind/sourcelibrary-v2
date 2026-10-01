@@ -905,6 +905,61 @@
       "note": "lead checker read from image: ref opens ~7 words early, ends at catchword 'INA.' +2",
       "checker": "lead session (Opus)",
       "written": "ed-69ee46ef6dd925d126f40e22-p581"
+    },
+    {
+      "round": 3,
+      "tcp": "A26190",
+      "book_id": "6990668a2ec9f7db5717ab11",
+      "cell": "English 1600-1699",
+      "page": 28,
+      "verdict": "ok",
+      "note": "lead checker read from image: ref opens 3 words early ('Quaere de hoc.'), ends at catchword 'But' +2",
+      "checker": "lead session (Opus)",
+      "written": "ed-6990668a2ec9f7db5717ab11-p28"
+    },
+    {
+      "round": 3,
+      "tcp": "A44323",
+      "book_id": "69cfa93f80eb0ccd3e739280",
+      "cell": "English 1600-1699",
+      "page": 101,
+      "verdict": "ok",
+      "note": "lead checker read from image: ref opens 4 words early, ends at catchword 'the' +2; colour scan of another copy, same edition",
+      "checker": "lead session (Opus)",
+      "written": "ed-69cfa93f80eb0ccd3e739280-p101"
+    },
+    {
+      "round": 3,
+      "tcp": "A66045",
+      "book_id": "69aec1f00767ad23dd0affb0",
+      "cell": "English 1600-1699",
+      "page": 64,
+      "verdict": "edge",
+      "note": "lead checker: bracketed table page; ref opens ~10 words from prior page, table reading order not a clean reference",
+      "checker": "lead session (Opus)",
+      "written": null
+    },
+    {
+      "round": 3,
+      "tcp": "A28378",
+      "book_id": "69ac7f0f20878c5c9ba524b5",
+      "cell": "English 1600-1699",
+      "page": 366,
+      "verdict": "ok",
+      "note": "lead checker read from image: ref opens with 7 words of prior letter's close, ends at catchword 'of' +3; another copy, same edition",
+      "checker": "lead session (Opus)",
+      "written": "ed-69ac7f0f20878c5c9ba524b5-p366"
+    },
+    {
+      "round": 3,
+      "tcp": "A64763",
+      "book_id": "6970e37d9b09d309d780a2c2",
+      "cell": "English 1600-1699",
+      "page": 61,
+      "verdict": "ok",
+      "note": "lead checker read from image: ref opens 4 words early, ends at catchword 'Trans-' +2; colour scan of another copy, same edition",
+      "checker": "lead session (Opus)",
+      "written": "ed-6970e37d9b09d309d780a2c2-p61"
     }
   ]
 }
