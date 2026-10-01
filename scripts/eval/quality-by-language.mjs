@@ -9,7 +9,7 @@
 // not per language). Neither joins the two by language, which is the point of this file.
 //
 //   node scripts/eval/quality-by-language.mjs [--audit scripts/eval/results/translation-corpus-audit-YYYY-MM-DD]
-// Writes src/data/quality-by-language.json.
+// Writes src/data/quality-by-language.json (src/data/* is gitignored: commit it with `git add -f`).
 
 import fs from 'node:fs';
 import path from 'node:path';
