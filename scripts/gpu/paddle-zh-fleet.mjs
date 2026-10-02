@@ -213,7 +213,10 @@ function tend(box) {
   // on every page applied from this box: re-collect on the box, with its serving env, before this cycle's apply
   const bj = readJson(path.join(F.boxes, box, 'box.json'), {});
   if (!DRY && bj.host && !bj.weights_sha256) {
-    gpu(box, 'ssh', [`cd /root/pz && ${isPod(box) ? 'BACKEND=server CLIENTS=8' : BOX_ENV} PV_WORK=/root/pz bash code/paddle-zh-box.sh collect > /dev/null 2>&1 || true`], { timeout: 900 });
+    // the env the box was STARTED with (its loop keeps it), never today's BOX_ENV: a box started before a BOX_ENV
+    // change (LAYOUT=0, #5600 job nolayout-5600e) would otherwise name a serving config it never ran. Boxes started
+    // before box_env was recorded all ran BACKEND=server CLIENTS=8.
+    gpu(box, 'ssh', [`cd /root/pz && ${b.box_env || 'BACKEND=server CLIENTS=8'} PV_WORK=/root/pz bash code/paddle-zh-box.sh collect > /dev/null 2>&1 || true`], { timeout: 900 });
     gpu(box, isPod(box) ? 'pullout' : 'pull', isPod(box) ? [F.out, path.join(F.boxes, box)] : [F.out], { timeout: 1800 });
     log(`${box}: box.json had no weights hash — re-collected (${readJson(path.join(F.boxes, box, 'box.json'), {}).weights_sha256 ? 'now recorded' : 'STILL MISSING'})`);
   }
@@ -232,6 +235,7 @@ function zoneShort(zone) {
   const r = spawnSync('bash', ['-c', `set -a; . /root/.scaleway.env; set +a; curl -s -H "X-Auth-Token: $SCALEWAY_SECRET_KEY" "https://api.scaleway.com/instance/v1/zones/${zone}/products/servers/availability?per_page=100"`], { encoding: 'utf8', timeout: 60000 });
   try { const a = JSON.parse(r.stdout).servers?.[TYPE]?.availability; return !a || a === 'shortage'; } catch { return false; }
 }
+const envStr = (env) => Object.entries(env).map(([k, v]) => `${k}=${v}`).join(' ');
 function startBox(box, env) {
   const tmp = path.join(DIR, 'empty.tsv'); fs.writeFileSync(tmp, '');
   const p = isPod(box) ? gpu(box, 'lane-push', [], { timeout: 900 }) : gpu(box, 'push', [tmp], { timeout: 600 });
@@ -250,7 +254,7 @@ function grow() {
     S.next_box++; save();
     const c = gpu(box, 'create', [], { env: { TYPE, ZONE: zone, LEASE_H: String(LEASE_H) }, timeout: 1500 });
     if (!c.ok) { log(`${box}: create in ${zone} failed: ${c.out.split('\n').slice(-2).join(' | ').slice(0, 300)}`); if (fs.existsSync(path.join(F.boxes, box, 'server-id'))) deleteBox(box, 'create half-failed'); continue; }
-    S.boxes[box] = { status: 'live', provider: 'scaleway', zone, type: TYPE, started: Math.floor(Date.now() / 1000) }; S.scw_short_since = null; save();
+    S.boxes[box] = { status: 'live', provider: 'scaleway', zone, type: TYPE, started: Math.floor(Date.now() / 1000), box_env: envStr(env) }; S.scw_short_since = null; save();
     log(`${box}: created in ${zone}; ${startBox(box, env)} (${BOX_ENV})`);
     feed(box);
     return;
@@ -268,7 +272,7 @@ function grow() {
     const c = gpu(pod, 'create', [], { env: { GPU: g, CLOUD: cloud, MINUTES: String(POD_MINUTES) }, timeout: 1200 });
     if (!c.ok) { log(`${pod}: RunPod ${g} ${cloud}: ${c.out.split('\n').pop().slice(0, 200)}`); if (fs.existsSync(path.join(DIR, 'runpod-pods', pod, 'pod-id'))) gpu(pod, 'terminate', [], { timeout: 300 }); S.boxes[pod].status = 'deleted'; save(); continue; }
     const t0 = +readText(path.join(DIR, 'runpod-pods', pod, 'created-at'));
-    S.boxes[pod] = { status: 'live', provider: 'runpod', type: `${g} ${cloud}`, started: t0, deadline: (t0 + POD_MINUTES * 60) * 1000 }; save();
+    S.boxes[pod] = { status: 'live', provider: 'runpod', type: `${g} ${cloud}`, started: t0, deadline: (t0 + POD_MINUTES * 60) * 1000, box_env: envStr({ ...env, CLIENTS: '8' }) }; save();
     log(`${pod}: RunPod ${g} ${cloud} (Scaleway short ${shortMin.toFixed(0)} min); ${startBox(pod, { ...env, CLIENTS: '8' })}`);
     feed(pod);
     return;
