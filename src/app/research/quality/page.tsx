@@ -42,6 +42,9 @@ const SOURCES = [
   { path: '.claude/docs/ocr-memorization-paper.md', what: 'Working paper on the memorisation subsidy: matched canonical and non-canonical passages on pages of the same books.' },
   { path: 'scripts/eval/experiments/2026-09-16-is-our-syriac-ocr-a-reading-of-the-page-4883.md', what: 'Syriac OCR against published Syriac and published English: wrong passages and text not in the Bible (#4883).' },
   { path: 'scripts/eval/results/quality-paper-stats-2026-10-01/report.md', what: 'Chance-corrected judge agreement, held-out screen performance and AUC, Wilson intervals on small counts, and the reader panel’s sample sizes (scripts/eval/quality-paper-stats.mjs).' },
+  { path: 'scripts/eval/experiments/2026-10-02-are-the-facts-translation-notes-add-right-5624.md', what: 'Facts added in notes, pilot: 40 Tibetan notes and the 21 audit pages with added facts, each claim checked against a source (#5624).' },
+  { path: 'scripts/eval/experiments/2026-10-02-note-facts-full-tibetan-run-5624.md', what: 'Facts added in notes, full count: all 359 candidate notes in the Tibetan run, seeded controls, author adjudication (#5624).' },
+  { path: 'scripts/eval/results/note-facts-full-2026-10-02-5624/corrections.json', what: 'The 18 wrong or partly wrong notes, each with its page, the correction and a source (examples in §4).' },
 ] as const;
 
 function N({ n }: { n: number }) {
@@ -991,6 +994,52 @@ const REFERENCE_LICENCES: { source: string; supplies: string; licence: string; u
   { source: '84000', supplies: 'Human English translations of the Tibetan canon', licence: 'To be confirmed from 84000’s permissions page', use: 'Scoring only until confirmed' },
 ];
 
+/* ── Wrong facts in notes: rows from corrections.json (#5640) ── */
+const NOTE_FACT_ERRORS: { book: string; page: number; href: string; note: string; right: string; source: string; sourceHref: string }[] = [
+  {
+    book: 'Phurdrup Gonpa Thor bu dPag bsam khri shing', page: 24, href: '/book/69e7ac955f1a22ab19aa9713?page=24',
+    note: '“Tibetan: dGa’ ba’i sde; Sanskrit: Harisena”',
+    right: 'Nandasena (“Joyful Army”). Hari is not “joy”.',
+    source: 'Sanskrit names list', sourceHref: 'https://s3-us-west-2.amazonaws.com/sgs-ore/pdf/sanskrit_names.pdf',
+  },
+  {
+    book: 'Neyphug Kanjur mDo sde Zha', page: 76, href: '/book/69e7abb55f1a22ab19a9cb7e?page=76',
+    note: '“Tibetan: ’Jig rten ’dzin; Sanskrit: Lokeshvara or Jagaddhara”',
+    right: 'Lokadhara, the interlocutor of Toh 174. Lokeśvara is ’jig rten dbang phyug, a different figure.',
+    source: '84000, Toh 174 glossary', sourceHref: 'https://84000.co/translation/toh174?part=glossary',
+  },
+  {
+    book: 'Neyphug Kanjur rGyud Tsha', page: 3, href: '/book/69e7abec5f1a22ab19aa0707?page=3',
+    note: '“Son of the Invincible”: “referring to Vishnu or a specific lineage”',
+    right: 'The son of Ajita (“the Invincible”) is the bodhisattva Maitreya, not Vishnu.',
+    source: 'Wikipedia, Maitreya', sourceHref: 'https://en.wikipedia.org/wiki/Maitreya',
+  },
+  {
+    book: 'mDo sde stag sna rgyas pa', page: 84, href: '/book/69e761e6cc48e59ad74f220f?page=84',
+    note: 'rgya gar (“in the language of India”): “literally: China”',
+    right: 'rgya gar is India. China is rgya nag.',
+    source: 'Wiktionary, rgya gar', sourceHref: 'https://en.wiktionary.org/wiki/%E0%BD%A2%E0%BE%92%E0%BE%B1%E0%BC%8B%E0%BD%82%E0%BD%A2',
+  },
+  {
+    book: 'Thadrak Kanjur ’Dul ba Tha', page: 26, href: '/book/69e7ab285f1a22ab19a93de3?page=26',
+    note: '“Me-skyes, Fire-born, referring to Jivaka Kumarabhritya”',
+    right: 'me skyes is Jyotiṣka. Jīvaka is ’tsho byed. The translation itself carries the same error.',
+    source: '84000, Vinaya glossary', sourceHref: 'https://read.84000.co/translation/toh1-6.html?part=glossary',
+  },
+  {
+    book: 'myur mdzad ye shes kyi mgon po phyag drug pa’i gtor chog', page: 23, href: '/book/69e7965680b52390feb195ab?page=23',
+    note: '“composed by the Great Siddha Drubchen Nyungpo”',
+    right: 'Khyungpo Naljor. The transcription reads byung po for khyung po, and the note follows it (partly wrong: the work is named correctly).',
+    source: 'Shangpa resource centre', sourceHref: 'https://www.shanpafoundation-resourcecenter.net/index.php?title=Khyung_pos_mdzad_pa%27i_bkra_shis_bka%27_rgya_ma',
+  },
+  {
+    book: 'Dus ’khor ’grel pa dpal gyi sgron me', page: 202, href: '/book/69e7619acc48e59ad74f091b?page=202',
+    note: 'Bull, Vessel and Sea-Monster of the southern group: “Taurus, Aquarius, Capricorn”',
+    right: 'Taurus, Virgo, Capricorn. Aquarius is already assigned to the West.',
+    source: 'Almanac, the twelve signs', sourceHref: 'https://www.almanac.com/12-astrology-zodiac-signs',
+  },
+];
+
 const cite = (key: string) => {
   const i = REFERENCES.findIndex(r => r.key === key);
   return <a href={`#ref-${key}`} className="text-accent-rust hover:underline">[{i + 1}]</a>;
@@ -1239,7 +1288,7 @@ export default function ResearchQualityPage() {
               <strong>Unreadable source filled with plausible content (6 pages, 5 major).</strong> Here the source cannot support the English. A page of the Herculaneum papyri facsimiles (1871) is almost blank in the scan, and its English is a paragraph of Epicurean theology. On a tenth-century manuscript of the Greek alchemists (Marcianus gr. 299), the passage on pounding gold ore in stone mortars (ὅλμοις λιθίνοις, legible in the scan) becomes sentences about laws, elders and purification. A Dunhuang Vinaya scroll whose transcription is garbled acquires a numbered fifteen-item list. All six are manuscripts, damaged pages or garbled transcriptions. This is the kind a reader cannot detect, because the English reads fluently.
             </li>
             <li>
-              <strong>Facts added in notes, headings and summaries (21 pages, 1 major).</strong> The translation of the page is sound, but a note, heading or summary states something the page does not. The translation prompt asks for explanatory notes in the manner of a museum label, so an added fact is by design. It is a defect only if it is wrong, and the judge, which sees only the page, cannot tell which. Examples: a first name (&ldquo;Samuel G. Fenton&rdquo; for &ldquo;Fenton, S. G.&rdquo;), an author and a date for a Korean poem collection, expansions of one-character Japanese place abbreviations, and a volume number in a running head. Some are right: the note naming Gemoll as the editor of the Homeric Hymns matches the edition&rsquo;s title. One is wrong on its face: a description of an illustration on a page that has none. Whether the rest are right is being checked against sources (#5624).
+              <strong>Facts added in notes, headings and summaries (21 pages, 1 major).</strong> The translation of the page is sound, but a note, heading or summary states something the page does not. The translation prompt asks for explanatory notes in the manner of a museum label, so an added fact is by design. It is a defect only if it is wrong, and the judge, which sees only the page, cannot tell which. Examples: a first name (&ldquo;Samuel G. Fenton&rdquo; for &ldquo;Fenton, S. G.&rdquo;), an author and a date for a Korean poem collection, expansions of one-character Japanese place abbreviations, and a volume number in a running head. Some are right: the note naming Gemoll as the editor of the Homeric Hymns matches the edition&rsquo;s title. One is wrong on its face: a description of an illustration on a page that has none. Whether the facts are right is taken up below.
             </li>
             <li>
               <strong>Bracketed glosses (4 pages, none major).</strong> Words the translator marked as its own, such as &ldquo;[Marriage] is the most happy&rdquo;. They are interpretive, but they are labelled.
@@ -1247,6 +1296,56 @@ export default function ResearchQualityPage() {
           </ul>
           <P>
             The two translation models differ mainly in the third kind. Flash added facts not on the page on 17 of the 21 pages, Flash-Lite on 4. On the other kinds they are close: 6 and 8 for page-boundary text, 4 and 2 for unreadable source. A separate paired run, which translated the same 304 pages with both models, points the same way. The judge flagged invention on 15.8% of Flash pages against 8.2% of Flash-Lite pages, with no measurable difference in the share rated 4 or 5.<N n={6} /> The invention rate above therefore overstates fabrication. Text with no source behind it was found on 6 of the 311 pages; page-boundary text on 14. An earlier pass over the same audit reached the same count of page-boundary imports (13).
+          </P>
+
+          <h3 id="note-facts" className="text-lg text-primary font-semibold mb-3 scroll-mt-24">Are the facts the notes add right?</h3>
+          <P>
+            The translation prompt (version 13) asks for explanatory notes. A note that names a person, gives the Sanskrit for a Tibetan name or identifies a work is therefore doing what it was asked to do. It is a defect only if the fact is wrong. We checked one run: the retranslation of the Tibetan collection by Gemini 3 Flash, 30,665 pages carrying 45,437 notes.<N n={15} />
+          </P>
+          <P>
+            <strong>Method.</strong> Most notes make no claim a source could settle. We kept the notes of at least 40 characters that carry a factual cue (a century, a founder, an author, a king, &ldquo;Sanskrit&rdquo;, &ldquo;known as&rdquo;): 359 notes from 197 books. A Claude model checked each claim on the web and marked it correct, wrong, partly wrong or unverifiable. A verdict of correct required a source URL; the sources were mainly the 84000 glossaries {cite('84000')}, Treasury of Lives and Wikipedia. To test the checkers, one false claim was planted in each batch, such as Samye &ldquo;founded in the 14th century&rdquo; or Yeshe Tsogyal as &ldquo;consort of Atiśa&rdquo;. All 16 were caught, as were all 7 in a 40-note pilot.<N n={14} /><N n={15} /> We then read every wrong and partly wrong verdict against its page and, where the call turned on the Tibetan, against the transcription. Five verdicts changed.<N n={15} />
+          </P>
+          <P>
+            <strong>Result.</strong> Of the 359 notes, 18 (5.0%) are wrong or partly wrong, and 11 (3.1%) are strictly wrong. They are spread over 17 books. Another 85 notes make no checkable claim, and 66 could not be decided; among the 274 that make a checkable claim the rate is 6.6%. An unverifiable note never counts as correct, so wrong notes may remain among the 66. Over all 45,437 notes in the run, the 18 are 0.04%. That is a floor, not a rate: the other 45,078 notes were not checked, and they include every short &ldquo;Sanskrit: X&rdquo; note, the shape of most of the errors found.<N n={15} />
+          </P>
+          <P>
+            Most of the errors are identifications: the Sanskrit for a Tibetan name (5 notes), who a person is (5), a guessed relation (2). Two follow a misreading in the transcription, and the other four include rgya gar glossed as &ldquo;China&rdquo; and a misassigned zodiac sign. None is a date. In the pilot the errors came where the note offered an equivalent the model was unsure of, such as an &ldquo;X or Y&rdquo; pair or a near-homophone; a note restating a standard identification was reliably right.<N n={14} /><N n={15} /> Where the transcription is wrong, correcting the note does not help, because the translation carries the same misreading.
+          </P>
+          <P>
+            <strong>A small sample ran high.</strong> The 40-note pilot found 6 wrong or partly wrong notes: 15%. The full set gives 5%. Part of the gap is design, since the pilot kept only notes with a checkable claim. The rest is chance: among the other 319 candidates, 12 of the 234 notes with a checkable claim were wrong or partly wrong (5.1%). The pilot&rsquo;s kind of error held up; its rate did not.<N n={14} /><N n={15} />
+          </P>
+          <div className="overflow-x-auto mb-6">
+            <table className="w-full text-sm text-secondary">
+              <caption className="text-left text-muted mb-2">Seven of the 18 wrong or partly wrong notes, with the page each is on.<N n={16} /></caption>
+              <thead>
+                <tr className="border-b border-light text-left text-muted">
+                  <th className="py-1.5 pr-4 font-medium">Page</th>
+                  <th className="py-1.5 pr-4 font-medium">The note says</th>
+                  <th className="py-1.5 pr-4 font-medium">What is right</th>
+                  <th className="py-1.5 font-medium">Source</th>
+                </tr>
+              </thead>
+              <tbody>
+                {NOTE_FACT_ERRORS.map(r => (
+                  <tr key={r.href} className="border-b border-light align-top">
+                    <td className="py-1.5 pr-4">
+                      <Link href={r.href} className="text-accent-rust hover:underline">{r.book}, p. {r.page}</Link>
+                    </td>
+                    <td className="py-1.5 pr-4">{r.note}</td>
+                    <td className="py-1.5 pr-4 text-primary">{r.right}</td>
+                    <td className="py-1.5">
+                      <a href={r.sourceHref} className="text-accent-rust hover:underline">{r.source}</a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <P>
+            <strong>The judge&rsquo;s invention flag is not a wrong-fact flag.</strong> The pilot also checked the claims on the 21 audit pages with added facts described above. Several of the flagged additions are correct: the note naming Gemoll as the editor of the Homeric Hymns (<Link href="/book/69938dc8d5a98fd66f42ed1b?page=346" className="text-accent-rust hover:underline">p. 346</Link>), and &ldquo;Book Three&rdquo; in a running head of Mercuriale&rsquo;s <em>De arte gymnastica</em> (<Link href="/book/69568909be7c607c5f03c44d?page=184" className="text-accent-rust hover:underline">p. 184</Link>). Some of the false claims are not about the world but about the page itself. The summary and keywords of a page of the Suda name Nicostratus, Nicon and Nicophon, who are not on it (<Link href="/book/69a99ce86c7545e2236e12de?page=757" className="text-accent-rust hover:underline">p. 757</Link>). A heading on a page of the <em>Wubei zhi</em> gives juan 139, part II; the page is juan 149, part I (<Link href="/book/6992ce7877d26f93217773a6?page=17" className="text-accent-rust hover:underline">p. 17</Link>). A note on a page of the <em>Yogini Hridaya</em> describes an illustration that is not there (<Link href="/book/69d7e24ce08c70307b76611e?page=350" className="text-accent-rust hover:underline">p. 350</Link>). Nine of the 21 pages carry at least one wrong or partly wrong claim. One page, of a Japanese slime-mould catalogue, holds 9 of the 16 such claims on Flash pages, so the sample is too small to compare Flash and Flash-Lite.<N n={14} /> A judge that serves readers needs a wrong-fact class checked against a reference. Claims about the page&rsquo;s own content can be checked against its transcription.
+          </P>
+          <P>
+            The 18 notes are being corrected in place (#5624). A separate fault, malformed note tags that put translated text inside a note so that it disappears when a reader hides notes, is tracked in #5644.<N n={14} />
           </P>
 
         </Section>
