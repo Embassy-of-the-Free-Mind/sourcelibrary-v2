@@ -7,6 +7,7 @@
 #
 #   POD=r4090 GPU="NVIDIA GeForce RTX 4090" CLOUD=COMMUNITY MINUTES=120 paddle-zh-runpod.sh create
 #   POD=r4090 paddle-zh-runpod.sh push | ssh <cmd> | pull <arm> | status | terminate
+#   fleet (#5600 lane): lane-push | lane-run | pullout <out dir> <box dir>
 # State: $LANE_DIR/runpod-pods/<POD>/{pod-id,name,created-at,cost-per-hr,gpu,cloud,driver.log,terminated-at}.
 # Progress (what the watchdog reads): $LANE_DIR/runpod/<pod id>/ — `pull` copies the pod's arm outputs there.
 # The API key comes from the environment (RUNPOD_API_KEY) and is never echoed.
@@ -60,6 +61,20 @@ push)
   rs "$LANE_DIR/bench/acc.tsv" "$LANE_DIR/bench/tput.tsv" POD:/root/pz/bench/
   rs "$LANE_DIR/bench/img" POD:/root/pz/bench/
   log "pushed code + bench" ;;
+lane-push)  # the fleet (#5600 lane): box scripts only — pages are fetched by the box from R2
+  sshp 'mkdir -p /root/pz/code /root/pz/queue && (command -v rsync >/dev/null || (apt-get -qq update && apt-get -qq install -y rsync libgl1 libglib2.0-0 python3-venv >/dev/null 2>&1))'
+  rs "$HERE/paddle-zh-box.sh" "$HERE/paddle-zh-run.py" "$HERE/paddle-vl-box.sh" POD:/root/pz/code/
+  log "pushed lane code" ;;
+lane-run)  # the queue loop; a container cannot power off its host — the Hetzner watchdog and the fleet end it
+  sshp "cd /root/pz; rm -f DONE job.exit; BACKEND=${BACKEND:-server} CLIENTS=${CLIENTS:-8} MAX_SIDE=${MAX_SIDE:-0} LAYOUT=${LAYOUT:-1} nohup bash -c 'bash code/paddle-zh-box.sh loop; echo exit=\$? > /root/pz/job.exit' > /root/pz/loop.log 2>&1 < /dev/null & echo launched" ;;
+pullout)  # pullout <out dir> <box dir>: page outputs (never overwriting) + box.json; touches the watchdog's progress dir on growth
+  OUT=${2:?out dir}; BD=${3:?box dir}; mkdir -p "$OUT" "$BD" "$LANE_DIR/runpod/$(pid)"
+  before=$(cat "$BD/pulled-n" 2>/dev/null || echo 0)
+  rs --ignore-existing POD:/root/pz/out/ "$OUT/" || true
+  rs POD:/root/pz/box.json POD:/root/pz/box.log "$BD/" 2>/dev/null || true
+  n=$(sshp 'find /root/pz/out -name "*.txt" -o -name "*.err" | wc -l' 2>/dev/null || echo "$before")
+  echo "$n" > "$BD/pulled-n"; [ "$n" -gt "$before" ] && date -u +%s > "$LANE_DIR/runpod/$(pid)/progress"
+  log "pulled; $n outputs on the pod" ;;
 ssh) shift; sshp "$@" ;;
 status) info | python3 -c 'import json,sys; d=json.load(sys.stdin); print({k: d.get(k) for k in ["id","name","desiredStatus","costPerHr","publicIp","portMappings","lastStartedAt"]})' ;;
 pull)  # pull <arm>: the arm's outputs into the progress dir and the bench arms dir

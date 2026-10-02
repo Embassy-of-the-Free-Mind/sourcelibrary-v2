@@ -118,6 +118,8 @@ loop() {
       [ $(( $(date +%s) - idle_since )) -ge $(( ${QUEUE_IDLE_MIN:-30} * 60 )) ] && { log "queue empty ${QUEUE_IDLE_MIN:-30} min — exiting"; break; }
       sleep 20; continue
     fi
+    # a retry chunk (the fleet's wave 3): the runner skips a page that has an .err, so move each row's aside
+    case $next in *-w3.tsv) while IFS=$'\t' read -r b p _; do if [ -e "$W/out/$b/$p.err" ]; then mv "$W/out/$b/$p.err" "$W/out/$b/$p.err.1"; fi; done < "$next"; log "retry chunk $(basename "$next"): .err moved aside" ;; esac
     INFER_HOURS=${INFER_HOURS:-24} infer "$next"
     mv "$next" "${next%.tsv}.done"; log "chunk $(basename "$next") done"; collect
     idle_since=$(date +%s)
