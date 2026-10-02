@@ -418,6 +418,9 @@ const PROFILE_CEILING = 10;
 const TYPEFACE = process.argv.includes('--typeface');
 const TYPEFACE_CEILING = 25;
 const TYPEFACE_METER = 200;
+// An image server that answers 429 to bursts (the BSB did, to most requests, at concurrency 8 in
+// the typeface pass) is asked last and more gently; everything else runs first at full speed.
+const GENTLE_HOSTS = { 'api.digitale-sammlungen.de': 2 };
 const PROFILE_CONCURRENCY = 8;
 const CJK_LANG = /chinese|japanese|korean|kanbun|tibetan/i;
 // Share of letters in Han, kana, Hangul or Tibetan blocks, over the first 4,000 characters.
@@ -538,12 +541,15 @@ async function profileDescribe(base) {
     return projected > TYPEFACE_CEILING ? `projected $${projected.toFixed(2)} ($${measured.toFixed(6)}/call over ${passCalls} calls, ${todo.length - n} left) is over the $${TYPEFACE_CEILING} ceiling (#5643 typeface) — stop` : null;
   };
   const limitArg = process.argv.find((a) => a.startsWith('--limit='));
-  const run = todo.slice(0, limitArg ? Number(limitArg.slice(8)) : Infinity);
+  const hostOf = (t) => { try { return new URL(t.image_url).host; } catch { return ''; } };
+  const run = todo.slice(0, limitArg ? Number(limitArg.slice(8)) : Infinity).sort((x, y) => (hostOf(x) in GENTLE_HOSTS) - (hostOf(y) in GENTLE_HOSTS));
   const out = fs.createWriteStream(dFile, { flags: 'a' });
   let n = 0;
   let metered = passCalls >= TYPEFACE_METER;
   for (let i = 0; i < run.length; i += 200) {
-    await mapLimit(run.slice(i, i + 200), PROFILE_CONCURRENCY, async (t) => {
+    const batch = run.slice(i, i + 200);
+    const gentle = Math.min(...batch.map((t) => GENTLE_HOSTS[hostOf(t)] ?? PROFILE_CONCURRENCY));
+    await mapLimit(batch, gentle, async (t) => {
       let row;
       try {
         const d = await describePage({ imageUrl: t.image_url, endpoint: 'scripts/eval/quality-covariates.mjs#corpus-profile', bookId: t.book_id, pageId: t.page_id });
