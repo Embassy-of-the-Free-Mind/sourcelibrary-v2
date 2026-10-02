@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-01",
+  "date": "2026-10-02",
   "issue": 5581,
   "reasons": "finishReason in RECITATION|PROHIBITED_CONTENT|SAFETY|BLOCKLIST|SPII|IMAGE_SAFETY with an empty output; else inferred (API engine, zero-byte output, reference ≥ 200 chars)",
   "strata": {
@@ -55,6 +55,29 @@
       },
       "tesseract-chi_tra_vert": {
         "outputs": 116,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      }
+    },
+    "chinese-cohort-5547": {
+      "gemini-3-flash-preview": {
+        "outputs": 540,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite": {
+        "outputs": 540,
+        "meter": true,
+        "refused": {
+          "chinese-cohort-5547-e2d4cb-p94": "RECITATION",
+          "chinese-cohort-5547-e58c29-p55": "RECITATION"
+        },
+        "inferred": []
+      },
+      "paddleocr-vl-1.6": {
+        "outputs": 540,
         "meter": false,
         "refused": {},
         "inferred": []
@@ -472,6 +495,60 @@
       "tesseract-syr": {
         "outputs": 29,
         "meter": false,
+        "refused": {},
+        "inferred": []
+      }
+    },
+    "syriac-gt": {
+      "gemini-3-flash-preview": {
+        "outputs": 40,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite": {
+        "outputs": 40,
+        "meter": true,
+        "refused": {
+          "jerusalem36-0003_SMMJ_00036__008": "RECITATION"
+        },
+        "inferred": []
+      },
+      "omnisyr": {
+        "outputs": 40,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "qoruyo-eastern": {
+        "outputs": 40,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "qoruyo-estrangela": {
+        "outputs": 40,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      },
+      "sophro-defaultseg": {
+        "outputs": 40,
+        "meter": false,
+        "refused": {},
+        "inferred": []
+      }
+    },
+    "syriac-print-loop": {
+      "gemini-3-flash-preview": {
+        "outputs": 8,
+        "meter": true,
+        "refused": {},
+        "inferred": []
+      },
+      "gemini-3.1-flash-lite": {
+        "outputs": 8,
+        "meter": true,
         "refused": {},
         "inferred": []
       }
