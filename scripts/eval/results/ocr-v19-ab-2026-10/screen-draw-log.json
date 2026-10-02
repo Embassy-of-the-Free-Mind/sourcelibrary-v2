@@ -1,0 +1,316 @@
+{
+ "seed": 4195,
+ "skipped": {
+  "screen": [
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e782d4d93c1f6007504deb",
+    "page_number": 29,
+    "langs": [
+     "Tibetan",
+     "Tibetan"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e782f2d93c1f60075057e6",
+    "page_number": 10,
+    "langs": [
+     "Tibetan",
+     "Tibetan"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69a5f460d4c2e3cf8ecb90a2",
+    "page_number": 627,
+    "langs": [
+     "Syriac",
+     "Syriac"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e782f2d93c1f60075057e6",
+    "page_number": 18,
+    "langs": [
+     "Tibetan",
+     "Tibetan"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e782f2d93c1f60075057e6",
+    "page_number": 28,
+    "langs": [
+     "Tibetan",
+     "Tibetan"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e787bc4a6785cfd60cd18f",
+    "page_number": 57,
+    "langs": [
+     "Tibetan",
+     "Tibetan"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e76200cc48e59ad74f2b83",
+    "page_number": 29,
+    "langs": [
+     "Tibetan",
+     "Tibetan"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69a5ed6d96d6dd816a56a840",
+    "page_number": 8,
+    "langs": [
+     "Syriac",
+     "Syriac"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e76180cc48e59ad74f00ef",
+    "page_number": 67,
+    "langs": [
+     "Tibetan",
+     "Tibetan"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69dfee89ce6bb8619e07f958",
+    "page_number": 40,
+    "langs": [
+     "Tibetan",
+     "Tibetan",
+     "Tibetan"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69a5ed3396d6dd816a569e2c",
+    "page_number": 631,
+    "langs": [
+     "Syriac",
+     "Syriac"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e76180cc48e59ad74f00ef",
+    "page_number": 68,
+    "langs": [
+     "Tibetan",
+     "Tibetan"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69920bb8e0a548a13d8851fc",
+    "page_number": 10,
+    "langs": [
+     "Syriac",
+     "Syriac"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69a5ed4896d6dd816a56a0b4",
+    "page_number": 9,
+    "langs": [
+     "Syriac",
+     "Syriac"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e76200cc48e59ad74f2b83",
+    "page_number": 50,
+    "langs": [
+     "Tibetan",
+     "Tibetan"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69a5ed4896d6dd816a56a0b4",
+    "page_number": 31,
+    "langs": [
+     "Syriac",
+     "Syriac"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e72cb6a409200ea79f54bc",
+    "page_number": 7,
+    "langs": [
+     "Syriac",
+     "Syriac"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69a5ea9a2c1720a023b0c9c0",
+    "page_number": 8,
+    "langs": [
+     "Syriac",
+     "Syriac"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e788d14a6785cfd60d1f07",
+    "page_number": 2,
+    "langs": [
+     "Tibetan",
+     "Tibetan"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e76200cc48e59ad74f2b83",
+    "page_number": 49,
+    "langs": [
+     "Tibetan",
+     "Tibetan"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69ae9cd3591c8449ffb83443",
+    "page_number": 14,
+    "langs": [
+     "Greek, Syriac",
+     "Latin",
+     "Latin"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e76180cc48e59ad74f00ef",
+    "page_number": 61,
+    "langs": [
+     "Tibetan",
+     "Tibetan"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e782d4d93c1f6007504deb",
+    "page_number": 14,
+    "langs": [
+     "Tibetan",
+     "Tibetan"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e782f2d93c1f60075057e6",
+    "page_number": 27,
+    "langs": [
+     "Tibetan",
+     "Tibetan"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e782f2d93c1f60075057e6",
+    "page_number": 3,
+    "langs": [
+     "Tibetan",
+     "Tibetan"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e782ded93c1f6007505127",
+    "page_number": 38,
+    "langs": [
+     "Tibetan",
+     "Tibetan"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e782f2d93c1f60075057e6",
+    "page_number": 14,
+    "langs": [
+     "Tibetan",
+     "Tibetan"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e72cb6a409200ea79f54bc",
+    "page_number": 12,
+    "langs": [
+     "Syriac",
+     "Syriac"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e782d4d93c1f6007504deb",
+    "page_number": 5,
+    "langs": [
+     "Tibetan",
+     "Tibetan"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e782ded93c1f6007505127",
+    "page_number": 8,
+    "langs": [
+     "Tibetan",
+     "Tibetan"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69a5ed6d96d6dd816a56a840",
+    "page_number": 10,
+    "langs": [
+     "Syriac",
+     "Syriac"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69a5ed4896d6dd816a56a0b4",
+    "page_number": 549,
+    "langs": [
+     "Syriac",
+     "Syriac"
+    ]
+   },
+   {
+    "reason": "tibetan-or-syriac",
+    "book_id": "69e77a2e0fc6fc955e35e455",
+    "page_number": 104,
+    "langs": [
+     "Tibetan",
+     "Tibetan"
+    ]
+   }
+  ]
+ },
+ "pool": {
+  "fabricated_4149": 409,
+  "v04_blank_page": 38
+ },
+ "resolved": 414,
+ "skipped_counts": {
+  "screen": {
+   "tibetan-or-syriac": 33
+  }
+ }
+}
