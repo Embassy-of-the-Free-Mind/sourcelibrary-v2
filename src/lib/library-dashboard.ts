@@ -28,6 +28,17 @@ export interface StepRow { live: number; hidden: number; pages_live: number; pag
 export interface PipelineDay { day: string; books: number; total: number | null; ocr: number | null; translated: number | null; funnel: Record<string, number | null> }
 export interface GeminiDay { day: string; ocr: number; translation: number; enrich: number; other: number; pagesOcr: number; pagesTranslated: number }
 
+/** Pages left in live books (#5599). A book whose source is dead, restricted or unreachable is counted, not costed. */
+export interface Finish { books: number; ocrPages: number; trPages: number; blockedBooks: number }
+/**
+ * Live editions clustered by work_id (#5599). Clustering under-merges, so `works` is an upper bound.
+ * `toOpen` works have no edition readable in English; their pages are those left in the edition with the fewest.
+ */
+export interface Works { works: number; editions: number; multiEdition: number; readable: number; toOpen: number; toOpenOcrPages: number; toOpenTrPages: number; unreachable: number }
+
+/** Model cost per page, low to high, September 2026 measured (ops spend report): OCR lite batch; translation lite batch to Flash. */
+export const RATES = { ocr: [0.00106, 0.00138], tr: [0.00058, 0.00174] } as const;
+
 export interface LibraryDashboard {
   generatedAt: Date | string;
   elapsedSec: number;
@@ -46,6 +57,9 @@ export interface LibraryDashboard {
   /** Added 2026-10-01 (second snapshot version); absent on a doc written by the first. */
   completion?: Completion;
   languagesAll?: LanguageAllRow[];
+  /** Added 2026-10-02 (#5599); absent on older docs. */
+  finish?: Finish;
+  works?: Works;
   pipeline: { days: PipelineDay[]; funnel: string[] };
   gemini: GeminiDay[];
 }

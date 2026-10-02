@@ -93,7 +93,7 @@ await withMongo(async (db) => {
   const libRows = await agg(LIVE, { _id: '$contributing_library', books: { $sum: 1 } }, [{ $sort: { books: -1 } }, { $limit: 11 }]);
   const libraries = libRows.filter(r => r._id).slice(0, 10).map(r => ({ name: r._id, books: r.books }));
   const noLibrary = (await books.countDocuments({ ...LIVE, $or: [{ contributing_library: null }, { contributing_library: { $exists: false } }] }));
-  const addedByMonth = (await books.aggregate([{ $match: LIVE }, { $project: { m: { $dateToString: { format: '%Y-%m', date: { $toDate: '$_id' } } }, pages_count: 1 } }, { $group: { _id: '$m', books: { $sum: 1 }, pages: { $sum: '$pages_count' } } }, { $sort: { _id: 1 } }], { allowDiskUse: true }).toArray())
+  const addedByMonth = (await books.aggregate([{ $match: LIVE }, { $project: { m: { $dateToString: { format: '%Y-%m', date: { $toDate: { $convert: { input: '$_id', to: 'objectId', onError: null, onNull: null } } }, onNull: null } }, pages_count: 1 } }, { $group: { _id: '$m', books: { $sum: 1 }, pages: { $sum: '$pages_count' } } }, { $sort: { _id: 1 } }], { allowDiskUse: true }).toArray())
     .filter(r => r._id >= '2025-11').map(r => ({ month: r._id, books: r.books, pages: r.pages }));
   const collections = (await db.collection('collections').find({ visible: true, collection_type: { $ne: 'visual_art' } }, { projection: { name: 1, slug: 1, book_count: 1, total_book_count: 1, artwork_count: 1 } }).sort({ total_book_count: -1 }).limit(10).toArray())
     .map(c => ({ name: c.name, slug: c.slug, texts: c.total_book_count || 0, readable: c.book_count || 0, art: c.artwork_count || 0 }));
@@ -103,7 +103,7 @@ await withMongo(async (db) => {
 
   // Next step per book (draft rule #5469), summarised: books and pages per step, live/hidden; OCR backlog by language (live).
   const cur = books.find(WITH_PAGES, { projection: {
-    content_type: 1, pages_count: 1, pages_archived: 1, pages_ocr: 1, pages_blank: 1, pages_translated: 1, pages_translatable: 1, visible: 1, language: 1, year: 1, translation_state: 1, summary: 1, chapters: { $slice: 1 },
+    content_type: 1, pages_count: 1, pages_archived: 1, pages_ocr: 1, pages_blank: 1, pages_translated: 1, pages_translatable: 1, visible: 1, language: 1, year: 1, work_id: 1, translation_state: 1, summary: 1, chapters: { $slice: 1 },
     'pipeline_auto.status': 1, 'pipeline_auto.hold': 1, 'pipeline_auto.archive_verdict': 1, 'pipeline_auto.error': 1, 'pipeline_auto.summary_skipped_reason': 1, 'pipeline_auto.chapters_skipped_reason': 1 } }).batchSize(5000);
   const steps = {}; const ocrByLang = {};
   // Per-book completion of LIVE books (what the totals hide): 20 bins of 5% for transcribed and translated share,
@@ -114,6 +114,12 @@ await withMongo(async (db) => {
   const grp = () => ({ books: 0, pages: 0, ocr: 0, translated: 0, sumOcrPct: 0, sumTrPct: 0, readable: 0, english: 0 });
   const addTo = (g, b, pctO, pctT) => { g.books++; g.pages += b.pages_count; g.ocr += b.pages_ocr || 0; g.translated += b.pages_translated || 0; g.sumOcrPct += pctO; g.sumTrPct += pctT; if (isReadable(b.translation_state)) g.readable++; if (b.translation_state?.english_original) g.english++; };
   const byLang = {}, byCent = {};
+  // What is left, in pages, for the public page's cost lines (#5599). A book whose source is dead,
+  // restricted or unreachable cannot be finished at any price, so it is counted apart, not costed.
+  // Works cluster editions by work_id (a book without one is its own work); a work still to open
+  // is one with no edition readable in English, costed at the edition with the fewest pages left.
+  const fin = { books: 0, ocrPages: 0, trPages: 0, blockedBooks: 0 };
+  const byWork = new Map();
   for await (const b of cur) {
     const step = nextStep(b);
     const live = b.visible === true;
@@ -133,6 +139,19 @@ await withMongo(async (db) => {
     else if (step.startsWith('translate')) pages = Math.max(0, translatable - (b.pages_translated || 0));
     steps[step] ??= { live: 0, hidden: 0, pages_live: 0, pages_hidden: 0 };
     const s = steps[step]; if (live) { s.live++; s.pages_live += pages; } else { s.hidden++; s.pages_hidden += pages; }
+    if (live && b.content_type !== 'artwork') {
+      const ts = b.translation_state || {};
+      const blocked = step.startsWith('blocked:source');
+      const o = ts.rung === 'no_text' || ts.rung === 'transcribing' ? Math.max(0, whole - (b.pages_ocr || 0)) : 0;
+      const t = ts.english_original ? 0 : Math.max(0, translatable - (b.pages_translated || 0));
+      if (blocked) fin.blockedBooks++;
+      else if (o + t > 0) { fin.books++; fin.ocrPages += o; fin.trPages += t; }
+      const key = b.work_id || `book:${b._id}`;
+      const w = byWork.get(key) ?? { n: 0, readable: false, best: null };
+      w.n++; if (isReadable(ts)) w.readable = true;
+      if (!blocked && (!w.best || o + t < w.best.o + w.best.t)) w.best = { o, t };
+      byWork.set(key, w);
+    }
     if (live && step === 'ocr') { const l = (b.language || 'unknown').split(/[ ,;(]/)[0]; ocrByLang[l] ??= { books: 0, pages: 0 }; ocrByLang[l].books++; ocrByLang[l].pages += pages; }
   }
   const ocrBacklog = Object.entries(ocrByLang).map(([name, v]) => ({ name, ...v })).sort((a, b) => b.pages - a.pages);
@@ -140,6 +159,13 @@ await withMongo(async (db) => {
   const languagesAll = Object.entries(byLang).map(([name, g]) => ({ name, ...finish(g) })).sort((a, b) => b.books - a.books);
   for (const row of byCentury) { const k = row.label === 'Before 1000' ? 'before' : [1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000][['11th c.', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th', '21st'].indexOf(row.label)]; Object.assign(row, byCent[k] ? finish(byCent[k]) : { ocr: 0, translated: 0, meanOcrPct: 0, meanTrPct: 0, readable: 0, english: 0 }); }
   const completion = { bins: BINS, ocr: hist.ocr, translated: hist.translated, books: hist.books };
+  const works = { works: byWork.size, editions: 0, multiEdition: 0, readable: 0, toOpen: 0, toOpenOcrPages: 0, toOpenTrPages: 0, unreachable: 0 };
+  for (const w of byWork.values()) {
+    works.editions += w.n; if (w.n > 1) works.multiEdition++;
+    if (w.readable) works.readable++;
+    else if (!w.best) works.unreachable++;
+    else { works.toOpen++; works.toOpenOcrPages += w.best.o; works.toOpenTrPages += w.best.t; }
+  }
   lap('next step, completion');
 
   // Pipeline history: last snapshot of each day since the record began (2026-02-19).
@@ -167,7 +193,7 @@ await withMongo(async (db) => {
     totals: { live: liveTotals, all: allTotals, readableLive: readable(ladderLive), readableAll: readable(ladderAll), held, feedbackOpen, visibleCollections },
     byLanguage, noLanguage, byCentury, yearMissing, ladder: { rungs: RUNGS, live: ladderLive, all: ladderAll }, statusLive, libraries, noLibrary, addedByMonth, collections,
     nextStep: { steps, ocrBacklog },
-    completion, languagesAll,
+    completion, languagesAll, finish: fin, works,
     pipeline: { days: pipelineDays, funnel: FUNNEL },
     gemini,
   };
