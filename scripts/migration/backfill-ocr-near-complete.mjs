@@ -207,6 +207,8 @@ async function main() {
       _id: 0, id: 1, title: 1, author: 1, year: 1,
       pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1,
       missing_ocr: 1, 'image_source.provider': 1,
+      // getOcrModelForBook reads these; without them every book routes as unknown script.
+      language: 1, visible: 1, created_at: 1,
     }},
   ]).toArray();
 
