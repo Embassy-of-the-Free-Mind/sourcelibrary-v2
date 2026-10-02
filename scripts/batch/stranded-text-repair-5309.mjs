@@ -86,7 +86,7 @@ const ENVELOPE_TAG = 'stranded-text-5309';
 const OCR_CALL_SITE = 'scripts/batch/bulk-reocr-local.mjs';
 const ACTIVE_JOB = ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'];
 const CAP = Number(val('cap', '265'));   // joint $310 with tingley-reread-5224 ($45), Derek 2026-09-30
-const OCR_RATE = Number(val('ocr-rate', '0.00225'));   // supabase-usage-logger's lite batch ceiling
+const OCR_RATE = Number(val('ocr-rate', '0.00225'));   // supabase-usage-logger's lite batch ceiling; flash Batch metered $0.00485/pg (2026-10-02)
 const TR_RATE = 0.0012;                                 // chained estimator ≈ 2× the $0.0006 measured
 const STATE = val('state', path.join(ROOT, 'scripts/output/stranded-text-repair-5309/state.json'));
 const LOG_DIR = path.dirname(STATE);
@@ -214,9 +214,13 @@ async function ocr(db) {
   const pages = picks.reduce((n, b) => n + ocrTargets(b).length, 0);
   const sp = await spend(db);
   const inflightTr = s.books.filter((b) => b.phase === 'tr_enrolled').reduce((n, b) => n + (b.tr_est || 0), 0);
+  // OCR already submitted is metered only when its batch is collected: count it, or a wave
+  // submitted on top of an uncollected one overshoots (2026-10-02 residual: flash metered 2.65×
+  // the planned rate while 2,000+ pages were still uncollected).
+  const inflightOcr = s.books.filter((b) => b.phase === 'ocr_submitted').reduce((n, b) => n + (b.residual_page_ids?.length ?? b.n), 0) * OCR_RATE;
   const add = pages * OCR_RATE;
-  log(`ocr: ${picks.length} books / ${pages} pages; envelope spent $${sp.usd.toFixed(2)} + open translation est $${inflightTr.toFixed(2)} + this wave at $${OCR_RATE}/pg = $${(sp.usd + inflightTr + add).toFixed(2)} vs cap $${CAP}`);
-  if (sp.usd + inflightTr + add > CAP) { log('ocr: CAP — not submitting'); s.cap_hit = new Date().toISOString(); saveState(s); return 0; }
+  log(`ocr: ${picks.length} books / ${pages} pages; envelope spent $${sp.usd.toFixed(2)} + open translation est $${inflightTr.toFixed(2)} + open OCR est $${inflightOcr.toFixed(2)} + this wave at $${OCR_RATE}/pg = $${(sp.usd + inflightTr + inflightOcr + add).toFixed(2)} vs cap $${CAP}`);
+  if (sp.usd + inflightTr + inflightOcr + add > CAP) { log('ocr: CAP — not submitting'); s.cap_hit = new Date().toISOString(); saveState(s); return 0; }
 
   // The project's File API storage (20 GB) fills when many batch inputs (≈40 MB each) are pending
   // at once — ours and other lanes'. Past ~200 open jobs of ours, wait for the collector.
