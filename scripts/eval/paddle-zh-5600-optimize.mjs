@@ -16,8 +16,17 @@
  *               CER − base CER), catastrophic rate, loops, empty, W/L/T vs base, throughput from the arm's
  *               box.json / timings, €/page; gate verdicts → results/paddle-zh-5600/optimize.json + a table.
  *
- *   node scripts/eval/paddle-zh-5600-optimize.mjs sample [--dir=/root/paddle-zh-5600/bench]
- *   node scripts/eval/paddle-zh-5600-optimize.mjs score  [--dir=...]
+ *   recall      body recall per arm (share of reference characters the reading contains, order-free — blind to
+ *               extra margin text by construction) and which arms keep the 版心 margin (<header>/<page-num> lines
+ *               after the lane writer's convertPaddle); paired Δ CER / recall of --pair=<a>,<b>. Reads the last
+ *               `score` run in <dir> → results/paddle-zh-5600/recall[-fresh].json + a table.
+ *   --fresh     (sample) the no-layout confirmation draw (prereg amendment 2026-10-02 ~21:40Z): same pool minus
+ *               the 100 drawn pages, the #5547 pilot books and every book the #5600 fleet applied; makeRng(56001)
+ *               → sample-fresh.json, acc.tsv only. `score`/`recall` take --sample=fresh to read it.
+ *
+ *   node scripts/eval/paddle-zh-5600-optimize.mjs sample [--dir=/root/paddle-zh-5600/bench] [--fresh]
+ *   node scripts/eval/paddle-zh-5600-optimize.mjs score  [--dir=...] [--sample=fresh]
+ *   node scripts/eval/paddle-zh-5600-optimize.mjs recall [--dir=...] [--sample=fresh] [--pair=nolayout,layout-on]
  * Arm metadata (written by the operator per arm): <dir>/arms/<arm>/arm.json
  *   { gpu: 'L4-1-24G', eur_per_hour: 0.7875, config: '…', tput: { pages, wall_secs } }
  */
@@ -27,6 +36,9 @@ import { execFileSync } from 'child_process';
 import { fileURLToPath } from 'url';
 import { makeRng } from './lib/paired-stats.mjs';
 import { loopVerdict } from '../lib/ocr-loop-guard.mjs';
+import { normalizeCJK } from './lib/metrics.mjs';
+import { stripMarkupTags } from '../lib/strip-markup-tags.mjs';
+import { convertPaddle, workTitleOf } from '../lib/paddle-zh-lane.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const argOf = (n, d) => { const a = process.argv.find(x => x.startsWith(`--${n}=`)); return a ? a.slice(n.length + 3) : d; };
@@ -40,7 +52,10 @@ const REG = JSON.parse(fs.readFileSync(path.join(__dirname, 'benchmark', 'chines
 const REFS_BUNDLE = path.join(__dirname, 'benchmark', 'refs', 'chinese-cohort-5547.refs.jsonl');
 const CLASS = path.join(__dirname, 'benchmark', 'script-class', 'chinese-cohort-5547.jsonl');
 const ANCHORS = ['gemini-3.1-flash-lite', 'gemini-3-flash-preview'];
-const N = 100, N_TPUT = 400, SEED = 5600;
+const N = 100, N_TPUT = 400, SEED = 5600, FRESH_SEED = 56001;
+const LANE_DIR = '/root/paddle-zh-5600';
+const FRESH = process.argv.includes('--fresh') || argOf('sample', '') === 'fresh';
+const SUFFIX = FRESH ? '-fresh' : '';
 const GATE = { delta: 0.01, catastrophic: 0.02 };
 const jsonl = f => fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map(l => JSON.parse(l));
 const median = xs => { const s = xs.filter(x => x != null).sort((a, b) => a - b); if (!s.length) return null; const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
@@ -49,14 +64,28 @@ const r4 = x => x == null ? null : +x.toFixed(4);
 function sample() {
   const refs = new Map(jsonl(REFS_BUNDLE).filter(r => r.text && r.text.trim()).map(r => [r.slug, r]));
   const cls = new Map(jsonl(CLASS).map(r => [r.slug, r.script_class]));
-  const pool = REG.pages.filter(p => !p.retired && p.cohort === 'held' && cls.get(p.slug) === 'manuscript-regular' && refs.has(p.slug)).map(p => p.slug).sort();
-  const rng = makeRng(SEED), bag = [...pool], slugs = [];
+  let pool = REG.pages.filter(p => !p.retired && p.cohort === 'held' && cls.get(p.slug) === 'manuscript-regular' && refs.has(p.slug)).map(p => p.slug).sort();
+  let note = null;
+  if (FRESH) {
+    // the no-layout confirmation (prereg amendment): never a page the 100 chose an arm on, never a pilot or fleet-applied book
+    const drawn = new Set(JSON.parse(fs.readFileSync(path.join(RES, 'sample.json'), 'utf8')).slugs);
+    const bookOf = new Map(REG.pages.map(p => [p.slug, p.book_id]));
+    const pilot = new Set(fs.readFileSync(path.join(LANE_DIR, 'pilot-books.txt'), 'utf8').split('\n').filter(Boolean));
+    const fleet = new Set(jsonl(path.join(LANE_DIR, 'applied-books.jsonl')).map(r => r.bid));
+    const notDrawn = pool.filter(s => !drawn.has(s) && !pilot.has(bookOf.get(s)));
+    const clean = notDrawn.filter(s => !fleet.has(bookOf.get(s)));
+    note = { not_drawn_not_pilot: notDrawn.length, also_not_fleet: clean.length, fleet_books_at_draw: fleet.size };
+    if (clean.length >= N) pool = clean;
+    else { pool = notDrawn; note.fleet_exclusion = `dropped: only ${clean.length} pages outside fleet-applied books; ${notDrawn.length - clean.length} of the pool are in books the fleet has written (their stored text is not read here, only the sealed image)`; }
+  }
+  const rng = makeRng(FRESH ? FRESH_SEED : SEED), bag = [...pool], slugs = [];
   while (slugs.length < N && bag.length) slugs.push(bag.splice(Math.floor(rng() * bag.length), 1)[0]);
   fs.mkdirSync(RES, { recursive: true });
-  fs.writeFileSync(path.join(RES, 'sample.json'), JSON.stringify({ issue: 5600, seed: SEED, drawn_at: new Date().toISOString(), rule: 'sealed chinese-cohort-5547 pages: cohort=held, eye manuscript-regular, with a reference text; slug-sorted, makeRng(5600) without replacement', pool: pool.length, slugs: slugs.sort() }, null, 1));
+  fs.writeFileSync(path.join(RES, `sample${SUFFIX}.json`), JSON.stringify({ issue: 5600, seed: FRESH ? FRESH_SEED : SEED, drawn_at: new Date().toISOString(), rule: 'sealed chinese-cohort-5547 pages: cohort=held, eye manuscript-regular, with a reference text; slug-sorted, makeRng(seed) without replacement' + (FRESH ? '; minus the 100 of sample.json, the #5547 pilot books and the #5600 fleet-applied books (prereg amendment 2026-10-02)' : ''), pool: pool.length, ...(note ? { exclusions: note } : {}), slugs: slugs.sort() }, null, 1));
   // the box manifests: accuracy pages, then the throughput set
   fs.mkdirSync(path.join(DIR, 'img', '_bench'), { recursive: true });
   const acc = slugs.sort().map(s => { const dst = path.join(DIR, 'img', '_bench', `${s}.jpg`); if (!fs.existsSync(dst)) fs.copyFileSync(path.join(BENCH, `${s}.jpg`), dst); return `_bench\t${s}\timg/_bench/${s}.jpg`; });
+  if (FRESH) { fs.writeFileSync(path.join(DIR, 'acc.tsv'), acc.join('\n') + '\n'); fs.writeFileSync(path.join(DIR, 'tput.tsv'), ''); console.log(`pool ${pool.length}; drew ${slugs.length}; ${JSON.stringify(note)}`); return; }
   const books = fs.readFileSync(path.join(PILOT, 'manifest.tsv'), 'utf8').split('\n').filter(l => l && !l.startsWith('_bench')).slice(0, N_TPUT);
   const tput = books.map(l => { const [bid, pn, rel] = l.split('\t'); const dst = path.join(DIR, rel); fs.mkdirSync(path.dirname(dst), { recursive: true }); if (!fs.existsSync(dst)) fs.copyFileSync(path.join(PILOT, rel), dst); return `${bid}\t${pn}\t${rel}`; });
   fs.writeFileSync(path.join(DIR, 'acc.tsv'), acc.join('\n') + '\n');
@@ -65,7 +94,7 @@ function sample() {
 }
 
 function score() {
-  const { slugs } = JSON.parse(fs.readFileSync(path.join(RES, 'sample.json'), 'utf8'));
+  const { slugs } = JSON.parse(fs.readFileSync(path.join(RES, `sample${SUFFIX}.json`), 'utf8'));
   const armsDir = path.join(DIR, 'arms');
   const arms = fs.existsSync(armsDir) ? fs.readdirSync(armsDir).filter(a => fs.existsSync(path.join(armsDir, a, 'out', '_bench'))).sort() : [];
   // a scorer root: <root>/chinese-cohort-5547/{<slug>.jpg, out/<arm>/<slug>.txt}
@@ -117,11 +146,64 @@ function score() {
   fs.mkdirSync(RES, { recursive: true });
   const excluded = { textless: scored.summary.textless.filter(s => slugs.includes(s)), ref_mismatch: scored.summary.ref_mismatch.filter(s => slugs.includes(s)) };
   console.log(`${slugs.length} sample pages; ${refd.length} with a usable reference; excluded ${JSON.stringify(excluded)}`);
-  fs.writeFileSync(path.join(RES, 'optimize.json'), JSON.stringify({ generated_at: new Date().toISOString(), gate: GATE, sample: slugs.length, scored_pages: refd.length, excluded, anchors: ANCHORS, prereg: 'scripts/eval/PREREGISTRATION-paddle-zh-optimize-5600.md', scorer: 'benchmark-score.mjs (--ref=base)', rows }, null, 1));
+  fs.writeFileSync(path.join(RES, `optimize${SUFFIX}.json`), JSON.stringify({ generated_at: new Date().toISOString(), gate: GATE, sample: slugs.length, scored_pages: refd.length, excluded, anchors: ANCHORS, prereg: 'scripts/eval/PREREGISTRATION-paddle-zh-optimize-5600.md', scorer: 'benchmark-score.mjs (--ref=base)', rows }, null, 1));
   console.log('| arm | config | GPU | s/page | €/page | median CER | Δ vs base | catastrophic | loops | empty | W/L/T vs base | gate |\n|---|---|---|---|---|---|---|---|---|---|---|---|');
   for (const r of rows) console.log(`| ${r.arm} | ${r.config} | ${r.gpu} | ${r.s_per_page ?? '—'} | ${r.eur_per_page ?? '—'} | ${r.median_cer} | ${r.delta_vs_base} | ${r.catastrophic}/${r.n} | ${r.loops} | ${r.empty} | ${r.wlt_vs_base ? r.wlt_vs_base.join('/') : '—'} | ${r.gate} |`);
 }
 
+// ── body recall + margin retention (prereg amendment 2026-10-02 ~21:40Z) ──
+// Recall = Σ_c min(n_hyp(c), n_ref(c)) / |ref| over Han characters (normalizeCJK after stripMarkupTags, 6,000-char
+// cap as the scorer). The scorer's kyūjitai→shinjitai fold is not applied: it exists for NDL's modern forms, and
+// here both the reading and the Kanripo reference are traditional. Extra text (the 版心 margin the reference
+// omits) cannot lower it; only body text missing or misread does.
+const hanNorm = t => normalizeCJK(stripMarkupTags(String(t || '')).normalize('NFC')).slice(0, 6000);
+function bagRecall(hyp, ref) {
+  const r = [...hanNorm(ref)]; if (!r.length) return null;
+  const c = new Map(); for (const ch of hanNorm(hyp)) c.set(ch, (c.get(ch) || 0) + 1);
+  let m = 0; for (const ch of r) { const n = c.get(ch); if (n) { m++; c.set(ch, n - 1); } }
+  return m / r.length;
+}
+function recall() {
+  const { slugs } = JSON.parse(fs.readFileSync(path.join(RES, `sample${SUFFIX}.json`), 'utf8'));
+  const root = path.join(DIR, 'score'), st = path.join(root, 'chinese-cohort-5547'), out = path.join(root, 'scored');
+  const scored = JSON.parse(fs.readFileSync(path.join(out, fs.readdirSync(out).find(f => f.startsWith('chinese-cohort-5547-'))), 'utf8'));
+  const byPage = new Map(scored.pages.map(p => [p.slug, p]));
+  const refd = slugs.filter(s => byPage.get(s)?.has_ref);
+  const refText = new Map(jsonl(REFS_BUNDLE).map(r => [r.slug, r.text]));
+  const title = new Map(REG.pages.map(p => [p.slug, p.title]));
+  const arms = fs.readdirSync(path.join(st, 'out')).filter(a => !ANCHORS.includes(a)).sort();
+  const read = (arm, s) => { const f = path.join(st, 'out', arm, `${s}.txt`); return fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : null; };
+  const cerOf = (s, arm) => { const e = byPage.get(s)?.engines?.[arm]; return e && !e.missing && e.cer != null ? e.cer : null; };
+  const per = {}, rows = [];
+  for (const arm of arms) {
+    per[arm] = {};
+    for (const s of refd) {
+      const t = read(arm, s);
+      const { stats } = convertPaddle(t || '', { workTitle: workTitleOf(title.get(s) || '') });
+      // fold strip read in any form: 四庫全書 / 欽定…, or the lane's anchors (kana lines, garbled 全書)
+      per[arm][s] = { recall: t == null ? 0 : bagRecall(t, refText.get(s)), cer: cerOf(s, arm), header: stats.header_lines, page_num: stats.page_num_lines, skqs: /四庫|全書/u.test(t || ''), juan: /^\s*卷[一二三四五六七八九十百上中下之首末0-9]+\s*$/mu.test(t || '') };
+    }
+    const v = Object.values(per[arm]);
+    rows.push({ arm, n: v.length, median_recall: r4(median(v.map(x => x.recall))), mean_recall: r4(v.reduce((a, x) => a + (x.recall ?? 0), 0) / v.length), recall_below_0_8: v.filter(x => (x.recall ?? 0) < 0.8).length, median_cer: r4(median(v.map(x => x.cer))), catastrophic: v.filter(x => x.cer == null || x.cer > 0.5).length, pages_with_header: v.filter(x => x.header > 0).length, pages_with_page_num: v.filter(x => x.page_num > 0).length, pages_with_skqs_strip: v.filter(x => x.skqs).length, pages_with_juan_line: v.filter(x => x.juan).length });
+  }
+  const pair = argOf('pair', '');
+  let paired = null;
+  if (pair) {
+    const [a, b] = pair.split(',');
+    if (!per[a] || !per[b]) { console.error(`--pair: arms ${a},${b} not both scored (have ${arms})`); process.exit(2); }
+    const dc = refd.map(s => (per[a][s].cer != null && per[b][s].cer != null) ? per[a][s].cer - per[b][s].cer : null).filter(d => d != null);
+    const dr = refd.map(s => per[a][s].recall - per[b][s].recall);
+    const w = dc.filter(d => d < -1e-9).length, l = dc.filter(d => d > 1e-9).length;
+    const ranked = refd.map(s => ({ slug: s, d_cer: per[a][s].cer != null && per[b][s].cer != null ? r4(per[a][s].cer - per[b][s].cer) : null, d_recall: r4(per[a][s].recall - per[b][s].recall) })).sort((x, y) => (x.d_cer ?? 9) - (y.d_cer ?? 9));
+    paired = { a, b, median_delta_cer: r4(median(dc)), median_delta_recall: r4(median(dr)), wlt_cer: [w, l, dc.length - w - l], biggest_wins: ranked.slice(0, 5), biggest_losses: ranked.filter(x => x.d_cer != null).slice(-5).reverse(), recall_drops_over_0_05: ranked.filter(x => x.d_recall < -0.05) };
+  }
+  fs.writeFileSync(path.join(RES, `recall${SUFFIX}.json`), JSON.stringify({ generated_at: new Date().toISOString(), prereg: 'scripts/eval/PREREGISTRATION-paddle-zh-optimize-5600.md (amendment 2026-10-02 ~21:40Z)', n: refd.length, rows, paired, pages: per }, null, 1));
+  console.log(`${refd.length} referenced pages\n| arm | median recall | mean recall | recall < 0.8 | median CER | catastrophic | header | page-num | 四庫全書 strip | juan line |\n|---|---|---|---|---|---|---|---|---|---|`);
+  for (const r of rows) console.log(`| ${r.arm} | ${r.median_recall} | ${r.mean_recall} | ${r.recall_below_0_8} | ${r.median_cer} | ${r.catastrophic} | ${r.pages_with_header} | ${r.pages_with_page_num} | ${r.pages_with_skqs_strip} | ${r.pages_with_juan_line} |`);
+  if (paired) console.log(JSON.stringify(paired, null, 1));
+}
+
 if (CMD === 'sample') sample();
 else if (CMD === 'score') score();
-else { console.error('usage: sample | score [--dir=…]'); process.exit(2); }
+else if (CMD === 'recall') recall();
+else { console.error('usage: sample [--fresh] | score [--sample=fresh] | recall [--sample=fresh] [--pair=a,b] [--dir=…]'); process.exit(2); }
