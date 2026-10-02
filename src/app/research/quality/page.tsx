@@ -5,6 +5,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import byLanguage from '@/data/quality-by-language.json';
 import ocrEvidence from '@/data/ocr-benchmark-evidence.json';
 import ErrorLadder from './ErrorLadder';
+import { KEY_FINDINGS } from './findings';
 
 // Every number on this page is embedded at build from a committed file in
 // scripts/eval/ (see SOURCES). No request-time fetch, so ISR cannot cache a
@@ -364,13 +365,7 @@ function Callout({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
-const KEY_FINDINGS: { figure: string; text: ReactNode; href: string }[] = [
-  { figure: '89%', text: <>of served pages rated faithful to their transcription by a model judge (CI 85–92); 71% for non-Latin scripts.</>, href: '#s4' },
-  { figure: '⅔', text: <>of translated pages are Latin, English or German, where transcription error is measured at 0.6–5.3%.</>, href: '#by-language' },
-  { figure: 'Greek', text: <>is the largest gap: a tenth of the library, 11% character error on the current engine, 75% rated faithful.</>, href: '#by-language' },
-  { figure: '13%', text: <>of translated pages (French, Italian, Dutch, Spanish) have no transcription measurement yet.</>, href: '#by-language' },
-  { figure: '0', text: <>results checked by a person who reads the language. A reader panel is preregistered.</>, href: '#s6' },
-];
+
 
 function KeyFindings() {
   return (
@@ -971,7 +966,7 @@ export default function ResearchQualityPage() {
 
         {/* ── Key findings and contents ── */}
         <section aria-label="Key findings" className="mb-8">
-          <h2 className="text-xs uppercase tracking-[0.16em] text-muted font-semibold mb-3">Key findings</h2>
+          <div className="flex flex-wrap items-baseline justify-between gap-2 mb-3"><h2 className="text-xs uppercase tracking-[0.16em] text-muted font-semibold">Key findings</h2><Link href="/research/quality/summary" className="text-sm text-accent-rust hover:underline">One-page summary, for printing</Link></div>
           <KeyFindings />
         </section>
         <Contents />
