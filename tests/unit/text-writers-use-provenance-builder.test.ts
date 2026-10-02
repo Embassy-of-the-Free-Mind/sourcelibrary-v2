@@ -31,6 +31,7 @@ const ALLOWED: Record<string, string> = {
   'scripts/lib/syriac-kraken-lane.mjs': 'Kraken (specialist, not Gemini) — its own engine block, checked by missingProvenance',
   'scripts/workers/syriac-kraken-lane.mjs': 'Kraken lane worker; the $set is built in scripts/lib/syriac-kraken-lane.mjs',
   'scripts/lib/ndl-koten-lane.mjs': 'NDL古典籍OCR (specialist, not Gemini) — its own engine block + content_hash per the #4613 specialist standard (#4925)',
+  'scripts/lib/paddle-zh-lane.mjs': 'PaddleOCR-VL (specialist, not Gemini) — its own engine block + content_hash, `paddle` checked by missingProvenance (#5600)',
   'scripts/maintenance/apply-reocr-verdicts.mjs': 'BDRC Tibetan models (specialist, not Gemini) — the template engine block',
   'scripts/import/ia-ocr-ingest.mjs': "the Internet Archive's own OCR, recorded in the `ia` block, not a Gemini read",
   'scripts/import/cdli-atf-source.mjs': "CDLI's published ATF transliteration",
