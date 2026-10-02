@@ -238,7 +238,7 @@ export default function QualitySummaryPage() {
             Source Library · Page quality · summary of the working paper · data as of {byLanguage.generated}
           </div>
           <h1 className="text-2xl md:text-3xl text-primary font-serif leading-tight text-balance">Does this English say what is printed on this leaf?</h1>
-          <p className="text-secondary mt-2 max-w-3xl text-sm leading-relaxed">
+          <p className="text-secondary mt-2 max-w-3xl text-sm print:text-[11px] leading-relaxed print:leading-snug">
             Source Library serves AI transcriptions and English translations of historical books in more than fifteen languages. A page is right for a reader only when three links hold. This summary gives how each link is measured, the results by language, and whether a book&rsquo;s date, the amount of text on a page or the scan&rsquo;s resolution explains the differences. All figures are observational, and no figure has yet been checked by a person who reads the source language.
           </p>
         </div>
@@ -264,7 +264,7 @@ export default function QualitySummaryPage() {
               <li key={f.figure} className="border border-light rounded bg-white/60 p-2.5 min-w-0 flex flex-col print:break-inside-avoid">
                 <div className="text-xl text-primary font-serif tabular-nums">{f.figure}</div>
                 <div className="text-xs text-secondary leading-snug flex-1">{f.text}</div>
-                <Link href={`${PAPER}${f.href}`} className="text-[11px] text-accent-rust hover:underline mt-1">Method →</Link>
+                <Link href={`${PAPER}${f.href}`} className="text-[11px] text-accent-rust hover:underline mt-1 print:hidden">Method →</Link>
               </li>
             ))}
           </ol>
@@ -303,7 +303,7 @@ export default function QualitySummaryPage() {
         </section>
 
         {/* ── by language ── */}
-        <section className="mb-5" aria-labelledby="by-language">
+        <section className="mb-5 print:mb-3" aria-labelledby="by-language">
           <H2 id="by-language" kicker="Results">Quality by language</H2>
           <div className="overflow-x-auto">
             <table className="w-full min-w-[640px] text-xs">
@@ -341,9 +341,9 @@ export default function QualitySummaryPage() {
         </section>
 
         {/* ── covariates ── */}
-        <section className="mb-5 print:break-before-page" aria-labelledby="covariates">
+        <section className="mb-5 print:mb-3" aria-labelledby="covariates">
           <H2 id="covariates" kicker="Confounding">Do date, text density or scan size explain it?</H2>
-          <p className="text-secondary text-sm leading-relaxed mb-3 max-w-3xl">
+          <p className="text-secondary text-sm print:text-[11px] leading-relaxed print:leading-snug mb-3 max-w-3xl">
             The languages differ in more than script. Their books differ in age, pages in how much text they carry, and scans in resolution. Each audited and benchmarked page was joined to all three. This analysis is exploratory and observational: nothing was randomised, and the audits over-sample non-Latin languages by design.
           </p>
 
