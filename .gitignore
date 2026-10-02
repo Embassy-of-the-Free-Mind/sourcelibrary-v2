@@ -70,6 +70,8 @@ src/data/*
 !src/data/shwep-bibliographies.ts
 !src/data/shwep-linked-bibliographies.ts
 !src/data/shwep-supplementary-works.ts
+!src/data/public-models.ts
+!src/data/model-usage-recent.json
 
 # User uploads and test files
 public/uploads/

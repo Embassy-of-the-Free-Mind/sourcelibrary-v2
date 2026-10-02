@@ -93,6 +93,7 @@ export interface FooterStrings {
   vision: string;
   census: string;
   progress: string;
+  models: string;
   research: string;
   researchNotes: string;
   privacy: string;
@@ -218,6 +219,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     vision: 'Our Vision',
     census: 'Translation Census',
     progress: 'Progress',
+    models: 'AI models',
     research: 'Research',
     researchNotes: 'Research Notes',
     privacy: 'Privacy',
@@ -250,6 +252,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     vision: 'Nuestra visión',
     census: 'Censo de traducciones',
     progress: 'Progreso',
+    models: 'Modelos de IA',
     research: 'Investigación',
     researchNotes: 'Notas de investigación',
     privacy: 'Privacidad',

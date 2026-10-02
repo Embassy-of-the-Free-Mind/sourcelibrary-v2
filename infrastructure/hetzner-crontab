@@ -107,6 +107,10 @@
 # vs attributed. Read-only except one ops_reports row (paid-vs-got-<day>, shown on /admin/spend)
 # and, on FAIL, one deduped GitHub issue. Exit 1 = FAIL, 2 = could not measure. No model call.
 10 6 * * * cd /root/sourcelibrary && [ -f scripts/audit/paid-vs-got.mjs ] && flock -n /tmp/sl-paid-vs-got.lock bash -c "set -a; source .env.production.local; set +a; GOOGLE_SERVICE_ACCOUNT_JSON=/root/.gcp/spend-reconcile.json node scripts/audit/paid-vs-got.mjs --apply" >> /var/log/sourcelibrary/paid-vs-got.log 2>&1
+# /about/models page counts (#5601): which engine's text every page carries, from page provenance.
+# A checkpointed walk over pages on a secondary (~1 h); writes one ops_reports row (model-usage).
+# Exit 3 = an engine wrote pages in the last 30 days that the page does not describe. No model call.
+40 3 * * 3 cd /root/sourcelibrary && [ -f scripts/audit/model-usage-snapshot.mjs ] && flock -n /tmp/sl-model-usage.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/model-usage-snapshot.mjs --apply" >> /var/log/sourcelibrary/model-usage.log 2>&1
 
 # CLIP index integrity (#5195, weekly Sunday 4:45am): does clip_embeddings still agree with
 # gallery_images? Counts drift (row names the wrong book), orphans (row names no gallery row)
