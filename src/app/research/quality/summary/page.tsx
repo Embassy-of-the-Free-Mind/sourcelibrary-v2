@@ -112,7 +112,7 @@ function Dots({ pts, series, scale }: { pts: Pt[]; series: Series[]; scale: Scal
 function Axis({ scale }: { scale: Scale }) {
   return (
     <svg viewBox={`0 0 ${W} 8`} className="w-full h-auto" aria-hidden="true">
-      {scale.ticks.map(([v, label]) => <text key={v} x={sx(scale, v)} y={6} textAnchor="middle" fontSize="5.5" fill="var(--text-muted)">{label}</text>)}
+      {scale.ticks.map(([v, label], i) => <text key={v} x={sx(scale, v)} y={6} textAnchor={i === 0 ? 'start' : i === scale.ticks.length - 1 ? 'end' : 'middle'} fontSize="5.5" fill="var(--text-muted)">{label}</text>)}
     </svg>
   );
 }
@@ -231,8 +231,9 @@ export default function QualitySummaryPage() {
 
   return (
     <main className="bg-cream min-h-screen print:bg-white">
-      <article className="max-w-5xl mx-auto px-4 py-10 print:py-0 print:px-0 text-[13px] print:text-[12px] leading-snug">
-        <header className="border-b border-light pb-4 mb-5">
+      <article className="max-w-5xl mx-auto px-4 py-10 print:py-0 print:px-0 text-[13px] print:text-[11px] leading-snug">
+        {/* div, not <header>/<footer>: globals.css hides those in print, which dropped v1's title from the sheet */}
+        <div className="border-b border-light pb-4 mb-5 print:pb-2 print:mb-3">
           <div className="text-xs uppercase tracking-[0.16em] text-muted font-semibold mb-2">
             Source Library · Page quality · summary of the working paper · data as of {byLanguage.generated}
           </div>
@@ -240,7 +241,7 @@ export default function QualitySummaryPage() {
           <p className="text-secondary mt-2 max-w-3xl text-sm leading-relaxed">
             Source Library serves AI transcriptions and English translations of historical books in more than fifteen languages. A page is right for a reader only when three links hold. This summary gives how each link is measured, the results by language, and whether a book&rsquo;s date, the amount of text on a page or the scan&rsquo;s resolution explains the differences. All figures are observational, and no figure has yet been checked by a person who reads the source language.
           </p>
-        </header>
+        </div>
 
         {/* ── the chain ── */}
         <section className="mb-5" aria-label="The three links">
@@ -272,7 +273,7 @@ export default function QualitySummaryPage() {
         {/* ── methods in brief ── */}
         <section aria-labelledby="methods" className="mb-5 border border-light rounded bg-white/60 p-3 md:p-4 print:break-inside-avoid">
           <H2 id="methods" kicker="For the statistician">Methods in brief</H2>
-          <dl className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 text-xs m-0">
+          <dl className="grid grid-cols-1 md:grid-cols-2 print:grid-cols-2 gap-x-6 gap-y-2 print:gap-y-1 text-xs print:text-[10.5px] m-0">
             <div>
               <dt className="text-primary font-semibold">Unit</dt>
               <dd className="text-secondary m-0">One text page per book, drawn at random from the book&rsquo;s middle (15–95% of its pages) among machine-translated, unedited pages with at least 200 transcribed characters. Title pages, indexes, plates and blanks are excluded. A book counts once across audits (its earliest verdict), so n is books.</dd>
@@ -346,7 +347,7 @@ export default function QualitySummaryPage() {
             The languages differ in more than script. Their books differ in age, pages in how much text they carry, and scans in resolution. Each audited and benchmarked page was joined to all three. This analysis is exploratory and observational: nothing was randomised, and the audits over-sample non-Latin languages by design.
           </p>
 
-          <ol className="list-none p-0 m-0 mb-4 grid gap-2 grid-cols-1 md:grid-cols-3">
+          <ol className="list-none p-0 m-0 mb-4 grid gap-2 grid-cols-1 md:grid-cols-3 print:grid-cols-3">
             <li className="border-l-2 border-accent-rust pl-2.5">
               <div className="text-primary font-semibold text-xs">Script, not date, density or scan size, carries the translation gap.</div>
               <div className="text-xs text-secondary">Adjusted odds of a faithful rating for non-Latin scripts: {nonLatin.odds_ratio.toFixed(2)} ({nonLatin.ci[0].toFixed(2)}–{nonLatin.ci[1].toFixed(2)}), n = {reg.n}. Every other term&rsquo;s interval spans 1. The low-resolution dip ({lowRes && pct(lowRes.rate ?? 0)}, n = {lowRes?.n}) is mostly non-Latin pages ({lowRes?.non_latin} of {lowRes?.n}){lowResOr && <>; adjusted odds ratio {lowResOr.odds_ratio.toFixed(2)} ({lowResOr.ci[0].toFixed(2)}–{lowResOr.ci[1].toFixed(2)})</>}.</div>
@@ -365,7 +366,7 @@ export default function QualitySummaryPage() {
             <h3 className="text-sm text-primary font-semibold m-0">Translation: share rated faithful by the judge (4 or 5 of 5), by script</h3>
             <Legend series={T_SERIES} />
           </div>
-          <div className="grid gap-x-5 gap-y-3 grid-cols-1 md:grid-cols-3 mb-4">
+          <div className="grid gap-x-5 gap-y-3 grid-cols-1 md:grid-cols-3 print:grid-cols-3 mb-4">
             <Panel title="By the book’s date" rows={rateRows(t.by_period, PERIOD_LABEL)} series={T_SERIES} scale={RATE_SCALE} />
             <Panel title="By characters on the page (thirds)" rows={rateRows(t.by_chars, CHAR_LABEL)} series={T_SERIES} scale={RATE_SCALE} />
             <Panel title="By scan long edge (px)" rows={rateRows(t.by_resolution, RES_LABEL)} series={T_SERIES} scale={RATE_SCALE} note={<>{t.n} books. Count shown is rated faithful / books.</>} />
@@ -375,13 +376,13 @@ export default function QualitySummaryPage() {
             <h3 className="text-sm text-primary font-semibold m-0">Transcription: median character error, Flash-Lite, against a published text (log scale)</h3>
             <Legend series={O_SERIES} />
           </div>
-          <div className="grid gap-x-5 gap-y-3 grid-cols-1 md:grid-cols-3 mb-2">
+          <div className="grid gap-x-5 gap-y-3 grid-cols-1 md:grid-cols-3 print:grid-cols-3 mb-2">
             <Panel title="By the book’s date" rows={cerRows('by_period', PERIOD_LABEL, ['Latin', 'Greek'])} series={O_SERIES.slice(0, 2)} scale={CER_SCALE} note={<>Chinese is left out: {at(cov.ocr.lite.within_script.Han.by_period, 'unknown')?.n} of its {cov.ocr.lite.within_script.Han.n} pages carry no catalogue date.</>} />
             <Panel title="By characters on the page (thirds within script)" rows={cerRows('by_chars', CHAR_LABEL, ['Latin', 'Greek', 'Han'])} series={O_SERIES} scale={CER_SCALE} note={<>Thirds cut at {la.char_cuts.join(' / ')} (Latin), {gk.char_cuts.join(' / ')} (Greek), {cov.ocr.lite.within_script.Han.char_cuts.join(' / ')} (Chinese) characters.</>} />
             <Panel title="By scan long edge (px)" rows={cerRows('by_resolution', RES_LABEL, ['Latin', 'Greek', 'Han'])} series={O_SERIES} scale={CER_SCALE} note={<>&ldquo;External scan&rdquo;: reference pages from Wikisource or pinned editions, not Source Library images. Cells under five pages are omitted.</>} />
           </div>
 
-          <div className="mt-4 grid gap-4 grid-cols-1 md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] items-start">
+          <div className="mt-4 grid gap-4 grid-cols-1 md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] print:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] items-start">
             <div className="min-w-0">
               <h3 className="text-sm text-primary font-semibold mb-1">One model: odds of a faithful rating</h3>
               <div className="overflow-x-auto">
@@ -433,12 +434,12 @@ export default function QualitySummaryPage() {
           </div>
         </section>
 
-        <footer className="border-t border-light pt-3 text-xs text-muted flex flex-wrap gap-x-5 gap-y-1">
+        <div className="border-t border-light pt-3 text-xs text-muted flex flex-wrap gap-x-5 gap-y-1">
           <span>Full working paper, methods and sources: <Link href={PAPER} className="text-accent-rust hover:underline">sourcelibrary.org/research/quality</Link></span>
           <span>Data: src/data/quality-by-language.json, src/data/quality-covariates.json ({cov.generated})</span>
           <span>Code: scripts/eval in the public repository (AGPL)</span>
           <span>team@sourcelibrary.org</span>
-        </footer>
+        </div>
       </article>
     </main>
   );
