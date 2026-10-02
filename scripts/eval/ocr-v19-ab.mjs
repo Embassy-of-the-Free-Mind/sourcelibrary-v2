@@ -25,7 +25,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
-import { bodyText, declaredBlank } from './blank-page-study.mjs';
+import { bodyText, declaredBlank, TAGGED } from './blank-page-study.mjs';
 import { makeRng, binomTwoSided, mean } from './lib/paired-stats.mjs';
 import {
   SEED, MODEL, V04, REF_5250, readJsonl, writeJsonl, r4, shuffle, letters, makeResolver, loadPrompts,
@@ -480,13 +480,17 @@ function stageScore191() {
   if (stampPages.length !== 20) throw new Error(`stamp pages ${stampPages.length}, expected 20`);
   const stamp = { pages: stampPages.length, scored_pages: 0, arms: {}, per_page: [] };
   const scored = stampPages.filter((p) => words[p.uid]); stamp.scored_pages = scored.length;
-  const hit = (p, arm, k) => { const r = reads.get(`${arm}:${p.uid}:${k}`); if (!r?.text) return 0; const b = fold(bodyText(r.text)); return words[p.uid].some((w) => b.includes(fold(w))) ? 1 : 0; };
+  // Post hoc (found after D was scored): bodyText's generic `<[^>]+>` strip reads the centring markers `->LINE<-` as a tag,
+  // so `<- BS 100 1912 Cop. 2 ->` between two centred lines is deleted. `body_loose` strips only real tags and the markers.
+  const bodyLoose = (t) => (t || '').replace(TAGGED, ' ').replace(/<\/?[a-z][\w-]*(\s[^>]*)?>/gi, ' ').replace(/->|<-/g, ' ');
+  const hit = (p, arm, k, body = bodyText) => { const r = reads.get(`${arm}:${p.uid}:${k}`); if (!r?.text) return 0; const b = fold(body(r.text)); return words[p.uid].some((w) => b.includes(fold(w))) ? 1 : 0; };
   for (const arm of ALL) {
-    let h = 0, n = 0; for (const p of scored) for (let k = 1; k <= K; k++) { n++; h += hit(p, arm, k); }
-    stamp.arms[arm] = { runs: n, captured: h, share: r4(h / n), false_blank: r4(mean(stampPages.map((p) => val(p, arm, 'false_blank')))) };
+    let h = 0, hl = 0, n = 0; for (const p of scored) for (let k = 1; k <= K; k++) { n++; h += hit(p, arm, k); hl += hit(p, arm, k, bodyLoose); }
+    stamp.arms[arm] = { runs: n, captured: h, share: r4(h / n), captured_body_loose_post_hoc: hl, share_body_loose_post_hoc: r4(hl / n), false_blank: r4(mean(stampPages.map((p) => val(p, arm, 'false_blank')))) };
   }
+  const sumK = (p, a, body) => [1, 2, 3].map((k) => hit(p, a, k, body)).reduce((s, x) => s + x, 0);
   for (const p of scored) stamp.per_page.push({ uid: p.uid, link: `https://sourcelibrary.org/book/${p.book_id}?page=${p.page_number}`, words: words[p.uid],
-    captured: Object.fromEntries(ALL.map((a) => [a, [1, 2, 3].map((k) => hit(p, a, k)).reduce((s, x) => s + x, 0)])) });
+    captured: Object.fromEntries(ALL.map((a) => [a, sumK(p, a, bodyText)])), captured_body_loose_post_hoc: Object.fromEntries(ALL.map((a) => [a, sumK(p, a, bodyLoose)])) });
 
   const firstText = (p, arm) => { for (let k = 1; k <= K; k++) { const r = reads.get(`${arm}:${p.uid}:${k}`); if (r?.text) return r.text; } return ''; };
   const examples = [];
