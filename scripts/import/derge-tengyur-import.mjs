@@ -97,7 +97,8 @@ const ETEXT_FILES = fs.readdirSync(path.join(ETEXT, 'text')).filter((f) => f.end
 if (ETEXT_FILES.length !== N_VOLUMES) throw new Error(`expected ${N_VOLUMES} e-text volumes, found ${ETEXT_FILES.length}`);
 
 let volumes;
-if (args.all) volumes = Array.from({ length: N_VOLUMES }, (_, i) => i + 1);
+if (args['map-volumes']) volumes = [];
+else if (args.all) volumes = Array.from({ length: N_VOLUMES }, (_, i) => i + 1);
 else if (args.volumes) volumes = String(args.volumes).split(',').map(Number);
 else throw new Error('pass --volumes=1,40 or --all');
 
@@ -198,7 +199,7 @@ function yigdzinRead(dir) {
     for (const f of todo) fs.symlinkSync(path.join(dir, f), path.join(batch, f));
   }
   execFileSync(path.join(YIG_APP, 'venv/bin/python'), ['cli.py', '--model', `${YIG_MODEL}/`, '--folder', batch, '--output', out, '--encoding', 'unicode', '--line-mode', 'line'],
-    { cwd: YIG_APP, env: { ...process.env, QT_QPA_PLATFORM: 'offscreen' }, stdio: ['ignore', 'ignore', 'pipe'], timeout: 30 * 60 * 1000 });
+    { cwd: YIG_APP, env: { ...process.env, QT_QPA_PLATFORM: 'offscreen' }, stdio: ['ignore', 'ignore', 'pipe'], timeout: Math.max(30 * 60 * 1000, todo.length * 90 * 1000) }); // ~40 s/read on a loaded box
   fs.rmSync(batch, { recursive: true, force: true });
   return out;
 }
@@ -280,8 +281,71 @@ function volumeTitle(vol, file) {
   return `${C.titleBo} ${section}${letter ? ` ${letter}` : ''} (${C.titleEn}, vol. ${vol})`;
 }
 
+/**
+ * Measure which scan volume holds which e-text volume (C.measureVolumeMap). One read from the middle
+ * of every scan volume is located against the e-text volumes within ±4 of its prior; the e-text
+ * volume it matches (identity ≥ informativeFloor and ≥ minMargin over the best other volume) is the
+ * pairing. Volumes with no confident read are left out of the map, and importVolume refuses them.
+ */
+async function mapVolumes() {
+  const f = path.join(WORK, 'volume-map.json');
+  if (fs.existsSync(f) && !args['remap']) return JSON.parse(fs.readFileSync(f, 'utf8'));
+  await igFor(1); // resolves igMap
+  const dir = path.join(WORK, 'samples', 'volume-map');
+  fs.mkdirSync(dir, { recursive: true });
+  const scanVols = Object.keys(igMap).map(Number).sort((a, b) => a - b);
+  for (const sv of scanVols) {
+    const cs = (await manifestFor(igMap[sv])).sequences[0].canvases.filter((c) => c.images?.[0]?.resource);
+    const ci = Math.floor(cs.length * 0.43);
+    const jf = path.join(dir, `s${String(sv).padStart(3, '0')}_c${ci}.jpg`);
+    if (!fs.existsSync(jf)) fs.writeFileSync(jf, Buffer.from(await (await fetchRetry(`${imageServiceOf(cs[ci])}/full/${C.readSize}/0/default.jpg`)).arrayBuffer()));
+  }
+  const out = yigdzinRead(dir);
+  const parsed = new Map();
+  const pagesOf = (ev) => { if (!parsed.has(ev)) parsed.set(ev, parseVolume(fs.readFileSync(path.join(ETEXT, 'text', ETEXT_FILES[ev - 1]), 'utf8'))); return parsed.get(ev); };
+  const map = { measured_at: new Date().toISOString(), engine: READ_ENGINE, rule: 'one read per scan volume located against e-text volumes within ±4 of the prior; pair when identity ≥ 0.4 and ≥ 0.25 over the best other volume', pairs: {}, evidence: {} };
+  for (const tf of fs.readdirSync(out).filter((x) => x.endsWith('.txt'))) {
+    const sv = Number(tf.match(/^s(\d+)/)[1]);
+    const text = fs.readFileSync(path.join(out, tf), 'utf8');
+    const prior = Array.from({ length: N_VOLUMES }, (_, i) => i + 1).find((ev) => C.scanVolumeFor(ev) === sv) ?? sv;
+    const cands = Array.from({ length: 9 }, (_, k) => prior - 4 + k).filter((ev) => ev >= 1 && ev <= N_VOLUMES);
+    const scored = cands.map((ev) => ({ ev, ...locateRead(text, pagesOf(ev)) })).sort((a, b) => b.identity - a.identity);
+    const [best, second] = scored;
+    const ok = best && best.read_syllables >= ALIGN_RULES.minReadSyllables && best.identity >= ALIGN_RULES.informativeFloor && best.identity - (second?.identity ?? 0) >= ALIGN_RULES.minMargin;
+    map.evidence[sv] = { read: tf, best: best && { etext: best.ev, side: best.side, identity: best.identity }, runner_up: second && { etext: second.ev, identity: second.identity }, paired: !!ok };
+    if (ok) {
+      if (map.pairs[best.ev]) { log(`map: e-text ${best.ev} claimed by scan ${map.pairs[best.ev]} and ${sv} — dropping both`); map.evidence[sv].paired = false; map.evidence[map.pairs[best.ev]].paired = false; map.pairs[best.ev] = null; continue; }
+      map.pairs[best.ev] = sv;
+    }
+    log(`map: scan vol ${sv} → e-text ${ok ? best.ev : 'NONE'} (best ${best?.ev} ${best?.identity}, next ${second?.ev} ${second?.identity})`);
+  }
+  for (const k of Object.keys(map.pairs)) if (map.pairs[k] == null) delete map.pairs[k];
+  fs.writeFileSync(f, JSON.stringify(map, null, 1));
+  return map;
+}
+
+let volumeMap = null;
+async function scanVolumeOf(vol) {
+  if (!C.measureVolumeMap) return C.scanVolumeFor(vol);
+  volumeMap ||= await mapVolumes();
+  if (volumeMap.pairs[vol]) return volumeMap.pairs[vol];
+  // No confident single read for this volume (a lone read is often weak on this red-ink print). Fall
+  // back to a prior that no measured pair has taken: the README prior, then the same number, then the
+  // one free scan volume within ±2. This is a CANDIDATE only — index mode then locates the volume's own
+  // reads in this e-text (measureOffset) and verifies them (measure), so a wrong pairing is refused.
+  // Measured 2026-10-02: every confident pair is N→N except e-text 100/101/102 ↔ scan 101/102/100.
+  const taken = new Set(Object.values(volumeMap.pairs).map(Number));
+  const free = (sv) => sv >= 1 && sv <= N_VOLUMES && !taken.has(sv);
+  // A free neighbour that is another unpaired volume's own prior is that volume's, not ours.
+  const priorOfOther = (sv) => Array.from({ length: N_VOLUMES }, (_, i) => i + 1).some((u) => u !== vol && !volumeMap.pairs[u] && (u === sv || C.scanVolumeFor(u) === sv));
+  const near = [vol - 2, vol - 1, vol + 1, vol + 2].filter((sv) => free(sv) && !priorOfOther(sv));
+  const sv = [C.scanVolumeFor(vol), vol].find(free) ?? (near.length === 1 ? near[0] : null);
+  if (!sv) throw new Error(`e-text volume ${vol}: no scan volume measured or free to try (volume-map.json) — refusing to guess`);
+  return sv;
+}
+
 async function importVolume(db, vol) {
-  const scanVol = C.scanVolumeFor(vol);
+  const scanVol = await scanVolumeOf(vol);
   const ig = await igFor(scanVol);
   const file = ETEXT_FILES[vol - 1];
   if (Number(file.slice(0, 3)) !== vol) throw new Error(`e-text file ${file} is not volume ${vol}`);
@@ -474,6 +538,11 @@ async function importVolume(db, vol) {
   return v;
 }
 
+if (args['map-volumes']) {
+  const m = await mapVolumes();
+  log(`volume map: ${Object.keys(m.pairs).length} of ${N_VOLUMES} e-text volumes paired; mismatched: ${JSON.stringify(Object.entries(m.pairs).filter(([e, sv]) => Number(e) !== sv))}`);
+  process.exit(0);
+}
 const client = new MongoClient(process.env.MONGODB_URI);
 await client.connect();
 const db = client.db('bookstore');

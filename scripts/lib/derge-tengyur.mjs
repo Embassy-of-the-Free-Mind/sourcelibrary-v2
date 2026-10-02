@@ -311,6 +311,7 @@ export const CANONS = Object.freeze({
     // (the manifest service answers 500; measured 2026-10-01), so volumes 203–213 are I1521–I1531.
     imageGroupFor: (vol) => `I${1317 + vol - 1 + (vol > 202 ? 2 : 0)}`,
     scanVolumeFor: (vol) => vol,
+    measureVolumeMap: false,
     eighty4000: false,
     claimMode: 'label', readSize: '1600,', redInk: false,
   }),
@@ -331,8 +332,11 @@ export const CANONS = Object.freeze({
     // BDRC's instanceHasVolume list by each manifest's own "volume N" label.
     imageGroupFor: null,
     // Esukhia README: the e-text follows W22084's volume order, and "in W4CZ5369 … vol. 102 was
-    // swapped with vol. 100".
+    // swapped with vol. 100". Measured 2026-10-02 that is not the whole story (scan "volume 102"
+    // holds e-text vol. 101), so the pairing is MEASURED (--map-volumes → WORK/volume-map.json) and
+    // this is only the prior the map is searched around.
     scanVolumeFor: (vol) => ({ 100: 102, 102: 100 })[vol] ?? vol,
+    measureVolumeMap: true,
     eighty4000: true,
     // Measured on vol. 1 (2026-10-02): W4CZ5369's canvas labels run one side off the leaves they show
     // (canvas "32b" carries side 32a: three reads located at side index = canvas index, identity
