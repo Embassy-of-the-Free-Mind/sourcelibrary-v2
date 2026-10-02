@@ -110,7 +110,9 @@ PY
 
 loop() {
   mkdir -p "$W/queue"
-  setup; collect
+  # serve before the first collect: on a fresh box the VL weights arrive with the server, and a box.json written
+  # before them names no weights hash (every page applied from it said `not_recorded`, f05, 2026-10-02)
+  setup; serve; collect
   local idle_since; idle_since=$(date +%s)
   while [ ! -e "$W/queue/FINISH" ]; do
     local next; next=$(ls -1tr "$W"/queue/*.tsv 2>/dev/null | head -1 || true)
