@@ -209,14 +209,19 @@ function yigdzinRead(dir) {
  * second, interleaved round of SAMPLES when any first-round read is uninformative (the reader failed
  * on that image). Cached on the checkpoint per engine + rules version; reads are cached on disk.
  */
-async function measure(vol, canvases, pages, claim) {
+// Reads and their scores are cached per volume AND image group: when the volume map re-pairs an
+// e-text volume with another scan volume (#5665), a measurement of the old scan must not be reused.
+// Checkpoints written before the image group was recorded (the Tengyur's) carry none and stay valid.
+const sampleDir = (vol, ig, suffix = '') => path.join(WORK, 'samples', `v${String(vol).padStart(3, '0')}${C.measureVolumeMap ? `-${ig}` : ''}${suffix}`);
+
+async function measure(vol, canvases, pages, claim, ig) {
   const v = ckpt.volumes[vol] ||= {};
   // The cache is keyed on what was claimed, too: a re-claim (index mode, a new offset) re-verifies.
   const claimKey = `${v.claim_mode || 'label'}:${v.offset_measurement?.offset ?? ''}`;
-  if (v.measurement?.engine === READ_ENGINE && v.measurement.rules?.version === ALIGN_RULES.version && (v.measurement.claim_key ?? 'label:') === claimKey) return v.measurement;
+  if (v.measurement?.engine === READ_ENGINE && v.measurement.rules?.version === ALIGN_RULES.version && (v.measurement.claim_key ?? 'label:') === claimKey && (v.measurement.ig ?? ig) === ig) return v.measurement;
   const cand = canvases.map((c, i) => i).filter((i) => claim[i] != null && syllables(pages[claim[i]].lines.join(' ')).length >= 150);
   const round = (phase) => Array.from({ length: SAMPLES }, (_, k) => cand[Math.floor(((k + phase) / SAMPLES) * cand.length)]).filter((x) => x != null);
-  const dir = path.join(WORK, 'samples', `v${String(vol).padStart(3, '0')}`);
+  const dir = sampleDir(vol, ig);
   fs.mkdirSync(dir, { recursive: true });
   const samples = [];
   const seen = new Set();
@@ -243,17 +248,17 @@ async function measure(vol, canvases, pages, claim) {
     }
     if (!samples.some((x) => x.class === 'uninformative' || x.class === 'weak')) break;
   }
-  v.measurement = { engine: READ_ENGINE, at: new Date().toISOString(), rules: ALIGN_RULES, claim_key: claimKey, samples, cost_usd: 0 };
+  v.measurement = { engine: READ_ENGINE, at: new Date().toISOString(), rules: ALIGN_RULES, claim_key: claimKey, ig, samples, cost_usd: 0 };
   v.measurement.verdict = volumeVerdict(samples);
   saveCkpt();
   return v.measurement;
 }
 
 /** Index mode: read SAMPLES canvases spread through the volume and locate each among ALL sides. */
-async function measureOffset(vol, canvases, pages) {
+async function measureOffset(vol, canvases, pages, ig) {
   const v = ckpt.volumes[vol] ||= {};
-  if (v.offset_measurement?.engine === READ_ENGINE && v.offset_measurement.rules?.version === ALIGN_RULES.version) return v.offset_measurement;
-  const dir = path.join(WORK, 'samples', `v${String(vol).padStart(3, '0')}-offset`);
+  if (v.offset_measurement?.engine === READ_ENGINE && v.offset_measurement.rules?.version === ALIGN_RULES.version && (v.offset_measurement.ig ?? ig) === ig) return v.offset_measurement;
+  const dir = sampleDir(vol, ig, '-offset');
   fs.mkdirSync(dir, { recursive: true });
   const n = canvases.length;
   // Phase 0.75 — away from the 0.5 / 0.25 phases the verification rounds use, so the canvases that
@@ -270,7 +275,7 @@ async function measureOffset(vol, canvases, pages) {
     log(`  v${vol} canvas ${ci}: best side ${loc.side} (index ${loc.index}, offset ${loc.index - ci}) identity ${loc.identity} control ${loc.control}`);
     return { canvas: ci, loc };
   });
-  v.offset_measurement = { engine: READ_ENGINE, rules: ALIGN_RULES, at: new Date().toISOString(), located, ...agreedOffset(located) };
+  v.offset_measurement = { engine: READ_ENGINE, rules: ALIGN_RULES, ig, at: new Date().toISOString(), located, ...agreedOffset(located) };
   saveCkpt();
   return v.offset_measurement;
 }
@@ -351,7 +356,7 @@ async function importVolume(db, vol) {
   if (Number(file.slice(0, 3)) !== vol) throw new Error(`e-text file ${file} is not volume ${vol}`);
   const v = ckpt.volumes[vol] ||= {};
   // A volume refused under an older rules version is re-measured and, if it now passes, filled in.
-  if (v.done && !args.redo && (v.verdict === 'pass' || v.measurement?.rules?.version === ALIGN_RULES.version)) { log(`v${vol}: done earlier (${v.book_id}) — skip`); return v; }
+  if (v.done && !args.redo && (v.verdict === 'pass' || (v.measurement?.rules?.version === ALIGN_RULES.version && (v.measurement?.ig ?? ig) === ig))) { log(`v${vol}: done earlier (${v.book_id}) — skip`); return v; }
 
   const manifest = await manifestFor(ig);
   const mlabel = manifestVolume(manifest);
@@ -371,14 +376,14 @@ async function importVolume(db, vol) {
     // No folio labels in the manifest: measure the offset on one round of reads, then let the
     // ordinary verification (measure) test the offset on independent canvases.
     v.claim_mode = 'index';
-    const om = await measureOffset(vol, canvases, pages);
+    const om = await measureOffset(vol, canvases, pages, ig);
     log(`v${vol}: no folio labels — measured offset ${om.offset ?? 'NONE'}${om.reason ? ` (${om.reason})` : ''}`);
     claim = canvases.map((_, i) => (om.offset != null && i + om.offset >= 0 && i + om.offset < pages.length ? i + om.offset : null));
   }
   v.canvases = canvases.length; v.text_sides = pages.length; v.claimed = claim.filter((x) => x != null).length;
   log(`v${vol} ${ig} ${file}: ${canvases.length} canvases, ${pages.length} text sides, ${v.claimed} claimed (${v.claim_mode})`);
 
-  const m = await measure(vol, canvases, pages, claim);
+  const m = await measure(vol, canvases, pages, claim, ig);
   log(`v${vol}: verdict ${m.verdict.pass ? 'PASS' : 'REFUSE'} (${m.verdict.scored} scored)${m.verdict.reasons.length ? ' — ' + m.verdict.reasons.join('; ') : ''} [$${m.cost_usd}]`);
   if (MEASURE_ONLY || !APPLY) { saveCkpt(); return v; }
 
