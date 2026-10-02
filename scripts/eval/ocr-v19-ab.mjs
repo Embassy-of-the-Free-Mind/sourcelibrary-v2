@@ -269,12 +269,13 @@ function stageScore() {
     const c = pooled[`A_vs_${X}`], t = strata.T[`A_vs_${X}`], s3 = strata.S3, s5 = strata.S5;
     const s5d = s5[`A_vs_${X}`];
     const s5lim = Math.max(s5.noise_floor_p90_abs_A_A2 || 0, 0.01);
+    const ok = (...xs) => xs.every((x) => x != null && !Number.isNaN(x)); // a missing arm or stratum fails its clause
     return {
-      1: { name: 'W ∪ T fabricated falls (primary)', test: `mean(A−${X}) ${c.mean} > 0 AND sign p ${c.sign_p} < 0.05 (${c.y_lower} better / ${c.y_higher} worse / ${c.ties} tie)`, pass: c.mean > 0 && c.sign_p < 0.05 },
-      2: { name: 'T: better on more pages than worse', test: `${t.y_lower} better > ${t.y_higher} worse`, pass: t.y_lower > t.y_higher },
-      3: { name: 'S3 false-blank guard', test: `${X} ${s3.arms[X].mean} ≤ A ${s3.arms.A.mean} + 0.05`, pass: s3.arms[X].mean <= s3.arms.A.mean + 0.05 + 1e-12 },
-      4: { name: 'S5 windowed-CER guard', test: `median(${X}−A) ${r4(-s5d.median)} ≤ max(floor ${s5.noise_floor_p90_abs_A_A2}, 0.01)`, pass: -s5d.median <= s5lim + 1e-12 },
-      5: { name: 'loop guard', test: `${X} Wilson lo ${loop[X].lo} ≤ A Wilson hi ${loop.A.hi}`, pass: loop[X].lo <= loop.A.hi },
+      1: { name: 'W ∪ T fabricated falls (primary)', test: `mean(A−${X}) ${c.mean} > 0 AND sign p ${c.sign_p} < 0.05 (${c.y_lower} better / ${c.y_higher} worse / ${c.ties} tie)`, pass: ok(c.mean) && c.mean > 0 && c.sign_p < 0.05 },
+      2: { name: 'T: better on more pages than worse', test: `${t.y_lower} better > ${t.y_higher} worse`, pass: t.n > 0 && t.y_lower > t.y_higher },
+      3: { name: 'S3 false-blank guard', test: `${X} ${s3.arms[X].mean} ≤ A ${s3.arms.A.mean} + 0.05`, pass: ok(s3.arms[X].mean, s3.arms.A.mean) && s3.arms[X].mean <= s3.arms.A.mean + 0.05 + 1e-12 },
+      4: { name: 'S5 windowed-CER guard', test: `median(${X}−A) ${r4(-s5d.median)} ≤ max(floor ${s5.noise_floor_p90_abs_A_A2}, 0.01)`, pass: ok(s5d.median) && -s5d.median <= s5lim + 1e-12 },
+      5: { name: 'loop guard', test: `${X} Wilson lo ${loop[X].lo} ≤ A Wilson hi ${loop.A.hi}`, pass: ok(loop[X].lo, loop.A.hi) && loop[X].lo <= loop.A.hi },
     };
   };
   const clausesC = decide('C'), clausesB = decide('B');
@@ -297,6 +298,7 @@ function stageScore() {
     issue: 4195, preregistration: 'scripts/eval/PREREGISTRATION-ocr-v19-showthrough.md', at: new Date().toISOString(), model: MODEL, k: K, seed: SEED,
     prompts: est.prompts, generation: est.generation, image: est.image,
     batch_jobs: [...screenRec.jobs.map((j) => ({ ...j, arm: `screen-${j.arm}` })), ...rec.jobs].map(({ arm, job_name, requests, outcomes, in_tokens, out_tokens, cost_usd, terminal_state }) => ({ arm, job_name, requests, outcomes, in_tokens, out_tokens, cost_usd: r4(cost_usd), terminal_state })),
+    cancelled_jobs: (rec.cancelled || []).map(({ arm, job_name, terminal_state, note }) => ({ arm, job_name, terminal_state, note })),
     cost: { screen_usd: r4(sum(screenRec)), arms_estimate_usd: est.usd, arms_usd: r4(sum(rec)), actual_usd: r4(sum(screenRec) + sum(rec)), cap_usd: CAP_USD },
     pages: { drawn: pages.length, live: live.length, dropped_image_fetch: dropped },
     run_outcomes: runCounts, primary_W_T: pooled, strata, loop, context_echo: echo,
