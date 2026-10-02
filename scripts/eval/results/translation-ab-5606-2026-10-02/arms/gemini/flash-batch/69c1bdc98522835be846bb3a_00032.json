@@ -1,0 +1,21 @@
+{
+ "id": "69c1bdc98522835be846bb3a_00032",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "<margin>1</margin>\nThus have I heard. At one time the Blessed One was staying among the Kurus. There is a market town of the Kuru people named Kammasadhamma. There, the Blessed One addressed the monks, saying, \"Monks!\" \"Venerable Sir!\" those monks replied to the Blessed One. The Blessed One said this:\n\n\"Monks, this is the direct path <note>original: ekāyano maggo; often translated as the only path or the one-way path</note> for the purification of beings, for the overcoming of sorrow and lamentation, for the disappearance of pain and distress, for the attainment of the true method, and for the realization of <term>Nibbana</term> <gloss>the liberation from suffering and rebirth</gloss>, namely, the four foundations of mindfulness.\n\nWhat are the four? Here, monks, a monk dwells contemplating the body in the body, ardent, clearly comprehending, and mindful, having removed covetousness and displeasure regarding the world. He dwells contemplating feelings in feelings, ardent, clearly comprehending, and mindful, having removed covetousness and displeasure regarding the world. He dwells contemplating the mind in the mind, ardent, clearly comprehending, and mindful, having removed covetousness and displeasure regarding the world. He dwells contemplating mental qualities in mental qualities, ardent, clearly comprehending, and mindful, having removed covetousness and displeasure regarding the world.\n\nAnd how, monks, does a monk dwell contemplating the body in the body? Here, monks, a monk who has gone to the forest, or to the foot of a tree, or to an empty places, sits down. Having folded his legs crosswise, set his body erect, and established mindfulness before him, mindful he breathes in, mindful he breathes out.\n\nBreathing in long, he knows, 'I breathe in long.' Breathing out long, he knows, 'I breathe out long.' Breathing in short, he knows, 'I breathe in short.' Breathing out short, he knows, 'I breathe out short.' He trains himself, 'I will breathe in experiencing the whole body.' He trains himself, 'I will breathe out experiencing the whole body.' He trains himself, 'I will breathe in calming the bodily formation.' He trains himself, 'I will breathe out calming the bodily formation.'\"\n\n<summary>This page introduces the Great Discourse on the Foundations of Mindfulness, establishing the four types of contemplation and detailing the initial practice of mindfulness of breathing.</summary>\n<keywords>Satipaṭṭhāna, mindfulness, meditation, breathing, Nibbana, Kuru, Kammasadhamma, Buddhism</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2643,
+ "outputTokens": 560,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.00150075,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1498,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

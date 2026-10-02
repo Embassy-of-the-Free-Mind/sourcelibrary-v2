@@ -1,0 +1,21 @@
+{
+ "id": "69bc7a3f8888fef520b73c1e_00217",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "III. 14. 6-11.] MAHÂVAGGA. 155\n\n. . . he stays those seven days within the boundaries. For that monk, O monks, the early retreat <note>original: \"purimikâ\" <gloss>the early period of the three-month rain retreat</gloss></note> is considered fulfilled, and there is no offense in the leaving <note>original: \"paṭissave\" <gloss>the act of leaving or abandoning the residence during the retreat</gloss></note>. ||6|| But here... he leaves because of a duty <note>original: \"sakaraṇîyo\" <gloss>having a matter to attend to</gloss></note> before the seven days are up, before the invitation <note>original: \"pavâraṇâya\" <gloss>the ceremony marking the end of the retreat</gloss></note>. Whether that monk, O monks, returns to that residence or does not return, for that monk the early retreat is considered fulfilled, and there is no offense in the leaving. ||7|| But here, O monks, a retreat has been pledged by a monk for the early period. He goes to that residence, performs the Uposatha <note>original: \"uposatham\" <gloss>observance day ceremony</gloss></note>, enters the monastery at the beginning of the period, arranges the bedding, prepares drinking and washing water, and sweeps the courtyard. He leaves on that very same day without a duty. For that monk, O monks, the early retreat is not considered fulfilled, and in the leaving there is an offense of wrong-doing <note>original: \"dukkaṭassa\" <gloss>a minor offense</gloss></note>. ||8|| But here... (= § 8) ... he leaves on that very same day with a duty—and so on—he stays two or three days, leaves without a duty—and so on—he stays two or three days, leaves with a duty—and so on—he stays two or three days, and leaves for a seven-day duty. He spends those seven days outside. For that monk, O monks, the early retreat is not considered fulfilled, and in the leaving there is an offense of wrong-doing. ||9|| He stays two or three days, leaves for a seven-day duty. He stays those seven days within the boundaries. For that monk, O monks, the early retreat is considered fulfilled, and there is no offense in the leaving. He... (= § 7) ... no offense. ||10|| But here, O monks, a retreat has been pledged by a monk for the late period <note>original: \"pacchimikâya\" <gloss>the later period of the three-month rain retreat</gloss></note>. Going to that residence, he performs the Uposatha outside, enters the monastery at the beginning of the period, arranges the bedding, prepares drinking and washing water, and sweeps the courtyard. He leaves on that very same day without a duty. For that monk, O monks, the late retreat is not considered fulfilled, and in the leaving there is an offense of wrong-doing. But here... (the whole passage is identical with § 5-10; read instead of \"early retreat\" and \"for the early period\": \"late retreat\" and \"for the late period\", instead of \"before the invitation\": \"before the full moon of the fourth month\") ... and no offense in the leaving. ||11||14||\n\nThe Third Chapter on Entering upon the Rain Retreat.\n\nIts summary:\nGoing to, and when, and how many, and during the rains,\nAnd those who do not wish, intentionally, to delay, the lay follower.\n\n<summary>This passage details the legal requirements and definitions of fulfilling the \"early\" and \"late\" rain retreats (Vassa) for monks, including how duties, departures, and the performance of required rituals like the Uposatha impact the status of their retreat.</summary>\n<keywords>Vassa, rain retreat, Bhikkhu, Uposatha, ecclesiastical law, monastic discipline, Mahavagga</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2791,
+ "outputTokens": 879,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.001008125,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2239,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

@@ -1,0 +1,21 @@
+{
+ "id": "69bd00f7f403a9ca2380efbf_00080",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "132 Long Discourses: Division on Morality — The Fruits of Reclusive Life Discourse <note>original: \"Dīghanikāye Sīlakkhandhavagga Sāmaññaphalasuttaṃ\"</note>\n\nIn the same way, Great King, a monk drenches, permeates, fills, and suffuses this very body with a happiness <note>referring to the third meditative state</note> that is free from rapture. There is no part of his entire body untouched by this happiness that is free from rapture.\n\nThis, Great King, is a fruit of reclusive life <note>term: sāmaññaphala</note> <gloss>the result of living as a monk</gloss> visible in this very life, more excellent and refined than the previous visible fruits of reclusive life.\n\n68. Furthermore, Great King, with the giving up of pleasure and the giving up of pain, and with the previous disappearance of joy and grief, a monk enters and remains in the fourth <term>jhāna</term> <gloss>meditative absorption</gloss>, which is neither painful nor pleasant and has purity of mindfulness due to equanimity. He sits suffusing this very body with a pure, bright mind. There is no part of his entire body untouched by that pure, bright mind.\n\nJust as if, Great King, a man were to sit wrapped from head to foot in a white cloth, so that there would be no part of his entire body not covered by the white cloth; in the same way, Great King, a monk sits suffusing this very body with a pure, bright mind. There is no part of his entire body untouched by that pure, bright mind.\n\nThis, Great King, is a fruit of reclusive life visible in this very life, more excellent and refined than the previous visible fruits of reclusive life.\n\n69. Furthermore, Great King, when the mind is thus concentrated, pure, bright, unblemished, rid of defilements, pliant, workable, steady, and attained to imperturbability, the monk directs and inclines it toward knowledge and vision. He understands thus: \"This body of mine has form, it is composed of the four great elements, born of a mother and father, nourished by rice and gruel, subject to impermanence, to being worn away, broken up, and dissolved. And this consciousness <note>term: viññāṇa</note> of mine is supported here and bound up here.\"\n\n70. Just as if, Great King, there were a beautiful beryl gem <note>term: veḷuriya</note> <gloss>lapis lazuli or similar precious stone</gloss> of the purest water, eight-faceted, well-cut, clear, bright, flawless, and endowed with every good quality. And through it was strung a thread—blue, yellow, red, white, or light brown. A man with good sight, taking it in his hand, would reflect: \"This is a beautiful beryl gem of the purest water, eight-faceted, well-cut, clear, bright, flawless, and endowed with every good quality. Through it is strung this thread—blue, yellow, red, white, or light brown.\"\n\n<summary>This page describes the fourth state of meditative absorption and the subsequent development of insight into the relationship between the physical body and consciousness. The Buddha uses the simile of a white cloth for meditation and a threaded gem to illustrate the clarity of self-knowledge.</summary>\n<keywords>Fourth Jhana, meditation, mindfulness, consciousness, body and mind, beryl gem simile, Fruits of Reclusive Life, Samannaphala Sutta</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2939,
+ "outputTokens": 778,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.0019017500000000002,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1922,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

@@ -1,0 +1,21 @@
+{
+ "id": "6a3c61db40c88a541d8f091d_00083",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page</meta>\n<header>Oral Instructions on the Diamond Sutra</header>\n\nSubhuti, what do you think? If someone were to fill three thousand great thousand worlds with the seven treasures <note>gold, silver, lapis lazuli, crystal, agate, ruby, and cornelian</note> and give them away as charity, would this person, because of this cause and condition, gain much merit? \n\nYes, World-Honored One. This person would, because of this cause and condition, gain very much merit. \n\nSubhuti, if merit were real, the Tathagata <term>Tathagata</term> <gloss>the thus-come one, a title for the Buddha</gloss> would not say that merit gained is much. Because merit is non-existent, the Tathagata says the merit gained is much.\n\nThe merit of the seven treasures cannot accomplish the fruit of the Buddha, <term>bodhi</term> <gloss>awakening/enlightenment</gloss>. Therefore, it is said to be non-existent. Because it is without limit or number, it is termed \"much.\" If it could be surpassed, it would not be called \"much.\"\n\nThe Chapter on Parting from Form and Marking, the Twenty-Third: The three bodies are fully realized, and all characteristics are perfectly complete. When both the person and the dharma are forgotten, this is then not \"fully realized.\" Thus, this section follows the Chapter on Parting from Form and Marking.\n\nSubhuti, what do you think? Can the Buddha be seen by means of the perfected form-body? \nNo, World-Honored One. If <column-break/>\n\n<summary>This passage discusses the relative merit of charitable acts compared to the realization of enlightenment and introduces the significance of transcending physical forms to perceive the Buddha.</summary>\n<keywords>Subhuti, Tathagata, merit, bodhi, three bodies, parting from form</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2054,
+ "outputTokens": 424,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.00057475,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 423,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

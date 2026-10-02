@@ -1,0 +1,21 @@
+{
+ "id": "6a312d8867a0ec73f1bc373f_00050",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>The supreme, unique Great Lord <term>Maheshvara</term> <gloss>an epithet for the divine principle or a supreme deity</gloss> is all-knowing, the mother and creator of the entire world. How is he to be known? Either through inference or through dedicated exertion. For instance, there is the following inference: this perceptible world, which is a subject of dispute, must have a cause, because it comes into existence after having not existed, just like a painting. From there, one gains specific knowledge through <term>yoga</term> <gloss>disciplined practice</gloss> of that which was previously understood only in a general sense. As for the other, the individual soul <term>jiva</term>, its proof comes from personal experience alone. \n\nThe activity of Nature <term>prakriti</term> is for the sake of the knowledge of the distinction between these two, the higher and the lower. In this context, it will be stated that her activity is for the sake of another. There is also an element of self-interest: she becomes indifferent toward that person <term>purusha</term> to whom she has revealed her true nature through the knowledge of distinction. How can unconscious Nature exhibit activity? It is observed that even unconscious things, such as milk, exhibit activity for the sake of a result <note>referring to the classic analogy of milk flowing for the sake of the calf</note>.\n\nNow, regarding who is eligible for liberation <term>moksha</term>, it is said:\n\nSuccess comes to one who is dispassionate.\n\nAs the scripture <term>shruti</term> <gloss>sacred revealed text</gloss> states: Having risen above the desire for sons, the desire for wealth, and the desire for worlds, they then live the life of a mendicant. Also: Having become peaceful, self-controlled, withdrawn, patient, and concentrated, one sees the Self within the self.\n\nIf liberation occurs after hearing the teachings due to dispassion, then everyone should be liberated immediately after receiving a teacher's instruction. Since this is not observed to happen, it is said:\n\nSuccess is not achieved by mere hearing, because beginningless impressions are powerful.\n\nLiberation does not follow immediately after hearing. Rather, because beginningless mental impressions <term>vasana</term> <gloss>latent tendencies or subconscious inclinations</gloss> are powerful, liberation may be swift for some and delayed for others.\n\nAnother reasoning is stated:\n\nBecause of the many tasks, each one...\n\n<summary>This page discusses the methods of knowing the supreme principle and the individual soul, emphasizing that liberation requires deep dispassion and the overcoming of powerful subconscious impressions rather than mere listening.</summary>\n<keywords>Maheshvara, inference, Nature, Purusha, liberation, dispassion, mental impressions, Samkhya</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2429,
+ "outputTokens": 611,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.00152375,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1325,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

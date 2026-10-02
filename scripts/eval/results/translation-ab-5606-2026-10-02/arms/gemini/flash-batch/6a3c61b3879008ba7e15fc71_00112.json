@@ -1,0 +1,21 @@
+{
+ "id": "6a3c61b3879008ba7e15fc71_00112",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "It cannot be misrepresented; this is also the way of teaching and instruction. <note>He</note> asked: From the Eight-Row Dance to the sacrifice at Mount Tai <unclear>five characters</unclear> vanished, therefore his grief and pain were entirely consistent with the meaning of the Spring and Autumn Annals. Master Zhu <note>Zhu Xi</note> said: This is so.\n\n***\n\n# The Master said: A gentleman has no cause to compete. If he must, let it be in archery! He bows and yields as he ascends, and does the same as he descends to drink. Such is the competition of a gentleman. <note>The word \"competition\" is pronounced in the departing tone</note>\n\nBowing and yielding as he ascends refers to the Ritual of Great Archery. One bows while advancing, performing the three bows before ascending the hall. <note>Master Hu</note> says: In the ritual of archery, the Master of Archery organizes three pairs of archers. The three pairs emerge from their stations, face west, and bow. When they reach the north of the stairs, they bow. Upon reaching the stairs, they bow. This is what is meant by performing three bows before ascending the hall.\n\nThis refers to the completion of the archery. One bows and descends to wait for the other pairs to descend. The winner then bows to the loser, who ascends to take <margin>Pronounced as \"jie\"</margin> the cup and stands to drink. <note>Master Hu says: After finishing the archery, one bows facing north as during the ascent, then returns to the station.</note> The pairs finish their archery in the same manner. This is what is meant by bowing and descending after the archery is completed.\n\n<summary>This page discusses the Confucian concept of \"the gentleman's competition\" through the specific rituals of an archery contest. It emphasizes the importance of humility, bowing, and ritual etiquette even during competitive acts.</summary>\n<keywords>Confucius, Analects, archery ritual, gentleman, etiquette, Zhu Xi, competition, ritual drinking</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2043,
+ "outputTokens": 439,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.0011692500000000002,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 412,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

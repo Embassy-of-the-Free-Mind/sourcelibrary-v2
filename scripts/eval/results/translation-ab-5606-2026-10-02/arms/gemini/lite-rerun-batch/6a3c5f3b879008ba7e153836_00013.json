@@ -1,0 +1,21 @@
+{
+ "id": "6a3c5f3b879008ba7e153836_00013",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Therefore, one should not grasp at phenomena, nor should one grasp at non-phenomena. Because of this meaning, the Tathagata <note>original: \"如來\", an epithet for the Buddha meaning \"Thus-Come One\"</note> always says: \"You monks! Know that my teaching is like a raft. Even the dharma <note>original: \"法\", here referring to Buddhist teachings</note> should be abandoned; how much more so that which is not the dharma.\"\n\n### The Seventh Section: On Neither Attainment Nor Discourse\n\nSubhuti! What do you think? Has the Tathagata attained the <term>anuttara-samyak-sambodhi</term> <gloss>unsurpassed, complete, perfect enlightenment</gloss>? Does the Tathagata have any fixed teaching?\n\nSubhuti replied: As I understand the meaning of what the Buddha has said, there is no fixed teaching called <term>anuttara-samyak-sambodhi</term>, nor is there any fixed teaching that the Tathagata can state. Why is this? The teachings stated by the Tathagata are all intangible, inexpressible, neither phenomena nor non-phenomena. Why is this? All sages and worthies are distinguished by the <term>asamskrta-dharma</term> <gloss>unconditioned or uncompounded reality</gloss>.\n\n### The Eighth Section: Birth Through the Dharma\n\nSubhuti! What do you think? If someone were to fill the three-thousand-great-thousand world systems with the seven treasures <note>traditional Buddhist symbols of wealth including gold, silver, lapis lazuli, crystal, agate, ruby, and cornelian</note> and give them as alms, would that person obtain many merits?\n\nSubhuti replied: Very many, World-Honored One! Why? Because this merit is not the essence of merit itself; therefore, the Tathagata speaks of the merit as being great.\n\nIf, however, there were another person who accepted and held even a four-line verse of this sutra and explained it to others, their merit would be greater than the former. Why? Subhuti! All the Buddhas and the <term>anuttara-samyak-sambodhi</term> of all Buddhas originate from this sutra. Subhuti! What is called the Buddhadharma is itself not the Buddhadharma.\n\n### The Ninth Section: On One Mark and No Mark\n\n<summary>This text emphasizes the emptiness of phenomena and teachings, explaining that true enlightenment is beyond fixed forms and that propagating the sutra holds greater merit than material offerings.</summary>\n<keywords>Tathagata, Subhuti, Anuttara-samyak-sambodhi, Dharma, Merit, Unconditioned Reality, Buddhist Sutras</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2171,
+ "outputTokens": 597,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.000719125,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 533,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

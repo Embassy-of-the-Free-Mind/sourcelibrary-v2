@@ -1,0 +1,21 @@
+{
+ "id": "69e8b27f2ff2a8dc09e77ed7_00048",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "# 45 Recto\n\nThe perfected ones, the singers, and the enlightened assembly, possessing brilliant manifestations. The Rudras, the Adityas, the Vasus, the Sadhyas, the Vishvadevas, and the Maruts. The glorious Gandharvas, the Yakshas, and the highly knowledgeable hosts, truly indeed, they are the ones who honor the divine mothers. 22. In this manner, in the two circles, the protection of the armor, the speech, and the wind, let there be the manifestation of the earth, the Rudra-fire net, and the protection of the worlds here. 23. Not of the human, but the body of the assembly, the great joy, the expansive armor. Having worshipped the lord of speech and the soul. Thus, I praise the assembly of Vishnu. 24. And seeing the auspicious signs, the fire of time.\n\n<column-break/>\n\n# 45 Verso\n\nThe signs being known, one will not perish, nor will there be lamentation for him. Here, Sudama is the eternal servant, fame without end, the assembly of the gods, the play of the garlands, the assembly of the joyful, the warrior-like ones, the eternal servant, fame without end, the gods. The line of the learned scholars, the collected arts, the states that are known. Fame without end, the gods. Now, through the sacrifice, he is the essence. 21. As the blissful one, the lord of the light. 22. Here, Sudama is the eternal servant, fame without end, the gods. The exalted one, the joyous, the expansive, the ones born from the fire. 23. Here, Sudama is the eternal servant, fame without end, the gods.\n\n<note>A circular hole is situated in the center of the palm leaf, intended for a binding cord to hold the manuscript folios together.</note>\n\n<summary>This passage invokes various celestial beings, deities, and protective forces, emphasizing ritual devotion and the preservation of divine order through sacrificial and meditative practice.</summary>\n<keywords>Sanskrit, Devanagari, Bhagavad Gita, deities, ritual, mantra, Sudama, cosmology</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2317,
+ "outputTokens": 473,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.000644375,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1190,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

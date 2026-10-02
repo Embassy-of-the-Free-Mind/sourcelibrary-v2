@@ -1,0 +1,21 @@
+{
+ "id": "69e8b26b2ff2a8dc09e77afc_00118",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Xunzi, Rectification of Arguments\n\nIn ancient times, the Son of Heaven had a thousand officials, and the feudal lords had a hundred officials. Through these thousand officials, decrees were carried out throughout the states of the Central States; this was called being a King. Through these hundred officials, decrees were carried out within their own borders; even if the state was unstable, it did not reach the point of collapse or being destroyed <note>The commentator notes: \"Destroyed\" here should be read as \"fallen,\" meaning the fall of one's lineage and heritage.</note>; this was called being a Lord. This applies to the descendants of sage kings after they have gained the empire, and to those who hold the imperial records and are the ancestors of the imperial lineage. Yet, if one lacks ability and moral center <note>The commentator notes: \"Without moral center\" means not upright or correct.</note>, if internally the hundred surnames suffer, and externally the feudal lords rebel, if those nearby within the borders are not united and those far away, the feudal lords, do not listen, if decrees cannot be executed within the borders, and at the extreme, the feudal lords encroach upon, diminish, attack, and invade—if it is like this, even if one has not yet perished, I would say they no longer possess the empire. After the sage kings have passed, if those who hold the records are weak and unable to secure the empire <note>The commentator notes: \"Weak\" is read as \"fatigued,\" meaning too frail to handle affairs. \"Secure\" means to bind or tie together.</note>, and the empire is without a ruler, if there is a feudal lord who has brilliant virtue and accumulated prestige such that the people within the seas all desire to have him as their lord and teacher, yet a tyrannical state acts alone in its excess and arrogance, how could he <note>The commentator notes: \"How could\" is used here in the sense of \"then.\"</note> punish them? One must not harm innocent people, but punish the ruler of a tyrannical state as if punishing a solitary man <note>The commentator notes: \"Solitary man\" means that everyone in the empire refuses to help him, as if he were just one man.</note>. If this is done, it can be called the ability to employ the empire. The ability to employ the empire is what is called Kingship. Tang and Wu did not seize the empire; they cultivated their Way, practiced their righteousness, shared common benefits with the empire, and eliminated common harms, and so the empire turned to them. Jie and Zhou did not abandon the empire; they acted against the virtues of Yu and Tang, threw the distinctions of ritual and righteousness into chaos, behaved like beasts, accumulated evil, and brought ruin upon their subjects <note>The commentator notes: \"Brought ruin\" refers to the empire departing of its own accord.</note>.\n\n<summary>This passage defines the distinction between a true King and a failing ruler based on the efficacy of their administration and moral standing, citing the examples of Tang and Wu versus the tyrants Jie and Zhou.</summary>\n<keywords>Xunzi, Rectification of Arguments, Kingship, Tang and Wu, Jie and Zhou, Ritual and Righteousness</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2236,
+ "outputTokens": 677,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.00078725,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 576,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

@@ -1,0 +1,21 @@
+{
+ "id": "6a0e54e98831ddc9459ad225_00087",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "In the *Hathayogapradipika*\n\nThe body becomes strong and free from all afflictions. By this method, truly, the king of yogis remains free from disturbances upon the surface of the earth. 56.\n\n### Now, Shitali (The Cooling Breath)\n\nThe wise practitioner should draw in air through the tongue, perform the retention as previously described, and slowly exhale the breath through the nostrils. 57.\n\nThis practice, known as <term>Shitali</term> <gloss>cooling</gloss> <term>kumbhaka</term> <gloss>breath retention</gloss>, indeed destroys diseases such as enlargement of the spleen or glands, fever, bile imbalances, hunger, thirst, and poisons. 58.\n\n->|| Commentary ||<-\n\n*Bhavet* etc.: The strength of the body increases. By this method of practice described, the king of yogis—one who is like Indra among yogis—truly becomes free from all disturbances on this earth. The meaning is that, according to the logical principle that \"all statements contain a definitive assertion,\" the result mentioned is certain. 56.\n\nHe describes <term>Shitali Kumbhaka</term>: *Jihvaya* etc. By extending the tongue outside the lips, like the lower beak of a bird, one draws in air, meaning one performs the inhalation. One then performs the method of retention as in the *Suryabhedana* practice. The \"wise one\"—one of excellent intellect—slowly exhales the breath through the cavities of the nostrils. 57.\n\nHe speaks of the qualities of <term>Shitali</term>: *Gulma* etc. It destroys diseases such as <term>gulma</term> <gloss>abdominal tumor/enlargement</gloss> and <term>pliha</term> <gloss>splenic enlargement</gloss>, as well as fever, bile disorders, hunger, thirst, and poisons caused by snakes and the like. \"Shitali\" is the name of this practice. This described <term>kumbhika</term> <gloss>retention</gloss> destroys them completely. \n\n->|| Vernacular (Hindi) ||<-\n\n*Bhavet* etc.: The body becomes strong, and by this method of practice, the yogi becomes like Indra among yogis on this earth, free from all afflictions. The result that has been stated is certain. 56.\n\nNow, he describes the fourth, <term>Shitali Kumbhaka</term>: *Jihvaya* etc. Having extended one's tongue outside the lips like the lower beak of a bird, draw in the air and perform the inhalation. Then, just as described before for <term>Suryabhedana</term>, perform the retention. Then, the one of beautiful intellect should slowly exhale the breath through the nostrils. 57.\n\nHe describes the qualities of <term>Shitali</term>: *Gulma* etc. This <term>kumbhika</term> destroys diseases like <term>gulma</term> and <term>pliha</term>, as well as fever, bile disorders, hunger, thirst, snake venom, and other toxins. 58.\n\n<summary>This page defines the Shitali Kumbhaka practice, detailing its technique of tongue-based inhalation and nostril-based exhalation, and lists its medicinal benefits, including the alleviation of splenic disorders, fever, and poisons.</summary>\n<keywords>Hathayogapradipika, Shitali, Kumbhaka, Pranayama, Svatmarama, Yoga, Breath Retention</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2665,
+ "outputTokens": 772,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.000912125,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2117,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

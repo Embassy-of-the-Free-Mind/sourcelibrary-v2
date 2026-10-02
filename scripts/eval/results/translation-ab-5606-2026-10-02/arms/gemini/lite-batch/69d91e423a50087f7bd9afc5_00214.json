@@ -1,0 +1,21 @@
+{
+ "id": "69d91e423a50087f7bd9afc5_00214",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Atharvaveda Commentary [Hymn 58, Verse 5]\n\nAnd for our own protection. May this cup of yours, which is the instrument of consumption, not slip away, may it not depart from the battle. The sage who envisioned the mantra says, \"Carry it.\"\n\nI offer the eye of the sacrifice, its opening, and its face, with speech, with hearing, and with the mind. May the gods, being well-disposed, approach this sacrifice spread out by the <term>Vishvakarman</term> <gloss>All-Maker/Creator of the Universe</gloss>. (5)\n\nOf the sacrifice. Eye. Beginning. Face. And. With speech. With hearing. With the mind. I offer. This. Sacrifice. Spread out. By the All-Maker. Approach. May the gods. Being well-disposed. (5)\n\nThis stanza has been explained previously (Atharvaveda 2.35.5). I offer the senses, beginning with the eye, and the mind as being connected to the sacrifice, and I make them inclined toward it. May the gods, being well-disposed, meaning acting as if they have good intentions, approach this mental sacrifice—this sacrifice spread out by the All-Maker, the creator of the world—and may they reach it. This is the summary.\n\nThose who are the officiating priests of the gods, those who are worthy of the sacrifice, and those for whom the sacrificial portion is prepared as an offering. May all the gods, together with their consorts, approach this sacrifice and delight in its brilliance. (6)\n\nThose. Of the gods. Officiating priests. Those. And. Worthy of sacrifice. Those for whom. The sacrificial offering. Is made. As a portion. This. Sacrifice. Together. With consorts. Approach. Come. As many as. Gods. With brilliance. May they delight. (6)\n\nAmong the gods, those who are the <term>ritvij</term> <gloss>officiating priests</gloss> are those who perform the sacrifice at the proper time. Those who are <term>yajniya</term> <gloss>worthy of sacrifice</gloss> are those to whom the sacrifice is owed. For both of these groups of gods, the <term>bhagadheya</term> <gloss>share/portion</gloss>, in the form of an oblation, is prepared and given. May as many gods as exist, those who are great in their brilliance, come together with their respective consorts, such as <term>Indrani</term> <gloss>the wife of Indra</gloss> and others, approach this sacrifice, and find satisfaction through the acceptance of the offering.\n\nThus ends the fourth hymn of the seventh <term>anuvaka</term> <gloss>section/chapter</gloss>.\n\nThe hymn beginning with \"You, Agni, are the protector of vows\" is prescribed for use during the omission of the <term>darshapurnamasa</term> <gloss>new and full moon sacrifices</gloss>, in the offering of clarified butter, or in the peaceful depositing of sacred fuel. It is indeed codified by Kausika in the <term>Samhitavidhi</term> <gloss>ritual manual of the collection</gloss>—\n\n<summary>This page provides a commentary on verses 5 and 6 of the 58th hymn of the Atharvaveda, detailing the ritual significance of the sacrifice and the involvement of the gods and their consorts.</summary>\n<keywords>Atharvaveda, Vishvakarman, Vedic sacrifice, ritual, priests, Agni, Kausika-sutra</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2647,
+ "outputTokens": 786,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.000920375,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2107,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

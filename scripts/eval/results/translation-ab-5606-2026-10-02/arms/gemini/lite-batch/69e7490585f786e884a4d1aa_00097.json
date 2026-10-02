@@ -1,0 +1,21 @@
+{
+ "id": "69e7490585f786e884a4d1aa_00097",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "The Cloud Messenger\n\n<note>Glossary note: \"The women who have parted their hair\" (seamantini); the Amarakosha states, \"A woman with parted hair is a bride.\"</note> <note>Glossary note: \"Presented by a friend\" (suhṛdupanata); obtained through a friend. The term friend is used to dispel any suspicion of infidelity. \"News of the beloved\" (kāntodanta); news of the lover. The Amarakosha states, \"News, occurrence, story, and report are synonyms for udanta.\" It means that receiving this news is almost as joyful as the reunion itself, effectively providing the same happiness.</note>\n\nNow he gives the message:\n\nO long-lived one, at my request and for your own benefit as well,\nSpeak these words to her: Your companion, staying at the hermitage of Ramagiri,\nAlive and well, asks after your welfare, O helpless one, though separated from you.\nFor those beings whose calamities come easily, this is the first thing to be spoken. <note>Verse 41</note>\n\n<note>Glossary note: \"To her\" (tām); O long-lived one (āyuṣman). The suffix matup is used here for praise, meaning one whose life is worthy because it is spent helping others. \"At my request\" (vacanāt); at the request of my prayer. \"And for your own benefit\" (ātmana upakartum); to fulfill yourself through the act of helping another. Even though this acts as an object for the action of helping, the use of the genitive case 'atmana' is not contradictory, as it implies a relationship of intent. As Bharavi says: \"That wealth is meaningful through which one helps others.\" Similarly, Sriharsha says: \"To help the good, to see wealth, and to travel through the sky.\" Thus, the commentator's claim that there is some other rule here is essentially baseless.</note> Tell her, the beloved, this: O helpless one, your companion, your husband, staying in the hermitages of Ramagiri, or Chitrakuta, is alive. This means he is not dead. He explains the reason for his remaining alive: separated and suffering from the separation, he asks after your welfare. Because the verb 'to ask' (pricchati) implies an object, it here takes two. Indeed, for living beings, whose misfortunes arise so easily, this inquiry about welfare is the very first thing that must be asked.\n\nBody against body, thin against thin,\nHot with burning heat against one burning,\nTearful with tears against one whose eyes are flowing,\nLonging against one who is longing,\n\n<summary>This page provides a grammatical and contextual commentary on verse 41 of the Uttaramegha, focusing on the message the Yaksha sends to his beloved via the cloud, emphasizing his survival and his desire to confirm her well-being.</summary>\n<keywords>Meghaduta, Kalidasa, Sanskrit literature, Ramagiri, separation, message, commentary</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2538,
+ "outputTokens": 654,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.0008077499999999999,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1891,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

@@ -1,0 +1,179 @@
+{
+ "seed": 5606,
+ "positive_control_page": "69b99d043a4a443c39c00775_00158",
+ "same_arm_pages": {
+  "69b99e551f30176bf4d37774_00306": "lite",
+  "6a09ff48fa20006dbaba8ee1_00114": "lite-rerun",
+  "69bd014bf403a9ca2380f091_00054": "lite"
+ },
+ "pages": {
+  "69b99e551f30176bf4d37774_00306": {
+   "T1": "flash",
+   "T2": "lite",
+   "T3": "lite-rerun",
+   "T4": "lite#dup"
+  },
+  "69b99e681f30176bf4d3798a_00155": {
+   "T1": "lite-rerun",
+   "T2": "flash",
+   "T3": "lite"
+  },
+  "69b99e496ed9e04909909f8f_00220": {
+   "T1": "lite-rerun",
+   "T2": "lite",
+   "T3": "flash"
+  },
+  "69b99e856ed9e0490990a0b5_00301": {
+   "T1": "lite",
+   "T2": "flash",
+   "T3": "lite-rerun"
+  },
+  "69b99e8b6ed9e0490990a274_00179": {
+   "T1": "lite-rerun",
+   "T2": "lite",
+   "T3": "flash"
+  },
+  "69b99d043a4a443c39c00775_00147": {
+   "T1": "lite",
+   "T2": "flash",
+   "T3": "lite-rerun"
+  },
+  "69b99d0e6ed9e04909908946_00387": {
+   "T1": "flash",
+   "T2": "lite",
+   "T3": "lite-rerun"
+  },
+  "6a09ff43fa20006dbaba8d78_00193": {
+   "T1": "lite",
+   "T2": "flash",
+   "T3": "lite-rerun"
+  },
+  "6a09ff48fa20006dbaba8ee1_00114": {
+   "T1": "flash",
+   "T2": "lite-rerun#dup",
+   "T3": "lite-rerun",
+   "T4": "lite"
+  },
+  "6a09ff4ffa20006dbaba901a_00263": {
+   "T1": "lite",
+   "T2": "flash",
+   "T3": "lite-rerun"
+  },
+  "6a09ff5dfa20006dbaba9200_00274": {
+   "T1": "lite",
+   "T2": "flash",
+   "T3": "lite-rerun"
+  },
+  "6a31c8b74400787ae5a9d7a7_00042": {
+   "T1": "lite-rerun",
+   "T2": "flash",
+   "T3": "lite"
+  },
+  "69bc7a3f8888fef520b73c1e_00217": {
+   "T1": "flash",
+   "T2": "lite-rerun",
+   "T3": "lite"
+  },
+  "69c1bdc98522835be846bb3a_00032": {
+   "T1": "lite-rerun",
+   "T2": "flash",
+   "T3": "lite"
+  },
+  "69bd00f7f403a9ca2380efbf_00080": {
+   "T1": "lite-rerun",
+   "T2": "flash",
+   "T3": "lite"
+  },
+  "69bd014bf403a9ca2380f091_00054": {
+   "T1": "lite#dup",
+   "T2": "lite",
+   "T3": "flash",
+   "T4": "lite-rerun"
+  }
+ },
+ "text_hash": {
+  "69b99e551f30176bf4d37774_00306": {
+   "T1": "309bf8ad46e463d9",
+   "T2": "ded4f75268219feb",
+   "T3": "136b65262f35c1e9",
+   "T4": "ded4f75268219feb"
+  },
+  "69b99e681f30176bf4d3798a_00155": {
+   "T1": "e3a8368c3de622c2",
+   "T2": "b1485d04fd90521b",
+   "T3": "7b73b7beea457e6e"
+  },
+  "69b99e496ed9e04909909f8f_00220": {
+   "T1": "fbe43be8b5928e60",
+   "T2": "4fcbb65ef08ffcba",
+   "T3": "cf12cae4e4390c02"
+  },
+  "69b99e856ed9e0490990a0b5_00301": {
+   "T1": "ac3994a08edb8845",
+   "T2": "f9ec51eae4d5b540",
+   "T3": "4b5ba6d48ced5598"
+  },
+  "69b99e8b6ed9e0490990a274_00179": {
+   "T1": "74e79a3963bc6287",
+   "T2": "eade59a37e036b84",
+   "T3": "7500607bb808615d"
+  },
+  "69b99d043a4a443c39c00775_00147": {
+   "T1": "2f40dbe1215c6f65",
+   "T2": "bd719442654c5496",
+   "T3": "c79ad315ccb17ccf"
+  },
+  "69b99d0e6ed9e04909908946_00387": {
+   "T1": "954aa383d95d69aa",
+   "T2": "358cbb5f65a02071",
+   "T3": "c30b2e00a718eb1d"
+  },
+  "6a09ff43fa20006dbaba8d78_00193": {
+   "T1": "cd26aa35addcd252",
+   "T2": "2815c603f7aea811",
+   "T3": "c2e49f572d3dae70"
+  },
+  "6a09ff48fa20006dbaba8ee1_00114": {
+   "T1": "fb585d38d3f0dee5",
+   "T2": "34cc02547200926b",
+   "T3": "34cc02547200926b",
+   "T4": "b4d0632479ed01c6"
+  },
+  "6a09ff4ffa20006dbaba901a_00263": {
+   "T1": "ebb40a3c71411926",
+   "T2": "c45b47f3b5491fb0",
+   "T3": "84a02ae3f89fb9e3"
+  },
+  "6a09ff5dfa20006dbaba9200_00274": {
+   "T1": "f41de362c8c388e4",
+   "T2": "ff9602ccc139b847",
+   "T3": "d33f5494683554db"
+  },
+  "6a31c8b74400787ae5a9d7a7_00042": {
+   "T1": "d04da4b61be4f5d8",
+   "T2": "1322f9ce4975316a",
+   "T3": "531422df287dfb14"
+  },
+  "69bc7a3f8888fef520b73c1e_00217": {
+   "T1": "d9c61d7ea4604162",
+   "T2": "4e45bd6028002928",
+   "T3": "9fc38774d06fe340"
+  },
+  "69c1bdc98522835be846bb3a_00032": {
+   "T1": "70445da909ecfe42",
+   "T2": "451cb2b92ee53bdd",
+   "T3": "b2bc2bc6494ced29"
+  },
+  "69bd00f7f403a9ca2380efbf_00080": {
+   "T1": "72b8a2b18d960d88",
+   "T2": "ddf7f1d252a1c7a9",
+   "T3": "cf8a2a0f2b1f6630"
+  },
+  "69bd014bf403a9ca2380f091_00054": {
+   "T1": "d87dc6d8694d5a41",
+   "T2": "d87dc6d8694d5a41",
+   "T3": "08511a76e27c3d0e",
+   "T4": "15c5ec7ec0109ad7"
+  }
+ }
+}

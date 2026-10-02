@@ -1,0 +1,21 @@
+{
+ "id": "69d91e423a50087f7bd9afc5_00214",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: this text continues the commentary on the Vedic sacrifice and the protective nature of the ritual vessels.</meta>\n\n...for the sake of one's own protection. May such a vessel <note>original: \"camasa\"</note> of yours, which is the means of consuming <note>food or sacrificial offerings</note>, never slip away from you during battle. The seer <note>term: rishi</note> who perceives the mantra says: \"Carry that vessel forward.\"\n\n### Hymn 58, Verse 5\n\nI offer with speech, with hearing, and with the mind, the eye of the sacrifice, its beginning, and its face. \nMay the gods, being well-disposed, come to this sacrifice extended by the All-Maker <note>term: Vishvakarman</note>. || 5 ||\n\nWord-for-word analysis:\nThe sacrifice’s; eye; beginning; face; and; with speech; with hearing; with the mind; I offer.\nThis; sacrifice; extended; by the All-Maker; toward; gods; may they come; being well-disposed. || 5 ||\n\nThis verse has been explained previously <note>referring to Atharva Veda 2.35.5</note>. I offer the senses such as the eye and the mind in relation to the sacrifice; I make them devoted to it. The gods, acting as if they are of good mind <note>well-disposed</note>, should come to and attain this mental sacrifice which has been stretched out and expanded by the All-Maker <note>term: Vishvakarman</note>, the creator of the universe. This is the summarized meaning.\n\n### Hymn 58, Verse 6\n\nThose who are the officiating priests <note>term: ritvijah</note> of the gods, and those who are worthy of sacrifice, to whom the portion of the oblation is made; \nmay all those gods, as many as they are, coming to this sacrifice together with their wives, rejoice in the light. || 6 ||\n\nWord-for-word analysis:\nWho; of the gods; officiating priests; who; and; worthy of sacrifice; to whom; oblation; is made; the portion.\nThis; sacrifice; together; with wives; toward; having come; as many as; gods; in light; may they rejoice. || 6 ||\n\nAmong the gods, those who are the officiating priests <note>term: ritvijah</note> are those who perform the sacrifice at the proper time <note>term: ritu</note>. And those who are worthy of sacrifice <note>term: yajniyah</note> are those to whom the sacrifice is offered. For both these types of gods, the oblation <note>term: havya</note> is prepared and given as their allotted portion. As many as there are gods of such measure, may those great gods, along with their respective wives such as Indrani and others, come to this sacrifice and rejoice; may they be satisfied by the acceptance of the oblation.\n\nThis concludes the fourth hymn in the seventh section <note>term: anuvaka</note>.\n\nThe hymn beginning with \"You, O Agni, are the protector of vows\" is used in the offering of clarified butter <note>term: ajya</note> or in the ritual of placing peaceful fuel <note>term: shantasamidhadhane</note> when there is a transgression or omission in the New Moon or Full Moon sacrifices. This is stated by Kaushika in the rules of the collection <note>term: Samhitavidhi</note>—\n\n<summary>This page contains the Sanskrit commentary on the Atharva Veda, focusing on Hymn 58, verses 5 and 6. It describes the internal and external aspects of sacrifice and the invitation of the gods and their wives to partake in the ritual.</summary>\n<keywords>Atharva Veda, sacrifice, Vishvakarman, Agni, ritual commentary, Sanskrit, gods, wives of gods</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2647,
+ "outputTokens": 874,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.00197275,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2107,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

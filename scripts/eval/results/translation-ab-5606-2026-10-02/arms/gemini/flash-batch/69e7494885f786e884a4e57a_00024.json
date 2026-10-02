@@ -1,0 +1,21 @@
+{
+ "id": "69e7494885f786e884a4e57a_00024",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "How can there be any stability? Would you rather not look upon me? <gloss>This is a narrative style</gloss> <note>original: \"Fu\"</note>.\n\n<gloss>\nThe character for \"to cover\" <note>original: \"mao\"</note> follows the radical for \"eye.\"\nPronunciation: \"hu\" to \"dao.\"\nPronunciation: \"bao\" reversed.\n</gloss>\n\nOh, sun! Oh, moon! You look down upon and cover this lower earth. But as for that person, he has gone away and does not love me. \n\nHow can there be any stability? Would you rather not repay my devotion? <gloss>This is a narrative style</gloss> <note>original: \"Fu\"</note>.\n\nOh, sun! Oh, moon! You emerge from the eastern quarter. But as for that person, his reputation for virtue is not good. \n\nHow can there be any stability? He wishes that I could be forgotten. <gloss>This is a narrative style</gloss> <note>original: \"Fu\"</note>.\n\nOh, sun! Oh, moon! From the east you come forth. Oh, father! Oh, mother! You did not nurture me to the end. How can there be any stability? He repays me without following the proper way. <gloss>This is a narrative style. Lady Zhuang Jiang was not answered with affection by Duke Zhuang, so she called out to the sun and moon to complain, and thus composed this poem.</gloss>\n\nThis poem, \"Sun and Moon,\" consists of four stanzas, with six lines in each stanza.\n\n<summary>This page contains the final three stanzas of the poem Ri Yue from the Odes of Bei, expressing a wife's lament over her husband's neglect. The text includes phonetic glosses and a historical note identifying the speaker as Lady Zhuang Jiang complaining about Duke Zhuang of Wei.</summary>\n<keywords>Book of Songs, Shijing, Odes of Bei, Lady Zhuang Jiang, Duke Zhuang of Wei, marriage, abandonment, sun and moon, Classical Chinese poetry</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2159,
+ "outputTokens": 445,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.00120725,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 862,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

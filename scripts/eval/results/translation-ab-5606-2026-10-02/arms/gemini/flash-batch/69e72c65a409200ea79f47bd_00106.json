@@ -1,0 +1,21 @@
+{
+ "id": "69e72c65a409200ea79f47bd_00106",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>This page continues the dialogue between Laozi and the seeker Shi Chengqi from the chapter The Way of Heaven in the Zhuangzi.</meta>\n\nDrinking without limit <note>meaning to be completely immersed in the Tao</note>, <term>Laozi</term> <gloss>Old Master</gloss> remained indifferent and did not respond. The next day, Shi Chengqi appeared again and said:\n\n### Discussion\n\nYesterday I had a stinging criticism for you, but today my heart has truly turned away from it. Why is this so? \n\n<margin>Turning away is like feeling regret.</margin>\n\n<term>Laozi</term> said: Regarding those of clever wisdom and divine holiness, I thought I had broken free from such things. Yesterday, if you had called me an ox, I would have called myself an ox. If you had called me a horse, I would have called myself a horse. \n\n<margin>The word \"stopped\" is used here for stylistic effect.</margin>\n<margin>Falling short.</margin>\n<margin>The word \"method\" is used here for stylistic effect.</margin>\n\nIf the reality is present and someone gives it a name, to refuse that name is to invite disaster twice over. \n\n<margin>To be like this always.</margin>\n<margin>To struggle with them a second time brings disaster upon oneself.</margin>\n\nMy submission is a constant submission. I do not submit because there is something to submit to. \n\n<margin>It is not that one acts because one thinks one should act; submission here is like \"holding to the breast\" or internalizing.</margin>\n\nShi Chengqi moved with a side-long gait like a shadow, avoiding his own reflection, and walked with careful steps.\n\n<margin>Sentence structure note.</margin>\n<margin>What I have practiced.</margin>\n<margin>The appearance of moving with the body turned sideways.</margin>\n<margin>To \"stop\" is the proof of being frugal and exhausted.</margin>\n\n<summary>Shi Chengqi returns to Laozi to express his change of heart, and Laozi explains the freedom found in being indifferent to names and labels. The passage emphasizes natural submission to reality rather than social status or intellectual vanity.</summary>\n<keywords>Laozi, Shi Chengqi, names and reality, submission, wisdom, identity, Taoist philosophy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2121,
+ "outputTokens": 508,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.00129225,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 552,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

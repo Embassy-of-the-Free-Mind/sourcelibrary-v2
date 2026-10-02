@@ -1,0 +1,21 @@
+{
+ "id": "69e72c7da409200ea79f4a01_00053",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>The text continues a discourse on the nature of internal character versus outward appearance, arguing that physical form does not dictate one's humanity or virtue.</meta>\n\n<margin>Both these points are acceptable</margin>\n<margin>Liezi, Yellow Emperor</margin>\n\nOne may lack the heart of a beast, yet because of one's appearance, one is treated with the closeness reserved for one's own kind. The traditions state that those with horns, teeth, claws, who fly, walk, crouch, or run are called birds and beasts. They do not necessarily lack the heart of a human, yet because of their appearance, they are treated with alienation. Fuxi, Nüwa, Shennong, and the sovereigns of the Xia dynasty had bodies like snakes, human faces, ox heads, and tiger noses. They possessed forms that were not human, yet they held the virtues of the great sages. Jie of Xia, Zhou of Shang, Huan of Lu, and Mu of Chu all possessed the features and seven orifices exactly the same as any human, yet they harbored the hearts of beasts. For the common people to rely solely on outward appearance to seek supreme wisdom is to remain far from the truth. The Yellow Emperor fought the Flame Emperor on the plains of Banquan. He commanded bears, leopards, <term>pixiu</term> <gloss>mythical fierce beasts</gloss>, and tigers as his vanguard, while eagles, falcons, and kites served as his banners. This was a case of using strength to command birds and beasts. When Yao appointed Kui to oversee music, striking stones and beating percussion instruments, a hundred beasts danced in sequence. When the <term>Xiaoshao</term> <gloss>a legendary ancient musical composition</gloss> was played in nine movements, the phoenix came to perform its rites.\n\n<summary>This passage contrasts external appearance with internal moral character, citing mythological sage-kings with non-human features alongside tyrannical rulers with human forms to argue that human nature is defined by virtue rather than physical shape.</summary>\n<keywords>Yellow Emperor, Flame Emperor, Banquan, virtue, appearance, nature, Fuxi, Nüwa, sage-kings</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2103,
+ "outputTokens": 459,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.000607125,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 423,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

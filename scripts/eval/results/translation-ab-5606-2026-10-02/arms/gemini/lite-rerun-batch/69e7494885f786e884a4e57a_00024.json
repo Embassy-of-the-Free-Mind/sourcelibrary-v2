@@ -1,0 +1,21 @@
+{
+ "id": "69e7494885f786e884a4e57a_00024",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "How can there be stability? Why do you not look upon me? <gloss>This is a narrative poem.</gloss>\n\n<gloss>\nThe character 冒 is pronounced with the initial of 目 and the final of 呼, combined as a returning sound. <note>Phonetic fanqie spelling</note>\n</gloss>\n\nO Sun, O Moon, you gaze down upon the land below. But this man, he goes away and does not love me. \n\nHow can there be stability? Why do you not answer me? <gloss>This is a narrative poem.</gloss>\n\nO Sun, O Moon, you rise from the east. But this man, his virtuous reputation is not good. \n\nHow can there be stability? How can I ever forget him? <gloss>This is a narrative poem.</gloss>\n\nO Sun, O Moon, from the east you arise. O my father, O my mother, you did not finish raising me. How can there be stability? He does not report back to me. <gloss>This is a narrative poem. Zhuang Jiang was not answered by Duke Zhuang, so she called upon the sun and moon to complain of her plight and composed this poem.</gloss>\n\n<gloss>This poem</gloss>\n\nThe poem \"Sun and Moon\" consists of four stanzas, with six lines per stanza.\n\n<summary>This page contains the poem \"Ri Yue\" (Sun and Moon) from the Odes of Bei, in which the speaker, Lady Zhuang Jiang, laments the neglect of her husband, Duke Zhuang, and expresses her longing for her parents.</summary>\n<keywords>Shijing, Book of Songs, Odes of Bei, Zhuang Jiang, Duke Zhuang, abandonment, longing, classical poetry</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2159,
+ "outputTokens": 370,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.0005473749999999999,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 862,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}
