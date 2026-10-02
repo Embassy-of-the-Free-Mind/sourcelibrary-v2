@@ -495,7 +495,8 @@ async function profileDescribe(base) {
   const walkFile = `${base}.walk.jsonl`, dFile = `${base}.descriptors.jsonl`;
   const done = new Set();
   let spent = 0, calls = 0;
-  for await (const d of readLines(dFile)) { done.add(d.book_id); spent += d.usd || 0; calls += d.input_tokens ? 1 : 0; }
+  // A failed call (429, image server busy) is not done: the next run retries it.
+  for await (const d of readLines(dFile)) { if (d.value) done.add(d.book_id); spent += d.usd || 0; calls += d.input_tokens ? 1 : 0; }
   const todo = [];
   let need = 0;
   for await (const r of readLines(walkFile)) if (r.needs_descriptor) { need++; if (!done.has(r.book_id)) todo.push({ book_id: r.book_id, page_id: r.page_id, page_number: r.page_number, image_url: r.image_url }); }
@@ -532,12 +533,14 @@ async function profileDescribe(base) {
 /** Merge walk + descriptor answers into the profile and count it by language and period. */
 async function profileWrite(base, date, describeInfo) {
   const answers = new Map();
-  let usd = 0, calls = 0, failed = 0;
+  let usd = 0, calls = 0;
+  const failedIds = new Set();
   for await (const d of readLines(`${base}.descriptors.jsonl`)) {
     usd += d.usd || 0; calls += d.input_tokens ? 1 : 0;
-    if (d.value) answers.set(d.book_id, { value: d.value, errors: d.errors });
-    else { failed++; answers.delete(d.book_id); }
+    if (d.value) { answers.set(d.book_id, { value: d.value, errors: d.errors }); failedIds.delete(d.book_id); }
+    else if (!answers.has(d.book_id)) failedIds.add(d.book_id);
   }
+  const failed = failedIds.size;
   // Languages with fewer than LANG_MIN books are pooled as "other".
   const LANG_MIN = 200;
   const langOf = (l) => String(l || 'unknown').split(/[;,]/)[0].trim() || 'unknown';
