@@ -26,6 +26,7 @@ const TR_WRITE = /(?:'translation\.data':\s*(?!null\b|undefined\b|''|\{|regexFil
 
 /** Writers whose text is not a Gemini reading — reason required. */
 const ALLOWED: Record<string, string> = {
+  'scripts/import/sefaria-fit-5560.mjs': 'a published Sefaria e-text, not a Gemini reading — its own text_source / text_edition / alignment block + content_hash (#5560, #5571)',
   'scripts/lib/ocr-loop-guard.mjs': 'the guard; writes only page_revisions',
   'scripts/lib/blank-page-guard.mjs': 'the sibling guard; writes only page_revisions',
   'scripts/lib/syriac-kraken-lane.mjs': 'Kraken (specialist, not Gemini) — its own engine block, checked by missingProvenance',

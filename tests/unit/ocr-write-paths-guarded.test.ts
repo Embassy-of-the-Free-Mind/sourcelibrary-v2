@@ -30,6 +30,7 @@ const WRITE_LINE = /(?:'ocr\.data':\s*(?!null\b|undefined\b|''|\{|regexFilter)[A
 
 /** Files that write the field but not a model's reading of a page image. */
 const ALLOWED: Record<string, string> = {
+  'scripts/import/sefaria-fit-5560.mjs': 'a published Sefaria e-text (not a model reading), cannot loop; written only where a Kraken read of the image verifies it (#5560)',
   'scripts/lib/ocr-loop-guard.mjs': 'the guard itself',
   'scripts/lib/blank-page-guard.mjs': 'the sibling guard; writes only page_revisions',
   'scripts/lib/syriac-kraken-lane.mjs': 'builds the $set for scripts/workers/syriac-kraken-lane.mjs, which runs loopVerdict on the text before calling it (#4883)',
