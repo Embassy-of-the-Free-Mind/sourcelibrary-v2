@@ -1,0 +1,46 @@
+{
+ "generated_at": "2026-10-02T08:30:00.198Z",
+ "gate": {
+  "delta": 0.01,
+  "catastrophic": 0.02
+ },
+ "sample": 100,
+ "scored_pages": 95,
+ "excluded": {
+  "textless": [],
+  "ref_mismatch": [
+   "chinese-cohort-5547-1658bf-p55",
+   "chinese-cohort-5547-16603a-p101",
+   "chinese-cohort-5547-5eb975-p83",
+   "chinese-cohort-5547-9d11ac-p88",
+   "chinese-cohort-5547-dec780-p54"
+  ]
+ },
+ "anchors": [
+  "gemini-3.1-flash-lite",
+  "gemini-3-flash-preview"
+ ],
+ "prereg": "scripts/eval/PREREGISTRATION-paddle-zh-optimize-5600.md",
+ "scorer": "benchmark-score.mjs (--ref=base)",
+ "rows": [
+  {
+   "arm": "base",
+   "config": "#5547 pilot recipe: native, 2 runners, ≤2400 px wide, layout on",
+   "gpu": "L4-1-24G",
+   "n": 95,
+   "scored": 95,
+   "missing": 0,
+   "median_cer": 0.205,
+   "delta_vs_base": 0,
+   "catastrophic": 2,
+   "catastrophic_rate": 0.0211,
+   "loops": 0,
+   "empty": 1,
+   "wlt_vs_base": null,
+   "s_per_page": 3.3519,
+   "eur_per_page": 0.000733,
+   "gate": "baseline",
+   "note": "#5547 pilot throughput (3,422 pages incl. bench; 3.35 s/page on book pages)"
+  }
+ ]
+}
