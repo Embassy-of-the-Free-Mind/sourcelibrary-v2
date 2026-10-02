@@ -9,12 +9,13 @@
 import type { ReactNode } from 'react';
 import ladder from '@/data/quality-error-ladder.json';
 
-type Kind = 'same' | 'wrong' | 'missing' | 'variant' | 'invented';
-type Seg = { text: string; kind: string };
+export type Kind = 'same' | 'wrong' | 'missing' | 'variant' | 'invented';
+export type Seg = { text: string; kind: string };
 type Crop = { x: number; y: number; w: number; h: number };
 type Scan = { image: string; size: number[]; crop: Crop; alt: string };
 
-const KIND_CLASS: Record<Kind, string> = {
+/** Shared with /research/page-errors (its specimens use the same marks). */
+export const KIND_CLASS: Record<Kind, string> = {
   same: '',
   wrong: 'text-accent-rust font-semibold underline decoration-2 underline-offset-4',
   missing: 'bg-amber-100 text-primary line-through decoration-accent-rust decoration-2',
@@ -22,7 +23,7 @@ const KIND_CLASS: Record<Kind, string> = {
   invented: 'text-accent-rust bg-amber-50 underline decoration-wavy decoration-1 underline-offset-4',
 };
 
-function Segments({ segs, lang, dir }: { segs: Seg[]; lang?: string; dir?: string }) {
+export function Segments({ segs, lang, dir }: { segs: Seg[]; lang?: string; dir?: string }) {
   return (
     <p lang={lang} dir={dir} className="text-secondary text-sm leading-relaxed break-words">
       {segs.map((s, i) => (

@@ -1,0 +1,428 @@
+{
+  "_about": "Data for /research/page-errors (#5613), the companion paper to /research/quality. Classes, strata and presence counts are copied from .claude/docs/page-error-taxonomy.md (the 2026-09-25 by-eye study; per-book notes in scripts/eval/results/page-error-taxonomy-2026-09-25/findings/). Counts are PRESENCE: the number of books, of six drawn per stratum, in which a class was seen on at least one page of the pair. They are not rates. 'mech' is the mechanism (1-7, 0 = none of the seven); 'placed: true' marks a class the taxonomy did not assign to a mechanism and this paper did. 'detect' is the state of our instruments on 2026-10-02, checked against scripts/lib and scripts/audit on main. Specimens: every scan crop was opened and read on 2026-10-02 ('read from image'); crop boxes are in the image's own pixels; served text was read from the production database on 2026-10-02 (the I1 specimen from page_revisions, as served until 2026-10-01). Rights were checked against books.image_source.rights_normalized and the source for every crop; two Internet Archive microfilm scans with no named holder were left out. Segment kinds: same; wrong = served, but the scan shows something else; missing = on the scan (or in the source) and absent from what was served; invented = served, with nothing on the leaf behind it.",
+  "study": {
+    "date": "2026-09-25",
+    "books": 78,
+    "strata": 13,
+    "perStratum": 6,
+    "leaves": 156,
+    "readers": 8,
+    "issueRange": "#5131–#5160"
+  },
+  "strata": [
+    { "key": "dense", "name": "Dense prose, 1500–1799", "drawn": "at least 2,600 reading characters, printed, one column", "found": "As intended." },
+    { "key": "multicol", "name": "Two or more columns", "drawn": "the OCR tagged both pages as two or more columns", "found": "Only 2 of 6 are real two-column pages; the rest are unsplit spreads or strips of the facing page tagged as columns." },
+    { "key": "ms", "name": "Manuscripts", "drawn": "the OCR tagged the script as handwritten", "found": "Two Tibetan pecha boards, Gurmukhi, an English secretary hand, a photographed Maya and Spanish manuscript, Latin textualis." },
+    { "key": "short", "name": "Short pages", "drawn": "25–260 reading characters", "found": "Mostly not short. The length field ignores tags and junk; one \"108-character\" page holds 8,100 lines of the character |." },
+    { "key": "illus", "name": "Plates and diagrams", "drawn": "page typed illustration, plate or diagram", "found": "Five real plates, and one text page with a wrong type that turned out to be one leaf away from its text." },
+    { "key": "music", "name": "Music", "drawn": "title or subject mentions music", "found": "2 of 12 leaves carry staff notation; no tablature, no underlaid text. Also astrology and a Psalm commentary." },
+    { "key": "tables", "name": "Tables and indexes", "drawn": "index or table type, or a markdown table in the OCR", "found": "As intended, plus a Syriac grammar paradigm and a hieroglyphic dictionary." },
+    { "key": "greek", "name": "Greek", "drawn": "catalogue language Greek", "found": "2 of 6 are manuscripts catalogued as prints; 2 are parallel-text editions." },
+    { "key": "rtl", "name": "Hebrew, Arabic, Syriac, Persian", "drawn": "a right-to-left catalogue language", "found": "Four manuscripts and one Syriac and French edition; no Rashi script, no rabbinic-Bible layout." },
+    { "key": "cjk", "name": "Chinese, Korean, Tibetan", "drawn": "catalogue language Chinese, Korean or Tibetan", "found": "Three Chinese woodblock prints, two Korean books, one Tibetan pecha board." },
+    { "key": "incun", "name": "Incunabula, 1450–1500", "drawn": "catalogue date 1450–1500", "found": "One is a manuscript; one is a Suetonius catalogued as a German prognostication." },
+    { "key": "c17", "name": "Western print, 1600–1699", "drawn": "catalogue date 1600–1699", "found": "As intended." },
+    { "key": "c19", "name": "Print, 1800–1899", "drawn": "catalogue date 1800–1899", "found": "Three English books, plus Yoruba, Greek and lithographed German." }
+  ],
+  "links": {
+    "leaf": "the image shown is the leaf transcribed",
+    "transcription": "the transcription matches the leaf",
+    "translation": "the English matches the transcription",
+    "display": "the reader is shown what was stored",
+    "record": "the catalogue and derived fields describe the book"
+  },
+  "mechanisms": [
+    { "n": 1, "title": "The model reads what it expects, not what is there", "text": "Faced with a hard or unfamiliar leaf, the model writes a fluent page in the right language and genre: a remembered canonical text, a normalised spelling, a confident expansion of an abbreviation. The translation then turns weak or invented source into fluent English, and notes explain misreads with invented learning. This is the largest family. It cannot be seen from the English alone, and the instinct that makes the model a good reader is the one that makes it a confident fabricator." },
+    { "n": 2, "title": "The page unit is not the leaf", "text": "Unsplit spreads, a strip of the facing page in the frame, three palm-leaf folios on one board, an image one leaf away from its text, a Hebrew book with its pages in reverse. The OCR transcribes a unit that has no single reading order, and everything downstream inherits the confusion." },
+    { "n": 3, "title": "Page furniture and apparatus have nowhere to go", "text": "Running heads, catchwords, signatures, block-hearts, footnote anchors, marginalia, interlinear glosses, plate labels, tables, a later reader's marks. Our page format has a handful of tags for these. The model assigns them wrongly, and the renderer trusts the assignment." },
+    { "n": 4, "title": "The seam", "text": "Catchwords, words split across the page break, and what the translator does with the last clause of a page. Around 30 of the 78 breaks we read had a defect. The harm concentrates there." },
+    { "n": 5, "title": "Two texts on one page", "text": "Facing or interlinear translations, a Latin crib beside the Greek, a Greek quotation inside a Latin commentary, an English source that needs no translation. The pipeline assumes one source language and one target. Where that is false it translates the crib, blends both, translates both, drops one, or paraphrases English into worse English." },
+    { "n": 6, "title": "Self-reported tags are trusted downstream", "text": "The model's own guesses about a page's language, script, columns, page type and page number are read as facts by routing, search filters, sampling, the language attribute a screen reader speaks, and our own page-integrity detectors." },
+    { "n": 7, "title": "The display contract is not enforced at write time", "text": "Unknown tags, broken tags, a whole translation wrapped in a metadata tag, reasoning left in the transcription. Each is stored as written and reaches the reader." },
+    { "n": 0, "title": "Outside the seven", "text": "Ordinary translation faults with a correct transcription, a translation cut short, two panes made from different reads, and metadata derived from bad text. They are listed here so that the count is complete." }
+  ],
+  "classes": [
+    { "id": "I1", "name": "Image one leaf away from its text", "mech": 2, "known": true, "links": ["leaf"], "sees": "The scan beside the text is the previous or next page. The transcription's own page number disagrees with the folio printed on the image.", "seen": { "illus": 1, "music": 1 }, "detect": "yes", "instrument": "Image-hash alignment check (page-alignment.mjs); a second read of the page flagged all 7 known cases in the quality study. The cheaper page-number check was not run on these books.", "issue": 3368, "issues": [4790, 5095], "examples": [{ "book": "69ef2b7985daccce30f2e810", "page": 87, "label": "Day, Music of Southern India (1891)" }, { "book": "69d006cf7d7491182a2325da", "page": 132, "label": "Ray, History of Hindu Chemistry, vol. 2" }], "specimen": "I1" },
+    { "id": "I2", "name": "Duplicate scan, back to back", "mech": 2, "placed": true, "known": true, "links": ["leaf"], "sees": "The same leaf twice in a row; the OCR reads it twice.", "seen": { "c17": 1 }, "detect": "yes", "instrument": "Duplicate-scan check in the page-integrity audit (20 of 20 confirmed by pixel correlation).", "issue": 5056, "examples": [{ "book": "6984e84f99e67a12430e0685", "page": 90, "label": "Philadelphia, or brotherly love (1694)" }] },
+    { "id": "I3", "name": "Spread not split", "mech": 2, "known": true, "links": ["leaf", "transcription"], "sees": "Two printed pages in one image. The text holds one of them and the other is lost, or both are tagged as two columns; the translator sees the facing half and describes it.", "seen": { "dense": 1, "multicol": 2, "tables": 1, "greek": 1, "rtl": 1, "c17": 2 }, "detect": "partly", "instrument": "Spread detection at import catches most printed spreads; microfilmed openings and right-to-left books are split late or backwards.", "issue": 2454, "issues": [3593, 4796], "examples": [{ "book": "6993890274305116d72d0a1c", "page": 208, "label": "Hippocrates, Greek manuscript on microfilm" }, { "book": "6970e3579b09d309d780a24c", "page": 135, "label": "Malvasia, Aelia Laelia Crispis (1683)" }], "specimen": "I3" },
+    { "id": "I4", "name": "Strip of the facing page read as content", "mech": 2, "known": false, "links": ["leaf", "transcription", "translation"], "sees": "A \"second column\" of half-words beside the real text, sometimes translated into a list of English stubs; or the line openings rebuilt into fluent invented Latin.", "seen": { "multicol": 2, "short": 2, "illus": 1, "rtl": 1, "incun": 2 }, "seenNote": "8 books had a strip in the frame; it was mishandled in 7.", "detect": "no", "instrument": "None. A two-column tag on a one-column page is the tell.", "issue": 5131, "examples": [{ "book": "69c786706a0f3d112faf992b", "page": 228, "label": "Dupuy, Condannation des Templiers (1713)" }, { "book": "69f3313f876dd827cbc48932", "page": 45, "label": "Ye camandemetes (Middle English manuscript)" }], "specimen": "I4" },
+    { "id": "I5", "name": "Several leaves in one photograph", "mech": 2, "known": false, "links": ["leaf", "transcription", "translation"], "sees": "Three loose Tibetan folios on a board shown as one page; the next image holds their three versos, so page to page is not a reading order. The OCR mixes or duplicates the leaves.", "seen": { "ms": 2, "cjk": 1 }, "seenNote": "Every Tibetan book in the sample.", "detect": "partly", "instrument": "Where the stored text carries a leaf-break marker the translator keeps the leaves apart; 76,333 cohort pages had no marker on 30 September 2026.", "issue": 5132, "examples": [{ "book": "69e782a4d93c1f60075041e6", "page": 80, "label": "mDo sde brtags sna rgyas pa (Tibetan)" }], "noSpecimen": "The British Library's statement for these scans forbids further copying, so no crop is shown." },
+    { "id": "I6", "name": "Pages in reverse order", "mech": 2, "known": true, "links": ["leaf"], "sees": "Page 16 is the page before page 15; the catchword of 16 opens 15.", "seen": { "multicol": 1 }, "detect": "yes", "instrument": "Catchword-boundary check in the page-integrity audit. It catches this cheaply and was not run on this book.", "issue": 4796, "examples": [{ "book": "6911cf678cb6d2ae494a1061", "page": 15, "label": "Sefer ha-bahir (1651)" }] },
+    { "id": "I7", "name": "Catalogue identity or format wrong", "mech": 6, "known": false, "links": ["record"], "sees": "A \"1561 print\" that is a manuscript; a \"Prognosticon for Leipzig, 1490 [German]\" whose leaves are a Latin Suetonius with commentary. The OCR's own script tag contradicts the record.", "seen": { "greek": 2, "incun": 2 }, "detect": "no", "instrument": "None for format. The OCR's script tag against the catalogue is a free check.", "issue": 5133, "examples": [{ "book": "69dbc9e01040d1d5e20a7b3e", "page": 105, "label": "\"Prognosticon for Leipzig\" (a Suetonius)" }, { "book": "6993895dce15387065946a95", "page": 128, "label": "Strategicon (Bodmer manuscript catalogued as print)" }] },
+    { "id": "O1", "name": "Confabulation on an illegible or unfamiliar leaf", "mech": 1, "known": true, "links": ["transcription"], "sees": "A fluent page in the right language and genre that is not on the leaf: a treatise on divine simplicity where the leaf is a list of remedies. The translation renders it faithfully and the summary confirms it.", "seen": { "multicol": 1, "ms": 1, "illus": 1, "greek": 1, "rtl": 2, "cjk": 1 }, "detect": "partly", "instrument": "A second read of the page finds some garble; a check for described pages catches only the polite version. No check anchors the text to visible words.", "issue": 3591, "issues": [4195, 5004], "examples": [{ "book": "69c1bafc8522835be845bffa", "page": 54, "label": "Sifre madaʿ segulot (Hebrew manuscript)" }, { "book": "6993890274305116d72d0a1c", "page": 209, "label": "Hippocrates, Greek manuscript" }], "specimen": "O1" },
+    { "id": "O2", "name": "Text in the wrong script", "mech": 1, "placed": true, "known": true, "links": ["transcription"], "sees": "Devanagari Sanskrit (\"Homage to Shri Ganesha…\") on a Tibetan biography.", "seen": { "ms": 1 }, "detect": "partly", "instrument": "A book-level audit of page scripts against the catalogue language (#4766) would catch this book; the affected Tibetan cohort is being re-read by a dedicated engine.", "issue": 4523, "examples": [{ "book": "69e787ae4a6785cfd60cccbd", "page": 38, "label": "ratna gling pa'i rnam thar (Tibetan)" }], "noSpecimen": "British Library scan; its rights statement forbids further copying." },
+    { "id": "O3", "name": "A remembered standard text put in place of the leaf", "mech": 1, "known": false, "links": ["transcription", "translation"], "sees": "For a famous text, lines that are not on the leaf and lines on the leaf that are missing: the model recites the version it remembers.", "seen": { "ms": 1, "rtl": 2, "incun": 1 }, "detect": "no", "instrument": "None. A translation much longer than its transcription on a well-known text is the tell.", "issue": 5134, "examples": [{ "book": "69c1bade8522835be845b016", "page": 334, "label": "Pocket-size Jewish prayer book (manuscript)" }, { "book": "6992ce7477d26f9321776f69", "page": 504, "label": "Sri Guru Granth Sahib (1691 manuscript)" }], "specimen": "O3" },
+    { "id": "O4", "name": "Repeated blocks", "mech": 1, "placed": true, "known": false, "links": ["transcription", "translation"], "sees": "The same phrase or paragraph over and over, faithfully translated: \"and the secret of the Shekhinah and the secret of the Shekhinah…\" for 3,500 characters.", "seen": { "ms": 2, "short": 1, "tables": 1, "rtl": 1, "cjk": 1 }, "detect": "yes", "instrument": "A repeated-block check in the page-integrity audit (added after the study); the older word-variety ratio catches only word-level loops.", "issue": 5135, "examples": [{ "book": "69c1bc148522835be846161f", "page": 127, "label": "Tiḳun sheṭarot (Hebrew manuscript)" }, { "book": "69e787a04a6785cfd60cc997", "page": 90, "label": "nyang gter thugs sgrub (Tibetan)" }], "specimen": "O4" },
+    { "id": "O5", "name": "Silent omission inside the page", "mech": 1, "placed": true, "known": false, "links": ["transcription", "translation"], "sees": "Nothing, which is the point. A clause, a line or half a column is gone with no marker, and the sentences either side are fused into one fluent false sentence.", "seen": { "dense": 1, "multicol": 3, "ms": 1, "short": 1, "tables": 1, "greek": 1, "cjk": 1, "incun": 4, "c17": 2 }, "detect": "partly", "instrument": "A check for words the page's own vocabulary list names but its text lacks (added after the study). Most omissions leave no such trace.", "issue": 5136, "examples": [{ "book": "69af0a2069627f8eeaa1b8ac", "page": 317, "label": "Kircher, Mundus subterraneus (1678)" }], "specimen": "O5" },
+    { "id": "O6", "name": "A misread that changes the meaning, carried into fluent English", "mech": 1, "known": false, "links": ["transcription", "translation"], "sees": "A plausible sentence that is wrong: the saint becomes the patient, by-laws become land, sin becomes life throughout a page. Never an uncertainty marker.", "seen": { "dense": 4, "multicol": 3, "ms": 5, "short": 2, "illus": 2, "music": 3, "tables": 3, "greek": 3, "rtl": 3, "cjk": 5, "incun": 6, "c17": 3, "c19": 1 }, "seenNote": "It concentrates at ligatures in Aldine Greek, long s, abbreviation marks in incunabula, minims in textura, Fraktur, every cursive hand, and single characters in Chinese.", "detect": "no", "instrument": "None from text alone. Only a reading against the image finds it.", "issue": 5137, "examples": [{ "book": "69f3313f876dd827cbc48932", "page": 45, "label": "Ye camandemetes (Middle English manuscript)" }, { "book": "69f32e4e876dd827cbc43daa", "page": 38, "label": "Vita S. Facii (Latin manuscript)" }, { "book": "69f33a7b876dd827cbc57e7c", "page": 66, "label": "Legal commonplace book (secretary hand)" }], "specimen": "O6" },
+    { "id": "O7", "name": "Numerals, dates, doses and units", "mech": 1, "known": false, "links": ["transcription", "translation"], "sees": "190 soldiers become 150; five years become \"[several]\"; a dose of two drachms becomes three; Chinese place-value numbers that cannot be recovered from the English.", "seen": { "dense": 1, "ms": 2, "music": 1, "cjk": 3, "incun": 1 }, "detect": "no", "instrument": "None. A check that every number in the English traces to the transcription is free and not built.", "issue": 5138, "examples": [{ "book": "6a878ac1d71f2514794f9e40", "page": 162, "label": "Chilam Balam de Kaua (photographs, 1887)" }, { "book": "69f32e4e876dd827cbc43daa", "page": 38, "label": "Vita S. Facii (Latin manuscript)" }] },
+    { "id": "O8", "name": "Silent normalisation toward the expected", "mech": 1, "known": false, "links": ["transcription"], "sees": "The corrupt reading an editor quotes in order to correct it, silently corrected; variant spellings replaced by standard ones; a grammar's forms swapped for textbook forms; abbreviations expanded without a mark.", "seen": { "dense": 1, "multicol": 1, "ms": 1, "short": 1, "music": 2, "tables": 3, "cjk": 1, "incun": 2 }, "detect": "no", "instrument": "None.", "issue": 5139, "examples": [{ "book": "69b2f3d7a9a500a45e5e8d46", "page": 87, "label": "Canini, Institutiones linguae Syriacae (1554)" }, { "book": "69b52fab1a04ee0f3b4180e9", "page": 494, "label": "Budge, Egyptian Hieroglyphic Dictionary, vol. 2" }], "specimen": "O8" },
+    { "id": "O9", "name": "Conventions flip between adjacent pages", "mech": 1, "placed": true, "known": false, "links": ["transcription"], "sees": "Nothing on one page. Across a break: long s kept, then turned into s, then into f; diplomatic, then expanded; vowel points on one page of an edition and not the next. Search and quotation break.", "seen": { "dense": 3, "rtl": 1, "incun": 2, "c17": 1 }, "detect": "no", "instrument": "None.", "issue": 5140, "examples": [{ "book": "69aec19cdd3c98abc0da86b6", "page": 247, "label": "Browne, Pseudodoxia Epidemica (1658)" }, { "book": "69a99d0a510aaf87d0635bfc", "page": 244, "label": "Patrologia Orientalis II (1907)" }], "specimen": "O9" },
+    { "id": "O10", "name": "A second script on the page dropped or garbled", "mech": 5, "placed": true, "known": false, "links": ["transcription", "translation"], "sees": "The Greek inside a Latin commentary replaced by other Greek or absorbed into the English; Hebrew in Kircher dropped; Yoruba tone marks and Hebrew vowel points lost.", "seen": { "dense": 2, "multicol": 1, "short": 1, "illus": 1, "tables": 2, "incun": 1, "c19": 2 }, "detect": "no", "instrument": "None. The audit counts the languages on a page but not whether each survives.", "issue": 5141, "examples": [{ "book": "6a21985ef11c08f10b202ad4", "page": 226, "label": "Theophrastus with Casaubon (1712)" }, { "book": "69e0138c93b116d24238b125", "page": 396, "label": "Lepsius, Denkmäler (1849)" }] },
+    { "id": "O11", "name": "Page furniture mis-tagged", "mech": 3, "known": false, "links": ["transcription", "display"], "sees": "The running head as the first sentence or as a heading; the catchword as the page's last word and translated; a page number read from show-through, a mount number or a chapter number.", "seen": { "dense": 3, "ms": 2, "short": 2, "illus": 1, "music": 4, "tables": 2, "greek": 4, "rtl": 3, "cjk": 3, "incun": 3, "c17": 3, "c19": 5 }, "detect": "partly", "instrument": "A page-number check against the book's own pagination (added after the study). Running heads, catchwords and signatures are not checked, and our page-integrity detectors read these tags as facts.", "issue": 5142, "examples": [{ "book": "69dbcb161040d1d5e20b1cfc", "page": 158, "label": "Perotti, Cornucopiae (1494)" }, { "book": "6a3cc17fec254ff6cae0cd27", "page": 97, "label": "Zunsheng bajian, vol. 4 (Chinese woodblock)" }] },
+    { "id": "O12", "name": "Marginalia and apparatus dropped, merged or mis-tagged", "mech": 3, "known": false, "links": ["transcription", "translation", "display"], "sees": "A marginal note dropped or merged into the body; a body paragraph tagged as a margin note; a footnote number at a line-end hyphen taken as a margin note, so the split word is doubled.", "seen": { "dense": 4, "multicol": 1, "ms": 2, "music": 1, "tables": 1, "greek": 2, "rtl": 1, "cjk": 2, "incun": 1, "c17": 3, "c19": 2 }, "detect": "no", "instrument": "None.", "issue": 5143, "examples": [{ "book": "69f33a7b876dd827cbc57e7c", "page": 66, "label": "Legal commonplace book (secretary hand)" }, { "book": "69942e97d607f8e57e4b98ab", "page": 98, "label": "Psellos, De operatione daemonum (1688)" }], "specimen": "O12" },
+    { "id": "O13", "name": "A later hand read as the text", "mech": 3, "placed": true, "known": false, "links": ["transcription", "translation"], "sees": "A later reader's pencil marks tagged as insertions; ink doodles given a doctrinal meaning; a library stamp called a printer's mark.", "seen": { "dense": 1, "tables": 1, "c17": 3 }, "detect": "no", "instrument": "None.", "issue": 5144, "examples": [{ "book": "69c870736c6f3cc53c8572dc", "page": 38, "label": "Boehme, Clavis (1642)" }], "specimen": "O13" },
+    { "id": "O14", "name": "Labels and notation described, not transcribed", "mech": 3, "known": false, "links": ["transcription", "translation"], "sees": "The forty Latin labels on a plate exist only inside a paraphrase, unsearchable and unquotable; a staff of music replaced by \"[Diagram showing a musical cadence.]\".", "seen": { "ms": 1, "illus": 3, "music": 3, "c19": 1 }, "detect": "no", "instrument": "None.", "issue": 5145, "examples": [{ "book": "69c809c06c6f3cc53c84624a", "page": 673, "label": "Lavinheta, Opera omnia (1612)" }, { "book": "6fc11c7d-782a-47c3-a855-f3b4415e797b", "page": 119, "label": "Kepler, Harmonices mundi (1619)" }], "specimen": "O14" },
+    { "id": "O15", "name": "Reasoning and page descriptions inside the transcription", "mech": 7, "placed": true, "known": true, "links": ["transcription", "display"], "sees": "\"I am transcribing the right-hand page\", \"The image is a photograph of a manuscript page, likely from…\", inside the text.", "seen": { "ms": 1, "short": 2, "music": 1, "greek": 2 }, "detect": "partly", "instrument": "A reasoning-leak check and a described-page check; the form wrapped in a metadata tag is not counted.", "issue": 5055, "examples": [{ "book": "6a878ac1d71f2514794f9e40", "page": 163, "label": "Chilam Balam de Kaua" }, { "book": "6993890274305116d72d0a1c", "page": 208, "label": "Hippocrates, Greek manuscript" }] },
+    { "id": "O16", "name": "The model's own page tags are wrong", "mech": 6, "known": false, "links": ["record"], "sees": "French on a half-Syriac page; \"Greek\" and \"Ancient Greek\" on facing pages; two columns on a one-column page; an illustration type on a text page.", "seen": { "dense": 1, "multicol": 5, "ms": 4, "illus": 1, "greek": 6, "rtl": 2, "cjk": 2, "c19": 1 }, "detect": "no", "instrument": "None at page level; book-level language checks exist.", "issue": 5146, "examples": [{ "book": "69de100b5cedf736edb84e84", "page": 458, "label": "Lucian, Opera (1545)" }] },
+    { "id": "O17", "name": "Table structure invented or lost", "mech": 3, "known": false, "links": ["transcription", "display"], "sees": "A marginal keyword index fused with the body into a table; a single list doubled into two identical columns; a paradigm's cells scrambled; a row too long, so its last cell is not shown.", "seen": { "multicol": 1, "short": 1, "illus": 1, "music": 1, "tables": 2, "cjk": 1, "c19": 1 }, "detect": "no", "instrument": "None. A table check (ragged rows, duplicate cells) is free and not built.", "issue": 5147, "examples": [{ "book": "69dbcb161040d1d5e20b1cfc", "page": 158, "label": "Perotti, Cornucopiae (1494)" }, { "book": "6911cf678cb6d2ae494a1061", "page": 16, "label": "Sefer ha-bahir (1651)" }], "specimen": "O17" },
+    { "id": "T1", "name": "Translation cut short", "mech": 0, "known": true, "links": ["translation"], "sees": "The English stops a third of the way down the page, or mid-word (\"with water and s\").", "seen": { "multicol": 1, "greek": 2 }, "detect": "yes", "instrument": "Length-ratio check in the page-integrity audit.", "issue": 5055, "examples": [{ "book": "69b21e58dbaba63c46019745", "page": 496, "label": "Plutarch, Moralia (Didot, 1841)" }] },
+    { "id": "T2", "name": "Source left untranslated", "mech": 5, "placed": true, "known": true, "links": ["translation"], "sees": "The original left in place of the English (here, one word on one page).", "seen": { "short": 1 }, "detect": "yes", "instrument": "Echoed-source check in the page-integrity audit.", "issue": 5058, "examples": [] },
+    { "id": "T3", "name": "Translation hidden inside a metadata tag", "mech": 7, "known": false, "links": ["translation", "display"], "sees": "An empty or near-empty page. The translation exists, but it was written inside a metadata tag, and the renderer moves it out of the reading text.", "seen": { "incun": 1, "c17": 1 }, "detect": "yes", "instrument": "New translations are unwrapped at write time (added after the study). A length check reads existing cases as truncation, which implies the wrong repair.", "issue": 5148, "examples": [{ "book": "69b51e1c47b06ecd5818a033", "page": 233, "label": "Agrippa, Armatae militiae (1600)" }], "specimen": "T3" },
+    { "id": "T4", "name": "A page's last section moved to the next page", "mech": 4, "known": true, "links": ["translation"], "sees": "Page N's last section is missing from N and prepended to N+1, so every word is translated somewhere and no completeness check fails.", "seen": { "c19": 1 }, "detect": "yes", "instrument": "Block-drift check (about 3% of in-block boundaries).", "issue": 5021, "examples": [{ "book": "6a3f02bb97e91e1768f68204", "page": 320, "label": "Mullach, Fragmenta philosophorum graecorum" }] },
+    { "id": "T5", "name": "The next page's opening translated twice", "mech": 4, "known": true, "links": ["translation"], "sees": "The next page's first clause finished at the end of this page and repeated at the start of the next; the catchword translated twice.", "seen": { "dense": 2, "music": 1, "tables": 2, "rtl": 1, "c17": 3 }, "detect": "yes", "instrument": "Page-boundary audit of translations.", "issue": 5026, "issues": [5103, 3918], "examples": [{ "book": "6a08551415c643eb1af54b17", "page": 185, "label": "Flaminio, In librum Psalmorum (1545)" }] },
+    { "id": "T6", "name": "Catchwords and split words at the break", "mech": 4, "known": true, "links": ["transcription", "translation"], "sees": "At the break, a negation lost, a split word misjoined into another word, a syllable doubled, or an invented word or ellipsis to bridge a sentence whose verb is on the next page.", "seen": { "dense": 4, "multicol": 2, "ms": 2, "short": 3, "illus": 1, "music": 1, "tables": 2, "greek": 1, "rtl": 1, "cjk": 2, "incun": 4, "c17": 3, "c19": 2 }, "seenNote": "About 30 of 78 breaks had a defect of some kind; 4 more could not be judged because both sides were invented.", "detect": "yes", "instrument": "Catchword checks in the page-integrity audit; a seam-repair pass for batch translation is measured (#5103).", "issue": 5103, "examples": [{ "book": "69b2f3d7a9a500a45e5e8d46", "page": 88, "label": "Canini, Institutiones linguae Syriacae (1554)" }, { "book": "69dbcb161040d1d5e20b1cfc", "page": 159, "label": "Perotti, Cornucopiae (1494)" }], "specimen": "T6" },
+    { "id": "T7", "name": "Fluent English built on garbled source", "mech": 1, "known": false, "links": ["translation"], "sees": "Confident English built on gibberish, on lines the transcription itself marks unclear, on stubs of a facing-page strip, on a repetition loop. Or the inverse: a word-by-word gloss shipped as the page.", "seen": { "ms": 3, "short": 1, "illus": 1, "greek": 1, "rtl": 2, "cjk": 1, "incun": 1 }, "seenNote": "This is the amplifier for the transcription classes above: the translator never declines.", "detect": "no", "instrument": "None. Withholding by default is the policy for whole scripts, not a page-level check.", "issue": 5149, "examples": [{ "book": "6a878ac1d71f2514794f9e40", "page": 162, "label": "Chilam Balam de Kaua (photographs, 1887)" }, { "book": "69e782a4d93c1f60075041e6", "page": 80, "label": "mDo sde brtags sna rgyas pa (Tibetan)" }], "specimen": "T7" },
+    { "id": "T8", "name": "Sense inverted or a qualifier dropped, with a correct transcription", "mech": 0, "known": false, "links": ["translation"], "sees": "Cold and hot drugs reversed; a negation dropped; \"each guest fearing for his own life\" becomes \"fearing for the bridegroom's life\".", "seen": { "dense": 1, "short": 1, "music": 1, "cjk": 3, "c17": 2, "c19": 3 }, "detect": "partly", "instrument": "The monthly source-grounded judge of the quality study finds some, on one sampled page per book. Nothing runs on every page.", "issue": 5150, "examples": [{ "book": "69dea7c3914eeed04ca4b4db", "page": 55, "label": "Journey to the West, vol. 34 (1592)" }] },
+    { "id": "T9", "name": "Quiet omission in the translation", "mech": 0, "known": false, "links": ["translation"], "sees": "Five lines gone between two fluent sentences; a footnote dropped; a commentary replaced by a one-line note. Too small for a length check.", "seen": { "dense": 1, "ms": 1, "short": 2, "greek": 1, "rtl": 2, "incun": 1, "c19": 1 }, "detect": "no", "instrument": "A sentence-count check has been written (sentence-deficit.mjs) but does not yet run on the corpus.", "issue": 5151, "examples": [{ "book": "69c1bade8522835be845b016", "page": 333, "label": "Pocket-size Jewish prayer book (manuscript)" }], "specimen": "T9" },
+    { "id": "T10", "name": "Invented scholarship in notes and glosses", "mech": 1, "known": false, "links": ["translation"], "sees": "Notes that explain a misread with confident, false learning: \"Saint Rotoi (likely a reference to a local feast day)\" where the leaf names St Christopher. The wrong reading arrives footnoted.", "seen": { "ms": 3, "short": 2, "illus": 3, "music": 4, "tables": 2, "greek": 2, "cjk": 2, "incun": 4, "c17": 1, "c19": 1 }, "detect": "no", "instrument": "None checks what a note says.", "issue": 5152, "examples": [{ "book": "69f32e4e876dd827cbc43daa", "page": 38, "label": "Vita S. Facii (Latin manuscript)" }, { "book": "69b1deccca46fa60ea1ee439", "page": 470, "label": "Alexander of Tralles, ed. Puschmann" }], "specimen": "T10" },
+    { "id": "T11", "name": "Parallel edition mishandled", "mech": 5, "known": false, "links": ["translation"], "sees": "A smooth \"translation of the Greek\" that is really the editor's facing Latin, so his printed gaps vanish; a paraphrase of a printed facing English; both columns translated, so the reader gets two English versions.", "seen": { "tables": 1, "greek": 2, "rtl": 1 }, "seenNote": "Every parallel edition in the sample.", "detect": "no", "instrument": "None. Two source languages on most pages of a book is the free signal.", "issue": 5153, "examples": [{ "book": "69b21e58dbaba63c46019745", "page": 495, "label": "Plutarch, Moralia (Didot, 1841)" }, { "book": "69a99d0a510aaf87d0635bfc", "page": 244, "label": "Patrologia Orientalis II (1907)" }] },
+    { "id": "T12", "name": "English source rewritten into other English", "mech": 5, "known": false, "links": ["translation"], "sees": "Burton, Browne, Jonson \"translated\" into abridged, modernised English: \"How Abu Hasan Brake Wind\" becomes \"Broke Wind\", footnotes dropped, commentary condensed.", "seen": { "dense": 1, "multicol": 1, "short": 1, "illus": 1, "c17": 2, "c19": 3 }, "seenNote": "Nearly every English-source book in the sample. Editions after 1820 do not show this panel to readers.", "detect": "yes", "instrument": "Since 30 September 2026 English pages are copied through, not paraphrased, for new translations. Existing paraphrases remain.", "issue": 5154, "issues": [4958], "examples": [{ "book": "69a553c467a3da9e7ba5aaec", "page": 112, "label": "Burton, Thousand Nights and a Night, vol. 5" }, { "book": "69ad657f75811c30866e1cf4", "page": 172, "label": "Ante-Nicene Fathers, vol. 2" }] },
+    { "id": "T13", "name": "Apparatus stripped in translation", "mech": 3, "known": false, "links": ["translation"], "sees": "Four of seven footnotes gone and the rest condensed with their attributions removed; an editor's emendation made meaningless; note numbers changed so the commentary no longer keys to the text.", "seen": { "short": 2, "music": 1, "greek": 1, "rtl": 1, "incun": 3, "c19": 2 }, "detect": "no", "instrument": "None measures whether notes survive.", "issue": 5155, "examples": [{ "book": "699356a983378b7aed7ce7b9", "page": 37, "label": "Shabistari, Gulshan-i Raz, tr. Whinfield" }] },
+    { "id": "T14", "name": "The two panes come from different reads", "mech": 0, "known": false, "links": ["transcription", "translation"], "sees": "The English contains a passage the transcription lacks, translated from the image, from memory or from an earlier read; a translation five times the transcription's length.", "seen": { "short": 1, "illus": 1, "greek": 1, "incun": 2 }, "detect": "no", "instrument": "None asserts that the served English was made from the served transcription.", "issue": 5156, "examples": [{ "book": "69b21e58dbaba63c46019745", "page": 495, "label": "Plutarch, Moralia (Didot, 1841)" }] },
+    { "id": "T15", "name": "Wrong \"continues from previous page\" notes", "mech": 4, "placed": true, "known": false, "links": ["translation", "display"], "sees": "\"Continues from previous page\" at the start of a new section; a note about Coptic on a page with none; the previous page's English repeated inside the note.", "seen": { "illus": 1, "music": 3, "rtl": 1, "cjk": 1, "c17": 1 }, "detect": "no", "instrument": "None.", "issue": 5157, "examples": [{ "book": "6993881574305116d72cef37", "page": 94, "label": "Euclid, Elements (Vat. gr. 190)" }] },
+    { "id": "T16", "name": "Form imposed or lost", "mech": 3, "placed": true, "known": false, "links": ["translation", "display"], "sees": "Manuscript line breaks carried into English prose so it reads as broken verse; verse flattened to prose; running heads made into headings; invented \"PAGE 85\" headings.", "seen": { "multicol": 1, "short": 1, "music": 1, "greek": 1, "rtl": 1, "c19": 6 }, "detect": "no", "instrument": "None.", "issue": 5158, "examples": [{ "book": "69f33c97876dd827cbc5a94f", "page": 121, "label": "Saʿdī, Gulistān (manuscript, 1722)" }] },
+    { "id": "D1", "name": "Markup the renderer does not know, or broken markup", "mech": 7, "known": false, "links": ["display"], "sees": "Raw tags in the reading text (a signature, a page number, a column break); footnote keys written as HTML letters that collide with real tags; a margin note split by an orphan closing tag.", "seen": { "dense": 3, "multicol": 4, "ms": 5, "short": 2, "illus": 4, "music": 4, "tables": 5, "greek": 5, "rtl": 5, "cjk": 3, "incun": 4, "c17": 2, "c19": 3 }, "seenNote": "Readers checked the stored text, not the screen, except where noted.", "detect": "yes", "instrument": "New translations are checked against the closed tag vocabulary at write time (added after the study). Existing pages are not.", "issue": 5159, "examples": [{ "book": "69c870736c6f3cc53c8572dc", "page": 38, "label": "Boehme, Clavis (1642)" }] },
+    { "id": "E1", "name": "Metadata derived from bad text", "mech": 0, "known": true, "links": ["record"], "sees": "Summaries, keywords and index entries derived from invented text: the Hebrew remedy book's summary describes divine unity.", "seen": null, "seenNote": "Not counted; a consequence of every transcription class.", "detect": "no", "instrument": "None in this study.", "issue": null, "examples": [] },
+    { "id": "E2", "name": "Our own measurements are wrong", "mech": 6, "known": false, "links": ["record"], "sees": "A stored length of 108 characters for a page holding 8,100 lines of the character |; a translation length of zero for a page with a translation; strata that mostly were not what their tags said.", "seen": null, "seenNote": "A finding about the sample, not counted per book.", "detect": "no", "instrument": "None. Every count in this paper is by eye for that reason.", "issue": 5160, "examples": [] }
+  ],
+  "specimens": [
+    {
+      "key": "I1", "cls": "I1",
+      "title": "The text of the page before",
+      "book": "C. R. Day, The Music and Musical Instruments of Southern India and the Deccan (London, 1891), printed p. 63",
+      "bookId": "69ef2b7985daccce30f2e810", "page": 87,
+      "image": "https://images.sourcelibrary.org/pages/69ef2b7985daccce30f2e810/0087.jpg",
+      "size": [2000, 2681], "crop": { "x": 220, "y": 200, "w": 1700, "h": 280 },
+      "alt": "Head of a printed page: running title THE MUSIC OF SOUTHERN INDIA, page number 63, and the opening words with a major seventh",
+      "scan": "Printed page 63. It opens \"with a major seventh. A comparison of the examples he gives with songs of India…\".",
+      "served": [
+        { "label": "Transcription", "lang": "en", "segs": [{ "text": "<page-num>62</page-num> … ", "kind": "wrong" }, { "text": "note in the middle of a roulade with which all Hindu music abounds. This is especially the case in the performance…", "kind": "invented" }] }
+      ],
+      "should": { "lang": "en", "segs": [{ "text": "<page-num>63</page-num> … with a major seventh. A comparison of the examples he gives with songs of India will be of great interest…", "kind": "same" }] },
+      "note": "Both records the readers checked carried the text of the page before their image. The transcription's own page number, 62, disagreed with the 63 printed on the scan, which is the cheapest tell. The page was read again from its image on 1 October 2026; the text shown is what was served until then.",
+      "servedOn": "as served until 1 October 2026, from the page's revision history",
+      "credit": { "text": "Scan: Wellesley College Library, digitised by the Internet Archive. Public-domain work; our record has no licence statement from the source.", "href": "https://archive.org/details/musicmusicalinst00dayc" }
+    },
+    {
+      "key": "I3", "cls": "I3",
+      "title": "Two manuscript pages in one frame",
+      "book": "Hippocrates, Greek manuscript on microfilm (catalogued as a 1550 print), image 208",
+      "bookId": "6993890274305116d72d0a1c", "page": 208,
+      "image": "https://images.sourcelibrary.org/pages/6993890274305116d72d0a1c/0208.jpg",
+      "size": [2000, 1368], "crop": { "x": 100, "y": 50, "w": 1800, "h": 1100 },
+      "alt": "A microfilm frame of an open Greek manuscript showing two full pages of minuscule script side by side",
+      "scan": "A microfilm frame of an open codex: two full pages of Greek minuscule, side by side.",
+      "served": [
+        { "label": "Transcription", "lang": "en", "segs": [{ "text": "<meta>The image shows a two-page spread of a Greek manuscript. I am transcribing the right-hand page (folio 109).</meta>", "kind": "invented" }] },
+        { "label": "Transcription, continued", "lang": "grc", "segs": [{ "text": "Συντείνειν δὲ πάνυ τὰ πρὸς τὰς ποίας ταύτας, ὥσπερ ἔφην, καὶ ὁ γελασμὸς τραχὺς δὲ γινόμενος…", "kind": "same" }] }
+      ],
+      "should": { "lang": "en", "segs": [{ "text": "Two records, one for each page, each transcribed in full. ", "kind": "same" }, { "text": "The left page is in no record.", "kind": "missing" }] },
+      "note": "The model says what it is doing and does it: the left page is dropped, and the model's working note is stored inside the transcription (class O15). The readers of 25 September found only a few words of the right page's transcription on the leaf, so even the half that was kept is mostly confabulated (O1). The catalogue calls the book a print (I7).",
+      "servedOn": "read on 2 October 2026",
+      "credit": { "text": "Scan: Bibliothèque nationale de France, Gallica. Reused under Gallica's conditions of use (non-commercial, with credit).", "href": "https://gallica.bnf.fr/ark:/12148/btv1b107231101" }
+    },
+    {
+      "key": "I4", "cls": "I4",
+      "title": "Whole sentences built from line openings",
+      "book": "Pierre Dupuy, Histoire de la condannation des Templiers (1713), printed p. 208",
+      "bookId": "69c786706a0f3d112faf992b", "page": 228,
+      "image": "https://images.sourcelibrary.org/pages/69c786706a0f3d112faf992b/sp69f69640aee36685de864880.jpg",
+      "size": [2000, 2583], "crop": { "x": 1500, "y": 290, "w": 500, "h": 1050 },
+      "alt": "Right edge of a printed Latin page beside a narrow strip of the facing page, which shows only the first two to four letters of each line",
+      "scan": "On the right, the gutter and a strip of the facing page: only the first letters of each line, deti, poſ, quo, & p, qua, exig, libr, & c, Atq, plan, hab, mo, divi, hon, V, Ron, Epi.",
+      "served": [
+        { "label": "Transcription", "lang": "la", "segs": [{ "text": "<column-break/> dent, sed in communi possident, ut in Monasteriis & per Ecclesias, quæ non sunt propriæ, sed exiguae… Atque hæc est Templariorum… Vota hæc, quæ Romani Pontifices & Episcopi exigebant, habebant in se, quod unusquisque in suo ordine & statu securus esset…", "kind": "invented" }] },
+        { "label": "English", "lang": "en", "segs": [{ "text": "These vows, which the Roman Pontiffs and Bishops required, ensured that each man was secure in his own order and state…", "kind": "invented" }] }
+      ],
+      "should": { "lang": "en", "segs": [{ "text": "Nothing. The strip is the edge of the facing page, whose full text is the next record. This page has one column.", "kind": "same" }] },
+      "note": "The model fitted fluent, plausible Latin to the line openings, and the translation renders it as the Templars' rule. The reader then meets the real text of the facing page on the next record, so two versions of it are served, one invented. The transcription also tags this one-column page as two columns.",
+      "servedOn": "read on 2 October 2026",
+      "credit": { "text": "Scan: Bibliotheca Philosophica Hermetica, Embassy of the Free Mind, Amsterdam. Public domain." }
+    },
+    {
+      "key": "O1", "cls": "O1",
+      "title": "A treatise where the leaf has remedies",
+      "book": "Sifre madaʿ segulot (Hebrew manuscript, 18th century), image 54",
+      "bookId": "69c1bafc8522835be845bffa", "page": 54,
+      "image": "https://images.sourcelibrary.org/pages/69c1bafc8522835be845bffa/0054.jpg",
+      "size": [2000, 2629], "crop": { "x": 100, "y": 190, "w": 1800, "h": 330 },
+      "alt": "Hebrew cursive manuscript: a short heading and the first numbered entry of a list, with a numeral in the right margin",
+      "scan": "A heading, לחולי פצעים (\"for those sick with sores\"), then the first of the page's numbered entries, with its numeral in the right margin; the entry contains קח, \"take\".",
+      "served": [
+        { "label": "Transcription", "lang": "he", "dir": "rtl", "segs": [{ "text": "כי אם בעל פשוט יש בו האחדות גמורה ואינו מורכב כלל לא מחלקים ולא ממאוחרים…", "kind": "invented" }] },
+        { "label": "English", "lang": "en", "segs": [{ "text": "For if the Master is simple, there is in Him absolute unity. He is not composed at all, not of parts, nor of \"later\" and \"earlier\"…", "kind": "invented" }] }
+      ],
+      "should": { "lang": "en", "segs": [{ "text": "A list of numbered remedies for sores. None of the served text is on this leaf.", "kind": "same" }] },
+      "note": "The served page is a philosophical treatise on divine simplicity, with numbered sections that mimic the leaf's numbered entries. The English translates it faithfully and the page summary repeats it. Each step is faithful to the one before, so nothing downstream objects. On the next leaf, also remedies, the readers of 25 September found the Yom Kippur confession served.",
+      "servedOn": "read on 2 October 2026",
+      "credit": { "text": "Scan: John Rylands Library, University of Manchester (MS Gaster Hebrew 444). CC BY-NC 3.0.", "href": "https://www.digitalcollections.manchester.ac.uk/iiif/MS-GASTER-HEBREW-00444" }
+    },
+    {
+      "key": "O3", "cls": "O3",
+      "title": "The printed prayer book's word, not the scribe's",
+      "book": "Pocket-size Jewish prayer book (Hebrew manuscript, 15th–16th century), image 334",
+      "bookId": "69c1bade8522835be845b016", "page": 334,
+      "image": "https://images.sourcelibrary.org/pages/69c1bade8522835be845b016/0334.jpg",
+      "size": [2000, 3023], "crop": { "x": 330, "y": 400, "w": 1300, "h": 420 },
+      "alt": "Four lines of Hebrew semi-square script from the Unetanneh Tokef",
+      "scan": "Lines 3–4 read ברעש ומי במגפה מי בדבר ומי ב / ברעב: by earthquake, by plague, by pestilence, by famine.",
+      "served": [
+        { "label": "Transcription", "lang": "he", "dir": "rtl", "segs": [{ "text": "ברעש ומי במגפה מי בדבר ומי ב ברעב", "kind": "same" }] },
+        { "label": "English", "lang": "en", "segs": [{ "text": "who by earthquake and who by plague, ", "kind": "same" }, { "text": "who by pestilence and ", "kind": "missing" }, { "text": "who by famine ", "kind": "same" }, { "text": "and who by drought", "kind": "invented" }] }
+      ],
+      "should": { "lang": "en", "segs": [{ "text": "who by earthquake and who by plague, who by pestilence and who by famine", "kind": "same" }] },
+      "note": "The transcription is right. The English drops the scribe's pestilence (בדבר) and adds drought, which is in the printed liturgy the model remembers, not in this manuscript. A manuscript's variants are why a reader opens it.",
+      "servedOn": "read on 2 October 2026",
+      "credit": { "text": "Scan: John Rylands Library, University of Manchester (MS Gaster Hebrew 144). CC BY-NC 3.0.", "href": "https://www.digitalcollections.manchester.ac.uk/iiif/MS-GASTER-HEBREW-00144" }
+    },
+    {
+      "key": "O4", "cls": "O4",
+      "title": "One phrase, over and over",
+      "book": "Tiḳun sheṭarot (Hebrew manuscript, late 18th–early 19th century), image 127",
+      "bookId": "69c1bc148522835be846161f", "page": 127,
+      "image": "https://images.sourcelibrary.org/pages/69c1bc148522835be846161f/0127.jpg",
+      "size": [2000, 3111], "crop": { "x": 60, "y": 2180, "w": 1900, "h": 640 },
+      "alt": "The last eight lines of a dense Hebrew cursive page, each line different",
+      "scan": "The last eight lines of the leaf, in a dense cursive hand. Every line is different.",
+      "served": [
+        { "label": "Transcription, last lines", "lang": "he", "dir": "rtl", "segs": [{ "text": "ובזה סוד שכינה וסוד שכינה / ובזה סוד שכינה וסוד שכינה / ובזה סוד שכינה וסוד שכינה / ובזה סוד שכינה וסוד שכינה / ובזה סוד שכינה וסוד שכינה", "kind": "invented" }] },
+        { "label": "English, last lines", "lang": "en", "segs": [{ "text": "…and in this the secret of the Shekhinah and the secret of the Shekhinah…", "kind": "invented" }] }
+      ],
+      "should": { "lang": "en", "segs": [{ "text": "A transcription of the leaf's own lines. The book is a formulary of legal deeds; the readers could match practically nothing of the served text to the leaf.", "kind": "same" }] },
+      "note": "The transcription collapses into \"the secret of the Shekhinah\" and \"the gate of understanding\" and ends with one line five times. Its own note calls the page a kabbalistic treatise. The English translates every repetition, about 3,500 characters on this page, and nothing between the two steps notices a loop.",
+      "servedOn": "read on 2 October 2026",
+      "credit": { "text": "Scan: John Rylands Library, University of Manchester (MS Gaster Hebrew 1838). CC BY-NC 3.0.", "href": "https://www.digitalcollections.manchester.ac.uk/iiif/MS-GASTER-HEBREW-01838" }
+    },
+    {
+      "key": "O5", "cls": "O5",
+      "title": "A line and a half dropped, the halves joined",
+      "book": "Athanasius Kircher, Mundus subterraneus, vol. II (1678), printed p. 301",
+      "bookId": "69af0a2069627f8eeaa1b8ac", "page": 317,
+      "image": "https://images.sourcelibrary.org/pages/69af0a2069627f8eeaa1b8ac/0317.jpg",
+      "size": [1958, 3000], "crop": { "x": 935, "y": 240, "w": 680, "h": 330 },
+      "alt": "Top of the right column of a printed Latin page, in italic and roman type, on a herb that turns metals into gold",
+      "scan": "\"…& lac habet in-|ſtar croci (Chelidoniam ego interpretor). Accipe ſuccum de hac herba & pone ſuper argen-|tum, & fiet cuprum.\"",
+      "served": [
+        { "label": "Transcription", "lang": "la", "segs": [{ "text": "Caulem habet rubrum, & violaceum, & lac habet in", "kind": "same" }, { "text": "ſtar croci (Chelidoniam ego interpretor). Accipe ſuccum de hac herba & pone ſuper argen", "kind": "missing" }, { "text": "tum, & fiet cuprum.", "kind": "same" }] },
+        { "label": "English", "lang": "en", "segs": [{ "text": "It has a red and violet stalk, and it has milk ", "kind": "same" }, { "text": "within", "kind": "wrong" }, { "text": ", and it will become copper.", "kind": "same" }] }
+      ],
+      "should": { "lang": "en", "segs": [{ "text": "It has a red and violet stalk, and a milk like saffron (I take it to be celandine). Take the juice of this herb and put it on silver, and it will become copper.", "kind": "same" }] },
+      "note": "The reading skips from in- to -tum and makes one word of the two halves. The English then makes a sentence of the join, and milk becomes copper. Nothing marks the gap. Earlier on the same page the transcription also drops vivum from argentum vivum, so quicksilver becomes silver.",
+      "servedOn": "read on 2 October 2026",
+      "credit": { "text": "Scan: Biblioteca de la Universidad Complutense de Madrid, digitised by Google, via the Internet Archive. Public-domain work.", "href": "https://archive.org/details/athanasiikirche00unkngoog" }
+    },
+    {
+      "key": "O6", "cls": "O6",
+      "title": "Unwedded becomes wedded",
+      "book": "Ye camandemetes, ye vii dedli synes (Middle English manuscript, 15th century), image 45",
+      "bookId": "69f3313f876dd827cbc48932", "page": 45,
+      "image": "https://images.sourcelibrary.org/pages/69f3313f876dd827cbc48932/0045.jpg",
+      "size": [2000, 1858], "crop": { "x": 240, "y": 405, "w": 1050, "h": 128 },
+      "alt": "Two lines of a Middle English manuscript in an Anglicana hand",
+      "scan": "\"is on many maners. Sūtyme vnwedded man / fuyleþ vnwedded woman, & þis is clepid comonli\"",
+      "served": [
+        { "label": "Transcription", "lang": "enm", "segs": [{ "text": "is on many maners· Sūyme ", "kind": "same" }, { "text": "wawedid", "kind": "wrong" }, { "text": " man· fuyley ", "kind": "same" }, { "text": "wawedid", "kind": "wrong" }, { "text": " woman· a ys is depid comoli", "kind": "same" }] },
+        { "label": "English", "lang": "en", "segs": [{ "text": "Sometimes a ", "kind": "same" }, { "text": "wedded", "kind": "wrong" }, { "text": " man defiles a ", "kind": "same" }, { "text": "wedded", "kind": "wrong" }, { "text": " woman, and this is called commonly simple fornication", "kind": "same" }] }
+      ],
+      "should": { "lang": "en", "segs": [{ "text": "Sometimes an unwedded man defiles an unwedded woman, and this is commonly called simple fornication.", "kind": "same" }] },
+      "note": "The next sentence on the leaf says that if one or both are wedded, it is adultery. The English now contradicts itself within four lines, and the gloss it adds (\"sexual sin between unmarried persons\") contradicts the sentence it glosses. On the same page the reading turns synne (sin) into liue (life) throughout, so the English says \"no lechery is lived\".",
+      "servedOn": "read on 2 October 2026",
+      "credit": { "text": "Scan: Houghton Library, Harvard University, under Harvard Library's terms of use.", "href": "https://nrs.lib.harvard.edu/URN-3:FHCL.HOUGH:1187100:MANIFEST:2" }
+    },
+    {
+      "key": "O8", "cls": "O8",
+      "title": "The author's forms replaced by textbook forms",
+      "book": "Angelo Canini, Institutiones linguae Syriacae, Assyriacae atque Thalmudicae (Paris: Estienne, 1554), printed p. 85",
+      "bookId": "69b2f3d7a9a500a45e5e8d46", "page": 87,
+      "image": "https://images.sourcelibrary.org/pages/69b2f3d7a9a500a45e5e8d46/0087.jpg",
+      "size": [2000, 2671], "crop": { "x": 470, "y": 1020, "w": 1270, "h": 430 },
+      "alt": "A printed paradigm table of Aramaic gentilic adjectives in Hebrew letters, headed Abs. Emph. Sing. and Abs. Emph. Plur.",
+      "scan": "The gentilic paradigm. The first row, masculine, prints (unpointed) יהודי · יהודאה · יהודאין · יהודיא, with aleph in the second and third forms.",
+      "served": [
+        { "label": "Transcription, same row", "lang": "arc", "dir": "rtl", "segs": [{ "text": "| mas. | ", "kind": "same" }, { "text": "יְהוּדָיָא | יְהוּדָי | יְהוּדָיֵא | יְהוּדָיִין", "kind": "wrong" }, { "text": " |", "kind": "same" }] }
+      ],
+      "should": { "lang": "arc", "dir": "rtl", "segs": [{ "text": "| mas. | יהודי | יהודאה | יהודאין | יהודיא |", "kind": "same" }] },
+      "note": "The book's spellings with aleph are gone, the standard forms the model knows are in their place, and the forms sit in other columns. In a grammar the forms are the data. The ordinal table above has the same fault, and the translation's transliterations inherit every error.",
+      "servedOn": "read on 2 October 2026",
+      "credit": { "text": "Scan: Duke University Libraries, digitised by the Internet Archive. Public-domain work.", "href": "https://archive.org/details/institutioneslin00cani" }
+    },
+    {
+      "key": "O9", "cls": "O9",
+      "title": "Every long s read as f, on this page only",
+      "book": "Thomas Browne, Pseudodoxia Epidemica (London, 1658), printed p. 227",
+      "bookId": "69aec19cdd3c98abc0da86b6", "page": 247,
+      "image": "https://images.sourcelibrary.org/pages/69aec19cdd3c98abc0da86b6/0247.jpg",
+      "size": [2000, 3088], "crop": { "x": 390, "y": 240, "w": 1360, "h": 170 },
+      "alt": "Three lines of seventeenth-century English roman type with long s",
+      "scan": "\"Ubiquity, and fetching under lines incomprehenſible circularity. / The Pictures of the Ægyptians were more tolerable, and in their ſacred let-/ters more veniably expreſſed the apprehenſion of Divinity.\"",
+      "served": [
+        { "label": "Transcription", "lang": "en", "segs": [{ "text": "Ubiquity, and fetching under lines incomprehen", "kind": "same" }, { "text": "f", "kind": "wrong" }, { "text": "ible circularity. The Pictures of the Ægyptians were more tolerable, and in their ", "kind": "same" }, { "text": "f", "kind": "wrong" }, { "text": "acred letters more veniably expre", "kind": "same" }, { "text": "ff", "kind": "wrong" }, { "text": "ed the apprehen", "kind": "same" }, { "text": "f", "kind": "wrong" }, { "text": "ion of Divinity.", "kind": "same" }] }
+      ],
+      "should": { "lang": "en", "segs": [{ "text": "incomprehensible … sacred … expressed … apprehension (or ſ kept throughout: one convention for the book)", "kind": "same" }] },
+      "note": "On the page before, the same book's transcription writes s for every long s. A search for \"sacred\" finds one page and not the other, and a quotation copied from this page is wrong in every word with an s. The English panel quietly repairs it, so a reader who never opens the transcription does not see the fault.",
+      "servedOn": "read on 2 October 2026",
+      "credit": { "text": "Scan: Wellcome Collection, via the Internet Archive. Public Domain Mark.", "href": "https://archive.org/details/b30324828" }
+    },
+    {
+      "key": "O12", "cls": "O12",
+      "title": "A body paragraph filed as a margin note",
+      "book": "Legal commonplace book, 1574–1639 (English secretary hand), fol. 27",
+      "bookId": "69f33a7b876dd827cbc57e7c", "page": 66,
+      "image": "https://images.sourcelibrary.org/pages/69f33a7b876dd827cbc57e7c/0066.jpg",
+      "size": [2000, 2631], "crop": { "x": 230, "y": 60, "w": 1760, "h": 840 },
+      "alt": "The first paragraph of a manuscript page in secretary hand, opening with a large display initial Y, inside the main text block",
+      "scan": "The page's first paragraph, inside the main text block with a large initial: \"Yf the Lord by fine will graunte the like lande to a man & his heires… then the heire at the next court in pformaunce of the said will doe graunte them by coppie…\". The page has no marginal note.",
+      "served": [
+        { "label": "Transcription", "lang": "en", "segs": [{ "text": "<margin>", "kind": "invented" }, { "text": "If the Lord by fine will graunte the ", "kind": "same" }, { "text": "his", "kind": "wrong" }, { "text": " lande to a man & his heires… then the heire at the next court in ", "kind": "same" }, { "text": "presence of the law", "kind": "wrong" }, { "text": " will doe graunte them by coppie accordingly…", "kind": "same" }, { "text": "</margin>", "kind": "invented" }] }
+      ],
+      "should": { "lang": "en", "segs": [{ "text": "Yf the Lord by fine will graunte the like lande to a man & his heires… then the heire at the next court in pformaunce of the said will doe graunte them by coppie accordinglie…", "kind": "same" }] },
+      "note": "Tagged as a margin note, the opening rule is styled as apparatus beside the text it opens. Inside it, the heir's grant \"in performance of the said will\" becomes a grant \"in presence of the law\", and the rule loses the will it turns on. Further down, by-laws \"set at liberty\" become land \"lost at liberty\".",
+      "servedOn": "read on 2 October 2026",
+      "credit": { "text": "Scan: Harvard Law School Library, Harvard University, under Harvard Library's terms of use.", "href": "https://nrs.lib.harvard.edu/URN-3:HLS.LIBR:33692915:MANIFEST:2" }
+    },
+    {
+      "key": "O13", "cls": "O13",
+      "title": "A reader's doodle given a doctrine",
+      "book": "Jacob Boehme, Clavis ofte sleutel (1642), printed p. 31",
+      "bookId": "69c870736c6f3cc53c8572dc", "page": 38,
+      "image": "https://images.sourcelibrary.org/pages/69c870736c6f3cc53c8572dc/0038.jpg",
+      "size": [2000, 2337], "crop": { "x": 200, "y": 1120, "w": 1650, "h": 320 },
+      "alt": "End of a printed Dutch paragraph, then hand-drawn ink signs for Mercury and a struck-through Jupiter and the letters NB before the printed heading DE VI. EYGENSCHAP",
+      "scan": "The end of §117, then, in a later reader's ink, a Mercury sign, a struck-through Jupiter sign and \"NB\", before the printed heading DE VI. EYGENSCHAP.",
+      "served": [
+        { "label": "Transcription", "lang": "nl", "segs": [{ "text": "<insert>NB</insert> <image-desc … significance=\"high\">Handwritten astrological/alchemical symbols for Mercury and Jupiter (or a modified cross) preceding the heading.</image-desc>", "kind": "same" }] },
+        { "label": "English", "lang": "en", "segs": [{ "text": "<insert>Note</insert> <note>Handwritten alchemical symbols for Mercury and Jupiter appear here, ", "kind": "same" }, { "text": "signaling the transition to the next stage of cosmic development.", "kind": "invented" }, { "text": "</note>", "kind": "same" }] }
+      ],
+      "should": { "lang": "en", "segs": [{ "text": "A note that a later reader drew these signs in ink, kept apart from the printed text and not interpreted.", "kind": "same" }] },
+      "note": "The transcription marks the signs as an insertion of high significance. The English then gives them a meaning in Boehme's system. A reader cannot tell that the interpretation belongs to neither Boehme nor the annotator.",
+      "servedOn": "read on 2 October 2026",
+      "credit": { "text": "Scan: Bibliotheca Philosophica Hermetica, Embassy of the Free Mind, Amsterdam. Public domain." }
+    },
+    {
+      "key": "O14", "cls": "O14",
+      "title": "The labels of a plate exist only as a paraphrase",
+      "book": "Bernardus de Lavinheta, Opera omnia (Cologne, 1612), printed p. 657",
+      "bookId": "69c809c06c6f3cc53c84624a", "page": 673,
+      "image": "https://images.sourcelibrary.org/pages/69c809c06c6f3cc53c84624a/sp69f71626a971c4a8e969ff1b.jpg",
+      "size": [2000, 2992], "crop": { "x": 190, "y": 270, "w": 1420, "h": 720 },
+      "alt": "Top of a woodcut tree diagram: a sun roundel lettered xps, deus, ens, hō, banners reading Iudicium and Generale, and roundels on the right and left branches",
+      "scan": "A roundel lettered xps · deus · ens · hō; banners Iudicium, Generale, \"Venite benedicti patris mei percipite\", \"Ite maledicti in ignem eternum\"; boxes Ad dexteram, Ad sinistram; roundels perfectum et imperfectum, Imperfectum et damnatum.",
+      "served": [
+        { "label": "Transcription", "lang": "en", "segs": [{ "text": "<image-desc>… a sun-like emblem contains the names \"Deus\", \"ho\" (homo), and ", "kind": "same" }, { "text": "\"Iesus\"", "kind": "wrong" }, { "text": " with \"XPS\" in the center. Two banners extend from the top: \"Iudicium\" on the left and \"Generale\" on the right… ", "kind": "same" }, { "text": "\"Imperfectum et imperfectum\"", "kind": "wrong" }, { "text": "…</image-desc>", "kind": "same" }] }
+      ],
+      "should": { "lang": "la", "segs": [{ "text": "The labels as text, under the description: xps · deus · ens · hō | Iudicium · Generale | Venite benedicti patris mei percipite | Ite maledicti in ignem eternum | ", "kind": "same" }, { "text": "Ad dexteram · Ad sinistram", "kind": "missing" }, { "text": " | perfectum et imperfectum · Imperfectum et damnatum | …", "kind": "same" }] },
+      "note": "About forty printed labels are on this plate. None is transcribed as text, so the Latin cannot be searched or quoted. Inside the paraphrase, ens is read as Iesus, the damned side's \"damnatum\" is lost, and the English builds on the misreads.",
+      "servedOn": "read on 2 October 2026",
+      "credit": { "text": "Scan: Bibliotheca Philosophica Hermetica, Embassy of the Free Mind, Amsterdam. Public domain." }
+    },
+    {
+      "key": "O17", "cls": "O17",
+      "title": "A marginal index fused with the text into a table",
+      "book": "Niccolò Perotti, Cornucopiae linguae latinae (Venice, 1494), leaf after fol. LIX",
+      "bookId": "69dbcb161040d1d5e20b1cfc", "page": 158,
+      "image": "https://images.sourcelibrary.org/pages/69dbcb161040d1d5e20b1cfc/0158.jpg",
+      "size": [2000, 2949], "crop": { "x": 250, "y": 200, "w": 1750, "h": 380 },
+      "alt": "Top of an incunable page: a column of marginal keywords on the left beside dense roman text, with a faint reversed numeral showing through at the head",
+      "scan": "A column of marginal keywords (Pellio, Pellicula, Pelliceum, Verſipellis, Pellis Aluta, Paſceolus, Alutamen) beside running text. The faint reversed numeral at the head is the recto's LIX showing through; this page has no folio.",
+      "served": [
+        { "label": "Transcription", "lang": "la", "segs": [{ "text": "<page-num>XLI</page-num>", "kind": "wrong" }, { "text": " <columns>2</columns> ", "kind": "wrong" }, { "text": "| Pellio | de quo post dicemus: & Pellicula diminutiuum: & Pelliceu quod ex pelle est: & ", "kind": "same" }, { "text": "Verripellis", "kind": "wrong" }, { "text": " fallax |", "kind": "same" }, { "text": " | Pellicula | De quo dicemus inferius…", "kind": "same" }] }
+      ],
+      "should": { "lang": "la", "segs": [{ "text": "The text as running prose, with the keywords as marginal notes; no page number; Versipellis.", "kind": "same" }] },
+      "note": "The table pairs each keyword with one line of text, an accident of line height. The body is cut into 66 rows, and the English keeps the table but puts whole paragraphs into three of its cells. At the foot of the page the negation in \"nõ | misericordia est\" is lost at the break (T6), so the next page says the opposite of Perotti.",
+      "servedOn": "read on 2 October 2026",
+      "credit": { "text": "Scan: Bayerische Staatsbibliothek, Munich (bsb00057899). Public Domain Mark.", "href": "https://www.digitale-sammlungen.de/en/view/bsb00057899" }
+    },
+    {
+      "key": "T6", "cls": "T6",
+      "title": "A word split at the break becomes another word",
+      "book": "Angelo Canini, Institutiones linguae Syriacae (1554), printed p. 84",
+      "bookId": "69b2f3d7a9a500a45e5e8d46", "page": 88,
+      "image": "https://images.sourcelibrary.org/pages/69b2f3d7a9a500a45e5e8d46/0088.jpg",
+      "size": [2000, 2588], "crop": { "x": 140, "y": 40, "w": 1810, "h": 160 },
+      "alt": "Head of a printed Latin page: running title INSTIT. and page 84, first line mininam habent, Aleph vltimum vel He mutatur in",
+      "scan": "The first line of the page: \"mininam habent, Aleph vltimum vel He mutatur in\". The previous page ends \"quæ formã fœ-\".",
+      "served": [
+        { "label": "English, end of the previous page", "lang": "en", "segs": [{ "text": "Otherwise, in feminine and heteroclite nouns that have the feminine form...", "kind": "same" }] },
+        { "label": "Transcription, this page", "lang": "la", "segs": [{ "text": "minimam", "kind": "wrong" }, { "text": " habent, Aleph vltimum vel He mutatur in Thau…", "kind": "same" }] },
+        { "label": "English, this page", "lang": "en", "segs": [{ "text": "have a ", "kind": "same" }, { "text": "minimum [signifier]", "kind": "invented" }, { "text": ", the final aleph or he is changed into thau…", "kind": "same" }] }
+      ],
+      "should": { "lang": "en", "segs": [{ "text": "…in feminine and heteroclite nouns that have the feminine form, the final aleph or he is changed into thau…", "kind": "same" }] },
+      "note": "The word fœminam is split across the page break. The previous page's English already used the whole word. This page's reading turns the second half into minimam, and the translator invents a bracketed noun to make sense of it, so the condition of the rule is lost.",
+      "servedOn": "read on 2 October 2026",
+      "credit": { "text": "Scan: Duke University Libraries, digitised by the Internet Archive. Public-domain work.", "href": "https://archive.org/details/institutioneslin00cani" }
+    },
+    {
+      "key": "T3", "cls": "T3",
+      "title": "A full translation the reader cannot see",
+      "book": "Heinrich Cornelius Agrippa, Opera (1600), book II, printed p. 203",
+      "bookId": "69b51e1c47b06ecd5818a033", "page": 233,
+      "image": "https://images.sourcelibrary.org/pages/69b51e1c47b06ecd5818a033/0233.jpg",
+      "size": [1158, 1963], "crop": { "x": 60, "y": 30, "w": 1060, "h": 200 },
+      "alt": "Head of a printed Latin page: running title LIBER SECVNDVS, page 203, and the opening lines of the text",
+      "scan": "A full page of Latin text, which opens \"quæ in eo ſunt, imperium habens ipſe temporum autor, à quo dies & annus, frigus & calor…\".",
+      "served": [
+        { "label": "English, as stored", "lang": "en", "segs": [{ "text": "<header>Book Two</header> ", "kind": "same" }, { "text": "<meta>continues from previous page: ", "kind": "invented" }, { "text": "...as having power over the things within it, being itself the author of times, from whom come day and year, cold and heat… [the whole page] …have conceived twenty-eight mansions of the Moon", "kind": "same" }, { "text": "</meta>", "kind": "invented" }] },
+        { "label": "English, as the reader sees it", "lang": "en", "segs": [{ "text": "Book Two", "kind": "same" }, { "text": " [the rest of the page]", "kind": "missing" }] }
+      ],
+      "should": { "lang": "en", "segs": [{ "text": "The same English, outside the wrapper, as the page's reading text.", "kind": "same" }] },
+      "note": "The model wrote the whole page inside a \"continues from previous page\" note. The reader's renderer moves every such note out of the reading text, so the page shows a heading and nothing else. A length check reads the page as a truncated translation, and re-translating it is the wrong repair. New translations are now unwrapped at write time.",
+      "servedOn": "read on 2 October 2026",
+      "credit": { "text": "Scan: Bayerische Staatsbibliothek, Munich (bsb11109445). No copyright, non-commercial use only (NoC-NC 1.0).", "href": "https://www.digitale-sammlungen.de/de/view/bsb11109445" }
+    },
+    {
+      "key": "T7", "cls": "T7",
+      "title": "Confident English from lines marked unclear",
+      "book": "Libro de Chilam Balam de Kaua (manuscript, photographed 1887), mount 161",
+      "bookId": "6a878ac1d71f2514794f9e40", "page": 162,
+      "image": "https://images.sourcelibrary.org/pages/6a878ac1d71f2514794f9e40/spl4cs-0162.jpg",
+      "size": [1200, 1671], "crop": { "x": 90, "y": 250, "w": 840, "h": 340 },
+      "alt": "Six very faded lines of handwritten Yucatec Maya at the top of a photographed manuscript page",
+      "scan": "Six very faded lines of Maya at the top of the leaf. Only scattered words can be made out.",
+      "served": [
+        { "label": "Transcription", "lang": "yua", "segs": [{ "text": "<unclear>u cilich Colebil, uai e yan ti chich hopis lay</unclear> <unclear>u kaba nil Ca yumil ti Dios Caix yutz</unclear> <unclear>belonten tu yichal Ca cilich Colebil ti suhuy Maria</unclear>…", "kind": "same" }] },
+        { "label": "English", "lang": "en", "segs": [{ "text": "the Holy Lady. Here are the five holy portions of the name of our Father God. May she be favorable to us, our Holy Lady, the Virgin Mary. Here, because of the nine pieces that were our Lord Jesus, true God, in the sixth month…", "kind": "invented" }] }
+      ],
+      "should": { "lang": "en", "segs": [{ "text": "The English marked as uncertain, or no English for these lines: the transcription itself marks every one of them unclear.", "kind": "same" }] },
+      "note": "The transcription is honest about these lines and the translation ignores it. The reader gets definite English with no sign that it is a guess at a guess. Lower on the same leaf the underlined number of soldiers reads as 190 on the photograph; the transcription and the English both give 150 (O7).",
+      "servedOn": "read on 2 October 2026",
+      "credit": { "text": "Scan: Courtesy of L. Tom Perry Special Collections, Harold B. Lee Library, Brigham Young University. Public domain.", "href": "https://contentdm.lib.byu.edu/digital/collection/p15999coll16/id/83705" }
+    },
+    {
+      "key": "T10", "cls": "T10",
+      "title": "St Christopher becomes Saint Rotoi, with a footnote",
+      "book": "Vita S. Facii de Cremona (Latin manuscript, 14th century), fol. 19",
+      "bookId": "69f32e4e876dd827cbc43daa", "page": 38,
+      "image": "https://images.sourcelibrary.org/pages/69f32e4e876dd827cbc43daa/0038.jpg",
+      "size": [2000, 2930], "crop": { "x": 100, "y": 1400, "w": 1430, "h": 190 },
+      "alt": "Three lines of Gothic textualis from a Latin manuscript, with abbreviations",
+      "scan": "\"…habuit a die s[an]c[t]i xpofori p[re]terita fuerunt V / anni…\": she had had it since the feast of St Christopher, and five years had passed.",
+      "served": [
+        { "label": "Transcription", "lang": "la", "segs": [{ "text": "habuit a die sancti ", "kind": "same" }, { "text": "rotoi", "kind": "wrong" }, { "text": " et preca fuerunt ", "kind": "same" }, { "text": "V", "kind": "missing" }, { "text": " anni", "kind": "same" }] },
+        { "label": "English", "lang": "en", "segs": [{ "text": "And she had this infirmity from the day of Saint ", "kind": "same" }, { "text": "Rotoi", "kind": "wrong" }, { "text": " <note>likely a reference to a local feast day</note>", "kind": "invented" }, { "text": ", and ", "kind": "same" }, { "text": "[several]", "kind": "wrong" }, { "text": " years had passed", "kind": "same" }] }
+      ],
+      "should": { "lang": "en", "segs": [{ "text": "She had had this infirmity since the feast of St Christopher, and five years had passed.", "kind": "same" }] },
+      "note": "A saint is invented from a misread abbreviation, and a note explains him. The numeral V is dropped and the English fills the gap with \"[several]\" (O7). The first line of this page has the same pattern: \"at the tomb of this brother, and at once he was healed\" is served as \"where Brother Facius was healed\", so the saint becomes the patient.",
+      "servedOn": "read on 2 October 2026",
+      "credit": { "text": "Scan: Houghton Library, Harvard University, under Harvard Library's terms of use.", "href": "https://nrs.lib.harvard.edu/URN-3:FHCL.HOUGH:10255239:MANIFEST:2" }
+    },
+    {
+      "key": "T9", "cls": "T9",
+      "title": "Five lines lost in translation only",
+      "book": "Pocket-size Jewish prayer book (Hebrew manuscript, 15th–16th century), image 333",
+      "bookId": "69c1bade8522835be845b016", "page": 333,
+      "image": "https://images.sourcelibrary.org/pages/69c1bade8522835be845b016/0333.jpg",
+      "size": [2000, 3140], "crop": { "x": 430, "y": 1480, "w": 1340, "h": 640 },
+      "alt": "Five lines of Hebrew semi-square script from the Unetanneh Tokef",
+      "scan": "Lines 11–15: \"…כבקרת רועה עדרו / ומעביר צאנו תחת שבטו כן תעביר / ותספור ותמנה ותפקוד נפש כל חי / ותחתוך קצבה לכל הבריות ותכתוב / את גזר דינם…\", the shepherd simile and the verdict.",
+      "served": [
+        { "label": "Transcription", "lang": "he", "dir": "rtl", "segs": [{ "text": "כבקרת רועה עדרו ומעביר צאנו תחת שבטו כן תעביר ותספור ותמנה ותפקוד נפש כל חי ותחתוך קצבה לכל הבריות ותכתוב את גזר דינם", "kind": "same" }] },
+        { "label": "English", "lang": "en", "segs": [{ "text": "And all who enter the world shall pass before You like members of the flock. ", "kind": "same" }, { "text": "[As a shepherd seeks out his flock and makes his sheep pass under his staff, so You make pass, count, number and visit every living soul, fix the term of every creature and write their verdict.] ", "kind": "missing" }, { "text": "On Rosh Hashanah it is inscribed…", "kind": "same" }] }
+      ],
+      "should": { "lang": "en", "segs": [{ "text": "The English of all five lines, with the shepherd simile and the verdict.", "kind": "same" }] },
+      "note": "The transcription is complete. The English joins the sentences either side of the gap so smoothly that nothing looks missing. A length check does not fire, because the loss is about a fifth of the page.",
+      "servedOn": "read on 2 October 2026",
+      "credit": { "text": "Scan: John Rylands Library, University of Manchester (MS Gaster Hebrew 144). CC BY-NC 3.0.", "href": "https://www.digitalcollections.manchester.ac.uk/iiif/MS-GASTER-HEBREW-00144" }
+    }
+  ]
+}
