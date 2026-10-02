@@ -61,9 +61,9 @@ import { withMongo } from '../lib/mongo.mjs';
 import { holdBook, releaseBook, isHeld } from '../lib/pipeline-hold.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import {
-  translationStaleness, withholdUpdate, translationText, WITHHOLD_REASONS, WITHHOLD_REVISION_SOURCE,
+  translationStaleness, withholdUpdate, withholdPin, translationText, WITHHOLD_REASONS, WITHHOLD_REVISION_SOURCE,
 } from '../lib/stale-translation.mjs';
-import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
+import { recountBook } from '../lib/page-counts.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { getScopeSpendUsd, readScopeEnvelopes } from '../lib/spend-guard.mjs';
 import { RUNS_COLLECTION } from '../lib/translate-batch-seam.mjs';
@@ -358,14 +358,13 @@ async function withholdBook(db, b) {
   if (saved !== targets.length) throw new Error(`revisions ${saved} != ${targets.length} — nothing withheld`);
   const now = new Date();
   const ops = targets.map((p) => ({ updateOne: {
-    filter: { id: p.id, ...(typeof p.translation === 'string' ? { translation: p.translation } : { 'translation.data': p.translation.data }) },
+    filter: { id: p.id, ...withholdPin(p) },
     update: withholdUpdate(p, WITHHOLD_REASONS.STALE_AFTER_REOCR, now),
   } }));
   let modified = 0;
   for (let i = 0; i < ops.length; i += 500) modified += (await db.collection('pages').bulkWrite(ops.slice(i, i + 500), { ordered: false })).modifiedCount;
   // Counters, featured quotes, and the Supabase mirror — the same three follow-ups the sweep does.
-  const [counts] = await db.collection('pages').aggregate(buildVisiblePageCountPipeline(b.id)).toArray();
-  if (counts) await db.collection('books').updateOne({ id: b.id }, { $set: { pages_count: counts.total, pages_ocr: counts.with_ocr, pages_translated: counts.with_translation, pages_translatable: counts.translatable, updated_at: now } });
+  await recountBook(db, b.id, { reason: SWEEP, now });
   const nums = new Set(targets.map((p) => p.page_number));
   const book = await db.collection('books').findOne({ id: b.id }, { projection: { 'reading_summary.quotes': 1 } });
   const quotes = book?.reading_summary?.quotes;
@@ -582,7 +581,7 @@ async function echofix(db) {
     const saved = await saveRevisionsBeforeOverwrite(db, ids, 'translation', { reason: 'echo-shift-5435', keepMeta: true });
     if (saved !== ids.length) { log(`  ${b.id}: revisions ${saved} != ${ids.length} — skipped`); continue; }
     const now = new Date();
-    const ops = [...victims.values()].map((p) => ({ updateOne: { filter: { id: p.id, 'translation.data': p.translation.data }, update: withholdUpdate(p, 'echo_shift_block', now) } }));
+    const ops = [...victims.values()].map((p) => ({ updateOne: { filter: { id: p.id, ...withholdPin(p) }, update: withholdUpdate(p, 'echo_shift_block', now) } }));
     const r = await db.collection('pages').bulkWrite(ops, { ordered: false });
     await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'echo-shift-withheld', detail: { refused: nums, withheld: r.modifiedCount, pages: [...victims.values()].map((p) => p.page_number).sort((a, c) => a - c) } });
     b.echo_withheld = (b.echo_withheld || 0) + r.modifiedCount; b.echo_prev_phase = b.phase; b.phase = 'withheld'; delete b.run_id;

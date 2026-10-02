@@ -46,6 +46,7 @@ const ALLOWED: Record<string, string> = {
   'scripts/maintenance/fix-h13-stragglers.mjs': 'moves stored text; introduces no new text',
   'scripts/maintenance/restore-refused-translations-5105.mjs': 'restores text from page_revisions; the original writer stamped it',
   'scripts/maintenance/withhold-stale-translations.mjs': 'removes text; writes none',
+  'scripts/lib/stale-translation.mjs': 'withholdPin() builds the update FILTER that pins a withhold to the judged text; writes none',
   'scripts/split-book.mjs': 'splits stored text across new page docs',
   'scripts/migration/backfill-ocr-near-complete.mjs': 'backfills counters from stored text',
   'scripts/migration/add-page-translations-withheld.mjs': 'migration of stored text',

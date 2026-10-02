@@ -460,6 +460,18 @@ export function withholdUpdate(page, reason, now = new Date()) {
 }
 
 /**
+ * The filter clause that pins a withhold to the translation that was judged: if
+ * another writer retranslated the page since it was read, the filter misses and
+ * the page is left alone. Pin on whichever shape the page has — on a legacy
+ * bare-string translation `'translation.data': undefined` matches nothing and
+ * the write would silently skip.
+ */
+export function withholdPin(page) {
+  const tr = page?.translation;
+  return typeof tr === 'string' ? { translation: tr } : { 'translation.data': tr?.data };
+}
+
+/**
  * The inverse of `withholdUpdate`. The text is not on the page, so a caller has
  * to supply it — from the `page_revisions` snapshot, which is where it lives.
  * That asymmetry is the point: there is exactly one place holding the text, and
