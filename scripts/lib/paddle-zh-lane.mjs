@@ -189,6 +189,9 @@ export function ocrSetFields(text, { run, now = new Date(), secs = null, imageUr
         : { revision_source: 'not_recorded: the box run did not hash the weights' }),
       conventions: PADDLE.conventions, postprocess: stats || null,
       run: run || LANE, issue: LANE_ISSUE, secs, host: box.host || null, gpu: box.gpu || null,
+      // how the box served the model (#5600 benchmark: the vLLM server with N pipeline clients reads ≈ 9× the
+      // native recipe at the same accuracy) — null for a box that did not report it
+      serving: box.backend ? { backend: box.backend, runners: box.workers ?? null, vllm: box.vllm_version || null, max_side: box.max_side ?? null, layout: box.layout ?? null } : null,
       input: imageUrl ? { image_url: imageUrl } : { status: 'not_recorded', reason: 'caller passed no image url' },
     },
     updated_at: now,

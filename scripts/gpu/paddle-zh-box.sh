@@ -144,6 +144,7 @@ for f in wf:
 json.dump({'host': socket.gethostname(), 'gpu': gpu, 'workers': workers, 'backend': backend, 'max_side': max_side, 'layout': layout,
            'paddle_version': paddle.__version__, 'paddleocr_version': paddleocr.__version__, 'paddlex_version': paddlex.__version__,
            'vl_model': 'PaddleOCRVL() default pipeline', 'weights_files': [os.path.relpath(f, os.path.expanduser('~/.paddlex/official_models')) for f in wf],
+           'vllm_version': (subprocess.run([f'{w}/srv/bin/python', '-c', 'import vllm; print(vllm.__version__)'], capture_output=True, text=True).stdout.strip() or None) if backend == 'server' and os.path.exists(f'{w}/srv/bin/python') else None,
            'weights_sha256': h.hexdigest() if wf else None, 'pages_out': n, 'pages_err': e, 'infer_secs': secs,
            'wall_secs_per_page': round(secs / n, 2) if n and secs else None}, open(f'{w}/box.json', 'w'), indent=1)
 PY
