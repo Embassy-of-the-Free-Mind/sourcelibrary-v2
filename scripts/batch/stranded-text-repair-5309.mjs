@@ -477,13 +477,22 @@ async function runs(db) {
   const mine = s.books.filter((b) => b.phase === 'tr_enrolled');
   if (!mine.length) return;
   const rows = await db.collection(RUNS_COLLECTION).find({ id: { $in: mine.map((b) => b.run_id) } },
-    { projection: { id: 1, phase: 1, counts: 1, spent_est_usd: 1, cursor: 1, page_count: 1, parked_reason: 1 } }).toArray();
+    { projection: { id: 1, phase: 1, counts: 1, spent_est_usd: 1, approved_usd: 1, cursor: 1, page_count: 1, parked_reason: 1 } }).toArray();
   const byRun = new Map(rows.map((r) => [r.id, r]));
   let finished = 0;
   for (const b of mine) {
     const r = byRun.get(b.run_id);
     if (!r) continue;
     b.tr_progress = `${r.cursor}/${r.page_count}`; b.tr_spent_est = r.spent_est_usd;
+    // The lane refuses a round once its running ESTIMATE passes the run's approval ("approval
+    // exhausted"), and the estimator runs ~2× the metered cost: two runs sat for six hours with 7
+    // and 9 pages left. Top the allowance up by half when it is nearly spent — bounded at
+    // $0.008/page per run; the envelope and the lane cap remain the real ceiling.
+    if (!TERMINAL_PHASES.includes(r.phase) && r.approved_usd > 0 && (r.spent_est_usd || 0) > 0.85 * r.approved_usd && r.approved_usd < r.page_count * 0.008) {
+      const next = +Math.min(r.page_count * 0.008, r.approved_usd * 1.5 + 0.1).toFixed(2);
+      await db.collection(RUNS_COLLECTION).updateOne({ id: r.id, approved_usd: r.approved_usd }, { $set: { approved_usd: next, updated_at: new Date() } });
+      b.tr_approved = next; log(`  ${b.id}: run ${r.id} allowance $${r.approved_usd} → $${next} (est spent $${(r.spent_est_usd || 0).toFixed(2)})`);
+    }
     if (!TERMINAL_PHASES.includes(r.phase)) continue;
     b.tr_counts = r.counts; b.tr_parked_reason = r.parked_reason || null; b.tr_done_at = new Date().toISOString();
     // A run covers ≤ 300 pages: a bigger book needs another run for the rest (bounded, so a page the
