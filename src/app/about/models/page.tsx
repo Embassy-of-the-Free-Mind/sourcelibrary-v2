@@ -77,7 +77,10 @@ export default async function ModelsPage() {
     const c = counts.get(m.id);
     if (!c || c.pages === 0) return m.status === 'starting' ? 'starting now; no pages yet' : null;
     const recent = c.recent > 0 ? `; ${n0(c.recent)} in the last 30 days` : '';
-    return `${n0(c.pages)} pages in ${n0(c.books)} books${recent}`;
+    // A page belongs to one book, so more books than pages means the snapshot counted books
+    // through pages without text (snapshots before the bookIfText fix): show pages only.
+    const books = c.books <= c.pages ? ` in ${n0(c.books)} books` : '';
+    return `${n0(c.pages)} pages${books}${recent}`;
   }
 
   return (

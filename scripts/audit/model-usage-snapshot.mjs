@@ -110,7 +110,10 @@ const isRecent = f => ({ $cond: [{ $or: [
   { $and: [{ $eq: [{ $type: f }, 'date'] }, { $gte: [f, CUT] }] },
   { $and: [{ $eq: [{ $type: f }, 'string'] }, { $gte: [f, CUT.toISOString()] }] },
 ] }, 1, 0] });
-const hasText = f => ({ $cond: [{ $and: [{ $eq: [{ $type: f }, 'string'] }, { $gt: [f, ''] }] }, 1, 0] });
+const textTest = f => ({ $and: [{ $eq: [{ $type: f }, 'string'] }, { $gt: [f, ''] }] });
+const hasText = f => ({ $cond: [textTest(f), 1, 0] });
+// A book counts for an engine only through a page that carries the engine's text.
+const bookIfText = f => ({ $addToSet: { $cond: [textTest(f), '$book_id', '$$REMOVE'] } });
 
 async function chunk(match) {
   return pages.aggregate([
@@ -120,8 +123,8 @@ async function chunk(match) {
     {
       $facet: {
         last: [{ $group: { _id: null, last: { $max: '$_id' }, n: { $sum: 1 } } }],
-        ocr: [{ $group: { _id: { m: '$ocr.model', s: '$ocr.source' }, n: { $sum: 1 }, text: { $sum: hasText('$ocr.data') }, recent: { $sum: isRecent('$ocr.updated_at') }, books: { $addToSet: '$book_id' } } }],
-        tr: [{ $match: { 'translation.data': { $exists: true } } }, { $group: { _id: { m: '$translation.model', s: '$translation.source' }, n: { $sum: 1 }, text: { $sum: hasText('$translation.data') }, recent: { $sum: isRecent('$translation.updated_at') }, books: { $addToSet: '$book_id' } } }],
+        ocr: [{ $group: { _id: { m: '$ocr.model', s: '$ocr.source' }, n: { $sum: 1 }, text: { $sum: hasText('$ocr.data') }, recent: { $sum: isRecent('$ocr.updated_at') }, books: bookIfText('$ocr.data') } }],
+        tr: [{ $match: { 'translation.data': { $exists: true } } }, { $group: { _id: { m: '$translation.model', s: '$translation.source' }, n: { $sum: 1 }, text: { $sum: hasText('$translation.data') }, recent: { $sum: isRecent('$translation.updated_at') }, books: bookIfText('$translation.data') } }],
         es: [{ $match: { 'translations.es': { $exists: true } } }, { $group: { _id: { m: '$translations.es.model' }, n: { $sum: 1 }, text: { $sum: 1 }, recent: { $sum: isRecent('$translations.es.updated_at') }, books: { $addToSet: '$book_id' } } }],
       },
     },

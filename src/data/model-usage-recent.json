@@ -18,19 +18,19 @@
       "lane": "ocr",
       "model": "gemini-3-flash-preview",
       "source": "batch_api",
-      "pages_last_30d": 24703
+      "pages_last_30d": 25049
     },
     {
       "lane": "translation",
       "model": "gemini-3-flash-preview",
       "source": "ai",
-      "pages_last_30d": 28724
+      "pages_last_30d": 32814
     },
     {
       "lane": "translation",
       "model": "gemini-3.1-flash-lite",
       "source": "ai",
-      "pages_last_30d": 325514
+      "pages_last_30d": 326050
     },
     {
       "lane": "ocr",
@@ -78,7 +78,7 @@
       "lane": "ocr",
       "model": "kraken/omnisyr",
       "source": "kraken",
-      "pages_last_30d": 26957
+      "pages_last_30d": 26982
     },
     {
       "lane": "ocr",
@@ -216,7 +216,7 @@
       "lane": "translation",
       "model": null,
       "source": "skip",
-      "pages_last_30d": 81
+      "pages_last_30d": 82
     },
     {
       "lane": "ocr",
