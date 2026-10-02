@@ -20,6 +20,7 @@ re-implementing one is the most common way work gets duplicated here.
 | `lib/paired-stats.mjs` | `makeRng`, `makeLegacyLcg`, `resetSeed`, `mean`, `binomTwoSided`, `bootstrapCI`, `diffCI`, `seededRand`, `bootstrapRatioCI` |
 | `lib/private-refs.mjs` | `PRIVATE_LICENCES`, `privateRefsDir`, `sha256`, `isPrivateRecord`, `loadRefText`, `writePrivateRef`, `findPrivateTextLeaks` |
 | `lib/production-prompt.mjs` | `getProductionOcrPrompt`, `withIntervention` |
+| `lib/refusals.mjs` | `REFUSAL_REASONS`, `API_ENGINE`, `MIN_REF_CHARS`, `readMeter`, `refusalOf` |
 | `lib/report.mjs` | `saveResults`, `loadLatestResults`, `listResults`, `generateConsistencyReport`, `generateEmbeddingReport`, `generateMatrixReport`, `saveBlogPost` |
 | `lib/revision-source.mjs` | `READING_SOURCES`, `MAINTENANCE_RE`, `isMaintenanceSource`, `rowIsMaintenance` |
 | `lib/runners.mjs` | `estimateCost`, `runGemini`, `runClaude`, `runMistralOcr`, `runMistralChat`, `isMuleModel`, `runMuleRouter`, `isScalewayModel`, `runScaleway`, `isReplicateOcrModel`, `runReplicateDeepSeekOcr`, `resolveModel`, `isClaudeModel`, `isMistralOcrModel`, `isMistralModel`, `runModel`, `isGoogleVisionModel`, `runGoogleVision`, `fetchImage` |
@@ -57,7 +58,7 @@ Read these for the house conventions before designing a new study.
 | `benchmark-dashboard-data.mjs` | benchmark-dashboard-data.mjs — fold every scored benchmark file into ONE evidence table, and grade each cell by how much it can carry (#4735 plan of 2026-09-17). |
 | `benchmark-refs.mjs` | benchmark-refs.mjs — build page-level reference windows for the Chinese benchmark pages. |
 | `benchmark-run-api.mjs` | benchmark-run-api.mjs — run an API model over every stratum directory that benchmark-seal.mjs exported, writing <root>/<stratum>/out/<engine>/<slug>.txt and a metering row per page ( tokens incl. |
-| `benchmark-score.mjs` | benchmark-score.mjs — score every engine's output for one or all strata (#4735 method): node scripts/eval/benchmark-score.mjs --root=/path/bench-images [--stratum=chinese] \ [--ref=gemini-3.1-flash… |
+| `benchmark-score.mjs` | mjs (scores <slug>.txt against the PINNED ground-truth files — passage-level references, free-skip aligner; it has no reading-order or invention measure and no reference-free mode), stats-cross-mod… |
 | `benchmark-seal.mjs` | benchmark-seal.mjs — draw and SEAL the per-stratum page sets for the standing OCR benchmark (#4735), one page per book, fixed seed, and export the images every engine will read (identical input for… |
 | `bestedition-shwep-eval.mjs` | Eval gate for the #3888 bestEdition ranking change. |
 | `blank-page-study.mjs` | Does the model transcribe a page that has nothing on it? (#3444 Tier 2) THE CLEANEST REFERENCE-FREE TEST WE HAVE. |
