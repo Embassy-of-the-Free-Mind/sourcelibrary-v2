@@ -73,7 +73,7 @@ export function cleanSegment(s) {
     .replace(/<br\s*\/?>/gi, '\n')
     .replace(/<sup[^>]*>.*?<\/sup>/gi, ' ')          // footnote markers
     .replace(/<i class="footnote"[^>]*>.*?<\/i>/gi, ' ') // inline footnotes
-    .replace(/<[^>]+>/g, '')
+    .replace(/<\/?[A-Za-z][^>]*>/g, '') // Sefaria's HTML tags only (a tag opens with a letter or /)
     .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
     .replace(/[ \t]+/g, ' ')
     .normalize('NFC')

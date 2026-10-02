@@ -41,6 +41,7 @@ import { spawn } from 'node:child_process';
 import { withMongo } from '../lib/mongo.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 import { isHumanEdited } from '../lib/syriac-kraken-lane.mjs';
+import { stripMarkupTags } from '../lib/strip-markup-tags.mjs';
 import {
   flattenVersion, buildStream, buildIndex, anchorAt, fitEnd, locate, spanText, normHe, sha16,
   licenceAllowed, krakenLetters, gramBag, containment, FIT_RULES, fitClass, POINTING_RE,
@@ -127,10 +128,10 @@ async function loadSefaria(cfg) {
 
 /** Body text of a stored reading: the model's editorial/apparatus blocks dropped, tags stripped. */
 export function bodyText(ocr) {
-  return String(ocr || '')
-    .replace(/<(header|margin|page-num|sig|image-desc|vocab|meta|warning|scan-quality|language|script|page-type|columns|catchword|footnote|note|summary)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/^#+\s*/gm, '');
+  // The shared tag stripper, not a bare one: a `->centred<-` line would swallow the body (#5564).
+  const noBlocks = String(ocr || '')
+    .replace(/<(header|margin|page-num|sig|image-desc|vocab|meta|warning|scan-quality|language|script|page-type|columns|catchword|footnote|note|summary)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ');
+  return stripMarkupTags(noBlocks).replace(/^#+\s*/gm, '');
 }
 
 /**
