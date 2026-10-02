@@ -39,6 +39,7 @@ import {
 } from '../../scripts/lib/translate-core.mjs';
 import {
   getOcrModelForBook as ocrMjs,
+  GREEK_FLASH_FROM,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/ocr-routing.mjs';
@@ -196,5 +197,45 @@ describe('OCR_LITE_ONLY (2026-09-11): every batch OCR submission is flash-lite',
 
   it('does not touch translation routing (BPH translation stays on flash)', () => {
     expect(translateMjs({ image_source: { provider: 'bph' }, language: 'latin' })).toBe(MODEL_FLASH);
+  });
+});
+
+describe('OCR_LITE_ONLY Greek exception (#5575, Derek 2026-10-02): visible and new Greek read on flash', () => {
+  const liteOnly = { liteOnly: true };
+  const before = new Date(GREEK_FLASH_FROM.getTime() - 86_400_000);
+  const after = new Date(GREEK_FLASH_FROM.getTime() + 86_400_000);
+
+  it('sends a visible book whose first language is Greek to flash', () => {
+    for (const language of ['Greek', 'greek', 'grc', 'Ancient Greek', 'Byzantine Greek', 'Modern Greek', 'Greek, Latin', 'Greek-Latin', 'Greek (Ancient)']) {
+      expect(ocrMjs({ language, visible: true, created_at: before }, liteOnly)).toBe(MODEL_FLASH);
+    }
+  });
+
+  it('sends a new hidden Greek book (created on or after the decision) to flash', () => {
+    expect(ocrMjs({ language: 'Greek', visible: false, created_at: after }, liteOnly)).toBe(MODEL_FLASH);
+    expect(ocrMjs({ language: 'Greek', created_at: GREEK_FLASH_FROM.toISOString() }, liteOnly)).toBe(MODEL_FLASH);
+  });
+
+  it('keeps the hidden Greek backlog on lite (not approved; waits for #4884)', () => {
+    expect(ocrMjs({ language: 'Greek', visible: false, created_at: before }, liteOnly)).toBe(MODEL_LITE);
+    // A projection that dropped visible/created_at falls back to the cheap model.
+    expect(ocrMjs({ language: 'Greek' }, liteOnly)).toBe(MODEL_LITE);
+    expect(ocrMjs({ language: 'Greek', created_at: 'not a date' }, liteOnly)).toBe(MODEL_LITE);
+  });
+
+  it('does not fire when Greek is not the first language, or the script is not Greek', () => {
+    for (const language of ['Latin, Greek', 'Latin-Greek', 'Hebrew-Greek', 'Judeo-Greek', 'Latin', null, '']) {
+      expect(ocrMjs({ language, visible: true, created_at: after }, liteOnly)).toBe(MODEL_LITE);
+    }
+  });
+
+  it('is Greek only: Chinese, Tibetan and Syriac stay on lite under OCR_LITE_ONLY', () => {
+    for (const language of ['Chinese', 'Classical Chinese', 'Tibetan', 'Syriac', 'Arabic']) {
+      expect(ocrMjs({ language, visible: true, created_at: after }, liteOnly)).toBe(MODEL_LITE);
+    }
+  });
+
+  it('leaves script-aware routing (OCR_LITE_ONLY off) unchanged: Greek was already flash there', () => {
+    expect(ocrMjs({ language: 'Greek', visible: false, created_at: before }, { liteOnly: false })).toBe(MODEL_FLASH);
   });
 });

@@ -3174,7 +3174,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
     // false` keeps the book at `archive_complete` — 8 pages is not an OCR pass.
     if (shouldRun(1.45) && await budgetAllowsDispatchForPhase('Phase 1.45 (IA reference seeding)')) {
       console.log(`\n--- Phase 1.45: IA reference seeding (flash-lite batch, ${IA_REFERENCE_PAGES} interior + ${IA_REFERENCE_LEAD_PAGES} front pages) ---`);
-      const iaRefProjection = { id: 1, title: 1, author: 1, year: 1, language: 1, needs_splitting: 1, 'image_source.provider': 1 };
+      const iaRefProjection = { id: 1, title: 1, author: 1, year: 1, language: 1, visible: 1, created_at: 1, needs_splitting: 1, 'image_source.provider': 1 };
       let iaCandidates = await db.collection('books')
         .find({
           'pipeline_auto.status': 'archive_complete',
@@ -3295,7 +3295,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
       console.log('\n--- Phase 1.5: Preview OCR (flash-lite batch, first 25 pages) ---');
 
       const previewRetryCutoff = new Date(Date.now() - PREVIEW_BATCH_RETRY_HOURS * 60 * 60 * 1000);
-      const previewProjection = { id: 1, title: 1, author: 1, year: 1, language: 1, needs_splitting: 1, 'image_source.provider': 1 };
+      const previewProjection = { id: 1, title: 1, author: 1, year: 1, language: 1, visible: 1, created_at: 1, needs_splitting: 1, 'image_source.provider': 1 };
       let readyForPreview = await db.collection('books')
         .find({
           'pipeline_auto.status': 'archive_complete',
@@ -4059,11 +4059,11 @@ Rules:
             // "unknown script" and routes EVERY book to flash-preview (~2.75x).
             // created_at + processing_priority are carried only for the dry-run
             // queue-order printout below (#5082).
-            { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, language: 1, created_at: 1, processing_priority: 1, 'image_source.provider': 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.split_checked': 1 } },
+            { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, language: 1, visible: 1, created_at: 1, processing_priority: 1, 'image_source.provider': 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.split_checked': 1 } },
             { $limit: ocrLimit },
           ])
           .toArray();
-        if (SCOPE_ACTIVE) previewCandidates = await applyBookOverride(db, previewCandidates, { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, language: 1, image_source: 1, pipeline_auto: 1 });
+        if (SCOPE_ACTIVE) previewCandidates = await applyBookOverride(db, previewCandidates, { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, language: 1, visible: 1, created_at: 1, image_source: 1, pipeline_auto: 1 });
 
         const dedupedPreview = await filterDuplicateWorks(db, previewCandidates);
 
@@ -4078,20 +4078,30 @@ Rules:
 
         // Cross-book pooling for small books — one batch instead of many
         if (smallBooks.length > 0 && !DRY_RUN && await canSubmitMore()) {
-          try {
-            console.log(`  Cross-book pool: ${smallBooks.length} small books (<${CROSS_BOOK_OCR_THRESHOLD} pages)`);
-            const crossResult = await submitCrossBookOcrBatches(db, smallBooks);
-            if (crossResult.submitted > 0) {
-              log.ocr_submitted += crossResult.bookIds.length;
-            }
-          } catch (err) {
-            const msg = err.message || String(err);
-            if (msg === 'ALL_KEYS_QUOTA_EXHAUSTED') {
-              console.log(`  All keys quota exhausted during cross-book OCR`);
-            } else {
-              console.error(`  Cross-book OCR error: ${msg.substring(0, 120)}`);
-              // Fall back to per-book submission for these books
-              largeOrSpreadBooks.push(...smallBooks);
+          // One job carries one model: partition by the router so Greek (#5575) is not pooled onto lite.
+          const smallByModel = new Map();
+          for (const b of smallBooks) {
+            const m = getOcrModelForBook(b);
+            if (!smallByModel.has(m)) smallByModel.set(m, []);
+            smallByModel.get(m).push(b);
+          }
+          for (const [m, group] of smallByModel) {
+            try {
+              console.log(`  Cross-book pool: ${group.length} small books (<${CROSS_BOOK_OCR_THRESHOLD} pages, ${m})`);
+              const crossResult = await submitCrossBookOcrBatches(db, group, { model: m });
+              if (crossResult.submitted > 0) {
+                log.ocr_submitted += crossResult.bookIds.length;
+              }
+            } catch (err) {
+              const msg = err.message || String(err);
+              if (msg === 'ALL_KEYS_QUOTA_EXHAUSTED') {
+                console.log(`  All keys quota exhausted during cross-book OCR`);
+                break;
+              } else {
+                console.error(`  Cross-book OCR error: ${msg.substring(0, 120)}`);
+                // Fall back to per-book submission for these books
+                largeOrSpreadBooks.push(...group);
+              }
             }
           }
         } else if (DRY_RUN && smallBooks.length > 0) {
@@ -4168,11 +4178,11 @@ Rules:
           { $sort: { processing_priority: -1, _priority: 1, hidden: 1, ...NEWEST_FIRST } },
           // language + image_source.provider must survive the projection (see Pass 1).
           // created_at + processing_priority are for the dry-run queue-order printout (#5082).
-          { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, language: 1, created_at: 1, processing_priority: 1, 'image_source.provider': 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.recitation_retry_lite': 1, 'pipeline_auto.split_checked': 1 } },
+          { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, language: 1, visible: 1, created_at: 1, processing_priority: 1, 'image_source.provider': 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.recitation_retry_lite': 1, 'pipeline_auto.split_checked': 1 } },
           { $limit: ocrLimit },
         ])
         .toArray() : [];
-      if (SCOPE_ACTIVE) readyForOcr = await applyBookOverride(db, readyForOcr, { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, language: 1, image_source: 1, pipeline_auto: 1 });
+      if (SCOPE_ACTIVE) readyForOcr = await applyBookOverride(db, readyForOcr, { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, language: 1, visible: 1, created_at: 1, image_source: 1, pipeline_auto: 1 });
 
       const dedupedFull = await filterDuplicateWorks(db, readyForOcr);
 

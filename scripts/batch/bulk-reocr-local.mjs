@@ -31,7 +31,7 @@
  * Control:
  *   --model=lite|flash Force the model. Default: the OCR router's choice per book
  *                      (scripts/lib/ocr-routing.mjs — flash-lite for everything while
- *                      OCR_LITE_ONLY is on).
+ *                      OCR_LITE_ONLY is on, except visible/new Greek, #5575).
  *   --max-chunk-mb=N   Byte cap per file-based job's JSONL (default 40). Chunks are bounded by
  *                      bytes first and pages second (#3974: a page-count bound overflowed V8's
  *                      string limit on large scans and silently dropped the chunk).
@@ -303,7 +303,7 @@ const PAGE_PROJECTION = {
   cropped_photo: 1, crop: 1, split_from_spread: 1,
 };
 const BOOK_PROJECTION = {
-  _id: 0, id: 1, title: 1, display_title: 1, language: 1, original_language: 1,
+  _id: 0, id: 1, title: 1, display_title: 1, language: 1, original_language: 1, visible: 1, created_at: 1,
   read_count: 1, pages_count: 1, image_source: 1, 'pipeline_auto.status': 1,
   'pipeline_auto.hold': 1, 'pipeline_auto.ocr_generation': 1,
 };
