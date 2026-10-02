@@ -38,18 +38,18 @@
   Adjudicated, all 6 conflicts are wrong notes. Derek should confirm N053 before #5624's 18 is restated.
 - **Recall is low: 3 of 18 known wrongs.** 12 of the 18 make no Sanskrit claim with a quoted Tibetan: "likely Garab Dorje's father", "founded by Atisha", "Taurus, Aquarius, Capricorn", a date. A Tibetan↔Sanskrit table cannot reach those, and they are stage 3's job. Of the 6 Sanskrit-equivalent wrongs, the table settles 3. N186 is ambiguous. N232 (dga' ba'i sde → "Harisena") is held only by Rangjung Yeshe ("Priyasena"), which may not refute. The Musulundha/Mucilinda claim quotes no Tibetan.
 
-**Result 2: the whole envelope** (`tibetan-retranslation-4523`, translations written since 2026-10-01, run 2026-10-02 ~22:04 UTC).
-- **Frame:** 94,439 pages, 157,654 notes, 1,255 candidate notes on 1,079 pages of 526 books, and 27,376 apparatus names/numbers. 333 candidates predate the #5624 snapshot (it had 359; 18 have been corrected and some pages retranslated since). 922 postdate it, which is the #5647 pilot stratum, grown from 217.
-- **Notes:** 129 match, **9 conflict**, 1,117 no-entry.
-  - The no-entry reasons: the kind is not covered by a v1 table for 973 notes (identification 461, description 244, other 156, attribution 55, date 45, place 12), and 144 are Sanskrit claims with no anchor, an ambiguous name, or similar.
-  - Sanskrit-equivalent notes alone: 129 match, 8 conflict, 137 no-entry of 274.
+**Result 2: the whole envelope** (`tibetan-retranslation-4523`, translations written since 2026-10-01, final run 2026-10-02 ~22:35 UTC; the run was still growing).
+- **Frame:** 96,926 pages, 160,631 notes, 1,277 candidate notes on 1,101 pages of 533 books, and 27,859 apparatus names/numbers. 333 candidates predate the #5624 snapshot (it had 359; 18 have been corrected and some pages retranslated since). 944 postdate it, which is the #5647 pilot stratum, grown from 217.
+- **Notes:** 130 match, **9 conflict**, 1,138 no-entry.
+  - The no-entry reasons: the kind is not covered by a v1 table for 994 notes (identification 471, description 253, other 158, attribution 55, date 45, place 12), and 144 are Sanskrit claims with no anchor, an ambiguous name, or similar.
+  - Sanskrit-equivalent notes alone: 130 match, 8 conflict, 137 no-entry of 275.
   - **#5624's fixes are visible:** the corrected N050, N193 and N221 now `match`.
 - **The 9 note conflicts, read against the cited entries** (in `results/note-claims-5647/run-summary.json` with URLs):
   - wrong (6): "Sanskrit: Dzogchen" (Dzogchen is the Tibetan name; the Sanskrit is mahāsandhi); shed bdag = "ātman or puruṣa" ×2 (84000: mānava); N053; N019; N233 (likely).
   - partly-wrong (2): "Sthira-datta" (84000 attests Dṛḍhadatta); Phal po che = "Daśabhūmika Sūtra" (it is the Avataṃsaka; the Daśabhūmika is one chapter).
   - debatable (1): byang chub tu sems bskyed = "bodhicitta". The phrase is generating the mind for awakening, so the gloss is loose rather than false.
   - Out of sample (the 6 post-cutoff conflicts): 3 wrong, 2 partly-wrong, 1 debatable. **No conflict is on a note the author reads as correct.**
-- **Apparatus:** 19,545 match, 7,795 no-entry, 36 conflicts on 13 pages.
+- **Apparatus:** 19,906 match, 7,917 no-entry, 36 conflicts on 13 pages.
   - The first run, before the script gate, gave **7,343** conflicts. On Tibetan pages, "Dzogchen", "Padmasambhava" and "Vinaya" are absent from the OCR because Tibetan writes rdzogs chen, padma 'byung gnas, 'dul ba. Absence is not evidence there.
   - A second pass, still without the `<image-desc>` strip, gave 81: diagram pages whose "OCR" is the reading model's English.
   - Of the final 13 pages, 12 carry descriptive keywords on illegible or tabular pages ("Javanese script", "Latin manuscript", "Astronomy"). They are not wrong facts.
@@ -58,15 +58,15 @@
   - **On a Tibetan run, 2b is a review signal, not a repair signal.**
 
 **Result 3: stage-3 estimate** (paid; not run; needs its own envelope).
-- **Inputs.** 873 candidate notes are no-entry, excluding the 244 bare mantra/dharani descriptions. With 1 seeded false claim per batch of 20, that makes 917 checks in 44 requests.
+- **Inputs.** 885 candidate notes are no-entry, excluding the 253 bare mantra/dharani descriptions. With 1 seeded false claim per batch of 20, that makes 930 checks in 45 requests.
 - **Model.** `gemini-3-flash-preview`, grounded (`googleSearch`), `thinkingBudget: 512`. Flash-lite does not ground, and `-1` suppresses grounding (measurement-instruments.md).
 - **Unit price.** **$0.014 per search query** (`GROUNDED_SEARCH_USD_PER_QUERY`, from the 2026-09-26 billing export). Tokens are $0.50 / $3.00 per M, halved on batch.
-- **Tokens.** About 14K in and 3K out per request: $0.70 realtime, $0.35 batch.
-- **Search.** $12.84 at 1 query per check, **$19.26 at 1.5 (central)**, $51.35 at 4. The FT skeptic prompt fired a median of ~16 per *book* and up to 1,290 in one call, so the envelope must cap it.
+- **Tokens.** About 14K in and 3K out per request: $0.72 realtime, $0.36 batch.
+- **Search.** $13.02 at 1 query per check, **$19.53 at 1.5 (central)**, $52.08 at 4. The FT skeptic prompt fired a median of ~16 per *book* and up to 1,290 in one call, so the envelope must cap it.
 - **Recommendation.** **About $20 for the current backlog; an envelope of $60 covers the high case.** Steady state is about **$0.20 per 1,000 newly translated pages** (high $0.54). The cost is search queries, not tokens.
 
 **Consequences.**
-1. The table is safe and narrow. Across 359 + 1,255 notes, no `match` hid a wrong and no conflict fell on a note read as correct. But it settles only 11% of candidates and 3 of 18 known wrongs. Stage 3 is where the recall is.
+1. The table is safe and narrow. Across 359 + 1,277 notes, no `match` hid a wrong and no conflict fell on a note read as correct. But it settles only 11% of candidates and 3 of 18 known wrongs. Stage 3 is where the recall is.
 2. **N053 should be re-judged wrong.** #5624's corpus figure becomes 19/359. N019 and N233 should move from unverifiable to wrong or likely-wrong. The 9 run conflicts are repair candidates for the `translation-text-repair.mjs` door. **None was written:** repair is separate and human-approved, per #5647.
 3. Stage 2b should not run on a Tibetan envelope except as a review queue. Its value is on Latin, Greek and Chinese pages. The one live signal it found here (an illegible page with a named summary) belongs with #5152.
 4. v2 ideas, not built: scope the 84000 glossary by text (page→Toh concordance, `/root/tibetan-reocr/concordance-eap.jsonl`) so ambiguous names like blo gros brtan pa resolve; the Tengyur glossaries; a Sanskrit-fold for apparatus names (śiva rātri ≠ "Shivaratri" today).
@@ -77,4 +77,4 @@
 - `validation.json`: 359 rows, the confusion table, the acceptance lists.
 - `run-summary.json`: frame, counts, the 9 note conflicts and 36 apparatus conflicts with URLs and evidence, and the stage-3 estimate.
 
-The claim rows are in Mongo `note_claims` (28,631 rows). The table is on Hetzner only. Cost: $0.
+The claim rows are in Mongo `note_claims` (29,136 rows). The table is on Hetzner only. Cost: $0.

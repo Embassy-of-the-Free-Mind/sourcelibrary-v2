@@ -19,10 +19,11 @@
  * "verified": there is no public badge, and stage 2 writes nothing outside `note_claims`.
  */
 import { skeletonMatch } from './translit-skeleton.mjs';
+import { stripMarkupTags } from './strip-markup-tags.mjs';
 import { contentHash } from './write-provenance.mjs';
 
 // Bump `version` when parsing changes: the extractor re-extracts every row made by another version.
-export const EXTRACTOR = { name: 'note-claims-extract', version: 2, cue_filter: '5624-v1' };
+export const EXTRACTOR = { name: 'note-claims-extract', version: 3, cue_filter: '5624-v1' };
 export const MATCHER = { name: 'note-claims-match', version: 1 };
 
 // ---------------------------------------------------------------------------------------------
@@ -55,7 +56,7 @@ export function pageNotes(text) {
 /** The ≤80 characters of running text before the note — what the note glosses. */
 export function noteAnchor(text, offset) {
   const before = String(text || '').slice(Math.max(0, offset - 400), offset);
-  return before.replace(/<[^>]+>[^<]*<\/[^>]+>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(-80);
+  return stripMarkupTags(before.replace(/<(note|gloss|term|margin)>[\s\S]*?<\/\1>/g, ' ')).replace(/\s+/g, ' ').trim().slice(-80);
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -193,7 +194,7 @@ export function pageContentClaims(text) {
     }
   }
   for (const m of t.matchAll(/^#{1,6}\s+(.+)$/gm)) {
-    const h = m[1].replace(/<[^>]+>/g, ' ');
+    const h = stripMarkupTags(m[1]);
     for (const name of properSpans(h)) out.push({ source_tag: 'heading', name, kind: 'page-name' });
     for (const n of h.matchAll(/\b([0-9]{2,4})\b/g)) out.push({ source_tag: 'heading', name: n[1], kind: 'page-number' });
   }
@@ -203,10 +204,9 @@ export function pageContentClaims(text) {
 
 /** The translation's running text: tags with their content removed for apparatus, kept for inline. */
 export function translationBody(text) {
-  return String(text || '')
+  return stripMarkupTags(String(text || '')
     .replace(/<(note|summary|keywords|meta|warning|vocab|detected-images|image-desc)>[\s\S]*?<\/\1>/g, ' ')
-    .replace(/^#{1,6}\s+.*$/gm, ' ')
-    .replace(/<[^>]+>/g, ' ');
+    .replace(/^#{1,6}\s+.*$/gm, ' '));
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -453,9 +453,8 @@ export function pageNumbers(text) {
  * was mostly an English <image-desc>.
  */
 export function ocrPageText(ocrText) {
-  return String(ocrText || '')
-    .replace(/<(image-desc|warning|meta|scan-quality|language|script|page-type|detected-images|vocab|note|lang)\b[^>]*>[\s\S]*?<\/\1>/g, ' ')
-    .replace(/<[^>]+>/g, ' ');
+  return stripMarkupTags(String(ocrText || '')
+    .replace(/<(image-desc|warning|meta|scan-quality|language|script|page-type|detected-images|vocab|note|lang)\b[^>]*>[\s\S]*?<\/\1>/g, ' '));
 }
 
 /**
@@ -466,7 +465,7 @@ export function ocrPageText(ocrText) {
  * 'dul ba, padma 'byung gnas, shes rab kyi pha rol tu phyin pa. Not errors.
  */
 export function nameBearingScript(ocrText) {
-  const t = String(ocrText || '').replace(/<[^>]+>/g, ' ');
+  const t = stripMarkupTags(String(ocrText || ''));
   const letters = (t.match(/\p{L}/gu) || []).length;
   if (!letters) return false;
   const named = (t.match(/[\p{Script=Latin}\p{Script=Greek}\p{Script=Cyrillic}]/gu) || []).length;
@@ -485,7 +484,7 @@ export function matchPageClaim(claim, ocrText, translationText, bookNames = []) 
   // The OCR of a diagram is the reading model's prose about it, not text the page prints.
   if (/<page-type>\s*(diagram|illustration|image|blank|cover)\s*<\/page-type>/i.test(String(ocrText || ''))) return { status: 'no-entry', reason: 'diagram-page' };
   const ocr = ocrPageText(ocrText);
-  if (ocr.replace(/<[^>]+>/g, '').trim().length < 80) return { status: 'no-entry', reason: 'no-ocr' };
+  if (ocr.trim().length < 80) return { status: 'no-entry', reason: 'no-ocr' };
   if (claim.kind === 'page-number') {
     const n = Number(claim.name);
     const nums = pageNumbers(ocr.replace(/<page-num>[\s\S]*?<\/page-num>/g, ' '));

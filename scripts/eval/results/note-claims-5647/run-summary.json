@@ -2,16 +2,16 @@
  "frame": {
   "envelope": "tibetan-retranslation-4523",
   "translation.updated_at_gte": "2026-10-01",
-  "pages": 94439,
-  "notes": 157654,
+  "pages": 96926,
+  "notes": 160631,
   "books_in_envelope": 1439,
-  "pages_with_candidate_notes": 1079,
-  "books_with_candidate_notes": 526,
-  "run_at": "2026-10-02"
+  "pages_with_candidate_notes": 1101,
+  "books_with_candidate_notes": 533,
+  "run_at": "2026-10-02T22:3xZ"
  },
  "extractor": {
   "name": "note-claims-extract",
-  "version": 2,
+  "version": 3,
   "cue_filter": "5624-v1"
  },
  "matcher": {
@@ -31,23 +31,23 @@
   "kept": "/root/factcheck-lane/refs/tib-skt-table.jsonl on Hetzner; not in git"
  },
  "rows_by_tag": {
-  "note:identification": 468,
-  "summary:page-name": 7270,
-  "keywords:page-name": 16186,
-  "note:description": 244,
-  "heading:page-name": 3828,
+  "note:identification": 478,
+  "summary:page-name": 7405,
+  "keywords:page-name": 16457,
+  "note:description": 253,
+  "heading:page-name": 3905,
   "note:place": 12,
-  "note:other": 157,
+  "note:other": 159,
   "note:date": 45,
   "note:attribution": 55,
-  "note:sanskrit-equivalent": 274,
+  "note:sanskrit-equivalent": 275,
   "heading:page-number": 92
  },
  "notes": {
   "all": {
-   "match": 129,
+   "match": 130,
    "conflict": 9,
-   "no-entry": 1117
+   "no-entry": 1138
   },
   "translated_before_5624_cutoff": {
    "match": 52,
@@ -55,14 +55,14 @@
    "no-entry": 278
   },
   "translated_after_5624_cutoff": {
-   "match": 77,
+   "match": 78,
    "conflict": 6,
-   "no-entry": 839
+   "no-entry": 860
   },
   "no_entry_reasons": {
-   "kind-identification-not-in-v1-tables": 461,
-   "kind-description-not-in-v1-tables": 244,
-   "kind-other-not-in-v1-tables": 156,
+   "kind-identification-not-in-v1-tables": 471,
+   "kind-description-not-in-v1-tables": 253,
+   "kind-other-not-in-v1-tables": 158,
    "no-anchor-on-page": 110,
    "kind-attribution-not-in-v1-tables": 55,
    "kind-date-not-in-v1-tables": 45,
@@ -75,9 +75,9 @@
   }
  },
  "apparatus": {
-  "match": 19545,
+  "match": 19906,
   "conflict": 36,
-  "no-entry": 7795
+  "no-entry": 7917
  },
  "note_conflicts": [
   {
@@ -676,23 +676,23 @@
     "batch_multiplier": 0.5
    }
   },
-  "claims_at_no_entry_excl_description": 873,
-  "seeded_false_claims": 44,
-  "checks": 917,
+  "claims_at_no_entry_excl_description": 885,
+  "seeded_false_claims": 45,
+  "checks": 930,
   "claims_per_request": 20,
-  "requests": 44,
+  "requests": 45,
   "tokens_per_request": {
    "input": 14000,
    "output": 3000
   },
   "token_usd": {
-   "realtime": 0.7,
-   "batch": 0.35
+   "realtime": 0.72,
+   "batch": 0.36
   },
   "search_usd": {
-   "1_query_per_check": 12.84,
-   "1.5_queries_per_check": 19.26,
-   "4_queries_per_check": 51.35
+   "1_query_per_check": 13.02,
+   "1.5_queries_per_check": 19.53,
+   "4_queries_per_check": 52.08
   },
   "per_1000_new_pages_usd": {
    "central": 0.2,
