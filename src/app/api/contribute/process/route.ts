@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
-import { DEFAULT_MODEL, extractPageType, extractColumns } from '@/lib/types';
+import { DEFAULT_MODEL, liftOcrTags } from '@/lib/types';
 import type { PromptReference } from '@/lib/types';
 import { extractTranslationMetadata } from '@/lib/translation-metadata';
 import { loopVerdict } from '@/lib/ocr-loop-guard';
@@ -228,8 +228,6 @@ export async function POST(request: NextRequest) {
               }
 
               // Update page with OCR result
-              const pageType = extractPageType(result.text);
-              const columns = extractColumns(result.text);
               await db.collection('pages').updateOne(
                 { _id: page._id },
                 {
@@ -248,8 +246,7 @@ export async function POST(request: NextRequest) {
                     'ocr.updated_at': new Date(),
                     'ocr.source': 'contributor',
                     'ocr.contributed_by': contributorName || 'Anonymous',
-                    ...(pageType && { page_type: pageType }),
-                    ...(columns && { columns }),
+                    ...liftOcrTags(result.text), // page_type, columns, script_type — whichever parsed
                   },
                 }
               );

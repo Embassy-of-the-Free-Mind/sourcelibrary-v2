@@ -8,7 +8,7 @@ import { createRevision } from '@/lib/page-revisions';
 import { isHumanEditedTranslation } from '@/lib/translate-write';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { getTriggerSource } from '@/lib/cron-auth';
-import { DEFAULT_MODEL, PROMPT_VERSION, extractPageType, extractColumns } from '@/lib/types';
+import { DEFAULT_MODEL, PROMPT_VERSION, liftOcrTags } from '@/lib/types';
 import { extractTranslationMetadata, propagateOcrWarnings } from '@/lib/translation-metadata';
 import { geminiEngine, imageInput, translationInput, ocrProvenance, translationProvenance, notRecorded, NOT_RECORDED, codeVersion, host } from '@/lib/write-provenance';
 import type { AICallRecord } from '@/lib/ai';
@@ -395,14 +395,7 @@ export const POST = withAuth(async (request: NextRequest) => {
           processing_ms: metadata.ocr?.durationMs,
           image_url: metadata.ocr?.imageUrl,
         };
-        const pageType = extractPageType(results.ocr);
-        if (pageType) {
-          updateData['page_type'] = pageType;
-        }
-        const cols = extractColumns(results.ocr);
-        if (cols) {
-          updateData['columns'] = cols;
-        }
+        Object.assign(updateData, liftOcrTags(results.ocr)); // page_type, columns, script_type — whichever parsed
       }
 
       if (results.translation && promptRefs.translation && !translationProtected) {

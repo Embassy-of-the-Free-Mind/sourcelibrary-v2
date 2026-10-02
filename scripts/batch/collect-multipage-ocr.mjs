@@ -16,7 +16,7 @@ import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance } from '../l
 
 /** Provenance identity of this collector (#4613). */
 const COLLECTOR_CALL_SITE = 'scripts/batch/collect-multipage-ocr.mjs';
-import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
+import { liftOcrTags, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { isTruncatedCandidate } from '../lib/truncated-response.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
@@ -186,8 +186,7 @@ async function main() {
           continue;
         }
 
-        const pageType = extractPageType(ocrText);
-        const columns = extractColumns(ocrText);
+        const tags = liftOcrTags(ocrText);
         const detectedImages = parseDetectedImages(ocrText);
 
         // First ensure the page has an ocr object (some pages have ocr: null)
@@ -225,8 +224,7 @@ async function main() {
                 }));
                 return { 'ocr.content_hash': prov.content_hash, 'ocr.engine': prov.engine };
               })(),
-              ...(pageType && { page_type: pageType }),
-              ...(columns && { columns }),
+              ...tags, // page_type, columns, script_type — whichever parsed
               ...(detectedImages.length > 0 && { detected_images: detectedImages }),
               updated_at: now,
             },
