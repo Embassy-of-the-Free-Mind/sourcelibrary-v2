@@ -33,7 +33,7 @@ const rand = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296);
 if (!IN) throw new Error('--in=<self-declared-blank jsonl> required');
 
 /** Strata, most specific first. A row belongs to the first that matches. */
-export function stratum(signals) {
+function stratum(signals) {
   if (signals.includes('page_type_blank')) return 'page_type_blank';
   if (signals.some((s) => s.endsWith(':blank'))) return 'tag_says_blank';
   return 'showthrough_only';
