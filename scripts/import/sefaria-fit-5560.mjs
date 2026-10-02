@@ -261,13 +261,16 @@ async function plan(db) {
       r.anchor_prev = ev(A); r.anchor_next = ev(B);
       const ok = (x) => x.pos != null && x.identity >= FIT_RULES.anchorIdentity && x.identity - x.chance >= FIT_RULES.anchorMargin;
       const why = (x) => (x.pos == null ? x.reason : `boundary alignment identity ${x.identity.toFixed(2)} (chance ${x.chance.toFixed(2)}) below ${FIT_RULES.anchorIdentity} / +${FIT_RULES.anchorMargin}`);
-      if (!ok(A)) r.refused_reason = `previous-page anchor: ${why(A)}`;
-      else if (!ok(B)) r.refused_reason = `next-page anchor: ${why(B)}`;
-      else if (B.pos <= A.pos) r.refused_reason = `anchors out of order (${A.pos} → ${B.pos})`;
+      // A weak anchor is not fatal: the neighbour's own coarse position bounds the window, and the
+      // page's OWN read must then fit that edge confidently in score() (r.weak) or the page is refused.
+      const aPos = ok(A) ? A.pos : prev.s, bPos = ok(B) ? B.pos : next.s + 64;
+      r.weak = { prev: !ok(A) ? `previous-page anchor: ${why(A)}` : null, next: !ok(B) ? `next-page anchor: ${why(B)}` : null };
+      if (bPos <= aPos) r.refused_reason = `anchors out of order (${aPos} → ${bPos})`;
       else {
-        const L = B.pos - A.pos;
+        const L = bPos - aPos;
         const exp = median ? median * run.filter((p) => isTarget.has(p.id) || !p.ocr?.data).length : null;
-        r.span = { a: A.pos, b: B.pos, letters: L, expected: exp, ratio: exp ? +(L / exp).toFixed(2) : null };
+        r.span = { a: aPos, b: bPos, letters: L, expected: exp, ratio: exp ? +(L / exp).toFixed(2) : null };
+        if (r.weak.prev || r.weak.next) { /* length is judged on the read-fitted cut, not on a coarse bound */ } else
         if (exp && (L / exp < FIT_RULES.spanRatio[0] || L / exp > FIT_RULES.spanRatio[1])) r.refused_reason = `span ${L} letters for ${run.length} page(s), ${r.span.ratio}× the book's median page — edition text differs or an anchor is wrong`;
       }
     }
@@ -282,6 +285,13 @@ async function plan(db) {
         verdict: r.refused_reason ? 'refused' : 'pending', reason: r.refused_reason || null });
     }
     i = j + 1;
+  }
+  // Pages an earlier pass WROTE keep that record (they now have text, so they would otherwise vanish
+  // from the targets and from the report).
+  if (fs.existsSync(planFile(id))) {
+    const prior = JSON.parse(fs.readFileSync(planFile(id), 'utf8'));
+    const have = new Set(out.pages.map((p) => p.id));
+    for (const p of prior.pages || []) if (p.written_at && !have.has(p.id)) out.pages.push({ ...p, run: null, carried: true });
   }
   fs.writeFileSync(planFile(id), JSON.stringify(out, null, 1));
   const c = (k) => out.pages.filter((p) => p.target !== false && p.verdict === k).length;
@@ -384,6 +394,48 @@ async function score() {
       const b = k === r.pages.length - 1 ? r.span.b : a + Math.round((r.span.b - r.span.a) * (tot ? lens[k] / tot : 1 / r.pages.length));
       cuts.push([a, b]); a = b;
     }
+    // EDGES (measured on Zohar Chadash: p26's anchor left its last line to the next page; in the run
+    // 160–163 the letter-count split put every inner boundary ~2,000 letters off, and F1-vs-control
+    // still passed all four — location is tested by the controls, edges are not). So each page's edges
+    // are fitted from its OWN read: its first / last two lines of ≥ 30 letters (short lines are
+    // catchwords, running heads, or the cut-off column of the facing page that the BPH crops include),
+    // aligned semi-globally inside the run's span (±3,000 letters), accepted only at ≥ anchorIdentity
+    // and ≥ anchorMargin above chance (the same letters in an equal-size far window).
+    // An INNER boundary of a run needs at least one confident side (both sides, if confident, must agree
+    // within edgeAgree letters); without one, the pages it separates are refused, never split by guess.
+    const edgeLines = (t) => t.split('\n').map(krakenLetters).filter((l) => l.length >= 30);
+    const rev = (x) => [...x].reverse().join('');
+    const fitEdge = (q, side, lo, hi) => {
+      if (q.length < 60) return null;
+      lo = Math.max(0, lo); hi = Math.min(stream.letters.length, hi);
+      const win = stream.letters.slice(lo, hi);
+      const f = side === 'end' ? fitEnd(q, win) : fitEnd(rev(q), rev(win));
+      const farAt = (lo + Math.floor(stream.letters.length / 2)) % Math.max(1, stream.letters.length - win.length);
+      const fw = stream.letters.slice(farAt, farAt + win.length);
+      const chance = (side === 'end' ? fitEnd(q, fw) : fitEnd(rev(q), rev(fw))).identity;
+      if (f.end == null || f.identity < FIT_RULES.anchorIdentity || f.identity - chance < FIT_RULES.anchorMargin) return null;
+      return { pos: side === 'end' ? lo + f.end : hi - f.end, identity: +f.identity.toFixed(3), chance: +chance.toFixed(3) };
+    };
+    const elo = r.span.a - 3000, ehi = r.span.b + 3000;
+    r.edges = reads.map((t) => {
+      const ls = edgeLines(t);
+      return { start: fitEdge(ls.slice(0, 2).join(''), 'start', elo, ehi), end: fitEdge(ls.slice(-2).join(''), 'end', elo, ehi) };
+    });
+    const bad = new Set();
+    const nc = cuts.length;
+    if (r.edges[0].start) cuts[0][0] = r.edges[0].start.pos;
+    if (r.edges[nc - 1].end) cuts[nc - 1][1] = r.edges[nc - 1].end.pos;
+    for (let k = 0; k + 1 < nc; k++) {
+      const e = r.edges[k].end, s2 = r.edges[k + 1].start;
+      let b = null;
+      if (e && s2) b = Math.abs(e.pos - s2.pos) <= FIT_RULES.edgeAgree ? Math.round((e.pos + s2.pos) / 2) : null;
+      else b = (e || s2)?.pos ?? null;
+      if (b == null) { bad.add(k); bad.add(k + 1); continue; }
+      cuts[k][1] = b; cuts[k + 1][0] = b;
+    }
+    r.inner_unverified = [...bad].map((k) => r.pages[k]);
+    if (r.weak?.prev && !r.edges[0].start) r.inner_unverified.push(r.pages[0]);
+    if (r.weak?.next && !r.edges[nc - 1].end) r.inner_unverified.push(r.pages[nc - 1]);
     r.cuts = cuts;
     for (const p of mine) {
       const k = r.pages.indexOf(p.page_number);
@@ -391,17 +443,20 @@ async function score() {
       const sc = scoreFit(reads[k], stream, x, y, far);
       p.score = sc;
       p.span = { a: x, b: y };
-      const cls = fitClass(sc);
+      const cls = (r.inner_unverified || []).includes(p.page_number) ? 'inner' : y - x < FIT_RULES.minReadLetters ? 'edges' : fitClass(sc);
       p.verdict = cls === 'verified' ? (p.human ? 'refused' : 'verified') : 'refused';
       p.reason = cls === 'verified' ? (p.human ? 'human-edited page' : null)
         : cls === 'uninformative' ? `read uninformative (${sc.read_letters} letters; precision ${sc.precision})`
         : cls === 'misaligned' ? `read fits shift ${sc.best_shift} better than the fitted span`
+        : cls === 'edges' ? `the page's own first/last lines fit ${y - x} letters apart — edges inconsistent, not written`
+        : cls === 'inner' ? (r.weak?.prev && k === 0 && !r.edges[0].start ? `${r.weak.prev}, and the page's own first lines do not fit either` : r.weak?.next && k === r.pages.length - 1 && !r.edges[r.pages.length - 1].end ? `${r.weak.next}, and the page's own last lines do not fit either` : 'boundary inside a run of refused pages could not be fitted from the reads — not split by guess')
         : cls === 'coverage' ? `read ${sc.read_letters} letters vs span ${sc.span_letters}: the page carries text the Sefaria version does not (or the span is wrong) — a partial page is not written`
         : `F1 ${sc.f1} vs wrong-page control ${sc.control}: below margin ${FIT_RULES.minMargin} / ratio ${FIT_RULES.minRatio}`;
     }
   }
+  pl.scored_at = new Date().toISOString();
   fs.writeFileSync(planFile(id), JSON.stringify(pl, null, 1));
-  const c = (k) => pl.pages.filter((p) => p.verdict === k).length;
+  const c = (k) => pl.pages.filter((p) => p.target !== false && p.verdict === k).length;
   log(`${pl.name}: verified ${c('verified')}, refused ${c('refused')}, pending ${c('pending')} of ${pl.pages.length}`);
 }
 

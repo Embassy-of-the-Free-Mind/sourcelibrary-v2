@@ -289,7 +289,7 @@ export function containment(A, B) {
  * reads 2–3× its span; writing the span alone would store a PARTIAL transcription as the page's text.
  */
 export const FIT_RULES = Object.freeze({
-  version: 1, minTextLetters: 300, minStripLetters: 200, minMonotoneShare: 0.2, anchorIdentity: 0.45, anchorMargin: 0.12, spanRatio: [0.5, 1.8],
+  version: 1, edgeAgree: 150, minTextLetters: 300, minStripLetters: 200, minMonotoneShare: 0.2, anchorIdentity: 0.45, anchorMargin: 0.12, spanRatio: [0.5, 1.8],
   minReadLetters: 300, informativeFloor: 0.12, minMargin: 0.08, minRatio: 1.8, readSpanRatio: [0.6, 1.6],
 });
 
