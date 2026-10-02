@@ -251,7 +251,10 @@ export function ReaderProse({
   // older reading the re-OCR replaced. Only the translation pane; saying
   // "not transcribed yet" or "ready to translate" here would both be false, and
   // the OCR pane must keep rendering normally.
-  if (kind === 'translation' && page.translation_withheld) {
+  // Only when there is no translation NOW: no translation writer clears the
+  // marker, so a page re-translated after its withhold carries both, and the
+  // new English must win (#5621; the /read view already checks text first).
+  if (kind === 'translation' && page.translation_withheld && !text) {
     return <PaneEmptyState page={page} book={book} kind={kind} withheld />;
   }
 
