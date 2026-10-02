@@ -655,7 +655,7 @@ async function run(db) {
   for (;;) {
     await check(db); await withhold(db); await enrol(db); await runs(db); await clear(db);
     const s = loadState();
-    const inflightOcr = s.books.filter((b) => b.phase === 'ocr_submitted').reduce((n, b) => n + b.n, 0);
+    const inflightOcr = s.books.filter((b) => b.phase === 'ocr_submitted').reduce((n, b) => n + (b.residual_page_ids?.length ?? b.n), 0);
     const backoff = s.quota_backoff_until && new Date(s.quota_backoff_until) > new Date();
     if (backoff) log(`run: File API quota backoff until ${s.quota_backoff_until}`);
     if (s.books.some((b) => b.phase === 'pending') && inflightOcr < wave * 200 && !s.cap_hit && !backoff) {
