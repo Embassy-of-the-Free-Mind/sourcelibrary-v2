@@ -204,3 +204,31 @@ Before any number is quoted, the five worst v14 #5305 pages by fidelity are read
      seeded groups** only; the all-group totals are reported beside it.
    - Only **3 of the 12 Sanskrit pages carry a substantial English share** (≥ 13 English function words); the
      other 9 are Sanskrit/Devanagari only. The S outcome is read on those 3 by eye, not as a rate.
+2. **2026-10-02, after scoring (corrections of fact, the rule is unchanged).**
+   - Amendment 1 miscounted the seedless Tibetan units: **6 of the 16 groups** (pp. 38, 49, 68, 25, Ya 16–17,
+     Ja 9–10) and 1 of the 5 dropped-leaf pages have no seed, so the v14ns-vs-v14 contrast rests on **10 seeded groups
+     + 4 seeded dropped-leaf pages**.
+   - Packet 01's judge received the rubric + addendum inline; packets 02–24 read the identical text from
+     `JUDGE-PROMPT-v14ab.md` (written to save prompt tokens). Same words, same order.
+   - During the Tibetan read a terminal `cut -c` truncated Tibetan by bytes, so some source leaf ends looked
+     shorter than they are. Three provisional "borrowed" calls made from those views were retracted after the exact
+     leaf ends were printed; they are listed in `tibetan-reading.json` and none is counted. Every counted site was
+     checked against the untruncated leaf.
+   - The mechanical "empty leaf" for v14ns on the dropped-leaf pages is a lost `<leaf-break/>` (two leaves merged on
+     69e7aac3 p.68), reported as such.
+
+## Result (2026-10-02)
+
+**#5305 strata — rule output: NO MEASURABLE EFFECT on judged invention, with a G3 breach.** Noise first: v13b vs
+v13a invention 42.1 vs 47.7 % (|Δ| 5.6 pp, 16 vs 22 discordant). P: v14 38.3 % vs v13a 47.7 %, 13 vs 23 discordant,
+**p 0.13** (needed < 0.10). G1, G2, G4 hold; **G3 fails**: control invention 24 → 36 % (+12 pp), six pages, all
+minor. Separately supportable by its own secondary: the bare continuity marker (edit 1b) — meta payload 32 → 0 pages
+(p < 1e-9) — and with it page-boundary invention 20 → 8 pages (16 vs 4 discordant, p 0.012; noise 10 vs 7).
+
+**Tibetan — rule output: neither the Tibetan lines nor the no-seed arm is supported.** Seam defects (classes 1–4)
+v13a 3 / v13b 7 / v14 3 / v14ns 3; the A-vs-A difference (4) exceeds every arm difference. Guard (class 7) 2 / 2 / 1 /
+2: not worse. On the dropped-leaf pages both v13 draws reproduce the production dropped leaf on rNying rgyud Nga p.41
+(seed already holds the leaf); v14 and v14ns do not.
+
+Write-up: `results/translation-prompt-v14-ab-2026-10-02/README.md`; experiment
+`experiments/2026-10-02-translation-prompt-v14-ab-5305.md`.
