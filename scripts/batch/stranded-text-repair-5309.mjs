@@ -298,10 +298,10 @@ async function reconcile(db, s = loadState()) {
   const byBook = new Map();
   for (const j of all) { if (!byBook.has(j.book_id)) byBook.set(j.book_id, []); byBook.get(j.book_id).push(j); }
   for (const b of s.books.filter((x) => x.phase === 'pending')) {
-    const jobs = byBook.get(b.id) || [];
+    const jobs = (byBook.get(b.id) || []).filter((j) => !b.residual_queued_at || j.created_at >= new Date(b.residual_queued_at));
     if (!jobs.length) continue;
     const covered = new Set(jobs.filter((j) => j.status !== 'submit_failed').flatMap((j) => j.page_ids || []));
-    const missing = b.page_ids.filter((id) => !covered.has(id));
+    const missing = (b.residual_page_ids || b.page_ids).filter((id) => !covered.has(id));
     b.ocr_jobs = [...new Set([...(b.ocr_jobs || []), ...jobs.map((j) => j.id)])];
     b.ocr_submitted_at = b.ocr_submitted_at || jobs.reduce((m, j) => (j.created_at < m ? j.created_at : m), jobs[0].created_at).toISOString();
     b.ocr_submitted = covered.size;
@@ -322,17 +322,19 @@ async function check(db) {
     const active = jobs.filter((j) => ACTIVE_JOB.includes(j.status));
     if (active.length) { waiting++; continue; }
     const since = new Date(b.ocr_submitted_at);
-    const written = await db.collection('pages').find({ id: { $in: b.page_ids }, 'ocr.updated_at': { $gt: since } }, { projection: { id: 1 } }).toArray();
+    const targets = b.residual_page_ids || b.page_ids;
+    const written = await db.collection('pages').find({ id: { $in: targets }, 'ocr.updated_at': { $gt: since } }, { projection: { id: 1 } }).toArray();
     const wset = new Set(written.map((p) => p.id));
-    const unwritten = b.page_ids.filter((id) => !wset.has(id));
-    b.ocr_written = written.length;
+    const unwritten = targets.filter((id) => !wset.has(id));
+    if (b.residual_page_ids) b.residual_written = written.length; else b.ocr_written = written.length;
     b.ocr_job_statuses = Object.fromEntries(jobs.map((j) => [j.id, j.status]));
     if (unwritten.length && b.retries < 1) {
       b.retries++; b.retry_page_ids = unwritten; b.phase = 'pending'; retried++;
       log(`  ${b.id}: ${written.length} written, ${unwritten.length} not — queued for one retry`);
       continue;
     }
-    b.ocr_unwritten = unwritten.length; delete b.retry_page_ids;
+    if (b.residual_page_ids) b.residual_unwritten = unwritten.length; else b.ocr_unwritten = unwritten.length;
+    delete b.retry_page_ids;
     b.phase = 'ocr_done'; done++;
     await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'ocr-collected', detail: { written: b.ocr_written, unwritten: unwritten.length, jobs: b.ocr_job_statuses } });
   }
@@ -614,10 +616,14 @@ async function residual(db) {
     // whose OCR is rewritten under a translation is gap-fill's to re-translate on realtime lite.
     if (!b.foreign_hold) {
       const h = await holdBook(db, b.id, HOLD);
-      if (h.outcome === 'held' || h.outcome === 'already_held') b.held_by_us = true;
+      if (h.outcome === 'held' || h.outcome === 'already_held') { b.held_by_us = true; delete b.released_for_translation_at; delete b.released_at; }
       else { log(`  ${b.id}: hold ${h.outcome} ${h.reason || ''} — not queued`); continue; }
     }
     b.residual_prev_phase = b.phase; b.retry_page_ids = ids; b.ocr_model = model; b.phase = 'pending'; b.submit_attempts = 0; b.retries = 1; b.residual_pages = ids.length;
+    // A new OCR epoch: the earlier passes' jobs are terminal, and `reconcile`/`check` must not read
+    // them as this pass's submit (2026-10-02: reconcile marked 332 residual books submitted off the
+    // lite jobs and the loop walked them to withhold without a flash submit).
+    b.residual_page_ids = ids; b.residual_queued_at = new Date().toISOString(); b.ocr_jobs = []; delete b.ocr_submitted_at;
     books++; pages += ids.length;
     await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'residual-queued', detail: { pages: ids.length, model } });
   }
