@@ -306,6 +306,11 @@ export const LOOP_CANDIDATE_FILTER = {
 export const UNVERIFIED_SCRIPTS = Object.freeze({
   tibetan: /[\u0F00-\u0FFF]/u,
   syriac: /[\u0700-\u074F]/u,
+  // #5645: Gemini cannot read Samaritan. On Petermann's Pentateuchus Samaritanus
+  // it named the script Gothic, Ethiopic, Avestan, Glagolitic\u2026 and recited
+  // Masoretic Genesis over Deuteronomy. It never writes the Samaritan block
+  // itself, so in practice this key is used in cohort mode only.
+  samaritan: /[\u0800-\u083F]/u,
 });
 
 /**
@@ -333,7 +338,7 @@ export const UNVERIFIED_SCRIPT_MIN_SHARE = 0.3;
  * Pure; returns `{ script: null, share: 0 }` for text with no letters.
  *
  * @param {string} ocrText
- * @returns {{ script: 'tibetan'|'syriac'|null, share: number, letters: number }}
+ * @returns {{ script: 'tibetan'|'syriac'|'samaritan'|null, share: number, letters: number }}
  */
 export function unverifiedScriptShare(ocrText) {
   const letters = stripOcrMetadata(ocrText || '').match(/\p{L}/gu) || [];
@@ -400,7 +405,7 @@ export const UNVERIFIED_SCRIPT_CANDIDATE_FILTER = {
  * `unverifiedScriptArm`.
  *
  * @param {object} page
- * @param {{ unverifiedScriptArm?: boolean, cohortScript?: 'tibetan'|'syriac'|null }} [opts]
+ * @param {{ unverifiedScriptArm?: boolean, cohortScript?: 'tibetan'|'syriac'|'samaritan'|null }} [opts]
  * @returns {'stale_after_reocr'|'ocr_unreadable'|'source_loop'|'unverified_script_ocr'|null}
  */
 export function staleTranslationReason(page, { unverifiedScriptArm = false, cohortScript = null } = {}) {
