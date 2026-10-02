@@ -420,8 +420,14 @@ async function enrol(db) {
     const est = b.n * TR_RATE;
     if (sp.usd + inflight + est > CAP) { log(`enrol: CAP — spent $${sp.usd.toFixed(2)} + in flight $${inflight.toFixed(2)} + $${est.toFixed(2)} > $${CAP}`); s.cap_hit = new Date().toISOString(); break; }
     const approved = Math.max(0.05, +(b.n * 0.003).toFixed(2));
-    const rel = await releaseBook(db, b.id, { note: 'released for chained batch enrol (#5309)', source: HOLD.source });
-    if (rel.outcome !== 'released') { log(`  ${b.id}: release ${rel.outcome} ${rel.reason || ''} — skipped`); b.phase = 'tr_refused'; b.tr_reason = `release:${rel.outcome}`; saveState(s); continue; }
+    // Release OUR hold; a book already released (a second 300-page run, an echo re-send) proceeds;
+    // a book someone else has since held is theirs — never lift a hold this lane did not place.
+    const cur = await db.collection('books').findOne({ id: b.id }, { projection: { pipeline_auto: 1 } });
+    if (isHeld(cur) && cur.pipeline_auto.hold.reason !== HOLD.reason) { log(`  ${b.id}: held by ${cur.pipeline_auto.hold.reason} — skipped`); b.phase = 'tr_refused'; b.tr_reason = `foreign-hold:${cur.pipeline_auto.hold.reason}`; saveState(s); continue; }
+    if (isHeld(cur)) {
+      const rel = await releaseBook(db, b.id, { note: 'released for chained batch enrol (#5309)', source: HOLD.source });
+      if (rel.outcome !== 'released') { log(`  ${b.id}: release ${rel.outcome} ${rel.reason || ''} — skipped`); b.phase = 'tr_refused'; b.tr_reason = `release:${rel.outcome}`; saveState(s); continue; }
+    }
     let out = '';
     try {
       out = execFileSync(process.execPath, ['scripts/workers/translate-batch-worker.mjs', '--chained', '--enrol', `--books=${b.id}`, `--approved-usd=${approved}`],
@@ -457,7 +463,7 @@ async function untranslatedLeft(db, s, b) {
 async function gaps(db) {
   const s = loadState();
   let books = 0, pages = 0;
-  for (const b of s.books.filter((x) => x.phase === 'cleared' && !x.english && !x.foreign_hold && x.run_id && (x.tr_rounds || 1) < 6)) {
+  for (const b of s.books.filter((x) => x.phase === 'cleared' && !x.english && !x.foreign_hold && (x.tr_rounds || 1) < 8)) {
     const left = await untranslatedLeft(db, s, b);
     if (!left) continue;
     b.gap_prev_phase = b.phase; b.phase = 'withheld'; b.tr_rounds = (b.tr_rounds || 1) + 1; b.gap_pages = left; books++; pages += left;
@@ -600,7 +606,8 @@ async function residual(db) {
     await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'residual-queued', detail: { pages: ids.length, model } });
   }
   saveState(s);
-  log(`residual: ${books} books / ${pages} pages queued on ${model}; the run loop submits them in waves`);
+  if (books) await envelope(db);   // the loop closes the envelope when it ends; a residual pass needs it again
+  log(`residual: ${books} books / ${pages} pages queued on ${model}; start the loop (restart-loop.sh) — it submits them in waves`);
 }
 
 // ── status / run ───────────────────────────────────────────────────────────
@@ -636,7 +643,14 @@ async function run(db) {
     }
     await status(db);
     const live = loadState().books.filter((b) => !['cleared', 'ocr_submit_failed'].includes(b.phase));
-    if (!live.length) { log('run: every book is cleared — run the audit, check the controls by eye, then `release`'); return; }
+    if (!live.length) {
+      // An open envelope funds every scoped worker on its books: close it the moment the lane ends.
+      // `residual` re-opens it if a later pass is approved.
+      try { execFileSync(process.execPath, ['scripts/maintenance/set-scope.mjs', '--tag', ENVELOPE_TAG, '--remove', '--by', 'stranded-text-5309 loop finished (#5309)'], { cwd: ROOT, env: process.env, encoding: 'utf8' }); log(`run: envelope ${ENVELOPE_TAG} removed`); }
+      catch (e) { log(`run: could not remove envelope ${ENVELOPE_TAG}: ${String(e.message).slice(0, 120)} — remove it by hand`); }
+      log('run: every book is cleared — run the audit, check the controls by eye, then `release`');
+      return;
+    }
     if (loadState().cap_hit) { log('run: CAP HIT — stopping the loop; report to Derek'); return; }
     await new Promise((r) => setTimeout(r, interval));
   }
