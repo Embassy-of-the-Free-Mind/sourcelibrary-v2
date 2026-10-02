@@ -1,0 +1,30 @@
+{
+ "key_env": "GEMINI_API_KEY_TIER3",
+ "estimate_usd": 1.9938,
+ "jobs": [
+  {
+   "arm": "A",
+   "model": "gemini-3.1-flash-lite",
+   "job_name": "batches/egmgl6inrvny3h6uy4wynftlnrvfmobvzrv6",
+   "requests": 564,
+   "bytes": 126871314,
+   "submitted_at": "2026-10-02T11:57:42.816Z"
+  },
+  {
+   "arm": "A2",
+   "model": "gemini-3.1-flash-lite",
+   "job_name": "batches/p8artmps02q5pnn9tqhmgaxlejlvqqlrc4fp",
+   "requests": 564,
+   "bytes": 126871878,
+   "submitted_at": "2026-10-02T11:58:04.072Z"
+  },
+  {
+   "arm": "B",
+   "model": "gemini-3.1-flash-lite",
+   "job_name": "batches/1zr1zkjhrtdsi5i9dapd9at52yaaic9ipjmt",
+   "requests": 564,
+   "bytes": 127903998,
+   "submitted_at": "2026-10-02T11:58:25.333Z"
+  }
+ ]
+}
