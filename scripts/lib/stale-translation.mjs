@@ -91,6 +91,7 @@
  */
 
 import { loopVerdict } from './ocr-loop-guard.mjs';
+import { illegibleSourceVerdict, ILLEGIBLE_SOURCE_REASON } from './illegible-source-gate.mjs';
 import { stripOcrMetadata } from './language-content-classify.mjs';
 
 /** Is this page's transcription a degeneration loop? The #4850 gate's own verdict. */
@@ -220,6 +221,7 @@ export const WITHHOLD_REASONS = {
   OCR_UNREADABLE: 'ocr_unreadable',
   SOURCE_LOOP: 'source_loop',
   UNVERIFIED_SCRIPT_OCR: 'unverified_script_ocr',
+  ILLEGIBLE_SOURCE: ILLEGIBLE_SOURCE_REASON,
 };
 
 /** `page_revisions.reason` for the snapshot taken before a withhold. */
@@ -405,10 +407,13 @@ export const UNVERIFIED_SCRIPT_CANDIDATE_FILTER = {
  * `unverifiedScriptArm`.
  *
  * @param {object} page
- * @param {{ unverifiedScriptArm?: boolean, cohortScript?: 'tibetan'|'syriac'|'samaritan'|null }} [opts]
- * @returns {'stale_after_reocr'|'ocr_unreadable'|'source_loop'|'unverified_script_ocr'|null}
+ * Arm 5 (`illegibleArm`, #5305) is opt-in for the same reason: the English was made from a page
+ * whose OCR read nothing, or says it could not read the page (illegible-source-gate.mjs).
+ *
+ * @param {{ unverifiedScriptArm?: boolean, cohortScript?: 'tibetan'|'syriac'|'samaritan'|null, illegibleArm?: boolean }} [opts]
+ * @returns {'stale_after_reocr'|'ocr_unreadable'|'source_loop'|'unverified_script_ocr'|'illegible_source'|null}
  */
-export function staleTranslationReason(page, { unverifiedScriptArm = false, cohortScript = null } = {}) {
+export function staleTranslationReason(page, { unverifiedScriptArm = false, cohortScript = null, illegibleArm = false } = {}) {
   if (cohortScript && !Object.hasOwn(UNVERIFIED_SCRIPTS, cohortScript)) {
     throw new Error(`cohortScript must be one of ${Object.keys(UNVERIFIED_SCRIPTS).join(', ')}; got ${cohortScript}`);
   }
@@ -435,6 +440,13 @@ export function staleTranslationReason(page, { unverifiedScriptArm = false, coho
   // read of Tibetan or Syriac that no specialist lane has checked.
   if (unverifiedScriptArm && isUnverifiedScriptOcr(page?.ocr, { cohortScript })) {
     return WITHHOLD_REASONS.UNVERIFIED_SCRIPT_OCR;
+  }
+
+  // Arm 5 (#5305): the source is illegible by the translation gate's own verdict — no legible body
+  // once lacunae and <unclear> are removed, or an OCR warning that the page could not be read. The
+  // same predicate that refuses a NEW translation before the call; self-healing on a better read.
+  if (illegibleArm && illegibleSourceVerdict(page?.ocr?.data, { pageType: page?.page_type }).illegible) {
+    return WITHHOLD_REASONS.ILLEGIBLE_SOURCE;
   }
   return null;
 }

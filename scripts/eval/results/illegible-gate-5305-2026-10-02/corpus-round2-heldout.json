@@ -1,0 +1,33 @@
+{
+  "at": "2026-10-02T12:40:10.635Z",
+  "sample": "600 random visible books with pages, every OCR'd page",
+  "books": 600,
+  "pages": 83927,
+  "translated": 69881,
+  "fired": 89,
+  "fired_translated": 73,
+  "by_kind": {
+    "no-legible-body": 73,
+    "ocr-illegible": 16
+  },
+  "by_language": {
+    "Latin": 31,
+    "Greek": 2,
+    "German": 15,
+    "English": 11,
+    "Hebrew and Judeo-Arabic": 7,
+    "Chinese": 3,
+    "Korean": 9,
+    "Dutch": 1,
+    "Syriac": 1,
+    "French": 2,
+    "Tibetan": 2,
+    "Spanish": 1,
+    "Russian": 2,
+    "Italian": 1,
+    "Sanskrit": 1
+  },
+  "fire_rate_pages": 0.00106,
+  "fire_rate_translated": 0.00104,
+  "books_with_a_fire": 61
+}

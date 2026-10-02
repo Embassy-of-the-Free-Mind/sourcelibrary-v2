@@ -54,6 +54,7 @@ import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { phase4Lane, REALTIME_PRIORITY_FLOOR } from '../lib/translate-batch-chained.mjs';
 import { openRunBookIds, notInOpenRun } from './lib/self-dispatch-lane.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
+import { illegibleGateEnabled, illegibleSourceVerdict, ILLEGIBLE_SOURCE_REASON } from '../lib/illegible-source-gate.mjs';
 import { geminiEngine, translationInput, translationProvenance, codeVersion, host } from '../lib/write-provenance.mjs';
 import { dropDriftedPages } from '../lib/block-drift.mjs';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
@@ -671,6 +672,28 @@ async function processBook(db, book, job, globalCounter, deadline) {
     console.log(`  [${label}] LOOP SOURCE: refusing to translate ${loopSources.length} page(s) whose OCR is a repetition loop (#4850)`);
     const loopIds = new Set(loopSources.map(p => p.id));
     pages.splice(0, pages.length, ...pages.filter(p => !loopIds.has(p.id)));
+  }
+
+  // ── Illegible sources (#5305) — OFF unless TRANSLATE_ILLEGIBLE_GATE=1 ─────
+  // The OCR read nothing, or says it could not read the page. Handed that, the model writes
+  // fluent prose anyway (Herculanensium p.328: a paragraph of Epicurean theology over "[...]").
+  // Refused before the call and stamped like a loop source. The contract's output, the single
+  // `<warning>Illegible: …</warning>`, is NOT written to translation.data (every counter reads a
+  // non-empty data as "translated") and gets no field of its own: illegibleWarning(verdict) derives
+  // it from the OCR wherever a reader surface wants to say why there is no English.
+  if (illegibleGateEnabled()) {
+    const illegible = pages.filter(p => illegibleSourceVerdict(p.ocr?.data, { pageType: p.page_type }).illegible);
+    if (illegible.length > 0) {
+      await db.collection('pages').bulkWrite(illegible.map(p => ({
+        updateOne: {
+          filter: { id: p.id },
+          update: { $set: { 'translation.health_blocked': ILLEGIBLE_SOURCE_REASON, 'translation.health_blocked_at': new Date(), updated_at: new Date() } },
+        },
+      })), { ordered: false }).catch(() => {});
+      console.log(`  [${label}] ILLEGIBLE SOURCE: refusing to translate ${illegible.length} page(s) whose OCR has no legible text (#5305)`);
+      const ids = new Set(illegible.map(p => p.id));
+      pages.splice(0, pages.length, ...pages.filter(p => !ids.has(p.id)));
+    }
   }
 
   // ── Same-language pages (#5154) ──────────────────────────────────────────

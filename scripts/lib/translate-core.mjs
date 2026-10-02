@@ -26,6 +26,7 @@ import { createHash, randomBytes } from 'crypto';
 import { buildVisiblePageCountPipeline } from './page-counts.mjs';
 import { saveRevisionBeforeOverwrite } from './page-revisions.mjs';
 import { loopVerdict } from './ocr-loop-guard.mjs';
+import { illegibleGateEnabled, illegibleSourceVerdict } from './illegible-source-gate.mjs';
 import { stripMarkupTags } from './strip-markup-tags.mjs';
 import { repairAnnotationTags } from './annotation-tag-repair.mjs';
 import { CLEAR_STALE_UNSET } from './stale-translation.mjs';
@@ -969,12 +970,16 @@ export const SOURCE_LOOP_REASON = 'source_loop';
  *
  * Reasons: 'soft-hidden' (page_number <= 0 — never renders, #3293),
  * 'skip-type', 'no-ocr', 'ocr-unreadable', 'blank-ocr', 'no-body', 'ocr-loop',
- * 'recitation-blocked', 'safety-blocked'.
+ * 'illegible-source' (only with the #5305 gate on), 'recitation-blocked', 'safety-blocked'.
  *
  * opts.extraSkipTypes extends (never replaces) the canonical list — e.g.
  * retranslate-stale deliberately also skips illustrations and title pages.
+ * opts.illegibleGate (default: TRANSLATE_ILLEGIBLE_GATE=1 in the environment, i.e. OFF) refuses a
+ * page whose OCR has no legible body or reports itself illegible (#5305) — see
+ * illegible-source-gate.mjs. The verdict object rides along as `illegible` so a caller can stamp
+ * the contract's `<warning>Illegible: …</warning>`.
  */
-export function isTranslatablePage(page, { extraSkipTypes = [] } = {}) {
+export function isTranslatablePage(page, { extraSkipTypes = [], illegibleGate = illegibleGateEnabled() } = {}) {
   if ((page?.page_number ?? 0) <= 0) return { ok: false, reason: 'soft-hidden' };
   const skip = new Set([...SKIP_TRANSLATION_PAGE_TYPES, ...extraSkipTypes]);
   if (page?.page_type && skip.has(page.page_type)) return { ok: false, reason: 'skip-type' };
@@ -993,6 +998,13 @@ export function isTranslatablePage(page, { extraSkipTypes = [] } = {}) {
   // A looping transcription is not a text to translate — it is the input that
   // produces a fabricated translation (#4765/#4850).
   if (isDegenerateSource(ocr)) return { ok: false, reason: 'ocr-loop' };
+  // An illegible page (#5305): the OCR read nothing, or says it could not read the page. Checked
+  // after no-body because the no-body gate lets a described picture through, and a papyrus with
+  // "[...]" and a described library stamp is not a picture — it is an unread page.
+  if (illegibleGate) {
+    const illegible = illegibleSourceVerdict(ocr, { pageType: page?.page_type });
+    if (illegible.illegible) return { ok: false, reason: 'illegible-source', illegible };
+  }
   if (page?.translation?.recitation_blocked) return { ok: false, reason: 'recitation-blocked' };
   if (page?.translation?.safety_blocked) return { ok: false, reason: 'safety-blocked' };
   return { ok: true };
