@@ -1,0 +1,21 @@
+{
+ "id": "6a312d8867a0ec73f1bc373f_00050",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Sāṃkhyatattvavṛttiḥ\n\nThe supreme Lord is omniscient, the mother and creator of the entire world. How is He to be known? By inference or by effort? For instance, the inference is that this world, which is the subject of debate and is perceived to have form, must have a cause, because it arises and ceases, just like a painting. From there, what is generally understood becomes known specifically through <term>yoga</term> <gloss>spiritual discipline/union</gloss>. For the individual soul, realization comes from one's own experience. The activity of <term>prakṛti</term> <gloss>primordial nature</gloss> is for the purpose of discriminating between these two: the supreme and the individual. Its purpose for the sake of others will be described. As for its purpose for itself, once it has revealed itself through discrimination to the <term>puruṣa</term> <gloss>self/consciousness</gloss> for whom it acted, it remains indifferent to him. How can inanimate nature act? It is observed that even inanimate things like milk act toward an end, such as the nourishment of a calf. || 1 ||\n\nNow, concerning who is entitled to liberation, it says:\n\nDue to the attainment of detachment. || 2 ||\n\nAnd the <term>śruti</term> <gloss>Vedic scripture</gloss> says, \"Having renounced the desire for sons, the desire for wealth, and the desire for worldly status, they then live the life of a mendicant,\" and \"Having become peaceful, self-controlled, withdrawn, patient, and concentrated, one sees the Self within the Self.\" || 2 ||\n\nIf liberation followed immediately after hearing the teachings due to detachment, then everyone would attain liberation after the teacher's instruction, yet this is not seen. In response, it says:\n\nLiberation is not attained from mere hearing due to the strength of beginningless impressions. || 3 ||\n\nLiberation does not occur immediately after hearing; rather, due to the strength of beginningless <term>vāsanā</term> <gloss>subconscious impressions</gloss>, liberation comes quickly for some and after a long time for others. || 3 ||\n\nIt offers another argument:\n\nThey are experienced individually, like many flows of water. || 4 ||\n\n<summary>This page discusses the nature of divine creation and the necessity of discrimination between primordial nature and the self, while explaining why mere hearing of the truth does not immediately lead to liberation due to deep-seated subconscious impressions.</summary>\n<keywords>Prakriti, Purusha, Vairagya, Vasana, Liberation, Inference, Yoga</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2429,
+ "outputTokens": 569,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.0007303749999999999,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1325,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

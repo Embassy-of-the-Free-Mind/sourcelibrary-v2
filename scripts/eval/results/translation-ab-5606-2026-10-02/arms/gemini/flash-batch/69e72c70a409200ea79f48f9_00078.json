@@ -1,0 +1,21 @@
+{
+ "id": "69e72c70a409200ea79f48f9_00078",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "<margin>\n<note>This has the sense of drawing someone out or attracting them.</note>\n</margin>\n<margin>\n<note>He also knows that Qiu <note>Confucius</note> knows him. This is a stylistic technique of circular phrasing.</note>\n</margin>\n<margin>\n<note>Stylistic phrasing technique.</note>\n</margin>\n<margin>\n<note>He took his wife and left.</note>\n</margin>\n<margin>\n<note>A place name. The person in charge of guarding the border territories.</note>\n</margin>\n<margin>\n<note>Mu was a disciple of Confucius.</note>\n</margin>\n<margin>\n<note>The clods of earth are large and the grass roots are thick.</note>\n</margin>\n<margin>\n<note>The state of Lu.</note>\n</margin>\n<margin>\n<note>Perhaps a virtuous person, yet in a place where ground-skin <note>weeds or common plants</note> grows.</note>\n</margin>\n\nZilu <note>a disciple of Confucius</note> requested to go and call for him. Confucius said: Forget it. He knows that I am famous for my ambitions, and he knows that I am traveling to the State of Chu. He will think that I will certainly cause the King of Chu to summon him. He sees me as a <term>ningren</term> <gloss>a sycophant or glib person</gloss>. If that is the case, such a person would be ashamed even to hear the words of a sycophant, much less see him in person! Why would you think he would still be there? When Zilu went to look for him, the house was already empty. \n\nThe border warden of Changwu asked Zimu: When you manage the government, do not be <term>lumang</term> <gloss>rash or careless</gloss>. When you govern the people, do not be <term>mielie</term> <gloss>negligent or superficial</gloss>. In the past...\n\n<summary>Confucius advises Zilu against pursuing a hermit who views the sage as a political opportunist. The text shifts to the border warden of Changwu advising Zimu on the importance of diligence in governance.</summary>\n<keywords>Confucius, Zilu, Zimu, King of Chu, governance, sincerity, hermits, Changwu</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2161,
+ "outputTokens": 538,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.00134725,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 622,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

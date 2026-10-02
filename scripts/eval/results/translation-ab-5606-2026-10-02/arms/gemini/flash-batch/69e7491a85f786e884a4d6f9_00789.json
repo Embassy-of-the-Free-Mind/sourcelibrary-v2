@@ -1,0 +1,21 @@
+{
+ "id": "69e7491a85f786e884a4d6f9_00789",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "# The Beautiful City of Lanka\n### From the War Book of the Valmiki Ramayana\n\nThe bears, lions, boars, buffaloes, elephants, and deer were terrified by that sound and fled in fear in all ten directions. There was a single, lofty peak of Mount Trikuta that touched the sky, covered all over with flowers and shining like great silver. It was a hundred <term>yojanas</term> <gloss>a measurement of distance, roughly eight miles</gloss> wide, pure and beautiful to behold. It was smooth, majestic, and massive, unreachable even by birds. It was difficult to ascend even in thought, let alone by the actions of men. Situated upon that peak was the city of Lanka, ruled by Ravana. \n\nIt was a hundred <term>yojanas</term> wide and thirty <term>yojanas</term> long. That city was adorned with high gateways that looked like white clouds. It was beautified by a golden wall and a silver wall, and Lanka was highly decorated with palaces and celestial mansions. Like the sky at the end of the hot season filled with clouds, the city stood grand. There, a palace decorated with a thousand pillars stood out, resembling the peak of Mount Kailasa and appearing to scrape the sky. This <term>caitya</term> <gloss>shrine or sacred palace</gloss> of the Lord of the Rakshasas was the jewel of the city. \n\nIt was constantly guarded by a full hundred Rakshasas. Rama, the prosperous elder brother of Lakshmana, together with the monkeys, beheld that charming city of Ravana, which possessed many forests, was graced by mountains of various colorful minerals, and adorned with gardens. It was filled with the songs of various birds and frequented by various groups of beings. It was covered with various flowers and inhabited by various Rakshasas. Seeing that city, crowded with great houses and resembling the city of the gods, the heroic elder brother of Lakshmana was filled with wonder.\n\nRama, with his great army, gazed upon that city filled with gems, possessing many arrangements, decorated with rows of palaces, and featuring great mechanical engines at its main gates.\n\nThus ends the thirty-ninth chapter, titled The Sight of Lanka, in the War Book of the glorious Ramayana of Valmiki, the first epic poem, a collection of twenty-four thousand verses.\n\n---\n\n### Chapter 40\n**The Duel Between Ravana and Sugriva**\n\nThen Rama, surrounded by Sugriva and the leaders of the monkey troops, climbed the peak of Mount Suvela, which had a circumference of two <term>yojanas</term>. Standing there for a moment and looking in all ten directions, he saw the well-constructed city of Lanka on the lovely peak of Trikuta, built by Vishvakarman <note>the divine architect of the gods</note> and graced by beautiful forests. \n\nOn a tower of the gateway, he saw the invincible Lord of the Rakshasas. He was flanked by white fly-whisks and graced by a victorious parasol. He was anointed with red sandalwood and adorned with jeweled ornaments. Appearing like a dark rain-cloud, he wore garments embroidered with gold. His chest bore prominent scars from the tusks of Airavata <note>the divine elephant of Indra</note>. He was wrapped in a red robe with the hue of a rabbit's blood, looking like a mass of clouds in the sky illuminated by the heat of the twilight. \n\nAs the leaders of the monkeys and Rama were watching, Sugriva suddenly sprang up at the sight of the Lord of the Rakshasas.\n\n<margin>1. This half-verse is missing in some versions.</margin>\n\n<summary>Rama and his army arrive at Mount Suvela and view the magnificent city of Lanka. Upon spotting Ravana standing on his palace gateway, the monkey king Sugriva impulsively leaps into action.</summary>\n<keywords>Lanka, Ravana, Rama, Sugriva, Trikuta, Suvela, architecture, fortifications, Rakshasa</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2716,
+ "outputTokens": 858,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.001966,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2240,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

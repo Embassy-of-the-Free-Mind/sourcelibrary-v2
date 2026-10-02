@@ -1,0 +1,32 @@
+{
+ "Pali": {
+  "pages": 16,
+  "judge_pages": 32,
+  "T_obs": 0.312,
+  "p_one_sided": 0.025,
+  "net_margin_flash_vs_lite": 0.312,
+  "net_margin_flash_vs_lite_rerun": 0.312,
+  "net_margin_A_vs_A (lite-rerun vs lite)": -0.25,
+  "beyond_floor": true
+ },
+ "Sanskrit": {
+  "pages": 20,
+  "judge_pages": 40,
+  "T_obs": 0.35,
+  "p_one_sided": 0.0092,
+  "net_margin_flash_vs_lite": 0.325,
+  "net_margin_flash_vs_lite_rerun": 0.375,
+  "net_margin_A_vs_A (lite-rerun vs lite)": 0.025,
+  "beyond_floor": true
+ },
+ "Chinese": {
+  "pages": 19,
+  "judge_pages": 38,
+  "T_obs": 0.447,
+  "p_one_sided": 0.0017,
+  "net_margin_flash_vs_lite": 0.289,
+  "net_margin_flash_vs_lite_rerun": 0.605,
+  "net_margin_A_vs_A (lite-rerun vs lite)": -0.395,
+  "beyond_floor": false
+ }
+}

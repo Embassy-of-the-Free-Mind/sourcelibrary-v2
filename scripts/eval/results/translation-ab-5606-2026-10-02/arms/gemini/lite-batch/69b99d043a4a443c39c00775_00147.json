@@ -1,0 +1,21 @@
+{
+ "id": "69b99d043a4a443c39c00775_00147",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "IV. 3. 5.] UPARIPAÑCA-VAGGA 3. 127\n\n19. Then Ragâ, daughter of Mâra, spoke this verse in the presence of the Blessed One:\nHaving severed the craving that flows like a river,\nMany beings will truly cross over.\nIndeed, this one <note>referring to the Buddha</note> leads away \nThe homeless multitude,\nHaving severed the snares of the King of Death.\n\n20. The great heroes, the Tathâgatas, guide through the true Dhamma.\nWhen those who understand are being led by the Dhamma,\nWhat jealousy can there be?\n\n21. Then Taṇhâ, Arati, and Ragâ, the daughters of Mâra, approached Mâra the Evil One.\n\n22. Mâra the Evil One saw Taṇhâ, Arati, and Ragâ, the daughters of Mâra, coming from afar. Seeing them, he spoke to them in verses:\nFools, you attempt to crush a mountain with lotus stalks,\nYou dig at a mountain with your fingernails,\nYou try to bite through it with teeth of iron.\nLike one who strikes their head against a rock,\nOr seeks footing in a deep abyss,\nOr strikes their chest against a tree stump,\nYou have become weary of Gotama.\n\n23. Taṇhâ, Arati, and Ragâ came up glowing <note>with anxiety or agitation</note>. The Teacher dispelled them there, just as the wind blows away a tuft of cotton.\n\n->Third section<-\n->Its summary<-\nSambahulâ, Samiddhi, Godhika, Seven Years,\nAnd the Daughters, taught by the Buddha as the Teacher: this is the Mâra-samyutta.\n\n<meta>The text contains scholarly footnotes regarding variations in the Pali manuscripts (SS., B., C., S1, S2, S3), which denote differences in spelling and phrasing in the source editions.</meta>\n\n<summary>This page records the conclusion of the Mâra-samyutta, featuring a dialogue where Mâra’s daughters attempt to tempt the Buddha, are rebuked, and subsequently mocked by Mâra for their failure to disturb him.</summary>\n<keywords>Mâra, daughters of Mâra, Taṇhâ, Arati, Ragâ, Tathâgata, Gotama, Mâra-samyutta</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2584,
+ "outputTokens": 536,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.000725,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1776,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

@@ -1,0 +1,21 @@
+{
+ "id": "6a09ff5dfa20006dbaba9200_00274",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "CLXXII.—The Jātaka Chapter. 255\n\nCLXXII.\n\n1. Monks, one should know what is unrighteous and what is righteous, what is unprofitable and what is profitable. Having known the unrighteous and the righteous, having known the unprofitable and the profitable, one should practice in accordance with the righteousness and in accordance with the profit. The Blessed One spoke this. Having said this, the Happy One rose from his seat and entered the monastery.\n\n2. Soon after the Blessed One had departed, it occurred to these monks: The Blessed One has given us a brief summary, and having risen from his seat and entered the monastery, he has not explained the meaning in detail, saying, \"Monks, one should know what is unrighteous and what is righteous, what is unprofitable and what is profitable. Having known the unrighteous and the righteous, having known the unprofitable and the profitable, one should practice in accordance with the righteousness and in accordance with the profit.\" Who now could explain in detail the meaning of this summary given briefly by the Blessed One without being explained in detail? Then it occurred to these monks: This Venerable Mahākaccāna is praised by the Teacher and honored by wise fellow-practitioners. The Venerable Mahākaccāna is capable of explaining in detail the meaning of this summary given briefly by the Blessed One without being explained in detail. Suppose we were to approach the Venerable Mahākaccāna, and having approached him, ask him about this matter. We will retain whatever the Venerable Mahākaccāna explains to us.\n\n3. Then those monks approached the Venerable Mahākaccāna. Having approached him, they exchanged greetings with the Venerable Mahākaccāna; having concluded their courteous and memorable conversation, they sat down to one side. Sitting to one side, those monks said to the Venerable Mahākaccāna: Venerable Kaccāna, the Blessed One gave us a brief summary and rose from his seat and entered the monastery without explaining the meaning in detail, saying, \"Monks, one should know what is unrighteous and what is righteous, what is unprofitable and what is profitable. Having known the unrighteous...\n\n<note>M. S. reads <term>vatvāna</term>; Ph. reads <term>vatvā ca</term>.</note>\n<note>* omitted by T. † S. <term>ay</term> ‡ T. <term>reyyama</term>.</note>\n\n<summary>The Blessed One provides a brief instruction on discerning righteousness and profit before retiring; the monks seek out the venerable Mahākaccāna to provide a detailed explanation of these teachings.</summary>\n<keywords>Dharma, Adharma, Artha, Anartha, Mahākaccāna, Practice, Righteousness, Profit</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2586,
+ "outputTokens": 584,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.00076125,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2094,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

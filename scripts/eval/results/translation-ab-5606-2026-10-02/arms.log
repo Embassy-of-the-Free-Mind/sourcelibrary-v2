@@ -1,0 +1,20 @@
+57 pages, prompt v13, 514542 prompt chars
+estimate over 3 arms: $0.2277 at the Batch rate (cap $10)
+flash: key 0 refused ({"error":{"code":429,"message":"You exceeded your current quota, please check your plan and billing )
+flash: submitted batches/dmrzzfkavs341wesshgc1suufr63284go2hh with key 1
+  flash JOB_STATE_RUNNING 0s  flash JOB_STATE_RUNNING 21s  flash JOB_STATE_RUNNING 41s  flash JOB_STATE_RUNNING 61s  flash JOB_STATE_RUNNING 82s  flash JOB_STATE_RUNNING 102s  flash JOB_STATE_RUNNING 122s
+flash: JOB_STATE_SUCCEEDED after 143s 
+flash: meter updated (143970 in / 44005 out)
+flash: 57/57 written, $0.1020 at the Batch rate (0.00179/page)
+lite: key 0 refused ({"error":{"code":429,"message":"You exceeded your current quota, please check your plan and billing )
+lite: submitted batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d with key 1
+  lite JOB_STATE_RUNNING 0s  lite JOB_STATE_RUNNING 21s  lite JOB_STATE_RUNNING 41s  lite JOB_STATE_RUNNING 61s  lite JOB_STATE_RUNNING 82s
+lite: JOB_STATE_SUCCEEDED after 102s 
+lite: meter updated (143970 in / 39959 out)
+lite: 57/57 written, $0.0480 at the Batch rate (0.00084/page)
+lite-rerun: key 0 refused ({"error":{"code":429,"message":"You exceeded your current quota, please check your plan and billing )
+lite-rerun: submitted batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5 with key 1
+  lite-rerun JOB_STATE_RUNNING 0s  lite-rerun JOB_STATE_RUNNING 21s  lite-rerun JOB_STATE_RUNNING 41s  lite-rerun JOB_STATE_RUNNING 61s  lite-rerun JOB_STATE_RUNNING 82s  lite-rerun JOB_STATE_RUNNING 102s
+lite-rerun: JOB_STATE_SUCCEEDED after 122s 
+lite-rerun: meter updated (143970 in / 39644 out)
+lite-rerun: 57/57 written, $0.0477 at the Batch rate (0.00084/page)

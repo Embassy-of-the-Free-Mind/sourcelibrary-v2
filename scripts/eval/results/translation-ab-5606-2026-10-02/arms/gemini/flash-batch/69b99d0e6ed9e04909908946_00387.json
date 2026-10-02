@@ -1,0 +1,21 @@
+{
+ "id": "69b99d0e6ed9e04909908946_00387",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>This page continues the confession of the Venerable Sariputta, who is responding to a false accusation of offending a fellow monk. He uses a series of similes to demonstrate his humble and disciplined state of mind.</meta>\n\n### The Numerical Discourses of the Buddha: The Elevens\n\nJust as, venerable sir, a dusting-cloth <note>original: \"rajoharaṇaṃ\"</note> wipes up what is clean and wipes up what is unclean, wipes up excrement, wipes up urine, wipes up saliva, wipes up pus, and wipes up blood, yet the dusting-cloth is not troubled, ashamed, or disgusted by it: even so, venerable sir, I dwell with a mind like a dusting-cloth, vast, exalted, measureless, without enmity, and without ill-will. Only one who has not established mindfulness of the body <note>original: \"kāyagatā sati\"</note> would, after offending a fellow monk here, set out on a journey without making amends.\n\nJust as, venerable sir, a youth of the outcaste class <note>original: \"caṇḍālakumārako\"</note> or a maiden of the outcaste class, carrying a begging-basket and dressed in rags, enters a village or a town with a lowly heart: even so, venerable sir, I dwell with a mind like an outcaste youth, vast, exalted, measureless, without enmity, and without ill-will. Only one who has not established mindfulness of the body would, after offending a fellow monk here, set out on a journey without making amends.\n\nJust as, venerable sir, a bull with its horns cut off, gentle, well-tamed, and well-trained, wanders from street to street and crossroad to crossroad without harming anyone with its feet or its horns: even so, venerable sir, I dwell with a mind like a bull with its horns cut off, vast, exalted, measureless, without enmity, and without ill-will. Only one who has not established mindfulness of the body would, after offending a fellow monk here, set out on a journey without making amends.\n\nJust as, venerable sir, a woman or a man, young and fond of ornaments, having bathed their head, would be [horrified] <note>the sentence breaks here; the context implies being horrified by a carcass</note> by the carcass of a snake or...\n\n<margin>\n1. Variant readings suggest \"wiping\" or \"releasing\" across different manuscripts.\n8. Some manuscripts read \"caṇḍāla boy\" or \"caṇḍāla girl.\"\n13. Variant: \"surato\" meaning well-delighted or gentle.\n</margin>\n\n<summary>The Venerable Sariputta defends his conduct through similes of a dusting-cloth, an outcaste youth, and a de-horned bull. He emphasizes that his disciplined mind is incapable of knowingly offending others without seeking forgiveness.</summary>\n<keywords>Sariputta, humility, mindfulness of the body, similes, outcaste, monk discipline, Anguttara Nikaya</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2732,
+ "outputTokens": 659,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.0016715,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2122,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

@@ -1,0 +1,21 @@
+{
+ "id": "69e72c6ba409200ea79f484e_00102",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>This page contains part of the Mountain Tree chapter from the Zhuangzi, featuring a dialogue between Confucius and the hermit Zi Sanghu regarding worldly hardship and the path of the perfected person.</meta>\n\n<margin>This describes the conduct of the <term>zhiren</term> <gloss>perfected person</gloss> who does not seek fame or advancement. Why, then, do you take such pleasure in being heard?</margin>\nRegarding this responsibility: the <term>zhiren</term> <gloss>perfected person</gloss> seeks no reputation. Why should you, sir, rejoice in being known? Confucius said, \"How excellent!\" He then declined his \n<margin>He does not value outward show.</margin>\nsocial obligations and left his disciples to escape into the great marshes. He wore clothes of coarse fur and hemp and ate acorns and chestnuts. \n<margin>He does not prize fine flavors.</margin>\n<margin>He does not give rise to a mind of discrimination and thus does not disturb the flocks of birds and beasts.</margin>\nHe moved among the beasts without disturbing the herd and among the birds without breaking their flight. If the birds and beasts did not dread him, how much less would \n<margin>Even different species do not dread him.</margin>\n<margin>Surname and name of a hermit.</margin>\nmen? Confucius asked Zi Sanghu <note>a Daoist hermit known for his detachment from worldly affairs</note>, saying: \"I was twice driven out of Lu, the tree was felled over me in Song, my footprints were wiped away in Wei, I was reduced to poverty in Shang and Zhou, and I was besieged between Chen and Cai. I have encountered these many disasters; my relatives and friends have become increasingly distant, and my followers and associates have increasingly dispersed. Why is this?\" Zi Sanghu \n\n<note>A small printer's mark or seal is located in the top right corner of the page.</note>\n\n<summary>Confucius seeks advice from the hermit Zi Sanghu after suffering repeated political failures and social isolation. Zi Sanghu explains that the perfected person lives simply among nature without seeking the fame or recognition that leads to such worldly troubles.</summary>\n<keywords>Confucius, Zi Sanghu, perfected person, zhiren, isolation, nature, Lu, Song, Wei, Chen, Cai, social withdrawal</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2124,
+ "outputTokens": 507,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.0012915,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 596,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

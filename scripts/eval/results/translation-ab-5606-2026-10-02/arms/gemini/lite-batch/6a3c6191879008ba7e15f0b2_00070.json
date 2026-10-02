@@ -1,0 +1,21 @@
+{
+ "id": "6a3c6191879008ba7e15f0b2_00070",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "The second is the aspect of continuity, which depends on knowledge <note>original: 智, referring to the faculty of discernment or discriminatory consciousness</note>. Because of the arising of the perception of suffering and joy, thoughts emerge and continue without interruption.\n\nRegarding the second, the aspect of continuity, the dependence on knowledge means that, based on the aforementioned discrimination, one arises a feeling of joy when encountering desired objects and a feeling of suffering when encountering undesired objects. Thoughts emerge repeatedly and the continuity becomes manifest. This explains the self-continuity. Furthermore, it can give rise to afflictions <term>klesha</term> <gloss>mental defilements</gloss> that nourish actions and draw one into the cycle of birth and death, which also causes the continuity of others. The text below mentions the sustaining of suffering and joy, and so on. Therefore, it is said that it gives rise to these, continuing until there is no interruption.\n\nThe third is the aspect of attachment, which means that, regarding the aforementioned objects of suffering and joy, one does not understand their emptiness and deeply gives rise to attachment.\n\n<summary>This passage defines the aspects of continuity and attachment within the context of Buddhist consciousness, explaining how discriminatory knowledge leads to cyclical suffering through the interaction of perception, emotion, and desire.</summary>\n<keywords>continuity, suffering, joy, attachment, mental defilements, birth and death, emptiness</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1967,
+ "outputTokens": 295,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.000467125,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 301,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

@@ -1,0 +1,21 @@
+{
+ "id": "6a3c5f3c879008ba7e153862_00029",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "金剛般若波羅蜜經 <note>Diamond Prajnaparamita Sutra</note>\n\nForm, sound, scent, taste, touch, and mental objects; this is what is called a <term>Srotapanna</term> <gloss>stream-winner, one who has entered the current of enlightenment</gloss>.\nSubhuti, what do you think? Can a <term>Sakrdagamin</term> <gloss>once-returner, one who will be reborn only once more</gloss> think to themselves, \"I have attained the fruit of a <term>Sakrdagamin</term>\"?\nSubhuti said, \"No, World-Honored One. Why? Because a <term>Sakrdagamin</term> is named for coming back once, but in reality, there is no coming or going. Therefore, it is called a <term>Sakrdagamin</term>.\"\nSubhuti, what do you think? Can an <term>Anagamin</term> <gloss>non-returner, one who will not be reborn in the realm of desire</gloss> think to themselves, \"I have attained the fruit of an <term>Anagamin</term>\"?\nSubhuti said, \"No, World-Honored One. Why? Because an <term>Anagamin</term> is named for not returning, but in reality, there is no non-returning. Therefore, it is called an <term>Anagamin</term>.\"\n\n<summary>This passage explains that the various stages of enlightenment, such as stream-winner, once-returner, and non-returner, are names for spiritual progression that lack inherent, independent existence.</summary>\n<keywords>Diamond Sutra, Srotapanna, Sakrdagamin, Anagamin, emptiness, enlightenment, non-attachment</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1986,
+ "outputTokens": 402,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.00054975,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 337,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

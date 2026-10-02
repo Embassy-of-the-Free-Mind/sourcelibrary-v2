@@ -1,0 +1,21 @@
+{
+ "id": "6a3c61b1879008ba7e15fba1_00068",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "If we speak of the relative importance of the root and the branch, action is heavy and significant, which is why this chapter puts action first, and later sections prioritize the root before the branch. If we speak of the sequence of knowing and acting, literary refinement is the primary stage, which is why the chapter on the four teachings places literary learning before putting it into practice. By examining these two chapters together, it is evident that learning and action cannot be advanced without each other.\n\n○ Zixia said, \"If a person replaces their appreciation of beauty with an appreciation of the virtuous, is able to exert all their strength in serving their parents, is able to devote their life in serving their ruler, and is sincere in their speech when interacting with friends, even if they say they have not studied, I will certainly say that they have learned.\"\n\nZixia was a disciple of Confucius, surnamed Bu, named Shang, and a man from the state of Wei. To consider the virtuous as virtuous and replace the heart that loves beauty with this; this is to love the good with sincerity. What does the *Collected Commentaries* <note>original: \"集註\"</note> say? It means to see the virtuous and change one's disposition, lowering one's love of beauty to cultivate a love for the good. Master Zhu <note>original: \"朱子\"</note> says the two statements in the *Analects* about not yet seeing one who loves virtue as much as one loves beauty, and the *Doctrine of the Mean* <note>original: \"中庸\"</note> presenting distance as a method to guard against the love of beauty, both show that reaching for virtue is like yielding oneself. \"Devoting one's body\" means not keeping one's self for oneself. It is the sincerity of replacing the love of beauty. Therefore, Fan's explanation is the most comprehensive.\n\n<margin>Great Compendium of the Collected Commentaries on the Analects</margin>\n<margin>Determining the Punctuation</margin>\n\n<summary>This passage discusses the relationship between learning and action in Confucian thought, utilizing Zixia's discourse on virtuous conduct to illustrate the necessity of balancing moral cultivation with practical application.</summary>\n<keywords>Zixia, Confucius, literary learning, moral action, virtue, filial piety, loyalty, sincerity</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2073,
+ "outputTokens": 494,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.000629625,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 453,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

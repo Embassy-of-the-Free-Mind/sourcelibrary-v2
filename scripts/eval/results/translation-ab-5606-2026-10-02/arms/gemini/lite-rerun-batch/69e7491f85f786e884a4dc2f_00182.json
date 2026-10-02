@@ -1,0 +1,21 @@
+{
+ "id": "69e7491f85f786e884a4dc2f_00182",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "8 22 58] Mahābhārata [Karnavadha Parvan\n<sig>C 8 1318 B 8 31 68 K 8 22 72</sig>\n\nIn every way, I shall conquer all the Pāṇḍavas who have gathered today. 58\n\nDuryodhana said:\nI will do all this as you think best, O Karṇa. Chariots complete with quivers shall surely follow you, O son of a charioteer. 59\nLet them also carry arrows with straight feathers and supply carts.\n\n<column-break/>\n\nWe, along with all the kings, shall follow you, O Karṇa. 60\n\nSañjaya said:\nHaving spoken thus, O great king, your valorous son, the king, approached the King of the Madras <note>referring to Śalya</note> and spoke these words. 61\n\n->Thus ends the twenty-second chapter in the Karṇa Parvan of the glorious Mahābhārata. 22<-\n\n---\n\n## 23\n\nSañjaya said:\nYour son, O great king, approached the King of the Madras with humility and spoke these words out of affection. 1\nO truthful one, O highly fortunate one, O you who increase the sorrow of your enemies,\n\n<column-break/>\n\n<note>The remainder of the page consists of critical apparatus (textual variants and notes).</note>\n\n<summary>This page contains the conclusion of the twenty-second chapter of the Karṇa Parvan, where Duryodhana promises to support Karṇa with supplies and troops, followed by the opening of the twenty-third chapter as Duryodhana approaches the King of the Madras, Śalya.</summary>\n<keywords>Mahābhārata, Karṇa Parvan, Duryodhana, Karṇa, Sañjaya, King of Madras, Śalya, Pāṇḍavas</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2196,
+ "outputTokens": 422,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.0005909999999999999,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 998,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

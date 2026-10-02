@@ -1,0 +1,21 @@
+{
+ "id": "69bd014bf403a9ca2380f091_00054",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Parājikapāḷi—First Pārājika\n\n17. Or, if a novice <term>sāmaṇeru</term> <gloss>novice monk</gloss> who is dissatisfied, unhappy, and desirous of leaving, while the training rule is being recited, feeling ashamed, loathing it, and aspiring to the household life—etc.—feeling unable or uninspired, he speaks and causes distraction, saying, “I have a mother, she will provide for me”; he speaks and causes distraction, saying, “I have a father, he will provide for me”; he speaks and causes distraction, saying, “I have a brother, he will provide for me”; he speaks and causes distraction, saying, “I have a sister, she will provide for me”; he speaks and causes distraction, saying, “I have a son, he will provide for me”; he speaks and causes distraction, saying, “I have a daughter, she will provide for me”; he speaks and causes distraction, saying, “I have a wife, she will provide for me”; he speaks and causes distraction, saying, “I have relatives, they will provide for me”; he speaks and causes distraction, saying, “I have friends, they will provide for me”; he speaks and causes distraction, saying, “I have a village, I shall live by that”; he speaks and causes distraction, saying, “I have a town, I shall live by that”; he speaks and causes distraction, saying, “I have fields, I shall live by that”; he speaks and causes distraction, saying, “I have land, I shall live by that”; he speaks and causes distraction, saying, “I have silver, I shall live by that”; he speaks and causes distraction, saying, “I have gold, I shall live by that”—etc.—he speaks and causes distraction, saying, “I have a craft, I shall live by that.” In this way, O monks, there is the expression of weakness <term>dubbalyavīkammakkhepa</term> <gloss>distraction/relinquishing of the training through revealing weakness</gloss>, and the training is cast aside.\n\n18. Or, if a novice who is dissatisfied, unhappy, and desirous of leaving, while the training rule is being recited, feeling ashamed, loathing it, and aspiring to the household life—etc.—feeling unable or uninspired, he speaks and causes distraction, saying, “It is difficult”; he speaks and causes distraction, saying, “It is a burden”; he speaks and causes distraction, saying, “It is hard to maintain”; he speaks and causes distraction, saying, “It is not easy”; he speaks and causes distraction, saying, “I am not able”; he speaks and causes distraction, saying, “I am not confident”; he speaks and causes distraction, saying, “I do not delight in it”—etc.—he speaks and causes distraction, saying, “I do not find happiness in it.” In this way, O monks, there is the expression of weakness, and the training is cast aside.\n\n19. And how, O monks, is there the expression of weakness and the training is formally renounced? Here, O monks, a monk or a novice who is dissatisfied, unhappy, and desirous of leaving, while the training rule is being recited, feeling ashamed, loathing it, and aspiring to the household life—etc.—feeling unable or uninspired, he speaks and causes distraction, saying, “I renounce the Buddha.” In this way, O monks, there is the expression of weakness, and the training is formally renounced.\n\n<summary>This page defines the specific verbal actions and declarations by which a novice or monk expresses their dissatisfaction with monastic life, thereby effectively abandoning or renouncing their training.</summary>\n<keywords>Sāmaṇeru, Sikkhāpada, Renunciation, Vinaya, Monastic Discipline</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3070,
+ "outputTokens": 817,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.0009965,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2172,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

@@ -1,0 +1,21 @@
+{
+ "id": "69b99e681f30176bf4d3798a_00155",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "These ten things, monks, are desired, loved, and agreeable, but are difficult to obtain in the world.\n\n3. Regarding these ten things, monks, which are desired, loved, agreeable, and difficult to obtain in the world, there are ten obstacles <term>paripanthā</term> <gloss>impediments or dangers that block the way</gloss>:\n\n4. Laziness and lack of effort are the obstacle to wealth. Lack of grooming and lack of adornment are the obstacle to physical beauty. Engaging in unsuitable habits is the obstacle to health. Evil friendship is the obstacle to virtuous conduct. Lack of sense restraint is the obstacle to the holy life <term>brahmacariya</term> <gloss>the path of purity or celibacy</gloss>. Deception is the obstacle to friendships. Lack of recitation is the obstacle to great learning. Lack of desire to listen and lack of questioning are the obstacle to wisdom. Lack of application and lack of reflection are the obstacle to understanding the teachings <term>dhammānam</term>. Wrong practice is the obstacle to the heavenly realms.\n\nThese, monks, are the ten obstacles to those ten things that are desired, loved, agreeable, and difficult to obtain in the world.\n\n5. Regarding these ten things, monks, which are desired, loved, agreeable, and difficult to obtain in the world, there are ten nourishments <term>āhārā</term> <gloss>supporting conditions or fuels</gloss>:\n\n6. Diligence and effort are the nourishment for wealth. Grooming and adornment are the nourishment for physical beauty. Engaging in suitable habits is the nourishment for health. Good friendship is the nourishment for virtuous conduct. Sense restraint is the nourishment for the holy life. Honesty is the nourishment for friendships. Recitation is the nourishment for great learning. The desire to listen and frequent questioning are the nourishment for wisdom. Constant application and reflection are the nourishment for understanding the teachings. Right practice is the nourishment for the heavenly realms.\n\nThese, monks, are the ten nourishments for those ten things that are desired, loved, agreeable, and difficult to obtain in the world.\n\n<margin>\n1. The manuscripts from Mandalay and Phayre omit this opening phrase.\n2. The Mandalay and Phayre manuscripts use the spelling <term>paribandhā</term> throughout this section.\n3. Spelling variation of laziness <note>original: ālasyam</note> found in certain manuscripts.\n4. The Siamese manuscript omits the section starting from \"lack of grooming\" to \"recitation.\"\n</margin>\n\n<summary>This passage from the Numerical Discourses identifies ten desirable worldly goals and lists the specific behaviors that either obstruct or nourish their attainment. It emphasizes practical virtues like effort, restraint, and inquiry as the means to achieve success, health, and spiritual progress.</summary>\n<keywords>Anguttara Nikaya, ten things, obstacles, nourishments, wealth, wisdom, virtue, Buddhist ethics</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2560,
+ "outputTokens": 627,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.0015804999999999999,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1868,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

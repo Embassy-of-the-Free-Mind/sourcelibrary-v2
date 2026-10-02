@@ -1,0 +1,21 @@
+{
+ "id": "6a3c61b3879008ba7e15fc71_00112",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "To say \"do not deceive\" is also a way of providing instruction. Asked about the section from \"The dance of the eight rows\" to \"traveling to Mount Tai\" [in the *Analects*], the Master says these are all about mourning and grief, and the intent is identical to that of the *Spring and Autumn Annals*. Master Zhu <note>Zhu Xi</note> says: This is [an example].\n\n○ The Master said, \"A gentleman has nothing to compete for. If he must compete, it is in archery, I suppose. He bows and yields to ascend, and upon descending he drinks. Such is his competition.\"\n\nThe \"gentleman\" <note>pronounced in the fourth tone</note>.\nThe meaning of \"he bows and yields to ascend\" refers to the ritual of the great archery contest. One performs three bows before ascending the hall. <note>Master Hu says: The ritual of archery involves the Master of Archers <term>si she</term> <gloss>official in charge of archery</gloss> organizing three pairs of archers. The three pairs leave their tents and face west to bow; when they reach the space below the stairs, they face north and bow; upon reaching the stairs, they bow again. This is what is meant by bowing three times before ascending the hall.</note>\nThe [phrase] refers to the fact that after the shooting is finished, they bow and descend to wait for all the other pairs to descend as well. The victor then bows, and the defeated party ascends to retrieve their [arrows] and takes their position to drink. <note>Master Hu says: Once the shooting is finished, they face north and bow, just as they did when ascending. After the shooting, they return to their tents.</note>\nThe position for the pairs upon finishing their turn is also like this. This is what is meant by bowing and descending after the shooting is completed.\n\n<margin>Pronunciation guide</margin>\n\n<summary>This passage discusses the ritual propriety of archery as a metaphor for the gentleman's conduct, specifically interpreting the Master's views on competition, mutual respect, and the mourning rituals described in the classics.</summary>\n<keywords>Confucianism, Archery Ritual, Gentleman, Ritual Propriety, Master Zhu, Analects</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2043,
+ "outputTokens": 482,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.000616875,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 412,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

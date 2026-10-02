@@ -1,0 +1,21 @@
+{
+ "id": "6a3c61b1879008ba7e15fba1_00068",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "Regarding the relative weight of the fundamental and the peripheral: in terms of behavior, action is considered more weighty. Therefore, this chapter places action first and culture <note>the study of literature and arts</note> afterward, prioritizing the root over the branches. However, regarding the sequence of knowledge and action, culture is the starting point. This is why the \"Four Teachings\" chapter lists culture first and action later. By examining these two chapters together, one can see that culture and action must progress in tandem.\n\n***\n\nMaster Zi Xia said: \"If a person values worthiness so as to replace his desire for physical beauty <note>or \"changes his expression/demeanor\"</note>; if he can exhaust his strength in serving his parents; if he can devote his very life to serving his prince; and if, in his dealings with friends, his words are trustworthy; even if it is said that he has not yet studied, I would certainly say that he has.\"\n\nZi Xia was a disciple of Confucius, surnamed Bu and named Shang, a man of Wei. To \"value worthiness\" <term>xian xian</term> <gloss>to treat the worthy as worthy</gloss> means to replace the heart that loves beauty with a sincere love for goodness. The Collected Commentaries <note>the *Jizhu* by Zhu Xi</note> ask: how can seeing worthiness change one’s outward appearance? This refers to the sincerity of loving goodness. Master Zhu <note>Zhu Xi</note> remarked that twice it has been said \"I have not seen one who loves virtue as he loves beauty.\" The *Doctrine of the Mean* also considers distancing oneself from beauty as a method. To \"devote\" <term>zhi</term> <gloss>to hand over or commit</gloss> one's body means to give oneself up entirely, not holding one's life as one’s own. Since this involves the sincerity of replacing the love of beauty, Fan’s explanation is the most excellent.\n\n<margin>Great Compendium of Collected Commentaries on the Analects</margin>\n<margin>Follow the established punctuation</margin>\n\n<summary>This page discusses the relationship between practical action and cultural study, followed by Zi Xia's teaching on the true nature of learning through filial piety, loyalty, and sincerity.</summary>\n<keywords>Zi Xia, Confucius, Zhu Xi, virtue, filial piety, loyalty, sincerity, action and knowledge</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2073,
+ "outputTokens": 519,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.0012967500000000002,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 453,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

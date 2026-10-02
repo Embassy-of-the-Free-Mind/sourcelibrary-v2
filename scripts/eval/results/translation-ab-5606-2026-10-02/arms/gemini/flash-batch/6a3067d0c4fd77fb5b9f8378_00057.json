@@ -1,0 +1,21 @@
+{
+ "id": "6a3067d0c4fd77fb5b9f8378_00057",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: Candrakīrti is illustrating the difficulty of understanding the profound teachings of emptiness through scriptural citations.</meta>\n\n# Chapter One\n\nLikewise, in the <term>Ratnakūṭa Sūtra</term> <gloss>The Jewel-Heap Scripture</gloss> <note>original: \"Arya-Ratnakūṭa-Sūtra\"</note>:\n\nThen it happened that those five hundred <term>bhikṣus</term> <gloss>monks</gloss>, because they did not enter into, dive into, or feel conviction toward the Lord’s teaching of the <term>Dharma</term> <gloss>Universal Law/Truth</gloss>, rose from their seats and departed.\n\nThen the Lord, at that moment, magically produced two monks on the path where those monks were traveling.\n\nThen those five hundred monks approached the place where the two <term>nirmitakas</term> <gloss>magically created forms</gloss> were. Having approached, they said: \"Where are you venerable ones going?\"\n\nThe two created monks said: \"We are going to the forest retreats. There we will dwell in the pleasant states of <term>dhyāna</term> <gloss>meditative absorption</gloss>. For we do not enter into, dive into, or feel conviction toward the Dharma that the Lord teaches; we stand aloof, we are terrified, we have fallen into great fear.\"\n\nThen those five hundred monks said: \"Venerable ones, we also do not enter into, dive into, or feel conviction toward the Lord’s teaching of the Dharma; we stand aloof, we are terrified, we have fallen into great fear. Therefore, we too shall dwell in the forest retreats in the pleasant states of meditative absorption.\"\n\nThe two created monks said: \"In that case, venerable ones, let us harmonize and not dispute. For the qualities of a <term>śramaṇa</term> <gloss>ascetic/seeker</gloss> are defined by non-dispute.\" <unclear>6 lines of text, not transcribed</unclear>. \"For the sake of abandoning what, venerable ones, have you set out?\"\n\nThey replied: \"We have set out for the sake of abandoning lust, hatred, and delusion.\"\n\n<margin>\n1) Tibetan: From the Jewel-Heap. See the same text cited below at XVII. 33.\n2) The Tibetan adds: \"attaining meditation.\"\n3) Words in brackets are based on the Tibetan and the citation at XVII. 33.\n4) \"Dwells in pleasant contact,\" see Mahāvyutpatti and Śikṣāsamuccaya.\n5) Non-dispute. Compare Śikṣāsamuccaya: \"That which does not dispute follows the dharma of the ascetic.\" See also the Lotus Sūtra: \"refrain from disputing... the science of the Tathāgata is beyond reasoning.\" In the Sarvadarśana, it is defined as accepting the teacher's word.\n6) See below, folio 100a. Our text is abbreviated.\n</margin>\n\n<summary>This page recounts a parable from the Ratnakūṭa Sūtra where the Buddha uses magically created monks to counsel five hundred monks who are terrified by the profound teaching of emptiness. The dialogue emphasizes that the true path of an ascetic is defined by avoiding intellectual dispute and focusing on abandoning the three poisons.</summary>\n<keywords>Ratnakuta Sutra, monks, fear of emptiness, nirmitaka, dhyana, non-dispute, śramaṇa, abandoning defilements</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2877,
+ "outputTokens": 773,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.0018787499999999998,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2403,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

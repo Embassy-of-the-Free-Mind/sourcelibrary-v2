@@ -1,0 +1,1297 @@
+{
+ "generated": "2026-10-02T11:14:57.751Z",
+ "seed": 5606,
+ "pages": 16,
+ "test_pages": 16,
+ "judges": {
+  "opus": {
+   "file": "/root/tab5606/judge/verdicts-opus-Pali.jsonl",
+   "pages_scored": 16,
+   "missing": []
+  },
+  "sonnet": {
+   "file": "/root/tab5606/judge/verdicts-sonnet-Pali.jsonl",
+   "pages_scored": 16,
+   "missing": []
+  }
+ },
+ "controls": {
+  "positive": {
+   "opus": {
+    "pass": false,
+    "note": "not scored"
+   },
+   "sonnet": {
+    "pass": false,
+    "note": "not scored"
+   }
+  },
+  "same_arm": {
+   "opus": {
+    "pairs": [
+     {
+      "id": "69b99e551f30176bf4d37774_00306",
+      "engine": "lite",
+      "fidelity": [
+       4,
+       4
+      ],
+      "rank": [
+       1,
+       1
+      ],
+      "tie": true
+     },
+     {
+      "id": "6a09ff48fa20006dbaba8ee1_00114",
+      "engine": "lite-rerun",
+      "fidelity": [
+       5,
+       5
+      ],
+      "rank": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "69bd014bf403a9ca2380f091_00054",
+      "engine": "lite",
+      "fidelity": [
+       3,
+       3
+      ],
+      "rank": [
+       1,
+       1
+      ],
+      "tie": true
+     }
+    ],
+    "n": 3,
+    "ties": 3,
+    "tie_rate": 1
+   },
+   "sonnet": {
+    "pairs": [
+     {
+      "id": "69b99e551f30176bf4d37774_00306",
+      "engine": "lite",
+      "fidelity": [
+       5,
+       5
+      ],
+      "rank": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "6a09ff48fa20006dbaba8ee1_00114",
+      "engine": "lite-rerun",
+      "fidelity": [
+       4,
+       4
+      ],
+      "rank": [
+       1,
+       1
+      ],
+      "tie": true
+     },
+     {
+      "id": "69bd014bf403a9ca2380f091_00054",
+      "engine": "lite",
+      "fidelity": [
+       3,
+       3
+      ],
+      "rank": [
+       1,
+       1
+      ],
+      "tie": true
+     }
+    ],
+    "n": 3,
+    "ties": 3,
+    "tie_rate": 1
+   }
+  },
+  "positive_supplementary": {}
+ },
+ "engines": {
+  "flash": {
+   "by_judge": {
+    "opus": {
+     "n": 16,
+     "fidelity_median": 5,
+     "fidelity_mean": 4.563,
+     "omission_rate": 0.125,
+     "invention_rate": 0.063,
+     "inversion_rate": 0.063,
+     "rank_mean": 1.188,
+     "first_place": 13,
+     "list_collapse_count": 0,
+     "term_misparse_count": 0,
+     "inversion_count": 1,
+     "omission_count": 2,
+     "invention_count": 1,
+     "list_collapse_rate": 0,
+     "term_misparse_rate": 0
+    },
+    "sonnet": {
+     "n": 16,
+     "fidelity_median": 4.5,
+     "fidelity_mean": 4.438,
+     "omission_rate": 0.188,
+     "invention_rate": 0.313,
+     "inversion_rate": 0,
+     "rank_mean": 1.5,
+     "first_place": 11,
+     "list_collapse_count": 0,
+     "term_misparse_count": 4,
+     "inversion_count": 0,
+     "omission_count": 3,
+     "invention_count": 5,
+     "list_collapse_rate": 0,
+     "term_misparse_rate": 0.25
+    }
+   },
+   "pooled": {
+    "n": 32,
+    "fidelity_median": 5,
+    "fidelity_mean": 4.5,
+    "invention_rate": 0.188,
+    "omission_rate": 0.156,
+    "inversion_rate": 0.031,
+    "list_collapse_count": 0,
+    "term_misparse_count": 4,
+    "inversion_count": 1,
+    "omission_count": 5,
+    "invention_count": 6,
+    "list_collapse_rate": 0,
+    "term_misparse_rate": 0.125
+   },
+   "run": {
+    "pages": 16,
+    "ms_mean": 143409,
+    "in_tokens_mean": 2687.125,
+    "out_tokens_mean": 689.563,
+    "usd_per_page_batch": 0.001706,
+    "usd_per_page_realtime": 0.003412,
+    "finish": {
+     "STOP": 16
+    }
+   }
+  },
+  "lite": {
+   "by_judge": {
+    "opus": {
+     "n": 16,
+     "fidelity_median": 4,
+     "fidelity_mean": 4,
+     "omission_rate": 0.313,
+     "invention_rate": 0,
+     "inversion_rate": 0.063,
+     "rank_mean": 1.625,
+     "first_place": 7,
+     "list_collapse_count": 0,
+     "term_misparse_count": 5,
+     "inversion_count": 1,
+     "omission_count": 5,
+     "invention_count": 0,
+     "list_collapse_rate": 0,
+     "term_misparse_rate": 0.313
+    },
+    "sonnet": {
+     "n": 16,
+     "fidelity_median": 4,
+     "fidelity_mean": 3.938,
+     "omission_rate": 0.25,
+     "invention_rate": 0.125,
+     "inversion_rate": 0,
+     "rank_mean": 1.688,
+     "first_place": 7,
+     "list_collapse_count": 0,
+     "term_misparse_count": 6,
+     "inversion_count": 0,
+     "omission_count": 4,
+     "invention_count": 2,
+     "list_collapse_rate": 0,
+     "term_misparse_rate": 0.375
+    }
+   },
+   "pooled": {
+    "n": 32,
+    "fidelity_median": 4,
+    "fidelity_mean": 3.969,
+    "invention_rate": 0.063,
+    "omission_rate": 0.281,
+    "inversion_rate": 0.031,
+    "list_collapse_count": 0,
+    "term_misparse_count": 11,
+    "inversion_count": 1,
+    "omission_count": 9,
+    "invention_count": 2,
+    "list_collapse_rate": 0,
+    "term_misparse_rate": 0.344
+   },
+   "run": {
+    "pages": 16,
+    "ms_mean": 102783,
+    "in_tokens_mean": 2687.125,
+    "out_tokens_mean": null,
+    "usd_per_page_batch": 0.000797,
+    "usd_per_page_realtime": 0.001594,
+    "finish": {
+     "STOP": 15,
+     "RECITATION": 1
+    }
+   }
+  },
+  "lite-rerun": {
+   "by_judge": {
+    "opus": {
+     "n": 16,
+     "fidelity_median": 4,
+     "fidelity_mean": 4.125,
+     "omission_rate": 0.188,
+     "invention_rate": 0.125,
+     "inversion_rate": 0.125,
+     "rank_mean": 1.875,
+     "first_place": 8,
+     "list_collapse_count": 1,
+     "term_misparse_count": 6,
+     "inversion_count": 2,
+     "omission_count": 3,
+     "invention_count": 2,
+     "list_collapse_rate": 0.063,
+     "term_misparse_rate": 0.375
+    },
+    "sonnet": {
+     "n": 16,
+     "fidelity_median": 4,
+     "fidelity_mean": 3.875,
+     "omission_rate": 0.25,
+     "invention_rate": 0.125,
+     "inversion_rate": 0.063,
+     "rank_mean": 2,
+     "first_place": 4,
+     "list_collapse_count": 0,
+     "term_misparse_count": 7,
+     "inversion_count": 1,
+     "omission_count": 4,
+     "invention_count": 2,
+     "list_collapse_rate": 0,
+     "term_misparse_rate": 0.438
+    }
+   },
+   "pooled": {
+    "n": 32,
+    "fidelity_median": 4,
+    "fidelity_mean": 4,
+    "invention_rate": 0.125,
+    "omission_rate": 0.219,
+    "inversion_rate": 0.094,
+    "list_collapse_count": 1,
+    "term_misparse_count": 13,
+    "inversion_count": 3,
+    "omission_count": 7,
+    "invention_count": 4,
+    "list_collapse_rate": 0.031,
+    "term_misparse_rate": 0.406
+   },
+   "run": {
+    "pages": 16,
+    "ms_mean": 123133,
+    "in_tokens_mean": 2687.125,
+    "out_tokens_mean": 635.625,
+    "usd_per_page_batch": 0.000813,
+    "usd_per_page_realtime": 0.001625,
+    "finish": {
+     "STOP": 16
+    }
+   }
+  }
+ },
+ "rules": {
+  "handoff": {
+   "rule": "cheapest engine whose median fidelity is within 0.5 of the best AND invention rate <= best + 5pp (pooled over judges)",
+   "cost_order": [
+    "lite",
+    "lite-rerun",
+    "flash"
+   ],
+   "best_fidelity_engine": "flash",
+   "eligible": [],
+   "pick": null
+  }
+ },
+ "agreement": {
+  "judges": [
+   "opus",
+   "sonnet"
+  ],
+  "fidelity_exact": 0.688,
+  "fidelity_within_1": 1,
+  "fidelity_mean_abs_diff": 0.313,
+  "top_rank_shared": 0.938,
+  "n_cells": 48,
+  "n_pages": 16
+ },
+ "pairs": {
+  "flash:lite": {
+   "by_judge": {
+    "opus": {
+     "rank": {
+      "a_wins": 9,
+      "ties": 4,
+      "b_wins": 3
+     },
+     "fidelity": {
+      "a_wins": 8,
+      "ties": 5,
+      "b_wins": 3
+     },
+     "untied": [
+      {
+       "id": "69b99e551f30176bf4d37774_00306",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "69b99e496ed9e04909909f8f_00220",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        5
+       ]
+      },
+      {
+       "id": "69b99e8b6ed9e0490990a274_00179",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "69b99d043a4a443c39c00775_00147",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "69b99d0e6ed9e04909908946_00387",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "6a09ff43fa20006dbaba8d78_00193",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "6a09ff4ffa20006dbaba901a_00263",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        5
+       ]
+      },
+      {
+       "id": "6a31c8b74400787ae5a9d7a7_00042",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        5
+       ]
+      },
+      {
+       "id": "69bc7a3f8888fef520b73c1e_00217",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        3
+       ]
+      },
+      {
+       "id": "69c1bdc98522835be846bb3a_00032",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        1
+       ]
+      },
+      {
+       "id": "69bd00f7f403a9ca2380efbf_00080",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "69bd014bf403a9ca2380f091_00054",
+       "winner": "flash",
+       "fidelity": [
+        3,
+        3
+       ]
+      }
+     ]
+    },
+    "sonnet": {
+     "rank": {
+      "a_wins": 9,
+      "ties": 2,
+      "b_wins": 5
+     },
+     "fidelity": {
+      "a_wins": 8,
+      "ties": 3,
+      "b_wins": 5
+     },
+     "untied": [
+      {
+       "id": "69b99e551f30176bf4d37774_00306",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        5
+       ]
+      },
+      {
+       "id": "69b99e681f30176bf4d3798a_00155",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        5
+       ]
+      },
+      {
+       "id": "69b99e496ed9e04909909f8f_00220",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        5
+       ]
+      },
+      {
+       "id": "69b99e856ed9e0490990a0b5_00301",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        4
+       ]
+      },
+      {
+       "id": "69b99e8b6ed9e0490990a274_00179",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "69b99d043a4a443c39c00775_00147",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "69b99d0e6ed9e04909908946_00387",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        5
+       ]
+      },
+      {
+       "id": "6a09ff43fa20006dbaba8d78_00193",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "6a09ff48fa20006dbaba8ee1_00114",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "6a31c8b74400787ae5a9d7a7_00042",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        5
+       ]
+      },
+      {
+       "id": "69bc7a3f8888fef520b73c1e_00217",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        2
+       ]
+      },
+      {
+       "id": "69c1bdc98522835be846bb3a_00032",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        1
+       ]
+      },
+      {
+       "id": "69bd00f7f403a9ca2380efbf_00080",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        3
+       ]
+      },
+      {
+       "id": "69bd014bf403a9ca2380f091_00054",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      }
+     ]
+    }
+   },
+   "pooled": {
+    "rank": {
+     "a_wins": 18,
+     "ties": 6,
+     "b_wins": 8
+    },
+    "fidelity": {
+     "a_wins": 16,
+     "ties": 8,
+     "b_wins": 8
+    }
+   }
+  },
+  "lite-rerun:lite": {
+   "by_judge": {
+    "opus": {
+     "rank": {
+      "a_wins": 3,
+      "ties": 7,
+      "b_wins": 6
+     },
+     "fidelity": {
+      "a_wins": 2,
+      "ties": 11,
+      "b_wins": 3
+     },
+     "untied": [
+      {
+       "id": "69b99e8b6ed9e0490990a274_00179",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        4
+       ]
+      },
+      {
+       "id": "69b99d043a4a443c39c00775_00147",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        3
+       ]
+      },
+      {
+       "id": "69b99d0e6ed9e04909908946_00387",
+       "winner": "lite-rerun",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "6a09ff43fa20006dbaba8d78_00193",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        4
+       ]
+      },
+      {
+       "id": "6a31c8b74400787ae5a9d7a7_00042",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        5
+       ]
+      },
+      {
+       "id": "69bc7a3f8888fef520b73c1e_00217",
+       "winner": "lite-rerun",
+       "fidelity": [
+        3,
+        3
+       ]
+      },
+      {
+       "id": "69c1bdc98522835be846bb3a_00032",
+       "winner": "lite-rerun",
+       "fidelity": [
+        5,
+        1
+       ]
+      },
+      {
+       "id": "69bd00f7f403a9ca2380efbf_00080",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "69bd014bf403a9ca2380f091_00054",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        3
+       ]
+      }
+     ]
+    },
+    "sonnet": {
+     "rank": {
+      "a_wins": 2,
+      "ties": 7,
+      "b_wins": 7
+     },
+     "fidelity": {
+      "a_wins": 2,
+      "ties": 9,
+      "b_wins": 5
+     },
+     "untied": [
+      {
+       "id": "69b99e551f30176bf4d37774_00306",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        5
+       ]
+      },
+      {
+       "id": "69b99e856ed9e0490990a0b5_00301",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "69b99e8b6ed9e0490990a274_00179",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        4
+       ]
+      },
+      {
+       "id": "69b99d043a4a443c39c00775_00147",
+       "winner": "lite",
+       "fidelity": [
+        2,
+        3
+       ]
+      },
+      {
+       "id": "6a09ff43fa20006dbaba8d78_00193",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        4
+       ]
+      },
+      {
+       "id": "6a31c8b74400787ae5a9d7a7_00042",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        5
+       ]
+      },
+      {
+       "id": "69bc7a3f8888fef520b73c1e_00217",
+       "winner": "lite-rerun",
+       "fidelity": [
+        3,
+        2
+       ]
+      },
+      {
+       "id": "69c1bdc98522835be846bb3a_00032",
+       "winner": "lite-rerun",
+       "fidelity": [
+        4,
+        1
+       ]
+      },
+      {
+       "id": "69bd00f7f403a9ca2380efbf_00080",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        3
+       ]
+      }
+     ]
+    }
+   },
+   "pooled": {
+    "rank": {
+     "a_wins": 5,
+     "ties": 14,
+     "b_wins": 13
+    },
+    "fidelity": {
+     "a_wins": 4,
+     "ties": 20,
+     "b_wins": 8
+    }
+   }
+  },
+  "flash:lite-rerun": {
+   "by_judge": {
+    "opus": {
+     "rank": {
+      "a_wins": 8,
+      "ties": 6,
+      "b_wins": 2
+     },
+     "fidelity": {
+      "a_wins": 6,
+      "ties": 8,
+      "b_wins": 2
+     },
+     "untied": [
+      {
+       "id": "69b99e551f30176bf4d37774_00306",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "69b99e496ed9e04909909f8f_00220",
+       "winner": "lite-rerun",
+       "fidelity": [
+        4,
+        5
+       ]
+      },
+      {
+       "id": "69b99e8b6ed9e0490990a274_00179",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        3
+       ]
+      },
+      {
+       "id": "69b99d043a4a443c39c00775_00147",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "6a09ff43fa20006dbaba8d78_00193",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        3
+       ]
+      },
+      {
+       "id": "6a09ff4ffa20006dbaba901a_00263",
+       "winner": "lite-rerun",
+       "fidelity": [
+        4,
+        5
+       ]
+      },
+      {
+       "id": "6a31c8b74400787ae5a9d7a7_00042",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "69bc7a3f8888fef520b73c1e_00217",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        3
+       ]
+      },
+      {
+       "id": "69bd00f7f403a9ca2380efbf_00080",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "69bd014bf403a9ca2380f091_00054",
+       "winner": "flash",
+       "fidelity": [
+        3,
+        3
+       ]
+      }
+     ]
+    },
+    "sonnet": {
+     "rank": {
+      "a_wins": 9,
+      "ties": 2,
+      "b_wins": 5
+     },
+     "fidelity": {
+      "a_wins": 8,
+      "ties": 5,
+      "b_wins": 3
+     },
+     "untied": [
+      {
+       "id": "69b99e551f30176bf4d37774_00306",
+       "winner": "lite-rerun",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "69b99e681f30176bf4d3798a_00155",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        5
+       ]
+      },
+      {
+       "id": "69b99e496ed9e04909909f8f_00220",
+       "winner": "lite-rerun",
+       "fidelity": [
+        4,
+        5
+       ]
+      },
+      {
+       "id": "69b99e856ed9e0490990a0b5_00301",
+       "winner": "lite-rerun",
+       "fidelity": [
+        3,
+        4
+       ]
+      },
+      {
+       "id": "69b99e8b6ed9e0490990a274_00179",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        3
+       ]
+      },
+      {
+       "id": "69b99d043a4a443c39c00775_00147",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        2
+       ]
+      },
+      {
+       "id": "69b99d0e6ed9e04909908946_00387",
+       "winner": "lite-rerun",
+       "fidelity": [
+        4,
+        5
+       ]
+      },
+      {
+       "id": "6a09ff43fa20006dbaba8d78_00193",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        3
+       ]
+      },
+      {
+       "id": "6a09ff48fa20006dbaba8ee1_00114",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "6a31c8b74400787ae5a9d7a7_00042",
+       "winner": "lite-rerun",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "69bc7a3f8888fef520b73c1e_00217",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "69c1bdc98522835be846bb3a_00032",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "69bd00f7f403a9ca2380efbf_00080",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        3
+       ]
+      },
+      {
+       "id": "69bd014bf403a9ca2380f091_00054",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      }
+     ]
+    }
+   },
+   "pooled": {
+    "rank": {
+     "a_wins": 17,
+     "ties": 8,
+     "b_wins": 7
+    },
+    "fidelity": {
+     "a_wins": 14,
+     "ties": 13,
+     "b_wins": 5
+    }
+   }
+  }
+ },
+ "per_page": [
+  {
+   "id": "69b99e551f30176bf4d37774_00306",
+   "opus": {
+    "flash": "5",
+    "lite": "4",
+    "lite-rerun": "4"
+   },
+   "sonnet": {
+    "flash": "4I",
+    "lite": "5",
+    "lite-rerun": "4O"
+   },
+   "reasons": {
+    "opus": "All carry the two-fruit and seven-fruit formulas in full; T1 renders paṭihacca (early) and uddhaṃsoto akaniṭṭhagāmī = reference; T2=T4 render akaniṭṭhagāmī as \"to the Pure Abodes\" (reference: Akaniṭṭha realm); T3 drops paṭihacca (\"early on\")",
+    "sonnet": "All keep the seven fruits; T2=T4 render paṭihacca as 'by breaking through'; T3 drops paṭihacca; T1 renders it 'early', adds 'paid respects' not in source (pe) and a doubtful gloss of anāgāmitā."
+   }
+  },
+  {
+   "id": "69b99e681f30176bf4d3798a_00155",
+   "opus": {
+    "flash": "5",
+    "lite": "5",
+    "lite-rerun": "5"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "5O",
+    "lite-rerun": "5O"
+   },
+   "reasons": {
+    "opus": "All three carry both ten-member lists (paripanthā / āhārā) in source order with the framing refrains, matching the reference (wealth, beauty, health, ethics, spiritual life, friends, learning, wisdom, good qualities, heaven); T2 alone also renders footnotes 1-4 accurately; no member dropped or reversed in any",
+    "sonnet": "All three carry all ten obstacle and ten nourishment pairs correctly; only T2 also renders the variant-reading footnotes on the page, which T1 and T3 drop."
+   }
+  },
+  {
+   "id": "69b99e496ed9e04909909f8f_00220",
+   "opus": {
+    "flash": "4",
+    "lite": "5",
+    "lite-rerun": "5"
+   },
+   "sonnet": {
+    "flash": "4T",
+    "lite": "5",
+    "lite-rerun": "5"
+   },
+   "reasons": {
+    "opus": "All carry the five hindrances, five kāmaguṇā, the impossibility formula and the fire simile incl. aññatra iddhimatā as in the reference; T3 renders nivuṭo (hindered) as \"secluded\", a minor term slip",
+    "sonnet": "T3 renders ophiṭo as 'secluded' (reference: hindered/engulfed), a term slip; T1 and T2 match source and reference on hindrances, five strands, fire simile and 'unless by psychic power'."
+   }
+  },
+  {
+   "id": "69b99e856ed9e0490990a0b5_00301",
+   "opus": {
+    "flash": "4I",
+    "lite": "4O",
+    "lite-rerun": "4O"
+   },
+   "sonnet": {
+    "flash": "3IOT",
+    "lite": "4O",
+    "lite-rerun": "4IT"
+   },
+   "reasons": {
+    "opus": "T1 and T3 drop 'samaggatā sammāpaṭipannā' (reference: 'rightly comported and rightly practiced') from the wrong-view formula; T2 keeps it but adds 'by his own actions' to yathābhataṃ (twice) and 'no special debt to' mother/father, absent from source; all carry the four heaven-side precepts with the know/see pairs correctly oriented",
+    "sonnet": "T1 drops sammāpaṭipannā/samaggatā in the wrong-view ascetics clause but otherwise tracks source and reference; T3 adds 'lineage' and reads dhammarakkhitā as 'follow the law'; T2 invents 'by his own actions' for yathābhatam, turns natthi mātā natthi pitā into 'no special debt to mother or father', and drops the apparatus footnotes."
+   }
+  },
+  {
+   "id": "69b99e8b6ed9e0490990a274_00179",
+   "opus": {
+    "flash": "5",
+    "lite": "4O",
+    "lite-rerun": "3T"
+   },
+   "sonnet": {
+    "flash": "5IO",
+    "lite": "4OT",
+    "lite-rerun": "3OT"
+   },
+   "reasons": {
+    "opus": "v837 'ajjhattasantiṃ pacinaṃ adassaṃ' = reference 'searching, I saw inner peace': T3 renders it (first person); T2 shifts to 'he seeks... having seen through it' and in v839 drops anissāya ('independent'); T1 misparses it as 'having seen nothingness' and also shifts the speaker to 'he'",
+    "sonnet": "837d pacinaṃ adassaṃ: T3 'searched, I saw inner peace' matches reference; T2 'having seen through it' loses the first person and the search; T1 'having seen nothingness' misparses adassaṃ; T3 adds a context note (daughter offered) not on the page and, like T1, drops footnotes T2 keeps."
+   }
+  },
+  {
+   "id": "69b99d043a4a443c39c00775_00147",
+   "opus": {
+    "flash": "4",
+    "lite": "3T",
+    "lite-rerun": "3XT"
+   },
+   "sonnet": {
+    "flash": "4IOT",
+    "lite": "3IT",
+    "lite-rerun": "2XT"
+   },
+   "reasons": {
+    "opus": "v19 'acchijja nessati maccurājassa pāraṃ' = reference 'lead them past the King of Death': T2 renders it; T1 makes anoko describe the multitude and turns pāraṃ into 'severed the snares'; T3 reverses it to 'carry away the multitude to the King of Death' and splits gaṇa-saṅgha-cārī into 'the crowd, and the current'; Māra's verses and the uddāna are complete in all",
+    "sonnet": "T3 turns 'lead past the King of Death' (pāraṃ) into 'carry the multitude to the King of Death' and reads selam va siras-ūhacca as striking the head against a rock (also T1); T2 alone has 'lifting a rock with your head' and 'beyond the King of Death' per reference, though it adds 'with beauty' for daddallamānā and reads gaṇasaṅghavārī as 'recruiter'; T1 mangles the verse 19 ending ('severed the snares of the King of Death') and adds an anxiety note."
+   }
+  },
+  {
+   "id": "69b99d0e6ed9e04909908946_00387",
+   "opus": {
+    "flash": "5",
+    "lite": "4O",
+    "lite-rerun": "5"
+   },
+   "sonnet": {
+    "flash": "4",
+    "lite": "5",
+    "lite-rerun": "5"
+   },
+   "reasons": {
+    "opus": "All three render the rag, outcaste-child and dehorned-bull similes with the full refrain; T2 garbles 'daharo vā yuvā vā' into 'a woman or a man, or a youth' (drops the young/youthful pair); T1 ('cut off', 'young') and T3 ('broken horns', 'young or in the prime of life') differ only by minor term choices, T1's bracketed [horrified] is flagged as inference",
+    "sonnet": "All keep the full filth list and the three similes, ending at the source's cut-off fourth simile; T1 recasts the refrain as 'Only one who has not...', adds 'ashamed' to the aṭṭiyati/jigucchati pair, drops 'daharo vā yuvā vā' to 'young', and guesses '[horrified]' for the fourth; T2/T3 follow the source."
+   }
+  },
+  {
+   "id": "6a09ff43fa20006dbaba8d78_00193",
+   "opus": {
+    "flash": "5",
+    "lite": "4T",
+    "lite-rerun": "3T"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "4T",
+    "lite-rerun": "3T"
+   },
+   "reasons": {
+    "opus": "T2 renders 'na hoti paccattaṃ sahadhammiko samaṇavādo' as no rightful claim to being ascetics (= reference 'can't rightly be called ascetics') and keeps every step; T1 keeps the ten-fold 'pubbe katahetu' refrain but turns samaṇavāda into 'a doctrine of righteous living'; T3 recasts the reductio 'you will be killers... because of past deeds' as an if-clause premise feeding the next sentence and also reads samaṇavāda as 'a rightful doctrine'",
+    "sonnet": "Source and reference: 'you (opponents) would do all ten bad deeds because of past deeds' then no chando/vayamo, then 'cannot rightly be called ascetics'. T2 matches; T1 renders samaṇavādo as 'doctrine of righteous living' rather than 'being called ascetics'; T3 recasts the refutation as 'if it is because of past actions that people will be killers... then...' (loses the 'you' addressed to the opponents and the argument step) and mis-renders samaṇavādo/chando-vāyāmo as 'no desire or effort to say this should be done'."
+   }
+  },
+  {
+   "id": "6a09ff48fa20006dbaba8ee1_00114",
+   "opus": {
+    "flash": "5",
+    "lite": "5",
+    "lite-rerun": "5"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "4",
+    "lite-rerun": "4"
+   },
+   "reasons": {
+    "opus": "All four keep the four cloud types, the nine-fold aṅga list (sutta...vedalla) and the four-truths pe-elisions in the correct thunder/rain pairings as in the reference; T2 and T3 are identical text; no candidate swaps a pariyāpuṇāti/pajānāti negation",
+    "sonnet": "All four give the four cloud/person types, nine aṅgas and the four-way knows/doesn't-know pattern correctly; T1 keeps the nine aṅga names exact (geyya = mixed prose and verse, itivuttaka = 'as it was said'), while T2/T3 (identical) and T4 render geyya as 'poems/songs' and itivuttaka as 'traditional narratives/legendary tales', minor term slips."
+   }
+  },
+  {
+   "id": "6a09ff4ffa20006dbaba901a_00263",
+   "opus": {
+    "flash": "4O",
+    "lite": "5",
+    "lite-rerun": "5"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "5",
+    "lite-rerun": "5"
+   },
+   "reasons": {
+    "opus": "All three render the rūpa/arūpa and sakkāya/sakkāyanirodha escapes, the five-fold nandi...nānuseti list and the niranusayo/acchejji taṇhaṃ/sammā-mānābhisamayā close as the reference does; T1 and T3 also translate the 12 variant-reading footnotes, which T2 drops entirely (and T2 adds 'painful' to 'na so taṃ vedanaṃ vediyati')",
+    "sonnet": "All three carry both escapes (form/formless, sakkāya/cessation), the five-fold nandi list with anusaya, and the closing formula (cut craving, fetters, conceit, end of suffering) as in source and reference; differences are wording only."
+   }
+  },
+  {
+   "id": "6a09ff5dfa20006dbaba9200_00274",
+   "opus": {
+    "flash": "5",
+    "lite": "5",
+    "lite-rerun": "5"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "5",
+    "lite-rerun": "5"
+   },
+   "reasons": {
+    "opus": "All three keep the adhamma/dhamma, anattha/attha summary each time it recurs, the monks' deliberation, the praise of Mahākaccāna and the approach, matching the reference; differences are only word choice (profitable/beneficial, dwelling/monastery) and how the apparatus line is rendered",
+    "sonnet": "All three carry the dhamma/adhamma, attha/anattha pairs, the Buddha's departure, the monks' reasoning about Mahakaccana and the approach, ending at the source's cut-off sentence, matching source and reference; differences are wording only."
+   }
+  },
+  {
+   "id": "6a31c8b74400787ae5a9d7a7_00042",
+   "opus": {
+    "flash": "4O",
+    "lite": "5",
+    "lite-rerun": "4IO"
+   },
+   "sonnet": {
+    "flash": "4IT",
+    "lite": "5",
+    "lite-rerun": "4I"
+   },
+   "reasons": {
+    "opus": "All three render vv.250-255 and the story references as the reference does; T3 also keeps the variant-reading footnotes and the Jāt III 223 cross-reference; T2 condenses that apparatus into a one-line summary note; T1 drops the apparatus and labels the 'etaṃ' of v.250 as 'asava', which the source does not say (in the reference it is the upset over others' food from v.249)",
+    "sonnet": "Verse 250 source has only 'etaṃ' (this), no āsava: T1 supplies 'this asava' and T2 supplies 'faults mentioned in previous verses' in a note, neither is in the page (reference: that anger/upset); T2 also renders ujjhānasaññino (fault-finding) as 'irritable'; T3 keeps 'this' bare and 'constantly finding fault', matching source and reference throughout."
+   }
+  },
+  {
+   "id": "69bc7a3f8888fef520b73c1e_00217",
+   "opus": {
+    "flash": "5",
+    "lite": "3OT",
+    "lite-rerun": "3T"
+   },
+   "sonnet": {
+    "flash": "4",
+    "lite": "2IT",
+    "lite-rerun": "3T"
+   },
+   "reasons": {
+    "opus": "T1 renders patissave as offense for the promise/agreeing (ref: for agreeing) and sattaham anagataya pavaranaya as seven days before the invitation; T2 misreads patissava as the leaving throughout and garbles para 7 as before the seven days are up; T3 misreads patissava as the arrival, drops sattaham in para 7 (before the pavarana has arrived) and renders patipadena as at dawn",
+    "sonnet": "T1 renders paṭissave as promise (matches ref agreeing) and keeps seven days before pavāraṇā; T2 reads paṭissave as leaving and garbles sattāham anāgatāya pavāraṇāya; T3 same paṭissava misparse plus sannivaṭṭa as a noun, drops the seven-days-before, and invents approaching the monastery at dawn"
+   }
+  },
+  {
+   "id": "69c1bdc98522835be846bb3a_00032",
+   "opus": {
+    "flash": "5",
+    "lite": "1O",
+    "lite-rerun": "5"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "1O",
+    "lite-rerun": "4"
+   },
+   "reasons": {
+    "opus": "T1 and T2 both carry the full opening, the four satipatthana formulas and the eight anapana steps matching source and ref (T1 noble path for nayassa adhigamaya is the commentarial gloss, T2 true method; neither changes meaning); T3 returned no translation (refusal)",
+    "sonnet": "T2 renders ñāyassa adhigamāya as attainment of the true method (ref: discover the system); T1 gives noble path, a term slip; both otherwise cover the source and ref through the breathing clauses; T3 is a refusal with no text"
+   }
+  },
+  {
+   "id": "69bd00f7f403a9ca2380efbf_00080",
+   "opus": {
+    "flash": "5",
+    "lite": "4T",
+    "lite-rerun": "4OLT"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "3T",
+    "lite-rerun": "3OT"
+   },
+   "reasons": {
+    "opus": "Source opens with the third-jhana close (nippitikena sukhena; ref: bliss free of rapture): T2 renders it correctly, T1 and T3 turn it into pleasure born of seclusion (first-jhana formula) and reduce upekkhasatiparisuddhi to purified by equanimity; T1 also drops jatima from the gem list in both occurrences, T3 keeps it (natural)",
+    "sonnet": "Opening paragraph closes the third jhana (ref: bliss free of rapture); T2 renders it so, T1 and T3 call it pleasure born of seclusion (the first jhana formula) from the garbled source word; T1 also drops jātimā (naturally lustrous) in the beryl simile, which T2 and T3 keep"
+   }
+  },
+  {
+   "id": "69bd014bf403a9ca2380f091_00054",
+   "opus": {
+    "flash": "3X",
+    "lite": "3XT",
+    "lite-rerun": "3IXT"
+   },
+   "sonnet": {
+    "flash": "4",
+    "lite": "3T",
+    "lite-rerun": "3T"
+   },
+   "reasons": {
+    "opus": "All four turn the conclusion of 17 and 18 (sikkha ca apaccakkhata; ref: without the training being renounced) into the training cast aside/renounced, erasing the contrast with 19; T1/T2 (identical) and T4 read samanna cavitukamo as a novice (samaneru), T3 keeps a monk wanting to leave and says/declares as in ref; T4 further adds a monk or a novice in 19 and misparses dubbalyavikammanceva as a compound -kkhepa",
+    "sonnet": "Source vadati vikkhipati is says and declares in the ref; T3 renders it so, while T1, T2 and T4 read vikkhipati as causes distraction; all keep the 16-item and 8-item lists; T3 has a small slip (daughter he will support) but is closest; T1 and T2 are identical text"
+   }
+  }
+ ]
+}

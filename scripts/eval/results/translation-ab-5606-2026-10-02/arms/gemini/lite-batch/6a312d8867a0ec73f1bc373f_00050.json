@@ -1,0 +1,21 @@
+{
+ "id": "6a312d8867a0ec73f1bc373f_00050",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<header>Sāṃkhyatattvavṛttiḥ</header>\n\nThe supreme <term>Maheśvara</term> <gloss>the Great Lord</gloss> is omniscient, the mother of the entire universe, and the creator. How is He to be known? Through inference or through scriptural authority? For example, the inference is as follows: the object under dispute, which is perceived, must have a cause, because it comes into existence and will cease to exist, like a painting. From this, what is understood in general is known in particular through <term>yoga</term> <gloss>meditation/disciplined union</gloss>. For the individual soul, realization comes from one's own experience. The activity of <term>prakṛti</term> <gloss>primordial nature</gloss> is for the purpose of discriminating between these two, the supreme and the individual. Its purpose for another will be explained later. And its purpose for itself: it remains indifferent toward that <term>puruṣa</term> <gloss>conscious spirit</gloss> to whom it has already revealed itself through discrimination. How can <term>prakṛti</term>, which is unconscious, be active? It is observed that even unconscious things, such as milk, act for a purpose, such as the nourishment of a calf.\n\nNow, regarding who is eligible for liberation, the text says:\n\n**Through detachment, that is accomplished.**\n\nAnd so the scripture says: \"Rising above the desire for sons, the desire for wealth, and the desire for worldly status, they then wander, living on alms.\" Also: \"Having become peaceful, self-controlled, retired from sensory objects, patient, and collected, one sees the Self within the Self.\"\n\nIf liberation followed immediately after hearing the teachings due to detachment, then everyone would attain liberation after the guru's instruction, but this is not observed. Regarding this, the text says:\n\n**Not by hearing alone is that accomplished, due to the strength of beginningless tendencies.**\n\nLiberation does not occur immediately after hearing; rather, due to the strength of beginningless tendencies, for some liberation is swift, while for others it is delayed.\n\nThe text offers another reason:\n\n**Like many streams, each one flows.**\n\n<summary>This page discusses the means of knowing the divine, the activity of primordial nature, and the conditions required for liberation, emphasizing that intellectual hearing alone is insufficient due to ingrained habitual tendencies.</summary>\n<keywords>Maheśvara, Prakṛti, Puruṣa, Liberation, Detachment, Vāsanā, Yoga</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2429,
+ "outputTokens": 554,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.000719125,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1325,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

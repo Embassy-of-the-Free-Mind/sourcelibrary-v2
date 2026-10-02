@@ -1,0 +1,21 @@
+{
+ "id": "69e72c60a409200ea79f46f6_00141",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "The reasoning in this northern passage is subtle and profound.\n\n<margin>Feeding at the breast</margin>\nConsider a child nursing from its dead mother. After a short while, the child's eyes seem to cast everything aside and \n<margin>Because the blinking of the eyes can no longer be seen</margin>\nthe child gets up and departs, for the mother no longer notices the child. The child finds no likeness there. That which makes the child love the mother is not \n<margin>The stiffness of the corpse no longer resembles a living person</margin>\n<margin>When the physical form is insufficient to be loved, then it is not loved</margin>\nlove for her physical form, but love for that which animated her form. When those who die in battle \n<margin>Those killed in battle have no further use for military power, so they are not provided with concubines</margin>\nare buried, they are not provided with the burial finery of handmaidens. For those whose feet have been amputated, there is no reason to love their shoes, as they have lost \n<margin>The foot is the basis of the shoe</margin>\n<margin>Another metaphor is set: The selection of imperial consorts does not require a complete physical form; this illustrates the deficiency of the most honored station</margin>\nthe foundation for them. The various attendants of the Son of Heaven <note>The Emperor</note> do not trim their nails and do not pierce their ears. Those who have just taken \n<margin>They are not kept in official service for fear of callousing their hands and feet, which would prevent them from forming a new marriage bond</margin>\na wife stay outside the palace and are no longer sent on labor service. If keeping the physical form \n<margin>A complete form is still enough to move others</margin>\nwhole is enough to make a person stand out, how much more so for one whose \nVirtue <note>original: \"de\"</note> is complete?\nWhat follows is also the meaning.\n\n<meta>This page belongs to the Sign of Full Virtue chapter <note>original: \"De Chong Fu\"</note></meta>\n<meta>Produced by the Richuan Hall</meta>\n\n<summary>Zhuangzi uses metaphors of a nursing child and palace rituals to argue that true value lies in the animating spirit and internal virtue rather than the physical body. He illustrates that even worldly authorities recognize the importance of physical wholeness, suggesting that spiritual wholeness is even more significant.</summary>\n<keywords>Zhuangzi, Virtue, physical form, burial customs, imperial attendants, Sign of Full Virtue, De Chong Fu, philosophy of spirit</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2188,
+ "outputTokens": 575,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.0014095,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 633,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}
