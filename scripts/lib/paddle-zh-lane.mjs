@@ -104,24 +104,41 @@ export function flattenHtml(raw) {
 export function convertPaddle(raw, { workTitle = null } = {}) {
   const html = flattenHtml(String(raw || '').normalize('NFC'));
   const stats = { img_dropped: html.img, tables_flattened: html.tables, kana_lines_dropped: 0, non_han_lines_dropped: 0, header_lines: 0, page_num_lines: 0 };
-  const kept = [];
+  // every line in Paddle's order, kept or not: a dropped kana line is where the fold strip was (the
+  // 欽定四庫全書 column misread, measured 2026-10-02 on the #5600 pilot), so it still anchors the margin
+  const seq = [];
   for (const line0 of html.text.split(/\r?\n/)) {
     const line = line0.replace(/\s+/g, ' ').trim();
     if (!line) continue;
-    if (KANA.test(line)) { stats.kana_lines_dropped++; continue; }
+    if (KANA.test(line)) { stats.kana_lines_dropped++; seq.push({ kind: 'kana' }); continue; }
     if (!HAN.test(line)) { stats.non_han_lines_dropped++; continue; }
-    kept.push(line);
+    seq.push({ kind: 'text', line, bare: line.replace(/\s/g, '') });
   }
-  const wt = String(workTitle || '').normalize('NFC').trim();
-  const isMarginHead = (l) => SKQS_LINE.test(l.replace(/\s/g, '')) || JUAN_LINE.test(l.replace(/\s/g, ''));
-  const heads = kept.map(isMarginHead);
-  const nearHead = (i) => { for (let k = Math.max(0, i - 3); k <= Math.min(kept.length - 1, i + 3); k++) if (k !== i && heads[k]) return true; return false; };
-  const out = kept.map((l, i) => {
-    const bare = l.replace(/\s/g, '');
-    if (heads[i]) { stats.header_lines++; return `<header>${bare}</header>`; }
-    if (LEAF_LINE.test(bare) && nearHead(i)) { stats.page_num_lines++; return `<page-num>${bare}</page-num>`; }
-    if (wt && bare === wt && nearHead(i)) { stats.header_lines++; return `<header>${bare}</header>`; }
-    return l;
+  const wt = String(workTitle || '').normalize('NFC').replace(/\s/g, '');
+  const isMarginHead = (b) => SKQS_LINE.test(b) || JUAN_LINE.test(b);
+  // the fold strip abbreviates the title (御定佩文齋書畫譜 → 御定書畫譜): its characters in the title's order
+  const inTitle = (b) => { if (!wt || b.length < 2) return false; let k = 0; for (const ch of wt) if (ch === b[k]) k++; return k === b.length; };
+  const textIdx = seq.map((e, i) => (e.kind === 'text' ? i : -1)).filter((i) => i >= 0);
+  const edge = new Set([...textIdx.slice(0, 4), ...textIdx.slice(-4)]);
+  // the strip's title misread (欽定司事全書, 欽定曰事全書 on the pilot): short, at the page edge, still carrying 全書/四庫/欽定
+  const garbledSkqs = (e, i) => edge.has(i) && e.bare.length >= 4 && e.bare.length <= 8 && /全書|四庫|^欽定/u.test(e.bare);
+  const anchor = seq.map((e, i) => e.kind === 'kana' || (e.kind === 'text' && (isMarginHead(e.bare) || garbledSkqs(e, i))));
+  const near = (i, marks, w = 3) => { for (let k = Math.max(0, i - w); k <= Math.min(seq.length - 1, i + w); k++) if (k !== i && marks[k]) return true; return false; };
+  const leaf = seq.map((e) => e.kind === 'text' && LEAF_LINE.test(e.bare));
+  const role = seq.map(() => null);
+  seq.forEach((e, i) => {
+    if (e.kind !== 'text') return;
+    if (anchor[i]) role[i] = 'header';
+    else if (edge.has(i) && (e.bare === wt || inTitle(e.bare)) && (near(i, anchor, 2) || (e.bare.length >= 3 && near(i, leaf, 2)))) role[i] = 'header';
+  });
+  const headOrAnchor = seq.map((e, i) => anchor[i] || role[i] === 'header');
+  seq.forEach((e, i) => { if (e.kind === 'text' && !role[i] && LEAF_LINE.test(e.bare) && near(i, headOrAnchor)) role[i] = 'page-num'; });
+  const out = [];
+  seq.forEach((e, i) => {
+    if (e.kind !== 'text') return;
+    if (role[i] === 'header') { stats.header_lines++; out.push(`<header>${e.bare}</header>`); }
+    else if (role[i] === 'page-num') { stats.page_num_lines++; out.push(`<page-num>${e.bare}</page-num>`); }
+    else out.push(e.line);
   });
   return { body: out.join('\n'), stats };
 }
