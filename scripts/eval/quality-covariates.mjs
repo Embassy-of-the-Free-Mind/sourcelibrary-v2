@@ -382,6 +382,247 @@ function descriptorReport({ pages }, { cache, wanted, check, check_hand }) {
   };
 }
 
+// ── corpus page profile (#5643) ───────────────────────────────────────────────
+// One page per visible book (visible, pages_count > 4): the middle page, ceil(pages_count / 2);
+// if it has no OCR, the next page after it that has, else the nearest one before it (page 1 or
+// later: a few books carry negative page numbers for relocated leaves). No seed is
+// needed: the fallback is fully determined by page order. Each value records where it came from.
+// Inline first, at $0: pages.script_type / page_type / columns (stored, #5629), else the OCR text's
+// own <script> / <page-type> / <columns> tags. The descriptor (lib/page-descriptor.mjs) runs only
+// on books with OCR whose page lacks a usable page type or script. Its `script` is NOT used on a
+// CJK or Tibetan page (by-eye check on #5623: it reads neat East Asian hands as print); those stay
+// unknown without an inline tag. Typeface and page type from it are used for every script.
+// Nothing is written to Mongo. Three files, all resumable (each is appended a row at a time):
+//   <base>.walk.jsonl         the $0 walk: one row per book, inline values only
+//   <base>.descriptors.jsonl  one descriptor answer per book that needed one
+//   <base>.jsonl + <base>.summary.json   the merged profile and its counts (Wilson 95%)
+//   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/quality-covariates.mjs \
+//     --corpus-profile [--date=YYYY-MM-DD] [--describe] [--limit=N]
+// Without --describe it walks (or resumes the walk), prints the descriptor count and estimate, and
+// writes the profile from whatever answers exist. $10 ceiling with a 2× margin on the estimate.
+const PROFILE_CEILING = 10;
+const PROFILE_CONCURRENCY = 8;
+const CJK_LANG = /chinese|japanese|korean|kanbun|tibetan/i;
+// Share of letters in Han, kana, Hangul or Tibetan blocks, over the first 4,000 characters.
+function scriptFamily(text, language) {
+  const s = String(text || '').replace(/<[^>\n]{1,80}>/g, '').slice(0, 4000);
+  let letters = 0, cjk = 0, tib = 0;
+  for (const ch of s) {
+    if (/\p{L}/u.test(ch)) letters++;
+    if (/[぀-ヿ㐀-鿿豈-﫿가-힯ᄀ-ᇿ]/.test(ch)) cjk++;
+    else if (/[ༀ-࿿]/.test(ch)) tib++;
+  }
+  if (letters >= 20 && (cjk + tib) / letters >= 0.3) return { family: tib > cjk ? 'tibetan' : 'cjk', family_src: 'ocr text characters' };
+  const l = String(language || '');
+  if (CJK_LANG.test(l)) return { family: /tibetan/i.test(l) ? 'tibetan' : 'cjk', family_src: 'books.language' };
+  return { family: 'other', family_src: letters >= 20 ? 'ocr text characters' : 'books.language' };
+}
+const readLines = async function* (f) {
+  if (!fs.existsSync(f)) return;
+  const rl = (await import('node:readline')).createInterface({ input: fs.createReadStream(f, 'utf8'), crlfDelay: Infinity });
+  for await (const line of rl) if (line.trim()) { try { yield JSON.parse(line); } catch { /* a torn last line from a kill: skipped, redone */ } }
+};
+async function mapLimit(items, n, fn) {
+  let i = 0;
+  await Promise.all(Array.from({ length: Math.min(n, items.length) }, async () => { while (i < items.length) { const j = i++; await fn(items[j], j); } }));
+}
+
+async function profileWalk(db, base) {
+  const booksFile = `${base}.books.jsonl`, walkFile = `${base}.walk.jsonl`;
+  if (!fs.existsSync(booksFile)) {
+    // The book list first, streamed to disk; the cursor is closed before any page lookup.
+    const tmp = `${booksFile}.tmp`, w = fs.createWriteStream(tmp);
+    const cur = db.collection('books').find({ visible: true, pages_count: { $gt: 4 } }, { projection: { _id: 0, id: 1, title: 1, language: 1, published: 1, year: 1, pages_count: 1, 'image_source.provider': 1 } }).sort({ id: 1 });
+    for await (const b of cur) if (!w.write(JSON.stringify({ id: b.id, title: String(b.title || '').slice(0, 80), language: b.language ?? null, published: b.published ?? null, year: b.year ?? null, pages_count: b.pages_count, provider: b.image_source?.provider ?? null }) + '\n')) await new Promise((r) => w.once('drain', r));
+    await new Promise((r) => w.end(r));
+    fs.renameSync(tmp, booksFile);
+  }
+  const done = new Set();
+  for await (const r of readLines(walkFile)) done.add(r.book_id);
+  const out = fs.createWriteStream(walkFile, { flags: 'a' });
+  const proj = { projection: { _id: 0, id: 1, page_number: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.source': 1, script_type: 1, page_type: 1, columns: 1, cropped_photo: 1, split_from_spread: 1, archived_photo: 1, enhanced_photo: 1, photo_original: 1, photo: 1 } };
+  const hasOcr = (p) => typeof p?.ocr?.data === 'string' && /\S/.test(p.ocr.data);
+  const withOcr = { 'ocr.data': { $type: 'string', $ne: '' } };
+  let chunk = [], walked = done.size;
+  const flush = async () => {
+    const rows = [];
+    await mapLimit(chunk, PROFILE_CONCURRENCY, async (b) => {
+      const mid = Math.ceil(b.pages_count / 2);
+      const pages = db.collection('pages');
+      let p = await pages.findOne({ book_id: b.id, page_number: mid }, proj), picked = 'middle';
+      if (!hasOcr(p)) {
+        const next = await pages.find({ book_id: b.id, page_number: { $gt: mid }, ...withOcr }, proj).sort({ page_number: 1 }).limit(1).next();
+        const prev = !next && (await pages.find({ book_id: b.id, page_number: { $lt: mid, $gte: 1 }, ...withOcr }, proj).sort({ page_number: -1 }).limit(1).next());
+        if (next || prev) { p = next || prev; picked = next ? 'next page with OCR' : 'previous page with OCR'; }
+        else picked = p ? 'middle (book has no OCR)' : 'no page record at the middle';
+      }
+      const text = hasOcr(p) ? p.ocr.data : '';
+      const f = inlineFacts(text);
+      const pick = (stored, storedSrc, tag, tagSrc) => (stored != null && stored !== '' ? [stored, storedSrc] : tag != null ? [tag, tagSrc] : [null, 'none']);
+      const [script, script_src] = pick(['printed', 'handwritten', 'mixed'].includes(p?.script_type) ? p.script_type : null, 'pages.script_type', f.script, 'ocr <script> tag');
+      const [page_type, page_type_src] = pick(p?.page_type, 'pages.page_type', f.page_type, 'ocr <page-type> tag');
+      const [columns, columns_src] = pick(Number.isInteger(p?.columns) ? p.columns : null, 'pages.columns', f.columns, 'ocr <columns> tag');
+      const fam = scriptFamily(text, b.language);
+      // Flags only where a Gemini read was asked for them (see inlineFacts); elsewhere unknown.
+      const gemini = /^gemini/.test(p?.ocr?.model || '') && !!f.script;
+      const image_url = p ? getPageSource(p) : null;
+      const has_ocr = !!text;
+      rows.push({
+        book_id: b.id, title: b.title, language: b.language, published: b.published, period: periodOf(b.published, typeof b.year === 'number' ? b.year : null),
+        pages_count: b.pages_count, provider: b.provider, page_id: p?.id ?? null, page_number: p?.page_number ?? null, picked, has_ocr,
+        ocr_model: p?.ocr?.model ?? null, ocr_source: p?.ocr?.source ?? null, image_url, ...fam,
+        script, script_src, page_type, page_type_src, columns, columns_src,
+        flags: gemini ? { has_illustration: f.has_illustration || ILLUS_TYPES.has(f.page_type), has_table: f.has_table || f.page_type === 'table', has_marginalia: f.has_marginalia } : null,
+        needs_descriptor: has_ocr && !!image_url && (!page_type || (!script && fam.family === 'other')),
+      });
+    });
+    out.write(rows.map((r) => JSON.stringify(r)).join('\n') + (rows.length ? '\n' : ''));
+    walked += chunk.length;
+    process.stdout.write(`\r  walked ${walked}`);
+    chunk = [];
+  };
+  for await (const b of readLines(booksFile)) {
+    if (done.has(b.id)) continue;
+    chunk.push(b);
+    if (chunk.length >= 200) await flush();
+  }
+  if (chunk.length) await flush();
+  await new Promise((r) => out.end(r));
+  console.log('');
+}
+
+async function profileDescribe(base) {
+  const walkFile = `${base}.walk.jsonl`, dFile = `${base}.descriptors.jsonl`;
+  const done = new Set();
+  let spent = 0, calls = 0;
+  for await (const d of readLines(dFile)) { done.add(d.book_id); spent += d.usd || 0; calls += d.input_tokens ? 1 : 0; }
+  const todo = [];
+  let need = 0;
+  for await (const r of readLines(walkFile)) if (r.needs_descriptor) { need++; if (!done.has(r.book_id)) todo.push({ book_id: r.book_id, page_id: r.page_id, page_number: r.page_number, image_url: r.image_url }); }
+  const perCall = (() => { const c = fs.existsSync(DESCRIPTOR_FILE) ? JSON.parse(fs.readFileSync(DESCRIPTOR_FILE, 'utf8')) : null; return c?.usd && c?.calls ? c.usd / c.calls : costOf(DESCRIPTOR_MODEL, 1400, 120); })();
+  const estimate = todo.length * perCall;
+  console.log(`descriptor: ${need} books need it, ${done.size} answered, ${todo.length} to call; $${perCall.toFixed(6)}/call measured on #5623 → estimate $${estimate.toFixed(2)} (2× = $${(2 * estimate).toFixed(2)}); spent so far $${spent.toFixed(3)}`);
+  if (!process.argv.includes('--describe') || !todo.length) return { need, todo: todo.length, perCall, estimate, spent };
+  if (2 * estimate + spent > PROFILE_CEILING) throw new Error(`2× estimate $${(2 * estimate).toFixed(2)} + spent $${spent.toFixed(2)} is over the $${PROFILE_CEILING} ceiling (#5643) — stop`);
+  const limitArg = process.argv.find((a) => a.startsWith('--limit='));
+  const run = todo.slice(0, limitArg ? Number(limitArg.slice(8)) : Infinity);
+  const out = fs.createWriteStream(dFile, { flags: 'a' });
+  let n = 0;
+  for (let i = 0; i < run.length; i += 200) {
+    await mapLimit(run.slice(i, i + 200), PROFILE_CONCURRENCY, async (t) => {
+      let row;
+      try {
+        const d = await describePage({ imageUrl: t.image_url, endpoint: 'scripts/eval/quality-covariates.mjs#corpus-profile', bookId: t.book_id, pageId: t.page_id });
+        row = { ...t, ...d };
+        spent += d.usd; calls++;
+      } catch (e) {
+        row = { ...t, value: null, errors: [String(e.message || e).slice(0, 200)] };
+      }
+      out.write(JSON.stringify(row) + '\n');
+      n++;
+    });
+    process.stdout.write(`\r  described ${n}/${run.length}  $${spent.toFixed(3)}`);
+    if (spent > PROFILE_CEILING) { await new Promise((r) => out.end(r)); throw new Error(`descriptor spend $${spent.toFixed(2)} passed the $${PROFILE_CEILING} ceiling — stop`); }
+  }
+  await new Promise((r) => out.end(r));
+  console.log('');
+  return { need, todo: todo.length - run.length, perCall, estimate, spent };
+}
+
+/** Merge walk + descriptor answers into the profile and count it by language and period. */
+async function profileWrite(base, date, describeInfo) {
+  const answers = new Map();
+  let usd = 0, calls = 0, failed = 0;
+  for await (const d of readLines(`${base}.descriptors.jsonl`)) {
+    usd += d.usd || 0; calls += d.input_tokens ? 1 : 0;
+    if (d.value) answers.set(d.book_id, { value: d.value, errors: d.errors });
+    else { failed++; answers.delete(d.book_id); }
+  }
+  // Languages with fewer than LANG_MIN books are pooled as "other".
+  const LANG_MIN = 200;
+  const langOf = (l) => String(l || 'unknown').split(/[;,]/)[0].trim() || 'unknown';
+  const langN = {};
+  for await (const r of readLines(`${base}.walk.jsonl`)) langN[langOf(r.language)] = (langN[langOf(r.language)] || 0) + 1;
+  const DIMS = ['script', 'typeface', 'page_type', 'columns'];
+  const tally = { all: {}, language: {}, period: {} };
+  const sources = Object.fromEntries(DIMS.map((k) => [k, {}]));
+  const picked = {}, ocr = { with_ocr: 0, without_ocr: 0 }, family = {};
+  let n = 0;
+  const outFile = `${base}.jsonl`, tmp = `${outFile}.tmp`, w = fs.createWriteStream(tmp);
+  for await (const r of readLines(`${base}.walk.jsonl`)) {
+    const a = answers.get(r.book_id)?.value;
+    const row = { ...r };
+    delete row.needs_descriptor;
+    if (!r.script && a?.script) {
+      if (r.family === 'other') Object.assign(row, { script: a.script, script_src: 'descriptor' });
+      else row.script_src = `none (descriptor said ${a.script}; not used for ${r.family}, #5623 by-eye rule)`;
+    }
+    if (!r.page_type && a?.page_type) Object.assign(row, { page_type: a.page_type, page_type_src: 'descriptor' });
+    if (r.columns == null && a && Number.isInteger(a.columns)) Object.assign(row, { columns: a.columns, columns_src: 'descriptor' });
+    Object.assign(row, a?.typeface ? { typeface: a.typeface, typeface_src: 'descriptor' } : { typeface: null, typeface_src: 'none' });
+    if (!row.flags && a) row.flags = { has_illustration: a.has_illustration, has_table: a.has_table, has_marginalia: a.has_marginalia, src: 'descriptor' };
+    else if (row.flags) row.flags.src = 'transcription tags (Gemini read)';
+    if (a) row.descriptor = a;
+    if (!w.write(JSON.stringify(row) + '\n')) await new Promise((res) => w.once('drain', res));
+    // counting
+    n++;
+    picked[r.picked] = (picked[r.picked] || 0) + 1;
+    ocr[r.has_ocr ? 'with_ocr' : 'without_ocr']++;
+    family[r.family] = (family[r.family] || 0) + 1;
+    const vals = { script: row.script ?? 'unknown', typeface: row.typeface ?? 'unknown', page_type: row.page_type ?? 'unknown', columns: row.columns == null ? 'unknown' : row.columns >= 3 ? '3+' : String(row.columns) };
+    const lang = langN[langOf(r.language)] >= LANG_MIN ? langOf(r.language) : 'other';
+    for (const k of DIMS) {
+      const src = String(row[`${k}_src`]).replace(/ \(descriptor said.*$/, ' (CJK/Tibetan rule)');
+      sources[k][src] = (sources[k][src] || 0) + 1;
+      for (const [g, key] of [['all', 'all'], ['language', lang], ['period', r.period]]) {
+        const cell = ((tally[g][key] ||= {})[k] ||= { n: 0 });
+        cell.n++; cell[vals[k]] = (cell[vals[k]] || 0) + 1;
+      }
+    }
+  }
+  await new Promise((res) => w.end(res));
+  fs.renameSync(tmp, outFile);
+  const withCi = (cell) => Object.fromEntries(Object.entries(cell).filter(([v]) => v !== 'n').sort((x, y) => y[1] - x[1]).map(([v, k]) => { const [lo, hi] = wilson(k, cell.n); return [v, { k, share: r3(k / cell.n), ci: [r3(lo), r3(hi)] }]; }));
+  const shape = (byKey) => Object.fromEntries(Object.entries(byKey).sort((x, y) => y[1].script.n - x[1].script.n).map(([key, dims]) => [key, { n: dims.script.n, ...Object.fromEntries(DIMS.map((k) => [k, withCi(dims[k])])) }]));
+  const summary = {
+    generated: date, issue: 5643, rows: n, file: path.relative(ROOT, outFile),
+    unit: 'one page per visible book (visible: true, pages_count > 4): the middle page, else the next page with OCR, else the nearest before it',
+    picked, ocr, script_family: family,
+    sources,
+    descriptor: { model: DESCRIPTOR_MODEL, prompt_version: DESCRIPTOR_VERSION, books_needing_it: describeInfo?.need ?? null, answered: answers.size, failed, calls, usd: Math.round(usd * 10000) / 10000, per_call_estimate: describeInfo?.perCall ?? null, billing: 'realtime list price through scripts/lib/gemini-script-client.mjs, thinking off' },
+    rules: {
+      script: 'pages.script_type, else the OCR <script> tag, else the descriptor — except on CJK or Tibetan pages (by OCR text characters, else books.language), where the descriptor\'s script is not used (#5623 by-eye check) and the value is unknown',
+      page_type: 'pages.page_type, else the OCR <page-type> tag, else the descriptor',
+      columns: 'pages.columns, else the OCR <columns> tag, else the descriptor',
+      typeface: 'the descriptor only (no inline counterpart); unknown on every page it did not run on',
+      language: `books.language, first value; languages under ${LANG_MIN} books pooled as "other"`,
+      period: 'books.published pinned to one century (periodOf in this script), else books.year, else unknown',
+      intervals: 'Wilson 95% on each share within its cell',
+    },
+    all: shape(tally.all).all,
+    by_language: shape(tally.language),
+    by_period: Object.fromEntries(PERIODS.filter((p) => tally.period[p]).map((p) => [p, shape({ [p]: tally.period[p] })[p]])),
+  };
+  fs.writeFileSync(`${base}.summary.json`, JSON.stringify(summary, null, 1) + '\n');
+  console.log(`profile: ${n} books → ${path.relative(ROOT, outFile)}; summary ${path.relative(ROOT, base)}.summary.json`);
+  console.log('picked', JSON.stringify(picked), 'ocr', JSON.stringify(ocr), 'family', JSON.stringify(family));
+  for (const k of DIMS) console.log(`${k}: ${JSON.stringify(Object.fromEntries(Object.entries(summary.all[k]).map(([v, c]) => [v, c.k])))}  sources ${JSON.stringify(sources[k])}`);
+  console.log(`descriptor: ${answers.size} answered, ${failed} failed, ${calls} calls, $${usd.toFixed(3)}`);
+}
+
+if (process.argv.includes('--corpus-profile')) {
+  const date = process.argv.find((a) => a.startsWith('--date='))?.slice(7) || new Date().toISOString().slice(0, 10);
+  const base = path.join(ROOT, `scripts/eval/output/corpus-page-profile-${date}`);
+  fs.mkdirSync(path.dirname(base), { recursive: true });
+  const mongo = new MongoClient(process.env.MONGODB_URI);
+  await mongo.connect();
+  await profileWalk(mongo.db('bookstore'), base);
+  await mongo.close(); // no Mongo connection is held across model calls
+  const info = await profileDescribe(base);
+  await profileWrite(base, date, info);
+  process.exit(0);
+}
+
 // ── 1. translation pages (pooling rule of quality-by-language.mjs) ─────────────
 const auditDirs = fs.readdirSync(RESULTS)
   .filter((d) => d.startsWith('translation-corpus-audit-') && !d.includes('chained') && fs.existsSync(path.join(RESULTS, d, 'report.json')))
