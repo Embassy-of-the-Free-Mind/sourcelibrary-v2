@@ -28,8 +28,24 @@
  * Plus: catastrophic-page rate (CER > 0.5, or agreement < 0.5), paired sign test vs --ref on
  * the pages both engines produced text for, and the five worst pages per engine with a
  * 300-char excerpt against the reference (or the reference engine) for reading by eye.
- * A page is TEXTLESS when every engine returns < 30 content characters; it is excluded and
- * listed, never averaged in.
+ * A page is TEXTLESS when every engine returns < 30 content characters and none REFUSED it; it is
+ * excluded and listed, never averaged in.
+ *
+ * REFUSALS (#5581). A page whose output is empty because the engine declined it (Gemini
+ * finishReason RECITATION / PROHIBITED_CONTENT / SAFETY …) is `refused`, which is not `empty`.
+ * The source is the run's own record — <engine>/_meter.jsonl, written by benchmark-run-api.mjs,
+ * last row per slug. Where an API engine left no meter row, a refusal is INFERRED from a zero-byte
+ * output on a page with a substantial reference (≥ 200 reference characters), and labelled so.
+ * An empty output is never inferred to be a refusal from the normalised text: the Greek strata
+ * count Greek letters only, and Gemini returns genuinely empty STOP outputs on some Japanese leaves.
+ * CER is reported twice — with a refusal counted as CER 1.0 (the pre-#5581 headline, unchanged) and
+ * over answered pages — and the paired sign test runs on pages BOTH engines answered, with its n
+ * and the number of pages a refusal took out of it. A page every engine refused is kept (it is not
+ * textless, and it is not a reference mismatch).
+ *
+ *   --refusals-only  read the meters and write results/benchmark/refusals/refusals-<date>.json
+ *                    without re-scoring: for a machine that holds only some engines' outputs,
+ *                    where a re-score would silently drop the others from the committed results.
  */
 import fs from 'fs';
 import path from 'path';
@@ -38,6 +54,7 @@ import { loadRefText } from './lib/private-refs.mjs';
 import { levenshtein, normalizeCJK, scoreAgainstReference } from './lib/metrics.mjs';
 import { binomTwoSided } from './lib/paired-stats.mjs';
 import { stripMarkupTags } from '../lib/strip-markup-tags.mjs';
+import { readMeter, refusalOf } from './lib/refusals.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const argOf = (n, d) => { const a = process.argv.find(x => x.startsWith(`--${n}=`)); return a ? a.slice(n.length + 3) : d; };
@@ -135,6 +152,7 @@ function scoreRefTier(stratum) {
   const outRoot = path.join(ROOT, stratum, 'out');
   const engines = fs.readdirSync(outRoot).filter(e => fs.statSync(path.join(outRoot, e)).isDirectory()).sort();
   const gts = fs.readdirSync(gtDir).filter(f => f.endsWith('.json') && !f.startsWith('_')).map(f => ({ slug: f.slice(0, -5), ...JSON.parse(fs.readFileSync(path.join(gtDir, f), 'utf8')) })).filter(g => g.ocr_ground_truth);
+  const meters = Object.fromEntries(engines.map(e => [e, readMeter(path.join(outRoot, e))]));
   const pages = [];
   for (const g of gts) {
     const script = g.script === 'cjk' || g.script === 'chinese' ? 'cjk' : (g.script || 'latin');
@@ -143,24 +161,33 @@ function scoreRefTier(stratum) {
       const f = path.join(outRoot, e, `${g.slug}.txt`);
       if (!fs.existsSync(f)) { row.engines[e] = { missing: true }; continue; }
       const hyp = fs.readFileSync(f, 'utf8');
+      const rf = refusalOf({ engine: e, meterRow: meters[e]?.get(g.slug), rawText: hyp, refChars: g.ocr_ground_truth.length });
+      // A refused page is never aligned (there is nothing to place); it is recorded, not scored.
+      if (rf.refused) { row.engines[e] = { aligned: false, refused: true, refusal_source: rf.source, ...(rf.finish_reason ? { finish_reason: rf.finish_reason } : {}), chars: hyp.length }; continue; }
       let r; try { r = scoreAgainstReference(g.ocr_ground_truth, hyp, script); } catch (err) { row.engines[e] = { error: err.message.slice(0, 80) }; continue; }
-      row.engines[e] = { aligned: r.aligned, guard: r3(r.guard?.value), acc_upper: r3(r.charAccuracy), acc_windowed: r3(r.charAccuracyWindowed), cer: r3(r.charAccuracyWindowed == null ? null : 1 - r.charAccuracyWindowed), span_dispersion: r.spanDispersion ?? null, chars: hyp.length };
+      row.engines[e] = { aligned: r.aligned, refused: false, guard: r3(r.guard?.value), acc_upper: r3(r.charAccuracy), acc_windowed: r3(r.charAccuracyWindowed), cer: r3(r.charAccuracyWindowed == null ? null : 1 - r.charAccuracyWindowed), span_dispersion: r.spanDispersion ?? null, chars: hyp.length };
     }
     pages.push(row);
   }
   const langs = [...new Set(pages.map(p => p.language))].sort();
-  const summary = { stratum, date, n_pages: pages.length, ref_engine: REF_ENGINE, languages: {} };
+  const summary = { stratum, date, refusal_source: 'finishReason (meter) / inferred', cer_refusals: 'median_cer_windowed / mean_acc_windowed are over ALIGNED pages (refusals excluded, as before #5581); *_refusals_as_1 add each refused page at CER 1.0', n_pages: pages.length, ref_engine: REF_ENGINE, languages: {} };
   for (const lang of langs) {
     const lp = pages.filter(p => p.language === lang);
     summary.languages[lang] = { n: lp.length, engines: {} };
     for (const e of engines) {
       const rows = lp.map(p => ({ p, m: p.engines[e] })).filter(x => x.m && !x.m.missing && !x.m.error);
       const al = rows.filter(x => x.m.aligned);
-      const s = { pages_run: rows.length, aligned: al.length, median_cer_windowed: r3(median(al.map(x => x.m.cer))), mean_acc_windowed: r3(mean(al.map(x => x.m.acc_windowed))), mean_acc_upper: r3(mean(al.map(x => x.m.acc_upper))), catastrophic: rows.filter(x => !x.m.aligned || x.m.cer > 0.5).length };
+      const refused = rows.filter(x => x.m.refused);
+      const withRefusals = [...al.map(x => x.m.cer), ...refused.map(() => 1)];
+      const s = { pages_run: rows.length, aligned: al.length, refused: refused.length, refused_inferred: refused.filter(x => x.m.refusal_source === 'inferred').length,
+        median_cer_windowed: r3(median(al.map(x => x.m.cer))), mean_cer_windowed: r3(mean(al.map(x => x.m.cer))), mean_acc_windowed: r3(mean(al.map(x => x.m.acc_windowed))), mean_acc_upper: r3(mean(al.map(x => x.m.acc_upper))),
+        median_cer_refusals_as_1: r3(median(withRefusals)), mean_cer_refusals_as_1: r3(mean(withRefusals)),
+        catastrophic: rows.filter(x => !x.m.aligned || x.m.cer > 0.5).length, catastrophic_answered: rows.filter(x => !x.m.refused && (!x.m.aligned || x.m.cer > 0.5)).length };
       if (e !== REF_ENGINE) {
         const paired = lp.filter(p => p.engines[e]?.aligned && p.engines[REF_ENGINE]?.aligned);
         const wins = paired.filter(p => p.engines[e].cer < p.engines[REF_ENGINE].cer - 1e-9).length, losses = paired.filter(p => p.engines[e].cer > p.engines[REF_ENGINE].cer + 1e-9).length;
-        s.paired_vs_ref = { n: paired.length, wins, losses, ties: paired.length - wins - losses, median_delta_cer: r3(median(paired.map(p => p.engines[REF_ENGINE].cer - p.engines[e].cer))), p_sign: paired.length ? r3(binomTwoSided(Math.max(wins, losses), wins + losses)) : null,
+        const excludedRefused = lp.filter(p => (p.engines[e]?.refused && (p.engines[REF_ENGINE]?.aligned || p.engines[REF_ENGINE]?.refused)) || (p.engines[REF_ENGINE]?.refused && p.engines[e]?.aligned)).length;
+        s.paired_vs_ref = { n: paired.length, excluded_refused: excludedRefused, wins, losses, ties: paired.length - wins - losses, median_delta_cer: r3(median(paired.map(p => p.engines[REF_ENGINE].cer - p.engines[e].cer))), p_sign: paired.length ? r3(binomTwoSided(Math.max(wins, losses), wins + losses)) : null,
           ref_engine_aligned: lp.filter(p => p.engines[REF_ENGINE]?.aligned).length, both_unaligned: lp.filter(p => p.engines[e] && !p.engines[e].missing && !p.engines[e].aligned && p.engines[REF_ENGINE] && !p.engines[REF_ENGINE].aligned).length };
       }
       summary.languages[lang].engines[e] = s;
@@ -170,8 +197,8 @@ function scoreRefTier(stratum) {
   console.log(`\n## ${stratum} — ${pages.length} reference pages, ${engines.length} engines (passage-level aligner; CER = windowed lower bound on ALIGNED pages)`);
   for (const lang of langs) {
     const L = summary.languages[lang];
-    console.log(`\n### ${lang} (n=${L.n})\n| engine | run | aligned | median CER | mean acc (windowed / upper) | catastrophic | paired CER vs ${REF_ENGINE} W/L/T (p) on both-aligned |\n|---|---|---|---|---|---|---|`);
-    for (const e of engines) { const s = L.engines[e]; if (!s.pages_run) continue; const pv = s.paired_vs_ref ? `${s.paired_vs_ref.wins}/${s.paired_vs_ref.losses}/${s.paired_vs_ref.ties} (p=${s.paired_vs_ref.p_sign}) n=${s.paired_vs_ref.n}` : '—'; console.log(`| ${e} | ${s.pages_run} | ${s.aligned} | ${s.median_cer_windowed ?? '—'} | ${s.mean_acc_windowed ?? '—'} / ${s.mean_acc_upper ?? '—'} | ${s.catastrophic} | ${pv} |`); }
+    console.log(`\n### ${lang} (n=${L.n})\n| engine | run | aligned | refused | median CER (aligned) | mean CER aligned / refusal = 1.0 | mean acc (windowed / upper) | catastrophic | paired CER vs ${REF_ENGINE} W/L/T (p) on both-aligned |\n|---|---|---|---|---|---|---|---|---|`);
+    for (const e of engines) { const s = L.engines[e]; if (!s.pages_run) continue; const pv = s.paired_vs_ref ? `${s.paired_vs_ref.wins}/${s.paired_vs_ref.losses}/${s.paired_vs_ref.ties} (p=${s.paired_vs_ref.p_sign}) n=${s.paired_vs_ref.n}${s.paired_vs_ref.excluded_refused ? `, ${s.paired_vs_ref.excluded_refused} refused excluded` : ''}` : '—'; console.log(`| ${e} | ${s.pages_run} | ${s.aligned} | ${s.refused} | ${s.median_cer_windowed ?? '—'} | ${s.mean_cer_windowed ?? '—'} / ${s.mean_cer_refusals_as_1 ?? '—'} | ${s.mean_acc_windowed ?? '—'} / ${s.mean_acc_upper ?? '—'} | ${s.catastrophic} | ${pv} |`); }
   }
   return summary;
 }
@@ -181,6 +208,39 @@ const strata = fs.readdirSync(ROOT).filter(d => fs.existsSync(path.join(ROOT, d,
 fs.mkdirSync(OUT_DIR, { recursive: true });
 const date = new Date().toISOString().slice(0, 10);
 const summaryAll = {};
+
+// --refusals-only: the refusal record alone, read from the meters, no re-score (see header).
+if (process.argv.includes('--refusals-only')) {
+  const out = { date, issue: 5581, reasons: 'finishReason in RECITATION|PROHIBITED_CONTENT|SAFETY|BLOCKLIST|SPII|IMAGE_SAFETY with an empty output; else inferred (API engine, zero-byte output, reference ≥ 200 chars)', strata: {} };
+  for (const stratum of strata) {
+    const outRoot = path.join(ROOT, stratum, 'out');
+    const tier = stratum.startsWith('ref-');
+    const gtDir = tier ? path.join(__dirname, stratum === 'ref-pinned' ? 'ground-truth' : 'ground-truth-ws') : null;
+    const refChars = (slug) => {
+      if (tier) { const f = path.join(gtDir, `${slug}.json`); return fs.existsSync(f) ? String(JSON.parse(fs.readFileSync(f, 'utf8')).ocr_ground_truth || '').length : 0; }
+      return loadRefText(REFS_DIR, slug).text?.length || 0;
+    };
+    for (const e of fs.readdirSync(outRoot).filter(e => fs.statSync(path.join(outRoot, e)).isDirectory()).sort()) {
+      const dir = path.join(outRoot, e);
+      const slugs = fs.readdirSync(dir).filter(f => f.endsWith('.txt')).map(f => f.slice(0, -4)).sort();
+      if (!slugs.length) continue;
+      const meter = readMeter(dir);
+      const refused = {}, inferred = [];
+      for (const s of slugs) {
+        const raw = fs.readFileSync(path.join(dir, `${s}.txt`), 'utf8');
+        const r = refusalOf({ engine: e, meterRow: meter?.get(s), rawText: raw, refChars: raw.length ? 0 : refChars(s) });
+        if (r.refused && r.source === 'inferred') inferred.push(s); else if (r.refused) refused[s] = r.finish_reason;
+      }
+      (out.strata[stratum] ||= {})[e] = { outputs: slugs.length, meter: !!meter, refused, inferred };
+    }
+  }
+  const dir = path.join(OUT_DIR, 'refusals');
+  fs.mkdirSync(dir, { recursive: true });
+  fs.writeFileSync(path.join(dir, `refusals-${date}.json`), JSON.stringify(out, null, 2) + '\n');
+  for (const [s, es] of Object.entries(out.strata)) for (const [e, v] of Object.entries(es)) if (Object.keys(v.refused).length || v.inferred.length) console.log(`${s} / ${e}: ${Object.keys(v.refused).length} refused, ${v.inferred.length} inferred (of ${v.outputs})`);
+  console.log(`wrote ${path.join(dir, `refusals-${date}.json`)}`);
+  process.exit(0);
+}
 for (const stratum of strata) {
   if (stratum.startsWith('ref-')) { summaryAll[stratum] = scoreRefTier(stratum); continue; }
   const cjk = CJK_STRATA.has(stratum), greek = GREEK_STRATA.has(stratum);
@@ -210,13 +270,17 @@ for (const stratum of strata) {
     else if (r.skipped !== 'no-reference') privateSkips[r.skipped] = (privateSkips[r.skipped] || 0) + 1;
   }
   if (Object.keys(privateSkips).length) console.warn(`  ${stratum}: private references not scored here: ${JSON.stringify(privateSkips)} (set SL_PRIVATE_REFS_DIR)`);
+  const meters = Object.fromEntries(engines.map(e => [e, readMeter(path.join(outRoot, e))]));
+  const refusal = {};   // slug -> engine -> { refused, source, finish_reason }
+  for (const s of slugs) { refusal[s] = {}; for (const e of engines) refusal[s][e] = refusalOf({ engine: e, meterRow: meters[e]?.get(s), rawText: texts[s][e], refChars: refText[s]?.length || 0 }); }
 
   const pages = [];
   const textless = [];
   for (const s of slugs) {
     const prepped = {}; for (const e of engines) prepped[e] = texts[s][e] == null ? null : prep(texts[s][e], cjk, greek);
     const maxContent = Math.max(0, ...engines.map(e => prepped[e]?.nContent || 0));
-    if (maxContent < 30) { textless.push(s); continue; }
+    const anyRefused = engines.some(e => refusal[s][e].refused);
+    if (maxContent < 30 && !anyRefused) { textless.push(s); continue; }
     const hasRef = !!refText[s];
     const ref = hasRef ? prep(refText[s], cjk, greek) : prepped[REF_ENGINE];
     const row = { slug: s, substratum: meta.get(s)?.substratum || null, script_class: classOf.get(s) || meta.get(s)?.observed_substratum || null, leaf_language: leafOf.get(s) || null, ...(shareOf.has(s) ? { greek_share: shareOf.get(s) } : {}), title: meta.get(s)?.title || null, year: meta.get(s)?.year || null, has_ref: hasRef, engines: {} };
@@ -244,7 +308,8 @@ for (const stratum of strata) {
       let invRef = null, invRefSample = [];
       if (hasRef) { const R = new Set(ref.content); const miss = uniq.filter(t => !R.has(t)); invRef = uniq.length ? miss.length / uniq.length : null; invRefSample = miss.slice(0, 8); }
       const base = (e === REF_ENGINE && !hasRef) ? null : (ref ? compare(h, ref) : null);
-      row.engines[e] = { n_content: h.nContent, empty: h.nContent < 30, loop: loopOf(e), ...(base || {}), invention: r3(inv), invention_indep: r3(invIndep), invention_ref: r3(invRef), unsupported_sample: unsupported.slice(0, 8), invention_ref_sample: invRefSample };
+      const rf = refusal[s][e];
+      row.engines[e] = { n_content: h.nContent, empty: h.nContent < 30, refused: rf.refused, ...(rf.refused ? { refusal_source: rf.source } : {}), ...(rf.finish_reason && rf.finish_reason !== 'STOP' ? { finish_reason: rf.finish_reason } : {}), loop: loopOf(e), ...(base || {}), invention: r3(inv), invention_indep: r3(invIndep), invention_ref: r3(invRef), unsupported_sample: unsupported.slice(0, 8), invention_ref_sample: invRefSample };
       // Greek strata, referenced pages: a SECONDARY, exploratory CER with accents, breathings and
       // iota subscript folded away (PREREGISTRATION-greek-ext-4925.md, References §c) — the e-text
       // is an edition of the WORK, and its diacritic conventions differ from a 1550 page's; the
@@ -257,37 +322,46 @@ for (const stratum of strata) {
     // page prints the bare sutra, say) makes EVERY engine look catastrophic. If no engine gets
     // within 0.5 CER of the reference, the reference is judged unreliable for this page and the
     // page falls back to the proxy comparison — recorded, never averaged in as an engine fault.
-    if (hasRef) {
-      const best = Math.min(...engines.map(e => row.engines[e]?.cer ?? Infinity));
+    // A refusal says nothing about the reference, so it neither triggers nor blocks the guard; a
+    // page every engine refused stays referenced (its CER is 1.0 for each, counted as refusals).
+    const answered = engines.filter(e => row.engines[e] && !row.engines[e].missing && !row.engines[e].refused);
+    if (hasRef && answered.length) {
+      const best = Math.min(...answered.map(e => row.engines[e]?.cer ?? Infinity));
       if (!(best <= 0.5)) {
         row.ref_mismatch = true; row.has_ref = false;
         const proxy = prepped[REF_ENGINE];
-        for (const e of engines) { const h = prepped[e]; if (!h) continue; const base = (e === REF_ENGINE) ? null : (proxy ? compare(h, proxy) : null); const keep = row.engines[e]; row.engines[e] = { n_content: keep.n_content, empty: keep.empty, loop: keep.loop, ...(base || {}), invention: keep.invention, invention_ref: null, unsupported_sample: keep.unsupported_sample, invention_ref_sample: [], agree: keep.agree }; }
+        for (const e of engines) { const h = prepped[e]; if (!h) continue; const base = (e === REF_ENGINE) ? null : (proxy ? compare(h, proxy) : null); const keep = row.engines[e]; row.engines[e] = { n_content: keep.n_content, empty: keep.empty, refused: keep.refused, ...(keep.refusal_source ? { refusal_source: keep.refusal_source } : {}), ...(keep.finish_reason ? { finish_reason: keep.finish_reason } : {}), loop: keep.loop, ...(base || {}), invention: keep.invention, invention_ref: null, unsupported_sample: keep.unsupported_sample, invention_ref_sample: [], agree: keep.agree }; }
       }
     }
     pages.push(row);
   }
 
   // ── roll-up per engine ──
-  const summary = { stratum, issue: reg?.issue || null, date, n_pages: pages.length, n_with_ref: pages.filter(p => p.has_ref).length, ref_mismatch: pages.filter(p => p.ref_mismatch).map(p => p.slug), textless, ref_engine: REF_ENGINE, engines: {} };
+  const summary = { stratum, issue: reg?.issue || null, date, refusal_source: 'finishReason (meter) / inferred', cer_refusals: 'ref.median_cer / mean_cer count a refusal as CER 1.0 (the pre-#5581 headline); *_answered exclude refused pages', n_pages: pages.length, n_with_ref: pages.filter(p => p.has_ref).length, ref_mismatch: pages.filter(p => p.ref_mismatch).map(p => p.slug), textless, ref_engine: REF_ENGINE, engines: {} };
   for (const e of engines) {
     const rows = pages.map(p => ({ p, m: p.engines[e] })).filter(x => x.m && !x.m.missing);
     const withRef = rows.filter(x => x.p.has_ref && x.m.cer != null);
     const proxy = rows.filter(x => !x.p.has_ref && x.m.cer != null);
+    const refAns = withRef.filter(x => !x.m.refused), proxyAns = proxy.filter(x => !x.m.refused);
     const s = {
-      pages_run: rows.length, empty: rows.filter(x => x.m.empty).length, loop: rows.filter(x => x.m.loop).length,
-      ref: { n: withRef.length, median_cer: r3(median(withRef.map(x => x.m.cer))), mean_cer: r3(mean(withRef.map(x => x.m.cer))), catastrophic: withRef.filter(x => x.m.cer > 0.5).length, median_gap: r3(median(withRef.map(x => x.m.gap))), median_seq: r3(median(withRef.map(x => x.m.seq))) },
-      proxy_vs_ref_engine: { n: proxy.length, median_cer: r3(median(proxy.map(x => x.m.cer))), catastrophic: proxy.filter(x => x.m.cer > 0.5).length, median_gap: r3(median(proxy.map(x => x.m.gap))), median_bow: r3(median(proxy.map(x => x.m.bow))) },
+      pages_run: rows.length, empty: rows.filter(x => x.m.empty && !x.m.refused).length, refused: rows.filter(x => x.m.refused).length,
+      refused_inferred: rows.filter(x => x.m.refused && x.m.refusal_source === 'inferred').length, loop: rows.filter(x => x.m.loop).length,
+      ref: { n: withRef.length, median_cer: r3(median(withRef.map(x => x.m.cer))), mean_cer: r3(mean(withRef.map(x => x.m.cer))), catastrophic: withRef.filter(x => x.m.cer > 0.5).length, median_gap: r3(median(withRef.map(x => x.m.gap))), median_seq: r3(median(withRef.map(x => x.m.seq))),
+        refused: withRef.length - refAns.length, n_answered: refAns.length, median_cer_answered: r3(median(refAns.map(x => x.m.cer))), mean_cer_answered: r3(mean(refAns.map(x => x.m.cer))), catastrophic_answered: refAns.filter(x => x.m.cer > 0.5).length },
+      proxy_vs_ref_engine: { n: proxy.length, median_cer: r3(median(proxy.map(x => x.m.cer))), catastrophic: proxy.filter(x => x.m.cer > 0.5).length, median_gap: r3(median(proxy.map(x => x.m.gap))), median_bow: r3(median(proxy.map(x => x.m.bow))),
+        refused: proxy.length - proxyAns.length, n_answered: proxyAns.length, median_cer_answered: r3(median(proxyAns.map(x => x.m.cer))), mean_cer: r3(mean(proxy.map(x => x.m.cer))), mean_cer_answered: r3(mean(proxyAns.map(x => x.m.cer))) },
       invention: { median: r3(median(rows.map(x => x.m.invention))), mean: r3(mean(rows.map(x => x.m.invention))), n_engines: engines.length,
         ref_median: r3(median(withRef.map(x => x.m.invention_ref))), ref_mean: r3(mean(withRef.map(x => x.m.invention_ref))) },
     };
     // paired vs REF_ENGINE on pages with a reference (both present)
     if (e !== REF_ENGINE) {
-      const paired = pages.filter(p => p.has_ref && p.engines[e]?.cer != null && p.engines[REF_ENGINE]?.cer != null);
+      // on pages BOTH engines answered: a refusal is not a misread, and is counted in `refused` instead
+      const bothScored = pages.filter(p => p.has_ref && p.engines[e]?.cer != null && p.engines[REF_ENGINE]?.cer != null);
+      const paired = bothScored.filter(p => !p.engines[e].refused && !p.engines[REF_ENGINE].refused);
       const wins = paired.filter(p => p.engines[e].cer < p.engines[REF_ENGINE].cer - 1e-9).length;
       const losses = paired.filter(p => p.engines[e].cer > p.engines[REF_ENGINE].cer + 1e-9).length;
       const deltas = paired.map(p => p.engines[REF_ENGINE].cer - p.engines[e].cer);
-      s.paired_vs_ref = { n: paired.length, wins, losses, ties: paired.length - wins - losses, median_delta_cer: r3(median(deltas)), p_sign: paired.length ? r3(binomTwoSided(Math.max(wins, losses), wins + losses)) : null,
+      s.paired_vs_ref = { n: paired.length, excluded_refused: bothScored.length - paired.length, wins, losses, ties: paired.length - wins - losses, median_delta_cer: r3(median(deltas)), p_sign: paired.length ? r3(binomTwoSided(Math.max(wins, losses), wins + losses)) : null,
         invention_wins: paired.filter(p => p.engines[e].invention_ref < p.engines[REF_ENGINE].invention_ref).length, invention_losses: paired.filter(p => p.engines[e].invention_ref > p.engines[REF_ENGINE].invention_ref).length };
     }
     // worst five: by CER when a reference exists, else by proxy CER, else by invention
@@ -305,7 +379,7 @@ for (const stratum of strata) {
       for (const e of engines) {
         const rows = cp.map(p => ({ p, m: p.engines[e] })).filter(x => x.m && !x.m.missing);
         const cer = rows.filter(x => x.m.cer != null).map(x => x.m.cer);
-        summary.by_class[c].engines[e] = { n: rows.length, empty: rows.filter(x => x.m.empty).length, loop: rows.filter(x => x.m.loop).length,
+        summary.by_class[c].engines[e] = { n: rows.length, empty: rows.filter(x => x.m.empty && !x.m.refused).length, refused: rows.filter(x => x.m.refused).length, loop: rows.filter(x => x.m.loop).length,
           median_cer: r3(median(cer)), catastrophic: cer.filter(v => v > 0.5).length, median_unsupported: r3(median(rows.map(x => x.m.invention))) };
       }
     }
@@ -315,20 +389,20 @@ for (const stratum of strata) {
 
   // ── console table ──
   console.log(`\n## ${stratum} (#${summary.issue}) — ${pages.length} pages scored (${summary.n_with_ref} with reference; ${summary.ref_mismatch.length} reference-mismatch → proxy: ${summary.ref_mismatch.join(', ') || '—'}), ${textless.length} textless: ${textless.join(', ') || '—'}`);
-  console.log('| engine | pages | empty | loop | ref n | median CER | catastrophic | median gap | invention (vs ref) | vs ref-engine (proxy) n / median CER / catastrophic | unsupported (vs other engines) | paired CER vs ' + REF_ENGINE + ' W/L/T (p) | invention W/L |');
-  console.log('|---|---|---|---|---|---|---|---|---|---|---|---|---|');
+  console.log('| engine | pages | empty | refused | loop | ref n | median CER (refusal = 1.0) | mean CER (refusal = 1.0) | mean CER answered (n) | catastrophic | median gap | invention (vs ref) | vs ref-engine (proxy) n / median CER / catastrophic | unsupported (vs other engines) | paired CER vs ' + REF_ENGINE + ' W/L/T (p) | invention W/L |');
+  console.log('|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|');
   for (const e of engines) {
     const s = summary.engines[e];
-    const pv = s.paired_vs_ref ? `${s.paired_vs_ref.wins}/${s.paired_vs_ref.losses}/${s.paired_vs_ref.ties} (p=${s.paired_vs_ref.p_sign})` : '—';
+    const pv = s.paired_vs_ref ? `${s.paired_vs_ref.wins}/${s.paired_vs_ref.losses}/${s.paired_vs_ref.ties} (p=${s.paired_vs_ref.p_sign}, n=${s.paired_vs_ref.n}${s.paired_vs_ref.excluded_refused ? `, ${s.paired_vs_ref.excluded_refused} refused excluded` : ''})` : '—';
     const iv = s.paired_vs_ref ? `${s.paired_vs_ref.invention_wins}/${s.paired_vs_ref.invention_losses}` : '—';
-    console.log(`| ${e} | ${s.pages_run} | ${s.empty} | ${s.loop} | ${s.ref.n} | ${s.ref.median_cer ?? '—'} | ${s.ref.catastrophic} | ${s.ref.median_gap ?? '—'} | ${s.invention.ref_median ?? '—'} | ${s.proxy_vs_ref_engine.n} / ${s.proxy_vs_ref_engine.median_cer ?? '—'} / ${s.proxy_vs_ref_engine.catastrophic} | ${s.invention.median ?? '—'} | ${pv} | ${iv} |`);
+    console.log(`| ${e} | ${s.pages_run} | ${s.empty} | ${s.refused} | ${s.loop} | ${s.ref.n} | ${s.ref.median_cer ?? '—'} | ${s.ref.mean_cer ?? '—'} | ${s.ref.mean_cer_answered ?? '—'} (${s.ref.n_answered}) | ${s.ref.catastrophic} | ${s.ref.median_gap ?? '—'} | ${s.invention.ref_median ?? '—'} | ${s.proxy_vs_ref_engine.n} / ${s.proxy_vs_ref_engine.median_cer ?? '—'} / ${s.proxy_vs_ref_engine.catastrophic} | ${s.invention.median ?? '—'} | ${pv} | ${iv} |`);
   }
   if (summary.by_class) {
     for (const [c, bc] of Object.entries(summary.by_class)) {
       console.log(`\n### script class: ${c} (n=${bc.n}) — CER is vs reference where one exists, else distance to ${REF_ENGINE}`);
-      console.log('| engine | n | empty | loop | median CER | catastrophic | median unsupported |');
-      console.log('|---|---|---|---|---|---|---|');
-      for (const [e, v] of Object.entries(bc.engines)) console.log(`| ${e} | ${v.n} | ${v.empty} | ${v.loop} | ${v.median_cer ?? '—'} | ${v.catastrophic} | ${v.median_unsupported ?? '—'} |`);
+      console.log('| engine | n | empty | refused | loop | median CER | catastrophic | median unsupported |');
+      console.log('|---|---|---|---|---|---|---|---|');
+      for (const [e, v] of Object.entries(bc.engines)) console.log(`| ${e} | ${v.n} | ${v.empty} | ${v.refused} | ${v.loop} | ${v.median_cer ?? '—'} | ${v.catastrophic} | ${v.median_unsupported ?? '—'} |`);
     }
   }
   // worst pages, excerpts for reading by eye

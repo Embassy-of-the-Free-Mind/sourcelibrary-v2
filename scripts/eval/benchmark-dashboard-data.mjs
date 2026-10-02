@@ -27,6 +27,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { API_ENGINE } from './lib/refusals.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DIR = path.join(__dirname, 'results', 'benchmark');
@@ -88,6 +89,22 @@ const scriptOf = (language, stratum) => (stratum === 'german-fraktur' ? 'Latin (
 // (#4884 — a "1716" Hagakure was a typeset reprint). Read period cells with that in mind.
 const periodOf = y => (typeof y !== 'number' || !Number.isFinite(y) ? null : y < 1500 ? 'before 1500' : y < 1600 ? '1500–1599' : y < 1700 ? '1600–1699' : y < 1800 ? '1700–1799' : y < 1900 ? '1800–1899' : '1900 on');
 
+// REFUSALS (#5581): a page the engine declined (Gemini RECITATION …) is not a misread. Three sources,
+// best first: the result file's own `refused` (scored after #5581); the refusal record
+// benchmark-score.mjs --refusals-only reads off the run meters (results/benchmark/refusals/), for
+// result files scored earlier; else an API engine with no content on a referenced page, labelled
+// inferred. Never inferred on an unreferenced page: Gemini returns genuinely empty STOP outputs.
+const REFUSAL_DIR = path.join(DIR, 'refusals');
+const refusalFiles = fs.existsSync(REFUSAL_DIR) ? fs.readdirSync(REFUSAL_DIR).filter(f => /^refusals-\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort() : [];
+const refusalRecord = refusalFiles.length ? JSON.parse(fs.readFileSync(path.join(REFUSAL_DIR, refusalFiles.at(-1)), 'utf8')) : null;
+function refusalOfRow(stratum, slug, engine, e, referenced, isTier) {
+  if (typeof e.refused === 'boolean') return e.refused ? (e.refusal_source || 'finishReason') : null;
+  const rec = refusalRecord?.strata?.[stratum]?.[engine];
+  if (rec?.meter) return rec.refused?.[slug] ? 'finishReason' : (rec.inferred?.includes(slug) ? 'inferred' : null);
+  if (!referenced || !API_ENGINE.test(engine)) return null;
+  return (isTier ? e.chars === 0 : e.n_content === 0) ? 'inferred' : null;
+}
+
 const rows = [];
 const sources = [];
 for (const [stratum, file] of latest) {
@@ -99,6 +116,7 @@ for (const [stratum, file] of latest) {
     for (const [engine, e] of Object.entries(p.engines)) {
       if (e.missing) continue; // the engine was never run on this page — not a failure of the engine
       const referenced = isTier ? true : !!p.has_ref;
+      const refusal = refusalOfRow(stratum, p.slug, engine, e, referenced, isTier);
       // In a reference tier an unaligned page has no CER: the engine ran and could not be placed
       // against the reference. That is COVERAGE, and it must not vanish into a smaller n.
       const aligned = isTier ? !!e.aligned : true;
@@ -112,7 +130,11 @@ for (const [stratum, file] of latest) {
         language, year,
         script: scriptOf(language, stratum),
         period: periodOf(year),
-        cer: aligned && typeof e.cer === 'number' ? e.cer : null, // vs reference if `referenced`, else vs the proxy engine
+        // vs reference if `referenced`, else vs the proxy engine. Unchanged by #5581: a sealed stratum
+        // scores a refusal as CER 1.0, a reference tier leaves it unplaced (coverage). The
+        // answered-only median below drops it either way.
+        cer: aligned && typeof e.cer === 'number' ? e.cer : null,
+        refused: !!refusal, refusal_inferred: refusal === 'inferred',
         loop: e.loop === true, empty: e.empty === true,
         invention: typeof e.invention_ref === 'number' ? e.invention_ref : (typeof e.invention === 'number' ? e.invention : null),
       });
@@ -151,6 +173,8 @@ for (const g of groups.values()) {
   const run = g.rows.length;
   const refRows = g.rows.filter(r => r.referenced);
   const refCer = refRows.filter(r => r.cer != null).map(r => r.cer);
+  const refCerAnswered = refRows.filter(r => r.cer != null && !r.refused).map(r => r.cer);
+  const refused = g.rows.filter(r => r.refused);
   const proxyCer = g.rows.filter(r => !r.referenced && r.cer != null).map(r => r.cer);
   const seed = hash(`${g.factor}|${g.level}|${g.engine}`);
   const loops = g.rows.filter(r => r.loop).length;
@@ -159,16 +183,18 @@ for (const g of groups.values()) {
   // Paired against the production engine on referenced pages both engines could be scored on.
   let paired = null;
   if (g.engine !== PRODUCTION_ENGINE) {
-    let wins = 0, losses = 0, ties = 0; const deltas = [];
+    let wins = 0, losses = 0, ties = 0, excludedRefused = 0; const deltas = [];
     for (const r of refRows) {
       const base = bySlugEngine.get(`${r.stratum}|${r.slug}|${PRODUCTION_ENGINE}`);
       if (!base || base.cer == null || r.cer == null) continue;
+      // on pages BOTH engines answered (#5581): a refusal is counted in `refused`, not as a loss
+      if (base.refused || r.refused) { excludedRefused++; continue; }
       const d = base.cer - r.cer; deltas.push(d);
       if (d > 1e-9) wins++; else if (d < -1e-9) losses++; else ties++;
     }
     const untied = wins + losses;
     paired = {
-      n: deltas.length, wins, losses, ties, untied,
+      n: deltas.length, excluded_refused: excludedRefused, wins, losses, ties, untied,
       median_delta_cer: r3(median(deltas)), delta_ci95: bootstrapMedianCI(deltas, seed + 1),
       p_sign: untied ? binomTwoSided(Math.max(wins, losses), untied) : null,
       grade: grade(untied),
@@ -182,7 +208,9 @@ for (const g of groups.values()) {
     n_run: run,
     n_referenced: refRows.length,
     coverage: refRows.length ? { aligned: refRows.filter(r => r.aligned).length, of: refRows.length, ci95: wilson(refRows.filter(r => r.aligned).length, refRows.length) } : null,
-    cer_vs_reference: refCer.length ? { n: refCer.length, median: r3(median(refCer)), ci95: bootstrapMedianCI(refCer, seed) } : null,
+    cer_vs_reference: refCer.length ? { n: refCer.length, median: r3(median(refCer)), ci95: bootstrapMedianCI(refCer, seed), refusals: 'sealed strata: CER 1.0; reference tiers: unplaced' } : null,
+    cer_vs_reference_answered: refCerAnswered.length ? { n: refCerAnswered.length, median: r3(median(refCerAnswered)), ci95: bootstrapMedianCI(refCerAnswered, seed) } : null,
+    refused: { k: refused.length, n: run, inferred: refused.filter(r => r.refusal_inferred).length },
     // Shown so the gap is visible, never graded: a proxy cannot see the proxy engine's own errors.
     cer_vs_proxy: proxyCer.length ? { n: proxyCer.length, median: r3(median(proxyCer)), proxy_engine: PRODUCTION_ENGINE } : null,
     catastrophic: refCer.length ? { k: cata, n: refCer.length, ci95: wilson(cata, refCer.length) } : null,
@@ -215,13 +243,17 @@ const mismatches = [];
 for (const [stratum, file] of latest) {
   if (stratum.startsWith('ref-')) continue;
   const s = JSON.parse(fs.readFileSync(path.join(DIR, file), 'utf8')).summary;
+  const scoredWithRefusals = !!s.refusal_source;   // scored after #5581: its paired test already excludes refusals
   for (const [engine, es] of Object.entries(s.engines || {})) {
     const c = cells.find(x => x.factor === 'stratum' && x.level === stratum && x.engine === engine);
     if (!c) { if (es.pages_run) mismatches.push(`${stratum}/${engine}: in the summary, absent from the table`); continue; }
     const want = es.ref?.n ? es.ref.median_cer : null, got = c.cer_vs_reference?.median ?? null;
     if (want != null && Math.abs(want - got) > 0.0015) mismatches.push(`${stratum}/${engine}: median CER ${got} here vs ${want} in the scorer's summary`);
     const pw = es.paired_vs_ref, pg = c.paired_vs_production;
-    if (pw?.n && pg && (pw.wins !== pg.wins || pw.losses !== pg.losses)) mismatches.push(`${stratum}/${engine}: paired ${pg.wins}/${pg.losses} here vs ${pw.wins}/${pw.losses}`);
+    // A file scored before #5581 paired refusals as losses; the table no longer does, so the two can
+    // only be compared where no refusal entered the pairs.
+    const comparable = scoredWithRefusals || !pg?.excluded_refused;
+    if (comparable && pw?.n && pg && (pw.wins !== pg.wins || pw.losses !== pg.losses)) mismatches.push(`${stratum}/${engine}: paired ${pg.wins}/${pg.losses} here vs ${pw.wins}/${pw.losses}`);
   }
 }
 if (mismatches.length) { console.error('SELF-CHECK FAILED:\n  ' + mismatches.join('\n  ')); process.exit(1); }
@@ -259,7 +291,8 @@ const out = {
   generated_from: sources,
   production_engine: PRODUCTION_ENGINE,
   thresholds: { catastrophic_cer: CATASTROPHIC_CER, directional_n: N_DIRECTIONAL, decision_n: N_DECISION, rate_n: N_RATE },
-  totals: { page_engine_rows: rows.length, pages: new Set(rows.map(r => `${r.stratum}|${r.slug}`)).size, cells: cells.length, cells_by_grade: gradeCount },
+  refusals_from: refusalRecord ? `results/benchmark/refusals/${refusalFiles.at(-1)}` : null,
+  totals: { page_engine_rows: rows.length, refused_rows: rows.filter(r => r.refused).length, refused_inferred_rows: rows.filter(r => r.refusal_inferred).length, pages: new Set(rows.map(r => `${r.stratum}|${r.slug}`)).size, cells: cells.length, cells_by_grade: gradeCount },
   sufficiency,
   cells,
   image_arms: imageArms,

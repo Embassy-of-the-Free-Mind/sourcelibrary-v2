@@ -29,6 +29,9 @@ interface Cell {
   n_referenced: number;
   coverage: { aligned: number; of: number } | null;
   cer_vs_reference: { n: number; median: number | null; ci95: Interval } | null;
+  // #5581: the same median over pages the engine answered — a refusal (Gemini RECITATION) is not a misread
+  cer_vs_reference_answered?: { n: number; median: number | null } | null;
+  refused?: { k: number; n: number; inferred: number };
   cer_vs_proxy: { n: number; median: number | null } | null;
   catastrophic: { k: number; n: number } | null;
   loop: { k: number; n: number };
@@ -222,6 +225,8 @@ export default async function OcrEvidencePage({ searchParams }: { searchParams: 
                     <th style={C.th}>Engine</th>
                     <th style={{ ...C.th, ...C.num }}>Ref. books</th>
                     <th style={{ ...C.th, ...C.num }}>Median error</th>
+                    <th style={{ ...C.th, ...C.num }}>Answered only</th>
+                    <th style={{ ...C.th, ...C.num }}>Refused</th>
                     <th style={C.th}>95 % interval</th>
                     <th style={{ ...C.th, ...C.num }}>Placed</th>
                     <th style={C.th}>vs production (win / loss / tie)</th>
@@ -242,6 +247,12 @@ export default async function OcrEvidencePage({ searchParams }: { searchParams: 
                         <td style={{ ...C.td, ...C.num }}>{c.cer_vs_reference?.n ?? 0}</td>
                         <td style={{ ...C.td, ...C.num }}>
                           {c.cer_vs_reference ? f3(c.cer_vs_reference.median) : <span style={C.dim}>{c.cer_vs_proxy ? `proxy ${f3(c.cer_vs_proxy.median)}` : '—'}</span>}
+                        </td>
+                        <td style={{ ...C.td, ...C.num }}>
+                          {c.cer_vs_reference_answered ? f3(c.cer_vs_reference_answered.median) : '—'}
+                        </td>
+                        <td style={{ ...C.td, ...C.num, color: c.refused?.k ? '#d29922' : '#e6edf3' }} title={c.refused?.inferred ? `${c.refused.inferred} inferred from an empty output` : undefined}>
+                          {c.refused ? `${c.refused.k}/${c.refused.n}${c.refused.inferred ? '*' : ''}` : '—'}
                         </td>
                         <td style={C.td}><IntervalBar cell={c} max={max} /></td>
                         <td style={{ ...C.td, ...C.num }}>{c.coverage ? `${c.coverage.aligned}/${c.coverage.of}` : '—'}</td>
@@ -321,6 +332,9 @@ export default async function OcrEvidencePage({ searchParams }: { searchParams: 
         Error is character error rate against a reference (0.010 is one character in a hundred). The bar is the 95 % interval on the
         median, bootstrapped over books. &ldquo;Proxy&rdquo; is distance from the production engine&rsquo;s own reading; it cannot show
         that engine&rsquo;s errors. &ldquo;Placed&rdquo; is the pages an engine&rsquo;s output could be aligned to the reference at all.
+        &ldquo;Refused&rdquo; is pages the engine declined (Gemini RECITATION and similar), read from the run&rsquo;s own record;
+        * marks counts inferred from an empty output on a referenced page. Median error counts a refusal as 1.0 on a sealed stratum and as unplaced in a reference tier, as before;
+        &ldquo;answered only&rdquo; leaves refusals out, and so does the head-to-head (#5581).
         Loop and catastrophic (error above 0.5) are rates and need about {DATA.thresholds.rate_n} books for ±5 points. The head-to-head
         needs about 47 untied pairs to see a 70/30 split. Built from {DATA.generated_from.map(s => s.file).join(', ')}.
       </p>
