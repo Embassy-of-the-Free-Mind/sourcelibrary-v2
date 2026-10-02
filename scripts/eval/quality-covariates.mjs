@@ -1,0 +1,403 @@
+#!/usr/bin/env node
+// Does page quality move with the book's date, the amount of text on the page, or the scan's
+// resolution? Joins every audited translation page (pooled monthly audits, one page per book) and
+// every referenced OCR benchmark page to three page properties, and reports stratified rates with
+// intervals plus one exploratory logistic regression. Feeds the covariate panels on
+// /research/quality/summary (#5615).
+//
+// PRIOR ART: quality-by-language.mjs (pools the audits by book, by LANGUAGE only — this reuses its
+// pooling rule verbatim); benchmark-dashboard-data.mjs (OCR cells by catalogue period — reuses its
+// file selection, reference rule and refusal-as-1.0 CER, but has no characters or resolution, and
+// its `period` cell is pooled over every engine-language mix); translation-corpus-audit/score.mjs
+// (by_period for one audit, no intervals by characters or resolution); lib/agreement-stats.mjs
+// (wilson, bootstrapItems) and lib/paired-stats.mjs (makeRng) are used, not copied. No logistic
+// regression exists in scripts/eval; the IRLS below is the first.
+//
+//   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/quality-covariates.mjs
+// Reads Mongo (bookstore.pages, read-only) for image dimensions, and image headers from
+// images.sourcelibrary.org where a page carries none. Writes src/data/quality-covariates.json
+// (src/data/* is gitignored: commit it with `git add -f`). $0, no model calls.
+
+import fs from 'node:fs';
+import path from 'node:path';
+import { MongoClient } from 'mongodb';
+import { wilson, bootstrapItems } from './lib/agreement-stats.mjs';
+import { makeRng } from './lib/paired-stats.mjs';
+import { API_ENGINE } from './lib/refusals.mjs';
+
+const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
+const RESULTS = path.join(ROOT, 'scripts/eval/results');
+const SEED = 20261002;
+const LITE = 'gemini-3.1-flash-lite';
+const FLASH = 'gemini-3-flash-preview';
+const GRADE = (n) => (n >= 50 ? 'decision-grade' : n >= 30 ? 'directional' : 'exploratory');
+const r3 = (x) => (x == null || !Number.isFinite(x) ? null : Math.round(x * 1000) / 1000);
+const median = (xs) => { const s = [...xs].sort((a, b) => a - b); if (!s.length) return null; const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
+const readJsonl = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter((l) => l.trim()).map((l) => JSON.parse(l)) : []);
+
+// ── period ────────────────────────────────────────────────────────────────────
+// `books.published` is free text: "1480", "[ca. 1780]", "1785-1789", "14th century", "14uu",
+// "Unknown", "1500–1825", "-1000". A year is taken only when the text pins it to one century:
+// a single 3–4 digit year, a range inside one century, an "Nth century", or a "14uu"-style
+// cataloguer's year. A range across centuries, a BCE date, or Roman numerals stays unknown.
+const PERIODS = ['pre-1500', '1500s', '1600s', '1700s', '1800s', '1900+', 'unknown'];
+const bucket = (y) => (y < 1500 ? 'pre-1500' : y < 1600 ? '1500s' : y < 1700 ? '1600s' : y < 1800 ? '1700s' : y < 1900 ? '1800s' : '1900+');
+function periodOf(published, fallbackYear = null) {
+  const s = String(published ?? '').trim();
+  if (/^-\d/.test(s) || /\bB\.?C\.?E?\b/i.test(s)) return 'unknown';
+  const one = (ys) => { const bs = new Set(ys.map(bucket)); return bs.size === 1 ? [...bs][0] : 'unknown'; };
+  // "14th century", "10th–11th century", "16th or 17th century": every ordinal must fall in one bucket.
+  if (/century/i.test(s)) {
+    const cs = [...s.matchAll(/\b(\d{1,2})(?:st|nd|rd|th)\b/gi)].map((m) => (Number(m[1]) - 1) * 100 + 50);
+    if (cs.length) return one(cs);
+  }
+  const uu = s.match(/\b(1\d)uu\b/i);
+  if (uu) return bucket(Number(uu[1]) * 100 + 50);
+  // Four-digit years first; a three-digit number counts only when no four-digit year is present
+  // ("Vol. 27, No. 321, pp. 407–417. Tokyo, 1913" is 1913, not a range from 321).
+  const four = [...s.matchAll(/(?<![\d])(\d{4})(?![\d])/g)].map((m) => Number(m[1])).filter((y) => y >= 1000 && y <= 2030);
+  const years = four.length ? four : [...s.matchAll(/(?<![\d])(\d{3})(?![\d])/g)].map((m) => Number(m[1])).filter((y) => y >= 300);
+  if (years.length) {
+    const bs = new Set(years.map(bucket));
+    return bs.size === 1 ? [...bs][0] : 'unknown';
+  }
+  return typeof fallbackYear === 'number' && Number.isFinite(fallbackYear) ? bucket(fallbackYear) : 'unknown';
+}
+
+// ── characters ────────────────────────────────────────────────────────────────
+// The served transcription with its structural tags (<scan-quality>, <header>, <sig> …) removed,
+// counted in non-space characters, so a CJK page and a Latin page are on one (imperfect) scale.
+const contentChars = (src) => String(src || '').replace(/<[^>\n]{1,80}>[^<\n]*<\/[^>\n]{1,40}>/g, '').replace(/<[^>\n]{1,80}>/g, '').replace(/\s+/g, '').length;
+
+// ── resolution ────────────────────────────────────────────────────────────────
+// The stored master scan's long edge in pixels (pages.image_width/height, written when the image was
+// archived). A split page is read from its crop, so its own crop image is measured instead. The
+// reader's display copy (`display_photo`) is capped at 2,000 px wide and would hide the difference.
+const RES_BANDS = ['<1500 px', '1500–2499 px', '≥2500 px', 'unknown'];
+const resBand = (longEdge) => (!longEdge ? 'unknown' : longEdge < 1500 ? '<1500 px' : longEdge < 2500 ? '1500–2499 px' : '≥2500 px');
+async function jpegOrPngSize(url) {
+  try {
+    const res = await fetch(url, { headers: { Range: 'bytes=0-131071', 'User-Agent': 'sourcelibrary-eval/quality-covariates' }, signal: AbortSignal.timeout(20000) });
+    if (!res.ok && res.status !== 206) return null;
+    const b = Buffer.from(await res.arrayBuffer());
+    if (b[0] === 0x89 && b[1] === 0x50) return { w: b.readUInt32BE(16), h: b.readUInt32BE(20) };
+    let i = 2;
+    while (i + 9 < b.length) {
+      if (b[i] !== 0xff) { i++; continue; }
+      const m = b[i + 1];
+      if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc) return { w: b.readUInt16BE(i + 7), h: b.readUInt16BE(i + 5) };
+      i += 2 + b.readUInt16BE(i + 2);
+    }
+  } catch { /* unreadable header: resolution stays unknown */ }
+  return null;
+}
+async function iiifSize(url) {
+  try {
+    const res = await fetch(url, { headers: { 'User-Agent': 'sourcelibrary-eval/quality-covariates' }, signal: AbortSignal.timeout(20000) });
+    const j = res.ok ? await res.json() : null;
+    return j?.width && j?.height ? { w: j.width, h: j.height } : null;
+  } catch { return null; }
+}
+async function resolutionFor(db, keys) {
+  // keys: [{ key, page_id?, book_id, page_number }]
+  const ids = keys.filter((k) => k.page_id).map((k) => k.page_id);
+  const proj = { projection: { id: 1, book_id: 1, page_number: 1, image_width: 1, image_height: 1, image_metadata: 1, cropped_photo: 1, archived_photo: 1, photo: 1 } };
+  const byId = new Map((await db.collection('pages').find({ id: { $in: ids } }, proj).toArray()).map((p) => [p.id, p]));
+  const byBp = new Map();
+  const bps = keys.filter((k) => !k.page_id && k.book_id && Number.isFinite(k.page_number));
+  if (bps.length) {
+    const ps = await db.collection('pages').find({ $or: bps.map((k) => ({ book_id: k.book_id, page_number: k.page_number })) }, proj).toArray();
+    for (const p of ps) byBp.set(`${p.book_id}|${p.page_number}`, p);
+  }
+  const out = new Map();
+  const queue = [];
+  for (const k of keys) {
+    const p = k.page_id ? byId.get(k.page_id) : byBp.get(`${k.book_id}|${k.page_number}`);
+    if (!p) { out.set(k.key, { long_edge: null, source: 'no page record' }); continue; }
+    if (p.cropped_photo && /images\.sourcelibrary\.org/.test(p.cropped_photo)) { queue.push([k.key, p.cropped_photo, 'crop header']); continue; }
+    const w = p.image_width ?? p.image_metadata?.width, h = p.image_height ?? p.image_metadata?.height;
+    if (w && h) { out.set(k.key, { long_edge: Math.max(w, h), w, h, source: 'pages.image_width/height' }); continue; }
+    const url = [p.archived_photo, p.photo].find((u) => u && /images\.sourcelibrary\.org/.test(u));
+    // A page never archived is read straight from the library's IIIF server: its info.json carries the size.
+    const iiif = !url && [p.photo].find((u) => u && /\/iiif\/image\/v[23]\/[^/]+\/full\/[^/]+\/\d+\/default\.(jpg|png)$/.test(u));
+    if (url) queue.push([k.key, url, 'image header']);
+    else if (iiif) queue.push([k.key, iiif.replace(/\/full\/[^/]+\/\d+\/default\.(jpg|png)$/, '/info.json'), 'IIIF info.json']);
+    else out.set(k.key, { long_edge: null, source: 'no measurable image' });
+  }
+  for (let i = 0; i < queue.length; i += 8) {
+    await Promise.all(queue.slice(i, i + 8).map(async ([key, url, source]) => {
+      const d = url.endsWith('/info.json') ? await iiifSize(url) : await jpegOrPngSize(url);
+      out.set(key, d ? { long_edge: Math.max(d.w, d.h), w: d.w, h: d.h, source } : { long_edge: null, source: `${source} unreadable` });
+    }));
+  }
+  return out;
+}
+
+// ── 1. translation pages (pooling rule of quality-by-language.mjs) ─────────────
+const auditDirs = fs.readdirSync(RESULTS)
+  .filter((d) => d.startsWith('translation-corpus-audit-') && !d.includes('chained') && fs.existsSync(path.join(RESULTS, d, 'report.json')))
+  .map((d) => ({ dir: path.join(RESULTS, d), report: JSON.parse(fs.readFileSync(path.join(RESULTS, d, 'report.json'), 'utf8')) }))
+  .sort((a, b) => String(a.report.drawn_at).localeCompare(String(b.report.drawn_at)));
+const tPages = new Map(); // book_id -> row
+for (const { dir, report } of auditDirs) {
+  if (report.controls_gate && report.controls_gate.pass === false) continue;
+  const judge = report.primary_judge || 'opus';
+  const verdicts = {};
+  const vdir = path.join(dir, 'verdicts', judge);
+  for (const f of fs.existsSync(vdir) ? fs.readdirSync(vdir).filter((x) => x.endsWith('.jsonl')) : []) for (const v of readJsonl(path.join(vdir, f))) verdicts[v.id] = v;
+  const items = new Map(readJsonl(path.join(dir, 'items.jsonl')).map((it) => [it.id, it]));
+  for (const m of readJsonl(path.join(dir, 'manifest.jsonl'))) {
+    const v = verdicts[m.id];
+    if (m.kind !== 'main' || !v || typeof v.fidelity !== 'number' || tPages.has(m.book_id)) continue;
+    tPages.set(m.book_id, {
+      key: `t|${m.book_id}`, audit: path.basename(dir), book_id: m.book_id, page_id: m.page_id, page_number: m.page_number,
+      language: m.language, script: m.language === 'Latin' || ['English', 'German', 'French', 'Italian', 'Dutch', 'Spanish'].includes(m.language) ? 'Latin' : 'non-Latin',
+      published: m.published ?? null, period: periodOf(m.published), period_draw: m.period ?? null,
+      chars: contentChars(items.get(m.id)?.source), fidelity: v.fidelity, ok: v.fidelity >= 4,
+    });
+  }
+}
+
+// ── 2. OCR benchmark pages (file selection and reference rule of benchmark-dashboard-data.mjs) ──
+const BDIR = path.join(RESULTS, 'benchmark');
+const latest = new Map();
+for (const f of fs.readdirSync(BDIR).filter((f) => /^[a-z0-9-]+-\d{4}-\d{2}-\d{2}\.json$/.test(f) && !f.startsWith('summary-')).sort()) latest.set(f.replace(/-\d{4}-\d{2}-\d{2}\.json$/, ''), f);
+const registry = new Map();
+for (const f of fs.readdirSync(path.join(ROOT, 'scripts/eval/benchmark')).filter((f) => f.endsWith('.json'))) {
+  const pages = JSON.parse(fs.readFileSync(path.join(ROOT, 'scripts/eval/benchmark', f), 'utf8')).pages;
+  for (const p of Array.isArray(pages) ? pages : []) registry.set(p.slug, p);
+}
+const refusalDir = path.join(BDIR, 'refusals');
+const refusalFile = fs.existsSync(refusalDir) ? fs.readdirSync(refusalDir).filter((f) => /^refusals-\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort().at(-1) : null;
+const refusals = refusalFile ? JSON.parse(fs.readFileSync(path.join(refusalDir, refusalFile), 'utf8')) : null;
+const isRefused = (stratum, slug, engine, e, isTier) => {
+  if (typeof e.refused === 'boolean') return e.refused;
+  const rec = refusals?.strata?.[stratum]?.[engine];
+  if (rec?.meter) return !!rec.refused?.[slug] || !!rec.inferred?.includes(slug);
+  return API_ENGINE.test(engine) && (isTier ? e.chars === 0 : e.n_content === 0);
+};
+const SCRIPT_OF = { Latin: 'Latin', English: 'Latin', French: 'Latin', Italian: 'Latin', Spanish: 'Latin', Dutch: 'Latin', German: 'Latin', Greek: 'Greek', Chinese: 'Han' };
+const oPages = []; // one row per referenced page × production engine
+for (const [stratum, file] of latest) {
+  const j = JSON.parse(fs.readFileSync(path.join(BDIR, file), 'utf8'));
+  const isTier = stratum.startsWith('ref-');
+  for (const p of j.pages) {
+    if (!(isTier || p.has_ref)) continue; // proxy-scored pages measure agreement, not accuracy
+    const reg = registry.get(p.slug) || {};
+    const engines = Object.entries(p.engines || {}).filter(([, e]) => !e.missing);
+    // Characters on the page: the reference's content length where the scorer kept it (n_content,
+    // equal across engines on a sealed stratum); a reference tier keeps only each engine's output
+    // length, so the median over engines stands in.
+    const chars = isTier ? median(engines.map(([, e]) => e.chars).filter((x) => x > 0)) : median(engines.map(([, e]) => e.n_content).filter((x) => x > 0));
+    for (const [engine, e] of engines) {
+      if (engine !== LITE && engine !== FLASH) continue;
+      if (isTier && !e.aligned) continue; // coverage, not CER (dashboard rule)
+      if (typeof e.cer !== 'number') continue;
+      const refused = isRefused(stratum, p.slug, engine, e, isTier);
+      oPages.push({
+        key: `o|${stratum}|${p.slug}`, stratum, slug: p.slug, engine,
+        book_id: reg.book_id ?? null, page_number: reg.page_number != null ? Number(reg.page_number) : null,
+        language: p.language ?? reg.language ?? null,
+        published: reg.published ?? (p.year ?? null), period: periodOf(reg.published, typeof p.year === 'number' ? p.year : (typeof reg.year === 'number' ? reg.year : null)),
+        chars: chars ?? null, cer: refused && !isTier ? 1 : e.cer, refused,
+        script: SCRIPT_OF[String(p.language ?? reg.language ?? '').split(/[;,]/)[0].trim().replace(/^Ancient /, '')] || 'other',
+      });
+    }
+  }
+}
+
+// ── 3. resolution ─────────────────────────────────────────────────────────────
+const client = new MongoClient(process.env.MONGODB_URI);
+await client.connect();
+const db = client.db('bookstore');
+const oKeys = [...new Map(oPages.filter((r) => r.book_id).map((r) => [r.key, { key: r.key, book_id: r.book_id, page_number: r.page_number }])).values()];
+const res = await resolutionFor(db, [...[...tPages.values()].map((r) => ({ key: r.key, page_id: r.page_id })), ...oKeys]);
+await client.close();
+for (const r of [...tPages.values(), ...oPages]) {
+  const x = res.get(r.key);
+  r.long_edge = x?.long_edge ?? null;
+  r.res_source = x?.source ?? (r.book_id ? 'not looked up' : 'external reference scan (no Source Library page)');
+  r.res_band = resBand(r.long_edge);
+}
+
+// ── 4. strata ─────────────────────────────────────────────────────────────────
+const terciles = (rows) => {
+  const xs = rows.map((r) => r.chars).filter((x) => x > 0).sort((a, b) => a - b);
+  return [xs[Math.floor(xs.length / 3)], xs[Math.floor((2 * xs.length) / 3)]];
+};
+const T = [...tPages.values()];
+const tCut = terciles(T);
+const charLevel = (c, cut) => (!(c > 0) ? 'unknown' : c < cut[0] ? 'fewest' : c < cut[1] ? 'middle' : 'most');
+for (const r of T) r.char_level = charLevel(r.chars, tCut);
+
+// The same cell within each script class: the audits over-sample non-Latin languages, so a pooled
+// cell's rate moves with its script mix as much as with the covariate.
+function scriptSplit(g) {
+  const o = {};
+  for (const [k, sc] of [['latin', 'Latin'], ['nonlatin', 'non-Latin']]) {
+    const s = g.filter((r) => r.script === sc), kk = s.filter((r) => r.ok).length, [lo, hi] = wilson(kk, s.length);
+    o[k] = s.length ? { n: s.length, k: kk, rate: r3(kk / s.length), ci: [r3(lo), r3(hi)] } : null;
+  }
+  return o;
+}
+function rateCells(rows, factor, levels) {
+  return levels.map((level) => {
+    const g = rows.filter((r) => r[factor] === level);
+    const k = g.filter((r) => r.ok).length;
+    const [lo, hi] = wilson(k, g.length);
+    return { level, n: g.length, k, rate: g.length ? r3(k / g.length) : null, ci: g.length ? [r3(lo), r3(hi)] : null, grade: GRADE(g.length), non_latin: g.filter((r) => r.script === 'non-Latin').length, ...scriptSplit(g) };
+  }).filter((c) => c.n > 0);
+}
+function cerCells(rows, factor, levels, seedSalt) {
+  return levels.map((level, i) => {
+    const g = rows.filter((r) => r[factor] === level).map((r) => r.cer);
+    const ci = g.length >= 5 ? bootstrapItems(g, median, makeRng(SEED + seedSalt * 31 + i), 2000) : null;
+    return { level, n: g.length, median: r3(median(g)), ci: ci ? ci.map(r3) : null, grade: GRADE(g.length) };
+  }).filter((c) => c.n > 0);
+}
+const CHAR_LEVELS = ['fewest', 'middle', 'most', 'unknown'];
+const translation = {
+  n: T.length,
+  overall: rateCells(T.map((r) => ({ ...r, all: 'all' })), 'all', ['all'])[0],
+  by_period: rateCells(T, 'period', PERIODS),
+  by_chars: rateCells(T, 'char_level', CHAR_LEVELS).map((c) => ({ ...c, range: c.level === 'fewest' ? `<${tCut[0]}` : c.level === 'middle' ? `${tCut[0]}–${tCut[1] - 1}` : c.level === 'most' ? `≥${tCut[1]}` : null })),
+  by_resolution: rateCells(T, 'res_band', RES_BANDS),
+  char_cuts: tCut,
+  period_parse_agrees_with_draw: T.filter((r) => r.period === r.period_draw).length,
+  resolution_sources: Object.fromEntries(Object.entries(T.reduce((a, r) => ((a[r.res_source] = (a[r.res_source] || 0) + 1), a), {}))),
+};
+const ocr = {};
+for (const [name, engine] of [['lite', LITE], ['flash', FLASH]]) {
+  const O = oPages.filter((r) => r.engine === engine);
+  const cut = terciles(O);
+  for (const r of O) r.char_level = charLevel(r.chars, cut);
+  ocr[name] = {
+    engine, n: O.length, refused_scored_as_1: O.filter((r) => r.refused).length,
+    overall: cerCells(O.map((r) => ({ ...r, all: 'all' })), 'all', ['all'], name === 'lite' ? 1 : 2)[0],
+    by_period: cerCells(O, 'period', PERIODS, name === 'lite' ? 3 : 4),
+    by_chars: cerCells(O, 'char_level', CHAR_LEVELS, name === 'lite' ? 5 : 6).map((c) => ({ ...c, range: c.level === 'fewest' ? `<${cut[0]}` : c.level === 'middle' ? `${cut[0]}–${cut[1] - 1}` : c.level === 'most' ? `≥${cut[1]}` : null })),
+    by_resolution: cerCells(O, 'res_band', RES_BANDS, name === 'lite' ? 7 : 8),
+    char_cuts: cut,
+    // Pooled cells mostly sort pages by LANGUAGE (the Chinese cohort is half the referenced pages, has
+    // no catalogue date and small scans), so each script is also cut on its own, terciles within it.
+    within_script: Object.fromEntries(['Latin', 'Greek', 'Han'].map((sc, si) => {
+      const S = O.filter((r) => r.script === sc).map((r) => ({ ...r }));
+      const sCut = terciles(S);
+      for (const r of S) r.char_level = charLevel(r.chars, sCut);
+      const salt = (name === 'lite' ? 10 : 20) + si * 3;
+      return [sc, {
+        n: S.length, char_cuts: sCut,
+        by_period: cerCells(S, 'period', PERIODS, salt),
+        by_chars: cerCells(S, 'char_level', CHAR_LEVELS, salt + 1).map((c) => ({ ...c, range: c.level === 'fewest' ? `<${sCut[0]}` : c.level === 'middle' ? `${sCut[0]}–${sCut[1] - 1}` : c.level === 'most' ? `≥${sCut[1]}` : null })),
+        by_resolution: cerCells(S, 'res_band', RES_BANDS, salt + 2),
+      }];
+    })),
+    resolution_sources: Object.fromEntries(Object.entries(O.reduce((a, r) => ((a[r.res_source] = (a[r.res_source] || 0) + 1), a), {}))),
+    strata: Object.fromEntries(Object.entries(O.reduce((a, r) => ((a[r.stratum] = (a[r.stratum] || 0) + 1), a), {}))),
+    by_language_n: Object.fromEntries(Object.entries(O.reduce((a, r) => ((a[r.language || 'unknown'] = (a[r.language || 'unknown'] || 0) + 1), a), {}))),
+  };
+}
+
+// ── 5. logistic regression (IRLS, Wald intervals) ─────────────────────────────
+// judge ≥ 4 ~ non-Latin script + period + log2(characters) + resolution band, one page per book,
+// unweighted. Reference levels: Latin script, 1600s, 1500–2499 px. Unknown period and unknown
+// resolution are kept as their own levels rather than dropped, so n is the whole sample.
+function logistic(X, y) {
+  const p = X[0].length;
+  let b = new Array(p).fill(0);
+  let cov = null, converged = false, iter = 0;
+  for (; iter < 50; iter++) {
+    const H = Array.from({ length: p }, () => new Array(p).fill(0));
+    const g = new Array(p).fill(0);
+    for (let i = 0; i < X.length; i++) {
+      const eta = X[i].reduce((s, x, j) => s + x * b[j], 0);
+      const mu = 1 / (1 + Math.exp(-eta));
+      const w = mu * (1 - mu);
+      for (let j = 0; j < p; j++) { g[j] += X[i][j] * (y[i] - mu); for (let k = 0; k < p; k++) H[j][k] += w * X[i][j] * X[i][k]; }
+    }
+    cov = invert(H);
+    const step = cov.map((row) => row.reduce((s, x, k) => s + x * g[k], 0));
+    b = b.map((x, j) => x + step[j]);
+    if (Math.max(...step.map(Math.abs)) < 1e-8) { converged = true; break; }
+  }
+  return { b, se: cov.map((row, j) => Math.sqrt(row[j])), converged, iterations: iter + 1 };
+}
+function invert(A) {
+  const n = A.length, M = A.map((r, i) => [...r, ...Array.from({ length: n }, (_, j) => (i === j ? 1 : 0))]);
+  for (let c = 0; c < n; c++) {
+    let piv = c;
+    for (let r = c + 1; r < n; r++) if (Math.abs(M[r][c]) > Math.abs(M[piv][c])) piv = r;
+    [M[c], M[piv]] = [M[piv], M[c]];
+    const d = M[c][c];
+    if (Math.abs(d) < 1e-12) throw new Error('singular information matrix (a level with no variation?)');
+    for (let j = 0; j < 2 * n; j++) M[c][j] /= d;
+    for (let r = 0; r < n; r++) if (r !== c) { const f = M[r][c]; for (let j = 0; j < 2 * n; j++) M[r][j] -= f * M[c][j]; }
+  }
+  return M.map((r) => r.slice(n));
+}
+const R = T.filter((r) => r.chars > 0);
+const termDefs = [
+  ['non-Latin script (vs Latin)', (r) => (r.script === 'non-Latin' ? 1 : 0)],
+  ...['pre-1500', '1500s', '1700s', '1800s', '1900+', 'unknown'].map((pd) => [`period ${pd} (vs 1600s)`, (r) => (r.period === pd ? 1 : 0)]),
+  ['log2 characters (per doubling)', (r) => Math.log2(r.chars) - Math.log2(median(R.map((x) => x.chars)))],
+  ...['<1500 px', '≥2500 px', 'unknown'].map((b) => [`resolution ${b} (vs 1500–2499 px)`, (r) => (r.res_band === b ? 1 : 0)]),
+].filter(([name, f]) => name.startsWith('log2') || R.some((r) => f(r) === 1)); // an empty level has no coefficient
+const X = R.map((r) => [1, ...termDefs.map(([, f]) => f(r))]);
+const fit = logistic(X, R.map((r) => (r.ok ? 1 : 0)));
+const Z = 1.959964;
+const regression = {
+  model: 'logit P(judge ≥ 4) = script + period + log2(chars) + resolution band; IRLS, Wald 95% CI; one page per book, unweighted',
+  n: R.length, events: R.filter((r) => r.ok).length, converged: fit.converged, iterations: fit.iterations,
+  terms: termDefs.map(([name, f], j) => {
+    const bj = fit.b[j + 1], se = fit.se[j + 1];
+    return { term: name, n_at_level: name.startsWith('log2') ? null : R.filter((r) => f(r) === 1).length, odds_ratio: r3(Math.exp(bj)), ci: [r3(Math.exp(bj - Z * se)), r3(Math.exp(bj + Z * se))], p: r3(2 * (1 - normCdf(Math.abs(bj / se)))) };
+  }),
+};
+function normCdf(z) { const t = 1 / (1 + 0.2316419 * z); const d = 0.3989423 * Math.exp((-z * z) / 2); return 1 - d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274)))); }
+
+// ── 6. write ──────────────────────────────────────────────────────────────────
+const out = {
+  generated: new Date().toISOString().slice(0, 10),
+  issue: 5615,
+  seed: SEED,
+  status: 'exploratory and observational: no covariate was randomised, the audits were stratified by language, and every cell under 30 is a first look',
+  sources: {
+    translation: auditDirs.map((a) => path.relative(ROOT, a.dir)),
+    ocr: [...latest.values()].map((f) => `scripts/eval/results/benchmark/${f}`),
+    refusals: refusalFile ? `scripts/eval/results/benchmark/refusals/${refusalFile}` : null,
+    resolution: 'bookstore.pages image_width/image_height; else the crop or archived image header on images.sourcelibrary.org',
+  },
+  definitions: {
+    unit: 'one page per book (audits pool monthly draws with each book counted once, its earliest verdict; the OCR benchmark draws one page per book per stratum)',
+    period: 'From books.published (free text) when it pins one century: a single year, a range inside one century, "Nth century", "14uu". Cross-century ranges, BCE dates and Roman numerals are unknown. OCR pages fall back to the registry year. Catalogue date: for a reprint it is the work\'s date, not the scan\'s.',
+    chars: 'Non-space characters of the served transcription with its structural tags removed (translation); the reference text\'s content length, or the engines\' median output length on reference tiers (OCR). Terciles are cut within each sample. A CJK page carries far fewer characters than a Latin page of the same area, so the lowest tercile is mostly non-Latin.',
+    resolution: 'Long edge in pixels of the stored master scan (or of the crop for a split page). Not the reader\'s display copy, which is capped at 2,000 px wide. OCR reference-tier pages (Wikisource, pinned editions) are external scans with no Source Library page and are unknown.',
+    judge: 'Claude Opus fidelity rating 4 or 5 of 5, source-grounded. A model judgement, not accuracy.',
+    cer: 'Character error rate against a published e-text, median per stratum, refusals scored as 1.0 on sealed strata (the dashboard rule). 95% percentile bootstrap, 2,000 resamples, seeded.',
+    intervals: 'Rates: Wilson 95%. Medians: percentile bootstrap 95%. Grades: under 30 exploratory, 30–49 directional, 50 or more decision-grade.',
+  },
+  translation,
+  ocr,
+  regression,
+};
+fs.writeFileSync(path.join(ROOT, 'src/data/quality-covariates.json'), JSON.stringify(out, null, 2) + '\n');
+
+const show = (title, cells, f) => { console.log(`\n${title}`); for (const c of cells) console.log(`  ${String(c.level).padEnd(14)} n=${String(c.n).padStart(4)}  ${f(c)}  ${c.grade}`); };
+console.log(`translation: ${T.length} books; period parse agrees with the draw on ${translation.period_parse_agrees_with_draw}; resolution sources ${JSON.stringify(translation.resolution_sources)}`);
+show('judge ≥4 by period', translation.by_period, (c) => `${c.rate} [${c.ci}] nonLatin=${c.non_latin}`);
+show(`judge ≥4 by chars (cuts ${tCut})`, translation.by_chars, (c) => `${c.rate} [${c.ci}] nonLatin=${c.non_latin}`);
+show('judge ≥4 by resolution', translation.by_resolution, (c) => `${c.rate} [${c.ci}] nonLatin=${c.non_latin}`);
+for (const k of ['lite', 'flash']) {
+  console.log(`\nOCR ${k}: ${ocr[k].n} pages, refused ${ocr[k].refused_scored_as_1}, strata ${JSON.stringify(ocr[k].strata)}`);
+  show('  CER by period', ocr[k].by_period, (c) => `${c.median} [${c.ci}]`);
+  show(`  CER by chars (cuts ${ocr[k].char_cuts})`, ocr[k].by_chars, (c) => `${c.median} [${c.ci}]`);
+  show('  CER by resolution', ocr[k].by_resolution, (c) => `${c.median} [${c.ci}]`);
+  console.log('  resolution sources', JSON.stringify(ocr[k].resolution_sources));
+  for (const [sc, w] of Object.entries(ocr[k].within_script)) {
+    console.log(`  -- ${sc}: n=${w.n} cuts ${w.char_cuts}`);
+    for (const f of ['by_period', 'by_chars', 'by_resolution']) console.log(`     ${f}: ` + w[f].map((c) => `${c.level} ${c.median} [${c.ci}] n=${c.n}`).join(' | '));
+  }
+}
+for (const f of ['by_period', 'by_chars', 'by_resolution']) console.log(`translation ${f} within script: ` + translation[f].map((c) => `${c.level} L ${c.latin?.k}/${c.latin?.n} N ${c.nonlatin?.k}/${c.nonlatin?.n}`).join(' | '));
+console.log(`\nregression n=${regression.n} events=${regression.events} converged=${regression.converged}`);
+for (const t of regression.terms) console.log(`  ${t.term.padEnd(38)} OR ${t.odds_ratio} [${t.ci}] p=${t.p} n=${t.n_at_level}`);

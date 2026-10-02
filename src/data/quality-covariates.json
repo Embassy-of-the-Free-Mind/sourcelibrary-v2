@@ -1,0 +1,1795 @@
+{
+  "generated": "2026-10-02",
+  "issue": 5615,
+  "seed": 20261002,
+  "status": "exploratory and observational: no covariate was randomised, the audits were stratified by language, and every cell under 30 is a first look",
+  "sources": {
+    "translation": [
+      "scripts/eval/results/translation-corpus-audit-2026-09-30",
+      "scripts/eval/results/translation-corpus-audit-monthly-2026-09"
+    ],
+    "ocr": [
+      "scripts/eval/results/benchmark/armenian-2026-09-16.json",
+      "scripts/eval/results/benchmark/chinese-2026-09-18.json",
+      "scripts/eval/results/benchmark/chinese-cohort-5547-2026-10-01.json",
+      "scripts/eval/results/benchmark/chinese-ext-2026-09-18.json",
+      "scripts/eval/results/benchmark/eebo-tcp-5488-2026-10-01.json",
+      "scripts/eval/results/benchmark/german-fraktur-2026-09-16.json",
+      "scripts/eval/results/benchmark/greek-2026-09-21.json",
+      "scripts/eval/results/benchmark/greek-ext-2026-09-21.json",
+      "scripts/eval/results/benchmark/greek-ext2-2026-09-21.json",
+      "scripts/eval/results/benchmark/japanese-2026-09-16.json",
+      "scripts/eval/results/benchmark/japanese-ext-2026-09-16.json",
+      "scripts/eval/results/benchmark/latin-1700s-2026-09-16.json",
+      "scripts/eval/results/benchmark/latin-pre1700-2026-09-16.json",
+      "scripts/eval/results/benchmark/longs-en-fr-2026-09-16.json",
+      "scripts/eval/results/benchmark/ref-pinned-2026-09-16.json",
+      "scripts/eval/results/benchmark/ref-ws-2026-09-16.json",
+      "scripts/eval/results/benchmark/syriac-2026-09-16.json"
+    ],
+    "refusals": "scripts/eval/results/benchmark/refusals/refusals-2026-10-02.json",
+    "resolution": "bookstore.pages image_width/image_height; else the crop or archived image header on images.sourcelibrary.org"
+  },
+  "definitions": {
+    "unit": "one page per book (audits pool monthly draws with each book counted once, its earliest verdict; the OCR benchmark draws one page per book per stratum)",
+    "period": "From books.published (free text) when it pins one century: a single year, a range inside one century, \"Nth century\", \"14uu\". Cross-century ranges, BCE dates and Roman numerals are unknown. OCR pages fall back to the registry year. Catalogue date: for a reprint it is the work's date, not the scan's.",
+    "chars": "Non-space characters of the served transcription with its structural tags removed (translation); the reference text's content length, or the engines' median output length on reference tiers (OCR). Terciles are cut within each sample. A CJK page carries far fewer characters than a Latin page of the same area, so the lowest tercile is mostly non-Latin.",
+    "resolution": "Long edge in pixels of the stored master scan (or of the crop for a split page). Not the reader's display copy, which is capped at 2,000 px wide. OCR reference-tier pages (Wikisource, pinned editions) are external scans with no Source Library page and are unknown.",
+    "judge": "Claude Opus fidelity rating 4 or 5 of 5, source-grounded. A model judgement, not accuracy.",
+    "cer": "Character error rate against a published e-text, median per stratum, refusals scored as 1.0 on sealed strata (the dashboard rule). 95% percentile bootstrap, 2,000 resamples, seeded.",
+    "intervals": "Rates: Wilson 95%. Medians: percentile bootstrap 95%. Grades: under 30 exploratory, 30–49 directional, 50 or more decision-grade."
+  },
+  "translation": {
+    "n": 327,
+    "overall": {
+      "level": "all",
+      "n": 327,
+      "k": 274,
+      "rate": 0.838,
+      "ci": [
+        0.794,
+        0.874
+      ],
+      "grade": "decision-grade",
+      "non_latin": 128,
+      "latin": {
+        "n": 199,
+        "k": 185,
+        "rate": 0.93,
+        "ci": [
+          0.885,
+          0.958
+        ]
+      },
+      "nonlatin": {
+        "n": 128,
+        "k": 89,
+        "rate": 0.695,
+        "ci": [
+          0.611,
+          0.768
+        ]
+      }
+    },
+    "by_period": [
+      {
+        "level": "pre-1500",
+        "n": 35,
+        "k": 28,
+        "rate": 0.8,
+        "ci": [
+          0.641,
+          0.9
+        ],
+        "grade": "directional",
+        "non_latin": 17,
+        "latin": {
+          "n": 18,
+          "k": 15,
+          "rate": 0.833,
+          "ci": [
+            0.608,
+            0.942
+          ]
+        },
+        "nonlatin": {
+          "n": 17,
+          "k": 13,
+          "rate": 0.765,
+          "ci": [
+            0.527,
+            0.904
+          ]
+        }
+      },
+      {
+        "level": "1500s",
+        "n": 50,
+        "k": 46,
+        "rate": 0.92,
+        "ci": [
+          0.812,
+          0.968
+        ],
+        "grade": "decision-grade",
+        "non_latin": 14,
+        "latin": {
+          "n": 36,
+          "k": 35,
+          "rate": 0.972,
+          "ci": [
+            0.858,
+            0.995
+          ]
+        },
+        "nonlatin": {
+          "n": 14,
+          "k": 11,
+          "rate": 0.786,
+          "ci": [
+            0.524,
+            0.924
+          ]
+        }
+      },
+      {
+        "level": "1600s",
+        "n": 58,
+        "k": 51,
+        "rate": 0.879,
+        "ci": [
+          0.771,
+          0.94
+        ],
+        "grade": "decision-grade",
+        "non_latin": 19,
+        "latin": {
+          "n": 39,
+          "k": 37,
+          "rate": 0.949,
+          "ci": [
+            0.831,
+            0.986
+          ]
+        },
+        "nonlatin": {
+          "n": 19,
+          "k": 14,
+          "rate": 0.737,
+          "ci": [
+            0.512,
+            0.882
+          ]
+        }
+      },
+      {
+        "level": "1700s",
+        "n": 56,
+        "k": 50,
+        "rate": 0.893,
+        "ci": [
+          0.785,
+          0.95
+        ],
+        "grade": "decision-grade",
+        "non_latin": 5,
+        "latin": {
+          "n": 51,
+          "k": 48,
+          "rate": 0.941,
+          "ci": [
+            0.841,
+            0.98
+          ]
+        },
+        "nonlatin": {
+          "n": 5,
+          "k": 2,
+          "rate": 0.4,
+          "ci": [
+            0.118,
+            0.769
+          ]
+        }
+      },
+      {
+        "level": "1800s",
+        "n": 57,
+        "k": 42,
+        "rate": 0.737,
+        "ci": [
+          0.61,
+          0.834
+        ],
+        "grade": "decision-grade",
+        "non_latin": 34,
+        "latin": {
+          "n": 23,
+          "k": 20,
+          "rate": 0.87,
+          "ci": [
+            0.679,
+            0.955
+          ]
+        },
+        "nonlatin": {
+          "n": 34,
+          "k": 22,
+          "rate": 0.647,
+          "ci": [
+            0.479,
+            0.785
+          ]
+        }
+      },
+      {
+        "level": "1900+",
+        "n": 42,
+        "k": 36,
+        "rate": 0.857,
+        "ci": [
+          0.722,
+          0.933
+        ],
+        "grade": "directional",
+        "non_latin": 18,
+        "latin": {
+          "n": 24,
+          "k": 22,
+          "rate": 0.917,
+          "ci": [
+            0.742,
+            0.977
+          ]
+        },
+        "nonlatin": {
+          "n": 18,
+          "k": 14,
+          "rate": 0.778,
+          "ci": [
+            0.548,
+            0.91
+          ]
+        }
+      },
+      {
+        "level": "unknown",
+        "n": 29,
+        "k": 21,
+        "rate": 0.724,
+        "ci": [
+          0.543,
+          0.853
+        ],
+        "grade": "exploratory",
+        "non_latin": 21,
+        "latin": {
+          "n": 8,
+          "k": 8,
+          "rate": 1,
+          "ci": [
+            0.676,
+            1
+          ]
+        },
+        "nonlatin": {
+          "n": 21,
+          "k": 13,
+          "rate": 0.619,
+          "ci": [
+            0.409,
+            0.792
+          ]
+        }
+      }
+    ],
+    "by_chars": [
+      {
+        "level": "fewest",
+        "n": 109,
+        "k": 89,
+        "rate": 0.817,
+        "ci": [
+          0.734,
+          0.878
+        ],
+        "grade": "decision-grade",
+        "non_latin": 62,
+        "latin": {
+          "n": 47,
+          "k": 46,
+          "rate": 0.979,
+          "ci": [
+            0.889,
+            0.996
+          ]
+        },
+        "nonlatin": {
+          "n": 62,
+          "k": 43,
+          "rate": 0.694,
+          "ci": [
+            0.57,
+            0.794
+          ]
+        },
+        "range": "<956"
+      },
+      {
+        "level": "middle",
+        "n": 109,
+        "k": 93,
+        "rate": 0.853,
+        "ci": [
+          0.775,
+          0.908
+        ],
+        "grade": "decision-grade",
+        "non_latin": 28,
+        "latin": {
+          "n": 81,
+          "k": 74,
+          "rate": 0.914,
+          "ci": [
+            0.832,
+            0.958
+          ]
+        },
+        "nonlatin": {
+          "n": 28,
+          "k": 19,
+          "rate": 0.679,
+          "ci": [
+            0.493,
+            0.821
+          ]
+        },
+        "range": "956–1569"
+      },
+      {
+        "level": "most",
+        "n": 109,
+        "k": 92,
+        "rate": 0.844,
+        "ci": [
+          0.764,
+          0.9
+        ],
+        "grade": "decision-grade",
+        "non_latin": 38,
+        "latin": {
+          "n": 71,
+          "k": 65,
+          "rate": 0.915,
+          "ci": [
+            0.828,
+            0.961
+          ]
+        },
+        "nonlatin": {
+          "n": 38,
+          "k": 27,
+          "rate": 0.711,
+          "ci": [
+            0.552,
+            0.83
+          ]
+        },
+        "range": "≥1570"
+      }
+    ],
+    "by_resolution": [
+      {
+        "level": "<1500 px",
+        "n": 30,
+        "k": 20,
+        "rate": 0.667,
+        "ci": [
+          0.488,
+          0.808
+        ],
+        "grade": "directional",
+        "non_latin": 17,
+        "latin": {
+          "n": 13,
+          "k": 11,
+          "rate": 0.846,
+          "ci": [
+            0.578,
+            0.957
+          ]
+        },
+        "nonlatin": {
+          "n": 17,
+          "k": 9,
+          "rate": 0.529,
+          "ci": [
+            0.31,
+            0.738
+          ]
+        }
+      },
+      {
+        "level": "1500–2499 px",
+        "n": 86,
+        "k": 73,
+        "rate": 0.849,
+        "ci": [
+          0.758,
+          0.909
+        ],
+        "grade": "decision-grade",
+        "non_latin": 24,
+        "latin": {
+          "n": 62,
+          "k": 56,
+          "rate": 0.903,
+          "ci": [
+            0.805,
+            0.955
+          ]
+        },
+        "nonlatin": {
+          "n": 24,
+          "k": 17,
+          "rate": 0.708,
+          "ci": [
+            0.508,
+            0.851
+          ]
+        }
+      },
+      {
+        "level": "≥2500 px",
+        "n": 211,
+        "k": 181,
+        "rate": 0.858,
+        "ci": [
+          0.804,
+          0.899
+        ],
+        "grade": "decision-grade",
+        "non_latin": 87,
+        "latin": {
+          "n": 124,
+          "k": 118,
+          "rate": 0.952,
+          "ci": [
+            0.898,
+            0.978
+          ]
+        },
+        "nonlatin": {
+          "n": 87,
+          "k": 63,
+          "rate": 0.724,
+          "ci": [
+            0.622,
+            0.807
+          ]
+        }
+      }
+    ],
+    "char_cuts": [
+      956,
+      1570
+    ],
+    "period_parse_agrees_with_draw": 305,
+    "resolution_sources": {
+      "pages.image_width/height": 299,
+      "crop header": 27,
+      "image header": 1
+    }
+  },
+  "ocr": {
+    "lite": {
+      "engine": "gemini-3.1-flash-lite",
+      "n": 892,
+      "refused_scored_as_1": 2,
+      "overall": {
+        "level": "all",
+        "n": 892,
+        "median": 0.168,
+        "ci": [
+          0.156,
+          0.179
+        ],
+        "grade": "decision-grade"
+      },
+      "by_period": [
+        {
+          "level": "pre-1500",
+          "n": 9,
+          "median": 0.19,
+          "ci": [
+            0.112,
+            0.367
+          ],
+          "grade": "exploratory"
+        },
+        {
+          "level": "1500s",
+          "n": 71,
+          "median": 0.168,
+          "ci": [
+            0.143,
+            0.18
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "1600s",
+          "n": 83,
+          "median": 0.06,
+          "ci": [
+            0.053,
+            0.067
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "1700s",
+          "n": 94,
+          "median": 0.091,
+          "ci": [
+            0.073,
+            0.117
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "1800s",
+          "n": 71,
+          "median": 0.006,
+          "ci": [
+            0.003,
+            0.008
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "1900+",
+          "n": 1,
+          "median": 0.001,
+          "ci": null,
+          "grade": "exploratory"
+        },
+        {
+          "level": "unknown",
+          "n": 563,
+          "median": 0.242,
+          "ci": [
+            0.219,
+            0.263
+          ],
+          "grade": "decision-grade"
+        }
+      ],
+      "by_chars": [
+        {
+          "level": "fewest",
+          "n": 290,
+          "median": 0.206,
+          "ci": [
+            0.182,
+            0.24
+          ],
+          "grade": "decision-grade",
+          "range": "<166"
+        },
+        {
+          "level": "middle",
+          "n": 304,
+          "median": 0.278,
+          "ci": [
+            0.246,
+            0.317
+          ],
+          "grade": "decision-grade",
+          "range": "166–755"
+        },
+        {
+          "level": "most",
+          "n": 298,
+          "median": 0.056,
+          "ci": [
+            0.042,
+            0.067
+          ],
+          "grade": "decision-grade",
+          "range": "≥756"
+        }
+      ],
+      "by_resolution": [
+        {
+          "level": "<1500 px",
+          "n": 492,
+          "median": 0.257,
+          "ci": [
+            0.239,
+            0.28
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "1500–2499 px",
+          "n": 92,
+          "median": 0.117,
+          "ci": [
+            0.106,
+            0.149
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "≥2500 px",
+          "n": 157,
+          "median": 0.113,
+          "ci": [
+            0.092,
+            0.142
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "unknown",
+          "n": 151,
+          "median": 0.008,
+          "ci": [
+            0.006,
+            0.011
+          ],
+          "grade": "decision-grade"
+        }
+      ],
+      "char_cuts": [
+        166,
+        756
+      ],
+      "within_script": {
+        "Latin": {
+          "n": 169,
+          "char_cuts": [
+            1069,
+            1782
+          ],
+          "by_period": [
+            {
+              "level": "pre-1500",
+              "n": 1,
+              "median": 0.112,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "1500s",
+              "n": 11,
+              "median": 0.035,
+              "ci": [
+                0.014,
+                0.115
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "1600s",
+              "n": 76,
+              "median": 0.056,
+              "ci": [
+                0.05,
+                0.065
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "1700s",
+              "n": 20,
+              "median": 0.014,
+              "ci": [
+                0.007,
+                0.027
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "1800s",
+              "n": 45,
+              "median": 0.004,
+              "ci": [
+                0.003,
+                0.008
+              ],
+              "grade": "directional"
+            },
+            {
+              "level": "unknown",
+              "n": 16,
+              "median": 0.01,
+              "ci": [
+                0.003,
+                0.029
+              ],
+              "grade": "exploratory"
+            }
+          ],
+          "by_chars": [
+            {
+              "level": "fewest",
+              "n": 55,
+              "median": 0.051,
+              "ci": [
+                0.034,
+                0.064
+              ],
+              "grade": "decision-grade",
+              "range": "<1069"
+            },
+            {
+              "level": "middle",
+              "n": 57,
+              "median": 0.024,
+              "ci": [
+                0.007,
+                0.037
+              ],
+              "grade": "decision-grade",
+              "range": "1069–1781"
+            },
+            {
+              "level": "most",
+              "n": 57,
+              "median": 0.026,
+              "ci": [
+                0.014,
+                0.042
+              ],
+              "grade": "decision-grade",
+              "range": "≥1782"
+            }
+          ],
+          "by_resolution": [
+            {
+              "level": "1500–2499 px",
+              "n": 2,
+              "median": 0.07,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "≥2500 px",
+              "n": 70,
+              "median": 0.057,
+              "ci": [
+                0.052,
+                0.067
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "unknown",
+              "n": 97,
+              "median": 0.008,
+              "ci": [
+                0.006,
+                0.013
+              ],
+              "grade": "decision-grade"
+            }
+          ]
+        },
+        "Greek": {
+          "n": 172,
+          "char_cuts": [
+            863,
+            1397
+          ],
+          "by_period": [
+            {
+              "level": "pre-1500",
+              "n": 5,
+              "median": 0.19,
+              "ci": [
+                0.152,
+                0.367
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "1500s",
+              "n": 54,
+              "median": 0.171,
+              "ci": [
+                0.158,
+                0.192
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "1600s",
+              "n": 6,
+              "median": 0.1,
+              "ci": [
+                0.067,
+                0.217
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "1700s",
+              "n": 63,
+              "median": 0.107,
+              "ci": [
+                0.082,
+                0.122
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "1800s",
+              "n": 26,
+              "median": 0.008,
+              "ci": [
+                0.003,
+                0.015
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "1900+",
+              "n": 1,
+              "median": 0.001,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "unknown",
+              "n": 17,
+              "median": 0.004,
+              "ci": [
+                0.001,
+                0.011
+              ],
+              "grade": "exploratory"
+            }
+          ],
+          "by_chars": [
+            {
+              "level": "fewest",
+              "n": 57,
+              "median": 0.114,
+              "ci": [
+                0.092,
+                0.156
+              ],
+              "grade": "decision-grade",
+              "range": "<863"
+            },
+            {
+              "level": "middle",
+              "n": 57,
+              "median": 0.114,
+              "ci": [
+                0.098,
+                0.14
+              ],
+              "grade": "decision-grade",
+              "range": "863–1396"
+            },
+            {
+              "level": "most",
+              "n": 58,
+              "median": 0.065,
+              "ci": [
+                0.008,
+                0.166
+              ],
+              "grade": "decision-grade",
+              "range": "≥1397"
+            }
+          ],
+          "by_resolution": [
+            {
+              "level": "<1500 px",
+              "n": 4,
+              "median": 0.176,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "1500–2499 px",
+              "n": 73,
+              "median": 0.11,
+              "ci": [
+                0.097,
+                0.139
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "≥2500 px",
+              "n": 57,
+              "median": 0.175,
+              "ci": [
+                0.156,
+                0.202
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "unknown",
+              "n": 38,
+              "median": 0.004,
+              "ci": [
+                0.002,
+                0.007
+              ],
+              "grade": "directional"
+            }
+          ]
+        },
+        "Han": {
+          "n": 536,
+          "char_cuts": [
+            150,
+            175
+          ],
+          "by_period": [
+            {
+              "level": "pre-1500",
+              "n": 3,
+              "median": 0.225,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "1500s",
+              "n": 4,
+              "median": 0.446,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "1600s",
+              "n": 1,
+              "median": 0.118,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "1700s",
+              "n": 11,
+              "median": 0.327,
+              "ci": [
+                0.156,
+                0.366
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "unknown",
+              "n": 517,
+              "median": 0.259,
+              "ci": [
+                0.24,
+                0.28
+              ],
+              "grade": "decision-grade"
+            }
+          ],
+          "by_chars": [
+            {
+              "level": "fewest",
+              "n": 178,
+              "median": 0.229,
+              "ci": [
+                0.194,
+                0.254
+              ],
+              "grade": "decision-grade",
+              "range": "<150"
+            },
+            {
+              "level": "middle",
+              "n": 177,
+              "median": 0.19,
+              "ci": [
+                0.177,
+                0.225
+              ],
+              "grade": "decision-grade",
+              "range": "150–174"
+            },
+            {
+              "level": "most",
+              "n": 181,
+              "median": 0.397,
+              "ci": [
+                0.368,
+                0.431
+              ],
+              "grade": "decision-grade",
+              "range": "≥175"
+            }
+          ],
+          "by_resolution": [
+            {
+              "level": "<1500 px",
+              "n": 488,
+              "median": 0.258,
+              "ci": [
+                0.24,
+                0.28
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "1500–2499 px",
+              "n": 15,
+              "median": 0.286,
+              "ci": [
+                0.145,
+                0.431
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "≥2500 px",
+              "n": 30,
+              "median": 0.287,
+              "ci": [
+                0.18,
+                0.372
+              ],
+              "grade": "directional"
+            },
+            {
+              "level": "unknown",
+              "n": 3,
+              "median": 0.017,
+              "ci": null,
+              "grade": "exploratory"
+            }
+          ]
+        }
+      },
+      "resolution_sources": {
+        "pages.image_width/height": 663,
+        "crop header": 2,
+        "IIIF info.json": 76,
+        "external reference scan (no Source Library page)": 151
+      },
+      "strata": {
+        "chinese": 28,
+        "chinese-cohort-5547": 441,
+        "chinese-ext": 64,
+        "eebo-tcp-5488": 72,
+        "greek": 11,
+        "greek-ext": 117,
+        "greek-ext2": 8,
+        "ref-pinned": 49,
+        "ref-ws": 102
+      },
+      "by_language_n": {
+        "Chinese": 536,
+        "English": 57,
+        "Latin": 77,
+        "Ancient Greek": 1,
+        "Greek": 171,
+        "grc": 1,
+        "gre": 1,
+        "Armenian": 9,
+        "German": 35,
+        "Hebrew": 4
+      }
+    },
+    "flash": {
+      "engine": "gemini-3-flash-preview",
+      "n": 896,
+      "refused_scored_as_1": 6,
+      "overall": {
+        "level": "all",
+        "n": 896,
+        "median": 0.137,
+        "ci": [
+          0.129,
+          0.146
+        ],
+        "grade": "decision-grade"
+      },
+      "by_period": [
+        {
+          "level": "pre-1500",
+          "n": 9,
+          "median": 0.098,
+          "ci": [
+            0.085,
+            0.282
+          ],
+          "grade": "exploratory"
+        },
+        {
+          "level": "1500s",
+          "n": 73,
+          "median": 0.087,
+          "ci": [
+            0.067,
+            0.106
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "1600s",
+          "n": 85,
+          "median": 0.045,
+          "ci": [
+            0.039,
+            0.05
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "1700s",
+          "n": 95,
+          "median": 0.066,
+          "ci": [
+            0.049,
+            0.097
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "1800s",
+          "n": 72,
+          "median": 0.003,
+          "ci": [
+            0.002,
+            0.005
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "1900+",
+          "n": 1,
+          "median": 0.002,
+          "ci": null,
+          "grade": "exploratory"
+        },
+        {
+          "level": "unknown",
+          "n": 561,
+          "median": 0.187,
+          "ci": [
+            0.175,
+            0.209
+          ],
+          "grade": "decision-grade"
+        }
+      ],
+      "by_chars": [
+        {
+          "level": "fewest",
+          "n": 290,
+          "median": 0.189,
+          "ci": [
+            0.175,
+            0.211
+          ],
+          "grade": "decision-grade",
+          "range": "<166"
+        },
+        {
+          "level": "middle",
+          "n": 307,
+          "median": 0.19,
+          "ci": [
+            0.167,
+            0.215
+          ],
+          "grade": "decision-grade",
+          "range": "166–764.5"
+        },
+        {
+          "level": "most",
+          "n": 299,
+          "median": 0.036,
+          "ci": [
+            0.028,
+            0.046
+          ],
+          "grade": "decision-grade",
+          "range": "≥765.5"
+        }
+      ],
+      "by_resolution": [
+        {
+          "level": "<1500 px",
+          "n": 492,
+          "median": 0.202,
+          "ci": [
+            0.184,
+            0.218
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "1500–2499 px",
+          "n": 92,
+          "median": 0.089,
+          "ci": [
+            0.071,
+            0.104
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "≥2500 px",
+          "n": 157,
+          "median": 0.085,
+          "ci": [
+            0.062,
+            0.097
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "unknown",
+          "n": 155,
+          "median": 0.004,
+          "ci": [
+            0.003,
+            0.007
+          ],
+          "grade": "decision-grade"
+        }
+      ],
+      "char_cuts": [
+        166,
+        765.5
+      ],
+      "within_script": {
+        "Latin": {
+          "n": 174,
+          "char_cuts": [
+            1076,
+            1820
+          ],
+          "by_period": [
+            {
+              "level": "pre-1500",
+              "n": 1,
+              "median": 0.085,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "1500s",
+              "n": 13,
+              "median": 0.04,
+              "ci": [
+                0.017,
+                0.062
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "1600s",
+              "n": 78,
+              "median": 0.043,
+              "ci": [
+                0.033,
+                0.05
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "1700s",
+              "n": 21,
+              "median": 0.006,
+              "ci": [
+                0.003,
+                0.008
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "1800s",
+              "n": 45,
+              "median": 0.003,
+              "ci": [
+                0.001,
+                0.004
+              ],
+              "grade": "directional"
+            },
+            {
+              "level": "unknown",
+              "n": 16,
+              "median": 0.008,
+              "ci": [
+                0.001,
+                0.032
+              ],
+              "grade": "exploratory"
+            }
+          ],
+          "by_chars": [
+            {
+              "level": "fewest",
+              "n": 58,
+              "median": 0.042,
+              "ci": [
+                0.029,
+                0.048
+              ],
+              "grade": "decision-grade",
+              "range": "<1076"
+            },
+            {
+              "level": "middle",
+              "n": 58,
+              "median": 0.009,
+              "ci": [
+                0.005,
+                0.025
+              ],
+              "grade": "decision-grade",
+              "range": "1076–1819"
+            },
+            {
+              "level": "most",
+              "n": 58,
+              "median": 0.013,
+              "ci": [
+                0.007,
+                0.022
+              ],
+              "grade": "decision-grade",
+              "range": "≥1820"
+            }
+          ],
+          "by_resolution": [
+            {
+              "level": "1500–2499 px",
+              "n": 2,
+              "median": 0.077,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "≥2500 px",
+              "n": 70,
+              "median": 0.043,
+              "ci": [
+                0.038,
+                0.055
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "unknown",
+              "n": 102,
+              "median": 0.004,
+              "ci": [
+                0.003,
+                0.007
+              ],
+              "grade": "decision-grade"
+            }
+          ]
+        },
+        "Greek": {
+          "n": 172,
+          "char_cuts": [
+            863,
+            1411
+          ],
+          "by_period": [
+            {
+              "level": "pre-1500",
+              "n": 5,
+              "median": 0.094,
+              "ci": [
+                0.018,
+                0.282
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "1500s",
+              "n": 54,
+              "median": 0.093,
+              "ci": [
+                0.077,
+                0.114
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "1600s",
+              "n": 6,
+              "median": 0.047,
+              "ci": [
+                0.042,
+                0.095
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "1700s",
+              "n": 63,
+              "median": 0.085,
+              "ci": [
+                0.064,
+                0.102
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "1800s",
+              "n": 27,
+              "median": 0.004,
+              "ci": [
+                0.002,
+                0.01
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "1900+",
+              "n": 1,
+              "median": 0.002,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "unknown",
+              "n": 16,
+              "median": 0.001,
+              "ci": [
+                0,
+                0.008
+              ],
+              "grade": "exploratory"
+            }
+          ],
+          "by_chars": [
+            {
+              "level": "fewest",
+              "n": 57,
+              "median": 0.085,
+              "ci": [
+                0.059,
+                0.118
+              ],
+              "grade": "decision-grade",
+              "range": "<863"
+            },
+            {
+              "level": "middle",
+              "n": 57,
+              "median": 0.071,
+              "ci": [
+                0.064,
+                0.09
+              ],
+              "grade": "decision-grade",
+              "range": "863–1410"
+            },
+            {
+              "level": "most",
+              "n": 58,
+              "median": 0.039,
+              "ci": [
+                0.006,
+                0.064
+              ],
+              "grade": "decision-grade",
+              "range": "≥1411"
+            }
+          ],
+          "by_resolution": [
+            {
+              "level": "<1500 px",
+              "n": 4,
+              "median": 0.133,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "1500–2499 px",
+              "n": 73,
+              "median": 0.077,
+              "ci": [
+                0.064,
+                0.097
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "≥2500 px",
+              "n": 57,
+              "median": 0.094,
+              "ci": [
+                0.076,
+                0.116
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "unknown",
+              "n": 38,
+              "median": 0.002,
+              "ci": [
+                0.001,
+                0.004
+              ],
+              "grade": "directional"
+            }
+          ]
+        },
+        "Han": {
+          "n": 536,
+          "char_cuts": [
+            150,
+            175
+          ],
+          "by_period": [
+            {
+              "level": "pre-1500",
+              "n": 3,
+              "median": 0.221,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "1500s",
+              "n": 4,
+              "median": 0.241,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "1600s",
+              "n": 1,
+              "median": 0.114,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "1700s",
+              "n": 11,
+              "median": 0.321,
+              "ci": [
+                0.141,
+                0.341
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "unknown",
+              "n": 517,
+              "median": 0.205,
+              "ci": [
+                0.186,
+                0.219
+              ],
+              "grade": "decision-grade"
+            }
+          ],
+          "by_chars": [
+            {
+              "level": "fewest",
+              "n": 178,
+              "median": 0.202,
+              "ci": [
+                0.18,
+                0.219
+              ],
+              "grade": "decision-grade",
+              "range": "<150"
+            },
+            {
+              "level": "middle",
+              "n": 177,
+              "median": 0.176,
+              "ci": [
+                0.164,
+                0.205
+              ],
+              "grade": "decision-grade",
+              "range": "150–174"
+            },
+            {
+              "level": "most",
+              "n": 181,
+              "median": 0.255,
+              "ci": [
+                0.214,
+                0.282
+              ],
+              "grade": "decision-grade",
+              "range": "≥175"
+            }
+          ],
+          "by_resolution": [
+            {
+              "level": "<1500 px",
+              "n": 488,
+              "median": 0.204,
+              "ci": [
+                0.185,
+                0.219
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "1500–2499 px",
+              "n": 15,
+              "median": 0.224,
+              "ci": [
+                0.113,
+                0.282
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "≥2500 px",
+              "n": 30,
+              "median": 0.273,
+              "ci": [
+                0.184,
+                0.343
+              ],
+              "grade": "directional"
+            },
+            {
+              "level": "unknown",
+              "n": 3,
+              "median": 0.016,
+              "ci": null,
+              "grade": "exploratory"
+            }
+          ]
+        }
+      },
+      "resolution_sources": {
+        "pages.image_width/height": 663,
+        "crop header": 2,
+        "IIIF info.json": 76,
+        "external reference scan (no Source Library page)": 155
+      },
+      "strata": {
+        "chinese": 28,
+        "chinese-cohort-5547": 441,
+        "chinese-ext": 64,
+        "eebo-tcp-5488": 72,
+        "greek": 11,
+        "greek-ext": 117,
+        "greek-ext2": 8,
+        "ref-pinned": 47,
+        "ref-ws": 108
+      },
+      "by_language_n": {
+        "Chinese": 536,
+        "English": 57,
+        "Latin": 83,
+        "Ancient Greek": 1,
+        "Greek": 171,
+        "grc": 1,
+        "gre": 1,
+        "Armenian": 8,
+        "German": 34,
+        "Hebrew": 4
+      }
+    }
+  },
+  "regression": {
+    "model": "logit P(judge ≥ 4) = script + period + log2(chars) + resolution band; IRLS, Wald 95% CI; one page per book, unweighted",
+    "n": 327,
+    "events": 274,
+    "converged": true,
+    "iterations": 7,
+    "terms": [
+      {
+        "term": "non-Latin script (vs Latin)",
+        "n_at_level": 128,
+        "odds_ratio": 0.195,
+        "ci": [
+          0.092,
+          0.416
+        ],
+        "p": 0
+      },
+      {
+        "term": "period pre-1500 (vs 1600s)",
+        "n_at_level": 35,
+        "odds_ratio": 0.761,
+        "ci": [
+          0.22,
+          2.629
+        ],
+        "p": 0.665
+      },
+      {
+        "term": "period 1500s (vs 1600s)",
+        "n_at_level": 50,
+        "odds_ratio": 1.555,
+        "ci": [
+          0.405,
+          5.979
+        ],
+        "p": 0.52
+      },
+      {
+        "term": "period 1700s (vs 1600s)",
+        "n_at_level": 56,
+        "odds_ratio": 0.821,
+        "ci": [
+          0.234,
+          2.885
+        ],
+        "p": 0.759
+      },
+      {
+        "term": "period 1800s (vs 1600s)",
+        "n_at_level": 57,
+        "odds_ratio": 0.583,
+        "ci": [
+          0.205,
+          1.657
+        ],
+        "p": 0.311
+      },
+      {
+        "term": "period 1900+ (vs 1600s)",
+        "n_at_level": 42,
+        "odds_ratio": 0.971,
+        "ci": [
+          0.279,
+          3.376
+        ],
+        "p": 0.963
+      },
+      {
+        "term": "period unknown (vs 1600s)",
+        "n_at_level": 29,
+        "odds_ratio": 0.683,
+        "ci": [
+          0.201,
+          2.32
+        ],
+        "p": 0.541
+      },
+      {
+        "term": "log2 characters (per doubling)",
+        "n_at_level": null,
+        "odds_ratio": 1.014,
+        "ci": [
+          0.826,
+          1.245
+        ],
+        "p": 0.897
+      },
+      {
+        "term": "resolution <1500 px (vs 1500–2499 px)",
+        "n_at_level": 30,
+        "odds_ratio": 0.576,
+        "ci": [
+          0.2,
+          1.663
+        ],
+        "p": 0.308
+      },
+      {
+        "term": "resolution ≥2500 px (vs 1500–2499 px)",
+        "n_at_level": 211,
+        "odds_ratio": 1.419,
+        "ci": [
+          0.656,
+          3.07
+        ],
+        "p": 0.373
+      }
+    ]
+  }
+}
