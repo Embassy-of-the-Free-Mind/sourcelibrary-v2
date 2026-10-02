@@ -67,6 +67,8 @@ function sample() {
   let pool = REG.pages.filter(p => !p.retired && p.cohort === 'held' && cls.get(p.slug) === 'manuscript-regular' && refs.has(p.slug)).map(p => p.slug).sort();
   let note = null;
   if (FRESH) {
+    // the fresh draw writes its own acc.tsv: never into the original bench's dir (its acc/tput sets are the benchmark's)
+    if (!process.argv.some(x => x.startsWith('--dir=')) || path.resolve(DIR) === '/root/paddle-zh-5600/bench') { console.error('sample --fresh needs its own --dir= (not the original bench)'); process.exit(2); }
     // the no-layout confirmation (prereg amendment): never a page the 100 chose an arm on, never a pilot or fleet-applied book
     const drawn = new Set(JSON.parse(fs.readFileSync(path.join(RES, 'sample.json'), 'utf8')).slugs);
     const bookOf = new Map(REG.pages.map(p => [p.slug, p.book_id]));
