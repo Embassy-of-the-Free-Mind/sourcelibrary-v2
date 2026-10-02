@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { assertLaneGuards } from '@/lib/lane-guards';
 import { loopVerdict } from '@/lib/ocr-loop-guard';
 import { GoogleGenAI } from '@google/genai';
 import { getDb } from '@/lib/mongodb';
@@ -60,6 +61,8 @@ export const POST = withAuth(async (request, session, context) => {
     } = body;
 
     const db = await getDb();
+    // Observe only (#5480): records a held book or an active pause in audit_log, never refuses.
+    await assertLaneGuards(db, { route: '/api/books/[id]/batch-translate-async', bookIds: [bookId], actor: session?.user?.email ?? undefined });
 
     // Get book
     const book = await db.collection('books').findOne({ id: bookId });

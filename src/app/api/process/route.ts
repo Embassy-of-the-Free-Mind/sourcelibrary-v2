@@ -4,6 +4,7 @@ import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { performOCR, performOCRWithBuffer, performTranslation, generateSummary, TokenUsage } from '@/lib/ai';
 import { getOcrPrompt, getTranslationPrompt, getSummaryPrompt, type PromptLookupResult } from '@/lib/prompts';
 import { withAuth } from '@/lib/auth-helpers';
+import { assertLaneGuards } from '@/lib/lane-guards';
 import { createRevision } from '@/lib/page-revisions';
 import { isHumanEditedTranslation, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON } from '@/lib/translate-write';
 import { logGeminiCall } from '@/lib/gemini-logger';
@@ -64,6 +65,8 @@ export const POST = withAuth(async (request: NextRequest) => {
     }
 
     const db = await getDb();
+    // Observe only (#5480): records a held book or an active pause in audit_log, never refuses.
+    if (autoSave && pageId) await assertLaneGuards(db, { route: '/api/process', pageIds: [pageId] });
 
     // Get previous page context if provided
     let previousPage: { ocr?: string; translation?: string; summary?: string } | undefined;
