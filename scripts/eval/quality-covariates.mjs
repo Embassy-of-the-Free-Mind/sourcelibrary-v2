@@ -161,12 +161,10 @@ const PROVIDER_ALIAS = { mdz: 'bsb', british_library: 'bl' };
 const HOST_PROVIDER = [[/archive\.org/, 'internet_archive'], [/digitale-sammlungen\.de|bsb-muenchen/, 'bsb'], [/gallica\.bnf\.fr/, 'gallica'], [/e-rara\.ch/, 'e-rara'], [/wikimedia\.org/, 'wikimedia_commons'], [/bl\.uk/, 'bl'], [/books\.google/, 'google_books']];
 const tagCounts = (o) => Object.values(o || {}).reduce((s, x) => s + x, 0);
 function formatOf(f) {
-  const s = String(f ?? '').toLowerCase();
-  if (/\b(2|folio)\b|^2°|\b2o\b|fol\./.test(s) || /^2\s*°/.test(s)) return '2°';
-  if (/^4\s*°|\bquarto\b|\b4to\b/.test(s)) return '4°';
-  if (/^8\s*°|\boctavo\b|\b8vo\b/.test(s)) return '8°';
-  if (/^(12|16|18|24|32)\s*°|\bduodecimo\b|\b12mo\b|\b16mo\b/.test(s)) return '12° and smaller';
-  return s.trim() ? 'other' : null;
+  const s = String(f ?? '').trim().toLowerCase();
+  if (!s) return null;
+  const n = Number(/^(\d{1,2})\s*(?:°|o\b|mo\b|to\b|vo\b)/.exec(s)?.[1] ?? (/^folio|^fol\b/.test(s) ? 2 : /^quarto/.test(s) ? 4 : /^octavo/.test(s) ? 8 : NaN));
+  return n === 2 ? '2°' : n === 4 ? '4°' : n === 8 ? '8°' : n >= 12 ? '12° and smaller' : 'other';
 }
 // What the transcription itself shows. Only a Gemini read was asked for <margin>, markdown tables and
 // the <detected-images> block, so on any other engine's text these are unknown, not "absent".
