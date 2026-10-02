@@ -80,4 +80,13 @@ If v19 fails and B passes 1–5 with B in place of C, the recommendation is **v1
 **Cap: $6.** The ledger line goes in `/root/claude-jobs/ocr-v19-ab-spend.txt`, and the parent copies it to the ops ledger.
 
 ## Amendments
-None yet. Any amendment is appended with a date, before the affected step runs.
+Any amendment is appended with a date, before the affected step runs.
+
+### Amendment 1 — 2026-10-02, after the screen and the labels, before the draw and before any arm is built
+- **Screen done.** The pool resolved to 414 pages (409 + 38, minus 33 Tibetan/Syriac rows; 0 unresolved). The v16 screen job returned 414 reads (410 text, 4 truncated) for **$0.29**. **127 pages qualify** (> 20 body letters). With the 37 resolved v0.4 `blank_page` pages (3 of them also qualify), **161 pages were labelled.**
+- **How the labels were made.** Each image was downloaded (`getPageSource`, ≤ 1100 px) together with a contrast-stretched copy (`sharp().normalise()`), and both were opened with Read by Claude subagents in batches of 15. The subagents saw no screen output and no arm output; each line records the two files viewed. I re-opened two by eye (one low-confidence show-through, one call-number page) and agree with both.
+- **Digital overlays count as real ink.** A right-reading "Digitized by Google" / HathiTrust / ProQuest caption burned into the image is not on the paper, but it is right-reading text the model can see, and transcribing it is not inventing. Two subagents labelled such pages differently; the two `white` / `show-through` overlay pages were relabelled `real-ink` (the field `relabelled_from` records it). Four pages carry such an overlay.
+- **Label counts:** white 74 (63 qualifying), show-through 42 (34 qualifying + 8 v0.4), real ink 45 (30 qualifying, 18 v0.4). Real-ink pages join S3; the 8 non-qualifying v0.4 show-through pages join T as written above. The 11 non-qualifying v0.4 white pages (mostly blank covers and boards) are in no stratum, as written.
+- **Floor rule, made exact.** A page counts as better or worse only if |d| ≥ the stratum's threshold, where threshold = the p90 of |A − A2| if that is > 0, else 1/k. W ∪ T pooled gets its own threshold computed the same way. Clause 1's sign test uses those counts.
+- **Context echo, made exact.** Tokens are NFD-folded, diacritics stripped, lower-cased, split on non-letter/digit, length ≥ 4, minus a fixed list of function words and catalogue words (`with`, `from`, `that`, `opera`, `omnia`, `tome`, `volume`, `book`, `edition`, `unknown`, …; the list is `STOP` in `ocr-v19-ab.mjs`). A run echoes if its `<header>` or body shares one token with the title + author. Reported per arm over all W ∪ T runs, and over the runs that fabricated.
+- **Budget.** The arms' estimate must fit in $6 − $0.29.
