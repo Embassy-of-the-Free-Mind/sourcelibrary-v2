@@ -15,6 +15,7 @@ import {
   catchwordBoundary, parseCatchword, pageNumberBreaks, parsePageNum, duplicateScan,
   truncationRatio, echoedSource, sourceLanguageCount, tokenMatches, readingLength, ocrReasoningLeak,
   parseVocab, vocabAbsent, repeatedBlocks, LOOP_MAX_TTR, LOOP_MIN_COPIES, REPEAT_MIN_CHARS,
+  metaPayload, continuityMeta,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/page-integrity.mjs';
@@ -30,6 +31,7 @@ const CW = fx('catchwords.json').cases as any[];
 const PN = fx('page-numbers.json').cases as any[];
 const DUP = fx('duplicate-scans.json').cases as any[];
 const TR = fx('translations.json');
+const MP = fx('meta-payload.json').cases as any[];
 
 describe('catchword continuity', () => {
   it('reads the catchword out of <meta>, and refuses a CJK fore-edge title', () => {
@@ -248,5 +250,30 @@ describe('O4 · a block repeated inside one page (#5135)', () => {
   });
   it('is unjudgeable under two shingles of text', () => {
     expect(repeatedBlocks('only a few words here')).toEqual({ judged: false, why: 'short' });
+  });
+});
+
+describe('text hidden in the continuity <meta>', () => {
+  it('has hidden, whole-page and copied cases', () => {
+    expect(MP.filter((c) => c.expect.shape === 'hidden-text').length).toBeGreaterThanOrEqual(3);
+    expect(MP.some((c) => c.expect.wholePage)).toBe(true);
+    expect(MP.some((c) => c.expect.shape === 'copied')).toBe(true);
+  });
+  for (const c of MP) {
+    it(`${c.expect.shape}${c.expect.wholePage ? ' (whole page)' : ''} — ${c.name}`, () => {
+      const r = metaPayload({ tr: c.tr, prevTr: c.prevTr });
+      expect(r.judged).toBe(true);
+      expect(r.shape).toBe(c.expect.shape);
+      expect(r.wholePage).toBe(c.expect.wholePage);
+    });
+  }
+  it('reads the bare marker and a sentence ABOUT the previous page as nothing hidden', () => {
+    expect(continuityMeta('<meta>continues from previous page</meta> x')?.form).toBe('bare');
+    expect(continuityMeta("<meta>continues from previous page's discussion of Saul.</meta> y")?.form).toBe('descriptive');
+    expect(continuityMeta('<meta>This page follows the title page.</meta> z')).toBeNull();
+  });
+  it('does not judge a payload with no previous translation to compare', () => {
+    const r = metaPayload({ tr: '<meta>continues from previous page: and so the work of the furnace went on through the night</meta> Then', prevTr: null });
+    expect(r).toMatchObject({ judged: false, why: 'no-previous-translation' });
   });
 });

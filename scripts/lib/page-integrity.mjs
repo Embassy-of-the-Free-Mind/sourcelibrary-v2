@@ -7,7 +7,7 @@
 // of page images for OCR↔image alignment — needs the image bytes, which the mirror does not
 // hold). Nothing in scripts/audit/ or scripts/lib/ reads <page-num> or the catchword.
 /**
- * page-integrity — five exact checks over text we already store (local mirror, no model).
+ * page-integrity — exact checks over text we already store (local mirror, no model).
  *
  * The OCR prompt (v4.2026-02 on) tags every page with the PRINTED page number (<page-num>),
  * the catchword (<meta>catchword: …</meta>), running head and signature. An early printed book
@@ -20,6 +20,8 @@
  *   3. duplicateScan()      — is OCR N+1 (nearly) the same text as OCR N?
  *   4. truncationRatio()    — is the translation far shorter than its source?
  *   5. echoedSource()       — does the "translation" contain the source verbatim?
+ *   (6–7, the page-error taxonomy checks, are listed at their section below)
+ *   8. metaPayload()        — is page text hidden inside the continuity <meta>?
  *
  * Every detector returns an explicit UNJUDGEABLE state (null / { judged: false, why }) for an
  * input it cannot read — a caseless or CJK "catchword" that is really the fore-edge title, a
@@ -811,4 +813,72 @@ export function repeatedBlocks(ocr) {
     judged: true, units: units.length, K, longest: best.len, copies, share, period, ttr: +types.toFixed(3), kind, unsegmented,
     flag: kind === 'block', sample: run.slice(0, unsegmented ? 60 : 24).join(unsegmented ? '' : ' '),
   };
+}
+
+// ── 8. text hidden in the continuity <meta> ────────────────────────────────────────────────
+
+export const META_PAYLOAD_MIN_WORDS = 8;
+export const META_COPIED_SHARE = 0.6;
+export const META_UNMATCHED_SHARE = 0.2;
+export const META_WHOLE_PAGE_SHARE = 0.8;
+
+const CONT_MARKER = /^[\s.…]*continue[sd]?\s+from\s+(?:the\s+)?previous\s+page\b/i;
+// "continues from previous page's discussion of …", "…, where the author …": a sentence ABOUT
+// the previous page (the v2–v5 page summary), not text standing in for it.
+const DESCRIPTIVE_LEAD = /^(?:['’]s\b|\s*,|\s+(?:and|where|which|in which|with|discussing|detailing|describing|regarding|concerning|about)\b)/i;
+const tagless = (t) => String(t || '').replace(/<\/?[a-zA-Z][^>]*>/g, ' ');
+const trigrams = (w) => { const g = new Set(); for (let i = 0; i + 3 <= w.length; i++) g.add(w.slice(i, i + 3).join(' ')); return g; };
+
+/**
+ * The continuity <meta> of a translation — `<meta>continues from previous page…</meta>`, the
+ * marker the translation prompt asks for when a page opens mid-sentence — or null when there is
+ * none. `form` is 'bare' (the marker alone), 'descriptive' (a sentence about the previous page)
+ * or 'text' (the marker, then `payload`: words standing where page text would).
+ */
+export function continuityMeta(tr) {
+  for (const m of String(tr || '').matchAll(/<meta>([\s\S]*?)<\/meta>/gi)) {
+    const mk = m[1].match(CONT_MARKER);
+    if (!mk) continue;
+    const rest = m[1].slice(mk[0].length);
+    if (DESCRIPTIVE_LEAD.test(rest)) return { form: 'descriptive', payload: '', words: 0 };
+    const payload = tagless(rest).replace(/^[\s:.…,;—–-]+/, '').replace(/\s+/g, ' ').trim();
+    const n = words(payload).length;
+    return { form: n ? 'text' : 'bare', payload, words: n };
+  }
+  return null;
+}
+
+/**
+ * Is page text hidden inside the continuity <meta>? Every reader and export strips <meta>,
+ * content and all (stripEditorialWrappers), so whatever the translator writes after the marker
+ * is text no reader sees. Returns null when the page has no continuity meta, else
+ *   { judged:true, form, words, shape, wholePage, inPrev?, text? }  with shape
+ *     'bare' | 'descriptive'  nothing hidden
+ *     'short'        a payload under META_PAYLOAD_MIN_WORDS — too few words to compare
+ *     'copied'       ≥ META_COPIED_SHARE of the payload's word trigrams are in the previous
+ *                    page's translation: the continuity context handed back, a hidden duplicate
+ *     'hidden-text'  < META_UNMATCHED_SHARE are: the words are not the previous page's. Hand-read
+ *                    (EXPERIMENTS.md 2026-09-30, tq9) they are this page's OWN opening lines,
+ *                    translated into the meta, far more often than an invented lead-in — either
+ *                    way the reader meets the page without them
+ *     'partial'      in between
+ *   { judged:false, why:'no-previous-translation', form, words, wholePage }  a payload with
+ *                    nothing to compare it to
+ * `wholePage`: the payload is ≥ META_WHOLE_PAGE_SHARE of everything the translation says — the
+ * page reads as empty.
+ */
+export function metaPayload({ tr, prevTr }) {
+  const cm = continuityMeta(tr);
+  if (!cm) return null;
+  if (cm.form !== 'text') return { judged: true, form: cm.form, words: 0, shape: cm.form, wholePage: false };
+  const hidden = readingLength(cm.payload), shown = readingLength(trProseOf(tr));
+  const wholePage = cm.words >= META_PAYLOAD_MIN_WORDS && hidden / Math.max(1, hidden + shown) >= META_WHOLE_PAGE_SHARE;
+  const base = { form: 'text', words: cm.words, wholePage };
+  if (cm.words < META_PAYLOAD_MIN_WORDS) return { judged: true, ...base, shape: 'short' };
+  if (!prevTr || !String(prevTr).trim()) return { judged: false, why: 'no-previous-translation', ...base };
+  const prev = trigrams(words(tagless(prevTr)));
+  const mine = [...trigrams(words(cm.payload))];
+  const inPrev = mine.filter(g => prev.has(g)).length / Math.max(1, mine.length);
+  const shape = inPrev >= META_COPIED_SHARE ? 'copied' : inPrev < META_UNMATCHED_SHARE ? 'hidden-text' : 'partial';
+  return { judged: true, ...base, shape, inPrev: +inPrev.toFixed(2), text: cm.payload.slice(0, 200) };
 }
