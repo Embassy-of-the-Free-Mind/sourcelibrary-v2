@@ -189,7 +189,14 @@ function yigdzinRead(dir) {
   const batch = `${dir}-batch`;
   fs.rmSync(batch, { recursive: true, force: true });
   fs.mkdirSync(batch);
-  for (const f of todo) fs.symlinkSync(path.join(dir, f), path.join(batch, f));
+  if (C.redInk) {
+    // Red-ink print (C.redInk): the green channel holds the ink dark on a light ground; stretch and
+    // equalise it before the read. The stored page image is untouched — this is the READER's input only.
+    const py = 'import cv2,sys\nfor a in sys.argv[2:]:\n  im=cv2.imread(a)\n  g=cv2.normalize(im[:,:,1],None,0,255,cv2.NORM_MINMAX)\n  g=cv2.createCLAHE(clipLimit=2.0,tileGridSize=(8,8)).apply(g)\n  cv2.imwrite(sys.argv[1]+"/"+a.split("/")[-1],g)\n';
+    execFileSync(path.join(YIG_APP, 'venv/bin/python'), ['-c', py, batch, ...todo.map((f) => path.join(dir, f))], { stdio: ['ignore', 'ignore', 'pipe'], timeout: 10 * 60 * 1000 });
+  } else {
+    for (const f of todo) fs.symlinkSync(path.join(dir, f), path.join(batch, f));
+  }
   execFileSync(path.join(YIG_APP, 'venv/bin/python'), ['cli.py', '--model', `${YIG_MODEL}/`, '--folder', batch, '--output', out, '--encoding', 'unicode', '--line-mode', 'line'],
     { cwd: YIG_APP, env: { ...process.env, QT_QPA_PLATFORM: 'offscreen' }, stdio: ['ignore', 'ignore', 'pipe'], timeout: 30 * 60 * 1000 });
   fs.rmSync(batch, { recursive: true, force: true });
@@ -218,7 +225,7 @@ async function measure(vol, canvases, pages, claim) {
     const meta = [];
     for (const ci of picks) {
       const label = canvasFolioLabel(canvases[ci]);
-      const url = `${imageServiceOf(canvases[ci])}/full/1600,/0/default.jpg`;
+      const url = `${imageServiceOf(canvases[ci])}/full/${C.readSize}/0/default.jpg`;
       const f = path.join(dir, `c${ci}_${label}.jpg`);
       if (!fs.existsSync(f)) fs.writeFileSync(f, Buffer.from(await (await fetchRetry(url)).arrayBuffer()));
       meta.push({ ci, label, url, stem: `c${ci}_${label}` });
@@ -253,7 +260,7 @@ async function measureOffset(vol, canvases, pages) {
   const picks = [...new Set(Array.from({ length: SAMPLES }, (_, k) => Math.floor(((k + 0.75) / SAMPLES) * n)))].filter((i) => i < n);
   for (const ci of picks) {
     const f = path.join(dir, `c${ci}.jpg`);
-    if (!fs.existsSync(f)) fs.writeFileSync(f, Buffer.from(await (await fetchRetry(`${imageServiceOf(canvases[ci])}/full/1600,/0/default.jpg`)).arrayBuffer()));
+    if (!fs.existsSync(f)) fs.writeFileSync(f, Buffer.from(await (await fetchRetry(`${imageServiceOf(canvases[ci])}/full/${C.readSize}/0/default.jpg`)).arrayBuffer()));
   }
   const out = yigdzinRead(dir);
   const located = picks.map((ci) => {
@@ -293,7 +300,7 @@ async function importVolume(db, vol) {
   const pages = parseVolume(fs.readFileSync(path.join(ETEXT, 'text', file), 'utf8'));
   const labels = canvases.map(canvasFolioLabel);
   let claim;
-  if (labels.filter(Boolean).length >= canvases.length * 0.5) {
+  if (C.claimMode === 'label' && labels.filter(Boolean).length >= canvases.length * 0.5) {
     v.claim_mode = 'label';
     claim = claimByLabel(labels, pages);
   } else {
@@ -437,7 +444,7 @@ async function importVolume(db, vol) {
       if (ocr && !ex.ocr?.data) {
         // Human-edit guard: only fill an empty page that nobody edited.
         if (isHumanEdited(ex.ocr)) { textKeptHuman++; continue; }
-        const label = canvasFolioLabel(c) ? {} : { page_label: `f. ${ocr.text_edition.folio}` };
+        const label = canvasFolioLabel(c) && v.claim_mode === 'label' ? {} : { page_label: `f. ${ocr.text_edition.folio}` };
         const r = await pagesC.updateOne({ _id: ex._id, 'ocr.data': { $exists: false } }, { $set: { ocr, ...label, updated_at: now } });
         textWritten += r.modifiedCount;
       } else if (ex.ocr?.data) textWritten += ex.ocr.source === TEXT_SOURCE ? 1 : 0;
@@ -446,7 +453,8 @@ async function importVolume(db, vol) {
     const _id = new ObjectId();
     toInsert.push(makePageDoc({
       _id: String(_id), id: String(_id), book_id: book.id, page_number: i + 1,
-      page_label: canvasFolioLabel(c) ? `f. ${canvasFolioLabel(c)}` : (ocr ? `f. ${ocr.text_edition.folio}` : null),
+      // Index mode: BDRC's label is not the leaf shown (W4CZ5369), so the label is the aligned side's.
+      page_label: canvasFolioLabel(c) && v.claim_mode === 'label' ? `f. ${canvasFolioLabel(c)}` : (ocr ? `f. ${ocr.text_edition.folio}` : null),
       source_ref: service.replace(/^https:\/\/iiif\.bdrc\.io\//, ''),
       photo, photo_original: photo,
       image_width: c.width, image_height: c.height,

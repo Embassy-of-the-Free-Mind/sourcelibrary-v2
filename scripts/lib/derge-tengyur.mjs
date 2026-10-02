@@ -312,6 +312,7 @@ export const CANONS = Object.freeze({
     imageGroupFor: (vol) => `I${1317 + vol - 1 + (vol > 202 ? 2 : 0)}`,
     scanVolumeFor: (vol) => vol,
     eighty4000: false,
+    claimMode: 'label', readSize: '1600,', redInk: false,
   }),
   kangyur: Object.freeze({
     key: 'kangyur', issue: 5665, nVolumes: 103, etext: '/mnt/HC_Volume_105839809/esukhia-derge-kangyur', work: '/mnt/HC_Volume_105839809/kangyur-5665',
@@ -333,6 +334,13 @@ export const CANONS = Object.freeze({
     // swapped with vol. 100".
     scanVolumeFor: (vol) => ({ 100: 102, 102: 100 })[vol] ?? vol,
     eighty4000: true,
+    // Measured on vol. 1 (2026-10-02): W4CZ5369's canvas labels run one side off the leaves they show
+    // (canvas "32b" carries side 32a: three reads located at side index = canvas index, identity
+    // 0.47/0.33/0.93 against controls ≤ 0.27, and ~0.1 at the labelled side). So the claim is by
+    // canvas INDEX with a per-volume measured offset, never by label; and the reader's page label
+    // comes from the e-text side. The LoC copy is printed in RED ink: at 1600 px Yigdzin read 0–17
+    // syllables a page; the full-size green channel, contrast-stretched, reads ~380.
+    claimMode: 'index', readSize: 'max', redInk: true,
   }),
 });
 
