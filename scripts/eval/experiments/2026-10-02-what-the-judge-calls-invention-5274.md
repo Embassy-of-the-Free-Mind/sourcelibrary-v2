@@ -9,7 +9,7 @@
 |---|---:|---:|---|
 | Text from the adjacent page (page-boundary) | 14 | 8 | 6 / 8 |
 | Unreadable source filled with plausible content | 6 | 5 | 4 / 2 |
-| Editorial additions in notes/headings/meta (names, dates, identifications, phantom illustration) | 21 | 1 | **17 / 4** |
+| Facts added in notes/headings/summary (by design per prompt v13; a defect only if WRONG — fact-check #5624) | 21 | 1 | **17 / 4** |
 | Bracketed glosses | 4 | 0 | 3 / 1 |
 
   - **Page-boundary: 13 of 14 confirmed on the adjacent page.** Ids: 1dfa95a297, 9242725390, 7c34ba73d6, ed9643dcf5, 52e056e34f, 630e34eb2f, bbad675645, 485571afa2, 8ad1bca178 (a correct completion of a hyphenated word: στα-|σιάσαντα), 018aef589b, 545f9fcf4b, 61d9ea9855, and 740bb56281 (the PREVIOUS page's meditation). Unconfirmed: 0b1479907c.
@@ -18,6 +18,7 @@
 - **Consequences.**
   1. The audit's invention rate overstates fabrication. Text with no source was found on 6 of 311 pages; page-boundary text on 14.
   2. Page-boundary text is a citation defect: the English for page N carries page N±1. It needs a detector that compares a translation's tail with the next page's head, not a prompt change alone.
-  3. Flash's excess invention is mostly annotation (17 vs 4), not mistranslation. Any Flash-vs-Lite translation comparison (#5606) must report invention by kind.
+  3. Flash's excess invention is mostly annotation (17 vs 4), not mistranslation; the prompt asks for explanatory notes, so these count only if the fact is wrong (#5624). Any Flash-vs-Lite translation comparison (#5606) must report invention by kind.
   4. Side finding: book `69af123a0092756351e4483e` is catalogued as Ricci's 畸人十篇 but is the play 繡襦記 (#5620).
+- **Prior pass.** tq9 (#5305, PR #5363) typed the same audit's inventions and also found 13 page-boundary imports.
 - *Replicated?* No. The typing is one reader's; the adjacent-page check is mechanical.
