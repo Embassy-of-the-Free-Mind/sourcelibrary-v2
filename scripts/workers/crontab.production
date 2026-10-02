@@ -186,6 +186,11 @@
 40 7 * * * cd /root/sourcelibrary && flock -n /tmp/sl-provenance.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/provenance-coverage.mjs --days=2" >> /var/log/sourcelibrary/provenance-coverage.log 2>&1
 # pipeline-hold drift audit (committed in crontab.production since #4919 but never installed; installed 2026-09-28)
 55 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/pipeline-hold-drift.mjs ] && flock -n /tmp/sl-hold-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/pipeline-hold-drift.mjs" >> /var/log/sourcelibrary/pipeline-hold.log 2>&1
+# pipeline_next daily audit + flow snapshot (#5478): recompute nextStep() over every book with pages_count > 0,
+# compare with the stored books.pipeline_next and pipeline_auto.status, write ops_reports pipeline-next-<day>
+# (type pipeline_next_daily, read by /admin/pipeline). Runs after the 06:00 sync-worker stamp pass. Read-only on
+# books/pages; on FAIL one deduped GitHub issue. Exit 1 = FAIL, 2 = could not measure. ~35 s, no model call.
+45 6 * * * cd /root/sourcelibrary && [ -f scripts/audit/pipeline-next-step-audit.mjs ] && flock -n /tmp/sl-pipeline-next-audit.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/pipeline-next-step-audit.mjs --apply" >> /var/log/sourcelibrary/pipeline-next-audit.log 2>&1
 # mark-stale-translations.mjs --apply (#4927): installed 2026-09-30 (was absent 2026-09-19..30 despite the template)
 45 4 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-clip-index.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/clip-index-integrity.mjs" >> /var/log/sourcelibrary/clip-index-integrity.log 2>&1
 # installed 2026-09-30 per DECIDED (#4927 marker; read by the paid translate lanes)
