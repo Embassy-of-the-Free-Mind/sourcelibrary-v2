@@ -1,0 +1,276 @@
+{
+  "_comment": "Written by scripts/audit/model-usage-snapshot.mjs --write-recent. Every (lane, model, source) that wrote pages in the 30 days before generated_at; tests/unit/public-models.test.ts fails if one has no entry in src/data/public-models.ts.",
+  "generated_at": "2026-10-02",
+  "rows": [
+    {
+      "lane": "translation",
+      "model": "gemini-3.1-flash-lite-preview",
+      "source": "ai",
+      "pages_last_30d": 8
+    },
+    {
+      "lane": "ocr",
+      "model": "gemini-3-flash-preview",
+      "source": "ai",
+      "pages_last_30d": 2789
+    },
+    {
+      "lane": "ocr",
+      "model": "gemini-3-flash-preview",
+      "source": "batch_api",
+      "pages_last_30d": 24703
+    },
+    {
+      "lane": "translation",
+      "model": "gemini-3-flash-preview",
+      "source": "ai",
+      "pages_last_30d": 28724
+    },
+    {
+      "lane": "translation",
+      "model": "gemini-3.1-flash-lite",
+      "source": "ai",
+      "pages_last_30d": 325514
+    },
+    {
+      "lane": "ocr",
+      "model": "gemini-3.1-flash-lite",
+      "source": "batch_api",
+      "pages_last_30d": 469604
+    },
+    {
+      "lane": "ocr",
+      "model": "bdrc-yigdzin-v1",
+      "source": "bdrc",
+      "pages_last_30d": 190095
+    },
+    {
+      "lane": "ocr",
+      "model": "gemini-3.1-flash-lite",
+      "source": "pipeline_preview",
+      "pages_last_30d": 76065
+    },
+    {
+      "lane": "ocr",
+      "model": null,
+      "source": "esukhia-derge-tengyur",
+      "pages_last_30d": 128369
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-ocr/0.0.14",
+      "source": "ia_djvu",
+      "pages_last_30d": 99517
+    },
+    {
+      "lane": "translation",
+      "model": "gemini-3-flash-preview",
+      "source": "batch_api",
+      "pages_last_30d": 5615
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-ocr/0.0.21",
+      "source": "ia_djvu",
+      "pages_last_30d": 59595
+    },
+    {
+      "lane": "ocr",
+      "model": "kraken/omnisyr",
+      "source": "kraken",
+      "pages_last_30d": 26957
+    },
+    {
+      "lane": "ocr",
+      "model": "gemini-3-flash-preview",
+      "source": "pipeline_preview",
+      "pages_last_30d": 16638
+    },
+    {
+      "lane": "ocr",
+      "model": "gemini-3.1-flash-lite",
+      "source": "ai",
+      "pages_last_30d": 12404
+    },
+    {
+      "lane": "translation",
+      "model": null,
+      "source": "same-language",
+      "pages_last_30d": 12208
+    },
+    {
+      "lane": "translation",
+      "model": "gemini-3.1-flash-lite",
+      "source": "batch_api",
+      "pages_last_30d": 11177
+    },
+    {
+      "lane": "ocr",
+      "model": "kraken/sophro-mhiro",
+      "source": "kraken",
+      "pages_last_30d": 11247
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-ocr/0.0.18",
+      "source": "ia_djvu",
+      "pages_last_30d": 10883
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-ocr/unknown",
+      "source": "ia_djvu",
+      "pages_last_30d": 10479
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-ocr/0.0.20",
+      "source": "ia_djvu",
+      "pages_last_30d": 9940
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-ocr/ABBYY FineReader 8.0",
+      "source": "ia_djvu",
+      "pages_last_30d": 8947
+    },
+    {
+      "lane": "ocr",
+      "model": "ndl-koten/v3",
+      "source": "ndl-koten",
+      "pages_last_30d": 7133
+    },
+    {
+      "lane": "ocr",
+      "model": "cbeta-xml-p5@dbdea41071",
+      "source": "cbeta-xml-p5",
+      "pages_last_30d": 4983
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-ocr/0.0.15",
+      "source": "ia_djvu",
+      "pages_last_30d": 3185
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-ocr/0.0.16",
+      "source": "ia_djvu",
+      "pages_last_30d": 2948
+    },
+    {
+      "lane": "ocr",
+      "model": "mineru-pipeline",
+      "source": "mineru",
+      "pages_last_30d": 45
+    },
+    {
+      "lane": "ocr",
+      "model": "bdrc-woodblock-easter2",
+      "source": "bdrc",
+      "pages_last_30d": 1802
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-ocr/0.0.13",
+      "source": "ia_djvu",
+      "pages_last_30d": 1782
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-ocr/0.0.12",
+      "source": "ia_djvu",
+      "pages_last_30d": 1477
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-ocr/0.0.17",
+      "source": "ia_djvu",
+      "pages_last_30d": 1327
+    },
+    {
+      "lane": "ocr",
+      "model": "gemini-3.1-flash-lite",
+      "source": "ia_reference",
+      "pages_last_30d": 821
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-ocr/ABBYY FineReader 11.0",
+      "source": "ia_djvu",
+      "pages_last_30d": 814
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-ocr/0.0.6",
+      "source": "ia_djvu",
+      "pages_last_30d": 710
+    },
+    {
+      "lane": "ocr",
+      "model": "bdrc-woodblock-easter2",
+      "source": "ai",
+      "pages_last_30d": 441
+    },
+    {
+      "lane": "translation",
+      "model": null,
+      "source": "skip",
+      "pages_last_30d": 81
+    },
+    {
+      "lane": "ocr",
+      "model": "oraec-corpus",
+      "source": null,
+      "pages_last_30d": 1
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-ocr/0.0.11",
+      "source": "ia_djvu",
+      "pages_last_30d": 150
+    },
+    {
+      "lane": "ocr",
+      "model": "ABBYY FineReader 8.0",
+      "source": "ia_djvu",
+      "pages_last_30d": 69
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-ocr/ABBYY FineReader 9.0",
+      "source": "ia_djvu",
+      "pages_last_30d": 54
+    },
+    {
+      "lane": "ocr",
+      "model": "ABBYY FineReader 11.0 (Extended OCR)",
+      "source": "ia_djvu",
+      "pages_last_30d": 12
+    },
+    {
+      "lane": "ocr",
+      "model": "ia-ocr/ABBYY FineReader 11.0 (Extended OCR)",
+      "source": "ia_djvu",
+      "pages_last_30d": 6
+    },
+    {
+      "lane": "ocr",
+      "model": "tesseract 5.3.0",
+      "source": "ia_djvu",
+      "pages_last_30d": 6
+    },
+    {
+      "lane": "ocr",
+      "model": null,
+      "source": "cdli-atf",
+      "pages_last_30d": 2
+    },
+    {
+      "lane": "translation",
+      "model": "gemini-3.1-flash-lite",
+      "source": null,
+      "pages_last_30d": 1
+    }
+  ]
+}

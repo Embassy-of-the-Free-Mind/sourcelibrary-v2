@@ -32,6 +32,8 @@
  *                      engine that wrote pages in the last 30 days must have an entry on the page)
  *   … --fresh          ignore the checkpoint and start the walk again
  *   … --chunk=N        pages per server-side aggregate (default 100000, ~5 s each)
+ *   … --from-state     skip the walk and re-map the last walk's rows (scripts/output/model-usage.state.json)
+ *                      — after changing an entry's match in src/data/public-models.ts, no hour-long re-walk
  *
  * Exit 0 = ran; 3 = ran, but an engine wrote pages in the last 30 days that the page does not
  * describe (add it to src/data/public-models.ts); 2 = could not measure.
@@ -55,6 +57,7 @@ const APPLY = flag('apply');
 const CHUNK = Number(arg('chunk', '100000'));
 const CHECKPOINT = path.join(ROOT, arg('checkpoint', 'scripts/output/model-usage.checkpoint.json'));
 const RECENT_FILE = path.join(ROOT, 'src/data/model-usage-recent.json');
+const STATE_FILE = path.join(ROOT, 'scripts/output/model-usage.state.json');
 const REPORT_ID = 'model-usage';
 const RECENT_DAYS = 30;
 
@@ -70,7 +73,10 @@ const pages = db.collection('pages');
 // ── checkpoint ────────────────────────────────────────────────────────────────
 const cutoff = new Date(Date.now() - RECENT_DAYS * 864e5);
 let state = null;
-if (!flag('fresh') && fs.existsSync(CHECKPOINT)) {
+if (flag('from-state')) {
+  state = JSON.parse(fs.readFileSync(STATE_FILE, 'utf8'));
+  console.log(`re-mapping the walk of ${state.started_at} (${state.seen.toLocaleString()} pages), no walk`);
+} else if (!flag('fresh') && fs.existsSync(CHECKPOINT)) {
   state = JSON.parse(fs.readFileSync(CHECKPOINT, 'utf8'));
   // A checkpoint older than a day would mix two different "last 30 days" windows.
   if (Date.now() - Date.parse(state.started_at) > 864e5) state = null;
@@ -124,7 +130,7 @@ async function chunk(match) {
 
 // ── walk ──────────────────────────────────────────────────────────────────────
 const t0 = Date.now();
-for (const phase of ['string', 'objectId']) {
+for (const phase of flag('from-state') ? [] : ['string', 'objectId']) {
   if (state.phase === 'objectId' && phase === 'string') continue;
   state.phase = phase;
   for (;;) {
@@ -155,6 +161,7 @@ for (const phase of ['string', 'objectId']) {
   state.last = null;
 }
 console.log('');
+if (!flag('from-state')) { state.phase = 'done'; state.finished_at = new Date().toISOString(); fs.writeFileSync(STATE_FILE, JSON.stringify(state)); }
 
 // ── languages per row (books.language of the books it touches) ────────────────
 const allBooks = new Set(Object.values(state.rows).flatMap(r => r.books));
@@ -217,7 +224,8 @@ const report = {
   _id: REPORT_ID,
   type: 'model_usage',
   schema_version: 1,
-  generated_at: new Date(),
+  // The date the pages were counted, also when re-mapped later with --from-state.
+  generated_at: new Date(state.finished_at || Date.now()),
   generated_by: 'scripts/audit/model-usage-snapshot.mjs',
   walk: { started_at: state.started_at, pages_seen: state.seen, recent_since: state.cutoff },
   engines,

@@ -43,6 +43,8 @@ function imageCounts(report: ModelUsageReport | null) {
 }
 
 const n0 = (n: number) => n.toLocaleString('en-US');
+/** A planner estimate, not a count: say so, and do not print false precision. */
+const about = (n: number) => (n >= 1e6 ? `about ${(n / 1e6).toFixed(1)} million` : `about ${n0(Math.round(n / 1000) * 1000)}`);
 const fmtDate = (d: Date | string) =>
   new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 
@@ -69,8 +71,8 @@ export default async function ModelsPage() {
       const c = images.get(m.id);
       return c ? `${n0(c.images)} pictures in the gallery` : null;
     }
-    if (m.id === 'search-gemini-embedding' && searchPages) return `about ${n0(searchPages)} pages searchable by meaning`;
-    if (m.id === 'search-clip' && clipImages) return `about ${n0(clipImages)} pictures compared`;
+    if (m.id === 'search-gemini-embedding' && searchPages) return `${about(searchPages)} pages searchable by meaning`;
+    if (m.id === 'search-clip' && clipImages) return `${about(clipImages)} pictures compared`;
     if (!LANE_FOR_JOB[m.job]) return null;
     const c = counts.get(m.id);
     if (!c || c.pages === 0) return m.status === 'starting' ? 'starting now; no pages yet' : null;

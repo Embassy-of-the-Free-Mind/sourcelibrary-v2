@@ -49,12 +49,15 @@ export const JOBS: { job: Job; title: string; sentence: string }[] = [
   { job: 'images', title: 'Finding pictures', sentence: 'A model finds the illustrations on each page and writes a short label for each one.' },
   { job: 'search', title: 'Searching by meaning', sentence: 'A model turns each page and each picture into a list of numbers, so a search can find passages about the same thing even when the words differ.' },
   { job: 'write', title: 'Summaries, indexes and the Librarian', sentence: 'Models write the summary, index and chapter list of each book, and answer questions in the Librarian.' },
-  { job: 'judge', title: 'Checking the other models', sentence: 'In our tests, a model grades samples of the work above; it writes nothing that appears in a book.' },
+  { job: 'judge', title: 'Checking the other models', sentence: 'In our tests, a model from another maker grades samples of the work above against the original page.' },
 ];
 
 const GEMINI_SOURCES = ['ai', 'batch_api', 'batch_api_recovery', 'pipeline_preview', 'spread-split'];
 /** Text that came from a published e-text matched to our scan, not from a model reading the image. */
-export const EDITION_SOURCES = ['esukhia-derge-tengyur', 'cbeta-xml-p5', 'oraec-corpus', 'kanripo', 'sefaria'];
+export const EDITION_SOURCES = ['esukhia-derge-tengyur', 'cbeta-xml-p5', 'oraec-corpus', 'cdli-atf', 'corpus', 'wikisource', 'kanripo', 'sefaria'];
+const EDITION_MODELS = [/^cbeta-/, /^oraec-/, /^esukhia-/, /^etcsl-/, /^cdli-/, /^tla-/, /^wikisource/];
+/** Hand corrections and one-off test runs: a few hundred pages, named so none is silently dropped. */
+const OTHER_MODELS = [/^claude-/, /^manual/];
 
 export const MODELS: PublicModel[] = [
   // ── Reading the page ────────────────────────────────────────────────────
@@ -69,8 +72,8 @@ export const MODELS: PublicModel[] = [
   },
   {
     id: 'ocr-flash', job: 'read', name: 'Gemini 3 Flash', version: 'gemini-3-flash-preview',
-    maker: 'Google', access: 'commercial service', status: 'no new pages',
-    books: 'Until 11 September 2026: most books in non-Latin scripts, books whose language was unknown, and the books of the Bibliotheca Philosophica Hermetica. Its transcriptions stay on those pages.',
+    maker: 'Google', access: 'commercial service', status: 'in use',
+    books: 'Much of the library, read before most new reading moved to Flash-Lite. Until 11 September 2026 it still read books in non-Latin scripts, books whose language was unknown, and the books of the Bibliotheca Philosophica Hermetica. Its transcriptions stay on those pages.',
     why: 'In our tests it made fewer errors than Flash-Lite on Greek and Chinese; it was the only Gemini model that passed on Greek printed both before and after 1700.',
     weakness: 'It shares Flash-Lite’s habits: refusals on famous texts, and invented text on scripts it cannot read. On Syriac, Gemini found the right passage on only 19% of pages.',
     evidence: [issue(4744, 'Greek test, #4744'), issue(4883, 'Syriac test, #4883')],
@@ -128,16 +131,16 @@ export const MODELS: PublicModel[] = [
     why: 'It is free and arrives with the scan, so a new book is searchable at once.',
     weakness: 'Flash-Lite read better on 57 books to 5, and the Archive’s text misreads about 1.5% of printed numbers.',
     evidence: [issue(5186, 'test, #5186')],
-    match: { lane: 'ocr', models: [/^ia-ocr\//], sources: ['ia_djvu'] },
+    match: { lane: 'ocr', models: [/^ia-ocr\//, /^ia-legacy-ocr/], sources: ['ia_djvu', 'ia-ocr-repair'] },
   },
   {
-    id: 'ocr-editions', job: 'read', name: 'Published e-texts', version: 'Esukhia Derge Tengyur, CBETA, ORAEC and others',
+    id: 'ocr-editions', job: 'read', name: 'Published e-texts', version: 'Esukhia Derge Tengyur, CBETA, ORAEC, ETCSL, CDLI, TLA, Wikisource',
     maker: 'Scholarly text projects', access: 'existing text, no model', status: 'in use',
     books: 'Pages where a scholarly e-text of the same work exists and has been matched to our scan.',
     why: 'Text typed and checked by people is more reliable than any model reading the image.',
     weakness: 'The e-text may follow a different edition than our scan, and its match to the page can slip by a line or a leaf.',
     evidence: [issue(5497, 'Tengyur, #5497'), issue(5571, 'licence display, #5571')],
-    match: { lane: 'ocr', models: [/^cbeta-/, /^oraec-/, /^esukhia-/], sources: EDITION_SOURCES },
+    match: { lane: 'ocr', models: EDITION_MODELS, sources: EDITION_SOURCES },
   },
   {
     id: 'ocr-gemini-older', job: 'read', name: 'Earlier Gemini models', version: 'gemini-2.5-flash, gemini-2.0-flash',
@@ -147,6 +150,15 @@ export const MODELS: PublicModel[] = [
     weakness: 'Not measured against the current models on our pages.',
     evidence: [],
     match: { lane: 'ocr', models: [/^gemini-(1|2)\./, /^gemini$/] },
+  },
+  {
+    id: 'ocr-other', job: 'read', name: 'Hand corrections and test runs', version: 'manual, claude-*',
+    maker: 'People, and Claude (Anthropic) in tests', access: 'commercial service', status: 'retired',
+    books: 'A few hundred pages typed or corrected by hand, or read by Claude while we tested it.',
+    why: 'Corrections by people; the Claude pages are left from tests.',
+    weakness: 'Each is a small, one-off source. The record on each page says which.',
+    evidence: [],
+    match: { lane: 'ocr', models: OTHER_MODELS, sources: ['manual'] },
   },
   {
     id: 'ocr-unrecorded', job: 'read', name: 'Not recorded', version: '—',
@@ -184,6 +196,33 @@ export const MODELS: PublicModel[] = [
     weakness: 'Not measured against the current models on our pages.',
     evidence: [],
     match: { lane: 'translation', models: [/^gemini-(1|2)\./, /^gemini$/] },
+  },
+
+  {
+    id: 'tr-editions', job: 'translate', name: 'Published translations', version: 'ETCSL, TLA',
+    maker: 'Scholarly text projects', access: 'existing text, no model', status: 'in use',
+    books: 'Sumerian and Egyptian texts whose scholarly translation is openly published and has been matched to our pages.',
+    why: 'A translation made and checked by scholars is more reliable than any model.',
+    weakness: 'It may translate a different edition than our scan, and its match to the page can slip.',
+    evidence: [{ label: 'ETCSL', href: 'https://etcsl.orinst.ox.ac.uk/' }],
+    match: { lane: 'translation', models: [/^etcsl-/, /^tla-/], sources: ['corpus'] },
+  },
+  {
+    id: 'tr-other', job: 'translate', name: 'Hand corrections and test runs', version: 'manual, claude-*',
+    maker: 'People, and Claude (Anthropic) in tests', access: 'commercial service', status: 'retired',
+    books: 'A few dozen pages translated or corrected by hand, or translated by Claude while we tested it.',
+    why: 'Corrections by people; the Claude pages are left from tests.',
+    weakness: 'Each is a small, one-off source. The record on each page says which.',
+    evidence: [],
+    match: { lane: 'translation', models: OTHER_MODELS, sources: ['manual'] },
+  },
+  {
+    id: 'tr-unrecorded', job: 'translate', name: 'Not recorded', version: '—',
+    maker: '—', access: 'commercial service', status: 'retired',
+    books: 'Pages translated before we began storing the model’s name on each page.',
+    why: '—',
+    weakness: 'We cannot say which model translated these pages.',
+    evidence: [],
   },
 
   // ── Finding pictures ────────────────────────────────────────────────────
@@ -271,15 +310,14 @@ export const NOT_A_MODEL = new Set(['system', 'skip', 'same-language']);
  */
 export function engineFor(lane: string, model: string | null, source: string | null): string | null {
   if (lane === 'ocr' && !model && !source) return 'ocr-unrecorded';
+  if (lane === 'translation' && !model && (!source || GEMINI_SOURCES.includes(source))) return 'tr-unrecorded';
   if (lane === 'images' && !model) return 'img-older';
   if (source && NOT_A_MODEL.has(source) && !model) return 'not-a-model';
-  // Specialists first: a BDRC model can arrive under a Gemini-shaped source ('ai').
-  const ordered = [...MODELS].sort((a, b) => Number(a.id.includes('gemini') || a.id.includes('flash')) - Number(b.id.includes('gemini') || b.id.includes('flash')));
-  for (const m of ordered) {
-    if (!m.match || m.match.lane !== lane) continue;
-    if (model && m.match.models?.some(re => re.test(model))) return m.id;
-    if (source && m.match.sources?.includes(source)) return m.id;
-  }
+  // The model name decides first (a BDRC model can arrive under a Gemini-shaped source, 'ai');
+  // the source decides only when no entry claims the model.
+  const lanes = MODELS.filter(m => m.match?.lane === lane);
+  if (model) for (const m of lanes) if (m.match!.models?.some(re => re.test(model))) return m.id;
+  if (source) for (const m of lanes) if (m.match!.sources?.includes(source)) return m.id;
   // A Gemini source with no model name recorded: Gemini, version unknown.
   if (lane === 'ocr' && source && GEMINI_SOURCES.includes(source) && !model) return 'ocr-unrecorded';
   return null;
