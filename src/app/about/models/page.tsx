@@ -197,7 +197,7 @@ function ModelCard({ m, count, languages, extra }: {
         <div><dt className="inline text-muted">Known weakness: </dt><dd className="inline text-secondary">{m.weakness}</dd></div>
       </dl>
       {m.version !== '—' && (
-        <div className="text-xs text-muted mt-2 break-words">Model: <span className="font-mono">{m.version}</span></div>
+        <div className="text-xs text-muted mt-2 break-words">{m.access === 'existing text, no model' ? 'Source' : 'Model'}: <span className="font-mono">{m.version}</span></div>
       )}
       {m.evidence.length > 0 && (
         <div className="text-xs mt-2 flex flex-wrap gap-x-3 gap-y-1">

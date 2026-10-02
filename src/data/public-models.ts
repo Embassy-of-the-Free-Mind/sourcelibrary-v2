@@ -28,7 +28,7 @@ export interface PublicModel {
   /** The model identifiers as stored on pages, so a reader can match a page's record. */
   version: string;
   maker: string;
-  access: 'open model' | 'commercial service' | 'existing text, no model';
+  access: 'open model' | 'commercial service' | 'existing text, no model' | 'various';
   status: Status;
   /** Which books it works on. */
   books: string;
@@ -153,7 +153,7 @@ export const MODELS: PublicModel[] = [
   },
   {
     id: 'ocr-other', job: 'read', name: 'Hand corrections and test runs', version: 'manual, claude-*',
-    maker: 'People, and Claude (Anthropic) in tests', access: 'commercial service', status: 'retired',
+    maker: 'People, and Claude (Anthropic) in tests', access: 'various', status: 'in use',
     books: 'A few hundred pages typed or corrected by hand, or read by Claude while we tested it.',
     why: 'Corrections by people; the Claude pages are left from tests.',
     weakness: 'Each is a small, one-off source. The record on each page says which.',
@@ -162,7 +162,7 @@ export const MODELS: PublicModel[] = [
   },
   {
     id: 'ocr-unrecorded', job: 'read', name: 'Not recorded', version: '—',
-    maker: '—', access: 'commercial service', status: 'retired',
+    maker: '—', access: 'various', status: 'retired',
     books: 'Pages transcribed before we began storing the model’s name on each page.',
     why: '—',
     weakness: 'We cannot say which model read these pages.',
@@ -209,7 +209,7 @@ export const MODELS: PublicModel[] = [
   },
   {
     id: 'tr-other', job: 'translate', name: 'Hand corrections and test runs', version: 'manual, claude-*',
-    maker: 'People, and Claude (Anthropic) in tests', access: 'commercial service', status: 'retired',
+    maker: 'People, and Claude (Anthropic) in tests', access: 'various', status: 'in use',
     books: 'A few dozen pages translated or corrected by hand, or translated by Claude while we tested it.',
     why: 'Corrections by people; the Claude pages are left from tests.',
     weakness: 'Each is a small, one-off source. The record on each page says which.',
@@ -218,7 +218,7 @@ export const MODELS: PublicModel[] = [
   },
   {
     id: 'tr-unrecorded', job: 'translate', name: 'Not recorded', version: '—',
-    maker: '—', access: 'commercial service', status: 'retired',
+    maker: '—', access: 'various', status: 'retired',
     books: 'Pages translated before we began storing the model’s name on each page.',
     why: '—',
     weakness: 'We cannot say which model translated these pages.',
