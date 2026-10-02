@@ -105,10 +105,10 @@ export async function resyncMirrors(db, pageIds, { log = console.log } = {}) {
   return out;
 }
 
-/** Count opening/closing `<note>` tags and malformed `</note` closers. */
+/** Count opening (with or without attributes)/closing `<note>` tags and malformed `</note` closers. */
 export function noteTagBalance(text) {
   const s = String(text || '');
-  const opens = (s.match(/<note>/gi) || []).length;
+  const opens = (s.match(/<note(?:\s[^>]*)?>/gi) || []).length;
   const closes = (s.match(/<\/note>/gi) || []).length;
   const malformed = (s.match(/<\/note(?!>)/gi) || []).length;
   return { opens, closes, malformed, balanced: opens === closes && malformed === 0 };
