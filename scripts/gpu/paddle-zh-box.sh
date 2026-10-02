@@ -34,16 +34,20 @@ setup() {
       python3 -m venv "$W/srv"
       "$W/srv/bin/pip" install -q --upgrade pip >> "$W/setup.log" 2>&1
       "$W/srv/bin/pip" install -q "paddleocr[doc-parser]==3.7.0" "paddlex==3.7.2" >> "$W/setup.log" 2>&1
-      PATH="$W/srv/bin:$PATH" "$W/srv/bin/paddleocr" install_genai_server_deps vllm >> "$W/setup.log" 2>&1 || log "install_genai_server_deps vllm FAILED (see setup.log)"
+      # the installer shells out to `paddlex` (so the venv goes on PATH) and builds flash-attn from source,
+      # which fails on the GPU OS image (no nvcc, measured 2026-10-02) — so its failure is expected and the
+      # prebuilt flash-attn wheel for the torch it installed (2.8, cu12, cxx11 ABI, py3.12) goes in after
+      PATH="$W/srv/bin:$PATH" "$W/srv/bin/paddleocr" install_genai_server_deps vllm >> "$W/setup.log" 2>&1 || log "install_genai_server_deps vllm: non-zero (flash-attn source build); installing the prebuilt wheel"
+      "$W/srv/bin/pip" install -q "https://github.com/Dao-AILab/flash-attention/releases/download/v2.8.3/flash_attn-2.8.3+cu12torch2.8cxx11abiTRUE-cp312-cp312-linux_x86_64.whl" >> "$W/setup.log" 2>&1 || log "flash-attn wheel FAILED"
     fi
-    log "server venv: $("$W/srv/bin/python" -c 'import vllm;print("vllm",vllm.__version__)' 2>&1 | tail -1)"
+    log "server venv: $("$W/srv/bin/python" -c 'import vllm,flash_attn;print("vllm",vllm.__version__,"flash_attn",flash_attn.__version__)' 2>&1 | tail -1)"
   fi
 }
 
 serve() {
   [ "$BACKEND" = server ] || return 0
   if ! curl -sf http://127.0.0.1:8118/v1/models >/dev/null 2>&1; then
-    PATH="$W/srv/bin:$PATH" nohup "$W/srv/bin/paddleocr" genai_server --model_name "${VL_MODEL:-PaddleOCR-VL-0.9B}" --backend vllm --port 8118 ${SERVER_ARGS:-} > "$W/server.log" 2>&1 &
+    PATH="$W/srv/bin:$PATH" nohup "$W/srv/bin/paddlex_genai_server" --model_name "${VL_MODEL:-PaddleOCR-VL-1.6-0.9B}" --backend vllm --port 8118 ${SERVER_ARGS:-} > "$W/server.log" 2>&1 &
     for i in $(seq 1 120); do curl -sf http://127.0.0.1:8118/v1/models >/dev/null 2>&1 && break; sleep 5; done
   fi
   curl -sf http://127.0.0.1:8118/v1/models >/dev/null && log "genai server up: $(curl -s http://127.0.0.1:8118/v1/models | head -c 200)" || { log "genai server did NOT come up"; tail -20 "$W/server.log" | tee -a "$W/box.log"; return 1; }
@@ -66,6 +70,35 @@ infer() {
   wait || true
   echo $(( $(date +%s) - t0 )) > "$W/infer-secs"
   log "infer done in $(cat "$W/infer-secs") s"
+}
+
+# a benchmark arm (#5600 step 3): <name> <manifest> — the runners over a bench manifest into arms/<name>/,
+# wall-clocked from the first runner's model load to the last page (arm.json: pages, wall, load secs, config)
+arm() {
+  local name=$1 M=$2 R=$W/arms/$1
+  mkdir -p "$R"; ln -sfn "$W/bench/img" "$R/img"
+  serve
+  local t0; t0=$(date +%s.%N)
+  for i in $(seq 0 $((WORKERS - 1))); do
+    "$W/venv/bin/python" "$HERE/paddle-zh-run.py" --manifest "$M" --root "$R" --worker "$i" --workers "$WORKERS" \
+      --page-timeout "${PAGE_TIMEOUT:-90}" --max-side "${MAX_SIDE:-0}" --layout "${LAYOUT:-1}" --backend "$BACKEND" \
+      --prefetch "${PREFETCH:-4}" --page-batch "${PAGE_BATCH:-1}" >> "$R/worker-$i.log" 2>&1 &
+  done
+  wait || true
+  local t1; t1=$(date +%s.%N)
+  "$W/venv/bin/python" - "$R" "$t0" "$t1" "$name" "$BACKEND" "$WORKERS" "${MAX_SIDE:-0}" "${LAYOUT:-1}" "${PAGE_BATCH:-1}" <<'PY'
+import json, glob, sys
+r, t0, t1, name, backend, workers, max_side, layout, pb = sys.argv[1:]
+T = [json.loads(l) for f in glob.glob(f'{r}/timings-*.jsonl') for l in open(f) if l.strip()]
+loads = [x['secs'] for x in T if x.get('event') == 'loaded']
+pages = [x for x in T if 'bid' in x and 'error' not in x]
+errs = [x for x in T if 'bid' in x and 'error' in x]
+wall = float(t1) - float(t0)
+json.dump({'arm': name, 'backend': backend, 'workers': int(workers), 'max_side': int(max_side), 'layout': int(layout), 'page_batch': int(pb),
+           'pages': len(pages), 'errors': len(errs), 'wall_secs': round(wall, 1), 'load_secs_max': max(loads) if loads else None,
+           'wall_secs_after_load': round(wall - (max(loads) if loads else 0), 1)}, open(f'{r}/arm-run.json', 'w'), indent=1)
+print(open(f'{r}/arm-run.json').read())
+PY
 }
 
 loop() {
@@ -114,5 +147,6 @@ case ${1:-} in
   setup) setup ;; serve) serve ;; infer) infer "${2:-}" ;; collect) collect ;;
   all) setup; infer; collect; touch "$W/DONE"; log DONE ;;
   loop) loop; touch "$W/DONE"; log DONE ;;
+  arm) arm "$2" "$3" ;;
   *) echo "usage: $0 setup|serve|infer|collect|all|loop"; exit 1 ;;
 esac

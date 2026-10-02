@@ -37,6 +37,18 @@ describe('paddle-zh-lane conversion 2: the 版心 margin', () => {
     expect(convertPaddle('西清古鑑\n卷一', { workTitle: '西清古鑑' }).body).toBe('<header>西清古鑑</header>\n<header>卷一</header>');
     expect(convertPaddle('西清古鑑\n甲\n乙\n丙\n丁\n戊', { workTitle: '西清古鑑' }).body.split('\n')[0]).toBe('西清古鑑');
   });
+  it('a fold strip whose 欽定四庫全書 was misread as kana still anchors the title and leaf (#5600 pilot, read-from-image)', () => {
+    // 6a3c787401fe4f593c2084f8 p40 and 6a3cb83d3dce6cfad748c6c1 p77: the strip is the last column read
+    const a = convertPaddle('謂之長男巽一索而得女故謂之長女坎再索而得男\nこんにちはいい\n大易通解\n二十', { workTitle: '大易通解' });
+    expect(a.body.split('\n').slice(-2)).toEqual(['<header>大易通解</header>', '<page-num>二十</page-num>']);
+    // the strip abbreviates the title: 御定佩文齋書畫譜 → 御定書畫譜; 林春 (a name heading in the body) stays text
+    const b = convertPaddle('例著論一道景泰間上之朝\n懷麓堂集\n林春\n御定書畫譜\nこっつミー・ン・う\n二十八', { workTitle: '御定佩文齋書畫譜' });
+    expect(b.body.split('\n').slice(-4)).toEqual(['懷麓堂集', '林春', '<header>御定書畫譜</header>', '<page-num>二十八</page-num>']);
+  });
+  it('a title-shaped line in the middle of a page is text even next to kana', () => {
+    const lines = ['甲乙丙丁', '戊己庚辛', '壬癸子丑', '寅卯辰巳', 'こんにち', '大易', '午未申酉', '戌亥甲乙', '丙丁戊己', '庚辛壬癸'];
+    expect(convertPaddle(lines.join('\n'), { workTitle: '大易通解' }).body).toContain('\n大易\n');
+  });
   it('a body juan heading (work title + 卷) is text, not margin', () => {
     expect(convertPaddle('周官集傳卷十').body).toBe('周官集傳卷十');
   });
