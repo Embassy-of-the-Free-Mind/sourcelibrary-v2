@@ -87,7 +87,7 @@ export default function Specimen({ s }: { s: SpecimenData }) {
             <div className="min-w-0 space-y-3">
               {s.served.map((p, i) => (
                 <div key={i}>
-                  <Label>Served{p.label ? `: ${p.label.toLowerCase()}` : ''}</Label>
+                  <Label>Served{p.label ? ` · ${p.label}` : ''}</Label>
                   <Segments segs={p.segs} lang={p.lang} dir={p.dir} />
                 </div>
               ))}

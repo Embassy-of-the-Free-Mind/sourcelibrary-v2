@@ -1070,7 +1070,7 @@ export default function ResearchQualityPage() {
         <Block id="kinds-of-error" title="Kinds of error" lede="Rates say how often a page goes wrong; this says how. Seven mechanisms account for almost everything found when pages were read by eye against their scans, and the judge’s own defect counts show which translation faults are common.">
           <MechanismTable />
           <p className="text-xs text-muted leading-relaxed mt-2 mb-6">
-            From a by-eye reading of 156 pages (two facing pages from each of 78 books, in 13 kinds of book) on 25 September 2026. It found 44 error classes, 30 of them new. Counts there are books in which a class was seen, not rates. &ldquo;Measured here&rdquo; says whether an instrument in this paper sees the mechanism. The full taxonomy, with an example of each class, is a companion paper in preparation (<a href={`${GH_ISSUE}5613`} className="text-accent-rust hover:underline">#5613</a>); until then it is <a href={`${GH}.claude/docs/page-error-taxonomy.md`} className="text-accent-rust hover:underline">in the repository</a>.
+            From a by-eye reading of 156 pages (two facing pages from each of 78 books, in 13 kinds of book) on 25 September 2026. It found 44 error classes, 30 of them new. Counts there are books in which a class was seen, not rates. &ldquo;Measured here&rdquo; says whether an instrument in this paper sees the mechanism. The full taxonomy, with every class and real pages for the most consequential, is the companion paper <Link href="/research/page-errors" className="text-accent-rust hover:underline">What goes wrong on a page</Link>.
           </p>
           <h3 className="text-lg text-primary font-semibold mb-2">What the translation judge flagged</h3>
           <DefectChart />
