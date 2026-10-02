@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-02T08:30:00.198Z",
+ "generated_at": "2026-10-02T12:36:28.227Z",
  "gate": {
   "delta": 0.01,
   "catastrophic": 0.02
@@ -41,6 +41,167 @@
    "eur_per_page": 0.000733,
    "gate": "baseline",
    "note": "#5547 pilot throughput (3,422 pages incl. bench; 3.35 s/page on book pages)"
+  },
+  {
+   "arm": "rp4090-native-w2",
+   "config": "native runners=2 max_side=0 layout=1",
+   "gpu": "RTX 4090 (secure)",
+   "n": 95,
+   "scored": 95,
+   "missing": 0,
+   "median_cer": 0.205,
+   "delta_vs_base": 0,
+   "catastrophic": 1,
+   "catastrophic_rate": 0.0105,
+   "loops": 0,
+   "empty": 0,
+   "wlt_vs_base": [
+    13,
+    12,
+    70
+   ],
+   "s_per_page": 4.9242,
+   "eur_per_page": 0.00087,
+   "gate": "PASS",
+   "note": "community: no instances (3 tries)"
+  },
+  {
+   "arm": "rp4090-vllm-c16",
+   "config": "server clients=16 max_side=0 layout=1",
+   "gpu": "RTX 4090 (secure)",
+   "n": 95,
+   "scored": 91,
+   "missing": 4,
+   "median_cer": 0.204,
+   "delta_vs_base": 0,
+   "catastrophic": 5,
+   "catastrophic_rate": 0.0526,
+   "loops": 0,
+   "empty": 0,
+   "wlt_vs_base": [
+    16,
+    9,
+    66
+   ],
+   "s_per_page": 1.6772,
+   "eur_per_page": 0.000296,
+   "gate": "FAIL",
+   "note": "UNSTABLE: tput arm errored; written by job paddle-zh-5600d"
+  },
+  {
+   "arm": "rp4090-vllm-c8",
+   "config": "server clients=8 max_side=0 layout=1",
+   "gpu": "RTX 4090 (secure)",
+   "n": 95,
+   "scored": 95,
+   "missing": 0,
+   "median_cer": 0.205,
+   "delta_vs_base": 0,
+   "catastrophic": 1,
+   "catastrophic_rate": 0.0105,
+   "loops": 0,
+   "empty": 0,
+   "wlt_vs_base": [
+    15,
+    9,
+    71
+   ],
+   "s_per_page": 0.463,
+   "eur_per_page": 0.000082,
+   "gate": "PASS",
+   "note": "community: no instances (3 tries)"
+  },
+  {
+   "arm": "sl4-native-w2",
+   "config": "native workers=2 max_side=0 layout=1",
+   "gpu": "L4-1-24G",
+   "n": 95,
+   "scored": 95,
+   "missing": 0,
+   "median_cer": 0.205,
+   "delta_vs_base": 0,
+   "catastrophic": 1,
+   "catastrophic_rate": 0.0105,
+   "loops": 0,
+   "empty": 0,
+   "wlt_vs_base": [
+    12,
+    9,
+    74
+   ],
+   "s_per_page": 4.2088,
+   "eur_per_page": 0.000921,
+   "gate": "PASS",
+   "note": "box zh1 (pl-waw-2); written from arm-run.json by job paddle-zh-5600d (tput = wall after model load)"
+  },
+  {
+   "arm": "sl4-vllm-c16",
+   "config": "server clients=16 max_side=0 layout=1",
+   "gpu": "L4-1-24G",
+   "n": 95,
+   "scored": 95,
+   "missing": 0,
+   "median_cer": 0.205,
+   "delta_vs_base": 0,
+   "catastrophic": 1,
+   "catastrophic_rate": 0.0105,
+   "loops": 0,
+   "empty": 0,
+   "wlt_vs_base": [
+    16,
+    10,
+    69
+   ],
+   "s_per_page": 0.3642,
+   "eur_per_page": 0.00008,
+   "gate": "PASS",
+   "note": "box zh1 (pl-waw-2); written from arm-run.json by job paddle-zh-5600d (tput = wall after model load)"
+  },
+  {
+   "arm": "sl4-vllm-c4",
+   "config": "server clients=4 max_side=0 layout=1",
+   "gpu": "L4-1-24G",
+   "n": 95,
+   "scored": 95,
+   "missing": 0,
+   "median_cer": 0.205,
+   "delta_vs_base": 0,
+   "catastrophic": 1,
+   "catastrophic_rate": 0.0105,
+   "loops": 0,
+   "empty": 0,
+   "wlt_vs_base": [
+    15,
+    11,
+    69
+   ],
+   "s_per_page": 0.7157,
+   "eur_per_page": 0.000157,
+   "gate": "PASS",
+   "note": "box zh1 (pl-waw-2); written from arm-run.json by job paddle-zh-5600d (tput = wall after model load)"
+  },
+  {
+   "arm": "sl4-vllm-c8",
+   "config": "server clients=8 max_side=0 layout=1",
+   "gpu": "L4-1-24G",
+   "n": 95,
+   "scored": 95,
+   "missing": 0,
+   "median_cer": 0.205,
+   "delta_vs_base": 0,
+   "catastrophic": 1,
+   "catastrophic_rate": 0.0105,
+   "loops": 0,
+   "empty": 0,
+   "wlt_vs_base": [
+    14,
+    8,
+    73
+   ],
+   "s_per_page": 0.4742,
+   "eur_per_page": 0.000104,
+   "gate": "PASS",
+   "note": "box zh1 (pl-waw-2); written from arm-run.json by job paddle-zh-5600d (tput = wall after model load)"
   }
  ]
 }
