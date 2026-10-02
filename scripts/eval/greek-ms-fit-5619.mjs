@@ -19,6 +19,7 @@
  *   node --env-file=.env.production.local scripts/eval/greek-ms-fit-5619.mjs search --books <id,id> [--per-book N]
  *   node --env-file=.env.production.local scripts/eval/greek-ms-fit-5619.mjs search --census <books.json> --per-book 5
  *   node --env-file=.env.production.local scripts/eval/greek-ms-fit-5619.mjs fit --book <id> --edition held:<bookId>[,held:…] | tei:<urn>[,…] [--null <id,id>]
+ *        [--reads kraken [--kraken-dir <dir>]]   (fit on Kraken reads, greek-ms-kraken-5619.sh, instead of Flash)
  *
  * search: every page's folded letters → distinct 9-grams; one pass over every flattened TEI edition
  *   (and any --held editions) counts, per page, the share of its 9-grams each edition contains.
@@ -102,9 +103,22 @@ async function loadEdition(db, spec) {
     segments: ps.filter((p) => p.ocr?.data).map((p) => ({ ref: `${id} p${p.page_number}`, text: bodyText(p.ocr.data) })) };
 }
 
+// --reads kraken: use the page's Kraken greek-cllg read (greek-ms-kraken-5619.sh, <book>-<page>.txt
+// under --kraken-dir) instead of the stored Flash reading. A page without a finished read has no text.
+const READS = val('reads', 'flash');
+const KRAKEN_DIR = val('kraken-dir', path.join(WORK, 'kraken-full'));
+function krakenRead(id, n) {
+  if (!fs.existsSync(path.join(KRAKEN_DIR, `${id}-${n}.ok`))) return '';
+  const f = path.join(KRAKEN_DIR, `${id}-${n}.txt`);
+  return fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : '';
+}
+
 async function bookPages(db, id) {
   return (await db.collection('pages').find({ book_id: id, page_number: { $gte: 0 } }, { projection: { _id: 0, id: 1, page_number: 1, 'ocr.data': 1, 'ocr.model': 1, photo: 1, archived_photo: 1 } }).sort({ page_number: 1 }).toArray())
-    .map((p) => ({ id: p.id, page_number: p.page_number, image: p.archived_photo || p.photo, model: p.ocr?.model || null, body: p.ocr?.data ? bodyText(p.ocr.data) : '', q: p.ocr?.data ? greekLetters(bodyText(p.ocr.data)) : '' }));
+    .map((p) => {
+      const body = READS === 'kraken' ? krakenRead(id, p.page_number) : (p.ocr?.data ? bodyText(p.ocr.data) : '');
+      return { id: p.id, page_number: p.page_number, image: p.archived_photo || p.photo, model: READS === 'kraken' ? 'kraken greek-cllg' : (p.ocr?.model || null), body, q: greekLetters(body) };
+    });
 }
 
 // ── search: which open edition does each page come from? ──
@@ -273,7 +287,7 @@ async function fit(db) {
   const absGap = bounds.map((b) => Math.abs(b.gap));
   const edgeErr = neigh.filter((x) => x.start_err != null && x.end_err != null).map((x) => Math.max(Math.abs(x.start_err), Math.abs(x.end_err)));
   const summary = {
-    book: id, at: new Date().toISOString(), editions: eds.map((e) => ({ spec: e.spec, label: e.label, licence: e.licence, segments: e.segments.length })), edition_letters: stream.letters.length,
+    book: id, at: new Date().toISOString(), reads: READS, editions: eds.map((e) => ({ spec: e.spec, label: e.label, licence: e.licence, segments: e.segments.length })), edition_letters: stream.letters.length,
     rules: { ...FIT_RULES, locate_k: 7, locate_threshold: +thr.toFixed(3), null_pages: nullShares.length, null_p99: nullShares.length ? +pct(nullShares, 0.99).toFixed(3) : null, null_max: nullShares.length ? +Math.max(...nullShares).toFixed(3) : null },
     pages: pages.length, text_pages: text.length, above_threshold: cand.length, located: located.length, located_share_of_text: text.length ? +(located.length / text.length).toFixed(3) : 0,
     located_strict: strict.length, located_strict_share: text.length ? +(strict.length / text.length).toFixed(3) : 0,
