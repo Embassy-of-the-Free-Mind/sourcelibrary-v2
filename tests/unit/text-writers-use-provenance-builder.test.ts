@@ -51,6 +51,7 @@ const ALLOWED: Record<string, string> = {
   'scripts/migration/add-page-translations-withheld.mjs': 'migration of stored text',
   'scripts/tmp-recitation-retry.mjs': "writes the marker '[RECITATION_BLOCKED]', not a transcription",
   'scripts/maintenance/fix-unclosed-note-tags.mjs': 'repairs tags in stored translation text; introduces no new text',
+  'scripts/lib/translation-text-repair.mjs': 'hand repair of stored translation text (a wrong note, a broken tag); revision row with before/after content_hash, no model output (#5624, #5644)',
   'scripts/maintenance/withdraw-fabricated-translation-4584.mjs': 'replaces invented spans with <lacuna>; introduces no new text',
   'scripts/workers/mineru-ocr-worker.mjs': "MinerU (specialist, not Gemini) — its own engine block (specialist-engine/1: version, licence, backend, run, input), checked by missingProvenance under source 'mineru'",
   'src/app/api/books/[id]/import-batch/route.ts': 'text supplied by the importer with the request, not a model read here',

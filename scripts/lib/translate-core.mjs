@@ -27,6 +27,7 @@ import { buildVisiblePageCountPipeline } from './page-counts.mjs';
 import { saveRevisionBeforeOverwrite } from './page-revisions.mjs';
 import { loopVerdict } from './ocr-loop-guard.mjs';
 import { stripMarkupTags } from './strip-markup-tags.mjs';
+import { repairAnnotationTags } from './annotation-tag-repair.mjs';
 import { CLEAR_STALE_UNSET } from './stale-translation.mjs';
 import { resolvePageBreak, lookaheadSnippet, LOOKAHEAD_CLAUSE } from './page-break-devices.mjs';
 import { echoedSource } from './page-integrity.mjs';
@@ -468,8 +469,10 @@ export function buildBlockTranslationPrompt({ prompts, book, pages, previousTran
   return { prompt, promptRef, isEnglish, pageBreak: pageBreak ? { applied, pages: per.map((r) => ({ ...r.meta, fired: r.fired })) } : null };
 }
 
-/** Close unterminated inline tags the model sometimes emits mid-stream, then hold the
- *  result to the closed tag vocabulary (validateTranslationTags). */
+/** Close unterminated inline tags the model sometimes emits mid-stream, repair malformed,
+ *  nested and unclosed annotation tags — <note> included (repairAnnotationTags, the twin of
+ *  the app's src/lib/sanitize-translation-tags.ts; #5644) — then hold the result to the closed
+ *  tag vocabulary (validateTranslationTags). */
 export function sanitizeTranslationTags(text) {
   if (!text) return text;
   const closed = text
@@ -477,7 +480,7 @@ export function sanitizeTranslationTags(text) {
       (_, tag, content) => `<${tag}>${content}</${tag}>`)
     .replace(/<\/(margin|gloss|insert|unclear|term|heading|footnote|caption)>\s*<\/\1>/g,
       (_, tag) => `</${tag}>`);
-  return validateTranslationTags(closed).text;
+  return validateTranslationTags(repairAnnotationTags(closed)).text;
 }
 
 // ────────────────────────────────────────────────────────────────────────────

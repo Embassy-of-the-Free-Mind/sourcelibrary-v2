@@ -1,191 +1,112 @@
 /**
- * Fix unclosed/malformed annotation tags in existing translations.
+ * Fix unclosed/malformed <note> tags in stored translations, for a named list of pages (#5644).
  *
- * Scans all translated pages, applies sanitizeTranslationTags(),
- * creates a revision before modifying, and updates in place.
+ * The corpus-wide scan this script used to run is retired: it wrote revisions without a
+ * content_hash, overwrote human-edited pages and never re-synced the Supabase mirrors. Derive
+ * the page list with an audit, then pass it here.
  *
- * Usage: set -a; source .env.production.local; set +a; node scripts/maintenance/fix-unclosed-note-tags.mjs
- * Dry run: DRY_RUN=1 node scripts/maintenance/fix-unclosed-note-tags.mjs
+ * Repair, in order:
+ *   1. a malformed closer (`</note.` `</note,`) becomes `</note>`;
+ *   2. an UNCLOSED note is closed at the tightest plausible point — right after a leading
+ *      `<term>…</term>` (optionally labelled `original:`/`Sanskrit:`/`Tibetan:`), else before the
+ *      first sentence break, newline or block tag. Closing at the next note or blank line (the
+ *      writer-side rule) balances the tags but leaves the running text it swallowed inside the
+ *      note, still hidden from a reader with notes off — the defect #5644 is about;
+ *   3. a `</note>` left with no opener (the intended closer of a nested note) is dropped;
+ *   4. repairAnnotationTags (the shared twin of src/lib/sanitize-translation-tags.ts) for
+ *      anything left: wrong closers, nesting, other annotation tags.
+ *
+ * Guards (scripts/lib/translation-text-repair.mjs): human-edited pages are skipped; the write
+ * is conditional on the text read; a page_revisions row (before/after content_hash, reason,
+ * issue) is written first; both Supabase mirrors are re-synced after.
+ *
+ * Usage:
+ *   node --env-file=.env.production.local scripts/maintenance/fix-unclosed-note-tags.mjs --ids=<file.json|id,id,…>   # dry run
+ *   … --apply [--out=<diff.json>]
  */
 
-import { MongoClient, ObjectId } from 'mongodb';
-import { nanoid } from 'nanoid';
+import fs from 'node:fs';
+import { MongoClient } from 'mongodb';
+import { repairAnnotationTags } from '../lib/annotation-tag-repair.mjs';
+import { repairTranslationText, resyncMirrors, noteTagBalance } from '../lib/translation-text-repair.mjs';
 
-const DRY_RUN = process.env.DRY_RUN === '1';
+const ARG = (n) => process.argv.find((a) => a.startsWith(`${n}=`))?.split('=').slice(1).join('=');
+const APPLY = process.argv.includes('--apply');
+const OUT = ARG('--out') || '/tmp/fix-unclosed-note-tags-diff.json';
+const SOURCE = 'fix-unclosed-note-tags-5644';
 
-// Inline the sanitizer since we can't import TS from mjs easily
-const ANNOTATION_TAGS = ['note', 'margin', 'gloss', 'insert', 'unclear', 'term', 'image-desc'];
+const LEADING_TERMS = /^(?:(?:original|sanskrit|tibetan)\s*:\s*)?<term>[^<]*<\/term>(?:\s*[;,]\s*(?:original|sanskrit|tibetan)\s*:\s*<term>[^<]*<\/term>)*/i;
+const STOP = /[.;!?](?=\s|$)|\n|<(?:note|summary|meta|keywords|leaf-break)\b/i;
+const NOTE_TOKEN = /<note(?:\s[^>]*)?>|<\/note>/gi;
 
-function sanitizeTranslationTags(text) {
-  let result = text;
-
-  for (const tag of ANNOTATION_TAGS) {
-    const malformed = new RegExp(`</${tag}([^>])`, 'gi');
-    result = result.replace(malformed, (match, trailing) => {
-      if (/[a-z]/i.test(trailing)) return match;
-      return `</${tag}>${trailing}`;
-    });
+/** Close each unclosed <note> at the tightest plausible point (step 2 above). */
+export function closeUnclosedNotes(text) {
+  const toks = [...text.matchAll(NOTE_TOKEN)].map((m) => ({ i: m.index, end: m.index + m[0].length, close: m[0][1] === '/' }));
+  const edits = [];
+  for (let k = 0; k < toks.length; k++) {
+    const t = toks[k];
+    if (t.close) continue;
+    const next = toks[k + 1];
+    if (next && next.close) { k++; continue; } // paired
+    const segEnd = next ? next.i : text.length;
+    const seg = text.slice(t.end, segEnd);
+    const lead = seg.match(LEADING_TERMS);
+    let at = lead ? lead[0].length : seg.search(STOP);
+    if (at < 0) at = seg.length;
+    if (at === 0 || !seg.slice(0, at).trim()) edits.push([t.i, t.end, '']); // empty: drop the stray opener
+    else edits.push([t.end + at, t.end + at, '</note>']);
   }
-
-  for (const openTag of ANNOTATION_TAGS) {
-    for (const closeTag of ANNOTATION_TAGS) {
-      if (openTag === closeTag) continue;
-      const wrongClose = new RegExp(
-        `(<${openTag}>)([^<]*?)(</${closeTag}>)`, 'gi'
-      );
-      result = result.replace(wrongClose, `$1$2</${openTag}>`);
-    }
-  }
-
-  result = fixUnclosedTags(result);
-  return result;
+  let out = text;
+  for (const [a, b, s] of edits.sort((x, y) => y[0] - x[0])) out = out.slice(0, a) + s + out.slice(b);
+  return out;
 }
 
-function fixUnclosedTags(text) {
-  const tagPattern = new RegExp(
-    `<(/?)(?:${ANNOTATION_TAGS.join('|')})>`, 'gi'
-  );
+/** Drop a `</note>` with no open note before it — once step 2 has closed a nested opener, its
+ *  intended closer is left over. Removing it changes no words and shows the text it ended. */
+export function dropOrphanNoteCloses(text) {
+  let depth = 0;
+  return text.replace(NOTE_TOKEN, (tok) => {
+    if (tok[1] !== '/') { depth++; return tok; }
+    if (depth === 0) return '';
+    depth--;
+    return tok;
+  });
+}
 
-  const tags = [];
-  let m;
-  while ((m = tagPattern.exec(text)) !== null) {
-    tags.push({
-      index: m.index,
-      length: m[0].length,
-      isClose: m[1] === '/',
-      name: m[0].replace(/<\/?/g, '').replace(/>/, '').toLowerCase(),
-    });
-  }
-
-  if (tags.length === 0) return text;
-
-  const insertions = [];
-
-  for (const tagName of ANNOTATION_TAGS) {
-    const typeTags = tags.filter(t => t.name === tagName);
-    const openStack = [];
-
-    for (const tag of typeTags) {
-      if (!tag.isClose) {
-        if (openStack.length > 0 && tagName === 'note') {
-          insertions.push({ index: tag.index, text: `</${tagName}>` });
-          openStack.pop();
-        }
-        openStack.push(tag);
-      } else {
-        if (openStack.length > 0) openStack.pop();
-      }
-    }
-
-    for (const unclosed of openStack) {
-      const afterTag = unclosed.index + unclosed.length;
-      const remainder = text.substring(afterTag);
-      const breakPoints = [
-        remainder.search(/<summary>/i),
-        remainder.search(/<keywords>/i),
-        remainder.search(/<meta>/i),
-        remainder.search(/\n\n/),
-      ].filter(i => i >= 0);
-
-      let insertAt;
-      if (breakPoints.length > 0) {
-        insertAt = afterTag + Math.min(...breakPoints);
-      } else {
-        insertAt = text.length;
-      }
-      insertions.push({ index: insertAt, text: `</${tagName}>` });
-    }
-  }
-
-  if (insertions.length === 0) return text;
-
-  insertions.sort((a, b) => b.index - a.index);
-  let result = text;
-  for (const ins of insertions) {
-    result = result.slice(0, ins.index) + ins.text + result.slice(ins.index);
-  }
-  return result;
+export function repairNotes(text) {
+  const malformedFixed = text.replace(/<\/note([^>a-z])/gi, '</note>$1');
+  return repairAnnotationTags(dropOrphanNoteCloses(closeUnclosedNotes(malformedFixed)));
 }
 
 async function main() {
+  const idsArg = ARG('--ids');
+  if (!idsArg) { console.error('--ids=<file.json|id,id,…> required — the corpus-wide scan is retired (#5644)'); process.exit(1); }
+  const ids = fs.existsSync(idsArg) ? JSON.parse(fs.readFileSync(idsArg, 'utf8')).map((x) => (typeof x === 'string' ? x : x.id)) : idsArg.split(',');
+
   const client = new MongoClient(process.env.MONGODB_URI);
   await client.connect();
   const db = client.db('bookstore');
-  const pages = db.collection('pages');
-  const revisions = db.collection('page_revisions');
-
-  console.log(DRY_RUN ? '=== DRY RUN ===' : '=== LIVE RUN ===');
-
-  // Stream all pages with annotation tags in translation
-  const cursor = pages.find(
-    { 'translation.data': { $exists: true, $ne: '' } },
-    { projection: { _id: 1, book_id: 1, page_number: 1, 'translation.data': 1 } }
-  ).batchSize(500);
-
-  let scanned = 0, fixed = 0, errors = 0;
-
-  for await (const page of cursor) {
-    scanned++;
-    if (scanned % 10000 === 0) {
-      process.stdout.write(`\rScanned ${scanned}, fixed ${fixed}...`);
-    }
-
-    const original = page.translation.data;
-
-    // Quick check: does this page even have annotation tags?
-    if (!/<(note|margin|gloss|insert|unclear|term|image-desc)>/i.test(original)) continue;
-
-    // Check for mismatched counts
-    const opens = (original.match(/<note>/gi) || []).length;
-    const closes = (original.match(/<\/note>/gi) || []).length;
-
-    // Also check other tag types and malformed patterns
-    const hasMalformed = /<\/note[^>]/i.test(original) ||
-      /<note>[^<]*<\/(term|margin|gloss|insert|unclear)>/i.test(original);
-
-    if (opens === closes && !hasMalformed) continue;
-
-    const sanitized = sanitizeTranslationTags(original);
-    if (sanitized === original) continue;
-
-    fixed++;
-
-    if (DRY_RUN) {
-      console.log(`\nWould fix: book=${page.book_id} page=${page.page_number} (opens:${opens} closes:${closes})`);
-      // Show diff summary
-      const newOpens = (sanitized.match(/<note>/gi) || []).length;
-      const newCloses = (sanitized.match(/<\/note>/gi) || []).length;
-      console.log(`  Before: ${opens} opens, ${closes} closes → After: ${newOpens} opens, ${newCloses} closes`);
-      continue;
-    }
-
-    try {
-      // Create revision before modifying (matches PageRevision schema)
-      await revisions.insertOne({
-        id: nanoid(12),
-        page_id: String(page._id),
-        book_id: String(page.book_id),
-        field: 'translation',
-        data: original,
-        source: 'maintenance',
-        job_id: 'fix-unclosed-note-tags',
-        original_date: new Date(),
-        created_at: new Date(),
-      });
-
-      // Update translation
-      await pages.updateOne(
-        { _id: page._id },
-        { $set: { 'translation.data': sanitized, updated_at: new Date() } }
-      );
-    } catch (e) {
-      errors++;
-      console.error(`\nError fixing page ${page._id}:`, e.message);
-    }
+  const rows = [];
+  const written = [];
+  for (const id of ids) {
+    const page = await db.collection('pages').findOne({ id });
+    if (!page) { rows.push({ id, status: 'skipped', why: 'not_found' }); continue; }
+    const before = page.translation?.data || '';
+    const next = repairNotes(before);
+    const row = { id, book_id: page.book_id, page: page.page_number, balance_before: noteTagBalance(before), balance_after: noteTagBalance(next) };
+    const res = await repairTranslationText(db, page, next, {
+      expectBefore: before, source: SOURCE, issue: '#5644', jobId: SOURCE, apply: APPLY,
+      reason: 'unbalanced or malformed <note> tags closed so running text is not hidden inside a note; no words changed',
+    });
+    rows.push({ ...row, ...res, before, after: next });
+    if (res.status === 'written') written.push(id);
   }
-
-  console.log(`\n\nDone. Scanned: ${scanned}, Fixed: ${fixed}, Errors: ${errors}`);
+  fs.writeFileSync(OUT, JSON.stringify(rows, null, 1));
+  const count = (s) => rows.filter((r) => r.status === s).length;
+  const skips = rows.filter((r) => r.status === 'skipped').map((r) => `${r.id}:${r.why}`);
+  console.log(`${APPLY ? 'written' : 'would write'}: ${count(APPLY ? 'written' : 'dry_run')} · skipped: ${skips.length}${skips.length ? ` (${skips.join(', ')})` : ''} · still unbalanced after repair: ${rows.filter((r) => r.balance_after && !r.balance_after.balanced).length} · diff → ${OUT}`);
+  if (written.length) console.log('mirrors:', JSON.stringify(await resyncMirrors(db, written)));
   await client.close();
 }
 
-main().catch(e => { console.error(e); process.exit(1); });
+if (process.argv[1] && import.meta.url === `file://${process.argv[1]}`) main().catch((e) => { console.error(e); process.exit(1); });
