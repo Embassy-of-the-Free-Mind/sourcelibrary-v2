@@ -57,6 +57,20 @@
  * It matters most for SHOW-THROUGH leaves: bleed-through measures as ink, so
  * the write-time pixel guard (#4184) and the quarantine tool both let them pass.
  *
+ * MEASURED, CORPUS-WIDE (2026-10-02) — DO NOT QUARANTINE ON THIS RULE ALONE.
+ * It flags 166,077 pages (122,688 on live books); 82% fire only on a
+ * show-through word, which is mostly a routine quality note on a real page
+ * ("some bleed-through from the reverse, text legible"). Of 20 flagged pages
+ * read by eye, 0 were a blank or show-through leaf carrying invented text
+ * (Wilson 95% 0–16%): 16 had real ink, 4 were blank leaves whose "body" was a
+ * stamp or digitiser caption. The 46.6%-vs-4.7% contrast above is real but
+ * drowned by base rate. Use it as a supporting signal that sharpens another
+ * screen. Also: of the 305 confirmed fabrications, 139 have <=20 body letters
+ * by this measure — their prose is in <unclear>/<insert>/<note>, i.e. honest
+ * declines the first screen's `body()` counted as text. Positive control for
+ * the rule is therefore 41/166 (24.7%) of fabrications WITH a body, vs 6/261
+ * (2.3%) of controls. Write-up: scripts/eval/experiments/2026-10-02-self-declared-blank-4149.md
+ *
  * The walk covers the whole `pages` collection with a server-side regex
  * prefilter and a checkpoint, one phase per `_id` BSON type (see
  * backfill-script-type-4195.mjs for why). Read-only; writes a JSONL of
@@ -132,14 +146,15 @@ export async function inkCoverage(buf) {
 }
 
 /** What a tag says when the model itself thinks the leaf carries nothing of its own. */
-export const BLANKISH = /\b(blank|empty|no (visible )?text|no content|unprinted|nothing (is )?(written|printed)|show-?through|bleed-?through|mirror(ed)?|reversed|offset)\b/i;
+const BLANK_WORDS = /\b(blank|empty|no (visible )?text|no content|unprinted|nothing (is )?(written|printed))\b/i;
+const SHOWTHROUGH_WORDS = /\b(show-?through|bleed-?through|mirror(ed)?|reversed|offset)\b/i;
+/** The rule's full vocabulary: the union of the two classes above. */
+export const BLANKISH = new RegExp(`${BLANK_WORDS.source}|${SHOWTHROUGH_WORDS.source}`, 'i');
 /**
  * Server-side prefilter for the corpus walk. Must stay a SUPERSET of
  * `selfDeclaredBlank` (a term missing here is a page silently never scored) —
  * hence unanchored stems. It only sees tag contents up to the first `<`.
  */
-const BLANK_WORDS = /\b(blank|empty|no (visible )?text|no content|unprinted|nothing (is )?(written|printed))\b/i;
-const SHOWTHROUGH_WORDS = /\b(show-?through|bleed-?through|mirror(ed)?|reversed|offset)\b/i;
 export const SELF_DECLARED_PREFILTER =
   '<(page-type|warning|meta|image-desc)[^>]*>[^<]*(blank|empty|no (visible )?text|no content|unprinted|nothing|show-?through|bleed-?through|mirror|reversed|offset)';
 const SELF_DECLARED_MIN_LETTERS = 20;
@@ -174,9 +189,8 @@ export function selfDeclaredBlank(data) {
 /**
  * Frozen fixtures (measurement-instruments.md: a positive control the corpus
  * can repair out from under you is not a control). The first is the shape of a
- * confirmed #4149 fabrication; the second a real page that merely mentions
- * show-through in passing — which DOES fire, by design: that is the false
- * positive the precision sample exists to measure.
+ * confirmed #4149 fabrication; the second a CORRECT blank declaration (no body,
+ * must not fire); the third a real page whose tags say nothing blank.
  */
 const SELF_DECLARED_FIXTURES = [
   ['<language>Latin</language><page-type>blank</page-type><warning>Page is blank; faint show-through of the verso text.</warning>Quod autem in hoc negotio, & in aliis omnibus, quæ ad salutem animarum pertinent', ['page_type_blank', 'warning:blank', 'warning:showthrough']],
