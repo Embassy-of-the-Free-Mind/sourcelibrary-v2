@@ -15,6 +15,6 @@
   2. **15,271 books (37%) are profiled from page 25.** Only their first 25 pages carry OCR, so the "nearest page with OCR" rule lands at the end of that span, close to front matter.
   3. **Period is unknown for 46%** (19,054 books, mostly Chinese, where `books.published` does not pin a century).
   4. The inline script tag is itself a model's reading (#5623: OCR right 6 of 11 on CJK disagreements). The descriptor agreed 39/40 on Latin-script pages.
-- **Next decision (not taken here).** Typeface on the remaining ~20K non-CJK books with inline tags would take about 20K descriptor calls (≈$10, list price).
+- **Next decision (taken the same day).** Derek approved typeface for the whole collection. See `2026-10-02-corpus-typeface-every-book-5643.md`: 31,258 more calls ($16.03), typeface known for 92% of books, blackletter 10.0% overall and German 83%.
 - *Replicated?* No. The walk is deterministic and re-runs at $0; the descriptor answers are cached in the output.
 - **Artifact.** `scripts/eval/output/corpus-page-profile-2026-10-02.jsonl.gz` (one row per book: value + source of each value, plus the raw descriptor answer) and `corpus-page-profile-2026-10-02.summary.json` (counts with Wilson intervals by language and period). Command: `node --env-file=… scripts/eval/quality-covariates.mjs --corpus-profile --date=2026-10-02 [--describe]`.
