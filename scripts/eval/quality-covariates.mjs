@@ -3,7 +3,8 @@
 // resolution? Joins every audited translation page (pooled monthly audits, one page per book) and
 // every referenced OCR benchmark page to three page properties, and reports stratified rates with
 // intervals plus one exploratory logistic regression. Feeds the covariate panels on
-// /research/quality/summary (#5615).
+// /research/quality/summary (#5615). #5623 adds manuscript vs print, holding library and page
+// content (and measures format coverage), each with its coverage and the rule each value came from.
 //
 // PRIOR ART: quality-by-language.mjs (pools the audits by book, by LANGUAGE only — this reuses its
 // pooling rule verbatim); benchmark-dashboard-data.mjs (OCR cells by catalogue period — reuses its
@@ -16,7 +17,11 @@
 //   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/quality-covariates.mjs
 // Reads Mongo (bookstore.pages, read-only) for image dimensions, and image headers from
 // images.sourcelibrary.org where a page carries none. Writes src/data/quality-covariates.json
-// (src/data/* is gitignored: commit it with `git add -f`). $0, no model calls.
+// (src/data/* is gitignored: commit it with `git add -f`). $0, no model calls, unless:
+//   --describe [--dry-run] [--limit=N]   run the image-only page descriptor (lib/page-descriptor.mjs,
+//       gemini-3.1-flash-lite, ~$0.0005 a page) on sampled pages whose OCR text lacks <script> or
+//       <page-type>, plus the agreement-check pages; answers are cached in
+//       scripts/eval/output/page-descriptors-5623.json and only missing pages are called. $3 ceiling.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -228,6 +233,11 @@ async function descriptorStep({ pages }) {
   const rng = makeRng(SEED + 5623);
   const check = tagged.sort((a, b) => a.p.id.localeCompare(b.p.id)).map((x) => [rng(), x]).sort((a, b) => a[0] - b[0]).slice(0, AGREEMENT_N).map(([, x]) => x);
   const limitArg = process.argv.find((a) => a.startsWith('--limit='));
+  // The random check is almost all print, so every sampled page the OCR tagged handwritten or mixed
+  // is checked as well (up to AGREEMENT_N): the manuscript covariate leans on the descriptor's hands.
+  const checkIds = new Set(check.map((x) => x.p.id));
+  const hand = tagged.filter((x) => !checkIds.has(x.p.id) && ['handwritten', 'mixed'].includes(extractScriptType(x.p.ocr?.data))).slice(0, AGREEMENT_N).map((x) => ({ ...x, reason: 'agreement-check-hand' }));
+  check.push(...hand);
   const todo = [...want, ...check].filter((x) => !cache.pages[x.p.id]?.value && x.url).slice(0, limitArg ? Number(limitArg.slice(8)) : Infinity);
   const noImage = [...want, ...check].filter((x) => !x.url).length;
   const EST_IN = 1400, EST_OUT = 120; // a 1,536 px page plus the prompt; revised after the first calls
@@ -255,7 +265,7 @@ async function descriptorStep({ pages }) {
     }
     console.log('');
   }
-  return { cache, wanted: want.length, check: check.map((x) => x.p.id), no_image: noImage };
+  return { cache, wanted: want.length, check: check.filter((x) => x.reason === 'agreement-check').map((x) => x.p.id), check_hand: hand.map((x) => x.p.id), no_image: noImage };
 }
 
 /** Resolve every row's manuscript label, provider, content class and format, recording each value's source. */
@@ -319,7 +329,7 @@ function applyFacts(rows, { pages, keyToPage, books, bookTags }, { cache }) {
 }
 
 /** What the descriptor run cost, what it said where tags were missing, and how it agrees with the inline tags. */
-function descriptorReport({ pages }, { cache, wanted, check }) {
+function descriptorReport({ pages }, { cache, wanted, check, check_hand }) {
   const entries = Object.entries(cache.pages || {});
   const ok = entries.filter(([, v]) => v.value);
   const family = (m) => (!m ? 'no engine recorded' : /^gemini/.test(m) ? m.replace(/-preview$/, '') : m.split(/[/@-]/)[0]);
@@ -328,20 +338,25 @@ function descriptorReport({ pages }, { cache, wanted, check }) {
     const e = (byEngine[family(v.ocr_model)] ||= { n: 0, printed: 0, handwritten: 0, mixed: 0 });
     e.n++; if (v.value.script) e[v.value.script]++;
   }
-  const agree = { script: [], page_type: [], columns: [], has_marginalia: [], has_table: [], has_illustration: [] };
-  const confusion = {};
-  for (const id of check) {
-    const d = cache.pages[id]?.value, p = pages.get(id);
-    if (!d || !p) continue;
-    const f = inlineFacts(p.ocr?.data);
-    agree.script.push(d.script === f.script);
-    (confusion[`${f.script} → ${d.script}`] ||= 0), confusion[`${f.script} → ${d.script}`]++;
-    agree.page_type.push(d.page_type === f.page_type);
-    agree.columns.push(Math.max(1, d.columns ?? 1) === (f.columns ?? 1));
-    agree.has_marginalia.push(d.has_marginalia === f.has_marginalia);
-    agree.has_table.push(d.has_table === (f.has_table || f.page_type === 'table'));
-    agree.has_illustration.push(d.has_illustration === (f.has_illustration || ILLUS_TYPES.has(f.page_type)));
-  }
+  const agreeOn = (ids) => {
+    const agree = { script: [], page_type: [], columns: [], has_marginalia: [], has_table: [], has_illustration: [] };
+    const confusion = {};
+    for (const id of ids) {
+      const d = cache.pages[id]?.value, p = pages.get(id);
+      if (!d || !p) continue;
+      const f = inlineFacts(p.ocr?.data);
+      agree.script.push(d.script === f.script);
+      (confusion[`${f.script} → ${d.script}`] ||= 0), confusion[`${f.script} → ${d.script}`]++;
+      agree.page_type.push(d.page_type === f.page_type);
+      agree.columns.push(Math.max(1, d.columns ?? 1) === (f.columns ?? 1));
+      agree.has_marginalia.push(d.has_marginalia === f.has_marginalia);
+      agree.has_table.push(d.has_table === (f.has_table || f.page_type === 'table'));
+      agree.has_illustration.push(d.has_illustration === (f.has_illustration || ILLUS_TYPES.has(f.page_type)));
+    }
+    return { agree, confusion };
+  };
+  const { agree, confusion } = agreeOn(check);
+  const handCheck = agreeOn(check_hand);
   // The same page type on pages whose OCR carries <page-type> but not <script> (older prompt versions).
   for (const [id, v] of ok.filter(([, v]) => v.reason === 'missing-tags')) {
     const f = inlineFacts(pages.get(id)?.ocr?.data);
@@ -365,6 +380,7 @@ function descriptorReport({ pages }, { cache, wanted, check }) {
     input_tokens: ok.reduce((x, [, v]) => x + (v.input_tokens || 0), 0), output_tokens: ok.reduce((x, [, v]) => x + (v.output_tokens || 0), 0),
     script_where_tag_missing_by_engine: byEngine,
     agreement_with_inline_tags: { pages: check.length, ...Object.fromEntries(Object.entries(agree).map(([k, xs]) => [k, share(xs)])), script_confusion: confusion, flag_disagreements: direction },
+    agreement_on_handwritten_or_mixed_tags: { pages: check_hand.length, script: share(handCheck.agree.script), page_type: share(handCheck.agree.page_type), has_marginalia: share(handCheck.agree.has_marginalia), script_confusion: handCheck.confusion },
   };
 }
 
@@ -520,7 +536,7 @@ const translation = {
   by_manuscript: rateCells(T, 'ms', MS_ALL),
   by_provider: rateCells(T, 'provider_group', T_PROVIDERS),
   by_content: rateCells(T, 'content', CONTENT_LEVELS),
-  cross: { manuscript_by_script: crossTab(T, 'ms', 'script'), manuscript_by_period: crossTab(T, 'ms', 'period'), provider_by_script: crossTab(T, 'provider_group', 'script'), provider_by_manuscript: crossTab(T, 'provider_group', 'ms') },
+  cross: { manuscript_by_script: crossTab(T, 'ms', 'script'), manuscript_by_period: crossTab(T, 'ms', 'period'), provider_by_script: crossTab(T, 'provider_group', 'script'), provider_by_manuscript: crossTab(T, 'provider_group', 'ms'), rule_by_manuscript: crossTab(T, 'ms_rule_class', 'ms') },
   char_cuts: tCut,
   period_parse_agrees_with_draw: T.filter((r) => r.period === r.period_draw).length,
   resolution_sources: Object.fromEntries(Object.entries(T.reduce((a, r) => ((a[r.res_source] = (a[r.res_source] || 0) + 1), a), {}))),
@@ -712,6 +728,7 @@ console.log('cross ocr lite', JSON.stringify(ocr.lite.cross));
 console.log('coverage', JSON.stringify(pageCoverage));
 console.log('format', JSON.stringify(out.format));
 console.log('descriptor', JSON.stringify(descriptorSummary.agreement_with_inline_tags));
+console.log('descriptor on hands', JSON.stringify(descriptorSummary.agreement_on_handwritten_or_mixed_tags));
 console.log('fallback rule check', JSON.stringify(out.fallback_rule_check));
 console.log(`\nregression n=${regression.n} events=${regression.events} converged=${regression.converged}`);
 for (const t of regression.terms) console.log(`  ${t.term.padEnd(38)} OR ${t.odds_ratio} [${t.ci}] p=${t.p} n=${t.n_at_level}`);

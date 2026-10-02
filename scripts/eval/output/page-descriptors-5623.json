@@ -14756,10 +14756,20 @@
    "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10237688_00140/full/full/0/default.jpg",
    "reason": "missing-tags",
    "ocr_model": null,
-   "value": null,
-   "errors": [
-    "image 429 https://api.digitale-sammlungen.de/iiif/image/v2/bsb10237688_00140/full/!1536,1536/0/default.jpg"
-   ]
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1669,
+   "output_tokens": 67,
+   "usd": 0.00051775,
+   "finish": "STOP"
   },
   "6a50874e78825bd7fde78934": {
    "book_id": "6a50874e78825bd7fde788f9",
@@ -14809,10 +14819,20 @@
    "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10237675_00375/full/full/0/default.jpg",
    "reason": "missing-tags",
    "ocr_model": null,
-   "value": null,
-   "errors": [
-    "image 429 https://api.digitale-sammlungen.de/iiif/image/v2/bsb10237675_00375/full/!1536,1536/0/default.jpg"
-   ]
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1669,
+   "output_tokens": 67,
+   "usd": 0.00051775,
+   "finish": "STOP"
   },
   "6a50866778825bd7fde6e543": {
    "book_id": "6a50866778825bd7fde6e49d",
@@ -14925,10 +14945,20 @@
    "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10169586_00307/full/full/0/default.jpg",
    "reason": "missing-tags",
    "ocr_model": null,
-   "value": null,
-   "errors": [
-    "image 429 https://api.digitale-sammlungen.de/iiif/image/v2/bsb10169586_00307/full/!1536,1536/0/default.jpg"
-   ]
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1635,
+   "output_tokens": 67,
+   "usd": 0.0005092499999999999,
+   "finish": "STOP"
   },
   "6a5087f478825bd7fde816f5": {
    "book_id": "6a5087f478825bd7fde816e6",
@@ -14936,10 +14966,20 @@
    "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10234926_00015/full/full/0/default.jpg",
    "reason": "missing-tags",
    "ocr_model": null,
-   "value": null,
-   "errors": [
-    "image 429 https://api.digitale-sammlungen.de/iiif/image/v2/bsb10234926_00015/full/!1536,1536/0/default.jpg"
-   ]
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1669,
+   "output_tokens": 67,
+   "usd": 0.00051775,
+   "finish": "STOP"
   },
   "6a50882e78825bd7fde853aa": {
    "book_id": "6a50882e78825bd7fde852df",
@@ -14947,10 +14987,20 @@
    "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10238041_00031/full/full/0/default.jpg",
    "reason": "missing-tags",
    "ocr_model": null,
-   "value": null,
-   "errors": [
-    "image 429 https://api.digitale-sammlungen.de/iiif/image/v2/bsb10238041_00031/full/!1536,1536/0/default.jpg"
-   ]
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1644,
+   "output_tokens": 67,
+   "usd": 0.0005115,
+   "finish": "STOP"
   },
   "6a50890878825bd7fde8c860": {
    "book_id": "6a50890878825bd7fde8c7b2",
@@ -15000,10 +15050,20 @@
    "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10234907_00185/full/full/0/default.jpg",
    "reason": "missing-tags",
    "ocr_model": null,
-   "value": null,
-   "errors": [
-    "image 429 https://api.digitale-sammlungen.de/iiif/image/v2/bsb10234907_00185/full/!1536,1536/0/default.jpg"
-   ]
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1644,
+   "output_tokens": 67,
+   "usd": 0.0005115,
+   "finish": "STOP"
   },
   "6a5089a678825bd7fde962bf": {
    "book_id": "6a5089a678825bd7fde96290",
@@ -15011,10 +15071,20 @@
    "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11264143_00047/full/full/0/default.jpg",
    "reason": "missing-tags",
    "ocr_model": null,
-   "value": null,
-   "errors": [
-    "image 429 https://api.digitale-sammlungen.de/iiif/image/v2/bsb11264143_00047/full/!1536,1536/0/default.jpg"
-   ]
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1661,
+   "output_tokens": 67,
+   "usd": 0.0005157499999999999,
+   "finish": "STOP"
   },
   "6a508c4178825bd7fdeb4a14": {
    "book_id": "6a508c4178825bd7fdeb49dc",
@@ -15022,10 +15092,20 @@
    "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10234931_00056/full/full/0/default.jpg",
    "reason": "missing-tags",
    "ocr_model": null,
-   "value": null,
-   "errors": [
-    "image 429 https://api.digitale-sammlungen.de/iiif/image/v2/bsb10234931_00056/full/!1536,1536/0/default.jpg"
-   ]
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1661,
+   "output_tokens": 67,
+   "usd": 0.0005157499999999999,
+   "finish": "STOP"
   },
   "6a508bb978825bd7fdeab91f": {
    "book_id": "6a508bb978825bd7fdeab76d",
@@ -15033,10 +15113,20 @@
    "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10139053_00434/full/full/0/default.jpg",
    "reason": "missing-tags",
    "ocr_model": null,
-   "value": null,
-   "errors": [
-    "image 429 https://api.digitale-sammlungen.de/iiif/image/v2/bsb10139053_00434/full/!1536,1536/0/default.jpg"
-   ]
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1649,
+   "output_tokens": 67,
+   "usd": 0.00051275,
+   "finish": "STOP"
   },
   "6a5089d978825bd7fde9849e": {
    "book_id": "6a5089d978825bd7fde982f4",
@@ -15044,10 +15134,20 @@
    "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10237974_00426/full/full/0/default.jpg",
    "reason": "missing-tags",
    "ocr_model": null,
-   "value": null,
-   "errors": [
-    "image 429 https://api.digitale-sammlungen.de/iiif/image/v2/bsb10237974_00426/full/!1536,1536/0/default.jpg"
-   ]
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": true,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1644,
+   "output_tokens": 67,
+   "usd": 0.0005115,
+   "finish": "STOP"
   },
   "6a5089dc78825bd7fde9859d": {
    "book_id": "6a5089dc78825bd7fde98549",
@@ -15055,10 +15155,20 @@
    "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10994070_00084/full/full/0/default.jpg",
    "reason": "missing-tags",
    "ocr_model": null,
-   "value": null,
-   "errors": [
-    "image 429 https://api.digitale-sammlungen.de/iiif/image/v2/bsb10994070_00084/full/!1536,1536/0/default.jpg"
-   ]
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1644,
+   "output_tokens": 67,
+   "usd": 0.0005115,
+   "finish": "STOP"
   },
   "6a508c0878825bd7fdeb1007": {
    "book_id": "6a508c0878825bd7fdeb0eaf",
@@ -15066,10 +15176,20 @@
    "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11724514_00344/full/full/0/default.jpg",
    "reason": "missing-tags",
    "ocr_model": null,
-   "value": null,
-   "errors": [
-    "image 429 https://api.digitale-sammlungen.de/iiif/image/v2/bsb11724514_00344/full/!1536,1536/0/default.jpg"
-   ]
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1625,
+   "output_tokens": 67,
+   "usd": 0.00050675,
+   "finish": "STOP"
   },
   "6a508af178825bd7fdea4cf6": {
    "book_id": "6a508af178825bd7fdea4cec",
@@ -15098,10 +15218,20 @@
    "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb00034943_00135/full/full/0/default.jpg",
    "reason": "missing-tags",
    "ocr_model": null,
-   "value": null,
-   "errors": [
-    "image 429 https://api.digitale-sammlungen.de/iiif/image/v2/bsb00034943_00135/full/!1536,1536/0/default.jpg"
-   ]
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1669,
+   "output_tokens": 67,
+   "usd": 0.00051775,
+   "finish": "STOP"
   },
   "6a508e7f78825bd7fded7732": {
    "book_id": "6a508e7f78825bd7fded76d4",
@@ -15109,10 +15239,20 @@
    "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb11088878_00094/full/full/0/default.jpg",
    "reason": "missing-tags",
    "ocr_model": null,
-   "value": null,
-   "errors": [
-    "image 429 https://api.digitale-sammlungen.de/iiif/image/v2/bsb11088878_00094/full/!1536,1536/0/default.jpg"
-   ]
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1687,
+   "output_tokens": 67,
+   "usd": 0.0005222499999999999,
+   "finish": "STOP"
   },
   "6a508e3d78825bd7fded2808": {
    "book_id": "6a508e3d78825bd7fded2769",
@@ -15120,10 +15260,20 @@
    "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb00070393_00159/full/full/0/default.jpg",
    "reason": "missing-tags",
    "ocr_model": null,
-   "value": null,
-   "errors": [
-    "image 429 https://api.digitale-sammlungen.de/iiif/image/v2/bsb00070393_00159/full/!1536,1536/0/default.jpg"
-   ]
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1661,
+   "output_tokens": 67,
+   "usd": 0.0005157499999999999,
+   "finish": "STOP"
   },
   "6a508cba78825bd7fdebaa7a": {
    "book_id": "6a508cba78825bd7fdeba9ff",
@@ -15236,10 +15386,20 @@
    "image_url": "https://api.digitale-sammlungen.de/iiif/image/v2/bsb10139054_00180/full/full/0/default.jpg",
    "reason": "missing-tags",
    "ocr_model": null,
-   "value": null,
-   "errors": [
-    "image 429 https://api.digitale-sammlungen.de/iiif/image/v2/bsb10139054_00180/full/!1536,1536/0/default.jpg"
-   ]
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1676,
+   "output_tokens": 67,
+   "usd": 0.0005195,
+   "finish": "STOP"
   },
   "6a508da878825bd7fdec9035": {
    "book_id": "6a508da878825bd7fdec8fdb",
@@ -16178,12 +16338,747 @@
    "output_tokens": 67,
    "usd": 0.0005157499999999999,
    "finish": "STOP"
+  },
+  "69ae66b74b74f168e0c14fcc": {
+   "book_id": "69ae66b74b74f168e0c14f12",
+   "page_number": 186,
+   "image_url": "https://images.sourcelibrary.org/archived/69ae66b74b74f168e0c14f12/186.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3-flash-preview",
+   "value": {
+    "script": "mixed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": true,
+    "typeface": "roman"
+   },
+   "errors": [],
+   "input_tokens": 1644,
+   "output_tokens": 65,
+   "usd": 0.0005085000000000001,
+   "finish": "STOP"
+  },
+  "69d38913922d3c6e1dbe488c": {
+   "book_id": "69b419122b0edf3eaa2deb6f",
+   "page_number": 61,
+   "image_url": "https://images.sourcelibrary.org/pages/69b419122b0edf3eaa2deb6f/spvkn4-0061.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "value": {
+    "script": "handwritten",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "n/a"
+   },
+   "errors": [],
+   "input_tokens": 1649,
+   "output_tokens": 68,
+   "usd": 0.0005142500000000001,
+   "finish": "STOP"
+  },
+  "69b4c0646248be021e01efef": {
+   "book_id": "69b4c0646248be021e01efc5",
+   "page_number": 42,
+   "image_url": "https://images.sourcelibrary.org/archived/69b4c0646248be021e01efc5/42.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "value": {
+    "script": "handwritten",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "n/a"
+   },
+   "errors": [],
+   "input_tokens": 1633,
+   "output_tokens": 68,
+   "usd": 0.00051025,
+   "finish": "STOP"
+  },
+  "6993895dce15387065946be0": {
+   "book_id": "6993895dce15387065946a95",
+   "page_number": 331,
+   "image_url": "https://images.sourcelibrary.org/archived/6993895dce15387065946a95/331.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "value": {
+    "script": "handwritten",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": true,
+    "typeface": "n/a"
+   },
+   "errors": [],
+   "input_tokens": 1633,
+   "output_tokens": 68,
+   "usd": 0.00051025,
+   "finish": "STOP"
+  },
+  "69d5ae474dc55b8478de1379": {
+   "book_id": "69d5ae474dc55b8478de136d",
+   "page_number": 12,
+   "image_url": "https://images.sourcelibrary.org/archived/69d5ae474dc55b8478de136d/12.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1649,
+   "output_tokens": 67,
+   "usd": 0.00051275,
+   "finish": "STOP"
+  },
+  "69e747e985f786e884a4a340": {
+   "book_id": "69e747e985f786e884a49f74",
+   "page_number": 972,
+   "image_url": "https://images.sourcelibrary.org/archived/69e747e985f786e884a49f74/972.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": true,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1647,
+   "output_tokens": 67,
+   "usd": 0.00051225,
+   "finish": "STOP"
+  },
+  "69f3288faeeee0fa38c64a97": {
+   "book_id": "69f3288faeeee0fa38c64a0d",
+   "page_number": 138,
+   "image_url": "https://images.sourcelibrary.org/archived/69f3288faeeee0fa38c64a0d/138.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3-flash-preview",
+   "value": {
+    "script": "handwritten",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": true,
+    "typeface": "n/a"
+   },
+   "errors": [],
+   "input_tokens": 1642,
+   "output_tokens": 68,
+   "usd": 0.0005125,
+   "finish": "STOP"
+  },
+  "69dfee8cce6bb8619e07ff47": {
+   "book_id": "69dfee8cce6bb8619e07ff08",
+   "page_number": 63,
+   "image_url": "https://images.sourcelibrary.org/archived/69dfee8cce6bb8619e07ff08/63.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "value": {
+    "script": "handwritten",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": true,
+    "typeface": "n/a"
+   },
+   "errors": [],
+   "input_tokens": 1619,
+   "output_tokens": 68,
+   "usd": 0.00050675,
+   "finish": "STOP"
+  },
+  "69f3259f52a77bb28fdb56a4": {
+   "book_id": "69f3259f52a77bb28fdb55c5",
+   "page_number": 223,
+   "image_url": "https://images.sourcelibrary.org/archived/69f3259f52a77bb28fdb55c5/223.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3-flash-preview",
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 4,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1661,
+   "output_tokens": 67,
+   "usd": 0.0005157499999999999,
+   "finish": "STOP"
+  },
+  "69f3252a52a77bb28fdb3f9a": {
+   "book_id": "69f3252a52a77bb28fdb3f93",
+   "page_number": 7,
+   "image_url": "https://images.sourcelibrary.org/archived/69f3252a52a77bb28fdb3f93/7.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 8,
+    "has_illustration": false,
+    "has_table": true,
+    "has_marginalia": false,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1661,
+   "output_tokens": 67,
+   "usd": 0.0005157499999999999,
+   "finish": "STOP"
+  },
+  "69f3280f9e1cab5867a34f4d": {
+   "book_id": "69f3280f9e1cab5867a34e44",
+   "page_number": 265,
+   "image_url": "https://images.sourcelibrary.org/archived/69f3280f9e1cab5867a34e44/265.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3-flash-preview",
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 4,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": true,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1644,
+   "output_tokens": 67,
+   "usd": 0.0005115,
+   "finish": "STOP"
+  },
+  "69e0afd131946cabe6014fad": {
+   "book_id": "69e0afd031946cabe6014ed6",
+   "page_number": 215,
+   "image_url": "https://images.sourcelibrary.org/archived/69e0afd031946cabe6014ed6/215.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 6,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1671,
+   "output_tokens": 67,
+   "usd": 0.00051825,
+   "finish": "STOP"
+  },
+  "69e80646fdad300064d9ea49": {
+   "book_id": "69e80646fdad300064d9e91e",
+   "page_number": 299,
+   "image_url": "https://images.sourcelibrary.org/archived/69e80646fdad300064d9e91e/299.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "value": {
+    "script": "handwritten",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "n/a"
+   },
+   "errors": [],
+   "input_tokens": 1676,
+   "output_tokens": 68,
+   "usd": 0.000521,
+   "finish": "STOP"
+  },
+  "69f335e7876dd827cbc4f74d": {
+   "book_id": "69f335e7876dd827cbc4f69a",
+   "page_number": 179,
+   "image_url": "https://images.sourcelibrary.org/archived/69f335e7876dd827cbc4f69a/179.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3-flash-preview",
+   "value": {
+    "script": "handwritten",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": true,
+    "typeface": "n/a"
+   },
+   "errors": [],
+   "input_tokens": 1649,
+   "output_tokens": 68,
+   "usd": 0.0005142500000000001,
+   "finish": "STOP"
+  },
+  "69f33809876dd827cbc5345b": {
+   "book_id": "69f33809876dd827cbc532f9",
+   "page_number": 354,
+   "image_url": "https://images.sourcelibrary.org/archived/69f33809876dd827cbc532f9/354.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3-flash-preview",
+   "value": {
+    "script": "handwritten",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "n/a"
+   },
+   "errors": [],
+   "input_tokens": 1635,
+   "output_tokens": 68,
+   "usd": 0.00051075,
+   "finish": "STOP"
+  },
+  "69f33a14876dd827cbc57a6b": {
+   "book_id": "69f33a14876dd827cbc57a69",
+   "page_number": 2,
+   "image_url": "https://images.sourcelibrary.org/archived/69f33a14876dd827cbc57a69/2.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "value": {
+    "script": "handwritten",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": true,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "n/a"
+   },
+   "errors": [],
+   "input_tokens": 1649,
+   "output_tokens": 68,
+   "usd": 0.0005142500000000001,
+   "finish": "STOP"
+  },
+  "69f32897aeeee0fa38c64b96": {
+   "book_id": "69f32897aeeee0fa38c64b0d",
+   "page_number": 137,
+   "image_url": "https://images.sourcelibrary.org/archived/69f32897aeeee0fa38c64b0d/137.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3-flash-preview",
+   "value": {
+    "script": "handwritten",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": true,
+    "typeface": "n/a"
+   },
+   "errors": [],
+   "input_tokens": 1649,
+   "output_tokens": 68,
+   "usd": 0.0005142500000000001,
+   "finish": "STOP"
+  },
+  "69f32f7f876dd827cbc458c9": {
+   "book_id": "69f32f7f876dd827cbc45808",
+   "page_number": 193,
+   "image_url": "https://images.sourcelibrary.org/archived/69f32f7f876dd827cbc45808/193.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3-flash-preview",
+   "value": {
+    "script": "handwritten",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": true,
+    "typeface": "n/a"
+   },
+   "errors": [],
+   "input_tokens": 1661,
+   "output_tokens": 68,
+   "usd": 0.00051725,
+   "finish": "STOP"
+  },
+  "69f332aa876dd827cbc4a26f": {
+   "book_id": "69f332aa876dd827cbc4a1e2",
+   "page_number": 141,
+   "image_url": "https://images.sourcelibrary.org/archived/69f332aa876dd827cbc4a1e2/141.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3-flash-preview",
+   "value": {
+    "script": "handwritten",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": true,
+    "typeface": "n/a"
+   },
+   "errors": [],
+   "input_tokens": 1657,
+   "output_tokens": 68,
+   "usd": 0.00051625,
+   "finish": "STOP"
+  },
+  "69f32a16e174846a67c4d45a": {
+   "book_id": "69f32a16e174846a67c4d42d",
+   "page_number": 45,
+   "image_url": "https://images.sourcelibrary.org/archived/69f32a16e174846a67c4d42d/45.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 8,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": true,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1661,
+   "output_tokens": 67,
+   "usd": 0.0005157499999999999,
+   "finish": "STOP"
+  },
+  "69f32e3c876dd827cbc43b14": {
+   "book_id": "69f32e3c876dd827cbc439d4",
+   "page_number": 320,
+   "image_url": "https://images.sourcelibrary.org/archived/69f32e3c876dd827cbc439d4/320.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3-flash-preview",
+   "value": {
+    "script": "handwritten",
+    "page_type": "text",
+    "columns": 2,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": true,
+    "typeface": "n/a"
+   },
+   "errors": [],
+   "input_tokens": 1671,
+   "output_tokens": 68,
+   "usd": 0.00051975,
+   "finish": "STOP"
+  },
+  "6a1d968ee0bba0578ecbbef7": {
+   "book_id": "69de130a8a46d0c97eedc10d",
+   "page_number": 8,
+   "image_url": "https://images.sourcelibrary.org/pages/69de130a8a46d0c97eedc10d/sp2siz-0008.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "value": {
+    "script": "handwritten",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "n/a"
+   },
+   "errors": [],
+   "input_tokens": 1649,
+   "output_tokens": 68,
+   "usd": 0.0005142500000000001,
+   "finish": "STOP"
+  },
+  "69f6e3b961b1be709288d225": {
+   "book_id": "69c8940c6c6f3cc53c85c03f",
+   "page_number": 394,
+   "image_url": "https://images.sourcelibrary.org/pages/69c8940c6c6f3cc53c85c03f/sp69f6e3b961b1be709288d225.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "value": {
+    "script": "mixed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "roman"
+   },
+   "errors": [],
+   "input_tokens": 1657,
+   "output_tokens": 65,
+   "usd": 0.00051175,
+   "finish": "STOP"
+  },
+  "6a0a248960700bc49f818300": {
+   "book_id": "6a0a248860700bc49f8182fc",
+   "page_number": 4,
+   "image_url": "https://images.sourcelibrary.org/archived/6a0a248860700bc49f8182fc/4.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "value": {
+    "script": "handwritten",
+    "page_type": "illustration",
+    "columns": 0,
+    "has_illustration": true,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "n/a"
+   },
+   "errors": [],
+   "input_tokens": 1658,
+   "output_tokens": 68,
+   "usd": 0.0005165,
+   "finish": "STOP"
+  },
+  "6a20329818654bf8e19031f7": {
+   "book_id": "6a20329818654bf8e19031b7",
+   "page_number": 64,
+   "image_url": "https://images.sourcelibrary.org/archived/6a20329818654bf8e19031b7/64.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3-flash-preview",
+   "value": {
+    "script": "handwritten",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "n/a"
+   },
+   "errors": [],
+   "input_tokens": 1649,
+   "output_tokens": 68,
+   "usd": 0.0005142500000000001,
+   "finish": "STOP"
+  },
+  "69f33dcd876dd827cbc5c97f": {
+   "book_id": "69f33dcd876dd827cbc5c954",
+   "page_number": 43,
+   "image_url": "https://images.sourcelibrary.org/archived/69f33dcd876dd827cbc5c954/43.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1650,
+   "output_tokens": 67,
+   "usd": 0.000513,
+   "finish": "STOP"
+  },
+  "69f33bd6876dd827cbc59614": {
+   "book_id": "69f33bd6876dd827cbc5960a",
+   "page_number": 10,
+   "image_url": "https://images.sourcelibrary.org/archived/69f33bd6876dd827cbc5960a/10.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 8,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1654,
+   "output_tokens": 67,
+   "usd": 0.000514,
+   "finish": "STOP"
+  },
+  "69f33e8f876dd827cbc5fb0b": {
+   "book_id": "69f33e8f876dd827cbc5fafb",
+   "page_number": 16,
+   "image_url": "https://images.sourcelibrary.org/archived/69f33e8f876dd827cbc5fafb/16.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3-flash-preview",
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": true,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1671,
+   "output_tokens": 67,
+   "usd": 0.00051825,
+   "finish": "STOP"
+  },
+  "69f33b96876dd827cbc58fd6": {
+   "book_id": "69f33b96876dd827cbc58f61",
+   "page_number": 117,
+   "image_url": "https://images.sourcelibrary.org/archived/69f33b96876dd827cbc58f61/117.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "value": {
+    "script": "handwritten",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": true,
+    "typeface": "n/a"
+   },
+   "errors": [],
+   "input_tokens": 1635,
+   "output_tokens": 68,
+   "usd": 0.00051075,
+   "finish": "STOP"
+  },
+  "6a3cb8f53dce6cfad74914f1": {
+   "book_id": "6a3cb8f43dce6cfad7491397",
+   "page_number": 10,
+   "image_url": "https://images.sourcelibrary.org/archived/6a3cb8f43dce6cfad7491397/10.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3-flash-preview",
+   "value": {
+    "script": "printed",
+    "page_type": "text",
+    "columns": 8,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": true,
+    "typeface": "non-latin"
+   },
+   "errors": [],
+   "input_tokens": 1661,
+   "output_tokens": 67,
+   "usd": 0.0005157499999999999,
+   "finish": "STOP"
+  },
+  "6a4a26ba9dda7124b26753cb": {
+   "book_id": "6a4a26ba9dda7124b26753a5",
+   "page_number": 38,
+   "image_url": "https://images.sourcelibrary.org/archived/6a4a26ba9dda7124b26753a5/38.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3.1-flash-lite",
+   "value": {
+    "script": "mixed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": true,
+    "typeface": "roman"
+   },
+   "errors": [],
+   "input_tokens": 1661,
+   "output_tokens": 65,
+   "usd": 0.00051275,
+   "finish": "STOP"
+  },
+  "aeac535e937882e31fcef6fc": {
+   "book_id": "fec0b295-0795-440f-a467-434e17ba2a8e",
+   "page_number": 24,
+   "image_url": "https://images.sourcelibrary.org/cropped/fec0b295-0795-440f-a467-434e17ba2a8e/aeac535e937882e31fcef6fc.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3.1-flash-lite-preview",
+   "value": {
+    "script": "handwritten",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": true,
+    "typeface": "n/a"
+   },
+   "errors": [],
+   "input_tokens": 1642,
+   "output_tokens": 68,
+   "usd": 0.0005125,
+   "finish": "STOP"
+  },
+  "6a8f6267e408ab73f484d29a": {
+   "book_id": "6a8f6267e408ab73f484d28b",
+   "page_number": 15,
+   "image_url": "https://images.sourcelibrary.org/archived/6a8f6267e408ab73f484d28b/15.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3-flash-preview",
+   "value": {
+    "script": "mixed",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": true,
+    "typeface": "roman"
+   },
+   "errors": [],
+   "input_tokens": 1649,
+   "output_tokens": 65,
+   "usd": 0.00050975,
+   "finish": "STOP"
+  },
+  "6a2032e718654bf8e1903bc2": {
+   "book_id": "6a2032e718654bf8e1903bba",
+   "page_number": 8,
+   "image_url": "https://images.sourcelibrary.org/archived/6a2032e718654bf8e1903bba/8.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3-flash-preview",
+   "value": {
+    "script": "handwritten",
+    "page_type": "text",
+    "columns": 2,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": false,
+    "typeface": "n/a"
+   },
+   "errors": [],
+   "input_tokens": 1644,
+   "output_tokens": 68,
+   "usd": 0.000513,
+   "finish": "STOP"
+  },
+  "6a45298cc6d95bc278fbc9ef": {
+   "book_id": "6a45298cc6d95bc278fbc8c3",
+   "page_number": 300,
+   "image_url": "https://images.sourcelibrary.org/manuscripts/marciana-gr-299/300.jpg",
+   "reason": "agreement-check-hand",
+   "ocr_model": "gemini-3-flash-preview",
+   "value": {
+    "script": "handwritten",
+    "page_type": "text",
+    "columns": 1,
+    "has_illustration": false,
+    "has_table": false,
+    "has_marginalia": true,
+    "typeface": "n/a"
+   },
+   "errors": [],
+   "input_tokens": 1642,
+   "output_tokens": 68,
+   "usd": 0.0005125,
+   "finish": "STOP"
   }
  },
  "model": "gemini-3.1-flash-lite",
  "prompt_version": "page-descriptor-v1.2026-10",
  "issue": 5623,
- "updated": "2026-10-02T11:55:37.679Z",
- "usd": 0.3901,
- "calls": 760
+ "updated": "2026-10-02T12:07:13.001Z",
+ "usd": 0.4163,
+ "calls": 811
 }

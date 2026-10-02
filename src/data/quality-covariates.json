@@ -923,6 +923,18 @@
           "print": 52,
           "manuscript": 2
         }
+      },
+      "rule_by_manuscript": {
+        "OCR <script> tags, book majority": {
+          "print": 165,
+          "manuscript": 38,
+          "mixed": 1
+        },
+        "descriptor (this page only)": {
+          "print": 91,
+          "manuscript": 27,
+          "mixed": 5
+        }
       }
     },
     "char_cuts": [
@@ -1194,21 +1206,21 @@
       "by_content": [
         {
           "level": "plain text",
-          "n": 446,
+          "n": 461,
           "median": 0.168,
           "ci": [
-            0.163,
+            0.16,
             0.18
           ],
           "grade": "decision-grade"
         },
         {
           "level": "marginalia",
-          "n": 226,
-          "median": 0.245,
+          "n": 227,
+          "median": 0.243,
           "ci": [
-            0.214,
-            0.274
+            0.203,
+            0.271
           ],
           "grade": "decision-grade"
         },
@@ -1234,11 +1246,11 @@
         },
         {
           "level": "unknown",
-          "n": 170,
-          "median": 0.01,
+          "n": 154,
+          "median": 0.008,
           "ci": [
-            0.007,
-            0.016
+            0.006,
+            0.011
           ],
           "grade": "decision-grade"
         }
@@ -1797,21 +1809,21 @@
           "by_content": [
             {
               "level": "plain text",
-              "n": 81,
+              "n": 96,
               "median": 0.142,
               "ci": [
-                0.107,
-                0.165
+                0.112,
+                0.159
               ],
               "grade": "decision-grade"
             },
             {
               "level": "marginalia",
-              "n": 28,
-              "median": 0.155,
+              "n": 29,
+              "median": 0.147,
               "ci": [
-                0.113,
-                0.199
+                0.112,
+                0.196
               ],
               "grade": "exploratory"
             },
@@ -1827,13 +1839,13 @@
             },
             {
               "level": "unknown",
-              "n": 57,
-              "median": 0.008,
+              "n": 41,
+              "median": 0.004,
               "ci": [
-                0.005,
-                0.054
+                0.002,
+                0.008
               ],
-              "grade": "decision-grade"
+              "grade": "directional"
             }
           ]
         },
@@ -2350,20 +2362,20 @@
       "by_content": [
         {
           "level": "plain text",
-          "n": 446,
-          "median": 0.148,
+          "n": 461,
+          "median": 0.146,
           "ci": [
-            0.139,
-            0.163
+            0.134,
+            0.159
           ],
           "grade": "decision-grade"
         },
         {
           "level": "marginalia",
-          "n": 226,
-          "median": 0.177,
+          "n": 227,
+          "median": 0.176,
           "ci": [
-            0.162,
+            0.161,
             0.205
           ],
           "grade": "decision-grade"
@@ -2390,11 +2402,11 @@
         },
         {
           "level": "unknown",
-          "n": 174,
-          "median": 0.006,
+          "n": 158,
+          "median": 0.004,
           "ci": [
-            0.004,
-            0.008
+            0.003,
+            0.007
           ],
           "grade": "decision-grade"
         }
@@ -2953,21 +2965,21 @@
           "by_content": [
             {
               "level": "plain text",
-              "n": 81,
-              "median": 0.087,
+              "n": 96,
+              "median": 0.085,
               "ci": [
                 0.065,
-                0.097
+                0.099
               ],
               "grade": "decision-grade"
             },
             {
               "level": "marginalia",
-              "n": 28,
-              "median": 0.084,
+              "n": 29,
+              "median": 0.089,
               "ci": [
                 0.061,
-                0.138
+                0.12
               ],
               "grade": "exploratory"
             },
@@ -2983,13 +2995,13 @@
             },
             {
               "level": "unknown",
-              "n": 57,
-              "median": 0.007,
+              "n": 41,
+              "median": 0.003,
               "ci": [
-                0.003,
-                0.042
+                0.001,
+                0.006
               ],
-              "grade": "decision-grade"
+              "grade": "directional"
             }
           ]
         },
@@ -3518,14 +3530,14 @@
     "ocr_lite": {
       "n": 892,
       "page_script_src": {
-        "descriptor": 556,
+        "descriptor": 572,
         "ocr <script> tag": 166,
-        "none": 170
+        "none": 154
       },
       "ms_rule": {
         "OCR <script> tags, book majority": 594,
-        "descriptor (this page only)": 128,
-        "fallback: print by default": 19,
+        "descriptor (this page only)": 144,
+        "fallback: print by default": 3,
         "external scan: unknown": 151
       },
       "ms": {
@@ -3539,16 +3551,16 @@
         "none": 151
       },
       "content_src": {
-        "descriptor": 558,
+        "descriptor": 574,
         "transcription tags (Gemini read)": 164,
-        "none": 170
+        "none": 154
       },
       "content": {
-        "plain text": 446,
-        "marginalia": 226,
+        "plain text": 461,
+        "marginalia": 227,
         "table": 39,
         "illustration": 11,
-        "unknown": 170
+        "unknown": 154
       },
       "format": {
         "null": 868,
@@ -3601,19 +3613,19 @@
     "prompt_version": "page-descriptor-v1.2026-10",
     "prompt": "scripts/eval/lib/page-descriptor.mjs",
     "pages_missing_a_tag": 739,
-    "described": 760,
-    "failed": 19,
+    "described": 811,
+    "failed": 3,
     "failures": [
       [
         "image 429",
-        19
+        3
       ]
     ],
     "field_errors": 5,
-    "usd": 0.39,
+    "usd": 0.416,
     "billing": "realtime list price through scripts/lib/gemini-script-client.mjs (the client has no Batch path)",
-    "input_tokens": 1255936,
-    "output_tokens": 50718,
+    "input_tokens": 1340226,
+    "output_tokens": 54147,
     "script_where_tag_missing_by_engine": {
       "gemini-3-flash": {
         "n": 207,
@@ -3640,8 +3652,8 @@
         "mixed": 0
       },
       "no engine recorded": {
-        "n": 499,
-        "printed": 492,
+        "n": 515,
+        "printed": 508,
         "handwritten": 1,
         "mixed": 6
       },
@@ -3742,6 +3754,42 @@
           "descriptor_only": 2,
           "transcription_only": 0
         }
+      }
+    },
+    "agreement_on_handwritten_or_mixed_tags": {
+      "pages": 35,
+      "script": {
+        "n": 35,
+        "agree": 24,
+        "rate": 0.686,
+        "ci": [
+          0.52,
+          0.814
+        ]
+      },
+      "page_type": {
+        "n": 35,
+        "agree": 34,
+        "rate": 0.971,
+        "ci": [
+          0.855,
+          0.995
+        ]
+      },
+      "has_marginalia": {
+        "n": 35,
+        "agree": 26,
+        "rate": 0.743,
+        "ci": [
+          0.579,
+          0.858
+        ]
+      },
+      "script_confusion": {
+        "handwritten → handwritten": 20,
+        "mixed → mixed": 4,
+        "handwritten → printed": 9,
+        "mixed → printed": 2
       }
     }
   },
