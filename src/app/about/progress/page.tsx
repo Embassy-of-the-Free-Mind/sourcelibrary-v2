@@ -249,7 +249,7 @@ async function getCompletion() {
   try {
     const doc = await (await getReadDb()).collection('system_config').findOne(
       { _id: LIBRARY_DASHBOARD_ID as unknown as ObjectId },
-      { projection: { completion: 1, byCentury: 1, languagesAll: 1, 'totals.readableLive': 1, 'totals.live': 1 }, maxTimeMS: 5000 },
+      { projection: { completion: 1, byCentury: 1, languagesAll: 1, finish: 1, works: 1, 'totals.readableLive': 1, 'totals.live': 1 }, maxTimeMS: 5000 },
     ) as Partial<LibraryDashboard> | null;
     if (!doc?.completion?.books || !doc.languagesAll?.length || !doc.totals?.live?.books) return null;
     return {
@@ -260,6 +260,8 @@ async function getCompletion() {
       livePages: doc.totals.live.pages,
       liveTranslatedPages: doc.totals.live.translated,
       readable: doc.totals.readableLive,
+      finish: doc.finish ?? null,
+      works: doc.works ?? null,
     };
   } catch {
     return null;

@@ -6,7 +6,7 @@ import { getSession } from '@/lib/auth-helpers';
 import { readFreshDashboardSnapshot } from '@/lib/dashboard-snapshot';
 import { getSpendReport, redactForViewer, resolveSpendViewer, type SpendData } from '@/lib/spend-report';
 import {
-  readHomepageStats, readLibraryDashboard, readMetricsHistory, readMetricsSnapshot,
+  RATES, readHomepageStats, readLibraryDashboard, readMetricsHistory, readMetricsSnapshot,
   type Ladder, type LibraryDashboard, type Rung,
 } from '@/lib/library-dashboard';
 import { Bars, HBars, Legend, LineChart, Panel, PipelineCumulative } from './DashboardCharts';
@@ -28,7 +28,6 @@ const pct = (a: number, b: number) => (b ? `${((100 * a) / b).toFixed(1)}%` : '�
 const signed = (n: number) => `${n >= 0 ? '+' : '−'}${fmtK(Math.abs(n))}`;
 const ago = (ms: number) => ms < 3600e3 ? `${Math.max(1, Math.round(ms / 60e3))} min ago` : ms < 48 * 3600e3 ? `${Math.round(ms / 3600e3)} h ago` : `${Math.round(ms / 86400e3)} days ago`;
 const RUNG_NAME: Record<Rung, string> = { no_text: 'No text', transcribing: 'Transcribing', transcribed: 'Transcribed', translating: 'Translating', readable: 'Readable', complete: 'Complete' };
-const RATES = { ocr: [0.00106, 0.00138], tr: [0.00058, 0.00174] } as const; // September 2026 measured, per page (ops spend report)
 const usdRange = (lo: number, hi: number) => `${fmtUsd(lo)} – ${fmtUsd(hi)}`;
 
 function Section({ id, title, intro, link, children }: { id: string; title: string; intro?: ReactNode; link?: { href: string; label: string }; children: ReactNode }) {

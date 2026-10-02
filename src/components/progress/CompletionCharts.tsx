@@ -16,7 +16,7 @@
  * direct labels on the two peaks, and no admin vocabulary.
  */
 import { useEffect, useRef, useState } from 'react';
-import type { CenturyRow, Completion, LanguageAllRow } from '@/lib/library-dashboard';
+import { RATES, type CenturyRow, type Completion, type Finish, type LanguageAllRow, type Works } from '@/lib/library-dashboard';
 
 const RUST = '#9e4a3a', TEAL = '#3e7a6e', BLUE = '#496da3';
 const INK = '#1a1612', MUTED = '#6b6560', GRID = '#e8e4dc';
@@ -225,13 +225,58 @@ export function LanguageBars({ rows, limit = 15 }: { rows: LanguageAllRow[]; lim
   );
 }
 
+const usd = (n: number) => (n >= 1000 ? `$${(n / 1000).toFixed(1)}K` : `$${Math.round(n)}`);
+const pagesWord = (n: number) => (n >= 1e6 ? `${(n / 1e6).toFixed(1)} million` : fmt(n));
+/** Model cost of transcribing `o` pages and translating `t`, low to high, at the September 2026 rates. */
+const costRange = (o: number, t: number) => `${usd(o * RATES.ocr[0] + t * RATES.tr[0])} to ${usd(o * RATES.ocr[1] + t * RATES.tr[1])}`;
+
+function CostTile({ label, value, children }: { label: string; value: string; children: React.ReactNode }) {
+  return (
+    <div className="rounded-lg border border-border-light p-4 grid gap-1 content-start">
+      <div className="text-xs uppercase tracking-wider text-stone-500 font-medium">{label}</div>
+      <div className="text-2xl font-semibold text-primary tabular-nums">{value}</div>
+      <p className="text-sm text-secondary leading-relaxed">{children}</p>
+    </div>
+  );
+}
+
+/**
+ * Works held, and the model cost of what is left (#5599). Two goals, priced separately: one readable
+ * edition of every work, and every page of every book. Rendered only when the snapshot carries both blocks.
+ */
+function WhatIsLeft({ finish, works }: { finish: Finish; works: Works }) {
+  return (
+    <div className="grid gap-3">
+      <h3 className="text-base font-semibold text-primary">Works, and what finishing would cost</h3>
+      <p className="text-sm text-secondary max-w-2xl leading-relaxed">
+        Leaving artworks aside, the {fmt(works.editions)} books hold about <b className="text-primary">{fmt(works.works)}</b> distinct works; {fmt(works.multiEdition)} of them are here in more than one edition.
+        {' '}<b className="text-primary">{fmt(works.readable)}</b> works ({pct(works.readable, works.works)}%) can be read in English in at least one edition.
+      </p>
+      <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))' }}>
+        <CostTile label="One readable edition of every work" value={costRange(works.toOpenOcrPages, works.toOpenTrPages)}>
+          {fmt(works.toOpen)} works have no edition in English yet. Taking the edition of each with the fewest pages left: {pagesWord(works.toOpenOcrPages)} pages to transcribe and {pagesWord(works.toOpenTrPages)} to translate.
+        </CostTile>
+        <CostTile label="Every page of every book" value={costRange(finish.ocrPages, finish.trPages)}>
+          {pagesWord(finish.ocrPages)} pages to transcribe and {pagesWord(finish.trPages)} to translate, across {fmt(finish.books)} books.
+        </CostTile>
+      </div>
+      <p className="text-xs text-muted max-w-2xl">
+        Model costs only, at the rates paid per page in September 2026: ${RATES.ocr[0]} to ${RATES.ocr[1]} to transcribe, ${RATES.tr[0]} to ${RATES.tr[1]} to translate, depending on the model.
+        Review, storage and staff time are not included. Editions are grouped into works automatically, which misses some matches, so the number of works is an upper bound.
+        {finish.blockedBooks > 0 && ` ${fmt(finish.blockedBooks)} ${finish.blockedBooks === 1 ? "book whose source can no longer be reached is" : "books whose source can no longer be reached are"} left out.`}
+      </p>
+    </div>
+  );
+}
+
 /**
  * The whole section. Every sentence is computed from the snapshot so it cannot
  * drift from the charts beneath it.
  */
-export function CompletionSection({ completion, century, languages, liveBooks, livePages, liveTranslatedPages, readable }: {
+export function CompletionSection({ completion, century, languages, liveBooks, livePages, liveTranslatedPages, readable, finish, works }: {
   completion: Completion; century: CenturyRow[]; languages: LanguageAllRow[];
   liveBooks: number; livePages: number; liveTranslatedPages: number; readable: number;
+  finish?: Finish | null; works?: Works | null;
 }) {
   const n = completion.bins;
   const trNone = completion.translated[0], trFull = completion.translated[n - 1], trMid = completion.books - trNone - trFull;
@@ -257,6 +302,7 @@ export function CompletionSection({ completion, century, languages, liveBooks, l
         <Histogram bins={completion.ocr} color={TEAL} title="Share of each book's pages transcribed" emptyLabel="none yet" fullLabel={`${fmt(ocrFull)} at 95% or more`} />
         <Histogram bins={completion.translated} color={RUST} title="Share of each book's pages translated" emptyLabel="none yet" fullLabel={`${fmt(trFull)} at 95% or more`} />
       </div>
+      {finish && works && <WhatIsLeft finish={finish} works={works} />}
       {dated.length > 0 && (
         <div className="grid gap-2">
           <h3 className="text-base font-semibold text-primary">By century of publication</h3>
