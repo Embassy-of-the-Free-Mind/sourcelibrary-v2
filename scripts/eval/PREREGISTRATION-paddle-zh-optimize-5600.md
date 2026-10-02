@@ -91,3 +91,17 @@ draw did not anticipate:
    would reject the pilot recipe itself. The catastrophic gate becomes **≤ max(2 % of scored pages,
    base's count)**: an arm may not be catastrophic on more pages than the recipe it replaces. The Δ gate is
    unchanged.
+
+**2026-10-02 09:55Z, before any RunPod arm was scored (brief amended: "compare gpu costs").** RunPod arms are
+now RUN, not estimated — the paragraph above saying "not run (the lease watchdog manages Scaleway only)" is
+superseded: `scripts/maintenance/runpod-pod-watchdog.mjs` (Hetzner cron, every 10 min) terminates any
+`sl-5600-*` pod past the deadline in its name or with no new output for 30 min; negative control passed
+(a CPU pod with a 5-min deadline was terminated by the 09:50 pass, confirmed gone). GPU arms: RTX 3090,
+RTX 4090, RTX 5090, L4, L40S (community cloud first, secure if community has none; availability recorded
+per type). Same images, same 100 accuracy pages, same 400-page throughput set, same scorer and gate.
+€/page on RunPod = s/page × $/h ÷ 3600 × 0.86 €/$ (2026-10-02), per-second billing; startup minutes
+(create → ssh → setup) are reported per pod and added in the cohort projection. The backend sweep
+(native vs the genai vLLM server at 4/8/16 clients) runs on the cheapest GPU RunPod had in stock (3090)
+rather than the Scaleway L4, because the L4 was busy with the pilot; `base-repeat` (the recipe on the
+Scaleway L4) remains the A-vs-A floor. Choice rule unchanged, plus: a winner must have had stock at the
+time it was measured and a fallback provider for the run length.
