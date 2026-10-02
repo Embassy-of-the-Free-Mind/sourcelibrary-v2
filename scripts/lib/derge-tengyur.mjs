@@ -6,8 +6,10 @@
 // `ocr.data` but has no images to align against. scripts/lib/ndl-koten-lane.mjs is the
 // page-provenance shape (`ocr.source`, `ocr.content_hash`, human-edit guard) this follows.
 //
-// derge-tengyur — pure helpers for the Derge Tengyur import (#5497): BDRC W23703 scans aligned
-// folio-for-folio to the Esukhia digital Derge Tengyur (public domain).
+// derge-tengyur — pure helpers for the Derge Tengyur (#5497) and Derge Kangyur (#5665) imports: BDRC
+// scans (W23703, W4CZ5369) aligned folio-for-folio to the Esukhia digital editions (public domain).
+// The 84000 catalogue parse below follows read84000() in scripts/catalog-coverage/canon-gap-map.mjs,
+// but reads each `works` array as JSON: its single regex can carry one record's status onto the next.
 //
 // No DB, no network. The importer is scripts/import/derge-tengyur-import.mjs.
 
@@ -17,13 +19,21 @@ export const TSHEG = '་';
 // Tibetan punctuation / marks + whitespace, treated as syllable separators (kanjur_align.py PUNCT_RE).
 const PUNCT_RE = /[\u0F01-\u0F0A\u0F0D-\u0F17\u0F1A-\u0F1F\u0F3A-\u0F3D\u0FBE-\u0FCF\s]+/gu;
 // Esukhia editorial markup: (error,correction) keeps the first reading — the woodblock's; {D123}
-// Tohoku boundaries; [X] doubt marks; # peydurma note points. Stripped for SCORING only.
-const MARKUP_RE = /\{D[0-9a-z]+\}|[[\]#]/g;
+// Tohoku boundaries ({D1-1}: a sub-text, Kangyur); [X] doubt marks; # peydurma note points. Stripped
+// for SCORING only.
+const MARKUP_RE = /\{D[0-9a-z]+(?:-\d+)?\}|[[\]#]/g;
 
-/** NFC-normalised Tibetan syllables, editorial markup removed (scoring only — never stored). */
-export function syllables(text) {
+/**
+ * NFC-normalised Tibetan syllables, editorial markup removed (scoring only — never stored).
+ * `blockSpelling`: also keep the first reading of {archaic,standard} (`{མྱི་,མི་}`, 61K in the
+ * Kangyur e-text) — the spelling carved on the block, which is what a read of the image sees. Off for
+ * the Tengyur, whose measurements were taken without it.
+ */
+export function syllables(text, { blockSpelling = false } = {}) {
   let t = String(text || '').normalize('NFC');
-  t = t.replace(/\(([^,()]*),[^()]*\)/g, '$1').replace(MARKUP_RE, ' ');
+  t = t.replace(/\(([^,()]*),[^()]*\)/g, '$1');
+  if (blockSpelling) t = t.replace(/\{([^,{}]*),[^{}]*\}/g, '$1');
+  t = t.replace(MARKUP_RE, ' ');
   t = t.replace(PUNCT_RE, TSHEG);
   return t.split(TSHEG).filter((s) => s && /[\u0F40-\u0FBC]/u.test(s));
 }
@@ -86,7 +96,7 @@ export function parseVolume(raw) {
     if (lineNo != null || rest.trim()) cur.lines.push(rest);
   }
   for (const p of pages) {
-    for (const l of p.lines) for (const t of l.matchAll(/\{(D[0-9a-z]+)\}/g)) p.tohoku.push(t[1]);
+    for (const l of p.lines) for (const t of l.matchAll(/\{(D[0-9a-z]+(?:-\d+)?)\}/g)) p.tohoku.push(t[1]);
   }
   return pages;
 }
@@ -146,10 +156,10 @@ export function claimByLabel(canvasLabels, pages, LOOKAHEAD = 6) {
  * (`global_best`): a read that matches a side far away is evidence of misalignment, while a read
  * that matches no side anywhere is evidence only that the reader failed on this image.
  */
-export function scoreRead(readText, pages, claimed, { span = 6, far = null, floor = 0.4 } = {}) {
+export function scoreRead(readText, pages, claimed, { span = 6, far = null, floor = 0.4, blockSpelling = false } = {}) {
   const read = syllables(readText);
   const sylCache = new Map();
-  const sylOf = (i) => { if (!sylCache.has(i)) sylCache.set(i, syllables(pages[i].lines.join(' '))); return sylCache.get(i); };
+  const sylOf = (i) => { if (!sylCache.has(i)) sylCache.set(i, syllables(pages[i].lines.join(' '), { blockSpelling })); return sylCache.get(i); };
   const byShift = {};
   for (let d = -span; d <= span; d++) {
     const i = claimed + d;
@@ -253,9 +263,9 @@ export function volumeVerdict(samples, rules = ALIGN_RULES) {
  * Used where BDRC's manifest carries no folio labels (I1441 = vol. 125 has only "img. N"), so the
  * canvas → side offset must be MEASURED from the reads rather than claimed by a label.
  */
-export function locateRead(readText, pages) {
+export function locateRead(readText, pages, { blockSpelling = false } = {}) {
   const read = syllables(readText);
-  const scores = pages.map((p) => (p.lines.length ? nwIdentity(read, syllables(p.lines.join(' '))) : 0));
+  const scores = pages.map((p) => (p.lines.length ? nwIdentity(read, syllables(p.lines.join(' '), { blockSpelling })) : 0));
   let best = 0;
   for (let i = 1; i < scores.length; i++) if (scores[i] > scores[best]) best = i;
   const control = Math.max(0, ...scores.filter((_, i) => Math.abs(i - best) >= 2));
@@ -276,4 +286,67 @@ export function agreedOffset(located, rules = ALIGN_RULES) {
   const offs = [...new Set(ok.map(({ canvas, loc }) => loc.index - canvas))];
   if (offs.length !== 1) return { offset: null, reason: `located reads disagree on the offset: ${offs.join(', ')}` };
   return { offset: offs[0], reason: null, located: ok.length };
+}
+
+/**
+ * The Tohoku texts each side carries: the one running in from the previous side (or volume —
+ * `carryIn`, the last id of the volume before) plus every one that opens on it; a blank side (an
+ * unprinted leaf) carries none. A parent id that is
+ * immediately refined by its sub-texts on the same side ({D1}{D1-1}) is dropped: 84000 catalogues
+ * the sub-texts (toh1-1 …), not the parent.
+ * @returns {string[][]} per side
+ */
+export function textsOnSides(pages, carryIn = null) {
+  let cur = carryIn;
+  return pages.map((p) => {
+    const ids = cur ? [cur] : [];
+    for (const t of p.tohoku) { ids.push(t); cur = t; }
+    if (!p.lines.join('').trim()) return [];
+    const out = [...new Set(ids)];
+    return out.filter((id) => !out.some((o) => o.startsWith(`${id}-`)));
+  });
+}
+
+/**
+ * 84000's Reading Room catalogue (read.84000.co/section/lobby.json, a Next.js page): every `works`
+ * array in the flight data, parsed as JSON. Returns Map("toh1-1" → { status, pages }).
+ */
+export function parse84000Works(html) {
+  const s = [...String(html).matchAll(/self\.__next_f\.push\(\[1,"((?:[^"\\]|\\.)*)"\]\)/g)].map((m) => JSON.parse(`"${m[1]}"`)).join('');
+  const arrayAt = (k) => {
+    let d = 0, str = false;
+    for (let j = k; j < s.length; j++) {
+      const c = s[j];
+      if (str) { if (c === '\\') j++; else if (c === '"') str = false; continue; }
+      if (c === '"') str = true;
+      else if (c === '[' || c === '{') d++;
+      else if ((c === ']' || c === '}') && --d === 0) return s.slice(k, j + 1);
+    }
+    throw new Error('84000: unterminated works array');
+  };
+  const recs = new Map();
+  for (const m of s.matchAll(/"works":\[/g)) {
+    for (const w of JSON.parse(arrayAt(m.index + 8))) {
+      if (!w?.toh || !w.publication_status) continue;
+      const prev = recs.get(w.toh);
+      if (prev && prev.status !== w.publication_status) throw new Error(`84000: ${w.toh} listed as ${prev.status} and ${w.publication_status}`);
+      recs.set(w.toh, { status: w.publication_status, pages: w.num_pages || 0 });
+    }
+  }
+  return recs;
+}
+
+/**
+ * 84000 coverage of one side, from the texts on it. The side is `published` only if every text on
+ * it is published, `in_progress` if every text is published or in progress, else `not_begun` (a text
+ * 84000 lists as Not Begun or Application Pending, or does not list at all). A side with no Tohoku
+ * text (a title leaf, the catalogue volume) is `no_text`.
+ */
+export function english84000(texts, recs) {
+  if (!texts.length) return { coverage: 'no_text', texts: {} };
+  const st = Object.fromEntries(texts.map((d) => [d, recs.get(`toh${d.slice(1)}`)?.status ?? 'not in catalogue']));
+  const v = Object.values(st);
+  const coverage = v.every((x) => x === 'Published') ? 'published'
+    : v.every((x) => x === 'Published' || x === 'In Progress') ? 'in_progress' : 'not_begun';
+  return { coverage, texts: st };
 }

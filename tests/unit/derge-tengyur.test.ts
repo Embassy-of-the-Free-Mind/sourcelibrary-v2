@@ -81,3 +81,46 @@ describe('derge-tengyur index mode (no folio labels in the manifest)', () => {
     expect(agreedOffset([loc(10, 11), loc(100, 101, 0.3), loc(200, 201, 0.3)]).offset).toBeNull();
   });
 });
+
+describe('derge-kangyur (#5665)', () => {
+  const KRAW = [
+    '[1a]',
+    '[1a.1]',
+    '[1b]',
+    '[1b.1]{D1}{D1-1}༄༅༅། །རྒྱ་གར་སྐད་དུ། བི་ན་ཡ་བསྟུ། {མྱི་,མི་}ཤེས་སོ།',
+    '[2a]',
+    '[2a.1]དཀོན་མཆོག་གསུམ་ལ་ཕྱག་འཚལ་ལོ། །{D1-2}གང་གིས་འཆིང་',
+    '[2b]',
+    '[2b.1]རྣམས་ཡང་དག་རབ་བཅད་ཅིང་།',
+  ].join('\n');
+  it('records dashed Tohoku sub-texts', async () => {
+    const p = parseVolume(KRAW);
+    expect(p[1].tohoku).toEqual(['D1', 'D1-1']);
+    expect(p[2].tohoku).toEqual(['D1-2']);
+  });
+  it('scores the block spelling of {archaic,standard} only when asked (the Tengyur path is unchanged)', () => {
+    expect(syllables('{མྱི་,མི་}ཤེས', { blockSpelling: true })).toEqual(['མྱི', 'ཤེས']);
+    expect(syllables('{མྱི་,མི་}ཤེས')).toEqual(['{མྱི', ',མི', '}ཤེས']);
+  });
+  it('carries the running text across sides and volumes, drops a refined parent, skips blank sides', async () => {
+    const { textsOnSides } = await import('../../scripts/lib/derge-tengyur.mjs');
+    expect(textsOnSides(parseVolume(KRAW))).toEqual([[], ['D1-1'], ['D1-1', 'D1-2'], ['D1-2']]);
+    expect(textsOnSides(parseVolume(KRAW), 'D0')[0]).toEqual([]);
+  });
+  it('a side is published only if every text on it is; unlisted texts count as not begun', async () => {
+    const { english84000 } = await import('../../scripts/lib/derge-tengyur.mjs');
+    const recs = new Map([['toh1-1', { status: 'Published', pages: 260 }], ['toh1-2', { status: 'In Progress', pages: 3 }]]);
+    expect(english84000(['D1-1'], recs).coverage).toBe('published');
+    expect(english84000(['D1-1', 'D1-2'], recs).coverage).toBe('in_progress');
+    expect(english84000(['D1-2', 'D7a'], recs)).toEqual({ coverage: 'not_begun', texts: { 'D1-2': 'In Progress', D7a: 'not in catalogue' } });
+    expect(english84000([], recs).coverage).toBe('no_text');
+  });
+  it('parses 84000 works arrays out of the Next.js flight data', async () => {
+    const { parse84000Works } = await import('../../scripts/lib/derge-tengyur.mjs');
+    const flight = JSON.stringify('x:{"works":[{"toh":"toh1-1","title":"a \\"b\\" [c]","num_pages":260,"publication_status":"Published"},{"toh":"toh7a","num_pages":null,"publication_status":"Not Begun"}]}');
+    const html = `<script>self.__next_f.push([1,${flight}])</script>`;
+    const r = parse84000Works(html);
+    expect(r.get('toh1-1')).toEqual({ status: 'Published', pages: 260 });
+    expect(r.get('toh7a')).toEqual({ status: 'Not Begun', pages: 0 });
+  });
+});
