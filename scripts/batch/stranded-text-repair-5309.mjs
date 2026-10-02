@@ -417,7 +417,7 @@ async function enrol(db) {
     if (open >= maxOpen) break;
     const sp = await spend(db);
     const inflight = s.books.filter((x) => x.phase === 'tr_enrolled').reduce((n, x) => n + (x.tr_est || 0), 0);
-    const est = b.n * TR_RATE;
+    const est = (b.residual_pages ?? b.n) * TR_RATE;   // a residual run re-translates only its residual pages
     if (sp.usd + inflight + est > CAP) { log(`enrol: CAP — spent $${sp.usd.toFixed(2)} + in flight $${inflight.toFixed(2)} + $${est.toFixed(2)} > $${CAP}`); s.cap_hit = new Date().toISOString(); break; }
     const approved = Math.max(0.05, +(b.n * 0.003).toFixed(2));
     // Release OUR hold; a book already released (a second 300-page run, an echo re-send) proceeds;
@@ -610,6 +610,13 @@ async function residual(db) {
     const docs = await db.collection('pages').find({ book_id: b.id, $or: [{ id: { $in: r.stranded_page_ids } }, { _id: { $in: r.stranded_page_ids.filter((x) => /^[0-9a-f]{24}$/.test(x)).map((x) => new ObjectId(x)) } }] }, { projection: { id: 1 } }).toArray();
     const ids = [...new Set(docs.map((d) => d.id))];
     if (!ids.length) continue;
+    // Re-hold before the OCR lands: the book was released for its chained run, and a released book
+    // whose OCR is rewritten under a translation is gap-fill's to re-translate on realtime lite.
+    if (!b.foreign_hold) {
+      const h = await holdBook(db, b.id, HOLD);
+      if (h.outcome === 'held' || h.outcome === 'already_held') b.held_by_us = true;
+      else { log(`  ${b.id}: hold ${h.outcome} ${h.reason || ''} — not queued`); continue; }
+    }
     b.residual_prev_phase = b.phase; b.retry_page_ids = ids; b.ocr_model = model; b.phase = 'pending'; b.submit_attempts = 0; b.retries = 1; b.residual_pages = ids.length;
     books++; pages += ids.length;
     await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'residual-queued', detail: { pages: ids.length, model } });
