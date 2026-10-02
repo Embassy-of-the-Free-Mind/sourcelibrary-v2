@@ -74,6 +74,7 @@ import { MongoClient } from 'mongodb';
 import { tokens as gateTokens, ratio as seqRatio, EDITORIAL_BLOCKS } from '../lib/ia-ocr-agreement.mjs';
 import { dehyphenateLineBreaks, countLineBreakHyphens } from '../lib/dehyphenate.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
+import { stripMarkupTags } from '../lib/strip-markup-tags.mjs';
 
 const ARG = (n, d) => process.argv.find((a) => a.startsWith(`${n}=`))?.split('=').slice(1).join('=') ?? d;
 const STAGE = ARG('--stage', 'report');
@@ -148,7 +149,7 @@ function modelBody(raw) {
   const text = String(raw || '');
   const columns = (text.match(/<columns>\s*(\d+)/i) || [])[1] ?? null;
   const pageType = (text.match(/<page-type>\s*([^<\s]+)/i) || [])[1]?.toLowerCase() ?? null;
-  const furniture = []; for (const m of text.matchAll(FURNITURE_RE)) furniture.push({ tag: m[1].toLowerCase(), text: m[2].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() });
+  const furniture = []; for (const m of text.matchAll(FURNITURE_RE)) furniture.push({ tag: m[1].toLowerCase(), text: stripMarkupTags(m[2]).replace(/\s+/g, ' ').trim() });
   const body = text.replace(EDITORIAL_RE, ' ').replace(FURNITURE_RE, '\n').replace(/->|<-/g, ' ').replace(/<\/?[A-Za-z][^>]*>/g, ' ').replace(/[*_`#|]/g, ' ');
   return { body, furniture, columns, pageType };
 }
