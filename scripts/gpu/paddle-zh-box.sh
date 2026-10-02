@@ -11,6 +11,10 @@
 #   paddle-zh-box.sh infer      runners over manifest.tsv until INFER_HOURS elapse (restarted on exit 3)
 #   paddle-zh-box.sh collect    box.json: versions, GPU, weights sha256, config, pages, s/page
 #   paddle-zh-box.sh all        setup, infer, collect, touch DONE
+#   paddle-zh-box.sh loop       the FLEET mode: setup + collect once, then read every manifest the driver drops in
+#                               queue/ (oldest first; queue/<name>.tsv → queue/<name>.done when every row has a
+#                               .txt or .err), and exit when the queue has been empty for QUEUE_IDLE_MIN (30) or
+#                               queue/FINISH exists. Run it under idle-poweroff.sh run -- so the box powers off then.
 # Env: PV_WORK (/root/pz), WORKERS (native runners, default 2: an L4 holds two), BACKEND (native|server),
 #      CLIENTS (server-mode runners, default 8), MAX_SIDE (0), LAYOUT (1), PREFETCH (4), INFER_HOURS (6),
 #      PAGE_TIMEOUT (90). Run under idle-poweroff.sh so the box powers itself off when the job ends.
@@ -30,7 +34,7 @@ setup() {
       python3 -m venv "$W/srv"
       "$W/srv/bin/pip" install -q --upgrade pip >> "$W/setup.log" 2>&1
       "$W/srv/bin/pip" install -q "paddleocr[doc-parser]==3.7.0" "paddlex==3.7.2" >> "$W/setup.log" 2>&1
-      "$W/srv/bin/paddleocr" install_genai_server_deps vllm >> "$W/setup.log" 2>&1 || log "install_genai_server_deps vllm FAILED (see setup.log)"
+      PATH="$W/srv/bin:$PATH" "$W/srv/bin/paddleocr" install_genai_server_deps vllm >> "$W/setup.log" 2>&1 || log "install_genai_server_deps vllm FAILED (see setup.log)"
     fi
     log "server venv: $("$W/srv/bin/python" -c 'import vllm;print("vllm",vllm.__version__)' 2>&1 | tail -1)"
   fi
@@ -39,7 +43,7 @@ setup() {
 serve() {
   [ "$BACKEND" = server ] || return 0
   if ! curl -sf http://127.0.0.1:8118/v1/models >/dev/null 2>&1; then
-    nohup "$W/srv/bin/paddleocr" genai_server --model_name "${VL_MODEL:-PaddleOCR-VL-0.9B}" --backend vllm --port 8118 ${SERVER_ARGS:-} > "$W/server.log" 2>&1 &
+    PATH="$W/srv/bin:$PATH" nohup "$W/srv/bin/paddleocr" genai_server --model_name "${VL_MODEL:-PaddleOCR-VL-0.9B}" --backend vllm --port 8118 ${SERVER_ARGS:-} > "$W/server.log" 2>&1 &
     for i in $(seq 1 120); do curl -sf http://127.0.0.1:8118/v1/models >/dev/null 2>&1 && break; sleep 5; done
   fi
   curl -sf http://127.0.0.1:8118/v1/models >/dev/null && log "genai server up: $(curl -s http://127.0.0.1:8118/v1/models | head -c 200)" || { log "genai server did NOT come up"; tail -20 "$W/server.log" | tee -a "$W/box.log"; return 1; }
@@ -47,12 +51,13 @@ serve() {
 
 infer() {
   serve
+  local M=${1:-$W/manifest.tsv}
   local t0; t0=$(date +%s)
   local deadline=$(( t0 + INFER_HOURS * 3600 ))
-  log "infer start: backend=$BACKEND runners=$WORKERS max_side=${MAX_SIDE:-0} layout=${LAYOUT:-1} prefetch=${PREFETCH:-4}, deadline $(date -u -d @$deadline +%FT%TZ), $(wc -l < "$W/manifest.tsv") rows"
+  log "infer start: $(basename "$M") backend=$BACKEND runners=$WORKERS max_side=${MAX_SIDE:-0} layout=${LAYOUT:-1} prefetch=${PREFETCH:-4}, deadline $(date -u -d @$deadline +%FT%TZ), $(wc -l < "$M") rows"
   for i in $(seq 0 $((WORKERS - 1))); do
     ( while [ "$(date +%s)" -lt "$deadline" ]; do
-        "$W/venv/bin/python" "$HERE/paddle-zh-run.py" --manifest "$W/manifest.tsv" --root "$W" --worker "$i" --workers "$WORKERS" \
+        "$W/venv/bin/python" "$HERE/paddle-zh-run.py" --manifest "$M" --root "$W" --worker "$i" --workers "$WORKERS" \
           --deadline "$deadline" --page-timeout "${PAGE_TIMEOUT:-90}" --max-side "${MAX_SIDE:-0}" --layout "${LAYOUT:-1}" \
           --backend "$BACKEND" --prefetch "${PREFETCH:-4}" >> "$W/worker-$i.log" 2>&1 && break
         echo "$(date -u +%FT%TZ) worker $i exited $? — restarting" >> "$W/box.log"
@@ -61,6 +66,23 @@ infer() {
   wait || true
   echo $(( $(date +%s) - t0 )) > "$W/infer-secs"
   log "infer done in $(cat "$W/infer-secs") s"
+}
+
+loop() {
+  mkdir -p "$W/queue"
+  setup; collect
+  local idle_since; idle_since=$(date +%s)
+  while [ ! -e "$W/queue/FINISH" ]; do
+    local next; next=$(ls -1tr "$W"/queue/*.tsv 2>/dev/null | head -1 || true)
+    if [ -z "$next" ]; then
+      [ $(( $(date +%s) - idle_since )) -ge $(( ${QUEUE_IDLE_MIN:-30} * 60 )) ] && { log "queue empty ${QUEUE_IDLE_MIN:-30} min — exiting"; break; }
+      sleep 20; continue
+    fi
+    INFER_HOURS=${INFER_HOURS:-24} infer "$next"
+    mv "$next" "${next%.tsv}.done"; log "chunk $(basename "$next") done"; collect
+    idle_since=$(date +%s)
+  done
+  collect
 }
 
 collect() {
@@ -89,7 +111,8 @@ PY
 }
 
 case ${1:-} in
-  setup) setup ;; serve) serve ;; infer) infer ;; collect) collect ;;
+  setup) setup ;; serve) serve ;; infer) infer "${2:-}" ;; collect) collect ;;
   all) setup; infer; collect; touch "$W/DONE"; log DONE ;;
-  *) echo "usage: $0 setup|serve|infer|collect|all"; exit 1 ;;
+  loop) loop; touch "$W/DONE"; log DONE ;;
+  *) echo "usage: $0 setup|serve|infer|collect|all|loop"; exit 1 ;;
 esac
