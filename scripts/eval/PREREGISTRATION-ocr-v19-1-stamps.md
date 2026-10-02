@@ -43,4 +43,9 @@ The promote is Derek's call. The run writes no `prompts` row and nothing to `pag
 1,170 Flash-Lite Batch requests is about $1.4. **Cap $3.**
 
 ## Amendments
-None yet.
+### Amendment 1 (2026-10-02, job ocr-v19-1, before any D or A3 request was built)
+Three operational definitions the text above leaves open. None is informed by any D or A3 output (none exists yet).
+1. **The 20 stamp pages** are the S3 pages labelled real-ink in `dataset/ocr-v19-labels.jsonl` whose note matches `/mirror|show-?through|bleed|reversed|behind|other side|verso|recto/i`. That rule reproduces the v19 RESULTS row exactly (n 20; A .200, A2 .217, B .283, C .400).
+2. **"A right-reading word from the label note"** is a fixed per-page list, copied from the notes by hand and committed now: `dataset/ocr-v19-1-stamp-words.json`. Words that the mirrored title on the other side may also carry are left out. One page whose note names no legible word (`'F'/'V'-like`) is excluded, so the share is over 19 pages × 3 runs. Matching is whole-token after lowercasing, stripping accents and folding non-alphanumerics to a space. The share is reported for every arm, not only D.
+3. **Drift count.** A page "differs" when |A3 − A| on its stratum's outcome is at least that stratum's page threshold from the v19 run (the A-vs-A2 p90, or 1/3 when that is 0). This is the same rule that counts a page as better or worse. Drift is declared when more than 10% of the 195 pages differ; the per-stratum counts are reported either way.
+4. **"Not worse than v18 on W ∪ T"** fails when D is worse than B on more W ∪ T pages than it is better (the pooled W ∪ T threshold), whatever the p value.
