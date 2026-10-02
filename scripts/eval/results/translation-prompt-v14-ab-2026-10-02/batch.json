@@ -13,14 +13,26 @@
       "job_name": "batches/fa2acr13lztfvizl9doqq4te6ujt3zb66qxt",
       "file_name": "files/uv7vb25ad3yz",
       "requests": 321,
-      "submitted_at": "2026-10-02T21:37:44.089Z"
+      "submitted_at": "2026-10-02T21:37:44.089Z",
+      "collected_at": "2026-10-02T21:42:00.587Z",
+      "responses": 321,
+      "errors": 0,
+      "in_tokens": 1093402,
+      "out_tokens": 278655,
+      "cost_usd": 0.3456665
     },
     {
       "model": "gemini-3-flash-preview",
       "job_name": "batches/97dj3ufiah1eep7lpdtdnnyxnya2y10b76zx",
       "file_name": "files/s8nx99x0hukb",
       "requests": 84,
-      "submitted_at": "2026-10-02T21:37:52.184Z"
+      "submitted_at": "2026-10-02T21:37:52.184Z",
+      "collected_at": "2026-10-02T21:42:01.649Z",
+      "responses": 84,
+      "errors": 0,
+      "in_tokens": 473510,
+      "out_tokens": 135437,
+      "cost_usd": 0.32153299999999996
     }
   ]
 }
