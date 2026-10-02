@@ -243,7 +243,7 @@ export default async function ProcessingPage() {
         </div>
 
         {/* ── Stage details ── */}
-        <div className="space-y-6 mb-16">
+        <div className="space-y-6 mb-6">
           {STAGES.map((stage) => (
             <div
               key={stage.name}
@@ -266,6 +266,11 @@ export default async function ProcessingPage() {
             </div>
           ))}
         </div>
+
+        <p className="text-secondary mb-16">
+          Which model does each step, for which books, and how well it works:{' '}
+          <Link href="/about/models" className="text-accent-rust hover:underline">the models we use</Link>.
+        </p>
 
         {/* ── Quality & Provenance ── */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
