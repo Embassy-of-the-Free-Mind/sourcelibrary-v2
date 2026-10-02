@@ -157,7 +157,7 @@ export default async function ModelsPage() {
             re-reads a page, the page moves to the specialist.
           </li>
           <li>
-            Blank pages and pages not yet read are not counted. Spanish translations are counted separately from English.
+            Pages not yet read are not counted. Spanish translations are counted separately from English.
           </li>
           <li>
             A count says how much a model wrote, not how good it is. For quality, follow the test linked on each card, or
