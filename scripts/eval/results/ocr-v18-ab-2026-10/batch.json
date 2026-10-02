@@ -8,7 +8,18 @@
    "job_name": "batches/egmgl6inrvny3h6uy4wynftlnrvfmobvzrv6",
    "requests": 564,
    "bytes": 126871314,
-   "submitted_at": "2026-10-02T11:57:42.816Z"
+   "submitted_at": "2026-10-02T11:57:42.816Z",
+   "collected_at": "2026-10-02T12:02:39.062Z",
+   "responses": 564,
+   "outcomes": {
+    "text": 543,
+    "truncated": 12,
+    "refusal": 9
+   },
+   "in_tokens": 2008782,
+   "out_tokens": 408446,
+   "cost_usd": 0.55743225,
+   "usage_logged": true
   },
   {
    "arm": "A2",
@@ -16,7 +27,18 @@
    "job_name": "batches/p8artmps02q5pnn9tqhmgaxlejlvqqlrc4fp",
    "requests": 564,
    "bytes": 126871878,
-   "submitted_at": "2026-10-02T11:58:04.072Z"
+   "submitted_at": "2026-10-02T11:58:04.072Z",
+   "collected_at": "2026-10-02T12:02:40.041Z",
+   "responses": 564,
+   "outcomes": {
+    "text": 543,
+    "truncated": 11,
+    "refusal": 10
+   },
+   "in_tokens": 2008782,
+   "out_tokens": 383625,
+   "cost_usd": 0.5388165,
+   "usage_logged": true
   },
   {
    "arm": "B",
@@ -24,7 +46,18 @@
    "job_name": "batches/1zr1zkjhrtdsi5i9dapd9at52yaaic9ipjmt",
    "requests": 564,
    "bytes": 127903998,
-   "submitted_at": "2026-10-02T11:58:25.333Z"
+   "submitted_at": "2026-10-02T11:58:25.333Z",
+   "collected_at": "2026-10-02T12:02:40.918Z",
+   "responses": 564,
+   "outcomes": {
+    "text": 544,
+    "truncated": 8,
+    "refusal": 12
+   },
+   "in_tokens": 2246790,
+   "out_tokens": 335258,
+   "cost_usd": 0.53229225,
+   "usage_logged": true
   }
  ]
 }
