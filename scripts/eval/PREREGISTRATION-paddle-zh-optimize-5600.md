@@ -58,7 +58,8 @@ projection to the cohort adds the measured per-box overhead (boot, install, pull
 
 For each arm, on the 100 accuracy pages:
 1. **Δ** = median over the pages of (CER_arm − CER_base). Gate: **Δ ≤ +0.01**.
-2. **Catastrophic rate** = pages with CER > 0.5 ÷ 100. Gate: **≤ 2 %**.
+2. **Catastrophic rate** = pages with CER > 0.5 (or no output) ÷ pages with a usable reference. Gate:
+   **≤ 2 %, or no more catastrophic pages than `base`, whichever is larger** (amended, see below).
 3. Reported beside both: the `base-repeat` floor (its Δ and catastrophic rate), loops by the production loop
    guard, empty reads, paired wins/losses/ties vs `base`.
 
@@ -76,3 +77,17 @@ fleet uses it.
 
 A table on #5600 — arm, s/page, €/page, median CER, Δ vs base, catastrophic, verdict — and
 `scripts/eval/experiments/2026-10-02-paddle-zh-optimize-5600.md`.
+
+## Amendments (before any arm ran)
+
+**2026-10-02, before the box read a single arm page.** Scoring `base` alone showed two instrument facts the
+draw did not anticipate:
+1. `benchmark-score.mjs` drops a page's reference when no engine in the run gets within CER 0.5 of it (the
+   reference-mismatch guard), so the usable-reference set depends on which engines are present. The two
+   #5547 Gemini arms (`gemini-3.1-flash-lite`, `gemini-3-flash-preview`) are therefore always included as
+   **anchors** (scored, never reported or gated) so the usable set is #5547's. Of the 100 pages, 95 have a
+   usable reference; 5 are reference-mismatch pages and are listed, not averaged.
+2. `base` is catastrophic on **2 of 95 (2.1 %)** — just over the absolute 2 % gate, so as written the gate
+   would reject the pilot recipe itself. The catastrophic gate becomes **≤ max(2 % of scored pages,
+   base's count)**: an arm may not be catastrophic on more pages than the recipe it replaces. The Δ gate is
+   unchanged.
