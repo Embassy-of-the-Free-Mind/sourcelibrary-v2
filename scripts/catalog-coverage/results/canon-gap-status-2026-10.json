@@ -1,6 +1,6 @@
 {
  "issue": 5513,
- "generated_at": "2026-10-02T21:59:14.306Z",
+ "generated_at": "2026-10-02T23:42:34.042Z",
  "script": "scripts/catalog-coverage/canon-gap-status.mjs",
  "gap_map": "scripts/catalog-coverage/results/canon-gap-map-2026-10.json",
  "fields": {
@@ -29,23 +29,22 @@
    "readable_books": 0,
    "pages_with_text": 128369,
    "holdings_method": "language=Tibetan, title/source matches Derge Tengyur (bstan 'gyur + sde dge, BDRC W23703, Esukhia)",
-   "updated_at": "2026-10-02T21:59:14.306Z"
+   "updated_at": "2026-10-02T23:42:34.042Z"
   },
   {
    "id": "derge-kangyur",
    "corpus": "Derge Kangyur",
    "status": "running",
    "owner_issue": 5665,
-   "done": "Import under way: BDRC W4CZ5369 (the Library of Congress copy the e-text transcribes) + the Esukhia public-domain text, aligned folio by folio; texts 84000 has published or has in progress are marked per page.",
-   "next_action": "Finish the 103-volume import and archive the images ($0 model spend); then a priced decision on a draft English for the texts 84000 has not begun.",
+   "next_action": "Import running (held_books / pages_with_text count it): BDRC W4CZ5369, the Library of Congress copy the e-text transcribes, plus the Esukhia public-domain text, aligned folio by folio, with the texts 84000 has published or has in progress marked per page. Then archive the images ($0 model spend) and price a draft English for the texts 84000 has not begun.",
    "cost_usd": 0,
-   "held_books": 0,
+   "held_books": 2,
    "live_books": 0,
-   "pipeline_held": 0,
+   "pipeline_held": 2,
    "readable_books": 0,
-   "pages_with_text": 0,
+   "pages_with_text": 620,
    "holdings_method": "language=Tibetan, title/source matches Derge Kangyur (bka' 'gyur + sde dge, BDRC W4CZ5369 / W22084, Esukhia)",
-   "updated_at": "2026-10-02T21:59:14.306Z"
+   "updated_at": "2026-10-02T23:42:34.042Z"
   },
   {
    "id": "cbeta",
@@ -57,10 +56,10 @@
    "held_books": 136,
    "live_books": 133,
    "pipeline_held": 55,
-   "readable_books": 69,
+   "readable_books": 70,
    "pages_with_text": 11885,
    "holdings_method": "Chinese-language books in buddhist-canon / chinese-buddhist-texts / zen-chan, SAT Daizōkyō scans, metadata.cbeta_id, or works-catalog cbeta holdings",
-   "updated_at": "2026-10-02T21:59:14.306Z"
+   "updated_at": "2026-10-02T23:42:34.042Z"
   },
   {
    "id": "cbeta-chan",
@@ -76,15 +75,15 @@
    "readable_books": 16,
    "pages_with_text": 8408,
    "holdings_method": "Chinese-language books whose title contains 景德傳燈錄 / 祖堂集 / 五燈會元 / 語錄 / 廣錄 / 語要, or in zen-chan",
-   "updated_at": "2026-10-02T21:59:14.306Z"
+   "updated_at": "2026-10-02T23:42:34.042Z"
   },
   {
    "id": "pali-mula",
    "corpus": "Pali Chaṭṭha Saṅgāyana — root texts (mūla)",
    "status": "running",
-   "owner_issue": 5513,
-   "done": "Eternity A+B pass: OCR + draft English on the Pali books we hold (hidden ones stay hidden).",
-   "next_action": "Fit the VRI Chaṭṭha Saṅgāyana text to our Pali scans instead of relying on OCR (issue filed from the #5513 scope table).",
+   "owner_issue": 5668,
+   "done": "Eternity A+B pass (#5513): OCR + draft English on the Pali books we hold (hidden ones stay hidden).",
+   "next_action": "Fit the VRI Chaṭṭha Saṅgāyana text (non-commercial, attribution) to our Pali scans instead of relying on OCR; re-translate changed pages.",
    "cost_usd": 4,
    "held_books": 57,
    "live_books": 26,
@@ -92,13 +91,13 @@
    "readable_books": 34,
    "pages_with_text": 16606,
    "holdings_method": "language=Pali (any edition; not matched to the VRI CSCD edition)",
-   "updated_at": "2026-10-02T21:59:14.306Z"
+   "updated_at": "2026-10-02T23:42:34.042Z"
   },
   {
    "id": "pali-atthakatha",
    "corpus": "Pali Chaṭṭha Saṅgāyana — commentaries (aṭṭhakathā)",
    "status": "running",
-   "owner_issue": 5513,
+   "owner_issue": 5668,
    "done": "Eternity A+B pass covered the commentaries we hold except five aṭṭhakathā owned by the quality-round-1 eval (#5438).",
    "next_action": "As root texts: fit the VRI text; translate the five aṭṭhakathā once the eval releases them.",
    "cost_usd": 11,
@@ -108,13 +107,13 @@
    "readable_books": 34,
    "pages_with_text": 16606,
    "holdings_method": "language=Pali (any edition; not matched to the VRI CSCD edition)",
-   "updated_at": "2026-10-02T21:59:14.306Z"
+   "updated_at": "2026-10-02T23:42:34.042Z"
   },
   {
    "id": "pali-tika",
    "corpus": "Pali Chaṭṭha Saṅgāyana — sub-commentaries (ṭīkā)",
    "status": "next",
-   "owner_issue": 5513,
+   "owner_issue": 5668,
    "next_action": "As root texts: fit the VRI text where we hold a scan; English coverage unknown (upper bound priced).",
    "cost_usd": 4,
    "held_books": 57,
@@ -123,7 +122,7 @@
    "readable_books": 34,
    "pages_with_text": 16606,
    "holdings_method": "language=Pali (any edition; not matched to the VRI CSCD edition)",
-   "updated_at": "2026-10-02T21:59:14.306Z"
+   "updated_at": "2026-10-02T23:42:34.042Z"
   },
   {
    "id": "gretil-buddhist",
@@ -139,7 +138,7 @@
    "readable_books": 34,
    "pages_with_text": 14130,
    "holdings_method": "Sanskrit books in buddhism collections or Buddhist title terms",
-   "updated_at": "2026-10-02T21:59:14.306Z"
+   "updated_at": "2026-10-02T23:42:34.042Z"
   },
   {
    "id": "gretil-vedanta",
@@ -155,7 +154,7 @@
    "readable_books": 11,
    "pages_with_text": 5740,
    "holdings_method": "Sanskrit books in vedanta-darshana or Vedānta title terms",
-   "updated_at": "2026-10-02T21:59:14.306Z"
+   "updated_at": "2026-10-02T23:42:34.042Z"
   },
   {
    "id": "gretil-gaudiya",
@@ -171,7 +170,7 @@
    "readable_books": 1,
    "pages_with_text": 504,
    "holdings_method": "Sanskrit books with Gauḍīya author/title terms",
-   "updated_at": "2026-10-02T21:59:14.306Z"
+   "updated_at": "2026-10-02T23:42:34.042Z"
   },
   {
    "id": "sefaria-zohar",
@@ -187,7 +186,7 @@
    "readable_books": 10,
    "pages_with_text": 7582,
    "holdings_method": "Zohar / Tikkunei Zohar by title",
-   "updated_at": "2026-10-02T21:59:14.306Z"
+   "updated_at": "2026-10-02T23:42:34.042Z"
   },
   {
    "id": "sefaria-lurianic",
@@ -203,7 +202,7 @@
    "readable_books": 2,
    "pages_with_text": 1366,
    "holdings_method": "Lurianic corpus by title (Etz Chaim, Vital, Shemonah She`arim …)",
-   "updated_at": "2026-10-02T21:59:14.306Z"
+   "updated_at": "2026-10-02T23:42:34.042Z"
   },
   {
    "id": "sefaria-cordovero",
@@ -219,7 +218,7 @@
    "readable_books": 1,
    "pages_with_text": 658,
    "holdings_method": "Cordovero by title (Pardes Rimonim, Tomer Devorah, Or Ne`erav)",
-   "updated_at": "2026-10-02T21:59:14.306Z"
+   "updated_at": "2026-10-02T23:42:34.042Z"
   },
   {
    "id": "openiti-sufi",
@@ -234,7 +233,7 @@
    "readable_books": 131,
    "pages_with_text": 26417,
    "holdings_method": "Arabic/Persian books in sufism collections, Ibn ʿArabī title terms, or works-catalog openiti holdings",
-   "updated_at": "2026-10-02T21:59:14.306Z"
+   "updated_at": "2026-10-02T23:42:34.042Z"
   },
   {
    "id": "ganjoor",
@@ -250,7 +249,7 @@
    "readable_books": 22,
    "pages_with_text": 9757,
    "holdings_method": "Persian books in persian-literary-tradition or with classical poetry title terms (any edition)",
-   "updated_at": "2026-10-02T21:59:14.306Z"
+   "updated_at": "2026-10-02T23:42:34.042Z"
   },
   {
    "id": "mongolian-kanjur",
@@ -260,13 +259,13 @@
    "done": "Scans-only import of BDRC W4CZ5370 (108 volumes) under way, held and hidden.",
    "next_action": "OCR feasibility is open: flash-lite drops ~70% of columns (#5664); needs a reference text or a Mongolist first.",
    "cost_usd": 0,
-   "held_books": 0,
+   "held_books": 108,
    "live_books": 0,
-   "pipeline_held": 0,
+   "pipeline_held": 108,
    "readable_books": 0,
    "pages_with_text": 0,
    "holdings_method": "language=Mongolian or Mongolian Kanjur by title/source",
-   "updated_at": "2026-10-02T21:59:14.306Z"
+   "updated_at": "2026-10-02T23:42:34.042Z"
   },
   {
    "id": "tripitaka-koreana",
@@ -282,7 +281,7 @@
    "readable_books": 0,
    "pages_with_text": 0,
    "holdings_method": "Korean/Chinese books with Tripitaka Koreana / 高麗 / 海印寺 title terms",
-   "updated_at": "2026-10-02T21:59:14.306Z"
+   "updated_at": "2026-10-02T23:42:34.042Z"
   },
   {
    "id": "kanripo",
@@ -297,7 +296,7 @@
    "readable_books": 155,
    "pages_with_text": 32306,
    "holdings_method": "works-catalog work_holdings for kanripo works (build-holdings.mjs title-auto match; a floor)",
-   "updated_at": "2026-10-02T21:59:14.306Z"
+   "updated_at": "2026-10-02T23:42:34.042Z"
   }
  ]
 }
