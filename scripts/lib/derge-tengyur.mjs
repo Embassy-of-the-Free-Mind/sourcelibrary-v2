@@ -6,10 +6,13 @@
 // `ocr.data` but has no images to align against. scripts/lib/ndl-koten-lane.mjs is the
 // page-provenance shape (`ocr.source`, `ocr.content_hash`, human-edit guard) this follows.
 //
-// derge-tengyur — pure helpers for the Derge Tengyur import (#5497): BDRC W23703 scans aligned
-// folio-for-folio to the Esukhia digital Derge Tengyur (public domain).
+// derge-tengyur — pure helpers for the Derge canon imports: the Tengyur (#5497, BDRC W23703 scans)
+// and the Kangyur (#5665, BDRC W4CZ5369 scans), each aligned folio-for-folio to the Esukhia digital
+// edition (public domain). Both e-texts share one format (`[1b.3]` markers, `{D…}` Tohoku
+// boundaries), so one parser and one alignment instrument serve both; what differs per canon is the
+// constant data in CANONS.
 //
-// No DB, no network. The importer is scripts/import/derge-tengyur-import.mjs.
+// No DB, no network. The importer is scripts/import/derge-tengyur-import.mjs (--canon=kangyur).
 
 import { createHash } from 'node:crypto';
 
@@ -17,8 +20,11 @@ export const TSHEG = '་';
 // Tibetan punctuation / marks + whitespace, treated as syllable separators (kanjur_align.py PUNCT_RE).
 const PUNCT_RE = /[\u0F01-\u0F0A\u0F0D-\u0F17\u0F1A-\u0F1F\u0F3A-\u0F3D\u0FBE-\u0FCF\s]+/gu;
 // Esukhia editorial markup: (error,correction) keeps the first reading — the woodblock's; {D123}
-// Tohoku boundaries; [X] doubt marks; # peydurma note points. Stripped for SCORING only.
-const MARKUP_RE = /\{D[0-9a-z]+\}|[[\]#]/g;
+// Tohoku boundaries (the Kangyur adds sub-texts, {D1-1}); [X] doubt marks; # peydurma note points.
+// Stripped for SCORING only.
+const TOHOKU_SRC = 'D[0-9a-z]+(?:-[0-9a-z]+)*';
+const MARKUP_RE = new RegExp(`\\{${TOHOKU_SRC}\\}|[[\\]#]`, 'g');
+const TOHOKU_RE = new RegExp(`\\{(${TOHOKU_SRC})\\}`, 'g');
 
 /** NFC-normalised Tibetan syllables, editorial markup removed (scoring only — never stored). */
 export function syllables(text) {
@@ -86,7 +92,7 @@ export function parseVolume(raw) {
     if (lineNo != null || rest.trim()) cur.lines.push(rest);
   }
   for (const p of pages) {
-    for (const l of p.lines) for (const t of l.matchAll(/\{(D[0-9a-z]+)\}/g)) p.tohoku.push(t[1]);
+    for (const l of p.lines) for (const t of l.matchAll(TOHOKU_RE)) p.tohoku.push(t[1]);
   }
   return pages;
 }
@@ -276,4 +282,119 @@ export function agreedOffset(located, rules = ALIGN_RULES) {
   const offs = [...new Set(ok.map(({ canvas, loc }) => loc.index - canvas))];
   if (offs.length !== 1) return { offset: null, reason: `located reads disagree on the offset: ${offs.join(', ')}` };
   return { offset: offs[0], reason: null, located: ok.length };
+}
+
+// ── Per-canon constants (#5665 generalised the Tengyur importer rather than copying it) ──────────
+
+const ESUKHIA_PD = 'This work is a mechanical reproduction of a Public Domain work, and as such is also in the Public Domain.';
+const CONVENTIONS = 'Esukhia markup kept verbatim: {D####} opens the text with that Tohoku number; (x,y) = (reading of the blocks, suggested correction); [x] = doubtful or untranscribable; # = a peydurma note point. Folio line markers [2a.1] became line breaks; a line-initial # is escaped as \\# for the Markdown reader.';
+
+/**
+ * What differs between the two canons. `scanVolumeFor(vol)` maps an e-text volume to the scan
+ * volume whose manifest says "volume N"; the alignment check verifies the pairing either way.
+ */
+export const CANONS = Object.freeze({
+  tengyur: Object.freeze({
+    key: 'tengyur', issue: 5497, nVolumes: 213, etext: '/root/derge-tengyur', work: '/root/tengyur-5497',
+    importer: 'script:derge-tengyur-import', campaign: 'tengyur-5497', pipeline: 'derge-tengyur-import-5497',
+    textSource: 'esukhia-derge-tengyur', editionName: 'Esukhia digital Derge Tengyur', repo: 'https://github.com/Esukhia/derge-tengyur',
+    licence: 'public domain — "mechanical reproduction of a public-domain work" (Esukhia README)', licenceQuote: ESUKHIA_PD,
+    conventions: CONVENTIONS,
+    hold: { reason: 'tengyur-import-5497', issue: 5497, release: 'a draft English translation of the Derge Tengyur is approved as a separate, priced decision (#5497: translation NOT approved at import)' },
+    bdrcInstance: 'MW23703', bdrcScans: 'W23703', volumeField: 'derge_tengyur_volume',
+    titleBo: 'བསྟན་འགྱུར། སྡེ་དགེ།', titleEn: 'Derge Tengyur', slug: 'derge-tengyur-vol',
+    year: 1982,
+    published: 'Delhi: Delhi Karmapae Choedhey, Gyalwae Sungrab Partun Khang, 1982–1985 (reproduced from clear prints of the 18th-century Derge blocks, carved 1737–1744)',
+    publisher: 'Delhi Karmapae Choedhey, Gyalwae Sungrab Partun Khang', place: 'Delhi',
+    describe: (vol, ig) => `Volume ${vol} of 213 of the Derge Tengyur (sde dge bstan 'gyur), the canonical Tibetan collection of translated Indian treatises and commentaries. Scans: BDRC W23703, image group ${ig}. Page text: the Esukhia digital Derge Tengyur (public domain), aligned folio by folio to the scan.`,
+    // tbrc volume numbers 1317-1531 (BDRC note on MW23703); I1519 and I1520 are not volumes of W23703
+    // (the manifest service answers 500; measured 2026-10-01), so volumes 203–213 are I1521–I1531.
+    imageGroupFor: (vol) => `I${1317 + vol - 1 + (vol > 202 ? 2 : 0)}`,
+    scanVolumeFor: (vol) => vol,
+    eighty4000: false,
+  }),
+  kangyur: Object.freeze({
+    key: 'kangyur', issue: 5665, nVolumes: 103, etext: '/mnt/HC_Volume_105839809/esukhia-derge-kangyur', work: '/mnt/HC_Volume_105839809/kangyur-5665',
+    importer: 'script:derge-kangyur-import', campaign: 'kangyur-5665', pipeline: 'derge-kangyur-import-5665',
+    textSource: 'esukhia-derge-kangyur', editionName: 'Esukhia digital Derge Kangyur', repo: 'https://github.com/Esukhia/derge-kangyur',
+    licence: 'public domain — "mechanical reproduction of a public-domain work" (Esukhia README)', licenceQuote: ESUKHIA_PD,
+    conventions: CONVENTIONS,
+    hold: { reason: 'kangyur-import', issue: 5665, release: 'a draft English translation of the Derge Kangyur is approved as a separate, priced decision that skips the texts 84000 has published or has in progress (#5665)' },
+    bdrcInstance: 'MW4CZ5369', bdrcScans: 'W4CZ5369', volumeField: 'derge_kangyur_volume',
+    titleBo: 'བཀའ་འགྱུར། སྡེ་དགེ།', titleEn: 'Derge Kangyur', slug: 'derge-kangyur-vol',
+    year: 1733,
+    published: 'Derge: Derge Parkhang, blocks carved 1729–1733 (Library of Congress copy, scanned by BDRC)',
+    publisher: 'Derge Parkhang', place: 'Derge',
+    describe: (vol, ig) => `Volume ${vol} of 103 of the Derge Kangyur (sde dge bka' 'gyur), the canonical Tibetan collection of the Buddha's word translated from Indian languages. Scans: BDRC W4CZ5369 (the Library of Congress copy of the Derge blocks), image group ${ig}. Page text: the Esukhia digital Derge Kangyur (public domain), which transcribes this copy, aligned folio by folio to the scan.`,
+    // The image groups of W4CZ5369 are not sequential (I1KG9127…); the importer resolves them from
+    // BDRC's instanceHasVolume list by each manifest's own "volume N" label.
+    imageGroupFor: null,
+    // Esukhia README: the e-text follows W22084's volume order, and "in W4CZ5369 … vol. 102 was
+    // swapped with vol. 100".
+    scanVolumeFor: (vol) => ({ 100: 102, 102: 100 })[vol] ?? vol,
+    eighty4000: true,
+  }),
+});
+
+/** Section and volume letter from an Esukhia file name: "001_འདུལ་བ།_ཀ.txt" → ['འདུལ་བ།', 'ཀ']. */
+export function volumeFileParts(file) {
+  const [, section, letter] = String(file).replace(/\.txt$/, '').split('_');
+  return [section, letter || null];
+}
+
+/**
+ * The Tohoku texts each side belongs to: the text still running from the previous side, plus every
+ * text that opens on this one. Esukhia marks only where a text BEGINS ({D1}, then sub-texts {D1-1});
+ * a side in the middle of a text carries no marker of its own.
+ * @returns {string[][]} per side, in order
+ */
+export function sideTexts(pages) {
+  let running = null;
+  return pages.map((p) => {
+    const here = running ? [running] : [];
+    for (const t of p.tohoku) if (!here.includes(t)) here.push(t);
+    if (p.tohoku.length) running = p.tohoku[p.tohoku.length - 1];
+    return here;
+  });
+}
+
+/**
+ * Parse the 84000 Reading Room catalogue (https://read.84000.co/section/lobby.json, a Next.js page
+ * whose records sit in `self.__next_f.push` chunks) → Map 'toh1-1' → { status, pages }.
+ * The parsing is the gap map's (scripts/catalog-coverage/canon-gap-map.mjs read84000), kept here
+ * per record because the importer needs each text's status, not the totals.
+ */
+export function parse84000Lobby(html) {
+  const chunks = [...String(html).matchAll(/self\.__next_f\.push\(\[1,"((?:[^"\\]|\\.)*)"\]\)/g)].map((m) => JSON.parse(`"${m[1]}"`)).join('');
+  const recs = new Map();
+  for (const m of chunks.matchAll(/\{"toh":"(toh[^"]+)","title":[\s\S]*?"num_pages":(\d+|null),[\s\S]*?"publication_status":"([^"]+)"/g)) {
+    recs.set(m[1], { pages: m[2] === 'null' ? 0 : Number(m[2]), status: m[3] });
+  }
+  return recs;
+}
+
+/**
+ * 84000's status for an Esukhia Tohoku id. 'D1-1' → 'toh1-1'; a sub-text 84000 does not list on its
+ * own falls back to its parent ('D1-1' → 'toh1'). null when 84000 lists neither.
+ */
+export function status84000(dId, recs) {
+  const toh = `toh${String(dId).replace(/^D/, '')}`;
+  if (recs.has(toh)) return recs.get(toh).status;
+  const parent = toh.replace(/-.*$/, '');
+  return recs.has(parent) ? recs.get(parent).status : null;
+}
+
+/**
+ * A side is left for 84000 when every text on it is Published or In Progress there. A parent id that
+ * 84000 lists only through its sub-texts (Esukhia opens vol. 1 with {D1}{D1-1}; 84000 has toh1-1…
+ * but no toh1) is a container, not a text, and does not count either way.
+ */
+export const LEAVE_TO_84000 = Object.freeze(['Published', 'In Progress']);
+const parentsOf = new WeakMap();
+export function sideLeftTo84000(texts, recs) {
+  if (!parentsOf.has(recs)) parentsOf.set(recs, new Set([...recs.keys()].filter((k) => k.includes('-')).map((k) => k.replace(/-.*$/, ''))));
+  const parents = parentsOf.get(recs);
+  const isContainer = (t) => status84000(t, recs) == null && parents.has(`toh${String(t).replace(/^D/, '')}`);
+  const real = texts.filter((t) => !isContainer(t));
+  return real.length > 0 && real.every((t) => LEAVE_TO_84000.includes(status84000(t, recs)));
 }

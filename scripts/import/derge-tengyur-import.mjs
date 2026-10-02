@@ -7,6 +7,12 @@
 // align it with; /root/tibetan-eval/kanjur_align.py (#4523) is the identity instrument, ported in
 // scripts/lib/derge-tengyur.mjs. None of them aligns a digital edition to a scan folio by folio.
 //
+// --canon=kangyur (#5665) runs the same import for the Derge Kangyur: BDRC W4CZ5369 (the Library of
+// Congress copy, the one the e-text transcribes) + the Esukhia digital Derge Kangyur. What differs
+// per canon is constant data in CANONS (scripts/lib/derge-tengyur.mjs); the Kangyur also records,
+// per side and per volume, which Tohoku texts 84000 has published or has in progress, so a later
+// draft-English run can leave them to 84000.
+//
 // Import the Derge Tengyur (#5497): BDRC W23703 scans (213 volumes, image groups I1317–I1531,
 // AccessOpen IIIF) as one HIDDEN, HELD book per volume, with the Esukhia digital Derge Tengyur
 // (public domain, github.com/Esukhia/derge-tengyur) written as each page's text — but only for a
@@ -33,6 +39,7 @@
 //   node --env-file=.env.production.local scripts/import/derge-tengyur-import.mjs --volumes=1,40 --measure
 //   node --env-file=.env.production.local scripts/import/derge-tengyur-import.mjs --volumes=1,40 --apply
 //   node --env-file=.env.production.local scripts/import/derge-tengyur-import.mjs --all --apply
+//   node --env-file=.env.production.local scripts/import/derge-tengyur-import.mjs --canon=kangyur --volumes=1,40 --apply
 // Flags: --etext=/root/derge-tengyur (a checkout; its HEAD sha is recorded on every page)
 //        --work=/root/tengyur-5497  (manifest cache, samples, checkpoint.json)
 // Resumable: the checkpoint records each volume's measurement (never paid twice) and outcome; a
@@ -50,33 +57,32 @@ import { isHumanEdited } from '../lib/syriac-kraken-lane.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import {
   parseVolume, pageText, syllables, canvasFolioLabel, claimByLabel, scoreRead, sampleClass, volumeVerdict,
-  locateRead, agreedOffset, ALIGN_RULES, sha16,
+  locateRead, agreedOffset, ALIGN_RULES, sha16, CANONS, volumeFileParts, sideTexts, parse84000Lobby, status84000,
+  sideLeftTo84000,
 } from '../lib/derge-tengyur.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; }));
-const ETEXT = args.etext || '/root/derge-tengyur';
-const WORK = args.work || '/root/tengyur-5497';
+const C = CANONS[args.canon || 'tengyur'];
+if (!C) throw new Error(`--canon must be one of ${Object.keys(CANONS).join(', ')}`);
+const ETEXT = args.etext || C.etext;
+const WORK = args.work || C.work;
 const APPLY = !!args.apply;
 const MEASURE_ONLY = !!args.measure;
 const SAMPLES = Number(args.samples || 5);
-const IMPORTER = 'script:derge-tengyur-import';
-const ISSUE = 5497;
-const CAMPAIGN = 'tengyur-5497';
-const HOLD = {
-  reason: 'tengyur-import-5497',
-  issue: ISSUE,
-  release: 'a draft English translation of the Derge Tengyur is approved as a separate, priced decision (#5497: translation NOT approved at import)',
-};
-const FIRST_IG = 1317; // tbrc volume numbers 1317-1531 (BDRC note on MW23703)
-// 215 numbers for 213 volumes: I1519 and I1520 are not volumes of W23703 (the manifest service
-// answers 500; measured 2026-10-01), so volumes 203–213 are I1521–I1531. The manifest's own
-// "volume N" label is still checked for every volume below.
-const igFor = (vol) => FIRST_IG + vol - 1 + (vol > 202 ? 2 : 0);
-const N_VOLUMES = 213;
-const TEXT_SOURCE = 'esukhia-derge-tengyur';
-const PIPELINE = 'derge-tengyur-import-5497';
-const LICENCE = 'public domain — "mechanical reproduction of a public-domain work" (Esukhia README)';
-const CONVENTIONS = 'Esukhia markup kept verbatim: {D####} opens the text with that Tohoku number; (x,y) = (reading of the blocks, suggested correction); [x] = doubtful or untranscribable; # = a peydurma note point. Folio line markers [2a.1] became line breaks; a line-initial # is escaped as \\# for the Markdown reader.';
+const IMPORTER = C.importer;
+const ISSUE = C.issue;
+const CAMPAIGN = C.campaign;
+const HOLD = C.hold;
+const N_VOLUMES = C.nVolumes;
+const TEXT_SOURCE = C.textSource;
+const PIPELINE = C.pipeline;
+const LICENCE = C.licence;
+const CONVENTIONS = C.conventions;
+// The page-level text licence the reader shows (#5571): one block per page, version = file@commit.
+const textSourceFor = (file, text) => ({
+  name: C.editionName, url: C.repo, license: 'Public Domain', license_url: `${C.repo}/blob/master/README.md`,
+  license_quote: C.licenceQuote, version: `text/${file}@${ETEXT_SHA.slice(0, 10)}`, content_hash: sha16(text),
+});
 
 if (!process.env.MONGODB_URI) throw new Error('MONGODB_URI missing — run with node --env-file=.env.production.local');
 fs.mkdirSync(path.join(WORK, 'manifests'), { recursive: true });
@@ -107,11 +113,50 @@ async function fetchRetry(url, opts = {}, tries = 4) {
 }
 
 async function manifestFor(ig) {
-  const f = path.join(WORK, 'manifests', `I${ig}.json`);
+  const f = path.join(WORK, 'manifests', `${ig}.json`);
   if (fs.existsSync(f)) return JSON.parse(fs.readFileSync(f, 'utf8'));
-  const m = await (await fetchRetry(`https://iiifpres.bdrc.io/v:bdr:I${ig}/manifest`)).json();
+  const m = await (await fetchRetry(`https://iiifpres.bdrc.io/v:bdr:${ig}/manifest`)).json();
   fs.writeFileSync(f, JSON.stringify(m));
   return m;
+}
+
+const manifestVolume = (m) => (m.label || []).find?.((l) => l['@language'] === 'en')?.['@value'] || '';
+
+/**
+ * Image group for a volume. The Tengyur's are sequential (C.imageGroupFor); the Kangyur's (W4CZ5369)
+ * are not, so they are read from BDRC's instanceHasVolume list and keyed by each manifest's own
+ * "volume N" label (cached in WORK/image-groups.json).
+ */
+let igMap = null;
+async function igFor(scanVol) {
+  if (C.imageGroupFor) return C.imageGroupFor(scanVol);
+  const f = path.join(WORK, 'image-groups.json');
+  if (!igMap && fs.existsSync(f)) igMap = JSON.parse(fs.readFileSync(f, 'utf8'));
+  if (!igMap) {
+    const res = await (await fetchRetry(`https://ldspdi.bdrc.io/resource/${C.bdrcScans}.json`)).json();
+    const igs = (res[`http://purl.bdrc.io/resource/${C.bdrcScans}`]?.['http://purl.bdrc.io/ontology/core/instanceHasVolume'] || []).map((x) => x.value.split('/').pop());
+    igMap = {};
+    for (const ig of igs) {
+      const n = manifestVolume(await manifestFor(ig)).match(/^volume (\d+)$/)?.[1];
+      if (!n) throw new Error(`${ig}: manifest has no "volume N" label`);
+      if (igMap[n]) throw new Error(`${C.bdrcScans}: two image groups claim volume ${n} (${igMap[n]}, ${ig})`);
+      igMap[n] = ig;
+    }
+    fs.writeFileSync(f, JSON.stringify(igMap, null, 1));
+    log(`${C.bdrcScans}: ${igs.length} image groups resolved to volumes`);
+  }
+  if (!igMap[scanVol]) throw new Error(`${C.bdrcScans}: no image group for volume ${scanVol}`);
+  return igMap[scanVol];
+}
+
+/** 84000's catalogue, read once per run (C.eighty4000 only). */
+let recs84000 = null;
+async function catalogue84000() {
+  if (recs84000) return recs84000;
+  recs84000 = parse84000Lobby(await (await fetchRetry('https://read.84000.co/section/lobby.json')).text());
+  if (recs84000.size < 4000) throw new Error(`84000 catalogue parsed only ${recs84000.size} records — refusing to mark coverage from a partial read`);
+  log(`84000: ${recs84000.size} catalogue records`);
+  return recs84000;
 }
 
 const imageServiceOf = (canvas) => {
@@ -224,12 +269,13 @@ async function measureOffset(vol, canvases, pages) {
 
 function volumeTitle(vol, file) {
   // "001_བསྟོད་ཚོགས།_ཀ.txt" → section བསྟོད་ཚོགས།, volume letter ཀ
-  const [, section, letter] = file.replace(/\.txt$/, '').split('_');
-  return `བསྟན་འགྱུར། སྡེ་དགེ། ${section}${letter ? ` ${letter}` : ''} (Derge Tengyur, vol. ${vol})`;
+  const [section, letter] = volumeFileParts(file);
+  return `${C.titleBo} ${section}${letter ? ` ${letter}` : ''} (${C.titleEn}, vol. ${vol})`;
 }
 
 async function importVolume(db, vol) {
-  const ig = igFor(vol);
+  const scanVol = C.scanVolumeFor(vol);
+  const ig = await igFor(scanVol);
   const file = ETEXT_FILES[vol - 1];
   if (Number(file.slice(0, 3)) !== vol) throw new Error(`e-text file ${file} is not volume ${vol}`);
   const v = ckpt.volumes[vol] ||= {};
@@ -237,8 +283,8 @@ async function importVolume(db, vol) {
   if (v.done && !args.redo && (v.verdict === 'pass' || v.measurement?.rules?.version === ALIGN_RULES.version)) { log(`v${vol}: done earlier (${v.book_id}) — skip`); return v; }
 
   const manifest = await manifestFor(ig);
-  const mlabel = (manifest.label || []).find?.((l) => l['@language'] === 'en')?.['@value'] || '';
-  if (mlabel !== `volume ${vol}`) throw new Error(`I${ig}: manifest label "${mlabel}" is not "volume ${vol}"`);
+  const mlabel = manifestVolume(manifest);
+  if (mlabel !== `volume ${scanVol}`) throw new Error(`${ig}: manifest label "${mlabel}" is not "volume ${scanVol}"`);
   // BDRC keeps a placeholder canvas for a leaf it never photographed ("134a (missing)", no image
   // resource — I1489). It cannot become a page; its text side is reported as text without an image.
   const allCanvases = manifest.sequences[0].canvases;
@@ -259,7 +305,7 @@ async function importVolume(db, vol) {
     claim = canvases.map((_, i) => (om.offset != null && i + om.offset >= 0 && i + om.offset < pages.length ? i + om.offset : null));
   }
   v.canvases = canvases.length; v.text_sides = pages.length; v.claimed = claim.filter((x) => x != null).length;
-  log(`v${vol} I${ig} ${file}: ${canvases.length} canvases, ${pages.length} text sides, ${v.claimed} claimed (${v.claim_mode})`);
+  log(`v${vol} ${ig} ${file}: ${canvases.length} canvases, ${pages.length} text sides, ${v.claimed} claimed (${v.claim_mode})`);
 
   const m = await measure(vol, canvases, pages, claim);
   log(`v${vol}: verdict ${m.verdict.pass ? 'PASS' : 'REFUSE'} (${m.verdict.scored} scored)${m.verdict.reasons.length ? ' — ' + m.verdict.reasons.join('; ') : ''} [$${m.cost_usd}]`);
@@ -270,59 +316,76 @@ async function importVolume(db, vol) {
   const now = new Date();
   const title = volumeTitle(vol, file);
   const tohoku = [...new Set(pages.flatMap((p) => p.tohoku))];
-  const manifestUrl = `https://iiifpres.bdrc.io/v:bdr:I${ig}/manifest`;
+  const manifestUrl = `https://iiifpres.bdrc.io/v:bdr:${ig}/manifest`;
+  // 84000 coverage (Kangyur): per side, the texts it carries and whether every one of them is
+  // Published or In Progress at 84000 — a later draft-English run leaves those sides alone.
+  const texts = sideTexts(pages);
+  let cov = null;
+  if (C.eighty4000) {
+    const recs = await catalogue84000();
+    const status = {};
+    for (const t of new Set(texts.flat())) status[t] = status84000(t, recs);
+    const left = texts.map((t) => sideLeftTo84000(t, recs));
+    cov = { recs, left, summary: {
+      source: 'https://read.84000.co/section/lobby.json', fetched_at: now.toISOString(),
+      texts: status, sides: pages.length, sides_left_to_84000: left.filter(Boolean).length,
+      rule: 'a side is left to 84000 when every Tohoku text on it is Published or In Progress there (parent ids listed only through sub-texts do not count)',
+    } };
+    v.eighty_four_thousand = { sides: pages.length, left: cov.summary.sides_left_to_84000 };
+  }
 
   // Adopt a book an earlier run created (by its image group), else create it through the gate.
-  let book = await books.findOne({ 'image_source.provider': 'bdrc', 'image_source.identifier': `I${ig}` }, { projection: { id: 1, pages_count: 1, pipeline_auto: 1 } });
+  let book = await books.findOne({ 'image_source.provider': 'bdrc', 'image_source.identifier': ig }, { projection: { id: 1, pages_count: 1, pipeline_auto: 1 } });
   if (!book) {
     const _id = new ObjectId();
     // hidden_reason is not on makeBookDoc's whitelist (#3969); it is written right after the insert,
     // as claremont-nag-hammadi.mjs does, from the same initialPublication() result.
-    const { hidden_reason: hiddenReason, ...publication } = initialPublication({ state: 'hidden', reason: 'curation', note: 'tengyur-import-5497: imported hidden; publication and translation are separate decisions', by: IMPORTER, issue: ISSUE, now });
+    const { hidden_reason: hiddenReason, ...publication } = initialPublication({ state: 'hidden', reason: 'curation', note: `${HOLD.reason}: imported hidden; publication and translation are separate decisions`, by: IMPORTER, issue: ISSUE, now });
     const r = await insertBookIfNew(db, {
       _id: String(_id), id: String(_id),
-      slug: `derge-tengyur-vol-${vol}`,
+      slug: `${C.slug}-${vol}`,
       title, display_title: title, author: '',
       language: 'Tibetan', languages: ['Tibetan'],
-      year: 1982,
-      published: 'Delhi: Delhi Karmapae Choedhey, Gyalwae Sungrab Partun Khang, 1982–1985 (reproduced from clear prints of the 18th-century Derge blocks, carved 1737–1744)',
-      publisher: 'Delhi Karmapae Choedhey, Gyalwae Sungrab Partun Khang',
-      place_published: 'Delhi',
+      year: C.year,
+      published: C.published,
+      publisher: C.publisher,
+      place_published: C.place,
       content_type: 'book',
       collections: ['tibetan-canon'],
-      description: `Volume ${vol} of 213 of the Derge Tengyur (sde dge bstan 'gyur), the canonical Tibetan collection of translated Indian treatises and commentaries. Scans: BDRC W23703, image group I${ig}. Page text: the Esukhia digital Derge Tengyur (public domain), aligned folio by folio to the scan.`,
+      description: C.describe(vol, ig),
       pages_count: canvases.length, pages_ocr: 0, pages_translated: 0, pages_archived: 0,
       status: 'draft',
       ...publication,
       image_source: {
         provider: 'bdrc',
         provider_name: 'Buddhist Digital Resource Center (BDRC)',
-        identifier: `I${ig}`,
+        identifier: ig,
         iiif_manifest: manifestUrl,
-        source_url: `https://library.bdrc.io/show/bdr:MW23703`,
+        source_url: `https://library.bdrc.io/show/bdr:${C.bdrcInstance}`,
         license: 'publicdomain',
         access_date: now.toISOString(),
         contributing_library: 'Buddhist Digital Resource Center',
       },
       held_by: ['bdrc'],
       contributing_library: 'Buddhist Digital Resource Center',
-      dublin_core: { dc_identifier: [`IIIF:I${ig}`], dc_source: 'https://library.bdrc.io/show/bdr:MW23703', dc_publisher: 'BDRC' },
-      catalog_ids: { bdrc_instance: 'MW23703', bdrc_scans: 'W23703', bdrc_image_group: `I${ig}`, derge_tengyur_volume: vol, tohoku },
-      catalog_metadata: { source: 'bdrc_iiif', manifest_label: manifest.label, etext_file: `text/${file}`, etext_commit: ETEXT_SHA },
+      dublin_core: { dc_identifier: [`IIIF:${ig}`], dc_source: `https://library.bdrc.io/show/bdr:${C.bdrcInstance}`, dc_publisher: 'BDRC' },
+      catalog_ids: { bdrc_instance: C.bdrcInstance, bdrc_scans: C.bdrcScans, bdrc_image_group: ig, [C.volumeField]: vol, ...(scanVol !== vol ? { bdrc_scan_volume: scanVol } : {}), tohoku },
+      catalog_metadata: { source: 'bdrc_iiif', manifest_label: manifest.label, etext_file: `text/${file}`, etext_commit: ETEXT_SHA, ...(cov ? { eighty_four_thousand: cov.summary } : {}) },
       acquisition_campaign: CAMPAIGN,
-      notes: `Imported by scripts/import/derge-tengyur-import.mjs (#5497). Page text from the Esukhia digital Derge Tengyur @ ${ETEXT_SHA.slice(0, 10)}, written only where the volume's folio alignment was measured and passed. Held: translation not approved.`,
+      notes: `Imported by scripts/import/derge-tengyur-import.mjs --canon=${C.key} (#${ISSUE}). Page text from the ${C.editionName} @ ${ETEXT_SHA.slice(0, 10)}, written only where the volume's folio alignment was measured and passed. Held: translation not approved.`,
       created_at: now, updated_at: now,
-    }, { importer: IMPORTER, sourceIdentifier: `bdrc:I${ig}`, sourceUrl: manifestUrl });
+    }, { importer: IMPORTER, sourceIdentifier: `bdrc:${ig}`, sourceUrl: manifestUrl });
     if (!r.inserted) { v.refused_book = r.message; saveCkpt(); log(`v${vol}: acquisition gate declined — ${r.message}`); return v; }
     book = { id: r.bookId };
     await books.updateOne({ id: book.id }, { $set: { hidden_reason: hiddenReason } });
     log(`v${vol}: created ${book.id}`);
   } else {
     log(`v${vol}: adopting ${book.id} from an earlier run`);
+    if (cov) await books.updateOne({ id: book.id }, { $set: { 'catalog_metadata.eighty_four_thousand': cov.summary } });
   }
   v.book_id = book.id;
   // Hold BEFORE any page exists, so no lane can see an enrollable book with pages.
-  const h = await holdBook(db, book.id, { ...HOLD, source: IMPORTER, detail: { volume: vol, image_group: `I${ig}` } });
+  const h = await holdBook(db, book.id, { ...HOLD, source: IMPORTER, detail: { volume: vol, image_group: ig } });
   if (!['held', 'already_held'].includes(h.outcome)) throw new Error(`v${vol}: hold failed (${h.outcome}) — refusing to insert pages`);
 
   const pass = m.verdict.pass;
@@ -341,12 +404,15 @@ async function importVolume(db, vol) {
     const side = pages[claim[i]];
     const text = pageText(side);
     if (!text) return null;
+    const k = claim[i];
     return {
       data: text, content_hash: sha16(text), language: 'Tibetan',
       source: TEXT_SOURCE, pipeline: PIPELINE,
+      text_source: textSourceFor(file, text),
       text_edition: {
-        name: 'Esukhia digital Derge Tengyur', repo: 'https://github.com/Esukhia/derge-tengyur', commit: ETEXT_SHA,
+        name: C.editionName, repo: C.repo, commit: ETEXT_SHA,
         path: `text/${file}`, folio: side.label, tohoku: side.tohoku, licence: LICENCE, conventions: CONVENTIONS, issue: ISSUE,
+        ...(cov ? { texts: texts[k], texts_84000: Object.fromEntries(texts[k].map((t) => [t, status84000(t, cov.recs)])), left_to_84000: cov.left[k] } : {}),
       },
       alignment, generated_at: now, updated_at: now,
     };

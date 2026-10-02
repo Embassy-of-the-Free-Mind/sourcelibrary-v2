@@ -81,3 +81,35 @@ describe('derge-tengyur index mode (no folio labels in the manifest)', () => {
     expect(agreedOffset([loc(10, 11), loc(100, 101, 0.3), loc(200, 201, 0.3)]).offset).toBeNull();
   });
 });
+
+describe('derge canon: Kangyur additions (#5665)', () => {
+  it('parses sub-text Tohoku markers ({D1-1}) and strips them for scoring', async () => {
+    const { parseVolume, syllables } = await import('../../scripts/lib/derge-tengyur.mjs');
+    const pages = parseVolume('[1a]\n[1a.1]\n[1b]\n[1b.1]{D1}{D1-1}ཀ་ཁ་\n[2a]\n[2a.1]ག་{D1-2}ང་\n');
+    expect(pages.map((p) => p.tohoku)).toEqual([[], ['D1', 'D1-1'], ['D1-2']]);
+    expect(syllables(pages[1].lines.join(' '))).toEqual(['ཀ', 'ཁ']);
+  });
+  it('sideTexts carries the running text onto sides with no marker', async () => {
+    const { parseVolume, sideTexts } = await import('../../scripts/lib/derge-tengyur.mjs');
+    const pages = parseVolume('[1b]\n[1b.1]{D1}{D1-1}ཀ་\n[2a]\n[2a.1]ཁ་\n[2b]\n[2b.1]ག་{D1-2}ང་\n[3a]\n[3a.1]ཅ་\n');
+    expect(sideTexts(pages)).toEqual([['D1', 'D1-1'], ['D1-1'], ['D1-1', 'D1-2'], ['D1-2']]);
+  });
+  it('84000 status: sub-text falls back to its parent; a parent listed only via sub-texts is a container', async () => {
+    const { status84000, sideLeftTo84000 } = await import('../../scripts/lib/derge-tengyur.mjs');
+    const recs = new Map([['toh1-1', { status: 'Published', pages: 10 }], ['toh2', { status: 'Not Begun', pages: 5 }], ['toh3', { status: 'In Progress', pages: 5 }]]);
+    expect(status84000('D1-1', recs)).toBe('Published');
+    expect(status84000('D3-4', recs)).toBe('In Progress');
+    expect(status84000('D9', recs)).toBeNull();
+    expect(sideLeftTo84000(['D1', 'D1-1'], recs)).toBe(true);
+    expect(sideLeftTo84000(['D1-1', 'D3'], recs)).toBe(true);
+    expect(sideLeftTo84000(['D1-1', 'D2'], recs)).toBe(false);
+    expect(sideLeftTo84000(['D9'], recs)).toBe(false);
+    expect(sideLeftTo84000([], recs)).toBe(false);
+  });
+  it('the Kangyur maps e-text vol 100 ↔ scan vol 102 (Esukhia README) and nothing else', async () => {
+    const { CANONS } = await import('../../scripts/lib/derge-tengyur.mjs');
+    expect([1, 99, 100, 101, 102, 103].map(CANONS.kangyur.scanVolumeFor)).toEqual([1, 99, 102, 101, 100, 103]);
+    expect(CANONS.tengyur.imageGroupFor(1)).toBe('I1317');
+    expect(CANONS.tengyur.imageGroupFor(203)).toBe('I1521');
+  });
+});
