@@ -54,7 +54,7 @@ import { getPageSource } from '../lib/page-image-url.mjs';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { contentHash } from '../lib/translate-core.mjs';
 import { batchJobProvenance, engineFromBatchJob, imageInput, ocrProvenance, codeVersion } from '../lib/write-provenance.mjs';
-import { extractPageType, extractColumns } from '../lib/ocr-result-parse.mjs';
+import { liftOcrTags } from '../lib/ocr-result-parse.mjs';
 import { STALE_OCR_FIELDS } from '../lib/syriac-kraken-lane.mjs';
 import { recountBook } from '../lib/page-counts.mjs';
 import { loopVerdict } from '../lib/ocr-loop-guard.mjs';
@@ -344,8 +344,6 @@ async function apply() {
       if (loopVerdict(text).refuse) { totals.raced++; continue; }
       const job = s.jobs.find(j => j.job === r.job);
       const prov = ocrProvenance(text, engineFromBatchJob(job, { batch_job_id: r.job, input: imageInput({ url: p.url }), collected_by: CALL_SITE, now }));
-      const pageType = extractPageType(text);
-      const columns = extractColumns(text);
       const set = {
         'ocr.data': text, 'ocr.model': r.model, 'ocr.updated_at': now, 'ocr.language': p.language,
         'ocr.has_warning': /<warning[\s>]/i.test(text),
@@ -355,7 +353,7 @@ async function apply() {
         'ocr.prompt_id': s.prompt?.id ?? null, 'ocr.prompt_version': s.prompt?.version ?? null, 'ocr.prompt_hash': s.prompt?.hash ?? null,
         'ocr.prompt_name': s.prompt?.name ?? null, 'ocr.batch_job_id': r.job, 'ocr.pipeline': REASON,
         'ocr.content_hash': prov.content_hash, 'ocr.engine': prov.engine,
-        ...(pageType ? { page_type: pageType } : {}), ...(columns ? { columns } : {}),
+        ...liftOcrTags(text), // page_type, columns, script_type — whichever parsed
         'ocr.reread': { issue: ISSUE, run: RUN, pass: d.pass, temperature: r.temperature, replaced: p.stored, verdict: { reasons: r.reasons, script: r.script }, at: now, by: CALL_SITE },
         updated_at: now,
       };

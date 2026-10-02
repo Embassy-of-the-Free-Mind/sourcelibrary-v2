@@ -57,7 +57,7 @@ import { OCR_MODEL_FLASH, OCR_MODEL_LITE } from '../lib/ocr-routing.mjs';
 import { MODEL_PRICING } from '../lib/model-pricing.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
-import { extractPageType, extractColumns, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
+import { liftOcrTags, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
@@ -441,8 +441,8 @@ async function processPage(page, ocrPrompt, db, runId) {
       return { pageId: page.id, status: 'skip', reason: `${reason} (${result.text.length} chars kept nothing)`, durationMs };
     }
 
-    const pageType = extractPageType(result.text);
-    const columns = extractColumns(result.text);
+    const tags = liftOcrTags(result.text);
+    const pageType = tags.page_type;
     const detectedImages = parseDetectedImages(result.text);
 
     // Retain existing OCR as a revision before overwriting (#3240) —
@@ -473,8 +473,8 @@ async function processPage(page, ocrPrompt, db, runId) {
             prompt_version: TARGET_PROMPT,
             ...ocrProvenance(result.text, engine),
           },
-          ...(isDigitizerPage(pageType, result.text) ? { page_type: 'digitizer-insert', hidden: true } : pageType ? { page_type: pageType } : {}),
-          ...(columns && { columns }),
+          ...tags, // page_type, columns, script_type — whichever parsed
+          ...(isDigitizerPage(pageType, result.text) ? { page_type: 'digitizer-insert', hidden: true } : {}),
           ...(detectedImages.length > 0 && { detected_images: detectedImages }),
           updated_at: new Date(),
         },

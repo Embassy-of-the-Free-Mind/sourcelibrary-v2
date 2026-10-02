@@ -35,7 +35,7 @@ import { shouldRefuseOcrWrite, recordRefusal, guardEnabled } from '../lib/blank-
 import { loopVerdict, recordLoopRefusal, guardEnabled as loopGuardEnabled } from '../lib/ocr-loop-guard.mjs';
 import { isTruncatedCandidate, truncationFailReason } from '../lib/truncated-response.mjs';
 import { repairTexGreek, texGreekRepairEnabled } from '../lib/tex-greek.mjs';
-import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
+import { liftOcrTags, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { resolvePreviewStub, previewStubGuardEnforced, recordPreviewStubRefusal, GUARD_PROJECTION } from '../lib/preview-stub-guard.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
@@ -615,8 +615,7 @@ async function processOneJob(db, job) {
         // the current vocabulary rather than the 14-value set it had frozen at.
         // That set had lost `digitizer-insert`, so this collector could not
         // record the one page type the digitizer guards downstream read (#4443).
-        const pageType = extractPageType(text);
-        const columns = extractColumns(text);
+        const tags = liftOcrTags(text);
         const detectedImages = parseDetectedImages(text);
 
         const setObj = {
@@ -658,8 +657,7 @@ async function processOneJob(db, job) {
         setObj['ocr.content_hash'] = prov.content_hash;
         setObj['ocr.engine'] = prov.engine;
         if (isMultiPage) setObj['ocr.pages_per_request'] = job.pages_per_request;
-        if (pageType) setObj.page_type = pageType;
-        if (columns) setObj.columns = columns;
+        Object.assign(setObj, tags); // page_type, columns, script_type — whichever parsed
         if (detectedImages.length > 0) setObj.detected_images = detectedImages;
 
         // A page that reads clears its failure history: the counter below must

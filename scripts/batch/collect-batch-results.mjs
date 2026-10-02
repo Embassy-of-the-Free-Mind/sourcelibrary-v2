@@ -19,7 +19,7 @@ import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance, translation
 /** Provenance identity of this collector (#4613): recorded on every page it writes as `run.collected_by`. */
 const COLLECTOR_CALL_SITE = 'scripts/batch/collect-batch-results.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
-import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
+import { liftOcrTags, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { isTruncatedCandidate } from '../lib/truncated-response.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
@@ -247,8 +247,8 @@ async function processOneJob(db, job) {
           failCount++;
           continue;
         }
-        const pageType = extractPageType(text);
-        const columns = extractColumns(text);
+        const tags = liftOcrTags(text);
+        const pageType = tags.page_type;
         const detectedImages = parseDetectedImages(text);
 
         const setObj = {
@@ -281,14 +281,12 @@ async function processOneJob(db, job) {
           setObj['ocr.content_hash'] = prov.content_hash;
           setObj['ocr.engine'] = prov.engine;
         }
+        Object.assign(setObj, tags); // page_type, columns, script_type — whichever parsed
         // Trust the OCR model's page-type classification, with body-text fallback
         if (isDigitizerPage(pageType, text)) {
           setObj.page_type = 'digitizer-insert';
           setObj.hidden = true;
-        } else if (pageType) {
-          setObj.page_type = pageType;
         }
-        if (columns) setObj.columns = columns;
         if (detectedImages.length > 0) setObj.detected_images = detectedImages;
 
         bulkOps.push({ updateOne: { filter: { id: pageId }, update: { $set: setObj } } });
