@@ -53,6 +53,7 @@
 
 /** `ocr.pipeline` value and `sweep_log.sweep` name — one id for the whole lane. */
 import { contentHash } from './write-provenance.mjs';
+import { stripMarkupTags } from './strip-markup-tags.mjs';
 
 export const LANE = 'syriac-kraken-2026-09';
 export const LANE_ISSUE = 4883;
@@ -155,8 +156,7 @@ export function scriptTagCounts(texts) {
  *  would otherwise count six Latin letters on every page). Body tags like `<header>` keep
  *  their content. */
 const META_TAGS = /<(language|script|page-type|page-num|columns|warning|lang)\b[^>]*>[\s\S]*?<\/\1>/gi;
-const TAG = /<[^>]+>/g;
-const body = (text) => String(text || '').replace(META_TAGS, ' ').replace(TAG, ' ');
+const body = (text) => stripMarkupTags(String(text || '').replace(META_TAGS, ' '));
 
 /**
  * What script a stored transcription is written in, by code-point share of its letters.

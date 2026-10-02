@@ -26,6 +26,7 @@
  *
  * See `.claude/docs/invariants/language-fields.md`.
  */
+import { stripMarkupTags } from './strip-markup-tags.mjs';
 
 /** Stopword lists, one per readable language. Deliberately short and common. */
 const SW = {
@@ -69,9 +70,8 @@ export function toClassifierKey(raw) {
 
 /** Drop the OCR metadata block so tags never vote on the body's language. */
 export function stripOcrMetadata(t) {
-  return (t || '')
-    .replace(/<(meta|summary|keywords|vocab|language|scan-quality|script|page-type|columns|warning)[^>]*>[\s\S]*?<\/\1>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ');
+  return stripMarkupTags((t || '')
+    .replace(/<(meta|summary|keywords|vocab|language|scan-quality|script|page-type|columns|warning)[^>]*>[\s\S]*?<\/\1>/gi, ' '));
 }
 
 /**
