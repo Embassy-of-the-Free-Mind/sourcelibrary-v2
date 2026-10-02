@@ -173,7 +173,7 @@ for (const bookId of books) {
           'ocr.content_hash': contentHash(x.text),
           'ocr.updated_at': now,
           // Provenance of the seam, inside the engine block that describes this text.
-          'ocr.engine.leaf_seams': { marker: LEAF_BREAK, count: x.seams.length, at_lines: x.seams, leaf_lines: x.leafLines, source: PAGE_MODE ? 'page-mode read aligned line by line to the per-leaf read (txt-yigdzin-leaf, leaf-run-logs/pages.jsonl)' : 'leaf-run-logs/pages.jsonl per-leaf line counts, mapped through txt-yigdzin-leaf', issue: ISSUE, run: RUN, at: now },
+          'ocr.engine.leaf_seams': { marker: LEAF_BREAK, count: x.seams.length, at_lines: x.seams, leaf_lines: x.leafLines, source: PAGE_MODE ? `page-mode read aligned line by line to the per-leaf read (${LEAFDIR}, ${LEDGER})` : `${LEDGER} per-leaf line counts, mapped through ${LEAFDIR}`, issue: ISSUE, run: RUN, at: now },
           updated_at: now,
         },
       },
