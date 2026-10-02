@@ -197,6 +197,16 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
                 >
                   Analytics
                 </Link>
+                {/* The public view of the same numbers: how complete each
+                    book is, by century and language (#5585). */}
+                <Link
+                  href="/about/progress"
+                  className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+                  style={{ color: 'var(--text-primary)' }}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Progress
+                </Link>
                 {/* People first. Introductions is what readers WROTE about
                     themselves and who offered to help — it lived only inside
                     AdminNav, which renders on /admin/* pages, so you could only
