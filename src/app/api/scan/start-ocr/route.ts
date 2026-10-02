@@ -2,6 +2,7 @@ export const dynamic = 'force-dynamic';
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { assertLaneGuards } from '@/lib/lane-guards';
 import { nanoid } from 'nanoid';
 import { getModelForBook, type RoutableBook } from '@/lib/types/ai-models';
 import type { JobStatus } from '@/lib/types/job';
@@ -26,6 +27,8 @@ export async function POST(request: NextRequest) {
     }
 
     const db = await getDb();
+    // Observe only (#5480): records a held book or an active pause in audit_log, never refuses.
+    await assertLaneGuards(db, { route: '/api/scan/start-ocr', bookIds: [String(bookId)] });
 
     // Validate: must be a Mobile Scan book
     const book = await db.collection('books').findOne({ id: bookId });
