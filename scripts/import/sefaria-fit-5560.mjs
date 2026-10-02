@@ -64,6 +64,7 @@ const KRAKEN_MODEL = {
   kraken: '7.1', flags: 'segment -bl -d horizontal-rl ocr --base-dir R',
 };
 const EXPORT = 'https://storage.googleapis.com/sefaria-export/';
+const LICENCE_URL = { 'public domain': 'https://creativecommons.org/publicdomain/mark/1.0/', 'cc0': 'https://creativecommons.org/publicdomain/zero/1.0/', 'cc-by': 'https://creativecommons.org/licenses/by/4.0/' };
 
 /**
  * The books #5560 names, and the Sefaria version each would fit — or why none can. A version is used
@@ -138,7 +139,7 @@ export function bodyText(ocr) {
  */
 function bestAnchor(t, side, win, index, stream) {
   let best = null;
-  for (const v of t.variants || []) {
+  for (const v of (t.variants || []).filter((x) => !x.sides || x.sides.includes(side))) {
     const a = anchorAt(v.q, index, stream, { side, ...win });
     if (a.pos == null) { if (!best) best = { ...a, via: v.via, chance: 0 }; continue; }
     const piece = side === 'end' ? v.q.slice(-150) : v.q.slice(0, 150);
@@ -180,7 +181,7 @@ async function plan(db) {
   // own image (a DIFFERENT image from the target's, so the target's read stays independent of the
   // anchors). Reads live in <work>/books/<id>/reads/<page_number>.txt.
   const letters = (p) => (p.ocr?.data ? normHe(bodyText(p.ocr.data)).replace(/ /g, '') : '');
-  const readOf = (n) => { const f = path.join(bookDir(id), 'reads', `${n}.txt`); return fs.existsSync(f) ? krakenLetters(fs.readFileSync(f, 'utf8')) : null; };
+  const readOf = (n, part = '') => { const f = path.join(bookDir(id), 'reads', `${n}${part}.txt`); return fs.existsSync(f) ? krakenLetters(fs.readFileSync(f, 'utf8')) : null; };
   const text = pages.map((p) => ({ p, q: letters(p), via: 'stored-ocr' })).filter((x) => x.q.length >= FIT_RULES.minTextLetters);
   const monotoneAt = (arr) => arr.forEach((t, k) => {
     const before = arr.slice(Math.max(0, k - 3), k).filter((u) => u.s != null && u.via === 'stored-ocr');
@@ -194,12 +195,16 @@ async function plan(db) {
   // variant locates monotone against the stored-OCR pages around it.
   text.forEach((t, k) => {
     t.variants = t.monotone ? [{ q: t.q, s: t.s, share: t.share, via: 'stored-ocr' }] : [];
-    const kq = readOf(t.p.page_number);
-    if (!kq || kq.length < FIT_RULES.minTextLetters) return;
-    const r = locate(kq, index, { slack: 64 });
-    const probe = [...text.slice(0, k), { ...t, q: kq, s: r.pos, via: 'kraken-read' }, ...text.slice(k + 1)];
-    monotoneAt(probe);
-    if (probe[k].monotone) t.variants.push({ q: kq, s: r.pos, share: r.share, via: 'kraken-read' });
+    // The whole page's read anchors both sides; a strip read (bottom / top 30% of the image, the
+    // cheap anchor read) anchors only its own side. Each must itself locate monotone.
+    for (const [part, via, sides] of [['', 'kraken-read', null], ['.end', 'kraken-strip-end', ['end']], ['.start', 'kraken-strip-start', ['start']]]) {
+      const kq = readOf(t.p.page_number, part);
+      if (!kq || kq.length < FIT_RULES.minStripLetters) continue;
+      const r = locate(kq, index, { slack: 64 });
+      const probe = [...text.slice(0, k), { ...t, q: kq, s: r.pos, via }, ...text.slice(k + 1)];
+      monotoneAt(probe);
+      if (probe[k].monotone) t.variants.push({ q: kq, s: r.pos, share: r.share, via, ...(sides ? { sides } : {}) });
+    }
   });
   for (const t of text) if (!t.monotone && t.variants.length) Object.assign(t, t.variants[0], { monotone: true, stored_s: t.s });
   const textById = new Map(text.map((t) => [t.p.id, t]));
@@ -270,8 +275,8 @@ async function plan(db) {
     // Neighbours to read: the previous page always (the stored OCR degenerates toward the END of a
     // page — measured on Zohar Chadash: end-boundary identity at chance, start-boundary 0.6–0.8), the
     // next page only when its stored OCR does not locate.
-    if (!out.book_refused && pages[i0 - 1]) out.read_also.push({ page_number: pages[i0 - 1].page_number, image: pages[i0 - 1].photo || pages[i0 - 1].archived_photo });
-    if (!out.book_refused && pages[j + 1] && !(next?.variants || []).some((v) => v.via === 'stored-ocr')) out.read_also.push({ page_number: pages[j + 1].page_number, image: pages[j + 1].photo || pages[j + 1].archived_photo });
+    if (!out.book_refused && pages[i0 - 1]) out.read_also.push({ page_number: pages[i0 - 1].page_number, side: 'end', image: pages[i0 - 1].photo || pages[i0 - 1].archived_photo });
+    if (!out.book_refused && pages[j + 1] && !(next?.variants || []).some((v) => v.via === 'stored-ocr')) out.read_also.push({ page_number: pages[j + 1].page_number, side: 'start', image: pages[j + 1].photo || pages[j + 1].archived_photo });
     for (const p of run) {
       out.pages.push({ id: p.id, page_number: p.page_number, run: out.runs.length - 1, target: isTarget.has(p.id), image: p.photo || p.archived_photo, human: isHumanEdited(p.ocr),
         verdict: r.refused_reason ? 'refused' : 'pending', reason: r.refused_reason || null });
@@ -318,13 +323,34 @@ async function read() {
   // Every page of a spanned run is read (a run is split by its pages' read lengths), refused runs are not.
   // Every page of every run (an anchor refusal may clear once the neighbours are read) and the runs'
   // neighbour pages. Books refused outright (licence) have no runs.
+  // --phase anchors: only the neighbour pages (they decide whether a run can be spanned at all);
+  // --phase targets: only pages of runs the last plan SPANNED. Default: both.
+  const phase = val('phase', 'all');
+  const want = phase === 'anchors' ? (pl.read_also || [])
+    : phase === 'targets' ? pl.pages.filter((p) => !pl.runs[p.run]?.refused_reason)
+    : [...pl.pages, ...(pl.read_also || [])];
+  // An anchor-phase read is a STRIP: the bottom 30% of the previous page (its last lines — in a
+  // right-to-left two-column page, the foot of the left column, which -d horizontal-rl reads last) or
+  // the top 30% of the next page. About a quarter of a full read's CPU.
+  const part = (p) => (phase === 'anchors' && p.side ? `.${p.side}` : '');
   const seen = new Set();
-  const todo = [...pl.pages, ...(pl.read_also || [])].filter((p) => p.image && !seen.has(p.page_number) && seen.add(p.page_number) && !fs.existsSync(path.join(dir, `${p.page_number}.txt`)));
-  log(`read: ${todo.length} pages to read`);
+  const todo = want.filter((p) => p.image && !seen.has(p.page_number + part(p)) && seen.add(p.page_number + part(p))
+    && !fs.existsSync(path.join(dir, `${p.page_number}.txt`)) && !fs.existsSync(path.join(dir, `${p.page_number}${part(p)}.txt`)));
+  log(`read: ${todo.length} ${phase === 'anchors' ? 'strips' : 'pages'} to read`);
   const pairs = [];
+  const sharp = (await import('sharp')).default;
   for (const p of todo) {
-    try { pairs.push([await fetchImage(p.image, path.join(dir, `${p.page_number}.jpg`)), path.join(dir, `${p.page_number}.txt`)]); }
-    catch (e) { log(`  p${p.page_number}: ${e.message}`); }
+    try {
+      const full = await fetchImage(p.image, path.join(dir, `${p.page_number}.jpg`));
+      let img = full;
+      if (part(p)) {
+        img = path.join(dir, `${p.page_number}${part(p)}.jpg`);
+        const m = await sharp(full).metadata();
+        const h = Math.round(m.height * 0.3);
+        await sharp(full).extract({ left: 0, top: p.side === 'end' ? m.height - h : 0, width: m.width, height: h }).jpeg({ quality: 92 }).toFile(img);
+      }
+      pairs.push([img, path.join(dir, `${p.page_number}${part(p)}.txt`)]);
+    } catch (e) { log(`  p${p.page_number}: ${e.message}`); }
   }
   const par = Number(val('par', '3'));
   const chunk = Math.max(1, Math.ceil(pairs.length / par));
@@ -419,6 +445,10 @@ async function write(db) {
     const ocr = {
       data: text, content_hash: sha16(text), language: 'Hebrew', source: TEXT_SOURCE, pipeline: PIPELINE,
       model: `sefaria/${src.versionTitle}`,
+      // #5571 contract: the reader shows "Text: <source>, <licence>" from this; a page without a
+      // non-empty licence is never written (asserted below).
+      text_source: { name: `Sefaria — ${src.title}`, url: `https://www.sefaria.org/${encodeURIComponent(src.title.replace(/ /g, '_'))}`, license: src.license,
+        license_url: LICENCE_URL[String(src.license).toLowerCase()] || null, version: src.versionTitle, content_hash: sha16(text) },
       text_edition: {
         name: `Sefaria — ${src.title}, “${src.versionTitle}”`, title: src.title, versionTitle: src.versionTitle,
         licence: src.license, licence_source: 'the version\'s own `license` field in the Sefaria export file', version_source: src.versionSource,
@@ -433,6 +463,7 @@ async function write(db) {
       },
       generated_at: now, updated_at: now,
     };
+    if (!licenceAllowed(ocr.text_source.license)) throw new Error(`p${p.page_number}: text licence "${ocr.text_source.license}" — refusing to write`);
     if (dry) { written++; continue; }
     const r = await db.collection('pages').updateOne(
       { id: p.id, book_id: id, $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }], 'ocr.edited_by': { $exists: false }, 'ocr.edited_at': { $exists: false } },
