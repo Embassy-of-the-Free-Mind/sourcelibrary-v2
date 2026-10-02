@@ -49,7 +49,6 @@ import {
   SURFACE, themeAttr, bookByline, TranscriptProvenanceChip,
 } from './ReaderV2Bits';
 import { pageTextCorpus, translationCorpus, transcriptProvenance, transcriptProvenanceLabel } from '@/lib/text-provenance';
-import { pageTextCorpus, translationCorpus } from '@/lib/text-provenance';
 import { isEnglishBook as isEnglishBookFn } from '@/lib/translation-pane-state';
 import type { CdliWitness } from '@/lib/types/book';
 import { translationVerdict, type TranslationStateSource } from '@/lib/translation-completeness';
