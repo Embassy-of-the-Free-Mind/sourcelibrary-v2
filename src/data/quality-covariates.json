@@ -1,6 +1,10 @@
 {
   "generated": "2026-10-02",
   "issue": 5615,
+  "issues": [
+    5615,
+    5623
+  ],
   "seed": 20261002,
   "status": "exploratory and observational: no covariate was randomised, the audits were stratified by language, and every cell under 30 is a first look",
   "sources": {
@@ -28,7 +32,10 @@
       "scripts/eval/results/benchmark/syriac-2026-09-16.json"
     ],
     "refusals": "scripts/eval/results/benchmark/refusals/refusals-2026-10-02.json",
-    "resolution": "bookstore.pages image_width/image_height; else the crop or archived image header on images.sourcelibrary.org"
+    "resolution": "bookstore.pages image_width/image_height; else the crop or archived image header on images.sourcelibrary.org",
+    "manuscript": "bookstore.pages ocr.data <script> tags (every OCR'd page of the book, counted in Mongo); scripts/eval/output/page-descriptors-5623.json where the sampled page has none; else routeBook() in scripts/lib/syriac-kraken-lane.mjs",
+    "provider": "bookstore.books image_source.provider; else the image host",
+    "content": "the Gemini transcription's own tags (<page-type>, <margin>, markdown tables, <detected-images>/<image-desc>); else the descriptor"
   },
   "definitions": {
     "unit": "one page per book (audits pool monthly draws with each book counted once, its earliest verdict; the OCR benchmark draws one page per book per stratum)",
@@ -37,6 +44,10 @@
     "resolution": "Long edge in pixels of the stored master scan (or of the crop for a split page). Not the reader's display copy, which is capped at 2,000 px wide. OCR reference-tier pages (Wikisource, pinned editions) are external scans with no Source Library page and are unknown.",
     "judge": "Claude Opus fidelity rating 4 or 5 of 5, source-grounded. A model judgement, not accuracy.",
     "cer": "Character error rate against a published e-text, median per stratum, refusals scored as 1.0 on sealed strata (the dashboard rule). 95% percentile bootstrap, 2,000 resamples, seeded.",
+    "manuscript": "Book level. The majority of the OCR <script> tag (printed | handwritten | mixed) over every OCR'd page of the book, with the sampled page's descriptor answer counted when its own tag is absent; a tie is mixed. A book with no tag at all takes the Syriac lane's routing rule (scripts/lib/syriac-kraken-lane.mjs routeBook): held by a manuscript library (vatican, cambridge, bodleian, manchester, chester_beatty, gallica, bl) or published before 1500 is manuscript, anything else print. That rule was written for Syriac; gallica and bl hold mostly print outside it. coverage.*.ms_rule counts which rule decided each book.",
+    "provider": "The holding library or scan source from books.image_source.provider (mdz merged into bsb: the same library). A library with fewer than 15 books in a sample is \"other\" within that sample.",
+    "content": "One class per page, the first that applies: illustration (page type illustration, diagram, map or frontispiece, or a detected image), table (page type table or a markdown table), marginalia (a <margin> note), else plain text. From the transcription's tags when the page was read by Gemini with the tagged prompt (absence of a <margin> tag there means none seen); otherwise from the image-only descriptor. The audits exclude plates and blanks, so illustration and table are rare there by design.",
+    "format": "books.format (2°, 4°, 8°) is filled on too few sampled books for a 30-per-cell comparison; see format.",
     "intervals": "Rates: Wilson 95%. Medians: percentile bootstrap 95%. Grades: under 30 exploratory, 30–49 directional, 50 or more decision-grade."
   },
   "translation": {
@@ -470,6 +481,450 @@
         }
       }
     ],
+    "by_manuscript": [
+      {
+        "level": "print",
+        "n": 256,
+        "k": 225,
+        "rate": 0.879,
+        "ci": [
+          0.833,
+          0.913
+        ],
+        "grade": "decision-grade",
+        "non_latin": 74,
+        "latin": {
+          "n": 182,
+          "k": 170,
+          "rate": 0.934,
+          "ci": [
+            0.888,
+            0.962
+          ]
+        },
+        "nonlatin": {
+          "n": 74,
+          "k": 55,
+          "rate": 0.743,
+          "ci": [
+            0.633,
+            0.829
+          ]
+        }
+      },
+      {
+        "level": "manuscript",
+        "n": 65,
+        "k": 43,
+        "rate": 0.662,
+        "ci": [
+          0.54,
+          0.765
+        ],
+        "grade": "decision-grade",
+        "non_latin": 52,
+        "latin": {
+          "n": 13,
+          "k": 11,
+          "rate": 0.846,
+          "ci": [
+            0.578,
+            0.957
+          ]
+        },
+        "nonlatin": {
+          "n": 52,
+          "k": 32,
+          "rate": 0.615,
+          "ci": [
+            0.48,
+            0.735
+          ]
+        }
+      },
+      {
+        "level": "mixed",
+        "n": 6,
+        "k": 6,
+        "rate": 1,
+        "ci": [
+          0.61,
+          1
+        ],
+        "grade": "exploratory",
+        "non_latin": 2,
+        "latin": {
+          "n": 4,
+          "k": 4,
+          "rate": 1,
+          "ci": [
+            0.51,
+            1
+          ]
+        },
+        "nonlatin": {
+          "n": 2,
+          "k": 2,
+          "rate": 1,
+          "ci": [
+            0.342,
+            1
+          ]
+        }
+      }
+    ],
+    "by_provider": [
+      {
+        "level": "internet_archive",
+        "n": 166,
+        "k": 139,
+        "rate": 0.837,
+        "ci": [
+          0.774,
+          0.886
+        ],
+        "grade": "decision-grade",
+        "non_latin": 69,
+        "latin": {
+          "n": 97,
+          "k": 90,
+          "rate": 0.928,
+          "ci": [
+            0.858,
+            0.965
+          ]
+        },
+        "nonlatin": {
+          "n": 69,
+          "k": 49,
+          "rate": 0.71,
+          "ci": [
+            0.594,
+            0.804
+          ]
+        }
+      },
+      {
+        "level": "bph",
+        "n": 54,
+        "k": 53,
+        "rate": 0.981,
+        "ci": [
+          0.902,
+          0.997
+        ],
+        "grade": "decision-grade",
+        "non_latin": 4,
+        "latin": {
+          "n": 50,
+          "k": 50,
+          "rate": 1,
+          "ci": [
+            0.929,
+            1
+          ]
+        },
+        "nonlatin": {
+          "n": 4,
+          "k": 3,
+          "rate": 0.75,
+          "ci": [
+            0.301,
+            0.954
+          ]
+        }
+      },
+      {
+        "level": "bsb",
+        "n": 22,
+        "k": 20,
+        "rate": 0.909,
+        "ci": [
+          0.722,
+          0.975
+        ],
+        "grade": "exploratory",
+        "non_latin": 0,
+        "latin": {
+          "n": 22,
+          "k": 20,
+          "rate": 0.909,
+          "ci": [
+            0.722,
+            0.975
+          ]
+        },
+        "nonlatin": null
+      },
+      {
+        "level": "harvard",
+        "n": 16,
+        "k": 11,
+        "rate": 0.688,
+        "ci": [
+          0.444,
+          0.858
+        ],
+        "grade": "exploratory",
+        "non_latin": 10,
+        "latin": {
+          "n": 6,
+          "k": 5,
+          "rate": 0.833,
+          "ci": [
+            0.436,
+            0.97
+          ]
+        },
+        "nonlatin": {
+          "n": 10,
+          "k": 6,
+          "rate": 0.6,
+          "ci": [
+            0.313,
+            0.832
+          ]
+        }
+      },
+      {
+        "level": "other",
+        "n": 69,
+        "k": 51,
+        "rate": 0.739,
+        "ci": [
+          0.625,
+          0.828
+        ],
+        "grade": "decision-grade",
+        "non_latin": 45,
+        "latin": {
+          "n": 24,
+          "k": 20,
+          "rate": 0.833,
+          "ci": [
+            0.641,
+            0.933
+          ]
+        },
+        "nonlatin": {
+          "n": 45,
+          "k": 31,
+          "rate": 0.689,
+          "ci": [
+            0.543,
+            0.805
+          ]
+        }
+      }
+    ],
+    "by_content": [
+      {
+        "level": "plain text",
+        "n": 216,
+        "k": 181,
+        "rate": 0.838,
+        "ci": [
+          0.783,
+          0.881
+        ],
+        "grade": "decision-grade",
+        "non_latin": 77,
+        "latin": {
+          "n": 139,
+          "k": 132,
+          "rate": 0.95,
+          "ci": [
+            0.9,
+            0.975
+          ]
+        },
+        "nonlatin": {
+          "n": 77,
+          "k": 49,
+          "rate": 0.636,
+          "ci": [
+            0.525,
+            0.735
+          ]
+        }
+      },
+      {
+        "level": "marginalia",
+        "n": 86,
+        "k": 71,
+        "rate": 0.826,
+        "ci": [
+          0.732,
+          0.891
+        ],
+        "grade": "decision-grade",
+        "non_latin": 42,
+        "latin": {
+          "n": 44,
+          "k": 38,
+          "rate": 0.864,
+          "ci": [
+            0.733,
+            0.936
+          ]
+        },
+        "nonlatin": {
+          "n": 42,
+          "k": 33,
+          "rate": 0.786,
+          "ci": [
+            0.641,
+            0.883
+          ]
+        }
+      },
+      {
+        "level": "table",
+        "n": 10,
+        "k": 8,
+        "rate": 0.8,
+        "ci": [
+          0.49,
+          0.943
+        ],
+        "grade": "exploratory",
+        "non_latin": 5,
+        "latin": {
+          "n": 5,
+          "k": 5,
+          "rate": 1,
+          "ci": [
+            0.566,
+            1
+          ]
+        },
+        "nonlatin": {
+          "n": 5,
+          "k": 3,
+          "rate": 0.6,
+          "ci": [
+            0.231,
+            0.882
+          ]
+        }
+      },
+      {
+        "level": "illustration",
+        "n": 15,
+        "k": 14,
+        "rate": 0.933,
+        "ci": [
+          0.702,
+          0.988
+        ],
+        "grade": "exploratory",
+        "non_latin": 4,
+        "latin": {
+          "n": 11,
+          "k": 10,
+          "rate": 0.909,
+          "ci": [
+            0.623,
+            0.984
+          ]
+        },
+        "nonlatin": {
+          "n": 4,
+          "k": 4,
+          "rate": 1,
+          "ci": [
+            0.51,
+            1
+          ]
+        }
+      }
+    ],
+    "cross": {
+      "manuscript_by_script": {
+        "print": {
+          "Latin": 182,
+          "non-Latin": 74
+        },
+        "manuscript": {
+          "Latin": 13,
+          "non-Latin": 52
+        },
+        "mixed": {
+          "Latin": 4,
+          "non-Latin": 2
+        }
+      },
+      "manuscript_by_period": {
+        "print": {
+          "pre-1500": 13,
+          "1600s": 53,
+          "1800s": 46,
+          "1500s": 41,
+          "1700s": 55,
+          "1900+": 36,
+          "unknown": 12
+        },
+        "manuscript": {
+          "pre-1500": 21,
+          "unknown": 16,
+          "1500s": 8,
+          "1900+": 5,
+          "1800s": 11,
+          "1700s": 1,
+          "1600s": 3
+        },
+        "mixed": {
+          "1500s": 1,
+          "pre-1500": 1,
+          "1900+": 1,
+          "1600s": 2,
+          "unknown": 1
+        }
+      },
+      "provider_by_script": {
+        "bsb": {
+          "Latin": 22
+        },
+        "harvard": {
+          "Latin": 6,
+          "non-Latin": 10
+        },
+        "internet_archive": {
+          "Latin": 97,
+          "non-Latin": 69
+        },
+        "other": {
+          "Latin": 24,
+          "non-Latin": 45
+        },
+        "bph": {
+          "Latin": 50,
+          "non-Latin": 4
+        }
+      },
+      "provider_by_manuscript": {
+        "bsb": {
+          "print": 22
+        },
+        "harvard": {
+          "manuscript": 15,
+          "mixed": 1
+        },
+        "internet_archive": {
+          "print": 152,
+          "mixed": 5,
+          "manuscript": 9
+        },
+        "other": {
+          "manuscript": 39,
+          "print": 30
+        },
+        "bph": {
+          "print": 52,
+          "manuscript": 2
+        }
+      }
+    },
     "char_cuts": [
       956,
       1570
@@ -642,6 +1097,231 @@
           "grade": "decision-grade"
         }
       ],
+      "by_manuscript": [
+        {
+          "level": "print",
+          "n": 730,
+          "median": 0.195,
+          "ci": [
+            0.18,
+            0.219
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "manuscript",
+          "n": 5,
+          "median": 0.385,
+          "ci": [
+            0.139,
+            0.483
+          ],
+          "grade": "exploratory"
+        },
+        {
+          "level": "mixed",
+          "n": 6,
+          "median": 0.133,
+          "ci": [
+            0.05,
+            0.183
+          ],
+          "grade": "exploratory"
+        },
+        {
+          "level": "unknown",
+          "n": 151,
+          "median": 0.008,
+          "ci": [
+            0.006,
+            0.011
+          ],
+          "grade": "decision-grade"
+        }
+      ],
+      "by_provider": [
+        {
+          "level": "internet_archive",
+          "n": 624,
+          "median": 0.223,
+          "ci": [
+            0.197,
+            0.243
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "bsb",
+          "n": 85,
+          "median": 0.122,
+          "ci": [
+            0.107,
+            0.147
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "e-rara",
+          "n": 16,
+          "median": 0.169,
+          "ci": [
+            0.114,
+            0.238
+          ],
+          "grade": "exploratory"
+        },
+        {
+          "level": "other",
+          "n": 16,
+          "median": 0.202,
+          "ci": [
+            0.118,
+            0.367
+          ],
+          "grade": "exploratory"
+        },
+        {
+          "level": "unknown",
+          "n": 151,
+          "median": 0.008,
+          "ci": [
+            0.006,
+            0.011
+          ],
+          "grade": "decision-grade"
+        }
+      ],
+      "by_content": [
+        {
+          "level": "plain text",
+          "n": 446,
+          "median": 0.168,
+          "ci": [
+            0.163,
+            0.18
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "marginalia",
+          "n": 226,
+          "median": 0.245,
+          "ci": [
+            0.214,
+            0.274
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "table",
+          "n": 39,
+          "median": 0.476,
+          "ci": [
+            0.403,
+            0.583
+          ],
+          "grade": "directional"
+        },
+        {
+          "level": "illustration",
+          "n": 11,
+          "median": 0.236,
+          "ci": [
+            0.139,
+            0.367
+          ],
+          "grade": "exploratory"
+        },
+        {
+          "level": "unknown",
+          "n": 170,
+          "median": 0.01,
+          "ci": [
+            0.007,
+            0.016
+          ],
+          "grade": "decision-grade"
+        }
+      ],
+      "cross": {
+        "manuscript_by_script": {
+          "print": {
+            "Han": 531,
+            "Latin": 71,
+            "Greek": 126,
+            "other": 2
+          },
+          "manuscript": {
+            "Han": 2,
+            "Greek": 3
+          },
+          "mixed": {
+            "Latin": 1,
+            "Greek": 5
+          },
+          "unknown": {
+            "other": 13,
+            "Han": 3,
+            "Latin": 97,
+            "Greek": 38
+          }
+        },
+        "manuscript_by_period": {
+          "print": {
+            "unknown": 512,
+            "1700s": 72,
+            "pre-1500": 7,
+            "1500s": 60,
+            "1600s": 73,
+            "1800s": 6
+          },
+          "manuscript": {
+            "unknown": 2,
+            "pre-1500": 1,
+            "1500s": 2
+          },
+          "mixed": {
+            "1600s": 1,
+            "1500s": 3,
+            "1700s": 2
+          },
+          "unknown": {
+            "unknown": 49,
+            "1500s": 6,
+            "1800s": 65,
+            "1700s": 20,
+            "1900+": 1,
+            "1600s": 9,
+            "pre-1500": 1
+          }
+        },
+        "provider_by_script": {
+          "internet_archive": {
+            "Han": 524,
+            "Latin": 71,
+            "Greek": 29
+          },
+          "other": {
+            "Han": 9,
+            "Latin": 1,
+            "Greek": 6
+          },
+          "e-rara": {
+            "Greek": 15,
+            "other": 1
+          },
+          "bsb": {
+            "Greek": 84,
+            "other": 1
+          },
+          "unknown": {
+            "other": 13,
+            "Han": 3,
+            "Latin": 97,
+            "Greek": 38
+          }
+        }
+      },
       "char_cuts": [
         166,
         756
@@ -772,6 +1452,103 @@
               "ci": [
                 0.006,
                 0.013
+              ],
+              "grade": "decision-grade"
+            }
+          ],
+          "by_manuscript": [
+            {
+              "level": "print",
+              "n": 71,
+              "median": 0.059,
+              "ci": [
+                0.052,
+                0.067
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "mixed",
+              "n": 1,
+              "median": 0.029,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "unknown",
+              "n": 97,
+              "median": 0.008,
+              "ci": [
+                0.006,
+                0.014
+              ],
+              "grade": "decision-grade"
+            }
+          ],
+          "by_provider": [
+            {
+              "level": "internet_archive",
+              "n": 71,
+              "median": 0.059,
+              "ci": [
+                0.052,
+                0.067
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "other",
+              "n": 1,
+              "median": 0.047,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "unknown",
+              "n": 97,
+              "median": 0.008,
+              "ci": [
+                0.006,
+                0.014
+              ],
+              "grade": "decision-grade"
+            }
+          ],
+          "by_content": [
+            {
+              "level": "plain text",
+              "n": 51,
+              "median": 0.056,
+              "ci": [
+                0.043,
+                0.067
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "marginalia",
+              "n": 20,
+              "median": 0.065,
+              "ci": [
+                0.052,
+                0.1
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "illustration",
+              "n": 1,
+              "median": 0.139,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "unknown",
+              "n": 97,
+              "median": 0.008,
+              "ci": [
+                0.006,
+                0.014
               ],
               "grade": "decision-grade"
             }
@@ -925,6 +1702,139 @@
               ],
               "grade": "directional"
             }
+          ],
+          "by_manuscript": [
+            {
+              "level": "print",
+              "n": 126,
+              "median": 0.145,
+              "ci": [
+                0.114,
+                0.165
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "manuscript",
+              "n": 3,
+              "median": 0.367,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "mixed",
+              "n": 5,
+              "median": 0.147,
+              "ci": [
+                0.07,
+                0.196
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "unknown",
+              "n": 38,
+              "median": 0.004,
+              "ci": [
+                0.002,
+                0.008
+              ],
+              "grade": "directional"
+            }
+          ],
+          "by_provider": [
+            {
+              "level": "internet_archive",
+              "n": 29,
+              "median": 0.151,
+              "ci": [
+                0.103,
+                0.186
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "bsb",
+              "n": 84,
+              "median": 0.131,
+              "ci": [
+                0.107,
+                0.15
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "e-rara",
+              "n": 15,
+              "median": 0.171,
+              "ci": [
+                0.097,
+                0.265
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "other",
+              "n": 6,
+              "median": 0.26,
+              "ci": [
+                0.191,
+                0.425
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "unknown",
+              "n": 38,
+              "median": 0.004,
+              "ci": [
+                0.002,
+                0.008
+              ],
+              "grade": "directional"
+            }
+          ],
+          "by_content": [
+            {
+              "level": "plain text",
+              "n": 81,
+              "median": 0.142,
+              "ci": [
+                0.107,
+                0.165
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "marginalia",
+              "n": 28,
+              "median": 0.155,
+              "ci": [
+                0.113,
+                0.199
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "illustration",
+              "n": 6,
+              "median": 0.229,
+              "ci": [
+                0.095,
+                0.354
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "unknown",
+              "n": 57,
+              "median": 0.008,
+              "ci": [
+                0.005,
+                0.054
+              ],
+              "grade": "decision-grade"
+            }
           ]
         },
         "Han": {
@@ -1041,6 +1951,107 @@
                 0.372
               ],
               "grade": "directional"
+            },
+            {
+              "level": "unknown",
+              "n": 3,
+              "median": 0.017,
+              "ci": null,
+              "grade": "exploratory"
+            }
+          ],
+          "by_manuscript": [
+            {
+              "level": "print",
+              "n": 531,
+              "median": 0.259,
+              "ci": [
+                0.24,
+                0.28
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "manuscript",
+              "n": 2,
+              "median": 0.431,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "unknown",
+              "n": 3,
+              "median": 0.017,
+              "ci": null,
+              "grade": "exploratory"
+            }
+          ],
+          "by_provider": [
+            {
+              "level": "internet_archive",
+              "n": 524,
+              "median": 0.262,
+              "ci": [
+                0.242,
+                0.281
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "other",
+              "n": 9,
+              "median": 0.149,
+              "ci": [
+                0.097,
+                0.414
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "unknown",
+              "n": 3,
+              "median": 0.017,
+              "ci": null,
+              "grade": "exploratory"
+            }
+          ],
+          "by_content": [
+            {
+              "level": "plain text",
+              "n": 312,
+              "median": 0.213,
+              "ci": [
+                0.185,
+                0.242
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "marginalia",
+              "n": 178,
+              "median": 0.281,
+              "ci": [
+                0.252,
+                0.315
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "table",
+              "n": 39,
+              "median": 0.476,
+              "ci": [
+                0.425,
+                0.583
+              ],
+              "grade": "directional"
+            },
+            {
+              "level": "illustration",
+              "n": 4,
+              "median": 0.379,
+              "ci": null,
+              "grade": "exploratory"
             },
             {
               "level": "unknown",
@@ -1242,6 +2253,231 @@
           "grade": "decision-grade"
         }
       ],
+      "by_manuscript": [
+        {
+          "level": "print",
+          "n": 730,
+          "median": 0.165,
+          "ci": [
+            0.153,
+            0.176
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "manuscript",
+          "n": 5,
+          "median": 0.282,
+          "ci": [
+            0.117,
+            0.388
+          ],
+          "grade": "exploratory"
+        },
+        {
+          "level": "mixed",
+          "n": 6,
+          "median": 0.039,
+          "ci": [
+            0.028,
+            0.115
+          ],
+          "grade": "exploratory"
+        },
+        {
+          "level": "unknown",
+          "n": 155,
+          "median": 0.004,
+          "ci": [
+            0.003,
+            0.007
+          ],
+          "grade": "decision-grade"
+        }
+      ],
+      "by_provider": [
+        {
+          "level": "internet_archive",
+          "n": 624,
+          "median": 0.181,
+          "ci": [
+            0.17,
+            0.197
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "bsb",
+          "n": 85,
+          "median": 0.084,
+          "ci": [
+            0.066,
+            0.102
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "e-rara",
+          "n": 16,
+          "median": 0.097,
+          "ci": [
+            0.059,
+            0.159
+          ],
+          "grade": "exploratory"
+        },
+        {
+          "level": "other",
+          "n": 16,
+          "median": 0.106,
+          "ci": [
+            0.09,
+            0.192
+          ],
+          "grade": "exploratory"
+        },
+        {
+          "level": "unknown",
+          "n": 155,
+          "median": 0.004,
+          "ci": [
+            0.003,
+            0.007
+          ],
+          "grade": "decision-grade"
+        }
+      ],
+      "by_content": [
+        {
+          "level": "plain text",
+          "n": 446,
+          "median": 0.148,
+          "ci": [
+            0.139,
+            0.163
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "marginalia",
+          "n": 226,
+          "median": 0.177,
+          "ci": [
+            0.162,
+            0.205
+          ],
+          "grade": "decision-grade"
+        },
+        {
+          "level": "table",
+          "n": 39,
+          "median": 0.315,
+          "ci": [
+            0.259,
+            0.365
+          ],
+          "grade": "directional"
+        },
+        {
+          "level": "illustration",
+          "n": 11,
+          "median": 0.183,
+          "ci": [
+            0.099,
+            0.282
+          ],
+          "grade": "exploratory"
+        },
+        {
+          "level": "unknown",
+          "n": 174,
+          "median": 0.006,
+          "ci": [
+            0.004,
+            0.008
+          ],
+          "grade": "decision-grade"
+        }
+      ],
+      "cross": {
+        "manuscript_by_script": {
+          "print": {
+            "Han": 531,
+            "Latin": 71,
+            "Greek": 126,
+            "other": 2
+          },
+          "manuscript": {
+            "Han": 2,
+            "Greek": 3
+          },
+          "mixed": {
+            "Latin": 1,
+            "Greek": 5
+          },
+          "unknown": {
+            "other": 12,
+            "Han": 3,
+            "Latin": 102,
+            "Greek": 38
+          }
+        },
+        "manuscript_by_period": {
+          "print": {
+            "unknown": 512,
+            "1700s": 72,
+            "pre-1500": 7,
+            "1500s": 60,
+            "1600s": 73,
+            "1800s": 6
+          },
+          "manuscript": {
+            "unknown": 2,
+            "pre-1500": 1,
+            "1500s": 2
+          },
+          "mixed": {
+            "1600s": 1,
+            "1500s": 3,
+            "1700s": 2
+          },
+          "unknown": {
+            "unknown": 47,
+            "1500s": 8,
+            "1800s": 66,
+            "1700s": 21,
+            "1900+": 1,
+            "1600s": 11,
+            "pre-1500": 1
+          }
+        },
+        "provider_by_script": {
+          "internet_archive": {
+            "Han": 524,
+            "Latin": 71,
+            "Greek": 29
+          },
+          "other": {
+            "Han": 9,
+            "Latin": 1,
+            "Greek": 6
+          },
+          "e-rara": {
+            "Greek": 15,
+            "other": 1
+          },
+          "bsb": {
+            "Greek": 84,
+            "other": 1
+          },
+          "unknown": {
+            "other": 12,
+            "Han": 3,
+            "Latin": 102,
+            "Greek": 38
+          }
+        }
+      },
       "char_cuts": [
         166,
         765.5
@@ -1364,6 +2600,103 @@
                 0.055
               ],
               "grade": "decision-grade"
+            },
+            {
+              "level": "unknown",
+              "n": 102,
+              "median": 0.004,
+              "ci": [
+                0.003,
+                0.007
+              ],
+              "grade": "decision-grade"
+            }
+          ],
+          "by_manuscript": [
+            {
+              "level": "print",
+              "n": 71,
+              "median": 0.046,
+              "ci": [
+                0.039,
+                0.057
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "mixed",
+              "n": 1,
+              "median": 0.028,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "unknown",
+              "n": 102,
+              "median": 0.004,
+              "ci": [
+                0.003,
+                0.007
+              ],
+              "grade": "decision-grade"
+            }
+          ],
+          "by_provider": [
+            {
+              "level": "internet_archive",
+              "n": 71,
+              "median": 0.043,
+              "ci": [
+                0.039,
+                0.057
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "other",
+              "n": 1,
+              "median": 0.047,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "unknown",
+              "n": 102,
+              "median": 0.004,
+              "ci": [
+                0.003,
+                0.007
+              ],
+              "grade": "decision-grade"
+            }
+          ],
+          "by_content": [
+            {
+              "level": "plain text",
+              "n": 51,
+              "median": 0.041,
+              "ci": [
+                0.028,
+                0.047
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "marginalia",
+              "n": 20,
+              "median": 0.058,
+              "ci": [
+                0.045,
+                0.089
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "illustration",
+              "n": 1,
+              "median": 0.122,
+              "ci": null,
+              "grade": "exploratory"
             },
             {
               "level": "unknown",
@@ -1525,6 +2858,139 @@
               ],
               "grade": "directional"
             }
+          ],
+          "by_manuscript": [
+            {
+              "level": "print",
+              "n": 126,
+              "median": 0.088,
+              "ci": [
+                0.071,
+                0.097
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "manuscript",
+              "n": 3,
+              "median": 0.12,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "mixed",
+              "n": 5,
+              "median": 0.042,
+              "ci": [
+                0.028,
+                0.169
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "unknown",
+              "n": 38,
+              "median": 0.002,
+              "ci": [
+                0.001,
+                0.004
+              ],
+              "grade": "directional"
+            }
+          ],
+          "by_provider": [
+            {
+              "level": "internet_archive",
+              "n": 29,
+              "median": 0.077,
+              "ci": [
+                0.059,
+                0.118
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "bsb",
+              "n": 84,
+              "median": 0.085,
+              "ci": [
+                0.067,
+                0.102
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "e-rara",
+              "n": 15,
+              "median": 0.099,
+              "ci": [
+                0.065,
+                0.159
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "other",
+              "n": 6,
+              "median": 0.109,
+              "ci": [
+                0.074,
+                0.206
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "unknown",
+              "n": 38,
+              "median": 0.002,
+              "ci": [
+                0.001,
+                0.004
+              ],
+              "grade": "directional"
+            }
+          ],
+          "by_content": [
+            {
+              "level": "plain text",
+              "n": 81,
+              "median": 0.087,
+              "ci": [
+                0.065,
+                0.097
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "marginalia",
+              "n": 28,
+              "median": 0.084,
+              "ci": [
+                0.061,
+                0.138
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "illustration",
+              "n": 6,
+              "median": 0.122,
+              "ci": [
+                0.06,
+                0.256
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "unknown",
+              "n": 57,
+              "median": 0.007,
+              "ci": [
+                0.003,
+                0.042
+              ],
+              "grade": "decision-grade"
+            }
           ]
         },
         "Han": {
@@ -1649,6 +3115,107 @@
               "ci": null,
               "grade": "exploratory"
             }
+          ],
+          "by_manuscript": [
+            {
+              "level": "print",
+              "n": 531,
+              "median": 0.209,
+              "ci": [
+                0.19,
+                0.221
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "manuscript",
+              "n": 2,
+              "median": 0.382,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "unknown",
+              "n": 3,
+              "median": 0.016,
+              "ci": null,
+              "grade": "exploratory"
+            }
+          ],
+          "by_provider": [
+            {
+              "level": "internet_archive",
+              "n": 524,
+              "median": 0.21,
+              "ci": [
+                0.19,
+                0.224
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "other",
+              "n": 9,
+              "median": 0.114,
+              "ci": [
+                0.088,
+                0.398
+              ],
+              "grade": "exploratory"
+            },
+            {
+              "level": "unknown",
+              "n": 3,
+              "median": 0.016,
+              "ci": null,
+              "grade": "exploratory"
+            }
+          ],
+          "by_content": [
+            {
+              "level": "plain text",
+              "n": 312,
+              "median": 0.189,
+              "ci": [
+                0.174,
+                0.211
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "marginalia",
+              "n": 178,
+              "median": 0.214,
+              "ci": [
+                0.181,
+                0.255
+              ],
+              "grade": "decision-grade"
+            },
+            {
+              "level": "table",
+              "n": 39,
+              "median": 0.315,
+              "ci": [
+                0.259,
+                0.365
+              ],
+              "grade": "directional"
+            },
+            {
+              "level": "illustration",
+              "n": 4,
+              "median": 0.267,
+              "ci": null,
+              "grade": "exploratory"
+            },
+            {
+              "level": "unknown",
+              "n": 3,
+              "median": 0.016,
+              "ci": null,
+              "grade": "exploratory"
+            }
           ]
         }
       },
@@ -1684,7 +3251,127 @@
     }
   },
   "regression": {
-    "model": "logit P(judge ≥ 4) = script + period + log2(chars) + resolution band; IRLS, Wald 95% CI; one page per book, unweighted",
+    "model": "logit P(judge ≥ 4) = script + manuscript + period + log2(chars) + resolution band; IRLS, Wald 95% CI; one page per book, unweighted",
+    "n": 327,
+    "events": 274,
+    "converged": true,
+    "iterations": 7,
+    "terms": [
+      {
+        "term": "non-Latin script (vs Latin)",
+        "n_at_level": 128,
+        "odds_ratio": 0.238,
+        "ci": [
+          0.108,
+          0.526
+        ],
+        "p": 0
+      },
+      {
+        "term": "manuscript (vs print)",
+        "n_at_level": 65,
+        "odds_ratio": 0.477,
+        "ci": [
+          0.207,
+          1.096
+        ],
+        "p": 0.081
+      },
+      {
+        "term": "period pre-1500 (vs 1600s)",
+        "n_at_level": 35,
+        "odds_ratio": 1.228,
+        "ci": [
+          0.313,
+          4.827
+        ],
+        "p": 0.769
+      },
+      {
+        "term": "period 1500s (vs 1600s)",
+        "n_at_level": 50,
+        "odds_ratio": 1.773,
+        "ci": [
+          0.455,
+          6.9
+        ],
+        "p": 0.409
+      },
+      {
+        "term": "period 1700s (vs 1600s)",
+        "n_at_level": 56,
+        "odds_ratio": 0.831,
+        "ci": [
+          0.237,
+          2.914
+        ],
+        "p": 0.773
+      },
+      {
+        "term": "period 1800s (vs 1600s)",
+        "n_at_level": 57,
+        "odds_ratio": 0.635,
+        "ci": [
+          0.221,
+          1.825
+        ],
+        "p": 0.4
+      },
+      {
+        "term": "period 1900+ (vs 1600s)",
+        "n_at_level": 42,
+        "odds_ratio": 1.058,
+        "ci": [
+          0.3,
+          3.738
+        ],
+        "p": 0.93
+      },
+      {
+        "term": "period unknown (vs 1600s)",
+        "n_at_level": 29,
+        "odds_ratio": 0.96,
+        "ci": [
+          0.263,
+          3.502
+        ],
+        "p": 0.95
+      },
+      {
+        "term": "log2 characters (per doubling)",
+        "n_at_level": null,
+        "odds_ratio": 0.996,
+        "ci": [
+          0.807,
+          1.229
+        ],
+        "p": 0.971
+      },
+      {
+        "term": "resolution <1500 px (vs 1500–2499 px)",
+        "n_at_level": 30,
+        "odds_ratio": 0.531,
+        "ci": [
+          0.181,
+          1.554
+        ],
+        "p": 0.248
+      },
+      {
+        "term": "resolution ≥2500 px (vs 1500–2499 px)",
+        "n_at_level": 211,
+        "odds_ratio": 1.265,
+        "ci": [
+          0.574,
+          2.787
+        ],
+        "p": 0.56
+      }
+    ],
+    "mixed_counted_as_print": 6
+  },
+  "regression_without_manuscript": {
+    "model": "logit P(judge ≥ 4) = script + period + log2(chars) + resolution band (the #5615 model, for comparison)",
     "n": 327,
     "events": 274,
     "converged": true,
@@ -1791,5 +3478,285 @@
         "p": 0.373
       }
     ]
+  },
+  "coverage": {
+    "translation": {
+      "n": 327,
+      "page_script_src": {
+        "ocr <script> tag": 169,
+        "descriptor": 158
+      },
+      "ms_rule": {
+        "OCR <script> tags, book majority": 204,
+        "descriptor (this page only)": 123
+      },
+      "ms": {
+        "print": 256,
+        "manuscript": 65,
+        "mixed": 6
+      },
+      "provider_src": {
+        "books.image_source.provider": 327
+      },
+      "content_src": {
+        "transcription tags (Gemini read)": 165,
+        "descriptor": 162
+      },
+      "content": {
+        "plain text": 216,
+        "marginalia": 86,
+        "illustration": 15,
+        "table": 10
+      },
+      "format": {
+        "null": 311,
+        "4°": 7,
+        "2°": 3,
+        "8°": 6
+      }
+    },
+    "ocr_lite": {
+      "n": 892,
+      "page_script_src": {
+        "descriptor": 556,
+        "ocr <script> tag": 166,
+        "none": 170
+      },
+      "ms_rule": {
+        "OCR <script> tags, book majority": 594,
+        "descriptor (this page only)": 128,
+        "fallback: print by default": 19,
+        "external scan: unknown": 151
+      },
+      "ms": {
+        "print": 730,
+        "manuscript": 5,
+        "mixed": 6,
+        "unknown": 151
+      },
+      "provider_src": {
+        "books.image_source.provider": 741,
+        "none": 151
+      },
+      "content_src": {
+        "descriptor": 558,
+        "transcription tags (Gemini read)": 164,
+        "none": 170
+      },
+      "content": {
+        "plain text": 446,
+        "marginalia": 226,
+        "table": 39,
+        "illustration": 11,
+        "unknown": 170
+      },
+      "format": {
+        "null": 868,
+        "2°": 4,
+        "4°": 8,
+        "8°": 11,
+        "12° and smaller": 1
+      }
+    }
+  },
+  "format": {
+    "skipped": true,
+    "reason": "books.format is set on 16 of 327 audited books and 24 of 892 benchmark pages; no cell reaches 30",
+    "translation": [
+      {
+        "level": "4°",
+        "n": 7
+      },
+      {
+        "level": "2°",
+        "n": 3
+      },
+      {
+        "level": "8°",
+        "n": 6
+      }
+    ],
+    "ocr_lite": [
+      {
+        "level": "2°",
+        "n": 4
+      },
+      {
+        "level": "4°",
+        "n": 8
+      },
+      {
+        "level": "8°",
+        "n": 11
+      },
+      {
+        "level": "12° and smaller",
+        "n": 1
+      }
+    ]
+  },
+  "descriptor": {
+    "file": "scripts/eval/output/page-descriptors-5623.json",
+    "model": "gemini-3.1-flash-lite",
+    "prompt_version": "page-descriptor-v1.2026-10",
+    "prompt": "scripts/eval/lib/page-descriptor.mjs",
+    "pages_missing_a_tag": 739,
+    "described": 760,
+    "failed": 19,
+    "failures": [
+      [
+        "image 429",
+        19
+      ]
+    ],
+    "field_errors": 5,
+    "usd": 0.39,
+    "billing": "realtime list price through scripts/lib/gemini-script-client.mjs (the client has no Batch path)",
+    "input_tokens": 1255936,
+    "output_tokens": 50718,
+    "script_where_tag_missing_by_engine": {
+      "gemini-3-flash": {
+        "n": 207,
+        "printed": 169,
+        "handwritten": 32,
+        "mixed": 6
+      },
+      "bdrc": {
+        "n": 6,
+        "printed": 1,
+        "handwritten": 5,
+        "mixed": 0
+      },
+      "ndl": {
+        "n": 4,
+        "printed": 3,
+        "handwritten": 1,
+        "mixed": 0
+      },
+      "cbeta": {
+        "n": 1,
+        "printed": 1,
+        "handwritten": 0,
+        "mixed": 0
+      },
+      "no engine recorded": {
+        "n": 499,
+        "printed": 492,
+        "handwritten": 1,
+        "mixed": 6
+      },
+      "ia": {
+        "n": 1,
+        "printed": 1,
+        "handwritten": 0,
+        "mixed": 0
+      },
+      "PaddleOCR": {
+        "n": 2,
+        "printed": 2,
+        "handwritten": 0,
+        "mixed": 0
+      }
+    },
+    "agreement_with_inline_tags": {
+      "pages": 40,
+      "script": {
+        "n": 40,
+        "agree": 39,
+        "rate": 0.975,
+        "ci": [
+          0.871,
+          0.996
+        ]
+      },
+      "page_type": {
+        "n": 40,
+        "agree": 40,
+        "rate": 1,
+        "ci": [
+          0.912,
+          1
+        ]
+      },
+      "columns": {
+        "n": 40,
+        "agree": 33,
+        "rate": 0.825,
+        "ci": [
+          0.681,
+          0.913
+        ]
+      },
+      "has_marginalia": {
+        "n": 40,
+        "agree": 33,
+        "rate": 0.825,
+        "ci": [
+          0.681,
+          0.913
+        ]
+      },
+      "has_table": {
+        "n": 40,
+        "agree": 40,
+        "rate": 1,
+        "ci": [
+          0.912,
+          1
+        ]
+      },
+      "has_illustration": {
+        "n": 40,
+        "agree": 38,
+        "rate": 0.95,
+        "ci": [
+          0.835,
+          0.986
+        ]
+      },
+      "page_type_partial": {
+        "n": 171,
+        "agree": 163,
+        "rate": 0.953,
+        "ci": [
+          0.91,
+          0.976
+        ]
+      },
+      "script_confusion": {
+        "printed → printed": 37,
+        "handwritten → handwritten": 1,
+        "mixed → mixed": 1,
+        "printed → mixed": 1
+      },
+      "flag_disagreements": {
+        "has_marginalia": {
+          "descriptor_only": 2,
+          "transcription_only": 5
+        },
+        "has_table": {
+          "descriptor_only": 0,
+          "transcription_only": 0
+        },
+        "has_illustration": {
+          "descriptor_only": 2,
+          "transcription_only": 0
+        }
+      }
+    }
+  },
+  "fallback_rule_check": {
+    "n": 321,
+    "agree": 273,
+    "label_by_fallback": {
+      "print": {
+        "manuscript": 20,
+        "print": 236
+      },
+      "manuscript": {
+        "manuscript": 37,
+        "print": 28
+      }
+    }
   }
 }
