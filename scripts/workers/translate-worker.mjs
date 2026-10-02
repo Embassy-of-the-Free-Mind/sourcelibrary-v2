@@ -41,6 +41,7 @@ import {
   parseBlockTranslations,
   PAGE_BREAK_SCOPED,
   dropLeafSeamBreaches,
+  isEnglishBook,
 } from '../lib/translate-core.mjs';
 import { leafSeamsPreserved } from '../lib/leaf-break.mjs';
 import { unwrapHiddenTranslation } from '../lib/hidden-translation.mjs';
@@ -690,6 +691,18 @@ async function processBook(db, book, job, globalCounter, deadline) {
     console.log(`  [${label}] SAME LANGUAGE: copied ${sameLanguage.length} English page(s) through — no model call (#5154)`);
     const copied = new Set(sameLanguage.map(p => p.id));
     pages.splice(0, pages.length, ...pages.filter(p => !copied.has(p.id)));
+  }
+
+  // An English BOOK is never sent to the model (#4958, #5154 — "no more English-English
+  // translations, just OCR"): whatever the copy step did not take stays as OCR only. The job
+  // ends; the book's pipeline status is left for Phase 4 to route, not advanced here.
+  if (isEnglishBook(book) && pages.length > 0) {
+    console.log(`  [${label}] ENGLISH BOOK: ${pages.length} page(s) left as OCR only — no model call (#5154)`);
+    await db.collection('jobs').updateOne(
+      { id: job.id },
+      { $set: { status: 'completed', updated_at: new Date(), completed_at: new Date(), note: 'english-book: not translated (#5154)' } },
+    );
+    return { translated: 0, failed: 0, completed: 1, inputTokens: 0, outputTokens: 0 };
   }
 
   if (pages.length === 0) {

@@ -59,6 +59,7 @@ import {
   assessTranslationHealth,
   sanitizeTranslationTags,
   isTranslatablePage,
+  sameLanguageReason,
   writePageTranslation,
   syncBookTranslationCounters,
   getTranslateModelForBook,
@@ -148,6 +149,7 @@ export function planNextRound(run, pageDocs) {
     if (p.translation?.data) { dropped.push({ id: r.id, reason: 'already_translated' }); return null; }
     const v = isTranslatablePage(p);
     if (!v.ok) { dropped.push({ id: r.id, reason: `not_translatable:${v.reason}` }); return null; }
+    if (sameLanguageReason({ page: p })) { dropped.push({ id: r.id, reason: 'same_language' }); return null; }
     return p;
   };
   const pending = (run.pending_single || []).map(live).filter(Boolean);
@@ -295,6 +297,7 @@ export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, 
   const book = await db.collection('books').findOne({ id: bookId });
   if (!book) return { ok: false, reason: 'book-not-found' };
   if (isHeld(book)) return { ok: false, reason: `book-held (${book.pipeline_auto.hold.reason})`, book };
+  if (sameLanguageReason({ book })) return { ok: false, reason: 'english-book (not translated, #5154)', book };
   if (book.pipeline_auto?.status === 'translate_submitted') return { ok: false, reason: 'realtime-lane-owns-book (pipeline_auto.status=translate_submitted)', book };
   const open = await db.collection(RUNS_COLLECTION).findOne({ book_id: bookId, phase: { $nin: [...TERMINAL_PHASES, 'written', 'shadow_complete', 'failed'] } });
   if (open) return { ok: false, reason: `open-run ${open.id} (${open.phase})`, book };
@@ -588,7 +591,7 @@ export async function collectRound(db, run, deps, { fetched } = {}) {
   const pageDocs = await loadPageDocs(db, round.pages.map((p) => p.id));
   const pages = round.pages.map((p) => pageDocs.get(p.id)).filter(Boolean);
   const summary = { n: round.n, kind: round.kind, pages: round.pages.length, job: round.job.name, submitted_at: round.job.submitted_at, collected_at: deps.now ? deps.now() : new Date(), written: 0, fallback: 0 };
-  const guardsOk = (p) => contentHash(p.ocr?.data || '') === round.pages.find((x) => x.id === p.id)?.ocr_hash && !p.translation?.data && isTranslatablePage(p).ok;
+  const guardsOk = (p) => contentHash(p.ocr?.data || '') === round.pages.find((x) => x.id === p.id)?.ocr_hash && !p.translation?.data && isTranslatablePage(p).ok && !sameLanguageReason({ book, page: p });
 
   if (round.kind === 'block') {
     const r = answerOf(0);

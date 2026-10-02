@@ -32,6 +32,7 @@ import { resolvePageBreak, lookaheadSnippet, LOOKAHEAD_CLAUSE } from './page-bre
 import { echoedSource } from './page-integrity.mjs';
 import { unwrapHiddenTranslation, hidesPageInMeta, HIDDEN_META_REASON, HIDDEN_META_MIN_WORDS } from './hidden-translation.mjs';
 export { hidesPageInMeta, HIDDEN_META_REASON, HIDDEN_META_MIN_WORDS };
+import { englishSource } from './same-language.mjs';
 import { countLeafBreaks, leafBreakNote, leafUnitsHealth, dropLeafSeamBreaches } from './leaf-break.mjs';
 export { dropLeafSeamBreaches };
 
@@ -188,6 +189,19 @@ export async function loadTranslationPrompts(db) {
 /** English books are modernized, not translated. */
 export function isEnglishBook(book) {
   return (book?.language || '').toLowerCase().trim() === 'english';
+}
+
+/**
+ * Why this page must not go to a translation model, or null (#5154). Derek, 2026-09-30: "I
+ * don't want to do any more English-English translations, just OCR." An English book is never
+ * translated (its reading text is the transcription; modernization is reader-triggered only,
+ * #4958), and an English page inside any book is copied by the realtime worker or skipped by the
+ * batch lanes — never paraphrased. The page test is evidence, not the tag: same-language.mjs.
+ */
+export function sameLanguageReason({ book, page } = {}) {
+  if (isEnglishBook(book)) return 'english-book';
+  if (page && englishSource(page.ocr?.data).english) return 'english-page';
+  return null;
 }
 
 /**
