@@ -28,6 +28,7 @@ ap.add_argument('--max-width', type=int, default=2400, help='the #5547 rule: pag
 ap.add_argument('--max-side', type=int, default=0, help='additionally cap the long side (0 = off)')
 ap.add_argument('--layout', type=int, default=1); ap.add_argument('--backend', default='native')
 ap.add_argument('--server-url', default='http://127.0.0.1:8118/v1'); ap.add_argument('--prefetch', type=int, default=4)
+ap.add_argument('--page-batch', type=int, default=1, help='pages per predict() call (the pipeline batches layout and VLM blocks across them)')
 a = ap.parse_args()
 
 from PIL import Image  # noqa: E402
@@ -89,9 +90,10 @@ def watchdog():
     while True:
         time.sleep(5)
         c = dict(current)
-        if c and time.time() - c['start'] > a.page_timeout:
-            err(c['bid'], c['pn'], f'timeout {a.page_timeout}s')
-            tw(dict(c['rec'], secs=round(time.time() - c['start'], 2), error=f'timeout {a.page_timeout}s (process restarted)'))
+        lim = a.page_timeout * (c.get('rec', {}).get('batch', 1) if c else 1)
+        if c and time.time() - c['start'] > lim:
+            err(c['bid'], c['pn'], f'timeout {lim}s')
+            tw(dict(c['rec'], secs=round(time.time() - c['start'], 2), error=f'timeout {lim}s (process restarted)'))
             os._exit(3)
 threading.Thread(target=watchdog, daemon=True).start()
 
@@ -108,25 +110,39 @@ def blocks_of(res):
         if md: blocks.append(str(md).strip())
     return blocks
 
+def write(bid, pn, text):
+    os.makedirs(os.path.dirname(out(bid, pn, 'txt')), exist_ok=True)
+    open(out(bid, pn, 'txt') + '.part', 'w').write(text); os.replace(out(bid, pn, 'txt') + '.part', out(bid, pn, 'txt'))
+
 done = 0
 while done < len(todo):
     if a.deadline and time.time() > a.deadline: break
-    bid, pn, src, path, size, fsecs, ferr = ready.get()
-    done += 1
-    rec = {'bid': bid, 'pn': pn, 'worker': a.worker, 'fetch_secs': fsecs}
-    if ferr:
-        err(bid, pn, ferr); tw(dict(rec, error=ferr)); continue
-    os.makedirs(os.path.dirname(out(bid, pn, 'txt')), exist_ok=True)
-    s = time.time(); current.update(bid=bid, pn=pn, rec=dict(rec), start=s)
+    batch = []
+    while len(batch) < max(1, a.page_batch) and done < len(todo):
+        item = ready.get(); done += 1
+        bid, pn, src, path, size, fsecs, ferr = item
+        if ferr: err(bid, pn, ferr); tw({'bid': bid, 'pn': pn, 'worker': a.worker, 'fetch_secs': fsecs, 'error': ferr}); continue
+        batch.append(item)
+        if ready.empty() and batch: break   # never hold a ready page back waiting for a full batch
+    if not batch: continue
+    s = time.time()
+    first = batch[0]
+    current.update(bid=first[0], pn=first[1], rec={'bid': first[0], 'pn': first[1], 'worker': a.worker, 'batch': len(batch)}, start=s)
     try:
-        text = '\n'.join(blk for r in pipe.predict(path) for blk in blocks_of(r))
+        results = list(pipe.predict([it[3] for it in batch])) if len(batch) > 1 else list(pipe.predict(batch[0][3]))
         current.clear()
-        open(out(bid, pn, 'txt') + '.part', 'w').write(text); os.replace(out(bid, pn, 'txt') + '.part', out(bid, pn, 'txt'))
-        rec.update(secs=round(time.time() - s, 2), chars=len(text), w=size[0], h=size[1], src=src)
+        secs = round((time.time() - s) / len(batch), 2)
+        for it, r in zip(batch, results):
+            text = '\n'.join(blocks_of(r))
+            write(it[0], it[1], text)
+            tw({'bid': it[0], 'pn': it[1], 'worker': a.worker, 'fetch_secs': it[5], 'secs': secs, 'batch': len(batch), 'chars': len(text), 'w': it[4][0], 'h': it[4][1], 'src': it[2]})
+        if len(results) != len(batch):
+            for it in batch[len(results):]: err(it[0], it[1], 'no result from the pipeline'); tw({'bid': it[0], 'pn': it[1], 'worker': a.worker, 'error': 'no result'})
     except Exception as e:  # noqa: BLE001
-        current.clear(); rec.update(secs=round(time.time() - s, 2), error=str(e)[:200]); err(bid, pn, f'exception: {str(e)[:200]}')
-    try: os.remove(path)
-    except OSError: pass
-    tw(rec)
+        current.clear()
+        for it in batch: err(it[0], it[1], f'exception: {str(e)[:200]}'); tw({'bid': it[0], 'pn': it[1], 'worker': a.worker, 'secs': round(time.time() - s, 2), 'error': str(e)[:200]})
+    for it in batch:
+        try: os.remove(it[3])
+        except OSError: pass
 tw({'event': 'worker-done', 'worker': a.worker, 'at': time.time(), 'pages': done})
 tlog.close()

@@ -73,7 +73,7 @@ push)
 setup)
   $SSH root@"$(ip)" "cd /root/pz && PV_WORK=/root/pz SERVER=${SERVER:-0} bash code/paddle-zh-box.sh setup" 2>&1 | tail -3 | tee -a "$D/driver.log" ;;
 run)
-  $SSH root@"$(ip)" "cd /root/pz && rm -f DONE job.exit && WORKERS=${WORKERS:-2} BACKEND=${BACKEND:-native} CLIENTS=${CLIENTS:-8} MAX_SIDE=${MAX_SIDE:-0} LAYOUT=${LAYOUT:-1} INFER_HOURS=${INFER_HOURS:-6} nohup bash code/idle-poweroff.sh run -- bash -c 'bash code/paddle-zh-box.sh all; echo exit=\$? > /root/pz/job.exit; sleep ${LINGER:-1800}' > /root/pz/idle.log 2>&1 < /dev/null & echo launched" | tee -a "$D/driver.log" ;;
+  $SSH root@"$(ip)" "cd /root/pz && rm -f DONE job.exit && WORKERS=${WORKERS:-2} BACKEND=${BACKEND:-native} CLIENTS=${CLIENTS:-8} MAX_SIDE=${MAX_SIDE:-0} LAYOUT=${LAYOUT:-1} INFER_HOURS=${INFER_HOURS:-6} nohup bash code/idle-poweroff.sh run -- bash -c 'bash code/paddle-zh-box.sh ${MODE:-all}; echo exit=\$? > /root/pz/job.exit; sleep ${LINGER:-1800}' > /root/pz/idle.log 2>&1 < /dev/null & echo launched" | tee -a "$D/driver.log" ;;
 status)
   $SSH root@"$(ip)" 'tail -n 2 /root/pz/box.log 2>/dev/null; echo "txt $(find /root/pz/out -name "*.txt" 2>/dev/null | wc -l)"; cat /root/pz/job.exit 2>/dev/null; ls /root/pz/DONE 2>/dev/null; nvidia-smi --query-gpu=utilization.gpu,memory.used --format=csv,noheader' ;;
 ssh)
