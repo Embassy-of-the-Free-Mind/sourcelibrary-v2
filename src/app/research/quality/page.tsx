@@ -383,7 +383,7 @@ function KeyFindings() {
 }
 
 const CONTENTS: { group: string; items: [string, string][] }[] = [
-  { group: 'Results', items: [['#by-language', 'Quality by language'], ['#error-ladder', 'What an error rate looks like'], ['#engines', 'The engines'], ['#decisions', 'Which engine does what, and why'], ['#at-a-glance', 'Quality by test']] },
+  { group: 'Results', items: [['#by-language', 'Quality by language'], ['#error-ladder', 'What an error rate looks like'], ['#kinds-of-error', 'Kinds of error'], ['#engines', 'The engines'], ['#decisions', 'Which engine does what, and why'], ['#at-a-glance', 'Quality by test']] },
   { group: 'The paper', items: [['#s1', '1. The reader’s question'], ['#s2', '2. Related work'], ['#s3', '3. Transcription'], ['#s4', '4. Translation'], ['#s5', '5. What none of this measures'], ['#s6', '6. The reader panel'], ['#s7', '7. Limitations'], ['#s8', '8. Data and code'], ['#s9', '9. References']] },
 ];
 
@@ -401,6 +401,81 @@ function Contents() {
         </div>
       ))}
     </nav>
+  );
+}
+
+/* ── Kinds of error: the by-eye mechanisms and the judge's defect counts ── */
+// Mechanisms from .claude/docs/page-error-taxonomy.md (by eye, 78 books, 2026-09-25; presence, not rates).
+// The full 44 classes are the companion paper (#5613).
+const MECHANISMS: { name: string; sees: string; links: string; seen: Cover }[] = [
+  { name: 'The model reads what it expects', sees: 'Fluent text over an illegible leaf, a famous passage recited instead of read, old spellings silently modernised, abbreviations expanded wrongly.', links: 'Transcription, and the translation that follows it', seen: 'part' },
+  { name: 'The page is not the leaf', sees: 'Two pages read as one, a strip of the facing page mixed in, text that belongs to the next leaf.', links: 'Leaf', seen: 'part' },
+  { name: 'Page furniture has nowhere to go', sees: 'Running heads, catchwords, footnotes, marginal notes and glosses mixed into the text or lost.', links: 'Transcription', seen: 'no' },
+  { name: 'The page break', sees: 'A sentence cut at the foot of the page and finished, or invented, by the translator. About 30 of 78 page breaks read had a defect.', links: 'Translation', seen: 'no' },
+  { name: 'Two texts on one page', sees: 'A facing or interlinear translation, or a Latin crib beside the Greek, read as one source.', links: 'Transcription and translation', seen: 'no' },
+  { name: 'The model’s own labels are trusted', sees: 'A guessed language, script or page type that then routes the page to the wrong engine or prompt.', links: 'All three', seen: 'part' },
+  { name: 'Display rules are not enforced', sees: 'Unknown or broken tags, a whole translation hidden as a note, markdown that does not render.', links: 'What the reader is shown', seen: 'no' },
+];
+
+// report.json defect_types, 2026-09-30 audit (311 pages, Claude Opus). Counts of defects, not pages.
+const DEFECTS: { type: string; minor: number; major: number }[] = [
+  { type: 'Mistranslation', minor: 153, major: 5 },
+  { type: 'Omission', minor: 44, major: 6 },
+  { type: 'Invention', minor: 33, major: 15 },
+  { type: 'Terminology', minor: 36, major: 2 },
+  { type: 'Garble carried into English', minor: 17, major: 15 },
+  { type: 'Names', minor: 12, major: 0 },
+  { type: 'Inversion', minor: 7, major: 3 },
+  { type: 'Numbers', minor: 6, major: 2 },
+];
+
+function DefectChart() {
+  const max = Math.max(...DEFECTS.map(d => d.minor + d.major));
+  const L = 190, R = 600, rowH = 22, top = 6;
+  const x = (v: number) => (v / max) * (R - L);
+  const H = top + DEFECTS.length * rowH + 4;
+  return (
+    <svg viewBox={`0 0 680 ${H}`} className="w-full h-auto max-w-3xl" role="img" aria-label="Defects the judge flagged on 311 pages, by type, minor and major">
+      {DEFECTS.map((d, i) => {
+        const y = top + i * rowH;
+        return (
+          <g key={d.type}>
+            <title>{`${d.type}: ${d.major} major, ${d.minor} minor`}</title>
+            <text x={L - 10} y={y + 14} textAnchor="end" fontSize="12" fill="var(--text-primary)">{d.type}</text>
+            <rect x={L} y={y + 4} width={Math.max(x(d.major), 0)} height={13} fill="var(--accent-rust)" />
+            <rect x={L + x(d.major)} y={y + 4} width={x(d.minor)} height={13} fill="var(--accent-rust)" fillOpacity="0.3" />
+            <text x={L + x(d.major + d.minor) + 6} y={y + 14} fontSize="11" fill="var(--text-secondary)" className="tabular-nums">{d.major ? `${d.major} major · ` : ''}{d.minor} minor</text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+function MechanismTable() {
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full min-w-[640px] text-sm">
+        <thead>
+          <tr className="border-b border-light text-left text-muted">
+            <th className="py-2 pr-3 font-medium">Mechanism</th>
+            <th className="py-2 pr-3 font-medium">What the reader sees</th>
+            <th className="py-2 pr-3 font-medium">Link it breaks</th>
+            <th className="py-2 font-medium">Measured here?</th>
+          </tr>
+        </thead>
+        <tbody>
+          {MECHANISMS.map(m => (
+            <tr key={m.name} className="border-b border-light align-top">
+              <td className="py-2 pr-3 text-primary font-medium leading-snug">{m.name}</td>
+              <td className="py-2 pr-3 text-secondary leading-snug">{m.sees}</td>
+              <td className="py-2 pr-3 text-secondary leading-snug">{m.links}</td>
+              <td className="py-2 text-secondary whitespace-nowrap"><CoverMark c={m.seen} />{m.seen === 'part' ? 'partly' : 'no'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
@@ -990,6 +1065,18 @@ export default function ResearchQualityPage() {
 
         <Block id="error-ladder" title="What an error rate looks like" lede="A character error rate or a judge rating means little until it is seen. Each rung is a real page from the measurements above, with what that level of error allows a reader to do.">
           <ErrorLadder />
+        </Block>
+
+        <Block id="kinds-of-error" title="Kinds of error" lede="Rates say how often a page goes wrong; this says how. Seven mechanisms account for almost everything found when pages were read by eye against their scans, and the judge’s own defect counts show which translation faults are common.">
+          <MechanismTable />
+          <p className="text-xs text-muted leading-relaxed mt-2 mb-6">
+            From a by-eye reading of 156 pages (two facing pages from each of 78 books, in 13 kinds of book) on 25 September 2026. It found 44 error classes, 30 of them new. Counts there are books in which a class was seen, not rates. &ldquo;Measured here&rdquo; says whether an instrument in this paper sees the mechanism. The full taxonomy, with an example of each class, is a companion paper in preparation (<a href={`${GH_ISSUE}5613`} className="text-accent-rust hover:underline">#5613</a>); until then it is <a href={`${GH}.claude/docs/page-error-taxonomy.md`} className="text-accent-rust hover:underline">in the repository</a>.
+          </p>
+          <h3 className="text-lg text-primary font-semibold mb-2">What the translation judge flagged</h3>
+          <DefectChart />
+          <p className="text-xs text-muted leading-relaxed mt-2">
+            Defects listed by the judge on the 311 audited pages, by type and severity; dark is major, light is minor. A page can carry several, so these are counts of defects, not of pages. Most are minor wording errors. The major ones that matter most to a reader are invention (text not on the page) and garble carried into fluent English.<N n={6} />
+          </p>
         </Block>
 
         <Block id="engines" title="The engines" lede="A page can be read by a commercial model or by an open model trained for one script. These are the readers in use or under test, what each is good at, and how each fails.">
