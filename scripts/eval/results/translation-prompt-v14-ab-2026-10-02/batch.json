@@ -1,0 +1,26 @@
+{
+  "key_env": "GEMINI_API_KEY_TIER3",
+  "estimate_usd": 1.0509257499999995,
+  "generation": {
+    "thinkingBudget": 0,
+    "maxOutputTokens": "maxOutputTokensFor(pages)",
+    "temperature": "default",
+    "safety": "BLOCK_NONE"
+  },
+  "jobs": [
+    {
+      "model": "gemini-3.1-flash-lite",
+      "job_name": "batches/fa2acr13lztfvizl9doqq4te6ujt3zb66qxt",
+      "file_name": "files/uv7vb25ad3yz",
+      "requests": 321,
+      "submitted_at": "2026-10-02T21:37:44.089Z"
+    },
+    {
+      "model": "gemini-3-flash-preview",
+      "job_name": "batches/97dj3ufiah1eep7lpdtdnnyxnya2y10b76zx",
+      "file_name": "files/s8nx99x0hukb",
+      "requests": 84,
+      "submitted_at": "2026-10-02T21:37:52.184Z"
+    }
+  ]
+}
