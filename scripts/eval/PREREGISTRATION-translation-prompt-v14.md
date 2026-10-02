@@ -195,4 +195,12 @@ Before any number is quoted, the five worst v14 #5305 pages by fidelity are read
 
 ## Amendments
 
-(none yet)
+1. **2026-10-02, after the draw, before submit (no arm output exists).** The draw pinned 128 units:
+   flagged **45** (the whole eligible pool; the cap of 60 was never reached), sanskrit 12, pagebreak 25 (19 Latin),
+   control 25, tibetan 16 groups, tibetan-dropped 5. 405 requests (321 Flash-Lite, 84 Flash). **Estimate $1.05**
+   (Batch, 50%). Two facts the rule has to live with, recorded now:
+   - **7 of the 16 Tibetan groups and 1 dropped-leaf page have no seed** (the page before the group has no stored
+     translation), so for them v14 and v14ns send the same prompt. The v14ns-vs-v14 comparison is read on the **9
+     seeded groups** only; the all-group totals are reported beside it.
+   - Only **3 of the 12 Sanskrit pages carry a substantial English share** (≥ 13 English function words); the
+     other 9 are Sanskrit/Devanagari only. The S outcome is read on those 3 by eye, not as a rate.
