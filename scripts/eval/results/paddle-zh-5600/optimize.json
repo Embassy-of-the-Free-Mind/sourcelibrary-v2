@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-02T12:36:28.227Z",
+ "generated_at": "2026-10-02T22:02:56.746Z",
  "gate": {
   "delta": 0.01,
   "catastrophic": 0.02
@@ -41,6 +41,98 @@
    "eur_per_page": 0.000733,
    "gate": "baseline",
    "note": "#5547 pilot throughput (3,422 pages incl. bench; 3.35 s/page on book pages)"
+  },
+  {
+   "arm": "o4000b-c8",
+   "config": "o4000b-c8",
+   "gpu": "RTX PRO 4000 Blackwell",
+   "n": 95,
+   "scored": 88,
+   "missing": 7,
+   "median_cer": 0.211,
+   "delta_vs_base": 0,
+   "catastrophic": 8,
+   "catastrophic_rate": 0.0842,
+   "loops": 0,
+   "empty": 0,
+   "wlt_vs_base": [
+    9,
+    9,
+    70
+   ],
+   "s_per_page": null,
+   "eur_per_page": null,
+   "gate": "FAIL",
+   "note": null
+  },
+  {
+   "arm": "o4000b-c8-1280",
+   "config": "o4000b-c8-1280",
+   "gpu": "RTX PRO 4000 Blackwell",
+   "n": 95,
+   "scored": 95,
+   "missing": 0,
+   "median_cer": 0.205,
+   "delta_vs_base": 0,
+   "catastrophic": 1,
+   "catastrophic_rate": 0.0105,
+   "loops": 0,
+   "empty": 0,
+   "wlt_vs_base": [
+    13,
+    9,
+    73
+   ],
+   "s_per_page": null,
+   "eur_per_page": null,
+   "gate": "PASS",
+   "note": null
+  },
+  {
+   "arm": "o4000b-c8-1600",
+   "config": "o4000b-c8-1600",
+   "gpu": "RTX PRO 4000 Blackwell",
+   "n": 95,
+   "scored": 95,
+   "missing": 0,
+   "median_cer": 0.205,
+   "delta_vs_base": 0,
+   "catastrophic": 1,
+   "catastrophic_rate": 0.0105,
+   "loops": 0,
+   "empty": 0,
+   "wlt_vs_base": [
+    13,
+    8,
+    74
+   ],
+   "s_per_page": null,
+   "eur_per_page": null,
+   "gate": "PASS",
+   "note": null
+  },
+  {
+   "arm": "o4000b-c8-nolayout",
+   "config": "o4000b-c8-nolayout",
+   "gpu": "RTX PRO 4000 Blackwell",
+   "n": 95,
+   "scored": 95,
+   "missing": 0,
+   "median_cer": 0.175,
+   "delta_vs_base": -0.01,
+   "catastrophic": 0,
+   "catastrophic_rate": 0,
+   "loops": 0,
+   "empty": 0,
+   "wlt_vs_base": [
+    69,
+    11,
+    15
+   ],
+   "s_per_page": null,
+   "eur_per_page": null,
+   "gate": "PASS",
+   "note": null
   },
   {
    "arm": "rp4090-native-w2",

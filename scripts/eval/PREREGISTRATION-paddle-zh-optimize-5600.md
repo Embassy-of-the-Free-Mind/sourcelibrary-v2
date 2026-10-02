@@ -105,3 +105,39 @@ per type). Same images, same 100 accuracy pages, same 400-page throughput set, s
 rather than the Scaleway L4, because the L4 was busy with the pilot; `base-repeat` (the recipe on the
 Scaleway L4) remains the A-vs-A floor. Choice rule unchanged, plus: a winner must have had stock at the
 time it was measured and a fallback provider for the run length.
+
+## Amendment — `c-nolayout` confirmation on fresh pages (2026-10-02 ~21:40Z, before any fresh page is read)
+
+On the 100 accuracy pages the no-layout arm (`o4000b-c8-nolayout`: vLLM c8, `use_layout_detection=False`,
+RTX PRO 4000 Blackwell) passed the gate and scored *better* than base (median CER 0.175 vs 0.205,
+catastrophic 0/95, W/L/T 69/11/15). Those 95 pages chose the arm, and the Kanripo references omit the
+margin text (版心, the fold strip 欽定四庫全書, juan title, leaf number), so an arm that simply drops the
+margins scores a lower CER without reading the body any better. Before the fleet adopts it:
+
+**Fresh sample.** From the same pool as the original draw (sealed `chinese-cohort-5547`, cohort `held`,
+eye `manuscript-regular`, non-empty reference), minus the 100 pages already drawn, minus every book in the
+#5547 pilot (`/root/paddle-zh-5600/pilot-books.txt`) and every book the #5600 fleet has applied
+(`applied-books.jsonl`) — if that leaves fewer than 100, the fleet exclusion is dropped and the overlap is
+reported. Slug-sorted, `makeRng(56001)`, without replacement, **100 pages** (or the whole remainder if fewer).
+`paddle-zh-5600-optimize.mjs sample --fresh` writes `results/paddle-zh-5600/sample-fresh.json`.
+
+**Arms on the fresh pages,** same pod, same images (≤ 2,400 px wide), vLLM server c8: `layout-on` (the fleet
+recipe) and `nolayout` (`LAYOUT=0`). `base` (#5547 Paddle outputs) and the two Gemini anchors are scored
+alongside, as before.
+
+**Body recall** (new, reported for every arm on both page sets): per page, the share of reference
+characters the reading contains, order-free — Σ_c min(n_hyp(c), n_ref(c)) / |ref|, after the scorer's own
+CJK normalisation (variant folding, Han/kana only, 6,000-char cap). Insensitive to extra margin text by
+construction; it falls only when body text is missing or misread.
+
+**Adoption rule for `LAYOUT=0` in the fleet** — all four, on the FRESH pages, against `layout-on`:
+1. median per-page Δ CER (nolayout − layout-on) **≤ 0**;
+2. catastrophic pages (CER > 0.5 or no output) **≤ layout-on's**;
+3. median body recall **≥ layout-on's − 0.01**;
+4. by eye (`read-from-image`, 5 pages of the original 95: 2 of the largest no-layout wins, 1 loss,
+   2 random): **no body text dropped** — margin text (header strip, juan title, leaf number) dropped is
+   recorded as a reader-facing loss, not as a body loss.
+
+If any fails, the fleet keeps the layout stage. Whatever the verdict, already-written pages are not re-read;
+an adopted change applies to chunks not yet queued, and each page records `ocr.engine.serving.layout`.
+Budget for this step: ≤ $5 RunPod.
