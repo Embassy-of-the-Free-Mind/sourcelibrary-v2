@@ -419,8 +419,8 @@ const TYPEFACE = process.argv.includes('--typeface');
 const TYPEFACE_CEILING = 25;
 const TYPEFACE_METER = 200;
 // An image server that answers 429 to bursts (the BSB did, to most requests, at concurrency 8 in
-// the typeface pass) is asked last and more gently; everything else runs first at full speed.
-const GENTLE_HOSTS = { 'api.digitale-sammlungen.de': 2 };
+// the typeface pass) is asked last, one request at a time; everything else runs first at full speed.
+const GENTLE_HOSTS = { 'api.digitale-sammlungen.de': 1 };
 const PROFILE_CONCURRENCY = 8;
 const CJK_LANG = /chinese|japanese|korean|kanbun|tibetan/i;
 // Share of letters in Han, kana, Hangul or Tibetan blocks, over the first 4,000 characters.
