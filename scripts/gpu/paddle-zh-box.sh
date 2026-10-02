@@ -79,10 +79,17 @@ arm() {
   mkdir -p "$R"; ln -sfn "$W/bench/img" "$R/img"
   serve
   local t0; t0=$(date +%s.%N)
+  # a runner exits 3 on a wedged page (its .err is written); restart it like infer does, at most 5 times,
+  # so one slow page does not halve an arm's runners (measured 2026-10-02: a fresh pod's first page compiles
+  # kernels for > 90 s, and the un-restarted runner took half the throughput set with it)
   for i in $(seq 0 $((WORKERS - 1))); do
-    "$W/venv/bin/python" "$HERE/paddle-zh-run.py" --manifest "$M" --root "$R" --worker "$i" --workers "$WORKERS" \
-      --page-timeout "${PAGE_TIMEOUT:-90}" --max-side "${MAX_SIDE:-0}" --layout "${LAYOUT:-1}" --backend "$BACKEND" \
-      --prefetch "${PREFETCH:-4}" --page-batch "${PAGE_BATCH:-1}" >> "$R/worker-$i.log" 2>&1 &
+    ( for k in 1 2 3 4 5 6; do
+        "$W/venv/bin/python" "$HERE/paddle-zh-run.py" --manifest "$M" --root "$R" --worker "$i" --workers "$WORKERS" \
+          --page-timeout "${PAGE_TIMEOUT:-90}" --max-side "${MAX_SIDE:-0}" --layout "${LAYOUT:-1}" --backend "$BACKEND" \
+          --prefetch "${PREFETCH:-4}" --page-batch "${PAGE_BATCH:-1}" >> "$R/worker-$i.log" 2>&1 && break
+        [ $? = 3 ] || break
+        echo "$(date -u +%FT%TZ) arm $name worker $i exited 3 — restart $k" >> "$W/box.log"
+      done ) &
   done
   wait || true
   local t1; t1=$(date +%s.%N)

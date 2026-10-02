@@ -150,6 +150,11 @@ function feed(box) {
     fs.rmSync(tmp, { force: true });
     if (r2.status !== 0) { log(`${box}: push ${n} FAILED ${(r2.stderr || '').slice(-200)}`); break; }
     Object.assign(S.chunks[n], { box, status: 'assigned', assigned_at: new Date().toISOString() });
+    // the lane's apply names the box a page was read on (ocr.engine.run/host/gpu, from boxes/<box>/box.json)
+    // by assign.json — without it every page says `unknown-box` (caught on the pilot, 2026-10-02)
+    const af = path.join(DIR, 'assign.json'), assign = readJson(af, {});
+    for (const [bid] of chunkRows(n)) assign[bid] = box;
+    fs.writeFileSync(af + '.tmp', JSON.stringify(assign)); fs.renameSync(af + '.tmp', af);
     log(`${box}: queued ${n} (${S.chunks[n].rows} rows)`); save();
   }
 }
