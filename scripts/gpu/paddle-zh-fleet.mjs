@@ -209,6 +209,14 @@ function tend(box) {
   b.ssh_fail = 0;
   if (!DRY && !isPod(box)) gpu(box, 'lease', [String(LEASE_H)], { timeout: 120 });
   if (!DRY) gpu(box, isPod(box) ? 'pullout' : 'pull', isPod(box) ? [F.out, path.join(F.boxes, box)] : [F.out], { timeout: 1800 });
+  // a box.json without the weights hash (written before the server fetched them) would put `revision: not_recorded`
+  // on every page applied from this box: re-collect on the box, with its serving env, before this cycle's apply
+  const bj = readJson(path.join(F.boxes, box, 'box.json'), {});
+  if (!DRY && bj.host && !bj.weights_sha256) {
+    gpu(box, 'ssh', [`cd /root/pz && ${isPod(box) ? 'BACKEND=server CLIENTS=8' : BOX_ENV} PV_WORK=/root/pz bash code/paddle-zh-box.sh collect > /dev/null 2>&1 || true`], { timeout: 900 });
+    gpu(box, isPod(box) ? 'pullout' : 'pull', isPod(box) ? [F.out, path.join(F.boxes, box)] : [F.out], { timeout: 1800 });
+    log(`${box}: box.json had no weights hash — re-collected (${readJson(path.join(F.boxes, box, 'box.json'), {}).weights_sha256 ? 'now recorded' : 'STILL MISSING'})`);
+  }
   const n = +(gpu(box, 'ssh', ['find /root/pz/out -name "*.txt" -o -name "*.err" | wc -l'], { timeout: 120 }).out.split('\n').pop() || 0);
   const job = gpu(box, 'ssh', ['cat /root/pz/job.exit 2>/dev/null; ls /root/pz/queue 2>/dev/null | grep -c "\\.tsv$"'], { timeout: 60 }).out;
   const hasWork = Object.values(S.chunks).some(c => c.box === box && c.status === 'assigned');
