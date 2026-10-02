@@ -24,7 +24,7 @@
 //       scripts/eval/output/page-descriptors-5623.json and only missing pages are called. $3 ceiling.
 //   --corpus-profile [--describe]   instead: one page per visible book, corpus-wide (#5643); see
 //       "corpus page profile" below. $10 ceiling.
-//   --corpus-profile --typeface [--describe]   the typeface extension (#5643): the descriptor on every
+//   --corpus-profile --typeface [--describe] [--skip-gentle]   the typeface extension (#5643): the descriptor on every
 //       picked page with OCR, and the descriptor's page type and flags used everywhere. $25 ceiling.
 
 import fs from 'node:fs';
@@ -542,7 +542,9 @@ async function profileDescribe(base) {
   };
   const limitArg = process.argv.find((a) => a.startsWith('--limit='));
   const hostOf = (t) => { try { return new URL(t.image_url).host; } catch { return ''; } };
-  const run = todo.slice(0, limitArg ? Number(limitArg.slice(8)) : Infinity).sort((x, y) => (hostOf(x) in GENTLE_HOSTS) - (hostOf(y) in GENTLE_HOSTS));
+  // --skip-gentle leaves those hosts' pages for a later run (they stay unknown until then).
+  const skipGentle = process.argv.includes('--skip-gentle');
+  const run = todo.filter((t) => !(skipGentle && hostOf(t) in GENTLE_HOSTS)).slice(0, limitArg ? Number(limitArg.slice(8)) : Infinity).sort((x, y) => (hostOf(x) in GENTLE_HOSTS) - (hostOf(y) in GENTLE_HOSTS));
   const out = fs.createWriteStream(dFile, { flags: 'a' });
   let n = 0;
   let metered = passCalls >= TYPEFACE_METER;
