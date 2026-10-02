@@ -292,7 +292,11 @@ if (allCut && open === 0) {
   for (const b of live()) { gpu(b, 'ssh', ['touch /root/pz/queue/FINISH']); deleteBox(b, 'all chunks read'); }
   const st = JSON.parse(spawnSync('node', [LANE, 'status', '--dir', DIR], { encoding: 'utf8' }).stdout || '{}');
   sp = spend();
-  comment('done', `**DONE — #5600 Paddle fleet.** Books applied ${st.books_applied} of ${st.books_planned} planned; pages read ${st.pages_read} (box errors ${st.pages_box_error}), written ${st.pages_written}, refused ${st.pages_refused}, skipped ${JSON.stringify(st.skipped_by_reason)}. QA screen (Kanripo WYG, Dice < 0.6): ${st.qa?.flagged}/${st.qa?.screened} flagged = ${st.qa?.rate}. Skipped duplicates: ${st.dedup?.skip_books} books / ${st.dedup?.skip_pages} pages (\`${DIR}/skipped-duplicates.tsv\`). GPU spend €${sp.eur}. Every box deleted. Books stay held (\`paddle-zh-5600-ocr-only\`) — translation is its own decision. Log: \`${F.log}\`.`);
+  // where the QA flags sit: a few books (a wrong Kanripo witness, a dictionary layout) carry most of them
+  const byBook = {};
+  for (const l of readText(path.join(DIR, 'qa-flagged.jsonl')).split('\n').filter(Boolean)) { try { const x = JSON.parse(l); byBook[x.title || x.bid] = (byBook[x.title || x.bid] || 0) + 1; } catch { /* partial line */ } }
+  const top = Object.entries(byBook).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([t, n]) => `${t} ${n}`).join('; ');
+  comment('done', `**DONE — #5600 Paddle fleet.** Books applied ${st.books_applied} of ${st.books_planned} planned; pages read ${st.pages_read} (box errors ${st.pages_box_error}), written ${st.pages_written}, refused ${st.pages_refused}, skipped ${JSON.stringify(st.skipped_by_reason)}. QA screen (Kanripo WYG, Dice < 0.6): ${st.qa?.flagged}/${st.qa?.screened} flagged = ${st.qa?.rate}; ${Object.keys(byBook).length} books have a flag, the most-flagged: ${top}. Skipped duplicates: ${st.dedup?.skip_books} books / ${st.dedup?.skip_pages} pages (\`${DIR}/skipped-duplicates.tsv\`). GPU spend €${sp.eur}. Every box and pod deleted (Scaleway €${sp.scw}, RunPod €${sp.runpod}${PRIOR_EUR ? `, prior €${PRIOR_EUR}` : ''}). ${st.books_planned} books stay held (\`paddle-zh-5600-ocr-only\`) — translation is its own decision. Log: \`${F.log}\`.`);
   S.status = 'done'; save();
   process.exit(0);
 }
