@@ -178,7 +178,7 @@ export function buildReport(rows, { now, openJobs, scope = 'corpus' }) {
   const shapeCounts = {};
   const shapeSamples = {};
   const agreement = { compared: 0, disagree: 0, fresh: 0, stale: 0, unstored: 0, transitions: {}, samples: [] };
-  let live = 0, needsHumanLive = 0, blockedNoRecheck = 0, sample = null;
+  let live = 0, needsHumanLive = 0, blockedNoRecheck = 0, sample = null, agreeing = 0;
 
   for (const b of rows) {
     const id = b.id ?? String(b._id);
@@ -216,7 +216,7 @@ export function buildReport(rows, { now, openJobs, scope = 'corpus' }) {
       const key = `${c.stored ? `${c.stored.step}:${c.stored.reason}` : '(unstamped)'} → ${step}:${c.fresh.reason}`;
       agreement.transitions[key] = (agreement.transitions[key] ?? 0) + 1;
       if (!c.recent && agreement.samples.length < 20) agreement.samples.push({ id, stored: c.stored ? `${c.stored.step}:${c.stored.reason}` : null, recomputed: `${step}:${c.fresh.reason}` });
-    } else if (!sample && c.stored) sample = b;
+    } else if (c.stored && Math.random() * ++agreeing < 1) sample = b; // reservoir: a uniform agreeing book
   }
 
   const positive = positiveControl(sample, { ...opts, openJob: sample ? (openJobs.get(sample.id ?? String(sample._id)) ?? null) : null });
