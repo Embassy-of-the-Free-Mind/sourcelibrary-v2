@@ -252,19 +252,19 @@ function grow() {
   const shortMin = (Date.now() - S.scw_short_since) / 60000;
   const pods = live.filter(([b]) => isPod(b)).length;
   if (shortMin < RUNPOD_AFTER_MIN || pods >= MAX_PODS || !process.env.RUNPOD_API_KEY) return log(`no Scaleway ${TYPE} in ${ZONES.join('/')} (short ${shortMin.toFixed(0)} min; RunPod overflow after ${RUNPOD_AFTER_MIN} min, ${pods}/${MAX_PODS} pods${process.env.RUNPOD_API_KEY ? '' : ', RUNPOD_API_KEY not set'})`);
-  const pod = `p${String(S.next_box).padStart(2, '0')}`;
-  S.next_box++; save();
   for (const [g, cloud] of POD_GPUS) {
-    S.boxes[pod] = { status: 'creating', provider: 'runpod' };
+    // one name (and ledger dir) per attempt: a pod that billed and then failed ssh keeps its own created-at
+    const pod = `p${String(S.next_box).padStart(2, '0')}`;
+    S.next_box++;
+    S.boxes[pod] = { status: 'creating', provider: 'runpod' }; save();
     const c = gpu(pod, 'create', [], { env: { GPU: g, CLOUD: cloud, MINUTES: String(POD_MINUTES) }, timeout: 1200 });
-    if (!c.ok) { log(`${pod}: RunPod ${g} ${cloud}: ${c.out.split('\n').pop().slice(0, 200)}`); if (fs.existsSync(path.join(DIR, 'runpod-pods', pod, 'pod-id'))) gpu(pod, 'terminate', [], { timeout: 300 }); continue; }
+    if (!c.ok) { log(`${pod}: RunPod ${g} ${cloud}: ${c.out.split('\n').pop().slice(0, 200)}`); if (fs.existsSync(path.join(DIR, 'runpod-pods', pod, 'pod-id'))) gpu(pod, 'terminate', [], { timeout: 300 }); S.boxes[pod].status = 'deleted'; save(); continue; }
     const t0 = +readText(path.join(DIR, 'runpod-pods', pod, 'created-at'));
     S.boxes[pod] = { status: 'live', provider: 'runpod', type: `${g} ${cloud}`, started: t0, deadline: (t0 + POD_MINUTES * 60) * 1000 }; save();
     log(`${pod}: RunPod ${g} ${cloud} (Scaleway short ${shortMin.toFixed(0)} min); ${startBox(pod, { ...env, CLIENTS: '8' })}`);
     feed(pod);
     return;
   }
-  delete S.boxes[pod]; save();
 }
 
 // ── the cycle ──────────────────────────────────────────────────────────────────────────────────────────────
