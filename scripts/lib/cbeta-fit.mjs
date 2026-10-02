@@ -101,6 +101,7 @@ export function extractTei(xml, gaiji) {
   let out = '';
   const lbs = [];
   const juans = [];
+  const juanCloses = [];   // text ranges of <cb:juan fun="close"> (the juan's closing title)
   const stack = [];       // open element names, to match closes to SKIP / note
   let skipDepth = 0;
   let unresolvedGaiji = 0;
@@ -110,12 +111,19 @@ export function extractTei(xml, gaiji) {
   let m;
   while ((m = re.exec(body))) {
     const [, close, name, attrs, selfClose, txt] = m;
-    if (txt != null) { emit(decode(txt).replace(/[ \t\r\n]+/g, '')); continue; }
+    if (txt != null) {
+      let t = decode(txt).replace(/[ \t\r\n]+/g, '');
+      // CBETA's own document numbers inside a head ("No. 1382-B 大丞相游公祭文") are not printed.
+      if (stack.length && stack[stack.length - 1].name === 'head') t = t.replace(/^No\.\d+[A-Za-z0-9-]*/, '');
+      emit(t);
+      continue;
+    }
     if (close) {
       const open = stack.pop();
       if (!open) continue;
       if (open.skip) skipDepth--;
       if (open.name === 'note' && !open.skip) emit('）');
+      if (open.closeFrom != null) juanCloses.push({ from: open.closeFrom, to: out.length });
       if (BLOCK.has(open.name)) newline();
       continue;
     }
@@ -133,12 +141,12 @@ export function extractTei(xml, gaiji) {
     if (selfClose) { if (name === 'pb' || name === 'anchor') continue; if (BLOCK.has(name)) newline(); continue; }
     let skip = SKIP.has(name);
     if (name === 'note') skip = !/place="inline/.test(attrs);
-    stack.push({ name, skip });
+    stack.push({ name, skip, ...(name === 'cb:juan' && /fun="close"/.test(attrs) && !skipDepth ? { closeFrom: out.length } : {}) });
     if (skip) { skipDepth++; continue; }
     if (name === 'note') emit('（');
     if (BLOCK.has(name)) newline();
   }
-  return { text: out.replace(/\n{2,}/g, '\n').trim(), lbs, juans, title, author, unresolvedGaiji };
+  return { text: out, lbs, juans, juanCloses, title, author, unresolvedGaiji };
 }
 
 /** The value in force at text offset `at` from a change-point list ({at, …}), by binary search. */
@@ -249,6 +257,9 @@ export function locate(R, F, idx, { hint = null, window = 30000, maxOcc = 40, mi
  *    them (see `slack`), and the gap is recorded on the boundary (variant_gap).
  *  - v5: an edge column must also lie inside the text frame horizontally (margin labels refused).
  *  - v6: between two anchored pages a boundary needs a vote from each side of the break (see fitBook).
+ *  - v7: a juan's closing line (CBETA <cb:juan fun="close">) is glued to the text it closes; CBETA's
+ *    document numbers in heads (No. 1382-B) are dropped from the text.
+ *  - v8: a variant gap that is a whole line of the typed text (a heading) opens the later page.
  *  - v4 edge columns are chosen by GEOMETRY (`edgeColumn`): a column that starts at the frame top,
  *    however short — a paragraph's last line is a real edge column, a margin label is not.
  *
@@ -262,7 +273,7 @@ export function locate(R, F, idx, { hint = null, window = 30000, maxOcc = 40, mi
  *    short for the read (lengthRatio).
  */
 export const FIT_RULES = Object.freeze({
-  version: 6,
+  version: 8,
   anchorIdentity: 0.5, anchorMin: 40,
   minIdentity: 0.6, minCoverage: 0.6, minMargin: 0.3,
   lengthRatio: [0.6, 1.7],
@@ -388,7 +399,7 @@ export function decideVotes(votes) {
  * @returns {{ pages: object[], boundaries: object[] }}  per page { anchor, span|null, why? };
  *   per boundary i (between page i and i+1) { position|null, votes, needs: ['i:last', 'i+1:first'] }
  */
-export function fitBook(pages, F, idx, structural = [0, F.length], evidence = new Map(), rules = FIT_RULES) {
+export function fitBook(pages, F, idx, structural = [0, F.length], evidence = new Map(), rules = FIT_RULES, glue = [], lineStarts = null) {
   const loc = [];
   let hint = null;
   for (const p of pages) {
@@ -468,13 +479,20 @@ export function fitBook(pages, F, idx, structural = [0, F.length], evidence = ne
       const g = votes.first - votes.last;
       const top = slack(i + 1, 'first', first.col), foot = slack(i, 'last', last.col);
       const roomTop = top != null && top >= g - 0.5, roomFoot = foot != null && foot >= g - 0.5;
-      if (roomTop && !roomFoot) { position = votes.last; variantGap = { chars: g, placed: 'later-page-unread', top: +top.toFixed(2) }; }
+      // v8: a gap that is a whole line of the typed text (a heading, a title) opens the later page:
+      // an indented heading is not taken as an edge column, so the column geometry cannot see it.
+      if (lineStarts && lineStarts.has(votes.last) && lineStarts.has(votes.first)) { position = votes.last; variantGap = { chars: g, placed: 'heading-line' }; }
+      else if (roomTop && !roomFoot) { position = votes.last; variantGap = { chars: g, placed: 'later-page-unread', top: +top.toFixed(2) }; }
       else if (roomFoot && !roomTop) { position = votes.first; variantGap = { chars: g, placed: 'earlier-page-unread', foot: +foot.toFixed(2) }; }
       else if (!roomTop && !roomFoot && top != null && foot != null) { position = votes.first; variantGap = { chars: g, placed: 'absent-from-print', top: +top.toFixed(2), foot: +foot.toFixed(2) }; }
     }
     const needs = [];
     if (position == null) { if (A && !evidence.has(`${i}:last`) && last.line != null) needs.push(`${i}:last`); if (B && !evidence.has(`${i + 1}:first`) && first.line != null) needs.push(`${i + 1}:first`); }
-    boundaries.push({ position, gap, votes: variantGap ? { ...votes, variant_gap: variantGap } : votes, needs, why: position == null ? 'votes-disagree' : null });
+    // v7: a juan's closing line stays with the text it closes (the print sets it at the foot of
+    // that text; a boundary that falls inside or just before it moves to its end).
+    let glued = null;
+    if (position != null) for (const g of glue) if (position >= g.from && position < g.to) { glued = position; position = g.to; break; }
+    boundaries.push({ position, gap, votes: { ...(variantGap ? { ...votes, variant_gap: variantGap } : votes), ...(glued != null ? { glued_from: glued } : {}) }, needs, why: position == null ? 'votes-disagree' : null });
   }
   const B = (i) => boundaries[i + 1];   // boundary after page i (i = -1 → before page 0)
   const out = loc.map((a, i) => {

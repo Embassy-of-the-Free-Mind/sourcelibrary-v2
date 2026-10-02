@@ -14,13 +14,32 @@ const XML = `<TEI><teiHeader><title level="m" xml:lang="zh-Hant">測試錄</titl
 describe('cbeta-fit extractTei', () => {
   const ex = extractTei(XML, GAIJI);
   it('keeps the printed text and the inline note; drops the TOC, the work number, editorial notes and variant readings', () => {
-    expect(ex.text).toBe('測試錄序\n屈㫬相傳。問廁編聯（楦釀二字出唐）亦用簡別。采擷。〔[日*旬]〕');
+    expect(ex.text.replace(/\n{2,}/g, '\n').trim()).toBe('測試錄序\n屈㫬相傳。問廁編聯（楦釀二字出唐）亦用簡別。采擷。〔[日*旬]〕');
     expect(ex.title).toBe('測試錄');
     expect(ex.unresolvedGaiji).toBe(1);
   });
   it('records the Taishō line in force at each offset, and the juan', () => {
     expect(ex.lbs.map((l) => l.lb)).toEqual(['0001a01', '0001a02', '0001a03']);
     expect(ex.juans).toEqual([{ at: 0, n: 1 }]);
+  });
+});
+
+describe('cbeta-fit extractTei — X-canon heads and juan closes', () => {
+  const X = `<TEI><text><body><lb ed="X" n="0274b23"/><p>到利袖僧。</p><cb:juan fun="close" n="005"><cb:jhead>卷第五（終）</cb:jhead></cb:juan>
+<lb ed="X" n="0274c02"/><cb:div type="xu"><cb:mulu type="序" level="1">No. 1382-B 大丞相游公祭文</cb:mulu><head>No. 1382-B
+<lb ed="X" n="0274c03"/><lb ed="R121" n="0961a01"/> 大丞相游公祭文</head></cb:div></body></text></TEI>`;
+  const ex = extractTei(X, {});
+  it('drops CBETA document numbers from heads and keeps the head', () => {
+    expect(ex.text).not.toMatch(/No\./);
+    expect(ex.text).toContain('大丞相游公祭文');
+  });
+  it('records the juan-closing line as a range, at the offsets the text really has', () => {
+    expect(ex.juanCloses).toHaveLength(1);
+    const g = ex.juanCloses[0];
+    expect(ex.text.slice(g.from, g.to).trim()).toBe('卷第五（終）');
+  });
+  it('keeps only the base edition line numbers (ed="R121" is a cross-reference)', () => {
+    expect(ex.lbs.map((l) => l.lb)).toEqual(['0274b23', '0274c02', '0274c03']);
   });
 });
 

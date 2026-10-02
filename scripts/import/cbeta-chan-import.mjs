@@ -143,6 +143,36 @@ const TEXTS = {
     title: '無文道燦禪師語錄', english: 'Recorded Sayings of Chan Master Wuwen Daocan', author: '無文道燦 (Wuwen Daocan); 惟康 (Weikang), comp.',
     source: ndl(['2545279'], 'Song print (宋刊), bound with 無文印', null),
   },
+  T1995: {
+    cbeta: 'T1995', xml: 'T/T47/T47n1995.xml', canonRef: 'T47n1995', work_id: 'kr:KR6q0058',
+    title: '法演禪師語錄', english: 'Recorded Sayings of Chan Master Fayan (Wuzu Fayan)', author: '五祖法演 (Wuzu Fayan); 才良 (Cailiang) et al., comp.',
+    source: ndl(['2537792'], '舒州白雲山海會演和尚語録, preface 文政12 [1829]', 1829),
+  },
+  X1333: {
+    cbeta: 'X1333', xml: 'X/X69/X69n1333.xml', canonRef: 'X69n1333', work_id: 'kr:KR6q0271',
+    title: '雪峰義存禪師語錄', english: 'Recorded Sayings of Chan Master Xuefeng Yicun', author: '雪峰義存 (Xuefeng Yicun)',
+    source: ndl(['2537758'], '福州雪峯東山和尚語録, Edo movable-type edition (江戸活字印)', null),
+  },
+  X1382: {
+    cbeta: 'X1382', xml: 'X/X70/X70n1382.xml', canonRef: 'X70n1382', work_id: 'kr:KR6q0315',
+    title: '無準師範禪師語錄', english: 'Recorded Sayings of Chan Master Wuzhun Shifan', author: '無準師範 (Wuzhun Shifan)',
+    source: ndl(['2543478', '2543479', '2543480', '2543481'], 'Gozan edition (五山版), 應安3 [1370]', 1370),
+  },
+  X1400: {
+    cbeta: 'X1400', xml: 'X/X70/X70n1400.xml', canonRef: 'X70n1400', work_id: 'kr:KR6q0333',
+    title: '高峰原妙禪師語錄', english: 'Recorded Sayings of Chan Master Gaofeng Yuanmiao', author: '高峰原妙 (Gaofeng Yuanmiao)',
+    source: ndl(['2537646'], '高峰大師語録, 明暦3 [1657]', 1657),
+  },
+  X1403: {
+    cbeta: 'X1403', xml: 'X/X70/X70n1403.xml', canonRef: 'X70n1403', work_id: 'kr:KR6q0336',
+    title: '天如惟則禪師語錄', english: 'Recorded Sayings of Chan Master Tianru Weize', author: '天如惟則 (Tianru Weize)',
+    source: ndl(['2559585', '2559586', '2559587', '2559588'], '師子林天如和尚語録, Edo-period edition', null),
+  },
+  X1420: {
+    cbeta: 'X1420', xml: 'X/X71/X71n1420.xml', canonRef: 'X71n1420', work_id: 'kr:KR6q0353',
+    title: '楚石梵琦禪師語錄', english: 'Recorded Sayings of Chan Master Chushi Fanqi', author: '楚石梵琦 (Chushi Fanqi)',
+    source: ndl(['2559910', '2559911', '2559912', '2559913', '2559914'], '佛日普照慧辯楚石禪師語録, Edo-period edition', null),
+  },
   // ── mode 1: books we already hold ──
   T2003N: {
     cbeta: 'T2003', xml: 'T/T48/T48n2003.xml', canonRef: 'T48n2003', work_id: null,
@@ -158,6 +188,16 @@ const TEXTS = {
     cbeta: 'X1565', xml: 'X/X80/X80n1565.xml', canonRef: 'X80n1565', work_id: null,
     title: '五燈會元', english: 'Compendium of the Five Lamps', author: '普濟 (Puji)',
     source: { kind: 'held', reader: 'gemini', books: ['6a3cc1baec254ff6cae0e99d', '6a3cc1bdec254ff6cae0eaf8', '6a3cc1bbf9474f825c172777', '6a3cc1beec254ff6cae0ebb5', '6a3cc1c1ec254ff6cae0edc2', '6a3cc1bfec254ff6cae0ec64', '6a3cc1c0ec254ff6cae0ecff', '6a3cc1c2ec254ff6cae0ee53', '6a3cc1c3ec254ff6cae0ef14', '6a3cc1c7ec254ff6cae0f042', '6a3cc1cbf9474f825c17281e', '6a3cc1c6ec254ff6cae0ef7f', '6a3cc1ccec254ff6cae0f113', '6a3cc1ccf9474f825c1728bb', '6a3cc1cff9474f825c17296e', '6a3cc1d0f9474f825c172a4b', '6a3cc1d1f9474f825c172bb9', '6a3cc1d0f9474f825c172a4c', '6a3cc1d4f9474f825c172c59', '6a3cc1d6f9474f825c172e49'], edition: 'IA/CADAL 五燈會元 (20 vols)', rights: 'Internet Archive, publicdomain (already held)' },
+  },
+  X1319: {
+    cbeta: 'X1319', xml: 'X/X68/X68n1319.xml', canonRef: 'X68n1319', work_id: null,
+    title: '御選語錄', english: 'Imperially Selected Recorded Sayings', author: '雍正帝 (Yongzheng Emperor), sel.',
+    source: { kind: 'held', reader: 'gemini', books: ['6a3c6ccbc4e8626320dbb9ae'], edition: 'Wuyingdian, 雍正11 [1733] (Harvard-Yenching, already held)', rights: 'already held' },
+  },
+  T1998L: {
+    cbeta: 'T1998A', xml: 'T/T47/T47n1998A.xml', canonRef: 'T47n1998A', work_id: null,
+    title: '大慧普覺禪師語錄', english: 'Recorded Sayings of Chan Master Dahui Pujue', author: '大慧宗杲',
+    source: { kind: 'held', reader: 'gemini', books: ['69bd0aecb01b17638a0982dd'], edition: '1585 (Library of Congress, already held)', rights: 'already held' },
   },
   X1318: {
     cbeta: 'X1318', xml: 'X/X68/X68n1318.xml', canonRef: 'X68n1318', work_id: 'kr:KR6q0265',
@@ -211,7 +251,12 @@ async function loadText() {
   const { f: F, map } = foldHan(ex.text);
   const toF = (at) => { let lo = 0, hi = map.length; while (lo < hi) { const m = (lo + hi) >> 1; if (map[m] < at) lo = m + 1; else hi = m; } return lo; };
   const structural = [...new Set([0, F.length, ...ex.juans.map((j) => toF(j.at))])].sort((a, b) => a - b);
-  return { sha, msha, ex, F, map, structural };
+  // F ranges of each juan-closing line, from 1 character before it (a boundary AT its start is the case to catch).
+  const glue = ex.juanCloses.map((g) => ({ from: toF(g.from), to: toF(g.to) })).filter((g) => g.to > g.from);
+  // F offsets where a line of the typed text begins (and the end of the text): a heading is a whole line.
+  const lineStarts = new Set([F.length]);
+  for (let i = 0; i < F.length; i++) { const at = map[i]; const prevNl = ex.text.lastIndexOf('\n', at - 1); const between = ex.text.slice(prevNl + 1, at); if (!/[\p{Script=Han}〇]/u.test(between)) lineStarts.add(i); }
+  return { sha, msha, ex, F, map, structural, glue, lineStarts };
 }
 
 // ── scan sources ───────────────────────────────────────────────────────────
@@ -254,8 +299,9 @@ const PAGE_PROMPT = 'This is one page (or an opened spread) of a classical Chine
 
 async function pageRead(p, cache) {
   if (cache[p.pageId]) return cache[p.pageId];
-  const img = Buffer.from(await (await fetchRetry(p.photo)).arrayBuffer());
-  let r;
+  let r, img;
+  try { img = Buffer.from(await (await fetchRetry(p.photo)).arrayBuffer()); }
+  catch (e) { return { text: '', finish: `error: image ${String(e.message).slice(0, 100)}`, usd: 0 }; }   // not cached: retried next run
   try {
     r = await callGemini({ model: PAGE_MODEL, prompt: PAGE_PROMPT, imageParts: [img], endpoint: 'scripts/import/cbeta-chan-import.mjs', type: 'ocr', triggeredBy: 'cbeta-chan-5566 verification read', bookId: p.bookId, pageIds: [p.pageId], maxOutputTokens: 3000 });
   } catch (e) { r = { text: '', finishReason: `error: ${String(e.message).slice(0, 120)}`, inputTokens: 0, outputTokens: 0 }; }
@@ -349,12 +395,12 @@ async function edgeRead(p, col, cache) {
 }
 
 async function measure(db) {
-  const { sha, ex, F, map, structural } = await loadText();
+  const { sha, ex, F, map, structural, glue, lineStarts } = await loadText();
   const src = await sourcePages(db);
   const pages = src.map((p) => ({ read: foldHan(p.read).f, lines: p.lines.map((l) => ({ f: foldHan(l.text).f, h: l.h, x0: l.box[0] ?? undefined, y0: l.box[1] ?? undefined, x1: l.box[2] ?? undefined, y1: l.box[3] ?? undefined })) }));
   const idx = buildIndex(F);
   // Pass 1: NDL's reads alone. Pass 2: a second read of the edge columns where they disagree.
-  let fit = fitBook(pages, F, idx, structural);
+  let fit = fitBook(pages, F, idx, structural, new Map(), FIT_RULES, glue, lineStarts);
   const CACHE = path.join(TDIR, 'edge-reads.json');
   const cache = fs.existsSync(CACHE) ? JSON.parse(fs.readFileSync(CACHE, 'utf8')) : {};
   const needs = [...new Set(fit.boundaries.flatMap((b) => b.needs || []))];
@@ -374,7 +420,7 @@ async function measure(db) {
   };
   await Promise.all([1, 2, 3, 4].map(worker));
   fs.writeFileSync(CACHE, JSON.stringify(cache));
-  if (needs.length) fit = fitBook(pages, F, idx, structural, evidence);
+  if (needs.length) fit = fitBook(pages, F, idx, structural, evidence, FIT_RULES, glue, lineStarts);
   const edgeUsd = Object.values(cache).reduce((n, r) => n + (r.usd || 0), 0);
   const spans = fit.pages.map((x) => x.span);
   const reads = pages.map((p) => p.read);
