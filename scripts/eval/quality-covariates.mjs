@@ -22,6 +22,8 @@
 //       gemini-3.1-flash-lite, ~$0.0005 a page) on sampled pages whose OCR text lacks <script> or
 //       <page-type>, plus the agreement-check pages; answers are cached in
 //       scripts/eval/output/page-descriptors-5623.json and only missing pages are called. $3 ceiling.
+//   --corpus-profile [--describe]   instead: one page per visible book, corpus-wide (#5643); see
+//       "corpus page profile" below. $10 ceiling.
 
 import fs from 'node:fs';
 import path from 'node:path';
