@@ -785,7 +785,30 @@ async function release(db) {
 async function translate(db) {
   const { readScopeEnvelopes, getScopeSpendUsd } = await import('../lib/spend-guard.mjs');
   const { translatablePageFilter } = await import('../lib/translate-core.mjs');
-  const ids = Object.values(state.books).filter((b) => b.book_id && b.published).map((b) => b.book_id);
+  // The chained lane must run code that judges CJK at the right runaway ratio (#5595, merged
+  // 2026-10-01T23:23Z). A long-lived --loop started before that keeps the old isExcess and refuses
+  // nearly every classical-Chinese page; the */5 --tick cron loads fresh code each run.
+  const FIX_MERGED = Date.parse('2026-10-01T23:23:34Z');
+  const loops = execFileSync('bash', ['-c', "pgrep -f 'translate-batch-worker.mjs --chained --loop' | xargs -r -I{} ps -o lstart= -p {} || true"], { encoding: 'utf8' }).trim().split('\n').filter(Boolean);
+  const stale = loops.filter((l) => Date.parse(l) < FIX_MERGED);
+  if (stale.length && !has('force')) { log(`translate: REFUSED — ${stale.length} chained --loop process(es) started before #5595 (${stale.join('; ')}); restart it first`); return; }
+  const { releaseBook: rel } = await import('../lib/pipeline-hold.mjs');
+  const live = [];
+  for (const b of Object.values(state.books)) {
+    if (!b.book_id || !b.published) continue;
+    const bk = await db.collection('books').findOne({ id: b.book_id }, { projection: { visible: 1, pipeline_auto: 1 } });
+    if (bk.visible !== true) continue;   // hidden by another process: not this job's to translate
+    if (bk.pipeline_auto?.hold?.reason === TRANSLATE_HOLD) {
+      const r = await rel(db, b.book_id, { note: `chained lane runs #5595; translating under ${ENVELOPE_TAG} (#${ISSUE})`, source: HOLD.source });
+      log(`${b.book_id}: translate hold ${r.outcome} → ${r.to}`);
+    } else if (isHeld(bk)) { log(`${b.book_id}: held by ${bk.pipeline_auto.hold.reason} — skipped`); continue; }
+    // Stamps written by the old 3x guard on this job's pages; the page goes back in the queue.
+    const u = await db.collection('pages').updateMany({ book_id: b.book_id, 'ocr.source': TEXT_SOURCE, 'translation.health_blocked': 'runaway' },
+      { $unset: { 'translation.health_blocked': '', 'translation.health_blocked_at': '' }, $set: { updated_at: new Date() } });
+    if (u.modifiedCount) log(`${b.book_id}: cleared ${u.modifiedCount} runaway stamps`);
+    live.push(b.book_id);
+  }
+  const ids = live;
   if (!ids.length) { log('translate: no published books'); return; }
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
   let env = readScopeEnvelopes(control).find((e) => e.tag === ENVELOPE_TAG);
