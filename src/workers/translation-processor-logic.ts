@@ -7,7 +7,7 @@ import { SKIP_TRANSLATION_PAGE_TYPES, extractPageType } from '@/lib/types/prompt
 import { classifyError } from '@/lib/errors';
 import { extractTranslationMetadata, propagateOcrWarnings } from '@/lib/translation-metadata';
 import { createRevision } from '@/lib/page-revisions';
-import { isHumanEditedTranslation } from '@/lib/translate-write';
+import { isHumanEditedTranslation, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON } from '@/lib/translate-write';
 import { sendWriteResult } from '@/lib/sqs-client';
 import { retryDbWrite } from '@/lib/retry-utils';
 import { geminiEngine, translationInput, translationProvenance, notRecorded, NOT_RECORDED, codeVersion, host } from '@/lib/write-provenance';
@@ -254,6 +254,29 @@ export async function processTranslationPage(message: PageProcessingMessage) {
 
     // Propagate OCR quality warnings to translation so readers see them on both sides
     const finalTranslation = propagateOcrWarnings(page.ocr.data, translationResult.text);
+
+    // The page's text inside its continuity <meta> is text no reader sees (#5376). Write
+    // nothing: stamp the page with the reason, keep the refused text as evidence, and report
+    // the page as failed with its (billed) usage.
+    if (hidesPageInMeta(finalTranslation)) {
+      console.warn(`[TRANS] Refusing page ${pageId}: translation is inside its continuity <meta> (${finalTranslation.length} chars)`);
+      await recordRefusedTranslation(db, { id: pageId, book_id: bookId }, finalTranslation, HIDDEN_META_REASON, { jobId, model: modelId });
+      await sendWriteResult({
+        type: 'translation',
+        bookId, pageId, jobId, targetPageIds,
+        timestamp: new Date().toISOString(),
+        failed: true,
+        error: { message: 'Translation refused: the page text is inside the continuity <meta>', category: HIDDEN_META_REASON },
+        geminiUsage: buildUsagePayload({
+          model: modelId, bookId, pageId, jobId, durationMs,
+          inputTokens: translationResult.usage.inputTokens,
+          outputTokens: translationResult.usage.outputTokens,
+          status: 'success',
+          promptRef,
+        }),
+      });
+      return;
+    }
 
     // DIRECT WRITE: Save translation to page — required for FIFO context chain.
     // The next page in the queue reads this translation for continuity.

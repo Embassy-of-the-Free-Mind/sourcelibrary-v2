@@ -18,7 +18,7 @@ import type { GenerationConfig } from '@google/generative-ai';
 // this spends a CONTRIBUTOR's money — reasoning tokens bill at the output rate (#4581).
 // thinkingConfig is not in @google/generative-ai 0.24.x types; it passes through verbatim.
 const THINKING_OFF = { thinkingConfig: { thinkingBudget: 0 } } as unknown as GenerationConfig;
-import { CLEAR_STALE_UNSET } from '@/lib/translate-write';
+import { CLEAR_STALE_UNSET, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON } from '@/lib/translate-write';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300; // 5 minutes max
@@ -289,32 +289,40 @@ export async function POST(request: NextRequest) {
                 previousText
               );
 
-              // Snapshot manual edits before overwriting
-              if (page.id) await createRevision(page.id, 'translation', `contribute-${bookId}`);
+              // The page's text inside its continuity <meta> is text no reader sees (#5376).
+              // Write nothing; the page is stamped with the reason and the text kept. The call
+              // is still logged and costed below — it was made either way.
+              const refused = hidesPageInMeta(result.text);
+              if (refused) {
+                if (page.id) await recordRefusedTranslation(db, { id: page.id, book_id: bookId }, result.text, HIDDEN_META_REASON, { jobId: `contribute-${bookId}`, model: DEFAULT_MODEL });
+              } else {
+                // Snapshot manual edits before overwriting
+                if (page.id) await createRevision(page.id, 'translation', `contribute-${bookId}`);
 
-              // Update page with translation result + harvest metadata tags
-              const translationMeta = extractTranslationMetadata(result.text);
-              await db.collection('pages').updateOne(
-                { _id: page._id },
-                {
-                  $set: {
-                    translation: {
-                      data: result.text,
-                      content_hash: contentHash(result.text),
-                      model: DEFAULT_MODEL,
-                      prompt_version: String(result.promptRef.version),
-                      prompt_id: result.promptRef.id,
-                      prompt_hash: result.promptRef.content_hash,
-                      prompt_name: result.promptRef.name,
-                      processed_at: new Date(),
-                      source: 'contributor',
-                      contributed_by: contributorName || 'Anonymous',
+                // Update page with translation result + harvest metadata tags
+                const translationMeta = extractTranslationMetadata(result.text);
+                await db.collection('pages').updateOne(
+                  { _id: page._id },
+                  {
+                    $set: {
+                      translation: {
+                        data: result.text,
+                        content_hash: contentHash(result.text),
+                        model: DEFAULT_MODEL,
+                        prompt_version: String(result.promptRef.version),
+                        prompt_id: result.promptRef.id,
+                        prompt_hash: result.promptRef.content_hash,
+                        prompt_name: result.promptRef.name,
+                        processed_at: new Date(),
+                        source: 'contributor',
+                        contributed_by: contributorName || 'Anonymous',
+                      },
+                      ...translationMeta,
                     },
-                    ...translationMeta,
-                  },
-                  $unset: CLEAR_STALE_UNSET,
-                }
-              );
+                    $unset: CLEAR_STALE_UNSET,
+                  }
+                );
+              }
 
               await logGeminiCall({
                 type: 'translation',
@@ -333,7 +341,8 @@ export async function POST(request: NextRequest) {
                 triggered_by: 'manual',
               });
 
-              previousText = result.text;
+              // A refused page is not context for the next one.
+              previousText = refused ? '' : result.text;
               const totalTokensThisCall = result.inputTokens + result.outputTokens;
               totalTokens += totalTokensThisCall;
               totalCostSpent += estimateCost(totalTokensThisCall);

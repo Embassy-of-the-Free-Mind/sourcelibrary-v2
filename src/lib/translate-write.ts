@@ -25,6 +25,7 @@
  * Parity with the .mjs door is pinned by tests/unit/translate-write-guard.test.ts.
  */
 import type { Db } from 'mongodb';
+import { nanoid } from 'nanoid';
 import { getDb } from './mongodb';
 import { createRevision } from './page-revisions';
 import { stripMarkupTags } from './strip-markup-tags';
@@ -105,6 +106,97 @@ export function hasNoTranslatableBody(ocrText: string | null | undefined): boole
   if (translatableBodyLen(ocrText) >= MIN_TRANSLATABLE_BODY) return false;
   if (imageDescLen(ocrText) >= MIN_TRANSLATABLE_BODY) return false;
   return true;
+}
+
+/**
+ * Did the translator put the page inside its continuity <meta> (#5363, #5376)?
+ *
+ * TS twin of `hidesPageInMeta` in `scripts/lib/translate-core.mjs` (which reads
+ * `metaPayload().wholePage` in `scripts/lib/page-integrity.mjs`);
+ * `tests/unit/hidden-meta-guard.test.ts` pins the two together.
+ *
+ * The prompt asks for `<meta>continues from previous page: …</meta>` on a page that
+ * opens mid-sentence. Sometimes the model writes the page's own lines after that
+ * colon, and every reader surface strips `<meta>`, content and all — the reader is
+ * shown a blank or near-blank page. True when the words after the marker are at
+ * least 80% of everything the translation says and number at least 40 — under that
+ * the meta is almost always a sentence of commentary on a near-empty leaf, and the
+ * short body is the whole translation (sizing: HIDDEN_META_MIN_WORDS in the .mjs).
+ */
+export const HIDDEN_META_REASON = 'hidden-meta';
+export const HIDDEN_META_MIN_WORDS = 40;
+const META_WHOLE_PAGE_SHARE = 0.8;
+const CONT_MARKER = /^[\s.…]*continue[sd]?\s+from\s+(?:the\s+)?previous\s+page\b/i;
+const DESCRIPTIVE_LEAD = /^(?:['’]s\b|\s*,|\s+(?:and|where|which|in which|with|discussing|detailing|describing|regarding|concerning|about)\b)/i;
+const TR_WRAPPERS = 'meta|summary|keywords|vocab|warning|note|header|page-num|sig|margin|catchword|image-desc|footnote|folio';
+const TR_WRAPPER_RE = new RegExp(`<(${TR_WRAPPERS})\\b[^>]*>[\\s\\S]*?</\\1>`, 'gi');
+
+/** Letters and digits only — the length a reader reads (twin of page-integrity `readingLength`). */
+function readingLength(t: string): number {
+  const x = t.replace(/&nbsp;/g, ' ').replace(/&(?:[a-zA-Z]+|#\d+|#x[0-9a-fA-F]+);/g, 'x')
+    .replace(/\\[a-zA-Z]+/g, ' ').replace(/\[(?:unclear|illegible)[^\]]*\]/gi, ' ');
+  return (x.match(/[\p{L}\p{N}]/gu) || []).length;
+}
+
+export function hidesPageInMeta(translationText: string | null | undefined): boolean {
+  const tr = String(translationText || '');
+  for (const m of tr.matchAll(/<meta>([\s\S]*?)<\/meta>/gi)) {
+    const mk = m[1].match(CONT_MARKER);
+    if (!mk) continue;
+    // Only the FIRST continuity meta is judged, as in page-integrity `continuityMeta`.
+    const rest = m[1].slice(mk[0].length);
+    if (DESCRIPTIVE_LEAD.test(rest)) return false;
+    const payload = rest.replace(/<\/?[a-zA-Z][^>]*>/g, ' ').replace(/^[\s:.…,;—–-]+/, '').replace(/\s+/g, ' ').trim();
+    const words = payload.split(/\s+/).filter(w => /\p{L}/u.test(w)).length;
+    if (words < HIDDEN_META_MIN_WORDS) return false;
+    const shown = tr.replace(TR_WRAPPER_RE, ' ').replace(/<\/?[a-zA-Z][^>]*>/g, ' ').replace(/[*_#>`~|]/g, ' ');
+    const hidden = readingLength(payload);
+    return hidden / Math.max(1, hidden + readingLength(shown)) >= META_WHOLE_PAGE_SHARE;
+  }
+  return false;
+}
+
+/**
+ * Record a refused translation on the page and keep its text. TS twin of
+ * `recordRefusedTranslation` in `scripts/lib/translate-core.mjs`: the stamp
+ * (`translation.health_blocked` + `_at`) is the recorded skip — the page stays
+ * untranslated and says why — and the refused text goes to `page_revisions` with
+ * `source: 'health-gate-refused'` (#3826), the row the repair lane restores from.
+ * Never throws.
+ */
+export async function recordRefusedTranslation(
+  db: Db,
+  page: { id: string; book_id?: string },
+  text: string,
+  reason: string,
+  opts: { jobId?: string; model?: string } = {}
+): Promise<void> {
+  const now = new Date();
+  try {
+    // A dotted $set cannot descend into `translation: null`.
+    await db.collection('pages').updateOne({ id: page.id, translation: null }, { $set: { translation: {} } });
+    await db.collection('pages').updateOne(
+      { id: page.id },
+      { $set: { 'translation.health_blocked': reason, 'translation.health_blocked_at': now, updated_at: now } }
+    );
+    const raw = text || '';
+    await db.collection('page_revisions').insertOne({
+      id: nanoid(12),
+      page_id: page.id,
+      book_id: page.book_id,
+      field: 'translation',
+      data: raw.slice(0, 50000),
+      source: 'health-gate-refused',
+      reason,
+      original_length: raw.length,
+      truncated: raw.length > 50000,
+      model: opts.model,
+      job_id: opts.jobId,
+      created_at: now,
+    });
+  } catch (e) {
+    console.error(`[health-gate] Failed to record refused translation for ${page.id}:`, e);
+  }
 }
 
 /** Shape of an existing `translation` (or `ocr`) subdocument for guard checks. */
@@ -193,6 +285,8 @@ export interface WritePageTranslationArgs {
 export interface WritePageTranslationResult {
   written: boolean;
   protected: boolean;
+  /** Set when the text was refused (e.g. 'hidden-meta', #5376): nothing was written, the reason is on the page. */
+  refused?: string;
   /**
    * When protected, the EXISTING human translation (use it for previous-page
    * continuity); when written, the new text.
@@ -227,11 +321,18 @@ export async function writePageTranslation(
   // Promise 1: the human-edit guard.
   const current = await db.collection('pages').findOne(
     { id: pageId },
-    { projection: { 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1 } }
+    { projection: { book_id: 1, 'translation.source': 1, 'translation.edited_by': 1, 'translation.data': 1 } }
   );
   const existing = current?.translation as HumanEditableField | undefined;
   if (isHumanEditedField(existing) && !overwriteHuman) {
     return { written: false, protected: true, text: existing?.data ?? '' };
+  }
+
+  // Model output whose continuity <meta> holds the page is never stored (#5376) — the reader
+  // would be shown an empty page. The refusal is recorded on the page and the text kept.
+  if (GEMINI_SOURCES.has(source) && hidesPageInMeta(text)) {
+    await recordRefusedTranslation(db, { id: pageId, book_id: current?.book_id as string | undefined }, text, HIDDEN_META_REASON, { jobId, model });
+    return { written: false, protected: false, refused: HIDDEN_META_REASON, text };
   }
 
   // Promise 2: snapshot existing content first (non-fatal — createRevision
