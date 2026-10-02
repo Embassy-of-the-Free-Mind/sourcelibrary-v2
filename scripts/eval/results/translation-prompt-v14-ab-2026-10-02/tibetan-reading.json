@@ -1,0 +1,24 @@
+{
+  "note": "Blind by-eye read (job v14-ab-2, 2026-10-02), recorded per arm LETTER before tibetan-key.json was opened. Each group's letters W-Z are shuffled independently, so letters are per-unit; the site list carries the unit. Coverage: every #4523 answer-key site read against the source leaf by leaf; every multi-page group's leaf seams (head/tail of each leaf vs the exact source leaf ends) scanned in all arms; litany group 69e7ab6d p62-64 scanned only. A reader's Tibetan, not a specialist's.",
+  "sites": [
+    {"unit":"69e782cfd93c1f6007504c15:15-16","class":"1-duplication","site":"p16 L1 ends at Jupiter (phu bu); arm adds Venus/Saturn/Ketu from p15 L2 head","letters":{"W":1,"X":1,"Y":0,"Z":1}},
+    {"unit":"69e782cfd93c1f6007504c15:15-16","class":"1-duplication","site":"p15 L2 ends 'nam' (split nam|mkha); arm renders 'place the mind in space', which p16 L2 also renders","letters":{"W":0,"X":1,"Y":0,"Z":0}},
+    {"unit":"69e782cfd93c1f6007504c15:15-16","class":"2-borrowed","site":"p15 L0 ends 'at the edge of the earth mandala' (no verb); arm adds 'stays'","letters":{"W":0,"X":0,"Y":0,"Z":1}},
+    {"unit":"69e786b34a6785cfd60c92c4:9-10","class":"3-split-word","site":"p9 L1 rdo | p10 L1 rje can ('with a vajra'): W 'like a stone'/'the noble one'; X 'a stone'/'possessed of vajra'; Y <unclear>rdo</unclear> / <term>rje can</term> + note; Z dropped / 'possessing the Lord'","letters":{"W":1,"X":1,"Y":0,"Z":1}},
+    {"unit":"69e77ac80fc6fc955e362163:8-9","class":"4-dropped","site":"p8 L2 ends bya dang gyi (bird and dog): 'dog' dropped","letters":{"W":0,"X":1,"Y":1,"Z":0}},
+    {"unit":"69e77ac80fc6fc955e362163:8-9","class":"5-name","site":"source 'dha na ko sha'i lha lcam ... badzra pu ne te': W 'Lake Kosha ... Vajrapani'; X 'Dhanakosa ... Vajrapani' (+ note original); Y 'Vajra Pune te' (+ note likely Garab Dorje); Z adds 'daughter of King Indrabhuti' (not in source)","letters":{"W":1,"X":1,"Y":0,"Z":1}},
+    {"unit":"69e7ab805f1a22ab19a9970f:64-65-66","class":"1-duplication","site":"p65 L2 ends 'attached to emptiness'; arm adds '...is invalidated by valid cognition', which p66 L0 also renders","letters":{"W":1,"X":0,"Y":0,"Z":0}},
+    {"unit":"69e7ab305f1a22ab19a945a3:81-82-83","class":"2-borrowed","site":"p81 L1 ends 'Noble Path bran-' (yan|lag); arm adds 'has gone (far) beyond', the predicate rendered on p82 L1","letters":{"W":0,"X":1,"Y":1,"Z":1}},
+    {"unit":"69e7ab305f1a22ab19a945a3:81-82-83","class":"meta-payload","site":"p81 L0 opens <meta>continues from previous page: Subhuti, it is just so.</meta> ('it is just so' not in source)","letters":{"W":0,"X":0,"Y":1,"Z":0}},
+    {"unit":"69e7ab6d5f1a22ab19a98934:62-63-64","class":"meta-payload","site":"p62 L0 opens <meta>continues from previous page: ...The great Mother</meta>","letters":{"W":0,"X":0,"Y":1,"Z":0}},
+    {"unit":"69e77a530fc6fc955e35f4a2:79-80","class":"4-dropped","site":"p79 L1 ends 'listen! indigestion's' (ma zhu'i): 'indigestion' dropped","letters":{"W":0,"X":0,"Y":1,"Z":0}},
+    {"unit":"69e77a530fc6fc955e35f4a2:79-80","class":"2-borrowed","site":"p80 L0 ends 'purge and bdud-'; arm adds 'use coolants'","letters":{"W":0,"X":0,"Y":1,"Z":0}},
+    {"unit":"69e7abc15f1a22ab19a9d83b:102","class":"5-name","site":"nye sde (Upasena): W 'Nyede <note>likely Upananda</note>', Z 'Upananda'; padma'i mdog: X 'Padmottara', Y summary '(Padmavati)'; Z 'countryside of Janapada'","letters":{"W":1,"X":1,"Y":1,"Z":2}},
+    {"unit":"6a14e12f2f45ee330c273fac:16-17-18","class":"note-doubtful","site":"Sanskrit chapter titles labelled 'Sanskrit mantra' (p16, p17)","letters":{"W":2,"X":0,"Y":1,"Z":0}},
+    {"unit":"69e7aace5f1a22ab19a8db52:49","class":"7-guard","site":"lus mi gda' bar ('without remainder') still mistranslated in every arm","letters":{"W":1,"X":1,"Y":1,"Z":1}},
+    {"unit":"69e7abf65f1a22ab19aa112a:68","class":"7-guard","site":"the king asks 'wise ones, what is the punishment'; W 'They asked', X 'The men asked', Z 'They said'; Y unattributed quote after the king's line (not swapped)","letters":{"W":1,"X":1,"Y":0,"Z":1}},
+    {"unit":"69e77a190fc6fc955e35dc13:7-8","class":"7-guard","site":"Ratnasambhava's wisdom of equality: correct in all arms (the source gives mirror-like for Vairocana on L2, rendered faithfully)","letters":{"W":0,"X":0,"Y":0,"Z":0}},
+    {"unit":"69e786ec6846fc56c49105c3:16-17","class":"7-guard","site":"'ten subduers of the arrogant directional guardians': correct in all arms","letters":{"W":0,"X":0,"Y":0,"Z":0}}
+  ],
+  "retracted_during_read": "6a14e12f p17 L1 / p18 L1 and 69e786ec p16 L1 first looked borrowed; the exact source leaf ends (python, not a byte-truncating cut) show the content is on the leaf. Not counted."
+}
