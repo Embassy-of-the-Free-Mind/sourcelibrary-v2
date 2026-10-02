@@ -25,6 +25,10 @@ const STATS = `${GH}scripts/eval/results/quality-paper-stats-2026-10-01/report.m
 const AUDIT = `${GH}scripts/eval/results/translation-corpus-audit-2026-09-30/README.md`;
 const COV_LOG = `${GH}scripts/eval/experiments/2026-10-02-quality-by-date-chars-resolution-5615.md`;
 const COV_SCRIPT = `${GH}scripts/eval/quality-covariates.mjs`;
+const COV2_LOG = `${GH}scripts/eval/experiments/2026-10-02-quality-by-manuscript-library-content-5623.md`;
+const DESCRIPTOR = `${GH}scripts/eval/lib/page-descriptor.mjs`;
+const DESCRIPTOR_DATA = `${GH}scripts/eval/output/page-descriptors-5623.json`;
+const MS_RULE = `${GH}scripts/lib/syriac-kraken-lane.mjs`;
 
 const pct = (x: number) => `${Math.round(x * 100)}%`;
 const cer = (x: number | null) => (x == null ? '—' : x < 0.01 ? `${(x * 100).toFixed(1)}%` : `${Math.round(x * 1000) / 10}%`);
@@ -33,13 +37,20 @@ const cer = (x: number | null) => (x == null ? '—' : x < 0.01 ? `${(x * 100).t
 type Ci = number[] | null;
 type RateCell = { level: string; n: number; k: number; rate: number | null; ci: Ci; grade: string; non_latin: number; range?: string | null; latin: { n: number; k: number; rate: number; ci: Ci } | null; nonlatin: { n: number; k: number; rate: number; ci: Ci } | null };
 type CerCell = { level: string; n: number; median: number | null; ci: Ci; grade: string; range?: string | null };
-type CerSet = { n: number; char_cuts: number[]; by_period: CerCell[]; by_chars: CerCell[]; by_resolution: CerCell[] };
+type CerSet = { n: number; char_cuts: number[]; by_period: CerCell[]; by_chars: CerCell[]; by_resolution: CerCell[]; by_manuscript: CerCell[]; by_provider: CerCell[]; by_content: CerCell[] };
+type Tab = Record<string, Record<string, number>>;
+type Share = { n: number; agree: number; rate: number | null; ci: Ci };
 type Term = { term: string; n_at_level: number | null; odds_ratio: number; ci: number[]; p: number };
 type Cov = {
   generated: string;
-  translation: { n: number; char_cuts: number[]; by_period: RateCell[]; by_chars: RateCell[]; by_resolution: RateCell[] };
-  ocr: Record<'lite' | 'flash', { engine: string; n: number; within_script: Record<'Latin' | 'Greek' | 'Han', CerSet> }>;
-  regression: { n: number; events: number; terms: Term[] };
+  translation: { n: number; char_cuts: number[]; by_period: RateCell[]; by_chars: RateCell[]; by_resolution: RateCell[]; by_manuscript: RateCell[]; by_provider: RateCell[]; by_content: RateCell[]; cross: { manuscript_by_script: Tab; manuscript_by_period: Tab; provider_by_manuscript: Tab } };
+  ocr: Record<'lite' | 'flash', { engine: string; n: number; within_script: Record<'Latin' | 'Greek' | 'Han', CerSet>; cross: { manuscript_by_script: Tab } }>;
+  regression: { n: number; events: number; terms: Term[]; mixed_counted_as_print: number };
+  regression_without_manuscript: { terms: Term[] };
+  coverage: Record<'translation' | 'ocr_lite', { n: number; page_script_src: Record<string, number>; ms_rule: Record<string, number>; content_src: Record<string, number> }>;
+  format: { skipped: boolean; reason: string | null };
+  descriptor: { described: number; failed: number; usd: number; agreement_with_inline_tags: { pages: number; script: Share; page_type: Share; page_type_partial: Share; has_marginalia: Share; has_illustration: Share }; agreement_on_handwritten_or_mixed_tags: { pages: number; script: Share } };
+  fallback_rule_check: { n: number; agree: number; label_by_fallback: Tab };
 };
 const cov = covariatesJson as unknown as Cov;
 const at = <T extends { level: string }>(cells: T[], level: string) => cells.find(c => c.level === level);
@@ -156,6 +167,9 @@ function Legend({ series }: { series: Series[] }) {
 // ── the data behind the panels ──────────────────────────────────────────────
 const PERIOD_LABEL: Record<string, string> = { 'pre-1500': 'before 1500', '1500s': '1500s', '1600s': '1600s', '1700s': '1700s', '1800s': '1800s', '1900+': '1900 on', unknown: 'no date' };
 const CHAR_LABEL: Record<string, string> = { fewest: 'fewest third', middle: 'middle third', most: 'most third' };
+const MS_LABEL: Record<string, string> = { print: 'print', manuscript: 'manuscript', mixed: 'mixed hand and print' };
+const CONTENT_LABEL: Record<string, string> = { 'plain text': 'plain text', marginalia: 'marginalia', table: 'table', illustration: 'illustration' };
+const PROVIDER_NAME: Record<string, string> = { internet_archive: 'Internet Archive', bph: 'Ritman Library (BPH)', bsb: 'BSB Munich', harvard: 'Harvard', 'e-rara': 'e-rara', gallica: 'Gallica', bl: 'British Library', wikimedia_commons: 'Wikimedia Commons', other: 'other libraries' };
 const RES_LABEL: Record<string, string> = { '<1500 px': 'under 1,500', '1500–2499 px': '1,500–2,499', '≥2500 px': '2,500 or more', unknown: 'external scan' };
 
 const T_SERIES: Series[] = [
@@ -180,7 +194,7 @@ function rateRows(cells: RateCell[], labels: Record<string, string>) {
   }));
 }
 // OCR cells under five pages carry no interval and are left out of the panel (counted in the note).
-function cerRows(dim: 'by_period' | 'by_chars' | 'by_resolution', labels: Record<string, string>, scripts: ('Latin' | 'Greek' | 'Han')[]) {
+function cerRows(dim: 'by_period' | 'by_chars' | 'by_resolution' | 'by_manuscript' | 'by_provider' | 'by_content', labels: Record<string, string>, scripts: ('Latin' | 'Greek' | 'Han')[]) {
   const sets = cov.ocr.lite.within_script;
   return Object.keys(labels).map(level => ({
     label: labels[level],
@@ -189,6 +203,32 @@ function cerRows(dim: 'by_period' | 'by_chars' | 'by_resolution', labels: Record
       return c && c.n >= 5 ? { series: sc, est: c.median, ci: c.ci, n: c.n, text: `${cer(c.median)} · ${c.n}` } : { series: sc, est: null, ci: null, n: 0, text: '' };
     }),
   })).filter(r => r.pts.some(p => p.est != null));
+}
+
+const sum = (o: Record<string, number> | undefined) => Object.values(o ?? {}).reduce((a, b) => a + b, 0);
+const providerLabels = (levels: string[]) => Object.fromEntries(levels.filter(l => l !== 'unknown').map(l => [l, PROVIDER_NAME[l] ?? l]));
+
+// A two-way count table: rows are book labels, columns a second covariate.
+function CrossTab({ caption, tab, rows, cols, colLabel }: { caption: string; tab: Tab; rows: string[]; cols: string[]; colLabel: Record<string, string> }) {
+  return (
+    <table className="w-full text-[11px] tabular-nums">
+      <caption className="text-left text-xs text-primary font-semibold mb-1">{caption}</caption>
+      <thead>
+        <tr className="text-muted border-b border-light">
+          <th className="py-0.5 pr-2 font-medium text-left">Book</th>
+          {cols.map(c => <th key={c} className="py-0.5 px-1 font-medium text-right">{colLabel[c] ?? c}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {rows.filter(r => tab[r]).map(r => (
+          <tr key={r} className="border-b border-light">
+            <td className="py-0.5 pr-2 text-secondary">{MS_LABEL[r] ?? r}</td>
+            {cols.map(c => <td key={c} className="py-0.5 px-1 text-right text-secondary">{tab[r]?.[c] ?? 0}</td>)}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
 }
 
 function OddsRow({ t }: { t: Term }) {
@@ -228,6 +268,20 @@ export default function QualitySummaryPage() {
   const gMid = at(gk.by_resolution, '1500–2499 px'), gHi = at(gk.by_resolution, '≥2500 px');
   const hanLow = at(cov.ocr.lite.within_script.Han.by_resolution, '<1500 px');
   const f15 = at(gkF.by_period, '1500s'), f18 = at(gkF.by_period, '1800s');
+  // #5623: manuscript, holding library, page content
+  const descr = cov.descriptor, agr = descr.agreement_with_inline_tags, hands = descr.agreement_on_handwritten_or_mixed_tags;
+  const msPrint = at(t.by_manuscript, 'print'), msMs = at(t.by_manuscript, 'manuscript');
+  const msOr = reg.terms.find(x => x.term.startsWith('manuscript'));
+  const nonLatinBase = cov.regression_without_manuscript.terms.find(x => x.term.startsWith('non-Latin'));
+  const msNonLatin = t.cross.manuscript_by_script.manuscript?.['non-Latin'] ?? 0;
+  const bph = at(t.by_provider, 'bph'), bphN = bph?.n ?? 0, bphLatin = bph?.latin?.n ?? 0;
+  const harvardN = sum(t.cross.provider_by_manuscript.harvard), harvardMs = t.cross.provider_by_manuscript.harvard?.manuscript ?? 0;
+  const bsbGk = at(gk.by_provider, 'bsb'), iaGk = at(gk.by_provider, 'internet_archive');
+  const hanSet = cov.ocr.lite.within_script.Han, hanTable = at(hanSet.by_content, 'table'), hanPlain = at(hanSet.by_content, 'plain text');
+  const ocrX = cov.ocr.lite.cross.manuscript_by_script, ocrMs = sum(ocrX.manuscript), ocrSl = sum(ocrX.print) + sum(ocrX.manuscript) + sum(ocrX.mixed);
+  const tCovMs = cov.coverage.translation.ms_rule['OCR <script> tags, book majority'] ?? 0, tCovDesc = cov.coverage.translation.ms_rule['descriptor (this page only)'] ?? 0;
+  // label_by_fallback[label][what the fallback rule says]
+  const fb = cov.fallback_rule_check.label_by_fallback, fbMs = sum(fb.manuscript), fbMissed = fb.manuscript?.print ?? 0;
 
   return (
     <main className="bg-cream min-h-screen print:bg-white">
@@ -350,7 +404,7 @@ export default function QualitySummaryPage() {
           <ol className="list-none p-0 m-0 mb-4 grid gap-2 grid-cols-1 md:grid-cols-3 print:grid-cols-3">
             <li className="border-l-2 border-accent-rust pl-2.5">
               <div className="text-primary font-semibold text-xs">Script, not date, density or scan size, carries the translation gap.</div>
-              <div className="text-xs text-secondary">Adjusted odds of a faithful rating for non-Latin scripts: {nonLatin.odds_ratio.toFixed(2)} ({nonLatin.ci[0].toFixed(2)}–{nonLatin.ci[1].toFixed(2)}), n = {reg.n}. Every other term&rsquo;s interval spans 1. The low-resolution dip ({lowRes && pct(lowRes.rate ?? 0)}, n = {lowRes?.n}) is mostly non-Latin pages ({lowRes?.non_latin} of {lowRes?.n}){lowResOr && <>; adjusted odds ratio {lowResOr.odds_ratio.toFixed(2)} ({lowResOr.ci[0].toFixed(2)}–{lowResOr.ci[1].toFixed(2)})</>}.</div>
+              <div className="text-xs text-secondary">Adjusted odds of a faithful rating for non-Latin scripts: {nonLatin.odds_ratio.toFixed(2)} ({nonLatin.ci[0].toFixed(2)}–{nonLatin.ci[1].toFixed(2)}), n = {reg.n}. {others.every(x => x.ci[0] < 1 && x.ci[1] > 1) ? <>Every other term&rsquo;s interval spans 1, the new manuscript term included.</> : <>Other terms whose interval excludes 1: {others.filter(x => !(x.ci[0] < 1 && x.ci[1] > 1)).map(x => x.term.replace(/ \(vs .*\)$/, '')).join(', ')}.</>} The low-resolution dip ({lowRes && pct(lowRes.rate ?? 0)}, n = {lowRes?.n}) is mostly non-Latin pages ({lowRes?.non_latin} of {lowRes?.n}){lowResOr && <>; adjusted odds ratio {lowResOr.odds_ratio.toFixed(2)} ({lowResOr.ci[0].toFixed(2)}–{lowResOr.ci[1].toFixed(2)})</>}.</div>
             </li>
             <li className="border-l-2 border-accent-rust pl-2.5">
               <div className="text-primary font-semibold text-xs">Within a script, transcription error falls with the book&rsquo;s date.</div>
@@ -403,11 +457,58 @@ export default function QualitySummaryPage() {
               </div>
             </div>
             <div className="text-[11px] text-muted leading-snug">
-              <p className="m-0 mb-1.5">Logistic regression, fitted by IRLS, Wald 95% intervals, unweighted, one page per book: judge ≥ 4 on script class, period, log₂ characters (per doubling) and resolution band. References: Latin script, 1600s, 1,500–2,499 px. Unknown date and resolution are kept as levels. n = {reg.n}, {reg.events} rated faithful. Exploratory and observational; language within script is not modelled.</p>
+              <p className="m-0 mb-1.5">Logistic regression, fitted by IRLS, Wald 95% intervals, unweighted, one page per book: judge ≥ 4 on script class, manuscript, period, log₂ characters (per doubling) and resolution band. References: Latin script, print, 1600s, 1,500–2,499 px. The manuscript term is new (<a href="#manuscript-library-content" className="text-accent-rust hover:underline">below</a>); without it the script odds ratio is {nonLatinBase?.odds_ratio.toFixed(2)}. Unknown date and resolution are kept as levels. n = {reg.n}, {reg.events} rated faithful. Exploratory and observational; language within script is not modelled.</p>
               <p className="m-0">Period is parsed from the catalogue&rsquo;s free-text date only when it pins one century; a reprint carries its work&rsquo;s date. Characters are the served transcription without its tags. Resolution is the stored master scan, not the reader&rsquo;s display copy, which is capped at 2,000 px wide.</p>
             </div>
           </div>
           <MethodLinks links={[['Experiment log', COV_LOG], ['Script', COV_SCRIPT], ['Transcription (§3)', `${PAPER}#s3`], ['Translation (§4)', `${PAPER}#s4`]]} />
+
+          {/* ── manuscript, holding library, page content (#5623) ── */}
+          <h3 id="manuscript-library-content" className="text-base text-primary font-serif leading-tight mt-6 mb-2">Is it really manuscript against print, or the library that holds the book?</h3>
+          <p className="text-secondary text-sm print:text-[11px] leading-relaxed print:leading-snug mb-3 max-w-3xl">
+            Three more properties were joined to the same pages: whether the book is a manuscript, which library holds the scan, and what is on the page besides running text. Where a transcription carried no tag saying so, one image-only model call per page supplied it ({descr.described - agr.pages - hands.pages} pages, plus {agr.pages + hands.pages} already-tagged pages as a check; ${descr.usd.toFixed(2)} in all). Format (folio, quarto, octavo) was left out: {cov.format.reason}.
+          </p>
+          <ol className="list-none p-0 m-0 mb-4 grid gap-2 grid-cols-1 md:grid-cols-3 print:grid-cols-3">
+            <li className="border-l-2 border-accent-rust pl-2.5">
+              <div className="text-primary font-semibold text-xs">Manuscripts score lower, mostly because most are in other scripts.</div>
+              <div className="text-xs text-secondary">Rated faithful: {msPrint && pct(msPrint.rate ?? 0)} of printed books (n = {msPrint?.n}), {msMs && pct(msMs.rate ?? 0)} of manuscripts (n = {msMs?.n}). {msNonLatin} of the {msMs?.n} manuscripts are in non-Latin scripts. Within non-Latin scripts the gap narrows to {msMs?.nonlatin && pct(msMs.nonlatin.rate)} against {msPrint?.nonlatin && pct(msPrint.nonlatin.rate)}. Adjusted for script, date, density and resolution, manuscript odds ratio {msOr && <>{msOr.odds_ratio.toFixed(2)} ({msOr.ci[0].toFixed(2)}–{msOr.ci[1].toFixed(2)})</>}; the script term moves from {nonLatinBase?.odds_ratio.toFixed(2)} to {nonLatin.odds_ratio.toFixed(2)}. Manuscript and script cannot be fully separated in a sample this size.</div>
+            </li>
+            <li className="border-l-2 border-accent-rust pl-2.5">
+              <div className="text-primary font-semibold text-xs">The holding library mostly stands in for script and manuscript.</div>
+              <div className="text-xs text-secondary">Each library&rsquo;s books lean to one kind: the Ritman Library&rsquo;s are {bphLatin} Latin-script of {bphN}; Harvard&rsquo;s {harvardMs} of {harvardN} are manuscripts. Within one script, libraries differ little. In the Greek transcription benchmark, BSB Munich scans read at {cer(bsbGk?.median ?? null)} (n = {bsbGk?.n}) and Internet Archive scans at {cer(iaGk?.median ?? null)} (n = {iaGk?.n}).</div>
+            </li>
+            <li className="border-l-2 border-accent-rust pl-2.5">
+              <div className="text-primary font-semibold text-xs">The transcription benchmark is almost all print.</div>
+              <div className="text-xs text-secondary">{ocrMs} of {ocrSl} benchmark pages with a Source Library scan are manuscripts, so character error says nothing yet about reading hands. Page content does show there: Chinese pages laid out as tables read at {cer(hanTable?.median ?? null)} (n = {hanTable?.n}) against {cer(hanPlain?.median ?? null)} for plain text (n = {hanPlain?.n}).</div>
+            </li>
+          </ol>
+
+          <div className="mb-1.5 flex flex-wrap items-baseline justify-between gap-2">
+            <h3 className="text-sm text-primary font-semibold m-0">Translation: share rated faithful by the judge (4 or 5 of 5), by script</h3>
+            <Legend series={T_SERIES} />
+          </div>
+          <div className="grid gap-x-5 gap-y-3 grid-cols-1 md:grid-cols-3 print:grid-cols-3 mb-4">
+            <Panel title="Manuscript or print (book)" rows={rateRows(t.by_manuscript, MS_LABEL)} series={T_SERIES} scale={RATE_SCALE} note={<>A book&rsquo;s label is the majority of its pages&rsquo; tags. Mixed books are counted with print in the model ({reg.mixed_counted_as_print}).</>} />
+            <Panel title="Holding library" rows={rateRows(t.by_provider, providerLabels(t.by_provider.map(c => c.level)))} series={T_SERIES} scale={RATE_SCALE} note={<>Libraries with fewer than 15 sampled books are &ldquo;other&rdquo;.</>} />
+            <Panel title="What is on the page" rows={rateRows(t.by_content, CONTENT_LABEL)} series={T_SERIES} scale={RATE_SCALE} note={<>One class per page, the first that applies: illustration, table, marginalia. The audits exclude plates, so illustration means an inline picture.</>} />
+          </div>
+
+          <div className="mb-1.5 flex flex-wrap items-baseline justify-between gap-2">
+            <h3 className="text-sm text-primary font-semibold m-0">Transcription: median character error, Flash-Lite, against a published text (log scale)</h3>
+            <Legend series={O_SERIES} />
+          </div>
+          <div className="grid gap-x-5 gap-y-3 grid-cols-1 md:grid-cols-3 print:grid-cols-3 mb-2">
+            <Panel title="Holding library" rows={cerRows('by_provider', providerLabels(Object.keys(PROVIDER_NAME)), ['Latin', 'Greek', 'Han'])} series={O_SERIES} scale={CER_SCALE} note={<>Reference pages from Wikisource or pinned editions have no Source Library scan and are left out. Cells under five pages are omitted.</>} />
+            <Panel title="What is on the page" rows={cerRows('by_content', CONTENT_LABEL, ['Latin', 'Greek', 'Han'])} series={O_SERIES} scale={CER_SCALE} />
+            <div className="min-w-0 grid gap-3">
+              <CrossTab caption="Translation sample: manuscript by script" tab={t.cross.manuscript_by_script} rows={['print', 'manuscript', 'mixed']} cols={['Latin', 'non-Latin']} colLabel={{ 'non-Latin': 'other scripts' }} />
+              <CrossTab caption="…and by the book’s date" tab={t.cross.manuscript_by_period} rows={['print', 'manuscript', 'mixed']} cols={['pre-1500', '1500s', '1600s', '1700s', '1800s', '1900+', 'unknown']} colLabel={{ 'pre-1500': '<1500', '1500s': '1500s', '1600s': '1600s', '1700s': '1700s', '1800s': '1800s', '1900+': '1900+', unknown: '?' }} />
+            </div>
+          </div>
+          <p className="text-[11px] text-muted leading-snug mt-1.5 max-w-3xl">
+            Where the labels come from. Manuscript: the <code>&lt;script&gt;</code> tag (printed, handwritten, mixed) the transcription model writes on each page, counted over every page of the book; {tCovMs} of {cov.coverage.translation.n} audited books were decided this way and {tCovDesc} by the image-only call on the sampled page. The older rule (held by a manuscript library, or dated before 1500) agrees with those labels on {cov.fallback_rule_check.agree} of {cov.fallback_rule_check.n} books and misses {fbMissed} of {fbMs} manuscripts, so it is used only where neither exists. Against the model&rsquo;s own tags on {agr.pages} tagged pages, the image-only call agreed on manuscript or print {agr.script.agree}/{agr.script.n}, page type {agr.page_type.agree}/{agr.page_type.n} ({agr.page_type_partial.agree}/{agr.page_type_partial.n} on older pages), marginalia {agr.has_marginalia.agree}/{agr.has_marginalia.n}. On the {hands.pages} sampled pages the transcription model tagged handwritten or mixed, the two agreed on only {hands.script.agree}: every disagreement was a Chinese, Japanese, Korean or Tibetan page the image-only call read as printed, where a woodblock print and a manuscript are hard to tell apart from a picture, and either model may be wrong. Treat the manuscript label for East Asian books as uncertain. Holding library: the catalogue&rsquo;s image source.
+          </p>
+          <MethodLinks links={[['Experiment log', COV2_LOG], ['Script', COV_SCRIPT], ['Page descriptor prompt', DESCRIPTOR], ['Descriptor answers', DESCRIPTOR_DATA], ['Fallback rule', MS_RULE]]} />
         </section>
 
         {/* ── limits and next ── */}

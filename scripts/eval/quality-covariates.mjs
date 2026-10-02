@@ -3,7 +3,8 @@
 // resolution? Joins every audited translation page (pooled monthly audits, one page per book) and
 // every referenced OCR benchmark page to three page properties, and reports stratified rates with
 // intervals plus one exploratory logistic regression. Feeds the covariate panels on
-// /research/quality/summary (#5615).
+// /research/quality/summary (#5615). #5623 adds manuscript vs print, holding library and page
+// content (and measures format coverage), each with its coverage and the rule each value came from.
 //
 // PRIOR ART: quality-by-language.mjs (pools the audits by book, by LANGUAGE only — this reuses its
 // pooling rule verbatim); benchmark-dashboard-data.mjs (OCR cells by catalogue period — reuses its
@@ -16,7 +17,11 @@
 //   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/quality-covariates.mjs
 // Reads Mongo (bookstore.pages, read-only) for image dimensions, and image headers from
 // images.sourcelibrary.org where a page carries none. Writes src/data/quality-covariates.json
-// (src/data/* is gitignored: commit it with `git add -f`). $0, no model calls.
+// (src/data/* is gitignored: commit it with `git add -f`). $0, no model calls, unless:
+//   --describe [--dry-run] [--limit=N]   run the image-only page descriptor (lib/page-descriptor.mjs,
+//       gemini-3.1-flash-lite, ~$0.0005 a page) on sampled pages whose OCR text lacks <script> or
+//       <page-type>, plus the agreement-check pages; answers are cached in
+//       scripts/eval/output/page-descriptors-5623.json and only missing pages are called. $3 ceiling.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -24,6 +29,11 @@ import { MongoClient } from 'mongodb';
 import { wilson, bootstrapItems } from './lib/agreement-stats.mjs';
 import { makeRng } from './lib/paired-stats.mjs';
 import { API_ENGINE } from './lib/refusals.mjs';
+import { describePage, DESCRIPTOR_MODEL, DESCRIPTOR_VERSION } from './lib/page-descriptor.mjs';
+import { extractScriptType, extractPageType, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
+import { getPageSource } from '../lib/page-image-url.mjs';
+import { routeBook } from '../lib/syriac-kraken-lane.mjs';
+import { costOf } from '../lib/model-pricing.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const RESULTS = path.join(ROOT, 'scripts/eval/results');
@@ -133,6 +143,245 @@ async function resolutionFor(db, keys) {
   return out;
 }
 
+// ── manuscript, holding library, page content, format (#5623) ─────────────────
+// Manuscript vs print, per page, is the OCR read's own `<script>printed|handwritten|mixed</script>`
+// tag. Where the page has none (Archive OCR, older Gemini prompts, e-text imports), the image-only
+// descriptor (lib/page-descriptor.mjs, `--describe`) supplies it. The BOOK's label is the majority
+// over every tagged page it has (the sampled page's descriptor answer counts as one more page);
+// a book with no tag anywhere falls back to routeBook() of the Syriac lane: a manuscript library
+// or a date before 1500 means manuscript, anything else print. Each row records which rule fired.
+const MS_LEVELS = ['print', 'manuscript', 'mixed'];
+const MS_OF = { printed: 'print', handwritten: 'manuscript', mixed: 'mixed' };
+const CONTENT_LEVELS = ['plain text', 'marginalia', 'table', 'illustration', 'unknown'];
+const ILLUS_TYPES = new Set(['illustration', 'diagram', 'map', 'frontispiece']);
+const DESCRIPTOR_FILE = path.join(ROOT, 'scripts/eval/output/page-descriptors-5623.json');
+const AGREEMENT_N = 40;
+// The Munich Digitization Centre (mdz) is the Bavarian State Library's (bsb) scanning arm: one holder.
+const PROVIDER_ALIAS = { mdz: 'bsb', british_library: 'bl' };
+const HOST_PROVIDER = [[/archive\.org/, 'internet_archive'], [/digitale-sammlungen\.de|bsb-muenchen/, 'bsb'], [/gallica\.bnf\.fr/, 'gallica'], [/e-rara\.ch/, 'e-rara'], [/wikimedia\.org/, 'wikimedia_commons'], [/bl\.uk/, 'bl'], [/books\.google/, 'google_books']];
+const tagCounts = (o) => Object.values(o || {}).reduce((s, x) => s + x, 0);
+function formatOf(f) {
+  const s = String(f ?? '').trim().toLowerCase();
+  if (!s) return null;
+  const n = Number(/^(\d{1,2})\s*(?:°|o\b|mo\b|to\b|vo\b)/.exec(s)?.[1] ?? (/^folio|^fol\b/.test(s) ? 2 : /^quarto/.test(s) ? 4 : /^octavo/.test(s) ? 8 : NaN));
+  return n === 2 ? '2°' : n === 4 ? '4°' : n === 8 ? '8°' : n >= 12 ? '12° and smaller' : 'other';
+}
+// What the transcription itself shows. Only a Gemini read was asked for <margin>, markdown tables and
+// the <detected-images> block, so on any other engine's text these are unknown, not "absent".
+function inlineFacts(text) {
+  const t = String(text || '');
+  const columnsTag = /<columns>\s*(\d+)\s*<\/columns>/i.exec(t);
+  return {
+    script: extractScriptType(t) ?? null,
+    page_type: extractPageType(t) ?? null,
+    columns: columnsTag ? Number(columnsTag[1]) : null,
+    has_marginalia: /<margin>/i.test(t),
+    has_table: /^\s*\|(\s*:?-{3,}:?\s*\|)+\s*$/m.test(t),
+    has_illustration: parseDetectedImages(t).length > 0 || /<image-desc>/i.test(t),
+  };
+}
+
+async function pageFacts(db, tRows, oRows) {
+  const proj = { projection: { id: 1, book_id: 1, page_number: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.source': 1, page_type: 1, cropped_photo: 1, split_from_spread: 1, archived_photo: 1, enhanced_photo: 1, photo_original: 1, photo: 1, crop: 1, archive_metadata: 1 } };
+  const pages = new Map(); // page id -> page
+  const keyToPage = new Map(); // row key -> page id
+  const tIds = tRows.map((r) => r.page_id).filter(Boolean);
+  for (const p of await db.collection('pages').find({ id: { $in: tIds } }, proj).toArray()) pages.set(p.id, p);
+  for (const r of tRows) if (pages.has(r.page_id)) keyToPage.set(r.key, r.page_id);
+  const bps = [...new Map(oRows.filter((r) => r.book_id && Number.isFinite(r.page_number)).map((r) => [`${r.book_id}|${r.page_number}`, r])).values()];
+  const byBp = new Map();
+  for (let i = 0; i < bps.length; i += 200) {
+    const ps = await db.collection('pages').find({ $or: bps.slice(i, i + 200).map((r) => ({ book_id: r.book_id, page_number: r.page_number })) }, proj).toArray();
+    for (const p of ps) { byBp.set(`${p.book_id}|${p.page_number}`, p); pages.set(p.id, p); }
+  }
+  for (const r of oRows) { const p = byBp.get(`${r.book_id}|${r.page_number}`); if (p) keyToPage.set(r.key, p.id); }
+
+  const bookIds = [...new Set([...tRows, ...oRows].map((r) => r.book_id).filter(Boolean))];
+  const bproj = { projection: { id: 1, published: 1, format: 1, 'image_source.provider': 1, 'image_source.source_url': 1 } };
+  const books = new Map((await db.collection('books').find({ id: { $in: bookIds } }, bproj).toArray()).map((b) => [b.id, b]));
+  // Every page's <script> tag across each book, counted server-side (the texts never leave Mongo).
+  const bookTags = new Map();
+  for (let i = 0; i < bookIds.length; i += 50) {
+    const agg = await db.collection('pages').aggregate([
+      { $match: { book_id: { $in: bookIds.slice(i, i + 50) }, 'ocr.data': { $type: 'string' } } },
+      { $project: { book_id: 1, m: { $regexFind: { input: '$ocr.data', regex: '<script>\\s*(printed|handwritten|mixed)\\s*</script>', options: 'i' } } } },
+      { $group: { _id: { b: '$book_id', s: { $toLower: { $ifNull: [{ $arrayElemAt: ['$m.captures', 0] }, 'none'] } } }, n: { $sum: 1 } } },
+    ], { allowDiskUse: true }).toArray();
+    for (const g of agg) { const o = bookTags.get(g._id.b) || {}; o[g._id.s] = g.n; bookTags.set(g._id.b, o); }
+  }
+  return { pages, keyToPage, books, bookTags };
+}
+
+/**
+ * The image-only descriptor, for every sampled page whose OCR text lacks <script> or <page-type>,
+ * plus AGREEMENT_N pages that carry both (the check against the inline tags). `--describe` calls
+ * the model for pages not yet in the cache file; without it the cache is read as is. `--dry-run`
+ * prints what would be called and the estimate.
+ */
+async function descriptorStep({ pages }) {
+  const cache = fs.existsSync(DESCRIPTOR_FILE) ? JSON.parse(fs.readFileSync(DESCRIPTOR_FILE, 'utf8')) : { pages: {} };
+  const want = [];
+  const tagged = [];
+  for (const p of pages.values()) {
+    const f = inlineFacts(p.ocr?.data);
+    const url = getPageSource(p);
+    if (!f.script || !f.page_type) want.push({ p, url, reason: 'missing-tags' });
+    else if (/^gemini/.test(p.ocr?.model || '')) tagged.push({ p, url, reason: 'agreement-check' });
+  }
+  const rng = makeRng(SEED + 5623);
+  const check = tagged.sort((a, b) => a.p.id.localeCompare(b.p.id)).map((x) => [rng(), x]).sort((a, b) => a[0] - b[0]).slice(0, AGREEMENT_N).map(([, x]) => x);
+  const limitArg = process.argv.find((a) => a.startsWith('--limit='));
+  // The random check is almost all print, so every sampled page the OCR tagged handwritten or mixed
+  // is checked as well (up to AGREEMENT_N): the manuscript covariate leans on the descriptor's hands.
+  const checkIds = new Set(check.map((x) => x.p.id));
+  const hand = tagged.filter((x) => !checkIds.has(x.p.id) && ['handwritten', 'mixed'].includes(extractScriptType(x.p.ocr?.data))).slice(0, AGREEMENT_N).map((x) => ({ ...x, reason: 'agreement-check-hand' }));
+  check.push(...hand);
+  const todo = [...want, ...check].filter((x) => !cache.pages[x.p.id]?.value && x.url).slice(0, limitArg ? Number(limitArg.slice(8)) : Infinity);
+  const noImage = [...want, ...check].filter((x) => !x.url).length;
+  const EST_IN = 1400, EST_OUT = 120; // a 1,536 px page plus the prompt; revised after the first calls
+  const estimate = todo.length * costOf(DESCRIPTOR_MODEL, EST_IN, EST_OUT);
+  console.log(`descriptor: ${want.length} pages missing a tag, ${check.length} agreement-check pages, ${todo.length} still to call, ${noImage} with no image; estimate $${estimate.toFixed(3)} (realtime list price)`);
+  if (process.argv.includes('--describe') && todo.length) {
+    if (estimate > 3) throw new Error(`descriptor estimate $${estimate.toFixed(2)} is over the $3 ceiling (#5623) — stop`);
+    if (process.argv.includes('--dry-run')) process.exit(0);
+    let spent = Object.values(cache.pages).reduce((s, x) => s + (x.usd || 0), 0);
+    for (let i = 0; i < todo.length; i += 8) {
+      await Promise.all(todo.slice(i, i + 8).map(async ({ p, url, reason }) => {
+        try {
+          const d = await describePage({ imageUrl: url, endpoint: 'scripts/eval/quality-covariates.mjs#describe', bookId: p.book_id, pageId: p.id });
+          cache.pages[p.id] = { book_id: p.book_id, page_number: p.page_number, image_url: url, reason, ocr_model: p.ocr?.model ?? null, ...d };
+          spent += d.usd;
+        } catch (e) {
+          cache.pages[p.id] = { book_id: p.book_id, page_number: p.page_number, image_url: url, reason, ocr_model: p.ocr?.model ?? null, value: null, errors: [String(e.message || e).slice(0, 200)] };
+        }
+      }));
+      if (spent > 3) throw new Error(`descriptor spend $${spent.toFixed(2)} passed the $3 ceiling — stop`);
+      Object.assign(cache, { model: DESCRIPTOR_MODEL, prompt_version: DESCRIPTOR_VERSION, issue: 5623, updated: new Date().toISOString(), usd: Math.round(spent * 10000) / 10000, calls: Object.values(cache.pages).filter((x) => x.input_tokens).length });
+      fs.mkdirSync(path.dirname(DESCRIPTOR_FILE), { recursive: true });
+      fs.writeFileSync(DESCRIPTOR_FILE, JSON.stringify(cache, null, 1) + '\n');
+      process.stdout.write(`\r  described ${Math.min(i + 8, todo.length)}/${todo.length}  $${spent.toFixed(3)}`);
+    }
+    console.log('');
+  }
+  return { cache, wanted: want.length, check: check.filter((x) => x.reason === 'agreement-check').map((x) => x.p.id), check_hand: hand.map((x) => x.p.id), no_image: noImage };
+}
+
+/** Resolve every row's manuscript label, provider, content class and format, recording each value's source. */
+function applyFacts(rows, { pages, keyToPage, books, bookTags }, { cache }) {
+  for (const r of rows) {
+    const p = pages.get(keyToPage.get(r.key));
+    const b = r.book_id ? books.get(r.book_id) : null;
+    if (!b && !p) {
+      Object.assign(r, { ms: 'unknown', ms_rule: 'external reference scan (no Source Library book)', ms_rule_class: 'external scan: unknown', page_script: null, page_script_src: 'none', provider: 'unknown', provider_src: 'none', content: 'unknown', content_src: 'none', format: null });
+      continue;
+    }
+    const f = inlineFacts(p?.ocr?.data);
+    const d = p ? cache.pages[p.id]?.value : null;
+    r.page_script = f.script ?? d?.script ?? null;
+    r.page_script_src = f.script ? 'ocr <script> tag' : d?.script ? 'descriptor' : 'none';
+    r.page_type = f.page_type ?? d?.page_type ?? null;
+    r.page_type_src = f.page_type ? 'ocr <page-type> tag' : d?.page_type ? 'descriptor' : 'none';
+    r.typeface = d?.typeface ?? null;
+    // book: majority over its tagged pages (+ this page's descriptor answer when its own tag is absent)
+    const counts = { ...(bookTags.get(r.book_id) || {}) };
+    delete counts.none;
+    if (!f.script && d?.script) counts[d.script] = (counts[d.script] || 0) + 1;
+    const n = tagCounts(counts);
+    if (n) {
+      const top = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+      const tie = top.length > 1 && top[0][1] === top[1][1];
+      r.ms = tie ? 'mixed' : MS_OF[top[0][0]];
+      r.ms_rule = !f.script && d?.script && n === 1 ? 'descriptor (this page; the book has no tagged page)' : `book majority of ${n} tagged page${n > 1 ? 's' : ''}${tie ? ' (tie, counted mixed)' : ''}`;
+      r.ms_counts = counts;
+      r.ms_rule_class = r.ms_rule.startsWith('descriptor') ? 'descriptor (this page only)' : 'OCR <script> tags, book majority';
+      // What the fallback rule would have said, so its accuracy can be read off the books the tags decide.
+      r.ms_fallback = routeBook(b || {}, {}).route === 'manuscript' ? 'manuscript' : 'print';
+    } else {
+      const route = routeBook(b || {}, {});
+      r.ms = route.route === 'manuscript' ? 'manuscript' : 'print';
+      r.ms_rule = `fallback routeBook: ${route.why}`;
+      r.ms_rule_class = route.route === 'print' ? 'fallback: print by default' : /^published/.test(route.why) ? 'fallback: published before 1500' : 'fallback: manuscript library';
+    }
+    // holding library
+    const prov = String(b?.image_source?.provider || '').toLowerCase();
+    if (prov) { r.provider = PROVIDER_ALIAS[prov] || prov; r.provider_src = 'books.image_source.provider'; }
+    else {
+      const url = [p?.archive_metadata?.source_url, b?.image_source?.source_url, p?.photo_original, p?.photo].find(Boolean) || '';
+      const hit = HOST_PROVIDER.find(([re]) => re.test(url));
+      r.provider = hit ? hit[1] : 'unknown';
+      r.provider_src = hit ? 'image host' : 'none';
+    }
+    // page content: one class, illustration > table > marginalia > plain text
+    const gemini = /^gemini/.test(p?.ocr?.model || '') && !!f.script;
+    const src = gemini ? { illus: ILLUS_TYPES.has(f.page_type) || f.has_illustration, table: f.page_type === 'table' || f.has_table, margin: f.has_marginalia } : d ? { illus: ILLUS_TYPES.has(d.page_type) || d.has_illustration, table: d.page_type === 'table' || d.has_table, margin: d.has_marginalia } : null;
+    r.content = !src ? 'unknown' : src.illus ? 'illustration' : src.table ? 'table' : src.margin ? 'marginalia' : 'plain text';
+    r.content_src = gemini ? 'transcription tags (Gemini read)' : d ? 'descriptor' : 'none';
+    r.format = formatOf(b?.format);
+  }
+  const cov = (rs) => {
+    const tally = (k) => rs.reduce((a, r) => ((a[r[k]] = (a[r[k]] || 0) + 1), a), {});
+    return { n: rs.length, page_script_src: tally('page_script_src'), ms_rule: tally('ms_rule_class'), ms: tally('ms'), provider_src: tally('provider_src'), content_src: tally('content_src'), content: tally('content'), format: tally('format') };
+  };
+  const tRows = rows.filter((r) => r.key.startsWith('t|'));
+  return { translation: cov(tRows), ocr_lite: cov(rows.filter((r) => r.key.startsWith('o|') && r.engine === LITE)) };
+}
+
+/** What the descriptor run cost, what it said where tags were missing, and how it agrees with the inline tags. */
+function descriptorReport({ pages }, { cache, wanted, check, check_hand }) {
+  const entries = Object.entries(cache.pages || {});
+  const ok = entries.filter(([, v]) => v.value);
+  const family = (m) => (!m ? 'no engine recorded' : /^gemini/.test(m) ? m.replace(/-preview$/, '') : m.split(/[/@-]/)[0]);
+  const byEngine = {};
+  for (const [, v] of ok.filter(([, v]) => v.reason === 'missing-tags')) {
+    const e = (byEngine[family(v.ocr_model)] ||= { n: 0, printed: 0, handwritten: 0, mixed: 0 });
+    e.n++; if (v.value.script) e[v.value.script]++;
+  }
+  const agreeOn = (ids) => {
+    const agree = { script: [], page_type: [], columns: [], has_marginalia: [], has_table: [], has_illustration: [] };
+    const confusion = {};
+    for (const id of ids) {
+      const d = cache.pages[id]?.value, p = pages.get(id);
+      if (!d || !p) continue;
+      const f = inlineFacts(p.ocr?.data);
+      agree.script.push(d.script === f.script);
+      (confusion[`${f.script} → ${d.script}`] ||= 0), confusion[`${f.script} → ${d.script}`]++;
+      agree.page_type.push(d.page_type === f.page_type);
+      agree.columns.push(Math.max(1, d.columns ?? 1) === (f.columns ?? 1));
+      agree.has_marginalia.push(d.has_marginalia === f.has_marginalia);
+      agree.has_table.push(d.has_table === (f.has_table || f.page_type === 'table'));
+      agree.has_illustration.push(d.has_illustration === (f.has_illustration || ILLUS_TYPES.has(f.page_type)));
+    }
+    return { agree, confusion };
+  };
+  const { agree, confusion } = agreeOn(check);
+  const handCheck = agreeOn(check_hand);
+  // The same page type on pages whose OCR carries <page-type> but not <script> (older prompt versions).
+  for (const [id, v] of ok.filter(([, v]) => v.reason === 'missing-tags')) {
+    const f = inlineFacts(pages.get(id)?.ocr?.data);
+    if (f.page_type && !f.script) (agree.page_type_partial ||= []).push(v.value.page_type === f.page_type);
+  }
+  const direction = Object.fromEntries(['has_marginalia', 'has_table', 'has_illustration'].map((k) => [k, { descriptor_only: 0, transcription_only: 0 }]));
+  for (const id of check) {
+    const d = cache.pages[id]?.value, p = pages.get(id);
+    if (!d || !p) continue;
+    const f = inlineFacts(p.ocr?.data);
+    const inline = { has_marginalia: f.has_marginalia, has_table: f.has_table || f.page_type === 'table', has_illustration: f.has_illustration || ILLUS_TYPES.has(f.page_type) };
+    for (const k of Object.keys(direction)) if (d[k] !== inline[k]) direction[k][d[k] ? 'descriptor_only' : 'transcription_only']++;
+  }
+  const share = (xs) => { const k = xs.filter(Boolean).length, [lo, hi] = wilson(k, xs.length); return { n: xs.length, agree: k, rate: xs.length ? r3(k / xs.length) : null, ci: xs.length ? [r3(lo), r3(hi)] : null }; };
+  return {
+    file: path.relative(ROOT, DESCRIPTOR_FILE), model: DESCRIPTOR_MODEL, prompt_version: DESCRIPTOR_VERSION, prompt: 'scripts/eval/lib/page-descriptor.mjs',
+    pages_missing_a_tag: wanted, described: ok.length, failed: entries.length - ok.length,
+    failures: Object.entries(entries.filter(([, v]) => !v.value).reduce((a, [, v]) => { const k = String(v.errors?.[0] || '').replace(/ https?:\/\/\S+/, '').slice(0, 60); a[k] = (a[k] || 0) + 1; return a; }, {})),
+    field_errors: ok.filter(([, v]) => v.errors?.length).length,
+    usd: r3(cache.usd ?? 0), billing: 'realtime list price through scripts/lib/gemini-script-client.mjs (the client has no Batch path)',
+    input_tokens: ok.reduce((x, [, v]) => x + (v.input_tokens || 0), 0), output_tokens: ok.reduce((x, [, v]) => x + (v.output_tokens || 0), 0),
+    script_where_tag_missing_by_engine: byEngine,
+    agreement_with_inline_tags: { pages: check.length, ...Object.fromEntries(Object.entries(agree).map(([k, xs]) => [k, share(xs)])), script_confusion: confusion, flag_disagreements: direction },
+    agreement_on_handwritten_or_mixed_tags: { pages: check_hand.length, script: share(handCheck.agree.script), page_type: share(handCheck.agree.page_type), has_marginalia: share(handCheck.agree.has_marginalia), script_confusion: handCheck.confusion },
+  };
+}
+
 // ── 1. translation pages (pooling rule of quality-by-language.mjs) ─────────────
 const auditDirs = fs.readdirSync(RESULTS)
   .filter((d) => d.startsWith('translation-corpus-audit-') && !d.includes('chained') && fs.existsSync(path.join(RESULTS, d, 'report.json')))
@@ -212,13 +461,19 @@ await client.connect();
 const db = client.db('bookstore');
 const oKeys = [...new Map(oPages.filter((r) => r.book_id).map((r) => [r.key, { key: r.key, book_id: r.book_id, page_number: r.page_number }])).values()];
 const res = await resolutionFor(db, [...[...tPages.values()].map((r) => ({ key: r.key, page_id: r.page_id })), ...oKeys]);
-await client.close();
 for (const r of [...tPages.values(), ...oPages]) {
   const x = res.get(r.key);
   r.long_edge = x?.long_edge ?? null;
   r.res_source = x?.source ?? (r.book_id ? 'not looked up' : 'external reference scan (no Source Library page)');
   r.res_band = resBand(r.long_edge);
 }
+
+// ── 3b. manuscript, holding library, page content, format (#5623) ───────────────
+const facts = await pageFacts(db, [...tPages.values()], oPages);
+const descriptors = await descriptorStep(facts);
+await client.close();
+const pageCoverage = applyFacts([...tPages.values(), ...oPages], facts, descriptors);
+const descriptorSummary = descriptorReport(facts, descriptors);
 
 // ── 4. strata ─────────────────────────────────────────────────────────────────
 const terciles = (rows) => {
@@ -229,6 +484,20 @@ const T = [...tPages.values()];
 const tCut = terciles(T);
 const charLevel = (c, cut) => (!(c > 0) ? 'unknown' : c < cut[0] ? 'fewest' : c < cut[1] ? 'middle' : 'most');
 for (const r of T) r.char_level = charLevel(r.chars, tCut);
+
+// Holding libraries with fewer than PROVIDER_MIN books in a sample go into "other", within that sample.
+const PROVIDER_MIN = 15;
+function groupProviders(rows) {
+  const n = rows.reduce((a, r) => ((a[r.provider] = (a[r.provider] || 0) + 1), a), {});
+  for (const r of rows) r.provider_group = r.provider === 'unknown' ? 'unknown' : n[r.provider] >= PROVIDER_MIN ? r.provider : 'other';
+  return [...Object.entries(rows.reduce((a, r) => ((a[r.provider_group] = (a[r.provider_group] || 0) + 1), a), {}))]
+    .sort((a, b) => (a[0] === 'unknown') - (b[0] === 'unknown') || (a[0] === 'other') - (b[0] === 'other') || b[1] - a[1]).map(([k]) => k);
+}
+const T_PROVIDERS = groupProviders(T);
+const O_PROVIDERS = groupProviders(oPages.filter((r) => r.engine === LITE));
+for (const r of oPages) if (!r.provider_group) r.provider_group = O_PROVIDERS.includes(r.provider) ? r.provider : r.provider === 'unknown' ? 'unknown' : 'other';
+const MS_ALL = [...MS_LEVELS, 'unknown'];
+const crossTab = (rows, a, b) => rows.reduce((o, r) => { const x = (o[r[a]] ||= {}); x[r[b]] = (x[r[b]] || 0) + 1; return o; }, {});
 
 // The same cell within each script class: the audits over-sample non-Latin languages, so a pooled
 // cell's rate moves with its script mix as much as with the covariate.
@@ -262,6 +531,10 @@ const translation = {
   by_period: rateCells(T, 'period', PERIODS),
   by_chars: rateCells(T, 'char_level', CHAR_LEVELS).map((c) => ({ ...c, range: c.level === 'fewest' ? `<${tCut[0]}` : c.level === 'middle' ? `${tCut[0]}–${tCut[1] - 1}` : c.level === 'most' ? `≥${tCut[1]}` : null })),
   by_resolution: rateCells(T, 'res_band', RES_BANDS),
+  by_manuscript: rateCells(T, 'ms', MS_ALL),
+  by_provider: rateCells(T, 'provider_group', T_PROVIDERS),
+  by_content: rateCells(T, 'content', CONTENT_LEVELS),
+  cross: { manuscript_by_script: crossTab(T, 'ms', 'script'), manuscript_by_period: crossTab(T, 'ms', 'period'), provider_by_script: crossTab(T, 'provider_group', 'script'), provider_by_manuscript: crossTab(T, 'provider_group', 'ms'), rule_by_manuscript: crossTab(T, 'ms_rule_class', 'ms') },
   char_cuts: tCut,
   period_parse_agrees_with_draw: T.filter((r) => r.period === r.period_draw).length,
   resolution_sources: Object.fromEntries(Object.entries(T.reduce((a, r) => ((a[r.res_source] = (a[r.res_source] || 0) + 1), a), {}))),
@@ -277,6 +550,10 @@ for (const [name, engine] of [['lite', LITE], ['flash', FLASH]]) {
     by_period: cerCells(O, 'period', PERIODS, name === 'lite' ? 3 : 4),
     by_chars: cerCells(O, 'char_level', CHAR_LEVELS, name === 'lite' ? 5 : 6).map((c) => ({ ...c, range: c.level === 'fewest' ? `<${cut[0]}` : c.level === 'middle' ? `${cut[0]}–${cut[1] - 1}` : c.level === 'most' ? `≥${cut[1]}` : null })),
     by_resolution: cerCells(O, 'res_band', RES_BANDS, name === 'lite' ? 7 : 8),
+    by_manuscript: cerCells(O, 'ms', MS_ALL, name === 'lite' ? 41 : 42),
+    by_provider: cerCells(O, 'provider_group', O_PROVIDERS, name === 'lite' ? 43 : 44),
+    by_content: cerCells(O, 'content', CONTENT_LEVELS, name === 'lite' ? 45 : 46),
+    cross: { manuscript_by_script: crossTab(O, 'ms', 'script'), manuscript_by_period: crossTab(O, 'ms', 'period'), provider_by_script: crossTab(O, 'provider_group', 'script') },
     char_cuts: cut,
     // Pooled cells mostly sort pages by LANGUAGE (the Chinese cohort is half the referenced pages, has
     // no catalogue date and small scans), so each script is also cut on its own, terciles within it.
@@ -290,6 +567,9 @@ for (const [name, engine] of [['lite', LITE], ['flash', FLASH]]) {
         by_period: cerCells(S, 'period', PERIODS, salt),
         by_chars: cerCells(S, 'char_level', CHAR_LEVELS, salt + 1).map((c) => ({ ...c, range: c.level === 'fewest' ? `<${sCut[0]}` : c.level === 'middle' ? `${sCut[0]}–${sCut[1] - 1}` : c.level === 'most' ? `≥${sCut[1]}` : null })),
         by_resolution: cerCells(S, 'res_band', RES_BANDS, salt + 2),
+        by_manuscript: cerCells(S, 'ms', MS_ALL, salt + 100),
+        by_provider: cerCells(S, 'provider_group', O_PROVIDERS, salt + 101),
+        by_content: cerCells(S, 'content', CONTENT_LEVELS, salt + 102),
       }];
     })),
     resolution_sources: Object.fromEntries(Object.entries(O.reduce((a, r) => ((a[r.res_source] = (a[r.res_source] || 0) + 1), a), {}))),
@@ -336,29 +616,44 @@ function invert(A) {
   return M.map((r) => r.slice(n));
 }
 const R = T.filter((r) => r.chars > 0);
-const termDefs = [
+const baseTerms = [
   ['non-Latin script (vs Latin)', (r) => (r.script === 'non-Latin' ? 1 : 0)],
   ...['pre-1500', '1500s', '1700s', '1800s', '1900+', 'unknown'].map((pd) => [`period ${pd} (vs 1600s)`, (r) => (r.period === pd ? 1 : 0)]),
   ['log2 characters (per doubling)', (r) => Math.log2(r.chars) - Math.log2(median(R.map((x) => x.chars)))],
   ...['<1500 px', '≥2500 px', 'unknown'].map((b) => [`resolution ${b} (vs 1500–2499 px)`, (r) => (r.res_band === b ? 1 : 0)]),
-].filter(([name, f]) => name.startsWith('log2') || R.some((r) => f(r) === 1)); // an empty level has no coefficient
-const X = R.map((r) => [1, ...termDefs.map(([, f]) => f(r))]);
-const fit = logistic(X, R.map((r) => (r.ok ? 1 : 0)));
+];
+// #5623: manuscript (the book's majority <script> tag, else the fallback rule) against print. A
+// "mixed" book is its own term only with at least 10 books; with fewer it is counted with print.
+const mixedN = R.filter((r) => r.ms === 'mixed').length;
+const msTerms = [
+  ['manuscript (vs print)', (r) => (r.ms === 'manuscript' ? 1 : 0)],
+  ...(mixedN >= 10 ? [['mixed hand and print (vs print)', (r) => (r.ms === 'mixed' ? 1 : 0)]] : []),
+];
 const Z = 1.959964;
+function fitModel(model, defs) {
+  const termDefs = defs.filter(([name, f]) => name.startsWith('log2') || R.some((r) => f(r) === 1)); // an empty level has no coefficient
+  const X = R.map((r) => [1, ...termDefs.map(([, f]) => f(r))]);
+  const fit = logistic(X, R.map((r) => (r.ok ? 1 : 0)));
+  return {
+    model, n: R.length, events: R.filter((r) => r.ok).length, converged: fit.converged, iterations: fit.iterations,
+    terms: termDefs.map(([name, f], j) => {
+      const bj = fit.b[j + 1], se = fit.se[j + 1];
+      return { term: name, n_at_level: name.startsWith('log2') ? null : R.filter((r) => f(r) === 1).length, odds_ratio: r3(Math.exp(bj)), ci: [r3(Math.exp(bj - Z * se)), r3(Math.exp(bj + Z * se))], p: r3(2 * (1 - normCdf(Math.abs(bj / se)))) };
+    }),
+  };
+}
 const regression = {
-  model: 'logit P(judge ≥ 4) = script + period + log2(chars) + resolution band; IRLS, Wald 95% CI; one page per book, unweighted',
-  n: R.length, events: R.filter((r) => r.ok).length, converged: fit.converged, iterations: fit.iterations,
-  terms: termDefs.map(([name, f], j) => {
-    const bj = fit.b[j + 1], se = fit.se[j + 1];
-    return { term: name, n_at_level: name.startsWith('log2') ? null : R.filter((r) => f(r) === 1).length, odds_ratio: r3(Math.exp(bj)), ci: [r3(Math.exp(bj - Z * se)), r3(Math.exp(bj + Z * se))], p: r3(2 * (1 - normCdf(Math.abs(bj / se)))) };
-  }),
+  ...fitModel('logit P(judge ≥ 4) = script + manuscript + period + log2(chars) + resolution band; IRLS, Wald 95% CI; one page per book, unweighted', [baseTerms[0], ...msTerms, ...baseTerms.slice(1)]),
+  mixed_counted_as_print: mixedN >= 10 ? 0 : mixedN,
 };
+const regressionWithoutManuscript = fitModel('logit P(judge ≥ 4) = script + period + log2(chars) + resolution band (the #5615 model, for comparison)', baseTerms);
 function normCdf(z) { const t = 1 / (1 + 0.2316419 * z); const d = 0.3989423 * Math.exp((-z * z) / 2); return 1 - d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274)))); }
 
 // ── 6. write ──────────────────────────────────────────────────────────────────
 const out = {
   generated: new Date().toISOString().slice(0, 10),
   issue: 5615,
+  issues: [5615, 5623],
   seed: SEED,
   status: 'exploratory and observational: no covariate was randomised, the audits were stratified by language, and every cell under 30 is a first look',
   sources: {
@@ -366,6 +661,9 @@ const out = {
     ocr: [...latest.values()].map((f) => `scripts/eval/results/benchmark/${f}`),
     refusals: refusalFile ? `scripts/eval/results/benchmark/refusals/${refusalFile}` : null,
     resolution: 'bookstore.pages image_width/image_height; else the crop or archived image header on images.sourcelibrary.org',
+    manuscript: 'bookstore.pages ocr.data <script> tags (every OCR\'d page of the book, counted in Mongo); scripts/eval/output/page-descriptors-5623.json where the sampled page has none; else routeBook() in scripts/lib/syriac-kraken-lane.mjs',
+    provider: 'bookstore.books image_source.provider; else the image host',
+    content: 'the Gemini transcription\'s own tags (<page-type>, <margin>, markdown tables, <detected-images>/<image-desc>); else the descriptor',
   },
   definitions: {
     unit: 'one page per book (audits pool monthly draws with each book counted once, its earliest verdict; the OCR benchmark draws one page per book per stratum)',
@@ -374,11 +672,31 @@ const out = {
     resolution: 'Long edge in pixels of the stored master scan (or of the crop for a split page). Not the reader\'s display copy, which is capped at 2,000 px wide. OCR reference-tier pages (Wikisource, pinned editions) are external scans with no Source Library page and are unknown.',
     judge: 'Claude Opus fidelity rating 4 or 5 of 5, source-grounded. A model judgement, not accuracy.',
     cer: 'Character error rate against a published e-text, median per stratum, refusals scored as 1.0 on sealed strata (the dashboard rule). 95% percentile bootstrap, 2,000 resamples, seeded.',
+    manuscript: 'Book level. The majority of the OCR <script> tag (printed | handwritten | mixed) over every OCR\'d page of the book, with the sampled page\'s descriptor answer counted when its own tag is absent; a tie is mixed. A book with no tag at all takes the Syriac lane\'s routing rule (scripts/lib/syriac-kraken-lane.mjs routeBook): held by a manuscript library (vatican, cambridge, bodleian, manchester, chester_beatty, gallica, bl) or published before 1500 is manuscript, anything else print. That rule was written for Syriac; gallica and bl hold mostly print outside it. coverage.*.ms_rule counts which rule decided each book.',
+    provider: 'The holding library or scan source from books.image_source.provider (mdz merged into bsb: the same library). A library with fewer than 15 books in a sample is "other" within that sample.',
+    content: 'One class per page, the first that applies: illustration (page type illustration, diagram, map or frontispiece, or a detected image), table (page type table or a markdown table), marginalia (a <margin> note), else plain text. From the transcription\'s tags when the page was read by Gemini with the tagged prompt (absence of a <margin> tag there means none seen); otherwise from the image-only descriptor. The audits exclude plates and blanks, so illustration and table are rare there by design.',
+    format: 'books.format (2°, 4°, 8°) is filled on too few sampled books for a 30-per-cell comparison; see format.',
     intervals: 'Rates: Wilson 95%. Medians: percentile bootstrap 95%. Grades: under 30 exploratory, 30–49 directional, 50 or more decision-grade.',
   },
   translation,
   ocr,
   regression,
+  regression_without_manuscript: regressionWithoutManuscript,
+  coverage: pageCoverage,
+  format: (() => {
+    const cells = (k) => Object.entries(pageCoverage[k].format).filter(([f]) => f !== 'null').map(([f, n]) => ({ level: f, n }));
+    const tc = cells('translation'), oc = cells('ocr_lite');
+    const usable = [...tc, ...oc].some((c) => c.n >= 30) && tc.every((c) => c.n >= 30);
+    return { skipped: !usable, reason: usable ? null : `books.format is set on ${tc.reduce((s, c) => s + c.n, 0)} of ${T.length} audited books and ${oc.reduce((s, c) => s + c.n, 0)} of ${pageCoverage.ocr_lite.n} benchmark pages; no cell reaches 30`, translation: tc, ocr_lite: oc };
+  })(),
+  descriptor: descriptorSummary,
+  // How the Syriac lane's fallback rule (provider or date) scores against the book's tag/descriptor
+  // label, on the audited books where a tag or descriptor answer exists.
+  fallback_rule_check: (() => {
+    const rows = T.filter((r) => r.ms_fallback && r.ms !== 'mixed');
+    const tab = crossTab(rows, 'ms', 'ms_fallback');
+    return { n: rows.length, agree: rows.filter((r) => r.ms === r.ms_fallback).length, label_by_fallback: tab };
+  })(),
 };
 fs.writeFileSync(path.join(ROOT, 'src/data/quality-covariates.json'), JSON.stringify(out, null, 2) + '\n');
 
@@ -399,5 +717,18 @@ for (const k of ['lite', 'flash']) {
   }
 }
 for (const f of ['by_period', 'by_chars', 'by_resolution']) console.log(`translation ${f} within script: ` + translation[f].map((c) => `${c.level} L ${c.latin?.k}/${c.latin?.n} N ${c.nonlatin?.k}/${c.nonlatin?.n}`).join(' | '));
+for (const f of ['by_manuscript', 'by_provider', 'by_content']) {
+  show(`judge ≥4 ${f}`, translation[f], (c) => `${c.rate} [${c.ci}] L ${c.latin?.k}/${c.latin?.n} N ${c.nonlatin?.k}/${c.nonlatin?.n}`);
+  for (const [sc, w] of Object.entries(ocr.lite.within_script)) console.log(`   lite ${sc} ${f}: ` + w[f].map((c) => `${c.level} ${c.median} [${c.ci}] n=${c.n}`).join(' | '));
+}
+console.log('\ncross translation', JSON.stringify(translation.cross));
+console.log('cross ocr lite', JSON.stringify(ocr.lite.cross));
+console.log('coverage', JSON.stringify(pageCoverage));
+console.log('format', JSON.stringify(out.format));
+console.log('descriptor', JSON.stringify(descriptorSummary.agreement_with_inline_tags));
+console.log('descriptor on hands', JSON.stringify(descriptorSummary.agreement_on_handwritten_or_mixed_tags));
+console.log('fallback rule check', JSON.stringify(out.fallback_rule_check));
 console.log(`\nregression n=${regression.n} events=${regression.events} converged=${regression.converged}`);
 for (const t of regression.terms) console.log(`  ${t.term.padEnd(38)} OR ${t.odds_ratio} [${t.ci}] p=${t.p} n=${t.n_at_level}`);
+console.log('without manuscript:');
+for (const t of regressionWithoutManuscript.terms.slice(0, 1)) console.log(`  ${t.term.padEnd(38)} OR ${t.odds_ratio} [${t.ci}] p=${t.p} n=${t.n_at_level}`);
