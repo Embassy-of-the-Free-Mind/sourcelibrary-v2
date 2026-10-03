@@ -172,8 +172,7 @@ async function archivePage(page, db) {
   const domain = getDomain(sourceUrl);
   await waitForToken(domain);
 
-  // Use the correct pages collection (pages or pages_warehouse)
-  const pagesCol = page._collection || 'pages';
+  const pagesCol = 'pages'; // the warehouse was retired 2026-10 (#5470)
 
   try {
     // Try full-res first, fall back to original URL if it fails (some sources reject /full/full/).
@@ -320,25 +319,6 @@ async function main() {
     .toArray()
     .catch(() => []) : [];
 
-  // Also include warehouse books from Hetzner-safe providers
-  // Priority: likely first translations (non-English) first
-  const HETZNER_SAFE_PROVIDERS = [...PRIORITY_PROVIDERS, 'mdz', 'cmc_kloss', 'bodleian', 'penn_colenda', 'kyoto_rmda', 'bph', 'oraec'];
-  const warehouseBooks = await db.collection('books_warehouse')
-    .find(
-      {
-        pages_count: { $gt: 0 },
-        'archive_metadata.blocked': { $ne: true },
-        'image_source.provider': { $in: HETZNER_SAFE_PROVIDERS },
-        ...NEEDS_ARCHIVE_EXPR,
-        ...SCOPE_FILTER,
-      },
-      { projection: { id: 1, title: 1, 'image_source.provider': 1, language: 1, is_first_translation: 1 } }
-    )
-    .limit(2000)
-    .maxTimeMS(60_000)
-    .toArray()
-    .catch(() => []);
-
   // Bulk-unsuitable IA fallback. archive-bulk marks books bulk_unsuitable when
   // the JP2 zip doesn't align with the IIIF-derived photo URLs (archive drift,
   // #1504). Those books can't be archived by bulk; route them here so their
@@ -361,22 +341,8 @@ async function main() {
     .toArray()
     .catch(() => []);
 
-  // Sort warehouse: likely first translations first (non-English = likely first)
-  const ENGLISH_VARIANTS = ['english', 'eng', 'en'];
-  warehouseBooks.sort((a, b) => {
-    const aEng = ENGLISH_VARIANTS.includes((a.language || '').toLowerCase());
-    const bEng = ENGLISH_VARIANTS.includes((b.language || '').toLowerCase());
-    if (a.is_first_translation && !b.is_first_translation) return -1;
-    if (!a.is_first_translation && b.is_first_translation) return 1;
-    if (!aEng && bEng) return -1;
-    if (aEng && !bEng) return 1;
-    return 0;
-  });
-  // Tag warehouse books so we know which collections to query
-  warehouseBooks.forEach(b => { b._warehouse = true; });
-
-  const books = [...priorityBooks, ...bulkUnsuitableIa, ...otherBooks, ...warehouseBooks];
-  console.log(`[archive-ocr] Checking ${priorityBooks.length} priority + ${bulkUnsuitableIa.length} bulk-unsuitable IA + ${otherBooks.length} other + ${warehouseBooks.length} warehouse books`);
+  const books = [...priorityBooks, ...bulkUnsuitableIa, ...otherBooks];
+  console.log(`[archive-ocr] Checking ${priorityBooks.length} priority + ${bulkUnsuitableIa.length} bulk-unsuitable IA + ${otherBooks.length} other books`);
 
   if (books.length === 0) {
     console.log(`[archive-ocr] No books with pages found`);
@@ -389,8 +355,7 @@ async function main() {
   const pagesPerBook = Math.ceil(MAX_PAGES / books.length);
   for (const book of books) {
     if (pages.length >= MAX_PAGES) break;
-    const pagesCol = book._warehouse ? 'pages_warehouse' : 'pages';
-    const bookPages = await db.collection(pagesCol)
+    const bookPages = await db.collection('pages')
       .find(
         {
           book_id: book.id,
@@ -418,8 +383,6 @@ async function main() {
       .maxTimeMS(10_000)
       .toArray()
       .catch(() => []);
-    // Tag pages with their collection for archivePage to write to the right place
-    if (book._warehouse) bookPages.forEach(p => { p._collection = 'pages_warehouse'; });
     pages.push(...bookPages);
   }
 
@@ -534,14 +497,11 @@ async function main() {
   console.log(`[archive-ocr] Per-domain: ${Object.entries(domainStats).map(([d, s]) => `${d}:${s.ok}ok/${s.fail}fail`).join(', ')}`);
 
   // Sync pages_archived counter on touched books (#497)
-  // Track which books are warehouse vs live
-  const warehouseBookIds = new Set(books.filter(b => b._warehouse).map(b => b.id));
   if (touchedBookIds.size > 0) {
     let synced = 0;
     for (const bookId of touchedBookIds) {
-      const isWarehouse = warehouseBookIds.has(bookId);
-      const pagesCol = isWarehouse ? 'pages_warehouse' : 'pages';
-      const booksCol = isWarehouse ? 'books_warehouse' : 'books';
+      const pagesCol = 'pages';
+      const booksCol = 'books';
       const archivedCount = await db.collection(pagesCol).countDocuments(
         { book_id: bookId, archived_photo: { $exists: true, $nin: [null, ''] } },
         { maxTimeMS: 10000 }
@@ -567,7 +527,7 @@ async function main() {
       );
       synced++;
     }
-    console.log(`[archive-ocr] Synced pages_archived on ${synced} books (${[...touchedBookIds].filter(id => warehouseBookIds.has(id)).length} warehouse)`);
+    console.log(`[archive-ocr] Synced pages_archived on ${synced} books`);
   }
 
   // Log to cron_runs for monitoring

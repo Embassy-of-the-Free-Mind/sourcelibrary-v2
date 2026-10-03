@@ -110,11 +110,7 @@ async function archivePage(db, page) {
         update.$set.thumbnail_blob = thumbBlob.url;
       } catch { /* thumbnail is optional */ }
 
-      // Try live pages first, fall back to warehouse
-      const result = await db.collection('pages').updateOne({ _id: page._id }, update);
-      if (result.matchedCount === 0) {
-        await db.collection('pages_warehouse').updateOne({ _id: page._id }, update);
-      }
+      await db.collection('pages').updateOne({ _id: page._id }, update);
 
       return 'ok';
     } catch (e) {
@@ -190,16 +186,7 @@ for (const book of toProcess) {
     .sort({ page_number: 1 })
     .toArray();
 
-  // Also check warehouse
-  const warehousePages = await db.collection('pages_warehouse')
-    .find(
-      { book_id: book.id, archived_photo: { $exists: false } },
-      { projection: { _id: 1, id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1 } }
-    )
-    .sort({ page_number: 1 })
-    .toArray();
-
-  const allPages = [...pages, ...warehousePages];
+  const allPages = pages;
   if (allPages.length === 0) continue;
 
   // Process pages with concurrency
