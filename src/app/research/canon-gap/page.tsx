@@ -204,7 +204,7 @@ export default function CanonGapPage() {
       header={
         <ContentHeader
           title="The Open Canons"
-          subtitle="Several of the great scriptural canons have already been typed in, and their texts released openly. For those, the slow and costly step of reading the page image is done. What remains is the English. This page lists each canon, how much of it has any English, and what a first draft would cost."
+          subtitle="Several scriptural canons have been typed in by other projects and released under open licences, so their text does not have to be read from page images. This page lists each one, how much of it has been translated into English, and what a first English draft would cost."
         />
       }
     >
@@ -223,45 +223,45 @@ export default function CanonGapPage() {
           <Stat n={`${SHELF.readable} / ${SHELF.listed}`} label="books on the Eternity reading list now readable in English here" />
         </div>
 
-        <Section kicker="The argument" title="The draft is cheap; the reading is not">
+        <Section kicker="Cost" title="Where the money goes">
           <p className="mb-4">
-            Where a canon exists only as page images, every page has to be read by a model first, and that reading has
-            to be checked. Where the canon has already been typed in by a project such as Esukhia, CBETA or Sefaria,
-            that step is gone. Where an open scan of the same edition exists, we pair the typed text with it, so each
-            page can still be checked against its source.
+            A canon that exists only as page images has to be read by a model page by page, and the reading has to be
+            checked. A canon already typed in by a project such as Esukhia, CBETA or Sefaria skips that step. Where an
+            open scan of the same edition exists, we pair the typed text with it, so each page can be checked against
+            the image.
           </p>
           <p>
-            The draft English is then a small cost: every canon below together comes to about $
-            {fmt(gapMap.total_draft_usd)}. The real cost is scholarly review. A draft makes a text searchable and
-            readable in outline; it does not replace a translator. Money for review goes furthest on the canons that
-            are open, typed, paired with scans, and have little English.
+            A draft English translation of every canon below would cost about ${fmt(gapMap.total_draft_usd)} in model
+            fees. Scholarly review costs far more. A draft lets a reader search a text and follow it in outline; it
+            does not replace a translator. Review funds go furthest on canons that are openly licensed, typed, paired
+            with scans, and have little English.
           </p>
           <RoutesDiagram n={1} />
         </Section>
 
         <Section kicker="Our library" title="Scanned, transcribed, translated">
           <p>
-            Before the typed canons, here is what we already hold in each tradition: scanned books in every edition we
-            could find, how much of each we have transcribed, and how much has a draft English translation. The
+            What we hold in each tradition: pages scanned, pages transcribed, and pages with a draft English
+            translation. The
             Tibetan figure includes the Derge Tengyur we imported this month; the Mongolian Kanjur is scans only so far.
           </p>
           <TraditionProgress n={2} rows={[...gapStatus.traditions].sort((a, b) => b.pages_scanned - a.pages_scanned)} />
         </Section>
 
-        <Section kicker="The gap" title="Most of the typed canon has no English, or nobody knows">
+        <Section kicker="The gap" title="How much of each canon is in English">
           <p>
-            Only three catalogues publish how much of their canon is in English: 84000 for the Tibetan canon,
-            SuttaCentral for the Pali, and Sefaria for the Hebrew. For the Chinese and Arabic canons, which are by far
-            the largest, the share is unknown, so their draft cost below assumes none of it is in English.
+            Three catalogues publish how much of their canon is in English: 84000 for the Tibetan canon, SuttaCentral
+            for the Pali, and Sefaria for the Hebrew. For the Chinese and Arabic canons, the two largest, nobody has
+            measured it, so their draft cost below assumes none of it is in English.
           </p>
           <CanonBars n={3} rows={bars} />
         </Section>
 
-        <Section kicker="The first case" title="The Derge Tengyur">
+        <Section kicker="First canon" title="The Derge Tengyur">
           <p>
-            The Tengyur, the canon of Indian commentaries and treatises in Tibetan, is the clearest case. Its text is
-            in the public domain, BDRC holds open scans of the same woodblock edition, and less than 1% of it is
-            available in English. We have imported all of it, paired each typed folio with its page image, and are
+            The Tengyur is the Tibetan canon of Indian commentaries and treatises. Its text is in the public domain,
+            BDRC holds open scans of the same woodblock edition, and less than 1% of it has been published in English,
+            so we started there. We have imported all of it, paired each typed folio with its page image, and are
             drafting an English translation of every page, to be reviewed by scholars beside the woodblock.{' '}
             <a href={TENGYUR.url} className="text-amber-800 underline underline-offset-2">
               Work log
@@ -276,6 +276,56 @@ export default function CanonGapPage() {
             pagesTranslated={TENGYUR.pages_translated}
             spendUsd={TENGYUR.spend_usd}
           />
+        </Section>
+
+        <Section kicker="Quality" title="How good the English is">
+          <p className="mb-4">
+            We test the English against published human translations of the same passages. Two AI judges score each
+            page for fidelity from 1 to 5 without knowing which version is which, and we open the page images
+            ourselves to find the cause of every low score. These are samples scored by models, not a
+            scholar&rsquo;s review. Tests run 30 September to 3 October 2026.
+          </p>
+          <ul className="list-disc pl-5 space-y-3 text-base">
+            <li>
+              <strong>Tengyur pilot.</strong> Of 40 sampled pages across five sections, 33 scored 4 or 5. The weakest
+              section was pramāṇa (logic), 4 of 8, where compressed verse came out as a literal crib. Four pages
+              contained a statement reversed in meaning, three of them in Madhyamaka verse. Every Tengyur page is
+              therefore labelled an unreviewed machine draft.{' '}
+              <a href={TENGYUR.url} className="text-amber-800 underline underline-offset-2">Details</a>
+            </li>
+            <li>
+              <strong>One page at a time.</strong> Against 84000&rsquo;s translations of the same passages (113
+              pages), drafting one page per request scored 4 or better on 99% of pages. Drafting eight pages at once
+              scored about the same, but put English for the wrong part of the text beside the woodblock 15 times,
+              against once. The full Tengyur is drafted one page at a time.
+            </li>
+            <li>
+              <strong>Sanskrit, Pali and classical Chinese.</strong> On 64 pages from 64 books, judged against
+              published translations, 58% of the English we serve scored 4 or better (mean 3.6). Sanskrit scored lowest,
+              mostly because on pages with verse and commentary the English keeps the verse and shortens or drops the
+              commentary. A stronger model (Gemini Flash instead of Flash-Lite) raised the mean by 0.4 and cut reversed
+              statements from 15 to 6 per 100 pages. We have not switched yet.{' '}
+              <a href={`${ISSUE_URL}5695`} className="text-amber-800 underline underline-offset-2">Details</a>
+            </li>
+            <li>
+              <strong>The reading of the page is often the cause.</strong> Of the 20 worst Sanskrit, Pali and Chinese
+              pages, 6 failed because the source text was misread, not mistranslated. Correcting those transcriptions
+              by hand raised their scores more than a better model did. This is why the typed canons above matter.
+            </li>
+            <li>
+              <strong>Transcription accuracy.</strong> Our reading of the Bhutanese Kangyur manuscripts matches the
+              Derge e-text on a median 95% of syllables. Our Sanskrit transcription matches GRETIL on at least 89% of
+              characters, and our Pali on 95%. Persian manuscripts are not yet readable: a median 41% character match
+              against Ganjoor&rsquo;s typed text, so we are not translating them. Printed Persian reads well.{' '}
+              <a href={`${ISSUE_URL}5525`} className="text-amber-800 underline underline-offset-2">Details</a>
+            </li>
+            <li>
+              <strong>What we withdrew.</strong> On some Tibetan manuscript folios our earlier reading model wrote out
+              Sanskrit scripture that is not on the page. We took down the English for the Bhutanese Kangyur
+              manuscripts and are re-reading the affected pages with a model trained on Tibetan script.{' '}
+              <a href={`${ISSUE_URL}4523`} className="text-amber-800 underline underline-offset-2">Details</a>
+            </li>
+          </ul>
         </Section>
 
         <Section kicker="Where it stands" title="Each canon, and what happens next">
@@ -299,8 +349,8 @@ export default function CanonGapPage() {
 
         <Section kicker="Already under way" title="The Eternity reading list">
           <p>
-            Alongside the typed canons, we have been reading and translating the scanned books on the list drawn up with
-            Eternity. As of the last count, <strong>{SHELF.readable} of {SHELF.listed}</strong> of those books can be
+            We are also transcribing and translating the scanned books on the reading list drawn up with Eternity. At
+            the last count, <strong>{SHELF.readable} of {SHELF.listed}</strong> of those books can be
             read in English on Source Library. The rest wait on a second reading of difficult pages or are still being
             translated. Each step is logged in{' '}
             <a href={SHELF.url} className="text-amber-800 underline underline-offset-2">
@@ -310,7 +360,7 @@ export default function CanonGapPage() {
           </p>
         </Section>
 
-        <Section kicker="Read these carefully" title="Limits of the numbers">
+        <Section kicker="Caveats" title="What these numbers leave out">
           <ul className="list-disc pl-5 space-y-3 text-base">
             <li>
               <strong>English coverage is unknown for most canons.</strong> Only 84000, SuttaCentral and Sefaria publish
@@ -319,7 +369,7 @@ export default function CanonGapPage() {
             </li>
             <li>
               <strong>The cost is for our cheapest translation setting.</strong> A stronger model costs about four
-              times as much per page for Chinese. Either way the draft is a small share of the cost of review.
+              times as much per page for Chinese. Either way the draft costs much less than review.
             </li>
             <li>
               <strong>Some sizes are sampled.</strong> Kanripo&rsquo;s size is estimated from 40 works per section; two

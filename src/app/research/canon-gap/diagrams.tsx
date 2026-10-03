@@ -72,7 +72,7 @@ export function RoutesDiagram({ n }: { n: number }) {
     <Figure
       n={n}
       title="Two routes from a canon to English"
-      caption="Where a canon exists only as page images, a model must read every page and the reading must be checked before any English can be drafted. Where it is already typed and openly licensed, those two steps fall away; an open scan of the same edition keeps every page checkable. Scholarly review is the same on both routes, and it is the expensive step."
+      caption="A canon that exists only as page images has to be read page by page, and the reading checked, before any English can be drafted. A canon that is already typed and openly licensed skips both steps, and an open scan of the same edition lets every page still be checked against its image. Scholarly review is needed on both routes and costs the most."
     >
       <div className="space-y-5">
         {[
@@ -83,7 +83,7 @@ export function RoutesDiagram({ n }: { n: number }) {
               <Step key="b" label="AI reading (OCR)" sub="every page, every script" />,
               <Step key="c" label="Check the reading" sub="second reads, by-eye samples" />,
               <Step key="d" label="Draft English" sub="cents per page" />,
-              <Step key="e" tone="review" label="Scholarly review" sub="where the money should go" />,
+              <Step key="e" tone="review" label="Scholarly review" sub="the main cost" />,
             ],
           },
           {
@@ -93,7 +93,7 @@ export function RoutesDiagram({ n }: { n: number }) {
               <Step key="b" skipped label="AI reading (OCR)" sub="already done by the typists" />,
               <Step key="c" skipped label="Check the reading" sub="page image stays beside the text" />,
               <Step key="d" label="Draft English" sub="cents per page" />,
-              <Step key="e" tone="review" label="Scholarly review" sub="where the money should go" />,
+              <Step key="e" tone="review" label="Scholarly review" sub="the main cost" />,
             ],
           },
         ].map((lane) => (
