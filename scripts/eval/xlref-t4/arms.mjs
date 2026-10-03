@@ -10,7 +10,8 @@
  *
  * Arms (one deviation from production each; production = getTranslateModelForBook, i.e. lite except BPH):
  *   prod-A / prod-B   production twice (X1 noise floor)            lite-A / lite-B   lite twice
- *   flash-0           flash, thinking 0                            flash-think       flash, thinkingBudget 2048 (X2)
+ *   flash-0           flash, thinking 0                            flash-think       flash, thinkingBudget 2048 (measured: no thinking happens)
+ *   flash-think8k     flash, thinkingBudget 8192 (X2, the arm that actually reasons)
  *   lite-noctx        lite, no previous translation, no neighbour OCR
  *   lite-gloss        lite + an open-source glossary block (--glossary <file>)
  *   lite-fixocr       lite on a corrected transcription (--fixed-dir <dir> with <book>_<page>.txt; pages without one are skipped)
@@ -48,6 +49,8 @@ const SPEC = {
   'lite-A': { model: MODEL_LITE, ctx: true }, 'lite-B': { model: MODEL_LITE, ctx: true },
   'flash-0': { model: MODEL_FLASH, ctx: true },
   'flash-think': { model: MODEL_FLASH, ctx: true, thinkingBudget: 2048 },
+  // probe 2026-10-03: on gemini-3-flash-preview a 2048 budget returns NO thoughtsTokenCount (the model does not think); 8192 does (3,651 tokens on one page). flash-think is therefore a second flash-0 replicate; flash-think8k is the real X2 arm.
+  'flash-think8k': { model: MODEL_FLASH, ctx: true, thinkingBudget: 8192 },
   'lite-noctx': { model: MODEL_LITE, ctx: false },
   'lite-gloss': { model: MODEL_LITE, ctx: true, glossary: true },
   'lite-fixocr': { model: MODEL_LITE, ctx: true, fixed: true },
@@ -100,7 +103,7 @@ async function runOne(arm, r) {
     prompt = prompt.replace('\n\n**Text to translate:**', `\n\n**Glossary (from open sources; use these senses where the term occurs; keep the source term, transliterated, in a <term> tag on first use if the English is not obvious):**\n${GLOSSARY}\n\n**Text to translate:**`);
   }
   if (DUMP) { fs.mkdirSync(DUMP, { recursive: true }); fs.writeFileSync(path.join(DUMP, `${id}.txt`), prompt); return; }
-  const maxOutputTokens = maxOutputTokensFor(ocrText.length);
+  const maxOutputTokens = maxOutputTokensFor(ocrText.length) + (spec.thinkingBudget || 0); // thoughts count against the output cap
   const generationConfig = { temperature: 1, maxOutputTokens, thinkingConfig: { thinkingBudget: spec.thinkingBudget || 0 } };
   if (DRY) { const est = costOf(model, prompt.length / 3.5, ocrText.length / 3 + 400 + (spec.thinkingBudget || 0)); runUsd += est; return; }
   if (envUsd + runUsd > MAX_USD - 0.05) throw new Error(`spend cap: envelope $${envUsd.toFixed(3)} + run $${runUsd.toFixed(3)} ≥ $${MAX_USD}`);
