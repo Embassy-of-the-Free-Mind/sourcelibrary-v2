@@ -83,6 +83,8 @@ const UNATTENDED = [
   { match: 'pipeline-health-alert.mjs', spends: false, gated: false, note: 'reads control, alerts' },
   { match: 'status-output-drift.mjs', spends: false, gated: false,
     note: 'read-only counts over books; no model call, no write (#4890)' },
+  { match: 'backfill-printed-page-4291.mjs', spends: false, gated: false,
+    note: 'daily refit of pages.printed_page from stored OCR text; Mongo only, no model call (#4291)' },
   { match: 'clip-index-integrity.mjs', spends: false, gated: false,
     note: 'read-only join of clip_embeddings to gallery_images; no model call, no write (#5195)' },
   { match: 'paid-vs-got.mjs', spends: false, gated: false,
