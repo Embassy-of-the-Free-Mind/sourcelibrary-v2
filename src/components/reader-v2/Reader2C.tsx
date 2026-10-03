@@ -4032,6 +4032,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               >
                 <ScanViewer
                   page={r.currentPage} book={r.book} zoom={scanZoom} onZoomChange={changeZoom} lensOn={lensOn}
+                  wheelZooms={false}
                   srcOverride={witnessSrc}
                   nativeSrcOverride={witnessNativeSrc}
                   altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}

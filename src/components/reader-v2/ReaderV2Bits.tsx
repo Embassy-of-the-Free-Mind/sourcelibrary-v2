@@ -338,7 +338,7 @@ const LENS_MAG_MAX = 6;
  */
 export function ScanViewer({
   page, book, zoom, onZoomChange, lensOn = false, scrollRef, onScroll, fullRes = false,
-  srcOverride, nativeSrcOverride, altOverride, onNaturalSize, onEdgePageTurn,
+  srcOverride, nativeSrcOverride, altOverride, onNaturalSize, onEdgePageTurn, wheelZooms = true,
 }: {
   page: Page;
   book: Book;
@@ -374,6 +374,10 @@ export function ScanViewer({
    *  Judged at finger-lift from the leftover travel, so drifting back before
    *  release cancels it. */
   onEdgePageTurn?: (dir: 'next' | 'prev') => void;
+  /** A plain two-finger scroll / mouse wheel zooms at the cursor (the map
+   *  and image-viewer convention). Off where the scan sits inside a scrolling
+   *  column, so a wheel over it still scrolls the page; a pinch zooms either way. */
+  wheelZooms?: boolean;
 }) {
   const t = getReaderStrings(useLocale()).panes;
   const resolved = resolveScanUrls(page);
@@ -547,12 +551,14 @@ export function ScanViewer({
   };
 
   /**
-   * Wheel does one of three things, depending on what is on:
-   * lens up   → dial the lens's magnification (what a loupe's focus does)
-   * ctrl/⌘    → zoom the scan, which is what a trackpad pinch sends
-   * otherwise → nothing, so a zoomed pane scrolls natively
+   * Wheel, depending on what is on:
+   * lens up        → dial the lens's magnification (what a loupe's focus does)
+   * ctrl/⌘         → zoom the scan, which is what a trackpad pinch sends
+   * vertical wheel → zoom the scan at the cursor (when wheelZooms)
+   * otherwise      → nothing, so a sideways or shift-scroll pans natively;
+   *                  a zoomed page also pans by dragging
    */
-  const onWheel = (e: React.WheelEvent) => {
+  const onWheel = (e: WheelEvent) => {
     if (lensOn && !zoomed) {
       e.preventDefault();
       const next = Math.min(LENS_MAG_MAX, Math.max(LENS_MAG_MIN, lensMag * Math.exp(-e.deltaY * 0.0022)));
@@ -568,8 +574,31 @@ export function ScanViewer({
       // deliberately small: a pinch fires dozens of events per second, so
       // anything punchier runs the page to 600% in half a gesture.
       queueZoom(queueBase() * Math.exp(-e.deltaY * 0.0025), { x: e.clientX, y: e.clientY });
+      return;
+    }
+    if (wheelZooms && !e.shiftKey && Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      e.preventDefault();
+      // Scroll deltas run larger than pinch deltas (a mouse notch is ~100px,
+      // in line mode ~3 lines), so normalise to pixels and cap each event:
+      // one notch is a comfortable step and trackpad momentum cannot fling
+      // the page to the limit.
+      const px = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaMode === 2 ? e.deltaY * 400 : e.deltaY;
+      const d = Math.max(-100, Math.min(100, px));
+      queueZoom(queueBase() * Math.exp(-d * 0.002), { x: e.clientX, y: e.clientY });
     }
   };
+  // React attaches wheel listeners as passive, so preventDefault there is
+  // ignored and the browser page-zooms or scrolls along with us. Bind it
+  // natively; the ref keeps the listener on the latest render's closure.
+  const onWheelRef = useRef(onWheel);
+  onWheelRef.current = onWheel;
+  useEffect(() => {
+    const c = containerRef.current;
+    if (!c) return;
+    const h = (e: WheelEvent) => onWheelRef.current(e);
+    c.addEventListener('wheel', h, { passive: false });
+    return () => c.removeEventListener('wheel', h);
+  }, [containerRef]);
 
   // A new page starts at the top of the scan. This touches the DOM, so it
   // belongs in an effect rather than in the render pass.
@@ -712,7 +741,6 @@ export function ScanViewer({
         // so the page read as unscrollable until you found the text below it.
         overscrollBehavior: zoomed ? 'contain' : 'auto',
       }}
-      onWheel={onWheel}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
