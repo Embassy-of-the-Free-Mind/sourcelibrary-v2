@@ -338,7 +338,7 @@ const LENS_MAG_MAX = 6;
  */
 export function ScanViewer({
   page, book, zoom, onZoomChange, lensOn = false, scrollRef, onScroll, fullRes = false,
-  srcOverride, nativeSrcOverride, altOverride, onNaturalSize, onEdgePageTurn, wheelZooms = true,
+  srcOverride, nativeSrcOverride, altOverride, onNaturalSize, onEdgePageTurn, wheelZooms = true, onMaxZoom,
 }: {
   page: Page;
   book: Book;
@@ -378,6 +378,9 @@ export function ScanViewer({
    *  and image-viewer convention). Off where the scan sits inside a scrolling
    *  column, so a wheel over it still scrolls the page; a pinch zooms either way. */
   wheelZooms?: boolean;
+  /** Reports how far this page can usefully zoom (see maxZoom), so the
+   *  parent's + button can stop there too. */
+  onMaxZoom?: (max: number) => void;
 }) {
   const t = getReaderStrings(useLocale()).panes;
   const resolved = resolveScanUrls(page);
@@ -422,6 +425,7 @@ export function ScanViewer({
     const el = imgRef.current;
     if (el?.complete && el.naturalWidth) {
       natural.current = { w: el.naturalWidth, h: el.naturalHeight };
+      noteLoaded(el.naturalWidth);
       onNaturalSize?.(natural.current);
       measure();
     }
@@ -443,6 +447,7 @@ export function ScanViewer({
       if (natural.current) return;
       if (el.naturalWidth && el.naturalHeight) {
         natural.current = { w: el.naturalWidth, h: el.naturalHeight };
+        noteLoaded(el.naturalWidth);
         onNaturalSize?.(natural.current);
         measure();
         return;
@@ -455,6 +460,29 @@ export function ScanViewer({
   }, []);
 
   const zoomed = zoom > 1;
+
+  // Zoom stops where the scan runs out of pixels: one image pixel per screen
+  // pixel of the fitted page. Past that the page only gets blurrier, which a
+  // reader takes for a bad scan. Measured from the widest image this page has
+  // loaded, so the cap rises once the high-res copy swaps in past 1.5x; never
+  // below 2x, so a small scan can still be enlarged a little.
+  // Keyed by page rather than reset in an effect: the cached-image effect
+  // above records the new page's width first, and a reset would wipe it.
+  const [sharpest, setSharpest] = useState<{ id: string; w: number }>({ id: '', w: 0 });
+  const sharpestW = sharpest.id === page.id ? sharpest.w : 0;
+  const noteLoaded = (w: number) => setSharpest(prev =>
+    prev.id === page.id ? (w > prev.w ? { id: page.id, w } : prev) : { id: page.id, w });
+  const maxZoom = fit && sharpestW
+    ? Math.min(SCAN_ZOOM_MAX, Math.max(2, Math.round((sharpestW / fit.w) * 100) / 100))
+    : SCAN_ZOOM_MAX;
+  const maxZoomRef = useRef(maxZoom);
+  maxZoomRef.current = maxZoom;
+  useEffect(() => { onMaxZoom?.(maxZoom); }, [maxZoom, onMaxZoom]);
+  // Zoom set from outside (the header's steps) is pulled back to the cap.
+  useEffect(() => {
+    if (zoom > maxZoom + 0.001) onZoomChange(maxZoom);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [zoom, maxZoom]);
 
   // Scroll offsets computed alongside a zoom change, applied before paint so
   // the anchored point does not visibly move.
@@ -490,7 +518,7 @@ export function ScanViewer({
    */
   const applyZoom = (next: number, anchor?: { x: number; y: number }) => {
     const current = prevZoom.current;
-    const clamped = Math.min(SCAN_ZOOM_MAX, Math.max(1, Math.round(next * 1000) / 1000));
+    const clamped = Math.min(maxZoomRef.current, Math.max(1, Math.round(next * 1000) / 1000));
     if (Math.abs(clamped - current) < 0.002) return;
     const c = containerRef.current;
     const sp = spacerRef.current;
@@ -771,6 +799,7 @@ export function ScanViewer({
           onLoad={e => {
             const el = e.currentTarget;
             natural.current = { w: el.naturalWidth, h: el.naturalHeight };
+            noteLoaded(el.naturalWidth);
             onNaturalSize?.(natural.current);
             measure();
           }}
