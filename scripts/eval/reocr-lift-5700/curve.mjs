@@ -12,7 +12,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { errorRates } from './text-distance.mjs';
+import { errorRates, SCRIPT_GROUP, CER_BINS, binOf } from './text-distance.mjs';
 import { bootstrapCI, resetSeed, mean } from '../lib/paired-stats.mjs';
 
 const args = process.argv.slice(2);
@@ -20,10 +20,6 @@ const DIR = args.includes('--dir') ? args[args.indexOf('--dir') + 1] : 'scripts/
 const rows = fs.readFileSync(path.join(DIR, 'track-pages.jsonl'), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)).filter((r) => r.has_corrected);
 const r3 = (x) => (x == null || Number.isNaN(x) ? null : Math.round(x * 1000) / 1000);
 
-export const SCRIPT_GROUP = { Latin: 'Latin', German: 'vernacular (Latin script)', French: 'vernacular (Latin script)', Italian: 'vernacular (Latin script)', Dutch: 'vernacular (Latin script)', Spanish: 'vernacular (Latin script)',
-  'Ancient Greek': 'Greek', 'Byzantine Greek': 'Greek', Hebrew: 'Hebrew/Aramaic', Aramaic: 'Hebrew/Aramaic', Arabic: 'Arabic', Persian: 'Persian', Sanskrit: 'Sanskrit', Pali: 'Pali', Chinese: 'Chinese' };
-export const CER_BINS = [[0, 0.02, '< 2 %'], [0.02, 0.05, '2–5 %'], [0.05, 0.10, '5–10 %'], [0.10, 0.20, '10–20 %'], [0.20, Infinity, '≥ 20 %']];
-export const binOf = (c) => CER_BINS.find(([lo, hi]) => c >= lo && c < hi)[2];
 
 const pages = rows.map((r) => {
   const e = errorRates(r.ocr_text, r.corrected_text); const t = r.track_fidelity;

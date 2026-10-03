@@ -68,4 +68,4 @@
 | Pali | < 2 % | 5 | +0.10 | -0.10 |
 | Chinese | 5–10 % | 3 | +0.83 | +0.50 |
 
-**Slope.** Lite gains +0.38 fidelity points per 10 points of CER removed [+0.30, +0.51] (Spearman ρ 0.741, n 99); Flash +0.25 [+0.15, +0.46] (ρ 0.527, n 73). Lite's fidelity on the uncorrected OCR falls -0.35 per 10 points of CER (ρ -0.827).
+**Slope.** Lite gains +0.40 fidelity points per 10 points of CER removed [+0.32, +0.52] (Spearman ρ 0.742, n 99); Flash +0.27 [+0.15, +0.48] (ρ 0.525, n 73). Lite's fidelity on the uncorrected OCR falls -0.36 per 10 points of CER (ρ -0.828).

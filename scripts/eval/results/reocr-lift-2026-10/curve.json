@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-03T22:21:33.878Z",
+ "generated": "2026-10-03T23:16:15.720Z",
  "question": "#5700 A5: how much translation fidelity is lost per unit of OCR error, per script?",
  "measure": {
   "cer": "edit distance of the served OCR to the track's by-eye corrected transcription, letters only, per-script folds (text-distance.mjs); NOT accuracy against an independent reference",
@@ -82,7 +82,7 @@
   "≥ 20 %": {
    "n": 17,
    "cer_median": 0.482,
-   "cer_mean": 0.474,
+   "cer_mean": 0.464,
    "lite_ocr": 1.588,
    "lite_corr": 4,
    "lite_delta": 2.412,
@@ -153,7 +153,7 @@
   "Hebrew/Aramaic": {
    "n": 9,
    "cer_median": 0.141,
-   "cer_mean": 0.227,
+   "cer_mean": 0.209,
    "lite_ocr": 2.333,
    "lite_corr": 3.778,
    "lite_delta": 1.444,
@@ -314,7 +314,7 @@
   "T4": {
    "n": 30,
    "cer_median": 0.111,
-   "cer_mean": 0.177,
+   "cer_mean": 0.172,
    "lite_ocr": 2.533,
    "lite_corr": 3.917,
    "lite_delta": 1.383,
@@ -370,7 +370,7 @@
   "ocr_misread": {
    "n": 44,
    "cer_median": 0.128,
-   "cer_mean": 0.195,
+   "cer_mean": 0.191,
    "lite_ocr": 2.114,
    "lite_corr": 3.955,
    "lite_delta": 1.841,
@@ -657,7 +657,7 @@
   "Hebrew/Aramaic | ≥ 20 %": {
    "n": 4,
    "cer_median": 0.39,
-   "cer_mean": 0.428,
+   "cer_mean": 0.388,
    "lite_ocr": 1.75,
    "lite_corr": 3.75,
    "lite_delta": 2,
@@ -999,30 +999,30 @@
  },
  "slope_lite": {
   "n": 99,
-  "fidelity_points_per_10pp_cer": 0.382,
+  "fidelity_points_per_10pp_cer": 0.399,
   "ci": [
-   0.299,
-   0.513
+   0.323,
+   0.523
   ],
-  "spearman_rho": 0.741
+  "spearman_rho": 0.742
  },
  "slope_flash": {
   "n": 73,
-  "fidelity_points_per_10pp_cer": 0.254,
+  "fidelity_points_per_10pp_cer": 0.27,
   "ci": [
-   0.15,
-   0.461
+   0.155,
+   0.481
   ],
-  "spearman_rho": 0.527
+  "spearman_rho": 0.525
  },
  "slope_lite_level": {
   "n": 99,
-  "fidelity_points_per_10pp_cer": -0.347,
+  "fidelity_points_per_10pp_cer": -0.363,
   "ci": [
-   -0.478,
-   -0.268
+   -0.493,
+   -0.287
   ],
-  "spearman_rho": -0.827
+  "spearman_rho": -0.828
  },
  "pages": [
   {
@@ -1893,8 +1893,8 @@
    "stratum": "before 1000",
    "primary_cause": "ocr_misread",
    "served_fidelity": 2.5,
-   "cer": 0.774,
-   "wer": 0.954,
+   "cer": 0.614,
+   "wer": 0.723,
    "cer_bin": "≥ 20 %",
    "corrected_chars": 1662,
    "lite_ocr": 2,
@@ -2654,7 +2654,7 @@
    "primary_cause": "page_seam",
    "served_fidelity": 3,
    "cer": 0.019,
-   "wer": 0.089,
+   "wer": 0.09,
    "cer_bin": "< 2 %",
    "corrected_chars": 1403,
    "lite_ocr": 4,
@@ -2714,7 +2714,7 @@
    "primary_cause": "translation",
    "served_fidelity": 2,
    "cer": 0.022,
-   "wer": 0.119,
+   "wer": 0.122,
    "cer_bin": "2–5 %",
    "corrected_chars": 1303,
    "lite_ocr": 4,
@@ -2753,10 +2753,10 @@
    "stratum": "1950+",
    "primary_cause": "translation",
    "served_fidelity": 3,
-   "cer": 0.019,
-   "wer": 0.063,
+   "cer": 0.018,
+   "wer": 0.058,
    "cer_bin": "< 2 %",
-   "corrected_chars": 473,
+   "corrected_chars": 511,
    "lite_ocr": 4,
    "lite_corr": 4,
    "lite_delta": 0,
