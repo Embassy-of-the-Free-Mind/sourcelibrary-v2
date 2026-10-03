@@ -1,0 +1,189 @@
+{
+ "seed": 5695,
+ "input": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-harness/scripts/eval/results/xlref-harness-smoke-2026-10/records.jsonl",
+ "input_sha": "6733ff4599842f64",
+ "judges": [
+  "j1",
+  "j2"
+ ],
+ "controls": {
+  "wrong_page": {
+   "6a09ff48fa20006dbaba8ee1_00114": {
+    "donor": "69b99d043a4a443c39c00775_00147",
+    "donor_arm": "flash",
+    "text": "19. Then Passion <term>Ragā</term>, the daughter of Mara, spoke this verse in the presence of the Blessed One:\n\nCutting through craving <term>taṇhā</term>, the recruiter of the crowds,\nmany beings will indeed walk <note>the editor notes a variant reading: cross over</note> <gloss>the spiritual path</gloss>.\nIndeed, this homeless one <note>referring to the Buddha</note> will pull many people away,\nsnatching them across to the far shore, beyond the King of Death.\n\n20. <note>The Buddha replies:</note>\nGreat heroes, the <term>Tathāgatas</term> <gloss>Those who have thus gone</gloss>, lead indeed by the true Dhamma.\nWhen beings are being led by the Dhamma, what envy can there be in those who truly understand?\n\n21. Then Craving <term>Taṇhā</term>, Discontent <term>Arati</term>, and Passion <term>Ragā</term>, the daughters of Mara, approached Mara the Evil One.\n\n22. Mara the Evil One saw Craving, Discontent, and Passion, his daughters, coming from afar. Seeing them, he addressed them in verses:\n\nFools! You try to crush a mountain with the stalks of water lilies.\nYou dig into a mountain with your fingernails. You chew iron with your teeth.\nAs if lifting a rock with your head, you seek a foothold in the abyss.\nAs if attacking a tree stump with your chest, you go away frustrated by Gotama.\n\n23. Blazing with beauty they came: Craving, Discontent, and Passion.\nThe Teacher swept them away right there, like the wind blows away a fallen tuft of cotton.\n\n->The Third Chapter<-\n\n->Its Summary Table<-\n\nThe Many <term>Sambahulā</term>, Samiddhi, Godhika, the Seven Years, and the Daughters; this Mara-pentad was taught by the Buddha-Teacher. The Connected Discourses of Mara <term>Māra-saṃyutta</term> are complete.\n\n<summary>The daughters of Mara admit their failure to tempt the Buddha, leading Mara to mock their foolishness before the chapter concludes with a summary of the section's contents.</summary>\n<keywords>Mara, Taṇhā, Arati, Ragā, Buddha, Dhamma, Māra-saṃyutta, Pali Canon</keywords>"
+   }
+  },
+  "planted": {
+   "69b99e8b6ed9e0490990a274_00179": {
+    "base_arm": "flash",
+    "text": "<meta>continues from the previous section where Māgandiya offers his daughter to the Buddha</meta>\n\n# The Octad Chapter <note>original: \"Atthakavagga\"</note>\n\n836. <note>Māgandiya speaks:</note> \"If you do not desire such a jewel, a woman sought after by many lords of men, then what kind of doctrine do you proclaim, regarding views, lives led according to habitual moral vows, and rebirth in future existences?\"\n\n837. <note>The Blessed One <gloss>Bhagavā</gloss> speaks:</note> \"Māgandiya,\" said the Blessed One, \"the thought 'I proclaim this' does not occur to the one who has reached a conclusion after grasping among doctrines. Looking among various views and not grasping them, I saw and searched for inner peace <note>original: \"ajjhattasanti\"</note>.\"\n\n838. <note>Māgandiya speaks:</note> \"O Sage <gloss>muni</gloss>,\" said Māgandiya, \"you speak of not grasping those conclusions that have been constructed. This matter called 'inner peace,' how is that explained by the wise?\"\n\n839. <note>The Blessed One speaks:</note> \"Māgandiya,\" said the Blessed One, \"one does not speak of purity <gloss>suddhim</gloss> through views, nor through learning, nor through knowledge, nor even through habitual moral vows. Nor is purity achieved through lack of views, lack of learning, lack of knowledge, or lack of vows. Having abandoned these without grasping, being peaceful and independent, one would not long for becoming <note>original: \"bhavaṃ,\" referring to future existence or rebirth</note>.\"\n\n840. <note>Māgandiya speaks:</note> \"If, as you say, one does speak of purity through views, nor through learning, nor through knowledge, nor even through habitual moral vows...\"\n\n<summary>The Brahmin Māgandiya questions the Buddha on how purity and inner peace are attained if not through traditional religious vows or intellectual views. The Buddha explains that true peace comes from non-attachment to all views and future existences.</summary>\n<keywords>Magandiya Sutta, Atthakavagga, inner peace, views, purity, non-attachment, rebirth, Buddhist philosophy</keywords>",
+    "op": "drop-negation",
+    "from": "does not",
+    "to": "does",
+    "at": 1554,
+    "before_context": "e or rebirth</note>.\"\n\n840. <note>Māgandiya speaks:</note> \"If, as you say, one does not speak of purity through views, nor through learning, nor through knowledge, nor",
+    "after_context": "e or rebirth</note>.\"\n\n840. <note>Māgandiya speaks:</note> \"If, as you say, one does speak of purity through views, nor through learning, nor through knowledge, nor"
+   }
+  },
+  "duplicate": {
+   "69b99d043a4a443c39c00775_00147": {
+    "arm": "served"
+   }
+  }
+ },
+ "items": {
+  "j1": {
+   "69b99e551f30176bf4d37774_00306": {
+    "T1": "flash",
+    "T2": "served",
+    "T3": "lite"
+   },
+   "69b99e681f30176bf4d3798a_00155": {
+    "T1": "served",
+    "T2": "flash",
+    "T3": "lite"
+   },
+   "69b99e496ed9e04909909f8f_00220": {
+    "T1": "flash",
+    "T2": "lite",
+    "T3": "served"
+   },
+   "69b99e8b6ed9e0490990a274_00179": {
+    "T1": "served",
+    "T2": "flash",
+    "T3": "lite",
+    "T4": "control:planted"
+   },
+   "69b99d043a4a443c39c00775_00147": {
+    "T1": "flash",
+    "T2": "lite",
+    "T3": "served",
+    "T4": "served#dup"
+   },
+   "6a09ff48fa20006dbaba8ee1_00114": {
+    "T1": "served",
+    "T2": "flash",
+    "T3": "lite",
+    "T4": "control:wrong_page"
+   }
+  },
+  "j2": {
+   "69b99e551f30176bf4d37774_00306": {
+    "T1": "flash",
+    "T2": "lite",
+    "T3": "served"
+   },
+   "69b99e681f30176bf4d3798a_00155": {
+    "T1": "flash",
+    "T2": "served",
+    "T3": "lite"
+   },
+   "69b99e496ed9e04909909f8f_00220": {
+    "T1": "served",
+    "T2": "flash",
+    "T3": "lite"
+   },
+   "69b99e8b6ed9e0490990a274_00179": {
+    "T1": "control:planted",
+    "T2": "lite",
+    "T3": "served",
+    "T4": "flash"
+   },
+   "69b99d043a4a443c39c00775_00147": {
+    "T1": "flash",
+    "T2": "lite",
+    "T3": "served",
+    "T4": "served#dup"
+   },
+   "6a09ff48fa20006dbaba8ee1_00114": {
+    "T1": "lite",
+    "T2": "flash",
+    "T3": "control:wrong_page",
+    "T4": "served"
+   }
+  }
+ },
+ "text_hash": {
+  "j1": {
+   "69b99e551f30176bf4d37774_00306": {
+    "T1": "309bf8ad46e463d9",
+    "T2": "3a6d559fa7b17001",
+    "T3": "ded4f75268219feb"
+   },
+   "69b99e681f30176bf4d3798a_00155": {
+    "T1": "8ff6f07509d3f377",
+    "T2": "b1485d04fd90521b",
+    "T3": "7b73b7beea457e6e"
+   },
+   "69b99e496ed9e04909909f8f_00220": {
+    "T1": "cf12cae4e4390c02",
+    "T2": "4fcbb65ef08ffcba",
+    "T3": "3e620c0383afb4a6"
+   },
+   "69b99e8b6ed9e0490990a274_00179": {
+    "T1": "78f165ab51c5d34a",
+    "T2": "7500607bb808615d",
+    "T3": "eade59a37e036b84",
+    "T4": "881dd6873649a18c"
+   },
+   "69b99d043a4a443c39c00775_00147": {
+    "T1": "bd719442654c5496",
+    "T2": "2f40dbe1215c6f65",
+    "T3": "dcfb58f269693189",
+    "T4": "dcfb58f269693189"
+   },
+   "6a09ff48fa20006dbaba8ee1_00114": {
+    "T1": "8874ee090a12fd00",
+    "T2": "fb585d38d3f0dee5",
+    "T3": "b4d0632479ed01c6",
+    "T4": "bd719442654c5496"
+   }
+  },
+  "j2": {
+   "69b99e551f30176bf4d37774_00306": {
+    "T1": "309bf8ad46e463d9",
+    "T2": "ded4f75268219feb",
+    "T3": "3a6d559fa7b17001"
+   },
+   "69b99e681f30176bf4d3798a_00155": {
+    "T1": "b1485d04fd90521b",
+    "T2": "8ff6f07509d3f377",
+    "T3": "7b73b7beea457e6e"
+   },
+   "69b99e496ed9e04909909f8f_00220": {
+    "T1": "3e620c0383afb4a6",
+    "T2": "cf12cae4e4390c02",
+    "T3": "4fcbb65ef08ffcba"
+   },
+   "69b99e8b6ed9e0490990a274_00179": {
+    "T1": "881dd6873649a18c",
+    "T2": "eade59a37e036b84",
+    "T3": "78f165ab51c5d34a",
+    "T4": "7500607bb808615d"
+   },
+   "69b99d043a4a443c39c00775_00147": {
+    "T1": "bd719442654c5496",
+    "T2": "2f40dbe1215c6f65",
+    "T3": "dcfb58f269693189",
+    "T4": "dcfb58f269693189"
+   },
+   "6a09ff48fa20006dbaba8ee1_00114": {
+    "T1": "b4d0632479ed01c6",
+    "T2": "fb585d38d3f0dee5",
+    "T3": "bd719442654c5496",
+    "T4": "8874ee090a12fd00"
+   }
+  }
+ },
+ "gate_items": [
+  "6a09ff48fa20006dbaba8ee1_00114",
+  "69b99e8b6ed9e0490990a274_00179",
+  "69b99d043a4a443c39c00775_00147"
+ ],
+ "main_items": [
+  "69b99e551f30176bf4d37774_00306",
+  "69b99e681f30176bf4d3798a_00155",
+  "69b99e496ed9e04909909f8f_00220"
+ ]
+}
