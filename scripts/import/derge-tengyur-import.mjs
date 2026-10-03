@@ -87,7 +87,8 @@ const textSourceFor = (file, text) => ({
 if (!process.env.MONGODB_URI) throw new Error('MONGODB_URI missing — run with node --env-file=.env.production.local');
 fs.mkdirSync(path.join(WORK, 'manifests'), { recursive: true });
 fs.mkdirSync(path.join(WORK, 'samples'), { recursive: true });
-const CKPT = path.join(WORK, 'checkpoint.json');
+// --ckpt: a partition's own checkpoint (copy of the main one), so two runs in parallel never clobber it.
+const CKPT = args.ckpt || path.join(WORK, 'checkpoint.json');
 const ckpt = fs.existsSync(CKPT) ? JSON.parse(fs.readFileSync(CKPT, 'utf8')) : { volumes: {} };
 const saveCkpt = () => { fs.writeFileSync(`${CKPT}.tmp`, JSON.stringify(ckpt, null, 1)); fs.renameSync(`${CKPT}.tmp`, CKPT); };
 const log = (...a) => console.log(new Date().toISOString().slice(11, 19), ...a);
@@ -179,7 +180,7 @@ const YIG_MODEL = args['yig-model'] || (() => {
   return fs.existsSync(base) ? path.join(base, fs.readdirSync(base)[0]) : null;
 })();
 // The red-ink preprocessing is part of the engine: a read made from another preprocessing is not reused.
-const READ_ENGINE = `bdrc-yigdzin-woodblock@${YIG_MODEL ? path.basename(YIG_MODEL).slice(0, 10) : 'missing'}${C.redInk ? '+redink-rg1' : ''}`;
+const READ_ENGINE = `bdrc-yigdzin-woodblock@${YIG_MODEL ? path.basename(YIG_MODEL).slice(0, 10) : 'missing'}${C.redInk ? '+redink-rg2' : ''}`;
 
 /** Read every image in `dir` that has no transcription yet in `${dir}-yig`; returns that out dir. */
 function yigdzinRead(dir) {
@@ -196,8 +197,9 @@ function yigdzinRead(dir) {
     // and its dark fibres are low — invert, and stretch so the paper goes white. The stored page image
     // is untouched — this is the READER's input only. Measured 2026-10-03 on vol. 27 (#5665): the
     // earlier green-channel + CLAHE input kept the paper fibres, and Yigdzin returned nothing for 4 of
-    // 5 leaves ("string index out of range"); R−G read all 5, 4 of them at 0.69–0.99 identity.
-    const py = 'import cv2,sys,numpy as np\nfor a in sys.argv[2:]:\n  im=cv2.imread(a).astype(np.int16)\n  d=np.clip(im[:,:,2]-im[:,:,1],0,255).astype(np.uint8)\n  d=cv2.normalize(cv2.GaussianBlur(d,(3,3),0),None,0,255,cv2.NORM_MINMAX)\n  g=255-d\n  lo,hi=np.percentile(g,1),np.percentile(g,60)\n  g=np.clip((g.astype(np.float32)-lo)*255/max(hi-lo,1),0,255).astype(np.uint8)\n  cv2.imwrite(sys.argv[1]+"/"+a.split("/")[-1],g)\n';
+    // 5 leaves ("string index out of range"); R−G read all 5, 4 of them at 0.69–0.99 identity. Scaled to
+    // 2400 px wide (rg2) it reads as well (0.85–0.98 on the same 4) for half the CPU.
+    const py = 'import cv2,sys,numpy as np\nfor a in sys.argv[2:]:\n  im=cv2.imread(a).astype(np.int16)\n  d=np.clip(im[:,:,2]-im[:,:,1],0,255).astype(np.uint8)\n  d=cv2.normalize(cv2.GaussianBlur(d,(3,3),0),None,0,255,cv2.NORM_MINMAX)\n  g=255-d\n  lo,hi=np.percentile(g,1),np.percentile(g,60)\n  g=np.clip((g.astype(np.float32)-lo)*255/max(hi-lo,1),0,255).astype(np.uint8)\n  h,w=g.shape\n  g=cv2.resize(g,(2400,int(h*2400/w)),interpolation=cv2.INTER_AREA) if w>2400 else g\n  cv2.imwrite(sys.argv[1]+"/"+a.split("/")[-1],g)\n';
     execFileSync(path.join(YIG_APP, 'venv/bin/python'), ['-c', py, batch, ...todo.map((f) => path.join(dir, f))], { stdio: ['ignore', 'ignore', 'pipe'], timeout: 10 * 60 * 1000 });
   } else {
     for (const f of todo) fs.symlinkSync(path.join(dir, f), path.join(batch, f));
@@ -296,7 +298,7 @@ async function measureSegments(vol, canvases, pages, ig) {
   const sm0 = v.segment_measurement;
   if (sm0?.engine === READ_ENGINE && sm0.rules?.version === ALIGN_RULES.version && sm0.segment_rules?.version === SEGMENT_RULES.version && sm0.ig === ig) return sm0;
   const SR = SEGMENT_RULES;
-  const dir = sampleDir(vol, ig, '-seg');
+  const dir = sampleDir(vol, ig, '-seg-rg2');
   fs.mkdirSync(dir, { recursive: true });
   const n = canvases.length;
   const texts = new Map();
