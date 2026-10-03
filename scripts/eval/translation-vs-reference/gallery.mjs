@@ -20,7 +20,8 @@ if (!RES || !INPUT || !OUT) { console.error('--results, --input, --out required'
 
 const res = JSON.parse(fs.readFileSync(RES, 'utf8'));
 const recs = Object.fromEntries(readJsonl(INPUT).map((r) => [itemId(r), r]));
-const strip = (t) => String(t || '').replace(/<(summary|keywords|meta)>[\s\S]*?<\/\1>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/->|<-/g, ' ').replace(/\s+/g, ' ').trim();
+// notes, glosses and term echoes are the house apparatus, not the running English a reader compares
+const strip = (t) => String(t || '').replace(/<(summary|keywords|meta|note|gloss|term)>[\s\S]*?<\/\1>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/->|<-/g, ' ').replace(/\s+/g, ' ').trim();
 const cell = (t) => t.replace(/\|/g, '\\|');
 
 function defectClass(page, arm) {

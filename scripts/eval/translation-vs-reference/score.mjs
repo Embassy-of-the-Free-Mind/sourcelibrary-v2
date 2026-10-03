@@ -125,7 +125,10 @@ function armBlock(arm, ids) {
 const strata = { all: allIds };
 for (const id of allIds) {
   const m = meta[id];
-  for (const [k, v] of [['canonical', m.canonical ? 'canonical' : 'non-canonical'], ['style', m.reference_meta.style], ['lang', m.lang], ['track', m.track]]) (strata[`${k}:${v}`] ||= []).push(id);
+  // fit:usable drops pages where ANY judge says the reference cut is a different passage — the reference, not the
+  // translation, failed there; read the headline beside it
+  const fit = key.judges.some((j) => dec[j][id]?._fit === 'wrong') ? 'reference-wrong' : 'usable';
+  for (const [k, v] of [['canonical', m.canonical ? 'canonical' : 'non-canonical'], ['style', m.reference_meta.style], ['lang', m.lang], ['track', m.track], ['fit', fit]]) (strata[`${k}:${v}`] ||= []).push(id);
 }
 const out = { generated: new Date().toISOString(), packet: path.resolve(PACKET), seed_bootstrap: SEED, seed_packet: key.seed, input_sha: key.input_sha, n_items: allIds.length, judges: key.judges,
   gate: { ...gate, forced: !gate.pass && FORCE }, measure: 'judged against a human reference (fidelity of meaning; the reference guides meaning, not wording)', arms: {}, strata: {}, pairs: {}, agreement: {}, reference_fit: {}, per_page: [] };
@@ -173,7 +176,8 @@ out.per_page = allIds.map((id) => clip(id, {
     fidelity: r3(judgeMean(id, arm, (z) => z.fidelity)),
     by_judge: Object.fromEntries(key.judges.map((j) => { const z = dec[j][id]?.arms[arm]; return [j, z ? { fidelity: z.fidelity, omission: z.omission, invention: z.invention, reversal: z.reversal, span: z.span, defects: z.defects, tier: z.tier } : null]; })),
   }])),
-  reasons: Object.fromEntries(key.judges.map((j) => [j, dec[j][id]?._reason ?? null])),
+  // labels are per judge; decode "T3" to its arm so a reason reads the same whichever judge wrote it
+  reasons: Object.fromEntries(key.judges.map((j) => [j, dec[j][id]?._reason ? dec[j][id]._reason.replace(/\bT(\d+)\b/g, (t) => `[${key.items[j][id]?.[t] ?? t}]`) : null])),
 }));
 fs.mkdirSync(path.dirname(path.resolve(OUT)), { recursive: true });
 fs.writeFileSync(OUT, JSON.stringify(out, null, 1));
