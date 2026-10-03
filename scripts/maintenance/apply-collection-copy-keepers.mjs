@@ -26,9 +26,10 @@
  *
  * DRY BY DEFAULT. Hiding books site-wide waits for Derek.
  *
- * --basis comparator|by-eye limits the run to pairs confirmed that way; the rest are listed as
- * deferred. Derek approved the comparator-confirmed set first (2026-10-03); the by-eye-only
- * pairs wait for a second look.
+ * --basis comparator|by-eye|by-eye-recheck limits the run to pairs confirmed that way; the rest
+ * are listed as deferred. Derek approved the comparator-confirmed set first (2026-10-03); the
+ * by-eye-only pairs waited for a second look, which the 2026-10-03 recheck gave them
+ * (`by-eye-recheck`; hiding those still waits for Derek).
  *
  *   node --env-file=.env.production.local scripts/maintenance/apply-collection-copy-keepers.mjs [--json out.json]
  *   node --env-file=.env.production.local scripts/maintenance/apply-collection-copy-keepers.mjs --apply
@@ -44,8 +45,8 @@ const jsonIdx = process.argv.indexOf('--json');
 const JSON_OUT = jsonIdx > 0 ? process.argv[jsonIdx + 1] : null;
 const basisIdx = process.argv.indexOf('--basis');
 const BASIS = basisIdx > 0 ? process.argv[basisIdx + 1] : null;
-if (BASIS && !['comparator', 'by-eye'].includes(BASIS)) {
-  console.error(`--basis must be comparator or by-eye, got ${BASIS}`);
+if (BASIS && !['comparator', 'by-eye', 'by-eye-recheck'].includes(BASIS)) {
+  console.error(`--basis must be comparator, by-eye or by-eye-recheck, got ${BASIS}`);
   process.exit(2);
 }
 const BY = 'collection-copies-5689';
