@@ -1,0 +1,44 @@
+{
+ "id": "695d0e044afae5c3b3aead52_353",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>all the necessary organs or instruments are present, by whose means these same movements could be carried out as if in a machine. Indeed, even in ourselves, the mind does not directly move the external limbs; it only directs the spirits <note>original: *spiritus*; referring to \"animal spirits,\" which were thought to be very subtle fluids that transmitted movement through the nerves.</note> flowing from the heart through the brain into the muscles, determining them to specific movements. These spirits, of their own accord, are just as easily applied to many diverse actions.\n\nIn fact, many of the movements that occur within us do not depend on the mind at all. Such are the beating of the heart, the digestion of food, nutrition, the breathing of those who sleep, and even in those who are awake, walking, singing, and similar activities when they are done without the mind paying attention.\n\nAnd when those who fall from a height put their hands out in front of them toward the ground to protect the head, they certainly do this without any deliberation of reason. It happens only because the sight of the impending fall, reaching as far as the brain, sends the animal spirits into the nerves in the manner necessary to produce this movement, even against the will of the mind, just as if it were produced in a machine.\n\nAnd since we know this for certain in our own case...\n\n<summary>Descartes explains that many bodily functions and reflexive actions are mechanical processes driven by animal spirits and do not require conscious mental intervention. He uses the example of a person instinctively breaking a fall to demonstrate how the body functions like a machine.</summary>\n<keywords>animal spirits, physiology, reflexes, mind-body interaction, mechanical philosophy, brain, nerves, involuntary movement</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2648,
+ "outputTokens": 371,
+ "thinkingTokens": 0,
+ "cost_usd": 0.002437,
+ "ms": 2729,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1181
+}

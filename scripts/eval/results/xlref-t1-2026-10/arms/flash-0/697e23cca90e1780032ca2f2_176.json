@@ -1,0 +1,44 @@
+{
+ "id": "697e23cca90e1780032ca2f2_176",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\ncertain that around the thirtieth day of this reign a lemon-yellow color appears, which within two weeks from its first appearance will imbue the whole work with a truly yellow color.\n\n## CHAPTER XXX.\n\n### On the Reign of the Sun.\n\nNow you approach the end of your work, and you have nearly finished your business; now everything appears like the finest gold <note>original: \"auri obryzi,\" referring to pure, refined gold</note>, and the <term>virgin's milk</term> <gloss>the alchemical solvent used to moisten the matter</gloss>, with which you soak this material, turns very yellow. Now return immortal thanks to God, the giver of all good things, who has led the work this far; pray to Him as a suppliant that He may rule your counsel from now on, lest by chance you lose the almost completed work entirely by striving to hurry it. Consider now that you have waited for almost seven months, and it would not be sane to annihilate everything in a single little hour. Therefore, be very cautious, all the more so as you are closer to perfection. Truly, if you proceed cautiously, these notable things will occur to you: first you will observe a certain yellow sweat on the body, and finally yellow vapors as the body settles, tinted with violet and sometimes with a dark purple. After twelve or fourteen days of waiting in this reign of the Sun <note>The final stage of the alchemical process, associated with the production of the Red Stone or gold</note>, you will observe the matter to be for the most part moist, and although it is heavy, it is nevertheless in\n\n<summary>This page marks the transition to the final Reign of the Sun, where the matter begins to turn a deep gold color and exhibit purple vapors. The author warns the alchemist to exercise extreme patience and caution as the work nears its seven-month completion.</summary>\n<keywords>Reign of the Sun, yellow color, virgin's milk, patience, gold, violet vapors, alchemical stages, completion</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2782,
+ "outputTokens": 443,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00272,
+ "ms": 2698,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1343
+}

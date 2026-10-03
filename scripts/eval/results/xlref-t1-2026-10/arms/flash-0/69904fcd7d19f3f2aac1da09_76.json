@@ -1,0 +1,44 @@
+{
+ "id": "69904fcd7d19f3f2aac1da09_76",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\n...among scholars. For Plato thinks that sight occurs through a sharing of light, namely, that light flowing out from the eyes toward the external air meets light reflected from bodies: while that which is in the middle air is easily spread and turned, being co-extended with the fire-like power of sight. Galen agrees with Plato: but Hipparchus says that rays extended from the eyes all the way to those bodies, touching them as if with a kind of palpitation, return the reception of them to the sight. The Epicureans affirm that the <term>simulacra</term> <gloss>images or likenesses</gloss> of things which appear cast themselves into the eyes. Aristotle, however, believes that these images are not actually bodies, but reach the sight from visible things through a quality and an alteration of the surrounding air. But Porphyry claims that neither rays, nor images, nor anything else is the cause of seeing: rather, he believes it is the soul itself, knowing itself to be visible—and being the one soul of all things—that recognizes itself in everything that exists.\n\nYet the Geometricians and the practitioners of optics, following Hipparchus in a certain way, describe certain cones formed by the coincidence of rays which are emitted through the eyes: from which they say the sight grasps many visible things at once, but those most clearly where the rays have coincided. However, Al-Kindi <note>original: \"Alchindus\"; a 9th-century Arab philosopher and scientist known for his work on optics</note> teaches something entirely different regarding appearances, while to Augustine it seems that the power of the soul performs something in the eye that has not yet been fully investigated by the students of wisdom. \n\nTherefore, this science contributes greatly to detecting the variety, distance, magnitude, and motion of the celestial bodies, as well as their reflections and refractions; it also serves Architecture in the measurement of buildings. Furthermore, it brings a great deal of ornament to the craft of painting and the manufacture of mirrors, such that these arts cannot be perfected without it. For it demonstrates the method by which we avoid creating disproportionate or deformed things in images that are seen, due to the effects of distance and height.\n\n<summary>Agrippa surveys classical and medieval theories of vision—from Plato and Aristotle to Al-Kindi and Porphyry—and outlines the practical applications of Optics in astronomy, architecture, and art.</summary>\n<keywords>Optics, Perspective, Plato, Aristotle, Al-Kindi, Porphyry, theory of vision, light rays, simulacra, architecture, painting</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3105,
+ "outputTokens": 562,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0032385,
+ "ms": 3364,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "CAPVT",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2146
+}

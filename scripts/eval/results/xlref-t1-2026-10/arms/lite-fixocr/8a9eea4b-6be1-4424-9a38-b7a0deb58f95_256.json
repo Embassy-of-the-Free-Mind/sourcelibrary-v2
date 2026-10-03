@@ -1,0 +1,44 @@
+{
+ "id": "8a9eea4b-6be1-4424-9a38-b7a0deb58f95_256",
+ "arm": "lite-fixocr",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page: ...which God has destined for their uses and necessity,</meta> so that they may penetrate. From these things, gather that it is necessary that procedure be according to my prescription, and by no means according to yours. Here it is necessary that you follow me, not I you. And although you may still thunder many things against me, my Monarchy shall nonetheless stand, while yours perishes. I do not write so prolixly about Alchemy in vain, but I do so with this intent and purpose, that from these things you may know closely and solidly what lies hidden within it, and how it ought to be understood. Nor should you be offended by the fact that neither gold nor silver results from it; but rather, care must be taken that through it, secrets are uncovered, and the deceits of the <term>seplasiariorum</term> <gloss>perfumers/apothecaries</gloss> are exposed, by which the crude masses are deceived, while they dispense to them for one florin what would not be bought for a single coin. So precious are their secrets.\n\n<margin>Poison exists even in the best things.</margin>\nWho is there who would dare to deny that poison lies hidden and exists even in the best things? All are forced to admit it. If this is therefore true, I ask you now: ought not the poison be separated from the good and useful? And the good taken, and the evil left behind? Indeed, it is necessary. If, therefore, it is necessary, I pray, explain to me: how is this separated in your shops? For with you, everything remains mixed. But in order to defend your simplicity, if you are convicted to admit that poison lies hidden there, and are asked where it finally goes, you then bring forward I know not what regarding \"corrections,\" which extract and remove the poison,\n<margin>The correction of physicians is scrutinized.</margin>\njust as they correct Quince or Scammony after <term>Diagridium</term> <gloss>a preparation of scammony</gloss> has been named. But what kind of correction is that? Does the poison not remain afterwards just as it did at first? And yet, you meanwhile boast that you have corrected it, so that the poison harms no longer. Where, in truth, has it vanished? \n<margin>Diagridion.</margin>\nIt remains in the <term>Diagridion</term>. Try that, if you are wise: exceed the measure, and you will see where the poison is. For you will know it quite briskly. Thus you also correct <term>Turbith</term> <gloss>a purgative root</gloss>, and call it <term>Diaturbith</term>. Such are your corrections, which would befit peasants and should be given to horses. Make a trial by exceeding the measure and increasing the dose; you will see whether or not you feel the poison.\n<margin>What \"Correction\" means to physicians.</margin>\n*To correct is to take the corrected.* If one is malicious and has sinned, if he is punished, the correction does not extend further than the will of the one who has punished him lasts. Such also are these corrections: it rests with the things themselves, not with you. Now, in this case, a physician must consider nothing further than that the poison be taken away. This must be done through separation: as, for example, a serpent is poisonous, and yet it is adopted for food. If you take the poison from it, you may eat it without harm. The same must be understood concerning all other things; namely, that a similar separation is necessary. That not having been done, you cannot be certain of your operation; unless perhaps it happens that nature supplies your shortcomings, or a greater kindness of heaven favors you. For in your art, no protection will remain.\n\nNow, therefore, if that true foundation which removes poison is necessary, how does Alchemy achieve it? For it is necessary that this be done so that, if Mars <note>alchemical term for Iron</note> is in Sol <note>alchemical term for Gold</note>, Mars is removed; and if Saturn <note>alchemical term for Lead</note> resides in Venus <note>alchemical term for Copper</note>, it is separated from it. For as many as there are ascendants and impressions in the things of nature, so many bodies exist within them. But as for those bodies which are contrary, it is necessary that some part be taken away and removed, so that in this way all contrariety may be lifted, and the evil which you seek may be removed from the good.\n<margin>Fire perfects all things.</margin>\nAs gold is useful for nothing unless it is first cast into the fire, so much less useful is medicine that does not pass through fire. For it is necessary for all things to pass through fire into a second generation, which ought to benefit and aid man. And should this not justly be considered the sound foundation of any physician? For a physician should not apply poisons, but secrets.\n<margin>The shops criticized.</margin>\nBut all those shop-preparations, as many as there are, do not contribute even a letter to this doctrine; rather, they are occupied simply in correcting, as if a dog were to pass wind in a room, and that stench were to be quieted either by troches and incense or by juniper wood: does the stench not remain in the room after, just as it was before, I ask? And although it may not be perceived by smell, is one therefore allowed to say that the stench has been separated and remains no longer? No, it is present, but corrected by fumigation. Thus, therefore, the fumigation and the stench enter the nostrils together. Of this kind also are the corrections of the apothecaries, who dull <term>Aleopaticum</term> <gloss>perhaps referring to a harsh medicine</gloss> with sugar so that it may inflict no harm. Thus, sugar and honey are their master-remedies. Thus they even correct gentian with theriac. Are these not works of asinine ignorance? Yet they boast and sell themselves as the princes of physicians. But who is so stupid as not to smell immediately that these things are worthless? For what else, I ask, can they boast concerning their remedies, than to say, *This electuary is sweet, made from aromatics, sugar,*\n\n<summary>Paracelsus condemns the \"corrections\" used by contemporary pharmacists, arguing that they merely mask the presence of poisons rather than separating them through alchemical processes. He insists that true medicine requires the separation of elements through fire to uncover the curative secrets (arcana) rather than simply dulling the harsh effects of substances with sugar or aromatics.</summary>\n<keywords>Alchemy, Pharmacy, Poison, Correction, Separation, Arcana, Fire, Medicine, Apothecaries, Paracelsus</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 4062,
+ "outputTokens": 1472,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0032235,
+ "ms": 6304,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 6181,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "catchword",
+   "joined": null,
+   "catchword": "melléque",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": true
+ },
+ "ocr_chars": 4981
+}

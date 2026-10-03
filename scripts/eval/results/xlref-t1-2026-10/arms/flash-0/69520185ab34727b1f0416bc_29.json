@@ -1,0 +1,44 @@
+{
+ "id": "69520185ab34727b1f0416bc_29",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\npresented itself. For indeed, arsenic can by no means be fixed unless the operative artist knows its staining spirit in an equal measure. In this matter, all the philosophers have slumbered, laboring in vain to produce anything from it. Whoever, therefore, is ignorant of this spirit, should have no hope of fixing the arsenic, nor of attributing to it the power by which the perfection of transmutation is acquired.\n\nWherefore I make it known to all that the whitening <note>original: \"dealbationem\"</note> of which mention was made is drawn from a false foundation; by it, copper is falsely whitened but not transformed. The Sophists have mixed copper <note>original: \"venerem\"; literally Venus, the planetary correspondence for copper</note> masked and painted in this manner with twice its weight of silver <note>original: \"lunæ\"; literally Luna, the planetary correspondence for silver</note>, and sold it to goldsmiths and coin-makers. Ultimately, they transformed themselves into counterfeiters—not only those who sold it, but also those who bought it.\n\nSome of the Sophists took red arsenic in place of white, and this itself resulted in a false art. For in whatever way it is prepared, it exhibits nothing but whiteness. Others proceeded further to common sulfur, which they cooked until yellow with vinegar, lye, or very sharp urine, day and night, until it emerged white. Afterward, they raised it from common salt and lime made of eggshells <note>original: \"calce ouorum\"</note> through sublimation; they cooked and sublimated it many times. Nevertheless, it always remained combustible, although white. With this, however, they attempted to fix crude mercury.\n\n<summary>Paracelsus exposes the fraudulent use of arsenic and sulfur to create a superficial silver appearance on copper, leading to counterfeit currency. He argues that without understanding the \"staining spirit,\" these chemical processes fail to achieve true metallic transmutation.</summary>\n\n<keywords>arsenic, copper, silver, alchemy, counterfeiting, sulfur, sublimation, fixation, chemical preparation, Sophists</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 8819,
+ "outputTokens": 448,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0057535,
+ "ms": 4399,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 20577,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 19377
+}

@@ -1,0 +1,44 @@
+{
+ "id": "69ac7ee520878c5c9ba51e75_98",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nprofitlessly in the remaining matters: and also that they may market themselves to others, to obtain a better reputation concerning those things in which they are occupied. Thus it happens that, in the manner of Atalanta, they go off the path to pick up the golden apple; meanwhile they interrupt their course and let the victory slip from their hands. But in the true course of Experience, and in directing it toward producing new works, Divine Prudence and Order are altogether to be taken as the model. For God, on the first day of Creation, created only Light, and assigned an entire day to that work; nor did He create any material work on that day. Similarly, from every kind of Experience, the discovery of true Causes and Axioms must first be drawn out: and \"light-bearing\" experiments, not \"fruit-bearing\" ones, must be sought. For Axioms correctly discovered and established do not provide for Practice in a narrow or limited way, but in abundance; and they draw after them whole ranks and troops of Works. But concerning the ways of experimenting, which are no less besieged and blocked than the ways of Judging, we shall speak later: for the present we have spoken only of common Experience as a bad form of Demonstration. Now, the order of things requires that we add something concerning those \"signs\" we mentioned a little while ago (which indicate that the Philosophies and contemplations in use are in a bad state); and also concerning the Causes of a thing so marvelous and incredible at first sight. For the recognition of Signs prepares the way for assent: while the explanation of Causes removes the wonder. These two things help greatly toward a more easy and gentle extirpation of the Idols from the Intellect.\n\n<summary>Bacon argues that researchers should seek general principles and \"light\" before practical results, comparing those distracted by immediate profit to Atalanta. He announces a shift to discussing the signs of failed philosophy and the causes of scientific stagnation.</summary>\n\n<keywords>Atalanta, light-bearing experiments, fruit-bearing experiments, Axioms, Divine Prudence, Idols of the Mind, scientific method, First Day of Creation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2713,
+ "outputTokens": 455,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0027215,
+ "ms": 3189,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1753
+}

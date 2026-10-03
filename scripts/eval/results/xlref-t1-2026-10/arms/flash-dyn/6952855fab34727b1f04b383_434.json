@@ -1,0 +1,42 @@
+{
+ "id": "6952855fab34727b1f04b383_434",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: Van Helmont is concluding his argument that the Archeus—the body's internal vital governor—dispenses healthy blood for nourishment, which is then wasted and corrupted into pus by medical cauteries.</meta>\n\n-># CAUTERY #<-\n\n<margin>15.</margin> Therefore, pus is blood corrupted in the specific part where the wound exists, the result of a corrupted digestion in that same place. To have corrupted the integrity, continuity, and digestion of the parts, and finally to have converted blood into pus—this is exactly what is considered in the <term>Schools</term> <gloss>the medical universities</gloss> to have countered <term>Catarrhs</term> <gloss>the supposed downward flow of waste fluids from the head</gloss>. They believe they have extracted an excrementitious humor through the hole of the cautery: whether it is drawn from the head (from which they claim all Catarrhs originally come), which otherwise threatened to settle upon a vital organ, or whether there is a sympathy between the head and the wounded part or not. For it is all the same to them, provided the wounded skin is kept open. Whether that excrementitious humor is blood, or whether it becomes pus or <term>sanies</term> <gloss>a thin, foul, or bloody discharge</gloss>, it is all the same, so long as the world is deceived by the worn-out terms of Catarrh, precaution, derivation, revulsion, and <term>fontanelle</term> <gloss>an artificial ulcer or \"little fountain\" created for drainage</gloss>. \n\nFor I observe a year-old infant, now teething, suffering from a fever, foaming at the mouth, and constant saliva. At last, there are griping pains and greenish-yellow bowel movements. At the very least, that tooth is a part of the head; therefore, according to their logic, the diarrhea would be a Catarrh of the head. But what sympathy is there between a tooth about to erupt, or a swollen gum, and the intestine? What power does it have to generate and send a Catarrh from the infant's stomach to the head, and then into the <term>ileum</term> <gloss>the lower part of the small intestine</gloss>? By what law does a vapor distilled from the stomach become verdigris-colored bile in the head? Perhaps from the very beginning of life, the factory of biles has already migrated to the head? Could a cautery (if the infant were able to tolerate it) drive away a leek-green diarrhea? Could it compensate for several pounds of leek-green bile with a few drops of pus? Why does the infant's stomach manufacture Catarrh because of a toothache? Why is it sent into the intestine and not to the aching tooth? Does the reader not yet see that diarrhea is not Catarrh? Rather, the provoked <term>Archeus</term> <gloss>the internal vital governor</gloss> is ready everywhere in the intestine to transform nutritional cream into excrements, which are thought by the Schools to be bile, phlegm, and so on. If, therefore, diarrhea is not a Catarrh, and the provoked Archeus can <column-break/> transmute anything into a hostile liquor if only the gum is afflicted, could it not discharge itself in any direction through the established <term>emunctories</term> <gloss>organs of elimination like the skin or kidneys</gloss>? Must it wait for the skin to be opened by a caustic? Ah, cruel dullness, has it made the Schools rage against their fellow mortals?\n\n<margin>16.</margin> For they do not consider that in women and the obese, there is a fleshy membrane around the ordinary locations of the cautery which is mere fat to the thickness of at least two fingers; yet for these persons, more frequent and supposedly more beneficial cauteries are urged. Therefore, the bottom of the fontanelle will scarcely be halfway through the fat. \n\n<margin>17.</margin> There is, therefore, no path by which the evil, fictitious humor of Catarrh, banished from the brain or from between the skull and the skin, can rush through the middle of the fat. But what, finally, is that solitary humor which, banished by its own sin from the sending part, descends unmixed through the substance of the fat and degenerates into pus? If it be an exhalation of vapors from the stomach, why will it not be more frequent in younger and hot stomachs than in weak, old, and cold ones? In what way will that water, distilled from vapor, take on the form of pus? How will it hasten through the brain, the <term>meninges</term> <gloss>membranes of the brain</gloss>, and the skull to find the hole made by the cautery, so that it may flow down and be purged by that way alone? Why does the vapor not fly off into the air a hundred times before it reaches the place assigned by the willing cautery? How will water rising from the stomach now be blood and the mother of pus? How will blood (the matter of pus, according to <term>Galen</term> <note>Galen: the 2nd-century physician whose theories Van Helmont is challenging</note>) be the matter of Catarrh? Why should blood, which is not yet contaminated and is dispensed by nature to the wounded place, be reduced to the category of evil humors? Why, once a wound is made, will nature cease to throw down the condemned matter through and into its usual places? For if the skin is opened at the doctor's whim, will the matter become ignorant of its wandering ways? Or did it perhaps labor so much only to find an exit somewhere, and once that is done, will it henceforth come into obedience to the one who wounds? Therefore, these four things are false:\n\n<summary>Van Helmont argues that the theory of catarrh flowing from the head to be drained by cauteries is anatomically impossible, especially in obese patients where fat blocks any such path. He uses the example of a teething infant to show that symptoms like diarrhea are reactions of the Archeus to local pain rather than descending fluids.</summary>\n<keywords>cautery, catarrh, Archeus, teething, fontanelle, fat, Galen, medical critique, humors, anatomy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3806,
+ "outputTokens": 7600,
+ "thinkingTokens": 6240,
+ "cost_usd": 0.024703,
+ "ms": 34366,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 5303,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "catchword",
+   "joined": null,
+   "catchword": "nempè,",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 4103
+}

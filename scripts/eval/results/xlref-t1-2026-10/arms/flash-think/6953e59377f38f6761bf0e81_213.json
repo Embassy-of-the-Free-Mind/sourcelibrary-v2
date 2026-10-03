@@ -1,0 +1,44 @@
+{
+ "id": "6953e59377f38f6761bf0e81_213",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: In the same...</meta>\n\nway, a flat, circular piece of iron that has been skillfully touched by a magnet at opposite points on its circumference will also incline. However, these magnetic experiments are less apparent in round iron objects because their forces are weaker. The variety of declinations can be seen from iron needles placed at various latitudes on a <term>terrella</term> <gloss>a small, spherical lodestone used as a model of the Earth</gloss>.\n\n<note>A circular diagram illustrates the magnetic inclination or dip on a terrella. An outer circle is labeled \"Sphere of Virtue\" </note><note>original: \"Orbis Virtutis\"</note>. Inside, a shaded sphere representing the terrella has a horizontal axis drawn through it. Along the circumference of this inner sphere, several small iron needles <note>original: \"obeli\"</note> are shown at various latitudes. At the equatorial points at the ends of the axis, the needles lie flat against the surface. As they move toward the top and bottom poles, they incline at increasingly steep angles until they stand perfectly vertical, pointing toward the center, at the magnetic poles.\n\nThe declination of magnetized iron upon a terrella is demonstrated by various equal iron wires, each the length of a barleycorn, arranged along a meridian. At the equator, these wires are directed toward the poles by the power of the stone and lie flat against the body of the stone, parallel to its horizontal plane. The closer they are placed to the poles, the more they are raised up by their rotating nature. At the poles themselves, they reach toward the center perpendicularly. However, iron needles do not stand perfectly upright unless the stone is vigorous and the needles are not longer than is appropriate.\n\n### CHAPTER III.\n\n### An instrument of demonstration, showing by the power of the stone the degrees of declination from the horizon of any latitude.\n\n<meta>The catchword \"Instru-\" at the bottom of the page indicates the beginning of the next word, \"Instrumentum.\"</meta>\n\n<summary>This page describes how small iron needles react to the magnetic field of a spherical lodestone, demonstrating that magnetic dip increases from the equator to the poles. It introduces a section on a specific instrument designed to measure these angles of inclination.</summary>\n\n<keywords>magnetic dip, inclination, terrella, meridian, equator, poles, magnetic demonstration, scientific instrument</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2803,
+ "outputTokens": 505,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0029165,
+ "ms": 2966,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1753
+}

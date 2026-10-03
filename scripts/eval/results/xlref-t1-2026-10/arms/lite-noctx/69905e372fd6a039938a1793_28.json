@@ -1,0 +1,34 @@
+{
+ "id": "69905e372fd6a039938a1793_28",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>The page continues a list of magical and medicinal properties of stones, starting mid-sentence from the previous page's discussion of intellectual gifts granted by stones.</meta>\n\n<sig>C 2</sig>\n\n<margin>3</margin>\n\n<note>continues from previous page: ...to foretell the future</note> and the interpretation of all dreams, and it enables one to understand enigmas.\n\n¶ If you wish to have a good understanding of the senses, and to be unable to become drunk, take the stone which is called <term>Amatistus</term> <gloss>Amethyst</gloss>, and it is of a purple color, and the best is born in India, and it is effective against drunkenness. And it bestows good understanding in the sciences.\n\n<margin>+</margin>\n¶ If you wish to overcome enemies and avoid disputes, take the stone which is called <term>Berillus</term> <gloss>Beryl</gloss>, and it is of a pale color, transparent like clear water. Carry it with you and you will win all disputes, and you will put enemies to flight, and it will render the enemy gentle. It makes one effective in matters of character, just as Aaron says. It also gives good understanding in the sciences.\n\n¶ If you wish to divine the future, take the stone which is called <term>Chelonytes</term> <gloss>Chelonite, or turtle-stone</gloss>, and it is of a varied purple color, and it is found in the body of a turtle. <margin>-</margin> If anyone carries this stone under their tongue, he will divine and predict the future. However, it does not have the power except when the moon is first ignited <note>meaning: when the moon is new or rising</note>, and it increases as the moon wanes <note>original: \"in vltia descendente\" implying the final descent of the moon</note>. Thus Aaron wishes [it to be known] concerning the virtues of stones and herbs.\n\n<margin>+</margin>\nIf you wish to calm storms and cross rivers, take the stone which is called <term>Corallus</term> <gloss>Coral</gloss>, and it is red and also white. And it is proven that it immediately restricts blood, and when carried, it repels foolishness and provides wisdom. And this has been proven by certain people in our time, and it is effective against storms and the dangers of rivers.\n\n<summary>This page describes the occult and medicinal virtues of four stones: Amethyst for clarity and sobriety, Beryl for victory in disputes, Chelonite for prophecy, and Coral for protection against storms and blood-related ailments.</summary>\n\n<keywords>Amethyst, Beryl, Chelonite, Coral, Aaron, divination, occult properties, stones, magic</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2528,
+ "outputTokens": 599,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0015305,
+ "ms": 2523,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1893
+}

@@ -1,0 +1,44 @@
+{
+ "id": "6956eaf4f23ebf30578dba35_88",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>of this kind. Thus they report that in cases of colic <note>original: \"torminibus\"; severe abdominal pains or cramps</note>, if a live duck is applied to the belly, the disease passes into it, and the duck dies. Archytas <note>A Pythagorean philosopher and mathematician of the 4th century BCE</note> says something similar: if a heart recently extracted from an animal, still warm and living, is hung over a patient suffering from a quartan fever <note>A fever where paroxysms occur every fourth day, often associated with malaria</note>, it removes it. Likewise, if anyone swallows the heart of a Hoopoe, or a Swallow, or a Weasel, or a Mole, while it is still living and pulsating, it grants him memory, recollection, understanding, and divination.\n\nFrom this arose a general precept, namely that whatever things are to be collected from animals, whether stones, members, or excrements such as hair, dung, or hooves, these must be taken from those animals while they are still living, and even, if possible, while they remain alive afterward. Hence they instruct that when you collect the tongue of a Frog, you should return it alive into the water; if you collect a tooth or an eye from a Wolf, do not kill the Wolf; and so on with similar cases. \n\nThus Democritus <note>The Greek \"laughing philosopher\" to whom many magical and medical works were apocryphally attributed</note> reports that if one extracts the tongue from a living sea-frog <note>original: \"Ranæ marinæ\"; likely referring to the Anglerfish or Monkfish</note>, with no other part of the body adhering to it, and after releasing it back into the sea, places the tongue over the heart-palpitation of a sleeping woman, she will answer truthfully to whatever questions are asked of her. In a similar way, they promise that the eyes of frogs, tied to a sick person before sunrise in such a way that the frogs are released blind into the water, drive away tertian fevers <note>A fever recurring every third day</note>. They also report that these same eyes, tied on in deerskin with the flesh of a Nightingale, maintain wakefulness and put sleep to flight. Similarly, the spine of a stingray <note>original: \"Pastinacæ radius\"; the venomous tail-spine of the common stingray</note> tied to the navel is said to make births easy.\n\n<summary>This page describes sympathetic magic and medical remedies derived from living animals. It emphasizes that certain occult virtues must be captured while the creature is still alive and pulsating, or by releasing the animal unharmed after a part has been taken.</summary>\n<keywords>sympathetic magic, Archytas, Democritus, animal remedies, divination, quartan fever, frog, wolf, stingray, nightingale, medical folklore</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3183,
+ "outputTokens": 626,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0034695000000000004,
+ "ms": 3959,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "split",
+   "joined": "faeere",
+   "catchword": "cere,",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1747
+}

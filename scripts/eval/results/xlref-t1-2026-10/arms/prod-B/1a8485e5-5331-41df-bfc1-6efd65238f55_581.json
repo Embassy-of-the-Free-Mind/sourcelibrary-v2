@@ -1,0 +1,44 @@
+{
+ "id": "1a8485e5-5331-41df-bfc1-6efd65238f55_581",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "ON BIRD-CATCHING.\n\nhairs, or the excrement they hold, or those who have the <term>peristereon</term> <gloss>vervain, or pigeon-herb</gloss>. A black stone similar to a bean is found in the Nile; when it is seen, dogs do not bark. You will carry a dog’s tongue placed under your thumb inside your shoe, or if you carry a dog’s dry heart with you, according to Sextus; or a hare’s hair or excrement, according to Pliny. Or, you will carry a young weasel’s tail that has been cut off in your foot, or you will give him a frog in a morsel of food; all these things serve to avoid the barking of dogs. Nigidius says that dogs will flee the sight of one who expels a tick from a dog and carries it for a while. Oppian:\n\n> *But if you carry a little piece cut from a hyena’s skin,*\n> *Immediately the puppies and fierce dogs*\n> *Will be struck with bitter terror, and will not bark at you*\n> *As you approach, even if they had been barking before.*\n\n### That a dog may not be able to run.\n\nIf you smear the wings with oil, he will be impeded in his running; in this way it will happen.\n\n### That a hawk may be spirited.\n\nYou will animate a bird against its prey so that it attacks large birds; moisten the bait, which it uses at the time of hunting, with wine, or if it is a goshawk, give it a little vinegar. When you want it to fly, give it three morsels of meat moistened with wine, or pour wine into the beak of a dove chick, then make it fly. Thus\n\n### You will make partridges more pugnacious,\n\nIf you give them sprigs of maidenhair fern as food, according to Pliny, and\n\n### Chickens become more pugnacious,\n\nBy giving them garlic in their food when they are about to fight; from which they are most wittily called in the old comedy <term>eskorodismenoi</term> <gloss>garlic-fed</gloss>, that is, garlic-stuffed, for one who is vehement and too prone to battle.\n\n### That a bird may not fly high.\n\nPull out the tail feathers, which direct the course upward; thus it will fly in a circle below. If you wish\n\n### That a bird may not be able to fly.\n\nCut the upper and lower nerves of the wing, and it remains without harm; the bird will not fly, and in this way, they do not flee in aviaries.\n\n<summary>This page details various folkloric methods and practical techniques for controlling animal behavior, including charms to silence barking dogs, methods to influence the temperament of hunting hawks and game birds, and minor surgical interventions to prevent birds from flying away.</summary>\n<keywords>bird-catching, hunting, animal behavior, vervain, Oppian, Pliny, folk medicine, hawking, poultry</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3057,
+ "outputTokens": 657,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00174975,
+ "ms": 2637,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1921
+}

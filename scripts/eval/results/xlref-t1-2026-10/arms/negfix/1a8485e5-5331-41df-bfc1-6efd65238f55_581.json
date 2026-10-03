@@ -1,0 +1,40 @@
+{
+ "id": "1a8485e5-5331-41df-bfc1-6efd65238f55_581",
+ "arm": "negfix",
+ "base_arm": "prod-A",
+ "text": "<header>ON BIRD-CATCHING.</header>\n\nor a hare's fur, or the dung that holds the <unclear>hair</unclear>, or those who have the <term>peristereon</term> <gloss>vervain or vervain-mallow</gloss> herb. A black stone, similar to a bean, is found in the Nile; when this is seen, dogs do not bark. You shall carry a dog’s tongue placed under the thumb in your shoe, or if you carry the dried heart of a dog with you, according to Sextus <note>Sextus Empiricus, a skeptic philosopher</note>; or hare’s fur or dung, according to Pliny. Or you shall carry the tail of a young weasel cut off in your foot <note>likely meaning in one's shoe or sandal</note>, or give it a frog in a morsel of food; all these are for avoiding the barking of dogs. Nigidius <note>Publius Nigidius Figulus, a Roman philosopher and polymath</note> says that dogs flee the sight of anyone all day who expels a tick from a pig and carries it for a while. Oppian <note>A Greek author of didactic poetry on hunting and fishing</note>:\n\n> But if you carry a small piece cut from a hyena’s skin,\n> Immediately the puppies and the fierce dogs,\n> Astonished by sharp terror, will not bark at you\n> As you approach, even if they were barking before.\n\n### *That a dog may not be able to run.*\n\nIf you smear the legs with oil, for it will be hindered in running; in this way, it will happen.\n\n### *That a hawk may be spirited.*\n\nYou shall animate the bird against its prey, so that it attacks large birds; moisten the bait, which it uses at the time of hunting, with wine, or if it is a goshawk, give it a little vinegar. When you want it to fly, give it three morsels of meat moistened with wine, or pour wine into the beak of a pigeon chick, then make it fly. Thus:\n\n### *You will make partridges more combative,*\n\nIf you give them twigs of maidenhair fern <note>original: \"adianti\"</note> in their food, according to Pliny, and:\n\n### *Roosters become more combative,*\n\nBy giving garlic in their food when they are about to fight; from which most facetiously in ancient comedy they are called <term>eskorodismenoi</term> <gloss>garlic-fed</gloss>, that is, garlic-stuffed, used for someone vehement and overly prone to fighting.\n\n### *That a bird may not fly high,*\n\nPull out the feathers of the tail, which direct the course upward; thus it will fly in a circle below. If you wish:\n\n### *That a bird may not be able to fly,*\n\nCut the upper and lower nerves of the wing, and it remains without harm; the bird will not fly, and in this way, they do not escape in aviaries.\n\n<summary>This page details various folkloric methods and natural observations for controlling animal behavior, including silencing dogs, increasing the spirit of hawks and game birds, and managing the flight capacity of birds for keeping them in aviaries.</summary>\n<keywords>bird-catching, hunting, animal behavior, folkloric medicine, Oppian, Pliny, Nigidius, hawks, partridges, roosters</keywords>",
+ "flagged": true,
+ "changed": true,
+ "flags": [
+  {
+   "latin": "Nigidius canes tota die fugere conspectum eius dicit, qui è sue ricinum expellit",
+   "english": "Nigidius says that dogs flee the sight of anyone all day who expels a tick from a dog",
+   "problem": "The Latin says the person expels the tick from a pig (sue), but the English says from a dog.",
+   "correct": "Nigidius says that dogs flee the sight of anyone all day who expels a tick from a pig"
+  },
+  {
+   "latin": "Alas si oleo illeueris, nam in cursu impedietur",
+   "english": "If you smear the wings with oil, for it will be hindered in running",
+   "problem": "The Latin refers to wings (alas), but the context of 'running' implies the English translation incorrectly attributes the effect to wings rather than legs or the animal itself.",
+   "correct": "If you smear the legs with oil, for it will be hindered in running"
+  },
+  {
+   "latin": "aut pullo columbæ vinum ex rostro infunde",
+   "english": "or pour wine from its beak into a pigeon chick",
+   "problem": "The Latin says to pour wine into the chick's beak (ex rostro), but the English says to pour it from the chick's beak.",
+   "correct": "or pour wine into the beak of a pigeon chick"
+  }
+ ],
+ "check_parse_failed": false,
+ "check": {
+  "model": "gemini-3.1-flash-lite",
+  "in": 1661,
+  "out": 275
+ },
+ "fix": {
+  "model": "gemini-3-flash-preview",
+  "in": 1866,
+  "out": 748
+ },
+ "cost_usd": 0.00400475
+}

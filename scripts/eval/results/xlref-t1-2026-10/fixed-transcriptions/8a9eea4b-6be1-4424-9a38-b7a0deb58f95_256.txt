@@ -1,0 +1,25 @@
+<lang>lat</lang>
+<page-num>215</page-num>
+<header>DE ALCHIMIA.</header>
+
+### DE ALCHIMIA.
+
+<margin>Alchimię finis non aurum & argentũ. sed arcana.</margin>
+destinauit, penetrent. Ex his colligite, necesse esse, vt ad præscriptum meum procedatur, & minimè ad vestrum. Hic opus est, vt me sectemini, non ego vos. Et licet quidem aduersus me adhuc plura defulminetis: mea tamen nihilominus Monarchia stabit, vestrâ eunte pessum. Frustra de Alchimia tam prolixè non scribo, sed id hoc animo & fine facio, vt ex his propè & solidè cognoscatis, quid in ipsā lateat, & quî intelligi debeat. Nec ex hoc offendi debes, quod ex eā nec aurum, nec argentum prodit: Sed hoc potius accurandum est, vt per eam arcana detegantur, & seductiones seplāsiariorum prodantur, quibus rude vulgus decipitur, dum his pro floreno vno ministrant, quod nummo vno non redimerent. Tam pretiosa eorum arcana sunt.
+
+<margin>Venenū etiam in reb. optimis.</margin>
+Quis est, qui inficiari ausit, etiam in rebus optimis venenum latere & inexistere? Fateri id omnes coguntur. Hoc ergò si verum est, ex vobis iam quæro an non à bono & vtili venenum separandum sit? & bonum accipiendum, malum relinquendum? Imò verò, ita oportet. Si itaq; oportet: quæso enarrate mihi, qui id in vestris officinis separetur? Apud vos enim omnia permixta manent. Vt verò simplicitatem vestram tueamini, si conuicti estis ad fatendum, ibi venęnum latere & quò tandem illud abeat, rogamini: tunc nescio quid de correctionibus profertis, quæ venenum exigant & auferant,
+<margin>Correctio Medicorum ventilatur.</margin>
+veluti Cotonea Scammoneam, post Diagridium, dictum corrigūt. Quid id verò correctionis est? An non manet venenum postea ceu primò? Et tu tamē interim gloriaris, quod correxeris, adeò vt venenum ampliùs non noceat. Id verò quò euasit? 
+<margin>Diagridion.</margin>
+In Diagridio manet. Id tenta, si sapis: modum excede, & videbis, vbi venenum sit. Nam id haud segniter scies Sic corrigis etiam Turbith, & vocas ipsum Diaturbith. Istiusmodi correctiones vestrę sunt, quæ rusticos decerent, & caballis propinandæ essent. Excedēndo modum periculum fac, & dosin auge: videris an venenum non sensurus sis. 
+<margin>Corrigo Medicis quid</margin>
+*Corrigere est correctum sumere.* Qui malitiosus est, & peccauit: is si plectitur, correctio non extēditur longius, quàm voluntas durat eius, qui plexus est. Tales hæ quoque correctiones sunt, penes ipsas situm est, non penes te. Iam verò hoc casu nihil considerandum Medico est ampliùs, quàm vt venenum dematur. Id per separationem fieri oportet: Vt, exempli gratia: serpens venenosus est: & tamen in cibum adoptatur. Si ipsi venenu demis, comedas nullā noxā. Idem de rebus cæteris vniuersis æquè intelligendum est, nimirùm simili separatione opus esse. Eā nondum factā, operationis tuæ securus esse non possis: ni forte fiat, vt vices tuas natura suppleat, aut cœli maior benignitas faueat. In arte etenim tuā præsidij nihil superfuerit.
+
+Iam ergò tandem verum illud fundamentum si oportet, quod venenum aufert, qualiter id Alchimia præstat. Hoc enim ita fieri necesse est, vt, si Mars in Sole sit, Mars dematur, & si Saturnus in Venere versetur, is ab eā separetur. Quot enim ascendentes & impressiones in rebus naturæ sunt, tot etiam corpora in illis existunt. Quæ verò corpora contraria sunt, eorum omninò aliquod demi & auferri opus est, vt hoc pacto omnis contrarietas tollatur, & à bono malum, quod quæris, adimatur.
+<margin>Ignis omnia perficit.</margin>
+Ut aurum ad nihil vtile est, nisi priùs in ignem coniiciatur: sic multò minùs vtilis Medicina est, quæ per ignem non transit. Per ignem enim necesse est omnia transire in generationem alteram, quā homini conducere & opitulari debet. Et hoc non meritò probum fundamentum cuiuslibet Medici censeri debeat? Nec enim Medicus venena, verū arcana adhibere debet. 
+<margin>Officinę reprehend.</margin>
+Omnes autem illæ officinales præparationes, quotquot earum sunt, isti doctrinæ ne quidem literulam conferunt: sed in corrigendo simpliciter occupantur, velut; si canis in conclaui pepedit, & fœtor ille aut trochiscis & thymiamate, aut ligno iuniperino sopiatur: an non quęso fœtor tam postea, quàm antea in cōclaui remanet? Et licet quidem olfactu non percipiatur: an ideò cuipiam dicere liceat, fœtor separatus est, nec restat ampliùs? Imò adest, sed correctus suffitu. Sic ergò suffitus & pedor nares vnà ingrediuntur. Huiusmodiquoque sunt correctiones Pharmacopœorum, qui saccharo obtundunt Aleopaticum, vt sic nullam noxam infligat. Ita saccharū & mel ipsorum magisteriū est. Sic gentianā etiā corrigūt theriacam. An verò hæc non asininæ inscitiæ opera sint? Ipsi tamen se principum Medicos iactant & venditant. Quis verò ita stupidus est, vt hæc nihili esse, non illicò olfaciat? De remediis suis quid quæso iactare possunt aliud, quàm vt dicant, *Hoc Electuarium suaue est, ex aromatis, saccharo, melléque*
+
+<vocab>Alchimia, Mars, Saturnus, Scammoneam, Diagridium, Turbith, Medicus, Electuarium, seplasiariorum</vocab>

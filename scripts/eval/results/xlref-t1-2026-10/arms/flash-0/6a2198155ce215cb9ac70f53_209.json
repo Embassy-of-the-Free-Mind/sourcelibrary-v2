@@ -1,0 +1,44 @@
+{
+ "id": "6a2198155ce215cb9ac70f53_209",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "# CHAPTER TWENTY-FOUR\n\n3222. Furthermore, loves and their affections are represented by flames, and this with inexpressible variation. Truths, however, are represented by lights, and by innumerable modifications of light. From this it can be established why it is that, in the Word <note>The Holy Scriptures</note>, the goods belonging to love are signified by flames, and the truths belonging to faith by lights.\n\n3223. There are two lights by which man is illuminated: the Light of the world and the Light of heaven. The Light of the world is from the sun; the Light of heaven is from the Lord. The Light of the world is for the natural or external man, and thus for those things which are in him. Although the things there do not appear to belong to that light, they nevertheless do; for nothing can be grasped by the natural man except through such things as exist and appear in the solar world, and thus unless they have some form derived from the light and shade there. All ideas of time and ideas of space, which are so important in the natural man that he cannot think without them, also belong to the light of the world. But the Light of heaven is for the spiritual or internal man. The interior mind of man, where his intellectual ideas—which are called immaterial—reside, is in that light. Man does not know this, even though he calls his intellect \"sight\" and ascribes \"light\" to it. The reason is that as long as he is in worldly and corporeal things, he has a perception only of such things as belong to the light of the world, but not of such things as belong to the light of heaven. The light of heaven is from the Lord alone, and the entire heaven is in that light. Indeed, this Light of heaven is immensely more perfect than the light of the world. Those things which make up a single ray in the light of the world make up myriads <note>tens of thousands</note> in the Light of heaven. Within the light of heaven, there is intelligence and wisdom. This is the light that flows into the light of the world which is in the External or Natural man, and causes him to perceive the objects of things through the senses. Unless that light flowed in, man would never have any perception, for those things which belong to the light of the world derive their life from it. Between these Lights—or between those things which are in the light of heaven and in the light of the world—a <term>correspondentia</term> <gloss>correspondence</gloss> exists when the External or natural man makes one with the Internal or Spiritual man, that is, when the former serves the latter. And the things which then exist in the light of the world are <term>repræsentativa</term> <gloss>representatives</gloss> of such things as are in the light of heaven.\n\n3224. It is strange that man does not yet know that his intellectual Mind is in a certain light that is entirely different from the light of the world. But such is the condition that for those who are in the Light of the world, the Light of heaven is like darkness; and for those who are in the Light of heaven, the light of the world is like darkness. This comes principally from the loves, which are the heats of light. Those who are in the loves of self and of the world—and thus in the heat of the light of the world alone—are affected only by evils and falsities, and these are what extinguish the truths which belong to the light of heaven. But those who are in love to the Lord and in love toward the neighbor\n\n<summary>This page distinguishes between the Light of the world and the Light of heaven, explaining that human intelligence relies on spiritual light flowing into natural perception. It describes how the internal mind operates in heavenly light while the external mind operates in worldly light, with a correspondence between them when they are in alignment.</summary>\n<keywords>Light of the world, Light of heaven, natural man, spiritual man, correspondence, representation, intelligence, wisdom, love to the Lord</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3348,
+ "outputTokens": 865,
+ "thinkingTokens": 0,
+ "cost_usd": 0.004269,
+ "ms": 4202,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4107,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "catchword",
+   "joined": null,
+   "catchword": "sunt",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2907
+}

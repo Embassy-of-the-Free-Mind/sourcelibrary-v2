@@ -1,0 +1,44 @@
+{
+ "id": "69dbcc3e0f8c5edf20f484a0_330",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: Article 3. Whether more universal things are prior in our intellectual cognition.</meta>\n\n### Third Article: Whether more universal things are prior in our intellectual cognition.\n\nRegarding the third article, the procedure is as follows. It seems that more universal things are not prior in our intellectual cognition: because those things which are prior and more known according to nature are posterior and less known to us <note>original: \"secundum nos\"</note>; but universals are prior according to the nature of our intellect. Furthermore, composite things are prior as far as we are concerned, as are simple things; but universals are prior <unclear>cioza</unclear> <note>likely \"simpliciora\" meaning simpler</note>: therefore they are known later to us. Furthermore, the Philosopher <note>Aristotle</note> says in the first book of the *Physics* that the defined falls first into our cognition, and the parts of the definition are less universal: just as \"animal\" is a part of the definition of \"man\": and universals are known later to us. Furthermore, we arrive at effects by chance and at principles; but universals are known later to us. But there is that which is said in the first book of the *Physics*, that from the universal we must arrive at particulars.\n\n**I answer that it must be said** that in the cognition of our intellect, two things must be considered. First, indeed, that intellectual cognition in some way takes its beginning from sensitive cognition; and because the sense is of singulars and the intellect of universals, it is necessary that the cognition of singulars as far as we are concerned be prior to the cognition of universals. Second, it must be considered that our intellect proceeds from <term>potentia</term> <gloss>potentiality</gloss> to <term>actus</term> <gloss>actuality</gloss>. And that which proceeds from potentiality into actuality first reaches an incomplete act, which is halfway between potentiality and actuality, and then a perfect act. Now the perfect act to which the intellect reaches is complete science, through which things are known distinctly and determinately; the incomplete act is imperfect science, through which things are known indistinctly under a certain confusion. For what is thus known is known both in act and in a certain way in potentiality. As is said in the first book of the *Physics*: first those things which are more confused are manifest and certain to us. Later, however, we know by distinguishing the principles and elements distinctly. It is manifest, however, that to know something in which many things are contained, without having proper knowledge of each of those things contained in it, is to know something under a certain confusion. In this way, both the whole in which the parts are contained in potentiality and the integral whole can be known; for either whole can be known in a certain confusion without the parts being distinctly known. To know distinctly that which is contained in the whole is either to have cognition of a less common thing: just as to know \"animal\" indistinctly is to know \"animal\" in which is contained \"rational\" or \"irrational,\" which is to know \"man\" or \"lion.\" Therefore, it first occurs to our intellect to know \"animal\" [rather than] to know \"man.\" And it falls to reason if I compare anything more universal to less universal, as the sense goes out from potentiality into act, so does the intellect: and this order\n\n<column-break/>\n\nof cognition appears in the sense. For more is judged by the sense more [generally] and when less is known at a distance, it is perceived to be a body; and then it is perceived to be an animal; and then it is perceived to be a man; and then Peter or Socrates. Or it is pleasing and evident that a child from the beginning first distinguishes a man from a non-man; and children from the beginning call all men \"fathers.\" Later, however, they determine each one specifically, as is said in the first book of the *Physics*: things manifest and that someone knows something indistinctly still and in potentiality, or knows both the fiction and the principle, thus he knows the genus and is able to know the differences. And thus, in itself, indistinct cognition is the middle between potentiality and act. And that cognition of singulars is prior as far as we are concerned, and universal cognition is sensitive cognition and intellectual cognition. If both the sense and the intellect [are considered], cognition of the more universal is prior to cognition of the less common.\n\nTo the first, it must be said that it can be considered in two ways. In one way, as it is considered through the intention of truth; and when the intention of truth is both true and the same, it has a relation to many. And the abstraction of the intellect arrives at this end in such a way that it is truly posterior. In the first book of *On the Soul* <note>Aristotle's De Anima</note>, it is said that the universal is either nothing or it is posterior; but [Plato] placed universals as substances; and in this consideration it is true, because particulars are not except by participation in the more universal subsisting things which are called Ideas. In another way, it can be considered in respect to the nature itself, [such as] of \"animality\" or \"humanity\" as it is found in particulars. And thus there is a twofold order of nature. One according to the way of generation and time, since in that way those things which are incomplete and in potentiality are prior; and in this way the more universal is prior in nature, which appears manifestly in the generation of man and animal. For first \"animal\" is generated, then \"man,\" as is said in the book *On the Generation of Animals*. The other is the order of perfection or the intention of nature, just as act is simply prior in nature, and that which is perfect [is prior] to that which is imperfect; and in this way the less universal is prior in nature, as \"man\" is prior to \"animal.\" For the intention of nature does not stop at the generation of an animal, but intends to generate a man.\n\nTo the second, the more universal is compared to the less universal as a whole; and through the whole which is more universal, not only \"man\" and \"horse\" [are known], but it contains in the future not only the more universal but also others, like \"man\" contains not only \"animal\" but \"rational.\" Thus, therefore, \"animal\" considered in itself is prior in our cognition to \"man.\" If \"man\" is prior in our cognition to \"animal,\" it is so through his reason <note>specific difference</note>.\n\nTo the third, it must be said that something can be known in two ways. In one way absolutely according to what it is in itself, and thus nothing [is known first]. In another way, when they are parts of this whole, as stones [of a house], it is necessary that we first know the whole and then the parts. For we first know the house in a certain confused way; thus, therefore, it must be said that the defining elements, considered absolutely, are prior to us and defined. Otherwise, the defined would not be made known through them. But rather, they are parts.\n\n<summary>Thomas Aquinas discusses the order of human cognition, arguing that we naturally progress from universal, confused knowledge to specific, distinct knowledge. He distinguishes between the order of nature and the order of discovery, using the example of how a child recognizes a \"man\" before recognizing their specific \"father.\"</summary>\n\n<keywords>universal, particular, cognition, potentiality, actuality, Aristotle, Physics, animal, man, definition, generation, intellectual knowledge</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3868,
+ "outputTokens": 1639,
+ "thinkingTokens": 0,
+ "cost_usd": 0.006851,
+ "ms": 12232,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 7195,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 5995
+}

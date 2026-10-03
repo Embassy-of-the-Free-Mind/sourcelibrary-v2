@@ -1,0 +1,34 @@
+{
+ "id": "69b2ff0ea1a4246ddb45adbb_62",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "OF THE UTOPIA BY THOMAS MORE\n\nit is a mark of dignity to exercise authority not over beggars, but rather over the wealthy and fortunate. The man of upright and lofty spirit, Fabricius <note>Gaius Fabricius Luscinus, a Roman consul known for his integrity and rejection of bribes</note>, surely understood this himself when he replied that he would rather command rich men than be rich himself. And in truth, for one man to wallow in pleasure and luxury while others groan and lament on all sides is not to be a king, but a jailer. Finally, just as the most unskilled physician is one who knows not how to cure one disease except by another, so he who knows no other way to correct the lives of citizens than by depriving them of the comforts of life must admit that he does not know how to rule free men. Indeed, let him rather change his own sloth or arrogance, for it is usually because of these vices that a people either despise him or hold him in hatred. Let him live innocuously on his own means, let him adjust his expenses to his income, let him curb crimes, and let him prevent them through the proper upbringing of his people rather than allowing them to grow, only to punish them afterwards. Let him not rashly revive laws abrogated by custom, especially those which, having long been abandoned, have never been missed. Nor should he ever accept anything under the name of a commission such as a judge would not allow a private citizen to accept, regarding it as unjust and deceitful. Here, if I were to propose to them the law of the Macarensians <margin>The marvelous law of the Macarensians</margin>, who themselves are not very far removed from Utopia, whose king, on the very first day he enters upon his rule, is bound by a solemn oath, after great sacrifices have been offered, that he will never at any one time have in his treasury more than one thousand pounds of gold, or an amount of silver equal to the value of that gold. They say this law was established by a certain excellent king, to whom the welfare of the fatherland was of greater concern than wealth\n\n<summary>More argues that a true ruler should cultivate the prosperity and morality of his subjects through good governance rather than punitive measures and personal enrichment. He illustrates this by citing the example of the Macarensians, who limit their king's treasury by law to prevent avarice.</summary>\n<keywords>Fabricius, Macarensians, Utopia, kingship, governance, wealth, law, moral instruction</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2393,
+ "outputTokens": 529,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00139175,
+ "ms": 2562,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1714
+}

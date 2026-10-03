@@ -1,0 +1,34 @@
+{
+ "id": "6956eaf4f23ebf30578dba35_88",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "OF OCCULT PHILOSOPHY\n\nthey act in such a way: thus, they report that in cases of colic, a living duck placed upon the belly causes the illness to pass into it, and the duck dies. Similar is what Archytas <note>A Greek philosopher and mathematician of the Pythagorean school.</note> says, that if the heart of an animal is taken freshly extracted while still warm and living, and is suspended over a patient with a quartan fever, it removes it. Thus, if one swallows the heart of a hoopoe, a swallow, a weasel, or a mole while it is still alive and palpitating, it contributes to memory, reminiscence, intellect, and divination. From this arose a general precept: that whatever is to be collected from animals, whether stones, members, or excrements such as hair, dung, or claws, these must be taken from the animals while they are still living, and even, if possible, while they themselves remain alive afterwards. Whence they instruct that when you collect the tongue of a frog, you should return it alive to the water; if you collect the tooth or the eye of a wolf, you should not kill the wolf, and so on for similar things. Thus Democritus <note>An ancient Greek pre-Socratic philosopher.</note> reports that if one extracts the tongue of a living sea-frog, with no other part of the body attached, and after releasing it into the sea, places it upon the heart of a sleeping woman, she will answer truthfully whatever she is asked. In a similar way, they promise that the eyes of frogs bound to a sick person before sunrise, in such a way that they are dropped into water while sightless, will drive away tertian fevers, and they report that the same eyes, when bound with the flesh of a nightingale in deerskin, provide wakefulness, having put sleep to flight. Similarly, the stingray's <note>An aquatic animal known for its venomous spine.</note> barb bound to the navel is said to make childbirth easy,\n<meta>catchword: to make,</meta>\n\n<summary>Agrippa describes sympathetic magic practices involving the use of animal parts, specifically emphasizing the necessity of harvesting these materials while the animals remain alive to ensure efficacy in healing and divination.</summary>\n<keywords>sympathetic magic, animal parts, Archytas, Democritus, healing, divination, occult philosophy, folk medicine</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2391,
+ "outputTokens": 514,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00136875,
+ "ms": 2336,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1747
+}

@@ -1,0 +1,28 @@
+{
+ "id": "698255ef792a04eb812c4860_190",
+ "arm": "negfix",
+ "base_arm": "prod-A",
+ "text": "But indeed, it is even more to be wondered at that some men are found who not only inquire into this highest art <note>Ecclesiastes 7</note> but even attempt to handle and practice it, and yet nevertheless doubt whether it be a natural and truly magical art, or instead a preternatural and necromantic one, acquired only through spirits and unlawful, forbidden means. Not at all, my good man; the Devil and all the impious do not have that power, except by divine permission, to touch even the smallest part of this art, much less to master it or exercise it according to their own pleasure. Not in the least, I say; that art rests solely in the hand and power of God, who imparts it to whom He wills and, at the same time, takes it away again. For to this art, which takes its origin from and out of God, no seekers of pleasure are admitted at all, much less the dire and infernal spirits; but rather, in their place, such a spirit is admitted who is simple, upright, true, constant, and of a pure and pious essence. Yet the present, secure, and impious world does not recognize this spirit, and therefore remains ignorant of its essence and its highest mystery in many things. For as soon as it hears anything of it with its ears, yet is unable to comprehend it quickly, then these worldly companions <note>Wisdom of Solomon 1</note> call it foolishness. Therefore also, because of their blindness, that spirit shall be perpetually hidden from them and shall finally be taken away from them altogether.\n\n<note>A small ink flourish or doodle consisting of several wavy vertical and horizontal strokes appears in the right margin.</note>\n\nLest I proceed by this mention perhaps further than is just from my purpose, let me touch upon it again and finally lead it to a conclusion. For that reason, I wish this to be properly instilled in pious craftsmen, by way of a friendly exhortation: namely, that to the extent one directs his heart, soul, and indeed his life and actions toward God <note>Ecclesiasticus 18 and 29</note>, to that same extent he shall perceive a remarkable benefit daily and even every hour in the progress of his stone and his labor. This is what I myself have observed every day with the highest diligence and great devotion, and thus I have experienced it by the very deed. Wherefore, everyone must direct all his actions toward this from the very beginning and prepare himself so that he may afterward be able to attain a more successful end in both works <note>the spiritual and the physical work</note>.\n\nHere someone might perhaps object that, to be sure, some are found\n\n<summary>The author asserts that alchemy is a divine gift rather than a demonic art, accessible only to the pious and upright. He emphasizes that success in the physical work is directly tied to the alchemist's spiritual devotion and moral conduct.</summary>\n<keywords>divine art, magic vs necromancy, pious essence, worldly blindness, spiritual preparation, craftsmen, success in labor</keywords>",
+ "flagged": true,
+ "changed": true,
+ "flags": [
+  {
+   "latin": "Diabolus omneisque adeo impij absque divina permissione, potestatem illam non habent",
+   "english": "the Devil and all the impious do not have that power, without divine permission",
+   "problem": "The Latin says they do not have power *without* permission (implying they might have it *with* permission), but the English phrasing suggests they lack the power regardless of permission.",
+   "correct": "The Devil and all the impious do not have that power, except by divine permission"
+  }
+ ],
+ "check_parse_failed": false,
+ "check": {
+  "model": "gemini-3.1-flash-lite",
+  "in": 1714,
+  "out": 109
+ },
+ "fix": {
+  "model": "gemini-3-flash-preview",
+  "in": 1717,
+  "out": 645
+ },
+ "cost_usd": 0.0033855
+}

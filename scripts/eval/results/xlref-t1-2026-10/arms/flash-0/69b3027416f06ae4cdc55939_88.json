@@ -1,0 +1,44 @@
+{
+ "id": "69b3027416f06ae4cdc55939_88",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: the Roman Senate itself...</meta>\n\nthe Roman Senate itself, to whom these things were written. What do you gain from that? For no precept joined to a specific reason usually can, or even should, bind anyone beyond the scope of that precept’s reasoning. *Be subject*, <term>hypotagēte</term> <gloss>original Greek: submit yourselves</gloss>; that is, if you look at the force of the word, be subordinate or legitimately subject. For <term>hē de taxis nomos</term> <gloss>original Greek: and order is law</gloss>, as <term>Aristotle</term> <note>the Greek philosopher and author of the Politics</note> says; law is order. *Be subject for the Lord's sake*. For what reason? Because both the king and the governor are appointed by God for the punishment of evildoers and the praise of those who do good. *For such is the will of God*. Namely, that we should obey such men as are described here; concerning others, there is not a single word here. You see how excellently the reason for this precept holds together. He adds in verse 16: *as free men*, therefore not as slaves. What if, on the contrary, they should reign for the torture and destruction of good men, and for the impunity, praise, and reward of criminals? Shall we be subject forever, not only as private citizens, but as leaders, as all the magistrates, and finally the Senate itself? Is it not called a human ordinance? Why then shall human power be valid for establishing what is good and healthy for men, but not be valid for removing what is evil and destructive to them? But you say that the king to whom they were commanded to be subject was the tyrant Nero at Rome at that time; therefore we must be subject even to tyrants. But I say it is both doubtful whether Nero or Claudius was in power at that time, and those who were commanded to be subject were strangers, dispersed individuals, and private citizens, not consuls, not prae-\n\n<summary>John Milton argues that biblical commands for subjection to authority are conditional and based on the ruler fulfilling their duty to punish evil and reward good. He distinguishes between the obligations of private citizens and the rights of magistrates or senates to resist tyranny.</summary>\n<keywords>subjection, Aristotle, Nero, Claudius, human ordinance, tyranny, Roman Senate, political philosophy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2811,
+ "outputTokens": 523,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0029745,
+ "ms": 3197,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "merged-catchword",
+   "joined": null,
+   "catchword": "tores,",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1629
+}

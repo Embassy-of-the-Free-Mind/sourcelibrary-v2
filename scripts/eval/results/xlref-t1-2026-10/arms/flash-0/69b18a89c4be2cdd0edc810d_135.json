@@ -1,0 +1,44 @@
+{
+ "id": "69b18a89c4be2cdd0edc810d_135",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>transfer rights, and so forth; and in this sense, it is called a <term>people</term> <gloss>populus</gloss> rather than a <term>multitude</term> <gloss>multitudo</gloss>. Therefore, the distinction must be made as follows: Whenever we say that a <term>people</term> or <term>multitude</term> wills, hopes, or does something, we understand the <term>city</term> <gloss>civitas, or commonwealth</gloss> which commands, wills, and acts through the will of <term>one</term> man, or through the consenting wills of <term>several</term> men, which can only happen within an assembly. However, whenever something is said to be done by a multitude of men, whether large or small, without the will of that man or assembly, it is said to have been done by a subject people, that is, by many individual citizens together, and it proceeds not from one will but from the several wills of several men; these men, being citizens and subjects, are not the <term>city</term>.\n\n<margin>\nThe beginning of the city is the right of the greater number consenting.\n</margin>\n\nII. It must then be considered that every person from the multitude (so that a beginning for establishing the city may be made) must agree with the others that in those matters proposed by anyone in the meeting, that which the majority of them wills shall be held as the will of all. For in any other way, a multitude of men whose dispositions and desires differ so variously among themselves will have no will at all. But if anyone refuses to agree, the others will nonetheless among themselves co<unclear>n</unclear>stitute the city.\n\n<summary>Hobbes distinguishes between a unified people acting as a single legal entity through a sovereign and a disorganized multitude of individual subjects. He establishes that a commonwealth begins when individuals agree to abide by the will of the majority.</summary>\n<keywords>sovereignty, majority rule, social contract, multitude vs people, commonwealth, collective will, consent, civil society</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2537,
+ "outputTokens": 461,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0026515,
+ "ms": 2825,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1450
+}

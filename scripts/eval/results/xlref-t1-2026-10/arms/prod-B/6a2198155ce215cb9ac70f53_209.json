@@ -1,0 +1,44 @@
+{
+ "id": "6a2198155ce215cb9ac70f53_209",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "# CHAPTER TWENTY-FOUR.\n\n3222. Moreover, loves and their affections are represented by flames, and this with inexpressible variation. Truths, however, are represented by lights, and by innumerable modifications of light. From this it can be evident why, in the Word, goods which belong to love are signified by flames, and truths which belong to faith by lights.\n\n3223. There are two lights from which man is illuminated: the light of the world and the light of heaven. The light of the world is from the sun; the light of heaven is from the Lord. The light of the world is for the natural or external man, and thus for those things that are within him. The things that are there, even though they do not appear to be of that light, nevertheless are; for nothing can be grasped by the natural man except through such things as exist and appear in the solar world, and thus unless they have some form from the light and shadow there. All ideas of time and ideas of space, which in the natural man constitute so much that he cannot think without them, are also of the light of the world. The light of heaven, however, is for the spiritual or internal man. The interior mind of man, where his intellectual ideas—which are called immaterial—reside, is in that light. Man does not know this, even though he calls his intellect \"sight\" and attributes light to it. The reason is that, as long as he is in worldly and corporeal things, he has perception only of those things which are of the light of the world, but not of those which are of the light of heaven. The light of heaven is from the Lord alone; the universal heaven is in that light. This light—namely, the light of heaven—is immensely more perfect than the light of the world. Things which form one ray in the light of the world form myriads in the light of heaven. In the light of heaven there is intelligence and wisdom. That light is what flows into the light of the world which is in the external or natural man, and causes him to perceive the objects of things sensually. Unless that light flowed in, man would have no perception at all, for those things which belong to the light of the world have life from that source. Between these lights—or between those things which are in the light of heaven and in the light of the world—there is a correspondence when the external or natural man makes one with the internal or spiritual man; that is, when the former serves the latter. And the things which then exist in the light of the world are representative of those things which are in the light of heaven.\n\n3224. It is a wonder that man does not yet know that his intellectual mind is in a certain light which is entirely different from the light of the world. But such is the condition that to those who are in the light of the world, the light of heaven is like darkness, and to those who are in the light of heaven, the light of the world is like darkness. This comes principally from the loves which are the heats of the light. Those who are in the loves of self and of the world, and thus in the heat of the light of the world alone, are affected only by evils and falsities, and these are what extinguish the truths which are of the light of heaven. But those who are in love to the Lord and love toward the neighbor\n\n->,<-\n\n<summary>This page explains the correspondence between the light of the world and the light of heaven, illustrating how the natural mind perceives through worldly light while the spiritual mind relies on the light of heaven, which contains intelligence and wisdom.</summary>\n<keywords>Light of the world, light of heaven, natural man, spiritual man, correspondence, love of self, love of the Lord</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3348,
+ "outputTokens": 799,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0020355,
+ "ms": 2836,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4107,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "catchword",
+   "joined": null,
+   "catchword": "sunt",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2907
+}

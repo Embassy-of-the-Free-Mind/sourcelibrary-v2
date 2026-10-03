@@ -1,0 +1,42 @@
+{
+ "id": "697947a145e954e8a877872d_218",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: to leave, and pass through the poison similar to itself.</meta>\n\n# Basilius Valentinus\n\n<margin>And it attracts its like to itself.</margin>\nNote next this kind of experiment: let a silver coin be hollowed out <note>The coin is likely hammered into a concave, boat-like shape to ensure it can float on the surface tension of the water.</note> and placed upon water so that it floats upon it like a ship. Then hold a small piece of true **unicorn's horn** <note>original: \"unicornu\"</note> in such a way that it does not touch the coin, but remains as close as possible to it. That horn, by its **spiritual virtue** <gloss>an internal, active power or essence inherent in the substance</gloss>, will drive the silver coin away from itself so that it flees, just like a duck swimming through the water flees when it notices the snares of a fowler aiming a leaden ball <note>original: \"glandem plumbeam\"; a reference to the projectiles used in hunting at the time</note> at it.\n\nOn the contrary, nature in a wonderful way loves and follows that which is similar to itself, as is clear from this example. Place a piece of pure and clean bread in a bowl filled with water so that the bread floats on the water. Then bring the genuine unicorn's horn toward the bread,\n\n<summary>Valentine describes an experiment using a floating silver coin and a unicorn's horn to demonstrate the hidden forces of repulsion. He establishes the alchemical principle that while some substances flee from one another, nature also naturally seeks out and \"loves\" its own likeness.</summary>\n<keywords>unicorn horn, sympathy, antipathy, natural philosophy, experiments, silver, Basilius Valentinus</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2698,
+ "outputTokens": 2315,
+ "thinkingTokens": 1927,
+ "cost_usd": 0.008294,
+ "ms": 10705,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": "aranea",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1017
+}

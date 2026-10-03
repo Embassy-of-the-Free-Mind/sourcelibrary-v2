@@ -1,0 +1,28 @@
+{
+ "id": "69b6fb4a3c7947b468d7aa52_309",
+ "arm": "negfix",
+ "base_arm": "prod-A",
+ "text": "<meta>continues from previous page: ...as a refuge, we wish to be understood, nonetheless, that they are also of great use even when proper instances are present; namely, for strengthening information alongside the proper ones. But we shall speak more precisely of these when the discourse proceeds in order to the treatment of the aids of <term>induction</term> <gloss>the process of deriving general principles from particular observations</gloss>.</meta>\n\nXLIII. Among the prerogatives of instances, we place in the twentieth position the perfecting instances; which we are also accustomed to call *twitching instances*, but for a different reason. We call them *twitching* because they twitch the intellect; <term>perfecting</term> <gloss>completing or finishing</gloss> because they perfect nature, for which reason we also sometimes name them the instances of <term>Democritus</term> <gloss>an ancient Greek philosopher known for atomic theory</gloss>. These are the instances which admonish the intellect of the admirable and exquisite subtlety of nature, so that it may be aroused and awakened to due attention, observation, and inquiry. For example: that a small drop of ink can be extended over so many letters or lines; that silver, gilded only on the exterior, can be continued to such a length of gilded wire; that a tiny worm, such as is found in the skin, possesses within itself a spirit and a figure of dissimilar parts; that a little saffron can color a whole cask of water; that a small amount of civet or perfume can scent a much larger volume of air; that from a small...\n\n<summary>Bacon introduces the twentieth prerogative of instances, the \"cutting\" or \"twitching\" instances, which serve to awaken the intellect to the hidden subtleties of the natural world through examples of extreme physical division and distribution.</summary>\n<keywords>cutting instances, twitching instances, Democritus, induction, nature, subtlety of matter</keywords>",
+ "flagged": true,
+ "changed": true,
+ "flags": [
+  {
+   "latin": "perfecantes, quia perfecant naturam",
+   "english": "cutting ... because they cut through nature",
+   "problem": "The translation 'cut through' implies division or destruction, whereas 'perfecantes' (from perficere) means 'perfecting' or 'completing' nature.",
+   "correct": "perfecting ... because they perfect nature"
+  }
+ ],
+ "check_parse_failed": false,
+ "check": {
+  "model": "gemini-3.1-flash-lite",
+  "in": 1055,
+  "out": 74
+ },
+ "fix": {
+  "model": "gemini-3-flash-preview",
+  "in": 1023,
+  "out": 407
+ },
+ "cost_usd": 0.00210725
+}

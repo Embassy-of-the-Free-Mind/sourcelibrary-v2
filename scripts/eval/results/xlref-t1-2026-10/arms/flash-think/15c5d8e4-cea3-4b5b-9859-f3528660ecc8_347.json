@@ -1,0 +1,44 @@
+{
+ "id": "15c5d8e4-cea3-4b5b-9859-f3528660ecc8_347",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nis moved continuously over the entire length *Aa*; and the trapezium described by that motion, or the rectangle *Aa* x $\\frac{1}{2}$ *a B* equal to it, will be equal to the sum of all the *MN* x *CM*, and therefore to the sum of all the *Dd* x *DK*, that is, to the area *BKVT a*. Which was to be demonstrated.\n\n*Corollary.* From this, given the law of resistance and the difference *Aa* between the arcs *Ca* and *CB*, the proportion of the resistance to gravity can be gathered very nearly.\n\nFor if the resistance *DK* is uniform, the figure *BKTa* will be a rectangle under *Ba* and *DK*; and from this, the rectangle under $\\frac{1}{2} Ba$ and *Aa* will be equal to the rectangle under *Ba* and *DK*, and *DK* will be equal to $\\frac{1}{2} Aa$. Therefore, since *DK* is the exponent of the resistance, and the length of the pendulum is the exponent of gravity, the resistance will be to gravity as $\\frac{1}{2} Aa$ is to the length of the pendulum; exactly as was demonstrated in proposition 28.\n\nIf the resistance is as the velocity, the figure *BKTa* will be an ellipsis very nearly. For if a body, in a non-resisting medium, were to describe the length *BA* in a complete oscillation, the velocity in any place *D* would be as the ordinate *DE* of a circle described with diameter *AB*. Accordingly, since *Ba* in a resisting medium, and *BA* in a non-resisting medium, are described in approximately equal times; and therefore the velocities at each point of *Ba* are very nearly to the velocities at the corresponding points of the length *BA* as *Ba* is to *BA*; the velocity at point *D* in a resisting medium will be as the ordinate of a circle or ellipsis described upon the diameter *Ba*; and therefore the figure *BKVT a* will be an ellipsis very nearly. Since the resistance is assumed proportional to the velocity, let *OV* be the exponent of the resistance at the midpoint *O*; and the ellipsis *BRVSa*, with center *O* and semi-axes *OB*, *OV*, will very nearly equal the figure *BKVT a*, and the rectangle *Aa* x *BO* equal to it. Therefore, *Aa* x *BO* is to *OV* x *BO* as the area of this ellipsis is to *OV* x *BO*: that is, *Aa* to *OV* as the area of a semi-circle is to the square of the radius, or as 11 to 7 approximately: And for that reason $\\frac{7}{11} Aa$ is to the length of the pendulum as the resistance of the oscillating body at *O* is to its gravity.\n\nBut if the resistance *DK* is in the duplicate ratio <note>The \"duplicate ratio\" of the velocity refers to the square of the velocity.</note> of the velocity, the figure *BKVT a* will be almost a parabola having its vertex at *V* and axis *OV*, and therefore it will be equal to the rectangle under $\\frac{2}{3} Ba$ and *OV* very nearly. Therefore the rectangle under $\\frac{1}{2} Ba$ and *Aa* is equal to the rectangle under $\\frac{2}{3} Ba$ and *OV*, and thus *OV* is equal to $\\frac{3}{4} Aa$: and for that reason the resistance of the oscillating body at *O* is to its gravity as $\\frac{3}{4} Aa$ is to the length of the pendulum.\n\n<summary>Newton derives mathematical proportions for calculating the resistance of a medium against a pendulum. He shows how to determine the ratio of resistance to gravity for three cases: constant resistance, resistance proportional to velocity, and resistance proportional to the square of velocity.</summary>\n<keywords>Newton, Principia, pendulum, resistance, gravity, velocity, duplicate ratio, ellipsis, parabola, geometry, fluid dynamics</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3467,
+ "outputTokens": 903,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0044425,
+ "ms": 4176,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "Atque",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2812
+}

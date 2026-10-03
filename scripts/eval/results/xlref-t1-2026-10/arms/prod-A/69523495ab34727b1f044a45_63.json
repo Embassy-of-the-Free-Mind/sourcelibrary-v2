@@ -1,0 +1,44 @@
+{
+ "id": "69523495ab34727b1f044a45_63",
+ "arm": "prod-A",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<margin>\n# Solutions to the arguments.\n</margin>\n\nThe answer to the first is clear. There is no doubt that just as men can kill by God’s permission, so too can they truly and really remove that member or others. But in that case, the demons are not operating through the witches of whom mention is made here. And by this, the solution to the second also becomes clear. But as to the point that because God more broadly permits the generative power to be bewitched, etc., therefore it is also permitted that that member be truly and really removed, this argument does not hold, because this would not occur by way of witchcraft, nor do witches intend this when they perform such acts, as they do not have the power to restore the member whenever they wish and know. From this it is clear that it is removed not truly, but by <term>prestigiosa arte</term> <gloss>the art of illusion/sleight of hand</gloss>. \n\nRegarding the third, concerning the transformation of Lot’s wife, we say that it was real and not by the art of illusion; whereas here we are speaking of the art of illusion. \n\nRegarding the fourth, that demons can induce certain substantial forms and therefore can also remove them: it is said regarding the magicians of Pharaoh that they created real serpents, and demons can produce certain effects regarding some imperfect creatures with the aid of some other agent, which they cannot do regarding humans, for whom God has greater care, according to that passage: \"Does God care for oxen?\" Nevertheless, as has been said, they can always, with God's permission, harm humans truly and really, or also by the art of illusion; and through this, the solution to the last argument is also clear.\n\n<margin>\n# Question X. Whether witches operate upon humans by transforming them into beastly forms through the art of illusion.\n</margin>\n\nFourthly, the truth itself is declared where they also transform humans into beasts. Regarding how this happens, it is argued that it is not possible for this to occur. <note>original: \"xxvi. q. v. Epi. ex cōsilio acquirensi.\" — this refers to the Decretals of Gratian, Part 2, Causa 26, Question 5, Chapter 12, citing the Council of Ancyra</note> Whoever believes that any creature can be changed for the better or the worse, or transformed into another species or into another appearance, except by the Creator Himself who made all things and through whom all things were made, is undoubtedly an infidel and worse than a pagan. And let us use the arguments of <term>Saint Thomas</term> <gloss>Aquinas</gloss> in his <term>Second Book of Sentences</term>, distinction 8: whether demons can imprint illusions upon the bodily senses. Where, firstly, he argues that they cannot. For that form of a beast which is seen must exist somewhere, but it cannot exist only in the sense, because the sense does not have any species except that which is received from things, and there is no real beast there according to the cited canonical authority. Nor again can it be in the thing that is seen, such as when a woman appears to be a beast, because two substantial forms cannot exist in the same subject at the same time and at once. Therefore, since that form of a beast which is seen cannot be anywhere, no deceptive illusion can occur in the eye of the viewer, since vision must necessarily be terminated by some form. \n\nFurthermore, if it is said that this form exists in the surrounding air, this cannot be; firstly, because air is not receptive to any form or figure; and secondly, because the same air cannot remain around that person due to its fluidity, particularly when it moves. Thirdly, because such a transformation would be seen by everyone, which does not happen, since demons are not seen to deceive the visions of holy men at least. Furthermore, the visual sense or visual power is a passive power. But everything passive is moved by an active agent proportioned to it. Now, the active agent proportioned to the sense is twofold: one as if originating the act, namely the object; the other as if referring, such as the medium. But that form which is seen cannot be the object of the sense, nor even the medium as if conveying it. Regarding the first, namely that it cannot be the object, it is because it cannot be derived from any thing, as touched upon in the previous argument, since it does not occur in the sense from a thing received, nor in the thing itself, nor even in the air itself as if in a referring medium, as was touched upon previously in the third argument. Furthermore, if the demon moves the internal cognitive power, or if it does this by presenting itself...\n\n<summary>This text addresses whether witchcraft can physically remove body parts or transform humans into animals, concluding that such phenomena are illusions created by demons rather than physical reality, supported by theological arguments from Saint Thomas Aquinas regarding the nature of sensory perception and demonic deception.</summary>\n<keywords>witchcraft, demonic illusion, Saint Thomas Aquinas, bodily transformation, canon law, sensory perception, physical reality, demons</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3798,
+ "outputTokens": 1091,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0025859999999999998,
+ "ms": 14547,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 5188,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 3988
+}

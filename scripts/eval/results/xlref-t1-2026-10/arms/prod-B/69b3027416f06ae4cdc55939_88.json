@@ -1,0 +1,44 @@
+{
+ "id": "69b3027416f06ae4cdc55939_88",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "the Roman Senate itself, to whom these things were written. What do you achieve by that, since no commandment, to which some reason is joined, is accustomed to, or can, bind anyone beyond the reason of that commandment? *Be subject*, ὑποτάγητε <gloss>submit yourselves</gloss>, that is, if you look at the force of the word, subordinated, or legitimately subject; ἡ δὲ τάξις νόμος <gloss>and order is law</gloss>, says *Aristotle*, law is order. *Be subject for the Lord’s sake*. Why? Because both the king and the governor are appointed by God for the punishment of evildoers, and the praise of those who do good. *For such is the will of God*. Clearly, that we should obey those who are described here; concerning others, there is not a word here. You see how well the reason for this commandment holds; he adds in verse 16: *as free men*, therefore not as slaves. What if, on the contrary, they reign for the destruction and ruin of the good, and for the impunity, praise, and rewarding of the wicked? Shall we be subject forever, not only private individuals, but leading men, all magistrates, and finally the Senate itself? Is it not called a human ordinance? Why then shall human power be valid for establishing what is good and healthy for men, and not be valid for removing what is evil and destructive to them? But that king, to whom they are ordered to be subject, was at that time in Rome, Nero the tyrant; therefore, we must be subject even to tyrannies. But I say, and this is a matter of doubt, whether Nero or Claudius was in power at that time, and those who are ordered to be subject were newcomers, dispersed, private individuals, not consuls, not praetors,\n\n<summary>Milton argues that the scriptural injunction to be subject to authority is conditional upon the ruler's adherence to justice, and distinguishes the obligations of private individuals in a foreign land from the rights of a Senate and a free people in their own.</summary>\n<keywords>Roman Senate, Aristotle, Nero, Claudius, human ordinance, tyranny, subjecthood, scriptural interpretation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2811,
+ "outputTokens": 469,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00140625,
+ "ms": 2121,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "merged-catchword",
+   "joined": null,
+   "catchword": "tores,",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1629
+}

@@ -1,0 +1,34 @@
+{
+ "id": "698255ef792a04eb812c4860_190",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Aquarium Sapientum.\n\nTruly, it is even more astonishing that there are some men who not only seek out this supreme art (Ecclesiastes 7), but even attempt to handle and practice it, while still doubting whether it is a natural or properly magical art, or in truth a preternatural and necromantic one acquired only through spirits and forbidden, illegitimate means. By no means, my good man; the Devil and all the impious have no power, without divine permission, to touch even the smallest part of this art, much less to make it their own or practice it according to their whims. Not at all, I say; it rests solely in the hand and power of God, who bestows it upon whom He wills and, at the same time, takes it away again. For to this art, which takes its origin from and through God, no pleasure-seekers are admitted, much less dire and infernal spirits; rather, only a spirit that is simple, upright, true, constant, and of a pure and pious essence is admitted. Yet this spirit is not recognized by the secure, impious world of today, and therefore it is ignorant of its essence and its supreme mystery in many respects. For as soon as the world hears anything of it, yet is unable to grasp it quickly, these worldly companions (Wisdom 1) call it foolishness. Therefore, because of their own blindness, that spirit will be forever hidden from them and will finally be taken away from them entirely.\n\n<note>A small ink flourish or doodle consisting of several wavy vertical and horizontal strokes appears in the right margin.</note>\n\nBut so that I do not perhaps wander too far from my purpose with this remembrance, I shall touch upon it again and finally bring it to a close. Therefore, I wish to firmly impress this upon pious artists as a form of friendly exhortation: that to the extent one directs their heart, mind, indeed their life and actions toward God (Ecclesiastes 18 and 29), to that extent will they perceive notable progress in the stone and their labor daily, and indeed at every hour. This is what I myself have observed with the utmost diligence and great devotion every day, and I have experienced it in practice. For this reason, one must direct all their actions toward that end from the very beginning, and prepare themselves in such a way that they may subsequently achieve a more fortunate end in both works.\n\nHere perhaps someone might object that some find\n\nS\n\n<summary>The author addresses the skepticism surrounding alchemy, asserting that the art is a divine gift rather than a demonic practice, and emphasizes that moral piety is essential for success in the Great Work.</summary>\n<keywords>alchemy, divine providence, spirit, skepticism, moral conduct, The Reformed and Enlarged Hermetic Museum</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2616,
+ "outputTokens": 580,
+ "thinkingTokens": 0,
+ "cost_usd": 0.001524,
+ "ms": 2536,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2584
+}

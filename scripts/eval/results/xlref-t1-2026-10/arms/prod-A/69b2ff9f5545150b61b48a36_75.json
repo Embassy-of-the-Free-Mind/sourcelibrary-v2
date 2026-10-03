@@ -1,0 +1,44 @@
+{
+ "id": "69b2ff9f5545150b61b48a36_75",
+ "arm": "prod-A",
+ "model": "gemini-3.1-flash-lite",
+ "text": "HISTORY OF THE WINDS.\n<sig>C</sig>\n\n2. *Procellæ* <gloss>storms</gloss>, which occur with mist or fog, which they call monsters, and which sustain themselves like a pillar, are very intense and dire for sailors.\n\n3. Greater *Typhones* <gloss>typhoons</gloss>, which snatch up things across some notable breadth and suck up what they have snatched on high, occur rarely; but small, and as it were playful, *Vortices* <gloss>vortices</gloss> or *Turbines* <gloss>whirlwinds</gloss> occur frequently.\n\n4. All *Procellæ*, *Typhones*, and greater *Turbines* have an evident motion of precipitation or downward vibration, more so than other winds; so that they seem to rush like torrents, and flow down as if through channels, and afterwards to be reflected by the ground.\n\n5. It happens in meadows that piles of hay are sometimes carried on high, and then scattered like a canopy; also in fields, that stalks of peas entangled and ears of corn cut down, and even linens exposed for drying, are lifted by *Turbines* up to the height of trees or above the roofs of houses; and these things occur without any greater force or vehemence of wind.\n\n6. But sometimes light and very narrow *Turbines* occur, even in clear weather; so that a rider may see dust or chaff snatched\n\n<summary>This page classifies various types of sudden, intense wind phenomena, including storms, typhoons, and small whirlwinds, noting their destructive potential and mechanical behaviors such as downward pressure and the lifting of light objects.</summary>\n<keywords>Procellæ, Typhones, Vortices, Turbines, meteorology, wind behavior</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2686,
+ "outputTokens": 381,
+ "thinkingTokens": 0,
+ "cost_usd": 0.001243,
+ "ms": 1932,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": false,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1314
+}

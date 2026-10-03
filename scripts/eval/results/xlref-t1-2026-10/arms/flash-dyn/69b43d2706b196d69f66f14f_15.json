@@ -1,0 +1,42 @@
+{
+ "id": "69b43d2706b196d69f66f14f_15",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: the creator Mind, indeed, together with the Word</meta> containing the circles with the Word, and turning them with swift rapacity, it directed its machine toward itself, commanding it to revolve from a beginning without beginning toward an end without end. For it always begins at the point where it ends. Through the circuit of all these things, just as the Mind itself willed, it breathed forth from the lower elements animals devoid of reason; for it did not provide reason. The air produced flying creatures, while the water produced swimming ones. Water and earth were also distinguished from one another in the manner that had pleased the Mind. Afterward, the earth brought forth the living creatures it had held within: namely quadrupeds, serpents, and wild and domestic beasts alike. But the Father of all, the Intellect <note>original: intellectus</note>, being life and light, procreated a Man like unto himself, and rejoiced in him as in his own son. For he was beautiful, and bore the image of his Father. For God, truly delighted by what was his own form, granted all his works to human use. But Man, <margin>note what the sin of the philosophers <unclear>is</unclear></margin> when he had considered the procreation of all things in his Father, wished also to create. Therefore, he slipped down from the contemplation of the Father toward the sphere of generation. And since he held power over all things within himself, he took notice of the works of the seven governors <note>the planetary rulers or Archons</note>. These, moreover, rejoicing in the meditation of the human mind, each made him a participant in their own order\n\n<summary>This page describes the creation of the natural world and the divine origin of Man, who is created in the image of the Father-Intellect. It explains Man's transition from divine contemplation to the material sphere of generation and his encounter with the seven planetary governors.</summary>\n<keywords>Intellect, creation of animals, seven governors, sphere of generation, origin of Man, Hermetic cosmogony, Marsilio Ficino</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2543,
+ "outputTokens": 2147,
+ "thinkingTokens": 1698,
+ "cost_usd": 0.007712500000000001,
+ "ms": 10287,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1483
+}

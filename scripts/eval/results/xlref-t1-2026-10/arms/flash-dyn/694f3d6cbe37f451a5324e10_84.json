@@ -1,0 +1,42 @@
+{
+ "id": "694f3d6cbe37f451a5324e10_84",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: Envy has departed from us</meta>\nFor good is innate to truth, along with life and light; and the avenger <note>original: \"uindex\"; a punishing force or spirit associated with material constraints</note> has no further access to go beyond. Indeed, all the avenging forces <note>the twelve material vices</note> have been cast out by a sudden impulse. You have understood, my son, the manner of rebirth itself: when the **number ten** <term>denarius</term> <gloss>the Decad</gloss> is present, the **spiritual generation** <note>original: \"intellectualis generatio\"; the birth of the mind or soul into a higher state</note> is completed, which rejects the **number twelve** <term>duodenarius</term> <gloss>the Dodecad</gloss>. And we have contemplated this from the generation itself. Therefore, whoever, because of the kindness of the generation which is according to God, loses bodily sense, knows himself to be composed of divine things; and having become steadfast <note>original: \"indecliuus\"; unswerving or upright in spiritual posture</note>, he rejoices in divine power with his whole mind.\n\n->**TATIUS.**<-\n\nO father, I conceive <note>perceive or understand</note> this not by the sight of eyes, but by the act of the mind, which is exercised through inner powers. I am in heaven; in earth; in water; in air. I am in animals; in trees; in the body; before the body; and after the body. But I wish you would tell me this besides: how are the avenging darknesses, twelve in number, repelled by the ten powers? What is the manner of this, Trismegistus?\n\n->**TRIS.**<-\n\nThis **tabernacle** <note>original: \"tabernaculum\"; referring to the physical body as a temporary shell or tent</note>, O son, is constituted from the **circle of the zodiac** <term>zodiaco circulo</term>, which consists of that number twelve. And the numbers are eleven; one is all-forming according to the ideas of nature, for the wandering and circuit of man. Thus, those avenging forces are in a way separated from one another, yet in acting they are in a way joined together; as for example, recklessness is inseparable from wrath. Therefore, rightly according to correct reason, there is a gap insofar as they are repelled by the **ten powers** <note>original: \"apotellatib9\", likely a contraction for \"a potestatibus\"; the divine virtues that overcome the influence of the zodiac</note>, that is, by the number ten. The number ten, O son, is the begetter of the soul; truly life\n\n<summary>Hermes explains the numerological transition of rebirth where the divine Decad (ten) expels the twelve zodiacal vices, leading Tatius to a state of cosmic consciousness.</summary>\n<keywords>rebirth, Decad, Dodecad, zodiac, Tatius, Hermes Trismegistus, cosmic consciousness, spiritual generation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2892,
+ "outputTokens": 3184,
+ "thinkingTokens": 2503,
+ "cost_usd": 0.010998,
+ "ms": 17751,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1567
+}

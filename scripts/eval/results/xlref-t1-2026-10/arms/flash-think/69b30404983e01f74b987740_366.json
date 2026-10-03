@@ -1,0 +1,44 @@
+{
+ "id": "69b30404983e01f74b987740_366",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nof the area, in which the prefect of the moneyers sits, accompanied perpetually by scribes and notaries. For here, as in many other places, whatever profit is collected returns entirely to the King. Bordering this place are the workshops of the goldsmiths, whose consul keeps the seal and the dies for the coins. In Fez <term>Fessa</term> <gloss>modern Fez, Morocco</gloss>, neither a ring nor anything else can be manufactured from gold or silver unless the metal has first been sealed. They punish transgressors most severely. But once the metal is sealed, whatever is made from it is weighed out just as if it were currency. The greatest part of the goldsmiths who inhabit New Fez <note>Fez el-Jdid</note> consists of Jews, and they carry gold and silver vessels to Old Fez <note>Fez el-Bali</note> to a certain place situated not far from the spice-merchants and sell them. For in Old Fez, neither gold nor silver is minted, nor is it permitted for Muslims <term>Mahumetani</term> to practice that art, because they consider those who resell any silver or gold work for more than its weight-value to be usurers, although this is granted to the Jews by the city governors. You may also find some here who only manufacture vessels for the citizens, to whom payment is counted out only in proportion to their labor. That part of the city which the Royal Guards <note>stipatores</note> formerly inhabited\n\n<summary>This page describes the regulation of the mint and goldsmith trade in Fez, noting the royal control over precious metals and the role of the Jewish community in the jewelry trade.</summary>\n<keywords>Fez, minting, moneyers, goldsmiths, Jewish community, trade regulations, usury, coinage</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2646,
+ "outputTokens": 405,
+ "thinkingTokens": 0,
+ "cost_usd": 0.002538,
+ "ms": 2667,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "split",
+   "joined": "inhabitabant",
+   "catchword": "habi-",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1354
+}

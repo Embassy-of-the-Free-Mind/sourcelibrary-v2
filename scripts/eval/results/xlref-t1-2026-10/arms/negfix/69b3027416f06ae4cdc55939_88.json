@@ -1,0 +1,28 @@
+{
+ "id": "69b3027416f06ae4cdc55939_88",
+ "arm": "negfix",
+ "base_arm": "prod-A",
+ "text": "the Roman Senate itself, to whom these things are written. What do you achieve by that? Since no commandment, to which some reason is attached, is accustomed to, or can, bind anyone beyond the reason of that commandment. *Be subject*, ὑποτάγητε <gloss>submit yourselves</gloss>, that is, if you look at the force of the word, subordinated, or legitimately subject; ἡ δὲ τάξις νόμος <gloss>order is law</gloss>, says <term>Aristotle</term>, order is law. *Be subject for the Lord’s sake*. For what reason? Because both the king and the governor are appointed by God for the punishment of evildoers and the praise of those who do good. *For such is the will of God*. Clearly that we should obey such as are described here; concerning others, there is not a word here. You see how well the reason for this commandment stands; he adds in verse 16, *as free*, therefore not as slaves. What if, on the contrary, they reign for the cross and destruction of the good, for the impunity and praise and rewards of evildoers? Shall we be subject forever, not only private citizens, but the leaders, but all the magistrates, indeed the Senate itself? Is it not called a human ordinance? Why then shall human power be valid for establishing what is good and healthy for men, will it not be valid for removing what is evil and destructive to them? Yet that king, to whom they are commanded to be subject, was Nero the tyrant at that time in Rome; therefore we must be subject even to tyrannies. But I say, and this is also doubtful, whether Nero or Claudius was in power at that time, and those who are commanded to be subject were strangers, dispersed, private individuals, not consuls, not praetors,\n\n<summary>Milton argues that the biblical injunction to be subject to authority is conditional upon the ruler's adherence to the duty of punishing evil and rewarding good, denying that it mandates submission to tyranny.</summary>\n<keywords>Roman Senate, Aristotle, Nero, Claudius, human ordinance, tyranny, submission, political theology</keywords>",
+ "flagged": true,
+ "changed": true,
+ "flags": [
+  {
+   "latin": "ad tollendum quod iisdem malum & exitiosum est, non valebit?",
+   "english": "but not be valid for removing what is evil and destructive to them?",
+   "problem": "The Latin 'non valebit' is a rhetorical question implying it *should* be valid, but the English translation frames it as a statement of inability, mis-scoping the rhetorical negation.",
+   "correct": "will it not be valid for removing what is evil and destructive to them?"
+  }
+ ],
+ "check_parse_failed": false,
+ "check": {
+  "model": "gemini-3.1-flash-lite",
+  "in": 1199,
+  "out": 103
+ },
+ "fix": {
+  "model": "gemini-3-flash-preview",
+  "in": 1194,
+  "out": 455
+ },
+ "cost_usd": 0.00241625
+}

@@ -1,0 +1,44 @@
+{
+ "id": "69b2ff19a1a4246ddb45ae6a_196",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: May I have all grammarians as ill-disposed toward me</meta> if I lie in any way. I once knew a certain man of many talents <note>original: \"polytechnotaton\"</note>, a Greek, a Latinist, a mathematician, a philosopher, a physician, and a royal one at that <note>original: \"kai tauta basilikon\"</note>, already in his sixties, who, having set aside all other matters, has for more than twenty years tortured and tormented himself with grammar. He thinks he will be completely happy if he is allowed to live long enough to determine with certainty how the eight parts of speech are to be distinguished, something which no Greek or Latin scholar has yet been able to achieve fully. It is as if it were a matter to be settled by war if someone should treat a conjunction as a word belonging to the category of adverbs. \n\nBecause of this, since there are as many grammars as there are grammarians—or rather more, since my friend Aldus <note>Aldus Manutius, the famous Venetian printer and scholar</note> alone has published a grammar more than five times—this man passes over no book of the sort, no matter how barbarously or tiresomely written, without thumbing through it and examining it. He envies anyone who attempts anything in this field, however foolishly, miserably fearing that someone might perhaps snatch this glory away from him, and the labors of so many years might be lost. Would you prefer to call this insanity or folly? It makes little difference to me, provided you admit \n\n<summary>Erasmus mocks the obsession of grammarians who spend decades debating trivial linguistic rules. He uses an anecdote about a multi-talented scholar driven to misery by the classification of speech parts.</summary>\n<keywords>grammar, grammarians, Aldus Manutius, eight parts of speech, scholarly obsession, folly</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2505,
+ "outputTokens": 411,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0024855,
+ "ms": 2899,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "meo",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1258
+}

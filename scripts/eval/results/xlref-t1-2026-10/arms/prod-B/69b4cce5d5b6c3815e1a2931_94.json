@@ -1,0 +1,44 @@
+{
+ "id": "69b4cce5d5b6c3815e1a2931_94",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<margin>Enemies are to be loved.</margin>\n<meta>continues from previous page</meta>to go with him a mile, go with him twain. Love your enemies, do good to them which hate you, and pray for them which despitefully use you and persecute you; that ye may be the children of your Father which is in heaven: for he maketh his sun to rise on the evil and on the good, and sendeth rain on the just and on the unjust. You reply, \"He did not say these things to me. He said them to the apostles, He said them to the perfect.\" Have you not heard, \"That ye may be the children of your Father\"? If you do not desire to be a child of God, the law does not pertain to you. Although, not even a good man exists who would not want to be perfect. Accept also that if you do not desire a reward, the commandment does not pertain to you. For it follows: For if ye love them <margin>Luke 6</margin> which love you, what reward have ye? As if to say, none. For it is not a virtue to do this, but it is a crime not to do it. Nothing is owed to either, when equal is rendered for equal. Hear <margin>Paul, the legal expert.</margin> Paul, the great consultant and interpreter of Christian laws. Bless them which persecute you: bless, and curse not. <margin>Rom. 12</margin> Recompense to no man evil for evil. If it be possible, as much as lieth in you, live peaceably with all men. Dearly beloved, avenge not yourselves, but rather give place unto wrath: for it is written, Vengeance is mine; I will repay, <margin>Deuteronomy 32</margin> saith the Lord. Therefore if thine enemy hunger, feed him; if he thirst, give him drink: for in so doing thou shalt heap coals of fire on his head. Be not overcome of evil, but overcome evil with good. What then is to be done, you ask, if I nourish another's insolence with my gentleness, and by enduring an old injury, I invite a new one? <margin>It is more fitting for a Christian to suffer injuries than to commit them.</margin> If you can either flee or ward off the evil without your own harm, no one forbids you to do so; but if not, beware of saying that it is more honorable to do harm than to suffer it. If you can, amend the situation, either by overwhelming them with benefits or by overcoming them with gentleness. If otherwise, it is better for the other to perish than for both to do so; it is better for you to grow rich in the profit of patience than for both to become evil through mutual retaliation. Therefore, let this be a Christian decree: to contend with all in love, gentleness, and benefit; and to willingly yield in matters of contention, detraction, insults, injuries, or even in the most trivial matters. But you say, \"He is unworthy to receive a benefit, unworthy of concessions.\" You are worthy to act correctly, and Christ is worthy, for whose grace this is done. \"I neither wish to harm anyone,\" they say, \"nor will I suffer myself to be harmed.\" Rather, when you are harmed, forgive the offense from your heart, taking care lest there be anything for which any man…\n\n<summary>This page discusses the Christian obligation to love enemies and endure injury with patience rather than retaliation, citing the teachings of Christ and the Apostle Paul.</summary>\n<keywords>Love of enemies, Christian law, Patience, Gentleness, Retaliation, Forgiveness, Virtue, Apostle Paul</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3096,
+ "outputTokens": 789,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0019575,
+ "ms": 3024,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2535
+}

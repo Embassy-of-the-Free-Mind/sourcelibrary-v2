@@ -1,0 +1,44 @@
+{
+ "id": "69b4d643853c26e0d15603c8_136",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "ARCHIDOXIS OF THEOPHRASTUS: BOOK III.\n\nadditions so that the fifth essence remains in their scent, color, and taste, and that it increases in these and does not diminish, such as Musk, Amber, and Civet. If the fifth essence is extracted from these, you will notice that the body stinks and is of no moment in taste, scent, or nature. The same must be judged concerning the extraction of the fifth essence of all other things. Although Musk, Amber, and Civet are not referred to this present chapter, because we are describing those things specifically, and here we are dealing only with things that grow, such as Lilies, Spikenard, and Leaves: the process of their extraction proceeds as follows.\n\nTake the things that grow, well crushed, and place them in a pot in horse manure to digest for four weeks, and distill by a bath. Afterward, putrefy again in horse manure for eight days, and distill again by a bath; the fifth essence will transcend through the alembic, and the body will remain at the bottom. However, if more of the fifth essence is held in the bottom, continue by putrefying and distilling. Afterward, take the distilled water, add that growing thing to it again, and digest in a pelican for six days, and it will turn into a dense color, which you must strain. Distill the strained liquid through a bath, and the body will emerge, but the fifth essence will reside at the bottom, which you should separate from the dregs by means of a retort press, and let the fifth essence [sit for] four\n\n<summary>This page details the process for extracting the quintessence from growing things, such as herbs, lilies, and leaves, using digestion in horse manure and distillation.</summary>\n<keywords>quintessence, extraction, digestion, distillation, alchemy, Paracelsus, Musk, Amber, Civet, horse manure</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2812,
+ "outputTokens": 406,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0013119999999999998,
+ "ms": 2502,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "split",
+   "joined": "quatuor",
+   "catchword": "or dies",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1558
+}

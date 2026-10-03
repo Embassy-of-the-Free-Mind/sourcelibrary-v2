@@ -1,0 +1,42 @@
+{
+ "id": "69b2ff19a1a4246ddb45ae6a_196",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: May I have all grammarians as ill-disposed toward me</meta>\n\n# PRAISE OF FOLLY\n\nif I lie in any way. I know a certain man of many talents <note>original Greek: \"polytechnotaton\"</note>, a scholar of Greek, Latin, mathematics, philosophy, and medicine—and a royal one at that <note>original Greek: \"kai tauta basilikon\", referring to a royal physician</note>—already in his sixties. This man, having set aside all other matters, has for more than twenty years tortured and tormented himself in the study of grammar. He thinks he would be perfectly happy if he were allowed to live long enough to finally establish for certain how the eight parts of speech are to be distinguished, a task which no one among the Greeks or Latins has yet been able to fully achieve. It is as if it were a matter to be settled by war if someone should treat a conjunction as a word belonging to the jurisdiction of adverbs. \n\nFor this reason, since there are as many grammars as there are grammarians—indeed more, since my friend Aldus <note>Aldus Manutius, the renowned Venetian printer and humanist scholar</note> alone has published more than five grammars—this man overlooks none of them, no matter how barbarously or tediously written, without unrolling and scrutinizing it. He envies everyone else who attempts anything in this field, however foolishly, for he is wretchedly afraid that someone might snatch away this glory and that the labors of so many years might perish. Would you prefer to call this madness or folly? As far as I am concerned, it matters little, provided you admit \n\n<summary>Folly describes a pedantic scholar who has spent twenty years obsessing over the classification of the eight parts of speech. She ridicules the excessive labors of grammarians and mentions the multiple grammar books published by Aldus Manutius.</summary>\n<keywords>grammar, grammarians, Aldus Manutius, pedantry, eight parts of speech, scholarship, academic obsession</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2505,
+ "outputTokens": 1798,
+ "thinkingTokens": 1351,
+ "cost_usd": 0.0066465,
+ "ms": 12558,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "meo",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1258
+}

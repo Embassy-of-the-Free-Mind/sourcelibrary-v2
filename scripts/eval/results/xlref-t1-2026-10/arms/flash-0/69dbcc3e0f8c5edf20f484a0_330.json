@@ -1,0 +1,44 @@
+{
+ "id": "69dbcc3e0f8c5edf20f484a0_330",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: Article three: whether more universal things are prior in our intellectual cognition.</meta>\n\n### Question 85, Article 3\n\n#### Whether more universal things are prior in our intellectual cognition\n\nRegarding the third point, the procedure is as follows. It seems that more universal things are not prior in our intellectual cognition. For those things which are prior and better known according to nature are posterior and less known to us. But universals are prior according to the nature of our intellect. Therefore, universals are posterior in our knowledge.\n\nFurthermore, composite things are prior to us compared to simple things. But universals are more simple than particulars. Therefore, they are known later by us.\n\nFurthermore, the Philosopher <note>Aristotle</note> says in the first book of the *Physics* that the thing defined first falls into our cognition, and the parts of the definition are less universal; for example, \"animal\" is a part of the definition of \"man,\" and thus universals are known later by us.\n\nFurthermore, we arrive at principles through effects. But universals are principles. Therefore, universals are known later by us.\n\nBut against this is what is said in the first book of the *Physics*, that we must proceed from universals to singulars.\n\nI respond that it must be said that in the cognition of our intellect, two things must be considered. First, that intellectual cognition in some way takes its origin from sensitive cognition. And because the sense is of singulars and the intellect is of universals, it is necessary that the cognition of singulars be prior to the cognition of universals for us.\n\nSecond, we must consider that our intellect proceeds from potency to act. Whatever proceeds from potency to act first reaches an incomplete act, which is halfway between potency and act, before reaching perfect act. Perfect act, which the intellect reaches, is complete science through which things are known distinctly and determinately. Incomplete act is imperfect science through which things are known indistinctly under a certain confusion. For what is known in this way is known both in act and in a certain way in potency. As it says in the first book of the *Physics*: things that are more confused are first manifest and certain to us. Later, we know them by distinguishing their principles and elements distinctly.\n\nIt is manifest, however, that to know something in which many things are contained, without having proper knowledge of each of those things contained within it, is to know something under a certain confusion. In this way, one can know both a whole <note>a universal whole</note> in which parts are contained in potency, and an integral whole; for both wholes can be known in a certain confusion without the parts being distinctly known. To know distinctly that which is contained in the whole is to have knowledge of a less common thing; for example, knowing \"animal\" indistinctly is to know \"animal\" as it is, while knowing it distinctly is knowing it as either rational or irrational, which is to know \"man\" or \"lion.\" Therefore, it occurs first to our intellect to know \"animal\" rather than to know \"man.\" And the same reasoning holds if we compare anything more universal to something less universal.\n\n<column-break/>\n\nThis order of cognition appears in the senses. For the sense judges more universal things before less universal ones, both in terms of space and time. For instance, when seeing something from a distance, we first perceive it to be a body, then we perceive it to be an animal, then a man, and finally Socrates. Similarly, it is clear that a child at the beginning distinguishes \"man\" from \"not-man\" before distinguishing individual men; children at first call all men \"fathers\" and later determine each one specifically, as is said in the first book of the *Physics*. This is because he who knows something indistinctly is still in potency to knowing it distinctly, just as one who knows a genus is in potency to knowing the specific differences. And thus, indistinct cognition is midway between potency and act.\n\nTherefore, sensitive cognition of singulars is prior to intellectual cognition of universals. But within the intellect itself, cognition of the more universal is prior to cognition of the less common.\n\nTo the first objection, it must be said that \"prior\" can be considered in two ways. In one way, regarding the intention of truth. Since the intention of truth and the true itself have a relationship to many things, the abstraction of the intellect arrives at this last. As is said in the first book *On the Soul*, the universal is either nothing or it is posterior. But <term>Plato</term> <note>referring to the Platonic view</note> held universals to be substances, and in this consideration it would be true that particulars exist only by participation in the more universal subsistent things called Ideas.\n\nIn another way, it can be considered regarding the nature itself, such as \"animality\" or \"humanity\" as found in particulars. In this, there is a twofold order of nature. One is according to the way of generation and time, where those things that are incomplete and in potency are prior. In this way, the more universal is prior in nature, as is clearly seen in the generation of a man and an animal; for the animal is generated before the man, as is said in the book *On the Generation of Animals*. The other is the order of perfection or the intention of nature, just as act is simply prior to potency in nature, and the perfect prior to the imperfect. In this way, the less universal is prior in nature, just as \"man\" is prior to \"animal.\" For nature's intention does not stop at the generation of an animal, but intends to generate a man.\n\nTo the second objection, it must be said that the more universal is compared to the less universal as a whole. The universal contains its parts in potency, such as \"animal\" containing not only \"man\" but also \"horse.\" Therefore, \"animal\" considered in itself is prior in our cognition to \"man.\"\n\nTo the third objection, it must be said that a thing can be known in two ways. In one way, absolutely as it is in itself. In another way, as it is a part of a whole. If we consider parts of a house like stones, we must first know the whole house in a confused way before knowing the parts. Thus it must be said that the defining parts, considered absolutely, are prior to the defined thing; otherwise, the defined thing would not be made known by them. But they are also parts of the definition.\n\n<summary>Thomas Aquinas argues that in the intellectual process, we move from universal, confused knowledge to specific, distinct knowledge. While sensory perception of individuals comes first, the mind grasps general concepts like animal before specific ones like man.</summary>\n<keywords>universals, cognition, intellect, Aristotle, potency and act, generation, definition, animal, man</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3868,
+ "outputTokens": 1453,
+ "thinkingTokens": 0,
+ "cost_usd": 0.006293,
+ "ms": 7284,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 7195,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 5995
+}

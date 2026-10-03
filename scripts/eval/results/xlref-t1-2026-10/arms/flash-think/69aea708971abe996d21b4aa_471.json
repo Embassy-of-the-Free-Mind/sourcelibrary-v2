@@ -1,0 +1,44 @@
+{
+ "id": "69aea708971abe996d21b4aa_471",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nand you should say to her: \"These things indeed, O Queen, I willingly suffer for you: you will restore me to wholeness, or certainly you alone are enough for me in place of all else. Cherish me in your pious bosom alone, so that I shall not feel the loss of fame, nor even of life.\"\n\n*Sorrow.* I am torn apart everywhere in the streets by the common people.\n\n*Reason.* Take it in good part. The common people will make you known, virtue will make you illustrious, and conscience will make you secure.\n\n---\n\n### On the shame sought from unworthy praises.\n## DIALOGUE XXVI.\n\n> Praise sparingly, for when you are praised unjustly\n> If you then condemn in turn, it will be a sign of levity.\n\n*Sorrow.* I am accused of having praised an unworthy man.\n<note>A large ornamental initial L marks the start of the dialogue response.</note>\n*Reason.* I am accused of having praised an unworthy man. An evil that exists often arises from a good root. For the good and the innocent believe others to be as they are themselves. Hence they are more prone to praise than is just: and although I may admit that praising the unworthy is an evil, yet to disparage the undeserving is much worse.\n\n*Sorrow.* I praised one who was unworthy.\n\n*Reason.* If you did so knowingly, you are reprehensible: but if unknowingly, you are excusable. It is a lesser evil to be deceived than to deceive. For to be deceived is the fault of another; but to deceive is the specific crime of the deceiver.\n\n*Sorrow.* The praise of another turns into my own infamy.\n\n*Reason.* Rather, it is your own fault or ignorance. For from another's praise, just as from another's infamy, there is nothing that truly belongs to you.\n\n*Sorrow.* I grieve greatly for having praised an unworthy man.\n\n*Reason.* See to it then that you do not often grieve for that same thing. Beware lest you rush headlong into praising or disparaging. For there is a lust for both things: and (to speak properly) a certain disease and itch of a moving tongue that knows no rest: the bridle and guardianship of which are numbered among the works of exceptional perfection, as the Scripture says:\n\n<summary>Reason advises Sorrow on dealing with a damaged reputation among the public and the regret of having praised an unworthy person. The dialogue emphasizes that inner conscience and virtue are more important than the fickle opinions of the common people.</summary>\n<keywords>reputation, virtue, conscience, praise, infamy, deception, speech, ethics</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3087,
+ "outputTokens": 578,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0032775,
+ "ms": 3435,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "Si quis",
+   "headJoined": null,
+   "headRemoved": "plectere",
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1879
+}

@@ -1,0 +1,44 @@
+{
+ "id": "695203a5ab34727b1f041c53_250",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Gloria Mundi.\n\nwhere they ought to have taken <term>pyrites</term>, they took <term>sulphur</term>, <term>salt</term>, <term>metal</term>, and various other materials in which there is no operation; and although these things are expensive in the workshops, they are of absolutely no value in the labor. Our material, however, is not bought from any workshop, yet it is found there daily, and shopkeepers throw it out into the streets. It is therefore enough that it is found for free: but the material of our <term>stone</term> is compared to all those things with which the craftsmen labor: for our stone is indeed our <term>salt</term>, our <term>Mercury</term>, <term>verdigris</term>, <term>natron</term> <gloss>a natural mineral salt</gloss>, <term>sal ammoniac</term>, <term>Mars</term> <gloss>iron</gloss>, <term>sulphur</term>, and infinite other things of this kind, not, however, dug up from wild, rural mountains with hammers and other instruments: but our stone is extracted solely from our own mountains and fountains: in our <term>Salt-fountain</term> our <term>salt</term> is found: from our earth our metal, <term>Mercury</term>, and <term>sulphur</term> are poured, and not from wild, foreign, rural mountains, which things craftsmen do not understand, nor can they believe or comprehend; for the Lord has obscured and stopped their senses, for which reason they used these things otherwise than they ought to have been used, and they did not aim at the target in the least; nevertheless, they persisted in this contrary direction, and followed their own stubborn heads; for when they ought to have <term>distilled</term> gently, they <term>sublimed</term> with a strong fire, they scorched the <term>aqua fortis</term> <gloss>strong water/nitric acid</gloss>, and immediately burned the operation of nature and the things themselves, and reduced them to nothing. Even when they ought to have <term>dissolved</term>, they <term>coagulated</term> there, and again, like those unskilled in things, they handled the matter unskillfully, and fell into doubt, and claimed with lying words that the art is not true, but false, in which, however, they rightly lie: for their own ignorance shamefully deceived them, which must be imputed to their own obscure and murky cunning, while, according to their own obscure intellect, they interpreted words otherwise than they sounded. For example, when the Philosophers made words about <term>calcining</term> (which they call grinding), those unskilled <term>Philosophasters</term> <gloss>pseudo-philosophers</gloss> understood it as burning, and reduced the things entirely to ashes, so that nothing could be made from them. Likewise, when the Philosophers <term>dissolve</term>, or transmute into water, those <term>noses</term> <gloss>contemptuous term for conceited, meddlesome people</gloss> burned the nature with <term>strong water</term>, and that same water, which in no way...\n\n<summary>The text critiques the errors of unskilled alchemists who confuse metaphorical descriptions in philosophical writings with literal, destructive laboratory practices.</summary>\n<keywords>alchemy, salt, Mercury, sulphur, distillation, calcination, Philosophasters, ignorance, error</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3332,
+ "outputTokens": 757,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0019684999999999998,
+ "ms": 3565,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4109,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "se",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2909
+}

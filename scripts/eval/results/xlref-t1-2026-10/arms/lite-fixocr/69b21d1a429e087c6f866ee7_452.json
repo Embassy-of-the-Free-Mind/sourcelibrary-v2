@@ -1,0 +1,44 @@
+{
+ "id": "69b21d1a429e087c6f866ee7_452",
+ "arm": "lite-fixocr",
+ "model": "gemini-3.1-flash-lite",
+ "text": "of roads and circles placed in such a way that those watching at a certain time see them clearly. Thus, ships, even if they go with full sails, still seem to stand still. There will be one who will demonstrate at some point in which parts the comets wander. Since they go so removed from the others, how great and of what kind they are. We are content with what has been discovered; let those who come after contribute something to the truth. Through the stars, he says, we do not see what lies further; through comets, we send our gaze across. First, if this happens, it does not happen in that part where the star itself is, of thick and solid fire, but where a rare splendor runs out and is scattered into hair. You see through the intervals of the fires, not through the fires themselves. All the stars, he says, are round; comets are elongated, from which it appears they are not stars. For who would concede to you that comets are long, the nature of which, like the others, is a sphere? But the brightness is extended just as the sun sends its rays far and wide. The form of the thing itself is one thing, and the light that flows from it is another. Thus, the body of the comets themselves is rounded. The splendor, however, appears longer than that of the other stars. Why, you ask? Tell me first, why does the moon receive a light very unlike the sun, when it receives it from the sun? Why does it now redden, now pale? Why is its color livid and black when it is excluded from the view of the sun? Tell me why all stars have a face in some way unlike each other, and most diverse from the sun. How does nothing prevent them from being stars, even if they are not similar, just as nothing prevents comets from being eternal and of the same lot as the others, even if they do not have a similar face? Furthermore, if you consider the world itself, is it not composed of diverse things? Why is it that in Leo the sun always burns and scorches the lands with heat? In Aquarius, it binds the winter and locks the rivers with ice? And yet, this star and that one are of the same condition <margin>† arises</margin> even though it is dissimilar in effect and nature. Within a very short time, Aries <margin>† is cultivated</margin>, Libra sets most slowly, and yet this star and that one are of the same nature, even though one ascends in a small amount of time and the other is brought forth for a long time. Do you not see how contrary the elements are among themselves? There are heavy and light, cold and hot, moist and dry. The whole harmony of this world consists of discord. You deny that a comet is a star because its form does not correspond to the model, nor is it similar to the others. For you see, that one which returns to its place in the thirtieth year is very similar to this one which revisits its seat within a year. Nature does not provide its work for one form, but boasts in variety itself. It made some things more sluggish, others swifter than others. It made some stronger, others more temperate, but some it led out from the crowd so that they might proceed individually and conspicuously, and some it sent into the flock. He is ignorant of the power of nature who does not think it is allowed to do anything except what it does more frequently. It does not show comets often; it assigns them another place, other times, motions unlike the others. It wanted to cultivate the magnitude of its work from these, whose face is more beautiful than you would think is accidental, whether you consider their amplitude or their splendor, which is greater and more ardent than that of the others. Indeed, it has a certain distinguished and singular face, not cast and tightened into a narrow space, but let out more freely, and embracing the region of many stars. Aristotle says that comets signify a storm and intemperance of winds and rains. What then? Do you not judge it to be a star that announces future things? For this is not a sign of a storm in the same way that oil sparking or rotten mushrooms growing is a sign of future rain, or how it is an indication of a raging sea if marine coots play on dry land and desert known marshes, and a heron flies above a high cloud. But it is so, just as the equinox is a sign of a year turning into heat and cold. Just as those things which the Chaldeans sing of, what a star determines for those born, whether sad or happy. So that you may know this is so, a comet’s rising does not immediately threaten winds and rains, as Aristotle says, but <margin>The rising of a comet makes the whole year suspect.</margin> it makes the whole year suspect. From which it appears that it did not draw the signs it gives for the near future from the near future, but has them stored and compressed by the laws of the world. That comet, which appeared when Patriculus and Vopiscus were consuls, did those things which were predicted by Aristotle and Theophrastus. For there were great and continuous storms everywhere. But in Achaia and Macedonia, cities were overthrown by earthquakes. Their slowness, he says, is an argument that they are heavier, and have much earthy matter in them. Their courses, moreover, are almost forced toward the cardinal points. Both are false. I will speak about the former first, because those things which are carried more slowly are heavy. What then? Is the star of Saturn, which completes its journey more slowly than all others, heavy? And yet it has an argument of lightness, in that it is above the others. But, you say, it travels in a larger\n\n<summary>Seneca defends the celestial nature of comets against Aristotelian objections, arguing that their irregular forms and long-term effects do not disqualify them from being stars, and challenging the idea that slow movement implies greater density or terrestrial weight.</summary>\n<keywords>Comets, Aristotle, Celestial Motion, Stoic Philosophy, Astronomy, Astrology, Elements</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3985,
+ "outputTokens": 1286,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00292525,
+ "ms": 16321,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 6078,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "bitu circuit,",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": true
+ },
+ "ocr_chars": 4878
+}

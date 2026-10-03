@@ -1,0 +1,44 @@
+{
+ "id": "6956eaf4f23ebf30578dba35_88",
+ "arm": "prod-A",
+ "model": "gemini-3.1-flash-lite",
+ "text": "OF OCCULT PHILOSOPHY.\n\nthey act in such a way: they teach that in the case of griping pains, a live duck applied to the belly causes the ailment to pass, and the duck itself dies. Similar is what Architas says: if a heart is taken recently extracted from an animal, and while it is still warm and living, is suspended over a patient suffering from quartan fever, it removes it. Thus, if someone swallows the heart of a Hoopoe, or of a Swallow, or of a Weasel, or of a Mole, while it is still alive and palpitating, it contributes to his memory, recollection, intellect, and divination. Hence a general precept has arisen, namely that whatever must be collected from animals, whether stones, or members, or excrement, such as hairs, dung, or hoofs, these must be taken from the animals while they are still living, and even, if possible, while they themselves remain alive afterwards. Whence they instruct that when you collect the tongue of a Frog, you should return it alive into the water; if you collect the tooth or the eye of a Wolf, do not kill the Wolf, and so on for similar things. Thus Democritus teaches that if someone extracts the tongue from a living Stingray <note>original: \"Ranæ marinæ\"; literally \"sea-frog,\" a term traditionally identified with the stingray or similar marine life</note>, without any other part of the body adhering to it, and after it has been cast back into the sea, places it upon the heart of a sleeping woman, she will answer truly whatever she is asked. In a similar manner, they promise that frog eyes bound to a sick person before sunrise, in such a way that they are then cast into the water while still blind, drive away tertian fevers; and they teach that the same, when bound with the flesh of a Nightingale in a deerskin, provide wakefulness, having driven away sleep. Similarly, the spine of a Stingray <note>original: \"Pastinacæ\"; the common stingray</note> bound to the navel is said to make childbirth easy\n\n<summary>This page continues the discussion of sympathetic magic, detailing specific rituals involving animal parts—such as hearts, tongues, and eyes—that must be harvested from living creatures to retain their occult efficacy in healing, divination, and labor.</summary>\n<keywords>sympathetic magic, animal remedies, Architas, Democritus, divination, quartan fever, Stingray, Nightingale, childbirth, occult virtues</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3183,
+ "outputTokens": 531,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00159225,
+ "ms": 2558,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "split",
+   "joined": "faeere",
+   "catchword": "cere,",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1747
+}

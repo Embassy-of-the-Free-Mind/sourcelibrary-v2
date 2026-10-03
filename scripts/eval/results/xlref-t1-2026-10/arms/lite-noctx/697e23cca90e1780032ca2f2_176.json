@@ -1,0 +1,34 @@
+{
+ "id": "697e23cca90e1780032ca2f2_176",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "AN OPEN ENTRANCE\n\ncertainly, around the thirtieth day of this regimen, a citrine color will appear, which will imbue the whole with a citrine color within two weeks of its first appearance.\n\n## CHAPTER XXX.\n\n### On the regimen of the Sun.\n\nYou are now approaching the end of your work, and you have almost completed your task; now everything appears like refined gold <note>original: \"auri obryzi\"</note>, and the virgin's milk <term>lac virginis</term> <gloss>a specific alchemical preparation used to feed the matter</gloss>, with which you imbibe this matter, becomes intensely citrine. Now render immortal thanks to God, the giver of all good things, who has brought the work thus far, and pray to Him as a suppliant that He may guide your counsel from this point onward, lest, by hastening to complete a work that is already almost finished, you might ruin it entirely. Consider now that you have waited for almost seven months, and it will not be prudent to destroy everything in a single hour. Therefore, be extremely cautious, and the more so the closer you are to perfection. If you have proceeded with caution, these notable signs will occur for you: First, you will observe a certain citrine sweat on the body, and finally, as the body subsides, citrine vapors, tinted with violet, and sometimes also a dark purple. After an expectation of twelve or fourteen days in this regimen of the Sun, you will observe the matter to be for the most part moist, and although it is heavy, it is nevertheless in\n\n<summary>This page describes the final stages of the alchemical process, specifically the appearance of the citrine color and the transition into the solar phase.</summary>\n<keywords>regimen, Sun, citrine, virgin's milk, alchemy, solar phase</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2203,
+ "outputTokens": 395,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0011432500000000002,
+ "ms": 1942,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1343
+}

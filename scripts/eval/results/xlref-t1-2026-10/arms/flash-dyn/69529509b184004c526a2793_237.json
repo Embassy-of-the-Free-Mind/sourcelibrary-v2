@@ -1,0 +1,42 @@
+{
+ "id": "69529509b184004c526a2793_237",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\n**History of Life and Death.** **227**\n\n<margin>4</margin> tigate; for the proper work of **Cold** is **Condensation** <term>Densatio</term> <gloss>the thickening of the vital spirits to make them more durable and less prone to dissipate</gloss>; and it is completed without any malignancy or hostile quality. Therefore, this operation is safer than through **Opiates**, although it is a little less powerful if it were used only occasionally, in the same way as **Opiates**. But again, because it can be used familiarly and moderately in the daily diet, it is even far more powerful for the **Prolongation of life** than through **Opiates**.\n\n<margin>39</margin> **Cooling of the Spirits** <term>Refrigeratio Spirituum</term> occurs in three ways: either through **Respiration**; or through **Vapors**; or through **Nourishment**. The first is the best, but is almost entirely outside our power. The second is also powerful and yet is readily available. The third is weak and works through circuitous routes <note>original: \"per Circuitus\"; referring to the long path food takes through the digestive system before affecting the spirits</note>.\n\n**Air**\n\n<summary>Bacon argues that cooling is a safer method than opiates for condensing the vital spirits because it can be integrated into a daily diet. He identifies breathing, vapors, and food as the three primary ways to cool the spirits.</summary>\n<keywords>cold, condensation, vital spirits, opiates, respiration, vapors, nourishment, diet, longevity</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2553,
+ "outputTokens": 3129,
+ "thinkingTokens": 2767,
+ "cost_usd": 0.0106635,
+ "ms": 18731,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 779
+}

@@ -1,0 +1,44 @@
+{
+ "id": "6952d05477f38f6761bc511e_428",
+ "arm": "prod-A",
+ "model": "gemini-3.1-flash-lite",
+ "text": "418 **B A S I L I C A**\n\n<margin>\nAstral, Venereal, and Spiritual, and into the Flagellum <gloss>scourge/affliction</gloss>, namely the Fifth.\n\nThese Sidereal and Firmamental Infections are known by the Adept physician, and are cured Firmamentally: for medicine is an Adept art, which gives the knowledge of how to know and expel Firmamental Infections.\n\nMan’s Magnet. Magical Cure, in which there is a celestial impression; after contact with an herb, until the herb has putrefied, it attracts the medicine into the ulcer, and thus heals it.\n</margin>\n\nin a plain manner, the greatest part of diseases coming from Celestial Influence, and from the Astral Impression of the Firmament of the Greater world, do not wish to be cured with promiscuous <note>common or unrefined</note> Remedies, such as through the <term>Arcana</term> <gloss>hidden mysteries/potent essences</gloss> of herbs, minerals, and metals, but rather the cure should be instituted through Astronomical Influence with those things only that have an Analogy to the greater and lesser world, in which resides the true Magnetic power of the Firmament and the Celestial Impression of resisting diseases from the Firmament of the greater and lesser world, as it appears in Persicaria <gloss>smartweed</gloss>, Greater Solidago <gloss>goldenrod</gloss>, Dracunculus <gloss>dragonwort</gloss>, and Greater Symphytum <gloss>comfrey</gloss>.\n\nIf a disease or pain is brought about Supernaturally through incantation or the Magical Impression of Ascendants, then the attempt to heal using the first three is useless, but according to Paracelsus, one must proceed Magically and Supernaturally, and the evil must be repelled by the same means by which it was brought, in turns. Otherwise, in the stated Simples there is an Influential attractive power, and they all cure by Divine ordination Magically, Astronomically, and Magnetically, because the medicine is in them and the Magnet is in Man: For just as the Sun and the Stars have the power of attracting humidity from the lower things, so too does Man (by his own innate magnetic attractive power, like a Magnet drawing the spirit of nourishment into the place of iron) and the lower things have the same power of attracting from the Superiors, as we see in the time of Plague, and these atCHYMICA\n\n<summary>This page discusses the necessity of treating diseases of astral or supernatural origin using magnetic and astrological correspondences rather than standard mineral or herbal remedies.</summary>\n<keywords>astral influence, Paracelsus, magnetic healing, celestial impression, sympathy, Arcana</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2993,
+ "outputTokens": 580,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00161825,
+ "ms": 2448,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "split",
+   "joined": "atCHYMICA",
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1772
+}

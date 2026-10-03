@@ -1,0 +1,42 @@
+{
+ "id": "6953ea3e1479a63c1108641e_241",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>with the best honey, and as it forms a mass, you shall soften it. The whole must be divided into pieces like the largest olives; one of these should be consumed around the second hour, and another around the tenth hour, and they shall suffer no ill from hunger. \n\nThere is another composition of the same, taking a half-sextary <note>a Roman measure, approximately 0.25 liters</note> of Attic sesame, half as much honey, a <term>cotyle</term> <gloss>about half a pint</gloss> of oil, and a <term>choenix</term> <gloss>about one liter</gloss> of cleaned sweet almonds. It is necessary to grind and sift the sesame and almonds after drying them. Then, peeling the squills <note>the sea onion, *Drimia maritima*</note> all around, cutting off the roots and leaves, and slicing them into small parts, one must place them in a mortar and pound them until they are very smooth. Soon, mix a part of the pounded squills equal to the honey, together with the oil, and pouring it into a pot and placing it over coals, it must be stirred here and there with a wooden stirrer until all are mixed. When the mass has become solid, it will be worthwhile to divide it into small morsels; someone taking one in the morning and another in the evening will have sufficient nourishment. \n\nThis <term>pharmacun</term> <gloss>medicine or remedy</gloss> is beneficial for an army; for being sweet, it brings satiety and takes away thirst. We extracted these from a certain manuscript <term>scholium</term> <gloss>an explanatory marginal note</gloss> on the book of Heron <note>likely Heron of Alexandria, a mathematician and engineer</note> in the Vatican library. We have seen the same composition in Philoponus <note>Joannes Philoponus, a 6th-century commentator</note>, in the fifth book of military matters, where he describes other similar things.\n\n---\n\n->*From which fruits wines may be made.*<-\n\n### CHAPTER XXI.\n\nNow we shall review the fruits from which wines may be made; but first those commonly made by our ancestors, though with a twofold difference: for some are for remedies, with which the books of Physicians are filled; others are for various uses, and there are almost infinite kinds according to the differences of places and nations; for what is given to one is denied to another. First:\n\n->*Wine from palms*<-\n\nPliny stated that wine is made from these in the East, and he recounts fifty kinds of palms and the differences of the wines made from them. Among these, the <term>cariotae</term> <gloss>nut-dates</gloss> are most celebrated, being very rich in juice, from which the principal wines of the East are made; they are troublesome to the head, from which the fruit takes its name <note>The name is derived from the Greek *karos*, meaning a heavy sleep or stupor</note>. The most praised are in Judea, especially in Jericho, though those from Archelais and Phaselis are also valued, and <note>the text breaks off here</note>\n\n<summary>Della Porta provides ancient recipes for military rations designed to suppress hunger and thirst, citing sources from the Vatican library, before beginning a new chapter on the production of fruit wines, specifically palm and date wines.</summary>\n<keywords>military rations, satiety, thirst suppression, sesame, honey, squill, almond, Heron of Alexandria, Philoponus, fruit wine, palm wine, dates, Pliny the Elder, Judea</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3203,
+ "outputTokens": 2296,
+ "thinkingTokens": 1506,
+ "cost_usd": 0.0084895,
+ "ms": 11072,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": "tanquam",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2287
+}

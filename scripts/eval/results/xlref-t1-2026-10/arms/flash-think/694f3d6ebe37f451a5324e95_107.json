@@ -1,0 +1,44 @@
+{
+ "id": "694f3d6ebe37f451a5324e95_107",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nand it will mix itself with the waters of its own spring. Therefore, there are gods who are the leaders of all species. These are followed by the gods whose leader is <term>ousia</term> <gloss>essence or substance</gloss>. These are the sensible gods, similar to both origins <note>meaning they share in both the intelligible and the material worlds</note>, who accomplish all things through sensible nature, each one illuminating his own work through the other. Jupiter is the <term>ousiarches</term> <gloss>ruler of essence</gloss> of the heaven, or whatever else is understood by that name; for through the heaven, Jupiter provides life to all. The <term>ousiarches</term> of the sun is light, for the good of light is infused into us through the orb of the sun. There are thirty-six <note>referring to the decans of the zodiac</note> whose name is <term>Horoscopoi</term> <gloss>Watchers of the Hour</gloss>, belonging to the stars always fixed in the same place; their <term>ousiarches</term> or leader is he whom they call <term>Pantomorphos</term> <gloss>All-formed or Omniform</gloss>, who creates diverse shapes for diverse species. The seven spheres which are called erratic <note>the planets</note> have their <term>ousiarchas</term>, that is, their own leaders, whom they call Fortune or <term>Heimarmene</term> <gloss>Fate</gloss>, by whom all things are changed by the law of nature with the firmest stability, and varied by eternal motion. But the air is the instrument or the machine of all, through which all things are made. Moreover, the <term>ousiarches</term> of this is the second <note>likely referring to the Demiurge or a secondary creative power</note>, providing mortal things to mortals and things similar to them. Since these things are so, moving themselves from the lowest to the highest, all things pertaining to themselves are so naturally connected to one another that mortal things are annexed to mortals, and sensible things to sensibles. Yet the whole of governance obeys that highest Lord, so that they are not many, but rather one. For since all things hang from one, and rather flow down from him, when they are seen at a distance they are believed to be many and divided. But joined together, they are one or rather two: that from which all things are made, and he by whom they are made. That is, from the matter out of which they are made, and from his will, by whose nod the others are produced. ASCLEPIUS: What is this reasoning again, O Trismegistus? TRISMEGISTUS: It is this, O Asclepius. For God, or the Father, or the Lord...\n\n<summary>This page describes the hierarchy of divine governors (Ousiarchs) over the heavens, planets, and fixed stars, emphasizing the unity of all things under a single divine will despite their apparent multiplicity.</summary>\n<keywords>Ousia, Ousiarch, Jupiter, Sun, Horoscopoi, Pantomorphos, Fate, Heimarmene, Seven Spheres, Material World, Divine Unity</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3089,
+ "outputTokens": 710,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0036745,
+ "ms": 8234,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1923
+}

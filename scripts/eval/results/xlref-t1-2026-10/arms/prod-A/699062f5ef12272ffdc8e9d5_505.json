@@ -1,0 +1,44 @@
+{
+ "id": "699062f5ef12272ffdc8e9d5_505",
+ "arm": "prod-A",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page: ...as they take notice of</meta> God and command everyone to worship him everywhere. But the unlearned and the philosophers themselves, who do not truly proceed from the Lord to obtain his gifts, and do not have the knowledge of the immortal Jupiter, not listening to both the gods and the divine men, have indeed rejected all the gods. Yet, they have chosen not only not to hate the forbidden demons, but even to revere them. Pretending to worship God, they do not do the only things through which God is adored. For God, as the father of all, needs nothing; but it is good for us when we adore him through justice and chastity and other virtues, making our very lives a path to him through imitation and instruction from him. For instruction purges the mind, while imitation deifies the affection for him by working. He preached well indeed about God the Father and told with what morals he should be worshipped. The prophetic books of the <term>Hebrei</term> <gloss>Hebrews</gloss> are full of these precepts, when the life of the holy ones is either praised or blamed. But it was only among the Christians, or [these philosophers] calumniate them as much as the demons they fancy to be gods desire; as if it were difficult for anyone to recall what shameful and disgraceful things were done in theaters and temples regarding the service of the gods, and to attend to what is read, said, and heard in the churches, or what is offered to God, and from this to understand where there is the building up and where the ruin of morals. But who said this to him or inspired him, if not a diabolical spirit, such a vain and fitting lie, that Christians would rather revere than hate the demons whom the Hebrews were forbidden to worship? But that God whom the wise men of the Hebrews worshipped, and whom we, in this our mortal pilgrimage, venerate and love as the most blessed citizens, the celestial holy angels and the powers of God, forbids that sacrifice be offered to anyone in his law which he gave to his people, the Hebrews; and he thundered very menacingly, saying: \"He who sacrifices to gods shall be rooted out.\" And so that no one would think that it was not forbidden to sacrifice to the most wicked demons and earthly spirits, whom he <note>referring to Porphyry</note> calls mimes or lesser [gods]—who were also called gods in the holy scriptures, not by the Hebrews\n\n<column-break/>\n\nbut by the Gentiles—which the seventy interpreters clearly placed in the psalm, saying: \"For all the gods of the Gentiles are demons.\" Therefore, lest anyone think that sacrifice was indeed forbidden to these demons, but permitted to be offered to the celestial ones, either to all or to some, he immediately added: \"unless to the Lord only,\" that is, unless to the Lord alone. Lest perhaps anyone, because he says \"to the Lord only,\" might believe that God is the only one to whom he thinks he must sacrifice. That this is not to be understood that way is most easily found in the Greek scriptures. Therefore, the God of the Hebrews, to whom even this philosopher gives so great a testimony, gave a law to his own Hebrew people, written in the Hebrew language, not obscure and unknown, but now spread among all the nations, in which law it is written: \"He who sacrifices to gods shall be rooted out, unless to the Lord only.\" What need is there in this law of his and in his prophets to search much about this matter? Or rather, not to search, for they are not hidden or erased, but clear and frequent to collect, and to place in this my disputation, by which it appears clearer than light that he wished the true and highest God to be sacrificed to no one at all except to himself. Behold, this one thing, briefly or rather weightily, menacingly, but truthfully said by that God whom their most learned men preach as so excellent: let it be heard, feared, and fulfilled, lest the destruction follow the disobedient. \"He who sacrifices to gods,\" he says, \"shall be rooted out, unless to the Lord only.\" Not because he needs any thing, but because it is expedient for us that we should be his. For to him it is sung in the sacred writings of the Hebrews: \"I have said to the Lord, you are my God, for you do not need my goods.\" And the most excellent and best sacrifice of him is we ourselves. This is his city, the mystery of which we celebrate with our oblations, which are known to the faithful, as we disputed in the preceding books. For the prophets of the Hebrews interpreted through oracles that the victims which the Jews offered in the shadow of the future were to cease, and that one sacrifice would be offered by the Gentiles from the rising of the sun even to its setting, as we now see being done.\n\n<summary>Augustine refutes the claim that Christians irrationally hate demons, arguing that the Hebrew law explicitly prohibits the worship of such spirits. He asserts that the one true God demands exclusive sacrifice, a tradition now fulfilled by the universal Christian sacrifice, replacing the temporary rituals of the Old Testament.</summary>\n<keywords>Demonology, Hebrew Law, Sacrifice, Porphyry, Idolatry, Old Testament, Christian Liturgy, Psalm 96</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3834,
+ "outputTokens": 1130,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0026535,
+ "ms": 4590,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4896,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 3696
+}

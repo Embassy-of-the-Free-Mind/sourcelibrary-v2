@@ -1,0 +1,44 @@
+{
+ "id": "69905d2a2fd6a0399389f0c0_180",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<margin>Thus the idle crowd of servants may be excluded.</margin>\n\nof citizens, I return. The eldest, as I have said, presides over the family. Wives are the servants of their husbands, children of their parents, and, in short, the younger of the older. The entire city is divided into four equal parts. In the middle of each part is a marketplace for all kinds of goods. There, the products of each family are brought to certain houses, and in warehouses each type is distributed separately. From these, every head of a family requests what he and his own need, and he takes whatever he has asked for without money, without any payment whatsoever. For why should anything be denied? Since there is an abundance of all things, and there is no fear that anyone would want to demand more than is necessary. For why would anyone be thought to demand useless things, who has the certainty that nothing will ever be lacking for him?\n\n<summary>More describes the economic organization of Utopian cities, where goods are held in common warehouses and distributed to citizens based on need without any monetary exchange.</summary>\n<keywords>Utopia, economy, distribution, family structure, abolition of money</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2584,
+ "outputTokens": 252,
+ "thinkingTokens": 0,
+ "cost_usd": 0.001024,
+ "ms": 2404,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "Nem-",
+   "headJoined": "conuictum",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1050
+}

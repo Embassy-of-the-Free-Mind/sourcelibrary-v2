@@ -1,0 +1,44 @@
+{
+ "id": "69ac7ee520878c5c9ba51e75_98",
+ "arm": "prod-A",
+ "model": "gemini-3.1-flash-lite",
+ "text": "New Organon. Book I.\n\nin vain on the remaining subjects: and they even sell themselves to others, to acquire a better reputation for the things in which they are occupied. It happens, just like Atalanta, that they step off the path to pick up the golden apple, meanwhile interrupting their course and letting victory slip from their hands. But in the true course of Experience, and in bringing it forward to new works, Divine Prudence and Order must be taken entirely as the model. For God, on the first day of Creation, created only Light, and attributed an entire day to that work; nor did He create any material work on that day. Similarly, from all-encompassing Experience, the discovery of Causes and true Axioms must first be elicited: and light-bearing experiments, not fruit-bearing ones, must be sought. Axioms, however, when rightly discovered and established, instruct practice not narrowly, but abundantly; and they draw after them ranks and troops of works. But concerning the ways of experimenting, which are no less beset and blocked than the ways of judging, we shall speak later: for the present, we have spoken only of vulgar Experience, as of a poor Demonstration. Now, the order of things demands that we add certain remarks concerning those signs we mentioned a little earlier (that the philosophies and contemplations currently in use are in a bad state), and concerning the causes of a thing so wonderful and incredible at first glance. For the notion of signs prepares for assent: but the explanation of causes removes the miracle. These two things greatly assist, in an easier and gentler manner, the extirpation of Idols from the Intellect.\n\n<summary>Bacon argues that the pursuit of practical results (fruit) should not precede the establishment of theoretical causes (light), urging a methodical approach to experimentation inspired by the order of Creation.</summary>\n<keywords>Atalanta, Divine Prudence, Axioms, Light-bearing experiments, Fruit-bearing experiments, Idols of the mind, Methodology</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2713,
+ "outputTokens": 417,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00130375,
+ "ms": 2113,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1753
+}

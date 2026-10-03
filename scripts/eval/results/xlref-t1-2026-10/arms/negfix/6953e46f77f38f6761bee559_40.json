@@ -1,0 +1,17 @@
+{
+ "id": "6953e46f77f38f6761bee559_40",
+ "arm": "negfix",
+ "base_arm": "prod-A",
+ "text": "continues from previous page group. Furthermore—and this is even more marvelous—those stars which have been called **nebulae** <note>original: \"NEBVLOSAE\"</note> by astronomers down to this day are groups of stars arranged in a wonderful manner. From the mixing of their rays, while each one individually escapes the sharpness of our eyes due to its smallness or its extreme distance from us, arises that brightness which, until now, has been believed to be a denser part of the heavens capable of reflecting the rays of the stars or the Sun. We have observed some of them; and we have wished to append the star charts <note>term: \"Aſteriſmos\" <gloss>star clusters or constellations</gloss></note> of two.\n\nIn the first, you have the **nebula** called the Head of Orion, in which we have counted twenty-one stars.\n\nThe second contains the **nebula** called the Praesepe <note>original: \"PRAESEPE\" <gloss>Manger or Beehive Cluster</gloss></note>, which is not merely one star, but a collection of more than forty stars: besides the Aselli <note>original: \"Aſellos\" <gloss>the Donkeys; the stars Gamma and Delta Cancri</gloss></note>, we have noted thirty-six arranged in the order that follows.\n\n<note>A diagram depicts the Orion Nebula, showing twenty-one individual stars.</note> ->NEBVLOSA ORIONIS.<- <column-break/> <note>A diagram depicts the Praesepe cluster, showing over thirty-six stars including the Aselli.</note> ->NEBVLOSA PRAESEPE.<-\n\n<summary>Galileo demonstrates that celestial objects previously classified as nebulae, such as the Orion Nebula and the Beehive Cluster (Praesepe), are actually dense groups of individual stars. He provides specific stellar counts for these regions, confirmed by his telescopic observations.</summary>\n<keywords>Nebulae, Orion Nebula, Praesepe, Beehive Cluster, Aselli, astronomy, telescope, star clusters, Sidereus Nuncius</keywords>",
+ "flagged": false,
+ "changed": false,
+ "flags": [],
+ "check_parse_failed": false,
+ "check": {
+  "model": "gemini-3.1-flash-lite",
+  "in": 1384,
+  "out": 1
+ },
+ "fix": null,
+ "cost_usd": 0.0003475
+}

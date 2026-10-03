@@ -1,0 +1,44 @@
+{
+ "id": "694bf8d2343422769f237558_277",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page: [influence] of the stars: for it is a most [perfect] imitator of all things; which, when it [captures] the celestial bodies opportunely, it wonderfully provokes celestial influence, and [of all things]</meta> that proceed from the continent, they lead a dance in a circular motion, then return to the shores. M. Varro testifies that he saw these things. And there are things more wonderful than these: for on the Attic shore, the sea sounds like a cithara. A certain rock at Megara produces musical notes when struck, so great is the power of Music. It soothes the soul, elevates the mind, incites warriors to battle, and relieves the labors and fatigue of individual tasks. It recalls the fallen and the desperate, and comforts travelers. And the Arabs say that camels carrying burdens are comforted by their singing guides. In a similar way, those carrying heavy burdens sing, and are rendered capable and relieved by it: for song produces delight and capability, mitigates the irascible, gladdens the sad and anxious, pacifies the discordant, and tempers the rage of the phrenetic, and dissipates vain thoughts: hence it is that Democritus and Theophrastus affirm that some diseases of the body and soul can be cured or induced in this way. Thus we read that Terpander and Arion of Methymna <meta>catchword: Methymnæum</meta>\n\n<summary>This page describes the power of music to affect the human soul and body, citing the observations of classical authorities like Varro, Democritus, and Theophrastus regarding its use in labor, mood regulation, and the healing of diseases.</summary>\n<keywords>Music, M. Varro, Democritus, Theophrastus, Terpander, Arion of Methymna, psychology, therapeutic music</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2853,
+ "outputTokens": 401,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00131475,
+ "ms": 2057,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1482
+}

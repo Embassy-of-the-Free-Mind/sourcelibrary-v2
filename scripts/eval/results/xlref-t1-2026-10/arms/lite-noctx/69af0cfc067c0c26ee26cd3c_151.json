@@ -1,0 +1,34 @@
+{
+ "id": "69af0cfc067c0c26ee26cd3c_151",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "On the Motion of the Heart, etc.\n\nSince these things are so, it is clear that another point will also be confirmed, which I previously stated: that blood passes continuously through the heart. For we see in the constitution of the body that blood flows from the arteries into the veins, not from the veins into the arteries; furthermore, we see that almost the entire mass of blood can be drained from the arm itself (provided a proper ligature is applied, and one cutaneous vein is opened with a scalpel). We see, moreover, that it pours out so impetuously and in such abundance that it is evident that not only is the blood which was contained in the arm below the ligature before the incision quickly and shortly evacuated, but that it is drawn from the entire arm and the whole body, from both the arteries and the veins.\n\nTherefore, it is necessary to admit, first, that it is supplied by force and impetus, and is driven by force\n\n<summary>Harvey demonstrates the circulation of blood by observing that blood flows from arteries into veins, noting that a single incision in a ligated arm can drain blood from the entire body.</summary>\n<keywords>circulation, blood flow, arteries, veins, ligature, heart motion</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2100,
+ "outputTokens": 255,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0009075,
+ "ms": 1513,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 911
+}

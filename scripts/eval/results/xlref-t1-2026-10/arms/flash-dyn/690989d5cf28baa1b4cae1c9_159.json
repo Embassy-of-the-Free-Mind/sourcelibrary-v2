@@ -1,0 +1,42 @@
+{
+ "id": "690989d5cf28baa1b4cae1c9_159",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "# ASCLEPIUS\n\n<meta>continues from previous page: of the good</meta> shines with <term>piety</term> <gloss>religious devotion</gloss>, religion, prudence, and the worship and veneration of God. It is as if the truth were perceived through the eyes of reason; and by the confidence of his belief, he stands as far above other men as the sun surpasses the other stars with its light. For the sun himself illuminates the other stars not so much by the magnitude of his power as by his divinity and holiness. Believe this sun to be a second god, O Asclepius, who governs all other things and illuminates all worldly beings, whether they possess souls or are inanimate. \n\nFor if the world is a <term>living being</term> <gloss>original: animal mundus</gloss> that lives forever—and has been, and is, and will be—then nothing in the world is mortal. In every single part of a living being that exists in the world, as in one and the same ever-living organism, there is no place for death. Therefore, God himself must be most full of life and eternity, if it is necessary for him to live forever. \n\nJust as the world is everlasting, so the sun itself is forever the governor of living things, or the one who constantly attends to and dispenses all their vitality. God, therefore, is the everlasting governor of the living beings, or the vital things, that are in the world, and he is the eternal dispenser of life itself. He distributed it once by an eternal law, providing life to all vital things, in the manner I shall now describe.\n\n<summary>This page describes the pious man's excellence through solar imagery and defines the sun as a second god that governs all life. It argues that because the world is an eternally living being, no part of it can truly be subject to mortality.</summary>\n<keywords>sun as deity, cosmic vitality, immortality of the world, Asclepius, divine governance, piety, life dispenser, world organism</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2803,
+ "outputTokens": 2906,
+ "thinkingTokens": 2471,
+ "cost_usd": 0.0101195,
+ "ms": 11994,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1364
+}

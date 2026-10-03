@@ -1,0 +1,42 @@
+{
+ "id": "695262d8ab34727b1f046ade_167",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nis shining, or rather dark and bluish with a deadly earthiness.\n\n### IV.\n\n->L iij<-\n\n<term>Moon</term> <gloss>silver</gloss> is also turned yellow in a similar way with a solution of <term>Mars</term> <gloss>iron</gloss>. Indeed, the method of that <term>citrination</term> <gloss>yellowing</gloss> which is accomplished through <term>Vitriol</term> <gloss>sulfate minerals</gloss> or <term>Copperas</term> <gloss>green vitriol</gloss> is as follows. Let a certain quantity of each of these be taken, and let that part of it be <term>sublimated</term> <gloss>vaporized and solidified</gloss> which allows itself to be sublimated, until it is sublimated in its entirety with compression. After this, let that which was sublimated be sublimated again with the type of fire appropriate to it, so that bit by bit it is <term>fixed</term> <gloss>rendered non-volatile</gloss>, until the greater part of it is fixed. Afterwards, let it be managed with careful attention to the fire, so that a greater heat can be applied to it for its perfection. After this, let it be dissolved into a most red water, to which there is no equal. \n\nFrom then on, you should devise a way to allow it entrance into the body of <term>Moon</term> <note>the metal silver</note>; and these devices have been sufficiently shown to you if you have been a diligent <term>seeker</term> <gloss>original: exquisitor</gloss> of the perfect work which we have written. And because we see these things adhere amicably to the depth of <term>Moon</term>, we have therefore considered and it is certain that these are from their root, and therefore it happens that they are altered by them. These, then, are all the medicines of the first order that we have brought forward; however, many more of their methods can be multiplied, provided the essence of the coloring things remains the same despite the variety of methods. \n\nIndeed, some have discovered more medicines, but it necessarily happens that one of two things occurs: either it is necessary that they create the medicine from these same things, or from things having the same nature. Or they compose a medicine which is equivalent to that which does not exist, along with its alteration, and which contributes neither to the world <note>original: mundo; can also mean a clean or refined substance</note> nor to the parts of the world, until the mover in the high place of mobile nature has rested incorrupt.\n\n<summary>This page explains how to yellow silver using solutions of iron, vitriol, or copperas through processes of sublimation and fixation. The author emphasizes that while many recipes exist, they must all rely on the same underlying natural principles to be effective.</summary>\n<keywords>citrination, silver, iron, vitriol, copperas, sublimation, fixation, first order medicines, alchemy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3087,
+ "outputTokens": 4003,
+ "thinkingTokens": 3341,
+ "cost_usd": 0.013552499999999999,
+ "ms": 16719,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": "citrinatio",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1739
+}
