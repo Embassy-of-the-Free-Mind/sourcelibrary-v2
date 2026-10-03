@@ -1,0 +1,44 @@
+{
+ "id": "694bf8d2343422769f237558_277",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\n<unclear>as if</unclear> coming forth from the mainland into a pool, moved in a circle, they perform a dance, and then return to the shores. Marcus Varro <note>Marcus Terentius Varro, a Roman scholar and writer.</note> testifies that he saw these things. And there are wonders even greater than these: for on the Attic shore, the sea sounds like a lyre. At Megara, a certain rock resonates like a stringed instrument when struck with pebbles, so great is the power of Music. It <note>original: \"Ipsa [musica]\"</note> soothes the soul, uplifts the mind, incites warriors to war, and eases the labor and fatigue of individual works. It recalls those who have fallen or are in despair and comforts travelers. And the Arabs say that camels carrying burdens are comforted by the singing of their drivers. In a similar way, those carrying heavy loads sing, and are made more capable and relieved by it: for singing produces delight and capability. It mitigates the wrathful, gladdens the sad and anxious, pacifies the discordant, tempers the madness of the frantic, and dissipates vain thoughts: hence it is that Democritus and Theophrastus affirm that some diseases of the body and mind can thus be either cured or induced. So we read that Terpander <note>A Greek poet and musician from the 7th century BCE.</note> and Arion of Me<unclear>thymna</unclear> <note>Arion of Methymna, a legendary Greek kitharode.</note>\n\n<summary>This page describes the miraculous effects of music on nature and the human psyche, citing classical authorities and the practical use of song to ease labor.</summary>\n<keywords>music, Marcus Varro, Megara, Arabs, camels, psychology, Democritus, Theophrastus, Terpander, Arion of Methymna</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2853,
+ "outputTokens": 424,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0026985000000000004,
+ "ms": 2698,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1482
+}

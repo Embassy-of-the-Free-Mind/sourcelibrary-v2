@@ -1,0 +1,34 @@
+{
+ "id": "69905e262fd6a039938a154f_67",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Petrus de Abano.\n\nnine, and which are distant from one another by one palm. And in the middle circle, write first the name of the hour in which you perform the work, in the second place the name of the angel of the hour, third the seal of the angel of the hour, fourth the name of the angel who presides over that day in which you perform the work and of his ministers, fifth the name of the present time, sixth the name of the spirits reigning in that part of time and presiding over it, seventh the name of the head of the sign reigning in the part of time in which you perform the work, eighth the name of the Earth according to that part of time in which you perform the work. Ninth, and for the completion of the middle circle, write the names of the Sun and Moon according to the aforementioned calculation of time. For with time changed, the names also change. Moreover, in the upper circle, let the names of the angels presiding over the air on that day on which you perform the work be assigned in the four corners, namely the King and his three ministers. Outside the circle, in the four corners, let there be pentagons. In the lower circle, let four Divine names be written, with crosses placed between them. In the middle of the circle, namely to the east, let Alpha be written, and to the west, let be written\n\n<summary>This page details the specific astrological and angelic inscriptions required for the construction of a ritual circle in the practice of magical art.</summary>\n<keywords>Petrus de Abano, ritual circle, angelic seals, astrology, planetary hours, Divine names</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2199,
+ "outputTokens": 344,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0010657499999999999,
+ "ms": 1505,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1309
+}

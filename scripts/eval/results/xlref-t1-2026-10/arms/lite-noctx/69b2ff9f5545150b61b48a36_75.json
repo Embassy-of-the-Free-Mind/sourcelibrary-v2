@@ -1,0 +1,34 @@
+{
+ "id": "69b2ff9f5545150b61b48a36_75",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "OF THE WINDS.\n\n2. *Storms* <note>original: \"Procellæ\"</note> that occur with fog or mist, which they call sea monsters, and which sustain themselves like a column, are very violent and dire for those who navigate.\n\n3. Greater *typhoons* <note>original: \"Typhones\"</note>, which sweep along a notable breadth and suck up what they have seized, occur rarely; but small, and as it were playful, *whirlwinds* <note>original: \"Vortices\" or \"Turbines\"</note> occur frequently.\n\n4. All *storms*, *typhoons*, and larger *whirlwinds* have a manifest motion of falling or vibration downwards, more so than other winds, so that they seem to rush in the manner of torrents and flow down as if through channels, and afterwards to be reflected by the earth.\n\n5. It happens in meadows that piles of hay are sometimes carried high into the air and then scattered like a canopy; likewise in fields, the stalks of peas and the ears of harvested corn, and even linens exposed to dry, are lifted by *whirlwinds* up to the height of trees or above the roofs of houses, and these things happen without any greater force or violence of the wind.\n\n6. But sometimes light and very narrow *whirlwinds* occur, even in clear weather, so that one riding on horseback may see dust or straw being swept\n\n<summary>This page describes various atmospheric phenomena, specifically storms, typhoons, and whirlwinds, detailing their physical manifestations, downward motions, and the ability of lesser vortices to lift objects.</summary>\n<keywords>storms, typhoons, whirlwinds, meteorology, wind behavior, vortices, atmospheric pressure</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2245,
+ "outputTokens": 372,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00111925,
+ "ms": 1816,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1314
+}

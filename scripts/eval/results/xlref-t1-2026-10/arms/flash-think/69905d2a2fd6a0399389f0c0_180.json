@@ -1,0 +1,44 @@
+{
+ "id": "69905d2a2fd6a0399389f0c0_180",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nof the citizens. As I mentioned, the oldest person presides over each household. Wives serve their husbands, children serve their parents, and generally, the younger serve the elder.\n\nEvery city is divided into four equal parts. In the middle of each part is a marketplace for all goods. The products of every household are brought there into specific buildings, and the various kinds of goods are distributed separately into warehouses. From these, each head of a household seeks what he and his family have need of, and he carries away whatever he asks for without money and without any form of compensation or trade. <margin>In this way, the idle crowd of servants can be excluded.</margin>\n\nFor why should anything be refused? There is an abundant supply of all things, and there is no fear that anyone would want to demand more than is necessary. Why would anyone be thought likely to ask for superfluous things when they are certain that they will never lack anything?\n\n<summary>This page describes the social hierarchy and economic distribution system in Utopia, where families are organized by age and goods are distributed for free from central markets based on need.</summary>\n<keywords>social hierarchy, distribution of goods, marketplace, abolition of money, communal living, Utopian economy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2584,
+ "outputTokens": 270,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0021019999999999997,
+ "ms": 2046,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "Nem-",
+   "headJoined": "conuictum",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1050
+}

@@ -1,0 +1,44 @@
+{
+ "id": "6991e171b53cae6bb6024476_216",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\n...and proposed by <term>Sotol.</term> <gloss>Domingo de Soto</gloss> and by theologians who establish the internal tribunal of the soul. <margin>Sotol. IV. q. 7. art. 2. Covar. ad c. peccatum. par. II. §. I. Silv. in ver- bo Reftitut. n. 3. quæ. 6.</margin>\n\nIII. First, it appears that a possessor in good faith <margin>Medina de contr. q. 10.</margin> (for a possessor in bad faith is held beyond the value of the thing by his own act) is not held to any restitution if the thing has perished: because neither the thing itself is with him, nor any profit from the thing.\n\nIV. Second, a possessor in good faith is held to restore even the existing fruits <gloss>products or profits</gloss> of the thing: I say fruits of the thing; for fruits of industry <margin>Zeff. l. II. c. 14. Navar. c. 17. n. 7.</margin> <note>profits arising from personal labor rather than the property itself</note>, even if they would not have proceeded without the thing, are nevertheless not owed to the thing. The cause of this obligation is from ownership <term>dominium</term>; for he who is the owner of a thing is naturally the owner of the fruits of that thing.\n\nV. Third, a possessor in good faith is held to the restitution of both the thing and the consumed fruits, provided that he would have consumed just as much anyway <note>if the possession saved him from spending his own funds</note>: for in this case he is judged to be enriched. Thus Gaius Caesar Caligula <margin>Suet. c. 16.</margin> is praised because, around the beginning of his empire, when he restored kingdoms to certain people, he also added the fruits of the intervening time.\n\nVI. Fourth, he is not held to the fruits which he neglected to collect: because he neither has the thing, nor anything that succeeds in place of the thing.\n\nVII. Fifth, if such a possessor gave a thing given to him to another, he is not held unless he would have given just as much anyway even without this thing: for then it will be a profit to have spared his own property. <margin>L. Quivæs. §. ult. D. furti.</margin>\n\nVIII. Sixth, if he sold a thing he bought, he is not held, unless perhaps he sold it for more: but if he sold a thing given to him, he is held to restore the price, unless perhaps he squandered the price which he would not have squandered otherwise. <margin>L. si & rem. D. de petit. hereditatis.</margin>\n\nIX. Seventh, a thing belonging to another bought in good faith must be restored, and the price paid out cannot be recovered. <margin>L. Sed & fi lege. D. eod.</margin> To this rule it seems to me this exception should be added: unless the owner probably could not have recovered possession of his thing without some expense, such as if the thing were with pirates. <margin>L. Si eum fervum. D. de rebus cre- ditis.</margin> For then as much as the owner would have been willing to spend can be deducted. For the possession of the fact itself, especially when difficult to recover, is something valuable; and in this the owner is judged to have been made more enriched after the loss of the thing. <margin>L. Mater tua. L. Si mancipia. D. de rei vin- dicatione.</margin> And therefore, while the purchase of one's own property is not valid by ordinary law, the Jurist Paulus says it is nevertheless valid if it was agreed from the beginning that the possession which is with another should be bought. <margin>L. Sucr. D. de cont. emt. L. 1. D. de evittionibus.</margin> And here I do not require that the thing be bought with the intention that it be restored to the owner, in which case there are those who say an action for business managed <term>negotiorum actio</term> <gloss>a claim for services rendered without a contract</gloss> arises. <margin>L. Si laborav. §. Si navis. D. ad legem Rhodiam. Aegid. Reg. diff. 35. dub. 7. num. 126. Hoft. tit. de pern. v. quid de prædam ementibus. a L. Si in emtione §. rei. D. de contr. emt.</margin>\n\n<summary>Grotius outlines the legal and moral obligations of a person who possesses property belonging to another in good faith, detailing when restitution of the item or its profits is required. He distinguishes between natural products of property and profits from labor, and addresses specific cases such as items recovered from pirates.</summary>\n<keywords>restitution, good faith, property rights, Caligula, fruits of property, purchase and sale, maritime law, Roman law, Paulus the Jurist</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3515,
+ "outputTokens": 1140,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0051775,
+ "ms": 5503,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4600,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 3400
+}

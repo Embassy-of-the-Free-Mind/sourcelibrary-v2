@@ -1,0 +1,44 @@
+{
+ "id": "690986dccf28baa1b4cae0e3_81",
+ "arm": "prod-A",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\n\nby **Neptune**, one the **Solar Tree**, and the other the **Lunar Tree**. And although everything in this island was available at a whim, one thing alone was missing. There was no water to be had, except with great difficulty. There were many, indeed, who attempted in part to bring spring water there through channels; others also extracted it from various things. But the labor attempted was in vain, because in that place it could be obtained by no means. And even if it was obtained, it was nonetheless useless and poisonous, unless it was drawn from the rays of the **Sun** or the **Moon** <note>This refers to the \"Celestial Dew\" or the \"Astral Spirit,\" a central concept in alchemy where the practitioner seeks to capture a universal solvent from the atmosphere or celestial influences.</note>, which few were able to provide. Whoever had favorable fortune in accomplishing this could never attract more than ten parts. For that water was of a wonderful kind; and believe me, for I saw with my own eyes and touched with my hands the snowy whiteness of that water, and while I contemplated it, I was greatly changed. Meanwhile, exhausted by that consideration, **Neptune** vanished from before my eyes, and there appeared to me a great man, upon whose forehead the name of **Saturn** was inscribed. He, having taken a vessel, drew ten parts of the water, and immediately from the fru-\n\n<summary>The narrator describes the rare celestial water required to nourish the symbolic trees, which is eventually collected by a figure representing Saturn.</summary>\n<keywords>Solar Tree, Lunar Tree, celestial water, Neptune, Saturn, alchemical solvent, planetary allegory</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3100,
+ "outputTokens": 362,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0026360000000000003,
+ "ms": 2684,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": "fructa",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2437
+}

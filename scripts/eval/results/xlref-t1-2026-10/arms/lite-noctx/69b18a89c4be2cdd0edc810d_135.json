@@ -1,0 +1,34 @@
+{
+ "id": "69b18a89c4be2cdd0edc810d_135",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "GOVERNMENT. CH. VI.\n\ntransfer, and so forth; and a *people* is said to be greater than a *multitude*. It must therefore be distinguished in this way: by *people* or *multitude*, whenever we say that it itself desires, hopes, or does something, it is understood that the *commonwealth* <note>original: \"civitas\"</note> which commands, wills, and acts through the will of *one* man, or through the consenting wills of *many* men, which cannot happen except in an assembly. However, whenever something is said to be done by a multitude of men, whether large or small, without the will of that man or assembly, it is said to have been done by the subject people, that is, by many individual citizens at the same time, and to proceed not from one will, but from the many wills of many men; those who are already citizens and subjects are not a *commonwealth*.\n\n<margin>The beginning of a commonwealth is the right of the consenting majority.</margin>\n\nII. Next, it must be considered that each person from the multitude (in order for a beginning of the establishment of a commonwealth to be made) must agree with the others that, in those matters which are proposed by anyone in the meeting, that which the greater part of them desires shall be held as the will of all. For in any other way, the multitude of men, whose dispositions and desires differ so variably among themselves, will have no will at all. But if someone does not wish to consent, the others will nonetheless establish the commonwealth among themselves <unclear>n</unclear>\n\n<summary>This passage defines the distinction between a \"people\" acting as a singular commonwealth through a unified will and a \"multitude\" acting as a collection of individual subjects. It further establishes the necessity of majority consent for the formation of a functioning civil state.</summary>\n<keywords>commonwealth, multitude, will, majority consent, sovereignty, subjects</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2217,
+ "outputTokens": 419,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0011827499999999998,
+ "ms": 2299,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1450
+}

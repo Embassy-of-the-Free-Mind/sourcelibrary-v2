@@ -1,0 +1,34 @@
+{
+ "id": "69b21c6c429e087c6f8646f6_223",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "VIRGIN\n\nEUPHEMIUS: What birds do I see here? \n\nCATHARINA: It is the patriarch of the college. Do not withdraw; they have already finished drinking. Sit for a little while; once he has departed, we will converse in our usual manner. \n\nEUPHEMIUS: Come now, I entreat you, tell me what you refused to tell me before. Now that we are alone, tell me the whole story; I would much rather learn it from you. \n\nCATHARINA: Of all the many friends whom I thought I valued most highly, I now realize there was none who gave me more prudent or mature advice than you, the youngest of them all. \n\nEUPHEMIUS: But how did you overcome the will of your parents? \n\nCATHARINA: First, through the wicked exhortations of the monks and nuns; then, my mother’s spirit was weakened by my own prayers and blandishments. My father could not be persuaded by any means. Finally, after all possible devices were employed, he was conquered and overwhelmed rather than convinced. It was done over cups of wine; they threatened a horrible, wretched end if he refused to deny his daughter to Christ. \n\nEUPHEMIUS: Oh, the wickedness of these fools! What happened then? \n\nCATHARINA: I was kept at home in secret for three days. Meanwhile, several women from that college, whom they call <term>Conversae</term> <gloss>lay sisters or converts</gloss>, were always present, giving me courage with their exhortations to persist in my holy purpose, and anxiously ensuring that no relative or companion who might seem likely to change my mind could approach me. Meanwhile, my clothing and other things belonging to the feast were being prepared. \n\nEUPHEMIUS: What was your state of mind in the meantime? Did you waver? \n\nCATHARINA: No, but I suffered something so horrendous that I would rather die ten times over than endure it again. \n\nEUPHEMIUS: I beg you, what is that? \n\nCATHARINA: I cannot say. \n\nEUPHEMIUS: Anything you tell me, you tell to your friend. \n\nCATHARINA: Do you promise silence? \n\nEUPHEMIUS: I would have guaranteed that even if you had not asked it of me. As if you did not know me yet.\n\n<summary>Catharina recounts to Euphemius how she was coerced by monks and nuns, and pressured through the manipulation of her parents, into joining a religious order against her father's will.</summary>\n<keywords>Catharina, Euphemius, religious vocation, coercion, monastic life, parental authority</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2399,
+ "outputTokens": 589,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00148325,
+ "ms": 2572,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1945
+}

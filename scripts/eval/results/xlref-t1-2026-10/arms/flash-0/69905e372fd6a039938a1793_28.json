@@ -1,0 +1,44 @@
+{
+ "id": "69905e372fd6a039938a1793_28",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nadversities, and gives the power of prophecy, and the interpretation of all dreams, and makes one understand enigmas.\n\n¶ If you wish to have a good understanding in the senses, and to be unable to become intoxicated: take the stone which is called **Amethyst** <note>original: \"Amatistus\"</note>; and it is of a purple color. The best kind is born in India, and it is effective against drunkenness. It also bestows a good understanding of scholarly matters.\n\n<margin>+</margin>\n¶ If you wish to overcome enemies and escape lawsuits: take the stone which is called **Beryl** <note>original: \"Berillus\"</note>. It is of a pale color, with light as transparent as water. Carry it with you and you will win all lawsuits and put enemies to flight. It will also make an enemy mild. It renders a person's power effective in their manners and character, just as Aaron says. It also gives a good understanding of scholarly matters.\n\n¶ If you wish to divine the future: take the stone which is called **Chelonite** <note>original: \"Chelonytes\"; traditionally known as the tortoise-stone</note>. It is purple and of various colors, and is found in the body of a tortoise. If anyone carries this stone under their tongue, they shall divine and predict the future. However, it does not have this power except when the first light has been kindled <note>likely referring to the rising sun or the new moon</note>, and while the moon is waxing and increasing toward its full size. This is according to the will of Aaron concerning the virtues of stones and herbs.\n<margin>-</margin>\n\n<margin>+</margin>\n¶ If you wish to pacify storms and cross over rivers: take the stone which is called **Coral** <note>original: \"Corallus\"</note>. It is red, and another kind is white. It has been proven by experience that it immediately restrains blood <note>original: \"restringit sanguinem,\" likely referring to staunching a wound or hemorrhage</note>. When carried, it drives away foolishness and grants wisdom. This has been experienced by some in our own time. It is also effective against storms and the dangers of rivers.\n\n<summary>This page outlines the virtues of Amethyst, Beryl, Chelonite, and Coral, focusing on their abilities to prevent intoxication, win legal disputes, predict the future through divination, and provide safety during travel by water.</summary>\n<keywords>Amethyst, Beryl, Chelonite, Coral, Aaron, divination, sobriety, lapidary, protection, medieval science</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3084,
+ "outputTokens": 567,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0032430000000000002,
+ "ms": 3193,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1893
+}

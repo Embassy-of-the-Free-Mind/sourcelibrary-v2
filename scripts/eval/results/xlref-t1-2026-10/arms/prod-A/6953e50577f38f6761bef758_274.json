@@ -1,0 +1,44 @@
+{
+ "id": "6953e50577f38f6761bef758_274",
+ "arm": "prod-A",
+ "model": "gemini-3.1-flash-lite",
+ "text": "# VERULAMII\n\nflee and abhor fire, such as all <term>Sales</term> <gloss>salts</gloss>. For we see that if they are thrown into a fire, the <term>Spiritus Aqueus</term> <gloss>aqueous spirit or moisture</gloss> erupts with a crackling noise before the flame is kindled. This also happens gently in leaves that are somewhat more resistant, as the aqueous part erupts before the oily part catches flame. But this is seen most clearly in <term>Argentum vivum</term> <gloss>quicksilver or mercury</gloss>, which is not inappropriately called <term>Aqua mineralis</term> <gloss>mineral water</gloss>. For this, without combustion, by eruption and simple expansion, almost equals the power of <term>Pulvis Pyrius</term> <gloss>gunpowder</gloss>; it is even said that when mixed with gunpowder, it multiplies its power.\n\nSimilarly, let the <term>Natura Inquisita</term> <gloss>nature being investigated</gloss> be the transitory nature of flame and its momentary extinction. For the nature of flame does not seem to be fixed and stable here among us, but rather is generated as if at every single moment and immediately extinguished. For it is manifest that in flames which continue and endure here, that duration is not of the same flame as an <term>Individuum</term> <gloss>individual entity</gloss>, but happens through a succession of new flame generated in order, and by no means does the flame remain the same in number. This is easily perceived from the fact that once the nourishment or fuel of the flame is removed, the flame immediately perishes. The <term>Bivium</term> <gloss>crossroads or binary choice</gloss> regarding this nature is as follows. This momentary nature either occurs because the cause that first generated it is remitting, as in light, sounds, and so-called violent motions; or it is because flame in its own nature could remain here among us, but is by a con\n\n<summary>Bacon analyzes the physics of combustion, noting that \"aqueous\" substances in materials cause cracking before flames ignite, and that mercury expands with power similar to gunpowder. He further examines the nature of flame, concluding that a persistent flame is not a single, continuous entity but a succession of sparks, and introduces a binary investigation into why flame is fleeting.</summary>\n<keywords>Francis Bacon, flame, mercury, gunpowder, salts, moisture, nature of fire, physics, combustion, momentary nature</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3129,
+ "outputTokens": 542,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0015952499999999999,
+ "ms": 2545,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "tra-",
+   "headJoined": "Flammam",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1690
+}

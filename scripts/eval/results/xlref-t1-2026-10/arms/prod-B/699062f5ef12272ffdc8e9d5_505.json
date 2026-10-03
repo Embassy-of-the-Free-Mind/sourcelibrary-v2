@@ -1,0 +1,44 @@
+{
+ "id": "699062f5ef12272ffdc8e9d5_505",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page: ...the gods command; and we have shown in the things above how they take notice of [God], advising that he be worshiped everywhere. But the unlearned, and indeed nature itself, because they truly did not receive the gifts of the Lord, nor did they have knowledge of the immortal Jupiter, not listening to both the gods and divine men, they indeed rejected all the gods; but they chose not only to harbor no hatred for prohibited demons, but even to revere them. Pretending to worship God, they do not do the only things through which God is adored. For God, indeed, as the Father of all, needs nothing; but it is good for us when we adore him through justice and chastity and other virtues, making our very life a path toward him through the imitation and instruction of him. For instruction purges the mind, [and] imitation deifies the affection by working toward him. He preached well indeed that God is the Father and of the morals by which he must be worshiped. These precepts the prophetic books of the Hebrews are full of, when the life of the holy ones is either praised or blamed. But it was only among the Christians; or they are slandered as much as the demons—whom they suppose to be gods—wish: as if it were difficult for anyone to recall what shameful things, what disgraces were performed in theaters and temples regarding the service of the gods, and to attend to what is read, said, and heard in the churches, or what is offered to God; and from this to understand where there is a building up and where there is a ruin of morals. But who said to him or inspired him, if not a diabolical spirit, such a vain and suitable lie: that Christians revere rather than hate the demons whom the Hebrews were forbidden to worship? But that God whom the wise men of the Hebrews worshipped, and whom we venerate and love—along with the celestial holy angels and the powers of God, whom we consider most blessed as fellow citizens in this our mortal pilgrimage—forbids in the law he gave to his Hebrew people that sacrifice be offered to him, and he decreed it very menacingly, saying: He who sacrifices to gods shall be eradicated. And so that no one might think that it was commanded not to sacrifice to the very worst demons and earthly spirits—whom he [Porphyry] calls mimics or lesser ones—because they also were called gods in the holy scriptures, not of the Hebrews\n\n<column-break/>\n\nbut of the nations: which the seventy interpreters <note>The Septuagint, the Greek translation of the Hebrew Bible.</note> clearly set down in a psalm, saying: For all the gods of the nations are demons. Lest anyone, therefore, think that it was forbidden to these demons indeed, but that it was permitted to sacrifice to the celestial ones, either to all or to some, he soon added: except to the Lord alone. That is, except to the Lord only, lest by chance anyone, because he says to the Lord alone, might believe that he is the only God to whom one thinks one must sacrifice. That this is not to be understood in that way is found most easily in the Greek scriptures. Therefore, the God of the Hebrews—to whom even this philosopher gives such great testimony—gave a law to his own Hebrew people, written in the Hebrew language, not obscure and unknown, but already made famous among all nations, in which law it is written: He who sacrifices to gods shall be eradicated, except to the Lord only. What need is there in this law of his and in his prophets to search out many things about this matter? Indeed, there is no need to search, for they are not obscured or erased, but are clear and frequent to collect and to place in this my disputation, by which it appears clearer than light that he wished the true and supreme God to be sacrificed to by no one at all except to himself. Behold this one thing, briefly—or rather, gravely, menacingly, but truthfully—spoken by that God whom their most learned men preach: let it be heard, feared, fulfilled, lest eradication follow the disobedient. He who sacrifices to gods shall be eradicated, he says, except to the Lord only. Not because he needs anything, but because it is profitable for us that we should be his. For it is sung to him in the sacred letters of the Hebrews: I have said to the Lord, you are my God, because you do not need my goods. But the most excellent and best sacrifice of him is we ourselves. This is his city, the mystery of which we celebrate with our oblations, which are known to the faithful, as we disputed in the preceding books. For the oracles of the Hebrew prophets interpreted that the victims which the Jews offered in the shadow of what was to come were to cease, and that one sacrifice would be offered by the nations from the rising of the sun even to the setting, as we already see being done.\n\n<summary>Augustine refutes Porphyry's claims by citing the Hebrew Law and Psalms to demonstrate that the God of the Hebrews strictly forbids sacrifice to any entity other than the Lord. He clarifies that the prohibition against \"gods of the nations\" targets demons, while defining the Christian sacrifice as the offering of oneself to God.</summary>\n<keywords>Porphyry, Hebrew Law, Sacrifice, Demonology, Septuagint, Idolatry, Christian liturgy, Divine Unity</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3834,
+ "outputTokens": 1147,
+ "thinkingTokens": 0,
+ "cost_usd": 0.002679,
+ "ms": 4688,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4896,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 3696
+}

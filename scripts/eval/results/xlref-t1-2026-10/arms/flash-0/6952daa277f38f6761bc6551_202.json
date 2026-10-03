@@ -1,0 +1,44 @@
+{
+ "id": "6952daa277f38f6761bc6551_202",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: they made another image of the Moon for the increase of the fruits of the earth, and against poisons and the infirmities of children, during the hour of the Moon while she was rising in the first face of Cancer.</meta>\n\nCLXXXVI.\n->OF OCCULT PHILOSOPHY,<-\n\n### On the images of the head and tail of the dragon of the Moon. Cap. XLV.\n\n<note>A woodcut illustration depicting a serpent or dragon coiled into a circular shape resembling the Greek letter Theta (Θ). The creature has the head of a hawk and a pointed tail. Within the circular body, there is a central vertical line crossed by a shorter horizontal line, with small astrological or symbolic marks at the terminals.</note>\n\nThey also used to make an image of the head and tail of the dragon of the Moon <note>the lunar nodes, where the Moon's orbit crosses the ecliptic</note>, specifically the likeness of a serpent between the aerial and fiery circle, with the head of a hawk encircling them, in the fashion of the Greek letter theta. They made it when Jupiter with the head <note>the North Node, or Caput Draconis</note> held the midheaven. They affirm that this image contributes much to the success of petitions. By this image, they wished to signify a good and happy <term>daemon</term> <gloss>spirit or guiding intelligence</gloss>. They wished to represent him through the image of a serpent: for the Egyptians and Phoenicians celebrate this as a divine animal above all other animals, and praise its divine nature because there exists in it a sharper spirit and a greater fire than in other animals. This is shown both by its swift movement, performed without any feet or hands or other instruments, and because it repeatedly renews its age with its cast-off skins and becomes young again. But they made an image of the tail <note>the South Node, or Cauda Draconis</note> in a similar way when the moon was eclipsed in the tail, or badly affected by Saturn or Mars. They made it to induce anxiety and infirmity, and they called it an evil genius. A certain Hebrew had enclosed such an image in a golden and double belt which Blanche, the daughter of the Duke of Bourbon, gave as a gift to her husband Peter, the first of that name, King of the Spains <note>Peter of Castile, known as Peter the Cruel</note>, whether she was aware of it or ignorant. When he was girded with it, it seemed to him that he was cinched by a serpent. After the magical power inserted into the belt was discovered, he repudiated his wife for that reason.\n\n### On the images of the Mansions of the Moon. Cap. XLVI.\n\nThey also made images in the individual mansions of the Moon <note>twenty-eight divisions of the lunar cycle</note>. In the first, for the destruction of someone, they made on an iron ring the image of a black man clothed in a hair-shirt and girded, throwing a small lance with his right hand. They sealed it in black wax and fumigated it with liquid styrax and uttered imprecations. In the second, against the anger of a prince and for his reconciliation, they sealed in white wax and mastic the image of a crowned king, and fumigated it with aloe wood. In the third, they made an image on a silver ring, the measure of which was square, and the figure of which was a woman well-clothed sitting in a chair, with her right hand raised above her head; they sealed and fumigated it with musk, camphor, and aromatic claw <note>ungula aromatica, likely the operculum of certain mollusks used in incense</note>. They asserted that this bestows prosperity of fortune and every good thing. In the fourth, for vengeance and separation, enmity and ill-will, they sealed in red wax the image of a soldier sitting on a horse, holding a serpent in his right hand, and they fumigated it with red myrrh and styrax. In the fifth, for the favor of kings and officials and a good reception, they sealed in silver the head of a man, and fumigated it with sandalwood. In the sixth, to place love between two people, they sealed in white wax two images embracing each other, and fumigated it with aloe wood and amber. In the seventh, to acquire every good thing, they sealed in silver the image of a man well-dressed, with hands toward heaven for\n\n<summary>This page explains the construction of talismans based on the Lunar Nodes and the first seven Mansions of the Moon, detailing their physical forms, materials, and ritual purposes.</summary>\n<keywords>Caput Draconis, Cauda Draconis, Lunar Mansions, talismans, astrological magic, Peter of Castile, serpent symbolism, Renaissance magic</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3386,
+ "outputTokens": 1028,
+ "thinkingTokens": 0,
+ "cost_usd": 0.004777,
+ "ms": 5049,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4543,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 3343
+}

@@ -1,0 +1,34 @@
+{
+ "id": "690986dccf28baa1b4cae0e3_81",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page: [This text describes the narrator's journey through a symbolic landscape under the guidance of Neptune, leading into a description of the properties of water in an alchemical context.]</meta>\n\n<header>ON MERCURY.</header>\n\n<meta>The text begins mid-sentence, following the description of a scenic landscape.</meta>\nset, of most pleasant appearance, and they smelled most sweetly. The hills were decorated in a wonderful way with vines, olives, and cedars. The groves were filled with orange and lemon trees; the public roads were planted on both sides with laurel and pomegranate trees, woven together with singular artifice, providing most grateful shade for travelers. To say it in a few words, whatever exists in the whole world seemed to be there. While walking, Neptune showed me two mines of that island, hidden under a certain rock, of Gold and Steel <note>original: \"Auri & Chalybis\"</note>. Not far from there, I was led to a meadow, in which a special garden was planted with various trees most worthy of being seen. Among many trees, he pointed out to me seven trees marked with names, and among these, I observed two principal ones more eminent than the others. One of them bore fruit like a most bright and shining Sun, and its leaves were like Gold. The other, however, produced fruits whiter than lilies, and its leaves were like fine Silver. These trees were called\n\n\n\n<header>ON MERCURY.</header>\n<sig>D 3</sig>\n\nthings, by Neptune, one the Solar Tree and the other the Lunar. And although in this island everything was at hand, one thing was lacking. Water was not obtained except with great difficulty. There were indeed many who partly tried to bring spring water there through channels, and partly extracted it from various substances, but the attempt and labor were in vain, because in that place it could be obtained by no means. And if it were obtained, it was nevertheless useless and poisonous, unless it came from the rays of the Sun or the Moon, which few were able to accomplish. And whoever had favorable fortune in perfecting this could never draw more than ten parts, for that water was of such a marvelous nature. And believe me, I saw with my own eyes and touched the snowy whiteness of that water, and while I contemplated that water, I was greatly changed. Meanwhile, fatigued by that consideration, Neptune vanished before my eyes, and a great man appeared to me, upon whose forehead the name of Saturn was inscribed. He, having taken a vessel, drew ten parts of water, and immediately from the fruit\n\n<summary>The author describes a paradisiacal garden containing symbolic trees of the Sun and Moon, followed by an allegorical account of the difficulty in obtaining a \"poisonous\" yet \"marvelous\" water that requires solar or lunar influence to be purified.</summary>\n<keywords>alchemy, Neptune, Saturn, Solar Tree, Lunar Tree, philosophical water, transmutation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2545,
+ "outputTokens": 631,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00158275,
+ "ms": 2389,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2437
+}

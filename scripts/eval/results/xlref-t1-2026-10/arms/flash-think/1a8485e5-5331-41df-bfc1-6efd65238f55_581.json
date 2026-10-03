@@ -1,0 +1,44 @@
+{
+ "id": "1a8485e5-5331-41df-bfc1-6efd65238f55_581",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\n...hair, or dung. A black stone is found in the Nile similar to a bean; when they see it, dogs do not bark. You may also carry a dog's tongue placed in your shoe under your big toe, or carry a dried dog's heart with you, according to Sextus <note>Sextus Placitus, a late Roman author of a medical book on animal remedies</note>. According to Pliny, you may carry a hare's hair or dung. Or, you may carry the severed tail of a young weasel in your shoe, or give a frog to the dog in its food; all these things are for evading the barking of dogs. Nigidius <note>Publius Nigidius Figulus, a Roman scholar and contemporary of Cicero</note> says that dogs will flee from the sight of anyone who pulls a tick from a pig and carries it about for a little while. Oppianus <note>Oppian of Apamea, author of a Greek poem on hunting</note> says:\n\n> *But if you carry even a small scrap cut from the skin of a hyena,*\n> *Immediately the puppies and fierce dogs,*\n> *Stricken with sharp terror, will not bark at you hereafter*\n> *As you walk, even if they barked before.*\n\n### That a dog cannot run.\n\nIf you smear its paws with oil, it will be hindered in its running; it happens in this way.\n\n### That a hawk may be courageous.\n\nYou shall encourage the bird against its prey so that it attacks large birds. Moisten the food it uses during the hunting season with wine; or, if it is a goshawk <note>original: \"astur\"</note>, give it a little vinegar. When you want it to fly, give it three morsels of meat soaked in wine, or pour wine into the beak of a pigeon chick and then let the hawk fly. Thus:\n\n### You will make partridges more combative,\n\nIf you give them sprigs of maidenhair fern <note>term: \"adiantum\"</note> in their food, according to Pliny; and\n\n### Cocks become more combative,\n\nBy giving them garlic in their food just before they are to fight; for this reason, in the Old Comedy <note>Ancient Greek theatrical style, notably Aristophanes</note>, they were most wittily called <term>eskorodismenoi</term> <gloss>original: ἐσκοροδισμένοι</gloss>, that is, \"garlic-fed,\" meaning a person who is violent and too prone to a fight.\n\n### Lest a bird fly too high,\n\nPluck the tail feathers which direct the flight upward; thus it will fly in circles below. If you wish\n\n### That a bird cannot fly,\n\nCut the upper and lower tendons of the wing, and it remains without harm; the bird will not fly, and in this way they do not escape from aviaries.\n\n<summary>This page provides folkloric and practical methods for managing animals during hunting, including charms to silence barking dogs, the use of wine or garlic to embolden hawks and fighting cocks, and techniques for grounding birds.</summary>\n<keywords>animal husbandry, hunting charms, falconry, fighting cocks, Pliny, Oppian, veterinary medicine, bird training</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3057,
+ "outputTokens": 716,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0036764999999999996,
+ "ms": 4021,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1921
+}

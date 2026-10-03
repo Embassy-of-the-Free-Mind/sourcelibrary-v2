@@ -1,0 +1,44 @@
+{
+ "id": "694bf8d2343422769f237558_277",
+ "arm": "prod-A",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page: of all things</meta> ...proceeding from the shore, they dance in a circle, and then return to the coasts. M. Varro testifies that he saw them. And there are things more wonderful than these: for on the Attic coast the sea sounds like a lyre. At Megara, a certain rock, when struck, rings like a lute; so great is the power of Music. It soothes the soul itself, elevates the mind, incites warriors to battle, and relieves the labors and weariness of all individual tasks. It calls back the fallen and the desperate, and comforts travelers. The Arabs say that camels carrying burdens are comforted by the singing of their drivers. In a similar way, those carrying heavy loads sing, and are thereby enabled and relieved: for song produces pleasure and facility, mitigates the irascible, gladdens the sad and anxious, pacifies those in discord, and tempers the rage of the phrenetic, while dissipating vain thoughts. Hence it is that Democritus and Theophrastus affirm that certain diseases of the body and soul can be cured or induced in this way. Thus we read that Terpander and Arion of Methymna <note>Original: \"Arionem Methymnæum\".</note>\n\n<summary>This page concludes the discussion on the powers of musical harmony, citing historical and geographical examples of its effect on the physical world, the human mind, and the curing of disease.</summary>\n<keywords>Music, M. Varro, Attic coast, Megara, Arabs, Democritus, Theophrastus, Terpander, Arion of Methymna, healing, soul, harmony</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2853,
+ "outputTokens": 360,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00125325,
+ "ms": 1799,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1482
+}

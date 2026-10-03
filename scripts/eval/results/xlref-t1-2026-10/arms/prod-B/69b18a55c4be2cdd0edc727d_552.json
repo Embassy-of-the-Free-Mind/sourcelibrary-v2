@@ -1,0 +1,44 @@
+{
+ "id": "69b18a55c4be2cdd0edc727d_552",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page: the remainder of the sentence regarding the loss of effort or material</meta>\n\n### PROCESS LXXVII.\n**Tincture of Tartarized Tartar.**\n\n#### APPARATUS.\n**T**o Tartarized Tartar, duly prepared according to Process 75, and dried, then reduced to a fine powder, add in a tall chemical vial the purest Alcohol of wine, enough to rise four inches above it. Then, with the vial stopped only with paper, let them boil together, as gently as possible, in our wooden furnace for the space of a day and a night. The supernatant Alcohol will be of a golden color, with an aromatic odor and a penetrating, warm taste. If this is repeated with fresh Alcohol in the same manner, a white salt will eventually be left at the bottom. The tinctures are thickened by a gentle fire, until a tenth part remains, concentrated at the bottom.\n\n#### USES.\n**I**t serves to demonstrate the part in that Salt which is dissolved by Alcohol. The prepared tincture itself is aromatic, warming, and consolidates ulcers and wounds. The remaining salt, being simpler than before, shows that salts themselves can be whitened once the tincture is drawn out by the aid of Alcohol.\n\n### PROCESS LXXVIII.\n**Dissolution of Regenerated Tartar in Alcohol.**\n\n#### APPARATUS.\n**T**o Regenerated Tartar, previously prepared as neatly as possible, and, as far as can be done, very safely, in a tall, glass, chemical vial, add six times its volume of the purest Alcohol; cook with a gentle fire in our wooden furnace, as prudently as possible. They will combine with each other, and out of these will emerge one evenly composed substance, with the dregs deposited at the bottom. After they have then settled accurately through rest, let the supernatant and pure liquor flow out by a prudent tilting of the vessel. If any saline matter not yet dissolved remains, it can be dissolved by the application of fresh Alcohol with the same caution, and separated from the dregs. Then, indeed, let the prepared liquors be concentrated to half their volume by distilling them over a very gentle fire, and the Tincture of this Salt will be obtained.\n\n#### USES.\n**Y**ou see in this experiment the union into one of alkali, oily acid, the oil of spirits, and vegetables. Hence, the most active principles of plants are freed from inert earth, yet at the same time they are safe enough and not beyond a dangerous acrimony. These, indeed, thus united, seem to constitute even the little Elixir of the Sages, which the masters of the ancient Art recommended for preserving and restoring health. It heals almost all obstructions, penetrates through the vessels, <column-break/> and incites life with a lovely stimulus: it heals by diaphoresis <note>profuse perspiration</note>. In chemical work, it also provides a most effective solvent, by which substances are reduced to their smallest parts, with their seminal virtue unimpaired, so that they may be admitted into the inner chambers of the body to repress and tame any rebellions. Nor is it any less praised for the beauty of the effects it produces on external bodily ailments, wounds, ulcers, and tumors. However, this remedy, though so wholesome, is not to be denied to the poor by being overly ambitious, for it can be prepared immediately by mixing potash <term>Cineres clavellatos</term> <gloss>key ashes/potash</gloss> with fifteen parts of the sharpest Vinegar, filtering, and thickening: thus, without the expense of labor and cost, it can be prepared and used in a suitable manner. Known to the ancients of Rome. Pliny, Book XXIII, in the Preface: \"The ash of vine-shoots sprinkled with vinegar is drunk for ailments of the spleen.\"\n\n### PROCESS LXXIX.\n**Harvey’s Tincture of Salt of Tartar.**\n\n#### APPARATUS.\n**I** take the alkaline salt, very black, which remained in the glass retort after all the volatile matter had been expelled by distillation from Tartar at the highest sand fire, according to (Proc. 55). To this, quickly crushed into powder in a hot iron mortar by a hot pestle and placed in a tall glass vial, I add the best common Spirits of Wine, so that they stand four fingers high above it. I cook this for twenty hours in a tall vial in our wooden furnace. A black, thin liquor will be obtained, with a bitter, aromatic, and lixivial taste. Let this be poured off pure. Thus, it can be kept safe in its vessel for the intended uses under its own title.\n\n#### USES.\n**C**ommon Spirit of Wine, consisting of water, acid, and alcohol united, boiling with the alkali of Tartar, which is still oily, makes a milder and safer lye <term>lixivium</term> <gloss>alkaline solution</gloss> because of the alkali tempered by the acid, oil, and alcohol; from which is born a species of medicine and solvent, by no means ignoble. When cooked or digested in chemistry with vegetables, it produces good results by beautifully dissolving the simples. In surgery, it is a most noble remedy for purifying, detergent, drying, and consolidating humid, purulent, putrid, sanious, and virulent ulcers, as well as those that are cancerous, whether fistulous or sinuous, and those eating away with tunnels; and also for consuming that which grows excessively through luxury, especially if it is mixed with a little oil according to art. It also works beautifully internally for all diseases in which acid, astringent, aqueous, mucous, pituitous, earthy, or coagulated matter abounds; let it be absent\n\n<summary>This page details chemical procedures for extracting tinctures from tartarized, regenerated, and Harvey’s salt of tartar, emphasizing their medical applications in treating ulcers, obstructions, and bodily imbalances.</summary>\n<keywords>Tartar, Tincture, Alcohol, Salt, chemical apparatus, medical application, surgery, Harvey's Tincture, lye, dissolution</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3892,
+ "outputTokens": 1298,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00292,
+ "ms": 6139,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 5875,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "mo-",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 4675
+}

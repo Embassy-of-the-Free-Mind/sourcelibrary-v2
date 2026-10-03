@@ -1,0 +1,34 @@
+{
+ "id": "69904fcd7d19f3f2aac1da09_76",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "# ON OPTICS OR PERSPECTIVE\n\nFor Plato believes that vision is formed according to clarity, specifically through light flowing out from the eyes toward an external air, and light from bodies being carried to meet it. This light, which exists in the intervening air, is easily extended alongside the fire-like faculty of sight, which is capable of being poured forth and turned. Galen agrees with Plato, but Hipparchus claims that rays extended from the eyes reach out to bodies, touching them as if with a certain palpitation, and thus render their perception to the sight. The Epicureans, however, affirm that images of what appears force themselves upon the eyes. Aristotle, on the other hand, believes that images are not bodies themselves, but that the quality comes from visible objects to the sight through an alteration of the air that surrounds us. Porphyry argues that neither rays, nor images, nor anything else is the cause of seeing; rather, the soul itself, knowing itself to be visible and one with all things, recognizes itself in all that exists. Yet geometers and opticians, leaning somewhat toward Hipparchus, propose certain cones formed by the coincidence of rays emitted through the eyes. From this, they conclude that the sight comprehends many visible things at once, but perceives those most clearly where the rays coincide. But Al-Kindi <note>original: Alchindus</note> teaches something entirely different regarding aspects, and indeed it seems to Augustine that the power of the soul effects something in the eye which has not yet been investigated by those studious of wisdom. Therefore, this science contributes much to understanding the variety, distance, magnitude, and motion of celestial bodies, as well as their reflections and refractions; it also serves architecture in measuring buildings. It contributes most, however, to the art of painting and the manufacture of mirrors, to the extent that these arts cannot be perfected without it. For it shows by what reasoning we should not create incorrect or deformed images when accounting for distances and heights.\n\n<summary>This passage outlines various classical and medieval philosophical theories regarding the nature of vision, including the ideas of Plato, Aristotle, and Al-Kindi, before noting the practical applications of optics in architecture and art.</summary>\n<keywords>Optics, Perspective, Plato, Aristotle, Hipparchus, Porphyry, Al-Kindi, Augustine, Vision, Geometry, Painting, Architecture</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2426,
+ "outputTokens": 498,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0013535,
+ "ms": 2282,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2146
+}

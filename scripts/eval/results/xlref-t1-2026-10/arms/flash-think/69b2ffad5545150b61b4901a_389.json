@@ -1,0 +1,44 @@
+{
+ "id": "69b2ffad5545150b61b4901a_389",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: we performed a similar experiment (though over a longer space of time) with expressed oil of sweet almonds, instead of common oil.</meta>\n\nfrom the two closest examples just recited, because in those we suppose that some of the external <term>corpuscula</term> <gloss>little bodies or particles</gloss> are halted within that body, where they contribute to its firmness and enter into its composition (though perhaps only in a small quantity). Here, however, we suppose that these particles do not materially combine to form the body upon which they act, but merely agitate and variously move the particles composing it. They do this perhaps by breaking some, bending and entangling others, and, in a word, changing the texture in such a way that those parts which were previously either moving separately or cohering less tightly are now reduced into a narrower space or a more entangled texture, and by this means are more firmly connected to one another. That the bare arrangement of the parts of a body in relation to each other, without any added external matter, can do much to produce stability, can be seen both in certain examples mentioned before and in willow branches. When these lie loose in a heap, they can easily be separated individually from the rest; but when woven into a basket <note>Latin: quasillum</note>, they cohere so firmly that if one is lifted, all the others are raised with it. To these may be added many obvious, though perhaps unobserved, examples in which the bare\n\n<summary>Boyle explains how the physical arrangement and entanglement of particles can create solid stability without adding new material. He uses the analogy of loose willow branches versus a woven basket to illustrate mechanical cohesion.</summary>\n<keywords>fluidity, particles, texture, mechanical cohesion, willow branches, corpuscular theory, Robert Boyle</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2457,
+ "outputTokens": 382,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0023745,
+ "ms": 2869,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "te-",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1377
+}

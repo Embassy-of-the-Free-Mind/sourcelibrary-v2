@@ -1,0 +1,44 @@
+{
+ "id": "69aea708971abe996d21b4aa_471",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<header>Of Both Fortunes. Book II.</header>\n\nand say to it: I willingly suffer these things for your sake, O queen: you shall restore me to wholeness, or surely you are enough for me in place of everything. Restore me with your kind embrace alone, and thus I shall not feel the losses of fame, nor even of life itself.\n\n*Sorrow.* I am maligned everywhere in the public squares.\n\n*Reason.* Make the best of it. The masses will make you known, virtue will make you illustrious, and a clear conscience will make you secure.\n\n---\n\n### On the shame felt from undeserved praise.\n## DIAL. XXVI.\n\n> Praise sparingly, for when you praise unjustly,\n> If you condemn again, it will be a mark of fickleness.\n\n*Sorrow.* I am accused of having praised an unworthy person.\n\n<note>A large ornamental letter L initiates the response from Reason.</note>\n*Reason.* You are accused of having praised an unworthy person. Truly, that which is evil often arises from a good root. For good and innocent people, such as they themselves are, judge others to be the same. Hence, they are even more prone to praise than is reasonable. And although I admit that praising an unworthy person is a mistake, blaming an innocent person is much worse.\n\n*Sorrow.* I have praised an unworthy person.\n\n*Reason.* If you did it knowingly, you are blameworthy; but if in ignorance, you are excusable. It is a lesser evil to be deceived than to deceive. For to be deceived is a condition external to oneself, but to deceive is a crime belonging to the deceiver.\n\n*Sorrow.* Another's praise turns into my own infamy.\n\n*Reason.* On the contrary, it is your own fault or ignorance. For as praise does not come from others, neither does infamy.\n\n*Sorrow.* I grieve deeply for having praised an unworthy person.\n\n*Reason.* Take care, then, that you do not often grieve for the same thing. Beware of rushing rashly into praising and blaming. For there is a craving for both—and, to speak properly, a disease and an itch of a tongue that is restless and ignorant of quietude. Its bridle and restraint are numbered among the works of highest perfection, as Scripture says:\n\n<summary>Reason counsels Sorrow on the dangers of rash judgment, distinguishing between ignorance and malice in the act of misplaced praise.</summary>\n<keywords>praise, infamy, ignorance, virtue, self-restraint, judgment</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3087,
+ "outputTokens": 546,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0015907500000000001,
+ "ms": 2443,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "Si quis",
+   "headJoined": null,
+   "headRemoved": "plectere",
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1879
+}

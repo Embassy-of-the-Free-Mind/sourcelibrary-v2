@@ -1,0 +1,34 @@
+{
+ "id": "69dbc9491040d1d5e20a1afd_87",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "all provinces and regions are radiant with a single kind of calamity. And so, vexed and with foreign nations despoiled, we have seen Massilia <note>original: Massilia; modern Marseille</note> carried in a triumph, its examples lost to the reach of our empire. A king was led in triumph from that city, without which our commanders have never triumphed over the transalpine wars. Many things beyond this I could recount concerning the wickedness against our allies, if I had seen nothing else of this sort. We are punished by right. For had we not allowed their crimes to go unpunished, license would never have reached the point where it did. From there, the desire for family property passed from a few to many wicked heirs. Nor, in truth, did the seed of civil wars ever arise from a cause more cruel than when men remembered those blood-stained spears <note>referring to the public auctions of confiscated property (hastae) during the proscriptions of Sulla</note> and hoped for them. That spear, when it was brandished with a dictator at hand, did not withdraw from the act of wickedness for thirty-six years. Another man, who had been a scribe in that dictatorship, was city quaestor in this one. From this it can be understood that, with such rewards proposed, civil wars will never be absent. And so, the city stands and remains only in appearance, while we ourselves, already fearing the final extremes of crime, have deeply lost the Republic. And so we have fallen into these shipwrecks. We must return to the point established, that we preferred to be loved than to be dear. Whatever could have rightly happened to the Roman people, what should each individual think? <insert>On the attainment of affection</insert>\nBut to whom it becomes clear that the force of benevolence is great, and that of fear is weak, it follows that we must discuss by what means we might most easily attain what we desire with honor, loyalty, and affection. But these are not equally\n\n<summary>This passage reflects on the moral degradation of the Roman Republic, citing the corruption of provinces and the cyclical violence of civil wars fueled by the greed for confiscated property.</summary>\n<keywords>Cicero, Republic, civil war, corruption, benevolence, Massilia, Sulla, politics</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2338,
+ "outputTokens": 486,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0013135,
+ "ms": 3656,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1664
+}

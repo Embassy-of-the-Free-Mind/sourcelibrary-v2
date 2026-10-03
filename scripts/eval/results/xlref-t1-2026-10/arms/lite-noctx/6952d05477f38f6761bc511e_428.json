@@ -1,0 +1,34 @@
+{
+ "id": "6952d05477f38f6761bc511e_428",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "418 **B A S I L I C A**\n\n<margin>Astral, Venereal, and Spiritual, and into the Scourge, namely the Fifth. These sidereal and firmamental infections are known by the Adept physician and are cured firmamentally: for the Adept medicine is an Art that provides the knowledge to recognize and expel firmamental infections. The Magnet of Man, a magical cure in which there is a celestial impression after contact with a herb; the herb, until it is putrefied, attracts the medicine into the ulcer, and thus heals it.</margin>\n\nClearly, the greatest part of diseases coming from celestial influence and from the astral impression of the firmament of the greater world does not wish to be cured by indiscriminate remedies, as by the arcana of herbs, minerals, or metals. Instead, the cure must be instituted through astronomical influence with those things only that have an analogy to the greater and lesser world, in which there is the true magnetic force of the firmament and the celestial impression of resisting diseases from the firmament of the greater and lesser world, as it appears in Persicaria, greater Comfrey, Dragonwort, and greater Symphytum.\n\nIf a disease or pain is brought on supernaturally through incantation or the magical impression of the ascendants, the attempt to heal using the former three is useless. Instead, according to Paracelsus, one must proceed magically and supernaturally, and the evil must be repelled by the same means through which it was introduced. Otherwise, in the aforementioned simples, there is an influential attractive force, and all things, by divine ordination, cure magically, astronomically, and magnetically, because the medicine is in them and the magnet is in man. For just as the Sun and the stars have the power of attracting moisture from things below, so does man (by his own innate magnetic attractive force, like a magnet of iron drawing in spirit in place of nourishment), and lower things have the same power of attracting from the higher things, as we see in the time of the plague, and these...\n\n<summary>This page discusses the necessity of treating diseases caused by celestial and firmamental influences through remedies that share a magnetic analogy with the human body and the heavens, noting that supernatural afflictions require corresponding magical or sympathetic cures.</summary>\n<keywords>astral influence, firmamental medicine, magnetic theory, Paracelsus, sympathetic magic, celestial impression, medical alchemy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2443,
+ "outputTokens": 509,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00137425,
+ "ms": 2250,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1772
+}

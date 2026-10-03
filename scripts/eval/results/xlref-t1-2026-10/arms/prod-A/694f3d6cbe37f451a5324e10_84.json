@@ -1,0 +1,44 @@
+{
+ "id": "694f3d6cbe37f451a5324e10_84",
+ "arm": "prod-A",
+ "model": "gemini-3.1-flash-lite",
+ "text": "For it is innate to truth to be good, along with life and light, and no avenging power has come to pass beyond this. Truly, all the avenging powers were cast back by a certain sudden force. You have understood, my son, the manner of regeneration itself. By the presence of the number ten, intellectual generation is composed, which rejects the number twelve. And this we have contemplated from generation itself. Whoever, therefore, because of the kindness of generation which is according to God, loses his bodily sense, knows himself to be composed of divine things and, having become unswerving, rejoices in the whole divine power with his entire mind. **TATIUS.** O father, I conceive this not by the intuition of the eyes, but by the act of the mind, which is exercised through intimate powers. I am in heaven, in the earth, in the water, in the air. I am in living creatures, in trees, in the body, before the body, and after the body. But I would have you tell me this further: how are the avenging shadows repelled by the number twelve through the ten powers? What is the method, Trismegistus? **TRIS.** This tabernacle, O son, is constituted from the zodiacal circle, which consists of that number twelve. And the numbers are eleven, plus one that is omniform according to the ideas of nature, for the wandering and circling of man. Therefore, those avenging powers are in a way separated from one another, yet in acting they are in a way joined; as, for example, recklessness is inseparable from wrath. Rightly, therefore, according to correct reason, they are distanced as far as the ten <term>apotelestikoi</term> <gloss>those that bring about effects</gloss>, that is, they are repelled by the number ten. The number ten, O son, is the generator of the soul, while life indeed\n\n<summary>Hermes explains how the number ten and its divine powers act to repel the twelve zodiacal influences and material vices, while Tatius describes his subjective experience of the divine omnipresence.</summary>\n<keywords>regeneration, zodiac, intellectual generation, Tatius, Trismegistus, number ten, number twelve, divine power</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2892,
+ "outputTokens": 479,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0014415,
+ "ms": 2683,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1567
+}

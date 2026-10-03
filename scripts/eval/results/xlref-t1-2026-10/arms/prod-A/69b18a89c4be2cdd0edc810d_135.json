@@ -1,0 +1,44 @@
+{
+ "id": "69b18a89c4be2cdd0edc810d_135",
+ "arm": "prod-A",
+ "model": "gemini-3.1-flash-lite",
+ "text": "to transfer, and so forth; and the *people* is said to be greater than the *multitude*. It must therefore be distinguished in this way: By *People* or *multitude*, whenever we say that it itself wills, hopes, or does something, it is understood that the *state* which commands, wills, and acts through the will of *one* man, or through the consenting wills of *many* men, which cannot happen except in an assembly. However, whenever something is said to be done by a multitude of men, whether great or small, without the will of that man or assembly; that act is said to be from the subject people, that is, from many individual citizens at once, and does not proceed from one will, but from the many wills of many men; who, as they are now citizens and subjects, are not the *state*.\n\n<margin>*The beginning of the state is the right of the greater number consenting.*</margin>\n\nII. It must then be considered that each one from the multitude (so that a beginning of establishing a state may be made) ought to agree with the others, so that in those matters which are proposed by anyone in the assembly, that which the greater part of them has willed shall be held as the will of all. For in any other way, there will be no will at all for a multitude of men whose characters and desires differ so variably among themselves. But if anyone refuses to agree, the others nevertheless establish the state among themselves without him<unclear>n</unclear>\n\n<summary>This passage clarifies the distinction between a mere multitude and a \"people\" or \"state,\" emphasizing that a collective entity only functions as a singular political body when individual wills are subordinated to a single sovereign or a majority consensus in an assembly.</summary>\n<keywords>People, multitude, state, consensus, majority, collective will, civil authority</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2537,
+ "outputTokens": 399,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00123275,
+ "ms": 2009,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1450
+}

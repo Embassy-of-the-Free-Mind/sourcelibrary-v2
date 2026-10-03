@@ -1,0 +1,44 @@
+{
+ "id": "6991e1b0339ebc850994ab9e_551",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "someone is delighted in the act of pretense itself; of whom it is said in 3 *Ethics*, ch. 7, near the middle, that he seems vain rather than evil; for the same reasoning applies to lying and simulation. It happens, however, sometimes that someone simulates a perfection of holiness that is not necessary for salvation; and such simulation is not always a mortal sin, nor is it always accompanied by mortal sin.\nAnd by this, the response to the objections is clear.\n\n---\n\n->QUESTION CXII<-\n\nON BOASTING. — Divided into two articles.\n\nNext, we must consider boasting and irony, which are parts of lying, according to the Philosopher, in 4 *Ethics*, ch. 7.\nFirst, regarding boasting, two things are asked: 1st, to which virtue it is opposed; 2nd, whether it is a mortal sin.\n\n->ARTICLE FIRST<-\n\nWhether boasting is opposed to the virtue of truth.\n\nTo the first, the procedure is as follows. 1. It seems that boasting is not opposed to the virtue of truth. For lying is opposed to truth. But sometimes boasting can exist even without a lie, as when someone displays their own excellence; for it is said in Esther 1:3: *Ahasuerus made a great feast... to show the riches of the glory of his kingdom, and the greatness, and excellence of his power.* Therefore, boasting is not opposed to the virtue of truth.\n2. Furthermore, boasting is placed by Gregory in 23 *Morals*, ch. 4, from the beginning, as one of the four species of pride, namely when someone boasts of having what they do not have; hence it is said in Jeremiah 48:29: *We have heard the pride of Moab (he is exceedingly proud), his loftiness, and his arrogance, and his pride, and the haughtiness of his heart. I know, saith the Lord, his boasting, and that his virtue is not according to it.* And in 31 *Morals*, ch. 7, near the middle, Gregory says that boasting arises from vain glory. But pride and vain glory are opposed to the virtue of humility. Therefore, boasting is not opposed to truth, but to humility.\n\n<margin>ART. I. — Boasting, properly so-called, is the vice by which someone outwardly elevates themselves above that which is in them. Although, regarding the usage of the word, boasting is also said of the ostentation of truth above the opinion or knowledge of others, it is not spoken of as a vice of its own genus (for thus it is only properly taken) except regarding the opposite of truth, by way of excess; since only then is it the name of a vice of its own genus. For the ostentation of truth above the knowledge of others is not evil by its own genus, but is sometimes good according to necessity or utility, and sometimes evil, on account of an evil end (Cajetan).</margin>\n\n(1) Vulgate: ... The riches of the glory of his kingdom.\n\n<column-break/>\n\n3. Furthermore, boasting seems to be caused by riches; hence it is said in Wisdom 5:8: *What has pride profited us, or what has the boasting of riches brought us?* But the superfluity of riches seems to pertain to the sin of avarice, which is opposed to justice or liberality. Therefore, boasting is not opposed to truth.\n— But on the contrary, there is what the Philosopher says in both 2 and 4 *Ethics*, ch. 7, that boasting is opposed to truth.\n\nI ANSWER that boasting seems properly to import that a man elevates himself by his words. For those things that a man wishes to boast of at length, he raises on high. A person, however, properly elevates himself when he says something about himself that is above himself. This indeed happens in two ways:—sometimes someone speaks of himself, not indeed above that which is in him, but above that which men think of him; which the Apostle, avoiding, says in 2 Corinthians 12:6: *I spare, lest any man should think of me above that which he sees in me, or hears anything from me.* — In another way, someone elevates himself through words, speaking of himself above that which is in him according to the truth of the matter. And because a person is to be judged more according to what is in him than according to what is in the opinion of others, it follows that it is more properly called boasting when someone elevates himself above what is in him than when he elevates himself above what is in the opinion of others; although in both ways it can be called boasting. And therefore **boasting properly so-called is opposed to truth by way of excess.**\n\nTo the first, therefore, it must be said that that argument proceeds concerning boasting as it exceeds opinion.\nTo the second, it must be said that the sin of boasting can be considered in two ways:—in one way according to the species of the act, and thus it is opposed to truth, as was said in the body, and in question 110, art. 2; —in another way according to its cause, from which, although not always, it nevertheless happens more frequently, and thus it indeed proceeds from pride as from an interior motivating and impelling cause; for from the fact that someone is interiorly elevated above himself through arrogance, it follows for the most part that he outwardly boasts of greater things concerning himself, although sometimes someone proceeds to boasting not from arrogance, but from a certain vanity, and delights in this, because such is he by habit. And therefore arrogance, by which someone is elevated above himself, is a species of pride; yet it is not the same as boasting, but is more frequently its cause. And for this reason, Gregory places boasting among the species of pride. Moreover, the boaster generally tends toward attaining glory through his boasting; and therefore, according to Gregory, it arises from vain glory by reason of the end.\n\n(1) In Nicolaus [the commentator], the word \"both\" is missing.\n\n<summary>This page explores the definition of boasting, arguing that it is properly classified as a vice opposed to the virtue of truth, rather than merely an expression of pride or vanity, by way of excess in speech.</summary>\n<keywords>Boasting, Jactantia, Truth, Pride, Arrogance, Vain Glory, Moral Philosophy, Thomas Aquinas</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3835,
+ "outputTokens": 1369,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0030122499999999997,
+ "ms": 4679,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 6483,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 5283
+}

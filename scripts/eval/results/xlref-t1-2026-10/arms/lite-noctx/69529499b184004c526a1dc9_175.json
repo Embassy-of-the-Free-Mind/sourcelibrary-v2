@@ -1,0 +1,34 @@
+{
+ "id": "69529499b184004c526a1dc9_175",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "OF THE ANCIENTS. 159\nare found, which nonetheless stuff the skin, and imitate a most beautiful and magnificent sacrificial victim; by which are rightly noted external, and empty rites and barren ceremonies, with which men burden and inflate divine worship, things composed for show rather than serving piety. Nor is it enough for men to offer such mockeries to God, unless they also impose and impute them to Him, as if He Himself had chosen and prescribed them. Certainly the Prophet, speaking in the person of God, expostulates regarding this opinion: Is this truly that fast, which I have chosen, that a man should afflict his soul for a day, and bow down his head like a reed? After the state of Religion, the parable turns its G 4\n\n<summary>This passage critiques the performance of empty, outward religious rituals that lack genuine piety, specifically addressing the tendency of people to attribute these man-made ceremonial burdens to divine command.</summary>\n<keywords>Religious ritual, piety, hypocrisy, divine worship, prophecy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2019,
+ "outputTokens": 217,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00083025,
+ "ms": 1351,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 666
+}

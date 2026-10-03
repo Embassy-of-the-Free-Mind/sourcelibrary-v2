@@ -1,0 +1,44 @@
+{
+ "id": "69526191ab34727b1f046982_108",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page: ...the time of exposure requires a measured fire and the gradual increase of that heat, with caution, until it is fixed in the lime, so that it does not easily return into a body, that a greater fire may be applied to it for the perfection of its lime. Similarly, let him not happen to err regarding <term>Jupiter</term> <gloss>tin</gloss>, because of the difficulty of its reduction, such that if he puts its lime into reduction, it happens that it does not reduce, but he finds it in its former disposition or reduced to glass, and he judges its reduction impossible. We say indeed that if he does not apply a great fire in the reduction of <term>Jupiter</term>, it will not reduce. If, however, he applies a great one, it does not necessarily happen that he will reduce it, but it is possible to reduce it into vitrification <note>turning into glass</note>. And that is because <term>Jupiter</term> <gloss>tin</gloss> has a fugitive substance of <term>argentum vivum</term> <gloss>quicksilver/mercury</gloss> enclosed in the depth of its nature. If it endures a long stay in the fire, it will flee, and it will leave the body deprived of humidity, so that it is found to be more suitable for vitrification than for the fusion of a metallic body. For everything deprived of its proper humidity gives no fusion except a vitrifying one. And therefore it is necessarily left that, with the most rapid force of fire, he must hasten to reduce it quickly. Otherwise, it is not reduced. Let him therefore practice that, and he will know.</meta>\n\nThe <gloss>second</gloss> method of calcination of these two bodies, <term>Saturn</term> <gloss>lead</gloss> and <term>Jupiter</term> <gloss>tin</gloss>, which is accomplished by the acuteness of salt, is that a quantity of salt is thrown over their surface, quantity after quantity, very often during their fusion, and mixed by much agitation with an iron rod, over the fire, until they are turned into ash through the mixture of salt. And afterward, let their lime be perfected by the same method of perfection, with its considerations. But in this there is also a difference in the calcination of these two bodies. Because <term>plumbum</term> <gloss>lead</gloss> is converted into powder more easily from the first labors of calcination than <term>Jupiter</term> <gloss>tin</gloss>, yet its lime is not perfected more easily than that of <term>Jupiter</term>. The cause of this depends on the fact that <term>Saturn</term> <gloss>lead</gloss> has a more fixed humidity than <term>Jupiter</term> <gloss>tin</gloss>.\n\n<summary>This page continues instructions on the calcination of tin and lead, emphasizing the danger of vitrification (turning to glass) if the fire is mismanaged or the inherent mercury is lost. It also describes an alternative method of calcination using salt as an agent to reduce the metals to ash.</summary>\n<keywords>calcination, Jupiter, tin, Saturn, lead, vitrification, mercury, salt, metallurgy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2970,
+ "outputTokens": 700,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0017924999999999998,
+ "ms": 2924,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2479
+}

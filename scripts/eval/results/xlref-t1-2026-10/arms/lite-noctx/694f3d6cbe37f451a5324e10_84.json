@@ -1,0 +1,34 @@
+{
+ "id": "694f3d6cbe37f451a5324e10_84",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "For truth is innately good, joined together with life and light, and the avenger has not gone further. Indeed, all the avenging powers were cast back with a certain sudden force. You have understood, my son, the manner of regeneration itself: it is composed of an intellectual generation with the number ten <term>denarius</term> <gloss>the number ten</gloss> present, which rejects the number twelve <term>duodenarius</term> <gloss>the number twelve</gloss>. We have contemplated this from the generation itself. Therefore, whoever, because of the kindness of that generation which is according to God, loses bodily sense, recognizes himself to be composed of divine things and, having become unswerving, rejoices in the divine power with his whole mind.\n\n**TATIUS.** O father, I conceive this not by the sight of the eyes, but by the act of the mind, which is exercised through inner forces. I am in heaven, on earth, in water, in air. I am in animals, in trees, in the body, before the body, and after the body. But I wish for you to tell me besides this: how are the avenging shadows repelled by the ten powers from the number twelve? What is the method, Trismegistus?\n\n**TRIS.** This tabernacle, O son, is constituted from the zodiacal circle, which consists of that number twelve. And the numbers are eleven, with one being multiform according to the ideas of nature, for the wandering and circuit of man. Therefore, those avenging powers are in a way separated from one another, yet in their action they are in a way joined, just as, for example, rashness is inseparable from anger. Rightly, therefore, according to right reason, there is an interval as far as they are repelled by the ten <term>apotellata</term> <gloss>influential powers/forces</gloss>, that is, by the number ten. The number ten, O son, is the generator of the soul, but life…\n\n<summary>This passage details the intellectual process of spiritual regeneration, explaining how the ten divine powers (the denarius) overcome the twelve negative influences associated with the zodiac and bodily existence.</summary>\n<keywords>Hermes Trismegistus, Tatius, Regeneration, Denarius, Duodenarius, Zodiac, Soul, Intellectual generation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2327,
+ "outputTokens": 505,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0013392500000000002,
+ "ms": 2361,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1567
+}

@@ -1,0 +1,44 @@
+{
+ "id": "69b2ff0ea1a4246ddb45adbb_62",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "to exercise authority over beggars, but rather over those who are wealthy and prosperous. This is certainly what Fabricius, a man of noble and sublime spirit, meant when he replied that he would rather rule over the rich than be rich himself. And truly, for one person to overflow with pleasure and luxury while others everywhere are groaning and lamenting, this is not to be a ruler of a kingdom, but a warden of a prison. Finally, just as a physician is most unskilled who does not know how to cure a disease except by another disease, so too he who does not know how to correct the lives of citizens in any other way than by taking away the comforts of life, should admit that he does not know how to rule free men. Instead, let him change either his own sloth or his pride; for it is usually by these vices that a people comes either to despise him or to hate him. Let him live harmlessly on his own means, adjust his expenses to his income, restrain wickedness, and by the right instruction of his subjects, let him prevent crimes rather than allow them to increase only to punish them later. Let him not rashly revive laws that have been cancelled by custom, especially those that have long been obsolete and were never missed. Nor should he ever, under the name of a penalty, take anything that a judge would not allow a private citizen to receive as being unjust and deceitful. \n\nAt this point, I might propose to them the law of the Macarensians <margin>The remarkable law of the Macarensians</margin>, a people who are not very far distant from Utopia. Their king, on the very first day he enters upon his rule, is bound by an oath, after great sacrifices have been offered, that he will never have at one time more than a thousand pounds of gold in his treasury, or as much silver as would equal that weight in gold. They say this law was established by an excellent king who cared more for the welfare of his country than \n\n<summary>Raphael Hythloday argues that a king's dignity relies on the prosperity of his subjects rather than their poverty. He cites the laws of the Macarensians as an example of a monarchy that limits the ruler's wealth to ensure economic stability.</summary>\n<keywords>Fabricius, Macarensians, kingship, political philosophy, treasury laws, poverty, justice</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2923,
+ "outputTokens": 493,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0029404999999999995,
+ "ms": 3137,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "catchword",
+   "joined": null,
+   "catchword": "diuitiæ",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1714
+}

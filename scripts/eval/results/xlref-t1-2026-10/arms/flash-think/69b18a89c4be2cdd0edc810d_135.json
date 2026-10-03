@@ -1,0 +1,44 @@
+{
+ "id": "69b18a89c4be2cdd0edc810d_135",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>to transfer, and so forth; and in this sense it is called a *people* rather than a *multitude*. Therefore, a distinction must be made as follows. Whenever we say a *people* or a *multitude* wills, hopes, or does something, we understand it as the *city* <note>original: civitas; here meaning the organized political state or commonwealth</note> which commands, wills, and acts through the will of *one* man, or through the concurring wills of *many* men, which cannot happen except within an assembly. However, whenever something is said to be done by a multitude of men, whether large or small, without the will of that man or assembly, it is said to have been done by the subject people; that is, by many individual citizens together. This does not proceed from a single will, but from the several wills of several men. These, being citizens and subjects, are not the *city*.\n\n<margin>\n*The beginning of a city is the right of the majority agreeing.*\n</margin>\n\nII. Next, it must be considered that every individual from the multitude (in order for the beginning of establishing a city to occur) must agree with the others that, in those matters proposed by anyone in the assembly, that which the majority <note>original: major pars; the greater part</note> wills shall be held as the will of all. For otherwise, there will be no will at all for a multitude of men whose dispositions and desires differ so diversely among themselves. But if anyone refuses to agree, the others will nonetheless establish the city among themselves <unclear>con</unclear> <note>the text continues on the next page to complete the word constituent, meaning they will establish or constitute it</note>\n\n<summary>Hobbes distinguishes between the state as a single legal actor and a disorganized collection of individuals, arguing that a commonwealth begins when a multitude agrees to abide by the will of the majority.</summary>\n<keywords>sovereignty, commonwealth, multitude, people, majority rule, social contract, political will</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2537,
+ "outputTokens": 449,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0026155,
+ "ms": 3131,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1450
+}

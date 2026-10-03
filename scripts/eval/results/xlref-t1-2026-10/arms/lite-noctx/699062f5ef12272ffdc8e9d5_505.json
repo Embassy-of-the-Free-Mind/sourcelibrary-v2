@@ -1,0 +1,34 @@
+{
+ "id": "699062f5ef12272ffdc8e9d5_505",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "XIX\n\n<note>This text continues from the previous discussion on pagan philosophy and religious practices, contrasting them with the divine law revealed to the Hebrew people.</note>\n\n...God, and to worship Him everywhere. Truly, the unlearned, and nature itself, did not advance in obtaining gifts from the Lord, nor in having the knowledge of immortal Jove. They did not listen to both the gods and the divine men. They indeed rejected all the gods, but they chose not only not to hate the demons who were forbidden, but even to revere them. Yet, while pretending to worship God, they do not perform those things alone through which God is adored. For God, as the Father of all, needs nothing. However, it is good for us when we adore Him through justice, chastity, and other virtues, making our very lives a path toward Him by imitation and instruction from Him. For instruction purges the mind, while imitation deifies the affection by working towards Him. He indeed preached well about God the Father, and said with what habits He should be worshipped. The prophetic books of the Hebrews are full of these precepts, whether the lives of the saints are praised or blamed. But this was only among the Christians, or they are slandered as much as the demons—whom they suppose to be gods—desire. As if it were difficult for anyone to recall what shameful and disgraceful things were done in the theaters and temples in the service of the gods, and to pay attention to what is read, said, and heard in the churches, or what is offered to God, and from this to understand where there is the building up of morals and where there is ruin. But who said this to him or inspired it, if not a diabolical spirit, such a vain and fitting lie, that Christians should revere rather than hate the demons who were forbidden to be worshipped by the Hebrews? But that God whom the wise men of the Hebrews worshipped, and whom we, in this our mortal pilgrimage, venerate and love—along with the celestial holy angels and the virtues of God, whom we consider most blessed as fellow citizens—forbids sacrificing in His law which He gave to His people, the Hebrews. And He threatened very menacingly, saying: \"He who sacrifices to gods shall be rooted out.\" And lest anyone should think that it was commanded not to sacrifice to the worst demons and earthly spirits—whom he calls mimes or lesser ones—because they themselves were called gods in the Holy Scriptures, not of the Hebrews\n\n<column-break/>\n\nbut of the nations, the seventy interpreters clearly set this forth in the psalm, saying: \"For all the gods of the nations are demons.\" Lest, therefore, anyone should think that it was forbidden to sacrifice to these demons, but permitted to sacrifice to celestial beings, whether to all or to some, He immediately added: \"unless to the Lord alone,\" that is, unless to the Lord only. Lest perhaps someone, because He said \"to the Lord alone,\" might believe that God is the only one to whom one thinks one must sacrifice. That this is not to be understood in this way is very easily found in the Greek scriptures. Therefore, the God of the Hebrews, to whom even this philosopher gives such great testimony, gave the law to His Hebrew people, written in the Hebrew language, not obscure and unknown, but already made famous to all nations. In which law it is written: \"He who sacrifices to gods shall be rooted out, unless to the Lord alone.\" What need is there in this His law and His prophets to seek out many things about this matter? Indeed, do not seek them out. For they are not hidden or sparse, but open and frequent; one may gather them and place them in this my disputation, by which it appears clearer than light that the true and supreme God wished that sacrifice be offered to no one at all except to Himself alone. Behold, this one thing, briefly—or rather, weightily—threatened, but truthfully spoken by that God whom their own most learned men preach: let it be heard, feared, and fulfilled, lest destruction overtake the disobedient. \"He who sacrifices to gods,\" He says, \"shall be rooted out, unless to the Lord alone.\" Not that He is in need of anything, but because it is profitable for us that we should be His. For to Him it is sung in the sacred letters of the Hebrews: \"I said to the Lord, You are my God, for You do not need my good things.\" But the most excellent and best sacrifice of this One is we ourselves. This is His city, the mystery of which we celebrate with our offerings, which are known to the faithful, as we have argued in the preceding books. For the prophets of the Hebrews interpreted the oracles that the victims which the Jews offered in the shadow of things to come would cease, and that the nations from the rising of the sun to its setting would offer one sacrifice, as we now see being done.\n\n<summary>Augustine clarifies that the Hebrew law explicitly forbids sacrifice to any being other than the one true God, refuting pagan interpretations that equate Hebrew worship with the veneration of demons.</summary>\n<keywords>De Civitate Dei, sacrifice, Hebrew law, one true God, demons, moral instruction, St. Augustine</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3266,
+ "outputTokens": 1101,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0024679999999999997,
+ "ms": 5156,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4896,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 3696
+}

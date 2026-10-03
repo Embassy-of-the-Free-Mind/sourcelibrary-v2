@@ -1,0 +1,44 @@
+{
+ "id": "694f3d6cbe37f451a5324e10_84",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: Envy has departed from us;</meta>\nfor the Good is innate to the Truth, together with Life and Light, and no further avenger has approached. Indeed, all the avengers have been cast out by a sudden impulse. You have understood, my son, the manner of **regeration** <note>original: \"regenerationis\"</note> itself. When the **tenfold number** <note>original: \"denario numero\"</note> is present, the intellectual generation is completed, which rejects the **twelvefold number** <note>original: \"duodenariū numerū\"</note>. We have observed this from the process of generation itself. Therefore, whoever loses their bodily sense on account of the kindness of this generation according to God, recognizes themselves as being composed of divine elements. Having become unwavering, they rejoice in divine power with their whole mind.\n\n**TATIUS.** O father, I conceive this not by the sight of the eyes, but by the action of the mind, which is exercised through inner strengths. I am in heaven; in the earth; in the water; in the air. I am in animals; in trees; in the body; before the body; and after the body. But I wish you would tell me this further: how are the avenging darknesses, twelve in number, repelled by the ten powers? By what method, Trismegistus?\n\n**TRISMEGISTUS.** This tabernacle, O son, is constituted from the **Zodiac circle** <note>original: \"ex zodiaco circulo\"</note>, which consists of that twelvefold number. The numbers are eleven <note>original: \"undecim\"; referring to the divisions or powers within the zodiacal structure</note>, but one is all-forming according to the **Ideas of nature** <note>original: \"ideas naturæ\"</note>, for the wandering and circuit of man. Thus, those avengers are in a certain way separated from one another, yet in their action they are in a certain way joined together; for example, recklessness is inseparable from wrath. Rightly, therefore, according to correct reason, they are kept at a distance insofar as they are repelled by the ten **effects** <note>original: \"apotellatib9\", likely a contraction of apotelesmatibus, meaning astrological effects or completions</note>, that is, by the tenfold number. The tenfold number, O son, is the parent of the soul. Life indeed\n\n<summary>Hermes explains the numerological transition from the twelve zodiacal vices to the ten divine powers, while Tatius describes his ecstatic experience of omnipresence.</summary>\n<keywords>numerology, decad, duodecad, Zodiac, rebirth, Tatius, Hermes Trismegistus, omnipresence, intellectual generation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2892,
+ "outputTokens": 604,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0032580000000000005,
+ "ms": 3533,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1567
+}

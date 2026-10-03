@@ -1,0 +1,44 @@
+{
+ "id": "1a8485e5-5331-41df-bfc1-6efd65238f55_581",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nfur, or their dung, or if you hold the <term>peristereon</term> <gloss>verbena</gloss> herb. A black stone like a bean is found in the Nile, and when it is seen, dogs do not bark. You may also carry a dog's tongue placed under your big toe in your shoe, or if you carry a dried dog's heart with you, according to <term>Sextus</term> <gloss>Sextus Placitus, a 4th-century medical writer</gloss>. According to Pliny, you may carry a hare's fur or dung. Or you may carry the severed tail of a young weasel in your footgear, or give the dog a toad in a morsel of food; all these things serve to avoid the barking of dogs. Nigidius <note>Publius Nigidius Figulus, a Roman scholar and contemporary of Cicero</note> says that dogs will flee from the sight of a person all day long if that person removes a tick from a pig and carries it about for a little while. Oppianus <note>A 2nd-century Greco-Roman poet known for works on hunting and fishing</note> writes:\n\n> If you carry but a small piece cut from the skin of a hyena,\n> Both puppies and fierce dogs will instantly be struck,\n> With a bitter terror, and they shall not bark at you thereafter,\n> As you walk along, even if they had barked before.\n\n### How a dog may be unable to run.\n\nIf you smear its wings <note>The author likely refers to the \"armpits\" or the leg-joints of the animal</note> with oil, it will be hindered in its running; it happens in this way.\n\n### That a hawk may be courageous.\n\nYou shall encourage the bird against the prey so that it attacks large birds. Moisten the meat which it uses during hunting time with wine; or if it is a goshawk <note>original: \"astur\"</note>, give it a little vinegar. When it is about to fly, give it three morsels of meat soaked in wine, or pour wine into the beak of a young pigeon and then let it fly. In this way:\n\n### You shall make partridges more pugnacious,\n\nIf you give them sprigs of <term>adiantum</term> <gloss>maidenhair fern</gloss> in their food, according to Pliny. And:\n\n### Roosters become more pugnacious,\n\nBy giving them garlic in their food just before they are to fight. From this comes the very witty term in the Old Comedy, <term>eskordismenoi</term> <gloss>garlicked-up</gloss>, meaning someone who is vehement and excessively inclined toward a fight.\n\n### Lest a bird fly high,\n\nPluck the tail feathers which direct its course upward, and thus it will fly in a circle below. If you wish:\n\n### That a bird cannot fly at all,\n\nCut the upper and lower tendons of the wing; it remains without further harm, but the bird will not fly. In this way, they do not escape from aviaries.\n\n<summary>This page provides folkloric and practical methods for hunters to silence barking dogs, manage animal aggression through diet—such as using wine for hawks and garlic for roosters—and physically prevent birds from escaping or flying high.</summary>\n<keywords>animal husbandry, hunting lore, dogs, falconry, partridges, garlic, wine, Oppianus, Pliny the Elder</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3057,
+ "outputTokens": 765,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0038234999999999996,
+ "ms": 4756,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1921
+}

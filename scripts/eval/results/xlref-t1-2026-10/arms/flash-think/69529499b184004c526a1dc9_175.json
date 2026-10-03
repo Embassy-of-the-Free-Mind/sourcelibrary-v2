@@ -1,0 +1,44 @@
+{
+ "id": "69529499b184004c526a1dc9_175",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nfound, which nevertheless stuff the skin and imitate a most beautiful and magnificent victim; by these things, the external and empty rites and shallow ceremonies are correctly noted, with which men burden and inflate divine worship—matters composed for ostentation rather than contributing to piety. Nor is it enough for men to offer mockeries of this kind to God, unless they also impose and impute them to Him, as if He Himself had chosen and prescribed them. Certainly, the Prophet, speaking in the person of God, expostulates against this opinion: Is this, then, that fast which I have chosen, that a man should afflict his soul for a day, and bow down his head like a bulrush? <note>A reference to Isaiah 58:5, where the prophet critiques performative fasting and hollow religious observance.</note> After the state of Religion, the parable turns itself...\n\n<summary>Bacon interprets the \"bones\" of Prometheus’s sacrifice as the empty rituals of hypocrites who prioritize outward show over sincere piety and falsely claim divine sanction for their ceremonies.</summary>\n<keywords>hypocrisy, religious ritual, Prometheus, sacrifice, Isaiah, external worship, piety</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2519,
+ "outputTokens": 256,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0020275,
+ "ms": 2010,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": "repeVETERUM",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 666
+}

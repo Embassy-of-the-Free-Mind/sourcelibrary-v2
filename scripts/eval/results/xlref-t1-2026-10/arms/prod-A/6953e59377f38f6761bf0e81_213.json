@@ -1,0 +1,44 @@
+{
+ "id": "6953e59377f38f6761bf0e81_213",
+ "arm": "prod-A",
+ "model": "gemini-3.1-flash-lite",
+ "text": "also, in this way, a flat circular iron piece can be artificially magnetized at opposite points on its perimeter. However, magnetic experiments appear less clearly because the forces are weaker in round iron tools. The variety of declinations is shown by iron needles <note>original: \"obelis ferreis\"</note> at various latitudes of the <term>terrella</term> <gloss>a spherical lodestone representing the Earth</gloss>.\n\n<note>A circular diagram represents a <term>terrella</term>. An outer circle is labeled \"Circle of Virtue\" </note><note>original: \"Orbis Virtutis\"</note>. Inside, a shaded sphere representing the <term>terrella</term> has a horizontal \"Axis\" drawn through it. Along the circumference of this inner sphere, several small iron needles are depicted at various latitudes. At the equatorial points, the needles lie flat against the surface. As they move toward the top and bottom poles, they incline at increasingly steep angles, until they stand perfectly vertical at the magnetic poles.\n\nThe declination of magnetic iron over the <term>terrella</term> is shown by various equal iron wires, the length of a barleycorn, arranged over the meridian. The wires at the equator are directed by the power of the stone toward the poles, and they lie down upon the body in the plane of its horizon. The closer they are placed to the poles, the more they are raised by their convertible nature. At the poles themselves, they tend perpendicularly toward the very center. But iron needles do not stand upright correctly unless they are on a vigorous stone, if they are longer than they should be.\n\n### C H A P. III.\n\n### A demonstrative instrument, indicating by the power of the stone the degrees of declination from the horizon of each latitude.\n\n<meta>continues from previous page: [in this] northern latitude. The large circle features a horizontal equator (line A-B) and a vertical axis (points C at the top and D at the bottom). The smaller sphere, representing a model magnet, is situated on the upper-left quadrant of the large circle's circumference. Radiating lines from the center of the large circle intersect with the smaller sphere to illustrate the specific angles of magnetic dip relative to the global horizon. The interior of the large circle is shaded with parallel horizontal lines to indicate the magnetic mass.</meta>\n\n<summary>This page explains how magnetic inclination (dip) changes relative to a spherical magnet, demonstrating that iron needles align with the magnetic field at various latitudes until they stand vertically at the poles.</summary>\n<keywords>magnetic declination, magnetic dip, terrella, meridian, iron wires, poles, horizon, magnetic force</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2803,
+ "outputTokens": 561,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00154225,
+ "ms": 2171,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1753
+}

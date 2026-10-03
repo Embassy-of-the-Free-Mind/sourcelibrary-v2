@@ -1,0 +1,44 @@
+{
+ "id": "c87fadfa-1543-44b9-a138-573c144246e6_328",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>and white <term>sulfur of nature</term> is hardened after a small amount of heat, as pertains to silver; provided also that it is formed with the shape of silver, from which gold can likewise be made just as from other metals, unless it is deprived of its heat or its natural operation is not taken away from it. But if the power of a greater natural heat should reach that <term>quicksilver</term> <note>original: \"argentum vivum\"</note> before it is formed to its end—namely, into the form of silver—so that it is reduced into the pure and red <term>sulfur of nature</term>, then gold is made from it sooner than silver, and it remains in that state forever, as the end toward which nature tends by working.\n\nThis quicksilver, which we have just mentioned, is the mother of all metals because of its coldness and humidity. If it is made pure and separated from all superfluity, then no further thickness can be mixed with it, so that it might be reduced back into some imperfect metal again. For Nature does not work backward, nor is it a matter that looks toward some impure form, such as imperfect metals are. But <term>sulfur</term> is the father of all metals because of its heat and dryness. According to this difference, let it be observed that quicksilver is described in the following chapter.\n\n## CHAPTER II.\n\nThere is, therefore, in all metals a true <term>Mercury</term> and a right <term>sulfur</term>, equally in the imperfect as in the perfect metals. They have merely been made contaminated and impure in the imperfect metals, and in those which alone are deprived of perfect maturation. For these same reasons, they can be reduced to gold and silver: that is, so that the impurity with which they had been defiled may be separated from the golden or silver nature that is in them, and the form of gold or silver may be introduced into them. For they were torn away from nature for the reason that they were removed and dug out from the natural passages, mines, and veins of the earth. Therefore, they can no longer have any operation in themselves, as if they still lay hidden under the earth; nevertheless, as much as is in them, they desire to be perfected.\n\nTo this natural property also belongs the Spirit of Truth, who [guides]\n\n<summary>This page defines mercury as the mother and sulfur as the father of all metals, explaining that base metals remain imperfect only due to impurities or premature extraction from the earth. It asserts that all metals possess an internal drive toward the perfection of gold or silver if their impurities are removed.</summary>\n<keywords>quicksilver, mercury, sulfur, metallic maturation, mother of metals, father of metals, impurity, perfection, alchemy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3271,
+ "outputTokens": 601,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0034384999999999997,
+ "ms": 3368,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "omnem",
+   "headJoined": "albumque",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2191
+}

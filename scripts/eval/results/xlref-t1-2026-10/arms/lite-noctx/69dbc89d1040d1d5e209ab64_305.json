@@ -1,0 +1,34 @@
+{
+ "id": "69dbc89d1040d1d5e209ab64_305",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "What, therefore, and in what manner does God foresee these uncertain future events? For if He judges that future events are avoidable, and they are such that it is not possible for them to occur, He is mistaken; and to think this is not merely wicked, but even to suggest it. But if He discerns that these things will be future in such a way that He knows they can either happen or not happen, what kind of foreknowledge is this that comprehends nothing certain, nothing stable? Or how does this differ from that <note>prophetic utterance</note> of the Tiresias of old, who said: \"Whatever I shall say, either it will be or it will not\"? Why, then, would divine prudence differ from human opinion, if it judges uncertain things as men do, whose outcome is uncertain? But if, in regard to that most certain fountain of all things, nothing is uncertain \n\n<summary>Boethius challenges the nature of divine foreknowledge, questioning how God can foresee future events without rendering them either fixed or uncertain.</summary>\n<keywords>Boethius, divine foreknowledge, contingency, Tiresias, prudence, free will</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2050,
+ "outputTokens": 242,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0008755,
+ "ms": 1550,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 856
+}

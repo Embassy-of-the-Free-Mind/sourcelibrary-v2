@@ -1,0 +1,44 @@
+{
+ "id": "69bd9d416120d54bd037457f_263",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\n...is affected by them only moderately. Christ teaches that we must deserve well of everyone, that even enemies are to be loved, loans should be given freely, vengeance should be taken on no one, and we should give to everyone who asks. In contrast, the philosophers say we should only give to those who repay a benefit with a benefit; otherwise, it is permitted to be angry, to hate, to contend, to wage war, and to practice usury. Furthermore, they have given us the <term>Pelagian</term> <gloss>followers of Pelagius who emphasized human agency over divine grace</gloss> heretics with their doctrine of free will, the dictates of right reason, and the light of nature. Moreover, all moral philosophy, as <term>Lactantius</term> <gloss>an early Christian author and advisor to Constantine I</gloss> testifies, is false and empty, neither instructing one in the duties of justice nor confirming the duty and reason of man. Finally, all of it is repugnant to the divine law and to Christ himself, so that its glory is owed to none other than Satan.\n\n## ON POLITICS\n### Chapter 55\n\nTo this philosophy also belongs Politics, which is the art of administering the <term>Republic</term> <gloss>the state or commonwealth</gloss>. Of this, truly, there are three types: namely, Monarchy, which is the rule of one; Aristocracy, which is the rule of the few, but those who are noble,\n\n<column-break/>\n\nwealthy, or wise; and Democracy, which is the rule of the people. Related to all of these are tyrannies, oligarchies, and anarchies. But all these things must be considered according to what happens to each individual. For even if the philosophers wish to define which form is the best, they follow diverse opinions. Some say that just as there is one God in heaven, one head among the limbs, and one leader among the bees, so Monarchy is the form of proper government. Others contend that Aristocracy or Democracy is the form of government that is equitable and by which liberty is preserved. This is argued above all others by <term>Plato</term>, <term>Aristotle</term>, <term>Apuleius</term>, and others, not only from our own people but even from the barbarians <note>original: \"barbaris\" - foreigners or non-Greeks/Romans</note>. Those who have written about these matters speak only of those things which pertain to external administration, peace, the tranquility of public affairs, and deliberation; they do not speak of matters of the soul, nor of salvation, nor of eternal aids. Indeed, they look solely at those things which are carried out in this world. This was also done by the lawmakers, such as <term>Lycurgus</term> <gloss>the legendary lawgiver of Sparta</gloss>, <term>Solon</term> <gloss>the Athenian lawmaker</gloss>, and others, who established laws almost entirely...\n\n<summary>Agrippa contrasts Christian morality with classical philosophy before defining the three primary forms of political government. He argues that secular politics and human laws focus only on worldly stability rather than spiritual salvation.</summary>\n<keywords>moral philosophy, Christianity versus Paganism, Pelagianism, Politics, Monarchy, Aristocracy, Democracy, Solon, Lycurgus</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2931,
+ "outputTokens": 725,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0036404999999999996,
+ "ms": 3926,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": "criter",
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2219
+}
