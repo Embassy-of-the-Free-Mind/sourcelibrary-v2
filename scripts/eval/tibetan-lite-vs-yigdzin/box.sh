@@ -5,13 +5,17 @@
 # worker yig_leaf_worker.py, partition mode, batch 128, pinned BDRC/tibetan-ocr 50506eb6 on vLLM 0.29.0). Only the
 # todo and the box count differ; the worker, setup and read flags are copied unchanged.
 #
-#   BOX=<k> ZONE=<zone> box.sh create|push|run|status|stop|delete
-# State: /root/yig527/boxes/<k>/{server-id,zone,driver.log}. Box name sl-yig527-<k>, owner 4523.
+#   BOX=<k> ZONE=<zone> [TYPE=L4-4-24G] box.sh create|push|run|status|stop|delete
+# State: /root/yig527/boxes/<k>/{server-id,zone,type,driver.log}. Box name sl-yig527-<k>, owner 4523.
+# Multi-GPU types (L4-2/L4-4; the L4-1 quota is 2 per zone and #5600 held the rest on 10-03): the shard is split into one
+# todo per GPU, and one worker runs per GPU (CUDA_VISIBLE_DEVICES) in /root/tib2/g<i>/ -- same worker, same flags.
 set -eu
 K=${BOX:?BOX=<shard index>}
 D=/root/yig527; S=$D/boxes/$K; mkdir -p "$S"
 [ -s "$S/zone" ] || echo "${ZONE:?ZONE required at create}" > "$S/zone"
 ZONE=$(cat "$S/zone")
+[ -s "$S/type" ] || echo "${TYPE:-L4-1-24G}" > "$S/type"
+TYPE=$(cat "$S/type"); GPUS=$(echo "$TYPE" | cut -d- -f2)
 NAME=sl-yig527-$K
 LEASE_H=${LEASE_H:-4}
 case $ZONE in fr-par-1) IMAGE=d459b881-5396-40ff-9152-afbe50aa53fd ;; pl-waw-2) IMAGE=2b1e002a-f3c1-40e2-8da4-18caf1dd05a9 ;;
@@ -31,7 +35,7 @@ case ${1:-} in
 create)
   [ -s "$S/server-id" ] && { echo "server exists: $(sid)"; exit 1; }
   until=$(date -u -d "+${LEASE_H} hours" +%FT%TZ)
-  r=$(curl -s -X POST "${H[@]}" $API/servers -d "{\"name\":\"$NAME\",\"commercial_type\":\"L4-1-24G\",\"image\":\"$IMAGE\",\"project\":\"$PROJECT\",\"dynamic_ip_required\":true,\"volumes\":{\"0\":{\"size\":100000000000,\"volume_type\":\"sbs_volume\"}},\"tags\":[\"lease-until=$until\",\"owner=4523\"]}")
+  r=$(curl -s -X POST "${H[@]}" $API/servers -d "{\"name\":\"$NAME\",\"commercial_type\":\"$TYPE\",\"image\":\"$IMAGE\",\"project\":\"$PROJECT\",\"dynamic_ip_required\":true,\"volumes\":{\"0\":{\"size\":100000000000,\"volume_type\":\"sbs_volume\"}},\"tags\":[\"lease-until=$until\",\"owner=4523\"]}")
   echo "$r" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d["server"]["id"])' > "$S/server-id" || { echo "create failed: $r"; rm -f "$S/server-id"; exit 1; }
   log "created $NAME $(sid) in $ZONE lease-until=$until"
   printf '#cloud-config\nssh_authorized_keys:\n  - %s\n' "$(cat /root/.ssh/id_ed25519.pub)" > "$S/user-data"
@@ -47,8 +51,9 @@ push)
   $SSH $B 'mkdir -p /root/tib2 /root/yig'
   rsync -a -e "$SSH" $D/box/yig_leaf_worker.py $D/box/leafsplit.py $REPO/scripts/gpu/idle-poweroff.sh $B:/root/tib2/
   rsync -a -e "$SSH" $D/box/setup.sh $B:/root/yig/setup.sh
-  rsync -a -e "$SSH" $D/shards/todo-$K.jsonl $B:/root/tib2/todo-main.jsonl
   printf 'SCW_SECRET_KEY=%s\n' "$SCALEWAY_SECRET_KEY" | $SSH $B 'umask 077; cat > /etc/gpu-idle.env'
+  if [ "$GPUS" = 1 ]; then
+  rsync -a -e "$SSH" $D/shards/todo-$K.jsonl $B:/root/tib2/todo-main.jsonl
   # run.sh = /root/tib-step2/box/run.sh (same flags); run-wrap.sh = step 2's (hold for the Hetzner final pull)
   $SSH $B "cat > /root/tib2/run.sh" <<'RUN'
 #!/bin/bash
@@ -64,7 +69,33 @@ RUN
 [ -f /root/yig/SETUP-OK ] && bash /root/tib2/run.sh
 for i in $(seq 1 50); do [ -f /root/tib2/PULLED ] && break; sleep 30; done
 WRAP
-  $SSH $B 'wc -l < /root/tib2/todo-main.jsonl; ls -la /etc/gpu-idle.env; nvidia-smi --query-gpu=name,memory.total --format=csv,noheader' | tee -a "$S/driver.log" ;;
+  $SSH $B 'wc -l < /root/tib2/todo-main.jsonl; ls -la /etc/gpu-idle.env; nvidia-smi --query-gpu=name,memory.total --format=csv,noheader' | tee -a "$S/driver.log"
+  else
+  python3 - "$D/shards/todo-$K.jsonl" "$S" "$GPUS" <<'PY'
+import sys
+src, d, g = sys.argv[1], sys.argv[2], int(sys.argv[3]); rows = open(src).read().splitlines()
+outs = [open(f"{d}/todo-g{i}.jsonl", "w") for i in range(g)]
+for j in range(0, len(rows), 500):
+    outs[(j // 500) % g].write("\n".join(rows[j:j + 500]) + "\n")
+PY
+  for i in $(seq 0 $((GPUS - 1))); do $SSH $B "mkdir -p /root/tib2/g$i"; rsync -a -e "$SSH" $S/todo-g$i.jsonl $B:/root/tib2/g$i/todo-main.jsonl; done
+  $SSH $B "cat > /root/tib2/run-g.sh" <<'RUN'
+#!/bin/bash
+# one worker per GPU: same worker and flags as /root/tib-step2/box/run.sh, in /root/tib2/g<i>
+G=$1; cd /root/tib2/g$G
+export CUDA_VISIBLE_DEVICES=$G VLLM_USE_FLASHINFER_SAMPLER=0 OCR_VLLM_IMAGE_TOKEN_POSITIONS=sequential
+/root/venv/bin/python /root/tib2/yig_leaf_worker.py --todo todo-main.jsonl --out /root/tib2/g$G/run --mode partition \
+  --batch 128 --stop-file /root/tib2/STOP >> /root/tib2/g$G/run.log 2>&1
+echo "exit=$? $(date -u +%FT%TZ)" > /root/tib2/g$G/run.exit
+RUN
+  $SSH $B "cat > /root/tib2/run-wrap.sh" <<WRAP
+#!/bin/bash
+[ -f /root/yig/SETUP-OK ] || bash /root/yig/setup.sh > /root/yig/setup.log 2>&1 || { for i in \$(seq 0 $((GPUS - 1))); do echo "exit=setup-failed" > /root/tib2/g\$i/run.exit; done; }
+if [ -f /root/yig/SETUP-OK ]; then for i in \$(seq 0 $((GPUS - 1))); do bash /root/tib2/run-g.sh \$i & sleep 20; done; wait; fi
+for i in \$(seq 1 50); do [ -f /root/tib2/PULLED ] && break; sleep 30; done
+WRAP
+  $SSH $B 'wc -l /root/tib2/g*/todo-main.jsonl; ls -la /etc/gpu-idle.env; nvidia-smi --query-gpu=name,memory.total --format=csv,noheader' | tee -a "$S/driver.log"
+  fi ;;
 run)
   $SSH root@$(ip) "nohup bash /root/tib2/idle-poweroff.sh run -- bash /root/tib2/run-wrap.sh > /root/tib2/idle.log 2>&1 < /dev/null & echo launched" | tee -a "$S/driver.log" ;;
 status)
