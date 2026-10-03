@@ -67,14 +67,19 @@ export async function bookRows(db, bookId) {
     { $project: {
       _id: 1, p: '$page_number', type: '$page_type', pv: '$ocr.prompt_version', has: { $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] },
       prior: '$printed_page',
-      pn: { $regexFind: { input: { $ifNull: ['$ocr.data', ''] }, regex: '<page-num>[\\s\\S]*?</page-num>', options: 'i' } },
+      pn: { $regexFind: { input: { $ifNull: ['$ocr.data', ''] }, regex: '<page-num>[^<]{0,80}</page-num>', options: 'i' } },
       head: { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, 300] },
       // Tagged-vintage OCR anywhere in the text: its first line is never a running head.
       tags: { $regexMatch: { input: { $ifNull: ['$ocr.data', ''] }, regex: '<(page-type|language|header)\\b', options: 'i' } },
     } },
   ], { maxTimeMS: 300000 }).toArray();
+  // Two docs at one page_number (a duplicate insert) make that scan position ambiguous: both
+  // are left out of the fit and never written, so no label lands on the wrong doc.
+  const seen = new Map();
+  for (const r of rows) seen.set(r.p, (seen.get(r.p) || 0) + 1);
   return rows.filter((r) => r.p > 0).sort((a, b) => a.p - b.p)
-    .map((r) => ({ _id: r._id, p: r.p, type: r.type, pv: r.pv, has: r.has, prior: r.prior, ocr: r.pn ? r.pn.match : r.tags ? '' : r.head }));
+    .map((r) => ({ _id: r._id, p: r.p, type: r.type, pv: r.pv, has: r.has, prior: r.prior, dup: seen.get(r.p) > 1,
+      ocr: r.pn ? r.pn.match : r.tags ? '' : r.head }));
 }
 
 const ours = (prior) => typeof prior?.fitter === 'string' && prior.fitter.startsWith(FITTER_NAME);
@@ -84,6 +89,7 @@ export function planBook(rows, fit, { run, at }) {
   const ops = [];
   let foreign = 0;
   for (const r of rows) {
+    if (r.dup) continue;
     const l = fit.labels.get(r.p);
     if (r.prior != null && !ours(r.prior)) { if (l) foreign++; continue; }
     if (l) {
@@ -110,7 +116,7 @@ export function bookLine(book, rows, fit) {
   const tagged = rows.filter((r) => /<page-num>/i.test(r.ocr || '')).length;
   return {
     book: book.id, visible: book.visible === true, pages: rows.length, ocr: ocr.length, pv: dominant,
-    tagged, judged: Object.values(fit.kinds).some((k) => k.judged), kinds: fit.kinds,
+    tagged, dup_page_number: rows.filter((r) => r.dup).length, judged: Object.values(fit.kinds).some((k) => k.judged), kinds: fit.kinds,
     labelled: fit.labels.size, ...by, skipped: fit.skipped,
     // A label at every 50th labelled scan, for spot checks and the positive control.
     sample: [...fit.labels].filter((_, i) => i % 50 === 25).slice(0, 4).map(([p, l]) => [p, l.label, l.method]),
@@ -169,36 +175,43 @@ async function main() {
     if (LIMIT) ids = ids.slice(0, LIMIT);
     console.log(`${SWEEP} — ${APPLY ? 'APPLY' : 'DRY RUN'} — ${ids.length} books to walk (${done.size} already in ${FILE})`);
 
-    const tot = { books: 0, fit: 0, labelled: 0, set: 0, unset: 0, written: 0, raced: 0, foreign: 0 };
+    const tot = { errors: 0, books: 0, fit: 0, labelled: 0, set: 0, unset: 0, written: 0, raced: 0, foreign: 0 };
     const started = Date.now();
     let next = 0;
     const worker = async () => {
       while (next < ids.length) {
         const id = ids[next++];
-        const book = await db.collection('books').findOne({ id }, { projection: { _id: 0, id: 1, visible: 1 } });
-        const rows = await bookRows(db, id);
-        const fit = fitPrintedPages(rows, { head: true });
-        const line = bookLine(book, rows, fit);
-        const { ops, foreign } = planBook(rows, fit, { run, at: new Date() });
-        const sets = ops.filter((o) => o.updateOne.update.$set).length;
-        line.plan = { set: sets, unset: ops.length - sets, foreign };
-        if (APPLY && ops.length) {
-          // Log before writing: a crash between the two leaves a row naming writes that may not
-          // have landed, never writes nobody recorded.
-          await recordSweepAction(db, { sweep: SWEEP, book_id: id, action: 'printed-page-fitted', detail: {
-            issue: 4291, run, labelled: line.labelled, read_tag: line.read_tag, read_head: line.read_head,
-            interpolated: line.interpolated, skipped: line.skipped, set: sets, unset: ops.length - sets, kinds: fit.kinds,
-          } });
-          const res = await db.collection('pages').bulkWrite(ops, { ordered: false });
-          line.written = res.modifiedCount;
-          line.raced = ops.length - res.matchedCount;
-          tot.written += res.modifiedCount; tot.raced += line.raced;
+        try { await one(id); } catch (e) {
+          // Not appended to books.jsonl, so a rerun retries it.
+          tot.errors++;
+          fs.appendFileSync(path.join(OUT, 'errors.jsonl'), JSON.stringify({ book: id, error: String(e.message).slice(0, 300) }) + '\n');
         }
-        fs.appendFileSync(FILE, JSON.stringify(line) + '\n');
-        tot.books++; if (line.judged) tot.fit++; tot.labelled += line.labelled; tot.set += sets; tot.unset += ops.length - sets; tot.foreign += foreign;
-        if (tot.books % 500 === 0) {
-          console.log(`  ${tot.books}/${ids.length} books (${(tot.books / ((Date.now() - started) / 1000)).toFixed(1)}/s) · fit ${tot.fit} · labelled ${tot.labelled}${APPLY ? ` · written ${tot.written} · raced ${tot.raced}` : ` · would set ${tot.set}`}`);
-        }
+      }
+    };
+    const one = async (id) => {
+      const book = await db.collection('books').findOne({ id }, { projection: { _id: 0, id: 1, visible: 1 } });
+      const rows = await bookRows(db, id);
+      const fit = fitPrintedPages(rows.filter((r) => !r.dup), { head: true });
+      const line = bookLine(book, rows, fit);
+      const { ops, foreign } = planBook(rows, fit, { run, at: new Date() });
+      const sets = ops.filter((o) => o.updateOne.update.$set).length;
+      line.plan = { set: sets, unset: ops.length - sets, foreign };
+      if (APPLY && ops.length) {
+        // Log before writing: a crash between the two leaves a row naming writes that may not
+        // have landed, never writes nobody recorded.
+        await recordSweepAction(db, { sweep: SWEEP, book_id: id, action: 'printed-page-fitted', detail: {
+          issue: 4291, run, labelled: line.labelled, read_tag: line.read_tag, read_head: line.read_head,
+          interpolated: line.interpolated, skipped: line.skipped, set: sets, unset: ops.length - sets, kinds: fit.kinds,
+        } });
+        const res = await db.collection('pages').bulkWrite(ops, { ordered: false });
+        line.written = res.modifiedCount;
+        line.raced = ops.length - res.matchedCount;
+        tot.written += res.modifiedCount; tot.raced += line.raced;
+      }
+      fs.appendFileSync(FILE, JSON.stringify(line) + '\n');
+      tot.books++; if (line.judged) tot.fit++; tot.labelled += line.labelled; tot.set += sets; tot.unset += ops.length - sets; tot.foreign += foreign;
+      if (tot.books % 500 === 0) {
+        console.log(`  ${tot.books}/${ids.length} books (${(tot.books / ((Date.now() - started) / 1000)).toFixed(1)}/s) · fit ${tot.fit} · labelled ${tot.labelled}${APPLY ? ` · written ${tot.written} · raced ${tot.raced}` : ` · would set ${tot.set}`}`);
       }
     };
     await Promise.all(Array.from({ length: Number(arg('concurrency') || 4) }, worker));
