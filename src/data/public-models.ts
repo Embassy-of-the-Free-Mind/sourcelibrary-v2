@@ -102,8 +102,8 @@ export const MODELS: PublicModel[] = [
     maker: 'Buddhist Digital Resource Center', access: 'open model', status: 'in use',
     books: 'Tibetan books.',
     why: 'Its text matched the Derge e-text with 0.88 identity, against 0.41 for Gemini; Flash-Lite failed on about a third of Tibetan pages.',
-    weakness: 'It reads Tibetan only, and unusual page layouts need our own handling before it can find the lines.',
-    evidence: [issue(4523, 'test, #4523')],
+    weakness: 'It reads Tibetan only. Given a page in another script, it still writes fluent Tibetan, so we check that a book is written in Tibetan before it reads it. Unusual page layouts need our own handling before it can find the lines.',
+    evidence: [issue(4523, 'test, #4523'), issue(5737, 'routing by script, #5737')],
     match: { lane: 'ocr', models: [/^bdrc-/], sources: ['bdrc'] },
   },
   {
