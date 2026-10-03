@@ -467,7 +467,10 @@ export type Improvement = {
   lowerBetter: boolean;
   inUse: boolean;
   status: string;
-  href: string;
+  /** what was measured on what, against what, by whom, when: the row's provenance in one line */
+  basis: string;
+  /** the write-up the numbers are copied from (a file pinned to a commit, or the issue comment that reports them) */
+  source: string;
 };
 
 export function ImprovementChart({ rows, n }: { rows: Improvement[]; n: number }) {
@@ -476,7 +479,7 @@ export function ImprovementChart({ rows, n }: { rows: Improvement[]; n: number }
     <Figure
       n={n}
       title="What each measured change did"
-      caption="Each row is one change we tested against a fixed reference on the same pages, before and after. The grey dot is the old method, the coloured dot the new one, on a scale of 0 to 100 (a percentage, or a count per 100 pages). Solid rows are in use; faded rows were tested and are waiting on a decision or a later step."
+      caption="Each row is one change tested on the same pages against the same reference, old method and new. The grey dot is the old method, the coloured dot the new one, on a scale of 0 to 100 (a percentage, or a count per 100 pages). Solid rows are in use; faded rows were tested and not adopted. Under each row: the sample, the reference, who judged it and when, and a link to the write-up the numbers are copied from. These are measured samples, not a census of the corpus."
     >
       <div className="font-body text-xs text-stone-600 mb-4 flex flex-wrap gap-y-1">
         <Swatch style={{ backgroundColor: BEFORE }} label="before" />
@@ -493,8 +496,10 @@ export function ImprovementChart({ rows, n }: { rows: Improvement[]; n: number }
                 <div className="text-stone-600 mt-1 leading-snug">{r.measure} ({r.lowerBetter ? 'lower is better' : 'higher is better'})</div>
                 <div className="text-xs mt-1">
                   <span className={r.inUse ? 'text-teal-800 font-semibold' : 'text-stone-500'}>{r.status}</span>
-                  {' · '}
-                  <a href={r.href} className="text-amber-800 underline underline-offset-2">evidence</a>
+                </div>
+                <div className="text-[11px] text-stone-500 mt-1 leading-snug">
+                  {r.basis}.{' '}
+                  <a href={r.source} className="text-amber-800 underline underline-offset-2">Source</a>
                 </div>
               </div>
               <div className="relative h-10 self-center" role="img" aria-label={`${r.measure}: ${r.before} before, ${r.after} after`}>
