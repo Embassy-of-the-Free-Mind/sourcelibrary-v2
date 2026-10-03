@@ -46,9 +46,9 @@ import { usePairedEdition, PairedBadgeRow, PairedTranscriptionProse, PairedTrans
 import {
   CapsLabel, AiChip, CorpusChip, WitnessCaption, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
   resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote, BAR_CONTROL, barControlStyle, useDialogFocus,
-  SURFACE, themeAttr, bookByline, TranscriptProvenanceChip,
+  SURFACE, themeAttr, bookByline, TranscriptProvenanceChip, MachineDraftChip,
 } from './ReaderV2Bits';
-import { pageTextCorpus, translationCorpus, transcriptProvenance, transcriptProvenanceLabel } from '@/lib/text-provenance';
+import { pageTextCorpus, translationCorpus, transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation } from '@/lib/text-provenance';
 import type { CdliWitness } from '@/lib/types/book';
 import { translationVerdict, type TranslationStateSource } from '@/lib/translation-completeness';
 
@@ -1534,9 +1534,10 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
           editions (#4350) branch on every row: there is no scan behind them,
           and an ETCSL translation is the corpus editors' scholarly work — the
           default wording was false in both directions. */}
-      {(page.ocr?.model || page.translation?.model) && (() => {
+      {(page.ocr?.model || page.translation?.model || transcriptProvenance(page)) && (() => {
         const ocrCorpus = pageTextCorpus(page);
         const trCorpus = translationCorpus(page);
+        const prov = transcriptProvenance(page);
         const witnessCount = (book.cdli_witnesses || []).length;
         return (
         <>
@@ -1548,12 +1549,21 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
                 {ocrCorpus ? t.corpusNoScan(witnessCount) : t.scannedFrom(page.page_number ?? undefined)}
               </dd>
             </div>
-            {page.ocr?.model && (
+            {(page.ocr?.model || prov) && (
               <div className="flex gap-3 py-1.5 border-t font-sans text-[12.5px]" style={{ borderColor: 'var(--border-light)' }}>
                 <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{t.fieldTranscript}</dt>
                 <dd style={{ color: 'var(--text-secondary)' }}>
                   {/* Same helper as the pane-header chip (#5186): one source of truth. */}
-                  {(() => { const prov = transcriptProvenance(page); return prov ? transcriptProvenanceLabel(prov, t, 'full') : t.transcribedBy(page.ocr!.model); })()}
+                  {prov ? transcriptProvenanceLabel(prov, t, 'full') : t.transcribedBy(page.ocr!.model)}
+                  {/* An open e-text's licence is the reader's to check (#5571). */}
+                  {prov?.kind === 'text_source' && (prov.source.licenseUrl || prov.source.url) && (
+                    <>
+                      {' · '}
+                      <a href={(prov.source.licenseUrl || prov.source.url)!} target="_blank" rel="noreferrer" className="underline" style={{ color: 'var(--accent-rust)' }}>
+                        {prov.source.licenseUrl ? t.licenceLink : t.sourceLink}
+                      </a>
+                    </>
+                  )}
                 </dd>
               </div>
             )}
@@ -1562,6 +1572,9 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
                 <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{t.fieldEnglish}</dt>
                 <dd style={{ color: 'var(--text-secondary)' }}>
                   {trCorpus ? t.corpusTranslation(trCorpus.name) : t.translatedBy(page.translation.model)}
+                  {isUnreviewedMachineTranslation(page) && (
+                    <span className="block mt-0.5" style={{ color: 'var(--accent-gold-dark)' }}>{t.machineDraftNotice}</span>
+                  )}
                 </dd>
               </div>
             )}
@@ -3807,6 +3820,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 {/* A corpus translation is the corpus editors' work, not AI's —
                     say so where the reader is looking (#4350). */}
                 {translationCorpusInfo && !paired && !showingSpanish && <CorpusChip corpus={translationCorpusInfo} />}
+                {!paired && !showingSpanish && <MachineDraftChip page={displayPage} />}
                 {editing && <CapsLabel style={{ color: 'var(--accent-rust)' }}>Editing</CapsLabel>}
               </PaneHeader>
               {traceActive && <TraceStatusLine status={traceStatus} showHint={!tracedOnce} />}
@@ -4153,6 +4167,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                     editing={editing}
                   />
                   {translationCorpusInfo && !paired && !showingSpanish && <CorpusChip corpus={translationCorpusInfo} />}
+                  {!paired && !showingSpanish && <MachineDraftChip page={displayPage} />}
                 </div>
                 <div className="flex items-center gap-1">
                   {traceShown && (
