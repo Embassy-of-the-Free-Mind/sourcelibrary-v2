@@ -67,12 +67,13 @@ function Colour({ value, onChange }: { value: string; onChange: (v: string) => v
   );
 }
 
-export function Inspector({ layer, materials, patch, onCrop, onCropInPlace, onFillBoard }: {
+export function Inspector({ layer, materials, patch, onCrop, onCropInPlace, onErase, onFillBoard }: {
   layer: Layer;
   materials: Materials;
   patch: Patch;
   onCrop: () => void;
   onCropInPlace: () => void;
+  onErase: () => void;
   onFillBoard: () => void;
 }) {
   const live = (k: string) => (v: number) => patch({ [k]: v } as Partial<Layer>, false);
@@ -101,6 +102,7 @@ export function Inspector({ layer, materials, patch, onCrop, onCropInPlace, onFi
       <div className="flex flex-col gap-3">
         <div className="flex flex-wrap gap-2">
           <button className="cm-btn" onClick={onCropInPlace}>Crop on the cover</button>
+          <button className="cm-btn" onClick={onErase}>Erase parts{layer.erase?.length ? ` (${layer.erase.length})` : ''}</button>
           <button className="cm-btn" onClick={onCrop}>Choose from page {layer.page ?? ''}</button>
           <button className="cm-btn" onClick={onFillBoard}>Fill the board</button>
         </div>

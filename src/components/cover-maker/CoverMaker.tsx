@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowDown, ArrowLeft, ArrowUp, Check, Copy, Download, Eye, EyeOff, FileDown, FileUp, Lock, Plus, Redo2, Save, Trash2, Undo2, Unlock } from 'lucide-react';
 import { loadImage, surfaceStats } from './analyze';
 import { assetToLayer, baseAssets, letteringAssets, replaceImage, type Asset } from './assets';
-import { Board } from './Board';
+import { Board, type EraseTool } from './Board';
 import { CoverCanvas } from './CoverCanvas';
 import { CropDialog } from './CropDialog';
 import { ElementsPanel } from './ElementsPanel';
@@ -89,6 +89,10 @@ export default function CoverMaker({ bookId, openDesign }: { bookId: string; ope
   const [tab, setTab] = useState<Tab>('start');
   const [cropFor, setCropFor] = useState<string | null>(null);
   const [cropMode, setCropMode] = useState(false);
+  const [eraseTool, setEraseTool] = useState<EraseTool | null>(null);
+  const [lastTool, setLastTool] = useState<EraseTool>({ shape: 'brush', mode: 'erase', size: 40 });
+  const startErasing = (on: boolean) => { setEraseTool(on ? lastTool : null); if (on) setCropMode(false); };
+  const setTool = (t: Partial<EraseTool>) => setEraseTool(cur => { const next = { ...(cur || lastTool), ...t }; setLastTool(next); return next; });
   const [pagePick, setPagePick] = useState<Leaf | null>(null);
   const [fontsReady, setFontsReady] = useState(false);
   const [exporting, setExporting] = useState(false);
@@ -456,8 +460,9 @@ export default function CoverMaker({ bookId, openDesign }: { bookId: string; ope
       if (cropFor || pagePick || t.closest('input, textarea, select, [contenteditable]')) return;
       const mod = e.metaKey || e.ctrlKey;
       if (mod && e.key.toLowerCase() === 'z') { e.preventDefault(); if (e.shiftKey) redo(); else undo(); return; }
-      if (e.key === 'Escape') { if (cropMode) setCropMode(false); else setSelected(null); return; }
-      if (e.key === 'Enter' && cropMode) { setCropMode(false); return; }
+      if (e.key === 'Escape') { if (eraseTool) setEraseTool(null); else if (cropMode) setCropMode(false); else setSelected(null); return; }
+      if (e.key === 'Enter' && (cropMode || eraseTool)) { setCropMode(false); setEraseTool(null); return; }
+      if (eraseTool && (e.key === '[' || e.key === ']')) { setTool({ size: Math.max(4, Math.min(300, eraseTool.size * (e.key === ']' ? 1.25 : 0.8))) }); return; }
       if (!sel) return;
       if (e.key === 'Delete' || e.key === 'Backspace') { e.preventDefault(); removeLayer(sel.id); return; }
       const step = e.shiftKey ? 20 : 2;
@@ -469,7 +474,8 @@ export default function CoverMaker({ bookId, openDesign }: { bookId: string; ope
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [sel, cropFor, pagePick, cropMode, undo, redo, removeLayer, patchLayer]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sel, cropFor, pagePick, cropMode, eraseTool, undo, redo, removeLayer, patchLayer]);
 
   // ── Provenance ──
   const provenance = useMemo(() => {
@@ -498,7 +504,11 @@ export default function CoverMaker({ bookId, openDesign }: { bookId: string; ope
 
   const book = materials?.book;
   const leaves = materials?.leaves || [];
-  const hint = !sel
+  const hint = eraseTool && sel?.kind === 'image'
+    ? (eraseTool.shape === 'brush'
+      ? `Paint over what you want ${eraseTool.mode === 'erase' ? 'gone' : 'back'}. Erased parts show faintly while you work. [ and ] change the brush size; Enter or Done when finished.`
+      : `Drag a box over what you want ${eraseTool.mode === 'erase' ? 'gone' : 'back'}. Enter or Done when finished.`)
+    : !sel
     ? 'Click something on the cover to change it. Double-click a picture or the background to reposition what shows inside it.'
     : cropMode
       ? 'Drag the page to choose what shows. Drag the sides to show more or less. Enter or Done when finished.'
@@ -621,7 +631,7 @@ export default function CoverMaker({ bookId, openDesign }: { bookId: string; ope
           <div className="flex items-center gap-1 overflow-x-auto px-3 py-2 border-b border-[var(--border-light)] shrink-0">
             {designs.map(d => (
               <div key={d.id} className={`flex items-center rounded text-sm whitespace-nowrap ${d.id === activeId ? 'bg-[var(--bg-warm)]' : ''}`}>
-                <button className="px-2.5 py-1" onClick={() => { setActiveId(d.id); setSelected(null); setCropMode(false); }} title={savedAs[d.id] ? (savedAs[d.id] === snapshot(d) ? 'Saved' : 'Saved, with unsaved changes') : 'Not saved yet'}>
+                <button className="px-2.5 py-1" onClick={() => { setActiveId(d.id); setSelected(null); setCropMode(false); setEraseTool(null); }} title={savedAs[d.id] ? (savedAs[d.id] === snapshot(d) ? 'Saved' : 'Saved, with unsaved changes') : 'Not saved yet'}>
                   {d.name}{savedAs[d.id] && <span className={`ml-1 inline-block w-1.5 h-1.5 rounded-full align-middle ${savedAs[d.id] === snapshot(d) ? 'bg-[var(--status-success)]' : 'bg-[var(--status-warning)]'}`} />}
                 </button>
                 {d.id === activeId && designs.length > 1 && (
@@ -648,7 +658,9 @@ export default function CoverMaker({ bookId, openDesign }: { bookId: string; ope
                 fontsReady={fontsReady}
                 selected={selected}
                 cropMode={cropMode}
-                onSelect={id => { setSelected(id); if (id !== selected) setCropMode(false); }}
+                eraseTool={eraseTool}
+                onEraseMode={startErasing}
+                onSelect={id => { setSelected(id); if (id !== selected) { setCropMode(false); setEraseTool(null); } }}
                 onChange={(p, commit) => patchLayer(p.id, p, commit)}
                 onCropMode={setCropMode}
                 onDropAsset={(id, at) => { const a = assets.find(x => x.id === id); if (a) addAsset(a, at); }}
@@ -656,6 +668,21 @@ export default function CoverMaker({ bookId, openDesign }: { bookId: string; ope
                 onDelete={removeLayer}
                 onReplace={() => setTab('elements')}
               />
+            )}
+            {eraseTool && sel?.kind === 'image' && (
+              <div className="absolute top-3 left-1/2 -translate-x-1/2 z-20 flex flex-wrap items-center justify-center gap-2 rounded-lg bg-[var(--bg-white)] shadow-lg border border-[var(--border-light)] px-3 py-2 text-sm max-w-[calc(100%-24px)]">
+                <span className="font-medium">Eraser</span>
+                <Seg value={eraseTool.shape} options={[['brush', 'Brush'], ['box', 'Box']]} onChange={v => setTool({ shape: v })} />
+                <Seg value={eraseTool.mode} options={[['erase', 'Erase'], ['restore', 'Bring back']]} onChange={v => setTool({ mode: v })} />
+                {eraseTool.shape === 'brush' && (
+                  <label className="flex items-center gap-1.5" title="Brush size ([ and ] keys)">
+                    Size
+                    <input type="range" min={4} max={300} value={eraseTool.size} onChange={e => setTool({ size: +e.target.value })} className="w-24 accent-[var(--accent-rust)]" />
+                  </label>
+                )}
+                <button className="cm-btn !py-1" disabled={!sel.erase?.length} onClick={() => patchLayer(sel.id, { erase: [] })}>Clear erasing</button>
+                <button className="cm-btn cm-btn-primary !py-1" onClick={() => setEraseTool(null)}>Done</button>
+              </div>
             )}
             {!active && <p className="text-sm text-[var(--text-muted)]">{starters ? 'Choose how to start, on the left.' : 'Making starting covers…'}</p>}
             {busy && <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-sm bg-[var(--bg-white)] rounded px-3 py-1.5 shadow">{busy}</div>}
@@ -679,7 +706,7 @@ export default function CoverMaker({ bookId, openDesign }: { bookId: string; ope
                   <li
                     key={l.id}
                     className={`group flex items-center gap-1 rounded px-1.5 py-1 text-sm cursor-pointer ${l.id === selected ? 'bg-[var(--text-primary)] text-[var(--bg-cream)]' : 'hover:bg-[var(--bg-warm)]'}`}
-                    onClick={() => { setSelected(l.id); setCropMode(false); }}
+                    onClick={() => { setSelected(l.id); setCropMode(false); setEraseTool(null); }}
                   >
                     <span className={`flex-1 truncate ${l.hidden ? 'opacity-40' : ''}`}>{l.name}</span>
                     <IconBtn label="Move up" onClick={() => moveLayer(l.id, 1)} disabled={i === active.layers.length - 1}><ArrowUp className="w-3.5 h-3.5" /></IconBtn>
@@ -706,7 +733,8 @@ export default function CoverMaker({ bookId, openDesign }: { bookId: string; ope
                 materials={materials}
                 patch={(p, commit = true) => patchLayer(sel.id, p, commit)}
                 onCrop={() => setCropFor(sel.id)}
-                onCropInPlace={() => setCropMode(true)}
+                onCropInPlace={() => { setEraseTool(null); setCropMode(true); }}
+                onErase={() => startErasing(true)}
                 onFillBoard={() => patchLayer(sel.id, { x: W / 2, y: H / 2, w: W, h: H, rot: 0 })}
               />
             </section>
@@ -748,6 +776,19 @@ export default function CoverMaker({ bookId, openDesign }: { bookId: string; ope
           onApplyGround={crop => addFromPage(pagePick, crop, true)}
         />
       )}
+    </div>
+  );
+}
+
+function Seg<T extends string>({ value, options, onChange }: { value: T; options: [T, string][]; onChange: (v: T) => void }) {
+  return (
+    <div className="flex rounded-md border border-[var(--border-medium)] overflow-hidden">
+      {options.map(([v, label]) => (
+        <button key={v} type="button" onClick={() => onChange(v)}
+          className={`px-2.5 py-1 ${value === v ? 'bg-[var(--text-primary)] text-[var(--bg-cream)]' : 'hover:bg-[var(--bg-warm)]'}`}>
+          {label}
+        </button>
+      ))}
     </div>
   );
 }

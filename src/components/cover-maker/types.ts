@@ -22,6 +22,16 @@ export type FontKey = 'cardo' | 'aldine' | 'fell' | 'garamond' | 'fraktur' | 'ci
 
 export interface Crop { x: number; y: number; w: number; h: number }
 
+/**
+ * One stroke of the eraser, in the page's own coordinates (0–1 of the page's
+ * width and height), so erasing stays put when the picture is recropped,
+ * moved or resized. Marks apply in order: `restore` paints back what an
+ * earlier `erase` removed.
+ */
+export type EraseMark =
+  | { t: 'brush'; m: 'erase' | 'restore'; r: number; p: number[] } // r: radius as a fraction of page width; p: flat x,y list
+  | { t: 'box'; m: 'erase' | 'restore'; x: number; y: number; w: number; h: number };
+
 interface LayerBase {
   id: string;
   name: string;
@@ -57,6 +67,8 @@ export interface ImageLayer extends LayerBase {
   contrast: number;
   saturation: number;
   depth: number;
+  /** Parts of the page rubbed out with the eraser. */
+  erase?: EraseMark[];
 }
 
 export interface TextLayer extends LayerBase {

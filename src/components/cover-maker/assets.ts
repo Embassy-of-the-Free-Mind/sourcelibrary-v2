@@ -148,6 +148,7 @@ export function replaceImage(L: ImageLayer, a: Extract<Asset, { kind: 'image' }>
   return {
     ...L,
     src: next.src, full: next.full, page: next.page, role: next.role, crop: next.crop, srcRot: next.srcRot,
+    erase: [], // marks belong to the old page
     h: isGround ? L.h : next.h,
     name: isGround ? a.label : L.name.replace(/p\. \d+/, `p. ${a.leaf.n}`),
     ...(a.threshold != null ? { threshold: Math.min(0.8, a.threshold + 0.05) } : {}),

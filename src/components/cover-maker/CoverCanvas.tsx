@@ -10,7 +10,7 @@ import { H, W, type Cover } from './types';
  * design thumbnails.
  */
 export function CoverCanvas({
-  cover, width, images, tick, fontsReady, className,
+  cover, width, images, tick, fontsReady, className, ghost,
 }: {
   cover: Cover;
   width: number;
@@ -18,6 +18,8 @@ export function CoverCanvas({
   tick: number;
   fontsReady: boolean;
   className?: string;
+  /** A layer to show with its erased parts faintly visible. */
+  ghost?: string | null;
 }) {
   const ref = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
@@ -27,8 +29,8 @@ export function CoverCanvas({
     const s = (width * dpr) / W;
     c.width = Math.round(W * s);
     c.height = Math.round(H * s);
-    const id = requestAnimationFrame(() => renderCover(c.getContext('2d')!, cover, s, images));
+    const id = requestAnimationFrame(() => renderCover(c.getContext('2d')!, cover, s, images, { ghost }));
     return () => cancelAnimationFrame(id);
-  }, [cover, width, images, tick, fontsReady]);
+  }, [cover, width, images, tick, fontsReady, ghost]);
   return <canvas ref={ref} className={className} style={{ width, height: (width * H) / W, display: 'block' }} />;
 }

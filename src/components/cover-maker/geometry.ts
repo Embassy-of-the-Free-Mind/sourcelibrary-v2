@@ -120,6 +120,17 @@ export function cropEdge(L: ImageLayer, c0: Crop, edge: Edge, delta: number): { 
   return { crop: c, delta: dF / perUnit };
 }
 
+/**
+ * Where a board point falls on the picture's page (0–1 of page width and
+ * height), and how much page width one board unit covers. Used by the eraser.
+ */
+export function boardToPage(L: ImageLayer, p: Pt, iw: number, ih: number): { x: number; y: number; perUnit: number } {
+  const c = effectiveCrop(L, iw, ih);
+  const tw = sideways(L) ? L.h : L.w, th = sideways(L) ? L.w : L.h;
+  const q = rotate(toLocal(p, L), -L.srcRot);
+  return { x: c.x + ((q.x + tw / 2) / tw) * c.w, y: c.y + ((q.y + th / 2) / th) * c.h, perUnit: c.w / tw };
+}
+
 /** Slide the page under a fixed frame by a board-unit delta in the layer's own axes. */
 export function panCrop(L: ImageLayer, c0: Crop, iw: number, ih: number, du: number, dv: number): Crop {
   const tw = sideways(L) ? L.h : L.w;

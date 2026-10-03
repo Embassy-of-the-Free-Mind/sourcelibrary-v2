@@ -1,7 +1,7 @@
 import { FONTS } from './fonts';
 import {
   H, W,
-  type Blend, type Cover, type Crop, type Finish, type FillLayer, type ImageLayer,
+  type Blend, type Cover, type Crop, type EraseMark, type Finish, type FillLayer, type ImageLayer,
   type Layer, type ShapeLayer, type TextLayer,
 } from './types';
 
@@ -217,28 +217,70 @@ function applyFinish(m: HTMLCanvasElement, finish: Finish, color: string, depth:
 
 // ─── Image layers ─────────────────────────────────────────────────────────────
 
-/** Draw `crop` of `img` to fill a pw×ph canvas, rotated by `rot`, centre-cropping to fit. */
-function cropTo(img: ImageSource, crop: Crop, rot: number, pw: number, ph: number): HTMLCanvasElement {
+/**
+ * What survives the eraser, as an alpha mask over the cropped page (before
+ * rotation): white where the page shows, clear where it was rubbed out.
+ */
+function eraseMask(marks: EraseMark[], iw: number, ih: number, sx: number, sy: number, sw: number, sh: number, tw: number, th: number): HTMLCanvasElement {
+  const m = mk(tw, th);
+  const x = ctx2d(m);
+  x.fillStyle = x.strokeStyle = '#fff';
+  x.fillRect(0, 0, m.width, m.height);
+  const kx = m.width / sw, ky = m.height / sh; // canvas px per page px
+  const X = (px: number) => (px * iw - sx) * kx, Y = (py: number) => (py * ih - sy) * ky;
+  x.lineCap = 'round';
+  x.lineJoin = 'round';
+  for (const mark of marks) {
+    x.globalCompositeOperation = mark.m === 'erase' ? 'destination-out' : 'source-over';
+    if (mark.t === 'box') {
+      x.fillRect(X(mark.x), Y(mark.y), mark.w * iw * kx, mark.h * ih * ky);
+      continue;
+    }
+    const r = Math.max(0.5, mark.r * iw * kx);
+    if (mark.p.length <= 2) {
+      x.beginPath();
+      x.arc(X(mark.p[0]), Y(mark.p[1]), r, 0, Math.PI * 2);
+      x.fill();
+      continue;
+    }
+    x.lineWidth = r * 2;
+    x.beginPath();
+    x.moveTo(X(mark.p[0]), Y(mark.p[1]));
+    for (let i = 2; i < mark.p.length; i += 2) x.lineTo(X(mark.p[i]), Y(mark.p[i + 1]));
+    x.stroke();
+  }
+  return m;
+}
+
+/** Draw `crop` of `img` to fill a pw×ph canvas, rotated by `rot`, centre-cropping to fit, minus anything erased. */
+function cropTo(img: ImageSource, crop: Crop, rot: number, pw: number, ph: number, erase?: EraseMark[]): HTMLCanvasElement {
   const [iw, ih] = dims(img);
   const sideways = rot === 90 || rot === 270;
   const tw = sideways ? ph : pw, th = sideways ? pw : ph;
   let sx = crop.x * iw, sy = crop.y * ih, sw = crop.w * iw, sh = crop.h * ih;
   const la = tw / th, ca = sw / sh;
   if (ca > la) { const nw = sh * la; sx += (sw - nw) / 2; sw = nw; } else { const nh = sw / la; sy += (sh - nh) / 2; sh = nh; }
+  const flat = mk(tw, th);
+  const f = ctx2d(flat);
+  f.imageSmoothingQuality = 'high';
+  f.drawImage(img, sx, sy, sw, sh, 0, 0, flat.width, flat.height);
+  if (erase?.length) {
+    f.globalCompositeOperation = 'destination-in';
+    f.drawImage(eraseMask(erase, iw, ih, sx, sy, sw, sh, flat.width, flat.height), 0, 0);
+  }
   const c = mk(pw, ph);
   const x = ctx2d(c);
-  x.imageSmoothingQuality = 'high';
   x.translate(c.width / 2, c.height / 2);
   x.rotate((rot * Math.PI) / 180);
-  x.drawImage(img, sx, sy, sw, sh, -tw / 2, -th / 2, tw, th);
+  x.drawImage(flat, -tw / 2, -th / 2, tw, th);
   return c;
 }
 
 function imageContent(L: ImageLayer, img: ImageSource, s: number, srcKey: string): HTMLCanvasElement {
   const pw = Math.round(L.w * s), ph = Math.round(L.h * s);
-  const key = JSON.stringify([srcKey, pw, ph, L.crop, L.srcRot, L.treatment, L.color, L.threshold, L.softness, L.invert, L.brightness, L.contrast, L.saturation, L.depth, s]);
+  const key = JSON.stringify([srcKey, pw, ph, L.crop, L.srcRot, L.treatment, L.color, L.threshold, L.softness, L.invert, L.brightness, L.contrast, L.saturation, L.depth, s, L.erase || null]);
   return cached(key, () => {
-    const c = cropTo(img, L.crop, L.srcRot, pw, ph);
+    const c = cropTo(img, L.crop, L.srcRot, pw, ph, L.erase);
     const x = ctx2d(c);
     const data = x.getImageData(0, 0, c.width, c.height);
     const p = data.data;
@@ -432,7 +474,7 @@ export function layerHeight(L: Layer): number {
  * Render a cover onto `x`, whose canvas is W*s × H*s pixels. `images` maps each
  * layer `src` to a loaded image; layers whose image hasn't arrived are skipped.
  */
-export function renderCover(x: CanvasRenderingContext2D, cover: Cover, s: number, images: ImageMap): void {
+export function renderCover(x: CanvasRenderingContext2D, cover: Cover, s: number, images: ImageMap, opts: { ghost?: string | null } = {}): void {
   x.save();
   x.setTransform(1, 0, 0, 1, 0, 0);
   x.clearRect(0, 0, x.canvas.width, x.canvas.height);
@@ -443,6 +485,18 @@ export function renderCover(x: CanvasRenderingContext2D, cover: Cover, s: number
     if (L.kind === 'fill') { drawFill(x, L, s); continue; }
     const c = layerCanvas(L, s, images);
     if (!c) continue;
+    if (L.id === opts.ghost && L.kind === 'image' && L.erase?.length) {
+      // While erasing, show what has been rubbed out faintly, so it can be brought back.
+      const whole = layerCanvas({ ...L, erase: [] }, s, images);
+      if (whole) {
+        x.save();
+        x.globalAlpha = 0.22;
+        x.translate(L.x * s, L.y * s);
+        x.rotate((L.rot * Math.PI) / 180);
+        x.drawImage(whole, -whole.width / 2, -whole.height / 2);
+        x.restore();
+      }
+    }
     x.save();
     x.globalAlpha = L.opacity;
     x.globalCompositeOperation = blendOp(L.blend);

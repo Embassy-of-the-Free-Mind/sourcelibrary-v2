@@ -1,14 +1,16 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { AlignCenterHorizontal, AlignCenterVertical, Copy, Crop as CropIcon, Replace, Trash2 } from 'lucide-react';
+import { AlignCenterHorizontal, AlignCenterVertical, Copy, Crop as CropIcon, Eraser, Replace, Trash2 } from 'lucide-react';
 import { CoverCanvas } from './CoverCanvas';
 import {
-  aabb, cropEdge, effectiveCrop, imageDims, panCrop, rotate, snap, snapTargets, toLocal, toWorld,
+  aabb, boardToPage, cropEdge, effectiveCrop, imageDims, panCrop, rotate, snap, snapTargets, toLocal, toWorld,
   type Box, type Pt, type Targets,
 } from './geometry';
 import { layerHeight, type ImageMap } from './render';
-import { H, W, type Cover, type Crop, type ImageLayer, type Layer } from './types';
+import { H, W, type Cover, type Crop, type EraseMark, type ImageLayer, type Layer } from './types';
+
+export interface EraseTool { shape: 'brush' | 'box'; mode: 'erase' | 'restore'; size: number }
 
 /**
  * The cover with direct manipulation on top:
@@ -18,7 +20,9 @@ import { H, W, type Cover, type Crop, type ImageLayer, type Layer } from './type
  *  - double-click a picture to slide its page around inside the frame;
  *  - smart guides snap to the centre lines, the board edges and other
  *    elements (hold Alt to move freely), and show the gaps to each edge,
- *    lighting up when they match.
+ *    lighting up when they match;
+ *  - in erase mode, paint (brush) or drag a box to rub out parts of the
+ *    selected picture, or bring them back.
  */
 
 type Edge = 'n' | 's' | 'e' | 'w';
@@ -29,15 +33,16 @@ type Drag =
   | { mode: 'corner'; h: Corner; L0: Layer; T: Targets }
   | { mode: 'edge'; h: Edge; L0: Layer; c0: Crop | null; T: Targets }
   | { mode: 'rotate'; a0: number; L0: Layer }
-  | { mode: 'pan'; p0: Pt; L0: ImageLayer; c0: Crop; iw: number; ih: number };
+  | { mode: 'pan'; p0: Pt; L0: ImageLayer; c0: Crop; iw: number; ih: number }
+  | { mode: 'erase'; L0: ImageLayer; iw: number; ih: number; start: { x: number; y: number }; mark: EraseMark };
 
 type Patch = Partial<Layer> & { id: string };
 
 const GUIDE = '#e0457b';
 
 export function Board({
-  cover, width, images, tick, fontsReady, selected, cropMode,
-  onSelect, onChange, onCropMode, onDropAsset, onDuplicate, onDelete, onReplace,
+  cover, width, images, tick, fontsReady, selected, cropMode, eraseTool,
+  onSelect, onChange, onCropMode, onEraseMode, onDropAsset, onDuplicate, onDelete, onReplace,
 }: {
   cover: Cover;
   width: number;
@@ -46,9 +51,12 @@ export function Board({
   fontsReady: boolean;
   selected: string | null;
   cropMode: boolean;
+  /** Set while erasing the selected picture. */
+  eraseTool: EraseTool | null;
   onSelect: (id: string | null) => void;
   onChange: (p: Patch, commit: boolean) => void;
   onCropMode: (on: boolean) => void;
+  onEraseMode: (on: boolean) => void;
   onDropAsset: (assetId: string, at: Pt) => void;
   onDuplicate: (id: string) => void;
   onDelete: (id: string) => void;
@@ -65,6 +73,8 @@ export function Board({
   const sel = cover.layers.find(l => l.id === selected && !l.hidden) || null;
   const selImg = sel?.kind === 'image' ? sel : null;
   const cropping = cropMode && !!selImg;
+  const erasing = !!eraseTool && !!selImg;
+  const [hover, setHover] = useState<Pt | null>(null);
 
   const pt = (e: { clientX: number; clientY: number }): Pt => {
     const r = svg.current!.getBoundingClientRect();
@@ -94,6 +104,17 @@ export function Board({
     const p = pt(e);
     const role = (e.target as Element).getAttribute('data-handle');
     moved.current = false;
+    if (erasing && selImg && eraseTool) {
+      const d = imageDims(selImg, images);
+      if (!d) return;
+      const q = boardToPage(selImg, p, d[0], d[1]);
+      const mark: EraseMark = eraseTool.shape === 'brush'
+        ? { t: 'brush', m: eraseTool.mode, r: (eraseTool.size / 2) * q.perUnit, p: [q.x, q.y] }
+        : { t: 'box', m: eraseTool.mode, x: q.x, y: q.y, w: 0, h: 0 };
+      drag.current = { mode: 'erase', L0: selImg, iw: d[0], ih: d[1], start: { x: q.x, y: q.y }, mark };
+      if (mark.t === 'brush') { moved.current = true; onChange({ id: selImg.id, erase: [...(selImg.erase || []), mark] } as Patch, false); }
+      return;
+    }
     if (sel && role === 'rotate') {
       drag.current = { mode: 'rotate', a0: Math.atan2(p.y - sel.y, p.x - sel.x), L0: sel };
       return;
@@ -124,11 +145,29 @@ export function Board({
 
   const move = (e: React.PointerEvent) => {
     const d = drag.current;
-    if (!d) return;
     const p = pt(e);
+    if (erasing) setHover(p);
+    if (!d) return;
     if (!moved.current) setMoving(true);
     moved.current = true;
     const free = e.altKey;
+
+    if (d.mode === 'erase') {
+      const q = boardToPage(d.L0, p, d.iw, d.ih);
+      let mark: EraseMark;
+      if (d.mark.t === 'brush') {
+        const pts = d.mark.p;
+        const lx = pts[pts.length - 2], ly = pts[pts.length - 1];
+        // Skip points closer than a third of the brush: smoother strokes, smaller files.
+        if (Math.hypot(q.x - lx, (q.y - ly) * (d.ih / d.iw)) < d.mark.r * 0.35) return;
+        mark = { ...d.mark, p: [...pts, q.x, q.y] };
+      } else {
+        mark = { ...d.mark, x: Math.min(d.start.x, q.x), y: Math.min(d.start.y, q.y), w: Math.abs(q.x - d.start.x), h: Math.abs(q.y - d.start.y) };
+      }
+      d.mark = mark;
+      onChange({ id: d.L0.id, erase: [...(d.L0.erase || []), mark] } as Patch, false);
+      return;
+    }
 
     if (d.mode === 'move') {
       const L0 = d.L0;
@@ -228,6 +267,7 @@ export function Board({
   };
 
   const dbl = (e: React.MouseEvent) => {
+    if (erasing) return;
     const p = pt(e);
     // Double-click reaches locked grounds too, so a background can be repositioned.
     const l = hit(p) || hit(p, true);
@@ -238,8 +278,8 @@ export function Board({
   const hs = 8 * k;
   const selH = sel ? layerHeight(sel) : 0;
   const box = sel ? aabb(sel) : null;
-  const showCorners = sel && !sel.locked && !cropping && sel.kind !== 'fill';
-  const edges: Edge[] = !sel || sel.locked || sel.kind === 'fill' ? []
+  const showCorners = sel && !sel.locked && !cropping && !erasing && sel.kind !== 'fill';
+  const edges: Edge[] = !sel || sel.locked || erasing || sel.kind === 'fill' ? []
     : sel.kind === 'text' ? ['e', 'w']
     : sel.kind === 'shape' && sel.shape === 'rule' ? ['e', 'w']
     : ['n', 's', 'e', 'w'];
@@ -299,7 +339,7 @@ export function Board({
   })();
 
   // Small toolbar over the selection, in CSS pixels.
-  const bar = sel && box && !moving ? {
+  const bar = sel && box && !moving && !erasing ? {
     left: Math.min(Math.max(((box.l + box.r) / 2) / k, 120), width - 120),
     top: box.t / k > 48 ? box.t / k - 44 : Math.min(box.b / k + 10, (H / k) - 40),
   } : null;
@@ -316,26 +356,33 @@ export function Board({
         if (id) { e.preventDefault(); onDropAsset(id, pt(e)); }
       }}
     >
-      <CoverCanvas cover={cover} width={width} images={images} tick={tick} fontsReady={fontsReady} />
+      <CoverCanvas cover={cover} width={width} images={images} tick={tick} fontsReady={fontsReady} ghost={erasing ? selImg?.id : null} />
       <svg
         ref={svg}
         viewBox={`0 0 ${W} ${H}`}
         className="absolute inset-0 w-full h-full touch-none"
-        style={{ overflow: 'visible' }}
         onPointerDown={down}
         onPointerMove={move}
         onPointerUp={up}
         onPointerCancel={up}
+        onPointerLeave={() => setHover(null)}
         onDoubleClick={dbl}
+        style={{ overflow: 'visible', cursor: erasing ? (eraseTool?.shape === 'brush' ? 'none' : 'crosshair') : undefined }}
       >
         {ghost}
         {guides.xs.map((x, i) => <line key={`x${i}`} x1={x} y1={0} x2={x} y2={H} stroke={GUIDE} strokeWidth={1.4 * k} pointerEvents="none" />)}
         {guides.ys.map((y, i) => <line key={`y${i}`} x1={0} y1={y} x2={W} y2={y} stroke={GUIDE} strokeWidth={1.4 * k} pointerEvents="none" />)}
         {gapMarks}
+        {erasing && hover && eraseTool?.shape === 'brush' && (
+          <g pointerEvents="none">
+            <circle cx={hover.x} cy={hover.y} r={eraseTool.size / 2} fill={eraseTool.mode === 'erase' ? 'rgba(224,69,123,0.12)' : 'rgba(255,255,255,0.15)'} stroke="#fff" strokeWidth={1.5 * k} />
+            <circle cx={hover.x} cy={hover.y} r={eraseTool.size / 2} fill="none" stroke={GUIDE} strokeWidth={1 * k} strokeDasharray={`${3 * k} ${3 * k}`} />
+          </g>
+        )}
         {sel && sel.kind !== 'fill' && (
           <g transform={`translate(${sel.x} ${sel.y}) rotate(${sel.rot})`}>
             <rect x={-sel.w / 2} y={-selH / 2} width={sel.w} height={selH} fill="none" stroke="#fff" strokeWidth={2.4 * k} pointerEvents="none" />
-            <rect x={-sel.w / 2} y={-selH / 2} width={sel.w} height={selH} fill="none" stroke={cropping ? GUIDE : '#9e4a3a'} strokeWidth={1.4 * k} strokeDasharray={cropping ? undefined : `${6 * k} ${4 * k}`} pointerEvents="none" />
+            <rect x={-sel.w / 2} y={-selH / 2} width={sel.w} height={selH} fill="none" stroke={cropping || erasing ? GUIDE : '#9e4a3a'} strokeWidth={1.4 * k} strokeDasharray={cropping || erasing ? undefined : `${6 * k} ${4 * k}`} pointerEvents="none" />
             {showCorners && (['nw', 'ne', 'sw', 'se'] as Corner[]).map(h => (
               <circle key={h} data-handle={h} cx={(h.includes('e') ? 1 : -1) * sel.w / 2} cy={(h.includes('s') ? 1 : -1) * selH / 2} r={hs}
                 fill="#fff" stroke="#9e4a3a" strokeWidth={2 * k} style={{ cursor: h === 'nw' || h === 'se' ? 'nwse-resize' : 'nesw-resize' }} />
@@ -357,6 +404,7 @@ export function Board({
           {sel.kind === 'image' && (
             <>
               <ToolBtn on={cropping} label={cropping ? 'Done' : 'Crop'} onClick={() => onCropMode(!cropping)}><CropIcon className="w-3.5 h-3.5" /></ToolBtn>
+              <ToolBtn label="Erase" onClick={() => onEraseMode(true)}><Eraser className="w-3.5 h-3.5" /></ToolBtn>
               <ToolBtn label="Replace" onClick={onReplace}><Replace className="w-3.5 h-3.5" /></ToolBtn>
             </>
           )}
