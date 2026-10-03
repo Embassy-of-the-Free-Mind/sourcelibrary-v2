@@ -1,0 +1,9345 @@
+{
+ "generated": "2026-10-03T22:55:50.552Z",
+ "measure": "agreement of a reference-free detector with two blind Opus judges who had a human reference (not accuracy)",
+ "n": 60,
+ "max_order": 60,
+ "note": "case-control sample: every judged reversal + random other pages; `at_base_rate` reweights to each track's own reference set",
+ "overall": {
+  "reversal (either judge)": {
+   "D3 direct: any contradiction": {
+    "n": 60,
+    "positives": 19,
+    "tp": 14,
+    "fp": 14,
+    "recall": 0.737,
+    "recall_ci": [
+     0.512,
+     0.882
+    ],
+    "false_alarm_rate": 0.341,
+    "false_alarm_ci": [
+     0.216,
+     0.495
+    ],
+    "at_base_rate": {
+     "base_rate": 0.11,
+     "flag_rate": 0.385,
+     "flag_rate_ci": [
+      0.264,
+      0.506
+     ],
+     "precision": 0.21,
+     "precision_ci": [
+      0.145,
+      0.318
+     ],
+     "lift": 1.913
+    },
+    "in_sample": {
+     "precision": 0.5,
+     "base_rate": 0.317,
+     "flag_rate": 0.467
+    }
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 60,
+    "positives": 19,
+    "tp": 11,
+    "fp": 9,
+    "recall": 0.579,
+    "recall_ci": [
+     0.363,
+     0.769
+    ],
+    "false_alarm_rate": 0.22,
+    "false_alarm_ci": [
+     0.12,
+     0.367
+    ],
+    "at_base_rate": {
+     "base_rate": 0.11,
+     "flag_rate": 0.26,
+     "flag_rate_ci": [
+      0.16,
+      0.368
+     ],
+     "precision": 0.245,
+     "precision_ci": [
+      0.15,
+      0.397
+     ],
+     "lift": 2.229
+    },
+    "in_sample": {
+     "precision": 0.55,
+     "base_rate": 0.317,
+     "flag_rate": 0.333
+    }
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 60,
+    "positives": 19,
+    "tp": 3,
+    "fp": 1,
+    "recall": 0.158,
+    "recall_ci": [
+     0.055,
+     0.376
+    ],
+    "false_alarm_rate": 0.024,
+    "false_alarm_ci": [
+     0.004,
+     0.126
+    ],
+    "at_base_rate": {
+     "base_rate": 0.11,
+     "flag_rate": 0.039,
+     "flag_rate_ci": [
+      0.006,
+      0.083
+     ],
+     "precision": 0.44,
+     "precision_ci": [
+      0.116,
+      1
+     ],
+     "lift": 4.01
+    },
+    "in_sample": {
+     "precision": 0.75,
+     "base_rate": 0.317,
+     "flag_rate": 0.067
+    }
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 60,
+    "positives": 19,
+    "tp": 15,
+    "fp": 16,
+    "recall": 0.789,
+    "recall_ci": [
+     0.567,
+     0.915
+    ],
+    "false_alarm_rate": 0.39,
+    "false_alarm_ci": [
+     0.257,
+     0.543
+    ],
+    "at_base_rate": {
+     "base_rate": 0.11,
+     "flag_rate": 0.432,
+     "flag_rate_ci": [
+      0.322,
+      0.552
+     ],
+     "precision": 0.201,
+     "precision_ci": [
+      0.148,
+      0.279
+     ],
+     "lift": 1.828
+    },
+    "in_sample": {
+     "precision": 0.484,
+     "base_rate": 0.317,
+     "flag_rate": 0.517
+    }
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 60,
+    "positives": 19,
+    "tp": 13,
+    "fp": 12,
+    "recall": 0.684,
+    "recall_ci": [
+     0.46,
+     0.846
+    ],
+    "false_alarm_rate": 0.293,
+    "false_alarm_ci": [
+     0.176,
+     0.445
+    ],
+    "at_base_rate": {
+     "base_rate": 0.11,
+     "flag_rate": 0.335,
+     "flag_rate_ci": [
+      0.246,
+      0.433
+     ],
+     "precision": 0.224,
+     "precision_ci": [
+      0.159,
+      0.316
+     ],
+     "lift": 2.044
+    },
+    "in_sample": {
+     "precision": 0.52,
+     "base_rate": 0.317,
+     "flag_rate": 0.417
+    }
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 60,
+    "positives": 19,
+    "tp": 10,
+    "fp": 6,
+    "recall": 0.526,
+    "recall_ci": [
+     0.317,
+     0.727
+    ],
+    "false_alarm_rate": 0.146,
+    "false_alarm_ci": [
+     0.069,
+     0.284
+    ],
+    "at_base_rate": {
+     "base_rate": 0.11,
+     "flag_rate": 0.188,
+     "flag_rate_ci": [
+      0.102,
+      0.276
+     ],
+     "precision": 0.307,
+     "precision_ci": [
+      0.176,
+      0.567
+     ],
+     "lift": 2.801
+    },
+    "in_sample": {
+     "precision": 0.625,
+     "base_rate": 0.317,
+     "flag_rate": 0.267
+    }
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 60,
+    "positives": 19,
+    "tp": 12,
+    "fp": 19,
+    "recall": 0.632,
+    "recall_ci": [
+     0.41,
+     0.809
+    ],
+    "false_alarm_rate": 0.463,
+    "false_alarm_ci": [
+     0.321,
+     0.613
+    ],
+    "at_base_rate": {
+     "base_rate": 0.11,
+     "flag_rate": 0.483,
+     "flag_rate_ci": [
+      0.392,
+      0.582
+     ],
+     "precision": 0.144,
+     "precision_ci": [
+      0.1,
+      0.198
+     ],
+     "lift": 1.308
+    },
+    "in_sample": {
+     "precision": 0.387,
+     "base_rate": 0.317,
+     "flag_rate": 0.517
+    }
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 60,
+    "positives": 19,
+    "tp": 7,
+    "fp": 13,
+    "recall": 0.368,
+    "recall_ci": [
+     0.191,
+     0.59
+    ],
+    "false_alarm_rate": 0.317,
+    "false_alarm_ci": [
+     0.196,
+     0.47
+    ],
+    "at_base_rate": {
+     "base_rate": 0.11,
+     "flag_rate": 0.32,
+     "flag_rate_ci": [
+      0.217,
+      0.425
+     ],
+     "precision": 0.126,
+     "precision_ci": [
+      0.058,
+      0.212
+     ],
+     "lift": 1.15
+    },
+    "in_sample": {
+     "precision": 0.35,
+     "base_rate": 0.317,
+     "flag_rate": 0.333
+    }
+   },
+   "D3 lists an omission": {
+    "n": 60,
+    "positives": 19,
+    "tp": 4,
+    "fp": 1,
+    "recall": 0.211,
+    "recall_ci": [
+     0.085,
+     0.433
+    ],
+    "false_alarm_rate": 0.024,
+    "false_alarm_ci": [
+     0.004,
+     0.126
+    ],
+    "at_base_rate": {
+     "base_rate": 0.11,
+     "flag_rate": 0.045,
+     "flag_rate_ci": [
+      0.017,
+      0.094
+     ],
+     "precision": 0.514,
+     "precision_ci": [
+      0.209,
+      1
+     ],
+     "lift": 4.682
+    },
+    "in_sample": {
+     "precision": 0.8,
+     "base_rate": 0.317,
+     "flag_rate": 0.083
+    }
+   },
+   "D3 lists an addition": {
+    "n": 60,
+    "positives": 19,
+    "tp": 3,
+    "fp": 4,
+    "recall": 0.158,
+    "recall_ci": [
+     0.055,
+     0.376
+    ],
+    "false_alarm_rate": 0.098,
+    "false_alarm_ci": [
+     0.039,
+     0.225
+    ],
+    "at_base_rate": {
+     "base_rate": 0.11,
+     "flag_rate": 0.103,
+     "flag_rate_ci": [
+      0.038,
+      0.167
+     ],
+     "precision": 0.169,
+     "precision_ci": [
+      0.104,
+      0.45
+     ],
+     "lift": 1.537
+    },
+    "in_sample": {
+     "precision": 0.429,
+     "base_rate": 0.317,
+     "flag_rate": 0.117
+    }
+   }
+  },
+  "reversal (both judges)": {
+   "D3 direct: any contradiction": {
+    "n": 60,
+    "positives": 10,
+    "tp": 8,
+    "fp": 20,
+    "recall": 0.8,
+    "recall_ci": [
+     0.49,
+     0.943
+    ],
+    "false_alarm_rate": 0.4,
+    "false_alarm_ci": [
+     0.276,
+     0.538
+    ],
+    "at_base_rate": {
+     "base_rate": 0.058,
+     "flag_rate": 0.385,
+     "flag_rate_ci": [
+      0.258,
+      0.516
+     ],
+     "precision": 0.12,
+     "precision_ci": [
+      0.08,
+      0.189
+     ],
+     "lift": 2.077
+    },
+    "in_sample": {
+     "precision": 0.286,
+     "base_rate": 0.167,
+     "flag_rate": 0.467
+    }
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 60,
+    "positives": 10,
+    "tp": 7,
+    "fp": 13,
+    "recall": 0.7,
+    "recall_ci": [
+     0.397,
+     0.892
+    ],
+    "false_alarm_rate": 0.26,
+    "false_alarm_ci": [
+     0.159,
+     0.396
+    ],
+    "at_base_rate": {
+     "base_rate": 0.058,
+     "flag_rate": 0.26,
+     "flag_rate_ci": [
+      0.154,
+      0.374
+     ],
+     "precision": 0.156,
+     "precision_ci": [
+      0.087,
+      0.271
+     ],
+     "lift": 2.695
+    },
+    "in_sample": {
+     "precision": 0.35,
+     "base_rate": 0.167,
+     "flag_rate": 0.333
+    }
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 60,
+    "positives": 10,
+    "tp": 2,
+    "fp": 2,
+    "recall": 0.2,
+    "recall_ci": [
+     0.057,
+     0.51
+    ],
+    "false_alarm_rate": 0.04,
+    "false_alarm_ci": [
+     0.011,
+     0.135
+    ],
+    "at_base_rate": {
+     "base_rate": 0.058,
+     "flag_rate": 0.039,
+     "flag_rate_ci": [
+      0.006,
+      0.089
+     ],
+     "precision": 0.293,
+     "precision_ci": [
+      0,
+      1
+     ],
+     "lift": 5.08
+    },
+    "in_sample": {
+     "precision": 0.5,
+     "base_rate": 0.167,
+     "flag_rate": 0.067
+    }
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 60,
+    "positives": 10,
+    "tp": 7,
+    "fp": 24,
+    "recall": 0.7,
+    "recall_ci": [
+     0.397,
+     0.892
+    ],
+    "false_alarm_rate": 0.48,
+    "false_alarm_ci": [
+     0.348,
+     0.615
+    ],
+    "at_base_rate": {
+     "base_rate": 0.058,
+     "flag_rate": 0.432,
+     "flag_rate_ci": [
+      0.315,
+      0.559
+     ],
+     "precision": 0.094,
+     "precision_ci": [
+      0.063,
+      0.143
+     ],
+     "lift": 1.62
+    },
+    "in_sample": {
+     "precision": 0.226,
+     "base_rate": 0.167,
+     "flag_rate": 0.517
+    }
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 60,
+    "positives": 10,
+    "tp": 7,
+    "fp": 18,
+    "recall": 0.7,
+    "recall_ci": [
+     0.397,
+     0.892
+    ],
+    "false_alarm_rate": 0.36,
+    "false_alarm_ci": [
+     0.241,
+     0.499
+    ],
+    "at_base_rate": {
+     "base_rate": 0.058,
+     "flag_rate": 0.335,
+     "flag_rate_ci": [
+      0.237,
+      0.447
+     ],
+     "precision": 0.121,
+     "precision_ci": [
+      0.078,
+      0.185
+     ],
+     "lift": 2.091
+    },
+    "in_sample": {
+     "precision": 0.28,
+     "base_rate": 0.167,
+     "flag_rate": 0.417
+    }
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 60,
+    "positives": 10,
+    "tp": 6,
+    "fp": 10,
+    "recall": 0.6,
+    "recall_ci": [
+     0.313,
+     0.832
+    ],
+    "false_alarm_rate": 0.2,
+    "false_alarm_ci": [
+     0.112,
+     0.33
+    ],
+    "at_base_rate": {
+     "base_rate": 0.058,
+     "flag_rate": 0.188,
+     "flag_rate_ci": [
+      0.102,
+      0.282
+     ],
+     "precision": 0.184,
+     "precision_ci": [
+      0.094,
+      0.344
+     ],
+     "lift": 3.193
+    },
+    "in_sample": {
+     "precision": 0.375,
+     "base_rate": 0.167,
+     "flag_rate": 0.267
+    }
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 60,
+    "positives": 10,
+    "tp": 7,
+    "fp": 24,
+    "recall": 0.7,
+    "recall_ci": [
+     0.397,
+     0.892
+    ],
+    "false_alarm_rate": 0.48,
+    "false_alarm_ci": [
+     0.348,
+     0.615
+    ],
+    "at_base_rate": {
+     "base_rate": 0.058,
+     "flag_rate": 0.483,
+     "flag_rate_ci": [
+      0.386,
+      0.587
+     ],
+     "precision": 0.084,
+     "precision_ci": [
+      0.049,
+      0.123
+     ],
+     "lift": 1.45
+    },
+    "in_sample": {
+     "precision": 0.226,
+     "base_rate": 0.167,
+     "flag_rate": 0.517
+    }
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 60,
+    "positives": 10,
+    "tp": 6,
+    "fp": 14,
+    "recall": 0.6,
+    "recall_ci": [
+     0.313,
+     0.832
+    ],
+    "false_alarm_rate": 0.28,
+    "false_alarm_ci": [
+     0.175,
+     0.417
+    ],
+    "at_base_rate": {
+     "base_rate": 0.058,
+     "flag_rate": 0.32,
+     "flag_rate_ci": [
+      0.206,
+      0.436
+     ],
+     "precision": 0.108,
+     "precision_ci": [
+      0.057,
+      0.189
+     ],
+     "lift": 1.872
+    },
+    "in_sample": {
+     "precision": 0.3,
+     "base_rate": 0.167,
+     "flag_rate": 0.333
+    }
+   },
+   "D3 lists an omission": {
+    "n": 60,
+    "positives": 10,
+    "tp": 1,
+    "fp": 4,
+    "recall": 0.1,
+    "recall_ci": [
+     0.018,
+     0.404
+    ],
+    "false_alarm_rate": 0.08,
+    "false_alarm_ci": [
+     0.032,
+     0.188
+    ],
+    "at_base_rate": {
+     "base_rate": 0.058,
+     "flag_rate": 0.045,
+     "flag_rate_ci": [
+      0.011,
+      0.098
+     ],
+     "precision": 0.128,
+     "precision_ci": [
+      0.061,
+      0.5
+     ],
+     "lift": 2.224
+    },
+    "in_sample": {
+     "precision": 0.2,
+     "base_rate": 0.167,
+     "flag_rate": 0.083
+    }
+   },
+   "D3 lists an addition": {
+    "n": 60,
+    "positives": 10,
+    "tp": 1,
+    "fp": 6,
+    "recall": 0.1,
+    "recall_ci": [
+     0.018,
+     0.404
+    ],
+    "false_alarm_rate": 0.12,
+    "false_alarm_ci": [
+     0.056,
+     0.238
+    ],
+    "at_base_rate": {
+     "base_rate": 0.058,
+     "flag_rate": 0.103,
+     "flag_rate_ci": [
+      0.033,
+      0.183
+     ],
+     "precision": 0.056,
+     "precision_ci": [
+      0.032,
+      0.175
+     ],
+     "lift": 0.974
+    },
+    "in_sample": {
+     "precision": 0.143,
+     "base_rate": 0.167,
+     "flag_rate": 0.117
+    }
+   }
+  },
+  "omission (both judges)": {
+   "D3 direct: any contradiction": {
+    "n": 60,
+    "positives": 14,
+    "tp": 10,
+    "fp": 18,
+    "recall": 0.714,
+    "recall_ci": [
+     0.454,
+     0.883
+    ],
+    "false_alarm_rate": 0.391,
+    "false_alarm_ci": [
+     0.264,
+     0.535
+    ],
+    "at_base_rate": {
+     "base_rate": 0.174,
+     "flag_rate": 0.385,
+     "flag_rate_ci": [
+      0.267,
+      0.518
+     ],
+     "precision": 0.27,
+     "precision_ci": [
+      0.147,
+      0.414
+     ],
+     "lift": 1.551
+    },
+    "in_sample": {
+     "precision": 0.357,
+     "base_rate": 0.233,
+     "flag_rate": 0.467
+    }
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 60,
+    "positives": 14,
+    "tp": 7,
+    "fp": 13,
+    "recall": 0.5,
+    "recall_ci": [
+     0.268,
+     0.732
+    ],
+    "false_alarm_rate": 0.283,
+    "false_alarm_ci": [
+     0.173,
+     0.425
+    ],
+    "at_base_rate": {
+     "base_rate": 0.174,
+     "flag_rate": 0.26,
+     "flag_rate_ci": [
+      0.155,
+      0.372
+     ],
+     "precision": 0.275,
+     "precision_ci": [
+      0.111,
+      0.467
+     ],
+     "lift": 1.577
+    },
+    "in_sample": {
+     "precision": 0.35,
+     "base_rate": 0.233,
+     "flag_rate": 0.333
+    }
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 60,
+    "positives": 14,
+    "tp": 1,
+    "fp": 3,
+    "recall": 0.071,
+    "recall_ci": [
+     0.013,
+     0.315
+    ],
+    "false_alarm_rate": 0.065,
+    "false_alarm_ci": [
+     0.022,
+     0.175
+    ],
+    "at_base_rate": {
+     "base_rate": 0.174,
+     "flag_rate": 0.039,
+     "flag_rate_ci": [
+      0.006,
+      0.083
+     ],
+     "precision": 0.147,
+     "precision_ci": [
+      0,
+      1
+     ],
+     "lift": 0.841
+    },
+    "in_sample": {
+     "precision": 0.25,
+     "base_rate": 0.233,
+     "flag_rate": 0.067
+    }
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 60,
+    "positives": 14,
+    "tp": 11,
+    "fp": 20,
+    "recall": 0.786,
+    "recall_ci": [
+     0.524,
+     0.924
+    ],
+    "false_alarm_rate": 0.435,
+    "false_alarm_ci": [
+     0.302,
+     0.578
+    ],
+    "at_base_rate": {
+     "base_rate": 0.174,
+     "flag_rate": 0.432,
+     "flag_rate_ci": [
+      0.307,
+      0.548
+     ],
+     "precision": 0.29,
+     "precision_ci": [
+      0.189,
+      0.414
+     ],
+     "lift": 1.664
+    },
+    "in_sample": {
+     "precision": 0.355,
+     "base_rate": 0.233,
+     "flag_rate": 0.517
+    }
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 60,
+    "positives": 14,
+    "tp": 9,
+    "fp": 16,
+    "recall": 0.643,
+    "recall_ci": [
+     0.388,
+     0.837
+    ],
+    "false_alarm_rate": 0.348,
+    "false_alarm_ci": [
+     0.227,
+     0.492
+    ],
+    "at_base_rate": {
+     "base_rate": 0.174,
+     "flag_rate": 0.335,
+     "flag_rate_ci": [
+      0.233,
+      0.442
+     ],
+     "precision": 0.34,
+     "precision_ci": [
+      0.205,
+      0.501
+     ],
+     "lift": 1.949
+    },
+    "in_sample": {
+     "precision": 0.36,
+     "base_rate": 0.233,
+     "flag_rate": 0.417
+    }
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 60,
+    "positives": 14,
+    "tp": 6,
+    "fp": 10,
+    "recall": 0.429,
+    "recall_ci": [
+     0.214,
+     0.674
+    ],
+    "false_alarm_rate": 0.217,
+    "false_alarm_ci": [
+     0.123,
+     0.356
+    ],
+    "at_base_rate": {
+     "base_rate": 0.174,
+     "flag_rate": 0.188,
+     "flag_rate_ci": [
+      0.106,
+      0.277
+     ],
+     "precision": 0.349,
+     "precision_ci": [
+      0.128,
+      0.582
+     ],
+     "lift": 2.004
+    },
+    "in_sample": {
+     "precision": 0.375,
+     "base_rate": 0.233,
+     "flag_rate": 0.267
+    }
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 60,
+    "positives": 14,
+    "tp": 8,
+    "fp": 23,
+    "recall": 0.571,
+    "recall_ci": [
+     0.326,
+     0.786
+    ],
+    "false_alarm_rate": 0.5,
+    "false_alarm_ci": [
+     0.361,
+     0.639
+    ],
+    "at_base_rate": {
+     "base_rate": 0.174,
+     "flag_rate": 0.483,
+     "flag_rate_ci": [
+      0.384,
+      0.592
+     ],
+     "precision": 0.193,
+     "precision_ci": [
+      0.099,
+      0.297
+     ],
+     "lift": 1.108
+    },
+    "in_sample": {
+     "precision": 0.258,
+     "base_rate": 0.233,
+     "flag_rate": 0.517
+    }
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 60,
+    "positives": 14,
+    "tp": 7,
+    "fp": 13,
+    "recall": 0.5,
+    "recall_ci": [
+     0.268,
+     0.732
+    ],
+    "false_alarm_rate": 0.283,
+    "false_alarm_ci": [
+     0.173,
+     0.425
+    ],
+    "at_base_rate": {
+     "base_rate": 0.174,
+     "flag_rate": 0.32,
+     "flag_rate_ci": [
+      0.212,
+      0.44
+     ],
+     "precision": 0.321,
+     "precision_ci": [
+      0.159,
+      0.496
+     ],
+     "lift": 1.842
+    },
+    "in_sample": {
+     "precision": 0.35,
+     "base_rate": 0.233,
+     "flag_rate": 0.333
+    }
+   },
+   "D3 lists an omission": {
+    "n": 60,
+    "positives": 14,
+    "tp": 4,
+    "fp": 1,
+    "recall": 0.286,
+    "recall_ci": [
+     0.117,
+     0.546
+    ],
+    "false_alarm_rate": 0.022,
+    "false_alarm_ci": [
+     0.004,
+     0.113
+    ],
+    "at_base_rate": {
+     "base_rate": 0.174,
+     "flag_rate": 0.045,
+     "flag_rate_ci": [
+      0.012,
+      0.077
+     ],
+     "precision": 0.872,
+     "precision_ci": [
+      0.5,
+      1
+     ],
+     "lift": 4.998
+    },
+    "in_sample": {
+     "precision": 0.8,
+     "base_rate": 0.233,
+     "flag_rate": 0.083
+    }
+   },
+   "D3 lists an addition": {
+    "n": 60,
+    "positives": 14,
+    "tp": 3,
+    "fp": 4,
+    "recall": 0.214,
+    "recall_ci": [
+     0.076,
+     0.476
+    ],
+    "false_alarm_rate": 0.087,
+    "false_alarm_ci": [
+     0.034,
+     0.203
+    ],
+    "at_base_rate": {
+     "base_rate": 0.174,
+     "flag_rate": 0.103,
+     "flag_rate_ci": [
+      0.033,
+      0.184
+     ],
+     "precision": 0.319,
+     "precision_ci": [
+      0.083,
+      0.85
+     ],
+     "lift": 1.827
+    },
+    "in_sample": {
+     "precision": 0.429,
+     "base_rate": 0.233,
+     "flag_rate": 0.117
+    }
+   }
+  },
+  "unreadable-fill invention (either judge)": {
+   "D3 direct: any contradiction": {
+    "n": 60,
+    "positives": 12,
+    "tp": 6,
+    "fp": 22,
+    "recall": 0.5,
+    "recall_ci": [
+     0.254,
+     0.746
+    ],
+    "false_alarm_rate": 0.458,
+    "false_alarm_ci": [
+     0.326,
+     0.597
+    ],
+    "at_base_rate": {
+     "base_rate": 0.147,
+     "flag_rate": 0.385,
+     "flag_rate_ci": [
+      0.263,
+      0.516
+     ],
+     "precision": 0.13,
+     "precision_ci": [
+      0.066,
+      0.221
+     ],
+     "lift": 0.883
+    },
+    "in_sample": {
+     "precision": 0.214,
+     "base_rate": 0.2,
+     "flag_rate": 0.467
+    }
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 60,
+    "positives": 12,
+    "tp": 4,
+    "fp": 16,
+    "recall": 0.333,
+    "recall_ci": [
+     0.138,
+     0.609
+    ],
+    "false_alarm_rate": 0.333,
+    "false_alarm_ci": [
+     0.217,
+     0.475
+    ],
+    "at_base_rate": {
+     "base_rate": 0.147,
+     "flag_rate": 0.26,
+     "flag_rate_ci": [
+      0.159,
+      0.369
+     ],
+     "precision": 0.148,
+     "precision_ci": [
+      0.049,
+      0.294
+     ],
+     "lift": 1.007
+    },
+    "in_sample": {
+     "precision": 0.2,
+     "base_rate": 0.2,
+     "flag_rate": 0.333
+    }
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 60,
+    "positives": 12,
+    "tp": 1,
+    "fp": 3,
+    "recall": 0.083,
+    "recall_ci": [
+     0.015,
+     0.354
+    ],
+    "false_alarm_rate": 0.063,
+    "false_alarm_ci": [
+     0.021,
+     0.168
+    ],
+    "at_base_rate": {
+     "base_rate": 0.147,
+     "flag_rate": 0.039,
+     "flag_rate_ci": [
+      0.006,
+      0.084
+     ],
+     "precision": 0.147,
+     "precision_ci": [
+      0,
+      0.667
+     ],
+     "lift": 0.996
+    },
+    "in_sample": {
+     "precision": 0.25,
+     "base_rate": 0.2,
+     "flag_rate": 0.067
+    }
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 60,
+    "positives": 12,
+    "tp": 9,
+    "fp": 22,
+    "recall": 0.75,
+    "recall_ci": [
+     0.468,
+     0.911
+    ],
+    "false_alarm_rate": 0.458,
+    "false_alarm_ci": [
+     0.326,
+     0.597
+    ],
+    "at_base_rate": {
+     "base_rate": 0.147,
+     "flag_rate": 0.432,
+     "flag_rate_ci": [
+      0.319,
+      0.557
+     ],
+     "precision": 0.228,
+     "precision_ci": [
+      0.133,
+      0.34
+     ],
+     "lift": 1.551
+    },
+    "in_sample": {
+     "precision": 0.29,
+     "base_rate": 0.2,
+     "flag_rate": 0.517
+    }
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 60,
+    "positives": 12,
+    "tp": 7,
+    "fp": 18,
+    "recall": 0.583,
+    "recall_ci": [
+     0.32,
+     0.807
+    ],
+    "false_alarm_rate": 0.375,
+    "false_alarm_ci": [
+     0.252,
+     0.516
+    ],
+    "at_base_rate": {
+     "base_rate": 0.147,
+     "flag_rate": 0.335,
+     "flag_rate_ci": [
+      0.232,
+      0.449
+     ],
+     "precision": 0.167,
+     "precision_ci": [
+      0.09,
+      0.284
+     ],
+     "lift": 1.133
+    },
+    "in_sample": {
+     "precision": 0.28,
+     "base_rate": 0.2,
+     "flag_rate": 0.417
+    }
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 60,
+    "positives": 12,
+    "tp": 4,
+    "fp": 12,
+    "recall": 0.333,
+    "recall_ci": [
+     0.138,
+     0.609
+    ],
+    "false_alarm_rate": 0.25,
+    "false_alarm_ci": [
+     0.149,
+     0.388
+    ],
+    "at_base_rate": {
+     "base_rate": 0.147,
+     "flag_rate": 0.188,
+     "flag_rate_ci": [
+      0.105,
+      0.284
+     ],
+     "precision": 0.205,
+     "precision_ci": [
+      0.069,
+      0.41
+     ],
+     "lift": 1.392
+    },
+    "in_sample": {
+     "precision": 0.25,
+     "base_rate": 0.2,
+     "flag_rate": 0.267
+    }
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 60,
+    "positives": 12,
+    "tp": 4,
+    "fp": 27,
+    "recall": 0.333,
+    "recall_ci": [
+     0.138,
+     0.609
+    ],
+    "false_alarm_rate": 0.563,
+    "false_alarm_ci": [
+     0.423,
+     0.693
+    ],
+    "at_base_rate": {
+     "base_rate": 0.147,
+     "flag_rate": 0.483,
+     "flag_rate_ci": [
+      0.38,
+      0.591
+     ],
+     "precision": 0.08,
+     "precision_ci": [
+      0.014,
+      0.157
+     ],
+     "lift": 0.542
+    },
+    "in_sample": {
+     "precision": 0.129,
+     "base_rate": 0.2,
+     "flag_rate": 0.517
+    }
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 60,
+    "positives": 12,
+    "tp": 3,
+    "fp": 17,
+    "recall": 0.25,
+    "recall_ci": [
+     0.089,
+     0.532
+    ],
+    "false_alarm_rate": 0.354,
+    "false_alarm_ci": [
+     0.234,
+     0.496
+    ],
+    "at_base_rate": {
+     "base_rate": 0.147,
+     "flag_rate": 0.32,
+     "flag_rate_ci": [
+      0.215,
+      0.432
+     ],
+     "precision": 0.102,
+     "precision_ci": [
+      0.016,
+      0.221
+     ],
+     "lift": 0.694
+    },
+    "in_sample": {
+     "precision": 0.15,
+     "base_rate": 0.2,
+     "flag_rate": 0.333
+    }
+   },
+   "D3 lists an omission": {
+    "n": 60,
+    "positives": 12,
+    "tp": 2,
+    "fp": 3,
+    "recall": 0.167,
+    "recall_ci": [
+     0.047,
+     0.448
+    ],
+    "false_alarm_rate": 0.063,
+    "false_alarm_ci": [
+     0.021,
+     0.168
+    ],
+    "at_base_rate": {
+     "base_rate": 0.147,
+     "flag_rate": 0.045,
+     "flag_rate_ci": [
+      0.011,
+      0.096
+     ],
+     "precision": 0.257,
+     "precision_ci": [
+      0.08,
+      1
+     ],
+     "lift": 1.745
+    },
+    "in_sample": {
+     "precision": 0.4,
+     "base_rate": 0.2,
+     "flag_rate": 0.083
+    }
+   },
+   "D3 lists an addition": {
+    "n": 60,
+    "positives": 12,
+    "tp": 3,
+    "fp": 4,
+    "recall": 0.25,
+    "recall_ci": [
+     0.089,
+     0.532
+    ],
+    "false_alarm_rate": 0.083,
+    "false_alarm_ci": [
+     0.033,
+     0.196
+    ],
+    "at_base_rate": {
+     "base_rate": 0.147,
+     "flag_rate": 0.103,
+     "flag_rate_ci": [
+      0.034,
+      0.182
+     ],
+     "precision": 0.473,
+     "precision_ci": [
+      0.083,
+      0.894
+     ],
+     "lift": 3.213
+    },
+    "in_sample": {
+     "precision": 0.429,
+     "base_rate": 0.2,
+     "flag_rate": 0.117
+    }
+   }
+  },
+  "fidelity <= 3": {
+   "D3 direct: any contradiction": {
+    "n": 60,
+    "positives": 20,
+    "tp": 13,
+    "fp": 15,
+    "recall": 0.65,
+    "recall_ci": [
+     0.433,
+     0.819
+    ],
+    "false_alarm_rate": 0.375,
+    "false_alarm_ci": [
+     0.242,
+     0.53
+    ],
+    "at_base_rate": {
+     "base_rate": 0.179,
+     "flag_rate": 0.385,
+     "flag_rate_ci": [
+      0.267,
+      0.509
+     ],
+     "precision": 0.279,
+     "precision_ci": [
+      0.178,
+      0.411
+     ],
+     "lift": 1.558
+    },
+    "in_sample": {
+     "precision": 0.464,
+     "base_rate": 0.333,
+     "flag_rate": 0.467
+    }
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 60,
+    "positives": 20,
+    "tp": 10,
+    "fp": 10,
+    "recall": 0.5,
+    "recall_ci": [
+     0.299,
+     0.701
+    ],
+    "false_alarm_rate": 0.25,
+    "false_alarm_ci": [
+     0.142,
+     0.402
+    ],
+    "at_base_rate": {
+     "base_rate": 0.179,
+     "flag_rate": 0.26,
+     "flag_rate_ci": [
+      0.162,
+      0.363
+     ],
+     "precision": 0.348,
+     "precision_ci": [
+      0.192,
+      0.549
+     ],
+     "lift": 1.939
+    },
+    "in_sample": {
+     "precision": 0.5,
+     "base_rate": 0.333,
+     "flag_rate": 0.333
+    }
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 60,
+    "positives": 20,
+    "tp": 3,
+    "fp": 1,
+    "recall": 0.15,
+    "recall_ci": [
+     0.052,
+     0.36
+    ],
+    "false_alarm_rate": 0.025,
+    "false_alarm_ci": [
+     0.004,
+     0.129
+    ],
+    "at_base_rate": {
+     "base_rate": 0.179,
+     "flag_rate": 0.039,
+     "flag_rate_ci": [
+      0.006,
+      0.086
+     ],
+     "precision": 0.853,
+     "precision_ci": [
+      0.333,
+      1
+     ],
+     "lift": 4.759
+    },
+    "in_sample": {
+     "precision": 0.75,
+     "base_rate": 0.333,
+     "flag_rate": 0.067
+    }
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 60,
+    "positives": 20,
+    "tp": 15,
+    "fp": 16,
+    "recall": 0.75,
+    "recall_ci": [
+     0.531,
+     0.888
+    ],
+    "false_alarm_rate": 0.4,
+    "false_alarm_ci": [
+     0.263,
+     0.554
+    ],
+    "at_base_rate": {
+     "base_rate": 0.179,
+     "flag_rate": 0.432,
+     "flag_rate_ci": [
+      0.324,
+      0.543
+     ],
+     "precision": 0.312,
+     "precision_ci": [
+      0.202,
+      0.44
+     ],
+     "lift": 1.74
+    },
+    "in_sample": {
+     "precision": 0.484,
+     "base_rate": 0.333,
+     "flag_rate": 0.517
+    }
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 60,
+    "positives": 20,
+    "tp": 12,
+    "fp": 13,
+    "recall": 0.6,
+    "recall_ci": [
+     0.387,
+     0.781
+    ],
+    "false_alarm_rate": 0.325,
+    "false_alarm_ci": [
+     0.201,
+     0.48
+    ],
+    "at_base_rate": {
+     "base_rate": 0.179,
+     "flag_rate": 0.335,
+     "flag_rate_ci": [
+      0.24,
+      0.44
+     ],
+     "precision": 0.304,
+     "precision_ci": [
+      0.184,
+      0.436
+     ],
+     "lift": 1.697
+    },
+    "in_sample": {
+     "precision": 0.48,
+     "base_rate": 0.333,
+     "flag_rate": 0.417
+    }
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 60,
+    "positives": 20,
+    "tp": 9,
+    "fp": 7,
+    "recall": 0.45,
+    "recall_ci": [
+     0.258,
+     0.658
+    ],
+    "false_alarm_rate": 0.175,
+    "false_alarm_ci": [
+     0.087,
+     0.32
+    ],
+    "at_base_rate": {
+     "base_rate": 0.179,
+     "flag_rate": 0.188,
+     "flag_rate_ci": [
+      0.103,
+      0.281
+     ],
+     "precision": 0.45,
+     "precision_ci": [
+      0.228,
+      0.718
+     ],
+     "lift": 2.509
+    },
+    "in_sample": {
+     "precision": 0.563,
+     "base_rate": 0.333,
+     "flag_rate": 0.267
+    }
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 60,
+    "positives": 20,
+    "tp": 11,
+    "fp": 20,
+    "recall": 0.55,
+    "recall_ci": [
+     0.342,
+     0.742
+    ],
+    "false_alarm_rate": 0.5,
+    "false_alarm_ci": [
+     0.352,
+     0.648
+    ],
+    "at_base_rate": {
+     "base_rate": 0.179,
+     "flag_rate": 0.483,
+     "flag_rate_ci": [
+      0.384,
+      0.59
+     ],
+     "precision": 0.199,
+     "precision_ci": [
+      0.116,
+      0.289
+     ],
+     "lift": 1.11
+    },
+    "in_sample": {
+     "precision": 0.355,
+     "base_rate": 0.333,
+     "flag_rate": 0.517
+    }
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 60,
+    "positives": 20,
+    "tp": 6,
+    "fp": 14,
+    "recall": 0.3,
+    "recall_ci": [
+     0.145,
+     0.519
+    ],
+    "false_alarm_rate": 0.35,
+    "false_alarm_ci": [
+     0.221,
+     0.505
+    ],
+    "at_base_rate": {
+     "base_rate": 0.179,
+     "flag_rate": 0.32,
+     "flag_rate_ci": [
+      0.223,
+      0.424
+     ],
+     "precision": 0.108,
+     "precision_ci": [
+      0.048,
+      0.19
+     ],
+     "lift": 0.603
+    },
+    "in_sample": {
+     "precision": 0.3,
+     "base_rate": 0.333,
+     "flag_rate": 0.333
+    }
+   },
+   "D3 lists an omission": {
+    "n": 60,
+    "positives": 20,
+    "tp": 4,
+    "fp": 1,
+    "recall": 0.2,
+    "recall_ci": [
+     0.081,
+     0.416
+    ],
+    "false_alarm_rate": 0.025,
+    "false_alarm_ci": [
+     0.004,
+     0.129
+    ],
+    "at_base_rate": {
+     "base_rate": 0.179,
+     "flag_rate": 0.045,
+     "flag_rate_ci": [
+      0.011,
+      0.097
+     ],
+     "precision": 0.514,
+     "precision_ci": [
+      0.209,
+      1
+     ],
+     "lift": 2.865
+    },
+    "in_sample": {
+     "precision": 0.8,
+     "base_rate": 0.333,
+     "flag_rate": 0.083
+    }
+   },
+   "D3 lists an addition": {
+    "n": 60,
+    "positives": 20,
+    "tp": 4,
+    "fp": 3,
+    "recall": 0.2,
+    "recall_ci": [
+     0.081,
+     0.416
+    ],
+    "false_alarm_rate": 0.075,
+    "false_alarm_ci": [
+     0.026,
+     0.199
+    ],
+    "at_base_rate": {
+     "base_rate": 0.179,
+     "flag_rate": 0.103,
+     "flag_rate_ci": [
+      0.033,
+      0.185
+     ],
+     "precision": 0.377,
+     "precision_ci": [
+      0.098,
+      1
+     ],
+     "lift": 2.103
+    },
+    "in_sample": {
+     "precision": 0.571,
+     "base_rate": 0.333,
+     "flag_rate": 0.117
+    }
+   }
+  },
+  "any of: reversal, omission (both), fill": {
+   "D3 direct: any contradiction": {
+    "n": 60,
+    "positives": 29,
+    "tp": 18,
+    "fp": 10,
+    "recall": 0.621,
+    "recall_ci": [
+     0.44,
+     0.773
+    ],
+    "false_alarm_rate": 0.323,
+    "false_alarm_ci": [
+     0.186,
+     0.499
+    ],
+    "at_base_rate": {
+     "base_rate": 0.323,
+     "flag_rate": 0.385,
+     "flag_rate_ci": [
+      0.258,
+      0.512
+     ],
+     "precision": 0.43,
+     "precision_ci": [
+      0.287,
+      0.605
+     ],
+     "lift": 1.331
+    },
+    "in_sample": {
+     "precision": 0.643,
+     "base_rate": 0.483,
+     "flag_rate": 0.467
+    }
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 60,
+    "positives": 29,
+    "tp": 14,
+    "fp": 6,
+    "recall": 0.483,
+    "recall_ci": [
+     0.314,
+     0.656
+    ],
+    "false_alarm_rate": 0.194,
+    "false_alarm_ci": [
+     0.092,
+     0.363
+    ],
+    "at_base_rate": {
+     "base_rate": 0.323,
+     "flag_rate": 0.26,
+     "flag_rate_ci": [
+      0.162,
+      0.369
+     ],
+     "precision": 0.49,
+     "precision_ci": [
+      0.304,
+      0.734
+     ],
+     "lift": 1.516
+    },
+    "in_sample": {
+     "precision": 0.7,
+     "base_rate": 0.483,
+     "flag_rate": 0.333
+    }
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 60,
+    "positives": 29,
+    "tp": 3,
+    "fp": 1,
+    "recall": 0.103,
+    "recall_ci": [
+     0.036,
+     0.264
+    ],
+    "false_alarm_rate": 0.032,
+    "false_alarm_ci": [
+     0.006,
+     0.162
+    ],
+    "at_base_rate": {
+     "base_rate": 0.323,
+     "flag_rate": 0.039,
+     "flag_rate_ci": [
+      0.006,
+      0.08
+     ],
+     "precision": 0.44,
+     "precision_ci": [
+      0.116,
+      1
+     ],
+     "lift": 1.361
+    },
+    "in_sample": {
+     "precision": 0.75,
+     "base_rate": 0.483,
+     "flag_rate": 0.067
+    }
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 60,
+    "positives": 29,
+    "tp": 22,
+    "fp": 9,
+    "recall": 0.759,
+    "recall_ci": [
+     0.579,
+     0.878
+    ],
+    "false_alarm_rate": 0.29,
+    "false_alarm_ci": [
+     0.161,
+     0.466
+    ],
+    "at_base_rate": {
+     "base_rate": 0.323,
+     "flag_rate": 0.432,
+     "flag_rate_ci": [
+      0.318,
+      0.55
+     ],
+     "precision": 0.545,
+     "precision_ci": [
+      0.411,
+      0.71
+     ],
+     "lift": 1.687
+    },
+    "in_sample": {
+     "precision": 0.71,
+     "base_rate": 0.483,
+     "flag_rate": 0.517
+    }
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 60,
+    "positives": 29,
+    "tp": 18,
+    "fp": 7,
+    "recall": 0.621,
+    "recall_ci": [
+     0.44,
+     0.773
+    ],
+    "false_alarm_rate": 0.226,
+    "false_alarm_ci": [
+     0.114,
+     0.398
+    ],
+    "at_base_rate": {
+     "base_rate": 0.323,
+     "flag_rate": 0.335,
+     "flag_rate_ci": [
+      0.234,
+      0.445
+     ],
+     "precision": 0.541,
+     "precision_ci": [
+      0.389,
+      0.717
+     ],
+     "lift": 1.674
+    },
+    "in_sample": {
+     "precision": 0.72,
+     "base_rate": 0.483,
+     "flag_rate": 0.417
+    }
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 60,
+    "positives": 29,
+    "tp": 13,
+    "fp": 3,
+    "recall": 0.448,
+    "recall_ci": [
+     0.284,
+     0.625
+    ],
+    "false_alarm_rate": 0.097,
+    "false_alarm_ci": [
+     0.033,
+     0.249
+    ],
+    "at_base_rate": {
+     "base_rate": 0.323,
+     "flag_rate": 0.188,
+     "flag_rate_ci": [
+      0.109,
+      0.276
+     ],
+     "precision": 0.647,
+     "precision_ci": [
+      0.428,
+      0.875
+     ],
+     "lift": 2
+    },
+    "in_sample": {
+     "precision": 0.813,
+     "base_rate": 0.483,
+     "flag_rate": 0.267
+    }
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 60,
+    "positives": 29,
+    "tp": 16,
+    "fp": 15,
+    "recall": 0.552,
+    "recall_ci": [
+     0.375,
+     0.716
+    ],
+    "false_alarm_rate": 0.484,
+    "false_alarm_ci": [
+     0.32,
+     0.652
+    ],
+    "at_base_rate": {
+     "base_rate": 0.323,
+     "flag_rate": 0.483,
+     "flag_rate_ci": [
+      0.392,
+      0.58
+     ],
+     "precision": 0.321,
+     "precision_ci": [
+      0.207,
+      0.417
+     ],
+     "lift": 0.993
+    },
+    "in_sample": {
+     "precision": 0.516,
+     "base_rate": 0.483,
+     "flag_rate": 0.517
+    }
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 60,
+    "positives": 29,
+    "tp": 12,
+    "fp": 8,
+    "recall": 0.414,
+    "recall_ci": [
+     0.255,
+     0.593
+    ],
+    "false_alarm_rate": 0.258,
+    "false_alarm_ci": [
+     0.137,
+     0.432
+    ],
+    "at_base_rate": {
+     "base_rate": 0.323,
+     "flag_rate": 0.32,
+     "flag_rate_ci": [
+      0.22,
+      0.427
+     ],
+     "precision": 0.459,
+     "precision_ci": [
+      0.276,
+      0.634
+     ],
+     "lift": 1.421
+    },
+    "in_sample": {
+     "precision": 0.6,
+     "base_rate": 0.483,
+     "flag_rate": 0.333
+    }
+   },
+   "D3 lists an omission": {
+    "n": 60,
+    "positives": 29,
+    "tp": 5,
+    "fp": 0,
+    "recall": 0.172,
+    "recall_ci": [
+     0.076,
+     0.345
+    ],
+    "false_alarm_rate": 0,
+    "false_alarm_ci": [
+     0,
+     0.11
+    ],
+    "at_base_rate": {
+     "base_rate": 0.323,
+     "flag_rate": 0.045,
+     "flag_rate_ci": [
+      0.017,
+      0.083
+     ],
+     "precision": 1,
+     "precision_ci": [
+      1,
+      1
+     ],
+     "lift": 3.093
+    },
+    "in_sample": {
+     "precision": 1,
+     "base_rate": 0.483,
+     "flag_rate": 0.083
+    }
+   },
+   "D3 lists an addition": {
+    "n": 60,
+    "positives": 29,
+    "tp": 6,
+    "fp": 1,
+    "recall": 0.207,
+    "recall_ci": [
+     0.098,
+     0.384
+    ],
+    "false_alarm_rate": 0.032,
+    "false_alarm_ci": [
+     0.006,
+     0.162
+    ],
+    "at_base_rate": {
+     "base_rate": 0.323,
+     "flag_rate": 0.103,
+     "flag_rate_ci": [
+      0.039,
+      0.182
+     ],
+     "precision": 0.792,
+     "precision_ci": [
+      0.447,
+      1
+     ],
+     "lift": 2.449
+    },
+    "in_sample": {
+     "precision": 0.857,
+     "base_rate": 0.483,
+     "flag_rate": 0.117
+    }
+   }
+  }
+ },
+ "by_track": {
+  "T1 Latin": {
+   "D3 direct: any contradiction": {
+    "n": 14,
+    "positives": 6,
+    "tp": 4,
+    "fp": 2,
+    "recall": 0.667,
+    "recall_ci": [
+     0.3,
+     0.903
+    ],
+    "false_alarm_rate": 0.25,
+    "false_alarm_ci": [
+     0.071,
+     0.591
+    ],
+    "at_base_rate": {
+     "base_rate": 0.168,
+     "flag_rate": 0.32,
+     "flag_rate_ci": [
+      0.084,
+      0.604
+     ],
+     "precision": 0.351,
+     "precision_ci": [
+      0.134,
+      1
+     ],
+     "lift": 2.082
+    },
+    "in_sample": {
+     "precision": 0.667,
+     "base_rate": 0.429,
+     "flag_rate": 0.429
+    }
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 14,
+    "positives": 6,
+    "tp": 4,
+    "fp": 0,
+    "recall": 0.667,
+    "recall_ci": [
+     0.3,
+     0.903
+    ],
+    "false_alarm_rate": 0,
+    "false_alarm_ci": [
+     0,
+     0.324
+    ],
+    "at_base_rate": {
+     "base_rate": 0.168,
+     "flag_rate": 0.112,
+     "flag_rate_ci": [
+      0.056,
+      0.168
+     ],
+     "precision": 1,
+     "precision_ci": [
+      1,
+      1
+     ],
+     "lift": 5.941
+    },
+    "in_sample": {
+     "precision": 1,
+     "base_rate": 0.429,
+     "flag_rate": 0.286
+    }
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 14,
+    "positives": 6,
+    "tp": 3,
+    "fp": 0,
+    "recall": 0.5,
+    "recall_ci": [
+     0.188,
+     0.812
+    ],
+    "false_alarm_rate": 0,
+    "false_alarm_ci": [
+     0,
+     0.324
+    ],
+    "at_base_rate": {
+     "base_rate": 0.168,
+     "flag_rate": 0.084,
+     "flag_rate_ci": [
+      0.028,
+      0.14
+     ],
+     "precision": 1,
+     "precision_ci": [
+      1,
+      1
+     ],
+     "lift": 5.941
+    },
+    "in_sample": {
+     "precision": 1,
+     "base_rate": 0.429,
+     "flag_rate": 0.214
+    }
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 14,
+    "positives": 6,
+    "tp": 3,
+    "fp": 2,
+    "recall": 0.5,
+    "recall_ci": [
+     0.188,
+     0.812
+    ],
+    "false_alarm_rate": 0.25,
+    "false_alarm_ci": [
+     0.071,
+     0.591
+    ],
+    "at_base_rate": {
+     "base_rate": 0.168,
+     "flag_rate": 0.292,
+     "flag_rate_ci": [
+      0.056,
+      0.576
+     ],
+     "precision": 0.288,
+     "precision_ci": [
+      0.083,
+      1
+     ],
+     "lift": 1.712
+    },
+    "in_sample": {
+     "precision": 0.6,
+     "base_rate": 0.429,
+     "flag_rate": 0.357
+    }
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 14,
+    "positives": 6,
+    "tp": 3,
+    "fp": 0,
+    "recall": 0.5,
+    "recall_ci": [
+     0.188,
+     0.812
+    ],
+    "false_alarm_rate": 0,
+    "false_alarm_ci": [
+     0,
+     0.324
+    ],
+    "at_base_rate": {
+     "base_rate": 0.168,
+     "flag_rate": 0.084,
+     "flag_rate_ci": [
+      0.028,
+      0.14
+     ],
+     "precision": 1,
+     "precision_ci": [
+      1,
+      1
+     ],
+     "lift": 5.941
+    },
+    "in_sample": {
+     "precision": 1,
+     "base_rate": 0.429,
+     "flag_rate": 0.214
+    }
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 14,
+    "positives": 6,
+    "tp": 3,
+    "fp": 0,
+    "recall": 0.5,
+    "recall_ci": [
+     0.188,
+     0.812
+    ],
+    "false_alarm_rate": 0,
+    "false_alarm_ci": [
+     0,
+     0.324
+    ],
+    "at_base_rate": {
+     "base_rate": 0.168,
+     "flag_rate": 0.084,
+     "flag_rate_ci": [
+      0.028,
+      0.14
+     ],
+     "precision": 1,
+     "precision_ci": [
+      1,
+      1
+     ],
+     "lift": 5.941
+    },
+    "in_sample": {
+     "precision": 1,
+     "base_rate": 0.429,
+     "flag_rate": 0.214
+    }
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 14,
+    "positives": 6,
+    "tp": 4,
+    "fp": 0,
+    "recall": 0.667,
+    "recall_ci": [
+     0.3,
+     0.903
+    ],
+    "false_alarm_rate": 0,
+    "false_alarm_ci": [
+     0,
+     0.324
+    ],
+    "at_base_rate": {
+     "base_rate": 0.168,
+     "flag_rate": 0.112,
+     "flag_rate_ci": [
+      0.056,
+      0.168
+     ],
+     "precision": 1,
+     "precision_ci": [
+      1,
+      1
+     ],
+     "lift": 5.941
+    },
+    "in_sample": {
+     "precision": 1,
+     "base_rate": 0.429,
+     "flag_rate": 0.286
+    }
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 14,
+    "positives": 6,
+    "tp": 3,
+    "fp": 0,
+    "recall": 0.5,
+    "recall_ci": [
+     0.188,
+     0.812
+    ],
+    "false_alarm_rate": 0,
+    "false_alarm_ci": [
+     0,
+     0.324
+    ],
+    "at_base_rate": {
+     "base_rate": 0.168,
+     "flag_rate": 0.084,
+     "flag_rate_ci": [
+      0.028,
+      0.14
+     ],
+     "precision": 1,
+     "precision_ci": [
+      1,
+      1
+     ],
+     "lift": 5.941
+    },
+    "in_sample": {
+     "precision": 1,
+     "base_rate": 0.429,
+     "flag_rate": 0.214
+    }
+   },
+   "auc": {
+    "D3 contradictions (count)": {
+     "auc": 0.771,
+     "pos": 6,
+     "neg": 8
+    },
+    "D3 high-certainty (count)": {
+     "auc": 0.833,
+     "pos": 6,
+     "neg": 8
+    },
+    "D2 contradictions (count)": {
+     "auc": 0.675,
+     "pos": 5,
+     "neg": 8
+    },
+    "D2 chrF (lower = worse)": {
+     "auc": 0.625,
+     "pos": 5,
+     "neg": 8
+    },
+    "D2 BLEU-4 (lower = worse)": {
+     "auc": 0.588,
+     "pos": 5,
+     "neg": 8
+    },
+    "D1 page_diff": {
+     "auc": 0.938,
+     "pos": 6,
+     "neg": 8
+    },
+    "D1 window": {
+     "auc": 0.938,
+     "pos": 6,
+     "neg": 8
+    }
+   }
+  },
+  "T2 Greek": {
+   "D3 direct: any contradiction": {
+    "n": 11,
+    "positives": 3,
+    "tp": 2,
+    "fp": 2,
+    "recall": 0.667,
+    "recall_ci": [
+     0.208,
+     0.939
+    ],
+    "false_alarm_rate": 0.25,
+    "false_alarm_ci": [
+     0.071,
+     0.591
+    ],
+    "at_base_rate": {
+     "base_rate": 0.092,
+     "flag_rate": 0.288,
+     "flag_rate_ci": [
+      0.061,
+      0.546
+     ],
+     "precision": 0.212,
+     "precision_ci": [
+      0,
+      1
+     ],
+     "lift": 2.313
+    },
+    "in_sample": {
+     "precision": 0.5,
+     "base_rate": 0.273,
+     "flag_rate": 0.364
+    }
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 11,
+    "positives": 3,
+    "tp": 1,
+    "fp": 2,
+    "recall": 0.333,
+    "recall_ci": [
+     0.061,
+     0.792
+    ],
+    "false_alarm_rate": 0.25,
+    "false_alarm_ci": [
+     0.071,
+     0.591
+    ],
+    "at_base_rate": {
+     "base_rate": 0.092,
+     "flag_rate": 0.258,
+     "flag_rate_ci": [
+      0,
+      0.546
+     ],
+     "precision": 0.119,
+     "precision_ci": [
+      0,
+      1
+     ],
+     "lift": 1.294
+    },
+    "in_sample": {
+     "precision": 0.333,
+     "base_rate": 0.273,
+     "flag_rate": 0.273
+    }
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 11,
+    "positives": 3,
+    "tp": 0,
+    "fp": 0,
+    "recall": 0,
+    "recall_ci": [
+     0,
+     0.562
+    ],
+    "false_alarm_rate": 0,
+    "false_alarm_ci": [
+     0,
+     0.324
+    ],
+    "at_base_rate": {
+     "base_rate": 0.092,
+     "flag_rate": 0,
+     "flag_rate_ci": [
+      0,
+      0
+     ],
+     "precision": null,
+     "precision_ci": [
+      null,
+      null
+     ],
+     "lift": null
+    },
+    "in_sample": {
+     "precision": null,
+     "base_rate": 0.273,
+     "flag_rate": 0
+    }
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 11,
+    "positives": 3,
+    "tp": 3,
+    "fp": 3,
+    "recall": 1,
+    "recall_ci": [
+     0.438,
+     1
+    ],
+    "false_alarm_rate": 0.375,
+    "false_alarm_ci": [
+     0.137,
+     0.694
+    ],
+    "at_base_rate": {
+     "base_rate": 0.092,
+     "flag_rate": 0.432,
+     "flag_rate_ci": [
+      0.205,
+      0.773
+     ],
+     "precision": 0.212,
+     "precision_ci": [
+      0.119,
+      0.447
+     ],
+     "lift": 2.313
+    },
+    "in_sample": {
+     "precision": 0.5,
+     "base_rate": 0.273,
+     "flag_rate": 0.545
+    }
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 11,
+    "positives": 3,
+    "tp": 3,
+    "fp": 1,
+    "recall": 1,
+    "recall_ci": [
+     0.438,
+     1
+    ],
+    "false_alarm_rate": 0.125,
+    "false_alarm_ci": [
+     0.022,
+     0.471
+    ],
+    "at_base_rate": {
+     "base_rate": 0.092,
+     "flag_rate": 0.205,
+     "flag_rate_ci": [
+      0.092,
+      0.432
+     ],
+     "precision": 0.447,
+     "precision_ci": [
+      0.212,
+      1
+     ],
+     "lift": 4.868
+    },
+    "in_sample": {
+     "precision": 0.75,
+     "base_rate": 0.273,
+     "flag_rate": 0.364
+    }
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 11,
+    "positives": 3,
+    "tp": 1,
+    "fp": 1,
+    "recall": 0.333,
+    "recall_ci": [
+     0.061,
+     0.792
+    ],
+    "false_alarm_rate": 0.125,
+    "false_alarm_ci": [
+     0.022,
+     0.471
+    ],
+    "at_base_rate": {
+     "base_rate": 0.092,
+     "flag_rate": 0.144,
+     "flag_rate_ci": [
+      0,
+      0.402
+     ],
+     "precision": 0.212,
+     "precision_ci": [
+      0,
+      1
+     ],
+     "lift": 2.313
+    },
+    "in_sample": {
+     "precision": 0.5,
+     "base_rate": 0.273,
+     "flag_rate": 0.182
+    }
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 11,
+    "positives": 3,
+    "tp": 2,
+    "fp": 3,
+    "recall": 0.667,
+    "recall_ci": [
+     0.208,
+     0.939
+    ],
+    "false_alarm_rate": 0.375,
+    "false_alarm_ci": [
+     0.137,
+     0.694
+    ],
+    "at_base_rate": {
+     "base_rate": 0.092,
+     "flag_rate": 0.402,
+     "flag_rate_ci": [
+      0.092,
+      0.742
+     ],
+     "precision": 0.152,
+     "precision_ci": [
+      0,
+      1
+     ],
+     "lift": 1.659
+    },
+    "in_sample": {
+     "precision": 0.4,
+     "base_rate": 0.273,
+     "flag_rate": 0.455
+    }
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 11,
+    "positives": 3,
+    "tp": 0,
+    "fp": 4,
+    "recall": 0,
+    "recall_ci": [
+     0,
+     0.562
+    ],
+    "false_alarm_rate": 0.5,
+    "false_alarm_ci": [
+     0.215,
+     0.785
+    ],
+    "at_base_rate": {
+     "base_rate": 0.092,
+     "flag_rate": 0.454,
+     "flag_rate_ci": [
+      0.114,
+      0.795
+     ],
+     "precision": 0,
+     "precision_ci": [
+      0,
+      0
+     ],
+     "lift": 0
+    },
+    "in_sample": {
+     "precision": 0,
+     "base_rate": 0.273,
+     "flag_rate": 0.364
+    }
+   },
+   "auc": {
+    "D3 contradictions (count)": {
+     "auc": 0.708,
+     "pos": 3,
+     "neg": 8
+    },
+    "D3 high-certainty (count)": {
+     "auc": 0.542,
+     "pos": 3,
+     "neg": 8
+    },
+    "D2 contradictions (count)": {
+     "auc": 0.875,
+     "pos": 3,
+     "neg": 8
+    },
+    "D2 chrF (lower = worse)": {
+     "auc": 0.667,
+     "pos": 3,
+     "neg": 8
+    },
+    "D2 BLEU-4 (lower = worse)": {
+     "auc": 0.667,
+     "pos": 3,
+     "neg": 8
+    },
+    "D1 page_diff": {
+     "auc": 0.5,
+     "pos": 3,
+     "neg": 8
+    },
+    "D1 window": {
+     "auc": 0.396,
+     "pos": 3,
+     "neg": 8
+    }
+   }
+  },
+  "T3 German/French/Italian/Dutch/Spanish": {
+   "D3 direct: any contradiction": {
+    "n": 9,
+    "positives": 0,
+    "tp": 0,
+    "fp": 4,
+    "recall": null,
+    "recall_ci": null,
+    "false_alarm_rate": 0.444,
+    "false_alarm_ci": [
+     0.189,
+     0.733
+    ],
+    "at_base_rate": {
+     "base_rate": 0,
+     "flag_rate": 0.444,
+     "flag_rate_ci": [
+      0.111,
+      0.778
+     ],
+     "precision": 0,
+     "precision_ci": [
+      0,
+      0
+     ],
+     "lift": null
+    },
+    "in_sample": {
+     "precision": 0,
+     "base_rate": 0,
+     "flag_rate": 0.444
+    }
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 9,
+    "positives": 0,
+    "tp": 0,
+    "fp": 3,
+    "recall": null,
+    "recall_ci": null,
+    "false_alarm_rate": 0.333,
+    "false_alarm_ci": [
+     0.121,
+     0.646
+    ],
+    "at_base_rate": {
+     "base_rate": 0,
+     "flag_rate": 0.333,
+     "flag_rate_ci": [
+      0.111,
+      0.667
+     ],
+     "precision": 0,
+     "precision_ci": [
+      0,
+      0
+     ],
+     "lift": null
+    },
+    "in_sample": {
+     "precision": 0,
+     "base_rate": 0,
+     "flag_rate": 0.333
+    }
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 9,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall": null,
+    "recall_ci": null,
+    "false_alarm_rate": 0,
+    "false_alarm_ci": [
+     0,
+     0.299
+    ],
+    "at_base_rate": {
+     "base_rate": 0,
+     "flag_rate": 0,
+     "flag_rate_ci": [
+      0,
+      0
+     ],
+     "precision": null,
+     "precision_ci": [
+      null,
+      null
+     ],
+     "lift": null
+    },
+    "in_sample": {
+     "precision": null,
+     "base_rate": 0,
+     "flag_rate": 0
+    }
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 9,
+    "positives": 0,
+    "tp": 0,
+    "fp": 2,
+    "recall": null,
+    "recall_ci": null,
+    "false_alarm_rate": 0.222,
+    "false_alarm_ci": [
+     0.063,
+     0.547
+    ],
+    "at_base_rate": {
+     "base_rate": 0,
+     "flag_rate": 0.222,
+     "flag_rate_ci": [
+      0,
+      0.556
+     ],
+     "precision": 0,
+     "precision_ci": [
+      0,
+      0
+     ],
+     "lift": null
+    },
+    "in_sample": {
+     "precision": 0,
+     "base_rate": 0,
+     "flag_rate": 0.222
+    }
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 9,
+    "positives": 0,
+    "tp": 0,
+    "fp": 2,
+    "recall": null,
+    "recall_ci": null,
+    "false_alarm_rate": 0.222,
+    "false_alarm_ci": [
+     0.063,
+     0.547
+    ],
+    "at_base_rate": {
+     "base_rate": 0,
+     "flag_rate": 0.222,
+     "flag_rate_ci": [
+      0,
+      0.556
+     ],
+     "precision": 0,
+     "precision_ci": [
+      0,
+      0
+     ],
+     "lift": null
+    },
+    "in_sample": {
+     "precision": 0,
+     "base_rate": 0,
+     "flag_rate": 0.222
+    }
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 9,
+    "positives": 0,
+    "tp": 0,
+    "fp": 1,
+    "recall": null,
+    "recall_ci": null,
+    "false_alarm_rate": 0.111,
+    "false_alarm_ci": [
+     0.02,
+     0.435
+    ],
+    "at_base_rate": {
+     "base_rate": 0,
+     "flag_rate": 0.111,
+     "flag_rate_ci": [
+      0,
+      0.333
+     ],
+     "precision": 0,
+     "precision_ci": [
+      0,
+      0
+     ],
+     "lift": null
+    },
+    "in_sample": {
+     "precision": 0,
+     "base_rate": 0,
+     "flag_rate": 0.111
+    }
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 9,
+    "positives": 0,
+    "tp": 0,
+    "fp": 2,
+    "recall": null,
+    "recall_ci": null,
+    "false_alarm_rate": 0.222,
+    "false_alarm_ci": [
+     0.063,
+     0.547
+    ],
+    "at_base_rate": {
+     "base_rate": 0,
+     "flag_rate": 0.222,
+     "flag_rate_ci": [
+      0,
+      0.556
+     ],
+     "precision": 0,
+     "precision_ci": [
+      0,
+      0
+     ],
+     "lift": null
+    },
+    "in_sample": {
+     "precision": 0,
+     "base_rate": 0,
+     "flag_rate": 0.222
+    }
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 9,
+    "positives": 0,
+    "tp": 0,
+    "fp": 1,
+    "recall": null,
+    "recall_ci": null,
+    "false_alarm_rate": 0.111,
+    "false_alarm_ci": [
+     0.02,
+     0.435
+    ],
+    "at_base_rate": {
+     "base_rate": 0,
+     "flag_rate": 0.111,
+     "flag_rate_ci": [
+      0,
+      0.333
+     ],
+     "precision": 0,
+     "precision_ci": [
+      0,
+      0
+     ],
+     "lift": null
+    },
+    "in_sample": {
+     "precision": 0,
+     "base_rate": 0,
+     "flag_rate": 0.111
+    }
+   },
+   "auc": {
+    "D3 contradictions (count)": null,
+    "D3 high-certainty (count)": null,
+    "D2 contradictions (count)": null,
+    "D2 chrF (lower = worse)": null,
+    "D2 BLEU-4 (lower = worse)": null,
+    "D1 page_diff": null,
+    "D1 window": null
+   }
+  },
+  "T4 Hebrew/Aramaic/Arabic/Persian": {
+   "D3 direct: any contradiction": {
+    "n": 6,
+    "positives": 3,
+    "tp": 2,
+    "fp": 2,
+    "recall": 0.667,
+    "recall_ci": [
+     0.208,
+     0.939
+    ],
+    "false_alarm_rate": 0.667,
+    "false_alarm_ci": [
+     0.208,
+     0.939
+    ],
+    "at_base_rate": {
+     "base_rate": 0.208,
+     "flag_rate": 0.667,
+     "flag_rate_ci": [
+      0.208,
+      1
+     ],
+     "precision": 0.208,
+     "precision_ci": [
+      0,
+      1
+     ],
+     "lift": 1
+    },
+    "in_sample": {
+     "precision": 0.5,
+     "base_rate": 0.5,
+     "flag_rate": 0.667
+    }
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 6,
+    "positives": 3,
+    "tp": 1,
+    "fp": 2,
+    "recall": 0.333,
+    "recall_ci": [
+     0.061,
+     0.792
+    ],
+    "false_alarm_rate": 0.667,
+    "false_alarm_ci": [
+     0.208,
+     0.939
+    ],
+    "at_base_rate": {
+     "base_rate": 0.208,
+     "flag_rate": 0.597,
+     "flag_rate_ci": [
+      0.069,
+      0.931
+     ],
+     "precision": 0.116,
+     "precision_ci": [
+      0,
+      1
+     ],
+     "lift": 0.558
+    },
+    "in_sample": {
+     "precision": 0.333,
+     "base_rate": 0.5,
+     "flag_rate": 0.5
+    }
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 6,
+    "positives": 3,
+    "tp": 0,
+    "fp": 1,
+    "recall": 0,
+    "recall_ci": [
+     0,
+     0.562
+    ],
+    "false_alarm_rate": 0.333,
+    "false_alarm_ci": [
+     0.061,
+     0.792
+    ],
+    "at_base_rate": {
+     "base_rate": 0.208,
+     "flag_rate": 0.264,
+     "flag_rate_ci": [
+      0,
+      0.792
+     ],
+     "precision": 0,
+     "precision_ci": [
+      0,
+      0
+     ],
+     "lift": 0
+    },
+    "in_sample": {
+     "precision": 0,
+     "base_rate": 0.5,
+     "flag_rate": 0.167
+    }
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 6,
+    "positives": 3,
+    "tp": 2,
+    "fp": 2,
+    "recall": 0.667,
+    "recall_ci": [
+     0.208,
+     0.939
+    ],
+    "false_alarm_rate": 0.667,
+    "false_alarm_ci": [
+     0.208,
+     0.939
+    ],
+    "at_base_rate": {
+     "base_rate": 0.208,
+     "flag_rate": 0.667,
+     "flag_rate_ci": [
+      0.208,
+      1
+     ],
+     "precision": 0.208,
+     "precision_ci": [
+      0,
+      1
+     ],
+     "lift": 1
+    },
+    "in_sample": {
+     "precision": 0.5,
+     "base_rate": 0.5,
+     "flag_rate": 0.667
+    }
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 6,
+    "positives": 3,
+    "tp": 1,
+    "fp": 2,
+    "recall": 0.333,
+    "recall_ci": [
+     0.061,
+     0.792
+    ],
+    "false_alarm_rate": 0.667,
+    "false_alarm_ci": [
+     0.208,
+     0.939
+    ],
+    "at_base_rate": {
+     "base_rate": 0.208,
+     "flag_rate": 0.597,
+     "flag_rate_ci": [
+      0.138,
+      0.931
+     ],
+     "precision": 0.116,
+     "precision_ci": [
+      0,
+      1
+     ],
+     "lift": 0.558
+    },
+    "in_sample": {
+     "precision": 0.333,
+     "base_rate": 0.5,
+     "flag_rate": 0.5
+    }
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 6,
+    "positives": 3,
+    "tp": 1,
+    "fp": 2,
+    "recall": 0.333,
+    "recall_ci": [
+     0.061,
+     0.792
+    ],
+    "false_alarm_rate": 0.667,
+    "false_alarm_ci": [
+     0.208,
+     0.939
+    ],
+    "at_base_rate": {
+     "base_rate": 0.208,
+     "flag_rate": 0.597,
+     "flag_rate_ci": [
+      0.138,
+      0.931
+     ],
+     "precision": 0.116,
+     "precision_ci": [
+      0,
+      0.44
+     ],
+     "lift": 0.558
+    },
+    "in_sample": {
+     "precision": 0.333,
+     "base_rate": 0.5,
+     "flag_rate": 0.5
+    }
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 6,
+    "positives": 3,
+    "tp": 2,
+    "fp": 3,
+    "recall": 0.667,
+    "recall_ci": [
+     0.208,
+     0.939
+    ],
+    "false_alarm_rate": 1,
+    "false_alarm_ci": [
+     0.438,
+     1
+    ],
+    "at_base_rate": {
+     "base_rate": 0.208,
+     "flag_rate": 0.931,
+     "flag_rate_ci": [
+      0.792,
+      1
+     ],
+     "precision": 0.149,
+     "precision_ci": [
+      0,
+      0.208
+     ],
+     "lift": 0.716
+    },
+    "in_sample": {
+     "precision": 0.4,
+     "base_rate": 0.5,
+     "flag_rate": 0.833
+    }
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 6,
+    "positives": 3,
+    "tp": 1,
+    "fp": 0,
+    "recall": 0.333,
+    "recall_ci": [
+     0.061,
+     0.792
+    ],
+    "false_alarm_rate": 0,
+    "false_alarm_ci": [
+     0,
+     0.562
+    ],
+    "at_base_rate": {
+     "base_rate": 0.208,
+     "flag_rate": 0.069,
+     "flag_rate_ci": [
+      0,
+      0.208
+     ],
+     "precision": 1,
+     "precision_ci": [
+      1,
+      1
+     ],
+     "lift": 4.818
+    },
+    "in_sample": {
+     "precision": 1,
+     "base_rate": 0.5,
+     "flag_rate": 0.167
+    }
+   },
+   "auc": {
+    "D3 contradictions (count)": {
+     "auc": 0.389,
+     "pos": 3,
+     "neg": 3
+    },
+    "D3 high-certainty (count)": {
+     "auc": 0.278,
+     "pos": 3,
+     "neg": 3
+    },
+    "D2 contradictions (count)": {
+     "auc": 0.25,
+     "pos": 3,
+     "neg": 2
+    },
+    "D2 chrF (lower = worse)": {
+     "auc": 0.667,
+     "pos": 3,
+     "neg": 2
+    },
+    "D2 BLEU-4 (lower = worse)": {
+     "auc": 0.667,
+     "pos": 3,
+     "neg": 2
+    },
+    "D1 page_diff": {
+     "auc": 0.5,
+     "pos": 3,
+     "neg": 3
+    },
+    "D1 window": {
+     "auc": 0.556,
+     "pos": 3,
+     "neg": 3
+    }
+   }
+  },
+  "T5 Sanskrit/Pali/Chinese": {
+   "D3 direct: any contradiction": {
+    "n": 10,
+    "positives": 5,
+    "tp": 4,
+    "fp": 3,
+    "recall": 0.8,
+    "recall_ci": [
+     0.376,
+     0.964
+    ],
+    "false_alarm_rate": 0.6,
+    "false_alarm_ci": [
+     0.231,
+     0.882
+    ],
+    "at_base_rate": {
+     "base_rate": 0.214,
+     "flag_rate": 0.643,
+     "flag_rate_ci": [
+      0.286,
+      1
+     ],
+     "precision": 0.267,
+     "precision_ci": [
+      0.141,
+      0.577
+     ],
+     "lift": 1.244
+    },
+    "in_sample": {
+     "precision": 0.571,
+     "base_rate": 0.5,
+     "flag_rate": 0.7
+    }
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 10,
+    "positives": 5,
+    "tp": 3,
+    "fp": 2,
+    "recall": 0.6,
+    "recall_ci": [
+     0.231,
+     0.882
+    ],
+    "false_alarm_rate": 0.4,
+    "false_alarm_ci": [
+     0.118,
+     0.769
+    ],
+    "at_base_rate": {
+     "base_rate": 0.214,
+     "flag_rate": 0.443,
+     "flag_rate_ci": [
+      0.086,
+      0.8
+     ],
+     "precision": 0.29,
+     "precision_ci": [
+      0.083,
+      1
+     ],
+     "lift": 1.355
+    },
+    "in_sample": {
+     "precision": 0.6,
+     "base_rate": 0.5,
+     "flag_rate": 0.5
+    }
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 10,
+    "positives": 5,
+    "tp": 0,
+    "fp": 0,
+    "recall": 0,
+    "recall_ci": [
+     0,
+     0.434
+    ],
+    "false_alarm_rate": 0,
+    "false_alarm_ci": [
+     0,
+     0.434
+    ],
+    "at_base_rate": {
+     "base_rate": 0.214,
+     "flag_rate": 0,
+     "flag_rate_ci": [
+      0,
+      0
+     ],
+     "precision": null,
+     "precision_ci": [
+      null,
+      null
+     ],
+     "lift": null
+    },
+    "in_sample": {
+     "precision": null,
+     "base_rate": 0.5,
+     "flag_rate": 0
+    }
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 10,
+    "positives": 5,
+    "tp": 5,
+    "fp": 5,
+    "recall": 1,
+    "recall_ci": [
+     0.566,
+     1
+    ],
+    "false_alarm_rate": 1,
+    "false_alarm_ci": [
+     0.566,
+     1
+    ],
+    "at_base_rate": {
+     "base_rate": 0.214,
+     "flag_rate": 1,
+     "flag_rate_ci": [
+      1,
+      1
+     ],
+     "precision": 0.214,
+     "precision_ci": [
+      0.214,
+      0.214
+     ],
+     "lift": 1
+    },
+    "in_sample": {
+     "precision": 0.5,
+     "base_rate": 0.5,
+     "flag_rate": 1
+    }
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 10,
+    "positives": 5,
+    "tp": 4,
+    "fp": 5,
+    "recall": 0.8,
+    "recall_ci": [
+     0.376,
+     0.964
+    ],
+    "false_alarm_rate": 1,
+    "false_alarm_ci": [
+     0.566,
+     1
+    ],
+    "at_base_rate": {
+     "base_rate": 0.214,
+     "flag_rate": 0.957,
+     "flag_rate_ci": [
+      0.871,
+      1
+     ],
+     "precision": 0.179,
+     "precision_ci": [
+      0.098,
+      0.214
+     ],
+     "lift": 0.836
+    },
+    "in_sample": {
+     "precision": 0.444,
+     "base_rate": 0.5,
+     "flag_rate": 0.9
+    }
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 10,
+    "positives": 5,
+    "tp": 3,
+    "fp": 2,
+    "recall": 0.6,
+    "recall_ci": [
+     0.231,
+     0.882
+    ],
+    "false_alarm_rate": 0.4,
+    "false_alarm_ci": [
+     0.118,
+     0.769
+    ],
+    "at_base_rate": {
+     "base_rate": 0.214,
+     "flag_rate": 0.443,
+     "flag_rate_ci": [
+      0.129,
+      0.8
+     ],
+     "precision": 0.29,
+     "precision_ci": [
+      0.083,
+      1
+     ],
+     "lift": 1.355
+    },
+    "in_sample": {
+     "precision": 0.6,
+     "base_rate": 0.5,
+     "flag_rate": 0.5
+    }
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 10,
+    "positives": 5,
+    "tp": 2,
+    "fp": 3,
+    "recall": 0.4,
+    "recall_ci": [
+     0.118,
+     0.769
+    ],
+    "false_alarm_rate": 0.6,
+    "false_alarm_ci": [
+     0.231,
+     0.882
+    ],
+    "at_base_rate": {
+     "base_rate": 0.214,
+     "flag_rate": 0.557,
+     "flag_rate_ci": [
+      0.2,
+      0.871
+     ],
+     "precision": 0.154,
+     "precision_ci": [
+      0,
+      0.45
+     ],
+     "lift": 0.718
+    },
+    "in_sample": {
+     "precision": 0.4,
+     "base_rate": 0.5,
+     "flag_rate": 0.5
+    }
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 10,
+    "positives": 5,
+    "tp": 2,
+    "fp": 4,
+    "recall": 0.4,
+    "recall_ci": [
+     0.118,
+     0.769
+    ],
+    "false_alarm_rate": 0.8,
+    "false_alarm_ci": [
+     0.376,
+     0.964
+    ],
+    "at_base_rate": {
+     "base_rate": 0.214,
+     "flag_rate": 0.714,
+     "flag_rate_ci": [
+      0.4,
+      0.957
+     ],
+     "precision": 0.12,
+     "precision_ci": [
+      0,
+      0.267
+     ],
+     "lift": 0.56
+    },
+    "in_sample": {
+     "precision": 0.333,
+     "base_rate": 0.5,
+     "flag_rate": 0.6
+    }
+   },
+   "auc": {
+    "D3 contradictions (count)": {
+     "auc": 0.6,
+     "pos": 5,
+     "neg": 5
+    },
+    "D3 high-certainty (count)": {
+     "auc": 0.6,
+     "pos": 5,
+     "neg": 5
+    },
+    "D2 contradictions (count)": {
+     "auc": 0.64,
+     "pos": 5,
+     "neg": 5
+    },
+    "D2 chrF (lower = worse)": {
+     "auc": 0.64,
+     "pos": 5,
+     "neg": 5
+    },
+    "D2 BLEU-4 (lower = worse)": {
+     "auc": 0.56,
+     "pos": 5,
+     "neg": 5
+    },
+    "D1 page_diff": {
+     "auc": 0.44,
+     "pos": 5,
+     "neg": 5
+    },
+    "D1 window": {
+     "auc": 0.28,
+     "pos": 5,
+     "neg": 5
+    }
+   }
+  },
+  "Tengyur Tibetan": {
+   "D3 direct: any contradiction": {
+    "n": 10,
+    "positives": 2,
+    "tp": 2,
+    "fp": 1,
+    "recall": 1,
+    "recall_ci": [
+     0.342,
+     1
+    ],
+    "false_alarm_rate": 0.125,
+    "false_alarm_ci": [
+     0.022,
+     0.471
+    ],
+    "at_base_rate": {
+     "base_rate": 0.062,
+     "flag_rate": 0.179,
+     "flag_rate_ci": [
+      0.062,
+      0.414
+     ],
+     "precision": 0.346,
+     "precision_ci": [
+      0.15,
+      1
+     ],
+     "lift": 5.58
+    },
+    "in_sample": {
+     "precision": 0.667,
+     "base_rate": 0.2,
+     "flag_rate": 0.3
+    }
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 10,
+    "positives": 2,
+    "tp": 2,
+    "fp": 0,
+    "recall": 1,
+    "recall_ci": [
+     0.342,
+     1
+    ],
+    "false_alarm_rate": 0,
+    "false_alarm_ci": [
+     0,
+     0.324
+    ],
+    "at_base_rate": {
+     "base_rate": 0.062,
+     "flag_rate": 0.062,
+     "flag_rate_ci": [
+      0.062,
+      0.062
+     ],
+     "precision": 1,
+     "precision_ci": [
+      1,
+      1
+     ],
+     "lift": 16.143
+    },
+    "in_sample": {
+     "precision": 1,
+     "base_rate": 0.2,
+     "flag_rate": 0.2
+    }
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 10,
+    "positives": 2,
+    "tp": 0,
+    "fp": 0,
+    "recall": 0,
+    "recall_ci": [
+     0,
+     0.658
+    ],
+    "false_alarm_rate": 0,
+    "false_alarm_ci": [
+     0,
+     0.324
+    ],
+    "at_base_rate": {
+     "base_rate": 0.062,
+     "flag_rate": 0,
+     "flag_rate_ci": [
+      0,
+      0
+     ],
+     "precision": null,
+     "precision_ci": [
+      null,
+      null
+     ],
+     "lift": null
+    },
+    "in_sample": {
+     "precision": null,
+     "base_rate": 0.2,
+     "flag_rate": 0
+    }
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 10,
+    "positives": 2,
+    "tp": 2,
+    "fp": 2,
+    "recall": 1,
+    "recall_ci": [
+     0.342,
+     1
+    ],
+    "false_alarm_rate": 0.25,
+    "false_alarm_ci": [
+     0.071,
+     0.591
+    ],
+    "at_base_rate": {
+     "base_rate": 0.062,
+     "flag_rate": 0.296,
+     "flag_rate_ci": [
+      0.062,
+      0.648
+     ],
+     "precision": 0.209,
+     "precision_ci": [
+      0.096,
+      1
+     ],
+     "lift": 3.373
+    },
+    "in_sample": {
+     "precision": 0.5,
+     "base_rate": 0.2,
+     "flag_rate": 0.4
+    }
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 10,
+    "positives": 2,
+    "tp": 2,
+    "fp": 2,
+    "recall": 1,
+    "recall_ci": [
+     0.342,
+     1
+    ],
+    "false_alarm_rate": 0.25,
+    "false_alarm_ci": [
+     0.071,
+     0.591
+    ],
+    "at_base_rate": {
+     "base_rate": 0.062,
+     "flag_rate": 0.296,
+     "flag_rate_ci": [
+      0.062,
+      0.648
+     ],
+     "precision": 0.209,
+     "precision_ci": [
+      0.096,
+      1
+     ],
+     "lift": 3.373
+    },
+    "in_sample": {
+     "precision": 0.5,
+     "base_rate": 0.2,
+     "flag_rate": 0.4
+    }
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 10,
+    "positives": 2,
+    "tp": 2,
+    "fp": 0,
+    "recall": 1,
+    "recall_ci": [
+     0.342,
+     1
+    ],
+    "false_alarm_rate": 0,
+    "false_alarm_ci": [
+     0,
+     0.324
+    ],
+    "at_base_rate": {
+     "base_rate": 0.062,
+     "flag_rate": 0.062,
+     "flag_rate_ci": [
+      0.062,
+      0.062
+     ],
+     "precision": 1,
+     "precision_ci": [
+      1,
+      1
+     ],
+     "lift": 16.143
+    },
+    "in_sample": {
+     "precision": 1,
+     "base_rate": 0.2,
+     "flag_rate": 0.2
+    }
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 10,
+    "positives": 2,
+    "tp": 2,
+    "fp": 8,
+    "recall": 1,
+    "recall_ci": [
+     0.342,
+     1
+    ],
+    "false_alarm_rate": 1,
+    "false_alarm_ci": [
+     0.676,
+     1
+    ],
+    "at_base_rate": {
+     "base_rate": 0.062,
+     "flag_rate": 1,
+     "flag_rate_ci": [
+      1,
+      1
+     ],
+     "precision": 0.062,
+     "precision_ci": [
+      0.062,
+      0.062
+     ],
+     "lift": 1
+    },
+    "in_sample": {
+     "precision": 0.2,
+     "base_rate": 0.2,
+     "flag_rate": 1
+    }
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 10,
+    "positives": 2,
+    "tp": 1,
+    "fp": 4,
+    "recall": 0.5,
+    "recall_ci": [
+     0.095,
+     0.905
+    ],
+    "false_alarm_rate": 0.5,
+    "false_alarm_ci": [
+     0.215,
+     0.785
+    ],
+    "at_base_rate": {
+     "base_rate": 0.062,
+     "flag_rate": 0.5,
+     "flag_rate_ci": [
+      0.148,
+      0.821
+     ],
+     "precision": 0.062,
+     "precision_ci": [
+      0,
+      0.209
+     ],
+     "lift": 1
+    },
+    "in_sample": {
+     "precision": 0.2,
+     "base_rate": 0.2,
+     "flag_rate": 0.5
+    }
+   },
+   "auc": {
+    "D3 contradictions (count)": {
+     "auc": 0.938,
+     "pos": 2,
+     "neg": 8
+    },
+    "D3 high-certainty (count)": {
+     "auc": 1,
+     "pos": 2,
+     "neg": 8
+    },
+    "D2 contradictions (count)": {
+     "auc": 0.75,
+     "pos": 2,
+     "neg": 8
+    },
+    "D2 chrF (lower = worse)": {
+     "auc": 0.5,
+     "pos": 2,
+     "neg": 8
+    },
+    "D2 BLEU-4 (lower = worse)": {
+     "auc": 0.5,
+     "pos": 2,
+     "neg": 8
+    },
+    "D1 page_diff": {
+     "auc": 0.344,
+     "pos": 2,
+     "neg": 8
+    },
+    "D1 window": {
+     "auc": 0.5,
+     "pos": 2,
+     "neg": 8
+    }
+   }
+  }
+ },
+ "by_lang": {
+  "Ancient Greek": {
+   "D3 direct: any contradiction": {
+    "n": 11,
+    "positives": 3,
+    "tp": 2,
+    "fp": 2,
+    "recall_ci": [
+     0.208,
+     0.939
+    ],
+    "false_alarm_ci": [
+     0.071,
+     0.591
+    ]
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 11,
+    "positives": 3,
+    "tp": 1,
+    "fp": 2,
+    "recall_ci": [
+     0.061,
+     0.792
+    ],
+    "false_alarm_ci": [
+     0.071,
+     0.591
+    ]
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 11,
+    "positives": 3,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": [
+     0,
+     0.562
+    ],
+    "false_alarm_ci": [
+     0,
+     0.324
+    ]
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 11,
+    "positives": 3,
+    "tp": 3,
+    "fp": 3,
+    "recall_ci": [
+     0.438,
+     1
+    ],
+    "false_alarm_ci": [
+     0.137,
+     0.694
+    ]
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 11,
+    "positives": 3,
+    "tp": 3,
+    "fp": 1,
+    "recall_ci": [
+     0.438,
+     1
+    ],
+    "false_alarm_ci": [
+     0.022,
+     0.471
+    ]
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 11,
+    "positives": 3,
+    "tp": 1,
+    "fp": 1,
+    "recall_ci": [
+     0.061,
+     0.792
+    ],
+    "false_alarm_ci": [
+     0.022,
+     0.471
+    ]
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 11,
+    "positives": 3,
+    "tp": 2,
+    "fp": 3,
+    "recall_ci": [
+     0.208,
+     0.939
+    ],
+    "false_alarm_ci": [
+     0.137,
+     0.694
+    ]
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 11,
+    "positives": 3,
+    "tp": 0,
+    "fp": 4,
+    "recall_ci": [
+     0,
+     0.562
+    ],
+    "false_alarm_ci": [
+     0.215,
+     0.785
+    ]
+   }
+  },
+  "Arabic": {
+   "D3 direct: any contradiction": {
+    "n": 1,
+    "positives": 1,
+    "tp": 1,
+    "fp": 0,
+    "recall_ci": [
+     0.207,
+     1
+    ],
+    "false_alarm_ci": null
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 1,
+    "positives": 1,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": [
+     0,
+     0.793
+    ],
+    "false_alarm_ci": null
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 1,
+    "positives": 1,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": [
+     0,
+     0.793
+    ],
+    "false_alarm_ci": null
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 1,
+    "positives": 1,
+    "tp": 1,
+    "fp": 0,
+    "recall_ci": [
+     0.207,
+     1
+    ],
+    "false_alarm_ci": null
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 1,
+    "positives": 1,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": [
+     0,
+     0.793
+    ],
+    "false_alarm_ci": null
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 1,
+    "positives": 1,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": [
+     0,
+     0.793
+    ],
+    "false_alarm_ci": null
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 1,
+    "positives": 1,
+    "tp": 1,
+    "fp": 0,
+    "recall_ci": [
+     0.207,
+     1
+    ],
+    "false_alarm_ci": null
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 1,
+    "positives": 1,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": [
+     0,
+     0.793
+    ],
+    "false_alarm_ci": null
+   }
+  },
+  "Chinese": {
+   "D3 direct: any contradiction": {
+    "n": 6,
+    "positives": 3,
+    "tp": 3,
+    "fp": 3,
+    "recall_ci": [
+     0.438,
+     1
+    ],
+    "false_alarm_ci": [
+     0.438,
+     1
+    ]
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 6,
+    "positives": 3,
+    "tp": 2,
+    "fp": 2,
+    "recall_ci": [
+     0.208,
+     0.939
+    ],
+    "false_alarm_ci": [
+     0.208,
+     0.939
+    ]
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 6,
+    "positives": 3,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": [
+     0,
+     0.562
+    ],
+    "false_alarm_ci": [
+     0,
+     0.562
+    ]
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 6,
+    "positives": 3,
+    "tp": 3,
+    "fp": 3,
+    "recall_ci": [
+     0.438,
+     1
+    ],
+    "false_alarm_ci": [
+     0.438,
+     1
+    ]
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 6,
+    "positives": 3,
+    "tp": 3,
+    "fp": 3,
+    "recall_ci": [
+     0.438,
+     1
+    ],
+    "false_alarm_ci": [
+     0.438,
+     1
+    ]
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 6,
+    "positives": 3,
+    "tp": 2,
+    "fp": 2,
+    "recall_ci": [
+     0.208,
+     0.939
+    ],
+    "false_alarm_ci": [
+     0.208,
+     0.939
+    ]
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 6,
+    "positives": 3,
+    "tp": 2,
+    "fp": 1,
+    "recall_ci": [
+     0.208,
+     0.939
+    ],
+    "false_alarm_ci": [
+     0.061,
+     0.792
+    ]
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 6,
+    "positives": 3,
+    "tp": 2,
+    "fp": 2,
+    "recall_ci": [
+     0.208,
+     0.939
+    ],
+    "false_alarm_ci": [
+     0.208,
+     0.939
+    ]
+   }
+  },
+  "Dutch": {
+   "D3 direct: any contradiction": {
+    "n": 2,
+    "positives": 0,
+    "tp": 0,
+    "fp": 2,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0.342,
+     1
+    ]
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 2,
+    "positives": 0,
+    "tp": 0,
+    "fp": 2,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0.342,
+     1
+    ]
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 2,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.658
+    ]
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 2,
+    "positives": 0,
+    "tp": 0,
+    "fp": 1,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0.095,
+     0.905
+    ]
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 2,
+    "positives": 0,
+    "tp": 0,
+    "fp": 1,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0.095,
+     0.905
+    ]
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 2,
+    "positives": 0,
+    "tp": 0,
+    "fp": 1,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0.095,
+     0.905
+    ]
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 2,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.658
+    ]
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 2,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.658
+    ]
+   }
+  },
+  "French": {
+   "D3 direct: any contradiction": {
+    "n": 4,
+    "positives": 0,
+    "tp": 0,
+    "fp": 1,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0.046,
+     0.699
+    ]
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 4,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.49
+    ]
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 4,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.49
+    ]
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 4,
+    "positives": 0,
+    "tp": 0,
+    "fp": 1,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0.046,
+     0.699
+    ]
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 4,
+    "positives": 0,
+    "tp": 0,
+    "fp": 1,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0.046,
+     0.699
+    ]
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 4,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.49
+    ]
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 4,
+    "positives": 0,
+    "tp": 0,
+    "fp": 1,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0.046,
+     0.699
+    ]
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 4,
+    "positives": 0,
+    "tp": 0,
+    "fp": 1,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0.046,
+     0.699
+    ]
+   }
+  },
+  "German": {
+   "D3 direct: any contradiction": {
+    "n": 2,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.658
+    ]
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 2,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.658
+    ]
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 2,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.658
+    ]
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 2,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.658
+    ]
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 2,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.658
+    ]
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 2,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.658
+    ]
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 2,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.658
+    ]
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 2,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.658
+    ]
+   }
+  },
+  "Hebrew": {
+   "D3 direct: any contradiction": {
+    "n": 2,
+    "positives": 1,
+    "tp": 1,
+    "fp": 0,
+    "recall_ci": [
+     0.207,
+     1
+    ],
+    "false_alarm_ci": [
+     0,
+     0.793
+    ]
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 2,
+    "positives": 1,
+    "tp": 1,
+    "fp": 0,
+    "recall_ci": [
+     0.207,
+     1
+    ],
+    "false_alarm_ci": [
+     0,
+     0.793
+    ]
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 2,
+    "positives": 1,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": [
+     0,
+     0.793
+    ],
+    "false_alarm_ci": [
+     0,
+     0.793
+    ]
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 2,
+    "positives": 1,
+    "tp": 1,
+    "fp": 0,
+    "recall_ci": [
+     0.207,
+     1
+    ],
+    "false_alarm_ci": [
+     0,
+     0.793
+    ]
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 2,
+    "positives": 1,
+    "tp": 1,
+    "fp": 0,
+    "recall_ci": [
+     0.207,
+     1
+    ],
+    "false_alarm_ci": [
+     0,
+     0.793
+    ]
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 2,
+    "positives": 1,
+    "tp": 1,
+    "fp": 0,
+    "recall_ci": [
+     0.207,
+     1
+    ],
+    "false_alarm_ci": [
+     0,
+     0.793
+    ]
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 2,
+    "positives": 1,
+    "tp": 1,
+    "fp": 1,
+    "recall_ci": [
+     0.207,
+     1
+    ],
+    "false_alarm_ci": [
+     0.207,
+     1
+    ]
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 2,
+    "positives": 1,
+    "tp": 1,
+    "fp": 0,
+    "recall_ci": [
+     0.207,
+     1
+    ],
+    "false_alarm_ci": [
+     0,
+     0.793
+    ]
+   }
+  },
+  "Italian": {
+   "D3 direct: any contradiction": {
+    "n": 1,
+    "positives": 0,
+    "tp": 0,
+    "fp": 1,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0.207,
+     1
+    ]
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 1,
+    "positives": 0,
+    "tp": 0,
+    "fp": 1,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0.207,
+     1
+    ]
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 1,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.793
+    ]
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 1,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.793
+    ]
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 1,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.793
+    ]
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 1,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.793
+    ]
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 1,
+    "positives": 0,
+    "tp": 0,
+    "fp": 1,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0.207,
+     1
+    ]
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 1,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.793
+    ]
+   }
+  },
+  "Latin": {
+   "D3 direct: any contradiction": {
+    "n": 14,
+    "positives": 6,
+    "tp": 4,
+    "fp": 2,
+    "recall_ci": [
+     0.3,
+     0.903
+    ],
+    "false_alarm_ci": [
+     0.071,
+     0.591
+    ]
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 14,
+    "positives": 6,
+    "tp": 4,
+    "fp": 0,
+    "recall_ci": [
+     0.3,
+     0.903
+    ],
+    "false_alarm_ci": [
+     0,
+     0.324
+    ]
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 14,
+    "positives": 6,
+    "tp": 3,
+    "fp": 0,
+    "recall_ci": [
+     0.188,
+     0.812
+    ],
+    "false_alarm_ci": [
+     0,
+     0.324
+    ]
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 14,
+    "positives": 6,
+    "tp": 3,
+    "fp": 2,
+    "recall_ci": [
+     0.188,
+     0.812
+    ],
+    "false_alarm_ci": [
+     0.071,
+     0.591
+    ]
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 14,
+    "positives": 6,
+    "tp": 3,
+    "fp": 0,
+    "recall_ci": [
+     0.188,
+     0.812
+    ],
+    "false_alarm_ci": [
+     0,
+     0.324
+    ]
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 14,
+    "positives": 6,
+    "tp": 3,
+    "fp": 0,
+    "recall_ci": [
+     0.188,
+     0.812
+    ],
+    "false_alarm_ci": [
+     0,
+     0.324
+    ]
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 14,
+    "positives": 6,
+    "tp": 4,
+    "fp": 0,
+    "recall_ci": [
+     0.3,
+     0.903
+    ],
+    "false_alarm_ci": [
+     0,
+     0.324
+    ]
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 14,
+    "positives": 6,
+    "tp": 3,
+    "fp": 0,
+    "recall_ci": [
+     0.188,
+     0.812
+    ],
+    "false_alarm_ci": [
+     0,
+     0.324
+    ]
+   }
+  },
+  "Pali": {
+   "D3 direct: any contradiction": {
+    "n": 1,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.793
+    ]
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 1,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.793
+    ]
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 1,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.793
+    ]
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 1,
+    "positives": 0,
+    "tp": 0,
+    "fp": 1,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0.207,
+     1
+    ]
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 1,
+    "positives": 0,
+    "tp": 0,
+    "fp": 1,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0.207,
+     1
+    ]
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 1,
+    "positives": 0,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0,
+     0.793
+    ]
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 1,
+    "positives": 0,
+    "tp": 0,
+    "fp": 1,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0.207,
+     1
+    ]
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 1,
+    "positives": 0,
+    "tp": 0,
+    "fp": 1,
+    "recall_ci": null,
+    "false_alarm_ci": [
+     0.207,
+     1
+    ]
+   }
+  },
+  "Persian": {
+   "D3 direct: any contradiction": {
+    "n": 3,
+    "positives": 1,
+    "tp": 0,
+    "fp": 2,
+    "recall_ci": [
+     0,
+     0.793
+    ],
+    "false_alarm_ci": [
+     0.342,
+     1
+    ]
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 3,
+    "positives": 1,
+    "tp": 0,
+    "fp": 2,
+    "recall_ci": [
+     0,
+     0.793
+    ],
+    "false_alarm_ci": [
+     0.342,
+     1
+    ]
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 3,
+    "positives": 1,
+    "tp": 0,
+    "fp": 1,
+    "recall_ci": [
+     0,
+     0.793
+    ],
+    "false_alarm_ci": [
+     0.095,
+     0.905
+    ]
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 3,
+    "positives": 1,
+    "tp": 0,
+    "fp": 2,
+    "recall_ci": [
+     0,
+     0.793
+    ],
+    "false_alarm_ci": [
+     0.342,
+     1
+    ]
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 3,
+    "positives": 1,
+    "tp": 0,
+    "fp": 2,
+    "recall_ci": [
+     0,
+     0.793
+    ],
+    "false_alarm_ci": [
+     0.342,
+     1
+    ]
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 3,
+    "positives": 1,
+    "tp": 0,
+    "fp": 2,
+    "recall_ci": [
+     0,
+     0.793
+    ],
+    "false_alarm_ci": [
+     0.342,
+     1
+    ]
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 3,
+    "positives": 1,
+    "tp": 0,
+    "fp": 2,
+    "recall_ci": [
+     0,
+     0.793
+    ],
+    "false_alarm_ci": [
+     0.342,
+     1
+    ]
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 3,
+    "positives": 1,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": [
+     0,
+     0.793
+    ],
+    "false_alarm_ci": [
+     0,
+     0.658
+    ]
+   }
+  },
+  "Sanskrit": {
+   "D3 direct: any contradiction": {
+    "n": 3,
+    "positives": 2,
+    "tp": 1,
+    "fp": 0,
+    "recall_ci": [
+     0.095,
+     0.905
+    ],
+    "false_alarm_ci": [
+     0,
+     0.793
+    ]
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 3,
+    "positives": 2,
+    "tp": 1,
+    "fp": 0,
+    "recall_ci": [
+     0.095,
+     0.905
+    ],
+    "false_alarm_ci": [
+     0,
+     0.793
+    ]
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 3,
+    "positives": 2,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": [
+     0,
+     0.658
+    ],
+    "false_alarm_ci": [
+     0,
+     0.793
+    ]
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 3,
+    "positives": 2,
+    "tp": 2,
+    "fp": 1,
+    "recall_ci": [
+     0.342,
+     1
+    ],
+    "false_alarm_ci": [
+     0.207,
+     1
+    ]
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 3,
+    "positives": 2,
+    "tp": 1,
+    "fp": 1,
+    "recall_ci": [
+     0.095,
+     0.905
+    ],
+    "false_alarm_ci": [
+     0.207,
+     1
+    ]
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 3,
+    "positives": 2,
+    "tp": 1,
+    "fp": 0,
+    "recall_ci": [
+     0.095,
+     0.905
+    ],
+    "false_alarm_ci": [
+     0,
+     0.793
+    ]
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 3,
+    "positives": 2,
+    "tp": 0,
+    "fp": 1,
+    "recall_ci": [
+     0,
+     0.658
+    ],
+    "false_alarm_ci": [
+     0.207,
+     1
+    ]
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 3,
+    "positives": 2,
+    "tp": 0,
+    "fp": 1,
+    "recall_ci": [
+     0,
+     0.658
+    ],
+    "false_alarm_ci": [
+     0.207,
+     1
+    ]
+   }
+  },
+  "Tibetan": {
+   "D3 direct: any contradiction": {
+    "n": 10,
+    "positives": 2,
+    "tp": 2,
+    "fp": 1,
+    "recall_ci": [
+     0.342,
+     1
+    ],
+    "false_alarm_ci": [
+     0.022,
+     0.471
+    ]
+   },
+   "D3 direct: a high-certainty contradiction": {
+    "n": 10,
+    "positives": 2,
+    "tp": 2,
+    "fp": 0,
+    "recall_ci": [
+     0.342,
+     1
+    ],
+    "false_alarm_ci": [
+     0,
+     0.324
+    ]
+   },
+   "D3 direct: 2+ contradictions": {
+    "n": 10,
+    "positives": 2,
+    "tp": 0,
+    "fp": 0,
+    "recall_ci": [
+     0,
+     0.658
+    ],
+    "false_alarm_ci": [
+     0,
+     0.324
+    ]
+   },
+   "D2 back-translation: any contradiction": {
+    "n": 10,
+    "positives": 2,
+    "tp": 2,
+    "fp": 2,
+    "recall_ci": [
+     0.342,
+     1
+    ],
+    "false_alarm_ci": [
+     0.071,
+     0.591
+    ]
+   },
+   "D2 back-translation: a high-certainty contradiction": {
+    "n": 10,
+    "positives": 2,
+    "tp": 2,
+    "fp": 2,
+    "recall_ci": [
+     0.342,
+     1
+    ],
+    "false_alarm_ci": [
+     0.071,
+     0.591
+    ]
+   },
+   "D2 and D3 both (high certainty)": {
+    "n": 10,
+    "positives": 2,
+    "tp": 2,
+    "fp": 0,
+    "recall_ci": [
+     0.342,
+     1
+    ],
+    "false_alarm_ci": [
+     0,
+     0.324
+    ]
+   },
+   "D1 negation counts differ by 2+": {
+    "n": 10,
+    "positives": 2,
+    "tp": 2,
+    "fp": 8,
+    "recall_ci": [
+     0.342,
+     1
+    ],
+    "false_alarm_ci": [
+     0.676,
+     1
+    ]
+   },
+   "D1 negation counts differ by 3+ in a window": {
+    "n": 10,
+    "positives": 2,
+    "tp": 1,
+    "fp": 4,
+    "recall_ci": [
+     0.095,
+     0.905
+    ],
+    "false_alarm_ci": [
+     0.215,
+     0.785
+    ]
+   }
+  }
+ },
+ "auc": {
+  "reversal (either judge)": {
+   "D3 contradictions (count)": {
+    "auc": 0.716,
+    "pos": 19,
+    "neg": 41
+   },
+   "D3 high-certainty (count)": {
+    "auc": 0.679,
+    "pos": 19,
+    "neg": 41
+   },
+   "D2 contradictions (count)": {
+    "auc": 0.71,
+    "pos": 18,
+    "neg": 40
+   },
+   "D2 chrF (lower = worse)": {
+    "auc": 0.669,
+    "pos": 18,
+    "neg": 40
+   },
+   "D2 BLEU-4 (lower = worse)": {
+    "auc": 0.594,
+    "pos": 18,
+    "neg": 40
+   },
+   "D1 page_diff": {
+    "auc": 0.583,
+    "pos": 19,
+    "neg": 41
+   },
+   "D1 window": {
+    "auc": 0.567,
+    "pos": 19,
+    "neg": 41
+   }
+  },
+  "reversal (both judges)": {
+   "D3 contradictions (count)": {
+    "auc": 0.727,
+    "pos": 10,
+    "neg": 50
+   },
+   "D3 high-certainty (count)": {
+    "auc": 0.727,
+    "pos": 10,
+    "neg": 50
+   },
+   "D2 contradictions (count)": {
+    "auc": 0.646,
+    "pos": 9,
+    "neg": 49
+   },
+   "D2 chrF (lower = worse)": {
+    "auc": 0.553,
+    "pos": 9,
+    "neg": 49
+   },
+   "D2 BLEU-4 (lower = worse)": {
+    "auc": 0.49,
+    "pos": 9,
+    "neg": 49
+   },
+   "D1 page_diff": {
+    "auc": 0.675,
+    "pos": 10,
+    "neg": 50
+   },
+   "D1 window": {
+    "auc": 0.7,
+    "pos": 10,
+    "neg": 50
+   }
+  },
+  "omission (both judges)": {
+   "D3 contradictions (count)": {
+    "auc": 0.655,
+    "pos": 14,
+    "neg": 46
+   },
+   "D3 high-certainty (count)": {
+    "auc": 0.614,
+    "pos": 14,
+    "neg": 46
+   },
+   "D2 contradictions (count)": {
+    "auc": 0.704,
+    "pos": 13,
+    "neg": 45
+   },
+   "D2 chrF (lower = worse)": {
+    "auc": 0.67,
+    "pos": 13,
+    "neg": 45
+   },
+   "D2 BLEU-4 (lower = worse)": {
+    "auc": 0.621,
+    "pos": 13,
+    "neg": 45
+   },
+   "D1 page_diff": {
+    "auc": 0.499,
+    "pos": 14,
+    "neg": 46
+   },
+   "D1 window": {
+    "auc": 0.574,
+    "pos": 14,
+    "neg": 46
+   }
+  },
+  "unreadable-fill invention (either judge)": {
+   "D3 contradictions (count)": {
+    "auc": 0.524,
+    "pos": 12,
+    "neg": 48
+   },
+   "D3 high-certainty (count)": {
+    "auc": 0.493,
+    "pos": 12,
+    "neg": 48
+   },
+   "D2 contradictions (count)": {
+    "auc": 0.663,
+    "pos": 12,
+    "neg": 46
+   },
+   "D2 chrF (lower = worse)": {
+    "auc": 0.746,
+    "pos": 12,
+    "neg": 46
+   },
+   "D2 BLEU-4 (lower = worse)": {
+    "auc": 0.58,
+    "pos": 12,
+    "neg": 46
+   },
+   "D1 page_diff": {
+    "auc": 0.398,
+    "pos": 12,
+    "neg": 48
+   },
+   "D1 window": {
+    "auc": 0.405,
+    "pos": 12,
+    "neg": 48
+   }
+  },
+  "fidelity <= 3": {
+   "D3 contradictions (count)": {
+    "auc": 0.659,
+    "pos": 20,
+    "neg": 40
+   },
+   "D3 high-certainty (count)": {
+    "auc": 0.637,
+    "pos": 20,
+    "neg": 40
+   },
+   "D2 contradictions (count)": {
+    "auc": 0.731,
+    "pos": 19,
+    "neg": 39
+   },
+   "D2 chrF (lower = worse)": {
+    "auc": 0.775,
+    "pos": 19,
+    "neg": 39
+   },
+   "D2 BLEU-4 (lower = worse)": {
+    "auc": 0.54,
+    "pos": 19,
+    "neg": 39
+   },
+   "D1 page_diff": {
+    "auc": 0.516,
+    "pos": 20,
+    "neg": 40
+   },
+   "D1 window": {
+    "auc": 0.516,
+    "pos": 20,
+    "neg": 40
+   }
+  },
+  "any of: reversal, omission (both), fill": {
+   "D3 contradictions (count)": {
+    "auc": 0.656,
+    "pos": 29,
+    "neg": 31
+   },
+   "D3 high-certainty (count)": {
+    "auc": 0.641,
+    "pos": 29,
+    "neg": 31
+   },
+   "D2 contradictions (count)": {
+    "auc": 0.715,
+    "pos": 28,
+    "neg": 30
+   },
+   "D2 chrF (lower = worse)": {
+    "auc": 0.746,
+    "pos": 28,
+    "neg": 30
+   },
+   "D2 BLEU-4 (lower = worse)": {
+    "auc": 0.612,
+    "pos": 28,
+    "neg": 30
+   },
+   "D1 page_diff": {
+    "auc": 0.529,
+    "pos": 29,
+    "neg": 31
+   },
+   "D1 window": {
+    "auc": 0.599,
+    "pos": 29,
+    "neg": 31
+   }
+  }
+ },
+ "planted": null,
+ "cost": {
+  "model": "gemini-3.1-flash-lite, thinking off",
+  "pages": 60,
+  "d3_usd_per_page": 0.00059,
+  "d2_usd_per_page": 0.00179,
+  "d3_usd_per_100k_pages": 59,
+  "d2_usd_per_100k_pages": 179,
+  "d1_usd_per_100k_pages": 0,
+  "note": "realtime price; these reference pages are the corpus the tracks drew, mean page length may differ from the whole library"
+ },
+ "d3_true_positives_located": {
+  "flagged_reversal_pages": 14,
+  "at_the_judges_quote": 7
+ },
+ "per_page": [
+  {
+   "id": "6abeafd3896ea18127c8218e_00108",
+   "order": 1,
+   "track": "Tengyur",
+   "lang": "Tibetan",
+   "url": "https://sourcelibrary.org/book/6abeafd3896ea18127c8218e?page=108",
+   "weight": 1,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 1,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 4,
+    "reversals": [
+     {
+      "english": "internal emptiness is established to reverse the apprehension of external things as the consumed",
+      "source": "ཕྱི་རོལ་གྱི་དངོས་པོ་ལ་བཟའ་བར་འཛིན་པ་བཟློག་པའི་ཕྱིར་ཕྱི་སྟོང་པ་ཉིད་རྣམ་པར་གཞག་སྟེ",
+      "why": "source and reference present OUTER emptiness here; T1 names its opposite, internal emptiness"
+     }
+    ],
+    "defects": []
+   },
+   "target": {
+    "reversal": true,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "དེ་ལྟར་ནང་གི་དངོས་པོ་ལ་ཟ་བ་པོར་འཛིན་པ་བཟློག་ནས་ཕྱི་རོལ་གྱི་དངོས་པོ་ལ་བཟའ་བར་འཛིན་པ་བཟློག་པའི་ཕྱིར་ཕྱི་སྟོང་པ་ཉིད་རྣམ་པར་གཞག་སྟེ།",
+      "english": "Having thus reversed the apprehension of internal things as a consumer , internal emptiness is established to reverse the apprehension of external things as the consumed .",
+      "kind": "sense",
+      "why": "The source says internal emptiness is established to reverse the apprehension of internal things, and external emptiness is established to reverse the apprehension of external things. The English incorrectly links the reversal of the consumer to the establishment of internal emptiness, and the reversal of the consumed to the establishment of external emptiness in a way that misrepresents the causal structure of the text.",
+      "certainty": "high"
+     }
+    ],
+    "located": true
+   },
+   "d2": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "a": "ཕྱི་སྟོང་པ་ཉིད་རྣམ་པར་གཞག་སྟེ།",
+      "b": "ནང་སྟོང་པ་ཉིད་དུ་བཞག་གོ །",
+      "kind": "sense",
+      "why": "A identifies the following section as 'outer emptiness' (phyi stong pa nyid), while B identifies it as 'inner emptiness' (nang stong pa nyid).",
+      "certainty": "high"
+     }
+    ],
+    "chrf": 0.5665270144795385,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 7,
+    "en_neg": 5,
+    "page_diff": 2,
+    "window": 2
+   }
+  },
+  {
+   "id": "69935b692c63944063133f67_00112",
+   "order": 2,
+   "track": "T5",
+   "lang": "Chinese",
+   "url": "https://sourcelibrary.org/book/69935b692c63944063133f67?page=112",
+   "weight": 1,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 2,
+    "omission_judges": 0,
+    "fill_judges": 1,
+    "boundary_judges": 0,
+    "fidelity": 3,
+    "reversals": [
+     {
+      "english": "Only after one does nothing can one speak of the Way",
+      "source": null,
+      "why": null
+     },
+     {
+      "english": "Only after one does nothing can one speak of the Way",
+      "source": null,
+      "why": null
+     }
+    ],
+    "defects": [
+     "T8: Huang: 無所不為 (nothing one does not do) rendered 'one does nothing'",
+     "T8: 'Only after one does nothing can one speak of the Way' inverts 無所不為而後可以言道"
+    ]
+   },
+   "target": {
+    "reversal": true,
+    "reversal_both": true,
+    "omission": false,
+    "fill": true,
+    "low": true
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "為道者已聞道者也已聞道而為之不得不無為而已",
+      "english": "One who practices the Way has already heard the Way. Having heard the Way, one has to do nothing but non-action.",
+      "kind": "sense",
+      "why": "The English translates '為道者' (one who practices the Way) as 'One who practices the Way', but the source text defines '為道' as the act of practicing the Way, not the person.",
+      "certainty": "medium"
+     }
+    ],
+    "located": true
+   },
+   "d2": {
+    "n": 2,
+    "n_high": 2,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "a": "未聞道而求之不得不博故曰益",
+      "b": "未聞道，故必廣學以求之，故曰損之又損。",
+      "kind": "sense",
+      "why": "A identifies 'increasing' (益) with the pursuit of learning before knowing the Way; B identifies this same pursuit as 'decreasing' (損之又損).",
+      "certainty": "high"
+     },
+     {
+      "a": "已聞道而為之不得不無為而已故曰損",
+      "b": "行道者，已聞道矣。既聞道，則無事乎無為，故曰損。",
+      "kind": "sense",
+      "why": "A says one who knows the Way must practice 'non-action' (無為) and calls this 'decreasing' (損); B says one who knows the Way has no need for 'non-action' and calls this 'decreasing' (損).",
+      "certainty": "high"
+     }
+    ],
+    "chrf": 0.3842608031953475,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 55,
+    "en_neg": 33,
+    "page_diff": 22,
+    "window": 14
+   }
+  },
+  {
+   "id": "69938e26d5a98fd66f4307b0_00136",
+   "order": 3,
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "url": "https://sourcelibrary.org/book/69938e26d5a98fd66f4307b0?page=136",
+   "weight": 3.7058823529411766,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 4,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.5091315122226036,
+    "bleu4": 0.057130922449999885
+   },
+   "d1": {
+    "src_neg": 18,
+    "en_neg": 14,
+    "page_diff": 4,
+    "window": 3
+   }
+  },
+  {
+   "id": "6abe8366433559215a997cad_00065",
+   "order": 4,
+   "track": "Tengyur",
+   "lang": "Tibetan",
+   "url": "https://sourcelibrary.org/book/6abe8366433559215a997cad?page=65",
+   "weight": 3.7857142857142856,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 5,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.6253748159392112,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 14,
+    "en_neg": 12,
+    "page_diff": 2,
+    "window": 1
+   }
+  },
+  {
+   "id": "69ac7ee520878c5c9ba51e75_00098",
+   "order": 5,
+   "track": "T1",
+   "lang": "Latin",
+   "url": "https://sourcelibrary.org/book/69ac7ee520878c5c9ba51e75?page=98",
+   "weight": 3.7058823529411766,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 4.5,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.5585507075090728,
+    "bleu4": 0.07228197624302661
+   },
+   "d1": {
+    "src_neg": 4,
+    "en_neg": 4,
+    "page_diff": 0,
+    "window": 1
+   }
+  },
+  {
+   "id": "6909f75fcf28baa1b4cb0f71_00197",
+   "order": 6,
+   "track": "T3",
+   "lang": "French",
+   "url": "https://sourcelibrary.org/book/6909f75fcf28baa1b4cb0f71?page=197",
+   "weight": 3.8666666666666667,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 5,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "Trois petites jambes également noires, sortoient des deux côtés du corps",
+      "english": "Three small legs, also black, emerged from each side of the body",
+      "kind": "number",
+      "why": "The source says three legs total (implied per side, but the text says 'three legs emerged from both sides'), while the English implies three legs per side (six total).",
+      "certainty": "medium"
+     }
+    ],
+    "located": false
+   },
+   "d2": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "a": "Trois petites jambes également noires, sortoient des deux côtés du corps",
+      "b": "Trois petites pattes, également noires, sortaient de chaque côté du corps",
+      "kind": "number",
+      "why": "A says three legs total (implied), B says three on each side (six total).",
+      "certainty": "high"
+     }
+    ],
+    "chrf": 0.7337497922430485,
+    "bleu4": 0.31326659488314024
+   },
+   "d1": {
+    "src_neg": 0,
+    "en_neg": 1,
+    "page_diff": 1,
+    "window": 1
+   }
+  },
+  {
+   "id": "69523495ab34727b1f044a45_00063",
+   "order": 7,
+   "track": "T1",
+   "lang": "Latin",
+   "url": "https://sourcelibrary.org/book/69523495ab34727b1f044a45?page=63",
+   "weight": 1,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 2,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 3,
+    "reversals": [
+     {
+      "english": "just as men can kill other humans when God permits it",
+      "source": null,
+      "why": null
+     },
+     {
+      "english": "just as men can kill other humans when God permits it, they can also",
+      "source": null,
+      "why": null
+     }
+    ],
+    "defects": [
+     "T8: 'men can kill ... they can also truly ... remove a limb': the subject is devils, 'homines' is the object",
+     "T8: 'just as men can kill other humans when God permits it' for 'occidere possunt homines' (the demons can kill men)",
+     "mistranslation: 'God permits the generative power of witches more than other powers' for 'amplius permittit vim generatiuam maleficiari' (to be bewitched)"
+    ]
+   },
+   "target": {
+    "reversal": true,
+    "reversal_both": true,
+    "omission": false,
+    "fill": false,
+    "low": true
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.626837512210825,
+    "bleu4": 0.05828371840605665
+   },
+   "d1": {
+    "src_neg": 29,
+    "en_neg": 30,
+    "page_diff": 1,
+    "window": 4
+   }
+  },
+  {
+   "id": "69c814536c6f3cc53c848191_00054",
+   "order": 8,
+   "track": "T3",
+   "lang": "German",
+   "url": "https://sourcelibrary.org/book/69c814536c6f3cc53c848191?page=54",
+   "weight": 3.8666666666666667,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 1,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 4.5,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.47659003087833546,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 4,
+    "en_neg": 4,
+    "page_diff": 0,
+    "window": 1
+   }
+  },
+  {
+   "id": "69ea3e63300d991d0f1d3186_00160",
+   "order": 9,
+   "track": "T5",
+   "lang": "Sanskrit",
+   "url": "https://sourcelibrary.org/book/69ea3e63300d991d0f1d3186?page=160",
+   "weight": 1,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 2,
+    "omission_judges": 2,
+    "fill_judges": 1,
+    "boundary_judges": 0,
+    "fidelity": 3,
+    "reversals": [
+     {
+      "english": "If a man causes her distress... he shall be punished",
+      "source": null,
+      "why": null
+     },
+     {
+      "english": "or forces her into water ... he shall be punished",
+      "source": null,
+      "why": null
+     }
+    ],
+    "defects": [
+     "T8: agent swapped: 'If a man causes her distress... he shall be punished' vs courtesan killing a man",
+     "T8: 'If a man causes her distress ... he shall be punished' — offender swapped; source 'पुरुषं ...ऽप्सु प्रवेशनं वा' punishes the courtesan",
+     "T9: verse reduced to 'used for secret missions and to observe the movements of others': घात, प्रमाद, बन्धुवाहनाः and अनात्मसु gone"
+    ]
+   },
+   "target": {
+    "reversal": true,
+    "reversal_both": true,
+    "omission": true,
+    "fill": true,
+    "low": true
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "पुरुषं अत्याश्रितापतापोऽप्सु प्रवेशनं वा ।",
+      "english": "If a man causes her distress while she is under his protection, or forces her into water , he shall be punished.",
+      "kind": "role",
+      "why": "The source text does not specify the punishment for the man, but the English translation adds that he shall be punished.",
+      "certainty": "high"
+     }
+    ],
+    "located": true
+   },
+   "d2": {
+    "n": 2,
+    "n_high": 2,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "a": "राजाज्ञया पुरुषमनभिगच्छन्ती गणिका शिफासहस्रं लभेत; पञ्चसहस्रं वा दण्डः ।",
+      "b": "राजशासनादुपसर्पणमकुर्वन्ती गणिका सहस्रं पणान् दण्डं दद्यात्, सहस्रं वा कशाघातान् लभेत।",
+      "kind": "number",
+      "why": "A specifies 5000 panas as the fine, while B specifies 1000 panas.",
+      "certainty": "high"
+     },
+     {
+      "a": "पुरुषं अत्याश्रितापतापोऽप्सु प्रवेशनं वा ।",
+      "b": "यः कश्चित् संरक्षितां गणिकां बाधते, जले वा प्रक्षिपते, स दण्डनीयः।",
+      "kind": "role",
+      "why": "A describes the woman's own actions (self-harm/suicide), while B describes a man harming the woman.",
+      "certainty": "high"
+     }
+    ],
+    "chrf": 0.45700263386054396,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 0,
+    "en_neg": 0,
+    "page_diff": 0,
+    "window": 0
+   }
+  },
+  {
+   "id": "69afd0df775a23a98ee93a30_00420",
+   "order": 10,
+   "track": "T1",
+   "lang": "Latin",
+   "url": "https://sourcelibrary.org/book/69afd0df775a23a98ee93a30?page=420",
+   "weight": 1,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 1,
+    "omission_judges": 1,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 3.5,
+    "reversals": [
+     {
+      "english": "if the loins of a buck are pricked with the blood of a wild black bull",
+      "source": null,
+      "why": null
+     }
+    ],
+    "defects": [
+     "mistranslation: 'if the loins of a buck are pricked' for 'lumbi punganē mulieri' (the woman's loins)",
+     "T8: 'goat urine mixed with spikenard is a drink of love, because of the fragrance' for 'Idē amoris ... pp fastigiū'"
+    ]
+   },
+   "target": {
+    "reversal": true,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 2,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "Eadē circunlita sanguine fœminæ suis minē crescunt.",
+      "english": "The same, smeared with the blood of a female sow, makes the breasts grow less.",
+      "kind": "sense",
+      "why": "The source says the breasts (uber) grow less, but the English says the breasts grow less, omitting the subject 'uber' and potentially confusing the reader.",
+      "certainty": "medium"
+     },
+     {
+      "source": "Lupi adeps illitus uuluas mollit. Dolores earu etiā cōtra illita noxia ualeat. Et n/ pdest.",
+      "english": "Wolf fat applied softens the womb. It can even be effective against harmful applications to alleviate their pains. And it is not useless.",
+      "kind": "sense",
+      "why": "The source says 'Et n/ pdest' (And it is not useful/useless), but the English translates it as 'And it is not useless'.",
+      "certainty": "high"
+     }
+    ],
+    "located": true
+   },
+   "d2": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "a": "Olympias thebana affirmat felle taurino & adipe spentium & erugine addito melle",
+      "b": "Olympias Thebana hoc fel tauri, adipe anserino, et aerugine, melle adiecto",
+      "kind": "sense",
+      "why": "A says 'spentium' (of serpents/vipers), B says 'anserino' (of a goose).",
+      "certainty": "high"
+     }
+    ],
+    "chrf": 0.5001224513366697,
+    "bleu4": 0.014976074200505592
+   },
+   "d1": {
+    "src_neg": 3,
+    "en_neg": 6,
+    "page_diff": 3,
+    "window": 2
+   }
+  },
+  {
+   "id": "69e7494885f786e884a4e57a_00024",
+   "order": 11,
+   "track": "T5",
+   "lang": "Chinese",
+   "url": "https://sourcelibrary.org/book/69e7494885f786e884a4e57a?page=24",
+   "weight": 1,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 1,
+    "omission_judges": 0,
+    "fill_judges": 1,
+    "boundary_judges": 0,
+    "fidelity": 3,
+    "reversals": [
+     {
+      "english": "You do not reply to me.",
+      "source": null,
+      "why": null
+     }
+    ],
+    "defects": [
+     "T8: 'You do not reply to me' after 'oh father, oh mother' swaps subject of 報我不述",
+     "mistranslation: 'Is it possible to forget?' for 俾也可忘 (he lets me be forgotten)",
+     "mistranslation: 'You do not reply to me' for 報我不述 drops 不述 (not according to reason)"
+    ]
+   },
+   "target": {
+    "reversal": true,
+    "reversal_both": false,
+    "omission": false,
+    "fill": true,
+    "low": true
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "俾也可忘",
+      "english": "Is it possible to forget?",
+      "kind": "sense",
+      "why": "The source asks if the person (the husband) can be forgotten, whereas the English asks if it is possible to forget in general.",
+      "certainty": "high"
+     }
+    ],
+    "located": false
+   },
+   "d2": {
+    "n": 3,
+    "n_high": 1,
+    "omissions": 1,
+    "additions": 0,
+    "items": [
+     {
+      "a": "日居月諸。下土是冒。",
+      "b": "日月，照臨下土。",
+      "kind": "sense",
+      "why": "A says the sun and moon 'cover' (oppress/overlook) the earth; B says they 'shine upon' (illuminate) it.",
+      "certainty": "high"
+     },
+     {
+      "a": "逝不相好。",
+      "b": "此人則離，不我善處。",
+      "kind": "sense",
+      "why": "A says 'he does not treat me well'; B says 'this person is distant/estranged'.",
+      "certainty": "medium"
+     },
+     {
+      "a": "德音無良。",
+      "b": "德音不實。",
+      "kind": "sense",
+      "why": "A says his reputation/words are 'not good'; B says they are 'not true/sincere'.",
+      "certainty": "medium"
+     }
+    ],
+    "chrf": 0.09520629776142107,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 7,
+    "en_neg": 6,
+    "page_diff": 1,
+    "window": 2
+   }
+  },
+  {
+   "id": "69942a7f045dfc482ad772e7_00291",
+   "order": 12,
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "url": "https://sourcelibrary.org/book/69942a7f045dfc482ad772e7?page=291",
+   "weight": 3.7058823529411766,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 1,
+    "fidelity": 4,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.11969198946921565,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 0,
+    "en_neg": 0,
+    "page_diff": 0,
+    "window": 0
+   }
+  },
+  {
+   "id": "69aebfa1c337b1e6a4d58005_00358",
+   "order": 13,
+   "track": "T3",
+   "lang": "Italian",
+   "url": "https://sourcelibrary.org/book/69aebfa1c337b1e6a4d58005?page=358",
+   "weight": 3.8666666666666667,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 2,
+    "fidelity": 4,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "et essendo rimaso uno suo figliuolo, et due suoi fratelli, furono a tempo a uendicare il morto.",
+      "english": "and one of his sons and two of his brothers having remained, they were in time to avenge the dead man.",
+      "kind": "role",
+      "why": "The English implies the son and brothers avenged the Duke, whereas the source says the conspirators were in time to avenge the dead man (by killing the survivors).",
+      "certainty": "high"
+     }
+    ],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.632151938286787,
+    "bleu4": 0.11003496697011894
+   },
+   "d1": {
+    "src_neg": 8,
+    "en_neg": 10,
+    "page_diff": 2,
+    "window": 2
+   }
+  },
+  {
+   "id": "69ea3e3a300d991d0f1d29be_00426",
+   "order": 14,
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "url": "https://sourcelibrary.org/book/69ea3e3a300d991d0f1d29be?page=426",
+   "weight": 3.7058823529411766,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 2,
+    "fill_judges": 0,
+    "boundary_judges": 2,
+    "fidelity": 4,
+    "reversals": [],
+    "defects": [
+     "T5: page ends at 'τὴν αἰτίαν τι-'; candidate runs on with 'reproaches Theodectes ... whom the sun does not touch', a verse and a paragraph of the next page",
+     "T5: after 'simply in the water, and' it runs on with 'reproaches Theodectes ... those in the womb, whom the sun does not touch' = next page (source_next_head 'μέμφεσθαι δὲ τὸν Θεοδέκτην')"
+    ]
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": true,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "κατεσκευασμένων δὲ ἀμφοτέρων ἐγκοιλίων μητρῶν χωρίς",
+      "english": "are constructed without en koiliois metron or keels",
+      "kind": "sense",
+      "why": "The source says 'without hollows/wombs' (ἐγκοιλίων μητρῶν), but the English interprets this as 'keels'.",
+      "certainty": "high"
+     }
+    ],
+    "located": false
+   },
+   "d2": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 1,
+    "additions": 1,
+    "items": [
+     {
+      "a": "οἱ κλάδους αὐξηθέντας ἐπὶ πήχεις καὶ δώδεκα · ἔπειτα τὴν λοιπὴν αὔξησιν κατωφερῆ λαμβάνειν",
+      "b": "hōn hoi kladoi anō phuontai epi dōdeka pēcheis, epeita tēn loipēn auxēsin katō pherontai",
+      "kind": "sense",
+      "why": "A says the branches grow to 12 cubits then turn down; B says they grow upwards for 12 cubits.",
+      "certainty": "high"
+     }
+    ],
+    "chrf": 0.17571528135502856,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 10,
+    "en_neg": 14,
+    "page_diff": 4,
+    "window": 4
+   }
+  },
+  {
+   "id": "69906485ef12272ffdc93acc_00116",
+   "order": 15,
+   "track": "T3",
+   "lang": "French",
+   "url": "https://sourcelibrary.org/book/69906485ef12272ffdc93acc?page=116",
+   "weight": 3.8666666666666667,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 4,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.5696569051902051,
+    "bleu4": 0.11689571537815195
+   },
+   "d1": {
+    "src_neg": 4,
+    "en_neg": 3,
+    "page_diff": 1,
+    "window": 3
+   }
+  },
+  {
+   "id": "69e8b18b2ff2a8dc09e76378_00076",
+   "order": 16,
+   "track": "T3",
+   "lang": "French",
+   "url": "https://sourcelibrary.org/book/69e8b18b2ff2a8dc09e76378?page=76",
+   "weight": 3.8666666666666667,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 5,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.8818445130307891,
+    "bleu4": 0.6456658143456327
+   },
+   "d1": {
+    "src_neg": 4,
+    "en_neg": 2,
+    "page_diff": 2,
+    "window": 2
+   }
+  },
+  {
+   "id": "69e74eeb5cf1eaf3ad80ddc1_00237",
+   "order": 17,
+   "track": "T4",
+   "lang": "Persian",
+   "url": "https://sourcelibrary.org/book/69e74eeb5cf1eaf3ad80ddc1?page=237",
+   "weight": 3.8181818181818183,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 1,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 3,
+    "reversals": [],
+    "defects": [
+     "mistranslation: 'Stay as long as the blue robe accepts it, May your young fortune live from the ancient heaven' — source: fortune accepts the blue khirqa from the old sky",
+     "mistranslation: 'Stay as long as the blue robe accepts it, May your young fortune live from the ancient heaven' for 'خرقه ازرق کند قبول بخت جوانت از فلک پیر'"
+    ]
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": true
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "تا چند همچو شمع زبان آوری کنی / پروانه مراد رسید ای محب خموش",
+      "english": "How long will you use your tongue like a candle? / The butterfly of desire has arrived, O silent lover.",
+      "kind": "sense",
+      "why": "The source says 'O lover, be silent' (imperative), but the English translates it as 'O silent lover' (adjective).",
+      "certainty": "high"
+     }
+    ],
+    "located": false
+   },
+   "d2": {
+    "n": 4,
+    "n_high": 2,
+    "omissions": 2,
+    "additions": 0,
+    "items": [
+     {
+      "a": "تا دید محتسب که سبویی کشد بدوش",
+      "b": "تا دید محتسب که سبویی به دوش داشت",
+      "kind": "role",
+      "why": "A implies the Sufi saw the Mohtasib carrying a jug; B implies the Mohtasib saw the Sufi.",
+      "certainty": "high"
+     },
+     {
+      "a": "بخت جوانت از فلک پیر زند بپوش",
+      "b": "بختِ جوانِ تو ز فلکِ کهن بزی",
+      "kind": "sense",
+      "why": "A says the young fortune wears the old sky as a garment; B says live from the old sky.",
+      "certainty": "medium"
+     },
+     {
+      "a": "سخت میگیرد جهان بر مردمان سخت کوش",
+      "b": "سخت است کار بر کسِ سخت‌کوشِ خویش",
+      "kind": "sense",
+      "why": "A says the world is hard on the hardworking; B says the work itself is hard for the person.",
+      "certainty": "medium"
+     },
+     {
+      "a": "آیی چو چنگ اندر خروش",
+      "b": "چون زخم می‌خوری، چو رباب از فغان مپوی",
+      "kind": "negation",
+      "why": "A tells the reader to cry out like a harp; B tells the reader not to cry out.",
+      "certainty": "high"
+     }
+    ],
+    "chrf": 0.3651230410928942,
+    "bleu4": 0.08384481257950206
+   },
+   "d1": {
+    "src_neg": 4,
+    "en_neg": 6,
+    "page_diff": 2,
+    "window": 2
+   }
+  },
+  {
+   "id": "69b2ff0ea1a4246ddb45adbb_00062",
+   "order": 18,
+   "track": "T1",
+   "lang": "Latin",
+   "url": "https://sourcelibrary.org/book/69b2ff0ea1a4246ddb45adbb?page=62",
+   "weight": 1,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 2,
+    "omission_judges": 1,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 3,
+    "reversals": [
+     {
+      "english": "He should not rashly revoke laws that have fallen into disuse",
+      "source": null,
+      "why": null
+     },
+     {
+      "english": "He should not rashly revoke laws that have fallen into disuse",
+      "source": null,
+      "why": null
+     }
+    ],
+    "defects": [
+     "T8: 'revoke laws that have fallen into disuse' inverts 'reuocet' (recall/revive) of laws abrogated by custom",
+     "T8: 'not rashly revoke laws that have fallen into disuse' vs 'leges abrogatas ... haud temere reuocet' = do not revive them; English 'revoke' says the opposite"
+    ]
+   },
+   "target": {
+    "reversal": true,
+    "reversal_both": true,
+    "omission": false,
+    "fill": false,
+    "low": true
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.4673528602313078,
+    "bleu4": 0.029234592528151544
+   },
+   "d1": {
+    "src_neg": 7,
+    "en_neg": 10,
+    "page_diff": 3,
+    "window": 2
+   }
+  },
+  {
+   "id": "699388f374305116d72d08a6_00120",
+   "order": 19,
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "url": "https://sourcelibrary.org/book/699388f374305116d72d08a6?page=120",
+   "weight": 3.7058823529411766,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 1,
+    "boundary_judges": 0,
+    "fidelity": 3,
+    "reversals": [],
+    "defects": [
+     "T7: 'in the deposition of the deposition, of the deposition' renders the looping 'τῇ δὲ ἀποθέσει τῆς ἀποθέσεως' as if text; summary presents it as 'a dense philosophical meditation'",
+     "T10: note says the diagram 'indicates the interconnections between the concepts'; source calls it 'faint, and partially illegible ... likely' a tree",
+     "T7: summary 'A dense philosophical meditation on ... deliberate choice' presents a looping garbled source ('τῆς ἀποθέσεως, τῆς ἀποθέσεως') as real content; reference has spears, ropes, Socrates"
+    ]
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": true,
+    "low": true
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 1,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 1,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.4569737379815057,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 0,
+    "en_neg": 0,
+    "page_diff": 0,
+    "window": 0
+   }
+  },
+  {
+   "id": "69e7933580b52390feb18277_00263",
+   "order": 20,
+   "track": "T4",
+   "lang": "Arabic",
+   "url": "https://sourcelibrary.org/book/69e7933580b52390feb18277?page=263",
+   "weight": 1,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 1,
+    "omission_judges": 2,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 2,
+    "reversals": [
+     {
+      "english": "sigh over the best of my deal",
+      "source": null,
+      "why": null
+     }
+    ],
+    "defects": [
+     "mistranslation: 'sigh over the best of my deal and the eloquence among my companions' — ref: bewailing my losing bargain and the shame among my comrades",
+     "mistranslation: 'so that you may forever banish your dirhams for the sake of memory' — ref: remember, so the admonition guards your money (لتقي الذكرى دراهمك)",
+     "T8: 'sigh over the best of my deal and the eloquence among my companions' — ref: 'my losing bargain, and the shame ... amongst my comrades'"
+    ]
+   },
+   "target": {
+    "reversal": true,
+    "reversal_both": false,
+    "omission": true,
+    "fill": false,
+    "low": true
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 0,
+    "omissions": 1,
+    "additions": 1,
+    "items": [
+     {
+      "source": "فَحَلَقْتُ وَأَفَقْتُ",
+      "english": "I shaved my head and woke up",
+      "kind": "sense",
+      "why": "The verb 'halaqtu' here refers to the act of shaving the head as a sign of repentance or distress, not literally shaving one's head.",
+      "certainty": "medium"
+     }
+    ],
+    "located": false
+   },
+   "d2": {
+    "n": 2,
+    "n_high": 0,
+    "omissions": 2,
+    "additions": 1,
+    "items": [
+     {
+      "a": "فَنَكَّسَ طَرْفِي مَا لَقِيتُ",
+      "b": "وغضضت الطرف عما لقيت",
+      "kind": "role",
+      "why": "In A, the narrator's gaze is lowered by an external force (the situation/shame), whereas in B, the narrator actively lowers his own gaze.",
+      "certainty": "medium"
+     },
+     {
+      "a": "لِتَنْفِيَ لِلذِّكْرَى دَرَاهِمَكَ",
+      "b": "لتنفي عنك دراهمك للذكرى أبداً",
+      "kind": "sense",
+      "why": "A suggests spending/losing money for the sake of memory, while B suggests removing/losing the money permanently as a lesson.",
+      "certainty": "medium"
+     }
+    ],
+    "chrf": 0.09171220063886383,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 4,
+    "en_neg": 6,
+    "page_diff": 2,
+    "window": 2
+   }
+  },
+  {
+   "id": "6952daa277f38f6761bc6551_00202",
+   "order": 21,
+   "track": "T1",
+   "lang": "Latin",
+   "url": "https://sourcelibrary.org/book/6952daa277f38f6761bc6551?page=202",
+   "weight": 3.7058823529411766,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 5,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 4,
+    "items": [
+     {
+      "source": "faciebātq́; quando Iupiter eum capite medium cœlum obtinebat",
+      "english": "They made this when Jupiter, along with the Head , held the midheaven",
+      "kind": "sense",
+      "why": "The source says Jupiter held the midheaven with the head (of the dragon), not 'along with' as a companion.",
+      "certainty": "medium"
+     }
+    ],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 1,
+    "items": [],
+    "chrf": 0.579344862663363,
+    "bleu4": 0.049074206241632085
+   },
+   "d1": {
+    "src_neg": 1,
+    "en_neg": 2,
+    "page_diff": 1,
+    "window": 2
+   }
+  },
+  {
+   "id": "69e41a008a8dae1074c52565_00515",
+   "order": 22,
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "url": "https://sourcelibrary.org/book/69e41a008a8dae1074c52565?page=515",
+   "weight": 1,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 2,
+    "omission_judges": 1,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 3,
+    "reversals": [
+     {
+      "english": "suspecting nothing—neither who the man was, nor for what reason he was beating me",
+      "source": null,
+      "why": null
+     },
+     {
+      "english": "I, as if in a mystery, suspecting nothing—neither who the man was",
+      "source": null,
+      "why": null
+     }
+    ],
+    "defects": [
+     "T8: 'suspecting nothing ... feared to defend myself' vs 'ὑποπτεύσας δή τι κακὸν εἶναι' (suspecting something was wrong); the reason for his fear is lost",
+     "T8: 'suspecting nothing ... feared to defend myself' vs source 'μηδὲν [knowing] ... ὑποπτεύσας δή τι κακὸν εἶναι' — he DID suspect something bad, which is why he feared to resist"
+    ]
+   },
+   "target": {
+    "reversal": true,
+    "reversal_both": true,
+    "omission": false,
+    "fill": false,
+    "low": true
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "ἐγὼ δὲ Φιλοσοφῶν",
+      "english": "and I was weary from philosophizing",
+      "kind": "sense",
+      "why": "The source says 'I, philosophizing,' but the English adds 'weary' which is not in the Greek text.",
+      "certainty": "high"
+     }
+    ],
+    "located": false
+   },
+   "d2": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "a": "ἐδεδοίκει γὰρ μή τινα τῶν πρὸς με αὐτῆς γραμμάτων ἦν.",
+      "b": "ἐδεδοίκει γὰρ μή τι τῶν αὐτῆς πρὸς ἐμὲ εἴη γραμμάτων.",
+      "kind": "sense",
+      "why": "A says Melitte feared the letter was from her to him; B says she feared it was from him to her.",
+      "certainty": "high"
+     }
+    ],
+    "chrf": 0.30100252050707776,
+    "bleu4": 0.03268658980997004
+   },
+   "d1": {
+    "src_neg": 3,
+    "en_neg": 5,
+    "page_diff": 2,
+    "window": 2
+   }
+  },
+  {
+   "id": "69a5d924a63a00aaae8aae3b_00105",
+   "order": 23,
+   "track": "T3",
+   "lang": "Dutch",
+   "url": "https://sourcelibrary.org/book/69a5d924a63a00aaae8aae3b?page=105",
+   "weight": 3.8666666666666667,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 5,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "mint.",
+      "english": "loves.",
+      "kind": "sense",
+      "why": "The Dutch word 'mint' (from minnen, to love) is used here as a typo for 'niet' (not) or a similar negative construction in the source context, but 'loves' is a mistranslation of the verb 'minnen' in a context where it clearly does not fit the theological quote.",
+      "certainty": "high"
+     }
+    ],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.4890185512811217,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 2,
+    "en_neg": 1,
+    "page_diff": 1,
+    "window": 1
+   }
+  },
+  {
+   "id": "69b4cd44d5b6c3815e1a52de_00215",
+   "order": 24,
+   "track": "T4",
+   "lang": "Hebrew",
+   "url": "https://sourcelibrary.org/book/69b4cd44d5b6c3815e1a52de?page=215",
+   "weight": 1,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 2,
+    "omission_judges": 2,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 3,
+    "reversals": [
+     {
+      "english": "If he drank pure liquids, he immersed and vomited, they are pure",
+      "source": null,
+      "why": null
+     },
+     {
+      "english": "If he drank pure liquids, he immersed and vomited, they are pure",
+      "source": null,
+      "why": null
+     }
+    ],
+    "defects": [
+     "T8: 'If he drank pure liquids' for 'שתה מים טמאים'",
+     "T8: 'I have not heard [the tradition regarding] \"third\"' for 'לא שמעתי אל שלשית' (I heard only)",
+     "terminology: 'the sin offering of the Nazirite, and the sin offering of the leper' for 'אשם נזיר ואשם מצורע' (guilt offering)",
+     "T8: 'If he drank pure liquids' for 'שתה מים טמאים' (ref: drank unclean water)",
+     "mistranslation: 'one may immerse a vessel that is full of liquid, and if one immersed it ... not immersed' runs Bet Hillel's 'מטבילין' into the next rule"
+    ]
+   },
+   "target": {
+    "reversal": true,
+    "reversal_both": true,
+    "omission": true,
+    "fill": false,
+    "low": true
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 1,
+    "additions": 1,
+    "items": [
+     {
+      "source": "בית הלל אומרים מטבילין כלי שהוא מלא משקין והטבילו כאילו לא טבל",
+      "english": "The House of Hillel says: one may immerse a vessel that is full of liquid, and if one immersed it [in a pool], it is as if it were not immersed.",
+      "kind": "negation",
+      "why": "The English adds 'if one immersed it... it is as if it were not immersed', which contradicts the House of Hillel's position that it IS validly immersed.",
+      "certainty": "high"
+     }
+    ],
+    "located": false
+   },
+   "d2": {
+    "n": 3,
+    "n_high": 2,
+    "omissions": 2,
+    "additions": 1,
+    "items": [
+     {
+      "a": "תפלה של ראש בזמן שהי' עולה ויורדת",
+      "b": "של יד כשהן עולות ויורדות",
+      "kind": "role",
+      "why": "A assigns the 'rising and falling' condition to the head tefillin, while B assigns it to the hand tefillin.",
+      "certainty": "high"
+     },
+     {
+      "a": "החבל שהוא קשור בקופה אינו חבור אלא אם כן תפר",
+      "b": "החבל הקשור בסל אינו חיבור עד שיקשור",
+      "kind": "other",
+      "why": "A requires sewing for the rope to be considered a connection, while B requires tying.",
+      "certainty": "high"
+     },
+     {
+      "a": "כל האוכלין מצטרפין לפסול את הגויה בכחצי פרס",
+      "b": "כל האוכלין מצטרפין לטמא את הגוף חצי פרס",
+      "kind": "sense",
+      "why": "A says the food disqualifies the body (פסול), while B says it makes the body impure (טמא).",
+      "certainty": "medium"
+     }
+    ],
+    "chrf": 0.5479603578019958,
+    "bleu4": 0.04482814064945333
+   },
+   "d1": {
+    "src_neg": 9,
+    "en_neg": 26,
+    "page_diff": 17,
+    "window": 10
+   }
+  },
+  {
+   "id": "6976f5fb7b4366f057e0e974_00631",
+   "order": 25,
+   "track": "T1",
+   "lang": "Latin",
+   "url": "https://sourcelibrary.org/book/6976f5fb7b4366f057e0e974?page=631",
+   "weight": 3.7058823529411766,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 4,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.6144390786975719,
+    "bleu4": 0.09189508946635447
+   },
+   "d1": {
+    "src_neg": 1,
+    "en_neg": 1,
+    "page_diff": 0,
+    "window": 1
+   }
+  },
+  {
+   "id": "6abe83b7433559215a997efb_00541",
+   "order": 26,
+   "track": "Tengyur",
+   "lang": "Tibetan",
+   "url": "https://sourcelibrary.org/book/6abe83b7433559215a997efb?page=541",
+   "weight": 3.7857142857142856,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 5,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.5794122072830038,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 6,
+    "en_neg": 1,
+    "page_diff": 5,
+    "window": 3
+   }
+  },
+  {
+   "id": "69942b0ed607f8e57e4b68eb_00502",
+   "order": 27,
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "url": "https://sourcelibrary.org/book/69942b0ed607f8e57e4b68eb?page=502",
+   "weight": 3.7058823529411766,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 4,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "ἵνα γένηται τῷ Πνεύματι ξένον, ὁ τῆς ἀηδοῦς θερμάτης κεκαθαρμένος.",
+      "english": "so that he who is purged of foul heat may be fervent in the Holy Spirit.",
+      "kind": "sense",
+      "why": "The Greek says 'fervent in the Spirit' (or 'to the Spirit'), but the English adds 'Holy' which is not in the source text.",
+      "certainty": "high"
+     }
+    ],
+    "located": false
+   },
+   "d2": {
+    "n": 1,
+    "n_high": 0,
+    "omissions": 1,
+    "additions": 1,
+    "items": [
+     {
+      "a": "καταγλυκαίνων τῷ οἰνοειδεῖ χυμῷ τὰ γευστικὰ αἰσθητήρια",
+      "b": "oinoeidei chymo ten geusin glukainon",
+      "kind": "other",
+      "why": "A says the juice sweetens the sensory organs, B says it sweetens the taste (the sense of taste).",
+      "certainty": "medium"
+     }
+    ],
+    "chrf": 0.14597704014980173,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 3,
+    "en_neg": 9,
+    "page_diff": 6,
+    "window": 5
+   }
+  },
+  {
+   "id": "699382dd84cf5845c644b377_00673",
+   "order": 28,
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "url": "https://sourcelibrary.org/book/699382dd84cf5845c644b377?page=673",
+   "weight": 3.7058823529411766,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 2,
+    "fill_judges": 1,
+    "boundary_judges": 0,
+    "fidelity": 4,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": true,
+    "fill": true,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 1,
+    "additions": 1,
+    "items": [],
+    "chrf": 0.3941350602982479,
+    "bleu4": 0.05421045745199745
+   },
+   "d1": {
+    "src_neg": 1,
+    "en_neg": 1,
+    "page_diff": 0,
+    "window": 1
+   }
+  },
+  {
+   "id": "6a3c5f05879008ba7e15291d_00045",
+   "order": 29,
+   "track": "T5",
+   "lang": "Chinese",
+   "url": "https://sourcelibrary.org/book/6a3c5f05879008ba7e15291d?page=45",
+   "weight": 3.6666666666666665,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 1,
+    "fill_judges": 1,
+    "boundary_judges": 0,
+    "fidelity": 4,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": true,
+    "low": false
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "六中各二初障後治。",
+      "english": "Within the six, each has two parts: the first is the obstruction, and the latter is the remedy.",
+      "kind": "sense",
+      "why": "The source says the six are divided into two groups (the first [three] are obstructions, the latter [three] are remedies), not that each of the six has two parts.",
+      "certainty": "high"
+     }
+    ],
+    "located": false
+   },
+   "d2": {
+    "n": 2,
+    "n_high": 2,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "a": "說爲無前",
+      "b": "說無始時",
+      "kind": "sense",
+      "why": "A says 'no-before' (timeless/non-origination), while B interprets this as 'beginningless time'.",
+      "certainty": "high"
+     },
+     {
+      "a": "三顯上緣起之相",
+      "b": "三、顯前依持相",
+      "kind": "sense",
+      "why": "The two versions describe the third section using different technical terms (Dependent Origination vs. Support/Reliance).",
+      "certainty": "high"
+     }
+    ],
+    "chrf": 0.35178937521210385,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 20,
+    "en_neg": 15,
+    "page_diff": 5,
+    "window": 4
+   }
+  },
+  {
+   "id": "694f3d6cbe37f451a5324e10_00084",
+   "order": 30,
+   "track": "T1",
+   "lang": "Latin",
+   "url": "https://sourcelibrary.org/book/694f3d6cbe37f451a5324e10?page=84",
+   "weight": 3.7058823529411766,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 4.5,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "Numeriq; undecim sunt",
+      "english": "There are eleven numbers",
+      "kind": "number",
+      "why": "The source says there are eleven numbers, but the context of the zodiacal circle (duodenary) and the following clause implies the number is twelve.",
+      "certainty": "medium"
+     }
+    ],
+    "located": false
+   },
+   "d2": {
+    "n": 1,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "a": "ante corpus: atque post corpus.",
+      "b": "ante corpus eram, et post corpus sum.",
+      "kind": "sense",
+      "why": "A describes the state of being (in/at), B changes this to a temporal existence (I was/I am).",
+      "certainty": "medium"
+     }
+    ],
+    "chrf": 0.511696805952891,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 2,
+    "en_neg": 2,
+    "page_diff": 0,
+    "window": 0
+   }
+  },
+  {
+   "id": "6992cf0970ab3737555456ae_00100",
+   "order": 31,
+   "track": "T4",
+   "lang": "Persian",
+   "url": "https://sourcelibrary.org/book/6992cf0970ab3737555456ae?page=100",
+   "weight": 1,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 1,
+    "omission_judges": 0,
+    "fill_judges": 1,
+    "boundary_judges": 0,
+    "fidelity": 3,
+    "reversals": [
+     {
+      "english": "The woman struck out with her feet and hands in pain",
+      "source": null,
+      "why": null
+     }
+    ],
+    "defects": [
+     "mistranslation: 'Rudaba became part of this unfolding story. She quickly gave the answer to the messenger-woman' — source 'سرانجام او گشت هم داستان / سبک پاسخ نامه زن را سپرد': Sam consented, Zal gave the letter",
+     "mistranslation: 'Rudaba became part of this unfolding story' — reference: Sam 'in the end consented'",
+     "T8: 'The woman struck out with her feet and hands in pain' — Sindukht kicks and strikes the woman"
+    ]
+   },
+   "target": {
+    "reversal": true,
+    "reversal_both": false,
+    "omission": false,
+    "fill": true,
+    "low": true
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 1,
+    "additions": 1,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 30,
+    "additions": 1,
+    "items": [],
+    "chrf": 0.014260323420176973,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 0,
+    "en_neg": 0,
+    "page_diff": 0,
+    "window": 0
+   }
+  },
+  {
+   "id": "69e72c6ba409200ea79f484e_00102",
+   "order": 32,
+   "track": "T5",
+   "lang": "Chinese",
+   "url": "https://sourcelibrary.org/book/69e72c6ba409200ea79f484e?page=102",
+   "weight": 3.6666666666666665,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 2,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 3.5,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": true,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "辭其 不尚華",
+      "english": "He rejected his not valuing flowers",
+      "kind": "sense",
+      "why": "The source describes the hermit's lifestyle (not valuing finery); the English incorrectly turns this into an action of 'rejecting' that state.",
+      "certainty": "high"
+     }
+    ],
+    "located": false
+   },
+   "d2": {
+    "n": 2,
+    "n_high": 1,
+    "omissions": 1,
+    "additions": 1,
+    "items": [
+     {
+      "a": "孔子問子桑雽曰",
+      "b": "孔子問於子桑戶曰",
+      "kind": "other",
+      "why": "The name of the person being questioned is different (Zisang Hu vs. Zisang Hu/Zisang Huai).",
+      "certainty": "high"
+     },
+     {
+      "a": "徒友益散",
+      "b": "弟子交遊，處不我從",
+      "kind": "sense",
+      "why": "A says friends/disciples scattered; B says they refused to follow him.",
+      "certainty": "medium"
+     }
+    ],
+    "chrf": 0.2710950799048675,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 9,
+    "en_neg": 9,
+    "page_diff": 0,
+    "window": 4
+   }
+  },
+  {
+   "id": "6abeafd3896ea18127c8218e_00570",
+   "order": 33,
+   "track": "Tengyur",
+   "lang": "Tibetan",
+   "url": "https://sourcelibrary.org/book/6abeafd3896ea18127c8218e?page=570",
+   "weight": 1,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 1,
+    "omission_judges": 2,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 4,
+    "reversals": [
+     {
+      "english": "in order to show the Noble Maitreya the classifications of all phenomena",
+      "source": "འཕགས་པ་བྱམས་པས་...རབ་ཏུ་དབྱེ་བ་བསྟན་པའི་ཕྱིར",
+      "why": "Maitreya made recipient instead of the one teaching/asking"
+     }
+    ],
+    "defects": []
+   },
+   "target": {
+    "reversal": true,
+    "reversal_both": false,
+    "omission": true,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "གཟུགས་རབ་ཏུ་དབྱེ་བའི་བརྟགས་པ་རྣམ་པ་དུ་ཞིག་ཏུ་རྟོགས་པར་བགྱི་ཞེས་བྱ་བ་ལ་སོགས་པ་ཞུས་སོ། །",
+      "english": "it was then asked: \"Blessed One, how many types of imagined classifications of form should a Bodhisattva... understand?\"",
+      "kind": "role",
+      "why": "The source says the Bodhisattva (Maitreya) asked the question, but the English implies a passive voice or external agent.",
+      "certainty": "high"
+     }
+    ],
+    "located": false
+   },
+   "d2": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "a": "བྱམས་པ་དེ་ལྟ་ཡིན་ན་དེ་རྣམ་པར་རྟོག་པ་ཙམ་དུ་མ་ཟད་དམ་",
+      "b": "བྱམས་པ་གལ་ཏེ་དེ་ལྟ་ན་རྣམ་པར་རྟོག་པ་ཙམ་དུ་མི་འགྱུར་རམ་",
+      "kind": "negation",
+      "why": "A asks if it is 'not only' (mere) conceptualization, while B asks if it 'does not become' mere conceptualization.",
+      "certainty": "high"
+     }
+    ],
+    "chrf": 0.5865552891716275,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 8,
+    "en_neg": 5,
+    "page_diff": 3,
+    "window": 3
+   }
+  },
+  {
+   "id": "69dbcc3e0f8c5edf20f484a0_00330",
+   "order": 34,
+   "track": "T1",
+   "lang": "Latin",
+   "url": "https://sourcelibrary.org/book/69dbcc3e0f8c5edf20f484a0?page=330",
+   "weight": 1,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 2,
+    "omission_judges": 2,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 2.5,
+    "reversals": [
+     {
+      "english": "from singulars to come to [principles]",
+      "source": null,
+      "why": null
+     },
+     {
+      "english": "from singulars to come to [principles]",
+      "source": null,
+      "why": null
+     }
+    ],
+    "defects": [
+     "T9: sensory example (body, animal, man, Socrates) replaced by '...' and a note 'text garbled in original'",
+     "T8: sed contra 'from singulars to come to [principles]' inverts 'in singularia deuenire'",
+     "T9: body/animal/man/Socrates series replaced by '... <note>text garbled in original' ",
+     "T8: 'from singulars to come to [principles]' for 'in singularia ... deuenire'",
+     "mistranslation: 'effects occur by chance and principles'; 'thus [we know] nothing of the house' in reply 3",
+     "mistranslation: '[some] posited universals as substances' and reply 2 'it contains in the future not only the more [universal]' stay garbled"
+    ]
+   },
+   "target": {
+    "reversal": true,
+    "reversal_both": true,
+    "omission": true,
+    "fill": false,
+    "low": true
+   },
+   "d3": {
+    "n": 4,
+    "n_high": 4,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "prius igitur occurrit intellectui nostro cognoscere animal et cognoscere homine.",
+      "english": "Therefore, it occurs to our intellect first to know \"animal\" and to know \"man.\"",
+      "kind": "sense",
+      "why": "The source says it occurs to the intellect to know animal first, then man; the English implies both occur first simultaneously.",
+      "certainty": "high"
+     },
+     {
+      "source": "et quod cognitio singularium est prior quo ad nos et cognitio uniuersalis cognitio sensitiua et cognitio intellectiua. si et sensum et cum intellectu cognitio magis et est prior et cognitio minoris et cois.",
+      "english": "And that the cognition of singulars is prior as to us, and the cognition of universal [is posterior]. Sensitive cognition and intellectual cognition, if it is sense and with intellect, the cognition [of the more] is prior and the cognition of the less and common [is posterior].",
+      "kind": "contradiction",
+      "why": "The English text contradicts itself within the same sentence regarding whether the more universal or the less universal is prior.",
+      "certainty": "high"
+     },
+     {
+      "source": "et hoc modo magis et est pus et in nam quod apparet manifeste in generatione bo minis et aialis. naz prius generatur animal bo: ut et or in in libro de generatione animalium.",
+      "english": "And in this mode, the more [universal] is prior in nature, which appears manifestly in the generation of man and animal. For the animal is generated before the man, as Aristotle says in the book On the Generation of Animals .",
+      "kind": "role",
+      "why": "The source says animal is generated before man; the English swaps the order in the first clause, claiming man is generated before animal.",
+      "certainty": "high"
+     },
+     {
+      "source": "sic igitur animal consideratum in se pus et in nostra cognitione et bo. si bo et pus i nra cognitione et animal sic per ronis eius.",
+      "english": "Thus, therefore, animal considered in itself is prior in our cognition, and man [is posterior]. If man [is prior] in our cognition, then animal [is posterior] by its reason.",
+      "kind": "contradiction",
+      "why": "The English text asserts that animal is prior in cognition, then immediately asserts the opposite (if man is prior, animal is posterior).",
+      "certainty": "high"
+     }
+    ],
+    "located": false
+   },
+   "d2": null,
+   "d1": {
+    "src_neg": 11,
+    "en_neg": 12,
+    "page_diff": 1,
+    "window": 2
+   }
+  },
+  {
+   "id": "6abeafd3896ea18127c8218e_00174",
+   "order": 35,
+   "track": "Tengyur",
+   "lang": "Tibetan",
+   "url": "https://sourcelibrary.org/book/6abeafd3896ea18127c8218e?page=174",
+   "weight": 3.7857142857142856,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 2,
+    "fill_judges": 0,
+    "boundary_judges": 2,
+    "fidelity": 4,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": true,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 1,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 1,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.5677751663298769,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 9,
+    "en_neg": 7,
+    "page_diff": 2,
+    "window": 3
+   }
+  },
+  {
+   "id": "690989d5cf28baa1b4cae1c9_00159",
+   "order": 36,
+   "track": "T1",
+   "lang": "Latin",
+   "url": "https://sourcelibrary.org/book/690989d5cf28baa1b4cae1c9?page=159",
+   "weight": 3.7058823529411766,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 5,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.553144604166247,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 2,
+    "en_neg": 3,
+    "page_diff": 1,
+    "window": 2
+   }
+  },
+  {
+   "id": "69bfccd88ab50eb88e8c69fd_00521",
+   "order": 37,
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "url": "https://sourcelibrary.org/book/69bfccd88ab50eb88e8c69fd?page=521",
+   "weight": 3.7058823529411766,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 1,
+    "fill_judges": 1,
+    "boundary_judges": 0,
+    "fidelity": 2,
+    "reversals": [],
+    "defects": [
+     "mistranslation: word-by-word gloss of a garbled OCR ('[that which is] poured out, having been spoken', 'the village...') conveys none of the argument on unequal adultery law the reference gives",
+     "terminology: '[wisdom]' / '[with] wisdom' for 'σωφροσύνῃ' (chastity, the topic of the passage)",
+     "T9: many lines reduced to '...' ('[I]...; but also and', '[the]... both; the village...'); the commandments on father and mother are not recoverable",
+     "mistranslation: word-by-word gloss of a garbled transcription yields no connected sense: '[that which is] poured out, having been spoken; and [the] opinion with having been lightened'",
+     "mistranslation: '[the] authority [they] give to the servants' for 'ὑπεξουσίαν διδόασι ταῖς θεραπαῖς' — reference: children placed under fathers, the weaker sex left uncared for"
+    ]
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": true,
+    "low": true
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 1,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "a": "ὑπεξουσίαν διδόασι ταῖς θεραπαῖς",
+      "b": "τὴν ἐξουσίαν διδόασιν τοῖς δούλοις",
+      "kind": "sense",
+      "why": "A refers to authority over servants/handmaidens (therapais), while B refers to authority over slaves (doulois).",
+      "certainty": "medium"
+     }
+    ],
+    "chrf": 0.42324610343299335,
+    "bleu4": 0.0793471566085719
+   },
+   "d1": {
+    "src_neg": 9,
+    "en_neg": 8,
+    "page_diff": 1,
+    "window": 2
+   }
+  },
+  {
+   "id": "694f3d6ebe37f451a5324e95_00107",
+   "order": 38,
+   "track": "T1",
+   "lang": "Latin",
+   "url": "https://sourcelibrary.org/book/694f3d6ebe37f451a5324e95?page=107",
+   "weight": 3.7058823529411766,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 2,
+    "boundary_judges": 0,
+    "fidelity": 4,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": true,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 1,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 1,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "a": "est autē vsiarches huius secundus. mortalibus mortalia:& his similia.",
+      "b": "Huius autem aeris Ousiarchēs secundus est. Is mortalia mortalibus et similia similibus praebet.",
+      "kind": "sense",
+      "why": "A says the second Ousiarch provides mortal things to mortals and similar things to them; B claims the Ousiarch of the air provides these things.",
+      "certainty": "medium"
+     }
+    ],
+    "chrf": 0.5665513628046227,
+    "bleu4": 0.035981101795087386
+   },
+   "d1": {
+    "src_neg": 1,
+    "en_neg": 1,
+    "page_diff": 0,
+    "window": 1
+   }
+  },
+  {
+   "id": "69bd9d6a6120d54bd0376a04_00060",
+   "order": 39,
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "url": "https://sourcelibrary.org/book/69bd9d6a6120d54bd0376a04?page=60",
+   "weight": 1,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 1,
+    "omission_judges": 1,
+    "fill_judges": 2,
+    "boundary_judges": 0,
+    "fidelity": 3,
+    "reversals": [
+     {
+      "english": "They also depict two water vessels, neither more nor less",
+      "source": null,
+      "why": null
+     }
+    ],
+    "defects": [
+     "number: 'two water vessels ... the action of the rising is twofold' — OCR 'βία δὲ ὑδρεῖα ... διμερὴς'; reference has three pots, triple cause, and the passage lists three",
+     "T7: 'They attribute grain to the rains' renders OCR 'Σῖτον δὲ ὑπὸ τὴν ὄμβρων' (τρίτον: the third, for the rains); third cause lost",
+     "number: 'two water vessels' / 'the action of the rising is twofold' where three vessels and a threefold cause are meant (OCR 'βία', 'διμερὴς'; reference 'three waterpots', 'triple cause')",
+     "T7: 'They attribute grain to the rains' for 'Σῖτον [τρίτον] δὲ ὑπὸ τὴν ὄμβρων' (the third, for the rains) — the third cause becomes grain"
+    ]
+   },
+   "target": {
+    "reversal": true,
+    "reversal_both": false,
+    "omission": false,
+    "fill": true,
+    "low": true
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 1,
+    "additions": 1,
+    "items": [
+     {
+      "a": "βία δὲ ὑδρεῖα, ἢ οὔτε πλείονα, οὔτε ἥττονα",
+      "b": "γράφουσι δὲ καὶ δύο ὑδροχόους, οὔτε πλείους οὔτε ἐλάττους",
+      "kind": "sense",
+      "why": "A refers to 'force/violence' (βία) while B refers to 'writing/depicting' (γράφουσι) regarding the hydriae.",
+      "certainty": "high"
+     }
+    ],
+    "chrf": 0.39184611648289086,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 2,
+    "en_neg": 2,
+    "page_diff": 0,
+    "window": 2
+   }
+  },
+  {
+   "id": "69938d775d28b693146cfc2c_00283",
+   "order": 40,
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "url": "https://sourcelibrary.org/book/69938d775d28b693146cfc2c?page=283",
+   "weight": 3.7058823529411766,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 4.5,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.4656597215761301,
+    "bleu4": 0.08342062256686235
+   },
+   "d1": {
+    "src_neg": 9,
+    "en_neg": 9,
+    "page_diff": 0,
+    "window": 5
+   }
+  },
+  {
+   "id": "69e748da49abba5e98281b25_00103",
+   "order": 41,
+   "track": "T4",
+   "lang": "Persian",
+   "url": "https://sourcelibrary.org/book/69e748da49abba5e98281b25?page=103",
+   "weight": 3.8181818181818183,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 3,
+    "reversals": [],
+    "defects": [
+     "mistranslation: 'She carries the sixty-step one by one hand ... no base is left for sitting' for 'شصت پایه چنان برد یک دست که نسازد بهیچ پایه نشست' (up sixty steps at one go, resting on none)",
+     "mistranslation: 'She carries the sixty-step one by one hand | In such a way that no base is left for sitting' vs 'شصت پایه چنان برد یک دست که نسازد بهیچ پایه نشست' (carries it up sixty steps at a stretch, resting on none)"
+    ]
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": true
+   },
+   "d3": {
+    "n": 3,
+    "n_high": 2,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "از پس شصت سال کز تو گذشت · چون توانی بزیر پای نوشت",
+      "english": "After sixty years have passed for you | How are you able to walk beneath your feet?",
+      "kind": "sense",
+      "why": "The source asks how he can write/inscribe (نوشت) beneath his feet, not walk.",
+      "certainty": "high"
+     },
+     {
+      "source": "از چنین پایه مانده کی گردم",
+      "english": "How could I remain from such a base?",
+      "kind": "sense",
+      "why": "The source asks how he could be left behind/remain (مانده) from such a height/base, not how he could remain from it.",
+      "certainty": "medium"
+     },
+     {
+      "source": "شه چو سرهنگش این حکایت گفت",
+      "english": "When the King heard this tale from his colonel",
+      "kind": "role",
+      "why": "The source says the King told the tale to his colonel (sarehang), not that he heard it from him.",
+      "certainty": "high"
+     }
+    ],
+    "located": false
+   },
+   "d2": {
+    "n": 2,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "a": "شصت پایه چنان برد یک دست · که نسازد بهیچ پایه نشست",
+      "b": "به یک دست آن شصت‌نردبان بَرَد | چنان کز نشستن نماند خرد",
+      "kind": "sense",
+      "why": "A says the girl carries the ladder so well she doesn't need to sit; B says she carries it so well that one loses their mind/reason.",
+      "certainty": "high"
+     },
+     {
+      "a": "از زمین بر گرایدش نفسی",
+      "b": "اگر کس دمی برکشد از غلوم",
+      "kind": "sense",
+      "why": "A refers to breathing/living; B uses 'gholum' (likely a corruption or different term) changing the context of the challenge.",
+      "certainty": "medium"
+     }
+    ],
+    "chrf": 0.3337926072804802,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 4,
+    "en_neg": 6,
+    "page_diff": 2,
+    "window": 2
+   }
+  },
+  {
+   "id": "69b51dc947b06ecd581849ee_00128",
+   "order": 42,
+   "track": "T3",
+   "lang": "German",
+   "url": "https://sourcelibrary.org/book/69b51dc947b06ecd581849ee?page=128",
+   "weight": 3.8666666666666667,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 1,
+    "fill_judges": 0,
+    "boundary_judges": 2,
+    "fidelity": 4,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.5754338788999455,
+    "bleu4": 0.05841450694090903
+   },
+   "d1": {
+    "src_neg": 3,
+    "en_neg": 3,
+    "page_diff": 0,
+    "window": 0
+   }
+  },
+  {
+   "id": "69790e9eeb0dcfd399123423_00297",
+   "order": 43,
+   "track": "T3",
+   "lang": "Dutch",
+   "url": "https://sourcelibrary.org/book/69790e9eeb0dcfd399123423?page=297",
+   "weight": 3.8666666666666667,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 2,
+    "fidelity": 5,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "der middel met Godt",
+      "english": "without mediation with God",
+      "kind": "sense",
+      "why": "The source says 'the medium/means with God', but the English translates it as 'without mediation'.",
+      "certainty": "high"
+     }
+    ],
+    "located": false
+   },
+   "d2": {
+    "n": 2,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "a": "der middel met Godt in dese eenicheydt",
+      "b": "zonder middeling met God in deze eenheid",
+      "kind": "sense",
+      "why": "A claims there is a medium/means, B claims there is no medium (zonder middeling).",
+      "certainty": "high"
+     },
+     {
+      "a": "die ghebruyckelijcke geneghentheyt des gheest",
+      "b": "de vruchtgevende neiging van de geest",
+      "kind": "sense",
+      "why": "A refers to 'customary/habitual' (ghebruyckelijcke), B refers to 'fruit-bearing' (vruchtgevende).",
+      "certainty": "medium"
+     }
+    ],
+    "chrf": 0.4033770868983621,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 3,
+    "en_neg": 4,
+    "page_diff": 1,
+    "window": 1
+   }
+  },
+  {
+   "id": "6abe8366433559215a997cad_00018",
+   "order": 44,
+   "track": "Tengyur",
+   "lang": "Tibetan",
+   "url": "https://sourcelibrary.org/book/6abe8366433559215a997cad?page=18",
+   "weight": 3.7857142857142856,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 4,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.5202556376937207,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 4,
+    "en_neg": 2,
+    "page_diff": 2,
+    "window": 2
+   }
+  },
+  {
+   "id": "6abe8366433559215a997cad_00092",
+   "order": 45,
+   "track": "Tengyur",
+   "lang": "Tibetan",
+   "url": "https://sourcelibrary.org/book/6abe8366433559215a997cad?page=92",
+   "weight": 3.7857142857142856,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 5,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.5032643593864901,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 15,
+    "en_neg": 4,
+    "page_diff": 11,
+    "window": 4
+   }
+  },
+  {
+   "id": "69593291b91a6184ea943bbe_00122",
+   "order": 46,
+   "track": "T3",
+   "lang": "French",
+   "url": "https://sourcelibrary.org/book/69593291b91a6184ea943bbe?page=122",
+   "weight": 3.8666666666666667,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 4,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.8696507660236482,
+    "bleu4": 0.5027630273652274
+   },
+   "d1": {
+    "src_neg": 0,
+    "en_neg": 0,
+    "page_diff": 0,
+    "window": 0
+   }
+  },
+  {
+   "id": "6abe83b7433559215a997efb_00589",
+   "order": 47,
+   "track": "Tengyur",
+   "lang": "Tibetan",
+   "url": "https://sourcelibrary.org/book/6abe83b7433559215a997efb?page=589",
+   "weight": 3.7857142857142856,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 5,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 3,
+    "n_high": 2,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "a": "སྐལ་ཆེན་ཞེས་པ་ནི་བདག་ཉིད་ཆེན་པོའོ།",
+      "b": "བསོད་ནམས་ཆེན་པོ་ཞེས་པ་ནི་སྐྱེས་བུ་ཆེན་པོ་ལ་བྱའོ།",
+      "kind": "sense",
+      "why": "A defines 'skal chen' as 'great self', while B defines 'bsod nams chen po' as 'great person'.",
+      "certainty": "high"
+     },
+     {
+      "a": "སྡོམ་པ་ནི་ཟུང་ཐུབ་པ་ལ་སོགས་པའོ།",
+      "b": "དམ་ཚིག་ནི་སྙོམས་པར་འཇུག་པ་ལ་སོགས་པ་ལ་བྱའོ།",
+      "kind": "sense",
+      "why": "A identifies the term as 'vow' (sdom pa), while B identifies it as 'samaya' (dam tshig).",
+      "certainty": "high"
+     },
+     {
+      "a": "དབུ་མ་ནི་ལམ་སྟེ། དེ་ཡང་སེམས་གཉིས་ཀྱི་རང་བཞིན་གྱིས་ཡོད་པ་མ་ཡིན་ཞིང་གཉིས་པོས་སྟོང་པའི་རང་བཞིན་གྱིས་མེད་པ་མ་ཡིན་ནོ་ཞེས་པའི་དོན་ཏོ།",
+      "b": "དབུ་མ་ནི་ལམ་སྟེ་དོན་ནི་སེམས་གཉིས་ཀྱི་རང་བཞིན་གྱིས་མེད་པ་དང་གཉིས་ཀ་སྟོང་པའི་རང་བཞིན་གྱིས་མེད་པ་མ་ཡིན་པའོ།",
+      "kind": "sense",
+      "why": "B negates the existence of the two-fold nature, whereas A negates the existence of the two-fold nature but affirms the emptiness.",
+      "certainty": "medium"
+     }
+    ],
+    "chrf": 0.5605914979623705,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 9,
+    "en_neg": 5,
+    "page_diff": 4,
+    "window": 3
+   }
+  },
+  {
+   "id": "6a3c61b3879008ba7e15fc71_00112",
+   "order": 48,
+   "track": "T5",
+   "lang": "Chinese",
+   "url": "https://sourcelibrary.org/book/6a3c61b3879008ba7e15fc71?page=112",
+   "weight": 3.6666666666666665,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 2,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 4,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": true,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 1,
+    "items": [
+     {
+      "source": "勝者乃揖不勝者升取",
+      "english": "The winner then bows, and the one who is not the winner ascends to take the cup and drink.",
+      "kind": "sense",
+      "why": "The source says the winner bows and the loser ascends to take the cup; the English implies the winner bows while the loser ascends, but the source text does not specify the winner bows while the loser ascends to drink as a sequence of two separate actions, but rather describes the ritual procedure of the loser taking the cup.",
+      "certainty": "medium"
+     }
+    ],
+    "located": false
+   },
+   "d2": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 1,
+    "additions": 1,
+    "items": [
+     {
+      "a": "勝者乃揖不勝者升取",
+      "b": "勝者揖，不勝者升取觶而飲",
+      "kind": "role",
+      "why": "A implies the winner bows (and the loser drinks), while B explicitly states the winner bows and the loser drinks.",
+      "certainty": "high"
+     }
+    ],
+    "chrf": 0.3630518864099969,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 3,
+    "en_neg": 3,
+    "page_diff": 0,
+    "window": 1
+   }
+  },
+  {
+   "id": "69e7518610ee9075bcdcde12_00071",
+   "order": 49,
+   "track": "T4",
+   "lang": "Hebrew",
+   "url": "https://sourcelibrary.org/book/69e7518610ee9075bcdcde12?page=71",
+   "weight": 3.8181818181818183,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 2,
+    "fidelity": 5,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": null,
+   "d1": {
+    "src_neg": 0,
+    "en_neg": 2,
+    "page_diff": 2,
+    "window": 1
+   }
+  },
+  {
+   "id": "69e72698a409200ea79ef8c3_00129",
+   "order": 50,
+   "track": "T5",
+   "lang": "Chinese",
+   "url": "https://sourcelibrary.org/book/69e72698a409200ea79ef8c3?page=129",
+   "weight": 1,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 2,
+    "omission_judges": 1,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 2.5,
+    "reversals": [
+     {
+      "english": "Before Cheng could sue, they sued him to the magistrate.",
+      "source": null,
+      "why": null
+     },
+     {
+      "english": "Before Cheng could sue, they sued him to the magistrate",
+      "source": null,
+      "why": null
+     }
+    ],
+    "defects": [
+     "T8: 'Before Cheng could sue, they sued him' reverses 成不待其訟先訟之 (Cheng sued first)",
+     "number: 'ensuring a seven-tenths share for everyone' for 使七分相準 (seven equal shares)",
+     "T8: 'Before Cheng could sue, they sued him' reverses 成不待其訟先訟之宰",
+     "number: 'ensuring a seven-tenths share for everyone' for 使七分相準 (seven equal shares)"
+    ]
+   },
+   "target": {
+    "reversal": true,
+    "reversal_both": true,
+    "omission": false,
+    "fill": false,
+    "low": true
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "以石投孝孝仁義各以杖出提忠及信並撻無數",
+      "english": "He threw a stone at Xiao. Xiao, Ren, and Yi all came out with staffs, and they together beat Zhong and Xin numerous times.",
+      "kind": "role",
+      "why": "The source says Xiao, Ren, and Yi beat Zhong and Xin; the English implies they beat Cheng.",
+      "certainty": "high"
+     }
+    ],
+    "located": false
+   },
+   "d2": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "a": "以石投孝孝仁義各以杖出提忠及信並撻無數",
+      "b": "擲石擊蕭。蕭、仁、義皆持杖出，共毆忠、信數十。",
+      "kind": "role",
+      "why": "A says Cheng threw a stone at Xiao; B says Cheng threw a stone at Xiao, but then says Xiao, Ren, and Yi beat Zhong and Xin. Zhong and Xin are not mentioned in A as being present or beaten.",
+      "certainty": "high"
+     }
+    ],
+    "chrf": 0.13947292273796222,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 7,
+    "en_neg": 4,
+    "page_diff": 3,
+    "window": 3
+   }
+  },
+  {
+   "id": "69e8b2962ff2a8dc09e780a7_00722",
+   "order": 51,
+   "track": "T5",
+   "lang": "Sanskrit",
+   "url": "https://sourcelibrary.org/book/69e8b2962ff2a8dc09e780a7?page=722",
+   "weight": 3.6666666666666665,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 2,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 3.5,
+    "reversals": [],
+    "defects": [
+     "T9: NN on sutra 15 compressed: drops glosses 'yad', 'atas ca', 'tasya', 'tad vyākhyātam' and the śruti-virodha objection on 'samyag'"
+    ]
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": true,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "a": "तथाच श्रुतिः—‘निचाय्य तन्मृत्युमुखात्प्रमुच्यते’ (कठ० ३।१५) इति।",
+      "b": "तथा च श्रुतिः—\"तमेवं विद्वानमृत इह भवति\" इति।",
+      "kind": "sense",
+      "why": "B cites a different Upanishadic verse than A to support the same claim.",
+      "certainty": "high"
+     }
+    ],
+    "chrf": 0.46271922829434114,
+    "bleu4": 0.015934667476151576
+   },
+   "d1": {
+    "src_neg": 7,
+    "en_neg": 18,
+    "page_diff": 11,
+    "window": 6
+   }
+  },
+  {
+   "id": "6952872cab34727b1f04d284_00499",
+   "order": 52,
+   "track": "T1",
+   "lang": "Latin",
+   "url": "https://sourcelibrary.org/book/6952872cab34727b1f04d284?page=499",
+   "weight": 3.7058823529411766,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 1,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 4,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.6840840071099209,
+    "bleu4": 0.06688596060427028
+   },
+   "d1": {
+    "src_neg": 9,
+    "en_neg": 9,
+    "page_diff": 0,
+    "window": 1
+   }
+  },
+  {
+   "id": "69938df1d5a98fd66f42f9be_00068",
+   "order": 53,
+   "track": "T2",
+   "lang": "Ancient Greek",
+   "url": "https://sourcelibrary.org/book/69938df1d5a98fd66f42f9be?page=68",
+   "weight": 1,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 1,
+    "omission_judges": 2,
+    "fill_judges": 2,
+    "boundary_judges": 0,
+    "fidelity": 2,
+    "reversals": [
+     {
+      "english": "The phlemys (a type of fish) is particularly clever, guileless, and prudent",
+      "source": null,
+      "why": null
+     }
+    ],
+    "defects": [
+     "T9: begins at 'For they are full of many devices' (ἐπεὶ μάλα πολλὰ ... μηχανόωνται); the Hermes invocation and ~17 lines on the fisher's body, leaping and diving are absent",
+     "T7: 'The phlemys ... a type of fish' for garbled 'φλημής δὲ μάλιστα, καὶ ἄβομος ἠδὲ σαόφρων' — reference: the fisher should be daring, dauntless, temperate",
+     "T10: gloss 'likely a species of bass or similar' invents a fish; the lines describe the fisherman",
+     "mistranslation: 'It endures winter twice over' for 'φέροι καὶ χεῖμα ... καὶ ῥίγιον ὥρη σερίκ' (winter and the season of Sirius)",
+     "mistranslation: 'In winter ... it is captured ... by manifold nets, it is raised' for 'σέλλεσθαι ... αἴραις παντόμοισιν ὀφίλλεται' (set out with the sun; spring day prospers every kind of fishing)",
+     "T9: first 18 verses absent: invocation 'ἑρμεία κλυτόβυλε', and the fisher's body 'πραιπνὰ, καὶ ἄλκιμα' through 'ψυχὴν δ’ ... νοήμων'; candidate opens at 'For they are full of many devices'"
+    ]
+   },
+   "target": {
+    "reversal": true,
+    "reversal_both": false,
+    "omission": true,
+    "fill": true,
+    "low": true
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 0,
+    "omissions": 1,
+    "additions": 0,
+    "items": [
+     {
+      "source": "φλημής δὲ μάλιστα, καὶ ἄβομος ἠδὲ σαόφρων ζῇ.",
+      "english": "The phlemys is particularly clever, guileless, and prudent.",
+      "kind": "sense",
+      "why": "The Greek word 'ἄβομος' (or 'ἄδολος') is translated as 'guileless', but in this context, it contradicts the preceding description of the fish as 'πολυπαίπαλος' (very crafty/deceitful).",
+      "certainty": "medium"
+     }
+    ],
+    "located": true
+   },
+   "d2": {
+    "n": 2,
+    "n_high": 1,
+    "omissions": 4,
+    "additions": 1,
+    "items": [
+     {
+      "a": "φλημής δὲ μάλιστα, καὶ ἄβομος ἠδὲ σαόφρων ζῇ.",
+      "b": "φλεμὺς δὲ μάλιστα σοφός τε καὶ ἀδόλιος καὶ περίφρων.",
+      "kind": "sense",
+      "why": "A describes the fish as 'abomos' (un-altared/simple/foolish), while B describes it as 'adolos' (guileless/cunning-free) and 'periphron' (very wise).",
+      "certainty": "medium"
+     },
+     {
+      "a": "χείματι δ’ ἠελίοιο βολαῖς ἅμα κιδναμένησε σέλλεσθαι",
+      "b": "ἐν δὲ χειμῶνι, ἅμα ἀκτῖσιν ἡλίου σκεδαννύμενος, ἁλίσκεται",
+      "kind": "role",
+      "why": "A says the fish is scattered/dispersed by sunbeams in winter; B says the fish is caught (halisketai) by them.",
+      "certainty": "high"
+     }
+    ],
+    "chrf": 0.1595829753857186,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 3,
+    "en_neg": 1,
+    "page_diff": 2,
+    "window": 1
+   }
+  },
+  {
+   "id": "6abeafd3896ea18127c8218e_00469",
+   "order": 54,
+   "track": "Tengyur",
+   "lang": "Tibetan",
+   "url": "https://sourcelibrary.org/book/6abeafd3896ea18127c8218e?page=469",
+   "weight": 3.7857142857142856,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 4.5,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "chrf": 0.6178435078939277,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 9,
+    "en_neg": 6,
+    "page_diff": 3,
+    "window": 2
+   }
+  },
+  {
+   "id": "69e7491a85f786e884a4d6f9_00789",
+   "order": 55,
+   "track": "T5",
+   "lang": "Sanskrit",
+   "url": "https://sourcelibrary.org/book/69e7491a85f786e884a4d6f9?page=789",
+   "weight": 1,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 1,
+    "omission_judges": 2,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 3,
+    "reversals": [
+     {
+      "english": "It shone like the sky after clouds have passed",
+      "source": null,
+      "why": null
+     }
+    ],
+    "defects": [
+     "T9: sarga-39 colophon 'इत्यार्षे श्रीमद्रामायणे ... एकोनचत्वारिंशः सर्गः' entirely absent; variant note also dropped",
+     "T8: v.23 'sky after clouds have passed' vs ghanair iva",
+     "T9: sarga colophon 'इत्यार्षे श्रीमद्रामायणे ... एकोनचत्वारिंशः सर्गः' and the footnote absent; 'श्लक्ष्णं श्रीमन्महच्चैव' dropped in v.19"
+    ]
+   },
+   "target": {
+    "reversal": true,
+    "reversal_both": false,
+    "omission": true,
+    "fill": false,
+    "low": true
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 1,
+    "n_high": 0,
+    "omissions": 6,
+    "additions": 2,
+    "items": [
+     {
+      "a": "तस्यां गोपुरशृङ्गस्थं राक्षसेन्द्रं दुरासदम् ॥ ३",
+      "b": "तत्र राक्षसराजानं द्वारस्थं शिखरस्थितम् ॥ ३",
+      "kind": "sense",
+      "why": "A places the demon king on the peak of the gate (gopura), while B places him at the gate (dvara) and on the peak (shikhara) separately.",
+      "certainty": "medium"
+     }
+    ],
+    "chrf": 0.42118647282110017,
+    "bleu4": 0.04434145134884161
+   },
+   "d1": {
+    "src_neg": 0,
+    "en_neg": 0,
+    "page_diff": 0,
+    "window": 0
+   }
+  },
+  {
+   "id": "6953e50577f38f6761bef758_00274",
+   "order": 56,
+   "track": "T1",
+   "lang": "Latin",
+   "url": "https://sourcelibrary.org/book/6953e50577f38f6761bef758?page=274",
+   "weight": 3.7058823529411766,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 5,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 1,
+    "additions": 1,
+    "items": [],
+    "chrf": 0.4274201761183191,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 4,
+    "en_neg": 3,
+    "page_diff": 1,
+    "window": 1
+   }
+  },
+  {
+   "id": "6abe83b7433559215a997efb_00535",
+   "order": 57,
+   "track": "Tengyur",
+   "lang": "Tibetan",
+   "url": "https://sourcelibrary.org/book/6abe83b7433559215a997efb?page=535",
+   "weight": 3.7857142857142856,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 0,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 4.5,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "རིག་པ་དང་སྐྱེས་བུའི་དངོས་གྲུབ་དང་། ཕྱག་རྒྱ་ཆེན་པོའི་དངོས་གྲུབ་ནི་རིགས་པའི་སྐྱེས་བུའི་དངོས་གྲུབ་སྟེ།",
+      "english": "The attainment of knowledge and the person, and the attainment of the Great Seal, are the attainment of the person of the family",
+      "kind": "sense",
+      "why": "The source says the attainment of knowledge/person and Mahamudra are the attainment of the 'person of the family' (rigs kyi skyes bu), but the English translates 'rigs' as 'family' while the source uses 'rigs' (family) and 'rig pa' (knowledge) distinctly.",
+      "certainty": "medium"
+     }
+    ],
+    "located": false
+   },
+   "d2": {
+    "n": 2,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "a": "རྡོ་རྗེ་སེམས་དཔའ་ནི་སེམས་བརྟན་པ་སྟེ་དེས་བསྙེམས་པའོ།",
+      "b": "རྡོ་རྗེ་སེམས་དཔའ་ཞེས་པ་ནི་སེམས་བརྟན་པའོ། དེས་ང་རྒྱལ་བྱའོ།",
+      "kind": "sense",
+      "why": "A interprets 'b-snyems-pa' as 'pride/arrogance' (or being proud), while B interprets it as 'pride' (nga-rgyal) as a separate instruction.",
+      "certainty": "medium"
+     },
+     {
+      "a": "རྐང་པ་ཞེས་པ་ནི་རྗེ་ངར་རོ།",
+      "b": "རྐང་པ་ནི་ལོང་བུའོ།",
+      "kind": "sense",
+      "why": "A defines 'rkang-pa' as the shin (rje-ngar), while B defines it as the ankle (long-bu).",
+      "certainty": "high"
+     }
+    ],
+    "chrf": 0.6687770977430088,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 5,
+    "en_neg": 2,
+    "page_diff": 3,
+    "window": 2
+   }
+  },
+  {
+   "id": "69b99d0e6ed9e04909908946_00387",
+   "order": 58,
+   "track": "T5",
+   "lang": "Pali",
+   "url": "https://sourcelibrary.org/book/69b99d0e6ed9e04909908946?page=387",
+   "weight": 3.6666666666666665,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 0,
+    "omission_judges": 1,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 4,
+    "reversals": [],
+    "defects": []
+   },
+   "target": {
+    "reversal": false,
+    "reversal_both": false,
+    "omission": false,
+    "fill": false,
+    "low": false
+   },
+   "d3": {
+    "n": 0,
+    "n_high": 0,
+    "omissions": 0,
+    "additions": 0,
+    "items": [],
+    "located": false
+   },
+   "d2": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "a": "so idha aññataraṃ sabrahmacāriṃ āsajja appaṭinissajja cārikaṃ pakkameyya.",
+      "b": "so idh'eva sabrahmacāriṃ ākoseyya, anāpucchā pakkameyya.",
+      "kind": "sense",
+      "why": "A describes offending a colleague and leaving without apologizing; B describes insulting a colleague and leaving without asking permission.",
+      "certainty": "high"
+     }
+    ],
+    "chrf": 0.48201642480341284,
+    "bleu4": 0.04157602047951237
+   },
+   "d1": {
+    "src_neg": 2,
+    "en_neg": 14,
+    "page_diff": 12,
+    "window": 5
+   }
+  },
+  {
+   "id": "69dbc9491040d1d5e20a1afd_00087",
+   "order": 59,
+   "track": "T1",
+   "lang": "Latin",
+   "url": "https://sourcelibrary.org/book/69dbc9491040d1d5e20a1afd?page=87",
+   "weight": 1,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 2,
+    "omission_judges": 1,
+    "fill_judges": 1,
+    "boundary_judges": 0,
+    "fidelity": 2,
+    "reversals": [
+     {
+      "english": "if we preferred to be loved when we wished to be dear",
+      "source": null,
+      "why": null
+     },
+     {
+      "english": "the Roman people, who were rightly governed",
+      "source": null,
+      "why": null
+     }
+    ],
+    "defects": [
+     "mistranslation: 'seed of civil wars ever arisen from any other cause than when' for 'semen a causa [de]erit, du[m]' (will never be wanting while)",
+     "T7: 'flourished with the spear ... until the thirty-sixth year' garbles 'cu vibrass ... sexto trigesimo anno post a sceleratioze hasta'",
+     "T8: 'metui quam' (feared rather than) lost; says 'preferred to be loved'",
+     "T8: 'we preferred to be loved when we wished to be dear' inverts 'metui quam cari'",
+     "T7: 'only by the piety of others' from OCR 'pietes' (parietes, walls)",
+     "mistranslation: 'did not recede... until the thirty-sixth year' misreads the Sulla sentence"
+    ]
+   },
+   "target": {
+    "reversal": true,
+    "reversal_both": true,
+    "omission": false,
+    "fill": true,
+    "low": true
+   },
+   "d3": {
+    "n": 3,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "Iure igitur plectim.",
+      "english": "Rightly, therefore, are we punished.",
+      "kind": "role",
+      "why": "The Latin 'plectim' (plectimur) is passive, but the context of the argument implies the subject is the Roman people/state being punished by the gods/fate, whereas the English 'we' implies the speaker and audience are the agents of their own punishment.",
+      "certainty": "medium"
+     },
+     {
+      "source": "du hoies pdia hasta illa crues ta et meminerme t sperabur.",
+      "english": "when men have remembered those bloody spears and hoped for them.",
+      "kind": "sense",
+      "why": "The Latin 'sperabur' (sperabantur) is passive ('were hoped for'), but the English translates it as active ('hoped for them').",
+      "certainty": "high"
+     },
+     {
+      "source": "du mes tui. q. cari esset diligi maluimus.",
+      "english": "if we preferred to be loved when we wished to be dear.",
+      "kind": "sense",
+      "why": "The Latin 'cari esset' (cari esse) means 'to be dear', but the English reverses the logic of the comparison between being loved and being dear.",
+      "certainty": "medium"
+     }
+    ],
+    "located": true
+   },
+   "d2": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "a": "uniuersas prouincias regionesque uno calamitatis genere splendet.",
+      "b": "sed integras provincias regionesque uno calamitatis genere perdiderunt.",
+      "kind": "sense",
+      "why": "A claims the provinces shine/are brightened by calamity, while B claims they were destroyed.",
+      "certainty": "high"
+     }
+    ],
+    "chrf": 0.5658400456456781,
+    "bleu4": 0.04632209994553808
+   },
+   "d1": {
+    "src_neg": 3,
+    "en_neg": 8,
+    "page_diff": 5,
+    "window": 3
+   }
+  },
+  {
+   "id": "69b2ff19a1a4246ddb45ae6a_00196",
+   "order": 60,
+   "track": "T1",
+   "lang": "Latin",
+   "url": "https://sourcelibrary.org/book/69b2ff19a1a4246ddb45ae6a?page=196",
+   "weight": 1,
+   "labels": {
+    "judges": 2,
+    "reversal_judges": 2,
+    "omission_judges": 2,
+    "fill_judges": 0,
+    "boundary_judges": 0,
+    "fidelity": 3,
+    "reversals": [
+     {
+      "english": "envying no one if they attempt anything",
+      "source": null,
+      "why": null
+     },
+     {
+      "english": "envying no one if they attempt anything however foolishly in this field",
+      "source": null,
+      "why": null
+     }
+    ],
+    "defects": [
+     "T8: 'envying no one' for 'nemini non inuidens' (envying everyone)",
+     "T8: 'envying no one' vs source 'nemini non inuidens' (envying everyone): double negative lost"
+    ]
+   },
+   "target": {
+    "reversal": true,
+    "reversal_both": true,
+    "omission": true,
+    "fill": false,
+    "low": true
+   },
+   "d3": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "source": "nemini non inuidens, si quid quantumlibet inepte moliatur in hoc genere",
+      "english": "envying no one if they attempt anything however foolishly in this field",
+      "kind": "negation",
+      "why": "The source says he envies everyone (nemini non = everyone), but the English says he envies no one.",
+      "certainty": "high"
+     }
+    ],
+    "located": true
+   },
+   "d2": {
+    "n": 1,
+    "n_high": 1,
+    "omissions": 0,
+    "additions": 0,
+    "items": [
+     {
+      "a": "nemini non inuidens, si quid quantumlibet inepte moliatur in hoc genere",
+      "b": "nemini invidens si quid in hoc genere vel stultissime moliantur",
+      "kind": "sense",
+      "why": "A says he envies everyone, B says he envies no one.",
+      "certainty": "high"
+     }
+    ],
+    "chrf": 0.5323515883944978,
+    "bleu4": 0
+   },
+   "d1": {
+    "src_neg": 6,
+    "en_neg": 4,
+    "page_diff": 2,
+    "window": 3
+   }
+  }
+ ]
+}
