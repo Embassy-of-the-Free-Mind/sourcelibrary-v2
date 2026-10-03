@@ -3,6 +3,11 @@
 **Read this when** you are choosing a Gemini model for a lane, adding or touching a
 `generateContent` call site (in `src/` or a script), reasoning about why OCR and
 translation route differently, using grounded search, or metering what a model call cost.
+**Changing, seeding, promoting or A/B testing an OCR or translation PROMPT** (or asking which
+prompt wrote a page) → `../prompt-history.md` first: every version, what it was measured to do,
+how many pages it wrote. **A page's `prompt_version` is a label, often a stamped constant — read
+`prompt_id`, then `prompt_hash`.** (Routed from here, not CLAUDE.md: the body is over its word
+budget, 5,605 words on 2026-10-03.)
 
 PRIOR ART: CLAUDE.md "AI Models — IMPORTANT" (this text lived there until 2026-09-22,
 #4943) — it is conditional by its own content, so it moved here; `language-fields.md`
