@@ -173,6 +173,24 @@ function transformBook(book) {
   };
 }
 
+// The incremental watermark is the START time of this script's last clean run,
+// kept in Mongo `system_config` where only this script writes it (#5454). It
+// used to be max(updated_at) in books_catalog — but mirrorBookToCatalog(), the
+// ensure-cover route and several maintenance scripts stamp catalog rows with
+// now(), and each such write moved the mark forward past Mongo changes no sync
+// had copied yet. Those changes (hides included: 103 duplicate-hidden books were
+// still public on 2026-10-03) then waited for the Sunday --full.
+// The overlap re-reads books written while the previous run's cursor was open
+// (the cursor is unsorted); upserts are idempotent, so overlap only costs time.
+const WATERMARK_ID = 'books_catalog_sync_watermark';
+const WATERMARK_OVERLAP_MS = 10 * 60 * 1000;
+
+async function getWatermark(db) {
+  const doc = await db.collection('system_config').findOne({ _id: WATERMARK_ID });
+  return doc?.last_run_started_at instanceof Date ? doc.last_run_started_at : null;
+}
+
+// Legacy fallback for the first run after deploy only: the table's max.
 async function getLastSyncTime() {
   const { data } = await supabase
     .from('books_catalog')
@@ -185,6 +203,7 @@ async function getLastSyncTime() {
 // ── Main ─────────────────────────────────────────────────────────────
 
 const start = Date.now();
+const runStartedAt = new Date(start);
 const mongoClient = new MongoClient(MONGODB_URI, { maxPoolSize: 2 });
 await mongoClient.connect();
 const db = mongoClient.db('bookstore');
@@ -198,10 +217,13 @@ let query;
 if (FULL_MODE) {
   query = { visible: true };
 } else {
-  const lastSync = await getLastSyncTime();
+  const watermark = await getWatermark(db);
+  const lastSync = watermark
+    ? new Date(watermark.getTime() - WATERMARK_OVERLAP_MS)
+    : await getLastSyncTime();
   if (lastSync) {
     query = { updated_at: { $gt: lastSync } };
-    console.log(`Incremental from: ${lastSync.toISOString()} (visibility changes included)`);
+    console.log(`Incremental from: ${lastSync.toISOString()} (${watermark ? 'own watermark' : 'legacy table max'}; visibility changes included)`);
   } else {
     query = { visible: true };
     console.log('No existing data — doing full sync');
@@ -341,6 +363,17 @@ if (FULL_MODE && synced > 0) {
       console.log(`[${new Date().toISOString()}] books_catalog: marked ${hidden} rows visible:false (hidden in Mongo)`);
     }
   }
+}
+
+// Advance the watermark only after a clean run, so a failed batch is retried
+// next time instead of being stepped over. A --full run never sets it: its
+// cleanup can abort on a cursor mismatch, leaving hides unpropagated.
+if (!FULL_MODE && errors === 0) {
+  await db.collection('system_config').updateOne(
+    { _id: WATERMARK_ID },
+    { $set: { last_run_started_at: runStartedAt, synced, updated_at: new Date() } },
+    { upsert: true },
+  );
 }
 
 await mongoClient.close();
