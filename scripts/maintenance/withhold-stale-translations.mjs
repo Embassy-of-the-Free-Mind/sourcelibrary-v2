@@ -55,6 +55,9 @@
  *                         --book/--books-file, see UNVERIFIED_SCRIPT_ARM below
  *   … --cohort-script=tibetan  with the arm above: every listed book is in that script,
  *                         so any Gemini read of it is unverified (see COHORT_SCRIPT)
+ *   … --illegible-arm     also withhold translations made from an ILLEGIBLE transcription
+ *                         (#5305: no legible body, or the OCR says it could not read the
+ *                         page); needs --book/--books-file, see ILLEGIBLE_ARM below
  *   … --limit=N           stop after N books (dry-run sizing)
  *   … --report=PATH
  *   … --skip-supabase-mirror   don't re-sync the Supabase `pages` mirror per book
@@ -99,6 +102,13 @@ const UNVERIFIED_SCRIPT_ARM = process.argv.includes('--unverified-script-arm');
  * Syriac books, which carry real Latin, Greek and Arabic pages.
  */
 const COHORT_SCRIPT = ARG('--cohort-script', null);
+/**
+ * Arm 5 (#5305): also withhold English made from a page whose OCR read nothing or says it could
+ * not read the page (illegible-source-gate.mjs). Opt-in and book-scoped like the loop arm — the
+ * predicate reads `ocr.data`, nothing indexed marks these pages. NOT approved for a bulk run:
+ * the #5305 report carries the corpus fire rate and the hand read; the go is Derek's.
+ */
+const ILLEGIBLE_ARM = process.argv.includes('--illegible-arm');
 if (COHORT_SCRIPT && !UNVERIFIED_SCRIPT_ARM) {
   console.error('--cohort-script only means something with --unverified-script-arm.');
   process.exit(2);
@@ -108,10 +118,12 @@ const CANDIDATE_FILTER = {
     STALE_CANDIDATE_FILTER,
     ...(LOOP_ARM ? [LOOP_CANDIDATE_FILTER] : []),
     ...(UNVERIFIED_SCRIPT_ARM ? [UNVERIFIED_SCRIPT_CANDIDATE_FILTER] : []),
+    ...(ILLEGIBLE_ARM ? [LOOP_CANDIDATE_FILTER] : []),  // same shape: every translated page with OCR
   ],
 };
 for (const [on, flag, filter] of [[LOOP_ARM, '--loop-arm', 'LOOP_CANDIDATE_FILTER'],
-  [UNVERIFIED_SCRIPT_ARM, '--unverified-script-arm', 'UNVERIFIED_SCRIPT_CANDIDATE_FILTER']]) {
+  [UNVERIFIED_SCRIPT_ARM, '--unverified-script-arm', 'UNVERIFIED_SCRIPT_CANDIDATE_FILTER'],
+  [ILLEGIBLE_ARM, '--illegible-arm', 'LOOP_CANDIDATE_FILTER']]) {
   if (on && !ONLY_BOOK && !BOOKS_FILE) {
     console.error(`${flag} needs --book or --books-file: nothing indexed narrows its candidate set (see ${filter}).`);
     process.exit(2);
@@ -245,7 +257,7 @@ for (const bookId of bookIds) {
   T.books++;
   const candidates = await pages.find(
     { book_id: bookId, ...CANDIDATE_FILTER },
-    { projection: { id: 1, book_id: 1, page_number: 1, ocr: 1, translation: 1, translation_withheld: 1 } },
+    { projection: { id: 1, book_id: 1, page_number: 1, page_type: 1, ocr: 1, translation: 1, translation_withheld: 1 } },
   ).toArray();
   T.candidates += candidates.length;
 
@@ -257,7 +269,7 @@ for (const bookId of bookIds) {
   const keptOther = [];
   for (const p of candidates) {
     if (p.translation_withheld?.reason) withheldPageNumbers.add(p.page_number);
-    const reason = staleTranslationReason(p, { unverifiedScriptArm: UNVERIFIED_SCRIPT_ARM, cohortScript: COHORT_SCRIPT });
+    const reason = staleTranslationReason(p, { unverifiedScriptArm: UNVERIFIED_SCRIPT_ARM, cohortScript: COHORT_SCRIPT, illegibleArm: ILLEGIBLE_ARM });
     if (!reason) {
       // Arm 4 keeps the English on other-script pages of the same books (Latin,
       // Hebrew, Arabic in a Syriac book). Count them, so the report shows what

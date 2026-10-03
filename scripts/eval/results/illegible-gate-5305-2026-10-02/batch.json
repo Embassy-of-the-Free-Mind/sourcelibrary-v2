@@ -1,0 +1,19 @@
+{
+  "key_env": "GEMINI_API_KEY_TIER3",
+  "estimate_usd": 0.2267,
+  "approved_usd": 1,
+  "jobs": [
+    {
+      "model": "gemini-3.1-flash-lite",
+      "job_name": "batches/qyxvrs9udsa1u90lcs6jn1ikem16urbbvro1",
+      "requests": 162,
+      "submitted_at": "2026-10-02T12:43:16.507Z",
+      "collected_at": "2026-10-02T12:47:19.112Z",
+      "responses": 162,
+      "errors": 0,
+      "in_tokens": 503721,
+      "out_tokens": 117297,
+      "cost_usd": 0.15094
+    }
+  ]
+}
