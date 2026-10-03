@@ -256,14 +256,16 @@ export const STATUS_STYLE: Record<(typeof STATUS_ORDER)[number], { label: string
 };
 
 export function StatusBoard({ items }: { items: { id: string; name: string; status: string }[] }) {
+  // An empty "Done" column reads as a hole; it appears once the first canon is done.
+  const shown = STATUS_ORDER.filter((s) => s !== 'done' || items.some((i) => i.status === 'done'));
   return (
     <Figure
       n={4}
       title="Where each canon stands"
       caption="“Blocked” means the open text’s licence does not let us publish it, or no open typed text exists. Each canon’s next step and its public work log are in the rows below."
     >
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {STATUS_ORDER.map((s) => {
+      <div className={`grid grid-cols-1 sm:grid-cols-2 gap-4 ${shown.length === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'}`}>
+        {shown.map((s) => {
           const list = items.filter((i) => i.status === s);
           return (
             <div key={s} className="border border-stone-200 rounded-sm bg-white">
@@ -272,7 +274,6 @@ export function StatusBoard({ items }: { items: { id: string; name: string; stat
                 <span>{list.length}</span>
               </div>
               <ul className="px-3 py-2 font-body text-sm text-stone-700 space-y-1">
-                {list.length === 0 && <li className="text-stone-400">none yet</li>}
                 {list.map((i) => (
                   <li key={i.id}>
                     <a href={`#${i.id}`} className="hover:underline underline-offset-2">
