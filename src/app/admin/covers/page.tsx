@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getDb } from '@/lib/mongodb';
 import { requireAdmin } from '@/lib/auth-helpers';
-import CoverMakerPicker from './CoverMakerPicker';
+import CoverCatalogue from './CoverCatalogue';
 
 /**
  * /admin/covers — concept covers made from books' own scans. Admin only (the
@@ -14,14 +14,19 @@ export const dynamic = 'force-dynamic';
 
 interface ConceptRow { id: string; book_id: string; book_title: string; name: string; thumb: string | null; updated_at: Date; updated_by: string | null }
 
-export default async function CoverConceptsPage() {
+export default async function CoverConceptsPage({ searchParams }: { searchParams: Promise<Record<string, string | undefined>> }) {
   await requireAdmin();
+  const sp = await searchParams;
+  const initial = { q: sp.q || '', collection: sp.collection || '', language: sp.language || '', century: sp.century || '', sort: sp.sort || 'date_asc' };
   const db = await getDb();
   const concepts = await db.collection<ConceptRow>('cover_concepts')
     .find({ deleted_at: null }, { projection: { _id: 0, id: 1, book_id: 1, book_title: 1, name: 1, thumb: 1, updated_at: 1, updated_by: 1 } })
     .sort({ updated_at: -1 })
     .limit(300)
     .toArray();
+
+  const conceptBooks: Record<string, number> = {};
+  for (const c of concepts) conceptBooks[c.book_id] = (conceptBooks[c.book_id] || 0) + 1;
 
   return (
     <main className="max-w-[var(--container-wide)] mx-auto px-4 py-10">
@@ -42,7 +47,7 @@ export default async function CoverConceptsPage() {
                   {c.thumb && <img src={c.thumb} alt={c.name} className="w-full h-full object-cover" />}
                 </div>
                 <span className="block text-sm mt-2 font-medium">{c.name}</span>
-                <span className="block text-xs text-[var(--text-muted)] line-clamp-2">{c.book_title}</span>
+                <span className="text-xs text-[var(--text-muted)] line-clamp-2">{c.book_title}</span>
                 <span className="block text-xs text-[var(--text-muted)]">{new Date(c.updated_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}{c.updated_by ? ` · ${c.updated_by.split('@')[0]}` : ''}</span>
               </Link>
             </li>
@@ -50,9 +55,9 @@ export default async function CoverConceptsPage() {
         </ul>
       </section>
 
-      <section className="max-w-[var(--container-narrow)]">
-        <h2 className="text-lg font-medium mb-3">Make a new one</h2>
-        <CoverMakerPicker />
+      <section>
+        <h2 className="text-lg font-medium mb-3">Choose a book</h2>
+        <CoverCatalogue initial={initial} conceptBooks={conceptBooks} />
       </section>
     </main>
   );
