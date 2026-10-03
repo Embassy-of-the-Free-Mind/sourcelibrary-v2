@@ -198,6 +198,14 @@ describe('positional reading (#5678 seam A/B, PR #5701): marker ORDER, not the n
     expect(r.pages.map((p: { span: string }) => p.span)).toEqual(['A.', 'B, and C.', '', 'D.']);
   });
 
+  it('a stray lead before a correctly numbered opener does not shift the pages', () => {
+    const r = parseFolioMarkedText('<note>ornamental header</note> <pb n="121"/>A. <pb n="122"/>B, and C. <pb n="124"/>D.', [121, 122, 123, 124]);
+    expect(r.reading).toBe('partial');
+    expect(r.missing).toEqual([123]);
+    expect(r.overrun).toEqual([122]);
+    expect(r.pages[0].span).toBe('A.');
+  });
+
   it('rejects too few markers when nothing says which turn is unmarked', () => {
     for (const text of ['<pb n="21"/>All of it.', '<pb n="97"/>A. <pb n="98"/>B.', 'No markers at all.']) {
       const r = parseFolioMarkedText(text, text.includes('97') ? [20, 21, 22] : [21, 22]);

@@ -84,7 +84,8 @@ export function leadingFragment(span) {
  *   - `renumbered`     one marker per page, numbers wrong or out of order: taken in text order
  *                      (text before the first marker, if any, joins the first page);
  *   - `opener-missing` one marker short and running text before the first marker: that text is the
- *                      first page (its span starts at offset 0) and the markers are the page turns;
+ *                      first page (its span starts at offset 0) and the markers are the page turns —
+ *                      unless the numbers are the sequence and name the first page, which is `partial`;
  *   - `partial`        fewer markers still, but every one carries a page number of this block, in
  *                      order: the numbers are the sequence, so the unmarked page is known and left
  *                      empty (Tengyur vol 96 p123, #5682). The page before it runs on to the next
@@ -141,7 +142,9 @@ export function parseFolioMarkedText(responseText, pageNumbers) {
   if (markers.length === nums.length) {
     reading = numbersAreSequence && !hasLead ? 'literal' : 'renumbered';
     starts = markers.map((m, i) => (i === 0 && hasLead ? { n: nums[0], at: 0, from: 0 } : { n: nums[i], at: m.index, from: m.index + m.length }));
-  } else if (markers.length === nums.length - 1 && hasLead) {
+  } else if (markers.length === nums.length - 1 && hasLead && !(numbersAreSequence && markers[0].n === nums[0])) {
+    // (when the numbers ARE the sequence and the first page's marker is there, the opener was not
+    // omitted: the lead is a stray heading or note and the unmarked page is an inner one — `partial`)
     reading = 'opener-missing';
     starts = [{ n: nums[0], at: 0, from: 0 }, ...markers.map((m, i) => ({ n: nums[i + 1], at: m.index, from: m.index + m.length }))];
   } else if (markers.length < nums.length && numbersAreSequence) {
