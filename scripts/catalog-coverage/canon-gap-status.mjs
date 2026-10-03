@@ -148,7 +148,7 @@ const tengyur_draft = {
   per_volume: volumes.map(({ vol, pages_with_text, pages_translated }) => [vol, pages_with_text, pages_translated]),
   counted_at: now,
 };
-await pgc.end(); await mc.close();
+await pgc.end();
 
 const corpora = map.rows.map((r) => {
   const s = STATUS[r.id];
@@ -182,10 +182,43 @@ const TRADITIONS = [
   { id: 'persian-poetry', name: 'Persian poetry', sets: ['ganjoor'], rows: ['ganjoor'] },
   { id: 'mongolian', name: 'Mongolian Kanjur', sets: ['mongolian_kanjur'], rows: ['mongolian-kanjur'] },
 ];
-const traditions = TRADITIONS.map((t) => {
+// Which engine read each page and which model drafted its English, per book, from the page
+// records themselves (ocr.model / ocr.source, translation.model). Read-only; one pass over the
+// pages of every book in a tradition.
+const tradBooks = TRADITIONS.map((t) => {
   const byId = new Map();
   for (const k of t.sets) for (const b of sets[k].books) byId.set(b.id, b);
-  const bs = [...byId.values()];
+  return [...byId.values()];
+});
+const allIds = [...new Set(tradBooks.flat().map((b) => b.id))];
+const engineRows = [];
+for (let i = 0; i < allIds.length; i += 25) engineRows.push(...await db.collection('pages').aggregate([
+  { $match: { book_id: { $in: allIds.slice(i, i + 25) } } },
+  { $group: {
+    _id: {
+      b: '$book_id',
+      o: { $cond: [{ $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] }, { $ifNull: ['$ocr.model', { $ifNull: ['$ocr.source', 'unrecorded'] }] }, null] },
+      t: { $cond: [{ $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] }, { $ifNull: ['$translation.model', 'unrecorded'] }, null] },
+    },
+    n: { $sum: 1 },
+  } },
+], { allowDiskUse: true }).toArray());
+const enginesByBook = new Map();
+for (const r of engineRows) {
+  const e = enginesByBook.get(r._id.b) || { ocr: {}, translation: {} };
+  if (r._id.o) e.ocr[r._id.o] = (e.ocr[r._id.o] || 0) + r.n;
+  if (r._id.t) e.translation[r._id.t] = (e.translation[r._id.t] || 0) + r.n;
+  enginesByBook.set(r._id.b, e);
+}
+const tally = (bs, kind) => {
+  const out = {};
+  for (const b of bs) for (const [k, n] of Object.entries(enginesByBook.get(b.id)?.[kind] || {})) out[k] = (out[k] || 0) + n;
+  return Object.entries(out).sort((x, y) => y[1] - x[1]);
+};
+const titleOf = (b) => String(b.english_title || b.title || b.id).replace(/\s+/g, ' ').slice(0, 90);
+
+const traditions = TRADITIONS.map((t, ti) => {
+  const bs = tradBooks[ti];
   const canon = t.rows.map((id) => map.rows.find((r) => r.id === id));
   const canon_page_equivalents = Math.round(canon.reduce((a, r) => a + (r.size.base_chars ? r.size.base_chars / map.rates[r.lang].base_chars_per_page : 0), 0));
   return {
@@ -196,8 +229,17 @@ const traditions = TRADITIONS.map((t) => {
     pages_transcribed: bs.reduce((a, b) => a + (b.pages_ocr || 0), 0),
     pages_translated: bs.reduce((a, b) => a + (b.pages_translated || 0), 0),
     canon_page_equivalents,
+    ocr_engines: tally(bs, 'ocr'),
+    translation_models: tally(bs, 'translation'),
+    // [id, title, public, pages scanned, transcribed, translated], most-translated first: the unit
+    // chart lays its squares over these so each square opens a real book.
+    book_pages: bs
+      .map((b) => [b.id, titleOf(b), isLive(b), b.pages_count || 0, b.pages_ocr || 0, b.pages_translated || 0])
+      .sort((x, y) => y[5] - x[5] || y[4] - x[4] || y[3] - x[3]),
   };
 });
+
+await mc.close();
 
 const missing = Object.keys(STATUS).filter((k) => !map.rows.some((r) => r.id === k));
 if (missing.length) throw new Error(`STATUS has ids the gap map does not: ${missing.join(', ')}`);
@@ -210,7 +252,7 @@ writeFileSync(OUT, JSON.stringify({
     live_books: 'visible && pages_count > 0', pipeline_held: 'books under a pipeline hold', readable_books: 'readable_in_english (translation_state)', pages_with_text: 'sum of pages_ocr',
     eternity_shelf: 'the 278-book Eternity reading list (list file); readable = readable_in_english recomputed from pages',
     tengyur_draft: 'Derge Tengyur volumes: pages with text / with draft English counted on pages; per_volume = [vol, pages_with_text, pages_translated]; spend_usd = type translation usage rows on these books, both stores',
-    traditions: 'books held per tradition, each counted once; pages_scanned/transcribed/translated = sums of pages_count/pages_ocr/pages_translated; canon_page_equivalents = the open typed canon (gap_map_rows) in base chars ÷ our average base chars per page in that language',
+    traditions: 'books held per tradition, each counted once; pages_scanned/transcribed/translated = sums of pages_count/pages_ocr/pages_translated; canon_page_equivalents = the open typed canon (gap_map_rows) in base chars ÷ our average base chars per page in that language; ocr_engines / translation_models = [model, pages] counted on pages with text / with English (ocr.model, else ocr.source; translation.model); book_pages = [id, title, public, scanned, transcribed, translated]',
   },
   corpora,
   traditions,

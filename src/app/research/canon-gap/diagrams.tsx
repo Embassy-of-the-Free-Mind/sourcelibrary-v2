@@ -198,7 +198,65 @@ export type TraditionProgressRow = {
   pages_transcribed: number;
   pages_translated: number;
   canon_page_equivalents: number;
+  /** [model or source, pages], from the page records */
+  ocr_engines: [string, number][];
+  translation_models: [string, number][];
+  /** [id, title, public, pages scanned, transcribed, translated], most-translated first */
+  book_pages: [string, string, boolean, number, number, number][];
 };
+
+// Plain names for the engine ids the page records carry.
+const ENGINE_NAMES: [RegExp, string][] = [
+  [/^esukhia-derge/, 'Esukhia typed Derge text'],
+  [/^bdrc-yigdzin/, 'BDRC Yigdzin (Tibetan manuscript OCR)'],
+  [/^bdrc-woodblock/, 'BDRC woodblock OCR'],
+  [/^cbeta/, 'CBETA typed text'],
+  [/^sefaria/, 'Sefaria typed text'],
+  [/^gemini-3-flash/, 'Gemini 3 Flash'],
+  [/^gemini-3\.1-flash-lite/, 'Gemini 3.1 Flash-Lite'],
+  [/^gemini-2\.5-flash/, 'Gemini 2.5 Flash'],
+  [/^PaddleOCR-VL/i, 'PaddleOCR-VL'],
+  [/^kraken/, 'Kraken'],
+  [/^ia-/, 'Internet Archive OCR'],
+  [/^mineru/, 'MinerU'],
+  [/^manual$/, 'hand-entered'],
+  [/^unrecorded$/, 'model not recorded'],
+];
+const engineName = (id: string) => ENGINE_NAMES.find(([re]) => re.test(id))?.[1] ?? id;
+
+/** "Gemini 3 Flash 62% · BDRC Yigdzin 31% · other 7%": merged by plain name, top three, shares of pages. */
+function engineLine(rows: [string, number][]) {
+  const merged = new Map<string, number>();
+  for (const [id, n] of rows) merged.set(engineName(id), (merged.get(engineName(id)) ?? 0) + n);
+  const total = [...merged.values()].reduce((a, b) => a + b, 0);
+  if (!total) return null;
+  const sorted = [...merged.entries()].sort((a, b) => b[1] - a[1]);
+  const pct = (n: number) => { const p = (n / total) * 100; return p < 1 ? '<1%' : `${Math.round(p)}%`; };
+  const top = sorted.slice(0, 3).map(([name, n]) => `${name} ${pct(n)}`);
+  const rest = sorted.slice(3).reduce((a, [, n]) => a + n, 0);
+  return [...top, ...(rest ? [`other ${pct(rest)}`] : [])].join(' · ');
+}
+
+type Stage = 'translated' | 'transcribed' | 'scanned only';
+/**
+ * Lay a stage's squares over the books that hold its pages, in order, so square k opens the book
+ * whose pages it stands for: the book under the square's midpoint, pages scaled to the squares.
+ */
+function booksForSquares(books: TraditionProgressRow['book_pages'], stage: Stage, count: number) {
+  const pagesOf = (b: TraditionProgressRow['book_pages'][number]) =>
+    stage === 'translated' ? b[5] : stage === 'transcribed' ? Math.max(b[4] - b[5], 0) : Math.max(b[3] - Math.max(b[4], b[5]), 0);
+  const withPages = books.map((b) => [b, pagesOf(b)] as const).filter(([, n]) => n > 0);
+  const total = withPages.reduce((a, [, n]) => a + n, 0);
+  const out: (TraditionProgressRow['book_pages'][number] | null)[] = [];
+  let i = 0;
+  let cum = withPages[0]?.[1] ?? 0;
+  for (let k = 0; k < count; k++) {
+    const mid = ((k + 0.5) / count) * total;
+    while (i < withPages.length - 1 && mid > cum) cum += withPages[++i][1];
+    out.push(withPages[i]?.[0] ?? null);
+  }
+  return out;
+}
 
 const UNIT = 1000; // pages per square
 const SCANNED_ONLY = '#d6d3d1';
@@ -217,6 +275,9 @@ export function TraditionProgress({ rows, n }: { rows: TraditionProgressRow[]; n
           hold its text (read from the image, or matched from an open typed edition) and translated when it has a
           draft English translation. &ldquo;Open typed text&rdquo; is the size of the openly licensed typed canon for
           that tradition in the table below, converted to pages at our average page length in that language.
+          Each square opens a book whose pages it stands for; squares for books not yet public have no
+          link. &ldquo;Read by&rdquo; and &ldquo;English by&rdquo; are shares of pages, from the engine each
+          page records.
         </>
       }
     >
@@ -248,6 +309,18 @@ export function TraditionProgress({ rows, n }: { rows: TraditionProgressRow[]; n
                       open typed text: ≈ {short(t.canon_page_equivalents)} pages
                     </>
                   )}
+                  {engineLine(t.ocr_engines) && (
+                    <>
+                      <br />
+                      <span className="text-stone-600">Read by:</span> {engineLine(t.ocr_engines)}
+                    </>
+                  )}
+                  {engineLine(t.translation_models) && (
+                    <>
+                      <br />
+                      <span className="text-stone-600">English by:</span> {engineLine(t.translation_models)}
+                    </>
+                  )}
                 </div>
               </div>
               <div
@@ -255,11 +328,20 @@ export function TraditionProgress({ rows, n }: { rows: TraditionProgressRow[]; n
                 role="img"
                 aria-label={`${t.name}: ${fmt(t.pages_scanned)} pages scanned, ${fmt(t.pages_transcribed)} transcribed, ${fmt(t.pages_translated)} translated`}
               >
-                {Array.from({ length: total }, (_, i) => {
-                  const stage = i < tr ? 'translated' : i < tr + tx ? 'transcribed' : 'scanned only';
-                  const bg = i < tr ? ENGLISH : i < tr + tx ? NO_ENGLISH : SCANNED_ONLY;
-                  return <div key={i} className="w-[9px] h-[9px] rounded-[1.5px]" style={{ backgroundColor: bg }} title={`${t.name}: ${stage}`} />;
-                })}
+                {([['translated', tr, ENGLISH], ['transcribed', tx, NO_ENGLISH], ['scanned only', total - tr - tx, SCANNED_ONLY]] as const).flatMap(
+                  ([stage, count, bg]) =>
+                    booksForSquares(t.book_pages, stage, count).map((b, i) => {
+                      const cls = 'block w-[9px] h-[9px] rounded-[1.5px]';
+                      const key = `${stage}-${i}`;
+                      if (!b) return <span key={key} className={cls} style={{ backgroundColor: bg }} title={`${t.name}: ${stage}`} />;
+                      const label = `${b[1]}: ${stage}${b[2] ? '' : ' (not yet public)'}`;
+                      return b[2] ? (
+                        <a key={key} href={`/book/${b[0]}`} className={`${cls} hover:outline hover:outline-2 hover:outline-amber-700`} style={{ backgroundColor: bg }} title={label} aria-label={label} />
+                      ) : (
+                        <span key={key} className={cls} style={{ backgroundColor: bg }} title={label} />
+                      );
+                    }),
+                )}
               </div>
             </div>
           );
