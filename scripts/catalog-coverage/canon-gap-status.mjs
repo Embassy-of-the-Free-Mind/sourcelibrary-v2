@@ -115,6 +115,39 @@ const corpora = map.rows.map((r) => {
     updated_at: now,
   };
 });
+// Progress by TRADITION (the page's unit charts): the books we hold, counted once each even when
+// two gap-map rows share a set (the three Pali rows) or one set contains another (Chan ⊂ CBETA),
+// with pages at each stage — scanned (pages_count), transcribed (pages_ocr), translated
+// (pages_translated) — and the open typed canon converted to page-equivalents at our own average
+// characters per page in that language (map.rates), so held pages and canon size share one unit.
+const TRADITIONS = [
+  { id: 'tibetan', name: 'Tibetan Buddhist canon', sets: ['tengyur', 'kangyur', 'tengyur_other_editions', 'kangyur_other_editions'], rows: ['derge-tengyur', 'derge-kangyur'] },
+  { id: 'chinese-buddhist', name: 'Chinese Buddhist canon', sets: ['cbeta', 'cbeta_chan'], rows: ['cbeta'] },
+  { id: 'chinese-classics', name: 'Chinese classics', sets: ['kanripo'], rows: ['kanripo'] },
+  { id: 'pali', name: 'Pali canon', sets: ['pali'], rows: ['pali-mula', 'pali-atthakatha', 'pali-tika'] },
+  { id: 'sanskrit', name: 'Sanskrit', sets: ['gretil'], rows: ['gretil-buddhist', 'gretil-vedanta', 'gretil-gaudiya'] },
+  { id: 'kabbalah', name: 'Kabbalah', sets: ['kabbalah'], rows: ['sefaria-zohar', 'sefaria-lurianic', 'sefaria-cordovero'] },
+  { id: 'sufi', name: 'Sufi texts (Arabic and Persian)', sets: ['openiti_sufi'], rows: ['openiti-sufi'] },
+  { id: 'persian-poetry', name: 'Persian poetry', sets: ['ganjoor'], rows: ['ganjoor'] },
+  { id: 'mongolian', name: 'Mongolian Kanjur', sets: ['mongolian_kanjur'], rows: ['mongolian-kanjur'] },
+];
+const traditions = TRADITIONS.map((t) => {
+  const byId = new Map();
+  for (const k of t.sets) for (const b of sets[k].books) byId.set(b.id, b);
+  const bs = [...byId.values()];
+  const canon = t.rows.map((id) => map.rows.find((r) => r.id === id));
+  const canon_page_equivalents = Math.round(canon.reduce((a, r) => a + (r.size.base_chars ? r.size.base_chars / map.rates[r.lang].base_chars_per_page : 0), 0));
+  return {
+    id: t.id, name: t.name, gap_map_rows: t.rows,
+    books: bs.length,
+    readable_books: bs.filter((b) => isReadableInEnglish(b.translation_state)).length,
+    pages_scanned: bs.reduce((a, b) => a + (b.pages_count || 0), 0),
+    pages_transcribed: bs.reduce((a, b) => a + (b.pages_ocr || 0), 0),
+    pages_translated: bs.reduce((a, b) => a + (b.pages_translated || 0), 0),
+    canon_page_equivalents,
+  };
+});
+
 const missing = Object.keys(STATUS).filter((k) => !map.rows.some((r) => r.id === k));
 if (missing.length) throw new Error(`STATUS has ids the gap map does not: ${missing.join(', ')}`);
 
@@ -124,9 +157,12 @@ writeFileSync(OUT, JSON.stringify({
     status: 'done | running | next | blocked', owner_issue: 'GitHub issue that owns the next action', next_action: 'what happens next, in one sentence',
     cost_usd: 'cost of the next action where it has one (draft-English figures are the gap map\'s)', held_books: 'books we hold for the corpus, live + hidden (holdings_method)',
     live_books: 'visible && pages_count > 0', pipeline_held: 'books under a pipeline hold', readable_books: 'readable_in_english (translation_state)', pages_with_text: 'sum of pages_ocr',
+    traditions: 'books held per tradition, each counted once; pages_scanned/transcribed/translated = sums of pages_count/pages_ocr/pages_translated; canon_page_equivalents = the open typed canon (gap_map_rows) in base chars ÷ our average base chars per page in that language',
   },
   corpora,
+  traditions,
 }, null, 1) + '\n');
 console.log(`wrote ${OUT}: ${corpora.length} corpora`);
 for (const c of corpora) console.log(`${c.id.padEnd(20)} ${c.status.padEnd(8)} #${c.owner_issue ?? '—'} held ${c.held_books} live ${c.live_books} readable ${c.readable_books} text-pages ${c.pages_with_text}`);
+for (const t of traditions) console.log(`${t.id.padEnd(18)} books ${t.books} scanned ${t.pages_scanned} text ${t.pages_transcribed} translated ${t.pages_translated} readable ${t.readable_books} canon≈${t.canon_page_equivalents}pp`);
 process.exit(0);
