@@ -127,3 +127,32 @@ Before any number is quoted, the five pages where S is judged worst (by fidelity
    because the lane's non-Tibetan, non-English frame is. Arms: v13 md5 `516510147237b6a79d9d3f6e797bba7f`, seam
    `9d9794376f5d09211ca95509e44bef57`. **375 Flash-Lite Batch requests; estimate $0.944** (the v14 run's same
    estimator over-read by ~35%: $1.05 estimated, $0.667 actual). Submit approved at $1.50, under the $3 cap.
+2. **2026-10-03, after scoring (a correction of fact; the rule is unchanged).** The packet-17 judge wrote its 15
+   verdicts in packet order but put two ids on the wrong lines: the verdict for item 13 (an Arabic charm page,
+   seam arm) carried item 14's id and the reverse (item 14 is a Chinese page, also seam arm). Each verdict's text
+   names the other item's source, so the swap is unambiguous. The ids were swapped back; the file as the judge wrote
+   it is kept as `verdicts/packet-17.jsonl.as-written`. The decision is the same before and after the fix. Also: the
+   packet-23 judge reports writing its file twice (the first write was partial); the file on disk is complete and
+   valid. Three blocks parsed short and lost page N (v13a 1, seam 2); the scorer counts them as omissions, not
+   invention, as in v14.
+
+## Result (2026-10-03)
+
+**Rule output: FAIL.** The primary clause fails, and both guards hold.
+- **P:** page-boundary invention on the 100 page-break pages is **19 / 19 / 19 pages** (A / A2 / S). S vs A is 8 vs
+  8 discordant, one-sided p 0.60. The noise pair is also 8 vs 8.
+- **G1 holds:** control invention 4 / 5 / 3 pages.
+- **G2 holds:** pooled omission 24 / 22 / 21 pages.
+- **Secondary:** the continuity-meta payload goes 6 / 5 / **0** pages (0 vs 6, two-sided p 0.031). On this door the
+  payload is rare, so there was little for item 1b to remove.
+
+The five pages where S was judged worst:
+- three are garbled or opaque scripts that v13 renders no better (Chinese commentary columns, a Jawi charm, an
+  Arabic charm);
+- two are Latin with one page-boundary import or a misreading, and both v13 draws have defects of the same kind on
+  their own pages.
+
+None shows a harm specific to the seam lines.
+
+Write-up: `results/translation-seam-confirm-2026-10-03/README.md`; experiment
+`experiments/2026-10-03-translation-seam-confirm-5305.md`.
