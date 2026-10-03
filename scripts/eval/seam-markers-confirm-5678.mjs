@@ -261,7 +261,12 @@ async function phaseSubmit() {
   const est = estimate(units);
   const approved = Number(opt('approved-usd', 0));
   if (!(approved >= est.usd) || approved > CAP_USD) { console.error(`REFUSING TO SPEND: estimate $${est.usd.toFixed(3)}, --approved-usd ${approved || 'absent'} (cap $${CAP_USD})`); process.exit(2); }
-  if (fs.existsSync(path.join(DIR, 'batch.json'))) { console.error('batch.json exists — already submitted'); process.exit(2); }
+  // --resubmit A2,A,B: a job that died server-side with no output (Amendment 2) is moved to dead_jobs and the
+  // same requests are submitted again, in the registered order
+  const redo = (opt('resubmit', '') || '').split(',').filter(Boolean);
+  const prior = fs.existsSync(path.join(DIR, 'batch.json')) ? JSON.parse(fs.readFileSync(path.join(DIR, 'batch.json'), 'utf8')) : null;
+  if (prior && !redo.length) { console.error('batch.json exists — already submitted'); process.exit(2); }
+  if (redo.some((a) => prior?.jobs.find((j) => j.arm === a)?.collected_at)) { console.error('refusing to resubmit a collected arm'); process.exit(2); }
   // the envelope (set-scope.mjs, lanes restricted to this eval so no production worker can draw on it)
   const { MongoClient } = await import('mongodb');
   const { getScopeSpendUsd } = await import('../lib/spend-guard.mjs');
@@ -272,13 +277,16 @@ async function phaseSubmit() {
   const spent = await getScopeSpendUsd(c.db('bookstore'), { ids: units.map((u) => u.book.id), since: new Date(env.created_at) });
   await c.close();
   if (spent.meterError) console.warn(`meter: ${spent.meterError}`);
-  if (spent.usd + est.usd > Math.min(env.budget_usd, CAP_USD)) { console.error(`REFUSING: envelope $${spent.usd.toFixed(3)} spent + $${est.usd.toFixed(3)} > $${env.budget_usd}`); process.exit(2); }
+  const deadUsd = (prior?.dead_jobs || []).concat(prior ? prior.jobs.filter((j) => redo.includes(j.arm)) : []).reduce((n, j) => n + (est.byArm[j.arm] || 0), 0);
+  if (prior && est.usd + deadUsd > CAP_USD) { console.error(`REFUSING: estimate $${est.usd.toFixed(3)} + dead jobs (assumed billed) $${deadUsd.toFixed(3)} > cap $${CAP_USD}`); process.exit(2); }
+  if (!prior && spent.usd + est.usd > Math.min(env.budget_usd, CAP_USD)) { console.error(`REFUSING: envelope $${spent.usd.toFixed(3)} spent + $${est.usd.toFixed(3)} > $${env.budget_usd}`); process.exit(2); }
   const envName = process.env.GEMINI_API_KEY_TIER3 ? 'GEMINI_API_KEY_TIER3' : 'GEMINI_API_KEY';
   const key = process.env[envName];
   if (!key) throw new Error(`no ${envName}`);
-  const jobs = [];
-  const save = () => fs.writeFileSync(path.join(DIR, 'batch.json'), JSON.stringify({ key_env: envName, estimate_usd: est.usd, approved_usd: approved, envelope_before_usd: spent.usd, generation: { thinkingBudget: 0, maxOutputTokens: 'maxOutputTokensFor(pages)', temperature: 'default', safety: 'SAFETY_SETTINGS (production)' }, jobs }, null, 2));
-  for (const arm of ARMS) {
+  const jobs = prior ? prior.jobs.filter((j) => !redo.includes(j.arm)) : [];
+  const dead_jobs = prior ? [...(prior.dead_jobs || []), ...prior.jobs.filter((j) => redo.includes(j.arm)).map((j) => ({ ...j, dead: opt('dead-reason', 'died server-side with no output') }))] : [];
+  const save = () => fs.writeFileSync(path.join(DIR, 'batch.json'), JSON.stringify({ key_env: envName, estimate_usd: est.usd, approved_usd: approved, envelope_before_usd: spent.usd, generation: { thinkingBudget: 0, maxOutputTokens: 'maxOutputTokensFor(pages)', temperature: 'default', safety: 'SAFETY_SETTINGS (production)' }, jobs, ...(dead_jobs.length ? { dead_jobs } : {}) }, null, 2));
+  for (const arm of (prior ? ARMS.filter((a) => redo.includes(a)) : ARMS)) {
     // production's request, key carried as the line key the collect side reads
     const lines = units.map((u) => {
       const line = batchRequestToJsonlLine(batchRequest({ key: `${u.unit}|${arm}`, prompt: promptFor(u, arm, v13), maxOutputTokens: maxOut(u) }));
@@ -286,6 +294,20 @@ async function phaseSubmit() {
     });
     jobs.push({ arm, ...(await submitBatchFile({ model: ARM[arm].model, lines, displayName: `markers-confirm-5678-${arm}`, key })) });
     save();   // a job that is submitted is recorded at once: a crash must not orphan paid work
+  }
+  // --retry-errors: a request that came back as an API error with NO response (Amendment 2) is asked once more
+  if (has('retry-errors') && fs.existsSync(path.join(DIR, 'outputs.jsonl'))) {
+    const rows = readJsonl(path.join(DIR, 'outputs.jsonl'));
+    const answered = new Set(rows.filter((o) => !o.error).map((o) => `${o.unit}|${o.arm}`));
+    const errs = rows.filter((o) => o.error && !answered.has(`${o.unit}|${o.arm}`));
+    const byUnit = new Map(units.map((u) => [u.unit, u]));
+    for (const arm of ARMS) {
+      const mine = errs.filter((o) => o.arm === arm);
+      if (!mine.length || jobs.some((j) => j.arm === arm && j.retry)) continue;
+      const lines = mine.map((o) => { const u = byUnit.get(o.unit); const line = batchRequestToJsonlLine(batchRequest({ key: `${u.unit}|${arm}`, prompt: promptFor(u, arm, v13), maxOutputTokens: maxOut(u) })); return JSON.stringify({ key: `${u.unit}|${arm}`, request: line.request }); });
+      jobs.push({ arm, retry: true, ...(await submitBatchFile({ model: ARM[arm].model, lines, displayName: `markers-confirm-5678-${arm}-retry`, key })) });
+      save();
+    }
   }
 }
 
@@ -316,10 +338,11 @@ async function phaseCollect() {
   const out = path.join(DIR, 'outputs.jsonl');
   const { logUsage } = await import('../workers/lib/supabase-usage-logger.mjs');
   for (;;) {
-    let pending = 0;
+    let pending = 0, dead = 0;
     for (const j of rec.jobs) {
       if (j.collected_at) continue;
-      const text = await fetchBatchOutput(j, key);
+      let text;
+      try { text = await fetchBatchOutput(j, key); } catch (e) { console.log(`${j.arm}: ${e.message} — no output; resubmit with --submit --resubmit ${j.arm}`); j.dead_state = e.message; dead++; continue; }
       if (text == null) { pending++; continue; }
       let inTok = 0, outTok = 0, n = 0, errors = 0;
       const p = priceFor(j.model);
@@ -348,6 +371,7 @@ async function phaseCollect() {
       console.log(`collected ${j.arm}: ${n} (${errors} errors) $${j.cost_usd.toFixed(4)}`);
       fs.writeFileSync(path.join(DIR, 'batch.json'), JSON.stringify(rec, null, 2));
     }
+    if (dead) { fs.writeFileSync(path.join(DIR, 'batch.json'), JSON.stringify(rec, null, 2)); if (!pending) { console.log(`${dead} job(s) dead`); return; } }
     if (!pending) { console.log(`all collected; actual $${rec.jobs.reduce((s, j) => s + (j.cost_usd || 0), 0).toFixed(4)} → ${out}`); return; }
     if (Date.now() - t0 > waitMax) { console.log(`${pending} job(s) pending; re-run --collect later`); return; }
     await new Promise((r) => setTimeout(r, 120e3));

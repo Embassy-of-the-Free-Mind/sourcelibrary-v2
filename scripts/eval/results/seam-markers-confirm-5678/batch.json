@@ -16,7 +16,8 @@
       "job_name": "batches/ljxbhwue1j6ryuab0j4woa6cbkz0we0pjlic",
       "file_name": "files/devwny52gug3",
       "requests": 120,
-      "submitted_at": "2026-10-03T22:29:35.507Z"
+      "submitted_at": "2026-10-03T22:29:35.507Z",
+      "dead_state": "batch BATCH_STATE_CANCELLED"
     },
     {
       "arm": "A",
@@ -24,7 +25,8 @@
       "job_name": "batches/dxfw47prrydcsfyt6px1faah7z7rrn07vir2",
       "file_name": "files/geywhbuvyzub",
       "requests": 120,
-      "submitted_at": "2026-10-03T22:29:43.963Z"
+      "submitted_at": "2026-10-03T22:29:43.963Z",
+      "dead_state": "batch BATCH_STATE_CANCELLED"
     },
     {
       "arm": "B",
@@ -32,7 +34,8 @@
       "job_name": "batches/oe6js4il4icb7mb79ksk4ns4xtw9n8ctrmfr",
       "file_name": "files/89kuyo5q1qg9",
       "requests": 120,
-      "submitted_at": "2026-10-03T22:29:52.466Z"
+      "submitted_at": "2026-10-03T22:29:52.466Z",
+      "dead_state": "batch BATCH_STATE_CANCELLED"
     },
     {
       "arm": "C",
@@ -40,7 +43,13 @@
       "job_name": "batches/8akqlvkcxwjf7l3re24161i46rnhsvpguxr6",
       "file_name": "files/7alln6p0ycgi",
       "requests": 120,
-      "submitted_at": "2026-10-03T22:30:00.451Z"
+      "submitted_at": "2026-10-03T22:30:00.451Z",
+      "collected_at": "2026-10-03T22:35:19.365Z",
+      "responses": 120,
+      "errors": 2,
+      "in_tokens": 503859,
+      "out_tokens": 147238,
+      "cost_usd": 0.34682175000000004
     },
     {
       "arm": "D",
@@ -48,7 +57,13 @@
       "job_name": "batches/y4v1z9y1amjxtn65pv6u33zfn9rbfwrfglad",
       "file_name": "files/crg8ng95oxy7",
       "requests": 120,
-      "submitted_at": "2026-10-03T22:30:09.099Z"
+      "submitted_at": "2026-10-03T22:30:09.099Z",
+      "collected_at": "2026-10-03T22:35:26.175Z",
+      "responses": 120,
+      "errors": 0,
+      "in_tokens": 477378,
+      "out_tokens": 159187,
+      "cost_usd": 0.358125
     }
   ]
 }

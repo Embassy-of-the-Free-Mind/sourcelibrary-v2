@@ -233,3 +233,20 @@ example breaks (source and English) are quoted in the report.
      is about $1.2 to $1.6. Approved at $2.50, under the $4 cap.
    - **Envelope.** `markers-confirm-5678`, $4, lanes `eval-markers-confirm-5678`, opened just before the submit
      and removed right after it.
+2. **2026-10-03, after the first collect attempt, before any packet was built or any output was read.**
+   - **The three Lite Batch jobs died server-side.** A2, A and B (submitted 22:29Z) ended at 22:33Z in state
+     `BATCH_STATE_CANCELLED` with `successfulRequestCount: 120`, error `code 13: "failed without error"` and **no
+     output file**. Nothing in this repo cancels a Batch job by name, and the three ended within three seconds of
+     each other; the two Flash jobs, submitted seconds later, succeeded. No Lite output exists.
+   - **Resubmitted unchanged**: the same 120 requests per arm, in the registered order (A2, A, B). The dead jobs
+     stay in `batch.json` under `dead_jobs`. Whether Google bills a job that dies like this is not known; for the
+     cap they are counted as billed at their estimate ($0.97), which with the full estimate ($2.27) is $3.24,
+     under $4.
+   - **Two Flash + markers requests (arm C) returned an API error, not a response** (`code 1: "The operation was
+     cancelled."`): `69e7ab425f…:214` and `69c1bad585…:45`. **Rule added now, for every arm:** a request that comes
+     back as an API error with no response is asked once more (as the lane would re-queue it); if it errors again it
+     counts as undrafted. A response that exists is never re-asked, whatever it contains.
+   - **What had been seen when this was written:** only counts. C parsed `literal` in all 118 responses; D left one
+     block with a page undrafted. No English had been read.
+   - C and D actual spend: $0.347 + $0.358 = $0.705.
+
