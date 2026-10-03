@@ -315,8 +315,9 @@ export default function CanonGapPage() {
             <li>
               <strong>Transcription accuracy.</strong> Our reading of the Bhutanese Kangyur manuscripts matches the
               Derge e-text on a median 95% of syllables. Our Sanskrit transcription matches GRETIL on at least 89% of
-              characters, and our Pali on 95%. Persian manuscripts are not yet readable: a median 41% character match
-              against Ganjoor&rsquo;s typed text, so we are not translating them. Printed Persian reads well.{' '}
+              characters, and our Pali on 95%. Persian manuscripts are not yet readable: the best model we tested
+              matches Ganjoor&rsquo;s typed text on a median 70% of characters, short of the 90% we require before
+              translating, so we are not translating them. Printed Persian reads well.{' '}
               <a href={`${ISSUE_URL}5525`} className="text-amber-800 underline underline-offset-2">Details</a>
             </li>
             <li>
