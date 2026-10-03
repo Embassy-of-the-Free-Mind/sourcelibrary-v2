@@ -24,6 +24,8 @@
  * page-break rules.
  */
 
+import { stripMarkupTags } from './strip-markup-tags.mjs';
+
 /** One marker: `<pb n="35"/>`, tolerant of spacing and quote style. */
 export const FOLIO_MARKER_RE = /<pb\s+n\s*=\s*["']?(\d+)["']?\s*\/?>/g;
 
@@ -75,58 +77,101 @@ export function leadingFragment(span) {
 /**
  * Split one continuous, marked English text into page spans.
  *
+ * Markers are read by POSITION, not by their `n` (#5678 seam A/B, PR #5701): on OCR'd books the
+ * model often numbers a marker by the printed page number in the OCR's `<page-num>` (`<pb n="97"/>`
+ * for sequence page 21), and Flash-Lite often leaves out the opening marker and starts straight in
+ * on the first page's text. The k-th marker is the k-th page start whatever its number says. The
+ * readings, in order:
+ *   - `literal`        one marker per page, numbered as asked, nothing before the first;
+ *   - `renumbered`     one marker per page, numbers wrong or out of order: taken in text order
+ *                      (text before the first marker, if any, joins the first page);
+ *   - `opener-missing` one marker short and running text before the first marker: that text is the
+ *                      first page (its span starts at offset 0) and the markers are the page turns —
+ *                      unless the numbers are the sequence and name the first page, which is `partial`;
+ *   - `partial`        fewer markers still, but every one carries a page number of this block, in
+ *                      order: the numbers are the sequence, so the unmarked page is known and left
+ *                      empty (Tengyur vol 96 p123, #5682). The page before it runs on to the next
+ *                      marker, so it holds the unmarked page's English too: listed in `overrun`;
+ *   - `rejected`       anything else (too many markers, or too few with no way to tell which turn is
+ *                      unmarked): every page is left empty and `rejected` says why.
+ *
  * @param {string} responseText  the model's response (wrapper and editorial blocks allowed)
  * @param {number[]} pageNumbers the block's pages, in order — the markers the text must carry
  * @returns {{
  *   continuous: string,               body with markers, editorial blocks removed
  *   pages: { page_number: number, span: string, head: string, tail: string,
  *            marker_offset: number|null, marker_fraction: number|null }[],
- *   missing: number[], duplicated: number[], unexpected: number[], outOfOrder: boolean,
- *   leading: string                    text before the first marker (should be empty)
+ *   reading: 'literal'|'renumbered'|'opener-missing'|'partial'|'rejected',
+ *   rejected: string|null,
+ *   missing: number[],                 pages left without a span
+ *   overrun: number[],                 pages whose span runs on over a `missing` page that follows
+ *   duplicated: number[], unexpected: number[], outOfOrder: boolean,   what the NUMBERS said
+ *   leading: string                    text before the first marker
  * }}
  *
- * `marker_offset` is the page's marker position in the continuous text with all markers removed;
- * `marker_fraction` is that offset over the total length. A page whose marker is missing gets an
- * empty span and nulls, and is listed in `missing` — it is never silently given a neighbour's text.
- * `head` / `tail` are empty when the break falls on a sentence boundary.
+ * `marker_offset` is where the page starts in the continuous text with all markers removed (0 for a
+ * first page whose marker was omitted); `marker_fraction` is that offset over the total length. A
+ * page without a span gets nulls and is listed in `missing` — it is never silently given a
+ * neighbour's text. `head` / `tail` are empty when the break falls on a sentence boundary.
  */
 export function parseFolioMarkedText(responseText, pageNumbers) {
+  const nums = pageNumbers.map(Number);
   const continuous = continuousBody(responseText);
   const markers = [...continuous.matchAll(FOLIO_MARKER_RE)].map((m) => ({ n: Number(m[1]), index: m.index, length: m[0].length }));
-  const wanted = new Set(pageNumbers.map(Number));
-  const seen = new Map();
+
+  // What the numbers say — diagnostics only, except for the `partial` reading.
+  const wanted = new Set(nums);
+  const seen = new Set();
   const duplicated = [];
   const unexpected = [];
   for (const m of markers) {
-    if (!wanted.has(m.n)) { unexpected.push(m.n); continue; }
-    if (seen.has(m.n)) { duplicated.push(m.n); continue; }
-    seen.set(m.n, m);
+    if (!wanted.has(m.n)) unexpected.push(m.n);
+    else if (seen.has(m.n)) duplicated.push(m.n);
+    else seen.add(m.n);
   }
-  const ordered = pageNumbers.map(Number).filter((n) => seen.has(n));
-  const outOfOrder = ordered.some((n, i) => i > 0 && seen.get(n).index < seen.get(ordered[i - 1]).index);
+  const valid = markers.filter((m) => wanted.has(m.n));
+  const outOfOrder = valid.some((m, i) => i > 0 && nums.indexOf(m.n) < nums.indexOf(valid[i - 1].n));
 
-  // Plain text (markers removed) and each kept marker's offset in it.
+  const clean = (t) => t.replace(FOLIO_MARKER_RE, '').trim();
+  const leading = clean(markers.length ? continuous.slice(0, markers[0].index) : continuous);
+  const hasLead = stripMarkupTags(leading).trim().length > 0;
+  const numbersAreSequence = markers.length > 0 && !unexpected.length && !duplicated.length && !outOfOrder;
+
+  // starts: one per page that has a span — { n, at (index in `continuous`), from (where its text starts) }
+  let reading;
+  let rejected = null;
+  let starts = [];
+  if (markers.length === nums.length) {
+    reading = numbersAreSequence && !hasLead ? 'literal' : 'renumbered';
+    starts = markers.map((m, i) => (i === 0 && hasLead ? { n: nums[0], at: 0, from: 0 } : { n: nums[i], at: m.index, from: m.index + m.length }));
+  } else if (markers.length === nums.length - 1 && hasLead && !(numbersAreSequence && markers[0].n === nums[0])) {
+    // (when the numbers ARE the sequence and the first page's marker is there, the opener was not
+    // omitted: the lead is a stray heading or note and the unmarked page is an inner one — `partial`)
+    reading = 'opener-missing';
+    starts = [{ n: nums[0], at: 0, from: 0 }, ...markers.map((m, i) => ({ n: nums[i + 1], at: m.index, from: m.index + m.length }))];
+  } else if (markers.length < nums.length && numbersAreSequence) {
+    reading = 'partial';
+    starts = markers.map((m) => ({ n: m.n, at: m.index, from: m.index + m.length }));
+  } else {
+    reading = 'rejected';
+    rejected = `${markers.length} marker(s) for ${nums.length} page(s)${hasLead ? '' : ', none missing at the opening'}`;
+  }
+
+  // Plain text (markers removed) and each page start's offset in it.
   const plainOffset = (index) => {
     let removed = 0;
     for (const m of markers) { if (m.index < index) removed += m.length; }
     return index - removed;
   };
-  const plain = continuous.replace(FOLIO_MARKER_RE, '');
-  const total = plain.length;
+  const total = continuous.replace(FOLIO_MARKER_RE, '').length;
+  const byPage = new Map(starts.map((s, i) => {
+    const end = i + 1 < starts.length ? starts[i + 1].at : continuous.length;
+    return [s.n, { span: clean(continuous.slice(s.from, end)), offset: plainOffset(s.at) }];
+  }));
 
-  // Spans: from each kept marker to the next kept marker in text order.
-  const byPosition = ordered.map((n) => seen.get(n)).sort((a, b) => a.index - b.index);
-  const spanOf = new Map();
-  byPosition.forEach((m, i) => {
-    const end = i + 1 < byPosition.length ? byPosition[i + 1].index : continuous.length;
-    spanOf.set(m.n, continuous.slice(m.index + m.length, end).replace(FOLIO_MARKER_RE, '').trim());
-  });
-  const leading = byPosition.length ? continuous.slice(0, byPosition[0].index).replace(FOLIO_MARKER_RE, '').trim() : continuous;
-
-  const pages = pageNumbers.map(Number).map((n) => {
-    const m = seen.get(n);
-    const offset = m ? plainOffset(m.index) : null;
-    return { page_number: n, span: spanOf.get(n) || '', head: '', tail: '', marker_offset: offset, marker_fraction: m && total ? offset / total : null };
+  const pages = nums.map((n) => {
+    const s = byPage.get(n);
+    return { page_number: n, span: s?.span || '', head: '', tail: '', marker_offset: s ? s.offset : null, marker_fraction: s && total ? s.offset / total : null };
   });
   // Carried half-sentences between neighbours that both have a span.
   for (let i = 0; i < pages.length; i++) {
@@ -135,5 +180,7 @@ export function parseFolioMarkedText(responseText, pageNumbers) {
     if (prev?.span && pages[i].span) pages[i].head = trailingFragment(prev.span);
     if (next?.span && pages[i].span && !endsSentence(pages[i].span)) pages[i].tail = leadingFragment(next.span);
   }
-  return { continuous, pages, missing: pageNumbers.map(Number).filter((n) => !seen.has(n)), duplicated, unexpected, outOfOrder, leading };
+  const missing = nums.filter((n) => !byPage.has(n));
+  const overrun = reading === 'partial' ? nums.filter((n, i) => byPage.has(n) && i + 1 < nums.length && !byPage.has(nums[i + 1])) : [];
+  return { continuous, pages, reading, rejected, missing, overrun, duplicated, unexpected, outOfOrder, leading };
 }
