@@ -15,6 +15,15 @@
  *   readable_books   of those, readable_in_english (translation_state, page-counts.mjs isReadableInEnglish)
  *   pages_with_text  sum of pages_ocr over those books (stored counter, recountBook)
  *
+ * Two figures the page used to hard-code (#5497, #5513), now measured on every run:
+ *   eternity_shelf   the 278 books of the Eternity reading list (eternity-shelf-5513.json, the A+B
+ *                    pass's list): how many are readable in English, recomputed from `pages`
+ *                    (computeTranslationState), not read from the stored flag, which lags.
+ *   tengyur_draft    the Derge Tengyur volumes: pages with text and pages with a draft English per
+ *                    volume, counted on `pages`; translation spend on those books from BOTH usage
+ *                    stores (type 'translation' only, so the 84000 reference and quality-arm evals,
+ *                    metered as 'eval', are not counted as draft cost).
+ *
  * Usage (Hetzner; needs MONGODB_URI + SUPABASE_DB_URL):
  *   node --env-file=.env.production.local scripts/catalog-coverage/canon-gap-status.mjs [--out=path.json]
  */
@@ -22,18 +31,19 @@ import { readFileSync, writeFileSync } from 'fs';
 import { MongoClient } from 'mongodb';
 import { pgClient } from '../works-catalog/lib.mjs';
 import { loadHoldingCandidates, corpusBookSets, isLive, ROW_SET } from '../lib/canon-holdings.mjs';
-import { isReadableInEnglish } from '../lib/page-counts.mjs';
+import { isReadableInEnglish, buildVisiblePageCountPipeline, pageCountersFromStats, computeTranslationState } from '../lib/page-counts.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; }));
 const MAP = 'scripts/catalog-coverage/results/canon-gap-map-2026-10.json';
 const OUT = args.out || 'scripts/catalog-coverage/results/canon-gap-status-2026-10.json';
+const SHELF = 'scripts/catalog-coverage/eternity-shelf-5513.json';
 
 // status: done | running | next | blocked. cost_usd: the next action's cost where it has one.
 const STATUS = {
   'derge-tengyur': { status: 'running', owner_issue: 5497,
-    done: '213 volumes imported hidden and held, 128,369 of 128,639 pages carry the Esukhia public-domain text, aligned folio by folio to the BDRC scans and verified on sampled reads.',
-    next_action: 'Translation pilot on 5 volumes (one per section), ≤ $5; the draft English for the whole Tengyur waits for Derek on the pilot\'s measured $/page.',
-    cost_usd: 5 },
+    done: '213 volumes imported hidden and held, 128,369 of 128,639 pages carry the Esukhia public-domain text, aligned folio by folio to the BDRC scans and verified on sampled reads. Translation pilot on 5 volumes: 1,269 pages for $1.90.',
+    next_action: 'Draft English for every page (approved by Derek, hard cap $200): gemini-3-flash-preview, one page per request, chosen over the pilot\'s chained blocks on 113 pages judged against 84000 (#5497). Volumes stay hidden; publishing them as an unreviewed machine draft is Derek\'s decision once the reader shows the licence and draft label (#5571).',
+    cost_usd: 200 },
   'derge-kangyur': { status: 'running', owner_issue: 5665,
     next_action: 'Import running (held_books / pages_with_text count it): BDRC W4CZ5369, the Library of Congress copy the e-text transcribes, plus the Esukhia public-domain text, aligned folio by folio, with the texts 84000 has published or has in progress marked per page. Then archive the images ($0 model spend) and price a draft English for the texts 84000 has not begun.',
     cost_usd: 0 },
@@ -95,9 +105,50 @@ const mc = new MongoClient(process.env.MONGODB_URI); await mc.connect();
 const db = mc.db('bookstore');
 const pgc = pgClient(); await pgc.connect();
 const { books, whBy } = await loadHoldingCandidates(db, pgc);
-await pgc.end(); await mc.close();
 const sets = corpusBookSets(books, whBy);
 const now = new Date().toISOString();
+
+// Eternity shelf: readable in English, recomputed from pages per book (the #5513 close-out's method).
+const shelfIds = JSON.parse(readFileSync(SHELF, 'utf8')).book_ids;
+const shelfBooks = await db.collection('books').find({ id: { $in: shelfIds } }, { projection: { id: 1, language: 1, content_type: 1 } }).toArray();
+let shelfReadable = 0;
+for (const b of shelfBooks) {
+  const [row] = await db.collection('pages').aggregate(buildVisiblePageCountPipeline(b.id)).toArray();
+  if (isReadableInEnglish(computeTranslationState(pageCountersFromStats(row), { language: b.language, content_type: b.content_type }))) shelfReadable++;
+}
+const eternity_shelf = { listed: shelfIds.length, found: shelfBooks.length, readable: shelfReadable, list: SHELF, owner_issue: 5513, counted_at: now };
+
+// Derge Tengyur draft English: per volume, pages with text and pages translated; translation spend.
+const tgBooks = sets.tengyur.books.filter((b) => /Derge Tengyur, vol\. \d+/.test(b.title || ''));
+const tgIds = tgBooks.map((b) => b.id);
+const perBook = async (match) => new Map((await db.collection('pages').aggregate([
+  { $match: { book_id: { $in: tgIds }, page_number: { $gt: 0 }, ...match } }, { $group: { _id: '$book_id', n: { $sum: 1 } } },
+]).toArray()).map((a) => [a._id, a.n]));
+const tgAll = await perBook({});
+const tgText = await perBook({ 'ocr.data': { $exists: true, $nin: [null, ''] } });
+const tgTr = await perBook({ 'translation.data': { $exists: true, $nin: [null, ''] } });
+const volumes = tgBooks.map((b) => ({ vol: Number(b.title.match(/vol\. (\d+)/)[1]), book_id: b.id, pages_with_text: tgText.get(b.id) || 0, pages_translated: tgTr.get(b.id) || 0 }))
+  .sort((a, b) => a.vol - b.vol);
+const [supa] = (await pgc.query("select coalesce(sum(cost_usd),0)::float as usd, count(*)::int as rows from gemini_usage where book_id = any($1) and type = 'translation'", [tgIds])).rows;
+const [mongoUsage] = await db.collection('gemini_usage').aggregate([{ $match: { book_id: { $in: tgIds }, type: 'translation' } }, { $group: { _id: null, usd: { $sum: { $ifNull: ['$cost_usd', 0] } }, rows: { $sum: 1 } } }]).toArray();
+const tgPagesTr = volumes.reduce((a, v) => a + v.pages_translated, 0);
+const tgUsd = +(supa.usd + (mongoUsage?.usd || 0)).toFixed(2);
+const tengyur_draft = {
+  owner_issue: 5497, volumes: volumes.length,
+  // A volume counts as translated when ≥ 95% of its pages with text have a draft (blank and
+  // refused pages never will); partly when any page has one.
+  volumes_translated: volumes.filter((v) => v.pages_with_text && v.pages_translated >= 0.95 * v.pages_with_text).length,
+  volumes_partly: volumes.filter((v) => v.pages_translated > 0 && !(v.pages_translated >= 0.95 * v.pages_with_text)).length,
+  pages_imaged: tgIds.reduce((a, id) => a + (tgAll.get(id) || 0), 0),
+  pages_with_text: volumes.reduce((a, v) => a + v.pages_with_text, 0),
+  pages_translated: tgPagesTr,
+  spend_usd: tgUsd, usage_rows: supa.rows + (mongoUsage?.rows || 0),
+  usd_per_page: tgPagesTr ? +(tgUsd / tgPagesTr).toFixed(5) : null,
+  model: 'gemini-3-flash-preview, prompt v13, Batch API, one page per request without neighbour context (#5497 arm B); the 5-volume pilot used 8-page chained blocks',
+  per_volume: volumes.map(({ vol, pages_with_text, pages_translated }) => [vol, pages_with_text, pages_translated]),
+  counted_at: now,
+};
+await pgc.end(); await mc.close();
 
 const corpora = map.rows.map((r) => {
   const s = STATUS[r.id];
@@ -157,12 +208,18 @@ writeFileSync(OUT, JSON.stringify({
     status: 'done | running | next | blocked', owner_issue: 'GitHub issue that owns the next action', next_action: 'what happens next, in one sentence',
     cost_usd: 'cost of the next action where it has one (draft-English figures are the gap map\'s)', held_books: 'books we hold for the corpus, live + hidden (holdings_method)',
     live_books: 'visible && pages_count > 0', pipeline_held: 'books under a pipeline hold', readable_books: 'readable_in_english (translation_state)', pages_with_text: 'sum of pages_ocr',
+    eternity_shelf: 'the 278-book Eternity reading list (list file); readable = readable_in_english recomputed from pages',
+    tengyur_draft: 'Derge Tengyur volumes: pages with text / with draft English counted on pages; per_volume = [vol, pages_with_text, pages_translated]; spend_usd = type translation usage rows on these books, both stores',
     traditions: 'books held per tradition, each counted once; pages_scanned/transcribed/translated = sums of pages_count/pages_ocr/pages_translated; canon_page_equivalents = the open typed canon (gap_map_rows) in base chars ÷ our average base chars per page in that language',
   },
   corpora,
   traditions,
+  eternity_shelf,
+  tengyur_draft,
 }, null, 1) + '\n');
 console.log(`wrote ${OUT}: ${corpora.length} corpora`);
 for (const c of corpora) console.log(`${c.id.padEnd(20)} ${c.status.padEnd(8)} #${c.owner_issue ?? '—'} held ${c.held_books} live ${c.live_books} readable ${c.readable_books} text-pages ${c.pages_with_text}`);
+console.log(`eternity shelf: ${eternity_shelf.readable} / ${eternity_shelf.listed} readable`);
+console.log(`tengyur draft: ${tengyur_draft.pages_translated} / ${tengyur_draft.pages_with_text} pages, ${tengyur_draft.volumes_translated} volumes translated (${tengyur_draft.volumes_partly} partly), $${tengyur_draft.spend_usd}`);
 for (const t of traditions) console.log(`${t.id.padEnd(18)} books ${t.books} scanned ${t.pages_scanned} text ${t.pages_transcribed} translated ${t.pages_translated} readable ${t.readable_books} canon≈${t.canon_page_equivalents}pp`);
 process.exit(0);

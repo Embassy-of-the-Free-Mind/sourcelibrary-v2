@@ -26,12 +26,10 @@ const ISSUE_URL = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary/iss
 const RESULTS_URL =
   'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary/blob/main/scripts/catalog-coverage/results/canon-gap-map-2026-10.json';
 
-// Measured figures that live in issue reports rather than in the two result files.
-// Eternity shelf: readable_in_english recomputed from pages for all 278 listed books
-// (#5513, 2026-10-02 23:50Z). Tengyur pilot: 5 volumes, envelope tengyur-pilot-5497 (#5497,
-// final report 2026-10-03 06:15Z).
-const SHELF = { readable: 221, listed: 278, url: `${ISSUE_URL}5513` };
-const TENGYUR_PILOT = { volumes: 5, pages: 1269, usd: 1.9, fullUsd: 192, pagesImaged: 128639, url: `${ISSUE_URL}5497` };
+// The Eternity shelf and the Tengyur draft are measured by canon-gap-status.mjs on every run
+// (eternity_shelf, tengyur_draft), not typed in here.
+const SHELF = { ...gapStatus.eternity_shelf, url: `${ISSUE_URL}${gapStatus.eternity_shelf.owner_issue}` };
+const TENGYUR = { ...gapStatus.tengyur_draft, url: `${ISSUE_URL}${gapStatus.tengyur_draft.owner_issue}` };
 
 // Rows inside another row (Chan ⊂ CBETA), duplicating one (K-Tripitaka ≈ CBETA Taishō), or
 // with no typed text (Mongolian Kanjur) stay out of totals and Figure 2 — the same scope
@@ -75,7 +73,6 @@ const rows = [...gapMap.rows].sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
 const inTotal = gapMap.rows.filter((r) => !OUT_OF_TOTAL.has(r.id));
 const typedChars = inTotal.reduce((s, r) => s + (r.size.base_chars ?? 0), 0);
 const tengyur = gapMap.rows.find((r) => r.id === 'derge-tengyur')!;
-const tengyurStatus = STATUS.get('derge-tengyur');
 const asOf = new Date(gapStatus.generated_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 
 const bars: CanonBar[] = inTotal
@@ -264,22 +261,20 @@ export default function CanonGapPage() {
           <p>
             The Tengyur, the canon of Indian commentaries and treatises in Tibetan, is the clearest case. Its text is
             in the public domain, BDRC holds open scans of the same woodblock edition, and less than 1% of it is
-            available in English. We have imported all of it, paired each typed folio with its page image, and drafted
-            a sample to measure the cost.{' '}
-            <a href={TENGYUR_PILOT.url} className="text-amber-800 underline underline-offset-2">
+            available in English. We have imported all of it, paired each typed folio with its page image, and are
+            drafting an English translation of every page, to be reviewed by scholars beside the woodblock.{' '}
+            <a href={TENGYUR.url} className="text-amber-800 underline underline-offset-2">
               Work log
             </a>
             .
           </p>
           <TengyurProgress
             n={4}
-            volumes={tengyurStatus?.held_books ?? 213}
-            pilotVolumes={TENGYUR_PILOT.volumes}
-            pagesImaged={TENGYUR_PILOT.pagesImaged}
-            pagesWithText={tengyurStatus?.pages_with_text ?? 128369}
-            pilotPages={TENGYUR_PILOT.pages}
-            pilotUsd={TENGYUR_PILOT.usd}
-            fullUsd={TENGYUR_PILOT.fullUsd}
+            perVolume={TENGYUR.per_volume as [number, number, number][]}
+            pagesImaged={TENGYUR.pages_imaged}
+            pagesWithText={TENGYUR.pages_with_text}
+            pagesTranslated={TENGYUR.pages_translated}
+            spendUsd={TENGYUR.spend_usd}
           />
         </Section>
 
