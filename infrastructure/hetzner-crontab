@@ -107,6 +107,13 @@
 # vs attributed. Read-only except one ops_reports row (paid-vs-got-<day>, shown on /admin/spend)
 # and, on FAIL, one deduped GitHub issue. Exit 1 = FAIL, 2 = could not measure. No model call.
 10 6 * * * cd /root/sourcelibrary && [ -f scripts/audit/paid-vs-got.mjs ] && flock -n /tmp/sl-paid-vs-got.lock bash -c "set -a; source .env.production.local; set +a; GOOGLE_SERVICE_ACCOUNT_JSON=/root/.gcp/spend-reconcile.json node scripts/audit/paid-vs-got.mjs --apply" >> /var/log/sourcelibrary/paid-vs-got.log 2>&1
+# Vercel production watch (#5708, every 15 min, off :17 so its `git fetch` misses auto-pull):
+# fires when the newest >= 2 production builds are Error/Canceled-with-src-changes, or production
+# is > 60 min behind main's oldest unshipped build-input commit (prod froze 8 h on 2026-10-02,
+# unnoticed). Reads the Vercel REST API (VERCEL_TOKEN) + origin/main. Files ONE deduped issue,
+# closes it on the next clean run; pages ntfy sourcelibrary-uptime on each ok/fail/unknown change.
+# Exit 1 = fired, 2 = could not measure. Never redeploys.
+7,22,37,52 * * * * cd /root/sourcelibrary && [ -f scripts/audit/vercel-prod-watch.mjs ] && flock -n /tmp/sl-vercel-prod-watch.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/vercel-prod-watch.mjs" >> /var/log/sourcelibrary/vercel-prod-watch.log 2>&1
 # /about/models page counts (#5601): which engine's text every page carries, from page provenance.
 # A checkpointed walk over pages on a secondary (~1 h); writes one ops_reports row (model-usage).
 # Exit 3 = an engine wrote pages in the last 30 days that the page does not describe. No model call.
