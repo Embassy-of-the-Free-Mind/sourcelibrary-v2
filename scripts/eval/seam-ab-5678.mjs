@@ -319,7 +319,7 @@ async function phaseCollect() {
 export const display = (t) => String(t || '').replace(/<(summary|keywords|meta|vocab|warning)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ').replace(/[ \t]+/g, ' ').replace(/\n\s*\n+/g, '\n').trim();
 const tailW = (s, n) => (s.length > n ? `…${s.slice(s.length - n).replace(/^\S*\s/, '')}` : s);
 const headW = (s, n) => (s.length > n ? `${s.slice(0, n).replace(/\s\S*$/, '')}…` : s);
-const SRC_TAIL = 1100, SRC_HEAD = 900, EN_TAIL = 1300, EN_HEAD = 1100;
+const SRC_TAIL = 750, SRC_HEAD = 600, EN_TAIL = 850, EN_HEAD = 700;
 export const PLANT_CLOSURE = ', and so the matter is settled.';
 
 function phasePackets() {
