@@ -978,7 +978,7 @@
       "content_chars": 6173
     }
   ],
-  "generated_at": "2026-10-03T08:09:26.282Z",
+  "generated_at": "2026-10-03T08:39:52.643Z",
   "git": {
     "prompts_dir": [
       {
@@ -3894,5 +3894,4493 @@
         ]
       }
     ]
+  },
+  "page_counts": {
+    "note": "Exact, full walk of pages by _id window per _id type. Keys: v=prompt_version, h=prompt_hash, id=prompt_id, n=prompt_name, src=<field>.source, t=$type of the field, data=$type of <field>.data. first/last_updated_at = min/max <field>.updated_at in the group (when pages were last written, not when the prompt was default).",
+    "started": "2026-10-03T08:09:26.290Z",
+    "finished": "2026-10-03T08:37:56.048Z",
+    "walk": {
+      "string": {
+        "walked": 268893,
+        "countDocuments": 268893,
+        "match": true
+      },
+      "objectId": {
+        "walked": 25451743,
+        "countDocuments": 25451743,
+        "match": true
+      }
+    },
+    "ocr": [
+      {
+        "v": null,
+        "id": null,
+        "t": "missing",
+        "data": "missing",
+        "count": 17574125,
+        "by_id_type": {
+          "string": 111931,
+          "objectId": 17462194
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": "v10",
+        "id": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 1420033,
+        "by_id_type": {
+          "objectId": 1420033
+        },
+        "first_updated_at": "2026-04-04T10:10:24.562Z",
+        "last_updated_at": "2026-05-05T21:38:14.681Z"
+      },
+      {
+        "v": "v5.2026-02",
+        "id": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 1408859,
+        "by_id_type": {
+          "objectId": 1408859
+        },
+        "first_updated_at": "2026-02-20T00:59:13.298Z",
+        "last_updated_at": "2026-09-14T14:00:24.493Z"
+      },
+      {
+        "v": "v5.2026-02",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 1043839,
+        "by_id_type": {
+          "objectId": 1043839
+        },
+        "first_updated_at": "2026-02-19T11:32:52.011Z",
+        "last_updated_at": "2026-10-01T13:04:19.901Z"
+      },
+      {
+        "v": "12",
+        "h": "e1a8c7ee5b0a1a0239813eb881fb3491",
+        "id": "69e95dce00d00c207591167c",
+        "n": "Standard OCR",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 857126,
+        "by_id_type": {
+          "objectId": 857126
+        },
+        "first_updated_at": "2026-05-06T07:40:10.220Z",
+        "last_updated_at": "2026-06-26T23:12:31.480Z"
+      },
+      {
+        "v": "v5.1.2026-03",
+        "h": "d048140cb048de32223645d9cd33bb1a",
+        "id": "6a3edbd0fd4d2f05ea592418",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 504013,
+        "by_id_type": {
+          "objectId": 504013
+        },
+        "first_updated_at": "2026-06-26T20:10:01.888Z",
+        "last_updated_at": "2026-07-09T08:15:47.002Z"
+      },
+      {
+        "v": "16",
+        "h": "0203c2641e253ffbf17772ae1b30bf16",
+        "id": "6a98b8a075660c6a8b09a8f8",
+        "n": "Standard OCR",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 409527,
+        "by_id_type": {
+          "objectId": 409527
+        },
+        "first_updated_at": "2026-09-03T00:08:20.747Z",
+        "last_updated_at": "2026-10-02T16:19:39.929Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "paddle",
+        "t": "object",
+        "data": "string",
+        "count": 314414,
+        "by_id_type": {
+          "objectId": 314414
+        },
+        "first_updated_at": "2026-10-02T09:39:13.099Z",
+        "last_updated_at": "2026-10-03T08:31:29.381Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "ia_djvu",
+        "t": "object",
+        "data": "string",
+        "count": 211898,
+        "by_id_type": {
+          "objectId": 211898
+        },
+        "first_updated_at": "2026-09-11T09:00:09.391Z",
+        "last_updated_at": "2026-09-29T22:13:08.920Z"
+      },
+      {
+        "v": "v5.1.2026-03",
+        "h": "e1a8c7ee5b0a1a0239813eb881fb3491",
+        "id": "69e95dce00d00c207591167c",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 210640,
+        "by_id_type": {
+          "objectId": 210640
+        },
+        "first_updated_at": "2026-04-23T00:00:38.912Z",
+        "last_updated_at": "2026-06-26T20:08:07.838Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "bdrc",
+        "t": "object",
+        "data": "string",
+        "count": 191897,
+        "by_id_type": {
+          "objectId": 191897
+        },
+        "first_updated_at": "2026-09-10T07:25:47.121Z",
+        "last_updated_at": "2026-10-02T16:49:05.313Z"
+      },
+      {
+        "v": "v5.1.2026-03",
+        "h": "98023b573db9740044651dc922266875",
+        "id": "6a4f58252ecde61d13c6a3ba",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 156811,
+        "by_id_type": {
+          "objectId": 156811
+        },
+        "first_updated_at": "2026-07-09T08:14:02.650Z",
+        "last_updated_at": "2026-08-31T11:04:15.156Z"
+      },
+      {
+        "v": "v3.2026-02",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 147069,
+        "by_id_type": {
+          "objectId": 147069
+        },
+        "first_updated_at": "2026-02-09T14:42:57.805Z",
+        "last_updated_at": "2026-03-25T13:25:42.065Z"
+      },
+      {
+        "v": "v10",
+        "id": null,
+        "src": "pipeline_preview",
+        "t": "object",
+        "data": "string",
+        "count": 132124,
+        "by_id_type": {
+          "objectId": 132124
+        },
+        "first_updated_at": "2026-04-10T08:40:54.860Z",
+        "last_updated_at": "2026-05-04T18:39:18.950Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "esukhia-derge-tengyur",
+        "t": "object",
+        "data": "string",
+        "count": 128369,
+        "by_id_type": {
+          "string": 128369
+        },
+        "first_updated_at": "2026-10-01T15:54:54.412Z",
+        "last_updated_at": "2026-10-01T22:58:13.240Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "t": "null",
+        "data": "missing",
+        "count": 91508,
+        "by_id_type": {
+          "objectId": 91508
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": "16",
+        "h": "0203c2641e253ffbf17772ae1b30bf16",
+        "id": "6a98b8a075660c6a8b09a8f8",
+        "n": "Standard OCR",
+        "src": "pipeline_preview",
+        "t": "object",
+        "data": "string",
+        "count": 91216,
+        "by_id_type": {
+          "objectId": 91216
+        },
+        "first_updated_at": "2026-09-03T00:08:20.871Z",
+        "last_updated_at": "2026-10-02T20:27:24.591Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "t": "object",
+        "data": "string",
+        "count": 76022,
+        "by_id_type": {
+          "objectId": 76022
+        },
+        "first_updated_at": "2025-12-26T10:16:06.812Z",
+        "last_updated_at": "2026-09-18T23:03:18.267Z"
+      },
+      {
+        "v": "16",
+        "id": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 74229,
+        "by_id_type": {
+          "objectId": 74229
+        },
+        "first_updated_at": "2026-09-03T03:30:06.333Z",
+        "last_updated_at": "2026-10-02T15:30:14.344Z"
+      },
+      {
+        "v": "12",
+        "h": "e1a8c7ee5b0a1a0239813eb881fb3491",
+        "id": "69e95dce00d00c207591167c",
+        "n": "Standard OCR",
+        "src": "pipeline_preview",
+        "t": "object",
+        "data": "string",
+        "count": 59630,
+        "by_id_type": {
+          "objectId": 59630
+        },
+        "first_updated_at": "2026-05-10T18:52:07.060Z",
+        "last_updated_at": "2026-06-26T18:05:39.352Z"
+      },
+      {
+        "v": "v5.1.2026-03",
+        "h": "a2bb9e511f73f4cd16e03c76ef61362c",
+        "id": "69c264f6c26fcca147d6bd5e",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 57587,
+        "by_id_type": {
+          "objectId": 57587
+        },
+        "first_updated_at": "2026-03-25T10:25:53.056Z",
+        "last_updated_at": "2026-04-12T23:16:27.221Z"
+      },
+      {
+        "v": "15",
+        "h": "98023b573db9740044651dc922266875",
+        "id": "6a4f58252ecde61d13c6a3ba",
+        "n": "Standard OCR",
+        "src": "pipeline_preview",
+        "t": "object",
+        "data": "string",
+        "count": 56566,
+        "by_id_type": {
+          "objectId": 56566
+        },
+        "first_updated_at": "2026-08-08T15:00:39.698Z",
+        "last_updated_at": "2026-09-03T00:08:20.839Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "t": "object",
+        "data": "missing",
+        "count": 50051,
+        "by_id_type": {
+          "objectId": 50051
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": "15",
+        "h": "98023b573db9740044651dc922266875",
+        "id": "6a4f58252ecde61d13c6a3ba",
+        "n": "Standard OCR",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 39371,
+        "by_id_type": {
+          "objectId": 39371
+        },
+        "first_updated_at": "2026-07-09T22:21:32.864Z",
+        "last_updated_at": "2026-09-02T23:46:11.643Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "kraken",
+        "t": "object",
+        "data": "string",
+        "count": 38926,
+        "by_id_type": {
+          "objectId": 38926
+        },
+        "first_updated_at": "2026-09-18T15:09:24.851Z",
+        "last_updated_at": "2026-10-02T19:00:03.652Z"
+      },
+      {
+        "v": "v4.2026-02",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 36800,
+        "by_id_type": {
+          "objectId": 36800
+        },
+        "first_updated_at": "2026-02-19T09:36:22.225Z",
+        "last_updated_at": "2026-02-19T17:43:21.884Z"
+      },
+      {
+        "v": "v5.2026-02",
+        "h": null,
+        "id": null,
+        "n": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 27999,
+        "by_id_type": {
+          "objectId": 27999
+        },
+        "first_updated_at": "2026-07-16T21:24:33.958Z",
+        "last_updated_at": "2026-09-15T23:34:26.584Z"
+      },
+      {
+        "v": "v3.2026-02",
+        "id": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 26502,
+        "by_id_type": {
+          "objectId": 26502
+        },
+        "first_updated_at": "2026-02-12T11:57:03.526Z",
+        "last_updated_at": "2026-02-18T01:37:33.875Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "esukhia-derge-kangyur",
+        "t": "object",
+        "data": "string",
+        "count": 25891,
+        "by_id_type": {
+          "string": 25891
+        },
+        "first_updated_at": "2026-10-02T23:25:44.545Z",
+        "last_updated_at": "2026-10-03T08:04:15.377Z"
+      },
+      {
+        "v": "v5.1.2026-03",
+        "h": "adc19581473dc596e7ecc7df215b9101",
+        "id": "69dd69de346e8052f41bee69",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 24747,
+        "by_id_type": {
+          "objectId": 24747
+        },
+        "first_updated_at": "2026-04-14T19:40:38.433Z",
+        "last_updated_at": "2026-04-22T12:51:58.890Z"
+      },
+      {
+        "v": "v10",
+        "h": null,
+        "id": null,
+        "n": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 22422,
+        "by_id_type": {
+          "objectId": 22422
+        },
+        "first_updated_at": "2026-05-05T22:04:07.287Z",
+        "last_updated_at": "2026-05-06T07:40:10.103Z"
+      },
+      {
+        "v": "19.1",
+        "h": "9d8f959e053491362b2c4acec1e20c9a",
+        "id": "6ac02220413a82637da889bb",
+        "n": "Standard OCR",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 21628,
+        "by_id_type": {
+          "objectId": 21628
+        },
+        "first_updated_at": "2026-10-03T00:19:46.073Z",
+        "last_updated_at": "2026-10-03T08:25:30.661Z"
+      },
+      {
+        "v": "spread-v2+ocr-v10",
+        "id": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 21485,
+        "by_id_type": {
+          "objectId": 21485
+        },
+        "first_updated_at": "2026-04-05T08:30:53.600Z",
+        "last_updated_at": "2026-04-06T06:00:06.360Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 19047,
+        "by_id_type": {
+          "objectId": 19047
+        },
+        "first_updated_at": "2025-12-30T12:58:29.295Z",
+        "last_updated_at": "2026-01-04T03:04:35.412Z"
+      },
+      {
+        "v": "v6.2026-03",
+        "id": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 18256,
+        "by_id_type": {
+          "objectId": 18256
+        },
+        "first_updated_at": "2026-04-04T05:10:04.906Z",
+        "last_updated_at": "2026-04-08T00:08:44.852Z"
+      },
+      {
+        "v": "19.1",
+        "h": "9d8f959e053491362b2c4acec1e20c9a",
+        "id": "6ac02220413a82637da889bb",
+        "n": "Standard OCR",
+        "src": "pipeline_preview",
+        "t": "object",
+        "data": "string",
+        "count": 15895,
+        "by_id_type": {
+          "objectId": 15895
+        },
+        "first_updated_at": "2026-10-03T00:07:31.733Z",
+        "last_updated_at": "2026-10-03T08:25:30.000Z"
+      },
+      {
+        "v": "14",
+        "h": null,
+        "id": "6a3edbd0fd4d2f05ea592418",
+        "n": "Standard OCR",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 15265,
+        "by_id_type": {
+          "objectId": 15265
+        },
+        "first_updated_at": "2026-06-26T23:24:15.864Z",
+        "last_updated_at": "2026-07-07T12:49:42.431Z"
+      },
+      {
+        "v": "spread-v2+ocr-v10",
+        "id": null,
+        "t": "object",
+        "data": "string",
+        "count": 14789,
+        "by_id_type": {
+          "objectId": 14789
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": "14",
+        "h": "d048140cb048de32223645d9cd33bb1a",
+        "id": "6a3edbd0fd4d2f05ea592418",
+        "n": "Standard OCR",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 12854,
+        "by_id_type": {
+          "objectId": 12854
+        },
+        "first_updated_at": "2026-06-27T01:02:14.680Z",
+        "last_updated_at": "2026-07-01T15:22:26.652Z"
+      },
+      {
+        "v": "v4.2026-02",
+        "id": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 11140,
+        "by_id_type": {
+          "objectId": 11140
+        },
+        "first_updated_at": "2025-12-26T10:18:25.044Z",
+        "last_updated_at": "2026-02-20T16:38:01.252Z"
+      },
+      {
+        "v": "15",
+        "id": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 9327,
+        "by_id_type": {
+          "objectId": 9327
+        },
+        "first_updated_at": "2026-08-08T15:30:06.387Z",
+        "last_updated_at": "2026-09-03T00:00:10.685Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "ndl-koten",
+        "t": "object",
+        "data": "string",
+        "count": 7133,
+        "by_id_type": {
+          "objectId": 7133
+        },
+        "first_updated_at": "2026-09-30T12:24:01.315Z",
+        "last_updated_at": "2026-10-01T00:48:48.727Z"
+      },
+      {
+        "v": "etcsl-import",
+        "id": null,
+        "src": "corpus",
+        "t": "object",
+        "data": "string",
+        "count": 5749,
+        "by_id_type": {
+          "objectId": 5749
+        },
+        "first_updated_at": "2026-03-10T08:19:08.442Z",
+        "last_updated_at": "2026-03-10T10:23:18.696Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "cbeta-xml-p5",
+        "t": "object",
+        "data": "string",
+        "count": 4983,
+        "by_id_type": {
+          "string": 2702,
+          "objectId": 2281
+        },
+        "first_updated_at": "2026-10-01T20:39:53.852Z",
+        "last_updated_at": "2026-10-02T00:53:41.719Z"
+      },
+      {
+        "v": "19.1",
+        "id": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 3598,
+        "by_id_type": {
+          "objectId": 3598
+        },
+        "first_updated_at": "2026-10-03T00:30:16.671Z",
+        "last_updated_at": "2026-10-03T08:00:22.300Z"
+      },
+      {
+        "v": "16",
+        "h": "e1a8c7ee5b0a1a0239813eb881fb3491",
+        "id": "69e95dce00d00c207591167c",
+        "n": "Standard OCR",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 3128,
+        "by_id_type": {
+          "objectId": 3128
+        },
+        "first_updated_at": "2026-09-30T21:30:15.482Z",
+        "last_updated_at": "2026-10-02T10:00:21.967Z"
+      },
+      {
+        "v": "v5.2026-02",
+        "h": "a2bb9e511f73f4cd16e03c76ef61362c",
+        "id": "69c264f6c26fcca147d6bd5e",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 2653,
+        "by_id_type": {
+          "objectId": 2653
+        },
+        "first_updated_at": "2026-03-25T11:10:22.840Z",
+        "last_updated_at": "2026-04-04T05:10:05.791Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "mineru",
+        "t": "object",
+        "data": "string",
+        "count": 2566,
+        "by_id_type": {
+          "objectId": 2566
+        },
+        "first_updated_at": "2026-06-18T14:34:58.583Z",
+        "last_updated_at": "2026-09-30T09:05:29.410Z"
+      },
+      {
+        "v": "v5.1.2026-03",
+        "id": null,
+        "t": "object",
+        "data": "string",
+        "count": 2443,
+        "by_id_type": {
+          "objectId": 2443
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 2339,
+        "by_id_type": {
+          "objectId": 2339
+        },
+        "first_updated_at": "2025-12-31T13:43:33.658Z",
+        "last_updated_at": "2026-02-09T05:20:41.130Z"
+      },
+      {
+        "v": "spread-v2+ocr-v10",
+        "h": "a2bb9e511f73f4cd16e03c76ef61362c",
+        "id": "69c264f6c26fcca147d6bd5e",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 2110,
+        "by_id_type": {
+          "objectId": 2110
+        },
+        "first_updated_at": "2026-04-05T12:12:25.354Z",
+        "last_updated_at": "2026-04-06T05:50:04.549Z"
+      },
+      {
+        "v": "14",
+        "h": null,
+        "id": "6a3edbd0fd4d2f05ea592418",
+        "n": "Standard OCR",
+        "src": "pipeline_preview",
+        "t": "object",
+        "data": "string",
+        "count": 1663,
+        "by_id_type": {
+          "objectId": 1663
+        },
+        "first_updated_at": "2026-06-26T23:10:09.660Z",
+        "last_updated_at": "2026-07-07T00:42:49.280Z"
+      },
+      {
+        "v": "12",
+        "h": null,
+        "id": "69e95dce00d00c207591167c",
+        "n": "Standard OCR",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 1342,
+        "by_id_type": {
+          "objectId": 1342
+        },
+        "first_updated_at": "2026-05-06T07:40:08.591Z",
+        "last_updated_at": "2026-05-06T07:52:09.285Z"
+      },
+      {
+        "v": "v2.2026-02",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 1080,
+        "by_id_type": {
+          "objectId": 1080
+        },
+        "first_updated_at": "2026-02-09T06:08:51.264Z",
+        "last_updated_at": "2026-02-09T11:44:44.312Z"
+      },
+      {
+        "v": "v10",
+        "h": "a2bb9e511f73f4cd16e03c76ef61362c",
+        "id": "69c264f6c26fcca147d6bd5e",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 980,
+        "by_id_type": {
+          "objectId": 980
+        },
+        "first_updated_at": "2026-04-04T17:50:02.874Z",
+        "last_updated_at": "2026-04-08T13:40:24.448Z"
+      },
+      {
+        "v": "16",
+        "h": null,
+        "id": null,
+        "n": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 970,
+        "by_id_type": {
+          "objectId": 970
+        },
+        "first_updated_at": "2026-10-01T06:30:12.022Z",
+        "last_updated_at": "2026-10-01T08:30:31.277Z"
+      },
+      {
+        "v": "16",
+        "h": "0203c2641e253ffbf17772ae1b30bf16",
+        "id": "6a98b8a075660c6a8b09a8f8",
+        "n": "Standard OCR",
+        "src": "ia_reference",
+        "t": "object",
+        "data": "string",
+        "count": 821,
+        "by_id_type": {
+          "objectId": 821
+        },
+        "first_updated_at": "2026-09-24T16:33:00.319Z",
+        "last_updated_at": "2026-10-01T00:51:22.524Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "system",
+        "t": "object",
+        "data": "string",
+        "count": 726,
+        "by_id_type": {
+          "objectId": 726
+        },
+        "first_updated_at": "2026-04-09T07:19:22.230Z",
+        "last_updated_at": "2026-04-09T07:19:42.798Z"
+      },
+      {
+        "v": "v10",
+        "id": null,
+        "t": "object",
+        "data": "string",
+        "count": 661,
+        "by_id_type": {
+          "objectId": 661
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": "v14-lacuna",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 593,
+        "by_id_type": {
+          "objectId": 593
+        },
+        "first_updated_at": "2026-06-26T20:27:47.828Z",
+        "last_updated_at": "2026-06-27T03:04:28.456Z"
+      },
+      {
+        "v": null,
+        "id": "6a3edbd0fd4d2f05ea592418",
+        "n": "Standard OCR",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 587,
+        "by_id_type": {
+          "objectId": 587
+        },
+        "first_updated_at": "2026-06-29T09:31:32.104Z",
+        "last_updated_at": "2026-06-29T09:53:37.589Z"
+      },
+      {
+        "v": "v5.2026-02",
+        "id": null,
+        "n": "Standard OCR",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 526,
+        "by_id_type": {
+          "objectId": 526
+        },
+        "first_updated_at": "2026-02-19T17:33:12.937Z",
+        "last_updated_at": "2026-02-20T01:04:53.600Z"
+      },
+      {
+        "v": "spread-v2+ocr-v12",
+        "id": null,
+        "t": "object",
+        "data": "string",
+        "count": 516,
+        "by_id_type": {
+          "objectId": 516
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": "12",
+        "id": null,
+        "t": "object",
+        "data": "string",
+        "count": 509,
+        "by_id_type": {
+          "objectId": 509
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": "v10",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 407,
+        "by_id_type": {
+          "objectId": 407
+        },
+        "first_updated_at": "2026-09-03T04:32:52.608Z",
+        "last_updated_at": "2026-09-03T04:32:55.936Z"
+      },
+      {
+        "v": "v4.2026-02",
+        "id": null,
+        "n": "Standard OCR",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 381,
+        "by_id_type": {
+          "objectId": 381
+        },
+        "first_updated_at": "2026-02-19T12:02:40.997Z",
+        "last_updated_at": "2026-02-20T16:38:01.252Z"
+      },
+      {
+        "v": "16",
+        "h": "e1a8c7ee5b0a1a0239813eb881fb3491",
+        "id": "69e95dce00d00c207591167c",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 344,
+        "by_id_type": {
+          "objectId": 344
+        },
+        "first_updated_at": "2026-10-01T09:00:19.832Z",
+        "last_updated_at": "2026-10-01T09:00:31.198Z"
+      },
+      {
+        "v": "spread-v1+ocr-v10",
+        "id": null,
+        "src": "spread-split",
+        "t": "object",
+        "data": "string",
+        "count": 277,
+        "by_id_type": {
+          "objectId": 277
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": "v5.2026-02",
+        "id": null,
+        "t": "object",
+        "data": "string",
+        "count": 273,
+        "by_id_type": {
+          "objectId": 273
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": "11",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 238,
+        "by_id_type": {
+          "objectId": 238
+        },
+        "first_updated_at": "2026-04-14T09:17:01.422Z",
+        "last_updated_at": "2026-04-14T10:10:46.785Z"
+      },
+      {
+        "v": "ia-djvu",
+        "id": null,
+        "src": "ia-ocr-repair",
+        "t": "object",
+        "data": "string",
+        "count": 187,
+        "by_id_type": {
+          "objectId": 187
+        },
+        "first_updated_at": "2026-07-27T15:26:26.174Z",
+        "last_updated_at": "2026-07-27T20:28:36.226Z"
+      },
+      {
+        "v": "v15",
+        "id": null,
+        "src": "reocr-contamination-repair-3362",
+        "t": "object",
+        "data": "string",
+        "count": 93,
+        "by_id_type": {
+          "objectId": 93
+        },
+        "first_updated_at": "2026-07-27T20:04:48.792Z",
+        "last_updated_at": "2026-07-27T20:19:43.609Z"
+      },
+      {
+        "v": "v5.2026-02+linenum",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 79,
+        "by_id_type": {
+          "objectId": 79
+        },
+        "first_updated_at": "2026-08-30T13:41:24.958Z",
+        "last_updated_at": "2026-08-30T13:48:07.682Z"
+      },
+      {
+        "v": "v5.1.2026-03",
+        "h": "403779dd9c5b0f7f275bada65cc4e3da",
+        "id": "6a3edbd0fd4d2f05ea592418",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 77,
+        "by_id_type": {
+          "objectId": 77
+        },
+        "first_updated_at": "2026-06-26T20:07:09.108Z",
+        "last_updated_at": "2026-06-26T20:10:54.770Z"
+      },
+      {
+        "v": "v14-lacuna",
+        "h": "e1a8c7ee5b0a1a0239813eb881fb3491",
+        "id": "69e95dce00d00c207591167c",
+        "n": "Standard OCR",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 70,
+        "by_id_type": {
+          "objectId": 70
+        },
+        "first_updated_at": "2026-06-26T20:27:43.766Z",
+        "last_updated_at": "2026-06-26T21:01:11.499Z"
+      },
+      {
+        "v": "v5.1.2026-03",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 69,
+        "by_id_type": {
+          "objectId": 69
+        },
+        "first_updated_at": "2026-03-24T22:55:25.107Z",
+        "last_updated_at": "2026-04-06T19:28:12.615Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "batch_api_recovery",
+        "t": "object",
+        "data": "string",
+        "count": 55,
+        "by_id_type": {
+          "objectId": 55
+        },
+        "first_updated_at": "2026-03-31T15:11:35.442Z",
+        "last_updated_at": "2026-03-31T15:17:23.284Z"
+      },
+      {
+        "v": "spread-v2+ocr-v11",
+        "id": null,
+        "t": "object",
+        "data": "string",
+        "count": 52,
+        "by_id_type": {
+          "objectId": 52
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": null,
+        "id": null,
+        "n": "Default",
+        "t": "object",
+        "data": "string",
+        "count": 50,
+        "by_id_type": {
+          "objectId": 50
+        },
+        "first_updated_at": "2025-12-27T07:49:04.246Z",
+        "last_updated_at": "2025-12-27T10:45:32.156Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "sefaria",
+        "t": "object",
+        "data": "string",
+        "count": 43,
+        "by_id_type": {
+          "objectId": 43
+        },
+        "first_updated_at": "2026-10-02T09:43:37.061Z",
+        "last_updated_at": "2026-10-02T12:58:49.666Z"
+      },
+      {
+        "v": "10",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 34,
+        "by_id_type": {
+          "objectId": 34
+        },
+        "first_updated_at": "2026-04-09T07:14:38.211Z",
+        "last_updated_at": "2026-04-09T07:35:06.772Z"
+      },
+      {
+        "v": null,
+        "h": null,
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 34,
+        "by_id_type": {
+          "objectId": 34
+        },
+        "first_updated_at": "2026-09-03T02:35:40.008Z",
+        "last_updated_at": "2026-09-03T02:35:40.330Z"
+      },
+      {
+        "v": "spread-v1+ocr-v10",
+        "id": null,
+        "t": "object",
+        "data": "string",
+        "count": 29,
+        "by_id_type": {
+          "objectId": 29
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": "v3.2026-02",
+        "id": null,
+        "t": "object",
+        "data": "string",
+        "count": 28,
+        "by_id_type": {
+          "objectId": 28
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": "v6.1.2026-05",
+        "h": "0203c2641e253ffbf17772ae1b30bf16",
+        "id": "6a98b8a075660c6a8b09a8f8",
+        "n": "Standard OCR",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 26,
+        "by_id_type": {
+          "objectId": 26
+        },
+        "first_updated_at": "2026-09-30T06:34:52.667Z",
+        "last_updated_at": "2026-09-30T06:35:15.566Z"
+      },
+      {
+        "v": "16",
+        "h": "a2bb9e511f73f4cd16e03c76ef61362c",
+        "id": "69c264f6c26fcca147d6bd5e",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 24,
+        "by_id_type": {
+          "objectId": 24
+        },
+        "first_updated_at": "2026-09-30T22:00:34.989Z",
+        "last_updated_at": "2026-09-30T22:00:34.989Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "wikisource",
+        "t": "object",
+        "data": "string",
+        "count": 21,
+        "by_id_type": {
+          "objectId": 21
+        },
+        "first_updated_at": "2026-05-29T11:39:09.522Z",
+        "last_updated_at": "2026-05-29T11:39:09.522Z"
+      },
+      {
+        "v": "v4.2026-02",
+        "id": null,
+        "n": "Standard OCR",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 19,
+        "by_id_type": {
+          "objectId": 19
+        },
+        "first_updated_at": "2026-02-18T14:56:10.791Z",
+        "last_updated_at": "2026-02-18T21:00:01.914Z"
+      },
+      {
+        "v": "v5.1.2026-03",
+        "h": "a2bb9e511f73f4cd16e03c76ef61362c",
+        "id": "69c264f6c26fcca147d6bd5e",
+        "src": "batch_api_recovery",
+        "t": "object",
+        "data": "string",
+        "count": 19,
+        "by_id_type": {
+          "objectId": 19
+        },
+        "first_updated_at": "2026-03-31T15:18:08.009Z",
+        "last_updated_at": "2026-03-31T15:18:08.009Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "manual",
+        "t": "object",
+        "data": "string",
+        "count": 16,
+        "by_id_type": {
+          "objectId": 16
+        },
+        "first_updated_at": "2026-04-09T07:44:32.924Z",
+        "last_updated_at": "2026-05-13T20:00:14.027Z"
+      },
+      {
+        "v": "v5.2026-02+ink",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 11,
+        "by_id_type": {
+          "objectId": 11
+        },
+        "first_updated_at": "2026-08-30T13:43:54.029Z",
+        "last_updated_at": "2026-08-30T13:46:42.101Z"
+      },
+      {
+        "v": "repair-sync-short",
+        "id": null,
+        "src": "ai-repair-sync",
+        "t": "object",
+        "data": "string",
+        "count": 10,
+        "by_id_type": {
+          "objectId": 10
+        },
+        "first_updated_at": "2026-07-27T15:22:06.604Z",
+        "last_updated_at": "2026-07-27T15:23:14.851Z"
+      },
+      {
+        "v": "19.1",
+        "h": "9d8f959e053491362b2c4acec1e20c9a",
+        "id": "6ac02220413a82637da889bb",
+        "n": "Standard OCR",
+        "src": "ia_reference",
+        "t": "object",
+        "data": "string",
+        "count": 10,
+        "by_id_type": {
+          "objectId": 10
+        },
+        "first_updated_at": "2026-10-03T04:45:33.495Z",
+        "last_updated_at": "2026-10-03T04:45:33.495Z"
+      },
+      {
+        "v": "v6.2026-03",
+        "h": "a2bb9e511f73f4cd16e03c76ef61362c",
+        "id": "69c264f6c26fcca147d6bd5e",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 9,
+        "by_id_type": {
+          "objectId": 9
+        },
+        "first_updated_at": "2026-04-04T05:10:04.523Z",
+        "last_updated_at": "2026-04-08T00:08:10.921Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "missing",
+        "count": 8,
+        "by_id_type": {
+          "objectId": 8
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": "v14-lacuna-escalated",
+        "h": "e1a8c7ee5b0a1a0239813eb881fb3491",
+        "id": "69e95dce00d00c207591167c",
+        "n": "Standard OCR",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 7,
+        "by_id_type": {
+          "objectId": 7
+        },
+        "first_updated_at": "2026-06-26T21:05:53.433Z",
+        "last_updated_at": "2026-06-26T21:09:19.551Z"
+      },
+      {
+        "v": "v5.2026-02",
+        "id": null,
+        "src": "manual",
+        "t": "object",
+        "data": "string",
+        "count": 5,
+        "by_id_type": {
+          "objectId": 5
+        },
+        "first_updated_at": "2026-03-09T08:05:58.439Z",
+        "last_updated_at": "2026-03-28T14:34:31.673Z"
+      },
+      {
+        "v": "v3.2026-02",
+        "id": null,
+        "src": "manual",
+        "t": "object",
+        "data": "string",
+        "count": 5,
+        "by_id_type": {
+          "objectId": 5
+        },
+        "first_updated_at": "2026-02-11T03:07:27.933Z",
+        "last_updated_at": "2026-08-04T06:50:25.370Z"
+      },
+      {
+        "v": "spread-v2+ocr-v10",
+        "id": null,
+        "n": "Standard OCR",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 5,
+        "by_id_type": {
+          "objectId": 5
+        },
+        "first_updated_at": "2026-04-06T03:10:14.005Z",
+        "last_updated_at": "2026-04-06T03:10:14.044Z"
+      },
+      {
+        "v": "v10",
+        "h": "a2bb9e511f73f4cd16e03c76ef61362c",
+        "id": "69c264f6c26fcca147d6bd5e",
+        "src": "pipeline_preview",
+        "t": "object",
+        "data": "string",
+        "count": 5,
+        "by_id_type": {
+          "objectId": 5
+        },
+        "first_updated_at": "2026-04-10T15:00:41.759Z",
+        "last_updated_at": "2026-05-03T00:35:04.907Z"
+      },
+      {
+        "v": "v9",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 4,
+        "by_id_type": {
+          "objectId": 4
+        },
+        "first_updated_at": "2026-03-24T10:11:11.790Z",
+        "last_updated_at": "2026-03-24T10:11:31.310Z"
+      },
+      {
+        "v": "v4.2026-02",
+        "id": null,
+        "t": "object",
+        "data": "string",
+        "count": 3,
+        "by_id_type": {
+          "objectId": 3
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": "v4.2026-02",
+        "id": null,
+        "src": "manual",
+        "t": "object",
+        "data": "string",
+        "count": 2,
+        "by_id_type": {
+          "objectId": 2
+        },
+        "first_updated_at": "2026-03-11T13:20:17.979Z",
+        "last_updated_at": "2026-03-12T12:57:52.305Z"
+      },
+      {
+        "v": "12",
+        "h": "e1a8c7ee5b0a1a0239813eb881fb3491",
+        "id": "69e95dce00d00c207591167c",
+        "n": "Standard OCR",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 2,
+        "by_id_type": {
+          "objectId": 2
+        },
+        "first_updated_at": "2026-05-14T02:44:55.047Z",
+        "last_updated_at": "2026-05-20T02:43:03.799Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "cdli-atf",
+        "t": "object",
+        "data": "string",
+        "count": 2,
+        "by_id_type": {
+          "objectId": 2
+        },
+        "first_updated_at": "2026-09-15T18:19:14.051Z",
+        "last_updated_at": "2026-09-15T18:19:16.635Z"
+      },
+      {
+        "v": "ia-djvu",
+        "h": "a2bb9e511f73f4cd16e03c76ef61362c",
+        "id": "69c264f6c26fcca147d6bd5e",
+        "src": "ia-ocr-repair",
+        "t": "object",
+        "data": "string",
+        "count": 2,
+        "by_id_type": {
+          "objectId": 2
+        },
+        "first_updated_at": "2026-07-27T15:26:25.971Z",
+        "last_updated_at": "2026-07-27T15:26:26.077Z"
+      },
+      {
+        "v": "ia-djvu",
+        "h": "e1a8c7ee5b0a1a0239813eb881fb3491",
+        "id": "69e95dce00d00c207591167c",
+        "n": "Standard OCR",
+        "src": "ia-ocr-repair",
+        "t": "object",
+        "data": "string",
+        "count": 2,
+        "by_id_type": {
+          "objectId": 2
+        },
+        "first_updated_at": "2026-07-27T15:26:28.610Z",
+        "last_updated_at": "2026-07-27T15:26:30.665Z"
+      },
+      {
+        "v": "15",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 2,
+        "by_id_type": {
+          "objectId": 2
+        },
+        "first_updated_at": "2026-07-26T10:35:18.724Z",
+        "last_updated_at": "2026-07-26T10:36:06.648Z"
+      },
+      {
+        "v": "v10",
+        "h": "adc19581473dc596e7ecc7df215b9101",
+        "id": "69dd69de346e8052f41bee69",
+        "src": "pipeline_preview",
+        "t": "object",
+        "data": "string",
+        "count": 2,
+        "by_id_type": {
+          "objectId": 2
+        },
+        "first_updated_at": "2026-04-23T12:08:26.011Z",
+        "last_updated_at": "2026-04-24T12:39:59.359Z"
+      },
+      {
+        "v": "v10",
+        "id": null,
+        "src": "manual",
+        "t": "object",
+        "data": "string",
+        "count": 2,
+        "by_id_type": {
+          "objectId": 2
+        },
+        "first_updated_at": "2026-05-22T13:24:56.115Z",
+        "last_updated_at": "2026-08-04T06:56:51.375Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "broadsheet-ocr",
+        "t": "object",
+        "data": "string",
+        "count": 2,
+        "by_id_type": {
+          "objectId": 2
+        },
+        "first_updated_at": "2026-06-15T23:39:05.658Z",
+        "last_updated_at": "2026-06-16T11:03:52.542Z"
+      },
+      {
+        "v": "v14-lacuna",
+        "h": "e1a8c7ee5b0a1a0239813eb881fb3491",
+        "id": "69e95dce00d00c207591167c",
+        "n": "Standard OCR",
+        "src": "pipeline_preview",
+        "t": "object",
+        "data": "string",
+        "count": 2,
+        "by_id_type": {
+          "objectId": 2
+        },
+        "first_updated_at": "2026-06-26T20:06:40.045Z",
+        "last_updated_at": "2026-06-26T20:06:40.074Z"
+      },
+      {
+        "v": "v10-paleographer",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-03-24T10:21:09.932Z",
+        "last_updated_at": "2026-03-24T10:21:09.932Z"
+      },
+      {
+        "v": "v5.1.2026-03",
+        "h": "a2bb9e511f73f4cd16e03c76ef61362c",
+        "id": "69c264f6c26fcca147d6bd5e",
+        "src": "ia_djvu",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-09-13T10:57:08.100Z",
+        "last_updated_at": "2026-09-13T10:57:08.100Z"
+      },
+      {
+        "v": "v10",
+        "id": null,
+        "src": "AI generated",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-04-12T09:38:19.042Z",
+        "last_updated_at": "2026-04-12T09:38:19.042Z"
+      },
+      {
+        "v": "v5.1.2026-03",
+        "h": "a2bb9e511f73f4cd16e03c76ef61362c",
+        "id": "69c264f6c26fcca147d6bd5e",
+        "src": "manual",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-05-22T14:07:05.642Z",
+        "last_updated_at": "2026-05-22T14:07:05.642Z"
+      },
+      {
+        "v": "v14-lacuna-escalated",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-06-26T21:09:40.383Z",
+        "last_updated_at": "2026-06-26T21:09:40.383Z"
+      },
+      {
+        "v": "10",
+        "h": "a2bb9e511f73f4cd16e03c76ef61362c",
+        "id": "69c264f6c26fcca147d6bd5e",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-04-09T07:31:56.657Z",
+        "last_updated_at": "2026-04-09T07:31:56.657Z"
+      },
+      {
+        "v": "repair-sync-short",
+        "h": "a2bb9e511f73f4cd16e03c76ef61362c",
+        "id": "69c264f6c26fcca147d6bd5e",
+        "src": "ai-repair-sync",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-07-27T15:22:06.627Z",
+        "last_updated_at": "2026-07-27T15:22:06.627Z"
+      },
+      {
+        "v": "spread-v2+ocr-v10",
+        "id": null,
+        "src": "manual",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-04-04T15:49:53.048Z",
+        "last_updated_at": "2026-04-04T15:49:53.048Z"
+      },
+      {
+        "v": "v5.1.2026-03",
+        "h": "e1a8c7ee5b0a1a0239813eb881fb3491",
+        "id": "69e95dce00d00c207591167c",
+        "src": "ia_djvu",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-09-12T20:27:06.324Z",
+        "last_updated_at": "2026-09-12T20:27:06.324Z"
+      },
+      {
+        "v": "12",
+        "id": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-06-26T13:57:46.629Z",
+        "last_updated_at": "2026-06-26T13:57:46.629Z"
+      },
+      {
+        "v": "v10",
+        "h": "adc19581473dc596e7ecc7df215b9101",
+        "id": "69dd69de346e8052f41bee69",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-05-02T09:48:11.094Z",
+        "last_updated_at": "2026-05-02T09:48:11.094Z"
+      },
+      {
+        "v": "v10",
+        "h": "e1a8c7ee5b0a1a0239813eb881fb3491",
+        "id": "69e95dce00d00c207591167c",
+        "src": "pipeline_preview",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-04-26T19:16:31.366Z",
+        "last_updated_at": "2026-04-26T19:16:31.366Z"
+      },
+      {
+        "v": "19.1",
+        "h": "e1a8c7ee5b0a1a0239813eb881fb3491",
+        "id": "69e95dce00d00c207591167c",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-10-03T08:00:20.961Z",
+        "last_updated_at": "2026-10-03T08:00:20.961Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "songshi-juan56",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-06-16T20:41:48.602Z",
+        "last_updated_at": "2026-06-16T20:41:48.602Z"
+      },
+      {
+        "v": "v5.1.2026-03",
+        "h": "d048140cb048de32223645d9cd33bb1a",
+        "id": "6a3edbd0fd4d2f05ea592418",
+        "src": "ia_djvu",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-09-13T10:58:36.746Z",
+        "last_updated_at": "2026-09-13T10:58:36.746Z"
+      },
+      {
+        "v": "v5.1.2026-03",
+        "h": "98023b573db9740044651dc922266875",
+        "id": "6a4f58252ecde61d13c6a3ba",
+        "src": "manual",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-08-04T08:29:45.572Z",
+        "last_updated_at": "2026-08-04T08:29:45.572Z"
+      }
+    ],
+    "translation": [
+      {
+        "v": null,
+        "id": null,
+        "t": "missing",
+        "data": "missing",
+        "count": 20184369,
+        "by_id_type": {
+          "string": 267211,
+          "objectId": 19917158
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": "v10",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 2154649,
+        "by_id_type": {
+          "objectId": 2154649
+        },
+        "first_updated_at": "2026-03-29T20:54:12.190Z",
+        "last_updated_at": "2026-09-03T15:13:39.107Z"
+      },
+      {
+        "v": "11",
+        "h": "33ae9a4a09e91a42891a396b382d497a",
+        "id": "69de17371d85ecbcc1558316",
+        "n": "Standard Translation",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 1079059,
+        "by_id_type": {
+          "objectId": 1079059
+        },
+        "first_updated_at": "2026-05-05T22:01:37.459Z",
+        "last_updated_at": "2026-07-07T13:25:06.215Z"
+      },
+      {
+        "v": "v2",
+        "h": "6f712937c0c374e54a0dce2e823b84b8",
+        "id": null,
+        "n": "Standard Translation",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 699031,
+        "by_id_type": {
+          "objectId": 699031
+        },
+        "first_updated_at": "2026-02-16T09:38:56.593Z",
+        "last_updated_at": "2026-03-17T19:00:22.745Z"
+      },
+      {
+        "v": "13",
+        "h": "516510147237b6a79d9d3f6e797bba7f",
+        "id": "6a98b8a175660c6a8b09a8f9",
+        "n": "Standard Translation",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 464213,
+        "by_id_type": {
+          "string": 1288,
+          "objectId": 462925
+        },
+        "first_updated_at": "2026-09-03T02:36:59.223Z",
+        "last_updated_at": "2026-10-03T08:25:39.464Z"
+      },
+      {
+        "v": "v1",
+        "h": "ce5ce003113059ce9273c607bb04c041",
+        "id": null,
+        "n": "Standard Translation",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 277763,
+        "by_id_type": {
+          "objectId": 277763
+        },
+        "first_updated_at": "2026-02-09T14:58:57.181Z",
+        "last_updated_at": "2026-07-13T18:20:01.449Z"
+      },
+      {
+        "v": "v5.2026-02",
+        "h": "fe12a2938451929c94bd9b63c3369ca0",
+        "id": null,
+        "n": "Standard Translation",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 186741,
+        "by_id_type": {
+          "objectId": 186741
+        },
+        "first_updated_at": "2026-03-17T19:00:25.052Z",
+        "last_updated_at": "2026-03-24T16:51:18.729Z"
+      },
+      {
+        "v": "v1",
+        "h": "d0e82fa7c2003057668582b035823bfe",
+        "id": "69ca28a20bbedaa22aed883e",
+        "n": "English Modernization",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 134441,
+        "by_id_type": {
+          "objectId": 134441
+        },
+        "first_updated_at": "2026-05-07T06:32:23.402Z",
+        "last_updated_at": "2026-09-01T07:55:30.718Z"
+      },
+      {
+        "v": "v5.1.2026-03b",
+        "h": "c3b625d94f2db56837fc04286cb605ae",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 108199,
+        "by_id_type": {
+          "objectId": 108199
+        },
+        "first_updated_at": "2026-03-24T16:51:16.998Z",
+        "last_updated_at": "2026-03-27T20:35:40.217Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "system",
+        "t": "object",
+        "data": "string",
+        "count": 91775,
+        "by_id_type": {
+          "objectId": 91775
+        },
+        "first_updated_at": "2026-04-12T09:38:41.179Z",
+        "last_updated_at": "2026-04-12T10:03:48.691Z"
+      },
+      {
+        "v": "v2",
+        "h": "6f712937c0c374e54a0dce2e823b84b8",
+        "id": null,
+        "n": "Standard Translation",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 57740,
+        "by_id_type": {
+          "objectId": 57740
+        },
+        "first_updated_at": "2026-02-18T00:15:25.068Z",
+        "last_updated_at": "2026-09-03T15:13:38.547Z"
+      },
+      {
+        "v": "v6",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 42163,
+        "by_id_type": {
+          "objectId": 42163
+        },
+        "first_updated_at": "2026-03-29T10:58:03.726Z",
+        "last_updated_at": "2026-03-29T20:52:31.208Z"
+      },
+      {
+        "v": "1",
+        "h": "d0e82fa7c2003057668582b035823bfe",
+        "id": "69ca28a20bbedaa22aed883e",
+        "n": "English Modernization",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 38743,
+        "by_id_type": {
+          "objectId": 38743
+        },
+        "first_updated_at": "2026-09-05T00:03:51.836Z",
+        "last_updated_at": "2026-09-19T00:20:08.066Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "t": "object",
+        "data": "missing",
+        "count": 32257,
+        "by_id_type": {
+          "string": 394,
+          "objectId": 31863
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": "12",
+        "h": "1e0960244a1cb8af8bfed92cba8078b6",
+        "id": "6a4f58529658a130d55ddbcb",
+        "n": "Standard Translation",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 25367,
+        "by_id_type": {
+          "objectId": 25367
+        },
+        "first_updated_at": "2026-07-27T20:30:29.446Z",
+        "last_updated_at": "2026-09-03T00:21:37.236Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "t": "object",
+        "data": "string",
+        "count": 23709,
+        "by_id_type": {
+          "objectId": 23709
+        },
+        "first_updated_at": "2026-04-20T11:05:47.452Z",
+        "last_updated_at": "2026-09-18T23:03:18.267Z"
+      },
+      {
+        "v": "2",
+        "h": "45790074eec996e8055b1462f36a62ea",
+        "id": "6ab143756295624338df3ed9",
+        "n": "English Modernization",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 19856,
+        "by_id_type": {
+          "objectId": 19856
+        },
+        "first_updated_at": "2026-09-24T00:00:13.286Z",
+        "last_updated_at": "2026-10-02T07:54:10.825Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 16144,
+        "by_id_type": {
+          "objectId": 16144
+        },
+        "first_updated_at": "2026-01-02T08:27:28.529Z",
+        "last_updated_at": "2026-02-20T11:26:47.509Z"
+      },
+      {
+        "v": "v5.1.2026-03c",
+        "h": "706dfce2cc8609c934a8f252edb551ff",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 12622,
+        "by_id_type": {
+          "objectId": 12622
+        },
+        "first_updated_at": "2026-03-26T15:47:11.580Z",
+        "last_updated_at": "2026-03-27T20:31:57.426Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "same-language",
+        "t": "object",
+        "data": "string",
+        "count": 12206,
+        "by_id_type": {
+          "objectId": 12206
+        },
+        "first_updated_at": "2026-09-30T14:58:39.093Z",
+        "last_updated_at": "2026-10-02T04:10:07.520Z"
+      },
+      {
+        "v": "2",
+        "h": "b2e3deae930c8ff8ed5cdd83be9c1426",
+        "id": "6992d4cd46b85e738a0c3ac5",
+        "n": "Latin Translation (Neo-Latin)",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 10707,
+        "by_id_type": {
+          "objectId": 10707
+        },
+        "first_updated_at": "2026-07-09T23:05:19.773Z",
+        "last_updated_at": "2026-10-02T10:55:46.967Z"
+      },
+      {
+        "v": "v12",
+        "h": "1e0960244a1cb8af8bfed92cba8078b6",
+        "id": "6a4f58529658a130d55ddbcb",
+        "n": "Standard Translation",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 6872,
+        "by_id_type": {
+          "objectId": 6872
+        },
+        "first_updated_at": "2026-08-11T16:13:12.195Z",
+        "last_updated_at": "2026-08-29T01:10:59.537Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "corpus",
+        "t": "object",
+        "data": "string",
+        "count": 5759,
+        "by_id_type": {
+          "objectId": 5759
+        },
+        "first_updated_at": "2026-03-10T08:19:08.442Z",
+        "last_updated_at": "2026-03-10T10:23:18.696Z"
+      },
+      {
+        "v": "12",
+        "id": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 5347,
+        "by_id_type": {
+          "objectId": 5347
+        },
+        "first_updated_at": "2026-07-27T15:42:07.401Z",
+        "last_updated_at": "2026-08-23T22:30:06.329Z"
+      },
+      {
+        "v": "v10",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "missing",
+        "count": 3408,
+        "by_id_type": {
+          "objectId": 3408
+        },
+        "first_updated_at": "2026-03-30T01:20:23.926Z",
+        "last_updated_at": "2026-05-05T19:37:27.625Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 3211,
+        "by_id_type": {
+          "objectId": 3211
+        },
+        "first_updated_at": "2026-01-01T18:30:14.500Z",
+        "last_updated_at": "2026-05-03T12:16:23.109Z"
+      },
+      {
+        "v": "13",
+        "h": "516510147237b6a79d9d3f6e797bba7f",
+        "id": "6a98b8a175660c6a8b09a8f9",
+        "n": "Standard Translation",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 2749,
+        "by_id_type": {
+          "objectId": 2749
+        },
+        "first_updated_at": "2026-09-03T02:50:11.152Z",
+        "last_updated_at": "2026-10-02T00:24:08.604Z"
+      },
+      {
+        "v": "13",
+        "id": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 2595,
+        "by_id_type": {
+          "objectId": 2595
+        },
+        "first_updated_at": "2026-09-03T02:00:05.721Z",
+        "last_updated_at": "2026-10-01T13:00:29.035Z"
+      },
+      {
+        "v": "11",
+        "h": "33ae9a4a09e91a42891a396b382d497a",
+        "id": "69de17371d85ecbcc1558316",
+        "n": "Standard Translation",
+        "src": "ai",
+        "t": "object",
+        "data": "missing",
+        "count": 2071,
+        "by_id_type": {
+          "objectId": 2071
+        },
+        "first_updated_at": "2026-05-06T07:44:13.266Z",
+        "last_updated_at": "2026-05-30T15:53:34.077Z"
+      },
+      {
+        "v": "v11",
+        "h": "33ae9a4a09e91a42891a396b382d497a",
+        "id": "69de17371d85ecbcc1558316",
+        "n": "Standard Translation",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 2009,
+        "by_id_type": {
+          "objectId": 2009
+        },
+        "first_updated_at": "2026-04-24T17:42:14.863Z",
+        "last_updated_at": "2026-06-17T15:28:18.990Z"
+      },
+      {
+        "v": "3",
+        "id": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 2003,
+        "by_id_type": {
+          "objectId": 2003
+        },
+        "first_updated_at": "2026-08-23T22:00:06.249Z",
+        "last_updated_at": "2026-09-29T23:00:10.271Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "t": "null",
+        "data": "missing",
+        "count": 1963,
+        "by_id_type": {
+          "objectId": 1963
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": "v0",
+        "h": null,
+        "id": "hardcoded",
+        "n": "English Modernization",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 1720,
+        "by_id_type": {
+          "objectId": 1720
+        },
+        "first_updated_at": "2026-06-10T22:28:52.810Z",
+        "last_updated_at": "2026-08-14T05:11:40.899Z"
+      },
+      {
+        "v": "3",
+        "h": "f15def1b27ecef96b4557d8514df3a40",
+        "id": "69db8967db25da46f7595d4a",
+        "n": "German Translation (Early Modern)",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 1433,
+        "by_id_type": {
+          "objectId": 1433
+        },
+        "first_updated_at": "2026-07-22T04:38:32.700Z",
+        "last_updated_at": "2026-09-16T12:54:10.493Z"
+      },
+      {
+        "v": "v1",
+        "id": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 1162,
+        "by_id_type": {
+          "objectId": 1162
+        },
+        "first_updated_at": "2026-07-27T15:42:07.590Z",
+        "last_updated_at": "2026-07-27T15:42:27.578Z"
+      },
+      {
+        "v": "11",
+        "h": null,
+        "id": "69de17371d85ecbcc1558316",
+        "n": "Standard Translation",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 1100,
+        "by_id_type": {
+          "objectId": 1100
+        },
+        "first_updated_at": "2026-05-06T07:34:11.406Z",
+        "last_updated_at": "2026-05-06T07:39:03.182Z"
+      },
+      {
+        "v": "2",
+        "id": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 996,
+        "by_id_type": {
+          "objectId": 996
+        },
+        "first_updated_at": "2026-08-24T00:30:06.726Z",
+        "last_updated_at": "2026-10-02T10:30:16.538Z"
+      },
+      {
+        "v": "v11",
+        "id": null,
+        "n": "Standard Translation",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 809,
+        "by_id_type": {
+          "objectId": 809
+        },
+        "first_updated_at": "2026-05-31T20:29:48.650Z",
+        "last_updated_at": "2026-06-01T07:12:02.818Z"
+      },
+      {
+        "v": "12",
+        "h": "1e0960244a1cb8af8bfed92cba8078b6",
+        "id": "6a4f58529658a130d55ddbcb",
+        "n": "Standard Translation",
+        "src": "ai",
+        "t": "object",
+        "data": "missing",
+        "count": 682,
+        "by_id_type": {
+          "objectId": 682
+        },
+        "first_updated_at": "2026-08-08T14:52:21.307Z",
+        "last_updated_at": "2026-08-09T09:15:20.670Z"
+      },
+      {
+        "v": null,
+        "id": "69de17371d85ecbcc1558316",
+        "n": "Standard Translation",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 634,
+        "by_id_type": {
+          "objectId": 634
+        },
+        "first_updated_at": "2026-06-29T09:32:59.847Z",
+        "last_updated_at": "2026-06-29T09:53:39.690Z"
+      },
+      {
+        "v": "v11-retx",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 583,
+        "by_id_type": {
+          "objectId": 583
+        },
+        "first_updated_at": "2026-06-26T21:17:36.093Z",
+        "last_updated_at": "2026-06-27T03:15:24.502Z"
+      },
+      {
+        "v": "11",
+        "h": "33ae9a4a09e91a42891a396b382d497a",
+        "id": "69de17371d85ecbcc1558316",
+        "n": "Standard Translation",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 399,
+        "by_id_type": {
+          "objectId": 399
+        },
+        "first_updated_at": "2026-07-01T15:32:21.405Z",
+        "last_updated_at": "2026-07-01T15:32:21.405Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "skip",
+        "t": "object",
+        "data": "string",
+        "count": 384,
+        "by_id_type": {
+          "objectId": 384
+        },
+        "first_updated_at": "2026-04-19T12:56:28.677Z",
+        "last_updated_at": "2026-10-03T08:20:11.127Z"
+      },
+      {
+        "v": "v5.2026-02",
+        "id": null,
+        "src": "system",
+        "t": "object",
+        "data": "string",
+        "count": 199,
+        "by_id_type": {
+          "objectId": 199
+        },
+        "first_updated_at": "2026-04-12T09:38:41.180Z",
+        "last_updated_at": "2026-04-12T09:38:58.630Z"
+      },
+      {
+        "v": "v5.2026-02",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "missing",
+        "count": 138,
+        "by_id_type": {
+          "objectId": 138
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": "v2",
+        "h": "6f712937c0c374e54a0dce2e823b84b8",
+        "id": null,
+        "n": "Standard Translation",
+        "src": "batch_api",
+        "t": "object",
+        "data": "missing",
+        "count": 107,
+        "by_id_type": {
+          "objectId": 107
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "missing",
+        "count": 98,
+        "by_id_type": {
+          "objectId": 98
+        },
+        "first_updated_at": "2026-01-02T08:34:30.344Z",
+        "last_updated_at": "2026-01-02T12:05:13.350Z"
+      },
+      {
+        "v": "",
+        "h": null,
+        "id": null,
+        "n": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 69,
+        "by_id_type": {
+          "objectId": 69
+        },
+        "first_updated_at": "2026-09-25T19:26:37.927Z",
+        "last_updated_at": "2026-09-25T19:27:10.020Z"
+      },
+      {
+        "v": "v11-retx",
+        "h": "33ae9a4a09e91a42891a396b382d497a",
+        "id": "69de17371d85ecbcc1558316",
+        "n": "Standard Translation",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 63,
+        "by_id_type": {
+          "objectId": 63
+        },
+        "first_updated_at": "2026-06-26T21:18:09.103Z",
+        "last_updated_at": "2026-06-26T21:21:14.236Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "realtime_api_sequential",
+        "t": "object",
+        "data": "string",
+        "count": 62,
+        "by_id_type": {
+          "objectId": 62
+        },
+        "first_updated_at": "2026-01-31T13:52:23.849Z",
+        "last_updated_at": "2026-01-31T14:38:57.655Z"
+      },
+      {
+        "v": "v2",
+        "h": "6f712937c0c374e54a0dce2e823b84b8",
+        "id": null,
+        "n": "Standard Translation",
+        "src": "system",
+        "t": "object",
+        "data": "string",
+        "count": 52,
+        "by_id_type": {
+          "objectId": 52
+        },
+        "first_updated_at": "2026-04-12T09:38:41.179Z",
+        "last_updated_at": "2026-04-12T09:38:58.630Z"
+      },
+      {
+        "v": "v13",
+        "h": "516510147237b6a79d9d3f6e797bba7f",
+        "id": "6a98b8a175660c6a8b09a8f9",
+        "n": "Standard Translation",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 26,
+        "by_id_type": {
+          "objectId": 26
+        },
+        "first_updated_at": "2026-09-30T06:38:56.110Z",
+        "last_updated_at": "2026-09-30T06:39:31.410Z"
+      },
+      {
+        "v": "12",
+        "h": "1e0960244a1cb8af8bfed92cba8078b6",
+        "id": "6a4f58529658a130d55ddbcb",
+        "n": "Standard Translation",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 22,
+        "by_id_type": {
+          "objectId": 22
+        },
+        "first_updated_at": "2026-07-10T00:33:14.061Z",
+        "last_updated_at": "2026-07-10T00:33:14.061Z"
+      },
+      {
+        "v": "v4.2026-02",
+        "h": "33ae9a4a09e91a42891a396b382d497a",
+        "id": "69de17371d85ecbcc1558316",
+        "n": "Standard Translation",
+        "src": "batch_api",
+        "t": "object",
+        "data": "string",
+        "count": 20,
+        "by_id_type": {
+          "objectId": 20
+        },
+        "first_updated_at": "2026-10-01T15:30:15.865Z",
+        "last_updated_at": "2026-10-01T15:30:15.865Z"
+      },
+      {
+        "v": "v11-retx",
+        "h": "d0e82fa7c2003057668582b035823bfe",
+        "id": "69ca28a20bbedaa22aed883e",
+        "n": "English Modernization",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 15,
+        "by_id_type": {
+          "objectId": 15
+        },
+        "first_updated_at": "2026-06-26T21:19:26.912Z",
+        "last_updated_at": "2026-06-26T21:20:33.871Z"
+      },
+      {
+        "v": "v1",
+        "h": "ce5ce003113059ce9273c607bb04c041",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 13,
+        "by_id_type": {
+          "objectId": 13
+        },
+        "first_updated_at": "2026-02-10T12:56:32.291Z",
+        "last_updated_at": "2026-02-10T13:01:24.646Z"
+      },
+      {
+        "v": "v1",
+        "h": "ce5ce003113059ce9273c607bb04c041",
+        "id": null,
+        "n": "Standard Translation",
+        "src": "ai",
+        "t": "object",
+        "data": "missing",
+        "count": 12,
+        "by_id_type": {
+          "objectId": 12
+        },
+        "first_updated_at": "2026-03-24T18:43:28.539Z",
+        "last_updated_at": "2026-03-27T18:37:08.108Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "manual-backfill",
+        "t": "object",
+        "data": "string",
+        "count": 12,
+        "by_id_type": {
+          "objectId": 12
+        },
+        "first_updated_at": "2026-04-12T13:49:59.615Z",
+        "last_updated_at": "2026-04-12T13:51:34.415Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "missing",
+        "count": 10,
+        "by_id_type": {
+          "objectId": 10
+        },
+        "first_updated_at": "2026-03-16T03:07:53.524Z",
+        "last_updated_at": "2026-03-16T07:12:25.089Z"
+      },
+      {
+        "v": "v5.2026-02",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 8,
+        "by_id_type": {
+          "objectId": 8
+        },
+        "first_updated_at": "2026-05-10T14:38:05.483Z",
+        "last_updated_at": "2026-05-10T14:38:11.147Z"
+      },
+      {
+        "v": "v2",
+        "h": "6f712937c0c374e54a0dce2e823b84b8",
+        "id": null,
+        "n": "Standard Translation",
+        "src": "manual",
+        "t": "object",
+        "data": "string",
+        "count": 7,
+        "by_id_type": {
+          "objectId": 7
+        },
+        "first_updated_at": "2026-03-09T08:05:58.439Z",
+        "last_updated_at": "2026-05-13T20:00:14.027Z"
+      },
+      {
+        "v": "v11-retx",
+        "h": "ce5ce003113059ce9273c607bb04c041",
+        "id": null,
+        "n": "Standard Translation",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 7,
+        "by_id_type": {
+          "objectId": 7
+        },
+        "first_updated_at": "2026-06-26T21:17:40.003Z",
+        "last_updated_at": "2026-06-26T21:17:57.584Z"
+      },
+      {
+        "v": "v1",
+        "h": "d0e82fa7c2003057668582b035823bfe",
+        "id": "69ca28a20bbedaa22aed883e",
+        "n": "English Modernization",
+        "src": "ai",
+        "t": "object",
+        "data": "missing",
+        "count": 6,
+        "by_id_type": {
+          "objectId": 6
+        },
+        "first_updated_at": "2026-08-08T15:04:37.951Z",
+        "last_updated_at": "2026-08-08T15:22:07.196Z"
+      },
+      {
+        "v": "v2",
+        "h": "6f712937c0c374e54a0dce2e823b84b8",
+        "id": null,
+        "n": "Standard Translation",
+        "src": "ai",
+        "t": "object",
+        "data": "missing",
+        "count": 4,
+        "by_id_type": {
+          "objectId": 4
+        },
+        "first_updated_at": "2026-02-19T17:41:31.823Z",
+        "last_updated_at": "2026-02-22T12:19:50.284Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "manual",
+        "t": "object",
+        "data": "string",
+        "count": 4,
+        "by_id_type": {
+          "objectId": 4
+        },
+        "first_updated_at": "2026-02-15T05:53:02.737Z",
+        "last_updated_at": "2026-03-09T06:54:30.424Z"
+      },
+      {
+        "v": "v1",
+        "h": "ce5ce003113059ce9273c607bb04c041",
+        "id": null,
+        "n": "Standard Translation",
+        "src": "manual",
+        "t": "object",
+        "data": "string",
+        "count": 4,
+        "by_id_type": {
+          "objectId": 4
+        },
+        "first_updated_at": "2026-02-11T03:07:27.933Z",
+        "last_updated_at": "2026-05-22T14:07:05.642Z"
+      },
+      {
+        "v": "v10",
+        "id": null,
+        "src": "skip",
+        "t": "object",
+        "data": "string",
+        "count": 4,
+        "by_id_type": {
+          "objectId": 4
+        },
+        "first_updated_at": "2026-08-08T15:16:35.417Z",
+        "last_updated_at": "2026-08-08T21:58:11.407Z"
+      },
+      {
+        "v": "v6",
+        "id": null,
+        "src": "ai",
+        "t": "object",
+        "data": "missing",
+        "count": 3,
+        "by_id_type": {
+          "objectId": 3
+        },
+        "first_updated_at": "2026-03-29T13:57:25.472Z",
+        "last_updated_at": "2026-03-29T19:15:49.578Z"
+      },
+      {
+        "v": "2",
+        "h": "b2e3deae930c8ff8ed5cdd83be9c1426",
+        "id": "6992d4cd46b85e738a0c3ac5",
+        "n": "Latin Translation (Neo-Latin)",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 2,
+        "by_id_type": {
+          "objectId": 2
+        },
+        "first_updated_at": "2026-05-14T02:45:32.393Z",
+        "last_updated_at": "2026-05-16T18:34:52.103Z"
+      },
+      {
+        "v": "v5.2026-02",
+        "h": "fe12a2938451929c94bd9b63c3369ca0",
+        "id": null,
+        "n": "Standard Translation",
+        "src": "ai",
+        "t": "object",
+        "data": "missing",
+        "count": 2,
+        "by_id_type": {
+          "objectId": 2
+        },
+        "first_updated_at": "2026-03-20T06:16:03.245Z",
+        "last_updated_at": "2026-03-20T12:30:11.235Z"
+      },
+      {
+        "v": null,
+        "h": "ce5ce003113059ce9273c607bb04c041",
+        "id": null,
+        "n": "Standard Translation",
+        "src": "ai",
+        "t": "object",
+        "data": "missing",
+        "count": 2,
+        "by_id_type": {
+          "objectId": 2
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": "3",
+        "h": "f15def1b27ecef96b4557d8514df3a40",
+        "id": "69db8967db25da46f7595d4a",
+        "n": "German Translation (Early Modern)",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 2,
+        "by_id_type": {
+          "objectId": 2
+        },
+        "first_updated_at": "2026-06-17T06:17:18.987Z",
+        "last_updated_at": "2026-06-17T06:18:06.618Z"
+      },
+      {
+        "v": "v1",
+        "h": "d0e82fa7c2003057668582b035823bfe",
+        "id": "69ca28a20bbedaa22aed883e",
+        "n": "English Modernization",
+        "t": "object",
+        "data": "string",
+        "count": 2,
+        "by_id_type": {
+          "objectId": 2
+        },
+        "first_updated_at": "2026-07-27T20:40:32.365Z",
+        "last_updated_at": "2026-07-27T20:40:35.769Z"
+      },
+      {
+        "v": "v10",
+        "id": null,
+        "src": "manual",
+        "t": "object",
+        "data": "string",
+        "count": 2,
+        "by_id_type": {
+          "objectId": 2
+        },
+        "first_updated_at": "2026-05-22T13:24:56.115Z",
+        "last_updated_at": "2026-08-04T06:56:51.375Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "broadsheet-ocr",
+        "t": "object",
+        "data": "string",
+        "count": 2,
+        "by_id_type": {
+          "objectId": 2
+        },
+        "first_updated_at": "2026-06-15T23:39:05.658Z",
+        "last_updated_at": "2026-06-16T11:03:52.542Z"
+      },
+      {
+        "v": "v11-retx",
+        "h": "fe12a2938451929c94bd9b63c3369ca0",
+        "id": null,
+        "n": "Standard Translation",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-06-26T21:17:34.420Z",
+        "last_updated_at": "2026-06-26T21:17:34.420Z"
+      },
+      {
+        "v": "v1",
+        "h": "ce5ce003113059ce9273c607bb04c041",
+        "id": null,
+        "src": "manual",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-07-17T21:55:00.728Z",
+        "last_updated_at": "2026-07-17T21:55:00.728Z"
+      },
+      {
+        "v": "v5.1.2026-03b",
+        "h": "c3b625d94f2db56837fc04286cb605ae",
+        "id": null,
+        "src": "manual",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-08-04T06:50:25.370Z",
+        "last_updated_at": "2026-08-04T06:50:25.370Z"
+      },
+      {
+        "v": "v2",
+        "h": "6f712937c0c374e54a0dce2e823b84b8",
+        "id": null,
+        "n": "Standard Translation",
+        "t": "object",
+        "data": "missing",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": "v5.2026-02",
+        "id": null,
+        "src": "batch_api",
+        "t": "object",
+        "data": "missing",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": null,
+        "last_updated_at": null
+      },
+      {
+        "v": "v2",
+        "h": "6f712937c0c374e54a0dce2e823b84b8",
+        "id": null,
+        "n": "Standard Translation",
+        "src": "AI generated",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-04-12T09:39:29.512Z",
+        "last_updated_at": "2026-04-12T09:39:29.512Z"
+      },
+      {
+        "v": "v5.1.2026-03a",
+        "h": "524c0a829f284f2fe047d8720096b76f",
+        "id": null,
+        "n": "Standard Translation",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-04-14T09:17:17.301Z",
+        "last_updated_at": "2026-04-14T09:17:17.301Z"
+      },
+      {
+        "v": "v5.2026-02",
+        "h": "fe12a2938451929c94bd9b63c3369ca0",
+        "id": null,
+        "n": "Standard Translation",
+        "src": "manual",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-03-27T16:18:33.424Z",
+        "last_updated_at": "2026-03-27T16:18:33.424Z"
+      },
+      {
+        "v": "12",
+        "h": "1e0960244a1cb8af8bfed92cba8078b6",
+        "id": "6a4f58529658a130d55ddbcb",
+        "n": "Standard Translation",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-07-27T19:55:04.245Z",
+        "last_updated_at": "2026-07-27T19:55:04.245Z"
+      },
+      {
+        "v": "11",
+        "h": "33ae9a4a09e91a42891a396b382d497a",
+        "id": "69de17371d85ecbcc1558316",
+        "n": "Standard Translation",
+        "src": "skip",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-05-29T11:12:46.868Z",
+        "last_updated_at": "2026-05-29T11:12:46.868Z"
+      },
+      {
+        "v": null,
+        "id": null,
+        "src": "songshi-juan56",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-06-16T20:45:53.845Z",
+        "last_updated_at": "2026-06-16T20:45:53.845Z"
+      },
+      {
+        "v": "12",
+        "h": "1e0960244a1cb8af8bfed92cba8078b6",
+        "id": "6a4f58529658a130d55ddbcb",
+        "n": "Standard Translation",
+        "src": "skip",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-08-09T11:37:59.019Z",
+        "last_updated_at": "2026-08-09T11:37:59.019Z"
+      },
+      {
+        "v": "v11-retx-escalated",
+        "h": "d0e82fa7c2003057668582b035823bfe",
+        "id": "69ca28a20bbedaa22aed883e",
+        "n": "English Modernization",
+        "src": "ai",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-06-26T21:22:24.682Z",
+        "last_updated_at": "2026-06-26T21:22:24.682Z"
+      },
+      {
+        "v": "12",
+        "h": "1e0960244a1cb8af8bfed92cba8078b6",
+        "id": "6a4f58529658a130d55ddbcb",
+        "n": "Standard Translation",
+        "src": "manual",
+        "t": "object",
+        "data": "string",
+        "count": 1,
+        "by_id_type": {
+          "objectId": 1
+        },
+        "first_updated_at": "2026-08-04T08:29:45.572Z",
+        "last_updated_at": "2026-08-04T08:29:45.572Z"
+      }
+    ]
+  },
+  "summary": {
+    "note": "pages whose <field>.data is a string, grouped by the prompts row they resolve to (prompt_id > prompt_hash > stored label). first/last_updated_at are page write dates, a LOWER bound on when the prompt was in use.",
+    "ocr": {
+      "pages_with_text": 8004944,
+      "pages_without_field": 17665633,
+      "field_without_text": 50059,
+      "by_prompt": [
+        {
+          "key": "label \"v5.2026-02\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 2481501,
+          "first_updated_at": "2026-02-19T11:32:52.011Z",
+          "last_updated_at": "2026-10-01T13:04:19.901Z",
+          "labels": {
+            "v5.2026-02": 2481501
+          },
+          "sources": {
+            "batch_api": 1437384,
+            "ai": 1043839,
+            "undefined": 273,
+            "manual": 5
+          }
+        },
+        {
+          "key": "label \"v10\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 1575650,
+          "first_updated_at": "2026-04-04T10:10:24.562Z",
+          "last_updated_at": "2026-09-03T04:32:55.936Z",
+          "labels": {
+            "v10": 1575650
+          },
+          "sources": {
+            "batch_api": 1442455,
+            "pipeline_preview": 132124,
+            "undefined": 661,
+            "ai": 407,
+            "manual": 2,
+            "AI generated": 1
+          }
+        },
+        {
+          "key": "Standard OCR v12 (91167c)",
+          "prompt_id": "69e95dce00d00c207591167c",
+          "version": 12,
+          "resolved_by": "prompt_id",
+          "count": 1132296,
+          "first_updated_at": "2026-04-23T00:00:38.912Z",
+          "last_updated_at": "2026-10-03T08:00:20.961Z",
+          "labels": {
+            "12": 918100,
+            "16": 3472,
+            "v5.1.2026-03": 210641,
+            "v14-lacuna": 72,
+            "v14-lacuna-escalated": 7,
+            "ia-djvu": 2,
+            "v10": 1,
+            "19.1": 1
+          },
+          "sources": {
+            "batch_api": 861941,
+            "ai": 210719,
+            "pipeline_preview": 59633,
+            "ia-ocr-repair": 2,
+            "ia_djvu": 1
+          }
+        },
+        {
+          "key": "Standard OCR v14 (592418)",
+          "prompt_id": "6a3edbd0fd4d2f05ea592418",
+          "version": 14,
+          "resolved_by": "prompt_id",
+          "count": 534460,
+          "first_updated_at": "2026-06-26T20:07:09.108Z",
+          "last_updated_at": "2026-09-13T10:58:36.746Z",
+          "labels": {
+            "14": 29782,
+            "v5.1.2026-03": 504091,
+            "null": 587
+          },
+          "sources": {
+            "ai": 504677,
+            "batch_api": 28119,
+            "pipeline_preview": 1663,
+            "ia_djvu": 1
+          }
+        },
+        {
+          "key": "Standard OCR v16 (09a8f8)",
+          "prompt_id": "6a98b8a075660c6a8b09a8f8",
+          "version": 16,
+          "resolved_by": "prompt_id",
+          "count": 501590,
+          "first_updated_at": "2026-09-03T00:08:20.747Z",
+          "last_updated_at": "2026-10-02T20:27:24.591Z",
+          "labels": {
+            "16": 501564,
+            "v6.1.2026-05": 26
+          },
+          "sources": {
+            "batch_api": 409527,
+            "pipeline_preview": 91216,
+            "ia_reference": 821,
+            "ai": 26
+          }
+        },
+        {
+          "key": "no prompt recorded (source: paddle)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 314414,
+          "first_updated_at": "2026-10-02T09:39:13.099Z",
+          "last_updated_at": "2026-10-03T08:31:29.381Z",
+          "labels": {
+            "null": 314414
+          },
+          "sources": {
+            "paddle": 314414
+          }
+        },
+        {
+          "key": "Standard OCR v15 (c6a3ba)",
+          "prompt_id": "6a4f58252ecde61d13c6a3ba",
+          "version": 15,
+          "resolved_by": "prompt_id",
+          "count": 252749,
+          "first_updated_at": "2026-07-09T08:14:02.650Z",
+          "last_updated_at": "2026-09-03T00:08:20.839Z",
+          "labels": {
+            "15": 95937,
+            "v5.1.2026-03": 156812
+          },
+          "sources": {
+            "ai": 156811,
+            "pipeline_preview": 56566,
+            "batch_api": 39371,
+            "manual": 1
+          }
+        },
+        {
+          "key": "no prompt recorded (source: ia_djvu)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 211898,
+          "first_updated_at": "2026-09-11T09:00:09.391Z",
+          "last_updated_at": "2026-09-29T22:13:08.920Z",
+          "labels": {
+            "null": 211898
+          },
+          "sources": {
+            "ia_djvu": 211898
+          }
+        },
+        {
+          "key": "no prompt recorded (source: bdrc)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 191897,
+          "first_updated_at": "2026-09-10T07:25:47.121Z",
+          "last_updated_at": "2026-10-02T16:49:05.313Z",
+          "labels": {
+            "null": 191897
+          },
+          "sources": {
+            "bdrc": 191897
+          }
+        },
+        {
+          "key": "label \"v3.2026-02\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 173604,
+          "first_updated_at": "2026-02-09T14:42:57.805Z",
+          "last_updated_at": "2026-08-04T06:50:25.370Z",
+          "labels": {
+            "v3.2026-02": 173604
+          },
+          "sources": {
+            "ai": 147069,
+            "batch_api": 26502,
+            "undefined": 28,
+            "manual": 5
+          }
+        },
+        {
+          "key": "no prompt recorded (source: esukhia-derge-tengyur)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 128369,
+          "first_updated_at": "2026-10-01T15:54:54.412Z",
+          "last_updated_at": "2026-10-01T22:58:13.240Z",
+          "labels": {
+            "null": 128369
+          },
+          "sources": {
+            "esukhia-derge-tengyur": 128369
+          }
+        },
+        {
+          "key": "no prompt recorded (source: none)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 76072,
+          "first_updated_at": "2025-12-26T10:16:06.812Z",
+          "last_updated_at": "2026-09-18T23:03:18.267Z",
+          "labels": {
+            "null": 76072
+          },
+          "sources": {
+            "undefined": 76072
+          }
+        },
+        {
+          "key": "label \"16\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 75199,
+          "first_updated_at": "2026-09-03T03:30:06.333Z",
+          "last_updated_at": "2026-10-02T15:30:14.344Z",
+          "labels": {
+            "16": 75199
+          },
+          "sources": {
+            "batch_api": 75199
+          }
+        },
+        {
+          "key": "Standard OCR v10 (d6bd5e)",
+          "prompt_id": "69c264f6c26fcca147d6bd5e",
+          "version": 10,
+          "resolved_by": "prompt_id",
+          "count": 63393,
+          "first_updated_at": "2026-03-25T10:25:53.056Z",
+          "last_updated_at": "2026-09-30T22:00:34.989Z",
+          "labels": {
+            "10": 1,
+            "16": 24,
+            "v5.1.2026-03": 57608,
+            "v5.2026-02": 2653,
+            "spread-v2+ocr-v10": 2110,
+            "v10": 985,
+            "v6.2026-03": 9,
+            "ia-djvu": 2,
+            "repair-sync-short": 1
+          },
+          "sources": {
+            "ai": 57588,
+            "batch_api": 5776,
+            "batch_api_recovery": 19,
+            "pipeline_preview": 5,
+            "ia-ocr-repair": 2,
+            "ia_djvu": 1,
+            "manual": 1,
+            "ai-repair-sync": 1
+          }
+        },
+        {
+          "key": "label \"v4.2026-02\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 48345,
+          "first_updated_at": "2025-12-26T10:18:25.044Z",
+          "last_updated_at": "2026-03-12T12:57:52.305Z",
+          "labels": {
+            "v4.2026-02": 48345
+          },
+          "sources": {
+            "ai": 36819,
+            "batch_api": 11521,
+            "undefined": 3,
+            "manual": 2
+          }
+        },
+        {
+          "key": "no prompt recorded (source: kraken)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 38926,
+          "first_updated_at": "2026-09-18T15:09:24.851Z",
+          "last_updated_at": "2026-10-02T19:00:03.652Z",
+          "labels": {
+            "null": 38926
+          },
+          "sources": {
+            "kraken": 38926
+          }
+        },
+        {
+          "key": "Standard OCR v19.1 (a889bb)",
+          "prompt_id": "6ac02220413a82637da889bb",
+          "version": 19.1,
+          "resolved_by": "prompt_id",
+          "count": 37533,
+          "first_updated_at": "2026-10-03T00:07:31.733Z",
+          "last_updated_at": "2026-10-03T08:25:30.661Z",
+          "labels": {
+            "19.1": 37533
+          },
+          "sources": {
+            "batch_api": 21628,
+            "pipeline_preview": 15895,
+            "ia_reference": 10
+          }
+        },
+        {
+          "key": "label \"spread-v2+ocr-v10\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 36280,
+          "first_updated_at": "2026-04-04T15:49:53.048Z",
+          "last_updated_at": "2026-04-06T06:00:06.360Z",
+          "labels": {
+            "spread-v2+ocr-v10": 36280
+          },
+          "sources": {
+            "batch_api": 21490,
+            "undefined": 14789,
+            "manual": 1
+          }
+        },
+        {
+          "key": "no prompt recorded (source: esukhia-derge-kangyur)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 25891,
+          "first_updated_at": "2026-10-02T23:25:44.545Z",
+          "last_updated_at": "2026-10-03T08:04:15.377Z",
+          "labels": {
+            "null": 25891
+          },
+          "sources": {
+            "esukhia-derge-kangyur": 25891
+          }
+        },
+        {
+          "key": "Standard OCR v11 (1bee69)",
+          "prompt_id": "69dd69de346e8052f41bee69",
+          "version": 11,
+          "resolved_by": "prompt_id",
+          "count": 24750,
+          "first_updated_at": "2026-04-14T19:40:38.433Z",
+          "last_updated_at": "2026-05-02T09:48:11.094Z",
+          "labels": {
+            "v5.1.2026-03": 24747,
+            "v10": 3
+          },
+          "sources": {
+            "ai": 24747,
+            "pipeline_preview": 2,
+            "batch_api": 1
+          }
+        },
+        {
+          "key": "no prompt recorded (source: batch_api)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 19047,
+          "first_updated_at": "2025-12-30T12:58:29.295Z",
+          "last_updated_at": "2026-01-04T03:04:35.412Z",
+          "labels": {
+            "null": 19047
+          },
+          "sources": {
+            "batch_api": 19047
+          }
+        },
+        {
+          "key": "label \"v6.2026-03\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 18256,
+          "first_updated_at": "2026-04-04T05:10:04.906Z",
+          "last_updated_at": "2026-04-08T00:08:44.852Z",
+          "labels": {
+            "v6.2026-03": 18256
+          },
+          "sources": {
+            "batch_api": 18256
+          }
+        },
+        {
+          "key": "label \"15\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 9329,
+          "first_updated_at": "2026-07-26T10:35:18.724Z",
+          "last_updated_at": "2026-09-03T00:00:10.685Z",
+          "labels": {
+            "15": 9329
+          },
+          "sources": {
+            "batch_api": 9327,
+            "ai": 2
+          }
+        },
+        {
+          "key": "no prompt recorded (source: ndl-koten)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 7133,
+          "first_updated_at": "2026-09-30T12:24:01.315Z",
+          "last_updated_at": "2026-10-01T00:48:48.727Z",
+          "labels": {
+            "null": 7133
+          },
+          "sources": {
+            "ndl-koten": 7133
+          }
+        },
+        {
+          "key": "label \"etcsl-import\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 5749,
+          "first_updated_at": "2026-03-10T08:19:08.442Z",
+          "last_updated_at": "2026-03-10T10:23:18.696Z",
+          "labels": {
+            "etcsl-import": 5749
+          },
+          "sources": {
+            "corpus": 5749
+          }
+        },
+        {
+          "key": "no prompt recorded (source: cbeta-xml-p5)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 4983,
+          "first_updated_at": "2026-10-01T20:39:53.852Z",
+          "last_updated_at": "2026-10-02T00:53:41.719Z",
+          "labels": {
+            "null": 4983
+          },
+          "sources": {
+            "cbeta-xml-p5": 4983
+          }
+        },
+        {
+          "key": "label \"19.1\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 3598,
+          "first_updated_at": "2026-10-03T00:30:16.671Z",
+          "last_updated_at": "2026-10-03T08:00:22.300Z",
+          "labels": {
+            "19.1": 3598
+          },
+          "sources": {
+            "batch_api": 3598
+          }
+        },
+        {
+          "key": "no prompt recorded (source: mineru)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 2566,
+          "first_updated_at": "2026-06-18T14:34:58.583Z",
+          "last_updated_at": "2026-09-30T09:05:29.410Z",
+          "labels": {
+            "null": 2566
+          },
+          "sources": {
+            "mineru": 2566
+          }
+        },
+        {
+          "key": "label \"v5.1.2026-03\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 2512,
+          "first_updated_at": "2026-03-24T22:55:25.107Z",
+          "last_updated_at": "2026-04-06T19:28:12.615Z",
+          "labels": {
+            "v5.1.2026-03": 2512
+          },
+          "sources": {
+            "undefined": 2443,
+            "ai": 69
+          }
+        },
+        {
+          "key": "no prompt recorded (source: ai)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 2373,
+          "first_updated_at": "2025-12-31T13:43:33.658Z",
+          "last_updated_at": "2026-09-03T02:35:40.330Z",
+          "labels": {
+            "null": 2373
+          },
+          "sources": {
+            "ai": 2373
+          }
+        },
+        {
+          "key": "label \"v2.2026-02\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 1080,
+          "first_updated_at": "2026-02-09T06:08:51.264Z",
+          "last_updated_at": "2026-02-09T11:44:44.312Z",
+          "labels": {
+            "v2.2026-02": 1080
+          },
+          "sources": {
+            "ai": 1080
+          }
+        },
+        {
+          "key": "no prompt recorded (source: system)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 726,
+          "first_updated_at": "2026-04-09T07:19:22.230Z",
+          "last_updated_at": "2026-04-09T07:19:42.798Z",
+          "labels": {
+            "null": 726
+          },
+          "sources": {
+            "system": 726
+          }
+        },
+        {
+          "key": "label \"v14-lacuna\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 593,
+          "first_updated_at": "2026-06-26T20:27:47.828Z",
+          "last_updated_at": "2026-06-27T03:04:28.456Z",
+          "labels": {
+            "v14-lacuna": 593
+          },
+          "sources": {
+            "ai": 593
+          }
+        },
+        {
+          "key": "label \"spread-v2+ocr-v12\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 516,
+          "first_updated_at": null,
+          "last_updated_at": null,
+          "labels": {
+            "spread-v2+ocr-v12": 516
+          },
+          "sources": {
+            "undefined": 516
+          }
+        },
+        {
+          "key": "label \"12\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 510,
+          "first_updated_at": "2026-06-26T13:57:46.629Z",
+          "last_updated_at": "2026-06-26T13:57:46.629Z",
+          "labels": {
+            "12": 510
+          },
+          "sources": {
+            "undefined": 509,
+            "batch_api": 1
+          }
+        },
+        {
+          "key": "label \"spread-v1+ocr-v10\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 306,
+          "first_updated_at": null,
+          "last_updated_at": null,
+          "labels": {
+            "spread-v1+ocr-v10": 306
+          },
+          "sources": {
+            "spread-split": 277,
+            "undefined": 29
+          }
+        },
+        {
+          "key": "label \"11\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 238,
+          "first_updated_at": "2026-04-14T09:17:01.422Z",
+          "last_updated_at": "2026-04-14T10:10:46.785Z",
+          "labels": {
+            "11": 238
+          },
+          "sources": {
+            "ai": 238
+          }
+        },
+        {
+          "key": "label \"ia-djvu\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 187,
+          "first_updated_at": "2026-07-27T15:26:26.174Z",
+          "last_updated_at": "2026-07-27T20:28:36.226Z",
+          "labels": {
+            "ia-djvu": 187
+          },
+          "sources": {
+            "ia-ocr-repair": 187
+          }
+        },
+        {
+          "key": "label \"v15\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 93,
+          "first_updated_at": "2026-07-27T20:04:48.792Z",
+          "last_updated_at": "2026-07-27T20:19:43.609Z",
+          "labels": {
+            "v15": 93
+          },
+          "sources": {
+            "reocr-contamination-repair-3362": 93
+          }
+        },
+        {
+          "key": "label \"v5.2026-02+linenum\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 79,
+          "first_updated_at": "2026-08-30T13:41:24.958Z",
+          "last_updated_at": "2026-08-30T13:48:07.682Z",
+          "labels": {
+            "v5.2026-02+linenum": 79
+          },
+          "sources": {
+            "ai": 79
+          }
+        },
+        {
+          "key": "no prompt recorded (source: batch_api_recovery)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 55,
+          "first_updated_at": "2026-03-31T15:11:35.442Z",
+          "last_updated_at": "2026-03-31T15:17:23.284Z",
+          "labels": {
+            "null": 55
+          },
+          "sources": {
+            "batch_api_recovery": 55
+          }
+        },
+        {
+          "key": "label \"spread-v2+ocr-v11\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 52,
+          "first_updated_at": null,
+          "last_updated_at": null,
+          "labels": {
+            "spread-v2+ocr-v11": 52
+          },
+          "sources": {
+            "undefined": 52
+          }
+        },
+        {
+          "key": "no prompt recorded (source: sefaria)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 43,
+          "first_updated_at": "2026-10-02T09:43:37.061Z",
+          "last_updated_at": "2026-10-02T12:58:49.666Z",
+          "labels": {
+            "null": 43
+          },
+          "sources": {
+            "sefaria": 43
+          }
+        },
+        {
+          "key": "label \"10\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 34,
+          "first_updated_at": "2026-04-09T07:14:38.211Z",
+          "last_updated_at": "2026-04-09T07:35:06.772Z",
+          "labels": {
+            "10": 34
+          },
+          "sources": {
+            "ai": 34
+          }
+        },
+        {
+          "key": "no prompt recorded (source: wikisource)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 21,
+          "first_updated_at": "2026-05-29T11:39:09.522Z",
+          "last_updated_at": "2026-05-29T11:39:09.522Z",
+          "labels": {
+            "null": 21
+          },
+          "sources": {
+            "wikisource": 21
+          }
+        },
+        {
+          "key": "no prompt recorded (source: manual)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 16,
+          "first_updated_at": "2026-04-09T07:44:32.924Z",
+          "last_updated_at": "2026-05-13T20:00:14.027Z",
+          "labels": {
+            "null": 16
+          },
+          "sources": {
+            "manual": 16
+          }
+        },
+        {
+          "key": "label \"v5.2026-02+ink\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 11,
+          "first_updated_at": "2026-08-30T13:43:54.029Z",
+          "last_updated_at": "2026-08-30T13:46:42.101Z",
+          "labels": {
+            "v5.2026-02+ink": 11
+          },
+          "sources": {
+            "ai": 11
+          }
+        },
+        {
+          "key": "label \"repair-sync-short\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 10,
+          "first_updated_at": "2026-07-27T15:22:06.604Z",
+          "last_updated_at": "2026-07-27T15:23:14.851Z",
+          "labels": {
+            "repair-sync-short": 10
+          },
+          "sources": {
+            "ai-repair-sync": 10
+          }
+        },
+        {
+          "key": "label \"v9\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 4,
+          "first_updated_at": "2026-03-24T10:11:11.790Z",
+          "last_updated_at": "2026-03-24T10:11:31.310Z",
+          "labels": {
+            "v9": 4
+          },
+          "sources": {
+            "ai": 4
+          }
+        },
+        {
+          "key": "no prompt recorded (source: cdli-atf)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 2,
+          "first_updated_at": "2026-09-15T18:19:14.051Z",
+          "last_updated_at": "2026-09-15T18:19:16.635Z",
+          "labels": {
+            "null": 2
+          },
+          "sources": {
+            "cdli-atf": 2
+          }
+        },
+        {
+          "key": "no prompt recorded (source: broadsheet-ocr)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 2,
+          "first_updated_at": "2026-06-15T23:39:05.658Z",
+          "last_updated_at": "2026-06-16T11:03:52.542Z",
+          "labels": {
+            "null": 2
+          },
+          "sources": {
+            "broadsheet-ocr": 2
+          }
+        },
+        {
+          "key": "label \"v10-paleographer\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 1,
+          "first_updated_at": "2026-03-24T10:21:09.932Z",
+          "last_updated_at": "2026-03-24T10:21:09.932Z",
+          "labels": {
+            "v10-paleographer": 1
+          },
+          "sources": {
+            "ai": 1
+          }
+        },
+        {
+          "key": "label \"v14-lacuna-escalated\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 1,
+          "first_updated_at": "2026-06-26T21:09:40.383Z",
+          "last_updated_at": "2026-06-26T21:09:40.383Z",
+          "labels": {
+            "v14-lacuna-escalated": 1
+          },
+          "sources": {
+            "ai": 1
+          }
+        },
+        {
+          "key": "no prompt recorded (source: songshi-juan56)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 1,
+          "first_updated_at": "2026-06-16T20:41:48.602Z",
+          "last_updated_at": "2026-06-16T20:41:48.602Z",
+          "labels": {
+            "null": 1
+          },
+          "sources": {
+            "songshi-juan56": 1
+          }
+        }
+      ]
+    },
+    "translation": {
+      "pages_with_text": 5495502,
+      "pages_without_field": 20186332,
+      "field_without_text": 38802,
+      "by_prompt": [
+        {
+          "key": "label \"v10\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 2154655,
+          "first_updated_at": "2026-03-29T20:54:12.190Z",
+          "last_updated_at": "2026-09-03T15:13:39.107Z",
+          "labels": {
+            "v10": 2154655
+          },
+          "sources": {
+            "ai": 2154649,
+            "skip": 4,
+            "manual": 2
+          }
+        },
+        {
+          "key": "Standard Translation v11 (558316)",
+          "prompt_id": "69de17371d85ecbcc1558316",
+          "version": 11,
+          "resolved_by": "prompt_id",
+          "count": 1083285,
+          "first_updated_at": "2026-04-24T17:42:14.863Z",
+          "last_updated_at": "2026-10-01T15:30:15.865Z",
+          "labels": {
+            "11": 1080559,
+            "v11": 2009,
+            "null": 634,
+            "v11-retx": 63,
+            "v4.2026-02": 20
+          },
+          "sources": {
+            "ai": 1082865,
+            "batch_api": 419,
+            "skip": 1
+          }
+        },
+        {
+          "key": "Standard Translation v2 (0c3ac4)",
+          "prompt_id": "6992d4b146b85e738a0c3ac4",
+          "version": 2,
+          "resolved_by": "prompt_hash",
+          "count": 756831,
+          "first_updated_at": "2026-02-16T09:38:56.593Z",
+          "last_updated_at": "2026-09-03T15:13:38.547Z",
+          "labels": {
+            "v2": 756831
+          },
+          "sources": {
+            "ai": 699031,
+            "batch_api": 57740,
+            "system": 52,
+            "manual": 7,
+            "AI generated": 1
+          }
+        },
+        {
+          "key": "Standard Translation v13 (09a8f9)",
+          "prompt_id": "6a98b8a175660c6a8b09a8f9",
+          "version": 13,
+          "resolved_by": "prompt_id",
+          "count": 466988,
+          "first_updated_at": "2026-09-03T02:36:59.223Z",
+          "last_updated_at": "2026-10-03T08:25:39.464Z",
+          "labels": {
+            "13": 466962,
+            "v13": 26
+          },
+          "sources": {
+            "ai": 464239,
+            "batch_api": 2749
+          }
+        },
+        {
+          "key": "Standard Translation v1 (dc334e)",
+          "prompt_id": "69507192da618b752bdc334e",
+          "version": 1,
+          "resolved_by": "prompt_hash",
+          "count": 277788,
+          "first_updated_at": "2026-02-09T14:58:57.181Z",
+          "last_updated_at": "2026-07-17T21:55:00.728Z",
+          "labels": {
+            "v1": 277781,
+            "v11-retx": 7
+          },
+          "sources": {
+            "ai": 277783,
+            "manual": 5
+          }
+        },
+        {
+          "key": "hash fe12a293 (no prompts row, no archived file)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "unmatched_hash",
+          "count": 186743,
+          "first_updated_at": "2026-03-17T19:00:25.052Z",
+          "last_updated_at": "2026-06-26T21:17:34.420Z",
+          "labels": {
+            "v5.2026-02": 186742,
+            "v11-retx": 1
+          },
+          "sources": {
+            "ai": 186742,
+            "manual": 1
+          }
+        },
+        {
+          "key": "English Modernization v1 (ed883e)",
+          "prompt_id": "69ca28a20bbedaa22aed883e",
+          "version": 1,
+          "resolved_by": "prompt_id",
+          "count": 173202,
+          "first_updated_at": "2026-05-07T06:32:23.402Z",
+          "last_updated_at": "2026-09-19T00:20:08.066Z",
+          "labels": {
+            "1": 38743,
+            "v1": 134443,
+            "v11-retx": 15,
+            "v11-retx-escalated": 1
+          },
+          "sources": {
+            "ai": 173200,
+            "undefined": 2
+          }
+        },
+        {
+          "key": "prompts/translation/standard-translation-v5-2-2026-03-code.md (code-shipped, hash c3b625d9)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "archived_file_hash",
+          "count": 108200,
+          "first_updated_at": "2026-03-24T16:51:16.998Z",
+          "last_updated_at": "2026-08-04T06:50:25.370Z",
+          "labels": {
+            "v5.1.2026-03b": 108200
+          },
+          "sources": {
+            "ai": 108199,
+            "manual": 1
+          }
+        },
+        {
+          "key": "no prompt recorded (source: system)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 91775,
+          "first_updated_at": "2026-04-12T09:38:41.179Z",
+          "last_updated_at": "2026-04-12T10:03:48.691Z",
+          "labels": {
+            "null": 91775
+          },
+          "sources": {
+            "system": 91775
+          }
+        },
+        {
+          "key": "label \"v6\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 42163,
+          "first_updated_at": "2026-03-29T10:58:03.726Z",
+          "last_updated_at": "2026-03-29T20:52:31.208Z",
+          "labels": {
+            "v6": 42163
+          },
+          "sources": {
+            "ai": 42163
+          }
+        },
+        {
+          "key": "Standard Translation v12 (5ddbcb)",
+          "prompt_id": "6a4f58529658a130d55ddbcb",
+          "version": 12,
+          "resolved_by": "prompt_id",
+          "count": 32264,
+          "first_updated_at": "2026-07-10T00:33:14.061Z",
+          "last_updated_at": "2026-09-03T00:21:37.236Z",
+          "labels": {
+            "12": 25392,
+            "v12": 6872
+          },
+          "sources": {
+            "ai": 32239,
+            "batch_api": 22,
+            "undefined": 1,
+            "skip": 1,
+            "manual": 1
+          }
+        },
+        {
+          "key": "no prompt recorded (source: none)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 23709,
+          "first_updated_at": "2026-04-20T11:05:47.452Z",
+          "last_updated_at": "2026-09-18T23:03:18.267Z",
+          "labels": {
+            "null": 23709
+          },
+          "sources": {
+            "undefined": 23709
+          }
+        },
+        {
+          "key": "English Modernization v2 (df3ed9)",
+          "prompt_id": "6ab143756295624338df3ed9",
+          "version": 2,
+          "resolved_by": "prompt_id",
+          "count": 19856,
+          "first_updated_at": "2026-09-24T00:00:13.286Z",
+          "last_updated_at": "2026-10-02T07:54:10.825Z",
+          "labels": {
+            "2": 19856
+          },
+          "sources": {
+            "ai": 19856
+          }
+        },
+        {
+          "key": "no prompt recorded (source: batch_api)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 16144,
+          "first_updated_at": "2026-01-02T08:27:28.529Z",
+          "last_updated_at": "2026-02-20T11:26:47.509Z",
+          "labels": {
+            "null": 16144
+          },
+          "sources": {
+            "batch_api": 16144
+          }
+        },
+        {
+          "key": "prompts/modernization/english-modernization-v0-code.md (code-shipped, hash 706dfce2)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "archived_file_hash",
+          "count": 12622,
+          "first_updated_at": "2026-03-26T15:47:11.580Z",
+          "last_updated_at": "2026-03-27T20:31:57.426Z",
+          "labels": {
+            "v5.1.2026-03c": 12622
+          },
+          "sources": {
+            "ai": 12622
+          }
+        },
+        {
+          "key": "no prompt recorded (source: same-language)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 12206,
+          "first_updated_at": "2026-09-30T14:58:39.093Z",
+          "last_updated_at": "2026-10-02T04:10:07.520Z",
+          "labels": {
+            "null": 12206
+          },
+          "sources": {
+            "same-language": 12206
+          }
+        },
+        {
+          "key": "Latin Translation (Neo-Latin) v2 (0c3ac5)",
+          "prompt_id": "6992d4cd46b85e738a0c3ac5",
+          "version": 2,
+          "resolved_by": "prompt_id",
+          "count": 10709,
+          "first_updated_at": "2026-05-14T02:45:32.393Z",
+          "last_updated_at": "2026-10-02T10:55:46.967Z",
+          "labels": {
+            "2": 10709
+          },
+          "sources": {
+            "batch_api": 10707,
+            "ai": 2
+          }
+        },
+        {
+          "key": "no prompt recorded (source: corpus)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 5759,
+          "first_updated_at": "2026-03-10T08:19:08.442Z",
+          "last_updated_at": "2026-03-10T10:23:18.696Z",
+          "labels": {
+            "null": 5759
+          },
+          "sources": {
+            "corpus": 5759
+          }
+        },
+        {
+          "key": "label \"12\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 5347,
+          "first_updated_at": "2026-07-27T15:42:07.401Z",
+          "last_updated_at": "2026-08-23T22:30:06.329Z",
+          "labels": {
+            "12": 5347
+          },
+          "sources": {
+            "batch_api": 5347
+          }
+        },
+        {
+          "key": "no prompt recorded (source: ai)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 3211,
+          "first_updated_at": "2026-01-01T18:30:14.500Z",
+          "last_updated_at": "2026-05-03T12:16:23.109Z",
+          "labels": {
+            "null": 3211
+          },
+          "sources": {
+            "ai": 3211
+          }
+        },
+        {
+          "key": "label \"13\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 2595,
+          "first_updated_at": "2026-09-03T02:00:05.721Z",
+          "last_updated_at": "2026-10-01T13:00:29.035Z",
+          "labels": {
+            "13": 2595
+          },
+          "sources": {
+            "batch_api": 2595
+          }
+        },
+        {
+          "key": "label \"3\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 2003,
+          "first_updated_at": "2026-08-23T22:00:06.249Z",
+          "last_updated_at": "2026-09-29T23:00:10.271Z",
+          "labels": {
+            "3": 2003
+          },
+          "sources": {
+            "batch_api": 2003
+          }
+        },
+        {
+          "key": "label \"v0\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 1720,
+          "first_updated_at": "2026-06-10T22:28:52.810Z",
+          "last_updated_at": "2026-08-14T05:11:40.899Z",
+          "labels": {
+            "v0": 1720
+          },
+          "sources": {
+            "ai": 1720
+          }
+        },
+        {
+          "key": "German Translation (Early Modern) v3 (595d4a)",
+          "prompt_id": "69db8967db25da46f7595d4a",
+          "version": 3,
+          "resolved_by": "prompt_id",
+          "count": 1435,
+          "first_updated_at": "2026-06-17T06:17:18.987Z",
+          "last_updated_at": "2026-09-16T12:54:10.493Z",
+          "labels": {
+            "3": 1435
+          },
+          "sources": {
+            "batch_api": 1433,
+            "ai": 2
+          }
+        },
+        {
+          "key": "label \"v1\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 1162,
+          "first_updated_at": "2026-07-27T15:42:07.590Z",
+          "last_updated_at": "2026-07-27T15:42:27.578Z",
+          "labels": {
+            "v1": 1162
+          },
+          "sources": {
+            "batch_api": 1162
+          }
+        },
+        {
+          "key": "label \"2\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 996,
+          "first_updated_at": "2026-08-24T00:30:06.726Z",
+          "last_updated_at": "2026-10-02T10:30:16.538Z",
+          "labels": {
+            "2": 996
+          },
+          "sources": {
+            "batch_api": 996
+          }
+        },
+        {
+          "key": "label \"v11\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 809,
+          "first_updated_at": "2026-05-31T20:29:48.650Z",
+          "last_updated_at": "2026-06-01T07:12:02.818Z",
+          "labels": {
+            "v11": 809
+          },
+          "sources": {
+            "ai": 809
+          }
+        },
+        {
+          "key": "label \"v11-retx\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 583,
+          "first_updated_at": "2026-06-26T21:17:36.093Z",
+          "last_updated_at": "2026-06-27T03:15:24.502Z",
+          "labels": {
+            "v11-retx": 583
+          },
+          "sources": {
+            "ai": 583
+          }
+        },
+        {
+          "key": "no prompt recorded (source: skip)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 384,
+          "first_updated_at": "2026-04-19T12:56:28.677Z",
+          "last_updated_at": "2026-10-03T08:20:11.127Z",
+          "labels": {
+            "null": 384
+          },
+          "sources": {
+            "skip": 384
+          }
+        },
+        {
+          "key": "label \"v5.2026-02\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 207,
+          "first_updated_at": "2026-04-12T09:38:41.180Z",
+          "last_updated_at": "2026-05-10T14:38:11.147Z",
+          "labels": {
+            "v5.2026-02": 207
+          },
+          "sources": {
+            "system": 199,
+            "ai": 8
+          }
+        },
+        {
+          "key": "label \"\"",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "label_only",
+          "count": 69,
+          "first_updated_at": "2026-09-25T19:26:37.927Z",
+          "last_updated_at": "2026-09-25T19:27:10.020Z",
+          "labels": {
+            "": 69
+          },
+          "sources": {
+            "ai": 69
+          }
+        },
+        {
+          "key": "no prompt recorded (source: realtime_api_sequential)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 62,
+          "first_updated_at": "2026-01-31T13:52:23.849Z",
+          "last_updated_at": "2026-01-31T14:38:57.655Z",
+          "labels": {
+            "null": 62
+          },
+          "sources": {
+            "realtime_api_sequential": 62
+          }
+        },
+        {
+          "key": "no prompt recorded (source: manual-backfill)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 12,
+          "first_updated_at": "2026-04-12T13:49:59.615Z",
+          "last_updated_at": "2026-04-12T13:51:34.415Z",
+          "labels": {
+            "null": 12
+          },
+          "sources": {
+            "manual-backfill": 12
+          }
+        },
+        {
+          "key": "no prompt recorded (source: manual)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 4,
+          "first_updated_at": "2026-02-15T05:53:02.737Z",
+          "last_updated_at": "2026-03-09T06:54:30.424Z",
+          "labels": {
+            "null": 4
+          },
+          "sources": {
+            "manual": 4
+          }
+        },
+        {
+          "key": "no prompt recorded (source: broadsheet-ocr)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 2,
+          "first_updated_at": "2026-06-15T23:39:05.658Z",
+          "last_updated_at": "2026-06-16T11:03:52.542Z",
+          "labels": {
+            "null": 2
+          },
+          "sources": {
+            "broadsheet-ocr": 2
+          }
+        },
+        {
+          "key": "prompts/translation/standard-translation-v5-1-2026-03-code.md (code-shipped, hash 524c0a82)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "archived_file_hash",
+          "count": 1,
+          "first_updated_at": "2026-04-14T09:17:17.301Z",
+          "last_updated_at": "2026-04-14T09:17:17.301Z",
+          "labels": {
+            "v5.1.2026-03a": 1
+          },
+          "sources": {
+            "ai": 1
+          }
+        },
+        {
+          "key": "no prompt recorded (source: songshi-juan56)",
+          "prompt_id": null,
+          "version": null,
+          "resolved_by": "none",
+          "count": 1,
+          "first_updated_at": "2026-06-16T20:45:53.845Z",
+          "last_updated_at": "2026-06-16T20:45:53.845Z",
+          "labels": {
+            "null": 1
+          },
+          "sources": {
+            "songshi-juan56": 1
+          }
+        }
+      ]
+    }
   }
 }
