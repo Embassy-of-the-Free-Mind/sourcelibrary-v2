@@ -20,7 +20,13 @@ const args = process.argv.slice(2);
 const opt = (n, d) => { const i = args.indexOf(`--${n}`); return i >= 0 && args[i + 1] != null ? args[i + 1] : d; };
 const SET = opt('set'); const RAW = opt('raw'); const OUT = opt('out'); const MAX_ORDER = Number(opt('max-order', 1e9));
 if (!SET || !RAW || !OUT) { console.error('--set, --raw and --out are required'); process.exit(1); }
-const load = (dir, id) => { const f = path.join(RAW, dir, `${id}.json`); return fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : null; };
+const packed = {}; // <raw>/<dir>.jsonl, one model output per line (run-detectors packs them); an unpacked <dir>/ wins while a run is in progress
+const load = (dir, id) => {
+  const f = path.join(RAW, dir, `${id}.json`); if (fs.existsSync(f)) return JSON.parse(fs.readFileSync(f, 'utf8'));
+  const j = path.join(RAW, `${dir}.jsonl`);
+  packed[dir] ??= new Map(fs.existsSync(j) ? readJsonl(j).filter((r) => !r.failed).map((r) => [r.id, r]) : []);
+  return packed[dir].get(id) || null;
+};
 
 // chrF (character n-gram F-score, n = 1..6, β = 2) on letters only; lib/metrics.mjs has BLEU-4 but no chrF.
 const norm = (t) => t.normalize('NFKC').replace(/ſ/g, 's').toLowerCase().replace(/[^\p{L}\p{M}\p{N}]+/gu, '');

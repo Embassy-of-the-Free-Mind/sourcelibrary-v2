@@ -8,7 +8,7 @@ on judged reversals at precision 18 % [15–22], flagging 50 % of pages.
 |---|---|
 | `set.jsonl` | 150 served pages (47 with a judged reversal + 103 random others), source, our English, the judges' labels, `weight` for the case-control reweighting, `order` (first 60 = stop-rule sample). No reference text. |
 | `set-summary.json` | the 434-page universe by track and language |
-| `raw/d3/`, `raw/d2-back/`, `raw/d2-check/` | one model output per page; `*-plant/` are the planted-control runs; `raw/plants.json` is the key; `raw/cost.json` the spend |
+| `raw/d3.jsonl`, `raw/d2-back.jsonl`, `raw/d2-check.jsonl` | one model output per line (per page); `*-plant.jsonl` are the planted-control runs; `raw/plants.json` is the key; `raw/cost.json` the spend |
 | `results.json` | every detector × target, by track and by language, AUCs, the planted control, cost, and `per_page` |
 | `results-first60.json` | the same on the first 60 pages (the stop rule) |
 | `d1-latin-check.json` | the $0 Latin negation check (20 pages, then the whole Latin track) |

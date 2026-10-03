@@ -6,7 +6,9 @@
 /**
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/translation-vs-reference/backtrans/run-detectors.mjs \
  *     --set <dir>/set.jsonl --out <dir>/raw [--max-order 60] [--plants 30] [--max-usd 5] [--model gemini-3.1-flash-lite]
- * Output <out>/<d3|d2-back|d2-check>[-plant]/<id>.json. Resumable. Spend is metered on gemini_usage (triggeredBy xlref-backtrans).
+ * Output <out>/<d3|d2-back|d2-check>[-plant]/<id>.json while running (resumable), packed at the end into one
+ * <out>/<dir>.jsonl per detector so the results stay under the PR classifier's 300-file diff limit; --pack-only repacks,
+ * and a run that finds only the .jsonl unpacks it first. Spend is metered on gemini_usage (triggeredBy xlref-backtrans).
  * The model never sees a reference translation or a judge's label. No writes to Mongo except the usage meter.
  */
 import fs from 'node:fs';
@@ -115,10 +117,17 @@ async function detect(r, english, suffix) {
   if (!back.failed && back.text) await call(`d2-check${suffix}`, r.id, checkPrompt(r, back.text.trim()), { json: true, maxOutputTokens: 4096 });
 }
 
+const DIRS = ['d3', 'd2-back', 'd2-check', 'd3-plant', 'd2-back-plant', 'd2-check-plant'];
+/** <out>/<dir>/*.json → <out>/<dir>.jsonl (sorted by id), then the directory is removed. */
+function pack() { for (const d of DIRS) { const dir = path.join(OUT, d); if (!fs.existsSync(dir)) continue; const rows = fs.readdirSync(dir).sort().map((f) => fs.readFileSync(path.join(dir, f), 'utf8').trim()); fs.writeFileSync(`${dir}.jsonl`, rows.join('\n') + '\n'); fs.rmSync(dir, { recursive: true }); } }
+function unpack() { for (const d of DIRS) { const f = path.join(OUT, `${d}.jsonl`); if (!fs.existsSync(f) || fs.existsSync(path.join(OUT, d))) continue; fs.mkdirSync(path.join(OUT, d), { recursive: true }); for (const r of readJsonl(f)) fs.writeFileSync(path.join(OUT, d, `${r.id}${r.failed ? '.failed' : ''}.json`), JSON.stringify(r)); } }
+
 async function pool(items, fn) { let i = 0; await Promise.all(Array.from({ length: CONC }, async () => { while (i < items.length) { const it = items[i++]; await fn(it); } })); }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   if (!SET || !OUT) { console.error('--set and --out are required'); process.exit(1); }
+  if (args.includes('--pack-only')) { pack(); process.exit(0); }
+  unpack();
   const set = readJsonl(SET).filter((r) => r.order <= MAX_ORDER);
   await pool(set, (r) => detect(r, r.english, ''));
   console.log(`main: ${set.length} pages, cumulative $${spent.toFixed(4)}`);
@@ -139,5 +148,6 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     console.log(`plants: ${key.length} pages, cumulative $${spent.toFixed(4)}`);
   }
   console.log(`spent $${spent.toFixed(4)} (incl. resumed) over ${calls} new calls`);
+  pack();
   fs.writeFileSync(path.join(OUT, 'cost.json'), JSON.stringify({ model: MODEL, spent_usd: Number(spent.toFixed(4)), max_usd: MAX_USD, at: new Date().toISOString() }));
 }
