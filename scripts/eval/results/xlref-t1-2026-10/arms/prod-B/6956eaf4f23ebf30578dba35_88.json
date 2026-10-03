@@ -1,0 +1,44 @@
+{
+ "id": "6956eaf4f23ebf30578dba35_88",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "OF OCCULT PHILOSOPHY.\n\nthey act in this way: thus they relate that in cases of severe abdominal pain, a living duck applied to the stomach causes the disease to pass into it, and the duck dies. It is a similar thing to what Architas <note>A Pythagorean philosopher and mathematician</note> says, that if a heart is taken fresh from an animal, and while it is still warm and beating, it is suspended over a patient suffering from a quartan fever, it removes it. Thus, if someone swallows the heart of a Hoopoe, or a Swallow, or a Weasel, or a Mole, while it is still alive and palpitating, it contributes to them memory, recollection, intellect, and divination. From this arose the general precept that whatever things are to be collected from animals, whether stones, or limbs, or excrements like hair, dung, or hoofs, these ought to be taken from those animals while they are still alive, and even, if it is possible, while the animals themselves remain alive afterward. Hence they give the instruction: when you collect the tongue of a Frog, you should return it alive into the water; if you collect the tooth or the eye of a Wolf, do not kill the Wolf, and so on for similar things. Thus Democritus <note>A pre-Socratic philosopher often associated with natural magic</note> relates that if someone extracts the tongue of a living Monkfish <note>Also known as a frogfish or anglerfish</note> without any other part of the body adhering to it, and after letting the fish back into the sea, they place the tongue upon the heart of a sleeping woman during its palpitation, she will answer truthfully whatever she is asked. In a similar way, they promise that the eyes of frogs bound to a sick person before sunrise, in such a way that they are cast into the water while still blinded, will drive away tertian fevers; and they relate that the same eyes, bound with the flesh of a Nightingale in a deerskin, ensure wakefulness, having put sleep to flight. Similarly, the sting of a Stingray <note>A type of flatfish</note> bound to the navel is said to make childbirth easy.\n\n<summary>This passage details various sympathetic magic rituals involving animal organs, emphasizing the necessity of keeping the source animals alive during the collection of parts to ensure efficacy.</summary>\n<keywords>Sympathetic magic, Democritus, Architas, animal parts, divination, folk medicine, quartan fever, Monkfish, Nightingale, childbirth</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3183,
+ "outputTokens": 535,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00159825,
+ "ms": 2371,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "split",
+   "joined": "faeere",
+   "catchword": "cere,",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1747
+}

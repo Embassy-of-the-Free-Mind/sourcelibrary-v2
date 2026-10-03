@@ -1,0 +1,44 @@
+{
+ "id": "69905e262fd6a039938a154f_67",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>nine, and which are distant one from another by one palm. In the middle circle, write first the name of the hour in which you perform the work; in the second place, the name of the Angel of the hour; third, the seal of the Angel of the hour; fourth, the name of the Angel who presides over that day in which you perform the work, and the names of his ministers; fifth, the name of the present season; sixth, the name of the Spirits reigning in that part of the season and presiding over it; seventh, the name of the head of the zodiac sign reigning in that part of the season in which you perform the work; eighth, the name of the Earth according to that part of the season in which you perform the work; ninth, and to complete the middle circle, write the names of the Sun and Moon according to the aforementioned calculation of time. For when the season is changed, the names also change.\n\nIn the outer circle, let there be assigned in the four corners the names of the angels presiding over the air on that day when you perform the work, namely the King and his three ministers. Outside the circle, in the four corners, let there be pentagons <note>likely referring to five-pointed stars or pentagrams used as protective symbols</note>. In the inner circle, let four Divine names be written with crosses placed between them. In the middle of the circle, namely toward the east, let Alpha be written, and toward the west, let\n\n<summary>This page provides specific instructions for constructing a ritual magic circle, detailing nine categories of names and seals to be inscribed based on the timing of the operation. It specifies the placement of angelic names, seasonal spirits, and divine names to ensure the practitioner's safety and success.</summary>\n<keywords>magic circle, ritual construction, Pietro d'Abano, planetary hours, angelic names, ceremonial magic, pentagons, Alpha, seals</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2587,
+ "outputTokens": 414,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0025355,
+ "ms": 2508,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "merged-catchword",
+   "joined": null,
+   "catchword": "batur",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1309
+}

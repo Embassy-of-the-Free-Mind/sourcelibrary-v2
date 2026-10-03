@@ -1,0 +1,44 @@
+{
+ "id": "697b07990411081cde5f4e66_153",
+ "arm": "prod-B",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: ...generation</meta>\n\ntion, the Creator commanded it to be passed down, so that through the successive replacement of individuals, he might bestow the benefit of immortality upon the species.\n\n167. It must not be thought that forms generate others like themselves within matter; for generating is a property of bodies. Rather, it is the right and duty of the **form** to move its organs harmoniously, and through them to prepare the seminal matter for generation. The form encloses within that matter a ray of light, or a secret spark of life, as if it were a treasure. It imprints its own specific character upon that vivifying spirit hidden in the seed, which, in the work of generation—driven by a pulsating heat and at a fixed time—unfolds itself into a **Soul** <note>original: \"Animam.\" In this philosophical context, the soul is the life-force or organizing principle of any living thing, whether plant or animal.</note>, whether vegetable or animal. Thus, that which had been a secret and formal spirit within the seed becomes the **Form** <note>The active, defining essence of a being.</note> within the compound. In this way, that which is hidden in the womb of Nature becomes manifest, and\n\n<summary>This page describes how the \"form\" or organizing principle of a being guides reproduction by imprinting a \"spark of life\" upon the seed. This process allows species to achieve a version of immortality by passing their divine blueprint from one generation to the next.</summary>\n<keywords>Generation, Form, Seminal Matter, Soul, Vivifying Spirit, Natural Philosophy, Immortality of Species</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2825,
+ "outputTokens": 354,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0024745,
+ "ms": 2513,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": "generationis",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 996
+}

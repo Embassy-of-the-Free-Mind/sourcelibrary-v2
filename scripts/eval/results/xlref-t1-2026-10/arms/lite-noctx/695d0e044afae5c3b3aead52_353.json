@@ -1,0 +1,34 @@
+{
+ "id": "695d0e044afae5c3b3aead52_353",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Metaphysics.\n\nall the organs or instruments, by whose aid these things could also be performed in a machine, are so constituted that the mind does not even immediately move the external limbs in us. Instead, it only directs the spirits flowing from the heart through the brain into the muscles, determining them toward certain movements, since these spirits are of themselves equally easily applicable to many different actions.\n\nTruly, most of the movements that occur in us do not depend at all upon the mind. Such are the pulse of the heart, the digestion of food, nutrition, the breathing of those who are asleep, and even, in those who are awake, walking, singing, and similar things, when they occur without the mind paying attention.\n\nAnd when those who fall from a height extend their hands toward the ground to protect their heads, they do not do this by any counsel of reason. Rather, they do it only because the vision of the impending fall, reaching as far as the brain, sends animal spirits into the nerves in the way that is necessary to produce this movement, even against the will of the mind, and as if in a machine.\n\nAnd since this, in our own selves, is certain\n\n<summary>Descartes discusses the mechanical nature of bodily movements, distinguishing between involuntary processes like digestion and reflex actions that occur without conscious intent.</summary>\n<keywords>Metaphysics, animal spirits, machine, mind, brain, heart, motion, nerves</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2146,
+ "outputTokens": 300,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0009865,
+ "ms": 1618,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1181
+}

@@ -1,0 +1,42 @@
+{
+ "id": "698255f1861f3361ae3249e0_198",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "# DE SVLPHVRE\n\n<meta>continues from previous page: decoctum</meta>by nature, you will be able to perfect all things from **Mercury** <note>original: \"ex Mercurio\"</note>: but if you know how to add your own weight to the weight of nature, to double the **Mercury**, and triple the **sulfur**, the work will sooner be finished for the good, then for the better, and finally for the best. Although only one sulfur is apparent, and there are two Mercuries, they are of one root; neither crude nor over-cooked, but purified and dissolved, if you have understood me.\n\n&nbsp;&nbsp;&nbsp;&nbsp;There is indeed no need to describe the matter of the **Mercury of the Philosophers** <note>original: \"Mercurij Philosophorum\"</note> and the matter of their sulfur. No mortal has been able, nor in the future will be able, to describe it more openly and clearly than it was described and named by the ancient Philosophers, unless he wishes to otherwise be a curse to the art <term>anathema artis</term> <gloss>literally a \"curse of the art,\" referring to one who betrays the secret or speaks too plainly against the tradition</gloss>. For it is named so commonly that it is not even esteemed; therefore, seekers turn themselves toward other subtleties rather than remaining in the simplicity of nature. We do not say, however, that the **Mercury of the Philosophers** is some common thing and openly named, but concerning the matter from\n\n<summary>The author explains how to accelerate nature's work by adjusting the proportions of sulfur and mercury. He emphasizes that the true material of the art is often overlooked because it is referred to by common, simple names that seekers tend to ignore in favor of complex theories.</summary>\n\n<keywords>sulfur, mercury, weight of nature, alchemical proportions, simplicity of nature, ancient philosophers, Philosophical Mercury, anathema artis</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2847,
+ "outputTokens": 3759,
+ "thinkingTokens": 3337,
+ "cost_usd": 0.0127005,
+ "ms": 15490,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "qua",
+   "headJoined": "decoctum",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1121
+}

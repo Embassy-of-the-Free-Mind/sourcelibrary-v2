@@ -1,0 +1,34 @@
+{
+ "id": "6952daa277f38f6761bc6551_202",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "OF OCCULT PHILOSOPHY\n\n### On the images of the head and tail of the lunar dragon. Chapter XLV.\n\n<note>A woodcut illustration depicts a serpent coiled into a circular shape, resembling the Greek letter Theta. The creature has the head of a hawk and a pointed tail. Within the circular body, there is a central vertical line crossed by a shorter horizontal line, representing the astronomical nodes of the moon.</note>\n\nThey also fashioned an image of the head and tail of the lunar dragon, specifically a figure of a serpent between an airy and a fiery circle, with the head of a hawk encircling them in the likeness of the Greek letter theta. They would make it when Jupiter occupied the mid-heaven with that head. They affirm that this image contributes greatly to the success of petitions, and by this image, they intended to signify a good and happy <term>daemon</term> <gloss>spirit or guardian entity</gloss>. They wished to represent him by the image of a serpent, for the Egyptians and Phoenicians celebrated this as a divine animal above all others, noting its divine nature because there exists in it a sharper and more expansive spirit of fire than in other animals. This fact is shown by its swift movement, without any feet, hands, or other limbs, and also because it periodically renews its age and becomes young again.\n\nThey fashioned an image of the tail in a similar way, when the moon was eclipsed in the tail, or was afflicted by Saturn or Mars. They made it to induce anxiety and infirmity, and they called it an evil genius. A certain Hebrew had enclosed such an image in a golden, double belt, which Blanche, the daughter of the Duke of Bourbon, gave as a gift to her husband, Peter, the first of that name to be King of Spain (whether knowingly or unknowingly). When he girded himself with it, he appeared to himself to be girded by a serpent. Having subsequently discovered the magic power inserted into the belt, he repudiated his wife for that reason.\n\n### On the images of the lunar mansions. Chapter XLVI.\n\nThey also fashioned images for the individual mansions of the moon. In the first, for the destruction of someone, they made an image in an iron ring of a black man wearing a hair shirt and girded, throwing a lance with his right hand. They sealed this in black wax and fumigated it with liquid storax, and pronounced curses. In the second, against the anger of a prince and for his reconciliation, they sealed in white wax and mastic the image of a crowned king, and fumigated it with aloe wood. In the third, they made an image in a silver ring, the measure of which was square, and the figure of which was a well-dressed woman sitting on a chair, with her right hand raised above her head; they sealed and fumigated this with musk, camphor, and aromatic nail <note>a reference to *blatta byzantina*</note>. They asserted that this grants prosperity of fortune and every good thing. In the fourth, for vengeance and separation, enmity and malevolence, they sealed in red wax the image of a soldier sitting on a horse, holding a serpent in his right hand, and fumigated it with red myrrh and storax. In the fifth, for the favor of kings and officials and a good reception, they sealed in silver the head of a man and fumigated it with sandalwood. In the sixth, to place love between two people, they sealed in white wax two images embracing each other, and fumigated it with aloe wood and amber. In the seventh, to acquire every good thing, they sealed in silver the image of a well-dressed man, with hands toward heaven for\n\n<summary>This page details the magical use of the lunar nodes (head and tail of the dragon) to craft talismans for both auspicious and malevolent purposes, including a historical anecdote regarding King Peter of Spain, and begins a list of specific astrological talismans corresponding to the mansions of the moon.</summary>\n<keywords>astrology, lunar nodes, talismans, occult philosophy, magical images, lunar mansions, Agrippa</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2829,
+ "outputTokens": 861,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00199875,
+ "ms": 3473,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4543,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 3343
+}

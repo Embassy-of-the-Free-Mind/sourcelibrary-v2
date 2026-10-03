@@ -1,0 +1,44 @@
+{
+ "id": "69b2ff9f5545150b61b48a36_75",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: so that it is rightly thought that a certain eruption takes place, a blast is shaken out, and the waters are shaken.</meta>\n\n2. *Storm-blasts*, which occur with mist or darkness, and which they call <term>Belluae</term> <gloss>Beasts or Monsters</gloss>, and which sustain themselves like a Column, are exceedingly violent and dire for those at sea.\n\n3. Greater *Typhoons*, which seize everything across a notable width and suck what they have seized upwards, occur rarely; but small and, as it were, playful *Eddies* or *Whirlwinds* occur frequently.\n\n4. All *Storm-blasts*, *Typhoons*, and larger *Whirlwinds* have a manifest motion of falling headlong or vibrating downward more than other Winds; so that they seem to rush in the manner of torrents, flowing down as if through channels, and are afterwards reflected back from the earth.\n\n5. It happens in meadows that piles of hay are sometimes carried on high and then scattered like a Canopy; also in fields, that tangled pea stalks and the harvested ears of crops—even linens set out for drying—are lifted by *Whirlwinds* as high as the tops of Trees or above the roofs of Houses; and these things happen without any greater force or vehemence of the Wind.\n\n6. But sometimes slight and very narrow *Whirlwinds* occur even in clear weather; so that a person riding a horse might see dust or straws seized <note>continues on next page with \"up\"</note>\n\n<summary>Bacon describes the physical characteristics and behaviors of violent wind phenomena like typhoons and whirlwinds, noting their downward vertical motion and their ability to lift objects high into the air even in seemingly calm weather.</summary>\n\n<keywords>meteorology, typhoons, whirlwinds, storm-blasts, vertical wind motion, atmospheric phenomena, Francis Bacon</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2686,
+ "outputTokens": 410,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0025729999999999998,
+ "ms": 2770,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": false,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1314
+}

@@ -1,0 +1,44 @@
+{
+ "id": "69aea708971abe996d21b4aa_471",
+ "arm": "prod-A",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Of Both Fortunes. Book II.\n\n, and say to her: Indeed, oh queen, I suffer this willingly for your sake; you will restore me to my former state, or at any rate you alone are sufficient for me in place of all things. Do you refresh me with your single, pious embrace, and in this way I shall not perceive the losses not only of fame, but also of life.\n\n*Sorrow.* I am slandered everywhere in the streets by the mob.\n\n*Reason.* Take it in good part. The mob will make you known, virtue will make you illustrious, and a clear conscience will make you secure.\n\n---\n\n### On the shame felt from undeserved praise.\n## D I A L. XXVI.\n\n> Praise sparingly, for when you praise unworthily,\n> If you condemn again, it will be a sign of fickleness.\n\n*Sorrow.* I am accused of having praised an unworthy man.\n\n<note>A woodcut depicts a large, ornate letter L used as a decorative initial for the dialogue.</note>\n\n*Reason.* You are accused of having praised an unworthy man. Truly, that which is evil often springs from a good root. For good and innocent people, such as they are themselves, imagine others to be the same. Hence, they are even more prone to praise; and although I admit that to praise an unworthy person is a mistake, it is still much worse to disparage one who is undeserving.\n\n*Sorrow.* I have praised an unworthy man.\n\n*Reason.* If you did it knowingly, you are blameworthy; but if you did it through ignorance, you are excusable. It is a lesser evil to be deceived than to deceive. For to be deceived is the fault of another, but to deceive is the crime belonging to the deceiver.\n\n*Sorrow.* The praise of another reflects upon my own infamy.\n\n*Reason.* Rather, it reflects your own fault or ignorance. For there is no infamy in the praise of another, just as there is no glory in it.\n\n*Sorrow.* I grieve greatly to have praised an unworthy man.\n\n*Reason.* See to it, therefore, that you do not grieve over this very thing often. Beware of rushing rashly into praising or blaming. For there is an urge for both, and (to speak precisely) a disease and a certain itch of a tongue that is restless and ignorant of quiet, the bridle and guard of which are counted among the works of the highest perfection, as Scripture says:\n\n<summary>This passage discusses the moral weight of praise and blame, asserting that being deceived in one's praise is a minor error born of innocence, whereas intentional deception is a moral failing.</summary>\n<keywords>praise, blame, innocence, deception, moral character, restraint of speech</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3087,
+ "outputTokens": 597,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00166725,
+ "ms": 2855,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "Si quis",
+   "headJoined": null,
+   "headRemoved": "plectere",
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1879
+}

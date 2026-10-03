@@ -1,0 +1,44 @@
+{
+ "id": "69bd9d416120d54bd037457f_263",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<header>ON MORAL PHILOSOPHY</header>\n\nChrist teaches that we should deserve well of all, that even enemies should be loved, that we should lend freely without interest, that we should take vengeance on no one, and that we should give to everyone who asks. In contrast, the philosophers say this should only be done for those who return a kindness with a kindness, and otherwise, it is permissible to grow angry, to hate, to contend, to wage war, and to practice usury. Furthermore, these philosophers, with their free will and their supposed dictates of right reason and the light of nature, have given us the <term>Pelagian</term> <gloss>a 5th-century heresy denying original sin and the necessity of divine grace</gloss> heretics. Moreover, all moral philosophy, as <note>Lactantius</note> testifies, is false and empty; it neither instructs one in the duties of justice nor confirms the office of man and his reasoning. In short, it is entirely repugnant to divine law and to Christ himself, so that its glory is owed to none other than Satan.\n\n### ON POLITICS.\nChapter LV.\n\nTo philosophy also pertains politics, which is the art of administering the <term>Respublica</term> <gloss>commonwealth or state</gloss>. There are three species of this, namely: Monarchy, which is the rule of one; Aristocracy, which is the rule of a few, but noble,\n\n<column-break/>\n\nwealthy, or wise men; and Democracy, which is the rule of the people. Related to all these are tyrannies, oligarchies, and anarchies. But all these things must be referred to that which pertains to the individual. For even if philosophers wish to define which is best, they follow diverse opinions. Some admit that just as there is one God in heaven, one head in the members of the body, and one leader among the bees, so Monarchy is the preferred form of proper government. Thus others contend that Aristocracy, and still others that Democracy, is the form of government that is equitable and by which liberty is preserved. This is true above all others, as held by <note>Plato</note>, <note>Aristotle</note>, <note>Apuleius</note>, and others, who draw not only from our own traditions but also from those of the barbarians. Those who have written about these matters speak only of those things that pertain to external administration, to peace, to the tranquility of public affairs, and to deliberation. They do not concern the soul, nor salvation, nor eternal aids; indeed, they look solely toward those things to be accomplished in this world. This is also what the lawgivers did, such as <note>Lycurgus</note>, <note>Solon</note>, and others, who established laws <unclear>almost</unclear>\n\n<summary>Agrippa critiques moral philosophy for its conflict with Christian charity and introduces his discussion on political systems, noting that secular governance focuses only on earthly matters rather than the salvation of the soul.</summary>\n<keywords>Moral Philosophy, Politics, Monarchy, Aristocracy, Democracy, Pelagians, Lactantius, Commonwealth, Lawgivers</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2931,
+ "outputTokens": 682,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00175575,
+ "ms": 2890,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": "criter",
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2219
+}

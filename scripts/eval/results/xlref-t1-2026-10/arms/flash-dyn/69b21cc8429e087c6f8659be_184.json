@@ -1,0 +1,42 @@
+{
+ "id": "69b21cc8429e087c6f8659be_184",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>owes its peace to the rule of the peaceful sex <note>referring to Queen Elizabeth I of England</note>. France? Look and have pity. Even now, through all its limbs, the gangrene of a bloody war is creeping. Nor is it otherwise in the whole world. Reflect on these things, Lipsius; and through this commonality of miseries, lighten your own. And just as a slave is usually placed behind those in a triumph, who in the midst of the joy of the triumph would cry out repeatedly, **\"You are a man\"** <note>original: \"Homo es\"</note>: so let this monitor always stand by you, **\"These things are human\"** <note>original: \"Esse hæc humana\"</note>. For as labor shared with many becomes lighter, so likewise is grief.\n\n### CHAPTER XXVI.\n\n->*Conclusion of the entire discourse, and a brief admonition to repeat and ruminate upon it.*<-\n\nI have deployed all my forces and my discourse, Lipsius; and you have what I thought should be said on behalf of <term>Constantia</term> <gloss>Constancy</gloss> against <term>Dolor</term> <gloss>Grief</gloss>. May these things be not only pleasing to you, but healthy; and let them not merely delight, but rather be of use! They will be of use, however, if you take them not only into your ears, but into your soul; and do not allow what you have heard to lie idle and wither, like seeds scattered on the very surface of the soil. Finally, if you repeat them seriously and ruminate upon them. Because as\n\n<summary>Langius uses the current wars in France and the stability of England to show that suffering is a universal human lot. He concludes his discourse by urging Lipsius to deeply internalize these lessons of constancy rather than treating them as superficial ideas.</summary>\n<keywords>England, France, Civil War, Universal Suffering, Stoicism, Constancy, Internalization, Human Condition</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2781,
+ "outputTokens": 2982,
+ "thinkingTokens": 2543,
+ "cost_usd": 0.010336499999999998,
+ "ms": 13083,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "ignis",
+   "headJoined": "imest",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1155
+}

@@ -1,0 +1,44 @@
+{
+ "id": "69bd9d416120d54bd037457f_263",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\n...is affected by them only moderately. Christ teaches that we must deserve well of all people, that even enemies are to be loved, that we should lend freely, take vengeance on no one, and give to everyone who asks. On the contrary, the philosophers teach that one should only do good to those who repay a benefit with a benefit; otherwise, it is permissible to be angry, to hate, to contend, to wage war, and to practice usury. Furthermore, they have handed down to us the <term>Pelagian</term> <gloss>followers of Pelagius, who emphasized human agency over divine grace</gloss> heresies with their talk of free will, the dictate of right reason, and the light of nature. Indeed, all of moral philosophy (according to <term>Lactantius</term> <gloss>an early Christian author and advisor to Constantine</gloss>) is false and empty, neither instructing one in the duties of justice nor strengthening the duty and reasoning of man. Finally, it all stands in opposition to divine law and to Christ himself, so that its glory should be attributed to no other than Satan.\n\n## ON POLITICS\n### Chapter 55\n\nTo this philosophy also belongs Politics, which is the art of administering the <term>Republic</term> <gloss>the state or commonwealth</gloss>. There are truly three types of it: namely, Monarchy, which is the rule of one; Aristocracy, which is the rule of a few, but those who are noble,\n\n<column-break/>\n\nwealthy, or wise; and Democracy, which is the rule of the people. Related to all these are tyrannies, oligarchies, and anarchies. But all these matters must be considered according to what befalls each individual. For even if philosophers wish to define which form is the best, they follow diverse opinions. Some, just as there is one God in heaven, one head among the limbs, and one leader among the bees, confess that Monarchy is the form of truly right government. Others contend that Aristocracy or Democracy is the form of government that is equitable and by which liberty is preserved. This is argued by others such as Plato, Aristotle, Apuleius, and others, not only from our own people but also from the barbarians <note>non-Greeks or non-Romans</note>. Those who have written about these things speak only of what pertains to external administration, peace, the tranquility of public affairs, and consultation. They do not speak of the soul, nor of salvation, nor of eternal aids; certainly, they look only toward those things which are carried out in this world. This is also what the lawmakers did, such as Lycurgus, Solon, and others, who [established] laws almost... <note>The text cuts off mid-sentence at the end of the page.</note>\n\n<summary>Agrippa critiques moral philosophy as contrary to Christian teachings and introduces the study of politics. He classifies forms of government and argues that political science focuses only on worldly peace rather than spiritual salvation.</summary>\n<keywords>moral philosophy, politics, monarchy, aristocracy, democracy, Christianity vs. Philosophy, Pelagianism, Lactantius, Plato, Aristotle</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2931,
+ "outputTokens": 683,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0035145000000000003,
+ "ms": 3742,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": "criter",
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2219
+}

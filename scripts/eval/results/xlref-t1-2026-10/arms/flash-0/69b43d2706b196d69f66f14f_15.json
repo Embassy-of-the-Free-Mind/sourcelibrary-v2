@@ -1,0 +1,44 @@
+{
+ "id": "69b43d2706b196d69f66f14f_15",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>the Word, containing the circles and turning them with swift speed, directed its own machine back upon itself, and commanded it to revolve from a beginning without beginning toward an end without end. For it always begins there, where it ceases. As the Mind itself willed, it forged creatures devoid of reason from the lower elements within the circuit of all these things; for it did not provide them with reason. The air brought forth flying things, and the water produced swimming things. Water and earth were also distinguished from one another in the manner that had pleased the Mind. Afterward, the earth gave birth to the living beings which it had contained within, namely quadrupeds, serpents, wild beasts of the field, and domestic animals alike. But the Mind, the father of all, existing as life and radiance, procreated a Man similar to himself, and rejoiced in him as his own son. For he was beautiful, bearing the image of his father. Truly, God, being delighted by his own true form, granted all his works to the use of man. However, man, <margin>Note what the sin of the philosophers is</margin> when he had considered the procreation of all things in his father, wished also to create. Therefore, he descended from the contemplation of the father to the sphere of generation. And since he held power over all things in himself, he observed the handiwork of the seven governors. These governors, rejoicing in the meditation of the human mind, each made him a participant in their own order.\n\n<summary>This page describes the creation of irrational animals from the elements and the subsequent creation of Man as a divine image of the Father Mind. It details Man's desire to create, leading to his descent into the sphere of generation and his interaction with the seven planetary governors.</summary>\n<keywords>Cosmology, Creation of Man, Elements, Seven Governors, Divine Image, Falling from Contemplation, Hermes Trismegistus, Marsilio Ficino</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2543,
+ "outputTokens": 421,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0025345000000000003,
+ "ms": 3072,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1483
+}

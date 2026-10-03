@@ -1,0 +1,44 @@
+{
+ "id": "695594f97bd6d2cd1d61e685_331",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "### CHAPTER THIRTY-SEVEN. 327\n\nis the Lord’s, because by Joseph is represented the Lord as to the Divine Spiritual (see n. 4669, 4708, 4710). Therefore, when it is said that Joseph would go and see the peace of his brothers, it signifies His coming; and every coming is said to occur when truth from the Word flows into thought.\n\n4713. \"And the peace of the flock,\" that this signifies how it is with those who are learning, or the Church, is evident from the signification of \"peace,\" which is how things stand (concerning which, see just above, n. 4712), and from the signification of \"flock,\" which are those who learn. For a shepherd, or one who feeds, is one who teaches and leads to the good of charity, and the flock is that which learns and is led (concerning which, see n. 343), and thus it also signifies the Church.\n\n4714. \"And bring me back word,\" that this signifies knowledge, is evident from the signification of \"bringing back word,\" which is to report how things stand, and thus it signifies knowledge.\n\n4715. \"And he sent him from the valley of Hebron,\" that this signifies from the Divine Natural and Sensual, is evident from the signification of \"being sent,\" which is to proceed and to teach (concerning which, see above, n. 4710); from the signification of \"valley,\" which are those things that are below (concerning which, see n. 1723, 3417); and from the signification of \"Hebron,\" which is the Lord’s Church as to good (concerning which, see n. 2909). Thus, by these words it is signified that He would teach those things that are lower in the Church, and this is because the higher things could not be grasped. For he who teaches faith and not charity can never perceive the higher or interior things of the Church, for he has nothing that leads him or dictates whether something belongs to faith or whether it is true. But if he teaches charity, then he has good; this is a dictate to him, and it leads him, for all truth is from good and deals with good—or, what is the same, everything of faith is from charity and deals with charity. That everything of doctrine must look to life, anyone can know from natural light alone. That by these words is signified \"from the Divine Natural and Sensual\" is the higher sense; for those things that are lower in the Church are said to be from the Lord’s Divine Natural and Sensual. This is not because these things are lower in the Lord—for in the Lord and in His Divine Human, everything is Infinite, as He is Jehovah as to both Essences (n. 2156, 2329, 2921, 3023)—but because it is so with man. For those who are sensual men grasp things that are in the Lord and from the Lord sensually, and those who are natural grasp them naturally; it is said this way because of the quality of those who receive. But those who are celestial men, and thereby truly rational, perceive interior things; concerning them, it is said that they are taught from the Lord’s Divine Rational. This is the higher sense, as stated, which is signified by those words. That \"valley\" refers to the lower things of the Church can be evident from other places in the Word, such as in Isaiah: <note>original: \"Propheticum vallis visionis; quid tibi hic, quod adscendisti omnis in tecta : dies tumultus, & conculcationis, & perplexitatis Domino Jehovih Zebaoth, in Valle visionis,\"</note> \"The prophecy of the valley of vision; what is it to you here, that you have gone up, all of you, to the roofs: a day of tumult, and of treading down, and of perplexity to the Lord Jehovih Zebaoth, in the valley of vision\" (xxii. 1, 5). The \"valley of vision\" stands for fantasies about spiritual things derived from sensual things, thus from lower things. In the same prophet: \"Your choice valleys are full of chariots, and the horsemen have set themselves at the gate\" (xxii. 7). The \"choice of valleys\" stands for goods and truths in the natural or external man. In the same prophet: \"The voice of one crying in the wilderness, prepare the way of Jehovah, make plain in the desert a path for our God, every valley shall be exalted\" (xl. 3, 4). \"Valley\" stands for the humble. In Jeremiah,\n\n<summary>This page explains that Joseph's search for his brothers represents the Lord's coming to those learning the truth of the Church, with \"valley of Hebron\" signifying the Divine Natural and Sensual.</summary>\n<keywords>Joseph, peace, flock, Church, valley of Hebron, Divine Natural, charity, faith</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3592,
+ "outputTokens": 1101,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0025495,
+ "ms": 4238,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4730,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "Quomodo",
+   "headJoined": null,
+   "headRemoved": "ventus",
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 3530
+}

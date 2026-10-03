@@ -1,0 +1,34 @@
+{
+ "id": "69aea708971abe996d21b4aa_471",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Of Both Fortunes. Book II.\n\n<meta>continues from previous page: ...to weave [my fate], and say to her: These things, O queen, I willingly suffer for your sake. You will restore me to wholeness, or at the very least, you alone are enough for me in place of all else. Cherish me within your faithful embrace, and thus I shall not feel the losses not only of my reputation, but of my life as well.</meta>\n\n*Reason.* You are torn apart everywhere in the streets by the common people.\n\n*Hope.* Consider it a good thing. The masses will make you known, virtue will make you famous, and a clear conscience will keep you secure.\n\n---\n\n### On Shame at Praising the Unworthy.\n## D I A L. XXVI.\n\n> Spare your praise, for when you praise unworthily,\n> If you condemn again, it will be a sign of fickleness.\n\n*Dread.* I am accused of having praised an unworthy person.\n<note>A large ornamental initial L marks the beginning of the response.</note>\n*Reason.* You are accused of having praised an unworthy person. That which is an evil often springs from a good root. For good and innocent men, such as they themselves are, imagine others to be the same. Hence, they are even more prone than is just to offer praise. And although I admit that to praise the unworthy is an evil, it is still much worse to disparage the deserving.\n\n*Dread.* I have praised an unworthy person.\n\n*Reason.* If you did so knowingly, you are reprehensible; but if in ignorance, you are excusable. It is a lesser evil to be deceived than to deceive. For to be deceived is a misfortune brought on by others, but to deceive is a crime belonging to the deceiver.\n\n*Dread.* The praise of another turns into my own infamy.\n\n*Reason.* On the contrary, it is truly either your fault or your ignorance. For just as there is no such thing as someone else’s praise, there is no such thing as someone else’s infamy.\n\n*Dread.* I grieve greatly to have praised an unworthy person.\n\n*Reason.* See to it, therefore, that you do not grieve over this very thing often. Beware of rushing rashly into praising or blaming. For there is an appetite for both, and to speak properly, it is a disease and a kind of itching of a tongue that is restless and ignorant of silence. The bridle and custody of this tongue are numbered among the works of highest perfection, as the Scripture says:\n\n<summary>In this dialogue, Reason advises Dread on the consequences of misplaced praise, distinguishing between honest error and moral failure, and emphasizing the virtue of cautious speech.</summary>\n<keywords>Fortune, praise, infamy, shame, virtue, conscience, Scripture, ethics of speech</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2433,
+ "outputTokens": 613,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00152775,
+ "ms": 4503,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1879
+}

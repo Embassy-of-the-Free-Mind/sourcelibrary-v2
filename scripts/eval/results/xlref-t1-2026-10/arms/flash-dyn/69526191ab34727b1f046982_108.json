@@ -1,0 +1,42 @@
+{
+ "id": "69526191ab34727b1f046982_108",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>the temperance of fire is needed, along with a gradual succession of its increase, handled with caution, until it is fixed in its <term>calx</term> <gloss>the oxide powder remaining after heating</gloss>. This prevents it from easily returning to a metallic body, so that a greater fire can then be applied to reach the perfection of its <term>calx</term>. Similarly, the craftsman should not err in the case of <term>Jupiter</term> <gloss>Tin</gloss> because of the difficulty of its <term>reduction</term> <gloss>the process of returning an oxide to its metallic state</gloss>. If he attempts to reduce its <term>calx</term>, it may happen that it does not return to metal at all, but is found to be in its previous state or even turned into glass, leading him to think its reduction is impossible.\n\nWe say that if one does not use a great fire in the reduction of <term>Jupiter</term> <gloss>Tin</gloss>, it will not reduce. Yet, if a great fire is used, it does not necessarily reduce the metal, but may instead result in <term>vitrification</term> <gloss>the process of turning into glass</gloss>. <margin>caution</margin> This occurs because <term>Jupiter</term> <gloss>Tin</gloss> contains a fugitive substance of <term>quicksilver</term> <gloss>mercury</gloss> <margin>matter</margin> hidden deep within its nature. <margin>table</margin> If this substance remains too long in the fire, it will escape, leaving the body deprived of its humidity. Consequently, the material is found to be more suited for turning into glass than for the melting of a metallic body. <margin>caution</margin> For everything deprived of its own internal humidity yields no melting except that which leads to glass. <margin>caution</margin> Therefore, it is necessary to hasten the reduction quickly with a very fast burst of fire. Otherwise, it cannot be reduced. Let the craftsman practice this, and he shall understand. <margin>and</margin>\n\n<margin>caution</margin> The second method for the <term>calcination</term> <gloss>roasting to powder</gloss> of these two bodies, <term>Saturn</term> <gloss>Lead</gloss> and <term>Jupiter</term> <gloss>Tin</gloss>, <margin>85, 6</margin> is performed by the sharpness of salt. A quantity of salt is thrown onto their surface, bit by bit, during their melting. <margin>wooden; boiling; see page 57, 14.</margin> They must be stirred continuously with an iron rod over the fire until they are turned into ash through the mixing of the salt. Afterward, their <term>calx</term> is perfected through the same process of completion, following the necessary considerations. However, there is a difference in the <term>calcination</term> of these two bodies. <term>Lead</term> is converted into powder more easily than <term>Jupiter</term> <gloss>Tin</gloss> during the first stages of the work, yet its <term>calx</term> is not perfected more easily than that of <term>Jupiter</term>. The cause of this is that <term>Saturn</term> <gloss>Lead</gloss> possesses a more fixed humidity than <term>Jupiter</term> <gloss>Tin</gloss>.\n\n<meta>catchword: of Venus</meta>\n\n<summary>This page discusses the precise fire control needed to prevent tin from turning into glass during reduction and introduces a second calcination method using salt. Geber explains that tin's tendency to vitrify is due to its fugitive mercury content escaping under prolonged heat.</summary>\n<keywords>Jupiter, tin, Saturn, lead, vitrification, calcination, reduction, quicksilver, mercury, salt method, fixed humidity</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2970,
+ "outputTokens": 3149,
+ "thinkingTokens": 2293,
+ "cost_usd": 0.010932,
+ "ms": 14043,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2479
+}

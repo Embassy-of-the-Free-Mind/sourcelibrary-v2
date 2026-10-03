@@ -1,0 +1,42 @@
+{
+ "id": "6953e59377f38f6761bf0e81_213",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: way the axis of a smaller stone is depressed.</meta>\n\neven in the same way as a flat, circular iron disc, skillfully touched at opposite points on its circumference, behaves. But magnetic experiments are less apparent because of the weaker forces in round iron tools. The variety of <term>declinations</term> <gloss>magnetic dip or inclination</gloss> is shown by iron <term>obeli</term> <gloss>small, pointed rods or needles</gloss> at various latitudes of the <term>terrella</term> <gloss>literally \"little earth\"; a spherical lodestone used as a model of the planet</gloss>.\n\n<note>A circular diagram representing a terrella, a small magnetic model of the Earth. An outer circle is labeled \"Orbis Virtutis\" or Circle of Virtue, representing the magnetic field. Inside, a shaded sphere representing the terrella has a horizontal Axis drawn through it. Along the circumference of this inner sphere, several small iron needles, called obeli, are depicted at various latitudes. At the equatorial points, which are the ends of the axis, the needles lie flat against the surface. As they move toward the top and bottom poles, they incline at increasingly steep angles, until they stand perfectly vertical and perpendicular to the surface at the magnetic poles.</note>\n\nThe <term>declination</term> <gloss>dip</gloss> of magnetized iron upon a terrella is demonstrated by various equal iron filaments, the length of a barleycorn, arranged upon the <term>meridian</term> <gloss>the longitudinal line passing through the poles</gloss>. At the equator, the filaments are directed toward the poles by the power of the stone, and they lie down upon the body of the stone along the plane of its <term>horizon</term> <gloss>the local horizontal surface</gloss>. The closer they are placed to the poles, the more they are raised up by their turning nature. At the poles themselves, they stretch perpendicularly toward the very center. However, iron needles are not raised correctly except upon a vigorous stone, especially if they are longer than is proper.\n\n### CHAPTER III.\n\n### A demonstrative instrument, indicating by the power of the stone the degrees of declination from the horizon of every latitude.\n\n<summary>This page describes how small iron filaments or needles demonstrate magnetic dip by tilting at different angles along the meridian of a spherical lodestone. Gilbert introduces the next chapter, which focuses on a specific instrument used to measure these degrees of inclination.</summary>\n<keywords>magnetic dip, inclination, terrella, obeli, iron filaments, magnetic poles, magnetic equator, meridian, measurement instruments</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2803,
+ "outputTokens": 1930,
+ "thinkingTokens": 1370,
+ "cost_usd": 0.0071915,
+ "ms": 13924,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1753
+}

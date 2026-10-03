@@ -1,0 +1,34 @@
+{
+ "id": "69b2ffad5545150b61b4901a_389",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "ON FLUIDITY\n\n<meta>continues from previous page: te-</meta>we have distinguished the two most recent cases, because in them we assume that certain adventitious corpuscles <note>small particles of matter</note> are retained within that body, contributing to its firmness and entering into its constitution—even if perhaps only in a small quantity. In this place, however, we assume that these agents, without materially contributing to the composition of the body upon which they act, merely agitate and variously move the particles that compose it. They perhaps break some, bend and entangle others, and, in a word, so change the texture that those parts which previously either moved separately or adhered less strictly are now reduced into a tighter space or a more tangled texture, and by this means are more firmly connected to one another. That the mere arrangement of the parts of a body, in how they relate to each other, without any added external matter, can contribute greatly to stability, may be seen both in certain previously mentioned examples and in wicker rods. When loose and lying in a heap, they can easily be separated from the rest, but when woven into a basket, they cohere so firmly that if one is lifted, all the rest are raised with it. To these may be added many obvious, though perhaps not observed, examples in which the bare\n\n<summary>Boyle explains how mechanical agitation can alter the internal texture of a body to increase its firmness without adding new material, using the analogy of woven wicker.</summary>\n<keywords>fluidity, corpuscles, texture, stability, mechanical movement, physical structure</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2186,
+ "outputTokens": 333,
+ "thinkingTokens": 0,
+ "cost_usd": 0.001046,
+ "ms": 1915,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1377
+}

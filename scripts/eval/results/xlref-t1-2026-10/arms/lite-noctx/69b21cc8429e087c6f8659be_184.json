@@ -1,0 +1,34 @@
+{
+ "id": "69b21cc8429e087c6f8659be_184",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "is owed to the peace of the gentler sex. France? Look and take pity. Even now, a gangrene of bloody war creeps through all its limbs. Nor is it different in the whole world. Think on these things, Lipsius, and relieve your own burdens by this communion of miseries. And just as a servant was accustomed to stand behind those celebrating a triumph, frequently shouting in the midst of the joy of the triumph, **You are a man**: so let this monitor always stand by you, **These things are human**. For just as labor shared with many becomes lighter, so too does sorrow.\n\n### CHAPTER XXVI.\n\n->*Conclusion of the entire discourse, and a brief exhortation to review and ruminate upon it.*<-\n\nI have set forth all my resources and discourse, Lipsius, and you have what I deemed necessary to say in favor of Constancy against Sorrow. I wish these things were not only pleasing to you, but also healthy: that they might not just delight, but rather provide aid. They will provide aid, however, if you let them sink not only into your ears, but into your mind: and if you do not allow what has been heard to lie there and wither, like seeds scattered on the surface of the soil. Finally, if you review them seriously and ruminate upon them. Because as\n\n<summary>Lipsius concludes his discourse on Constancy, urging the reader to internalize these teachings and reflect upon them deeply to alleviate the suffering caused by human misery and war.</summary>\n<keywords>Constancy, Sorrow, Human Condition, France, Reflection, Stoic Philosophy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2148,
+ "outputTokens": 337,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0010425,
+ "ms": 1980,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1155
+}

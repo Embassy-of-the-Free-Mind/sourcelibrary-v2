@@ -1,0 +1,44 @@
+{
+ "id": "69905d2a2fd6a0399389f0c0_180",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: dining</meta>companionship of the citizens. The oldest person (as I said) is in charge of the household. Wives serve their husbands, and children serve their parents, and in short, the younger serve their elders. <margin>In this way, the idle crowd of servants can be excluded.</margin> Every city is divided into four equal parts. In the center of each part is a marketplace for all goods. To that location, the products of each household are brought to specific buildings, and the different types of goods are distributed into separate warehouses. From these, every head of a household <note>original: \"paterfamilias\"</note> seeks whatever he and his family have need of, and he carries away whatever he has requested without money and without any kind of payment or trade <note>original: \"hostimento\"</note> whatsoever. For why would anything be denied? Since there is an abundant sufficiency of all things, and there is no underlying fear that anyone would wish to demand more than is necessary. For why would one be thought likely to seek unnecessary things, when he is certain that he will never lack for anything?\n\n<summary>This page describes the organizational structure of Utopian cities, focusing on communal resource distribution and the lack of currency. Goods are stored in central warehouses where heads of households collect what they need for free based on a system of mutual trust and abundance.</summary>\n<keywords>Utopia, social hierarchy, marketplace, communal property, resource distribution, household management, abolition of money</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2584,
+ "outputTokens": 325,
+ "thinkingTokens": 0,
+ "cost_usd": 0.002267,
+ "ms": 2237,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "Nem-",
+   "headJoined": "conuictum",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1050
+}

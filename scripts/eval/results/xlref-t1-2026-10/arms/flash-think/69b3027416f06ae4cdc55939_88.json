@@ -1,0 +1,44 @@
+{
+ "id": "69b3027416f06ae4cdc55939_88",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nthe Roman Senate itself, to whom these things were written. What do you achieve from this? Since no precept to which a specific reason is attached is either accustomed or able to bind anyone beyond the reason of that precept. *Be subject*, <term>hypotagete</term> <gloss>original Greek: ὑποτάγητε</gloss>, that is, if you look at the force of the word, \"be subordinate,\" or legitimately subject; for \"order is law\" <note>original: ἡ δὲ τάξις νόμος</note> as <term>Aristotle</term> says. *Be subject for the Lord’s sake*. Why? Because both the king and the governor are appointed by God for the punishment of evildoers and the praise of those who do good. *For such is the will of God*. Namely, that we should obey such men as are described here; there is not a word here concerning any others. You see how perfectly the reason for this precept stands; he adds in verse sixteen: *as free men*, therefore not as slaves. What if, on the contrary, they reign for the torture and destruction of good men, and for the impunity, praise, and reward of criminals? Shall we be subject forever—not only private citizens, but the leaders, all the magistrates, and finally the Senate itself? Is it not called a human ordinance? Why then shall a human power be valid for establishing what is good and healthy for men, but not be valid for removing what is evil and destructive to them? But you say that king to whom they were commanded to be subject was the tyrant Nero at Rome at that time; therefore we ought to be subject even to tyrants. But I say, it is both doubtful whether Nero or Claudius was in power at that time, and those who are commanded to be subject were strangers, scattered individuals, and private citizens, not consuls, not prae\n\n<summary>Milton argues that the biblical command to be subject to authority is conditional on that authority fulfilling its divine purpose of punishing evil and rewarding good. He distinguishes between the obligations of private strangers and the rights of sovereign bodies like the Roman Senate.</summary>\n<keywords>subjection, Aristotle, Nero, Claudius, human ordinance, tyranny, Roman Senate, biblical interpretation, political obligation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2811,
+ "outputTokens": 491,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0028785,
+ "ms": 3198,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "merged-catchword",
+   "joined": null,
+   "catchword": "tores,",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1629
+}

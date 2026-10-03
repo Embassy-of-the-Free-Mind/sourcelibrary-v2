@@ -1,0 +1,44 @@
+{
+ "id": "69523495ab34727b1f044a45_63",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<margin>\n# Solutions to the arguments.\n</margin>\n\nIt is evident regarding the first point: there is no doubt that just as men can kill by God’s permission, so too can they truly and really take away that member or others. But in that case, demons do not operate through the witches of whom mention is now made. And through this, the solution to the second point is also clear. But as to the claim that because God permits the generative power to be bewitched more [often] because of [etc.], therefore it is also permitted that that member be truly and really taken away, this does not hold; for this does not happen by way of witchcraft, nor do witches intend this when they perform such acts, because they do not have the power to restore the member when they wish and know how. From which it is evident that it is taken away not truly, but by <term>prestigiosa arte</term> <gloss>illusory or glamour-based art</gloss>. Regarding the third point, concerning the transformation of Lot’s wife, we say: it was true and not by illusory art; now, however, we are speaking of illusory art. Regarding the fourth point, that demons can induce certain substantial forms and therefore can also take them away: it is said regarding the magicians of Pharaoh that they made real serpents. And demons can produce certain effects upon some imperfect creatures with the aid of some other agent, which they cannot do regarding humans, for whom God has greater care. According to that saying: \"Is it for the oxen that God is concerned?\" <note>A reference to 1 Corinthians 9:9</note>. Nevertheless, they can always, as has been said, by God’s permission, harm humans truly and really, or also by illusory art; and through this, the solution to the last argument is also clear.\n\n<margin>\n# Question X. Whether witches operate upon humans by transforming them into beastly forms through illusory art.\n</margin>\n\nFourth, the truth itself is declared where they also transform men into beasts. Concerning how this is done, it is argued that it is not possible for this to happen. 26, q. 5, *Episcopi*, from the Council of Ancyra: \"Whoever believes that any creature can be changed for the better or the worse, or transformed into another species or into another likeness, except by the Creator Himself who made all things and through whom all things were made, is undoubtedly an infidel and worse than a pagan.\" And let us use the arguments of <term>Saint Thomas</term> in *Second Book of Sentences*, distinction 8, \"Whether demons can impress themselves upon the bodily senses by deluding them with illusions.\" Where he first argues that they cannot. For that form of a beast which is seen, it is necessary that it exists somewhere, but it cannot be only in the sense, because the sense does not have any species except that which is received from things, and there is no true beast there by the cited canon law. Nor, furthermore, can it be in the thing that is seen, such as a woman appearing as a beast, because two substantial forms cannot exist in the same subject simultaneously and at once. Therefore, since that form of a beast which is seen cannot be anywhere, no illusory deception can occur in the eye of the one seeing, since vision must necessarily be terminated by some form. Furthermore, if it is said that that form is created in the surrounding air, this cannot be: first, because air is not receptive of any form or figure; second, because the same air does not remain around that person due to its fluidity, especially when it moves; third, because such a transformation would thus be seen by everyone, which is not the case, because demons do not appear to deceive the visions of holy men, at least. Furthermore, the visual sense or visual power is a passive power. But everything passive is moved by an active [power] proportioned to it. However, the active [power] proportioned to the sense is twofold: one as if originating the act, namely the object; the other as if conveying it, like a medium. But that form which is seen cannot be the object of the sense, nor a medium as if conveying it. Regarding the first, namely that it cannot be the object, it is because it can be taken from no thing, as was touched upon in the preceding argument, since it is not made in the sense from a thing received; nor is it in the thing itself, nor even in the air itself as a conveying medium, as was touched upon earlier in the third argument. Furthermore, if a demon moves the inner cognitive power, either he does this by presenting himself as an object...\n\n<summary>This page addresses the theological distinction between true physical transformation and demonic illusion (prestigiosa arte), concluding that witches cannot change the substantial form of humans, and begins a critique of how demons might manipulate sensory perception.</summary>\n<keywords>demonic illusion, witchcraft, Saint Thomas Aquinas, Council of Ancyra, transformation, canon law, sensory perception, substantial form</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3798,
+ "outputTokens": 1066,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0025485000000000004,
+ "ms": 4199,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 5188,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 3988
+}

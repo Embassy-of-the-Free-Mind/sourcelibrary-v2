@@ -1,0 +1,44 @@
+{
+ "id": "6953e46f77f38f6761bee559_40",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "# STARRY OBSERVATIONS\n\n<meta>continues from previous page: you encounter a crowd of stars packed together.</meta> Furthermore—and this is most marvelous—the stars which have been called **nebulae** <note>original: \"NEBVLOSAE\"</note> by all astronomers up to this day are groups of stars set together in a wondrous manner. From the mixing of their rays, while each individual star escapes our sight due to its smallness or its extreme distance from us, arises that brightness which, until now, was believed to be a denser part of the heavens capable of reflecting the rays of the stars or the Sun. We have observed some of them and have wished to append the star charts <note>term: Asterismos <gloss>groups of stars/constellations</gloss></note> of two.\n\nIn the first, you have the **nebula** called the Head of Orion, in which we have counted twenty-one stars.\n\nThe second contains the **nebula** called Praesepe <gloss>the Manger/Beehive Cluster</gloss>, which is not merely one star, but a collection of more than forty small stars. Besides the Aselli <gloss>the Donkeys</gloss>, we have noted thirty-six arranged in the following order.\n\n<note>A telescopic star chart of the Orion Nebula, showing twenty-one individual stars.</note>\n\n->NEBULA OF PRAESEPE.<- <column-break/> ->NEBULA OF ORION.<-\n\n<note>A telescopic star chart of the Praesepe (Beehive) cluster, depicting over thirty-six stars including the Aselli.</note>\n\n<summary>Galileo reveals that celestial bodies previously categorized as nebulae are actually dense clusters of individual stars. He provides specific stellar counts for the Orion nebula and the Praesepe cluster to support his findings.</summary>\n<keywords>Galileo Galilei, Sidereus Nuncius, nebulae, Orion Nebula, Praesepe, Beehive Cluster, astronomy, telescope, stars</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2853,
+ "outputTokens": 429,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0013567499999999999,
+ "ms": 1934,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2195
+}

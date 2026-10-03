@@ -1,0 +1,44 @@
+{
+ "id": "69b18a89c4be2cdd0edc810d_135",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "to transfer, and so forth; and the *people* is said to be something other than the *multitude*. We must therefore distinguish as follows: By *people* or *multitude*, whenever we say that it itself desires, hopes, or does something, we understand the *civil state* which commands, desires, and acts through the will of *one* man, or through the consenting wills of *several* men, which cannot happen except in an assembly. However, whenever something is said to be done by a multitude of men, whether large or small, without the will of that man or assembly; it is said to have been done by the subject people, that is, by many individual citizens at once, arising not from one will, but from the many wills of many men; those who, being already citizens and subjects, are not a *civil state*.\n\n<margin>The beginning of a civil state is the right of the majority in agreement.</margin>\n\nII. Next, it must be considered that everyone from the multitude (in order for the principle of establishing a civil state to be brought about) must agree with the others, so that in those matters which are proposed by anyone in the assembly, that which the greater part of them desires shall be held as the will of all. For in any other way, the multitude of men, whose temperaments and desires differ so variably among themselves, will have no will at all. But if anyone refuses to agree, the others nevertheless establish a civil state among themselves without him <unclear>n</unclear>\n\n<summary>This passage clarifies the distinction between a mere multitude of individuals and a cohesive civil state, emphasizing that the latter requires a singular will derived from the agreement of a majority.</summary>\n<keywords>people, multitude, civil state, majority, will, assembly, subjects</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2537,
+ "outputTokens": 383,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00120875,
+ "ms": 1806,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1450
+}

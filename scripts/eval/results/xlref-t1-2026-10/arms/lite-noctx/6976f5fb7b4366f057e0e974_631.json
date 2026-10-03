@@ -1,0 +1,34 @@
+{
+ "id": "6976f5fb7b4366f057e0e974_631",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "CHEMISTRY.\n\nFurthermore, its powers, namely for expulsion, are made stronger, and additionally, the doses of precipitated <term>mercury</term> <gloss>quicksilver</gloss> are formed more easily for administration or absorption, specifically in the form of pills. Therefore, this precipitated mercury is uniquely praised and recommended, and it truly performs excellently. The mercury of life, or the flowers of the butter of antimony, which were mentioned above, achieves the same result if four to twelve grains are administered over three full days in an extract of hellebore and colocynth; it successfully expels the dissolved salt. Afterwards, however, sweats and urine should be stimulated with a decoction of sarsaparilla, lignum sanctum <gloss>holy wood</gloss>, or the root of asarabacca, always adding spirit of tartar or other diaphoretics and diuretics, which were mentioned above. Especially when the arcanum of wormwood or blessed thistle is added. However, it must be noted that a three-day administration of the mercury of life often tends to cause a prolapse of the anus in adults, which is later rarely or even with difficulty healed. It is necessary, when curing dropsy, that such purgatives be used right from the beginning of the treatment; afterwards, however, diuretics and sudorifics should follow. Otherwise, a <term>hysteron proteron</term> <gloss>a reversal of natural order (lit. \"the latter first\")</gloss> would be committed here, as all the serum or water would descend to the kidneys and ureters, and there, due to the aggravation, very persistent symptoms often tend to arise. Moreover, in the preparation of the extract of black hellebore root, it is safer to use wine itself instead of spirit of wine, with which the root alone should be gently boiled without turbulence, and this should be done with fresh wine until all the essential strength has been extracted from the roots; afterwards, the extract is to be reduced to the consistency of honey by evaporation or distillation. The spirit of wine, because of that in which it possesses sulfur rather than liquid.\n\n<sig>Y 3</sig>\n\n<summary>This passage discusses the medicinal application of precipitated mercury and the \"mercury of life\" for treating dropsy, emphasizing the importance of the correct sequence of purgatives and diuretics to avoid adverse symptoms.</summary>\n<keywords>Mercury, dropsy, purgatives, diuretics, hellebore, chemical medicine</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2453,
+ "outputTokens": 519,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0013917500000000002,
+ "ms": 2352,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1960
+}

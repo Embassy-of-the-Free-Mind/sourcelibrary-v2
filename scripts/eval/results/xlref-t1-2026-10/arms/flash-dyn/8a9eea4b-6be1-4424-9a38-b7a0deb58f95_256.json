@@ -1,0 +1,42 @@
+{
+ "id": "8a9eea4b-6be1-4424-9a38-b7a0deb58f95_256",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: which God for their uses and necessity</meta> destined, so that they might penetrate. From these things conclude that it is necessary to proceed according to my prescription, and not at all according to yours. Here there is a need for you to follow me, not for me to follow you. And although you may still thunder more accusations against me, my Monarchy shall nevertheless stand, while all of yours goes to ruin. I do not write so extensively about <term>Alchemy</term> <gloss>the art of transmuting and purifying substances</gloss> in vain, but I do so with this intent and end: that from these things you may nearly and solidly learn what lies hidden within it, and how it ought to be understood. Nor should you be offended by the fact that neither gold nor silver comes forth from it. Rather, this must be the goal: that through alchemy the <term>arcana</term> <gloss>medicinal secrets or hidden virtues</gloss> may be detected, and the seductions of the <term>seplasiariorum</term> <gloss>perfume-sellers or ointment-peddlers; a derogatory term for pharmacists</gloss> may be exposed. For by these men the crude common folk are deceived, as they provide for one florin that which they would not redeem for a single penny. So \"precious\" are their secrets.\n\n<margin>Poison is also in the best things.</margin>\nWho is he who would dare to deny that even in the best things poison lies hidden and exists? All are forced to confess this. If this therefore is true, I now ask of you: is not the poison to be separated from the good and the useful? Must not the good be received and the evil left behind? Indeed, truly, it must be so. If therefore it must, I pray you, relate to me how that separation is performed in your shops? For among you all things remain mixed together. Yet to protect your simple-mindedness, if you are forced to confess that poison is hidden there and are asked where it eventually goes, you then bring forth I know not what regarding \"corrections,\" which you claim drive out and take away the poison. \n<margin>The correction of the Physicians is examined.</margin>\nJust as they say Quince corrects <term>Scammony</term> <gloss>a harsh purgative plant resin</gloss>, or as <term>Diagridium</term> <gloss>a prepared form of scammony</gloss> is said to be corrected. But what kind of correction is that? Does the poison not remain afterward just as it was at first? And yet you meanwhile boast that you have corrected it, so that the poison no longer harms. Where, then, did it escape? \n<margin>Diagridium.</margin>\nIt remains in the <term>Diagridium</term>. Test it, if you are wise: exceed the proper measure, and you will see where the poison is. For you shall know it quite quickly. Thus you also correct <term>Turbith</term> <gloss>a purgative root</gloss> and call it <term>Diaturbith</term>. Your \"corrections\" are of the sort that would befit peasants and should be given to pack-horses. Make a trial by exceeding the measure and increase the dose: you will see if you do not feel the poison. \n<margin>What \"I, a Physician, correct\" means.</margin>\n*To correct is to take the corrected substance.* If a man is malicious and has sinned, and he is punished <note>original: \"plectitur\", meaning beaten or penalized</note>, the correction lasts no longer than the will of the one who was punished. Such are these pharmaceutical corrections: the power remains with the substance, not with you. Now truly, in this case, a Physician should consider nothing more than that the poison be removed. This ought to be done through separation. As an example: a serpent is poisonous, yet it is adopted as food. If you take away the poison from it, you may eat it with no harm. The same is to be understood equally concerning all other things; there is a similar need for separation. Until that is done, you cannot be secure in your operation, unless by chance nature supplies your deficiency, or a greater benevolence of the heavens favors you. For in your own art, no protection will remain.\n\nNow therefore, at last, let us look at that true foundation which takes away poison, and how Alchemy provides it. This must be done in such a way that if <term>Mars</term> <gloss>iron</gloss> is in the <term>Sun</term> <gloss>gold</gloss>, the Mars may be removed; and if <term>Saturn</term> <gloss>lead</gloss> is turned in <term>Venus</term> <gloss>copper</gloss>, it may be separated from her. For as many ascendants and impressions as there are in the things of nature, so many bodies also exist within them. But where those bodies are contrary, it is necessary that one be taken away and removed, so that in this way all contrariety may be lifted, and the evil which you seek to avoid may be removed from the good. \n<margin>Fire perfects all things.</margin>\nJust as gold is useful for nothing unless it is first cast into the fire, so a Medicine is much less useful if it does not pass through the fire. For it is necessary that all things pass through fire into a second generation, which ought to benefit and help man. Should this not rightly be considered the honest foundation of any Physician? For a Physician ought to apply not poisons, but <term>arcana</term>. \n<margin>The shops are rebuked.</margin>\nBut all those official preparations in the shops, as many as they are, do not contribute even a single letter to this doctrine. Instead, they are simply occupied in \"correcting,\" as if a dog farts in a room <note>original: \"pepedit\"</note>, and that stench is suppressed either by lozenges and incense, or by juniper wood. I ask you: does not the stench remain in the room just as much after as before? And although it is not perceived by smell, can anyone therefore say the stench has been separated and remains no longer? On the contrary, it is present, but merely corrected by the perfume. Thus the perfume and the stench enter the nostrils together. Of this kind also are the corrections of the Pharmacists, who dull an <term>Aleopaticum</term> <gloss>a bitter medicine containing aloes</gloss> with sugar so that it may seemingly inflict no harm. Thus sugar and honey are their entire mastery. In this way they also \"correct\" gentian into theriac. Are these not the works of asinine ignorance? Yet they boast and sell themselves as the Physicians of princes. But who is so stupid as not to smell at once that these things are worthless? Concerning their remedies, what can they boast of other than to say: *This Electuary is sweet, made from spices and sugar,*\n\n<summary>Paracelsus argues that the true purpose of alchemy in medicine is the separation of medicinal virtues from their inherent poisons, rather than the creation of gold. He ridicules contemporary pharmacists for using sugar and incense to mask toxic or bitter medicines, comparing their \"corrections\" to using perfume to hide a foul odor rather than removing the source.</summary>\n<keywords>Alchemy, Pharmacy, Arcana, Toxicology, Separation, Diagridium, Scammony, Medical Theory, Paracelsus</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 4063,
+ "outputTokens": 5938,
+ "thinkingTokens": 4316,
+ "cost_usd": 0.0198455,
+ "ms": 26942,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 6183,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "catchword",
+   "joined": null,
+   "catchword": "melléque",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 4983
+}

@@ -1,0 +1,44 @@
+{
+ "id": "699062f5ef12272ffdc8e9d5_505",
+ "arm": "flash-fixocr",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>God, and they command that he be worshiped everywhere. But people of an unlearned and impious nature—to whom fate has truly not granted the ability to obtain gifts from the gods, nor to possess knowledge of the immortal Jove <note>original: \"Iouis\"; Jupiter, often identified in this context with the supreme divine principle</note>—not listening to either the gods or to divine men, have rejected all the gods. Instead of following the prohibition against demons, they have chosen not only to not pursue them with hatred, but even to revere them. While pretending to worship God, they do not perform those acts through which alone God is adored. For God, being the father of all, needs nothing; but it is well with us when we adore him through justice, chastity, and other virtues, making our very life a prayer to him through imitation and inquiry concerning him. For inquiry purifies, he says, and imitation deifies the affection by working toward him. He indeed preached well about God the father and spoke of the manners in which he should be worshiped. The prophetic books of the Hebrews are full of these precepts, when the life of the saints is either praised or blamed.\n\nBut regarding the Christians, he either says as much or calumniates as much as the demons—whom he considers gods—desire. As if it were difficult for anyone to recall what shameful and disgraceful things were performed in the service of the gods in theaters and temples, and to attend to what is read, said, and heard in the churches, or what is offered to the true God; and from this to understand where the building up and where the ruin of morals lies. Who told or inspired this man with such a vain and open lie: that the Christians revere the demons who were prohibited from being worshiped by the Hebrews, rather than hating them? But that God whom the wise men of the Hebrews worshiped forbids sacrifice even to the holy celestial angels and the powers of God—whom we, in this mortal pilgrimage of ours, venerate and love as most blessed fellow citizens—thundering in his law which he gave to his Hebrew people, and very threateningly brought forth, saying: He who sacrifices to gods shall be rooted out.\n\nAnd lest anyone should think it was commanded that sacrifice not be made only to the most wicked demons and earthly spirits—whom this man calls the least or lesser—because in the holy scriptures they themselves are called gods, not those of the Hebrews\n\n<column-break/>\n\nbut of the nations: which the seventy translators <note>The Septuagint: the ancient Greek translation of the Hebrew Bible</note> evidently placed in the Psalm, saying: For all the gods of the nations are demons. Therefore, lest anyone should think it was prohibited to sacrifice to these demons, but permitted to sacrifice to the celestial ones, either all or some of them, he immediately added: except to the Lord alone; that is, except to the Lord only. This was so that no one might believe the phrase \"to the Lord alone\" refers to the Sun-god <note>original: \"deum solem\"; a pun on \"soli\" (alone) and \"Soli\" (to the Sun)</note> to whom he thinks sacrifice should be made. That it is not to be understood this way is very easily found in the Greek scriptures.\n\nTherefore, the God of the Hebrews, to whom even this great philosopher bears such great testimony, gave the law to his Hebrew people. It was written in the Hebrew language, not obscure and unknown, but now spread abroad among all nations. In this law it is written: He who sacrifices to gods shall be rooted out, except to the Lord only. What need is there to search for many things regarding this matter in his law and his prophets? Rather, there is no need to search; for these things are not hidden or rare. One may collect things that are open and frequent, and place them in this disputation of mine, by which it appears clearer than light that the true and highest God wished sacrifice to be made to no one at all except himself. Behold this one thing said briefly, or rather grandly, threateningly, but truly, by that God whom the most learned of their men preach so excellently: let it be heard, let it be feared, let it be fulfilled, lest the rooting out of the disobedient follows.\n\nHe who sacrifices to gods shall be rooted out, he says, except to the Lord only. Not because he has need of anything, but because it is profitable for us that we should be his. For to him it is sung in the holy writings of the Hebrews: I have said to the Lord, you are my God, because you do not need my goods. Moreover, the most excellent and best sacrifice to him is ourselves. This is his city, the mystery of which we celebrate with our oblations, which are known to the faithful, as we have discussed in the preceding books. For the Hebrew prophets gave oracles that the victims which the Jews offered in the shadow of the future would cease, and that the nations from the rising of the sun to its setting would offer one sacrifice, just as we now see being done.\n\n<summary>Augustine refutes Porphyry's claim that Christians worship demons, asserting that the God of the Hebrews strictly forbids sacrifice to any being but himself. He identifies the \"true sacrifice\" as the Christian community and its life of virtue, fulfilling Hebrew prophecies about the end of Jewish animal sacrifices.</summary>\n<keywords>Porphyry, Demons, Sacrifice, Hebrew Law, Septuagint, Sun worship, City of God, Virtue, Liturgy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3616,
+ "outputTokens": 1189,
+ "thinkingTokens": 0,
+ "cost_usd": 0.005375,
+ "ms": 6664,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 5329,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": true
+ },
+ "ocr_chars": 4129
+}

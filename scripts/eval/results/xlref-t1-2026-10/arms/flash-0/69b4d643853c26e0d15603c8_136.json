@@ -1,0 +1,44 @@
+{
+ "id": "69b4d643853c26e0d15603c8_136",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nof additions, so that the <term>quinta essentia</term> <gloss>quintessence</gloss> remains within their own odor, color, and taste, and that it increases in these rather than diminishes. Examples include <term>Muscus</term> <gloss>musk</gloss>, <term>Ambra</term> <gloss>ambergris</gloss>, and <term>Sibeta</term> <gloss>civet</gloss>. If the quintessence is extracted from these, you will notice the remaining body stinks and is of no importance in taste, odor, or nature. The same judgment must be made regarding the extraction of the quintessence of all other things. Although musk, ambergris, and civet do not belong to this present chapter—because we describe them specifically elsewhere and here deal only with <term>Crescentibus</term> <gloss>growing things</gloss> like lilies, spikenard, and leaves—the process for their extraction is as follows.\n\nTake growing things, well crushed, and place them in a jar to digest in horse dung for four weeks. Distill them by means of a <term>balneum</term> <gloss>water bath</gloss>, then putrefy them again in horse dung for eight days, and again distill by water bath. The quintessence will transcend through the <term>alembic</term> <gloss>distillation head</gloss>, and the body remains at the bottom. But if more quintessence should still be held in the bottom, proceed by putrefying and distilling further. Afterward, take the distilled water and add the growing thing to it again. Digest it in a <term>pellicanum</term> <gloss>circulating vessel</gloss> for six days, and it will turn into a thick color. Strain this, and distill the strained liquid by water bath; the body will pass out, but the quintessence will reside at the bottom. Separate this from the dregs using a press or a <term>retortæ</term> <gloss>retort</gloss>, and leave the quintessence for four\n\n<summary>This page describes the laboratory process for extracting the quintessence from growing plants, emphasizing that the essence must retain the original odor and color. Paracelsus provides specific instructions involving digestion in horse dung and distillation using water baths and specialized vessels.</summary>\n<keywords>extraction, quintessence, alchemy, distillation, musk, ambergris, civet, plants, laboratory equipment, putrefaction</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2812,
+ "outputTokens": 539,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0030229999999999996,
+ "ms": 3321,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "split",
+   "joined": "quatuor",
+   "catchword": "or dies",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1558
+}

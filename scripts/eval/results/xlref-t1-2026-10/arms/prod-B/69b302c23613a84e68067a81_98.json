@@ -1,0 +1,44 @@
+{
+ "id": "69b302c23613a84e68067a81_98",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "but many are deaf and hard to my voice. Most people listen more willingly to the world than to God: they follow the appetite of their own flesh more easily than the good pleasure of God. The world promises temporal and small things, and it is served with great greed: I promise the highest and eternal things, and the hearts of mortals grow sluggish. Who serves and obeys me in all things with as much care as the world and its masters are served? <margin>Isaiah 23</margin> \"Be ashamed, O Sidon,\" the sea says. And if you seek the cause, hear why. For a small stipend, a long journey is traveled: for eternal life, many hardly lift a foot from the ground once. A cheap reward is sought: for one coin, there is sometimes shameful litigation: for a vain thing and a small promise, one does not fear to toil day and night.\n\n4. But, oh the shame! For a good that cannot change, for an invaluable reward, for the highest honor and never-ending glory, one is reluctant to toil even a little. Be ashamed, therefore, you lazy and complaining servant, that they are found more ready for destruction than you are for life. They rejoice more in vanity than you do in truth. Indeed, they are sometimes frustrated in their hope: but my promise deceives no one, nor does it send away empty the one who trusts in me. What I have promised, I will give; what I have spoken, I will fulfill; provided that one remains faithful in my love until the end. I am the rewarder of all good things and a strong tester of all the devout.\n\n5. Write my words in your heart and ponder them diligently: for they will be very necessary in the time of temptation. What you do not understand when you read, you will recognize in the day of visitation. I am accustomed to visit my chosen ones in two ways, namely, by temptation and by consolation. And I read two lessons to them daily: one, by rebuking their vices; the other, by exhorting them to the growth of virtues. He who has my words and despises them has one who will judge him on the last day.\n\n<summary>Christ contrasts the diligence people show for worldly gain with their laziness toward eternal life, emphasizing that his words are meant to be cherished as essential instruction for both trial and consolation.</summary>\n<keywords>temptation, consolation, eternal life, obedience, divine instruction, vanity</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2921,
+ "outputTokens": 516,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00150425,
+ "ms": 2291,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "Oratio",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1964
+}

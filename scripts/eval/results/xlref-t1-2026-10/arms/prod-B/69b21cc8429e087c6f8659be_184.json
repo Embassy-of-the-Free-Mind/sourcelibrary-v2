@@ -1,0 +1,44 @@
+{
+ "id": "69b21cc8429e087c6f8659be_184",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "and is owed to the peaceful sex <note>referring to women and those not involved in combat</note> by imperial command. France? Look and pity. Even now, a gangrene of bloody war creeps through all its limbs. Nor is it different in the entire world. Think on these things, Lipsius, and lighten your own burdens through this communion of miseries. And just as a servant was accustomed to stand behind those celebrating a triumph, frequently shouting in the midst of the joy of the triumph, **You are a man**: so let this monitor always stand by you, **These things are human**. For just as labor shared with many becomes lighter, so too does sorrow.\n\n### CHAPTER XXVI.\n\n->*Conclusion of the entire discourse. And a brief admonition to repeat and ruminate upon it.*<-\n\nI have unfolded all my forces and my discourse, Lipsius; and you have what I judged should be said for Constancy against Sorrow. I wish that these things were not only pleasing to you, but also healthy; and that they do not just delight you, but rather help you. They will help, however, if you let them sink not only into your ears but into your soul; and if you do not allow them to lie heard and wither away, like seeds scattered on the surface of the soil. Finally, if you repeat them seriously and ruminate upon them. Because as\n\n<summary>Lipsius concludes his dialogue by urging the reader to internalize these Stoic arguments, treating them not as mere intellectual entertainment but as practical remedies for sorrow that require repetition and contemplation.</summary>\n<keywords>Constancy, Sorrow, Stoic exercises, Discourse, Contemplation, Humanity</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2781,
+ "outputTokens": 353,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0012247500000000001,
+ "ms": 1703,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "ignis",
+   "headJoined": "imest",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1155
+}

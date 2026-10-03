@@ -1,0 +1,44 @@
+{
+ "id": "690986dccf28baa1b4cae0e3_81",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\n\nby **Neptune**, one the **Solar Tree** <note>original: *Solaris Arbor*</note>, and the other the **Lunar Tree** <note>original: *Lunaris Arbor*</note>. And although everything in this island was available at a whim, yet one single thing was lacking. **Water** was not to be had, except with great difficulty. There were indeed many who tried, partly by leading spring water there through channels, and partly by extracting it from various things; but the attempted labor was in vain, because in those places it could be obtained by no means. Even if it was obtained, it was nevertheless useless and poisonous, unless it was drawn from the rays of the **Sun** or the **Moon** <note>This refers to the \"Celestial Dew\" or \"Astral Spirit,\" a substance alchemists believed could be condensed from the air at specific times.</note>, which few were able to provide. And whoever had a favorable fortune in accomplishing this could never attract more than ten parts. For that water was of a marvelous kind; and believe me, for I saw with my own eyes and touched the snowy whiteness of that water, and while I contemplated that water, I was greatly changed. Meanwhile, exhausted by that meditation, **Neptune** vanished from before my eyes, and there appeared to me a tall man, upon whose forehead the name of **Saturn** was inscribed. This man, taking a vessel, drew ten parts of the water, and immediately from the fruit...\n\n<summary>The narrator discovers that the alchemical garden lacks life-giving water unless it is drawn from celestial rays; Neptune vanishes, replaced by Saturn, who begins to collect this rare water.</summary>\n<keywords>Solar Tree, Lunar Tree, Celestial Water, Sun rays, Moon rays, Neptune, Saturn, alchemy, allegory</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3100,
+ "outputTokens": 397,
+ "thinkingTokens": 0,
+ "cost_usd": 0.002741,
+ "ms": 2668,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": "fructa",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2437
+}

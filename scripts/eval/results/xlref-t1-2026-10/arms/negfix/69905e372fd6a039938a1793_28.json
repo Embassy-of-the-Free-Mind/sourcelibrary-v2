@@ -1,0 +1,28 @@
+{
+ "id": "69905e372fd6a039938a1793_28",
+ "arm": "negfix",
+ "base_arm": "prod-A",
+ "text": "<meta>continues from previous page</meta>titions: and it gives interpretations of all dreams: and makes one understand enigmas.\n\n¶ If you wish to have a good intellect for the senses: and to not be able to become drunk: Take the stone which is called **Amethyst** <note>original: \"Amatistus\"</note>: and it is of a purple color: and the best is born in India and it is effective against drunkenness. And it confers good intellect in knowable things.\n\n<margin>+</margin>\n¶ If you wish to overcome enemies and avoid lawsuits. Take the stone which is called **Beryl**: and it is of a pale color, of a light transparent like water: Carry it with you and you will conquer all litigations and you will put enemies to flight: and it will render the enemy mild. It renders one powerful in manners: just as Aaron says. It also gives good intellect in knowable things.\n\n¶ If you wish to divine about future things. Take the stone which is called **Chelonitis** <note>original: \"Chelōytes\"</note>: and it is of a purple and various color: and it is found in the body of a tortoise. If anyone, however, shall have carried this stone under the tongue he will divine and predict future things. Nevertheless it does not have power unless it is shining first when it has been ignited: and growing <note>the text likely refers to the moon's cycle</note> in the last quarter descending. Thus Aaron wishes concerning the powers of stones and herbs.\n\n<margin>+</margin>\nIf you wish to pacify tempests and to cross rivers. Take the stone which is called **Coral** and it is red and some are white. And it is expert testimony that it immediately restrains blood and being carried it drives away stupidity: and proffers wisdom: and this has been tested by some in our time: and it is valid against tempests: and the dangers of rivers.\n\n<summary>This page continues a list of magical stones and their virtues, detailing the Amethyst for sobriety, Beryl for legal victory, Chelonitis for divination, and Coral for protection against storms and blood-related ailments.</summary>\n<keywords>Amethyst, Beryl, Chelonitis, Coral, lapidary, divination, lithotherapy, medieval medicine</keywords>",
+ "flagged": true,
+ "changed": true,
+ "flags": [
+  {
+   "latin": "Si vis deuincere hostes ꝛ fugere lites",
+   "english": "If you wish to overcome enemies and flee litigations",
+   "problem": "'Fugere lites' means to avoid/escape lawsuits, but the translation implies fleeing from them as a coward rather than avoiding them as a legal outcome.",
+   "correct": "If you wish to overcome enemies and avoid lawsuits."
+  }
+ ],
+ "check_parse_failed": false,
+ "check": {
+  "model": "gemini-3.1-flash-lite",
+  "in": 1476,
+  "out": 81
+ },
+ "fix": {
+  "model": "gemini-3-flash-preview",
+  "in": 1450,
+  "out": 491
+ },
+ "cost_usd": 0.0026885
+}

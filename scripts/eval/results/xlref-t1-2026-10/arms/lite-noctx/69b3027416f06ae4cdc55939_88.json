@@ -1,0 +1,34 @@
+{
+ "id": "69b3027416f06ae4cdc55939_88",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Pro Populo Anglicano\n\nto the Roman Senate itself, to whom these things were written. What do you achieve from this, since no command accompanied by some rationale is accustomed to, or able to, bind anyone beyond that rationale of the command? *Be subject*, ὑποτάγητε <note>original: \"hupotagete\"</note>, that is, if you look at the force of the word, subordinated, or legitimately subject; *Aristotle* says, order is law. *Be subject for the Lord’s sake*. Wherefore? Because both king and governor are appointed by God for the punishment of evildoers and the praise of those who do good. *For such is the will of God*. Namely, that we should obey such as are described here; regarding others, there is no word here. You see how well the rationale of this command stands; he adds in verse 16: *as free men*, therefore not as slaves. What if, conversely, they reign for the cross and destruction of the good, and for the impunity, praise, and rewards of evildoers? Shall we be subject forever, not only private citizens, but leaders, all magistrates, and the Senate itself? Is it not called a human ordinance? Why then would human power be valid for establishing what is good and healthy for men, but not valid for removing what is evil and destructive to them? But that king, to whom they are commanded to be subject, was Nero the tyrant at Rome at that time; therefore, we must be subject even to tyrants. But I say, and this is doubtful, whether Nero or Claudius was in power at that time, and those who are commanded to be subject were foreigners, dispersed, private individuals, not consuls, not praetors,\n\n<summary>Milton argues that submission to authority is conditional upon the ruler's adherence to the purpose of their office, which is to punish evil and reward good.</summary>\n<keywords>Roman Senate, Aristotle, Nero, Claudius, divine ordinance, human authority, tyranny, political subjection</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2291,
+ "outputTokens": 434,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00122375,
+ "ms": 2076,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1629
+}

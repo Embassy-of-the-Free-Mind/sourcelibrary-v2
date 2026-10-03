@@ -1,0 +1,44 @@
+{
+ "id": "6952daa277f38f6761bc6551_202",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>r.\n\n### On the images of the head and tail of the dragon of the Moon. Cap. XLV.\n\n<note>A woodcut illustration depicts a serpent or dragon coiled into a circular shape resembling the Greek letter Theta (Θ). The creature has the head of a hawk and a pointed tail. Within the circular body, there is a central vertical line crossed by a shorter horizontal line, with small astrological or symbolic marks at the terminals.</note>\n\nThey also made an image of the <term>head and tail of the dragon of the Moon</term> <gloss>the North and South lunar nodes</gloss>, namely the likeness of a serpent between the aerial and fiery circle, surrounding them with the head of a hawk, in the fashion of the Greek letter <term>theta</term> <gloss>Θ</gloss>. They made it when Jupiter with the Head <note>the North Node</note> held the <term>midheaven</term> <gloss>the highest point of the southern sky in a horoscope</gloss>. They affirm that this image contributes much to the success of petitions. They intended to represent a good and happy <term>daemon</term> <gloss>a guiding spirit or divinity</gloss> through this image, and they wished to figure him through the image of a serpent. Indeed, the <term>Egyptians</term> and <term>Phoenicians</term> celebrate this as a divine animal above all others, and they celebrate its divine nature because there exists in it a sharper spirit and more abundant fire than in other animals. This quality is shown by its swift movement without any feet, hands, or other instruments, and also because it repeatedly renews its age with discarded skins and grows young again. But they made the image of the Tail <note>the South Node</note> in a similar way when the Moon was eclipsed in the Tail, or was poorly affected by Saturn or Mars. They made it to induce anxiety and infirmity, and they called it an evil <term>genius</term> <gloss>spirit</gloss>. A certain Hebrew had enclosed such an image in a golden and doubled belt, which Blanche, the daughter of the Duke of Bourbon, gave as a gift to her husband Peter, the first of that name, King of the Spains <note>Peter of Castile, known as Peter the Cruel</note>, whether she was aware of it or ignorant. When he was girded with it, he seemed to himself to be encircled by a serpent. After the <term>magical</term> power inserted into the belt was discovered, he repudiated his wife for that reason.\n\n### On the images of the Mansions of the Moon. Cap. XLVI.\n\nThey also made images in the individual <term>Mansions of the Moon</term> <gloss>twenty-eight divisions of the lunar orbit</gloss>. In the first, for the destruction of someone, they made on an iron ring the image of a black man clothed in a hair-shirt and girded, throwing a small lance with his right hand. They sealed it in black wax, fumigated it with liquid storax, and made imprecations. In the second, against the anger of a prince and for reconciliation with him, they sealed in white wax and mastic the image of a crowned king, and fumigated it with aloes-wood. In the third, they made an image on a silver ring whose measure was square, and whose figure was a well-dressed woman sitting in a chair, with her right hand raised over her head. They sealed it and fumigated it with musk, camphor, and <term>aromatic claw</term> <gloss>unguis odoratus, a dried shell part used in incense</gloss>. They asserted that this bestowed prosperity of fortune and every good thing. In the fourth, for vengeance and separation, enmity and malevolence, they sealed in red wax the image of a soldier sitting on a horse, holding a serpent in his right hand, and they fumigated it with red myrrh and storax. In the fifth, for the favor of kings and officials and a good reception, they sealed in silver the head of a man, and fumigated it with sandalwood. In the sixth, to place love between two people, they sealed in white wax two images embracing each other, and fumigated it with aloes-wood and amber. In the seventh, to acquire every good thing, they sealed in silver the image of a well-dressed man, with hands extended toward heaven in \n\n<summary>Agrippa describes the construction of talismans based on the lunar nodes and the first seven lunar mansions. He details the specific materials, symbols, and ritual fumigations used to achieve effects ranging from royal favor to the destruction of enemies.</summary>\n<keywords>lunar nodes, Head of the Dragon, Tail of the Dragon, Mansions of the Moon, talismans, planetary magic, Peter of Castile, astrological images</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3386,
+ "outputTokens": 1042,
+ "thinkingTokens": 0,
+ "cost_usd": 0.004819,
+ "ms": 4894,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4543,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 3343
+}

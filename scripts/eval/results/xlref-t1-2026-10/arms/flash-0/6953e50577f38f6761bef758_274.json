@@ -1,0 +1,44 @@
+{
+ "id": "6953e50577f38f6761bef758_274",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nflee and shrink from flame, such as all **Salts**. For we see that if they are thrown into the **Fire**, the **Aqueous Spirit** <note>original: \"Spiritum Aqueum\"; the watery vapor or essence contained within a mineral.</note> breaks out with a loud noise before a **Flame** is conceived. This also happens gently in leaves that are somewhat more stubborn, the watery part breaking out before the oily part catches **Flame**. But this is most clearly seen in **Quicksilver** <note>original: \"Argento vivo\"</note>, which is not wrongly called **Mineral Water**. For this substance, without catching fire, almost equals the power of **Gunpowder** <note>original: \"Pulvis Pyrius\"</note> through simple **Eruption** and **Expansion**; it is also said that when mixed with **Gunpowder**, it multiplies its strength.\n\nSimilarly, let the <term>Natura Inquisita</term> <gloss>Nature under investigation</gloss> be the transitory nature of **Flame** and its momentary extinction. For it does not seem that the **Flaming Nature** is fixed or remains stable here with us, but is generated at almost every single moment and immediately extinguished. It is evident that in **Flames** which continue and endure here, that duration is not of the same **Flame** in the <term>Individuo</term> <gloss>individual instance</gloss>, but occurs through a succession of new **Flames** generated in a series; the same numerical **Flame** does not remain at all. This is easily perceived from the fact that once the nourishment or **fuel** <note>original: \"fomite\"</note> of the **Flame** is withdrawn, the **Flame** immediately perishes. There is a <term>Bivium</term> <gloss>fork in the road; a crucial crossroad</gloss> regarding this nature, as follows. This momentary nature either happens because the **Cause** which first generated it ceases, as in **Light** <note>original: \"Lumen\"</note>, **Sounds**, and so-called violent **Motions**; or because **Flame** could, by its own nature, remain here with us, but from a con\n\n<summary>Bacon compares the explosive expansion of mercury and salts to gunpowder and observes that flame is not a permanent substance but a constant succession of new moments of fire. He proposes a logical crossroad to determine if flame dies because its cause ceases or because of external environmental pressure.</summary>\n<keywords>Francis Bacon, salts, quicksilver, mercury, gunpowder, expansion, nature of flame, fuel, motion, light, physics of fire</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3129,
+ "outputTokens": 577,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0032955,
+ "ms": 3283,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "tra-",
+   "headJoined": "Flammam",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1690
+}

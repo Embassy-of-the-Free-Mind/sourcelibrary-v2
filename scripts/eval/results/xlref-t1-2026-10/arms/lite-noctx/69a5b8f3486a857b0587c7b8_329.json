@@ -1,0 +1,34 @@
+{
+ "id": "69a5b8f3486a857b0587c7b8_329",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "BOOK NINE. 309\n<meta>continues from previous page: and</meta> kindle the fire: in this way both the crucible and the hearth are sufficiently heated in the space of half an hour; and certainly, if the ore was smelted in the same furnace the previous day, they heat up more quickly; if it was not smelted, more slowly. Indeed, if the hearth and crucible are not heated before the ore to be smelted is thrown in, they will themselves suffer damage, and the metals will sustain a loss. For if the powder from which both are made is damp in the summer time, or frozen in the winter, both will burst and, together with the metals and other materials, will scatter while emitting a sound like thunder, not without great danger to the men. Next, the master should throw the slag <note>original: \"recrementa\"</note> into the furnace; when this has liquefied, it will flow out of the mouth into the crucible. Soon he should block the mouth with clay, with which coal dust has been mixed; he should apply this by hand to a round wooden pestle, five fingers thick and two palms high, whose handle is three feet long. Then, with a hooked iron rod, he should draw the slag out of the crucible, and if he is about to smelt ore rich in gold or silver, he should place a hundredweight of lead into it; if it is poor, half that amount. For the former requires much lead, while the latter requires little. Soon he should throw charcoal on top of the lead so that it liquefies; afterwards, he should do everything properly and throw the contents into the furnace in a certain order: first, such a portion of loaves <note>original: \"panes\", here referring to compacted cakes of smelted pyrite</note> made from pyrite <note>original: \"pyrites\"</note> as is needed to smelt the ore; then the ore, mixed with silver dross <note>original: \"spuma argenti\"</note> and lead-glance <note>original: \"molybdæna\"</note> and stones of the second kind that melt easily in the fire, as much as two troughs can hold; then as much charcoal as a trough woven from wooden slats can hold; finally, the slag. With the furnace now filled with the aforementioned items, he should smelt the ore gradually; but he should not place it too close to the back wall of the furnace, lest it become fused around the nozzles of the bellows, obstructing the air and causing the fire to burn less brightly. He is certainly always to be held in the number of excellent smelters who can temper the four elements. A person tempers them who does not throw more of the ore, which partakes of the earth, into the furnace than is appropriate; who pours in water as often as the situation requires; who regulates the blast of the bellows with skill; and who casts the ore into the fire at the spot where it is burning brightly. The master indeed, pouring water gradually into both sides of the furnace, should dampen the charcoal so that the finest parts of the ores adhere to it, which otherwise would be stirred up and lifted by the blast of the bellows and the force of the fire, flying away with the smoke. But because the nature of ores to be smelted is diverse, smelters find it necessary to prepare the hearth now high and now low, and to place the pipe in which the nozzles of the bellows are situated sometimes very sloped and sometimes only slightly; and to breathe into the furnace a blast of the bellows sometimes gentle and sometimes vehement. For, for ores that heat and melt quickly, smelters need a low hearth, a pipe placed with little slope, and a gentle blast of the bellows; on the contrary, for those that heat and melt slowly, they need a high hearth, a pipe placed with much slope, and a vehement blast of the bellows. For these, they also need the furnace to be very hot and one in which slag has previously been smelted, or cakes made from pyrite, or stones that melt easily in the fire; if these things are not done, the ores settling in the hearth of the furnace block the mouth and as it were suffocate it. Small metallic particles that settled while the ores were being washed are also accustomed to do this. Furthermore, the large bellows should have wide nozzles; for if they are narrow, much and great blast is inspired into the furnace too tightly and sharply, from which the liquefied material is cooled and fused around the nozzles,\n\n<summary>This passage details the technical procedures for smelting ores, emphasizing the preparation of the furnace, the proper regulation of heat and air blast for different types of ore, and the critical importance of balancing the \"four elements\" to prevent damage to the equipment and loss of metal.</summary>\n<keywords>smelting, metallurgy, furnace operation, ores, pyrite, bellows, slag, lead, tempering</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3076,
+ "outputTokens": 1027,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0023095,
+ "ms": 4275,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4771,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 3571
+}

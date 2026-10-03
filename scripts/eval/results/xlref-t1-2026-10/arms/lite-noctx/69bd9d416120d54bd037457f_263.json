@@ -1,0 +1,34 @@
+{
+ "id": "69bd9d416120d54bd037457f_263",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "DE MOR. PHILOS.\n\nbe affected with judgment. Christ teaches that one should deserve well of all, that even enemies should be loved, that one should freely lend without expectation of return, that one should take revenge on no one, and that one should give to everyone who asks. The philosophers, by contrast, teach that one should only give to those who compensate a benefit with a benefit. Otherwise, they permit anger, hatred, contention, warfare, and usury. Furthermore, they have given us the <term>Pelagian</term> <gloss>a heresy denying original sin and asserting the sufficiency of human free will</gloss> heretics with their free will, the dictate of right reason, and the light of nature. Indeed, all of Moral Philosophy, as <note>Lactantius</note> testifies, is false and empty; it neither instructs one in the duties of justice nor confirms the office and reason of man. Finally, it is entirely repugnant to divine law and to Christ himself, so that its glory is owed to no one other than Satan.\n\nDE POLITICA.\nCap. LV.\n\nPolitics also pertains to Philosophy, which is the art of administering the Commonwealth. There are three types of this: namely Monarchy, which is the rule of one; Aristocracy, which is the rule of a few, though they be noble,\n\n<column-break/>\n\nwealthy, or wise; and Democracy, which is the rule of the people. Related to all these are tyrannies, oligarchies, and anarchies. But all these things must be referred to what comes to each person. For although philosophers wish to define which is best, they follow diverse opinions. Just as there is one God in heaven, one head in the body, and one leader among the bees, some confess that Monarchy is the truer form of government. Others contend that Aristocracy or Democracy is the form of government that is equitable and by which liberty is preserved. This is argued by others, such as Plato, Aristotle, Apuleius, and those who speak not only from our own traditions but also from those of the barbarians. Those who have written about these matters speak only of those things that pertain to external administration, to peace, to the tranquility of public affairs, and to deliberation; they do not speak of souls, nor of salvation, nor of eternal aids. They only look to those things which are to be accomplished in this world. This is also what the lawgivers did, such as Lycurgus, Solon, and others, who established laws almost <unclear>c</unclear>\n\n<summary>Agrippa critiques Moral Philosophy for contradicting Christian ethics and dismisses political science as a purely worldly pursuit that ignores the soul and eternal salvation.</summary>\n<keywords>Moral Philosophy, Politics, Pelagianism, Christ, Monarchy, Aristocracy, Democracy, Lawgivers</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2515,
+ "outputTokens": 599,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00152725,
+ "ms": 2647,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2219
+}

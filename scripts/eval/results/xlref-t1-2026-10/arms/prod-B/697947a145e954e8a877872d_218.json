@@ -1,0 +1,44 @@
+{
+ "id": "697947a145e954e8a877872d_218",
+ "arm": "prod-B",
+ "model": "gemini-3-flash-preview",
+ "text": "to leave, and would have crossed over that poison which is similar to itself.\n\n<margin>And it attracts its own kind.</margin>\nNote next this kind of experiment: let a silver coin be hollowed out and placed upon water so that it floats upon it like a ship. Then hold a small piece of true unicorn’s horn in such a way that it does not actually touch the coin, but remains as close to it as possible. That unicorn’s horn, by its spiritual virtue, will drive the coin away from itself so that it flees, just like a duck swimming through the water flees when it notices the snares of a fowler aiming a lead bullet at it.\n\nOn the other hand, nature loves and follows that which is similar to itself in a marvelous way, as is clear from this example. Place a piece of pure and clean bread in a dish filled with water, so that the bread floats upon the water. Then move the pure unicorn’s horn toward the bread,\n\n<summary>The author describes an experiment where a floating silver coin is repelled by a unicorn's horn to demonstrate its antipathy toward poisons, contrasting this with nature's attraction to similar substances.</summary>\n<keywords>unicorn's horn, silver coin, magnetism, sympathy and antipathy, alchemical experiments, natural philosophy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2698,
+ "outputTokens": 279,
+ "thinkingTokens": 0,
+ "cost_usd": 0.002186,
+ "ms": 2000,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": "aranea",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1017
+}

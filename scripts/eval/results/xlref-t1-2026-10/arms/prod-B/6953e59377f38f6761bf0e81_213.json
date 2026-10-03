@@ -1,0 +1,44 @@
+{
+ "id": "6953e59377f38f6761bf0e81_213",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "in the same way, a flat circular piece of iron can be artistically touched at opposite points on its perimeter. However, magnetic experiments appear less clear due to weaker forces in round iron implements. The variety of declinations arises from iron needles <note>original: \"obelis ferreis\"</note> at various latitudes on the <term>terrella</term> <gloss>a spherical lodestone used as a model of the Earth</gloss>.\n\n<note>A circular diagram represents a <term>terrella</term> <gloss>a small magnetic model of the Earth</gloss>. An outer circle is labeled \"Circle of Virtue.\" Inside, a shaded sphere representing the terrella has a horizontal \"Axis\" drawn through it. Along the circumference of this inner sphere, several small iron needles are depicted at various latitudes. At the equatorial points, the needles lie flat against the surface. As they move toward the top and bottom poles, they incline at increasingly steep angles, until they stand perfectly vertical at the magnetic poles.</note>\n\nThe declination of magnetized iron upon the <term>terrella</term> <gloss>little Earth</gloss> is shown by various equal iron wires, of the length of a barleycorn, arranged along the meridian. At the equator, the wires are directed by the virtue of the stone toward the poles and lie flat against the body, parallel to its horizon. The closer they are placed to the poles, the more they are raised by their changeable nature; at the poles themselves, they point perpendicularly toward the center. But iron needles are not correctly raised unless the stone is vigorous and they are of the appropriate length.\n\n### C A P. III.\n\n### An instrument for demonstration, indicating by the virtue of the stone the degrees of declination from the horizon of each latitude.\n\n<meta>catchword: Instru-</meta>\n\n<summary>This page explains the mechanics of magnetic declination, or \"dip,\" demonstrating through experiments with iron needles on a spherical lodestone that the angle of inclination varies predictably based on the proximity to the magnetic poles.</summary>\n<keywords>magnetic declination, inclination, terrella, iron needles, meridian, equator, poles, magnetic force</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2803,
+ "outputTokens": 455,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00138325,
+ "ms": 2032,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1753
+}

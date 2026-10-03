@@ -1,0 +1,42 @@
+{
+ "id": "6952d05477f38f6761bc511e_428",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\n418 **B A S I L I C A**\n\n<margin>\n...stral, Venenous <gloss>poisonous</gloss>, and Spiritual, and into the Scourge <note>Flagellum</note>, namely the Fifth.\n</margin>\n\n<margin>\nThese Sidereal and Firmamental Infections are recognized by the Adept physician and are cured Firmamentally: for it is Adept medicine. The Art which gives the knowledge of recognizing and expelling Firmamental Infections.\n</margin>\n\n<margin>\nThe Magnet of Man. A Magical Cure, in which there is a celestial impression after contact with the herb; as long as the herb is putrefied, it attracts the medicine into the ulcer, and thus heals it.\n</margin>\n\nclearly, the greatest part of diseases coming from celestial Influence, and from the Astral Impression of the Firmament of the Greater World <note>the Macrocosm</note>, does not wish to be cured with mixed Remedies, such as through the Secrets <term>Arcana</term> <gloss>hidden powers or essential principles</gloss> of herbs, minerals, and metals, but the cure should be established through Astronomical Influence with those things at least which have an Analogy to the greater and lesser world <note>the Microcosm, or Man</note>, in which there is a true Magnetic force of the Firmament and a Celestial Impression for resisting diseases from the Firmament of the greater and lesser world, just as appears in Water-pepper <term>Persicaria</term>, Great Goldenrod <term>Solidagine maiore</term>, Dragonwort <term>Dracunculo</term>, and Great Comfrey <term>Symphyto maiore</term>.\n\nIf a disease or pain is brought on Supernaturally through incantation or the Magical Impression of the Ascendants <note>the zodiacal signs rising at the time of a disease's onset</note>, then the attempt of the first three to heal is in vain; instead, according to Paracelsus, one must proceed Magically and Supernaturally, and the evil must be repelled in turn in the same way it was brought on. Otherwise, in the said Simples <note>medicinal plants containing only one constituent</note> there is an Influential attractiveness, and they cure all things according to Divine ordination Magically, Astronomically, and Magnetically, because the medicine is in them and the Magnet is in Man: For just as the Sun and the Stars have the power of attracting moisture from lower things: So Man (by his innate magnetic attractive force, like a Magnet drawing the spirit of nourishment in place of Iron) and lower things have the same power of attracting from Higher things, as we see in the time of the Plague, and these but chymical\n\n<summary>Croll explains that diseases of celestial or magical origin require specialized astronomical and magnetic cures rather than standard herbal remedies. He describes the human body and certain plants as magnets capable of attracting or repelling these higher spiritual influences.</summary>\n<keywords>Paracelsus, Five Beings of disease, astral influence, macrocosm, microcosm, magnetic medicine, sympathetic magic, medicinal herbs, plague</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2993,
+ "outputTokens": 4796,
+ "thinkingTokens": 4112,
+ "cost_usd": 0.0158845,
+ "ms": 19665,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "split",
+   "joined": "atCHYMICA",
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1772
+}

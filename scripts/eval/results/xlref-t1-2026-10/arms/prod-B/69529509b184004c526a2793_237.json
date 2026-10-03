@@ -1,0 +1,44 @@
+{
+ "id": "69529509b184004c526a2793_237",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "**History of Life and Death.** **227**\n\n<margin>04</margin> let us inquire; for the proper\nwork of cold is *Condensation*; and\nit is perfected without any\nmalignancy, or inimical quality:\nand therefore the operation is safer,\nthan by *Opiates*; although a little\nless potent, if it were used only by turns,\nas *Opiates* are: But again, because it\ncan be applied familiarly, and in the daily\ndiet moderately, it is also\nby far more potent for the prolongati-\non of life, than by *Opiates*.\n\n<margin>39</margin> *Refrigeration of the Spirits*, is done in three\nways; Either by *Respiration*;\nOr by *Vapors*; Or by *Alimen-\nts*: The first is the best, but almost\noutside our power; The second is\nalso potent, and yet is at hand;\nThe third is weak and through circuits.\n\n*Air*\n\n<summary>Bacon argues that the cooling of the vital spirits is a safer method for prolonging life than the use of opiates, as cold can be applied through diet daily without negative side effects. He briefly outlines three methods of refrigeration: respiration, vapors, and foods.</summary>\n<keywords>refrigeration, vital spirits, condensation, respiration, vapors, food, longevity, Francis Bacon</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2553,
+ "outputTokens": 309,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0011017499999999999,
+ "ms": 1679,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 779
+}

@@ -1,0 +1,44 @@
+{
+ "id": "69b6e791f8a84d859cde1de2_473",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "OF ANIMALS. 255\n\n<margin>where they come from.</margin>\n<margin>they are.</margin>\n<margin>end.</margin>\n<margin>institution.</margin>\n<margin>begotten</margin>\n<margin>part.</margin>\n<margin>tion-</margin>\n<margin>is.</margin>\n<margin>and.</margin>\n<margin>in-</margin>\n<margin>t-</margin>\n<margin>and</margin>\n<margin>di-</margin>\n<margin>fac-</margin>\n<margin>and,</margin>\n<margin>5,</margin>\n<margin>is</margin>\n<margin>of</margin>\n<margin>by</margin>\n<margin>and;</margin>\n<margin>the air,</margin>\n<margin>of-</margin>\n<margin>it is.</margin>\n<margin>per-</margin>\n<margin>fact-</margin>\n\nbefore the first <note>in the stomach</note>, which is called chylification. The excrements of the first and second digestion <note>referring to metabolic processes</note> (namely in the intestines, and in the vesicle of the urine and bile) are contemporary with the cooking organs themselves. Finally, not only in the vegetative part of the soul, but even before the soul itself, there exists a mind, providence, and intellect, which dispose, order, and provide for all things immediately from the first origin for the existence and well-being of the chick, and fashion them with art into the form and likeness of their progenitors.\n\nRegarding the resemblance of the offspring, it is permissible to doubt what the cause is why the fetus is sometimes more similar to the father, sometimes to the mother, and sometimes even found to be like its ancestors, whether paternal or maternal, especially when several eggs are fertilized at one gathering and in the same moment. It is also admirable that virtues and vices, as well as diseases, marks, and moles, are transferred from the parents to the descendants, and this in only some fetuses, but not in all. In the genus of fowls, some are noble and born for battle, preferring to die than to yield to adversaries by fleeing; yet their descendants, unless they have been begotten by similar parents, gradually divest themselves of that virtue, according to the saying: \"The brave are created from the brave.\" In most other species of animals also (and especially in humans), the nobility of the lineage is observed, and many gifts of mind and body arrive by transmission.\n\nI have often wondered why, when we see the offspring (for the most part) obtain a mixed structure or composition from each parent, and this in all other parts, the same does not happen in the genitals; but generally, either a male or a female is born, and very rarely an hermaphrodite.\n\nFinally, many things are present before they appear, and some things are initiated among the first that are perfected at the last, such as the eyes, the genitals, and the beak.\n\nDoubts also arise from here, and certain difficulties, concerning the supremacy of the members or the dignity of the parts.\n\n<summary>Harvey explores the origins of physical resemblance and hereditary traits in offspring, while questioning why sexual characteristics do not typically blend like other physical features.</summary>\n<keywords>heredity, fetal development, vegetative soul, generation, sexual dimorphism</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3390,
+ "outputTokens": 734,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0019485,
+ "ms": 3938,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "catchword",
+   "joined": null,
+   "catchword": "in",
+   "headJoined": "perficitur",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2682
+}

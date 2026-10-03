@@ -1,0 +1,34 @@
+{
+ "id": "69ac7ee520878c5c9ba51e75_98",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "New Organon. Book I.\n\nthey will occupy themselves uselessly in the rest, and even sell themselves to others to gain a better reputation for the things they are engaged in. Thus it happens that, after the manner of <term>Atalanta</term> <gloss>a figure from Greek mythology known for her speed, who was distracted from a race by golden apples</gloss>, they depart from the path to pick up the golden apple; meanwhile, they interrupt their course and let victory slip from their hands. But in the true course of experience, and in carrying it forward to new works, Divine Providence and Order must be taken entirely as the model. God, on the first day of Creation, created only Light, and He attributed an entire day to that work; He did not create any material work on that day. Likewise, from all kinds of experience, the invention of Causes and true Axioms must be elicited first: and light-bearing experiments, not fruit-bearing ones, are to be sought. Axioms, however, when correctly invented and established, instruct practice not sparingly, but in abundance; and they draw after themselves troops and masses of works. But concerning the ways of experimenting, which are no less beset and blocked than the ways of judging, we shall speak hereafter: for the present, we have spoken only of common experience, as of a poor Demonstration. Now, the order of things requires that we add something concerning those signs mentioned a little earlier (that philosophies and contemplations currently in use are in a bad state), and concerning the causes of a thing so wonderful and incredible at first glance. For the notion of signs prepares for assent, while the explanation of causes removes the miracle. These two things greatly assist in the easier and gentler extirpation of Idols from the Intellect.\n\n<summary>Bacon argues that researchers should prioritize discovering fundamental causes and axioms over immediate practical applications, illustrating this through a theological analogy of the creation of light.</summary>\n<keywords>Atalanta, Divine Providence, light-bearing experiments, fruit-bearing experiments, axioms, Idols of the Intellect</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2371,
+ "outputTokens": 436,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00124675,
+ "ms": 2110,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1753
+}

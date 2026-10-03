@@ -1,0 +1,44 @@
+{
+ "id": "69b4d643853c26e0d15603c8_136",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nof additions, so that the <term>quintessence</term> <gloss>the fifth essence or purest portion of a substance</gloss> remains within their odor, color, and taste, and increases within these rather than diminishing. This is seen in <term>Musk</term> <gloss>an aromatic substance from the musk deer</gloss>, <term>Ambergris</term> <gloss>a waxy substance from sperm whales used in perfume</gloss>, and <term>Civet</term> <gloss>a musk-like secretion from the civet cat</gloss>; if the quintessence is extracted from these, you will notice the remaining body stinks and is of no importance in taste, odor, or nature. The same must be judged regarding the extraction of the quintessence of all other things. Although Musk, Ambergris, and Civet are not referred to this present chapter—because we describe those specifically elsewhere, and here we deal only with things that grow <note>original: \"Crescentibus\"</note>, such as Lilies, Spikenard, and Spikenard-leaf—the process of their extraction is as follows.\n\nTake the growing things, well crushed, and place them in a jar to digest in horse dung for four weeks. Distill this through a <term>balneum</term> <gloss>a water bath or bain-marie</gloss>, then putrefy it again in horse dung for eight days, and distill again through the water bath. The quintessence will transcend through the <term>alembic</term> <gloss>the cap of a distilling apparatus</gloss>, and the body remains at the bottom. If more quintessence is still held at the bottom, continue by putrefying and distilling. Afterward, take the distilled water and add that growing thing to it again. Digest it through a <term>pelican</term> <gloss>a circulatory distillation vessel with two side arms</gloss> for six days, and it will turn into a thick color. Strain this, and distill the strained liquid through a water bath. The body will come out, but the quintessence will reside at the bottom. Separate this from the dregs using a press for the <term>retort</term> <gloss>a curved glass vessel for distillation</gloss>, and leave the quintessence for four\n\n<summary>This page describes the method for extracting the quintessence from growing plants and aromatic substances, emphasizing the use of digestion in horse dung and specific distillation vessels like the alembic and pelican.</summary>\n<keywords>quintessence, distillation, alchemy, Musk, Ambergris, Civet, horse dung, balneum, alembic, pelican, botany</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2812,
+ "outputTokens": 574,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0031279999999999997,
+ "ms": 3114,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "split",
+   "joined": "quatuor",
+   "catchword": "or dies",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1558
+}

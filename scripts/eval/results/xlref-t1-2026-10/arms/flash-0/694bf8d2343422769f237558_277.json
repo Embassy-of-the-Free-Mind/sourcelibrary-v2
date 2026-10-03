@@ -1,0 +1,44 @@
+{
+ "id": "694bf8d2343422769f237558_277",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\n<note>is the most powerful</note> of all things <note>referring to music or harmony</note>. Moving away from the mainland into the pond, they move in a circle and lead a dance, then return to the shores. Marcus Varro <note>Roman scholar and writer, 116 to 27 BCE</note> testifies that he saw these things. And there are wonders even greater than these: for on the Attic shore, the sea sounds like a lyre. At Megara, a certain rock resonates like a stringed instrument when struck with pebbles, so great is the force of Music. It also soothes the soul, lifts the mind, incites warriors to war, and eases the labor and fatigue of individual tasks. It restores those who have fallen or are in despair, and strengthens travelers. The Arabs say that camels carrying burdens are strengthened by their drivers singing. In a similar way, those carrying heavy loads sing, and through this they are made capable and relieved: for song produces delight and ability. It mitigates the angry, makes the sad and anxious joyful, pacifies those in discord, tempers the madness of the frantic, and dissipates vain thoughts. Hence it is that Democritus and Theophrastus affirm that certain diseases of the body and mind can be either cured or induced in this way. Thus we read that Terpander and Arion of Methymna <note>Arion was a semi-legendary Greek kitharode and poet</note>...\n\n<summary>This page explores the marvelous effects of music and harmony on nature and the human spirit. It cites classical authorities and observations of musical phenomena in the natural world to demonstrate music's power to heal, motivate, and transform emotional states.</summary>\n<keywords>Music, harmony, Marcus Varro, acoustics, psychology of music, Arabs, Democritus, Theophrastus, Terpander, Arion of Methymna, healing, emotional influence</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2853,
+ "outputTokens": 423,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0026955,
+ "ms": 2882,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1482
+}

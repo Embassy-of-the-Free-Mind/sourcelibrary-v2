@@ -1,0 +1,44 @@
+{
+ "id": "6949af986ef4a68b726b7fa9_358",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\npivots, and in this way, the screw creates rotations as men tread upon it. Its elevation and inclination are to be arranged such that it corresponds to the description of a Pythagorean right-angled triangle <note>original: \"pythagoricum trigonum orthogonium\"</note>. That is, the length is divided into five parts; the head of the screw is raised by three of these parts, so that the space from the plumb line to the lower openings <note>original: \"imas nares\"</note> is four parts. The reason why this must be so is described in the drawing at the end of the book.\n\n<margin>\na. The screw <term>coclea</term> <gloss>snail-shaped water lifter</gloss> set at the ratio of a Pythagorean triangle.\nb. The beams in which the screw turns.\n</margin>\n\n<note>A woodcut illustration shows an Archimedean screw, or \"coclea,\" used for irrigation or drainage. The device consists of a wooden shaft with an internal spiral encased in a cylinder, tilted at an angle. The lower end is submerged in water, and the upper end is supported by a tall wooden pillar labeled \"b.\" A large treadwheel labeled \"d\" is attached to the center of the shaft, allowing humans to turn the device by treading on its rungs. Water is shown being lifted through the screw and discharging from the top into a wooden trough or basin. The letter \"a\" labels the main body of the screw.</note>\n\nRegarding the materials from which machines for drawing water <note>original: \"organa ad hauriendam aquam\"</note> are made, the methods by which they are completed, and the things that provide them with motion through rotations for infinite uses,\n\n<summary>Vitruvius explains the mathematical ratio for tilting an Archimedean screw using a 3-4-5 Pythagorean triangle and concludes the section on water-lifting machines.</summary>\n<keywords>Archimedean screw, coclea, Pythagorean triangle, hydraulic engineering, water lifting, treadwheel</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2872,
+ "outputTokens": 449,
+ "thinkingTokens": 0,
+ "cost_usd": 0.002783,
+ "ms": 2664,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": "inducuntur",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1502
+}

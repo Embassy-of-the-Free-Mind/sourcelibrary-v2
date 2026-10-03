@@ -1,0 +1,44 @@
+{
+ "id": "69520185ab34727b1f0416bc_29",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\n\nbrought it forth. Truly, arsenic can certainly by no means be fixed <note>fixed: stabilized into a solid, non-volatile state</note> unless the practicing artist has an equal knowledge of its staining spirit, a matter in which all the philosophers have slumbered, striving in vain to produce anything from it. Therefore, whoever remains ignorant of this spirit should have no hope of fixing the arsenic itself, nor of attributing to it the power by which he might acquire the perfection of transmutation. For this reason, I make it known to all that the whitening of which mention was made is drawn from a false foundation; by it, copper is falsely whitened but not transformed. The Sophists have mixed <term>Venus</term> <gloss>copper</gloss>, masked and painted in this manner, with twice its weight of <term>Luna</term> <gloss>silver</gloss> and sold it to goldsmiths and coin-makers. Eventually, they transformed themselves into counterfeiters—not only those who sold it, but also those who bought it. Some of the Sophists took red arsenic instead of white, and this itself resulted in a false art. For in whatever way it is prepared, it exhibits nothing beyond whiteness. Some proceeded further to common sulfur, which they cooked until yellow with vinegar, lye, or very sharp urine, day and night, until it emerged white. Afterward, they raised it from common salt and the lime of eggs <note>powdered eggshells</note>, and cooked and sublimated it through sublimation, doing so many times. Nevertheless, it always remained combustible, even though it was white. With this, however, they attempted to fix raw <term>mercury</term> <gloss>quicksilver</gloss>\n\n<summary>Paracelsus warns that arsenic cannot be truly stabilized for transmutation without understanding its hidden spirit. He exposes how \"Sophists\" use deceptive whitening techniques to create counterfeit silver and details failed attempts to whiten sulfur for the same purpose.</summary>\n<keywords>arsenic, fixation, transmutation, copper, silver, counterfeiters, sulfur, sublimation, mercury</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 8819,
+ "outputTokens": 450,
+ "thinkingTokens": 0,
+ "cost_usd": 0.005759500000000001,
+ "ms": 3987,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 20577,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 19377
+}

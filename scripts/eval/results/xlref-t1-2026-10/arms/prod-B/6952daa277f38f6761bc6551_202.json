@@ -1,0 +1,44 @@
+{
+ "id": "6952daa277f38f6761bc6551_202",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "ON OCCULT PHILOSOPHY,\nPage CLXXXVI.\n\n### On the images of the Head and Tail of the Dragon of the Moon. Chapter 45.\n\n<note>A woodcut illustration depicts a serpent or dragon coiled into a circular shape resembling the Greek letter Theta (Θ). The creature has the head of a hawk and a pointed tail. Within the circular body, there is a central vertical line crossed by a shorter horizontal line, with small astrological or symbolic marks at the terminals.</note>\n\nThey also used to make an image of the Head and Tail of the Dragon of the Moon, namely the figure of a serpent placed between an airy and a fiery circle, with the head of a hawk surrounding them in the likeness of the Greek letter <term>theta</term> <gloss>Θ</gloss>. They fashioned it when Jupiter held the mid-heaven with that head; they affirm that this image contributes much to the success of petitions. They intended by this image to denote a good and fortunate <term>daemon</term> <gloss>spirit</gloss>. They wished to represent him through the image of a serpent, for the Egyptians and Phoenicians celebrated this as a divine animal above all others, and praised its divine nature, because in it, more than in other animals, there exists a sharper and more expansive spirit. This is shown both by its swift movement, without any feet or hands or other instruments, and because it repeatedly renews its age and becomes young again.\n\nThey made an image of the Tail in a similar fashion when the Moon was eclipsed in the tail, or was badly affected by Saturn or Mars. They made it to induce anxiety and infirmity, and they called it an evil <term>genius</term> <gloss>spirit</gloss>. A certain Hebrew had enclosed such an image in a double golden belt, which Blanch, daughter of the Duke of Bourbon, gave as a gift to her husband, Peter, King of Spain of that name (the first), whether knowingly or unknowingly. When he was girded with it, he felt himself surrounded by a serpent. Having subsequently discovered the magic power inserted into the belt, he repudiated his wife for that reason.\n\n### On the images of the Mansions of the Moon. Chapter 46.\n\nThey also made images for the individual <term>mansions of the Moon</term> <gloss>the twenty-eight lunar stations used in astrology</gloss>. In the first, for the destruction of someone, they made an image in an iron ring of a black man dressed in sackcloth and girded, throwing a small lance with his right hand. They sealed it in black wax and fumigated it with liquid storax and uttered imprecations. In the second, against the anger of a prince and for his reconciliation, they sealed in white wax and mastic the image of a crowned king, and fumigated it with wood of aloes. In the third, they made an image in a silver ring, whose measurement was square, and whose figure was a woman well dressed sitting on a chair, with her right hand raised above her head; they sealed and fumigated it with musk, camphor, and aromatic nail <note>likely clove or a similar fragrant spice</note>. They asserted that this bestows the prosperity of fortune and every good thing. In the fourth, for vengeance and separation, enmity and malevolence, they sealed in red wax the image of a soldier sitting on a horse, holding a serpent in his right hand, and fumigated it with red myrrh and storax. In the fifth, for the favor of kings and officials and a good reception, they sealed from silver the head of a man, and fumigated it with sandalwood. In the sixth, to place love between two, they sealed in white wax two images embracing each other, and fumigated it with wood of aloes and amber. In the seventh, to acquire every good thing, they sealed from silver the image of a man well dressed, with hands toward heaven for\n\n<summary>This page details the creation and use of talismans based on the lunar nodes (the head and tail of the dragon) and the first seven lunar mansions, specifying materials, timing, and fumigations for various effects ranging from protection to the provocation of enmity.</summary>\n<keywords>Head of the Dragon, Tail of the Dragon, lunar mansions, talismans, astrological magic, Agrippa, occult philosophy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3386,
+ "outputTokens": 913,
+ "thinkingTokens": 0,
+ "cost_usd": 0.002216,
+ "ms": 3961,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4543,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 3343
+}

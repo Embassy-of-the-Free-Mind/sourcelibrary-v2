@@ -1,0 +1,42 @@
+{
+ "id": "1a8485e5-5331-41df-bfc1-6efd65238f55_581",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "# ON BIRD-CATCHING\n<note>original: \"DE AVCVPIO\"</note>\n\n<meta>continues from previous page: Hold the membrane from a dog’s afterbirth, or a hare’s fur</meta> or its dung, or those who carry the <term>peristereon</term> <gloss>vervain</gloss> herb. A black stone like a bean is found in the Nile; upon seeing it, dogs do not bark. You shall carry a dog's tongue in your shoe, placed under the big toe, or if you carry a dried dog's heart with you, according to Sextus <note>Sextus Placitus, a late Roman medical author</note>. Or hare's hair, or dung, according to Pliny <note>Gaius Plinius Secundus, the Roman natural historian</note>. Or you shall carry the severed tail of a young weasel on your foot, or give the dog a frog in a morsel of food; all these things serve to avoid the barking of dogs. Nigidius <note>Publius Nigidius Figulus, a Roman scholar and contemporary of Cicero</note> says that dogs flee the sight of anyone for a whole day who has pulled a tick from a pig and carried it for a short while. Oppian <note>A 2nd-century Greco-Roman poet who wrote on hunting and fishing</note> wrote:\n\n> If you carry a small piece cut from the skin of a hyena,\n> Both fierce puppies and dogs will be struck\n> With sharp terror; they will not bark at you\n> As you walk hereafter, even if they barked before.\n\n### That a dog cannot run.\n\nSmear its wings <note>original: \"alas,\" which usually means wings, but in the context of a dog likely refers to the armpits or the \"wings\" of the shoulder</note> with oil, for it will be hindered in its course; it will happen in this manner.\n\n### That a hawk be spirited.\n\nYou shall encourage the bird against its prey so that it attacks large birds. Soak the bait used during hunting time in wine. Or, if it is a goshawk <note>original: \"astur\"</note>, give it a little vinegar. When you wish it to fly, give it three morsels of meat soaked in wine, or pour wine into a pigeon's beak from your own mouth and then make the hawk fly. Thus:\n\n### You will make partridges more inclined to fight,\n\nIf you give them small branches of <term>adiantum</term> <gloss>maidenhair fern</gloss> to eat, according to Pliny. And:\n\n### Roosters become more inclined to fight,\n\nBy giving them garlic in their food when they are about to fight. For this reason, in ancient comedy, they are very wittily called <term>eskorodismenoi</term> <gloss>garlicked</gloss> <note>original Greek: ἐσκοροδισμένοι</note>, which means \"fed with garlic,\" to describe one who is vehement and too inclined to a fight.\n\n### Lest a bird fly high,\n\nPull out the tail feathers that direct the course upward; thus it will fly in a circle below. If you wish:\n\n### That a bird cannot fly,\n\nCut the upper and lower nerves of the wing; it remains without harm, but the bird will not fly. In this way, they do not escape from aviaries.\n\n<summary>This page details various charms and natural remedies to control animal behavior, including ways to silence dogs, increase the aggression of hawks and roosters, and prevent birds from flying away.</summary>\n<keywords>animal husbandry, hunting dogs, falconry, folk medicine, Pliny the Elder, Oppian, garlic, avian management</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3057,
+ "outputTokens": 2886,
+ "thinkingTokens": 2071,
+ "cost_usd": 0.010186500000000001,
+ "ms": 12983,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1921
+}

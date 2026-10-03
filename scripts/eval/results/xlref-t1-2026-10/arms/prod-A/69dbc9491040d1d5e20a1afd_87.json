@@ -1,0 +1,44 @@
+{
+ "id": "69dbc9491040d1d5e20a1afd_87",
+ "arm": "prod-A",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page: ...but also confiscated the goods of entire provinces and regions in a single type of disaster. Therefore, having been vexed and having lost their possessions to foreign nations as an example, we saw Massilia carried in a triumph, a city that was never even allowed to be triumphed over <note>Massilia, modern-day Marseille, was considered a protected ally and a symbol of Roman stability</note> by our commanders from their Transalpine wars. There are many other nefarious things to commemorate regarding the allies, if seeing anything at all in this single instance were not enough. We are therefore rightly punished. For unless we had endured their unpunished crimes, the license would never have reached such a point. From the greed of a few, it became an inheritance for many wicked men. Nor, indeed, did the seed of civil wars ever arrive from a more just cause, so long as men remembered that blood-stained spear <note>referring to the auctions held by Sulla, marked by a spear</note> and expected others. When that man brandished it, with the dictator approaching, the state did not recover from that wickedness for thirty-six years. Another, who had been a scribe in that dictatorship, was city quaestor in this one. From this, it can be understood that with such rewards proposed, civil wars will never be absent. And so, the city stands and remains only by the grace of the walls, and even those men themselves now fear the ultimate crimes. In truth, we have completely lost the Republic. And we have fallen into these shipwrecks. It is necessary, therefore, to return to the point <note>of the argument</note>: we preferred to be loved when we could have been dear <note>Cicero emphasizes that being worthy of love is more stable than being feared</note>. What could have happened justly ordered to the Roman people, what should individuals think? <insert>On the attainment of affection</insert>\n\nBut for whom it is clear that the power of benevolence is great, and that of fear is weak, it follows that we must discuss by what means we can most easily attain those things which we desire, along with honor, loyalty, and affection. But those things are not equally</meta>\n\n<summary>This passage continues Cicero’s critique of the decline of Roman political ethics, focusing on the transition from a republic maintained by benevolence to one defined by civil war and the exploitation of allies. Cicero emphasizes that authority based on fear is inherently unstable and destructive to the state.</summary>\n<keywords>Cicero, Republic, benevolence, civil war, Massilia, Roman ethics, political power</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2777,
+ "outputTokens": 555,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0015267500000000001,
+ "ms": 2925,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1664
+}

@@ -1,0 +1,44 @@
+{
+ "id": "69af0cfc067c0c26ee26cd3c_151",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nSince these things are so, it is certain that another point I previously stated will also be confirmed: namely, that the blood passes continually through the heart. For we see in the external part of the body that the blood flows from the arteries into the veins, and not from the veins into the arteries. We see, moreover, that almost the entire mass of blood can be drained from the arm itself, and this from a single superficial vein opened with a lancet, provided a proper ligature is applied. We further see it poured out so forcefully and abundantly that it is clear that not only is the blood which was contained in the arm below the ligature before the incision quickly and rapidly evacuated, but blood from the whole arm and the whole body, from both the arteries and the veins, is drained.\n\nTherefore, it must first be admitted that it is supplied by force and impulse, and is driven by force <note>The Latin text ends here with \"impingi\", which describes the blood being pushed or driven into the vessels by the action of the heart.</note>\n\n<summary>Harvey demonstrates that blood flows in a one-way circuit from arteries to veins and can be entirely drained from the body through a single incision, proving a continuous circulation.</summary>\n<keywords>circulation of blood, William Harvey, arteries, veins, ligature, phlebotomy, heart motion, anatomy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2467,
+ "outputTokens": 293,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0021125,
+ "ms": 6476,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "split+catchword",
+   "joined": "impingi",
+   "catchword": "pingi",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 911
+}

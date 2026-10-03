@@ -1,0 +1,44 @@
+{
+ "id": "69dbc89d1040d1d5e209ab64_305",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>What, then, is the manner in which God foreknows these uncertain future events? For if he judges that those things which are avoidable will occur, then it is impossible for them to happen as he foresees; he is deceived, which is not only a wicked thing to feel, but even to speak. But if he discerns that they will happen just as they are, so that he knows they are able to either happen or not happen, what kind of foreknowledge is this, which grasps nothing certain and nothing stable? Or how does this differ from that ridiculous prophecy of Tiresias <note>A blind prophet of Apollo in Greek mythology, often cited in discussions of fate</note> saying: \"Whatever I say will either be or not be\"? How would divine providence then differ from human opinion, if God judges uncertain things just as men do, the outcome of which is uncertain? But if nothing uncertain can exist for that most certain fountain of all things, <summary>Boethius questions how God can have certain foreknowledge of events that are inherently uncertain or avoidable without being deceived or appearing no different from a fallible human observer.</summary>\n<keywords>foreknowledge, divine providence, Tiresias, certainty, God, future contingents</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2223,
+ "outputTokens": 267,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0019125000000000001,
+ "ms": 2082,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 856
+}

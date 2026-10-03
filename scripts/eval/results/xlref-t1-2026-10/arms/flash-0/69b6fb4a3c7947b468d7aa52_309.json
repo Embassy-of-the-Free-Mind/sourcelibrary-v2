@@ -1,0 +1,44 @@
+{
+ "id": "69b6fb4a3c7947b468d7aa52_309",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nnevertheless we wish it to be understood that they are also of great use even when proper instances are available: namely, to strengthen the information alongside the proper ones. But we shall speak more precisely regarding these when the discourse descends in order to the treatment of the supports of induction <note>Latin: \"adminicula inductionis\"</note>.\n\n### XLIII.\n\nAmong the prerogatives of instances, we shall place in the twentieth position the instances of dissection <note>Latin: \"instantias perfecantes\"</note>; which we are also accustomed to call twitching instances <note>Latin: \"instantias vellicantes\"</note>, though for different reasons. We call them twitching because they twitch the intellect; and of dissection because they dissect nature, wherefore we also sometimes call them the instances of Democritus <note>A reference to the Greek philosopher Democritus, who theorized that the world was composed of indivisible atoms</note>. These are the instances which remind the intellect of the admirable and exquisite subtlety of nature, so that it may be excited and awakened to attention, observation, and proper inquiry. For example: how a small drop of ink may be extended into so many letters or lines; how silver, gilded only on the outside, may be drawn out into such a great length of gilded wire; how a tiny little worm, such as is found in the skin, possesses in itself both a spirit and a distinct configuration of parts; how a little saffron stains even a cask of water with its color; how a little civet or spice fills a much greater volume of air with its scent; how from a small...\n\n<summary>Bacon introduces instances of dissection or twitching, which reveal the extreme subtlety of nature to provoke deeper scientific inquiry. He provides examples of the vast expansion and divisibility of matter, such as ink, gold, and perfumes.</summary>\n<keywords>Francis Bacon, Novum Organum, instances of dissection, Democritus, subtlety of nature, induction, scientific observation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2477,
+ "outputTokens": 428,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0025225,
+ "ms": 2580,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1436
+}

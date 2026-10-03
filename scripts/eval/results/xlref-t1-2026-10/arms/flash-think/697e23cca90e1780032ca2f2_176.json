@@ -1,0 +1,44 @@
+{
+ "id": "697e23cca90e1780032ca2f2_176",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>certain that around the thirtieth day of this reign, a lemon-yellow color appears, which within two weeks from its first appearance will imbue the whole with that same yellow hue.\n\n## CHAPTER XXX.\n\n### On the Reign of the Sun.\n\nNow you approach the end of your work, and you have almost completed your business; now everything appears like pure gold <note>original: *auri obryzi*; refers to gold that has been tested and refined by fire</note>, and the \"virgin's milk\" <note>an alchemical term for the mercurial liquid or white solvent used to moisten the material</note> with which you soak this matter becomes intensely yellow. Now return immortal thanks to God, the giver of all good things, who has led the work this far; pray to Him as a suppliant that He may guide your counsel from here on, lest by chance you lose everything by striving to rush a work that is already nearly finished. Consider now that you have waited for almost seven months, and it would not be sane to annihilate everything in a single hour. Therefore, be very cautious, and all the more so the closer you are to perfection. If you proceed cautiously, these notable things will occur: first, you will observe a certain yellow sweat on the body, and finally yellow vapors as the body settles, tinged with violet and sometimes with dark purple. After a wait of twelve or fourteen days in this \"reign of the Sun\" <note>The final stage of the process, associated with the achievement of the gold-colored Philosopher's Stone</note>, you will observe the matter to be for the most part moist, and although it is heavy, it is nevertheless in <meta>catchword: venti (the wind)</meta>\n\n<summary>This page describes the final transition into the Reign of the Sun, characterized by a transformation of the matter into a deep yellow or gold color. The author emphasizes the need for patience and gratitude to God as the seven-month process nears its completion.</summary>\n\n<keywords>Reign of the Sun, lemon-yellow, pure gold, virgin's milk, yellow sweat, violet vapors, alchemical stages, patience, Eirenaeus Philalethes</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2782,
+ "outputTokens": 477,
+ "thinkingTokens": 0,
+ "cost_usd": 0.002822,
+ "ms": 3155,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1343
+}

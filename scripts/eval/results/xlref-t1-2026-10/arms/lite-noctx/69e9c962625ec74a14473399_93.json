@@ -1,0 +1,34 @@
+{
+ "id": "69e9c962625ec74a14473399_93",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "CREDITI CONTINENIS <note>Meaning of the heading: Continued credits</note>\n\n<margin>The tiger of the Indies <note>original: \"Indale tigri\"</note> was killed.</margin> \nNecessity, the mother of invention, finally forced the discovery of a method to exact punishment for such great bloodshed. Since the narrow paths and the hidden caves from which it was accustomed to emerge at night for its prey had been explored, the trail was blocked. They excavated a pit, covered it with hurdles and spread earth over it, while the extra dirt was scattered about to conceal the work. <margin>On the tiger</margin> When the unsuspecting male tiger arrived, it fell into the pit and became fixed upon sharp stakes driven into the bottom. It deafened the whole neighborhood with its roaring, and the mountains echoed with that harsh sound. It was killed by huge stones and logs thrown down upon it from the edge of the pit, having been pierced by the stakes. It shattered the lances that had been thrust forward and thrown from above into a thousand splinters and tiny fragments. Even half-dead and drained of blood, it filled the onlookers with terror, making them wonder what it would have done had it been free and unharmed. One Juan de Ledesma, a man from Seville and a friend and companion in labor of Vasco <note>referring to Vasco Núñez de Balboa</note>, confessed that he had eaten of that tiger. He reported to me that it was no worse than beef. When asked why they call it a tiger—for those who have now seen the animal think it a tiger based on its spots, its ferocity, its dexterity, and other signs provided by ancient authors—they respond that they compare it to a tiger, although many of them claim to have seen spotted leopards and panthers themselves. After the male tiger was killed, they followed its tracks toward the mountains and reached its den, its matrimonial home.\n\nThey took away two cubs in the absence of the mother, though they were still too young to be weaned. Having changed their plan to send them to Spain once they were grown, they placed iron chains carefully around their necks and carried the little ones back to the mother's lair. Returning to the cave a few days later, they found it empty, with the chains unmoved from where they had placed them. They assumed the mother, in her rage, had torn them to pieces and carried them away so that no one else could enjoy them. Indeed, they assert that they could not have freed themselves from the chains while alive under any circumstances. The skin of the killed tiger was stuffed with dried herbs and straw and sent to Hispaniola for the Admiral and the leading men, from whom these new lands await laws and assistance. Those who suffered troubles from the tiger and those who handled its skin related these things to me, and I receive what is given. We must return to Pacra, from whom we digressed. Vasco entered the houses of Pacra, that is, his dwellings, and attempted to draw Pacra out. Through envoys, <margin>Pacra returns</margin> he signaled the same things to Pacra that we have mentioned were signaled to the others. For a long time, Pacra refused. Threats were added to the refusal. Finally, he came, accompanied by three chieftains. Vasco writes that Pacra was so deformed, so filthy, and so foul that he confesses never to have seen anything more repulsive. He says nature had given him only a human shape; otherwise, he was a brutish, wild, and monstrous animal. He says his morals matched his habits and features. He was abusing the daughters of four neighboring chieftains whom he had abducted by force, with detestable lust. Because of the obscene habits of Pacra and countless other things of that nature, many accusations were brought before Vasco by the neighboring chieftains as if before a praetorian judge or a vengeful Hercules, so that punishment might be inflicted upon Pacra. The monster, along with those three chieftains who obeyed Pacra's commands and suffered from the same vices, was thrown to the jaws of the war dogs, and their torn corpses were ordered to be burned. Regarding the dogs with which they engage in battle, amazing things are reported. Against armed natives, there was no need for swords, arrows, or other weapons to defeat the opposing host; for once the signal was given and the dogs were released, the column of Molossian hounds, with their sight and unfamiliar barking, terrified the enemy so greatly that they abandoned their battles and ranks in panic, astounded by the prodigious invention. It happens differently, however, when they join battle with the Caramairenses and the Caribs, for they are more ferocious and better suited to waging war. They swiftly aim poisoned arrows at the rushing dogs as if struck by lightning, and they kill many. The inhabitants of these mountains, however, do not wage war with arrows, but only with *macanas* <gloss>broad, oblong wooden swords</gloss> and thrown stakes, which they use against their enemies. From the living Pacra, it could never be extorted by any entreaties, threats, or torture where his people gathered gold. When asked where he got it—for thirty pounds of gold had been taken from his treasury—he replied that the relatives who gathered gold from those mountains in his father's time were dead. Since he reached adulthood, he had no concern for searching for gold. He could never be swayed from this stated position. By this severity toward Pacra, Vasco won over the minds of the neighboring chieftains. Hence it arose that...\n\n<summary>This page recounts the hunting of a man-eating tiger in the New World, the capture and disappearance of its cubs, and Vasco Núñez de Balboa's violent pacification of a local chieftain named Pacra, including the use of war dogs and the inquiry into local gold sources.</summary>\n<keywords>Vasco Núñez de Balboa, Pacra, tiger hunt, war dogs, gold, indigenous chieftains, Hispaniola</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3287,
+ "outputTokens": 1259,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00271025,
+ "ms": 5840,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 5955,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 4755
+}

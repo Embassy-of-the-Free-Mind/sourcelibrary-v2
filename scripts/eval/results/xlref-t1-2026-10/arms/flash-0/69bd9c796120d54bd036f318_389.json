@@ -1,0 +1,44 @@
+{
+ "id": "69bd9c796120d54bd036f318_389",
+ "arm": "flash-0",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>faithfully recite that prayer and act securely in the help of God.\n\nHowever, certain superstitious people and children of this world, wishing to pile error upon error, attempt to defend themselves using the arguments of <term>Scotus</term> <gloss>John Duns Scotus, a Franciscan theologian</gloss> and the <term>canonists</term> <gloss>experts in church law</gloss> beyond their actual intellect and intention. They argue that because natural things possess certain occult virtues whose rationale cannot be assigned by man—such as the way a magnet attracts iron, and many other examples that <term>Augustine</term> <gloss>Saint Augustine of Hippo</gloss> enumerates in the twenty-first book of <term>The City of God</term> <gloss>original: \"De Civitate Dei\"</gloss>—therefore, certain methods ought to be integrated for obtaining health where the most excellent and natural medicines fail. They claim it is not illicit if it seems vain, provided it is done through images that are not <term>necromantic</term> <gloss>involving communication with the dead</gloss> or astrological, or through rings and such things, when one wishes to procure health for oneself or another.\n\nLikewise, they argue that just as natural bodies are subject to the celestial bodies, so too do artificial bodies—namely images—acquire certain occult virtues by following their nature from the influence of the celestial bodies. Therefore, artificial bodies like images obtain some occult powers from the celestial bodies to cause certain effects, and thus it is not illicit to use them and other such things. Furthermore, demons can transform bodies in many ways, as Augustine says in the third book of <term>On the Trinity</term> <gloss>original: \"De Trinitate\"</gloss>, and as is evident in the cases of the <term>maleficiatis</term> <gloss>those afflicted by harmful witchcraft</gloss>; therefore, it is licit to use even their power to remove those afflictions.\n\nBut in truth, the sayings of all the holy doctors are to the opposite, as has been shown scattered here and there. Regarding the first point, they say that if natural things are simply applied to produce certain effects for which they are thought to have a natural virtue, it is not illicit. If, however, there are added any characters, or any other unknown and vain observations which clearly do not possess efficacy from a natural source, it will be superstitious and illicit. This is treated by <term>Thomas</term> <gloss>Saint Thomas Aquinas</gloss> in the <term>Secunda Secundae</term> <gloss>the second part of the second part of the Summa Theologica</gloss>, question ninety-six, article two, at the foot of the question.\n\n<summary>The author refutes the argument that magical images and charms are licit natural remedies, citing Saint Augustine and Thomas Aquinas to distinguish between natural properties and superstitious practices.</summary>\n<keywords>superstition, occult virtues, natural medicine, celestial bodies, Saint Augustine, Thomas Aquinas, images, witchcraft, healing</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2856,
+ "outputTokens": 658,
+ "thinkingTokens": 0,
+ "cost_usd": 0.003402,
+ "ms": 3525,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2127
+}

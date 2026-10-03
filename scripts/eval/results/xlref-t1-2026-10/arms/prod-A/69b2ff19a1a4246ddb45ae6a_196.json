@@ -1,0 +1,44 @@
+{
+ "id": "69b2ff19a1a4246ddb45ae6a_196",
+ "arm": "prod-A",
+ "model": "gemini-3.1-flash-lite",
+ "text": "if I lie in any way. I know a certain man of many crafts, a master of Greek, Latin, mathematics, philosophy, and medicine—and a royal one at that—already sixty years old, who has abandoned all other matters to torment and torture himself for more than twenty years with grammar. He deems himself truly blessed if he might live long enough to finally determine how the eight parts of speech are to be distinguished, a task that no Greek or Latin scholar has yet been able to fully accomplish. It is as if the matter must be settled by war should someone use a conjunction that actually belongs to the domain of adverbs. And for this reason, since there are as many grammars as there are grammarians—or even more, given that my friend <term>Aldus</term> <gloss>Aldus Manutius, the famous Venetian printer</gloss> has published a grammar more than five times—he passes over no book, no matter how barbarously or tediously written, without unfolding and examining it. He envies everyone who attempts anything, however foolishly, in this field, dreading miserably that someone might snatch away this glory and the labors of so many years might perish. Do you prefer to call this insanity or folly? For my part, it matters little, provided you admit\n\n<summary>Erasmus ridicules a grammarian who wastes decades on pedantic, unresolved questions regarding the classification of the parts of speech.</summary>\n<keywords>grammar, pedantry, Aldus Manutius, folly, parts of speech</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2505,
+ "outputTokens": 322,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00110925,
+ "ms": 1687,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "meo",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1258
+}

@@ -1,0 +1,44 @@
+{
+ "id": "69b6fb4a3c7947b468d7aa52_309",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nnonetheless, we wish it to be understood that these are also of great use even when proper instances are available; namely, to strengthen the information alongside the proper ones. But we shall speak of these more precisely when the discourse, in its proper order, descends to the treatment of the supports of induction.\n\n### XLIII.\nAmong the prerogatives of instances, we shall place in the twentieth position **perfecting instances**; which we have also been accustomed to call **twitching instances**, though for a different reason. For we call them *twitching* because they twitch the intellect; *perfecting*, because they perfect nature, whence we also sometimes call them the **instances of Democritus** <note>Democritus was a Greek philosopher known for his atomic theory, which sought to find the smallest, most subtle components of nature.</note>. These are the instances that remind the intellect of the admirable and exquisite subtlety of nature, so that it may be excited and awakened to due attention, observation, and inquiry. \n\nFor example: that a tiny drop of ink can be extended to form so many letters or lines; that silver, gilded only on the outside, can be drawn out into such a great length of gilded wire; that a tiny little worm, such as is found in the skin, has within itself both a spirit and a distinct configuration of parts; that a small amount of saffron can stain a whole tub of water with color; that a small amount of civet or spice can infect a much larger volume of air with its scent; that a small amount of...\n\n<summary>Bacon introduces perfecting or twitching instances, which highlight the extreme subtlety of nature to provoke closer scientific observation. He provides examples of the massive expansion or diffusion of small amounts of matter, such as ink, gold, and scents.</summary>\n\n<keywords>induction, perfecting instances, twitching instances, Democritus, subtlety of nature, physical properties, diffusion, scientific observation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2477,
+ "outputTokens": 416,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0024865,
+ "ms": 2957,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 2048
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1436
+}

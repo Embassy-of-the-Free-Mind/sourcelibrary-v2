@@ -1,0 +1,34 @@
+{
+ "id": "69b2ff19a1a4246ddb45ae6a_196",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "THE PRAISE OF FOLLY\n\nif I lie at all. I knew a certain man of many crafts, a Greek, a Latin, a mathematician, a philosopher, a physician, and indeed a kingly one at that, now sixty years old. Abandoning all other things, he has tortured and agonized himself for more than twenty years over grammar. He believes he will be perfectly happy if he is allowed to live long enough to determine with certainty how the eight parts of speech should be distinguished, a task that no Greek or Latin scholar has yet been able to fully accomplish. Just as if it were a matter that must be settled by war, should anyone place a conjunction among the rights of adverbs. And for this reason, since there are as many grammars as there are grammarians—or even more, since my friend <term>Aldus</term> <gloss>Aldus Manutius, the famous Venetian printer</gloss> published a grammar more than five times—this man skips absolutely no text, no matter how barbarously or tediously written, without unfolding and examining it. He envies everyone who attempts anything, however foolish, in this field, fearing miserably that someone might snatch away his glory and that the labors of so many years might perish. Do you prefer to call this insanity or folly? It matters little to me, provided you admit\n\n<summary>Erasmus ridicules a pedantic grammarian who wastes his life obsessing over the classification of the eight parts of speech.</summary>\n<keywords>grammar, pedantry, Aldus Manutius, Folly, eight parts of speech</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2192,
+ "outputTokens": 335,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0010505,
+ "ms": 1927,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1258
+}

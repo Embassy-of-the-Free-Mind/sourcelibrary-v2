@@ -1,0 +1,44 @@
+{
+ "id": "69529499b184004c526a1dc9_175",
+ "arm": "prod-A",
+ "model": "gemini-3.1-flash-lite",
+ "text": "159\nwhich nevertheless fill the skin, and imitate a most beautiful and magnificent sacrificial victim. By these are rightly denoted external and empty rites and barren ceremonies, with which men burden and inflate divine worship, things composed for the sake of ostentation rather than conducive to piety. Nor is it enough for men to offer such mockeries to God, unless they also attribute and impute them to Him, as if He himself had chosen and prescribed them. Certainly, the Prophet, speaking in the person of God, protests against this opinion: Is this, then, the fast that I have chosen, that a man should afflict his soul for one day, and bow down his head like a bulrush? After the state of Religion, the parable turns\n\n<summary>This passage continues the critique of religious hypocrisy, specifically condemning those who replace sincere devotion with hollow, performative rituals and then falsely claim such practices are divinely commanded.</summary>\n<keywords>hypocrisy, religious ceremonies, divine worship, ostentation, piety, Isaiah 58, Prometheus, sacrifice</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2519,
+ "outputTokens": 219,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00095825,
+ "ms": 1356,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": "repeVETERUM",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 666
+}

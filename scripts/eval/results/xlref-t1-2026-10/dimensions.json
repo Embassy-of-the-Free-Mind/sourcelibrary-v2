@@ -1,0 +1,3958 @@
+{
+ "n": 71,
+ "note": "one Opus judge, not blind to kind; fidelity for served copied from the fidelity pass (two blind judges); the reference has no fidelity score by construction",
+ "profile": {
+  "served": {
+   "fidelity": {
+    "mean": 4.16,
+    "ci": [
+     3.97,
+     4.34
+    ],
+    "n": 71
+   },
+   "readability": {
+    "mean": 3.87,
+    "ci": [
+     3.68,
+     4.06
+    ],
+    "n": 71
+   },
+   "register": {
+    "mean": 3.68,
+    "ci": [
+     3.56,
+     3.79
+    ],
+    "n": 71
+   },
+   "terminology": {
+    "mean": 3.85,
+    "ci": [
+     3.72,
+     3.96
+    ],
+    "n": 71
+   },
+   "ambiguity": {
+    "mean": 4.23,
+    "ci": [
+     4.07,
+     4.38
+    ],
+    "n": 71
+   },
+   "transparency": {
+    "mean": 3.92,
+    "ci": [
+     3.72,
+     4.1
+    ],
+    "n": 71
+   }
+  },
+  "reference": {
+   "readability": {
+    "mean": 4.1,
+    "ci": [
+     3.92,
+     4.28
+    ],
+    "n": 71
+   },
+   "register": {
+    "mean": 4.73,
+    "ci": [
+     4.62,
+     4.85
+    ],
+    "n": 71
+   },
+   "terminology": {
+    "mean": 4.08,
+    "ci": [
+     3.94,
+     4.23
+    ],
+    "n": 71
+   },
+   "ambiguity": {
+    "mean": 4.27,
+    "ci": [
+     4.1,
+     4.42
+    ],
+    "n": 71
+   },
+   "transparency": {
+    "mean": 3.17,
+    "ci": [
+     3,
+     3.34
+    ],
+    "n": 71
+   }
+  }
+ },
+ "by_style": {
+  "literal": {
+   "n": 37,
+   "served": {
+    "readability": {
+     "mean": 3.59,
+     "ci": [
+      3.32,
+      3.86
+     ],
+     "n": 37
+    },
+    "register": {
+     "mean": 3.62,
+     "ci": [
+      3.43,
+      3.78
+     ],
+     "n": 37
+    },
+    "terminology": {
+     "mean": 3.7,
+     "ci": [
+      3.51,
+      3.86
+     ],
+     "n": 37
+    },
+    "ambiguity": {
+     "mean": 4.16,
+     "ci": [
+      3.92,
+      4.38
+     ],
+     "n": 37
+    },
+    "transparency": {
+     "mean": 3.89,
+     "ci": [
+      3.65,
+      4.14
+     ],
+     "n": 37
+    }
+   },
+   "reference": {
+    "readability": {
+     "mean": 4.51,
+     "ci": [
+      4.3,
+      4.7
+     ],
+     "n": 37
+    },
+    "register": {
+     "mean": 4.62,
+     "ci": [
+      4.43,
+      4.78
+     ],
+     "n": 37
+    },
+    "terminology": {
+     "mean": 4.19,
+     "ci": [
+      4,
+      4.38
+     ],
+     "n": 37
+    },
+    "ambiguity": {
+     "mean": 4.32,
+     "ci": [
+      4.08,
+      4.54
+     ],
+     "n": 37
+    },
+    "transparency": {
+     "mean": 3.35,
+     "ci": [
+      3.14,
+      3.57
+     ],
+     "n": 37
+    }
+   }
+  },
+  "free": {
+   "n": 3,
+   "served": {
+    "readability": {
+     "mean": 3.33,
+     "ci": [
+      3,
+      4
+     ],
+     "n": 3
+    },
+    "register": {
+     "mean": 3.33,
+     "ci": [
+      3,
+      4
+     ],
+     "n": 3
+    },
+    "terminology": {
+     "mean": 4,
+     "ci": [
+      4,
+      4
+     ],
+     "n": 3
+    },
+    "ambiguity": {
+     "mean": 4.33,
+     "ci": [
+      4,
+      5
+     ],
+     "n": 3
+    },
+    "transparency": {
+     "mean": 4.33,
+     "ci": [
+      4,
+      5
+     ],
+     "n": 3
+    }
+   },
+   "reference": {
+    "readability": {
+     "mean": 5,
+     "ci": [
+      5,
+      5
+     ],
+     "n": 3
+    },
+    "register": {
+     "mean": 4.33,
+     "ci": [
+      4,
+      5
+     ],
+     "n": 3
+    },
+    "terminology": {
+     "mean": 3.67,
+     "ci": [
+      3,
+      4
+     ],
+     "n": 3
+    },
+    "ambiguity": {
+     "mean": 3.33,
+     "ci": [
+      3,
+      4
+     ],
+     "n": 3
+    },
+    "transparency": {
+     "mean": 2,
+     "ci": [
+      2,
+      2
+     ],
+     "n": 3
+    }
+   }
+  },
+  "early-modern": {
+   "n": 31,
+   "served": {
+    "readability": {
+     "mean": 4.26,
+     "ci": [
+      4.03,
+      4.48
+     ],
+     "n": 31
+    },
+    "register": {
+     "mean": 3.77,
+     "ci": [
+      3.61,
+      3.9
+     ],
+     "n": 31
+    },
+    "terminology": {
+     "mean": 4,
+     "ci": [
+      3.84,
+      4.16
+     ],
+     "n": 31
+    },
+    "ambiguity": {
+     "mean": 4.29,
+     "ci": [
+      4.1,
+      4.48
+     ],
+     "n": 31
+    },
+    "transparency": {
+     "mean": 3.9,
+     "ci": [
+      3.58,
+      4.19
+     ],
+     "n": 31
+    }
+   },
+   "reference": {
+    "readability": {
+     "mean": 3.52,
+     "ci": [
+      3.32,
+      3.71
+     ],
+     "n": 31
+    },
+    "register": {
+     "mean": 4.9,
+     "ci": [
+      4.77,
+      5
+     ],
+     "n": 31
+    },
+    "terminology": {
+     "mean": 4,
+     "ci": [
+      3.77,
+      4.23
+     ],
+     "n": 31
+    },
+    "ambiguity": {
+     "mean": 4.29,
+     "ci": [
+      4.06,
+      4.52
+     ],
+     "n": 31
+    },
+    "transparency": {
+     "mean": 3.06,
+     "ci": [
+      2.84,
+      3.29
+     ],
+     "n": 31
+    }
+   }
+  }
+ },
+ "stance": {
+  "served": {
+   "literal": 50,
+   "balanced": 20,
+   "free": 1
+  },
+  "reference": {
+   "balanced": 38,
+   "free": 19,
+   "literal": 14
+  }
+ },
+ "disagreements": {
+  "n": 190,
+  "right": {
+   "reference": 72,
+   "served": 75,
+   "both_defensible": 38,
+   "cant_tell": 3,
+   "neither": 2
+  },
+  "pages_with_served_right_reference_wrong": 48,
+  "pages_with_reference_right_served_wrong": 48
+ },
+ "legit_choice_pages": [
+  {
+   "id": "695203a5ab34727b1f041c53_250",
+   "note": "A is a word-for-word crib keeping every clause (incl. 'which they call grinding'); B is Waite's free reading version that paraphrases, condenses and adds explanatory phrases.",
+   "stance_served": "literal",
+   "stance_reference": "free"
+  },
+  {
+   "id": "69b3027416f06ae4cdc55939_88",
+   "note": "A (1692) recasts into vigorous English polemic, domesticating Senatus as Parliament and expanding clauses; B keeps Milton's syntax, Greek and Roman terms closely.",
+   "stance_served": "literal",
+   "stance_reference": "free"
+  },
+  {
+   "id": "6953ea3e1479a63c1108641e_241",
+   "note": "A keeps Latin measures and terms and explains them in flagged notes; B gives a plain 1658 working translation in period idiom with terms left bare (Sextarius, Cotyle, mundified).",
+   "stance_served": "balanced",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "6976f5fb7b4366f057e0e974_631",
+   "note": "A modernises and explains each chymical term in flagged notes (dropsy, arcanum, spirit of wine); B keeps the period technical vocabulary untranslated (Mercurius vitae, Hydroticks, Arcanum, the Greek).",
+   "stance_served": "balanced",
+   "stance_reference": "literal"
+  },
+  {
+   "id": "69905e262fd6a039938a154f_67",
+   "note": "A gives a 1655 practitioner's rendering that interprets the diagram (outermost/inner, sigil, hands breadth); B keeps the Latin's own terms (upper/lower, seal, palm) and glosses the unit in a note.",
+   "stance_served": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "69a5b8f3486a857b0587c7b8_329",
+   "note": "A explains terms in notes and restructures into lists (receiving pit, molybdæna kept, hundredweight); B uses mining trade vocabulary in continuous prose (forehearth, tap-hole, sows, hearth-lead, centumpondium kept).",
+   "stance_served": "balanced",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "69b30404983e01f74b987740_366",
+   "note": "A uses Elizabethan idiom with explanatory doublets ('Consul or gouernour', 'attendants or guard', 'Iewell or commoditie'); B follows the Latin word for word in modern English with modernised names (Muslims, spice merchants).",
+   "stance_served": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "690986dccf28baa1b4cae0e3_81",
+   "note": "A is a word-for-word crib of the second page only, with alchemical glosses in notes; B is a free Victorian reading version that reorders, condenses and silently adds ('drunk', 'condensed') and drops clauses.",
+   "stance_served": "literal",
+   "stance_reference": "free"
+  },
+  {
+   "id": "6953e50577f38f6761bef758_274",
+   "note": "A keeps Bacon's capitalised terms and explains them in notes (Nature under Investigation, Crossroads for Bivium); B absorbs them into polished Victorian philosophical prose (nature in question, the roads branch into two).",
+   "stance_served": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "69b4cce5d5b6c3815e1a2931_94",
+   "note": "A gives plain modern prose with scripture in KJV dress; B is Tudor devotional English that doubles terms and adds in-text glosses (e.g. on the coals of fire).",
+   "stance_served": "balanced",
+   "stance_reference": "free"
+  },
+  {
+   "id": "69b2ff9f5545150b61b48a36_75",
+   "note": "A keeps Bacon's Latinate terms and italics (Squalls, 'Beasts', vehement, reverberated); B naturalises into Victorian plain prose and leaves 'belluae' untranslated.",
+   "stance_served": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "69b2ff0ea1a4246ddb45adbb_62",
+   "note": "A is a close modern rendering; B is Robinson's expansive Tudor paraphrase with doublets, additions and an omitted sacrifice clause.",
+   "stance_served": "literal",
+   "stance_reference": "free"
+  },
+  {
+   "id": "69b2f3bfa9a500a45e5e857c_165",
+   "note": "A recasts into idiomatic theological English, quoting scripture in familiar form and compressing or expanding phrases; B tracks the Latin word-for-word, calques included.",
+   "stance_served": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "69b6e791f8a84d859cde1de2_473",
+   "note": "A is a free Victorian reading version that expands and interprets ('dispositions to disease', 'once or twice removed'); B is a close rendering keeping Harvey's scholastic terms with flagged glosses.",
+   "stance_served": "literal",
+   "stance_reference": "free"
+  },
+  {
+   "id": "69520185ab34727b1f0416bc_29",
+   "note": "A gives a smooth unannotated reading text keeping Venus/Luna as period terms; B gives a close crib that keeps the cover-names and glosses every term in notes.",
+   "stance_served": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "694f3d6ebe37f451a5324e95_107",
+   "note": "A modernises and explains (Ruler of Essence, Jupiter, notes on decans); B archaises in rhythmic prose, re-Hellenises (Zeus, Heimarmene, essence-chief) and brackets every supplied word.",
+   "stance_served": "balanced",
+   "stance_reference": "literal"
+  },
+  {
+   "id": "6952d05477f38f6761bc511e_428",
+   "note": "A is a word-for-word modern crib with modernised plant names (Knotgrass, Goldenrod); B is seventeenth-century idiom with period herbal names (Arsemart, Wallwort) and freer syntax.",
+   "stance_served": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "694bf8d2343422769f237558_277",
+   "note": "A is a compressing seventeenth-century reading version that folds clauses together and normalises names (Arion of Lesbos); B is a clause-by-clause modern rendering with notes on cithara, fidicinat and the authorities.",
+   "stance_served": "literal",
+   "stance_reference": "free"
+  },
+  {
+   "id": "6952872cab34727b1f04d284_499",
+   "note": "A keeps the period vocabulary (Mohammedan, Koran, stumbling-block) in the house Swedenborgian style; B modernises to Muslim/Quran, glosses spiritual-world terms and supplies subjects for clarity.",
+   "stance_served": "balanced",
+   "stance_reference": "literal"
+  },
+  {
+   "id": "695262d8ab34727b1f046ade_167",
+   "note": "A keeps the Latinate art-vocabulary untranslated (Luna, Ingress, Radix, Medicine of the first Order); B translates the cover-names (Silver, Iron) and explains each technical term in notes.",
+   "stance_served": "literal",
+   "stance_reference": "literal"
+  },
+  {
+   "id": "15c5d8e4-cea3-4b5b-9859-f3528660ecc8_347",
+   "note": "A modernises and glosses period terms (exponens as 'represents', duplicate ratio explained in a note); B keeps Newton's own vocabulary ('exponent', 'rectangle under', 'collected') unglossed.",
+   "stance_served": "balanced",
+   "stance_reference": "literal"
+  },
+  {
+   "id": "695d0e044afae5c3b3aead52_353",
+   "note": "A breaks the periods into short modern sentences and footnotes spiritus/coctio; B keeps the long periods and works the gloss ('the subtle fluid styled') silently into the text.",
+   "stance_served": "balanced",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "69ac7ee520878c5c9ba51e75_98",
+   "note": "A follows the Latin word for word with Latinate cognates ('invention', 'light-bearing', capitalised nouns); B recasts into idiomatic English and coins 'experiments of Light / of Fruit'.",
+   "stance_served": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "69b6fb4a3c7947b468d7aa52_309",
+   "note": "A names the instances by their function and compresses ('silver gilt', 'varied organisation'); B stays word for word with Latinate cognates ('infects', 'figure dissimilar in its parts') and tags terms.",
+   "stance_served": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "69bd9d416120d54bd037457f_263",
+   "note": "A gives a plain modern word-for-word rendering; B a free early-modern polemical recasting with doublets and rhetorical heightening.",
+   "stance_served": "literal",
+   "stance_reference": "free"
+  },
+  {
+   "id": "69af0cfc067c0c26ee26cd3c_151",
+   "note": "A keeps Harvey's Latin order and calques (habit of the body, impetuously); B smooths into Victorian medical prose and drops minor phrases.",
+   "stance_served": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "695594f97bd6d2cd1d61e685_331",
+   "note": "A modernises Swedenborg's diction (higher/lower, thou-less scripture); B keeps the Latinate tradition (superior/inferior, denoting, added 'principle') and KJV-style quotations.",
+   "stance_served": "balanced",
+   "stance_reference": "literal"
+  },
+  {
+   "id": "1a8485e5-5331-41df-bfc1-6efd65238f55_581",
+   "note": "A is a brisk early-modern recipe-book version with rhymed couplets for Oppian; B is a modern literal version with unrhymed lines and explanatory notes.",
+   "stance_served": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "69b21d1a429e087c6f866ee7_452",
+   "note": "A is a fluent reading translation that recasts and expands (and supplies 'Apollonius'); B is a word-for-word crib of this particular printed text, Latinisms and all.",
+   "stance_served": "literal",
+   "stance_reference": "free"
+  },
+  {
+   "id": "69529509b184004c526a2793_237",
+   "note": "A gives a lean, polished Victorian reading text; B keeps the Latin's word order and capitalised terms and surrounds them with flagged explanatory glosses.",
+   "stance_served": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "c87fadfa-1543-44b9-a138-573c144246e6_328",
+   "note": "Waite recasts and smooths into a fluent reading version, resolving the Latin's awkward logic; the machine keeps a close crib, including the source's tangled double negative, with a flagged gloss on crassities.",
+   "stance_served": "literal",
+   "stance_reference": "free"
+  },
+  {
+   "id": "69905e372fd6a039938a1793_28",
+   "note": "The 1560 version keeps period idiom and Latin stone names and leaves the corrupt lunar clause in Latin; the machine modernises names, annotates, and commits to a reading of the crux.",
+   "stance_served": "balanced",
+   "stance_reference": "literal"
+  },
+  {
+   "id": "6956eaf4f23ebf30578dba35_88",
+   "note": "The 1651 version keeps period idiom and names (fork fish, ague, travel) in running prose; the machine recasts into modern sentences with identified species and flagged explanatory notes.",
+   "stance_served": "free",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "6a2198155ce215cb9ac70f53_209",
+   "note": "A keeps Victorian New-Church idiom (appertaining, falses, doublets like comprehended or conceived); B gives the same close rendering in plain modern English (falsities, goods, grasped).",
+   "stance_served": "literal",
+   "stance_reference": "literal"
+  },
+  {
+   "id": "690989d5cf28baa1b4cae1c9_159",
+   "note": "A archaises into a hieratic, rhythmic voice with bracketed supplements and Greek-leaning terms (Cosmos, ensouled); B is a plain word-for-word crib of the printed Latin.",
+   "stance_served": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "6952855fab34727b1f04b383_434",
+   "note": "A modernises and explains (glossed Archeus, emunctories, fontanelle, scare quotes for sarcasm); B stays word-for-word in period medical English with doublets (venal Blood, Rheum, Issue).",
+   "stance_served": "balanced",
+   "stance_reference": "literal"
+  },
+  {
+   "id": "697e23cca90e1780032ca2f2_176",
+   "note": "A is a close annotated crib keeping every clause and glossing terms; B is a condensed reading version that merges sentences and drops the thanksgiving and auri obryzi.",
+   "stance_served": "literal",
+   "stance_reference": "free"
+  },
+  {
+   "id": "6991e171b53cae6bb6024476_216",
+   "note": "A is a word-for-word crib in the Latin's order (held, fruits, owed to the thing); B is lawyerly English keeping bona fide, adding bracketed clarifications and moving the parenthesis.",
+   "stance_served": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "698255ef792a04eb812c4860_190",
+   "note": "A is a close annotated crib that keeps every clause and scripture reference; B (Waite) is a smooth Victorian paraphrase that condenses, drops citations and recasts.",
+   "stance_served": "literal",
+   "stance_reference": "free"
+  },
+  {
+   "id": "6953e59377f38f6761bf0e81_213",
+   "note": "A modernises and explains in notes (declination = dip, terrella glossed); B keeps Gilbert's period technical idiom ('versatory', 'virtue', 'magnetick') without glosses.",
+   "stance_served": "literal",
+   "stance_reference": "literal"
+  },
+  {
+   "id": "69b302c23613a84e68067a81_98",
+   "note": "A keeps the Latin's impersonal passives and word order in plain modern English; B recasts into Authorised-Version devotional idiom with thee/thou and active constructions.",
+   "stance_served": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "69b21cc8429e087c6f8659be_184",
+   "note": "A (Stradling) uses Elizabethan rhetorical doublets and expansion to carry Lipsius's oratory; B is a plain modern near-literal rendering with the Latin tags footnoted.",
+   "stance_served": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "697b07990411081cde5f4e66_153",
+   "note": "A keeps the scholastic-hermetic vocabulary in 17th-century idiom (specifical, vivifical, mixt); B splits the long period into short sentences and explains terms in modern notes ('blueprint').",
+   "stance_served": "balanced",
+   "stance_reference": "literal"
+  },
+  {
+   "id": "69b21c6c429e087c6f8646f6_223",
+   "note": "A recasts the dialogue into racy 18th-century colloquial idiom ('Cattle', 'Dose of Fuddle'); B follows the Latin word by word in neutral modern English, including the OCR's faults.",
+   "stance_served": "literal",
+   "stance_reference": "free"
+  },
+  {
+   "id": "69529499b184004c526a1dc9_175",
+   "note": "A keeps every Latin word ('barren ceremonies', 'impose and impute') and annotates; B gives a fluent Victorian reading ('lay and father them upon himself') and lets 'ieiunae' go.",
+   "stance_served": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "69b4d643853c26e0d15603c8_136",
+   "note": "A renders the recipe word for word in plain terms ('horse dung', 'through a bath'); B recasts it as a laboratory procedure and swaps in adept's Latin ('venter equinus', 'balneum maris', 'bath of Mary').",
+   "stance_served": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "69526191ab34727b1f046982_108",
+   "note": "A keeps the 17th-century adept's vocabulary (Calx, Argentvive, Acuity, Vitrificatory) and alternates Jupiter/Tin unglossed; B modernises to moisture/quicksilver/melting and keeps the planet names with explanatory notes.",
+   "stance_served": "balanced",
+   "stance_reference": "literal"
+  },
+  {
+   "id": "6953e46f77f38f6761bee559_40",
+   "note": "A keeps Galileo's plural 'we' and literal images ('flocks of stars planted') and modernises to 'nebulae' with notes; B uses 'I', keeps the period adjective 'nebulous', and smooths the syntax into a reading version.",
+   "stance_served": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "69905d2a2fd6a0399389f0c0_180",
+   "note": "A recasts More's rhetorical questions as flat statements and drops 'omnium rerum' and the marginal note for a smooth reading text; B keeps the questions, the margin and the sentence order.",
+   "stance_served": "literal",
+   "stance_reference": "free"
+  },
+  {
+   "id": "697947a145e954e8a877872d_218",
+   "note": "A keeps the Latin's steps, margin note and causal 'spiritual virtue' with flagged glosses; B condenses into a smooth Victorian paraphrase, modernising to 'homogeneous substances' and a sportsman's gun.",
+   "stance_served": "balanced",
+   "stance_reference": "free"
+  },
+  {
+   "id": "6952daa277f38f6761bc6551_202",
+   "note": "A modernises and explains (nodes, midheaven, daemon, cilicium) in flagged notes; B keeps mid-17th-century idiom and period terms (Genius, perfumed, Lignum Aloes, Sanders) in one running sentence, silently adding 'misfortune'.",
+   "stance_served": "balanced",
+   "stance_reference": "literal"
+  },
+  {
+   "id": "698255f1861f3361ae3249e0_198",
+   "note": "A keeps a close early-modern crib with period terms (decocted, subtilties, Students of this Art); B modernises syntax and explains Mercury/Sulphur/anathema in flagged glosses.",
+   "stance_served": "balanced",
+   "stance_reference": "literal"
+  },
+  {
+   "id": "69b43d2706b196d69f66f14f_15",
+   "note": "A renders Ficino's Latin word for word in modern English; B gives a 1650s reading version with explanatory doublets and verse numbering, resting on a different text tradition.",
+   "stance_served": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "69aea708971abe996d21b4aa_471",
+   "note": "A is an Elizabethan expansive rendering (softens laceror, amplifies the itching tongue); B is a modern close crib keeping the Latin images (torn, itch, curb).",
+   "stance_served": "literal",
+   "stance_reference": "balanced"
+  }
+ ],
+ "rows": [
+  {
+   "id": "69bd9c796120d54bd036f318_389",
+   "served": {
+    "fidelity": 5,
+    "readability": 3,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "non erit illicitum si videat vanum",
+     "served": "it will not be illicit if one sees it as vain",
+     "reference": "will not be unlawful, although it may seem to be vain",
+     "right": "reference",
+     "why": "The clause is concessive (licet videatur vanum behind the OCR); A's conditional makes no sense in the argument."
+    },
+    {
+     "latin": "per imagines non nigromanticas et astrologicas",
+     "served": "images that are not necromantic or astrological",
+     "reference": "images, not necromantic but astrological",
+     "right": "reference",
+     "why": "The next argument defends astrological images by celestial influence, so the contrast is necromantic vs astrological; A follows an OCR 'et'."
+    },
+    {
+     "latin": "ergo licit uti etiam eorum virtute ad tollendum illa",
+     "served": "licit to use even their power to remove those things",
+     "reference": "lawful to use the virtues of such bodies",
+     "right": "served",
+     "why": "eorum refers to the demons just named, whose power is to be used; B shifts it to the bodies."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "Machine A cribs a corrupt OCR and reproduces its nonsense ('pursuing hope', dropped 'non contenti'), silently expanding the Thomas citation; published B reads smoothly and makes sense of the argument but silently adds 'they say' and compresses the repeated syllogism."
+  },
+  {
+   "id": "695203a5ab34727b1f041c53_250",
+   "served": {
+    "fidelity": 4,
+    "readability": 3,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 3,
+    "transparency": 2,
+    "stance": "free"
+   },
+   "style": "free",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "materia nostri lapidis omnibus iis rebus ... comparatur",
+     "served": "is compared to all those things with which artisans labor",
+     "reference": "is found in all those things which are used",
+     "right": "served",
+     "why": "comparatur is 'is likened to'; the page goes on to say the stone is not literally those substances."
+    },
+    {
+     "latin": "quibus in artifices laborant",
+     "served": "artisans",
+     "reference": "ignorant charlatans",
+     "right": "served",
+     "why": "artifices is neutral 'workers of the art'; B imports a pejorative the Latin only supplies later (Philosophastri)."
+    },
+    {
+     "latin": "tunc nasutuli isti forti aqua naturam combusserunt",
+     "served": "these sharp-nosed ones burned nature with strong water",
+     "reference": "these shallow persons corrode with aqua fortis",
+     "right": "both_defensible",
+     "why": "nasutuli is 'would-be clever sneerers'; A is etymological, B gives the sense loosely, neither exact."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A is a word-for-word crib keeping every clause (incl. 'which they call grinding'); B is Waite's free reading version that paraphrases, condenses and adds explanatory phrases.",
+   "reason": "A keeps all content and term order but is heavy and slips on 'gratis' ('by grace'); B is fluent period prose that silently omits (aquas fortes ustularunt, terere gloss) and adds ('lay the fault on their teacher')."
+  },
+  {
+   "id": "69b3027416f06ae4cdc55939_88",
+   "served": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 5,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 2,
+    "stance": "free"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "cùm rex, tum præses constituitur à Deo",
+     "served": "when a king, as well as a governor, is constituted",
+     "reference": "a King is an Officer appointed by God",
+     "right": "served",
+     "why": "cum...tum names both king and governor; A drops the governor, though B's 'when' wrongly makes the clause temporal."
+    },
+    {
+     "latin": "sed magistratus omnes, ipse denique Senatus",
+     "served": "all magistrates, and finally the Senate itself",
+     "reference": "all our inferior Magistrates; our very Parliament it self",
+     "right": "served",
+     "why": "Latin says Senatus and has no 'inferior'; A domesticates to the English constitution."
+    },
+    {
+     "latin": "ἡ δὲ τάξις νόμος inquit Aristoteles, lex est ordo",
+     "served": "Aristotle says, ἡ δὲ τάξις νόμος, order is law",
+     "reference": "For the law, Aristotle says, is order",
+     "right": "both_defensible",
+     "why": "A follows Milton's Latin gloss, B the Greek word order; the identity statement runs either way."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A (1692) recasts into vigorous English polemic, domesticating Senatus as Parliament and expanding clauses; B keeps Milton's syntax, Greek and Roman terms closely.",
+   "reason": "A carries the polemical voice superbly but silently expands, drops 'dispersi' and the Greek citation, and anglicises institutions; B is accurate and transparent but stiff ('for the cross and destruction') with one sentence fragment."
+  },
+  {
+   "id": "6953ea3e1479a63c1108641e_241",
+   "served": {
+    "fidelity": 4,
+    "readability": 5,
+    "register": 4,
+    "terminology": 5,
+    "ambiguity": 4,
+    "transparency": 5,
+    "stance": "balanced"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "in ollam infundendo, & super carbones imponendo",
+     "served": "pouring it into a pot and placing it over coals",
+     "reference": "put all into a pot, and set them in cold",
+     "right": "served",
+     "why": "super carbones is 'over coals'; B's 'in cold' reverses the instruction."
+    },
+    {
+     "latin": "Eandem vidimus compositionem apud Philoponem, quinto rei bellicæ libro",
+     "served": "in Philoponus ... in the fifth book of Military Affairs",
+     "reference": "in Philo, in his fifth book of wars",
+     "right": "reference",
+     "why": "The form points to Philonem (Philo of Byzantium, book 5 on siegecraft); A's note identifying John Philoponus is a false precision."
+    },
+    {
+     "latin": "circa horam secundam, alteram verò circam horam decimam",
+     "served": "around the second hour ... around the tenth hour",
+     "reference": "about two of the clock, another about ten",
+     "right": "served",
+     "why": "These are ancient hours counted from sunrise, taken from a Greek source; B converts them to clock times."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A keeps Latin measures and terms and explains them in flagged notes; B gives a plain 1658 working translation in period idiom with terms left bare (Sextarius, Cotyle, mundified).",
+   "reason": "A is clear, complete and openly annotated, though one note misidentifies the author cited; B is serviceable early-modern prose with a real slip (cold for coals) and a conflated squill instruction, unflagged."
+  },
+  {
+   "id": "69e9c962625ec74a14473399_93",
+   "served": {
+    "fidelity": 3.5,
+    "readability": 3,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "Semianimis & exanguis formidine replebat intuentes",
+     "served": "Half-dead and bloodless, it filled those watching with fear",
+     "reference": "even when dead and no longer breathing, it filled",
+     "right": "served",
+     "why": "semianimis is half-alive, which is the point of the following 'what if free and unhurt'."
+    },
+    {
+     "latin": "qui nunc tigridem uiderunt: respondent a maculis",
+     "served": "those who now saw the tiger",
+     "reference": "these people who have never seen tigers",
+     "right": "reference",
+     "why": "The sense requires nunquam (abbreviation lost in OCR): how can men who never saw a tiger call it one."
+    },
+    {
+     "latin": "In ruentes canes citius fulgure icto uenenatas destinant fagittas",
+     "served": "Rushing upon the dogs, they aim their poisoned arrows",
+     "reference": "shoot their poisoned arrows ... and kill the dogs",
+     "right": "reference",
+     "why": "irruentes agrees with canes: the arrows are aimed at the charging dogs, not shot by charging natives."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "Published A is fluent narrative but adds and drops silently (nursing motive, 'civilian', Hispalensis, marginalia) and errs on semianimis and the thirty pounds; machine B keeps marginalia and structure but is stiff and misled by OCR in several places (dogs 'not ferocious', 'unworthy of milk')."
+  },
+  {
+   "id": "6976f5fb7b4366f057e0e974_631",
+   "served": {
+    "fidelity": 4,
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "reference": {
+    "readability": 3,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "ligni sancti, aut radice asari",
+     "served": "asarum root",
+     "reference": "root of Colts-foot",
+     "right": "served",
+     "why": "asarum is asarabacca, a different plant from coltsfoot (tussilago)."
+    },
+    {
+     "latin": "postea verò diuretica & hydrotica succedant",
+     "served": "diuretics and water-movers should follow",
+     "reference": "Diureticks and Hydroticks must succeed",
+     "right": "reference",
+     "why": "hydrotica are sudorifics (sweat-inducers), matching the sweats and urine prescribed above; 'water-movers' misreads the term."
+    },
+    {
+     "latin": "Spiritus nimirum vini propter ea, quæ pollet sulphure potiùs quàm liquore",
+     "served": "because it prevails in its sulfurous nature rather than in its liquid",
+     "reference": "by reason of its attraction, which it rather acts upon the Sulphur",
+     "right": "cant_tell",
+     "why": "The sentence is cut off at the page end; A is closer to 'pollet sulphure' but the construction depends on what follows."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A modernises and explains each chymical term in flagged notes (dropsy, arcanum, spirit of wine); B keeps the period technical vocabulary untranslated (Mercurius vitae, Hydroticks, Arcanum, the Greek).",
+   "reason": "A is very readable and openly glossed but flattens hydrotica and replaces the Greek with a transliteration; B preserves 17th-century chymical register and terms faithfully, with small silent additions ('by him', 'a little') and one plant misnamed."
+  },
+  {
+   "id": "69905e262fd6a039938a154f_67",
+   "served": {
+    "fidelity": 5,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "Spirituum regnantium in ea temporis parte, & ei præsidentium",
+     "served": "the Spirits reigning in that part of the time, and presiding over it",
+     "reference": "the Spirits ruling in that part of time, and their Presidents",
+     "right": "served",
+     "why": "præsidentium is a participle agreeing with Spirituum and governing ei, not a separate group of 'Presidents'."
+    },
+    {
+     "latin": "In superiore autem circulo ... In inferiore circulo",
+     "served": "the upper circle ... the lower circle",
+     "reference": "the outermost Circle ... the inner Circle",
+     "right": "both_defensible",
+     "why": "superior/inferior of concentric circles can be read as outer/inner (A interprets) or kept as upper/lower (B leaves open)."
+    },
+    {
+     "latin": "crucibus interpositis. In medio circuli, scilicet ad orientem",
+     "served": "crosses placed between them. In the middle of the circle, namely",
+     "reference": "with crosses interposed in the middle of the Circle; to wit",
+     "right": "served",
+     "why": "The Latin has a full stop after interpositis; 'in medio circuli' opens the Alpha sentence."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A gives a 1655 practitioner's rendering that interprets the diagram (outermost/inner, sigil, hands breadth); B keeps the Latin's own terms (upper/lower, seal, palm) and glosses the unit in a note.",
+   "reason": "Both close and usable; A has period ritual voice but silently interprets and misparses præsidentium, B is a flagged literal version that follows the Latin punctuation."
+  },
+  {
+   "id": "69a5b8f3486a857b0587c7b8_329",
+   "served": {
+    "fidelity": 4.5,
+    "readability": 5,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 5,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "Is certe in præstantium excoctorum numero semper habitus est, qui",
+     "served": "he has always been counted among the ranks of excellent smelters who",
+     "reference": "This, indeed, is the custom of many most excellent smelters",
+     "right": "served",
+     "why": "in numero habitus est = 'has been reckoned among'; the Latin says nothing of a custom of many."
+    },
+    {
+     "latin": "poſtea ritè faciat omnia & ordine quodam injiciat",
+     "served": "perform everything according to the rite ... in a specific order",
+     "reference": "performs everything according to the usual manner and order",
+     "right": "reference",
+     "why": "rite here means 'duly, in the proper way'; 'according to the rite' imports a ceremonial sense."
+    },
+    {
+     "latin": "atque fornaci flatum follium modò lenem, modò uehementem inspirare",
+     "served": "they must inspire the furnace with a blast ... sometimes gentle",
+     "reference": "so that the blast of the bellows may blow ... mild or vigorous",
+     "right": "served",
+     "why": "inspirare is a third coordinate thing the smelters must do, not a result of the pipe's angle."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A explains terms in notes and restructures into lists (receiving pit, molybdæna kept, hundredweight); B uses mining trade vocabulary in continuous prose (forehearth, tap-hole, sows, hearth-lead, centumpondium kept).",
+   "reason": "A is clear and well flagged but breaks technical prose into bullets with some odd literalisms; B has the authentic metallurgical register and terms but silently recasts and misreads the 'four elements' sentence."
+  },
+  {
+   "id": "69b30404983e01f74b987740_366",
+   "served": {
+    "fidelity": 5,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "quicquid inde conficitur, ac si moneta esset, expenditur",
+     "served": "whatever is made from it is spent as if it were coin",
+     "reference": "whatsoeuer is made thereof is weighed as if it were money",
+     "right": "both_defensible",
+     "why": "expendere means both to weigh out and to pay out; either fits sealed metal passing like coin."
+    },
+    {
+     "latin": "quemadmodum & aliis multis in locis",
+     "served": "just as in many other places",
+     "reference": "as well as in any other places",
+     "right": "served",
+     "why": "multis = many, not any."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A uses Elizabethan idiom with explanatory doublets ('Consul or gouernour', 'attendants or guard', 'Iewell or commoditie'); B follows the Latin word for word in modern English with modernised names (Muslims, spice merchants).",
+   "reason": "Same sense throughout; A is a lively period version with silent expansions, B a faithful plain crib with a few stiff phrases and one modernised period term."
+  },
+  {
+   "id": "690986dccf28baa1b4cae0e3_81",
+   "served": {
+    "fidelity": 2,
+    "readability": 3,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 3,
+    "transparency": 2,
+    "stance": "free"
+   },
+   "style": "free",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "in hac insula omnia ad nutum essent, unicum tamen ipsi deerat",
+     "served": "everything was at his command, yet one thing alone was missing to him",
+     "reference": "The only thing which it was difficult to obtain in the island",
+     "right": "reference",
+     "why": "ipsi refers to the island and ad nutum means 'available at will'; A wrongly makes it Neptune's command."
+    },
+    {
+     "latin": "multi, qui partim tentabant ... partim etiam ex varijs rebus eliciebant",
+     "served": "many who partially attempted ... others also drew it out",
+     "reference": "The inhabitants had tried ... and to elicit it from many things",
+     "right": "reference",
+     "why": "partim ... partim = 'some ... others'; 'partially attempted' is a misreading, though B blurs the two groups."
+    },
+    {
+     "latin": "apparet mihi vir magnus",
+     "served": "there appeared to me a great man",
+     "reference": "there stood before me a tall man",
+     "right": "both_defensible",
+     "why": "magnus can be stature or greatness; A leaves it open, B resolves it to height."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A is a word-for-word crib of the second page only, with alchemical glosses in notes; B is a free Victorian reading version that reorders, condenses and silently adds ('drunk', 'condensed') and drops clauses.",
+   "reason": "B reads beautifully as allegorical narrative but silently omits and expands; A is transparent and keeps more of the Latin but is stiff and has two construal slips."
+  },
+  {
+   "id": "6953e50577f38f6761bef758_274",
+   "served": {
+    "fidelity": 5,
+    "readability": 4,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": true,
+   "disagreements": [
+    {
+     "latin": "aut fit remittente se Causa quæ eam primo genuit",
+     "served": "because the Cause that first generated it is diminishing",
+     "reference": "from a cessation of the cause which at first produced",
+     "right": "both_defensible",
+     "why": "remittere se is 'slacken, abate'; A is closer to the word, B takes the abatement to its end point."
+    },
+    {
+     "latin": "per successionem novæ Flammæ seriatim generatæ",
+     "served": "a succession of new flames generated one after another",
+     "reference": "a succession of new flame regularly generated",
+     "right": "served",
+     "why": "seriatim = in series, one after another; 'regularly' shifts the sense slightly."
+    },
+    {
+     "latin": "Non enim videtur Natura Flammea hic apud nos figi & consistere",
+     "served": "does not seem to be fixed or consistent here",
+     "reference": "appears to have no fixed consistency here with us",
+     "right": "reference",
+     "why": "consistere = to stand firm, hold together; 'consistent' is a false friend."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A keeps Bacon's capitalised terms and explains them in notes (Nature under Investigation, Crossroads for Bivium); B absorbs them into polished Victorian philosophical prose (nature in question, the roads branch into two).",
+   "reason": "Both accurate; B has the stronger voice and settled Baconian vocabulary, A is a heavily annotated, fully flagged literal version whose bolding and markup interrupt the argument."
+  },
+  {
+   "id": "8a9eea4b-6be1-4424-9a38-b7a0deb58f95_256",
+   "served": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "veluti Cotonea Scammoneam, post Diagridium, dictum corrigunt",
+     "served": "they say Quinces correct Scammony, or as they say of Diagridium",
+     "reference": "Comfrey ... to correct scammony, which is then called diagridium",
+     "right": "neither",
+     "why": "Cotonea are quinces (B right, A wrong), but 'afterwards called Diagridium' is A's construal and is the correct one."
+    },
+    {
+     "latin": "Sic gentiana etiam corrigunt theriacam",
+     "served": "they also \"correct\" Gentian and Theriac",
+     "reference": "So, too, they correct theriacum with gentian",
+     "right": "reference",
+     "why": "gentiana is ablative of means and theriacam the object: theriac is corrected with gentian."
+    },
+    {
+     "latin": "isti doctrinæ ne quidem literulam conferunt",
+     "served": "do not contribute even a tiny letter to this doctrine",
+     "reference": "do not contribute the smallest tittle of learning",
+     "right": "served",
+     "why": "isti doctrinæ is dative: they add nothing to this teaching (of separation), not 'no learning' in general."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A is fluent, sharp Victorian polemic but drops the marginalia, smooths (heavens to providence, harm to palate) and misnames quinces; B is an annotated literal version that keeps margins and terms but misconstrues the gentian and Diagridium clauses and adds an unflagged 'let us look'."
+  },
+  {
+   "id": "69b4cce5d5b6c3815e1a2931_94",
+   "served": {
+    "fidelity": 4,
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "reference": {
+    "readability": 3,
+    "register": 5,
+    "terminology": 3,
+    "ambiguity": 3,
+    "transparency": 3,
+    "stance": "free"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "caue dixeris: facere facius est q̃ pati",
+     "served": "It is more honorable to do harm than to suffer it",
+     "reference": "it is better to do than to suffer",
+     "right": "reference",
+     "why": "OCR 'facius' is 'satius' (better); A invents 'more honorable' and supplies 'harm'."
+    },
+    {
+     "latin": "iuerit mille passus: vale cũ illo & alia duo",
+     "served": "go with him twain",
+     "reference": "go with him two more other",
+     "right": "reference",
+     "why": "'alia duo' is two more; A substitutes the familiar KJV wording for Erasmus's text."
+    },
+    {
+     "latin": "Paulum magnum Christianarũ legũ & cõsultum & interpretem",
+     "served": "the great consultant and interpreter of Christian laws",
+     "reference": "a great wise man and cunning and an interpreter",
+     "right": "served",
+     "why": "'legum consultus' is a jurisconsult of the laws; B dissolves the legal image into general wisdom."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A gives plain modern prose with scripture in KJV dress; B is Tudor devotional English that doubles terms and adds in-text glosses (e.g. on the coals of fire).",
+   "reason": "A is clear and close but silently conforms biblical quotations to KJV and adds 'they say'; B keeps the homiletic voice but expands with explanatory doublets and glosses and is harder for a modern reader."
+  },
+  {
+   "id": "69b2ff9f5545150b61b48a36_75",
+   "served": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "Turbines leves, & admodum angusti, etiam in sereno",
+     "served": "even in calm weather",
+     "reference": "even on a clear day",
+     "right": "reference",
+     "why": "'serenum' is clear sky, not absence of wind; a whirlwind in 'calm' blurs Bacon's point."
+    },
+    {
+     "latin": "corripiunt, & correpta sorbent in sursum",
+     "served": "suck up what they have seized",
+     "reference": "carry things up into the air along with them",
+     "right": "served",
+     "why": "'sorbent' is suck/swallow upward; B weakens it to carrying, though the sense is near."
+    },
+    {
+     "latin": "caules pisarum involutæ, & aristæ segetum demessæ",
+     "served": "stalks of peas when tangled and the ears of corn when mowed",
+     "reference": "bundles of pea-straw, sheafs of corn",
+     "right": "both_defensible",
+     "why": "'involutae' can be rolled-up/bundled or entangled; B interprets as farm bundles, A stays word-for-word."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A keeps Bacon's Latinate terms and italics (Squalls, 'Beasts', vehement, reverberated); B naturalises into Victorian plain prose and leaves 'belluae' untranslated.",
+   "reason": "Both accurate and close; A is a slightly stiff Latinate crib, B a smoother reading version with small interpretive smoothings ('these', 'cover over the field')."
+  },
+  {
+   "id": "6949af986ef4a68b726b7fa9_358",
+   "served": {
+    "fidelity": 4,
+    "readability": 3,
+    "register": 3,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 5,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": true,
+   "disagreements": [
+    {
+     "latin": "cuntur stili, & ita coclea hominibus calcantibus",
+     "served": "are called rods, and thus the screw",
+     "reference": "pivots are introduced, and thus the screw is turned",
+     "right": "reference",
+     "why": "The truncated word is '[indu]cuntur' (pivots are inserted); B guessed 'dicuntur' and made it a naming clause."
+    },
+    {
+     "latin": "Qua de materia fiunt organa ad hauriendam aquam",
+     "served": "the materials from which instruments for drawing water are made",
+     "reference": "wooden engines for raising water",
+     "right": "both_defensible",
+     "why": "'materia' in Vitruvius is usually timber, so A is likelier, but 'material' is a possible reading."
+    },
+    {
+     "latin": "ad imas nares eius spatiū, partes quatuor",
+     "served": "to the lower openings",
+     "reference": "to the nozzle of the screw at the bottom",
+     "right": "both_defensible",
+     "why": "'nares' are the mouths of the screw; singular nozzle vs plural openings is a choice, same geometry."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A is fluent technical prose but its wording follows a fuller text than this page (extra clauses unflagged); B flags everything with notes and brackets but misreads the truncated opening and is cluttered with markup and an unsupported 'maximum efficiency' summary."
+  },
+  {
+   "id": "69b2ff0ea1a4246ddb45adbb_62",
+   "served": {
+    "fidelity": 3,
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 3,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 3,
+    "transparency": 2,
+    "stance": "free"
+   },
+   "style": "early-modern",
+   "canonical": true,
+   "disagreements": [
+    {
+     "latin": "leges abrogatas consuetudine haud temere reuocet",
+     "served": "should not rashly revoke laws that have fallen into disuse",
+     "reference": "not be to hastie in callynge agayne lawes",
+     "right": "reference",
+     "why": "'revocet' is revive/call back; English 'revoke' says the opposite and makes the clause nonsensical."
+    },
+    {
+     "latin": "quin aut inertiā potius mutet suam, aut superbiā",
+     "served": "he should change his own laziness or pride",
+     "reference": "amende hys owne lyfe, renounce vnhonest pleasures, and forsake pride",
+     "right": "served",
+     "why": "The Latin names sloth and pride; B replaces sloth with 'unhonest pleasures' and adds a clause."
+    },
+    {
+     "latin": "mille auri pondo ... aut argenti, quantū eius auri preciū æquet",
+     "served": "thousand pounds of gold, or its equivalent in silver",
+     "reference": "a thousande pounde of golde or syluer",
+     "right": "served",
+     "why": "The silver limit is the value-equivalent of that gold; B flattens it to the same weight of either."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A is a close modern rendering; B is Robinson's expansive Tudor paraphrase with doublets, additions and an omitted sacrifice clause.",
+   "reason": "A is clear and close with one real slip ('revoke') and a stray untranslated header; B has the period voice and gets 'revocet' right but silently expands, drops 'magnis adhibitis sacrificiis' and needs effort from a modern reader."
+  },
+  {
+   "id": "69b2f3bfa9a500a45e5e857c_165",
+   "served": {
+    "fidelity": 4,
+    "readability": 3,
+    "register": 3,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": true,
+   "disagreements": [
+    {
+     "latin": "Quid Lex & Prophetæ sui temporis hominibus prodiderūt?",
+     "served": "What did the Law and the Prophets profit the men",
+     "reference": "What discoveries did Moses and the prophets make to their contemporaries",
+     "right": "reference",
+     "why": "'prodiderunt' is handed down/disclosed, not 'profited' (profuerunt); A however swaps 'Law' for 'Moses'."
+    },
+    {
+     "latin": "pueritiæ vocabulo ... quā elementis huius mundi ... voluit Dominus exerceri",
+     "served": "by which the Lord wished them to be exercised",
+     "reference": "childhood, which it was the Lord's will to exercise in the elements",
+     "right": "reference",
+     "why": "'quam' is the object (the childish understanding is what is exercised); B turns it into an instrument."
+    },
+    {
+     "latin": "æterna sanctificatio electis semel acquisita est",
+     "served": "eternal sanctification has been once acquired for the elect",
+     "reference": "eternal sanctification has been at once procured for the elect",
+     "right": "both_defensible",
+     "why": "'semel' is once-for-all; A's older 'at once' can carry that sense but now reads as 'immediately'."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A recasts into idiomatic theological English, quoting scripture in familiar form and compressing or expanding phrases; B tracks the Latin word-for-word, calques included.",
+   "reason": "A reads as real doctrinal prose but silently drops 'accessiones ... accessoria', adds 'scope of the apostle' and 'to the Jews'; B omits nothing but is calque-heavy ('justices of the flesh', 'in the very thing of future goods') and has one misreading."
+  },
+  {
+   "id": "69b6e791f8a84d859cde1de2_473",
+   "served": {
+    "fidelity": 4.5,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 3,
+    "transparency": 3,
+    "stance": "free"
+   },
+   "style": "literal",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "non modo in vegetativa animae parte, sed & ante animam ipsam",
+     "served": "not only in the vegetative part of the soul, but even before the soul itself",
+     "reference": "not only is there a soul or vital principle present in the vegetative part",
+     "right": "served",
+     "why": "Harvey says mind is present in the soul's vegetative part and even before the soul; A rewrites the claim."
+    },
+    {
+     "latin": "Ad quam prolis similitudinem quod attinet",
+     "served": "Regarding this resemblance to the offspring",
+     "reference": "In reference to this subject of family likeness",
+     "right": "reference",
+     "why": "'prolis' is the offspring's likeness (to its parents); B's 'to the offspring' reverses the relation."
+    },
+    {
+     "latin": "ad pulli esse & bene esse, disponunt",
+     "served": "for the existence and well-being of the chick",
+     "reference": "to the being and perfect formation of the chick",
+     "right": "both_defensible",
+     "why": "Scholastic esse/bene esse pair; B keeps it literally, A interprets 'bene esse' as completed formation."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A is a free Victorian reading version that expands and interprets ('dispositions to disease', 'once or twice removed'); B is a close rendering keeping Harvey's scholastic terms with flagged glosses.",
+   "reason": "A is the more graceful prose but silently reshapes the soul/mind sentence and adds interpretive phrases; B is closer and flags glosses, with a stray header, one reversed preposition and 'admirable' for 'remarkable'."
+  },
+  {
+   "id": "69520185ab34727b1f0416bc_29",
+   "served": {
+    "fidelity": 4,
+    "readability": 3,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "aceto, lixiuio, vel urinis acerrimis",
+     "served": "vinegar, lye, or very sharp urines",
+     "reference": "vinegar, lixivium, or sharpest wines",
+     "right": "served",
+     "why": "The Latin reads urinis (urines), not vinis; A's 'wines' does not match this text."
+    },
+    {
+     "latin": "sui duplo admiscuerunt lunæ",
+     "served": "with twice as much of their own Moon",
+     "reference": "with twice its weight of Luna",
+     "right": "reference",
+     "why": "sui duplo is 'double of itself' (the copper); nothing says the silver was the sophists' own."
+    },
+    {
+     "latin": "arsenicum sanè minimè figi potest, nisi operator artista",
+     "served": "artist-operator has an equal knowledge of its tinting spirit",
+     "reference": "cannot be fixed unless the operator be an Artist",
+     "right": "both_defensible",
+     "why": "A makes being an Artist a condition; B keeps artista as apposition and ex aequo literally."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A gives a smooth unannotated reading text keeping Venus/Luna as period terms; B gives a close crib that keeps the cover-names and glosses every term in notes.",
+   "reason": "A reads as fluent period alchemical prose but silently compresses and has 'wines' for urines; B is accurate and fully flagged but awkward ('fixed the very least') and note-cluttered."
+  },
+  {
+   "id": "694f3d6ebe37f451a5324e95_107",
+   "served": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 3,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "reference": {
+    "readability": 3,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "style": "literal",
+   "canonical": true,
+   "disagreements": [
+    {
+     "latin": "summa vero gubernationis summo illi domino paret",
+     "served": "the peak of governance obeys that supreme Lord",
+     "reference": "The whole of Rulership seems to Him the Highest Lord",
+     "right": "both_defensible",
+     "why": "paret can be 'obeys' or 'appears'; each silently picks one, A's being the commoner modern reading."
+    },
+    {
+     "latin": "cum distantia videntur creduntur esse plurima",
+     "served": "when they are seen from a distance",
+     "reference": "when they are seen as separate",
+     "right": "reference",
+     "why": "distantia is a participle, 'standing apart/distinct', set against adunata; not viewing distance."
+    },
+    {
+     "latin": "Hec iterum ratio que est o Trismegiste",
+     "served": "What then is this reasoning, O Trismegistus?",
+     "reference": "Is this again the reason, O Thrice-greatest one?",
+     "right": "served",
+     "why": "que est asks what the account is; B turns it into a yes/no question and drops the sense."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A modernises and explains (Ruler of Essence, Jupiter, notes on decans); B archaises in rhythmic prose, re-Hellenises (Zeus, Heimarmene, essence-chief) and brackets every supplied word.",
+   "reason": "A is the easier read with consistent glossed terms but resolves paret, adds 'provides' and misreads distantia; B is harder, hieratic and scrupulously bracketed, with one mistaken question."
+  },
+  {
+   "id": "6952d05477f38f6761bc511e_428",
+   "served": {
+    "fidelity": 4.5,
+    "readability": 3,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 3,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "instar Magnetis Ferri spiritum nutrimenti loco trahentis",
+     "served": "like an Iron Magnet drawing the spirit of nourishment in its stead",
+     "reference": "attracts Spirit instead of Nutriment, as a Loadstone draws Iron",
+     "right": "reference",
+     "why": "nutrimenti loco is 'in place of nourishment'; A's 'spirit of nourishment' misconstrues, B recasts but keeps the sense."
+    },
+    {
+     "latin": "medicina enim Adepta est. Ars, quæ cognitionem dat",
+     "served": "for adept medicine is an Art which gives the knowledge",
+     "reference": "for Art hath obtained a Medicine which impowers",
+     "right": "served",
+     "why": "medicina Adepta is the Paracelsian term 'Adept medicine'; B reads adepta as 'obtained' and inverts subject."
+    },
+    {
+     "latin": "Astrali Impressione Firmamenti Maioris mundi",
+     "served": "Astral Impression of the Firmament of the Greater World",
+     "reference": "Astral Impression of the greater and lesser Worlds firmament",
+     "right": "served",
+     "why": "The Latin names only the greater world here; B silently adds 'and lesser'."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A is a word-for-word modern crib with modernised plant names (Knotgrass, Goldenrod); B is seventeenth-century idiom with period herbal names (Arsemart, Wallwort) and freer syntax.",
+   "reason": "B keeps the Paracelsian voice and period herbal vocabulary but silently adds, drops (alioquin) and misses Adepta; A is close but stiff, garbles the magnet simile and flags almost nothing."
+  },
+  {
+   "id": "694bf8d2343422769f237558_277",
+   "served": {
+    "fidelity": 5,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 2,
+    "stance": "free"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "Megaris saxum quoddam ad singulos ictus fidicinat",
+     "served": "plays like a stringed instrument when struck with blows",
+     "reference": "every time the string of a Harpe is struck",
+     "right": "served",
+     "why": "ad singulos ictus is 'at each blow' on the rock; A imports a harp string not in the Latin."
+    },
+    {
+     "latin": "stagnum á continenti procedentes, in circulum motæ",
+     "served": "Proceeding from the mainland into a pond",
+     "reference": "forthwith come into the middle of the sea",
+     "right": "served",
+     "why": "stagnum is a pool or lake and a continenti 'from the mainland'; A's 'middle of the sea' paraphrases both away."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A is a compressing seventeenth-century reading version that folds clauses together and normalises names (Arion of Lesbos); B is a clause-by-clause modern rendering with notes on cithara, fidicinat and the authorities.",
+   "reason": "A has the livelier period voice but silently drops lapsos and the 'labours of individual tasks' and adds a harp string; B is complete, flagged and accurate, with a dangling opening fragment."
+  },
+  {
+   "id": "6952872cab34727b1f04d284_499",
+   "served": {
+    "fidelity": 4,
+    "readability": 5,
+    "register": 4,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "style": "literal",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "in Inferiori vivunt honeste cum pluribus uxoribus",
+     "served": "they live honestly with multiple wives",
+     "reference": "they live honorably, with more than one wife",
+     "right": "reference",
+     "why": "honeste means honourably/decently; 'honestly' is a false friend in modern English."
+    },
+    {
+     "latin": "quia modo Alcoranum Librum religionis suæ fecerunt",
+     "served": "made the Quran the book of their religion",
+     "reference": "made the Koran the only book of their religion",
+     "right": "reference",
+     "why": "modo ('only') carries the point of the clause; B drops it without notice."
+    },
+    {
+     "latin": "apparet ignis sicut faculæ, ut noscatur",
+     "served": "a fire appears like torches",
+     "reference": "a fire appears as of a torch",
+     "right": "both_defensible",
+     "why": "faculæ can be genitive singular or nominative plural; the Latin allows either."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A keeps the period vocabulary (Mohammedan, Koran, stumbling-block) in the house Swedenborgian style; B modernises to Muslim/Quran, glosses spiritual-world terms and supplies subjects for clarity.",
+   "reason": "Both are close and largely agree; A is the more exact and doctrinally consistent, B the more readable but it modernises period terms, slips on honeste and modo, and adds 'Christians' unflagged."
+  },
+  {
+   "id": "695262d8ab34727b1f046ade_167",
+   "served": {
+    "fidelity": 5,
+    "readability": 4,
+    "register": 4,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 3,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 3,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "donec cum expressione sublimetur totali",
+     "served": "until it is totally sublimed with pressure",
+     "reference": "until with great expression of Fire it be sublimed",
+     "right": "reference",
+     "why": "expressio is the Geberian term for the strongest degree of fire, not mechanical pressure."
+    },
+    {
+     "latin": "quæ nec mundo confert, nec mundi partibus",
+     "served": "contributes neither to the world nor to the parts",
+     "reference": "neither confers to the Clean, nor to the Parts",
+     "right": "served",
+     "why": "The following clause about the mover of nature coming to rest points to mundus as 'world'."
+    },
+    {
+     "latin": "post administretur cum ignis cautelæ intentione",
+     "served": "let it be administered with careful attention to the fire",
+     "reference": "afterward, it must be warily calcined",
+     "right": "served",
+     "why": "This Latin has administretur and no calcination; A may follow a different reading but does not match."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A keeps the Latinate art-vocabulary untranslated (Luna, Ingress, Radix, Medicine of the first Order); B translates the cover-names (Silver, Iron) and explains each technical term in notes.",
+   "reason": "A preserves Geberian terminology best but silently omits the Mars-solution sentence and is opaque to a lay reader; B is complete and annotated but flattens expressio and ingressus into everyday words."
+  },
+  {
+   "id": "15c5d8e4-cea3-4b5b-9859-f3528660ecc8_347",
+   "served": {
+    "fidelity": 5,
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "reference": {
+    "readability": 3,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "style": "early-modern",
+   "canonical": true,
+   "disagreements": [],
+   "legit_choice": true,
+   "legit_note": "A modernises and glosses period terms (exponens as 'represents', duplicate ratio explained in a note); B keeps Newton's own vocabulary ('exponent', 'rectangle under', 'collected') unglossed.",
+   "reason": "Same mathematics throughout; A is a clear annotated modern reading that twice calls Ba/BA an 'arc' where the Latin has only a length and moves Q.E.D. into a note, B is a close period crib harder for a modern non-specialist."
+  },
+  {
+   "id": "695d0e044afae5c3b3aead52_353",
+   "served": {
+    "fidelity": 4,
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": true,
+   "disagreements": [
+    {
+     "latin": "Plurimi verò ex motibus qui in nobis fiunt",
+     "served": "many of the movements that occur within us",
+     "reference": "the greater part of our motions",
+     "right": "both_defensible",
+     "why": "plurimi can be 'very many' or 'most'; each resolves the superlative one way."
+    },
+    {
+     "latin": "cùm ex se isti spiritus ad multas actiones diuersas æquè facilè applicentur",
+     "served": "even though the spirits themselves could just as easily be applied",
+     "reference": "these animal spirits being in their own nature capable",
+     "right": "both_defensible",
+     "why": "cum + subjunctive is concessive in A, circumstantial in B; the Latin allows either."
+    },
+    {
+     "latin": "illi qui ex alto decidunt manus in terram præmittunt",
+     "served": "people fall from a high place and stretch out their hands",
+     "reference": "a man in falling thrusts out his hand",
+     "right": "served",
+     "why": "B drops 'ex alto' and 'in terram' and turns the plural into a singular; A keeps 'from a height'."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A breaks the periods into short modern sentences and footnotes spiritus/coctio; B keeps the long periods and works the gloss ('the subtle fluid styled') silently into the text.",
+   "reason": "Both sound; A is more readable and flags its glosses though it writes 'animal spirits' where the Latin first has bare spiritus, B silently expands that term and trims small details of the falling example."
+  },
+  {
+   "id": "69904fcd7d19f3f2aac1da09_76",
+   "served": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "reference": {
+    "readability": 3,
+    "register": 4,
+    "terminology": 3,
+    "ambiguity": 3,
+    "transparency": 2,
+    "stance": "free"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "Alchindus de aspectibus omnino docet aliud, verum Augustino videtur",
+     "served": "teaches something else entirely regarding aspects, while it seems to Augustine",
+     "reference": "teaches another thing, which St. Austin thinks to be most true",
+     "right": "served",
+     "why": "verum is adversative ('but'); B reads it as 'true' and fuses two separate opinions."
+    },
+    {
+     "latin": "quod à sapientiæ studiosis necdum sit pervestigatum",
+     "served": "not yet been fully investigated by students of wisdom",
+     "reference": "which is above humane Wisdome to find out",
+     "right": "served",
+     "why": "necdum = 'not yet'; B turns an open question into something beyond human reach."
+    },
+    {
+     "latin": "pingendi artificio, atque speculorum fabricæ plurimum confert ornamenti",
+     "served": "the art of painting and the manufacture of mirrors",
+     "reference": "the Art of Painting and making of Landskips",
+     "right": "served",
+     "why": "speculorum fabrica is mirror-making; 'Landskips' has no basis in the Latin."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "B silently omits the Epicurean sentence and 'refractions', adds 'adorning, and perfecting great Buildings' and misreads verum and specula; A is complete and annotated, with minor slips ('truly' for vero, duplicated heading)."
+  },
+  {
+   "id": "69ac7ee520878c5c9ba51e75_98",
+   "served": {
+    "fidelity": 4.5,
+    "readability": 3,
+    "register": 4,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": true,
+   "disagreements": [
+    {
+     "latin": "atque etiam alijs se venditent, ad existimationem meliorem comparandam",
+     "served": "and even sell themselves to others",
+     "reference": "and also to show themselves off to the world",
+     "right": "reference",
+     "why": "se venditare is idiomatic for 'to show off / recommend oneself', not literally to sell oneself."
+    },
+    {
+     "latin": "Diuina Prudentia omninò, & Ordo pro exemplari sumenda sunt",
+     "served": "Divine Providence and Order must be taken as the pattern",
+     "reference": "the divine wisdom and order must be our pattern",
+     "right": "reference",
+     "why": "prudentia here is God's wisdom in ordering the work of creation, not providence."
+    },
+    {
+     "latin": "Axiomata ... Praxin non strictim, sed confertim instruunt",
+     "served": "instruct Practice not sparingly, but in abundance",
+     "reference": "supply practice with its instruments, not one by one, but in clusters",
+     "right": "both_defensible",
+     "why": "instruere is 'equip' rather than 'instruct', but strictim/confertim admit both pairs of renderings."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A follows the Latin word for word with Latinate cognates ('invention', 'light-bearing', capitalised nouns); B recasts into idiomatic English and coins 'experiments of Light / of Fruit'.",
+   "reason": "A is a serviceable crib with an unintelligible opening fragment ('useless in other matters'), a false-friend 'sell themselves' and 'invention' for inventio; B is accurate, idiomatic and keeps Bacon's aphoristic voice."
+  },
+  {
+   "id": "69dbc9491040d1d5e20a1afd_87",
+   "served": {
+    "fidelity": 2,
+    "readability": 2,
+    "register": 2,
+    "terminology": 2,
+    "ambiguity": 2,
+    "transparency": 2,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": true,
+   "disagreements": [
+    {
+     "latin": "si hoc uno solo quicq. vidissi indignus",
+     "served": "if I had seen anything unworthy in this one thing alone",
+     "reference": "if the sun had ever beheld anything more infamous",
+     "right": "reference",
+     "why": "The abbreviated text stands for 'hoc uno sol quicquam vidisset indignius'; B follows the corrupt transcription."
+    },
+    {
+     "latin": "Itaq. pietes urbis modo stat et manet",
+     "served": "the city stands and remains only by the piety of others",
+     "reference": "in Rome only the walls of her houses remain standing",
+     "right": "reference",
+     "why": "'pietes' is abbreviated parietes (walls), not pietas; B invents 'of others'."
+    },
+    {
+     "latin": "Que hi pplo rono iuste imperati accidere potuerit",
+     "served": "happen to the Roman people, who were rightly governed",
+     "reference": "overtake the Roman People for their injustice and tyranny",
+     "right": "reference",
+     "why": "The reading is 'iniuste imperanti' (ruling unjustly); B reverses the sense to 'justly' and makes it passive."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "B translates a heavily abbreviated, badly transcribed incunable at face value and produces repeated nonsense with little flagging, though it keeps the marginal heading; A renders the standard Cicero text fluently, with silent expansions ('a model of', 'Publius Sulla') and section numbers."
+  },
+  {
+   "id": "69b6fb4a3c7947b468d7aa52_309",
+   "served": {
+    "fidelity": 4,
+    "readability": 3,
+    "register": 3,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": true,
+   "disagreements": [
+    {
+     "latin": "instantias perfecantes ... quia perfecant naturam",
+     "served": "perforating instances ... because they perforate nature",
+     "reference": "Dissecting Instances ... because they dissect nature",
+     "right": "reference",
+     "why": "The word is persecantes (long s read as f): cutting through, hence the Democritean link; 'perforate' is wrong."
+    },
+    {
+     "latin": "instantias vellicantes ... qui vellicant intellectum",
+     "served": "pricking instances because they prick the intellect",
+     "reference": "Awakening Instances, because they awaken the understanding",
+     "right": "both_defensible",
+     "why": "vellicare is literally to pluck or twitch; B keeps the image, A gives its effect."
+    },
+    {
+     "latin": "quod parum zibethi aut aromatis",
+     "served": "a small amount of civet or perfume",
+     "reference": "a little civet or musk",
+     "right": "served",
+     "why": "aroma is a generic spice or perfume; 'musk' narrows it to one substance."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A names the instances by their function and compresses ('silver gilt', 'varied organisation'); B stays word for word with Latinate cognates ('infects', 'figure dissimilar in its parts') and tags terms.",
+   "reason": "A is a polished reading version that silently trims details (gilt 'only on the outside', 'along with the proper ones'); B is a faithful but stiff crib ('slides down', 'infects') misled by the long-s transcription into 'perforating'."
+  },
+  {
+   "id": "69523495ab34727b1f044a45_63",
+   "served": {
+    "fidelity": 3,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 4,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 2,
+    "stance": "free"
+   },
+   "style": "literal",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "deus amplius permittit vim generatiuam maleficiari",
+     "served": "God permits the generative power of witches more than other powers",
+     "reference": "God allows more power of witchcraft over the genital forces",
+     "right": "reference",
+     "why": "maleficiari is passive: the generative power is what gets bewitched, it is not the witches' power."
+    },
+    {
+     "latin": "ibi non est vera bestia per auctoritatem canonis allegatam",
+     "served": "according to the legal authority cited above, there is no real beast",
+     "reference": "there is no actual beast there; and he adduces the authority",
+     "right": "served",
+     "why": "per auctoritatem grounds the claim that no real beast is there; it is not a separate act of citing."
+    },
+    {
+     "latin": "non potest esse obiectum quia a nulla re sumi potest",
+     "served": "it cannot be derived from any real thing",
+     "reference": "it cannot be taken hold of by anything",
+     "right": "served",
+     "why": "sumi a re = be taken/derived from a thing, matching 'a re accepta' just after."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "Both articulate the scholastic argument readably; A errs on the subject of 'occidere' and on vim generativam but glosses terms and flags originals, while B flattens forma to 'shape', uses 'glamour', silently drops the Council attribution and a clause, and misreads several phrases."
+  },
+  {
+   "id": "69bd9d416120d54bd037457f_263",
+   "served": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "free"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "de omnibus benè merendum esse",
+     "served": "one must do good to all",
+     "reference": "to desire the Good Will of all Men",
+     "right": "served",
+     "why": "bene mereri de aliquo = to deserve well of / do good to someone, not to seek their goodwill."
+    },
+    {
+     "latin": "liberè mutuum dandum",
+     "served": "give freely without expecting a return",
+     "reference": "Lend freely",
+     "right": "reference",
+     "why": "mutuum dare is to lend; A turns it into giving and adds an unflagged gloss."
+    },
+    {
+     "latin": "ceterum liceat irasci, odisse, contendere",
+     "served": "otherwise, it is permissible to be angry",
+     "reference": "there is nothing more Lawful, than to be Angry",
+     "right": "served",
+     "why": "The Latin says only that it is allowed; B's superlative is an intensification not in the text."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A gives a plain modern word-for-word rendering; B a free early-modern polemical recasting with doublets and rhetorical heightening.",
+   "reason": "B keeps Agrippa's polemical bite in period idiom but expands and intensifies silently; A is accurate and flat, with one silent expansion and a crib-like passage where the Latin text itself is corrupt (B covers only the first part of the page)."
+  },
+  {
+   "id": "69af0cfc067c0c26ee26cd3c_151",
+   "served": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 4,
+    "terminology": 3,
+    "ambiguity": 5,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "Hæc cùm ita sint, constat confirmatum iri",
+     "served": "Since these things are so, it is clear",
+     "reference": "If these things be so, another point",
+     "right": "served",
+     "why": "cum ita sint is causal ('since'), and B also drops constat; B makes the premise hypothetical."
+    },
+    {
+     "latin": "in brachio infra ligaturam, comprehensus erat sanguis",
+     "served": "contained in the arm below the ligature",
+     "reference": "contained in the arm beyond the ligature",
+     "right": "both_defensible",
+     "why": "infra is literally 'below'; 'beyond' interprets the same distal side of the bandage."
+    },
+    {
+     "latin": "Videmus enim in corporis habitu, ab arteriis sanguinem",
+     "served": "we see in the habit of the body that blood flows",
+     "reference": "We have seen, that the blood passes from the arteries",
+     "right": "served",
+     "why": "B omits in corporis habitu (the fleshy parts) and shifts tense; A keeps it, though as an unglossed calque."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A keeps Harvey's Latin order and calques (habit of the body, impetuously); B smooths into Victorian medical prose and drops minor phrases.",
+   "reason": "Both convey the argument correctly; A is a close crib with an opaque calque and runs past the page's Latin, B reads better but silently omits 'in corporis habitu' and the lancet."
+  },
+  {
+   "id": "695594f97bd6d2cd1d61e685_331",
+   "served": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "reference": {
+    "readability": 3,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "style": "literal",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "& hoc ideo quia superiora non caperent",
+     "served": "This is because higher things cannot be grasped",
+     "reference": "because they did not comprehend superior things",
+     "right": "reference",
+     "why": "caperent is active plural with the brothers as subject; A's impersonal passive loses who fails to grasp."
+    },
+    {
+     "latin": "adventus omnis dicitur cum in cogitationem ex Verbo",
+     "served": "A \"coming\" is said to occur when truth",
+     "reference": "It is said, every coming, when truth from the Word",
+     "right": "reference",
+     "why": "A drops omnis, which is the very word the paragraph is explaining."
+    },
+    {
+     "latin": "dies tumultus ... perplexitatis Domino Jehovih Zebaoth",
+     "served": "perplexity for the Lord Jehovah Zebaoth",
+     "reference": "perplexity by the Lord Jehovah Zebaoth",
+     "right": "both_defensible",
+     "why": "The dative can be read as 'belonging to/for' or as agent; the Latin leaves it open."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A modernises Swedenborg's diction (higher/lower, thou-less scripture); B keeps the Latinate tradition (superior/inferior, denoting, added 'principle') and KJV-style quotations.",
+   "reason": "Both are faithful and terminologically consistent; A is easier to read and flags the original of the Isaiah quotation, B is the denominational literal style with unflagged additions ('principle', 'the Word', numbering)."
+  },
+  {
+   "id": "1a8485e5-5331-41df-bfc1-6efd65238f55_581",
+   "served": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 5,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "Alas si oleo illeueris, nam in cursu impedietur",
+     "served": "If you smear the wings with oil",
+     "reference": "anoynt him with Oyl under the shoulders",
+     "right": "reference",
+     "why": "For a dog alae means the armpits; B prints 'wings' and only concedes the right sense in a note."
+    },
+    {
+     "latin": "aut si astur sit, aceti parum dato",
+     "served": "if it is a goshawk, give it a little vinegar",
+     "reference": "If it be a Buzzard, add a little Vinegar",
+     "right": "served",
+     "why": "astur is the goshawk, not a buzzard."
+    },
+    {
+     "latin": "aut pullo columbæ vinum ex rostro infunde",
+     "served": "pour wine into a pigeon chick's beak",
+     "reference": "pour Wine in at his mouth, with a yong Pidgeon",
+     "right": "served",
+     "why": "pullo columbae is the dative recipient of the wine; A makes the hawk receive wine alongside a pigeon."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A is a brisk early-modern recipe-book version with rhymed couplets for Oppian; B is a modern literal version with unrhymed lines and explanatory notes.",
+   "reason": "A has the period voice and verse but compresses and misidentifies some terms silently; B is fuller and annotated, though it drops 'tota die' and its 'wings' for the dog is wrong in the text line."
+  },
+  {
+   "id": "69b21d1a429e087c6f866ee7_452",
+   "served": {
+    "fidelity": 4,
+    "readability": 3,
+    "register": 3,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "free"
+   },
+   "style": "literal",
+   "canonical": true,
+   "disagreements": [
+    {
+     "latin": "circulorumque sic positorum, ut certo tempore intuētes afflent",
+     "served": "that they flow to those who observe",
+     "reference": "at certain periods calculated to deceive the eye",
+     "right": "reference",
+     "why": "afflent is a corruption of fallant ('deceive'); B translates the corrupt word into nonsense without flagging it."
+    },
+    {
+     "latin": "Contenti sumus inuentis, aliquid ueritati & posteri conferant",
+     "served": "let posterity also contribute something to the truth",
+     "reference": "leave a little truth for our descendants to find out",
+     "right": "served",
+     "why": "conferant veritati = let posterity contribute to truth; A recasts it as us leaving truth over."
+    },
+    {
+     "latin": "aries † excolitur, libra tardissime mergitur",
+     "served": "Libra sets most slowly",
+     "reference": "Libra lifts its scales very slowly",
+     "right": "both_defensible",
+     "why": "B follows this edition's mergitur; A follows a different reading (rising) from its own text, with poetic expansion."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A is a fluent reading translation that recasts and expands (and supplies 'Apollonius'); B is a word-for-word crib of this particular printed text, Latinisms and all.",
+   "reason": "A carries Seneca's rhetorical voice and reads without the Latin but adds unflagged material; B stays close yet is stiff, calques (denounces, suspicious, argument of lightness) and renders OCR/print corruptions unmarked."
+  },
+  {
+   "id": "69b18a89c4be2cdd0edc810d_135",
+   "served": {
+    "fidelity": 4,
+    "readability": 3,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "& populus quam multitudo dicitur",
+     "served": "the people is said to be other than the multitude",
+     "reference": "it is oftner call'd the People, then the Multitude",
+     "right": "reference",
+     "why": "quam completes a comparative (saepius) from the previous page; A invents 'other than' from the fragment."
+    },
+    {
+     "latin": "quoties ipsam aliquid velle, sperare, vel facere dicimus",
+     "served": "wills, hopes, or does something",
+     "reference": "wills, commands, or doth any thing",
+     "right": "both_defensible",
+     "why": "OCR reads sperare (A follows it); the true text is surely imperare, matching 'quae imperat, vult & agit' (B)."
+    },
+    {
+     "latin": "quo constituendae civitatis principium fiat",
+     "served": "so that a beginning of the constituting ... may be made",
+     "reference": "by whose meanes there may be a beginning",
+     "right": "served",
+     "why": "quo + subjunctive is a purpose clause, not a relative referring to the multitude."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "Machine is a stiff word-order crib with a fragment misreading and a broken margin tag; the 1651 version is idiomatic period political prose, 'City' vs 'commonwealth' for civitas being the one real choice."
+  },
+  {
+   "id": "69529509b184004c526a2793_237",
+   "served": {
+    "fidelity": 5,
+    "readability": 3,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "Tertia debilis & per Circuitus",
+     "served": "is weak and works through Circuits",
+     "reference": "the third is weak and circuitous",
+     "right": "both_defensible",
+     "why": "A reads it as 'roundabout'; B keeps the noun, which could also mean periodic rounds, and glosses it as roundabout."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A gives a lean, polished Victorian reading text; B keeps the Latin's word order and capitalised terms and surrounds them with flagged explanatory glosses.",
+   "reason": "Same sense throughout; Spedding reads as natural-philosophical aphorism, the machine version is accurate but cluttered by notes and bolding that interrupt a short page."
+  },
+  {
+   "id": "c87fadfa-1543-44b9-a138-573c144246e6_328",
+   "served": {
+    "fidelity": 5,
+    "readability": 3,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 3,
+    "transparency": 2,
+    "stance": "free"
+   },
+   "style": "literal",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "tunc citius ex eo aurum, quam argentum fit",
+     "served": "gold is made from it more quickly than silver",
+     "reference": "becomes gold without first passing through the stage of silver",
+     "right": "served",
+     "why": "Latin says only 'sooner gold than silver'; A's developmental-stage reading is an interpretive expansion."
+    },
+    {
+     "latin": "nec etiam est materia, quae ad impuram aliquam formam spectat",
+     "served": "nor is it a matter that looks toward any impure form",
+     "reference": "that which has once become perfectly pure can never become impure",
+     "right": "served",
+     "why": "B follows the Latin; A substitutes a general maxim not in the text."
+    },
+    {
+     "latin": "& forma auri, vel argenti iisdem ingeratur",
+     "served": "the form of gold or silver may be introduced into them",
+     "reference": "reduced by gentle heat to the form of silver or gold",
+     "right": "served",
+     "why": "No heat is mentioned; ingeratur is 'be introduced', and A adds a procedure silently."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "Waite recasts and smooths into a fluent reading version, resolving the Latin's awkward logic; the machine keeps a close crib, including the source's tangled double negative, with a flagged gloss on crassities.",
+   "reason": "Waite is highly readable but silently expands and drops clauses; the machine is faithful and flagged but stiff, and reproduces an illogical 'unless ... not taken away' without comment."
+  },
+  {
+   "id": "69b2ff19a1a4246ddb45ae6a_196",
+   "served": {
+    "fidelity": 3,
+    "readability": 4,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 5,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "free"
+   },
+   "style": "early-modern",
+   "canonical": true,
+   "disagreements": [
+    {
+     "latin": "medicum, καὶ ταῦτα βασιλικόν, iam sexagenarium",
+     "served": "and a royal one at that",
+     "reference": "a Man master of 'em all",
+     "right": "served",
+     "why": "βασιλικόν qualifies the physician (a king's physician); A turns it into general mastery."
+    },
+    {
+     "latin": "hic nullam omnino ... praetermittit, quam non evolvat",
+     "served": "this man leaves out no book at all",
+     "reference": "my friend Aldus ... not passing by any kind of Grammar",
+     "right": "served",
+     "why": "hic resumes the sixty-year-old grammarian; A wrongly makes Aldus the one who reads every grammar."
+    },
+    {
+     "latin": "nemini non invidens, si quid ... moliatur",
+     "served": "envying no one if they attempt anything",
+     "reference": "envying every man's attempts in this kind",
+     "right": "reference",
+     "why": "nemini non is a double negative meaning 'everyone'; B reverses the sense."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "Wilson keeps the satire's bite in racy Restoration idiom but misassigns the subject and paraphrases; the machine is closer clause by clause yet flat, drops the opening 'si quid mentior' silently and inverts 'nemini non'."
+  },
+  {
+   "id": "69905e372fd6a039938a1793_28",
+   "served": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 3,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "reference": {
+    "readability": 3,
+    "register": 5,
+    "terminology": 3,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "invenitur in corpore testudinis",
+     "served": "it is found in the body of a tortoise",
+     "reference": "it is foūde in the head of the snayle",
+     "right": "served",
+     "why": "testudo is the tortoise and corpore is body; A's snail and head are not in the Latin."
+    },
+    {
+     "latin": "nisi lucens prima cum fuerit accensa: & crescens monoytes",
+     "served": "unless the first light has been kindled: and as the moon grows",
+     "reference": "left in Latin, untranslated",
+     "right": "cant_tell",
+     "why": "The Latin is corrupt (lunar phases); A openly declines to translate, B guesses a sense and notes only part of it."
+    },
+    {
+     "latin": "Si vis devincere hostes & fugere lites",
+     "served": "overcome enemies and escape lawsuits",
+     "reference": "ouercom thy enemyes, and slee debate",
+     "right": "both_defensible",
+     "why": "lites covers both quarrels and suits at law; A takes the general sense, B the legal one."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "The 1560 version keeps period idiom and Latin stone names and leaves the corrupt lunar clause in Latin; the machine modernises names, annotates, and commits to a reading of the crux.",
+   "reason": "Tudor version has authentic recipe-book voice but heavy archaic spelling, a snail for a tortoise and an untranslated crux; the machine is clear and glossed but gives false precision on the corrupt clause and on 'scibilibus'."
+  },
+  {
+   "id": "6956eaf4f23ebf30578dba35_88",
+   "served": {
+    "fidelity": 5,
+    "readability": 5,
+    "register": 4,
+    "terminology": 5,
+    "ambiguity": 4,
+    "transparency": 5,
+    "stance": "free"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "eo adhuc vivente, & palpitante",
+     "served": "while it is still alive and beating",
+     "reference": "whilest it is yet warm with naturall heat",
+     "right": "served",
+     "why": "The Latin says living and throbbing; A substitutes warmth and loses the point of the chapter."
+    },
+    {
+     "latin": "transire morbum, anatemque emori",
+     "served": "the sickness passes into it and the duck dies",
+     "reference": "it takes away the pain, and her self dies",
+     "right": "served",
+     "why": "transire is transfer of the disease to the duck, not mere relief."
+    },
+    {
+     "latin": "si quis transglutit cor Upupae",
+     "served": "the heart of a hoopoe",
+     "reference": "the heart of a Lapwing",
+     "right": "served",
+     "why": "Upupa is the hoopoe; lapwing is the customary but mistaken early-modern English equivalent."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "The 1651 version keeps period idiom and names (fork fish, ague, travel) in running prose; the machine recasts into modern sentences with identified species and flagged explanatory notes.",
+   "reason": "J.F. reads as genuine period magic-book prose but silently drops 'sleeping', the wolf's eye and 'living'; the machine is complete, modern and heavily but openly glossed."
+  },
+  {
+   "id": "6a2198155ce215cb9ac70f53_209",
+   "served": {
+    "fidelity": 5,
+    "readability": 5,
+    "register": 4,
+    "terminology": 5,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "style": "literal",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "quæ in naturali homine tantum faciunt, ut absque illis cogitare nequeat",
+     "served": "which in the natural man function in such a way",
+     "reference": "which are of so much account in the natural man",
+     "right": "reference",
+     "why": "tantum faciunt = count for so much; B turns a statement of weight into one of manner."
+    },
+    {
+     "latin": "amores & illorum affectiones repræsentantur per flammas",
+     "served": "loves and their affections",
+     "reference": "the different kinds of love and their affections",
+     "right": "both_defensible",
+     "why": "A unpacks the plural amores as kinds of love; B keeps the Swedenborgian plural bare."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A keeps Victorian New-Church idiom (appertaining, falses, doublets like comprehended or conceived); B gives the same close rendering in plain modern English (falsities, goods, grasped).",
+   "reason": "Two near-identical literal renderings; A has the period doctrinal voice with small silent doublets, B is clearer but slips once on tantum faciunt."
+  },
+  {
+   "id": "690989d5cf28baa1b4cae1c9_159",
+   "served": {
+    "fidelity": 5,
+    "readability": 4,
+    "register": 3,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 3,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": true,
+   "disagreements": [
+    {
+     "latin": "non tam magnitudine numinis, quàm diuinitate & sanctitate",
+     "served": "not so much by the magnitude of its power",
+     "reference": "not so much by the greatness of his light",
+     "right": "both_defensible",
+     "why": "Page prints numinis (B follows it); A follows the standard reading luminis of the Asclepius text."
+    },
+    {
+     "latin": "Semel autem dispensauit æterna lege, cunctis uitalibus uitam præstans",
+     "served": "he dispensed once by eternal law, bestowing life",
+     "reference": "Once for all bestowed Life; further doth preserve them by a law",
+     "right": "served",
+     "why": "The Latin has one act of dispensing by eternal law; A splits it into bestowal plus a separate preserving."
+    },
+    {
+     "latin": "quasi oculis uera ratione perspecta",
+     "served": "as if with eyes perceiving by true reason",
+     "reference": "see True Reason, as though with corporal eyes",
+     "right": "reference",
+     "why": "Ablative absolute: true reason is the thing seen, not the instrument of seeing."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A archaises into a hieratic, rhythmic voice with bracketed supplements and Greek-leaning terms (Cosmos, ensouled); B is a plain word-for-word crib of the printed Latin.",
+   "reason": "A is solemn and flagged with brackets but tangled in the 'every part' sentence and works from a different text; B is clearer but flat, with unflagged guesses (cherisher, vitalities)."
+  },
+  {
+   "id": "694f3d6cbe37f451a5324e10_84",
+   "served": {
+    "fidelity": 4.5,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "reference": {
+    "readability": 3,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 2,
+    "stance": "balanced"
+   },
+   "style": "early-modern",
+   "canonical": true,
+   "disagreements": [
+    {
+     "latin": "in corpore: ante corpus: atque post corpus",
+     "served": "in the body; I was before the body, and after",
+     "reference": "in the Womb, every where",
+     "right": "served",
+     "why": "The Latin has body, before body, after body; B follows the Greek 'womb' and collapses the rest."
+    },
+    {
+     "latin": "Numeriq; undecim sunt: unus omniformisq; secundū ideas naturæ: ad hominis peruagationē",
+     "served": "eleven numbers, but one all-formed, for man's wandering",
+     "reference": "twelve numbers, the Idea of one; to the deceiving of Man",
+     "right": "served",
+     "why": "Ficino's Latin says eleven and pervagatio (wandering); B renders the Greek plane as deceit and has twelve."
+    },
+    {
+     "latin": "a potestatib9 decem. i. a denario numero repellūť",
+     "served": "driven away by the ten results—that is, the number ten",
+     "reference": "driven away, by the Ten powers; By the dead",
+     "right": "reference",
+     "why": "potestatibus = powers (A's 'results' misreads the OCR); B's 'dead' is a misprint for decad."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A is a readable annotated version of Ficino's Latin with one silent OCR misreading; B has fine period voice but renders a different (Greek-based) text, so it silently drops and adds against this page."
+  },
+  {
+   "id": "6952855fab34727b1f04b383_434",
+   "served": {
+    "fidelity": 4,
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "reference": {
+    "readability": 3,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "sive à capite ... humorem excrementosum ... per foramen cauterii extraxisse",
+     "served": "either from the head ... or elsewhere",
+     "reference": "or thorow the hole of a Cautery, to have extracted",
+     "right": "reference",
+     "why": "sive introduces an alternative description of the same claim; A invents a second source 'or elsewhere'."
+    },
+    {
+     "latin": "An cauterium posset ... diarrhœam porraceam in se affugere",
+     "served": "drive away that leek-green diarrhea into itself",
+     "reference": "suck unto it a leeky Flux into it self",
+     "right": "reference",
+     "why": "OCR affugere is assugere (suck in); 'drive away into itself' is self-contradictory."
+    },
+    {
+     "latin": "carnosa membrana sit circa ordinaria loca cauterii, mera axungia",
+     "served": "there is a fleshy membrane around the ordinary locations",
+     "reference": "there is in the fleshly membrane ... a meer grease",
+     "right": "both_defensible",
+     "why": "Latin sets membrane and fat in apposition; B reads fat as lying in the membrane, A keeps the apposition."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A modernises and explains (glossed Archeus, emunctories, fontanelle, scare quotes for sarcasm); B stays word-for-word in period medical English with doublets (venal Blood, Rheum, Issue).",
+   "reason": "A is lively and well annotated but smooths the syntax with unflagged additions and flattens cruor; B is a faithful period crib, harder to read, with silent synonym doublets."
+  },
+  {
+   "id": "697e23cca90e1780032ca2f2_176",
+   "served": {
+    "fidelity": 5,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 4,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 2,
+    "stance": "free"
+   },
+   "style": "free",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "vapores citrinos, subsidente corpore, viola tinctos, interdum & obscurâ purpurâ",
+     "served": "lemon-yellow vapors while the body settles, tinted with violet",
+     "reference": "the body below becomes tinged with violet",
+     "right": "served",
+     "why": "tinctos agrees with vapores; it is the vapours, not the body, that are violet-tinged."
+    },
+    {
+     "latin": "Post duodecim aut quatuordecim dierum expectationem",
+     "served": "After a wait of twelve or fourteen days",
+     "reference": "At the end of fourteen or fifteen days",
+     "right": "served",
+     "why": "The Latin numerals are twelve or fourteen."
+    },
+    {
+     "latin": "colorem citrinum apparere",
+     "served": "a lemon-yellow color will appear",
+     "reference": "an orange colour",
+     "right": "both_defensible",
+     "why": "Alchemical citrinus spans yellow to orange-gold; A keeps the conventional citrine yellow, B deepens it."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A is a close annotated crib keeping every clause and glossing terms; B is a condensed reading version that merges sentences and drops the thanksgiving and auri obryzi.",
+   "reason": "A is complete and heavily flagged though note-laden; B reads smoothly but silently abridges and alters numbers and the violet-vapour detail."
+  },
+  {
+   "id": "6991e171b53cae6bb6024476_216",
+   "served": {
+    "fidelity": 4,
+    "readability": 3,
+    "register": 4,
+    "terminology": 3,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "malæ fidei poffeffor ultra rei rationem ex facto fuo tenetur",
+     "served": "held beyond the mere value of the thing because of his act",
+     "reference": "bound by his own act, besides the consequences of wrong doing",
+     "right": "served",
+     "why": "ultra rei rationem = beyond what the thing itself accounts for; B's 'consequences of wrong doing' is a paraphrase off the phrase."
+    },
+    {
+     "latin": "ipfa enim facti poffeffio, præfertim recuperatu difficilis",
+     "served": "the possession of the fact itself",
+     "reference": "the actual possession of a thing",
+     "right": "reference",
+     "why": "facti possessio is possession in fact (de facto holding), not possession of a fact."
+    },
+    {
+     "latin": "quo cafu negotiorum actionem nafci funt qui ajant",
+     "served": "there are those who say an action of managed business arises",
+     "reference": "in which case an action for agency would lie",
+     "right": "served",
+     "why": "Grotius reports it as an opinion of some (sunt qui aiant); B states it flatly before turning to the dispute."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A is a word-for-word crib in the Latin's order (held, fruits, owed to the thing); B is lawyerly English keeping bona fide, adding bracketed clarifications and moving the parenthesis.",
+   "reason": "A is exact in structure but stiff and opaque on legal phrases, and completes the last sentence past the page; B is idiomatic legal prose with flagged glosses but varies fructus (produce/fruits/income)."
+  },
+  {
+   "id": "698255ef792a04eb812c4860_190",
+   "served": {
+    "fidelity": 4.5,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 4,
+    "terminology": 3,
+    "ambiguity": 2,
+    "transparency": 2,
+    "stance": "free"
+   },
+   "style": "literal",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "talis, versa vice, spiritus, qui simplex, rectus, verus, constans",
+     "served": "such a spirit as shall be simple, upright, true, constant",
+     "reference": "He gives it only to the pure, true, and humble of heart",
+     "right": "served",
+     "why": "The Latin speaks of a spirit admitted to the art; B turns it into human hearts and then calls it 'this excellence'."
+    },
+    {
+     "latin": "ut postmodum in utroque opere eo feliciorem finem consequi valeat",
+     "served": "attain a more successful end in both works",
+     "reference": "the best preparation for this study is ... amendment of heart and life",
+     "right": "served",
+     "why": "B drops the 'both works' and the happier outcome and substitutes a moral summary."
+    },
+    {
+     "latin": "ipse omnibus diebus summa diligentia, & magna devotione observavi",
+     "served": "I myself have observed with the greatest diligence and great devotion every day",
+     "reference": "the result of my own personal experience during many years",
+     "right": "served",
+     "why": "Latin says daily observance with diligence and devotion, not 'many years' or 'deliberate conviction'."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A is a close annotated crib that keeps every clause and scripture reference; B (Waite) is a smooth Victorian paraphrase that condenses, drops citations and recasts.",
+   "reason": "A follows the Latin clause by clause with flagged (sometimes speculative) notes; B reads well but silently omits, expands ('wicked angels', 'discovery, preparation, and use') and resolves the 'spirit' motif."
+  },
+  {
+   "id": "6953e59377f38f6761bf0e81_213",
+   "served": {
+    "fidelity": 4.5,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "style": "literal",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "non rectè eriguntur nisi in vegeto lapide, si fuerint iusto longiores",
+     "served": "especially if they are longer than is right",
+     "reference": "if they are of more than a due length",
+     "right": "reference",
+     "why": "The Latin is a plain condition; A's 'especially' widens the claim to needles of any length."
+    },
+    {
+     "latin": "Ostenditur declinatio ferri magnetici super terrellam",
+     "served": "declination of magnetized iron upon a terrella",
+     "reference": "declination of a magnetick needle above a terrella",
+     "right": "both_defensible",
+     "why": "'ferri magnetici' is literally magnetic iron; B specifies needle from context; 'super' admits upon or above."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A modernises and explains in notes (declination = dip, terrella glossed); B keeps Gilbert's period technical idiom ('versatory', 'virtue', 'magnetick') without glosses.",
+   "reason": "Both are close and accurate; B's period terminology suits the text better, A adds helpful flagged glosses but one silent 'especially'."
+  },
+  {
+   "id": "69b18a55c4be2cdd0edc727d_552",
+   "served": {
+    "fidelity": 4,
+    "readability": 3,
+    "register": 4,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 5,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "alcali, acidum oleosum, oleosum spirituum, vegetabilium",
+     "served": "alkali, oily acid, oily spirit, and vegetable matter",
+     "reference": "a vegetable Alcali, an oily vegetable Acid, and an oily vegetable Spirit",
+     "right": "reference",
+     "why": "'vegetabilium' is a genitive qualifying the three ingredients, not a fourth item."
+    },
+    {
+     "latin": "Neque tamen ambitiosa adeo pauperibus medela hæc neganda",
+     "served": "should not be denied to the poor out of such ambition",
+     "reference": "Nor is this valuable Medicine so costly, that the Poor may not share",
+     "right": "reference",
+     "why": "'ambitiosa' qualifies the remedy (pretentious/costly), not a motive for denying it."
+    },
+    {
+     "latin": "vase clauso incolumis servari poterit suo titulo",
+     "served": "kept unharmed in its title in a closed vessel",
+     "reference": "keep in a close Vessel ... This is Dr. Harvey's Tincture",
+     "right": "reference",
+     "why": "'suo titulo' means under its own label/name; A's 'in its title' is unintelligible."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A is a serviceable crib but misconstrues several phrases and uses non-period or odd terms ('detergenting', 'vial', 'cooked'); B is idiomatic period chemistry yet silently adds and drops small items (e.g. 'cleanses', cacoethe)."
+  },
+  {
+   "id": "69b302c23613a84e68067a81_98",
+   "served": {
+    "fidelity": 5,
+    "readability": 4,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": true,
+   "disagreements": [
+    {
+     "latin": "exhortando ad virtutum incrementa",
+     "served": "exhorting them to the increase of virtues",
+     "reference": "exhorting them to grow in grace",
+     "right": "served",
+     "why": "The Latin names growth in virtues; 'grace' imports a different theological term."
+    },
+    {
+     "latin": "fortis probator omnium devotorum",
+     "served": "a strong prover of all the devout",
+     "reference": "a strong approver of all who are godly",
+     "right": "both_defensible",
+     "why": "'probator' can mean tester or approver; A's 'prover' leaves it open, B chooses approval."
+    },
+    {
+     "latin": "Pro modica præbenda, longa via curritur",
+     "served": "For a small prebend, a long journey is run",
+     "reference": "For a little reward men make a long journey",
+     "right": "both_defensible",
+     "why": "'praebenda' is specifically a stipend/prebend but may be read generally as a small allowance."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A keeps the Latin's impersonal passives and word order in plain modern English; B recasts into Authorised-Version devotional idiom with thee/thou and active constructions.",
+   "reason": "Both faithful; A is accurate but stiff ('one is lazy to be fatigued'), B carries the devotional voice with minor silent adjustments ('Therefore', 'grace')."
+  },
+  {
+   "id": "69b21cc8429e087c6f8659be_184",
+   "served": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "quæ pro Constantia dicenda mihi censui in Dolorem",
+     "served": "what I deemed must be said to me",
+     "reference": "as much as I thought necessary to be spoken",
+     "right": "reference",
+     "why": "'mihi' is dative of agent with 'dicenda' (to be said by me), not an indirect object."
+    },
+    {
+     "latin": "imperio debet pacati sexus",
+     "served": "owes it to the peace of the gentler sex",
+     "reference": "must be referred to the gouernment of a peaceable sex",
+     "right": "reference",
+     "why": "B drops 'imperio' (rule, i.e. Elizabeth's reign) and shifts 'pacati' into a noun."
+    },
+    {
+     "latin": "Denique si repetes seriò & ruminabere",
+     "served": "if you repeat them seriously and ruminate upon them",
+     "reference": "if thou repeate the same often",
+     "right": "served",
+     "why": "'serio' is earnestly, not often; B also keeps the 'ruminate' image."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A (Stradling) uses Elizabethan rhetorical doublets and expansion to carry Lipsius's oratory; B is a plain modern near-literal rendering with the Latin tags footnoted.",
+   "reason": "A has the right voice but silently doubles and expands ('communication or participation', 'God graunt'); B is clear and flagged but flat and has two construal slips."
+  },
+  {
+   "id": "697b07990411081cde5f4e66_153",
+   "served": {
+    "fidelity": 5,
+    "readability": 5,
+    "register": 3,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 5,
+    "stance": "balanced"
+   },
+   "reference": {
+    "readability": 3,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "calore pulsifico & ſtato tempore",
+     "served": "by means of a pulsating heat",
+     "reference": "by the engendering heat",
+     "right": "served",
+     "why": "'pulsificus' is pulse-making/beating; 'engendering' substitutes a different idea."
+    },
+    {
+     "latin": "Forma fiat in mixto",
+     "served": "becomes the Form in the physical mixture",
+     "reference": "is now a Form in the mixt body",
+     "right": "reference",
+     "why": "'mixtum' is the technical term for a compound (mixt) body, not a mixture in the everyday sense."
+    },
+    {
+     "latin": "occultum in Naturæ ſinu fit manifeſtum",
+     "served": "hidden in the womb of Nature",
+     "reference": "closed in the bosom of Nature",
+     "right": "both_defensible",
+     "why": "'sinus' covers bosom, lap and womb; each picks one sense."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A keeps the scholastic-hermetic vocabulary in 17th-century idiom (specifical, vivifical, mixt); B splits the long period into short sentences and explains terms in modern notes ('blueprint').",
+   "reason": "A preserves period terminology and the single long sentence at some cost to readability, with small silent expansions; B is clear and fully flagged but modernises and flattens technical terms."
+  },
+  {
+   "id": "69b21c6c429e087c6f8646f6_223",
+   "served": {
+    "fidelity": 4.5,
+    "readability": 4,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "free"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "Age obtestabor tibi, quæ mihi noluisti",
+     "served": "I will ask of you what you were unwilling to tell me",
+     "reference": "hearken to you, though you would not to me",
+     "right": "reference",
+     "why": "Erasmus wrote obtemperabo (I will comply with you, who would not with me); B construes the OCR's corrupt 'obtestabor' and invents 'tell'."
+    },
+    {
+     "latin": "quos putabam pere plurimum",
+     "served": "whom I thought to be the most steadfast",
+     "reference": "which I took to be very wise Men",
+     "right": "reference",
+     "why": "The damaged word is sapere plurimum, matching 'prudentius ac senilius consilium'; 'steadfast' is a guess with no basis in the Latin."
+    },
+    {
+     "latin": "si Christo suam sponsam denegaret",
+     "served": "if he denied his daughter to Christ",
+     "reference": "if he refus'd to let Christ have his Spouse",
+     "right": "reference",
+     "why": "sponsam is Christ's bride, the monks' loaded phrase; B replaces it with 'daughter' and loses the point."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A recasts the dialogue into racy 18th-century colloquial idiom ('Cattle', 'Dose of Fuddle'); B follows the Latin word by word in neutral modern English, including the OCR's faults.",
+   "reason": "Published A is a lively free version that keeps the colloquy's voice and reads the true text, but embroiders ('Tears', 'frighted'); machine B is a sober crib that is closer on 'aves' and 'passa sum' yet stiff for dialogue and silently guesses through OCR damage."
+  },
+  {
+   "id": "69529499b184004c526a1dc9_175",
+   "served": {
+    "fidelity": 4.5,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "Propheta sub Dei persona de hac opinione expostulat",
+     "served": "complains of this notion",
+     "reference": "It is against such a kind of choice that the prophet",
+     "right": "both_defensible",
+     "why": "The page as transcribed reads opinione (A); B's 'choice' suits the elegerit/elegi wordplay and presupposes the reading optione."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A keeps every Latin word ('barren ceremonies', 'impose and impute') and annotates; B gives a fluent Victorian reading ('lay and father them upon himself') and lets 'ieiunae' go.",
+   "reason": "Both are accurate; machine A is a close annotated rendering whose notes and bolding clutter the page, published B reads as natural English prose in Bacon's voice but silently drops 'ieiunae' and adds small connectives."
+  },
+  {
+   "id": "69b4d643853c26e0d15603c8_136",
+   "served": {
+    "fidelity": 5,
+    "readability": 3,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "colatum distilla per balneum, et exibit corpus",
+     "served": "the body will come forth",
+     "reference": "when the body will disappear",
+     "right": "both_defensible",
+     "why": "exibit means the body passes out/over in distillation; A is the literal sense, B gives the result as seen from the vessel."
+    },
+    {
+     "latin": "vertetur in colorem densum, quem cola, colatum distilla",
+     "served": "which strain; distill the strained matter through a bath",
+     "reference": "Abstract this by means of the balneum maris",
+     "right": "served",
+     "why": "The Latin orders a straining step (cola, colatum) before distilling; B leaves it out."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A renders the recipe word for word in plain terms ('horse dung', 'through a bath'); B recasts it as a laboratory procedure and swaps in adept's Latin ('venter equinus', 'balneum maris', 'bath of Mary').",
+   "reason": "Machine A is a faithful crib with stiff calques ('transcend through the alembic', 'of no moment') and one bracketed supplement; published B reads as a proper recipe in period voice but silently adds ('some fitting vessel', 'elsewhere', 'of Mary') and drops the straining."
+  },
+  {
+   "id": "69526191ab34727b1f046982_108",
+   "served": {
+    "fidelity": 4,
+    "readability": 5,
+    "register": 4,
+    "terminology": 5,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "reference": {
+    "readability": 3,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "Si uero magnum, non necessario illum reducere contingit",
+     "served": "if the fire is too great, it does not necessarily follow",
+     "reference": "if a great Fire be administred, it doth not necessarily",
+     "right": "reference",
+     "why": "The Latin says only 'great'; the danger lies in long exposure (longam moram), not excess, so 'too great' is a false precision."
+    },
+    {
+     "latin": "[tem]perantia ignis indiget, & successione augmenti illius paulatim",
+     "served": "The moderation of the fire requires care",
+     "reference": "he needs Temperance of Fire, and that leisurely augmented",
+     "right": "reference",
+     "why": "temperantia is ablative with indiget: the metal needs a temperate fire; B makes moderation the subject and supplies 'care'."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A keeps the 17th-century adept's vocabulary (Calx, Argentvive, Acuity, Vitrificatory) and alternates Jupiter/Tin unglossed; B modernises to moisture/quicksilver/melting and keeps the planet names with explanatory notes.",
+   "reason": "Published A is a close period rendering in authentic alchemical voice, harder for a modern reader and inconsistent on Jupiter/Tin; machine B is clear and well glossed but sharpens 'great' to 'too great', misreads the opening clause, and renders the marginal 'ligneum' as iron."
+  },
+  {
+   "id": "6991e1b0339ebc850994ab9e_551",
+   "served": {
+    "fidelity": 4,
+    "readability": 3,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": true,
+   "disagreements": [
+    {
+     "latin": "Illa enim quæ vult homo longe jactare, in altum elevat",
+     "served": "things that a man wishes to boast about, he elevates on high",
+     "reference": "wishes to throw (jactare) a thing far away, he lifts it up",
+     "right": "reference",
+     "why": "Thomas is giving the etymology: jactare here is literal throwing, which explains 'extollere'; A's 'boast about' makes the sentence circular."
+    },
+    {
+     "latin": "ac magnitudinem, atque excellentiam potentiæ suæ",
+     "served": "the magnitude and excellence of his power",
+     "reference": "the greatness and boasting of his power",
+     "right": "served",
+     "why": "This edition prints excellentiam; B silently follows the Vulgate's jactantiam instead of the page."
+    },
+    {
+     "latin": "quod non sit juxta eum virtus ejus",
+     "served": "his virtue is not according to him",
+     "reference": "the strength thereof is not according to it",
+     "right": "reference",
+     "why": "virtus in Jeremiah is strength/power matching the boast, not moral virtue; A's calque misleads."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "Published B is the articulated scholastic English of the standard version, keeping and glossing the jactare wordplay; machine A is a serviceable crib with calques ('ratio of the end', 'it proceeds thus'), misses the etymology, and silently drops the Q.110 cross-reference and footnotes while usefully including the Cajetan margin."
+  },
+  {
+   "id": "6953e46f77f38f6761bee559_40",
+   "served": {
+    "fidelity": 4.5,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "Stellæ ab Astronomis singulis in hanc vsque diem NEBVLOSAE appellatæ",
+     "served": "called NEBULAE by individual astronomers",
+     "reference": "called by every one of the astronomers up to this day nebulous",
+     "right": "reference",
+     "why": "singulis is distributive (each and every astronomer); 'individual astronomers' suggests only some of them."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A keeps Galileo's plural 'we' and literal images ('flocks of stars planted') and modernises to 'nebulae' with notes; B uses 'I', keeps the period adjective 'nebulous', and smooths the syntax into a reading version.",
+   "reason": "Both convey the page accurately; machine A is close and heavily annotated, with a slip on 'singulis' and the anachronistic noun 'nebulae' for stars; published B is fluent and idiomatic, with small unflagged expansions ('small stars set thick', 'a diagram of')."
+  },
+  {
+   "id": "69905d2a2fd6a0399389f0c0_180",
+   "served": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 3,
+    "stance": "free"
+   },
+   "style": "early-modern",
+   "canonical": true,
+   "disagreements": [
+    {
+     "latin": "Eò in certas domos opera cuiusque familiae conuehuntur",
+     "served": "the products of each family are brought to certain houses",
+     "reference": "brought thither... is carried from thence to houses appointed",
+     "right": "served",
+     "why": "Eò = to that place; the Latin has one movement into the houses, not a second removal from the market."
+    },
+    {
+     "latin": "in horrea singulae seorsim species distributae sunt",
+     "served": "in the warehouses, each item is distributed separately",
+     "reference": "all things of a sort are laid by themselves",
+     "right": "reference",
+     "why": "species = kinds of goods stored apart by sort; B's 'each item distributed' blurs storing-by-kind into handing out."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A recasts More's rhetorical questions as flat statements and drops 'omnium rerum' and the marginal note for a smooth reading text; B keeps the questions, the margin and the sentence order.",
+   "reason": "Both convey the page; A is a fluent free reading version that silently flattens rhetoric and trims, B is a close, slightly stiff crib with a stray opening fragment and broken margin tag."
+  },
+  {
+   "id": "69dbc89d1040d1d5e209ab64_305",
+   "served": {
+    "fidelity": 4,
+    "readability": 3,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 3,
+    "transparency": 2,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": true,
+   "disagreements": [
+    {
+     "latin": "si euitabilia futura censet que ea euenire non possibile est",
+     "served": "thinks that those things are avoidable whose occurrence is not possible",
+     "reference": "events which possibly may not happen at all as inevitably destined",
+     "right": "reference",
+     "why": "The argument needs 'inevitably to come / possibly not to happen' (inevitabiliter eventura... non evenire); A follows the corrupt OCR into a non sequitur."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A follows a garbled OCR line into a logically broken premise without flagging it and silently completes the sentence past the page end; B gives the sound scholastic argument in elevated Victorian prose, versifying the Tiresias line unflagged."
+  },
+  {
+   "id": "69afd0df775a23a98ee93a30_420",
+   "served": {
+    "fidelity": 3.5,
+    "readability": 2,
+    "register": 3,
+    "terminology": 3,
+    "ambiguity": 3,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "free"
+   },
+   "style": "literal",
+   "canonical": true,
+   "disagreements": [
+    {
+     "latin": "felle taurino & adipe spentium & erugine addito melle",
+     "served": "bull bile, the fat of geese, and verdigris",
+     "reference": "bull's gall, serpents' fat, verdigrease, and honey",
+     "right": "reference",
+     "why": "The abbreviated word is serpentium; nothing in the Latin means geese."
+    },
+    {
+     "latin": "Vultus suffigit",
+     "served": "It stiffens the face",
+     "reference": "used in the form of a fumigation... corrective upon the uterus",
+     "right": "reference",
+     "why": "Context is uterine remedies (vulvas suffitu corrigit); 'face' is an OCR artefact A took at face value."
+    },
+    {
+     "latin": "si sanguine hircini lumbi punganē mulieri tediū ueneris",
+     "served": "if the loins of a buck are pricked with the blood",
+     "reference": "woman's loins are rubbed with blood taken from the ticks",
+     "right": "reference",
+     "why": "The loins are the woman's and the blood is from ticks (ricini) on the bull; A's buck comes from the corrupt 'hircini'."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A cribs a heavily corrupt abbreviated OCR text and yields several nonsense or wrong recipes despite useful term glosses; B is a coherent, expansive Victorian medical rendering that silently supplies subjects and 'pessary' but gets the remedies right."
+  },
+  {
+   "id": "69b2ffad5545150b61b4901a_389",
+   "served": {
+    "fidelity": 1,
+    "readability": 3,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 1,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 4,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "B renders only the preceding section and breaks off where this page begins, so almost none of the page's Latin is translated and no meaning comparison is possible; A is Boyle's own English, matching the Latin closely apart from 'very considerable' against 'exigua'."
+  },
+  {
+   "id": "697947a145e954e8a877872d_218",
+   "served": {
+    "fidelity": 5,
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 5,
+    "stance": "balanced"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 3,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 2,
+    "stance": "free"
+   },
+   "style": "literal",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "Nota deinde hoc experimenti genus",
+     "served": "Next, note this type of experiment",
+     "reference": "Any similar experiment would yield the same result",
+     "right": "served",
+     "why": "The Latin simply introduces a further experiment; B invents a general claim about similar experiments."
+    },
+    {
+     "latin": "unicornu illud spirituali suâ virtute nummum à se depellet",
+     "served": "Through its spiritual power, the unicorn's horn will drive the coin",
+     "reference": "The coin will be as surely repelled and moved backward",
+     "right": "served",
+     "why": "B drops the 'spiritual virtue' that is the stated cause of the repulsion; A keeps it."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A keeps the Latin's steps, margin note and causal 'spiritual virtue' with flagged glosses; B condenses into a smooth Victorian paraphrase, modernising to 'homogeneous substances' and a sportsman's gun.",
+   "reason": "A is close, clear and openly annotated; B reads well but paraphrases freely, silently omits the marginal note and the spiritual-virtue clause, and flattens the sympathy/antipathy vocabulary."
+  },
+  {
+   "id": "6952daa277f38f6761bc6551_202",
+   "served": {
+    "fidelity": 5,
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "reference": {
+    "readability": 3,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "incluserat aureo geminatoq́; baltheo",
+     "served": "enclosed such an image in a golden double-belt",
+     "reference": "included in a golden Belt full of Jewels",
+     "right": "cant_tell",
+     "why": "A follows the printed 'geminato' (doubled), B reads 'gemmato' (jewelled); it turns on the reading of one word."
+    },
+    {
+     "latin": "fumigabāt cum moscho, camphora & ungula aromatica",
+     "served": "musk, camphor, and \"aromatic claw\"",
+     "reference": "muske, Camphire and Calamus Aromaticus",
+     "right": "served",
+     "why": "ungula aromatica is onycha (the aromatic 'hoof'/operculum), not the reed calamus."
+    },
+    {
+     "latin": "in annulo argenteo, cuius mēfura erat quadrata",
+     "served": "on a silver ring of square measure",
+     "reference": "in a silver ring, whose table was square",
+     "right": "both_defensible",
+     "why": "A keeps 'mensura' literally; B interprets it as the square bezel (mensa) of the ring, which is the practical sense."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A modernises and explains (nodes, midheaven, daemon, cilicium) in flagged notes; B keeps mid-17th-century idiom and period terms (Genius, perfumed, Lignum Aloes, Sanders) in one running sentence, silently adding 'misfortune'.",
+   "reason": "Both are faithful overall; A is an annotated modern reading text that silently emends to 'shedding its skin', B is a period-voiced close version, harder for a modern reader and with a wrong incense ingredient."
+  },
+  {
+   "id": "698255f1861f3361ae3249e0_198",
+   "served": {
+    "fidelity": 5,
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "reference": {
+    "readability": 3,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "citius terminabitur in bonum",
+     "served": "the work will be finished more quickly",
+     "reference": "it will quickly be terminated in good",
+     "right": "served",
+     "why": "citius is comparative; B keeps 'more quickly' (but supplies 'the work' as subject), A flattens to 'quickly'."
+    },
+    {
+     "latin": "ut etiam non æstimetur",
+     "served": "that it is not even held in high esteem",
+     "reference": "that truly it is not esteemed of",
+     "right": "both_defensible",
+     "why": "etiam can be read as intensive 'indeed' or 'even'; sense of disregard is the same."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A keeps a close early-modern crib with period terms (decocted, subtilties, Students of this Art); B modernises syntax and explains Mercury/Sulphur/anathema in flagged glosses.",
+   "reason": "Both accurate; A is a period-faithful literal version with archaic spelling, B a clear modern rendering whose inline glosses fix alchemical senses the source leaves open."
+  },
+  {
+   "id": "69b43d2706b196d69f66f14f_15",
+   "served": {
+    "fidelity": 5,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 3,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "early-modern",
+   "canonical": true,
+   "disagreements": [
+    {
+     "latin": "a contemplatione patris ad speram generationis delapsus est",
+     "served": "fell down from the contemplation of the Father to the sphere",
+     "reference": "was separated from the Father, being in the sphere of Generation",
+     "right": "served",
+     "why": "delapsus est a contemplatione is a fall from contemplation into the sphere, not a separation while already in it."
+    },
+    {
+     "latin": "atque ei tanquam filio suo congratulatus est",
+     "served": "congratulated him as his own son",
+     "reference": "whom he loved as his proper Birth",
+     "right": "both_defensible",
+     "why": "Ficino's congratulatus = rejoiced in him; A calques the Latin, B follows the Greek sense 'loved'."
+    },
+    {
+     "latin": "hi autem humane mentis meditatione gaudentes",
+     "served": "rejoicing in the meditation of the human mind",
+     "reference": "but they loved him",
+     "right": "served",
+     "why": "The Latin has the governors delighting in the human mind's meditation; B reflects a different (Greek-based) reading."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A renders Ficino's Latin word for word in modern English; B gives a 1650s reading version with explanatory doublets and verse numbering, resting on a different text tradition.",
+   "reason": "A follows this Latin closely and carries the marginal note flagged; B is stylistically rich but adds numbering and doublets and diverges from the Latin wording in several clauses."
+  },
+  {
+   "id": "69aea708971abe996d21b4aa_471",
+   "served": {
+    "fidelity": 4,
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 3,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "style": "early-modern",
+   "canonical": false,
+   "disagreements": [
+    {
+     "latin": "Falli enim alienum; fallere autem, proprium fallentis eſt crimen",
+     "served": "to be deceived is foreign to one's nature",
+     "reference": "to be deceived, belongeth to a man",
+     "right": "neither",
+     "why": "alienum = it is another's fault (opposed to the deceiver's own crime); A reads it as 'human', B as 'unnatural'."
+    },
+    {
+     "latin": "Hinc ad laudandum, æquo etiam proniores ſunt",
+     "served": "they are even more prone to praise",
+     "reference": "more redy to prayse other, then reason requireth",
+     "right": "reference",
+     "why": "aequo proniores = more prone than is fair; B drops aequo and loses the comparison."
+    },
+    {
+     "latin": "Vulgò paſſim in triviis laceror",
+     "served": "I am torn apart by the mob everywhere in the streets",
+     "reference": "I am commonly euyl spoken of, yea in euery corner",
+     "right": "both_defensible",
+     "why": "vulgo can be adverbial 'commonly' or 'by the crowd'; Reason's reply 'vulgus' supports B, usage supports A."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A is an Elizabethan expansive rendering (softens laceror, amplifies the itching tongue); B is a modern close crib keeping the Latin images (torn, itch, curb).",
+   "reason": "A is lively period dialogue with silent expansions and no epigraph; B is clear and close but drops 'aequo', closes the address to Virtue early and silently rewrites the repeated speaker line."
+  },
+  {
+   "id": "69dbcc3e0f8c5edf20f484a0_330",
+   "served": {
+    "fidelity": 2.5,
+    "readability": 2,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 3,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": true,
+   "disagreements": [
+    {
+     "latin": "ex libris in singularia os deuenire",
+     "served": "from singulars to come to [principles]",
+     "reference": "We must proceed from the universal to the singular",
+     "right": "reference",
+     "why": "The sed contra (OCR-damaged 'ex universalibus in singularia') moves from universals to singulars; A reverses the direction."
+    },
+    {
+     "latin": "Preterea effectus euenimus et casu et principia",
+     "served": "effects occur by chance and principles",
+     "reference": "we know causes and principles by their effects",
+     "right": "reference",
+     "why": "Garbled OCR of 'per effectus devenimus in causas et principia'; A translates the corruption into nonsense."
+    },
+    {
+     "latin": "sic et intentio ueritatis",
+     "served": "that which is considered thus is the intention of truth",
+     "reference": "considered together with the intention of universality",
+     "right": "reference",
+     "why": "The argument concerns the intentio universalitatis (one related to many); 'truth' is an OCR misreading A follows."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A cribs a badly corrupted OCR text, producing several unintelligible or reversed statements with only partial flagging; B is a coherent, articulated scholastic translation of the true text."
+  },
+  {
+   "id": "699062f5ef12272ffdc8e9d5_505",
+   "served": {
+    "fidelity": 3,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 3,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "reference": {
+    "readability": 5,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "style": "literal",
+   "canonical": true,
+   "disagreements": [
+    {
+     "latin": "celestib’ sanctis angelis ⁊ uirtutib’ dei ... sacrificari uetat",
+     "served": "and the holy heavenly angels and powers of God",
+     "reference": "forbids sacrifice to be offered even to the holy angels",
+     "right": "reference",
+     "why": "The datives depend on sacrificari vetat: God forbids sacrifice to the angels; A makes the angels co-worshipped/co-subject."
+    },
+    {
+     "latin": "ne forte q’ ait dño soli: deū soluz credat",
+     "served": "there is only one God to whom sacrifice is due",
+     "reference": "\"alone\" (soli), which might be rendered \"the sun\"",
+     "right": "reference",
+     "why": "Augustine guards against reading soli as the Sun (deum Solem); A follows the OCR 'solum' and invents an explanatory note."
+    },
+    {
+     "latin": "qbus uere fatū nō pcessit a dño dona obtiere",
+     "served": "to whom fate did not truly proceed from the Lord",
+     "reference": "who are not destined to receive favours from the gods",
+     "right": "reference",
+     "why": "Porphyry's oracle says fate did not grant them gifts from the gods (a diis); A follows a misread abbreviation."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A is readable and heavily annotated but follows OCR misreadings and adds confident notes that fix wrong senses; B is fluent and accurate, handling the soli pun by a flagged note and truncating one repeated quotation."
+  }
+ ]
+}

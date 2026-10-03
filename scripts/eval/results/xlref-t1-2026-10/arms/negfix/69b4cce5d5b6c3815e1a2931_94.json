@@ -1,0 +1,28 @@
+{
+ "id": "69b4cce5d5b6c3815e1a2931_94",
+ "arm": "negfix",
+ "base_arm": "prod-A",
+ "text": "<margin>Enemies are to be loved.</margin>\n<meta>continues from previous page</meta>to go with him a mile, go with him twain. Love your enemies, do good to them which hate you, and pray for them which despitefully use you, and persecute you; that you may be the children of your Father which is in heaven: for he maketh his sun to rise on the evil and on the good, and sendeth rain on the just and on the unjust. You answer, \"He did not say this to me. He said it to the apostles; He said it to the perfect.\" Have you not heard, \"That you may be the children of your Father\"? If you do not desire to be a child of God, the law does not pertain to you. Although, not even a good man is he who refuses to be perfect. Receive also this: if you do not desire a reward, the commandment does not pertain to you. For it follows: \"For if you love them <margin>Luke 6</margin> which love you, what reward have you?\" As if to say, none. For it is no virtue to do this; but not to do it is a crime. Nothing is owed to either party when like is rendered for like. Hear Paul, the great <margin>Paul, the legal expert.</margin> consultant and interpreter of Christian laws. Bless them which persecute you: bless, <margin>Rom. 12.</margin> and curse not. Recompense to no man evil for evil. If it be possible, as much as lieth in you, live peaceably with all men. Dearly beloved, avenge not yourselves, but rather give place unto wrath: for it is written, Vengeance is mine; I will repay, <margin>Deuteronomy 32.</margin> saith the Lord. But if your enemy hungers, feed him. If he thirsts, give him drink. For in so doing you shall heap coals of fire on his head. Be not overcome of evil, but overcome evil with good. What then, you ask, is to be done if I encourage another’s forwardness by my own gentleness, and by bearing an old injury invite a new one? <margin>It is more fitting for a Christian to suffer injury than to commit it.</margin> If you can either escape or ward off evil without your own moral failing, no one forbids you to do so; but if not, take care you do not say, \"It is more shameful to do than to suffer.\" If you are able, amend the situation, either by overwhelming them with benefits or by overcoming them with kindness. If otherwise, it is better that one perish than both. It is better for you to grow rich in the profit of patience than for both to become evil through mutual retaliation. Therefore, let this be a Christian decree: to contend with everyone through love, <margin>A decree of Christianity.</margin> gentleness, and kindness, while willingly yielding to others in matters of contention, detraction, insults, injuries, or even in the lowliest affairs. \"But he is unworthy to be benefited, unworthy to be yielded to.\" Yet you are worthy to act correctly, and Christ is worthy, for whose grace this is done. \"I do not wish to harm anyone,\" they say, \"nor will I suffer myself to be harmed.\" Rather, you, being harmed, should remit the wrong from your heart, taking care that there is nothing for which anyone can...\n\n<summary>This page discusses the Christian duty to love one's enemies, avoid retaliation, and practice patience in the face of injury, citing the authority of Christ and Paul.</summary>\n<keywords>Christian ethics, enemies, patience, injury, retaliation, Christ, Paul, kindness</keywords>",
+ "flagged": true,
+ "changed": true,
+ "flags": [
+  {
+   "latin": "sed non facere scelus est",
+   "english": "but it is a crime not to do it",
+   "problem": "The Latin says 'not doing it is a crime', but the English implies the opposite or misinterprets the scope of the crime.",
+   "correct": "but not to do it is a crime"
+  }
+ ],
+ "check_parse_failed": false,
+ "check": {
+  "model": "gemini-3.1-flash-lite",
+  "in": 1858,
+  "out": 66
+ },
+ "fix": {
+  "model": "gemini-3-flash-preview",
+  "in": 1818,
+  "out": 795
+ },
+ "cost_usd": 0.0038575
+}

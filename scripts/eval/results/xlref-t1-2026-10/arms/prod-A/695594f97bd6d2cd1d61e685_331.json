@@ -1,0 +1,44 @@
+{
+ "id": "695594f97bd6d2cd1d61e685_331",
+ "arm": "prod-A",
+ "model": "gemini-3.1-flash-lite",
+ "text": "# CHAPTER THIRTY-SEVENTH. 327\n\nof the Lord, is because Joseph represents the Lord as to the Divine Spiritual, n. 4669, 4708, 4710; wherefore when it is said that Joseph should go and see the peace of his brothers, the coming of the Lord is signified. Every coming <note>original: \"adventus\"</note> is spoken of when truth from the Word flows into the thought.\n\n4713. And the peace of the flock, that this signifies how it is with those who are learning, or with the Church, is evident from the signification of peace, that it is how a matter stands, concerning which see just above n. 4712; and from the signification of the flock, that these are those who learn. For a shepherd, or one who pastures, is he who teaches and leads to the good of charity, and the flock is that which learns and is led, concerning which see n. 343; thus also the Church.\n\n4714. And bring me word, that this signifies knowledge, is evident from the signification of bringing word, which is to report how a matter stands; thus, knowledge.\n\n4715. And he sent him from the valley of Hebron, that this signifies from the Divine Natural and Sensual, is evident from the signification of being sent, which is to proceed and to teach, concerning which see above n. 4710; from the signification of a valley, that these are things which are below, concerning which see n. 1723, 3417; and from the signification of Hebron, that it is the Lord’s Church as to good, concerning which see n. 2909. Thus, by these words it is signified that He would teach those things which are the lower things of the Church, and this because the higher things could not be grasped. For he who teaches faith and not charity can never perceive the higher or interior things of the Church, for he does not have anything that leads or that dictates whether this belongs to faith or whether this is true; but if he teaches charity, then he has good, and this is his guide and leads him, for all truth is from good and acts from good—or, what is the same, everything of faith is from charity and acts from charity. That everything of doctrine should have regard to life, everyone can know from mere natural light. That by these words it is signified from the Divine Natural and Sensual is the higher sense; for the lower things of the Church are said to be from the Lord’s Divine Natural and Sensual, not that these are lower in the Lord, for in the Lord and in His Divine Human everything is Infinite, as He is Jehovah as to both Essences, n. 2156, 2329, 2921, 3023; but because it is so with man. For those who are sensual men grasp sensually those things that are in the Lord and from the Lord, and those who are natural grasp them naturally; it is so spoken according to the quality of those who receive. But those who are celestial men, and hence truly rational, perceive interior things; concerning them it is said that they are taught from the Lord’s Divine Rational. This is the higher sense, as was said, which is signified by these words. That a valley signifies the lower things of the Church can be evident from other places in the Word; as in Isaiah: “The prophecy of the valley of vision; what is it to thee here, that thou hast gone up all of you to the housetops: a day of tumult, and of treading down, and of perplexity, to the Lord Jehovih Zebaoth, in the valley of vision,” XXII, 1, 5; where the valley of vision stands for fantasies concerning spiritual things from sensual things, thus from lower things. In the same author: “The choice of thy valleys were full of chariots, and the horsemen set themselves in array at the gate,” XXII, 7; where the choice of valleys stands for goods and truths in the natural or external man. In the same author: “The voice of him that crieth in the desert, prepare ye the way of Jehovah, make straight in the solitude a path for our God, every valley shall be exalted,” XL, 3, 4; where valley stands for those who are humble. In Jeremiah,\n\n<summary>This passage provides an allegorical interpretation of Joseph being sent from the valley of Hebron, explaining the descent of Divine truth into the Natural and Sensual states of man.</summary>\n<keywords>Divine Spiritual, peace, flock, charity, Hebron, Divine Natural, Divine Sensual, valley of vision</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3592,
+ "outputTokens": 1020,
+ "thinkingTokens": 0,
+ "cost_usd": 0.002428,
+ "ms": 3983,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4730,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "Quomodo",
+   "headJoined": null,
+   "headRemoved": "ventus",
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 3530
+}

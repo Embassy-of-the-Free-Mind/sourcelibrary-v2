@@ -1,0 +1,28 @@
+{
+ "id": "69b302c23613a84e68067a81_98",
+ "arm": "negfix",
+ "base_arm": "prod-A",
+ "text": "but many are deaf and hard to my voice. Most people listen more willingly to the world than to God: they follow the appetite of their own flesh more easily than the good pleasure of God. The world promises temporal and small things, and it is served with great greed: I promise the highest and eternal things, and the hearts of mortals grow sluggish. Who serves and obeys me with as much care in all things as the world and its masters are served? <margin>Isaiah 23</margin> Be ashamed, O Sidon, says the sea. And if you seek the reason, hear why. For a small stipend, one runs a long way: for eternal life, many hardly lift a foot from the ground. A cheap reward is sought: for a single coin, men sometimes litigate disgracefully: for a vain thing and a small promise, they do not fear to be wearied day and night.\n\n4. But, alas for the shame! For a good that is unchangeable, for an inestimable reward, for the highest honor and unending glory, one is reluctant to be wearied even a little. Be ashamed, therefore, you lazy and complaining servant, that they are found more ready for destruction than you are for life. They rejoice more in vanity than you do in truth. Indeed, they are sometimes frustrated in their hope: but my promise deceives no one, nor does it send away empty him who trusts in me. What I have promised, I will give; what I have spoken, I will fulfill; if only one remains faithful in my love until the end. I am the rewarder of all good people, and a strong tester of all the devout.\n\n5. Write my words in your heart, and ponder them diligently: for they will be very necessary in the time of temptation. What you do not understand when you read, you will recognize in the day of visitation. I am accustomed to visit my chosen ones in two ways, namely, by temptation and by consolation. And I read them two lessons daily: one, by rebuking their vices; the other, by exhorting them to the growth of virtues. He who has received my words and despises them, has one who will judge him on the last day.\n\n<summary>This passage contrasts the worldly devotion to temporal, fleeting rewards with the sluggishness of those who ignore God's eternal promises, urging the reader to prioritize divine instruction through temptation and consolation.</summary>\n<keywords>Sidon, worldliness, eternal life, temptation, consolation, divine judgment, obedience</keywords>",
+ "flagged": true,
+ "changed": true,
+ "flags": [
+  {
+   "latin": "Qui habet verba mea, & spernit ea, habet qui judicet eum",
+   "english": "He who possesses my words, and despises them, has one who will judge him",
+   "problem": "The Latin 'habet' (possesses/has) is used in the sense of 'he who holds/keeps' (as in John 12:48), but the English translation implies the person 'possesses' the words while despising them, whereas the Latin implies 'he who has [received] my words and [yet] despises them'.",
+   "correct": "He who has received my words and despises them, has one who will judge him"
+  }
+ ],
+ "check_parse_failed": false,
+ "check": {
+  "model": "gemini-3.1-flash-lite",
+  "in": 1369,
+  "out": 143
+ },
+ "fix": {
+  "model": "gemini-3-flash-preview",
+  "in": 1407,
+  "out": 530
+ },
+ "cost_usd": 0.00285025
+}

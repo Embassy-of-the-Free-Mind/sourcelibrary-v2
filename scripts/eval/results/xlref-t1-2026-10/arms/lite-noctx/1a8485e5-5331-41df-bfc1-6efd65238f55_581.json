@@ -1,0 +1,34 @@
+{
+ "id": "1a8485e5-5331-41df-bfc1-6efd65238f55_581",
+ "arm": "lite-noctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "ON BIRD-CATCHING.\n\nhairs, or excrement, or those who carry the herb <term>peristereon</term> <gloss>vervain</gloss>. A black stone similar to a bean is found in the Nile; when it is seen, dogs do not bark. You shall carry a dog’s tongue placed in your shoe under your big toe, or if you carry a dried dog’s heart with you, according to Sextus. Use hare hair or excrement, according to Pliny. Or, you shall carry the severed tail of a young weasel on your foot, or give a frog to the dog in a morsel of food; all these things serve to avoid the barking of dogs. Nigidius says that dogs will flee from the sight of a person all day if he expels a tick from a pig and carries it for a while. Oppian writes:\n\n> If you carry a little piece cut from the skin of a hyena,\n> Immediately the whelps and fierce dogs,\n> Struck with bitter terror, will not bark at you\n> As you walk past, even if they were barking before.\n\n### That a dog cannot run.\n\nIf you smear its wings <note>Note: referring to the dog's legs/feet in the context of animal speed</note> with oil, it will be hindered in running; this is how it will happen.\n\n### That a hawk may be spirited.\n\nYou will invigorate a bird against its prey so that it attacks large birds. Moisten the food it uses during the time of hunting with wine; or if it is a goshawk, give it a little vinegar. When you wish for it to fly, give it three morsels of meat soaked in wine, or pour wine into the beak of a pigeon chick, then make it fly. Thus,\n\n### You will make partridges more combative,\n\nIf you give them branches of maidenhair fern <term>adiantum</term> <gloss>maidenhair fern</gloss> in their food, according to Pliny. And,\n\n### Roosters become more combative,\n\nBy giving them garlic in their food shortly before they are to fight, from which the term <term>eskorodismenoi</term> <gloss>garlic-stuffed</gloss> is most wittily derived in ancient comedy, that is, one who is seasoned with garlic as a term for someone who is vehement and overly inclined toward fighting.\n\n### That a bird may not fly high.\n\nPluck the tail feathers that direct the course upward; thus, it will fly in a circle below. If you wish,\n\n### That a bird may not be able to fly.\n\nCut the upper and lower tendons of the wing, and it remains unharmed; the bird will not fly. In this way, they do not escape from aviaries.\n\n<summary>This page details various traditional methods and folk remedies for manipulating animal behavior, including techniques to silence dogs, increase the aggression of hunting birds and roosters, and restrict the flight of birds.</summary>\n<keywords>bird-catching, folk medicine, animal behavior, Pliny, Oppian, hunting, husbandry</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2458,
+ "outputTokens": 670,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0016195,
+ "ms": 3593,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": false,
+  "prev_ocr": false,
+  "next_ocr": false,
+  "page_break": null,
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1921
+}

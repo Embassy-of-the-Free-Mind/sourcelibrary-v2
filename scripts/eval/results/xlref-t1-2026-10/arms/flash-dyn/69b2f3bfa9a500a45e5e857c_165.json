@@ -1,0 +1,42 @@
+{
+ "id": "69b2f3bfa9a500a45e5e857c_165",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: which even happened to the Manichees. But we shall easily be disentangled from such scruples if we turn our mind to that dispensation of God which I have noted: that he wished at that time to signify and figure both the grace of future and eternal happiness by earthly benefits, and the gravity of spiritual death by bodily punishments, for that time when he was delivering his Testament, still in some way wrapped up <note>original: \"inuolutum\"</note>, to the Israelite people.</meta>\n\n# OF THE KNOWLEDGE OF GOD THE REDEEMER.\n\n4 A second difference between the Old and New Testament is established in figures: the former, in the absence of the truth, displayed only an image and a shadow in place of the body; the latter exhibits the present truth and a solid body. This distinction is mentioned almost everywhere that the New Testament is opposed to the Old, though it is treated more extensively in the Epistle to the Hebrews than anywhere else. There, the Apostle disputes against those who did not think the observations of the Mosaic Law could be abolished without bringing about the ruin of all religion. To refute this error, he takes up <margin>Psalm 110:4</margin> what had been predicted by the Prophet concerning the priesthood of Christ. For since an eternal priesthood is assigned to him, it is certain that the priesthood in which successors were daily substituted for one another is abolished. He proves that the institution of this new priest prevails because <margin>Hebrews 7:11, 19; 9:9; 10:1</margin> it is established by an oath. He adds afterward that in this transfer of the priesthood, a change of the Testament is also involved. He confirms that this was necessary by reasoning that the Law was so weak that it could bring nothing to perfection. Then he follows with what that weakness was: namely, that it had external righteousnesses of the flesh which could not make its worshippers perfect according to conscience, because it could neither erase sins nor provide true holiness through the sacrifices of beasts. He concludes, therefore, that there was a shadow of future goods in the Law, not a living image of the things themselves; and for that reason, it had no other function than to be an introduction to the better hope which is exhibited in the Gospel. Here we must see in what part the Legal covenant is compared with the Evangelical covenant, and the ministry of Christ with that of Moses. For if the comparison pertained to the substance of the promises, a great disagreement would exist between the two Testaments; but since the status of the question leads us elsewhere, we must head there to find the truth. Let us, therefore, place in the middle the covenant which God sanctioned once as eternal and never to perish. The fulfillment of that covenant, from which it finally derives its fixed and ratified status, is Christ. While such confirmation was awaited, the Lord prescribed ceremonies through Moses, which are, as it were, solemn symbols of confirmation. This came into dispute: whether the ceremonies ordained in the Law ought to yield to Christ. These, although they were only accidents of the covenant, or certainly accessions and attachments—or as the common people say, <term>accessoria</term> <gloss>auxiliary parts</gloss>—yet because they were instruments of administering it, they bear the name of the \"covenant.\" This is similar to how the name is also given to other Sacraments. Therefore, in short, the Old Testament is called in this place the solemn manner of confirming the covenant, comprised of ceremonies and sacrifices. Since nothing solid underlies these unless one passes further, the Apostle contends that they had to become antiquated and be abrogated so that room might be given to Christ, the sponsor and mediator of a better Testament, through whom eternal sanctification was acquired once for all for the elect, and transgressions which remained under the Law were blotted out. If you prefer, take it this way: the Lord's Testament was \"old\" because it was delivered wrapped in the shadowy and ineffectual observation of ceremonies. For that reason, it was temporary, because it was, as it were, in suspense until it could rely on a firm and substantial confirmation. But then finally it was made new and eternal after it was consecrated and established by the blood of Christ. Hence, the cup which Christ reaches to his disciples at the Supper, he calls <margin>Matthew 26:28</margin> the cup of the New Testament in his blood, to signify that the truth of God's Testament then truly consists in its own reality, through which it becomes new and eternal while it is sealed by his blood.\n\n5 From this it is clear in what sense the Apostle said the Jews were led to Christ by the <margin>Galatians 3:24; 4:1</margin> <term>pædagogia</term> <gloss>child-discipline or schooling</gloss> of the Law before he was exhibited in the flesh. He confesses that they also were the sons and heirs of God, but those who, on account of childhood, had to be held under the custody of a tutor. For it was fitting, since the sun of righteousness had not yet arisen, that there was neither such a great brightness of revelation nor such a great clarity of understanding. Thus the Lord dispensed the light of his word to them so that they might discern it while it was still far off and obscure. Therefore Paul notes this thinness of understanding by the term \"childhood,\" which the Lord willed to be exercised by the elements of this world and external observations as if by the rules of a childish discipline, until Christ should shine forth; through whom the knowledge of the faithful people ought to grow to maturity. Christ himself marked this distinction when he said that the <margin>Matthew 11:13</margin> Law and the Prophets were until John; from that time the kingdom of God is preached. What did the Law and the Prophets produce for the men of their time? Surely they provided a taste of that wisdom which was one day to be manifested clearly, and they pointed to it as it flashed from afar. But where Christ can be pointed to with a finger, the kingdom of God is unlocked. For in him are laid out <margin>Colossians 2:9</margin> all the treasures of wisdom and understanding, by which one penetrates almost to the very inner rooms of heaven.\n\n<summary>Calvin argues that the Old Testament ceremonies were temporary \"shadows\" intended to lead the faithful to Christ. He contrasts the physical requirements of the Mosaic Law with the spiritual perfection and eternal priesthood established through Christ's blood.</summary>\n<keywords>Covenant, Priesthood, Mosaic Law, Christ, Shadows and Types, Pædagogia, Hebrews, Galatians, Ceremonies, Sacraments</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 4053,
+ "outputTokens": 2632,
+ "thinkingTokens": 1206,
+ "cost_usd": 0.0099225,
+ "ms": 11823,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 6644,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": "Manichæis",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 5444
+}

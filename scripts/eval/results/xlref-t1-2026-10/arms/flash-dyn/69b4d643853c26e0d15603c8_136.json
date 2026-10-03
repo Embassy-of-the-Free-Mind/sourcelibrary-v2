@@ -1,0 +1,42 @@
+{
+ "id": "69b4d643853c26e0d15603c8_136",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "# ARCHIDOXES OF THEOPHRASTUS: BOOK III.\n\n<meta>continues from previous page</meta>\nof additions [so] that they are performed in such a way that the <term>quintessence</term> <gloss>the purest and most essential part of a substance</gloss> remains in their own odor, color, and taste, and increases itself in these and does not diminish, such as <term>musk</term>, <term>ambergris</term>, and <term>civet</term>. If the quintessence is extracted from these, you will notice that the body stinks and is of no importance either in taste, nor in odor, nor in nature. The same is to be judged concerning the extraction of the quintessence of all other things. Although musk, ambergris, and civet do not refer to the present chapter—because we describe those specifically elsewhere, and here we deal only with things that grow <note>original: \"Crescentibus\", meaning plants and herbs</note>, such as lilies, spikenard <note>original: \"Spica\"</note>, and leaf <note>original: \"Folio\", likely referring to Malabathrum or Indian leaf</note>—their process of extraction is as follows.\n\nTake things that grow well crushed; place these in a jar in horse dung <note>a common alchemical heat source providing steady warmth</note> and digest for four weeks, then distill by a bath <note>a water bath or bain-marie</note>. After this, rot <gloss>putrefy</gloss> again in horse dung for eight days, and again distill by a bath. The quintessence will ascend through the <term>alembic</term> <gloss>the top part of a distillation apparatus</gloss>, and the body remains at the bottom. But if more of the quintessence were held at the bottom, proceed by rotting and distilling. Afterwards take the distilled water and add to it again that growing thing, and digest through a <term>pelican</term> <gloss>a circulatory vessel used for constant distillation</gloss> for six days. It will be turned into a dense color; strain this, and distill the strained liquid by a bath. The body will go out, but the quintessence will reside at the bottom. Separate this from the dregs by the press of a <term>retort</term> <gloss>a distillation vessel with a downward-pointing neck</gloss>, and leave the quintessence for four\n\n<summary>Paracelsus details the extraction of the quintessence from botanical sources using digestion in horse dung and multiple distillations. He emphasizes that the process must preserve the substance's original sensory qualities while discarding the spent physical matter.</summary>\n<keywords>quintessence, distillation, horse dung, digestion, botanical extraction, musk, ambergris, civet, spikenard, lilies, alchemy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2812,
+ "outputTokens": 6728,
+ "thinkingTokens": 6116,
+ "cost_usd": 0.02159,
+ "ms": 28706,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "split",
+   "joined": "quatuor",
+   "catchword": "or dies",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1558
+}

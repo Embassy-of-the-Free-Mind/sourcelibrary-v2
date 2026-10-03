@@ -1,0 +1,44 @@
+{
+ "id": "695d0e044afae5c3b3aead52_353",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page: ...all the necessary</meta> complete organs, or instruments, by whose aid the same things could be performed in a machine, so that the mind does not even immediately move the external limbs in us, but only directs the spirits flowing from the heart through the brain into the muscles, and determines them to certain movements, since those spirits are of themselves applied just as easily to many diverse actions.\n\nIndeed, most of the movements that occur in us do not depend in any way on the mind; such are the beating of the heart, the digestion of food, nutrition, the breathing of those asleep, and even walking, singing, and the like in those who are awake, when they occur without the mind attending to them.\n\nAnd when those who fall from a height thrust their hands forward toward the ground to protect their head, they certainly do not do this by any counsel of reason, but only because the vision of the impending fall, reaching as far as the brain, sends animal spirits <note>original: *spiritus animales*; a 17th-century physiological concept referring to subtle fluids thought to carry sensory and motor information through the nerves.</note> into the nerves in the way that is necessary to produce this movement, even against the mind's will and as if in a machine.\n\nAnd since this is certain in us ourselves\n\n<summary>Descartes explains that many bodily functions, including instinctive reactions and automatic processes like digestion, occur via mechanical movements of animal spirits without conscious intervention from the mind.</summary>\n<keywords>Metaphysics, animal spirits, machine, mind, brain, heart, movement, nerves</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2648,
+ "outputTokens": 342,
+ "thinkingTokens": 0,
+ "cost_usd": 0.001175,
+ "ms": 1733,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1181
+}

@@ -1,0 +1,42 @@
+{
+ "id": "69523495ab34727b1f044a45_63",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "<margin>\n# Solutions to the arguments.\n</margin>\n\nIt is clear regarding the first argument. There is no doubt that just as, by God's permission, men can be killed, so too can that member or others be removed truly and realistically. But in such cases, demons do not operate through the witches of whom mention is now made. And through this, the solution to the second argument is also clear. But as for the point that because God permits the generative power to be more bewitched on account of [certain reasons], therefore it is also permitted that the member be truly and realistically removed—this is not valid as a general rule. This would not be done by way of witchcraft, nor do witches even desire this when they perform such works, for they do not wish to lack the power of restoring the member when they want and know how. From this, it is clear that it is removed not truly, but by a <term>prestigiosa arte</term> <gloss>glamorous art or the art of illusion</gloss>.\n\nRegarding the third argument, concerning the transformation of Lot's wife <note>Genesis 19:26</note>: we say that it was a true transformation and not done by glamorous art; however, we are now speaking of glamorous art. Regarding the fourth: that demons can induce certain <term>formas substantiales</term> <gloss>substantial forms</gloss>, and therefore can also remove them. It is said regarding the magicians of Pharaoh that they created true serpents, and demons can produce certain effects concerning some <term>imperfectas creaturas</term> <gloss>lower animals or simple organisms</gloss> with the aid of some other agent, which they cannot do concerning men, for whom God has greater care. According to the text: \"Does God care for oxen?\" <note>1 Corinthians 9:9; the authors imply God's providence is specifically focused on humanity</note>. They can, however, always harm men truly and realistically or even by glamorous art if God permits it, as has been said; and by this, the solution to the last argument is also clear.\n\n<margin>\n# Question 10. Whether witches operate upon men by transforming them into bestial forms through a certain glamorous art.\n</margin>\n\nFourthly, the truth itself is declared where men are also transformed into beasts. Regarding how this occurs, it is argued that it is not possible for this to happen. According to Canon 26, Question 5, \"Episcopi,\" from the Council of Ancyra <note>A significant canon law reference, though historians note this specific attribution to Ancyra was often a misidentification in medieval texts</note>: \"Whoever believes that any crea-\n<column-break/>\nture can be made, or changed for better or worse, or transformed into another species or another likeness, except by the Creator himself who made all things and through whom all things were made, is without doubt an infidel and worse than a pagan.\" And let us use the arguments of **Saint Thomas** in his [commentary on the] *Sentences*, book 2, distinction 8: \"Whether demons can make impressions upon the bodily senses by deluding them with glamours.\" There, he first argues that they cannot. For that form of a beast which is seen must exist somewhere, but it cannot be only in the sense, because the sense does not have any <term>species</term> <gloss>sensory form or mental image</gloss> except that which is received from things. And there is no true beast there, according to the authority of the canon cited. Nor again can it be in the thing that is seen—as when a woman appears to be a beast—because two substantial forms cannot exist in the same thing at one and the same time. Therefore, since that form of a beast which is seen can exist nowhere, no glamorous illusion can happen in the eye of the beholder, since vision must necessarily be terminated by some form. Furthermore, if it were said that the form is created in the surrounding air, this cannot be; both because air is not capable of receiving any form or figure, and also because it is not always the same air that can remain around that person on account of its fluidity, especially when they move. Also, such a transformation would then be seen by everyone, which does not happen, since it does not seem that demons can deceive the visions of holy men, at least. Furthermore, the sense of sight or the visual power is a passive power; but every passive thing is moved by an active thing proportioned to it. Now, the active thing proportioned to the sense is twofold. One is as if originating the act, namely the object; the other is as if conveying it, like the medium. But that form which is seen can be neither the object of the sense nor the conveying medium. Regarding the first—that it cannot be the object—this is because it can be taken from no thing, as was touched upon in the preceding argument, since it does not exist in the sense as something received from a thing, nor in the thing itself, nor even in the air itself as a conveying medium, as was previously touched upon in the third argument. Furthermore, if the demon moves the interior cognitive power, he does this either by presenting himself as an object...\n\n<summary>This page addresses arguments regarding the reality of magical removals and transformations, distinguishing between physical reality and \"glamorous art\" or illusion. It introduces Question 10, which uses canon law and Thomistic philosophy to argue that witches cannot truly change humans into animals, as only God can alter substantial forms.</summary>\n<keywords>glamour, illusion, substantial forms, Saint Thomas Aquinas, Canon Episcopi, metamorphosis, sensory perception, Pharaoh's magicians, generative power</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3798,
+ "outputTokens": 7161,
+ "thinkingTokens": 5943,
+ "cost_usd": 0.023382,
+ "ms": 28908,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 5188,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 3988
+}

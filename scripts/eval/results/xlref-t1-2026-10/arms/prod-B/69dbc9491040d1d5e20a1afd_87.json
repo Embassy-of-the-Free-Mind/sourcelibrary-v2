@@ -1,0 +1,44 @@
+{
+ "id": "69dbc9491040d1d5e20a1afd_87",
+ "arm": "prod-B",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page: ...not only confiscated the goods of individual citizens, but even entire provinces and regions, and it shines with one single kind of calamity. And so, ravaged and with estates lost to foreign nations, we saw Massilia <note>the city of Marseille</note> carried in a triumph, a city without which our commanders never triumphed in wars across the Alps. Furthermore, there is much to recount concerning wickedness toward our allies, if I had seen anything shameful in this single event alone. We are punished by law, therefore. For if we had not tolerated their unpunished crimes, the license would never have reached one man. From him, the acquisition of family wealth came to a few, and the inheritance of wickedness to many. Nor, indeed, did the seed of civil wars ever have a more <unclear>just</unclear> cause; for while men remembered that bloody spear <note>the sign of the public auction of confiscated property</note> and hoped for it, when it vibrated in the hand of that approaching dictator in the thirty-sixth year after that, the wicked spear did not recede. The other man, who had been a scribe in that dictatorship, was a city quaestor in this one. From which it can be understood that, with such rewards proposed, civil wars will never be absent. And so, the city stands and remains only by the grace of the walls, and these men themselves, now fearing the ultimate crimes. But we have fundamentally lost the Republic. And we have fallen into these shipwrecks. For we must return to the point, that we preferred to be loved than to be feared. As to what could have happened to the Roman people that was justly ordered, what ought individual men to think? <insert>On acquiring affection</insert>\n\nBut to whom it is clear that the power of benevolence is great, and fear is weak, it follows that we discuss by what means we can most easily obtain what we desire with honor, fidelity, and affection. But these are not equally</meta>\n\n<summary>This passage discusses the loss of Roman civic virtue and the rise of civil conflict, emphasizing that true stability relies on benevolence rather than fear or the spoils of war.</summary>\n<keywords>Republic, civil war, Roman Empire, benevolence, Massilia, justice, civic duty</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2777,
+ "outputTokens": 489,
+ "thinkingTokens": 0,
+ "cost_usd": 0.00142775,
+ "ms": 2642,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1664
+}
