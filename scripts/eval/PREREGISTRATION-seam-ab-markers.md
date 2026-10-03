@@ -171,4 +171,27 @@ The --pin estimate is quoted in Amendment 1, and the hard cap is **$2**:
 
 ## Amendments
 
-(none yet)
+1. **2026-10-03, after the draw and screen, before submit (no arm output exists).**
+   - **Draw.** 419 books were visited. Skipped:
+     - 311 for book language;
+     - 60 with no OCR on N+1;
+     - 42 with no seeded lane page;
+     - 22 prior-sample books;
+     - 12 short OCR;
+     - 10 for page language;
+     - 4 with N+1 of an excluded type.
+   - **Screen.** The 150 `pagebreak` candidates screened as 133 `mid`, 6 `closed` and 11 `reject`.
+   - **The control pool was extended, as the rule allows.** The first 30 `control` candidates gave only 13
+     `closed`: 10 of them were in fact mid-sentence (`sourceEndsOpen` misses an end like "…super Psal." or
+     "…apud"). The pool was extended to 60 by the same seeded procedure (`--pool-control 60`). The `pagebreak`
+     list is byte-identical, which was checked. The extension added 14 `closed`, 9 `mid` and 7 `reject`.
+   - **Pinned:** 100 mid-sentence breaks and 20 closed controls. Languages by the page's own tag: Latin 117,
+     German 2, French 1.
+   - **Verdicts and reasons** are in `results/seam-ab-5678/screen.json`, and `candidates.jsonl` holds the
+     candidates.
+   - **Spend.** 480 Batch requests; the `--pin` estimate is **$1.569** (A2 0.311, A 0.311, B 0.316, C 0.631).
+     The same estimator over-read seam-confirm by ~44% ($0.944 estimated, $0.531 actual). Approved at $1.90,
+     under the $2 cap.
+   - **Envelope.** Because a scope's book list is also a pause bypass for production workers, the
+     `seam-ab-5678` scope is opened just before submit and removed just after it; it gates only this submit.
+     Spend is metered per book under endpoint `eval/seam-ab-5678`.

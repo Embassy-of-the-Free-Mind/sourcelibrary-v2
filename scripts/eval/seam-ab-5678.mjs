@@ -59,7 +59,9 @@ const CAP_USD = 2;
 const ENDPOINT = 'eval/seam-ab-5678';
 const V13_MD5 = '516510147237b6a79d9d3f6e797bba7f';
 const N_PAGEBREAK = 100, N_CONTROL = 20;
-const POOL = { pagebreak: 150, control: 30 };   // candidates drawn for the by-eye screen
+// candidates drawn for the by-eye screen; --pool-control extends the control pool by the same procedure (the
+// pagebreak pool is unchanged by it: the extra visits only take closed-end pages)
+const POOL = { pagebreak: 150, control: Number(opt('pool-control', 30)) };
 export const ARMS = ['A2', 'A', 'B', 'C'];      // submit order: the noise floor first
 export const ARM = {
   A: { model: MODEL_LITE, markers: false },
@@ -143,7 +145,9 @@ async function phaseDraw() {
   log.pools = Object.fromEntries(['pagebreak', 'control'].map((s) => [s, cands.filter((u) => u.stratum === s).length]));
   fs.writeFileSync(path.join(DIR, 'draw-log.json'), JSON.stringify(log, null, 2));
   // The by-eye screen reads SOURCE only: N's last lines and N+1's first, nothing an arm wrote.
-  const md = cands.map((u) => `\n### ${u.unit}  [${u.stratum}] ${u.language}\nN END:   …${body(u.pages[0].ocr).slice(-260).replace(/\n/g, ' ⏎ ')}\nN+1 HEAD: ${body(u.pages[1].ocr).slice(0, 180).replace(/\n/g, ' ⏎ ')}…\n`).join('');
+  // the screen file lists only candidates not already screened (screen.json), so an extension is read fresh
+  const screened = fs.existsSync(path.join(DIR, 'screen.json')) ? JSON.parse(fs.readFileSync(path.join(DIR, 'screen.json'), 'utf8')) : {};
+  const md = cands.filter((u) => !screened[u.unit]).map((u) => `\n### ${u.unit}  [${u.stratum}] ${u.language}\nN END:   …${body(u.pages[0].ocr).slice(-260).replace(/\n/g, ' ⏎ ')}\nN+1 HEAD: ${body(u.pages[1].ocr).slice(0, 180).replace(/\n/g, ' ⏎ ')}…\n`).join('');
   fs.writeFileSync(path.join(DIR, 'screen.md'), `# Source screen (seam-ab-5678): is the break a TRUE mid-sentence break?\n${md}`);
   console.log(JSON.stringify(log, null, 1));
 }
