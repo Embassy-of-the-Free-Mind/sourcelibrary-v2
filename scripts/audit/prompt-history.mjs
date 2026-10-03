@@ -9,7 +9,7 @@
  * prompt-history — the data behind .claude/docs/prompt-history.md (#5672). $0: Mongo reads and
  * `git log` only, no model.
  *
- *   node --env-file=.env.production.local scripts/audit/prompt-history.mjs [--step prompts|counts|git|all]
+ *   node --env-file=.env.production.local scripts/audit/prompt-history.mjs [--step prompts|counts|git|summarize|all]
  *        [--days N]   (window width for the page walk; default 7)
  *        [--fresh]    (ignore the counts checkpoint and walk from the start)
  *
@@ -17,6 +17,7 @@
  *   prompt-history.json   prompts metadata + hashes, page counts per (version, hash, id, name,
  *                         source), first/last updated_at per group, git log of prompt files
  *   prompts-content.json  every `prompts` row in full (content included)
+ *                         and `summary`: each group resolved to the prompts row that wrote it
  *   counts-checkpoint.json  resumable state of the page walk (delete or --fresh to restart)
  *
  * PAGE COUNTS. `pages` has no index on ocr/translation.prompt_*, so an exact count is a full read.
@@ -172,6 +173,40 @@ async function stepCounts(db) {
   };
 }
 
+// Resolve every page group to the `prompts` row that wrote it. The stored LABEL is not reliable:
+// realtime writers stamped code-era labels ("v5.1.2026-03") while reading a DB row, and the batch
+// collector falls back to 'v5.2026-02' for any job without a version. prompt_id, then prompt_hash
+// (md5 of the row's content), are the evidence; the label is used only when neither is present.
+function stepSummarize() {
+  const rows = history.prompts ?? [];
+  const byId = new Map(rows.map((r) => [r._id, r]));
+  const byHash = new Map(rows.map((r) => [r.content_md5, r]));
+  const label = (r) => `${r.name} v${r.version} (${r._id.slice(-6)})`;
+  const out = {};
+  for (const field of ['ocr', 'translation']) {
+    const groups = history.page_counts?.[field] ?? [];
+    const acc = {};
+    let withText = 0, noField = 0, fieldNoText = 0;
+    for (const g of groups) {
+      if (g.t === 'missing' || g.t === 'null') { noField += g.count; continue; }
+      if (g.data !== 'string') { fieldNoText += g.count; continue; }
+      withText += g.count;
+      const row = (g.id && byId.get(g.id)) || (g.h && byHash.get(g.h)) || null;
+      const how = row ? (g.id && byId.get(g.id) ? 'prompt_id' : 'prompt_hash') : g.h ? 'unmatched_hash' : g.v != null ? 'label_only' : 'none';
+      const key = row ? label(row) : g.h ? `hash ${g.h.slice(0, 8)} (no prompts row)` : g.v != null ? `label "${g.v}"` : `no prompt recorded (source: ${g.src ?? 'none'})`;
+      const a = acc[key] ?? (acc[key] = { key, prompt_id: row?._id ?? null, version: row?.version ?? null, resolved_by: how, count: 0, first_updated_at: null, last_updated_at: null, labels: {}, sources: {} });
+      a.count += g.count;
+      a.labels[String(g.v)] = (a.labels[String(g.v)] ?? 0) + g.count;
+      a.sources[String(g.src)] = (a.sources[String(g.src)] ?? 0) + g.count;
+      if (g.first_updated_at && (!a.first_updated_at || g.first_updated_at < a.first_updated_at)) a.first_updated_at = g.first_updated_at;
+      if (g.last_updated_at && (!a.last_updated_at || g.last_updated_at > a.last_updated_at)) a.last_updated_at = g.last_updated_at;
+    }
+    out[field] = { pages_with_text: withText, pages_without_field: noField, field_without_text: fieldNoText, by_prompt: Object.values(acc).sort((x, y) => y.count - x.count) };
+  }
+  history.summary = { note: 'pages whose <field>.data is a string, grouped by the prompts row they resolve to (prompt_id > prompt_hash > stored label). first/last_updated_at are page write dates, a LOWER bound on when the prompt was in use.', ...out };
+  console.log(`summary: ocr ${out.ocr.pages_with_text} pages in ${out.ocr.by_prompt.length} groups; translation ${out.translation.pages_with_text} in ${out.translation.by_prompt.length}`);
+}
+
 function stepGit() {
   const git = (...a) => execFileSync('git', a, { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 << 20 });
   const seeders = git('grep', '-lE', "collection\\(['\"]prompts['\"]\\)").split('\n').filter(Boolean)
@@ -195,6 +230,7 @@ try {
   history.generated_at = new Date().toISOString();
   writeJson(HISTORY, history);
   if (STEP === 'all' || STEP === 'counts') { await stepCounts(db); history.generated_at = new Date().toISOString(); writeJson(HISTORY, history); }
+  if (STEP === 'all' || STEP === 'summarize') { stepSummarize(); writeJson(HISTORY, history); }
 } finally {
   await client?.close();
 }
