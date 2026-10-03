@@ -454,3 +454,73 @@ export function StatusBoard({ items, n }: { items: { id: string; name: string; s
     </Figure>
   );
 }
+
+/* ---------- What the measured fixes changed ---------- */
+
+export type Improvement = {
+  change: string;
+  measure: string;
+  /** both on a 0–100 scale (a rate per 100 pages, or a percentage) */
+  before: number;
+  after: number;
+  /** true when lower is better */
+  lowerBetter: boolean;
+  inUse: boolean;
+  status: string;
+  /** what was measured on what, against what, by whom, when: the row's provenance in one line */
+  basis: string;
+  /** the write-up the numbers are copied from (a file pinned to a commit, or the issue comment that reports them) */
+  source: string;
+};
+
+export function ImprovementChart({ rows, n }: { rows: Improvement[]; n: number }) {
+  const BEFORE = '#a8a29e';
+  return (
+    <Figure
+      n={n}
+      title="What each measured change did"
+      caption="Each row is one change tested on the same pages against the same reference, old method and new. The grey dot is the old method, the coloured dot the new one, on a scale of 0 to 100 (a percentage, or a count per 100 pages). Solid rows are in use; faded rows were tested and not adopted. Under each row: the sample, the reference, who judged it and when, and a link to the write-up the numbers are copied from. These are measured samples, not a census of the corpus."
+    >
+      <div className="font-body text-xs text-stone-600 mb-4 flex flex-wrap gap-y-1">
+        <Swatch style={{ backgroundColor: BEFORE }} label="before" />
+        <Swatch style={{ backgroundColor: ENGLISH }} label="after" />
+      </div>
+      <div className="divide-y divide-stone-200 border-y border-stone-200">
+        {rows.map((r) => {
+          const lo = Math.min(r.before, r.after);
+          const hi = Math.max(r.before, r.after);
+          return (
+            <div key={r.change} className={`py-4 md:grid md:grid-cols-[18rem_minmax(0,1fr)] md:gap-6 ${r.inUse ? '' : 'opacity-60'}`}>
+              <div className="font-body text-sm mb-2 md:mb-0">
+                <div className="font-serif text-base text-stone-900 leading-tight">{r.change}</div>
+                <div className="text-stone-600 mt-1 leading-snug">{r.measure} ({r.lowerBetter ? 'lower is better' : 'higher is better'})</div>
+                <div className="text-xs mt-1">
+                  <span className={r.inUse ? 'text-teal-800 font-semibold' : 'text-stone-500'}>{r.status}</span>
+                </div>
+                <div className="text-[11px] text-stone-500 mt-1 leading-snug">
+                  {r.basis}.{' '}
+                  <a href={r.source} className="text-amber-800 underline underline-offset-2">Source</a>
+                </div>
+              </div>
+              <div className="relative h-10 self-center mx-4" role="img" aria-label={`${r.measure}: ${r.before} before, ${r.after} after`}>
+                <div className="absolute inset-x-0 top-1/2 h-px bg-stone-200" />
+                <div className="absolute top-1/2 h-[3px] -translate-y-1/2 rounded" style={{ left: `${lo}%`, width: `${hi - lo}%`, backgroundColor: ENGLISH, opacity: 0.35 }} />
+                {([[r.before, BEFORE, 'before'], [r.after, ENGLISH, 'after']] as const).map(([v, c, k]) => (
+                  <div key={k} className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center" style={{ left: `${v}%` }}>
+                    <div className="w-3 h-3 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
+                    <div className={`absolute ${k === 'before' ? '-top-5' : 'top-4'} font-body text-xs tabular-nums ${k === 'after' ? 'text-stone-900 font-semibold' : 'text-stone-500'}`}>{v}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div className="hidden md:flex justify-between font-body text-[11px] text-stone-400 mt-1 md:ml-[20.5rem] md:mr-4">
+        <span>0</span>
+        <span>50</span>
+        <span>100</span>
+      </div>
+    </Figure>
+  );
+}

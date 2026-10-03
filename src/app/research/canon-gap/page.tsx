@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import gapMap from '../../../../scripts/catalog-coverage/results/canon-gap-map-2026-10.json';
 import gapStatus from '../../../../scripts/catalog-coverage/results/canon-gap-status-2026-10.json';
-import { CanonBars, RoutesDiagram, StatusBoard, STATUS_STYLE, TengyurProgress, TraditionProgress, short, type CanonBar, type TraditionProgressRow } from './diagrams';
+import { CanonBars, RoutesDiagram, StatusBoard, STATUS_STYLE, TengyurProgress, TraditionProgress, ImprovementChart, short, type CanonBar, type Improvement, type TraditionProgressRow } from './diagrams';
 
 // Built for the Eternity Foundation working session (#5513): read once, seated, as a
 // table with a short argument. Sizes, licences, English shares and draft costs come from
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
 type Row = (typeof gapMap.rows)[number];
 type StatusRow = (typeof gapStatus.corpora)[number] & { done?: string };
 
-const ISSUE_URL = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary/issues/';
+const ISSUE_URL = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/';
 const RESULTS_URL =
-  'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary/blob/main/scripts/catalog-coverage/results/canon-gap-map-2026-10.json';
+  'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/scripts/catalog-coverage/results/canon-gap-map-2026-10.json';
 
 // The Eternity shelf and the Tengyur draft are measured by canon-gap-status.mjs on every run
 // (eternity_shelf, tengyur_draft), not typed in here.
@@ -57,6 +57,55 @@ const SHORT_NAME: Record<string, string> = {
   kanripo: 'Kanripo (Chinese classics)',
 };
 const nameOf = (id: string, fallback: string) => SHORT_NAME[id] ?? fallback;
+
+// Before/after on the same pages and reference. Every figure is copied from the write-up in `source`:
+// an experiment file pinned to the commit it was read at, or, where the write-up is not on main yet,
+// the issue comment that reports the run. inUse = adopted in a production lane.
+const EXP = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/88b09e0084cbd9dc9c025cecec53e2a2430c8973/scripts/eval/experiments/';
+const IMPROVEMENTS: Improvement[] = [
+  {
+    change: 'Sanskrit, Pali, Chinese: Flash-Lite → Flash', measure: 'reversed statements per 100 pages', before: 15.4, after: 5.9, lowerBetter: true,
+    inUse: true, status: 'in use for new translations since 4 Oct 2026',
+    basis: '68 pages from 68 books, against published translations (SuttaCentral, CC0; public-domain translators); two blind Claude Opus judges; 3 Oct 2026',
+    source: `${EXP}2026-10-03-xlref-t5-sanskrit-pali-chinese-vs-reference.md`,
+  },
+  {
+    change: 'Tengyur: 8-page blocks → one page at a time', measure: 'pages whose English belongs to another page, per 100', before: 13.3, after: 0.9, lowerBetter: true,
+    inUse: true, status: 'in use for the Tengyur draft',
+    basis: '113 pages (15 vs 1), against 84000’s published translations; two blind Claude Opus judges; 3 Oct 2026',
+    source: `${EXP}2026-10-03-tengyur-84000-reference-ab-5497.md`,
+  },
+  {
+    change: 'Syriac: Gemini → Kraken (Sophro Mhiro)', measure: 'line error rate, %', before: 74, after: 19, lowerBetter: true,
+    inUse: true, status: 'in use for Syriac',
+    basis: '40 manuscript pages with published transcriptions (Jerusalem SMMJ 36, ÖNB Cod. Syr. 1); Gemini arms 74–79%, lower shown; 16 Sep 2026',
+    source: `${EXP}2026-09-16-syriac-retest-do-the-beth-mardutho-kraken-models-read-4746.md`,
+  },
+  {
+    change: 'Blank and show-through leaves: OCR prompt v16 → v19.1', measure: 'leaves given invented text, %', before: 75, after: 30, lowerBetter: true,
+    inUse: true, status: 'in use for new OCR since 2 Oct 2026',
+    basis: '69 white and show-through leaves labelled by eye before any run, three reads each, v16 run alongside as control; 2 Oct 2026',
+    source: `${EXP}2026-10-02-ocr-v19-1-stamps-4195.md`,
+  },
+  {
+    change: 'Sentences across a page turn: Flash-Lite → Flash', measure: 'defects at mid-sentence page breaks, per 100', before: 26, after: 16, lowerBetter: true,
+    inUse: true, status: 'in use for new translations in seven languages since 4 Oct 2026',
+    basis: '100 mid-sentence page breaks from 100 books, screened by eye; a defect counts only when both of two blind Claude Opus judges flag it; 3–4 Oct 2026',
+    source: 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5678#issuecomment-5974324959',
+  },
+  {
+    change: 'Sentences across a page turn: Flash with page markers', measure: 'defects at mid-sentence page breaks, per 100', before: 26, after: 11, lowerBetter: true,
+    inUse: false, status: 'tested; markers added too little beyond Flash to adopt',
+    basis: 'same 100 breaks and judges as the row above; 3–4 Oct 2026',
+    source: 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5678#issuecomment-5974324959',
+  },
+  {
+    change: 'Persian manuscripts: Flash-Lite → Flash reading', measure: 'characters matching Ganjoor’s typed text, median %', before: 41, after: 70, lowerBetter: false,
+    inUse: false, status: 'tested; still below the 90% needed to translate',
+    basis: 'manuscript pages of classical poetry located in Ganjoor (9 and 13 pages); 1 Oct 2026; a small sample',
+    source: 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5525#issuecomment-5936907070',
+  },
+];
 
 const LICENCE_LABEL: Record<string, string> = {
   open: 'Open',
@@ -315,6 +364,7 @@ export default function CanonGapPage() {
             ourselves to find the cause of every low score. These are samples scored by models, not a
             scholar&rsquo;s review. Tests run 30 September to 3 October 2026.
           </p>
+          <ImprovementChart n={5} rows={IMPROVEMENTS} />
           <ul className="list-disc pl-5 space-y-3 text-base">
             <li>
               <strong>Tengyur pilot.</strong> Of 40 sampled pages across five sections, 33 scored 4 or 5. The weakest
@@ -334,7 +384,8 @@ export default function CanonGapPage() {
               published translations, 58% of the English we serve scored 4 or better (mean 3.6). Sanskrit scored lowest,
               mostly because on pages with verse and commentary the English keeps the verse and shortens or drops the
               commentary. A stronger model (Gemini Flash instead of Flash-Lite) raised the mean by 0.4 and cut reversed
-              statements from 15 to 6 per 100 pages. We have not switched yet.{' '}
+              statements from 15 to 6 per 100 pages. Since 4 October 2026 new translations in these languages, and in
+              Greek, Hebrew, Arabic and Persian, use Flash; pages already served are not yet retranslated.{' '}
               <a href={`${ISSUE_URL}5695`} className="text-amber-800 underline underline-offset-2">Details</a>
             </li>
             <li>
@@ -360,7 +411,7 @@ export default function CanonGapPage() {
         </Section>
 
         <Section kicker="Where it stands" title="Each canon, and what happens next">
-          <StatusBoard n={5} items={rows.map((r) => ({ id: r.id, name: nameOf(r.id, r.corpus), status: STATUS.get(r.id)?.status ?? 'next' }))} />
+          <StatusBoard n={6} items={rows.map((r) => ({ id: r.id, name: nameOf(r.id, r.corpus), status: STATUS.get(r.id)?.status ?? 'next' }))} />
           <p className="mb-6 text-base text-stone-600">
             Ordered by how much untranslated text each canon holds, weighted by how open its licence is and whether open
             scans of the same edition exist. &ldquo;We hold&rdquo; counts the books in our library for that canon:
