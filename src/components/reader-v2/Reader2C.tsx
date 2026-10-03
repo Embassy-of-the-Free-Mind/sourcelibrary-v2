@@ -1538,6 +1538,10 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
         const ocrCorpus = pageTextCorpus(page);
         const trCorpus = translationCorpus(page);
         const witnessCount = (book.cdli_witnesses || []).length;
+        // Syriac pages read by the Kraken lane (#4883) carry their own notice: the
+        // model's measured accuracy, not the generic machine-transcription line.
+        const prov = transcriptProvenance(page);
+        const krakenRoute = prov?.kind === 'kraken' ? prov.route : null;
         return (
         <>
           <CapsLabel className="block mt-5 mb-2" style={{ color: 'var(--text-muted)' }}>{t.howPageWasMade}</CapsLabel>
@@ -1553,7 +1557,7 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
                 <dt className="w-[72px] shrink-0" style={{ color: 'var(--text-faint)' }}>{t.fieldTranscript}</dt>
                 <dd style={{ color: 'var(--text-secondary)' }}>
                   {/* Same helper as the pane-header chip (#5186): one source of truth. */}
-                  {(() => { const prov = transcriptProvenance(page); return prov ? transcriptProvenanceLabel(prov, t, 'full') : t.transcribedBy(page.ocr!.model); })()}
+                  {prov ? transcriptProvenanceLabel(prov, t, 'full') : t.transcribedBy(page.ocr!.model)}
                 </dd>
               </div>
             )}
@@ -1567,7 +1571,7 @@ function InfoPanel({ page, book }: { page: Page; book: Book }) {
             )}
           </dl>
           <p className="mt-2.5 font-sans text-[11.5px] leading-relaxed" style={{ color: 'var(--text-faint)' }}>
-            {trCorpus ? t.corpusNotice : ocrCorpus ? t.corpusAiNotice(ocrCorpus.name) : t.machineNotice}
+            {trCorpus ? t.corpusNotice : ocrCorpus ? t.corpusAiNotice(ocrCorpus.name) : krakenRoute ? t.krakenNotice(krakenRoute) : t.machineNotice}
           </p>
         </>
         );

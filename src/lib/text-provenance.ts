@@ -86,6 +86,9 @@ export type TranscriptProvenance =
   | { kind: 'ia'; engine: string | null; year: string | null; agreement: number | null }
   /** Written or corrected by a person; `model` is what they started from, if known. */
   | { kind: 'manual'; model: string | null }
+  /** Syriac read by a specialist Kraken model (#4883): Sophro Mhiro for
+   *  manuscripts, omnisyr for print. Named, with its measured accuracy. */
+  | { kind: 'kraken'; route: 'manuscript' | 'print' }
   /** Read from the scan by a model in the ordinary pipeline. */
   | { kind: 'model'; model: string };
 
@@ -113,6 +116,10 @@ export function transcriptProvenance(page: Pick<Page, 'ocr'>): TranscriptProvena
     return { kind: 'ia', engine, year, agreement: typeof median === 'number' ? median : null };
   }
   if (ocr.source === 'manual') return { kind: 'manual', model: ocr.model || null };
+  const engine = ocr.engine;
+  if (engine && engine.name === 'kraken') {
+    return { kind: 'kraken', route: 'route' in engine && engine.route === 'print' ? 'print' : 'manuscript' };
+  }
   if (ocr.model) return { kind: 'model', model: ocr.model };
   return null;
 }
@@ -152,6 +159,10 @@ export function transcriptProvenanceLabel(
       return form === 'short'
         ? t.transcriptChipManual
         : t.manualTranscript(prov.model ? modelDisplayName(prov.model) : null);
+    case 'kraken':
+      return form === 'short'
+        ? (prov.route === 'print' ? 'omnisyr (Kraken)' : 'Sophro Mhiro (Kraken)')
+        : t.krakenTranscript(prov.route);
     case 'model':
       return form === 'short' ? modelDisplayName(prov.model) : t.transcribedBy(prov.model);
   }
