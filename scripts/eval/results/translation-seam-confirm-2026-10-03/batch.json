@@ -1,0 +1,19 @@
+{
+  "key_env": "GEMINI_API_KEY_TIER3",
+  "estimate_usd": 0.9440628750000006,
+  "generation": {
+    "thinkingBudget": 0,
+    "maxOutputTokens": "maxOutputTokensFor(pages)",
+    "temperature": "default",
+    "safety": "BLOCK_NONE"
+  },
+  "jobs": [
+    {
+      "model": "gemini-3.1-flash-lite",
+      "job_name": "batches/bilk7vtvca51x86s65cyqc12cftxzq117pjg",
+      "file_name": "files/z1q2rauqs8yw",
+      "requests": 375,
+      "submitted_at": "2026-10-03T08:08:15.905Z"
+    }
+  ]
+}
