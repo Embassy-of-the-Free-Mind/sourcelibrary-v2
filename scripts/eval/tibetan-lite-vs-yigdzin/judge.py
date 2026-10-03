@@ -21,7 +21,24 @@ Outputs (all under /root/yig527):
 """
 import json, os, sys, time, collections, glob
 sys.path.insert(0, "/root/tibetan-reocr"); sys.path.insert(0, "/root/tibetan-eval")
-import leaf_v4 as V
+import leaf_v4 as V, difflib
+
+
+def _line_doubles_fast(t):
+    """leaf_finalize.line_doubles, same pairs in the same orientation, same 0.9 threshold. real_quick_ratio() and
+    quick_ratio() are upper bounds on ratio(), so a pair below 0.9 on either can never reach 0.9 on ratio(). Same count,
+    about 12x faster (difflib was 99% of the judge's time). Checked equal on 650 pages of this run before use."""
+    ls = [l for l in t.split("\n") if len(V.F.syls(l)) >= 10]
+    n = 0
+    for i in range(len(ls)):
+        for j in range(i + 1, len(ls)):
+            sm = difflib.SequenceMatcher(None, ls[i], ls[j], autojunk=False)
+            if sm.real_quick_ratio() >= 0.9 and sm.quick_ratio() >= 0.9 and sm.ratio() >= 0.9: n += 1
+    return n
+
+
+V.F.line_doubles = _line_doubles_fast
+MAX_PER_PASS = int(os.environ.get("JUDGE_MAX", "40000"))   # keep a tender pass short; the rest waits for the next pass
 
 D = "/root/yig527"
 RUN = "yigdzin-leaf-2026-10-03"
@@ -47,6 +64,7 @@ def main():
                 except Exception: continue                      # a half-pulled last line; next pass gets it
                 s = r.get("id")
                 if not s or s in judged or s not in todo: continue
+                if sum(c.values()) >= MAX_PER_PASS: break
                 raw_f = f"{run}/txt/{s}.txt"
                 if not os.path.exists(raw_f): continue          # ledger row pulled before its text; next pass
                 t = todo[s]
