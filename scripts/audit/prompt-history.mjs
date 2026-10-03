@@ -182,6 +182,14 @@ function stepSummarize() {
   const byId = new Map(rows.map((r) => [r._id, r]));
   const byHash = new Map(rows.map((r) => [r.content_md5, r]));
   const label = (r) => `${r.name} v${r.version} (${r._id.slice(-6)})`;
+  // Code-shipped prompts never had a row; their text is archived under prompts/. Match the body.
+  const byFile = new Map();
+  for (const d of fs.readdirSync(path.join(ROOT, 'prompts'), { withFileTypes: true }).filter((e) => e.isDirectory())) {
+    for (const f of fs.readdirSync(path.join(ROOT, 'prompts', d.name))) {
+      const body = fs.readFileSync(path.join(ROOT, 'prompts', d.name, f), 'utf8').replace(/^---[\s\S]*?---\n\n?/, '');
+      for (const v of [body, body.trim()]) byFile.set(md5(v), `prompts/${d.name}/${f}`);
+    }
+  }
   const out = {};
   for (const field of ['ocr', 'translation']) {
     const groups = history.page_counts?.[field] ?? [];
@@ -192,8 +200,9 @@ function stepSummarize() {
       if (g.data !== 'string') { fieldNoText += g.count; continue; }
       withText += g.count;
       const row = (g.id && byId.get(g.id)) || (g.h && byHash.get(g.h)) || null;
-      const how = row ? (g.id && byId.get(g.id) ? 'prompt_id' : 'prompt_hash') : g.h ? 'unmatched_hash' : g.v != null ? 'label_only' : 'none';
-      const key = row ? label(row) : g.h ? `hash ${g.h.slice(0, 8)} (no prompts row)` : g.v != null ? `label "${g.v}"` : `no prompt recorded (source: ${g.src ?? 'none'})`;
+      const how = row ? (g.id && byId.get(g.id) ? 'prompt_id' : 'prompt_hash') : g.h ? (byFile.has(g.h) ? 'archived_file_hash' : 'unmatched_hash') : g.v != null ? 'label_only' : 'none';
+      const file = !row && g.h ? byFile.get(g.h) : null;
+      const key = row ? label(row) : file ? `${file} (code-shipped, hash ${g.h.slice(0, 8)})` : g.h ? `hash ${g.h.slice(0, 8)} (no prompts row, no archived file)` : g.v != null ? `label "${g.v}"` : `no prompt recorded (source: ${g.src ?? 'none'})`;
       const a = acc[key] ?? (acc[key] = { key, prompt_id: row?._id ?? null, version: row?.version ?? null, resolved_by: how, count: 0, first_updated_at: null, last_updated_at: null, labels: {}, sources: {} });
       a.count += g.count;
       a.labels[String(g.v)] = (a.labels[String(g.v)] ?? 0) + g.count;
