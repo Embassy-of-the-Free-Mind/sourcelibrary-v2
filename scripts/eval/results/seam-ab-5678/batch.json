@@ -1,0 +1,46 @@
+{
+  "key_env": "GEMINI_API_KEY_TIER3",
+  "estimate_usd": 1.5693857499999981,
+  "approved_usd": 1.9,
+  "envelope_before_usd": 0,
+  "generation": {
+    "thinkingBudget": 0,
+    "maxOutputTokens": "maxOutputTokensFor(pages)",
+    "temperature": "default",
+    "safety": "SAFETY_SETTINGS (production)"
+  },
+  "jobs": [
+    {
+      "arm": "A2",
+      "model": "gemini-3.1-flash-lite",
+      "job_name": "batches/miquo0dt541j0qd75gqksr7k4cu4n0jerr90",
+      "file_name": "files/ftt1lmnpvbx6",
+      "requests": 120,
+      "submitted_at": "2026-10-03T10:47:59.826Z"
+    },
+    {
+      "arm": "A",
+      "model": "gemini-3.1-flash-lite",
+      "job_name": "batches/nhices58yfs6x60p90l3rihy7xwbv0u4yxf5",
+      "file_name": "files/0y08k850fh40",
+      "requests": 120,
+      "submitted_at": "2026-10-03T10:48:08.073Z"
+    },
+    {
+      "arm": "B",
+      "model": "gemini-3.1-flash-lite",
+      "job_name": "batches/kae03igcrtken0wtoymc98fhn8vow4bjaebc",
+      "file_name": "files/4zyzj6ilzmfv",
+      "requests": 120,
+      "submitted_at": "2026-10-03T10:48:16.182Z"
+    },
+    {
+      "arm": "C",
+      "model": "gemini-3-flash-preview",
+      "job_name": "batches/rzyrjg32ju7gs1b2n143pxwz2ok1fax2h6xd",
+      "file_name": "files/0tz4h6sydcrm",
+      "requests": 120,
+      "submitted_at": "2026-10-03T10:48:24.792Z"
+    }
+  ]
+}
