@@ -21,7 +21,8 @@ if (!RES || !INPUT || !OUT) { console.error('--results, --input, --out required'
 const res = JSON.parse(fs.readFileSync(RES, 'utf8'));
 const recs = Object.fromEntries(readJsonl(INPUT).map((r) => [itemId(r), r]));
 // notes, glosses and term echoes are the house apparatus, not the running English a reader compares
-const strip = (t) => String(t || '').replace(/<(summary|keywords|meta|note|gloss|term)>[\s\S]*?<\/\1>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/->|<-/g, ' ').replace(/\s+/g, ' ').trim();
+// Centring markers go FIRST: stripped after the tags, the `<` of `<-` opens a "tag" that eats body text (#5105).
+const strip = (t) => String(t || '').replace(/->|<-/g, ' ').replace(/<(summary|keywords|meta|note|gloss|term)>[\s\S]*?<\/\1>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 const cell = (t) => t.replace(/\|/g, '\\|');
 
 function defectClass(page, arm) {
