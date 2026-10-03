@@ -179,7 +179,16 @@ async function collect(state) {
         const echoed = unit.pages.filter((p) => { const t = tr.get(p.page_number); return t && assessTranslationHealth(p.src, t, { lang: 'Tibetan' }).reason === 'echo'; });
         if (echoed.length) tr.clear();
         const { drifted } = dropDriftedPages(lanePages, tr);
-        if (parsed.returned === 0) { unit.retry = true; continue; }
+        if (parsed.returned === 0) {
+          // The lane strikes a block that parsed nothing and, after MAX_STRIKES (3), PARKS the whole run
+          // (translate-batch-chained strike()). Here the strike is recorded and, at 3, the block's pages go
+          // single-page so the arm has every page; the park itself is reported as a lane finding.
+          ch.strikes = (ch.strikes || 0) + 1;
+          (ch.strike_log ||= []).push({ round: unit.round, pages: unit.pages.map((p) => p.page_number), discarded: parsed.discarded || null, finish: a.finishReason });
+          if (ch.strikes >= 3) { ch.cursor += unit.pages.length; ch.pending_single.push(...unit.pages); ch.strikes = 0; (ch.parked_blocks ||= []).push(unit.pages.map((p) => p.page_number)); }
+          unit.retry = true; continue;
+        }
+        ch.strikes = 0;
         const pending = [];
         for (const p of unit.pages) {
           const t = tr.get(p.page_number);
