@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-03T22:55:50.552Z",
+ "generated": "2026-10-03T23:03:58.789Z",
  "measure": "agreement of a reference-free detector with two blind Opus judges who had a human reference (not accuracy)",
  "n": 60,
  "max_order": 60,
@@ -5546,7 +5546,648 @@
    }
   }
  },
- "planted": null,
+ "planted": {
+  "n": 30,
+  "by_op": {
+   "drop-negation": 18,
+   "add-negation": 12
+  },
+  "d3_flagged": {
+   "k": 28,
+   "n": 30,
+   "rate": 0.933,
+   "ci": [
+    0.787,
+    0.982
+   ]
+  },
+  "d3_located": {
+   "k": 25,
+   "n": 30,
+   "rate": 0.833,
+   "ci": [
+    0.664,
+    0.927
+   ]
+  },
+  "d3_same_pages_unplanted_flagged": {
+   "k": 10,
+   "n": 30,
+   "rate": 0.333,
+   "ci": [
+    0.192,
+    0.512
+   ]
+  },
+  "d3_more_than_unplanted": {
+   "k": 20,
+   "n": 30,
+   "rate": 0.667,
+   "ci": [
+    0.488,
+    0.808
+   ]
+  },
+  "d2_flagged": {
+   "k": 24,
+   "n": 30,
+   "rate": 0.8,
+   "ci": [
+    0.627,
+    0.905
+   ]
+  },
+  "d2_same_pages_unplanted_flagged": {
+   "k": 9,
+   "n": 30,
+   "rate": 0.3,
+   "ci": [
+    0.167,
+    0.479
+   ]
+  },
+  "d2_more_than_unplanted": {
+   "k": 16,
+   "n": 30,
+   "rate": 0.533,
+   "ci": [
+    0.361,
+    0.698
+   ]
+  },
+  "rows": [
+   {
+    "id": "69938e26d5a98fd66f4307b0_00136",
+    "lang": "Ancient Greek",
+    "op": "drop-negation",
+    "from": "do not",
+    "to": "do",
+    "after_context": "ought the following obstacle upon him. A certain Messenian man (whose name they do mention) happened to be in love with the daughter of Aristodemus, and was then ",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 0
+    },
+    "d2": {
+     "n": 1,
+     "n_high": 1,
+     "base_n": 0
+    }
+   },
+   {
+    "id": "6abe8366433559215a997cad_00065",
+    "lang": "Tibetan",
+    "op": "drop-negation",
+    "from": "do not",
+    "to": "do",
+    "after_context": "s\" are the eyes and the other senses. Likewise, flesh, blood, and so forth also do exist. Having thus established that the obscuration of disturbing emotions does",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 0
+    },
+    "d2": {
+     "n": 1,
+     "n_high": 1,
+     "base_n": 0
+    }
+   },
+   {
+    "id": "69ac7ee520878c5c9ba51e75_00098",
+    "lang": "Latin",
+    "op": "add-negation",
+    "from": "must ",
+    "to": "must not ",
+    "after_context": " of Experience, and in producing new works from it, Divine Providence and Order must not be taken as the pattern. For God, on the first day of Creation, created only Lig",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 0
+    },
+    "d2": {
+     "n": 1,
+     "n_high": 1,
+     "base_n": 0
+    }
+   },
+   {
+    "id": "6909f75fcf28baa1b4cb0f71_00197",
+    "lang": "French",
+    "op": "drop-negation",
+    "from": "were not",
+    "to": "were",
+    "after_context": "ee lines long, were placed on the front of the head above two black eyes, which were very prominent and resembled amaranth seeds. Three small legs, also black, emer",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 1
+    },
+    "d2": {
+     "n": 1,
+     "n_high": 1,
+     "base_n": 1
+    }
+   },
+   {
+    "id": "69c814536c6f3cc53c848191_00054",
+    "lang": "German",
+    "op": "drop-negation",
+    "from": "would not",
+    "to": "would",
+    "after_context": "be and is in truth in a divine or in a truly divinized human , for otherwise he would be divine or divinized.\n\n### Chapter 31.\n\n Nature and quality of the right love",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 0
+    },
+    "d2": {
+     "n": 1,
+     "n_high": 1,
+     "base_n": 0
+    }
+   },
+   {
+    "id": "69942a7f045dfc482ad772e7_00291",
+    "lang": "Ancient Greek",
+    "op": "add-negation",
+    "from": "are ",
+    "to": "are not ",
+    "after_context": "ch matters, as far as we were able. We refute the claim that irrational animals are not wiser than humans, and we demonstrate as false the claim that they possess thoug",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 0
+    },
+    "d2": {
+     "n": 1,
+     "n_high": 1,
+     "base_n": 0
+    }
+   },
+   {
+    "id": "69aebfa1c337b1e6a4d58005_00358",
+    "lang": "Italian",
+    "op": "drop-negation",
+    "from": "did not",
+    "to": "did",
+    "after_context": ", who were small; and not seeming to them that they could live securely if they did get hold of the fortress, and the castellan not wishing to give it to them, Mad",
+    "d3": {
+     "n": 2,
+     "n_high": 2,
+     "located": false,
+     "base_n": 1
+    },
+    "d2": {
+     "n": 0,
+     "n_high": 0,
+     "base_n": 0
+    }
+   },
+   {
+    "id": "69ea3e3a300d991d0f1d29be_00426",
+    "lang": "Ancient Greek",
+    "op": "drop-negation",
+    "from": "does not",
+    "to": "does",
+    "after_context": "n it is poured out), those around Aristobulus would not agree, as they claim it does rain on the plains. But to Onesicritus, it seems that this water is the cause o",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 1
+    },
+    "d2": {
+     "n": 2,
+     "n_high": 1,
+     "base_n": 1
+    }
+   },
+   {
+    "id": "69906485ef12272ffdc93acc_00116",
+    "lang": "French",
+    "op": "drop-negation",
+    "from": "Will not",
+    "to": "Will",
+    "after_context": "ry when Berich comes to bite.\n\n### XXXIII.\n\nHis final hand by the bloody Alus ,\nWill be able to protect itself by the sea,\nBetween two rivers, fearing a military ha",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 0
+    },
+    "d2": {
+     "n": 1,
+     "n_high": 1,
+     "base_n": 0
+    }
+   },
+   {
+    "id": "69e8b18b2ff2a8dc09e76378_00076",
+    "lang": "French",
+    "op": "drop-negation",
+    "from": "does not",
+    "to": "does",
+    "after_context": " part. It indicates at most only the portion of caloric it has received, but it does measure the total quantity that has been released, displaced, or absorbed. The ",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 0
+    },
+    "d2": {
+     "n": 0,
+     "n_high": 0,
+     "base_n": 0
+    }
+   },
+   {
+    "id": "6952daa277f38f6761bc6551_00202",
+    "lang": "Latin",
+    "op": "add-negation",
+    "from": "was ",
+    "to": "was not ",
+    "after_context": "m that he was cinched by a serpent. Once the magic power inserted into the belt was not discovered, he repudiated his wife for that reason.\n\n### On the images of the Ma",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 1
+    },
+    "d2": {
+     "n": 1,
+     "n_high": 1,
+     "base_n": 0
+    }
+   },
+   {
+    "id": "69a5d924a63a00aaae8aae3b_00105",
+    "lang": "Dutch",
+    "op": "drop-negation",
+    "from": "do not",
+    "to": "do",
+    "after_context": "ble and needy; full of sorrows; but You are my help and my deliverer. O my God, do delay.* \n\n## THE SIXTH CHAPTER.\n\n### *The dissection of the internal parts of t",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 1
+    },
+    "d2": {
+     "n": 0,
+     "n_high": 0,
+     "base_n": 0
+    }
+   },
+   {
+    "id": "6976f5fb7b4366f057e0e974_00631",
+    "lang": "Latin",
+    "op": "add-negation",
+    "from": "should ",
+    "to": "should not ",
+    "after_context": "r to use the wine itself instead of spirit of wine , with which the root itself should not at least gently simmer without much bubbling; and this must be done with fresh w",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 0
+    },
+    "d2": {
+     "n": 0,
+     "n_high": 0,
+     "base_n": 0
+    }
+   },
+   {
+    "id": "6abe83b7433559215a997efb_00541",
+    "lang": "Tibetan",
+    "op": "add-negation",
+    "from": "is ",
+    "to": "is not ",
+    "after_context": "o the mind becomes of a \"collected nature\"—this is the remaining word. \n\n\"Mind\" is not the bodhicitta as previously described. \"Collected\" means that all phenomena are",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 0
+    },
+    "d2": {
+     "n": 1,
+     "n_high": 1,
+     "base_n": 0
+    }
+   },
+   {
+    "id": "69942b0ed607f8e57e4b68eb_00502",
+    "lang": "Ancient Greek",
+    "op": "drop-negation",
+    "from": "is not",
+    "to": "is",
+    "after_context": "pomegranate becomes a bounty of luxury from every kind of fruit; this enjoyment is found in plums or acorns or other such things, but a varied and multifaceted na",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 1
+    },
+    "d2": {
+     "n": 1,
+     "n_high": 1,
+     "base_n": 1
+    }
+   },
+   {
+    "id": "699382dd84cf5845c644b377_00673",
+    "lang": "Ancient Greek",
+    "op": "add-negation",
+    "from": "will ",
+    "to": "will not ",
+    "after_context": "come as an immortal god,\nHermes. For my father sent me as a guide to you.\nBut I will not return, nor will I look upon the face of Achilles;\nIt would be unseemly\nFor an i",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": false,
+     "base_n": 0
+    },
+    "d2": {
+     "n": 1,
+     "n_high": 1,
+     "base_n": 0
+    }
+   },
+   {
+    "id": "6a3c5f05879008ba7e15291d_00045",
+    "lang": "Chinese",
+    "op": "drop-negation",
+    "from": "does not",
+    "to": "does",
+    "after_context": "s not sever the upper mind, one is no different from an ordinary person. If one does leave the seeds of afflictions, one is no different from the two vehicles.\" Fur",
+    "d3": {
+     "n": 0,
+     "n_high": 0,
+     "located": false,
+     "base_n": 1
+    },
+    "d2": {
+     "n": 2,
+     "n_high": 2,
+     "base_n": 2
+    }
+   },
+   {
+    "id": "694f3d6cbe37f451a5324e10_00084",
+    "lang": "Latin",
+    "op": "add-negation",
+    "from": "are ",
+    "to": "are not ",
+    "after_context": "se avengers are in one way separated from each other, yet in their actions they are not in another way joined together. For behold, **recklessness** is inseparable from",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 1
+    },
+    "d2": {
+     "n": 1,
+     "n_high": 1,
+     "base_n": 1
+    }
+   },
+   {
+    "id": "6abeafd3896ea18127c8218e_00174",
+    "lang": "Tibetan",
+    "op": "drop-negation",
+    "from": "does not",
+    "to": "does",
+    "after_context": "a thing without those. Therefore, intending to show that the Bodhisattva itself does exist, Subhuti replied: \"Blessed One, that is not so.\" \n\nAmong those who speak ",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 0
+    },
+    "d2": {
+     "n": 0,
+     "n_high": 0,
+     "base_n": 0
+    }
+   },
+   {
+    "id": "690989d5cf28baa1b4cae1c9_00159",
+    "lang": "Latin",
+    "op": "add-negation",
+    "from": "is ",
+    "to": "is not ",
+    "after_context": "ng creature, living always, and was, and is, and shall be, nothing in the world is not mortal. For of each living part which is in the world itself, as in one and the ",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 0
+    },
+    "d2": {
+     "n": 1,
+     "n_high": 1,
+     "base_n": 0
+    }
+   },
+   {
+    "id": "694f3d6ebe37f451a5324e95_00107",
+    "lang": "Latin",
+    "op": "drop-negation",
+    "from": "are not",
+    "to": "are",
+    "after_context": " the sensible. But the peak of governance obeys that supreme Lord, so that they are many, but rather **One**. For all things hang from the One, or rather flow from",
+    "d3": {
+     "n": 0,
+     "n_high": 0,
+     "located": false,
+     "base_n": 0
+    },
+    "d2": {
+     "n": 1,
+     "n_high": 1,
+     "base_n": 1
+    }
+   },
+   {
+    "id": "69938d775d28b693146cfc2c_00283",
+    "lang": "Ancient Greek",
+    "op": "drop-negation",
+    "from": "was not",
+    "to": "was",
+    "after_context": "assing the great wall , they would have taken the city 15 by force. But (for it was destined for the city to be captured by the Persians) a certain individual from",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 0
+    },
+    "d2": {
+     "n": 1,
+     "n_high": 1,
+     "base_n": 0
+    }
+   },
+   {
+    "id": "69b51dc947b06ecd581849ee_00128",
+    "lang": "German",
+    "op": "drop-negation",
+    "from": "cannot",
+    "to": "can",
+    "after_context": " can prove its effect.\n\nWhat is applied externally in the infirmities of wounds can come to the aid of any damage that has its origin from within, which are bodily",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 0
+    },
+    "d2": {
+     "n": 1,
+     "n_high": 1,
+     "base_n": 0
+    }
+   },
+   {
+    "id": "69790e9eeb0dcfd399123423_00297",
+    "lang": "Dutch",
+    "op": "drop-negation",
+    "from": "cannot",
+    "to": "can",
+    "after_context": " Spirit and the Father and the Son and the divine nature all together / for one can divide God / and the fruition-giving inclination of the spirit, which seeks res",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 1
+    },
+    "d2": {
+     "n": 1,
+     "n_high": 1,
+     "base_n": 2
+    }
+   },
+   {
+    "id": "6abe8366433559215a997cad_00018",
+    "lang": "Tibetan",
+    "op": "add-negation",
+    "from": "should ",
+    "to": "should not ",
+    "after_context": "ed, emerging perfectly from the syllable *I*. She holds a noose and a hook. One should not meditate on the syllable *Aṃ*, like the color of a Bandhuka flower, in one's own",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 0
+    },
+    "d2": {
+     "n": 1,
+     "n_high": 1,
+     "base_n": 0
+    }
+   },
+   {
+    "id": "6abe8366433559215a997cad_00092",
+    "lang": "Tibetan",
+    "op": "add-negation",
+    "from": "is ",
+    "to": "is not ",
+    "after_context": " which is uninterrupted. **\"Kripida\"** is the indestructible sound. **\"Vajja\"** is not the arising of all that. **\"Karuni\"** is the practitioner Yogi . **\"Kaiaai\"** me",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 0
+    },
+    "d2": {
+     "n": 1,
+     "n_high": 1,
+     "base_n": 0
+    }
+   },
+   {
+    "id": "69593291b91a6184ea943bbe_00122",
+    "lang": "French",
+    "op": "add-negation",
+    "from": "must ",
+    "to": "must not ",
+    "after_context": "arriage is the reproduction within humanity of the great cosmogonic mystery. It must not be one, as God and nature are one.\n>\n> \"Marriage is the unity of the tree of lif",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 0
+    },
+    "d2": {
+     "n": 1,
+     "n_high": 1,
+     "base_n": 0
+    }
+   },
+   {
+    "id": "6abe83b7433559215a997efb_00589",
+    "lang": "Tibetan",
+    "op": "drop-negation",
+    "from": "are not",
+    "to": "are",
+    "after_context": "ra\" means that all these various appearances are mere mind; objects that appear are true, and they arise as such from the power of mental latencies , just like a d",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 0
+    },
+    "d2": {
+     "n": 1,
+     "n_high": 1,
+     "base_n": 3
+    }
+   },
+   {
+    "id": "6a3c61b3879008ba7e15fc71_00112",
+    "lang": "Chinese",
+    "op": "drop-negation",
+    "from": "is not",
+    "to": "is",
+    "after_context": "d to wait for the other pairs to descend. The winner then bows, and the one who is the winner ascends to take the cup and drink. Master Hu says: \"When the archery",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": true,
+     "base_n": 1
+    },
+    "d2": {
+     "n": 1,
+     "n_high": 1,
+     "base_n": 1
+    }
+   },
+   {
+    "id": "69e7518610ee9075bcdcde12_00071",
+    "lang": "Hebrew",
+    "op": "add-negation",
+    "from": "is ",
+    "to": "is not ",
+    "after_context": "ar and foam, though the mountains shake at the swelling thereof. Selah. 5 There is not a river, the streams whereof make glad the city of God, the holy place of the ta",
+    "d3": {
+     "n": 1,
+     "n_high": 1,
+     "located": false,
+     "base_n": 0
+    },
+    "d2": {
+     "n": 0,
+     "n_high": 0,
+     "base_n": null
+    }
+   }
+  ]
+ },
  "cost": {
   "model": "gemini-3.1-flash-lite, thinking off",
   "pages": 60,
@@ -5580,6 +6221,7 @@
      {
       "english": "internal emptiness is established to reverse the apprehension of external things as the consumed",
       "source": "ཕྱི་རོལ་གྱི་དངོས་པོ་ལ་བཟའ་བར་འཛིན་པ་བཟློག་པའི་ཕྱིར་ཕྱི་སྟོང་པ་ཉིད་རྣམ་པར་གཞག་སྟེ",
+      "should_be": "to stop grasping at outer entities as the enjoyed there is a presentation of outer …",
       "why": "source and reference present OUTER emptiness here; T1 names its opposite, internal emptiness"
      }
     ],
@@ -5650,11 +6292,13 @@
      {
       "english": "Only after one does nothing can one speak of the Way",
       "source": null,
+      "should_be": "無所不為而後可以言道",
       "why": null
      },
      {
       "english": "Only after one does nothing can one speak of the Way",
       "source": null,
+      "should_be": "無所不為而後可以言道 (only when there is nothing one does not do)",
       "why": null
      }
     ],
@@ -5943,11 +6587,13 @@
      {
       "english": "just as men can kill other humans when God permits it",
       "source": null,
+      "should_be": "sicut deo permittente occidere possunt homines (devils can kill men)",
       "why": null
      },
      {
       "english": "just as men can kill other humans when God permits it, they can also",
       "source": null,
+      "should_be": "sicut deo permittente occidere possunt homines ... Sed tunc demones non operantur per maleficas",
       "why": null
      }
     ],
@@ -6054,11 +6700,13 @@
      {
       "english": "If a man causes her distress... he shall be punished",
       "source": null,
+      "should_be": "पुरुषं [घ्न]त्याः ... अप्सु प्रवेशनं वा (she who kills a man: pyre or water)",
       "why": null
      },
      {
       "english": "or forces her into water ... he shall be punished",
       "source": null,
+      "should_be": "prostitute murders her paramour, she shall be burnt alive or thrown into water",
       "why": null
      }
     ],
@@ -6140,6 +6788,7 @@
      {
       "english": "if the loins of a buck are pricked with the blood of a wild black bull",
       "source": null,
+      "should_be": "si sanguine hircini lumbi punganē mulieri (reference: 'a woman's loins are rubbed')",
       "why": null
      }
     ],
@@ -6220,6 +6869,7 @@
      {
       "english": "You do not reply to me.",
       "source": null,
+      "should_be": "報我不述 (he responds to me contrary to reason)",
       "why": null
      }
     ],
@@ -6663,11 +7313,13 @@
      {
       "english": "He should not rashly revoke laws that have fallen into disuse",
       "source": null,
+      "should_be": "leges abrogatas consuetudine haud temere reuocet",
       "why": null
      },
      {
       "english": "He should not rashly revoke laws that have fallen into disuse",
       "source": null,
+      "should_be": "leges abrogatas consuetudine haud temere reuocet (not hastily call back abrogated laws)",
       "why": null
      }
     ],
@@ -6777,6 +7429,7 @@
      {
       "english": "sigh over the best of my deal",
       "source": null,
+      "should_be": "bewailing all the while my losing bargain",
       "why": null
      }
     ],
@@ -6914,11 +7567,13 @@
      {
       "english": "suspecting nothing—neither who the man was, nor for what reason he was beating me",
       "source": null,
+      "should_be": "ὑποπτεύσας δή τι κακὸν εἶναι, ἐδεδοίκειν ἀμύνασθαι",
       "why": null
      },
      {
       "english": "I, as if in a mystery, suspecting nothing—neither who the man was",
       "source": null,
+      "should_be": "ὑποπτεύσας δή τι κακὸν εἶναι, ἐδεδοίκειν ἀμύνασθαι (ref: 'suspecting the truth')",
       "why": null
      }
     ],
@@ -7048,11 +7703,13 @@
      {
       "english": "If he drank pure liquids, he immersed and vomited, they are pure",
       "source": null,
+      "should_be": "שתה מים טמאים טבל והקיא: טהורים (drank impure water)",
       "why": null
      },
      {
       "english": "If he drank pure liquids, he immersed and vomited, they are pure",
       "source": null,
+      "should_be": "שתה מים טמאים טבל והקיא טהורים",
       "why": null
      }
     ],
@@ -7486,6 +8143,7 @@
      {
       "english": "The woman struck out with her feet and hands in pain",
       "source": null,
+      "should_be": "همی کوفت پای و همی زد بدست / 'bound and spurned and smote her'",
       "why": null
      }
     ],
@@ -7615,6 +8273,7 @@
      {
       "english": "in order to show the Noble Maitreya the classifications of all phenomena",
       "source": "འཕགས་པ་བྱམས་པས་...རབ་ཏུ་དབྱེ་བ་བསྟན་པའི་ཕྱིར",
+      "should_be": "Noble Maitreya, in order to again differentiate and teach all phenomena",
       "why": "Maitreya made recipient instead of the one teaching/asking"
      }
     ],
@@ -7685,11 +8344,13 @@
      {
       "english": "from singulars to come to [principles]",
       "source": null,
+      "should_be": "ex [uniuersalibus] in singularia os deuenire",
       "why": null
      },
      {
       "english": "from singulars to come to [principles]",
       "source": null,
+      "should_be": "in singularia os deuenire (reference: 'from the universal to the singular')",
       "why": null
      }
     ],
@@ -7986,6 +8647,7 @@
      {
       "english": "They also depict two water vessels, neither more nor less",
       "source": null,
+      "should_be": "three waterpots, and neither more nor less (source 'βία [τρία] δὲ ὑδρεῖα, ἢ οὔτε πλείονα, …",
       "why": null
      }
     ],
@@ -8626,11 +9288,13 @@
      {
       "english": "Before Cheng could sue, they sued him to the magistrate.",
       "source": null,
+      "should_be": "成不待其訟先訟之",
       "why": null
      },
      {
       "english": "Before Cheng could sue, they sued him to the magistrate",
       "source": null,
+      "should_be": "成不待其訟先訟之宰",
       "why": null
      }
     ],
@@ -8812,6 +9476,7 @@
      {
       "english": "The phlemys (a type of fish) is particularly clever, guileless, and prudent",
       "source": null,
+      "should_be": "Daring also should he be and dauntless and temperate (the fisher)",
       "why": null
      }
     ],
@@ -8944,6 +9609,7 @@
      {
       "english": "It shone like the sky after clouds have passed",
       "source": null,
+      "should_be": "घनैरिवातपापाये (as with clouds at the end of the heat)",
       "why": null
      }
     ],
@@ -9185,11 +9851,13 @@
      {
       "english": "if we preferred to be loved when we wished to be dear",
       "source": null,
+      "should_be": "du mes tui. q. cari esset diligi maluimus",
       "why": null
      },
      {
       "english": "the Roman people, who were rightly governed",
       "source": null,
+      "should_be": "pplo rono iuste imperati (populo Romano iniuste imperanti)",
       "why": null
      }
     ],
@@ -9281,11 +9949,13 @@
      {
       "english": "envying no one if they attempt anything",
       "source": null,
+      "should_be": "nemini non inuidens, si quid ... moliatur",
       "why": null
      },
      {
       "english": "envying no one if they attempt anything however foolishly in this field",
       "source": null,
+      "should_be": "nemini non inuidens, si quid quantumlibet inepte moliatur in hoc genere",
       "why": null
      }
     ],

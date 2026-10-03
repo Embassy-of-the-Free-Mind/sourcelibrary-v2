@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-03T23:00:28.405Z",
+ "generated": "2026-10-03T23:03:56.101Z",
  "measure": "agreement of a reference-free detector with two blind Opus judges who had a human reference (not accuracy)",
  "n": 150,
  "max_order": null,
@@ -6639,7 +6639,7 @@
      {
       "english": "internal emptiness is established to reverse the apprehension of external things as the consumed",
       "source": "ཕྱི་རོལ་གྱི་དངོས་པོ་ལ་བཟའ་བར་འཛིན་པ་བཟློག་པའི་ཕྱིར་ཕྱི་སྟོང་པ་ཉིད་རྣམ་པར་གཞག་སྟེ",
-      "should_be": "to stop grasping at outer entities as the enjoyed there is a presentation of outer emptiness",
+      "should_be": "to stop grasping at outer entities as the enjoyed there is a presentation of outer …",
       "why": "source and reference present OUTER emptiness here; T1 names its opposite, internal emptiness"
      }
     ],
@@ -9065,7 +9065,7 @@
      {
       "english": "They also depict two water vessels, neither more nor less",
       "source": null,
-      "should_be": "three waterpots, and neither more nor less (source 'βία [τρία] δὲ ὑδρεῖα, ἢ οὔτε πλείονα, οὔτε ἥττονα')",
+      "should_be": "three waterpots, and neither more nor less (source 'βία [τρία] δὲ ὑδρεῖα, ἢ οὔτε πλείονα, …",
       "why": null
      }
     ],
@@ -12125,13 +12125,13 @@
      {
       "english": "should first satisfy himself and then give what remains to the poor",
       "source": null,
-      "should_be": "ולא ... והשבע וארוי קדמיתא ומה דישתאר לתן למסכני / reference: 'A man should not say, I will first satisfy myself'",
+      "should_be": "ולא ... והשבע וארוי קדמיתא ומה דישתאר לתן למסכני / reference: 'A man should not …",
       "why": null
      },
      {
       "english": "should first satisfy himself and then give what remains to the poor",
       "source": null,
-      "should_be": "ולא ... והשבע וארוי קדמיתא ומה דישתאר לתן למסכני / reference: 'A man should not say, I will first satisfy myself'",
+      "should_be": "ולא ... והשבע וארוי קדמיתא ומה דישתאר לתן למסכני / reference: 'A man should not …",
       "why": null
      }
     ],
@@ -14326,13 +14326,13 @@
      {
       "english": "Because it does not exist in the manner of a conceptualized entity, it is not suitable to say it exists",
       "source": "རྣམ་པར་བརྟགས་པའི་དངོས་པོའི་རྣམ་པར་ཡོད་པའི་ཕྱིར་ཡོད་དོ་ཞེས་བརྗོད་དུ་ཡང་མི་རུང་",
-      "should_be": "It is not suitable to say “it exists” because it exists in the form of a conceptualized basis",
+      "should_be": "It is not suitable to say “it exists” because it exists in the form of …",
       "why": "source gives existence in the form of a conceptualized basis as the reason; candidate negates it"
      },
      {
       "english": "Because it does not exist in the manner of a conceptualized entity, it is not suitable to say it exists",
       "source": "རྣམ་པར་བརྟགས་པའི་དངོས་པོའི་རྣམ་པར་ཡོད་པའི་ཕྱིར་ཡོད་དོ་ཞེས་བརྗོད་དུ་ཡང་མི་རུང་",
-      "should_be": "It is not suitable to say “it exists” because it exists in the form of a conceptualized basis",
+      "should_be": "It is not suitable to say “it exists” because it exists in the form of …",
       "why": "reason clause negated: source says it DOES exist in the form of a conceptualized thing"
      }
     ],
