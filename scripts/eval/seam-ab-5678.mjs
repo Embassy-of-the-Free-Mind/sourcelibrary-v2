@@ -38,7 +38,7 @@ import {
   buildBlockTranslationPrompt, parseBlockTranslations, PAGE_BREAK_SCOPED, MODEL_LITE, MODEL_FLASH,
 } from '../lib/translate-core.mjs';
 import { maxOutputTokensFor, batchRequest, batchRequestToJsonlLine } from '../lib/translate-batch-seam.mjs';
-import { parseFolioMarkedText, endsSentence, leadingFragment } from '../lib/folio-markers.mjs';
+import { parseFolioMarkedText, endsSentence, leadingFragment, continuousBody, FOLIO_MARKER_RE } from '../lib/folio-markers.mjs';
 import { sourceProse, translationProse, duplicatedAcrossBoundary } from '../lib/block-drift.mjs';
 import { sourceEndsOpen } from '../audit/translation-bridging.mjs';
 import { priceFor } from '../lib/model-pricing.mjs';
@@ -243,6 +243,33 @@ export function parseArm(u, arm, raw) {
   return { pages: Object.fromEntries(nums.map((n) => [n, parsed.translations.get(n) ?? null])), discarded: parsed.discarded };
 }
 
+/**
+ * Amendment 2 (post hoc, declared before any judging): the markers read by POSITION, their numbers ignored.
+ * On these Latin books the model often numbered the markers by the printed page number in the OCR's <page-num>
+ * (`<pb n="97"/>` for sequence page 21), or left out the first page's marker and began with page N's text. The
+ * literal parse (the pre-registered primary) counts both as a failure; this reading recovers them when the turn is
+ * still marked. kind: literal | renumbered | first-omitted | unmarked (the last stays a failure).
+ */
+export function positionalSpans(u, raw) {
+  const nums = u.pages.map((p) => p.page_number);
+  const lit = parseFolioMarkedText(raw, nums);
+  if (!lit.missing.length && !lit.outOfOrder && !lit.duplicated.length) return { kind: 'literal', pages: Object.fromEntries(lit.pages.map((x) => [x.page_number, x.span || null])) };
+  const body = continuousBody(raw);
+  const ms = [...body.matchAll(FOLIO_MARKER_RE)];
+  const clean = (t) => t.replace(FOLIO_MARKER_RE, '').trim();
+  const lead = ms.length ? body.slice(0, ms[0].index) : body;
+  if (ms.length === nums.length) {
+    const spans = ms.map((m, i) => clean(body.slice(m.index + m[0].length, i + 1 < ms.length ? ms[i + 1].index : body.length)));
+    if (lead.replace(/<[^>]+>/g, '').trim().length) spans[0] = `${clean(lead)} ${spans[0]}`.trim();
+    return { kind: 'renumbered', pages: Object.fromEntries(nums.map((n, i) => [n, spans[i] || null])) };
+  }
+  if (ms.length === nums.length - 1 && lead.replace(/<[^>]+>/g, '').trim().length >= 40) {
+    const spans = [clean(lead), ...ms.map((m, i) => clean(body.slice(m.index + m[0].length, i + 1 < ms.length ? ms[i + 1].index : body.length)))];
+    return { kind: 'first-omitted', pages: Object.fromEntries(nums.map((n, i) => [n, spans[i] || null])) };
+  }
+  return { kind: 'unmarked', pages: Object.fromEntries(nums.map((n) => [n, null])) };
+}
+
 async function phaseCollect() {
   const rec = JSON.parse(fs.readFileSync(path.join(DIR, 'batch.json'), 'utf8'));
   const key = process.env[rec.key_env];
@@ -310,7 +337,9 @@ function phasePackets() {
     const N = u.pages[0].page_number, N1 = u.pages[1].page_number;
     const versions = ARMS.map((arm) => {
       const o = outs.get(`${u.unit}|${arm}`);
-      return { source: arm, en: o?.pages?.[N] ?? null, en1: o?.pages?.[N1] ?? null };
+      // marker arms: the positional reading (Amendment 2), so a renumbered or first-omitted block is still judged
+      const pg = ARM[arm].markers && o?.raw ? positionalSpans(u, o.raw).pages : o?.pages;
+      return { source: arm, en: pg?.[N] ?? null, en1: pg?.[N1] ?? null };
     }).concat(extra);
     const lettered = shuffle(versions.map((v) => ({ ...v })));
     const letters = 'PQRSTUV';
@@ -329,7 +358,8 @@ function phasePackets() {
     let dup = 0, clo = 0;
     for (const u of pb) {
       const N = u.pages[0].page_number, N1 = u.pages[1].page_number;
-      const a2 = outs.get(`${u.unit}|A2`), b = outs.get(`${u.unit}|B`);
+      const a2 = outs.get(`${u.unit}|A2`), b0 = outs.get(`${u.unit}|B`);
+      const b = b0?.raw ? { pages: positionalSpans(u, b0.raw).pages } : b0;
       if (dup < 2 && a2?.pages?.[N] && a2.pages[N1]) {
         const lead = leadingFragment(display(a2.pages[N1]));
         if (lead.length >= 40 && lead.length <= 400) { plants[u.unit] = { source: 'PLANT_DUP', en: `${display(a2.pages[N])} ${lead}`, en1: a2.pages[N1] }; dup++; continue; }
@@ -411,7 +441,12 @@ function phaseScore() {
     const o = outs.get(`${u.unit}|${arm}`);
     const N = u.pages[0].page_number, N1 = u.pages[1].page_number;
     const r = { failed: !o || !!o.error || !o.pages?.[N] || !o.pages?.[N1] };
-    if (ARM[arm].markers) { r.dropped = !!o?.markers?.missing?.length || !!o?.markers?.outOfOrder; r.leading = (o?.markers?.leading || 0) > 0; r.miss = o && !r.failed ? markerMiss(u, o) : null; }
+    if (ARM[arm].markers) {
+      r.dropped = !!o?.markers?.missing?.length || !!o?.markers?.outOfOrder; r.leading = (o?.markers?.leading || 0) > 0;
+      const pos = o?.raw ? positionalSpans(u, o.raw) : { kind: 'unmarked', pages: {} };
+      r.posKind = pos.kind; r.posFailed = !pos.pages[N] || !pos.pages[N1];
+      r.miss = !r.posFailed ? markerMiss(u, { pages: pos.pages }) : null;
+    } else r.posFailed = r.failed;
     r.mechDup = !!(o?.pages?.[N] && o.pages[N1] && duplicatedAcrossBoundary(o.pages[N], o.pages[N1]));
     return r;
   };
@@ -428,11 +463,15 @@ function phaseScore() {
         const vs = SLOTS.map((s) => cell.get(`${u.unit}|${arm}|${s}`));
         const judged = vs.filter(Boolean);
         // a failed parse or a dropped marker is a real defect by construction (the page has no text of its own)
+        // pre-registered: a literal parse failure or dropped marker is a defect by construction
         const forced = m.failed || m.dropped;
         const both = forced || (judged.length === 2 && judged.every(realDefect));
         const either = forced || judged.some(realDefect);
+        // Amendment 2 (post hoc): only a turn that is not marked at all (positional reading) is a defect by construction
+        const posBoth = m.posFailed || (judged.length === 2 && judged.every(realDefect));
+        const posEither = m.posFailed || judged.some(realDefect);
         const types = Object.fromEntries(TYPES.map((t) => [t, { both: judged.length === 2 && judged.every((v) => typeOf(v, t)), either: judged.some((v) => typeOf(v, t)) }]));
-        return { unit: u.unit, judged: judged.length, both, either, types, m, moved: judged.map((v) => v.words_moved ?? 0) };
+        return { unit: u.unit, judged: judged.length, both, either, posBoth, posEither, types, m, moved: judged.map((v) => v.words_moved ?? 0) };
       });
       flag[arm] = new Map(rows.map((r) => [r.unit, r]));
       const k = (f) => rows.filter(f).length;
@@ -441,13 +480,16 @@ function phaseScore() {
         real_both: k((r) => r.both), real_both_ci: ci(k((r) => r.both), rows.length),
         real_either: k((r) => r.either), real_either_ci: ci(k((r) => r.either), rows.length),
         failed_parse: k((r) => r.m.failed),
+        pos_both: k((r) => r.posBoth), pos_both_ci: ci(k((r) => r.posBoth), rows.length),
+        pos_either: k((r) => r.posEither), pos_either_ci: ci(k((r) => r.posEither), rows.length),
+        pos_failed: k((r) => r.m.posFailed),
         types: Object.fromEntries(TYPES.map((t) => [t, { both: k((r) => r.types[t].both), either: k((r) => r.types[t].either) }])),
         mech_duplication: k((r) => r.m.mechDup),
         moved_1_5_either: k((r) => r.moved.some((x) => x >= 1 && x < 6)),
       };
       if (ARM[arm].markers) {
         const miss = rows.map((r) => r.m.miss).filter(Boolean).map((x) => Math.abs(x.miss_words)).sort((a, b) => a - b);
-        A.markers = { dropped: k((r) => r.m.dropped), leading_text: k((r) => r.m.leading), n_measured: miss.length, median_abs_miss_words: miss.length ? miss[Math.floor(miss.length / 2)] : null, p90_abs_miss_words: miss.length ? miss[Math.min(miss.length - 1, Math.floor(miss.length * 0.9))] : null, judge_moved_median: (() => { const xs = rows.flatMap((r) => r.moved).sort((a, b) => a - b); return xs.length ? xs[Math.floor(xs.length / 2)] : null; })() };
+        A.markers = { pos_kinds: rows.reduce((acc, r) => ({ ...acc, [r.m.posKind]: (acc[r.m.posKind] || 0) + 1 }), {}), dropped: k((r) => r.m.dropped), leading_text: k((r) => r.m.leading), n_measured: miss.length, median_abs_miss_words: miss.length ? miss[Math.floor(miss.length / 2)] : null, p90_abs_miss_words: miss.length ? miss[Math.min(miss.length - 1, Math.floor(miss.length * 0.9))] : null, judge_moved_median: (() => { const xs = rows.flatMap((r) => r.moved).sort((a, b) => a - b); return xs.length ? xs[Math.floor(xs.length / 2)] : null; })() };
       }
       S.arms[arm] = A;
     }
@@ -456,7 +498,7 @@ function phaseScore() {
       const c = us.filter((u) => !flag[x].get(u.unit)[f] && flag[y].get(u.unit)[f]).length;
       return { [`${x}_only`]: b, [`${y}_only`]: c, p_two_sided: +mcnemar(b, c).toFixed(4), p_one_sided_x_lower: +signOneSided(b, c).toFixed(4) };
     };
-    S.paired = Object.fromEntries(['both', 'either'].map((f) => [f, { noise_A2_vs_A: pair('A2', 'A', f), B_vs_A: pair('B', 'A', f), C_vs_B: pair('C', 'B', f), C_vs_A: pair('C', 'A', f) }]));
+    S.paired = Object.fromEntries(['both', 'either', 'posBoth', 'posEither'].map((f) => [f, { noise_A2_vs_A: pair('A2', 'A', f), B_vs_A: pair('B', 'A', f), C_vs_B: pair('C', 'B', f), C_vs_A: pair('C', 'A', f) }]));
     // best seam per break (each judge; a tie is allowed)
     const wins = Object.fromEntries([...ARMS, 'tie'].map((a) => [a, 0]));
     for (const u of us) for (const s of SLOTS) for (const a of best.get(`${u.unit}|${s}`) || []) if (a in wins) wins[a]++;
@@ -493,7 +535,22 @@ function decide(report) {
   else if (markersFixLite && flashBeyondMarkers) answer = 'BOTH';
   else if (!markersFixLite && flashBeatsA) answer = 'MODEL';
   else answer = 'UNRESOLVED';
-  return { counts: Object.fromEntries(ARMS.map((a) => [a, n(a)])), noise, markersFixLite, flashBeyondMarkers, flashBeatsA, control_counts: Object.fromEntries(ARMS.map((a) => [a, cn(a)])), control_guard: guard, plants_caught_share: plantsOk, answer };
+  return { counts: Object.fromEntries(ARMS.map((a) => [a, n(a)])), noise, markersFixLite, flashBeyondMarkers, flashBeatsA, control_counts: Object.fromEntries(ARMS.map((a) => [a, cn(a)])), control_guard: guard, plants_caught_share: plantsOk, answer, positional_post_hoc: decidePositional(report) };
+}
+
+/** The same rule on the positional reading (Amendment 2, post hoc — reported beside the primary, never instead). */
+function decidePositional(report) {
+  const pb = report.strata.pagebreak, ctl = report.strata.control;
+  const n = (arm) => pb.arms[arm].pos_both;
+  const noise = Math.abs(n('A2') - n('A'));
+  const P = pb.paired.posBoth;
+  const markersFixLite = n('B') < n('A') && (n('A') - n('B')) > noise && P.B_vs_A.p_one_sided_x_lower < 0.10;
+  const flashBeyondMarkers = n('C') < n('B') && (n('B') - n('C')) > noise && P.C_vs_B.p_one_sided_x_lower < 0.10;
+  const flashBeatsA = n('C') < n('A') && (n('A') - n('C')) > noise && P.C_vs_A.p_one_sided_x_lower < 0.10;
+  const cn = (arm) => ctl.arms[arm].pos_both;
+  const cnoise = Math.abs(cn('A2') - cn('A'));
+  const answer = markersFixLite ? (flashBeyondMarkers ? 'BOTH' : 'FORCING') : (flashBeatsA ? 'MODEL' : 'UNRESOLVED');
+  return { counts: Object.fromEntries(ARMS.map((a) => [a, n(a)])), noise, markersFixLite, flashBeyondMarkers, flashBeatsA, control_counts: Object.fromEntries(ARMS.map((a) => [a, cn(a)])), control_guard: { B: cn('B') - cn('A') <= Math.max(1, cnoise), C: cn('C') - cn('A') <= Math.max(1, cnoise) }, answer };
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {

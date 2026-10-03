@@ -195,3 +195,27 @@ The --pin estimate is quoted in Amendment 1, and the hard cap is **$2**:
    - **Envelope.** Because a scope's book list is also a pause bypass for production workers, the
      `seam-ab-5678` scope is opened just before submit and removed just after it; it gates only this submit.
      Spend is metered per book under endpoint `eval/seam-ab-5678`.
+2. **2026-10-03, after collect, before any packet was built or judged (a post-hoc secondary; the primary is
+   unchanged).**
+   - **What failed the literal parse.** It lost a page in 35 marker-arm blocks: B 22, C 13. A2 lost 2 blocks
+     (production format, discarded by `parseBlockTranslations`).
+   - **The marker failures are almost all numbering, not a missing turn.** Read from the raw responses:
+     - **renumbered** (B 10, C 13): both markers are present and in order, but carry the **printed page number** from
+       the OCR's `<page-num>` tag (`<pb n="97"/>` for sequence page 21) instead of the sequence number the prompt
+       labels the page with.
+     - **first-omitted** (B 11): the first page's marker is left out, page N's text stands before the one marker,
+       and that marker is at the turn.
+     - **unmarked** (B 1): the turn carries no marker.
+   - **Why it was not seen before.** The Tengyur e-text has no `<page-num>`, so the #5678 run could not show it.
+   - **The primary is computed as registered.** Every literal failure is a defect by construction.
+   - **Beside it, post hoc, the same rule on a positional reading** (`positionalSpans()` in the harness):
+     - the markers are read by position, with their numbers ignored;
+     - in a block missing only its first marker, the text before the remaining marker is page N;
+     - only an **unmarked** turn stays a defect by construction.
+   - **What the judges see.** They judge the positional spans for the marker arms. Under the literal rule their
+     verdicts on the 35 blocks do not enter the primary, because those blocks are already defects. Under the
+     positional rule they do.
+   - **What the report must say.** It quotes the primary first. It may quote the positional reading only as post
+     hoc, and only as the answer to "do markers fix the seam once the numbering bug is fixed". The numbering fix
+     itself (sequence numbers in the prompt, or a positional parser) is out of scope here, and is reported as a
+     finding for #5678.
