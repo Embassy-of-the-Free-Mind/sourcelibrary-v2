@@ -13,7 +13,7 @@ import { getDb } from '@/lib/mongodb';
 
 export const WORK_BOARD_TYPE = 'work-board';
 /** Boxes that should be pushing. A missing one reads as "no data", red — never as a quiet board. */
-export const EXPECTED_SOURCES = ['hetzner', 'cloudlayer', 'github'] as const;
+export const EXPECTED_SOURCES = ['hetzner', 'cloudlayer', 'github', 'infra-hetzner', 'infra-scaleway'] as const;
 /** A pusher runs every 10 min; older than this and its data is called stale, in red. */
 export const STALE_MIN = 30;
 /** A running job whose log and transcript have not moved for this long is listed as stuck. */
@@ -50,6 +50,17 @@ export interface BoxChain {
   last_activity: Date | string | null;
 }
 
+/**
+ * A rented server costing money for nothing (#5736), pushed by scripts/maintenance/gpu-lease-watchdog.mjs
+ * as `flags` on its infra-hetzner / infra-scaleway documents. Flag only: nothing stops these.
+ */
+export interface InfraFlag {
+  provider: string; id: string; name: string; type: string; location: string | null; status: string;
+  eur_month: number | null; age_days: number | null; cpu_24h: number | null;
+  owner: string | null; issue: number | null;
+  kind: 'no-lease' | 'bad-lease' | 'expired' | 'idle' | 'unwatched'; reason: string;
+}
+
 export interface BoxDoc {
   _id: string;
   type: typeof WORK_BOARD_TYPE;
@@ -57,6 +68,9 @@ export interface BoxDoc {
   generated_at: Date | string;
   jobs: BoxJob[];
   chains: BoxChain[];
+  flags?: InfraFlag[];
+  /** A pusher on a slower cadence than STALE_MIN (the hourly Hetzner pass) says how old is too old. */
+  stale_after_min?: number;
 }
 
 export interface GhPr {
@@ -95,9 +109,11 @@ export interface PrRef { number: number; url: string; state: string | null; tier
 
 export interface WaitingItem { issue: IssueRef; line: string; default: string | null; url: string; at: string }
 export interface DeadItem {
-  kind: 'job' | 'chain';
-  name: string; box: string; state: JobState | 'stuck';
+  kind: 'job' | 'chain' | 'infra';
+  name: string; box: string; state: JobState | 'stuck' | 'billing';
   why: string; at: string | null; issue: IssueRef | null;
+  /** infra only: what ignoring it costs. */
+  eur_month?: number | null;
 }
 export interface RunningItem {
   kind: 'job' | 'chain';
@@ -147,6 +163,22 @@ export function deadReason(j: BoxJob): string {
 
 type Placed = BoxJob & { box: string };
 
+const INFRA_WORDS: Record<InfraFlag['kind'], string> = {
+  'no-lease': 'no lease', 'bad-lease': 'unreadable lease', expired: 'lease expired', idle: 'idle', unwatched: 'NOT WATCHED',
+};
+/** A flagged server as a dead-list line: what it costs first, then why. */
+export function infraItem(f: InfraFlag, b: BoxDoc, gh: GithubDoc | null): DeadItem {
+  const facts = [
+    f.eur_month != null ? `€${Math.round(f.eur_month)}/month` : null,
+    INFRA_WORDS[f.kind] ?? f.kind,
+    `${f.provider} ${f.type}`,
+    f.status !== 'running' ? f.status : null,
+    f.age_days != null ? `${f.age_days} d old` : null,
+    f.cpu_24h != null ? `CPU ${f.cpu_24h.toFixed(1)} % / 24 h` : null,
+  ].filter(Boolean).join(' · ');
+  return { kind: 'infra', name: f.name, box: b.box, state: 'billing', why: `${facts} — ${f.reason}`, at: iso(b.generated_at), issue: issueRef(f.issue ?? undefined, gh), eur_month: f.eur_month };
+}
+
 /** Grace after the done file for the report comment, which some jobs post just after touching it. */
 const VERDICT_GRACE_MS = 15 * 60_000;
 /**
@@ -172,7 +204,8 @@ export function buildBoard(docs: WorkBoardDoc[], now: Date = new Date()): Board 
     const d = docs.find(x => x.box === source);
     const at = iso(d?.generated_at);
     const age = at ? Math.max(0, Math.round((t - ms(at)) / 60_000)) : null;
-    return { source, generated_at: at, age_min: age, stale: age == null || age > STALE_MIN };
+    const limit = (d && 'stale_after_min' in d && d.stale_after_min) || STALE_MIN;
+    return { source, generated_at: at, age_min: age, stale: age == null || age > limit };
   });
 
   const jobs: Placed[] = boxes.flatMap(b => (b.jobs ?? []).map(j => ({ ...j, box: b.box })));
@@ -216,8 +249,9 @@ export function buildBoard(docs: WorkBoardDoc[], now: Date = new Date()): Board 
       dead.push({ kind: 'chain', name: c.name, box: b.box, state: 'gave-up', why: c.last_line, at: iso(c.last_activity), issue: null });
     }
   }
-  const rank = { blocked: 0, 'gave-up': 1, stuck: 2, dead: 3, running: 4, done: 5 } as Record<string, number>;
-  dead.sort((a, b) => rank[a.state] - rank[b.state] || ms(b.at) - ms(a.at));
+  for (const b of boxes) for (const f of b.flags ?? []) dead.push(infraItem(f, b, gh));
+  const rank = { blocked: 0, billing: 1, 'gave-up': 2, stuck: 3, dead: 4, running: 5, done: 6 } as Record<string, number>;
+  dead.sort((a, b) => rank[a.state] - rank[b.state] || (b.eur_month ?? 0) - (a.eur_month ?? 0) || ms(b.at) - ms(a.at));
 
   // 3. Running
   const stuck = new Set(dead.filter(d => d.kind === 'job').map(d => `${d.box}:${d.name}`));

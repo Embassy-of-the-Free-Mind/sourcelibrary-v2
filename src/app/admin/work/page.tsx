@@ -75,6 +75,7 @@ function Sections({ b, now }: { b: Board; now: Date }) {
     b.hidden.older ? `${b.hidden.older} older than ${DEAD_WINDOW_H} h` : null,
   ].filter(Boolean);
   const finished = b.finished.slice(0, FINISHED_SHOWN);
+  const infraEur = b.dead.reduce((a, d) => a + (d.kind === 'infra' ? d.eur_month ?? 0 : 0), 0);
   return (
     <>
       <Section title="Waiting on you" count={b.waiting.length}>
@@ -90,10 +91,11 @@ function Sections({ b, now }: { b: Board; now: Date }) {
       </Section>
 
       <Section title="Dead or stuck" count={b.dead.length}>
+        {infraEur > 0 && <p className="text-xs text-red-700">Flagged servers: ≈ €{Math.round(infraEur)}/month. Nothing is stopped automatically — lease, label role=permanent, or delete.</p>}
         {b.dead.length === 0 ? <Empty>Nothing dead.</Empty> : (
           <List>
             {b.dead.map(d => (
-              <Item key={`${d.box}:${d.name}`} head={d.name} tone={d.state === 'stuck' ? 'amber' : 'red'}
+              <Item key={`${d.box}:${d.kind}:${d.name}`} head={d.name} tone={d.state === 'stuck' ? 'amber' : 'red'}
                 meta={<>{d.box} · {ago(d.at, now)}</>}
                 text={`${d.why}${d.issue ? ` — #${d.issue.number} ${d.issue.title ?? ''}` : ''}`}
                 href={d.issue?.url ?? null} />
