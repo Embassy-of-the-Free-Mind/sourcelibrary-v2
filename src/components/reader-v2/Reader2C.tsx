@@ -1722,9 +1722,11 @@ function LibrarianPanel({ page, book, messages, onMessages }: {
  * switch on (it used to follow the cursor uninvited).
  */
 function ScanControls({
-  zoom, onZoomStep, onZoomReset, lensOn, onToggleLens, onExpand, compact = false,
+  zoom, onZoomStep, onZoomReset, lensOn, onToggleLens, onExpand, compact = false, maxZoom = SCAN_ZOOM_MAX,
 }: {
   zoom: number;
+  /** Where this page's zoom stops (ScanViewer's onMaxZoom). */
+  maxZoom?: number;
   onZoomStep: (dir: 1 | -1) => void;
   onZoomReset: () => void;
   lensOn: boolean;
@@ -1785,7 +1787,7 @@ function ScanControls({
       >
         {Math.round(zoom * 100)}%
       </button>
-      <button type="button" aria-label={t.zoomIn} disabled={zoom >= SCAN_ZOOM_STEPS[SCAN_ZOOM_STEPS.length - 1]}
+      <button type="button" aria-label={t.zoomIn} disabled={zoom >= maxZoom - 0.001}
         onClick={() => onZoomStep(1)} className={btn} style={btnStyle}>
         <ZoomIn size={14} />
       </button>
@@ -1841,6 +1843,7 @@ function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext, s
   const t = strings.toolbar;
   // Zoom resets per page, keyed rather than set from an effect.
   const [zoomByPage, setZoomByPage] = useState<{ id: string; zoom: number }>({ id: page.id, zoom: 1 });
+  const [zoomMax, setZoomMax] = useState(SCAN_ZOOM_MAX);
   const zoom = zoomByPage.id === page.id ? zoomByPage.zoom : 1;
   const setZoom = useCallback((next: number | ((z: number) => number)) => {
     setZoomByPage(prev => {
@@ -1909,7 +1912,7 @@ function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext, s
       </div>
       <div className="flex-1 min-h-0 px-3 py-3" onTouchStart={onLbTouchStart} onTouchEnd={onLbTouchEnd}>
         <ScanViewer
-          page={page} book={book} zoom={zoom} onZoomChange={setZoom} fullRes
+          page={page} book={book} zoom={zoom} onZoomChange={setZoom} onMaxZoom={setZoomMax} fullRes
           srcOverride={srcOverride} altOverride={altOverride}
           onEdgePageTurn={dir => { if (dir === 'next') { if (hasNext) onNext(); } else if (hasPrev) onPrev(); }}
         />
@@ -1921,8 +1924,8 @@ function ScanLightbox({ page, book, onClose, onPrev, onNext, hasPrev, hasNext, s
         <button type="button" onClick={() => setZoom(1)} disabled={zoom === 1}
           className="min-w-[56px] h-10 font-sans text-[12px] tabular-nums transition-colors hover:bg-[rgba(253,252,249,0.12)] disabled:cursor-default"
           style={{ color: onInk(0.7) }}>{Math.round(zoom * 100)}%</button>
-        <button type="button" aria-label={strings.panes.zoomIn} disabled={zoom >= SCAN_ZOOM_MAX}
-          onClick={() => setZoom(z => SCAN_ZOOM_STEPS[Math.min(SCAN_ZOOM_STEPS.length - 1, SCAN_ZOOM_STEPS.indexOf(z) + 1)] ?? z)}
+        <button type="button" aria-label={strings.panes.zoomIn} disabled={zoom >= zoomMax - 0.001}
+          onClick={() => setZoom(z => Math.min(zoomMax, SCAN_ZOOM_STEPS[Math.min(SCAN_ZOOM_STEPS.length - 1, SCAN_ZOOM_STEPS.indexOf(z) + 1)] ?? z))}
           className={navBtn} style={{ color: onInk(0.7) }}><ZoomIn size={16} /></button>
       </div>
     </div>
@@ -2479,6 +2482,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   // Scan zoom + lens — controlled from the pane header, never from buttons
   // over the scan itself. The lens is off until asked for.
   const [scanZoom, setScanZoom] = useState(1);
+  const [scanZoomMax, setScanZoomMax] = useState(SCAN_ZOOM_MAX);
   const [lensOn, setLensOn] = useState(false);
   useEffect(() => { setScanZoom(1); }, [r.currentPageId]);
   // Any zoom holds the pane sync off briefly: the scan's scroll is being moved
@@ -2491,7 +2495,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const zoomStep = (dir: 1 | -1) => {
     const idx = SCAN_ZOOM_STEPS.findIndex(s => Math.abs(s - scanZoom) < 0.01);
     const next = SCAN_ZOOM_STEPS[Math.min(SCAN_ZOOM_STEPS.length - 1, Math.max(0, (idx === -1 ? 0 : idx) + dir))];
-    changeZoom(next);
+    changeZoom(Math.min(next, scanZoomMax));
   };
 
   // Filmstrip visibility — toggled from the bottom of the rail, persisted.
@@ -3640,6 +3644,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 right={
                   <ScanControls
                     zoom={scanZoom}
+                    maxZoom={scanZoomMax}
                     onZoomStep={zoomStep}
                     onZoomReset={() => changeZoom(1)}
                     lensOn={lensOn}
@@ -3663,6 +3668,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   book={r.book}
                   zoom={scanZoom}
                   onZoomChange={changeZoom}
+                  onMaxZoom={setScanZoomMax}
                   lensOn={lensOn}
                   scrollRef={scanScrollRef}
                   onScroll={() => syncFrom('scan')}
@@ -4039,6 +4045,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 <ScanControls
                   compact
                   zoom={scanZoom}
+                  maxZoom={scanZoomMax}
                   onZoomStep={zoomStep}
                   onZoomReset={() => changeZoom(1)}
                   lensOn={lensOn}
@@ -4067,7 +4074,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               >
                 <ScanViewer
                   page={r.currentPage} book={r.book} zoom={scanZoom} onZoomChange={changeZoom} lensOn={lensOn}
-                  wheelZooms={false}
+                  wheelZooms={false} onMaxZoom={setScanZoomMax}
                   srcOverride={witnessSrc}
                   nativeSrcOverride={witnessNativeSrc}
                   altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
