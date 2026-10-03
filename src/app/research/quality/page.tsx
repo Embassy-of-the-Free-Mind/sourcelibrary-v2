@@ -114,7 +114,7 @@ const CHAIN_ROWS: { instrument: string; cells: [Cover, string][] }[] = [
     cells: [
       ['no', 'none'],
       ['part', 'decision-grade in a few strata only'],
-      ['part', 'Tibetan against 84000 only'],
+      ['part', 'judged against published translations: 321 pages in 14 languages, and the Tengyur'],
     ],
   },
   {
@@ -626,6 +626,8 @@ const GLANCE: { link: string; rows: GlanceRow[] }[] = [
       { test: 'Accuracy, Latin print, Flash-Lite', against: 'Published e-texts', result: `Median character error ${pc1(LATIN_LITE.median)} (CI ${pc1(LATIN_LITE.ci[0])}–${pc1(LATIN_LITE.ci[1])}), ${LATIN_LITE.books} books`, grade: 'decision-grade', note: [1] },
       { test: 'Printed numbers, English 1800–1930', against: 'Crops read blind by a model', result: 'Flash-Lite 1.8% wrong, Archive OCR 5.1%; 5,212 numbers', grade: 'directional', note: [3] },
       { test: 'Two-read screen for garble', against: 'The judge’s garble flag', result: 'AUC 0.79–0.83; held out, finds 55–58% of garble, 28% of flags are garble', grade: 'exploratory', note: [4, 13] },
+      { test: 'Transcription as the cause of a bad translation', against: 'Scans read by a model', result: 'First cause on 16 of 22 low Greek pages; 6 of 20 in Sanskrit, Pali and Chinese; 1 of 10 in the vernaculars', bar: { k: 16, n: 22 }, barLabel: 'low Greek pages caused by the transcription', grade: 'exploratory', note: [19, 21, 20] },
+      { test: 'Open engine on Latin-script and Greek print', against: 'Published e-texts', result: 'PaddleOCR-VL worse than or tied with Flash-Lite in every cell; on Greek print catastrophic on 58 of 114 pages', grade: 'decision-grade', note: [28] },
       { test: 'Japanese, Sanskrit, Arabic, Korean, Persian, Ge’ez, Pali', against: 'No reference pages', result: 'Accuracy unknown', grade: 'not run', note: [2] },
     ],
   },
@@ -636,6 +638,8 @@ const GLANCE: { link: string; rows: GlanceRow[] }[] = [
       { test: 'Judge agrees with a second judge', against: 'Claude Sonnet, 107 pages', result: 'Sound or not: κ 0.56 (CI 0.32–0.76); 1–5 scale: weighted κ 0.73', grade: 'decision-grade', note: [13] },
       { test: 'Judge’s flags hold up on the scan', against: 'Scans read by a model', result: '20 of 21 flagged defects confirmed', bar: { k: 20, n: 21 }, barLabel: 'flags confirmed', grade: 'exploratory', note: [7, 13] },
       { test: 'Served pages the judge rates 4–5', against: 'The judge, 311 books', result: '89% (CI 85.5–92.5); 87–89% across weightings', bar: { p: 0.891, lo: 0.855, hi: 0.925 }, barLabel: 'pages rated faithful', grade: 'decision-grade', note: [6] },
+      { test: 'Served English against a published translation', against: 'Human translations, two model judges, 269 books in four tracks', result: 'Mean fidelity 3.6–4.4 of 5 by track: vernaculars 4.39, Latin 4.16, Greek 3.64, Sanskrit, Pali and Chinese 3.63 (Hebrew, Arabic and Persian 3.44, not yet merged)', grade: 'decision-grade', note: [18, 19, 20, 21] },
+      { test: 'Flash against Flash-Lite as translator', against: 'Human translations, same pages', result: 'Flash +0.21 to +0.40 of 5 in the four merged tracks; Flash-Lite against itself within ±0.05', grade: 'decision-grade', note: [18, 19, 20, 21] },
     ],
   },
   {
@@ -1134,7 +1138,7 @@ export default function ResearchQualityPage() {
           title="Does this English say what is printed on this leaf?"
           subtitle="How Source Library measures the quality of a page, and what each measurement can and cannot see"
         >
-          <p className="text-stone-400 text-sm mt-4">Working draft &middot; 1 October 2026</p>
+          <p className="text-stone-400 text-sm mt-4">Working draft &middot; updated 3 October 2026</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -1149,7 +1153,7 @@ export default function ResearchQualityPage() {
       </div>
 
       <article className="prose-content max-w-none">
-        {/* ── Abstract (Derek's draft, verbatim) ── */}
+        {/* ── Abstract (Derek's draft, verbatim, except the paragraph on published translations and the first sentence of the last, added 2026-10-03 for #5695) ── */}
         <section className="border-l-2 border-accent-rust pl-5 md:pl-6 mb-10">
           <h2 className="text-xs uppercase tracking-[0.16em] text-muted font-semibold mb-4">Abstract</h2>
           <p className="text-secondary leading-relaxed mb-4">
@@ -1162,10 +1166,13 @@ export default function ResearchQualityPage() {
             <strong className="text-primary">Translation.</strong> A source-grounded model judge (Claude Opus) rated one random page from each of 311 books. With planted controls passing, it rated 89% of pages faithful to their transcription (95% CI 85–92), and 71% for non-Latin scripts. The judge reads text only. A model check of 20 of those pages against their scans found two that showed a different page from the one transcribed. The judge could not have seen either.
           </p>
           <p className="text-secondary leading-relaxed mb-4">
+            <strong className="text-primary">Against published translations.</strong> On 321 pages in 14 languages we also scored the served English against a published human translation of the same passage, with two model judges. It scores 4.4 of 5 on German, French, Italian, Dutch and Spanish print, 4.2 on Latin, 3.6 on Greek and on Sanskrit, Pali and Chinese, and 3.4 on Hebrew, Arabic and Persian. In Greek, Hebrew, Arabic and Persian most low pages begin with a wrong transcription, which no translator recovers. Flash translates more faithfully than Flash-Lite in every language group, and since 3 October it translates new pages in Greek, Hebrew, Aramaic, Arabic, Persian, Sanskrit, Pali and Chinese.
+          </p>
+          <p className="text-secondary leading-relaxed mb-4">
             <strong className="text-primary">By language.</strong> The picture is uneven. Latin, English and German, two-thirds of translated pages, have measured transcription (0.6–5.3% character error on the current engine) and the judge rated 92–97% of their pages faithful. Greek, a tenth of the library, is the largest gap: 11% character error on the current engine (6.6% on Flash) and 75% rated faithful. French, Italian, Dutch and Spanish, about 13% of translated pages, have no transcription measurement at all, and most smaller languages have too few judged books to compare with each other. Chinese shows 19–25% character error, but against other editions of the same texts, so part of that may be variant characters rather than misreads. The grid below gives every language.
           </p>
           <p className="text-secondary leading-relaxed">
-            <strong className="text-primary">The missing part.</strong> None of these measurements involves a human reader. We preregister a standing panel of volunteers who read the source languages. Each is asked one question about one page drawn from the judge&rsquo;s own monthly sample. We will report how often the readers agree with the judge, what each side misses, and how many volunteers answer when asked.
+            <strong className="text-primary">The missing part.</strong> No person who reads the source language has yet checked any of these results. We preregister a standing panel of volunteers who read the source languages. Each is asked one question about one page drawn from the judge&rsquo;s own monthly sample. We will report how often the readers agree with the judge, what each side misses, and how many volunteers answer when asked.
           </p>
         </section>
 
@@ -1350,7 +1357,7 @@ export default function ResearchQualityPage() {
           </P>
           <h3 className="text-lg text-primary font-semibold mb-3">2.6 Translation of low-resource classical languages</h3>
           <P>
-            Parallel data for classical languages is thin and unevenly available. MITRA assembles 1.74 million parallel sentence pairs across Pali, Sanskrit, Buddhist Chinese and Tibetan and reports machine translation and retrieval results among these languages {cite('nehrdich2026')}. For Classical Chinese to English, Quinjica et al. {cite('quinjica2026')} test whether metrics built for modern languages detect errors, using minimal pairs that capture error types salient in scholarly use, and report that all metrics have limitations, with MetricX24 performing best of those tested. Human translations, such as those published by the 84000 project for the Tibetan canon {cite('84000')}, are the natural references where they exist; we use them for Tibetan. Our setting differs in that most of our pages have no human reference translation at all, and the judge must work from the transcription.
+            Parallel data for classical languages is thin and unevenly available. MITRA assembles 1.74 million parallel sentence pairs across Pali, Sanskrit, Buddhist Chinese and Tibetan and reports machine translation and retrieval results among these languages {cite('nehrdich2026')}. For Classical Chinese to English, Quinjica et al. {cite('quinjica2026')} test whether metrics built for modern languages detect errors, using minimal pairs that capture error types salient in scholarly use, and report that all metrics have limitations, with MetricX24 performing best of those tested. Human translations, such as those published by the 84000 project for the Tibetan canon {cite('84000')}, are the natural references where they exist; we use them for Tibetan and, since October 2026, for 14 more languages on a sample of 321 pages. Our setting differs in that most of our pages have no human reference translation at all, and the judge must work from the transcription.
           </P>
         </Section>
 
@@ -1364,6 +1371,12 @@ export default function ResearchQualityPage() {
           </P>
           <P>
             One narrower accuracy check reads the numbers. On English books printed 1800–1930, every printed number on which two engines disagreed was cropped from the page image and read blind by a model, with no engine&rsquo;s reading on the sheet. Of 5,212 printed numbers across 82 books, the Internet Archive&rsquo;s own OCR had 5.1% wrong (CI 3.8–7.4) and Flash-Lite 1.8% (CI 1.1–3.1). This is directional, and the reader of the crops was a model, not a person.<N n={3} />
+          </P>
+          <P>
+            Two comparisons on 3 October changed nothing in production, and both are reported because they could have. First, an open engine run on our own GPU, PaddleOCR-VL 1.6, was scored against published e-texts on 632 print pages, with the cells fixed before it ran. It was worse than or tied with Flash-Lite in every cell. On Greek print it was catastrophically wrong (over half the characters) on 58 of 114 pages, against 1 for Flash-Lite, writing polytonic Greek as fluent nonsense. On early print it dropped long s and abbreviation marks, and on some pages it invented text, among them a closing date of 2023 on a 17th-century play. Its failures read fluently, which makes them worse than visible garble. The print backlog stays on Flash-Lite.<N n={28} /> Second, a tighter wording of the OCR prompt&rsquo;s page-number and language tags (v20) was tested on 275 pages, three reads each. Version 19.1 already reads the printed page number exactly on 86% of the test pages and matches the catalogue language on 97%; the new wording changed neither, and it moved pages with show-through from the facing leaf both ways. Version 19.1 stays.<N n={29} />
+          </P>
+          <P>
+            Errors in the transcription also travel into the English. Scoring the translation against published human translations (Results, above) found the transcription to be the first cause of most bad pages in Greek, Hebrew, Arabic and Persian, and on Greek manuscripts no translator recovered the text. In those scripts the transcription limits the translation.<N n={19} />
           </P>
           <P>
             <strong>A screen where no reference exists.</strong> Reading a page a second time and comparing the two reads costs a tenth to a fifth of a cent per page. We tested it on 327 pages the translation judge (§4) had rated, one per book, using the judge&rsquo;s garble flag as the label: 32 pages were flagged. A fresh Flash-Lite read that agreed with the served text on less than 70% of its tokens flagged 70 pages, 20 of them garbled: precision 29%, recall 74%. A fresh Flash read gave 30% and 70%.<N n={4} /><N n={5} /> Those figures are flattering, because the 0.7 threshold was chosen on these same pages. Choosing the threshold on a random half and scoring it on the other half, repeated a thousand times, recall falls to 55% (lite) and 58% (Flash), and precision stays near 28%. A measure that needs no threshold says the same: a garbled page has a lower agreement than a sound one 79% of the time for the lite read (AUC 0.79, CI 0.70–0.88) and 83% for Flash (CI 0.77–0.89).<N n={13} /> The screen finds about half the garbled pages and mostly flags pages that are not. On Latin-script pages it does not separate at all (precision about 10%); 24 of the 30 garbled pages it could judge were in non-Latin scripts.<N n={4} />
@@ -1430,6 +1443,10 @@ export default function ResearchQualityPage() {
           </ul>
           <P>
             The two translation models differ mainly in the third kind. Flash added facts not on the page on 17 of the 21 pages, Flash-Lite on 4. On the other kinds they are close: 6 and 8 for page-boundary text, 4 and 2 for unreadable source. A separate paired run, which translated the same 304 pages with both models, points the same way. The judge flagged invention on 15.8% of Flash pages against 8.2% of Flash-Lite pages, with no measurable difference in the share rated 4 or 5.<N n={6} /> The invention rate above therefore overstates fabrication. Text with no source behind it was found on 6 of the 311 pages; page-boundary text on 14. An earlier pass over the same audit reached the same count of page-boundary imports (13).
+          </P>
+
+          <P>
+            <strong>Against a published translation.</strong> The judge above has no reference translation. For 321 pages in 14 languages, and for 113 sides of the Tengyur, we also scored the served English against a published human translation of the same passage, with the same kind of controls. The method and results are in <a href="#against-references" className="text-accent-rust hover:underline">Translation against published human translations</a>. In brief: Latin and vernacular print scores 4.2–4.4 of 5, Greek, Sanskrit, Pali and Chinese about 3.6, and Hebrew, Arabic and Persian 3.4. In Greek, Hebrew, Arabic and Persian most low pages start with a wrong transcription; in Sanskrit, Pali and Chinese most are the translator&rsquo;s. Flash is more faithful than Flash-Lite in every track, and no prompt lever tested beat the noise floor.<N n={17} />
           </P>
 
           <h3 id="note-facts" className="text-lg text-primary font-semibold mb-3 scroll-mt-24">Are the facts the notes add right?</h3>
@@ -1518,7 +1535,8 @@ export default function ResearchQualityPage() {
         <Section n={7} title="Limitations">
           <ul className="list-disc pl-6 text-secondary leading-relaxed mb-6 space-y-3">
             <li><strong>One sample, one judge.</strong> The audit is one draw of 311 pages, rated by one judge with one prompt. The by-language cells are mostly under 20 books, and the per-language rankings in Figure 5 are within each other&rsquo;s intervals for most pairs.</li>
-            <li><strong>The translation models are not compared.</strong> Pages were translated by whichever model the book went through, so model and book are confounded. The audit does not say which model translates better.<N n={2} /></li>
+            <li><strong>The audit does not compare the translation models.</strong> In the 311-page audit, pages were translated by whichever model the book went through, so model and book are confounded.<N n={2} /> The comparison against published translations does compare them, on the same pages, but only on works that have a published English translation.<N n={18} /></li>
+            <li><strong>A reference is one translator&rsquo;s reading.</strong> Where our English and the published translation differ in meaning, a judge sided with ours on some pages and with the reference on others. A score against a reference measures distance from that translator, not from the text.<N n={21} /></li>
             <li><strong>The screen was tuned on its own sample.</strong> The 0.7 threshold and the three-read classes were chosen on the same 327 pages they are reported on. Cross-validation on those pages lowers the recall from 70–74% to 55–58%, but it is not a replication on a new draw.<N n={4} /><N n={13} /></li>
             <li><strong>Many cells, no correction.</strong> The evidence table has 1,188 cells and Figure 5 has fifteen languages. We test no hypotheses and rank no languages. With this many intervals, some will miss their true value by chance alone, so a single cell that stands out should be re-measured before it is acted on.</li>
             <li><strong>&ldquo;By eye&rdquo; means a model reading an image.</strong> The leaf-identity counts, the flag precision and the number adjudication all rest on model readers of scans. That is stronger than a text-only check and weaker than a person.<N n={9} /></li>
@@ -1538,7 +1556,7 @@ export default function ResearchQualityPage() {
             Gemini sometimes refuses to output text that matches its training data (the <code>RECITATION</code> stop). These refusals cluster on the cleanest canonical print, so the pages they remove are the easiest ones. We report refusals per stratum as an outcome, and never drop them silently.
           </P>
           <P>
-            Translation has the same risk in two places. The translating model may reproduce a remembered published English translation instead of translating the page, and a modern published translation may be under copyright. We have not measured how often this happens. The judge may also know the canonical text and rate a translation against its memory rather than the transcription it was given. The swapped-page control shows that it reads the page it is given, but it does not rule out memory on famous texts. Readers holding the scan are the one check that is independent of any training data.
+            Translation has the same risk in two places. The translating model may reproduce a remembered published English translation instead of translating the page, and a modern published translation may be under copyright. We have not measured how often this happens. One indirect sign is absent: against published translations, famous texts did not score consistently higher than the rest (Latin 3.95 against 4.26, Greek 3.50 against 3.66), and on garbled Greek manuscripts of Thucydides and Lucian the English followed the garble, not the famous text.<N n={18} /><N n={19} /> The judge may also know the canonical text and rate a translation against its memory rather than the transcription it was given. The swapped-page control shows that it reads the page it is given, but it does not rule out memory on famous texts. Readers holding the scan are the one check that is independent of any training data.
           </P>
           <P>
             Publishing feeds future training. Once our pages and reference passages are public, later models may memorise them, and a benchmark built on our own corpus will drift upward without any real improvement. We keep a sealed reserve of benchmark pages whose reference text is never published, and we plan to mark the published dataset with a canary string so its presence in training data can be detected.
