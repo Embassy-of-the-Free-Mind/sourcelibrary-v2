@@ -106,7 +106,11 @@ export function isLatinScriptLanguage(language) {
  *
  * - BPH books: full flash (partner institution's manuscripts).
  * - Tibetan: full flash (#4742 — measured exception, see isTibetanBook).
- * - Everything else, INCLUDING other non-Latin scripts: flash-lite.
+ * - Greek, Hebrew/Aramaic, Arabic, Persian, Sanskrit, Pali, Chinese: full
+ *   flash (#5695, measured against published human translations — see
+ *   isFlashMeasuredLanguage).
+ * - Everything else (Latin-script languages, and non-Latin scripts nobody has
+ *   measured yet — Syriac, Japanese, Armenian, Russian, …): flash-lite.
  *
  * OCR keeps its non-Latin carve-out because flash-lite hallucinates when
  * VISUAL decoding is hard (#1726: a Bhutanese astrological text read as a
@@ -121,7 +125,26 @@ export function isLatinScriptLanguage(language) {
 export function getTranslateModelForBook(book) {
   if (book?.image_source?.provider === 'bph') return MODEL_FLASH;
   if (isTibetanBook(book)) return MODEL_FLASH;
+  if (isFlashMeasuredLanguage(book)) return MODEL_FLASH;
   return MODEL_LITE;
+}
+
+/**
+ * Languages where flash measurably beats lite at TRANSLATION, judged blind
+ * against published human translations (#5695, 2026-10-03; two Opus judges,
+ * controls passed, A-vs-A lite floor ≈ 0). Flash − lite fidelity on a 1–5
+ * scale: Greek +0.32 (75 pages; print +0.38, manuscripts 0.00 — there the
+ * OCR is the problem), Hebrew/Aramaic/Arabic/Persian +0.53 (52), Sanskrit/
+ * Pali/classical Chinese +0.40 (64; reversed statements 15 → 6 per 100 pages).
+ * Latin (+0.22) and the Latin-script vernaculars (+0.21) also gained, but
+ * stay on lite pending Derek's cost call (scripts/eval/DECISIONS.md).
+ * Matches the book's FIRST language label, so "Greek-Latin" and
+ * "Hebrew and Aramaic" route here and "Latin; Greek" does not.
+ */
+const FLASH_MEASURED_LANGUAGE = /^\s*(ancient\s+)?(greek|hebrew|heb|aramaic|arabic|persian|sanskrit|pali|chinese|classical\s+chinese)\b/i;
+
+export function isFlashMeasuredLanguage(book) {
+  return FLASH_MEASURED_LANGUAGE.test(String(book?.language ?? ''));
 }
 
 /**

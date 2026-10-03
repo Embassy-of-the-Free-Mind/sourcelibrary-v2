@@ -121,14 +121,28 @@ describe('translation routing parity (TS router vs .mjs router)', () => {
       expect(translateTs({ language })).toBe(MODEL_FLASH);
     }
     // Negative controls: a word that merely CONTAINS "tibetan" is not Tibetan.
-    for (const language of ['sino-tibetan', 'chinese; tibetan', 'tibetanish-unknown']) {
+    for (const language of ['sino-tibetan', 'latin; tibetan', 'tibetanish-unknown']) {
       expect(translateMjs({ language })).toBe(MODEL_LITE);
       expect(translateTs({ language })).toBe(MODEL_LITE);
     }
   });
 
-  it('routes every other non-BPH book to lite — Latin, non-Latin, unknown (#4759)', () => {
-    for (const language of ['latin', 'english', 'malay', ...NON_LATIN.filter((l) => l !== 'tibetan'), null, '', 'klingon']) {
+  it('routes the #5695-measured languages to full flash, by first label', () => {
+    for (const language of ['Greek', 'Ancient Greek', 'Greek-Latin', 'Hebrew and Aramaic', 'heb', 'arabic', 'Persian',
+      'Sanskrit', 'Pali', 'Chinese', 'Classical Chinese', 'Chinese; Chinese (script)']) {
+      expect(translateMjs({ language })).toBe(MODEL_FLASH);
+      expect(translateTs({ language })).toBe(MODEL_FLASH);
+    }
+    // Negative controls: a measured language that is not the FIRST label, and lookalikes.
+    for (const language of ['Latin; Greek', 'Latin, Greek', 'Judeo-Arabic', 'paliyan', 'greekish']) {
+      expect(translateMjs({ language })).toBe(MODEL_LITE);
+      expect(translateTs({ language })).toBe(MODEL_LITE);
+    }
+  });
+
+  it('routes every other non-BPH book to lite — Latin, unmeasured non-Latin, unknown (#4759)', () => {
+    const MEASURED = ['tibetan', 'greek', 'hebrew', 'arabic', 'chinese', 'sanskrit'];
+    for (const language of ['latin', 'english', 'malay', ...NON_LATIN.filter((l) => !MEASURED.includes(l)), null, '', 'klingon']) {
       expect(translateMjs({ language })).toBe(MODEL_LITE);
       expect(translateTs({ language })).toBe(MODEL_LITE);
     }
@@ -163,12 +177,13 @@ describe('OCR and translation routing DIFFER on purpose (#4759)', () => {
     expect(translateMjs(book)).toBe(MODEL_LITE);
   });
 
-  it('every non-Latin or unknown language splits (except Tibetan, #4742); every allowlisted language and BPH agree', () => {
-    for (const language of [...NON_LATIN.filter((l) => l !== 'tibetan'), 'malay', null, '']) {
+  it('every unmeasured non-Latin or unknown language splits; measured ones (#4742, #5695), allowlisted languages and BPH agree', () => {
+    const MEASURED = ['tibetan', 'greek', 'hebrew', 'arabic', 'chinese', 'sanskrit'];
+    for (const language of [...NON_LATIN.filter((l) => !MEASURED.includes(l)), 'malay', null, '']) {
       expect(translateTs({ language })).not.toBe(ocrTs({ language }));
     }
-    // Tibetan is flash on both sides — the measured exception, not a re-sync.
-    expect(translateTs({ language: 'tibetan' })).toBe(ocrTs({ language: 'tibetan' }));
+    // Measured languages are flash on both sides — measured exceptions, not a re-sync.
+    for (const language of MEASURED) expect(translateTs({ language })).toBe(ocrTs({ language }));
     for (const language of LATIN_SCRIPT_LANGUAGES as Set<string>) {
       expect(translateTs({ language })).toBe(ocrTs({ language }));
     }
