@@ -273,48 +273,47 @@ export function TraditionProgress({ rows, n }: { rows: TraditionProgressRow[]; n
 
 export function TengyurProgress({
   n,
-  volumes,
-  pilotVolumes,
+  perVolume,
   pagesImaged,
   pagesWithText,
-  pilotPages,
-  pilotUsd,
-  fullUsd,
+  pagesTranslated,
+  spendUsd,
 }: {
   n: number;
-  volumes: number;
-  pilotVolumes: number;
+  /** [volume, pages with text, pages with a draft English], in volume order */
+  perVolume: [number, number, number][];
   pagesImaged: number;
   pagesWithText: number;
-  pilotPages: number;
-  pilotUsd: number;
-  fullUsd: number;
+  pagesTranslated: number;
+  spendUsd: number;
 }) {
+  // A volume is drafted when ≥ 95% of its pages with text have English (blank and refused pages never will).
+  const stateOf = ([, text, tr]: [number, number, number]) => (text && tr >= 0.95 * text ? 'done' : tr > 0 ? 'partly' : 'none');
+  const drafted = perVolume.filter((v) => stateOf(v) === 'done').length;
+  const partly = perVolume.filter((v) => stateOf(v) === 'partly').length;
+  const COLOR = { done: ENGLISH, partly: `${ENGLISH}66`, none: '#d6d3d1' } as const;
+  const TITLE = { done: 'draft English for the whole volume', partly: 'draft English for part of the volume', none: 'imported and aligned, not yet translated' } as const;
   const stages = [
     { n: fmt(pagesImaged), label: 'page images imported from BDRC (W23703)' },
     { n: fmt(pagesWithText), label: 'pages carrying the Esukhia public-domain text, aligned folio by folio' },
-    { n: fmt(pilotPages), label: `pages drafted in English in the ${pilotVolumes}-volume pilot, for $${pilotUsd.toFixed(2)}` },
-    { n: `≈ $${fmt(fullUsd)}`, label: 'to draft all 213 volumes at the pilot’s measured cost per page' },
+    { n: fmt(pagesTranslated), label: `pages with a draft English translation, for $${fmt(Math.round(spendUsd))} in model costs` },
+    { n: `${drafted} / ${perVolume.length}`, label: 'volumes drafted in full; every page is an unreviewed machine draft' },
   ];
   return (
     <Figure
       n={n}
       title="The Derge Tengyur, volume by volume"
-      caption={`Each square is one of the ${volumes} volumes we imported. All are held from public view until their English has been checked; the ${pilotVolumes} teal squares are the pilot volumes, one from each major section, whose first pages were drafted to measure real cost and quality before the full run.`}
+      caption={`Each square is one of the ${perVolume.length} volumes we imported, in volume order. All are held from public view until their English has been checked. ${drafted} have a draft English translation for the whole volume${partly ? ` and ${partly} for part of it` : ''}.`}
     >
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(14px,1fr))] gap-[3px] max-w-xl" role="img" aria-label={`${volumes} volumes, ${pilotVolumes} in the translation pilot`}>
-        {Array.from({ length: volumes }, (_, i) => (
-          <div
-            key={i}
-            className="aspect-square rounded-[2px]"
-            style={{ backgroundColor: i < pilotVolumes ? ENGLISH : '#d6d3d1' }}
-            title={i < pilotVolumes ? 'pilot volume: first pages drafted in English' : 'imported, text aligned, awaiting translation'}
-          />
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(14px,1fr))] gap-[3px] max-w-xl" role="img" aria-label={`${perVolume.length} volumes, ${drafted} drafted in English${partly ? `, ${partly} in part` : ''}`}>
+        {perVolume.map((v) => (
+          <div key={v[0]} className="aspect-square rounded-[2px]" style={{ backgroundColor: COLOR[stateOf(v)] }} title={`vol. ${v[0]}: ${TITLE[stateOf(v)]}`} />
         ))}
       </div>
       <div className="font-body text-xs text-stone-600 mt-3">
-        <Swatch style={{ backgroundColor: ENGLISH }} label="translation pilot" />
-        <Swatch style={{ backgroundColor: '#d6d3d1' }} label="imported and aligned, not yet translated" />
+        <Swatch style={{ backgroundColor: COLOR.done }} label="drafted in English" />
+        {partly > 0 && <Swatch style={{ backgroundColor: COLOR.partly }} label="partly drafted" />}
+        <Swatch style={{ backgroundColor: COLOR.none }} label="imported and aligned, not yet translated" />
       </div>
       <ol className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-px bg-stone-200 border border-stone-200 rounded-sm mt-6">
         {stages.map((s, i) => (
