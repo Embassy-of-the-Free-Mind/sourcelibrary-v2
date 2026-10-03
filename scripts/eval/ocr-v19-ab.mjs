@@ -28,7 +28,7 @@ import { fileURLToPath } from 'node:url';
 import { bodyText, declaredBlank, TAGGED } from './blank-page-study.mjs';
 import { makeRng, binomTwoSided, mean } from './lib/paired-stats.mjs';
 import {
-  SEED, MODEL, V04, REF_5250, readJsonl, writeJsonl, r4, shuffle, letters, makeResolver, loadPrompts,
+  SEED, MODEL, V04, REF_5250, readJsonl, writeJsonl, r4, shuffle, letters, makeResolver, loadPrompts, md5, LANGUAGE_INSTRUCTION, BAD_LANG,
   stageBuild, stageSubmit, stagePoll, runOutcomes, wilson, quantile, median, sd,
 } from './ocr-v18-ab.mjs';
 
@@ -540,7 +540,347 @@ function stageScore191() {
   console.log(`examples: ${JSON.stringify(examples.reduce((a, e) => ((a[e.kind] = (a[e.kind] || 0) + 1), a), {}))}`);
 }
 
+// ───────────────────────────── v20 tags (PREREGISTRATION-ocr-v20-tags.md) ─────────────────────────────
+// Four fresh arms (D = v19.1, D2 = v19.1 again, E = v19.1 + tag wording, F = E − the "too cautious" sentence) on the
+// v19 run's 195 pages plus two new strata: PN (printed page numbers) and LG (language labels).
+const V20 = {
+  work: opt('work20', '/root/claude-jobs/ocr-v20-work'), arms: ['D', 'D2', 'E', 'F'], k: K, jobName: 'ocr-v20-tags-4195', endpoint: 'eval/ocr-v20-tags-4195', capUsd: 8,
+  base: path.join(__dirname, '../../prompts/ocr/standard-ocr-v19-1-candidate.md'), baseMd5: '9d8f959e053491362b2c4acec1e20c9a',
+  E: path.join(__dirname, '../../prompts/ocr/standard-ocr-v20-E-candidate.md'), F: path.join(__dirname, '../../prompts/ocr/standard-ocr-v20-F-candidate.md'),
+  v19pages: opt('v19pages', F('pages.jsonl')), v19images: opt('v19images', F('images.jsonl')),
+  keyCheck: path.join(__dirname, 'dataset/ocr-v20-pn-key-check.jsonl'),
+  results: path.join(__dirname, 'results/ocr-v20-tags-2026-10.json'), resultsDir: path.join(__dirname, 'results/ocr-v20-tags-2026-10'),
+};
+const H = (n) => path.join(V20.work, n);
+
+/** Replace exactly once, or throw (ocr-prompt-v17-lacuna.mjs's rule: a prompt edit that misses is worse than one that fails). */
+function once(text, find, replace, label) {
+  const n = text.split(find).length - 1;
+  if (n !== 1) throw new Error(`[${label}] anchor matched ${n}x, expected 1: ${find.slice(0, 100)}`);
+  return text.replace(find, replace);
+}
+const V20_EDITS = [
+  ['item 6 line 1', 'Transcribe this historical manuscript page to Markdown.', 'Transcribe this historical page to Markdown.'],
+  ['item 6 context', 'transcribing public domain manuscripts (16th-18th century) from institutional archives', 'transcribing public domain books and manuscripts from institutional archives'],
+  ['item 4 language', '- <language>X</language> — the detected language of this page (REQUIRED — always identify the language)',
+    '- <language>X</language> — the primary language of this page\'s text, by its standard English name (REQUIRED). Examples: Latin, German, Ancient Greek, Hebrew, Arabic, Persian, Ottoman Turkish, Punjabi, Sanskrit, Classical Chinese, Japanese. Name the LANGUAGE, never the script or writing system (Punjabi, not Gurmukhi; Persian, not Arabic script; Japanese, not Kanji). Give ONE language: the one most of the text is in.'],
+  ['item 6 script', '- <script>printed|handwritten|mixed</script> — whether the text is typeset, handwritten, or mixed (REQUIRED)',
+    '- <script>printed|handwritten|mixed</script> — how the text was made (REQUIRED). printed = set in type, cut on a woodblock (xylograph), engraved or lithographed; handwritten = written by hand, including text brush-written on pre-printed ruled paper or forms; mixed = both on this page'],
+  ['item 2 page-num', '- <page-num>N</page-num> — visible page/folio numbers (NOT in body text)',
+    '- <page-num>N</page-num> — the page or folio number printed or written on THIS page, exactly as it appears: arabic (123), roman (xiv), or a folio with its side (12r, 12v). Omit the tag if no number is visible. Never work it out from a neighbouring page, the scan order or the book\'s structure, and never use a chapter, section, plate or signature number (NOT in body text)'],
+  ['item 1 sig', '- <sig>X</sig> — printer\'s marks like A2, B1 (NOT in body text)', '- <sig>X</sig> — printer\'s signature marks, transcribed exactly as printed on THIS page (NOT in body text)'],
+];
+const V20_F_EDIT = ['item 5', ' If you are marking more than ~20% of words as unclear, you are being too cautious.', ''];
+
+function stageCandidates20() {
+  const base = fs.readFileSync(V20.base, 'utf8');
+  if (md5(base) !== V20.baseMd5) throw new Error(`v19.1 file md5 ${md5(base)} != ${V20.baseMd5}`);
+  let e = base;
+  for (const [label, a, b] of V20_EDITS) e = once(e, a, b, label);
+  const f = once(e, V20_F_EDIT[1], V20_F_EDIT[2], V20_F_EDIT[0]);
+  fs.writeFileSync(V20.E, e); fs.writeFileSync(V20.F, f);
+  console.log(`E md5 ${md5(e)} (${e.length} chars)  F md5 ${md5(f)} (${f.length} chars)  base ${base.length}`);
+}
+
+const LG_TARGETS = [
+  ['greek', /^(ancient |classical |koine |byzantine )?greek/i, 4], ['arabic', /^arabic/i, 3], ['persian', /^(persian|farsi)/i, 3], ['hebrew', /^hebrew/i, 3],
+  ['chinese', /^(classical |literary )?chinese/i, 3], ['japanese', /^japanese/i, 3], ['sanskrit', /^sanskrit/i, 3], ['punjabi', /^(punjabi|panjabi)/i, 2],
+  ['ottoman', /^ottoman/i, 2], ['armenian', /^armenian/i, 2], ['slavonic', /^(old church slavonic|church slavonic|russian)/i, 2],
+  ['mixed', /,/, 5], ['latin', /^latin$/i, 2], ['german', /^german$/i, 2], ['french', /^french$/i, 1],
+];
+const PN_TARGET = { online: 30, misread: 20 };
+
+async function stageDraw20() {
+  fs.mkdirSync(V20.work, { recursive: true });
+  const { withMongo } = await import('../lib/mongo.mjs');
+  const { pageNumberBreaks, pageNumMisreads, parsePageNum, NON_TEXT_TYPES } = await import('../lib/page-integrity.mjs');
+  const { toLanguageCodes } = await import('../lib/language-normalize.mjs');
+  const core = readJsonl(V20.v19pages);
+  const prior = JSON.parse(fs.readFileSync(RESULTS_JSON, 'utf8')).per_page.map((p) => `${p.stratum}:${p.uid}`).sort();
+  if (JSON.stringify(prior) !== JSON.stringify(core.map((p) => `${p.stratum}:${p.uid}`).sort())) throw new Error('v19pages is not the v19 run\'s scored page set');
+  const log = { seed: SEED, pn: { books_scanned: 0, picked: { online: 0, misread: 0 } }, lg: {}, skipped: {} };
+  const skip = (stratum, reason, what) => ((log.skipped[stratum] ||= []).push({ reason, ...what }));
+  const used = new Set(core.map((p) => p.book_id));
+  const out = [];
+  const rng = makeRng(SEED);
+  await withMongo(async (db) => {
+    const resolve = makeResolver(db, skip);
+    // PN: seeded order over every eligible book id (no $sample: it cannot be seeded)
+    const ids = (await db.collection('books').find({ visible: true, pages_count: { $gte: 60, $lte: 800 } }, { projection: { id: 1, language: 1 } }).toArray())
+      .filter((b) => b.id && !BAD_LANG.test(String(b.language || ''))).map((b) => b.id).sort();
+    const order = shuffle(ids, rng);
+    for (const bid of order) {
+      if (log.pn.picked.online >= PN_TARGET.online && log.pn.picked.misread >= PN_TARGET.misread) break;
+      if (used.has(bid) || log.pn.books_scanned >= 600) continue;
+      log.pn.books_scanned++;
+      const pages = await db.collection('pages').find({ book_id: bid }, { projection: { page_number: 1, page_type: 1, 'ocr.data': 1 } }).sort({ page_number: 1 }).toArray();
+      const rows = pages.filter((p) => typeof p.ocr?.data === 'string').map((p) => ({ p: p.page_number, ocr: p.ocr.data, type: p.page_type || null }));
+      if (rows.length < 40) continue;
+      const pnb = pageNumberBreaks(rows);
+      const okKinds = new Set(Object.entries(pnb.kinds).filter(([k, v]) => (k === 'arabic' || k === 'roman') && v.judged && v.rate === 1).map(([k]) => k));
+      if (!okKinds.size) continue;
+      const lo = rows[Math.floor(rows.length * 0.1)].p, hi = rows[Math.floor(rows.length * 0.9)].p;
+      const textish = (r) => r && !NON_TEXT_TYPES.has(r.type) && r.p >= lo && r.p <= hi;
+      let cands = [];
+      if (log.pn.picked.misread < PN_TARGET.misread) {
+        const byP = new Map(rows.map((r) => [r.p, r]));
+        cands = pageNumMisreads(rows).filter((m) => okKinds.has(m.numbering) && textish(byP.get(m.p)) && m.expected > 0)
+          .map((m) => ({ page_number: m.p, key: { kind: m.numbering, value: m.expected, printed: m.expectedPrinted, source: 'misread', cause: m.cause, stored_tag: m.tag } }));
+      }
+      if (!cands.length && log.pn.picked.online < PN_TARGET.online) {
+        for (let i = 1; i + 1 < rows.length; i++) {
+          const [a, b, c] = [rows[i - 1], rows[i], rows[i + 1]];
+          if (!textish(b) || b.p - a.p !== 1 || c.p - b.p !== 1) continue;
+          const [va, vb, vc] = [a, b, c].map((r) => parsePageNum(r.ocr));
+          if (!va || !vb || !vc || !okKinds.has(vb.kind) || va.kind !== vb.kind || vc.kind !== vb.kind || vb.span !== 1) continue;
+          if (vb.value - va.value !== 1 || vc.value - vb.value !== 1) continue;
+          cands.push({ page_number: b.p, key: { kind: vb.kind, value: vb.value, printed: (b.ocr.match(/<page-num>([\s\S]*?)<\/page-num>/i) || [])[1]?.trim(), source: 'online' } });
+        }
+      }
+      if (!cands.length) continue;
+      const pick = cands[Math.floor(rng() * cands.length)];
+      const row = await resolve('PN', { book_id: bid, page_number: pick.page_number }, { key: pick.key });
+      if (!row) continue;
+      out.push(row); used.add(bid); log.pn.picked[pick.key.source]++;
+      if (out.length % 10 === 0) console.log(`  PN ${JSON.stringify(log.pn.picked)} after ${log.pn.books_scanned} books`);
+    }
+    // LG: per target, seeded order over matching books; one interior text page with > 400 chars of stored OCR
+    const all = await db.collection('books').find({ visible: true, pages_count: { $gt: 20 } }, { projection: { id: 1, language: 1, languages: 1, pages_count: 1 } }).toArray();
+    for (const [name, re, n] of LG_TARGETS) {
+      const pool = all.filter((b) => b.id && typeof b.language === 'string' && re.test(b.language.trim()) && !BAD_LANG.test(b.language) && (name === 'mixed' || !b.language.includes(',') || ['greek', 'arabic', 'persian', 'hebrew', 'chinese', 'japanese', 'sanskrit', 'punjabi', 'ottoman', 'armenian', 'slavonic'].includes(name)))
+        .map((b) => b.id).sort();
+      const byId = new Map(all.map((b) => [b.id, b]));
+      let got = 0; log.lg[name] = { pool: pool.length, picked: 0 };
+      for (const bid of shuffle(pool, rng)) {
+        if (got >= n) break;
+        if (used.has(bid)) continue;
+        const b = byId.get(bid);
+        const pages = await db.collection('pages').find({ book_id: bid, page_number: { $gte: Math.floor(b.pages_count * 0.2), $lte: Math.ceil(b.pages_count * 0.8) } }, { projection: { page_number: 1, page_type: 1, 'ocr.data': 1 } }).limit(60).toArray();
+        const ok = pages.filter((p) => typeof p.ocr?.data === 'string' && p.ocr.data.length > 400 && !NON_TEXT_TYPES.has(p.page_type));
+        if (!ok.length) continue;
+        const pg = ok[Math.floor(rng() * ok.length)];
+        const codes = [...new Set([...toLanguageCodes(b.language).codes, ...(Array.isArray(b.languages) ? b.languages.flatMap((x) => toLanguageCodes(x).codes) : [])])];
+        if (!codes.length) { skip('LG', 'catalogue-language-unresolved', { book_id: bid, language: b.language }); continue; }
+        const row = await resolve('LG', { book_id: bid, page_number: pg.page_number }, { lg_target: name, key_codes: codes, catalogue_language: b.language, catalogue_languages: b.languages || null });
+        if (!row) continue;
+        out.push(row); used.add(bid); got++;
+      }
+      log.lg[name].picked = got;
+    }
+  });
+  writeJsonl(H('pages.jsonl'), [...core, ...out]);
+  log.counts = [...core, ...out].reduce((a, r) => ((a[r.stratum] = (a[r.stratum] || 0) + 1), a), {});
+  log.skipped_counts = Object.fromEntries(Object.entries(log.skipped).map(([s, l]) => [s, l.reduce((a, x) => ((a[x.reason] = (a[x.reason] || 0) + 1), a), {})]));
+  fs.writeFileSync(H('draw-log.json'), JSON.stringify(log, null, 1));
+  console.log('draw:', JSON.stringify(log.counts), 'pn:', JSON.stringify(log.pn), 'lg:', JSON.stringify(log.lg), 'skipped:', JSON.stringify(log.skipped_counts));
+}
+
+/** PN key check by eye: write every misread page's image and 10 on-line pages' images to WORK/eye-pn/. */
+async function stageEye20() {
+  const sharp = (await import('sharp')).default;
+  const pn = readJsonl(H('pages.jsonl')).filter((p) => p.stratum === 'PN');
+  const rng = makeRng(SEED + 1);
+  const online = shuffle(pn.filter((p) => p.key.source === 'online'), rng).slice(0, 10).map((p) => p.uid);
+  const list = pn.filter((p) => p.key.source === 'misread' || online.includes(p.uid));
+  fs.mkdirSync(H('eye-pn'), { recursive: true });
+  for (const p of list) {
+    const res = await fetch(p.image, { signal: AbortSignal.timeout(60000) });
+    const buf = Buffer.from(await res.arrayBuffer());
+    await sharp(buf).resize({ width: 1400, height: 1400, fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85 }).toFile(H(`eye-pn/${p.uid}.jpg`));
+  }
+  writeJsonl(H('eye-pn/list.jsonl'), list.map((p) => ({ uid: p.uid, book_id: p.book_id, page_number: p.page_number, key: p.key })));
+  console.log(`eye-pn: ${list.length} images (misread ${list.filter((p) => p.key.source === 'misread').length}, online ${online.length})`);
+}
+
+async function stageBuild20() {
+  const checked = fs.existsSync(V20.keyCheck) ? readJsonl(V20.keyCheck) : null;
+  if (!checked) throw new Error(`${V20.keyCheck} missing: check the PN keys by eye first (pre-registration)`);
+  const bad = new Set(checked.filter((c) => c.uid && !c.key_ok).map((c) => c.uid));
+  const all = readJsonl(H('pages.jsonl'));
+  const pages = all.filter((p) => !(p.stratum === 'PN' && bad.has(p.uid)));
+  fs.writeFileSync(H('pages-built-from.json'), JSON.stringify({ drawn: all.length, dropped_pn_bad_key: [...bad] }, null, 1));
+  // stageBuild reads WORK/pages.jsonl: keep the drawn file aside, build from the checked set
+  if (!fs.existsSync(H('pages-drawn.jsonl'))) fs.copyFileSync(H('pages.jsonl'), H('pages-drawn.jsonl'));
+  writeJsonl(H('pages.jsonl'), pages);
+  const sub = (t) => t.replace('{language_instruction}', LANGUAGE_INSTRUCTION).replace('{language}', '');
+  const arm = (file) => { const c = fs.readFileSync(file, 'utf8'); return { text: sub(c), source: path.relative(path.join(__dirname, '../..'), file), content_hash: md5(c) }; };
+  const D = arm(V20.base);
+  if (D.content_hash !== V20.baseMd5) throw new Error('v19.1 file changed');
+  const { withMongo } = await import('../lib/mongo.mjs');
+  await withMongo(async (db) => {
+    const live = await db.collection('prompts').findOne({ type: 'ocr', is_default: true });
+    if (live?.content_hash !== V20.baseMd5) throw new Error(`live OCR default is ${live?.version} (${live?.content_hash}), not v19.1`);
+  });
+  await stageBuild({ ...V20, prompts: { D, D2: D, E: arm(V20.E), F: arm(V20.F) } });
+  const before = new Map(readJsonl(V20.v19images).map((m) => [m.uid, m.image_hash]));
+  const changed = readJsonl(H('images.jsonl')).filter((m) => !m.fetch_error && before.has(m.uid) && before.get(m.uid) !== m.image_hash).map((m) => m.uid);
+  fs.writeFileSync(H('image-drift.json'), JSON.stringify({ changed }, null, 1));
+  console.log(`core images changed since the v19 run: ${changed.length}`);
+}
+
+const unclearCount = (t) => ((t || '').match(/<unclear>/gi) || []).length;
+const tagVal = (t, tag) => ((t || '').match(new RegExp(`<${tag}>\\s*([^<]*?)\\s*<\\/${tag}>`, 'i')) || [])[1] ?? null;
+
+async function stageScore20() {
+  const { parsePageNum } = await import('../lib/page-integrity.mjs');
+  const { toLanguageCodes, sameLanguage } = await import('../lib/language-normalize.mjs');
+  const ARMS20 = V20.arms;
+  const pages = readJsonl(H('pages.jsonl'));
+  const imgs = new Map(readJsonl(H('images.jsonl')).map((m) => [m.uid, m]));
+  const live = pages.filter((p) => imgs.get(p.uid) && !imgs.get(p.uid).fetch_error);
+  const reads = new Map(readJsonl(H('reads.jsonl')).map((r) => [`${r.arm}:${r.uid}:${r.k}`, r]));
+  const rec = JSON.parse(fs.readFileSync(H('batch.json'), 'utf8'));
+  const est = JSON.parse(fs.readFileSync(H('estimate.json'), 'utf8'));
+  const key = (p) => `${p.stratum}:${p.uid}`;
+  const OUT20 = { ...OUTCOME_OF, PN: 'pn_correct', LG: 'lg_match' };
+  const per = new Map(); const runCounts = {}; const labels = {};
+  for (const p of live) {
+    const byArm = {};
+    for (const arm of ARMS20) {
+      const runs = [];
+      for (let k = 1; k <= K; k++) {
+        const r = reads.get(`${arm}:${p.uid}:${k}`);
+        const c = `${arm}:${r ? r.outcome : 'missing'}`; runCounts[c] = (runCounts[c] || 0) + 1;
+        if (!r) continue;
+        const o = runOutcomes(p, r); if (!o) continue;
+        const t = r.text || '';
+        o.unclear = unclearCount(t);
+        o.script = tagVal(t, 'script');
+        if (p.stratum === 'PN') {
+          const raw = tagVal(t, 'page-num'); const v = raw == null ? null : parsePageNum(`<page-num>${raw}</page-num>`);
+          o.pn_absent = raw == null ? 1 : 0;
+          o.pn_correct = v && v.kind === p.key.kind && v.value === p.key.value ? 1 : 0;
+          o.pn_raw = raw;
+        }
+        if (p.stratum === 'LG') {
+          const raw = tagVal(t, 'language'); const codes = raw ? toLanguageCodes(raw).codes : [];
+          o.lg_resolved = codes.length ? 1 : 0;
+          o.lg_match = codes.some((c) => p.key_codes.some((kc) => sameLanguage(c, kc))) ? 1 : 0;
+          (labels[arm] ||= {})[raw ?? '(none)'] = ((labels[arm] ||= {})[raw ?? '(none)'] || 0) + 1;
+          o.lg_raw = raw;
+        }
+        runs.push({ k, ...o });
+      }
+      const m = {};
+      for (const f of [OUT20[p.stratum], 'blank_recall', 'loop', 'declared_blank', 'body_letters', 'unclear', 'pn_absent', 'lg_resolved']) {
+        const v = runs.map((r) => r[f]).filter((x) => x != null); m[f] = v.length ? mean(v) : null;
+      }
+      if (p.stratum === 'S5') m.aligned_runs = runs.filter((r) => r.aligned).length;
+      byArm[arm] = { n_runs: runs.length, mean: m, raws: runs.map((r) => r.pn_raw ?? r.lg_raw ?? null), scripts: runs.map((r) => r.script), page_types: runs.map((r) => r.page_type) };
+    }
+    per.set(key(p), byArm);
+  }
+  const val = (p, arm, f) => per.get(key(p))[arm]?.mean[f];
+  /** x vs y; `lower` = pages where y is better (lower when lowerBetter, higher otherwise). */
+  function compare(ps, x, y, f, thr, lowerBetter = true) {
+    const both = ps.filter((p) => val(p, x, f) != null && val(p, y, f) != null);
+    const d = both.map((p) => (lowerBetter ? 1 : -1) * (val(p, x, f) - val(p, y, f)));
+    const better = d.filter((v) => v >= thr - 1e-9).length, worse = d.filter((v) => v <= -thr + 1e-9).length;
+    return { n: d.length, mean_gain: r4(mean(d)), median_gain: r4(median(d)), y_better: better, y_worse: worse, ties: d.length - better - worse, sign_p: r4(binomTwoSided(better, better + worse)) };
+  }
+  const floorOf = (ps, f) => { const aa = ps.filter((p) => val(p, 'D', f) != null && val(p, 'D2', f) != null).map((p) => Math.abs(val(p, 'D', f) - val(p, 'D2', f))); const q = aa.length ? quantile(aa, 0.9) : null; return { floor: r4(q), thr: q > 0 ? q : 1 / K }; };
+  const SP = {};
+  for (const S of [...STRATA, 'PN', 'LG']) {
+    const sp = live.filter((p) => p.stratum === S);
+    SP[S] = S === 'S5' ? sp.filter((p) => (per.get(key(p)).D.mean.aligned_runs || 0) >= 2) : sp;
+  }
+  const lowerBetter = { fabricated: true, false_blank: true, wcer: true, pn_correct: false, lg_match: false, lg_resolved: false };
+  const strata = {};
+  for (const S of [...STRATA, 'PN', 'LG']) {
+    const f = OUT20[S]; const el = SP[S]; const fl = floorOf(el, f); const ufl = floorOf(el, 'unclear');
+    const armMean = (a, g = f) => { const v = el.map((p) => val(p, a, g)).filter((x) => x != null); return v.length ? r4(mean(v)) : null; };
+    strata[S] = { outcome: f, n_pages: live.filter((p) => p.stratum === S).length, n_scored: el.length, floor_p90_abs_D_D2: fl.floor, page_threshold: r4(fl.thr), unclear_floor: ufl.floor,
+      arms: Object.fromEntries(ARMS20.map((a) => [a, { mean: armMean(a), unclear: armMean(a, 'unclear'), ...(S === 'PN' ? { absent: armMean(a, 'pn_absent') } : {}), ...(S === 'LG' ? { resolved: armMean(a, 'lg_resolved') } : {}) }])) };
+    for (const [x, y] of [['D', 'D2'], ['D', 'E'], ['D', 'F'], ['E', 'F']]) strata[S][`${x}_vs_${y}`] = compare(el, x, y, f, fl.thr, lowerBetter[f]);
+    if (S === 'LG') { const rf = floorOf(el, 'lg_resolved'); strata.LG.D_vs_E_resolved = compare(el, 'D', 'E', 'lg_resolved', rf.thr, false); strata.LG.D_vs_F_resolved = compare(el, 'D', 'F', 'lg_resolved', rf.thr, false); }
+    strata[S].E_vs_F_unclear_up = compare(el, 'E', 'F', 'unclear', ufl.thr, false); // y_better = pages where F marks MORE unclear
+  }
+  const WT = [...SP.W, ...SP.T]; const wfl = floorOf(WT, 'fabricated');
+  const pooled = { n_pages: WT.length, floor: wfl.floor, thr: r4(wfl.thr), arms: Object.fromEntries(ARMS20.map((a) => [a, r4(mean(WT.map((p) => val(p, a, 'fabricated')).filter((x) => x != null)))])) };
+  for (const [x, y] of [['D', 'D2'], ['D', 'E'], ['D', 'F'], ['E', 'F']]) pooled[`${x}_vs_${y}`] = compare(WT, x, y, 'fabricated', wfl.thr);
+  const loop = {};
+  for (const arm of ARMS20) { let k = 0, n = 0; for (const p of live) { const a = per.get(key(p))[arm]; if (!a?.n_runs) continue; n += a.n_runs; k += Math.round(a.mean.loop * a.n_runs); } loop[arm] = wilson(k, n); }
+
+  const ok = (...xs) => xs.every((x) => x != null && !Number.isNaN(x));
+  const guards = (X) => {
+    const c = pooled[`D_vs_${X}`], s3 = strata.S3, s5 = strata.S5, s5d = s5[`D_vs_${X}`];
+    const s5lim = Math.max(s5.floor_p90_abs_D_D2 || 0, 0.01);
+    return {
+      G1: { name: 'W ∪ T fabricated: not more pages worse than better', test: `${c.y_better} better / ${c.y_worse} worse / ${c.ties} tie (p ${c.sign_p})`, pass: c.y_worse <= c.y_better },
+      G2: { name: 'S3 false blank ≤ D + 0.05', test: `${X} ${s3.arms[X].mean} vs D ${s3.arms.D.mean}`, pass: ok(s3.arms[X].mean, s3.arms.D.mean) && s3.arms[X].mean <= s3.arms.D.mean + 0.05 + 1e-12 },
+      G3: { name: 'S5 windowed CER: median(X−D) ≤ max(floor, 0.01)', test: `median ${r4(-s5d.median_gain)} vs ${s5lim}`, pass: ok(s5d.median_gain) && -s5d.median_gain <= s5lim + 1e-12 },
+      G4: { name: 'loop: X Wilson lo ≤ D Wilson hi', test: `${loop[X].lo} ≤ ${loop.D.hi}`, pass: ok(loop[X].lo, loop.D.hi) && loop[X].lo <= loop.D.hi },
+    };
+  };
+  const gE = guards('E'), gF = guards('F');
+  const pn = strata.PN.D_vs_E, lgm = strata.LG.D_vs_E, lgr = strata.LG.D_vs_E_resolved;
+  const P1 = { name: 'PN: E better on more pages, sign p < 0.10', test: `${pn.y_better} better / ${pn.y_worse} worse (p ${pn.sign_p})`, pass: pn.y_better > pn.y_worse && pn.sign_p < 0.10 };
+  const P2 = { name: 'LG: match or resolved better on more pages, sign p < 0.10', test: `match ${lgm.y_better}/${lgm.y_worse} (p ${lgm.sign_p}); resolved ${lgr.y_better}/${lgr.y_worse} (p ${lgr.sign_p})`,
+    pass: (lgm.y_better > lgm.y_worse && lgm.sign_p < 0.10) || (lgr.y_better > lgr.y_worse && lgr.sign_p < 0.10) };
+  const gEpass = Object.values(gE).every((g) => g.pass), gFpass = Object.values(gF).every((g) => g.pass);
+  const verdictE = !gEpass ? `not E (${Object.entries(gE).filter(([, g]) => !g.pass).map(([k]) => k).join(', ')})` : P1.pass || P2.pass ? 'E' : 'E safe, not shown to help';
+  const s3u = strata.S3.E_vs_F_unclear_up, s5 = strata.S5;
+  const fs5d = s5.E_vs_F;
+  const Fc = {
+    guards: { name: 'F passes G1–G4 vs D', pass: gFpass },
+    s3_unclear_up: { name: 'S3: F marks more <unclear> than E on more pages than fewer', test: `${s3u.y_better} up / ${s3u.y_worse} down`, pass: s3u.y_better > s3u.y_worse },
+    s5_unclear: { name: 'S5 mean <unclear>: F ≤ E + floor', test: `F ${s5.arms.F.unclear} vs E ${s5.arms.E.unclear} + ${s5.unclear_floor}`, pass: ok(s5.arms.F.unclear, s5.arms.E.unclear) && s5.arms.F.unclear <= s5.arms.E.unclear + (s5.unclear_floor || 0) + 1e-12 },
+    s5_cer: { name: 'S5 windowed CER: median(F−E) ≤ max(floor, 0.01)', test: `median ${r4(-fs5d.median_gain)}`, pass: ok(fs5d.median_gain) && -fs5d.median_gain <= Math.max(s5.floor_p90_abs_D_D2 || 0, 0.01) + 1e-12 },
+  };
+  const verdictF = Object.values(Fc).every((c) => c.pass) ? 'F over E' : 'not F';
+
+  const distinct = Object.fromEntries(ARMS20.map((a) => [a, Object.keys(labels[a] || {}).length]));
+  const scriptDist = Object.fromEntries(ARMS20.map((a) => [a, live.filter((p) => p.stratum === 'PN' || p.stratum === 'LG').flatMap((p) => per.get(key(p))[a].scripts).reduce((o, s) => ((o[s ?? '(none)'] = (o[s ?? '(none)'] || 0) + 1), o), {})]));
+  const examples = [];
+  for (const p of live) {
+    const a = per.get(key(p)); const link = `https://sourcelibrary.org/book/${p.book_id}?page=${p.page_number}`;
+    if (p.stratum === 'PN' && a.E.mean.pn_correct > a.D.mean.pn_correct) examples.push({ kind: 'PN-fixed-by-E', link, key: p.key, D: a.D.raws, E: a.E.raws });
+    if (p.stratum === 'PN' && a.E.mean.pn_correct < a.D.mean.pn_correct) examples.push({ kind: 'PN-worse-under-E', link, key: p.key, D: a.D.raws, E: a.E.raws });
+    if (p.stratum === 'LG' && a.E.mean.lg_match > a.D.mean.lg_match) examples.push({ kind: 'LG-fixed-by-E', link, catalogue: p.catalogue_language, D: a.D.raws, E: a.E.raws });
+    if (p.stratum === 'LG' && a.E.mean.lg_match < a.D.mean.lg_match) examples.push({ kind: 'LG-worse-under-E', link, catalogue: p.catalogue_language, D: a.D.raws, E: a.E.raws });
+    if ((p.stratum === 'W' || p.stratum === 'T') && a.E.mean.fabricated > a.D.mean.fabricated) examples.push({ kind: 'WT-worse-under-E', link, D: a.D.mean.fabricated, E: a.E.mean.fabricated });
+    if (p.stratum === 'S3' && a.E.mean.false_blank > a.D.mean.false_blank) examples.push({ kind: 'S3-worse-under-E', link, D: a.D.mean.false_blank, E: a.E.mean.false_blank });
+  }
+  const actual = rec.jobs.reduce((s, j) => s + (j.cost_usd || 0), 0);
+  const result = {
+    issue: 4195, preregistration: 'scripts/eval/PREREGISTRATION-ocr-v20-tags.md', at: new Date().toISOString(), model: MODEL, k: K, seed: SEED,
+    arms: { D: 'v19.1', D2: 'v19.1 again', E: 'v19.1 + items 1, 2, 4, 6', F: 'E + item 5' }, prompts: est.prompts, generation: est.generation, image: est.image,
+    image_drift_since_v19: JSON.parse(fs.readFileSync(H('image-drift.json'), 'utf8')), pages_built_from: JSON.parse(fs.readFileSync(H('pages-built-from.json'), 'utf8')),
+    batch_jobs: rec.jobs.map(({ arm, job_name, requests, outcomes, in_tokens, out_tokens, cost_usd, terminal_state }) => ({ arm, job_name, requests, outcomes, in_tokens, out_tokens, cost_usd: r4(cost_usd), terminal_state })),
+    cost: { estimate_usd: est.usd, actual_usd: r4(actual), cap_usd: V20.capUsd }, run_outcomes: runCounts,
+    primary_W_T: pooled, strata, loop, lg_distinct_labels: distinct, lg_labels: labels, script_values_pn_lg: scriptDist,
+    decision: { E: { guards: gE, P1, P2, verdict: verdictE }, F: { clauses: Fc, verdict: verdictF } },
+    examples,
+    per_page: live.map((p) => ({ uid: p.uid, stratum: p.stratum, book_id: p.book_id, page_number: p.page_number, key: p.key || p.key_codes || null,
+      arms: Object.fromEntries(ARMS20.map((a) => [a, { n_runs: per.get(key(p))[a].n_runs, ...Object.fromEntries(Object.entries(per.get(key(p))[a].mean).map(([k, v]) => [k, r4(v)])), raws: per.get(key(p))[a].raws, page_types: per.get(key(p))[a].page_types }])) })),
+  };
+  fs.writeFileSync(V20.results, JSON.stringify(result, null, 1));
+  fs.mkdirSync(V20.resultsDir, { recursive: true });
+  fs.writeFileSync(path.join(V20.resultsDir, 'reads.jsonl.gz'), zlib.gzipSync(fs.readFileSync(H('reads.jsonl'))));
+  writeJsonl(path.join(V20.resultsDir, 'pages.jsonl'), pages.map(({ ref, ...p }) => ({ ...p, ref_chars: ref ? ref.length : undefined })));
+  fs.copyFileSync(H('draw-log.json'), path.join(V20.resultsDir, 'draw-log.json'));
+
+  console.log(`\n== OCR v20 tags (#4195) ${MODEL} k=${K} pages ${live.length} cost $${result.cost.actual_usd}`);
+  console.log('run outcomes:', JSON.stringify(runCounts));
+  console.log(`\n[W∪T] n=${WT.length} fabricated ${ARMS20.map((a) => `${a} ${pooled.arms[a]}`).join('  ')} thr ${pooled.thr}`);
+  for (const c of ['D_vs_D2', 'D_vs_E', 'D_vs_F', 'E_vs_F']) console.log(`   ${c}: ${JSON.stringify(pooled[c])}`);
+  for (const [S, s] of Object.entries(strata)) {
+    console.log(`\n[${S}] ${s.outcome} n=${s.n_scored}/${s.n_pages} floor ${s.floor_p90_abs_D_D2} thr ${s.page_threshold}`);
+    for (const a of ARMS20) console.log(`   ${a.padEnd(3)} ${JSON.stringify(s.arms[a])}`);
+    for (const c of Object.keys(s).filter((x) => x.includes('_vs_'))) console.log(`   ${c}: ${JSON.stringify(s[c])}`);
+  }
+  console.log('\nloop:', ARMS20.map((a) => `${a} ${loop[a].k}/${loop[a].n} [${loop[a].lo}, ${loop[a].hi}]`).join('  '));
+  console.log('LG distinct labels:', JSON.stringify(distinct));
+  console.log('\nE:'); for (const [i, c] of Object.entries({ ...gE, P1, P2 })) console.log(`  ${i}. ${c.pass ? 'PASS' : 'FAIL'} ${c.name}: ${c.test}`);
+  console.log(`  → ${verdictE}`);
+  console.log('F:'); for (const [i, c] of Object.entries(Fc)) console.log(`  ${i}. ${c.pass ? 'PASS' : 'FAIL'} ${c.name}${c.test ? ': ' + c.test : ''}`);
+  console.log(`  → ${verdictF}`);
+  console.log(`examples: ${JSON.stringify(examples.reduce((a, e) => ((a[e.kind] = (a[e.kind] || 0) + 1), a), {}))}`);
+}
+
 const STAGES = {
+  'v20-candidates': stageCandidates20, 'v20-draw': stageDraw20, 'v20-eye': stageEye20, 'v20-build': stageBuild20,
+  'v20-submit': () => stageSubmit(V20), 'v20-poll': async () => process.exit((await stagePoll(V20)) ? 0 : 1), 'v20-score': stageScore20,
   'v191-build': stageBuild191, 'v191-submit': () => stageSubmit(V191), 'v191-poll': async () => process.exit((await stagePoll(V191)) ? 0 : 1), 'v191-score': stageScore191,
   'screen-draw': stageScreenDraw, 'screen-build': stageScreenBuild,
   'screen-submit': () => stageSubmit(SCREEN_CFG), 'screen-poll': async () => process.exit((await stagePoll(SCREEN_CFG)) ? 0 : 1),
