@@ -502,7 +502,7 @@ export function ImprovementChart({ rows, n }: { rows: Improvement[]; n: number }
                   <a href={r.source} className="text-amber-800 underline underline-offset-2">Source</a>
                 </div>
               </div>
-              <div className="relative h-10 self-center" role="img" aria-label={`${r.measure}: ${r.before} before, ${r.after} after`}>
+              <div className="relative h-10 self-center mx-4" role="img" aria-label={`${r.measure}: ${r.before} before, ${r.after} after`}>
                 <div className="absolute inset-x-0 top-1/2 h-px bg-stone-200" />
                 <div className="absolute top-1/2 h-[3px] -translate-y-1/2 rounded" style={{ left: `${lo}%`, width: `${hi - lo}%`, backgroundColor: ENGLISH, opacity: 0.35 }} />
                 {([[r.before, BEFORE, 'before'], [r.after, ENGLISH, 'after']] as const).map(([v, c, k]) => (
@@ -516,7 +516,7 @@ export function ImprovementChart({ rows, n }: { rows: Improvement[]; n: number }
           );
         })}
       </div>
-      <div className="hidden md:flex justify-between font-body text-[11px] text-stone-400 mt-1 md:ml-[19.5rem]">
+      <div className="hidden md:flex justify-between font-body text-[11px] text-stone-400 mt-1 md:ml-[20.5rem] md:mr-4">
         <span>0</span>
         <span>50</span>
         <span>100</span>
