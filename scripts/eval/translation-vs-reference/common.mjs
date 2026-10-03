@@ -90,3 +90,33 @@ export function clipDeep(obj, reference) {
   if (obj && typeof obj === 'object') return Object.fromEntries(Object.entries(obj).map(([k, v]) => [k, clipDeep(v, reference)]));
   return obj;
 }
+
+// ── planted meaning change: one operation on the English, away from the page edges, outside tags ──────────
+const PLANT_RULES = [
+  { op: 'drop-negation', re: /\b(do|does|did|is|are|was|were|can|could|will|would|should|shall|must|may|has|have|had) not\b/gi, to: (m, aux) => aux },
+  { op: 'drop-negation', re: /\bcannot\b/gi, to: () => 'can' },
+  { op: 'drop-negation', re: /\b(\w+)n't\b/gi, to: (m, aux) => (/^(wo)$/i.test(aux) ? 'will' : /^(ca)$/i.test(aux) ? 'can' : aux) },
+  { op: 'never-always', re: /\bnever\b/gi, to: (m) => (m[0] === 'N' ? 'Always' : 'always') },
+  { op: 'add-negation', re: /\b(is|are|was|were|can|will|should|must|shall) (?!not\b)(?=[a-z])/g, to: (m, aux) => `${aux} not ` },
+  { op: 'number', re: /\b(two|three|four|five|six|seven|eight|nine|ten)\b/gi, to: (m) => {
+    const n = ['two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten']; const i = n.indexOf(m.toLowerCase()); const r = n[(i + 3) % n.length];
+    return m[0] === m[0].toUpperCase() ? r[0].toUpperCase() + r.slice(1) : r; } },
+  { op: 'number', re: /\b([1-9]\d{0,3})\b/g, to: (m) => String(Number(m) + (Number(m) > 3 ? 3 : 2)) },
+];
+/** One planted meaning change (negation dropped/added, never→always, a number). `pick` chooses among the usable sites, so the caller owns the seed. Shared by build-packet.mjs (judge gate) and backtrans/ (detector positive control). */
+export function plant(text, pick) {
+  const tagSpans = [...text.matchAll(/<[^>]*>[^<]*<\/[^>]*>|<[^>]*>/g)].map((m) => [m.index, m.index + m[0].length]);
+  const inTag = (i) => tagSpans.some(([a, b]) => i >= a && i < b);
+  const lo = text.length * 0.15, hi = text.length * 0.85;
+  for (const rule of PLANT_RULES) { // rules in order of how surely they reverse meaning; first rule with a usable site wins
+    const sites = [...text.matchAll(rule.re)].filter((m) => m.index >= lo && m.index <= hi && !inTag(m.index));
+    if (!sites.length) continue;
+    const m = pick(sites);
+    const rep = rule.to(...m);
+    if (rep === m[0]) continue;
+    const after = text.slice(0, m.index) + rep + text.slice(m.index + m[0].length);
+    const s = Math.max(0, m.index - 80), e = Math.min(text.length, m.index + m[0].length + 80);
+    return { text: after, op: rule.op, from: m[0], to: rep, at: m.index, before_context: text.slice(s, e), after_context: after.slice(s, e - m[0].length + rep.length) };
+  }
+  return null;
+}
