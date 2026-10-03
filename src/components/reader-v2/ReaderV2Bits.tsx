@@ -106,32 +106,16 @@ export function TranscriptProvenanceChip({ page }: { page: Pick<Page, 'ocr'> }) 
   const t = getReaderStrings(useLocale()).info;
   const prov = transcriptProvenance(page);
   if (!prov) return null;
+  // An open e-text says so in TextSourceLine, at the top of the pane body: in a
+  // narrow pane this chip truncates, and a truncated licence is no licence (#5571).
+  if (prov.kind === 'text_source') return null;
   const isArchive = prov.kind === 'ia';
-  const className = 'font-sans text-[10px] font-medium uppercase tracking-[0.12em] cursor-help truncate max-w-[14rem]';
-  const title = isArchive ? t.transcriptChipIaTitle(prov.agreement) : transcriptProvenanceLabel(prov, t, 'full');
-  // An open e-text's chip is its licence (#5571): it links to the licence itself.
-  const href = prov.kind === 'text_source' ? (prov.source.licenseUrl || prov.source.url) : null;
-  if (href) {
-    return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noreferrer"
-        data-transcript-provenance={prov.kind}
-        className={`${className} underline-offset-2 hover:underline`}
-        style={{ color: 'var(--text-muted)' }}
-        title={title}
-      >
-        {transcriptProvenanceLabel(prov, t, 'short')}
-      </a>
-    );
-  }
   return (
     <span
       data-transcript-provenance={prov.kind}
-      className={className}
-      style={{ color: isArchive ? 'var(--accent-gold-dark)' : prov.kind === 'text_source' ? 'var(--text-muted)' : 'var(--text-faint)' }}
-      title={title}
+      className="font-sans text-[10px] font-medium uppercase tracking-[0.12em] cursor-help truncate max-w-[14rem]"
+      style={{ color: isArchive ? 'var(--accent-gold-dark)' : 'var(--text-faint)' }}
+      title={isArchive ? t.transcriptChipIaTitle(prov.agreement) : transcriptProvenanceLabel(prov, t, 'full')}
     >
       {transcriptProvenanceLabel(prov, t, 'short')}
     </span>
@@ -139,22 +123,43 @@ export function TranscriptProvenanceChip({ page }: { page: Pick<Page, 'ocr'> }) 
 }
 
 /**
- * In the translation pane header: this English is a machine draft nobody has
- * reviewed (#5571). Toned like the Archive chip — a caution, not a credit — and
- * absent on corpus, Sefaria and hand-edited translations.
+ * First line of the transcription pane on a page whose text is an open e-text
+ * fitted to the scan (#5571): where the TEXT came from and its licence, which is
+ * not the scan's. A line rather than a header chip so it wraps instead of
+ * truncating in a narrow pane or on a phone.
  */
-export function MachineDraftChip({ page }: { page: Pick<Page, 'translation'> }) {
+export function TextSourceLine({ page }: { page: Pick<Page, 'ocr'> }) {
+  const t = getReaderStrings(useLocale()).info;
+  const prov = transcriptProvenance(page);
+  if (prov?.kind !== 'text_source') return null;
+  const href = prov.source.licenseUrl || prov.source.url;
+  return (
+    <p data-text-source="" className="font-sans text-[11.5px] leading-snug mb-3" style={{ color: 'var(--text-muted)' }}>
+      {t.transcriptChipTextSource(prov.source.name, prov.source.license)}
+      {href && (
+        <>
+          {' · '}
+          <a href={href} target="_blank" rel="noreferrer" className="underline underline-offset-2">
+            {prov.source.licenseUrl ? t.licenceLink : t.sourceLink}
+          </a>
+        </>
+      )}
+    </p>
+  );
+}
+
+/**
+ * First line of the translation pane when the English is a machine translation
+ * nobody has reviewed (#5571). Toned like the Archive-OCR caution; absent on
+ * corpus, Sefaria and hand-edited translations.
+ */
+export function MachineDraftLine({ page }: { page: Pick<Page, 'translation'> }) {
   const t = getReaderStrings(useLocale()).info;
   if (!isUnreviewedMachineTranslation(page)) return null;
   return (
-    <span
-      data-machine-draft=""
-      className="font-sans text-[10px] font-medium uppercase tracking-[0.12em] cursor-help truncate"
-      style={{ color: 'var(--accent-gold-dark)' }}
-      title={t.machineDraftNotice}
-    >
-      {t.machineDraftChip}
-    </span>
+    <p data-machine-draft="" className="font-sans text-[11.5px] leading-snug mb-3" style={{ color: 'var(--accent-gold-dark)' }}>
+      {t.machineDraftNotice}
+    </p>
   );
 }
 

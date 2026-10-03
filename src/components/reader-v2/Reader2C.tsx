@@ -46,9 +46,9 @@ import { usePairedEdition, PairedBadgeRow, PairedTranscriptionProse, PairedTrans
 import {
   CapsLabel, AiChip, CorpusChip, WitnessCaption, ReaderProse, ScanViewer, SCAN_ZOOM_STEPS, SCAN_ZOOM_MAX,
   resolveScanUrls, ViewToggleGroup, onInk, hasBlockquote, BAR_CONTROL, barControlStyle, useDialogFocus,
-  SURFACE, themeAttr, bookByline, TranscriptProvenanceChip, MachineDraftChip,
+  SURFACE, themeAttr, bookByline, TranscriptProvenanceChip, TextSourceLine, MachineDraftLine,
 } from './ReaderV2Bits';
-import { pageTextCorpus, translationCorpus, transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation } from '@/lib/text-provenance';
+import { pageTextCorpus, pageTextSource, translationCorpus, transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation } from '@/lib/text-provenance';
 import type { CdliWitness } from '@/lib/types/book';
 import { translationVerdict, type TranslationStateSource } from '@/lib/translation-completeness';
 
@@ -1133,13 +1133,18 @@ function TranslitProgress({ ocrLength }: { ocrLength: number }) {
  */
 function UnreliableTranscriptionNotice({
   book,
+  page,
   paired,
 }: {
   book: { language?: string | null };
+  page: Pick<Page, 'ocr'>;
   paired: boolean;
 }) {
   const flag = transcriptionReliability(book);
-  if (!flag || paired) return null;
+  // The flag is about OUR OCR of the script. A page whose text is an open
+  // e-text fitted to the scan (#5571) was not read by it, and saying it was
+  // contradicts the source line directly above.
+  if (!flag || paired || pageTextSource(page)) return null;
   return (
     <aside
       className="mb-5 rounded-md px-4 py-3 text-[13.5px] leading-snug"
@@ -3749,7 +3754,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   style={{ overscrollBehavior: 'contain' }}
                 >
                   <div key={r.currentPageId} className="rv2-page-in">
-                    <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />
+                    {!paired && <TextSourceLine page={r.currentPage} />}
+                    <UnreliableTranscriptionNotice book={r.book} page={r.currentPage} paired={!!paired} />
                     {paired
                       ? <PairedTranscriptionProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={17.5} />
                       : <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={17.5} />}
@@ -3820,7 +3826,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 {/* A corpus translation is the corpus editors' work, not AI's —
                     say so where the reader is looking (#4350). */}
                 {translationCorpusInfo && !paired && !showingSpanish && <CorpusChip corpus={translationCorpusInfo} />}
-                {!paired && !showingSpanish && <MachineDraftChip page={displayPage} />}
                 {editing && <CapsLabel style={{ color: 'var(--accent-rust)' }}>Editing</CapsLabel>}
               </PaneHeader>
               {traceActive && <TraceStatusLine status={traceStatus} showHint={!tracedOnce} />}
@@ -3835,7 +3840,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                   style={{ overscrollBehavior: 'contain' }}
                 >
                   <div key={r.currentPageId} className="rv2-page-in">
-                    {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />}
+                    {!paired && !showingSpanish && <MachineDraftLine page={displayPage} />}
+                    {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} page={r.currentPage} paired={!!paired} />}
                     {!paired && <ReadCautionNote page={r.currentPage} book={r.book} />}
                     {paired
                       ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={18.5} />
@@ -4133,7 +4139,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
               </div>
               <div data-reader-panel className="px-[22px] pt-4 pb-8">
-                <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />
+                {!paired && <TextSourceLine page={r.currentPage} />}
+                <UnreliableTranscriptionNotice book={r.book} page={r.currentPage} paired={!!paired} />
                 {paired
                       ? <PairedTranscriptionProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={16} />
                       : <ReaderProse suppressBlockquote={quotesDisagree} page={r.currentPage} book={r.book} kind="ocr" settings={r.settings} baseSize={16} />}
@@ -4167,7 +4174,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                     editing={editing}
                   />
                   {translationCorpusInfo && !paired && !showingSpanish && <CorpusChip corpus={translationCorpusInfo} />}
-                  {!paired && !showingSpanish && <MachineDraftChip page={displayPage} />}
                 </div>
                 <div className="flex items-center gap-1">
                   {traceShown && (
@@ -4204,7 +4210,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                     )}
                   </p>
                 )}
-                {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} paired={!!paired} />}
+                {!paired && !showingSpanish && <MachineDraftLine page={displayPage} />}
+                {!r.views.ocr && <UnreliableTranscriptionNotice book={r.book} page={r.currentPage} paired={!!paired} />}
                 {!paired && <ReadCautionNote page={r.currentPage} book={r.book} />}
                 {paired
                   ? <PairedTranslationProse paired={paired} page={r.currentPage} settings={r.settings} baseSize={16} />

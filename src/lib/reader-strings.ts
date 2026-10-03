@@ -347,12 +347,11 @@ export interface ReaderStrings {
     transcriptChipIaTitle: (agreement: number | null) => string;
     transcriptChipManual: string;
     transcriptChipCorpus: (shortName: string) => string;
-    /** Open e-text fitted to the scan (#5571): "Text: CBETA, CC BY-NC-SA 4.0". */
+    /** Open e-text fitted to the scan (#5571): "Text: CBETA, CC BY-NC-SA 4.0". The pane line passes the full name. */
     transcriptChipTextSource: (shortName: string, license: string) => string;
     /** Drawer form: full source name, version when known, licence. */
     textSourceTranscript: (name: string, license: string, version: string | null) => string;
-    /** Translation pane chip and drawer line for an unreviewed machine translation (#5571). */
-    machineDraftChip: string;
+    /** Translation pane line and drawer line for an unreviewed machine translation (#5571). */
     machineDraftNotice: string;
     licenceLink: string;
     sourceLink: string;
@@ -832,7 +831,6 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipCorpus: (shortName) => `Corpus: ${shortName}`,
       transcriptChipTextSource: (shortName, license) => `Text: ${shortName}, ${license}`,
       textSourceTranscript: (name, license, version) => `Text: ${name}${version ? ` (${version})` : ''}, ${license}`,
-      machineDraftChip: 'Machine draft · unreviewed',
       machineDraftNotice: 'Machine draft, not yet reviewed by a scholar.',
       licenceLink: 'licence',
       sourceLink: 'source',
@@ -1261,7 +1259,6 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       transcriptChipCorpus: (shortName) => `Corpus: ${shortName}`,
       transcriptChipTextSource: (shortName, license) => `Texto: ${shortName}, ${license === 'public domain' ? 'dominio público' : license}`,
       textSourceTranscript: (name, license, version) => `Texto: ${name}${version ? ` (${version})` : ''}, ${license === 'public domain' ? 'dominio público' : license}`,
-      machineDraftChip: 'Borrador automático · sin revisar',
       machineDraftNotice: 'Borrador automático, aún no revisado por un especialista.',
       licenceLink: 'licencia',
       sourceLink: 'fuente',
