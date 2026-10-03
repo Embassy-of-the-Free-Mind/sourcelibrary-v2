@@ -31,6 +31,9 @@ describe('normalizeText', () => {
   it('keeps Greek, Hebrew and CJK letters (never \\w)', () => {
     expect(normalizeText('Ἀρχὴ, שלום; 三國演義!')).toBe('ἀρχὴ שלום 三國演義');
   });
+  it('deletes combining marks instead of splitting words on them', () => {
+    expect(normalizeText('नमस्ते בְּרֵאשִׁית')).toBe('नमसत בראשית');
+  });
   it('drops OCR metadata and page apparatus content-and-all, keeps inline notes', () => {
     const raw = '<language>Latin</language><page-num>58</page-num><header>LIBER I.</header>Arma <note>virumque</note> cano';
     expect(normalizeText(raw)).toBe('arma virumque cano');

@@ -13,7 +13,8 @@
  *   - text: drop the OCR metadata blocks (language, page-type, meta, …) and the page
  *     apparatus (header, page-num, sig, catchword) CONTENT AND ALL — they repeat on every
  *     page and are not body text — then strip remaining tags, NFC, lowercase, keep \p{L}\p{N} only (never \w — it is
- *     ASCII-only and silently erases Greek, Hebrew, Arabic, CJK), other runs → one space;
+ *     ASCII-only and silently erases Greek, Hebrew, Arabic, CJK); combining marks are
+ *     deleted (never word separators), other runs → one space;
  *   - character 4-gram SETS, Jaccard similarity per page pair;
  *   - samples at 25/40/55/70/85% of book A; for each, the best match among book B's
  *     pages inside ±(|ΔpageCount|+8) of the same relative position;
@@ -53,6 +54,9 @@ export function normalizeText(s) {
   return stripMarkupTags(String(s || '').replace(DROP_BLOCKS, ' '))
     .normalize('NFC')
     .toLowerCase()
+    // Combining marks (\p{M}: Devanagari matras, Hebrew/Syriac/Arabic points) are
+    // DELETED, not spaced: as separators they split every word into fragments.
+    .replace(/\p{M}+/gu, '')
     .replace(/[^\p{L}\p{N}]+/gu, ' ')
     .trim();
 }
