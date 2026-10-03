@@ -422,6 +422,22 @@ export function buildTranslationPrompt({ prompts, book, ocrText, previousTransla
 }
 
 /**
+ * Folio markers (#5678) — OFF by default; with `folioMarkers` absent the block prompt is
+ * byte-identical to production. On: instead of one self-contained `<translation page="N">` per
+ * page (which makes the model END each page, so a sentence that runs over the turn is completed
+ * on one side and dropped or repeated on the other — vol 96 p35 showed 7 of ~21 verses), the
+ * block comes back as ONE continuous English text with `<pb n="N"/>` where each source page
+ * begins. scripts/lib/folio-markers.mjs splits it into page spans. Measured on the Tengyur pilot
+ * only (scripts/eval/folio-markers-5678.mjs); not adopted by any lane.
+ */
+export const FOLIO_MARKER_RULE = `**IMPORTANT: The pages below are consecutive pages of ONE continuous text. Translate them as one continuous English text inside a single <translation> wrapper, and mark every page turn inside it:**
+- Write <pb n="N"/> at the exact point in the English where source page N begins: before page N's first translated word, in the middle of a sentence or clause if the page turns there. Every page gets exactly one marker, in page order, using the page numbers given below; the first page's marker opens the text.
+- Keep the English continuous: a sentence or verse that runs across a page turn is translated once, as one sentence, with the marker inside it. Do not end a page early, and do not restart, summarize or repeat at a marker.
+- Render every source word exactly once, on the side of the marker where it stands in the source: never move words from one page to another, never complete a sentence the source leaves unfinished, never omit anything. Where English word order differs from the source, place the marker at the nearest word boundary that keeps each page's words on its own side.
+- If the first page begins mid-sentence, the English begins mid-sentence too: no invented lead-in.
+- After </translation>, give ONE <summary> and ONE <keywords> for the whole block.`;
+
+/**
  * THE block prompt: production translates BATCH_SIZE (8) consecutive pages in one call
  * (translate-worker.mjs translateBatch), the previous block's last translation as continuity, each
  * page wrapped in `<translation page="N">`. Moved here from the worker's inline assembly (2026-09-25)
@@ -439,7 +455,7 @@ export function buildTranslationPrompt({ prompts, book, ocrText, previousTransla
  * 18, and a hyphen at the foot of 16 must not be "completed" from the head of 18. `prevOcrText` /
  * `nextOcrText` are the caller's promise of the pages adjacent to the block's ends.
  */
-export function buildBlockTranslationPrompt({ prompts, book, pages, previousTranslation, prevOcrText, nextOcrText, pageBreak }) {
+export function buildBlockTranslationPrompt({ prompts, book, pages, previousTranslation, prevOcrText, nextOcrText, pageBreak, folioMarkers = false }) {
   const { prompt: header, promptRef, isEnglish } = translationPromptHeader({ prompts, book });
   const ocrOf = (p) => (typeof p.ocr === 'string' ? p.ocr : p.ocr?.data) || '';
   const adjacent = (a, b) => a?.page_number == null || b?.page_number == null || Number(a.page_number) + 1 === Number(b.page_number);
@@ -459,8 +475,13 @@ export function buildBlockTranslationPrompt({ prompts, book, pages, previousTran
   if (applied && per.some((r) => r.meta.leafSeams)) prompt += `\n\n${LEAF_BREAK_RULE}`;
 
   const verb = isEnglish ? 'modernize' : 'translate';
-  prompt += `\n\n**IMPORTANT: You will receive ${pages.length} consecutive pages. ${isEnglish ? 'Modernize' : 'Translate'} each one separately. Wrap each translation in XML tags with the page number:**\n`;
-  prompt += `\`\`\`\n${pages.map((p) => `<translation page="${p.page_number}">...${verb}d text...</translation>`).join('\n')}\n\`\`\`\n`;
+  if (folioMarkers) {
+    prompt += `\n\n${FOLIO_MARKER_RULE}\n`;
+    prompt += `\`\`\`\n<translation>\n${pages.map((p) => `<pb n="${p.page_number}"/>...${verb}d text of page ${p.page_number}...`).join(' ')}\n</translation>\n<summary>...</summary>\n<keywords>...</keywords>\n\`\`\`\n`;
+  } else {
+    prompt += `\n\n**IMPORTANT: You will receive ${pages.length} consecutive pages. ${isEnglish ? 'Modernize' : 'Translate'} each one separately. Wrap each translation in XML tags with the page number:**\n`;
+    prompt += `\`\`\`\n${pages.map((p) => `<translation page="${p.page_number}">...${verb}d text...</translation>`).join('\n')}\n\`\`\`\n`;
+  }
   prompt += `\n**Pages to ${verb}:**\n`;
   pages.forEach((p, i) => {
     prompt += `\n--- Page ${p.page_number} ---\n${applied ? per[i].text : ocrOf(p)}\n`;
