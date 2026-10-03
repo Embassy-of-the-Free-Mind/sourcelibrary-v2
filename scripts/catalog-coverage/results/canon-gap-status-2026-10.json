@@ -1,6 +1,6 @@
 {
  "issue": 5513,
- "generated_at": "2026-10-02T23:42:34.042Z",
+ "generated_at": "2026-10-03T09:25:00.460Z",
  "script": "scripts/catalog-coverage/canon-gap-status.mjs",
  "gap_map": "scripts/catalog-coverage/results/canon-gap-map-2026-10.json",
  "fields": {
@@ -12,7 +12,8 @@
   "live_books": "visible && pages_count > 0",
   "pipeline_held": "books under a pipeline hold",
   "readable_books": "readable_in_english (translation_state)",
-  "pages_with_text": "sum of pages_ocr"
+  "pages_with_text": "sum of pages_ocr",
+  "traditions": "books held per tradition, each counted once; pages_scanned/transcribed/translated = sums of pages_count/pages_ocr/pages_translated; canon_page_equivalents = the open typed canon (gap_map_rows) in base chars ÷ our average base chars per page in that language"
  },
  "corpora": [
   {
@@ -25,11 +26,11 @@
    "cost_usd": 5,
    "held_books": 213,
    "live_books": 0,
-   "pipeline_held": 208,
+   "pipeline_held": 213,
    "readable_books": 0,
    "pages_with_text": 128369,
    "holdings_method": "language=Tibetan, title/source matches Derge Tengyur (bstan 'gyur + sde dge, BDRC W23703, Esukhia)",
-   "updated_at": "2026-10-02T23:42:34.042Z"
+   "updated_at": "2026-10-03T09:25:00.460Z"
   },
   {
    "id": "derge-kangyur",
@@ -38,13 +39,13 @@
    "owner_issue": 5665,
    "next_action": "Import running (held_books / pages_with_text count it): BDRC W4CZ5369, the Library of Congress copy the e-text transcribes, plus the Esukhia public-domain text, aligned folio by folio, with the texts 84000 has published or has in progress marked per page. Then archive the images ($0 model spend) and price a draft English for the texts 84000 has not begun.",
    "cost_usd": 0,
-   "held_books": 2,
+   "held_books": 94,
    "live_books": 0,
-   "pipeline_held": 2,
+   "pipeline_held": 94,
    "readable_books": 0,
-   "pages_with_text": 620,
+   "pages_with_text": 30958,
    "holdings_method": "language=Tibetan, title/source matches Derge Kangyur (bka' 'gyur + sde dge, BDRC W4CZ5369 / W22084, Esukhia)",
-   "updated_at": "2026-10-02T23:42:34.042Z"
+   "updated_at": "2026-10-03T09:25:00.460Z"
   },
   {
    "id": "cbeta",
@@ -59,7 +60,7 @@
    "readable_books": 70,
    "pages_with_text": 11885,
    "holdings_method": "Chinese-language books in buddhist-canon / chinese-buddhist-texts / zen-chan, SAT Daizōkyō scans, metadata.cbeta_id, or works-catalog cbeta holdings",
-   "updated_at": "2026-10-02T23:42:34.042Z"
+   "updated_at": "2026-10-03T09:25:00.460Z"
   },
   {
    "id": "cbeta-chan",
@@ -75,7 +76,7 @@
    "readable_books": 16,
    "pages_with_text": 8408,
    "holdings_method": "Chinese-language books whose title contains 景德傳燈錄 / 祖堂集 / 五燈會元 / 語錄 / 廣錄 / 語要, or in zen-chan",
-   "updated_at": "2026-10-02T23:42:34.042Z"
+   "updated_at": "2026-10-03T09:25:00.460Z"
   },
   {
    "id": "pali-mula",
@@ -91,7 +92,7 @@
    "readable_books": 34,
    "pages_with_text": 16606,
    "holdings_method": "language=Pali (any edition; not matched to the VRI CSCD edition)",
-   "updated_at": "2026-10-02T23:42:34.042Z"
+   "updated_at": "2026-10-03T09:25:00.460Z"
   },
   {
    "id": "pali-atthakatha",
@@ -107,7 +108,7 @@
    "readable_books": 34,
    "pages_with_text": 16606,
    "holdings_method": "language=Pali (any edition; not matched to the VRI CSCD edition)",
-   "updated_at": "2026-10-02T23:42:34.042Z"
+   "updated_at": "2026-10-03T09:25:00.460Z"
   },
   {
    "id": "pali-tika",
@@ -122,7 +123,7 @@
    "readable_books": 34,
    "pages_with_text": 16606,
    "holdings_method": "language=Pali (any edition; not matched to the VRI CSCD edition)",
-   "updated_at": "2026-10-02T23:42:34.042Z"
+   "updated_at": "2026-10-03T09:25:00.460Z"
   },
   {
    "id": "gretil-buddhist",
@@ -136,9 +137,9 @@
    "live_books": 37,
    "pipeline_held": 2,
    "readable_books": 34,
-   "pages_with_text": 14130,
+   "pages_with_text": 14487,
    "holdings_method": "Sanskrit books in buddhism collections or Buddhist title terms",
-   "updated_at": "2026-10-02T23:42:34.042Z"
+   "updated_at": "2026-10-03T09:25:00.460Z"
   },
   {
    "id": "gretil-vedanta",
@@ -152,9 +153,9 @@
    "live_books": 14,
    "pipeline_held": 0,
    "readable_books": 11,
-   "pages_with_text": 5740,
+   "pages_with_text": 5995,
    "holdings_method": "Sanskrit books in vedanta-darshana or Vedānta title terms",
-   "updated_at": "2026-10-02T23:42:34.042Z"
+   "updated_at": "2026-10-03T09:25:00.460Z"
   },
   {
    "id": "gretil-gaudiya",
@@ -168,9 +169,9 @@
    "live_books": 1,
    "pipeline_held": 0,
    "readable_books": 1,
-   "pages_with_text": 504,
+   "pages_with_text": 535,
    "holdings_method": "Sanskrit books with Gauḍīya author/title terms",
-   "updated_at": "2026-10-02T23:42:34.042Z"
+   "updated_at": "2026-10-03T09:25:00.460Z"
   },
   {
    "id": "sefaria-zohar",
@@ -186,7 +187,7 @@
    "readable_books": 10,
    "pages_with_text": 7582,
    "holdings_method": "Zohar / Tikkunei Zohar by title",
-   "updated_at": "2026-10-02T23:42:34.042Z"
+   "updated_at": "2026-10-03T09:25:00.460Z"
   },
   {
    "id": "sefaria-lurianic",
@@ -202,7 +203,7 @@
    "readable_books": 2,
    "pages_with_text": 1366,
    "holdings_method": "Lurianic corpus by title (Etz Chaim, Vital, Shemonah She`arim …)",
-   "updated_at": "2026-10-02T23:42:34.042Z"
+   "updated_at": "2026-10-03T09:25:00.460Z"
   },
   {
    "id": "sefaria-cordovero",
@@ -218,7 +219,7 @@
    "readable_books": 1,
    "pages_with_text": 658,
    "holdings_method": "Cordovero by title (Pardes Rimonim, Tomer Devorah, Or Ne`erav)",
-   "updated_at": "2026-10-02T23:42:34.042Z"
+   "updated_at": "2026-10-03T09:25:00.460Z"
   },
   {
    "id": "openiti-sufi",
@@ -233,7 +234,7 @@
    "readable_books": 131,
    "pages_with_text": 26417,
    "holdings_method": "Arabic/Persian books in sufism collections, Ibn ʿArabī title terms, or works-catalog openiti holdings",
-   "updated_at": "2026-10-02T23:42:34.042Z"
+   "updated_at": "2026-10-03T09:25:00.460Z"
   },
   {
    "id": "ganjoor",
@@ -249,7 +250,7 @@
    "readable_books": 22,
    "pages_with_text": 9757,
    "holdings_method": "Persian books in persian-literary-tradition or with classical poetry title terms (any edition)",
-   "updated_at": "2026-10-02T23:42:34.042Z"
+   "updated_at": "2026-10-03T09:25:00.460Z"
   },
   {
    "id": "mongolian-kanjur",
@@ -265,7 +266,7 @@
    "readable_books": 0,
    "pages_with_text": 0,
    "holdings_method": "language=Mongolian or Mongolian Kanjur by title/source",
-   "updated_at": "2026-10-02T23:42:34.042Z"
+   "updated_at": "2026-10-03T09:25:00.460Z"
   },
   {
    "id": "tripitaka-koreana",
@@ -281,7 +282,7 @@
    "readable_books": 0,
    "pages_with_text": 0,
    "holdings_method": "Korean/Chinese books with Tripitaka Koreana / 高麗 / 海印寺 title terms",
-   "updated_at": "2026-10-02T23:42:34.042Z"
+   "updated_at": "2026-10-03T09:25:00.460Z"
   },
   {
    "id": "kanripo",
@@ -296,7 +297,133 @@
    "readable_books": 155,
    "pages_with_text": 32306,
    "holdings_method": "works-catalog work_holdings for kanripo works (build-holdings.mjs title-auto match; a floor)",
-   "updated_at": "2026-10-02T23:42:34.042Z"
+   "updated_at": "2026-10-03T09:25:00.460Z"
+  }
+ ],
+ "traditions": [
+  {
+   "id": "tibetan",
+   "name": "Tibetan Buddhist canon",
+   "gap_map_rows": [
+    "derge-tengyur",
+    "derge-kangyur"
+   ],
+   "books": 522,
+   "readable_books": 111,
+   "pages_scanned": 284520,
+   "pages_transcribed": 252654,
+   "pages_translated": 82035,
+   "canon_page_equivalents": 132416
+  },
+  {
+   "id": "chinese-buddhist",
+   "name": "Chinese Buddhist canon",
+   "gap_map_rows": [
+    "cbeta"
+   ],
+   "books": 170,
+   "readable_books": 78,
+   "pages_scanned": 21408,
+   "pages_transcribed": 15938,
+   "pages_translated": 10274,
+   "canon_page_equivalents": 900484
+  },
+  {
+   "id": "chinese-classics",
+   "name": "Chinese classics",
+   "gap_map_rows": [
+    "kanripo"
+   ],
+   "books": 170,
+   "readable_books": 155,
+   "pages_scanned": 36297,
+   "pages_transcribed": 32306,
+   "pages_translated": 30647,
+   "canon_page_equivalents": 2763913
+  },
+  {
+   "id": "pali",
+   "name": "Pali canon",
+   "gap_map_rows": [
+    "pali-mula",
+    "pali-atthakatha",
+    "pali-tika"
+   ],
+   "books": 57,
+   "readable_books": 34,
+   "pages_scanned": 20359,
+   "pages_transcribed": 16606,
+   "pages_translated": 13423,
+   "canon_page_equivalents": 44399
+  },
+  {
+   "id": "sanskrit",
+   "name": "Sanskrit",
+   "gap_map_rows": [
+    "gretil-buddhist",
+    "gretil-vedanta",
+    "gretil-gaudiya"
+   ],
+   "books": 2109,
+   "readable_books": 385,
+   "pages_scanned": 355193,
+   "pages_transcribed": 160323,
+   "pages_translated": 109625,
+   "canon_page_equivalents": 48672
+  },
+  {
+   "id": "kabbalah",
+   "name": "Kabbalah",
+   "gap_map_rows": [
+    "sefaria-zohar",
+    "sefaria-lurianic",
+    "sefaria-cordovero"
+   ],
+   "books": 603,
+   "readable_books": 344,
+   "pages_scanned": 159531,
+   "pages_transcribed": 124129,
+   "pages_translated": 110753,
+   "canon_page_equivalents": 8860
+  },
+  {
+   "id": "sufi",
+   "name": "Sufi texts (Arabic and Persian)",
+   "gap_map_rows": [
+    "openiti-sufi"
+   ],
+   "books": 161,
+   "readable_books": 131,
+   "pages_scanned": 28271,
+   "pages_transcribed": 26417,
+   "pages_translated": 24976,
+   "canon_page_equivalents": 52285
+  },
+  {
+   "id": "persian-poetry",
+   "name": "Persian poetry",
+   "gap_map_rows": [
+    "ganjoor"
+   ],
+   "books": 54,
+   "readable_books": 22,
+   "pages_scanned": 24556,
+   "pages_transcribed": 9757,
+   "pages_translated": 7185,
+   "canon_page_equivalents": 41462
+  },
+  {
+   "id": "mongolian",
+   "name": "Mongolian Kanjur",
+   "gap_map_rows": [
+    "mongolian-kanjur"
+   ],
+   "books": 108,
+   "readable_books": 0,
+   "pages_scanned": 83090,
+   "pages_transcribed": 0,
+   "pages_translated": 0,
+   "canon_page_equivalents": 0
   }
  ]
 }
