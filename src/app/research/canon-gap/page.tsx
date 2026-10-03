@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import gapMap from '../../../../scripts/catalog-coverage/results/canon-gap-map-2026-10.json';
 import gapStatus from '../../../../scripts/catalog-coverage/results/canon-gap-status-2026-10.json';
-import { CanonBars, RoutesDiagram, StatusBoard, STATUS_STYLE, TengyurProgress, TraditionProgress, short, type CanonBar } from './diagrams';
+import { CanonBars, RoutesDiagram, StatusBoard, STATUS_STYLE, TengyurProgress, TraditionProgress, short, type CanonBar, type TraditionProgressRow } from './diagrams';
 
 // Built for the Eternity Foundation working session (#5513): read once, seated, as a
 // table with a short argument. Sizes, licences, English shares and draft costs come from
@@ -213,6 +213,45 @@ export default function CanonGapPage() {
           Prepared for the Eternity Foundation working session, October 2026. Figures measured {asOf}.
         </p>
 
+        <Section kicker="Our library" title="Scanned, transcribed, translated">
+          <p className="mb-4">
+            What we hold in each tradition: pages scanned, pages transcribed, and pages with a draft English
+            translation. Click a square to open a book. The Tibetan figure includes the Derge Tengyur and Kangyur we
+            imported this month; the Mongolian Kanjur is scans only so far.
+          </p>
+          <p className="mb-2 font-semibold text-stone-900">The tools and models involved</p>
+          <ul className="list-disc pl-5 space-y-2 text-base mb-2">
+            <li>
+              <strong>Scans</strong> come from the libraries that hold the books: BDRC for the Tibetan and Mongolian
+              canons, the British Library&rsquo;s Endangered Archives Programme for the Bhutanese manuscripts, the
+              Internet Archive, and national and university libraries.
+            </li>
+            <li>
+              <strong>Transcription.</strong> Where an open typed edition exists we use it, matched to our scans page
+              by page: Esukhia&rsquo;s Derge Tengyur and Kangyur, CBETA for the Chinese Buddhist canon, Sefaria for
+              Hebrew. Otherwise a model reads the page image. Google&rsquo;s Gemini (3 Flash and 3.1 Flash-Lite)
+              reads most scripts. Specialist models read where they measured better: BDRC&rsquo;s Yigdzin for Tibetan
+              manuscripts, Kraken for Syriac, and PaddleOCR-VL for Chinese brush manuscripts.
+            </li>
+            <li>
+              <strong>English drafts</strong> are written by Gemini 3 Flash or Gemini 3.1 Flash-Lite. The Derge
+              Tengyur is drafted by Gemini 3 Flash one page at a time, which put the English beside the right
+              woodblock most reliably in our tests.
+            </li>
+            <li>
+              <strong>Checking.</strong> Claude models (Opus and Sonnet) score samples blind against published
+              translations and typed editions, and we read the page images ourselves where scores are low (see
+              &ldquo;How good the English is&rdquo; below).
+            </li>
+          </ul>
+          <p className="text-base text-stone-600">
+            Under each tradition below, &ldquo;Read by&rdquo; and &ldquo;English by&rdquo; give the share of its pages
+            each engine and model produced, from the records on the pages themselves.
+          </p>
+          {/* JSON imports widen tuples to arrays; the status script writes them as the row type declares. */}
+          <TraditionProgress n={1} rows={([...gapStatus.traditions] as unknown as TraditionProgressRow[]).sort((a, b) => b.pages_scanned - a.pages_scanned)} />
+        </Section>
+
         <div className="grid grid-cols-2 md:grid-cols-4 border border-stone-200 rounded-sm bg-stone-50 my-8">
           <Stat n={short(typedChars)} label="characters of canon typed in and openly available, across the canons below" />
           <Stat n={`$${fmt(gapMap.total_draft_usd)}`} label="to draft all of it in English with AI at our measured rates; mostly an upper bound" />
@@ -236,16 +275,7 @@ export default function CanonGapPage() {
             does not replace a translator. Review funds go furthest on canons that are openly licensed, typed, paired
             with scans, and have little English.
           </p>
-          <RoutesDiagram n={1} />
-        </Section>
-
-        <Section kicker="Our library" title="Scanned, transcribed, translated">
-          <p>
-            What we hold in each tradition: pages scanned, pages transcribed, and pages with a draft English
-            translation. The
-            Tibetan figure includes the Derge Tengyur we imported this month; the Mongolian Kanjur is scans only so far.
-          </p>
-          <TraditionProgress n={2} rows={[...gapStatus.traditions].sort((a, b) => b.pages_scanned - a.pages_scanned)} />
+          <RoutesDiagram n={2} />
         </Section>
 
         <Section kicker="The gap" title="How much of each canon is in English">
