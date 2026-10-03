@@ -49,7 +49,7 @@ function Item({ head, meta, text, href, tone }: { head: string; meta: ReactNode;
     <li className="px-3 py-2 grid gap-0.5 min-w-0">
       <div className="flex items-baseline gap-2 min-w-0 text-sm">
         <span className={`font-medium truncate ${headTone}`}>{head}</span>
-        <span className="text-xs text-stone-500 whitespace-nowrap ml-auto tabular-nums">{meta}</span>
+        <span className="text-xs text-stone-500 whitespace-nowrap ml-auto shrink-0 tabular-nums">{meta}</span>
       </div>
       {href
         ? <a href={href} className={`text-sm leading-snug line-clamp-2 break-words ${LINK}`}>{text || '—'}</a>
@@ -108,7 +108,7 @@ function Sections({ b, now }: { b: Board; now: Date }) {
           <List>
             {b.running.map(r => (
               <Item key={`${r.box}:${r.kind}:${r.name}`} head={r.name}
-                meta={<>{r.box} · started {ago(r.started, now)} · active {ago(r.last_activity, now)}</>}
+                meta={<>{r.box} · up {ago(r.started, now)} · seen {ago(r.last_activity, now)} ago</>}
                 text={r.issue ? `#${r.issue.number} ${r.what}` : r.what} href={r.issue?.url ?? null} />
             ))}
           </List>
