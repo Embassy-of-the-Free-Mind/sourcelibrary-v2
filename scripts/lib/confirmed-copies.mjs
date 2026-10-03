@@ -8,6 +8,7 @@
  * Reads the committed evidence in scripts/identity-evidence/:
  *   collection-copies-<date>.jsonl             visual verdicts with provenance (row: "pair")
  *   collection-copies-<date>.comparator.jsonl  #4285 comparator scores, one row per pair
+ *   collection-copies-<date>.recheck.jsonl     by-eye recheck verdicts, one row per pair (optional)
  *
  * A pair is CONFIRMED only when all of these hold:
  *   - the visual reviewer said `copies`, and the pair's status is not `reversed`;
@@ -16,6 +17,14 @@
  * A comparator `different` vetoes a by-eye "consistent" — on 2026-10-03, 18 of 65 by-eye
  * pairs disagreed with the text and wait for a second look (#5689). `gray` with no by-eye
  * check is not confirmed.
+ *
+ * A RECHECK row outranks all of the above (#5689 recheck): the comparator has known false
+ * negatives on thin OCR, and the first by-eye check looked at two page tops only. The recheck
+ * read title pages, aligned pages and last pages, so its verdict decides:
+ *   - `same_printing` confirms with basis `by-eye-recheck` (even over a comparator `different`
+ *     or an earlier `reversed`);
+ *   - `different_part`, `different_edition`, `fragment` and `cannot_tell` reject.
+ * The comparator score stays on the record either way.
  *
  * Callers: the enrich worker's collection tagger (Phase 7.6), which refuses to add a copy to a
  * collection that already holds its keeper, and scripts/maintenance/apply-collection-copy-keepers.mjs.
@@ -31,9 +40,14 @@ const VERDICT_FILE = /^collection-copies-\d{4}-\d{2}-\d{2}\.jsonl$/;
 
 const pairKey = (copyId, keeperId) => `${copyId}|${keeperId}`;
 
-/** The rule, on one verdict row and its comparator row (may be undefined). */
-export function confirmPair(verdict, comparator) {
+/** The rule, on one verdict row, its comparator row and its recheck row (both may be undefined). */
+export function confirmPair(verdict, comparator, recheck) {
   if (verdict?.row !== 'pair') return { confirmed: false, reason: 'not a pair row' };
+  if (recheck?.verdict) {
+    const cv0 = comparator?.verdict ?? null;
+    if (recheck.verdict === 'same_printing') return { confirmed: true, basis: 'by-eye-recheck', comparator_verdict: cv0, recheck_verdict: recheck.verdict };
+    return { confirmed: false, reason: `recheck ${recheck.verdict}`, comparator_verdict: cv0, recheck_verdict: recheck.verdict };
+  }
   if (verdict.reviewer?.verdict !== 'copies') return { confirmed: false, reason: 'visual verdict is not copies' };
   if (verdict.status === 'reversed') return { confirmed: false, reason: 'reversed' };
   const cv = comparator?.verdict ?? null;
@@ -46,14 +60,16 @@ export function confirmPair(verdict, comparator) {
  * Build the confirmed set from parsed rows. `source` labels where the rows came from.
  * Returns { pairs, rejected, keepersOfCopy: Map<copy_id, pair[]> }.
  */
-export function buildConfirmedCopies(verdictRows, comparatorRows, source = null) {
+export function buildConfirmedCopies(verdictRows, comparatorRows, source = null, recheckRows = []) {
   const scores = new Map();
   for (const c of comparatorRows || []) scores.set(pairKey(c.copy_id, c.keeper_id), c);
+  const rechecks = new Map();
+  for (const r of recheckRows || []) rechecks.set(pairKey(r.copy_id, r.keeper_id), r);
   const pairs = [], rejected = [];
   for (const v of verdictRows || []) {
     if (v?.row !== 'pair') continue;
     const c = scores.get(pairKey(v.copy_id, v.keeper_id));
-    const d = confirmPair(v, c);
+    const d = confirmPair(v, c, rechecks.get(pairKey(v.copy_id, v.keeper_id)));
     const rec = {
       copy_id: v.copy_id, keeper_id: v.keeper_id, ...d,
       comparator_score: c?.score ?? null, comparator_version: c?.comparator_version ?? null,
@@ -79,7 +95,9 @@ export function loadConfirmedCopies({ dir = EVIDENCE_DIR } = {}) {
   for (const f of files) {
     const cmpFile = path.join(dir, f.replace(/\.jsonl$/, '.comparator.jsonl'));
     const cmp = fs.existsSync(cmpFile) ? readJsonl(cmpFile) : [];
-    const built = buildConfirmedCopies(readJsonl(path.join(dir, f)), cmp, f);
+    const recheckFile = path.join(dir, f.replace(/\.jsonl$/, '.recheck.jsonl'));
+    const recheck = fs.existsSync(recheckFile) ? readJsonl(recheckFile) : [];
+    const built = buildConfirmedCopies(readJsonl(path.join(dir, f)), cmp, f, recheck);
     all.pairs.push(...built.pairs);
     all.rejected.push(...built.rejected);
     for (const [k, v] of built.keepersOfCopy) all.keepersOfCopy.set(k, [...(all.keepersOfCopy.get(k) || []), ...v]);
