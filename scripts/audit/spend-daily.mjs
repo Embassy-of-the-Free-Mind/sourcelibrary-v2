@@ -159,7 +159,7 @@ export function envelopeLevel(e, now = new Date()) {
   const age = now.getTime() - ms(e.created_at);
   const idle = e.last_spend_at ? now.getTime() - ms(e.last_spend_at) : Infinity;
   if (age > STORED_DAYS * DAY && idle > STORED_DAYS * DAY) {
-    return { level: 'WARN', why: `stored spend: ${$(e.budget_usd - e.spent_usd)} unspent, no spend for ${idle === Infinity ? 'its whole life' : `${Math.floor(idle / DAY)} d`}` };
+    return { level: 'WARN', why: `stored spend: ${$(e.budget_usd - e.spent_usd)} unspent, no OCR/translation spend on its books for ${idle === Infinity ? `${STORED_DAYS}+ d` : `${Math.floor(idle / DAY)} d`}` };
   }
   return { level: 'ok', why: `${$(e.spent_usd)} / ${$(e.budget_usd)}; 24 h: ${$(e.paid24_usd)} → ${e.pages24 || 0} pages` };
 }
