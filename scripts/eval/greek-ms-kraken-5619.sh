@@ -7,13 +7,14 @@
 #   Grec 1841, Marcianus gr. 299, the Cambridge Psellos, the Laurenziana Ars sacra, Grec 1839.
 # Reads Mongo for image URLs only; writes only under $W. At most 3 Kraken processes, nice -n 10.
 #   bash scripts/eval/greek-ms-kraken-5619.sh            # (re)start; finished pages are skipped
+# PAGE_TIMEOUT (s, default 4 h): a starved spread at nice 10 on a load-25 box took > 45 min.
 # Per page: <book>-<page>.txt (Kraken text) + <book>-<page>.ok (checkpoint) or .err (failed).
 set -u
 REPO=$(cd "$(dirname "$0")/../.." && pwd)
 W=${W:-/mnt/HC_Volume_105839809/greek-ms-align-5619/kraken-full}
 K=/root/bench2-kraken/venv/bin/kraken; M=/root/bench2-kraken/models/greek-cllg.safetensors
 BOOKS=${BOOKS:-69a5e5e985fa13e734e41cba,6a45298cc6d95bc278fbc8c3,69938921ce15387065946912,69b4c04d978ca9526eda33f7,69a5e5e385fa13e734e41894}
-export OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 W K M
+export OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 W K M PAGE_TIMEOUT
 mkdir -p "$W"
 cd "$REPO" && node --env-file=/root/sourcelibrary/.env.production.local -e '
 const { withMongo } = await import("./scripts/lib/mongo.mjs");
@@ -32,7 +33,7 @@ one() {
   slug=$1; url=$2
   [ -e "$W/$slug.ok" ] && return 0
   [ -s "$W/$slug.jpg" ] || curl -sf --retry 3 -o "$W/$slug.jpg" "$url" || { echo "download $url" > "$W/$slug.err"; return 0; }
-  if timeout 2700 nice -n 10 "$K" -i "$W/$slug.jpg" "$W/$slug.txt" segment -bl ocr -m "$M" >> "$W/kraken.log" 2>&1; then
+  if timeout ${PAGE_TIMEOUT:-14400} nice -n 10 "$K" -i "$W/$slug.jpg" "$W/$slug.txt" segment -bl ocr -m "$M" >> "$W/kraken.log" 2>&1; then
     rm -f "$W/$slug.err"; date -u +%FT%TZ > "$W/$slug.ok"
   else echo "kraken exit $?" > "$W/$slug.err"; fi
 }
