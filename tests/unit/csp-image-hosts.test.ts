@@ -188,3 +188,9 @@ describe('CSP connect-src covers the image host we fetch bytes from (#4630)', ()
     ).toContain('https://images.sourcelibrary.org');
   });
 });
+
+describe('IA master redirect host (#5679)', () => {
+  it('img-src allows ia*.us.archive.org, where archive.org/download/ page URLs land', () => {
+    expect(CSP_IMG_SRC).toContain('https://*.us.archive.org');
+  });
+});

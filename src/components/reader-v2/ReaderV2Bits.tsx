@@ -460,6 +460,7 @@ export function ScanViewer({
   }, []);
 
   const zoomed = zoom > 1;
+  const [nativeFailed, setNativeFailed] = useState<string | null>(null);
 
   // Zoom stops where the scan runs out of pixels: one image pixel per screen
   // pixel of the fitted page. Past that the page only gets blurrier, which a
@@ -738,7 +739,10 @@ export function ScanViewer({
     );
   }
   const brightness = (page as unknown as { display_brightness?: number }).display_brightness;
-  const src = (fullRes || zoom > 1.5) && native ? native : display;
+  // The hi-res copy can live on a provider (IA's master, #5679); if it fails
+  // to load, stay on the display copy rather than show a broken image.
+  const useNative = (fullRes || zoom > 1.5) && native && nativeFailed !== native;
+  const src = useNative ? native : display;
 
   return (
     <div
@@ -796,6 +800,7 @@ export function ScanViewer({
           src={src}
           alt={alt}
           draggable={false}
+          onError={() => { if (src === native && native !== display) setNativeFailed(native); }}
           onLoad={e => {
             const el = e.currentTarget;
             natural.current = { w: el.naturalWidth, h: el.naturalHeight };
