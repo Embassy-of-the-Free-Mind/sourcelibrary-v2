@@ -1,0 +1,2907 @@
+{
+ "about": "#5647 stage 3 review list — NOT applied. partly-wrong and unverifiable verdicts, wrong verdicts not applied (with the reason), and notes left unverified (request r040 never searched in 4 attempts).",
+ "wrong_not_applied": [
+  {
+   "note_claim": "69e76156cc48e59ad74ef399:note:1",
+   "url": "https://sourcelibrary.org/book/69e76156cc48e59ad74ef30f?page=138",
+   "book_title": "Kun bzang dgongs 'dus sngon 'gro",
+   "note": "This is the complete Tibetan alphabet in order.",
+   "checked_claim": "complete Tibetan alphabet in order",
+   "correction": "This is a list of Sanskrit consonants (vyanjana) used in Tibetan",
+   "source_url": "https://en.wikipedia.org/wiki/Tibetan_alphabet",
+   "evidence": "The Tibetan alphabet starts Ka Kha Ga Nga. The sequence Ja Nya Ta Tha Da Na... follows the Sanskrit varga order.",
+   "why_not_applied": "verifier wrong: the listed letters include tsa tsha dza wa zha za 'a, which are Tibetan-only; the list is the Tibetan alphabet (#5624 N347: correct)"
+  },
+  {
+   "note_claim": "69e76178cc48e59ad74eff44:note:1",
+   "url": "https://sourcelibrary.org/book/69e76178cc48e59ad74efea6?page=158",
+   "book_title": "lHan cig skyes sbyor zab khrid",
+   "note": "From one's own stream to a different stream, a human formed as a human; regarding the basis and thought, there are four: application, finalization, the target, and the killer. Regarding the first, there are the factors of the object and the factors of the basis. First, it must be a human formed from a mother, a stream different from oneself. If a monk kills himself or a non-human, it is a gross offense; and there is a downfall for killing an animal. First, because it must be a stream different f",
+   "checked_claim": "mer-mer-po is the second week of embryonic development",
+   "correction": "fourth week",
+   "source_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4213871/",
+   "evidence": "Nur nur po, ltar ltar po and mer mer po are the respective names of the embryo in the second, third and fourth week of pregnancy.",
+   "why_not_applied": "sources disagree: the Mahāvyutpatti gives mer mer po = kalala (first stage), the cited medical paper puts it in week four; note is also a malformed (unclosed) note — see #5644"
+  },
+  {
+   "note_claim": "69e761f7cc48e59ad74f284c:note:0",
+   "url": "https://sourcelibrary.org/book/69e761f7cc48e59ad74f27f4?page=88",
+   "book_title": "Jam dpal gshin rje gshed kyi sgrub thabs",
+   "note": "the text here has a parenthetical note: \"Padma is the water-deity\"",
+   "checked_claim": "Padma is the water-deity",
+   "correction": "Padma is a naga king",
+   "source_url": "https://waterstories.fas.harvard.edu/water-spirits-in-a-desert-serpentine-imagery-and-ritual-in-ladakh/",
+   "evidence": "In the northwest is the white naga king Padma, and he holds a lotus and a fruit in his left.",
+   "why_not_applied": "verifier wrong: the note reports the text's own gloss; Padma the nāga king is a water deity"
+  },
+  {
+   "note_claim": "69e77a420fc6fc955e35ee4b:note:4",
+   "url": "https://sourcelibrary.org/book/69e77a420fc6fc955e35ee3f?page=12",
+   "book_title": "sNying thig yang sgang rgyud bu chung",
+   "note": "referring to the different types of sounds or vocalizations. Furthermore, the qualities of the realm are beyond speech and number. Below that is the celestial abode called Free from Extremes <note>Sanskrit: Yama",
+   "checked_claim": "Free from Extremes is Sanskrit Yama",
+   "correction": "Yama is the Lord of Death; 'Free from Extremes' (spros bral) refers to the ultimate nature.",
+   "source_url": "https://84000.co/glossary/yama",
+   "evidence": "Yama (gshin rje) is the Lord of Death. 'Free from extremes' (spros bral) is a common epithet for emptiness or the ultimate state.",
+   "why_not_applied": "verifier wrong: the celestial abode is the Yāma heaven ('thab bral, \"free from strife\"), so \"Yama\" is the right name; the verifier read Yama, lord of death. The note is malformed (unclosed) — #5644"
+  },
+  {
+   "note_claim": "69e782bcd93c1f60075045a1:note:1",
+   "url": "https://sourcelibrary.org/book/69e782bcd93c1f6007504595?page=12",
+   "book_title": "sNyan ngag me long",
+   "note": "the traditional author of the Mahabharata",
+   "checked_claim": "Bharata is the name of the Sage Vyasa",
+   "correction": "Vyasa is the author; Bharata is the epic's title or the king.",
+   "source_url": "https://en.wikipedia.org/wiki/Mahabharata",
+   "evidence": "The Mahābhārata... is attributed to the sage Vyasa... 'Great Bharata' is the title... Bharata is a legendary emperor... ancestor of the Pandavas.",
+   "why_not_applied": "verifier checked the running text, not the note; the note (Vyāsa, traditional author of the Mahābhārata) is right"
+  },
+  {
+   "note_claim": "69e7aaef5f1a22ab19a8ffd3:note:0",
+   "url": "https://sourcelibrary.org/book/69e7aaef5f1a22ab19a8fe6a?page=361",
+   "book_title": "Thadrak Kanjur mDo sde Nya",
+   "note": "Tibetan: 'Od srung; also identified with Mahakashyapa in some contexts, but here likely the interlocutor",
+   "checked_claim": "Akashagarbha is 'Od srung",
+   "correction": "Akashagarbha is Nam mkha'i snying po",
+   "source_url": "https://84000.co/glossary/akashagarbha",
+   "evidence": "Akāśagarbha is translated into Tibetan as Nam mkha'i snying po. 'Od srung is the Tibetan for Kāśyapa.",
+   "why_not_applied": "the error is in the running text ('Od srung rendered \"Akashagarbha\"), not in the note; needs a retranslation-level fix"
+  },
+  {
+   "note_claim": "69e7ab915f1a22ab19a9a420:note:2",
+   "url": "https://sourcelibrary.org/book/69e7ab915f1a22ab19a9a3be?page=98",
+   "book_title": "Thadrak Thor bu 030 sNyan ngag 'grel pa",
+   "note": "referring to the scholar-translator Ratnakarashanti",
+   "checked_claim": "Dharmakara refers to Ratnakarashanti",
+   "correction": "Taranatha",
+   "source_url": "https://treasuryoflives.org/biographies/view/Taranatha/2823",
+   "evidence": "Dharmakara is the Sanskrit name for the Tibetan scholar Taranatha (Kun dga' snying po), who is often called 'omniscient' (thams cad mkhyen pa). Ratnakarashanti is a different Indian master.",
+   "why_not_applied": "not settled: \"the omniscient Dharmākara\" is more likely Situ Paṇchen Chökyi Jungné (chos kyi 'byung gnas) than either Ratnākaraśānti (note) or Tāranātha (verifier)"
+  },
+  {
+   "note_claim": "69e7abdd5f1a22ab19a9fd4a:note:2",
+   "url": "https://sourcelibrary.org/book/69e7abdd5f1a22ab19a9fade?page=620",
+   "book_title": "Neyphug Kanjur rGyud Na",
+   "note": "referring to the Buddha's senior disciples",
+   "checked_claim": "King of the Elders refers to the Buddha's senior disciples",
+   "correction": "King of the Elders (Jyestharaja) is an epithet of Ganesha or Brihaspati.",
+   "source_url": "https://en.wikipedia.org/wiki/Ganesha",
+   "evidence": "Ganesha is the king of the elders (Jyesta raja).",
+   "why_not_applied": "not settled: the verifier's Jyeṣṭharāja = Gaṇeśa reading is not supported by a source for this passage"
+  }
+ ],
+ "partly_wrong": [
+  {
+   "note_claim": "69e7615bcc48e59ad74ef5aa:note:3",
+   "url": "https://sourcelibrary.org/book/69e7615bcc48e59ad74ef4c9?page=225",
+   "book_title": "Kun bzang dgongs 'dus skor",
+   "note": "This was written based on the oral instructions of the Master and the instruction manuals. This brief summary was composed by Pad-gling III <note>the third Pema Lingpa reincarnation",
+   "checked_claim": "Pad-gling III is the third Pema Lingpa reincarnation",
+   "correction": "Pad-gling III usually refers to the 3rd Gangteng Tulku (Peling Gyalse)",
+   "source_url": "https://pl.wikipedia.org/wiki/Gangteng_Tulku_Rinpocze",
+   "evidence": "Gangteng Tulku Rinpocze III (1727-1758) is the third incarnation in the Peling lineage; the main Pema Lingpa line uses 'Sungtrul'."
+  },
+  {
+   "note_claim": "69e787b54a6785cfd60ccf01:note:0",
+   "url": "https://sourcelibrary.org/book/69e787b54a6785cfd60ccecf?page=50",
+   "book_title": "gsang ba sbas ston thems byang ye shes gsal byed",
+   "note": "These are the Sanskrit vowels and consonants used for purification",
+   "checked_claim": "Sanskrit vowels and consonants",
+   "correction": "The list contains only consonants.",
+   "source_url": "https://tibetanlanguage.school/sanskrit-grammar/",
+   "evidence": "kāli are 33 in number: ka kha ga gha ṅa... ya ra la va, śa ṣa sa ha. āli are the 14 vowels."
+  },
+  {
+   "note_claim": "69e788484a6785cfd60d048c:note:3",
+   "url": "https://sourcelibrary.org/book/69e788484a6785cfd60d0434?page=88",
+   "book_title": "she bya rab tu gsal ba'I bstan bcos dang seng gdong sgrub thabs sogs",
+   "note": "meditation between sessions</note.\nSecond, the main part: [the text mentions 110 categories].\nFirst, the ritual of mandala accomplishment and offering. Second, the vase accomplishment. Third, the self-entry. Fourth, the purification.\nIn the previous hundred-fold [rites], the four rituals were arranged to start when the sun rises.\nToday, there is a tradition of inserting relics. The three actual relics of the Tathagata,\nOr \"OM SARVA VIDYA SANGA\" and the Heart of Dependent Origination written duri",
+   "checked_claim": "three-part rite refers to meditation between sessions",
+   "correction": "The 'three-part' (cha gsum) rite is a specific ritual offering to spirits.",
+   "source_url": "https://www.lotsawahouse.org/topics/cha-gsum/",
+   "evidence": "The 'Three-Part Ritual' (cha gsum) is a common Tibetan Buddhist ritual involving offerings to three classes of spirits: local deities, obstructors, and elemental spirits."
+  },
+  {
+   "note_claim": "69e78b5c4a6785cfd60d547b:note:0",
+   "url": "https://sourcelibrary.org/book/69e78b5c4a6785cfd60d5329?page=338",
+   "book_title": "dpal ldan sa skya ba'i mchog sgrub pa'i gser chos mkha' spyod bskor gsum",
+   "note": "referring to the fifty Sanskrit letters/vowels",
+   "checked_claim": "ka-la refers to letters/vowels",
+   "correction": "ali-kali (vowels and consonants)",
+   "source_url": "https://rywiki.tsadra.org/index.php/ka_li",
+   "evidence": "ka li: alphabet, consonants. The term for the full set of vowels and consonants is ali-kali."
+  },
+  {
+   "note_claim": "69e7968380b52390feb19772:note:0",
+   "url": "https://sourcelibrary.org/book/69e7968380b52390feb19770?page=2",
+   "book_title": "'tsho byed las dang po ba la nye bar mkho ba'i zin tig gces par btus pa bdud rtsi'i thigs pa",
+   "note": "refers to the Buddha or the clear sky of reality",
+   "checked_claim": "All-Illuminating refers to the Buddha or clear sky",
+   "correction": "All-illuminating refers to a specific meditative concentration (samadhi)",
+   "source_url": "https://www.lotsawahouse.org/tibetan-masters/jamyang-khyentse-wangpo/daily-chime-pakme-nyingtik-commentary",
+   "evidence": "The two meditative concentrations of suchness and all-illuminating compassion."
+  },
+  {
+   "note_claim": "69e7aae95f1a22ab19a8f88e:note:1",
+   "url": "https://sourcelibrary.org/book/69e7aae95f1a22ab19a8f76c?page=290",
+   "book_title": "Thadrak Kanjur mDo sde Nga",
+   "note": "the son of Sred-med, known for immense strength",
+   "checked_claim": "Narayana is the son of Sred-med",
+   "correction": "Narayana is Sred-med kyi bu",
+   "source_url": "https://84000.co/glossary/narayana",
+   "evidence": "In Tibetan, Nārāyaṇa is translated as Sred med kyi bu, which literally means 'Son of the Desireless One'."
+  },
+  {
+   "note_claim": "69e7ab0c5f1a22ab19a920ec:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab0c5f1a22ab19a91faa?page=322",
+   "book_title": "Thadrak Kanjur mDo sde La",
+   "note": "a king of the Nagas or a celestial being",
+   "checked_claim": "Musulundha a king of the Nagas or celestial being",
+   "correction": "Musulundha is specifically the ruler of the Heaven Free from Strife (Yama realm), not a Naga.",
+   "source_url": "https://84000.co/translation/toh287",
+   "evidence": "Musulundha, you possess great wealth and you roam heedlessly... Therefore, O ruler of the Heaven Free from Strife, listen to this."
+  },
+  {
+   "note_claim": "69e7ab745f1a22ab19a98ea7:note:25",
+   "url": "https://sourcelibrary.org/book/69e7ab745f1a22ab19a98dac?page=251",
+   "book_title": "Thadrak Thor bu 009 dGongs 'dus rdzogs rim",
+   "note": "Phonetic Sanskrit: \"Yadisatritayānhabatolagaunabhabharashcatadāhariṇaslutā...\"",
+   "checked_claim": "Yadisatritaya defines the Hariṇaplutā meter",
+   "correction": "Hariṇaplutā",
+   "source_url": "https://www.scribd.com/document/553817700/Vrttaratnakara-A-Sanskrit-Prosody-Guide",
+   "evidence": "The Vṛttaratnākara defines Hariṇaplutā as 'nana-ra-sa-la-gaiḥ' or similar; the phonetic string 'Yadisatritaya' appears to be a corruption of a different definition."
+  },
+  {
+   "note_claim": "69e7ab915f1a22ab19a9a3f3:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ab915f1a22ab19a9a3be?page=53",
+   "book_title": "Thadrak Thor bu 030 sNyan ngag 'grel pa",
+   "note": "The \"Blue Top\" refers to a person of high status or a specific deity",
+   "checked_claim": "Blue Top refers to a person or deity",
+   "correction": "Shiva (Nilakantha)",
+   "source_url": "https://www.wisdomlib.org/definition/nilakantha",
+   "evidence": "In the Kavyadarsha, 'Blue Top' or 'Blue Neck' (Nilakantha) refers specifically to the deity Shiva, who has a blue throat from swallowing poison."
+  },
+  {
+   "note_claim": "69e7abc95f1a22ab19a9e07f:note:2",
+   "url": "https://sourcelibrary.org/book/69e7abc95f1a22ab19a9e04a?page=53",
+   "book_title": "Neyphug Kanjur mDo sde Ngi",
+   "note": "Musulundha, king of the gods of the Heaven Free from Strife, acting as a teacher",
+   "checked_claim": "Musulundha is king of the Heaven Free from Strife and a teacher",
+   "correction": "Musulundha is the king of the Heaven Free from Strife, but he is the student, not the teacher.",
+   "source_url": "https://84000.co/translation/toh287",
+   "evidence": "Auspicious Time will then proceed to teach Musulundha... O ruler of the Heaven Free from Strife, listen to this."
+  },
+  {
+   "note_claim": "69e7abdd5f1a22ab19a9fb75:note:1",
+   "url": "https://sourcelibrary.org/book/69e7abdd5f1a22ab19a9fade?page=151",
+   "book_title": "Neyphug Kanjur rGyud Na",
+   "note": "Stable One; Sanskrit: Sthavira or Prithvi",
+   "checked_claim": "Dran-ma is Earth Goddess; Sanskrit Sthavira or Prithvi",
+   "correction": "Dran-ma (brtan ma) is the Earth Goddess; Sanskrit is Prithvi or Sthavara, not Sthavira.",
+   "source_url": "https://84000.co/translation/toh434",
+   "evidence": "The earth goddess Sthāvarā (brtan ma). Sthavira refers to an elder monk."
+  },
+  {
+   "note_claim": "69e7abe05f1a22ab19a9ff11:note:0",
+   "url": "https://sourcelibrary.org/book/69e7abe05f1a22ab19a9ff10?page=1",
+   "book_title": "Neyphug Kanjur rGyud Pha",
+   "note": "Sanskrit: Arya Bapule Prabesha Maha Sutra; Tibetan: 'Phags pa yangs pa'i grong khྱer du 'jug pa'i mdo chen po",
+   "checked_claim": "Sanskrit title of the sutra",
+   "correction": "Arya-vaishalipravesha-mahasutra",
+   "source_url": "https://84000.co/translation/toh312",
+   "evidence": "The Sanskrit title is Āryavaiśālīpraveśamahāsūtra. The note's 'Bapule Prabesha' is a corruption of 'Vaishalipravesha'."
+  },
+  {
+   "note_claim": "69e7ac565f1a22ab19aa6a0b:note:4",
+   "url": "https://sourcelibrary.org/book/69e7ac565f1a22ab19aa69d1?page=58",
+   "book_title": "Neyphug Thor bu Bla ma'i rnal 'byor byin rlabs kun 'dus sogs",
+   "note": "Because Rudra's wife did not desire him, she performed austerities under an Ashoka tree; because Gauri's wish was fulfilled there, the Ashoka was born. This tree is also called Kakubha.",
+   "checked_claim": "the Ashoka tree is also called Kakubha",
+   "correction": "The Ashoka and Kakubha are distinct trees.",
+   "source_url": "https://wisdomlib.org/definition/kakubha",
+   "evidence": "In Sanskrit literature and botanical texts, Kakubha refers to the Terminalia arjuna (Arjun tree), while Ashoka refers to Saraca asoca. They are listed as separate species in the Ramayana and Puranas."
+  },
+  {
+   "note_claim": "69e7ac625f1a22ab19aa6f6b:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac625f1a22ab19aa6e9f?page=204",
+   "book_title": "Phurdrup Gonpa bKa' brgyad Ka",
+   "note": "the Sanskrit endings for pacifying, increasing, subjugating, and slaying",
+   "checked_claim": "Sanskrit endings for pacifying, increasing, subjugating, slaying",
+   "correction": "The standard terms are Shantim, Pushtim, Vasham, and Maraya.",
+   "source_url": "https://www.rigpawiki.org/index.php?title=Four_activities",
+   "evidence": "The four activities are pacifying (shantika), increasing (paushtika), subjugating (vashika), and destroying (abhicharaka/marana). The ritual endings are usually 'shantim kuru', 'pushtim kuru', 'vasham kuru', and 'maraya phat'."
+  },
+  {
+   "note_claim": "6a14e146311a9edd4621e623:note:1",
+   "url": "https://sourcelibrary.org/book/6a14e146311a9edd4621e414?page=527",
+   "book_title": "Tshamdrak rNying rgyud La",
+   "note": "the Buddha's cousin and rival, here as a demon king",
+   "checked_claim": "Devadatta as King of the Demons",
+   "correction": "Devadatta is the Buddha's cousin, but the 'Demon King' is usually Mara.",
+   "source_url": "https://84000.co/glossary/devadatta",
+   "evidence": "Devadatta was the Buddha's cousin and rival. The 'Demon King' (Mārarāja) is typically Mara, though Devadatta is sometimes associated with demonic forces in specific tantric narratives."
+  },
+  {
+   "note_claim": "6a14e1df311a9edd46224a16:note:91",
+   "url": "https://sourcelibrary.org/book/6a14e1df311a9edd462249f0?page=38",
+   "book_title": "Thor bu Bla ma nor bu rgya mtsho'i las byang sogs",
+   "note": "gloss: It is not arbitrary since it can be etymologically explained as \"having a canopy,\" \"monkey head,\" \"circular destruction,\" etc., by following the corresponding Sanskrit sounds",
+   "checked_claim": "Ugyen etymology includes 'having a canopy'",
+   "correction": "Udyāna (garden)",
+   "source_url": "https://en.wikipedia.org/wiki/Oddiyana",
+   "evidence": "Ugyen is the Tibetan for Oddiyana/Udyāna. While 'Udyāna' means garden, the note's folk etymologies like 'having a canopy' (Skt. sapidhāna?) are not standard Sanskrit meanings."
+  }
+ ],
+ "unverifiable": [
+  {
+   "note_claim": "69e76139cc48e59ad74ee5c7:note:0",
+   "url": "https://sourcelibrary.org/book/69e76139cc48e59ad74ee568?page=95",
+   "note": "A description of the retreat place: On the right, a high and steep rocky mountain where vultures, the kings of birds, soar. On the left, a lush and smooth meadow mountain where wild animals like deer, antelopes, and wild sheep naturally play and frolic at ease. In front is a fine forest where various flowers bloom, and within it, monkeys and apes practice their agility. Beautiful birds such as peacocks and thrushes sing melodic songs and dance with their wings. Below the front of the meditation ",
+   "checked_claim": "cave called Kata",
+   "source_url": "https://theeverestholiday.com/blog/milarepa-cave-tsum-valley-manaslu-trek/",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e76139cc48e59ad74ee5c8:note:0",
+   "url": "https://sourcelibrary.org/book/69e76139cc48e59ad74ee568?page=96",
+   "note": "I bow to the Guru. The Venerable Mila Repa himself placed his heart-sons each in their own mountain retreats, and the Venerable One himself went to the secluded place of Nyi Shang Gurta on the border of Nepal and Tibet. It was a high and formidable mountain, where snow and rain fell continuously from thick clouds and mist. On the right was a high and steep rocky mountain where wild beasts let out their roaring calls...",
+   "checked_claim": "Nyi Shang Gurta cave",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7613ccc48e59ad74ee6b1:note:3",
+   "url": "https://sourcelibrary.org/book/69e7613ccc48e59ad74ee65d?page=84",
+   "note": "referring to Milarepa and his primary heart-disciple",
+   "checked_claim": "father and son refers to Milarepa and heart-disciple",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e76142cc48e59ad74ee8c2:note:0",
+   "url": "https://sourcelibrary.org/book/69e76142cc48e59ad74ee8bd?page=5",
+   "note": "A rectangular manuscript leaf in the traditional Tibetan pothi format. Red ink ruling defines a central rectangular frame for text. Within this frame are two red circles spaced evenly from the center, marking the traditional locations for binding cords. On the far left, within the vertical margin created by the ruling, is a small amount of vertical Tibetan text indicating the folio or volume number.",
+   "checked_claim": "description of a pothi manuscript leaf",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e76156cc48e59ad74ef312:note:0",
+   "url": "https://sourcelibrary.org/book/69e76156cc48e59ad74ef30f?page=3",
+   "note": "This is the Sanskrit dharani of Ushnishavijaya rendered in Tibetan phonetics.",
+   "checked_claim": "Sanskrit dharani of Ushnishavijaya",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e76159cc48e59ad74ef458:note:1",
+   "url": "https://sourcelibrary.org/book/69e76159cc48e59ad74ef39b?page=189",
+   "note": "This is a humorous corruption of the Sanskrit: 'Homage to the Buddha, Homage to the Demons, Homage to the Dogs'.",
+   "checked_claim": "humorous corruption of Sanskrit homage to Buddha, demons, dogs",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e76168cc48e59ad74ef978:note:0",
+   "url": "https://sourcelibrary.org/book/69e76168cc48e59ad74ef921?page=87",
+   "note": "The following is a list of divine names, mostly female, with Tibetan glosses below the Sanskrit.",
+   "checked_claim": "list of divine names",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7619acc48e59ad74f0a27:note:0",
+   "url": "https://sourcelibrary.org/book/69e7619acc48e59ad74f091b?page=268",
+   "note": "referring to Shambala or a specific lineage site",
+   "checked_claim": "Victory Banner of the Bull refers to Shambala",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7619acc48e59ad74f0aa9:note:3",
+   "url": "https://sourcelibrary.org/book/69e7619acc48e59ad74f091b?page=398",
+   "note": "if speaking in terms of the Dharma numbers",
+   "checked_claim": "vulture and demon-bird in terms of Dharma numbers",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e761a2cc48e59ad74f0c9f:note:0",
+   "url": "https://sourcelibrary.org/book/69e761a2cc48e59ad74f0c93?page=12",
+   "note": "Interlinear note: Even in the activity, there is the burnt offering. Here it says to write the letters Akshara Bhirati. King Nyana Bhoris. First, the enhancement of the phone? And the activity wealth near the wheel reversed. After the King and Brahmin were cut off by the expansion, they died.",
+   "checked_claim": "King Nyana Bhoris and Akshara Bhirati",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e761aacc48e59ad74f0fdc:note:0",
+   "url": "https://sourcelibrary.org/book/69e761aacc48e59ad74f0f83?page=89",
+   "note": "a famous 8th-century Indian Buddhist monk",
+   "checked_claim": "master is a famous 8th-century Indian monk",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e761b0cc48e59ad74f11c4:note:0",
+   "url": "https://sourcelibrary.org/book/69e761b0cc48e59ad74f11ad?page=23",
+   "note": "A transliteration of the Sanskrit Vajrasattva mantra",
+   "checked_claim": "note is a transliteration of Vajrasattva mantra",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e761b6cc48e59ad74f13cb:note:0",
+   "url": "https://sourcelibrary.org/book/69e761b6cc48e59ad74f12f9?page=210",
+   "note": "marginal notes: Sound. Weakness. Sinking. Agitation.",
+   "checked_claim": "marginal notes: Sound. Weakness. Sinking. Agitation.",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e761c4cc48e59ad74f1914:note:0",
+   "url": "https://sourcelibrary.org/book/69e761c4cc48e59ad74f18a4?page=112",
+   "note": "Prostration to the glorious Arrogant Deities. I, Padmasambhava, have great faith in life in this world. I shall stabilize the clearing of many destructions. For that, here is the <term>dham tram tam</term>:",
+   "checked_claim": "dham tram tam is a mantra",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e761d6cc48e59ad74f1d8b:note:1",
+   "url": "https://sourcelibrary.org/book/69e761d6cc48e59ad74f1cfe?page=141",
+   "note": "inner text: one sees outer appearances as being like dreams and illusions; thus, without abandoning delusion, it is purified in its own place, and the afflictions are liberated in their own ground. By looking at the inner active mind of mindfulness without distraction",
+   "checked_claim": "inner text on seeing appearances as dreams",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e761d8cc48e59ad74f1ddb:note:2",
+   "url": "https://sourcelibrary.org/book/69e761d8cc48e59ad74f1dda?page=1",
+   "note": "A second folio continues the Sanskrit text with red marginal borders.",
+   "checked_claim": "second folio continues Sanskrit text",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e761e6cc48e59ad74f226d:note:0",
+   "url": "https://sourcelibrary.org/book/69e761e6cc48e59ad74f220f?page=94",
+   "note": "erroneously identified as Chinese in OCR",
+   "checked_claim": "erroneously identified as Chinese in OCR",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e761f0cc48e59ad74f25a8:note:0",
+   "url": "https://sourcelibrary.org/book/69e761f0cc48e59ad74f256e?page=58",
+   "note": "These are Sanskrit mantras for the Great Secret Gnosis Blood-Drinker, the Great Vajra Teacher, the Great Wrathful One, and the Garuda, intended to summon and subdue all malevolent forces.",
+   "checked_claim": "Sanskrit mantras for Great Secret Gnosis Blood-Drinker",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e761f2cc48e59ad74f2684:note:1",
+   "url": "https://sourcelibrary.org/book/69e761f2cc48e59ad74f2608?page=124",
+   "note": "The middle section contains three geometric diagrams used for ritual construction. On the left is a triangular structure with internal horizontal divisions. The center shows a small triangle with Tibetan instructions below. On the right is a complex nested triangular mandala, also known as a yantra, with sacred script inscribed along its borders to define the ritual space.",
+   "checked_claim": "middle section contains three geometric diagrams",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e761f2cc48e59ad74f2684:note:2",
+   "url": "https://sourcelibrary.org/book/69e761f2cc48e59ad74f2608?page=124",
+   "note": "The bottom section displays a sequence of ritual icons and offerings. From left to right: a ritual lamp or vessel for light offerings; a flaming jewel representing spiritual wealth; a triple-gem motif within flames representing the Buddha, Dharma, and Sangha; a flaming wish-fulfilling jewel; a seated Buddha figure in a meditative posture; and a seated monk or lama representing the lineage of teachers. On the far right is an eternal knot, symbolizing the interconnectedness of all things and the u",
+   "checked_claim": "ritual icons and offerings description",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e76212cc48e59ad74f31ac:note:0",
+   "url": "https://sourcelibrary.org/book/69e76212cc48e59ad74f316e?page=62",
+   "note": "translator: a grammatical note on the Sanskrit root",
+   "checked_claim": "grammatical note on the Sanskrit root",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7621dcc48e59ad74f3727:note:3",
+   "url": "https://sourcelibrary.org/book/69e7621dcc48e59ad74f370b?page=28",
+   "note": "Even if the \"Hum\" is born within a little, it is for the sake of those who delight in elaboration.",
+   "checked_claim": "Hum born within a little for those who delight in elaboration",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e763a0cc48e59ad74f398e:note:6",
+   "url": "https://sourcelibrary.org/book/69e763a0cc48e59ad74f391f?page=111",
+   "note": "refers to specific deities or practices related to Hayagriva and Kilaya",
+   "checked_claim": "Vairotsana, Namkhai Nyingpo, and Gyalwa Choyang refer to Hayagriva and Kilaya",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e779f70fc6fc955e35d50f:note:0",
+   "url": "https://sourcelibrary.org/book/69e779f70fc6fc955e35d49d?page=114",
+   "note": "This refers to the context of showing the fierce reversal and killing rituals as the primary focus. For daily practice and protection rituals, it is said: \"the last two hands hold a stupa.\" At the time of daily reversal practice: \"the last two hands clap with meteoric iron palms.\" For the ritual of suppression: \"the last two hands lift Mount Meru.\" For the <term>Zor</term> <gloss>magical weapon</gloss> ritual: \"the last two hands hold fierce weapons.\" One must understand these distinctions throu",
+   "checked_claim": "Drikungpa school places the Lord of the Family at the crown",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e779f70fc6fc955e35d511:note:8",
+   "url": "https://sourcelibrary.org/book/69e779f70fc6fc955e35d49d?page=116",
+   "note": "Say \"KHA HI\" for the wisdom offering. For the lineage offering, use the three verses as in the lineage prayer",
+   "checked_claim": "KHA HI for wisdom offering",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e77a260fc6fc955e35e174:note:1",
+   "url": "https://sourcelibrary.org/book/69e77a260fc6fc955e35e0bd?page=183",
+   "note": "Scholarly Note: The great master Khrona Ba said the Guru is the speech of Vajradhara. He said that one should think \"the Tathagata is the precious Beautiful Form\" without needing to visualize the specific color and shape. For specific substances, use water, grain, flour, and sweets.",
+   "checked_claim": "Khrona Ba said Guru is speech of Vajradhara",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e77a300fc6fc955e35e4ee:note:2",
+   "url": "https://sourcelibrary.org/book/69e77a300fc6fc955e35e4e8?page=6",
+   "note": "likely a lineage name or specific Chöd tradition",
+   "checked_claim": "lineage name or specific Chöd tradition",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e77a300fc6fc955e35e64f:note:0",
+   "url": "https://sourcelibrary.org/book/69e77a300fc6fc955e35e4e8?page=359",
+   "note": "The syllable 'Ni' refers to the nature of phenomena.",
+   "checked_claim": "Ni refers to the nature of phenomena",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e77a3c0fc6fc955e35eac1:note:0",
+   "url": "https://sourcelibrary.org/book/69e77a3c0fc6fc955e35eab7?page=10",
+   "note": "likely referring to Dhanvantari or a similar medical lineage founder",
+   "checked_claim": "Dhanvantari is a medical lineage founder",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e77a440fc6fc955e35ef7f:note:0",
+   "url": "https://sourcelibrary.org/book/69e77a440fc6fc955e35ef4a?page=53",
+   "note": "also known as the \"Servant of Existence\"",
+   "checked_claim": "Dza dhar bhir is the Servant of Existence",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e77a500fc6fc955e35f40e:note:3",
+   "url": "https://sourcelibrary.org/book/69e77a500fc6fc955e35f3be?page=80",
+   "note": "referring to his teacher or the King as a noble being",
+   "checked_claim": "minister referring to teacher or King as noble being",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e77a530fc6fc955e35f531:note:3",
+   "url": "https://sourcelibrary.org/book/69e77a530fc6fc955e35f4a2?page=143",
+   "note": "The Great One, the \"Legged-Tadpole,\" Scorpion, White Snake, \"Blinking Fish,\" the \"Demon-Telo,\" Vulture-feather, Parrot, Owl, the \"Six Excellences,\" Sweet Flag, Asafoetida, \"Do-ba,\" \"Bu-pag,\" \"Kyu-drengs,\" the \"Ten Non-chewing,\" \"Ear-poison\" (yellow and black), etc.",
+   "checked_claim": "identifications of medicinal substances in bShad rgyud",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e77a5e0fc6fc955e35f8a4:note:0",
+   "url": "https://sourcelibrary.org/book/69e77a5e0fc6fc955e35f863?page=65",
+   "note": "Note: This refers to the end of the previous chapter",
+   "checked_claim": "note refers to end of previous chapter",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e77a6c0fc6fc955e35fcd2:note:0",
+   "url": "https://sourcelibrary.org/book/69e77a6c0fc6fc955e35fc9b?page=55",
+   "note": "a prominent 12th-century master of the Kagyu lineage",
+   "checked_claim": "identification of a 12th-century Kagyu master",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e77a720fc6fc955e35ff6c:note:19",
+   "url": "https://sourcelibrary.org/book/69e77a720fc6fc955e35ff23?page=73",
+   "note": "an analogy for a small but powerful method, which is the meditation and recitation of Vajrasattva for purification.\" Thus he spoke. Since there are inconceivable commitments beyond the *Sprout of Samaya* <note>Dam tshig 'bru ngye",
+   "checked_claim": "Dam tshig 'bru ngye means Sprout of Samaya",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e77a7a0fc6fc955e3602f4:note:0",
+   "url": "https://sourcelibrary.org/book/69e77a7a0fc6fc955e360243?page=177",
+   "note": "May [they] be born in the pure land. By this merit, [may] myself and all others without exception [be liberated].",
+   "checked_claim": "note is a prayer for pure land birth",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e77a7f0fc6fc955e360425:note:0",
+   "url": "https://sourcelibrary.org/book/69e77a7f0fc6fc955e360417?page=14",
+   "note": "Two manuscript fragments are pinned to a gray archival backing. The upper fragment is an irregular rectangle containing approximately five lines of faint, tightly-packed cursive handwriting. The lower fragment is a long, narrow horizontal strip of parchment or paper with vertical red ruled lines at both ends, appearing otherwise blank or severely faded.",
+   "checked_claim": "description of manuscript fragments",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e77a9b0fc6fc955e360dc3:note:0",
+   "url": "https://sourcelibrary.org/book/69e77a9b0fc6fc955e360c62?page=353",
+   "note": "The text uses the King's own name here, possibly referring to the lineage or a self-reference",
+   "checked_claim": "note explains text usage of King's name",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e77aba0fc6fc955e361b8d:note:0",
+   "url": "https://sourcelibrary.org/book/69e77aba0fc6fc955e361a51?page=316",
+   "note": "<term>Dzogchen</term> sky, when one remains in the state where action and effort are non-dual, the person whose effort and striving have collapsed has no basis for action and remains in the emptiness of the doer. If that is me, then I am happy! Ha ha! It was merely my own universal labeling. I am primordially liberated from the basis of joy and sadness. There is no object of aspiration and no one to make aspirations. This is the state, this is the primordial, the Great Perfection of the nature. ",
+   "checked_claim": "note glosses dharanis as mnemonics",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e77abc0fc6fc955e361c47:note:1",
+   "url": "https://sourcelibrary.org/book/69e77abc0fc6fc955e361c3d?page=10",
+   "note": "Beyond the measure of the forms of reality, signs of the play of wisdom arise; many deities from the causeless state. Summon them with the mantra endowed with the four mudras. This is the separation of the protection from the back. Without self-control, summon and dissolve them. Visualize weapons descending greatly. Visualize the destruction of all harmful ones. The twenty life-perceptions are the recognition of reality. Meditate on the liberation of the mind that does not linger.",
+   "checked_claim": "no checkable fact in note",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e77ac80fc6fc955e3621dc:note:10",
+   "url": "https://sourcelibrary.org/book/69e77ac80fc6fc955e362163?page=121",
+   "note": "Whichever is the Perfectly Awakened Buddha",
+   "checked_claim": "no checkable fact in note",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e77ac80fc6fc955e3621df:note:0",
+   "url": "https://sourcelibrary.org/book/69e77ac80fc6fc955e362163?page=124",
+   "note": "In the tradition of inner grasping, it does not exist. Know this.",
+   "checked_claim": "no checkable fact in note",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e77ac80fc6fc955e362240:note:0",
+   "url": "https://sourcelibrary.org/book/69e77ac80fc6fc955e362163?page=221",
+   "note": "term: \"shang shi\" gloss: possibly refers to a Chinese lineage or count",
+   "checked_claim": "shang shi refers to Chinese lineage",
+   "source_url": "https://mentseekhang.org/tibetan-astro-science/",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e77ac80fc6fc955e362281:note:5",
+   "url": "https://sourcelibrary.org/book/69e77ac80fc6fc955e362163?page=286",
+   "note": "urine at the gate. In the south, the \"great meat\" of the wild yak and the meat of the deer are supreme. In the western wheel, the <term>rakta</term> of the five elements, the <term>masa</term> <gloss>flesh</gloss>, and the <term>rakta</term> and so forth: place the <term>rakta</term> at the gate. In the north, place the \"water of scent\" from the liberated one. Clarify the families of the medicinal ingredients and bless everything with this mantra: <term>OM SWA HUM HRI HA</term>. One should know ",
+   "checked_claim": "no checkable fact in note",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e77add0fc6fc955e362bb7:note:1",
+   "url": "https://sourcelibrary.org/book/69e77add0fc6fc955e362b62?page=85",
+   "note": "This buffalo-like <term>mahe</term> part here, the teacher of that is the heard-at-once <term>Mitri Manji</term>, and what enters into a person who has no measure for the time of the result.",
+   "checked_claim": "Mitri Manji is a teacher of the heard-at-once lineage",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e77ae70fc6fc955e362fa1:note:0",
+   "url": "https://sourcelibrary.org/book/69e77ae70fc6fc955e362f6f?page=50",
+   "note": "A collection of four distinct ritual diagrams on a single sheet. Top left: A tripod brazier with five flames. Top center: A circular mandala with a central triangle and four vajra-like ornaments at the cardinal points. Top right: A triangular ritual object with five horizontal markings. Bottom left: A complex circular mandala containing a central vase with flowers, surrounded by smaller circular motifs. Bottom right: A large, multi-layered circular mandala with flame-like outer borders and conce",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e77ae90fc6fc955e3630eb:note:0",
+   "url": "https://sourcelibrary.org/book/69e77ae90fc6fc955e362ff5?page=246",
+   "note": "corrupted Sanskrit: \"May it be auspicious,\" or \"It is finished.\"",
+   "checked_claim": "Siti Siti Mam means May it be auspicious or It is finished",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e782c5d93c1f6007504962:note:7",
+   "url": "https://sourcelibrary.org/book/69e782c5d93c1f6007504885?page=221",
+   "note": "Terma. Having invited and opened these yellow scrolls of Oddiyana written in the script of the <term>dakinis</term> <gloss>sky-goers/female wisdom spirits</gloss> from various treasure sites, he ripened all fortunate disciples. Through this, the marvelous lineage\n\n<leaf-break/>\n\nthe sound resounds. It clears away all heretical and wrong views and pleases the Victors through the benefit of beings. This is the supreme offering of Dharma. Regarding this inquiry in the formal letter <note>original: ",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e782ccd93c1f6007504be7:note:0",
+   "url": "https://sourcelibrary.org/book/69e782ccd93c1f6007504af7?page=240",
+   "note": "likely refers to the master Galwa Chokyang or a form of Padmasambhava",
+   "checked_claim": "Knowledge Holder with the Skull refers to Galwa Chokyang",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e782d1d93c1f6007504d7a:note:0",
+   "url": "https://sourcelibrary.org/book/69e782d1d93c1f6007504ce0?page=154",
+   "note": "possibly a reference to Vairocana or a specific lineage holder",
+   "checked_claim": "translator-son refers to Vairocana",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e782d1d93c1f6007504de7:note:0",
+   "url": "https://sourcelibrary.org/book/69e782d1d93c1f6007504ce0?page=263",
+   "note": "A diagram depicts an eight-petaled lotus mandala. In the center is the seed syllable or triple mantra representing enlightened body, speech, and mind. Each of the eight petals contains a specific mantra dedicated to various aspects of the Vajra family of deities, such as Vajrasattva (Diamond Being) and Vajraraja (Diamond King).",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e782d4d93c1f6007504e5d:note:1",
+   "url": "https://sourcelibrary.org/book/69e782d4d93c1f6007504deb?page=114",
+   "note": "The following is a series of Sanskrit-based mantras transliterated into Tibetan script, translated here as phonetic invocations",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e782d8d93c1f6007504fac:note:1",
+   "url": "https://sourcelibrary.org/book/69e782d8d93c1f6007504fa9?page=3",
+   "note": "referring to a lineage holder of the Gangtey monastery tradition",
+   "checked_claim": "Mchog-grub is a lineage holder of Gangtey",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e782dad93c1f600750508d:note:4",
+   "url": "https://sourcelibrary.org/book/69e782dad93c1f6007505046?page=71",
+   "note": "Sanskrit: \"Om Tsandra Rakshi Mandala Hum\"",
+   "checked_claim": "Sanskrit mantra for jewel throne",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e782ddd93c1f60075050f3:note:2",
+   "url": "https://sourcelibrary.org/book/69e782ddd93c1f60075050c0?page=51",
+   "note": "When this coincides with a hundred-fold Ganachakra Puja, or when the signs of virtue appear like the drawings of a self-liberated person, may it be endowed with the authority of the spoken word.",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e782ddd93c1f6007505119:note:0",
+   "url": "https://sourcelibrary.org/book/69e782ddd93c1f60075050c0?page=89",
+   "note": "This page contains a large, high-quality color illustration. The top row depicts three ritual tormas <gloss>sacrificial cakes</gloss> shaped into elaborate triangular forms. These are decorated with stylized flame borders in red and orange. The central torma is larger and more ornate, topped with a golden parasol and a trident, symbols of spiritual sovereignty and the destruction of the three poisons. To the left of the central torma stands a dark-skinned deity, likely a protector, holding ritua",
+   "checked_claim": "tormas and offering bowls in Heart-Practice Dispelling All Obstacles",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e782e2d93c1f600750531e:note:2",
+   "url": "https://sourcelibrary.org/book/69e782e2d93c1f6007505280?page=158",
+   "note": "Samaya is without fabrication, stainless and perfectly great. The benefit of beings is uninterrupted, the great benefit for others. Regarding the six practices of Great Compassion: the generation stage is the body of the Great Compassionate One, clearly visualized in a single moment of recollection, practicing the appearance as having no inherent nature. The recitation is the stage of mantra: <term>Om Mani Padme Hum</term>, practicing it as an uninterrupted sound. The completion stage is the min",
+   "checked_claim": "six heads of the fire-plain metaphor",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e782ead93c1f6007505608:note:1",
+   "url": "https://sourcelibrary.org/book/69e782ead93c1f60075055a8?page=96",
+   "note": "Latin/Sanskrit: \"Stifle the speech of all enemies\"",
+   "checked_claim": "Latin/Sanskrit translation of the mantra",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e782f2d93c1f600750580a:note:0",
+   "url": "https://sourcelibrary.org/book/69e782f2d93c1f60075057e6?page=36",
+   "note": "three syllables unclear. In the western direction, <term>Vishva Heruka</term> and the consort <term>Vishva Krotishvari Ma</term> sit in union. In the north, <term>Yaksha Heruka</term> and the consort <term>Yaksha Krotishvari</term>. Their body colors are also dark brown, and one should meditate on them being adorned with the eight glorious ornaments. For each of the eight <unclear>...</unclear> in the <unclear>...</unclear> direction is the nature of the body, <term>Yamantaka</term> <gloss>Slaye",
+   "checked_claim": "Vishva and Yaksha Heruka directions",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e782f2d93c1f600750584b:note:0",
+   "url": "https://sourcelibrary.org/book/69e782f2d93c1f60075057e6?page=101",
+   "note": "The document is a tabular historical record known as a <term>Lo rgyus</term> <gloss>chronicle/history</gloss>. The grid structure suggests a chronological mapping of names, events, or lineages. Transcribing the individual Tibetan syllables is not feasible at this resolution.",
+   "checked_claim": "Lo rgyus means chronicle/history",
+   "source_url": "https://library.bdrc.io/show/static/glossary.html",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e782f2d93c1f6007505868:note:0",
+   "url": "https://sourcelibrary.org/book/69e782f2d93c1f60075057e6?page=130",
+   "note": "The document consists of three separate folios mounted for display. The text is organized in a tabular grid format, likely representing a lineage list or chronological record associated with the <term>Lo rgyus rin po che'i phreng ba</term> <gloss>The Precious Garland of History</gloss>.",
+   "checked_claim": "Lo rgyus rin po che'i phreng ba title",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e782f2d93c1f600750586d:note:0",
+   "url": "https://sourcelibrary.org/book/69e782f2d93c1f60075057e6?page=135",
+   "note": "The document is a series of three horizontal manuscript strips in the <term>pecha</term> <gloss>traditional Tibetan loose-leaf book</gloss> style. Due to the nature of the script and the degradation of the paper, specific character-by-character transcription is highly prone to error. The content appears to be a chronological record or a lineage table.",
+   "checked_claim": "pecha style manuscript strips",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e78328d93c1f6007506212:note:2",
+   "url": "https://sourcelibrary.org/book/69e78328d93c1f60075061d1?page=65",
+   "note": "here likely referring to the teacher Padmabhadra",
+   "checked_claim": "Padmabhadra identification",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7832fd93c1f60075064a0:note:0",
+   "url": "https://sourcelibrary.org/book/69e7832fd93c1f600750643d?page=99",
+   "note": "The text here contains a series of Sanskrit-based seed syllables and mantras: A A DU NA HE HI MA A YA HI A A HI A A HI A A I HI LA A HI A; A I A A PU BHA NI HI BHA HU A A A SHCHA eight. I HUM and for the Glorious Lady HRIG and the White Parasol, the Dweller of the Sugata's Abode, the wanderer Na Pi.",
+   "checked_claim": "mantra transcription and Na Pi",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7832fd93c1f60075064a8:note:5",
+   "url": "https://sourcelibrary.org/book/69e7832fd93c1f600750643d?page=107",
+   "note": "Sanskrit: O Vajra, all wicked ones, come!",
+   "checked_claim": "Sanskrit mantra translation",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e783390fc6fc955e36313d:note:3",
+   "url": "https://sourcelibrary.org/book/69e783390fc6fc955e363107?page=54",
+   "note": "Scholars note: When the medicine first ripens and stabilizes the fever, follow with strong cooling agents to ensure the heat breaks. This is the oral tradition for chasing the fever to its limit.",
+   "checked_claim": "sky-soaring treatment oral tradition",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7833c0fc6fc955e36325b:note:0",
+   "url": "https://sourcelibrary.org/book/69e7833c0fc6fc955e363242?page=25",
+   "note": "Padmasambhava, \na son of the Uddiyana Topknot-Wearers <note>scholars/siddhas",
+   "checked_claim": "Uddiyana Topknot-Wearers identification",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e786a36846fc56c490e6ca:note:1",
+   "url": "https://sourcelibrary.org/book/69e786a36846fc56c490e648?page=130",
+   "note": "The text repeats the line: Even after being free from the effort of empowerment and authority, there is no traveling the path.",
+   "checked_claim": "textual repetition",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e786a74a6785cfd60c87ae:note:0",
+   "url": "https://sourcelibrary.org/book/69e786a74a6785cfd60c873c?page=114",
+   "note": "a prominent master in the Dzogchen lineage",
+   "checked_claim": "Indian master in Dzogchen lineage",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e786ae4a6785cfd60c8d04:note:7",
+   "url": "https://sourcelibrary.org/book/69e786ae4a6785cfd60c8bb3?page=337",
+   "note": "meta: This likely refers to a non-human or symbolic language",
+   "checked_claim": "non-human or symbolic language",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e786b04a6785cfd60c8dfa:note:1",
+   "url": "https://sourcelibrary.org/book/69e786b04a6785cfd60c8d27?page=211",
+   "note": "historical: likely a reference to a translator like Nyak Jnanakumara or similar early figures",
+   "checked_claim": "Shag-yab is likely Nyak Jnanakumara",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e786b76846fc56c490e8db:note:0",
+   "url": "https://sourcelibrary.org/book/69e786b76846fc56c490e7bc?page=287",
+   "note": "Sanskrit title: Kaya Vak Chitta Vajra Tika Sarva Maba Ta Tantra Nama",
+   "checked_claim": "Sanskrit title of the tantra",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e786e16846fc56c490fb7d:note:3",
+   "url": "https://sourcelibrary.org/book/69e786e16846fc56c490fb0c?page=113",
+   "note": "term: Heruka. Thus have I heard at one time: In the vast expanse of the secret lotus of <term>Samantabhadrī</term> <gloss>The All-Good Consort</gloss>, the creator <term>Samantabhadra</term> <gloss>The All-Good Father</gloss> as <term>Heruka</term>, non-dual with the mother <term>Krodhīśvarī</term>, and <term>Buddha Heruka</term>, <term>Ratna Heruka</term>, <term>Padma Heruka</term>, <term>Karma Heruka</term>, <term>Buddhaśvarī</term>, <term>Ratnaśvarī</term>, <term>Padmaśvarī</term>, and <term>",
+   "checked_claim": "no checkable fact",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e786e16846fc56c490fc51:note:0",
+   "url": "https://sourcelibrary.org/book/69e786e16846fc56c490fb0c?page=325",
+   "note": "The following is a Sanskrit-based mantra or title invocation:",
+   "checked_claim": "no checkable fact",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e786e66846fc56c49100cf:note:0",
+   "url": "https://sourcelibrary.org/book/69e786e66846fc56c49100bb?page=20",
+   "note": "The Hundred Syllable Mantra of Vajrasattva, left in Sanskrit transliteration as per the manual's instruction to provide the technical/foreign terms but here the primary text is the mantra itself.",
+   "checked_claim": "no checkable fact",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e786e76846fc56c4910288:note:0",
+   "url": "https://sourcelibrary.org/book/69e786e76846fc56c49101ed?page=155",
+   "note": "Sanskrit: Come, O Blessed One, Great Compassionate One, behold! Ho! The Bond!",
+   "checked_claim": "Sanskrit translation of the passage",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e786e76846fc56c4910288:note:1",
+   "url": "https://sourcelibrary.org/book/69e786e76846fc56c49101ed?page=155",
+   "note": "Sanskrit: Om Vajra Flame Jewel Mandala Bhrum",
+   "checked_claim": "Sanskrit mantra identification",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e786f36846fc56c4910cd9:note:0",
+   "url": "https://sourcelibrary.org/book/69e786f36846fc56c4910c35?page=164",
+   "note": "refers to a specific ethnic or regional group, likely central Asian",
+   "checked_claim": "refers to a central Asian ethnic group",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e786fe4a6785cfd60c98ce:note:2",
+   "url": "https://sourcelibrary.org/book/69e786fe4a6785cfd60c98b4?page=26",
+   "note": "This follows the verses of the Sutra of the Noble One Vajra-Holder, as it is the common intention of the Noble Ones.",
+   "checked_claim": "follows Sutra of the Noble One Vajra-Holder",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e787044a6785cfd60c9dfc:note:1",
+   "url": "https://sourcelibrary.org/book/69e787044a6785cfd60c9da0?page=92",
+   "note": "meaning the Tseg-lung lineage or ritual site",
+   "checked_claim": "Tseg-lung means stacked valley lineage",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e787114a6785cfd60ca860:note:0",
+   "url": "https://sourcelibrary.org/book/69e787114a6785cfd60ca6f8?page=360",
+   "note": "The Ru refers to a class of powerful spirits or a specific lineage within the demon kings",
+   "checked_claim": "Ru refers to a class of spirits or demon lineage",
+   "source_url": "https://www.tsemrinpoche.com/wp-content/uploads/2018/07/cover-Rene-de-Nebesky-Wojkowitz-Oracles-and-Demons-of-Tibet-The-Cult-and-Iconography-of-the-Tibetan-Protective-Deities-195x300.jpg",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7878a4a6785cfd60cc061:note:0",
+   "url": "https://sourcelibrary.org/book/69e7878a4a6785cfd60cc031?page=48",
+   "note": "A rectangular, light-colored, textured piece of paper or parchment is pinned to a dark grey, fabric-covered board. The paper has two faint red vertical lines near its left and right edges. The board has two vertical rows of six clear pushpins each, with faint vertical markings on the fabric to the left of the pins.",
+   "checked_claim": "description of a blank page with paper and pins",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e787944a6785cfd60cc4af:note:2",
+   "url": "https://sourcelibrary.org/book/69e787944a6785cfd60cc471?page=62",
+   "note": "The text here becomes fragmentary and includes interlinear glosses: \"...put some gold coins in its cheek, named it like the two bodies of his own reflection, whatever appears two births are put in, the son of birth produces the reflected body. Thus at the time of accomplishment the teacher master did not fold, did not obtain various things, there are no gold coins. That is the recitation of accomplishment from the treasury of the Omniscient One. Also the commitment of the nature of the Omniscien",
+   "checked_claim": "fragmentary text and interlinear glosses",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7879d4a6785cfd60cc7c1:note:0",
+   "url": "https://sourcelibrary.org/book/69e7879d4a6785cfd60cc76f?page=82",
+   "note": "This is the speech of the Great Treasure Revealer.",
+   "checked_claim": "speech of the Great Treasure Revealer",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e787cc4a6785cfd60cd880:note:1",
+   "url": "https://sourcelibrary.org/book/69e787cc4a6785cfd60cd756?page=298",
+   "note": "Long series of Sanskrit-derived syllables",
+   "checked_claim": "Sanskrit-derived syllables",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e787d04a6785cfd60cdb3d:note:0",
+   "url": "https://sourcelibrary.org/book/69e787d04a6785cfd60cd9ea?page=339",
+   "note": "A large diagram depicts a square-enclosed circular mandala. In the center of the circle is the seed syllable Hum. Around this center are concentric rings containing the syllables Om, A, and Hum. The outer square enclosure features ritual vases placed at the four cardinal points.",
+   "checked_claim": "mandala diagram description",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e787e24a6785cfd60ce0ee:note:0",
+   "url": "https://sourcelibrary.org/book/69e787e24a6785cfd60ce047?page=167",
+   "note": "This page contains a geometric ritual diagram consisting of two sets of concentric circles. Each set is composed of four distinct rings, arranged horizontally. These structures represent the foundational layers of a <term>mandala</term> <gloss>a sacred geometric map of a deity's palace or the universe</gloss> used for meditative visualization or ritual placement of offerings.",
+   "checked_claim": "geometric ritual diagram",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e788044a6785cfd60ce97a:note:0",
+   "url": "https://sourcelibrary.org/book/69e788044a6785cfd60ce94f?page=43",
+   "note": "The text uses the abbreviation symbol for repetition here: \"is the focus of meditation... the offering to beings... the fulfillment of the oath-bound... the establishment of the Dharma protectors... the turning back of appearance and existence... the right path of the male demons... the left path of the female demons... the path of the general demons...\"",
+   "checked_claim": "abbreviation symbol for repetition",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e788114a6785cfd60cee42:note:0",
+   "url": "https://sourcelibrary.org/book/69e788114a6785cfd60cee11?page=49",
+   "note": "likely referring to the disciple Kunga or the state of \"All-Joy\"",
+   "checked_claim": "disciple Kunga",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7881b4a6785cfd60cf350:note:2",
+   "url": "https://sourcelibrary.org/book/69e7881b4a6785cfd60cf309?page=71",
+   "note": "refers to the refrain \"Accept this offering\"",
+   "checked_claim": "refrain Accept this offering",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7881c4a6785cfd60cf364:note:1",
+   "url": "https://sourcelibrary.org/book/69e7881c4a6785cfd60cf35b?page=9",
+   "note": "And so forth, as before, purify the thread-cross substances with the six mantras and six mudras. Invite, offer the \"Pure Grain\" offering, and praise. After the music descends, hold for three beats. The melody is the \"Great Rough One.\"",
+   "checked_claim": "ritual melody Great Rough One",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7881c4a6785cfd60cf366:note:0",
+   "url": "https://sourcelibrary.org/book/69e7881c4a6785cfd60cf35b?page=11",
+   "note": "Having generated conviction, the inner food is offered. This is the offering-base of the Precious One:",
+   "checked_claim": "offering-base of the Precious One",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e788334a6785cfd60cfd76:note:0",
+   "url": "https://sourcelibrary.org/book/69e788334a6785cfd60cfd28?page=78",
+   "note": "likely referring to the Four Jewels or specific lineage masters",
+   "checked_claim": "Four peerless precious ones refers to specific lineage masters",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7883a4a6785cfd60cffb7:note:0",
+   "url": "https://sourcelibrary.org/book/69e7883a4a6785cfd60cff08?page=175",
+   "note": "corrupt Sanskrit for Vyākaraṇamūlatrimatā",
+   "checked_claim": "Vyākaraṇamūlatrimatā is the Sanskrit for Sum rtags",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7883e4a6785cfd60d006b:note:3",
+   "url": "https://sourcelibrary.org/book/69e7883e4a6785cfd60d0045?page=38",
+   "note": "One should also perform the extensive praise and summoning for the drinking during the ritual cake of the weapon. Thus, summon fiercely. Then, for the four paths of the weapon:",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7883e4a6785cfd60d006c:note:1",
+   "url": "https://sourcelibrary.org/book/69e7883e4a6785cfd60d0045?page=39",
+   "note": "Thus, perform the recitation. The weapon of the dagger, the weapon of the stone, and the ritual cake weapon are cast. In meditative concentration, think that the assembly of oath-bound messengers has formed an army; diseases, weapons, and poison weapons are agitated like a hailstorm and fall like lightning, so that the enemy's homeland and surroundings are ruined, turned to ash, and leave no trace. Then, for the pressing down: press the oath-breaking spirit into the head and lower body of the ef",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7884e4a6785cfd60d0660:note:0",
+   "url": "https://sourcelibrary.org/book/69e7884e4a6785cfd60d0612?page=78",
+   "note": "The following lines consist of Sanskrit-based mantras and seed syllables for summoning and binding spirits: Ma Ma, Ru Lu, Maha Deva, Rakta, Amrita, etc.",
+   "checked_claim": "Blood-Vajra refers to a specific deity",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7884e4a6785cfd60d0662:note:1",
+   "url": "https://sourcelibrary.org/book/69e7884e4a6785cfd60d0612?page=80",
+   "note": "A rectangular fragment of traditional brocade textile featuring a repeating geometric and floral pattern in red, blue, and gold tones, mounted onto a paper backing. The textile is heavily frayed and torn, particularly along the left and bottom edges, revealing the underlying paper.",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7885f4a6785cfd60d0be3:note:2",
+   "url": "https://sourcelibrary.org/book/69e7885f4a6785cfd60d0bad?page=54",
+   "note": "Sanskrit: Om agni krodhaye [name of enemy] maraya jvala ram sindhu phat hum.",
+   "checked_claim": "Sanskrit mantra for Guru Dragpo",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7885f4a6785cfd60d0be3:note:3",
+   "url": "https://sourcelibrary.org/book/69e7885f4a6785cfd60d0bad?page=54",
+   "note": "Sanskrit: Om agnaye tra jvala gatstsha muh.",
+   "checked_claim": "Sanskrit mantra for Guru Dragpo",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7885f4a6785cfd60d0be3:note:7",
+   "url": "https://sourcelibrary.org/book/69e7885f4a6785cfd60d0bad?page=54",
+   "note": "Sanskrit: Om agne krodha saparivara balita pu...",
+   "checked_claim": "Sanskrit mantra for Guru Dragpo",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7885f4a6785cfd60d0be4:note:0",
+   "url": "https://sourcelibrary.org/book/69e7885f4a6785cfd60d0bad?page=55",
+   "note": "Sanskrit: Om ehyehi bhagavan dza hum bam hoh agni jnana samaye manta karunika dratshya hoh.",
+   "checked_claim": "Sanskrit mantra for Guru Dragpo",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7885f4a6785cfd60d0be4:note:2",
+   "url": "https://sourcelibrary.org/book/69e7885f4a6785cfd60d0bad?page=55",
+   "note": "Sanskrit: Agnaye a la la pra hi tsa hoh.",
+   "checked_claim": "Sanskrit mantra for Guru Dragpo",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7885f4a6785cfd60d0be4:note:3",
+   "url": "https://sourcelibrary.org/book/69e7885f4a6785cfd60d0bad?page=55",
+   "note": "Sanskrit: Om agnaye saparivara argham to shabda pantsa kama kuna amrita rakta balingta pudza khahih.",
+   "checked_claim": "Sanskrit mantra for Guru Dragpo",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7885f4a6785cfd60d0be4:note:5",
+   "url": "https://sourcelibrary.org/book/69e7885f4a6785cfd60d0bad?page=55",
+   "note": "Sanskrit: Om agnaye divya divya vishuddhe maha shri havya kavahanaye.",
+   "checked_claim": "Sanskrit mantra for Guru Dragpo",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7885f4a6785cfd60d0be4:note:11",
+   "url": "https://sourcelibrary.org/book/69e7885f4a6785cfd60d0bad?page=55",
+   "note": "Sanskrit: Om vajra yaksha krodha sarva dushtam [name of person] nri tri jvala ram.",
+   "checked_claim": "Sanskrit mantra for Guru Dragpo",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7885f4a6785cfd60d0be6:note:1",
+   "url": "https://sourcelibrary.org/book/69e7885f4a6785cfd60d0bad?page=57",
+   "note": "Sanskrit: Om agne krodha saparivara balingta putsa khahi.",
+   "checked_claim": "Sanskrit mantra for Guru Dragpo",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7885f4a6785cfd60d0be6:note:10",
+   "url": "https://sourcelibrary.org/book/69e7885f4a6785cfd60d0bad?page=57",
+   "note": "Sanskrit: Om pantsa kama guna ah hum. Ram yam kham ha ho hrih.",
+   "checked_claim": "Sanskrit mantra for Guru Dragpo",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7885f4a6785cfd60d0be6:note:11",
+   "url": "https://sourcelibrary.org/book/69e7885f4a6785cfd60d0bad?page=57",
+   "note": "Sanskrit: Om agnaye saparivara argham to shabta sarva pantsa amrita rakta balingta pudza khahi.",
+   "checked_claim": "Sanskrit mantra for Guru Dragpo",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7885f4a6785cfd60d0be6:note:13",
+   "url": "https://sourcelibrary.org/book/69e7885f4a6785cfd60d0bad?page=57",
+   "note": "Sanskrit: Om vajra agne shanting kuru ye svaha.",
+   "checked_claim": "Sanskrit mantra for Guru Dragpo",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7885f4a6785cfd60d0be6:note:14",
+   "url": "https://sourcelibrary.org/book/69e7885f4a6785cfd60d0bad?page=57",
+   "note": "Sanskrit: Om vajra agne shanting kuru ye svaha.",
+   "checked_claim": "Sanskrit mantra for Guru Dragpo",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7885f4a6785cfd60d0bed:note:1",
+   "url": "https://sourcelibrary.org/book/69e7885f4a6785cfd60d0bad?page=64",
+   "note": "Sanskrit: Hum bishva vajra krodha jvala madhala hum phat.",
+   "checked_claim": "Sanskrit mantra for Guru Dragpo",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7885f4a6785cfd60d0bee:note:0",
+   "url": "https://sourcelibrary.org/book/69e7885f4a6785cfd60d0bad?page=65",
+   "note": "Sanskrit: Om vajra krota heruka hum phat.",
+   "checked_claim": "Sanskrit mantra for Guru Dragpo",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7885f4a6785cfd60d0bee:note:1",
+   "url": "https://sourcelibrary.org/book/69e7885f4a6785cfd60d0bad?page=65",
+   "note": "Sanskrit: Vajra ankusha dza. Ratna pasha hum. Padma phoka bam. Karma garbha ho.",
+   "checked_claim": "Sanskrit mantra for Guru Dragpo",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7885f4a6785cfd60d0bee:note:3",
+   "url": "https://sourcelibrary.org/book/69e7885f4a6785cfd60d0bad?page=65",
+   "note": "Sanskrit: Om vajra kili kilya abhishintsa om.",
+   "checked_claim": "Sanskrit mantra for Guru Dragpo",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7885f4a6785cfd60d0bee:note:4",
+   "url": "https://sourcelibrary.org/book/69e7885f4a6785cfd60d0bad?page=65",
+   "note": "Sanskrit: Om vajra kili kila ya vakka abhishintsa ah.",
+   "checked_claim": "Sanskrit mantra for body liberation",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7885f4a6785cfd60d0bee:note:5",
+   "url": "https://sourcelibrary.org/book/69e7885f4a6785cfd60d0bad?page=65",
+   "note": "Sanskrit: Om vajra kili kila ya tstitta abhishintsa hum.",
+   "checked_claim": "Sanskrit mantra for speech liberation",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7885f4a6785cfd60d0bee:note:6",
+   "url": "https://sourcelibrary.org/book/69e7885f4a6785cfd60d0bad?page=65",
+   "note": "Sanskrit: Om vajra kili kila ya. E yam ram spharana phat. Thum ti tstitta ni sam ha ra dza hum.",
+   "checked_claim": "Sanskrit mantra for wisdom heroes",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e788644a6785cfd60d0df5:note:3",
+   "url": "https://sourcelibrary.org/book/69e788644a6785cfd60d0dbb?page=58",
+   "note": "Having bowed to all the supreme speakers, this great lamp which dispels the darkness of Sanskrit speech is given here. Like a golden needle removing a cataract from the eye, may those of good fortune who seek to preserve the pure eye of Dharma be joyful. I heart-feltly perform this dance of compassion in the heavenly courtyard. For the sake of the wonderful spectacle of Menaka's transformations, let those with the eye of intelligence be glad.",
+   "checked_claim": "note content check",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e788644a6785cfd60d0dfe:note:0",
+   "url": "https://sourcelibrary.org/book/69e788644a6785cfd60d0dbb?page=67",
+   "note": "referring to a major monastery like Samye or a specific regional seat",
+   "checked_claim": "Eastern of Tibet monastery",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e788854a6785cfd60d1237:note:3",
+   "url": "https://sourcelibrary.org/book/69e788854a6785cfd60d1234?page=3",
+   "note": "A manuscript page featuring eight hand-drawn and painted ritual offerings, known as Tormas (gtor ma). The illustrations are colored with red pigment and outlined in black ink. The top row contains: 1. A wrathful deity face (Kirtimukha) with stylized curls and bared teeth, positioned above a skull-cup or offering bowl. 2. A triangular torma surrounded by stylized flames. 3. A large bulbous torma with a base decorated with a brick-like or masonry pattern. 4. An uncolored outline of a bulbous torma",
+   "checked_claim": "torma illustration description",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e788854a6785cfd60d1238:note:0",
+   "url": "https://sourcelibrary.org/book/69e788854a6785cfd60d1234?page=4",
+   "note": "This folio page consists of a series of six hand-drawn illustrations of ritual objects, identified as tormas (votive offerings in Tibetan Buddhist traditions). The drawings are arranged horizontally across the top half of the page, executed in black ink with red pigment accents. Starting from the left: 1. A shallow tray holding a cluster of five flame-like or petal-shaped red structures. 2. A tray supporting a central, pointed pillar structure colored red, flanked by smaller base elements. 3. A ",
+   "checked_claim": "torma illustration description",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e788a14a6785cfd60d13fb:note:1",
+   "url": "https://sourcelibrary.org/book/69e788a14a6785cfd60d13f3?page=8",
+   "note": "perhaps referring to the king, his ministers, and his subjects, or the three spheres of Buddhist practice",
+   "checked_claim": "three circles meaning",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e788c64a6785cfd60d1e6c:note:0",
+   "url": "https://sourcelibrary.org/book/69e788c64a6785cfd60d1e69?page=3",
+   "note": "refers to the Jewel Ocean of Guru Sadhana",
+   "checked_claim": "Jewel Ocean of Guru Sadhana",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e788dd4a6785cfd60d2055:note:2",
+   "url": "https://sourcelibrary.org/book/69e788dd4a6785cfd60d2045?page=16",
+   "note": "not the Buddhist disciple, but a figure of the same name in this context",
+   "checked_claim": "The Great Lord identity",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e788dd4a6785cfd60d205b:note:5",
+   "url": "https://sourcelibrary.org/book/69e788dd4a6785cfd60d2045?page=22",
+   "note": "Jetsun Dragpa Gyaltsen said that for the purpose of meditation, one should meditate in front, in the center of the activity house. Even if the light of the rising stairs and the <term>a-si-ka-li</term> <gloss>vowels and consonants</gloss> are absent, it is acceptable. Since that \"heart-fire\" is the scatterer of demons, it seems necessary to recite it. By the Great Seven, the Ornament of the Great Venerable Scholar's accomplishment cycle was explained by Shinje Dra, and the opportunity to draw it",
+   "checked_claim": "a-si-ka-li meaning",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e789154a6785cfd60d2aff:note:4",
+   "url": "https://sourcelibrary.org/book/69e789154a6785cfd60d2aed?page=18",
+   "note": "interlinear: \"that too does not exist. The domain of form and so forth does not exist, and the organs also do not exist. Since one knows it as a dream while dreaming, here, just as in the waking state, as long as one has not woken up, these three exist for that person. Once awakened, the three do not exist. Likewise, for those noble ones who have awakened from the sleep of ignorance, the three also do not exist.\"",
+   "checked_claim": "interlinear commentary on dream existence",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e789bc4a6785cfd60d2da9:note:3",
+   "url": "https://sourcelibrary.org/book/69e789bc4a6785cfd60d2d9a?page=15",
+   "note": "Saying such extensive verses of auspiciousness, one should make everything excellent. This ritual for the Root Sadhana of Phurba was composed by the great Treasure Revealer Guru himself. At that time, because the sealing commands had not been fully released, there were minor hidden or scrambled parts. Fearing these might become corrupted over time, I prayed for a long time to the Three Roots and the ocean of Victors along with feast offerings.",
+   "checked_claim": "ritual composed by Guru himself",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e789bc4a6785cfd60d2e13:note:0",
+   "url": "https://sourcelibrary.org/book/69e789bc4a6785cfd60d2d9a?page=121",
+   "note": "The image depicts the outer cover of a traditional Tibetan book, known as a pecha. The cover is wrapped in a thick, red fabric brocade. The fabric is decorated with a detailed floral pattern featuring blossoms in shades of pink, blue, and white, surrounded by green leaves and scrolling vines. This type of decorative textile is traditionally used to protect sacred manuscripts.",
+   "checked_claim": "image depicts pecha cover",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e78a124a6785cfd60d2f6a:note:0",
+   "url": "https://sourcelibrary.org/book/69e78a124a6785cfd60d2f63?page=7",
+   "note": "An image description of a circular purple ink seal containing a floral pattern and illegible Tibetan or Sanskrit script.",
+   "checked_claim": "image description of purple seal",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e78aad4a6785cfd60d4bec:note:1",
+   "url": "https://sourcelibrary.org/book/69e78aad4a6785cfd60d4b4b?page=161",
+   "note": "natural purity and purity from adventitious stains is reached, the qualities that resided in the ground are made manifest. This is the Result.\nThe *Internal Tantra* says: \"The perfection of accomplishment is called the Result.\" Because this never ceases, it is called \"Tantra.\" Regarding this, the former text says:\n\"The essence of the result is Body, Speech, and Mind,\nQualities, and Activities—these are the five aspects.\nEach of these also has five sub-categories.\"\nSince each of the five—Body, Sp",
+   "checked_claim": "definition of Mandala",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e78af04a6785cfd60d4dd4:note:0",
+   "url": "https://sourcelibrary.org/book/69e78af04a6785cfd60d4db5?page=31",
+   "note": "Heruka with the consort symbolizes the purification of the moon. The deity body, which is the indivisibility of the Vajradhara's moon and mind, is the symbol. The Samadhisattva holding the skull-cup is the symbol of the fruit, the Dharmakaya.",
+   "checked_claim": "Heruka symbolizes moon purification",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e78af04a6785cfd60d4dd7:note:1",
+   "url": "https://sourcelibrary.org/book/69e78af04a6785cfd60d4db5?page=34",
+   "note": "a Tibetan idiom meaning to apply things indiscriminately or without proper lineage authorization",
+   "checked_claim": "Tibetan idiom about hat model",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e78b5c4a6785cfd60d54df:note:0",
+   "url": "https://sourcelibrary.org/book/69e78b5c4a6785cfd60d5329?page=438",
+   "note": "A large mandala diagram features a six-pointed star, known as a hexagram or Dharmodayo, with a central vajra symbol. The mandala is colored with red, blue, and green concentric rings and decorative elements. To the right, a rectangular illustration depicts three snow-capped mountains with a waterfall flowing from the center, with a small symbol at the peak of the central mountain. This likely represents the pure realm of Khechari or the Himalayan environment of the practitioners.",
+   "checked_claim": "image description of hexagram mandala",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e78b744a6785cfd60d5751:note:0",
+   "url": "https://sourcelibrary.org/book/69e78b744a6785cfd60d5738?page=25",
+   "note": "refers to the Guru's name, likely Bodhibhadra or similar",
+   "checked_claim": "Guru's name likely Bodhibhadra",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e78f3f6cebc58893321d0f:note:1",
+   "url": "https://sourcelibrary.org/book/69e78f3f6cebc58893321c7e?page=145",
+   "note": "literally \"Blood-Drinking Deity of Trade\"",
+   "checked_claim": "Tsong-lha Trakthung means Blood-Drinking Deity of Trade",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e78f659adaf7b110e39b0c:note:0",
+   "url": "https://sourcelibrary.org/book/69e78f659adaf7b110e39aac?page=96",
+   "note": "A detailed architectural line drawing on parchment depicts the geometric layout for a Stupa or mandala. A central lotus-like motif is enclosed by concentric squares and rectangular gate structures known as toranas. A red ink grid provides the primary axis and perimeter markers for the monument's base and tiers.",
+   "checked_claim": "Drawing depicts layout for Stupa or mandala",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7928780b52390feb162eb:note:0",
+   "url": "https://sourcelibrary.org/book/69e7928780b52390feb162e9?page=2",
+   "note": "The upper half of the image displays the inner side of a manuscript cover. It features a blue textile with a white scrolling vine and floral pattern, including a prominent green and yellow leaf motif. The textile is mounted onto a light-colored paper backing.",
+   "checked_claim": "Image displays inner side of manuscript cover",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7962f80b52390feb18ef6:note:0",
+   "url": "https://sourcelibrary.org/book/69e7962f80b52390feb18ef5?page=1",
+   "note": "A green textile cover features a repeating dark purple or maroon floral pattern of stylized roses and foliage. This is the protective outer board for a pothi, a traditional long-format loose-leaf manuscript.",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7963880b52390feb18fd8:note:0",
+   "url": "https://sourcelibrary.org/book/69e7963880b52390feb18fd7?page=1",
+   "note": "A woodcut depicts a long, narrow rectangular manuscript cover or wrapping made of red fabric. A bundle of golden-brown threads or a cord is attached to the upper edge. On the far left, there is a handwritten archival marking.",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7963b80b52390feb19034:note:3",
+   "url": "https://sourcelibrary.org/book/69e7963b80b52390feb18ff4?page=64",
+   "note": "Hum. Splendor is to be abandoned, and if you ask why this sign appears as non-false: these who have even a little devotion, all is the method for finding the eighth level. Completely, through this meaning, even if the son, self, and others benefit the mind, until one transcends grasping at relative truth. If you ask if this will occur in the future through such a door, the accomplishment of this meaning. In the eyes of the mind accomplished in the relative. Hum.",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7963b80b52390feb19034:note:5",
+   "url": "https://sourcelibrary.org/book/69e7963b80b52390feb18ff4?page=64",
+   "note": "4. Analyzing the eyebrows and so forth as truly established, they appear to the essence of mistaken knowledge. 2. Because they go to truth. Upon analysis, those two which are truly established are established as labels by thought. Suffering is the reality, the complete application of true establishment and the promise of truth.",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7963b80b52390feb19036:note:1",
+   "url": "https://sourcelibrary.org/book/69e7963b80b52390feb18ff4?page=66",
+   "note": "1. For the sake of being free from conceptual proliferation, which is the cause of the manifest existence or non-existence of knowledge. The knowledge of the producer. Knowing the object. It has become the sphere of the consequence. In the middle, because it becomes emptiness.",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7964880b52390feb1935f:note:2",
+   "url": "https://sourcelibrary.org/book/69e7964880b52390feb1934e?page=17",
+   "note": "trikaya of the path and for the sake of accomplishing the resultant state of the three bodies. Second, there are two parts: the explanation of taking death as the path of the <term>Dharmakaya</term>, and the explanation of taking the intermediate state as the <term>Sambhogakaya</term> <gloss>Enjoyment Body</gloss> and taking rebirth as the <term>Nirmanakaya</term> <gloss>Emanation Body</gloss>. Regarding the first, there are three in the ground...\n\n<leaf-break/>\n\nFrom the Clear Light where all w",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7965180b52390feb19471:note:3",
+   "url": "https://sourcelibrary.org/book/69e7965180b52390feb19416?page=91",
+   "note": "Tibetan: dga' ba 'khyil ba; Sanskrit: nandavarta",
+   "checked_claim": "dga' ba 'khyil ba is Sanskrit nandavarta",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7967380b52390feb1967f:note:11",
+   "url": "https://sourcelibrary.org/book/69e7967380b52390feb19671?page=14",
+   "note": "bdag-gi-ba <gloss>the mine</gloss> refers to entities related to oneself, but not to the self itself. Regarding the two applications of time: for the past, \"that year of last year,\" \"that time of yesterday.\" For the future: \"At that time of summer, flowers will bloom,\" \"I will go at that time of tomorrow.\" For the present, it is not used in this context of expressing time; thus...\n\n<leaf-break/>\n\n...newly joining them is the \"sound of the owner\" <term>bdag-po’i-sa</term>; know it as the \"self\" s",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7967380b52390feb19682:note:1",
+   "url": "https://sourcelibrary.org/book/69e7967380b52390feb19671?page=17",
+   "note": "grammar is one who recognizes the teacher of this as their master and feels gratitude. They must have abandoned the two unfavorable factors for learning: the laziness of procrastination and the distraction of engaging in other activities. Through the diligence of constant application, they are not overcome by those two faults. They should have favorable conditions, such as a good character or nature, and possess the diligence of respectful application based on the faith of wishing to know the su",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7968180b52390feb19765:note:8",
+   "url": "https://sourcelibrary.org/book/69e7968180b52390feb1970d?page=88",
+   "note": "lithospermum. Mix with <term>Haritaki</term> and others in one handful of beer. \"Seven Saffron\" refers to the \"Seven Excellence.\" \"Pomegranate Eight\" consists of the \"Four\" plus clove,\n\n<leaf-break/>\n\nChinese salt, <term>Gya-ru</term>, lac, and \"Black Chinese\" <note>compounds",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7aaba80b52390feb19a1c:note:0",
+   "url": "https://sourcelibrary.org/book/69e7aaba80b52390feb199b8?page=100",
+   "note": "These Sanskrit phrases translate to: I offer myself for the service and worship of the five Dakinis; I offer myself for the service and worship of all the Masters; I offer myself for the purpose of protecting all sentient beings.",
+   "checked_claim": "Sanskrit phrases translate to service of Dakinis, Masters, and sentient beings",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7aac35f1a22ab19a8cfb4:note:0",
+   "url": "https://sourcelibrary.org/book/69e7aac35f1a22ab19a8cf73?page=65",
+   "note": "Om, oh you lords of the serpents! This is the body of the blue-clad one. The heart of Vajrapani. Whoever transgresses it will be destroyed; thus: Awake, awake! Fully awake, fully awake! Transgress! Take away, take away the serpents! Strike, strike the serpents! Cut, cut the hearts of the serpents!",
+   "checked_claim": "The note provides a translation of a serpent-related mantra",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7aac35f1a22ab19a8d11c:note:1",
+   "url": "https://sourcelibrary.org/book/69e7aac35f1a22ab19a8cf73?page=425",
+   "note": "A Sanskrit-derived liturgical greeting or exclamation",
+   "checked_claim": "Surata Stram Masi Ho is a Sanskrit-derived greeting",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7aacb5f1a22ab19a8d827:note:0",
+   "url": "https://sourcelibrary.org/book/69e7aacb5f1a22ab19a8d7d8?page=79",
+   "note": "The Sanskrit verse of Dependent Origination",
+   "checked_claim": "The passage refers to the Sanskrit verse of Dependent Origination",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7aad05f1a22ab19a8dda8:note:3",
+   "url": "https://sourcelibrary.org/book/69e7aad05f1a22ab19a8dce9?page=191",
+   "note": "This is the root mantra of Maitreya, invoking the \"Unconquered\" one to remember his promise and bring the seed of enlightenment.",
+   "checked_claim": "Maitreya root mantra meaning",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7aad25f1a22ab19a8df34:note:1",
+   "url": "https://sourcelibrary.org/book/69e7aad25f1a22ab19a8de9e?page=150",
+   "note": "Salutations to the Triple Gem. Salutations to the Noble Avalokiteshvara, the Bodhisattva, the Great Being, the Compassionate One. It is like this: Om, looking upon the flowers, essence of fragrance, unerring water-bearer, born from the lotus, be established, svaha.",
+   "checked_claim": "mantra translation for Great Goddess",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7aad55f1a22ab19a8e312:note:0",
+   "url": "https://sourcelibrary.org/book/69e7aad55f1a22ab19a8e1f6?page=284",
+   "note": "These Sanskrit terms within the mantra refer to paralyzing armies, purifying the mind, pacifying all sins, and destroying all defilements. It includes commands to strike, burn, and cook negative influences, and offers protection against poison, weapons, water, and thieves.",
+   "checked_claim": "mantra terms meaning",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7aad55f1a22ab19a8e319:note:1",
+   "url": "https://sourcelibrary.org/book/69e7aad55f1a22ab19a8e1f6?page=291",
+   "note": "This long Sanskrit praise to Tara describes her as the destroyer of sins, the one who shakes the three worlds, the destroyer of poisons and fevers, and the granter of sons, wealth, and all desires. It claims the practitioner will be consecrated by seven crores of Buddhas.",
+   "checked_claim": "Tara praise content",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7aad55f1a22ab19a8e31a:note:0",
+   "url": "https://sourcelibrary.org/book/69e7aad55f1a22ab19a8e1f6?page=292",
+   "note": "This is the Sanskrit text of the well-known \"Twenty-One Praises to Tara,\" describing her various forms and powers to defeat Maras, attract the worlds, and destroy enemies.",
+   "checked_claim": "Sanskrit Twenty-One Praises to Tara",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7aad95f1a22ab19a8e58f:note:1",
+   "url": "https://sourcelibrary.org/book/69e7aad95f1a22ab19a8e519?page=118",
+   "note": "Sanskrit mantra for the King of the North and his retinue",
+   "checked_claim": "mantra for King of the North",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7aada5f1a22ab19a8e763:note:1",
+   "url": "https://sourcelibrary.org/book/69e7aada5f1a22ab19a8e68d?page=214",
+   "note": "transliteration of a Sanskrit-based salutation",
+   "checked_claim": "Deva Shisha salutation",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7aadf5f1a22ab19a8ec63:note:3",
+   "url": "https://sourcelibrary.org/book/69e7aadf5f1a22ab19a8ebcb?page=152",
+   "note": "referring to the Sanskrit alphabet structure",
+   "checked_claim": "Sanskrit alphabet logic",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7aae25f1a22ab19a8f0fe:note:0",
+   "url": "https://sourcelibrary.org/book/69e7aae25f1a22ab19a8ef93?page=363",
+   "note": "and so forth, representing the series of Sanskrit consonants",
+   "checked_claim": "seed-syllables of twelve goddesses",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7aae65f1a22ab19a8f3f5:note:1",
+   "url": "https://sourcelibrary.org/book/69e7aae65f1a22ab19a8f3de?page=23",
+   "note": "referring to the qualities of the mother, Queen Maya",
+   "checked_claim": "note refers to Queen Maya",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7aae65f1a22ab19a8f489:note:5",
+   "url": "https://sourcelibrary.org/book/69e7aae65f1a22ab19a8f3de?page=171",
+   "note": "a Tibetan translation of the Sanskrit name Raivata",
+   "checked_claim": "Namgru is Tibetan for Raivata",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7aaec5f1a22ab19a8fb39:note:0",
+   "url": "https://sourcelibrary.org/book/69e7aaec5f1a22ab19a8fad6?page=99",
+   "note": "likely referring to the lineage or the specific era of the current Buddha",
+   "checked_claim": "likely referring to the lineage",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7aafa5f1a22ab19a90d3b:note:0",
+   "url": "https://sourcelibrary.org/book/69e7aafa5f1a22ab19a90bc8?page=371",
+   "note": "Sudhana is the protagonist of the Gandavyuha Sutra",
+   "checked_claim": "laywoman Husha in the Gandavyuha Sutra",
+   "source_url": "https://84000.co/translation/toh44-45",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab015f1a22ab19a91409:note:2",
+   "url": "https://sourcelibrary.org/book/69e7ab015f1a22ab19a9131f?page=234",
+   "note": "This section contains highly repetitive and likely corrupted scribal iterations of the phrase \"made from\" or \"composed from\" the treatise of the Blessed One.",
+   "checked_claim": "passage contains corrupted scribal iterations",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab035f1a22ab19a91611:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ab035f1a22ab19a914f4?page=285",
+   "note": "possibly referring to a Naga king or a highly diligent figure",
+   "checked_claim": "King of Great Diligence refers to a Naga king",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab075f1a22ab19a91b8c:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ab075f1a22ab19a91a42?page=330",
+   "note": "This leaf contains repetitive liturgical phrases or scribal practice formulas focusing on the \"Virtuous Friend\" or spiritual teacher.",
+   "checked_claim": "repetitive liturgical phrases or scribal practice formulas",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab1a5f1a22ab19a92f63:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab1a5f1a22ab19a92e84?page=223",
+   "note": "a name, possibly a translation of a Sanskrit name like Balajata",
+   "checked_claim": "Born-of-Sand translation of Balajata",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab1d5f1a22ab19a93320:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ab1d5f1a22ab19a93200?page=288",
+   "note": "This likely refers to specific ritual contexts or a specific rule being debated in the Vinaya",
+   "checked_claim": "monk ordained for a hundred years bow",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab1f5f1a22ab19a93424:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ab1f5f1a22ab19a933c7?page=93",
+   "note": "Yaksha here refers to the divine power of Shakra",
+   "checked_claim": "Yaksha refers to Shakra",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab1f5f1a22ab19a934e3:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab1f5f1a22ab19a933c7?page=284",
+   "note": "The \"fine tusks\" refers to the prince's royal name or epithet, likely Sudana/Vessantara",
+   "checked_claim": "fine tusks refers to Sudana",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab275f1a22ab19a93cef:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ab275f1a22ab19a93c12?page=221",
+   "note": "often identified as a nun with the same name as the monk Upananda",
+   "checked_claim": "Upananda nun sister of Upananda monk",
+   "source_url": "https://84000.co/glossary/upananda",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab275f1a22ab19a93dad:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ab275f1a22ab19a93c12?page=411",
+   "note": "Fat Joyous One refers to her past lives or the Buddha's infant bath",
+   "checked_claim": "Fat Joyous One past life bath",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab285f1a22ab19a93dfe:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab285f1a22ab19a93de3?page=27",
+   "note": "The text likely refers to the son, Me-kye, acting on behalf of his father or continuing his legacy",
+   "checked_claim": "Shin-tu Zangpo Me-kye legacy",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab325f1a22ab19a94770:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ab325f1a22ab19a94758?page=24",
+   "note": "the text likely means 'This is the liberation...'",
+   "checked_claim": "the text likely means 'This is the liberation...'",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab435f1a22ab19a95a1d:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ab435f1a22ab19a958f8?page=293",
+   "note": "Sanskrit: Smritilabdha; 'Attainer of Mindfulness'",
+   "checked_claim": "Tranpa Thobpa is Sanskrit Smritilabdha",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab435f1a22ab19a95a21:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab435f1a22ab19a958f8?page=297",
+   "note": "Sanskrit: Vivardhanabahu; 'Thriving Arm'",
+   "checked_claim": "Rabtu Phelwai Pungpa is Sanskrit Vivardhanabahu",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab435f1a22ab19a95a21:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ab435f1a22ab19a958f8?page=297",
+   "note": "Sanskrit: Nishkamacharin; 'Certain Conduct'",
+   "checked_claim": "Gondon Miza-wai Chöpa is Sanskrit Nishkamacharin",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab435f1a22ab19a95a21:note:2",
+   "url": "https://sourcelibrary.org/book/69e7ab435f1a22ab19a958f8?page=297",
+   "note": "Sanskrit: Asanganetra; 'Unobstructed Eye'",
+   "checked_claim": "Thogpa Mi-ngawai Chen is Sanskrit Asanganetra",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab4d5f1a22ab19a96596:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab4d5f1a22ab19a9642b?page=363",
+   "note": "a vocative addressed to the disciple Shariputra",
+   "checked_claim": "Son is a vocative addressed to Shariputra",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab6b5f1a22ab19a98775:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab6b5f1a22ab19a98677?page=254",
+   "note": "Prostration to the Guru! In that hermitage of the primordially pure expanse, resides that person of the Dharmakaya beyond the mind. He relies on the solitude free from hope and fear, and sustains the experience of the non-duality of cyclic existence and nirvana. In that hermitage of the unarisen appearance, resides that person of unceasing awareness. He relies on the solitude of the non-dual direct encounter, and sustains the experience of the relaxed six senses. In that hermitage of the four im",
+   "checked_claim": "song of 'The High White Rock'",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab6b5f1a22ab19a987d0:note:4",
+   "url": "https://sourcelibrary.org/book/69e7ab6b5f1a22ab19a98677?page=345",
+   "note": "Maitreya's younger brother, often identified as the future Buddha Jina",
+   "checked_claim": "Jungmoe Pa is Maitreya's brother and future Buddha Jina",
+   "source_url": "https://archive.org/details/MahamudraTheOceanOfDefinitiveMeaning/page/n391/mode/2up",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab6c5f1a22ab19a988d9:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ab6c5f1a22ab19a987ee?page=235",
+   "note": "The following line is a Sanskrit auspicious formula written in Tibetan script:",
+   "checked_claim": "the line is a Sanskrit formula in Tibetan script",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab705f1a22ab19a98b4c:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab705f1a22ab19a98afe?page=78",
+   "note": "the author of a Prajnaparamita commentary",
+   "checked_claim": "Master of the Three Hundred Thousand wrote a Prajnaparamita commentary",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab745f1a22ab19a98ea7:note:7",
+   "url": "https://sourcelibrary.org/book/69e7ab745f1a22ab19a98dac?page=251",
+   "note": "Phonetic Sanskrit: \"Syādīhatanībha gabhathanananābhonmusharasvarataraṇibhirāmā...\"",
+   "checked_claim": "Syādīhatanībha is a 24-syllable meter",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab745f1a22ab19a98ea7:note:11",
+   "url": "https://sourcelibrary.org/book/69e7ab745f1a22ab19a98dac?page=251",
+   "note": "Phonetic Sanskrit: \"Kroñcupādābhagā bhagapānaukla nanaba ishusharabasumunibiratih...\"",
+   "checked_claim": "Kroñcupādābhagā is a 25-syllable meter",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab745f1a22ab19a98ea7:note:16",
+   "url": "https://sourcelibrary.org/book/69e7ab745f1a22ab19a98dac?page=251",
+   "note": "Phonetic Sanskrit: \"Maugvenaukla sujjobāh syangsumadanadahanamunibindhujoga bijrimbhitam...\"",
+   "checked_claim": "Maugvenaukla is a 26-syllable meter",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab745f1a22ab19a98ea7:note:21",
+   "url": "https://sourcelibrary.org/book/69e7ab745f1a22ab19a98dac?page=251",
+   "note": "Phonetic Sanskrit: \"Smannurdhīrnacu sāgabihinaba rasarasakaranabiratirasabāhah syātra...\"",
+   "checked_claim": "Smannurdhīrnacu is a Sanskrit meter",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab745f1a22ab19a98ea7:note:23",
+   "url": "https://sourcelibrary.org/book/69e7ab745f1a22ab19a98dac?page=251",
+   "note": "Phonetic Sanskrit: \"Sracita ihanayugādhitatācandabrīñjasrayātādayoyer yathādandakoraih...\"",
+   "checked_claim": "Sracita is a Sanskrit meter",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab745f1a22ab19a98ea7:note:28",
+   "url": "https://sourcelibrary.org/book/69e7ab745f1a22ab19a98dac?page=251",
+   "note": "Phonetic Sanskrit: \"Rephajaurajau tathājaraujagashcayabadhūnarmatustiyāpamādhinān...\"",
+   "checked_claim": "Phonetic Sanskrit for a specific meter",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab745f1a22ab19a98ea7:note:30",
+   "url": "https://sourcelibrary.org/book/69e7ab745f1a22ab19a98dac?page=251",
+   "note": "Phonetic Sanskrit: \"Śaśabasulaghucayadi bishamamitadaradipica śadaśadaśalaghukam. Gurunidhanamubhayamasibihitalalitapatabisritiyadibhavatibhavatiśikhā...\"",
+   "checked_claim": "Phonetic Sanskrit for Shikha meter",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab785f1a22ab19a9918a:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab785f1a22ab19a99112?page=120",
+   "note": "A large panoramic painting depicts a Tibetan monastery complex nestled in a mountain valley. The traditional white buildings have flat roofs and red trim. The scene includes courtyards, trees, and the surrounding hills.",
+   "checked_claim": "description of a painting",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab785f1a22ab19a9918c:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab785f1a22ab19a99112?page=122",
+   "note": "The page consists of three horizontal registers of detailed thangka-style paintings. The top register shows a fortified town or monastery in a mountain landscape with traditional Tibetan architecture and stupas. The middle register displays a pantheon of Buddhist figures, with a central Buddha surrounded by various deities and practitioners on lotus thrones. The bottom register depicts an expansive monastery or city complex with multiple buildings and courtyards from a bird's-eye view.",
+   "checked_claim": "description of a painting",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab785f1a22ab19a9918e:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab785f1a22ab19a99112?page=124",
+   "note": "This horizontal page is divided into three registers of landscape illustrations. The top register shows a monastery nestled among peaks with a prominent stupa. The middle register focuses on a central temple structure with a golden roof. The bottom register depicts rolling green hills and scattered small buildings or hermitages. Small Tibetan characters appear as marginalia on the far left of each section.",
+   "checked_claim": "description of a painting",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab785f1a22ab19a9918f:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab785f1a22ab19a99112?page=125",
+   "note": "The page contains three horizontal landscape panels serving as illustrative maps. The top panel shows a hill-fort or monastery surrounded by clouds. The middle panel depicts a wider valley with a river and a large settlement complex. The bottom panel shows a rugged mountain range with several isolated structures.",
+   "checked_claim": "description of a painting",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab785f1a22ab19a991a0:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab785f1a22ab19a99112?page=142",
+   "note": "likely a specific lineage holder or form of Avalokiteshvara",
+   "checked_claim": "eleventh as a form of Avalokiteshvara",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab7f5f1a22ab19a9960e:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab7f5f1a22ab19a9960a?page=4",
+   "note": "Regarding the reason for not committing the fault of scrambling the sutras or making personal fabrications: in the holy <term>Sutra of the Sublime Path</term>, the Bodhisattva Simhanada asked, \"How should the meaning of the sutras be explained?\" It was granted: \"Do as you please according to the power of the meaning. Collect the brief meaning of those and narrate them along with the stories.\" Having made such a request, the conclusion of the sutras will not be ruined.",
+   "checked_claim": "Sutra of the Sublime Path content",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab805f1a22ab19a997db:note:3",
+   "url": "https://sourcelibrary.org/book/69e7ab805f1a22ab19a9970f?page=204",
+   "note": "The following is the Sanskrit mantra of Vajra Vidarana translated into English phonetics as requested",
+   "checked_claim": "mantra of Vajra Vidarana",
+   "source_url": "https://www.karmapa.org/kagyu-monlam-prayers/",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab835f1a22ab19a99a3e:note:2",
+   "url": "https://sourcelibrary.org/book/69e7ab835f1a22ab19a99935?page=265",
+   "note": "for the superior person, this is done by the support alone; for the middling, by the day and the mantra; for the inferior, by the three mudras. Having done so, it is the mastery of pleasing knowledge.",
+   "checked_claim": "three mudras for inferior person",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab835f1a22ab19a99a45:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab835f1a22ab19a99935?page=272",
+   "note": "Not only that, but the meditation on the sandalwood was also shown. The Wheel of Enjoyment. The vase is filled with... <unclear>18 characters</unclear>. Through great attachment, all the Buddhas are to be bound by the Vajra iron chains. <unclear>10 characters</unclear>. One will return to the Joyous Land <gloss>Tushita</gloss>. One obtains the neck of the Buddhas. The Victorious Protector Maitreya... <unclear>15 characters</unclear>. The accomplishment of the reflection of the surplus power. <un",
+   "checked_claim": "meditation on sandalwood and Vajra Chain",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab835f1a22ab19a99a45:note:2",
+   "url": "https://sourcelibrary.org/book/69e7ab835f1a22ab19a99935?page=272",
+   "note": "Deviating from the dwelling. Experiencing the meaning. Because the essence is free from what is called power, it is the state of emptiness that does not even move. It is the approach of the sound called the \"just-so\" which is free from the mind and so forth. One desires \"so.\" Since one is far from the desire and being free from desire that sees only that much, one is clothed in the just-so accomplishment of not seeing the meaning.",
+   "checked_claim": "essence free from power",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab835f1a22ab19a99a45:note:3",
+   "url": "https://sourcelibrary.org/book/69e7ab835f1a22ab19a99935?page=272",
+   "note": "One needs to be skilled; accomplishment is not in power, nor is it in just the boundary. Thus, it is not for those who desire the laughing role—thus the praise. Having remembered and meditated on the freedom. Because it is a mantra. Because the sound has sixty forms. Regarding the meaning of conceptualization. Not so, because it is wicked. Because it robs the boundary of conceptualization. Because it is the Sun. When investigating.",
+   "checked_claim": "sound has sixty forms",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab835f1a22ab19a99a45:note:4",
+   "url": "https://sourcelibrary.org/book/69e7ab835f1a22ab19a99935?page=272",
+   "note": "Because it is the cycle, if one kills, it is close. She is the beautiful one. \"I am not the Immovable; I am Mamaki.\" \"Do you hold the city of the maternal uncle or what?\" \"What is your commitment? Peace itself.\" \"Do you hold the deceit of a woman or what?\" \"I am not; I am the Goddess Lochana.\" At the time of the unconditioned and non-conceptual, since the faults of the... are all equal. In the meaning. It is so. Since it is unconditioned and non-possessing, since the face is not possessed, it be",
+   "checked_claim": "Mamaki and Lochana commitments",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab835f1a22ab19a99a45:note:5",
+   "url": "https://sourcelibrary.org/book/69e7ab835f1a22ab19a99935?page=272",
+   "note": "The knowledge of the side-long glance is the accomplishment through the view. All boundaries are praised in their meaning. What is the commitment, etc. Greatly attached. In that case, through the later experience of showing the wisdom of emptiness, one is free from the two. It will be requested as the \"White One.\"",
+   "checked_claim": "knowledge of side-long glance",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab835f1a22ab19a99a46:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab835f1a22ab19a99935?page=273",
+   "note": "Turning back the hands. If one says \"it exists\" by making it worthwhile. Having done so, the turning back of the hands is gathered. From the gods and the turning back of the hands. The non-gods and the hell-beings. Called from below the source of phenomena. From the Om, Brahma and the other gods. From the Hum, the unattached and so forth.",
+   "checked_claim": "Son of the Wealth-Expander",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab835f1a22ab19a99a4b:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab835f1a22ab19a99935?page=278",
+   "note": "Interlinear: The accomplishments of the five families. The skilled Yakshini. Bestowing the secret of sinking/absorption. The Vajra accomplishments are superior.",
+   "checked_claim": "accomplishments of the five families",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab835f1a22ab19a99a4b:note:4",
+   "url": "https://sourcelibrary.org/book/69e7ab835f1a22ab19a99935?page=278",
+   "note": "Interlinear: Buddha pure... Recite the \"Vajra-daka-pa-na\" [formula]. One should generate the infinite Vajra-daka-pa-na and enter into union; from that, generate the Vajra and bestow the example/model empowerment. The Daka-pa-na disciple... though dwelling in the Shakyas... bliss and...",
+   "checked_claim": "Vajra-daka-pa-na formula",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab835f1a22ab19a99a4c:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab835f1a22ab19a99935?page=279",
+   "note": "Interlinear: Blessed by self-blessing, so one brings to mind the co-emergent Great Bliss. It is said to be the blessing of the \"Lhog-kye\". Those who have explained the high indications, by the seed of equal love, it is the end of the navel; again, spoken until the end of the navel, by the Ga-pa. Signs... truly indicated.",
+   "checked_claim": "blessing of the Lhog-kye",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab835f1a22ab19a99a50:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab835f1a22ab19a99935?page=283",
+   "note": "Marginal note: For the sake of all those who are logical and uncertain, it is the supreme sage; others are inferior because of their place of birth and wisdom.",
+   "checked_claim": "supreme sage for logical",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab835f1a22ab19a99a59:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ab835f1a22ab19a99935?page=292",
+   "note": "Gloss: There, on top of the general mandala, praise with the final one; around it with the unmoving; the circling of the gift; on top of that \"Tsara Tsida Dadi\" and \"Kada Dhoce,\" the teacher; by the drawing of the five peaks; by the one desiring Buddha's siddhi; strike with the Buddha stake through power. The town of the source of phenomena <gloss>dharmodaya</gloss>.",
+   "checked_claim": "Tsara Tsida Dadi mantra",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab835f1a22ab19a99a66:note:4",
+   "url": "https://sourcelibrary.org/book/69e7ab835f1a22ab19a99935?page=305",
+   "note": "if it is the application of activity, having made the lady the Sovereign of the Vajra Realm, enter into union with her",
+   "checked_claim": "Sovereign of the Vajra Realm",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab855f1a22ab19a99ab3:note:8",
+   "url": "https://sourcelibrary.org/book/69e7ab855f1a22ab19a99a6b?page=72",
+   "note": "performing the four. The path's teacher. Mixing with and immediately being busy with the conduct of the secret mantra. The <term>vajra</term> restoration and the taking care. The best of the restoration and taking care",
+   "checked_claim": "vajra restoration",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab875f1a22ab19a99bc5:note:2",
+   "url": "https://sourcelibrary.org/book/69e7ab875f1a22ab19a99b86?page=63",
+   "note": "Sanskrit: Ehyahi Mahakarunika Amanupalaya... Prajna Karuna Pratibhanadhana Vardhani Bhava.",
+   "checked_claim": "Sanskrit mantra Ehyahi Mahakarunika",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab875f1a22ab19a99bc5:note:3",
+   "url": "https://sourcelibrary.org/book/69e7ab875f1a22ab19a99b86?page=63",
+   "note": "Sanskrit: Sarvapata Natha Sharana Artha Dhishthah.",
+   "checked_claim": "Sanskrit mantra Sarvapata Natha",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab875f1a22ab19a99c7e:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ab875f1a22ab19a99b86?page=248",
+   "note": "Hinakuladharmas; early disciples of the Buddha",
+   "checked_claim": "Hinakuladharmas as early disciples",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab875f1a22ab19a99c98:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab875f1a22ab19a99b86?page=274",
+   "note": "The text continues on the next page with more Sanskrit-Tibetan lines.",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab915f1a22ab19a9a420:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab915f1a22ab19a9a3be?page=98",
+   "note": "referring to the specific quantitative prosody of Sanskrit",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab915f1a22ab19a9a42a:note:2",
+   "url": "https://sourcelibrary.org/book/69e7ab915f1a22ab19a9a3be?page=108",
+   "note": "When this king, dear to Brahmins, attained glory, from then on the festival of Dharma occurred in this world.",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab915f1a22ab19a9a42c:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ab915f1a22ab19a9a3be?page=110",
+   "note": "Love is harsh and wicked, my dear; desire and anger have made us thin. Pride has fallen, passion has increased, and delusion has been born, giving enjoyment.",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab915f1a22ab19a9a47e:note:8",
+   "url": "https://sourcelibrary.org/book/69e7ab915f1a22ab19a9a3be?page=192",
+   "note": "This is the special exception where \"Vulgarity\" is not a fault.",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab935f1a22ab19a9a50d:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab935f1a22ab19a9a48c?page=129",
+   "note": "The first paragraph repeats variations of \"Gathering of the Guru's Intentions\" several times as a practice of title-invocation and lineage homage.",
+   "checked_claim": "",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ab975f1a22ab19a9a8b3:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ab975f1a22ab19a9a872?page=65",
+   "note": "referring to a high lama, likely the Seventh Karmapa or Tsongkhapa depending on the lineage context",
+   "checked_claim": "Lord of Conquerors refers to 7th Karmapa or Tsongkhapa",
+   "source_url": "https://fpmt.org/wp-content/uploads/teachers/tsongkhapa/chintamani_rosary_spreading_the_buddhas_teachings.pdf",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab9b5f1a22ab19a9adfc:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab9b5f1a22ab19a9ad39?page=195",
+   "note": "This likely refers to the tutor Vishvamitra, whose name is rendered here as Trinbu Gocha",
+   "checked_claim": "Trinbu Gocha refers to Vishvamitra",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ab9d5f1a22ab19a9b030:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ab9d5f1a22ab19a9aebb?page=373",
+   "note": "Sanskrit: Tranamukta, \"Saved and Liberated\"",
+   "checked_claim": "Kyabrol Sanskrit is Tranamukta",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7abac5f1a22ab19a9c1fc:note:0",
+   "url": "https://sourcelibrary.org/book/69e7abac5f1a22ab19a9c16c?page=144",
+   "note": "this refers to the Bodhisattva's conduct appearing in the world",
+   "checked_claim": "the note explains the passage's meaning",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7abae5f1a22ab19a9c398:note:0",
+   "url": "https://sourcelibrary.org/book/69e7abad5f1a22ab19a9c315?page=131",
+   "note": "the previous page's context likely refers to the Buddhas' manifestation",
+   "checked_claim": "the note explains the passage's context",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7abb25f1a22ab19a9c94e:note:0",
+   "url": "https://sourcelibrary.org/book/69e7abb25f1a22ab19a9c827?page=295",
+   "note": "The term \"urging\" refers to the spiritual encouragement or \"prompting\" a Bodhisattva provides to others to keep them on the path.",
+   "checked_claim": "the note explains the term 'urging'",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7abb35f1a22ab19a9cad2:note:0",
+   "url": "https://sourcelibrary.org/book/69e7abb35f1a22ab19a9c9d3?page=255",
+   "note": "the eclipse deity,\nThe Tathagata beholds sentient beings.\nHe who is the supreme of all beings\nPasses into permanent Nirvana.\nWhen snakes and mongooses\nDwell together at the base of a tree,\nLike brothers or like sons,\nThey always satisfy one another.\nAt that time, as if seized by Rahu,\nThe Tathagata beholds sentient beings.\nHe who is the supreme of all beings\nPasses into permanent Nirvana.\nWhen the <term>saptaparna</term> <gloss>seven-leaf tree</gloss>\n<leaf-break/>\nDo not have the perception of ",
+   "checked_claim": "the note explains the term 'bodhicitta'",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7abd05f1a22ab19a9eb15:note:0",
+   "url": "https://sourcelibrary.org/book/69e7abd05f1a22ab19a9e929?page=492",
+   "note": "This is the long Dharani/Mantra of Vajravarahi. It consists of various Sanskrit epithets and commands such as \"destroy,\" \"slay,\" \"dry up,\" \"wielder of the skull-staff,\" and \"consort of Heruka.\"",
+   "checked_claim": "The note describes the content of the Vajravarahi dharani",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7abe75f1a22ab19aa0299:note:1",
+   "url": "https://sourcelibrary.org/book/69e7abe75f1a22ab19aa00d4?page=453",
+   "note": "This is a Sanskrit dharani kept in transliteration; it invokes the Great Wrathful King with \"deformed face,\" calling for the destruction and burning of evil spirits, nagas, and obstacles, while describing the deity's ornaments of gems, gold, and lapis, and his implements: the vajra-axe, lasso, and lotus-hook.",
+   "checked_claim": "meaning of the Sanskrit dharani",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7abe95f1a22ab19aa0372:note:0",
+   "url": "https://sourcelibrary.org/book/69e7abe95f1a22ab19aa030c?page=102",
+   "note": "This is a Sanskrit praise to the goddess Tara, the Savioress.",
+   "checked_claim": "dharani is a praise to Tara",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7abf05f1a22ab19aa0b9f:note:0",
+   "url": "https://sourcelibrary.org/book/69e7abf05f1a22ab19aa0a8f?page=272",
+   "note": "referring to the lesser Nirvana of the disciples",
+   "checked_claim": "eight aspects of liberation of Nirvana",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7abf65f1a22ab19aa1247:note:0",
+   "url": "https://sourcelibrary.org/book/69e7abf65f1a22ab19aa112a?page=285",
+   "note": "Tibetan: Mig dmar, likely refers to a specific heretic leader",
+   "checked_claim": "Mig dmar is a heretic leader",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7abf75f1a22ab19aa1378:note:0",
+   "url": "https://sourcelibrary.org/book/69e7abf75f1a22ab19aa12e0?page=152",
+   "note": "meta: This likely means \"Even though I was born in a low caste\"",
+   "checked_claim": "meta-interpretation of the passage",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ac155f1a22ab19aa3587:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ac155f1a22ab19aa3557?page=48",
+   "note": "The Tibetan term 'ston pa' can mean 'teacher' or 'to show/reveal'. In this Prajnaparamita context, it refers to how emptiness 'shows' the nature of reality.",
+   "checked_claim": "ston pa refers to emptiness showing reality",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac2b5f1a22ab19aa4b5f:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac2b5f1a22ab19aa4b5d?page=2",
+   "note": "The Tibetan text provides space for the Sanskrit title but it is not transcribed here.",
+   "checked_claim": "Tibetan text provides space for Sanskrit title",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac2c5f1a22ab19aa4e24:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac2c5f1a22ab19aa4d48?page=220",
+   "note": "the Buddha explains that beings mistake the lack of inherent existence for a type of existence, which is the root of ignorance",
+   "checked_claim": "Buddha explains root of ignorance",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac3c5f1a22ab19aa5cf6:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ac3c5f1a22ab19aa5ce8?page=14",
+   "note": "i.e., not turning to non-Buddhist gods or mundane spirits",
+   "checked_claim": "not seeking other methods means not turning to non-Buddhist gods",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ac415f1a22ab19aa5f3c:note:12",
+   "url": "https://sourcelibrary.org/book/69e7ac415f1a22ab19aa5ed8?page=100",
+   "note": "likely referring to Tsongkhapa or a specific lineage master",
+   "checked_claim": "Foremost Scholar likely refers to Tsongkhapa",
+   "source_url": "https://en.wikipedia.org/wiki/Je_Tsongkhapa",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac415f1a22ab19aa5f49:note:4",
+   "url": "https://sourcelibrary.org/book/69e7ac415f1a22ab19aa5ed8?page=113",
+   "note": "Neyphugpa likely refers to Haribhadra or the author of the root text",
+   "checked_claim": "author likely refers to Haribhadra",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac455f1a22ab19aa6190:note:11",
+   "url": "https://sourcelibrary.org/book/69e7ac455f1a22ab19aa618e?page=2",
+   "note": "The page ends with a listing of the Sanskrit alphabet vowels and consonants",
+   "checked_claim": "page ends with Sanskrit alphabet",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ac465f1a22ab19aa61df:note:2",
+   "url": "https://sourcelibrary.org/book/69e7ac465f1a22ab19aa61d8?page=7",
+   "note": "Translation of the Sanskrit prayer: Om, I offer myself for the worshipful presence of all Heroes and Yoginis. May all the Dakinis of the Tathagatas bless me.",
+   "checked_claim": "translation of the Sanskrit prayer",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac465f1a22ab19aa622e:note:3",
+   "url": "https://sourcelibrary.org/book/69e7ac465f1a22ab19aa61d8?page=86",
+   "note": "possibly Kṣa is roughly similar to <term>Khya</term>. This means: the final letter <term>Kṣa</term> has a tone similar to the Tibetan <term>Khya</term>. <term>Dza</term> with a subjoined <term>Nya</term> is read as <term>Gya</term> or <term>Nya</term>. This means: regarding the way to read <term>Jña</term>, which is <term>Dza</term> with a subjoined <term>Nya</term>, those from Eastern India read it as <term>Gya</term>. It is said that those from Kashmir read it as <term>Nya</term>.\n\n<leaf-break",
+   "checked_claim": "Kṣa similar to Khya and Jña as Gya/Nya",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac545f1a22ab19aa68bb:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac545f1a22ab19aa6870?page=75",
+   "note": "The Buddha and the Bodhisattvas: fewer vowels first. Men and Narayana: men and the god. Men, gods, and Indra: the gods. Bhima, Arjuna, and the son of the wealth-god.",
+   "checked_claim": "grammatical rules for vowels in names",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac545f1a22ab19aa68e1:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac545f1a22ab19aa6870?page=113",
+   "note": "referring to the grammatical constraints of the Sanskrit root",
+   "checked_claim": "grammatical constraints of Sanskrit root",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac555f1a22ab19aa6987:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ac555f1a22ab19aa697d?page=10",
+   "note": "transliteration of Sanskrit: kinneri/kinnara? Likely technical term for bone marrow or bone substance",
+   "checked_claim": "Maha Kenir is bone marrow",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac565f1a22ab19aa69f9:note:4",
+   "url": "https://sourcelibrary.org/book/69e7ac565f1a22ab19aa69d1?page=40",
+   "note": "He has the fame of a hero of the lineage of renouncers and a stimulated man, but having found the strength of the struggle for clarity after killing the calf born of jealousy, he took the secret instructions by acting like a Brahmin who possesses the unwavering vow. Skilled in the application of great boundaries, he is known as the Knower of Marks.",
+   "checked_claim": "identification of the Knower of Marks and the calf born of jealousy",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac565f1a22ab19aa6a0b:note:9",
+   "url": "https://sourcelibrary.org/book/69e7ac565f1a22ab19aa69d1?page=58",
+   "note": "Because it resembles the excrement of the internal organs, it is considered inferior; yet it destroys the forest, thus it is the Trumpet-flower tree.",
+   "checked_claim": "Trumpet-flower tree resembles internal organ excrement",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac565f1a22ab19aa6a0c:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac565f1a22ab19aa69d1?page=59",
+   "note": "Here, the translator Gra-gzigs has confused \"reta\" and \"retu\" and seems to have changed the time.",
+   "checked_claim": "translator Gra-gzigs confused reta and retu",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac565f1a22ab19aa6a0c:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ac565f1a22ab19aa69d1?page=59",
+   "note": "Here the translator Gra-gzigs has confused \"reta\" and \"retu\" and seems to have changed the time.",
+   "checked_claim": "translator Gra-gzigs confused reta and retu",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac565f1a22ab19aa6a0f:note:9",
+   "url": "https://sourcelibrary.org/book/69e7ac565f1a22ab19aa69d1?page=62",
+   "note": "This is the water arising from the ocean held as a cloud-vapor. The cloud's body is water, wind, and smoke.",
+   "checked_claim": "cloud's body is water, wind, and smoke",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac585f1a22ab19aa6b40:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac585f1a22ab19aa6a97?page=169",
+   "note": "This refers to the hero Bhima speaking about the enemy who insulted his beloved.",
+   "checked_claim": "Bhima speaking about an enemy who insulted his beloved",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac595f1a22ab19aa6bfd:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac595f1a22ab19aa6b71?page=140",
+   "note": "The middle section of this leaf contains several repetitive or garbled lines in the OCR, likely reflecting the author's report of Drung Drung's declining speech or difficulty in communication",
+   "checked_claim": "OCR reflects Drung Drung's declining speech",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ac605f1a22ab19aa6e1e:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac605f1a22ab19aa6df2?page=44",
+   "note": "HUM, from the state of the unborn Dharmadhatu",
+   "checked_claim": "HUM from the state of the unborn Dharmadhatu",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac625f1a22ab19aa6ed5:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac625f1a22ab19aa6e9f?page=54",
+   "note": "These Sanskrit phrases identify the practitioner's body, speech, mind, qualities, and activity as being of the same nature as all the Buddhas.",
+   "checked_claim": "Sanskrit phrases identify practitioner's body, speech, mind",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac625f1a22ab19aa6f1b:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac625f1a22ab19aa6e9f?page=124",
+   "note": "The following consists of Sanskrit-derived mantras and ritual formulas preserved for their phonetic power.",
+   "checked_claim": "Sanskrit-derived mantras preserved for phonetic power",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ac665f1a22ab19aa72ab:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac665f1a22ab19aa71f2?page=185",
+   "note": "This was composed by Padmasambhava and others. It is the practice text of King Trisong Detsen, hidden as a precious treasure. Treasure seal. Entrustment seal. Hidden seal. <term>Mangalam</term> <gloss>Auspiciousness</gloss>. Let there be virtue!",
+   "checked_claim": "text composed by Padmasambhava for Trisong Detsen",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac695f1a22ab19aa73f6:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac695f1a22ab19aa73c6?page=48",
+   "note": "Translator's note within text: In the source manuscript, this was written after the \"Mamo-Calling\" section. Since there was a list of errors from the \"Yellow Paper,\" it was said to write this after the nine mandalas were completed, and so it was written afterward.",
+   "checked_claim": "note describes manuscript structure and errors",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ac695f1a22ab19aa740a:note:37",
+   "url": "https://sourcelibrary.org/book/69e7ac695f1a22ab19aa73c6?page=68",
+   "note": "Father Shud. This is the secret text of the Muje.",
+   "checked_claim": "Father Shud and Muje secret text",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac6a5f1a22ab19aa7590:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ac6a5f1a22ab19aa74f3?page=157",
+   "note": "attaining power over the kingdom of the Dharma",
+   "checked_claim": "Crown empowerment means power over Dharma kingdom",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac6a5f1a22ab19aa7590:note:2",
+   "url": "https://sourcelibrary.org/book/69e7ac6a5f1a22ab19aa74f3?page=157",
+   "note": "attaining power over the kingdom of the Dharma",
+   "checked_claim": "sacred power means power over Dharma kingdom",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac6d5f1a22ab19aa7845:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac6d5f1a22ab19aa7723?page=290",
+   "note": "A detailed illustration in the style of Tibetan religious painting. On the left, a central ritual offering cake known as a torma features the blue face of a wrathful deity flanked by two smaller faces. These are set within a flaming structure atop a tiger skin base and sheltered by a ceremonial parasol. To the right, a blue bird headed deity resembling a Garuda rides a reddish brown camel like creature while holding a serpent. Various ritual implements, including a butter lamp and small offering",
+   "checked_claim": "description of a torma and Garuda figure",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ac6e5f1a22ab19aa78c1:note:5",
+   "url": "https://sourcelibrary.org/book/69e7ac6e5f1a22ab19aa784c?page=117",
+   "note": "Phurpa unshakingly, grant it its majesty and give the command as follows: <term>Hum</term>",
+   "checked_claim": "ritual command for Phurpa",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac705f1a22ab19aa79f5:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac705f1a22ab19aa7951?page=164",
+   "note": "Once the continuous mantra is established, even during the time when the teacher explains the Dharma, do not let the continuous mantra be interrupted",
+   "checked_claim": "instruction on continuous mantra recitation",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ac705f1a22ab19aa79f5:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ac705f1a22ab19aa7951?page=164",
+   "note": "Once the continuous mantra is established, even during the time when the teacher explains the Dharma, do not let the continuous mantra be interrupted",
+   "checked_claim": "instruction on continuous mantra recitation",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ac725f1a22ab19aa7bfc:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac725f1a22ab19aa7bd5?page=39",
+   "note": "This is the final aspiration: Generate! May sentient beings who are not liberated...",
+   "checked_claim": "final aspiration text",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac725f1a22ab19aa7c35:note:3",
+   "url": "https://sourcelibrary.org/book/69e7ac725f1a22ab19aa7bd5?page=96",
+   "note": "Establish the core in a moderate pace, occasionally making long, clear calls like a sentinel. Perform many melodic bends. For such types, use these as models:",
+   "checked_claim": "melody instructions for torma-dance",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "69e7ac745f1a22ab19aa7d90:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac745f1a22ab19aa7cff?page=145",
+   "note": "This belongs to the category of finishing hats, clothes, and curtains; thus it is the common outer category. The specific inner logic is the logic of the meaning of the Word possessed of four special qualities.",
+   "checked_claim": "classification of ritual items",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac785f1a22ab19aa81cc:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ac785f1a22ab19aa809b?page=305",
+   "note": "Naga (margin): One should know which of the upper or lower parts the lineage connects to.",
+   "checked_claim": "lineage connection of upper or lower parts",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac7b5f1a22ab19aa8451:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac7b5f1a22ab19aa83a5?page=172",
+   "note": "this is the sign that awareness is the Body",
+   "checked_claim": "Vajrasattva appearance as sign awareness is the Body",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac7b5f1a22ab19aa8451:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ac7b5f1a22ab19aa83a5?page=172",
+   "note": "this is the sign of ripening into the Wisdom Body",
+   "checked_claim": "five bodies as sign of ripening into Wisdom Body",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac7b5f1a22ab19aa8484:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac7b5f1a22ab19aa83a5?page=223",
+   "note": "In the natural state, the female wind flows on the left. In the natural state, the male wind flows on the right. This is the reverse of the natural order.",
+   "checked_claim": "female wind left, male wind right as reverse order",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac7c5f1a22ab19aa850a:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ac7c5f1a22ab19aa84e5?page=37",
+   "note": "following that, if one asks what kind of Protector of Beings appeared as the teacher: he expanded it from the tongue-organ of the Lord and so on",
+   "checked_claim": "Protector of Beings expanded from tongue-organ",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac7f5f1a22ab19aa87c1:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ac7f5f1a22ab19aa874d?page=116",
+   "note": "From the *Tantric Overthrow of Sounds*: \"The expression of speech, known as sound: all external sounds arise from the opening of the door of space. Internal spoken sounds also result from the interdependence of channels and winds and the meeting of external and internal causes and conditions of the subject and object.\" From the *Tantric Overthrow*: \"They are accomplished through the pairing of the non-dual times.\"",
+   "checked_claim": "quotes from Tantric Overthrow of Sounds",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac7f5f1a22ab19aa87e7:note:3",
+   "url": "https://sourcelibrary.org/book/69e7ac7f5f1a22ab19aa874d?page=154",
+   "note": "Produced by the great ultimate wisdom, the sole <term>bindu</term> of direct reality, together with the play of the wisdom of samsara and nirvana, is fixed by the iron chains of the manner of looking of the three root bodies. The winds of the coming, going, and staying of the three bodies are bound helplessly by the iron chains of the throat. The <term>bindu</term> of the three bodies increases as the Vajra and awareness reaches its limit. Through the three visions of the exhaustion of reality, ",
+   "checked_claim": "rolled into the nine iron chains",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac7f5f1a22ab19aa8867:note:4",
+   "url": "https://sourcelibrary.org/book/69e7ac7f5f1a22ab19aa874d?page=282",
+   "note": "offering torma to the Three Roots and taking refuge",
+   "checked_claim": "offering hair and nails as torma",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "69e7ac805f1a22ab19aa88cb:note:7",
+   "url": "https://sourcelibrary.org/book/69e7ac805f1a22ab19aa8870?page=91",
+   "note": "the text likely refers to Bonpo medicinal methods",
+   "checked_claim": "refers to Bonpo medicinal methods",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "6a14e1193c22df423f9fa8b0:note:2",
+   "url": "https://sourcelibrary.org/book/6a14e1193c22df423f9fa798?page=280",
+   "note": "The Sanskrit title is omitted in the source transcription",
+   "checked_claim": "Sanskrit title omitted in source",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "6a14e11d3c22df423f9facab:note:0",
+   "url": "https://sourcelibrary.org/book/6a14e11d3c22df423f9fab02?page=425",
+   "note": "this refers to the lower vehicles attempting to apply their rules to the Great Perfection",
+   "checked_claim": "refers to lower vehicles in Great Perfection",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "6a14e11d3c22df423f9facb4:note:1",
+   "url": "https://sourcelibrary.org/book/6a14e11d3c22df423f9fab02?page=434",
+   "note": "meaning obscure; likely a corruption of a Sanskrit term for a phantom or a sky-flower",
+   "checked_claim": "corruption of Sanskrit for phantom/sky-flower",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "6a14e1262f45ee330c273834:note:0",
+   "url": "https://sourcelibrary.org/book/6a14e1262f45ee330c27370b?page=297",
+   "note": "This passage lists various historical and legendary figures from the transmission lineage of the Dzogchen teachings.",
+   "checked_claim": "lists figures from Dzogchen transmission",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "6a14e12d2f45ee330c273ed5:note:15",
+   "url": "https://sourcelibrary.org/book/6a14e12d2f45ee330c273e25?page=176",
+   "note": "Perfected without blocking the ointment from that reality. Supreme.",
+   "checked_claim": "meaning of passage",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "6a14e12d2f45ee330c273ede:note:2",
+   "url": "https://sourcelibrary.org/book/6a14e12d2f45ee330c273e25?page=185",
+   "note": "The root is the heart and corresponds to the phenomenon. Because they consume.",
+   "checked_claim": "meaning of passage",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "6a14e12d2f45ee330c273ede:note:5",
+   "url": "https://sourcelibrary.org/book/6a14e12d2f45ee330c273e25?page=185",
+   "note": "Scent is the flesh-mound. Hair-pores and taste are the skin.",
+   "checked_claim": "meaning of passage",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "6a14e12d2f45ee330c273ee3:note:0",
+   "url": "https://sourcelibrary.org/book/6a14e12d2f45ee330c273e25?page=190",
+   "note": "Because the lineages of ignorance are purified. Everything of the mind and body.",
+   "checked_claim": "meaning of passage",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "6a14e12d2f45ee330c273ee4:note:8",
+   "url": "https://sourcelibrary.org/book/6a14e12d2f45ee330c273e25?page=191",
+   "note": "Join the knees to the chest, place the chin on top of the knees, and cross the hands behind the neck. Looking with wide eyes over the right chin, awareness and space are united.",
+   "checked_claim": "description of posture",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "6a14e13d311a9edd4621da98:note:0",
+   "url": "https://sourcelibrary.org/book/6a14e13d311a9edd4621da85?page=19",
+   "note": "Fourth, seeking the six Sages of the Nirmanakaya",
+   "checked_claim": "seeking the six Sages",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "6a14e13d311a9edd4621da9b:note:1",
+   "url": "https://sourcelibrary.org/book/6a14e13d311a9edd4621da85?page=22",
+   "note": "Sixth, seeking the eight Tramen goddesses",
+   "checked_claim": "seeking the eight Tramen goddesses",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "6a14e148311a9edd4621e6c6:note:0",
+   "url": "https://sourcelibrary.org/book/6a14e148311a9edd4621e634?page=146",
+   "note": "The following are phonetic Sanskrit-based mantras for summoning destructive weather",
+   "checked_claim": "mantras for summoning weather",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "6a14e148311a9edd4621e836:note:3",
+   "url": "https://sourcelibrary.org/book/6a14e148311a9edd4621e634?page=514",
+   "note": "The following is a fierce mantra containing Sanskrit-derived terms for summoning and destroying",
+   "checked_claim": "mantra for summoning and destroying",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "6a14e153311a9edd4621f35d:note:0",
+   "url": "https://sourcelibrary.org/book/6a14e153311a9edd4621f29e?page=191",
+   "note": "Regarding the first, there are six parts: drawing the mandala, sprinkling, releasing the lower ones, striking the lines, and spreading the colors. Regarding the first of those, there are five: constructing the face, sprinkling, releasing the lower ones again, striking the lines, and spreading the colors.",
+   "checked_claim": "six parts of mandala activity and five sub-parts",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "6a14e153311a9edd4621f38c:note:1",
+   "url": "https://sourcelibrary.org/book/6a14e153311a9edd4621f29e?page=238",
+   "note": "This Tantra of the Blazing Nectar Wheel has three parts: the beginning, the body, and the conclusion. The beginning has two: the title and the prostration. The body has four: the introductory history which is the cause for the tantra's arising, the provocation of conditions, the tantric meaning to be fully known, and the subsequent rejoicing in accordance with the conclusion. For the poison of samsara which does not realize the world beyond,",
+   "checked_claim": "three-part structure of the Tantra of the Blazing Nectar Wheel",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "6a14e153311a9edd4621f396:note:3",
+   "url": "https://sourcelibrary.org/book/6a14e153311a9edd4621f29e?page=248",
+   "note": "Second, the ten activities, of which there are seven. Making the sacred womb, and so on, are the same.",
+   "checked_claim": "ten activities of which there are seven",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "6a14e153311a9edd4621f3c7:note:1",
+   "url": "https://sourcelibrary.org/book/6a14e153311a9edd4621f29e?page=297",
+   "note": "Regarding this tantra, there are three parts: the beginning, the body, and the conclusion. The beginning has two: the title and the prostration. The body has four: the introductory setting, the provocation of the dialogue, the meaning of the tantra, and the entrustment. For the demon of conceptual characteristics, the remedy is the realization of all phenomena as lacking characteristics. The path of achieving that is called \"Great Bliss Nectar.\"",
+   "checked_claim": "three-part structure of the Tantra of the Great Bliss Nectar Wisdom",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "6a14e156311a9edd4621f675:note:0",
+   "url": "https://sourcelibrary.org/book/6a14e156311a9edd4621f61c?page=89",
+   "note": "These are the Sanskrit vowels and consonants",
+   "checked_claim": "Equal Vajra refers to Sanskrit vowels and consonants",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "6a14e156311a9edd4621f675:note:1",
+   "url": "https://sourcelibrary.org/book/6a14e156311a9edd4621f61c?page=89",
+   "note": "This is the hundred-syllable mantra of Vajrasattva",
+   "checked_claim": "this is the hundred-syllable mantra of Vajrasattva",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "6a14e15e311a9edd462200e1:note:0",
+   "url": "https://sourcelibrary.org/book/6a14e15e311a9edd4621ffdf?page=258",
+   "note": "This leaf contains a series of Sanskrit-based mantras and seed syllables used for ritual purification or establishment of a sacred space.",
+   "checked_claim": "mantras used for ritual purification or sacred space",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "6a14e160311a9edd462202ba:note:0",
+   "url": "https://sourcelibrary.org/book/6a14e160311a9edd46220175?page=325",
+   "note": "These are phonetic transliterations of Sanskrit-derived seed syllables and mantras used for invoking the wrathful female deities known as Mamos.",
+   "checked_claim": "seed syllables for invoking Mamos",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "6a14e165311a9edd4622090f:note:0",
+   "url": "https://sourcelibrary.org/book/6a14e165311a9edd46220750?page=447",
+   "note": "likely referring to the seven-fold ritual sequence or the seven Naga kings",
+   "checked_claim": "seven-fold ritual sequence or seven Naga kings",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "6a14e167311a9edd46220a94:note:0",
+   "url": "https://sourcelibrary.org/book/6a14e167311a9edd4622093b?page=345",
+   "note": "Mantra in Sanskrit-influenced ritual language calling upon the protectors and demonesses",
+   "checked_claim": "mantra calling upon protectors and demonesses",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "6a14e176311a9edd4622170e:note:0",
+   "url": "https://sourcelibrary.org/book/6a14e176311a9edd462216f3?page=27",
+   "note": "likely referring to the 5th Dalai Lama or a specific lineage holder",
+   "checked_claim": "Garland of Flames composed by 5th Knowledge-Holder",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "6a14e176311a9edd46221750:note:1",
+   "url": "https://sourcelibrary.org/book/6a14e176311a9edd462216f3?page=93",
+   "note": "The Sanskrit alphabet follows, used for these calculations:",
+   "checked_claim": "Sanskrit alphabet used for these calculations",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "6a14e180311a9edd46221ca0:note:4",
+   "url": "https://sourcelibrary.org/book/6a14e180311a9edd46221c7d?page=35",
+   "note": "referring to Hiranyakashipu's lineage or a specific epithet",
+   "checked_claim": "Water-Crane refers to Hiranyakashipu's lineage",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "6a14e18e311a9edd46222396:note:1",
+   "url": "https://sourcelibrary.org/book/6a14e18e311a9edd46222354?page=66",
+   "note": "This is the Praise of the Five Radiations for Vajrapani. Corrected once.",
+   "checked_claim": "Praise of the Five Radiations for Vajrapani",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "6a14e18e311a9edd462223d8:note:6",
+   "url": "https://sourcelibrary.org/book/6a14e18e311a9edd46222354?page=132",
+   "note": "Make the \"Beautiful to Behold\" and \"Complete Victory\" palaces and place them on top; on that place one circle of the serpent king Takshaka. For the four treasures—if using flour, make the shapes of jewels—namely: the Conch and the Great Conch, the Lotus and the Great Lotus. Supported at the base of the continents are the",
+   "checked_claim": "Beautiful to Behold and Complete Victory palaces",
+   "source_url": "",
+   "no_checkable_fact": true
+  },
+  {
+   "note_claim": "6a14e19f311a9edd46222c45:note:1",
+   "url": "https://sourcelibrary.org/book/6a14e19f311a9edd46222b2c?page=281",
+   "note": "The actual fulfillment ritual is the \"Fulfillment of a Hundred Thousand Dakinis\"; as it is well-known and edited elsewhere, it is not written here.",
+   "checked_claim": "Fulfillment of a Hundred Thousand Dakinis ritual",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "6a14e1a1311a9edd46222c84:note:0",
+   "url": "https://sourcelibrary.org/book/6a14e1a1311a9edd46222c77?page=13",
+   "note": "In Sanskrit; in Tibetan; single; volume. I bow to the Triple Gem. I bow to the Triple Gem.",
+   "checked_claim": "head on the tail and single-prong note",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "6a14e1b5311a9edd4622368c:note:0",
+   "url": "https://sourcelibrary.org/book/6a14e1b5311a9edd46223647?page=69",
+   "note": "When the Great Lord Repa descended from the Lapchi snow mountains, the benefactor Dormo offered him a welcoming drink. At that time, the practitioners led by the teacher Shakya Guna requested a Dharma teaching for the welcoming ceremony. In response, he sang this song of meditative experience, the \"Song of the Six Essential Points,\" as a welcoming gift.",
+   "checked_claim": "Great Lord Repa and Song of Six Essential Points",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "6a14e1b5311a9edd46223705:note:3",
+   "url": "https://sourcelibrary.org/book/6a14e1b5311a9edd46223647?page=190",
+   "note": "referring to the author's name, likely Shakya-shala or similar",
+   "checked_claim": "author name ends in Shala",
+   "source_url": "",
+   "no_checkable_fact": false
+  },
+  {
+   "note_claim": "6a14e1ce311a9edd46224233:note:2",
+   "url": "https://sourcelibrary.org/book/6a14e1ce311a9edd462241d5?page=94",
+   "note": "likely Je Tsongkhapa or a similar lineage head",
+   "checked_claim": "Lord of Dharma refers to Tsongkhapa",
+   "source_url": "https://www.wisdomlib.org/definition/dharmasvamin",
+   "no_checkable_fact": false
+  }
+ ],
+ "unanswered": [
+  {
+   "note_claim": "69e7ac805f1a22ab19aa88fd:note:2",
+   "url": "https://sourcelibrary.org/book/69e7ac805f1a22ab19aa8870?page=141",
+   "note": "marginal note: four finger-widths measured from the crown is the \"Great Gathering Secret.\" On the front of both hands is the left secret; then to the right and left are the four \"Slanting Secrets.\" Everywhere, inside and out, like an opened parasol. If yellow-water enters the spine, rub it. Although",
+   "flags": [
+    "ungrounded"
+   ]
+  },
+  {
+   "note_claim": "69e7ac805f1a22ab19aa88fd:note:4",
+   "url": "https://sourcelibrary.org/book/69e7ac805f1a22ab19aa8870?page=141",
+   "note": "marginal note: These are the gathering points of all internal channels, such as those of the five vital organs. Striking these clears head diseases and the diseases of the individual vital organs. It also helps with fainting from \"brain-wind,\" crookedness, and disorders of the five organs and six ve",
+   "flags": [
+    "ungrounded"
+   ]
+  },
+  {
+   "note_claim": "69e7ac805f1a22ab19aa88fe:note:6",
+   "url": "https://sourcelibrary.org/book/69e7ac805f1a22ab19aa8870?page=142",
+   "note": "marginal note: Do not let the wind hit the very tip of the staff. When striking the area below the ear, it is important not to hit the eye-gaze or the channels.",
+   "flags": [
+    "ungrounded"
+   ]
+  },
+  {
+   "note_claim": "69e7ac805f1a22ab19aa88ff:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ac805f1a22ab19aa8870?page=143",
+   "note": "marginal note: This is the great secret of the wind. It benefits all wind diseases, such as when the body's strength is low and cannot bear weight, discomfort in breathing, illness entering the lungs, inability to cough up phlegm, loss of voice, unstable consciousness, palpitations, trembling, dryne",
+   "flags": [
+    "ungrounded"
+   ]
+  },
+  {
+   "note_claim": "69e7ac805f1a22ab19aa88ff:note:5",
+   "url": "https://sourcelibrary.org/book/69e7ac805f1a22ab19aa8870?page=143",
+   "note": "marginal note: When the liver is enlarged or swollen, when wind enters the liver causing distension and blurred vision, or for spinal \"running stomach\" <gloss>diarrhea</gloss>. It is the foundation that holds many liver diseases, such as vomiting much sour water. Because the ways of being ill are ma",
+   "flags": [
+    "ungrounded"
+   ]
+  },
+  {
+   "note_claim": "69e7ac805f1a22ab19aa8953:note:3",
+   "url": "https://sourcelibrary.org/book/69e7ac805f1a22ab19aa8870?page=227",
+   "note": "when nine months and ten days are complete, the Nirmanakaya is born. From the subsidiary channels,\nthe five basic winds and five branch winds, the ten winds that flow in the nose. First, the space element of consciousness-wisdom; the Life-wind together with the bindu, A and HAM, as its support.\nLate",
+   "flags": [
+    "ungrounded"
+   ]
+  },
+  {
+   "note_claim": "69e7ac815f1a22ab19aa89af:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac815f1a22ab19aa8980?page=47",
+   "note": "This page acts as a title or section header for the Phurdrup Gonpa manuscript. The Phurdrup dGongs 'dus is a cycle of revealed teachings <term>Terma</term> central to the Nyingma tradition of Tibetan Buddhism.",
+   "flags": [
+    "ungrounded"
+   ]
+  },
+  {
+   "note_claim": "69e7ac815f1a22ab19aa89e9:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac815f1a22ab19aa8980?page=105",
+   "note": "A region in Eastern Tibet famous for its monastery and printing house",
+   "flags": [
+    "ungrounded"
+   ]
+  },
+  {
+   "note_claim": "69e7ac815f1a22ab19aa89f6:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac815f1a22ab19aa8980?page=118",
+   "note": "This page is a visual manuscript containing ritual diagrams without textual inscriptions. A large diagram contains four circular mandalas arranged in a two by two grid. The top-left diagram features a central flaming jewel <note>Sanskrit: ratna",
+   "flags": [
+    "ungrounded"
+   ]
+  },
+  {
+   "note_claim": "69e7ac815f1a22ab19aa8a08:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac815f1a22ab19aa8980?page=136",
+   "note": "On the left, a circular <term>mandala</term> contains a central rectangular frame inscribed with the sacred syllables Om Ah Hum. It is surrounded by an eight-pointed star and circular bands of mantras in Tibetan script. On the right, a large circular diagram features a central triangle <note>Sanskri",
+   "flags": [
+    "ungrounded"
+   ]
+  },
+  {
+   "note_claim": "69e7ac835f1a22ab19aa8a90:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac835f1a22ab19aa8a0e?page=130",
+   "note": "refrain: Please grant that stupa held by the dakinis to us, your disciples!",
+   "flags": [
+    "ungrounded"
+   ]
+  },
+  {
+   "note_claim": "69e7ac835f1a22ab19aa8ad8:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac835f1a22ab19aa8a0e?page=202",
+   "note": "This likely refers to a specific numerological grid or ritual sequence in the Kilaya tradition",
+   "flags": [
+    "ungrounded"
+   ]
+  },
+  {
+   "note_claim": "69e7ac875f1a22ab19aa8ce1:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac875f1a22ab19aa8c96?page=75",
+   "note": "In Sanskrit: <term>Sha-shi-tsa-ka</term>; in Tibetan: <term>Gtum po gsung gi bsgrub pa</term>",
+   "flags": [
+    "ungrounded"
+   ]
+  },
+  {
+   "note_claim": "69e7ac8e5f1a22ab19aa91e6:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac8e5f1a22ab19aa919d?page=73",
+   "note": "at the crown of the head of the sentient being is a green horse head neighing; the two feet press down on the arrogant ones, the sun, and the moon. On a lotus, sun, and moon at the crown of the head is the Lord Padma Thötreng Tsal <gloss>Powerful Lotus of the Garland of Skulls</gloss>. The body colo",
+   "flags": [
+    "ungrounded"
+   ]
+  },
+  {
+   "note_claim": "69e7ac905f1a22ab19aa92a0:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac905f1a22ab19aa9269?page=55",
+   "note": "Pema Lingpa (1450–1521) was a major Treasure Revealer (terton), traditionally regarded as an incarnation of Longchenpa and of Princess Pema Sel",
+   "flags": [
+    "ungrounded"
+   ]
+  },
+  {
+   "note_claim": "69e7ac925f1a22ab19aa93a2:note:1",
+   "url": "https://sourcelibrary.org/book/69e7ac925f1a22ab19aa935f?page=67",
+   "note": "two dots indicating a specific Sanskrit phoneme",
+   "flags": [
+    "ungrounded"
+   ]
+  },
+  {
+   "note_claim": "69e7ac955f1a22ab19aa972b:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac955f1a22ab19aa9713?page=24",
+   "note": "Tibetan: dGa' ba'i sde; Sanskrit: Nandasena",
+   "flags": [
+    "ungrounded"
+   ]
+  },
+  {
+   "note_claim": "69e7ac955f1a22ab19aa9739:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac955f1a22ab19aa9713?page=38",
+   "note": "term: Anagami; one who will not be reborn in the desire realm",
+   "flags": [
+    "ungrounded"
+   ]
+  },
+  {
+   "note_claim": "69e7ac955f1a22ab19aa97ec:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac955f1a22ab19aa9713?page=217",
+   "note": "This refers to the protagonist, the son of Maitraka/Maitryezaka",
+   "flags": [
+    "ungrounded"
+   ]
+  },
+  {
+   "note_claim": "69e7ac955f1a22ab19aa97f3:note:0",
+   "url": "https://sourcelibrary.org/book/69e7ac955f1a22ab19aa9713?page=224",
+   "note": "The text likely refers to the \"Nusbhas\" or the turtle/elephant sacrifice story",
+   "flags": [
+    "ungrounded"
+   ]
+  }
+ ]
+}
