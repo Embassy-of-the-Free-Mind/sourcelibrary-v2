@@ -30,6 +30,12 @@ This is the evidence for the first pass at "one card per work-volume" on collect
 5. `5-text-check.mjs` is the text screen above.
 6. `6-apply-membership.mjs` applies the membership and highlight changes (DRY unless `APPLY=1`).
 7. `7-covers.mjs` sets title-page covers that were picked by eye.
+8. `8-comparator.mjs` scores every pair with the #4285 text comparator (`../collection-copies-2026-10-03.comparator.jsonl`).
+9. `9-recheck-plan.mjs` picks, for each of the 68 pairs the loader left unsettled (35 by-eye-only confirmations, 33 rejections), the title page, three aligned text pages and the last pages of keeper and copy.
+10. `10-recheck-sheets.mjs` renders those pages from `images.sourcelibrary.org` at a size that shows running headers, page numbers and imprints (images not kept; rerun to regenerate).
+11. `11-recheck-pages.mjs` renders chosen scan positions side by side, for the follow-up looks a sheet did not settle.
+
+The recheck verdicts are in `../collection-copies-2026-10-03.recheck.jsonl` (one row per pair, `supersedes: "spot_check"`). Each row records what was read from the images: the title-page imprints, the printed pages compared, running headers and last pages.
 
 The scratchpad paths inside the scripts (`S=...`) are from the original session. Point `S` at a working directory to rerun them.
 
