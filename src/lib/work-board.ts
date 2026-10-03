@@ -105,7 +105,7 @@ export interface RunningItem {
   what: string; issue: IssueRef | null;
 }
 export interface FinishedItem {
-  name: string; box: string; at: string | null; verdict: string; issue: IssueRef | null; pr: PrRef | null;
+  name: string; box: string; at: string | null; verdict: string; verdict_url: string | null; issue: IssueRef | null; pr: PrRef | null;
 }
 export interface Board {
   freshness: Freshness[];
@@ -187,7 +187,7 @@ export function buildBoard(docs: WorkBoardDoc[], now: Date = new Date()): Board 
   for (const i of Object.values(gh?.issues ?? {})) {
     if (i.state !== 'OPEN' || !i.last_comment || !i.decisions?.length) continue;
     for (const d of i.decisions) {
-      waiting.push({ issue: { number: i.number, title: i.title, url: i.url }, line: d.line, default: d.default, url: i.last_comment.url, at: i.last_comment.at });
+      waiting.push({ issue: { number: i.number, title: i.title, url: i.url, closed: false }, line: d.line, default: d.default, url: i.last_comment.url, at: i.last_comment.at });
     }
   }
   waiting.sort((a, b) => ms(b.at) - ms(a.at));
