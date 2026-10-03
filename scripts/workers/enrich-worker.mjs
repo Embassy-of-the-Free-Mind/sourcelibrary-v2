@@ -47,6 +47,9 @@ import { composeBookEmbeddingText } from '../lib/book-embedding-text.mjs';
 import { embedBookPages } from '../lib/embed-book-pages.mjs';
 import { computeEndPages } from '../lib/chapter-endpages.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
+import { loadConfirmedCopies, copyGuard } from '../lib/confirmed-copies.mjs';
+import { recordSweepActions } from '../lib/sweep-log.mjs';
+import { publicationFilter } from '../lib/publication.mjs';
 import { buildPageIndex, groundQuotes } from './lib/quote-grounding.mjs';
 import { startHeartbeat, startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 import pg from 'pg';
@@ -1847,6 +1850,18 @@ NO explanation, just the JSON array.`;
 
       const validSlugs = new Set(collections.map(c => c.slug));
 
+      // Copy guard (#5689): never add a scan to a collection that already holds the
+      // keeper of a CONFIRMED copy pair — one card per edition-volume on the grid.
+      // Evidence is committed in scripts/identity-evidence/; load failure → no guard.
+      let confirmedCopies = null;
+      try {
+        confirmedCopies = loadConfirmedCopies();
+        console.log(`  Copy guard: ${confirmedCopies.pairs.length} confirmed copy pairs from ${confirmedCopies.files.join(', ') || 'no evidence files'}`);
+      } catch (err) {
+        console.error(`  Copy guard disabled — evidence unreadable: ${err.message}`);
+      }
+      let copySkips = 0;
+
       // Find books that have content but haven't been classified yet.
       // CANNOT use collection_scores: { $exists: false } in the DB query — Atlas times out
       // even with pipeline_auto.status index. Fetch by status (indexed), filter client-side.
@@ -1936,16 +1951,41 @@ NO explanation, just the JSON array.`;
             }
           }
 
+          // PUBLIC keepers' current collections, for the books in this batch that are
+          // confirmed copies. A keeper off the shelf does not block its copy.
+          const keeperCollections = new Map();
+          const keeperIds = confirmedCopies
+            ? [...new Set(batch.flatMap(b => (confirmedCopies.keepersOfCopy.get(b.id) || []).map(k => k.keeper_id)))]
+            : [];
+          if (keeperIds.length) {
+            const keepers = await db.collection('books')
+              .find({ id: { $in: keeperIds }, ...publicationFilter('public') })
+              .project({ _id: 0, id: 1, collections: 1 })
+              .toArray();
+            for (const k of keepers) keeperCollections.set(k.id, k.collections || []);
+          }
+          const skipRows = [];
+
           // Write results for this batch
           const bulkOps = [];
           for (const res of results) {
             const book = batch[res.i];
             if (!book) continue;
 
-            const assignments = (res.c || [])
+            const ranked = (res.c || [])
               .filter(a => a.s && validSlugs.has(a.s) && a.r >= 50)
               .sort((a, b) => b.r - a.r)
               .slice(0, 3);
+            const guard = copyGuard(book.id, ranked.map(a => a.s), confirmedCopies, keeperCollections);
+            for (const sk of guard.skipped) {
+              skipRows.push({
+                sweep: 'collection-tagger-copy-guard',
+                book_id: book.id,
+                action: 'collection-skipped-confirmed-copy',
+                detail: { collection: sk.slug, keeper_id: sk.keeper_id, basis: sk.basis, evidence: sk.source, issue: 5689 },
+              });
+            }
+            const assignments = ranked.filter(a => guard.keep.includes(a.s));
 
             const slugs = assignments.map(a => a.s);
 
@@ -1974,7 +2014,8 @@ NO explanation, just the JSON array.`;
               });
               collectionAssigned++;
             } else {
-              // Mark as processed even with no match, so we don't re-attempt
+              // Mark as processed even with no match (or every match was a confirmed
+              // copy's keeper collection — the sweep_log row says which), so we don't re-attempt
               bulkOps.push({
                 updateOne: {
                   filter: { id: book.id },
@@ -1983,7 +2024,7 @@ NO explanation, just the JSON array.`;
                       collection_scores: {
                         assigned_at: new Date(),
                         model: COLLECTION_MODEL,
-                        result: 'no_match',
+                        result: guard.skipped.length ? 'copy_guard' : 'no_match',
                       },
                     },
                   },
@@ -1995,10 +2036,14 @@ NO explanation, just the JSON array.`;
           if (bulkOps.length > 0) {
             await db.collection('books').bulkWrite(bulkOps);
           }
+          if (skipRows.length > 0) {
+            copySkips += skipRows.length;
+            await recordSweepActions(db, skipRows).catch(err => console.error(`  Copy guard sweep_log write failed: ${err.message}`));
+          }
 
           process.stdout.write(`  Processed: ${Math.min(i + COLLECTION_BATCH_SIZE, unclassifiedBooks.length)}/${unclassifiedBooks.length}\r`);
         }
-        console.log(`\n  Collection assignments: ${collectionAssigned}`);
+        console.log(`\n  Collection assignments: ${collectionAssigned}, copy-guard skips: ${copySkips}`);
       } else if (DRY_RUN) {
         console.log(`  Would classify ${unclassifiedBooks.length} books`);
       }
