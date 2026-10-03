@@ -16,6 +16,7 @@
  *   lite-gloss        lite + an open-source glossary block (--glossary <file>)
  *   lite-fixocr       lite on a corrected transcription (--fixed-dir <dir> with <book>_<page>.txt; pages without one are skipped)
  *   flash-fixocr      flash on the corrected transcription
+ * --dump-prompt-dir <dir>: write each page's exact prompt for the arm and call nothing (X3: Opus translates these).
  * Output <out>/<arm>/<book>_<page>.json {text, model, generationConfig, tokens, thinkingTokens, cost_usd, prompt_ref, context}.
  * Resumable. Usage rows go to gemini_usage with book_id 'xlref-t1' (the envelope's meter); the run refuses when the
  * envelope's measured spend plus this run's spend would pass --max-usd.
@@ -40,6 +41,7 @@ const GLOSSARY = opt('glossary') ? fs.readFileSync(opt('glossary'), 'utf8').trim
 const FIXED = opt('fixed-dir');
 const ENVELOPE = 'xlref-t1';
 const CONC = Number(opt('concurrency', 4));
+const DUMP = opt('dump-prompt-dir'); // write the exact prompt per page instead of calling Gemini (the X3 Opus ceiling reads these)
 if (!INPUT || !OUT) { console.error('--input and --out required'); process.exit(1); }
 
 const SPEC = {
@@ -63,7 +65,7 @@ const ctl = await db.collection('system_config').findOne({ _id: 'processing_cont
 const env = ctl?.allow_scopes?.[ENVELOPE];
 if (!env?.created_at) throw new Error(`envelope ${ENVELOPE} missing — refusing to spend`);
 const metered = async () => { const s = await getScopeSpendUsd(db, { ids: [ENVELOPE], since: new Date(env.created_at) }); if (s.meterError) throw new Error(`envelope meter unreadable: ${s.meterError}`); return s.usd; };
-let envUsd = DRY ? 0 : await metered();
+let envUsd = DRY || DUMP ? 0 : await metered();
 let runUsd = 0;
 console.log(`envelope ${ENVELOPE}: measured $${envUsd.toFixed(3)} / cap $${MAX_USD} (budget $${env.budget_usd})`);
 
@@ -98,6 +100,7 @@ async function runOne(arm, r) {
     if (!GLOSSARY) throw new Error('lite-gloss needs --glossary');
     prompt = prompt.replace('\n\n**Text to translate:**', `\n\n**Glossary (from open early-modern lexica; use these senses where the term occurs; keep the Latin term in a <term> tag on first use if the English is not obvious):**\n${GLOSSARY}\n\n**Text to translate:**`);
   }
+  if (DUMP) { fs.mkdirSync(DUMP, { recursive: true }); fs.writeFileSync(path.join(DUMP, `${id}.txt`), prompt); return; }
   const maxOutputTokens = maxOutputTokensFor(ocrText.length);
   const generationConfig = { temperature: 1, maxOutputTokens, thinkingConfig: { thinkingBudget: spec.thinkingBudget || 0 } };
   if (DRY) { const est = costOf(model, prompt.length / 3.5, ocrText.length / 3 + 400 + (spec.thinkingBudget || 0)); runUsd += est; return; }
@@ -130,7 +133,7 @@ try {
     console.log(`${arm}: done; run spend so far $${runUsd.toFixed(4)}`);
   }
 } finally {
-  if (!DRY) { try { envUsd = await metered(); } catch {} }
+  if (!DRY && !DUMP) { try { envUsd = await metered(); } catch {} }
   await c.close();
 }
 console.log(`${DRY ? 'ESTIMATED' : 'spent (computed)'} $${runUsd.toFixed(4)} over arms ${ARMS.join(',')}; envelope measured $${envUsd.toFixed(3)}`);
