@@ -210,3 +210,10 @@ centred line (`->text<-`, a marker the prompt itself defines) to the next `>`,
 eating whole paragraphs on ~60 pages per arm. Fixed to require a tag name;
 positive control added to the test file. Re-scoring moved the mean by <1% —
 the loop pages dominate either way.
+
+### Amendment 2: 2026-10-03, v16 vs v13, written before its run
+
+→ `PREREGISTRATION-translation-prompt-v16-amendment.md`. It re-runs both arms with v16 in
+place of v15, applies Amendment 1's loop rule, adds an interpretive-note floor (−15%), and
+removes the header class from the judge brief. It also records that the verifier moved on
+2026-09-13 (#4777).
