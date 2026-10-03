@@ -119,4 +119,11 @@ Before any number is quoted, the five pages where S is judged worst (by fidelity
 
 ## Amendments
 
-_(none yet)_
+1. **2026-10-03, after the draw, before submit (no arm output exists).** The draw pinned **125 units: pagebreak 100,
+   control 25**, one per book, from 263 books visited (skipped: 93 English/Tibetan, 5 v14 books, 28 with no seeded
+   lane page, 14 with no OCR on N+1, 8 with no stored translation on N−1, 88 closed-end pages after the control quota
+   filled). Languages: Latin 97, Chinese 10, German 3, Hebrew 3, Arabic 3, Greek 2, and one each of Old Norse,
+   Persian, Malay, Avestan, Italian, French and one book whose language field reads "e". The sample is mostly Latin
+   because the lane's non-Tibetan, non-English frame is. Arms: v13 md5 `516510147237b6a79d9d3f6e797bba7f`, seam
+   `9d9794376f5d09211ca95509e44bef57`. **375 Flash-Lite Batch requests; estimate $0.944** (the v14 run's same
+   estimator over-read by ~35%: $1.05 estimated, $0.667 actual). Submit approved at $1.50, under the $3 cap.
