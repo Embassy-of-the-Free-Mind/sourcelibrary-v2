@@ -27,6 +27,11 @@
  *   --packets   blinded judge packets (#5305 strata) + the blinded Tibetan reading file   FREE
  *   --score     verdicts + mechanical signals → report.json                       FREE
  *
+ * --study seam (#5305 seam confirm, 2026-10-03): arms v13a / v13b / seam, where seam = v13 + ONLY items 1 and 1b
+ * (SEAM_EDITS, the v14 wording byte for byte), on ~100 NEW chained-lane page breaks + 25 NEW closed-end controls,
+ * all sent through the block door. Pre-registration: scripts/eval/PREREGISTRATION-translation-seam-confirm.md.
+ * Candidate text: prompts/translation/standard-translation-seam-candidate.md (the draw asserts its md5).
+ *
  * NOTHING here writes to `pages` or `prompts`.
  */
 import fs from 'node:fs';
@@ -51,11 +56,20 @@ const has = (n) => args.includes(`--${n}`);
 const HERE = path.dirname(new URL(import.meta.url).pathname);
 const AUDIT = path.join(HERE, 'results/translation-corpus-audit-2026-09-30');
 const CHAINED = path.join(HERE, 'results/translation-corpus-audit-chained-2026-10-01');
-const DIR = opt('dir', path.join(HERE, 'results/translation-prompt-v14-ab-2026-10-02'));
+// Two studies share this runner; --study picks the arm config. v14 (default) is the 2026-10-02 run, unchanged.
+const STUDIES = {
+  v14: { dir: 'results/translation-prompt-v14-ab-2026-10-02', seed: 5305, cand: 'v14', endpoint: 'eval/translation-prompt-v14-ab', promptVersion: 'eval-5305-v14', batchName: 'prompt-v14-ab-5305', repeats: 16 },
+  seam: { dir: 'results/translation-seam-confirm-2026-10-03', seed: 53055, cand: 'seam', endpoint: 'eval/translation-seam-confirm-5305', promptVersion: 'eval-5305-seam', batchName: 'seam-confirm-5305', repeats: 20 },
+};
+const STUDY_NAME = opt('study', 'v14');
+const STUDY = STUDIES[STUDY_NAME];
+if (!STUDY) throw new Error(`unknown --study ${STUDY_NAME}`);
+const DIR = opt('dir', path.join(HERE, STUDY.dir));
 const V13_HASH = '516510147237b6a79d9d3f6e797bba7f';
-const SEED = Number(opt('seed', 5305));
+const SEED = Number(opt('seed', STUDY.seed));
 const N = { flagged: 60, sanskrit: 12, pagebreak: 25, control: 25 };
-const ARMS_5305 = ['v13a', 'v13b', 'v14'];
+const CAND = STUDY.cand;
+const ARMS_5305 = ['v13a', 'v13b', CAND];
 const ARMS_TIB = ['v13a', 'v13b', 'v14', 'v14ns'];
 
 // ── the v14 edits, verbatim; the pre-registration quotes them ────────────────
@@ -133,6 +147,21 @@ export const TIBETAN_GROUPS = [
 
 export const DROPPED_FROM = 16;
 
+// ── the seam candidate: v14's items 1b and 1 ONLY, taken from V14_EDITS so the wording is identical by construction ──
+export const SEAM_EDITS = [V14_EDITS[1], V14_EDITS[3]];
+export const SEAM_FILE = path.join(HERE, '../../prompts/translation/standard-translation-seam-candidate.md');
+export function buildSeam(v13) {
+  let t = v13;
+  for (const [a, b] of SEAM_EDITS) {
+    if (t.split(a).length !== 2) throw new Error(`seam anchor not found exactly once: ${a.slice(0, 60)}…`);
+    t = t.replace(a, () => b);
+  }
+  return t;
+}
+/** The prompt body of the committed candidate file (frontmatter stripped). */
+export const seamFileText = () => fs.readFileSync(SEAM_FILE, 'utf8').replace(/^---\n[\s\S]*?\n---\n/, '');
+const md5 = (t) => createHash('md5').update(t).digest('hex');
+
 const sha = (t) => createHash('sha256').update(t).digest('hex').slice(0, 12);
 const readJsonl = (f) => fs.readFileSync(f, 'utf8').split('\n').filter((l) => l.trim()).map((l) => JSON.parse(l));
 const writeJsonl = (f, rows) => fs.writeFileSync(f, rows.map((r) => JSON.stringify(r)).join('\n') + '\n');
@@ -151,6 +180,7 @@ export function englishShare(ocr) {
 
 // ── draw ──────────────────────────────────────────────────────────────────────
 async function phaseDraw() {
+  if (STUDY_NAME === 'seam') return phaseDrawSeam();
   const { MongoClient } = await import('mongodb');
   const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
   const db = c.db('bookstore');
@@ -263,10 +293,114 @@ async function phaseDraw() {
   console.log(`ESTIMATE (Batch API, 50%): $${est.usd.toFixed(3)}`);
 }
 
+// ── draw (study seam): NEW chained-lane pages, one per book, none from a book the v14 run used ──
+// Frame = draw-chained.mjs's: books with a chained translate_batch_runs record, pages the lane wrote
+// (translation.engine.call_site) with a continuity seed. Visit books in seeded order; pick ONE random seeded lane
+// page per book; it is a page break if its source ends open (sourceEndsOpen), else a control. Both are sent as the
+// lane sends a block (N + N+1, seed = stored translation of N−1); page N is judged.
+const CHAINED_CALL_SITE = 'scripts/lib/translate-batch-chained.mjs';
+const EXCLUDED_TYPES = ['archived-spread', 'blank', 'title-page', 'toc', 'index', 'illustration', 'digitizer-insert', 'colophon', 'errata', 'cover', 'map', 'plate'];
+async function phaseDrawSeam() {
+  const NS = { pagebreak: Number(opt('n-pagebreak', 100)), control: Number(opt('n-control', 25)) };
+  const { MongoClient } = await import('mongodb');
+  const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
+  const db = c.db('bookstore');
+  const row = await db.collection('prompts').findOne({ type: 'translation', is_default: true }, { sort: { version: -1 } });
+  if (!row || row.version !== 13) throw new Error(`default translation prompt is v${row?.version}, not 13 — re-read before drawing`);
+  const h = row.content_hash || md5(row.content);
+  if (h !== V13_HASH || md5(row.content) !== V13_HASH) throw new Error(`v13 hash ${h} != ${V13_HASH}`);
+  const seam = buildSeam(row.content);
+  if (md5(seam) !== md5(seamFileText())) throw new Error(`built seam candidate ${md5(seam)} != committed file ${md5(seamFileText())}`);
+  const arms = { v13: row.content, seam };
+
+  // every book the v14 run touched is out
+  const v14Books = new Set(readJsonl(path.join(HERE, STUDIES.v14.dir, 'sample.jsonl')).map((u) => u.book.id));
+  const bookIds = (await db.collection('translate_batch_runs').distinct('book_id', { mode: 'chained' })).sort();
+  const books = new Map((await db.collection('books').find({ id: { $in: bookIds } }, { projection: { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1, image_source: 1 } }).toArray()).map((b) => [b.id, b]));
+  resetSeed(SEED);
+  const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(seededRand() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const order = shuffle(bookIds.filter((id) => books.has(id)));
+  const log = { seed: SEED, frame: { call_site: CHAINED_CALL_SITE, runs_mode: 'chained', books: order.length }, skipped: {}, visited: 0 };
+  const skip = (k) => { log.skipped[k] = (log.skipped[k] || 0) + 1; };
+  const units = [];
+  const need = (s) => units.filter((u) => u.stratum === s).length < NS[s];
+  for (const id of order) {
+    if (!need('pagebreak') && !need('control')) break;
+    const b = books.get(id);
+    if (v14Books.has(id)) { skip('v14_book'); continue; }
+    if (/english/i.test(b.language || '') || /^tibetan/i.test(b.language || '')) { skip('english_or_tibetan'); continue; }
+    log.visited++;
+    const cands = await db.collection('pages').find(
+      { book_id: id, 'translation.engine.call_site': CHAINED_CALL_SITE, 'translation.engine.input.context.previous_translation': true, 'translation.edited_by': { $exists: false }, page_type: { $nin: EXCLUDED_TYPES } },
+      { projection: { page_number: 1, 'translation.model': 1 } },
+    ).toArray();
+    const ok = cands.filter((p) => /^gemini-3(\.1)?-flash/.test(p.translation?.model || ''));
+    if (!ok.length) { skip('no_seeded_lane_page'); continue; }
+    const pick = ok[Math.floor(seededRand() * ok.length)].page_number;
+    const nb = new Map((await db.collection('pages').find({ book_id: id, page_number: { $in: [pick - 1, pick, pick + 1, pick + 2] } }, { projection: { id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1 } }).toArray()).map((r) => [r.page_number, r]));
+    const pg = nb.get(pick), nx = nb.get(pick + 1);
+    if (!pg?.ocr?.data || pg.ocr.data.length < 200) { skip('short_ocr'); continue; }
+    if (!nx?.ocr?.data) { skip('no_next_ocr'); continue; }
+    if (!nb.get(pick - 1)?.translation?.data) { skip('no_seed_now'); continue; }
+    const stratum = sourceEndsOpen(pg.ocr.data) ? 'pagebreak' : 'control';
+    if (!need(stratum)) { skip(`${stratum}_full`); continue; }
+    units.push({
+      unit: `${id}:${pick}`, stratum, door: 'block', model: MODEL_LITE, sourceOpen: stratum === 'pagebreak',
+      book: { id: b.id, title: b.display_title || b.title, author: b.author, language: b.language, published: b.published || b.year, image_source: b.image_source ? { provider: b.image_source.provider } : undefined },
+      language: b.language,
+      pages: [{ page_number: pick, id: pg.id, ocr: pg.ocr.data }, { page_number: pick + 1, id: nx.id, ocr: nx.ocr.data }],
+      seed: nb.get(pick - 1).translation.data,
+      prevOcr: nb.get(pick - 1)?.ocr?.data || null, nextOcr: nb.get(pick + 2)?.ocr?.data || null,
+    });
+  }
+  await c.close();
+  fs.mkdirSync(DIR, { recursive: true });
+  writeJsonl(path.join(DIR, 'sample.jsonl'), units);
+  fs.writeFileSync(path.join(DIR, 'arms.json'), JSON.stringify({
+    base: { version: 13, hash: h, id: String(row._id) }, edits: SEAM_EDITS, candidate_file: path.relative(path.join(HERE, '../..'), SEAM_FILE), candidate_md5: md5(seam),
+    arms: Object.fromEntries(Object.entries(arms).map(([k, t]) => [k, { sha: sha(t), md5: md5(t), chars: t.length }])), text: arms,
+  }, null, 2));
+  const by = {}, langs = {}; for (const u of units) { by[u.stratum] = (by[u.stratum] || 0) + 1; langs[u.language] = (langs[u.language] || 0) + 1; }
+  log.by = by; log.languages = langs;
+  const est = estimate(units, arms);
+  log.estimate = est;
+  fs.writeFileSync(path.join(DIR, 'draw-log.json'), JSON.stringify(log, null, 2));
+  console.log(`units by stratum ${JSON.stringify(by)}; languages ${JSON.stringify(langs)}; visited ${log.visited}; skipped ${JSON.stringify(log.skipped)}`);
+  console.log(`arms: ${Object.entries(arms).map(([k, t]) => `${k}=${md5(t)}`).join(' ')}`);
+  console.log(`requests ${est.calls}; in ~${est.inTok.toLocaleString()} tok, out ~${est.outTok.toLocaleString()} tok; by model ${JSON.stringify(est.models)}`);
+  console.log(`ESTIMATE (Batch API, 50%): $${est.usd.toFixed(3)}`);
+}
+
+/** Exact one-sided sign test: P(X ≤ x) for X ~ Bin(x + y, ½) — H1: the x arm is flagged on fewer pages. */
+export function signOneSided(x, y) {
+  const n = x + y; if (!n) return 1;
+  const lf = (k) => { let s = 0; for (let i = 2; i <= k; i++) s += Math.log(i); return s; };
+  let p = 0; for (let i = 0; i <= x; i++) p += Math.exp(lf(n) - lf(i) - lf(n - i) - n * Math.log(2));
+  return Math.min(1, p);
+}
+
+/** The pre-registered rule (PREREGISTRATION-translation-seam-confirm.md), in pages. */
+function seamDecision(report) {
+  const pages = (st, a, f) => Math.round(st[a][f] * st.n);
+  const pb = report.strata.pagebreak, ctl = report.strata.control, all = report.strata.all;
+  const pbCount = (a) => pb[a].kinds['page-boundary'];
+  const A = pbCount('v13a'), A2 = pbCount('v13b'), S = pbCount('seam');
+  const e = pb.pageBoundary.effect_seam_v13a;
+  const primary = { v13a: A, v13b: A2, seam: S, noise: Math.abs(A2 - A), discordant: `${e.seam_only} seam-only vs ${e.v13a_only} v13a-only`, p_one_sided: e.p_one_sided_x_lower,
+    pass: S < A && (A - S) > Math.abs(A2 - A) && e.p_one_sided_x_lower < 0.10 };
+  const g1 = { v13a: pages(ctl, 'v13a', 'inv'), v13b: pages(ctl, 'v13b', 'inv'), seam: pages(ctl, 'seam', 'inv') };
+  g1.noise = Math.abs(g1.v13b - g1.v13a); g1.hold = g1.seam - g1.v13a <= g1.noise;
+  const g2 = { v13a: pages(all, 'v13a', 'om'), v13b: pages(all, 'v13b', 'om'), seam: pages(all, 'seam', 'om') };
+  g2.noise = Math.abs(g2.v13b - g2.v13a); g2.hold = g2.seam - g2.v13a <= g2.noise;
+  const secondary = { metaPayload: Object.fromEntries(ARMS_5305.map((a) => [a, pages(all, a, 'metaPayload')])), paired: all.effect_seam_v13a.metaPayload };
+  return { primary, guard1_control_invention: g1, guard2_omission_pooled: g2, secondary, verdict: primary.pass && g1.hold && g2.hold ? 'PASS' : 'FAIL' };
+}
+
 // ── requests ────────────────────────────────────────────────────────────────
 const armsFor = (u) => (/^tibetan/.test(u.stratum) ? ARMS_TIB : ARMS_5305);
 function textFor(arm, u, arms) {
   if (arm === 'v13a' || arm === 'v13b') return arms.v13;
+  if (arm === 'seam') return arms.seam;
   return /^tibetan/.test(u.stratum) ? arms.v14t : arms.v14;
 }
 export function promptFor(u, arm, arms) {
@@ -309,7 +443,7 @@ async function phaseSubmit() {
   const key = process.env[envName];
   if (!key) throw new Error(`no ${envName}`);
   const jobs = [];
-  for (const [model, lines] of Object.entries(byModel)) jobs.push(await submitBatchFile({ model, lines, displayName: `prompt-v14-ab-5305-${model}`, key }));
+  for (const [model, lines] of Object.entries(byModel)) jobs.push(await submitBatchFile({ model, lines, displayName: `${STUDY.batchName}-${model}`, key }));
   fs.writeFileSync(path.join(DIR, 'batch.json'), JSON.stringify({ key_env: envName, estimate_usd: est.usd, generation: { thinkingBudget: 0, maxOutputTokens: 'maxOutputTokensFor(pages)', temperature: 'default', safety: 'BLOCK_NONE' }, jobs }, null, 2));
 }
 
@@ -350,7 +484,7 @@ async function phaseCollect() {
       console.log(`collected ${n} (${errors} errors) $${j.cost_usd.toFixed(4)}`);
       try {
         const { logUsage } = await import('../workers/lib/supabase-usage-logger.mjs');
-        await logUsage({ type: 'eval', mode: 'batch', model: j.model, page_count: n - errors, input_tokens: inTok, output_tokens: outTok, batch_job_id: j.job_name, endpoint: 'eval/translation-prompt-v14-ab', triggered_by: 'manual', prompt_version: 'eval-5305-v14' });
+        await logUsage({ type: 'eval', mode: 'batch', model: j.model, page_count: n - errors, input_tokens: inTok, output_tokens: outTok, batch_job_id: j.job_name, endpoint: STUDY.endpoint, triggered_by: 'manual', prompt_version: STUDY.promptVersion });
       } catch (e) { console.warn(`logUsage failed: ${e.message}`); }
     }
     fs.writeFileSync(path.join(DIR, 'batch.json'), JSON.stringify(rec, null, 2));
@@ -388,7 +522,7 @@ function phasePackets() {
   shuffle(items);
   const NP = Number(opt('n-packets', 24));
   const packets = Array.from({ length: NP }, (_, p) => items.filter((_, i) => i % NP === p));
-  const REPEATS = Number(opt('repeats', 16));
+  const REPEATS = Number(opt('repeats', STUDY.repeats));
   for (let i = 0; i < REPEATS; i++) {
     const at = Math.floor(seededRand() * items.length), src = items[at], pid = opaque();
     key[pid] = { ...key[src.id], repeat_of: src.id };
@@ -513,9 +647,14 @@ function phaseScore() {
       if (stratum === 'sanskrit') out[a].meanTrChars = Math.round(rows.reduce((s, c) => s + (c[a].trChars || 0), 0) / rows.length);
     }
     out.noise_v13b_v13a = Object.fromEntries(['inv', 'invBody', 'om'].map((f) => [f, paired('v13b', 'v13a', f)]));
-    out.effect_v14_v13a = Object.fromEntries(['inv', 'invBody', 'om', 'openEndUnmarked', 'summary', 'drift', 'dupWithSeed'].map((f) => [f, paired('v14', 'v13a', f)]));
+    out[`effect_${CAND}_v13a`] = Object.fromEntries(['inv', 'invBody', 'om', 'openEndUnmarked', 'summary', 'drift', 'dupWithSeed', 'metaPayload'].map((f) => [f, paired(CAND, 'v13a', f)]));
+    // page-boundary invention as a per-page flag (judged defect kind), paired
+    const pbFlag = (c, a) => !!c[a].kinds?.['page-boundary'];
+    const pbPair = (x, y) => { const b = rows.filter((c) => pbFlag(c, x) && !pbFlag(c, y)).length, cc = rows.filter((c) => !pbFlag(c, x) && pbFlag(c, y)).length; return { [`${x}_only`]: b, [`${y}_only`]: cc, p_two_sided: +mcnemar(b, cc).toFixed(4), p_one_sided_x_lower: +signOneSided(b, cc).toFixed(4) }; };
+    out.pageBoundary = { noise_v13b_v13a: pbPair('v13b', 'v13a'), [`effect_${CAND}_v13a`]: pbPair(CAND, 'v13a') };
     report.strata[stratum] = out;
   }
+  if (STUDY_NAME === 'seam') report.decision = seamDecision(report);
   // Tibetan mechanical (the by-eye read is in tibetan-reading.json, written by hand from tibetan-read/)
   for (const s of ['tibetan', 'tibetan-dropped']) {
     const us = [...units.values()].filter((u) => u.stratum === s);
