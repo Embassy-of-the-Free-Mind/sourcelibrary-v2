@@ -24,7 +24,9 @@
  *   (c) ENVELOPES every allow_scopes envelope. FAIL: more than $1 paid on its books in the last 24 h
  *                 (realtime by call time, batch by COLLECTION time, OCR+translation lanes) and zero
  *                 pages written on them in that window. WARN: 90–100 % of cap; open, more than 3 days
- *                 old and no spend for 3 days (stored spend: authority nobody is using).
+ *                 old and no OCR/translation spend on its books for 3 days (stored spend: authority
+ *                 nobody is using). Attribution is by book, as the gate meters it, so envelopes
+ *                 sharing books share spend.
  *                 INFO: at or over cap and still configured (the gate refuses it; clutter).
  *   (d) DIAL      yesterday's metered spend OUTSIDE every envelope vs the dial (FAIL above
  *                 max(1.5 × dial, dial + $5): the known ungated holes are ~$1.6/day), and the
@@ -315,10 +317,13 @@ async function readEnvelopes(db, control, { usage, pages24, pages7 = null, now }
     let paid24 = 0, last = null, spend72 = 0;
     for (const r of usage.byTime) {
       if (!ids.has(String(r.book_id)) || ms(r.timestamp) < createdT) continue;
-      if ((r.cost_usd || 0) > 0 && (!last || ms(r.timestamp) > ms(last))) last = r.timestamp;
       spend72 += r.cost_usd || 0;
+      // Only the lanes an envelope is opened for count as its activity: an eval or embedding pass
+      // that touches every book (2026-10-02 17:30) would otherwise make every envelope look busy.
       const lane = laneOf(r.type);
-      if (r.mode !== 'batch' && ms(r.timestamp) >= t24 && (lane === 'ocr' || lane === 'translation')) paid24 += r.cost_usd || 0;
+      if (lane !== 'ocr' && lane !== 'translation') continue;
+      if ((r.cost_usd || 0) > 0 && (!last || ms(r.timestamp) > ms(last))) last = r.timestamp;
+      if (r.mode !== 'batch' && ms(r.timestamp) >= t24) paid24 += r.cost_usd || 0;
     }
     for (const r of usage.collected) {
       if (!ids.has(String(r.book_id)) || PLACEHOLDER.has(r.status) || ms(r.timestamp) < createdT) continue;
