@@ -17,6 +17,7 @@
 
 import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
+import { catalogTranslationColumns } from '../lib/page-counts.mjs';
 
 // Locally-sourced .env.production.local values can carry a literal "\n"
 // suffix (vercel env pull escaping — same footgun as the R2 vars, #3000).
@@ -93,6 +94,11 @@ function transformBook(book) {
     // helper can tell "not recounted yet" from "genuinely nothing translatable" — 0
     // means a book of plates and must not be confused with a missing value.
     pages_translatable: typeof book.pages_translatable === 'number' ? book.pages_translatable : null,
+    // The translation-state ladder (#5288, .claude/docs/translation-state.md):
+    // `translation_rung` + `english_original`, which browseBooks filters on. Paired
+    // with the counters, `language`, `content_type` and `translation_state` in the
+    // projection below — a missing input computes a wrong rung, silently.
+    ...catalogTranslationColumns(book),
     is_first_translation: book.is_first_translation === true,
     // LISTING predicate: matches the canonical public-listing filter
     // (visible: true), so Mongo's unset-visible legacy books collapse to
@@ -200,7 +206,18 @@ if (FULL_MODE) {
 } else {
   const lastSync = await getLastSyncTime();
   if (lastSync) {
-    query = { updated_at: { $gt: lastSync } };
+    // Second branch (#5288): sync-worker re-stamps `translation_state` WITHOUT
+    // bumping `updated_at` when only the rung moved (a rule-version bump, a
+    // `pages_translatable` recount, a language fix), so `updated_at` alone would
+    // leave the catalog's rung stale until the weekly --full. `computed_at` is
+    // written on every stamp. Visible books only: a hidden book's rung changes
+    // no listing, and a visibility change bumps `updated_at` anyway.
+    query = {
+      $or: [
+        { updated_at: { $gt: lastSync } },
+        { visible: true, 'translation_state.computed_at': { $gt: lastSync } },
+      ],
+    };
     console.log(`Incremental from: ${lastSync.toISOString()} (visibility changes included)`);
   } else {
     query = { visible: true };
@@ -213,6 +230,7 @@ const projection = {
   thumbnail: 1, thumbnail_blob: 1, photo: 1, language: 1, year: 1, published: 1,
   read_count: 1, pages_blank: 1,
   pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_translated_es: 1, pages_translatable: 1,
+  'translation_state.rung': 1, 'translation_state.english_original': 1, 'translation_state.version': 1,
   is_first_translation: 1, visible: 1, quality_score: 1,
   last_translation_at: 1, updated_at: 1, created_at: 1,
   categories: 1, collections: 1, collection_relevance: 1,
