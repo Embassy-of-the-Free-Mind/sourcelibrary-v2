@@ -41,6 +41,10 @@
  *   --crisis-only              books with spread_translation_crisis: true
  *   --ia-only                  Internet Archive books (ia_identifier set) — see below
  *   --translated               books with at least one translated page
+ *   --random                   (--audit) draw --limit books at random instead of the
+ *                              first N in natural order — the first N are the oldest
+ *                              imports, and 200 of them audited 0 low-res while a
+ *                              random 59 found 37 (#5679)
  *
  * Internet Archive sources (#5679):
  *   An IA page's `photo` is a BookReader URL, archive.org/download/<id>/page/nN/...,
@@ -116,6 +120,7 @@ const PROVIDER = ARG('--provider');
 const CRISIS_ONLY = FLAG('--crisis-only');
 const IA_ONLY = FLAG('--ia-only');
 const TRANSLATED = FLAG('--translated');
+const RANDOM = FLAG('--random');
 const CONCURRENCY = parseInt(ARG('--concurrency', '2'));
 const PAGE_CONCURRENCY = parseInt(ARG('--page-concurrency', '4'));
 const LIMIT = parseInt(ARG('--limit', '0'));
@@ -339,9 +344,12 @@ async function fetchUpgraded(url) {
 // ── Audit mode ──
 
 async function audit() {
-  const books = await db.collection('books').find(buildBookQuery(), {
-    projection: { id: 1, slug: 1, title: 1, 'image_source.provider': 1 },
-  }).limit(LIMIT || 0).toArray();
+  const projection = { id: 1, slug: 1, title: 1, 'image_source.provider': 1 };
+  const books = RANDOM && LIMIT
+    ? await db.collection('books').aggregate([
+        { $match: buildBookQuery() }, { $project: projection }, { $sample: { size: LIMIT } },
+      ]).toArray()
+    : await db.collection('books').find(buildBookQuery(), { projection }).limit(LIMIT || 0).toArray();
 
   console.log(`Auditing ${books.length} books for low-res IIIF source...\n`);
 
