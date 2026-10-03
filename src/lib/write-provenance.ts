@@ -312,7 +312,7 @@ export function missingProvenance(field: 'ocr' | 'translation', sub: unknown): {
     else if (isNotRecorded(i)) markers.push(`${field}.engine.input`);
     else if (field === 'ocr' && !i.image_url) missing.push(`${field}.engine.input.image_url`);
     else if (field === 'translation' && !HEX16.test((i.source_text_hash as string) || '')) missing.push(`${field}.engine.input.source_text_hash`);
-  } else if (src === 'kraken' || src === 'bdrc' || src === 'mineru') {
+  } else if (src === 'kraken' || src === 'bdrc' || src === 'mineru' || src === 'paddle') {
     if (!e) missing.push(`${field}.engine`);
     else {
       if (!e.name) missing.push(`${field}.engine.name`);
