@@ -101,6 +101,11 @@
 # says whether it can be switched to enforce.
 30 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-status-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/status-output-drift.mjs" >> /var/log/sourcelibrary/status-output-drift.log 2>&1
 
+# Printed page numbers (#4291): refit pages.printed_page on every book whose OCR changed in
+# the last 26h. The fit is per book, so no per-page OCR writer can do it. $0: no model calls,
+# Mongo only, ~20 books/s.
+50 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-printed-page.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/backfill-printed-page-4291.mjs --apply --ocr-since=26h" >> /var/log/sourcelibrary/printed-page.log 2>&1
+
 # Paid-vs-got daily ledger (#5499): yesterday's Gemini spend by lane from COLLECTED usage rows
 # against pages written (page provenance), open batches by age (FAIL past 40 h; Gemini expires
 # them at 48 h), duplicate/repeat/paid-for-nothing waste, and on Mondays the invoice vs metered
