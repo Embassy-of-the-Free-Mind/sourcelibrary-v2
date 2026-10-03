@@ -92,6 +92,11 @@ const WIDE_LEAF_MAX_H = '50dvh';
  *  vertical padding, and its horizontal padding. */
 const SCAN_PANE_CHROME_Y = 38 + 2 * 22;
 const SCAN_PANE_CHROME_X = 2 * 24;
+/** Bounds on the desktop scan column once it is sized to the page's shape:
+ *  never so narrow the controls crowd, never more than this share of the
+ *  panes, so the text beside it keeps a readable measure. */
+const SCAN_PANE_MIN_W = 320;
+const SCAN_PANE_MAX_SHARE = 0.6;
 /**
  * Stacks a wide leaf BEFORE hydration (#5367). The reader only learns a scan's
  * shape from the image, and its own code is not running until the bundle has
@@ -3259,6 +3264,31 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     ...(stackWideLeaf ? { '--rv2-leaf-ratio': String(scanRatio) } : {}),
   } as React.CSSProperties;
 
+  // Side by side, a tall page fits the pane by height and an equal flex share
+  // left a third of its column as empty bed either side of the page. Size the
+  // scan column to the page instead — its height in the pane times its shape —
+  // and give the rest to the text. Measured from the panes' own box, because
+  // the strip under them changes their height.
+  const [panesBox, setPanesBox] = useState<{ w: number; h: number } | null>(null);
+  const panesObserver = useRef<ResizeObserver | null>(null);
+  const panesRef = useCallback((el: HTMLElement | null) => {
+    panesObserver.current?.disconnect();
+    panesObserver.current = null;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(([entry]) => {
+      const { width: w, height: h } = entry.contentRect;
+      setPanesBox(prev => (prev && Math.abs(prev.w - w) < 1 && Math.abs(prev.h - h) < 1 ? prev : { w, h }));
+    });
+    ro.observe(el);
+    panesObserver.current = ro;
+  }, []);
+  const scanPaneWidth = r.views.scan && textPaneCount > 0 && !stackWideLeaf && panesBox
+    ? Math.round(Math.min(
+        panesBox.w * SCAN_PANE_MAX_SHARE,
+        Math.max(SCAN_PANE_MIN_W, (panesBox.h - SCAN_PANE_CHROME_Y) * scanRatio + SCAN_PANE_CHROME_X),
+      ))
+    : null;
+
 
   // The text of a neighbouring page is already prefetched, but its scan is
   // not, so a page turn showed the words instantly and then waited on the
@@ -3588,6 +3618,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         <main
           key={browserTranslated ? `translated-${r.currentPageId}` : undefined}
           data-reader-panels-container
+          ref={panesRef}
           data-wide-leaf={stackWideLeaf ? '' : undefined}
           className="rv2-panes relative flex min-h-0"
           style={panesStyle}
@@ -3599,7 +3630,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             <section
               data-scan-pane
               className="flex-1 min-w-0 min-h-0 flex flex-col border-r"
-              style={{ background: SURFACE.scanBed, borderColor: 'var(--border-medium)' }}
+              style={{
+                background: SURFACE.scanBed,
+                borderColor: 'var(--border-medium)',
+                ...(scanPaneWidth ? { flex: `0 0 ${scanPaneWidth}px` } : {}),
+              }}
             >
               <PaneHeader
                 right={
@@ -4032,6 +4067,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               >
                 <ScanViewer
                   page={r.currentPage} book={r.book} zoom={scanZoom} onZoomChange={changeZoom} lensOn={lensOn}
+                  wheelZooms={false}
                   srcOverride={witnessSrc}
                   nativeSrcOverride={witnessNativeSrc}
                   altOverride={witness ? t.panes.witnessAlt(witness.designation) : undefined}
