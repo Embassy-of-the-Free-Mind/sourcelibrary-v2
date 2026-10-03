@@ -250,3 +250,44 @@ example breaks (source and English) are quoted in the report.
      block with a page undrafted. No English had been read.
    - C and D actual spend: $0.347 + $0.358 = $0.705.
 
+## Result (2026-10-03)
+
+The numbers are in `results/seam-markers-confirm-5678/report.json` (`decision`). Every count below is breaks out of
+the 100 true mid-sentence breaks with a real seam defect flagged by both judges, with Wilson 95% intervals.
+
+| Arm | Real seam defects | 95% |
+|---|---:|---|
+| A Lite, production | 26 | 18–35% |
+| A2 Lite again | 26 | 18–35% |
+| B Lite + markers | 19 | 13–28% |
+| C Flash + markers | 11 | 6–19% |
+| D Flash, no markers | 16 | 10–24% |
+
+**Noise floor.** |A2 − A| = 0, but the two Lite draws disagree on 26 breaks (13 each way): the count is stable,
+which breaks fail is not.
+
+**Primaries.**
+- **T1, markers on Lite (B vs A): fails.** 19 vs 26; discordant 8 vs 15; one-sided p 0.105.
+- **T2, markers on Flash (C vs D): fails.** 11 vs 16; discordant 7 vs 12; p 0.18.
+
+**Secondaries.**
+- **S1, model without markers (D vs A): holds.** 16 vs 26; discordant 8 vs 18; p 0.038.
+- **S2, model with markers (C vs B): holds.** 11 vs 19; discordant 5 vs 13; p 0.048.
+- C vs A: 11 vs 26; discordant 5 vs 20; p 0.002. B vs A2: discordant 10 vs 17; p 0.124.
+
+**Guards.**
+- Controls (20): A 0, A2 1, B 1, C 0, D 0. Holds for B and C.
+- Edge omission (both judges): A 3, A2 3, B 6, C 3, D 3. **Fails for B** (6 − 3 = 3 > 2). Holds for C.
+- Undrafted blocks of 120: A 0, A2 2, B 2, C 0, D 1. Holds for B and C.
+
+**Question 1: NO.** T1 fails, so the flag stays off and no adoption PR is opened. Had T1 held, the omission guard
+would have made it "effect with a cost". T2 also fails, so there is no "only C/D wins" case to report.
+
+**Question 2: MODEL.** Both model tests hold and neither marker test does.
+
+**Judges.** Plants caught 64 of 64 (no judge set aside). Inter-judge agreement on "real defect" 594 of 600. Repeat
+agreement 158 of 160.
+
+**Spend.** $1.232 metered (`gemini_usage`, endpoint `eval/markers-confirm-5678`, 600 rows, $1.2325). The three
+dead Lite jobs of Amendment 2 returned nothing and are not in the meter; if Google billed them, they add about
+$0.52. The envelope was opened for each submit only and is removed.
