@@ -3,13 +3,14 @@ import { NextRequest, NextResponse } from 'next/server';
 // mongodb requires the Node.js runtime (never edge).
 export const runtime = 'nodejs';
 import { getDb } from '@/lib/mongodb';
+import { withAdminAuth } from '@/lib/auth-helpers';
 import { getPageSource, getPageImageUrl } from '@/lib/page-image-url';
 import type { Page } from '@/lib/types';
 
 /**
- * GET /api/books/[id]/cover-materials
+ * GET /api/admin/cover-materials/[id]   (admin only)
  *
- * Everything the cover maker (/book/[id]/cover) can build a cover from, taken
+ * Everything the cover maker (/admin/covers/[bookId]) can build a cover from, taken
  * from the book's own scans: the boards and endpapers, the title page, the
  * plates, and the illustrations the pipeline has already cut out.
  *
@@ -53,8 +54,8 @@ function roleOf(page: { page_type?: string | null; page_number: number }, head: 
   return 'leaf';
 }
 
-export async function GET(_req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
+export const GET = withAdminAuth(async (_req: NextRequest, _session, context: { params: Promise<{ id: string }> }) => {
+  const { id } = await context.params;
   const db = await getDb();
 
   const book = await db.collection('books').findOne(
@@ -67,7 +68,8 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
       },
     },
   );
-  if (!book || book.visible === false) {
+  // Admins may make concepts for hidden books too.
+  if (!book) {
     return NextResponse.json({ error: 'Book not found' }, { status: 404 });
   }
 
@@ -147,6 +149,6 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ id:
       leaves,
       images,
     },
-    { headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400' } },
+    { headers: { 'Cache-Control': 'private, no-store' } },
   );
-}
+});

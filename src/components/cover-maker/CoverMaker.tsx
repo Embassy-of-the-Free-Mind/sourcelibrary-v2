@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowDown, ArrowLeft, ArrowUp, Copy, Download, Eye, EyeOff, Lock, Plus, Redo2, Trash2, Undo2, Unlock } from 'lucide-react';
+import { ArrowDown, ArrowLeft, ArrowUp, Check, Copy, Download, Eye, EyeOff, FileDown, FileUp, Lock, Plus, Redo2, Save, Trash2, Undo2, Unlock } from 'lucide-react';
 import { loadImage, surfaceStats } from './analyze';
 import { assetToLayer, baseAssets, letteringAssets, replaceImage, type Asset } from './assets';
 import { Board } from './Board';
@@ -19,11 +19,19 @@ import { H, W, uid, type Cover, type Crop, type Layer, type Leaf, type Materials
 /**
  * The cover maker: starting covers made from a book's own scans, an elements
  * panel holding everything the book offers, and a board to arrange them on.
- * Covers are kept in this browser only (localStorage, per book); the finished
- * cover leaves as a PNG.
+ * Admin only (/admin/covers). Work in progress is kept in this browser
+ * (localStorage, per book); Save stores a concept in Source Library
+ * (cover_concepts, never applied to the book); Save file downloads the layers
+ * as JSON that Open file reads back; Download PNG exports the picture.
  */
 
 const STORE_KEY = (id: string) => `cover-maker:v1:${id}`;
+const FILE_FORMAT = 'sourcelibrary-cover';
+
+/** What Save compares against: the parts of a design that are the design. */
+const snapshot = (c: Cover) => JSON.stringify({ name: c.name, layers: c.layers });
+
+interface Concept { id: string; book_id: string; name: string; layers: Layer[]; updated_at: string }
 
 const ROLE_LABEL: Record<string, string> = {
   outside: 'binding', endpaper: 'endpaper', title: 'title page', frontispiece: 'frontispiece', plate: 'plate', leaf: 'page',
@@ -69,7 +77,7 @@ function hexLum(hex: string): number {
   return (0.299 * ((n >> 16) & 255) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255;
 }
 
-export default function CoverMaker({ bookId }: { bookId: string }) {
+export default function CoverMaker({ bookId, openDesign }: { bookId: string; openDesign?: string }) {
   const [materials, setMaterials] = useState<Materials | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [starters, setStarters] = useState<Cover[] | null>(null);
@@ -89,12 +97,16 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
   const [tick, setTick] = useState(0);
   const history = useRef<{ past: Cover[]; future: Cover[]; base: Cover | null }>({ past: [], future: [], base: null });
   const lumCache = useRef(new Map<string, number>()).current;
+  /** Snapshot of each design as last saved to Source Library, by design id. */
+  const [savedAs, setSavedAs] = useState<Record<string, string>>({});
+  const [saving, setSaving] = useState(false);
+  const fileInput = useRef<HTMLInputElement>(null);
 
   // ── Load ──
   useEffect(() => {
     let live = true;
     loadCoverFonts().then(() => { if (live) { clearRenderCache(); setFontsReady(true); } });
-    fetch(`/api/books/${encodeURIComponent(bookId)}/cover-materials`)
+    fetch(`/api/admin/cover-materials/${encodeURIComponent(bookId)}`)
       .then(r => (r.ok ? r.json() : Promise.reject(new Error(r.status === 404 ? 'This book was not found.' : 'Could not load this book.'))))
       .then((m: Materials) => { if (live) { setMaterials(m); setAssets(baseAssets(m)); } })
       .catch(e => { if (live) setError(e.message); });
@@ -115,13 +127,24 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
   useEffect(() => {
     if (!materials || !fontsReady) return;
     let live = true;
-    buildStarters(materials).then(s => {
+    const server = fetch(`/api/admin/cover-concepts?book=${encodeURIComponent(materials.book.id)}`)
+      .then(r => (r.ok ? r.json() : { concepts: [] }))
+      .then((d: { concepts: Concept[] }) => d.concepts || [])
+      .catch(() => [] as Concept[]);
+    Promise.all([buildStarters(materials), server]).then(([s, concepts]) => {
       if (!live) return;
       setStarters(s);
-      const saved = readSaved(materials.book.id);
-      if (saved?.designs?.length) {
-        setDesigns(saved.designs);
-        setActiveId(saved.activeId && saved.designs.some(d => d.id === saved.activeId) ? saved.activeId : saved.designs[0].id);
+      const local = readSaved(materials.book.id)?.designs || [];
+      // This browser's copy wins when both exist: it holds the latest edits.
+      // Saved concepts this browser doesn't have are added.
+      const ids = new Set(local.map(d => d.id));
+      const fromServer = concepts.filter(c => !ids.has(c.id)).map(c => ({ id: c.id, name: c.name, layers: c.layers }));
+      const all = [...local, ...fromServer];
+      setSavedAs(Object.fromEntries(concepts.map(c => [c.id, snapshot({ id: c.id, name: c.name, layers: c.layers })])));
+      if (all.length) {
+        setDesigns(all);
+        const want = openDesign && all.some(d => d.id === openDesign) ? openDesign : readSaved(materials.book.id)?.activeId;
+        setActiveId(want && all.some(d => d.id === want) ? want : all[0].id);
         setTab('elements');
       } else if (s.length) {
         const first = { ...clone(s[0]), id: uid() };
@@ -130,7 +153,7 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
       }
     });
     return () => { live = false; };
-  }, [materials, fontsReady]);
+  }, [materials, fontsReady, openDesign]);
 
   useEffect(() => {
     if (designs.length && materials) writeSaved(materials.book.id, { designs, activeId });
@@ -233,6 +256,12 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
   };
 
   const deleteDesign = (id: string) => {
+    const d = designs.find(x => x.id === id);
+    if (savedAs[id] && !window.confirm(`Remove “${d?.name}” from the saved concepts too?`)) return;
+    if (savedAs[id]) {
+      fetch(`/api/admin/cover-concepts/${encodeURIComponent(id)}`, { method: 'DELETE' }).catch(() => {});
+      setSavedAs(m => { const n = { ...m }; delete n[id]; return n; });
+    }
     const rest = designs.filter(d => d.id !== id);
     setDesigns(rest);
     if (activeId === id) setActiveId(rest[0]?.id ?? null);
@@ -327,6 +356,70 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
     setPagePick(null);
   };
 
+  // ── Save ──
+  const thumbOf = (c: Cover): string | null => {
+    try {
+      const s = 240 / W;
+      const cv = document.createElement('canvas');
+      cv.width = 240;
+      cv.height = Math.round(H * s);
+      renderCover(cv.getContext('2d')!, c, s, images);
+      return cv.toDataURL('image/jpeg', 0.82);
+    } catch {
+      return null;
+    }
+  };
+
+  const saveActive = async () => {
+    if (!active || !materials) return;
+    setSaving(true);
+    try {
+      const res = await fetch('/api/admin/cover-concepts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: active.id, book_id: materials.book.id, name: active.name, layers: active.layers, thumb: thumbOf(active) }),
+      });
+      if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || `HTTP ${res.status}`);
+      setSavedAs(m => ({ ...m, [active.id]: snapshot(active) }));
+    } catch (e) {
+      setError(`Not saved: ${e instanceof Error ? e.message : 'unknown error'}. Your work is still kept in this browser.`);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const fileSlug = () => materials ? shortTitle(materials.book.title).toLowerCase().normalize('NFKD').replace(/[^\w]+/g, '-').replace(/^-|-$/g, '').slice(0, 60) : 'cover';
+
+  const saveFile = () => {
+    if (!active || !materials) return;
+    const data = {
+      format: FILE_FORMAT, version: 1, saved_at: new Date().toISOString(),
+      book: { id: materials.book.id, title: materials.book.title },
+      cover: { id: active.id, name: active.name, layers: active.layers },
+    };
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 1)], { type: 'application/json' }));
+    a.download = `${fileSlug() || 'cover'}-${active.name.toLowerCase().replace(/\s+/g, '-')}.cover.json`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+  };
+
+  const openFile = async (file: File) => {
+    try {
+      const data = JSON.parse(await file.text());
+      if (data?.format !== FILE_FORMAT || !Array.isArray(data?.cover?.layers)) throw new Error('not a cover file');
+      if (materials && data.book?.id && data.book.id !== materials.book.id
+        && !window.confirm(`This cover was made for “${data.book.title}”. Open it here anyway? Its pictures still come from that book.`)) return;
+      const c: Cover = { id: uid(), name: `${data.cover.name || 'Opened'} (file)`, layers: data.cover.layers };
+      setDesigns(ds => [...ds, c]);
+      setActiveId(c.id);
+      setSelected(null);
+      setTab('elements');
+    } catch {
+      setError('That file is not a cover saved from the cover maker.');
+    }
+  };
+
   // ── Export ──
   const exportPng = async () => {
     if (!active || !materials) return;
@@ -346,8 +439,7 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
       if (!blob) throw new Error('export failed');
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      const slug = shortTitle(materials.book.title).toLowerCase().normalize('NFKD').replace(/[^\w]+/g, '-').replace(/^-|-$/g, '').slice(0, 60);
-      a.download = `${slug || 'cover'}-${active.name.toLowerCase().replace(/\s+/g, '-')}.png`;
+      a.download = `${fileSlug() || 'cover'}-${active.name.toLowerCase().replace(/\s+/g, '-')}.png`;
       a.click();
       setTimeout(() => URL.revokeObjectURL(a.href), 5000);
     } catch {
@@ -441,11 +533,20 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
           <div className="text-xs text-[var(--text-muted)]">Cover maker</div>
           <div className="truncate text-sm font-medium">{book ? shortTitle(book.title) : 'Loading…'}</div>
         </div>
+        <Link href="/admin/covers" className="text-sm px-2 py-1 rounded hover:bg-[var(--bg-warm)] hidden sm:block">All concepts</Link>
         <button className="cm-btn" onClick={undo} disabled={!history.current.past.length} aria-label="Undo" title="Undo"><Undo2 className="w-4 h-4" /></button>
         <button className="cm-btn" onClick={redo} disabled={!history.current.future.length} aria-label="Redo" title="Redo"><Redo2 className="w-4 h-4" /></button>
-        <button className="cm-btn cm-btn-primary" onClick={exportPng} disabled={!active || exporting}>
-          <Download className="w-4 h-4" /> {exporting ? 'Exporting…' : 'Download PNG'}
+        <button className="cm-btn" onClick={() => fileInput.current?.click()} title="Open a .cover.json file"><FileUp className="w-4 h-4" /> Open file</button>
+        <input ref={fileInput} type="file" accept=".json,application/json" className="hidden" onChange={e => { const f = e.target.files?.[0]; if (f) openFile(f); e.target.value = ''; }} />
+        <button className="cm-btn" onClick={saveFile} disabled={!active} title="Download this cover with all its layers as a file"><FileDown className="w-4 h-4" /> Save file</button>
+        <button className="cm-btn" onClick={exportPng} disabled={!active || exporting}>
+          <Download className="w-4 h-4" /> {exporting ? 'Exporting…' : 'PNG'}
         </button>
+        {active && savedAs[active.id] === snapshot(active)
+          ? <span className="cm-btn cm-btn-primary opacity-80" title="Saved as a concept in Source Library"><Check className="w-4 h-4" /> Saved</span>
+          : <button className="cm-btn cm-btn-primary" onClick={saveActive} disabled={!active || saving} title="Save as a concept in Source Library (never applied to the book)">
+              <Save className="w-4 h-4" /> {saving ? 'Saving…' : savedAs[active?.id || ''] ? 'Save changes' : 'Save'}
+            </button>}
       </header>
 
       <div className="flex-1 min-h-0 flex flex-col lg:flex-row">
@@ -520,7 +621,9 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
           <div className="flex items-center gap-1 overflow-x-auto px-3 py-2 border-b border-[var(--border-light)] shrink-0">
             {designs.map(d => (
               <div key={d.id} className={`flex items-center rounded text-sm whitespace-nowrap ${d.id === activeId ? 'bg-[var(--bg-warm)]' : ''}`}>
-                <button className="px-2.5 py-1" onClick={() => { setActiveId(d.id); setSelected(null); setCropMode(false); }}>{d.name}</button>
+                <button className="px-2.5 py-1" onClick={() => { setActiveId(d.id); setSelected(null); setCropMode(false); }} title={savedAs[d.id] ? (savedAs[d.id] === snapshot(d) ? 'Saved' : 'Saved, with unsaved changes') : 'Not saved yet'}>
+                  {d.name}{savedAs[d.id] && <span className={`ml-1 inline-block w-1.5 h-1.5 rounded-full align-middle ${savedAs[d.id] === snapshot(d) ? 'bg-[var(--status-success)]' : 'bg-[var(--status-warning)]'}`} />}
+                </button>
                 {d.id === activeId && designs.length > 1 && (
                   <button className="pr-2 opacity-50 hover:opacity-100" aria-label={`Delete ${d.name}`} title="Delete this cover" onClick={() => deleteDesign(d.id)}><Trash2 className="w-3.5 h-3.5" /></button>
                 )}
