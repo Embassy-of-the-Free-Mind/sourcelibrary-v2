@@ -16,7 +16,6 @@ import { withAdminAuth } from '@/lib/auth-helpers';
  * POST /api/admin/cover-concepts             save (create or overwrite) one concept
  */
 
-const COLLECTION = 'cover_concepts';
 const MAX_LAYERS = 120;
 const MAX_THUMB = 250_000;
 const MAX_BODY = 1_500_000;
@@ -24,7 +23,7 @@ const MAX_BODY = 1_500_000;
 export const GET = withAdminAuth(async (request: NextRequest) => {
   const db = await getDb();
   const book = new URL(request.url).searchParams.get('book');
-  const concepts = await db.collection(COLLECTION)
+  const concepts = await db.collection('cover_concepts')
     .find({ deleted_at: null, ...(book ? { book_id: book } : {}) }, { projection: { _id: 0 } })
     .sort({ updated_at: -1 })
     .limit(book ? 200 : 500)
@@ -54,7 +53,7 @@ export const POST = withAdminAuth(async (request: NextRequest, session) => {
 
   const now = new Date();
   const email = session.user?.email || null;
-  await db.collection(COLLECTION).updateOne(
+  await db.collection('cover_concepts').updateOne(
     { id },
     {
       $set: {
