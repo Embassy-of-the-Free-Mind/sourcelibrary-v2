@@ -11,33 +11,6 @@
   },
   "jobs": [
     {
-      "arm": "A2",
-      "model": "gemini-3.1-flash-lite",
-      "job_name": "batches/ljxbhwue1j6ryuab0j4woa6cbkz0we0pjlic",
-      "file_name": "files/devwny52gug3",
-      "requests": 120,
-      "submitted_at": "2026-10-03T22:29:35.507Z",
-      "dead_state": "batch BATCH_STATE_CANCELLED"
-    },
-    {
-      "arm": "A",
-      "model": "gemini-3.1-flash-lite",
-      "job_name": "batches/dxfw47prrydcsfyt6px1faah7z7rrn07vir2",
-      "file_name": "files/geywhbuvyzub",
-      "requests": 120,
-      "submitted_at": "2026-10-03T22:29:43.963Z",
-      "dead_state": "batch BATCH_STATE_CANCELLED"
-    },
-    {
-      "arm": "B",
-      "model": "gemini-3.1-flash-lite",
-      "job_name": "batches/oe6js4il4icb7mb79ksk4ns4xtw9n8ctrmfr",
-      "file_name": "files/89kuyo5q1qg9",
-      "requests": 120,
-      "submitted_at": "2026-10-03T22:29:52.466Z",
-      "dead_state": "batch BATCH_STATE_CANCELLED"
-    },
-    {
       "arm": "C",
       "model": "gemini-3-flash-preview",
       "job_name": "batches/8akqlvkcxwjf7l3re24161i46rnhsvpguxr6",
@@ -64,6 +37,71 @@
       "in_tokens": 477378,
       "out_tokens": 159187,
       "cost_usd": 0.358125
+    },
+    {
+      "arm": "A2",
+      "model": "gemini-3.1-flash-lite",
+      "job_name": "batches/0n7pla3s14zss2wuqfykrmh50z3fko7ri533",
+      "file_name": "files/erylvp5wp7yc",
+      "requests": 120,
+      "submitted_at": "2026-10-03T22:36:12.799Z"
+    },
+    {
+      "arm": "A",
+      "model": "gemini-3.1-flash-lite",
+      "job_name": "batches/2mijaxse0oc5p0vg42qqm98o3up8rby31tub",
+      "file_name": "files/cnrkssjfe6cn",
+      "requests": 120,
+      "submitted_at": "2026-10-03T22:36:21.309Z"
+    },
+    {
+      "arm": "B",
+      "model": "gemini-3.1-flash-lite",
+      "job_name": "batches/d19cb0fk6qax8dodxlpvzy99s6wlhukcln4y",
+      "file_name": "files/wgvhvorlgyyv",
+      "requests": 120,
+      "submitted_at": "2026-10-03T22:36:30.356Z"
+    },
+    {
+      "arm": "C",
+      "retry": true,
+      "model": "gemini-3-flash-preview",
+      "job_name": "batches/xcmadj5atqywisqkw6anx9182o5naty81hbv",
+      "file_name": "files/a8cxx16nlz2r",
+      "requests": 2,
+      "submitted_at": "2026-10-03T22:36:38.091Z"
+    }
+  ],
+  "dead_jobs": [
+    {
+      "arm": "A2",
+      "model": "gemini-3.1-flash-lite",
+      "job_name": "batches/ljxbhwue1j6ryuab0j4woa6cbkz0we0pjlic",
+      "file_name": "files/devwny52gug3",
+      "requests": 120,
+      "submitted_at": "2026-10-03T22:29:35.507Z",
+      "dead_state": "batch BATCH_STATE_CANCELLED",
+      "dead": "BATCH_STATE_CANCELLED, code 13 failed without error, no output file"
+    },
+    {
+      "arm": "A",
+      "model": "gemini-3.1-flash-lite",
+      "job_name": "batches/dxfw47prrydcsfyt6px1faah7z7rrn07vir2",
+      "file_name": "files/geywhbuvyzub",
+      "requests": 120,
+      "submitted_at": "2026-10-03T22:29:43.963Z",
+      "dead_state": "batch BATCH_STATE_CANCELLED",
+      "dead": "BATCH_STATE_CANCELLED, code 13 failed without error, no output file"
+    },
+    {
+      "arm": "B",
+      "model": "gemini-3.1-flash-lite",
+      "job_name": "batches/oe6js4il4icb7mb79ksk4ns4xtw9n8ctrmfr",
+      "file_name": "files/89kuyo5q1qg9",
+      "requests": 120,
+      "submitted_at": "2026-10-03T22:29:52.466Z",
+      "dead_state": "batch BATCH_STATE_CANCELLED",
+      "dead": "BATCH_STATE_CANCELLED, code 13 failed without error, no output file"
     }
   ]
 }
