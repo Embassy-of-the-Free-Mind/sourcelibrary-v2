@@ -15,6 +15,8 @@
  *       eebo-tcp-5488's images come from `benchmark-seal.mjs --stratum=eebo-tcp-5488 --out=<root>` first.
  *   node scripts/eval/open-engine-print-5660.mjs paddle-in --root=… --lane=… --arm=<arm> [--engine=paddleocr-vl-1.6]
  *       copies the pulled arm's page outputs into <root>/<stratum>/out/<engine>/<slug>.txt.
+ *   node scripts/eval/open-engine-print-5660.mjs report --engines=<e,…> [--scored=scored] [--summary=summary.json] --lane=…
+ *       the prereg's table per cell from the scored dir and the cost-lane file(s).
  *   node scripts/eval/open-engine-print-5660.mjs tally --root=…
  *       the descriptive long-s / abbreviation / ligature tally of the prereg, per engine, on early print.
  */
@@ -193,7 +195,7 @@ function tally() {
     }
   }
   fs.mkdirSync(RES, { recursive: true });
-  fs.writeFileSync(path.join(RES, 'weak-spots.json'), JSON.stringify({ note: 'descriptive only (prereg); f_for_s counted only where a reference exists; ref_* are the reference text\'s own counts (EEBO-TCP keeps ſ; Wikisource often normalises it)', engines: res }, null, 1) + '\n');
+  fs.writeFileSync(path.join(RES, argOf('weak', 'weak-spots.json')), JSON.stringify({ note: 'descriptive only (prereg); f_for_s counted only where a reference exists; ref_* are the reference text\'s own counts (EEBO-TCP keeps ſ; Wikisource often normalises it)', engines: res }, null, 1) + '\n');
   console.log(JSON.stringify(res, null, 1));
 }
 
@@ -201,7 +203,7 @@ function tally() {
 function report() {
   const LITE = 'gemini-3.1-flash-lite', FLASH = 'gemini-3-flash-preview';
   const engines = argOf('engines', 'paddleocr-vl-1.6').split(',');
-  const scored = path.join(RES, 'scored');
+  const scored = path.join(RES, argOf('scored', 'scored'));   // olmOCR arm: --scored=scored-olmocr (its own bench root, Amendment 1)
   const S = st => { const f = fs.readdirSync(scored).filter(x => x.startsWith(`${st}-`) && x.slice(st.length + 1).match(/^\d{4}-\d{2}-\d{2}\.json$/)).sort().pop(); return readJson(path.join(scored, f)); };
   const med = xs => { const s = xs.filter(x => typeof x === 'number').sort((a, b) => a - b); if (!s.length) return null; const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
   const r3 = x => (x == null ? null : Math.round(x * 1000) / 1000);
@@ -241,7 +243,7 @@ function report() {
   let usd = 0, n = 0;
   for (const st of ['eebo-tcp-5488', 'english-ia-5124']) { const m = path.join(ROOT, st, 'out', LITE, '_meter.jsonl'); if (fs.existsSync(m)) for (const l of fs.readFileSync(m, 'utf8').split('\n').filter(Boolean)) { const r = JSON.parse(l); if (typeof r.costUsd === 'number') { usd += r.costUsd; n++; } } }
   if (n) out.cost[LITE] = { pages: n, usd_per_page_realtime: +(usd / n).toExponential(2), usd_per_page_batch: +(usd / n / 2).toExponential(2), note: 'generic transcription prompt, thinking 0; production prompt output is longer' };
-  fs.writeFileSync(path.join(RES, 'summary.json'), JSON.stringify(out, null, 1) + '\n');
+  fs.writeFileSync(path.join(RES, argOf('summary', 'summary.json')), JSON.stringify(out, null, 1) + '\n');
   console.log(JSON.stringify(out, null, 1));
 }
 
