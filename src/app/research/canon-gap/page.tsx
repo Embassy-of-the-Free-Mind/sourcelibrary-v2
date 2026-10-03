@@ -65,7 +65,8 @@ const IMPROVEMENTS: Improvement[] = [
   { change: 'Tengyur: 8-page blocks → one page at a time', measure: 'pages whose English belongs to another page, per 100', before: 13.3, after: 0.9, lowerBetter: true, inUse: true, status: 'in use for the Tengyur draft', href: `${ISSUE_URL}5497` },
   { change: 'Syriac: Gemini → Kraken (Sophro Mhiro)', measure: 'line error rate on published ground truth, %', before: 74, after: 19, lowerBetter: true, inUse: true, status: 'in use for Syriac', href: `${ISSUE_URL}4883` },
   { change: 'Blank and show-through leaves: OCR prompt v16 → v19.1', measure: 'leaves given invented text, %', before: 75, after: 30, lowerBetter: true, inUse: true, status: 'in use for new OCR since 2 Oct 2026', href: `${ISSUE_URL}4195` },
-  { change: 'Page turns: blocks → continuous English with page markers', measure: 'real seam defects per 100 mid-sentence breaks', before: 21, after: 8, lowerBetter: true, inUse: false, status: 'tested; not yet in a lane', href: `${ISSUE_URL}5678` },
+  { change: 'Sentences across a page turn: Flash-Lite → Flash', measure: 'defects at mid-sentence page breaks, per 100', before: 26, after: 16, lowerBetter: true, inUse: true, status: 'in use for new translations in seven languages since 4 Oct 2026', href: `${ISSUE_URL}5678` },
+  { change: 'Sentences across a page turn: Flash with page markers', measure: 'defects at mid-sentence page breaks, per 100', before: 26, after: 11, lowerBetter: true, inUse: false, status: 'tested; markers added too little beyond Flash to adopt', href: `${ISSUE_URL}5678` },
   { change: 'Persian manuscripts: Flash-Lite → Flash reading', measure: 'characters matching Ganjoor’s typed text, median %', before: 41, after: 70, lowerBetter: false, inUse: false, status: 'tested; still below the 90% needed to translate', href: `${ISSUE_URL}5525` },
 ];
 
