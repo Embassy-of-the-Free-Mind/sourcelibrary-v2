@@ -39,6 +39,8 @@ export const REPO = 'Embassy-of-the-Free-Mind/sourcelibrary-v2';
 export const COLLECTION = 'ops_reports';
 /** Jobs whose last activity is older than this are left out (running/blocked are always kept). */
 export const WINDOW_DAYS = 7;
+/** --github also sweeps open issues whose last comment (this recent) asks for a decision. */
+export const RECENT_DECISION_HOURS = 48;
 const TRANSCRIPT_CAP_BYTES = 40 * 1024 * 1024;
 
 // ───────────────────────────────────────────── pure helpers (unit-tested)
@@ -171,7 +173,9 @@ export function decisionLines(body) {
     const l = raw.trim();
     if (!l || RECORDED_RE.test(l) || !DECISION_RES.some(re => re.test(l))) continue;
     const plain = l.replace(/\*\*|__/g, '');
-    const d = plain.match(/default\b\s*(?:[:=]|is)?\s*([^.;|()]{1,80})/i);
+    const d = plain.match(/recommended default\s*(?:[:=]|is)?\s*([^.;|()?]{1,80})/i)
+      ?? plain.match(/\bdefault\s*[:=]\s*([^.;|()?]{1,80})/i)
+      ?? plain.match(/\bdefault\s+(yes|no)\b/i);
     out.push({ line: redact(plain.replace(/^[-*>#\s]+/, ''), 240), default: d ? redact(d[1], 80) : null });
     if (out.length >= 5) break;
   }
@@ -334,7 +338,7 @@ export function collectBox({ box, jobScript = '/root/bin/claude-job.sh', now = n
 // ───────────────────────────────────────────── github side
 
 const ISSUE_FIELDS = `number title state url
-  comments(last: 1) { nodes { createdAt url body author { login } } }
+  comments(last: 10) { nodes { createdAt url body author { login } } }
   timelineItems(last: 25, itemTypes: [CROSS_REFERENCED_EVENT, CONNECTED_EVENT]) { nodes {
     ... on CrossReferencedEvent { source { ... on PullRequest { PRFIELDS } } }
     ... on ConnectedEvent { subject { ... on PullRequest { PRFIELDS } } }
@@ -366,7 +370,8 @@ export function shapePr(p) {
 }
 
 export function shapeIssue(i) {
-  const c = i.comments?.nodes?.[0] ?? null;
+  const nodes = i.comments?.nodes ?? [];
+  const c = nodes[nodes.length - 1] ?? null;
   const prs = new Map();
   for (const n of i.timelineItems?.nodes ?? []) {
     const pr = shapePr(n?.source ?? n?.subject);
@@ -381,6 +386,8 @@ export function shapeIssue(i) {
     state: i.state,
     url: i.url,
     last_comment: c ? { at: c.createdAt, url: c.url, first_line: firstLine(c.body), author: c.author?.login ?? null } : null,
+    // First lines only: the page picks the comment a job wrote during its own run as that job's verdict.
+    recent_comments: nodes.map(x => ({ at: x.createdAt, url: x.url, first_line: firstLine(x.body) })),
     decisions: c ? decisionLines(c.body) : [],
     prs: sorted.slice(0, 5),
   };
@@ -415,6 +422,22 @@ export async function collectGithub(db, now = new Date()) {
       }
     } catch (e) { errors.push(`issues ${chunk.join(',')}: ${redact(String(e.message), 200)}`); }
   }
+  // Decisions are not only posted by tracked jobs: chat sessions and the other box post them too. One
+  // search over open issues touched in the last 48 h; only those whose LAST comment asks something are kept.
+  const recent = [];
+  try {
+    const since = new Date(now.getTime() - RECENT_DECISION_HOURS * 3600_000).toISOString().slice(0, 10);
+    const q = `{ search(type: ISSUE, first: 60, query: "repo:${REPO} is:issue is:open updated:>=${since} sort:updated-desc") { nodes { ... on Issue { ${issueFields} } } } }`;
+    for (const x of gql(q).search.nodes ?? []) {
+      if (!x?.number || issues[x.number]) continue;
+      const shaped = shapeIssue(x);
+      if (!shaped.decisions.length) continue;
+      if (Date.parse(shaped.last_comment.at) < now.getTime() - RECENT_DECISION_HOURS * 3600_000) continue;
+      issues[x.number] = shaped;
+      recent.push(x.number);
+    }
+  } catch (e) { errors.push(`recent decisions: ${redact(String(e.message), 200)}`); }
+
   const prList = [...prNums].filter(n => !prs[n]);
   for (let k = 0; k < prList.length; k += 25) {
     const chunk = prList.slice(k, k + 25);
@@ -432,6 +455,7 @@ export async function collectGithub(db, now = new Date()) {
     generated_by: 'scripts/maintenance/work-board-push.mjs --github',
     host: os.hostname(),
     in_flight_label: inFlight,
+    recent_decision_issues: recent,
     issues,
     prs,
     errors,
