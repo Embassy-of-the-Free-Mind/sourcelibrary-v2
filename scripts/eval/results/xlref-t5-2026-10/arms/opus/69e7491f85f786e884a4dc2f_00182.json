@@ -1,9 +1,0 @@
-{
- "id": "69e7491f85f786e884a4dc2f_00182",
- "arm": "opus",
- "model": "claude-opus-5-5 (subagent, subscription)",
- "text": "<header>8.22.58 Mahābhārata, Book of the Slaying of Karṇa</header>\n<sig>C 8 1318 B 8 31 68 K 8 22 72</sig>\n\n\"By every means I shall today conquer all the Pāṇḍavas, gathered together.\" ‖ 58\nDuryodhana said:\n\"I will do all this just as you think fit, Karṇa.\nChariots stocked with quivers will follow you in person, O son of a charioteer. ‖ 59\nLet carts carry iron shafts and vulture-feathered arrows for you.\n\n<column-break/>\n\nWe will follow you, Karṇa, we and all the kings.\" ‖ 60\nSañjaya said:\nHaving spoken thus, great king, your mighty son,\nthe king, approached the king of the Madras and spoke these words. ‖ 61 <note>The king of the Madras is Śalya, whom Duryodhana is about to ask to serve as Karṇa's charioteer.</note>\n\n->Thus ends the twenty-second chapter of the Karṇa Parvan in the glorious Mahābhārata. ‖ 22 ‖<-\n\n---\n\n## 23\n\nSañjaya said:\nYour son, great king, to the king of the Madras these words,\n\n<column-break/>\n\napproaching him with humility, spoke out of affection: ‖ 1\n\"O you who are true to your vows, most fortunate one, you who increase the sorrow of your enemies,\n\n---\n\n<note>The remainder of the page consists of critical apparatus (textual variants and notes).</note>\n\n<summary>This page of the Critical Edition's Karṇa Parvan closes chapter 22, where Duryodhana promises Karṇa chariots, carts of arrows, and the support of all the kings, and opens chapter 23, where Duryodhana humbly approaches Śalya, king of the Madras.</summary>\n<keywords>Mahābhārata, Karṇa Parvan, Karṇa, Duryodhana, Sañjaya, Śalya, king of the Madras, Pāṇḍavas, chariots, arrows, BORI Critical Edition</keywords>\n",
- "finishReason": null,
- "generation_config": "Claude Code subagent; prompt v13 file as the whole instruction",
- "origin": "X3 ceiling"
-}

@@ -71,16 +71,19 @@ ok_fit = [i for i, p in per.items() if all(v not in ('wrong',) for v in p['refer
 S['served']['fit_not_wrong_n'] = len(ok_fit)
 
 # 3. arms: fidelity, reversals / 100 pages, cost
+def arm_rows(arm):  # committed form: arms/<arm>.jsonl (one row per page); run-arms.mjs writes arms/<arm>/<id>.json while running
+    f = f'{R}/arms/{arm}.jsonl'
+    return [json.loads(l) for l in open(f)] if os.path.exists(f) else [json.load(open(x)) for x in glob.glob(f'{R}/arms/{arm}/*.json')]
 def cost_of(arm):
-    fs = glob.glob(f'{R}/arms/{arm}/*.json')
+    fs = arm_rows(arm)
     if arm in ('lite', 'lite2', 'flash'):
         d5606 = os.path.join(R, '..', 'translation-ab-5606-2026-10-02', 'arms', 'gemini', {'lite': 'lite-batch', 'lite2': 'lite-rerun-batch', 'flash': 'flash-batch'}[arm])
         b = [json.load(open(f)).get('cost_usd') for f in glob.glob(d5606 + '/*.json') if not f.endswith('failed.json')]
         b = [x for x in b if x is not None]
-        r = [json.load(open(f)).get('cost_usd_batch_equiv') for f in fs]
+        r = [f.get('cost_usd_batch_equiv') for f in fs]
         allc = b + [x for x in r if x is not None]
         return {'usd_per_page_batch': round(sum(allc) / len(allc), 5), 'n': len(allc)} if allc else None
-    cs = [json.load(open(f)) for f in fs]; cs = [c for c in cs if c.get('cost_usd_batch_equiv') is not None]
+    cs = [c for c in fs if c.get('cost_usd_batch_equiv') is not None]
     if not cs: return None
     return {'usd_per_page_batch': round(sum(c['cost_usd_batch_equiv'] for c in cs) / len(cs), 5), 'n': len(cs),
             'thinking_tokens_per_page': round(sum(c.get('thinkingTokens') or 0 for c in cs) / len(cs)), 'spent_realtime_usd': round(sum(c['cost_usd_realtime'] for c in cs), 4)}
@@ -123,7 +126,7 @@ S['X3_same_20_pages'] = {a: boot([fid(per[i], a) for i in opus_ids if fid(per[i]
 
 # 4b. X2 thinking — its own packet (flash vs flash with the model's dynamic thinking), same judges, same pages
 th = json.load(open(f'{R}/results-thinking.json')); tper = {p['id']: p for p in th['per_page']}
-tc = [json.load(open(f)) for f in glob.glob(f'{R}/arms/flash-thinkon/*.json')]
+tc = arm_rows('flash-thinkon')
 def tpair(ids=None):
     ps = [p for i, p in tper.items() if (ids is None or i in ids)]
     return {'n': len(ps), 'fidelity_delta': boot([fid(p, 'flash-thinkon') - fid(p, 'flash') for p in ps]),
