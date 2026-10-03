@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import gapMap from '../../../../scripts/catalog-coverage/results/canon-gap-map-2026-10.json';
 import gapStatus from '../../../../scripts/catalog-coverage/results/canon-gap-status-2026-10.json';
-import { CanonBars, RoutesDiagram, StatusBoard, STATUS_STYLE, TengyurProgress, TraditionProgress, short, type CanonBar, type TraditionProgressRow } from './diagrams';
+import { CanonBars, RoutesDiagram, StatusBoard, STATUS_STYLE, TengyurProgress, TraditionProgress, ImprovementChart, short, type CanonBar, type Improvement, type TraditionProgressRow } from './diagrams';
 
 // Built for the Eternity Foundation working session (#5513): read once, seated, as a
 // table with a short argument. Sizes, licences, English shares and draft costs come from
@@ -57,6 +57,17 @@ const SHORT_NAME: Record<string, string> = {
   kanripo: 'Kanripo (Chinese classics)',
 };
 const nameOf = (id: string, fallback: string) => SHORT_NAME[id] ?? fallback;
+
+// Before/after on the same pages and reference, each from the experiment it links to (scripts/eval/experiments/).
+// inUse = adopted in the production lane; the rest are measured but not switched on.
+const IMPROVEMENTS: Improvement[] = [
+  { change: 'Sanskrit, Pali, Chinese: Flash-Lite → Flash', measure: 'reversed statements per 100 pages', before: 15.4, after: 5.9, lowerBetter: true, inUse: true, status: 'in use for new translations since 4 Oct 2026', href: `${ISSUE_URL}5695` },
+  { change: 'Tengyur: 8-page blocks → one page at a time', measure: 'pages whose English belongs to another page, per 100', before: 13.3, after: 0.9, lowerBetter: true, inUse: true, status: 'in use for the Tengyur draft', href: `${ISSUE_URL}5497` },
+  { change: 'Syriac: Gemini → Kraken (Sophro Mhiro)', measure: 'line error rate on published ground truth, %', before: 74, after: 19, lowerBetter: true, inUse: true, status: 'in use for Syriac', href: `${ISSUE_URL}4883` },
+  { change: 'Blank leaves: OCR prompt v16 → v18', measure: 'white leaves given invented text, %', before: 91, after: 29, lowerBetter: true, inUse: false, status: 'tested; awaiting decision', href: `${ISSUE_URL}4195` },
+  { change: 'Page turns: blocks → continuous English with page markers', measure: 'real seam defects per 100 mid-sentence breaks', before: 21, after: 8, lowerBetter: true, inUse: false, status: 'tested; not yet in a lane', href: `${ISSUE_URL}5678` },
+  { change: 'Persian manuscripts: Flash-Lite → Flash reading', measure: 'characters matching Ganjoor’s typed text, median %', before: 41, after: 70, lowerBetter: false, inUse: false, status: 'tested; still below the 90% needed to translate', href: `${ISSUE_URL}5525` },
+];
 
 const LICENCE_LABEL: Record<string, string> = {
   open: 'Open',
@@ -315,6 +326,7 @@ export default function CanonGapPage() {
             ourselves to find the cause of every low score. These are samples scored by models, not a
             scholar&rsquo;s review. Tests run 30 September to 3 October 2026.
           </p>
+          <ImprovementChart n={5} rows={IMPROVEMENTS} />
           <ul className="list-disc pl-5 space-y-3 text-base">
             <li>
               <strong>Tengyur pilot.</strong> Of 40 sampled pages across five sections, 33 scored 4 or 5. The weakest
@@ -334,7 +346,8 @@ export default function CanonGapPage() {
               published translations, 58% of the English we serve scored 4 or better (mean 3.6). Sanskrit scored lowest,
               mostly because on pages with verse and commentary the English keeps the verse and shortens or drops the
               commentary. A stronger model (Gemini Flash instead of Flash-Lite) raised the mean by 0.4 and cut reversed
-              statements from 15 to 6 per 100 pages. We have not switched yet.{' '}
+              statements from 15 to 6 per 100 pages. Since 4 October 2026 new translations in these languages, and in
+              Greek, Hebrew, Arabic and Persian, use Flash; pages already served are not yet retranslated.{' '}
               <a href={`${ISSUE_URL}5695`} className="text-amber-800 underline underline-offset-2">Details</a>
             </li>
             <li>
@@ -360,7 +373,7 @@ export default function CanonGapPage() {
         </Section>
 
         <Section kicker="Where it stands" title="Each canon, and what happens next">
-          <StatusBoard n={5} items={rows.map((r) => ({ id: r.id, name: nameOf(r.id, r.corpus), status: STATUS.get(r.id)?.status ?? 'next' }))} />
+          <StatusBoard n={6} items={rows.map((r) => ({ id: r.id, name: nameOf(r.id, r.corpus), status: STATUS.get(r.id)?.status ?? 'next' }))} />
           <p className="mb-6 text-base text-stone-600">
             Ordered by how much untranslated text each canon holds, weighted by how open its licence is and whether open
             scans of the same edition exist. &ldquo;We hold&rdquo; counts the books in our library for that canon:
