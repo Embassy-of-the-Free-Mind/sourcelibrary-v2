@@ -31,7 +31,7 @@ case ${1:-} in
 create)
   [ -s "$S/server-id" ] && { echo "server exists: $(sid)"; exit 1; }
   until=$(date -u -d "+${LEASE_H} hours" +%FT%TZ)
-  r=$(curl -s -X POST "${H[@]}" $API/servers -d "{\"name\":\"$NAME\",\"commercial_type\":\"L4-1-24G\",\"image\":\"$IMAGE\",\"project\":\"$PROJECT\",\"dynamic_ip_required\":true,\"tags\":[\"lease-until=$until\",\"owner=4523\"]}")
+  r=$(curl -s -X POST "${H[@]}" $API/servers -d "{\"name\":\"$NAME\",\"commercial_type\":\"L4-1-24G\",\"image\":\"$IMAGE\",\"project\":\"$PROJECT\",\"dynamic_ip_required\":true,\"volumes\":{\"0\":{\"size\":100000000000,\"volume_type\":\"sbs_volume\"}},\"tags\":[\"lease-until=$until\",\"owner=4523\"]}")
   echo "$r" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d["server"]["id"])' > "$S/server-id" || { echo "create failed: $r"; rm -f "$S/server-id"; exit 1; }
   log "created $NAME $(sid) in $ZONE lease-until=$until"
   printf '#cloud-config\nssh_authorized_keys:\n  - %s\n' "$(cat /root/.ssh/id_ed25519.pub)" > "$S/user-data"

@@ -50,6 +50,11 @@ def main():
                 raw_f = f"{run}/txt/{s}.txt"
                 if not os.path.exists(raw_f): continue          # ledger row pulled before its text; next pass
                 t = todo[s]
+                if t.get("gate"):                                # non-Tibetan page by its Gemini read (build-todo.mjs gate)
+                    c[f"gated:{t['gate']}"] += 1
+                    df.write(json.dumps({"stem": s, "id": t["id"], "book": t["book"], "page": t["page"], "prior": t["prior"], "box": box,
+                                         "class": "gated", "reason": t["gate"]}) + "\n")
+                    jf.write(s + "\n"); judged.add(s); continue
                 link = f"{D}/leafdir/{s}.txt"
                 if not os.path.lexists(link): os.symlink(raw_f, link)
                 lf.write(json.dumps(r) + "\n")
