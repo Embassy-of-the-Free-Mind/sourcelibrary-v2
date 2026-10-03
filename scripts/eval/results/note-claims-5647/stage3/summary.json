@@ -1,0 +1,291 @@
+{
+ "stage": 3,
+ "issue": "#5647",
+ "verifier": {
+  "name": "note-claims-verify",
+  "version": 1,
+  "model": "gemini-3-flash-preview",
+  "thinking_budget": 512,
+  "lane": "batch"
+ },
+ "plan": {
+  "made_at": "2026-10-03T09:25:45.135Z",
+  "verifier": {
+   "name": "note-claims-verify",
+   "version": 1,
+   "model": "gemini-3-flash-preview",
+   "thinking_budget": 512,
+   "lane": "batch"
+  },
+  "main": 885,
+  "stale_skipped": 0,
+  "calib_shared": 202,
+  "calib_own": 103,
+  "calib_total": 305,
+  "requests": 50,
+  "seeds": {
+   "table": 16,
+   "hand": 34
+  }
+ },
+ "meter": {
+  "requests_accepted": 49,
+  "attempts": 80,
+  "accepted_by_prompt_version": {
+   "v1": 14,
+   "v2": 35
+  },
+  "queries": 1599,
+  "search_usd": 22.386,
+  "input_tokens": 166866,
+  "output_tokens": 121628
+ },
+ "seed_catch": {
+  "caught": 48,
+  "answered": 49,
+  "rate": 0.98,
+  "by_kind": {
+   "hand:wrong": 32,
+   "hand:partly-wrong": 1,
+   "table:wrong": 15,
+   "table:unverifiable": 1
+  },
+  "missed": [
+   {
+    "req": "r017",
+    "note": "Tibetan: 'Dul ba phran tshegs; Sanskrit: bodhichitta",
+    "truth": "'Dul ba phran tshegs = Vinayaksudraka (84000/Mahāvyutpatti table); seeded with bodhichitta",
+    "verdict": "unverifiable",
+    "evidence": "'Dul ba phran tshegs is the Tibetan title for the Vinayakṣudrakavastu (Minor Bases of Discipline), not bodhichitta."
+   }
+  ]
+ },
+ "main_verdicts": {
+  "correct": 527,
+  "unverifiable": 311,
+  "wrong": 11,
+  "partly-wrong": 16
+ },
+ "main_by_kind": {
+  "identification:correct": 283,
+  "place:unverifiable": 7,
+  "identification:unverifiable": 172,
+  "other:correct": 76,
+  "date:correct": 42,
+  "other:unverifiable": 71,
+  "attribution:correct": 38,
+  "identification:wrong": 7,
+  "sanskrit-equivalent:unverifiable": 45,
+  "attribution:partly-wrong": 1,
+  "date:unverifiable": 2,
+  "sanskrit-equivalent:correct": 84,
+  "attribution:unverifiable": 14,
+  "sanskrit-equivalent:wrong": 1,
+  "place:correct": 4,
+  "attribution:wrong": 2,
+  "other:partly-wrong": 4,
+  "identification:partly-wrong": 8,
+  "sanskrit-equivalent:partly-wrong": 3,
+  "other:wrong": 1
+ },
+ "main_unanswered": 20,
+ "url_missing_downgrades": 2,
+ "main_searched_by_verdict": {
+  "correct:searched": 418,
+  "unverifiable:no-matching-query": 114,
+  "unverifiable:searched": 197,
+  "correct:no-matching-query": 109,
+  "wrong:searched": 11,
+  "partly-wrong:searched": 14,
+  "partly-wrong:no-matching-query": 2
+ },
+ "main_url_domain_in_grounding_chunks": 72,
+ "calibration": {
+  "notes": 304,
+  "confusion_theirs_by_ours": {
+   "correct": {
+    "correct": 124,
+    "unverifiable": 16,
+    "wrong": 2,
+    "partly-wrong": 1
+   },
+   "no-claim": {
+    "unverifiable": 72,
+    "correct": 12,
+    "partly-wrong": 1
+   },
+   "unverifiable": {
+    "correct": 31,
+    "unverifiable": 26,
+    "partly-wrong": 1,
+    "wrong": 3
+   },
+   "partly-wrong": {
+    "partly-wrong": 2,
+    "unverifiable": 1,
+    "correct": 4
+   },
+   "wrong": {
+    "unverifiable": 3,
+    "correct": 3,
+    "wrong": 2
+   }
+  },
+  "exact_agreement_4class": "154/219",
+  "coarse_agreement_4class": "154/219",
+  "known_errors_found": "4/15",
+  "known_errors": [
+   {
+    "nid": "N018",
+    "theirs": "partly-wrong",
+    "ours": "partly-wrong",
+    "note": "The king or deity Musulundha/Mucilinda acting as a teacher",
+    "correction": "Naga King protector",
+    "source_url": "https://en.wikipedia.org/wiki/Mucalinda"
+   },
+   {
+    "nid": "N030",
+    "theirs": "partly-wrong",
+    "ours": "unverifiable",
+    "note": "likely a phonetic rendering of a Sanskrit name",
+    "correction": "",
+    "source_url": ""
+   },
+   {
+    "nid": "N057",
+    "theirs": "wrong",
+    "ours": "unverifiable",
+    "note": "likely Garab Dorje's father or a master in the lineage",
+    "correction": "",
+    "source_url": "https://www.treasuryoflives.org/biographies/view/Garab-Dorje/2853"
+   },
+   {
+    "nid": "N063",
+    "theirs": "partly-wrong",
+    "ours": "correct",
+    "note": "referring to Sanskrit as 'mleccha' in this specific context or a non-Tibetan dialect",
+    "correction": "",
+    "source_url": "https://www.wisdomlib.org/definition/mleccha"
+   },
+   {
+    "nid": "N075",
+    "theirs": "partly-wrong",
+    "ours": "correct",
+    "note": "The personal name of the disciple Shariputra",
+    "correction": "",
+    "source_url": "https://www.wisdomlib.org/definition/sariputra"
+   },
+   {
+    "nid": "N093",
+    "theirs": "partly-wrong",
+    "ours": "correct",
+    "note": "Pema Lingpa (1450–1521) was a major Treasure Revealer (terton) and an incarnation of Guru Rinpoche",
+    "correction": "",
+    "source_url": "https://www.treasuryoflives.org/biographies/view/Pema-Lingpa/2992"
+   },
+   {
+    "nid": "N186",
+    "theirs": "wrong",
+    "ours": "correct",
+    "note": "Tibetan: Blo gros brtan pa; Sanskrit: Sthiramati",
+    "correction": "",
+    "source_url": "https://84000.co/glossary/sthiramati"
+   },
+   {
+    "nid": "N216",
+    "theirs": "wrong",
+    "ours": "unverifiable",
+    "note": "referring to Vishnu or a specific lineage",
+    "correction": "",
+    "source_url": ""
+   },
+   {
+    "nid": "N222",
+    "theirs": "wrong",
+    "ours": "correct",
+    "note": "term: \"Mi-skyes\" gloss: \"Ajata; literally 'unborn' or 'not produced'\"",
+    "correction": "",
+    "source_url": "https://84000.co/glossary/unborn"
+   },
+   {
+    "nid": "N232",
+    "theirs": "wrong",
+    "ours": "wrong",
+    "note": "Tibetan: dGa' ba'i sde; Sanskrit: Harisena",
+    "correction": "Harṣadeva or Priyasena",
+    "source_url": "https://dictionary.library.tufs.ac.jp/search/tibetan/dga'%20ba'i%20sde"
+   },
+   {
+    "nid": "N255",
+    "theirs": "partly-wrong",
+    "ours": "partly-wrong",
+    "note": "This is the \"Sealed Command of Auspiciousness\" composed by the Great Siddha Drubchen Nyungpo.",
+    "correction": "Drubchen Shawarippa (Nyungpo is a nickname)",
+    "source_url": "https://www.himalayanart.org/items/598"
+   },
+   {
+    "nid": "N287",
+    "theirs": "wrong",
+    "ours": "wrong",
+    "note": "literally: China, but often used for Sanskrit in these contexts",
+    "correction": "In Tibetan, 'rgya gar' refers to India/Sanskrit, while 'rgya nag' or 'rgya' refers to China.",
+    "source_url": "https://www.lotsawahouse.org/tibetan-masters/imperial-decrees-two-volume-lexicon"
+   },
+   {
+    "nid": "N295",
+    "theirs": "wrong",
+    "ours": "unverifiable",
+    "note": "Taurus, Aquarius, Capricorn - though Vessel usually denotes Aquarius, here it refers to the container category",
+    "correction": "",
+    "source_url": ""
+   },
+   {
+    "nid": "N298",
+    "theirs": "partly-wrong",
+    "ours": "correct",
+    "note": "A major school of Tibetan Buddhism founded by Atisha",
+    "correction": "",
+    "source_url": "https://treasuryoflives.org/biographies/view/Atisha-Dipamkara-Shrijnana/2739"
+   },
+   {
+    "nid": "N332",
+    "theirs": "wrong",
+    "ours": "correct",
+    "note": "Minling Terchen Gyurme Dorje, 1646-1714.",
+    "correction": "",
+    "source_url": "https://treasuryoflives.org/biographies/view/Terdak-Lingpa-Gyurme-Dorje/2856"
+   }
+  ],
+  "ours_error_theirs_correct": [
+   {
+    "nid": "N347",
+    "note": "This is the complete Tibetan alphabet in order.",
+    "ours": "wrong",
+    "correction": "This is a list of Sanskrit consonants (vyanjana) used in Tibetan",
+    "source_url": "https://en.wikipedia.org/wiki/Tibetan_alphabet",
+    "evidence": "The Tibetan alphabet starts Ka Kha Ga Nga. The sequence Ja Nya Ta Tha Da Na... follows the Sanskrit varga order."
+   },
+   {
+    "nid": "N274",
+    "note": "From one's own stream to a different stream, a human formed as a human; regarding the basis and thought, there are four: application, finalization, the target, and the killer. Regarding the first, there are the factors of the object and the factors of the basis. First, it must be a human formed from a mother, a stream different from oneself. If a monk kills himself or a non-human, it is a gross offense; and there is a downfall for killing an animal. First, because it must be a stream different from oneself, if one kills oneself, it is a \"gross offense.\" As stated in the *Pratimoksha*: \"Any monk who, from a human formed from a mother, with his own hand kills... A 'human formed' is the state from the 'mer-mer-po' stage <note>the second week of embryonic development",
+    "ours": "wrong",
+    "correction": "fourth week",
+    "source_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4213871/",
+    "evidence": "Nur nur po, ltar ltar po and mer mer po are the respective names of the embryo in the second, third and fourth week of pregnancy."
+   },
+   {
+    "nid": "N267",
+    "note": "This is a Sanskrit dharani or incantation; the terms invoke the \"Great Compassionate One,\" \"Great Lotus-Handed One,\" and \"Great Pure Being.\"",
+    "ours": "partly-wrong",
+    "correction": "Mahasthamaprapta means 'Arrival of Great Strength'; Avalokiteshvara is the 'Great Compassionate One'.",
+    "source_url": "https://www.wisdomlib.org/definition/mahasthamaprapta",
+    "evidence": "Mahāsthāmaprāpta (महास्थामप्राप्त) is the name of a Bodhisattva... literally 'the one who has obtained great strength'. Avalokiteśvara is known as Mahākāruṇika (the Great Compassionate One)."
+   }
+  ],
+  "no_claim_labelled": {
+   "unverifiable": 72,
+   "correct": 12,
+   "partly-wrong": 1
+  }
+ }
+}
