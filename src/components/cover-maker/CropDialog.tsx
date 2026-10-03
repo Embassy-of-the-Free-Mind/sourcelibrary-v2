@@ -13,13 +13,16 @@ const clamp = (v: number, a = 0, b = 1) => Math.max(a, Math.min(b, v));
  * drag on the page to draw a new one.
  */
 export function CropDialog({
-  src, page, initial, onApply, onClose,
+  src, page, initial, onApply, onClose, applyLabel = 'Use this crop', onApplyGround,
 }: {
   src: string;
   page: number | null;
   initial: Crop;
   onApply: (crop: Crop, threshold?: number) => void;
   onClose: () => void;
+  applyLabel?: string;
+  /** Offer "Use as background" too (choosing from All pages). */
+  onApplyGround?: (crop: Crop) => void;
 }) {
   const [crop, setCrop] = useState<Crop>(initial);
   const [img, setImg] = useState<HTMLImageElement | null>(null);
@@ -130,7 +133,8 @@ export function CropDialog({
           </div>
           <div className="flex gap-2">
             <button className="cm-btn" onClick={onClose}>Cancel</button>
-            <button className="cm-btn cm-btn-primary" onClick={() => onApply(crop, threshold)}>Use this crop</button>
+            {onApplyGround && <button className="cm-btn" onClick={() => onApplyGround(crop)}>Use as background</button>}
+            <button className="cm-btn cm-btn-primary" onClick={() => onApply(crop, threshold)}>{applyLabel}</button>
           </div>
         </div>
       </div>

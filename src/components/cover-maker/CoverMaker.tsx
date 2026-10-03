@@ -3,20 +3,24 @@
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowDown, ArrowLeft, ArrowUp, Copy, Download, Eye, EyeOff, Lock, Plus, Redo2, Trash2, Undo2, Unlock } from 'lucide-react';
-import { findInkArea, findTitleBlock, loadImage } from './analyze';
+import { loadImage, surfaceStats } from './analyze';
+import { assetToLayer, baseAssets, letteringAssets, replaceImage, type Asset } from './assets';
+import { Board } from './Board';
 import { CoverCanvas } from './CoverCanvas';
 import { CropDialog } from './CropDialog';
+import { ElementsPanel } from './ElementsPanel';
 import { loadCoverFonts } from './fonts';
 import { Inspector } from './Inspector';
-import { FULL, fillLayer, imageLayer, shapeLayer, shortTitle, textLayer } from './layers';
-import { clearRenderCache, layerHeight, renderCover, type ImageMap } from './render';
+import { fillLayer, imageLayer, shortTitle } from './layers';
+import { clearRenderCache, renderCover, type ImageMap } from './render';
 import { buildStarters } from './starters';
-import { H, W, uid, type Cover, type Crop, type CutImage, type Layer, type Leaf, type Materials, type ShapeKind } from './types';
+import { H, W, uid, type Cover, type Crop, type Layer, type Leaf, type Materials } from './types';
 
 /**
- * The cover maker: starting covers made from a book's own scans, then a free
- * editor. Covers are kept in this browser only (localStorage, per book); the
- * finished cover leaves as a PNG.
+ * The cover maker: starting covers made from a book's own scans, an elements
+ * panel holding everything the book offers, and a board to arrange them on.
+ * Covers are kept in this browser only (localStorage, per book); the finished
+ * cover leaves as a PNG.
  */
 
 const STORE_KEY = (id: string) => `cover-maker:v1:${id}`;
@@ -25,7 +29,7 @@ const ROLE_LABEL: Record<string, string> = {
   outside: 'binding', endpaper: 'endpaper', title: 'title page', frontispiece: 'frontispiece', plate: 'plate', leaf: 'page',
 };
 
-type Tab = 'starters' | 'outside' | 'title' | 'plates' | 'cuts' | 'pages';
+type Tab = 'start' | 'elements' | 'pages';
 
 interface Saved { designs: Cover[]; activeId: string | null }
 
@@ -44,7 +48,7 @@ function writeSaved(bookId: string, s: Saved) {
 
 const clone = <T,>(v: T): T => JSON.parse(JSON.stringify(v));
 
-function useWidth<T extends HTMLElement>(): [React.RefObject<T | null>, number, number] {
+function useSize<T extends HTMLElement>(): [React.RefObject<T | null>, number, number] {
   const ref = useRef<T>(null);
   const [size, setSize] = useState<[number, number]>([0, 0]);
   useEffect(() => {
@@ -57,21 +61,34 @@ function useWidth<T extends HTMLElement>(): [React.RefObject<T | null>, number, 
   return [ref, size[0], size[1]];
 }
 
+/** Is a layer the cover's background: a full-board picture or an all-over colour? */
+const isGround = (l: Layer) => (l.kind === 'fill' && l.region === 'all') || (l.kind === 'image' && l.w >= W - 1 && l.h >= H - 1);
+
+function hexLum(hex: string): number {
+  const n = parseInt(hex.replace('#', '').slice(0, 6), 16);
+  return (0.299 * ((n >> 16) & 255) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255;
+}
+
 export default function CoverMaker({ bookId }: { bookId: string }) {
   const [materials, setMaterials] = useState<Materials | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [starters, setStarters] = useState<Cover[] | null>(null);
+  const [assets, setAssets] = useState<Asset[]>([]);
+  const [letteringReady, setLetteringReady] = useState(false);
   const [designs, setDesigns] = useState<Cover[]>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
-  const [tab, setTab] = useState<Tab>('starters');
+  const [tab, setTab] = useState<Tab>('start');
   const [cropFor, setCropFor] = useState<string | null>(null);
+  const [cropMode, setCropMode] = useState(false);
+  const [pagePick, setPagePick] = useState<Leaf | null>(null);
   const [fontsReady, setFontsReady] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [busy, setBusy] = useState<string | null>(null);
   const images = useRef<ImageMap>(new Map()).current;
   const [tick, setTick] = useState(0);
   const history = useRef<{ past: Cover[]; future: Cover[]; base: Cover | null }>({ past: [], future: [], base: null });
+  const lumCache = useRef(new Map<string, number>()).current;
 
   // ── Load ──
   useEffect(() => {
@@ -79,10 +96,21 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
     loadCoverFonts().then(() => { if (live) { clearRenderCache(); setFontsReady(true); } });
     fetch(`/api/books/${encodeURIComponent(bookId)}/cover-materials`)
       .then(r => (r.ok ? r.json() : Promise.reject(new Error(r.status === 404 ? 'This book was not found.' : 'Could not load this book.'))))
-      .then((m: Materials) => { if (live) setMaterials(m); })
+      .then((m: Materials) => { if (live) { setMaterials(m); setAssets(baseAssets(m)); } })
       .catch(e => { if (live) setError(e.message); });
     return () => { live = false; };
   }, [bookId]);
+
+  useEffect(() => {
+    if (!materials) return;
+    let live = true;
+    letteringAssets(materials).then(ls => {
+      if (!live) return;
+      setAssets(a => [...a.filter(x => x.group !== 'lettering'), ...ls]);
+      setLetteringReady(true);
+    });
+    return () => { live = false; };
+  }, [materials]);
 
   useEffect(() => {
     if (!materials || !fontsReady) return;
@@ -94,6 +122,7 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
       if (saved?.designs?.length) {
         setDesigns(saved.designs);
         setActiveId(saved.activeId && saved.designs.some(d => d.id === saved.activeId) ? saved.activeId : saved.designs[0].id);
+        setTab('elements');
       } else if (s.length) {
         const first = { ...clone(s[0]), id: uid() };
         setDesigns([first]);
@@ -101,7 +130,7 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
       }
     });
     return () => { live = false; };
-  }, [materials, fontsReady, bookId]);
+  }, [materials, fontsReady]);
 
   useEffect(() => {
     if (designs.length && materials) writeSaved(materials.book.id, { designs, activeId });
@@ -142,7 +171,7 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
 
   const patchLayer = useCallback((id: string, patch: Partial<Layer>, commit = true) => {
     if (!active) return;
-    setActive({ ...active, layers: active.layers.map(l => (l.id === id ? ({ ...l, ...patch } as Layer) : l)) }, commit);
+    setActive({ ...active, layers: active.layers.map(l => (l.id === id ? ({ ...l, ...patch, id } as Layer) : l)) }, commit);
   }, [active, setActive]);
 
   const undo = useCallback(() => {
@@ -163,16 +192,11 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
     setDesigns(ds => ds.map(d => (d.id === next.id ? next : d)));
   }, [active]);
 
-  const addLayers = useCallback((ls: Layer[], below = false) => {
-    if (!active) return;
-    setActive({ ...active, layers: below ? [...ls, ...active.layers] : [...active.layers, ...ls] });
-    setSelected(ls[ls.length - 1].id);
-  }, [active, setActive]);
-
   const removeLayer = useCallback((id: string) => {
     if (!active) return;
     setActive({ ...active, layers: active.layers.filter(l => l.id !== id) });
     setSelected(null);
+    setCropMode(false);
   }, [active, setActive]);
 
   const moveLayer = (id: string, dir: 1 | -1) => {
@@ -200,9 +224,12 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
   const startFrom = (c: Cover) => {
     const n = designs.filter(d => d.name.startsWith(c.name)).length;
     const d = { ...clone(c), id: uid(), name: n ? `${c.name} ${n + 1}` : c.name };
+    d.layers = d.layers.map(l => ({ ...l, id: uid() }));
     setDesigns(ds => [...ds, d]);
     setActiveId(d.id);
     setSelected(null);
+    setCropMode(false);
+    setTab('elements');
   };
 
   const deleteDesign = (id: string) => {
@@ -212,51 +239,93 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
     if (!rest.length && materials) writeSaved(materials.book.id, { designs: [], activeId: null });
   };
 
-  // ── Adding material ──
-  const dimsOf = async (url: string) => {
-    const img = await loadImage(url);
-    images.set(url, img);
-    setTick(t => t + 1);
-    return img;
+  /** Blank starting points: the book's own binding if it has one, and plain cloth. */
+  const blanks = useMemo<Cover[]>(() => {
+    if (!materials) return [];
+    const out: Cover[] = [];
+    const board = materials.leaves.find(l => l.role === 'outside') || materials.leaves.find(l => l.role === 'endpaper');
+    if (board) {
+      out.push({ id: 'blank-board', name: 'Blank', layers: [imageLayer(board, board.w || 1000, board.h || 1500, { ground: true, crop: { x: 0.06, y: 0.04, w: 0.88, h: 0.92 }, name: `${board.role === 'outside' ? 'Binding' : 'Endpaper'}, p. ${board.n}` })] });
+    }
+    out.push({ id: 'blank-cloth', name: 'Blank', layers: [fillLayer('#4a2620', { texture: 'cloth', name: 'Cloth' })] });
+    return out;
+  }, [materials]);
+
+  // ── Adding elements ──
+  const groundIsDark = (): boolean => {
+    const g = active?.layers.find(isGround);
+    if (!g) return true;
+    if (g.kind === 'fill') return hexLum(g.color) < 0.5;
+    if (g.kind !== 'image') return true;
+    let lum = lumCache.get(g.src);
+    const img = images.get(g.src);
+    if (lum == null && img instanceof HTMLImageElement) { lum = surfaceStats(img).lum; lumCache.set(g.src, lum); }
+    return lum == null ? true : lum < 0.55;
   };
 
-  const addLeaf = async (leaf: Leaf, how: 'ground' | 'add' | 'lift-title' | 'lift-page', crop?: Crop, rot: 0 | 90 | 180 | 270 = 0) => {
+  const dimsFor = async (leaf: Leaf): Promise<[number, number]> => {
+    const img = await loadImage(leaf.display);
+    images.set(leaf.display, img);
+    setTick(t => t + 1);
+    return [img.naturalWidth, img.naturalHeight];
+  };
+
+  const addAsset = async (a: Asset, at?: { x: number; y: number }) => {
     if (!active) return;
-    setBusy(`Loading page ${leaf.n}…`);
     try {
-      const img = await dimsOf(leaf.display);
-      const [iw, ih] = [img.naturalWidth, img.naturalHeight];
-      if (how === 'ground') {
-        addLayers([imageLayer(leaf, iw, ih, { ground: true, crop: crop || { x: 0.06, y: 0.04, w: 0.88, h: 0.92 }, srcRot: rot, name: `Ground · p. ${leaf.n}` })], true);
-        return;
+      if (a.kind === 'image') setBusy('Loading…');
+      const dims = a.kind === 'image' ? await dimsFor(a.leaf) : undefined;
+      const { layer, ground } = assetToLayer(a, { dark: groundIsDark(), dims, at });
+      let layers: Layer[];
+      if (ground) {
+        // A new binding or cloth replaces the background rather than piling up.
+        const i = active.layers.findIndex(isGround);
+        layers = i >= 0 ? active.layers.map((l, k) => (k === i ? layer : l)) : [layer, ...active.layers];
+      } else if (layer.kind === 'fill') {
+        const i = active.layers.findIndex(isGround);
+        layers = [...active.layers];
+        layers.splice(i + 1, 0, layer);
+      } else {
+        layers = [...active.layers, layer];
       }
-      if (how === 'lift-title' || how === 'lift-page') {
-        const r = how === 'lift-title' ? findTitleBlock(img) : findInkArea(img);
-        const ground = active.layers.find(l => l.kind !== 'text' && l.kind !== 'shape');
-        const dark = !ground || ground.kind === 'fill' || (ground.kind === 'image' && ground.role !== 'leaf');
-        addLayers([imageLayer(leaf, iw, ih, {
-          crop: r?.crop || FULL, threshold: r ? Math.min(0.8, r.threshold + 0.05) : 0.5, softness: 0.12,
-          treatment: dark ? 'gilt' : 'ink', width: how === 'lift-title' ? W * 0.74 : W * 0.7,
-          name: how === 'lift-title' ? `Title lifted · p. ${leaf.n}` : `Title page · p. ${leaf.n}`,
-        })]);
-        return;
-      }
-      const l = imageLayer(leaf, iw, ih, { crop: crop || FULL, srcRot: rot, width: W * 0.6 });
-      if (l.h > H * 0.8) { l.w *= (H * 0.8) / l.h; l.h = H * 0.8; }
-      addLayers([l]);
+      setActive({ ...active, layers });
+      setSelected(ground ? null : layer.id);
+      setCropMode(false);
     } catch {
-      setError(`Page ${leaf.n} could not be loaded.`);
+      setError('That page could not be loaded.');
     } finally {
       setBusy(null);
     }
   };
 
-  const leafOf = (n: number) => materials?.leaves.find(l => l.n === n);
-  const cutCrop = (c: CutImage): Crop => ({ x: c.bbox.x, y: c.bbox.y, w: c.bbox.width, h: c.bbox.height });
+  const replaceSelected = async (a: Asset) => {
+    if (!active || !sel || sel.kind !== 'image' || a.kind !== 'image') return addAsset(a);
+    try {
+      setBusy('Loading…');
+      const dims = await dimsFor(a.leaf);
+      const next = replaceImage(sel, a, dims);
+      setActive({ ...active, layers: active.layers.map(l => (l.id === sel.id ? next : l)) });
+    } catch {
+      setError('That page could not be loaded.');
+    } finally {
+      setBusy(null);
+    }
+  };
 
-  const addShape = (shape: ShapeKind) => addLayers([shapeLayer(shape)]);
-  const addText = () => addLayers([textLayer(materials ? shortTitle(materials.book.title) : 'Title', { y: H * 0.3, name: 'Title' })]);
-  const addFill = () => addLayers([fillLayer('#4a2620', { texture: 'cloth', name: 'Cloth', locked: true })], true);
+  const addFromPage = async (leaf: Leaf, crop: Crop, asGround: boolean) => {
+    if (!active) return;
+    const dims = await dimsFor(leaf);
+    const l = imageLayer(leaf, dims[0], dims[1], { crop, ground: asGround, width: W * 0.6, name: asGround ? `Page ${leaf.n}` : `Picture, p. ${leaf.n}` });
+    if (!asGround && l.h > H * 0.7) { l.w *= (H * 0.7) / l.h; l.h = H * 0.7; }
+    if (asGround) {
+      const i = active.layers.findIndex(isGround);
+      setActive({ ...active, layers: i >= 0 ? active.layers.map((x, k) => (k === i ? l : x)) : [l, ...active.layers] });
+    } else {
+      setActive({ ...active, layers: [...active.layers, l] });
+      setSelected(l.id);
+    }
+    setPagePick(null);
+  };
 
   // ── Export ──
   const exportPng = async () => {
@@ -292,9 +361,11 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const t = e.target as HTMLElement;
-      if (cropFor || t.closest('input, textarea, select, [contenteditable]')) return;
+      if (cropFor || pagePick || t.closest('input, textarea, select, [contenteditable]')) return;
       const mod = e.metaKey || e.ctrlKey;
       if (mod && e.key.toLowerCase() === 'z') { e.preventDefault(); if (e.shiftKey) redo(); else undo(); return; }
+      if (e.key === 'Escape') { if (cropMode) setCropMode(false); else setSelected(null); return; }
+      if (e.key === 'Enter' && cropMode) { setCropMode(false); return; }
       if (!sel) return;
       if (e.key === 'Delete' || e.key === 'Backspace') { e.preventDefault(); removeLayer(sel.id); return; }
       const step = e.shiftKey ? 20 : 2;
@@ -303,11 +374,10 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
         e.preventDefault();
         patchLayer(sel.id, { x: sel.x + moves[e.key][0], y: sel.y + moves[e.key][1] });
       }
-      if (e.key === 'Escape') setSelected(null);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [sel, cropFor, undo, redo, removeLayer, patchLayer]);
+  }, [sel, cropFor, pagePick, cropMode, undo, redo, removeLayer, patchLayer]);
 
   // ── Provenance ──
   const provenance = useMemo(() => {
@@ -322,9 +392,8 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
     return parts.join(' · ');
   }, [active]);
 
-  // ── Board size ──
-  const [stageRef, stageW, stageH] = useWidth<HTMLDivElement>();
-  const boardW = Math.max(160, Math.min(stageW - 16, ((stageH - 16) * W) / H, 640));
+  const [stageRef, stageW, stageH] = useSize<HTMLDivElement>();
+  const boardW = Math.max(160, Math.min(stageW - 32, ((stageH - 40) * W) / H, 640));
 
   if (error && !materials) {
     return (
@@ -337,23 +406,24 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
 
   const book = materials?.book;
   const leaves = materials?.leaves || [];
-  const lists: Record<Exclude<Tab, 'starters' | 'cuts'>, Leaf[]> = {
-    outside: leaves.filter(l => l.role === 'outside' || l.role === 'endpaper'),
-    title: leaves.filter(l => l.role === 'title' || l.role === 'frontispiece'),
-    plates: leaves.filter(l => l.role === 'plate' || l.role === 'frontispiece'),
-    pages: leaves,
-  };
-  const tabs: { v: Tab; label: string; count?: number }[] = [
-    { v: 'starters', label: 'Starters', count: starters?.length },
-    { v: 'outside', label: 'Binding & endpapers', count: lists.outside.length },
-    { v: 'title', label: 'Title page', count: lists.title.length },
-    { v: 'plates', label: 'Plates', count: lists.plates.length },
-    { v: 'cuts', label: 'Illustrations', count: materials?.images.length },
-    { v: 'pages', label: 'All pages', count: leaves.length },
+  const hint = !sel
+    ? 'Click something on the cover to change it. Double-click a picture or the background to reposition what shows inside it.'
+    : cropMode
+      ? 'Drag the page to choose what shows. Drag the sides to show more or less. Enter or Done when finished.'
+      : sel.kind === 'image'
+        ? 'Drag to move. Corners resize. Sides crop: drag outward to show more of the page. Hold Alt to move without snapping.'
+        : sel.kind === 'text'
+          ? 'Drag to move. Corners resize the lettering. Sides set how wide the lines run.'
+          : 'Drag to move. Corners resize, sides stretch.';
+
+  const tabs: { v: Tab; label: string }[] = [
+    { v: 'start', label: 'New cover' },
+    { v: 'elements', label: 'Elements' },
+    { v: 'pages', label: `All pages${leaves.length ? ` ${leaves.length}` : ''}` },
   ];
 
   return (
-    <div className="cover-maker h-[100dvh] flex flex-col bg-[var(--bg-cream)] text-[var(--text-primary)]">
+    <div className="cover-maker fixed inset-0 z-40 flex flex-col bg-[var(--bg-cream)] text-[var(--text-primary)]">
       <style>{`
         .cover-maker .cm-btn { display:inline-flex; align-items:center; gap:.4rem; padding:.45rem .75rem; border-radius:.375rem; border:1px solid var(--border-medium); font-size:.875rem; background:var(--bg-white); }
         .cover-maker .cm-btn:hover:not(:disabled) { background:var(--bg-warm); }
@@ -365,91 +435,82 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
         .cover-maker .cm-input { width:100%; padding:.45rem .6rem; border-radius:.375rem; border:1px solid var(--border-medium); background:var(--bg-white); font-size:16px; }
       `}</style>
 
-      {/* Header */}
       <header className="flex items-center gap-3 px-4 py-2.5 border-b border-[var(--border-light)]">
         <Link href={`/book/${bookId}`} className="p-1.5 -ml-1.5 rounded hover:bg-[var(--bg-warm)]" aria-label="Back to the book"><ArrowLeft className="w-5 h-5" /></Link>
         <div className="min-w-0 flex-1">
           <div className="text-xs text-[var(--text-muted)]">Cover maker</div>
           <div className="truncate text-sm font-medium">{book ? shortTitle(book.title) : 'Loading…'}</div>
         </div>
-        <button className="cm-btn" onClick={undo} disabled={!history.current.past.length} aria-label="Undo"><Undo2 className="w-4 h-4" /></button>
-        <button className="cm-btn" onClick={redo} disabled={!history.current.future.length} aria-label="Redo"><Redo2 className="w-4 h-4" /></button>
+        <button className="cm-btn" onClick={undo} disabled={!history.current.past.length} aria-label="Undo" title="Undo"><Undo2 className="w-4 h-4" /></button>
+        <button className="cm-btn" onClick={redo} disabled={!history.current.future.length} aria-label="Redo" title="Redo"><Redo2 className="w-4 h-4" /></button>
         <button className="cm-btn cm-btn-primary" onClick={exportPng} disabled={!active || exporting}>
           <Download className="w-4 h-4" /> {exporting ? 'Exporting…' : 'Download PNG'}
         </button>
       </header>
 
       <div className="flex-1 min-h-0 flex flex-col lg:flex-row">
-        {/* Materials */}
-        <aside className="lg:w-[340px] lg:border-r border-[var(--border-light)] flex flex-col min-h-0 order-2 lg:order-1 max-h-[42dvh] lg:max-h-none">
-          <nav className="flex gap-1 overflow-x-auto px-3 py-2 border-b border-[var(--border-light)] shrink-0">
+        {/* Left: new cover, elements, pages */}
+        <aside className="lg:w-[360px] lg:border-r border-[var(--border-light)] flex flex-col min-h-0 order-2 lg:order-1 max-h-[45dvh] lg:max-h-none">
+          <nav className="flex gap-1 px-3 py-2 border-b border-[var(--border-light)] shrink-0">
             {tabs.map(t => (
-              <button
-                key={t.v}
-                onClick={() => setTab(t.v)}
-                className={`whitespace-nowrap px-2.5 py-1 rounded text-sm ${tab === t.v ? 'bg-[var(--text-primary)] text-[var(--bg-cream)]' : 'hover:bg-[var(--bg-warm)]'}`}
-              >
-                {t.label}{t.count != null ? <span className="opacity-60"> {t.count}</span> : null}
+              <button key={t.v} onClick={() => setTab(t.v)}
+                className={`whitespace-nowrap px-3 py-1.5 rounded text-sm ${tab === t.v ? 'bg-[var(--text-primary)] text-[var(--bg-cream)]' : 'hover:bg-[var(--bg-warm)]'}`}>
+                {t.label}
               </button>
             ))}
           </nav>
-          <div className="flex-1 overflow-y-auto p-3">
-            {tab === 'starters' && (
-              !starters ? <p className="text-sm text-[var(--text-muted)]">Reading the scans and making starting covers…</p> : (
-                <>
-                  <p className="text-sm text-[var(--text-muted)] mb-3">Made only from this book&apos;s scans and its catalogue record. Pick one to start a new cover.</p>
-                  <div className="grid grid-cols-3 lg:grid-cols-2 gap-3">
-                    {starters.map(s => (
-                      <button key={s.id} onClick={() => startFrom(s)} className="text-left group">
-                        <CoverCanvas cover={s} width={140} images={images} tick={tick} fontsReady={fontsReady} className="rounded-sm shadow group-hover:ring-2 ring-[var(--accent-rust)] max-w-full !h-auto aspect-[2/3]" />
-                        <span className="block text-sm mt-1">{s.name}</span>
+          <div data-cm-scroll className="flex-1 overflow-y-auto p-3">
+            {tab === 'start' && (
+              <div className="flex flex-col gap-5">
+                <section>
+                  <h3 className="text-xs font-medium uppercase tracking-wide text-[var(--text-muted)] mb-2">Start empty</h3>
+                  <div className="grid grid-cols-3 gap-3">
+                    {blanks.map(b => (
+                      <button key={b.id} onClick={() => startFrom(b)} className="text-left group">
+                        <CoverCanvas cover={b} width={96} images={images} tick={tick} fontsReady={fontsReady} className="rounded-sm shadow group-hover:ring-2 ring-[var(--accent-rust)] max-w-full !h-auto aspect-[2/3]" />
+                        <span className="block text-xs mt-1 text-[var(--text-muted)]">{b.id === 'blank-board' ? 'On its binding' : 'On cloth'}</span>
                       </button>
                     ))}
                   </div>
-                </>
-              )
-            )}
-            {tab === 'cuts' && (
-              <div className="grid grid-cols-3 gap-2">
-                {(materials?.images || []).map((c, i) => {
-                  const leaf = leafOf(c.page);
-                  if (!leaf) return null;
-                  return (
-                    <div key={i} className="flex flex-col gap-1">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={c.thumb || c.cut || leaf.thumb} alt={c.description} title={`${c.description} (p. ${c.page})`} className="w-full aspect-square object-contain bg-[var(--bg-warm)] rounded" loading="lazy" />
-                      <div className="flex gap-1">
-                        <button className="cm-chip flex-1" onClick={() => addLeaf(leaf, 'add', cutCrop(c), c.rotation)}>Add</button>
-                        <button className="cm-chip flex-1" onClick={() => addLeaf(leaf, 'ground', cutCrop(c), c.rotation)}>Ground</button>
-                      </div>
+                </section>
+                <section>
+                  <h3 className="text-xs font-medium uppercase tracking-wide text-[var(--text-muted)] mb-2">Or start from a design</h3>
+                  {!starters ? <p className="text-sm text-[var(--text-muted)]">Reading the scans…</p> : (
+                    <div className="grid grid-cols-3 gap-3">
+                      {starters.map(s => (
+                        <button key={s.id} onClick={() => startFrom(s)} className="text-left group">
+                          <CoverCanvas cover={s} width={96} images={images} tick={tick} fontsReady={fontsReady} className="rounded-sm shadow group-hover:ring-2 ring-[var(--accent-rust)] max-w-full !h-auto aspect-[2/3]" />
+                          <span className="block text-xs mt-1">{s.name}</span>
+                        </button>
+                      ))}
                     </div>
-                  );
-                })}
-                {!materials?.images.length && <p className="col-span-3 text-sm text-[var(--text-muted)]">No illustrations have been cut out of this book yet. Use Plates or All pages and crop.</p>}
+                  )}
+                </section>
+                <p className="text-xs text-[var(--text-muted)]">Everything is made from this book&apos;s own scans and catalogue record. Each new cover opens as a tab above the board; your covers stay in this browser.</p>
               </div>
             )}
-            {tab !== 'starters' && tab !== 'cuts' && (
-              <div className="grid grid-cols-3 gap-2">
-                {lists[tab].map(leaf => (
-                  <div key={leaf.n} className="flex flex-col gap-1">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={leaf.thumb} alt={`Page ${leaf.n}`} title={leaf.note || `Page ${leaf.n}`} className="w-full aspect-[2/3] object-cover bg-[var(--bg-warm)] rounded" loading="lazy" />
-                    <span className="text-xs text-[var(--text-muted)]">p. {leaf.n} · {ROLE_LABEL[leaf.role]}</span>
-                    {tab === 'title' && leaf.role === 'title' ? (
-                      <div className="flex flex-wrap gap-1">
-                        <button className="cm-chip" onClick={() => addLeaf(leaf, 'lift-title')}>Lift title</button>
-                        <button className="cm-chip" onClick={() => addLeaf(leaf, 'lift-page')}>Lift page</button>
-                      </div>
-                    ) : (
-                      <div className="flex gap-1">
-                        <button className="cm-chip flex-1" onClick={() => addLeaf(leaf, 'add')}>Add</button>
-                        <button className="cm-chip flex-1" onClick={() => addLeaf(leaf, 'ground')}>Ground</button>
-                      </div>
-                    )}
-                  </div>
-                ))}
-                {!lists[tab].length && <p className="col-span-3 text-sm text-[var(--text-muted)]">Nothing of this kind was found. Try All pages.</p>}
-              </div>
+            {tab === 'elements' && (
+              <ElementsPanel
+                assets={assets}
+                letteringReady={letteringReady}
+                canReplace={sel?.kind === 'image' && !isGround(sel)}
+                onAdd={a => addAsset(a)}
+                onReplace={a => replaceSelected(a)}
+              />
+            )}
+            {tab === 'pages' && (
+              <>
+                <p className="text-sm text-[var(--text-muted)] mb-3">Any page of the book. Click one to choose the part you want.</p>
+                <div className="grid grid-cols-3 gap-2">
+                  {leaves.map(leaf => (
+                    <button key={leaf.n} onClick={() => setPagePick(leaf)} className="flex flex-col gap-1 text-left group">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={leaf.thumb} alt={`Page ${leaf.n}`} title={leaf.note || `Page ${leaf.n}`} className="w-full aspect-[2/3] object-cover bg-[var(--bg-warm)] rounded border border-transparent group-hover:border-[var(--accent-rust)]" loading="lazy" />
+                      <span className="text-xs text-[var(--text-muted)]">p. {leaf.n}{leaf.role !== 'leaf' ? ` · ${ROLE_LABEL[leaf.role]}` : ''}</span>
+                    </button>
+                  ))}
+                </div>
+              </>
             )}
           </div>
         </aside>
@@ -459,19 +520,22 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
           <div className="flex items-center gap-1 overflow-x-auto px-3 py-2 border-b border-[var(--border-light)] shrink-0">
             {designs.map(d => (
               <div key={d.id} className={`flex items-center rounded text-sm whitespace-nowrap ${d.id === activeId ? 'bg-[var(--bg-warm)]' : ''}`}>
-                <button className="px-2.5 py-1" onClick={() => { setActiveId(d.id); setSelected(null); }}>{d.name}</button>
+                <button className="px-2.5 py-1" onClick={() => { setActiveId(d.id); setSelected(null); setCropMode(false); }}>{d.name}</button>
                 {d.id === activeId && designs.length > 1 && (
-                  <button className="pr-2 opacity-50 hover:opacity-100" aria-label={`Delete ${d.name}`} onClick={() => deleteDesign(d.id)}><Trash2 className="w-3.5 h-3.5" /></button>
+                  <button className="pr-2 opacity-50 hover:opacity-100" aria-label={`Delete ${d.name}`} title="Delete this cover" onClick={() => deleteDesign(d.id)}><Trash2 className="w-3.5 h-3.5" /></button>
                 )}
               </div>
             ))}
+            <button className="px-2 py-1 text-sm rounded hover:bg-[var(--bg-warm)] whitespace-nowrap" onClick={() => setTab('start')}>
+              <Plus className="w-3.5 h-3.5 inline -mt-0.5" /> New cover
+            </button>
             {active && (
-              <button className="px-2 py-1 text-sm opacity-70 hover:opacity-100 whitespace-nowrap" onClick={() => startFrom(active)}>
+              <button className="px-2 py-1 text-sm rounded opacity-70 hover:opacity-100 hover:bg-[var(--bg-warm)] whitespace-nowrap" onClick={() => startFrom(active)}>
                 <Copy className="w-3.5 h-3.5 inline -mt-0.5" /> Duplicate
               </button>
             )}
           </div>
-          <div ref={stageRef} className="flex-1 min-h-[300px] flex items-center justify-center bg-[var(--bg-warm)] relative">
+          <div ref={stageRef} className="flex-1 min-h-[300px] flex items-center justify-center bg-[var(--bg-warm)] relative overflow-hidden">
             {active && stageW > 0 && (
               <Board
                 cover={active}
@@ -480,37 +544,39 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
                 tick={tick}
                 fontsReady={fontsReady}
                 selected={selected}
-                onSelect={setSelected}
-                onChange={(l, commit) => patchLayer(l.id, l, commit)}
+                cropMode={cropMode}
+                onSelect={id => { setSelected(id); if (id !== selected) setCropMode(false); }}
+                onChange={(p, commit) => patchLayer(p.id, p, commit)}
+                onCropMode={setCropMode}
+                onDropAsset={(id, at) => { const a = assets.find(x => x.id === id); if (a) addAsset(a, at); }}
+                onDuplicate={duplicateLayer}
+                onDelete={removeLayer}
+                onReplace={() => setTab('elements')}
               />
             )}
-            {!active && <p className="text-sm text-[var(--text-muted)]">{starters ? 'Pick a starter to begin.' : 'Making starting covers…'}</p>}
+            {!active && <p className="text-sm text-[var(--text-muted)]">{starters ? 'Choose how to start, on the left.' : 'Making starting covers…'}</p>}
             {busy && <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-sm bg-[var(--bg-white)] rounded px-3 py-1.5 shadow">{busy}</div>}
             {error && materials && (
               <button className="absolute top-3 left-1/2 -translate-x-1/2 text-sm bg-[var(--bg-white)] rounded px-3 py-1.5 shadow text-[var(--status-error)]" onClick={() => setError(null)}>{error} ✕</button>
             )}
           </div>
-          {provenance && (
-            <p className="px-4 py-2 text-xs text-[var(--text-muted)] border-t border-[var(--border-light)] shrink-0">
-              From this book&apos;s scans: {provenance}. Lettering from the catalogue record.
-            </p>
-          )}
+          <div className="px-4 py-2 border-t border-[var(--border-light)] shrink-0 text-xs flex flex-col gap-0.5">
+            <span>{hint}</span>
+            {provenance && <span className="text-[var(--text-muted)]">From this book&apos;s scans: {provenance}. Lettering from the catalogue record.</span>}
+          </div>
         </main>
 
-        {/* Layers + inspector */}
+        {/* Right: layers + inspector */}
         <aside className="lg:w-[320px] lg:border-l border-[var(--border-light)] flex flex-col min-h-0 order-3 overflow-y-auto max-h-[50dvh] lg:max-h-none">
           {active && (
             <section className="p-3 border-b border-[var(--border-light)]">
-              <div className="flex items-center justify-between mb-2">
-                <h2 className="text-sm font-medium">Layers</h2>
-                <AddMenu onText={addText} onShape={addShape} onFill={addFill} />
-              </div>
+              <h2 className="text-sm font-medium mb-2">Layers</h2>
               <ul className="flex flex-col-reverse gap-0.5">
                 {active.layers.map((l, i) => (
                   <li
                     key={l.id}
                     className={`group flex items-center gap-1 rounded px-1.5 py-1 text-sm cursor-pointer ${l.id === selected ? 'bg-[var(--text-primary)] text-[var(--bg-cream)]' : 'hover:bg-[var(--bg-warm)]'}`}
-                    onClick={() => setSelected(l.id)}
+                    onClick={() => { setSelected(l.id); setCropMode(false); }}
                   >
                     <span className={`flex-1 truncate ${l.hidden ? 'opacity-40' : ''}`}>{l.name}</span>
                     <IconBtn label="Move up" onClick={() => moveLayer(l.id, 1)} disabled={i === active.layers.length - 1}><ArrowUp className="w-3.5 h-3.5" /></IconBtn>
@@ -537,11 +603,12 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
                 materials={materials}
                 patch={(p, commit = true) => patchLayer(sel.id, p, commit)}
                 onCrop={() => setCropFor(sel.id)}
+                onCropInPlace={() => setCropMode(true)}
                 onFillBoard={() => patchLayer(sel.id, { x: W / 2, y: H / 2, w: W, h: H, rot: 0 })}
               />
             </section>
           )}
-          {!sel && active && <p className="p-3 text-sm text-[var(--text-muted)]">Click something on the cover, or a layer, to change it. Grounds start locked so they don&apos;t move when you drag on them.</p>}
+          {!sel && active && <p className="p-3 text-sm text-[var(--text-muted)]">Nothing selected. Backgrounds are locked so they don&apos;t move when you drag on them; double-click the background to reposition it, or unlock it here.</p>}
         </aside>
       </div>
 
@@ -560,13 +627,24 @@ export default function CoverMaker({ bookId }: { bookId: string }) {
               const ih = img instanceof HTMLImageElement ? img.naturalHeight : 1;
               const aspect = (crop.w * iw) / (crop.h * ih);
               const shown = l.srcRot === 90 || l.srcRot === 270 ? 1 / aspect : aspect;
-              const isGround = l.w === W && l.h === H;
-              patchLayer(l.id, { crop, ...(isGround ? {} : { h: l.w / shown }), ...(threshold != null && l.treatment !== 'photo' ? { threshold } : {}) });
+              patchLayer(l.id, { crop, ...(isGround(l) ? {} : { h: l.w / shown }), ...(threshold != null && l.treatment !== 'photo' ? { threshold } : {}) });
               setCropFor(null);
             }}
           />
         );
       })()}
+
+      {pagePick && (
+        <CropDialog
+          src={pagePick.display}
+          page={pagePick.n}
+          initial={{ x: 0.04, y: 0.03, w: 0.92, h: 0.94 }}
+          applyLabel="Add to cover"
+          onClose={() => setPagePick(null)}
+          onApply={crop => addFromPage(pagePick, crop, false)}
+          onApplyGround={crop => addFromPage(pagePick, crop, true)}
+        />
+      )}
     </div>
   );
 }
@@ -583,157 +661,5 @@ function IconBtn({ label, onClick, disabled, children }: { label: string; onClic
     >
       {children}
     </button>
-  );
-}
-
-function AddMenu({ onText, onShape, onFill }: { onText: () => void; onShape: (s: ShapeKind) => void; onFill: () => void }) {
-  const [open, setOpen] = useState(false);
-  const items: [string, () => void][] = [
-    ['Text', onText],
-    ['Frame', () => onShape('frame')],
-    ['Double frame', () => onShape('double-frame')],
-    ['Rule', () => onShape('rule')],
-    ['Oval', () => onShape('oval')],
-    ['Sunk panel', () => onShape('panel')],
-    ['Paper label', () => onShape('label')],
-    ['Cloth or colour', onFill],
-  ];
-  return (
-    <div className="relative">
-      <button className="cm-btn !py-1" onClick={() => setOpen(o => !o)}><Plus className="w-4 h-4" /> Add</button>
-      {open && (
-        <>
-          <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
-          <ul className="absolute right-0 mt-1 z-20 bg-[var(--bg-white)] border border-[var(--border-light)] rounded shadow-lg py-1 w-44">
-            {items.map(([label, fn]) => (
-              <li key={label}><button className="w-full text-left px-3 py-1.5 text-sm hover:bg-[var(--bg-warm)]" onClick={() => { fn(); setOpen(false); }}>{label}</button></li>
-            ))}
-          </ul>
-        </>
-      )}
-    </div>
-  );
-}
-
-// ─── The board with direct manipulation ──────────────────────────────────────
-
-type DragState =
-  | { mode: 'move'; id: string; px: number; py: number; x0: number; y0: number }
-  | { mode: 'scale'; id: string; d0: number; l0: Layer }
-  | { mode: 'rotate'; id: string; a0: number; r0: number };
-
-function Board({ cover, width, images, tick, fontsReady, selected, onSelect, onChange }: {
-  cover: Cover;
-  width: number;
-  images: ImageMap;
-  tick: number;
-  fontsReady: boolean;
-  selected: string | null;
-  onSelect: (id: string | null) => void;
-  onChange: (l: Partial<Layer> & { id: string }, commit: boolean) => void;
-}) {
-  const svg = useRef<SVGSVGElement>(null);
-  const drag = useRef<DragState | null>(null);
-  const moved = useRef(false);
-  const k = W / width;
-  const sel = cover.layers.find(l => l.id === selected && !l.hidden);
-
-  const pt = (e: React.PointerEvent) => {
-    const r = svg.current!.getBoundingClientRect();
-    return { x: ((e.clientX - r.left) / r.width) * W, y: ((e.clientY - r.top) / r.height) * H };
-  };
-
-  const hit = (x: number, y: number): Layer | null => {
-    for (let i = cover.layers.length - 1; i >= 0; i--) {
-      const l = cover.layers[i];
-      if (l.hidden || l.locked || l.kind === 'fill') continue;
-      const a = (-l.rot * Math.PI) / 180;
-      const dx = x - l.x, dy = y - l.y;
-      const lx = dx * Math.cos(a) - dy * Math.sin(a), ly = dx * Math.sin(a) + dy * Math.cos(a);
-      const pad = 8 * k;
-      if (Math.abs(lx) <= l.w / 2 + pad && Math.abs(ly) <= layerHeight(l) / 2 + pad) return l;
-    }
-    return null;
-  };
-
-  const down = (e: React.PointerEvent) => {
-    svg.current!.setPointerCapture(e.pointerId);
-    const p = pt(e);
-    const role = (e.target as Element).getAttribute('data-handle');
-    moved.current = false;
-    if (sel && role === 'scale') {
-      drag.current = { mode: 'scale', id: sel.id, d0: Math.hypot(p.x - sel.x, p.y - sel.y), l0: sel };
-      return;
-    }
-    if (sel && role === 'rotate') {
-      drag.current = { mode: 'rotate', id: sel.id, a0: Math.atan2(p.y - sel.y, p.x - sel.x), r0: sel.rot };
-      return;
-    }
-    const l = hit(p.x, p.y);
-    onSelect(l ? l.id : null);
-    if (l) drag.current = { mode: 'move', id: l.id, px: p.x, py: p.y, x0: l.x, y0: l.y };
-  };
-
-  const move = (e: React.PointerEvent) => {
-    const d = drag.current;
-    if (!d) return;
-    const p = pt(e);
-    moved.current = true;
-    if (d.mode === 'move') {
-      let x = d.x0 + p.x - d.px, y = d.y0 + p.y - d.py;
-      // Snap to the board's centre lines.
-      if (Math.abs(x - W / 2) < 8 * k) x = W / 2;
-      if (Math.abs(y - H / 2) < 8 * k) y = H / 2;
-      onChange({ id: d.id, x, y }, false);
-    } else if (d.mode === 'scale') {
-      const f = Math.max(0.05, Math.hypot(p.x - d.l0.x, p.y - d.l0.y) / Math.max(1, d.d0));
-      const l0 = d.l0;
-      if (l0.kind === 'text') onChange({ id: d.id, size: l0.size * f, w: l0.w * f } as Partial<Layer> & { id: string }, false);
-      else onChange({ id: d.id, w: l0.w * f, h: l0.h * f }, false);
-    } else {
-      let r = d.r0 + ((Math.atan2(p.y - (sel?.y ?? 0), p.x - (sel?.x ?? 0)) - d.a0) * 180) / Math.PI;
-      r = ((r + 540) % 360) - 180;
-      if (!e.shiftKey) for (const snap of [-180, -90, 0, 90, 180]) if (Math.abs(r - snap) < 3) r = snap;
-      onChange({ id: d.id, rot: r }, false);
-    }
-  };
-
-  const up = () => {
-    if (drag.current && moved.current) onChange({ id: drag.current.id }, true);
-    drag.current = null;
-  };
-
-  const hs = 9 * k;
-  const selH = sel ? layerHeight(sel) : 0;
-
-  return (
-    <div className="relative shadow-[0_10px_40px_rgba(0,0,0,0.35)]" style={{ width, height: (width * H) / W }}>
-      <CoverCanvas cover={cover} width={width} images={images} tick={tick} fontsReady={fontsReady} />
-      <svg
-        ref={svg}
-        viewBox={`0 0 ${W} ${H}`}
-        className="absolute inset-0 w-full h-full touch-none"
-        onPointerDown={down}
-        onPointerMove={move}
-        onPointerUp={up}
-        onPointerCancel={up}
-      >
-        {sel && sel.kind !== 'fill' && (
-          <g transform={`translate(${sel.x} ${sel.y}) rotate(${sel.rot})`}>
-            <rect x={-sel.w / 2} y={-selH / 2} width={sel.w} height={selH} fill="none" stroke="#fff" strokeWidth={2.5 * k} />
-            <rect x={-sel.w / 2} y={-selH / 2} width={sel.w} height={selH} fill="none" stroke="#9e4a3a" strokeWidth={1.2 * k} strokeDasharray={`${6 * k} ${4 * k}`} />
-            {!sel.locked && (
-              <>
-                {[[-1, -1], [1, -1], [-1, 1], [1, 1]].map(([sx, sy]) => (
-                  <circle key={`${sx}${sy}`} data-handle="scale" cx={(sx * sel.w) / 2} cy={(sy * selH) / 2} r={hs} fill="#fff" stroke="#9e4a3a" strokeWidth={2 * k} style={{ cursor: 'nwse-resize' }} />
-                ))}
-                <line x1={0} y1={-selH / 2} x2={0} y2={-selH / 2 - 34 * k} stroke="#fff" strokeWidth={2 * k} />
-                <circle data-handle="rotate" cx={0} cy={-selH / 2 - 34 * k} r={hs} fill="#9e4a3a" stroke="#fff" strokeWidth={2 * k} style={{ cursor: 'grab' }} />
-              </>
-            )}
-          </g>
-        )}
-      </svg>
-    </div>
   );
 }

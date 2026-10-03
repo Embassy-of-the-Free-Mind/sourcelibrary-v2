@@ -238,3 +238,37 @@ export function findInkArea(img: HTMLImageElement): { crop: Crop; threshold: num
   const d = density(m, x0, x1, y0, y1);
   return { crop: toCrop(m, x0, x1, y0, y1, 0.03), threshold: m.threshold, plausible: d > 0.02 && d < 0.3 && blocks.length >= 3 };
 }
+
+export interface TextBlock { crop: Crop; threshold: number; lines: number }
+
+/**
+ * Every separate block of lettering on a page, top to bottom: the title, the
+ * author line, the imprint, a motto. Lines are grouped while they are set at a
+ * similar size and sit close together; a change of size or a wide gap starts a
+ * new block. Each one can be lifted onto a cover on its own.
+ */
+export function findTextBlocks(img: HTMLImageElement): TextBlock[] {
+  const m = inkMap(img);
+  const lines = rowBlocks(m);
+  const tall = (b: Block) => b.y1 - b.y0 + 1;
+  const groups: Block[][] = [];
+  for (const b of lines) {
+    const g = groups[groups.length - 1];
+    const last = g?.[g.length - 1];
+    if (last) {
+      const ratio = tall(b) / tall(last);
+      if (b.y0 - last.y1 < Math.max(tall(b), tall(last)) * 1.1 && ratio > 0.55 && ratio < 1.8) { g.push(b); continue; }
+    }
+    groups.push([b]);
+  }
+  const out: TextBlock[] = [];
+  for (const g of groups) {
+    const y0 = g[0].y0, y1 = g[g.length - 1].y1;
+    const [x0, x1] = columnsOf(m, y0, y1);
+    if (x1 - x0 < m.w * 0.05 || y1 - y0 < m.h * 0.008) continue;
+    const d = density(m, x0, x1, y0, y1);
+    if (d < 0.02 || d > 0.45) continue;
+    out.push({ crop: toCrop(m, x0, x1, y0, y1, 0.012), threshold: m.threshold, lines: g.length });
+  }
+  return out.slice(0, 14);
+}
