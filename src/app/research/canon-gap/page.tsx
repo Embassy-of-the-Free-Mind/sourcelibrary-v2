@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import gapMap from '../../../../scripts/catalog-coverage/results/canon-gap-map-2026-10.json';
 import gapStatus from '../../../../scripts/catalog-coverage/results/canon-gap-status-2026-10.json';
-import { CanonBars, RoutesDiagram, StatusBoard, STATUS_STYLE, TengyurProgress, short, type CanonBar } from './diagrams';
+import { CanonBars, RoutesDiagram, StatusBoard, STATUS_STYLE, TengyurProgress, TraditionProgress, short, type CanonBar } from './diagrams';
 
 // Built for the Eternity Foundation working session (#5513): read once, seated, as a
 // table with a short argument. Sizes, licences, English shares and draft costs come from
@@ -239,7 +239,16 @@ export default function CanonGapPage() {
             readable in outline; it does not replace a translator. Money for review goes furthest on the canons that
             are open, typed, paired with scans, and have little English.
           </p>
-          <RoutesDiagram />
+          <RoutesDiagram n={1} />
+        </Section>
+
+        <Section kicker="Our library" title="Scanned, transcribed, translated">
+          <p>
+            Before the typed canons, here is what we already hold in each tradition: scanned books in every edition we
+            could find, how much of each we have transcribed, and how much has a draft English translation. The
+            Tibetan figure includes the Derge Tengyur we imported this month; the Mongolian Kanjur is scans only so far.
+          </p>
+          <TraditionProgress n={2} rows={[...gapStatus.traditions].sort((a, b) => b.pages_scanned - a.pages_scanned)} />
         </Section>
 
         <Section kicker="The gap" title="Most of the typed canon has no English, or nobody knows">
@@ -248,7 +257,7 @@ export default function CanonGapPage() {
             SuttaCentral for the Pali, and Sefaria for the Hebrew. For the Chinese and Arabic canons, which are by far
             the largest, the share is unknown, so their draft cost below assumes none of it is in English.
           </p>
-          <CanonBars rows={bars} />
+          <CanonBars n={3} rows={bars} />
         </Section>
 
         <Section kicker="The first case" title="The Derge Tengyur">
@@ -263,6 +272,7 @@ export default function CanonGapPage() {
             .
           </p>
           <TengyurProgress
+            n={4}
             volumes={tengyurStatus?.held_books ?? 213}
             pilotVolumes={TENGYUR_PILOT.volumes}
             pagesImaged={TENGYUR_PILOT.pagesImaged}
@@ -274,7 +284,7 @@ export default function CanonGapPage() {
         </Section>
 
         <Section kicker="Where it stands" title="Each canon, and what happens next">
-          <StatusBoard items={rows.map((r) => ({ id: r.id, name: nameOf(r.id, r.corpus), status: STATUS.get(r.id)?.status ?? 'next' }))} />
+          <StatusBoard n={5} items={rows.map((r) => ({ id: r.id, name: nameOf(r.id, r.corpus), status: STATUS.get(r.id)?.status ?? 'next' }))} />
           <p className="mb-6 text-base text-stone-600">
             Ordered by how much untranslated text each canon holds, weighted by how open its licence is and whether open
             scans of the same edition exist. &ldquo;We hold&rdquo; counts the books in our library for that canon:

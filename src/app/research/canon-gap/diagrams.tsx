@@ -44,7 +44,7 @@ function Figure({ n, title, caption, children }: { n: number; title: string; cap
   );
 }
 
-/* ---------- Figure 1: the two routes from a canon to English ---------- */
+/* ---------- The two routes from a canon to English ---------- */
 
 function Step({ label, sub, skipped, tone }: { label: string; sub?: string; skipped?: boolean; tone?: 'source' | 'review' }) {
   const base = 'rounded-sm px-3 py-2 font-body text-sm leading-tight min-w-0';
@@ -67,10 +67,10 @@ const Arrow = () => (
   <div aria-hidden className="text-stone-400 text-center md:self-center leading-none max-md:rotate-90 max-md:my-0.5">→</div>
 );
 
-export function RoutesDiagram() {
+export function RoutesDiagram({ n }: { n: number }) {
   return (
     <Figure
-      n={1}
+      n={n}
       title="Two routes from a canon to English"
       caption="Where a canon exists only as page images, a model must read every page and the reading must be checked before any English can be drafted. Where it is already typed and openly licensed, those two steps fall away; an open scan of the same edition keeps every page checkable. Scholarly review is the same on both routes, and it is the expensive step."
     >
@@ -109,7 +109,7 @@ export function RoutesDiagram() {
   );
 }
 
-/* ---------- Figure 2: size and English coverage, and draft cost, per canon ---------- */
+/* ---------- Size and English coverage, and draft cost, per canon ---------- */
 
 export type CanonBar = {
   id: string;
@@ -120,13 +120,13 @@ export type CanonBar = {
   upper: boolean; // cost prices the whole corpus because English coverage is unknown
 };
 
-export function CanonBars({ rows }: { rows: CanonBar[] }) {
+export function CanonBars({ rows, n }: { rows: CanonBar[]; n: number }) {
   const maxChars = Math.max(...rows.map((r) => r.chars));
   const maxUsd = Math.max(...rows.map((r) => r.usd));
   const pct = (v: number, max: number) => `max(${((v / max) * 100).toFixed(2)}%, 3px)`;
   return (
     <Figure
-      n={2}
+      n={n}
       title="How big each canon is, how much has English, and what a draft costs"
       caption={
         <>
@@ -187,9 +187,92 @@ export function CanonBars({ rows }: { rows: CanonBar[] }) {
   );
 }
 
-/* ---------- Figure 3: the Tengyur, volume by volume ---------- */
+/* ---------- What we hold, tradition by tradition ---------- */
+
+export type TraditionProgressRow = {
+  id: string;
+  name: string;
+  books: number;
+  readable_books: number;
+  pages_scanned: number;
+  pages_transcribed: number;
+  pages_translated: number;
+  canon_page_equivalents: number;
+};
+
+const UNIT = 1000; // pages per square
+const SCANNED_ONLY = '#d6d3d1';
+// A stage with any pages gets at least one square, so a small start is visible rather than rounded away.
+const squares = (n: number) => (n > 0 ? Math.max(1, Math.round(n / UNIT)) : 0);
+
+export function TraditionProgress({ rows, n }: { rows: TraditionProgressRow[]; n: number }) {
+  return (
+    <Figure
+      n={n}
+      title="What we hold, tradition by tradition"
+      caption={
+        <>
+          Each square is {fmt(UNIT)} pages of scanned books in our library, any edition, published or still held for checking, rounded to the nearest square;
+          squares are the same size in every tradition, so the areas compare directly. A page is transcribed when we
+          hold its text (read from the image, or matched from an open typed edition) and translated when it has a
+          draft English translation. &ldquo;Open typed text&rdquo; is the size of the openly licensed typed canon for
+          that tradition in the table below, converted to pages at our average page length in that language.
+        </>
+      }
+    >
+      <div className="font-body text-xs text-stone-600 mb-4 flex flex-wrap gap-y-1">
+        <Swatch style={{ backgroundColor: ENGLISH }} label="translated" />
+        <Swatch style={{ backgroundColor: NO_ENGLISH }} label="transcribed, not yet translated" />
+        <Swatch style={{ backgroundColor: SCANNED_ONLY }} label="scanned only" />
+      </div>
+      <div className="divide-y divide-stone-200 border-y border-stone-200">
+        {rows.map((t) => {
+          const total = squares(t.pages_scanned);
+          const tr = Math.min(squares(t.pages_translated), total);
+          const tx = Math.min(Math.max(squares(t.pages_transcribed) - tr, 0), total - tr);
+          const pct = (v: number) => (t.pages_scanned ? `${Math.round((v / t.pages_scanned) * 100)}%` : '—');
+          return (
+            <div key={t.id} className="py-4 md:grid md:grid-cols-[14rem_minmax(0,1fr)] md:gap-6">
+              <div className="font-body text-sm mb-2 md:mb-0">
+                <div className="font-serif text-lg text-stone-900 leading-tight">{t.name}</div>
+                <div className="text-stone-600 mt-1">
+                  {fmt(t.books)} books · {fmt(t.pages_scanned)} pages
+                </div>
+                <div className="text-stone-500 text-xs mt-1 leading-snug">
+                  {pct(t.pages_transcribed)} transcribed · {pct(t.pages_translated)} translated
+                  <br />
+                  {fmt(t.readable_books)} books readable in English
+                  {t.canon_page_equivalents > 0 && (
+                    <>
+                      <br />
+                      open typed text: ≈ {short(t.canon_page_equivalents)} pages
+                    </>
+                  )}
+                </div>
+              </div>
+              <div
+                className="flex flex-wrap gap-[2px] content-start"
+                role="img"
+                aria-label={`${t.name}: ${fmt(t.pages_scanned)} pages scanned, ${fmt(t.pages_transcribed)} transcribed, ${fmt(t.pages_translated)} translated`}
+              >
+                {Array.from({ length: total }, (_, i) => {
+                  const stage = i < tr ? 'translated' : i < tr + tx ? 'transcribed' : 'scanned only';
+                  const bg = i < tr ? ENGLISH : i < tr + tx ? NO_ENGLISH : SCANNED_ONLY;
+                  return <div key={i} className="w-[9px] h-[9px] rounded-[1.5px]" style={{ backgroundColor: bg }} title={`${t.name}: ${stage}`} />;
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </Figure>
+  );
+}
+
+/* ---------- The Tengyur, volume by volume ---------- */
 
 export function TengyurProgress({
+  n,
   volumes,
   pilotVolumes,
   pagesImaged,
@@ -198,6 +281,7 @@ export function TengyurProgress({
   pilotUsd,
   fullUsd,
 }: {
+  n: number;
   volumes: number;
   pilotVolumes: number;
   pagesImaged: number;
@@ -214,7 +298,7 @@ export function TengyurProgress({
   ];
   return (
     <Figure
-      n={3}
+      n={n}
       title="The Derge Tengyur, volume by volume"
       caption={`Each square is one of the ${volumes} volumes we imported. All are held from public view until their English has been checked; the ${pilotVolumes} teal squares are the pilot volumes, one from each major section, whose first pages were drafted to measure real cost and quality before the full run.`}
     >
@@ -245,7 +329,7 @@ export function TengyurProgress({
   );
 }
 
-/* ---------- Figure 4: where each canon stands ---------- */
+/* ---------- Where each canon stands ---------- */
 
 const STATUS_ORDER = ['done', 'running', 'next', 'blocked'] as const;
 export const STATUS_STYLE: Record<(typeof STATUS_ORDER)[number], { label: string; cls: string }> = {
@@ -255,12 +339,12 @@ export const STATUS_STYLE: Record<(typeof STATUS_ORDER)[number], { label: string
   blocked: { label: 'Blocked', cls: 'bg-stone-100 text-stone-600 border border-stone-300' },
 };
 
-export function StatusBoard({ items }: { items: { id: string; name: string; status: string }[] }) {
+export function StatusBoard({ items, n }: { items: { id: string; name: string; status: string }[]; n: number }) {
   // An empty "Done" column reads as a hole; it appears once the first canon is done.
   const shown = STATUS_ORDER.filter((s) => s !== 'done' || items.some((i) => i.status === 'done'));
   return (
     <Figure
-      n={4}
+      n={n}
       title="Where each canon stands"
       caption="“Blocked” means the open text’s licence does not let us publish it, or no open typed text exists. Each canon’s next step and its public work log are in the rows below."
     >
