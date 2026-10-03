@@ -794,3 +794,35 @@ describe('enrol dryRun', () => {
     expect(gemini.submitted).toHaveLength(0);
   });
 });
+
+describe('noContext (context_mode none, #5497 arm B): one request per page, unseeded, no adjacent OCR', () => {
+  it('sends every page in round 1 as its own bare single-page prompt, writes them all, and a failed page alone goes again', async () => {
+    const gemini = makeGemini({ drop: (n, round) => round === 1 && n === 7 });
+    const deps = makeDeps(gemini);
+    const res = await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1, noContext: true });
+    expect(res.ok).toBe(true);
+    expect(res.run.context_mode).toBe('none');
+    expect(gemini.submitted).toHaveLength(1);
+    expect(gemini.submitted[0].requests).toHaveLength(N_PAGES);
+    expect(gemini.prompt(0, 4)).toBe(buildTranslationPrompt({ prompts: PROMPTS, book: BOOK, ocrText: ocrFor(5), pageBreak: PAGE_BREAK_SCOPED }).prompt);
+    let run = await runOf(db);
+    expect(run.round.units.every((u: Doc) => !u.context.previous_translation && !u.context.prev_ocr && !u.context.next_ocr && u.context.mode === 'none')).toBe(true);
+
+    await tick(db, deps); // round 1 collected: p7 empty, the rest written; round 2 = p7 alone, still unseeded
+    run = await runOf(db);
+    expect(run.round.units.map((u: Doc) => u.pages[0].page_number)).toEqual([7]);
+    expect(run.round.units[0].context.previous_translation).toBe(false); // p6 is stored, but no seed in this mode
+    expect(gemini.prompt(1, 0)).toBe(buildTranslationPrompt({ prompts: PROMPTS, book: BOOK, ocrText: ocrFor(7), pageBreak: PAGE_BREAK_SCOPED }).prompt);
+    await tick(db, deps, 2);
+    run = await runOf(db);
+    expect(run.phase).toBe(PHASE.COMPLETE);
+    for (let n = 1; n <= N_PAGES; n++) expect(pageText(db, `p${n}`)).toBe(textFor(n));
+  });
+
+  it('the default (no flag) is unchanged: round 1 is still a block', async () => {
+    const gemini = makeGemini();
+    await enrolChainedRun(db, 'bk1', makeDeps(gemini), { prompts: PROMPTS, approvedUsd: 1 });
+    expect(gemini.submitted[0].requests).toHaveLength(1);
+    expect((await runOf(db)).context_mode).toBeUndefined();
+  });
+});

@@ -27,8 +27,10 @@
  *   --chained --enrol  --books=ID,ID --approved-usd=X   PAID  enrol each book (X is PER BOOK) and
  *                                                             submit the first rounds in shared jobs
  *             [--pages-file=F] [--exclude-withheld]          F = JSON { bookId: [pageId] }: queue only
- *             [--dry-run]                                    those pages (implies --exclude-withheld);
- *                                                             --dry-run plans + prices, enrols nothing
+ *             [--dry-run] [--no-context]                     those pages (implies --exclude-withheld);
+ *                                                             --dry-run plans + prices, enrols nothing;
+ *                                                             --no-context: one request per page, no
+ *                                                             seed, no adjacent OCR (#5497 arm B)
  *   --chained --enrol-auto [--limit=40] [--max-open=60] PAID  enrol what the gap-fill would want
  *             [--zero-only] [--min-pages=N]                     (AUTO_STATUSES), each approved at
  *             [--exclude-chinese] [--include-hidden]            pages × $0.0012, then submit;
@@ -317,7 +319,7 @@ async function chained(db) {
     const ids = (arg('books') || arg('book') || '').split(',').map(s => s.trim()).filter(Boolean);
     if (!ids.length && pagesByBook) ids.push(...Object.keys(pagesByBook));
     if (!ids.length) throw new Error('--chained --enrol needs --books=ID,ID (or --pages-file)');
-    const target = (id) => ({ pageIds: pagesByBook ? (pagesByBook[id] || []) : null, excludeWithheld });
+    const target = (id) => ({ pageIds: pagesByBook ? (pagesByBook[id] || []) : null, excludeWithheld, noContext: has('no-context') });
     const prompts = await loadTranslationPrompts(db);
     if (has('dry-run')) {
       // FREE: the queue and estimate each enrol would make; nothing written, nothing sent.
