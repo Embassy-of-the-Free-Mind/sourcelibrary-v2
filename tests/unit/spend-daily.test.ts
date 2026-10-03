@@ -79,6 +79,14 @@ describe('(c) envelopes', () => {
   });
 });
 
+describe('--week', () => {
+  it('sums an envelope\'s week from the stored daily rows, and says when only today is known', () => {
+    const d = (pages24: number, paid24_usd: number) => ({ checks: { envelopes: { envelopes: [{ tag: 'a', pages24, paid24_usd }] } } });
+    expect(S.weekOf('a', [d(10, 1), d(0, 2.5), { checks: {} }])).toEqual({ pages_week: 10, paid_week_usd: 3.5, days_counted: 2 });
+    expect(S.weekOf('b', [d(10, 1)], { pages24: 4, paid24_usd: 0.2 })).toMatchObject({ pages_week: 4, days_counted: 1, from_today_only: true });
+  });
+});
+
 describe('(d) dial', () => {
   const a = Date.parse('2026-10-03T00:00:00Z'), b = a + 86400e3;
   it('uses the highest dial in force that day, not today\'s', () => {

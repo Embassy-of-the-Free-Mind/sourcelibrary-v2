@@ -22,15 +22,18 @@ nothing measurable. Then at most 5 numbered cuts, costliest first.
 
 ## Steps (one tool call each where possible)
 
-1. Facts (takes about 9 min; run it in the foreground with a 600000 ms timeout):
+1. Facts. This takes about 5 min and can outrun one foreground call, so detach it and then wait
+   in the foreground (two calls):
    ```
    # from your job worktree (the current directory; it is a fresh origin/main)
-   set -a; . /root/.scaleway.env 2>/dev/null; set +a
-   GOOGLE_SERVICE_ACCOUNT_JSON=/root/.gcp/spend-reconcile.json node --env-file=/root/sourcelibrary/.env.production.local \
-     scripts/audit/spend-daily.mjs --week --json > /tmp/spend-week.json; echo exit $?
+   rm -f /tmp/spend-week.exit; nohup bash -c 'set -a; . /root/.scaleway.env 2>/dev/null; set +a; \
+     GOOGLE_SERVICE_ACCOUNT_JSON=/root/.gcp/spend-reconcile.json node --env-file=/root/sourcelibrary/.env.production.local \
+     scripts/audit/spend-daily.mjs --week --json > /tmp/spend-week.json 2>/tmp/spend-week.err; echo $? > /tmp/spend-week.exit' >/dev/null 2>&1 &
    ```
-   Exit 2 or a crash means a store could not be read. Post what you have, and say which source is
-   unreadable in line 1. Never present a partial week as a complete one.
+   then `until [ -f /tmp/spend-week.exit ]; do sleep 20; done; cat /tmp/spend-week.exit /tmp/spend-week.err`
+   (timeout 600000; repeat the same call if it times out). A non-zero exit or an empty JSON means a store
+   could not be read. Post what you have, and say which source is unreadable in line 1. Never present
+   a partial week as a complete one.
 2. Read `/tmp/spend-week.json` (one `python3 -c` that prints the parts below is enough).
 3. `gh issue view 5743 --comments`. Read the last cut list and Derek's replies since. **Do not
    re-propose an item he answered "n" to** unless its $ at stake doubled; carry a "y" that has not
@@ -45,7 +48,7 @@ nothing measurable. Then at most 5 numbered cuts, costliest first.
 = Σ ledger `waste_usd` over the week's `ledgers` (duplicate submissions, pages paid twice, collected
 batches that wrote no page)
 + the week's share of flagged machines (`machines.flagged`: €/month × 7/30, $ converted at 1.08)
-+ spend on envelopes whose `pages7` is 0 and whose spend grew over the week.
++ envelope `paid_week_usd` where `pages_week` is 0 (both summed from the daily rows; `days_counted` says how many).
 Gemini **billed minus ledger-paid** is reported separately as "unmetered". It is not waste: it means we
 cannot see it. Vendors marked not readable are named as such, never counted as $0.
 
@@ -63,7 +66,7 @@ Answer in one line, e.g. `1y 2n 3 defaults`. Nothing is changed until you answer
 
 <details><summary>Evidence</summary>
 
-envelopes (tag · issue · spent/cap · pages 7 d · last spend · verdict line), machines, Vercel top services, ledgers by day
+envelopes (tag · issue · spent/cap · paid and pages this week · last spend · verdict line), machines, Vercel top services, ledgers by day
 </details>
 ```
 - Every item line must contain `recommended default:`. The board's parser keys on it, and it reads

@@ -43,8 +43,9 @@
  * (default ~/.spend-daily/state.json). It stops, deletes, or changes nothing else.
  *
  * --week prints the facts the Monday cut-list job needs (scripts/audit/spend-weekly-brief.md), so that
- * job only composes and posts: the last 7 daily checks and ledgers, every envelope with spend and
- * pages over 7 days and its owning issue, every running machine with its price, and the vendor bills
+ * job only composes and posts: the last 7 daily checks and ledgers, every envelope with its spend, its
+ * week of paid and pages summed from the stored daily rows (never a 7-day scan of `pages`, which
+ * exceeds Mongo's time limit), and its owning issue, every running machine with its price, and the vendor bills
  * that can be read ($0 APIs: BigQuery Gemini export, Vercel FOCUS charges; Atlas and Cloudflare have
  * no token on this box, so they are reported as not readable).
  *
@@ -162,6 +163,21 @@ export function envelopeLevel(e, now = new Date()) {
     return { level: 'WARN', why: `stored spend: ${$(e.budget_usd - e.spent_usd)} unspent, no OCR/translation spend on its books for ${idle === Infinity ? `${STORED_DAYS}+ d` : `${Math.floor(idle / DAY)} d`}` };
   }
   return { level: 'ok', why: `${$(e.spent_usd)} / ${$(e.budget_usd)}; 24 h: ${$(e.paid24_usd)} → ${e.pages24 || 0} pages` };
+}
+
+/**
+ * --week: an envelope's week from the stored daily rows (each holds its 24 h paid and pages), so the
+ * weekly job never re-counts `pages`. Today's run stands in when no stored row has the envelope.
+ */
+export function weekOf(tag, dailies, today = { pages24: 0, paid24_usd: 0 }) {
+  let pages = 0, paid = 0, days = 0;
+  for (const d of dailies) {
+    const e = (d.checks?.envelopes?.envelopes || []).find((x) => x.tag === tag);
+    if (!e) continue;
+    pages += e.pages24 || 0; paid += e.paid24_usd || 0; days++;
+  }
+  if (!days) return { pages_week: today.pages24 || 0, paid_week_usd: r2(today.paid24_usd || 0), days_counted: 1, from_today_only: true };
+  return { pages_week: pages, paid_week_usd: r2(paid), days_counted: days };
 }
 
 export function envelopesCheck(envs, now = new Date()) {
@@ -305,7 +321,7 @@ async function envelopeIds(db, env) {
   return ids;
 }
 
-async function readEnvelopes(db, control, { usage, pages24, pages7 = null, now }) {
+async function readEnvelopes(db, control, { usage, pages24, now }) {
   const scopes = control?.allow_scopes || {};
   const out = [];
   const t24 = now.getTime() - DAY;
@@ -330,14 +346,13 @@ async function readEnvelopes(db, control, { usage, pages24, pages7 = null, now }
       const lane = laneOf(r.type);
       if (lane === 'ocr' || lane === 'translation') paid24 += r.cost_usd || 0;
     }
-    let p24 = 0, p7 = 0;
-    for (const id of ids) { p24 += pages24.get(id) || 0; if (pages7) p7 += pages7.get(id) || 0; }
+    let p24 = 0;
+    for (const id of ids) p24 += pages24.get(id) || 0;
     const s = scopes[env.tag] || {};
     out.push({
       tag: env.tag, issue: envelopeIssue(env.tag, s), budget_usd: env.budget_usd, spent_usd: r2(meter.usd),
       meter_error: meter.meterError || null, books: ids.size, lanes: env.lanes, created_at: env.created_at,
       paid24_usd: r2(paid24), pages24: p24, spend_window_usd: r2(spend72), last_spend_at: last ? new Date(last) : null,
-      ...(pages7 ? { pages7: p7 } : {}),
       why_opened: String(s.created_by || '').slice(0, 160),
     });
   }
@@ -485,8 +500,7 @@ async function main() {
     const since = new Date(Math.min(now.getTime() - STORED_DAYS * DAY, today0 - 2 * DAY));
     const usage = await readUsageWindow(db, since, now);
     const pages24 = await pagesWrittenByBook(db, new Date(now.getTime() - DAY));
-    const pages7 = WEEK ? await pagesWrittenByBook(db, new Date(now.getTime() - 7 * DAY)) : null;
-    const envs = await readEnvelopes(db, control, { usage, pages24, pages7, now });
+    const envs = await readEnvelopes(db, control, { usage, pages24, now });
     const envelopes = envelopesCheck(envs, now);
 
     const union = new Map(); // book id → earliest envelope created_at that covers it
@@ -523,7 +537,7 @@ async function main() {
     if (WEEK) {
       const since7 = new Date(today0 - 7 * DAY);
       const [dailies, ledgers, scw, vercel, billed7] = await Promise.all([
-        db.collection('ops_reports').find({ type: REPORT_TYPE }).sort({ day: -1 }).limit(7).project({ day: 1, status: 1, line: 1 }).toArray(),
+        db.collection('ops_reports').find({ type: REPORT_TYPE }).sort({ day: -1 }).limit(7).project({ day: 1, status: 1, line: 1, 'checks.envelopes.envelopes': 1 }).toArray(),
         db.collection('ops_reports').find({ type: PVG_TYPE }).sort({ day: -1 }).limit(7).project({ day: 1, verdict: 1, headline: 1 }).toArray(),
         readScaleway(),
         readVercel(since7, new Date(today0)),
@@ -537,8 +551,9 @@ async function main() {
           paid_usd: r2((l.headline || []).reduce((a, h) => a + (h.paid_usd || 0), 0)),
           waste_usd: r2((l.headline || []).reduce((a, h) => a + (h.waste_usd || 0), 0)),
           pages: (l.headline || []).reduce((a, h) => a + (h.pages_written || 0), 0) })),
-        envelopes: envelopes.envelopes.map(({ tag, issue, budget_usd, spent_usd, pages7: p7, pages24: p24, paid24_usd, last_spend_at, created_at, level, why, books, lanes, why_opened }) =>
-          ({ tag, issue, level, why, budget_usd, spent_usd, unspent_usd: r2(Math.max(0, budget_usd - spent_usd)), pages7: p7, pages24: p24, paid24_usd, last_spend_at, created_at, books, lanes, why_opened })),
+        envelopes: envelopes.envelopes.map(({ tag, issue, budget_usd, spent_usd, pages24: p24, paid24_usd, last_spend_at, created_at, level, why, books, lanes, why_opened }) =>
+          ({ tag, issue, level, why, budget_usd, spent_usd, unspent_usd: r2(Math.max(0, budget_usd - spent_usd)), ...weekOf(tag, dailies, { pages24: p24, paid24_usd }),
+            last_spend_at, created_at, books, lanes, why_opened })),
         machines: { flagged: machines.flags, not_readable: machines.lines.filter((l) => l.startsWith('UNKNOWN')),
           scaleway: scw, runpod: pods ? pods.map((p) => ({ name: p.name, status: p.desiredStatus, usd_hr: p.costPerHr, deadline: podDeadline(p.name) })) : podsError,
           hetzner: infraDocs['infra-hetzner'] ? { flags: infraDocs['infra-hetzner'].flags || [], generated_at: infraDocs['infra-hetzner'].generated_at } : 'not readable (no infra-hetzner flag document; needs #5741 + HCLOUD_TOKEN)' },
