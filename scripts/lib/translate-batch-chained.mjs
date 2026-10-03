@@ -164,9 +164,19 @@ export function planNextRound(run, pageDocs) {
   return { kind: block.length === 1 ? 'single' : 'block', pages: block, dropped };
 }
 
-/** Conservative batch-price estimate for the whole queue, seeds included (~1 page of context per block). */
-export function estimateChainedUsd({ prompts, book, pages, model }) {
+/**
+ * Conservative batch-price estimate for the whole queue, seeds included (~1 page of context per block).
+ * noContext: one request per page with no seed and no adjacent OCR (the run's context_mode 'none').
+ */
+export function estimateChainedUsd({ prompts, book, pages, model, noContext = false }) {
   let inChars = 0, outChars = 0;
+  if (noContext) {
+    for (const p of pages) {
+      inChars += buildTranslationPrompt({ prompts, book, ocrText: p.ocr?.data || '', pageBreak: PAGE_BREAK_SCOPED }).prompt.length;
+      outChars += (p.ocr?.data || '').length;
+    }
+    return +(costOf(model, inChars / 3.5, outChars / 2.5) * BATCH_MULTIPLIER).toFixed(4);
+  }
   for (const block of planBlocks(pages)) {
     inChars += buildBlockTranslationPrompt({ prompts, book, pages: block }).prompt.length + 2400;
     outChars += block.reduce((n, p) => n + (p.ocr?.data || '').length, 0);
@@ -207,18 +217,24 @@ async function loadPageDocs(db, ids) {
   return new Map(docs.map((d) => [d.id, d]));
 }
 
-/** The exact request the realtime worker would build for these pages, from the same builders. */
-export async function buildRoundRequest(db, { prompts, book, pages, kind }) {
+/**
+ * The exact request the realtime worker would build for these pages, from the same builders.
+ * noContext (a run enrolled with context_mode 'none'): the page alone — no stored translation of
+ * the page before, no adjacent OCR. Measured on the Derge Tengyur (#5497, PR #5704): the page's
+ * own e-text is exact, and the English beside each woodblock covered the wrong span on 1 side in
+ * 113 against the chained lane's 15, at the same fidelity.
+ */
+export async function buildRoundRequest(db, { prompts, book, pages, kind, noContext = false }) {
   const first = pages[0].page_number, last = pages[pages.length - 1].page_number;
-  const previousTranslation = await seedFor(db, book.id, first);
-  const { prevOcrText, nextOcrText } = await adjacentOcr(db, book.id, first, last);
+  const previousTranslation = noContext ? null : await seedFor(db, book.id, first);
+  const { prevOcrText, nextOcrText } = noContext ? {} : await adjacentOcr(db, book.id, first, last);
   const built = kind === 'block'
     ? buildBlockTranslationPrompt({ prompts, book, pages, previousTranslation, prevOcrText, nextOcrText, pageBreak: PAGE_BREAK_SCOPED })
     : buildTranslationPrompt({ prompts, book, ocrText: pages[0].ocr.data, previousTranslation, prevOcrText, nextOcrText, pageBreak: PAGE_BREAK_SCOPED });
   const maxOutputTokens = maxOutputTokensFor(pages);
   return {
     prompt: built.prompt, promptRef: built.promptRef, maxOutputTokens,
-    context: { previous_translation: !!previousTranslation, prev_ocr: !!prevOcrText, next_ocr: !!nextOcrText, page_break: 'scoped', ...(kind === 'block' ? { block: { pages: pages.length, first_page: first } } : {}) },
+    context: { previous_translation: !!previousTranslation, prev_ocr: !!prevOcrText, next_ocr: !!nextOcrText, page_break: 'scoped', ...(noContext ? { mode: 'none' } : {}), ...(kind === 'block' ? { block: { pages: pages.length, first_page: first } } : {}) },
   };
 }
 
@@ -292,7 +308,7 @@ async function claimRun(db, run, deps) {
  * (`translate_submitted`), an open run, nothing to translate, an estimate over `approvedUsd`, or
  * a closed dial. Returns { ok, reason?, run?, estimate? }.
  */
-export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, limit = MAX_PAGES_PER_RUN, submit = true, pageIds = null, excludeWithheld = false, dryRun = false } = {}) {
+export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, limit = MAX_PAGES_PER_RUN, submit = true, pageIds = null, excludeWithheld = false, dryRun = false, noContext = false } = {}) {
   const log = deps.log || console.log;
   const book = await db.collection('books').findOne({ id: bookId });
   if (!book) return { ok: false, reason: 'book-not-found' };
@@ -304,7 +320,7 @@ export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, 
   const { pages, excluded } = await selectPages(db, bookId, { limit, pageIds, excludeWithheld });
   if (pages.length === 0) return { ok: false, reason: 'nothing-to-translate', book, excluded };
   const model = getTranslateModelForBook(book);
-  const estimate = estimateChainedUsd({ prompts, book, pages, model });
+  const estimate = estimateChainedUsd({ prompts, book, pages, model, noContext });
   // dryRun: every refusal above, then stop — the queue and price an enrol would make, nothing written.
   if (dryRun) return { ok: true, dryRun: true, book, model, pages, excluded, estimate };
   if (!(Number(approvedUsd) >= estimate)) return { ok: false, reason: `estimate $${estimate} exceeds approved $${approvedUsd ?? 0}`, book, estimate };
@@ -313,7 +329,10 @@ export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, 
   const run = {
     id: newRunId(), book_id: bookId, model, mode: MODE, shadow: false,
     phase: PHASE.READY, prompt_ref: null,
-    queue: pages.map(ref), cursor: 0, pending_single: [],
+    // context_mode 'none' (opt-in per enrol, --no-context): every page is a pending single from
+    // the start, so each round sends every page still owed, one request each, unseeded.
+    queue: pages.map(ref), cursor: noContext ? pages.length : 0, pending_single: noContext ? pages.map(ref) : [],
+    ...(noContext ? { context_mode: 'none' } : {}),
     round: null, rounds: [], strikes: 0, dropped: [],
     counts: { written: 0, unhealthy: 0, protected: 0, blocked: 0, dropped: 0, single_fallbacks: 0 },
     page_count: pages.length, excluded, estimate, approved_usd: Number(approvedUsd), spent_est_usd: 0,
@@ -381,7 +400,7 @@ async function prepareRound(db, run, deps, { prompts }) {
   for (const pages of groups) {
     // Seeded from the STORED translation of the page before, as the worker seeds: a fallback page
     // whose predecessor is in this same round goes unseeded (context.previous_translation false).
-    const req = await buildRoundRequest(db, { prompts, book, pages, kind: plan.kind });
+    const req = await buildRoundRequest(db, { prompts, book, pages, kind: plan.kind, noContext: run.context_mode === 'none' });
     est += roundEstimateUsd({ model: run.model, prompt: req.prompt, pages });
     // The key names the run as well as the round (and the page, for singles): a shared job's
     // responses are told apart by it.
