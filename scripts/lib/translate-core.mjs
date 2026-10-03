@@ -431,7 +431,8 @@ export function buildTranslationPrompt({ prompts, book, ocrText, previousTransla
  * only (scripts/eval/folio-markers-5678.mjs); not adopted by any lane.
  */
 export const FOLIO_MARKER_RULE = `**IMPORTANT: The pages below are consecutive pages of ONE continuous text. Translate them as one continuous English text inside a single <translation> wrapper, and mark every page turn inside it:**
-- Write <pb n="N"/> at the exact point in the English where source page N begins: before page N's first translated word, in the middle of a sentence or clause if the page turns there. Every page gets exactly one marker, in page order, using the page numbers given below; the first page's marker opens the text.
+- Write <pb n="N"/> at the exact point in the English where source page N begins: before page N's first translated word, in the middle of a sentence or clause if the page turns there. Every page gets exactly one marker, in page order; the first page's marker opens the text, before its first word.
+- N is the number from that page's "--- Page N ---" line below, never a printed page, folio or signature number from the page itself (<page-num>, <header>, <sig>, a number in the text): if the "--- Page 21 ---" page shows the printed number 97, its marker is <pb n="21"/>.
 - Keep the English continuous: a sentence or verse that runs across a page turn is translated once, as one sentence, with the marker inside it. Do not end a page early, and do not restart, summarize or repeat at a marker.
 - Render every source word exactly once, on the side of the marker where it stands in the source: never move words from one page to another, never complete a sentence the source leaves unfinished, never omit anything. Where English word order differs from the source, place the marker at the nearest word boundary that keeps each page's words on its own side.
 - If the first page begins mid-sentence, the English begins mid-sentence too: no invented lead-in.
