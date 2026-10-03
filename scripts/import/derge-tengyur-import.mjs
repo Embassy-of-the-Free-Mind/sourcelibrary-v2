@@ -58,7 +58,7 @@ import { recountBook } from '../lib/page-counts.mjs';
 import {
   parseVolume, pageText, syllables, canvasFolioLabel, claimByLabel, scoreRead, sampleClass, volumeVerdict,
   locateRead, agreedOffset, ALIGN_RULES, sha16, CANONS, volumeFileParts, sideTexts, parse84000Lobby, status84000,
-  sideLeftTo84000,
+  sideLeftTo84000, SEGMENT_RULES, isConfidentLocation, offsetRuns, gapProbes, segmentsFromRuns, claimFromSegments,
 } from '../lib/derge-tengyur.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).filter((a) => a.startsWith('--')).map((a) => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; }));
@@ -178,7 +178,8 @@ const YIG_MODEL = args['yig-model'] || (() => {
   const base = '/root/.cache/huggingface/hub/models--BDRC--Woodblock/snapshots';
   return fs.existsSync(base) ? path.join(base, fs.readdirSync(base)[0]) : null;
 })();
-const READ_ENGINE = `bdrc-yigdzin-woodblock@${YIG_MODEL ? path.basename(YIG_MODEL).slice(0, 10) : 'missing'}`;
+// The red-ink preprocessing is part of the engine: a read made from another preprocessing is not reused.
+const READ_ENGINE = `bdrc-yigdzin-woodblock@${YIG_MODEL ? path.basename(YIG_MODEL).slice(0, 10) : 'missing'}${C.redInk ? '+redink-rg1' : ''}`;
 
 /** Read every image in `dir` that has no transcription yet in `${dir}-yig`; returns that out dir. */
 function yigdzinRead(dir) {
@@ -191,9 +192,12 @@ function yigdzinRead(dir) {
   fs.rmSync(batch, { recursive: true, force: true });
   fs.mkdirSync(batch);
   if (C.redInk) {
-    // Red-ink print (C.redInk): the green channel holds the ink dark on a light ground; stretch and
-    // equalise it before the read. The stored page image is untouched — this is the READER's input only.
-    const py = 'import cv2,sys\nfor a in sys.argv[2:]:\n  im=cv2.imread(a)\n  g=cv2.normalize(im[:,:,1],None,0,255,cv2.NORM_MINMAX)\n  g=cv2.createCLAHE(clipLimit=2.0,tileGridSize=(8,8)).apply(g)\n  cv2.imwrite(sys.argv[1]+"/"+a.split("/")[-1],g)\n';
+    // Red-ink print (C.redInk): isolate the ink as RED minus GREEN — red ink is high, the beige paper
+    // and its dark fibres are low — invert, and stretch so the paper goes white. The stored page image
+    // is untouched — this is the READER's input only. Measured 2026-10-03 on vol. 27 (#5665): the
+    // earlier green-channel + CLAHE input kept the paper fibres, and Yigdzin returned nothing for 4 of
+    // 5 leaves ("string index out of range"); R−G read all 5, 4 of them at 0.69–0.99 identity.
+    const py = 'import cv2,sys,numpy as np\nfor a in sys.argv[2:]:\n  im=cv2.imread(a).astype(np.int16)\n  d=np.clip(im[:,:,2]-im[:,:,1],0,255).astype(np.uint8)\n  d=cv2.normalize(cv2.GaussianBlur(d,(3,3),0),None,0,255,cv2.NORM_MINMAX)\n  g=255-d\n  lo,hi=np.percentile(g,1),np.percentile(g,60)\n  g=np.clip((g.astype(np.float32)-lo)*255/max(hi-lo,1),0,255).astype(np.uint8)\n  cv2.imwrite(sys.argv[1]+"/"+a.split("/")[-1],g)\n';
     execFileSync(path.join(YIG_APP, 'venv/bin/python'), ['-c', py, batch, ...todo.map((f) => path.join(dir, f))], { stdio: ['ignore', 'ignore', 'pipe'], timeout: 10 * 60 * 1000 });
   } else {
     for (const f of todo) fs.symlinkSync(path.join(dir, f), path.join(batch, f));
@@ -278,6 +282,102 @@ async function measureOffset(vol, canvases, pages, ig) {
   v.offset_measurement = { engine: READ_ENGINE, rules: ALIGN_RULES, ig, at: new Date().toISOString(), located, ...agreedOffset(located) };
   saveCkpt();
   return v.offset_measurement;
+}
+
+/**
+ * Segment mode (C.segmentOffsets, #5665): the offset is measured per stretch of the volume, so a
+ * skipped or repeated leaf costs the canvases around the break, not the whole volume. See
+ * SEGMENT_RULES (scripts/lib/derge-tengyur.mjs). Reads that LOCATE (coarse + gap probes) are never the
+ * reads that VERIFY a segment; a verify read that turns out misaligned and locates with confidence is
+ * moved to the locating set (it is evidence of a break nobody saw) and the segments are re-cut.
+ */
+async function measureSegments(vol, canvases, pages, ig) {
+  const v = ckpt.volumes[vol] ||= {};
+  const sm0 = v.segment_measurement;
+  if (sm0?.engine === READ_ENGINE && sm0.rules?.version === ALIGN_RULES.version && sm0.segment_rules?.version === SEGMENT_RULES.version && sm0.ig === ig) return sm0;
+  const SR = SEGMENT_RULES;
+  const dir = sampleDir(vol, ig, '-seg');
+  fs.mkdirSync(dir, { recursive: true });
+  const n = canvases.length;
+  const texts = new Map();
+  const readAll = async (cis) => {
+    const todo = [...new Set(cis)].filter((ci) => ci >= 0 && ci < n && !texts.has(ci));
+    for (const ci of todo) {
+      const f = path.join(dir, `c${ci}.jpg`);
+      if (!fs.existsSync(f)) fs.writeFileSync(f, Buffer.from(await (await fetchRetry(`${imageServiceOf(canvases[ci])}/full/${C.readSize}/0/default.jpg`)).arrayBuffer()));
+    }
+    if (!todo.length) return;
+    const out = yigdzinRead(dir);
+    for (const ci of todo) { const tf = path.join(out, `c${ci}.txt`); texts.set(ci, fs.existsSync(tf) ? fs.readFileSync(tf, 'utf8') : ''); }
+  };
+  const located = new Map();
+  const locate = (cis) => {
+    for (const ci of cis) {
+      const loc = locateRead(texts.get(ci) ?? '', pages);
+      located.set(ci, loc);
+      log(`  v${vol} locate canvas ${ci}: side ${loc.side} offset ${loc.index - ci} identity ${loc.identity} control ${loc.control} (${loc.read_syllables} syl)${isConfidentLocation(loc) ? ' ✓' : ''}`);
+    }
+  };
+  const locatedList = () => [...located].map(([canvas, loc]) => ({ canvas, loc }));
+  const edge = Math.floor(n * SR.edge);
+  const coarse = [...new Set([edge, ...Array.from({ length: SR.coarse }, (_, k) => Math.floor(((k + 0.5) / SR.coarse) * n)), n - 1 - edge])];
+  await readAll(coarse); locate(coarse);
+
+  let segments = [];
+  let rounds = 0;
+  for (let iter = 0; iter < SR.maxIterations; iter++) {
+    for (let r = 0; r < SR.maxRefineRounds; r++) {
+      const probes = gapProbes(offsetRuns(locatedList()).gaps, new Set(located.keys()));
+      if (!probes.length) break;
+      rounds++;
+      await readAll(probes); locate(probes);
+    }
+    const { runs, gaps } = offsetRuns(locatedList());
+    segments = segmentsFromRuns(runs, n);
+    log(`v${vol}: ${segments.length} segment(s) ${segments.map((s) => `[${s.from}–${s.to}] ${s.offset >= 0 ? '+' : ''}${s.offset}`).join(', ')}${gaps.filter((g) => g.hi - g.lo > 1).length ? `; unresolved gaps ${JSON.stringify(gaps.filter((g) => g.hi - g.lo > 1))}` : ''}`);
+    let newEvidence = false;
+    for (const seg of segments) {
+      seg.samples = [];
+      const cand = [];
+      for (let i = seg.from; i <= seg.to; i++) {
+        const k = i + seg.offset;
+        if (located.has(i) || k < 0 || k >= pages.length) continue;
+        if (syllables(pages[k].lines.join(' ')).length >= 150) cand.push(i);
+      }
+      const used = new Set();
+      for (const phase of [0.5, 0.25, 0.75]) {
+        const picks = [...new Set(Array.from({ length: SR.verifyPerRound }, (_, k) => cand[Math.floor(((k + phase) / SR.verifyPerRound) * cand.length)]))].filter((x) => x != null && !used.has(x));
+        picks.forEach((x) => used.add(x));
+        if (!picks.length) break;
+        await readAll(picks);
+        for (const ci of picks) {
+          const side = ci + seg.offset;
+          const far = (side + Math.floor(pages.length / 2)) % pages.length;
+          const score = scoreRead(texts.get(ci) ?? '', pages, side, { far, floor: ALIGN_RULES.informativeFloor });
+          const cls = sampleClass(score);
+          seg.samples.push({ canvas: ci, side: pages[side].label, read_sha: sha16(texts.get(ci) ?? ''), class: cls, score });
+          log(`  v${vol} verify [${seg.from}–${seg.to}] canvas ${ci} → side ${pages[side].label}: identity ${score.identity} shift ${score.measured_shift} control ${score.control} → ${cls}`);
+        }
+        const vd = volumeVerdict(seg.samples, { ...ALIGN_RULES, minScored: SR.minSegmentAligned });
+        if (vd.pass || seg.samples.some((x) => x.class === 'misaligned')) break;
+      }
+      seg.verdict = volumeVerdict(seg.samples, { ...ALIGN_RULES, minScored: SR.minSegmentAligned });
+      seg.pass = seg.verdict.pass;
+      for (const x of seg.samples.filter((y) => y.class === 'misaligned')) {
+        const loc = locateRead(texts.get(x.canvas) ?? '', pages);
+        if (isConfidentLocation(loc)) { located.set(x.canvas, loc); newEvidence = true; log(`  v${vol} canvas ${x.canvas}: misaligned verify read locates at offset ${loc.index - x.canvas} — re-cutting segments`); }
+      }
+    }
+    if (!newEvidence) break;
+  }
+  v.segment_measurement = {
+    engine: READ_ENGINE, rules: ALIGN_RULES, segment_rules: SR, ig, at: new Date().toISOString(), cost_usd: 0,
+    reads: texts.size, refine_rounds: rounds,
+    located: locatedList().map(({ canvas, loc }) => ({ canvas, ...loc, confident: isConfidentLocation(loc) })),
+    segments: segments.map((s) => ({ ...s, samples: s.samples, verdict: s.verdict, pass: !!s.pass })),
+  };
+  saveCkpt();
+  return v.segment_measurement;
 }
 
 function volumeTitle(vol, file) {
@@ -369,7 +469,14 @@ async function importVolume(db, vol) {
   const pages = parseVolume(fs.readFileSync(path.join(ETEXT, 'text', file), 'utf8'));
   const labels = canvases.map(canvasFolioLabel);
   let claim;
-  if (C.claimMode === 'label' && labels.filter(Boolean).length >= canvases.length * 0.5) {
+  let segs = null;
+  if (C.segmentOffsets) {
+    // Segment mode (#5665): the offset is measured per stretch, and only verified stretches are claimed.
+    v.claim_mode = 'segment';
+    const sm = await measureSegments(vol, canvases, pages, ig);
+    segs = sm.segments;
+    claim = claimFromSegments(segs, canvases.length, pages.length);
+  } else if (C.claimMode === 'label' && labels.filter(Boolean).length >= canvases.length * 0.5) {
     v.claim_mode = 'label';
     claim = claimByLabel(labels, pages);
   } else {
@@ -383,7 +490,18 @@ async function importVolume(db, vol) {
   v.canvases = canvases.length; v.text_sides = pages.length; v.claimed = claim.filter((x) => x != null).length;
   log(`v${vol} ${ig} ${file}: ${canvases.length} canvases, ${pages.length} text sides, ${v.claimed} claimed (${v.claim_mode})`);
 
-  const m = await measure(vol, canvases, pages, claim, ig);
+  // Segment mode verifies inside measureSegments; its result is folded into the volume measurement.
+  const m = segs ? (v.measurement = {
+    engine: v.segment_measurement.engine, at: v.segment_measurement.at, rules: ALIGN_RULES, claim_key: 'segment', ig, cost_usd: 0,
+    samples: segs.flatMap((s) => s.samples),
+    verdict: {
+      pass: segs.some((s) => s.pass),
+      scored: segs.filter((s) => s.pass).reduce((a, s) => a + s.verdict.scored, 0),
+      uninformative: segs.flatMap((s) => s.verdict.uninformative), weak: segs.flatMap((s) => s.verdict.weak),
+      reasons: segs.length ? segs.filter((s) => !s.pass).map((s) => `segment [${s.from}–${s.to}] offset ${s.offset}: ${s.verdict.reasons.join('; ')}`) : ['no read located with confidence'],
+      segments: segs.map((s) => ({ from: s.from, to: s.to, offset: s.offset, pass: s.pass })),
+    },
+  }) : await measure(vol, canvases, pages, claim, ig);
   log(`v${vol}: verdict ${m.verdict.pass ? 'PASS' : 'REFUSE'} (${m.verdict.scored} scored)${m.verdict.reasons.length ? ' — ' + m.verdict.reasons.join('; ') : ''} [$${m.cost_usd}]`);
   if (MEASURE_ONLY || !APPLY) { saveCkpt(); return v; }
 
@@ -465,7 +583,21 @@ async function importVolume(db, vol) {
   if (!['held', 'already_held'].includes(h.outcome)) throw new Error(`v${vol}: hold failed (${h.outcome}) — refusing to insert pages`);
 
   const pass = m.verdict.pass;
-  const alignment = pass ? {
+  // Segment mode: each page carries its own segment's measurement.
+  const segAlignment = (seg) => {
+    const al = seg.samples.filter((x) => x.class === 'aligned');
+    return {
+      method: 'canvas index + per-segment measured offset → esukhia side (a skipped or repeated leaf moves the offset), each segment verified by its own independent sampled reads',
+      measured_shift: 0, measured_offset: seg.offset, segment: { from_page: seg.from + 1, to_page: seg.to + 1, of: v.segment_measurement.segments.length },
+      samples: seg.verdict.scored, read_engine: m.engine,
+      min_identity: Math.min(...al.map((x) => x.score.identity)), max_control: Math.max(...al.map((x) => x.score.control)),
+      uninformative_reads: seg.verdict.uninformative.length, weak_reads: seg.verdict.weak.length,
+      rules: ALIGN_RULES, segment_rules: SEGMENT_RULES, measured_at: m.at,
+    };
+  };
+  const segAlignments = segs ? segs.map((sg) => (sg.pass ? segAlignment(sg) : null)) : null;
+  const alignmentFor = (i) => (segs ? segAlignments[segs.findIndex((sg) => sg.pass && i >= sg.from && i <= sg.to)] : alignment);
+  const alignment = segs ? null : pass ? {
     method: v.claim_mode === 'index'
       ? 'canvas index + measured offset → esukhia side (manifest has no folio labels), verified by independent sampled reads'
       : 'bdrc-canvas-label → esukhia folio marker, verified by sampled reads',
@@ -490,14 +622,14 @@ async function importVolume(db, vol) {
         path: `text/${file}`, folio: side.label, tohoku: side.tohoku, licence: LICENCE, conventions: CONVENTIONS, issue: ISSUE,
         ...(cov ? { texts: texts[k], texts_84000: Object.fromEntries(texts[k].map((t) => [t, status84000(t, cov.recs)])), left_to_84000: cov.left[k] } : {}),
       },
-      alignment, generated_at: now, updated_at: now,
+      alignment: alignmentFor(i), generated_at: now, updated_at: now,
     };
   };
 
   const existing = new Map((await pagesC.find({ book_id: book.id }, { projection: { page_number: 1, ocr: 1 } }).toArray()).map((p) => [p.page_number, p]));
   const toInsert = [];
   let textWritten = 0, textKeptHuman = 0;
-  const refused = { volume_refused: 0, no_label_match: 0, blank_side: 0 };
+  const refused = { volume_refused: 0, no_label_match: 0, blank_side: 0, ...(segs ? { segment_refused: 0 } : {}) };
   for (let i = 0; i < canvases.length; i++) {
     const c = canvases[i];
     const service = imageServiceOf(c);
@@ -505,7 +637,7 @@ async function importVolume(db, vol) {
     const ocr = ocrFor(i);
     if (!ocr) {
       if (!pass) refused.volume_refused++;
-      else if (claim[i] == null) refused.no_label_match++;
+      else if (claim[i] == null) refused[segs ? 'segment_refused' : 'no_label_match']++;
       else refused.blank_side++;
     }
     const ex = existing.get(i + 1);
