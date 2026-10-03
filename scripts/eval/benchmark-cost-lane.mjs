@@ -119,7 +119,7 @@ for (const c of classes) {
     invention_le_ref: inv(ENGINE) != null && inv(REF) != null && inv(ENGINE) <= inv(REF),
     loops_le_ref: loops(ENGINE) <= loops(REF),
   };
-  const better = untied >= MIN_N && p_sign != null && p_sign < 0.05 && wins > losses && bigWinShare >= 0.6;
+  const better = untied >= MIN_N && nGate >= MIN_N && p_sign != null && p_sign < 0.05 && wins > losses && bigWinShare >= 0.6;
   let verdict;
   if (nGate < MIN_N) verdict = `directional (n=${nGate}${CELLS ? ' library' : ''} < ${MIN_N}) — no lane decision`;
   else if (!checks.noise_floor_below_margin) verdict = 'engine noise exceeds the margin — no lane decision';
