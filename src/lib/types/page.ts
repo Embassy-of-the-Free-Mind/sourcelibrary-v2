@@ -2,6 +2,20 @@ import { PromptReference } from "./prompt";
 import { DeepZoomManifest } from "./book";
 import { getPageSource } from "@/lib/page-image-url";
 
+/**
+ * The page number printed on the leaf (#4291), as `pages.printed_page` stores it: fitted per
+ * book from the OCR's page numbers and running heads (scripts/lib/page-integrity.mjs,
+ * fitPrintedPages). Absent where the book's own sequence does not vouch for one.
+ */
+export interface PrintedPage {
+  /** "217", "xii", "12v", "12–13": a string, because folios and romans are not integers. */
+  label: string;
+  numbering?: 'arabic' | 'roman' | 'folio';
+  /** Printed numbers per scan: 1 paginated, 0.5 rectos only (leaves), 2 two pages per scan. */
+  rate?: number;
+  method?: 'read' | 'interpolated';
+}
+
 export interface Page {
   id: string;
   tenantId?: string;
@@ -36,6 +50,11 @@ export interface Page {
    * `scripts/lib/stale-translation.mjs`.
    */
   translation_withheld?: WithheldTranslation;
+  /**
+   * The page number printed on the leaf (#4291), fitted per book; absent where the book's
+   * own sequence does not vouch for one. Cite it with pageLocator (src/lib/citation.ts).
+   */
+  printed_page?: PrintedPage;
   summary?: SummaryData;
   modernized?: ModernizedData;  // Modernized text for reading dashboard
   transliteration?: TransliterationData;  // Romanized transliteration for non-Latin scripts
