@@ -81,19 +81,14 @@ const SHEET_DISMISS_PULL = 90;
 /** Width of the desktop tool rail, the first column of the desktop grid. */
 const DESKTOP_RAIL_W = 66;
 /** Width over height at which a scan counts as a wide leaf (palm-leaf, pothi,
- *  pecha) and the desktop panes stack instead of sitting side by side. Above
- *  an unsplit two-page spread (about 1.3 to 1.6), so an ordinary book keeps
- *  its columns (#5352). */
-const WIDE_LEAF_RATIO = 1.7;
-/** The same rule for a Tibetan book, whose pages are pecha. A photograph of
- *  two pecha leaves, one above the other, is about 1.5 (the British Library's
- *  EAP volumes are 3888×2592), under the ratio above, and in a column the
- *  leaves' long lines shrink to unreadable (#5746). A Tibetan book has no
- *  two-page spreads to protect, so its threshold can sit lower. */
-const PECHA_LEAF_RATIO = 1.4;
-function wideLeafMin(book: { language?: string | null } | null | undefined): number {
-  return (book?.language ?? '').trim().toLowerCase() === 'tibetan' ? PECHA_LEAF_RATIO : WIDE_LEAF_RATIO;
-}
+ *  pecha) and the desktop panes stack instead of sitting side by side (#5352).
+ *  Was 1.7, above an unsplit two-page spread (about 1.3 to 1.6), so ordinary
+ *  books kept their columns. Lowered to 1.4 (#5746): a photograph of two pecha
+ *  leaves, one above the other, is about 1.5 (the British Library's EAP
+ *  volumes are 3888×2592), and in a column the leaves' long lines wrapped four
+ *  or five times. Shape alone cannot tell that photo from a spread, and Derek
+ *  chose one shape rule over a per-language one: unsplit spreads now stack too. */
+const WIDE_LEAF_RATIO = 1.4;
 /** Most of the screen a stacked wide leaf may take before the text beneath it
  *  gets too short to read. */
 const WIDE_LEAF_MAX_H = '50dvh';
@@ -117,7 +112,7 @@ const SCAN_PANE_MAX_SHARE = 0.6;
  * start from. Once the reader mounts it takes the mark off and owns the
  * layout (see the mount effect beside `scanRatio`).
  */
-const WIDE_LEAF_PREPAINT_SCRIPT = `(function(){var w=window;if(w.__rv2Hydrated)return;var m=document.querySelector('main.rv2-panes');var img=m&&m.querySelector('section[data-scan-pane] img');if(!img)return;var min=parseFloat(m.getAttribute('data-wide-leaf-min'))||${WIDE_LEAF_RATIO};var t=Date.now();function mark(){if(w.__rv2Hydrated)return true;var a=img.naturalWidth,b=img.naturalHeight;if(!a||!b)return false;var r=a/b;w.__rv2LeafRatio=r;if(r>=min){var e=document.documentElement;e.style.setProperty('--rv2-leaf-ratio',String(r));e.setAttribute('data-rv2-wide-leaf','');}return true;}function poll(){if(mark())return;if(Date.now()-t<15000)requestAnimationFrame(poll);}img.addEventListener('load',mark,{once:true});poll();})();`;
+const WIDE_LEAF_PREPAINT_SCRIPT = `(function(){var w=window;if(w.__rv2Hydrated)return;var img=document.querySelector('main.rv2-panes section[data-scan-pane] img');if(!img)return;var t=Date.now();function mark(){if(w.__rv2Hydrated)return true;var a=img.naturalWidth,b=img.naturalHeight;if(!a||!b)return false;var r=a/b;w.__rv2LeafRatio=r;if(r>=${WIDE_LEAF_RATIO}){var e=document.documentElement;e.style.setProperty('--rv2-leaf-ratio',String(r));e.setAttribute('data-rv2-wide-leaf','');}return true;}function poll(){if(mark())return;if(Date.now()-t<15000)requestAnimationFrame(poll);}img.addEventListener('load',mark,{once:true});poll();})();`;
 /** Drawer header tint — a shade deeper than the panel, so content passes under it. */
 const PANEL_HEADER_BG = 'color-mix(in srgb, var(--bg-warm) 92%, var(--bg-dark) 5%)';
 /** Mobile sheets that always take the full height — lists and conversations. */
@@ -3301,8 +3296,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   // running: see WIDE_LEAF_PREPAINT_SCRIPT. The ratio is left off until the
   // reader has one of its own, so the script's value on <html> shows through.
   const textPaneCount = (r.views.ocr ? 1 : 0) + (r.views.translit && translitEligible ? 1 : 0) + (r.views.en ? 1 : 0);
-  const leafMin = wideLeafMin(r.book);
-  const stackWideLeaf = r.views.scan && textPaneCount > 0 && scanRatio >= leafMin;
+  const stackWideLeaf = r.views.scan && textPaneCount > 0 && scanRatio >= WIDE_LEAF_RATIO;
   const panesStyle = {
     '--rv2-text-panes': String(textPaneCount),
     '--rv2-leaf-max-h': WIDE_LEAF_MAX_H,
@@ -3667,7 +3661,6 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           data-reader-panels-container
           ref={panesRef}
           data-wide-leaf={stackWideLeaf ? '' : undefined}
-          data-wide-leaf-min={leafMin}
           className="rv2-panes relative flex min-h-0"
           style={panesStyle}
           onTouchStart={onTouchStart}
