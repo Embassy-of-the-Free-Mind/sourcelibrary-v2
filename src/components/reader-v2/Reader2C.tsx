@@ -85,6 +85,15 @@ const DESKTOP_RAIL_W = 66;
  *  an unsplit two-page spread (about 1.3 to 1.6), so an ordinary book keeps
  *  its columns (#5352). */
 const WIDE_LEAF_RATIO = 1.7;
+/** The same rule for a Tibetan book, whose pages are pecha. A photograph of
+ *  two pecha leaves, one above the other, is about 1.5 (the British Library's
+ *  EAP volumes are 3888×2592), under the ratio above, and in a column the
+ *  leaves' long lines shrink to unreadable (#5746). A Tibetan book has no
+ *  two-page spreads to protect, so its threshold can sit lower. */
+const PECHA_LEAF_RATIO = 1.4;
+function wideLeafMin(book: { language?: string | null } | null | undefined): number {
+  return (book?.language ?? '').trim().toLowerCase() === 'tibetan' ? PECHA_LEAF_RATIO : WIDE_LEAF_RATIO;
+}
 /** Most of the screen a stacked wide leaf may take before the text beneath it
  *  gets too short to read. */
 const WIDE_LEAF_MAX_H = '50dvh';
@@ -108,7 +117,7 @@ const SCAN_PANE_MAX_SHARE = 0.6;
  * start from. Once the reader mounts it takes the mark off and owns the
  * layout (see the mount effect beside `scanRatio`).
  */
-const WIDE_LEAF_PREPAINT_SCRIPT = `(function(){var w=window;if(w.__rv2Hydrated)return;var img=document.querySelector('main.rv2-panes section[data-scan-pane] img');if(!img)return;var t=Date.now();function mark(){if(w.__rv2Hydrated)return true;var a=img.naturalWidth,b=img.naturalHeight;if(!a||!b)return false;var r=a/b;w.__rv2LeafRatio=r;if(r>=${WIDE_LEAF_RATIO}){var e=document.documentElement;e.style.setProperty('--rv2-leaf-ratio',String(r));e.setAttribute('data-rv2-wide-leaf','');}return true;}function poll(){if(mark())return;if(Date.now()-t<15000)requestAnimationFrame(poll);}img.addEventListener('load',mark,{once:true});poll();})();`;
+const WIDE_LEAF_PREPAINT_SCRIPT = `(function(){var w=window;if(w.__rv2Hydrated)return;var m=document.querySelector('main.rv2-panes');var img=m&&m.querySelector('section[data-scan-pane] img');if(!img)return;var min=parseFloat(m.getAttribute('data-wide-leaf-min'))||${WIDE_LEAF_RATIO};var t=Date.now();function mark(){if(w.__rv2Hydrated)return true;var a=img.naturalWidth,b=img.naturalHeight;if(!a||!b)return false;var r=a/b;w.__rv2LeafRatio=r;if(r>=min){var e=document.documentElement;e.style.setProperty('--rv2-leaf-ratio',String(r));e.setAttribute('data-rv2-wide-leaf','');}return true;}function poll(){if(mark())return;if(Date.now()-t<15000)requestAnimationFrame(poll);}img.addEventListener('load',mark,{once:true});poll();})();`;
 /** Drawer header tint — a shade deeper than the panel, so content passes under it. */
 const PANEL_HEADER_BG = 'color-mix(in srgb, var(--bg-warm) 92%, var(--bg-dark) 5%)';
 /** Mobile sheets that always take the full height — lists and conversations. */
@@ -1130,21 +1139,36 @@ function TranslitProgress({ ocrLength }: { ocrLength: number }) {
  * Suppressed when a paired critical edition is showing, because that surface
  * already carries its own, more specific version of the same warning and two
  * stacked disclaimers read as boilerplate.
+ *
+ * A page read by the specialist engine gets the quieter `caution` form: the
+ * text is good but unchecked, which is worth saying without the alarm (#5746).
  */
 function UnreliableTranscriptionNotice({
   book,
   page,
   paired,
 }: {
-  book: { language?: string | null };
+  book: { language?: string | null; title?: string | null };
   page: Pick<Page, 'ocr'>;
   paired: boolean;
 }) {
-  const flag = transcriptionReliability(book);
+  const flag = transcriptionReliability(book, page);
   // The flag is about OUR OCR of the script. A page whose text is an open
   // e-text fitted to the scan (#5571) was not read by it, and saying it was
   // contradicts the source line directly above.
   if (!flag || paired || pageTextSource(page)) return null;
+  if (flag.level === 'caution') {
+    return (
+      <aside
+        className="mb-5 pl-2.5 border-l-2 text-[12.5px] leading-snug"
+        style={{ color: 'var(--text-secondary, #6b6560)', borderColor: 'rgba(158,74,58,0.45)' }}
+        data-transcription-caution
+      >
+        <p className="m-0">{flag.message}</p>
+        <p className="m-0 mt-1 text-[11.5px]">{flag.evidence}</p>
+      </aside>
+    );
+  }
   return (
     <aside
       className="mb-5 rounded-md px-4 py-3 text-[13.5px] leading-snug"
@@ -3277,7 +3301,8 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   // running: see WIDE_LEAF_PREPAINT_SCRIPT. The ratio is left off until the
   // reader has one of its own, so the script's value on <html> shows through.
   const textPaneCount = (r.views.ocr ? 1 : 0) + (r.views.translit && translitEligible ? 1 : 0) + (r.views.en ? 1 : 0);
-  const stackWideLeaf = r.views.scan && textPaneCount > 0 && scanRatio >= WIDE_LEAF_RATIO;
+  const leafMin = wideLeafMin(r.book);
+  const stackWideLeaf = r.views.scan && textPaneCount > 0 && scanRatio >= leafMin;
   const panesStyle = {
     '--rv2-text-panes': String(textPaneCount),
     '--rv2-leaf-max-h': WIDE_LEAF_MAX_H,
@@ -3642,6 +3667,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           data-reader-panels-container
           ref={panesRef}
           data-wide-leaf={stackWideLeaf ? '' : undefined}
+          data-wide-leaf-min={leafMin}
           className="rv2-panes relative flex min-h-0"
           style={panesStyle}
           onTouchStart={onTouchStart}
