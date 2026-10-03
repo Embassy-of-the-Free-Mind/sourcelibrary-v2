@@ -1,0 +1,1083 @@
+
+
+######## ITEM 1/15  id=ebcf472fff  language=Latin
+
+==== PREVIOUS PAGE SOURCE (end; context only) ====
+…ibus) solennissima, huius Deo gratissimæ oblationis, nec sine maximis sæpenumero miraculis, florebat deuotio: hodie proh dolor sues excubare cernas. O plusquam Neronianam tyrannidem. Ubi est tandem timor Dei? ubi mortis memoria? ubi gehennæ metus? O tempora inquam, ô mores, sed ô vitæ umbras, et ô execranda mortis exempla. Euangelij obedientiam iactitant: et Christum è memoria hominum deletum iri student. Iuge sacrificium aboleri parant, et se in omnem euentum truculentum Antichristi regnum propagare negant. Quale cum nemo non luce meridiana
+
+<vocab>atheis, prophanetur, sacrilegia, Christifidelium, Turca, Euangelistam, negociationis, Neronianam tyrannidem, gehennæ, Antichristi regnum</vocab>
+
+==== SOURCE (this page) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<meta>
+catchword: trum
+</meta>
+<warning>Bleed-through from reverse page visible at bottom left.</warning>
+
+diana clarius deprehendat: ita vel ex eo manifestissimum
+dubitauerit esse nemo. Quod praeter infinita alias in
+immaculatam sponsam Christi ecclesiam, peruicatiae suae
+facinora (contra euidentissimum Dei praeceptum) ipsam
+causam quoad esse sacramentale, sine qua non (hoc est
+sacri ordinis authoritatem) despicientes: tremendum
+coenae Dominicae mysterium. Andabatarum more lip-
+pis et tonsoribus profanandum proponunt. Ita nimi-
+rum ut dum utramque Synaxeos speciem vulgo ambiti-
+ose iactitent: eo penitius neutra se gaudere posse pro-
+bent. Non obstante siquidem quod extra ecclesiam
+Catholicam, nulla usquam virtutem, sortiri possint Sa-
+cramenta: à Laicis tamen ne in ipsa quidem Ecclesia,
+eucharistiae sacramentum quoque modo confici posse
+constat. At quuum talibus humanitus impune licet quod
+possunt: rogemus saltem Dominum, nenon coelitus ab
+eo quod vel maxime optant prohibeantur. Quinpo-
+tius perinde incauti, in altissima spiritus sancti consilia,
+uesana quadam tumescentes superbia, Abraham euan-
+gelicum monentem, et ad Moysen atque audiendos in
+ecclesia Dei prophetas remittentem despiciunt. Sic al-
+quando (vtinam non tardius quam sperant, saperent)
+recordari possent illius iam olim per Christum latae
+sententiae: utpote ex quo ecclesiam Dei uiui, quae est
+columna veritatis non audirent: essent tanquam ethni-
+ci et publicani. Nos nihilominus interim, memores so-
+lius iustitiae Diuinae (quae dicit, mihi vindicta et ego re-
+tribuam) non neglectis probatissimis sanctorum pa-
+
+<vocab>Andabatarum, Synaxeos, sacramentale, eucharistiae, uesana, vtinam</vocab>
+
+==== NEXT PAGE SOURCE (start; context only) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<meta>catchword: regnum</meta>
+<vocab>Oratio, Ambrosius, Missa, Eucharistia, Sacerdos</vocab>
+
+trum exemplis, euidentissimis sacrae scripturae testimonijs suffulti : pergamus cum omni humilitate, cum maiore modestia, et maxima qua possumus cum deuotione, tantundem perpetuo, huic salutifero et ter maximo Dei Optimi Maximi dono tribuere : Quantum ipsemet vitae et mortis Dominus, omnibus corporis et sanguinis sui participibus promisit dicens. Qui manducat carnem meam, et bibit meum sanguinem, in me manet et ego in eo. In quo nos cum omnibus electis suis, et manere, et meritorum pass…
+
+==== TRANSLATION (this page) ====
+one may perceive it more clearly, so that it is most manifest even from this, that no one could doubt it. Beyond the infinite other crimes committed against the immaculate spouse of Christ, the Church, by the stubbornness of their own malice (contrary to the most evident commandment of God), they despise the very cause regarding its sacramental essence, without which it cannot be—that is, the authority of the sacred order—and they propose to profane the awesome mystery of the Lord's Supper like blindfolded gladiators <note>original: "andabatarum"</note> for the eyes of the dim-sighted and barbers. Truly, they boast ambitiously of the two kinds of Communion <note>original: "synaxeos"</note> to the common people, yet in doing so, they demonstrate more deeply that they can enjoy neither. For despite the fact that outside the Catholic Church no sacraments can possess any virtue, it is nonetheless established that even within the Church itself, the sacrament of the Eucharist cannot be confected by laymen. But since such things are allowed to them without human punishment, let us at least ask the Lord that they might be prohibited from above from what they most desire. Rather, being equally imprudent, they swell with a certain insane pride against the highest counsels of the Holy Spirit, despising the evangelical Abraham who warns us and sends us to Moses and the prophets to be heard in the Church of God. If only they could remember (would that they might come to their senses, not later than they hope) the sentence once passed by Christ: that because they did not hear the Church of the living God, which is the pillar of truth, they would be as heathens and publicans. We, meanwhile, mindful only of Divine Justice (which says, "Vengeance is mine, and I will repay"), and not neglecting the most approved examples of the holy fathers
+
+
+######## ITEM 2/15  id=0a04b557ff  language=Latin
+
+==== PREVIOUS PAGE SOURCE (end; context only) ====
+… finem seculi Quarti clarus, qui Homilia 59. in capite XVII. Matthaeum pagina mihi 629. Tomo I. operum Editione novae Francofurti Anno 1697. ubi ita fatur: *Nihil est Demoni tam amicum quam ebrietas, quae est fons, mater atque origo omnium vitiorum.* Nec aliter Sanctus Augustinus loco citato nempè in Sermone de sobrietate et cetera pagina 1003. Tomo IX. operum loquitur: *Ebrietas, inquit, est flagitiorum omnium mater, culparumque materia, radix criminum, origo vitiorum, turbatio capitis, subversio sen-*
+
+<vocab>Ebrietas, sobrietates, delicta, Alexander ab Ales, Andreas Tiraquellus, Sebastianus Medices, Sanctus Basilius, Johannes Chrysostomus, Sanctus Augustinus, Digestum, Jure divino</vocab>
+
+==== SOURCE (this page) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<sig>B 3</sig>
+<meta>catchword: §. VIII.</meta>
+<vocab>ebrietas, Seneca, Ovidius, Plautus, Propertius, Horatius Flaccus, Plinius, Plato, Isocrates, Johannes Azorius, Hieronymus Treutlerus</vocab>
+
+sensuum, tempestas linguae, procella corporis, naufragium castitatis, amissio temporis, insania voluntaria, ignominiosus languor, turpitudo morum, dedecus vitae, honestatis infamia, animae corruptela. H. J. Quin quod Ethnicis Scriptoribus horrendum fuerit vitium ebrietas, utpote quae omne aliud vitium incendit atque detegit, asserente Seneca Epistola 83. Haud aliud testimonium de ebrietate perhibet Ovidius Libro I. Amorum Elegia VI. ubi ita capit.
+
+> ->Nox et amor vinumque nihil moderabile suadent,<-
+> ->Ista pudore vacat, Liber amorque metu.<-
+
+Cui jungi meretur Plautus in Pseudolo Actu V. versus 1263. Propertius Libro 2. Elegia penultima ad Cynthiam. Quintus Horatius Flaccus, Libro 2. Sermonum Satyra 2. et alii. Praecipuè verò incommoda atque turpitudinem hujus vitii adumbravit Plinius Libro 14. Historiae Naturalis capite 22. pagina mea 656. Hinc pallor, ait, et genae pendulae, oculorum ulcera, tremula manus effundentes plena vasa, furiales somni et inquies nocturna, premiumque summum ebrietatis libido ac jucundum nefas. Postera die ex ore halitus cadi, ac ferè rerum omnium oblivio, morsque memoriae. H. J. Unde et Plato monuit in Minoë seu Dialogo de Lege pagina mea 568. Dicit. μὴ συμπίνειν ἀλλήλοις εἰς μέθην, id est ne potetis ad ebrietatem. Et Isocrates in Paraenesi ad Demonicum: ἄν ᾗ ποτέ σοι συμπέσῃ καιρὸς, ἐξανίστασο πρὸ μέθης. hoc est aut si forte incidas in convivium, surge antequam ebrius fias. Quodsi ergò ebrii per tam foedum atque execrandum vitium delinquunt, cujus sobrii contra haud accusari possunt, graviùs quoque illorum delicta punienda erunt. Ebrietatis enim vitium delictum aggravare pluribus docent Johannes Azorius Parte 2. Institutionum Moralium Libro 2. capite 13. et 14. Hieronymus Treutlerus Jurisconsultus in Disputationibus selectis Parte I. Disputatione 6. Thesi 5. et alii.
+
+==== NEXT PAGE SOURCE (start; context only) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>mixed</script>
+<page-type>text</page-type>
+<warning>Handwritten margin notes</warning>
+<meta>catchword: Apud</meta>
+
+### §. VIII.
+
+<margin>
+ach: 1
+2
+3
+4
+</margin>
+
+Ulteriùs, ille ſine dubio graviùs puniendus erit, qui dupliciter delinquit, quàm qui ſimplex quoddam peccatum committit. Ita verbi gratia ſeveriori pœnâ excipiendus videtur Latro quam Fur, dupliciter enim iſte peccavit, et per ipſam cædem et per conſequens furtum, adeoque etiam duplici pœnâ dignus, multoque acriùs fure caſtigandus erit, utpote qui cæde immunis, ſimplicis tantùm furti reus invenitur. Eôdem modô vel ipſum adulterium gravius ſcortatione vindicatur, …
+
+==== TRANSLATION (this page) ====
+of the senses, a tempest of the tongue, a storm of the body, a shipwreck of chastity, a loss of time, a voluntary insanity, a shameful weakness, a baseness of character, a disgrace of life, an infamy of honor, a corruption of the soul. Thus, the vice of drunkenness was considered horrible by pagan writers, as it inflames and exposes every other vice, as Seneca asserts in Epistle 83. Ovid offers no different testimony concerning drunkenness in Book 1 of the <term>Amores</term> <gloss>Loves</gloss>, Elegy 6, where he says:
+
+> Night, love, and wine persuade one to nothing moderate,
+> This one is free from shame, Bacchus and love from fear.
+
+To this is worthily joined Plautus in <term>Pseudolus</term>, Act V, line 1263. Propertius in Book 2, the penultimate Elegy to Cynthia. Quintus Horatius Flaccus, in Book 2 of his <term>Satires</term>, Satire 2, and others. But Pliny, in particular, has outlined the inconveniences and foulness of this vice in Book 14 of his <term>Natural History</term>, chapter 22, page 656 of my edition: Hence, he says, come pallor and drooping cheeks, ulcers of the eyes, trembling hands spilling full vessels, furial dreams and nightly restlessness, and the highest prize of drunkenness, lust and pleasant sin. On the following day, breath from the mouth smells of the cask, and there is almost a total oblivion of all things, a death of memory. Hence also Plato warned in the <term>Minos</term>, or Dialogue on Law, page 568. He says: <term>μὴ συμπίνειν ἀλλήλοις εἰς μέθην</term> <gloss>do not drink with one another to the point of drunkenness</gloss>. And Isocrates in his <term>Paraenesis</term> <gloss>Exhortation</gloss> to Demonicus: <term>ἄν ᾗ ποτέ σοι συμπέσῃ καιρὸς, ἐξανίστασο πρὸ μέθης</term> <gloss>if it ever happens that you fall into a drinking party, rise before you become drunk</gloss>. If, therefore, drunkards commit offenses through such a foul and detestable vice, for which sober people cannot be accused, their crimes must also be punished more severely. That the vice of drunkenness aggravates a crime is taught by many: Johannes Azorius in Part 2 of his <term>Moral Institutions</term>, Book 2, chapters 13 and 14. Hieronymus Treutlerus, the jurist, in his <term>Selected Disputations</term>, Part I, Disputation 6, Thesis 5, and others.
+
+
+######## ITEM 3/15  id=4ba97638ff  language=Latin
+
+==== PREVIOUS PAGE SOURCE (end; context only) ====
+…elissimum atque augustissimum testimonium contineret, ac traderet hominum memoriæ sempiternæ.
+
+---
+
+<image-desc size="medium" type="decorative" significance="low">A horizontal ornamental divider composed of repeating floral typographic motifs.</image-desc>
+
+## Singularum partium intellectus.
+
+<margin>Roma.</margin>
+**T**ERRARUM ROMA MAGISTRA. Nihil apud omnes tàm tritum, tàmque vulgatum est, quàm Romam mundi caput ac dominam appellari. Zeno Imperator, *in l. 3. C. de Consulibus, et cetera de Roma loquens, Gloriosissimæ, inquit, huic urbi, quæ caput orbis terrarum est, omnifariam*
+
+<vocab>Heraclius, Monothelitarum, Anglia, Gallia, Diuo Stephano, Trophimi Apostoli, Zeno Imperator, Roma</vocab>
+
+==== SOURCE (this page) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>11</page-num>
+
+credimus consulendum. Iustinianus etiam Imperator in epistola quam de conceptione Digestorum ad Tribonianum scripsit, quaeque eadem lex prima est, C. de veteri iure enucleando. Saluii Iuliani scripturam commendat, quae iudicat omnes ciuitates debere consuetudinem Romae sequi, quae caput est orbis terrarum. Athalaricus quoque Rex apud Cassiodorum, lib. 9. epist. 17. ad Saluantium Romam mundi caput appellat. Plinius nat. hist. lib. 3. cap. 5. statim initio Romam terrarum caput nuncupat. Et Poëta veritus non est Romanos rerum dominos appellare.
+
+Magnificum sane fatidici illius Fauni vaticinium, ad Latinum Regem de nuptiis Lauiniae filiae suae impensius sollicitum a me praeteriri non debet, quod nobilissimis Versibus descriptum a Virgilio est, 7. Aeneid. de futura Romanorum Principum, qui a Troianis olim originem ducerent in cunctos populos potestate atque imperio, his verbis.
+
+<margin><unclear>nota</unclear></margin>
+> *Externi ueniunt generi, qui sanguine nostrum*
+> *Nomen in astra ferant, quorumque a stirpe nepotes*
+> *Omnia sub pedibus, qua Sol utrumque recurrens*
+> *Aspicit Oceanum, vertique regique videbunt.*
+
+GEMINA DE LUCE. Primò, propter legum originem, & Pontificatus praeeminentiam: quia, *ut legum originem anterior Roma sortita est, ita & summi Pontificatus apicem apud eam esse nemo est qui dubitet, ait Iustinianus Imperator in Auth. coll. 2. tit. 4. Ut Ecclesia Romana, &c. statim initio.*
+
+Secundò. Propter additum decus Christianae religionis Imperio Romanorum.
+
+Tertiò. Propter claritatem Solis & Lunae. Solis quidem, quia CHRISTUS caput Ecclesiae se lucem mundi
+
+<vocab>Iustinianus, Tribonianum, Digestorum, Roma caput orbis, Athalaricus, Cassiodorus, Plinius, Faunus, Lauinia, Virgilius, Aeneid, Pontificatus, Christus</vocab>
+
+==== NEXT PAGE SOURCE (start; context only) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>mixed</script>
+<page-type>text</page-type>
+<page-num>12</page-num>
+<meta>catchword: cum</meta>
+<warning>Handwritten marginal notes in a cursive hand</warning>
+
+esse testatus est, de quo Ioann. 1. *Erat lux vera que illuminat omnem hominem venientem in hunc mundum: Et lumen missum ad reuelationem gentium.* Solem sanè Pierius Valerianus Christi hieroglyphicum esse testatur, lib. 44. cap. 5.
+<margin>
+Sol.
+Christus.
+</margin>
+cui titulus *Christus*. Christus autem Romae per Vicarium suum summum Pontificem facilè intelligitur quasi domicilium collocasse. Lunae verò, quia fidelium vniuersitatis seu Ecclesiae symbolum est, vt refe…
+
+==== TRANSLATION (this page) ====
+we believe it must be provided for." The Emperor Justinian also, in the letter which he wrote to Tribonianus regarding the conception of the Digest—which is also the same first law, *C. de veteri iure enucleando*—commends the writing of Salvius Julianus, which judges that all cities ought to follow the custom of Rome, which is the head of the world. Athalaricus the King, also, in Cassiodorus, Book 9, Epistle 17, addressed to Salvantius, calls Rome the head of the world. Pliny, *Natural History*, Book 3, Chapter 5, immediately at the beginning calls Rome the head of the lands. And the Poet <note>Virgil</note> did not fear to call the Romans the masters of things.
+
+The prophecy of that prophetic Faunus, regarding the Latin King who was most intensely anxious about the marriage of his daughter Lavinia, must certainly not be passed over by me, as it is described in the most noble verses by Virgil, *Aeneid* 7, concerning the future Roman leaders—who would one day trace their origin from the Trojans—in their power and empire over all peoples, in these words:
+
+<margin><unclear>note</unclear></margin>
+> *Foreigners come, who by their blood shall raise*
+> *Our name to the stars, and whose descendants from their stock*
+> *Shall see all things beneath their feet, wherever the Sun, in its recurring course,*
+> *Looks upon either Ocean, and shall be turned and ruled.*
+
+ON THE DUAL LIGHT. First, because of the origin of laws and the preeminence of the Pontificate: because, as the Emperor Justinian says in *Authentica*, Coll. 2, Tit. 4, *Ut Ecclesia Romana, &c.*, immediately at the beginning: "Just as Rome obtained the priority in the origin of laws, so too there is no one who doubts that the summit of the Supreme Pontificate is with her."
+
+Second. Because of the added honor of the Christian religion to the Roman Empire.
+
+Third. Because of the brightness of the Sun and the Moon. Of the Sun, indeed, because CHRIST, the head of the Church, testified that He is the light of the world, concerning which John 1: *He was the true light which enlightens every man coming into this world: And the light was sent for the revelation of the gentiles.* Indeed, Pierius Valerianus testifies that the Sun is a hieroglyph of Christ, Book 44, Chapter 5,
+
+
+######## ITEM 4/15  id=f132e369ff  language=Arabic
+
+==== PREVIOUS PAGE SOURCE (end; context only) ====
+…لبطاح والتركي والمقام والمشعر الحرام ومتى اجبل غضام والحج والحرام ه واذ قال ابراهيم رب اجعل هذا البلد امنا واجنب وبني ان نعبد الاصنام ه رب انهن اضللن كثيرا من الناس فمن تبعني فانه مني ومن عصاني فانك غفور رحيم ه الله اكبر ما ارتفع الضجيج وناض الحجيج وجرا بالحيج تميج ويتموا الحج والعمرة لله فان احصرتم فما استيسر من الهدي ولا تحلقوا رؤسكم حتى يبلغ الهدي محله فمن كان منكم مريضا او به اذى من راسه ففدية من صيام او صدقة او نسك فاذا امنتم فمن تمتع بالعمرة الى الحج فما استيسر من الهدي فمن لم يجد فصيام ثلثة ايام في الحج وسبعة اذا رجعتم تلك عشرة كاملة ذلك لمن لم يكن اهله حاضر المسجد الحرام
+
+<margin>و في الحج</margin>
+
+<vocab>الحج, العمرة, الله اكبر, ابراهيم, المسجد الحرام, الهدي, الصيام, الصدقة</vocab>
+
+==== SOURCE (this page) ====
+<split-position>500</split-position>
+<scan-quality>good</scan-quality>
+<language>ar</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<page-num>13</page-num>
+<warning>Handwritten Arabic (Jawi/Malay-style Naskh)</warning>
+
+وعلى آله وصحبه الكرام وسلم تسليما كثيرا أيها الناس اتقوا الله فاحضروا إليه رحمكم الله وصلاتكم في قاره وسكينة واجعل لهيئة وزينة واحمدوا ربكم في هذا اليوم العظيم وضمو بذكر وجوهكم من صلاتكم وكبروا الله على ما هداكم وتقربوا إلى الله تعالى في هذا اليوم عظيم بذبائحكم وعظموا شائر الله ربكم وجعلوا هاني أطيب خائركم واستغفروا تقوى في طمايركم فليس بنيل الله من الاعمل الأمد كان خالصاه فإنه يتول سبحانه وتعالى لن ينال الله لحومها ولا دماؤها ولكن بنا له التقوى منكم كذلك سخرها لكم لتكبر الله على ما مدكم وبشر المحسنين وجعلنا الله وإياكم ممن امتلاء قلبه وحلاه ولم يرض بالدنيا عن الآخرة بدلا
+
+<vocab>اتقوا, الله, صلاة, يوم عظيم, تقوى, محسن</vocab>
+
+<page-break/>
+
+<scan-quality>good</scan-quality>
+<language>ar</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<warning>Handwritten Arabic (Jawi/Malay-style Naskh)</warning>
+
+أعوذ بالله من الشيطان الرجيم ويوم تسير الجبال وتر الأرض بارزة وحشرناهم فلم نغادر أحدا وعرضوا على ربك صفا لقد جئتمونا كما خلقناكم أول مرة بل زعمتم ألم نجعل لكم موعداه بارك الله لي ولكم بالقرآن العظيم إنه جواد كريم ملك بر رؤوف رحيم قول لنكوه ما يمسوره اخلص سرت طماينه الله اكبر الله اكبر الله اكبر الله اكبر الله اكبر الحمد لله حمد كما أمره أشهد أن لا إله إلا الله وحده لا شريك له إرغاما لمن جحد وكفر وأشهد أن محمد عبده ورسوله سيد البشر صلى الله عليه وسلم ما اتصلت عين بنصر وأذن بخبر أيها الناس أوصيكم عباد الله وإياي بتقوى الله فإن الله مع الذين اتقوا والذين هم محسنون واعلموا
+
+<vocab>أعوذ بالله, الشيطان الرجيم, يوم القيامة, القرآن العظيم, الله اكبر, شهادة, تقوى, محسنون</vocab>
+
+==== NEXT PAGE SOURCE (start; context only) ====
+<split-position>500</split-position>
+
+<scan-quality>good</scan-quality>
+<language>ar</language>
+<script>handwritten</script>
+<page-type>text</page-type>
+<warning>Handwritten Arabic (Jawi/Naskh style)</warning>
+
+إِنَّ اللَّهَ تَعَالَى أَمَرَكُمْ أَمْرًا عَمِيمًا بَدَأَ بِنَفْسِهِ
+عَظِيمًا إِنَّ اللَّهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ
+يَا أَيُّهَا الَّذِينَ آمَنُوا صَلُّوا عَلَيْهِ وَسَلِّمُوا تَسْلِيمًا
+فَأَجِيبُوا اللَّهَ عِبَادَ اللَّهِ إِلَى مَا دَعَاكُمْ وَصَلُّوا عَلَى
+مَنْ بِهِ اللَّهُ هَدَاكُمْ اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى
+آلِ مُحَمَّدٍ إِمَامِ الْأَبْرَارِ وَشِمَامِ الْكُفَّارِ وَشَفِيعِ الْأُمَّةِ
+إِلَى الْعَزِيزِ الْجَبَّارِ وَعَلَى الْبَرَرَةِ الْأَخْيَارِ ا…
+
+==== TRANSLATION (this page) ====
+And upon his family and his noble companions, and grant them abundant peace. O people, fear God, and approach Him, may God have mercy on you. Perform your prayer with calmness and tranquility, and adorn yourselves with dignity. Praise your Lord on this great day, and occupy yourselves with His remembrance in the early parts of your prayer. Magnify God for what He has guided you to, and draw near to God the Almighty on this great day with your sacrificial animals. Honor the rites of God, your Lord, and choose the best of your offerings. Seek forgiveness, for piety is in your hidden hearts. The attainment of God does not come from deeds unless they are sincere. For He, Glory be to Him, says: "Their meat will not reach God, nor will their blood, but what reaches Him is piety from you." Thus He has subjected them to you that you may glorify God for that to which He has guided you; and give good tidings to the doers of good. May God make us and you among those whose hearts are filled with His love, and who do not accept the world as a substitute for the Hereafter.
+
+I seek refuge in God from Satan, the accursed. "And the day We will remove the mountains and you will see the earth prominent, and We will gather them and not leave behind, from among them, anyone. And they will be presented to your Lord in rows, 'You have certainly come to Us just as We created you the first time. But you claimed that We would never make for you an appointment.'" May God bless me and you with the Great Qur'an. Indeed, He is the Generous, the Kind, the King, the Righteous, the Compassionate, the Merciful. Say what you wish in secret, for He knows the secrets of the hearts. God is Most Great, God is Most Great, God is Most Great, God is Most Great, God is Most Great. Praise be to God, a praise as He commanded. I bear witness that there is no god but God, alone with no partner, a compulsion to those who deny and disbelieve. And I bear witness that Muhammad is His servant and messenger, the master of mankind. May God bless him and grant him peace as long as an eye sees and an ear hears. O people, I advise you, servants of God, and myself, to fear God, for God is with those who fear Him and those who are doers of good. And know
+
+
+######## ITEM 5/15  id=d7cb33b9ff  language=Latin
+
+==== PREVIOUS PAGE SOURCE (end; context only) ====
+…ένας, vocat, à Deo: nullum est dubium: cum
+Magistratus earum, qui inter cives præcipui sunt, esse à Deo, sa-
+cræ litteræ testentur. Rom. 13, 1. Petr. 2, 13. Jud. 2, 14. Christusque &
+Apostoli Imperatoribus & Regibus, qui tum nulli erant, nisi infi-
+deles, tanquam divinitus ad tantam dignitatem evectis, obœdien-
+tiam & honorem præstare jubeant. Matth. 22. v. 21. Rom. 13, 4. 1.
+Petr. 2, 13. Ac quemadmodum bona cætera fortunæ, corporis &
+ingenij concessa Ethnicis non desinunt esse dona Dei; ita quoque
+
+<vocab>Timones, Philosophos, Pythagoras, Aelianus, Cicero, Plato, Republica, Relligio, Aristoteles, Politiae, Ethnicorum, Magistratus, Christus, Apostoli, Imperatoribus, Regibus, Monachi</vocab>
+
+==== SOURCE (this page) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<meta>catchword: Non</meta>
+<vocab>Politia, status innocentiae, Parerga, Augustinus, Lutherus, Gerardus, Verbum Dei, Scaliger</vocab>
+
+de bona & legitima Politia Ethnicorum judicandum. Est & inter divinae providentiae opera, Ecclesiae & gentilibus extra Ecclesiam communia, Politiarum distributio & constitutio. Gerardus tomo 6. locorum Theologicorum tractatu de magistratu Politico, parte priore capitulo 3. numero 79.
+
+->V.<-
+
+### *Fuisset nè in statu innocentiae futura Politica Gubernatio?*
+
+Augustinus negativè respondet, libro 19. de Civitate Dei capitulo 15. ut & beatus Lutherus in capitulo 2. Geneseos. Nec enim talis despotica dominatio & servilis subjectio cum repugnantia voluntatis & cum molestia conjuncta, qualis nunc est, in statu innocentiae locum habuisset. Futurum tamen fuisse regimen patrium cum animo consulendi & diligendi, & subjectionem filialem, vero est simile. Dominus Gerardus, dicto tractatu numero 26.
+
+->VI.<-
+
+### *Suntnè Reges magis Politici quàm subditi habendi?*
+
+Et qui imperant & qui parent dicendi sunt Politici: siquidem utrique ad constitutionem Politiae requiruntur. Sed illi sunt Politici κατ' ἐξοχήν, hi minus principaliter.
+
+---
+
+# Parerga
+
+->I.<-
+
+Unicum Theologiae principium est Verbum Dei, in scripturae sacrae monumentis, hoc est Veteris & Novi Testamenti libris indubitatò Propheticis & Apostolicis, hodie propositum.
+
+->II.<-
+
+Scripturam sacram legere & cognoscere ad quosvis spectat.
+
+->III.<-
+
+Grammatica etiam ad Logicam coarctatur. Scaliger exercitatione 1. sectione 3.
+
+<meta>catchword: Non</meta>
+
+==== NEXT PAGE SOURCE (start; context only) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<vocab>Logicus, Philosophus, Logica, speculativa, Cicero, Rhetor, Metaphysica, Physices, Scaliger, Coelum, Pindarus, Athenaeum</vocab>
+
+### IV.
+
+->Non omnis Logicus est Philosophus.<-
+
+### V.
+
+Non, quia argumentatio ab intellectu procedit, Logica dicenda est speculativa. Propriè enim loquendo nec speculativum nec practicum quid Argumentatio nominari potest. non illud: quia non est gratia sui: non hoc, quia est opus intellectus.
+
+### VI.
+
+->Orator, qualem Cicero vult, & Rhetor non sunt idem.<-
+
+### VII.
+
+->Metaphysica est scientia: eamque homo per naturam appetit.<-
+
+### VIII.
+
+Su…
+
+==== TRANSLATION (this page) ====
+the judgment to be made regarding a good and legitimate Polity of the Heathens. Among the works of divine providence, which are common to the Church and to the Gentiles outside the Church, is the distribution and constitution of Polities. <note>original: "Gerardus tomo 6. locorum Theologicorum..." refers to Johann Gerhard, a prominent Lutheran theologian</note> Gerardus, in volume 6 of his Theological Commonplaces, in the treatise on the Political Magistrate, part 1, chapter 3, number 79.
+
+->V.<-
+
+### *Would there have been political governance in the state of innocence?*
+
+Augustine answers in the negative, in Book 19 of *The City of God*, chapter 15, as does the blessed Luther in chapter 2 of *Genesis*. For such despotic domination and servile subjection, joined with the opposition of the will and with hardship, such as now exists, would not have had a place in the state of innocence. However, it is probable that there would have been a paternal rule with a spirit of concern and affection, and a filial subjection. Lord Gerardus, in the aforementioned treatise, number 26.
+
+->VI.<-
+
+### *Are Kings to be considered more political than subjects?*
+
+Both those who command and those who obey are to be called political, since both are required for the constitution of a Polity. But those who rule are political <term>kat’ exochēn</term> <gloss>by way of eminence</gloss>, while the latter are so less principally.
+
+# Parerga <note>This term refers to supplementary or subordinate works.</note>
+
+->I.<-
+
+The unique principle of Theology is the Word of God, as it is proposed today in the monuments of sacred scripture, that is, in the books of the Old and New Testaments which are undoubtedly Prophetic and Apostolic.
+
+->II.<-
+
+It pertains to all people to read and know sacred scripture.
+
+->III.<-
+
+Grammar is also narrowed down to Logic. Scaliger, Exercise 1, section 3.
+
+
+######## ITEM 6/15  id=65acbf1cff  language=Latin
+
+==== PREVIOUS PAGE SOURCE (end; context only) ====
+… cruce sublati, tantam sudoris abundantiam emiserit, ut multa vasa sudore plena homines receperint; Quin et hoc loco in Oppidulo Wededingen presbytero sacra faciente vinum in calice elevato visibiliter in concretum sanguinem conversum esse legimus, quod Magdeburgum in vase quodam argenteo allatum diu asservarunt. Ex rerum quoque memorabilium scriptoribus accepimus Episcopo Merseburgi VVernero sacra ad eundem modum peragenti, unam cyathi partem, cui sanctissimum Christi corpus injectum esset, in plumbum esse translatam, et alia quam plurima esse annotata offendimus ipsorum scripta pervolventes, cometam
+
+<vocab>Wernerus, Magdeburg, Stedeleburg, Wededingen, Merseburg, prodigia, portenta</vocab>
+
+==== SOURCE (this page) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>135</page-num>
+
+tam duntaxat in æthere per aliquot menses retardantem, faces
+flammantes, sarissas candentes, formidabiles in terra tam homi-
+num quam pecudum abortus, Embryones in alvo materno ver-
+ba vernacula effutientes, sanguinem ex pisto pane emanantem
+& hujus farinæ multa alia, quæ commemorandi non est locus.
+
+<margin>Herod. l. 7. Livi. d. l. 3. Zonar. com. Appian. l. 2. Sabell. Ennead. 7. l. 2.</margin>
+Sed ne cui vestrum mira videantur hactenus â nobis relata, cum
+temporibus præterlapsis & Romæ horum similia usu venisse
+Herodotum, Livium & alios testes fidei exploratæ, nec ulla unquam
+inconstantia testimonij labefactatæ, proferre valeam, proden-
+tes, equam peperisse leporem, bovem & mulum humano idio-
+mate esse sermocinatos, infantem materno in utero distinctâ &
+articulatâ voce usum exclamasse: Jö triumphe, pisces sub glebis
+esse repertos. Cum verò Saxones hæc omina ac portenta par-
+vipendentes nihilique facientes nondum in viam redirent, illis
+Dei concessu ab Imperatore bellum acerrimum ac perniciosum
+illatum est, quippe, qui victoriam reportavit, & universam illo-
+rum diœcesin pergrassatus devastavit. Facessant ergò Veterum
+mendacia impudica gloriantium Virgini cuidam Vestali divini-
+tus manifestatum esse, ut S. Sebastiani caput, quod divinis iam dudum
+honoribus afficerent, ad fines Archiepiscopatus transferri facerent.
+Huic monito cum auras patulas præbuisset Meinfridus urbis præ-
+fectus & Archiepiscopus, Imperatorem tanto perfusum terrore
+in Archiepiscopatum pedem figere non potuisse, quodque factum
+ob sanctorum merita, quibus divinitatem fermè id temporis
+Magdeburgi tribuerunt. Præterea illius laudibus majus addidit
+decus, quod CRAFTIUM & BENNONEM Episcopos Meis-
+nensi Ecclesiæ ordinare & BERNHARDO Abbate S. Johan-
+nis Baptistæ in monte Magdeburgico animam expirante Junio-
+rem Bernhardum subordinare non dedignatus sit. O sancta pie-
+tas atque omni laude, prædicatione, literis monumentisque deco-
+randa! cujus memoria nunquam est moritura. Ast quid mi-
+rum? cum vir esset clarissimis majoribus natus, etsi generis no-
+bilitatem doctrina, doctrinam sanctitudo superavit. Sed ut ad
+Oratiunculæ nostræ catastrophen properemus, quæ de obitu.
+
+Heinricus ille Imperator otij, pacisque inimicus ac totus do-
+
+<meta>catchword: minan-</meta>
+
+<vocab>Saxones, Imperatore, Magdeburgi, S. Sebastiani, Meinfridus, Craftium, Bennonem, Bernhardum, Heinricus, omina, portenta, diœcesin</vocab>
+
+==== NEXT PAGE SOURCE (start; context only) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>136</page-num>
+
+minandi ardore accensus, Saxonicam sedem iterum atque iterum 
+bello nefario perturbavit, parum vel nihil perpendens: belli 
+continuatione religionis mysteria pollui, spoliari ædes, funesta-
+ri civium sanguine cloacas: viduas opprimi: virgines constu-
+prari: uxores etiam maritis intuentibus ad inflammatas mili-
+tum libidines compelli; matres á liberorum complexu excludi; 
+liberis manus adferri: postremò omnia sursum inverti. VVER-
+NERUS autem futurorum neque incautus neque ignarus vidit, 
+quàm tyrannicè in capite & fortunis omnium civium ac inco-
+larum do…
+
+==== TRANSLATION (this page) ====
+not to mention those lingering in the sky for several months, flaming torches, glowing spears, formidable miscarriages of both men and cattle on the earth, embryos in the maternal womb uttering native words, blood flowing from baked bread, and many other things of this flour <note>referring to the previous mention of bread</note>, for which there is no place to recount.
+
+<margin>Herod. b. 7. Liv. same b. 3. Zonar. comm. Appian. b. 2. Sabell. Ennead. 7. b. 2.</margin>
+But lest those things related by us so far seem wonderful to any of you, since I am able to produce witnesses of proven faith—never undermined by any inconstancy of testimony—such as Herodotus, Livy, and others, who report that in past times similar things occurred in Rome: that a mare gave birth to a hare, that an ox and a mule spoke in human language, that an infant in the maternal womb shouted with distinct and articulate voice, "Jö triumphe" <gloss>Victory/Triumph</gloss>, that fish were found under the soil. However, when the Saxons, slighting these omens and portents and making nothing of them, did not yet return to the right path, a most bitter and pernicious war was brought upon them by the Emperor by the concession of God; for he indeed carried off the victory and traversed and devastated their entire diocese. Therefore, let the shameless lies of the ancients vanish, who boast that it was divinely manifested to a certain Vestal Virgin that they should cause the head of St. Sebastian, which they had already long treated with divine honors, to be transferred to the borders of the Archbishopric. When Meinfridus, the prefect of the city and Archbishop, had lent an open ear to this warning, the Emperor, permeated with such great terror, could not set foot in the Archbishopric; a fact brought about by the merits of the saints, to whom they almost attributed divinity at that time in Magdeburg. Furthermore, he added greater glory to his praises because he did not disdain to ordain Craftius and Benno as Bishops for the Meissen Church, and to subordinate the younger Bernhard when Bernhard, Abbot of St. John the Baptist on the Magdeburg mountain, was expiring. O holy piety, and worthy to be adorned with every praise, preaching, writing, and monument! Whose memory is never to die. But what is the wonder? Since he was a man born of most illustrious ancestors, even though he surpassed the nobility of his lineage in learning, and his learning in holiness. But that we may hasten to the catastrophe of our short oration, which concerns his death.
+
+That Emperor Henry, an enemy of leisure and peace, and entirely inflamed by the passion
+
+
+######## ITEM 7/15  id=312e655aff  language=Latin
+
+==== PREVIOUS PAGE SOURCE (end; context only) ====
+…bschafft aller Mobilien und Immobilien/ item no-
+minum, jurium et actionum wann zuforderst von Beklagtene
+ein Inventarium oder Eydliche Specificatio bonorum, wie die-
+selbe in Zeit des letzt Verstorbenen Parentis in qualitate et
+quantitate beschaffen gewesen/ intra terminum von 14. Ta-
+gen/ so Ihme hiemit ex officio angesetzet seyn sollen/ ad acta
+vorgebracht/ unter die sämtliche Erben in absteigender Li-
+nien/ jedoch collatis conferendis, was ein oder ander zu Ehe-
+licher Aussteuer vorhero erhoben/ als auch was des abge-
+
+<vocab>Erbtheilung, vindiciren, actionem, sententia, Jurisconsulto, Consiliario, Minden, Kläger, Beklagten, Mobilien, Immobilien, Inventarium, Specificatio bonorum</vocab>
+
+==== SOURCE (this page) ====
+<scan-quality>good</scan-quality>
+<language>German, Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>17</page-num>
+<header>(17)</header>
+<sig>C</sig>
+<meta>catchword: rada</meta>
+
+<image-desc size="small" type="decorative" significance="low">A decorative arrangement of three typographic ornaments (fleurons) surrounding the page number (17) at the top of the page.</image-desc>
+
+lebten seligen Reincken Wittemeyers ausgesteuerte Tochter /
+weyland Johann Schlenseckers Wittib / nach Ihrem Tode an
+zeitlichen Gütern verlassen / unter den nechsten Anverwand-
+ten ex linea collaterali in stirpes zu dividiren / und also Be-
+klagter schüldig seye / Klägern aus beyden Erbschafften Ih-
+me zustehende erbliche Antheile cum fructibus perceptis aus-
+zuantworten und zu restituiren / wie wir dann sothane divi-
+sion obgedachter massen hiemit erkennen / und dem Beklag-
+ten die restitution aufferlegen. V. R. W. (12.) Non con-
+feruntur a liberis patri succedentibus bona adventitia, nimi-
+rum quae aliunde, quam ab ascendente, cui succeditur, liberis
+obvenere, Matri vero succedentes non conferunt profectitia
+in specie sic dicta et illa adventitia, quae non a Matre sed aliun-
+de provenere, ut ex laboribus filii. lege 6. Codice de bonis quae liberis in
+potestate et Doctores ibidem. Struvius Exercitationibus XXXVII. thesi 32. et thesi sequenti 33.
+ubi duas cautelas pro filio succedente notat, quod si ex re a-
+scendentis et opificio suo filius quid acquisiverit teneatur hoc
+conferre pro rata scilicet rei ab ascendente profectae, partim non
+conferre secundum proportionem artificii seu operae a filio
+additae, vel si salutarius ipsi videatur, praecipuum a Coheredi-
+bus fratribus loco salarii petere possit; conferatur et Coppen.
+decisione 49. (13.) Neque legata et fideicommissa a Patre reli-
+cta, neque donatio mortis causa collationi et divisioni subjacent.
+Struvius dictis Exercitationibus thesi 34. (14.) Nec ea quae defunctus haeredi de-
+buit, lege 20. paragrapho 1. Pandectis familiae erciscundae. (15.) Item feuda majora, dignita-
+tem annexam habentia, ut sunt Electoratus, Ducatus, Marchio-
+natus, Comitatus et Baronatus sunt indivisibilia, Aurea Bulla
+Caroli V. Titulus 24. vide lege feudorum 13. in fine de alienatione feudorum Andreas
+Iserniensis in usus feudorum ad dictum capitulum numero 7. Rosenthal de feudis capite 2. conclusione 82.
+Et quamvis contraria consuetudine, divisionem in nonnullis
+familiis admittant: tamen recte divisio hujusmodi feudorum
+regalem dignitatem annexam habentium per caput familiae
+abrogatur. (16.) Tum et jure Saxonico ac Mindensi nec filii
+res expeditorias, nec filiae geradam tenentur conferre, quia ge-
+
+<vocab>Erbschafften, linea collaterali, in stirpes, fructibus perceptis, bona adventitia, profectitia, feuda majora, Electoratus, Ducatus, Marchionatus, Comitatus, Baronatus, Aurea Bulla, jure Saxonico, Mindensi, geradam</vocab>
+
+==== NEXT PAGE SOURCE (start; context only) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>18</page-num>
+<meta>catchword: item</meta>
+
+<image-desc size="small" type="decorative" significance="low">Floral and scrolled printer's ornaments flanking the page number 18.</image-desc>
+
+rada & res expeditionis non jure hereditario, ut heredi, sed potius familiæ ratione & jure cognationis & respectivè agnationis tanquam lucrum adventitium deferuntur. *Matthaeus Coler. pagina 1. decisio 12. numero 58. Crusius ad articulum 7. Jure statutorio Mindensi Titulus de rebus expeditoriis & utensilibus.*
+
+### TH. XI.
+
+<margin>Removenda.</margin>
+Planè verò removenda esse contend…
+
+==== TRANSLATION (this page) ====
+<note>A decorative arrangement of three typographic ornaments surrounds the page number (17).</note>
+
+the endowed daughter of the late Reinken Wittemeyer, and the widow of the late Johann Schlensecker, left behind in temporal goods after her death, are to be divided among the nearest relatives <term>ex linea collaterali</term> <gloss>from the collateral line</gloss> <term>in stirpes</term> <gloss>by branches of the family</gloss>, and thus the Defendant is obligated to surrender and restore to the Plaintiffs the hereditary shares due to him from both inheritances <term>cum fructibus perceptis</term> <gloss>with the fruits already harvested/collected</gloss>, just as we hereby recognize such a division in the aforementioned manner and impose the restitution upon the Defendant. (12.) <term>Bona adventitia</term> <gloss>Incidental assets</gloss> are not brought into collation by children succeeding their father, namely those which have come to the children from elsewhere than from the ascendant to whom they are succeeding; but those succeeding the mother do not bring into collation <term>profectitia</term> <gloss>assets derived from the parent</gloss> specifically so-called, nor those incidental assets which did not come from the mother but from elsewhere, such as from the son's labor. Law 6, Code, On property that children have in their power, and the Doctors there. Struvius, Exercises XXXVII, thesis 32, and the following thesis 33, where he notes two caveats for a succeeding son: that if a son has acquired anything from the property of an ascendant and his own craftsmanship, he is bound to bring this into collation—to the extent, that is, of the property derived from the ascendant—while not bringing into collation that portion corresponding to the proportion of the skill or work added by the son, or, if it seems more beneficial to him, he may request a preferential share from his brother co-heirs in lieu of wages; see also Coppen, decision 49. (13.) Neither legacies nor trusts left by a father, nor a donation <term>mortis causa</term> <gloss>in anticipation of death</gloss> are subject to collation and division. Struvius, in the stated Exercises, thesis 34. (14.) Nor are those things which the deceased owed to the heir, Law 20, paragraph 1, Digest, On the division of an inheritance. (15.) Likewise, major fiefs possessing an annexed dignity, such as an Electorate, Duchy, Marquessate, Earldom, or Barony, are indivisible; Golden Bull of Charles V, Title 24; see Law of Fiefs 13, at the end, On the alienation of fiefs; Andreas Iserniensis, On the uses of fiefs, at the said chapter, number 7; Rosenthal, On fiefs, chapter 2, conclusion 82. And although in some families they admit division through contrary custom, nevertheless, the division of such fiefs having an annexed royal dignity is rightly abrogated by the head of the family. (16.) Furthermore, according to Saxon and Minden law, neither sons are required to bring into collation their travel gear, nor daughters their <term>gerada</term> <gloss>dowry/paraphernalia</gloss>, because the <term>gerada</term>...
+
+
+######## ITEM 8/15  id=e5cce66dff  language=Chinese
+
+==== PREVIOUS PAGE SOURCE (end; context only) ====
+<scan-quality>good</scan-quality>
+<language>Classical Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>廿二</page-num>
+<header>通志卷二十二</header>
+
+攻燕不利死國亡石虎將苻健稱天王于長安國
+曰秦元曰皇始是謂前秦敗晉軍于五丈原燕慕
+容雋南伐魏滅冉閔于昌城
+壬子晉武陵王晞為太宰會稽王昱為司徒大將軍桓
+溫為太尉魏冉智以鄴降燕慕容雋稱帝自和龍
+徙居中山改元元璽秦苻健稱帝長安
+癸丑涼秦相攻涼張重華卒子曜靈繼伯父祚殺曜靈
+代立改元和平
+
+<vocab>苻健, 前秦, 燕, 慕容雋, 冉閔, 桓溫, 張重華, 皇始, 元璽, 曜靈, 冉智</vocab>
+
+==== SOURCE (this page) ====
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>3</columns>
+<header>欽定四庫全書</header>
+<sig>卷六中</sig>
+
+欽定四庫全書
+
+甲寅晉太尉桓溫伐秦至灞上秦苻健敗晉軍于白鹿
+原又敗之于子午谷
+
+乙卯晉將段龕敗燕軍于狼山右軍王義之辭官歸涼
+宋混張瓘殺張祚立曜弟元靚改元大始燕南
+攻晉不利秦苻健卒子生繼
+
+丙辰晉桓溫敗姚襄軍于伊水遂復洛陽秦苻生改元
+壽元
+
+丁巳晉改元升平帝加元服王彪之為左僕射燕改元
+
+<vocab>晉, 秦, 燕, 桓溫, 苻健, 苻生, 姚襄, 王義之, 宋混, 張瓘, 張祚, 張元靚</vocab>
+
+==== NEXT PAGE SOURCE (start; context only) ====
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<columns>4</columns>
+
+光壽自中山徙都鄴秦苻生虐用其人雄子堅殺
+生代立去帝號稱天王改元永興以王猛呂婆樓
+強汪梁平老為之輔
+戊午晉將馮鴦以眾入于燕燕拔晉上黨
+已未晉伐燕不利燕敗晉于東阿秦改元甘露以王猛
+為中書令尹京兆
+庚申晉仇池公楊駿卒子世繼燕慕容雋卒子暐繼改
+元建熙慕容恪為太宰專政慕容評為太傅慕容
+
+<vocab>光壽, 中山, 鄴, 秦, 苻生, 雄子堅, 永興, 王猛, 呂婆樓, 強汪, 梁平老, 戊午, 晉, 馮鴦, 燕, 上黨, 已未, 東阿, 甘露, 中書令, 尹京兆, 庚申, 仇池公, 楊駿, 慕容雋, 慕容暐, 建熙, 慕容恪, 太宰, 慕容評, 太傅</vocab>
+
+==== TRANSLATION (this page) ====
+<header>Imperially Commissioned Complete Library of the Four Treasuries</header>
+<sig>Volume 6, Part 2</sig>
+
+Imperially Commissioned Complete Library of the Four Treasuries
+
+Year <term>Jiayin</term> <gloss>354 AD</gloss>: Huan Wen, the <term>Taiwei</term> <gloss>Grand Marshal</gloss> of the <term>Jin</term> dynasty, campaigned against <term>Qin</term>, reaching Ba Shang. <term>Fu Jian</term> of <term>Qin</term> defeated the <term>Jin</term> army at Bailuyuan, and defeated them again at Ziwu Valley.
+
+Year <term>Yimao</term> <gloss>355 AD</gloss>: Duan Kan, a general of <term>Jin</term>, defeated the army of <term>Yan</term> at Langshan. The Right General Wang Yizhi <note>historically known as Wang Xizhi</note> resigned his post and returned home. Song Hun and Zhang Guan killed Zhang Zuo and established Yao’s younger brother, Yuanjing, as ruler, changing the era name to <term>Dashi</term> <gloss>Great Beginning</gloss>. <term>Yan</term> attacked <term>Jin</term> from the south but was unsuccessful. <term>Fu Jian</term> of <term>Qin</term> died; his son, <term>Fu Sheng</term>, succeeded him.
+
+Year <term>Bingchen</term> <gloss>356 AD</gloss>: Huan Wen of <term>Jin</term> defeated the army of Yao Xiang at the Yi River and subsequently recaptured Luoyang. <term>Fu Sheng</term> of <term>Qin</term> changed the era name to <term>Shouyuan</term> <gloss>Longevity Origin</gloss>.
+
+Year <term>Dingsi</term> <gloss>357 AD</gloss>: <term>Jin</term> changed the era name to <term>Shengping</term> <gloss>Ascending Peace</gloss>. The Emperor attained his majority <note>reached the age for the capping ceremony</note>. Wang Biaozhi was appointed Left <term>Puye</term> <gloss>Director of the Secretariat</gloss>. <term>Yan</term> changed the era name to...
+
+<summary>This page covers military movements during the mid-4th century, documenting Huan Wen's campaigns against the Former Qin, internal power shifts in the state of Liang, and the succession of Fu Sheng in the Former Qin.</summary>
+<keywords>Jiayin, Yimao, Bingchen, Dingsi, Huan Wen, Fu Jian, Fu Sheng, Jin Dynasty, Former Qin, Former Yan, Liang</keywords>
+
+
+######## ITEM 9/15  id=1f886990ff  language=Latin
+
+==== PREVIOUS PAGE SOURCE (end; context only) ====
+…emeteriis, & Locis extra urbes conveniebant : quemadmodum fecerunt in persecutione sub Valente Antiochiae, ubi extra urbis moenia ad radices montium Christiani conventus agebant.* Theodoretus *Lib. IV. c. 24.* Et *persecutione sub Georgio Alexandriae, ubi cùm Adversarii, pietatem praevalentes, Templa obtinerent, eorumque conjunctionem Christiani fugere cogerentur, in Caemeteriis ad orationem conveniebant*, Theodoretus *Lib. XXI. c. 14.* Quid quod Dominus Chrysostomus *Homil. XL. ad Populum* dicat : *quosdam in Monumentis & Sepulcris habitasse*.
+
+<vocab>Sepulcra, Ritum, Calixtus Senior, Onuphrius, Baronius, Magdeburgenses, Theodoretus, Chrysostomus, Caemeteria, Neroniana, Corinthiacae</vocab>
+
+==== SOURCE (this page) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+
+§. XIX. Quemadmodum igitur Christiani cum ad Verbi Divini praedicationem, tum ad Sacrae Eucharistiae celebrationem convenire in Coemeteriis soliti sunt: Vid. HIST. MAGDEB. Cent. XII. c. 5. arg. 4. col. 840. HUNN. T. I. Opp. Lat. col. 1549-1551. GERH. LL. CC. T. IIX. Loc. XXIX. de Morte §. 268. p. 482-489. & in Conf. Cathol. L. II. P. II. art. 9. arg. 13. p. 511-514. CHAMIER T. III. Panstr. Cathol. Lib. XXVI. c. 19. p. 594-596. GLASS. Lib. III. Philol. S. Tr. VI. Can. 14. m. 2. n. 1. p. 559. ita & Baptismum eos in publicis super Coemeteriis conventibus administrasse, plane nobis habemus persuasissimum. Refert EUSEBIUS PAMPHILI Lib. IV. Hist. Eccl. c. 15. f. 86. Edit. Lat. Basil. 1544. Christianos olim Smyrnenses solemnes egisse celebresque conventus eo in loco, quo condita Polycarpi Martyris ossa ambusta erant. Hinc adeo cum nulli alii fini, quam Cultûs Divini exercitio destinati isti conventus essent, & Baptismum omni procul dubio, tanquam partem Divini Cltûs, solemniter super Polycarpi Sepulcreto administrarunt. Quanquam hoc ultimo loco tenendum, illam Baptismi administrationem non ea intentione fuisse susceptam, qua in Ecclesia Corinthiaca, nempe ad probandam Mortuorum Resurrectionem. Scriptores enim Historiae Sacrae id minime silentio praeteriissent. Sufficiat vero nobis, RITUM ADMINISTRANDI SUPER MORTUIS BAPTISMUM ex sola Relatione Apostolica innotuisse. Atque hic terminus esto! DEO T. O. M. pro concessa Spiritûs Sui assistentia gratias persolvimus immortales, Eidemque porro Studia nostra, alibi nunc continuanda, humilime ac devotissime commendamus.
+
+->Ps. CXIII. 2.<-
+->יהי שם יהוה מברך מעתה<-
+->ועד עולם :<-
+
+<image-desc size="medium" type="decorative" significance="low">A woodcut tailpiece featuring a symmetrical floral arrangement. In the center is a pomegranate-like fruit, from which spring scrolling leaves, vines, and several smaller bell-shaped flowers on either side.</image-desc>
+
+<vocab>baptismum, Coemeteriis, Eucharistia, Eusebius Pamphili, Polycarpus, resurrectio mortuorum, cultus divinus</vocab>
+
+==== NEXT PAGE SOURCE (start; context only) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<sig>E6</sig>
+<vocab>Exercitatio Metrica, Resurrection, Rehberg, Daniel Graden, Dantiscano, Corinthus, Baptisma Sepulcra</vocab>
+
+->בגבורת גואלנו :<-
+
+<image-desc size="small" type="decorative" significance="low">Three small asterisks arranged in a triangle.</image-desc>
+
+## EXERCITATIO METRICA
+## in praecedaneam
+## EXERCITATIONEM PHILOLOGICAM.
+
+<image-desc size="small" type="decorative" significance="low">A horizontal row of seven small asterisks.</image-desc>
+
+Rupit ut occlusum superata Morte Sepulcrum,
+Invictumque Caput Stygios super extulit Hostes
+*Magna DEI Soboles: Quondam …
+
+==== TRANSLATION (this page) ====
+§. XIX. Just as, therefore, Christians were accustomed to gather in cemeteries for the preaching of the Divine Word and the celebration of the Holy Eucharist (see *Magdeburg History*, Century XII, c. 5, arg. 4, col. 840; Hunn, Vol. I, Latin Works, col. 1549-1551; Gerhard, Theological Commonplaces, Vol. IIX, Loc. XXIX, on Death, §. 268, p. 482-489; and in *Catholic Confession*, Book II, Part II, art. 9, arg. 13, p. 511-514; Chamier, Vol. III, Panstratia Catholica, Book XXVI, c. 19, p. 594-596; Glassius, Book III, Philologia Sacra, Tract VI, Can. 14, m. 2, n. 1, p. 559), so we are thoroughly persuaded that they also administered baptism in public assemblies held above cemeteries. Eusebius Pamphili reports, in *Ecclesiastical History*, Book IV, c. 15, fol. 86 (Latin edition, Basel 1544), that the Christians of Smyrna formerly held solemn and famous assemblies in the place where the burnt bones of the martyr Polycarp had been laid to rest. Hence, since these assemblies were destined for no other purpose than the exercise of Divine Worship, they undoubtedly and solemnly administered baptism as a part of Divine Worship above Polycarp’s tomb. Although it must be held, regarding this latter case, that this administration of baptism was not undertaken with the same intention as that in the Corinthian Church, namely to prove the resurrection of the dead. For the writers of sacred history would by no means have passed over that in silence. Let it suffice for us, however, that the RITE OF ADMINISTERING BAPTISM OVER THE DEAD has become known from the Apostolic account alone. And here let this be the end! We pay immortal thanks to God, the Greatest and Best, for the granted assistance of His Spirit, and we commend to Him henceforth our studies, now to be continued elsewhere, most humbly and most devoutly.
+
+->Ps. 113:2.<-
+->Blessed be the name of the Lord from this time forth<-
+->and for evermore.<-
+
+<note>A decorative tailpiece depicts a central pomegranate-like fruit surrounded by symmetrical scrolling vines, leaves, and bell-shaped flowers.</note>
+
+<summary>The author concludes that baptism was indeed performed over the tombs of the dead in early Christian practice, citing the precedent of the early Church's use of cemeteries, but distinguishes this from the specific, controversial practice mentioned in Corinth.</summary>
+<keywords>Baptism for the dead, early Christian cemeteries, Polycarp, Divine worship, resurrection of the body</keywords>
+
+
+######## ITEM 10/15  id=1fcd30d7ff  language=Latin
+
+==== PREVIOUS PAGE SOURCE (end; context only) ====
+… operiri, ut cùm perpetrata fuerint, tunc denique, ubi quæ facta sunt infecta fieri nequeunt, puniantur. *vid Gell. Noct. Att. libr. 7. c. 3.* Nos Tironis sententiam pro subjecta causa amplectimur, et quam Lex privato indulget facultatem tempestivo occursu damnum imminens præcavendi. *l. ult. C. in quibus causis restit. l. 1. C. quando liceat unicuique. l. 4. C. ad L. Corn. de Sicariis.* hanc Legi ejusque ministro pro rerum exigentia multò magis competere arbitramur. Sed obloquitur disertis et Oedipo non indigentibus verbis *l. 18.*
+
+<vocab>nudæ voluntatis, M. Cato, Tiro, Justinianus, Jurisprudentia, Mascardus, Menochius, Rhodiensibus, Gellius, Noctes Atticæ, Lex Cornelia de Sicariis</vocab>
+
+==== SOURCE (this page) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<sig>B</sig>
+<meta>catchword: & cona-</meta>
+<vocab>Ulpianus, Justinianus, Cogitationis poenam nemo patitur, Pandectas, Cujacium, Bachovius, Conatus</vocab>
+
+*ff. de poenis: Cogitationis poenam nemo patitur:* Opponit suam in Jure authoritatem Ulpianus Author Legis Vir summi Ingenii Justiniano in *l. un. §. 9. C. de Caduc. toll.* Valeriano disertissimus. *l. 9. C. de Instit. & substit.* Diocletiano prudentissimus *l. 11. C. de quaest.* & Imperatoris Alexandri Amicus *l. 4. C. de contrah. stipul.* Imò, quod magis est, ipse Sacratissimus Legislator Justinianus, qui per Enucleatores veteris Jurisprudentiae, quos laudat. *§. 3. & seqq. I. in prooem. l. 2. §. 3. C. de vet. jur. enucl.* relata in Pandectas JurisConsultorum responsa sua fecit *d. l. 2. §. 10.* repleto quicquid imperfectum in ipsorum mente fuit. *l. 1. §. 7. C. eod.* Id quod circa *d. l. 18.* factum, eamque propterea non tam ex Ulpiani mente ad edictum quod quisque juris probabiliter restricta, quàm latiore Imperatoris & hujus sensum sequentium Canonum *c. 14. de poenit. dist. 1.* censendam esse contra Cujacium rectè judicat acutissimus Bachovius ad *Treutl. vol. 2. Disp. 32. th. 1. lit. G. verb. Conatus.*
+
+->VII.<-
+
+Age ergò, quomodo salva Legis Majestate Cogitationis poenam quis patitur? Non placet sententia distinguentium inter voluntatem merè nudam & conatum, illum quidem ipsum quoque nudam, sed nimiâ sui per actum in quem erumpit denudatione vestitae quodammodo speciem referentem voluntatem; istam legali poenae eximendo, hanc eidem semper & omninò subjiciendo. Utrumque enim legibus apertè contrarium est, per quas
+
+==== NEXT PAGE SOURCE (start; context only) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+
+et conatus nonnunquam impunitate gaudere, et mentem non egressa voluntas acerbè puniri solet. Rectiùs proinde et Juri convenientiùs per Cogitationem Fori nostri seu poenae Civilis impatientem intelligimus eam, quae (ut verbis Imperatoriis ex lege 2. Codice de rebus creditis utar) satis Deum ultorem habet. Talis est interna illa animi <term>ἀταξία</term>, quam non judicat Ecclesia capitulo 34. extra de Simonia. Sed Deo judicandam relinquit capitulo 20. causa 2. quaestione 4. Etenim non peccat in fori foro sufficienter ad poenam inobedientis animi votum:
+
+> Quàm vellem, si liceret…
+
+==== TRANSLATION (this page) ====
+*Digest, On Penalties: No one suffers punishment for their thoughts:* Ulpian, the author of the law, a man of the highest talent, opposes his own authority in law to Justinian in *l. 1, § 9, Code On the Repeal of Escheats*, to Valerian in *l. 9, Code On Institutions and Substitutions*, to Diocletian in *l. 11, Code On Questions*, and as a friend to the Emperor Alexander in *l. 4, Code On Contracting Stipulations*. Indeed, what is more, the most Sacred Legislator Justinian himself, who made his own the responses of the Jurisconsults <note>the Roman legal scholars</note> reported in the Pandects through the elucidators of ancient jurisprudence—whom he praises in *§ 3 and following, Institutes, in the proem; l. 2, § 3, Code On the Elucidation of Ancient Law*—filled whatever was imperfect in their minds in *said l. 2, § 10, l. 1, § 7, Code of the same*. This was done regarding *said l. 18*, and therefore it is to be judged not so much based on Ulpian’s intent regarding the edict of what is prohibited by law, as rather based on the broader sense of the Emperor and the Canons that followed his sense in *c. 14, On Penance, dist. 1*. The very acute Bachovius rightly judges this against Cujacius in his notes to *Treutl., vol. 2, Disp. 32, th. 1, lit. G, at the word Attempt*.
+
+->VII.<-
+
+Proceed then: how does anyone suffer punishment for thought while preserving the majesty of the Law? The opinion of those who distinguish between a merely naked will and an attempt does not please me; the latter, while also naked, bears the appearance of a will clothed in some way by the excessive uncovering of itself through the act into which it erupts, thus exempting the former from legal punishment while subjecting the latter to it always and entirely. Both are clearly contrary to the laws, through which
+
+<column-break/>
+
+and attempts sometimes enjoy impunity, and a will that has not exited the mind is accustomed to being harshly punished. Therefore, more correctly and conveniently for the Law, we understand by a thought that is impatient of our Forum or of Civil punishment that which (to use the Imperial words from law 2, Code On Credit Matters) has God sufficiently as its avenger. Such is that internal <term>ἀταξία</term> <gloss>disorder/lack of order</gloss> of the mind, which the Church does not judge in chapter 34, Extra, On Simony. But it leaves it to be judged by God in chapter 20, cause 2, question 4. For the wish of a disobedient mind is not sufficient in the forum of the court for a penalty:
+
+> How I would wish, if it were permitted. Let subjects hate, provided they fear; let them hate to sin; whether it is from the fear of punishment or the love of virtue matters little to the Republic, which values a good citizen without considering the title of a good man, except incidentally and presumptively.
+
+It is the property of Divine law to annex the prohibition of concupiscence to the precept of external obedience, as if it were punishable by itself alone. Civil reason does not scrutinize the simulator and the hypocrite, nor does it presume an evil thought in a good action; but it entrusts its judgment to another Forum, where crimes are taxed in a manner greater than ours.
+
+
+######## ITEM 11/15  id=abcc53cdff  language=Latin
+
+==== PREVIOUS PAGE SOURCE (end; context only) ====
+…ue fortunæ sacris, quater jam fecundum omina felicissimus, porrò quinquies, imò sexies atque septies felicissimum ex eo quoque fore Te ominamur, quod unius Tuæ Augustæ Domus decimus & quintus, & à Rudolpho Primo, ceu Familiæ Tuæ Julio, decimus & quartus Imperator, Helius sis Adrianus. Græcis Helium Te Germaniæ Solem esse quis etiam non Germanus diffiteatur? Jam verò Solem à solo veteres dixere, quod solus sit & unicus in Orbe; & Tu in Orbe,
+
+## LEOPOLDE,
+
+solus atque unicus es Imperator; qui reliquorum etiam Astrorum omnium terrarum Orbis cum Sole solus obtines principatum.
+
+<vocab>Leopoldus, Augustus, Julius Caesar, Rudolphus I, Helius Adrianus, Germania, Consulatus, Respublica, Sol</vocab>
+
+==== SOURCE (this page) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>13</page-num>
+<header>IMPERII ROMANI.</header>
+<sig>B 3</sig>
+<meta>catchword: cimus</meta>
+
+Quin & Solem Tullius, Phœbum alii & Apollinem, Luminum reliquorum Ducem, Principem, Moderatorem, omnium Planetarum Medium, Mundi Mentem, Lucem Vitæ, atque Deum Sapientiæ voluere, quæ certô modô Imperatori Tibique congrua non ignoramus, ut quem majestate primum & supremum, aliorum Regum velut Arbitrum ac Moderatorem agere, ceu Lucem Vitæ & Sapientiæ Numen, decet, & quia decet, acturum etiam speremus Summam per Sapientiam oportet. Lustrabis igitur & illustrabis, quia Helius, quia Sol es, jam exortus, terras omnes, regiones omnes, Christianum Orbem, quem ubique, ut confidimus, victis bellorum nebulis, serenabis; &, omne noxium armorum felicissimo calore protinus consumens, recreabis; quoniam & hanc Daphnen olim, sive Laurum, Phœbus adamavit. Et profectò Helius Adrianus, sic velut Helium & Solem egit, Romanum Orbem peragravit, Oceanum, Rhenum, Danubium, Euxinum, ac longè dissita deinde flumina, Nilum, Phasidem, Pactolum & Euphratem navigans, omnes Imperii totius limites perlustravit, & exurgentibus hinc indè bellorum vaporibus consumptis, adversus omnem imminentium Barbarorum illuviem efficacibus & potentissimis Majestatis suæ radiis securam reddidit. Eundem Helium Adrianum, decimum & quartum à Divo Julio, Tu de-
+
+<vocab>Tullius, Phœbus, Apollo, Imperator, Helius, Christianum Orbem, Daphnen, Adrianus, Romanum Orbem, Oceanum, Rhenum, Danubium, Euxinum, Nilum, Phasidem, Pactolum, Euphratem, Divus Julius</vocab>
+
+==== NEXT PAGE SOURCE (start; context only) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>14</page-num>
+<header>P L A V S V S</header>
+
+cimus & quartus augustæ Domus à Rudolpho Pri-
+mo, **LEOPOLDVS** agis, & ut agas porrò
+devotissimi vovemus, quò per deliquium Lunæ Tur-
+cicæ ad Persarum Solem felix penetres, Hierosoly-
+mam melioribus adhuc auspiciis restaures, & in al-
+tissima deinde pace cum eodem fasces Imperatorios
+Sapientiæ submittas, philosophantes audias Favori-
+nos, foveas Epictetos. Hoc Tibi, Sacratissi-
+me **LEOPOLDE**, fautores Superi concedant,
+& hoc addant, ut tot Nominibus & Ominibus
+felicissimus & Primus, Vladislaus, Rudolphus, Ca-
+rolus, Alexa…
+
+==== TRANSLATION (this page) ====
+<header>OF THE ROMAN EMPIRE.</header>
+<sig>B 3</sig>
+
+Furthermore, Cicero called the Sun Phoebus, and others called it Apollo, the leader of the remaining lights, the prince, the moderator, the center of all the planets, the mind of the world, the light of life, and the god of wisdom. We are not unaware that these qualities, in a certain way, are appropriate for an Emperor and for you. Since it is fitting that you, who are first in majesty and supreme, should act as the arbiter and moderator of other kings, just as the light of life and the divinity of wisdom; and because it is fitting, we hope that you will perform these duties through supreme wisdom. Therefore, you will shine upon and illuminate all lands and all regions, for you are Helius, you are the Sun, now risen; you will bring serenity to the Christian world, which we trust will be cleared of the mists of war; and you will restore it, consuming every harmful aspect of warfare with your most fortunate warmth; since Phoebus himself once loved this Daphne, or Laurel. And indeed, Helius Hadrianus acted as Helius and the Sun, wandering through the Roman world, sailing the Ocean, the Rhine, the Danube, the Euxine <note>The Black Sea</note>, and then far-distant rivers: the Nile, the Phasis, the Pactolus, and the Euphrates. He surveyed all the boundaries of the entire Empire and, having consumed the vapors of war rising on all sides, he rendered it secure against every flood of encroaching barbarians with the effective and most powerful rays of his Majesty. You act as that same Helius Hadrianus, the fourteenth from Divine Julius, and you are the fourteenth
+
+
+######## ITEM 12/15  id=c94d4d38ff  language=Chinese
+
+==== PREVIOUS PAGE SOURCE (end; context only) ====
+十也三其二十亦六十也六其十亦六十也皆自然之相符也<margin>此蓋陰數分其陽數耳是以相因也如月初一分作十二也二十四氣十二候之數亦可因之以明</margin>
+
+四九三十六也六三十六也陽六而又兼陰六之半是以九也故以二卦言之陰陽各三也以三爻言之天地人各二也陰陽之中各有天地人天地人之中各有陰陽故參天兩地而倚數也
+
+易有真數三而已參天者三三而九兩地者倍三而六
+
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>二十三</page-num>
+<meta>皇極經世書</meta>
+<vocab>易, 陰陽, 參天兩地, 數</vocab>
+
+==== SOURCE (this page) ====
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<header>卷十三</header>
+<meta>金貞四臣合註</meta>
+
+參天兩地而倚數非天地之正數也倚者擬也天地
+正數而生也
+易之數窮天地終始或曰天地亦有終始乎曰既有消
+長豈無終始天地雖大是亦形器乃二物也
+易之生數一十二萬九千六百總為四千三百二十比
+消長之大數演三十年之辰數即其數也歲三百六十
+日得四千三百二十辰以三十乘之得其數矣凡甲子
+甲午為世首此為經世之數始于日甲月子星甲辰子
+
+<vocab>易, 天地, 數, 消長, 經世, 甲子</vocab>
+
+==== NEXT PAGE SOURCE (start; context only) ====
+<scan-quality>good</scan-quality>
+<language>Chinese</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>1063</page-num>
+<meta>皇極經世書</meta>
+
+又云此經世日月星甲辰子從之也
+十百千萬億為奇天之數也十二百二十二百萬二
+千億二萬為偶地之數也
+十干天也十二支地也支干配天地之用也
+干者幹之義陽也支者枝之義陰也干十而支十二是
+陽數中有陰陰數中有陽也
+陽數一衍之為十十千之類是也陰數二衍之為十二
+十二支十二月之類是也
+
+<vocab>皇極經世書, 天干, 地支, 陰陽, 數</vocab>
+
+==== TRANSLATION (this page) ====
+### Scroll 13
+<meta>Joint commentary by the four scholars of the Jin and Zhen eras.</meta>
+
+To participate in Heaven and double the Earth to rely upon the numbers does not refer to the actual, primary numbers of Heaven and Earth. To rely upon them means to simulate them. It is from the primary numbers of Heaven and Earth that all things are born.
+
+Are the numbers of the <term>Yi</term> <gloss>Book of Changes</gloss> exhaustive of the beginning and end of Heaven and Earth? Some ask if Heaven and Earth themselves have a beginning and an end. The answer is: since there is waxing and waning, how could there not be a beginning and an end? Although Heaven and Earth are vast, they are still formed objects, and are therefore dual entities.
+
+The generative numbers of the <term>Yi</term> total 129,600, which is the sum of 4,320 multiplied by the great number of waxing and waning. This is derived from the chronological numbers of the thirty-year cycle. A year has 360 days, which yields 4,320 <term>chen</term> <gloss>two-hour periods</gloss>. By multiplying this by 30, one obtains that number. In every case, <term>Jia-Zi</term> and <term>Jia-Wu</term> mark the beginning of a <term>Shi</term> <gloss>generation</gloss>. This constitutes the numerical system of <term>Jingshi</term> <gloss>Ordering the World</gloss>, which begins with the Sun at <term>Jia</term>, the Moon at <term>Zi</term>, and the Stars at <term>Jia</term> and <term>Chen</term>, <term>Zi</term>.
+
+<summary>This page discusses the derivation of cosmological numbers from the principles of the Book of Changes, specifically linking the cycles of heaven and earth to a total of 129,600 units.</summary>
+<keywords>Book of Changes, Heaven and Earth, waxing and waning, cyclical numbers, Jingshi</keywords>
+
+
+######## ITEM 13/15  id=aadb58a3ff  language=Latin
+
+==== PREVIOUS PAGE SOURCE (end; context only) ====
+…d Patricius Discussiones folio 317. sub finem et Theupolus IX. Academicas Contemplationes 10. pagina 352. Aristotelem ex Platonis hypothesi metientes asserunt, Platonicam opinionem esse Aristotelicam scientiam, indignam quæ habeatur inter partes Philosophiæ.
+<margin>(4</margin>
+† Quibus obiter hoc loco illud respondisse suffecerit: laudandum esse, hactenus quidem certè, institutum Aristotelis, quòd noluerit cum Platone ἀεροβατεῖν, sed humano se pede metiens, ordiri voluerit scientiam à sensu, qualemcunque sic futuram,
+
+<vocab>Aristoteles, Plato, Ideae, Philoponus, Nicomachus Gerasenus, Thomas Reinesius, Franciscus Patricius, Theupolus, scientia, opinio, τὰ ὄντα, γιγνόμενα, ἀεροβατεῖν</vocab>
+
+==== SOURCE (this page) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>14</page-num>
+<header>SCHEDIASMA</header>
+<meta>catchword: fed</meta>
+
+tam, minus utique habituram periculi, quam cui Platonem inducerent ἐνθυσιασμοὶ, & à corpore nescio quae mentis in mundum idealem conversiones, ludibriis malignorum Spirituum opportunissimae. Quae plura esse dixerim in uno Platonis Timaeo, quam in Aristotelis operibus universis.
+
+§. 22. Enimverò τοῖς αἰσθητοῖς Plato dedit opinionem seu δόξαν, contrà τοῖς νοητοῖς *scientiam, sapientiam, intelligentiam, ἐπιστήμην, σοφίαν, νόησιν* g). Quae omnia, quoties nominantur contrà δόξαν, idem sonant h).
+
+> g) Plato VII. de Rep. f. 705. δόξαν μὲν περὶ γένεσιν, νόησιν δὲ περὶ οὐσίαν. Alcinous c. 7. Isagog. p 472. ed. Heins. cum Max. Tyr. δόξαν μὲν τῶν σωμάτων φησὶν, ἐπιστήμην δὲ τῶν πρώτων (νοητῶν.)
+> 
+> h) Vid. Patric. Discuss. f. 317. lin. 8. Marsil. Ficin. argum. in Euthydem. f. 188. Theupol. IX. Acad. contempl. 10. & 12 p. 350 359.
+
+§. 23. Quare & Φιλόσοφον opponit Plato φιλοδόξῳ i), & Philosophiam veram, puta Metaphysicam suam, definit ψυχῆς περιαγωγήν; ἐκ νυκτερινῆς τινὸς ἡμέρας εἰς ἀληθινὴν τοῦ ὄντος ἰούσης ἐπάνοδον k).
+
+> i) V. de Rep. in fin. f. 670.
+> 
+> k) VII. de Rep. f 696. Sic Φιλοσόφους ἀληθινοὺς lib. V. f. 667 definit τοὺς τῆς ἀληθείας Φιλοθεάμονας. Et iterum lib. VII. f 699. Φιλοσόφῳ ait (ἀναγκαῖον μαθεῖν ταῦτα) διὰ τὸ τῆς οὐσίας ἁπτέον εἶναι, γενέσεως ἐξαναδύντι. Alcinous quoque c. 1. Isag. hanc profert Philosophiae definitionem Platonicam: περιαγωγὴ ψυχῆς ἀπὸ σώματος ἐπὶ τὰ νοητὰ ἡμῶν τρεπομένων καὶ τὰ κατ’ ἀλήθειαν ὄντα.
+
+§. 24. Etiam γνῶσιν ait τοῦ ὄντος, quod scilicet opponatur τῷ γιγνομένῳ, h. e. αἰσθητῷ, esse l) planè ut Pythagoras σοφίαν faciebat τῶν ὄντων γνῶσιν. Atque hoc alterum est, quod in ea definitione excutiendum proponebamus de ΓΝΩΣΕΙ.
+
+> l) VII. de Rep. f. 700. τῆς τοῦ ἀεὶ ὄντος γνώσεως, ἀλλ’ οὐ τοῦ ποτὲ γιγνομένου καὶ ἀπολλυμένου. Sic Porphyrius Platonicus parte II. sentent. p. m. 237. virtutem animi post conversionem ad Deum consistere ait ἐν γνώσει καὶ εἰδήσει τοῦ ὄντος.
+
+§. 25. Quae Philosophis illis erat notitia non qualiscunque,
+-> fed <-
+
+<vocab>Plato, Aristoteles, Timaeus, Metaphysica, Pythagoras, Porphyrius, δόξα, νόησις, ἐπιστήμη, σοφία, γνῶσις</vocab>
+
+==== NEXT PAGE SOURCE (start; context only) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>19</page-num>
+<header>HISTORICUM.</header>
+<vocab>cognitio, notitia, Plato, Lutherus, Dialectica, Theologia, Petrus Hispanus, Psellus, Gisbertus Voetius, scientia scientiarum</vocab>
+
+sed eximia, nec rerum quarumlibet, sed maximè honorabilium, hoc est divinarum, planè ut ἐπιστήμη et σοφία, et cum quâ ejusdem est originationis, νόησις. Itaque opposita jam etiam sunt Platoni γνῶσις et δόξα, γιγνώσκειν et δοξάζειν, γνωστόν et δοξαστόν m).
+
+m) Vide de Republica folio 667. E. F. folio 668. A. (quo è loco etiam clarum est, γνῶσιν et ἐπιστήμην illi esse synonyma) E. F. folio 6…
+
+==== TRANSLATION (this page) ====
+<header>SCHEDIASMA</header>
+
+such that it would have less danger, at any rate, than that into which <term>Plato’s</term> <term>enthusiasms</term> <gloss>divine inspirations/ecstasies</gloss> would lead them, and I know not what conversions of the mind from the body into the ideal world, which are most prone to the mockeries of malignant spirits. I would say there are more of these in a single <term>Timaeus</term> of <term>Plato</term> than in all the works of <term>Aristotle</term> combined.
+
+§. 22. Indeed, to <term>sensible things</term> <gloss>objects of sense</gloss> <term>Plato</term> granted opinion, or <term>doxa</term> <gloss>belief/opinion</gloss>, while on the contrary to <term>intelligible things</term> <gloss>objects of intellect</gloss> he granted *science, wisdom, intelligence, <term>episteme</term>, <term>sophia</term>, <term>noesis</term>* <gloss>knowing/intellection</gloss> g). All of these, as often as they are named in contrast to <term>doxa</term>, sound the same h).
+
+> g) <term>Plato</term>, VII <term>Republic</term> f. 705: "<term>doxa</term> concerns generation, but <term>noesis</term> concerns essence." <term>Alcinous</term>, ch. 7, <term>Isagoge</term> p. 472 (ed. Heinsius), with <term>Maximus of Tyre</term>: "He says <term>doxa</term> belongs to bodies, but <term>episteme</term> belongs to primary (intelligible) things."
+> 
+> h) See <term>Patricius</term>, <term>Discussiones</term> f. 317, line 8. <term>Marsilio Ficino</term>, argument in <term>Euthydemus</term> f. 188. <term>Theupolus</term>, IX <term>Academic Contemplations</term> 10 & 12, p. 350, 359.
+
+§. 23. Wherefore <term>Plato</term> opposes the <term>Philosopher</term> to the <term>Philodox</term> <gloss>lover of opinion</gloss> i), and defines true philosophy, for instance his own <term>Metaphysics</term>, as the <term>turning of the soul</term> <gloss>periagoge</gloss> from a certain nocturnal day to the true ascent of being k).
+
+> i) V <term>Republic</term> in fine, f. 670.
+> 
+> k) VII <term>Republic</term> f. 696. Thus he defines "true philosophers" in book V, f. 667, as those who are "lovers of the sight of truth." And again in book VII, f. 699, he says (to the philosopher) "it is necessary to learn these things because one must grasp essence, having emerged from generation." <term>Alcinous</term> also, ch. 1 of the <term>Isagoge</term>, presents this Platonic definition of philosophy: "the turning of the soul from the body toward those intelligible things that are turned toward us, and those things that are true beings."
+
+§. 24. He also calls it the <term>gnosis</term> <gloss>knowledge</gloss> of being, which is obviously opposed to <term>becoming</term> <gloss>to gignomeno</gloss>, that is, to the <term>sensible</term> l), just as <term>Pythagoras</term> made <term>sophia</term> the knowledge of beings. And this is the second thing that we proposed to examine in that definition concerning <term>GNOSIS</term>.
+
+> l) VII <term>Republic</term> f. 700: "of the knowledge of that which is always being, but not of that which is ever becoming and perishing." Thus the Platonist <term>Porphyry</term>, part II of his <term>Sententiae</term>, p. 237, says that the virtue of the soul after conversion to God consists in the <term>knowledge and cognition of being</term>.
+
+§. 25. Which, to those philosophers, was not just any notice,
+-><-
+
+
+######## ITEM 14/15  id=5e6aeeebff  language=Latin
+
+==== PREVIOUS PAGE SOURCE (end; context only) ====
+…n eos, vt seditiosos aduertet Pilatus.
+
+<margin>Liberatio Apostolorum per Angelum.</margin>
+II. Liberatio sequitur. Primum hic confidera, a quo liberentur. Ab Angelo Domini. Vides insolitum liberationem modum. Sup. alio medio liberati sunt, & infra saepe aliis liberabuntur mediis. Angelus hic illis inferuit. Matt. 4. ministrarunt Christo. Luc. 16. deportant Lazari animam in sinum Abrahae. Matt. 14. adfunt infantibus. Tobias Angelum ductorem & custodem habet. Iacob similiter.
+
+Hinc dicitur ad Heb. 1. ministratorios esse Spiritus, quòd sumptu est ex psal. 104. Et alias etiam de Angelis.
+
+<vocab>Apostoli, Gamaliel, Sadducaei, zelus, invidia, carcer, Angelus, liberatio, Pontifex, seditio</vocab>
+
+==== SOURCE (this page) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>mixed</script>
+<page-type>text</page-type>
+<page-num>35</page-num>
+<header>C A P V T. V.</header>
+
+de Angelorum officio diximus in defendendis piis.
+
+2. Quando. Nocte scilicet eadem: nam vna solum intercedit nox inter captiuitatem, & concilij congregationem. Hac ipsa igitur liberantur: ac quiescunt hic quidem tutissime, magna securitate: mox ad officium redituri, vt persona Angeli inferuit consolationi: sic breuitas quoque temporis. Non diu durant aduersa. Igitur forti animo toleranda.
+
+<margin>Liberatio auget constantiam in Apostolis ad docendum.</margin> 3. Cur liberentur? Id fermo Angeli declarat, Ite & stantes loquamini populo in templo, omnia verba vitae huius. Sententia Angeli est, animosius illis deinceps etiam docendum Euangelium, quia est tanquam finis liberationis, quasi dicat, Non eratis liberandi, nisi docedum esset vobis deinceps, etiam constantius contra Pharisaeos. Diligentie sunt argumenta: quia eundum illis est, quasi dicat, à carcere ad templum, à vinculis ad doctrinam. Deinde quia stantes iubet facere, hoc est, intrepide & animose. Tertio, quia in templo, non priuatim. Nec obstat contaminatio templi, quominus isthuc mittantur.
+
+<margin>Euangelij periphrasis.</margin> Quarto, quia populo, hoc est, publice, omnibus qui ad sacra conueniunt. Quinto, quid docebunt? <greek>πάντα τὰ ῥήματα τῆς ζωῆς ταύτης</greek>. Periphrasis est breuis Euangelij, secundum illud Ioan. 6. Verba vitae aeternae habes: & ibidem, Verba quae loquor, vita sunt, Vita dicitur, quia continet rationem vitae aeternae consequendae. Nec solum rationem continet, sed vim assequendi suppeditat. Hinc illud ad Rom. 1. Potentia Dei est ad salutem omni credenti. Illa sunt verba vitae huius. Nec opus est hic aliqua hypallage, quia relatio <greek>ταύτης</greek> praesentem indicat vitam, de qua illis erat quaestio cum Pharisaeis. Illa autem non erat haec externa: sed aeterna illa, & tota summa Euangelicae doctrinae.
+
+4. Sequitur obedientia Apostolorum, qui ingrediuntur templum, idque fummo mane, vt scias à carcere mox templum repetitum, idque mane: quia in illo etiam templo ante solis ortum, ad sacra conueniebant.
+
+Docent igitur loco & tempore idoneo. Nos discamus quid liberatos à periculis deceat, scilicet maiori diligentia pietati incumbere.
+
+III. Sequitur hostium conatus re nondum illis patefacta. Primum cogunt concilium. <margin>Quid liberatis Apostolis faciat cum suis Pontifex affeclis.</margin> Author illius est Pontifex & pauci quidam, hoc est, Sadducaei. Hinc synedrium & <greek>γερουσία</greek> filiorum Israel, hoc est, plenissimus coetus, perfectus Senatus tanquam in re graui. Non solebat in causis leuibus hic fenatus congregari.
+
+2. Rei cognitio, & deprehensa veritas: mittunt ad carcerem ministros, qui adducunt captiuos. Reuersi quid referunt? Carcerem munitum reperimus: custodes foris etiam astantes: sed ingrediente neminem reperimus. Vides insolitam rerum mutationem.
+
+Hic imprimis expende, cur miraculum hoc non fit fic explicatum vel ab Angelo, vel ab Apostolis: sed potius hic hostium ministris tribuatur illius narratio. Fit id ad rei maiorem emphafim, vt videas nihil vel custodes tale sensisse, vel alios suspicatos: sed improuisum, & stupendum esse miraculum.
+
+Deinde cur lateat hoc tantos viros. Vtique rei nouitas debuit eos percellere: ac validius apud eos esset, non ab aliis quam propriis ministris debuerunt discere.
+
+Sed ne fic mouentur. Disce igitur hoc saltem, hinc effectum, vt constaret quomodo Deus suorum hostium consilia eludat: putant praedam in manibus: sed quid? elusi sunt, vt corui hiantes. Sic prius vidimus Saphiram, per horas tres ignorasse mariti fui fortunam.
+
+3. Vt hinc affecti est stupor: <greek>διηπόρουν</greek>, hoc est, ambiguo sunt animo: nesciunt quid faciant, haec fit etiam quid illis hinc colligendum, sic confunduntur. Obstinatos tamen fuisse, certum est, quia solum de euento cogitant, nihil de poenitentia, quo euafurum esset, quasi dicat, non latuit eos miraculi vis: sed caeci inuidia resistunt, auidi etiam euentus.
+
+4. Plenior rei cognitio. Dum attoniti stupent, adest alius nuncius, qui plenius re enarrat. Qualis hic fuerit nuncius parum refert: fieri potest, virum simplicem, & bonu fuisse: probabilius tamen adulatorē aliquem, qui hinc voluerit venari gratia aliquam apud Pontifices. Vt fit, casu illis videtur adesse: cum illi nec miserint, nec consilio expectet. Quod Deum vero attinet, certo consilio & prouidentia missus adest. Ita nobis multa eueniunt casu & fortuito in nostris actionibus: quae tame quod Deum attinet, consilio & ratione prouidentiae eueniunt.
+
+<margin>Indurantur Iudęi ad mirationem liberationis.</margin> IIII. Expectari hic poterat à bonis ingeniis aliqua illorum significatio emendationis: sed pergit commemorare iam, rem semper in deterius vergere apud Pontifices.
+
+Primum enim denuo capiuntur, idque à praefecto templi, vt scias concilij hoc decretum esse: nam hic iure interest. Haec illorum est emendatio. Sed prouida est malitia: non vim inferunt, vt prius, verum amice eos inuitant ad consessum, quasi audiendi libere.
+
+Hic mos est hypocritarum: blande irretire solent, quos palam obruere non audent. Et quae est huius facti ratio? Anne sapere incipiunt? minime vero: sed metuunt lapidationem: En metum & causam metus. Idem habes in causa Christi Matth. 21. luc. 20. Chorus est malorum, impotens tamen conatus, & periculi plenus.
+
+2. Sistunt eos iterum consilio. Animos videas exasperatos. Nolunt videri frustra congregati.
+
+<vocab>Apostoli, Angelus, Pharisaei, Euangelium, Pontifex, Sadducaei, Synedrium, miraculum, hypocritae</vocab>
+
+==== NEXT PAGE SOURCE (start; context only) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<header>COMMENT. IN ACTA APOST.</header>
+
+Et dum in carceribus non deprehendunt, ex templo adducunt, vt bilem aliquo pacto euomant: & cùm superati fint priori facto, iam vel isto superiores Apostolis videantur.
+
+<margin>Conci-
+liorum
+semper
+magna
+fuit au-
+thoritas.</margin>
+3. Obiurgatio grauis describitur. Primum obiiciunt eis contemptum decretorum suorum. Nonne etiam atque etiam mandauimus vobis? q.d. Non curatis nostra decreta. Senatum hunc contemnimus. Videas hic magna semper fuisse <term>ousias</term> authoritatem, nec est quicquam aliud quod magis imponat etia hominibus doc…
+
+==== TRANSLATION (this page) ====
+<header>C H A P T E R V.</header>
+
+we have spoken of the office of the Angels in defending the pious.
+
+2. When. Clearly that same night: for only one night intervenes between the imprisonment and the gathering of the council. They are therefore liberated on this very night, and they rest here most safely, with great security, soon to return to their duty, as the persona of the Angel serves for consolation, and so too does the brevity of time. Adversities do not last long. Therefore, they must be endured with a brave heart.
+
+<margin>Liberation increases the constancy of the Apostles in teaching.</margin> 3. Why are they liberated? The speech of the Angel declares it: Go and stand and speak to the people in the temple, all the words of this life. The sentiment of the Angel is that they must teach the Gospel more spiritedly from then on, because it is like the end or purpose of their liberation, as if he were saying, You were not to be liberated unless you were to teach from then on, even more constantly against the Pharisees. There are arguments for diligence: because they must go, as if he were saying, from the prison to the temple, from chains to doctrine. Then, because he commands them to do it standing, that is, fearlessly and spiritedly. Third, because in the temple, not privately. Nor does the contamination of the temple stand in the way of their being sent there.
+
+<margin>A paraphrase of the Gospel.</margin> Fourth, because to the people, that is, publicly, to all who gather for sacred rites. Fifth, what will they teach? πάντα τὰ ῥήματα τῆς ζωῆς ταύτης <gloss>all the words of this life</gloss>. It is a brief paraphrase of the Gospel, according to that in John 6: "You have the words of eternal life," and in the same place, "The words that I speak, they are life." It is called life because it contains the method for obtaining eternal life. Nor does it only contain the method, but it provides the power to attain it. Hence that in Romans 1: "It is the power of God unto salvation to everyone who believes." Those are the words of this life. Nor is any <term>hypallage</term> <gloss>a figure of speech in which cases are exchanged</gloss> needed here, because the relation ταύτης <gloss>this</gloss> points to the present life, concerning which the question was for them with the Pharisees. But that was not this external life, but that eternal one, and the whole sum of evangelical doctrine.
+
+4. The obedience of the Apostles follows, who enter the temple, and that at the break of dawn, so that you may know that the temple was sought out again soon after the prison, and in the morning, because they gathered for sacred rites in that temple even before sunrise.
+
+They teach, therefore, in a suitable place and time. Let us learn what becomes those who have been liberated from dangers, namely, to devote themselves to piety with greater diligence.
+
+III. The attempt of the enemies follows, the matter not yet being revealed to them. First, they convene the council. <margin>What the High Priest does with his minions, the Apostles having been liberated.</margin> Its author is the High Priest and a certain few, that is, the Sadducees. Hence the Sanhedrin and γερουσία <gloss>senate/council of elders</gloss> of the sons of Israel, that is, the fullest assembly, a perfect Senate as if in a grave matter. This senate was not accustomed to be gathered in light cases.
+
+2. The inquiry into the matter, and the truth discovered: they send ministers to the prison, who bring the captives. Having returned, what do they report? We found the prison fortified, the guards standing outside, but upon entering, we found no one. You see an unusual change of events.
+
+Here, above all, weigh why this miracle is not explained as such by the Angel or by the Apostles, but rather its narration is attributed to the ministers of the enemies. It is done for the greater emphasis of the matter, so that you may see that neither the guards sensed such a thing, nor did others suspect it, but it is an unforeseen and stupendous miracle.
+
+Then, why should this lie hidden from such great men? Certainly, the novelty of the matter should have struck them; and it would be more valid among them, as they ought to have learned it from no others than their own ministers.
+
+But they are not moved even by this. Learn, therefore, at least this effect: that it might be established how God eludes the counsels of his enemies. They think the prey is in their hands, but what? They are eluded like gaping crows. Thus we previously saw Sapphira, who for three hours remained ignorant of her husband's fortune.
+
+3. As to how they are affected: it is stupor; διηπόρουν, that is, they are of an ambiguous mind; they do not know what they are doing, and this is also what is to be gathered by them from this, so confused are they. It is certain, however, that they were obstinate, because they think only of the outcome, nothing of repentance, as if to say, the power of the miracle did not escape them, but blind with envy, they resist, greedy also for the outcome.
+
+4. A fuller knowledge of the matter. While they stand astonished and stupified, another messenger is present who explains the matter more fully. What sort of messenger this was matters little; it is possible he was a simple and good man; however, it is more probable that he was some flatterer who wished to hunt for some favor with the High Priests. As happens, it seems to them that he is present by chance, when they neither sent for him nor expected him by plan. But as far as God is concerned, he is present, sent by certain plan and providence. Thus, many things happen to us by chance and accidentally in our actions, which, however, as far as God is concerned, come about by plan and the reason of providence.
+
+<margin>The Jews are hardened to the wonder of the liberation.</margin> IIII. One could have expected from good natures some indication of their amendment here, but he proceeds to recount that the matter always turns for the worse among the High Priests.
+
+For first, they are captured again, and that by the captain of the temple, so that you may know that this is a decree of the council, for he has a legal interest here. This is their amendment. But malice is provident: they do not inflict force as before, but rather they invite them in a friendly manner to the meeting, as if to be heard freely.
+
+This is the custom of hypocrites; they are accustomed to ensnare blandly those whom they dare not openly overwhelm. And what is the reason for this action? Do they begin to grow wise? Not in the least, but they fear stoning. Behold the fear and the cause of the fear. You have the same thing in the case of Christ in Matthew 21, Luke 20. It is a choir of the wicked, yet an impotent attempt, and full of danger.
+
+2. They station them before the council again. You may see that their spirits are exasperated. They do not wish to seem to have gathered in vain.
+
+<vocab>Apostles, Angel, Pharisees, Gospel, High Priest, Sadducees, Sanhedrin, miracle, hypocrites</vocab>
+
+
+######## ITEM 15/15  id=ef717e2fff  language=Latin
+
+==== PREVIOUS PAGE SOURCE (end; context only) ====
+…. IX. v. 27. Uniuscujusque actiones quasi per trutinam examinantur; Illos, qui leves reperti fuerint, rejicit supremus Judex, atque hac methodo usus est adversus Belsazarum, Daniel c. V. v. 27. Hieronymus in Joelem. c. II. *Quicquid in die Iudicii futurum est omnibus, hoc in singulis die mortis impletur.* Negat hoc contra Orthodoxiam Ecclesiae Lactantius Divin. Instit. lib. VII. c. 21. *Nec quisquam putet, animas post mortem protinus judicari, omnes una communique custodia detinentur, donec tempus adveniat, quo maximus Iudex meritorum faciat examen.*
+
+§. 7. Ad pietatem, Christianamque religionem proxime videtur accedere Socratis sententia, qui teste Cicerone, lib. I. Tusculanarum Quaestionum
+
+==== SOURCE (this page) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>0</page-num>
+<header>❃ (0) ❃</header>
+<sig>(a)</sig>
+<meta>Catchword: V.2. The page number is stylized in the header.</meta>
+
+<image-desc size="small" type="decorative" significance="low">Small printer's ornaments (floral or stellar symbols) flanking the page number in the header.</image-desc>
+
+censuit, duas esse vias, duplicesque cursus animarum è corpore excedentium. Nam qui se humanis vitiis contaminassent, et se totos libidinibus dedissent, iis devium quoddam iter esse, seclusum à concilio Deorum; qui autem se integros castosque servassent, quibusque fuisset minima cum corporibus contagio, essentque in corporibus humanis vitam imitati Deorum, his ad illas, a quibus essent profecti, reditum facilem patere.
+
+§. 8 Etsi vero Beatorum in coelis circa perceptionem æternæ felicitatis eadem conditio sit, illos tamen, qui vitæ integritate et justitia cæteris præstiterunt, ut sidera fulgere pronunciat Daniel capitulo VII. versu 3. Simili modo Dominus noster JESUS CHRISTUS, ubi ad ultimum judicium venerit, martyribus propter confessionem veritatis, imponet præeminentiæ Coronam. Enimvero animarum immortalium nullam in conspectu Domini esse confusinem, satis arguit numerus Beatorum, à Daniele annotatus capitulo VII, versu 10. ubi Angeli, qui Antiquo, hoc est, Summo Deo serviunt, ab animabus fidelium distinguuntur. Animæ separatæ à corpore moventur de loco in locum, sicut Angeli, argumento capitulo XXVIII
+
+<vocab>anima, corpus, Deorum, Beatorum, coelis, felicitatis, Daniel, Jesus Christus, judicium, martyribus, Angeli, Antiquo</vocab>
+
+==== NEXT PAGE SOURCE (start; context only) ====
+<scan-quality>good</scan-quality>
+<language>Latin</language>
+<script>printed</script>
+<page-type>text</page-type>
+<sig>(B) 2</sig>
+<header>(o)</header>
+<meta>Catchword: §. 10. Sad-</meta>
+
+<image-desc size="small" type="decorative" significance="low">Printer's ornaments consisting of floral and leaf-like scrollwork elements flanking the centered header text.</image-desc>
+
+v. 2. apud Matthæum, sed motus conveniens est substantiæ spirituali, cui nihil decedit per prædictam separationem.
+
+§. 9. Præter custodiam Domini pro animabus, nullum aliud receptaculum constituendum est. Pontificiis Doctoribus Ecclesiæ Latinæ ad stabiliendum Purgatorium, quod Scriptura nullibi agnoscit, nihil opitulantur t…
+
+==== TRANSLATION (this page) ====
+<note>Small printer's ornaments, consisting of floral or stellar symbols, flank the page number in the header.</note>
+
+<header>❃ (0) ❃</header>
+<sig>(a)</sig>
+
+thought, there are two paths and two double courses for souls departing from the body. For those who had contaminated themselves with human vices and had given themselves over entirely to lusts, there is a certain wayward path, excluded from the council of the Gods; but for those who had kept themselves upright and chaste, and who had had the least contagion with bodies, and who had imitated the life of the Gods while in human bodies, for them an easy return lay open to those from whom they had set out.
+
+§. 8. Although the condition of the Blessed in heaven concerning the perception of eternal happiness is the same, nevertheless, as Daniel declares in chapter 12, verse 3, he pronounces that those who surpassed others in integrity of life and justice shine like the stars. In a similar way, our Lord JESUS CHRIST, when He comes to the final judgment, will place a crown of preeminence upon the martyrs on account of their confession of the truth. Indeed, that there is no confusion of immortal souls in the sight of the Lord is sufficiently argued by the number of the Blessed, noted by Daniel in chapter 7, verse 10, where the Angels, who serve the Ancient One, that is, the Most High God, are distinguished from the souls of the faithful. Souls separated from the body move from place to place, just as Angels, by the argument of chapter 28
+
+<summary>This page discusses Socratic views on the afterlife and the state of the Blessed in heaven, emphasizing their distinction from angels and their movement.</summary>
+<keywords>Socrates, Cicero, Afterlife, Blessed, Daniel, Martyrs, Angels, Soul</keywords>

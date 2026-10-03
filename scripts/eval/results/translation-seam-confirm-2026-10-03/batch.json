@@ -13,7 +13,13 @@
       "job_name": "batches/bilk7vtvca51x86s65cyqc12cftxzq117pjg",
       "file_name": "files/z1q2rauqs8yw",
       "requests": 375,
-      "submitted_at": "2026-10-03T08:08:15.905Z"
+      "submitted_at": "2026-10-03T08:08:15.905Z",
+      "collected_at": "2026-10-03T08:12:24.001Z",
+      "responses": 375,
+      "errors": 0,
+      "in_tokens": 1455901,
+      "out_tokens": 465224,
+      "cost_usd": 0.5309056249999999
     }
   ]
 }
