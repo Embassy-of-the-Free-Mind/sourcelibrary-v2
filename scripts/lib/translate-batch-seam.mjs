@@ -62,6 +62,7 @@ import { isHeld } from './pipeline-hold.mjs';
 import { dropDriftedPages, translationProse } from './block-drift.mjs';
 import { echoedSource, readingLength } from './page-integrity.mjs';
 import { sumBatchResponseUsage } from '../workers/lib/supabase-usage-logger.mjs';
+import { parseFolioMarkedText } from './folio-markers.mjs';
 import { costOf, BATCH_MULTIPLIER } from './model-pricing.mjs';
 
 // ── Constants (mirrors of production where noted) ──────────────────────────
@@ -138,12 +139,23 @@ export function maxOutputTokensFor(pages) {
  * rule; every other page — and this lane's page-break behaviour, which was never measured with
  * the #5103 devices — is byte-identical to what was sent before.
  */
-export function blockPrompt({ prompts, book, pages }) {
+/**
+ * Folio markers (#5678): `TRANSLATE_FOLIO_MARKERS=1` asks a multi-page block for ONE continuous
+ * English text with `<pb n="N"/>` where each source page begins (translate-core
+ * FOLIO_MARKER_RULE), and parseBlockResponse then splits it into page spans. OFF by default:
+ * unset, every prompt and every parse is byte-identical to before. Measured on the Tengyur pilot
+ * only (scripts/eval/experiments/2026-10-03-folio-markers-5678.md); no lane runs with it on.
+ */
+export function folioMarkersEnabled(env = process.env) {
+  return env.TRANSLATE_FOLIO_MARKERS === '1';
+}
+
+export function blockPrompt({ prompts, book, pages, folioMarkers = folioMarkersEnabled() }) {
   if (pages.length === 1) {
     const { prompt, promptRef, isEnglish } = buildTranslationPrompt({ prompts, book, ocrText: pages[0].ocr.data, pageBreak: LEAF_BREAK_ONLY });
     return { prompt, promptRef, isEnglish };
   }
-  const { prompt, promptRef, isEnglish } = buildBlockTranslationPrompt({ prompts, book, pages, pageBreak: LEAF_BREAK_ONLY });
+  const { prompt, promptRef, isEnglish } = buildBlockTranslationPrompt({ prompts, book, pages, pageBreak: LEAF_BREAK_ONLY, ...(folioMarkers ? { folioMarkers: true } : {}) });
   return { prompt, promptRef, isEnglish };
 }
 
@@ -154,12 +166,23 @@ export function blockPrompt({ prompts, book, pages }) {
  * boundary whose opening clause landed on the previous page drops both its pages. A block of
  * one takes the whole response.
  */
-export function parseBlockResponse(responseText, pages, { onDrift } = {}) {
+export function parseBlockResponse(responseText, pages, { onDrift, folioMarkers = folioMarkersEnabled() } = {}) {
   const out = new Map();
   if (!responseText) return out;
   if (pages.length === 1) {
     const text = sanitizeTranslationTags(String(responseText).trim());
     if (text) out.set(pages[0].page_number, text);
+    return out;
+  }
+  // Folio markers (#5678): each page takes its own span. A page whose marker is missing or
+  // duplicated is left undrafted (back to the queue), never given a neighbour's words.
+  if (folioMarkers) {
+    const parsed = parseFolioMarkedText(responseText, pages.map((p) => p.page_number));
+    const bad = new Set([...parsed.missing, ...parsed.duplicated]);
+    if (parsed.outOfOrder) return out;
+    for (const pg of parsed.pages) {
+      if (!bad.has(pg.page_number) && pg.span) out.set(pg.page_number, sanitizeTranslationTags(pg.span));
+    }
     return out;
   }
   const tooShort = (p, text) => !!p && (p.ocr?.data || '').length > 100 && text.length < (p.ocr?.data || '').length * 0.15;
