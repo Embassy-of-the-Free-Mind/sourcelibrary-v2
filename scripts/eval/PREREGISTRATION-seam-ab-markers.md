@@ -219,3 +219,49 @@ The --pin estimate is quoted in Amendment 1, and the hard cap is **$2**:
      hoc, and only as the answer to "do markers fix the seam once the numbering bug is fixed". The numbering fix
      itself (sequence numbers in the prompt, or a positional parser) is out of scope here, and is reported as a
      finding for #5678.
+
+## Result (2026-10-03)
+
+The numbers are in `results/seam-ab-5678/report.json` (`decision`). Every count below is breaks out of the 100
+true mid-sentence breaks with a real seam defect, flagged by both judges, with Wilson 95% intervals.
+
+**Noise floor, read first:**
+- A: 21 (14–30%).
+- A2: 26 (18–35%).
+- |A − A2| = 5 (10 vs 5 discordant breaks).
+
+**Primary, as registered (literal parse): UNRESOLVED.**
+- B: 28 (20–38%). 17 of its 28 are blocks the literal parse could not split.
+- C: 18 (12–27%). 11 of its 18 are such blocks.
+- Clause 1 (markers fix Lite) fails: B is worse than A.
+- Clause 2 (Flash beyond markers) holds: C vs B is 8 vs 18 discordant, p 0.038.
+- Clause 3 (C beats production) fails: C vs A is 12 vs 15 discordant, p 0.35.
+- The control guard fails for B (5 vs 1, all of them parse failures) and holds for C (2).
+
+**Post hoc, Amendment 2 (positional reading): MODEL.**
+- B: 15 (9–23%).
+- C: 8 (4–15%).
+- B vs A: A − B = 6 > noise, but 5 vs 11 discordant, one-sided p 0.105, which misses 0.10.
+- C vs A: 5 vs 18, p 0.005.
+- C vs B: 2 vs 9, p 0.033.
+- Controls: 1 / 1 / 0 / 0.
+
+**Defect kinds, both judges (A / A2 / B / C):**
+
+| Kind | A | A2 | B | C |
+|---|---:|---:|---:|---:|
+| Forced closure | 12 | 15 | 6 | 1 |
+| Duplication | 5 | 8 | 1 | 0 |
+| Words moved ≥ 6 | 6 | 9 | 5 | 5 |
+| Edge omission | 4 | 6 | 4 | 3 |
+
+So markers on Lite halve forced closures and nearly remove duplication, but do not stop the import. Flash with
+markers removes almost all closures.
+
+**Judges:**
+- Plants caught: 32 of 32.
+- Inter-judge agreement on "real defect": 475 of 480.
+- Repeat agreement: 59 of 64.
+
+**Spend:** $0.848 (480 Batch requests). The `gemini_usage` meter matches: $0.848 over 480 rows. The envelope was
+opened for the submit only and is removed.
