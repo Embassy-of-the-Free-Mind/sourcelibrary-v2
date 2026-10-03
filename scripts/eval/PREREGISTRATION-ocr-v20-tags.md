@@ -93,3 +93,18 @@ Reported, not gating: per-arm `<unclear>` rates on S3, T and S5; PN tag-absent a
 - **Cap:** $8. If the build estimate exceeds $8, k drops to 2 for PN and LG only.
 - **Metering:** `eval/ocr-v20-tags-4195`.
 - **Where it runs:** from the laptop. Nothing is written to `prompts` or `pages`, and no default changes.
+
+## Amendment 1: PN key check (2026-10-03, after the draw, before any request)
+
+The draw gave W 31, T 38, S3 88, S5 38, PN 50 (30 on-line, 20 misread) and LG 40. Its log is `results/ocr-v20-tags-2026-10/draw-log.json`. The "mixed" LG pool held only 31 books.
+
+**Every misread page and 10 on-line pages were checked by eye**, as planned (`dataset/ocr-v20-pn-key-check.jsonl`):
+- **On-line: 10 of 10 keys correct.** The rule holds, so the other 20 on-line pages stand unchecked, as pre-registered.
+- **Misread: 10 of 20 keys wrong, and those 10 pages are dropped.**
+  - In 4 the stored tag WAS what is printed (173, 118, 29, 26). The printer misnumbered, so the book's fitted line is wrong for that page.
+  - 2 carry no number at all (a section opening; a plate with a part title).
+  - 4 are ambiguous: a blackletter digit that reads as 1 or 2 (twice), a faint middle digit, and a lone "I" that could be roman l.
+
+**PN is therefore 40 pages: 30 on-line and 10 misread.** The rest of the rule is unchanged.
+
+**Finding for #4291 and #5059.** `pageNumMisreads` "misread" verdicts are about half real on this sample (10 of 20 survive). A per-book fit cannot overrule the printed number on its own: a printer's misnumbering is exactly where "as printed" and "the book's line" disagree.
