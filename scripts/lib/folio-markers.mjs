@@ -24,6 +24,8 @@
  * page-break rules.
  */
 
+import { stripMarkupTags } from './strip-markup-tags.mjs';
+
 /** One marker: `<pb n="35"/>`, tolerant of spacing and quote style. */
 export const FOLIO_MARKER_RE = /<pb\s+n\s*=\s*["']?(\d+)["']?\s*\/?>/g;
 
@@ -132,7 +134,7 @@ export function parseFolioMarkedText(responseText, pageNumbers) {
 
   const clean = (t) => t.replace(FOLIO_MARKER_RE, '').trim();
   const leading = clean(markers.length ? continuous.slice(0, markers[0].index) : continuous);
-  const hasLead = leading.replace(/<[^>]+>/g, '').trim().length > 0;
+  const hasLead = stripMarkupTags(leading).trim().length > 0;
   const numbersAreSequence = markers.length > 0 && !unexpected.length && !duplicated.length && !outOfOrder;
 
   // starts: one per page that has a span — { n, at (index in `continuous`), from (where its text starts) }
