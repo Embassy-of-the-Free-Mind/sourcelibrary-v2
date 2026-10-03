@@ -1,0 +1,88 @@
+{
+ "id": "69e9c962625ec74a14473399_00093",
+ "image_legible": true,
+ "ocr_word_errors": 36,
+ "ocr_words_approx": 620,
+ "ocr_errors": [
+  {
+   "image": "haud secus irruunt praecipites ac in fugaces ceruos aut feros apros si digitto monstrentur. Accidit interdum non ensibus",
+   "ocr": "haud ferox insu: non ensibus",
+   "effect_on_english": "a whole printed line dropped and garbled; 'They were not ferocious against the armed natives' (sense reversed)"
+  },
+  {
+   "image": "qui nunq̃ [nunquam] tigridem uiderunt",
+   "ocr": "qui nunc tigridem uiderunt",
+   "effect_on_english": "'those who now saw the tiger' instead of 'who have never seen a tiger'"
+  },
+  {
+   "image": "uberibus adhuc matris indigos",
+   "ocr": "uberibus adhuc matris indignos",
+   "effect_on_english": "'still unworthy of the mother's milk' instead of 'still needing'"
+  },
+  {
+   "image": "paruulos reportant lactandos",
+   "ocr": "paruulos reportant.",
+   "effect_on_english": "'to be suckled' missing"
+  },
+  {
+   "image": "Desertos pacrae boios",
+   "ocr": "De fertos pacrae boios",
+   "effect_on_english": "'the villages of Pacra': 'deserted' lost"
+  },
+  {
+   "image": "deq̃ iniuriis alteriusmodi",
+   "ocr": "decq̃ ininitis alteriusmodi",
+   "effect_on_english": "'the infinite things of another kind' instead of 'wrongs of another kind'"
+  },
+  {
+   "image": "ut de pacra supplicium sumeretur eflagitabant",
+   "ocr": "ut de pacra suppliciu sumeretur.",
+   "effect_on_english": "'they demanded' missing; sentence re-joined"
+  },
+  {
+   "image": "e fossae superciliis in eum sudibus infixum deiectis",
+   "ocr": "& fosse superciliis in eum fudibus infixi de-iectis",
+   "effect_on_english": "'rocks and stakes thrown at it' instead of rocks thrown on it as it hung on the stakes"
+  },
+  {
+   "image": "canibus solutis p̄euntibus agmen toruo molossorum aspectu",
+   "ocr": "canis-bus folutis peuntibus agmen torno molofforꝫ aspectu",
+   "effect_on_english": "'going ahead' and 'grim' lost; otherwise none"
+  },
+  {
+   "image": "quae dāt accipimus",
+   "ocr": "quae dat accipimus",
+   "effect_on_english": "'which we accept as given' for 'we take what they give'"
+  },
+  {
+   "image": "interrogatus ... qui parentum suoque tempore ... colligerent",
+   "ocr": "interrogat ... qui parenti- fuoq̃ tempore ... colligeret",
+   "effect_on_english": "none (guessed right)"
+  },
+  {
+   "image": "ad almirātū & primores",
+   "ocr": "ad admirattū & primores",
+   "effect_on_english": "none ('to the admiral')"
+  }
+ ],
+ "page_cause": "ocr_misread",
+ "causes": [
+  {
+   "finding": "Reversal: 'They were not ferocious against the armed natives' vs dogs rush furiously on armed natives",
+   "cause": "ocr_misread",
+   "image": "haud secus irruunt praecipites ac in fugaces ceruos aut feros apros",
+   "ocr": "haud ferox insu:",
+   "english": "They were not ferocious against the armed natives"
+  },
+  {
+   "finding": "minor: 'the villages of Pacra' for 'desertos pacrae boios' (deserted houses)",
+   "cause": "ocr_misread",
+   "image": "Desertos pacrae boios idest domos ingressus",
+   "ocr": "De fertos pacrae boios idest domos ingressus",
+   "english": "having entered the villages of Pacra—that is, his houses"
+  }
+ ],
+ "share_of_served_error_from_ocr": "all",
+ "fixed_transcription_written": true,
+ "note": "IMAGE/OCR OFF BY ONE: the stored image .../0093.jpg is the NEXT leaf ('LIBER SECVNDVS. catos ad se ualitudinarios ... TERTIAE DECADIS LIBER TERTIVS'); the OCR text is the page on .../0092.jpg ('CREDITI CONTINENIS animal. Necessitate ... ut uo'), which I read instead (crops/…_00093-prev0092-*). On 0092 the OCR drops the line 'secus irruunt praecipites ac in fugaces ceruos aut feros apros si digitto monstrentur. Accidit interdum' -> the judged reversal."
+}

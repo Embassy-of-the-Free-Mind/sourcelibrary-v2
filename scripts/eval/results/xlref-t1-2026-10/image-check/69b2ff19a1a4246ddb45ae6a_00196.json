@@ -1,0 +1,27 @@
+{
+ "id": "69b2ff19a1a4246ddb45ae6a_00196",
+ "image_legible": true,
+ "ocr_word_errors": 0,
+ "ocr_words_approx": 150,
+ "ocr_errors": [],
+ "page_cause": "translation",
+ "causes": [
+  {
+   "finding": "Reversal: 'envying no one' for 'nemini non inuidens' (envying everyone)",
+   "cause": "translation",
+   "image": "nemini non inuidens, si quid quantumlibet inepte moliatur",
+   "ocr": "nemini non inuidens, si quid quantumlibet inepte moliatur",
+   "english": "envying no one if they attempt anything however foolishly"
+  },
+  {
+   "finding": "minor: opening 'si quid mentior' absent",
+   "cause": "translation",
+   "image": "si quid mentior. Noui quēdam",
+   "ocr": "si quid mentior. Noui quēdam",
+   "english": "I know a certain \"polytechnician\""
+  }
+ ],
+ "share_of_served_error_from_ocr": "none",
+ "fixed_transcription_written": false,
+ "note": "OCR body matches the image word for word (line 'euoluat, excutiatq;, nemini non inuidens,'). Only the OCR <page-num> is off: image folio is 192, OCR says 292. Read from the full image (large clear roman type); strips not needed."
+}

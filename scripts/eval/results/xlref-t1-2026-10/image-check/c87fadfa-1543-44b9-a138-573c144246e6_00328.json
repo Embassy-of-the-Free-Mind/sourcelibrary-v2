@@ -1,0 +1,31 @@
+{
+ "id": "c87fadfa-1543-44b9-a138-573c144246e6_00328",
+ "image_legible": true,
+ "ocr_word_errors": 4,
+ "ocr_words_approx": 300,
+ "ocr_errors": [
+  {
+   "image": "formatum ſiet / quam finis ſiet / separatum ſiet (siet = sit)",
+   "ocr": "formatum fiet / quam finis fiet / ſeparatum fiet",
+   "effect_on_english": "none ('is formed', 'which is the goal', 'is made pure')"
+  },
+  {
+   "image": "quod sublata effossa ſient ex naturalib. meatibus",
+   "ocr": "quod ſublata effoſſa fient ex naturalib. meatibus",
+   "effect_on_english": "none ('have been removed and dug out')"
+  }
+ ],
+ "page_cause": "none",
+ "causes": [
+  {
+   "finding": "No defects reported for served English (fidelity 5/5)",
+   "cause": "none",
+   "image": "quo ex itidem aurum fieri potest, quam ex aliis metallis",
+   "ocr": "quo exitidem aurum fieri poteſt, quam ex aliis metallis",
+   "english": "Gold can be produced from this just as well as"
+  }
+ ],
+ "share_of_served_error_from_ocr": "none",
+ "fixed_transcription_written": true,
+ "note": "OCR matches the page except that the long-s forms 'ſiet' (3x) and 'ſient' (1x) are read as 'fiet/fient'; compare the crossbarred f in 'argentum fit' on the same line. No effect on the English. Fixed file changes only those four words."
+}
