@@ -41,6 +41,11 @@
  *   --crisis-only              books with spread_translation_crisis: true
  *   --ia-only                  Internet Archive books (ia_identifier set) — see below
  *   --translated               books with at least one translated page
+ *   --pages-with-images        only re-archive pages with detected_images (plates,
+ *                              figures: where zoom matters most). The book is NOT
+ *                              stamped image_resolution_upgraded_at, so a later
+ *                              full run still takes it; reruns skip pages already
+ *                              at master via the per-page held check.
  *   --random                   (--audit) draw --limit books at random instead of the
  *                              first N in natural order — the first N are the oldest
  *                              imports, and 200 of them audited 0 low-res while a
@@ -121,6 +126,7 @@ const CRISIS_ONLY = FLAG('--crisis-only');
 const IA_ONLY = FLAG('--ia-only');
 const TRANSLATED = FLAG('--translated');
 const RANDOM = FLAG('--random');
+const PAGES_WITH_IMAGES = FLAG('--pages-with-images');
 const CONCURRENCY = parseInt(ARG('--concurrency', '2'));
 const PAGE_CONCURRENCY = parseInt(ARG('--page-concurrency', '4'));
 const LIMIT = parseInt(ARG('--limit', '0'));
@@ -170,6 +176,7 @@ function buildBookQuery() {
   if (CRISIS_ONLY) q.spread_translation_crisis = true;
   if (IA_ONLY) q.ia_identifier = { $type: 'string' };
   if (TRANSLATED) q.pages_translated = { $gt: 0 };
+  if (PAGES_WITH_IMAGES) q.detected_images_count = { $gt: 0 };
   // Resume support for long interruptible runs: refetchOne stamps
   // image_resolution_upgraded_at on success, so this makes re-runs converge
   // on the remaining books instead of redoing finished ones.
@@ -440,10 +447,12 @@ async function refetchOne(book) {
     // it arrives undefined and every regenerated display/thumb is written
     // WITHOUT the keyed watermark — unattributable in the wild (#2651). The
     // function logs that as a warning, so the only symptom was a line in a log.
-    { projection: { id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, split_side: 1, display_photo: 1, image_thumb: 1, thumbnail_blob: 1, image_metadata: 1 } },
+    { projection: { id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, split_side: 1, display_photo: 1, image_thumb: 1, thumbnail_blob: 1, image_metadata: 1, detected_images: { $slice: 1 } } },
   ).sort({ page_number: 1 }).toArray();
 
   if (!pages.length) return { skipped: 'no-pages' };
+  const toWrite = PAGES_WITH_IMAGES ? pages.filter(p => p.detected_images?.length) : pages;
+  if (!toWrite.length) return { skipped: 'no-image-pages' };
   if (isAlreadySplit(pages)) return { skipped: 'already-split (use --recover-split)' };
 
   // Decide once per book, from the median of three interior pages (measureBook).
@@ -481,10 +490,10 @@ async function refetchOne(book) {
     }
   }
 
-  console.log(`  ${(book.title || '').substring(0, 55)} — upgrading ${held}→${info.width}px (${pages.length} pages)`);
+  console.log(`  ${(book.title || '').substring(0, 55)} — upgrading ${held}→${info.width}px (${toWrite.length} pages)`);
 
   let updated = 0, skipped = 0, failed = 0;
-  await parallelMap(pages, async (page) => {
+  await parallelMap(toWrite, async (page) => {
     const url = page.photo_original || page.photo;
     if (!isIiifUrl(url)) { skipped++; return; }
     const result = await fetchUpgraded(url);
@@ -531,7 +540,7 @@ async function refetchOne(book) {
 
   // Stamp only fully-clean books: a partial failure (e.g. laptop sleep killed
   // in-flight fetches) must not look "done" to --skip-upgraded re-runs.
-  if (!DRY_RUN && updated > 0 && failed === 0) {
+  if (!DRY_RUN && !PAGES_WITH_IMAGES && updated > 0 && failed === 0) {
     await db.collection('books').updateOne(
       { id: book.id },
       { $set: {
