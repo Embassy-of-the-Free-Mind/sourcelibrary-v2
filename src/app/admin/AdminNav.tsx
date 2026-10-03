@@ -16,6 +16,7 @@ const adminLinks: NavItem[] = [
   { href: '/admin/canon', label: 'Canon' },
   { href: '/curation/identity-review', label: 'Identity review' },
   { href: '/admin/pipeline', label: 'Pipeline' },
+  { href: '/admin/work', label: 'Work in flight' },
   { href: '/admin/processing', label: 'Processing' },
   { href: '/admin/quality', label: 'Quality' },
   { href: '/admin/realtime', label: 'Realtime' },
