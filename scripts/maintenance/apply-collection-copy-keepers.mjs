@@ -26,6 +26,10 @@
  *
  * DRY BY DEFAULT. Hiding books site-wide waits for Derek.
  *
+ * --basis comparator|by-eye limits the run to pairs confirmed that way; the rest are listed as
+ * deferred. Derek approved the comparator-confirmed set first (2026-10-03); the by-eye-only
+ * pairs wait for a second look.
+ *
  *   node --env-file=.env.production.local scripts/maintenance/apply-collection-copy-keepers.mjs [--json out.json]
  *   node --env-file=.env.production.local scripts/maintenance/apply-collection-copy-keepers.mjs --apply
  */
@@ -38,6 +42,12 @@ import { recordSweepActions } from '../lib/sweep-log.mjs';
 const APPLY = process.argv.includes('--apply');
 const jsonIdx = process.argv.indexOf('--json');
 const JSON_OUT = jsonIdx > 0 ? process.argv[jsonIdx + 1] : null;
+const basisIdx = process.argv.indexOf('--basis');
+const BASIS = basisIdx > 0 ? process.argv[basisIdx + 1] : null;
+if (BASIS && !['comparator', 'by-eye'].includes(BASIS)) {
+  console.error(`--basis must be comparator or by-eye, got ${BASIS}`);
+  process.exit(2);
+}
 const BY = 'collection-copies-5689';
 const SWEEP = `collection-copy-collapse-${new Date().toISOString().slice(0, 10)}`;
 
@@ -65,6 +75,7 @@ const plan = { would_hide: [], refused: [] };
 for (const r of confirmed.rejected) plan.refused.push({ copy_id: r.copy_id, keeper_id: r.keeper_id, why: `not confirmed: ${r.reason}` });
 for (const p of confirmed.pairs) {
   const refuse = (why) => plan.refused.push({ copy_id: p.copy_id, keeper_id: p.keeper_id, basis: p.basis, why });
+  if (BASIS && p.basis !== BASIS) { refuse(`deferred: basis ${p.basis}, run limited to ${BASIS}`); continue; }
   const keepersOfThisCopy = confirmed.keepersOfCopy.get(p.copy_id) || [];
   if (keepersOfThisCopy.length > 1) { refuse(`ambiguous: ${keepersOfThisCopy.length} confirmed keepers`); continue; }
   if (copyIds.has(p.keeper_id)) { refuse('chain: keeper is itself a confirmed copy'); continue; }
@@ -77,7 +88,7 @@ for (const p of confirmed.pairs) {
 
 const tally = (xs, k) => xs.reduce((m, x) => ((m[x[k]] = (m[x[k]] || 0) + 1), m), {});
 const whyClass = (w) => w.replace(/ \(.*\)$/, '').replace(/: \d+ confirmed keepers$/, '');
-console.log(`${APPLY ? 'APPLY' : 'DRY RUN'} — sweep ${SWEEP}, evidence ${confirmed.files.join(', ')}`);
+console.log(`${APPLY ? 'APPLY' : 'DRY RUN'}${BASIS ? ` (basis ${BASIS} only)` : ''} — sweep ${SWEEP}, evidence ${confirmed.files.join(', ')}`);
 console.log(`  evidence pairs: ${confirmed.pairs.length + confirmed.rejected.length} (confirmed ${confirmed.pairs.length}, not confirmed ${confirmed.rejected.length})`);
 console.log(`  would hide: ${plan.would_hide.length}`, tally(plan.would_hide, 'basis'));
 console.log(`  refused: ${plan.refused.length}`, plan.refused.reduce((m, r) => ((m[whyClass(r.why)] = (m[whyClass(r.why)] || 0) + 1), m), {}));
