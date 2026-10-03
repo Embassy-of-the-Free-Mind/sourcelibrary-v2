@@ -290,6 +290,9 @@ async function chained(db) {
       limit: room, zeroOnly: has('zero-only'), minPages: Number(arg('min-pages') || 0),
       visibleOnly: !has('include-hidden'), excludeChinese: has('exclude-chinese'),
       ...(arg('statuses') ? { statuses: arg('statuses').split(',').map((s) => s.trim()) } : {}),
+      // #5700: never a silent skip — the gate's refusals are printed here and recorded in book_events.
+      recordRefusals: !has('dry-run'),
+      onRefused: (b, trust) => console.log(`  ${b.id}: REFUSED — ${trust.reason}  ${String(b.title || '').slice(0, 60)}`),
     });
     const total = candidates.reduce((s, b) => s + b.approvedUsd, 0);
     for (const b of candidates) console.log(`  ${b.id}  ${String(b.language).slice(0, 12).padEnd(12)} ${b.pages_ocr}/${b.pages_count}pp tr ${b.pages_translated || 0}  ${b.pipeline_auto?.status}  approve $${b.approvedUsd}  ${String(b.title || '').slice(0, 60)}`);

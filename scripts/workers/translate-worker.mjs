@@ -26,6 +26,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { createHash, randomBytes } from 'crypto';
 import { nanoid } from 'nanoid';
 import { logUsage, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
+import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
 import {
   getTranslateModelForBook as getModelForBook,
   sanitizeTranslationTags,
@@ -1329,6 +1330,14 @@ async function selfDispatch(db, limit) {
     const label = (book.title || '').substring(0, 50);
     const pageIds = pages.map(p => p.id);
 
+    // #5700: untrusted OCR is not translated until re-read (scripts/lib/ocr-trust-gate.mjs).
+    // Checked before the claim, so the book's status is never moved for a refusal.
+    const trust = await ocrTrustGate(db, book, { lane: 'translate-worker-self-dispatch' });
+    if (!trust.ok) {
+      console.log(`[TRANSLATE] Not dispatched (${trust.reason}): ${label}`);
+      continue;
+    }
+
     // Atomic claim (#3826): concurrent selfDispatch calls (each finishing book
     // triggers a backfill) all read the same candidates before any of them
     // flipped a status, so one book got 3-4 jobs within seconds — quadruple
@@ -1603,6 +1612,20 @@ async function main() {
     const job = await db.collection('jobs').findOne({ id: jobId });
     if (!job || job.status === 'cancelled' || job.status === 'failed') {
       console.log(`  [${(book.title || '').substring(0, 40)}] Job ${jobId} is ${job?.status || 'missing'}, resetting`);
+      await db.collection('books').updateOne(
+        { id: book.id, ...NOT_HELD },
+        { $set: { 'pipeline_auto.status': 'ocr_complete', updated_at: new Date() }, $unset: { job: '' } },
+      );
+      return zero;
+    }
+    // #5700: THE consumer-side check. Every job-creating script and route ends here, so a
+    // creator this gate was never wired into still cannot get a gated book translated. The job
+    // is cancelled with the reason and the book goes back to ocr_complete (still owed, never
+    // "translated"); nothing already written is touched.
+    const trust = await ocrTrustGate(db, book, { lane: `translate-worker (${job.initiated_by || 'job'})` });
+    if (!trust.ok) {
+      console.log(`  [${(book.title || '').substring(0, 40)}] Job ${jobId} cancelled: ${trust.reason}`);
+      await db.collection('jobs').updateOne({ id: jobId }, { $set: { status: 'cancelled', cancelled_at: new Date(), cancel_reason: trust.reason, updated_at: new Date() } });
       await db.collection('books').updateOne(
         { id: book.id, ...NOT_HELD },
         { $set: { 'pipeline_auto.status': 'ocr_complete', updated_at: new Date() }, $unset: { job: '' } },

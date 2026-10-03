@@ -43,6 +43,7 @@ import {
   SKIP_TRANSLATION_PAGE_TYPES,
   isDegenerateSource,
 } from '../lib/translate-core.mjs';
+import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
 import { translationStaleness, STALE_FIELD } from '../lib/stale-translation.mjs';
 import { codeVersion, host } from '../lib/write-provenance.mjs';
 import { budgetAllowsDispatch } from '../lib/spend-guard.mjs';
@@ -68,6 +69,9 @@ const MAX_PAGES = parseInt(getArg('limit') || '5000', 10);
 const BOOK_LIMIT = parseInt(getArg('book-limit') || '100', 10);
 const BOOK_CONCURRENCY = parseInt(getArg('book-concurrency') || '5', 10);
 const DRY_RUN = hasFlag('dry-run');
+// #5700: books in a stratum whose OCR was measured untrusted are refused. The override is for a
+// named pilot that re-translates re-read pages before the book as a whole is released.
+const ALLOW_UNTRUSTED_OCR = hasFlag('allow-untrusted-ocr');
 const SINGLE_BOOK = getArg('book-id');
 const OFFSET = parseInt(getArg('offset') || '0', 10);
 const PIPELINE_STATUS = getArg('status');
@@ -427,6 +431,12 @@ async function main() {
     console.log(`Querying pages for ${books.length} books...`);
     for (const book of books) {
       if (totalPages >= MAX_PAGES) break;
+
+      const trust = await ocrTrustGate(db, book, { lane: 'realtime-translate', allow: ALLOW_UNTRUSTED_OCR, record: !DRY_RUN });
+      if (!trust.ok) {
+        console.log(`  ${book.id}: REFUSED — ${trust.reason} (--allow-untrusted-ocr to override)`);
+        continue;
+      }
 
       const pages = await db.collection('pages')
         .find(
