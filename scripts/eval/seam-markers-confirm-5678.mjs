@@ -72,12 +72,14 @@ const QUOTA = {
   pagebreak: { latin: 70, tibetan: 10, han: 10, other: 10 },
   control: { latin: 14, tibetan: 2, han: 2, other: 2 },
 };
-// candidates drawn for the by-eye screen; --pool-scale extends every pool by the same seeded procedure
+// candidates drawn for the by-eye screen; --pool-scale extends every pool by the same seeded procedure, and
+// --pool-scale-nonlatin only the Tibetan / Han / other pools (the Latin list is then unchanged)
 const SCALE = Number(opt('pool-scale', 1));
+const SCALE_NL = Number(opt('pool-scale-nonlatin', 1));
 const POOL = Object.fromEntries(Object.entries({
   pagebreak: { latin: 95, tibetan: 18, han: 18, other: 18 },
   control: { latin: 36, tibetan: 6, han: 6, other: 6 },
-}).map(([s, g]) => [s, Object.fromEntries(Object.entries(g).map(([k, n]) => [k, Math.ceil(n * SCALE)]))]));
+}).map(([s, g]) => [s, Object.fromEntries(Object.entries(g).map(([k, n]) => [k, Math.ceil(n * SCALE * (k === 'latin' ? 1 : SCALE_NL))]))]));
 const CHAINED_CALL_SITE = 'scripts/lib/translate-batch-chained.mjs';
 const EXCLUDED_TYPES = ['archived-spread', 'blank', 'title-page', 'toc', 'index', 'illustration', 'digitizer-insert', 'colophon', 'errata', 'cover', 'map', 'plate', 'table'];
 // books already used: #5701 (every candidate it drew), #5675 seam-confirm, the v14 A/B, the #5682 Tengyur preview
@@ -132,7 +134,7 @@ async function phaseDraw() {
   resetSeed(SEED);
   const shuffle = shuffleWith(seededRand);
   const order = shuffle(bookIds.filter((id) => books.has(id)));
-  const log = { seed: SEED, pool_scale: SCALE, frame: { call_site: CHAINED_CALL_SITE, runs_mode: 'chained', served_books: order.length, prior_books_excluded: used.size }, skipped: {}, visited: 0 };
+  const log = { seed: SEED, pool_scale: SCALE, pool_scale_nonlatin: SCALE_NL, frame: { call_site: CHAINED_CALL_SITE, runs_mode: 'chained', served_books: order.length, prior_books_excluded: used.size }, skipped: {}, visited: 0 };
   const skip = (k) => { log.skipped[k] = (log.skipped[k] || 0) + 1; };
   const cands = [];
   const count = (s, g) => cands.filter((u) => u.stratum === s && u.group === g).length;

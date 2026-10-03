@@ -199,4 +199,37 @@ example breaks (source and English) are quoted in the report.
 
 ## Amendments
 
-_None yet._
+1. **2026-10-03, after the draw and the by-eye screen, before submit (no arm output exists).**
+   - **First draw** (seed 56782): every pool filled (95 / 18 / 18 / 18 open-end; 36 / 6 / 6 / 6 closed-end), 203
+     candidates.
+   - **First screen.** `mid` among the open-end candidates: Latin 84 of 95, Tibetan 7 of 18, Han 14 of 18, other 4
+     of 18. Non-Latin `mid` total 25, short of 30, so the fill rule could not complete the sample.
+   - **The non-Latin pools were extended, as the rule allows**, by the same seeded procedure with the non-Latin
+     pools doubled (`--pool-scale-nonlatin 2`, a flag added for this: scaling every pool would have added Latin
+     candidates nobody needs). Checked: all 203 first-draw candidates are kept, the Latin list is identical, and each
+     non-Latin pool's first-draw list is a prefix of its extended list. The `other` open-end pool ran out of frame at
+     30 (of 36 asked). 66 new candidates were screened; 269 in all.
+   - **Why so many non-Latin rejects.** Tibetan: 22 of 36 open-end candidates rejected, most because N+1's OCR is
+     not the continuation (it opens "Folio 1" / "Top Section" with another text, or picks up elsewhere). Other: 18 of
+     30 (garbled or looped OCR, verse, unpunctuated Arabic where the break falls between coordinated clauses).
+   - **Final screen tally, open-end pools (`mid` / `closed` / `reject`):** Latin 84 / 6 / 5; Tibetan 14 / 0 / 22; Han
+     26 / 2 / 8; other 10 / 2 / 18. Closed-end pools (`closed` / `mid` / `reject`): Latin 17 / 6 / 13; Tibetan 1 / 0 /
+     11; Han 3 / 1 / 8; other 6 / 0 / 6.
+   - **Pinned: 100 mid-sentence breaks** (70 Latin script, 10 Tibetan, 10 Han, 10 other) **and 20 closed controls**
+     (14 Latin script, 1 Tibetan, 2 Han, 3 other). The Tibetan control quota was one short and was filled, by the
+     fill rule, with one `other` control.
+   - **Languages** (page tag): mid-sentence breaks are Latin 68, German 1, Italian 1; Tibetan 10; Chinese 10;
+     Arabic 3, Malay in Arabic script 1, Persian 1, Russian 2, Hebrew 1, Greek 1, Sanskrit 1. Controls: Latin 13,
+     German 1, Tibetan 1, Chinese 2, Hebrew 1, Sanskrit 2.
+   - **Screen rulings applied throughout** (all on the source, nothing an arm wrote):
+     - a catchword repeated at the head of N+1 is not text of N;
+     - a page that ends a sentence and carries only a split syllable of the next one is `reject`;
+     - unpunctuated Arabic or Chinese where the break falls between clauses is `reject`, because the sentence end
+       cannot be placed;
+     - a Tibetan page ending in a shad after a continuative ("…pas", "…na", "…shing", "…ni") is not `closed`.
+   - **Verdicts and reasons** are in `results/seam-markers-confirm-5678/screen.json`; `screen.md` is what was read.
+   - **Spend.** 600 Batch requests; the `--pin` estimate is **$2.266** (A2 0.321, A 0.321, B 0.327, C 0.654,
+     D 0.642). The same estimator over-read #5701 by 85% ($1.569 estimated, $0.848 actual), so the expected actual
+     is about $1.2 to $1.6. Approved at $2.50, under the $4 cap.
+   - **Envelope.** `markers-confirm-5678`, $4, lanes `eval-markers-confirm-5678`, opened just before the submit
+     and removed right after it.
