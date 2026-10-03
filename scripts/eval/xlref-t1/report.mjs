@@ -19,10 +19,11 @@ const dimRow = dims ? Object.fromEntries(dims.rows.map((r) => [r.id.replace(/_0*
 const rows = [];
 const add = (pass, res) => { for (const p of res.per_page) { const id = key(p); const r = recs[id]; for (const [arm, v] of Object.entries(p.arms)) {
   if (pass !== 'pass1' && (arm === 'prod-A' || arm === 'flash-0')) continue; // anchors: their pass-1 rows are the record
-  const af = armFile(arm, id); const js = Object.values(v.by_judge);
+  const af = armFile(arm, id); const js = Object.values(v.by_judge || {}).filter(Boolean);
+  if (!js.length || v.fidelity == null) continue; // the arm was not run on this page
   rows.push({ track: 'T1', lang: 'Latin', book_id: p.book_id, page_number: p.page_number, url: `https://sourcelibrary.org/book/${p.book_id}?page=${p.page_number}`, title: r.title, author: r.author, year: r.year, period: r.period, genre: r.genre, work: r.work,
     arm, pass, model: arm === 'served' ? r.candidates.find((c) => c.arm === 'served')?.model : arm === 'opus' ? 'claude-opus (subscription, X3 ceiling)' : af?.model || null, served_prompt_version: arm === 'served' ? r.candidates.find((c) => c.arm === 'served')?.prompt_version : undefined,
-    fidelity: v.fidelity, fidelity_by_judge: Object.fromEntries(Object.entries(v.by_judge).map(([j, x]) => [j, x.fidelity])), omission: js.some((x) => x.omission), reversal: js.some((x) => x.reversal), reversal_quotes: js.filter((x) => x.reversal).map((x) => x.reversal),
+    fidelity: v.fidelity, fidelity_by_judge: Object.fromEntries(Object.entries(v.by_judge).map(([j, x]) => [j, x?.fidelity ?? null])), omission: js.some((x) => x.omission), reversal: js.some((x) => x.reversal), reversal_quotes: js.filter((x) => x.reversal).map((x) => x.reversal),
     invention_kinds: [...new Set(js.flatMap((x) => (x.invention || []).map((i) => i.kind)))], defect_classes: [...new Set(js.flatMap((x) => (x.defects || []).map((d) => `${d.class}:${d.severity}`)))],
     reference_fit: p.reference_fit, cost_usd_realtime: af?.cost_usd ?? null, thinking_tokens: af?.thinkingTokens ?? null,
     reference: { title: r.reference_meta.title, translator: r.reference_meta.translator, year: r.reference_meta.year, style: r.reference_meta.style, canonical: !!r.reference_meta.canonical, kind: r.reference_meta.reference_kind, located: r.reference_meta.located, url: r.reference_meta.url, licence: r.reference_meta.licence, publishable: r.licences.reference_publishable },
