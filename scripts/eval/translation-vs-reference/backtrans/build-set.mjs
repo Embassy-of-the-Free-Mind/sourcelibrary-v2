@@ -41,8 +41,8 @@ function labelsOf(byJudge) {
     fill_judges: count(fill),
     boundary_judges: count((j) => (j.invention || []).some((i) => i.kind === 'boundary')),
     fidelity: fid.length ? fid.reduce((a, b) => a + b, 0) / fid.length : null,
-    // reference quotes are dropped: some references are in copyright (#5488), and the detectors never see one
-    reversals: js.flatMap((j) => revList(j.reversal).map((r) => ({ english: r.candidate ?? r.english ?? null, source: r.source ?? r.tibetan ?? null, why: r.why ?? r.note ?? null }))),
+    // `should_be` is the judge's own short quote of the source or reference (the harness already clips private references to ≤ 15 words, #5488)
+    reversals: js.flatMap((j) => revList(j.reversal).map((r) => ({ english: r.candidate ?? r.english ?? null, source: r.source ?? r.tibetan ?? null, should_be: r.source_or_reference ?? null, why: r.why ?? r.note ?? null }))),
     defects: js.flatMap((j) => (j.defects || []).filter((d) => d.severity === 'major').map((d) => `${d.class}: ${d.detail}`)).slice(0, 6),
   };
 }
@@ -83,7 +83,7 @@ addHarness('T5', J(`${RES}/xlref-t5-2026-10/results.json`).per_page, fromRecords
         arm: 'A (chained lane draft)', source_text: src.get(r.page_id), english: text.get(r.page_id),
         labels: { judges: n, reversal_judges: a.inversions.filter((x) => x.length).length, omission_judges: a.omit.filter(Boolean).length,
           fill_judges: a.inv_types.filter((x) => x.includes('unreadable_fill')).length, boundary_judges: a.inv_types.filter((x) => x.includes('boundary')).length,
-          fidelity: a.fid_mean, reversals: a.inversions.flat().map((q) => ({ english: q.candidate ?? null, source: q.tibetan ?? null, why: q.why ?? null })), defects: [] } });
+          fidelity: a.fid_mean, reversals: a.inversions.flat().map((q) => ({ english: q.candidate ?? null, source: q.tibetan ?? null, should_be: q.reference ?? null, why: q.why ?? null })), defects: [] } });
     }
   } finally { await client.close(); }
 }

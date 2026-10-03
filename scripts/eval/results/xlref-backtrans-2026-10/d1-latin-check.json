@@ -167,5 +167,18 @@
    "window": 1
   }
  ],
+ "whole_track": {
+  "pages": 71,
+  "positives": 8,
+  "auc_page_diff": 0.8531746031746031,
+  "auc_window": 0.7906746031746031,
+  "flag_rule": "page_diff >= 2",
+  "recall_in_sample": "6/8",
+  "false_alarms_all": "14/63",
+  "false_alarms_unseen_pages": "14/51",
+  "precision": 0.3,
+  "flag_rate": 0.28169014084507044,
+  "base_rate": 0.11267605633802817
+ },
  "verdict": "build D1"
 }
