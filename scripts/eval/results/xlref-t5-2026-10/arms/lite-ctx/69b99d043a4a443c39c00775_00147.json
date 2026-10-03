@@ -1,0 +1,30 @@
+{
+ "id": "69b99d043a4a443c39c00775_00147",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "IV. 3. 5.] UPARIPAÑCA-VAGGA 3. 127\n\n19. Then Ragâ, the daughter of Māra, spoke this verse in the presence of the Blessed One:\nHaving severed the craving that flows like a swarm of bees,\nmany beings will surely pass over.\nTruly, this homeless one\nwill lead many people away to the King of Death.\n\n20. The great heroes, the Tathâgatas <gloss>those who have thus come/gone</gloss>, lead by the true teaching <term>saddhamma</term>.\nSince they are led by the teaching, what jealousy can there be for those who understand?\n\n21. Then Taṇhâ, Arati, and Ragâ, the daughters of Māra, approached the place where Māra the Evil One was.\n\n22. Māra the Evil One saw Taṇhâ, Arati, and Ragâ, the daughters of Māra, coming from afar. Seeing them, he addressed them in verses:\nFools, you try to crush a mountain with lotus stalks,\nyou dig at a mountain with your fingernails, you chew on it with iron teeth.\nYou seek a foothold in the abyss, bumping your head against a rock.\nYou collide with a stump with your breast, trying to shake Gotama.\n\n23. Taṇhâ, Arati, and Ragâ arrived, shining brightly.\nThe Teacher dispelled them there, just as the wind disperses a tuft of cotton.\n\n->The Third Chapter<-\n->Summary of the contents<-\nMany, Samiddhi, Godhika, seven years,\nThe daughter, this set of five regarding Māra, taught by the Teacher of the Buddha, concludes the Mâra-samyutta <gloss>Connected Discourses regarding Māra</gloss>.\n\n<meta>The text marks the conclusion of the Mâra-samyutta section. Translation follows the Pali source provided, addressing the final verses of the daughters of Māra and the summary verse (uddâna) concluding the chapter.</meta>\n\n<summary>The daughters of Māra fail in their attempt to lead the Buddha away, and the Buddha dismisses them effortlessly, bringing the section of discourses concerning Māra to a close.</summary>\n<keywords>Māra, Taṇhâ, Arati, Ragâ, Gotama, Tathâgata, Mâra-samyutta, finality, temptation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3119,
+ "outputTokens": 528,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.00157175,
+ "cost_usd_batch_equiv": 0.000785875,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2463,
+ "at": "2026-10-03T12:04:28.016Z"
+}

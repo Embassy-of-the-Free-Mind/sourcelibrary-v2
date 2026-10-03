@@ -1,0 +1,30 @@
+{
+ "id": "6a3c6192879008ba7e15f12e_00065",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "Question: For what causes and conditions was this treatise composed?\n\nThe answer consists of three parts: stating the number, explaining the characteristics, and the final summary.\n\nAnswer: There are eight kinds of causes and conditions. What are these eight?\n\nIn the explanation of the characteristics, the first is general and the following seven are specific. The reason for this is that the general covers both the primary and secondary objectives, while the specific ones address those individuals who are ready for the teaching; thus, it must be so.\n\n1. The general characteristic of the causes and conditions: namely, to cause all sentient beings to leave behind all suffering and obtain ultimate bliss.\n\nWithin the general characteristic, \"leaving behind all suffering\" means causing sentient beings to leave behind the three types of suffering <note>The three types are: suffering from pain itself, suffering from the change of pleasant things, and suffering from the conditioned nature of existence.</note> and the two types of death <note>The two types are: \"fragmentary death\" involving physical rebirth and \"transformational death\" which is the subtle rebirth experienced by advanced practitioners.</note>. Consequently, \"obtaining ultimate bliss\" means causing them to obtain the bliss of Supreme Enlightenment <note>original: \"Anuttara Samyak Sambodhi\"</note> and Great Nirvana <note>original: \"Mahaparinirvana\"</note>. This is not for seeking worldly fame and profit. There are two interpretations of this: first, it is not intended to make them seek the benefits and happiness of human or heavenly realms in future lives.\n\n<summary>This page explains the primary motivation for composing the Treatise on the Awakening of Faith in the Mahayana, identifying eight causes and conditions focused on liberating sentient beings from suffering.</summary>\n<keywords>causes and conditions, sentient beings, three types of suffering, two types of death, Supreme Enlightenment, Great Nirvana, worldly fame and profit</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1974,
+ "outputTokens": 396,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.002175,
+ "cost_usd_batch_equiv": 0.0010875,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2813,
+ "at": "2026-10-03T12:05:27.233Z"
+}

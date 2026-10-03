@@ -1,0 +1,30 @@
+{
+ "id": "69b99e8b6ed9e0490990a274_00179",
+ "arm": "lite-corr",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Atthakavagga\n\n836. \"If you do not desire such a jewel as this woman, sought after by many men of royal status, how then do you describe a life rooted in views and religious practice, and the attainment of states of existence?\" 2.\n\n837. \"One who has made a definitive judgment among the teachings does not think, 'This is what I claim,'\" the Blessed One said, Māgandiya. \"Seeing into these views without grasping, he pursues inner peace, having perceived no such state of bondage.\" 3.\n\n838. \"Those judgments which are constructed,\" said Māgandiya, \"do you, Sage, speak of them as not to be grasped? How is this meaning of 'inner peace' described by the wise?\" 4.\n\n839. \"Not by view, not by learning, not by knowledge, Māgandiya,\" the Blessed One said, \"nor even by moral conduct and religious practice does one speak of purity. Nor is it by the absence of view, the absence of learning, the absence of knowledge, nor by the absence of moral conduct or religious practice. Leaving these behind, without grasping, the peaceful one does not long for existence, not relying on anything.\" 5.\n\n840. \"If, indeed, you do not speak of purity by way of view, learning, knowledge, or by moral conduct and religious practice,\" said Māgandiya,\n\n<summary>In this dialogue, the Buddha instructs Māgandiya that true purity and inner peace are not found in clinging to philosophical views, intellectual learning, or rigid adherence to rituals and practices, but rather in a state of non-attachment.</summary>\n<keywords>Māgandiya, inner peace, views, purity, non-attachment, Buddha, religious practice</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2522,
+ "outputTokens": 386,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0012095,
+ "cost_usd_batch_equiv": 0.00060475,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 1923,
+ "at": "2026-10-03T20:27:41.339Z"
+}

@@ -1,0 +1,30 @@
+{
+ "id": "69e13c79998131d6a99c0917_00310",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "### Burning of the Khandava Forest | Chapter 227, 228 | Adi Parva\n\nArjuna, greatly provoked, countered that rain with his arrows. Seeing his efforts rendered fruitless, Indra <note>literally: the performer of a hundred sacrifices</note>, the subduer of Paka, increased the downpour further. Indra released the rain with great force and arrows, yet Arjuna caused it to dissolve, bringing joy to the other side <note>referring to Agni, the fire god</note>. <margin>828</margin>\n\nThen, uprooting a great peak from Mount Mandara with his hands, Indra hurled the mountain top, covered in trees, wishing to kill the son of Pandu <note>Arjuna</note>. Arjuna then shattered that mountain peak into a thousand pieces with swift, flaming-crested arrows. As that mountain was being destroyed, it looked like the sky itself was scattering its sun, moon, and planets. As that great rocky mass fell toward the forest fire, many creatures living in the Khandava forest were crushed by its peaks.\n\nThus ends the two hundred and twenty-seventh chapter in the Adi Parva, within the section on the Burning of the Khandava Forest, concerning the battle between the gods and Krishna and Arjuna.\n\n### Chapter 228\n\nVaishampayana said: Terrified by the falling mountain, the inhabitants of Khandava—demons, ogres, serpents, and forest-dwelling trees—were all in turmoil. <margin>829</margin> Elephants in rut, tigers, and maned lions fled, abandoning their young and their own kind. They looked upon the forest fire, enraged and with weapons raised. The forest seemed to stand still, vibrating with the sound of the uprooting.\n\nSeeing the forest burning in many ways and Krishna standing with his weapons raised, they let out a fierce roar. With that terrible sound and the crackling of the fire, the whole sky roared as if filled with storm clouds. Then the mighty-armed Keshava <note>Krishna</note> released his extremely fierce <term>Chakra</term> <gloss>discus</gloss>, shining with the brilliance of lightning, for their destruction. <margin>830</margin>\n\nBy that weapon, various small creatures along with demons and night-walkers were cut into hundreds and fell into the fire in an instant. There, the demons were seen torn apart by Krishna’s discus, soaked in fat and blood like clouds at twilight. Slaying <term>Pisachas</term> <gloss>flesh-eating demons</gloss>, serpents, and animals by the thousands, the descendant of Vrishni <note>Krishna</note> moved through the forest like Time personified, O descendant of Bharata. The wondrous discus of Krishna, the slayer of enemies, repeatedly returned to his hand after cutting through many beings. <margin>831</margin>\n\nAs he struck down the <term>Pisachas</term>, serpents, and ogres, the form of the Soul of all beings <note>Krishna</note> became extremely fierce. Among all the gathered gods, none could emerge victorious over Krishna and Arjuna in that battle. When the gods were unable to protect the forest or extinguish the fire, they turned their backs and retreated.\n\nIndra, seeing the gods turning away, felt joy and praised Krishna and Arjuna. <margin>832</margin> As the gods withdrew, a deep, bodiless voice spoke from the sky, addressing Indra:\n\n\"Your friend, the great serpent Takshaka, is not present here. During the burning of Khandava, he has gone to Kurukshetra. It is impossible to win this battle against them in any way, O Indra. Hear my words regarding Krishna and Arjuna. These two are Nara and Narayana, the ancient gods renowned in heaven. You yourself know their power and their prowess. These two invincible ones cannot be defeated in battle even by all the worlds. They are the best of the ancient sages. They are most worthy of worship by all—gods, demons, celestial musicians, humans, and serpents. Therefore, O Indra, you should depart from here along with the gods. See this destruction of Khandava as something ordained by fate.\" <margin>833</margin>\n\nHearing these words and recognizing them as truth, the lord of the immortals set aside his anger and resentment and departed for heaven.\n\n<summary>Indra attempts to crush Arjuna with a mountain peak, but Arjuna shatters it. A divine voice reveals that Krishna and Arjuna are the ancient deities Nara and Narayana, leading Indra to cease his interference in the forest's destruction.</summary>\n<keywords>Indra, Arjuna, Krishna, Khandava Forest, Mount Mandara, Nara and Narayana, Takshaka, Sudarshana Chakra</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3074,
+ "outputTokens": 2808,
+ "thinkingTokens": 1785,
+ "cost_usd_realtime": 0.009961000000000001,
+ "cost_usd_batch_equiv": 0.0049805000000000006,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4133
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 13433,
+ "at": "2026-10-03T20:42:27.520Z"
+}

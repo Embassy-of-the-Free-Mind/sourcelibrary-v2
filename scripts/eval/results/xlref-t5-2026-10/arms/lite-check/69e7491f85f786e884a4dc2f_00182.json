@@ -1,0 +1,35 @@
+{
+ "id": "69e7491f85f786e884a4dc2f_00182",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "8 22 58] Mahābhārata [Karnavadha Parva\nC 8 1318 B 8 31 68 K 8 22 72\n\nIn every way, I shall conquer all the Pāṇḍavas who have gathered here today. 58\nDuryodhana said:\nI will do all that you suggest, Karṇa. The chariots, equipped with quivers, will surely follow you, O son of a charioteer. 59\nLet those carts carry arrows with iron heads and feathered shafts.\n\n<column-break/>\n\nWe, along with all the kings, will follow you, Karṇa. 60\nSañjaya said:\nHaving said this, O great king, your son, who is full of majesty, approached the king of the Madras and spoke these words. 61\n\n->Thus ends the twenty-second chapter in the Karṇa Parva of the blessed Mahābhārata. 22<-\n\n---\n\n## 23\n\nSañjaya said:\nYour son, O great king, approached the king of the Madras with humility and, out of affection, spoke these words: 1\nO one of true vows, O most fortunate one, O you who increase the sin of your enemies.\n\n---\n\n<note>The remainder of the page consists of critical apparatus (textual variants and notes).</note>\n\n<summary>Duryodhana expresses his resolve to defeat the Pāṇḍavas and confirms his intent to support Karṇa with his full military forces, leading to the conclusion of the twenty-second chapter and the beginning of the twenty-third.</summary>\n<keywords>Duryodhana, Karṇa, Pāṇḍavas, Sañjaya, King of Madras, Mahābhārata, Karṇa Parva</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1048,
+ "outputTokens": 498,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.002018,
+ "cost_usd_batch_equiv": 0.001009,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "role",
+   "source": "द्विषतामघवर्धन",
+   "was": "increase the sorrow",
+   "now": "increase the sin"
+  }
+ ],
+ "base_sha": 1344,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 2220,
+ "at": "2026-10-03T12:07:50.799Z"
+}

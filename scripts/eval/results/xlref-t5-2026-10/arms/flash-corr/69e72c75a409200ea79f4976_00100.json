@@ -1,0 +1,30 @@
+{
+ "id": "69e72c75a409200ea79f4976_00100",
+ "arm": "flash-corr",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>This page continues the discussion on assessing human character through \"nine tests\" and contrasts the humility of the sage with the arrogance of the common man.</meta>\n\nEmploy them with wine to observe their standards; mix them in social gatherings to observe their demeanor <note>literally: color or facial expression</note>. Through these nine tests, even the most unworthy person can be identified.\n\nZheng Kaofu <gloss>styled Fu</gloss>\n<margin>A member of the ducal house of the State of Song and the tenth-generation ancestor of Confucius</margin>\nreceived his first commission <note>the rank of Officer</note> and walked with a slight stoop;\n<margin>Officer</margin>\n<margin>A bent back</margin>\nhe received his second commission <note>the rank of Great Officer</note> and walked with a deep hunch;\n<margin>Great Officer</margin>\n<margin>Bending the body low, not daring to obstruct the path</margin>\nhe received his third commission and walked with a profound bow, scurrying along the walls <note>out of modesty</note>.\n<margin>Kaofu's humility was like this</margin>\nWho would dare not to take him as a model? \n<margin>Who would dare not take him as a law?</margin>\n\nBut as for common men:\n<margin>Ordinary men</margin>\nupon their first <unclear>commission</unclear>, they become boastful and grand;\n<margin>A look of pride and arrogance</margin>\nupon their second commission, they dance atop their carriages;\n<margin>Riding in a carriage and dancing with elation</margin>\nupon their third commission, they address their elders by their personal names <unclear>one character, ink blot</unclear>.\n<margin>Calling paternal uncles by their names</margin>\n\nHow different was the yielding virtue of Xu You of old!\n<margin>How great was the yielding virtue of Xu You in the past!</margin>\nThere is no greater thief than a virtue possessed of intention; if the heart has intention, the heart has eyes <gloss>contact</gloss>.\n<margin>To have a heart set on virtue is the thief of virtue</margin>\n<margin>When the heart is enslaved by the appearance of things, virtue becomes increasingly perverse</margin>\nOnce there is this outward cleverness, one practices \"inner vision,\" and through inner vision, one is ruined.\n<margin>From this, looking back into the heart, there is constant turmoil, and one can never complete virtue or advance in the Dao</margin>\nThere are five \"ominous virtues,\" and the central virtue <note>referring to the mind or heart</note> is the chief among them.\n<margin>The eyes, ears, nose, tongue, and mind</margin>\n<margin>The mind/heart</margin>\n\n<summary>The text contrasts the growing humility of the official Zheng Kaofu with the increasing arrogance of commoners as they rise in rank. It warns that intentional or self-conscious virtue acts as a \"thief\" that destroys true spiritual progress.</summary>\n<keywords>Zheng Kaofu, humility, arrogance, Xu You, virtue, inner vision, nine tests of character</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2334,
+ "outputTokens": 703,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.003276,
+ "cost_usd_batch_equiv": 0.001638,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 4094,
+ "at": "2026-10-03T20:30:32.754Z"
+}

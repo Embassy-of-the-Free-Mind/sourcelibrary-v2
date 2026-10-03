@@ -1,0 +1,30 @@
+{
+ "id": "69de10185cedf736edb851e4_00244",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "[ 3rd Chapter ] Examination of Feelings | 237\n\nA wise man, knowing his own <term>pratyaya</term> <gloss>assurance or ability</gloss>, should not solicit a woman who is suspicious, guarded, afraid, or who is in the presence of her mother-in-law. 27\n\nThus ends the second chapter, titled \"The Causes of Introduction and Solicitation,\" in the fifth section on the wives of others, in the <term>Kamasutram</term> <gloss>Aphorisms on Love</gloss> of the venerable Vatsyayana.\n\n\"Suspicious\": one who has developed doubt regarding the solicitor. \"Guarded\": one protected by guards. \"Afraid\": one afraid of her husband. \"Mother-in-law\": one who is under the watch of a mother-in-law. \"Should not solicit\": should not desire her. \"Knowing his own assurance\": realizing the certainty that I am incapable here. 27\n\nThis is the forty-fourth chapter on solicitations.\n\nThus ends the second chapter, titled \"The Causes of Introduction and Solicitation,\" in the fifth section on the wives of others, in the <term>Jayamangala</term> <gloss>Victory Banner</gloss>, the commentary on the <term>Kamasutram</term> composed by Yashodhara.\n\n---\n\n### Third Chapter\n\nEven when solicitation is present, a wise and bold man should examine those women who are not yet fully won over, for if their true feelings are not revealed, there is no special solicitation of them. Therefore, the \"Examination of Feelings\" is explained—\n\nOne who is soliciting should examine the woman’s inclinations, for by that, her feelings are examined. 1\n\n\"Like a maiden\": one who is soliciting; \"inclinations\": behavioral signs. One should examine them, for through this observed behavior, the underlying feeling is tested. 1\n\nHe explains how this is to be accomplished:\n\nOne should win her over through a female messenger who is not manifesting the intent. 2\n\n\"Not manifesting the intent\": not revealing the amorous feeling, one should win her over through a messenger because she is clever. 2\n\nIf she rejects the solicitation but continues to associate, one should know her mind is divided; one should win her over gradually. 3\n\n\"Rejects the solicitation\": having refused the initial approach made by the hero, but then, after remaining for some days, \"continues to associate\": moves toward contact with the hero again. \"Know her mind is divided\": one should recognize her as someone needing to be tested, thinking \"What should I do? I do not know,\" and one should win her over gradually; one should not abandon her suddenly. 3\n\nHe states a specific detail here:\n\nIf, after refusing the solicitation, she is seen again wearing special ornaments and approaches him in that same way\n\n<summary>This page concludes the second chapter on solicitation tactics and begins the third chapter, focusing on the careful examination of a woman's feelings when she expresses ambivalence toward a suitor.</summary>\n<keywords>Kamasutra, Vatsyayana, solicitation, courtship, female psychology, Yashodhara</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3202,
+ "outputTokens": 678,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0018175,
+ "cost_usd_batch_equiv": 0.00090875,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 3277,
+ "at": "2026-10-03T12:05:15.092Z"
+}

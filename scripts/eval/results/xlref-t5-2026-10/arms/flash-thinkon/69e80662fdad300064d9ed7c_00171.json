@@ -1,0 +1,30 @@
+{
+ "id": "69e80662fdad300064d9ed7c_00171",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: the physician should ensure the wound is clean.</meta>\n\n...after removing the waste in this manner, set it properly. A skilled physician should repeatedly squeeze out the discharge from wounds dominated by <term>kapha</term> <gloss>phlegm</gloss> and <term>vayu</term> <gloss>wind humor</gloss>. (39) Press the wound from below and drain it in the direction of hair growth. All deep bindings and joints must be aligned perfectly. (40) For joining the lips, proceed as previously instructed. A physician who understands joints should also apply their intellect to bandaging bone fractures as prescribed. (41)\n\nThe wound of a person who is rising, sitting, lying down, walking, or traveling by various vehicles does not become aggravated <note>meaning it does not suffer further injury or pain</note> when properly bandaged. (42) Wounds located in the joints, bones, or internal cavities, as well as those in the veins and sinews, or those that are deep, serious, and irregular in all directions, cannot be successfully treated without the use of bandages. (43)\n\nThus ends the eighteenth chapter in the <term>Sutrasthana</term> <gloss>Section on Fundamental Principles</gloss> of the <term>Sushruta Samhita</term>. (18)\n\n<note>The following is the Hindi commentary by Pandit Muralidhar Sharma for the eighteenth chapter of the Sutrasthana of the Sushruta Samhita.</note>\n\n### Nineteenth Chapter: 19\n\nNow we shall explain the chapter on the management of the wounded patient <note>original: \"Vranitopasaniya\"</note>.\n\nHere begins the explanation of the method for treating those with wounds.\n\nFirst, one should seek a house for the wounded patient. This house should be constructed on commendable ground and according to proper architecture. (1) In a house built on auspicious ground, which is clean, protected from intense sunlight, and sheltered from the wind, diseases of the body, external accidents, and the mind do not arise. (1) <note>Verse numbering follows the original text.</note> In that room, one should provide a bed that is not cramped, is well-spread with linens, pleasant, positioned with the head to the east, and kept with weapons nearby <note>weapons were kept for protection and perhaps to ward off evil spirits or for psychological security</note>. (3) On a well-spread bed, the wounded patient can move and act comfortably. The gods reside in the eastern direction, which is why the head is placed toward the east. (4)\n\n<note>verse 42: endowed with bindings.</note>\n\n<meta>The vocabulary list provided in the OCR includes: Sushruta Samhita, Sutrasthana, Vrana (Wound), Vranitopasaniya (Management of the Wounded), Chikitsa (Treatment), Shalya-tantra (Surgery).</meta>\n\n<summary>This page concludes the instructions on surgical bandaging for complex wounds and begins the guidelines for the residential care of a wounded patient. It emphasizes the importance of an auspicious, clean environment and proper bed orientation for recovery.</summary>\n<keywords>Sushruta Samhita, bandaging, wound management, architectural hygiene, patient care, orientation of the head, ancient Indian surgery</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2638,
+ "outputTokens": 2217,
+ "thinkingTokens": 1503,
+ "cost_usd_realtime": 0.00797,
+ "cost_usd_batch_equiv": 0.003985,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 9939,
+ "at": "2026-10-03T20:45:22.865Z"
+}

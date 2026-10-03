@@ -1,0 +1,47 @@
+{
+ "id": "69e72674a409200ea79ef3ae_00219",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "# Book II. THE WINNING OF FRIENDS; Tale vi: Weaver and Stingy and Bountiful.\n\n\"It must be given. Its outcome depends upon him,\" and \"Therefore, you take it away.\" Hearing this, as soon as he awoke and searched for the gold knot, he saw it was empty and thought, \"Alas! How has the wealth I earned with such difficulty been lost so easily? How shall I, now penniless, show my face to my wife or my friends?\" Having decided this, he went back to Vardhamanapura. There, having earned five hundred gold coins in just one year, he set out for his home again by a different route.\n\nAs the sun was setting, he arrived at that same banyan tree. \"Woe, alas, woe! What has this wretch of a fate begun?\" he thought. \"The same demon in the form of the banyan tree has appeared again.\" Thinking this, while dreaming, he saw those same two men on its branch. One of them said, \"Doer, why did you give this Somilaka five hundred gold coins? Do you not know that he has nothing beyond food and clothing?\" The other replied, \"Oh, Deed, I must give to those who are industrious. The outcome is up to them. Why do you blame me?\" Hearing this, Somilaka searched for the knot, and seeing that it was empty, he was filled with supreme detachment and thought, \"Alas! What is the use of living without wealth? I shall hang myself from this banyan tree and give up my life.\"\n\nHaving decided this, he made a rope of sacred grass, fastened a noose around his neck, approached a branch, and just as he was about to cast himself off after tying it, a man in the sky said this: \"Oh Somilaka, do not act so rashly. I am that same wealth-taker, who takes away your wealth that exceeds your food and clothing...\"",
+ "finishReason": "STOP",
+ "inputTokens": 1372,
+ "outputTokens": 605,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0025009999999999998,
+ "cost_usd_batch_equiv": 0.0012504999999999999,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "role",
+   "source": "स्वप्रायमानस्",
+   "was": "while pretending to be asleep",
+   "now": "while dreaming"
+  },
+  {
+   "type": "role",
+   "source": "कर्तः ... कर्मन्",
+   "was": "Worker ... Worker",
+   "now": "Doer ... Deed"
+  },
+  {
+   "type": "omission",
+   "source": "यस् ते भोजनाच्छा-",
+   "was": "who takes away your wealth that exceeds your food and clothing",
+   "now": "who takes away your wealth that exceeds your food and clothing..."
+  }
+ ],
+ "base_sha": 2024,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 2483,
+ "at": "2026-10-03T12:08:45.569Z"
+}

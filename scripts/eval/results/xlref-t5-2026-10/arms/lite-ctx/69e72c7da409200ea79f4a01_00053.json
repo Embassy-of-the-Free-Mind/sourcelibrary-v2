@@ -1,0 +1,30 @@
+{
+ "id": "69e72c7da409200ea79f4a01_00053",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page: ...this is called a human, yet</meta> it may not be without a beast's heart. Although one may possess a beast's heart, if one's outward form appears human, one is treated with affection. It is said that those who wear horns, divide their teeth, spread their claws, soar aloft, or crouch and scuttle are called birds and beasts. They may not be without a human heart, yet although they possess a human heart, if their outward form appears animal, one is treated with alienation. Fuxi, Nuwa, Shennong, and the rulers of the Xia dynasty had the bodies of snakes, human faces, heads of oxen, and noses of tigers. They possessed forms that were not human, yet they held the virtues of the great sages. Jie of Xia, Zhou of Shang, Huan of Lu, and Mu of Chu had faces, features, and seven orifices exactly like those of humans, yet they possessed the hearts of birds and beasts. If the masses rely on a single outward appearance to seek the highest wisdom, they will never come near to it.\n\nThe Yellow Emperor fought the Flame Emperor on the plains of Banquan. He commanded bears, grizzly bears, wolves, leopards, <term>pixiu</term> <gloss>mythical beasts</gloss>, and tigers as his vanguard, and used eagles, <term>he</term> <gloss>long-tailed pheasants</gloss>, hawks, and kites as his banners. This is how he used force to command birds and beasts. When Yao commanded Kui to oversee music, striking stones and beating stones, all the beasts followed the dance. When the <term>Xiaoshao</term> <gloss>the legendary music of Emperor Shun</gloss> was performed in nine movements, the phoenix came to perform ceremonies.\n\n<margin>Both of these meanings are possible.</margin>\n<margin>Liezi, Yellow Emperor.</margin>\n\n<summary>This passage contrasts external appearance with internal morality, arguing that outward form does not determine the presence of a human or beastly nature. It cites the legendary sage-kings and tyrannical rulers as evidence, concluding that true wisdom cannot be judged by physical form.</summary>\n<keywords>Fuxi, Nuwa, Yellow Emperor, Flame Emperor, outward appearance, human heart, beastly nature, virtue</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2472,
+ "outputTokens": 493,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0013574999999999998,
+ "cost_usd_batch_equiv": 0.0006787499999999999,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2652,
+ "at": "2026-10-03T12:05:00.949Z"
+}

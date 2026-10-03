@@ -1,0 +1,30 @@
+{
+ "id": "6a09ff43fa20006dbaba8d78_00193",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: the Buddha is addressing those who believe that all human experience is determined by past actions</meta>\n\n# THE GREAT SECTION <note>III. 61. 2.</note>\n\nTo them I say: In that case, venerable ones, people will be <term>pânâtipâtino</term> <gloss>those who take life</gloss> because of past actions; they will be <term>adinnâdâyino</term> <gloss>those who take what is not given</gloss> because of past actions; they will be <term>abrahmacârino</term> <gloss>those who are unchaste</gloss> because of past actions; they will be <term>musâvâdino</term> <gloss>those who speak lies</gloss> because of past actions; they will be <term>pisuṇâvâcâ</term> <gloss>those who speak maliciously</gloss> <margin>All manuscripts read <term>pisuṇâvâcâ</term> and <term>pharusâvâcâ</term>; compare section XVI. 8 below.</margin> because of past actions; they will be <term>pharusâvâcâ</term> <gloss>those who speak harshly</gloss> because of past actions; they will be <term>samphappalâpino</term> <gloss>those who engage in frivolous chatter</gloss> because of past actions; they will be <term>abhijhâluno</term> <gloss>those who are covetous</gloss> because of past actions; they will be <term>vyâpannacittâ</term> <gloss>those who are ill-willed</gloss> because of past actions; and they will be <term>micchâdiṭṭhikâ</term> <gloss>those who hold wrong views</gloss> because of past actions. Monks, for those who fall back on past actions as the essential truth <margin>The manuscripts here and below vary between <term>gacchantam</term> and <term>gacchatam</term>.</margin>, there is no desire or effort regarding \"this should be done\" or \"this should not be done.\" Thus, when what should and should not be done cannot be established as a truth or a reality, those who live with confused mindfulness and without self-restraint lack a legitimate, righteous claim to being a contemplative <note>original: sahadhammiko samaṇavādo</note>.\n\nMonks, this is my first legitimate refutation of those contemplatives and brahmins who hold such a view.\n\n3. There, monks, among those contemplatives and brahmins who hold this view: \"Whatever a person experiences, be it pleasure, pain, or neutral feeling, it is all caused by the creation of a supreme deity <note>original: issaranimmânahetu</note>,\" I approach them and say: \"Is it true, venerable ones, that you hold this view: 'Whatever a person experiences, be it pleasure, pain, or neutral feeling, it is all caused by the creation of a supreme deity'?\"\n\nIf they answer \"yes\" <margin>Manuscripts D. and T. read <term>âmo</term>.</margin> when questioned this way, I say to them: \"In that case, venerable ones, people will be those who take life because of the creation of a supreme deity <term>pe</term> <gloss>and so on</gloss> they will hold wrong views because of the creation of a supreme deity.\" Monks, for those who fall back on the creation of a supreme deity as the essential truth, there is no desire or effort regarding \"this should be done\" or \"this should not be done.\" Thus, when what should and should not be done cannot be established as a truth or a reality, those who live with confused mindfulness and without self-restraint lack a legitimate, righteous claim to being a contemplative.\n\nMonks, this is my second legitimate refutation of those contemplatives and brahmins who hold such a view.\n\n<summary>The Buddha refutes two fatalistic views: the idea that all current experiences are caused by past karma and the idea that all experiences are caused by a supreme creator. He argues both views negate moral responsibility and the necessity for human effort.</summary>\n<keywords>determinism, karma, theism, moral responsibility, refutation, Anguttara Nikaya, Buddhist philosophy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2686,
+ "outputTokens": 3796,
+ "thinkingTokens": 2831,
+ "cost_usd_realtime": 0.012731,
+ "cost_usd_batch_equiv": 0.0063655,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 15172,
+ "at": "2026-10-03T20:41:40.792Z"
+}

@@ -1,0 +1,30 @@
+{
+ "id": "69ea3e63300d991d0f1d3186_00160",
+ "arm": "lite-corr",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page: regarding the regulations and conduct governing courtesans under the state's supervision.</meta>\n\n### Chapter 44. The Superintendent of Courtesans\n\nA courtesan who refuses to approach a man under the king’s order shall receive a thousand lashes, or a fine of five thousand <term>panas</term> <gloss>units of currency</gloss>. \nIf she accepts payment and then develops an aversion, the fine shall be double the payment. \nIf she steals the payment for her lodging, she shall pay eight times the amount, unless the fault lies with the illness or personal failings of the man. \nA courtesan who kills a man shall be burned on a funeral pyre or drowned in water. \nIf anyone steals a courtesan’s ornaments or her earnings, the fine shall be eight times the value. \nA courtesan must report her earnings, her future income, and the man with whom she is associated. \n\nBy this rule, the regulations for the wives of actors, dancers, singers, musicians, reciters, rope-dancers, magicians, and traveling bards, as well as for those women who live by secret means, are also explained. \nThey shall pay a fee of five <term>panas</term> for every public performance. \nWomen living by their beauty <term>rupajiva</term> <gloss>courtesans</gloss> shall pay twice the amount of a single day’s earnings every month. \nThe courtesan shall cause her female servants and those who live by performing on stage to master the arts of singing, playing instruments, reading, dancing, acting, writing, painting, playing the <term>vina</term> <gloss>lute</gloss>, the flute, and the drum, as well as the knowledge of others' thoughts, perfumery, garland-making, massage, and the arts of gallantry <term>vaishika-kala</term> <gloss>the arts of seduction and courtly love</gloss>, and she shall maintain her livelihood through the king’s jurisdiction. \nThe sons of courtesans and those who live by the stage should be made into leaders, and they should be proficient in all rhythmic and musical practices. \n\nWomen who are skilled in secret codes and foreign languages should be employed by them, along with their kinsmen and retainers, for the purposes of espionage, assassination, and detecting negligence. \n\nThus ends the twenty-seventh chapter, the Superintendent of Courtesans, in the Book of Superintendents. \nForty-eighth from the beginning.\n\n<note>The original text contains minor variations in readings for sections regarding payment and the education of performers: 1. Concerning men. 2. Concerning the purpose of maintenance/ornaments. 3. Concerning the mastery of rhythmic and musical practices.</note>\n\n<summary>This page details the legal and professional regulations for courtesans and performing artists under the state-appointed superintendent, including penalties for disobedience, taxes on earnings, and the requirement for performers to serve as state intelligence assets.</summary>\n<keywords>Arthaśāstra, Courtesan, Superintendent, Taxation, Espionage, Performing Arts, Kautilya</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2345,
+ "outputTokens": 682,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.00160925,
+ "cost_usd_batch_equiv": 0.000804625,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 3220,
+ "at": "2026-10-03T20:28:12.300Z"
+}

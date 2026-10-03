@@ -1,0 +1,30 @@
+{
+ "id": "69906a861cf6ed5fbc8f5d21_00078",
+ "arm": "flash-corr",
+ "model": "gemini-3-flash-preview",
+ "text": "page 62\n# Lilavati\n# Example:\n# And another example:\n\n> At the arrival of the clouds <note>the monsoon season</note>, ten times the square root of a flock of swans flew away to Lake Manasa. One eighth of the flock flew up from the water's edge and went to a forest of land-growing lotuses. O young girl, three pairs of swans were seen playing with great passion in the water beautified by tender lotus stalks. Tell me the total number of swans in that flock. 3.\n\n**Syntax:** O young girl! At the arrival of the clouds, ten times the square root of a flock of swans went to Lake Manasa. One eighth of the flock flew from the shore of the water to a forest of land-lotuses. And three pairs of swans were seen playing with delight in water adorned with young lotus stalks. Then, tell me the total number of the flock. 3.\n\n**Meaning:** O my dear, sixteen-year-old beloved! There was a flock of swans. From that flock, when the rainy season arrived, ten times the square root <note>of the total</note> went to Lake Manasa. One eighth part flew from the edge of the water into a forest of land-growing lotuses. If three pairs of swans—that is, six swans—were seen playing very affectionately in the water which is beautiful with tender lotus fibers, then say, how many swans were in that group? 3.\n\n**Layout:** Multiplier of the root: 10. One eighth part: <gloss>1/8</gloss>. Visible amount: <gloss>6</gloss>. Since the rule states \"when increased or decreased by parts,\" here we divide the visible amount and the root-multiplier by the whole minus the fraction <gloss>7/8</gloss>. The resulting visible amount is <gloss>48/7</gloss> and the root-multiplier is <gloss>80/7</gloss>. Half of the multiplier is <gloss>40/7</gloss>. Its square is <gloss>1600/49</gloss>. Added <note>to the product of the visible amount and common denominator</note> it becomes <gloss>1936/49</gloss>. The square root of this is <gloss>44/7</gloss>. Adding the half-multiplier <gloss>40/7</gloss> and squaring the result, the total number of swans is found to be: 144.\n\n**Expansion:** Following the rule stated in the second verse, we subtract the eighth part <gloss>1/8</gloss> from one. Thus: <gloss>1/1 - 1/8 = 7/8</gloss>. Dividing the visible amount of 6 by this: <gloss>6 ÷ 7/8 = 6/1 × 8/7 = 48/7</gloss>. This becomes the visible quantity <term>drishya rashi</term>. Similarly, dividing the root-multiplier of 10 by <gloss>7/8</gloss>: <gloss>10 ÷ 7/8 = 10/1 × 8/7 = 80/7</gloss>. This becomes the root-multiplier <term>mula-guna</term>. Now, taking the visible quantity as <gloss>48/7</gloss> and the root-multiplier as <gloss>80/7</gloss>, we perform the operation according to the method mentioned in the previous verse. That is, half of the root-multiplier is <gloss>40/7</gloss>. Squaring this gives <gloss>1600/49</gloss>. Adding this to the visible quantity <gloss>48/7</gloss>...\n\n<summary>This page presents a mathematical word problem involving a flock of swans to demonstrate the calculation of an unknown total using square roots and fractions. It provides the Sanskrit verse, a literal prose explanation, and the step-by-step algebraic resolution resulting in the number 144.</summary>\n<keywords>Lilavati, Bhaskara II, algebra, square root, fractions, quadratic equations, swans, mathematics</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2769,
+ "outputTokens": 895,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0040695,
+ "cost_usd_batch_equiv": 0.00203475,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 5601,
+ "at": "2026-10-03T20:29:30.706Z"
+}

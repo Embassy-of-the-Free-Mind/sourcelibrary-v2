@@ -1,0 +1,30 @@
+{
+ "id": "69e7267ca409200ea79ef51d_00353",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<header>Hitopadesha</header>\n\n-> 140 <-\n\nSince war is imminent, why, Your Majesty, do you not act before the conflict begins? For it is said:\n\nWhat kind of servant or what kind of minister is he who, without due consideration, directs the King toward preparations for battle and the abandonment of his own post at the very outset?\n\nFurthermore:\n\nOne should strive to conquer enemies by means other than battle. Between two combatants, victory is seen to be uncertain.\n\nAnd again:\n\nOne should strive to resolve the enemy through conciliation, gifts, or sowing dissension—either collectively or individually—but never through war.\n\nAnd also:\n\nEvery man is a hero until he has encountered actual conflict. Who would not be full of pride before seeing the strength of the opponent?\n\nMoreover:\n\nA great result is not achieved by creatures through harsh means in the same way it is achieved through gentle efforts. Success is not easily gained through minor means, yet the fruit of this strategy is great. However, seeing that war is present, let it be regarded with caution. For it is said:\n\n<note>The following section is a Bengali translation or commentary of the Sanskrit verses above.</note>\n\nWhen battle is imminent, the <term>Chakravaka</term> <gloss>Ruddy Goose, acting as a minister</gloss> says: \"O Great King, war should not be undertaken at the very beginning. For what kind of servant or minister is he who, without deliberation, advises the King to prepare for battle and to abandon his own position at the outset? Furthermore, one should make efforts to conquer the opponent through conciliation and similar means; one should never do so through battle, because among two people fighting, it is not known for certain whose victory it will be. Furthermore, one should strive to settle the opponent through conciliation, gifts, or dissension, either individually or through all of them combined; never do so through war. Furthermore, every man is a hero who has not yet fought, because...\"\n\n<summary>This page contains political advice from the Hitopadesha regarding the avoidance of war. The minister Chakravaka counsels the King to prioritize diplomacy, gifts, and strategy over direct military conflict due to the unpredictable nature of battle.</summary>\n<keywords>Hitopadesha, diplomacy, war strategy, Chakravaka, conciliation, political ethics, Sanskrit fables</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2238,
+ "outputTokens": 509,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.002646,
+ "cost_usd_batch_equiv": 0.001323,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 3601,
+ "at": "2026-10-03T12:05:43.008Z"
+}

@@ -1,0 +1,30 @@
+{
+ "id": "6a3c5f3b879008ba7e153836_00013",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "For this reason, one should not grasp at phenomena, nor should one grasp at non-phenomena. Because of this meaning, the <term>Tathagata</term> <gloss>Thus-Come One, the Buddha</gloss> always says: \"You monks! Understand that my teaching is like a raft. Even the phenomena should be abandoned, let alone the non-phenomena.\"\n\n### Section 7: Nothing Attained, Nothing Spoken\n\nSubhuti, what do you think? Has the Tathagata attained <term>Anuttara-samyak-sambodhi</term> <gloss>unsurpassed, perfect, and complete enlightenment</gloss>? Does the Tathagata have any fixed teaching to preach?\n\nSubhuti replied: As I understand the meaning of what the Buddha has said, there is no fixed phenomenon called <term>Anuttara-samyak-sambodhi</term>, and there is no fixed phenomenon that the Tathagata can preach. Why? The teachings spoken by the Tathagata are all intangible, inexpressible, neither phenomena nor non-phenomena. Why is this? Because all sages and saints are distinguished by their realization of the <term>Asamskrta</term> <gloss>unconditioned or uncompounded reality</gloss>.\n\n### Section 8: The Birth of Merit through the Teaching\n\nSubhuti, what do you think? If someone were to fill the three-thousand-great-thousand worlds with the seven treasures and use them for charity, would the merit obtained by this person be great?\n\nSubhuti replied: Very great, World-Honored One! Why? Because this merit is not the nature of true merit. It is for this reason that the Tathagata speaks of the merit as being great.\n\nIf, however, there is someone who accepts and upholds even a four-line verse of this sutra and explains it to others, their merit would be even greater. Why? Subhuti, all Buddhas and the <term>Anuttara-samyak-sambodhi</term> of all Buddhas originate from this sutra. Subhuti, what is called \"Buddha-dharma\" is, in fact, not Buddha-dharma.\n\n### Section 9: One Mark and No-Mark\n\n<summary>This page discusses the necessity of detaching from fixed concepts of teachings, the nature of enlightenment as unconditioned, and the superiority of transmitting the sutra's wisdom over material charity.</summary>\n<keywords>Tathagata, Anuttara-samyak-sambodhi, raft metaphor, unconditioned reality, merit, four-line verse, Buddha-dharma</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2618,
+ "outputTokens": 566,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0015035,
+ "cost_usd_batch_equiv": 0.00075175,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2345,
+ "at": "2026-10-03T12:05:03.312Z"
+}

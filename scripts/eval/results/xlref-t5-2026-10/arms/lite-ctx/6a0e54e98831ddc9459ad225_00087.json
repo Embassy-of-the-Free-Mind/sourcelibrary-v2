@@ -1,0 +1,30 @@
+{
+ "id": "6a0e54e98831ddc9459ad225_00087",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "In the <term>Hathayogapradipika</term> <gloss>Light on Hatha Yoga</gloss>\n\n**Root:** The body gains strength, and it becomes free from all disturbances. By this method, the lord of yogis truly becomes free from all troubles on the face of the earth. || 56 ||\n\n### Now, the <term>Shitali</term> <gloss>cooling breath</gloss> ###\n\nWith the tongue, one should draw in the air and perform <term>kumbhaka</term> <gloss>breath retention</gloss> as before. The wise practitioner should slowly exhale the air through the nasal passages. || 57 ||\n\nDiseases such as enlarged spleen or glands, fever, bile, hunger, thirst, and poisons are truly destroyed by this <term>kumbhaka</term> <gloss>breath retention</gloss> called <term>Shitali</term>. || 58 ||\n\n-> || Commentary || <-\n\n\"The body gains strength\" means the body becomes strong. By the method mentioned here, which is the method of practice, the lord of yogis, who is like a king among yogis, truly becomes free from all disturbances on the face of the earth. The logic follows that every statement is provided with certainty, meaning the fruit that has been described is indeed true. || 56 ||\n\nThe author describes <term>Shitali Kumbhaka</term>. \"With the tongue\" means that by extending the tongue out of the lips, resembling the lower beak of a bird, one should draw in the air and perform an inhalation. The phrase \"as before,\" meaning like in <term>Suryabhedana</term> <gloss>sun-piercing breath</gloss>, implies that one should perform the procedure of <term>kumbhaka</term>. \"The wise\" is one who possesses good intelligence. \"Through the nasal passages\" refers to the openings of the nostrils, through which one should slowly exhale the air. || 57 ||\n\nThe author describes the qualities of <term>Shitali</term>. \"Enlarged spleen and glands\" refers to specific diseases. \"Diseases\" refers to ailments. \"Fever\" is the disease known as fever; \"bile\" is bile-related disorder; \"hunger\" is the desire to eat; \"thirst\" is the desire to drink water; \"poisons\" are disorders caused by snake venom and other toxins. \"Called <term>Shitali</term>\" is a term used to indicate the well-known name. This <term>kumbhaka</term> removes them entirely. The word <term>kumbhaka</term> is feminine here.\n\n-> || Vernacular || <-\n\n\"The body gains strength\" means the body becomes strong. And as stated, the yogi becomes like a king among yogis, and on this earth, he remains free from all disturbances. Whatever is said here, the result is true. || 56 ||\n\nNow, the fourth <term>kumbhaka</term>, <term>Shitali</term>, is described. \"With the tongue\" means one should extend the tongue out of the lips, like the lower beak of a bird, draw in the air to perform inhalation, and then perform the <term>kumbhaka</term> as previously described in <term>Suryabhedana</term>. One who has a beautiful intellect should then slowly exhale the air through the nostrils. || 57 ||\n\nThe qualities of <term>Shitali</term> are stated. \"Enlarged spleen and glands\" are diseases. Along with fever, bile disorders, the desire for food, the desire for water, and poison from snake bites or other toxins, this <term>kumbhaka</term> removes them all. || 58 ||\n\n<summary>This page details the Shitali Kumbhaka, a cooling breathing technique involving tongue-curling and retention, which is credited with healing various physical ailments, including digestive issues and toxins.</summary>\n<keywords>Shitali, Kumbhaka, breath retention, cooling breath, spleen, fever, bile, toxins, Hatha Yoga</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3283,
+ "outputTokens": 885,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.00214825,
+ "cost_usd_batch_equiv": 0.001074125,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 3687,
+ "at": "2026-10-03T12:04:55.807Z"
+}

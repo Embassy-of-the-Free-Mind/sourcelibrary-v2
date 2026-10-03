@@ -1,0 +1,30 @@
+{
+ "id": "69b99d0e6ed9e04909908946_00387",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Aṅguttara-Nikāya. XI.\n\nJust as, Venerable Sir, a duster <note>original: \"rajoharaṇa\" - a cloth used for cleaning dust</note> wipes away both what is clean and what is unclean, what is covered in excrement, what is covered in urine, what is covered in saliva, what is covered in pus, and what is covered in blood, and the duster is not troubled, ashamed, or disgusted by it: in this way, Venerable Sir, I dwell with a mind like a duster: vast, exalted, measureless, without enmity, and without ill-will. Should there be anyone, Venerable Sir, who has not established mindfulness of the body, he might offend a fellow practitioner here and depart on his travels without seeking forgiveness.\n\nJust as, Venerable Sir, a young outcaste boy or girl, wearing a loincloth <note>original: \"kaḷopihattho\" - holding a bowl or bundle</note> and carrying a vessel, enters a village or town having established a humble mind: in this way, Venerable Sir, I dwell with a mind like a young outcaste: vast, exalted, measureless, without enmity, and without ill-will. Should there be anyone, Venerable Sir, who has not established mindfulness of the body, he might offend a fellow practitioner here and depart on his travels without seeking forgiveness.\n\nJust as, Venerable Sir, a bull with broken horns, gentle, well-tamed, and well-trained, wandering from street to street and junction to junction, does not harm anything with its feet or its horns: in this way, Venerable Sir, I dwell with a mind like a bull with broken horns: vast, exalted, measureless, without enmity, and without ill-will. Should there be anyone, Venerable Sir, who has not established mindfulness of the body, he might offend a fellow practitioner here and depart on his travels without seeking forgiveness.\n\nJust as, Venerable Sir, a woman or a man, whether young or in their prime, fond of adornment, having washed their head, would be horrified, ashamed, and disgusted by a snake carcass <note>original: \"ahikuṇapena\"</note> or\n\n<summary>The Buddha continues his discourse on cultivating a mind of absolute equanimity and humility, using the metaphors of a cleaning rag, a lowly outcaste, and a dehorned bull.</summary>\n<keywords>equanimity, humility, mindfulness, restraint, Pali Canon, Aṅguttara-Nikāya</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3248,
+ "outputTokens": 542,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.001625,
+ "cost_usd_batch_equiv": 0.0008125,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2072,
+ "at": "2026-10-03T12:04:27.707Z"
+}

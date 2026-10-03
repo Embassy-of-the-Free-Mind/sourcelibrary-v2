@@ -1,0 +1,30 @@
+{
+ "id": "6a3c61b5879008ba7e15fd28_00117",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page: commentary on the Analects, specifically regarding Zichan and the governance of the people, leading into the discussion of Yan Pingzhong.</meta>\n\nTo say it covers one person or one event, or covers one specific time, is incorrect. Master Feng of Houzhai says: judging from his actions of casting the statutes of punishment <note>referring to Zichan's creation of the bronze vessel inscribed with penal laws</note>, there is indeed much that he left unfinished. Judging from the words in the <term>Spring and Autumn Annals</term> <gloss>Chunqiu</gloss>, the way of the noble man is truly rare. The words of the sage do not exaggerate praise nor do they exaggerate condemnation. The <term>Jizhu</term> <gloss>Collected Commentaries</gloss> regarding the treatment of the people merely tracks the facts of the matter, and one cannot hide that. Master Hu says: the three-year mourning period is the legacy of love left by the teachings of Confucius’s disciple. The cultivation of fields and crops, and their harvest, is the legacy of love left by the teachings of our disciples. The spirit of Zichan rests entirely on the character <term>Yi</term> <gloss>righteousness/justice</gloss>. When the people speak of his <term>Hui</term> <gloss>kindness/benevolence</gloss>, they do not know that his governance began by focusing on the single matter of assisting the people.\n\n○ The Master said: Yan Pingzhong was good at associating with others; the longer he knew them, the more they respected him.\n\nYan Pingzhong was a grand officer of the State of Qi, named Ying. Master Cheng said: when people associate for a long time, respect tends to decline; to be able to maintain respect over a long time...\n\n<summary>This passage discusses the administrative legacy of Zichan, the nature of Confucian praise and criticism, and introduces the moral character of the Qi official Yan Pingzhong.</summary>\n<keywords>Zichan, Yan Pingzhong, Confucius, Governance, Righteousness, Kindness, Respect</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2029,
+ "outputTokens": 457,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.00119275,
+ "cost_usd_batch_equiv": 0.000596375,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2189,
+ "at": "2026-10-03T12:05:07.350Z"
+}

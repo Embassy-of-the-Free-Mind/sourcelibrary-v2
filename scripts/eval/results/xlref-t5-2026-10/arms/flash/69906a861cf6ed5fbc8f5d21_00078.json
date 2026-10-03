@@ -1,0 +1,30 @@
+{
+ "id": "69906a861cf6ed5fbc8f5d21_00078",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "# Example-\n# And another example-\n\n> At the onset of the monsoon, ten times the square root of a flock of swans flew away to <term>Manasa</term> <gloss>a sacred lake in the Himalayas</gloss>. One-eighth of the flock flew up from the water's edge and went to a forest of land-lilies. Oh young girl, three pairs of swans were seen playing with great passion in the water beautified by young lotus stalks. Tell me the total number of the flock. 3.\n\n**Prose Order:** Oh girl! At the arrival of the clouds, ten times the square root of a flock of swans went to <term>Manasa</term> lake. One-eighth part flew from the shore and reached a forest of land-lilies. Three pairs of swans were seen eagerly engaged in playful sport in water adorned with tender lotus fibers. Then, tell the total count of the entire flock. 3.\n\n**Meaning:** Oh beloved, sixteen years of age! There was a group of swans. Among them, when the rainy season arrived, ten times the square root went to <term>Manasaro-vara</term> lake. One-eighth part of the flock flew from the edge of the water into a forest of land-lilies. Six swans <note>three pairs</note> were seen playing very affectionately in water glowing with tender lotus stalks. Tell me, how many swans were in that group? 3.\n\n**Mathematical Setup:** Multiplier of the square root is 10. The fraction is <gloss>1/8</gloss>. The visible quantity is <gloss>6</gloss>. As the rule states \"when increased or decreased by fractions,\" here we divide the visible quantity and the square root multiplier by one minus the fraction <gloss>7/8</gloss>. The resulting visible quantity is <gloss>48/7</gloss>. The square root multiplier becomes <gloss>80/7</gloss>. Half of the multiplier is <gloss>40/7</gloss>. Its square <gloss>1600/49</gloss> added <note>to the product of the visible quantity and the denominator</note> results in <gloss>1936/49</gloss>. The square root of this is <gloss>44/7</gloss>. Adding half the multiplier <gloss>40/7</gloss> and squaring the result gives the total flock of swans: 144.\n\n**Explanation:** According to the rule mentioned in the second verse, the eighth part <gloss>1/8</gloss> was subtracted from one <note>the whole</note>, so <gloss>1/1 - 1/8</gloss> = <gloss>7/8</gloss>. This was divided into the visible quantity 6, resulting in <gloss>6/1 / 7/8</gloss> = <gloss>6/1 × 8/7</gloss> = <gloss>48/7</gloss>. Thus, <gloss>48/7</gloss> became the adjusted visible quantity. Similarly, the square root multiplier 10 was divided by the remaining fraction <gloss>7/8</gloss>, so <gloss>10/1 / 7/8</gloss> = <gloss>10/1 × 8/7</gloss> = <gloss>80/7</gloss>. This became the adjusted multiplier. Now, treating <gloss>48/7</gloss> as the visible quantity and <gloss>80/7</gloss> as the multiplier, the operation was performed according to the method in the previous verse. Specifically, half of the multiplier <gloss>40/7</gloss> was taken. Its square was <gloss>1600/49</gloss>. This was added to the visible quantity <gloss>48/7</gloss>...\n\n<summary>This page presents a poetic mathematical problem involving a flock of swans to demonstrate the solution of quadratic equations. It provides the verse, a prose explanation, and a step by step calculation resulting in the number 144.</summary>\n<keywords>Lilavati, Bhaskara II, quadratic equations, square roots, fractions, algebra, swans, mathematical poetry</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2710,
+ "outputTokens": 906,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.004073,
+ "cost_usd_batch_equiv": 0.0020365,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 4729,
+ "at": "2026-10-03T12:04:53.448Z"
+}

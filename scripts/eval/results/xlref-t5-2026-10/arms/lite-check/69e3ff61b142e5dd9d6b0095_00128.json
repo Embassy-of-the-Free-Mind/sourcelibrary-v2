@@ -1,0 +1,59 @@
+{
+ "id": "69e3ff61b142e5dd9d6b0095_00128",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "<header>Canto 7] Accompanied by the Rasikapriya and Rasamanjari commentaries 103</header>\n\nMay the love-play of Hari, as sung by Sri Jayadeva, bring an end to the impurities of the Kali Age. <note>8</note>\n\nThis moon, whose glow resembles the pale lotus-face of Murari <note>Krishna</note> during separation, though it attempts to conceal my pain, acts as a friend to Desire <note>Manobhava/Kama</note> and deeply intensifies the pangs of love within my heart. <note>5</note>\n\n<note>The commentator notes: In this situation, the heroine is firm and steady. Regarding the verse beginning \"Sri...\", this love-play—or rather, the unconventional sporting—described by Sri Jayadeva should bring about the pacification of the sins of the Kali Age. As stated in the Sangeetarāja: \"Where Sri-raga is the mode, the rhythm is fast, the description is of Vasudeva, and the acts are of intimacy, this is known as a superior composition.\" Thus, this is the fourteenth composition, known as Harimita-Champaka-Shekhara. Now, Radha, tormented by separation, addresses the moon: Aye is a gentle address. O friend, this moon actually intensifies the agony of desire in my heart. How so? It is a friend to Manobhava (Kama). It reminds me of the state of Murari's separation. How is the moon described? It possesses a luster like that of Murari's face, which has turned pale due to separation. Therefore, even though it hides the pain, it remains a friend to desire and thus causes pain. The meaning is: while the beauty of the moon, resembling Krishna's face in separation, should soothe my pain, its nature as a friend to Kama ensures it only increases my suffering. The Amarakosha states: 'lava, lesha, and kana are synonyms for a small bit'.</note>\n\n<note>Regarding the verse \"Sri Jayadeva...\", the play of the enemy of Mura </note><note>Krishna</note> as sung by Jayadeva should destroy the impurities of the Kali Age for both the listeners and the reciters. Now, the poet explains how the moon causes even greater distress. \"O\" is an expression of sorrow. This moon, which I see, expands the agony of love in my heart to an extreme degree. How is it described? It possesses the luster of Krishna's face-lotus, which has turned pale due to my separation from him. The implication is that seeing the moon, which resembles Krishna's face, causes intense pain through the memory of that face. What is it doing? It covers or obscures the pain. The arrival of the moon uproots one's discretion, causing the mind to remember Krishna, even though he has committed an offense. The reason for its deceitfulness is given: it is a friend to Kama. Since I did not follow Krishna even when he was near, and thus violated the command of Love, Kama has become my enemy. The moon, wishing to assist Kama, also generates this distress. The moon and Kama are well-known to be friends, as both are born of the mind <note>The text cites the Vedic source: \"The moon was born of the mind.\"</note>. The Vishva lexicon says: 'Vedana means both knowledge and pain; Aye is used in fear, anger, despair, confusion, and recollection'. The root 'tiras' means disappearance or crookedly.\n\n<note>A small symbol representing the Google logo.</note>\n\n<summary>This page presents a Sanskrit verse from the Gita Govinda featuring Radha's lamentation at the sight of the moon, accompanied by two traditional commentaries, Rasikapriya and Rasamanjari, which explain the theological and emotional significance of the moon's light as a catalyst for Radha's longing for Krishna.</summary>\n<keywords>Gita Govinda, Jayadeva, Radha, Krishna, Sanskrit, Rasa-manjari, Rasikapriya, commentary, poetry, Indian philosophy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2147,
+ "outputTokens": 1247,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0048145,
+ "cost_usd_batch_equiv": 0.00240725,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "role",
+   "source": "हरिमितचम्पकवर्णेभ्यः शेखराभिधः",
+   "was": "known as Harimitachampaka-shekhara",
+   "now": "known as Harimita-Champaka-Shekhara"
+  },
+  {
+   "type": "role",
+   "source": "अये कोमलामन्रणे",
+   "was": "O gentle one...",
+   "now": "Aye is a gentle address"
+  },
+  {
+   "type": "omission",
+   "source": "लवलेशकणार्णवः इत्यमरः",
+   "was": "",
+   "now": "The Amarakosha states: 'lava, lesha, and kana are synonyms for a small bit'."
+  },
+  {
+   "type": "omission",
+   "source": "वेदना ज्ञानदुःखयोः । भये क्रोधे विषादे च संभ्रमे स्मरणेऽपि च ॥ इति विश्वः",
+   "was": "",
+   "now": "The Vishva lexicon says: 'Vedana means both knowledge and pain; Aye is used in fear, anger, despair, confusion, and recollection'."
+  },
+  {
+   "type": "omission",
+   "source": "तिरोऽन्तद्धौ तिर्यगर्थे",
+   "was": "",
+   "now": "The root 'tiras' means disappearance or crookedly."
+  }
+ ],
+ "base_sha": 3402,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 4740,
+ "at": "2026-10-03T12:07:40.311Z"
+}

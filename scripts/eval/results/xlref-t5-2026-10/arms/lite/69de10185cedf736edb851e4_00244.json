@@ -1,0 +1,30 @@
+{
+ "id": "69de10185cedf736edb851e4_00244",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "[Chapter 3] Examination of Sentiments | 237\n\nA wise man, knowing his own limitations, should not proposition a woman who is suspicious, guarded, afraid, or under the supervision of a mother-in-law. || 27 ||\nThus ends the second chapter, on the causes of acquaintance and the methods of approach, in the fifth book, on the wives of others, of the Kamasutram by Vatsyayana.\n\n\"Suspicious\" means one who has doubts about the suitor. \"Guarded\" means protected by her attendants. \"Afraid\" means fearful of her husband. \"Under the supervision of a mother-in-law\" means staying under the authority of the mother-in-law. \"Should not proposition\" means should not desire. \"Knowing his own limitations\" means arriving at the firm realization that \"I am incapable in this situation.\" || 27 ||\nThus ends the forty-fourth section, on approaches.\n\nThus ends the second chapter, on the causes of acquaintance and the methods of approach, in the fifth book, on the wives of others, of the Jayamangala commentary on the Kamasutram, written by Yashodhara.\n\n---\n\nChapter 3.\n\nEven when an approach is made, women who are steady, bold, and worth testing should not be approached if their intentions are not revealed; therefore, the examination of sentiments is described—\nOne who is making an approach should examine the woman’s inclinations; by that, her sentiments become tested. || 1 ||\n\nJust as one approaches a maiden, one should examine her inclinations, meaning her behavior. Indeed, by this indirect examination, her sentiments are tested. || 1 ||\n\nHe explains how she should be won over—\nOne should win over a woman who does not reveal her secret thoughts through a female messenger. || 2 ||\n\n\"Who does not reveal her secret thoughts\" means one who does not make her amorous feelings known. One should win her over through a female messenger because of the messenger's boldness. || 2 ||\n\nOne should recognize as having a divided mind a woman who, having rejected an approach, later engages in contact again; one should win her over gradually. || 3 ||\n\n\"Having rejected an approach\" means after refusing the overture made by the hero. \"Later engages in contact again\" means after some days have passed, she enters into contact with the hero. \"One should recognize as having a divided mind\" means she is to be examined, thinking, \"What should I do? I do not know.\" One should win her over gradually and not abandon her suddenly. || 3 ||\n\nRegarding this, he mentions a specific detail—\nIf she is seen again wearing special ornaments after having rejected an approach, one should approach her in that same manner and \n\n<summary>This page concludes the second chapter on the methods of approaching women, noting the risks of targeting guarded individuals, and begins the third chapter, which outlines the systematic examination of a woman's sentiments and inclinations through messengers and observation.</summary>\n<keywords>Kamasutra, Vatsyayana, Yashodhara, Jayamangala, courtship, sentiment, behavior, messengers, female approach</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2661,
+ "outputTokens": 676,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.00167925,
+ "cost_usd_batch_equiv": 0.000839625,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 3002,
+ "at": "2026-10-03T12:04:29.202Z"
+}

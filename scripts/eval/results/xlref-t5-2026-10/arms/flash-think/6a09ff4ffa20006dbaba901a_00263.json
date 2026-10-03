@@ -1,0 +1,30 @@
+{
+ "id": "6a09ff4ffa20006dbaba901a_00263",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "5. Furthermore, monks, when a monk directs his mind toward form <note>original: <term>rūpaṃ</term></note>, his mind does not leap forward, does not find confidence, does not settle, and does not release into form. However, when he directs his mind toward the formless <note>original: <term>arūpaṃ</term></note>, his mind leaps forward, finds confidence, settles, and releases into the formless. His mind is well-directed, well-developed, well-uplifted, well-released, and well-detached from forms. Those taints <note>original: <term>āsavā</term></note>, distresses, and fevers that arise conditioned by form—he is freed from them; he does not feel that sensation. This is declared to be the escape from forms.\n\n6. Furthermore, monks, when a monk directs his mind toward self-identity <note>original: <term>sakkāyaṃ</term></note>, his mind does not leap forward, does not find confidence, does not settle, and does not release into self-identity. However, when he directs his mind toward the cessation of self-identity <note>original: <term>sakkāyanirodhaṃ</term></note>, his mind leaps forward, finds confidence, settles, and releases into the cessation of self-identity. His mind is well-directed, well-developed, well-uplifted, well-released, and well-detached from self-identity. Those taints, distresses, and fevers that arise conditioned by self-identity—he is freed from them; he does not feel that sensation. This is declared to be the escape from self-identity.\n\nIn such a monk, delight in sensual pleasure <note>original: <term>kāmanandi</term></note> no longer underlies his tendency; delight in ill-will <note>original: <term>vyāpādanandi</term></note> no longer underlies it; delight in cruelty <note>original: <term>vihesānandi</term></note> no longer underlies it; delight in form <note>original: <term>rūpanandi</term></note> no longer underlies it; and delight in self-identity <note>original: <term>sakkāyanandi</term></note> no longer underlies it. Because he has no underlying tendency toward delight in sensual pleasure, ill-will, cruelty, form, or self-identity, he is called, monks, a monk without underlying tendencies <note>original: <term>niranusayo</term></note>. He has cut off craving, struck off the fetters <note>original: <term>samyojanaṃ</term></note>, and by the full understanding of conceit, he has made an end of suffering <note>original: <term>dukkhassa</term></note>.\n\nThese, monks, are the five elements of escape <note>original: <term>nissaraṇiyā dhātuyo</term></note>.\n\n->The Chapter on Brahmins <note>original: <term>Brāhmaṇavaggo</term></note>, the twentieth section.<-\n\n<summary>This text concludes the teaching on the five elements of escape, describing how a monk achieves liberation by directing the mind away from form and self-identity toward their cessation. By removing underlying delights in these concepts, the practitioner cuts off craving and ends suffering.</summary>\n<keywords>escape, formless, self-identity, cessation of suffering, underlying tendencies, liberation, Buddhist psychology</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2713,
+ "outputTokens": 767,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0036575,
+ "cost_usd_batch_equiv": 0.00182875,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 7203,
+ "at": "2026-10-03T12:04:38.917Z"
+}

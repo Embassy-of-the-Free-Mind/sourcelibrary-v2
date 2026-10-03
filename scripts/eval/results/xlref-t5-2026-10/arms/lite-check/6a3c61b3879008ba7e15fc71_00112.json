@@ -1,0 +1,47 @@
+{
+ "id": "6a3c61b3879008ba7e15fc71_00112",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "To say that one cannot deceive others is also a way of providing instruction. A question was raised regarding the chapters from \"Eight Rows of Dancers\" <note>referring to the *Ba Yi* chapter</note> to \"Offering Sacrifice at Mount Tai.\" <note>referring to the *Ba Yi* chapter of the Analects</note> The five ways they were destroyed, and thus the sorrow felt, are entirely consistent with the principles found in the *Spring and Autumn Annals*. Master Zhu <note>Zhu Xi</note> said: This is...\n\n○ The Master said: A noble man has nothing to compete for. If he must compete, perhaps it is in archery. He bows and yields to ascend, and upon descending, he drinks. Such is his competition. A noble man <note>The character \"noble man\" here is pronounced in the departing tone</note>.\n\n\"He bows and yields to ascend\" refers to the ritual of grand archery. One makes three bows before ascending the hall. <note>Hu's commentary</note> In the ritual of archery, the Master of Archers <term>Si She</term> <gloss>official in charge of archery</gloss> arranges the three pairs of archers. The three pairs exit the dressing room, face west, and bow. When they reach the north side of the stairs, they bow, and upon reaching the stairs, they bow again. This is what is meant by \"three bows before ascending the hall.\" \n\nThis refers to the completion of the archery, where they bow and descend to wait for all the other pairs to descend. The winner then bows, and the loser ascends to take the cup\n<margin>Explanation of pronunciation</margin>\nplaces it, stands, and drinks. <note>Master Hu says: Once the archery is finished, they face north and bow, just as they did when ascending. They return to the side room.</note>\nThe pairs finish their archery in the same manner. This is what is meant by \"when the archery is finished, they bow and descend to...\"\n\n<summary>This passage discusses the ritual protocols of archery as a metaphor for the noble man's conduct, emphasizing modesty, deference, and the avoidance of unseemly competition, as interpreted through the commentaries of Master Hu and Master Zhu.</summary>\n<keywords>Analects, Archery Ritual, Noble Man, Ritual Propriety, Master Zhu, Master Hu, Competition</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1015,
+ "outputTokens": 721,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0026705,
+ "cost_usd_batch_equiv": 0.00133525,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "omission",
+   "source": "五滅故其哀痛一切與春秋同意",
+   "was": "The reasons for their destruction are consistent",
+   "now": "The five ways they were destroyed, and thus the sorrow felt, are entirely consistent"
+  },
+  {
+   "type": "role",
+   "now": "the loser ascends to take the cup",
+   "was": "the one who is defeated ascends to retrieve the...",
+   "source": "不勝者升取"
+  },
+  {
+   "type": "omission",
+   "source": "置立飲也",
+   "was": "placing them in position to drink.",
+   "now": "places it, stands, and drinks."
+  }
+ ],
+ "base_sha": 2258,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 3020,
+ "at": "2026-10-03T12:08:30.910Z"
+}

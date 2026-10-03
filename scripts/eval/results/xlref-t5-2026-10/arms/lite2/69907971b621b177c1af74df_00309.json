@@ -1,0 +1,30 @@
+{
+ "id": "69907971b621b177c1af74df_00309",
+ "arm": "lite2",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<page-num>290</page-num>\n<header>Surya Siddhanta:</header>\n\nVasudeva is the supreme Brahman. His manifestation is the Supreme Person, who is unmanifest, devoid of qualities, peaceful, beyond the twenty-five elements, and immutable; that is, he is without change. 12\n\n->The Lord, abiding within nature, is omnipresent, both external and internal.<-\n->Sankarshana, at the beginning of creation, created the waters and deposited his energy within them. 13<-\n\nSince it is impossible for the pure Brahman to be the direct cause of the world, [the author] explains: [the Lord] abiding within nature, or rather, associated with <term>Maya</term> <gloss>illusory power</gloss>, is omnipresent, both external and internal, as he is the material cause of the world. All these attributes should be understood as applying to Sankarshana, a portion of Vasudeva, by recognizing his identity with Vasudeva. Sankarshana, who is a portion of Vasudeva, first created the waters. In those waters, he deposited his energy, a specific power. 13\n\nExperiential for all, the Lord Sankarshana entered into this nature and first created the waters. Afterward, he placed his own radiance, in the form of a seed, into those waters. 13\n\n->That became a golden egg, covered everywhere by darkness.<-\n->Therein, the eternal Aniruddha first manifested himself. 14<-\n\nWhat happened thereafter? That water, combined with his energy, became a golden egg, spherical in shape, covered everywhere—both inside and outside—by darkness. The meaning is that a golden egg was produced in the space filled with darkness. There, in that golden egg, the eternal Lord Aniruddha, a portion of Vasudeva—and also a portion of Sankarshana—first manifested; he was not born, for the doctrine of <term>Satkaryavada</term> <gloss>the theory that the effect pre-exists in the cause</gloss> is accepted. Just as oil exists in sesame seeds and is merely manifested, not created, so too was he manifested. 14\n\nThat radiance in the form of a seed took the shape of a golden egg. It was surrounded on all sides by darkness. There, within the egg, the eternal Lord Aniruddha first appeared. 14\n\n->This Lord is described in the Vedas as Hiranyagarbha.<-\n->He is called Aditya because he was the first to exist, and because he expands, he is called Surya. 15<-\n\nNow, for the sake of public understanding, [the author] provides other names for him. This Lord Aniruddha, a portion of Sankarshana, who is endowed with the six qualities of majesty <note>original: <term>shadgunya-aishvarya</term></note>, is described or characterized in the Vedas as Hiranyagarbha because he resides within the golden egg as its core. The meaning is that he is famously known in the Vedas by the name Hiranyagarbha. Indeed, he is called <term>Aditya</term> <gloss>the First/Original</gloss> because he was the first to manifest. Because of his expansion—that is, because the world is manifested from him—he is called Surya.\n\n\"Hiranyagarbha existed in the beginning, the sole lord of all that is born.\" \n\nThis is the scriptural text. 15\n\nThis very Lord is Hiranyagarbha, who is mentioned in the Vedas. In the beginning\n\n<summary>This page discusses the cosmology of the Surya Siddhanta, detailing the manifestation of the Lord through Vasudeva, Sankarshana, and Aniruddha as part of the creative process that leads to the emergence of the golden egg, or Hiranyagarbha.</summary>\n<keywords>Surya Siddhanta, Vasudeva, Sankarshana, Hiranyagarbha, Aniruddha, nature, golden egg, Vedic scriptures</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2554,
+ "outputTokens": 885,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.001966,
+ "cost_usd_batch_equiv": 0.000983,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 3123,
+ "at": "2026-10-03T12:04:39.261Z"
+}

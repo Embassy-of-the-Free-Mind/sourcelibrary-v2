@@ -1,0 +1,30 @@
+{
+ "id": "69b99e856ed9e0490990a0b5_00301",
+ "arm": "flash-corr",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>He is covetous. He covets the wealth and property of others, thinking: \"Oh, that what belongs to another might be mine.\" He is malevolent of mind and corrupt in his intentions, thinking: \"May these beings be killed, or slaughtered, or abolished, or destroyed, or may they cease to exist.\" He holds wrong view and has a perverted vision, thinking: \"There is nothing given, nothing offered, nothing sacrificed. There is no fruit or result of good or bad actions. There is no this world, no other world. There is no mother, no father. There are no beings who are reborn spontaneously. In this world, there are no ascetics or brahmins who have reached the right path and are practicing correctly, who, having realized this world and the other world by their own higher knowledge, proclaim it.\"\n\nMonks, one who possesses these ten qualities is cast into hell according to his deeds.\n\n3. Monks, one who possesses ten qualities is cast into heaven according to his deeds. What are those ten?\n\n4. Here, monks, a certain person gives up the destruction of life and abstains from killing. He has laid down the rod and the sword. He is conscientious, merciful, and dwells with compassion for the welfare of all living beings. He gives up taking what is not given and abstains from theft. Whatever wealth or property belongs to another, whether in the village or the forest, he does not take by way of theft. He gives up sexual misconduct and abstains from it. He does not have relations with those protected by their mother, father, brother, sister, or relatives, nor with those protected by the law <note>original: \"dhammarakkhitā\"</note>, nor those who have a husband, nor those subject to punishment, nor even those garlanded with a string of flowers <note>referring to a girl betrothed by a wreath</note>. He gives up false speech and abstains from lying. When he goes to a council, an assembly, among relatives, among a guild, or to the royal court, and is summoned as a witness and asked, \"Come, good man, tell us what you know,\" if he does not know, he says \"I do not know,\" and if he knows, he says \"I know.\" If he did not see, he says \"I did not see,\" and if he saw, he says \"I saw.\" Thus, he does not speak a deliberate lie for his own sake, or for the sake of another, or for the sake of some material gain. He does not comm-\n\n<summary>This text details the ten unwholesome actions that lead to rebirth in hell and begins the list of ten wholesome actions, such as non-violence and honesty, that lead to heaven.</summary>\n<keywords>ethics, karma, ten courses of action, rebirth, morality, Pali Canon, Buddhism</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2751,
+ "outputTokens": 617,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0032265,
+ "cost_usd_batch_equiv": 0.00161325,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 3761,
+ "at": "2026-10-03T20:28:36.641Z"
+}

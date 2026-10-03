@@ -1,0 +1,30 @@
+{
+ "id": "69e72c75a409200ea79f4976_00100",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "...placing them in situations with wine to observe their adherence to rules; and mingling with them in various circumstances to observe their composure. Through these nine tests, even the most unworthy person can be identified.\n\n<margin>An ancestor of Confucius in the tenth generation, a member of the ducal clan of the state of Song.</margin>\nWhen Zheng Kaofu <note>a virtuous official of the Song state</note> received his first appointment, he walked with a humble posture. When he received his second appointment, he walked with his back bent even lower. When he received his third appointment, he walked with his body bowed down.\n\n<margin>The rank of scholar.</margin>\n<margin>Bending the back.</margin>\n<margin>The rank of Great Officer.</margin>\n<margin>Bowing the body, not daring to obstruct the road.</margin>\n<margin>Such was the record of Kaofu’s conduct.</margin>\n<margin>Who would not dare to take this as a model?</margin>\n\nHe walked along the walls with his head lowered. Who would dare not to follow his example?\n\n<margin>The common man.</margin>\n<margin>Stylistic note.</margin>\n<margin>Stylistic note.</margin>\n<margin>Stylistic note.</margin>\n<margin>Stylistic note.</margin>\n<margin>Stylistic note.</margin>\n\nBut for a common man, once he receives his first appointment, he becomes arrogant and boastful. Upon his second appointment, he dances atop his carriage. Upon his third appointment, he addresses his uncles by their personal names.\n\n<margin>A haughty and arrogant appearance.</margin>\n<margin>Riding in a carriage with a proud and high-handed manner.</margin>\n<margin>Calling his elders by their names.</margin>\n\n<margin>How great was the yielding virtue of Xu You in the past!</margin>\n<margin>To possess a mind focused on being virtuous is the thief of virtue.</margin>\n<margin>When the mind is enslaved by superficial concerns, virtue becomes even more strained.</margin>\n<margin>Sentence structure note.</margin>\n<margin>From this, if one looks back into the heart, it is filled with confusion and turmoil, and in the end, one cannot achieve virtue or advance toward the Dao.</margin>\n\nThere is no greater thief of the heart than a virtue that is calculated. When the mind is focused on virtue, the heart looks outward to the eyes and eyelashes. When it is quick to act in this way, it looks inward; but looking inward in this manner leads to ruin.\n\n<margin>The eyes, ears, nose, tongue, and mind.</margin>\n<margin>The mind.</margin>\n\nThere are five types of ominous virtue, and the chief of these is the virtue centered in the heart. <unclear>協</unclear>\n\n<summary>This passage contrasts the humility of the virtuous official Zheng Kaofu with the arrogance of common men who gain power. It warns that performing virtue with a calculating mind is destructive and distances one from the Dao.</summary>\n\n<keywords>Zheng Kaofu, humility, arrogance, nine tests of character, Xu You, thief of virtue, inner vision, Daoist ethics</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2315,
+ "outputTokens": 695,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0032424999999999997,
+ "cost_usd_batch_equiv": 0.0016212499999999999,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 4563,
+ "at": "2026-10-03T12:06:45.752Z"
+}

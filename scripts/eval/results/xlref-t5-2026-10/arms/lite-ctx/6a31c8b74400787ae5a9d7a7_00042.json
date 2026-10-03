@@ -1,0 +1,30 @@
+{
+ "id": "6a31c8b74400787ae5a9d7a7_00042",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Malavaggo\n\n250 For whom this <note>greed or attachment</note> is cut off, uprooted, and removed, he indeed attains concentration whether by day or by night. <note>8. The story of Tissa the novice, III, 357</note>\n\n251 There is no fire like lust, there is no grip like hatred, there is no net like delusion, there is no river like craving. <note>9. The story of the five lay followers, III, 360</note>\n\n252 It is easy to see the faults of others, but one's own are difficult to see. One winnows the faults of others like chaff, but covers one's own as a crafty gambler hides a losing die. <note>10. The story of Meṇḍaka the treasurer, III, 363</note>\n\n253 For one who sees only the faults of others, and who is always irritable, the <term>āsavas</term> <gloss>mental taints or intoxicants</gloss> increase; he is far from the destruction of these taints. <note>11. The story of the monk who was always finding fault, III, 376</note>\n\n254 There is no footprint in the sky, and there is no ascetic outside <note>of the Buddha's teaching</note>. Living beings delight in proliferation <note>of mental fabrications</note>, but the <term>Tathāgatas</term> <gloss>those who have attained the truth</gloss> are without proliferation.\n\n255 There is no footprint in the sky, and there is no ascetic outside. There are no eternal compounded things, and there is no agitation for the Buddhas. <note>12. The story of Subhadda the wanderer, III, 377</note>\n\nXVIII THE CHAPTER ON IMPURITIES (MALAVAGGO) THE EIGHTEENTH\n\n---\n\n1 Bṝ kaḷi va 2 F ca Bṝ va\n3 K F bāhiro, Bṝ, Sḝ bāhire\n\n252 Jāt III 223\n\n<summary>This page contains verses 250 through 255 of the Malavaggo, covering themes of mental concentration, the dangers of lust and hatred, the difficulty of self-reflection, and the nature of the Buddha's state.</summary>\n<keywords>Malavaggo, concentration, lust, hatred, delusion, craving, faults, āsavas, Tathāgata, Buddha</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2784,
+ "outputTokens": 568,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0015480000000000001,
+ "cost_usd_batch_equiv": 0.0007740000000000001,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2064,
+ "at": "2026-10-03T12:04:31.238Z"
+}

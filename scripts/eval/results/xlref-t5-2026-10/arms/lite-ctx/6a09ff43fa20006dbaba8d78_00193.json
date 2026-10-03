@@ -1,0 +1,30 @@
+{
+ "id": "6a09ff43fa20006dbaba8d78_00193",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "I speak to them thus: \"In that case, venerable sirs, you will be those who destroy life due to past actions, those who take what is not given due to past actions, those who engage in sexual misconduct due to past actions, those who speak falsehood due to past actions, those who speak maliciously due to past actions, those who speak harshly due to past actions, those who indulge in idle chatter due to past actions, those who are covetous due to past actions, those who have a mind of ill will due to past actions, and those who hold wrong views due to past actions. For those who rely on past actions as the essential reason, there is no desire, no effort, no idea that 'this must be done' or 'this must not be done.' Since in this way, what should be done and what should not be done cannot be established as a true and reliable reality for those who dwell heedless and unprotected, there is no valid basis for the title of 'ascetic' <term>samaṇavâdo</term> <gloss>the doctrine of the ascetics</gloss>.\"\n\nThis, bhikkhus, is my first valid refutation of those ascetics and Brahmins who hold such views and such doctrines.\n\n3. \"In this matter, bhikkhus, those ascetics and Brahmins who hold the view that whatever a person experiences—be it pleasure, pain, or neutral—is all due to creation by a supreme deity <term>issaranimmânahetu</term> <gloss>the cause of being created by a supreme lord/God</gloss>, I approach them and ask: 'Is it true, venerable sirs, that you hold such views and such doctrines—that whatever a person experiences, be it pleasure, pain, or neutral, is all due to creation by a supreme deity?'\n\n\"If, being asked by me, they reply 'Yes.'\n\n\"I speak to them thus: 'In that case, venerable sirs, you will be those who destroy life due to creation by a supreme deity... <note>The text indicates an abbreviated repetition of the list above.</note> ...you will be those who hold wrong views due to creation by a supreme deity. For those who rely on creation by a supreme deity as the essential reason, there is no desire, no effort, no idea that \"this must be done\" or \"this must not be done.\" Since in this way, what should be done and what should not be done cannot be established as a true and reliable reality for those who dwell heedless and unprotected, there is no valid basis for the title of \"ascetic\".'\n\n\"This, bhikkhus, is my second valid refutation of those ascetics and Brahmins who hold such views and such doctrines.\"\n\n<note>All manuscripts have <term>pisuṇâvâcâ</term> <gloss>malicious speech</gloss> and <term>pharusâvâcâ</term> <gloss>harsh speech</gloss>.</note>\n<note>The manuscripts here and below vary between <term>gacchantam</term> <gloss>going/approaching</gloss> and <term>gacchatam</term>.</note>\n<note>D. and T. manuscripts have <term>âmo</term> <gloss>yes</gloss>.</note>\n\n<summary>The Buddha refutes the determinist views that human experience is caused solely by past actions or by a divine creator, arguing that such views negate moral responsibility and the necessity of personal effort.</summary>\n<keywords>determinism, past actions, divine creation, moral efficacy, refutation, ascetics, kamma</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3035,
+ "outputTokens": 772,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.00191675,
+ "cost_usd_batch_equiv": 0.000958375,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 3151,
+ "at": "2026-10-03T12:04:29.149Z"
+}

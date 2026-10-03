@@ -1,0 +1,30 @@
+{
+ "id": "6a3c5f3b879008ba7e153836_00013",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>This page concludes Section Six and contains Sections Seven and Eight of the Diamond Sutra, discussing the nature of enlightenment and the merit of the teachings.</meta>Therefore, one should not grasp onto the <term>Dharma</term> <gloss>the Law or teachings</gloss>, nor should one grasp onto what is not the Dharma. For this reason, the <term>Tathagata</term> <gloss>the Thus-Come One; an epithet for the Buddha</gloss> often says: \"You monks! Know that my teaching of the Law is like the <term>parable of the raft</term> <gloss>the teaching is a tool to cross the river of suffering; once the other shore is reached, the raft is left behind</gloss>. Even the Law should be abandoned, how much more so that which is not the Law.\"\n\n### Section Seven: Nothing Obtained, Nothing Spoken\n\nSubhuti! What do you think? Has the Tathagata attained <term>Anuttara Samyak Sambodhi</term> <gloss>Supreme, Perfect Enlightenment</gloss>? Has the Tathagata spoken any Law?\n\nSubhuti replied: As I understand the meaning of what the Buddha has said, there is no fixed Law called <term>Anuttara Samyak Sambodhi</term>, nor is there any fixed Law that the Tathagata can speak. Why is this? The Law spoken by the Tathagata cannot be grasped and cannot be spoken. It is not the Law, yet it is not not the Law. Why is this so? All worthy and holy beings are distinguished by the <term>unconditioned Law</term> <gloss>asamskrta; reality that is eternal and not produced by causes</gloss>.\n\n### Section Eight: Born from the Law\n\nSubhuti! What do you think? If a person filled <term>three thousand great thousand worlds</term> <gloss>a vast Buddhist cosmological system representing a universe</gloss> with the <term>seven treasures</term> <gloss>precious materials including gold, silver, and lapis lazuli</gloss> to give as <term>charity</term> <gloss>dana</gloss>, would the <term>merit</term> <gloss>punya; spiritual credit</gloss> gained by this person be great?\n\nSubhuti said: Very great, <term>World-Honored One</term> <gloss>Bhagavan</gloss>! Why? This merit does not have the nature of merit. Therefore, the Tathagata says that the merit is great.\n\nIf, however, there is someone who receives and maintains even a <term>four-line verse</term> <gloss>gatha</gloss> from this sutra and explains it to others, their merit would surpass the former. Why? Subhuti! All Buddhas and the Law of Supreme, Perfect Enlightenment of all Buddhas emerge from this sutra. Subhuti! That which is called the Buddha's Law is not, in fact, the Buddha's Law.\n\n### Section Nine: One Appearance is No Appearance\n\n<note>Vocabulary: <term>Anuttara Samyak Sambodhi</term> <gloss>Supreme, Perfect Enlightenment</gloss>, <term>Subhuti</term> <gloss>a senior disciple of the Buddha</gloss>, <term>Tathagata</term> <gloss>the Buddha</gloss>, <term>Raft Parable</term>, <term>Charity</term> <gloss>giving</gloss>, <term>Merit</term>, <term>Four-line verse</term>, <term>Unconditioned Law</term>, <term>Buddha's Law</term></note>\n\n<summary>This page explains that the Buddha's teachings are like a raft to be discarded after use and that true enlightenment involves no fixed or graspable law. It emphasizes that the Diamond Sutra is the source of all Buddhas, making the sharing of its verses more meritorious than vast material wealth.</summary>\n<keywords>Dharma, Tathagata, Subhuti, Enlightenment, Merit, Raft Parable, Unconditioned Law, Charity</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2170,
+ "outputTokens": 4237,
+ "thinkingTokens": 3357,
+ "cost_usd_realtime": 0.013796,
+ "cost_usd_batch_equiv": 0.006898,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 16214,
+ "at": "2026-10-03T20:44:22.524Z"
+}

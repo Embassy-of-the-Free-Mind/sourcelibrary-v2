@@ -1,0 +1,30 @@
+{
+ "id": "69ef251c85daccce30f2b1f2_00309",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "# Srimad Bhagavad Gita\n\n[Chapter 9, Verses 30-31]\n\n### Shreedhara’s Commentary\nIf you give liberation only to your devotees and not to those who are not devotees, then is there a partiality in you caused by attachment and aversion? To this the Lord says \"I am equal\" <note>This refers to the preceding Verse 29: \"I am equal in all beings...\"</note>. I am equal in all beings. Therefore, there is no one who is particularly hateful or dear to me. Even though this is true, those who worship me with devotion abide in me, and I also abide in them as their benefactor. The meaning is this: Fire removes the distress of darkness and cold only for those who stay near it, yet the fire itself has no partiality. Similarly, the wish-fulfilling tree <term>kalpavriksha</term> <gloss>a divine tree that grants all desires</gloss> acts without bias. In the same way, even though I favor my devotees, I have no partiality. This is simply the supreme greatness of devotion to me. || 29 ||\n\n### Madhusudana’s Commentary\nFurthermore, the greatness of devotion to me is such that it brings about a distinction even in one who is equal to all. Hear its greatness—\n\n> Even if a person of extremely evil conduct worships me with undivided devotion, he must be considered a righteous person, for he has made a right resolution. || 30 ||\n\nIf anyone, even one of very evil conduct like Ajamila <note>A famous figure in the Puranas who was a great sinner but was saved by calling upon the name of God</note> and others, worships me with undivided devotion due to some dawn of good fortune, he must be considered righteous, even if he was unrighteous before. This is because he has made a right resolution <note>original: \"samya-vyavasitah\"</note>; he possesses the firm conviction of a saintly person. || 30 ||\n\n### Shreedhara’s Commentary\nFurthermore, showing the inconceivable influence of devotion to me, the Lord says: \"Even if.\" Even a man of extremely evil conduct, if he worships me—the Lord Narayana—alone, without practicing devotion to other deities separately, then he must be considered excellent and righteous. This is because he has made a right resolution. He has made a beautiful determination, thinking, \"I shall become successful and fulfilled only by the worship of the Supreme Lord.\" || 30 ||\n\n### Madhusudana’s Commentary\nBecause of this very right resolution, having abandoned his evil conduct—\n\n> Quickly he becomes a righteous soul and attains eternal peace. O son of Kunti <term>Kaunteya</term> <gloss>Arjuna</gloss>, declare it boldly: my devotee never perishes. || 31 ||\n\nEven if one has been an unrighteous soul for a long time, by the greatness of worshiping me, he \"quickly\"—meaning very soon—becomes a righteous soul <term>dharmatma</term> <gloss>one whose mind follows the path of virtue</gloss>. The meaning is that after immediately abandoning evil conduct, he becomes a person of good conduct. Furthermore, he \"attains eternal peace,\" which is the complete cessation of the desire for sensual enjoyments due to intense detachment. If someone suggests that my devotee might not become a righteous soul, might not give up his previous evil conduct, and thus would surely perish, the Lord says \"no.\" Being overcome by compassion for his devotees, the Lord speaks as if he were angry: \"O son of Kunti <term>Kaunteya</term>, do not think this is a miracle. Such is the established greatness of my devotion. Therefore, even in front of those who disagree, you should declare it. Make a promise with disregard for the doubters and with pride: 'The devotee of me, Vasudeva <note>Krishna</note>, even if he was of very evil conduct, even if he has fallen into a life-threatening crisis, even if he is sought after for a high position, even if he is very foolish or without refuge—he does not perish. Instead, he becomes one who has achieved the goal of his life.'\"\n\n<note>Footnote 1: Manuscripts labeled Ka, Ga, Gha, Nga, Cha, Chha, Ja, and Jha read \"beautifully resolved\" </note><note>original: \"shobhanam\"</note> as a variant for \"rightly resolved.\"\n\n<summary>This page contains commentaries on Krishna’s declaration that he is equal to all beings but favors his devotees. It emphasizes that even the most sinful person is transformed and saved by exclusive, sincere devotion.</summary>\n<keywords>devotion, equality, salvation, transformation, Krishna, Arjuna, Ajamila, Shreedhara Swami, Madhusudana Sarasvati</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2739,
+ "outputTokens": 6238,
+ "thinkingTokens": 5194,
+ "cost_usd_realtime": 0.020083499999999997,
+ "cost_usd_batch_equiv": 0.010041749999999999,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 27668,
+ "at": "2026-10-03T20:47:11.018Z"
+}

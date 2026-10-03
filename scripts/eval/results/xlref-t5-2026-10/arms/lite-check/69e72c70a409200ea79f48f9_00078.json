@@ -1,0 +1,41 @@
+{
+ "id": "69e72c70a409200ea79f48f9_00078",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "<margin>\n<note>Implies a sense of leading or drawing forth.</note>\n</margin>\n<margin>\n<note>He also knows that I know him; this is a method of character analysis.</note>\n</margin>\n<margin>\n<note>Method of character analysis.</note>\n</margin>\n<margin>\n<note>Zhi took his wife and departed.</note>\n</margin>\n<margin>\n<note>A place name; the person who guards the border.</note>\n</margin>\n<margin>\n<note>Mou is a disciple of Confucius.</note>\n</margin>\n<margin>\n<note>Where the soil clods are large and the grass roots are abundant.</note>\n</margin>\n<margin>\n<note>Lu.</note>\n</margin>\n<margin>\n<note>Perhaps a good kind of person, or a place with thin soil.</note>\n</margin>\n\nZilu asked to go and summon him. Confucius said: \"Desist. He knows that I am famous to him. He knows that I am traveling to Chu, and he assumes that I will surely have the King of Chu summon him. He will regard me as a flatterer <note>original: 佞人 <term>nìngrén</term> <gloss>flatterer; sycophant</gloss></note>. If that is the case, he would be ashamed even to hear the words of a flatterer, let alone see the man himself. How could he remain there?\" Zilu went to check, and the room was indeed empty. The border guard of Changwu asked Zimou: \"When you govern, do not be rash. When you rule the people, do not be destructive. In the past...\"\n\n<summary>Confucius explains to Zilu why a certain recluse refuses to meet him, followed by a dialogue between a border guard and Zimou regarding the principles of governance.</summary>\n<keywords>Confucius, Zilu, governance, reclusion, moral integrity, Zimou, Changwu</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1036,
+ "outputTokens": 600,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0023179999999999997,
+ "cost_usd_batch_equiv": 0.0011589999999999999,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "role",
+   "source": "彼知丘之著於已也",
+   "was": "He knows that I am preoccupied with him",
+   "now": "He knows that I am famous to him"
+  },
+  {
+   "type": "role",
+   "source": "長梧封人問子牟曰",
+   "was": "The border guard of Changwu asked Zimu",
+   "now": "The border guard of Changwu asked Zimou"
+  }
+ ],
+ "base_sha": 1599,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 2535,
+ "at": "2026-10-03T12:08:16.075Z"
+}

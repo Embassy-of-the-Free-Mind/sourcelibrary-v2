@@ -1,0 +1,30 @@
+{
+ "id": "6a3c6192879008ba7e15f12e_00065",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<margin>Treatise on the Awakening of Faith, Commentary, Volume One</margin>\n\nQuestion: What causes and conditions are there for the composition of this treatise?\n△ Within the answer there are three parts: stating the number, distinguishing the characteristics, and the general conclusion.\n\nAnswer: There are eight such causes and conditions. What are the eight?\n△ Regarding the distinction of characteristics: the first is the general, and the following seven are the specific. The reason for this is that the general covers both the primary and the secondary, while the specific is intended for those capable of receiving the teaching; therefore, it must be so.\n\n1. The general characteristic of the causes and conditions: this refers to enabling sentient beings to depart from all suffering and attain ultimate happiness.\nIn the general section, \"departing from all suffering\" refers to enabling sentient beings to be free from the three types of suffering and the two types of death <note>The three sufferings refer to the suffering of suffering, the suffering of change, and the suffering of conditioned existence; the two deaths refer to the \"death of changing retribution\" and the \"death of phenomena.\"</note>. \"Attaining ultimate happiness\" refers to enabling them to attain the joy of supreme <term>bodhi</term> <gloss>enlightenment</gloss> and the great <term>nirvana</term> <gloss>extinction of suffering</gloss>. It does not mean seeking worldly fame, profit, or the like. \"Not seeking fame and profit\" is interpreted in two ways: first, it does not mean wishing them to seek the benefits and happiness of the human or heavenly realms in future lives.\n\n<summary>This passage introduces the motivation behind the treatise, specifically the intent to lead sentient beings toward supreme enlightenment and away from the cycle of suffering.</summary>\n<keywords>Causes and conditions, sentient beings, suffering, nirvana, bodhi, enlightenment</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2281,
+ "outputTokens": 400,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.00117025,
+ "cost_usd_batch_equiv": 0.000585125,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 1817,
+ "at": "2026-10-03T12:05:05.144Z"
+}

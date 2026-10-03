@@ -1,0 +1,30 @@
+{
+ "id": "6a3c61ec40c88a541d8f0f4a_00018",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "->Undefiled, pure light, the sun of wisdom breaks all darkness. It subdues disasters of wind and fire and universally illuminates the<-\n->world.<-\n->The essence of compassion is like the rumble of thunder; the intent of kindness is like a wondrous, great cloud. It pours down the <term>Dharma</term> <gloss>Buddhist teachings</gloss> rain of nectar to extinguish the flames of<-\n->affliction.<-\n->In legal disputes before officials, or in the terrors of military ranks, by thinking of the power of <term>Avalokitesvara</term> <gloss>the Bodhisattva of Compassion</gloss>, all enemies will<-\n->retreat and scatter.<-\n->Wondrous Sound, Observer of the World's Sounds, Brahma Sound, Sea-tide Sound—these surpass all worldly sounds. For this reason, one should always<-\n->mind them.<-\n->In every thought, let no doubt arise. <term>Avalokitesvara</term>, the pure sage, can serve as a refuge and protector in times of suffering, distress, and the danger of<-\n->death.<-\n->Possessing every merit and looking upon all beings with eyes of compassion, the accumulation of blessings is as boundless as the ocean. Therefore, one should<-\n->prostrate.<-\n\n---\n\n->At that time, <term>Earth-Holding Bodhisattva</term> <gloss>Dharanindhara, a high-ranking being who protects the earth</gloss> rose from his seat, came forward, and said to the Buddha: \"World-Honored One!<-\n->If there are sentient beings who hear this chapter on the sovereign deeds of <term>Avalokitesvara Bodhisattva</term> and the supernatural power of his universal manifestations,<-\n->one should know that the merit of these people is not small.\" When the Buddha spoke this \"Universal Gate\" chapter,<-\n->eighty-four thousand sentient beings in the assembly all gave rise to the mind of <term>Anuttara-samyak-sambodhi</term> <gloss>the unexcelled, perfect, and complete enlightenment of a Buddha</gloss>.<-\n\n<summary>This page concludes the verses praising Avalokitesvara's saving powers and records the assembly's spiritual awakening after hearing the teaching. Earth-Holding Bodhisattva affirms the great merit of those who encounter this chapter of the Lotus Sutra.</summary>\n<keywords>Avalokitesvara, Earth-Holding Bodhisattva, Universal Gate, Dharma Rain, enlightenment, merit, compassion</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2141,
+ "outputTokens": 2017,
+ "thinkingTokens": 1464,
+ "cost_usd_realtime": 0.007121500000000001,
+ "cost_usd_batch_equiv": 0.0035607500000000005,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 8467,
+ "at": "2026-10-03T20:44:40.912Z"
+}

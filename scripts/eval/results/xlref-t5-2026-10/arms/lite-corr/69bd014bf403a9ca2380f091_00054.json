@@ -1,0 +1,30 @@
+{
+ "id": "69bd014bf403a9ca2380f091_00054",
+ "arm": "lite-corr",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Pārājikapāḷi — The First Defeat\n\n17. Or, if a monk is dissatisfied, unhappy, wishing to leave the ascetic life, troubled by the state of being a monk, ashamed of it, loathing it, desiring the householder life—or desiring to be a follower of a different faith—and he says or makes known, \"I have a mother, she will provide for me\"; or \"I have a father, he will provide for me\"; or \"I have a brother, he will provide for me\"; or \"I have a sister, she will provide for me\"; or \"I have a son, he will provide for me\"; or \"I have a daughter, she will provide for me\"; or \"I have a wife, she will provide for me\"; or \"I have relatives, they will provide for me\"; or \"I have friends, they will provide for me\"; or \"I have a village, I will live off that\"; or \"I have a town, I will live off that\"; or \"I have a field, I will live off that\"; or \"I have a plot of land, I will live off that\"; or \"I have silver, I will live off that\"; or \"I have gold, I will live off that\"; or \"I have a craft, I will live off that\"—in this way, O monks, there is both a manifestation of weakness and the training has not been renounced.\n\n18. Or, if a monk is dissatisfied, unhappy, wishing to leave the ascetic life, troubled by the state of being a monk, ashamed of it, loathing it, desiring the householder life—or desiring to be a follower of a different faith—and he says or makes known, \"It is difficult,\" or \"It is not easy,\" or \"It is hard to perform,\" or \"It is not easy to perform,\" or \"I cannot do it,\" or \"I am unable to do it,\" or \"I find no joy in it,\" or \"I find no pleasure in it\"—in this way, O monks, there is both a manifestation of weakness and the training has not been renounced.\n\n19. And how, O monks, is there both a manifestation of weakness and the training has been renounced? Here, O monks, a monk is dissatisfied, unhappy, wishing to leave the ascetic life, troubled by the state of being a monk, ashamed of it, loathing it, desiring the householder life—or desiring to be a follower of a different faith—and he says or makes known, \"I renounce the Buddha.\" In this way, O monks, there is both a manifestation of weakness and the training has been renounced.\n\n<summary>This page details specific declarations a monk might make when dissatisfied with monastic life, distinguishing between expressions of weakness that do not constitute a formal renunciation of the vows and those that indicate a successful renunciation of the training.</summary>\n<keywords>Monastic discipline, Vinaya, Renunciation, Bhikkhu, Sikkhā, Dissatisfaction</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3089,
+ "outputTokens": 640,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0017322500000000003,
+ "cost_usd_batch_equiv": 0.0008661250000000001,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2410,
+ "at": "2026-10-03T20:27:45.743Z"
+}

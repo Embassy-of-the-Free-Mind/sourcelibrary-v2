@@ -1,0 +1,30 @@
+{
+ "id": "69e80670fdad300064d9ef9d_00599",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "Clean, sprouted <term>masha</term> <gloss>black gram</gloss> and sweet <term>gajada</term> fruits <note>possibly a variety of date or similar sweet fruit</note> should be placed into a rich broth of buffalo meat that has been prepared with ghee, yogurt, and pomegranate. When this mixture is seasoned with coriander, cumin, and dry ginger, and then eaten or drunk as a soup, it produces an inexhaustible supply of semen.\n> This is the Buffalo Broth Aphrodisiac.\n\nOne who eats fresh fish or fried <term>shaphari</term> <gloss>small glistening silver fish</gloss> in hot ghee will never suffer from depletion when approaching women.\n> This is the Fish Fried in Ghee Aphrodisiac.\n\nOne who seeks to conceive should eat <term>rohita</term> <gloss>red-scaled carp</gloss> fried in ghee and prepared with goat broth and sour fruits, followed by drinking the remaining broth.\n> This is the Formulation for Producing Conception.\n\nOne should make small cakes by mixing minced fish with asafoetida, rock salt, and coriander, then combining this with wheat flour and frying the cakes in ghee. Alternatively, one may cook fish in buffalo broth seasoned with fats, sours, and salt. Once the broth has reduced and permeated the fish, the fish should be crushed and mixed with black pepper, cumin, coriander, a little asafoetida, and fresh ghee. This mixture should then be used as a stuffing for <term>masha</term> <gloss>black gram</gloss> cakes. These two preparations of cakes are aphrodisiac, increase physical strength, bestow sexual vigor and good fortune, provide nourishment, and are supreme for the increase of semen.\n> These are the two Aphrodisiac Cake Formulations.\n\n---\nBlack gram, <term>atmagupta</term> <gloss>mucuna pruriens or velvet bean</gloss>, wheat, and the flour of <term>shali</term> <gloss>winter rice</gloss> and <term>shashtika</term> <gloss>sixty-day rice</gloss>...\n\n<summary>This page details specific dietary recipes and formulations from the Caraka Samhita used as aphrodisiacs and to promote fertility. The preparations involve buffalo broth, various fish, and grain-based cakes combined with medicinal spices.</summary>\n<keywords>Ayurveda, aphrodisiacs, fertility, buffalo broth, fish recipes, black gram, Rohita fish, semen increase, virility</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2279,
+ "outputTokens": 551,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0027925,
+ "cost_usd_batch_equiv": 0.00139625,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 3669,
+ "at": "2026-10-03T12:05:45.090Z"
+}

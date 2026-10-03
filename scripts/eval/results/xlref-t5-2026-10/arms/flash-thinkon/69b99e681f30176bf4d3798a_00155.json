@@ -1,0 +1,30 @@
+{
+ "id": "69b99e681f30176bf4d3798a_00155",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "### Numerical Discourses of the Buddha <note>original: Aṅguttara-Nikāya</note>. Discourse 73, Sections 2–6\n\n2. Monks, these ten things <note>Footnote 1: The Mandalay and Phayre manuscripts omit this opening phrase.</note> are desirable, pleasant, and agreeable, but they are difficult to obtain in the world.\n\n3. For these ten things, monks, which are desirable, pleasant, and agreeable, and difficult to obtain in the world, there are ten <term>paripanthā</term> <gloss>obstacles or roadblocks</gloss>: <note>Footnote 2: The Mandalay and Phayre manuscripts use the term \"paribandhā,\" meaning hindrances, throughout this section.</note>\n\n4. Laziness and a lack of initiative <note>Footnote 3: The Mandalay and Phayre manuscripts use the spelling \"ālasyam\" throughout.</note> are the obstacle to wealth. A lack of grooming and a lack of adornment are the obstacle to beauty <note>Footnote 5: One manuscript reads \"vanna\" for beauty or appearance.</note>. <note>Footnote 4: The Siamese manuscript omits the entire section from \"lack of grooming\" to \"lack of recitation.\"</note> Unwholesome habits are the obstacle to health. Evil friendship is the obstacle to <term>sīla</term> <gloss>virtuous conduct</gloss>. A lack of sense-restraint <note>Footnote 6: Some manuscripts vary the compound structure of \"lack of sense-restraint.\"</note> is the obstacle to the <term>brahmacariya</term> <gloss>the holy life</gloss>. Deception is the obstacle to friendships. A lack of recitation and study is the obstacle to great learning. A lack of desire to listen and a lack of questioning <note>Footnote 7: One manuscript reads \"assu\" instead of \"asussusā.\"</note> are the obstacles to wisdom. A lack of application and a lack of reflection <note>Footnote 8: Various manuscripts offer alternate spellings for \"reflection.\"</note> are the obstacles to the <term>dhammas</term> <gloss>teachings or mental qualities</gloss>. Wrong practice is the obstacle to the heavens.\n\nThese, monks, are the ten obstacles to those ten things that are desirable, pleasant, and agreeable, but difficult to obtain in the world.\n\n5. For these ten things, monks, which are desirable, pleasant, and agreeable, and difficult to obtain in the world, there are ten <term>āhārā</term> <gloss>nutriments or supports</gloss>:\n\n6. Diligence and initiative <note>Footnote 9: The Siamese and Mandalay manuscripts use an alternate spelling for \"diligence.\"</note> <note>Footnote 10: All manuscripts except the Siamese put \"initiative\" before \"diligence.\"</note> are the nutriment for wealth. Grooming and adornment are the nutriment for beauty. Wholesome habits are the nutriment for health. Noble friendship is the nutriment for virtuous conduct. Sense-restraint is the nutriment for the holy life. Honesty is the nutriment for friendships. Recitation and study are the nutriment for great learning. The desire to listen and questioning are the nutriment for wisdom. Application and reflection <note>Footnote 11: Manuscript variations on the spelling of \"reflection.\"</note> are the nutriment for the teachings. Right practice is the nutriment for the heavens.\n\nThese, monks, are the ten nutriments for those ten things that are desirable, pleasant, and agreeable, but difficult to obtain in the world.\n\n<summary>This page lists ten desirable worldly and spiritual goals, such as wealth, beauty, and wisdom, and details the specific behaviors that either hinder or support their achievement.</summary>\n<keywords>Anguttara Nikaya, Buddhist ethics, ten obstacles, ten supports, spiritual discipline, diligence, wisdom</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2559,
+ "outputTokens": 3604,
+ "thinkingTokens": 2736,
+ "cost_usd_realtime": 0.0120915,
+ "cost_usd_batch_equiv": 0.00604575,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 15694,
+ "at": "2026-10-03T20:41:12.595Z"
+}

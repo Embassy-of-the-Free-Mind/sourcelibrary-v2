@@ -1,0 +1,30 @@
+{
+ "id": "69e7491a85f786e884a4d6f9_00789",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page: ...as they approached the city, the bears, lions, boars, buffaloes, elephants, and deer were terrified by the sound and fled in the ten directions. 18</meta>\n\nThe peak of <term>Trikūṭa</term> <gloss>Three-peaked mountain</gloss> is tall, touches the sky, is covered on all sides with flowers, and resembles massive gold. 18\nIt is one hundred leagues wide, clear, beautiful to behold, smooth, magnificent, and large, making it inaccessible even to birds. 19\nIt is impossible to climb even in thought, let alone for people to ascend. Established on that peak is the city of Laṅkā, governed by Rāvaṇa. 20\nIt is one hundred leagues wide and thirty leagues long. That city is adorned with high gates resembling white clouds. 21\nLaṅkā is embellished with golden and silver walls, and is heavily decorated with palaces and aerial chariots. 22\nLike the sky after the clouds have dispersed, the city’s central place is decorated with a palace featuring a thousand pillars. 23\nResembling the peak of Mount <term>Kailāsa</term> <gloss>sacred mountain in the Himalayas</gloss>, it was the ornament of the city, belonging to the lord of the demons. 24\nIt is constantly guarded by a full hundred demons. The city is pleasant, filled with forests, and adorned with mountains. 25\nIt is decorated with gardens variegated with various minerals, and is filled with various birds and frequented by various groups of beings. 26\nIt is covered with various flowers and served by various demons. Rāma, the elder brother of Lakṣmaṇa, possessed of good fortune, viewed that prosperous city of Rāvaṇa, filled with wealth, along with the monkeys. 27-28\nSeeing that city, which was crowded with great houses and resembled the city of the immortals, the powerful brother of Lakṣmaṇa was struck with wonder. 28\n\nRāma, with his great army, gazed upon the city, which was full of jewels, possessed of many arrangements, adorned with rows of palaces, and marked by great mechanical gates. 29\n\nThus ends the thirty-ninth canto, titled \"The Sight of Laṅkā,\" in the Yuddhakāṇḍa of the glorious Rāmāyaṇa of Vālmīki, the ancient poem consisting of twenty-four thousand verses.\n\n---\n\n### Canto 40\n**The Duel Between Rāvaṇa and Sugrīva**\n\nThen Rāma, surrounded by the monkey troop leaders and Sugrīva, ascended the two-league-wide plateau of the <term>Suvela</term> <gloss>mountain near Laṅkā</gloss> summit. 1\nHaving stood there for a moment, looking toward the ten directions, he saw the city of Laṅkā, built by <term>Viśvakarman</term> <gloss>divine architect</gloss> on the beautiful peak of Trikūṭa, well-situated and graced by lovely forests. 2-3\nOn the ridge of the gateway, he saw the lord of the demons, who was difficult to approach. 3\nHe was surrounded by white <term>cāmara</term> <gloss>fly-whisks</gloss> and adorned by a victory umbrella. He was smeared with red sandalwood and decorated with jewelry. 4\nHe resembled a blue cloud and was dressed in gold-covered garments. His chest was marked by the scars of his battles with the elephant Airāvata. 5\nHe was wrapped in a red cloth with a color like that of rabbit’s blood. He appeared like a mass of clouds in the sky illuminated by the evening sun. 6\nWhile the monkey lords were watching, and as Rāghava <gloss>descendant of Raghu, i.e., Rāma</gloss> was also watching, Sugrīva suddenly leaped up upon seeing the lord of the demons. 7\n\n<note>1. This half-verse is missing in the Ka-recension.</note>\n\n<summary>Rāma and his army observe the formidable and beautiful architecture of the city of Laṅkā from the summit of Mount Suvela, leading to an immediate reaction from Sugrīva upon spotting Rāvaṇa.</summary>\n<keywords>Rāma, Laṅkā, Rāvaṇa, Sugrīva, Trikūṭa, architecture, Suvela</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3293,
+ "outputTokens": 977,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.00228875,
+ "cost_usd_batch_equiv": 0.001144375,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 4042,
+ "at": "2026-10-03T12:04:46.389Z"
+}

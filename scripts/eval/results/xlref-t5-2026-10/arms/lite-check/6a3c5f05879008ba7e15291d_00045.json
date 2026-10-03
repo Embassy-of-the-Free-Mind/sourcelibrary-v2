@@ -1,0 +1,41 @@
+{
+ "id": "6a3c5f05879008ba7e15291d_00045",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "Also, this is stated in terms of the door of interdependence between the coarse and the subtle, so it is said to have no before. It also speaks of \"suddenness\" not in terms of time, but to describe the nature of that suddenness.\n\n○ 3. Clarifying the characteristics of the aforementioned dependent origination: This refers to the passage concerning the \"defiled mind.\"\n\n○ 1. Indication.\nThe defiled mind has six types.\n\n○ 2. Inquiry.\nWhat are the six?\nWithin the six, each has two parts: the first is the obstacle, and the latter is the remedy.\n\n○ 3. Explanation.\nRegarding these six types of defilement, they are matched in reverse order to the six coarse marks. The first four and the latter three subtle marks are, according to the *Commentary on the Awakening of Faith*, Volume One, identical to this. This first section matches the three and four within the coarse marks, totaling six; thus, these names are borrowed to categorize these six.\n\n○ 1. The mark of attachment and grasping to names.\n\nThe first is \"attachment-correspondence defilement,\" which is abandoned by the two vehicles upon liberation and by those at the stage of faith-correspondence. This corresponds to the third and fourth of the six coarse marks. It is also the meaning of the increase of views and desires of the aforementioned consciousness; it is also the aspect of \"discriminated attachment\" among the four marks mentioned above. Since the coarse mind externally attaches and corresponds to objects, polluting pure practice, it is called \"defiled.\" Liberation of the two vehicles refers to reaching the stage of no-more-learning, where the defilements of view and practice are completely abandoned. \"Faith-correspondence\" refers to the ten stages of understanding and beyond, where the root of faith is perfected and never lost; thus, it is called faith-correspondence. The *Treatise on the Ten Stages* states that all stages before the actual stages are collectively called the \"stage of faith-practice.\" The *Treatise on Non-Attachment* says the same. This Bodhisattva\n\n<column-break/>\n\nattains the view of human emptiness, and the defilements of view and practice do not manifest; hence it is said they are \"far removed.\" This is not regarding the remaining seeds of defilement. The *Summary of the Mahayana* states that if one does not cut off the active mind, one is no different from an ordinary person; if one does not retain the seeds of defilement, one is no different from the two vehicles. Moreover, there are two intentions for retaining defilement: for oneself or for others. This is explained according to the Final Teaching. If it were according to the Initial Teaching, the retention of defilement is only spoken of from the first stage upward, as stated in other treatises. This Bodhisattva does not only cut off the four dwellings and human attachment, but also partially cuts off the dwelling of ignorance. Therefore, this treatise says later, \"those who do not understand the meaning of the one Dharma-realm.\" Because one observes and learns to cut it off from the stage of faith-correspondence, for the sake of clarifying the coarseness of the attachment to a human self, the other is not discussed here.\n\n○ 2. The mark of continuity.\n\nThe second is \"uninterrupted-correspondence defilement,\" which depends on the stage of faith-correspondence, where one studies and practices skillful means, gradually letting it go, and finally abandoning it completely at the stage of pure-mind-ground.\n*Commentary on the Awakening of Faith*, Volume One, is the same.\nThis is the second of the six coarse marks. From this one to the sixth, they are matched in reverse to the five consciousnesses mentioned earlier; this is the fifth in that position. Simply grasping at the continuity of dharma, where birth and death arise without cessation, is the meaning of \"continuity.\" From the ten stages of understanding and beyond, through the practice of consciousness-only contemplation and the skillful means of seeking and examining, up to the first stage where one realizes the three-no-nature and the pervasive, full, true suchness, dharma-attachment and discrimination do not manifest.\n\n○ 3. The mark of wisdom.\n\nThe third is \"distinguishing-wisdom-correspondence defilement,\" which depends on the stage of complete precepts, where it is gradually abandoned, and finally removed at the stage of non-mark skillful means.\nThis is the first of the six and the fourth of the five, because it can distinguish between worldly and supramundane dharmas, as well as defilement and purity; hence it is called \"wisdom.\" This is dharma-attachment and the defilements of practice. Up to the seventh stage, because there are differences in entering and exiting contemplation, there is subtle discrimination regarding objects. However, because it is removed stage by stage, it is said to be \"gradually abandoned.\" The eighth stage",
+ "finishReason": "STOP",
+ "inputTokens": 2008,
+ "outputTokens": 1211,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.004637,
+ "cost_usd_batch_equiv": 0.0023185,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "role",
+   "source": "又二意留惑爲自他也",
+   "was": "for oneself and for others",
+   "now": "for oneself or for others"
+  },
+  {
+   "type": "negation",
+   "source": "攝論云若不断上心",
+   "was": "cut off the higher mind",
+   "now": "cut off the active mind"
+  }
+ ],
+ "base_sha": 5279,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 4416,
+ "at": "2026-10-03T12:08:23.520Z"
+}

@@ -1,0 +1,28 @@
+{
+ "id": "6a3c5f3b879008ba7e153836_00013",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "Therefore, one should not grasp at phenomena, nor should one grasp at non-phenomena. For this reason, the Tathagata <note>original: \"如來\" (Thus-come one)</note> always says: \"You monks, know that my teaching is like a raft. Even the dharma <note>original: \"法\" (teachings/phenomena)</note> should be relinquished, how much more so that which is not the dharma.\"\n\n### The Seventh Section: On Neither Attainment Nor Discourse\n\nSubhuti, what do you think? Has the Tathagata attained the <term>anuttara-samyak-sambodhi</term> <gloss>unsurpassed, complete, perfect awakening</gloss>? Does the Tathagata have any dharma to speak of?\n\nSubhuti replied: As I understand the meaning of what the Buddha has said, there is no fixed dharma called the unsurpassed, complete, perfect awakening, and there is also no fixed dharma that the Tathagata can speak of. Why? Because the dharma spoken by the Tathagata cannot be grasped, cannot be spoken of, and is neither dharma nor non-dharma. Why is this? Because all sages and saints are distinguished by the <term>asamskrta-dharma</term> <gloss>unconditioned dharma; that which is not created or subject to change</gloss>.\n\n### The Eighth Section: The Birth of Merit through the Dharma\n\nSubhuti, what do you think? If a person were to fill the three-thousand great thousand-fold world system with the seven treasures and use them for charity, would the merit gained by this person be great?\n\nSubhuti said: Very great, World-Honored One. Why? Because this merit is not of the nature of true merit, and therefore the Tathagata speaks of the merit as great.\n\nIf, however, there were another person who, within this sutra, received and upheld even a four-line stanza and explained it to others, their merit would exceed the former. Why? Subhuti, all Buddhas and the dharma of the unsurpassed, complete, perfect awakening of all Buddhas arise from this sutra. Subhuti, what is called the Buddhadharma is precisely not the Buddhadharma.\n\n### The Ninth Section: On One Mark and No Mark\n\n<summary>This passage explores the non-attachment to concepts of truth and merit, emphasizing that the highest awakening and Buddhist teachings transcend fixed definitions and conventional forms.</summary>\n<keywords>Anuttara-samyak-sambodhi, Subhuti, Tathagata, Dharma, Merit, Unconditioned Dharma</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1180,
+ "outputTokens": 587,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.002351,
+ "cost_usd_batch_equiv": 0.0011755,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [],
+ "base_sha": 2318,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 2338,
+ "at": "2026-10-03T12:08:24.319Z"
+}

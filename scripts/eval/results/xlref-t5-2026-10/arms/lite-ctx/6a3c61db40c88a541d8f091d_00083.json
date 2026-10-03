@@ -1,0 +1,30 @@
+{
+ "id": "6a3c61db40c88a541d8f091d_00083",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page: ...The Section on the Dharma Realm’s Universal Transformation.</meta>\n\nSubhuti, what do you think? If someone were to fill the three-thousand great thousand-fold worlds with the seven treasures <note>gold, silver, lapis lazuli, crystal, agate, ruby, and cornelian; traditional symbols of great worldly wealth</note> and give them as alms, would that person, because of this cause and condition, obtain much merit? Yes, World-Honored One, this person would, because of this cause and condition, obtain very much merit. Subhuti, if merit were real, the Tathagata <note>Thus-Come-One, a title for the Buddha</note> would not say that one obtains much merit. It is because merit is devoid of true existence <note>lacking inherent, permanent nature</note> that the Tathagata says one obtains much merit.\n\nThe merit of the seven treasures cannot accomplish the Buddha-fruit of <term>bodhi</term> <gloss>enlightenment</gloss>. Therefore, it is said to be \"devoid of existence.\" Because it is without fixed limit or measure, it is named as \"much.\" If one can transcend this, then it is not called \"much.\"\n\n### Section Twenty: Departing from Form and Departing from Characteristics\n\nThe three bodies are fully complete. All characteristics are perfectly realized. Both person and <term>dharma</term> <gloss>phenomena/teachings</gloss> are forgotten. This is what it means to not be fully complete. Therefore, this follows with the Section on Departing from Form and Departing from Characteristics.\n\nSubhuti, what do you think? Can the Buddha be seen by means of a fully complete physical form? No, World-Honored One, the <unclear>Tatha</unclear>\n\n<summary>This passage discusses the nature of merit as emptiness and introduces the section on transcending physical forms and characteristics to perceive the true nature of the Buddha.</summary>\n<keywords>Subhuti, seven treasures, merit, Tathagata, bodhi, three bodies, dharma, form, emptiness</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2443,
+ "outputTokens": 457,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.00129625,
+ "cost_usd_batch_equiv": 0.000648125,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2042,
+ "at": "2026-10-03T12:05:07.251Z"
+}

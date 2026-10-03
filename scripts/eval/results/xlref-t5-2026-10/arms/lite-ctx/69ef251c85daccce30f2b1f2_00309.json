@@ -1,0 +1,30 @@
+{
+ "id": "69ef251c85daccce30f2b1f2_00309",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Srimad Bhagavad Gita\n\n[Ch. 9, Verses 30-31]\n\n**Shridhara Swami’s Commentary**—If You grant liberation only to those who are devoted, and not to those who are not, does this mean that You have partiality born of attachment or aversion? No, He says this: \"Equal am I.\" I am the same toward all beings. Therefore, no one is dear to Me, and no one is hateful. Even while this is true, those who worship Me, they are devotees, and they exist in Me, and I in them, in the capacity of one who shows grace. The sentiment is this: just as fire is not partial for removing the darkness or cold that afflicts its own servants, or as the wish-fulfilling tree <note>a mythical tree that grants desires</note> is not partial, even so, I who am partial to My devotees am not partial at all; rather, this is the inherent greatness of devotion to Me. <note>29</note>\n\n**Madhusudana Saraswati’s Commentary**—Moreover, it is the inherent greatness of devotion to Me that produces a state of partiality even among those who are equal; hear of that greatness—\n\n> Even if a man of very evil conduct worships Me, having no other desire, \n> He should be considered righteous, for he has made the right resolution. <note>30</note>\n\nWhoever, even a person of very evil conduct like Ajamila and others, if they worship Me having no other desire, having experienced the dawning of good fortune, they serve Me; such a person, though formerly unrighteous, should be considered righteous. For he has made a right resolution, that is, he has attained a virtuous determination. <note>30</note>\n\n**Shridhara Swami’s Commentary**—Furthermore, showing that the influence of devotion to Me is inconceivable, He says, \"Even if...\" If a person of extremely evil conduct does not worship other deities but worships only Me, Sri Narayana, then he should be considered righteous, indeed superior. Because he has made the right resolution: \"I will be fulfilled by worshiping the Supreme Lord alone,\" he has formed a good determination. <note>30</note>\n\n**Madhusudana Saraswati’s Commentary**—From this very right resolution, having abandoned his evil conduct—\n\n> He quickly becomes a righteous soul, and attains eternal peace. \n> O son of Kunti, proclaim that My devotee never perishes. <note>31</note>\n\nThough one may have been unrighteous for a long time, by the greatness of devotion to Me, one quickly becomes a righteous soul, one whose mind follows the path of dharma, meaning one who abruptly abandons evil conduct and becomes virtuous. Furthermore, one attains eternal peace—the cessation of the desire for sense objects—and attains it completely due to deep detachment. But what if My devotee, not having abandoned the evil conduct practiced before, does not become a righteous soul, and thus he indeed perishes? To this, He says, as if angry due to being overcome by compassion for His devotees: Do not think this to be surprising, O son of Kunti. This greatness of devotion to Me is certain. Therefore, even before those who are skeptical, you proclaim it; make a pledge with confidence and pride: \"My devotee—the devotee of Vasudeva—even if he is of very evil conduct, or has met a life-threatening crisis, or is a person whose merits are very difficult to attain, or is being oppressed, or is extremely foolish, or is without refuge, does not perish; rather, he is fulfilled.\"\n\n<summary>The Lord addresses concerns about divine impartiality by affirming that devotion to Him acts as a transformative force, ensuring that even a deeply flawed individual who turns toward Him with exclusive dedication attains righteousness and salvation.</summary>\n<keywords>Devotion, Righteousness, Divine Grace, Transformation, Impartiality, Vasudeva, Dharma</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3298,
+ "outputTokens": 852,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0021025,
+ "cost_usd_batch_equiv": 0.00105125,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 6165,
+ "at": "2026-10-03T12:04:52.574Z"
+}

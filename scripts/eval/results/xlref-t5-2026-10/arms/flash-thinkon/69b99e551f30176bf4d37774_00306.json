@@ -1,0 +1,30 @@
+{
+ "id": "69b99e551f30176bf4d37774_00306",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "# 25. (5) Fruits 1 <note>original: Phalā 1</note>\n\n2. Monks, there are these four <term>iddhipādā</term> <gloss>bases of spiritual power</gloss>. These are the four bases of spiritual power.\n\n3. Because these four bases of spiritual power have been developed and cultivated <note>original: bhāvitattā bahulikatattā</note>, one of two fruits may be expected: final knowledge <term>aññā</term> in this very life, or, if there is a residue of clinging remaining <term>upādisese</term>, the state of a non-returner <term>anāgāmitā</term>.\n\n# 26. (6) Fruits 2 <note>original: Phalā 2</note>\n\n2. Monks, there are these four bases of spiritual power. These are the four bases of spiritual power.\n\n3. Because these four bases of spiritual power have been developed and cultivated, seven fruits and seven benefits may be expected. What are the seven fruits and seven benefits?\n\n4. One attains final knowledge early in this very life. If one does not attain final knowledge early in this life, then one attains final knowledge at the time of death. If one does not attain final knowledge at the time of death, then through the total destruction of the five lower fetters <term>samyojanānam</term>, one becomes:\n* An <term>antarāparinibbāyī</term> <gloss>one who attains final Nirvana in the interval between lives</gloss>.\n* An <term>upahaccaparinibbāyī</term> <gloss>one who attains final Nirvana upon landing in a higher realm</gloss>.\n* An <term>asaṅkhāraparinibbāyī</term> <gloss>one who attains final Nirvana without exertion</gloss>.\n* A <term>sasaṅkhāraparinibbāyī</term> <gloss>one who attains final Nirvana with exertion</gloss>.\n* An <term>uddhamsoto akaniṭṭhagāmī</term> <gloss>one who goes upstream to the Highest Heaven</gloss>.\n\n5. Because these four bases of spiritual power have been developed and cultivated, these seven fruits and seven benefits may be expected.\n\n# 27. (7) Ananda 1\n\n1. The setting was at Sāvatthi.\n\n2. Then the Venerable Ananda approached the Blessed One. After approaching and greeting him, <term>pe</term> <gloss>as is the custom</gloss>, he sat to one side. While sitting there, the Venerable Ananda said this to the Blessed One: \"What, Lord, are the...\"\n\n<meta>The text on this page corresponds to page 285 of Feer's 1884 edition of the Saṃyutta-Nikāya. Footnote 1 indicates numbering consistency with section 23. Footnotes 2 through 10 list manuscript variations between the Burmese and Sinhalese editions, including the insertion of the word \"bhikkhu\" and different spellings for \"attaining.\"</meta>\n\n<summary>This page lists the spiritual benefits of practicing the four bases of power, ranging from full enlightenment in this life to various stages of non-returning. It begins a dialogue between the Buddha and his attendant Ananda regarding these practices.</summary>\n\n<keywords>four bases of power, iddhipada, enlightenment, non-returner, Ananda, Savatthi, Nirvana, five lower fetters</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2619,
+ "outputTokens": 3020,
+ "thinkingTokens": 2246,
+ "cost_usd_realtime": 0.0103695,
+ "cost_usd_batch_equiv": 0.00518475,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 13325,
+ "at": "2026-10-03T20:41:10.161Z"
+}

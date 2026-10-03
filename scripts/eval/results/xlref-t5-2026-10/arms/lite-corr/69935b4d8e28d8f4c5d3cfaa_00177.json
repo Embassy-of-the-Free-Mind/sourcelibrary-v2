@@ -1,0 +1,30 @@
+{
+ "id": "69935b4d8e28d8f4c5d3cfaa_00177",
+ "arm": "lite-corr",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Patañjali Yoga-Sūtras\n\n## From that comes speed of mind, the state of disembodied agency, and mastery over nature ॥ 48 ॥\n\nSpeed of mind is the attainment of incomparable motion for the body. The state of disembodied agency is the ability of the sense organs, when separated from the body, to function at will with respect to place, time, and objects. Mastery over nature is the power to control all manifestations of primal nature <term>pradhāna</term> <gloss>the fundamental material cause of the universe</gloss>. These three accomplishments are called \"honey-like\" <term>madhu-pratīkā</term> <gloss>a stage of realization where knowledge becomes sweet and intuitive</gloss>. These are attained through the mastery of the five forms of the senses. ॥ 48 ॥\n\n## When there is only the awareness of the distinction between the purity of consciousness and the self, comes mastery over all states of existence and omniscience ॥ 49 ॥\n\nFor the one established solely in the awareness of the distinction between the purity of consciousness <term>sattva</term> <gloss>the quality of clarity or luminosity</gloss> and the Self <term>puruṣa</term> <gloss>the pure witness-consciousness</gloss>, who is established in the highest clarity where all impurities of activity <term>rajas</term> <gloss>passion/motion</gloss> and inertia <term>tamas</term> <gloss>darkness/heaviness</gloss> have been shaken off, and who resides in the ultimate state of mastery, comes the power to preside over all states of existence. All aspects of the constituents <term>guṇas</term> <gloss>the three qualities of nature</gloss> are...\n\n<column-break/>\n\nHe states the accomplishments resulting from the mastery of the five forms of the senses: **From that comes speed of mind, the state of disembodied agency, and mastery over nature.** The ability of the sense organs to act when apart from the body is the state of disembodied agency. Place refers to regions such as Kashmir, time refers to the past and future, and objects refer to the subtle elements. Mastery over nature is the control of all manifestations of primal nature, achieved through the mastery of the senses along with their latent impressions. Those learned in the science of yoga call these accomplishments \"honey-like.\" One might ask: let the senses and their objects be mastered through the control of the senses, but how does this relate to their causes, like primal nature? To this, he says: **These are attained...** through the mastery of the five forms of the senses—which are perception and the like. The meaning is this: these accomplishments do not come from the mere control of the senses, but from the control of the five forms, which includes primal nature and its products within it. ॥ 48 ॥\n\nThese types of <term>saṃyama</term> <gloss>concentrated meditation</gloss>, which are the causes of power in the form of knowledge and action, show the secondary manifestations of that discernment—the awareness of the distinction between the purity of consciousness and the Self—which is the goal, through direct experience and through the faith acquired by the realization of one's own accomplishments: **When there is only the awareness of the distinction between the purity of consciousness and the self, comes mastery over all states of existence and omniscience.** Clarity arises from the shaking off of the stains of passion and inertia, and from that comes the highest state of mastery. The mind-stuff, previously overwhelmed by passion and inertia, was not under control; upon their cessation, it becomes subject to the yogi who has attained mastery. In this state of control, the yogi who is established solely in the awareness of the distinction between the purity of consciousness and the Self possesses mastery over all states of existence. He clarifies this: **All aspects...**\n\n<margin>\n1. Manuscripts K, Kha, Cha, Ja read 'five-fold form'. G, Gha, Nga read 'five-fold form'. 2. Ja reads 'instruments and senses'. 3. K reads 'destruction'. Ja reads 'obtainment'.\n</margin>\n\n<summary>This page discusses advanced yogic powers (siddhis), specifically the attainment of physical and sensory transcendence, and the ultimate realization of the distinction between pure consciousness and the individual self, leading to omniscience.</summary>\n<keywords>Siddhis, Yoga-Sutra, Pradhana, Purusa, Sattva, Samyama, Omniscience, Consciousness, Five senses</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2641,
+ "outputTokens": 972,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0021182500000000003,
+ "cost_usd_batch_equiv": 0.0010591250000000002,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 4680,
+ "at": "2026-10-03T20:27:50.452Z"
+}

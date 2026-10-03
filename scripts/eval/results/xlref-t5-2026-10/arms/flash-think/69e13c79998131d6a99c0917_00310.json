@@ -1,0 +1,30 @@
+{
+ "id": "69e13c79998131d6a99c0917_00310",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nArjuna, becoming very angry, countered that rain with his own arrows. When <term>Śatakraṭu</term> <gloss>Indra, the performer of a hundred sacrifices</gloss>, the subduer of the demon Paka, saw his efforts being rendered fruitless, he increased the intensity of the rain once again.\nThe subduer of Paka discharged a rain of arrows with great speed. He caused the destruction of Arjuna's defenses while bringing joy to the other gods. <margin>828</margin>\nThen, lifting with his hands a great peak from Mount Mandara, complete with its trees, <term>Cakra</term> <gloss>Indra</gloss> hurled it, desiring to kill the son of Pandu.\nThen Arjuna, with swift arrows tipped with fire and feathered with peacock plumes, shattered that mountain peak into a thousand pieces.\nAs the mountain was being destroyed, its appearance was like the sky itself falling apart along with the sun, moon, and planets.\nWhen that great mountain peak fell upon the forest, many creatures living in the Khandava were crushed and killed.\nThus ends the two hundred and twenty-seventh chapter in the Section of the Burning of Khandava of the First Book, describing the battle between the gods and Krishna and Arjuna.\n\n### Chapter 228\n\nVaisampayana said: Terrified by the falling of the mountain, the residents of Khandava—the <term>Danavas</term> <gloss>demons</gloss>, <term>Rakshasas</term> <gloss>ogres</gloss>, <term>Nagas</term> <gloss>serpents</gloss>, and the trees dwelling in the forest—were all struck with fear. <margin>829</margin>\nElephants in rut, tigers, lions, and other maned beasts were greatly agitated and abandoned their young.\nThey looked upon the burning forest, raising their weapons in anger. The forest stood as if stirred by the sound of its own uprooting.\nSeeing the forest being consumed in many ways and Krishna standing with his weapon raised, they let out a fierce roar.\nWith that terrible sound and the roar of <term>Vibhavasu</term> <gloss>the Fire-god</gloss>, the entire sky reverberated as if filled with clouds of doom.\nThen the mighty-armed <term>Keshava</term> <gloss>Krishna</gloss> discharged his great, terrifying <term>Cakra</term> <gloss>discus</gloss>, which shone with the brilliance of fire, for their destruction. <margin>830</margin>\nBy that weapon, the lesser creatures, as well as the <term>Danavas</term> <gloss>demons</gloss> and <term>Nishacharas</term> <gloss>night-stalkers</gloss>, were cut into hundreds of pieces and fell into the fire instantly.\nThere, the <term>Daityas</term> <gloss>demons</gloss> were seen torn apart by Krishna's discus, soaked in fat and blood, looking like clouds at twilight.\nThe descendant of Vrishni <note>Krishna</note> moved through the forest like Death itself, slaying <term>Pishachas</term> <gloss>flesh-eating demons</gloss>, serpents, and thousands of beasts.\nThe wonderful discus of Krishna, the slayer of foes, having cut through many beings, returned to his hand again and again.\nAs he was thus slaying the <term>Pishachas</term>, serpents, and <term>Rakshasas</term>, the appearance of that Soul of All Beings became extremely terrible. <margin>831</margin>\nEven with all the gods assembled, no one could defeat Krishna and the Pandava <note>Arjuna</note> in that battle.\nWhen the gods were unable to protect the creatures or extinguish the burning of the forest, they turned their backs and retreated.\n<term>Shatakratu</term> <gloss>Indra</gloss>, seeing the immortals retreat, felt a sense of joy and began to praise Krishna and Arjuna.\nWhen the gods had withdrawn, an incorporeal voice spoke to Indra with a deep and solemn sound:\n\"Your friend, the supreme serpent <term>Takshaka</term>, is not present here. At the time of the burning of Khandava, he has gone to Kurukshetra. <margin>832</margin>\nO <term>Vasava</term> <gloss>Indra</gloss>, it is impossible to conquer Krishna and Arjuna in battle by any means. Listen to my words.\nThese two are <term>Nara</term> and <term>Narayana</term>, the ancient gods famous in heaven. You yourself know their power and their prowess.\nThese two, the best of ancient sages, are invincible and cannot be overcome in battle even by all the worlds.\nThey are most worthy of worship by all the gods, demons, <term>Yakshas</term>, <term>Rakshasas</term>, <term>Gandharvas</term>, humans, <term>Kinnaras</term>, and serpents.\nTherefore, Indra, you should depart from here with the gods. Look upon this destruction of Khandava as something ordained by fate.\" <margin>833</margin>\nHearing these words and recognizing them as truth, the lord of the immortals abandoned his anger and resentment and departed for heaven.\n\n<summary>Arjuna and Krishna successfully defend the burning Khandava forest against Indra's celestial attacks. A divine voice intervenes, identifying the duo as the ancient deities Nara and Narayana, prompting Indra to withdraw.</summary>\n<keywords>Arjuna, Krishna, Indra, Khandava Forest, Nara and Narayana, Takshaka, divine voice, Agni, Sudarshana Chakra</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3074,
+ "outputTokens": 1269,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.005344,
+ "cost_usd_batch_equiv": 0.002672,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6181
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 7128,
+ "at": "2026-10-03T12:04:54.849Z"
+}

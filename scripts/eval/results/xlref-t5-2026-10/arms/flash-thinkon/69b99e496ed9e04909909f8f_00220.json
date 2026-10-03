@@ -1,0 +1,30 @@
+{
+ "id": "69b99e496ed9e04909909f8f_00220",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "### 5. 9. The Discourse to Subha (99)\n\nYoung man <term>māṇava</term> <gloss>a term for a young brahmin student</gloss>, there are these five hindrances <term>nīvaraṇā</term> <gloss>mental factors that block spiritual progress</gloss>. Which five? The hindrance of sensual desire, the hindrance of ill-will, the hindrance of dullness and drowsiness, the hindrance of restlessness and worry, and the hindrance of doubt. These, young man, are the five hindrances. By these five hindrances, young man, the brahmin Pokkharasāti Opamañño of the Subhaga Forest is obstructed, hindered, blocked, and enveloped. That he should know or see or realize any distinction in knowledge and vision worthy of the noble ones, beyond the human state <note>original: \"uttarimanussadhammā\", referring to superhuman or meditative attainments</note>—this is impossible.\n\nThere are, young man, these five strands of sensual pleasure <term>kāmaguṇā</term>. Which five? Forms cognizable by the eye that are wished for, desired, agreeable, likeable, connected with sensual desire, and provocative of lust; sounds cognizable by the ear <note>the text uses an abbreviation mark \"pe\" here to indicate the repetition for the other senses</note>; smells cognizable by the nose; tastes cognizable by the tongue; and tangibles cognizable by the body that are wished for, desired, agreeable, likeable, connected with sensual desire, and provocative of lust. These, young man, are the five strands of sensual pleasure.\n\nThe brahmin Pokkharasāti Opamañño of the Subhaga Forest enjoys these five strands of sensual pleasure, tied to them, infatuated by them, obsessed with them, not seeing the danger in them, and not understanding the escape from them. That he should know or see or realize any distinction in knowledge and vision worthy of the noble ones, beyond the human state—this is impossible.\n\nWhat do you think, young man? Suppose someone were to kindle a fire depending on grass and sticks as fuel, and another were to kindle a fire without grass and sticks as fuel. Which fire would have flame, color, and radiance?\n\nMaster Gotama, if it were possible to kindle a fire without grass and sticks as fuel, that fire would have flame, color, and radiance.\n\nIt is impossible, young man, it cannot happen, that a fire could be kindled without grass and sticks as fuel, except by one of psychic power. Just as, young man, a fire burns depending on grass and sticks as fuel, in the same way, I say, is this joy <term>pīti</term>, the joy that \n\n<meta>The text ends mid-sentence at the bottom of page 203. The footnotes provide various readings from different manuscript traditions including Burmese (Bm) and Siamese (Si).</meta>\n\n<summary>The Buddha explains to the young man Subha why certain brahmins cannot achieve higher spiritual knowledge because they are blocked by the five hindrances and attached to sensual pleasures. He uses the metaphor of a fire needing fuel to illustrate different types of joy.</summary>\n<keywords>five hindrances, sensual pleasures, Pokkharasāti, fire metaphor, spiritual knowledge, Pali Canon</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2843,
+ "outputTokens": 2601,
+ "thinkingTokens": 1888,
+ "cost_usd_realtime": 0.0092245,
+ "cost_usd_batch_equiv": 0.00461225,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 10862,
+ "at": "2026-10-03T20:41:07.755Z"
+}

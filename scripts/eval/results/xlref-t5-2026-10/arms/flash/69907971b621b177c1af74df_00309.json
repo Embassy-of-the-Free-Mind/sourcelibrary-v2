@@ -1,0 +1,30 @@
+{
+ "id": "69907971b621b177c1af74df_00309",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "Vasudeva is the Supreme Brahman <gloss>the absolute reality</gloss>. His form is the Supreme Spirit <note>original: \"Param Purusha\"</note>. He is unmanifest, devoid of qualities <gloss>nirguna</gloss>, peaceful, beyond the twenty-five elements, and imperishable, meaning he is free from any change or decay.\n\n->The God within nature, moving everywhere both outside and inside, is Sankarshana; having first created the waters, he cast his seed into them.<-\n\nSince the pure Brahman cannot be the direct cause of the material world, it is said: he is situated within nature <note>original: \"prakrityantargato\"</note>, conditioned by the creative power <gloss>maya</gloss>, and moves everywhere outside and inside because he is the material cause of the universe. All these attributes of Sankarshana, who is an expansion of Vasudeva, should be understood through his identification with the essence of Vasudeva. Sankarshana, as an expansion of Vasudeva, first created the waters. In those waters, he cast his seed, which is a specific power <gloss>shakti</gloss>.\n\nThe deity Sankarshana, who is experienced everywhere, entered into this nature and first created the waters. Afterward, he established his brilliance in the form of a seed within that water.\n\n->That became a golden egg, surrounded everywhere by darkness; within it, Aniruddha, the eternal, first became manifest.<-\n\nWhat happened next is explained: That water, combined with that power, became a golden egg <note>original: \"haimam\"</note> in a spherical shape, covered everywhere—inside and out—by darkness. This means the golden egg was produced in the sky accompanied by darkness. Inside that golden egg, Aniruddha—who is eternal, constant, and an expansion of Sankarshana (himself an expansion of Vasudeva)—became manifest. He was not \"born\" or \"produced\" in the sense of coming into existence from nothing, but rather became visible. This follows the doctrine of existent effects <note>original: \"Satkaryavada\"</note>, which holds that the effect already exists within the cause. Just as oil is already present in sesame seeds and is merely expressed, he was manifested, not created.\n\nThat seed-like brilliance took the form of a golden egg. It was surrounded on all sides by darkness. There, within the egg, the eternal Lord Aniruddha first appeared.\n\n->He is recited in the Vedas as the Lord Hiranyagarbha; he is called Aditya because he was the first manifestation, and Surya because of his expansion.<-\n\nNow, his other names are given for the easy understanding of the world. This Aniruddha, an expansion of Sankarshana, is endowed with the six-fold lordly powers <term>shaigunya-aishvarya</term> <gloss>the six divine attributes: sovereignty, virility, glory, splendor, knowledge, and dispassion</gloss>. In the Vedas <note>original: \"chhandasi\"</note>, he is described as Hiranyagarbha <gloss>the Golden Embryo</gloss> because he resided within the interior of the golden egg. This is his famous alternative name in the Vedas. He is certainly called Aditya because he was the first to be manifested. Because of his expansion or emergence from this world, he is called Surya.\n\nThe scripture <note>original: \"shruti\"</note> states: Hiranyagarbha was present in the beginning; when born, he was the sole lord of all that exists.\n\nThis is the Lord Hiranyagarbha who is mentioned in the Vedas. First—\n\n<summary>This page describes the cosmogony of the Surya Siddhanta, detailing the manifestation of the divine expansions Sankarshana and Aniruddha within a golden egg to begin the process of creation. It identifies the creator deity with Vedic figures like Hiranyagarbha and Surya.</summary>\n<keywords>Vasudeva, Sankarshana, Aniruddha, Hiranyagarbha, golden egg, cosmogony, Satkaryavada, Aditya, Surya, Prakriti</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2554,
+ "outputTokens": 895,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.003962,
+ "cost_usd_batch_equiv": 0.001981,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 5143,
+ "at": "2026-10-03T12:04:54.008Z"
+}

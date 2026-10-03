@@ -1,0 +1,30 @@
+{
+ "id": "69e72c75a409200ea79f4976_00100",
+ "arm": "lite-corr",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page</meta>\ndrink <note>in order to observe their state of sobriety</note> and observe their behavioral norms, mix them into various situations to observe their disposition. When the Nine Signs <note>the nine criteria for judging character mentioned in the previous section</note> reach the point where even unworthy people are successfully evaluated, consider Zheng Kaofu <note>original: \"正考父\"</note> <gloss>a virtuous official of the Song state</gloss>. At his first appointment he bowed, at his second appointment he stooped, at his third appointment he bent down <margin>a member of the ducal family of the Song state, a tenth-generation ancestor of Confucius</margin> <margin>an official</margin> <margin>bent back</margin> <margin>a high official</margin> <margin>bowing his body and not daring to occupy the center of the road</margin> <margin>Kaofu's humility was of this sort</margin> <margin>who would dare not take him as a model</margin> <margin>ordinary men</margin> and walked along the wall. Who would dare not follow the rules? Contrast this with the man who upon his first appointment <unclear>appointment</unclear> <margin>calligraphic note</margin> <margin>calligraphic note</margin> <margin>calligraphic note</margin> <margin>calligraphic note</margin> <margin>calligraphic note</margin> <margin>arrogant and haughty appearance</margin> <margin>riding in a carriage and dancing about</margin> <margin>calling his elders by their personal names</margin> acts with pride <note>original: \"呂鉅\"</note> <gloss>arrogant behavior</gloss>, upon his second appointment dances on his carriage, and upon his third appointment calls his elders by their names <unclear>(one character, ink blot)</unclear> <margin>How different from the virtue of Xu You who yielded the throne</margin> <margin>to have an intention to perform virtue is the thief of virtue</margin> <margin>and to exhaust the mind in the space between the eyebrows makes virtue even more distorted</margin> <margin>syntactic note</margin> <margin>from this point on, if one reflects back upon the mind, it is chaotic and disturbed, and one cannot achieve virtue or progress toward the Way</margin> <margin>eyes, ears, nose, tongue, heart</margin> <margin>heart</margin>. This is the great thief of virtue. When one has intentions, the heart develops eyelashes <note>interpreted here as a visual obstruction, original gloss: \"contact\"</note>. By the time it has these obstructions, one looks inward, and by looking inward, one is ruined. There are five types of sinister virtue and central virtue.\n\n<summary>This page discusses the necessity of observing a person's behavior under pressure to judge character, contrasting the extreme humility of the official Zheng Kaofu with the arrogance of common men who pride themselves on minor advancements.</summary>\n<keywords>Zheng Kaofu, virtue, humility, arrogance, character assessment, Nine Signs, Xu You</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2334,
+ "outputTokens": 672,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0015915,
+ "cost_usd_batch_equiv": 0.00079575,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 9016,
+ "at": "2026-10-03T20:28:24.688Z"
+}

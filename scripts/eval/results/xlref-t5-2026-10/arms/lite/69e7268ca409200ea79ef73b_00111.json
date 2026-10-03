@@ -1,0 +1,30 @@
+{
+ "id": "69e7268ca409200ea79ef73b_00111",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<margin>\nTo be a person of reserve,\nto acquire a wife of reserve,\nto have friends of reserve,\nand a daughter of reserve,\nto write of them\nwith a pen of reserve,\nto speak words of reserve,\nto record deeds of reserve,\nto compose essays of reserve;\nall this, I have yet to read in a lifetime,\nall this, I have yet to see in books.\n</margin>\n\nOulong’an had once stored a case of cups and bowls separately, with the velvet covers undisturbed, yet the vessels had all vanished. He spoke wildly and unpredictably. Liu laughed and said, \"One by one, do not question it further.\"\n\n**Jiaona**\n\nScholar Kong, of the Snow Hat clan <note>original: \"雪笠\", likely referring to the lineage of Confucius</note>, was a descendant of the Sage. He was a person of reserve and skilled at poetry. He had a close friend living in Tiantai who sent a letter inviting him over. Kong went to visit, but as it happened, his friend had passed away. Destitute and unable to return home, he resided in Putuo Temple, working for the monks as a copyist. About a hundred paces west of the temple stood the residence of Mr. Shan. The master was a former nobleman who had fallen into poverty due to a great lawsuit. His family members were few, and they had moved away to live in the countryside, leaving the house vacant. One day, as heavy snow fell and the world was silent with no travelers, Kong happened to pass by the gate. A youth emerged with a truly elegant appearance. Seeing Kong, he hurried forward to greet him with the proper rites, offering his condolences and immediately inviting him inside. Kong was pleased and readily followed him in. The house was not very large, but everywhere hung brocade curtains. On the walls were many paintings and calligraphy by the ancients. On the desk lay a book with a label that read *Trifles from the Langhuan Library* <note>original: \"瑯環瑣\", a reference to a mythical celestial library</note>.\n\n<summary>This page introduces the story of Scholar Kong, a refined descendant of Confucius who, while stranded in Tiantai, encounters a mysterious and elegant youth residing in a supposedly vacant mansion.</summary>\n<keywords>Scholar Kong, Jiaona, Putuo Temple, Mr. Shan, Langhuan Library, reserve</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2121,
+ "outputTokens": 514,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0013012499999999999,
+ "cost_usd_batch_equiv": 0.0006506249999999999,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2563,
+ "at": "2026-10-03T12:04:25.930Z"
+}

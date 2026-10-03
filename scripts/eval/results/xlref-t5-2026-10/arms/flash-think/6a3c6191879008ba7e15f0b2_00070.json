@@ -1,0 +1,30 @@
+{
+ "id": "6a3c6191879008ba7e15f0b2_00070",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "Second: The Aspect of Continuity, which relies on the intellect <note>the faculty of discrimination</note>. It produces feelings of suffering and joy, and the mind gives rise to thoughts that are continuously associated without interruption.\n\nWithin this second aspect of continuity, \"relying on the intellect\" clarifies the basis upon which this aspect arises. This means that based on the previous discrimination of pleasant objects, a sensation of joy arises; based on unpleasant objects, a sensation of suffering arises. Thoughts arise repeatedly, appearing in continuous succession. This explains the continuity of the self <note>internal mental processes</note>. Furthermore, it can give rise to delusions that nourish karma, leading to and sustaining the cycle of birth and death. This causes the continuity of others <note>the external cycle of rebirth</note>. Later text says this \"maintains suffering and joy,\" and so on. Therefore, it is said to \"produce... without interruption.\"\n\nThird: The Aspect of Attachment, which means regarding the previously mentioned realms of suffering, joy, and so on. Failing to realize they are empty and non-existent, one develops deep-seated attachment to them.\n\n<summary>This page explains the second and third aspects of the evolving mind, focusing on how intellectual discrimination leads to continuous feelings of joy or suffering and subsequent attachment to these unreal states.</summary>\n<keywords>Aspect of Continuity, Aspect of Attachment, suffering and joy, karma, birth and death, delusion, mental discrimination</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1966,
+ "outputTokens": 302,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.001889,
+ "cost_usd_batch_equiv": 0.0009445,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2403,
+ "at": "2026-10-03T12:05:26.044Z"
+}

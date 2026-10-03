@@ -1,0 +1,35 @@
+{
+ "id": "69e72c75a409200ea79f4976_00100",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "by drinking, observe his constancy; mix him with others, and observe his disposition; use the nine indicators <note>referring to the nine tests to judge a person's character</note> to judge him. Even if a person is unworthy, one can obtain the truth about them. When Zheng Kaofu <margin>A member of the ducal family of Song, tenth-generation ancestor of Confucius</margin> received his first appointment, he walked with a stooped back <margin>An official</margin>; at his second appointment, he walked with a hunched back <margin>Bent back</margin>; at his third appointment, he walked with a bowed back <margin>A grand officer</margin>, and he walked along the wall so that no one would dare to cross his path <margin>Bending his body, not daring to occupy the center of the road</margin>. Who would dare not follow his example? <margin>The genealogy of Kaofu is like this</margin> <margin>Who would dare not take this as a model</margin> <margin>Nine-fold man</margin>\nIf one acts like him, one <margin>Calligraphy principle</margin> <margin>Calligraphy principle</margin> <margin>Calligraphy principle</margin> <margin>Calligraphy principle</margin> <margin>Calligraphy principle</margin> <margin>Arrogant appearance</margin> <margin>Riding in a carriage, chin held high</margin> <margin>Addressing elders by their given names</margin> walks with head bowed, creeping along the wall. Who would dare not follow his example? But there are those who, when they receive their first appointment, act with pride; when they receive their second appointment, they dance upon their carriages; and when they receive their third appointment, they call their elders by their given names. <margin>How different from the virtue of Xu You yielding the throne in antiquity</margin> <margin>To have a conscious intention toward virtue is to be a thief of virtue</margin> <margin>If one exhausts the mind within the narrow span of the eyebrows, virtue is further diminished</margin> <margin>Syntax</margin> <margin>From this, looking back into the mind, it is chaotic and turbulent; one cannot achieve virtue or advance toward the Dao</margin> <margin>Eyes, ears, nose, tongue, mind</margin> <margin>Mind</margin> <unclear>If</unclear> one is a thief of virtue, nothing is greater than the presence of conscious intention. When the mind has conscious intention, it is like having eyelashes <note>a metaphor for obstructing the clear vision of the mind</note>. When one acts with such haste and focuses only on what is before the eyes, looking inward, one is ruined. There are five kinds of baneful virtue, and there is central virtue.\n\n<summary>This passage contrasts the humility of the official Zheng Kaofu with the arrogance of those who boast of their rank, warning that conscious effort and external pride obstruct the path to true virtue.</summary>\n<keywords>Zheng Kaofu, humility, arrogance, virtue, inner focus, Dao, nine indicators</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1403,
+ "outputTokens": 714,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0028434999999999997,
+ "cost_usd_batch_equiv": 0.0014217499999999998,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "negation|role",
+   "source": "孰敢不軌",
+   "was": "Who would dare not follow the rules?",
+   "now": "Who would dare not follow his example?"
+  }
+ ],
+ "base_sha": 2934,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 2944,
+ "at": "2026-10-03T12:08:16.544Z"
+}

@@ -1,0 +1,30 @@
+{
+ "id": "69e8b27f2ff2a8dc09e77ed7_00048",
+ "arm": "flash-corr",
+ "model": "gemini-3-flash-preview",
+ "text": "# 45 Recto\n\nThe hosts of perfected beings <term>Siddhas</term> <gloss>enlightened masters with supernatural powers</gloss> praise you with magnificent hymns. (21) The Rudras, the Adityas, the Vasus, and the Sadhyas <note>various classes of Vedic deities representing cosmic forces, time, and elements</note>, the Vishvedevas, the two Ashvins, the Maruts, and the Ushmapas <note>ancestral spirits who consume the steam of offerings</note>, the Gandharvas <gloss>celestial musicians</gloss>, Yakshas <gloss>nature spirits</gloss>, Asuras <gloss>demons</gloss>, and the hosts of perfected beings; all of them look upon you in utter amazement. (22) O mighty-armed one, seeing your immense form with many mouths and eyes, many arms, thighs, and feet, many bellies, and many terrifying tusks, the worlds are trembling with fear, and so am I. (23) Touching the sky, radiant, many-colored, with mouths wide open and large shining eyes; seeing you thus, my innermost soul is deeply troubled. I find no steadiness and no peace, O Vishnu. (24) Seeing your mouths which are terrifying with tusks and resemble the fire of cosmic destruction <note>original: \"kalanalasannibhani\"</note>—\n\n---\n\n# 45 Verso\n\n—I lose my sense of direction and find no comfort. Be gracious, O Lord of gods, O Shelter of the Universe! (25) And all these sons of Dhritarashtra <unclear>illegible to line end</unclear> along with the hosts of kings; Bhishma, Drona, and that son of a charioteer <note>referring to Karna</note>, together with the chief warriors of our own side <unclear>illegible, damaged edge</unclear>. (27) They are rushing and entering your mouths, which are fearful and terrifying with tusks. Some are seen caught between your teeth with their heads crushed to powder. (28) Just as the many water currents of rivers flow rapidly toward the ocean, so do these heroes of the world of men enter your flaming mouths. (29) As moths enter a blazing fire <unclear>illegible</unclear>.\n\n<note>A circular hole is located in the center of the palm leaf to allow a binding cord to pass through the manuscript.</note>\n\n<summary>Arjuna describes his overwhelming terror and awe upon seeing Krishna's universal form, which is shown consuming the warriors of both armies. The passage emphasizes the destructive aspect of the divine as the consumer of all worlds.</summary>\n<keywords>Vishvarupa, Arjuna, Krishna, cosmic destruction, Kurukshetra war, theophany, divine terror</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2368,
+ "outputTokens": 610,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.003014,
+ "cost_usd_batch_equiv": 0.001507,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 4197,
+ "at": "2026-10-03T20:29:10.872Z"
+}

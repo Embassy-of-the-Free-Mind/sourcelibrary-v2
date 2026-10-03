@@ -1,0 +1,30 @@
+{
+ "id": "69e7491a85f786e884a4d6f9_00789",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "### Śrīmad Vālmīki Rāmāyaṇa, Yuddhakāṇḍa\n\n730\n\nBears, lions, boars, buffaloes, elephants, and deer were terrified by that sound and fled in fear toward the ten directions. There was a tall peak of Mount <term>Trikūṭa</term> <gloss>Three-peaks</gloss> that touched the heavens. It was covered all over with flowers and shone like great silver. It was a hundred <term>yojanas</term> <gloss>a measure of distance, about 8-9 miles</gloss> wide, pure and beautiful to behold, smooth, majestic, and so vast that it was inaccessible even to birds. It was impossible to climb even in thought, much less by the actions of men. Situated on that peak was the city of Lanka, protected by Ravana. It was a hundred <term>yojanas</term> wide and thirty <term>yojanas</term> long. That city, with its high gate-towers resembling white clouds, was adorned with a golden wall and silver <note>ornamentation</note>. Lanka was superbly decorated with palaces and celestial mansions, appearing like the sky filled with thick clouds at the end of the summer heat. In that city, a palace adorned with a thousand pillars, shaped like a peak of Mount Kailas and seemingly scraping the sky, served as the ornament of the city for the King of the Rākṣasas. That place was guarded constantly by a full hundred Rākṣasas. The glorious Rama, elder brother of Lakshmana, along with the monkeys, beheld that prosperous city of Ravana, which reached to the sea, was full of forests, graced by mountains with various colorful minerals, adorned with gardens, filled with the sounds of various birds, and inhabited by diverse groups of beings. It was covered with various flowers and served by various Rākṣasas. Seeing that city crowded with great houses, looking like the city of the gods, the powerful Rama, elder brother of Lakshmana, was filled with wonder. Rama, with his great army, gazed upon that city filled with gems and various arrangements, decorated with rows of palaces and featuring great mechanical gates.\n\nThus ends the thirty-ninth canto, titled \"The Sight of Lanka,\" in the Yuddhakāṇḍa of the glorious Rāmāyaṇa of Vālmīki, the first epic poem, a compendium of twenty-four thousand verses.\n\n---\n\n### Canto Forty\n**The Duel Between Ravana and Sugriva**\n\nThen Rama, accompanied by Sugriva and the leaders of the monkey hosts, ascended the summit of Mount Suvela, which had a circumference of two <term>yojanas</term>. After standing there for a moment and looking toward the ten directions, he saw Lanka, built by <term>Viśvakarmā</term> <gloss>the divine architect</gloss> on the lovely peak of Trikūṭa, well-laid out and graced with beautiful forests. He saw the King of the Rākṣasas, difficult to approach, standing on the top of a gate-tower. He was flanked by white fly-whisks and graced by the parasol of victory. He was anointed with red sandalwood and adorned with jeweled ornaments. Looking like a dark rain-cloud, he wore clothing covered in gold. His chest bore the prominent scars inflicted by the tusks of Airavata <note>the divine elephant of Indra</note>. He was wrapped in a red cloth with the hue of a rabbit's blood, looking like a mass of clouds in the sky bathed in the glow of twilight. While the monkey leaders were looking and while Rama was looking, Sugriva suddenly sprang up at the sight of the King of the Rākṣasas.\n\n<note>1. This half-verse is not present in the 'ka' manuscript.</note>\n\n<summary>Rama and the monkey army view the magnificent city of Lanka from Mount Suvela, after which Sugriva impulsively leaps toward Ravana upon spotting him on a tower.</summary>\n<keywords>Lanka, Trikuta, Ravana, Rama, Sugriva, Suvela, architecture, geography, monkey army</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2715,
+ "outputTokens": 885,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0040125000000000004,
+ "cost_usd_batch_equiv": 0.0020062500000000002,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 5331,
+ "at": "2026-10-03T12:05:01.212Z"
+}

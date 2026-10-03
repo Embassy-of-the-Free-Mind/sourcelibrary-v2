@@ -1,0 +1,35 @@
+{
+ "id": "69b99e856ed9e0490990a0b5_00301",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "One is covetous. That which belongs to another, their property and assets, one covets, thinking, \"Oh, if only that which belongs to another were mine.\" One has a malevolent mind and corrupt intentions, thinking, \"May these beings be slain, or imprisoned, or annihilated, or destroyed, or may they not exist at all.\" One holds wrong views and has a distorted perspective, thinking, \"There is no value in giving, no value in offerings, no value in sacrifices. There is no fruit or result of good or evil deeds. There is no this world, no other world. There is no mother, no father. There are no beings who arise spontaneously. There are no recluses or brahmins in the world who, having realized this world and the other world by their own direct knowledge, make them known.\"\n\nPossessed of these ten states, monks, one is placed in hell exactly as if carried there.\n\n3. Possessed of ten states, monks, one is placed in heaven exactly as if carried there. Which ten?\n\n4. Here, monks, a certain person, having abandoned the taking of life, abstains from taking life. He dwells with the rod laid down, with the sword laid down, conscientious, merciful, and sympathetic to the welfare of all living beings. Having abandoned taking what is not given, he abstains from taking what is not given. Whatever belongs to another, their property and assets, whether in the village or the forest, he does not take as a thief. Having abandoned sexual misconduct, he abstains from sexual misconduct. He does not visit those who are protected by their mother, protected by their father, protected by their brother, protected by their sister, protected by their relatives, protected by their duty, those who have a husband, those who are protected by law, or even those crowned with a garland of flowers. Having abandoned false speech, he abstains from false speech. When summoned to a gathering, or an assembly, or the midst of one's relatives, or the midst of a guild, or the midst of a royal court, and questioned as a witness, saying, \"Come, good man, tell us what you know,\" whether he does not know, he says, \"I do not know,\" or if he knows, he says, \"I know.\" If he does not see, he says, \"I do not see,\" or if he sees, he says, \"I see.\" Thus, for the sake of himself, or for the sake of another, or for the sake of some trivial material gain, he does not intentionally speak a lie.\n\n<meta>Notes provided in the source text are listed here as they appear, translated or explained for clarity:\n¹ T. M. read \"vatāyam\"; M6 reads \"vata ayam\". \n² M6 and S read \"va\". \n³ Omitted by S. \n⁴ S reads \"viparitta\". \n⁵ T, M6, and M add \"ti\". \n⁶ T, M6, and M read \"tan nādinnam\"; Ph and S read only \"adinnam\". \n⁷ Ph and S read \"na āḍo\". \n⁸ M continues: \"pa || antamaso.\" \n⁹ Ph inserts \"mātāpitu\". \n¹⁰ Ph inserts \"gotta\". \n¹¹ Omitted by T, M6, and M.</meta>\n\n<summary>This page defines the ten unwholesome states that lead to hell and begins the list of ten wholesome states that lead to heaven, specifically focusing on the first four precepts: non-killing, non-stealing, avoiding sexual misconduct, and truthfulness.</summary>\n<keywords>hell, heaven, ten states, precepts, karma, ethics, Pali Canon</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1925,
+ "outputTokens": 847,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0035034999999999997,
+ "cost_usd_batch_equiv": 0.0017517499999999998,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "omission",
+   "source": "na sampa-",
+   "was": "he does not",
+   "now": "he does not intentionally speak a lie."
+  }
+ ],
+ "base_sha": 3171,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 3300,
+ "at": "2026-10-03T12:07:06.995Z"
+}

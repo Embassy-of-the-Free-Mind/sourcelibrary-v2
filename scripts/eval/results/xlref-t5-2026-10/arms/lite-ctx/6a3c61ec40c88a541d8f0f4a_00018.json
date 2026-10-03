@@ -1,0 +1,30 @@
+{
+ "id": "6a3c61ec40c88a541d8f0f4a_00018",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "->The undefiled, pure light,\nThe sun of wisdom that shatters all darkness,\nCan subdue the disasters of wind and fire,\nAnd brilliantly illuminate the entire world.<-\n->The body of compassion, like thunder of precepts,\nThe mind of kindness, like a wondrous great cloud,\nPours down the sweet dew of the Dharma rain,\nExtinguishing the flames of affliction.<-\n->In disputes before officials,\nOr in the terror of the battlefield,\nIf one contemplates the power of Guan Yin,\nAll enemies will be scattered.<-\n->The wondrous voice, the voice of observing the world,\nThe Brahma voice, the voice of the rising tide,\nSurpasses all sounds of the world;\nTherefore, one must constantly keep it in mind.<-\n->In every thought, do not harbor doubt.\nGuan Yin, the pure and holy one,\nCan serve as a refuge in suffering, agony, death, and disaster.<-\n->Possessing all merits,\nLooking upon sentient beings with eyes of compassion,\nThe ocean of blessings is immeasurable;\nTherefore, one should bow in reverence.<-\n\n---\n\n->At that time, the Bodhisattva Earth-Holder rose from his seat, stepped forward, and said to the Buddha: \"World-Honored One! If there are sentient beings who hear of the free and pervasive conduct of this Bodhisattva Guan Yin, and of his power to manifest through his universal doors, know that the merit of such people is not small.\" When the Buddha spoke this Universal Door Chapter, eighty-four thousand beings in the assembly all generated the incomparable heart of <term>anuttara-samyak-sambodhi</term> <gloss>unsurpassed, perfect, and complete enlightenment</gloss>.<-\n\n<summary>This passage concludes the verses praising the salvific power of the Bodhisattva Guan Yin and records the response of the Bodhisattva Earth-Holder to the teachings of the Universal Door Chapter.</summary>\n<keywords>Guan Yin, Bodhisattva, Universal Door Chapter, Earth-Holder, merit, enlightenment, Lotus Sutra</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2141,
+ "outputTokens": 447,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0012057500000000002,
+ "cost_usd_batch_equiv": 0.0006028750000000001,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 1981,
+ "at": "2026-10-03T12:05:08.460Z"
+}

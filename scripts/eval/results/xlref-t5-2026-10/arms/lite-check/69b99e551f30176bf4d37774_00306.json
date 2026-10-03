@@ -1,0 +1,41 @@
+{
+ "id": "69b99e551f30176bf4d37774_00306",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "25. (5) Fruits 1.\n\n2. There are these four bases of psychic power, monks. These are the four bases of psychic power.\n\n3. Because these four bases of psychic power have been developed and cultivated, monks, one of two fruits may be expected: final knowledge <note>original: \"aññā\" <gloss>the attainment of Arahantship</gloss></note> in this very life, or, if there is a remainder of clinging, the state of a non-returner <note>original: \"anāgāmitā\"</note>.\n\n26. (6) Fruits 2.\n\n2. There are these four bases of psychic power, monks. These are the four bases of psychic power.\n\n3. Because these four bases of psychic power have been developed and cultivated, monks, seven fruits and seven benefits may be expected. Which are the seven fruits and seven benefits?\n\n4. One attains final knowledge <note>original: \"aññam\" <gloss>Arahantship</gloss></note> by breaking through in this very life. If one does not attain final knowledge by breaking through in this very life, then one attains final knowledge at the time of death. If one does not attain final knowledge at the time of death, then with the destruction of the five lower fetters, one becomes an attainer of final liberation in the interval <note>original: \"antarāparinibbāyī\"</note>, an attainer of final liberation upon landing <note>original: \"upahaccaparinibbāyī\"</note>, an attainer of final liberation without exertion <note>original: \"asaṅkhāraparinibbāyī\"</note>, an attainer of final liberation with exertion <note>original: \"sasaṅkhāraparinibbāyī\"</note>, or one who goes upstream, heading to the Akaniṭṭha realm <note>original: \"akaniṭṭhagāmī\"</note>.\n\n5. Because these four bases of psychic power have been developed and cultivated, monks, these seven fruits and seven benefits may be expected.\n\n27. (7) Ānanda 1.\n\n1. At Sāvatthi.\n\n2. Then the venerable Ānanda went to the Blessed One. Having gone, having sat to one side, the venerable Ānanda said to the Blessed One: What indeed is\n\n<summary>This page outlines the spiritual fruits and benefits derived from the development of the four bases of psychic power (iddhipāda), culminating in various stages of liberation, followed by the beginning of a discourse involving Ānanda at Sāvatthi.</summary>\n<keywords>iddhipāda, bases of psychic power, fruit, arahantship, non-returner, Sāvatthi, Ānanda</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1640,
+ "outputTokens": 779,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0031569999999999997,
+ "cost_usd_batch_equiv": 0.0015784999999999998,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "role",
+   "source": "ekam antam nisinno kho āyasmā Ānando",
+   "was": "he sat to one side",
+   "now": "having sat to one side"
+  },
+  {
+   "type": "omission",
+   "source": "uddhamsoto hoti akaniṭṭhagāmī",
+   "was": "one who goes upstream to the Pure Abodes",
+   "now": "one who goes upstream, heading to the Akaniṭṭha realm"
+  }
+ ],
+ "base_sha": 2305,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 3189,
+ "at": "2026-10-03T12:07:03.668Z"
+}

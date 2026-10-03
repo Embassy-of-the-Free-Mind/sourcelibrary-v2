@@ -1,0 +1,30 @@
+{
+ "id": "6a3c61ec40c88a541d8f0f4a_00018",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "->Undefiled and pure light, a sun of wisdom that shatters all darkness, it can subdue the calamities of wind and fire, and universally illuminates the world.<-\n\n->The body of compassion is like the rumble of thunder, and the mind of kindness is like a wondrous great cloud, pouring down the dharma rain of sweet dew <note>original: \"amrta\", the nectar of immortality</note>, extinguishing the flames of affliction.<-\n\n->In legal disputes before the court, or in the terrors of the battlefield, by mindfulness of the power of Avalokiteshvara <note>the Bodhisattva of Compassion</note>, all enemies will retreat and disperse.<-\n\n->Wondrous Sound, Perceiver of the World’s Sounds <note>Avalokiteshvara</note>, Brahma Sound, Ocean-tide Sound, surpassing all sounds of the world; therefore, one should always be mindful of him.<-\n\n->In every thought, let there be no doubt. The pure sage Avalokiteshvara is a refuge in times of suffering, agony, death, and misfortune.<-\n\n->Possessing all merits and viewing sentient beings with eyes of compassion, he is a shoreless ocean of accumulated blessings; therefore, one should bow with the head to the ground.<-\n\n---\n\n->At that moment, the Bodhisattva Dharanimdhara <note>Holder of the Earth</note> rose from his seat, went forward, and said to the Buddha: \"World-Honored One! If there are sentient beings who hear this chapter on the Bodhisattva Avalokiteshvara, these deeds of sovereign mastery, and the supernatural power of his universal manifestation, it should be known that the merit of these people is not small.\" When the Buddha spoke this Universal Gate Chapter, eighty-four thousand sentient beings in the assembly all set their minds upon the unsurpassed, equal, and perfect enlightenment <note>original: \"Anuttara-samyak-sambodhi\"</note>.<-\n\n<summary>This page concludes the gatha verses praising Avalokiteshvara's saving powers and records the Bodhisattva Dharanimdhara's testimony to the merit gained by hearing this teaching. The chapter ends with eighty-four thousand beings aspiring to supreme enlightenment.</summary>\n\n<keywords>Avalokiteshvara, Guanyin, Dharanimdhara, Universal Gate Chapter, Lotus Sutra, Bodhisattva, enlightenment, compassion, dharma rain, merit</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2141,
+ "outputTokens": 517,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0026214999999999997,
+ "cost_usd_batch_equiv": 0.0013107499999999998,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 3529,
+ "at": "2026-10-03T12:05:32.273Z"
+}

@@ -1,0 +1,30 @@
+{
+ "id": "69e8b27f2ff2a8dc09e77ed7_00048",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "# 45 Recto\n\nThe perfected beings, the singers, and the enlightened ones shine with brilliance. The <term>Rudras</term> <gloss>storm gods</gloss>, the <term>Adityas</term> <gloss>solar deities</gloss>, the <term>Vasus</term> <gloss>deities of the elements</gloss>, the <term>Sadhus</term> <gloss>holy ones</gloss>, the universal gods, and the wind deities.\nThe noble spirits, the celestial musicians, and the guardians of treasure, the well-informed assemblies, in this devotion to the Mother Divine. 22. Thus, the two realms, shining with splendor, through the protection of the lords, may they bring forth the manifestation of the Rudra-net, here in the world, having established the excellence. 23. The devotion to the body of the Lord, a great joy, a vast protection. Having worshiped with the sounds of instruments, in the expanse of the soul. Thus, I praise the refuge, the Pervasive One. 24. And the auspicious signs, having observed the fire of time.\n\n<column-break/>\n\n# 45 Verso\n\nThe signs are marked, no one shall be distressed, nor shall they be denied joy. Here Sudama, always the servant, the fame without end, without the demons. \nWith play, in the gathering of the garland, the joy of the warriors, Sudama always the servant, the fame without end, without the demons. \nThe gathering of the learned scholars, the various arts, and the things that are. Fame without end, without the demons.\nNow, by the sacrifice, with the essence. 21. As the joyous one, to the one who is the support of the light. 22. Here Sudama, always the servant, the fame without end, without the demons.\nThe support of the wise, the great ones, born of those who are noble. 23. Here Sudama, always the servant, the fame without end, without the demons.\n\n<note>A circular hole is visible in the center of the manuscript leaf, originally used for passing a binding cord through the stack of palm leaves.</note>\n\n<summary>This page contains a series of invocations to various celestial beings and deities, followed by a ritualized text involving the figure of Sudama, emphasizing devotion and the removal of demonic forces.</summary>\n<keywords>Sudama, Rudras, Adityas, Vasus, celestial beings, devotion, ritual, sacrifice, auspiciousness</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2695,
+ "outputTokens": 551,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0015002499999999998,
+ "cost_usd_batch_equiv": 0.0007501249999999999,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2439,
+ "at": "2026-10-03T12:04:47.270Z"
+}

@@ -1,0 +1,30 @@
+{
+ "id": "69e80662fdad300064d9ed7c_00171",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Sūtrasthāna—Chapter 19. (143)\n\nRemove the impurities carefully and seat the patient. For wounds caused by <term>kapha</term> <gloss>mucus humor</gloss> and <term>vāta</term> <gloss>wind humor</gloss>, the expert physician should extract the impurities repeatedly. (39) Pressing the wound from below, he should induce drainage in the direction of the hair growth and properly align all deep-seated bonds (connections) and joints. (40) In joining the lips, one should act in accordance with what has been previously stated. A physician skilled in the mechanics of joints should also apply the prescribed bandages for bone fractures based on his own intelligent judgment. (41)\n\nWhen standing, sitting, lying down, walking, or riding, the wound of a person (once the prescribed bandage is applied) does not cause pain. (42) Wounds involving joints, bones, the abdominal cavity, blood vessels, and tendons, as well as those that are deep, severe, or distorted in all directions, cannot be successfully treated without these prescribed bandages. (43)\n\nThus ends the eighteenth chapter in the Sūtrasthāna of the Suśruta Saṃhitā. (18)\n\nA wound does not cause pain when the person is rising, sitting, resting, walking, or traveling (provided the bandage has been applied as described). (42) Wounds located in the joints, bones, and the abdominal cavity, as well as those affecting blood vessels and tendons, deep and severe wounds, and those that have become irregular on all sides, cannot be cured without the prescribed bandages. (43)\n\nThus ends the eighteenth chapter in the Hindi translation of the Suśruta Saṃhitā by Pandit Muralidhar Sharma. (18)\n\n### Chapter Nineteen (19)\n\nNow, we shall explain the chapter on the care of the wounded <term>Vraṇitopāsanīyam</term> <gloss>the management of patients with wounds</gloss>.\n\nHere, the exposition of the chapter regarding the care of the wounded (the prescribed conduct for wound management) is provided.\n\nFirst, one should seek a suitable dwelling for the wounded person, and that dwelling should be constructed in a favorable location, such as a place with auspicious surroundings. (1) In a house with a favorable orientation, which is clean and protected from wind and sunlight, and sheltered from drafts, bodily, external, and mental diseases will not arise. (1) In that dwelling, one should prepare a bed that is spacious, well-cushioned, pleasant, and oriented with the head towards the east, equipped with the necessary items. (3) A wounded person will have comfort in their movements on a well-prepared bed. The gods dwell in the eastern direction, therefore one should place the head towards that direction. (4)\n\n<note>(Verse 42) Regarding the application of bandages.</note>\n\n<summary>This page concludes the discussion on bandaging techniques for various types of wounds and begins the nineteenth chapter concerning the proper environment and care required for a wounded patient.</summary>\n<keywords>Suśruta Saṃhitā, wound care, bandaging, hygiene, patient environment, medical ethics</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3104,
+ "outputTokens": 689,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0018095000000000001,
+ "cost_usd_batch_equiv": 0.0009047500000000001,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2991,
+ "at": "2026-10-03T12:05:16.615Z"
+}

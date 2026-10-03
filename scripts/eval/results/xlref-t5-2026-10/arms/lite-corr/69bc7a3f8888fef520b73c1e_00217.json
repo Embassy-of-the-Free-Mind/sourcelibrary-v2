@@ -1,0 +1,30 @@
+{
+ "id": "69bc7a3f8888fef520b73c1e_00217",
+ "arm": "lite-corr",
+ "model": "gemini-3.1-flash-lite",
+ "text": "III. 14. 6-11.] MAHÂVAGGA. 155\n\n. . . he spends that seven-day period within the dwelling place. For that monk, O monks, the <term>purimikâ</term> <gloss>the first (early) start of the rains retreat</gloss> is accounted for, and there is no offense regarding the interrupted residence. ||6|| But here... he departs for an essential matter before the <term>pavâraṇâ</term> <gloss>invitation ceremony at the end of the rains</gloss>. Whether that monk, O monks, returns to that residence or does not return, for that monk the <term>purimikâ</term> is accounted for, and there is no offense regarding the interrupted residence. ||7|| But here, O monks, a <term>bhikkhu</term> <gloss>monk</gloss> has undertaken the <term>vassâvâsa</term> <gloss>rains retreat</gloss> for the early period. He goes to that residence and performs the <term>uposatha</term> <gloss>observance day</gloss>, arrives at the monastery at the start of the lunar fortnight, prepares the sleeping quarters, sets out drinking and washing water, and sweeps the courtyard. He then departs the same day for a non-essential matter. For that monk, O monks, the <term>purimikâ</term> is not accounted for, and there is an offense of <term>dukkaṭa</term> <gloss>wrongdoing</gloss> regarding the interrupted residence. ||8|| But here... (= § 8)... he departs that same day for an essential matter—etc.—he stays two or three days and departs for a non-essential matter—etc.—he stays two or three days and departs for an essential matter—etc.—he stays two or three days and departs for a seven-day essential matter. He spends that seven-day period outside. For that monk, O monks, the <term>purimikâ</term> is not accounted for, and there is an offense of <term>dukkaṭa</term> regarding the interrupted residence. ||9|| He stays two or three days and departs for a seven-day essential matter. He spends that seven-day period within the dwelling place. For that monk, O monks, the <term>purimikâ</term> is accounted for, and there is no offense regarding the interrupted residence. He [departs] seven days before... (= § 7)... there is no offense. ||10|| But here, O monks, a monk has undertaken the <term>vassâvâsa</term> for the late period. While going to that residence, he performs the <term>uposatha</term> elsewhere, arrives at the monastery at the start of the lunar fortnight, prepares the sleeping quarters, sets out drinking and washing water, and sweeps the courtyard. He then departs the same day for a non-essential matter. For that monk, O monks, the <term>pacchimikâ</term> <gloss>the second (late) start of the rains retreat</gloss> is not accounted for, and there is an offense of <term>dukkaṭa</term> regarding the interrupted residence. But here... (the whole passage is identical with § 5-10; read instead of <term>purimikâ</term> and <term>purimikâya</term>: <term>pacchimikâ</term> and <term>pacchimikâya</term>, instead of <term>anâgatâya pavâraṇâya</term>: <term>anâgatâya komudiyâ câtumâsiniyâ</term> <gloss>before the Kaumudī full moon, which marks the end of the four-month period</gloss>)... and there is no offense regarding the interrupted residence. ||11||14||\n\nThe third section on the entry into the rains retreat.\n\nIts summary:\nApproaching, and when, how many, during the rains,\nAnd not wishing, intentionally, to postpone, a lay follower,\n\n<summary>This page details the specific legal conditions under which a monk's rains retreat (vassa) is considered valid or broken, focusing on the early (purimikâ) and late (pacchimikâ) periods of the retreat.</summary>\n<keywords>Vassa, Bhikkhu, Purimikâ, Pacchimikâ, Uposatha, Vinaya, Dukkaṭa</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2793,
+ "outputTokens": 989,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.00218175,
+ "cost_usd_batch_equiv": 0.001090875,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 3637,
+ "at": "2026-10-03T20:27:45.002Z"
+}

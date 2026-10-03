@@ -1,0 +1,30 @@
+{
+ "id": "69d91e423a50087f7bd9afc5_00214",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "And for your own protection. May such a <term>camasa</term> <gloss>drinking vessel or sacrificial ladle</gloss>, which is your means of sustenance in battle, not fail or depart from you. Carry it forth—so says the Seer who perceived the mantra.\n\nThe eye of the sacrifice, the beginning, and the mouth: I offer with speech, with hearing, and with mind.\nTo this sacrifice, spread out by the All-Maker <note>original: \"Viśvakarman\"</note>, may the gods come with well-disposed hearts. (5)\n\n<note>The following section provides the word-by-word breakdown of the verse above.</note>\nOf the sacrifice. The eye. The beginning. The mouth. And. With speech. With hearing. With mind. I offer.\nThis. Sacrifice. Spread out. By the All-Maker. [To]. The gods. May they come. Being well-disposed. (5)\n\nThis verse has been explained previously <note>referring to Atharva Veda 2.35.5</note>. I offer the senses such as the eye, and the mind, in relation to the sacrifice; I make them focused upon it. May the gods, acting with well-disposed minds, come to this mental sacrifice which has been extended and spread out by the All-Maker, the creator of the universe. This is the summary of the meaning.\n\nThose who are the officiating priests of the gods, and those who are worthy of sacrifice, for whom the oblation is prepared as their allotted portion;\nHaving come to this sacrifice along with their wives, may all the gods rejoice in the light. (6)\n\n<note>The following section provides the word-by-word breakdown of the verse above.</note>\nThose who. Of the gods. Officiating priests. Those who. And. Worthy of sacrifice. For whom. Oblation. Is made. Allotted portion.\nThis. Sacrifice. With. Wives. Having come. However many. The gods. With light. May they rejoice. (6)\n\nAmong the gods, those who exist as <term>ṛtvijah</term> <gloss>officiating priests</gloss> who sacrifice at the proper season; and those who are <term>yajñiyāḥ</term> <gloss>worthy of sacrifice</gloss> and are to be worshiped. For both these groups of gods, the <term>havyam</term> <gloss>oblation</gloss> is prepared and given as their allotted share. May all the gods, however many there are, being great in their splendor, come to this sacrifice along with their wives—Indrāṇī and the others—and may they rejoice and be satisfied by the acceptance of the oblation.\n\nThus ends the fourth hymn in the seventh <term>anuvāka</term> <gloss>lesson or section</gloss>.\n\nThe hymn beginning with \"You, Agni, are the protector of vows\" is used in the <term>ājya-homa</term> <gloss>offering of clarified butter</gloss> during the transgression of the New Moon or Full Moon sacrifices, or during the placement of the kindling wood for peace. It is prescribed by Kauśika in the rules of the collection:\n\n---\n\n<note>Footnotes from the original manuscript:\n1. \"Is made\" appears in manuscripts A, Bb, C, R, Sm; another variant in Cs; \"makes\" in D.\n2. Variants of \"with wives\" across manuscripts A, K, Km, V, Dc, Bb, Sm, R, C, D, and Cs.\n3. Variants of \"rejoice in the light\" or \"gods with the oblation\" found in manuscripts A, R, Cs, Bb, C, D, Sm, V, K, Km, Dc, and the RW/W editions; see also Kausika Sutra 1.148.3c.</note>\n\n<summary>This page contains the Sanskrit commentary on the 58th hymn of the Atharva Veda, focusing on the mental and physical preparation of sacrifice and the invitation of the gods and their wives to partake in oblations. It also notes the ritual application of subsequent verses according to the Kauśika Sutra.</summary>\n<keywords>Atharva Veda, sacrifice, Agni, Vishvakarman, priests, oblations, Vedic ritual, Sanskrit commentary, Kausika Sutra</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2646,
+ "outputTokens": 962,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.004208999999999999,
+ "cost_usd_batch_equiv": 0.0021044999999999996,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 5743,
+ "at": "2026-10-03T12:06:34.914Z"
+}

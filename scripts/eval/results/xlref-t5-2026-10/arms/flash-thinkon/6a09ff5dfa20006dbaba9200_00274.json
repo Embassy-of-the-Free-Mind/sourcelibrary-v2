@@ -1,0 +1,30 @@
+{
+ "id": "6a09ff5dfa20006dbaba9200_00274",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "### CLXXII.—I Jātakassu-Vagga. 255\n\n### CLXXII.\n\n1. Monks, <term>adhamma</term> <gloss>unrighteousness</gloss> should be known and <term>dhamma</term> <gloss>righteousness</gloss> should be known. What is <term>anattha</term> <gloss>harmful or lacking purpose</gloss> should be known and what is <term>attha</term> <gloss>beneficial or meaningful</gloss> should be known. Having known unrighteousness and righteousness, and having known what is harmful and what is beneficial, one should practice according to righteousness and according to what is beneficial. The <term>Bhagavā</term> <gloss>Blessed One</gloss> said this. Having said this, the <term>Sugata</term> <gloss>Happy One</gloss> rose from his seat and entered his dwelling.\n\n2. Then, not long after the Blessed One had departed, those <term>bhikkhus</term> <gloss>monks</gloss> thought: The Blessed One has risen from his seat and entered his dwelling after giving us a brief <term>uddesa</term> <gloss>summary</gloss> without explaining the meaning in <term>vitthāra</term> <gloss>detail</gloss>. He said: \"Monks, unrighteousness should be known and righteousness should be known; what is harmful should be known and what is beneficial should be known. Having known unrighteousness and righteousness, and having known what is harmful and what is beneficial, one should practice according to righteousness and according to what is beneficial.\" Who now could explain in detail the meaning of this brief summary that the Blessed One has given? \n\nThen those monks thought: This Venerable <term>Mahākaccāna</term> <gloss>a disciple renowned for his analytical skills</gloss> is praised by the Teacher and esteemed by his wise fellow monks. Venerable Mahākaccāna is capable of explaining in detail the meaning of this brief summary given by the Blessed One. Let us approach Venerable Mahākaccāna and ask him about this matter. However Venerable Mahākaccāna explains it to us, so we shall remember it.\n\n3. Then those monks approached Venerable Mahākaccāna and exchanged greetings with him. When they had concluded the polite and friendly conversation, they sat down to one side. Sitting there, those monks said to Venerable Mahākaccāna: Friend Kaccāna, the Blessed One has risen from his seat and entered his dwelling after giving us a brief summary without explaining the meaning in detail. He said: \"Monks, unrighteousness should be known and righteousness should be known; what is harmful should be known and what is beneficial should be known; having known unrighteousness...\"\n\n<note>Manuscript S reads: vatvāna; Phayre manuscript reads: vatvā ca.</note>\n<note>The asterisk is omitted by the Thai edition. The dagger indicates the S manuscript reading for \"ayasmā\". The double dagger indicates the Thai edition reading for \"upasaṅkameyyāma\".</note>\n\n<summary>The Buddha provides a brief teaching on distinguishing righteousness from unrighteousness and then retires to his dwelling. The monks decide to seek out Mahākaccāna to provide a more detailed explanation of the Buddha's summary.</summary>\n<keywords>Dhamma, Adhamma, Mahākaccāna, interpretation of teachings, monastic community, Buddha's instructions</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2585,
+ "outputTokens": 2098,
+ "thinkingTokens": 1347,
+ "cost_usd_realtime": 0.0075865,
+ "cost_usd_batch_equiv": 0.00379325,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 8973,
+ "at": "2026-10-03T20:41:46.810Z"
+}

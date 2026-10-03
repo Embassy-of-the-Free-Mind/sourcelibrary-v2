@@ -1,0 +1,30 @@
+{
+ "id": "69907971b621b177c1af74df_00309",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>This page continues the philosophical discourse on the nature of the Supreme Being and the process of cosmic creation as described in the commentary on the Surya Siddhanta.</meta>\n\n290\n\nSurya Siddhanta\n\nVasudeva is the Supreme Brahman. His very form is the Supreme Person <note>original: Parama Purusha</note>; he is unmanifest, without qualities, peaceful, and beyond the twenty-five elements <note>referring to the twenty-five principles of the Samkhya school of philosophy</note> as well as immutable, which means he is without change. 12\n\n->The God within nature, all-pervading outside and inside; Sankarshana, having created the waters first, cast his seed into them. 13<-\n\nThe text explains this because it is impossible for the pure Brahman to be the direct cause of the world. He is \"within nature,\" meaning he is associated with <term>Maya</term> <gloss>the creative power of illusion</gloss>, and all-pervading because he is the material cause of the world. All these attributes are to be understood as belonging to Sankarshana, who is an expansion of Vasudeva, through the realization of their essential identity. Sankarshana, as an expansion of Vasudeva, first created the waters. Into those waters, he cast his \"seed,\" which refers to a specific power or potency. 13\n\nLord Sankarshana, who is experienceable everywhere, entered within this very nature and first created the waters. Thereafter, he established his own brilliance in the form of a seed within that water. 13\n\n->That became a golden egg, surrounded on all sides by darkness; there Aniruddha, the eternal, first became manifest. 14<-\n\nThe author then explains what happened next. That water, combined with that potency, became a <term>haimam</term> <gloss>golden</gloss> egg, spherical in shape, and was enveloped everywhere, inside and out, by darkness. The meaning is that the golden egg was produced in the sky accompanied by darkness. In that golden egg, first Aniruddha—the eternal, the expansion of Sankarshana and Vasudeva—became manifest. He was not \"born\" or \"produced\" in the literal sense, because the theory of <term>Satkaryavada</term> <gloss>the doctrine that the effect pre-exists in its cause</gloss> is accepted here. Just as oil is always present in sesame seeds and is merely manifested from them, he was manifested rather than created. 14\n\nThat seed-like brilliance took the form of a golden egg. It was surrounded on all sides by darkness. Within that egg, the eternal Lord Aniruddha first appeared. 14\n\n->He is recited in the Vedas as the Lord Hiranyagarbha; because he is the first being, he is called Aditya, and by his procession he is called Surya. 15<-\n\nNow the text provides his other names for the easy understanding of the people. This Lord Aniruddha, an expansion of Sankarshana and endowed with the <term>shāḍguṇya-aiśvarya</term> <gloss>six-fold lordly attributes of divinity</gloss>, is described in the <term>Chandas</term> <gloss>Vedas</gloss> as <term>Hiranyagarbha</term> <gloss>Golden Womb</gloss> because he resides in the womb or interior of the golden egg. This is his famous alternative name in the Vedas. He is certainly called <term>Aditya</term> <gloss>Son of Aditi or the First-born</gloss> because he was the first to be manifested. By his \"procession,\" meaning his manifestation out of this world, he is called Surya.\n\n\"Hiranyagarbha was present in the beginning; when born, he was the sole lord of all created beings.\" <note>original Sanskrit quote from the Rig Veda 10.121.1: Hiranyagarbhah samavartatagre bhutasya jatah patireka asit</note> 15\n\nThis very person is Lord Hiranyagarbha who is mentioned in the Vedas. First of all...\n\nSurya Siddhanta, Vasudeva, Sankarshana, Hiranyagarbha, Aniruddha, Nature, Golden Egg, Scripture\n\n<summary>This page describes the emanations of the divine during the creation process, specifically how Sankarshana creates the cosmic waters and Aniruddha manifests as Hiranyagarbha within the golden egg.</summary>\n<keywords>Vasudeva, Sankarshana, Aniruddha, Hiranyagarbha, cosmic egg, Satkaryavada, creation myth, Surya, Aditya, Vedic cosmology</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2554,
+ "outputTokens": 4041,
+ "thinkingTokens": 3004,
+ "cost_usd_realtime": 0.013400000000000002,
+ "cost_usd_batch_equiv": 0.006700000000000001,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 17640,
+ "at": "2026-10-03T20:45:15.719Z"
+}

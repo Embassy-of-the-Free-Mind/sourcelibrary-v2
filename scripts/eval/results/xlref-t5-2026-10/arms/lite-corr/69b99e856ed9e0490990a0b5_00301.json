@@ -1,0 +1,30 @@
+{
+ "id": "69b99e856ed9e0490990a0b5_00301",
+ "arm": "lite-corr",
+ "model": "gemini-3.1-flash-lite",
+ "text": "One is covetous; regarding the property and belongings of others, one covets them, thinking, \"Oh, may that which belongs to others be mine.\" One has a mind of ill-will and malicious intention, thinking, \"May these beings be slaughtered, bound, annihilated, destroyed, or may they not exist at all.\" One holds wrong view, possessing a distorted perspective: \"There is no merit in almsgiving, no merit in offerings, no merit in sacrifices. There is no fruit or result of good or evil deeds. There is no this world, no next world. There is no mother, no father <note>meaning there is no karmic consequence for one's actions toward them</note>. There are no beings reborn spontaneously. There are no ascetics or brahmins in the world who, having realized this world and the next world by their own direct knowledge, declare them.\"\n\nPossessing these ten qualities, one is placed in hell just as if brought there.\n\n3. Possessing ten qualities, one is placed in heaven just as if brought there. Which ten?\n\n4. Here, monks, a certain person, having abandoned the taking of life, abstains from taking life. He dwells with rod and weapon laid aside, conscientious, merciful, and compassionate for the welfare of all living beings. Having abandoned the taking of what is not given, he abstains from taking what is not given; whatever property or belongings of others there may be in the village or the forest, he does not take it as a thief. Having abandoned sexual misconduct, he abstains from sexual misconduct. He does not engage with those who are protected by their mother, father, brother, sister, relatives, or lineage, those who are protected by law, those who have a husband, those who have legal penalties against them, or even those who are betrothed with a garland. Having abandoned false speech, he abstains from false speech. When he is in a council, or in an assembly, or among his relatives, or in a guild, or at the royal court, and is summoned as a witness and asked, \"Come, good man, tell what you know,\" if he does not know, he says, \"I do not know,\" and if he knows, he says, \"I know.\" If he does not see, he says, \"I do not see,\" and if he sees, he says, \"I see.\" Thus, he does not speak falsely for the sake of himself, for the sake of another, or for the sake of some material gain.\n\n<summary>This page defines the ten unwholesome actions leading to suffering, specifically focusing on covetousness, ill-will, and wrong view, and begins a list of ten wholesome actions leading to heaven, covering the first four precepts.</summary>\n<keywords>kamma, morality, hell, heaven, wrong view, precepts, virtue</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2751,
+ "outputTokens": 602,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.00159075,
+ "cost_usd_batch_equiv": 0.000795375,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 3251,
+ "at": "2026-10-03T20:27:40.503Z"
+}

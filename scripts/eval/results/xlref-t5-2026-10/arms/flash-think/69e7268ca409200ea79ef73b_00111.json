@@ -1,0 +1,30 @@
+{
+ "id": "69e7268ca409200ea79ef73b_00111",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<margin>\nA refined man obtains a refined wife, a refined friend, and a refined daughter. Written with a refined pen, about refined people, refined speech, and refined events, this refined text is truly a book the likes of which one has never read or seen in a lifetime.\n</margin>\n\n<unclear>...used without permission. He once separately stored a chest of cups and bowls; the velvet padding remained as before, but the vessels were all gone. When someone made unpredictable and absurd remarks, Liu laughed and said...</unclear> <note>This fragment appears to be the conclusion of a previous story, likely \"The Marriage Lottery\" or similar, regarding a character named Liu.</note> individually, and did not question it further.\n\n# Jiao Na\n\nScholar Kong, given the name Xueli, was a descendant of the Sage <note>Confucius</note>. He was a man of refined character and skilled in poetry. A close friend of his, serving as an official in Tiantai, sent a letter inviting him to visit. When Kong arrived, his friend had unfortunately died. Left stranded and without resources to return home, Kong took up residence at Putuo Temple, where he was employed by the monks to do transcription work. \n\nAbout a hundred paces west of the temple stood the estate of a Mr. Shan. Mr. Shan was the scion of a noble family, but because of a major lawsuit, his fortunes had declined and his household had dwindled. He had moved his family to the countryside, leaving the house vacant. \n\nOne day, the snow fell in a heavy torrent, and the roads were devoid of travelers. As Kong happened to pass by the gate of the estate, a young man came out. His bearing was very elegant. Seeing Kong, he hurried forward to greet him with proper ceremony. After a brief exchange of comforts and inquiries, the young man invited Kong to come inside. Kong was charmed by him and followed him in. \n\nThe rooms were not particularly spacious, but were everywhere hung with brocade curtains. On the walls were many calligraphies and paintings by the ancients. On the desk lay a book with a label that read: \"Fragments from the Jade Repository\" <term>Langhuan Suoji</term> <gloss>Records of the legendary library of the immortals</gloss>.\n\n<summary>Scholar Kong is stranded at a temple after his friend's death and meets a refined young man at a seemingly vacant estate during a snowstorm. The young man invites Kong into a lavishly decorated home containing rare books and art.</summary>\n<keywords>Scholar Kong, Jiao Na, Putuo Temple, Confucius descendant, Langhuan Suoji, mysterious youth</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2121,
+ "outputTokens": 567,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0027615,
+ "cost_usd_batch_equiv": 0.00138075,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 4013,
+ "at": "2026-10-03T12:05:34.637Z"
+}

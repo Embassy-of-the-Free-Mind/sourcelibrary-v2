@@ -1,0 +1,30 @@
+{
+ "id": "69b99e551f30176bf4d37774_00306",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "25. (5) Results 1.\n\n2. There are these four bases of power, monks. These are the four bases of power.\n\n3. Because these four bases of power, monks, have been developed and cultivated, one of two results may be expected: either final knowledge <term>aññā</term> <gloss>enlightenment/liberation</gloss> in this very life, or, if there is a remainder of clinging, the state of non-returning.\n\n26. (6) Results 2.\n\n2. There are these four bases of power, monks. These are the four bases of power.\n\n3. Because these four bases of power, monks, have been developed and cultivated, seven results and seven benefits may be expected. Which are the seven results and seven benefits?\n\n4. He realizes the highest knowledge by direct experience in this very life. If he does not realize the highest knowledge by direct experience in this very life, then he realizes it at the time of death. If he does not realize it at the time of death, then, through the destruction of the five lower fetters, he becomes one who attains liberation in the interval, one who attains liberation upon landing, one who attains liberation without prompting, one who attains liberation with prompting, or one who goes upstream toward the highest heavens <term>akaniṭṭhagāmī</term> <gloss>those who attain the highest realm of the Pure Abodes</gloss>.\n\n5. Because these four bases of power, monks, have been developed and cultivated, these seven results and seven benefits may be expected.\n\n27. (7) Ānanda 1.\n\n1. At Sāvatthi.\n\n2. Then the Venerable Ānanda approached the Blessed One. Having approached, he sat down to one side. Sitting to one side, the Venerable Ānanda said to the Blessed One, \"What is...\"\n\n<meta>The text continues the discourse on the four bases of power (iddhipādā), detailing specific spiritual attainments and liberation outcomes (results) associated with their cultivation, before transitioning to a new section featuring a dialogue with Ānanda.</meta>\n\n<summary>This page outlines the spiritual results and benefits gained from cultivating the four bases of power, categorizing them into varying levels of enlightenment, and begins a new dialogue between the Buddha and Ānanda.</summary>\n<keywords>bases of power, iddhipādā, non-returning, enlightenment, liberation, Ānanda, Sāvatthi</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2959,
+ "outputTokens": 534,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.00154075,
+ "cost_usd_batch_equiv": 0.000770375,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2167,
+ "at": "2026-10-03T12:04:25.527Z"
+}

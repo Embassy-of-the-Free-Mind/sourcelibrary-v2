@@ -1,0 +1,30 @@
+{
+ "id": "69e7268ca409200ea79ef73b_00111",
+ "arm": "lite2",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<margin>Those who are refined obtain refined wives, refined friends, and refined daughters. To write of refined people, with a refined pen, refined language, and refined affairs, is to produce refined literature. Yet, I have never read such things in my life, nor have I seen such books.</margin>\n\n<note>A legend involving a dragon, a thief, and a missing set of drinking vessels, which the host dismisses with a laugh, refusing to pursue the matter further.</note>\n\n### Jiao Na\n\nScholar Kong, known as Xue Li, was a descendant of the Sage <note>a reference to Confucius</note>. He was a refined man, skilled in poetry. He had a close friend in Tiantai who sent him a letter of invitation, so Kong set out to meet him. Upon arriving, he found that his friend had passed away. Left stranded and unable to return home, he took up residence in Putuo Temple, where he worked as a scribe for the monks. \n\nAbout a hundred paces west of the temple stood the residence of Master Dan. The master was the descendant of a noble family, but due to a major lawsuit, his household had dwindled. He had moved to the countryside, leaving his town house vacant. \n\nOne day, while heavy snow was falling and the paths were deserted, Kong happened to pass by the house. A youth came out, possessed of a remarkably elegant bearing. Seeing Kong, he hurried forward to greet him with courtesy, offering words of comfort and inviting him to step inside. Kong, feeling drawn to him, readily accepted. The house was not particularly large, but everywhere hung brocade curtains. On the walls were many paintings and scrolls by ancient masters, and on the desk lay a volume with a label reading *Langhuan Suo* <gloss>Trivial Records of the Langhuan Library</gloss>.\n\n<summary>This passage introduces Scholar Kong, a refined man who becomes stranded at a temple and meets a mysterious, elegant youth at the vacant residence of Master Dan.</summary>\n<keywords>Scholar Kong, Jiao Na, Putuo Temple, refinement, ancient scrolls, Langhuan Suo</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2121,
+ "outputTokens": 451,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.00120675,
+ "cost_usd_batch_equiv": 0.000603375,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2206,
+ "at": "2026-10-03T12:04:35.952Z"
+}

@@ -1,0 +1,30 @@
+{
+ "id": "69e72c60a409200ea79f46f6_00141",
+ "arm": "flash-corr",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>The text is from the Inner Chapters of the Zhuangzi, specifically the section titled The Sign of Virtue Complete (De Chong Fu).</meta>\n\n### This section contains subtle and profound principles\n\n<margin>Feeding at the breast</margin>\nWhen a suckling calf <gloss>an heir</gloss> feeds from its dead mother, after a short while, it starts <gloss>blinking</gloss> and then abandons her and runs away. <margin>The movement of the eyes; it refers to the mother's eyes moving at death.</margin> <margin>Because it perceives that the blinking of the eyes no longer sees it.</margin> This is because the mother no longer sees the calf, and she no longer resembles her own kind. <margin>The stiffness of the corpse no longer resembles the living self.</margin> What the calf loved about its mother was not her physical body <margin>If the form is not worthy of love, then it is not loved.</margin> but rather that which animated her body. When a man dies in battle, he is buried without his feathered fan <gloss>an ornamental funerary object</gloss> decorations. <margin>Because he died in battle, he lacked the protective military power, so he is not provided with the fan.</margin> A man whose feet have been amputated has no reason to care for his shoes. In both cases, the fundamental basis is gone. <margin>Battle takes military prowess as its basis.</margin> <margin>Shoes take the feet as their basis.</margin> <margin>Another metaphor: choosing concubines. Their nails are not clipped and their ears are not pierced to keep their forms whole, so as to receive the Emperor’s <unclear>gaze</unclear>.</margin> Those who serve as the Emperor’s attendants do not clip their nails or pierce their ears. A man who has just taken <gloss>married</gloss> a wife stays outside the official quarters and is no longer called for labor duty. <margin>Being away from official labor prevents the hands and feet from becoming calloused, so as not to interfere with the joy of the new marriage.</margin> If preserving the physical form whole is enough to gain such consideration, <margin>A whole form is still enough to move people.</margin> <margin>The following meaning is even more significant.</margin>\n\n<meta>The Sign of Virtue Complete</meta>\n<meta>Hall of the Sun and River</meta>\n\n<summary>This page uses metaphors of suckling calves, fallen soldiers, and amputees to argue that what we truly love is the animating spirit rather than the physical body. It notes that even in worldly affairs, such as imperial service or marriage, the wholeness of the physical form is granted special status.</summary>\n<keywords>Zhuangzi, Virtue, body and spirit, mourning, metaphors, physical wholeness, rituals</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2274,
+ "outputTokens": 607,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.002958,
+ "cost_usd_batch_equiv": 0.001479,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 4669,
+ "at": "2026-10-03T20:29:18.615Z"
+}

@@ -1,0 +1,30 @@
+{
+ "id": "69e7491f85f786e884a4dc2f_00182",
+ "arm": "lite-corr",
+ "model": "gemini-3.1-flash-lite",
+ "text": "8 22 58] Mahābhārata [Karṇavadhaparva\nSigla: C 8 1318 B 8 31 68 K 8 22 72\n\nI shall surely conquer all the Pāṇḍavas gathered here today. 58\nDuryodhana said:\nI shall do all this as you think best, Karṇa. \nChariots equipped with quivers and horses shall follow you, O son of a charioteer. 59\nLet them carry iron arrows fletched with vulture feathers and transport wagons. \n\n<column-break/>\n\nWe, along with all the kings, shall follow you, Karṇa. 60\nSañjaya said:\nHaving spoken thus, O great king, your son, possessed of great splendor,\nThe king approached and spoke these words to the King of the Madras. 61\n\n->Thus ends the twenty-second chapter in the Karṇa-parva of the glorious Mahābhārata. 22<-\n\n## 23\n\nSañjaya said:\nYour son, O great king, spoke these words to the King of the Madras.\n\n<column-break/>\n\nApproaching with humility, he spoke out of affection. 1\nO man of true vows, possessor of great fortune, O destroyer of enemies.\n\n<note>The remainder of the page consists of critical apparatus (textual variants and notes).</note>\n\n<summary>This passage describes Duryodhana pledging his full support to Karṇa's battle strategy and subsequently approaching the King of the Madras, Śalya, to request his assistance.</summary>\n<keywords>Mahābhārata, Karṇavadhaparva, Duryodhana, Karṇa, Sañjaya, King of the Madras, Pāṇḍavas</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2197,
+ "outputTokens": 395,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.00114175,
+ "cost_usd_batch_equiv": 0.000570875,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2237,
+ "at": "2026-10-03T20:28:07.418Z"
+}

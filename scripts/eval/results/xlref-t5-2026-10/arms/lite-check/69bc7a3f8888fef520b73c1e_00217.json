@@ -1,0 +1,41 @@
+{
+ "id": "69bc7a3f8888fef520b73c1e_00217",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "III. 14. 6-11.] MAHÂVAGGA. 155\n\n. . . he stays within the <term>sannivaṭṭa</term> <gloss>residence or enclosure</gloss> for that seven-day period. For that monk, O monks, the early retreat <note>the *purimikâ*, the first three months of the rainy season retreat</note> is recognized, and there is no offense in the arrival <note>the *paṭissava*</note>. ||6|| But here, if he departs for a duty <note>the *sakaraṇîya*</note> before the <term>pavâraṇâ</term> <gloss>ceremony marking the end of the retreat</gloss> has arrived. Whether that monk returns to that residence or does not return, O monks, for that monk the early retreat is recognized, and there is no offense in the arrival. ||7|| But here, O monks, a retreat has been promised by a monk for the early period. He goes to that residence, performs the <term>uposatha</term> <gloss>observance day</gloss>, approaches the monastery on the day after the Uposatha, arranges the bedding, prepares drinking and usable water, and sweeps the courtyard. He then departs the same day without a duty. For that monk, O monks, the early retreat is not recognized, and there is an offense of wrong-doing <note>the *dukkaṭa*</note> in the arrival. ||8|| But here . . . (= § 8) . . . he departs the same day for a duty — and so on — he stays for two or three days and departs without a duty — and so on — he stays for two or three days and departs for a duty — and so on — he stays for two or three days and departs for a seven-day duty. He spends that seven-day period outside. For that monk, O monks, the early retreat is not recognized, and there is an offense of wrong-doing in the arrival. ||9|| He stays for two or three days and departs for a seven-day duty. He stays within the residence for that seven-day period. For that monk, O monks, the early retreat is recognized, and there is no offense in the arrival. He [stays] for the seven-day period . . . (= § 7) . . . no offense. ||10|| But here, O monks, a retreat has been promised by a monk for the late period <note>the *pacchimikâ*, the second three months of the rainy season retreat</note>. While going to that residence, he performs the <term>uposatha</term> outside, approaches the monastery on the day after the Uposatha, arranges the bedding, prepares drinking and usable water, and sweeps the courtyard. He then departs the same day without a duty. For that monk, O monks, the late retreat is not recognized, and there is an offense of wrong-doing in the arrival. But here . . . (the whole passage is identical with § 5-10; read instead of *purimikâ* and *purimikâya*: *pacchimikâ* and *pacchimikâya*, instead of *anâgatâya pavâraṇâya*: *anâgatâya komudiyâ câtumâsiniyâ* <gloss>before the Komudî full-moon of the four-month season</gloss>) . . . and no offense in the arrival. ||11||14||\n\nvassupanâyikakkhandhako tatiyo.\n\ntassa uddânam:\nupagantum, kadâ c’ eva, kati, antarâ vassa ca,\nna icchanti ca, sañcicca, ukkaḍḍhitum, upâsako.|\n\n<summary>This page continues the technical regulations for monks observing the rainy season retreat, specifically defining when a retreat is considered valid or invalid based on residency, performance of duties, and timing of the arrival.</summary>\n<keywords>Vassa, retreat, monastic discipline, Mahavagga, Vinaya, Dukkaṭa, Uposatha</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1964,
+ "outputTokens": 1038,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.004096000000000001,
+ "cost_usd_batch_equiv": 0.0020480000000000003,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "number",
+   "source": "dvîhatîham",
+   "was": "two or three days",
+   "now": "two or three days"
+  },
+  {
+   "type": "role",
+   "source": "pâṭipadena",
+   "was": "at dawn",
+   "now": "on the day after the Uposatha"
+  }
+ ],
+ "base_sha": 3288,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 4080,
+ "at": "2026-10-03T12:07:20.958Z"
+}

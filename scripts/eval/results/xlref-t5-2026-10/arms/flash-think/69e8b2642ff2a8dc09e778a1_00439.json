@@ -1,0 +1,30 @@
+{
+ "id": "69e8b2642ff2a8dc09e778a1_00439",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "# Mozi Volume 12\n\n<meta>This page continues the philosophical debates of Mozi, focusing on the relationship between ritual, governance, and divine retribution.</meta>\n\nThey are unable to bring about fortune or calamity, and they hold that there is no such thing as auspicious or inauspicious omens. Because of this, the administration falls into disorder and the state is endangered. Therefore, the books of the ancient kings also contain this sentiment, saying: \"If one's character <note>original: 丌, an ancient form of 其; here used in the sense of one's disposition</note> is arrogant, it will bring inauspiciousness upon one's descendants.\" This means that doing evil results in punishment, while doing good results in reward.\n\nMaster Mozi addressed Gongmengzi <note>a Ruist or Confucian scholar from the State of Lu known for debating Mozi</note> saying: Regarding the funeral rites, for a ruler, parents, wife, or the eldest son <insert>the legal heir</insert>, there is a three-year mourning period. For paternal uncles, brothers, and clansmen, it is five months. For paternal aunts, elder sisters, maternal uncles, and sisters' sons, there are all a specific number of months for mourning. Furthermore, during the intervals when one is not actively mourning, one must recite three hundred poems, play three hundred poems on stringed instruments, sing three hundred poems, and dance to three hundred poems. If one follows your words, when will the ruler find the time to attend to the administration? When will the common people find the time to pursue their occupations?\n\nGongmengzi replied: When the state is in disorder, one works to govern it. When it is well-governed, one performs the <term>li</term> <gloss>ritual</gloss> and <term>yue</term> <gloss>music</gloss>. When the state is well-governed, one attends to business; when the state is wealthy, one performs ritual and music.\n\nMaster Mozi said: The governance of a state <insert>Lu Wenchao suggests the words \"depends on governing it; therefore, it is governed\" are missing here</insert> depends on governing it. If the practice of governing is abandoned, then the order of the state is also abandoned. If the state...\n\n<summary>Mozi critiques Gongmengzi's defense of lengthy Confucian funeral rites and musical performances, arguing that such rituals distract from the practical administration and labor necessary for a stable society.</summary>\n<keywords>Mozi, Gongmengzi, funeral rites, mourning periods, ritual and music, governance, social utility, Confucianism versus Mohism</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2081,
+ "outputTokens": 571,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0027535,
+ "cost_usd_batch_equiv": 0.00137675,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 3921,
+ "at": "2026-10-03T12:05:22.004Z"
+}

@@ -1,0 +1,30 @@
+{
+ "id": "69e7491f85f786e884a4dc2f_00182",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "I shall surely conquer all the Pandavas gathered today. 58\nDuryodhana said:\nI will do all this just as you think, O Karna. The chariots with quivers will surely follow you, O son of a charioteer. 59\nMay they carry carts filled with arrows with eagle-feathered shafts.\n\n<column-break/>\n\nWe and all the kings will follow you, O Karna. 60\nSanjaya said:\nHaving said this, O great king, your valorous son, the king, approached the King of the Madras <note>Shalya</note> and spoke these words. 61\n\n->Thus ends the twenty-second chapter in the Karna Parva of the glorious Mahabharata. 22<-\n\n---\n\n## 23\n\nSanjaya said:\nYour son, O great king, approached the King of the Madras with humility and spoke these words out of affection. 1\nO truth-vowed, highly fortunate one, you who increase the sorrow of your enemies.\n\n---\n\n<note>The remainder of the page consists of critical apparatus (textual variants and notes).</note>\n\n<summary>Duryodhana asks Karna to prepare for battle, confirming that the army will follow him, and subsequently approaches King Shalya with humility to solicit his support.</summary>\n<keywords>Duryodhana, Karna, Shalya, Sanjaya, Pandavas, Chariot warfare, Mahabharata, Karna Parva</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2446,
+ "outputTokens": 315,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.001084,
+ "cost_usd_batch_equiv": 0.000542,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 1497,
+ "at": "2026-10-03T12:04:45.330Z"
+}

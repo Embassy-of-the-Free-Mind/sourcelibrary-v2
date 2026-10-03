@@ -1,0 +1,30 @@
+{
+ "id": "69e7267ca409200ea79ef51d_00353",
+ "arm": "lite-corr",
+ "model": "gemini-3.1-flash-lite",
+ "text": "॥ Hitopadesha ॥\n\n->॥ 140 ॥<-\n\nWhen the conflict was imminent, the Chakravaka <note>a type of bird, often used as a character in these fables</note> said, \"O King, war is not the proper course of action initially. For, what kind of servant or minister is he who, without due consideration, advises a king to prepare for war and abandon his own territory at the very outset? Furthermore, one should always endeavor to overcome enemies through methods other than war, for when two parties are engaged in battle, the outcome of victory is never certain. Moreover, one should attempt to subdue the enemy through conciliation, bribery, or sowing dissension—either separately or combined—but never through war. Additionally, every person feels heroic before a conflict has begun; who would not be proud when the strength of the opponent has not yet been witnessed? What is more, a heavy stone is not lifted by living creatures as easily as an enemy. Great success achieved through small means is the true fruit of counsel. Therefore, now that conflict has arrived, let us act accordingly.\"\n\nWhen the battle was near, the Chakravaka said, \"O Great King, war should not be undertaken first. For, what is that servant or minister who advises a king to prepare for battle and abandon his own position without first considering the matter? Furthermore, one should strive to defeat the opponent through diplomacy and other means; never through direct conflict, because when two people are fighting, it is not certain whose victory will occur. Moreover, one should attempt to resolve the matter with the enemy through conciliation, bribery, or creating division—either individually or collectively—but never through war. Besides, all people are brave before they have engaged in battle.\"\n\n<summary>This page contains a debate on the ethics and strategies of warfare, emphasizing diplomacy, conciliation, and caution over the immediate use of armed conflict, presented in both Sanskrit and Bengali.</summary>\n<keywords>Hitopadesha, diplomacy, warfare, political strategy, Chakravaka, conflict resolution</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2250,
+ "outputTokens": 431,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.001209,
+ "cost_usd_batch_equiv": 0.0006045,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2727,
+ "at": "2026-10-03T20:28:30.831Z"
+}

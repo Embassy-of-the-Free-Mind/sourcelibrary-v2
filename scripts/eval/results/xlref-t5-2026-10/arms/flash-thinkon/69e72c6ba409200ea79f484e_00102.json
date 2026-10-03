@@ -1,0 +1,30 @@
+{
+ "id": "69e72c6ba409200ea79f484e_00102",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "# Zhuangzi: Garden of Sayings, Volume 3\n\n<margin>This describes the conduct of the <term>Zhiren</term> <gloss>Perfect Man</gloss> who does not seek fame or prominence. Why then do you find joy in being known?</margin>\nHe rebuked him: \"The Perfect Man is not known. Why do you take joy in fame?\" Confucius said, \"How excellent!\" He gave up his social circles and dismissed his disciples.\n<margin>He does not value ostentation.</margin>\nHe fled to the great marshes, wearing skins and coarse cloth and eating acorns and chestnuts.\n<margin>He does not value delicacies.</margin>\n<margin>Because he did not give rise to a mind of discrimination, he did not disturb the groups of birds and beasts.</margin>\nHe walked among the beasts without disturbing the herd and among the birds without disturbing their flight. If birds and beasts did not dislike him, how much less would humans?\n<margin>Even different species did not dislike him.</margin>\n<margin>The name of a hermit.</margin>\nConfucius asked Zi Sanghu: \"I was twice driven out of the State of <term>Lu</term>. The tree I rested under was cut down in the State of <term>Song</term>. My footprints were erased in the State of <term>Wei</term>. I was impoverished in <term>Shang</term> and <term>Zhou</term>. I was besieged between the states of <term>Chen</term> and <term>Cai</term>. Having encountered these many hardships, my close friends have grown more distant and my followers have scattered. Why is this?\"\n\n<note>A small symbol, possibly a printer's mark or seal, is located in the top right corner.</note>\n\n<summary>This page records a dialogue between Confucius and the hermit Zi Sanghu. Confucius describes his many political failures and social isolation, seeking an explanation for his hardships from the perspective of Daoist detachment.</summary>\n<keywords>Confucius, Zi Sanghu, Perfect Man, Zhiren, Lu, Song, Wei, Chen, Cai, hermit, social withdrawal, discrimination</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2123,
+ "outputTokens": 2152,
+ "thinkingTokens": 1684,
+ "cost_usd_realtime": 0.0075175,
+ "cost_usd_batch_equiv": 0.00375875,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 8913,
+ "at": "2026-10-03T20:43:43.719Z"
+}

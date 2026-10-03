@@ -1,0 +1,35 @@
+{
+ "id": "69906a861cf6ed5fbc8f5d21_00078",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "<page-num>62</page-num>\n<header>Lilavati</header>\n\n# Example\n# Further Example\n\n> When the clouds gathered, ten times the square root of a flock of swans flew to Lake Manasa, while one-eighth of the flock flew from the water's edge to a grove of land-lotuses. O maiden, you see three pairs of swans playing with delight in the water adorned with young lotus stalks; tell me the total number of the flock. (3)\n\n**Syntactical Arrangement:** O maiden! When the clouds gathered, ten times the square root of the flock of swans went to Lake Manasa. One-eighth flew from the water's edge to the grove of land-lotuses. And three pairs of swans were seen playing with delight in the water adorned with young lotus stalks. Then, tell me the total number of the flock. (3)\n\n**Meaning:** O beloved one, sixteen years of age! There was a group of swans. When the rainy season arrived, ten times the square root of the group went to Lake Manasa, one-eighth of them flew from the edge of the water to the grove of land-lotuses, and three pairs of swans were seen playing with great affection in the water, which was beautiful with soft lotus stalks. Then, say, how many swans were in that group? (3)\n\n**Calculation:** Square root factor 10, one-eighth <gloss>1/8</gloss>, visible <gloss>6</gloss>. Since the rule stated is to subtract the fractional parts, here, by dividing the visible amount <gloss>6</gloss> by the remainder of the parts <gloss>7/8</gloss>, the resulting visible amount is <gloss>48/7</gloss>, and the square root factor is <gloss>80/7</gloss>. Half of the factor is <gloss>40/7</gloss>; squaring this gives <gloss>1600/49</gloss>. Added to this is <gloss>1936/49</gloss>. The square root of this is <gloss>44/7</gloss>. Added to half the factor <gloss>40/7</gloss> and squared, the total number of swans is 144.\n\n**Elaboration:** According to the rule stated in the previous verse, when one-eighth <gloss>1/8</gloss> is subtracted from one <gloss>1/1 - 1/8</gloss>, it becomes <gloss>7/8</gloss>. When the visible amount 6 is divided by this, <gloss>6/1 divided by 7/8 = 6/1 × 8/7 = 48/7</gloss>. Upon converting the seven, 48/7 becomes the visible quantity. Similarly, when the square root factor 10 is divided by 7/8, <gloss>10/1 divided by 7/8 = 10/1 × 8/7 = 80/7</gloss>. Upon converting the seven, 80/7 becomes the root quantity. Now, taking 48/7 as the visible quantity and 80/7 as the root factor, perform the operation according to the method stated in the verse above. That is, half of the root factor is 40/7. Squaring this gives 1600/49. To this, in the visible quantity 48/7,\n\n<summary>This page provides a mathematical problem concerning a flock of swans, involving square roots and fractional parts, followed by a detailed calculation and elaboration to determine the total number of swans.</summary>\n<keywords>Lilavati, algebra, swan flock, square root, fractions, mathematics</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1938,
+ "outputTokens": 909,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0036959999999999996,
+ "cost_usd_batch_equiv": 0.0018479999999999998,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "omission",
+   "source": "इसको दृश्य राशि ४८/७ में",
+   "was": "To this, the visible quantity 48/7 is...",
+   "now": "To this, in the visible quantity 48/7,"
+  }
+ ],
+ "base_sha": 2911,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 3388,
+ "at": "2026-10-03T12:08:41.910Z"
+}

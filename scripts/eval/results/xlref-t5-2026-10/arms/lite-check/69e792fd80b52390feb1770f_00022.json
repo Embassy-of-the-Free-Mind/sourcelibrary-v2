@@ -1,0 +1,35 @@
+{
+ "id": "69e792fd80b52390feb1770f_00022",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: Li Ru advised Dong Zhuo to appoint famous scholars to win popular support. Following this, he recommended Cai Yong for his talent, and Dong Zhuo ordered that he be summoned.</meta>\n\nCai Yong did not comply at first. Dong Zhuo was furious and sent a messenger to tell him, \"If you do not come, I will wipe out your clan.\" Terrified, Cai Yong had no choice but to obey the order and arrive. Dong Zhuo was overjoyed to see him and promoted him three times in a single month, eventually appointing him as a Palace Attendant <note>original: 侍中</note>, treating him with great intimacy and favor. <gloss>He always relied on the patronage of Wang Feng and Yang Xiong; he would end his life as firewood and be buried by the woodcutters of Kunshan.</gloss>\n\nMeanwhile, the Young Emperor <note>original: 少帝</note>, Empress Dowager He, and Consort Tang were trapped in the Yong'an Palace, with clothing and food becoming increasingly scarce. The Young Emperor’s tears never dried. <gloss>As the former king once said, the sun and moon in this place feel endless.</gloss> One day, he happened to see a pair of swallows flying in the courtyard and composed a poem. <gloss>In the empty courtyard, birds dance and fly; in this cold palace and abandoned temple, I am alone, and my years are my own.</gloss>\n\nThe poem read:\n\nThe tender grass is green, congealed in mist,\nThe pair of swallows flutter and fly.\nThe Luo River is a blue stream,\nEnvied by those upon the road.\n<gloss>The first half of the poem describes the swallows and looks into the distance.</gloss>\nDeep within the azure clouds lies my former palace,\n<gloss>Gazing at the old palace, unable to fly, truly not as fortunate as the pair of swallows returning to their old nest. How tragic.</gloss>\nWho will wield loyalty and righteousness,\nTo vent the grievances in my heart?\n<gloss>The second half is an expression of his personal wishes. A fine poem.</gloss>\n\nDong Zhuo often sent people to eavesdrop. That day, they intercepted this poem and presented it to him. Dong Zhuo said, \"He is full of resentment and writes poems. I have a valid reason to kill him.\" <gloss>Killing him provides a famous justification, setting an example for the world.</gloss>\n\nHe then ordered Li Ru to take eighteen armed men into the palace to murder the Emperor. The Emperor and his consorts were on the upper floor when a palace maid reported that Li Ru had arrived. The Emperor was terrified. Li Ru presented the Emperor with a cup of poisoned wine. <gloss>Suggesting that such a poem deserves this wine, which is the most elegant way to end him.</gloss>\n\n<summary>Cai Yong is forced into service by Dong Zhuo, while the imprisoned Young Emperor expresses his despair through a poem, leading Dong Zhuo to plot his execution.</summary>\n<keywords>Dong Zhuo, Li Ru, Cai Yong, Young Emperor, Empress Dowager He, Consort Tang, Poisoned Wine</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1383,
+ "outputTokens": 768,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0029955,
+ "cost_usd_batch_equiv": 0.00149775,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "role",
+   "source": "帝與后妃正在樓上",
+   "was": "The Emperor and the Empress",
+   "now": "The Emperor and his consorts"
+  }
+ ],
+ "base_sha": 2910,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 3060,
+ "at": "2026-10-03T12:08:38.484Z"
+}

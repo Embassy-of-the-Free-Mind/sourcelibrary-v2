@@ -1,0 +1,30 @@
+{
+ "id": "69e72698a409200ea79ef8c3_00129",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>Continues from Volume 3, page 6. The protagonist, Cheng, has returned from captivity and is feuding with his brothers over inheritance and property.</meta>\n\nThey all went out to the fields and houses, and once the estate was settled, the brothers became angry that he had bought favor. They went to his gate to humiliate and harass him. Cheng had been among bandits for a long time and had grown accustomed to ferocity. Upon hearing this, he became furious and said, \"Now that I have returned, no one is willing to provide me with a single room. Fortunately, my third younger brother remembered our blood ties, yet you even reproach him for this? Are you trying to drive me away?\" He threw stones at Xiao. Xiao, Ren, and Yi each brought out their staffs and, taking Zhong and Xin along, beat him countless times. Cheng did not wait for them to sue him; he sued them to the magistrate first. The magistrate then sent someone to invite Youyu to testify. Youyu could not help but come. When asked, he bowed his head in shame and remained silent, only shedding tears. The magistrate pressed him for an answer, and he only requested that the official judge the matter. The magistrate then ordered Xiao and the others to each contribute a portion of their land and property to return to Cheng, making the seven shares equal. From this point on, Ren, Yi, and Cheng grew increasingly affectionate and respectful toward one another. During a conversation, the subject of their mother's burial suddenly came up, and they all wept. Cheng stated, \"To be this unfilial is to be a beast.\" He then intended to open the grave and rebury her. Ren and Yi rushed to tell Youyu, who hurried home to remonstrate and stop him. Cheng did not listen and set a date for the act.\n\n<summary>Cheng returns from captivity to find his brothers hostile regarding family inheritance. After a physical confrontation and legal intervention, the brothers reconcile, though Cheng insists on reburying their mother to honor her properly.</summary>\n<keywords>inheritance dispute, familial reconciliation, filial piety, legal judgment, reburial</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2081,
+ "outputTokens": 450,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0011952500000000001,
+ "cost_usd_batch_equiv": 0.0005976250000000001,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2339,
+ "at": "2026-10-03T12:04:25.776Z"
+}

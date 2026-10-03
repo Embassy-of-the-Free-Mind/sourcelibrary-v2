@@ -1,0 +1,30 @@
+{
+ "id": "69920bd5e0a548a13d886144_00793",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>the root *hve* <note>to call</note> takes the suffix *ap* and undergoes vocalic change <term>samprasāraṇa</term>. Regarding the word *sūktāni* <gloss>well-spoken hymns</gloss>, it is the past passive participle <term>niṣṭhā</term> of the root *vac* <note>to speak</note> preceded by the prefix *su* <note>good</note>. Following the rule \"after the prefix *su* used in the sense of praise,\" the final syllable of the second member retains the high accent <term>udātta</term>. The word *haryatam* <gloss>desirable</gloss> comes from the root *hary* <note>to go or to desire</note> of the first class of verbs <term>bhauvādika</term>.\n\nWhen Agni and Soma are the deities of the low-voiced sacrifice <term>upāṃśu-yāja</term> on the full-moon day, the verse beginning \"O Agni and Soma, he who today\" serves as the invitatory verse <term>anuvākyā</term>. This is indicated in the ritual section \"The deities are spoken of\" <note>referring to the Ashvalayana Shrauta Sutra 1.6</note>: \"Agni and Soma, he who today... Matarishvan brought the one from heaven.\" Now the author states this second verse:\n\n---\n\n## Hymn Text\n\n**अग्नी॑षोमा॒ यो अ॒द्य वा॑मि॒दं वचः॑ स॒पर्य॑ति ।**\n**तस्मै॑ धत्तं सु॒वीर्यं॒ गवां॒ पोषं॑ स्व॒श्व्य॑म् ॥ २ ॥**\n\n->पदपाठः<-\n**अग्नी॑षोमा । यः । अ॒द्य । वाम् । इ॒दम् । वचः॑ । स॒पर्य॑ति ।**\n**तस्मै॑ । ध॒त्त॒म् । सु॒ऽवीर्य॑म् । गवा॑म् । पोष॑म् । सु॒ऽअश्व्य॑म् ॥ २ ॥**\n\n---\n\n## Commentary (Sayana)\n\nO **Agni and Soma**, whatever **sacrificer today** <note>during this ritual</note> **honors**—meaning treats as an object of worship—**this speech** <note>a sentence in the form of praise</note> **for you** <note>for both of you</note>, **bestow**—meaning grant—to **that** sacrificer the **increase** <note>the prosperity</note> of **cattle** <note>of livestock</note>. What kind of increase? **Great strength**, which is accompanied by excellent power and capability, and **good horses**, meaning it is joined with excellent horses. Regarding the word *gavām* <gloss>of cows</gloss>, the high accent usually expected on the case ending for monosyllabic stems is prohibited by the rule \"not for the words *go* <note>cow</note> and *śvan* <note>dog</note> when followed by a vowel-ending case.\"\n\n---\n\n->He now states the third verse:<-\n\n---\n\n## Hymn Text\n\n**अग्नी॑षोमा॒ य आहु॑तिं॒ यो वां॑ दा॒शाद्ध॑वि॒ष्कृति॑म् ।**\n**स प्र॒जया॑ सु॒वीर्य॑म् वि॒श्वमायु॒व्य॑श्नवत् ॥ ३ ॥**\n\n->पदपाठः<-\n**अग्नी॑षोमा । यः । आ॒हुति॑म् । यः । वाम् । दाशा॑त् । ह॒विः॒ऽकृति॑म् ।**\n**सः । प्र॒ऽजया॑ । सु॒ऽवीर्य॑म् । वि॒श्वम् । आयुः॑ । वि । अ॒श्न॒व॒त् ॥ ३ ॥**\n\n---\n\n## Commentary (Sayana)\n\nO **Agni and Soma, whatever sacrificer should offer** <note>should give</note> **an oblation** <note>an offering of clarified butter</note> **to you** <note>to both of you</note>, or whatever sacrificer should give a **prepared offering** <note>an oblation made with sacrificial food such as rice-mash or cakes</note>, **that** sacrificer, possessing **great strength** <note>characterized by excellent power</note> along with **offspring** <note>sons, grandsons, and so on</note>, **may enjoy** <note>may attain</note> **all** <note>the entire</note> **life** <note>lifespan</note>. Regarding the word *āhutim* <gloss>oblation</gloss>, the suffix *ktin* is added to the root *hu* <note>to sacrifice</note>, and the word retains its original accent <term>prakṛti-svara</term>. The word *dāśāt* <gloss>may he give</gloss> is from the root *dāś* <note>to give</note>, using the Vedic subjunctive <term>leṭ</term> with the *āṭ* augment; it does not lose its accent because of its connection with the relative pronoun *yat* <note>who or whatever</note>. *Haviṣkṛtim* <gloss>prepared offering</gloss> refers to an offering where the preparation <term>kṛti</term> is of the sacrificial food <term>havis</term>; in this possessive compound <term>bahuvrīhi</term>, the first member retains its original accent.\n\n---\n<margin>VOL. I. 9 F</margin>\n\n<summary>This page contains the second and third verses of a hymn dedicated to the dual deity Agni-Soma, detailing the rewards of cattle, horses, strength, and long life for the sacrificer who honors them. Sayana provides grammatical analysis of the terms for offerings and the benefits granted by the gods.</summary>\n<keywords>Agni-Soma, sacrifice, cattle, horses, strength, lifespan, Sayana, Rig Veda, oblation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2898,
+ "outputTokens": 3292,
+ "thinkingTokens": 1937,
+ "cost_usd_realtime": 0.011325,
+ "cost_usd_batch_equiv": 0.0056625,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 13693,
+ "at": "2026-10-03T20:42:09.610Z"
+}

@@ -1,0 +1,30 @@
+{
+ "id": "69bc7a3f8888fef520b73c1e_00217",
+ "arm": "flash-corr",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: He returns within those seven days.</meta> In that case, monks, that monk is recognized as having observed the earlier <term>Vassa</term> <gloss>Rainy Season retreat</gloss> and there is no offense regarding his promise. ||6||\n\nFurthermore, in this case, a monk departs on some business seven days before the <term>Pavāranā</term> <gloss>the ceremony marking the end of the retreat</gloss>. Whether that monk returns to that residence or not, monks, he is recognized as having observed the earlier <term>Vassa</term> and there is no offense regarding his promise. ||7||\n\nIn this case, monks, a monk has promised to enter the earlier <term>Vassa</term> at a residence. After going to that residence, he performs the <term>Uposatha</term> <gloss>observance day</gloss>, enters the dwelling on the first day of the month, prepares the lodgings, sets out the drinking water and the water for washing, and sweeps the courtyard. He then departs that very day on no urgent business. In that case, monks, he is not recognized as having observed the earlier <term>Vassa</term> and there is an offense of <term>Dukkaṭa</term> <gloss>wrongdoing</gloss> regarding his promise. ||8||\n\nFurthermore, in this case <note>as in section 8</note>, he departs that very day on business <note>the text indicates a series of repetitions follows</note>. He stays for two or three days and departs on no urgent business. He stays for two or three days and departs on business. He stays for two or three days and departs on business to be completed within seven days, but he spends more than those seven days outside. In that case, monks, he is not recognized as having observed the earlier <term>Vassa</term> and there is an offense of <term>Dukkaṭa</term> regarding his promise. ||9||\n\nIf he stays for two or three days and departs on business to be completed within seven days, and he returns within those seven days, then, monks, he is recognized as having observed the earlier <term>Vassa</term> and there is no offense regarding his promise. If he departs seven days before <note>the end of the retreat as in section 7</note>, there is no offense. ||10||\n\nIn this case, monks, a monk has promised to enter the later <term>Vassa</term> at a residence. While traveling to that residence, he performs the <term>Uposatha</term> elsewhere. He enters the dwelling on the first day of the month, prepares the lodgings, sets out the drinking water and the water for washing, and sweeps the courtyard. He then departs that very day on no urgent business. In that case, monks, he is not recognized as having observed the later <term>Vassa</term> and there is an offense of <term>Dukkaṭa</term> regarding his promise. In this case <note>the text specifies that sections 5 through 10 are to be repeated here exactly, substituting \"later\" for \"earlier\", and \"four-monthly full moon day of the Komudi month\" for \"Pavāranā ceremony\"</note>, there is no offense regarding the promise. ||11||14||\n\n### The Third Chapter on Entering the Rainy Season Retreat.\n\nThe summary of its contents:\nEntering the retreat, and when, and how many, and during the retreat,\nAnd they do not wish, and intentionally, to postpone, and the lay follower,\n\n<summary>This page concludes the regulations regarding the two periods for the Rainy Season retreat, detailing the conditions under which a monk is considered to have successfully fulfilled his vow of residence and the penalties for unexcused absence.</summary>\n<keywords>Vassa, Rainy Season retreat, monastic discipline, Uposatha, Pavarana, Dukkata, bhikkhu</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2793,
+ "outputTokens": 856,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0039645,
+ "cost_usd_batch_equiv": 0.00198225,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 4429,
+ "at": "2026-10-03T20:28:45.288Z"
+}

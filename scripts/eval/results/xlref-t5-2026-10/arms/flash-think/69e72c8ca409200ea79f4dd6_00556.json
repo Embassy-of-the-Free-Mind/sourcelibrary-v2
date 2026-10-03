@@ -1,0 +1,30 @@
+{
+ "id": "69e72c8ca409200ea79f4dd6_00556",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nGreat amounts of human flesh were offered to him for his satisfaction. He devoured it quickly and then, being a glutton for human flesh, said to me: \"I am not yet satisfied, bring more.\" (49)\n\nWhen I was unable to provide more for a time, I cut off my own flesh and gave those pleasing pieces to him. By this, the lord of <term>yoga</term> <gloss>mystical union</gloss> was satisfied with me. (50)\n\nThen he said to me: \"Friend, I am pleased with your firm courage. Now, O brave one, let your body be uninjured as before, and choose a desired boon from me.\" (51)\n\nWhen he said this, I replied to him then and there: \"O god, lead me to the place where my lord Mrigankadatta is. No other boon is more desirable to me than this.\" (52)\n\nHearing this, the lord of the <term>vetalas</term> <gloss>vampire-like spirits inhabiting corpses</gloss> said to me: \"In that case, climb upon my back. I will carry you swiftly through the air and bring you to the presence of your master.\" (53)\n\nWhen he had spoken thus, I agreed and gladly mounted his shoulders. Then, carrying me, he set out through the path of the sky, having entered into a dead body. (54)\n\nHaving brought me here and seeing you all, he set me down from the sky onto the path. By this noble <term>vetala</term>, O King, I have been brought to your feet. (55)\n\nI have been reunited with my lord, and he has also completed his task. This, O giver of honor, is the great story of my release from the serpent-noose <note>the curse that separated the companions</note>. (56)\n\nHaving heard this account of the separation from his minister Vikramakesari, Mrigankadatta continued on the road toward Ujjayini for the sake of his beloved. (57)\n\nHaving regained some of his ministers who had fallen away due to the curse of the semi-divine <term>paravata</term>, the prince rejoiced, seeing the success of all his goals as possible. (58)\n\nThus ends the thirty-second wave in the \"Shashankavati\" book of the *Ocean of the Streams of Story* composed by the great poet, the illustrious Somadeva Bhatta.\n\n### Wave Thirty-Three\n\nSalutations to the Vanquisher of Obstacles <note>Ganesha</note>, upon whose knees the trunk moves like a garland of stars during his nightly dance. (1)\n\nThen, at the conclusion of the story, Mrigankadatta rose from the middle of the road, delighted at having recovered Vikramakesari. (2)\n\nAccompanied by Gunakara and Vimalabuddhi, along with the teller of strange tales Bhimaparakrama, (3)\n\nAnd joined by Prachandashakti and the twice-born Shrutadhi, he thought of seeking his remaining friends who were still separated by the curse. (4)\n\nIntending to reach Ujjayini to find Shashankavati, he set out again, the eighth in the group, with a high spirit. (5)\n\nIn due course, he reached a forest that was terrifyingly dry and devoid of water, where the sand was heated by the fierce sun. (6)\n\nAs he traveled through it, the prince's chief minister spoke to them: \"See how this forest is impassable, vast, and terrible.\" (7)\n\n\"This path is broken, deserted by people, and without shelter. It is like the rising flame of a forest fire with its desert mirages.\" (8)\n\n\"It is like a woman with disheveled, dry hair, represented by its withered, rustling grass. It has goosebumps of thorns caused by the terror of lions and tigers.\" (9)\n\n\"It seems to be weeping through the deer that long for water at the edges of the scorched region. Therefore, we must cross this dangerous place with speed.\" (10)\n\nHaving spoken thus, Mrigankadatta, along with his ministers who were oppressed by hunger and thirst, quickly crossed that forest. (11)\n\nHe saw ahead a very large lake filled with clear, cold water, looking like the liquid of the moon melted by the heat of the sun. (12)\n\n<note>A small decorative floral ornament marks the end of the chapter.</note>\n\n<summary>Vikramakesari concludes the story of how a Vetala helped him reunite with Mrigankadatta. The group continues their journey toward Ujjayini and enters a scorching desert forest.</summary>\n<keywords>Vikramakesari, Mrigankadatta, Ujjayini, Vetala, Shashankavati, Ganesha, desert journey</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2930,
+ "outputTokens": 1065,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.00466,
+ "cost_usd_batch_equiv": 0.00233,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 6235,
+ "at": "2026-10-03T12:04:57.945Z"
+}

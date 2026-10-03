@@ -1,0 +1,30 @@
+{
+ "id": "69b99d043a4a443c39c00775_00147",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "19. Then Ragā, the daughter of Māra, spoke this verse in the presence of the Blessed One:\n\n\"Having cut off craving, the one who carries a crowd of followers across,\nIndeed many beings shall walk <note>The variant reading suggests 'cross'</note>.\nTruly this homeless one <note>literally 'the one without a home' or 'the one without attachment'</note>\nShall lead a great many people across to the far shore, away from the King of Death.\"\n\n20. <note>The Buddha replies:</note>\n\"Indeed, the Great Heroes lead others by means of the true Law <note>original: <term>Saddhamma</term></note>, the <term>Tathāgatas</term> <gloss>the ones who have thus come/gone; the Buddhas</gloss>.\nWhen people are being led by the Law <note>original: <term>Dhamma</term></note>, what envy can there be in those who truly understand?\"\n\n21. Then Taṇhā, Arati, and Ragā, the daughters of Māra, went to where Māra the Wicked One was located.\n\n22. Māra the Wicked One saw Taṇhā, Arati, and Ragā, his daughters, coming from afar. Seeing them, he addressed them in verses:\n\n\"Fools! You try to crush a mountain with lily stalks.\nYou dig up a hill with your fingernails. You chew iron with your teeth.\nAs if lifting a rock with your head, you seek a footing in the abyss.\nAs if striking a tree stump with your chest, you go away frustrated by Gotama.\"\n\n23. Blazing with beauty they came: Taṇhā, Arati, and Ragā.\nBut the Teacher swept them away there, like the wind blows away a fallen tuft of cotton.\n\n->The Third Chapter<- <note>variant readings note this as the fourth or the 'Higher Five' chapter</note>\n\n->The Summary of the Chapter<-\nThe Many, Samiddhi, and Godhika; Seven Years;\nThe Daughters. This 'Five of Māra' was taught by the Buddha-Teacher. The Connected Discourses of Māra <note>original: <term>Māra-saṃyuttaṃ</term></note> are finished.\n\n<summary>This page concludes the story of Māra's daughters attempting to seduce the Buddha. After their failure, they return to Māra, who mocks their futility, and the entire section regarding Māra's temptations is concluded.</summary>\n<keywords>Māra, Taṇhā, Arati, Ragā, Buddha, Dhamma, temptation, King of Death, Māra-saṃyutta</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2583,
+ "outputTokens": 587,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0030524999999999997,
+ "cost_usd_batch_equiv": 0.0015262499999999998,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 4329,
+ "at": "2026-10-03T12:04:31.697Z"
+}

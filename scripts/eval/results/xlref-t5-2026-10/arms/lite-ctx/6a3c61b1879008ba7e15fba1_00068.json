@@ -1,0 +1,30 @@
+{
+ "id": "6a3c61b1879008ba7e15fba1_00068",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page</meta>\n\nIf we speak in terms of the weight given to the root and the branch, then conduct is heavy; therefore, in this chapter, it is placed first, while the subsequent text places the root before the branch. If we speak in terms of the sequence of knowing and acting, then literature is the priority; therefore, in the chapter on the four teachings, literature is placed before conduct. Viewing these two chapters in comparison, it is evident that literature and conduct must advance together.\n\n○ Zixia said: \"If a person treats the virtuous as virtuous and alters his lustful heart, if he can exert his utmost strength in serving his parents, if he can dedicate his entire person to serving his ruler, and if he is faithful in his speech when interacting with friends, then even if it is said he has not learned, I will certainly say he has learned.\"\n\nZixia was a disciple of Confucius, surnamed Bu, named Shang, and was a man of the state of Wei. To consider the virtuous as virtuous and to alter one's love for beauty means to love goodness with sincerity. The <term>Jizhu</term> <gloss>Collected Commentaries</gloss> asks: \"What does this mean?\" Seeing the virtuous and changing one's appearance signifies the love of goodness over the love of beauty. Master Zhu <note>Zhu Xi</note> says: \"The two instances of 'not yet seeing one who loves virtue as much as he loves beauty' <note>a reference to the Analects 1.7 and 9.17</note>, and the <term>Zhongyong</term> <gloss>Doctrine of the Mean</gloss> also treat distancing oneself as a method for dealing with the love of beauty, show that the sincerity <note>or extreme intensity</note> is similar to 'devoting'. 'Devoting one's person' means one does not hold back one's own body. Altering one's love of beauty is a matter of sincerity; therefore, the explanation by Master Fan is superior.\"\n\n<margin>Great Compendium of the Collected Commentaries on the Analects</margin>\n<margin>Determining the Punctuation</margin>\n\n<summary>This page discusses the prioritization of conduct over literature and presents Zixia's definition of learning through the moral transformation of the self, filial piety, and loyalty.</summary>\n<keywords>Zixia, Confucius, learning, conduct, literature, filial piety, loyalty, sincerity, Zhu Xi</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2440,
+ "outputTokens": 538,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0014169999999999999,
+ "cost_usd_batch_equiv": 0.0007084999999999999,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2756,
+ "at": "2026-10-03T12:05:06.463Z"
+}

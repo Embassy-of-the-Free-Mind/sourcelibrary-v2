@@ -1,0 +1,30 @@
+{
+ "id": "69e72674a409200ea79ef3ae_00219",
+ "arm": "lite2",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Book II. THE WINNING OF FRIENDS; Tale vi: Weaver and Stingy and Bountiful.\n\nit must be given. Its outcome is dependent upon him. Thus, you take it away. Hearing this, as soon as he awoke, he searched for the gold knot. Seeing it empty, he thought, \"Oh, how has the wealth I earned with such difficulty vanished so easily? Having become penniless in vain, how shall I show my face to my wife or my friends?\" Having decided this, he went back to Vardhamanapura. There, within a year, he earned five hundred gold coins and again started for his own home by a different path.\n\nAs the sun was setting, he reached the same banyan tree. \"Alas, what misery. Why has this been started by one struck by fate? Once again, that same demon in the form of a banyan tree has arrived.\" While thinking this and pretending to be asleep, he saw those same two men on its branches. One of them said, \"Doer, why did you give these five hundred gold coins to this Somilaka? Does your honor not know that apart from food and clothing, he has nothing more at all?\" The other said, \"Oh, worker, it must be given by me to those engaged in business. The result is dependent upon him. Why do you blame me?\" Hearing this, as soon as Somilaka searched for the knot, he saw it empty. Then, filled with supreme detachment, he thought, \"Alas, what is the point of my living without wealth? I shall hang myself on this banyan tree and give up my life.\"\n\nHaving decided this, he made a rope out of *darbha* grass <note>a sacred bunch grass used in ritual</note>, fastened a noose around his neck, approached a branch, and just as he was about to cast himself off after tying it, a man in the sky said this: \"Oh Somilaka, do not commit such a rash act. I am that very wealth-taker who takes from you what is more than food and clothing.\"\n\n<summary>Somilaka the weaver loses his hard-earned money twice to divine agents who claim his destiny only allows for basic sustenance; in despair, he attempts suicide, only to be addressed by the entity responsible for his misfortune.</summary>\n<keywords>Panchatantra, Somilaka, weaver, wealth, destiny, suicide, banyan tree, supernatural intervention</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2619,
+ "outputTokens": 518,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0014317499999999999,
+ "cost_usd_batch_equiv": 0.0007158749999999999,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2416,
+ "at": "2026-10-03T12:04:40.874Z"
+}

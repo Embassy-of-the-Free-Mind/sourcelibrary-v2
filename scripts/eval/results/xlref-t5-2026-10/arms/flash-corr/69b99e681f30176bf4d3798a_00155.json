@@ -1,0 +1,30 @@
+{
+ "id": "69b99e681f30176bf4d3798a_00155",
+ "arm": "flash-corr",
+ "model": "gemini-3-flash-preview",
+ "text": "These ten things, monks, are desirable, lovely, agreeable, and rare in the world.\n\n### 3. Obstacles to the Desirable\n\nOf these ten things, monks, that are desirable, lovely, agreeable, and rare in the world, there are ten things that act as <term>paripanthā</term> <gloss>obstacles or hindrances</gloss>:\n\n### 4. The Ten Hindrances\n\nSloth and lack of effort are obstacles to wealth.\nLack of grooming and lack of adornment are obstacles to a good appearance.\nActing in ways that are unwholesome for health is an obstacle to health.\nBad friendship is an obstacle to moral conduct.\nLack of sense restraint is an obstacle to the <term>brahmacariya</term> <gloss>holy life</gloss>.\nDeception is an obstacle to friendships.\nLack of recitation is an obstacle to great learning.\nLack of desire to listen and lack of questioning are obstacles to wisdom.\nLack of application and lack of reflection are obstacles to understanding the <term>dhammā</term> <gloss>teachings or phenomena</gloss>.\nWrong practice is an obstacle to the heavenly realms.\n\nThese ten things, monks, are the obstacles to these ten things that are desirable, lovely, agreeable, and rare in the world.\n\n### 5. Supports for the Desirable\n\nOf these ten things, monks, that are desirable, lovely, agreeable, and rare in the world, there are ten things that act as <term>āhārā</term> <gloss>nutriments or supports</gloss>:\n\n### 6. The Ten Supports\n\nDiligence and effort are the supports for wealth.\nGrooming and adornment are the supports for a good appearance.\nActing in ways that are wholesome for health is the support for health.\nGood friendship is the support for moral conduct.\nSense restraint is the support for the holy life.\nTruthfulness is the support for friendships.\nRecitation is the support for great learning.\nThe desire to listen and questioning are the supports for wisdom.\nApplication and reflection are the supports for understanding the teachings.\nRight practice is the support for the heavenly realms.\n\nThese ten things, monks, are the supports for these ten things that are desirable, lovely, agreeable, and rare in the world.\n\n<margin>\n1. Manuscripts M. and Ph. omit this phrase.\n2. Manuscripts M. and Ph. read \"paribandhā\" <gloss>restrictions</gloss> throughout.\n3. Manuscripts M. and Ph. read \"ālasyaṃ\" throughout.\n4. Manuscript S. omits the section from \"Lack of grooming\" to \"Lack of recitation.\"\n5. Text T. reads \"vanna\" for appearance/color.\n6. Manuscript M. reads \"indriya-asaṃvaro\"; Text T. and M6 read \"indriyasaṃvaro.\"\n7. Text T. reads \"assusā.\"\n8. Manuscript M6 and M7 read \"nā\"; Text T. reads \"apaccavekkhamānā.\"\n9. Text T. and M7 read \"anālyassaṃ.\"\n10. All manuscripts except S. place \"effort\" before \"diligence.\"\n11. Text T., M6, and M7 read \"nā.\"\n</margin>\n\n<summary>This text from the Anguttara Nikaya outlines ten desirable qualities in life and identifies the specific behaviors that either hinder or support their attainment. It emphasizes practical virtues like effort, health consciousness, and right practice as the foundations for worldly and spiritual success.</summary>\n<keywords>ten qualities, obstacles, supports, wealth, health, wisdom, holy life, Anguttara Nikaya, Buddhist ethics</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2598,
+ "outputTokens": 803,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0037080000000000004,
+ "cost_usd_batch_equiv": 0.0018540000000000002,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 3971,
+ "at": "2026-10-03T20:28:36.774Z"
+}

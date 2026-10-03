@@ -1,0 +1,30 @@
+{
+ "id": "6a09ff5dfa20006dbaba9200_00274",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "### 172. The Unrighteous\n\n1. \"Monks, you must understand the unrighteous <term>adhamma</term> <gloss>contrary to the Dhamma</gloss> and the righteous <term>dhamma</term> <gloss>truth, law, or teaching</gloss>. You must understand the unbeneficial <term>anattha</term> <gloss>that which lacks purpose or welfare</gloss> and the beneficial <term>attha</term> <gloss>meaning, purpose, or welfare</gloss>. Having understood the unrighteous and the righteous, and having understood the unbeneficial and the beneficial, you should practice in accordance with the righteous and the beneficial.\" This is what the Blessed One <term>Bhagavā</term> <gloss>the Exalted One</gloss> said. Having said this, the Happy One <term>Sugato</term> <gloss>the Well-Gone One</gloss> rose from his seat and entered his dwelling.\n\n2. Then, not long after the Blessed One had departed, those monks <term>bhikkhu</term> thought: \"Friends, the Blessed One gave us this brief recitation <term>uddesa</term> without explaining the meaning in detail <term>vitthāra</term>. He said: 'Monks, you must understand the unrighteous and the righteous, the unbeneficial and the beneficial. Having understood them, you should practice in accordance with the righteous and the beneficial.' Then he rose and entered his dwelling. Who then could explain in detail the meaning of this brief recitation that the Blessed One has not explained in detail?\" Then those monks thought: \"The venerable Mahākaccāna is praised by the Teacher and esteemed by his wise fellow-monks. He is capable of explaining in detail the meaning of this brief recitation given by the Blessed One. What if we approach the venerable Mahākaccāna and ask him about this matter? As he explains it to us, so shall we remember it.\"\n\n3. Then those monks approached the venerable Mahākaccāna. Having approached him, they exchanged greetings with him. After sharing polite and amiable conversation, they sat down to one side. Sitting there, those monks said to the venerable Mahākaccāna: \"Friend Kaccāna, the Blessed One gave us a brief recitation and then, without explaining the meaning in detail, rose from his seat and entered his dwelling. He said: 'Monks, you must understand the unrighteous and the righteous, the unbeneficial and the beneficial. Having understood them, you should practice in accordance with the righteous and the beneficial.'\n\n<margin>Manuscript variant: S. reads \"having said\" <note>original: \"vatvana\"</note>; Ph. reads \"and having said\" <note>original: \"vatvā ca\"</note>.</margin>\n<margin>Textual notes: * omitted by T. † S. ay* ‡ T. *reyyama.</margin>\n\n<summary>The Buddha gives a brief instruction on discerning right from wrong and benefit from harm before retiring. The monks, seeking a deeper explanation, decide to consult Mahākaccāna, who is known for his ability to elaborate on the Buddha's brief teachings.</summary>\n<keywords>Adhamma, Dhamma, Attha, Mahākaccāna, interpretation, monastic community, Buddha's teaching method</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2585,
+ "outputTokens": 707,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0034135,
+ "cost_usd_batch_equiv": 0.00170675,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 4176,
+ "at": "2026-10-03T12:04:36.478Z"
+}

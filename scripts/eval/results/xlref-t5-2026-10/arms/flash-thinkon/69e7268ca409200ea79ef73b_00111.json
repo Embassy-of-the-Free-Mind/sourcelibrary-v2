@@ -1,0 +1,30 @@
+{
+ "id": "69e7268ca409200ea79ef73b_00111",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: the conclusion of the previous tale</meta>\n\n<margin>\nA refined person gains a refined wife, a refined friend, and a refined daughter. Written with a refined pen: refined people, refined words, refined events, and refined prose. One has never read such a book in a lifetime; it is truly a work never seen before.\n</margin>\n\n...the thief used them in secret. He had once stored a chest of cups and basins separately. The velvet cushions remained as before, but the vessels were no longer in pairs. To those who spoke wildly of unfathomable omens, Liu laughed and said, \"I will not question any of it further.\"\n\n# Jiaona\n\nScholar Kong, whose courtesy name was Xueli <note>meaning Snowy Straw Hat</note>, was a descendant of the Sage <note>referring to Confucius</note>. He was a refined man and skilled in poetry. A close friend of his who held office in <term>Tiantai</term> <gloss>a mountain and district in Zhejiang province</gloss> sent a letter inviting him to visit. When Kong arrived, his friend had just died. Left stranded and unable to return home, he took up residence at Putuo Temple, where he was employed by the monks to transcribe texts.\n\nAbout a hundred paces west of the temple stood the residence of a Mr. Shan. Mr. Shan was the son of a noble family, but a major lawsuit had brought him to ruin. His family was small and had moved away, leaving the country house empty.\n\nOne day, a heavy snow fell in torrents, and the roads were silent, with no travelers. Kong happened to pass by the gate of the estate. A young man came out, possessing a very handsome appearance. Seeing Kong, the youth hurried forward to pay his respects and offered warm words of greeting. He then invited Kong to enter. Kong was charmed by him and readily followed him inside.\n\nThe rooms were not particularly spacious, but brocade curtains hung everywhere. On the walls were many paintings and calligraphies by ancient masters. On the desk lay a book with a label that read: <term>Langhuan Suo</term> <gloss>Gleanings from the Lang-huan Library; Lang-huan is a mythical library of the immortals</gloss>.\n\n<summary>Scholar Kong is stranded at a temple after the death of his friend and meets a mysterious, handsome young man who invites him into an elegant, secluded estate. The narrative introduces the themes of refinement and the supernatural through the setting of a noble's abandoned house.</summary>\n<keywords>Scholar Kong, Jiaona, Putuo Temple, Tiantai, Langhuan Library, hospitality, refinement, Pu Songling</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2121,
+ "outputTokens": 2347,
+ "thinkingTokens": 1766,
+ "cost_usd_realtime": 0.008101500000000001,
+ "cost_usd_batch_equiv": 0.0040507500000000005,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 10733,
+ "at": "2026-10-03T20:44:44.895Z"
+}

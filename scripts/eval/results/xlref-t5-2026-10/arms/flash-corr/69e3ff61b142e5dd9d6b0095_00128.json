@@ -1,0 +1,30 @@
+{
+ "id": "69e3ff61b142e5dd9d6b0095_00128",
+ "arm": "flash-corr",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from page 102</meta>\n\n# Canto 7\n\n### The Rasikapriya and Rasamanjari Commentaries, Page 103\n\nThis song uttered by Sri Jayadeva, concerning the <term>Hari-ramita</term> <gloss>the amorous play of Krishna</gloss>, let it bring about the complete calming of the sins of the <term>Kali Yuga</term> <gloss>the current dark age of discord</gloss>. ॥ 8 ॥\n\n-> Verse 5 <-\nO friend! This moon, a companion of the mind-born <term>Manobhu</term> <gloss>Kama, the god of love</gloss>, spreads intense pangs of desire in my heart. Even while it seems to mask my pain with its light—a light resembling the luster of the lotus-face of Krishna, grown pale in the sorrow of separation—it only increases my torment. ॥ 5 ॥\n\n<note>Commentary Rasikapriya:</note>\nIn the battle of love, she is firm and resolute. ॥ 7 ॥ This poem spoken by Sri Jayadeva describes the inversed amorous play <note>original: \"viparita-rata\"</note> and may it bring peace by exhausting the impurities of the Kali age. ॥ 8 ॥ Furthermore, in the <term>Sangita-raja</term> <gloss>The King of Music, a treatise</gloss>, it is said: Where the <term>Sri Raga</term> is the melody and the rhythm is <term>druta-manthaka</term>, and the description is of Vasudeva <note>Krishna</note>, with actions like the blossoming of love, followed by sequences of syllables and notes, that is considered a superior composition. This fourteenth song-cycle is named <term>Hari-ramita-champaka-shekhara</term>.\n\nNow Radha, distressed by separation, speaks regarding the moon: \"O!\" is a gentle address. \"O friend, this moon expands the agony of love in my heart.\" What is its nature? It is a friend of the mind-born Kama. She speaks by remembering Krishna's state during their separation. What else? Its glow is like the luster of the lotus-face of <term>Murari</term> <gloss>Krishna</gloss>, which has turned pale <note>original: \"pandu\"</note> due to the sorrow of being apart. Therefore, even though it covers or hides the pain <note>by its beauty</note>, it actually heightens it. The meaning is: Previously, by possessing the radiance of the face of Krishna, who was pale from longing for me, it might have destroyed my pain; but now, because it is a friend to Love, it only creates agony. Because he is now perceived as being attached to another woman, I am unable to remain steady.\n\n<note>Commentary Rasamanjari:</note>\nRegarding the verse by Sri Jayadeva: May the amorous play of Krishna, as told by Jayadeva, destroy the sins of the Kali age for both the listeners and the readers. ॥ 8 ॥\n\nNow she explains how even the moon causes greater suffering: \"O!\" expresses her despair. This visible moon expands the torment of desire in my heart to an extreme degree. Of what kind is it? It possesses the luster of the lotus-face of Krishna, which has become greyish-white <note>original: \"dhusara\"</note> due to separation from me. The inner feeling is that by seeing the moon, which resembles Krishna's lotus-face, the memory of that face arises, causing extreme agony. What does it do? It even hides or masks the pain. By seeing the moon, one's discrimination is uprooted; the mind remembers only Krishna, even though he has committed an offense. She gives the reason for this production of pain: He is the friend of the mind-born one. Because I did not follow Krishna even when he was near, I have disobeyed the commands of Love, and thus Love has become my enemy. The moon, wishing to help his friend <note>Kama</note>, also creates this pain. Since the moon is born from the mind of the Supreme Being, and Kama is also \"mind-born,\" they are like brothers and thus friends. As the <term>Sruti</term> <gloss>Scripture</gloss> says: \"The moon was born from his mind, and the sun from his eyes.\" The word <term>vedana</term> refers to both knowledge and pain. The word <term>aye</term> is used in fear, anger, despair, confusion, or recollection.\n\n<note>The small Google logo indicates a digital scan element.</note>\n\n<summary>This page concludes the fourteenth song of the Gita Govinda, emphasizing its power to purify the sins of the Kali age, and begins a new verse where Radha describes her torment upon seeing the moon, which reminds her of Krishna's face.</summary>\n<keywords>Jayadeva, Krishna, Radha, Kali Yuga, Moon, Kama, separation, Rasamanjari, Rasikapriya, Sanskrit poetics</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2906,
+ "outputTokens": 1092,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0047290000000000006,
+ "cost_usd_batch_equiv": 0.0023645000000000003,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 6324,
+ "at": "2026-10-03T20:29:00.357Z"
+}

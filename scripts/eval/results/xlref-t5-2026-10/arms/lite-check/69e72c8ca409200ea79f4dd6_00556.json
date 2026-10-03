@@ -1,0 +1,71 @@
+{
+ "id": "69e72c8ca409200ea79f4dd6_00556",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "Ocean of the Streams of Stories [Aditastaranga 100]\n\nI gave him great meat <note>human flesh</note> to satisfy him. He ate it immediately, and satisfied, he who craved human flesh said to me, \"Bring no other food.\" 49\nWhen I could bear the time no longer, I sliced my own flesh and gave it to him, for it brings him pleasure. The lord of the yogis <note>a powerful ascetic or supernatural being</note> was pleased with me for that. 50\nThen he said to me, \"Friend, I am pleased with your firm resolve. Therefore, be whole-bodied <note>restored to health</note> and brave as before, and choose from me a boon you desire.\" 51\nWhen he said this, I replied to him then and there, \"Lead me, O God, to the place where my lord, that Mrigankadatta, is. No other boon is desired by me.\" 52\nHearing this, the lord of the <term>vetalas</term> <gloss>vampire-like spirits</gloss> said to me, \"Then climb upon my shoulder, and I shall quickly take you to the presence of your lord.\" 53\nWhen he said this, I agreed, and having climbed upon his shoulders, I set off. He, having entered the corpse-body, began to carry me through the path of the sky. 54\nAnd having brought me here and seeing you, he lowered me from the sky. Through this excellent <term>vetala</term> <gloss>vampire-like spirit</gloss>, I have been brought to the root of your feet, O King. 55\nI have arrived, and he has gone, having completed his task. This is the great story of my separation from the <term>nagapasha</term> <gloss>noose of serpents</gloss>, O giver of honor. 56\nHaving heard this account of the separation from his minister, Mrigankadatta, on his way to Ujjayini for the sake of his beloved, traveled onward. 57\nThat prince, having met a few of his followers who had been met after being separated by the curse, rejoiced, possessing all his objectives within reach. 58\n\nThis is the thirty-second chapter of the Ocean of the Streams of Stories, composed by the great poet, the illustrious Somadeva Bhatta, in the Shashankavati Lambaka.\n\nThe Thirty-Third Chapter.\n\nSalutation to the Conqueror of Obstacles <note>Ganesha</note>, upon whose knees the garland of stars revolves like a water-jar while he dances in the nights. 1\nThen, at the end of the story, Mrigankadatta, having regained Vikramakesari, rose up from the middle of the road, joyful. 2\nAccompanied by Gunakara, Vimalabuddhi, the one with diverse stories <note>Vichitrakatha</note>, and the one endowed with terrible prowess <note>Bhimaparakrama</note>. 3\nTogether with Prachandashakti and the learned Brahmin Shrutadhi, he searched for the remaining companions who had been separated by the curse. 4\nHaving previously obtained Shashankavati, he started out again toward Ujjayini, being the eighth including himself. 5\nGradually, he reached a forest in the desert, scorched by the sun, where the water had dried up and the sands were burning. 6\nTraveling through it, the prince spoke to the ministers, \"Look at this forest, how difficult to cross, vast, and terrifying. 7\nIt is where paths are blocked and people are invisible, as if filled with the rising flames of fire in the form of desert mirages. 8\nWith dry hair scattered about, with dry, rustling grass, and with thorns that make one’s hair stand on end from the fear of lions, tigers, and the like. 9\nIt seems to be weeping with thirsting deer that look for water at the end of the quarters. Therefore, we must cross this vast, difficult place.\" 10\nHaving said this, Mrigankadatta, along with those ministers who were afflicted by hunger and thirst, quickly crossed that forest. 11\nAnd in front, he saw a very large lake with clean, cool water, like the nectar of the moon melted by the heat of the sun. 12\n\n<note>A decorative floral ornament marks the end of the chapter.</note>\n\n<summary>Vikramakesari concludes his account of being rescued by a vetala, and the prince Mrigankadatta resumes his journey toward Ujjayini with his reunited ministers, traversing a harsh desert landscape.</summary>\n\n<keywords>Mrigankadatta, Vikramakesari, Shashankavati, Ujjayini, vetala, journey, desert, ministers</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2431,
+ "outputTokens": 1358,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.005289500000000001,
+ "cost_usd_batch_equiv": 0.0026447500000000004,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "role",
+   "source": "भोज्यं महामांसमदायि तस्मै",
+   "was": "He gave me great meat",
+   "now": "I gave him great meat"
+  },
+  {
+   "type": "role",
+   "source": "ममंसपृष्ठम् । आरोह",
+   "was": "climb upon my back",
+   "now": "climb upon my shoulder"
+  },
+  {
+   "type": "role",
+   "source": "तस्यान्तिकं खस्य विभोर्नयामि",
+   "was": "take you to that lord of the sky",
+   "now": "take you to the presence of your lord"
+  },
+  {
+   "type": "role",
+   "source": "स चाप्येष समाप्तकृत्यः",
+   "was": "he who had completed his task, has gone",
+   "now": "he has gone, having completed his task"
+  },
+  {
+   "type": "negation",
+   "source": "शापभ्रष्टक्रममिलित",
+   "was": "scattered due to the loss of their path",
+   "now": "met after being separated by the curse"
+  },
+  {
+   "type": "omission",
+   "source": "उच्चालात्मनाष्टमः",
+   "was": "high-spirited ones",
+   "now": "eight including himself"
+  },
+  {
+   "type": "negation",
+   "source": "विघ्घटपथा जनलक्षा निराश्रया",
+   "was": "devoid of human paths",
+   "now": "where paths are blocked and people are invisible"
+  }
+ ],
+ "base_sha": 4106,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 5091,
+ "at": "2026-10-03T12:07:45.426Z"
+}

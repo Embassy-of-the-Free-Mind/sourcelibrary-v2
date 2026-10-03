@@ -1,0 +1,28 @@
+{
+ "id": "6a09ff4ffa20006dbaba901a_00263",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "Anguttara-Nikāya. CC.5—6\n\n5. Furthermore, monks, when a monk reflects on form <note>original: \"rūpa\"</note>, his mind does not leap forward, does not grow clear, does not stand firm, and is not liberated regarding form. But when he reflects on the formless <note>original: \"arūpa\"</note>, his mind leaps forward, grows clear, stands firm, and is liberated regarding the formless. His mind is well-made, well-developed, well-risen, well-liberated, and well-detached from forms. Those <term>āsavā</term> <gloss>influences/corruptions</gloss> and the distress and burning heat that arise based on form, he is freed from them, and he does not experience that feeling. This is called the escape from forms.\n\n6. Furthermore, monks, when a monk reflects on personality <note>original: \"sakkāya\"</note>, his mind does not leap forward, does not grow clear, does not stand firm, and is not liberated regarding personality. But when he reflects on the cessation of personality, his mind leaps forward, grows clear, stands firm, and is liberated regarding the cessation of personality. His mind is well-made, well-developed, well-risen, well-liberated, and well-detached from personality. Those <term>āsavā</term> <gloss>influences/corruptions</gloss> and the distress and burning heat that arise based on personality, he is freed from them, and he does not experience that feeling. This is called the escape from personality.\n\nThe delight in sensual pleasure does not lie latent in him; the delight in ill-will does not lie latent in him; the delight in harming does not lie latent in him; the delight in form does not lie latent in him; the delight in personality does not lie latent in him. Because the delight in sensual pleasure is not latent in him, and the delight in ill-will, harming, form, and personality are not latent in him, this monk, monks, is called one without latent tendencies. He has cut off <term>taṇhā</term> <gloss>craving</gloss>, untwisted the <term>samyojana</term> <gloss>fetters</gloss>, and by the correct realization of pride, he has made an end of suffering.\n\nThese, monks, are the five elements of escape.\n\n->The Chapter on Brahmins, the twentieth.<-\n\n<note>Footnotes from the original edition: 1. S. reads \"rūpe\". 2. S. reads \"rūpesu\". 3. T. reads \"ºnandī\". 4. Omitted by T. 5. Omitted by M₆. 6. M. Ph. read \"bhikkhuno\". 7. M. reads \"nirānusayo\"; M. Ph. read \"ananusayo\"; S. reads \"nirālayo\". 8. T. M₆ read \"acchecchi\"; the reading of M is wholly corrupt. 9. T. M₆, M read \"vivattayi\"; Ph. reads \"vivaṭayi\". 10. T. reads \"nissaraṇā\". 11. T. M₆, M read \"Mahāvaggo\"; all the rest is missing in T. M₆. M; Ph. adds \"niṭṭhito\". 12. Ph. reads \"vīsatimaṃ\", although it has \"ºvaggo\"; omitted by M.; S. has \"pañcamo\"; M. Ph. S. insert before Uddānaṃ: \"Catuttho paṇṇāsako\" (S. adds \"niṭṭhito\").</note>\n\n<summary>This text outlines the practice of reflecting on form, formlessness, and personality to attain detachment from corrupting influences and latent tendencies.</summary>\n<keywords>rūpa, arūpa, sakkāya, nissaraṇa, āsavā, taṇhā, samyojana, niranusayo</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2011,
+ "outputTokens": 910,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0037355,
+ "cost_usd_batch_equiv": 0.00186775,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [],
+ "base_sha": 3080,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 3471,
+ "at": "2026-10-03T12:07:16.096Z"
+}

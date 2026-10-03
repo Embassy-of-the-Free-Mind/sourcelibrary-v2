@@ -1,0 +1,30 @@
+{
+ "id": "69e8b26b2ff2a8dc09e77afc_00118",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page</meta>\n\n# Xunzi: Correct Discussion\n\nIn ancient times, the Son of Heaven had one thousand officials, and the feudal lords had one hundred officials. Because of these one thousand officials, orders were carried out throughout the states of the <term>Zhu Xia</term> <gloss>the various states of China</gloss>; this was called being a king. Because of these one hundred officials, orders were carried out within the borders. Even if the state was not peaceful, it would not reach the point of collapse, removal, or destruction <note>original: \"遂亡\" - the commentary notes \"遂\" is read as \"墜\", meaning to let one's legacy fall/decline</note>; this was called being a ruler. He is the descendant of a sage king. After possessing the world, he is the holder of the register <note>referring to the official records of the state and its people</note>, the ancestral lineage of the world. However, if he is without talent or lacks rectitude <note>commentary notes \"不中\" means lacking uprightness</note>, then internally the hundred surnames will suffer, and externally the feudal lords will rebel against him. Those near the borders will not be unified, and those far away will not listen. Orders will not be carried out within the borders, and in the worst cases, the feudal lords will encroach, diminish, attack, and invade him. If it reaches this point, although he has not yet perished, I say he has lost the world. \n\nWhen the sage king dies, if the one who holds the register is feeble and cannot sustain <note>commentary notes \"罷\" is pronounced \"pi\", meaning weak and unable to handle affairs; \"縣\" means to suspend or bind together</note> the world, then the world is without a ruler. If among the feudal lords there is one whose virtue is brilliant and whose prestige has accumulated, the people within the seas will all wish for him to be their lord and teacher. However, if a tyrannical state is exceptionally arrogant, how can he <note>the virtuous one</note> execute it? He must not harm the innocent people. Executing the ruler of a tyrannical state is like executing a <term>du fu</term> <gloss>solitary man/tyrant</gloss> <note>commentary explains this means one who has no supporters in the world, as if he were just one man</note>. If he acts this way, he can be called capable of using the world. Being capable of using the world is called being a king. Tang and Wu did not seize the world. They cultivated their way, practiced their righteousness, shared common interests with the world, removed common harms from the world, and thus the world returned to them <note>commentary notes this means the world naturally gravitated toward them</note>. Jie and Zhou did not abandon the world. They went against the virtue of Yu and Tang, disrupted the divisions of ritual and righteousness, acted like beasts, accumulated their cruelty, and slaughtered their subordinates; thus, the world naturally left them.\n\n<summary>This passage discusses the nature of legitimate rule, arguing that kingship depends on the ability to maintain order and virtue rather than merely holding the title of ruler. It explains that leaders like Tang and Wu succeeded by aligning themselves with the interests of the people, while tyrants like Jie and Zhou lost their power through cruelty and moral failure.</summary>\n<keywords>Xunzi, Correct Discussion, Kingship, Tang and Wu, Jie and Zhou, Ritual and Righteousness</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2729,
+ "outputTokens": 749,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.00180575,
+ "cost_usd_batch_equiv": 0.000902875,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 3447,
+ "at": "2026-10-03T12:05:03.689Z"
+}

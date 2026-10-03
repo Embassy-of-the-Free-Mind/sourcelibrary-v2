@@ -1,0 +1,35 @@
+{
+ "id": "6a3c6191879008ba7e15f0b2_00070",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "The second is the aspect of continuity, which depends on knowledge <note>original: 智, referring to the faculty of discernment or discriminatory consciousness</note>. Because of the arising of the perception of suffering and joy, thoughts emerge and continue without interruption.\n\nRegarding the second, the aspect of continuity, the dependence on knowledge means that, depending on the aforementioned discrimination of desired objects, one arises a feeling of joy, and regarding undesired objects, one arises a feeling of suffering. Thoughts emerge repeatedly and the continuity becomes manifest. This explains the self-continuity. Furthermore, it can give rise to afflictions <term>klesha</term> <gloss>mental defilements</gloss> that nourish actions and draw one into the cycle of birth and death, which also causes the continuity of others. The text below mentions the sustaining of suffering and joy, and so on. Therefore, it is said that it gives rise to these, continuing until there is no interruption.\n\nThe third is the aspect of attachment, which means that, regarding the aforementioned objects of suffering and joy, one does not understand their emptiness and deeply gives rise to attachment.\n\n<summary>This passage defines the aspects of continuity and attachment within the context of Buddhist consciousness, explaining how discriminatory knowledge leads to cyclical suffering through the interaction of perception, emotion, and desire.</summary>\n<keywords>continuity, suffering, joy, attachment, mental defilements, birth and death, emptiness</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 718,
+ "outputTokens": 386,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.001517,
+ "cost_usd_batch_equiv": 0.0007585,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "role",
+   "source": "謂依前分別愛境起樂覺受",
+   "was": "based on the aforementioned discrimination, one arises",
+   "now": "depending on the aforementioned discrimination of objects"
+  }
+ ],
+ "base_sha": 1573,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 1934,
+ "at": "2026-10-03T12:08:26.269Z"
+}

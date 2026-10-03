@@ -1,0 +1,30 @@
+{
+ "id": "6a3c61b1879008ba7e15fba1_00068",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nRegarding the relative importance of the root and the branch: in terms of practice, action is considered heavy <note>primary</note> while words are considered light <note>secondary</note>. Therefore, this chapter places action first and culture <note>the branches of learning</note> second, emphasizing the root before the branch. In terms of the sequence of knowledge and action, culture comes first. For this reason, the \"Four Teachings\" chapter lists culture first and action later. By observing these two chapters together, one can see that culture and action must progress side by side.\n\n### Zixia said: \"One who treats the worthy as worthy and thereby changes his love of sensual beauty; who, in serving his parents, can exert his full strength; who, in serving his prince, can devote his life; and who, in interacting with friends, is trustworthy in his words — even if it is said that such a person has not yet studied, I would certainly call him a man of learning.\"\n\nZixia was a disciple of Confucius. His surname was Bu and his given name was Shang; he was a man of the state of Wei. To \"treat the worthy as worthy and change sensual beauty\" <term>xian xian yi se</term> means to honor the virtue of worthy people and thereby replace the desire for physical beauty. It refers to having a sincere love for the good. The Collected Commentaries <note>referring to the *Lunyu Jizhu* by Zhu Xi</note> state that seeing worthiness changes the expression of the face <note>the \"color\"</note> to show a love for goodness. Master Zhu said that the Master twice remarked on never seeing anyone who loved virtue as much as they loved sensual beauty. The *Doctrine of the Mean* also considers distancing oneself from beauty as a method for self-cultivation. To \"devote\" <term>zhi</term> means to give over or entrust. Devoting one's body <note>or life</note> means not holding onto one's self interest. This sincerity in replacing the love of beauty is why Fan’s explanation is considered superior.\n\n<margin>Great Collection of Commentaries on the Analects</margin>\n<margin>Sequence of punctuated sentences</margin>\n\n<summary>This page discusses the relationship between learning and moral action, specifically interpreting Zixia's teaching that practical virtue in family and social roles defines a learned person more than formal study alone.</summary>\n<keywords>Zixia, Confucius, virtue, learning, filial piety, loyalty, sincerity, Bu Shang, Lunyu Jizhu</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2072,
+ "outputTokens": 561,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.002719,
+ "cost_usd_batch_equiv": 0.0013595,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 3884,
+ "at": "2026-10-03T12:05:28.730Z"
+}

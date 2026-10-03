@@ -1,0 +1,30 @@
+{
+ "id": "69d91e423a50087f7bd9afc5_00214",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "# Commentary on the Atharva Veda [Hymn 58, Verse 5]\n\nAnd for the purpose of one's own protection. May such a vessel <term>camasa</term> <gloss>a sacrificial drinking cup</gloss> of yours, which serves as a means of consumption—referring here to the battle—not fail or depart from you. \"Carry that,\" says the Rishi <note>the sage or seer of the mantra</note>.\n\nI offer with my voice, with my hearing, and with my mind the eye and the principal face of the sacrifice. May the gods, being well-disposed in their hearts, come to this sacrifice which has been spread out by <term>Viśvakarman</term> <gloss>the Divine Architect and All-Maker</gloss>. || 5 ||\n\n**Sacrifice. Eye. Principal. Face. And. With voice. With hearing. With mind. I offer. This. Sacrifice. Spread out. By Viśvakarman. Toward. Gods. Let them come. Being well-disposed.** || 5 ||\n\nThis verse <term>ṛc</term> was explained previously in the second book <note>referring to Atharva Veda 2.35.5</note>. I offer the senses, such as the eye and the mind, in connection to the sacrifice; I make them focused upon it. The summary of the meaning is: May the gods, acting with a benevolent spirit, come to this mental sacrifice which has been extended or spread out by the god <term>Viśvakarman</term> <gloss>the Creator of the Universe</gloss>.\n\nThose who are the officiating priests of the gods, those who are worthy of the sacrifice, and those for whom the portion of the oblation is prepared; let all those gods, coming to this sacrifice along with their wives, rejoice with splendor. || 6 ||\n\n**Those. Of the gods. Officiating priests. Those. And. Worthy of sacrifice. For whom. Oblation. Is made. Portion. This. Sacrifice. With. Wives. Toward. Having come. However many. Gods. With splendor. Let them rejoice.** || 6 ||\n\nAmong the gods, those who are the <term>ṛtvijaḥ</term> <gloss>priests who sacrifice at the proper seasons</gloss> act as the officiants. And those who are <term>yajñiyāḥ</term> <gloss>worthy of the rite</gloss> are those to whom the sacrifice is offered. For both these classes of gods, the <term>havis</term> <gloss>sacrificial oblation</gloss> is prepared as their allotted portion. Let all the gods, however many there may be, being great in their splendor, come to this sacrifice along with their respective wives, such as <term>Indrāṇī</term> <gloss>the wife of Indra</gloss> and others, and let them be delighted and satisfied by accepting the oblation.\n\nThus ends the fourth hymn in the seventh section <term>anuvāka</term>.\n\nThe hymn beginning with \"You, O Agni, are the protector of vows\" is employed in cases where there is a mistake in the New Moon or Full Moon sacrifices, or during the offering of clarified butter, or when placing the peaceful fuel sticks. This is prescribed by <term>Kauśika</term> <gloss>the author of the ritual manual</gloss> in the rules for the Samhita:\n\n---\n\n1. Is made <note>variant readings in manuscripts A, Bb, C, R, Sm; another form in Cs; \"makes\" in D</note>. 2. With wives <note>variants in manuscript abbreviations A, K, Km, V, Dc, Bb, Sm, R, C, D, Cs</note>. 3. \"Let them rejoice with splendor\" <note>variants in A, R, Cs, Bb, C, D, Sm, V, K, Km, Dc; some manuscripts read \"Gods with strength\" or \"Gods with the oblation\"; see also Kaushika Sutra 1.148.3 c</note>.\n\n<summary>This page contains the Sanskrit commentary on the Atharva Veda, focusing on the invocation of gods and their wives to a sacrifice spread out by the divine creator Vishvakarman. It provides word-for-word breakdowns and ritual applications for specific mantras used to correct errors in Vedic ceremonies.</summary>\n<keywords>Atharva Veda, Vishvakarman, Yajna, Agni, ritual correction, Kausika Sutra, Vedic priests, Indrani, mantra commentary</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2646,
+ "outputTokens": 2989,
+ "thinkingTokens": 1990,
+ "cost_usd_realtime": 0.010289999999999999,
+ "cost_usd_batch_equiv": 0.005144999999999999,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 13312,
+ "at": "2026-10-03T20:46:43.322Z"
+}

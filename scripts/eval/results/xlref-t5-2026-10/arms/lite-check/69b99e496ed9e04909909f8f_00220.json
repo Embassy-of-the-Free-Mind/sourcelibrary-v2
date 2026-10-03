@@ -1,0 +1,35 @@
+{
+ "id": "69b99e496ed9e04909909f8f_00220",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "5. 9. SUBHASUTTAM (99).\n\nThese five, young man, are the hindrances. Which five? The hindrance of sensual desire, the hindrance of ill-will, the hindrance of sloth and torpor, the hindrance of restlessness and worry, and the hindrance of doubt. These, young man, are the five hindrances. By these five hindrances, the brahmin Pokkharasāti of the Opamañña clan, a resident of Subhaga, is obstructed, hindered, covered, and enveloped. That he should know, see, or realize for himself a state of super-human knowledge and vision worthy of the noble ones—such a thing cannot happen.\n\nThese five, young man, are the strands of sensual pleasure. Which five? Forms cognizable by the eye that are desirable, pleasant, agreeable, attractive, associated with sensual desire, and stimulating; sounds cognizable by the ear; <note>etc.</note> odors cognizable by the nose; flavors cognizable by the tongue; and tangibles cognizable by the body that are desirable, pleasant, agreeable, attractive, associated with sensual desire, and stimulating. These, young man, are the five strands of sensual pleasure. By these five strands of sensual pleasure, the brahmin Pokkharasāti of the Opamañña clan, a resident of Subhaga, is bound, infatuated, attached, not seeing the danger, and lacking the wisdom of escape, as he enjoys them. That he should know, see, or realize for himself a state of super-human knowledge and vision worthy of the noble ones—such a thing cannot happen.\n\nWhat do you think, young man? Whether one were to kindle a fire dependent on grass and wood, or kindle a fire without depending on grass and wood—which of these would be a fire that is radiant, colorful, and brilliant?\n\nIf, Master Gotama, one were able to kindle a fire without depending on grass and wood, that would be the fire that is radiant, colorful, and brilliant.\n\nThat is an impossible state, young man, a situation that cannot occur, that one could kindle a fire without depending on grass and wood, unless one were a person of psychic power. Just as a fire burns dependent on grass and wood, young man, so do I describe this joy, which is the joy <unclear>that</unclear>\n\n<summary>The Buddha explains to a young man how hindrances and sensual desires obstruct spiritual insight, using the analogy of a fire that requires fuel to burn.</summary>\n<keywords>hindrances, nīvaraṇā, sensual pleasure, kāmaguṇā, Pokkharasāti, spiritual insight</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1828,
+ "outputTokens": 617,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.002765,
+ "cost_usd_batch_equiv": 0.0013825,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "omission",
+   "source": "...sacchi vā karissatīti",
+   "was": "...or realize",
+   "now": "...or realize for himself"
+  }
+ ],
+ "base_sha": 2394,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 2708,
+ "at": "2026-10-03T12:07:05.481Z"
+}

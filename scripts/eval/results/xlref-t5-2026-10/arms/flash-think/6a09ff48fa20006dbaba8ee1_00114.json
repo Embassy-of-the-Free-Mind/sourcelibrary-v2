@@ -1,0 +1,30 @@
+{
+ "id": "6a09ff48fa20006dbaba8ee1_00114",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "# CHAPTER ON CLOUDS <note>original: \"Valāhakavagga\"</note>\n\n## 102.\n\n1. Monks <note>original: \"bhikkhave\"</note>, there are these four types of clouds <note>original: \"valāhakā\"</note>. Which four?\nOne that thunders but does not rain <note>original: \"gajjitā no vassitā\"</note>, <unclear>one that rains but does not thunder, one that neither thunders nor rains</unclear>, and one that both thunders and rains.\nThese, monks, are the four types of clouds.\n\n2. In the same way, monks, there are these four types of persons <note>original: \"puggalā\"</note> found existing in the world who are like clouds. Which four?\nOne who thunders but does not rain, <unclear>one who rains but does not thunder, one who neither thunders nor rains</unclear>, and one who both thunders and rains.\n\n3. And how, monks, is a person one who thunders but does not rain?\nIn this case, monks, a certain person masters the teaching <note>original: \"dhammam\"</note>, namely: the discourses <note>original: \"suttam\"</note>, the mixed prose and verse <note>original: \"geyyam\"</note>, the explanations <note>original: \"veyyākaraṇam\"</note>, the verses <note>original: \"gātham\"</note>, the inspired utterances <note>original: \"udānam\"</note>, the quotations <note>original: \"itivuttakam\"</note>, the birth stories <note>original: \"jātakam\"</note>, the marvelous accounts <note>original: \"abbhutadhammam\"</note>, and the interpretations <note>original: \"vedallam\"</note>. Yet he does not understand as it really is: \"This is suffering\" <note>original: \"dukkhan\"</note>; <unclear>he does not understand as it really is: \"This is the origin of suffering\"; he does not understand as it really is: \"This is the cessation of suffering\"</unclear>; and he does not understand as it really is: \"This is the practice leading to the cessation of suffering\" <note>original: \"dukkhanirodhagāminī paṭipadā\"</note>.\nIn this way, monks, a person is one who thunders but does not rain. Monks, I say this person is just like that cloud that thunders but does not rain.\n\n4. And how, monks, is a person one who rains but does not thunder?\nIn this case, monks, a certain person does not master the teaching, namely: the discourses <unclear>and the rest of the ninefold division of scripture</unclear> up to the interpretations. Yet he understands as it really is: \"This is suffering\"; <unclear>he understands as it really is: \"This is the origin of suffering\"; he understands as it really is: \"This is the cessation of suffering\"</unclear>; and he understands as it really is: \"This is the practice leading to the cessation of suffering.\" In this way, monks, a person is one who rains but does not thunder. Monks, I say this person is just like <unclear>that cloud that rains but does not thunder</unclear>.\n\n5. And how, monks, is a person one who neither thunders nor rains?\nIn this case, monks, a certain person does not master the teaching, namely: the discourses <unclear>and so on</unclear> up to the interpretations. He does not understand as it really is: \"This is suffering\"; <unclear>he does not understand the origin or the cessation</unclear>; and he does not understand as it really is: \"This is the practice leading to the cessation of suffering.\" In this way, monks, is a person who neither thunders nor rains. Monks, I say this person is just like <unclear>that cloud that neither thunders nor rains</unclear>.\n\n6. And how, monks, is a person one who both thunders and rains?\nIn this case, monks, a certain person masters the teaching, namely: the discourses <unclear>and so on</unclear> up to the interpretations. He understands as it really is: \"This is suffering\"; <unclear>he understands the origin and the cessation</unclear>; and he understands as it really is: \"This is the practice leading to the cessation of suffering.\" In this way, monks, a person is one who both thunders and rains. Monks, I say this person is just like that cloud that both thunders and rains.\n\n<summary>The Buddha uses a fourfold analogy of clouds—thundering, raining, both, or neither—to categorize individuals based on their theoretical knowledge of the scriptures and their practical realization of the Four Noble Truths.</summary>\n<keywords>Four Noble Truths, suffering, types of persons, clouds, Buddhist scriptures, mastery of Dhamma, realization</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2653,
+ "outputTokens": 1092,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.004602500000000001,
+ "cost_usd_batch_equiv": 0.0023012500000000003,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 4796,
+ "at": "2026-10-03T12:04:34.788Z"
+}

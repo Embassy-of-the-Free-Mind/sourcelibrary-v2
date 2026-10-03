@@ -1,0 +1,30 @@
+{
+ "id": "69b99e856ed9e0490990a0b5_00301",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "He is covetous, thinking: ‘Oh, that what belongs to another, the wealth and assets of another, might be mine.’ He is of ill will, with a mind full of corrupt intentions: ‘May these beings be slaughtered, or bound, or annihilated, or destroyed, or may they not exist at all.’ He holds wrong view, with a perverted outlook: ‘There is no such thing as almsgiving, no offering, no sacrifice. There is no fruit or result of good or evil deeds. There is no this world, no other world. There is no mother, no father. There are no spontaneously arisen beings. There are no ascetics or brahmins in the world who live rightly and practice rightly, who, having realized this world and the other world by their own direct knowledge, make them known.’\n\nEndowed with these ten qualities, monks, a person is placed in hell as if brought and set down there.\n\n3. Endowed with ten qualities, monks, a person is placed in heaven as if brought and set down there. With which ten?\n\n4. Here, monks, a person abandons the taking of life and abstains from taking life. He dwells with rod laid down, weapon laid down, conscientious, compassionate, and kind to all living beings. He abandons the taking of what is not given and abstains from taking what is not given. Whatever property or assets of another belong to him, whether in the village or the forest, he does not take it by way of theft. He abandons sexual misconduct and abstains from sexual misconduct. He does not approach those who are protected by their mother, protected by their father, protected by their brother, protected by their sister, protected by their relatives, or protected by their Dhamma <note>those bound by religious vows</note>; nor those who have husbands, nor those who have protection, nor even those who have been garlanded as a sign of betrothal; he does not engage in such relations. He abandons false speech and abstains from false speech. When he is called to a council, or an assembly, or a gathering of kin, or a guild, or a royal court, and asked as a witness, saying: ‘Come, good man, tell what you know,’ he says ‘I do not know’ if he does not know, or ‘I know’ if he knows, or ‘I do not see’ if he does not see, or ‘I see’ if he sees; thus, for his own sake, or for the sake of another, or for some trifling worldly gain, he does not <column-break/>\n\n<summary>This page concludes the list of ten unwholesome paths leading to hell and begins the list of ten wholesome paths leading to heaven, specifically detailing abstentions from killing, stealing, sexual misconduct, and lying.</summary>\n<keywords>hell, heaven, karma, non-violence, morality, wrong view, right conduct</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3182,
+ "outputTokens": 615,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.001718,
+ "cost_usd_batch_equiv": 0.000859,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2594,
+ "at": "2026-10-03T12:04:25.978Z"
+}

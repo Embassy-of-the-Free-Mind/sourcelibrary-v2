@@ -1,0 +1,30 @@
+{
+ "id": "69b99e681f30176bf4d3798a_00155",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page: ...in the world.</meta>\n\nThese, monks, are the ten things wished for, desired, liked, and difficult to obtain in the world.\n\n3. Of these ten things, monks, which are wished for, desired, liked, and difficult to obtain in the world, there are ten things that are obstacles <note>original: \"paripanthā\"</note>: \n\n4. Laziness and lack of initiative are obstacles to wealth. Lack of grooming and lack of adornment are obstacles to beauty. Acting in ways that are not beneficial is an obstacle to health. Friendship with bad people is an obstacle to virtue. Lack of restraint of the senses is an obstacle to the holy life. Dishonesty with friends is an obstacle to friendship. Not practicing recitation is an obstacle to extensive learning. Lack of desire to listen and not asking questions are obstacles to wisdom. Lack of diligence and lack of reflection are obstacles to the <term>Dhamma</term> <gloss>teachings</gloss>. Wrong conduct is an obstacle to heavenly realms.\n\nThese, monks, are the ten things that are obstacles to these ten things which are wished for, desired, liked, and difficult to obtain in the world.\n\n5. Of these ten things, monks, which are wished for, desired, liked, and difficult to obtain in the world, there are ten things that are sustenance <note>original: \"āhārā\"</note>: \n\n6. Diligence and initiative are sustenance for wealth. Grooming and adornment are sustenance for beauty. Acting in beneficial ways is sustenance for health. Friendship with good people is sustenance for virtue. Restraint of the senses is sustenance for the holy life. Honesty with friends is sustenance for friendship. Practicing recitation is sustenance for extensive learning. The desire to listen and asking questions are sustenance for wisdom. Diligence and reflection are sustenance for the <term>Dhamma</term>. Right conduct is sustenance for heavenly realms.\n\nThese, monks, are the ten things that are sustenance for these ten things which are wished for, desired, liked, and difficult to obtain in the world.\n\n<summary>This page lists ten obstacles to desired worldly states, such as laziness for wealth or bad company for virtue, followed by their corresponding sources of sustenance or support.</summary>\n<keywords>wealth, beauty, health, virtue, holy life, friendship, learning, wisdom, Dhamma, obstacles, sustenance</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2977,
+ "outputTokens": 509,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.00150775,
+ "cost_usd_batch_equiv": 0.000753875,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 1833,
+ "at": "2026-10-03T12:04:25.290Z"
+}

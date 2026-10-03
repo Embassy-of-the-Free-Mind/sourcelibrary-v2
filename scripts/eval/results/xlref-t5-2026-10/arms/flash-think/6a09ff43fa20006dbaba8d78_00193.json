@@ -1,0 +1,30 @@
+{
+ "id": "6a09ff43fa20006dbaba8d78_00193",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "# The Great Chapter <note>original: Mahâ-vagga</note>\n\nTo them I say this: \"If that is so, venerable sirs, then people will be killers of living beings <term>pânâtipâtino</term> <gloss>those who destroy life</gloss> because of what was done in the past. They will be takers of what is not given <term>adinnâdâyino</term> <gloss>thieves</gloss> because of what was done in the past. They will be unchaste <term>abrahmacârino</term> <gloss>not living a holy life</gloss> because of what was done in the past. They will be speakers of lies <term>musâvâdino</term> because of what was done in the past. They will be speakers of slander <term>pisuṇâvâcâ</term> <margin>All manuscripts read pisuṇâvâcâ and pharusâvâcâ. Compare below XVI. 8.</margin> because of what was done in the past. They will be speakers of harsh words <term>pharusâvâcâ</term> because of what was done in the past. They will be idle chatterers <term>samphappalâpino</term> because of what was done in the past. They will be covetous <term>abhijhâluno</term> because of what was done in the past. They will be ill-willed in mind <term>vyâpannacittâ</term> because of what was done in the past. They will be holders of wrong views <term>micchâdiṭṭhikâ</term> because of what was done in the past.\"\n\nMonks, for those who fall back on what was done in the past as the essential truth <margin>The manuscripts here and below vary between gacchantam and gacchatam.</margin>, there is no desire to act, nor effort, nor the thought: \"This must be done,\" or \"This must not be done.\" Thus, when what should be done and what should not be done are not truly and firmly found, those who live with muddled mindfulness and without protection have no legitimate ground to call themselves ascetics <note>original: sahadhammiko samaṇavâdo</note>.\n\nThis, monks, is my first legitimate rebuke <term>sahadhammiko niggaho</term> <gloss>a righteous refutation based on the teaching</gloss> of those ascetics and brahmins who hold such a doctrine and such a view.\n\n3. In that regard, monks, there are some ascetics and brahmins who hold such a doctrine and view as this: \"Whatever a person experiences, whether pleasure, pain, or neutral feeling, all that is caused by the creation of a Supreme Lord <term>issaranimmânahetu</term> <gloss>the cause being the creation by God/Ishvara</gloss>.\" I approach them and say: \"Is it true, venerable sirs, that you hold such a doctrine and view: that whatever a person experiences... all that is caused by the creation of a Supreme Lord?\"\n\nIf, when asked, they acknowledge it by saying, \"Yes,\" <margin>Manuscripts D. and T. read âmo.</margin> then I say this to them:\n\n\"If that is so, venerable sirs, then people will be killers of living beings because of the creation of a Supreme Lord... <note>The text uses the ellipsis marker \"pe\" to indicate the repetition of the list of ten unwholesome actions found in the previous paragraph.</note> they will be holders of wrong views because of the creation of a Supreme Lord. For those who fall back on the creation of a Supreme Lord as the essential truth, monks, there is no desire to act, nor effort, nor the thought: 'This must be done,' or 'This must not be done.' Thus, when what should be done and what should not be done are not truly and firmly found, those who live with muddled mindfulness and without protection have no legitimate ground to call themselves ascetics.\"\n\nThis, monks, is my second legitimate rebuke of those ascetics and brahmins who hold such a doctrine and such a view.\n\n<summary>The Buddha refutes two fatalistic views: that all current experiences are caused solely by past actions, and that all experiences are caused by a Supreme Creator. He argues these views lead to moral inaction and a lack of personal responsibility.</summary>\n<keywords>determinism, fatalism, karma, creationism, moral responsibility, ten unwholesome actions, asceticism, refutation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2686,
+ "outputTokens": 997,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.004334,
+ "cost_usd_batch_equiv": 0.002167,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 4927,
+ "at": "2026-10-03T12:04:32.829Z"
+}

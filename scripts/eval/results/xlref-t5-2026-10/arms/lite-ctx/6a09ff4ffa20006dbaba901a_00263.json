@@ -1,0 +1,30 @@
+{
+ "id": "6a09ff4ffa20006dbaba901a_00263",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Anguttara-Nikāya. CC.5—6\n\n5. \"Furthermore, bhikkhus, when a bhikkhu directs his mind toward <term>rūpa</term> <gloss>form</gloss>, his mind does not leap out toward form, does not become clear, does not stand firm, and is not liberated. But when he directs his mind toward the <term>arūpa</term> <gloss>formless</gloss>, his mind leaps out toward the formless, becomes clear, stands firm, and is liberated. His mind is well-made, well-developed, well-risen, and well-liberated and detached from forms. He is freed from the <term>āsavā</term> <gloss>mental effluents</gloss> and the distress and burning that arise due to forms. He does not experience that feeling. This is called the deliverance from forms.\n\n6. \"Furthermore, bhikkhus, when a bhikkhu directs his mind toward <term>sakkāya</term> <gloss>identity/personality</gloss>, his mind does not leap out toward identity, does not become clear, does not stand firm, and is not liberated. But when he directs his mind toward the cessation of identity, his mind leaps out toward the cessation of identity, becomes clear, stands firm, and is liberated. His mind is well-made, well-developed, well-risen, and well-liberated and detached from identity. He is freed from the <term>āsavā</term> <gloss>mental effluents</gloss> and the distress and burning that arise due to identity. He does not experience that feeling. This is called the deliverance from identity.\"\n\nHe does not harbor delight in sensual desire, he does not harbor delight in ill-will, he does not harbor delight in cruelty, he does not harbor delight in form, and he does not harbor delight in identity. Because he has no underlying tendency toward delight in sensual desire, delight in ill-will, delight in cruelty, delight in form, or delight in identity, this bhikkhu is called, bhikkhus, one without underlying tendencies. He has cut off <term>taṇhā</term> <gloss>craving</gloss>, he has turned back the <term>samyojana</term> <gloss>fetters</gloss>, and through the right attainment of conceit <note>original: \"mānābhisamayā\"</note>, he has made an end to <term>dukkha</term> <gloss>suffering</gloss>.\n\nThese, bhikkhus, are the five elements of deliverance.\n\n->The Chapter on Brahmins.<-\n\n<summary>This page concludes a discourse on the five elements of deliverance, detailing the mental liberation from form and identity, and describes the state of a monk who has abandoned all underlying tendencies and fetters.</summary>\n<keywords>deliverance, form, identity, mental effluents, underlying tendencies, craving, fetters, suffering</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3218,
+ "outputTokens": 621,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0017360000000000001,
+ "cost_usd_batch_equiv": 0.0008680000000000001,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 3562,
+ "at": "2026-10-03T12:04:31.373Z"
+}

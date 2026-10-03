@@ -1,0 +1,28 @@
+{
+ "id": "6a31c8b74400787ae5a9d7a7_00042",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "Malavaggo\n\n250 For whom this is cut off, rooted out, and pulled up, he indeed attains concentration <note>original: \"samādhi\"</note> by day or by night.\n8 The Story of Tissa the Novice, III 357\n\n251 There is no fire like lust, there is no captor like hatred, there is no net like delusion, and there is no river like craving.\n9 The Story of the Five Lay Followers, III 360\n\n252 The faults of others are easily seen, but one's own are difficult to see. One winnows the faults of others like chaff, but hides one's own faults, like a cheating gambler hiding a bad die.\n10 The Story of the Treasurer Meṇḍaka, III 363\n\n253 For one who is always observing the faults of others and is constantly finding fault, one's own defilements <note>original: \"āsavā\"</note> increase, and one is far from the destruction of these defilements.\n11 The Story of the Elder Who Found Fault, III 376\n\n254 There is no track in the sky, and there is no ascetic <note>original: \"samaṇo\"</note> outside this path. People delight in worldly proliferation <note>original: \"papañca\"</note>, but the Realized Ones <note>original: \"Tathāgata\"</note> are free from such proliferation.\n\n255 There is no track in the sky, and there is no ascetic outside this path. There are no conditioned things <note>original: \"saṅkhārā\"</note> that are permanent, and there is no wavering for the Buddhas.\n12 The Story of the Wanderer Subhadda, III 377\n\nXVIII THE CHAPTER ON IMPURITIES (MALAVAGGO) EIGHTEENTH\n\n<note>1 Bṝ kaḷi va 2 F ca Bṝ va 3 K F bāhiro, Bṝ, Sḝ bāhire</note>\n\n<note>252 Jāt III 223</note>\n\n<summary>This page contains verses 250 through 255 of the Dhammapada, discussing the nature of defilements, the difficulty of self-reflection, and the state of those who have attained liberation.</summary>\n<keywords>Malavaggo, Pali, Buddhism, Dhammapada, Tissa, Meṇḍakasetthi, Ujjhānasaññimatthera, Subhaddaparibbājaka, Tathāgata, craving, defilements</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1358,
+ "outputTokens": 636,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.002587,
+ "cost_usd_batch_equiv": 0.0012935,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [],
+ "base_sha": 1922,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 2381,
+ "at": "2026-10-03T12:07:18.498Z"
+}

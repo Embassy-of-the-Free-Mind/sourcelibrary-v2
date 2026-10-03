@@ -1,0 +1,30 @@
+{
+ "id": "6a31c8b74400787ae5a9d7a7_00042",
+ "arm": "lite-corr",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Malavaggo\n\n250 For whom this <note>the root of evil</note> is cut off, uprooted, and removed, he indeed attains concentration <note>original: \"samādhi\"</note> by day or by night.\n8 The Story of the Young Tissa, III 357\n\n251 There is no fire like lust, there is no grip like hatred, there is no net like delusion, there is no river like craving.\n9 The Story of the Five Lay-followers, III 360\n\n252 The faults of others are easy to see, but one's own are difficult to see. A person winnows the faults of others like chaff, but covers his own faults like a deceitful gambler hiding a losing die <note>original: \"kaliṃ\"</note>.\n10 The Story of Meṇḍakasetthi, III 363\n\n253 For one who is always looking at the faults of others and who is always censorious, his corruptions <note>original: \"āsavā\"</note> increase; he is far from the destruction of corruptions.\n11 The Story of the Monk Ujjhānasaññī, III 376\n\n254 There is no track in the sky, there is no recluse <note>original: \"samaṇo\"</note> outside <note>i.e., outside the Buddha's teaching</note>. Mankind delights in complications <note>original: \"papañcābhiratā\"</note>, but the Tathāgatas are free from complications.\n\n255 There is no track in the sky, there is no recluse outside. There are no eternal compounded things <note>original: \"saṅkhārā\"</note>, there is no wavering for the Buddhas.\n12 The Story of the Wanderer Subhadda, III 377\n\nXVIII THE CHAPTER ON IMPURITIES (MALAVAGGO), THE EIGHTEENTH\n\n---\n\n1 In the Bʳ manuscript: kaḷi va; 2 In the F manuscript: ca; In the Bʳ manuscript: va\n3 In the K and F manuscripts: bāhiro; In the Bʳ and Sᵉ manuscripts: bāhire\n\n252 Jātaka, III 223\n\n<summary>This page contains verses 250 through 255 of the Malavaggo (Chapter on Impurities) from the Dhammapada, focusing on the removal of mental defilements, the danger of focusing on the faults of others, and the nature of the enlightened Tathāgata.</summary>\n<keywords>Dhammapada, Malavaggo, lust, hatred, delusion, craving, faults, Tathāgata, recluses, compounded things</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2346,
+ "outputTokens": 601,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.001488,
+ "cost_usd_batch_equiv": 0.000744,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2784,
+ "at": "2026-10-03T20:27:43.309Z"
+}

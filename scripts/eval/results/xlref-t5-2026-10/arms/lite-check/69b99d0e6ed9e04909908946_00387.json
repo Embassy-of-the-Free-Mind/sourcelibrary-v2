@@ -1,0 +1,35 @@
+{
+ "id": "69b99d0e6ed9e04909908946_00387",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "Aṅguttara-Nikāya. XI.\n\nJust as, venerable sir, a dust-cloth wipes clean things and wipes dirty things, wipes away excrement and wipes away urine, wipes away saliva, wipes away pus, and wipes away blood, and the dust-cloth is neither troubled nor disgusted by it; just so, venerable sir, I dwell with a mind like a dust-cloth, expansive, exalted, measureless, free from enmity, free from ill-will. Whoever, venerable sir, does not have mindfulness directed toward the body established in their own body, such a person might offend a fellow practitioner and depart on their journey without having representation made amends.\n\nJust as, venerable sir, an outcaste boy or an outcaste girl, with a basket in hand, wearing ragged clothes <note>original: \"nantikavāsī\"</note>, enters a village or a town with a lowly mind; just so, venerable sir, I dwell with a mind like an outcaste boy, expansive, exalted, measureless, free from enmity, free from ill-will. Whoever, venerable sir, does not have mindfulness directed toward the body established in their own body, such a person might offend a fellow practitioner and depart on their journey without having made amends.\n\nJust as, venerable sir, a bull with broken horns, gentle, well-tamed, and well-trained, wandering from street to street and crossroads to crossroads, harms no one with its feet or its horns; just so, venerable sir, I dwell with a mind like a bull with broken horns, expansive, exalted, measureless, free from enmity, free from ill-will. Whoever, venerable sir, does not have mindfulness directed toward the body established in their own body, such a person might offend a fellow practitioner and depart on their journey without having made amends.\n\nJust as, venerable sir, a woman or a man, young or a youth, fond of ornamentation, having bathed their head, with a snake carcass or\n\n<column-break/>\n\n<summary>The Buddha describes the cultivation of a mind that remains expansive, calm, and free from ill-will, drawing comparisons to a cleaning cloth, an outcaste, and a gentle bull, emphasizing the necessity of bodily mindfulness in monastic conduct.</summary>\n<keywords>mindfulness, bodily awareness, non-aggression, monastic conduct, Aṅguttara-Nikāya, mental states</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1666,
+ "outputTokens": 588,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.002597,
+ "cost_usd_batch_equiv": 0.0012985,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "omission",
+   "source": "daharo vā",
+   "was": "or a youth",
+   "now": "young or a youth"
+  }
+ ],
+ "base_sha": 2222,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 2488,
+ "at": "2026-10-03T12:07:11.083Z"
+}

@@ -1,0 +1,30 @@
+{
+ "id": "6a312d8867a0ec73f1bc373f_00050",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "The Supreme Lord, who is one, is all-knowing, the mother of the entire world, and the creator. How is He to be known? Through inference or through labor <note>spiritual practice or exertion</note>. For instance, there is the inference: \"This perceived world, which is subject to dispute, has a cause, because it comes into being and passes away, just like a painting.\" From this knowledge of Him in a general sense, specific knowledge is gained through <term>yoga</term> <gloss>disciplined meditation</gloss>. The existence of the other, the individual soul <note>original: <term>jīva</term></note>, is established through one's own experience alone. The activity of <term>prakṛti</term> <gloss>nature or primal matter</gloss> is for the sake of the knowledge of the distinction between these two, the higher and the lower. Regarding this, the quality of serving another's purpose will be explained later. There is also the quality of serving its own purpose: toward that <term>puruṣa</term> <gloss>spirit or person</gloss> to whom it has shown itself through discernment, it becomes indifferent. How can unconscious <term>prakṛti</term> exhibit activity? It is observed that even unconscious things like milk and so on exhibit activity for the sake of a result <note>such as the nourishment of a calf</note>.\n\nNext, he addresses who is eligible for liberation:\n\nBy the one who is dispassionate, there is the attainment of that <note>liberation</note>.\n\nAnd so the scripture <note>original: <term>śruti</term></note> says: \"Rising above the desire for sons, the desire for wealth, and the desire for worlds, they then lead the life of a mendicant.\" Also: \"Becoming calm, self-controlled, withdrawn, patient, and composed, he sees the Self indeed in the Self.\"\n\nIf liberation follows immediately after hearing the teachings due to dispassion, then liberation should occur for everyone immediately after the Guru's instruction. Since this is not observed, he says:\n\nThat attainment is not from mere hearing, because of the strength of beginningless latent impressions.\n\nLiberation does not occur immediately after hearing. Rather, because of the strength of beginningless <term>vāsanā</term> <gloss>latent impressions or tendencies</gloss>, liberation is swift for some and takes a long time for others.\n\nHe provides another reason:\n\nThe many-ness is each one <note>referring to the plurality of individual experiences or souls</note>.\n\n<summary>This page discusses the methods for knowing the Supreme Lord and the individual soul, emphasizing that spiritual liberation requires dispassion and the overcoming of beginningless mental impressions.</summary>\n<keywords>Ishvara, Prakriti, Purusha, Vāsanā, Yoga, liberation, dispassion, inference, individual soul</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2428,
+ "outputTokens": 623,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.003083,
+ "cost_usd_batch_equiv": 0.0015415,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 3864,
+ "at": "2026-10-03T12:05:13.424Z"
+}

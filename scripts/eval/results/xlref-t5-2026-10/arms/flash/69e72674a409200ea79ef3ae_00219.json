@@ -1,0 +1,30 @@
+{
+ "id": "69e72674a409200ea79ef3ae_00219",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "It should be given; and its final outcome is within his control. Therefore, you must take it away. Having heard this, as soon as he woke up, he searched for the bag of gold. Seeing that it was empty, he thought: Oh! How has the money I earned with such great hardship vanished so easily? Now that I am penniless and useless, how will I show my face to my wife or my friends? Having decided this, he went back to the city of Vardhamanapur. There, after working for another year and earning five hundred gold pieces, he set out for his home again by a different route.\n\nJust as the sun was setting, he arrived at that very same banyan tree. Oh, the misery! Oh, the pain! Why has cursed fate started this again? That same demon in the form of a banyan tree has appeared once more. Thinking thus, as if in a dream, he saw those same two men upon a branch of the tree. One of them said: Creator! Why did you give these five hundred gold pieces to this Somilaka? Do you not know that he is not meant to have anything more than food and clothing? The other replied: O Action! I must certainly give to those who are industrious. Its final outcome is within his control. So why do you reproach me? Having heard this, as soon as Somilaka searched for his bag, he saw that it was empty. Then, overcome by supreme despair, he thought: Oh! What is the use of my life without wealth? Therefore, I will abandon my life by hanging myself here from this banyan tree.\n\nHaving made this decision, he fashioned a rope out of <term>darbha</term> <gloss>sacred kusha grass</gloss>, placed the noose around his neck, climbed a branch, and just as he was about to tie it and throw himself off, a man standing in the sky spoke these words: O Somilaka! Do not, do not commit such a rash act. I am that same taker of your wealth, who allowed you nothing more than food and clothing.\n\n<summary>The weaver Somilaka loses his hard earned wealth twice due to the intervention of personified forces of Fate and Action. In despair, he attempts to hang himself from a banyan tree but is interrupted by a divine voice.</summary>\n<keywords>Somilaka, Weaver, Fate, Action, Vardhamanapur, Banyan tree, gold, suicide, wealth, industry</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2619,
+ "outputTokens": 522,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0028755,
+ "cost_usd_batch_equiv": 0.00143775,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 3198,
+ "at": "2026-10-03T12:04:56.665Z"
+}

@@ -1,0 +1,30 @@
+{
+ "id": "69e8b2642ff2a8dc09e778a1_00439",
+ "arm": "lite-corr",
+ "model": "gemini-3.1-flash-lite",
+ "text": "墨子卷之十二\n\n<meta>continues from previous page</meta>\n<note>People</note> cannot bring about misfortune or prosperity, and they insist there is no such thing as being auspicious or ominous. Consequently, the government falls into disorder and the state is endangered. Therefore, in the books of the former kings, there is also the statement: \"Those who are arrogant <note>The character 'qi' (丌) here was formerly written as 'yi' (亦) in all previous editions.</note> will find that their bad behavior results in inauspicious outcomes.\" This means that those who do evil are punished, and those who do good are rewarded.\n\nMaster Mozi asked Gongmengzi, \"Regarding mourning rites, when a ruler, parents, wife, or heir <insert>successor son</insert> dies, one wears mourning clothes for three years. For uncles, brothers, and cousins, one wears them for five months. For aunts, sisters, maternal uncles, and nephews, there are mourning periods of several months. If, during the intervals of mourning, one spends time reciting the three hundred poems, playing the three hundred poems on strings, singing the three hundred poems, and dancing the three hundred poems, then if one follows your words, on what day does a gentleman attend to governance? On what day do the common people engage in their work?\"\n\nGongmengzi said, \"When the state is in disorder, one governs it. When it is governed, one performs rituals and music. When the state is stable, one attends to work. When the state is wealthy, one performs rituals and music.\"\n\nMaster Mozi said, \"When the governance of the state <insert>Lu says five characters 'governing it, therefore it is governed' (治之故治也) are missing here</insert> is abandoned, then the governance of the state is also lost. If the state...\"\n\n<summary>Mozi criticizes Gongmengzi for prioritizing rituals and music over the practical requirements of governance and daily labor, especially during times of mourning.</summary>\n<keywords>Mozi, Gongmengzi, mourning rites, governance, ritual and music</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2084,
+ "outputTokens": 454,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.001202,
+ "cost_usd_batch_equiv": 0.000601,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2310,
+ "at": "2026-10-03T20:28:20.110Z"
+}

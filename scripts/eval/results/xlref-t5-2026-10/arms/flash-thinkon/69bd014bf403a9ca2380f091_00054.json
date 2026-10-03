@@ -1,0 +1,30 @@
+{
+ "id": "69bd014bf403a9ca2380f091_00054",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "# Pārājika Pāḷi: First Pārājika\n\n17. Moreover, if a monk is dissatisfied, bored, and wishes to leave: being ashamed of the training rules, loathing them, and desiring the state of a householder <note>a layperson</note>... feeling unable to endure it and desiring to leave, he says and reveals: \"I have a mother, she will support me.\" He thus declares his intent. \"I have a father, he will support me.\" He thus declares his intent. \"I have a brother, he will support me.\" He thus declares his intent. \"I have a sister, she will support me.\" He thus declares his intent. \"I have a son, he will support me.\" He thus declares his intent. \"I have a daughter, she will support me.\" He thus declares his intent. \"I have a wife <term>pajapati</term> <gloss>spouse</gloss>, she will support me.\" He thus declares his intent. \"I have relatives, they will support me.\" He thus declares his intent. \"I have friends, they will support me.\" He thus declares his intent. \"I have a village, I will live by that.\" He thus declares his intent. \"I have a market town, I will live by that.\" He thus declares his intent. \"I have a field, I will live by that.\" He thus declares his intent. \"I have property, I will live by that.\" He thus declares his intent. \"I have silver, I will live by that.\" He thus declares his intent. \"I have gold, I will live by that.\" He thus declares his intent. ... \"I have a craft <term>sippa</term> <gloss>a trade or professional skill</gloss>, I will live by that.\" He thus declares his intent. In this way also, monks, there is the revealing of weakness and the training is renounced.\n\n18. Moreover, if a monk is dissatisfied, bored, and wishes to leave: being ashamed of the training rules, loathing them, and desiring the state of a householder... feeling unable to endure it and desiring to leave, he says and reveals: \"It is difficult to do.\" He thus declares his intent. \"It is hard to perform.\" He thus declares his intent. \"It is difficult to support.\" He thus declares his intent. \"It is not easily maintained.\" He thus declares his intent. \"I cannot persevere.\" He thus declares his intent. \"I cannot cope.\" He thus declares his intent. \"I do not enjoy it.\" He thus declares his intent. ... \"I find no delight in it.\" He thus declares his intent. In this way also, monks, there is the revealing of weakness and the training is renounced.\n\n19. And how, monks, is there the revealing of weakness and the training is renounced? Here, monks, a monk who is dissatisfied, bored, and wishes to leave: being ashamed of the training rules, loathing them, and desiring the state of a householder... feeling unable to endure it and desiring to leave, he says and reveals: \"I renounce the Buddha.\" He thus declares his intent. In this way also, monks, there is the revealing of weakness and the training is renounced.\n\n<summary>This page details the specific verbal declarations a monk might make to formally renounce his training and return to lay life. It lists various reasons for leaving, including family support, personal assets, or finding the monastic discipline too difficult.</summary>\n<keywords>disrobing, monastic discipline, renunciation, family support, householder state, Vinaya, Pali Canon</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3069,
+ "outputTokens": 2554,
+ "thinkingTokens": 1786,
+ "cost_usd_realtime": 0.0091965,
+ "cost_usd_batch_equiv": 0.00459825,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 11363,
+ "at": "2026-10-03T20:42:02.593Z"
+}

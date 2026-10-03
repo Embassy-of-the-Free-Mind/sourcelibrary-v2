@@ -1,0 +1,30 @@
+{
+ "id": "6a3c6192879008ba7e15f12e_00065",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "Question: For what <term>causes and conditions</term> <gloss>Sanskrit: hetu-pratyaya</gloss> was this treatise composed?\n\n<note>The response contains three parts: stating the number of reasons, distinguishing their characteristics, and providing a summary conclusion.</note>\n\nAnswer: There are eight kinds of causes and conditions. What are these eight?\n\n<note>In the section distinguishing the characteristics, the first reason is general and the following seven are specific. The reason for this structure is that the general reason covers both the primary and secondary goals, while the specific ones are tailored to the spiritual capacities of the audience.</note>\n\nFirst: The general characteristic of the causes and conditions. This is to lead all sentient beings to leave all suffering behind and attain ultimate bliss.\n\n<note>Within the general characteristic, \"leaving all suffering\" means causing sentient beings to leave the three types of suffering </note><note>suffering from pain, suffering from change, and suffering from conditioned existence</note> and the two types of birth and death <note>physical rebirth in the six realms and the subtle transformation of the mind</note>.\n\n\"Ultimate bliss\" refers to enabling them to attain the bliss of <term>unexcelled Bodhi</term> <gloss>supreme enlightenment</gloss> and <term>Great Nirvana</term>. It is not for seeking worldly fame and profit. There are two interpretations for this. First, it is not intended to make them seek the benefits and pleasures of human or heavenly rebirths in future lives.\n\n<summary>This page introduces the eight reasons for composing the Awakening of Faith in the Mahayana, focusing on the first and primary reason: helping sentient beings escape all forms of suffering and reach the highest spiritual bliss.</summary>\n<keywords>causes and conditions, sentient beings, suffering, ultimate bliss, Bodhi, Nirvana, worldly fame, Mahayana</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1974,
+ "outputTokens": 1678,
+ "thinkingTokens": 1282,
+ "cost_usd_realtime": 0.006021,
+ "cost_usd_batch_equiv": 0.0030105,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 7265,
+ "at": "2026-10-03T20:44:26.439Z"
+}

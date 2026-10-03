@@ -1,0 +1,30 @@
+{
+ "id": "69e80670fdad300064d9ef9d_00599",
+ "arm": "lite2",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Caraka Saṃhitā | Section Two: Chapter 4\n\nWhen soaked lentils, clean and sweet, are combined with cool fruits and prepared in a rich buffalo meat broth seasoned with yogurt and pomegranate, and further enriched with flour, coriander, cumin, and dry ginger, this soup when consumed with a meal prevents the depletion of vital essence <term>śukra</term> <gloss>semen/vital reproductive fluid</gloss>. (8)\n> This is the buffalo meat broth for virility.\n\nOne who consumes fresh fish or fried small <term>śapharī</term> <gloss>a type of small fish</gloss> cooked in hot clarified butter <term>ghṛta</term> <gloss>ghee</gloss> will not experience exhaustion during sexual activity. (9)\n> These are the fish sautéed in ghee for virility.\n\nOne seeking to conceive a child should consume <term>rohita</term> <gloss>a species of carp</gloss> fish fried in ghee and cooked in goat meat broth, followed by drinking the remaining broth. (10)\n> This is the preparation for conception.\n\nPrepare cakes by mixing minced fish meat with asafoetida, rock salt, and coriander, adding wheat flour, and frying them in ghee. Alternatively, cook fatty, sour, and salty fish in buffalo meat broth. Once the liquid has reduced, crush the fish, add black pepper, cumin, coriander, a small amount of asafoetida, and fresh ghee. Use this as a filling for the lentil cakes. These two preparations of cakes increase virility, enhance strength, promote joy and attractiveness, provide nourishment, and are supreme promoters of vital essence. (11)\n> These are the two cake preparations for virility.\n\n<column-break/>\nPaste of lentils, velvet beans <term>ātmaguptā</term> <gloss>Mucuna pruriens</gloss>, wheat, rice, and <term>ṣaṣṭika</term> <gloss>a variety of sixty-day rice</gloss>.\n\n<summary>This page lists several dietary preparations and medicinal recipes designed to increase virility, prevent exhaustion, and aid in conception.</summary>\n<keywords>Caraka Samhita, Ayurveda, aphrodisiacs, dietetics, reproductive health, fish preparations</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2279,
+ "outputTokens": 490,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.00130475,
+ "cost_usd_batch_equiv": 0.000652375,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2366,
+ "at": "2026-10-03T12:04:41.951Z"
+}

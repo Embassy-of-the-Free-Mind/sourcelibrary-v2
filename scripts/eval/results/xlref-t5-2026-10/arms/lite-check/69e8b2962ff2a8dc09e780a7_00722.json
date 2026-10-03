@@ -1,0 +1,47 @@
+{
+ "id": "69e8b2962ff2a8dc09e780a7_00722",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "# Brahma Sutra Bhashya | [Adhyaya 3, Pada 3, Adhikarana 7, Sutra 14]\n\nIt is the Supreme Being alone that is presented as superior to all of these; therefore, it is appropriate that each one is not declared superior. Why? Because there is no purpose. For no purpose is seen or heard in the superiority of the others being established. However, when the Person <term>purusha</term> <gloss>the Conscious Subject</gloss> is understood as being beyond the senses and the rest, and beyond all objective phenomena, a purpose is seen: the attainment of liberation <term>moksha</term> <gloss>release</gloss>. And so the scripture says: \"By discerning this, one is released from the mouth of death\" (Katha Upanishad 3.15). Moreover, by showing reverence for the subject of the Person through the denial of anything else and the use of the word 'limit' <term>kastha</term> <gloss>the final point or limit</gloss>, the text shows that the sequence from the former to the latter is for the realization of the Person. The phrase \"for the sake of the narrative\" means for the sake of the correct knowledge preceded by a narrative. This narrative is indeed taught only for the sake of correct knowledge, not because the narrative itself is the primary focus. 14\n\n**And because of the word 'Self'. 15**\n\nFor this reason also, the description of the sequence of the senses and the rest is meant for the realization of the Person. The reason is that the text refers to the Person under discussion as the Self: \"This Self, hidden in all beings, does not shine forth. But it is seen by the subtle seers through their sharp and subtle intellect\" (Katha Upanishad 3.12). Hence, it is understood that the non-selfhood of the others is intended. It also shows that the Person is difficult to know and requires a refined mind to be understood. For the sake of that knowledge, the text prescribes the narrative: \"The wise man should restrain his speech into the mind\" (Katha Upanishad 3.13). That has been explained in the section \"Even that which is inferred is mentioned by some\" (Brahma Sutra 1.4.1). In this way, by manifold methods—\n\n**Bhamati**\n\nThe Veda, by the sign of the negation of others and the sign of being the substrate of all things, shows the purport lies in the Person. Thus, he says 'Moreover' <term>apica</term>, to show that the statement of superiority of each previous one over the subsequent one is intended for that purpose. He connects the sutra 'for the sake of the narrative' by explaining that the superiority of one over the other is for the sake of seeing the Person, as there is no independent purpose in the others. 14 'And because of the word Self'. Furthermore, because of the consistency between the opening and closing statements—\"That is the highest abode of Vishnu\" and \"There is nothing superior to the Person\"—it is certain that the whole passage aims at a single Person. Thus, it is not appropriate to assume a difference in sentences or a difference in results, as it would be cumbersome. 15\n\n**Nyaya Nirnaya**\n\n'Why?' He considers that the purport is not meant for the others because they lack the capacity to produce the desired result. 'No purpose'—he asks how the absence of purpose is stated, and he differentiates between fruit established by logical analysis and fruit established by scripture. He says 'No' to the first. He replies to the second, 'is heard'. Since this passage is seen to concern the nature of reality, it is not suited for the injunction of meditation; it concerns the knowledge of the ultimate goal of human life. Since the inner self is the goal, the senses do not have independent status as the goal, so the knowledge of each one's superiority is not the aim. If the knowledge of the Person's superiority were also fruitlessly, how could there be a causal relationship to the human goal? He says 'However, in the Person' because, as the subject of the ultimate, the knowledge of the Person is not empty and is experiential. 'Is seen'—he maintains that since the cessation of ignorance and false knowledge is a visible fruit, it is not right to imagine an unseen one. Regarding the experience of the wise, he cites the scripture 'And so'. He says 'Moreover' because the entire context aims at the knowledge of the Person. 'Superior to the Person'—the Veda shows reverence for the Person by the sign of negation and the word 'limit' as a boundary. The sequence of former to latter is the statement of the superiority of the latter over the former. Since there is no injunction for meditation here, how can the knowledge of the Person be for meditation? He explains the part of the sutra: 'for the sake of the narrative'. The knowledge of the attributeless Brahman is also for the sake of meditation as it resides in Brahman, but he clarifies that it is consistent with the scripture 'Then he who...'. 14 He gives another reason for the Person being the only subject here: 'And because of the word Self'. He explains the word 'and' in the sutra: 'For this reason also'. Explaining clearly, he breaks down the word 'Self'. He refutes the doubt that the non-manifestation of the Self is natural: 'But it is seen'. He says 'under discussion' because of the Selfhood in that scripture. He states the intended meaning of the sutra: 'Hence'. He explains the rest of the earlier meaning: 'of that'. He states the purport of the later part: 'refined mind'. He gives the other reason indicated by the word 'and': 'That'. Regarding the doubt that only the restraint of speech is mentioned in the mantra, not an injunction for meditation, he says 'That has been explained'. The meaning is that since the Self is difficult to know by scripture itself, and the senses are easy to know, the declaration of their superiority is a device for the purport. In this way, the excess of the opening and closing...",
+ "finishReason": "STOP",
+ "inputTokens": 3161,
+ "outputTokens": 1568,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0062845,
+ "cost_usd_batch_equiv": 0.00314225,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4937
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "negation",
+   "source": "अतःश्रुतानात्मत्वमितरेषां विवक्षितमिति",
+   "was": "it is understood that it is not intended for the others to be the Self",
+   "now": "it is understood that the non-selfhood of the others is intended"
+  },
+  {
+   "type": "role",
+   "source": "पूर्वसात्पूर्वस्मादपरस्यापरस्य परत्वोक्ति",
+   "was": "superiority of each subsequent one over the previous one",
+   "now": "superiority of each previous one over the subsequent one"
+  },
+  {
+   "type": "omission",
+   "source": "एवमनेकप्रकार-",
+   "was": "In this way, the multi-faceted",
+   "now": "In this way, by manifold methods—"
+  }
+ ],
+ "base_sha": 6441,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 5235,
+ "at": "2026-10-03T12:07:56.060Z"
+}

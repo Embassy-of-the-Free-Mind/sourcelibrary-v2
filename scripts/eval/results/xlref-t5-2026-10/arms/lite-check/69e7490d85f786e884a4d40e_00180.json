@@ -1,0 +1,41 @@
+{
+ "id": "69e7490d85f786e884a4d40e_00180",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "In the Kumārasambhava\n\n\"May you obtain the unbroken love of your husband,\" the women said to Umā, who bowed low. But she, having become one who shares half the body of him <note>referring to Shiva, who makes Pārvatī half of himself</note>, had already surpassed even the blessings of her affectionate kin. || 28 ||\n\nCommentary: \"Unbroken,\" etc. Umā, being humble, was addressed by those virtuous women who said, \"May you obtain the unbroken, unblemished love of your husband, Shiva.\" The use of the imperfect tense is indicated by the particle *sma*. \"Him,\" meaning Hara (Shiva). \"Half of the body,\" meaning *ardhaśarīra*, formed by the compound *ardha* (half) in the neuter gender. By her, Gauri (Pārvatī), who has become one who shares half the body of him, the blessings of her dear ones were made secondary, or placed below, because she had gained a fruit even greater than those blessings.\n\nThe mountain king, having skillfully completed all the tasks of her (Pārvatī) according to his own desires and resources, sat in the assembly occupied by his friends, waiting for the arrival of the bull-emblemed one. || 29 ||\n\nCommentary: \"Desire,\" etc. A *kṛtī* is one who is skillful. A *sabhya* is one who is worthy of the assembly. The mountain, Himavān, having completed every remaining task of Pārvatī in a manner appropriate to his own desires and wealth—that is, his enthusiasm and majesty—stood (remained) in the assembly occupied by his friends, waiting for the arrival of Hara, whose emblem is the bull.\n\nMeanwhile, on the mountain of Kubera <note>Mount Kailāsa</note>, the accessories for decoration, appropriate for that former marriage ceremony, were brought by the Mothers <note>the seven divine mothers, such as Brāhmī</note> who had been summoned, and were placed before the City-Subduer <note>Shiva, the destroyer of Tripura</note>. || 30 ||\n\nCommentary: \"Meanwhile,\" etc. While Gauri's adornment was being performed, at that very moment, on the mountain of Kubera (Kailāsa), the items for decoration, matching that previous wedding ceremony, were brought by the Mothers who had been respectfully summoned, and were placed before the destroyer of the city (Shiva).",
+ "finishReason": "STOP",
+ "inputTokens": 1596,
+ "outputTokens": 735,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.003003,
+ "cost_usd_batch_equiv": 0.0015015,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "role",
+   "source": "तस्याः कृती कृत्यमशेषयित्वा",
+   "was": "tasks befitting the desires and resources of his daughter",
+   "now": "tasks of her (Pārvatī) according to his (Himavān's) desires and resources"
+  },
+  {
+   "type": "role",
+   "source": "तस्याः पार्वत्याः कृत्यं",
+   "was": "desires and majesty—of his daughter Pārvatī",
+   "now": "desires and majesty (of Himavān)—the task of Pārvatī"
+  }
+ ],
+ "base_sha": 2551,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 3120,
+ "at": "2026-10-03T12:07:48.564Z"
+}

@@ -1,0 +1,30 @@
+{
+ "id": "69b99e551f30176bf4d37774_00306",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "25. (5) Fruit 1. <note>original: \"Phalā 1.\"</note>\n\n2. \"Monks, there are these four bases of power <term>iddhipādā</term> <gloss>foundations of success or psychic power</gloss>. These are the four bases of power.\n\n3. \"Monks, through the development and frequent practice of these four bases of power, one of two fruits <term>phalānam</term> <gloss>results or attainments</gloss> may be expected: either final knowledge <term>aññā</term> <gloss>highest realization or Arhatship</gloss> in this very life, or, if there is a remainder of clinging <term>upādisese</term> <gloss>residual substrate of life</gloss>, the state of a non-returner <term>anāgāmitā</term> <gloss>one who will not be reborn in the human realm</gloss>.\"\n\n26. (6) Fruit 2. <note>original: \"Phalā 2.\"</note>\n\n2. \"Monks, there are these four bases of power. These are the four bases of power.\n\n3. \"Monks, through the development and frequent practice of these four bases of power, seven fruits and seven benefits <term>sattānisamsā</term> may be expected. What are the seven fruits and seven benefits?\n\n4. \"One attains final knowledge early in this very life. If one does not attain final knowledge early in this very life, then one attains final knowledge at the time of death. If one does not attain final knowledge at the time of death, then through the total destruction of the five lower fetters <term>orambhāgiyānam samyojanānam</term> <gloss>the bonds that tie one to the sensual world</gloss>, one becomes:\n- An attainrer of Nirvana in the interval <term>antarāparinibbāyī</term> <gloss>one who attains Nirvana shortly after death in a higher realm</gloss>.\n- An attainrer of Nirvana upon landing <term>upahaccaparinibbāyī</term> <gloss>one who attains Nirvana shortly after being reborn in a higher realm</gloss>.\n- An attainrer of Nirvana without exertion <term>asaṅkhāraparinibbāyī</term>.\n- An attainrer of Nirvana with exertion <term>sasaṅkhāraparinibbāyī</term>.\n- One who goes upstream <term>uddhamsoto</term> bound for the highest heaven <term>akaniṭṭhagāmī</term> <gloss>heading toward the Peerless realm</gloss>.\n\n5. \"Monks, through the development and frequent practice of these four bases of power, these seven fruits and seven benefits may be expected.\"\n\n27. (7) Ananda 1. <note>original: \"Ānando 1.\"</note>\n\n1. Set at Savatthi. <note>original: \"Sāvatthi nidānam\"</note>\n\n2. Then the venerable Ananda approached the Blessed One <term>Bhagavā</term>. Having approached <note>pe: indicates a standard greeting sequence omitted in the text</note>, he sat to one side. Sitting there, the venerable Ananda said this to the Blessed One: \"What now, [Lord]...\"\n\n<summary>The text details the spiritual benefits of practicing the four bases of power, ranging from immediate enlightenment to various stages of non-returning. It begins a dialogue between the Buddha and his attendant Ananda regarding these practices.</summary>\n<keywords>four bases of power, iddhipada, enlightenment, Arhatship, non-returner, Ananda, Savatthi, Buddhist cosmology</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2619,
+ "outputTokens": 820,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0037695,
+ "cost_usd_batch_equiv": 0.00188475,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 4492,
+ "at": "2026-10-03T12:04:27.885Z"
+}

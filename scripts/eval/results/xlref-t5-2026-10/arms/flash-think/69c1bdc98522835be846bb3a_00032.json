@@ -1,0 +1,30 @@
+{
+ "id": "69c1bdc98522835be846bb3a_00032",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<margin>ka</margin>\n<note>original: \"Evaṃ me sutaṃ\"</note> Thus have I heard. At one time the Blessed One was staying among the Kurus, at a market town of the Kurus named Kammāsadhamma. There the Blessed One addressed the monks: \"Monks!\" \"Venerable Sir,\" those monks replied to the Blessed One. The Blessed One said this: \"Monks, this is the direct path <note>original: \"ekāyano maggo\"</note> for the purification of beings, for the overcoming of sorrow and lamentation, for the disappearance of pain and distress, for the attainment of the true method, and for the realization of <term>Nibbāna</term> <gloss>liberation from suffering</gloss>, namely, the four foundations of mindfulness <note>original: \"cattāro satipaṭṭhāna\"</note>. \n\nWhat are the four? Here, monks, a monk dwells contemplating the body in the body, ardent, clearly comprehending, and mindful, having removed covetousness and displeasure regarding the world. He dwells contemplating feelings in feelings, ardent, clearly comprehending, and mindful, having removed covetousness and displeasure regarding the world. He dwells contemplating mind in mind, ardent, clearly comprehending, and mindful, having removed covetousness and displeasure regarding the world. He dwells contemplating phenomena in phenomena <note>original: \"dhammesu dhammānupassī\"</note>, ardent, clearly comprehending, and mindful, having removed covetousness and displeasure regarding the world.\n\nAnd how, monks, does a monk dwell contemplating the body in the body? Here, monks, a monk, having gone to the forest, or to the foot of a tree, or to an empty place, sits down. Having folded his legs cross-legged, set his body erect, and established mindfulness in front of him, mindful he breathes in, mindful he breathes out. Breathing in long, he knows, \"I breathe in long\"; or breathing out long, he knows, \"I breathe out long.\" Breathing in short, he knows, \"I breathe in short\"; or breathing out short, he knows, \"I breathe out short.\" \n\n\"I shall breathe in experiencing the whole body,\" he trains himself. \"I shall breathe out experiencing the whole body,\" he trains himself. \"I shall breathe in calming the bodily formation,\" he trains himself. \"I shall breathe out calming the bodily formation,\" he trains himself.\n\n<summary>This page contains the opening of the Great Discourse on the Foundations of Mindfulness, establishing the purpose of the practice and describing the initial steps of mindfulness of breathing.</summary>\n<keywords>Mahāsatipaṭṭhānasutta, mindfulness, meditation, breathing, Nibbāna, four foundations of mindfulness, Kammāsadhamma</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2642,
+ "outputTokens": 599,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.003118,
+ "cost_usd_batch_equiv": 0.001559,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 9793,
+ "at": "2026-10-03T12:04:46.299Z"
+}

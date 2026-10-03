@@ -1,0 +1,30 @@
+{
+ "id": "69e72698a409200ea79ef8c3_00129",
+ "arm": "lite2",
+ "model": "gemini-3.1-flash-lite",
+ "text": "They all produced land and housing, but Cheng had already become the head of the household. His brothers were furious that he had curried favor <note>implying that Cheng gained the brothers' inheritance through deceit or manipulation</note> and went to his door to shame and harass him. Cheng, having lived among bandits for a long time, had grown accustomed to violence and intimidation. Upon hearing this, he was enraged and said, \"I have returned with nowhere to live. I was fortunate that my third younger brother remembered our blood ties, and yet you condemn him? Do you wish to drive me away?\" He threw stones at Xiao. Xiao, Ren, and Yi each took up staffs and beat Zhong and Xin countless times. \n\nCheng did not wait for them to sue him; he sued them first. The magistrate summoned You-Yu to ask for his counsel. You-Yu, having no other choice, arrived, but he felt only shame. He hung his head and remained silent, shedding tears. When pressed for an answer, he requested only that the magistrate provide a fair judgment. The magistrate ruled that Xiao and the others must each contribute a portion of their land and property to Cheng, such that the division would be equal among the seven. From this point on, Ren and Yi grew to love and respect Cheng all the more.\n\nWhile laughing and talking, the topic suddenly turned to the burial of their mother, and all of them wept. Cheng remarked, \"To be so inhumane is to be no better than a beast.\" He then intended to open the grave to rebury her. Ren and Yi ran to inform You-Yu, who hurried back to remonstrate with him and stop him, but Cheng would not listen and set a date for the task.\n\n<summary>Cheng, having adopted the aggressive habits of bandits, extorts land and property from his brothers through legal action and intimidation, while also demanding the exhumation and reburial of their mother.</summary>\n<keywords>Cheng, family dispute, inheritance, legal judgment, reburial, filial piety</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2081,
+ "outputTokens": 428,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.00116225,
+ "cost_usd_batch_equiv": 0.000581125,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2292,
+ "at": "2026-10-03T12:04:36.108Z"
+}

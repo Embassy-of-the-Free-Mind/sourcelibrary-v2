@@ -1,0 +1,30 @@
+{
+ "id": "69b99e856ed9e0490990a0b5_00301",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "# Aṅguttara-Nikāya. CC.2—4\n\nOne is covetous <term>abhijjhālu</term> <gloss>greedy for others' possessions</gloss>. He covets that which belongs to another, thinking: \"O, that what is another's were mine!\" He is malevolent <term>vyāpannacitto</term> <gloss>having a mind of ill-will</gloss> and harbors malicious intentions: \"May these beings be killed, or slaughtered, or destroyed, or perish, or cease to exist!\" He holds wrong view <term>micchādiṭṭhiko</term> <gloss>a distorted perspective</gloss> and has a perverted outlook: \"There is no gift <note>meaning there is no merit in charity</note>, no offering, no sacrifice. There is no fruit or result of good and bad actions. There is no this world, no other world. There is no mother, no father <note>meaning there is no moral debt or obligation to parents</note>. There are no spontaneously reborn beings <term>opapātikā</term> <gloss>beings who appear without parents, such as deities or inhabitants of hell</gloss>. There are no contemplatives or priests in the world who have reached the goal and practiced rightly, who describe this world and the other world after having known and realized them for themselves.\"\n\nMonks, one endowed with these ten qualities is cast into hell as if carried there.\n\n3. Monks, one endowed with ten qualities is cast into heaven as if carried there. Which ten?\n\n4. In this case, monks, a certain person, having abandoned the taking of life, abstains from taking life. With the rod and sword laid aside, he is conscientious and full of pity, dwelling with compassion for the welfare of all living beings. Having abandoned taking what is not given, he abstains from taking what is not given. He does not take the wealth and property of another by way of theft, whether it is in the village or in the forest. Having abandoned sexual misconduct, he abstains from sexual misconduct. He does not have sexual relations with those under the protection of their mother, father, brother, sister, or relatives, nor those protected by the Law <note>original: dhammarakkhitā</note>, nor those with a husband, nor those subject to punishment, nor even those betrothed with a garland of flowers. Having abandoned false speech, he abstains from false speech. When he goes to a council, an assembly, a meeting of relatives, a guild, or the royal court, and is called as a witness and asked, \"Come now, good man, tell what you know,\" if he does not know, he says, \"I do not know.\" If he knows, he says, \"I know.\" If he did not see, he says, \"I did not see.\" If he saw, he says, \"I saw.\" Thus he does not deliberately <note>original: \"na sampa-\" likely from sampajāna-musāvāda meaning deliberate lying</note>\n\n<meta>\nThe footnotes (1-11) indicate minor textual variants and manuscript differences across different editions (T. M. Ph. S.). These primarily concern spelling (e.g., vatāyam vs vata ayam) or small omissions of particles like 'ti'. Note 7 suggests a variation in the word for \"taking\" (ādātā). Note 11 indicates \"protected by the law\" (dhammarakkhitā) is missing in some versions.\nThe page ends mid-sentence with \"na sampa-\", part of the phrase for \"deliberate lying.\"\n</meta>\n\n<summary>This page concludes a list of ten unwholesome actions that lead to rebirth in hell and begins an opposing list of ten wholesome actions that lead to heaven. The wholesome actions described include abstaining from killing, stealing, sexual misconduct, and lying.</summary>\n\n<keywords>Anguttara Nikaya, karma, ten wholesome actions, ten unwholesome actions, ethics, precepts, wrong view, rebirth, sexual ethics, truthfulness</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2702,
+ "outputTokens": 4652,
+ "thinkingTokens": 3776,
+ "cost_usd_realtime": 0.015307,
+ "cost_usd_batch_equiv": 0.0076535,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 19313,
+ "at": "2026-10-03T20:41:27.104Z"
+}

@@ -1,0 +1,30 @@
+{
+ "id": "69ea3e63300d991d0f1d3186_00160",
+ "arm": "flash-corr",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>This page continues the regulations concerning the Superintendent of Courtesans from the previous section.</meta>\n\n# 44. The Superintendent of Courtesans\n\nA courtesan <term>ganika</term> <gloss>a high-class professional entertainer and consort</gloss> who refuses to associate with a man at the King's command shall receive one thousand lashes with a whip, or pay a fine of five thousand <term>panas</term> <gloss>the standard silver coin unit</gloss>.\n\nIf she takes her fee but then shows dislike or refuses the suitor, she shall be fined twice the amount of the fee.\n\nIf she prevents a guest from staying overnight after receiving payment, she shall pay eight times the amount of the fee, unless the man suffers from a disease or possesses personal defects <note>physical or moral failings that would justify refusal</note>.\n\nA courtesan who kills a man shall be burnt alive on a pyre or drowned in water.\n\nIf a man steals a courtesan's jewelry or her fee, he shall be fined eight times the value of what was taken.\n\nThe courtesan must report her income, her future earnings, and the identity of her client to the Superintendent.\n\nBy these rules, the activities of women belonging to actors, dancers, singers, musicians, storytellers, bards, rope-dancers, magicians, and wandering performers who trade in their women, as well as women who live in secret <note>clandestine or private prostitutes</note>, are also explained and regulated.\n\nWhen these performers arrive from elsewhere, they shall pay five <term>panas</term> as a license fee for each performance.\n\nProstitutes <term>rupajiva</term> <gloss>those who live on their beauty; independent practitioners</gloss> shall pay one-fifteenth <note>the text specifies \"twice the fee\" per month, interpreted in context as a monthly tax based on daily earnings</note> of their monthly income to the state.\n\nThe state shall provide a livelihood to those who teach courtesans, female slaves, and actresses the arts of singing, playing musical instruments, recitation, dancing, acting, writing, painting, playing the lute <term>veena</term>, the flute, and the drum, reading the thoughts of others, preparing perfumes and garlands, shampooing, and the arts of the courtesan <term>vaishika-kala</term> <gloss>the specialized erotic and social arts of the professional entertainer</gloss>.\n\nTeachers shall train the sons of courtesans to be chief performers in the theater and in all types of rhythmic musical performances.\n\nWomen who are fluent in various languages and secret signals <note>codes used for espionage</note> should be employed, along with their relatives, to monitor, injure, or confuse enemies of the state.\n\nThus ends the twenty-seventh chapter, The Superintendent of Courtesans, in the Book of the Conduct of Superintendents. This is the forty-eighth chapter from the beginning of the work.\n\n---\n\n<note>original: \"purushabhyah\" - regarding the men. original: \"bharanamartham\" - for the purpose of maintenance. original: \"talapacharanshcha\" - and the practices of rhythm; this reflects a variation in the interpreted text of the commentary.</note>\n\n<summary>This page details the legal penalties for courtesans and their clients, tax requirements for performers, and the state-sponsored education of entertainers in various fine arts. It concludes the chapter on the Superintendent of Courtesans by highlighting the role of these women in state intelligence and espionage.</summary>\n<keywords>courtesan, legal fines, performing arts, state taxes, education, espionage, Kautilya, Arthashastra</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2345,
+ "outputTokens": 789,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0035395,
+ "cost_usd_batch_equiv": 0.00176975,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 4998,
+ "at": "2026-10-03T20:29:13.931Z"
+}

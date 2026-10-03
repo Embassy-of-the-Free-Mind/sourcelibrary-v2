@@ -1,0 +1,30 @@
+{
+ "id": "69e72674a409200ea79ef3ae_00219",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: the dialogue between two mystical entities regarding the fate of the weaver Somilaka.</meta>\n\n\"[It] must be given. And the result of that depends on him. Therefore, you yourself take it away.\" Hearing this, as soon as he woke up, he searched for the bundle of gold. Seeing it empty, he thought: \"Alas! How has the wealth I earned with such great difficulty gone so easily? Now that I am penniless and useless, how will I show my face to my wife or my friends?\" Having decided this, he went to Vardhamanapura <note>a city in West Bengal, modern Bardhaman</note> once again. Having earned five hundred gold coins there in only a year, he set out for his home again by a different path.\n\nJust as the sun was setting, he reached that same Banyan tree <term>nyagrodha</term> <gloss>Ficus benghalensis</gloss>. \"Alas, oh alas! Why has wretched fate started this again? Again, that same demon in the form of a Banyan tree has been encountered.\" Thinking thus in a dream-like state, he saw those same two men on its branch. One of them said: \"Doer <term>Kartṛ</term> <gloss>the creative aspect of fate</gloss>! Why was five hundred gold coins given by you to this Somilaka? Do you not know that he has nothing at all beyond food and clothing?\" He <note>the Doer</note> said: \"O Deed <term>Karman</term> <gloss>the personification of past actions and destiny</gloss>! I must certainly give to those who are industrious. The outcome of that depends on him. So why do you reproach me?\" Hearing this, as soon as Somilaka searched for his bundle, he saw it was empty. Then, overcome with extreme despair <term>vairāgya</term> <gloss>disenchantment or detachment from the world</gloss>, he thought: \"Alas! What is the use of life for me without wealth? I will hang myself here on this Banyan tree <term>vaṭa</term> <gloss>fig tree</gloss> and give up my life.\"\n\nHaving decided this, he made a rope out of <term>darbha</term> <gloss>sacred grass used in rituals</gloss>, placed a noose around his neck, and climbed the branch. Just as he tied himself and was about to throw himself down, a man standing in the sky said this: \"O Somilaka! Do not, do not do such a rash act. I am that same taker of wealth, who [takes whatever is] in excess of your food and clothing\"\n\n<summary>Somilaka the weaver loses his newly earned gold twice to personified forces of fate and destiny. Driven to despair, he attempts suicide under a Banyan tree but is interrupted by a celestial voice.</summary>\n<keywords>Somilaka, Vardhamanapura, Banyan tree, Kartr, Karman, wealth, fate, suicide attempt, divine intervention</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2619,
+ "outputTokens": 3729,
+ "thinkingTokens": 3063,
+ "cost_usd_realtime": 0.0124965,
+ "cost_usd_batch_equiv": 0.00624825,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 15370,
+ "at": "2026-10-03T20:47:50.024Z"
+}

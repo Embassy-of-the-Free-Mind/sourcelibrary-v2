@@ -1,0 +1,30 @@
+{
+ "id": "6a3c61b1879008ba7e15fba1_00068",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from the discussion on the relationship between action and learning in the previous chapter</meta>\n\nRegarding the weight of the fundamental and the peripheral: in terms of importance, conduct is the fundamental. Therefore, this chapter places conduct before literature, prioritizing the root over the branches. However, in terms of the sequence of knowledge and action, literature comes first. This is why the chapter on the Four Teachings <note>referring to Analects 7.25: literature, conduct, loyalty, and trustworthiness</note> places literature before conduct. By examining these two chapters together, it is clear that literature and conduct must advance in tandem.\n\n<margin>Great Collection of Commentaries on the Collected Annotations of the Analects</margin>\n<margin>Sequence of punctuation and reading</margin>\n\n○ <term>Zi Xia</term> <gloss>a prominent disciple of Confucius known for his scholarship</gloss> said: \"If a person honors the worthy as worthy <note>original: 賢賢, xian xian</note> and changes his regard for physical beauty <note>original: 易色, yi se</note>; if in serving his parents he can exhaust his strength; if in serving his lord he can devote his life; and if in interacting with friends his words are trustworthy—even if it is said that such a person has not yet studied, I will certainly say that he has.\"\n\n<term>Zi Xia</term> was a disciple of Confucius. His surname was Bu and his name was Shang; he was a man from the state of Wei. To \"honor the worthy as worthy and change his regard for physical beauty\" means to appreciate the virtue of the worthy and thereby transform the heart that loves physical beauty. This indicates a sincere love for goodness. The <term>Ji Zhu</term> <gloss>Collected Annotations</gloss> asks: Why does it say \"seeing the worthy and changing one's countenance\"? It refers to the beauty of loving goodness. Master Zhu <note>Zhu Xi, the primary commentator</note> said that the Master twice remarked on never having seen anyone love virtue as much as they love physical beauty. The <term>Zhongyong</term> <gloss>Doctrine of the Mean</gloss> also treats distancing oneself as a method for dealing with physical beauty. \"Devote\" <note>original: 致, zhi</note> is similar to \"entrust\" <note>original: 委, wei</note>. To entrust and devote one's life means to no longer treat the body as one's private possession. Sincerity lies in changing the love of beauty. Therefore, the explanation by Fan <note>Fan Zuyu, a Song dynasty historian and scholar</note> is the most accurate.\n\n<summary>This page discusses the balance between moral conduct and formal study, concluding they must proceed together. It includes Zi Xia's famous teaching that practical filial piety and loyalty constitute true learning even without formal education.</summary>\n<keywords>Zi Xia, Confucius, Zhu Xi, filial piety, loyalty, physical beauty vs virtue, root and branch, Four Teachings</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2072,
+ "outputTokens": 2372,
+ "thinkingTokens": 1713,
+ "cost_usd_realtime": 0.008152,
+ "cost_usd_batch_equiv": 0.004076,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 10722,
+ "at": "2026-10-03T20:44:32.430Z"
+}

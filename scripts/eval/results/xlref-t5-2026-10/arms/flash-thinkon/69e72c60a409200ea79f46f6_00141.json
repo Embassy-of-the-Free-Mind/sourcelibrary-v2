@@ -1,0 +1,30 @@
+{
+ "id": "69e72c60a409200ea79f46f6_00141",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "# The principles in this section are subtle and profound\n\n<margin>Nursing</margin>\nA child who nurses from its dead mother will, after a short while, look at her with eyes that seem to abandon her and get up to leave, <margin>because the blinking of the eyes no longer sees him</margin> for she no longer sees him. You do not find your own kind in her. <margin>The stiffness of the body no longer resembles her</margin> What you love in your mother is not her physical form, <margin>if the form is not worth loving, then it is not loved</margin> but that which animates her form.\n\nWhen a man who dies in battle is buried, he is not provided with <term>qiesha</term> <gloss>funeral ornaments or concubines</gloss> for his burial. <margin>Those who die in battle lose their martial prowess, so concubines are not provided for the burial</margin> A man who has undergone <term>yue</term> <gloss>the punishment of foot amputation</gloss> <note>original: \"胎者\" (taizhe), a variant for \"刖者\" (yuezhe)</note> has no reason to love his shoes; in both cases, the foundation is gone. <margin>The shoe takes the foot as its basis</margin>\n\n<margin>Another metaphor: selecting concubines requires a complete body; this illustrates the greatness of those with whole virtue</margin>\nThose who serve as palace women for the Son of Heaven do not trim their nails or pierce their ears. A man who has just taken a wife stays outside the official court and is no longer called for duty. <margin>They are not sent for official labor for fear of callousing their hands and feet, which would prevent them from forming a new marriage bond</margin> If keeping the physical form whole is enough to make one special, <margin>a whole form is still enough to move people</margin> how much more so for one whose <term>de</term> <gloss>virtue/inner power</gloss> is whole!\n\nThe text below follows this meaning.\n\n<meta>This page is part of the chapter \"The Sign of Virtue Complete\" (De Chong Fu)</meta>\n<meta>Publisher mark: Richuantang</meta>\n\n<summary>Zhuangzi uses metaphors of nursing infants, funeral rites, and palace etiquette to argue that inner essence is more important than physical form. He suggests that spiritual wholeness is far superior to mere physical completeness.</summary>\n<keywords>inner essence, physical form, virtue, foot amputation, palace women, funeral rites, Zhuangzi</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2187,
+ "outputTokens": 1899,
+ "thinkingTokens": 1334,
+ "cost_usd_realtime": 0.0067905000000000005,
+ "cost_usd_batch_equiv": 0.0033952500000000003,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 9608,
+ "at": "2026-10-03T20:43:41.553Z"
+}

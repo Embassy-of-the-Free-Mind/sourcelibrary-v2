@@ -1,0 +1,30 @@
+{
+ "id": "6a3c5f3c879008ba7e153862_00029",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "# The Diamond Prajna Paramita Sutra\n\n<note>original: 金剛般若波羅蜜經</note>\n\nForm, sound, smell, taste, touch, and phenomena; this is what is called a <term>Srotapanna</term> <gloss>Stream-enterer</gloss>.\n\n\"What do you think? Can a <term>Sakradagamin</term> <gloss>Once-returner</gloss> entertain this thought: 'I have attained the fruit of a Once-returner'?\"\n\nSubhuti said, \"No, World-Honored One. Why? <term>Sakradagamin</term> means 'going and returning once,' but in truth there is no such thing as going or returning. Therefore, he is called a Once-returner.\"\n\n\"Subhuti, what do you think? Can an <term>Anagamin</term> <gloss>Non-returner</gloss> entertain this thought: 'I have attained the fruit of a Non-returner'?\"\n\nSubhuti said, \"No, World-Honored One. Why? <term>Anagamin</term> means 'not coming,' but in truth there is no such thing as 'not coming.' Therefore, he is called a Non-returner.\"\n\n<summary>This page records a dialogue between the Buddha and Subhuti regarding the first three stages of Buddhist enlightenment: the Stream-enterer, the Once-returner, and the Non-returner. It emphasizes that these stages are designations rather than inherent identities or self-possessed achievements.</summary>\n<keywords>Diamond Sutra, Srotapanna, Sakradagamin, Anagamin, Subhuti, enlightenment stages, emptiness of attainments</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1985,
+ "outputTokens": 375,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0021175,
+ "cost_usd_batch_equiv": 0.00105875,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2387,
+ "at": "2026-10-03T12:05:24.405Z"
+}

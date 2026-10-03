@@ -1,0 +1,30 @@
+{
+ "id": "69e72c75a409200ea79f4976_00100",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "...give them wine to observe their decorum, and place them in diverse situations to observe their composure <term>se</term> <gloss>facial expression and internal state</gloss>. Through these nine tests, even the most unworthy person can be fully understood. \n\nZheng Kaofu <margin>A member of the ducal clan of the State of Song and the tenth-generation ancestor of Confucius</margin> was stooped <margin>A scholar <note>the first rank of officialdom</note></margin> <margin>A stooped back</margin> when first appointed, bowed further when appointed a second time <margin>A Great Officer <note>the second rank</note></margin>, and bent low <margin>His body was hunched as he did not dare take up space on the road</margin> when appointed a third time. <margin>Such was the genealogical record of Kaofu</margin> <margin>Who would dare not take this as a model?</margin> <margin>Nine men <note>referring to a group or a specific count in the commentary</note></margin> When he received a command, he would bow and walk along the wall. Who would dare not follow such a disciplined path? \n\nBut as for those common men, upon their first appointment <margin>Word technique</margin> they become haughty <margin>An appearance of pride and arrogance</margin>; <margin>Word technique</margin> upon their second appointment <margin>Word technique</margin> they dance atop their carriages <margin>Riding in a carriage with a boastful, swaying manner</margin>; <margin>Word technique</margin> and upon their third appointment <margin>Word technique</margin> they address their uncles by their personal names. <margin>Calling his elders by their names</margin> \n\nHow great was the yielding virtue of Xu You <margin>How great was the yielding virtue of Xu You in ancient times!</margin> in the past! To have a conscious intention to be virtuous is the thief of virtue <margin>To have a mind set on being virtuous is the enemy of true virtue</margin>. And when the heart is enslaved to what is right before the eyes <note>literally: between the eyebrows and eyelashes</note>, virtue becomes even more of a fabrication <margin>When the mind is occupied with superficial appearances, virtue is further corrupted</margin>. \n\nBecause of this, if one looks back into the heart <margin>Sentence structure</margin>, one finds constant agitation and confusion <margin>From this, looking inward at the heart, all is in turmoil, making it impossible to achieve virtue or progress in the Way</margin>; in the end, one can neither complete virtue nor advance toward the Way. <margin>Eye, ear, nose, tongue, heart</margin> <margin>Heart</margin> \n\n<unclear>協</unclear> There is no greater thief than a virtue that possesses a conscious heart, and a heart that possesses \"eyelashes\" <note>meaning a heart that looks outward or is concerned with how it is seen by others</note>. When one is clever, they look inward; yet by looking inward with a self-conscious mind, they are ruined. There are five types of harmful virtue, and the most dangerous is the virtue of the heart <note>referring to the ego-driven center of the self</note>.\n\n<summary>This page contrasts the genuine humility of Zheng Kaofu, who became more modest with each promotion, against the arrogance of common men. It warns that conscious or performative virtue is a \"thief\" that prevents one from reaching the Way.</summary>\n\n<keywords>Zheng Kaofu, humility, arrogance, Xu You, yielding virtue, nine tests of character, inner vision, Five Harmful Virtues</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2315,
+ "outputTokens": 2893,
+ "thinkingTokens": 2097,
+ "cost_usd_realtime": 0.009836500000000001,
+ "cost_usd_batch_equiv": 0.004918250000000001,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 13417,
+ "at": "2026-10-03T20:47:24.462Z"
+}

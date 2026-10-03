@@ -1,0 +1,30 @@
+{
+ "id": "69907971b621b177c1af74df_00309",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page: ...He is beyond that.</meta>\n\n<page-num>290</page-num>\n<header>Surya Siddhanta:</header>\n\nVasudeva is the Supreme Brahman. His embodiment is the Supreme Person; He is the Unmanifest, without attributes, peaceful, beyond the twenty-five elements, and immutable, meaning He is devoid of transformation. || 12 ||\n\n->The Lord, who dwells within <term>prakṛti</term> <gloss>primordial nature</gloss>, pervades both inside and out;<-\n->Sankarshana, at the beginning of creation, created the waters and deposited His potency within them. || 13 ||<-\n\nHe explains the reason for the impossibility of the pure Brahman being the cause of the world. \"Dwells within <term>prakṛti</term>\" means He is veiled by <term>māyā</term> <gloss>illusion</gloss>; \"pervades both inside and out\" means He is the material cause of the world. All these attributes are to be understood as belonging to Sankarshana, who is an aspect of Vasudeva, because he is identical in essence to Vasudeva. Sankarshana, who is an aspect of Vasudeva, first created the waters. In those waters, He deposited His potency, which is a specific type of power. || 13 ||\n\nThe omnipresent and experienced Lord Sankarshana entered this <term>prakṛti</term> and first created the waters. Thereafter, He established His own brilliance, in the form of a seed, within those waters. || 13 ||\n\n->That became a golden egg, covered everywhere by darkness;<-\n->Within it, the eternal Aniruddha was the first to become manifest. || 14 ||<-\n\nWhat happened thereafter? That water, combined with His power, became a golden, spherical egg, covered everywhere—inside and out—by darkness. The meaning is that a golden egg was born in the space filled with darkness. Within that golden egg, the eternal Aniruddha, who is an aspect of Vasudeva (Sankarshana being a partial manifestation), was the first to become manifest. He was not \"created\" in the sense of a new origin, following the doctrine of pre-existing effects <term>satkāryavāda</term>. Just as oil is always present in sesame seeds and is only manifested, not created. || 14 ||\n\nThat brilliance in the form of a seed assumed the shape of a golden egg. It was surrounded on all sides by darkness. There (within the egg), the eternal Lord Aniruddha first appeared. || 14 ||\n\n->This Lord is read in the Vedas as <term>Hiraṇyagarbha</term> <gloss>Golden Womb/Germ</gloss>;<-\n->He is indeed called <term>Āditya</term> <gloss>the First/Sun</gloss> because of his primordial state, and <term>Surya</term> <gloss>the Sun</gloss> because of his expansion. || 15 ||<-\n\nNow, He states His other names for the better understanding of the people. This Aniruddha, who is a portion of Sankarshana and is endowed with the six qualities of divine majesty, is read in the <term>Chhandas</term> <gloss>Vedas</gloss> as <term>Hiraṇyagarbha</term>, because He dwells in the center of the golden egg. This means that in the Vedas, it is well-known that His other name is <term>Hiraṇyagarbha</term>. Indeed, He is called <term>Āditya</term> because He was the first to be manifested. Due to His expansion—because this world is manifested from Him—He is called <term>Surya</term>.\n\n->\"<term>Hiraṇyagarbha</term> existed in the beginning; He was the sole Lord of all beings.\"<-\n\nThis is the Shruti <note>scriptural text</note>. || 15 ||\n\nThis is the Lord <term>Hiraṇyagarbha</term> who is mentioned in the Vedas. In the beginning...\n\n<summary>This page details the metaphysical origin of the universe, describing the manifestation of Sankarshana, the creation of the golden cosmic egg, and the emergence of Aniruddha, who is identified with Hiraṇyagarbha, Āditya, and Surya according to Vedic tradition.</summary>\n<keywords>Vasudeva, Sankarshana, Aniruddha, Hiraṇyagarbha, creation, golden egg, Surya, Vedic cosmology</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3166,
+ "outputTokens": 1022,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0023244999999999997,
+ "cost_usd_batch_equiv": 0.0011622499999999999,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 4059,
+ "at": "2026-10-03T12:05:13.609Z"
+}

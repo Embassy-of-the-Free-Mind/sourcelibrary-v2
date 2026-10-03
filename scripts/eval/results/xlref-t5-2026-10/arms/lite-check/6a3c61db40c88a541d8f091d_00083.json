@@ -1,0 +1,35 @@
+{
+ "id": "6a3c61db40c88a541d8f091d_00083",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: Subhuti, what do you think?</meta> If a person were to fill the three thousand great thousand worlds with the seven treasures <note>gold, silver, lapis lazuli, crystal, agate, ruby, and cornelian</note> and use them for charity, would that person gain much merit because of this cause and condition? It is so, World-Honored One. This person would gain very much merit because of this cause and condition. Subhuti, if merit were real, the Tathagata <note>The Thus-Come One, a title for the Buddha</note> would not say that one gains much merit. It is because there is no merit that the Tathagata speaks of gaining much merit.\n\nThe merit of the seven treasures cannot accomplish the fruit of Buddhahood or <term>bodhi</term> <gloss>enlightenment</gloss>. Therefore, it is said to be \"none.\" Because it is boundless and without limit, it is named as \"much.\" If one could surpass this, then one would not speak of it as \"much.\"\n\nThe Section on Detachment from Form and Characteristics, the Twentieth: The three bodies <note>the <term>trikaya</term> or three dimensions of a Buddha's being</note> are fully present, and all characteristics are perfectly fulfilled. Both person and dharma are forgotten. This is precisely not being fully present, therefore it is followed by the Section on Detachment from Form and Characteristics.\n\nSubhuti, what do you think? Can the Buddha be seen by means of a fully perfect physical body? No, World-Honored One. If <unclear>as</unclear>\n\n<summary>This passage discusses the emptiness of merit gained through material charity and transitions into the twentieth section of the Diamond Sutra, which emphasizes detachment from physical form and characteristics in order to perceive the true nature of the Buddha.</summary>\n<keywords>Subhuti, merit, charity, Tathagata, enlightenment, three bodies, detachment, Diamond Sutra</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 954,
+ "outputTokens": 510,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.002007,
+ "cost_usd_batch_equiv": 0.0010035,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "number",
+   "source": "離色離相分第二十",
+   "was": "the Twenty-Third",
+   "now": "the Twentieth"
+  }
+ ],
+ "base_sha": 1904,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 2282,
+ "at": "2026-10-03T12:08:31.348Z"
+}

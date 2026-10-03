@@ -1,0 +1,30 @@
+{
+ "id": "69b99f256ed9e0490990aa8a_00185",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "->13. The Chapter on the Peaceful Abode<-\n\n<margin>K 275</margin>\nN 180\nW 235\nThen Manjushri the Youthful <note>original: \"kumarabhuto\"; also meaning Crown Prince</note> spoke thus to the Blessed One: \"It is difficult, O Blessed One, extremely difficult what these <term>Bodhisattvas</term> <gloss>beings dedicated to enlightenment</gloss> <term>Mahasattvas</term> <gloss>great beings</gloss> have undertaken out of reverence for the Blessed One. How, Blessed One, should this <term>Dharma-paryaya</term> <gloss>Dharma-discourse</gloss> be proclaimed by these Bodhisattva-Mahasattvas in the latter times, in the final age?\" When he had spoken thus, the Blessed One said to Manjushri the Youthful: \"Established in four things, Manjushri, a Bodhisattva-Mahasattva should proclaim this Dharma-discourse in the latter times, in the final age. Which four? In this case, Manjushri, the Bodhisattva-Mahasattva must be established in proper <term>achara</term> <gloss>conduct</gloss> and <term>gocara</term> <gloss>sphere of activity</gloss> to proclaim this Dharma-discourse in the latter times, in the final age. And how, Manjushri, is a Bodhisattva-Mahasattva established in conduct and sphere? When, Manjushri, the Bodhisattva-Mahasattva is patient, self-controlled, has reached the level of self-mastery, is not agitated or terrified in mind, and is not envious. When, Manjushri, the Bodhisattva-Mahasattva does not dwell on any phenomenon <note>original: \"dharma\"</note> and observes the true nature of phenomena according to their own characteristics <note>original: \"svalakshana\"</note>. That which is the non-upholding and non-conceptualizing of these phenomena, this is called the conduct of a Bodhisattva-Mahasattva. And what, Manjushri, is the Bodhisattva-Mahasattva's\n<margin>K 276</margin>\nW 236\nsphere of activity? When, Manjushri, the Bodhisattva-Mahasattva does not associate with kings, nor does he associate with, serve, honor, or approach princes, high ministers, or royal officers. He does not associate with, serve, or honor followers of other paths <note>heretics</note> such as the <term>Charakas</term> <gloss>wandering mendicants</gloss>, <term>Parivrajakas</term> <gloss>homeless ascetics</gloss>, <term>Ajivikas</term> <gloss>fatalist ascetics</gloss>, or <term>Nirgranthas</term> <gloss>Jain monks</gloss>, nor those devoted to secular poetry and treatises. He does not serve, associate with, or honor those who maintain the mantras of the <term>Lokayatas</term> <gloss>materialists/worldly philosophers</gloss> or the materialists themselves, nor does he cultivate friendship with them. He does not associate with <term>Chandalas</term> <gloss>outcastes</gloss>, nor with pugilists, swineherds, poulterers, or\n<margin>N 181</margin>\nhunters. He does not associate with meat-sellers, actors, dancers, or wrestlers. He does not go to the places of entertainment or play belonging to others. He does not cultivate friendship with them. Except when they approach him, then he preaches the Dharma to them at the appropriate time, and he preaches it without being dependent on them. He does not serve, associate with, or honor monks, nuns, or male and female lay followers belonging to the <term>Shravaka-yana</term> <gloss>Hearer vehicle</gloss>, nor does he cultivate friendship with them. He does not share the same sphere of movement with them, whether in the walking-path or in the monastery. Except when they approach him, then he preaches the Dharma to them at the appropriate time, and he preaches it without being dependent on them. This, Manjushri, is the sphere of activity for a Bodhisattva-Mahasattva.\n<margin>K 277</margin>\n\nFurthermore, Manjushri, the Bodhisattva-Mahasattva does not frequently preach the Dharma to women by taking hold of any signs of desire, nor does he desire frequent sight of women. He does not enter the homes of families, nor does he think it proper to frequently converse with young girls, maidens, or daughters-in-law, nor does he exchange pleasantries with them. He does not preach the Dharma to a <term>pandaka</term> <gloss>eunuch</gloss>, nor does he cultivate friendship with one, nor exchange pleasantries. He does not enter a house for alms alone, unless he is cultivating the <term>tathagata-anushmriti</term> <gloss>recollection of the Buddha</gloss>. If he should preach the Dharma to women, he does not preach it even with the slightest affection for the Dharma, <note>text continues: much less with affection for the person</note>\n\n---\n\n<meta>The bottom section contains critical variants for the edition. Note 1: \"Very difficult\" (G version). Note 2: Omitted \"in the latter times\" (G version). Note 3: Omitted \"not terrified\". Note 4: \"Is attached\" (K version). Note 5: \"Upholding of dharmas\" (G version). Note 6: \"Associates\" (G version). Note 7: \"Taking\" (K version). Note 8: \"Is pleased with\" (G version).</meta>\n\n<summary>Manjushri asks the Buddha how Bodhisattvas should behave in the future to preserve the teachings. The Buddha explains the first of four requirements: maintaining proper conduct and avoiding distracting or low-status social circles.</summary>\n<keywords>Manjushri, Bodhisattva, conduct, sphere of activity, materialists, Shravaka vehicle, social ethics, mindfulness</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3120,
+ "outputTokens": 2878,
+ "thinkingTokens": 1491,
+ "cost_usd_realtime": 0.010194,
+ "cost_usd_batch_equiv": 0.005097,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4318
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 13445,
+ "at": "2026-10-03T20:42:23.083Z"
+}

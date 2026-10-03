@@ -1,0 +1,30 @@
+{
+ "id": "69e72c7da409200ea79f4a01_00053",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "<margin>Both of these meanings are acceptable.</margin>\n<margin>Liezi. Yellow Emperor.</margin>\n\nThey certainly lack the heart of a beast. Even if they did have the heart of a beast, they would be treated as kin because of their outward form. It is said that those who wear horns, have sharp teeth, spread their claws, fly upward, or walk and crouch are called birds and beasts. Yet they do not necessarily lack the heart of a human. Even if they have a human heart, they are kept at a distance because of their outward form.\n\n<term>Paoxi</term> <gloss>Fuxi</gloss>, <term>Nuwa</term>, <term>Shennong</term>, and the <term>Xiahou</term> <gloss>Yu the Great</gloss> had bodies of snakes, faces of humans, heads of oxen, or noses of tigers. These possessed the appearance of non-humans but had the virtue of great sages. <term>Jie</term> of Xia, <term>Zhou</term> of Yin, <term>Huan</term> of Lu, and <term>Mu</term> of Chu had appearances and facial features <note>the seven orifices of the head: eyes, ears, nostrils, and mouth</note> identical to other humans, but they had the hearts of birds and beasts. Yet the common people stick to a single outward appearance to seek supreme wisdom. This is unlikely to succeed.\n\nThe <term>Yellow Emperor</term> fought the <term>Flame Emperor</term> in the wilderness of <term>Banquan</term>. He led bears, grizzly bears, wolves, leopards, <term>pixiu</term> <gloss>mythical fierce beasts</gloss>, and tigers as his vanguard. He used eagles, <term>he</term> <gloss>brown eared-pheasants</gloss>, hawks, and kites as his banners. This was a case of using power to command birds and beasts. <term>Yao</term> commanded <term>Kui</term> <note>a legendary music official</note> to oversee the music. When the sounding stones were struck and patted, all the animals danced together. When the <term>Xiaoshao</term> <gloss>music of the sage-king Shun</gloss> was performed nine times, the phoenixes came to present themselves.\n\n<summary>This page argues that internal character and wisdom are independent of outward appearance. It cites mythological sages with animal traits and historical tyrants with human forms to illustrate this distinction.</summary>\n<keywords>Fuxi, Nuwa, Yellow Emperor, Banquan battle, outward appearance vs inner nature, sagehood, mythical animals</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2102,
+ "outputTokens": 1980,
+ "thinkingTokens": 1403,
+ "cost_usd_realtime": 0.006991,
+ "cost_usd_batch_equiv": 0.0034955,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 9004,
+ "at": "2026-10-03T20:43:52.738Z"
+}

@@ -1,0 +1,30 @@
+{
+ "id": "6a31c8b74400787ae5a9d7a7_00042",
+ "arm": "flash-corr",
+ "model": "gemini-3-flash-preview",
+ "text": "# Chapter on Impurity <note>original: Malavaggo</note>\n\n250. But for him in whom this <note>referring to the practice of lying and misconduct mentioned in previous verses</note> is destroyed, struck at the root and uprooted, he indeed, by day or by night, attains <term>samadhi</term> <gloss>meditative concentration</gloss>.\n8. The Story of the Young Tissa <note>Aṭṭhakathā reference: Volume III, page 357</note>\n\n251. There is no fire like lust; there is no grip like hatred; there is no net like delusion; there is no river like craving.\n9. The Story of the Five Lay-Devotees <note>Aṭṭhakathā reference: Volume III, page 360</note>\n\n252. The faults of others are easily seen, but one’s own are difficult to see. One winnows the faults of others like chaff, but hides one’s own like a dishonest gambler hides an unlucky die <note>original: kali</note>.\n10. The Story of Mendaka the Merchant <note>Aṭṭhakathā reference: Volume III, page 363</note>\n\n253. For one who focuses on the faults of others and is constantly irritable, their <term>asavas</term> <gloss>mental fermentations or pollutants</gloss> increase. Such a person is far from the destruction of the <term>asavas</term>.\n11. The Story of the Elder Named Ujjhanasanni <note>The name literally means \"He who perceives faults\"; Aṭṭhakathā reference: Volume III, page 376</note>\n\n254. In the sky there is no track. There is no true <term>samana</term> <gloss>ascetic or seeker</gloss> outside <note>referring to those outside the path of Dhamma</note>. Mankind delights in worldliness and conceptual proliferation, but the <term>Tathagatas</term> <gloss>the Buddhas; literally \"Those who have thus come/gone\"</gloss> are free from such proliferation.\n\n255. In the sky there is no track. There is no true <term>samana</term> <gloss>ascetic</gloss> outside. There are no eternal conditioned things. There is no instability in the Buddhas.\n12. The Story of Subhadda the Wandering Ascetic <note>Aṭṭhakathā reference: Volume III, page 377</note>\n\nXVIII THE EIGHTEENTH CHAPTER: IMPURITY\n\n---\n\n<margin>\n1. Burmese variant: kaḷi. \n2. F-variant: ca; Burmese variant: va.\n3. K-variant and F-variant: bāhiro; Burmese and Siamese variants: bāhire.\n252. Jataka Volume III, page 223.\n</margin>\n\n<summary>This page contains verses 250 to 255 of the Dhammapada, focusing on the removal of spiritual impurities, the danger of judging others, and the unique nature of the Buddha's path. It emphasizes that internal peace and the destruction of mental pollutants are achieved through self-reflection rather than criticizing others.</summary>\n<keywords>Dhammapada, Malavaggo, Samadhi, Asavas, Tathagata, Buddhist ethics, self-reflection, craving, Tissa, Mendaka, Subhadda</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2346,
+ "outputTokens": 769,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.00348,
+ "cost_usd_batch_equiv": 0.00174,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 4225,
+ "at": "2026-10-03T20:28:41.020Z"
+}

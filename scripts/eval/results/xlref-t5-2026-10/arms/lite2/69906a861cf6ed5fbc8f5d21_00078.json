@@ -1,0 +1,30 @@
+{
+ "id": "69906a861cf6ed5fbc8f5d21_00078",
+ "arm": "lite2",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<page-num>62</page-num>\n<header>Lilavati</header>\n\n# Example\n# Further Example\n\n> When the clouds arrived, ten times the square root of a flock of swans flew to Lake Manasa, while one-eighth of the flock flew from the water's edge to a grove of land-lotuses. O girl, three pairs of swans were seen enjoying themselves in the water, which was lovely with young lotus stalks. Tell me the total number of the flock. (3)\n\n**Prose order:** O girl! With the arrival of the clouds, ten times the square root of the flock of swans went to Lake Manasa. One-eighth of the flock flew from the water's edge to a land-lotus grove. And three pairs of swans were seen enjoying play in the water, adorned with young lotus stalks. If so, tell me the total number of the flock. (3)\n\n**Meaning:** O beloved, who is sixteen years of age! There was a flock of swans. When the rainy season arrived, ten times the square root of them went to Lake Manasa, and one-eighth of the flock flew from the water's edge to the land-lotus grove. And three pairs <note>6 swans</note> of swans were seen playing with great affection in the water, which was beautiful with soft lotus stalks. Tell me, how many swans were in that flock? (3)\n\n**Calculation:** The multiplier is 10. The fraction is 1/8. The visible amount is 6. Since the rule states \"reduced by the fraction,\" here, by dividing the visible amount 6 by the remaining fraction 7/8, we obtain the visible amount 48/7. The multiplier becomes 80/7. Half of the multiplier is 40/7. Squaring this gives 1600/49. Adding this to the visible amount gives 1936/49. The square root of this is 44/7. Added to half the multiplier (40/7) and squared, the total number of swans is 144.\n\n**Elaboration:** According to the rule mentioned in the second verse above, when one-eighth (1/8) is subtracted from one, it becomes 1/1 - 1/8 = 7/8. Dividing the visible amount of 6 by this, we get 6/1 ÷ 7/8 = 6/1 × 8/7 = 48/7. By adjusting the seven, 48/7 becomes the visible quantity. Similarly, dividing the multiplier 10 by 7/8, we get 10/1 ÷ 7/8 = 10/1 × 8/7 = 80/7. By adjusting the seven, 80/7 becomes the base quantity. Now, taking 48/7 as the visible quantity and 80/7 as the base, the operation is performed according to the method stated in the verse above. That is, half of the multiplier is 40/7. Squaring this gives 1600/49. This is added to the visible quantity 48/7...\n\n<meta>Collection: Late Pt. Manmohan Shastri Collection Jammu. Digitized by eGangotri. CC-0.</meta>\n\n<summary>This page presents a mathematical word problem concerning a flock of swans, providing the original Sanskrit verse, its prose translation, and the step-by-step algebraic calculation to find the total number of birds.</summary>\n<keywords>Lilavati, swans, square root problems, algebraic calculation, fractions, word problems</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2710,
+ "outputTokens": 786,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0018565,
+ "cost_usd_batch_equiv": 0.00092825,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2777,
+ "at": "2026-10-03T12:04:38.775Z"
+}

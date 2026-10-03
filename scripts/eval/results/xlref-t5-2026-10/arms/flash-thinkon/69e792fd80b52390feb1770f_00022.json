@@ -1,0 +1,30 @@
+{
+ "id": "69e792fd80b52390feb1770f_00022",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "Previously, <term>Li Ru</term> <gloss>a chief advisor to Dong Zhuo</gloss> advised <term>Dong Zhuo</term> <gloss>the warlord controlling the imperial court</gloss> to promote famous scholars to win public support. <term>Dong Zhuo</term> followed most of this advice. <term>Li Ru</term> then recommended the talent of <term>Cai Yong</term> <gloss>a renowned scholar and official</gloss>. <term>Dong Zhuo</term> ordered him to be summoned, but <term>Cai Yong</term> did not go at first. <term>Dong Zhuo</term> was furious and sent a messenger to tell him: \"If you do not come, I shall exterminate your entire clan.\" Fearing this, <term>Cai Yong</term> had no choice but to comply and arrive at the capital. <term>Dong Zhuo</term> was greatly pleased to see <term>Cai Yong</term> and promoted him three times within a single month, appointing him as a Palace Attendant. He was treated with great intimacy and favor. <gloss>Always relying on the likes of Wang Feng and Yang Xiong.</gloss> <gloss>Perishing amidst the firewood, buried by the woodcutter of Mount Kun.</gloss>\n\nNow it is said that the <term>Young Emperor</term> <gloss>the deposed former ruler, Liu Bian</gloss>, along with <term>Empress Dowager He</term> and <term>Consort Tang</term>, were confined in the <term>Yong'an Palace</term> <gloss>the Palace of Everlasting Peace</gloss>. Their clothing and food supplies gradually dwindled. The <term>Young Emperor's</term> tears never dried. <gloss>Like what a later king said of the \"days and months in this place.\"</gloss> One day, he happened to see a pair of swallows flying in the courtyard and composed a poem. <gloss>Birds flying in the empty courtyard, soaring and dancing, while he is isolated in a cold, abandoned palace.</gloss> The poem read:\n\nThe tender grass is green, shrouded in mist,\nGracefully fly a pair of swallows.\nThe Luo River is a single ribbon of blue,\nPeople on the roads are truly to be envied. <gloss>The first half of the poem describes the swallows and gazes into the distance.</gloss>\nDeep within the azure clouds was the palace where I once lived. <gloss>He gazes toward his old palace but cannot fly there; he is truly not as fortunate as the pair of swallows who can return to their old nest. How tragic!</gloss>\nWho will rely on loyalty and righteousness,\nTo vent the resentment in my heart? <gloss>The second half is an expression of his own will. It is a fine poem.</gloss>\n\n<term>Dong Zhuo</term> frequently sent people to eavesdrop on them. On this day, his spies obtained this poem and presented it to him. <term>Dong Zhuo</term> said, \"Writing a poem out of resentment gives me a legitimate reason to kill him.\" <gloss>To kill him with a justification, and thus inform the world.</gloss> He then ordered <term>Li Ru</term> to take eighteen warriors into the palace to assassinate the Emperor. The Emperor, the Empress Dowager, and the Consort were on an upper floor. When a palace maid reported that <term>Li Ru</term> had arrived, the Emperor was greatly alarmed. <term>Li Ru</term> offered the Emperor <term>poisoned wine</term> <gloss>literally \"poisoned wine of the zhen bird\"</gloss>. <gloss>Implying that since he wrote such poetry, drinking wine would be a most elegant matter.</gloss>\n\n<summary>Dong Zhuo forces the scholar Cai Yong into service and discovers a poem of lament written by the deposed Young Emperor. Viewing the poem as an act of rebellion, Dong Zhuo sends Li Ru to the palace to assassinate the former ruler with poisoned wine.</summary>\n<keywords>Dong Zhuo, Li Ru, Cai Yong, Young Emperor, Empress Dowager He, assassination, poisoned wine, poetry of resentment</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2279,
+ "outputTokens": 3157,
+ "thinkingTokens": 2247,
+ "cost_usd_realtime": 0.0106105,
+ "cost_usd_batch_equiv": 0.00530525,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 13127,
+ "at": "2026-10-03T20:44:58.042Z"
+}

@@ -1,0 +1,30 @@
+{
+ "id": "6a06b0aff12363da8cfdc945_00193",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "The king shall not make the holder pay for that <term>upanidhi</term> <gloss>open deposit</gloss> if it is stolen or destroyed by an act of God, such as fire or water, or by thieves, as the loss belongs to the owner of the wealth, provided the loss was not caused by fraud <note>original: jihma</note>. As <term>Narada</term> <gloss>an ancient legal authority</gloss> says: \"If it is lost along with the receiver's own property, it is lost for the giver; the same applies to acts of God or the king, unless it was caused by fraud.\"\n\nHe states an exception to this:\n\n### If loss occurs after it has been demanded and not given, he shall be made to pay its value and a fine equal to that. || 66 ||\n\nIf the owner has demanded or requested the item and the holder does not return it, and if a loss or destruction occurs through the king or other means after that demand, then the receiver is made to pay the value of that property to the owner, and an equivalent fine to the king. || 66 ||\n\nHe speaks regarding the fine for one who uses the deposit:\n\n### He who uses it for his own livelihood by his own will shall be fined and made to pay it back with interest.\n\nOne who uses or trades with the deposited property for his own profit by his own will, without the owner's permission, shall be fined according to the extent of use or the gain. He shall be made to return that <term>upanidhi</term> <gloss>open deposit</gloss> with its increase <note>interest</note> to the owner—with interest in the case of personal use, or with the profit in the case of trading. The standard for interest was stated by <term>Katyayana</term> <gloss>a legal commentator</gloss>: \"If a deposit, a balance of interest, a purchase, or a sale is not returned when demanded, it shall increase at five percent <note>per month</note>.\" This should be understood as applying when the item has been consumed. However, the same author shows a distinction regarding loss through negligence or lack of knowledge: \"For what is consumed, he shall be made to pay with interest; for what is neglected, he shall pay an equal amount; for property destroyed through ignorance, he should be made to pay slightly less.\" \"Slightly less\" means one-fourth less.\n\nHe extends the rules of the <term>upanidhi</term> <gloss>open deposit</gloss> to borrowed items and others:\n\n### This rule applies to borrowed items, sub-deposits, trusts, sealed deposits, and so forth. || 67 ||\n\n<term>Yachita</term> <gloss>borrowed items</gloss> refers to clothes, ornaments, and such items brought after requesting them for weddings and other festivities. <term>Anvahita</term> <gloss>sub-deposit</gloss> is wealth placed in the hand of one person, who then places it in the hand of another with the instruction, \"Give this to the owner.\" <term>Nyasa</term> <gloss>trust</gloss> is defined as placing an object in the hands of the members of a household without showing the master of the house, in his absence, with the intent that it be handed over to the master. Handing over an object in the presence of the master is a <term>nikshepa</term> <gloss>sealed deposit</gloss>. By the word \"and so forth\" <note>original: adi</note>, the text includes gold placed in the hands of a goldsmith for making bracelets and such, and <term>pratinyasa</term> <gloss>mutual deposit</gloss> where, for mutual benefit, one says, \"This property of mine is to be guarded by you, and this of yours is to be guarded by me.\" As <term>Narada</term> says: \"This same rule is seen for borrowed items, sub-deposits, and so forth; for artisans, for open deposits, for trusts, and for mutual deposits likewise.\" In these cases of borrowed items, sub-deposits, and so forth, this rule—which is the rule of return and liability for an open deposit—is to be understood. || 67 ||\n\n->Thus ends the Section on Open Deposits.<-\n\n<margin>\n1. Another reading is \"then it becomes fraud.\" 2. Another reading is \"he uses it and enjoys the fruit.\" 3. Another reading is \"being demanded.\" 4. Another reading is \"with the expectation that 'this of mine shall be [guarded]'.\"\n</margin>\n\n<summary>This page details the legal liabilities regarding deposited property, establishing that holders are not liable for accidental loss unless they refuse a return request, use the property for profit, or act with negligence.</summary>\n<keywords>Upanidhi, deposits, legal liability, Narada, Katyayana, interest, Nyasa, Nikshepa, property law</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2773,
+ "outputTokens": 2930,
+ "thinkingTokens": 1852,
+ "cost_usd_realtime": 0.0101765,
+ "cost_usd_batch_equiv": 0.00508825,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 13264,
+ "at": "2026-10-03T20:43:16.100Z"
+}

@@ -1,0 +1,41 @@
+{
+ "id": "69e7491a85f786e884a4d6f9_00789",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "Śrīmad Vālmīki Rāmāyaṇa, Yuddhakāṇḍa\n\n730\n\nBears, lions, boars, buffaloes, elephants, and deer were terrified by that sound and fled in all ten directions. \nThe Trikūṭa peak was tall, touching the sky, covered in flowers on all sides, and shone like refined gold. 18\nIt was one hundred <term>yojanas</term> <gloss>a measure of distance, roughly 8–9 miles</gloss> wide, pure, beautiful to behold, smooth, magnificent, and massive, difficult even for birds to reach. 19\nIt was difficult to ascend even in one’s mind, let alone for people to climb through physical effort. Perched upon that peak was Laṅkā, protected by Rāvaṇa. 20\nThe city was one hundred <term>yojanas</term> wide and thirty <term>yojanas</term> long. It had towering gateways that resembled white clouds. 21\nLaṅkā was adorned with golden and silver walls and was decorated with palaces and aerial vehicles. 22\nJust as the sun shines in the middle of the sky when the clouds have passed, the palace, decorated with a thousand pillars, stood out. 23\nLooking like a peak of Mount Kailāsa, it appeared to touch the sky. That <term>caitya</term> <gloss>sacred structure/temple</gloss> of the Lord of the Rākṣasas was the ornament of the city. 24\nIt was constantly guarded by a hundred Rākṣasas. Seeing that charming city, filled with forests, adorned with mountains, 25\nembellished with gardens rich in various minerals, resounding with various birds, and inhabited by various groups of beings, 26\ncovered in various flowers, and served by various Rākṣasas, the prosperous Rāma, elder brother of Lakṣmaṇa, 27\nbeheld the city of Rāvaṇa along with the monkeys. Seeing that city, crowded with great houses, the heroic elder brother of Lakṣmaṇa, 28\nwho resembled a god, was struck with wonder.\n\nRāma, with his great army, beheld the city filled with jewels, possessing many arrangements, decorated with rows of palaces, and equipped with great mechanical doors. 29\n\nThus ends the thirty-ninth chapter, titled \"The Sight of Laṅkā,\" in the Yuddhakāṇḍa of the glorious Rāmāyaṇa, the primal poem by Vālmīki, consisting of twenty-four thousand verses.\n\n---\n\n### Fortieth Chapter\n**The Duel Between Rāvaṇa and Sugrīva**\n\nThen Rāma, surrounded by Sugrīva and the leaders of the monkey army, ascended the summit of Mount Suvela, which measured two <term>yojanas</term> in circumference. 1\nStaying there for a moment and observing the ten directions, he saw Laṅkā, which had been built by <term>Viśvakarman</term> <gloss>the architect of the gods</gloss> on the beautiful peak of Trikūṭa, well-planned and beautified by charming forests. 2-3\nUpon it, he saw the Lord of the Rākṣasas, difficult to approach, stationed on the pinnacle of the gateway. 3\nHe was fanned by white <term>cāmaras</term> <gloss>yak-tail whisks</gloss> and adorned with a canopy of victory. He was smeared with red sandalwood paste and decorated with jewel ornaments. 4\nHe resembled a dark cloud and wore golden garments. His chest bore scars that looked like the tusks of the elephant Airāvata. 5\nHe was wrapped in a red cloth, the color of a rabbit's blood; he looked like a mass of clouds in the sky illuminated by the evening sun. 6\nAs the monkey leaders and Rāghava <gloss>Rāma</gloss> were looking on, Sugrīva suddenly rose up upon seeing the Lord of the Rākṣasas. 7\n\n<note>1. This half-verse is not present in version K.</note>\n\n<summary>This passage describes Rāma and his monkey army surveying the magnificent and well-defended city of Laṅkā from the Trikūṭa mountain, followed by the beginning of the fortieth chapter where Sugrīva confronts Rāvaṇa.</summary>\n<keywords>Rāma, Laṅkā, Rāvaṇa, Sugrīva, Yuddhakāṇḍa, Trikūṭa, Vālmīki, Rāmāyaṇa</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2168,
+ "outputTokens": 1158,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0045579999999999996,
+ "cost_usd_batch_equiv": 0.0022789999999999998,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "number",
+   "source": "योजनद्वयमण्डलम",
+   "was": "measured two yojanas",
+   "now": "two yojanas in circumference"
+  },
+  {
+   "type": "omission",
+   "source": "२",
+   "was": "2",
+   "now": "2-3"
+  }
+ ],
+ "base_sha": 3661,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 4136,
+ "at": "2026-10-03T12:07:49.657Z"
+}

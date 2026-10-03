@@ -1,0 +1,41 @@
+{
+ "id": "69b99d043a4a443c39c00775_00147",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "IV. 3. 5.] UPARIPAÑCA-VAGGA 3. 127\n\n19. Then Ragâ, daughter of Mâra, spoke this verse in the presence of the Blessed One:\nHaving severed the craving that flows like a river,\nMany beings will truly cross over.\nIndeed, this one <note>referring to the Buddha</note> leads away \nThe homeless multitude,\nHaving severed the snares of the King of Death.\n\n20. The great heroes, the Tathâgatas, guide through the true Dhamma.\nWhen those who understand are being led by the Dhamma,\nWhat jealousy can there be?\n\n21. Then Taṇhâ, Arati, and Ragâ, the daughters of Mâra, approached Mâra the Evil One.\n\n22. Mâra the Evil One saw Taṇhâ, Arati, and Ragâ, the daughters of Mâra, coming from afar. Seeing them, he spoke to them in verses:\nFools, you attempt to crush a mountain with lotus stalks,\nYou dig at a mountain with your fingernails,\nYou try to bite through it with teeth of iron.\nLike one who strikes their head against a rock,\nOr seeks footing in a deep abyss,\nOr strikes their chest against a tree stump,\nDepart disappointed from Gotama.\n\n23. Taṇhâ, Arati, and Ragâ came up glowing <note>with anxiety or agitation</note>. The Teacher dispelled them there, just as the wind blows away a tuft of cotton.\n\n->Third section<-\n->Its summary<-\nSambahulâ, Samiddhi, Godhika, Seven Years,\nAnd the Daughters, taught by the Buddha as the Teacher: the Mâra-samyutta is finished.",
+ "finishReason": "STOP",
+ "inputTokens": 1552,
+ "outputTokens": 545,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.002411,
+ "cost_usd_batch_equiv": 0.0012055,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "negation|role",
+   "source": "nibbijjâpetha Gotamâ ti",
+   "was": "You have become weary of Gotama.",
+   "now": "Depart disappointed from Gotama."
+  },
+  {
+   "type": "omission",
+   "source": "samattam",
+   "was": "this is the Mâra-samyutta.",
+   "now": "the Mâra-samyutta is finished."
+  }
+ ],
+ "base_sha": 1878,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 2507,
+ "at": "2026-10-03T12:07:09.532Z"
+}

@@ -1,0 +1,30 @@
+{
+ "id": "69e8b2642ff2a8dc09e778a1_00439",
+ "arm": "flash-corr",
+ "model": "gemini-3-flash-preview",
+ "text": "# Mozi, Volume 12\n\n<meta>The text continues the debate regarding the consequences of human actions and the validity of traditional rituals.</meta>\n\nThey cannot bring about misfortune or blessing, and they hold that there are no such things as auspicious or inauspicious omens. Because of this, the administration falls into disorder and the state is endangered. Therefore, the books of the former kings also contain this principle, stating: \"His <note>The character formerly written as 'also' is corrected here to mean 'his'</note> arrogance originates from himself and is inauspicious.\" This means that those who do evil will be punished, and those who do good will be rewarded.\n\nMaster Mozi spoke to Gongmengzi, saying: According to the rites of mourning, when a ruler, a parent, a wife, or the eldest son <insert>meaning the heir</insert> dies, one must observe three years of mourning. For paternal uncles, brothers, and cousins, the period is one year. For distant relatives, it is five months. For paternal aunts, elder sisters, maternal uncles, and sisters' sons, there are all designated months for mourning. Some people, during the intervals when they are not actively mourning, recite three hundred poems, play three hundred poems on stringed instruments, sing three hundred poems, and perform three hundred dances. If your words were followed, when would the gentleman find the time to attend to the administration of the state? When would the common people find the time to follow their occupations?\n\nGongmengzi replied: When the state is in disorder, one should govern it. When it is well-ordered, one should perform the rites and music. When the state is well-ordered, one follows one's occupation. When the state is wealthy, one performs the rites and music.\n\nMaster Mozi said: The order of a state <insert>Lu Wenchao suggests that five characters meaning 'is maintained through governing, therefore it is ordered' are missing here</insert>. If governing is abandoned, then the order of the state is also abandoned. The state's \n\n<summary>Mozi debates Gongmengzi regarding the impracticality of lengthy Confucian mourning rituals and the proper timing for rites and music in statecraft. Mozi argues that excessive ritual interferes with the essential duties of governing and productivity.</summary>\n<keywords>Mozi, Gongmengzi, mourning rites, rituals and music, governance, state order, reward and punishment</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2084,
+ "outputTokens": 517,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.002593,
+ "cost_usd_batch_equiv": 0.0012965,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 3941,
+ "at": "2026-10-03T20:29:22.803Z"
+}

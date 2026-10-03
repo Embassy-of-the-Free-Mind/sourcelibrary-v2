@@ -1,0 +1,30 @@
+{
+ "id": "69e72c60a409200ea79f46f6_00141",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>This page continues the discussion within the chapter Signs of Full Virtue (De Chong Fu), specifically focusing on the distinction between the physical form and the inner spirit or essence.</meta>\n\n# This Section Contains Subtle and Profound Principles\n\n<margin>Nursing</margin>\nA child who nurses from its mother after she has died will, after a short while, look at her with a fixed gaze and then <margin>Thinking her eyes no longer blink or see him</margin> get up and leave her. This is because the child no longer finds his own kind in her. <margin>The stillness of the form no longer resembles himself</margin> What he loved about his mother was <margin>If the form is not enough to be loved, then it is truly not loved</margin> not her physical form, but that which animated her form. When a man dies in battle <margin>Dying in battle means his martial prowess is gone, so he is not provided with concubines for the burial</margin> and is buried, he is not provided with the burial finery of concubines. A man whose feet have been amputated <margin>The feet are the root of the body</margin> has no reason to love his shoes. In both cases, the root is gone. <note>The text uses these analogies to show that once the essence or function is lost, the physical shell or its accessories lose their value.</note> <margin>Another metaphor: In selecting ladies-in-waiting, the emperor does not seek to exhaust the perfection of their physical forms; thus the most high should disregard physical defects.</margin> The ladies-in-waiting of the Son of Heaven do not trim their nails and do not pierce their ears. A man who has just <margin>Remaining outside of official service for fear that laboring with hands and feet would make him unfit for the wedding chambers</margin> taken a wife remains outside of official duties and is no longer sent on exhausting tasks. If keeping the physical form whole is enough to be treated with such consideration, <margin>One with a whole form is still able to move people</margin> how much more should this apply to one whose inner virtue is whole?\nThe meaning continues below.\n\n<meta>Signs of Full Virtue</meta>\n<meta>Nichuantang edition</meta>\n\n<summary>Zhuangzi uses analogies of a nursing child, a fallen warrior, and an amputee to argue that essence and spirit are more important than the physical body. He concludes that if people value physical wholeness in servants and newlyweds, they should value spiritual wholeness even more.</summary>\n<keywords>Zhuangzi, Signs of Full Virtue, essence vs. form, burial customs, physical wholeness, inner virtue</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2187,
+ "outputTokens": 575,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0028185,
+ "cost_usd_batch_equiv": 0.00140925,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 4249,
+ "at": "2026-10-03T12:05:14.785Z"
+}

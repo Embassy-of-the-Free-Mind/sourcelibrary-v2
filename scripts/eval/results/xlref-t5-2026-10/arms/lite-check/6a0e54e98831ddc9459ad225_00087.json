@@ -1,0 +1,28 @@
+{
+ "id": "6a0e54e98831ddc9459ad225_00087",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "In the <term>Hathayogapradipika</term> <gloss>Light on Hatha Yoga</gloss>\n\nThe body will become vigorous and free from all afflictions. By this method, the lord of yogis will truly be free of all disturbances on the surface of the earth. 56.\n\n### Now, the Shitali <gloss>Cooling Breath</gloss>\n\nDrawing in the air through the tongue, perform the <term>kumbhaka</term> <gloss>breath retention</gloss> as before. The wise practitioner should slowly exhale the air through the nostrils. 57.\n\nThis <term>kumbhaka</term> known as <term>Shitali</term> destroys diseases such as enlarged spleen and tumors, fever, bilious disorders, hunger, thirst, and poisons. 58.\n\n<column-break/>\n\n-> Commentary <-\n\n\"Will become,\" etc. The strength of the body will arise. By this stated method, the <term>Yogindra</term> <gloss>lord of yogis</gloss>, like an Indra among yogis, becomes free of all afflictions on the surface of the earth. This is the truth. By the maxim that every statement is emphatic, the fruit mentioned is certain. 56.\n\nDescribing the <term>Shitali Kumbhaka</term>. \"With the tongue,\" etc. By extending the tongue outward like the lower beak of a bird, draw in the air and perform the <term>puraka</term> <gloss>inhalation</gloss> slowly. Perform the <term>kumbhaka</term> <gloss>breath retention</gloss> as mentioned previously regarding the <term>Suryabhedana</term> <gloss>Sun-piercing breath</gloss>. The wise one, possessing good intellect, should slowly exhale the air through the openings of the nostrils. 57.\n\nDescribing the virtues of <term>Shitali</term>. \"Tumors,\" etc. Tumors, enlarged spleen, and other such diseases, fever, bilious disorders, hunger, thirst, and toxins resulting from snakebites and similar poisons—this <term>kumbhaka</term> known as <term>Shitali</term> destroys them completely. 58.\n\n<column-break/>\n\n-> Vernacular Translation <-\n\n\"Will become,\" etc. The body gains strength, and through this practice, one becomes like an Indra among yogis upon the earth, free from all disturbances. The fruit mentioned here is certain. 56.\n\nNow, the fourth <term>kumbhaka</term>, <term>Shitali</term>, is described. \"With the tongue,\" etc. Extending the tongue outside the lips like the lower beak of a bird, draw in the air, perform inhalation, and then perform the <term>kumbhaka</term> practice as previously mentioned for <term>Suryabhedana</term>. Then, one whose intellect is fine should slowly exhale the air through the nasal passages. 57.\n\nThe virtues of <term>Shitali</term> are described. \"Tumors,\" etc. Diseases such as tumors and enlarged spleen, fever, bilious disorders, the desire for food, the desire for water, the poison of snakebites, and other poisons—all of these are removed by this <term>kumbhaka</term> called <term>Shitali</term>. 58.\n\n<summary>This page describes the Shitali pranayama technique, explaining the physical practice and its therapeutic benefits, such as alleviating fever, digestive issues, and poisoning.</summary>\n<keywords>Shitali Kumbhaka, Hatha Yoga, Pranayama, Respiratory health, Traditional medicine, Svatmarama</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1892,
+ "outputTokens": 844,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.003478,
+ "cost_usd_batch_equiv": 0.001739,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [],
+ "base_sha": 3093,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 3257,
+ "at": "2026-10-03T12:08:04.320Z"
+}

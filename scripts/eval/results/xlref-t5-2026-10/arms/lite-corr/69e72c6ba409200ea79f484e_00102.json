@@ -1,0 +1,30 @@
+{
+ "id": "69e72c6ba409200ea79f484e_00102",
+ "arm": "lite-corr",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<header>Zhuangzi's Garden of Sayings, Volume 3</header>\n\n<margin>This refers to the conduct of a person who has attained the ultimate, one who does not seek fame or status. Why, then, would you be pleased by hearing such a thing?</margin>\nblamed him, saying, \"The person who has attained the ultimate does not seek fame. Why are you so pleased by it?\" Confucius said, \"That is well said.\" He withdrew from his <margin>He did not value ostentation</margin>\nsocial circles, left his disciples, and fled to the great marshes. He wore clothes made of coarse furs and ate acorns and chestnuts. <margin>He did not prize rare delicacies</margin>\n<margin>He did not give rise to a mind of discrimination that would disturb the flocks of birds and beasts.</margin>\nWhen he entered among the beasts, he did not disturb their herds; when he entered among the birds, he did not disturb their flight formations. <margin>Even creatures of different species do not resent him.</margin>\n<margin>Name: The Recluse</margin>\nIf even they do not resent him, how much more so for people? Confucius asked Zisang Hu, <margin>Surname</margin> \"I was twice driven out of Lu, had the tree cut down over me in Song, had my traces erased in Wei, was reduced to poverty in Shang and Zhou, and was besieged between Chen and Cai. I have encountered these many calamities. My close acquaintances have become more distant, and my followers and friends have scattered. Why is this?\" Zisang Hu\n\n<summary>This passage contrasts Confucius's worldly struggles with the conduct of a recluse who lives in harmony with nature, highlighting the indifference of the realized person toward fame and social entanglement.</summary>\n<keywords>Confucius, Zisang Hu, reclusion, harmony with nature, social status, philosophical dialogue</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2111,
+ "outputTokens": 413,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.00114725,
+ "cost_usd_batch_equiv": 0.000573625,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2657,
+ "at": "2026-10-03T20:28:17.780Z"
+}

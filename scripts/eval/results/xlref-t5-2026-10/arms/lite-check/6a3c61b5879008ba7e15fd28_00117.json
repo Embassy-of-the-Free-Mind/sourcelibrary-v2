@@ -1,0 +1,41 @@
+{
+ "id": "6a3c61b5879008ba7e15fd28_00117",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: 論語註疏大全 (Great Compendium of Commentaries on the Analects)</meta>\n\nTo say it covers one person or one event, or covers one era, is entirely incorrect. Master Feng of Houzhai says: judging from the account of his revising and casting the penal laws, the things he did not fully address were indeed numerous. Judging from the words of the Spring and Autumn period, the principles of the gentleman were truly few. The sage’s words of praise do not overflow with flattery, and his words of censure do not overflow with malice. The Collected Commentaries on “making use of the people” rely solely on the facts of the matter and cannot be concealed.\n\nHu says: The three-year mourning period is the legacy of affection left behind by the teachings that Confucius taught his disciples. The produce of the fields and the planting of crops, and upon his death, are the legacy of affection left by the teachings given to my sons and brothers. Zichan’s spirit resides entirely in the character for righteousness (<term>yi</term> <gloss>righteousness/duty</gloss>). As for the people’s perception of his kindness (<term>hui</term> <gloss>kindness/favor</gloss>), they do not realize that when he began to govern, it was directed solely at the single act of helping others.\n\n○ The Master said: Yan Pingzhong was good at interacting with others; the longer he knew them, the more he respected them.\n\nYan Pingzhong was a great officer of the state of Qi whose name was Ying. Master Cheng says: When people interact for a long time, their respect tends to decline, yet he was able to maintain it over time.\n\n<summary>This passage discusses the ethical legacy of historical figures Zichan and Yan Pingzhong, emphasizing the nature of their governance, their lasting influence, and their consistent character in social interactions.</summary>\n<keywords>Zichan, Yan Pingzhong, Confucius, righteousness, governance, respect, virtue</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 911,
+ "outputTokens": 582,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0022015000000000003,
+ "cost_usd_batch_equiv": 0.0011007500000000002,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "role",
+   "source": "孔子之弟子之所教之遺愛也",
+   "was": "teachings of Confucius’s disciple",
+   "now": "teachings that Confucius taught his disciples"
+  },
+  {
+   "type": "role",
+   "source": "我子弟之所教之遺愛也",
+   "was": "teachings of my disciples",
+   "now": "teachings given to my sons and brothers"
+  }
+ ],
+ "base_sha": 1930,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 2544,
+ "at": "2026-10-03T12:09:43.358Z"
+}

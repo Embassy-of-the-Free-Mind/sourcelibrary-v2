@@ -1,0 +1,30 @@
+{
+ "id": "69e72698a409200ea79ef8c3_00129",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: the dispute over the family estate and the treatment of the returned brother, Cheng.</meta>\n\nThey collectively provided land and a house for <term>Cheng</term> <gloss>Accomplishment</gloss> to live in. The other brothers were angry that <term>Youyu</term> <gloss>Brotherly Love</gloss> was <note>literally \"marketing favors\"</note> performing such a public display of kindness; they went to his door to humiliate and harass him. <term>Cheng</term>, who had been among bandits for a long time and was accustomed to fierce and violent ways, was enraged when he heard of this. He said: \"When I returned, no one was willing to provide me with even a single room. Fortunately, my third brother remembered our kinship, yet you blame and scold him for it. Are you trying to drive me away?\"\n\nHe threw a stone at <term>Xiao</term> <gloss>Filial Piety</gloss>. In response, <term>Xiao</term>, <term>Ren</term> <gloss>Benevolence</gloss>, and <term>Yi</term> <gloss>Righteousness</gloss> each came out with staffs. <term>Cheng</term> grabbed <term>Zhong</term> <gloss>Loyalty</gloss> and <term>Xin</term> <gloss>Trustworthiness</gloss> and thrashed them both countless times. <term>Cheng</term> did not wait for them to file a lawsuit; he sued them first before the District Magistrate. The Magistrate sent someone to seek advice from <term>Youyu</term>. Forced to respond, <term>Youyu</term> only said he was deeply ashamed; he hung his head and did not speak, only shedding tears. When the Magistrate pressed him for an answer, he only requested a fair judgment.\n\nThe Magistrate then ruled that <term>Xiao</term> and the others must each provide a portion of their land and property to be given to <term>Cheng</term>, so that the estate was divided into seven equal shares. From this point on, <term>Ren</term> and <term>Yi</term> respected and loved <term>Cheng</term> twice as much as before. While they were chatting and laughing, they suddenly spoke of the matter of their mother’s burial, and they all began to weep together. <term>Cheng</term> sighed and said: \"To be so lacking in humanity <note>original: \"bu ren,\" meaning unkind or failing in one's duties</note> is to be like beasts.\" He then wished to open the grave to provide a better reburial for her. <term>Ren</term> and <term>Yi</term> ran to inform <term>Youyu</term>. <term>Youyu</term> hurried back to advise against it, but <term>Cheng</term> would not listen and set a date for the task.\n\n<summary>Cheng violently defends his kind brother Youyu against their other brothers, leading to a legal settlement that divides the family estate equally. The brothers reconcile over their mother's memory, but Cheng's plan to rebury her causes new friction.</summary>\n<keywords>Zhang Cheng, family dispute, inheritance, District Magistrate, filial piety, funeral rites, brotherly conflict</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2081,
+ "outputTokens": 3213,
+ "thinkingTokens": 2499,
+ "cost_usd_realtime": 0.0106795,
+ "cost_usd_batch_equiv": 0.00533975,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 14061,
+ "at": "2026-10-03T20:44:54.447Z"
+}

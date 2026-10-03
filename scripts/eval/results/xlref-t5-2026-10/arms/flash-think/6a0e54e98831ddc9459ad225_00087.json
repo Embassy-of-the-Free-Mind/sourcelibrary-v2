@@ -1,0 +1,30 @@
+{
+ "id": "6a0e54e98831ddc9459ad225_00087",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nThe body becomes strong and completely free from all ailments. By this method, a lord of yogis truly becomes free from all disturbances on this earthly sphere. 56.\n\n### Now, Shitali <note>the Cooling Breath</note>\n\nDrawing in the air with the tongue, one should perform <term>kumbhaka</term> <gloss>breath retention</gloss> as described before. The wise practitioner should then slowly exhale the air through the nostrils. 57.\n\nThis <term>kumbhika</term> <gloss>breath retention</gloss> named <term>shitali</term> <gloss>the cooling one</gloss> certainly destroys diseases such as enlargement of the chronic glandular sores <note>original: \"gulma\"</note>, disorders of the spleen, fever, bile <note>original: \"pitta\"</note>, hunger, thirst, and the effects of poisons. 58.\n\n---\n\n->### Commentary<-\n\n**The body becomes...** The strength and essence of the body are realized. By the method of practice mentioned above, a lord of yogis <note>one who is like a king among yogis</note> becomes free from all troubles and obstacles on the earthly sphere. This is the truth. According to the maxim that \"every sentence contains an emphasis,\" the results described are indeed true. 56.\n\n**He describes Shitali breath retention.** **Drawing in with the tongue...** Extending the tongue outside the lips like the lower beak of a bird, one should slowly draw in the air, meaning one should perform <term>puraka</term> <gloss>inhalation</gloss>. Then, performing the practice of <term>kumbhaka</term> <gloss>retention</gloss> as described previously for <term>Suryabhedana</term> <note>Sun-piercing breath</note> is the implied instruction. One who is wise <note>of refined intellect</note> should exhale the air very slowly through the two openings of the nostrils. 57.\n\n**He describes the qualities of Shitali.** **Enlargement of the glands...** Diseases such as <term>gulma</term> <gloss>abdominal tumors or bloating</gloss> and <term>pliha</term> <gloss>spleen disorders</gloss>, fever, disorders caused by bile, the desire to eat <note>hunger</note>, the desire to drink water <note>thirst</note>, and the toxins produced by the venom of snakes and other creatures. This well-known practice called <term>shitali</term> completely destroys these. The word <term>kumbhika</term> is used here in the feminine form. 58.\n\n---\n\n->### Bhasha <note>Vernacular Hindi Translation</note><-\n\n**The body becomes...** The body gains strength. By the practice method mentioned, one becomes like Indra <note>the King of Gods</note> among yogis on this earth, remaining free from all disturbances. The fruit of the practice described here is true. 56.\n\n**Now the fourth practice, Shitali breath retention, is described.** **Drawing in with the tongue...** Making the tongue like the lower beak of a bird and extending it outside the lips, one should pull in the air to inhale. Then, just as previously described for <term>Suryabhedana</term>, one should perform the practice of retention. Then, the practitioner of beautiful intellect should slowly exhale the air through the holes of the nose. 57.\n\n**The qualities of Shitali are described.** **Enlargement of the glands...** Diseases like <term>gulma</term> and <term>pliha</term>, fever, bilious disorders, the urge for food, the urge for water, and the poison from snake bites or other toxins are all removed by this <term>kumbhika</term> called <term>shitali</term>. 58.\n\n<summary>This page describes the technique and benefits of Shitali Pranayama, a cooling breathing practice where air is drawn through a curled tongue. It is credited with curing digestive issues, fever, and neutralizing poisons.</summary>\n<keywords>Shitali, Pranayama, cooling breath, spleen disorders, fever, pitta, hunger, thirst, venom, yoga therapy</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2664,
+ "outputTokens": 929,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.004119,
+ "cost_usd_batch_equiv": 0.0020595,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 5289,
+ "at": "2026-10-03T12:05:10.432Z"
+}

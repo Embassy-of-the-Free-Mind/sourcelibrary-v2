@@ -1,0 +1,30 @@
+{
+ "id": "69bd00f7f403a9ca2380efbf_00080",
+ "arm": "lite-ctx",
+ "model": "gemini-3.1-flash-lite",
+ "text": "132 Dīghanikāya, Sīlakkhandhavagga, Sāmaññaphalasutta\n\nIn the same way, Great King, a monk permeates, drenches, fills, and suffuses this very body with this cool happiness. There is no part of the entire body that is not suffused with this cool happiness.\n\nThis, too, Great King, is a visible fruit of asceticism, more excellent and refined than the previous visible fruits of asceticism.\n\n68. Again, Great King, with the abandoning of pleasure and pain, and with the previous disappearance of joy and distress, a monk enters and dwells in the fourth <term>jhāna</term> <gloss>meditative absorption</gloss>, which is neither painful nor pleasant and is purified by equanimity and mindfulness. He sits, having suffused this body with a mind that is pure and bright. There is no part of the entire body that is not suffused with a mind that is pure and bright.\n\nGreat King, just as if a person were to sit having covered their entire body with a white cloth, and there were no part of the entire body that was not covered by the white cloth, in the same way, Great King, a monk sits having suffused this body with a mind that is pure and bright. There is no part of the entire body that is not suffused with a mind that is pure and bright.\n\nThis, too, Great King, is a visible fruit of asceticism, more excellent and refined than the previous visible fruits of asceticism.\n\n69. Again, Great King, when the mind is thus concentrated, purified, bright, unblemished, rid of defilements, become pliable, workable, steady, and attained to imperturbability, the monk directs and inclines his mind to knowledge and vision. He understands this: \"This body of mine is material, composed of the four great elements, born of mother and father, nourished by rice and porridge, subject to impermanence, to rubbing and pressing, to breaking and destruction. And this consciousness of mine is bound to it, dependent on it.\"\n\n70. Great King, just as if there were a beryl gem, beautiful, eight-faceted, well-polished, clear, limpid, unclouded, and perfect in all aspects, through which a blue, yellow, red, white, or brown thread is passed. A person with sight, having taken it in their hand, would examine it, saying: \"This is a beryl gem, beautiful, eight-faceted, well-polished, clear, limpid, unclouded, and perfect in all aspects, through which a blue, yellow, red, white, or brown thread is passed.\"\n\n<summary>The monk achieves the fourth jhana and uses this clarity of mind to gain insight into the impermanent nature of the physical body and its relationship to consciousness.</summary>\n<keywords>fourth jhana, equanimity, mindfulness, consciousness, impermanence, four great elements</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3417,
+ "outputTokens": 632,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.00180225,
+ "cost_usd_batch_equiv": 0.000901125,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "served-prev",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2371,
+ "at": "2026-10-03T12:04:33.627Z"
+}

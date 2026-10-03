@@ -1,0 +1,30 @@
+{
+ "id": "69e7490585f786e884a4d1aa_00097",
+ "arm": "flash-thinkon",
+ "model": "gemini-3-flash-preview",
+ "text": "# The Latter Cloud\n\n...of women <term>sīmantinīnām</term> <gloss>those who part their hair</gloss>. The <term>Amarakośa</term> <note>a standard Sanskrit lexicon</note> states: \"A woman is called <term>nārī</term>, <term>sīmantinī</term>, or <term>vadhū</term>.\" The term <term>suhṛdupantaḥ</term> <gloss>brought by a friend</gloss> means news received through the mouth of a friend. The word \"friend\" is used to prevent the suspicion of bad news or the pain of separation. \"News of the beloved\" <note>original: <term>kāntodantaḥ</term></note> is defined by the <term>Amarakośa</term>: \"News, report, account, and tidings are synonyms.\" This news is \"slightly less than a meeting,\" meaning it is almost as joyful as the physical presence of the lover.\n\nNow he sends the message:\n\nO long-lived one, at my request and to benefit your own soul,\ntell her this: \"Your companion, staying in the hermitages of Ramagiri,\nis alive and asks after your welfare, O fragile one;\nfor for living beings prone to misfortune, this is the very first thing to be said.\" 41\n\nRegarding the verse: \"O long-lived one\" <note>original: <term>āyuṣman</term></note>. The suffix here implies praise for a life that is spent in the service of others. \"At my request\" <note>original: <term>mama vacanāt</term></note> refers to my prayerful words, and \"to benefit yourself\" <note>original: <term>ātmano'pakartuṃ ca</term></note> means to fulfill your own purpose through an act of kindness. Even though \"yourself\" is the object of the action, the genitive <note>possessive</note> case is used here to show a general relationship, which is grammatically acceptable. As the poet Bhāravi says: \"That wealth is beneficial by which one helps others.\" Similarly, Śrīharṣa writes: \"To help the virtuous, to see wealth, and to travel through the sky.\" Thus, the commentator Nātha’s opinion that a different case must always be used is merely an empty statement.\n\nHe says: tell \"that\" beloved these words. What should be said? \"O fragile one\" <note>original: <term>abale</term></note>, your companion <note>husband</note> resides in the hermitages of Ramagiri <note>often identified with the hill of Chitrakuta</note>. \"He is alive\" <note>original: <term>avyāpannaḥ</term></note> means he has not perished. He gives the reason for mentioning this: even though \"separated\" <note>original: <term>viyuktaḥ</term></note> and suffering, he \"asks of your welfare.\" Grammatically, the verb \"to ask\" takes two objects here. Indeed, for living beings for whom \"calamities are easily found\" <note>meaning they occur naturally and frequently</note>, this inquiry into welfare is \"the first thing to be spoken\" <note>original: <term>pūrvābhāṣyam</term></note>, meaning it is the essential first step of any message.\n\nLimb for limb, his thin body for your thin body, his deeply burning for your burning,\nhis tear-filled for your tear-drenched, his ceaselessly longing for your longing...\n\n<margin>1. Long-lived one. 2. He should say. 3. One. 4. Separated (feminine), joined. 5. Variations on the phrase \"to be spoken first\" or \"this is the first thing for mortal bodies.\" 6. Fair-bodied, and thin. 7. Flow of tears.</margin>\n\n<summary>This page contains the commentary and text for Verse 41 of the Meghadūta, where the Yaksha instructs the Cloud to deliver a message of survival and well-being to his wife. It includes grammatical justifications for the phrasing and emphasizes the importance of sharing good news in times of hardship.</summary>\n<keywords>Kālidāsa, Meghadūta, Sanskrit poetry, Ramagiri, welfare, grammar, Mallinātha, Amarakośa</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2537,
+ "outputTokens": 2970,
+ "thinkingTokens": 2010,
+ "cost_usd_realtime": 0.0101785,
+ "cost_usd_batch_equiv": 0.00508925,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingConfig": "absent (model default: dynamic thinking)",
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 12964,
+ "at": "2026-10-03T20:42:40.507Z"
+}

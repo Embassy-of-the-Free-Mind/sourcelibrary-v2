@@ -1,0 +1,47 @@
+{
+ "id": "69e72c60a409200ea79f46f6_00141",
+ "arm": "lite-check",
+ "model": "gemini-3-flash-preview",
+ "text": "### The subtle principles of the northern section\n\n<margin>Feeding on breast milk</margin>\nWhen one feeds a child at the breast of its dead mother, after a short time the eyes of the mother all turn away and leave the child.\n<margin>This means the movement of the eyes does not perceive her anymore</margin>\nIt rises and does not see her anymore. It does not recognize the likeness of its mother. That which you loved in your mother, it was not\n<margin>The stiffening of the body is not like the person anymore</margin>\n<margin>If the body is not worth loving, then the body is not loved</margin>\nthe love of her physical form. It was the love of that which animated her form. For those who die in battle, the funeral rites\n<margin>Those who die in battle lack martial virtue, so they are not honored with the sacrifice of concubines</margin>\nare performed without killing concubines to provide for them in the afterlife. The feet of those who have been punished, the lack of love for them, all lack their root.\n<margin>Often using the feet as the root</margin>\n<margin>Another metaphor: choosing imperial consorts should not exhaust their physical perfection, as it would cause a loss of the utmost dignity</margin>\nAs for the consorts of the Son of Heaven, they do not cut their nails nor pierce their ears. When one takes a wife,\n<margin>They are not assigned official duties for fear of callousing their hands and feet, which would prevent them from fulfilling the duties of a new marriage</margin>\nshe is kept in the outer quarters. She is not allowed to be employed again. If the form remains complete, it is still sufficient to fulfill the \n<margin>One whose form is complete is still sufficient to move people</margin>\nintent. \nThe intent follows this as well.\n\n<meta>Chapter: De Chong Fu (The Sign of Virtue Complete)</meta>\n<meta>Source: Richuan Hall edition</meta>\n\n<summary>This passage discusses the importance of internal essence over external form, using the examples of an infant realizing the death of its mother, the burial rites of soldiers, and the preservation of the physical integrity of imperial consorts.</summary>\n<keywords>De Chong Fu, physical form, essence, mourning, imperial consorts, Zhuangzi</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1121,
+ "outputTokens": 763,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0028495000000000005,
+ "cost_usd_batch_equiv": 0.0014247500000000002,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": "lite",
+ "issues": [
+  {
+   "type": "role",
+   "source": "眸若皆棄之而",
+   "was": "the child will notice that the mother is different and will leave her",
+   "now": "the eyes of the mother all turn away and leave the child"
+  },
+  {
+   "type": "negation",
+   "source": "形不足愛即不足愛",
+   "was": "If the body is not worth loving, then nothing is worth loving",
+   "now": "If the body is not worth loving, then the body is not loved"
+  },
+  {
+   "type": "omission",
+   "source": "胎者之屢無為愛之皆無其本矣",
+   "was": "In all these cases, the failure to act stems from the fact that they have lost their original nature.",
+   "now": "The feet of those who have been punished, the lack of love for them, all lack their root."
+  }
+ ],
+ "base_sha": 2263,
+ "prompt_ref": {
+  "name": "xlref-t5 check-and-fix",
+  "version": 1
+ },
+ "ms": 3066,
+ "at": "2026-10-03T12:08:10.829Z"
+}

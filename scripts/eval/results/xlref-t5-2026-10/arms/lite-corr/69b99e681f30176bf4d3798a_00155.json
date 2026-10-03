@@ -1,0 +1,30 @@
+{
+ "id": "69b99e681f30176bf4d3798a_00155",
+ "arm": "lite-corr",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Aṅguttara-Nikāya. LXXIII 2—6\n\nThese, monks, are ten things that are desirable, pleasant, agreeable, and rare in the world.\n\n3. For these ten things that are desirable, pleasant, agreeable, and rare in the world, there are ten obstacles:\n\n4. Laziness and lack of initiative are obstacles to wealth. Lack of grooming and lack of adornment are obstacles to personal appearance. Engaging in unsuitable activities is an obstacle to health. Associating with wicked friends is an obstacle to moral conduct. Lack of restraint over the senses is an obstacle to the holy life. Deceiving friends is an obstacle to friendship. Not practicing recitation is an obstacle to deep learning. Lack of willingness to listen and to ask questions is an obstacle to wisdom. Lack of application and reflection are obstacles to the <term>Dhamma</term> <gloss>teachings/truth</gloss>. Wrong conduct is an obstacle to heavenly realms.\n\nThese, monks, are the ten things that are obstacles to these ten things that are desirable, pleasant, agreeable, and rare in the world.\n\n5. For these ten things that are desirable, pleasant, agreeable, and rare in the world, there are ten sources of sustenance:\n\n6. Initiative in place of laziness is the sustenance for wealth. Grooming and adornment are the sustenance for personal appearance. Engaging in suitable activities is the sustenance for health. Associating with virtuous friends is the sustenance for moral conduct. Restraint over the senses is the sustenance for the holy life. Honesty toward friends is the sustenance for friendship. Practicing recitation is the sustenance for deep learning. Willingness to listen and to ask questions is the sustenance for wisdom. Application and reflection are the sustenance for the <term>Dhamma</term> <gloss>teachings/truth</gloss>. Right conduct is the sustenance for heavenly realms.\n\nThese, monks, are the ten things that are the sustenance for these ten things that are desirable, pleasant, agreeable, and rare in the world.\n\n<meta>The text provides a list of ten desirable qualities, followed by ten corresponding obstacles and ten corresponding sources of sustenance (nourishment).</meta>\n\n<summary>The text lists ten desirable things in life, identifies the specific obstacles that prevent their attainment, and provides the ten corresponding practices that sustain them.</summary>\n<keywords>Buddhism, Dhamma, obstacles, sustenance, wealth, morality, wisdom, conduct</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2598,
+ "outputTokens": 507,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0014099999999999998,
+ "cost_usd_batch_equiv": 0.0007049999999999999,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 0,
+  "maxOutputTokens": 4096
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": true,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 2212,
+ "at": "2026-10-03T20:27:39.385Z"
+}

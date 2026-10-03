@@ -1,0 +1,30 @@
+{
+ "id": "69bd014bf403a9ca2380f091_00054",
+ "arm": "flash-think",
+ "model": "gemini-3-flash-preview",
+ "text": "# Pārājika-pāḷi: First Pārājika\n\n17. Or alternatively, a monk who is dissatisfied and discontented, wishing to leave the monkhood <note>original: \"vittukāmo\", meaning one who desires to return to the lay life</note>, weary of the <term>sikkhāpada</term> <gloss>training rules</gloss>, ashamed of them, loathing them, and longing for the state of a householder —<note>the text uses an abbreviation marker \"pe\" indicating a repetitive sequence</note>— feeling incapable and embarrassed, and longing for release, says and declares: \"I have a mother, she will support me\"; or he says and declares: \"I have a father, he will support me\"; or he says and declares: \"I have a brother, he will support me\"; or he says and declares: \"I have a sister, she will support me\"; or he says and declares: \"I have a son, he will support me\"; or he says and declares: \"I have a daughter, she will support me\"; or he says and declares: \"I have a wife, she will support me\"; or he says and declares: \"I have relatives, they will support me\"; or he says and declares: \"I have friends, they will support me\"; or he says and declares: \"I have a village, I will live by means of it\"; or he says and declares: \"I have a market town, I will live by means of it\"; or he says and declares: \"I have a field, I will live by means of it\"; or he says and declares: \"I have property, I will live by means of it\"; or he says and declares: \"I have bullion, I will live by means of it\"; or he says and declares: \"I have gold, I will live by means of it\" —<note>pe</note>— or he says and declares: \"I have a craft, I will live by means of it.\" Even in this way, monks, there is an opening for the declaration of weakness, and the training is renounced.\n\n18. Or alternatively, a monk who is dissatisfied and discontented, wishing to leave the monkhood, weary of the training rules, ashamed of them, loathing them, and longing for the state of a householder —<note>pe</note>— feeling incapable and embarrassed, and longing for release, says and declares: \"It is difficult to do\"; or he says and declares: \"It is hard to do\"; or he says and declares: \"It is difficult to maintain\"; or he says and declares: \"It is not easy to maintain\"; or he says and declares: \"I cannot persevere\"; or he says and declares: \"I do not wish to continue\"; or he says and declares: \"I do not find delight\"; —<note>pe</note>— or he says and declares: \"I am not finding satisfaction.\" Even in this way, monks, there is an opening for the declaration of weakness, and the training is renounced.\n\n19. And how, monks, is there an opening for the declaration of weakness, and the training is renounced? In this case, monks, a monk who is dissatisfied and discontented, wishing to leave the monkhood, weary of the training rules, ashamed of them, loathing them, and longing for the state of a householder —<note>pe</note>— feeling incapable and embarrassed, and longing for release, says and declares: \"I renounce the <term>Buddha</term> <gloss>the Enlightened One</gloss>.\" Even in this way, monks, there is an opening for the declaration of weakness, and the training is renounced.\n\n<summary>This page details the specific verbal declarations a monk might make when wishing to leave the monastic order, focusing on his reliance on family, property, or his inability to endure the discipline. It establishes what constitutes a valid renunciation of the training.</summary>\n<keywords>monastic discipline, renunciation of training, Vinaya, Buddhist monkhood, lay life, legal declarations</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3069,
+ "outputTokens": 875,
+ "thinkingTokens": 0,
+ "cost_usd_realtime": 0.0041595,
+ "cost_usd_batch_equiv": 0.00207975,
+ "generation_config": {
+  "temperature": 1,
+  "thinkingBudget": 2048,
+  "maxOutputTokens": 6144
+ },
+ "context": "none (single page, page-break lookahead only)",
+ "source_override": false,
+ "check_of": null,
+ "issues": null,
+ "base_sha": null,
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ms": 4489,
+ "at": "2026-10-03T12:04:43.427Z"
+}
