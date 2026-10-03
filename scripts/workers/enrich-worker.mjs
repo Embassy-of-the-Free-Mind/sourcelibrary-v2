@@ -49,6 +49,7 @@ import { computeEndPages } from '../lib/chapter-endpages.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { loadConfirmedCopies, copyGuard } from '../lib/confirmed-copies.mjs';
 import { recordSweepActions } from '../lib/sweep-log.mjs';
+import { publicationFilter } from '../lib/publication.mjs';
 import { buildPageIndex, groundQuotes } from './lib/quote-grounding.mjs';
 import { startHeartbeat, startWorkerBeacon } from './lib/worker-heartbeat.mjs';
 import pg from 'pg';
@@ -1950,14 +1951,15 @@ NO explanation, just the JSON array.`;
             }
           }
 
-          // Keepers' current collections, for the books in this batch that are confirmed copies.
+          // PUBLIC keepers' current collections, for the books in this batch that are
+          // confirmed copies. A keeper off the shelf does not block its copy.
           const keeperCollections = new Map();
           const keeperIds = confirmedCopies
             ? [...new Set(batch.flatMap(b => (confirmedCopies.keepersOfCopy.get(b.id) || []).map(k => k.keeper_id)))]
             : [];
           if (keeperIds.length) {
             const keepers = await db.collection('books')
-              .find({ id: { $in: keeperIds }, hidden: { $ne: true } })
+              .find({ id: { $in: keeperIds }, ...publicationFilter('public') })
               .project({ _id: 0, id: 1, collections: 1 })
               .toArray();
             for (const k of keepers) keeperCollections.set(k.id, k.collections || []);
