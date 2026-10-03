@@ -133,17 +133,33 @@ async function assemble() {
   console.log(`manifest: ${rows.length} pages → ${path.join(LANE, 'bench', 'acc.tsv')}`);
 }
 
+// Conventions (eval-design §6), open-engine arms only: Paddle/olmOCR emit layout markup that is not text —
+// HTML tables and <sup>, markdown headings/emphasis, LaTeX math delimiters and commands, and Greek written as
+// LaTeX (`$\omega\tau\eta$`). Rule v1: drop tags, `$`, `^ _ { }`, markdown `#`/`*`; LaTeX Greek letter commands
+// → the Unicode letter; any other `\command` dropped. The raw output stays in the lane's arms dir.
+const GREEK_CMD = { alpha: 'α', beta: 'β', gamma: 'γ', delta: 'δ', epsilon: 'ε', varepsilon: 'ε', zeta: 'ζ', eta: 'η', theta: 'θ', vartheta: 'θ', iota: 'ι', kappa: 'κ', lambda: 'λ', mu: 'μ', nu: 'ν', xi: 'ξ', pi: 'π', rho: 'ρ', sigma: 'σ', varsigma: 'ς', tau: 'τ', upsilon: 'υ', phi: 'φ', varphi: 'φ', chi: 'χ', psi: 'ψ', omega: 'ω', Gamma: 'Γ', Delta: 'Δ', Theta: 'Θ', Lambda: 'Λ', Xi: 'Ξ', Pi: 'Π', Sigma: 'Σ', Upsilon: 'Υ', Phi: 'Φ', Psi: 'Ψ', Omega: 'Ω' };
+export const CONVENTION_RULE = 'open-engine-markup@1';
+function normaliseConventions(t) {
+  return t.replace(/<[^>\n]{1,200}>/g, ' ')
+    .replace(/\\([A-Za-z]+)/g, (m, c) => GREEK_CMD[c] ?? ' ')
+    .replace(/[$^_{}]/g, '')
+    .replace(/^#{1,6}\s+/gm, '').replace(/\*\*|__/g, '');
+}
+
 function paddleIn() {
   const arm = argOf('arm'), engine = argOf('engine', 'paddleocr-vl-1.6');
   const where = readJson(path.join(LANE, 'bench', 'where.json'));
   const src = path.join(LANE, 'bench', 'arms', arm, 'out', '_bench');
-  let n = 0, err = 0;
+  let n = 0, err = 0, touched = 0;
   for (const [slug, st] of Object.entries(where)) {
     const d = path.join(ROOT, st, 'out', engine); fs.mkdirSync(d, { recursive: true });
-    if (fs.existsSync(path.join(src, `${slug}.txt`))) { fs.copyFileSync(path.join(src, `${slug}.txt`), path.join(d, `${slug}.txt`)); n++; }
-    else if (fs.existsSync(path.join(src, `${slug}.err`))) { fs.writeFileSync(path.join(d, `${slug}.txt`), ''); err++; }   // a failed read is an empty output, never a missing one
+    if (fs.existsSync(path.join(src, `${slug}.txt`))) {
+      const raw = fs.readFileSync(path.join(src, `${slug}.txt`), 'utf8'); const t = normaliseConventions(raw);
+      if (t !== raw) touched++;
+      fs.writeFileSync(path.join(d, `${slug}.txt`), t); n++;
+    } else if (fs.existsSync(path.join(src, `${slug}.err`))) { fs.writeFileSync(path.join(d, `${slug}.txt`), ''); err++; }   // a failed read is an empty output, never a missing one
   }
-  console.log(`${engine}: ${n} outputs, ${err} errors written as empty`);
+  console.log(`${engine}: ${n} outputs (${touched} changed by ${CONVENTION_RULE}), ${err} errors written as empty`);
 }
 
 /** Descriptive weak-spot tally (#4877) per engine on the early-print strata. */
@@ -160,6 +176,7 @@ function tally() {
       const T = (R[st] ||= { pages: 0, long_s_glyph: 0, f_for_s: 0, abbrev_marks: 0, ligature_glyphs: 0, ref_long_s_glyph: 0, ref_abbrev_marks: 0 });
       for (const f of fs.readdirSync(path.join(dir, e)).filter(f => f.endsWith('.txt'))) {
         const slug = f.slice(0, -4);
+        if (!fs.existsSync(path.join(ROOT, st, `${slug}.jpg`))) continue;   // sealed pages only (old out dirs hold retired/derived files)
         if (st === 'ref-ws' && !(ws.get(slug)?.year < 1700)) continue;   // early print only
         const t = fs.readFileSync(path.join(dir, e, f), 'utf8'); T.pages++;
         T.long_s_glyph += (t.match(/ſ/g) || []).length;
@@ -180,7 +197,56 @@ function tally() {
   console.log(JSON.stringify(res, null, 1));
 }
 
+/** The one table of the prereg: per cell the cost-lane verdict, plus a refusals-excluded view, agreement strata, cost. */
+function report() {
+  const LITE = 'gemini-3.1-flash-lite', FLASH = 'gemini-3-flash-preview';
+  const engines = argOf('engines', 'paddleocr-vl-1.6').split(',');
+  const scored = path.join(RES, 'scored');
+  const S = st => { const f = fs.readdirSync(scored).filter(x => x.startsWith(`${st}-`) && x.slice(st.length + 1).match(/^\d{4}-\d{2}-\d{2}\.json$/)).sort().pop(); return readJson(path.join(scored, f)); };
+  const med = xs => { const s = xs.filter(x => typeof x === 'number').sort((a, b) => a - b); if (!s.length) return null; const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
+  const r3 = x => (x == null ? null : Math.round(x * 1000) / 1000);
+  const cellMap = new Map(readJson(path.join(RES, 'cells.json')).pages.filter(r => r.cell).map(r => [r.slug, r]));
+  const rows = {};
+  for (const st of ['eebo-tcp-5488', 'english-ia-5124', 'ref-ws', 'greek', 'greek-ext', 'greek-ext2']) for (const p of S(st).pages) { const c = cellMap.get(p.slug); if (c) (rows[c.cell] ||= []).push(p); }
+  const out = { engines: {}, agreement: {}, cost: {} };
+  for (const e of engines) {
+    const cl = fs.existsSync(path.join(RES, `cost-lane-${e.startsWith('olm') ? 'olmocr' : 'paddle'}.json`)) ? readJson(path.join(RES, `cost-lane-${e.startsWith('olm') ? 'olmocr' : 'paddle'}.json`)).classes : {};
+    out.engines[e] = {};
+    for (const [cell, ps] of Object.entries(rows)) {
+      const both = ps.filter(p => typeof p.engines?.[e]?.cer === 'number' && typeof p.engines?.[LITE]?.cer === 'number');
+      const answered = both.filter(p => !p.engines[LITE].refused && !p.engines[e].refused);
+      const v = cl[cell] || {};
+      out.engines[e][cell] = {
+        n_pages: both.length, n_library: both.filter(p => cellMap.get(p.slug).origin === 'library').length,
+        lite_cer: r3(med(both.map(p => p.engines[LITE].cer))), engine_cer: r3(med(both.map(p => p.engines[e].cer))),
+        delta: v.delta?.median ?? null, delta_ci95: v.delta?.ci95 ?? null, wlt: v.delta ? `${v.delta.wins}/${v.delta.losses}/${v.delta.ties}` : null,
+        catastrophic: { engine: both.filter(p => p.engines[e].cer > 0.5).length, lite: both.filter(p => p.engines[LITE].cer > 0.5).length },
+        lite_refused: both.filter(p => p.engines[LITE].refused).length,
+        answered_only: { n: answered.length, lite_cer: r3(med(answered.map(p => p.engines[LITE].cer))), engine_cer: r3(med(answered.map(p => p.engines[e].cer))), delta: r3(med(answered.map(p => p.engines[e].cer - p.engines[LITE].cer))), catastrophic_engine: answered.filter(p => p.engines[e].cer > 0.5).length, catastrophic_lite: answered.filter(p => p.engines[LITE].cer > 0.5).length },
+        invention: v.invention_median ?? null, checks: v.checks ?? null, verdict: v.verdict ?? null,
+      };
+    }
+    // agreement strata: `cer` there is 1 − agreement with lite (no reference); flash-preview vs lite is the yardstick
+    for (const st of AGREEMENT) {
+      const ps = S(st).pages;
+      const ag = (x) => r3(med(ps.map(p => p.engines?.[x]?.cer).filter(c => typeof c === 'number').map(c => 1 - c)));
+      (out.agreement[st] ||= { n: ps.length, [`${FLASH}_vs_lite`]: ag(FLASH) })[`${e}_vs_lite`] = ag(e);
+    }
+  }
+  // throughput + cost: the arm's wall after model load ÷ pages (8 clients on one GPU), GEX45 at $249/mo
+  for (const [e, f] of [['paddleocr-vl-1.6', path.join(LANE, 'bench', 'arms', 'latin-layout', 'arm-run.json')], ['olmocr-2-7b-fp8', path.join(LANE, 'bench', 'arms', 'olmocr', 'arm-run.json')]]) {
+    if (!fs.existsSync(f)) continue; const a = readJson(f); const secs = a.wall_secs_after_load ?? a.wall_secs;
+    const spp = secs / a.pages; out.cost[e] = { pages: a.pages, errors: a.errors ?? null, wall_secs: secs, s_per_page: r3(spp), usd_per_page_gex45: +(spp * 249 / (30.42 * 86400)).toExponential(2) };
+  }
+  let usd = 0, n = 0;
+  for (const st of ['eebo-tcp-5488', 'english-ia-5124']) { const m = path.join(ROOT, st, 'out', LITE, '_meter.jsonl'); if (fs.existsSync(m)) for (const l of fs.readFileSync(m, 'utf8').split('\n').filter(Boolean)) { const r = JSON.parse(l); if (typeof r.costUsd === 'number') { usd += r.costUsd; n++; } } }
+  if (n) out.cost[LITE] = { pages: n, usd_per_page_realtime: +(usd / n).toExponential(2), usd_per_page_batch: +(usd / n / 2).toExponential(2), note: 'generic transcription prompt, thinking 0; production prompt output is longer' };
+  fs.writeFileSync(path.join(RES, 'summary.json'), JSON.stringify(out, null, 1) + '\n');
+  console.log(JSON.stringify(out, null, 1));
+}
+
 if (CMD === 'assemble') await assemble();
+else if (CMD === 'report') report();
 else if (CMD === 'paddle-in') paddleIn();
 else if (CMD === 'tally') tally();
 else { console.error('usage: assemble | paddle-in --arm=<arm> | tally'); process.exit(1); }
