@@ -1,0 +1,42 @@
+{
+ "id": "69905d2a2fd6a0399389f0c0_180",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "# BOOK II.\n\n<margin>Thus the idle crowd of servants can be excluded.</margin>\n<meta>continues from previous page: \"conuictum\" (social life/dining together)</meta>\nof the citizens. I return. The oldest (as I said) is in charge of the household. Wives serve their husbands, and children their parents, and in short, the younger serve their elders. The whole city is divided into four equal parts. In the middle of each part is a marketplace for all things. To specific houses there, the products of each household are brought, and individual types of goods are distributed into separate storehouses. From these, every <term>paterfamilias</term> <gloss>head of a household</gloss> seeks what he and his family have need of, and without money, and entirely without any form of compensation <note>original: \"hostimento\"</note>, he takes away whatever he requested. For why would anything be denied him, since there is an abundant sufficiency of all things, and no fear exists that anyone would want to demand more than is necessary? For why would anyone be thought likely to seek unnecessary things, when they are certain that nothing will ever be lacking for them?\n\n<summary>This page describes the social organization of Utopia, focusing on patriarchal household hierarchies and the communal distribution of goods without money. It explains that abundance and security eliminate the desire for excess or hoarding.</summary>\n<keywords>household hierarchy, city planning, communal economy, marketplace, paterfamilias, abundance, social order</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2584,
+ "outputTokens": 7594,
+ "thinkingTokens": 7267,
+ "cost_usd": 0.024074,
+ "ms": 31602,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "Nem-",
+   "headJoined": "conuictum",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1050
+}

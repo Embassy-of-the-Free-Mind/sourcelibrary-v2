@@ -1,0 +1,42 @@
+{
+ "id": "697b07990411081cde5f4e66_153",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nthe Creator commanded to be handed down, so that through the successive replacement of individuals, the benefit of immortality might be bestowed upon the species.\n\n167. One should not believe that **forms** <note>In this context, the \"form\" is the non-physical blueprint or soul that gives matter its identity and life.</note> existing in matter generate others similar to themselves. Generating is actually a property of bodies. It is, however, the right and duty of the form to move its organs harmoniously, and through them to prepare the **seminal matter** <note>The physical substance used for reproduction.</note> for generation. The form encloses a ray of light or a secret spark of life within this matter, like a hidden treasure. It also imprints its own specific character upon that **vivifying spirit** <note>original: \"Spiritui viuifico.\" This is the active, subtle life-force that mediates between soul and body.</note> hidden within the seed. During the process of generation, by means of a pulsating heat and at a fixed time, this spirit unfolds itself into a **Soul** <note>original: \"Animam.\"</note>, whether it be vegetative <note>The soul responsible for growth and nutrition in plants.</note> or animal <note>The soul responsible for sensation and movement in animals.</note>. In this way, that which was a secret and formal spirit in the seed becomes the **Form** in the completed mixture. Thus, what was hidden in the bosom of Nature is made manifest, and\n\n<summary>This page explains that species achieve immortality through the replacement of individuals. It details how the non-physical form directs the body to prepare seed and imprints a spark of life that eventually unfolds into a soul.</summary>\n<keywords>immortality of species, generation, seminal matter, vivifying spirit, vegetative soul, animal soul, nature, metaphysics</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2825,
+ "outputTokens": 2808,
+ "thinkingTokens": 2400,
+ "cost_usd": 0.009836500000000001,
+ "ms": 16422,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": "generationis",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 996
+}

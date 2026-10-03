@@ -1,0 +1,44 @@
+{
+ "id": "69dbc9491040d1d5e20a1afd_87",
+ "arm": "lite-fixocr",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page: ...but he even involved whole provinces and regions in a single type of calamity. And so, we saw the plundered and ruined foreign nations carried in a triumph over Massilia <note>Marseille</note>, and a triumph celebrated over that very city, without which our commanders never celebrated triumphs for wars beyond the Alps. I could recount many other nefarious deeds against our allies, if he had not seen something even more shameful in this one instance alone. We are punished justly, therefore. For if we had not tolerated their unpunished crimes, such license would never have reached one man. From him, the inheritance of private wealth came to a few, and the inheritance of corrupt desires came to the many. Nor, indeed, will the seed and cause of civil wars ever be lacking as long as ruined men remember that bloody spear and hope for it. When Lucius Sulla had brandished it while his kinsman was dictator, thirty-six years later, it did not depart from a more wicked man. Another man, who had been a scribe during that dictatorship, was city quaestor in this one. From this, it ought to be understood that, with such rewards proposed, civil wars will never be lacking. And so, the walls of the city merely stand and remain, and they themselves now fear the ultimate crimes. But the Republic itself, we have lost entirely. And we have fallen into these disasters, for we must return to the point, while we preferred to be feared rather than to be dear and loved. If these things could happen to the Roman people, who ruled unjustly, what ought individuals to think? <insert>On the attainment of affection</insert>\n\nBut since it is clear that the power of benevolence is great, and that of fear is weak, it follows that we must discuss by what means we can most easily attain the affection we desire, along with honor and trust. But that is not equally</meta>\n\n<summary>Cicero argues that Roman civil wars and the collapse of the Republic are direct consequences of prioritizing fear over benevolence, as evidenced by the historical abuses of power under Sulla and his successors. He contends that relying on violence and confiscations inevitably invites further cycles of conflict, leading to the ultimate loss of the state's integrity.</summary>\n<keywords>Cicero, De Officiis, civil war, benevolence, fear, Roman Republic, tyranny, Sulla, political morality</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2773,
+ "outputTokens": 507,
+ "thinkingTokens": 0,
+ "cost_usd": 0.0014537499999999997,
+ "ms": 3602,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": true
+ },
+ "ocr_chars": 1784
+}

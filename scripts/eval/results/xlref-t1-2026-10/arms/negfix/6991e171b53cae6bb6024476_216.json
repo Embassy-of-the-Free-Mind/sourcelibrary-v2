@@ -1,0 +1,28 @@
+{
+ "id": "6991e171b53cae6bb6024476_216",
+ "arm": "negfix",
+ "base_arm": "prod-A",
+ "text": "ON THE LAW OF WAR\n\n<margin>Sotol. IV. q. 7. art. 2. Covar. ad c. peccatum. par. II. §. 1. Silv. in verbo Restitut. n. 3. quæ. 6.</margin>\nwhich are customarily proposed by the theologians who instruct the internal tribunal of the conscience.\n\nIII. For it first appears that a possessor in good faith (for a possessor in bad faith is held beyond the account of the thing itself due to his own deed) is not held to any restitution if the thing has perished: because neither is the thing itself with him, nor is there any gain from the thing.\n\n<margin>Medina de contr. q. 10. Zeff. l. II. c. 14. Navar. c. 17. n. 7.</margin>\nIV. Secondly, that a possessor in good faith is held to restore even the existing fruits of the thing: I say the fruits of the thing; for the fruits of industry, even if they would not have proceeded without the thing, are nevertheless not owed to the thing. The cause of this obligation is from ownership. For he who is the owner of a thing, is naturally the owner of the fruits of that thing.\n\nV. Thirdly, that a possessor in good faith is held to the restitution of both the thing and the consumed fruits, provided that he would have consumed just as much anyway: for in this he is considered to have become wealthier. Thus C. Caesar Caligula <margin>Suet. c. 16.</margin> is praised regarding the beginnings of his reign, because he added the fruits of the interim period to those to whom he restored kingdoms.\n\nVI. Fourthly, that he is not held for the fruits which he neglected to gather: because he neither has the thing, nor anything that succeeds in the place of the thing.\n\nVII. Fifthly, if such a possessor has donated to another a thing donated to him, he is not held unless he would have donated just as much even without this thing: for then it will be a gain to have spared his own property.\n\n<margin>L. Quivæs. §. ult. D. furti.</margin>\nVIII. Sixthly, if he has sold a thing purchased, he is not held, unless perhaps insofar as he sold it for more: but if he sold a donated thing, he is held to restore the price, unless perhaps he squandered the price, which he would not otherwise have squandered.\n\n<margin>L. fi & rem. D. de petit. hereditatis.</margin>\nIX. Seventhly, that a foreign thing purchased in good faith must be restored, and the price expended cannot be recovered. To which rule, in my view, this exception must be added: unless insofar as the owner could not plausibly have recovered possession of his own thing without some expense, such as if the thing was in the hands of pirates.\n\n<margin>L. Sed & si lege. D. eod. L. Si eum servum. D. de rebus creditis. L. Mater tua. L. Si mancipia. D. de rei vindicatione.</margin>\nFor then it will be possible to deduct how much the owner would willingly have spent. For the possession of the deed itself, especially when recovery is difficult, is something estimable, and in this the owner is considered to have become wealthier after the loss of the thing. And therefore, while the purchase of one's own thing is not valid under ordinary law, the jurist <term>Paulus</term> <gloss>Roman legal scholar, Paulus</gloss> says that it is valid if it was agreed from the beginning that the possession which is with another should be purchased. Nor do I require here that the thing be purchased with the intention that it be restored to the owner, in which case there are those who say that an action of <term>negotiorum gestio</term> <gloss>management of business affairs</gloss> arises.\n\n<margin>L. Sucr. D. de cont. emt. L. 1. D. de evittionibus. L. Si laborav. §. Si navis. D. ad legem Rhodiam. pern. v. quid de prædam ementibus. Ægid. Reg. diff. 35. dub. 7. num. 126. Hoft. tit. de</margin>\n<note>a L. Si in emtione §. rei. D. de contr. emt.</note>\n\n<summary>This page defines the legal obligations of a good-faith possessor regarding the restitution of property, its fruits, and the recovery of costs incurred in obtaining or preserving such property.</summary>\n<keywords>restitution, good faith, property law, fruits of property, expenses, Roman law, Hugo Grotius</keywords>",
+ "flagged": true,
+ "changed": true,
+ "flags": [
+  {
+   "latin": "nisi forte prodegerit pretium, alias non prodacturus.",
+   "english": "unless perhaps he squandered the price, having otherwise not intended to squander it.",
+   "problem": "The Latin 'alias non prodacturus' means he would NOT have squandered it otherwise; the English 'not intended to squander it' implies a lack of intent rather than a lack of the act itself.",
+   "correct": "unless perhaps he squandered the price, which he would not otherwise have squandered."
+  }
+ ],
+ "check_parse_failed": false,
+ "check": {
+  "model": "gemini-3.1-flash-lite",
+  "in": 2532,
+  "out": 107
+ },
+ "fix": {
+  "model": "gemini-3-flash-preview",
+  "in": 2531,
+  "out": 1057
+ },
+ "cost_usd": 0.00523
+}

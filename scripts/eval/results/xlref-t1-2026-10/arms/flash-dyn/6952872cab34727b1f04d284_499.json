@@ -1,0 +1,42 @@
+{
+ "id": "6952872cab34727b1f04d284_499",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta> fession of the Lord and of one God; for that confession joins their spirits to Heaven, and creates a distance from the East, over which the Lord is present.\n\n829. Since Religion resides in the highest levels of a person’s being, and from those highest levels the lower parts live and shine, and because <term>Mahumedes</term> <gloss>Mohammed</gloss> is present in their minds along with their religion, some Mohammed is always placed in their sight. To ensure they turn their faces toward the East, over which the Lord is, he is placed below the <term>Meditullium Christianum</term> <gloss>Christian center or middle-point</gloss>. This is not the actual Mohammed who wrote the <term>Alcoranum</term> <gloss>Koran</gloss>, but another who performs his office; nor is it always the same person, but he is changed. Once it was a man from Saxony who, having been captured by the <term>Algirienses</term> <gloss>Algerians</gloss>, became a Mohammedan. Because he had also been a Christian, he was sometimes moved to speak with them about the Lord, saying that He was not merely the son of Joseph, but the Son of God Himself. Other Mohammeds later succeeded him. In the place where that representative Mohammed has his seat, a fire appears like torches so that he may be recognized; but that fire is visible to no one except the Mohammedans.\n\n830. The actual Mohammed who wrote the Koran does not come into sight today. I was told that in the earliest times he presided over them, but because he wished to rule over all things of their religion as God, he was cast out from his seat, which he held beneath the Papists, and was sent down to the right side near the south. Once, a certain society of Mohammedans was stirred up by malicious spirits to acknowledge Mohammed as God. To settle the sedition, Mohammed was raised up from the lower earth and shown, and I saw him then as well. He appeared similar to corporeal Spirits who lack interior perception, with a face verging toward black, and I heard him speaking these words: *I am your Mohammed*; and soon he seemed to sink back down.\n\n831. The Mohammedans are hostile to Christians primarily because of the faith of three Divine Persons, and the resulting worship of three Gods and three Creators. They are additionally hostile to Roman Catholics because of their kneeling before images; hence they call the latter Idolaters and the former fanatics. They say that Christians make a Three-headed God, and that they say \"one\" but whisper \"three,\" thus splitting Omnipotence and making three out of one. They compare Christians to <term>Fauni</term> <gloss>mythological forest spirits</gloss> with three horns, one for each God and three for one, and say that they pray, sing, and preach from their pulpits in this manner.\n\n832. Like all nations who acknowledge one God, love what is just, and do good from a religious motive, the Mohammedans have their own Heaven, but it is outside the Christian one. The Mohammedan Heaven is divided into two. In the lower one, they live honestly with several wives, but no one is elevated from there into the upper Heaven except those who renounce concubines and acknowledge the Lord our Savior, as well as His dominion over Heaven and Hell. I heard that it is impossible for them to think of God the Father and our Lord as one, but it is possible for them to believe that He rules over the Heavens and Hells because He is the Son of God the Father. This is the faith among them through which the Lord grants them ascent into the higher Heaven.\n\n833. The fact that the Mohammedan religion has been accepted by more kingdoms than the Christian religion may be a scandal <note>a cause of stumbling or doubt</note> to those who think about Divine Providence and believe that no one can be saved except those born Christian. But the Mohammedan religion is no scandal to those who believe that all things are of Divine Providence; such people look for the reason behind it and find it. It is this: the Mohammedan religion acknowledges the Lord as the Greatest Prophet, the Wisest of all, and also as the Son of God. However, because they have made the Koran the book of their religion, and Mohammed, who wrote it, is fixed in their thoughts and they follow him with some worship, they think little about our Lord. To fully understand that this religion was raised up by the Lord's Divine Providence to destroy the idolatries of many nations, it will be described in order; but first, concerning the origin of idolatries. Before that religion, there was idolatrous worship...\n\n<summary>This page describes the state of Muslims in the spiritual world, their views on the Christian Trinity, and their path to a specific Heaven. Swedenborg explains that the Mohammedan religion was established by Divine Providence to combat widespread idolatry.</summary>\n<keywords>Mohammedans, Spiritual World, Koran, Trinity, Idolatry, Divine Providence, Heaven, Son of God, Meditullium Christianum, Religious Geography</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3950,
+ "outputTokens": 3202,
+ "thinkingTokens": 2105,
+ "cost_usd": 0.011581000000000001,
+ "ms": 14345,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 5321,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "split",
+   "joined": "idololatricus",
+   "catchword": "cus",
+   "headJoined": "Confeſſionem",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 4121
+}

@@ -1,0 +1,17 @@
+{
+ "id": "69dbc89d1040d1d5e209ab64_305",
+ "arm": "negfix",
+ "base_arm": "prod-A",
+ "text": "<meta>continues from previous page: ...as the knowledge itself grasps that it is. If knowledge is not devoid of falsehood, it does not truly know the object, but rather misapprehends it. If a thing is uncertain, the knowledge of it is likewise uncertain.</meta>\n\nWhy, therefore, and in what manner does God foresee these uncertain future events? For if He deems them to be avoidable future events, yet it is not possible for them to happen in that way, He is deceived; and it is wicked to think this, let alone to say it. But if He discerns that they are to be future events in such a way that He knows they can either happen or not happen, what kind of foreknowledge is this that grasps nothing certain, nothing stable? Or what is the difference between this and that ridiculous prophecy of <term>Tiresias</term> <gloss>a legendary blind prophet of Thebes</gloss>, who said: \"Whatever I say will either be or not be\"? Why, then, would divine prudence be any different from human opinion? For humans judge things as uncertain when their outcome is uncertain. But if, at that most certain fountain of all things, there is nothing uncertain...\n\n<summary>This passage explores the paradox of divine foreknowledge, questioning how God can possess certain knowledge of future events that are contingent or avoidable without falling into error or mere guesswork.</summary>\n<keywords>Boethius, divine foreknowledge, contingency, Tiresias, human opinion, predestination</keywords>",
+ "flagged": false,
+ "changed": false,
+ "flags": [],
+ "check_parse_failed": false,
+ "check": {
+  "model": "gemini-3.1-flash-lite",
+  "in": 823,
+  "out": 1
+ },
+ "fix": null,
+ "cost_usd": 0.00020725
+}

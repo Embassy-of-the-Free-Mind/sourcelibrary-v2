@@ -1,0 +1,42 @@
+{
+ "id": "69b6e791f8a84d859cde1de2_473",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "# OF ANIMALS. 255\n\n<margin>from abun-</margin>\n<margin>they come.</margin>\n<margin>of those being</margin>\n<margin>end.</margin>\n<margin>insti-</margin>\n<margin>limited</margin>\n<margin>more.</margin>\n<margin>tion-</margin>\n<margin>is.</margin>\n<margin>e.</margin>\n<margin>i-</margin>\n<margin>l-</margin>\n<margin>m</margin>\n<margin>di-</margin>\n<margin>suc-</margin>\n<margin>a,</margin>\n<margin>5,</margin>\n<margin>fis</margin>\n<margin>o-</margin>\n<margin>by</margin>\n<margin>i;</margin>\n<margin>to be,</margin>\n<margin>o-</margin>\n<margin>is.</margin>\n<margin>per-</margin>\n<margin>ict-</margin>\n\n<meta>continues from previous page: Sanguification is completed</meta> before the first <note>digestion</note> (in the stomach), which is called <term>chylificatio</term> <gloss>chyle-making</gloss>. The waste products of the first and second <term>coctio</term> <gloss>concoction or digestion</gloss> (namely in the intestines, and the bladder of urine and gall) are contemporaneous with the digesting organs themselves. Finally, not only in the vegetative part of the soul, but even before the soul itself, there is a mind, providence, and intellect; which from the very first origin dispose, ordain, and provide all things for the being and well-being of the chick; and with art they fashion <note>the chick</note> according to the form and likeness of the parents.\n\nAs far as this likeness of the offspring is concerned, one may wonder what the cause is that the fetus is sometimes found more like the father, sometimes the mother, and sometimes even ancestors, whether paternal or maternal? Especially since, in a single mating and at the same moment, several eggs are fertilized. It is also remarkable that virtues and vices, diseases, and even marks and moles are transferred from parents to their descendants; and this only to some offspring, but not to all. In the race of chickens, some are noble and born for battle, preferring to die rather than yield to adversaries by fleeing; yet their descendants, unless born from similar parents, gradually cast off that virtue; according to the saying: \"the brave are created by the brave\" <note>original: \"fortes creantur fortibus,\" a quote from Horace</note>. In most other species of animals also (and especially in humans) a nobility of race is observed; and many endowments of mind and body come to them by descent <note>original: \"ex traduce,\" referring to the transmission of the soul or traits through generation</note>.\n\nI have often wondered at this: why, when we see the offspring (for the most part) obtain a certain mixed structure or composition from both parents in all other parts, the same does not happen in the genitals: but usually either a male or a female is born, and very rarely a <term>hermaphroditus</term> <gloss>hermaphrodite</gloss>?\n\nFinally, many things are present before they appear; and some are begun among the first things which are finished last, such as the eyes, the genitals, and the beak.\n\nFrom this also arise certain doubts and difficulties concerning the primacy of the members or the dignity of the parts;\n\n<summary>Harvey discusses the providential intellect guiding embryonic development and the hereditary transmission of physical and moral traits, questioning why sexual characteristics remain distinct while other features blend.</summary>\n<keywords>heredity, embryology, vegetative soul, sexual differentiation, chylification, Horace, generation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3390,
+ "outputTokens": 4912,
+ "thinkingTokens": 4062,
+ "cost_usd": 0.016430999999999998,
+ "ms": 20087,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "catchword",
+   "joined": null,
+   "catchword": "in",
+   "headJoined": "perficitur",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2682
+}

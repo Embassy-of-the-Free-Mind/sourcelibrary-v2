@@ -1,0 +1,45 @@
+{
+ "id": "690986dccf28baa1b4cae0e3_00081",
+ "image_legible": true,
+ "ocr_word_errors": 1,
+ "ocr_words_approx": 150,
+ "ocr_errors": [
+  {
+   "image": "(image shows only printed p. 77; p. 76 is not on it)",
+   "ocr": "whole of p. 76 'cta, iucundissimo aspectu ... Vocabantur autem hæ Arbores,' (~150 words) + <page-break/>",
+   "effect_on_english": "English covers only p. 77, which is all the image shows; judges count p. 76 as omitted"
+  },
+  {
+   "image": "valdè miratus sum (faint, worn; probable)",
+   "ocr": "valdè mutatus sum",
+   "effect_on_english": "none - English 'I was greatly amazed' matches the image, not the OCR"
+  }
+ ],
+ "page_cause": "page_seam",
+ "causes": [
+  {
+   "finding": "T9 major: entire printed p. 76 omitted; English starts at 'things, by Neptune'",
+   "cause": "page_seam",
+   "image": "page begins 'res, à Neptuno vna Solaris Arbor' (header DE MERCVRIO. 77)",
+   "ocr": "carries p. 76 'cta, iucundissimo aspectu ...' before a <page-break/>",
+   "english": "things, by Neptune [were called] one the Solar Tree"
+  },
+  {
+   "finding": "minor mistranslation: 'I was greatly amazed' for 'valdè mutatus sum'",
+   "cause": "none",
+   "image": "valdè mi[r]at[u]s sum (worn, reads miratus)",
+   "ocr": "valdè mutatus sum",
+   "english": "I was greatly amazed"
+  },
+  {
+   "finding": "T10 minor: note guesses 'fructibus' for catchword fru-; next page has fructu",
+   "cause": "translation",
+   "image": "& statim de fru-",
+   "ocr": "& statim de fru-",
+   "english": "likely leading to \"fructibus\" (fruits)"
+  }
+ ],
+ "share_of_served_error_from_ocr": "all",
+ "fixed_transcription_written": true,
+ "note": "Image is a single page (p. 77, sig. D 3); the stored OCR is of the whole spread (pp. 76+77, split-position 500), so the 'omission' is OCR text from the neighbouring page, not a translation drop. The one worn word reads miratus (reference: 'wrapt in admiration'), so the English is right and the OCR 'mutatus' is wrong. Fixed file holds p. 77 only."
+}

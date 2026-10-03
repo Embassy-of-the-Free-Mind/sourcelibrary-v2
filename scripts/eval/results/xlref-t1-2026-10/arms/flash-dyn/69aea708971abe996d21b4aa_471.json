@@ -1,0 +1,42 @@
+{
+ "id": "69aea708971abe996d21b4aa_471",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: you alone embrace that very virtue which no one will ever take from you,</meta>\nand say to her: \"These things indeed, O queen <note>referring to Virtue</note>, I suffer willingly for you. You will restore me to wholeness, or certainly you alone are enough for me instead of all things. Cherish me in your pious bosom alone; in this way, I shall not feel the losses of fame only, but also of life itself.\"\n\n*Sorrow.* I am torn apart everywhere by the common crowd at the crossroads.\n\n*Reason.* Take it in good part. The common crowd will make you known, virtue will make you illustrious, and conscience will make you secure.\n\n---\n\n### On the shame arising from unworthy praise\n## DIALOGUE XXVI\n\n> Praise sparingly, for when you praise unjustly,\n> If you then condemn later, it will be a sign of fickleness.\n\n*Sorrow.* I am accused of having praised an unworthy man.\n<note>A small decorative ornamental initial L appears at the start of the response.</note>\n*Reason.* You say you are accused of having praised an unworthy man. This evil often arises from a good root. For good and innocent people think others are just as they are themselves. From this, they are even more prone to praise than is fair. Although I admit it is an evil to praise the unworthy, it is much worse to revile the undeserving.\n\n*Sorrow.* I praised an unworthy man.\n\n*Reason.* If you did so knowingly, you are blameworthy. If you did so unknowingly, you are excusable. It is a lesser evil to be deceived than to deceive. To be deceived is the fault of another, but to deceive is the specific crime of the deceiver.\n\n*Sorrow.* The praise of another turns to my own infamy.\n\n*Reason.* Rather, it is your own fault or your ignorance. No infamy, just as no praise, arises from what belongs to another.\n\n*Sorrow.* I grieve greatly that I praised an unworthy man.\n\n*Reason.* See to it then that you do not often grieve for this. Beware of leaping rashly to praise or to blame. There is a lust for both things. To speak accurately, it is a disease and a certain itching of a restless tongue that knows no rest. The restraint and guarding of the tongue are counted among the works of highest perfection, as the Scripture says:\n\n<vocab>Fortune, praise, infamy, shame, virtue, conscience, Scripture</vocab>\n\n<summary>Reason counsels Sorrow on the insignificance of public reputation compared to inner conscience and virtue. The dialogue addresses the shame one feels after mistakenly praising an unworthy person, noting that such errors often stem from an innocent heart.</summary>\n<keywords>virtue, reputation, conscience, gossip, praise, blame, integrity</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3087,
+ "outputTokens": 6288,
+ "thinkingTokens": 5677,
+ "cost_usd": 0.0204075,
+ "ms": 25402,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "Si quis",
+   "headJoined": null,
+   "headRemoved": "plectere",
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1879
+}

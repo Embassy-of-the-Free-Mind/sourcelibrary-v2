@@ -1,0 +1,42 @@
+{
+ "id": "690986dccf28baa1b4cae0e3_81",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "# ->ON MERCURY<-\n\n<meta>continues from previous page: ...adorned</meta>\nwith a most pleasant appearance, they gave off a most sweet fragrance. The hills were decorated in a marvelous way with vines, olives, and cedars. The groves were filled with orange and lemon trees. The public roads, lined on both sides with laurel and pomegranate trees interwoven with singular skill, provided a most welcome shade to travelers.\n\nTo speak briefly, whatever exists in the whole world seemed to be visible there. While walking, the aforementioned **Neptune** showed me, hidden beneath a certain rock, two minerals of that island: **Gold** <note>original: *Auri*</note> and **Steel** <note>original: *Chalybis*; in alchemical theory, iron or steel is often described as the \"magnet\" that attracts the celestial influence of the sun into the metallic body.</note>. Not far from there, I was led to a meadow in which a special Garden was planted with various trees most worthy of being seen. Among these many trees, he showed me seven trees distinguished by names <note>These represent the seven metals of antiquity, which were linked to the seven planets.</note>; among these, I observed two principal ones more eminent than the others. One of these bore fruit like a most bright and shining **Sun** <note>original: *Solis*</note>, and its leaves were like **Gold**. The other, indeed, produced very white fruits, whiter than lilies, and its leaves were like fine **Silver** <note>original: *Argentum*</note>. These trees were called by Neptune: one the **Solar Tree** <note>original: *Solaris Arbor*</note>, and the other the **Lunar Tree** <note>original: *Lunaris*</note>.\n\nAnd although on this island everything was at their beck and call, yet one thing alone was missing. Water was not to be had, except with great difficulty. There were indeed many who attempted to lead spring water <note>original: *Aquam Fontis*</note> there through channels; others also extracted it from various substances; but the labor attempted was in vain, because it could be obtained by no means in that place. Even if it was obtained, it was nevertheless useless and poisonous, unless it was drawn from the rays of the Sun or the Moon, which few were able to perform; and whoever had favorable fortune in accomplishing this was never able to attract more than ten parts <note>In alchemical practice, \"parts\" denote the specific ratios or measures of a substance required for the Work.</note>.\n\nFor that water was of a marvelous kind; and believe me, I saw with my own eyes and felt with my hands the snowy whiteness of that water, and while I contemplated that water, I was greatly changed. In the meantime, exhausted by that contemplation, Neptune vanished from my sight, and a great man appeared to me, on whose forehead the name of **Saturn** <note>Saturn represents lead and the beginning of the transmutation process, often characterized by the \"blackness\" of the material.</note> was inscribed. Having taken a vessel, he drew ten parts of the water, and immediately from the fru-\n\n<summary>The narrator explores an alchemical garden featuring solar and lunar trees but discovers the island lacks pure water. Neptune vanishes and is replaced by Saturn, who begins collecting a rare water drawn from celestial rays.</summary>\n<keywords>Neptune, Saturn, Solar Tree, Lunar Tree, Gold, Steel, Silver, alchemical water, planetary metals, allegory</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3100,
+ "outputTokens": 8964,
+ "thinkingTokens": 8207,
+ "cost_usd": 0.028442,
+ "ms": 36901,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": "fructa",
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2437
+}

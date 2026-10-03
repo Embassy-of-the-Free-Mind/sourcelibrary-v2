@@ -1,0 +1,17 @@
+{
+ "id": "695d0e044afae5c3b3aead52_353",
+ "arm": "negfix",
+ "base_arm": "prod-A",
+ "text": "<meta>continues from previous page</meta>all the organs, or instruments, by whose help these same things could also be carried out in a machine. This is so to the extent that the mind does not even immediately move the external limbs in us ourselves, but only directs the spirits <note>original: *spiritus animales*; refined, mobile particles thought to transmit sensory and motor impulses through the nerves.</note> flowing from the heart through the brain into the muscles, and determines them to certain movements, since those spirits are of themselves just as easily applied to many different actions.\n\nTruly, most of the movements that occur in us do not depend in any way upon the mind. Such are the beating of the heart, the digestion of food, nutrition, the breathing of those who are asleep, and even walking, singing, and similar actions in those who are awake, when they are performed without the mind paying attention.\n\nAnd when those who fall from a height thrust their hands forward to the ground to protect their head, they certainly do not do this by any counsel of reason, but only because the vision of the impending fall, reaching all the way to the brain, sends the animal spirits into the nerves in the way that is necessary to produce this movement, even against the will of the mind, and as if in a machine.\n\nAnd since this, in us ourselves, is for certain\n\n<summary>Descartes explains that many bodily functions, including reflexive actions like catching oneself during a fall, occur mechanically through the flow of animal spirits without the intervention of the conscious mind.</summary>\n<keywords>animal spirits, bodily functions, mechanical movement, involuntary action, reflex, mind-body interaction</keywords>",
+ "flagged": false,
+ "changed": false,
+ "flags": [],
+ "check_parse_failed": false,
+ "check": {
+  "model": "gemini-3.1-flash-lite",
+  "in": 949,
+  "out": 1
+ },
+ "fix": null,
+ "cost_usd": 0.00023875
+}

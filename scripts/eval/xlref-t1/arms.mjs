@@ -49,6 +49,9 @@ const SPEC = {
   'lite-A': { model: MODEL_LITE, ctx: true }, 'lite-B': { model: MODEL_LITE, ctx: true },
   'flash-0': { model: MODEL_FLASH, ctx: true },
   'flash-think': { model: MODEL_FLASH, ctx: true, thinkingBudget: 2048 },
+  // flash-think (budget 2048) billed 0 thinking tokens on 71/71 pages (2026-10-03): on gemini-3-flash-preview a budget is a cap the
+  // model may leave unused. flash-dyn leaves the model's own default (dynamic) thinking on — the real X2 arm.
+  'flash-dyn': { model: MODEL_FLASH, ctx: true, allowThinking: true },
   'lite-noctx': { model: MODEL_LITE, ctx: false },
   'lite-gloss': { model: MODEL_LITE, ctx: true, glossary: true },
   'lite-fixocr': { model: MODEL_LITE, ctx: true, fixed: true },
@@ -102,13 +105,13 @@ async function runOne(arm, r) {
   }
   if (DUMP) { fs.mkdirSync(DUMP, { recursive: true }); fs.writeFileSync(path.join(DUMP, `${id}.txt`), prompt); return; }
   const maxOutputTokens = maxOutputTokensFor(ocrText.length);
-  const generationConfig = { temperature: 1, maxOutputTokens, thinkingConfig: { thinkingBudget: spec.thinkingBudget || 0 } };
+  const generationConfig = { temperature: 1, maxOutputTokens, thinkingConfig: spec.allowThinking ? 'model default (dynamic)' : { thinkingBudget: spec.thinkingBudget || 0 } };
   if (DRY) { const est = costOf(model, prompt.length / 3.5, ocrText.length / 3 + 400 + (spec.thinkingBudget || 0)); runUsd += est; return; }
   if (envUsd + runUsd > MAX_USD - 0.05) throw new Error(`spend cap: envelope $${envUsd.toFixed(3)} + run $${runUsd.toFixed(3)} ≥ $${MAX_USD}`);
   let res; const t0 = Date.now();
   for (let attempt = 1; ; attempt++) {
     try {
-      res = await callGemini({ model, prompt, endpoint: 'scripts/eval/xlref-t1/arms.mjs', thinkingBudget: spec.thinkingBudget || 0, temperature: 1, maxOutputTokens, safetySettings: SAFETY_SETTINGS, type: 'eval', bookId: ENVELOPE, pageIds: [id], promptVersion: `v${promptRef.version}`, triggeredBy: `xlref-t1:${arm}` });
+      res = await callGemini({ model, prompt, endpoint: 'scripts/eval/xlref-t1/arms.mjs', ...(spec.allowThinking ? { allowThinking: true } : { thinkingBudget: spec.thinkingBudget || 0 }), temperature: 1, maxOutputTokens: spec.allowThinking ? maxOutputTokens + 8192 : maxOutputTokens, safetySettings: SAFETY_SETTINGS, type: 'eval', bookId: ENVELOPE, pageIds: [id], promptVersion: `v${promptRef.version}`, triggeredBy: `xlref-t1:${arm}` });
       break;
     } catch (err) {
       if (attempt >= 4 || !/(503|429|500|overloaded|UNAVAILABLE)/i.test(String(err.message))) {

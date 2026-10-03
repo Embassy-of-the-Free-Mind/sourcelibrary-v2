@@ -1,0 +1,28 @@
+{
+ "id": "69b4d643853c26e0d15603c8_136",
+ "arm": "negfix",
+ "base_arm": "prod-A",
+ "text": "ARCHIDOXIS OF THEOPHRASTUS: BOOK III.\n\nadditions so that the <term>quinta essentia</term> <gloss>fifth essence</gloss> may remain in their odor, color, and taste, and may increase in these and not diminish, as in Musk, Amber, and Civet. If the <term>quinta essentia</term> of these is extracted, you will notice that the body is foul and of no value, either in taste, in odor, or in nature. The same must be judged regarding the extraction of the <term>quinta essentia</term> of all other things. Although Musk, Amber, and Civet are not referred to in this present chapter, because we describe them elsewhere specifically, and here we are dealing only with growing things, such as Lilies, Spikenard, and Foliage: the process of their extraction is as follows.\n\nTake well-crushed growing things, which you should place in a pot in horse dung to <term>digere</term> <gloss>digest</gloss> for four weeks, and distill by a <term>balneum</term> <gloss>water bath</gloss>. Afterward, putrefy them again in horse dung for eight days, and distill again by the <term>balneum</term>. The <term>quinta essentia</term> will transcend through the <term>Alembic</term> <gloss>distilling apparatus</gloss>, and the body will remain at the bottom. But if more <term>quinta essentia</term> remains at the bottom, continue by putrefying and distilling. Afterward, take the distilled water and add that growing thing to it again, and digest it in a <term>pellicanum</term> <gloss>circulatory vessel</gloss> for six days, and it will turn into a dense color. Strain this, and distill the strained substance by the <term>balneum</term>. The body will come out, but the <term>quinta essentia</term> will reside at the bottom, which you should separate by means of a <term>retortæ</term> <gloss>curved distillation vessel</gloss> from the dregs, and let the <term>quinta essentia</term> [rest] for four\n\n<summary>This page details the specific extraction process of the quintessence from botanical materials through digestion in horse dung, distillation, and circulation in a pelican vessel.</summary>\n<keywords>quinta essentia, distillation, putrefaction, botanical extraction, digestion, laboratory equipment</keywords>",
+ "flagged": true,
+ "changed": true,
+ "flags": [
+  {
+   "latin": "propterea quòd ea specialiter describamus",
+   "english": "because we are describing them specifically",
+   "problem": "The Latin 'propterea quòd' (because) introduces the reason why they are NOT referred to, but the English phrasing implies they are being described in this chapter.",
+   "correct": "because we are describing them [the growing things] specifically"
+  }
+ ],
+ "check_parse_failed": false,
+ "check": {
+  "model": "gemini-3.1-flash-lite",
+  "in": 1304,
+  "out": 79
+ },
+ "fix": {
+  "model": "gemini-3-flash-preview",
+  "in": 1277,
+  "out": 548
+ },
+ "cost_usd": 0.002727
+}

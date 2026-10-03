@@ -1,0 +1,34 @@
+{
+ "id": "69dbc9491040d1d5e20a1afd_87",
+ "arm": "negfix",
+ "base_arm": "prod-A",
+ "text": "<scan-quality>good</scan-quality>\n<language>Latin</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>N/A</page-num>\n\nuniuersas prouincias regionesque uno calamitatis genere splendet. Itaque vexatus ac pdiis exteris nationibus ad exemplum amissis impn. portari in triumpho massilia vidimus. rex ea vrbe triumphari. sme qua nunq. nri imperatores ex transalpinis bellis triumpharunt. Multa preterea commemorare nephariam in socios. si hoc uno solo quicq. vidissi indignus. Iure igitur plectim. Nisi enim eor. impunita scelera tulistemus. nunq. ad unu rata puemss licentia. A quo quidem rei familiaris ad paucos cupiditati. ad multos venit hereditas improbos. Nec vero unq. bellor. ciuilius semen a causa uerit. du hoies pdia hasta illa crues ta et meminerme t sperabur. Qua lhilla cu vibrass dictatore ppinquo hio. sexto trigesimo anno post a sceleratioze hasta eate no recessit. Alter aut q in illa dictatura scriba fuerat. in hac fuit questor urbanus. Ex quo exbs intelligi. talibz pmijs ppositis. nunq. se futura bella ciuilia. Itaq. pietes urbis modo stat et manet. hncq. ipi ia extrema scelera metuetes. Re vero publica penitus amismus. Atq. in has claes incidimus. Redeundu est emm ad positu. du mes tui. q. cari esset diligi maluimus. Que hi pplo rono iuste imperati accidere potuerit. quid teber putare singuli. <insert>De caritate adipiscenda</insert>\nSed cui pspicuu fit. beniuolentie vim esse magna. metus imbecille. sequitur ut differamus quibz rebz possimus facillime ea qua volumus adipisci cu honore fide caritatem. Sed ea non pariter\n\n<vocab>Cicero, De Officiis, bellum civile, caritas, benevolentia, triumphus, Massilia</vocab>\n\nENGLISH TRANSLATION:\n<meta>continues from previous page: ...but also confiscated the goods of entire provinces and regions in a single type of disaster. Therefore, having been vexed and having lost their possessions to foreign nations as an example, we saw Massilia carried in a triumph, a city that was never even allowed to be triumphed over <note>Massilia, modern-day Marseille, was considered a protected ally and a symbol of Roman stability</note> by our commanders from their Transalpine wars. There are many other nefarious things to commemorate regarding the allies, if seeing anything at all in this single instance were not enough. We are therefore rightly punished. For unless we had endured their unpunished crimes, the license would never have reached such a point. From the greed of a few, it became an inheritance for many wicked men. Nor, indeed, did the seed of civil wars ever arrive from a more just cause, so long as men remembered that blood-stained spear <note>referring to the auctions held by Sulla, marked by a spear</note> and expected others. When that man brandished it, with the dictator approaching, the state did not recover from that wickedness for thirty-six years. Another, who had been a scribe in that dictatorship, was city quaestor in this one. From this, it can be understood that with such rewards proposed, civil wars will never be absent. And so, the city stands and remains only by the grace of the walls, and even those men themselves now fear the ultimate crimes. In truth, we have completely lost the Republic. And we have fallen into these shipwrecks. It is necessary, therefore, to return to the point <note>of the argument</note>: we preferred to be loved when we could have been dear <note>Cicero emphasizes that being worthy of love is more stable than being feared</note>. What could have happened justly ordered to the Roman people, what should individuals think? <insert>On the attainment of affection</insert>\n\nBut for whom it is clear that the power of benevolence is great, and that of fear is weak, it follows that we must discuss by what means we can most easily attain those things which we desire, along with honor, loyalty, and affection. But those things are not equally</meta>\n\n<summary>This passage continues Cicero’s critique of the decline of Roman political ethics, focusing on the transition from a republic maintained by benevolence to one defined by civil war and the exploitation of allies. Cicero emphasizes that authority based on fear is inherently unstable and destructive to the state.</summary>\n<keywords>Cicero, Republic, benevolence, civil war, Massilia, Roman ethics, political power</keywords>",
+ "flagged": true,
+ "changed": true,
+ "flags": [
+  {
+   "latin": "Iure igitur plectim.",
+   "english": "We are therefore rightly punished.",
+   "problem": "Subject/Agent swapped: 'plectimur' (we are punished) vs 'plectimus' (we punish/inflict punishment). In this context, Cicero is arguing that the Romans are the ones inflicting punishment or that they deserve to be the ones punishing.",
+   "correct": "We are therefore rightly punishing."
+  },
+  {
+   "latin": "du mes tui. q. cari esset diligi maluimus.",
+   "english": "we preferred to be loved when we could have been dear",
+   "problem": "Reversed sense of comparative/preference: The Latin 'cari esse' (to be dear/valued) is contrasted with 'diligi' (to be loved/esteemed). The translation reverses the preference Cicero is critiquing.",
+   "correct": "we preferred to be loved when we should have preferred to be dear."
+  }
+ ],
+ "check_parse_failed": false,
+ "check": {
+  "model": "gemini-3.1-flash-lite",
+  "in": 1305,
+  "out": 224
+ },
+ "fix": {
+  "model": "gemini-3-flash-preview",
+  "in": 1400,
+  "out": 1077
+ },
+ "cost_usd": 0.00459325
+}

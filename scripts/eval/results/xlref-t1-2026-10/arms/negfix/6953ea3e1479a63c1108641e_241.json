@@ -1,0 +1,34 @@
+{
+ "id": "6953ea3e1479a63c1108641e_241",
+ "arm": "negfix",
+ "base_arm": "prod-A",
+ "text": "OF HOUSEHOLD MANAGEMENT,\n\nyou will soften it with the best fat, kneading the mass: the whole must be divided, as if into the largest olives, and one should consume one of these around the second hour, and indeed the other around the tenth hour, and they will suffer no harm from hunger. There is another composition of the same, taking a half-sextarius <note>a measure of about 0.3 liters</note> of Attic sesame, and half the portion of honey, a cotyla <note>a measure of about 0.27 liters</note> of oil, and a choenix <note>a measure of about 1.1 liters</note> of peeled sweet almonds; it is necessary to dry the sesame and almonds, then grind and pound them, then peeling the squills <note>sea onions</note> all around, and cutting off the roots and leaves, and dissecting them into small parts, you must place them in a mortar and pound them until they are thoroughly smoothed. Soon after, you must work the equal part of honey with the pounded squills together with the oil, and pouring it into a pot, and placing it over coals, it must be stirred here and there with a wooden spatula until everything is mixed. When the mass has become solid, it will be worth the effort to divide it into small morsels, and anyone taking one in the morning and another in the evening will have sufficient nourishment. This medicine is useful for an army, for being sweet, it brings satiety and removes thirst. We have extracted these from a certain manuscript scholium <note>marginal note or commentary</note> on the book of Heron <note>Heron of Alexandria</note> in the Vatican library. We saw the same composition in Philoponus <note>John Philoponus, a 6th-century philosopher</note>, in the fifth book on military affairs, where he describes other similar things of this kind.\n\n---\n\n->*From which fruits wines may be made.*<-\n\n### CHAP. XXI.\n\nNow we shall recount the fruits from which wines may be made, but first those produced by the ancients, in a twofold difference: for some are for remedies, with which books of physicians are filled, others are for use, and they are of nearly infinite kinds, according to the differences of places and peoples: for that which is given to one is denied to another. First\n\n->*Wine from palms*<-\n\nPliny <note>Pliny the Elder, author of *Natural History*</note> said that in the East, wine is made from these, and he lists fifty kinds of palms, and the differences of wines from them. Among these, the dates <note>original: *cariotæ*; a specific variety of date</note> are most celebrated, being very rich in juice, from which come the principal wines of the East, which are harmful to the head, whence the fruit gets its name <note>a reference to the Greek *kara*, meaning head</note>. They are most highly praised in Judea, especially in Jericho, although those from Archelais and Phaselis are also valued, and\n\n<summary>Della Porta provides recipes for concentrated nutrient rations made from sesame, honey, and squill for military use, and begins a new chapter on the varieties and medicinal properties of fruit-based wines, focusing on date wine.</summary>\n<keywords>military rations, squill, honey, sesame, Heron, Vatican Library, Philoponus, palm wine, Pliny the Elder, dates, Judea</keywords>",
+ "flagged": true,
+ "changed": false,
+ "flags": [
+  {
+   "latin": "nullum in fame malum patientur",
+   "english": "they will suffer no harm from hunger",
+   "problem": "The Latin 'nullum... malum' (no harm) is correctly translated, but the context implies the subject will suffer no harm *because* of the hunger (i.e., they will not suffer from hunger). The English phrasing is accurate.",
+   "correct": "they will suffer no harm from hunger"
+  },
+  {
+   "latin": "quod vni datum alteri negatum est",
+   "english": "that which is given to one is denied to another",
+   "problem": "The Latin 'datum' (given) and 'negatum' (denied) are correctly translated, but the English text ends abruptly at 'First' (Primo), whereas the Latin 'Primo' introduces the list of fruits. The translation is accurate.",
+   "correct": "that which is given to one is denied to another"
+  }
+ ],
+ "check_parse_failed": false,
+ "check": {
+  "model": "gemini-3.1-flash-lite",
+  "in": 1689,
+  "out": 223
+ },
+ "fix": {
+  "model": "gemini-3-flash-preview",
+  "in": 1783,
+  "out": 745
+ },
+ "cost_usd": 0.00388325
+}

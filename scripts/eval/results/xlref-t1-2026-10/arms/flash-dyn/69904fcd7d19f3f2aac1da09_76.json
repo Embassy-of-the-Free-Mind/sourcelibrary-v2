@@ -1,0 +1,42 @@
+{
+ "id": "69904fcd7d19f3f2aac1da09_76",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: regarding the theory of vision, however, there are various and conflicting opinions</meta>\n\n...are. For Plato believes that sight occurs by means of a mutual radiance <note>original: \"conclaritatem\"; referring to the theory of *synaugeia* where internal and external light combine</note>, namely, that light flowing from the eyes meets the light coming from bodies in the external air. This occurs in the intervening air, through a fire-like power of sight that is easily spread, changeable, and co-extensive. Galen agrees with Plato. But Hipparchus says that rays are extended from the eyes as far as those bodies, touching them as if with a certain palpitation, and thus returning the perception of them to the sight. The Epicureans, however, assert that <term>simulacra</term> <gloss>images or effigies</gloss> of things that appear force themselves into the eyes. Aristotle, on the other hand, believes that these images are not bodies, but travel from visible things to the sight according to quality, through the alteration of the surrounding air. Porphyry claims that neither rays, nor images, nor anything else is the cause of seeing; instead, he believes the soul itself, knowing itself as visible, and being the one soul of all things, recognizes itself in everything that exists.\n\nBut geometers and optical scientists, somewhat agreeing with Hipparchus, describe certain cones formed by the coincidence of rays emitted through the eyes. From this, the sight grasps many visible things at once, but those where the rays coincide are seen most clearly. Yet <term>Alchindus</term> <note>Al-Kindi, the 9th-century Arab philosopher and author of \"De Aspectibus\"</note> teaches something entirely different regarding perspectives. To Augustine, it seems that the power of the soul effects something in the eye which has not yet been fully investigated by scholars of wisdom. This science, therefore, contributes greatly to detecting the variety, distance, size, and motion of celestial bodies, as well as their reflections and refractions. It also serves architecture in the measurement of buildings. Most closely, however, it adds the greatest adornment to the craft of painting and the manufacture of mirrors, such that these arts cannot be perfected without it. For it demonstrates how we should create images that are neither disproportionate nor deformed due to the distances and heights at which they are viewed.\n\n<summary>This page catalogs diverse philosophical theories on the nature of vision and discusses the practical applications of optics in astronomy, architecture, and art. It highlights how perspective prevents distortion in painting and mirror-making.</summary>\n<keywords>Optics, Perspective, Plato, Aristotle, Hipparchus, Epicureans, Al-Kindi, theories of vision, astronomy, architecture, painting, mirrors</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3105,
+ "outputTokens": 3255,
+ "thinkingTokens": 2658,
+ "cost_usd": 0.0113175,
+ "ms": 13655,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": "CAPVT",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2146
+}

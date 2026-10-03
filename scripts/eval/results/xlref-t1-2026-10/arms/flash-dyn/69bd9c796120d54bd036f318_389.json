@@ -1,0 +1,42 @@
+{
+ "id": "69bd9c796120d54bd036f318_389",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>recite it faithfully and act securely in the help of God.\n\nHowever, certain superstitious people and children of this world, wishing to pile errors upon errors, attempt to defend themselves with arguments beyond the understanding and intention of Scotus <note>John Duns Scotus, a medieval philosopher and theologian.</note> and the canonists <note>experts in Church law.</note>. They argue that since natural things possess certain occult <gloss>hidden</gloss> powers whose reason cannot be assigned by man—such as how a magnet <note>original: \"adamas\", here referring to a lodestone</note> attracts iron, and many other examples that Augustine enumerates in the twenty-first book of *The City of God*—it should therefore not be illicit to apply certain objects to restore health when exorcisms and natural medicines fail. They claim this is acceptable even if it seems vain, provided one intends to procure health for oneself or another through images that are not necromantic or astrological, or through rings and such things.\n\nLikewise, he argues that just as natural bodies are subject to celestial bodies, so also artificial bodies—such as images—receive certain occult powers through the influence <note>original: \"implisione\", likely \"impressione\"</note> of the celestial bodies. Therefore, since artificial bodies like images receive certain hidden powers from the heavens to cause certain effects, it is not illicit to use them and other things of this kind. Furthermore, demons can transform bodies in many ways, as Augustine says in the third book of *On the Trinity*, and as is evident in the case of the bewitched; therefore, it is permitted to use their power to remove those afflictions.\n\nBut in truth, the sayings of all the holy doctors are to the contrary, as has been made clear in many places and scattered throughout this work. Hence, regarding the first point, he says that if natural things are applied simply to produce certain effects for which they are thought to have a natural power, it is not illicit. But if there are added any <term>caracteres</term> <gloss>mystic symbols or characters</gloss> or any other unknown and vain observations which clearly do not have efficacy from nature, it will be superstitious and illicit, as Saint Thomas <note>Thomas Aquinas, in the Summa Theologica</note> treats in the second part of the second part, question ninety-six, article two, at the conclusion of the question.\n\n<summary>This page refutes the argument that occult properties of objects or celestial influences justify the use of superstitious charms or demonic power for healing. It distinguishes between the legitimate use of natural properties and the illicit use of mystical symbols or images.</summary>\n<keywords>occult powers, celestial bodies, images, amulets, Saint Augustine, Thomas Aquinas, superstition, healing, demonic power</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2856,
+ "outputTokens": 2179,
+ "thinkingTokens": 1582,
+ "cost_usd": 0.007965,
+ "ms": 10346,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 2127
+}

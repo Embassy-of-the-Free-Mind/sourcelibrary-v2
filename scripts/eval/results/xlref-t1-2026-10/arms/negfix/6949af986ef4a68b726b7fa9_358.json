@@ -1,0 +1,27 @@
+{
+ "id": "6949af986ef4a68b726b7fa9_358",
+ "arm": "negfix",
+ "base_arm": "prod-A",
+ "text": "of the pivots, and thus the screw creates rotations as men tread upon it. Its elevation must be set at such an inclination that it corresponds to the <term>Pythagorean right-angled triangle</term> <gloss>a geometric principle where the sides are in a 3:4:5 ratio</gloss>. This means the length should be divided into five parts; the head of the screw is raised by three of these parts, so that the distance from the perpendicular to the lower end is four parts. The method of how this should be arranged at the extremity is described in the form <note>or diagram</note> at the end of the book.\n\n<margin>\na. A screw erected according to the ratio of a Pythagorean triangle.\nb. The beam in which the screw rotates.\n</margin>\n\n<note>A woodcut illustration depicts an Archimedean screw used for irrigation or drainage. The device consists of a wooden shaft with an internal spiral encased in a cylinder, tilted at an angle. The lower end is submerged in water, and the upper end is supported by a tall wooden pillar (labeled 'b'). A large treadwheel (labeled 'd') is attached to the center of the shaft, allowing humans to turn the device by treading on its rungs. Water is shown being lifted through the screw and discharging from the top into a wooden trough or basin. The letter 'a' labels the main body of the screw.</note>\n\nRegarding the material from which machines are made for drawing water, the methods by which they are completed, and the means by which, receiving motion, they provide rotations for endless utilities,\n\n<summary>This page concludes the technical description of the Archimedean screw by specifying the ideal angle of inclination based on a 3:4:5 right triangle and introduces the broader subject of water-lifting machines.</summary>\n<keywords>Archimedean screw, Pythagorean triangle, hydraulic machines, water lifting, engineering, Vitruvius</keywords>",
+ "flagged": true,
+ "changed": false,
+ "flags": [
+  {
+   "latin": "extollatur caput cocleae ita erit à perpendiculo ad imas nares eius spatiū, partes quatuor",
+   "english": "the head of the screw is raised by three of these parts, so that the distance from the perpendicular to the lower end is four parts",
+   "problem": "The translation swaps the measurements: the Latin says the head is raised by three parts and the base distance is four, but the English phrasing implies the head is raised by three and the base is four, which is correct, but the Latin actually states the head is raised by three and the distance from the perpendicular to the base is four. Wait, the translation is actually correct. Checking again: 'earum trium extollatur caput... spatium, partes quatuor'. The translation is accurate. No error found."
+  }
+ ],
+ "check_parse_failed": false,
+ "check": {
+  "model": "gemini-3.1-flash-lite",
+  "in": 1070,
+  "out": 171
+ },
+ "fix": {
+  "model": "gemini-3-flash-preview",
+  "in": 1132,
+  "out": 412
+ },
+ "cost_usd": 0.002326
+}

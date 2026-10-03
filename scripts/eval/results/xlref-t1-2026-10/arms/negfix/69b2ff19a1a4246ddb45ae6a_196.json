@@ -1,0 +1,28 @@
+{
+ "id": "69b2ff19a1a4246ddb45ae6a_196",
+ "arm": "negfix",
+ "base_arm": "prod-A",
+ "text": "if I lie in any way. I know a certain man of many crafts, a master of Greek, Latin, mathematics, philosophy, and medicine—and a royal one at that—already sixty years old, who has abandoned all other matters to torment and torture himself for more than twenty years with grammar. He deems himself truly blessed if he might live long enough to finally determine how the eight parts of speech are to be distinguished, a task that no Greek or Latin scholar has yet been able to fully accomplish. It is as if the matter must be settled by war should someone use a conjunction that actually belongs to the domain of adverbs. And for this reason, since there are as many grammars as there are grammarians—or even more, given that my friend <term>Aldus</term> <gloss>Aldus Manutius, the famous Venetian printer</gloss> has published a grammar more than five times—he passes over no book, no matter how barbarously or tediously written, without unfolding and examining it. He envies everyone who attempts anything, however foolishly, in this field, dreading miserably that someone might snatch away this glory and the labors of so many years might perish. Do you prefer to call this insanity or folly? For my part, it matters little, provided you admit\n\n<summary>Erasmus ridicules a grammarian who wastes decades on pedantic, unresolved questions regarding the classification of the parts of speech.</summary>\n<keywords>grammar, pedantry, Aldus Manutius, folly, parts of speech</keywords>",
+ "flagged": true,
+ "changed": false,
+ "flags": [
+  {
+   "latin": "nemini non inuidens",
+   "english": "He envies everyone",
+   "problem": "The double negative 'nemini non' (everyone) is translated as 'everyone', but the context of the Latin 'nemini non inuidens' implies he is jealous of everyone's work, whereas the English phrasing 'He envies everyone' is correct, but the Latin 'nemini non' is a litotes for 'everyone'. Wait, the translation is accurate. Checking again: 'nemini non inuidens' = 'envying no one not' = 'envying everyone'. The translation is correct.",
+   "correct": "He envies everyone"
+  }
+ ],
+ "check_parse_failed": false,
+ "check": {
+  "model": "gemini-3.1-flash-lite",
+  "in": 972,
+  "out": 136
+ },
+ "fix": {
+  "model": "gemini-3-flash-preview",
+  "in": 1002,
+  "out": 322
+ },
+ "cost_usd": 0.001914
+}

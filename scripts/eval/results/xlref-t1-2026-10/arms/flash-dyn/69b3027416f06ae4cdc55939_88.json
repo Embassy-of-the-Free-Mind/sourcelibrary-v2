@@ -1,0 +1,42 @@
+{
+ "id": "69b3027416f06ae4cdc55939_88",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "# Pro Populo Anglicano\n\n78\n\n<meta>continues from previous page: but the Senate</meta> itself of Rome, to whom these things were written. What do you gain from that? Since no precept to which a reason is attached is accustomed to or able to bind anyone beyond the reason for that precept. *Be subject* <term>hypotagēte</term> <gloss>be ordered under</gloss>; that is, if you look at the force of the word, subordinated or legitimately subject. And order is law <note>original: hē de taxis nomos</note>, says Aristotle; law is order. *Be subject for the Lord’s sake*. Why? Because both the king and the governor are appointed by God for the punishment of evildoers and the praise of those who do good. *Since such is the will of God*. That is to say, we are to obey such as are described here; about others there is not a word here. You see how excellently the reason for this precept stands. He adds in verse 16: *as free men*, therefore not as slaves. What if, on the contrary, they reign for the torture and ruin of the good, and for the impunity, praise, and rewards of evildoers? Shall we be subject forever, not only as private citizens, but as leading men, as all the magistrates, and finally as the Senate itself? Is it not called a human ordinance? Why then shall human power be valid for establishing what is good and healthy for men, but not be valid for removing what is evil and destructive to them? But you say that king, to whom they were ordered to be subject, was the tyrant Nero at Rome at that time: therefore we must be subject even to tyrants. But I say, it is doubtful whether Nero or Claudius held power at that time: and those who were ordered to be subject were strangers, dispersed individuals, and private citizens, not consuls, not praetors\n\n<summary>Milton argues that the biblical duty of subjection is conditional on a ruler fulfilling their God-given role of punishing evil and rewarding good. He asserts that if a ruler becomes a tyrant, the reason for the command fails and the people's obligation to obey ends.</summary>\n<keywords>subjection, tyranny, biblical interpretation, Aristotle, Nero, Claudius, political resistance, human ordinance</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2811,
+ "outputTokens": 3512,
+ "thinkingTokens": 3012,
+ "cost_usd": 0.0119415,
+ "ms": 14158,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 4096,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": "merged-catchword",
+   "joined": null,
+   "catchword": "tores,",
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": true,
+   "applied": true
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 1629
+}

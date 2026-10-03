@@ -1,0 +1,17 @@
+<meta>continues from previous page</meta>
+<header>ON THE MAGNET, BOOK V.</header>
+
+so also is a flat circular iron, skilfully touched at opposite points around its rim. But the magnetic experiments show less clearly in round iron objects, because the forces in them are weaker. The variety of declinations shown by iron needles at different latitudes of the terrella.
+
+<note>A circular diagram represents a <term>terrella</term> <gloss>a small spherical lodestone used as a model of the Earth</gloss>. An outer circle is labeled "Orbis Virtutis" <gloss>Circle of Virtue, the region around the stone where its magnetic force acts</gloss>. Inside, a shaded sphere stands for the terrella, with a horizontal line marked "Axis" drawn through it. Small iron needles are set around the edge of this sphere at different latitudes. At the equator, where the needles sit midway between the poles, they lie flat against the surface. Moving toward the top and bottom poles, they tilt at steeper and steeper angles, until at the magnetic poles they stand perfectly upright.</note>
+
+The declination of magnetized iron above the terrella is shown by a number of equal iron wires, each the length of a barleycorn, set out along a meridian. At the equator the wires are turned toward the poles by the virtue of the stone, and lie down on its body along the plane of its horizon. The nearer they are placed to the poles, the more they are raised up by their turning nature. At the poles themselves they point straight toward the very center. But iron needles do not rise properly, if they are longer than they should be, unless the stone is a vigorous one. <note>Gilbert's "declination" is what we now call magnetic dip or inclination: the downward tilt of a freely pivoted needle. Here the tiny wires show in miniature what a dip needle does at different latitudes on the Earth.</note>
+
+### CHAPTER III.
+
+### An instrument which shows, by the virtue of the stone, *
+### the degrees of declination from the horizon
+### of each latitude.
+
+<summary>Gilbert shows how short iron wires placed along a meridian of a terrella lie flat at its equator and stand upright at its poles, demonstrating magnetic dip in miniature. The page then opens Chapter III, which introduces an instrument for measuring the degree of dip at any latitude.</summary>
+<keywords>William Gilbert, De Magnete, terrella, magnetic dip, declination, inclination, Orbis Virtutis, meridian, equator, poles, iron needles, latitude, dip instrument</keywords>

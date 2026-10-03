@@ -1,0 +1,27 @@
+{
+ "id": "69904fcd7d19f3f2aac1da09_00076",
+ "image_legible": true,
+ "ocr_word_errors": 0,
+ "ocr_words_approx": 255,
+ "ocr_errors": [],
+ "page_cause": "none",
+ "causes": [
+  {
+   "finding": "Summary credits Al-Kindi with the geometers' ray cones; source says he teaches otherwise (minor)",
+   "cause": "translation",
+   "image": "Sed enim Alchindus de aspectibus omnino docet aliud",
+   "ocr": "Sed enim Alchindus de aspectibus omnino docet aliud",
+   "english": "geometric ray theories used by Al-Kindi and architects"
+  },
+  {
+   "finding": "'This occurs because the air in between...' makes causal 'ea vero quae circa aerem medium est' (minor)",
+   "cause": "translation",
+   "image": "ea vero quæ circa aërem medium est, facile effusibili vertibilique",
+   "ocr": "ea vero quæ circa aërem medium est, facile effusibili vertibilique",
+   "english": "This occurs because the air in between is easily diffused"
+  }
+ ],
+ "share_of_served_error_from_ocr": "none",
+ "fixed_transcription_written": false,
+ "note": "OCR agrees with the image word for word (only spelling normalised: print has 'simulachra' twice; the repeated 'seipsam in omnium, seipsam in omnibus' is in the print). Both minor findings are translator/summary slips on correctly transcribed text."
+}

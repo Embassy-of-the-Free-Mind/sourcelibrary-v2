@@ -1,0 +1,28 @@
+{
+ "id": "69529509b184004c526a2793_237",
+ "arm": "negfix",
+ "base_arm": "prod-A",
+ "text": "**History of Life and Death.** **227**\n\n<margin>04</margin> let us inquire; for the proper\nwork of cold is *Condensation*; and\nit is performed without any\nmalignity or hostile quality:\nand therefore the operation is safer\nthan by *Opiates*; though a little\nless powerful if it were used\nonly by turns, just as *Opiates*\nare used: But again, because it\ncan be applied familiarly and in\ndaily diet in a moderate way, it is\nalso far more powerful for the prolonga-\ntion of life than through *Opiates*.\n\n<margin>39</margin> *Refrigeration of the Spirits* is performed in three\nways; Either by *Respiration*;\nOr by *Vapors*; Or by *Food*:\nThe first is the best, but almost\nbeyond our power; The second is\nalso powerful, and yet it is at hand;\nThe third is weak and works through\ncircuits.\n\n*Air*\n\n<summary>Bacon argues that because cold condenses the spirits without harm, it serves as a safer and more effective tool for longevity than opiates, provided it is applied through daily diet and lifestyle. He classifies the methods of cooling the spirits into respiration, vapors, and food.</summary>\n<keywords>condensation, spirits, cold, refrigeration, respiration, vapors, food, longevity, Bacon</keywords>",
+ "flagged": true,
+ "changed": true,
+ "flags": [
+  {
+   "latin": "04",
+   "english": "40",
+   "problem": "Number changed",
+   "correct": "04"
+  }
+ ],
+ "check_parse_failed": false,
+ "check": {
+  "model": "gemini-3.1-flash-lite",
+  "in": 823,
+  "out": 23
+ },
+ "fix": {
+  "model": "gemini-3-flash-preview",
+  "in": 741,
+  "out": 307
+ },
+ "cost_usd": 0.00153175
+}

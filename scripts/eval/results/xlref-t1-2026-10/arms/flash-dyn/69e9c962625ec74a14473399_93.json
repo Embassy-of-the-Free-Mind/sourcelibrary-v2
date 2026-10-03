@@ -1,0 +1,42 @@
+{
+ "id": "69e9c962625ec74a14473399_93",
+ "arm": "flash-dyn",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page: animal. Under the compulsion of necessity, an art was finally invented by which he might pay the penalty for so much blood;</meta> <margin>The nature of the tiger explained.</margin> animal. having investigated the narrow paths of the trails and the shelters of the caves from which he was accustomed to go out for prey at night, the path was cut. Having dug a pit with hurdles and thrown earth, with the extra <margin>what about the tiger</margin> earth dispersed, they laid it over. Coming along incautiously—it was indeed a male tiger—he fell into the pit and became stuck on sharp stakes fixed at the bottom of the ditch. With his roaring, he deafened the whole neighborhood, and the mountains re-echoed with that screeching. He was killed by massive stones and stakes fixed into the pit's edge, which were thrown down upon him. Into a thousand splinters and a thousand pieces: with his right paw he shattered the spears aimed at him and those hurled from above. Even half-dead and bloodless, he filled those watching with fear; what might he have done if free and unharmed? A certain Juan Ledesma of Seville, a friend of Vasco <note>Vasco Núñez de Balboa</note> and a companion in his labors, confessed to me that he had eaten of that tiger. He reported to me that it was no worse than beef. When asked why they call it a tiger—those who have now seen a tiger—they reply that they consider it a tiger because of the spots, the ferocity, the dexterity, and other signs given by authors. Although many of them claim to have seen spotted leopards and panthers. After the male tiger was killed, they followed his tracks toward the mountains and reached the conjugal cave, his home.\n\nWhile the mother was away, they took two cubs, not yet weaned from their mother's teats. Changing their plan, so that they might later send them to Spain once they had grown a bit, they carefully placed iron chains around their necks and brought the little ones back to the mother's cave. Returning to the cave a few days later, they found the cave empty, with the chains unchanged in their place. It was thought that the mother, out of rage, had torn them to pieces and carried them off so that no one else might enjoy them. For they assert that they could in no way have been freed from the chains while alive. The skin of the killed tiger was sent to Hispaniola, stuffed with dried herbs and straw, to the Admiral and the leading men from whom these new lands expect laws and assistance. Both those who suffered inconveniences from the tiger and those who handled its skin have discussed these things with me; we accept what is given. We must return to Pacra, from whom we had diverged. Having entered the deserted <term>boios</term> <gloss>houses</gloss> of Pacra, Vasco strove to attract Pacra. Through messengers <margin>Pacra returns</margin> he signified the same things to Pacra that we remember were signified to the others. For a long time, Pacra refused. Threats were added to the refusals. He finally came, accompanied by three minor chieftains. Vasco writes that Pacra was so deformed, filthy, and foul that he confesses he never saw anything more shameful. Nature, he says, had only granted him <margin>What kind of man Pacra is considered to be, by Hercules.</margin> human form; for the rest, he was a wild, monstrous brute. His morals, he says, were equal to his habits and features. He had abused the daughters of four neighboring chieftains, whom he had seized by force, with detestable lust. Concerning the obscene morals of Pacra and many other things of that sort, accusations were hurled by the neighboring chieftains before Vasco, as if before a praetorian judge <note>a Roman judicial official</note> or, by Hercules, an avenger, so that punishment might be taken upon Pacra. This monstrous beast, along with <margin>what against the wicked.</margin> the same three minor chieftains who obeyed Pacra's word and labored under the same vices, he threw into the maws of war dogs; and he ordered their mangled corpses to be burned. Marvelous things are reported concerning the dogs with which they engage in battles. Against the armed natives, he says they were not fierce: there was no need for swords or arrows or other weapons to rout the opposing enemies; for once the signal was given and the dogs were released, the column, terrified by the <margin>marvels about the dogs.</margin> appearance and unusual barking of the Molossian dogs <note>large, powerful guard dogs used since antiquity</note>, would hesitate and, in confusion, abandon their battle lines and orders because of this prodigious invention. It happens differently, however, when they engage with the people of Cartagena and the Caribs; for they are fiercer and more apt at waging wars. Charging, they aim their poisoned arrows at the dogs, just as if they had been struck by lightning, and kill many. The inhabitants of these mountains, however, do not wage war with arrows; they use only <margin>with what weapons they wage wars</margin> <term>maccanae</term> <gloss>broad, oblong wooden swords</gloss> and javelins and fire-hardened spears against their enemies. From the living Pacra, where his family members collected gold could never be extorted by any enticements, threats, or tortures. When asked where he had that—for <margin>30 pounds of gold from Pacra</margin> thirty pounds of gold had been taken from his treasury—he answered that his family members who used to collect gold from those mountains in the time of his parents and his own were dead. He had had no concern since he passed puberty for searching for gold. He could never be pulled from this proposed intention. From this severity toward Pacra, Vasco reconciled the minds of the neighboring chieftains to himself. Hence it arose that...\n\n<summary>This page describes the capture and death of a large predatory cat, identified as a tiger, followed by Vasco Núñez de Balboa's brutal execution of Chief Pacra using war dogs. It details the efficacy of these dogs against local tribes and the use of indigenous weaponry like wooden swords.</summary>\n<keywords>tiger, jaguar, Juan Ledesma, Vasco Núñez de Balboa, Chief Pacra, war dogs, Molossian dogs, gold, macana, Panama, indigenous warfare</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 3722,
+ "outputTokens": 3343,
+ "thinkingTokens": 1961,
+ "cost_usd": 0.01189,
+ "ms": 13256,
+ "generationConfig": {
+  "temperature": 1,
+  "maxOutputTokens": 5955,
+  "thinkingConfig": "model default (dynamic)"
+ },
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "context": {
+  "previous_translation": true,
+  "prev_ocr": true,
+  "next_ocr": true,
+  "page_break": {
+   "kind": null,
+   "joined": null,
+   "catchword": null,
+   "headJoined": null,
+   "headRemoved": null,
+   "lookahead": false,
+   "leafSeams": 0,
+   "fired": false,
+   "applied": false
+  },
+  "glossary": false,
+  "fixed_ocr": false
+ },
+ "ocr_chars": 4755
+}
