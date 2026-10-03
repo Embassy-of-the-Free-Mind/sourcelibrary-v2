@@ -250,6 +250,32 @@ export interface OcrData extends ProcessingMetadata {
    * that read is NOT what `data` holds (`data` keeps the earlier text for provenance).
    */
   verdict?: OcrVerdict;
+  /**
+   * Set when `data` is an open e-text fitted to this scan rather than a reading of it
+   * (#5571): the Esukhia Derge Tengyur/Kangyur (#5497), Sefaria (#5560). The reader shows
+   * "Text: <name>, <license>" from it. Per page, because Sefaria licences vary per version.
+   */
+  text_source?: {
+    name: string;
+    url?: string | null;
+    license: string;
+    license_url?: string | null;
+    version?: string | null;
+    content_hash?: string;
+  };
+  /**
+   * The edition the fitted text came from, in each lane's own words. CBETA (#5566) records
+   * its licence only here (`licence`, `licence_url`); `pageTextSource()` normalises both.
+   */
+  text_edition?: {
+    name?: string;
+    repo?: string;
+    commit?: string;
+    work?: string;
+    licence?: string;
+    licence_url?: string;
+    [key: string]: unknown;
+  };
   source_url?: string;
   content_hash?: string;      // contentHash(data): SHA-256 truncated to 16 hex (64 bits) — scripts/lib/write-provenance.mjs
   image_urls?: string[];
