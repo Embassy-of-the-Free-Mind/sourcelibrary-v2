@@ -359,12 +359,12 @@ export default function CoverMaker({ bookId, openDesign }: { bookId: string; ope
   // ── Save ──
   const thumbOf = (c: Cover): string | null => {
     try {
-      const s = 240 / W;
+      const s = 600 / W;
       const cv = document.createElement('canvas');
-      cv.width = 240;
+      cv.width = 600;
       cv.height = Math.round(H * s);
       renderCover(cv.getContext('2d')!, c, s, images);
-      return cv.toDataURL('image/jpeg', 0.82);
+      return cv.toDataURL('image/jpeg', 0.86);
     } catch {
       return null;
     }

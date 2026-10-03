@@ -17,8 +17,8 @@ import { withAdminAuth } from '@/lib/auth-helpers';
  */
 
 const MAX_LAYERS = 120;
-const MAX_THUMB = 250_000;
-const MAX_BODY = 1_500_000;
+const MAX_THUMB = 900_000;
+const MAX_BODY = 3_000_000;
 
 export const GET = withAdminAuth(async (request: NextRequest) => {
   const db = await getDb();
