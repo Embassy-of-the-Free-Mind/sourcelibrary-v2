@@ -87,7 +87,7 @@
     "resend": "^6.29.0",
     "sharp": "^0.35.5",
     "sonner": "^2.0.8",
-    "stripe": "^20.4.1",
+    "stripe": "^22.6.2",
     "tailwind-merge": "^3.7.0",
     "three": "^0.186.1",
     "use-debounce": "^10.1.1",
