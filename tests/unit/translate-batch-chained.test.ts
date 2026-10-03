@@ -484,6 +484,18 @@ describe('a book whose OCR is not trusted is refused at enrol and parked at its 
     expect(res.ok).toBe(true);
   });
 
+  it('the operator override enrols a gated book, is stamped on the run, and survives the per-round check', async () => {
+    gateBook();
+    const gemini = makeGemini();
+    const deps = makeDeps(gemini);
+    const res = await enrolChainedRun(db, 'bk1', deps, { prompts: PROMPTS, approvedUsd: 1, allowUntrustedOcr: true });
+    expect(res.ok).toBe(true);
+    expect(res.run.ocr_trust_override).toBe('persian');
+    await tick(db, deps);                                   // round 1 collected; round 2 submitted, not parked
+    expect((await runOf(db)).phase).not.toBe(PHASE.PARKED);
+    expect(gemini.submitted.length).toBeGreaterThan(1);
+  });
+
   it('enrolForPhase4 skips an untrusted book instead of handing it to the realtime lane', async () => {
     gateBook();
     const routed = await enrolForPhase4(db, db.data.books[0], { prompts: PROMPTS, pageCount: 20, deps: makeDeps(makeGemini()) });

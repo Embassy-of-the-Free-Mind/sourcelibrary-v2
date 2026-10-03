@@ -323,15 +323,17 @@ async function claimRun(db, run, deps) {
  * (`translate_submitted`), an open run, nothing to translate, an estimate over `approvedUsd`, or
  * a closed dial. Returns { ok, reason?, run?, estimate? }.
  */
-export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, limit = MAX_PAGES_PER_RUN, submit = true, pageIds = null, excludeWithheld = false, dryRun = false, noContext = false } = {}) {
+export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, limit = MAX_PAGES_PER_RUN, submit = true, pageIds = null, excludeWithheld = false, dryRun = false, noContext = false, allowUntrustedOcr = false } = {}) {
   const log = deps.log || console.log;
   const book = await db.collection('books').findOne({ id: bookId });
   if (!book) return { ok: false, reason: 'book-not-found' };
   if (isHeld(book)) return { ok: false, reason: `book-held (${book.pipeline_auto.hold.reason})`, book };
   if (sameLanguageReason({ book })) return { ok: false, reason: 'english-book (not translated, #5154)', book };
   // Fluent wrong OCR cannot be seen page by page; the strata where it was measured are refused
-  // here, with the reason recorded (a dry run records nothing).
-  const trust = await ocrTrustGate(db, book, { lane: 'chained-enrol', record: !dryRun });
+  // here, with the reason recorded (a dry run records nothing). `allowUntrustedOcr` is the
+  // operator's override for a named pilot (re-read pages re-translated before the book as a whole
+  // is released); it is stamped on the run so the per-round check honours it. Never set by a selector.
+  const trust = await ocrTrustGate(db, book, { lane: 'chained-enrol', record: !dryRun, allow: allowUntrustedOcr });
   if (!trust.ok) return { ok: false, reason: trust.reason, book };
   if (book.pipeline_auto?.status === 'translate_submitted') return { ok: false, reason: 'realtime-lane-owns-book (pipeline_auto.status=translate_submitted)', book };
   const open = await db.collection(RUNS_COLLECTION).findOne({ book_id: bookId, phase: { $nin: [...TERMINAL_PHASES, 'written', 'shadow_complete', 'failed'] } });
@@ -352,6 +354,7 @@ export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, 
     // the start, so each round sends every page still owed, one request each, unseeded.
     queue: pages.map(ref), cursor: noContext ? pages.length : 0, pending_single: noContext ? pages.map(ref) : [],
     ...(noContext ? { context_mode: 'none' } : {}),
+    ...(trust.overridden ? { ocr_trust_override: trust.stratum } : {}),
     round: null, rounds: [], strikes: 0, dropped: [],
     counts: { written: 0, unhealthy: 0, protected: 0, blocked: 0, dropped: 0, single_fallbacks: 0 },
     page_count: pages.length, excluded, estimate, approved_usd: Number(approvedUsd), spent_est_usd: 0,
@@ -396,7 +399,7 @@ async function prepareRound(db, run, deps, { prompts }) {
   const book = await db.collection('books').findOne({ id: run.book_id });
   if (isHeld(book)) return { submitted: false, note: `parked: ${await parkForHold(db, run, book, deps)}` };
   // Likewise the OCR trust gate: a run enrolled before its stratum was gated parks at its next round.
-  const trust = await ocrTrustGate(db, book, { lane: 'chained-round' });
+  const trust = await ocrTrustGate(db, book, { lane: 'chained-round', allow: !!run.ocr_trust_override });
   if (!trust.ok) return { submitted: false, note: `parked: ${await parkForOcrTrust(db, run, trust, deps)}` };
   const ids = [...(run.pending_single || []).map((r) => r.id), ...(run.queue || []).slice(run.cursor || 0).map((r) => r.id)];
   const pageDocs = await loadPageDocs(db, ids);

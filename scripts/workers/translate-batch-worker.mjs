@@ -322,7 +322,9 @@ async function chained(db) {
     const ids = (arg('books') || arg('book') || '').split(',').map(s => s.trim()).filter(Boolean);
     if (!ids.length && pagesByBook) ids.push(...Object.keys(pagesByBook));
     if (!ids.length) throw new Error('--chained --enrol needs --books=ID,ID (or --pages-file)');
-    const target = (id) => ({ pageIds: pagesByBook ? (pagesByBook[id] || []) : null, excludeWithheld, noContext: has('no-context') });
+    // --allow-untrusted-ocr: enrol a book the OCR trust gate (#5700) refuses — for a named pilot on
+    // re-read pages only. Never available to --enrol-auto.
+    const target = (id) => ({ pageIds: pagesByBook ? (pagesByBook[id] || []) : null, excludeWithheld, noContext: has('no-context'), allowUntrustedOcr: has('allow-untrusted-ocr') });
     const prompts = await loadTranslationPrompts(db);
     if (has('dry-run')) {
       // FREE: the queue and estimate each enrol would make; nothing written, nothing sent.
