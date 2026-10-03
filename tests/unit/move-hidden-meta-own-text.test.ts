@@ -4,8 +4,9 @@
  * says `own-text`, and never over a human edit, a #5148 unwrap, a held book or changed text.
  */
 import { describe, it, expect } from 'vitest';
-import { planMove, pickPilot, HAZARD, MAX_IN_BODY } from '../../scripts/maintenance/move-hidden-meta-own-text.mjs';
+import { planMove, planRollback, pickPilot, HAZARD, MAX_IN_BODY } from '../../scripts/maintenance/move-hidden-meta-own-text.mjs';
 import { continuityMeta } from '../../scripts/lib/hidden-translation.mjs';
+import { contentHash } from '../../scripts/lib/write-provenance.mjs';
 
 const MEDIANS = { latin: 1.172, _all: 1.095 };
 const PAYLOAD = 'The philosophers consider the substance of mercury and the principle of nature, the operation of metals and the generation of minerals';
@@ -77,5 +78,18 @@ describe('pickPilot', () => {
     expect(picks).toHaveLength(20);
     expect(new Set(picks.map(p => p.book)).size).toBe(20);
     expect(new Set(picks.map(p => p.sev)).size).toBe(4);
+  });
+});
+
+describe('planRollback', () => {
+  const moved = plan();
+  const revision = { data: tr() };
+  it('restores the text the page had before the move', () => {
+    const r = planRollback({ page: page({}, { data: moved.text }), revision, afterHash: moved.after_hash });
+    expect(r).toMatchObject({ restore: true, text: tr(), hash: contentHash(tr()) });
+  });
+  it('never overwrites a page changed since the move, or a human edit', () => {
+    expect(planRollback({ page: page({}, { data: moved.text + ' new' }), revision, afterHash: moved.after_hash }).why).toBe('changed-since-move');
+    expect(planRollback({ page: page({}, { data: moved.text, edited_by: 'x' }), revision, afterHash: moved.after_hash }).why).toBe('human-edited');
   });
 });

@@ -27,7 +27,8 @@
  * — it is the model's own text, moved; `content_hash` is recomputed; page `updated_at` is bumped
  * (the Supabase page_translations embedding resync keys on it). No new field on the page.
  *
- * ROLLBACK: every page_revisions row with reason `hidden-meta-move-5376` holds the text before.
+ * ROLLBACK: every page_revisions row with reason `hidden-meta-move-5376` holds the text before;
+ * `--rollback --pages=<id,…|all> [--apply]` restores it wherever the live text is still the moved text.
  *
  *   node --env-file=.env.production.local scripts/maintenance/move-hidden-meta-own-text.mjs [--limit=N]
  *        [--pilot=20] [--apply] [--candidates=…/move-candidates.jsonl] [--out=scripts/output/hidden-meta-move]
@@ -39,6 +40,7 @@ import path from 'path';
 import { evidence, classify, moveContinuityPayload, severity } from '../audit/hidden-meta-scan.mjs';
 import { continuityMeta, hidesPageInMeta } from '../lib/hidden-translation.mjs';
 import { contentHash } from '../lib/write-provenance.mjs';
+import { foldWord } from '../lib/page-integrity.mjs';
 
 export const SWEEP = 'hidden-meta-move-5376';
 export const REASON = 'hidden-meta-move-5376';
@@ -47,6 +49,18 @@ const PLAN_DIR = 'scripts/eval/results/hidden-meta-repair-plan-2026-10-01';
 // The six copied-previous pages #5148 opened (the hazard posted on #5148, 2026-10-01): never touched.
 export const HAZARD = new Set(['69b62fd91c1c21a3737fb4fb:124', '69b658e118b87551bfcf6dd5:15', '69e533e0d48480a38696480e:31',
   '69e8b18b2ff2a8dc09e76378:26', '69e8b2ac2ff2a8dc09e7883c:29', '6a08527949638a50931ba781:134']);
+
+export const HEAD_WORDS = 40;
+const fold3 = (s) => { const w = String(s || '').replace(/<\/?[a-zA-Z][^>]*>/g, ' ').split(/\s+/).map(foldWord).filter(Boolean); const g = new Set(); for (let i = 0; i + 3 <= w.length; i++) g.add(w.slice(i, i + 3).join(' ')); return g; };
+/** Share of the payload's first HEAD_WORDS words (as trigrams) already in the previous page's
+ *  translation: the pilot's miss shape — the page's own text behind a lead-in the page before
+ *  already shows (#4 of the pilot). Evidence only; the class rule is the scan's. */
+export function headInPrev(payload, prevTr) {
+  const head = fold3(String(payload || '').split(/\s+/).slice(0, HEAD_WORDS).join(' '));
+  if (!head.size || !prevTr) return 0;
+  const prev = fold3(prevTr); let n = 0; for (const g of head) if (prev.has(g)) n++;
+  return +(n / head.size).toFixed(2);
+}
 
 const words = (s) => String(s || '').replace(/<\/?[a-zA-Z][^>]*>/g, ' ').split(/\s+/).filter(w => /\p{L}/u.test(w));
 
@@ -81,7 +95,20 @@ export function planMove({ cand, page, prev, bookLang, medians, held = false }) 
   const after = words(out.text.replace(/<meta>continues from previous page<\/meta>/, ' ')).length;
   if (after < before) return { write: false, why: 'assert-words' };
   if (hidesPageInMeta(out.text) || continuityMeta(out.text)?.form !== 'bare') return { write: false, why: 'assert-bare' };
-  return { write: true, text: out.text, before_hash: contentHash(tr), after_hash: contentHash(out.text), cls, sev: severity(ev), share: ev.share, inBody: ev.inBody ?? 0, words: cm.words, ev };
+  return { write: true, text: out.text, headInPrev: headInPrev(cm.payload, prev?.translation?.data), before_hash: contentHash(tr), after_hash: contentHash(out.text), cls, sev: severity(ev), share: ev.share, inBody: ev.inBody ?? 0, words: cm.words, ev };
+}
+
+/**
+ * Rollback decision for one page, from its newest `hidden-meta-move-5376` revision. Restores
+ * only while the live text is still exactly what this sweep wrote (`after_hash`), so a later
+ * re-translation or a human edit is never overwritten by the old text.
+ */
+export function planRollback({ page, revision, afterHash }) {
+  if (!page || !revision?.data) return { restore: false, why: 'no-revision' };
+  const t = page.translation || {};
+  if (t.source === 'manual' || t.edited_by) return { restore: false, why: 'human-edited' };
+  if (contentHash(t.data || '') !== afterHash) return { restore: false, why: 'changed-since-move' };
+  return { restore: true, text: revision.data, hash: contentHash(revision.data) };
 }
 
 /** N candidates from N different books, seeded, round-robin over severity. */
@@ -104,8 +131,45 @@ export function pickPilot(cands, n, seed = 5376) {
 const arg = (k, d) => process.argv.find(a => a.startsWith(`--${k}=`))?.split('=').slice(1).join('=') ?? d;
 const flag = (k) => process.argv.includes(`--${k}`);
 
+/** --rollback --pages=<id,id|all>: put back the text each page had before this sweep. */
+async function rollback(db, ids, APPLY) {
+  const { saveRevisionBeforeOverwrite } = await import('../lib/page-revisions.mjs');
+  const { recordSweepAction } = await import('../lib/sweep-log.mjs');
+  const { syncPageUpdate } = await import('../workers/lib/supabase-page-writer.mjs');
+  const q = { reason: REASON, field: 'translation', ...(ids === 'all' ? {} : { page_id: { $in: ids } }) };
+  const revs = await db.collection('page_revisions').find(q).sort({ created_at: -1 }).toArray();
+  const newest = new Map(); for (const r of revs) if (!newest.has(r.page_id)) newest.set(r.page_id, r);
+  const tally = { apply: APPLY, pages: newest.size, restored: 0, skipped: {} };
+  for (const [pageId, revision] of newest) {
+    const log = await db.collection('sweep_log').findOne({ sweep: SWEEP, action: 'move-continuity-payload', 'detail.page_id': pageId }, { sort: { timestamp: -1 } });
+    const page = await db.collection('pages').findOne({ id: pageId }, { projection: { id: 1, book_id: 1, page_number: 1, translation: 1 } });
+    const plan = planRollback({ page, revision, afterHash: log?.detail?.after_hash });
+    if (!plan.restore) { tally.skipped[plan.why] = (tally.skipped[plan.why] || 0) + 1; continue; }
+    if (!APPLY) { tally.restored++; continue; }
+    await recordSweepAction(db, { sweep: SWEEP, book_id: page.book_id, action: 'rollback-continuity-payload', detail: { page_id: pageId, page_number: page.page_number } });
+    if (!await saveRevisionBeforeOverwrite(db, pageId, 'translation', { jobId: SWEEP, reason: `${REASON}-rollback`, keepMeta: true })) { tally.skipped['revision-failed'] = (tally.skipped['revision-failed'] || 0) + 1; continue; }
+    const now = new Date();
+    const res = await db.collection('pages').updateOne({ id: pageId, 'translation.data': page.translation.data }, { $set: { 'translation.data': plan.text, 'translation.content_hash': plan.hash, updated_at: now } });
+    if (res.modifiedCount !== 1) { tally.skipped.raced = (tally.skipped.raced || 0) + 1; continue; }
+    syncPageUpdate(pageId, { 'translation.data': plan.text, updated_at: now });
+    tally.restored++;
+  }
+  if (APPLY) await new Promise(r => setTimeout(r, 5000));
+  return tally;
+}
+
 async function main() {
   const APPLY = flag('apply');
+  if (flag('rollback')) {
+    const ids = arg('pages', '');
+    if (!ids) throw new Error('--rollback needs --pages=<id,id,…> or --pages=all');
+    const { MongoClient } = await import('mongodb');
+    const client = new MongoClient(process.env.MONGODB_URI); await client.connect();
+    const t = await rollback(client.db(process.env.MONGODB_DB || 'bookstore'), ids === 'all' ? 'all' : ids.split(','), APPLY);
+    await client.close();
+    console.log(JSON.stringify(t, null, 1));
+    return;
+  }
   const LIMIT = Number(arg('limit', 0)) || Infinity;
   const PILOT = Number(arg('pilot', 0));
   const outDir = arg('out', 'scripts/output/hidden-meta-move');
@@ -152,7 +216,7 @@ async function main() {
     const base = { book: c.book, p: c.p, page_id: page?.id ?? null };
     if (!plan.write) { skip(plan.why); record({ ...base, why: plan.why }); continue; }
     tally.eligible++;
-    const row = { ...base, sev: plan.sev, words: plan.words, share: plan.share, inBody: plan.inBody, before_hash: plan.before_hash, after_hash: plan.after_hash };
+    const row = { ...base, sev: plan.sev, headInPrev: plan.headInPrev, words: plan.words, share: plan.share, inBody: plan.inBody, before_hash: plan.before_hash, after_hash: plan.after_hash };
     if (!APPLY) { record({ ...row, why: 'eligible' }); continue; }
 
     const tr = page.translation.data;
