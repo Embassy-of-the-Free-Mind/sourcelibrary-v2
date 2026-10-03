@@ -18,6 +18,11 @@
  * of ≥ 3 numbers at one offset in a numbering whose adjacent pairs fit ≥ 75% (fitPrintedPages).
  * Pages without such a fit get NO field; the per-book sweep_log row counts them as skipped.
  *
+ * Why the writer for NEW OCR is this script on a daily cron (--ocr-since=26h), not
+ * liftOcrTags like script_type (#5629): liftOcrTags sees one page, and a printed number taken
+ * from one page is exactly the per-page trust #4291 rules out. The fit needs the book's
+ * sequence, which no per-page writer holds. One refit, after any lane, covers all 13 writers.
+ *
  * Writes (only with --apply):
  *   - `$set: { printed_page: { label, numbering, rate, method, source?, run_len, fit_share,
  *     fitter, run, at } }` on labelled pages where the field is absent or was written by this
@@ -36,7 +41,8 @@
  *   node --env-file=.env.production.local scripts/maintenance/backfill-printed-page-4291.mjs --apply
  *     [--books=id,id]       only these books (e.g. --books=6952dac977f38f6761bc6cb0)
  *     [--visible-only]      only visible books
- *     [--ocr-since=ISO]     only books with a page whose ocr.updated_at ≥ ISO (refit after new OCR)
+ *     [--ocr-since=ISO|Nh]  only books with a page whose ocr.updated_at is that recent: the refit
+ *                           that keeps new OCR covered (hetzner-crontab runs --ocr-since=26h daily)
  *     [--limit=N]           stop after N books this run
  *     [--concurrency=N]     books in flight (default 4)
  *     [--out=DIR]           default scripts/output/printed-page-4291[.dry]
@@ -56,7 +62,11 @@ export const FITTER = `${FITTER_NAME}/v1`;
 const args = process.argv.slice(2);
 const arg = (k) => args.find((a) => a.startsWith(`--${k}=`))?.split('=').slice(1).join('=');
 const APPLY = args.includes('--apply');
-const OUT = arg('out') || path.join('scripts/output', `printed-page-4291${APPLY ? '' : '.dry'}`);
+// --ocr-since takes an ISO date or a relative "<N>h"; each refit run gets its own output file,
+// or the books.jsonl of an earlier run would mark today's books as already done.
+const SINCE = arg('ocr-since') && (/^\d+h$/.test(arg('ocr-since'))
+  ? new Date(Date.now() - parseInt(arg('ocr-since'), 10) * 3600e3) : new Date(arg('ocr-since')));
+const OUT = arg('out') || path.join('scripts/output', `printed-page-4291${APPLY ? '' : '.dry'}${SINCE ? `/refit-${new Date().toISOString().slice(0, 13)}` : ''}`);
 const FILE = path.join(OUT, 'books.jsonl');
 
 /** The page rows fitPrintedPages needs, with only the <page-num> tag or the OCR's first 300
@@ -165,8 +175,9 @@ async function main() {
     if (args.includes('--visible-only')) q.visible = true;
     if (arg('books')) q.id = { $in: arg('books').split(',') };
     let ids = (await db.collection('books').find(q, { projection: { _id: 0, id: 1 } }).toArray()).map((b) => b.id).filter(Boolean);
-    if (arg('ocr-since')) {
-      const since = await db.collection('pages').distinct('book_id', { 'ocr.updated_at': { $gte: new Date(arg('ocr-since')) } });
+    if (SINCE) {
+      if (Number.isNaN(SINCE.getTime())) throw new Error(`--ocr-since: not a date or <N>h: ${arg('ocr-since')}`);
+      const since = await db.collection('pages').distinct('book_id', { 'ocr.updated_at': { $gte: SINCE } });
       const s = new Set(since);
       ids = ids.filter((id) => s.has(id));
     }
