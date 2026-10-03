@@ -174,14 +174,14 @@ export function parseBlockResponse(responseText, pages, { onDrift, folioMarkers 
     if (text) out.set(pages[0].page_number, text);
     return out;
   }
-  // Folio markers (#5678): each page takes its own span. A page whose marker is missing or
-  // duplicated is left undrafted (back to the queue), never given a neighbour's words.
+  // Folio markers (#5678): each page takes its own span, the markers read by position. A page the
+  // parse could not place is left undrafted (back to the queue), and so is the page before it, whose
+  // span ran on over it: never a neighbour's words. A rejected block leaves every page undrafted.
   if (folioMarkers) {
     const parsed = parseFolioMarkedText(responseText, pages.map((p) => p.page_number));
-    const bad = new Set([...parsed.missing, ...parsed.duplicated]);
-    if (parsed.outOfOrder) return out;
+    const overrun = new Set(parsed.overrun);
     for (const pg of parsed.pages) {
-      if (!bad.has(pg.page_number) && pg.span) out.set(pg.page_number, sanitizeTranslationTags(pg.span));
+      if (pg.span && !overrun.has(pg.page_number)) out.set(pg.page_number, sanitizeTranslationTags(pg.span));
     }
     return out;
   }
