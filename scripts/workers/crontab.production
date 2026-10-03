@@ -184,6 +184,12 @@
 */10 * * * * cd /root/sourcelibrary && [ -f scripts/maintenance/gpu-lease-watchdog.mjs ] && [ -f /root/.scaleway.env ] && flock -n /tmp/sl-gpu-lease.lock bash -c "set -a; source .env.production.local; source /root/.scaleway.env; set +a; node scripts/maintenance/gpu-lease-watchdog.mjs --apply" >> /var/log/sourcelibrary/gpu-lease-watchdog.log 2>&1
 # Monday 08:10 — volumes that bill while their instance is stopped/archived, with approximate cost
 10 8 * * 1 cd /root/sourcelibrary && [ -f scripts/maintenance/gpu-lease-watchdog.mjs ] && [ -f /root/.scaleway.env ] && flock -n /tmp/sl-gpu-lease.lock bash -c "set -a; source .env.production.local; source /root/.scaleway.env; set +a; node scripts/maintenance/gpu-lease-watchdog.mjs --apply --weekly" >> /var/log/sourcelibrary/gpu-lease-watchdog.log 2>&1
+# Hetzner pass of the same watchdog (#5736), hourly: FLAGS (email digest per 6 h + /admin/work) servers with
+# no lease-until label, an expired one, or CPU < 5 % over 24 h. Never stops or deletes (a stopped Hetzner
+# server still bills). Not guarded on /root/.hcloud.env existing: a missing token must flag, not skip.
+# Own lock and state file (hetzner-state.json), so it never clobbers the Scaleway pass. Guarded on the
+# rule module so the line is inert until #5736 is on main.
+25 * * * * cd /root/sourcelibrary && [ -f scripts/lib/infra-lease.mjs ] && flock -w 600 /tmp/sl-hetzner-lease.lock bash -c "set -a; source .env.production.local; [ -f /root/.hcloud.env ] && source /root/.hcloud.env; set +a; node scripts/maintenance/gpu-lease-watchdog.mjs --hetzner --apply" >> /var/log/sourcelibrary/hetzner-lease-watchdog.log 2>&1
 */30 * * * * bash /root/sourcelibrary/scripts/workers/syriac-kraken-relaunch.sh >> /root/syriac-kraken/relaunch.log 2>&1 # syriac-kraken-4883 (remove when the lane is done)
 30 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-subject-index.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/build-gallery-subject-index.mjs" >> /var/log/sourcelibrary/subject-index.log 2>&1
 # provenance coverage audit (#4613): every page written in the window carries its engine block + content_hash

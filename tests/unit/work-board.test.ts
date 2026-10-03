@@ -170,3 +170,28 @@ describe('buildBoard', () => {
     expect(b.waiting.map(w => w.issue.number)).toEqual([2, 1]);
   });
 });
+
+describe('buildBoard: infra flags (#5736)', () => {
+  const flag = (over: Record<string, unknown> = {}) => ({
+    provider: 'hetzner', id: '1', name: 'sl-reocr-1', type: 'cax41', location: 'hel1', status: 'running',
+    eur_month: 32, age_days: 20, cpu_24h: 0.3, owner: null, issue: null, kind: 'no-lease' as const, reason: 'no lease-until and not role=permanent', ...over,
+  });
+  const infra = (flags: ReturnType<typeof flag>[], gen = h(0.5)): BoxDoc =>
+    ({ _id: 'work-board:infra-hetzner', type: 'work-board', box: 'infra-hetzner', generated_at: gen, stale_after_min: 150, jobs: [], chains: [], flags });
+
+  it('a flagged server lands in dead-or-stuck with its €/month first, costliest first', () => {
+    const b = buildBoard([box([]), github(), infra([flag(), flag({ id: '2', name: 'sl-reocr-x86', type: 'cpx62', eur_month: 70 })])], NOW);
+    expect(b.dead.map(d => d.name)).toEqual(['sl-reocr-x86', 'sl-reocr-1']);
+    expect(b.dead[0]).toMatchObject({ kind: 'infra', state: 'billing', eur_month: 70 });
+    expect(b.dead[1].why).toMatch(/^€32\/month · no lease · hetzner cax41 · 20 d old · CPU 0\.3 %/);
+  });
+  it('the hourly pusher is not called stale at 31 min, but is at 3 h', () => {
+    const fresh = buildBoard([infra([], h(0.6))], NOW).freshness.find(f => f.source === 'infra-hetzner')!;
+    const old = buildBoard([infra([], h(3))], NOW).freshness.find(f => f.source === 'infra-hetzner')!;
+    expect(fresh.stale).toBe(false);
+    expect(old.stale).toBe(true);
+  });
+  it('no infra document reads as no data, not as nothing flagged', () => {
+    expect(buildBoard([], NOW).freshness.find(f => f.source === 'infra-hetzner')).toMatchObject({ age_min: null, stale: true });
+  });
+});
