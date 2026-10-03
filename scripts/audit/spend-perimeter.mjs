@@ -87,6 +87,8 @@ const UNATTENDED = [
     note: 'read-only join of clip_embeddings to gallery_images; no model call, no write (#5195)' },
   { match: 'paid-vs-got.mjs', spends: false, gated: false,
     note: 'daily paid-vs-got ledger: reads usage stores, batch_jobs, pages and the billing export; writes one ops_reports row; no model call (#5499)' },
+  { match: 'vercel-prod-watch.mjs', spends: false, gated: false,
+    note: 'production-deploy watch: reads the Vercel REST API + origin/main; files/closes one GitHub issue, pages ntfy; no model call, no Vercel function invocation (#5708)' },
   { match: 'model-usage-snapshot.mjs', spends: false, gated: false,
     note: '/about/models counts: checkpointed walk over pages + gallery_images, Supabase count estimates; writes one ops_reports row; no model call (#5601)' },
   { match: 'warm-author-pages.mjs', spends: false, gated: false, note: 'HTTP warm' },

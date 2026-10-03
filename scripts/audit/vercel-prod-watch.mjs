@@ -39,7 +39,7 @@
  *        --now 2026-10-02T14:00:00Z                         # replay a recorded window (implies --dry-run)
  *   ... --json   the report on stdout
  *
- * Env: VERCEL_TOKEN (required, no fallback). VERCEL_PROJECT_ID / VERCEL_ORG_ID, else .vercel/project.json.
+ * Env: VERCEL_TOKEN (required, no fallback). VERCEL_PROJECT_ID / VERCEL_ORG_ID, else .vercel/project.json, else the ids below.
  *      VERCEL_PROD_WATCH_STATE (state file), VERCEL_PROD_WATCH_TOPIC (ntfy URL) for testing the wiring.
  */
 import { execFileSync } from 'node:child_process';
@@ -49,7 +49,9 @@ import { fileURLToPath } from 'node:url';
 
 export const MIN_STREAK = 2;
 export const MAX_BEHIND_MIN = 60;
-export const PROJECT_NAME = 'sourcelibrary-v2';
+// Public identifiers (not secrets; Vercel's own PR comments print them). Env or .vercel/project.json override.
+const PROJECT_ID = 'prj_rUw0rjkXvVbIo7iwqpRTl31sxA8s'; // sourcelibrary-v2
+const TEAM_ID = 'team_lpvBLTNADOdDvzq054wPGov8'; // dereklomas-projects
 const MAIN_DEPTH = 400; // commits of origin/main to read; production further back than this is UNKNOWN
 const DEPLOYMENT_LIMIT = 30;
 const ISSUE_TITLE = 'Vercel production: builds failing or behind main';
@@ -207,7 +209,7 @@ export function renderText(r) {
 function projectIds() {
   let file = {};
   try { file = JSON.parse(readFileSync(join(REPO, '.vercel/project.json'), 'utf8')); } catch { /* optional */ }
-  return { projectId: process.env.VERCEL_PROJECT_ID || file.projectId || PROJECT_NAME, teamId: process.env.VERCEL_ORG_ID || file.orgId || null };
+  return { projectId: process.env.VERCEL_PROJECT_ID || file.projectId || PROJECT_ID, teamId: process.env.VERCEL_ORG_ID || file.orgId || TEAM_ID };
 }
 
 async function vercel(path, token, teamId) {
