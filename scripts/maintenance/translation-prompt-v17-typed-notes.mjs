@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // PRIOR ART: scripts/maintenance/translation-prompt-v16-scope-omit.mjs — same once() anchored
 // edit and the same non-default row shape, reused here. It cannot be reused as-is: it inserts
-// ONE sentence into v15 and one row; v17 is eleven anchored edits to the v16 row and two rows
+// ONE sentence into v15 and one row; v17 is twelve anchored edits to the v16 row and two rows
 // (one per stance). scripts/eval/translation-prompt-v14-ab.mjs holds a "translate the
 // description only" image edit as an in-memory arm, never seeded.
 /**

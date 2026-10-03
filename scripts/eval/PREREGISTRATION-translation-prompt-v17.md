@@ -27,7 +27,7 @@ only by what notes are for: an honest apparatus.
 ## The design under test
 
 `scripts/maintenance/translation-prompt-v17-typed-notes.mjs` builds v17 from the v16 row by
-eleven anchored edits; v16's verbatim rule for `<note>original: "…"</note>` is byte-identical.
+twelve anchored edits; v16's verbatim rule for `<note>original: "…"</note>` is byte-identical.
 
 - **Types as a prefix inside the plain `<note>` tag**: `original:`, `clarification:`,
   `context:`, `alternative:`, `image:`. `original:` is already this shape in v13–v16.
