@@ -35,6 +35,7 @@ import { extractScriptType } from '../lib/ocr-result-parse.mjs';
 import { routeBook, editionYear } from '../lib/syriac-kraken-lane.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
 import { sheetFor } from './lib/contact-sheet.mjs';
+import { makeRng } from './lib/paired-stats.mjs';
 import { priceFor, BATCH_MULTIPLIER } from '../lib/model-pricing.mjs';
 import { createThenDeleteInput } from '../lib/gemini-batch-input-file.mjs';
 import { recordSweepActions } from '../lib/sweep-log.mjs';
@@ -249,7 +250,10 @@ const textish = (p) => !p.page_type || TEXTISH.has(p.page_type);
 /** Pick the pages to embed: a stratified training set (tagged pages) and 3 spread pages per unlabelled book. */
 function plan() {
   const rows = readJsonl(LABELS_FILE);
-  let seed = 5768; const rnd = () => ((seed = (seed * 1103515245 + 12345) % 2 ** 31) / 2 ** 31);
+  // The 2026-10-04 run drew its training set with a hand-rolled LCG (the lossy double-arithmetic
+  // one tests/unit/paired-stats-prng.test.ts forbids); a re-plan with makeRng draws a different,
+  // equally stratified set. The cached train-pages.json is what the reported numbers used.
+  const rnd = makeRng(5768);
   const cells = new Map();
   for (const r of rows) {
     if (!r.family_ocr || tagN(r) < 2) continue;
