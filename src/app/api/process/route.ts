@@ -7,6 +7,7 @@ import { withAuth } from '@/lib/auth-helpers';
 import { assertLaneGuards } from '@/lib/lane-guards';
 import { createRevision } from '@/lib/page-revisions';
 import { isHumanEditedTranslation, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON } from '@/lib/translate-write';
+import { strayScriptVerdict, STRAY_SCRIPT_REASON } from '@/lib/stray-script';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { getTriggerSource } from '@/lib/cron-auth';
 import { DEFAULT_MODEL, PROMPT_VERSION, liftOcrTags } from '@/lib/types';
@@ -82,6 +83,10 @@ export const POST = withAuth(async (request: NextRequest) => {
     }
 
     const results: { ocr?: string; translation?: string; summary?: string } = {};
+
+    // Set when the translation carries a script that is in neither the source nor the book's language (#5734).
+
+    let strayRefused = false;
     const metadata: {
       ocr?: { inputTokens: number; outputTokens: number; costUsd: number; durationMs: number; imageUrl?: string; call?: AICallRecord };
       translation?: { inputTokens: number; outputTokens: number; costUsd: number; durationMs: number; call?: AICallRecord; sourceText?: string };
@@ -304,6 +309,11 @@ export const POST = withAuth(async (request: NextRequest) => {
       );
       // Propagate OCR quality warnings to translation so readers see them on both sides
       results.translation = propagateOcrWarnings(textToTranslate, translationResult.text);
+      // #5734: the Korean 그-for-"that" is repaired; any other script in the English that is in
+      // neither the source nor the book's language is refused below, like the hidden page.
+      const stray = strayScriptVerdict(results.translation, { ocr: textToTranslate, language, targetLanguage });
+      results.translation = stray.text;
+      strayRefused = stray.refuse;
       totalUsage.inputTokens += translationResult.usage.inputTokens;
       totalUsage.outputTokens += translationResult.usage.outputTokens;
       totalUsage.totalTokens += translationResult.usage.totalTokens;
@@ -367,10 +377,13 @@ export const POST = withAuth(async (request: NextRequest) => {
 
     // The page's text inside its continuity <meta> is text no reader sees (#5376): the result
     // goes back to the caller, flagged, but is not saved as the page's translation.
-    const translationRefused = !!results.translation && hidesPageInMeta(results.translation);
-    if (translationRefused && autoSave && pageId && !translationProtected) {
+    const refusedReason = !results.translation ? null
+      : hidesPageInMeta(results.translation) ? HIDDEN_META_REASON
+      : strayRefused ? STRAY_SCRIPT_REASON : null;
+    const translationRefused = !!refusedReason;
+    if (refusedReason && autoSave && pageId && !translationProtected) {
       const refusedPage = await db.collection('pages').findOne({ id: pageId, tenantId }, { projection: { book_id: 1 } });
-      if (refusedPage) await recordRefusedTranslation(db, { id: pageId, book_id: refusedPage.book_id }, results.translation!, HIDDEN_META_REASON, { model });
+      if (refusedPage) await recordRefusedTranslation(db, { id: pageId, book_id: refusedPage.book_id }, results.translation!, refusedReason, { model });
     }
 
     // Auto-save to database if requested
@@ -516,7 +529,7 @@ export const POST = withAuth(async (request: NextRequest) => {
       ...results,
       usage: totalUsage,
       ...(translationProtected && { translationProtected: true }),
-      ...(translationRefused && { translationRefused: HIDDEN_META_REASON }),
+      ...(translationRefused && { translationRefused: refusedReason }),
     });
   } catch (error) {
     console.error('Error processing:', error);
