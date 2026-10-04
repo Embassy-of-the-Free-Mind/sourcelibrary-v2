@@ -309,9 +309,10 @@ export default async function ImageLayout({
       {children}
       {/* Server-rendered content for crawlers (#4286). The viewer is a client
           component, so the served HTML would otherwise carry nav, footer and
-          meta tags but no heading, caption or book link. This is the page's
-          only <h1> (the viewer's headings are h2) and it is visible: a caption
-          naming the book, author and year, linking to the book. */}
+          meta tags but no heading, caption or book link. Inside noscript so JS
+          readers (and the rendered DOM Google indexes) see only the viewer's own
+          <h1>/description; raw-HTML fetchers get heading, caption and book link. */}
+      <noscript>
       <section className="max-w-3xl mx-auto px-6 py-8 text-stone-200" aria-label="Image details">
         <h1 className="text-xl sm:text-2xl font-serif text-white leading-snug">
           {detection.description || 'Historical illustration'}
@@ -326,13 +327,12 @@ export default async function ImageLayout({
         {detection.museum_description && (
           <p className="mt-3 text-sm text-stone-400">{detection.museum_description}</p>
         )}
-        <noscript>
-          {imageUrl && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={imageUrl} alt={altText} style={{ maxWidth: '100%', height: 'auto' }} />
-          )}
-        </noscript>
+        {imageUrl && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={imageUrl} alt={altText} style={{ maxWidth: '100%', height: 'auto' }} />
+        )}
       </section>
+      </noscript>
     </div>
   );
 }
