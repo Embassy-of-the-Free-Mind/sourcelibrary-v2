@@ -31,7 +31,7 @@ const ids = Object.keys(pa).filter((id) => pb[id] && pairs[id]);
 const judgeCells = (p, arm) => Object.values(p.arms[arm]?.by_judge || {}).filter(Boolean);
 const flag = (p, arm, f) => { const c = judgeCells(p, arm); return c.length ? mean(c.map((z) => (f(z) ? 1 : 0))) : null; };
 const page = ids.map((id) => {
-  const o = { id, lang: LANG[pairs[id].track] || pairs[id].lang, independent: pairs[id].independent, canonical: pairs[id].canonical, a_style: pairs[id].a.style, b_style: pairs[id].b.style,
+  const o = { id, lang: LANG[pairs[id].track] || pairs[id].lang, independent: pairs[id].independent, canonical: pairs[id].canonical, source_corrected: !!pairs[id].source_corrected, a_style: pairs[id].a.style, b_style: pairs[id].b.style,
     fit_usable: ![...Object.values(pa[id].reference_fit), ...Object.values(pb[id].reference_fit)].includes('wrong'),
     human_span_same: [...judgeCells(pa[id], 'human'), ...judgeCells(pb[id], 'human')].every((z) => z.span === 'same') };
   for (const arm of ARMS) {
@@ -61,6 +61,7 @@ for (const l of ['Greek', 'Latin']) {
   const g = groups[l];
   groups[`${l} · independent B only`] = g.filter((p) => p.independent === true);
   groups[`${l} · human cut judged same span`] = g.filter((p) => p.human_span_same);
+  if (g.some((p) => p.source_corrected)) { groups[`${l} · arms translated the page as OCR'd, judged against the page as printed`] = g.filter((p) => p.source_corrected); groups[`${l} · OCR not corrected`] = g.filter((p) => !p.source_corrected); }
   groups[`${l} · non-canonical`] = g.filter((p) => !p.canonical);
   groups[`${l} · A and B both 19th–20th c.`] = g.filter((p) => p.a_style !== 'early-modern' && p.b_style !== 'early-modern');
   groups[`${l} · A or B early-modern`] = g.filter((p) => p.a_style === 'early-modern' || p.b_style === 'early-modern');

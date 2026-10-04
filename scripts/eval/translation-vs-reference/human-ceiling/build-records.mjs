@@ -7,6 +7,8 @@
 /**
  *   node scripts/eval/translation-vs-reference/human-ceiling/build-records.mjs \
  *        --t1 <records-2.jsonl> --t2 <records-arms.jsonl> --align <dir with out-*.jsonl> --out <dir> [--min-verbatim 0.85]
+ *        [--t2-ocr <records.jsonl>]   T2's served-arm records: where their source_text differs, T2 judged the page against a
+ *                                     transcription corrected from the image while the arms had translated the OCR (source_corrected)
  * Writes <out>/records-refA.jsonl, records-refB.jsonl (same pages, same order), pairs.json (one row per page: both
  * translators, independence, anchors, verbatim share; no texts) and dropped.json.
  * Arms: `human` = the other translator; `flash`, `lite` = the T1/T2 fresh arms (see ARM_OF); `self` = the reference
@@ -50,6 +52,7 @@ function verbatimShare(cut, file) {
 
 const base = Object.fromEntries([...readJsonl(opt('t2')), ...readJsonl(opt('t1'))].map((r) => [itemId(r), r]));
 const aligned = fs.readdirSync(ALIGN).filter((f) => /^out-.*\.jsonl$/.test(f)).sort().flatMap((f) => readJsonl(path.join(ALIGN, f)).map((x) => ({ ...x, group: f.replace(/^out-|\.jsonl$/g, '') })));
+const ocrSource = opt('t2-ocr') ? Object.fromEntries(readJsonl(opt('t2-ocr')).map((r) => [itemId(r), r.source_text])) : {};
 const refA = [], refB = [], pairs = [], dropped = [];
 for (const x of aligned) {
   const r = base[x.id];
@@ -74,7 +77,7 @@ for (const x of aligned) {
     a: { translator: r.reference_meta.translator, year: r.reference_meta.year, title: r.reference_meta.title, style: r.reference_meta.style, licence: r.reference_meta.licence, located: r.reference_meta.located, url: r.reference_meta.url || null },
     b: { translator: x.b_meta.translator, year: x.b_meta.year, title: x.b_meta.title, style: x.b_meta.style, licence: x.b_meta.licence, located: x.b_meta.located, url: x.b_meta.url, source_edition_used_by_translator: x.b_meta.source_edition_used_by_translator || null, coverage_note: x.b_meta.coverage_note || null },
     independent: x.independent, independence_note: x.independence_note, alignment_method: x.alignment_method, anchors: x.anchors, alignment_confidence: x.alignment_confidence, variant_note: x.variant_note || null,
-    b_verbatim_share: Math.round(share * 1000) / 1000, canonical: !!r.reference_meta.canonical,
+    b_verbatim_share: Math.round(share * 1000) / 1000, canonical: !!r.reference_meta.canonical, source_corrected: ocrSource[x.id] != null && ocrSource[x.id] !== r.source_text,
     arms: { flash: { from_arm: flash.arm, model: flash.model }, lite: { from_arm: lite.arm, model: lite.model } }, words: { a: words(aText).length, b: words(bText).length } });
 }
 fs.mkdirSync(OUT, { recursive: true });

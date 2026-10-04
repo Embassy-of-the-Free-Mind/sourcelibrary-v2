@@ -12,11 +12,16 @@
  * spacing, line breaks, u/v-style edition variants and markup are folded away by the lib: what is left is a
  * difference of LETTERS). Edges are free (one cut may be a word wider than the other), interior differences are
  * charged. The floor is the mean of the two directions.
+ * Second column, `marks`: the same alignment keeping diacritics (accents, breathings, iota subscript; NFC, so oxia and
+ * tonos are one code point), still without case, punctuation or spacing. The lib folds these away because they vary
+ * between editions; between two transcriptions of ONE edition they are transcription differences, so they are
+ * reported beside the lib figure, never instead of it. For cjk the two columns are the same normalisation.
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { normalizeForScript, normalizeCJK, windowedErrorRate, NORMALIZE_FOR_SCRIPT_VERSION } from '../lib/metrics.mjs';
 import { resetSeed, bootstrapRatioCI } from '../lib/paired-stats.mjs';
+import { stripTags } from '../lib/edition-window.mjs';
 import { readJsonl, writeJsonl } from '../translation-vs-reference/common.mjs';
 
 const args = process.argv.slice(2);
@@ -26,8 +31,9 @@ if (!opt('pairs') || !OUT) { console.error('--pairs and --out are required'); pr
 
 const norm = (t, script) => (script === 'cjk' ? normalizeCJK(t || '') : normalizeForScript(t || '', script));
 /** edits and reference length of hyp against ref, fitting alignment */
-function err(ref, hyp, script) {
-  const w = windowedErrorRate(norm(ref, script), norm(hyp, script));
+const withMarks = (t, script) => (script === 'cjk' ? normalizeCJK(t || '') : [...stripTags(t || '').replace(/(\p{L})[-¬]\s*\n\s*/gu, '$1').normalize('NFC').toLowerCase().replace(/ς/g, 'σ')].filter((c) => /[\p{L}\p{M}]/u.test(c)).join(''));
+function err(ref, hyp, script, marks = false) {
+  const w = marks ? windowedErrorRate(withMarks(ref, script), withMarks(hyp, script)) : windowedErrorRate(norm(ref, script), norm(hyp, script));
   return { cer: w.windowedCer, units: w.windowUnits, edits: Math.round(w.windowedCer * w.windowUnits) };
 }
 const r4 = (x) => (x == null ? null : Math.round(x * 10000) / 10000);
@@ -37,11 +43,14 @@ const rows = opt('pairs').split(',').flatMap((f) => readJsonl(f));
 const pages = rows.map((r) => {
   const ab = err(r.a.text, r.b.text, r.script), ba = err(r.b.text, r.a.text, r.script);
   const oa = r.ours?.text ? err(r.a.text, r.ours.text, r.script) : null, ob = r.ours?.text ? err(r.b.text, r.ours.text, r.script) : null;
+  const mab = err(r.a.text, r.b.text, r.script, true), mba = err(r.b.text, r.a.text, r.script, true);
   return { id: r.id, lang: r.lang, script: r.script, work: r.work, edition: r.edition, book_id: r.book_id ?? null, page_number: r.page_number ?? null, printed_page: r.printed_page ?? null,
     cluster: r.book_id || r.work || r.id,
     a: { source: r.a.source, how_made: r.a.how_made, licence: r.a.licence, url: r.a.url, chars: ab.units }, b: { source: r.b.source, how_made: r.b.how_made, licence: r.b.licence, url: r.b.url, chars: ba.units },
     edition_check: r.edition_check, edition_check_by: r.edition_check_by, edition_note: r.edition_note || null, independence: r.independence, cut_method: r.cut_method,
     human_b_vs_a: ab, human_a_vs_b: ba, human_cer: r4((ab.cer + ba.cer) / 2),
+    marks_b_vs_a: mab, marks_a_vs_b: mba,
+    ours_marks_vs_a: r.ours?.text ? err(r.a.text, r.ours.text, r.script, true) : null, ours_marks_vs_b: r.ours?.text ? err(r.b.text, r.ours.text, r.script, true) : null,
     ours_model: r.ours?.model ?? null, ours_vs_a: oa, ours_vs_b: ob };
 });
 
@@ -57,18 +66,22 @@ function block(ps) {
   const withOurs = ps.filter((p) => p.ours_vs_a);
   return { pages: ps.length, books: new Set(ps.map((p) => p.cluster)).size,
     human_vs_human: { ...pooled(ps, (p) => [p.human_b_vs_a, p.human_a_vs_b]), median_page_cer: r4(median(ps.map((p) => p.human_cer))), pages_identical: ps.filter((p) => p.human_b_vs_a.edits === 0 && p.human_a_vs_b.edits === 0).length },
+    human_vs_human_with_marks: { ...pooled(ps, (p) => [p.marks_b_vs_a, p.marks_a_vs_b]), pages_identical: ps.filter((p) => p.marks_b_vs_a.edits === 0 && p.marks_a_vs_b.edits === 0).length },
     on_pages_we_hold: withOurs.length ? { pages: withOurs.length,
       human_vs_human: pooled(withOurs, (p) => [p.human_b_vs_a, p.human_a_vs_b]),
       ours_vs_a: { ...pooled(withOurs, (p) => [p.ours_vs_a]), median_page_cer: r4(median(withOurs.map((p) => p.ours_vs_a.cer))) },
       ours_vs_b: { ...pooled(withOurs, (p) => [p.ours_vs_b]), median_page_cer: r4(median(withOurs.map((p) => p.ours_vs_b.cer))) },
+      human_vs_human_with_marks: pooled(withOurs, (p) => [p.marks_b_vs_a, p.marks_a_vs_b]), ours_with_marks_vs_a: pooled(withOurs, (p) => [p.ours_marks_vs_a]), ours_with_marks_vs_b: pooled(withOurs, (p) => [p.ours_marks_vs_b]),
       ours_models: Object.fromEntries([...new Set(withOurs.map((p) => p.ours_model))].map((m) => [m, withOurs.filter((p) => p.ours_model === m).length])) } : null };
 }
+const FAMILIES = [[/CBETA/i, 'CBETA'], [/SAT\b/, 'SAT'], [/Perseus/i, 'Perseus'], [/First1K/i, 'First1KGreek'], [/Gutenberg/i, 'Project Gutenberg'], [/wikisource/i, 'Wikisource'], [/EEBO|TCP/i, 'EEBO-TCP'], [/Kanripo/i, 'Kanripo']];
+const family = (src) => (FAMILIES.find(([re]) => re.test(src)) || [null, String(src).split(/\s+/).slice(0, 2).join(' ')])[1];
 resetSeed(SEED);
 const groups = {};
 for (const p of pages) {
   const same = p.edition_check === 'same' ? 'same-edition' : 'edition-mismatch';
   (groups[`${p.lang} · ${same}`] ||= []).push(p);
-  (groups[`${p.lang} · ${same} · ${p.a.source.replace(/[\s#]*[A-Z]?\d[\w.-]*$/, '').trim()} vs ${p.b.source.replace(/[\s#]*[A-Z]?\d[\w.-]*$/, '').trim()}`] ||= []).push(p);
+  (groups[`${p.lang} · ${same} · ${family(p.a.source)} vs ${family(p.b.source)}`] ||= []).push(p);
 }
 const results = { generated: new Date().toISOString(), seed: SEED, measure: 'agreement between two human transcriptions (not accuracy: neither is the truth); ours-vs-reference is accuracy against that reference',
   normalisation: `scripts/eval/lib/metrics.mjs normalizeForScript v${NORMALIZE_FOR_SCRIPT_VERSION} / normalizeCJK + windowedErrorRate, identical for every pair`,
@@ -79,7 +92,7 @@ fs.writeFileSync(path.join(OUT, 'results.json'), JSON.stringify(results, null, 1
 writeJsonl(path.join(OUT, 'pages.jsonl'), pages);
 const pct = (x) => (x == null ? '–' : `${(x * 100).toFixed(2)}%`);
 const cell = (b) => (b ? `${pct(b.pooled_cer)} [${b.ci ? b.ci.map(pct).join(', ') : '–'}]` : '–');
-const md = ['| pairs | pages (books) | human vs human, pooled CER [95% CI] | median page | identical pages | pages we hold | human vs human there | our OCR vs A | our OCR vs B |', '|---|---|---|---|---|---|---|---|---|'];
-for (const [k, g] of Object.entries(results.groups)) md.push(`| ${k} | ${g.pages} (${g.books}) | ${cell(g.human_vs_human)} | ${pct(g.human_vs_human.median_page_cer)} | ${g.human_vs_human.pages_identical} | ${g.on_pages_we_hold?.pages ?? 0} | ${cell(g.on_pages_we_hold?.human_vs_human)} | ${cell(g.on_pages_we_hold?.ours_vs_a)} | ${cell(g.on_pages_we_hold?.ours_vs_b)} |`);
+const md = ['| pairs | pages (books) | human vs human, pooled CER [95% CI] | median page | identical pages | human vs human keeping diacritics | pages we hold | human vs human there | our OCR vs A | our OCR vs B |', '|---|---|---|---|---|---|---|---|---|---|'];
+for (const [k, g] of Object.entries(results.groups)) md.push(`| ${k} | ${g.pages} (${g.books}) | ${cell(g.human_vs_human)} | ${pct(g.human_vs_human.median_page_cer)} | ${g.human_vs_human.pages_identical} | ${cell(g.human_vs_human_with_marks)} | ${g.on_pages_we_hold?.pages ?? 0} | ${cell(g.on_pages_we_hold?.human_vs_human)} | ${cell(g.on_pages_we_hold?.ours_vs_a)} | ${cell(g.on_pages_we_hold?.ours_vs_b)} |`);
 fs.writeFileSync(path.join(OUT, 'table.md'), md.join('\n') + '\n');
 console.log(md.join('\n'));

@@ -1,0 +1,52 @@
+[
+ {
+  "id": "69942e75d607f8e57e4b93b8_00150",
+  "reason": "aligner skipped: Hinted B is not independent (independent=false): Johnson's preface says 'The translation is based on Taylor's', and props. 88-90 are Taylor's wording almost verbatim, down to Taylor's 'truly or primarily being' and 'therefore possesses infinite power'. No alternative named in b_hint; the other pre-1931 translation (A. C. Ionides, 1917) was not found online, and Dodds (1933) is in copyright.",
+  "tried": [
+   "https://archive.org/download/metaphysicalelem00procuoft/metaphysicalelem00procuoft_djvu.txt (saved as /data/scratch/sl/hc5762/src/A/johnson1909_djvu.txt)",
+   "archive.org search: ionides proclus / elements of theology",
+   "web search: Ionides 1917 Elements of Theology full text"
+  ]
+ },
+ {
+  "id": "699383a750654cbbe2917f1b_00116",
+  "reason": "aligner skipped: The page's source_text is not usable for cutting or anchoring: the manuscript OCR is largely invented (long runs of repeated ἱεραρχικὰ, a heading 'ἐκ τῶν περὶ τῆς οὐρανίου ἱεραρχίας') and does not contain the wording of Divine Names 4.16-18 that A's located names, so no start/middle/end source anchors can be given and B cannot be cut against the source. Rolt (1920) was therefore not downloaded or cut.",
+  "tried": [
+   "read source_text against A's located (DN 4.16-18)",
+   "archive.org search confirmed a 1920 Rolt scan exists (dionysiusareopag00pseu); not used"
+  ]
+ },
+ {
+  "id": "69938d775d28b693146cfc2c_00283",
+  "reason": "aligner skipped: Holcroft (1653) abridges this page: about 150 English words for about 185 Greek, roughly 70-75% of the page covered (under the 80% floor). Dropped or paraphrased away: 'for here alone can the earth be dug' (kept only as 'the rest of it being built upon a rock'), the parenthesis οὐ γὰρ αὐτὴν ἔδει Πέρσαις ἁλῶναι, the whole relative clause on the arrows the Romans had shot from the wall at the attacking barbarians (reduced to 'scattered arrows'), 'taunting with laughter', 'with much shouting and confusion ... ordering' (reduced to 'dig'd for life'), κατὰ κράτος. No other public-domain English translation of Procopius' Persian War besides A (Dewing) was found.",
+  "tried": [
+   "Holcroft 1653, EEBO-TCP A55986, Persian Wars II ch. X (Daras mine passage located; saved as /data/scratch/sl/hc5762/src/B/holcroft_A55986.txt)",
+   "archive.org search for other pre-1931 English Procopius Wars translations: none"
+  ]
+ },
+ {
+  "id": "69938d94d5a98fd66f42d7c7_00139",
+  "reason": "aligner skipped: Not independent: A (1814, Green & Chaplin) is a light revision of the 1684 translation. On this page the two agree clause for clause, including shared slips and paraphrases: 'which were sent him out of Phrygia and Cappadocia', 'which was built and man'd, for the most part, out of Greece' (1814: 'built and manned chiefly in Greece'), 'bring Trees from the Mountain, and tie Ropes about 'em' (σχοίνους πλέκειν), 'where another River joyns with the Hebrus', 'thick Woods, enough to hide any body that was in 'em', 'eight hundred Horse' (Greek ὀγδοήκοντα). The hint names no alternative and no other public-domain English Zosimus exists (Buchanan-Davis 1967 and Ridley 1982 are in copyright).",
+  "tried": [
+   "The New History of Count Zosimus (1684), archive.org TheNewHistoryOfCountZosimus1684 djvu text, Book II pp. 99-100, compared with A (saved as /data/scratch/sl/hc5762/src/B/zosimus1684_djvu.txt)"
+  ]
+ },
+ {
+  "id": "6993882474305116d72cf673_00163",
+  "reason": "aligner skipped: No independent PD second translation. Guthrie 1918 (Gutenberg 42930/42931) covers the page but is not independent of the French: II.6.1 follows Bouillet (1857) sentence for sentence, including Bouillet's own glosses ('Cette définition semble raisonnable' = 'This definition seems reasonable'; 'raison séminale' = 'seminal (reason)'; 'à la surface d'un objet' = 'on the surface of a being'), i.e. a retranslation through another language (independent=false). Thomas Taylor translated neither II.5 nor II.6 (not in Five Books 1794, Select Works 1817, or the 1834 volume).",
+  "tried": [
+   "Guthrie, Plotinos: Complete Works vol. 1-2, https://www.gutenberg.org/cache/epub/42930/pg42930.txt and pg42931.txt (found; compared with Bouillet at https://fr.wikisource.org/wiki/Ennéades_(trad._Bouillet)/II/Livre_6)",
+   "Thomas Taylor (no translation of Enn. II.5/II.6 exists)"
+  ]
+ },
+ {
+  "id": "69af0cfc067c0c26ee26cd3c_00151",
+  "reason": "B cut not recoverable from its source file (verbatim share 0.84)",
+  "source_file": "/data/scratch/sl/hc5762/src/G/bim_early-english-books-1641-1700_the-anatomical-exercises_harvey-william_1653.txt"
+ },
+ {
+  "id": "69b18a55c4be2cdd0edc727d_00552",
+  "reason": "B cut not recoverable from its source file (verbatim share 0.75)",
+  "source_file": "/data/scratch/sl/hc5762/src/I/shaw1741_v2_djvu.txt"
+ }
+]
