@@ -216,6 +216,11 @@ function firstReads() {
 
 // ── --propose ──────────────────────────────────────────────────────────────────────────────────
 
+/** The reader's script name → book_class family ("Greek" → greek, "Devanagari" → indic). */
+const READER_SCRIPT = [[/^latin/i, 'latin'], [/greek/i, 'greek'], [/cyrillic/i, 'cyrillic'], [/hebrew|samaritan/i, 'hebrew'], [/arabic|perso/i, 'arabic'], [/syriac/i, 'syriac'], [/coptic/i, 'coptic'],
+  [/devanagari|bengali|gujarati|gurmukhi|tamil|telugu|kannada|malayalam|sinhala|sharada|grantha|brahmi/i, 'indic'], [/tibetan/i, 'tibetan'], [/han|kana|hangul|chinese|japanese|korean/i, 'cjk'],
+  [/thai|lao|khmer|burmese|javanese|balinese|batak/i, 'southeast-asian'], [/ge.?ez|ethiopic/i, 'ethiopic'], [/armenian/i, 'armenian'], [/georgian/i, 'georgian'], [/mongol|manchu/i, 'mongolian']];
+const readerScriptFamily = (x) => (READER_SCRIPT.find(([re]) => re.test(String(x || ''))) || [])[1] || null;
 const MIN_CONFIDENCE = 0.8;
 const MIN_READS_TO_WRITE = 4;
 const TRANSLATION_ROLES = new Set(['modern-translation', 'period-translation', 'translation']);
@@ -277,7 +282,12 @@ export function decide(row, tags) {
   }
   const agreeing = 2 + extra.filter((r) => r.codes.length === 1 && r.content === 'text' && (r.confidence ?? 0) >= MIN_CONFIDENCE && codeFamily(r.codes[0]) === f1).length;
   const instruments = `${agreeing} page reads${tags && tags.tagged >= 10 ? ' + OCR tags' : ''}`;
-  // Gate 1 (2026-10-04): two reads were 14/15 on Greek → Latin; the write needs four.
+  // Gate 2 (2026-10-04, eye-check-gate2.json): both Greek → Latin misses were Greek–Latin editions, and
+  // on both the reader had listed the label's script among `other_scripts`. Any trace of it stops the flip.
+  const labelScripts = new Set(row.label.map(scriptFamilyOfCode));
+  const trace = row.reads.find((r) => [r.script, ...(r.other_scripts || [])].some((x) => labelScripts.has(readerScriptFamily(x))));
+  if (trace) return { decision: 'report', why: `the label's script is on a sampled page (read ${trace.read}): possibly bilingual`, to };
+  // The write needs four agreeing reads, not two.
   return { decision: agreeing >= MIN_READS_TO_WRITE ? 'flip' : 'flip-2-reads', to, agreeing, instruments };
 }
 
@@ -292,6 +302,8 @@ function writePattern(row, to) {
   return `${from} → ${languageName(to)}`;
 }
 
+/** Pairs that had ≥ 10 two-read flips when gate 1 was drawn; they keep their name after the four-read rule thins them. */
+const NAMED_AT_GATE_1 = new Set(['Greek → Latin', 'Javanese → Arabic', 'Javanese → Balinese', 'Latin → Greek', 'Sanskrit → English', 'Javanese → Malay', 'Sanskrit → Hindi']);
 const VERNACULAR = new Set(['German', 'Italian', 'French', 'Spanish', 'English', 'Dutch']);
 /** The by-eye gate judges groups it can sample: named pairs with ≥ 10 books, Greek → any vernacular, translation editions, and the rare-pair tail. */
 function gatePatterns(out) {
@@ -301,7 +313,7 @@ function gatePatterns(out) {
     const [from, to] = f.pattern.split(' → ');
     if (f.pattern.startsWith('translation edition:')) f.gate_pattern = 'translation edition → its own language';
     else if (from === 'Greek' && VERNACULAR.has(to)) f.gate_pattern = 'Greek → Latin-script vernacular';
-    else f.gate_pattern = size[f.pattern] >= 10 ? f.pattern : 'rare pairs (< 10 books each)';
+    else f.gate_pattern = size[f.pattern] >= 10 || NAMED_AT_GATE_1.has(f.pattern) ? f.pattern : 'rare pairs (< 10 books each)';
   }
 }
 
@@ -354,7 +366,9 @@ async function phaseEyeSample() {
   const WORK = process.env.LANGID_WORK_DIR || '/data/scratch/sl/relabel-4884';
   const N = Number(args[args.indexOf('--n') + 1]) || 40;
   const only = args.includes('--gate-patterns') ? new Set(String(args[args.indexOf('--gate-patterns') + 1]).split('|')) : null;
-  const flips = readJsonl(inDir('proposals.jsonl')).filter((p) => p.decision === 'flip' && (!only || only.has(p.gate_pattern)));
+  // A second gate draws fresh books: nothing already looked at in gate 1.
+  const seenBefore = new Set(!args.includes('--dir') ? [] : fs.readdirSync(DIR).filter((f) => /^eye-sample-gate\d\.json$/.test(f) && f !== `eye-sample-${args[args.indexOf('--dir') + 1]}.json`).flatMap((f) => JSON.parse(fs.readFileSync(inDir(f), 'utf8')).rows.map((r) => r.book_id)));
+  const flips = readJsonl(inDir('proposals.jsonl')).filter((p) => p.decision === 'flip' && (!only || only.has(p.gate_pattern)) && !seenBefore.has(p.book_id));
   const by = new Map(); for (const f of flips) { if (!by.has(f.gate_pattern)) by.set(f.gate_pattern, []); by.get(f.gate_pattern).push(f); }
   const rand = rng(4884);
   const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
