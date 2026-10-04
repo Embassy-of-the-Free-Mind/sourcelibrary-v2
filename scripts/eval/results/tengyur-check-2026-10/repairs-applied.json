@@ -1,0 +1,195 @@
+{
+ "apply": true,
+ "books": 213,
+ "books_in_scope": 187,
+ "skipped_books": {
+  "out_of_scope_volume": 26,
+  "open_run": []
+ },
+ "pages_scanned": 110952,
+ "pairs": {
+  "pages": 137,
+  "resolved": 105,
+  "kept_both": 40
+ },
+ "unclear": {
+  "gap_pages": 16157,
+  "words_pages": 3432,
+  "src_doubtful": 0,
+  "not_final": 1104,
+  "gap_content_top40": [
+   [
+    "...",
+    4803
+   ],
+   [
+    "one line of text follows",
+    854
+   ],
+   [
+    "one line of text not transcribed",
+    698
+   ],
+   [
+    "…",
+    628
+   ],
+   [
+    "2-3 characters",
+    462
+   ],
+   [
+    "one line of text partially illegible",
+    384
+   ],
+   [
+    "one line of text continued on next page",
+    362
+   ],
+   [
+    "one line not transcribed",
+    324
+   ],
+   [
+    "2-3 syllables",
+    308
+   ],
+   [
+    "one syllable",
+    302
+   ],
+   [
+    "one line of text partially obscured",
+    291
+   ],
+   [
+    "one or two syllables obscured",
+    214
+   ],
+   [
+    "one line of text not fully legible",
+    211
+   ],
+   [
+    "one line break",
+    180
+   ],
+   [
+    "one or two syllables",
+    179
+   ],
+   [
+    "one line continues to next page",
+    168
+   ],
+   [
+    "one line of text not fully transcribed",
+    162
+   ],
+   [
+    "sentence continues to next page",
+    144
+   ],
+   [
+    "not transcribed",
+    144
+   ],
+   [
+    "continues to next page",
+    141
+   ],
+   [
+    "2 characters",
+    136
+   ],
+   [
+    "text breaks off",
+    122
+   ],
+   [
+    "one line following",
+    117
+   ],
+   [
+    "text continues",
+    111
+   ],
+   [
+    "2 words",
+    109
+   ],
+   [
+    "one line of text following",
+    101
+   ],
+   [
+    "one line not fully transcribed",
+    89
+   ],
+   [
+    "text continues to next page",
+    80
+   ],
+   [
+    "one or two syllables unreadable",
+    78
+   ],
+   [
+    "one line of text",
+    76
+   ],
+   [
+    "2 lines not transcribed",
+    74
+   ],
+   [
+    "one line of text continued on the next page",
+    70
+   ],
+   [
+    "one line of text partially cut off",
+    65
+   ],
+   [
+    "2 lines of text",
+    62
+   ],
+   [
+    "one or two words obscured",
+    62
+   ],
+   [
+    "one or two words unreadable",
+    58
+   ],
+   [
+    "text cuts off",
+    54
+   ],
+   [
+    "one or two words",
+    51
+   ],
+   [
+    "one line continues",
+    44
+   ],
+   [
+    "the text continues",
+    42
+   ]
+  ]
+ },
+ "attr_note": {
+  "pages": 1
+ },
+ "still_unbalanced": [],
+ "written": 16284,
+ "skipped": {},
+ "resync": {
+  "books_synced": 187,
+  "books_failed": 0,
+  "pt_updated": 2687,
+  "pt_absent": 13597
+ }
+}
