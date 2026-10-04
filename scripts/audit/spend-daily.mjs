@@ -224,7 +224,7 @@ export function dialCheck({ days, billedUnreadable = null }) {
   }
   if (billedUnreadable) lines.push(`UNKNOWN invoice not readable: ${billedUnreadable}`);
   for (const f of fails) lines.push(`FAIL ${f}`);
-  return { status: fails.length ? 'FAIL' : billedUnreadable ? 'UNKNOWN' : 'PASS', lines, fails };
+  return { status: fails.length ? 'FAIL' : billedUnreadable ? 'UNKNOWN' : 'PASS', lines, fails, days };
 }
 
 export function overall(checks) {
@@ -555,7 +555,7 @@ async function main() {
     if (WEEK) {
       const since7 = new Date(today0 - 7 * DAY);
       const [dailies, ledgers, scw, vercel, billed7] = await Promise.all([
-        db.collection('ops_reports').find({ type: REPORT_TYPE }).sort({ day: -1 }).limit(7).project({ day: 1, status: 1, line: 1, 'checks.envelopes.envelopes': 1 }).toArray(),
+        db.collection('ops_reports').find({ type: REPORT_TYPE }).sort({ day: -1 }).limit(7).project({ day: 1, status: 1, line: 1, 'checks.envelopes.envelopes': 1, 'checks.dial.days': 1 }).toArray(),
         db.collection('ops_reports').find({ type: PVG_TYPE }).sort({ day: -1 }).limit(7).project({ day: 1, verdict: 1, headline: 1 }).toArray(),
         readScaleway(),
         readVercel(since7, new Date(today0)),
@@ -565,6 +565,10 @@ async function main() {
         window: `${dayStr(today0 - 7 * DAY)} .. ${D1}`,
         today: report,
         daily_checks: dailies.map((d) => ({ day: d.day, status: d.status, line: d.line })),
+        // Each daily row's primary day: metered (both stores, call time) vs the invoice. billed − metered = unmetered.
+        gemini_days: dailies.map((d) => d.checks?.dial?.days?.find((x) => x.primary)).filter(Boolean)
+          .map(({ day, dial_usd, metered_usd, envelope_usd, billed_usd }) => ({ day, dial_usd, metered_usd, envelope_usd, billed_usd,
+            unmetered_usd: billed_usd != null ? r2(billed_usd - metered_usd) : null })),
         ledgers: ledgers.map((l) => ({ day: l.day, status: l.verdict?.status, fails: l.verdict?.fails || [],
           paid_usd: r2((l.headline || []).reduce((a, h) => a + (h.paid_usd || 0), 0)),
           waste_usd: r2((l.headline || []).reduce((a, h) => a + (h.waste_usd || 0), 0)),

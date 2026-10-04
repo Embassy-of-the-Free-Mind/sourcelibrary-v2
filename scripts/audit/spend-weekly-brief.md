@@ -49,7 +49,7 @@ nothing measurable. Then at most 5 numbered cuts, costliest first.
 batches that wrote no page)
 + the week's share of flagged machines (`machines.flagged`: €/month × 7/30, $ converted at 1.08)
 + envelope `paid_week_usd` where `pages_week` is 0 (both summed from the daily rows; `days_counted` says how many).
-Gemini **billed minus ledger-paid** is reported separately as "unmetered". It is not waste: it means we
+Gemini **billed minus metered** (Σ `gemini_days[].unmetered_usd`) is reported separately as "unmetered". It is not waste: it means we
 cannot see it. Vendors marked not readable are named as such, never counted as $0.
 
 ## The comment, exactly this shape
