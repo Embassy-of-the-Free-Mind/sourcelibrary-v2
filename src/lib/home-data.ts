@@ -12,6 +12,7 @@ import { getEsSpanishCollectionCard, type EsSpanishCollectionCard } from '@/lib/
 import { localizedEditionFilterIndexed } from '@/lib/localized';
 import type { Locale } from '@/lib/locale-path';
 import { SITE_STATS_FALLBACK } from '@/lib/site-stats';
+import { dedupeHomeSections } from '@/lib/home-dedupe';
 
 // Shared data layer for the homepage. Both the English `/` route and the
 // Spanish `/es` route fetch through getHomeData() so the two pages can never
@@ -61,6 +62,9 @@ export interface FeaturedItem {
     hero_image: string | null;
   };
   books: any[];
+  /** Every usable hero image, best first — dedupeHomeSections() takes the first
+   *  one whose book is not already elsewhere on the page. */
+  heroCandidates?: string[];
 }
 
 async function getFeaturedCollections(): Promise<FeaturedItem[]> {
@@ -171,7 +175,16 @@ async function getFeaturedCollections(): Promise<FeaturedItem[]> {
 
     // Fall back to hardcoded hero image if DB doesn't have images
     const fallbackHero = FALLBACK_COLLECTIONS.find(f => f.slug === collection.slug)?.hero_image;
+    // The same preference order as heroUrl above, but every candidate, so the
+    // cross-section de-dupe can skip a book already shown higher on the page.
+    const heroCandidates = [...new Set([
+      ...gallery.map((img: Record<string, unknown>) => img?.image_url as string | undefined),
+      ...(collection.featured_images || []).map((img: unknown) => typeof img === 'string' ? img
+        : ((img as Record<string, unknown>)?.thumbnail_url || (img as Record<string, unknown>)?.extracted_url || (img as Record<string, unknown>)?.image_url) as string | undefined),
+      heroUrl, fallbackHero,
+    ].filter((u): u is string => typeof u === 'string' && u.length > 0))];
     return {
+      heroCandidates,
       collection: {
         slug: collection.slug as string,
         name: collection.name as string,
@@ -557,15 +570,19 @@ async function getHomeGalleryPlates(): Promise<Plate[]> {
     });
   }
 
-  // Shuffle the pool with a per-window seed, then take 48. Same window → same 48.
+  // Shuffle the pool with a per-window seed. Same window → same order.
+  // Returns a few spares beyond the 48 shown, so getHomeData can drop plates
+  // from books other sections already show and still fill the wall.
   const windowSeed = Math.floor(Date.now() / (GALLERY_ROTATION_HOURS * 3600 * 1000));
   const rand = mulberry32(windowSeed);
   for (let i = pool.length - 1; i > 0; i--) {
     const j = Math.floor(rand() * (i + 1));
     [pool[i], pool[j]] = [pool[j], pool[i]];
   }
-  return pool.slice(0, 48);
+  return pool.slice(0, HOME_GALLERY_COUNT + 16);
 }
+
+const HOME_GALLERY_COUNT = 48;
 
 
 export interface HomeCounts {
@@ -803,5 +820,28 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
       : withTimeout(getLocalizedCollectionCounts(lang), 8000, {} as Record<string, number>),
   ]);
 
-  return { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, blogPosts: BLOG_POSTS, spanishCollection, localizedCollectionCounts };
+  // One book, one appearance: see src/lib/home-dedupe.ts.
+  const deduped = dedupeHomeSections({
+    recentlyTranslated,
+    mostLiked,
+    showcaseItems: curatedShowcase.items,
+    featuredItems,
+    galleryPlates,
+  }, {
+    pinnedShowcaseSlugs: new Set(curatedShowcase.items.filter((i) => coverOverride(i.slug)).map((i) => i.slug)),
+  });
+
+  return {
+    featuredItems: deduped.featuredItems,
+    discoverBooks,
+    recentlyTranslated,
+    mostLiked: deduped.mostLiked,
+    galleryPlates: deduped.galleryPlates.slice(0, HOME_GALLERY_COUNT),
+    counts,
+    collections,
+    curatedShowcase: { ...curatedShowcase, items: deduped.showcaseItems },
+    blogPosts: BLOG_POSTS,
+    spanishCollection,
+    localizedCollectionCounts,
+  };
 }
