@@ -9,6 +9,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { cleanTranslation } from './prompt.mjs';
+import { makeRng } from '../lib/paired-stats.mjs';
 
 const [, , cmd, ...argv] = process.argv;
 const arg = (f) => { const i = argv.indexOf(f); return i > -1 ? argv[i + 1] : null; };
@@ -18,7 +19,9 @@ const OUT = arg('--out');
 if (cmd === 'build') {
   const [an, af] = arg('--a').split('='), [bn, bf] = arg('--b').split('=');
   const A = new Map(readJsonl(af).map((r) => [r.id, r.text])), B = new Map(readJsonl(bf).map((r) => [r.id, r.text]));
-  let s = 5793; const rnd = () => ((s = (s * 1103515245 + 12345) % 2147483648) / 2147483648);
+  // Only decides which arm shows as X vs Y. The committed key.json records the assignment actually judged and
+  // `score` reads that, so this generator does not affect any reported number; a rebuild gives a fresh blinding.
+  const rnd = makeRng(5793);
   const items = [], key = [];
   for (const d of readJsonl(arg('--dev'))) {
     const id = `dev:${d.page_id}`;
