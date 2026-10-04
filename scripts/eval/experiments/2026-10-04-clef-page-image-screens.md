@@ -29,3 +29,15 @@ random sample, human-read at the top.
 `scripts/eval/results/clef-leaf-match-2026-10-04.json`, `scripts/eval/results/clef-image-screens-2026-10-04.json`.
 Rows stayed in the session scratchpad. Gotcha: a 1600px page is refused (~170K estimated tokens against a 64K window);
 1024px works.
+
+### Follow-up: a screen of real stored pages (one page per book, 200 books, $0.11)
+
+Each page was scored against its own stored OCR. Clef put **3/199 below 0.5** and 12 below 0.9. The four lowest were opened by eye:
+- **0.06, a real whole-book defect (#5782).** *Schutzschrift für die Aechtheit der Rosenkreutzergesellschaft*: a full Clef pass over the book ($0.11) scores 366/367 pages mismatched. Four leaves were read from the image (e.g. leaf 102 shows p.75, its text is p.101).
+- **0.28, a harness artifact.** Ovid (Loeb) p48: the harness sent the unsplit spread (`display_photo`) for a split page. Fixed: it now prefers `cropped_photo`.
+- 0.37 and 0.56 (a Tibetan compilation, a Greek MS with out-of-order folio numbers): unverified.
+
+**Cost-effectiveness.** One confirmed whole-book defect in 199 random books (95% CI roughly 0.01–2.8% of books). A
+first pass of 1–3 pages per book over the visible corpus is on the order of $10–30 (Clef, ~$0.0003/page with
+text). A full-book pass on each flagged book costs ~$0.10. Today's alternative is a reader report; this book's
+mismatch was unreported.

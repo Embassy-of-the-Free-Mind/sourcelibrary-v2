@@ -5,7 +5,7 @@
 //   (a) its own OCR text — match, (b) page N+1's OCR text — the realistic off-by-one, same typeface and layout,
 //   (c) another sampled book's OCR text — the easy control. Labels are constructed, so no judge is involved.
 // Run: node --env-file=<.env.production.local> scripts/eval/jev/clef-leaf-match.mjs   (needs MONGODB_URI, CF_ANALYTICS_TOKEN)
-//   N_BOOKS=60 OUT=<dir> IMG_PX=768. A 1600px page costs ~170K estimated tokens and is refused (64K window); size not yet calibrated — the Workers free plan ran out first (2026-10-04).
+//   N_BOOKS=60 OUT=<dir> IMG_PX=1024 CONDS=match,next,other (CONDS=match alone = a screen of real stored pages). A 1600px page costs ~170K estimated tokens and is refused (64K window); 1024px is ~900 image tokens.
 import { MongoClient } from 'mongodb';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -45,13 +45,13 @@ for (const b of books) {
   if (seen.has(bid)) continue;
   seen.add(bid);
   const pages = await db.collection('pages')
-    .find({ book_id: bid, page_number: { $gte: 1 } }, { projection: { page_number: 1, ocr: 1, display_photo: 1, archived_photo: 1 } })
+    .find({ book_id: bid, page_number: { $gte: 1 } }, { projection: { page_number: 1, ocr: 1, cropped_photo: 1, display_photo: 1, archived_photo: 1 } })
     .sort({ page_number: 1 }).toArray();
   const ok = [];
   for (let i = 0; i + 1 < pages.length; i++) {
     const a = pages[i], n = pages[i + 1];
     if (n.page_number !== a.page_number + 1) continue;
-    const img = a.display_photo || a.archived_photo;
+    const img = a.cropped_photo || a.display_photo || a.archived_photo; // the crop is what the reader shows for a split spread
     if (!img || !/images\.sourcelibrary\.org|r2\./.test(img)) continue;
     if (ocrText(a).length < 500 || ocrText(n).length < 500) continue;
     ok.push([a, n, img]);
@@ -98,7 +98,8 @@ for (let i = 0; i < samples.length; i++) {
   const image = await loadImage(s.img, i).catch(() => null);
   if (!image) { console.error('image fail', s.book_id); continue; }
   const other = samples[(i + 1) % samples.length].own;
-  for (const [cond, text] of [['match', s.own], ['next', s.next], ['other', other]]) {
+  const conds = [['match', s.own], ['next', s.next], ['other', other]].filter(([c]) => (process.env.CONDS || 'match,next,other').split(',').includes(c));
+  for (const [cond, text] of conds) {
     const row = { book_id: s.book_id, title: s.title, language: s.language, page: s.page, cond };
     for (const model of ['clef-flash', 'clef']) row[model] = await ask(model, image, text);
     rows.push(row);
