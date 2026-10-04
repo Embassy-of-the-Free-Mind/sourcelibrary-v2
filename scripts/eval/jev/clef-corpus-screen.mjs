@@ -5,6 +5,8 @@
 // Checkpoint first: one JSON row per book is appended to PROGRESS as it finishes; a rerun skips books already there.
 // Run: PROGRESS=/root/clef-screen/progress.jsonl node --env-file=<.env.production.local> scripts/eval/jev/clef-corpus-screen.mjs
 //   CONC=8 CAP_USD=35 LIMIT=<n books, for a smoke test>   (needs MONGODB_URI, CF_ANALYTICS_TOKEN)
+//   PASS2=1: revisit books pass 1 recorded as `skip` (4 random pages lacked ≥300 chars of OCR or an image) and pick a
+//   random page among those that HAVE both, server-side; a book with none is recorded `no_ocr`. The last row per book wins.
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
 import fs from 'node:fs';
@@ -19,12 +21,14 @@ const Q = { same_page: { type: 'noul', instructions: 'The text in the state is a
 const R2 = /^https:\/\/(images\.sourcelibrary\.org|[^/]*r2\.(dev|cloudflarestorage\.com))\//; // never hit provider IIIF (BSB quota)
 sharp.cache(false); sharp.concurrency(1);
 
+const PASS2 = !!process.env.PASS2;
 const done = new Set();
+const skipped = new Set();
 let spent = 0;
 if (fs.existsSync(PROGRESS)) {
   for (const l of fs.readFileSync(PROGRESS, 'utf8').split('\n')) {
     if (!l) continue;
-    try { const r = JSON.parse(l); done.add(r.book_id); spent += ((r.tokens || 0) * PRICE) / 1e6; } catch { /* torn last line */ }
+    try { const r = JSON.parse(l); if (r.status === 'skip') skipped.add(r.book_id); else skipped.delete(r.book_id); if (!PASS2 || r.pass === 2) done.add(r.book_id); spent += ((r.tokens || 0) * PRICE) / 1e6; } catch { /* torn last line */ }
   }
 }
 console.log('resume:', done.size, 'books done, $', spent.toFixed(3));
@@ -35,7 +39,7 @@ const db = client.db('bookstore');
 const books = await db.collection('books')
   .find({ visible: true, pages_count: { $gt: 0 } }, { projection: { id: 1, language: 1, pages_count: 1, ia_identifier: 1, 'image_source.provider': 1, 'archive_metadata.jp2_offset_repaired': 1 } })
   .sort({ _id: 1 }).toArray();
-const todo = books.filter((b) => !done.has(b.id || String(b._id))).slice(0, LIMIT);
+const todo = books.filter((b) => !done.has(b.id || String(b._id)) && (!PASS2 || skipped.has(b.id || String(b._id)))).slice(0, LIMIT);
 console.log('visible books', books.length, 'to screen', todo.length);
 
 const ocrText = (p) => (typeof p?.ocr === 'object' ? p.ocr?.data : p?.ocr) || '';
@@ -80,6 +84,26 @@ async function screen(b) {
   const ids = [...new Set([bid, String(b._id)])];
   const base = { book_id: bid, language: b.language || null, provider: b.image_source?.provider || null, ia_identifier: b.ia_identifier || null, pages_count: b.pages_count };
   if (b.archive_metadata?.jp2_offset_repaired) base.jp2_offset_repaired = true;
+  if (PASS2) {
+    const len = { $strLenCP: { $cond: [{ $eq: [{ $type: '$ocr' }, 'string'] }, '$ocr', { $ifNull: ['$ocr.data', ''] }] } };
+    const cand = await db.collection('pages').aggregate([
+      { $match: { book_id: { $in: ids }, page_number: { $gte: 1, $lte: b.pages_count } } }, // negative page_numbers are parked leaves
+      { $project: { page_number: 1, len, img: { $ifNull: ['$cropped_photo', { $ifNull: ['$display_photo', '$archived_photo'] }] } } },
+      { $match: { len: { $gte: MIN_OCR }, img: { $type: 'string' } } },
+      { $sample: { size: 3 } },
+    ]).toArray();
+    for (const c of cand) {
+      const p = await db.collection('pages').findOne({ _id: c._id }, proj);
+      const text = ocrText(p), url = p.cropped_photo || p.display_photo || p.archived_photo;
+      if (!R2.test(url)) continue;
+      const image = await loadImage(url);
+      if (!image) continue;
+      const a = await ask(image, text);
+      if (!a) return null;
+      return { ...base, pass: 2, status: 'screened', page: p.page_number, img_field: p.cropped_photo ? 'cropped' : p.display_photo ? 'display' : 'archived', ocr_len: text.length, p: a.p, tokens: a.tokens };
+    }
+    return { ...base, pass: 2, status: cand.length ? 'skip' : 'no_ocr', eligible_seen: cand.length };
+  }
   const tried = [];
   const reasons = [];
   for (let t = 0; t < 4 && tried.length < b.pages_count; t++) {
