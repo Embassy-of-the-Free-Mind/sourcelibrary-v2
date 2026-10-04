@@ -1,0 +1,46 @@
+{
+  "model": "gemini-3.1-flash-lite",
+  "jobs": [
+    {
+      "round": 1,
+      "chunk": 0,
+      "job_name": "batches/6ukll3wmntdbf13f3pvz70c2mmn70jrpe523",
+      "requests": 450,
+      "input_mb": 102.1,
+      "estimate_usd": 0.1176,
+      "approved_usd": 1,
+      "submitted_at": "2026-10-04T02:43:41.453Z"
+    },
+    {
+      "round": 1,
+      "chunk": 1,
+      "job_name": "batches/yu5otc339euca1z9voexqav8927xvsk1a3bt",
+      "requests": 450,
+      "input_mb": 100,
+      "estimate_usd": 0.1176,
+      "approved_usd": 1,
+      "submitted_at": "2026-10-04T02:44:00.924Z"
+    },
+    {
+      "round": 1,
+      "chunk": 2,
+      "job_name": "batches/tqartwjfigdj8apcj7rhn1hi4ev9hy8707io",
+      "requests": 450,
+      "input_mb": 84.4,
+      "estimate_usd": 0.1176,
+      "approved_usd": 1,
+      "submitted_at": "2026-10-04T02:44:20.889Z"
+    },
+    {
+      "round": 1,
+      "chunk": 3,
+      "job_name": "batches/5cohdakyq99m6hm9yv5uyy9zfkc9lf2s3gji",
+      "requests": 263,
+      "input_mb": 44.1,
+      "estimate_usd": 0.0687,
+      "approved_usd": 1,
+      "submitted_at": "2026-10-04T02:44:34.402Z"
+    }
+  ],
+  "key_env": "GEMINI_API_KEY_TIER3"
+}
