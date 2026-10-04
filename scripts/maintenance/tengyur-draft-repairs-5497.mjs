@@ -38,7 +38,8 @@ const ISSUE = 5497;
 export function stripHashMarks(text) {
   return String(text).split('\n').map((line) => {
     if (/https?:\/\//.test(line)) return line;
-    const head = line.match(/^#{1,6} /)?.[0] || '';
+    // A heading marker may follow the reader's centring arrow: "-># Title<-".
+    const head = line.match(/^(?:->\s*)?#{1,6} /)?.[0] || '';
     const rest = line.slice(head.length);
     if (!rest.includes('#')) return line;
     // A space survives only between two words: never at either end, never before punctuation or a tag.
