@@ -69,7 +69,7 @@ run)
   set -- $ADDR; IP=$1; PORT=$2
   SSHO="-o BatchMode=yes -o ConnectTimeout=15 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR"
   rsync -a -e "ssh $SSHO -p $PORT" "$HERE/glm-english-run.py" "$LANE_DIR/manifest.tsv" root@$IP:/root/pz/code/
-  bash $S ssh "cd /root/pz && rm -f run.end && CLIENTS=$CLIENTS nohup bash -c '/root/pz/vl/bin/python code/glm-english-run.py code/manifest.tsv /root/pz/out http://127.0.0.1:8200/v1 m $MAX_TOKENS > run.out 2>&1; echo END > run.end' > /dev/null 2>&1 < /dev/null & echo launched" < /dev/null
+  bash $S ssh "cd /root/pz; rm -f run.end; CLIENTS=$CLIENTS nohup bash -c '/root/pz/vl/bin/python code/glm-english-run.py code/manifest.tsv /root/pz/out http://127.0.0.1:8200/v1 m $MAX_TOKENS > run.out 2>&1; echo END > run.end' > /dev/null 2>&1 < /dev/null & echo launched"   # ';' not '&&': with '&&' the whole list is the async job and holds the ssh channel < /dev/null
   log "launched on $(wc -l < $LANE_DIR/manifest.tsv) manifest rows, CLIENTS=$CLIENTS MAX_TOKENS=$MAX_TOKENS"
   pull() { rsync -a --ignore-existing -e "ssh $SSHO -p $PORT" --exclude '*.tmp' root@$IP:/root/pz/out/ "$LANE_DIR/out/" && rsync -a -e "ssh $SSHO -p $PORT" root@$IP:/root/pz/out/timings.jsonl "$LANE_DIR/timings-$PODID.jsonl" 2>/dev/null; touch $WD/progress; }
   while :; do

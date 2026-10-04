@@ -116,7 +116,7 @@ run)
     "$(sid)" "$gpu" "$rev" "$vv" "$CLIENTS" "$MAX_TOKENS" "$D/cost-per-hr" "$LANE_DIR/box.json" "$ZONE" "$(git -C "$REPO" rev-parse HEAD)"
   log "box: $(cat $LANE_DIR/box.json)"
   rsync -a -e "$SSH" "$HERE/glm-english-run.py" "$LANE_DIR/manifest.tsv" root@"$(ip)":/root/pz/code/
-  on "cd /root/pz && rm -f run.end && CLIENTS=$CLIENTS nohup bash -c '/root/pz/vl/bin/python code/glm-english-run.py code/manifest.tsv /root/pz/out http://127.0.0.1:8200/v1 m $MAX_TOKENS > run.out 2>&1; echo END > run.end' > /dev/null 2>&1 < /dev/null & echo launched"
+  on "cd /root/pz; rm -f run.end; CLIENTS=$CLIENTS nohup bash -c '/root/pz/vl/bin/python code/glm-english-run.py code/manifest.tsv /root/pz/out http://127.0.0.1:8200/v1 m $MAX_TOKENS > run.out 2>&1; echo END > run.end' > /dev/null 2>&1 < /dev/null & echo launched"   # ';' not '&&': with '&&' the whole list is the async job and holds the ssh channel
   log "launched on $(wc -l < $LANE_DIR/manifest.tsv) manifest rows, CLIENTS=$CLIENTS MAX_TOKENS=$MAX_TOKENS"
   pull() { rsync -a --ignore-existing --exclude '*.tmp' --exclude timings.jsonl -e "$SSH" root@"$(ip)":/root/pz/out/ "$LANE_DIR/out/"; rsync -a -e "$SSH" root@"$(ip)":/root/pz/out/timings.jsonl "$LANE_DIR/timings-$BOX.jsonl" 2>/dev/null; true; }
   applyb() { [ -n "${APPLY:-}" ] && (cd "$REPO" && node --env-file=/root/sourcelibrary/.env.production.local scripts/workers/glm-english-lane.mjs apply --apply --dir "$LANE_DIR" 2>&1 | tail -1 | tee -a "$LANE_DIR/driver.log"); true; }
