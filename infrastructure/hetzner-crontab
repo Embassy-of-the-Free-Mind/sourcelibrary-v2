@@ -112,6 +112,16 @@
 # vs attributed. Read-only except one ops_reports row (paid-vs-got-<day>, shown on /admin/spend)
 # and, on FAIL, one deduped GitHub issue. Exit 1 = FAIL, 2 = could not measure. No model call.
 10 6 * * * cd /root/sourcelibrary && [ -f scripts/audit/paid-vs-got.mjs ] && flock -n /tmp/sl-paid-vs-got.lock bash -c "set -a; source .env.production.local; set +a; GOOGLE_SERVICE_ACCOUNT_JSON=/root/.gcp/spend-reconcile.json node scripts/audit/paid-vs-got.mjs --apply" >> /var/log/sourcelibrary/paid-vs-got.log 2>&1
+# Daily spend check (#5743): ONE verdict over (a) paid-vs-got for yesterday, (b) machines the lease watchdog
+# flags + RunPod pods past the deadline in their name, (c) budget envelopes (paid with no pages, near cap, stored
+# spend), (d) the dial in force that day vs the invoice. Writes one ops_reports row (spend-daily-<day>), shown as the
+# "spend check" line on /admin/work; emails only on FAIL (7-day cooldown per failure set). Exit 1 = FAIL, 2 = a
+# source unreadable. No model call. Runs after paid-vs-got (06:10), whose row it reads.
+0 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/spend-daily.mjs ] && flock -n /tmp/sl-spend-daily.lock bash -c "set -a; source .env.production.local; set +a; GOOGLE_SERVICE_ACCOUNT_JSON=/root/.gcp/spend-reconcile.json node scripts/audit/spend-daily.mjs --apply" >> /var/log/sourcelibrary/spend-daily.log 2>&1
+# Weekly spend cut list (#5743), Mondays 06:30: a headless claude job (subscription; no API spend) runs
+# spend-daily.mjs --week and posts ONE comment on #5743, at most 5 numbered cuts with recommended defaults, which
+# /admin/work lists under WAITING ON YOU. It never stops, deletes or changes anything. Brief: scripts/audit/spend-weekly-brief.md
+30 6 * * 1 [ -f /root/sourcelibrary/scripts/audit/spend-weekly-brief.md ] && /root/bin/claude-job.sh start waste-review-weekly-$(date -u +\%Y\%m\%d) /root/sourcelibrary/scripts/audit/spend-weekly-brief.md >> /var/log/sourcelibrary/spend-weekly.log 2>&1
 # Vercel production watch (#5708, every 15 min, off :17 so its `git fetch` misses auto-pull):
 # fires when the newest >= 2 production builds are Error/Canceled-with-src-changes, or production
 # is > 60 min behind main's oldest unshipped build-input commit (prod froze 8 h on 2026-10-02,
