@@ -15,6 +15,8 @@
  *   node scripts/eval/benchmark-dashboard-data.mjs            # writes src/data/ocr-benchmark-evidence.json
  * Slices: sealed stratum, period substratum, observed script class, and — pooled across strata
  * and reference tiers — script, language, period (catalogue year), script × period, language × period.
+ * Also carried, as their own `measure` and never mixed into a CER cell: image-preprocessing arms (#5250) and
+ * translation-fidelity cells (#5695 served English vs published translations; #5700 A5 re-read lift).
  * How it fails: loudly. A results file it cannot parse, or a cell whose recomputed numbers
  * disagree with the scorer's own summary, is an error — never a silently thinner table.
  *
@@ -290,6 +292,50 @@ for (const f of fs.readdirSync(path.join(__dirname, 'results')).filter(f => /^oc
   sources.push({ file: `results/${f}` });
 }
 
+// ── Translation fidelity (#5695, #5700 A5; added by #5828). ──
+// The OCR table above stops at the transcription. Two studies measured what the reader gets: the served
+// English against published human translations, per language, with the paired flash − lite difference
+// (xlref-synthesis-2026-10/summary.json), and what a fresh flash OCR re-read does to that English, by the
+// engine that made the served read (reocr-lift-2026-10/lift.json). Read as written, nothing recomputed.
+// Their `measure` is their own — a judge's 1–5 rating against a human reference, on one page per book —
+// and is never mixed into a CER cell. Graded by books on the same thresholds as the OCR cells.
+const translationFidelity = [];
+{
+  const RES = path.join(__dirname, 'results');
+  const ci = c => (Array.isArray(c) ? c : null);
+  const served = path.join(RES, 'xlref-synthesis-2026-10', 'summary.json');
+  if (fs.existsSync(served)) {
+    const j = JSON.parse(fs.readFileSync(served, 'utf8'));
+    for (const l of j.languages) translationFidelity.push({
+      cell_id: `translation-fidelity/served/${l.lang}`, measure: 'translation-fidelity', measure_note: j.measure, kind: 'served',
+      run_id: 'xlref-synthesis-2026-10', issue: j.issue, track: l.track, language: l.lang, n: l.n,
+      fidelity_mean: l.mean, fidelity_ci95: ci(l.mean_ci), share_ge4: l.ge4_pct == null ? null : l.ge4_pct / 100,
+      reversals_per_100: l.reversals_per_100 ?? null,
+      flash_minus_lite: l.flash_minus_lite ? { n: l.flash_minus_lite.n, delta: l.flash_minus_lite.delta, ci95: ci(l.flash_minus_lite.ci), better: l.flash_minus_lite.better, worse: l.flash_minus_lite.worse } : null,
+      grade: grade(l.n),
+    });
+    sources.push({ file: 'results/xlref-synthesis-2026-10/summary.json' });
+  }
+  const lift = path.join(RES, 'reocr-lift-2026-10', 'lift.json');
+  if (fs.existsSync(lift)) {
+    const j = JSON.parse(fs.readFileSync(lift, 'utf8'));
+    for (const [level, v] of Object.entries(j.by_script_and_engine)) {
+      const [language, servedBy] = level.split(' | ');
+      translationFidelity.push({
+        cell_id: `translation-fidelity/reocr-lift/${language}/${servedBy.replace(/^served /, '')}`, measure: 'translation-fidelity', measure_note: j.measure, kind: 'reocr_lift',
+        run_id: j.run_id, issue: 5700, language, served_ocr_engine: servedBy.replace(/^served /, ''), n: v.n,
+        // fidelity of the lite translation on the served OCR, then on a fresh flash re-read of the same page
+        fidelity_served_ocr: v.lite_ocr ?? null, fidelity_reread: v.lite_reocr ?? null,
+        reread_lift: v.lift_lite ? { mean: v.lift_lite.mean, ci95: ci(v.lift_lite.ci), better: v.lift_lite.better, same: v.lift_lite.same, worse: v.lift_lite.worse } : null,
+        a_vs_a_floor: j.a_vs_a?.lite ? { n: j.a_vs_a.lite.n, mean: j.a_vs_a.lite.mean, ci95: ci(j.a_vs_a.lite.ci) } : null,
+        grade: grade(v.n),
+      });
+    }
+    sources.push({ file: 'results/reocr-lift-2026-10/lift.json' });
+  }
+  for (const c of translationFidelity) if (!c.measure || typeof c.n !== 'number') throw new Error(`translation-fidelity cell ${c.cell_id} has no measure or n`);
+}
+
 const gradeCount = cells.reduce((m, c) => ((m[c.grade] = (m[c.grade] || 0) + 1), m), {});
 const out = {
   generated_from: sources,
@@ -300,6 +346,7 @@ const out = {
   sufficiency,
   cells,
   image_arms: imageArms,
+  translation_fidelity: translationFidelity,
 };
 fs.writeFileSync(OUT, JSON.stringify(out) + '\n');
 console.log(`rows ${rows.length} · pages ${out.totals.pages} · cells ${cells.length} · ${JSON.stringify(gradeCount)}`);
