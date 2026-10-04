@@ -63,12 +63,13 @@ arm() {  # arm <arm> <client: vlm|mineru> <mode> <max_tokens>
   drive $a acc "$cmd_a"
 }
 
-if serve glm-ocr zai-org/GLM-OCR "--speculative-config '{\"method\":\"mtp\",\"num_speculative_tokens\":1}'" || serve glm-ocr zai-org/GLM-OCR; then
-  arm glm-ocr vlm glm 4500; else log "NOT-RUN glm-ocr"; fi
-if serve dots-ocr dots-studio/dots.ocr --trust-remote-code; then arm dots-ocr vlm dots 8000; else log "NOT-RUN dots-ocr"; fi
-if serve nanonets-ocr2 nanonets/Nanonets-OCR2-3B; then arm nanonets-ocr2 vlm nanonets 4500; else log "NOT-RUN nanonets-ocr2"; fi
-if serve mineru25-pro opendatalab/MinerU2.5-Pro-2605-1.2B --logits-processors mineru_vl_utils:MinerULogitsProcessor || serve mineru25-pro opendatalab/MinerU2.5-Pro-2605-1.2B; then
-  arm mineru25-pro mineru - 0; else log "NOT-RUN mineru25-pro"; fi
+want() { [ -z "${ARMS:-}" ] || [[ " $ARMS " == *" $1 "* ]]; }   # ARMS="a b": resume with only these arms
+if want glm-ocr && { serve glm-ocr zai-org/GLM-OCR "--speculative-config '{\"method\":\"mtp\",\"num_speculative_tokens\":1}'" || serve glm-ocr zai-org/GLM-OCR; }; then
+  arm glm-ocr vlm glm 4500; elif want glm-ocr; then log "NOT-RUN glm-ocr"; fi
+if want dots-ocr && serve dots-ocr dots-studio/dots.ocr --trust-remote-code; then arm dots-ocr vlm dots 8000; elif want dots-ocr; then log "NOT-RUN dots-ocr"; fi
+if want nanonets-ocr2 && serve nanonets-ocr2 nanonets/Nanonets-OCR2-3B; then arm nanonets-ocr2 vlm nanonets 4500; elif want nanonets-ocr2; then log "NOT-RUN nanonets-ocr2"; fi
+if want mineru25-pro && { serve mineru25-pro opendatalab/MinerU2.5-Pro-2605-1.2B --logits-processors mineru_vl_utils:MinerULogitsProcessor || serve mineru25-pro opendatalab/MinerU2.5-Pro-2605-1.2B; }; then
+  arm mineru25-pro mineru - 0; elif want mineru25-pro; then log "NOT-RUN mineru25-pro"; fi
 bash $S ssh "pkill -f '[v]llm serve'; /root/pz/vl/bin/pip freeze 2>/dev/null | grep -iE '^(vllm|torch|transformers|mineru)' ; VIRTUAL_ENV=/root/pz/vl /root/.local/bin/uv pip freeze 2>/dev/null | grep -iE '^(vllm|torch|transformers|mineru)'" < /dev/null > $LANE_DIR/vl-freeze.txt
 
 log "GPU-ARMS-DONE; waiting for the CPU track"

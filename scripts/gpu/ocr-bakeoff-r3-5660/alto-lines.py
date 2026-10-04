@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """#5660 round 3, CPU arms: from Kraken's ALTO (one per page)
   text  <alto dir> <out dir>           Kraken's own text: TextLine order, String CONTENTs joined by spaces
-  crop  <alto dir> <bench dir> <manifest> <lines dir>
+  crop  <alto dir> <bench dir> <manifest> <lines dir> [<binarized page dir>]   (binarized: <dir>/<slug>.png, Kraken nlbin)
         one grey PNG per TextLine for Calamari: the line polygon's bounding box, pixels outside the polygon
         set to white (so neighbouring lines' ascenders/descenders do not enter), 2 px pad
   join  <alto dir> <lines dir> <out dir>   Calamari's <line>.pred.txt per page, in line order, joined by newlines
@@ -38,13 +38,13 @@ if cmd == 'text':
     print('kraken text pages', n)
 elif cmd == 'crop':
     from PIL import Image, ImageDraw
-    a, bench, man, L = sys.argv[2:6]; n = 0
+    a, bench, man, L = sys.argv[2:6]; BIN = sys.argv[6] if len(sys.argv) > 6 else None; n = 0
     for row in open(man):
         if not row.strip(): continue
         _, slug, src = row.rstrip('\n').split('\t')
         x = os.path.join(a, slug + '.xml')
         if not os.path.exists(x): continue
-        im = Image.open(os.path.join(bench, src)).convert('L'); d = os.path.join(L, slug); os.makedirs(d, exist_ok=True)
+        im = Image.open(os.path.join(BIN, slug + '.png') if BIN else os.path.join(bench, src)).convert('L'); d = os.path.join(L, slug); os.makedirs(d, exist_ok=True)
         for i, l in enumerate(lines_of(x)):
             if l['poly'] and len(l['poly']) >= 3:
                 xs = [p[0] for p in l['poly']]; ys = [p[1] for p in l['poly']]
