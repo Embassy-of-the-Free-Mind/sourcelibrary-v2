@@ -6,7 +6,7 @@
 import { describe, it, expect } from 'vitest';
 import { execSync } from 'child_process';
 // @ts-expect-error — plain .mjs script library, no types
-import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus, resolveSourceImages, takeInscriptions } from '../../scripts/lib/scholarly-typst.mjs';
+import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus, resolveSourceImages, takeInscriptions, splitOriginalTerm, plateCaption, runningTitle, attachOrphanNotes } from '../../scripts/lib/scholarly-typst.mjs';
 
 const page = (n: number, data: string, ocr?: string) => ({ page_number: n, translation: { data }, ...(ocr ? { ocr: { data: ocr } } : {}) });
 
@@ -163,6 +163,33 @@ describe('generateTypstSource', () => {
   }, 60000);
 });
 
+describe('source terms inline', () => {
+  it('takes the quoted term and keeps the explanation as the note', () => {
+    expect(splitOriginalTerm('original: "ardorem," meaning heat or burning light.')).toEqual({ term: 'ardorem', rest: 'Meaning heat or burning light.' });
+    expect(splitOriginalTerm('original: "grossus" — dense or unrefined')).toEqual({ term: 'grossus', rest: 'Dense or unrefined' });
+    expect(splitOriginalTerm('original: chorda ænea')).toEqual({ term: 'chorda ænea', rest: '' });
+    expect(splitOriginalTerm('original: lux essentifica. The light that gives things their being.')).toEqual({ term: 'lux essentifica', rest: 'The light that gives things their being.' });
+  });
+  it('leaves a whole quotation, and any other note, as a footnote', () => {
+    expect(splitOriginalTerm('original Latin: "In mysterio magno increato creavit DEUS caelum & terram."')).toBeNull();
+    expect(splitOriginalTerm('The famous 16th-century Swiss physician.')).toBeNull();
+  });
+  it('sets the term after its word and the explanation as a note', () => {
+    const { body } = translationToTypst('his own radiance<note>original: "ardorem," meaning heat.</note> back into himself.');
+    expect(body).toContain('radiance #orig[ardorem]#footnote[Meaning heat.]; back');
+  });
+  it('hangs a notes-only paragraph on the paragraph before it, not on a line of its own', () => {
+    expect(attachOrphanNotes('The jar.\n\n#footnote[This diagram shows a thermoscope.];\n\nNext.')).toBe('The jar.#footnote[This diagram shows a thermoscope.];\n\nNext.');
+    // A labelled gloss is the plate's (takeInscriptions), and a first paragraph has nothing before it
+    expect(attachOrphanNotes('A.\n\n#footnote[Gloss: Motto.];')).toBe('A.\n\n#footnote[Gloss: Motto.];');
+    expect(attachOrphanNotes('#footnote[Note.];\n\nText.')).toBe('#footnote[Note.];\n\nText.');
+  });
+  it('names the work, not its volume, in the running head', () => {
+    expect(runningTitle('Utriusque Cosmi Historia - Tomus Primus (De Macrocosmi)')).toBe('Utriusque Cosmi Historia');
+    expect(runningTitle('De occulta philosophia')).toBe('De occulta philosophia');
+  });
+});
+
 describe('plates', () => {
   const book = { id: 'b3', slug: 'plates', title: 'T', author: 'A', language: 'Latin' };
   const plate = (n: number) => ({ page_number: n, type: 'engraving', width: 800, height: 1200, file: `plate-${n}.jpg` });
@@ -170,7 +197,7 @@ describe('plates', () => {
   it('sets a plate at its source page, sized to fit the page, and lists it', () => {
     const src = generateTypstSource(book, [page(1, 'One.'), page(2, 'Two.')], { illustrations: [plate(2)] });
     // 1200/800 × 125mm would overrun the page; the height cap sets the width
-    expect(src).toMatch(/#plate\("plate-2\.jpg", 116\.7mm, "2", \[Engraving\]\)\n#pagegap\n#src\("2"/);
+    expect(src).toMatch(/#plate\("plate-2\.jpg", 116\.7mm, "2", kind: \[Engraving\]\)\n#pagegap\n#src\("2"/);
     expect(src).toContain('outline(title: none, target: figure.where(kind: "plate"))');
   });
 
@@ -195,7 +222,32 @@ describe('plates', () => {
     expect(rest).toContain('#footnote[This diagram illustrates a fire engine.];');
   });
 
+  it('captions a plate with every word on it in English, marks and repeats dropped', () => {
+    const c = plateCaption({
+      title: 'Diagram of the elements in a sealed vessel.',
+      inscriptions: [
+        { original: '5', english: '5' }, { original: 'Æther', english: 'Ether' }, { original: 'Æther', english: 'Ether' },
+        { original: 'Trianguli incomprehensibilis umbra in speculo mundano visa', english: 'The shadow of the incomprehensible Triangle seen in the worldly mirror' },
+      ],
+      key: [{ mark: 'A', english: 'The altar.' }],
+    });
+    expect(c.title).toBe('Diagram of the elements in a sealed vessel');
+    expect(c.labels).toEqual([['Æther', 'Ether']]);
+    expect(c.lines).toHaveLength(1);
+    expect(c.key).toEqual([['A', 'The altar']]);
+  });
+
   const hasTypst = (() => { try { execSync('typst --version', { stdio: 'pipe' }); return true; } catch { return false; } })();
+  it.skipIf(!hasTypst)('compiles with a captioned plate', async () => {
+    const sharp = (await import('sharp')).default;
+    const buffer = await sharp({ create: { width: 40, height: 60, channels: 3, background: '#888888' } }).jpeg().toBuffer();
+    const caption = { title: 'The elements', inscriptions: [{ original: 'Ignis', english: 'Fire' }, { original: 'Divinum illud obiectum in speculo', english: 'That divine object in the mirror' }], key: [{ mark: 'A', english: 'The altar' }] };
+    const pdf = await generateScholarlyPdf(book, [page(1, 'Text.'), page(2, 'More.')], {
+      illustrations: [{ page_number: 1, type: 'diagram', width: 40, height: 60, buffer, caption }],
+    });
+    expect(pdf.subarray(0, 5).toString()).toBe('%PDF-');
+  }, 60000);
+
   it.skipIf(!hasTypst)('compiles with a plate', async () => {
     const sharp = (await import('sharp')).default;
     const buffer = await sharp({ create: { width: 40, height: 60, channels: 3, background: '#888888' } }).jpeg().toBuffer();
