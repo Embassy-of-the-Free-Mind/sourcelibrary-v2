@@ -25,6 +25,8 @@ type StatusRow = (typeof gapStatus.corpora)[number] & { done?: string };
 const ISSUE_URL = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/';
 const RESULTS_URL =
   'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/scripts/catalog-coverage/results/canon-gap-map-2026-10.json';
+const STATUS_URL =
+  'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/scripts/catalog-coverage/results/canon-gap-status-2026-10.json';
 
 // The Eternity shelf and the Tengyur draft are measured by canon-gap-status.mjs on every run
 // (eternity_shelf, tengyur_draft), not typed in here.
@@ -136,20 +138,91 @@ const bars: CanonBar[] = inTotal
   }))
   .sort((a, b) => b.chars - a.chars);
 
-function Stat({ n, label }: { n: string; label: string }) {
+// Our shelf for each tradition and canon language. Mongolian has no language page yet.
+const LANG_PAGE: Record<string, string> = {
+  tibetan: '/languages/tibetan',
+  chinese: '/languages/chinese',
+  pali: '/languages/pali',
+  sanskrit: '/languages/sanskrit',
+  hebrew: '/languages/hebrew',
+  arabic: '/languages/arabic',
+  persian: '/languages/persian',
+};
+const TRADITION_LANG: Record<string, string> = {
+  tibetan: 'tibetan',
+  'chinese-buddhist': 'chinese',
+  'chinese-classics': 'chinese',
+  pali: 'pali',
+  sanskrit: 'sanskrit',
+  kabbalah: 'hebrew',
+  sufi: 'arabic',
+  'persian-poetry': 'persian',
+};
+const LANG_NAME: Record<string, string> = {
+  tibetan: 'Tibetan', chinese: 'Chinese', pali: 'Pali', sanskrit: 'Sanskrit', hebrew: 'Hebrew', arabic: 'Arabic', persian: 'Persian',
+};
+// The Mongolian Kanjur row carries lang "tibetan" (its BDRC catalogue language); our books are Mongolian.
+const rowLang = (r: Row) => (r.id === 'mongolian-kanjur' ? null : r.lang);
+
+// External projects named in the prose.
+const L = {
+  k84000: 'https://84000.co',
+  suttacentral: 'https://suttacentral.net',
+  sefaria: 'https://www.sefaria.org',
+  cbeta: 'https://www.cbeta.org',
+  esukhia: 'https://github.com/Esukhia/derge-tengyur',
+  bdrc: 'https://www.bdrc.io',
+  bdrcTengyur: 'https://library.bdrc.io/show/bdr:W23703',
+  eap: 'https://eap.bl.uk',
+  ia: 'https://archive.org',
+  gretil: 'https://gretil.sub.uni-goettingen.de',
+  ganjoor: 'https://ganjoor.net',
+  kraken: 'https://kraken.re',
+};
+
+const TRADITIONS = ([...gapStatus.traditions] as unknown as TraditionProgressRow[])
+  .map((t) => ({ ...t, href: LANG_PAGE[TRADITION_LANG[t.id]] }))
+  .sort((a, b) => b.pages_scanned - a.pages_scanned);
+
+const CONTENTS = [
+  ['library', 'What we already hold'],
+  ['gap', 'How much is in English'],
+  ['cost', 'Why typed text matters'],
+  ['tengyur', 'The Derge Tengyur'],
+  ['canons', 'Each canon, and what is next'],
+  ['quality', 'How good the English is'],
+  ['eternity', 'The Eternity reading list'],
+  ['method', 'Method and caveats'],
+] as const;
+
+function A({ href, children }: { href: string; children: ReactNode }) {
   return (
-    <div className="px-5 py-6 border-stone-200 [&:not(:last-child)]:border-r max-sm:[&:nth-child(odd)]:border-r max-sm:[&:nth-child(-n+2)]:border-b">
-      <div className="font-serif text-3xl md:text-4xl text-stone-900 tracking-tight">{n}</div>
-      <div className="font-body text-sm text-stone-500 mt-1.5 leading-snug">{label}</div>
-    </div>
+    <a href={href} className="text-amber-800 underline decoration-amber-800/30 underline-offset-2 hover:decoration-amber-800">
+      {children}
+    </a>
   );
 }
 
-function Section({ kicker, title, children }: { kicker: string; title: string; children: ReactNode }) {
+function Stat({ n, label, href }: { n: string; label: string; href: string }) {
   return (
-    <section className="py-12 border-b border-stone-200">
-      <div className="font-body text-xs tracking-[0.16em] uppercase text-amber-700 font-semibold mb-3">{kicker}</div>
-      <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-4 tracking-tight">{title}</h2>
+    <a
+      href={href}
+      className="group block px-5 py-6 border-stone-200 hover:bg-white transition-colors [&:not(:last-child)]:border-r max-sm:[&:nth-child(odd)]:border-r max-sm:[&:nth-child(-n+2)]:border-b"
+    >
+      <div className="font-serif text-3xl md:text-4xl text-stone-900 tracking-tight tabular-nums group-hover:text-amber-800">{n}</div>
+      <div className="font-body text-sm text-stone-500 mt-1.5 leading-snug">{label}</div>
+    </a>
+  );
+}
+
+function Section({ id, title, children }: { id: (typeof CONTENTS)[number][0]; title: string; children: ReactNode }) {
+  const i = CONTENTS.findIndex(([k]) => k === id) + 1;
+  return (
+    <section id={id} className="scroll-mt-24 py-14 border-t border-stone-200">
+      <div className="font-body text-xs tracking-[0.16em] uppercase text-amber-700 font-semibold mb-3 tabular-nums">
+        {String(i).padStart(2, '0')}
+      </div>
+      <h2 className="font-serif text-2xl md:text-3xl text-stone-900 mb-5 tracking-tight">{title}</h2>
       {children}
     </section>
   );
@@ -159,52 +232,54 @@ function CorpusRow({ r }: { r: Row }) {
   const st = STATUS.get(r.id);
   const style = st ? STATUS_STYLE[st.status as keyof typeof STATUS_STYLE] : null;
   const upper = r.english.fraction == null;
+  const lang = rowLang(r);
   return (
-    <div id={r.id} className="scroll-mt-24 py-5 border-b border-stone-200 md:grid md:grid-cols-[minmax(0,2.4fr)_repeat(4,minmax(0,1fr))] md:gap-4">
+    <div id={r.id} className="scroll-mt-24 py-6 border-b border-stone-200 md:grid md:grid-cols-[minmax(0,2.4fr)_repeat(4,minmax(0,1fr))] md:gap-4">
       <div className="min-w-0">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="font-serif text-lg text-stone-900">{r.corpus}</span>
+          <span className="font-serif text-lg text-stone-900 leading-snug">{r.corpus}</span>
           {style && (
             <span className={`font-body text-[11px] uppercase tracking-wider px-1.5 py-0.5 rounded-sm ${style.cls}`}>{style.label}</span>
           )}
         </div>
         <div className="font-body text-sm text-stone-500 mt-0.5">{r.tradition}</div>
-        <div className="font-body text-sm mt-2">
-          <a href={r.source.url} className="text-amber-800 underline underline-offset-2 break-words">
-            {r.source.name}
-          </a>
-          <span className="text-stone-500"> · {LICENCE_LABEL[r.licence.open] ?? r.licence.open}</span>
+        <div className="font-body text-sm mt-2 flex flex-wrap gap-x-3 gap-y-1">
+          <span>
+            <A href={r.source.url}>{r.source.name}</A>
+            <span className="text-stone-500"> · {LICENCE_LABEL[r.licence.open] ?? r.licence.open}</span>
+          </span>
+          {lang && LANG_PAGE[lang] && <A href={LANG_PAGE[lang]}>Our {LANG_NAME[lang]} books</A>}
+          {st?.owner_issue && <A href={`${ISSUE_URL}${st.owner_issue}`}>Work log #{st.owner_issue}</A>}
         </div>
-        {r.licence.quote && (
-          <details className="font-body text-sm text-stone-600 mt-1">
-            <summary className="cursor-pointer text-stone-500">Licence, as the source states it</summary>
-            <blockquote className="mt-1 pl-3 border-l-2 border-stone-300 italic break-words">
-              &ldquo;{r.licence.quote}&rdquo;{' '}
-              {r.licence.url && (
-                <a href={r.licence.url} className="not-italic text-amber-800 underline underline-offset-2">
-                  source
-                </a>
-              )}
-            </blockquote>
+        {(st?.next_action || st?.done || r.licence.quote) && (
+          <details className="font-body text-sm text-stone-600 mt-2">
+            <summary className="cursor-pointer text-stone-500 hover:text-stone-800">
+              {st?.next_action || st?.done ? 'Progress, next step and licence' : 'The licence, as the source states it'}
+            </summary>
+            {st?.done && (
+              <p className="mt-2 text-stone-700">
+                <span className="font-semibold">Done:</span> {st.done}
+              </p>
+            )}
+            {st?.next_action && (
+              <p className="mt-2 text-stone-700">
+                <span className="font-semibold">Next:</span> {st.next_action}
+              </p>
+            )}
+            {r.licence.quote && (
+              <blockquote className="mt-2 pl-3 border-l-2 border-stone-300 italic break-words">
+                &ldquo;{r.licence.quote}&rdquo;{' '}
+                {r.licence.url && (
+                  <a href={r.licence.url} className="not-italic text-amber-800 underline underline-offset-2">
+                    source
+                  </a>
+                )}
+              </blockquote>
+            )}
           </details>
         )}
-        {st?.done && (
-          <p className="font-body text-sm text-stone-700 mt-2">
-            <span className="font-semibold">Done:</span> {st.done}
-          </p>
-        )}
-        {st?.next_action && (
-          <p className="font-body text-sm text-stone-700 mt-1">
-            <span className="font-semibold">Next:</span> {st.next_action}
-          </p>
-        )}
-        {st?.owner_issue && (
-          <a href={`${ISSUE_URL}${st.owner_issue}`} className="font-body text-xs text-stone-500 underline underline-offset-2">
-            Work log #{st.owner_issue}
-          </a>
-        )}
       </div>
-      <dl className="grid grid-cols-2 gap-x-4 gap-y-2 mt-3 md:mt-0 md:contents font-body text-sm">
+      <dl className="grid grid-cols-2 gap-x-4 gap-y-2 mt-4 md:mt-0 md:contents font-body text-sm tabular-nums">
         <div>
           <dt className="md:hidden text-[11px] uppercase tracking-wider text-stone-400">Typed text</dt>
           <dd className="text-stone-800">
@@ -253,99 +328,84 @@ export default function CanonGapPage() {
       header={
         <ContentHeader
           title="The Open Canons"
-          subtitle="Several scriptural canons have been typed in by other projects and released under open licences, so their text does not have to be read from page images. This page lists each one, how much of it has been translated into English, and what a first English draft would cost."
+          subtitle="Buddhist, Hindu, Jewish, Islamic and Chinese canons that other projects have already typed in and released openly: how much of each is in English, what a first English draft would cost, and where our work on each stands."
         />
       }
     >
       <div className="max-w-5xl mx-auto font-body text-stone-700 text-lg leading-relaxed">
-        <p className="text-sm text-stone-500 mt-6">
+        <p className="text-sm text-stone-500 mt-8">
           Prepared for the Eternity Foundation working session, October 2026. Figures measured {asOf}.
         </p>
 
-        <Section kicker="Our library" title="Scanned, transcribed, translated">
-          <p className="mb-4">
-            What we hold in each tradition: pages scanned, pages transcribed, and pages with a draft English
-            translation. Click a square to open a book. The Tibetan figure includes the Derge Tengyur and Kangyur we
-            imported this month; the Mongolian Kanjur is scans only so far.
-          </p>
-          <p className="mb-2 font-semibold text-stone-900">The tools and models involved</p>
-          <ul className="list-disc pl-5 space-y-2 text-base mb-2">
-            <li>
-              <strong>Scans</strong> come from the libraries that hold the books: BDRC for the Tibetan and Mongolian
-              canons, the British Library&rsquo;s Endangered Archives Programme for the Bhutanese manuscripts, the
-              Internet Archive, and national and university libraries.
-            </li>
-            <li>
-              <strong>Transcription.</strong> Where an open typed edition exists we use it, matched to our scans page
-              by page: Esukhia&rsquo;s Derge Tengyur and Kangyur, CBETA for the Chinese Buddhist canon, Sefaria for
-              Hebrew. Otherwise a model reads the page image. Google&rsquo;s Gemini (3 Flash and 3.1 Flash-Lite)
-              reads most scripts. Specialist models read where they measured better: BDRC&rsquo;s Yigdzin for Tibetan
-              manuscripts, Kraken for Syriac, and PaddleOCR-VL for Chinese brush manuscripts.
-            </li>
-            <li>
-              <strong>English drafts</strong> are written by Gemini 3 Flash or Gemini 3.1 Flash-Lite. The Derge
-              Tengyur is drafted by Gemini 3 Flash one page at a time, which put the English beside the right
-              woodblock most reliably in our tests.
-            </li>
-            <li>
-              <strong>Checking.</strong> Claude models (Opus and Sonnet) score samples blind against published
-              translations and typed editions, and we read the page images ourselves where scores are low (see
-              &ldquo;How good the English is&rdquo; below).
-            </li>
-          </ul>
-          <p className="text-base text-stone-600">
-            Under each tradition below, &ldquo;Read by&rdquo; and &ldquo;English by&rdquo; give the share of its pages
-            each engine and model produced, from the records on the pages themselves.
-          </p>
-          {/* JSON imports widen tuples to arrays; the status script writes them as the row type declares. */}
-          <TraditionProgress n={1} rows={([...gapStatus.traditions] as unknown as TraditionProgressRow[]).sort((a, b) => b.pages_scanned - a.pages_scanned)} />
-        </Section>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 border border-stone-200 rounded-sm bg-stone-50 my-8">
-          <Stat n={short(typedChars)} label="characters of canon typed in and openly available, across the canons below" />
-          <Stat n={`$${fmt(gapMap.total_draft_usd)}`} label="to draft all of it in English with AI at our measured rates; mostly an upper bound" />
+        <div className="grid grid-cols-2 md:grid-cols-4 border border-stone-200 rounded-sm bg-stone-50 mt-6">
+          <Stat href="#gap" n={short(typedChars)} label="characters of canon typed in and openly available" />
+          <Stat href="#cost" n={`$${fmt(gapMap.total_draft_usd)}`} label="to draft all of it in English at our measured rates (mostly an upper bound)" />
           <Stat
+            href="#tengyur"
             n={`${(100 - (tengyur.english.fraction ?? 0) * 100).toFixed(1)}%`}
-            label="of the Derge Tengyur has no published English translation (84000 catalogue)"
+            label="of the Derge Tengyur has no published English translation"
           />
-          <Stat n={`${SHELF.readable} / ${SHELF.listed}`} label="books on the Eternity reading list now readable in English here" />
+          <Stat href="#eternity" n={`${SHELF.readable} / ${SHELF.listed}`} label="books on the Eternity reading list readable in English here" />
         </div>
 
-        <Section kicker="Cost" title="Where the money goes">
+        <nav aria-label="Contents" className="mt-10 mb-4">
+          <div className="font-body text-xs tracking-[0.16em] uppercase text-stone-400 mb-3">Contents</div>
+          <ol className="grid sm:grid-cols-2 gap-x-8 gap-y-1.5 text-base">
+            {CONTENTS.map(([id, title], i) => (
+              <li key={id} className="flex gap-3">
+                <span className="text-amber-700 tabular-nums text-sm pt-0.5">{String(i + 1).padStart(2, '0')}</span>
+                <a href={`#${id}`} className="text-stone-800 hover:text-amber-800 hover:underline underline-offset-2">
+                  {title}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+
+        <Section id="library" title="What we already hold">
+          <p>
+            Pages scanned, transcribed and translated in each tradition, across every edition in our library. The
+            Tibetan figure includes the Derge Tengyur and Kangyur imported this month; the Mongolian Kanjur is scans
+            only so far. Each square opens a book; each tradition&rsquo;s name opens its shelf.
+          </p>
+          <TraditionProgress n={1} rows={TRADITIONS} />
+        </Section>
+
+        <Section id="gap" title="How much of each canon is in English">
+          <p>
+            Three catalogues publish how much of their canon has been translated: <A href={L.k84000}>84000</A> for the
+            Tibetan canon, <A href={L.suttacentral}>SuttaCentral</A> for the Pali, and <A href={L.sefaria}>Sefaria</A>{' '}
+            for the Hebrew. Nobody has measured it for the Chinese and Arabic canons, the two largest, so their draft
+            cost assumes none of it is in English. Click a canon to see its row in{' '}
+            <a href="#canons" className="text-amber-800 underline underline-offset-2">the table</a>.
+          </p>
+          <CanonBars n={2} rows={bars} />
+        </Section>
+
+        <Section id="cost" title="Why typed text matters">
           <p className="mb-4">
-            A canon that exists only as page images has to be read by a model page by page, and the reading has to be
-            checked. A canon already typed in by a project such as Esukhia, CBETA or Sefaria skips that step. Where an
-            open scan of the same edition exists, we pair the typed text with it, so each page can be checked against
-            the image.
+            A canon that exists only as page images has to be read by a model page by page, and the reading checked. A
+            canon already typed in, by <A href={L.esukhia}>Esukhia</A>, <A href={L.cbeta}>CBETA</A> or{' '}
+            <A href={L.sefaria}>Sefaria</A>, skips both steps. Where an open scan of the same edition exists, we pair
+            the typed text with it, so every page can still be checked against its image.
           </p>
           <p>
-            A draft English translation of every canon below would cost about ${fmt(gapMap.total_draft_usd)} in model
+            A draft English translation of every canon here would cost about ${fmt(gapMap.total_draft_usd)} in model
             fees. Scholarly review costs far more. A draft lets a reader search a text and follow it in outline; it
-            does not replace a translator. Review funds go furthest on canons that are openly licensed, typed, paired
+            does not replace a translator. Review money goes furthest on canons that are openly licensed, typed, paired
             with scans, and have little English.
           </p>
-          <RoutesDiagram n={2} />
+          <RoutesDiagram n={3} />
         </Section>
 
-        <Section kicker="The gap" title="How much of each canon is in English">
+        <Section id="tengyur" title="The first canon: the Derge Tengyur">
           <p>
-            Three catalogues publish how much of their canon is in English: 84000 for the Tibetan canon, SuttaCentral
-            for the Pali, and Sefaria for the Hebrew. For the Chinese and Arabic canons, the two largest, nobody has
-            measured it, so their draft cost below assumes none of it is in English.
-          </p>
-          <CanonBars n={3} rows={bars} />
-        </Section>
-
-        <Section kicker="First canon" title="The Derge Tengyur">
-          <p>
-            The Tengyur is the Tibetan canon of Indian commentaries and treatises. Its text is in the public domain,
-            BDRC holds open scans of the same woodblock edition, and less than 1% of it has been published in English,
-            so we started there. We have imported all of it, paired each typed folio with its page image, and are
-            drafting an English translation of every page, to be reviewed by scholars beside the woodblock.{' '}
-            <a href={TENGYUR.url} className="text-amber-800 underline underline-offset-2">
-              Work log
-            </a>
-            .
+            The Tengyur is the Tibetan canon of Indian commentaries and treatises. <A href={L.esukhia}>Esukhia&rsquo;s
+            typed text</A> is in the public domain, <A href={L.bdrcTengyur}>BDRC holds open scans</A> of the same
+            woodblock edition, and less than 1% of it is published in English by <A href={L.k84000}>84000</A>. So we
+            started there: all 213 volumes are imported, each typed folio is paired with its page image, and every
+            page is being drafted in English for scholars to review beside the woodblock.{' '}
+            <A href={TENGYUR.url}>Work log #{TENGYUR.owner_issue}</A>
           </p>
           <TengyurProgress
             n={4}
@@ -355,67 +415,27 @@ export default function CanonGapPage() {
             pagesTranslated={TENGYUR.pages_translated}
             spendUsd={TENGYUR.spend_usd}
           />
-        </Section>
-
-        <Section kicker="Quality" title="How good the English is">
-          <p className="mb-4">
-            We test the English against published human translations of the same passages. Two AI judges score each
-            page for fidelity from 1 to 5 without knowing which version is which, and we open the page images
-            ourselves to find the cause of every low score. These are samples scored by models, not a
-            scholar&rsquo;s review. Tests run 30 September to 3 October 2026.
-          </p>
-          <ImprovementChart n={5} rows={IMPROVEMENTS} />
           <ul className="list-disc pl-5 space-y-3 text-base">
             <li>
-              <strong>Tengyur pilot.</strong> Of 40 sampled pages across five sections, 33 scored 4 or 5. The weakest
-              section was pramāṇa (logic), 4 of 8, where compressed verse came out as a literal crib. Four pages
-              contained a statement reversed in meaning, three of them in Madhyamaka verse. Every Tengyur page is
-              therefore labelled an unreviewed machine draft.{' '}
-              <a href={TENGYUR.url} className="text-amber-800 underline underline-offset-2">Details</a>
+              <strong>Pilot quality.</strong> Of 40 sampled pages across five sections, 33 scored 4 or 5 out of 5. The
+              weakest section was pramāṇa (logic), 4 of 8, where compressed verse came out as a literal crib. Four pages
+              reversed a statement&rsquo;s meaning, three of them in Madhyamaka verse. Every Tengyur page is labelled
+              an unreviewed machine draft.
             </li>
             <li>
               <strong>One page at a time.</strong> Against 84000&rsquo;s translations of the same passages (113
               pages), drafting one page per request scored 4 or better on 99% of pages. Drafting eight pages at once
-              scored about the same, but put English for the wrong part of the text beside the woodblock 15 times,
-              against once. The full Tengyur is drafted one page at a time.
-            </li>
-            <li>
-              <strong>Sanskrit, Pali and classical Chinese.</strong> On 64 pages from 64 books, judged against
-              published translations, 58% of the English we serve scored 4 or better (mean 3.6). Sanskrit scored lowest,
-              mostly because on pages with verse and commentary the English keeps the verse and shortens or drops the
-              commentary. A stronger model (Gemini Flash instead of Flash-Lite) raised the mean by 0.4 and cut reversed
-              statements from 15 to 6 per 100 pages. Since 4 October 2026 new translations in these languages, and in
-              Greek, Hebrew, Arabic and Persian, use Flash; pages already served are not yet retranslated.{' '}
-              <a href={`${ISSUE_URL}5695`} className="text-amber-800 underline underline-offset-2">Details</a>
-            </li>
-            <li>
-              <strong>The reading of the page is often the cause.</strong> Of the 20 worst Sanskrit, Pali and Chinese
-              pages, 6 failed because the source text was misread, not mistranslated. Correcting those transcriptions
-              by hand raised their scores more than a better model did. This is why the typed canons above matter.
-            </li>
-            <li>
-              <strong>Transcription accuracy.</strong> Our reading of the Bhutanese Kangyur manuscripts matches the
-              Derge e-text on a median 95% of syllables. Our Sanskrit transcription matches GRETIL on at least 89% of
-              characters, and our Pali on 95%. Persian manuscripts are not yet readable: the best model we tested
-              matches Ganjoor&rsquo;s typed text on a median 70% of characters, short of the 90% we require before
-              translating, so we are not translating them. Printed Persian reads well.{' '}
-              <a href={`${ISSUE_URL}5525`} className="text-amber-800 underline underline-offset-2">Details</a>
-            </li>
-            <li>
-              <strong>What we withdrew.</strong> On some Tibetan manuscript folios our earlier reading model wrote out
-              Sanskrit scripture that is not on the page. We took down the English for the Bhutanese Kangyur
-              manuscripts and are re-reading the affected pages with a model trained on Tibetan script.{' '}
-              <a href={`${ISSUE_URL}4523`} className="text-amber-800 underline underline-offset-2">Details</a>
+              scored about the same but put English for the wrong passage beside the woodblock 15 times, against once.
             </li>
           </ul>
         </Section>
 
-        <Section kicker="Where it stands" title="Each canon, and what happens next">
-          <StatusBoard n={6} items={rows.map((r) => ({ id: r.id, name: nameOf(r.id, r.corpus), status: STATUS.get(r.id)?.status ?? 'next' }))} />
+        <Section id="canons" title="Each canon, and what happens next">
+          <StatusBoard n={5} items={rows.map((r) => ({ id: r.id, name: nameOf(r.id, r.corpus), status: STATUS.get(r.id)?.status ?? 'next' }))} />
           <p className="mb-6 text-base text-stone-600">
-            Ordered by how much untranslated text each canon holds, weighted by how open its licence is and whether open
-            scans of the same edition exist. &ldquo;We hold&rdquo; counts the books in our library for that canon:
-            how many are public, and how many can be read in English.
+            Ordered by how much untranslated text each canon holds, weighted by how open its licence is and whether
+            open scans of the same edition exist. &ldquo;We hold&rdquo; counts our books for that canon: how many are
+            public, and how many can be read in English.
           </p>
           <div className="hidden md:grid md:grid-cols-[minmax(0,2.4fr)_repeat(4,minmax(0,1fr))] md:gap-4 border-b-2 border-stone-300 pb-2 font-body text-[11px] uppercase tracking-wider text-stone-500">
             <div>Canon · open source · licence</div>
@@ -429,24 +449,87 @@ export default function CanonGapPage() {
           ))}
         </Section>
 
-        <Section kicker="Already under way" title="The Eternity reading list">
+        <Section id="quality" title="How good the English is">
+          <p className="mb-4">
+            We test the English against published human translations of the same passages. Two AI judges score each
+            page from 1 to 5 for fidelity without knowing which version is which, and we open the page images to find
+            the cause of every low score. These are model-scored samples, not a scholar&rsquo;s review. The full
+            write-up is on <a href="/research/quality" className="text-amber-800 underline underline-offset-2">our translation quality page</a>.
+          </p>
+          <ImprovementChart n={6} rows={IMPROVEMENTS} />
+          <ul className="list-disc pl-5 space-y-3 text-base">
+            <li>
+              <strong>Sanskrit, Pali and classical Chinese.</strong> On 64 pages from 64 books, 58% of the English we
+              serve scored 4 or better (mean 3.6). Sanskrit scored lowest: on pages with verse and commentary, the
+              English keeps the verse and shortens or drops the commentary. Gemini Flash in place of Flash-Lite raised
+              the mean by 0.4 and cut reversed statements from 15 to 6 per 100 pages. Since 4 October 2026 new
+              translations in these languages, and in Greek, Hebrew, Arabic and Persian, use Flash; pages already
+              served are not yet retranslated. <A href={`${ISSUE_URL}5695`}>#5695</A>
+            </li>
+            <li>
+              <strong>Misreading causes many failures.</strong> Of the 20 worst Sanskrit, Pali and Chinese pages, 6
+              failed because the source text was misread, not mistranslated. Correcting those transcriptions by hand
+              raised their scores more than a better model did, which is why the typed canons matter.
+            </li>
+            <li>
+              <strong>Transcription accuracy.</strong> Our reading of the Bhutanese Kangyur manuscripts matches the
+              Derge e-text on a median 95% of syllables. Our Sanskrit matches <A href={L.gretil}>GRETIL</A> on at
+              least 89% of characters, our Pali 95%. Persian manuscripts are not yet readable: the best model matches{' '}
+              <A href={L.ganjoor}>Ganjoor</A>&rsquo;s text on a median 70% of characters, short of the 90% we require
+              before translating. Printed Persian reads well. <A href={`${ISSUE_URL}5525`}>#5525</A>
+            </li>
+            <li>
+              <strong>What we withdrew.</strong> On some Tibetan manuscript folios an earlier reading model wrote out
+              Sanskrit scripture that is not on the page. We took down the English for the{' '}
+              <a href="/bhutan-library" className="text-amber-800 underline underline-offset-2">Bhutanese Kangyur manuscripts</a>{' '}
+              and are re-reading the affected pages with a model trained on Tibetan script.{' '}
+              <A href={`${ISSUE_URL}4523`}>#4523</A>
+            </li>
+          </ul>
+        </Section>
+
+        <Section id="eternity" title="The Eternity reading list">
           <p>
-            We are also transcribing and translating the scanned books on the reading list drawn up with Eternity. At
-            the last count, <strong>{SHELF.readable} of {SHELF.listed}</strong> of those books can be
-            read in English on Source Library. The rest wait on a second reading of difficult pages or are still being
-            translated. Each step is logged in{' '}
-            <a href={SHELF.url} className="text-amber-800 underline underline-offset-2">
-              the public work log
-            </a>
-            .
+            We are also transcribing and translating the scanned books on the reading list drawn up with Eternity.{' '}
+            <strong>
+              {SHELF.readable} of {SHELF.listed}
+            </strong>{' '}
+            can now be read in English on Source Library. The rest wait on a second reading of difficult pages or are
+            still being translated. <A href={SHELF.url}>Work log #{SHELF.owner_issue}</A>
           </p>
         </Section>
 
-        <Section kicker="Caveats" title="What these numbers leave out">
+        <Section id="method" title="Method and caveats">
+          <h3 className="font-serif text-xl text-stone-900 mb-3">Tools and models</h3>
+          <ul className="list-disc pl-5 space-y-2 text-base mb-8">
+            <li>
+              <strong>Scans</strong> come from the libraries that hold the books: <A href={L.bdrc}>BDRC</A> for the
+              Tibetan and Mongolian canons, the British Library&rsquo;s <A href={L.eap}>Endangered Archives
+              Programme</A> for the Bhutanese manuscripts, the <A href={L.ia}>Internet Archive</A>, and{' '}
+              <a href="/libraries" className="text-amber-800 underline underline-offset-2">national and university libraries</a>.
+            </li>
+            <li>
+              <strong>Transcription.</strong> Where an open typed edition exists we use it, matched to our scans page
+              by page: Esukhia for the Derge Tengyur and Kangyur, CBETA for the Chinese Buddhist canon, Sefaria for
+              Hebrew. Otherwise a model reads the page image: Google&rsquo;s Gemini 3 Flash and 3.1 Flash-Lite for most
+              scripts; BDRC&rsquo;s Yigdzin for Tibetan manuscripts, <A href={L.kraken}>Kraken</A> for Syriac, and
+              PaddleOCR-VL for Chinese brush manuscripts, where each measured better.
+            </li>
+            <li>
+              <strong>English drafts</strong> are written by Gemini 3 Flash or 3.1 Flash-Lite. The Derge Tengyur is
+              drafted by Gemini 3 Flash, one page at a time.
+            </li>
+            <li>
+              <strong>Checking.</strong> Claude Opus and Sonnet score samples blind against published translations
+              and typed editions, and we read the page images where scores are low.
+            </li>
+          </ul>
+
+          <h3 className="font-serif text-xl text-stone-900 mb-3">What these numbers leave out</h3>
           <ul className="list-disc pl-5 space-y-3 text-base">
             <li>
               <strong>English coverage is unknown for most canons.</strong> Only 84000, SuttaCentral and Sefaria publish
-              a measurable share. SuttaCentral&rsquo;s figure also leaves out the Pali Text Society&rsquo;s printed
+              a measurable share. SuttaCentral&rsquo;s figure leaves out the Pali Text Society&rsquo;s printed
               translations, so it undercounts.
             </li>
             <li>
@@ -468,14 +551,27 @@ export default function CanonGapPage() {
               may hold more.
             </li>
           </ul>
-          <p className="text-sm text-stone-500 mt-6">
-            Every figure, quote, sample size and query behind this page is in the{' '}
-            <a href={RESULTS_URL} className="text-amber-800 underline underline-offset-2">
-              results file
-            </a>{' '}
-            produced by <code className="text-xs">scripts/catalog-coverage/canon-gap-map.mjs</code>. Measuring it made no
-            model calls.
-          </p>
+
+          <h3 className="font-serif text-xl text-stone-900 mt-8 mb-3">Data and related pages</h3>
+          <ul className="list-disc pl-5 space-y-2 text-base">
+            <li>
+              <A href={RESULTS_URL}>Canon results file</A>: every size, licence quote, sample and query behind this page
+              (<code className="text-sm">canon-gap-map.mjs</code>, no model calls), and the{' '}
+              <A href={STATUS_URL}>status file</A> for where each canon stands (<code className="text-sm">canon-gap-status.mjs</code>).
+            </li>
+            <li>
+              <a href="/research/quality" className="text-amber-800 underline underline-offset-2">Translation quality</a>:
+              the full evaluation behind section 6.
+            </li>
+            <li>
+              <a href="/research/translation-gap" className="text-amber-800 underline underline-offset-2">The translation gap</a>{' '}
+              and <a href="/research/translation-registry" className="text-amber-800 underline underline-offset-2">translation registry</a>:
+              the same question across the whole library.
+            </li>
+            <li>
+              <a href="/research" className="text-amber-800 underline underline-offset-2">All research pages</a>
+            </li>
+          </ul>
         </Section>
       </div>
     </ContentPageLayout>
