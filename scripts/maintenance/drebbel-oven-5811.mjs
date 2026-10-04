@@ -75,4 +75,20 @@ await withMongo(async (db) => {
       await recordSweepAction(db, { sweep: SWEEP, book_id: f.id, action: 'imprint_fixed', detail: { before: Object.fromEntries(Object.keys(f.set).map((k) => [k, b[k] ?? null])), after: f.set, basis: f.basis } });
     }
   }
+  // Evelyn vol. II (diaryjohnevelyn01wheagoog): archive.org answers HTTP 500 for the item's JP2 zip
+  // (and its _djvu.xml) on every attempt, while single /page/nN images serve 200. archive-bulk would
+  // strike it 5 times and then mark it BLOCKED, which archive-ocr also skips. Its own route for
+  // "zip unusable, pages fetchable" is bulk_unsuitable → archive-ocr per-page IIIF; set exactly that.
+  if (process.argv.includes('--evelyn-per-page')) {
+    const id = '6ac2798602c7f994f850646a';
+    const reason = 'archive.org HTTP 500 on the JP2 zip (and _djvu.xml) on every attempt 2026-10-04, single page images 200 (#5811)';
+    console.log(`${id} ${APPLY ? 'SET' : 'would set'} archive_metadata.bulk_unsuitable — ${reason}`);
+    if (APPLY) {
+      await B.updateOne({ id }, {
+        $set: { 'archive_metadata.bulk_unsuitable': true, 'archive_metadata.bulk_unsuitable_at': new Date(), 'archive_metadata.bulk_unsuitable_reason': reason, updated_at: new Date() },
+        $unset: { 'archive_metadata.bulk_failures': '', 'archive_metadata.bulk_last_error': '', 'archive_metadata.bulk_last_failed_at': '' },
+      });
+      await recordSweepAction(db, { sweep: SWEEP, book_id: id, action: 'bulk_unsuitable', detail: { reason } });
+    }
+  }
 });
