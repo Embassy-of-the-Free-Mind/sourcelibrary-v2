@@ -1,0 +1,9 @@
+# Hetzner main box only (cloudlayer already has sourcelibrary.slice). Every claude-job unit
+# (sl-job-<name>, started by scripts/ops/claude-job.sh) runs in this slice, so all jobs together
+# can never take more than MemoryMax from the workers and crons that share the box (#5709).
+# Install:  cp scripts/ops/sourcelibrary-jobs.slice /etc/systemd/system/ && systemctl daemon-reload
+[Unit]
+Description=Source Library claude-job units (total memory cap for unattended Claude jobs)
+
+[Slice]
+MemoryMax=9G
