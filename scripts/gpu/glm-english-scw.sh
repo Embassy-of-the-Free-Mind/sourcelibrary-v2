@@ -97,7 +97,8 @@ run)
   if ! on "curl -sf http://127.0.0.1:8200/v1/models >/dev/null"; then
     on 'mkdir -p /root/pz/code /root/pz/out; nvidia-smi --query-gpu=name,driver_version --format=csv,noheader; command -v rsync >/dev/null || (apt-get -qq update && apt-get -qq install -y rsync >/dev/null 2>&1); curl -LsSf https://astral.sh/uv/install.sh | sh > /dev/null 2>&1; U=/root/.local/bin/uv; $U venv -p 3.12 /root/pz/vl > /dev/null 2>&1 && VIRTUAL_ENV=/root/pz/vl timeout 1800 $U pip install -U vllm pillow --torch-backend auto > /root/pz/vl-setup.log 2>&1; tail -n 2 /root/pz/vl-setup.log; /root/pz/vl/bin/python -c "import vllm,torch;print(vllm.__version__, torch.__version__, torch.cuda.is_available())"' | tee "$LANE_DIR/vl-versions-$BOX.txt"
     serve() {  # serve <label> <env> <extra args>: 0 when the server answers within the budget
-      on "pkill -f '[v]llm serve'; sleep 5; cd /root/pz && ($2 nohup /root/pz/vl/bin/vllm serve zai-org/GLM-OCR --served-model-name m --max-model-len 32768 --gpu-memory-utilization 0.85 --limit-mm-per-prompt '{\"image\":1}' --port 8200 $3 > srv-$1.log 2>&1 < /dev/null &); echo serving $1"
+      on "pkill -f '[v]llm serve'; sleep 5; true"   # its own call: a pkill inside the serve line matches that line's own shell
+      on "cd /root/pz && ($2 nohup /root/pz/vl/bin/vllm serve zai-org/GLM-OCR --served-model-name m --max-model-len 32768 --gpu-memory-utilization 0.85 --limit-mm-per-prompt '{\"image\":1}' --port 8200 $3 > srv-$1.log 2>&1 < /dev/null &); echo serving $1"
       t1=$(date +%s)
       until on "curl -sf http://127.0.0.1:8200/v1/models >/dev/null"; do
         if [ $(( $(date +%s) - t1 )) -gt 1500 ] || ! on "pgrep -f '[v]llm serve' >/dev/null"; then
