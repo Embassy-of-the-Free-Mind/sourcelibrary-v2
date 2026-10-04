@@ -1,0 +1,269 @@
+{
+ "generated_at": "2026-10-04T21:16:54.457Z",
+ "owner_issue": 5846,
+ "book_id": "6abeb20a896ea18127c82b01",
+ "book_title": "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཛ (Derge Tengyur, vol. 98)",
+ "book_public": false,
+ "volume": 98,
+ "section": "Madhyamaka",
+ "page_number": 211,
+ "folio": "106b",
+ "image": {
+  "url": "https://images.sourcelibrary.org/pages/6abeb20a896ea18127c82b01/0211.jpg",
+  "bdrc": "https://iiif.bdrc.io/bdr:I1414::14140214.tif/full/max/0/default.jpg",
+  "source_ref": "bdr:I1414::14140214.tif",
+  "width": 2001,
+  "height": 292,
+  "line_bands": [
+   [
+    6,
+    46
+   ],
+   [
+    46,
+    84
+   ],
+   [
+    84,
+    120
+   ],
+   [
+    120,
+    158
+   ],
+   [
+    158,
+    195
+   ],
+   [
+    195,
+    232
+   ],
+   [
+    232,
+    270
+   ]
+  ]
+ },
+ "typed": {
+  "name": "Esukhia digital Derge Tengyur",
+  "repo": "https://github.com/Esukhia/derge-tengyur",
+  "commit": "174653137d62af481f53c6ae3dc842bf8629323e",
+  "path": "text/098_དབུ་མ།_ཛ.txt",
+  "licence": "public domain — \"mechanical reproduction of a public-domain work\" (Esukhia README)",
+  "lines": [
+   "པ་དག་དང་མི་མཐུན་པའི་ཚུལ་ཁྲིམས་ལ་སོགས་པའི་དབྱེ་བས་ཐ་དད་པ་དག་སྣང་བ་ལ་སོགས་པ་དག་ཀྱང་ཡོད་པས་དེའི་ཕྱིར་དེ་དག་གི་སྤྱོད་པ་དེ་ལྟ་བུ་དག་ནི་སྔོན་གོམས་པ་ཉིད་ལས་གྱུར་པ་ཡིན་པར་ཁོང་དུ་ཆུད་པར་བྱའོ། །ཡང་ན། འཇིག་རྟེན་སྔ་མ་ཡོད་པའི་ཚུལ། །མངལ་ནས་སྔོན་",
+   "རོལ་བློ་ལ་ནི། །མདུན་རོལ་ཁོ་ནར་འགགས་པ་ཡོད། །ཤེས་བྱ་གཞན་གྱིས་དེ་གཞན་ཕྱིར། །ཡང་ན་བློ་ཕྱིར་དེའི་འོག་བཞིན། །ཞེས་སྔར་ཇི་སྐད་སྨྲས་པའི་ཕྱིར་ན་འདས་པའི་འཆི་འཕོའི་སེམས་དེ་ཡང་ཡོད་པ་ཁོ་ནར་ངེས་སོ་ཞེས་བྱ་བའི་ཐ་ཚིག་གོ། །གཞན་ཡང་། འཕགས་",
+   "པ་མིན་པའི་འཆི་འཕོའི་སེམས། །སེམས་གཞན་བསྐྱེད་པ་ཉིད་ཡིན་ཏེ། །མ་རིག་པ་དང་བཅས་པའི་ཕྱིར། །སེམས་དེ་སྐྱེད་#པར་བྱེད་པ་བཞིན། །ཞེས་བྱ་བ་ནི་བྱིས་པ་འཕགས་པ་མ་ཡིན་པའི་འཆི་འཕོའི་སེམས་ནི་སེམས་གཞན་བསྐྱེད་པ་ཉིད་ཡིན་ཏེ་ཞེས་དམ་བཅའོ། །ཅིའི་",
+   "ཕྱིར་ཞེ་ན། མ་རིག་པ་དང་བཅས་པའི་ཕྱིར་ཞེས་བྱ་བའི་གཏན་ཚིགས་ཀྱི་ཕྱིར་རོ། །དཔེ་#ཇི་ལྟ་བུ་ཞེ་ན། འདས་པའི་འཆི་འཕོ་ཉིད་ཀྱི་སེམས་དེ་སྐྱེད་པར་བྱེད་པ་བཞིན་ནོ། །ཡང་རྣམ་པ་གཞན་དུ་འཇིག་རྟེན་རྒྱང་པན་པའི་བསམ་པས་ཕྱོགས་སྔ་མ་ཉེ་བར་བཞག་ནས་དེ་དགག་པའི་ཕྱིར།",
+   "གལ་ཏེ་ལུས་དང་དབང་བློ་དག །རང་གི་ལས་ཀྱིས་སྐྱེད་#མི་འདོད། །ཞིག་ཕྱིར་དཔེར་ན་བུམ་པ་བཞིན། །དེ་ཕྱིར་འཇིག་རྟེན་ཕ་རོལ་མེད། །ཅེས་བྱ་བ་ནི་ཕྱོགས་སྔ་མ་ཉེ་བར་བཞག་པ་ཡིན་ཏེ། གལ་ཏེ་ཁྱེད་སངས་རྒྱས་པ་དག་འཇིག་རྟེན་ནི་ལས་བདག་གིར་བྱ་བ་དང་། ལས་ཀྱི་",
+   "སྐྱེ་གནས་པ་དང་། ལས་ཀྱི་རྗེས་སུ་འབྲང་བ་དང་། ལས་ཀྱི་བགོ་སྐལ་བའོ་#ཞེས་བྱ་བ་ལ་སོགས་པ་གང་དག་གིས་ལུས་དང་། དབང་པོ་དང་། བློ་དག་རང་གི་ལས་ཀྱིས་བསྐྱེད་པར་འདོད་པ་གང་ཡིན་པ་དེ་ལྟར་ཁོ་བོ་ཅག་མི་འདོད་དེ། ཞིག་པའི་ཕྱིར་དཔེར་ན་བུམ་པ་བཞིན་ནོ་ཞེ་ན།",
+   "དེའི་ལན་ནི། དེ་ཉིད་ཀྱིས་ནི་དེ་མ་བྱས། །དེ་གཞན་གྱིས་ཀྱང་མ་བྱས་ཕྱིར། །འཇིག་རྟེན་རང་གི་ལས་སྐྱེད་མིན། །གཞན་འདི་ངེད་ལ་ཅི་ཞིག་གནོད། །ཅེས་བྱ་བ་ཡིན་ཏེ། ཁོ་བོ་ཅག་གི་ལས་བརྟག་གི་ལས་#བརྟག་པའི་སྐབས་སུ་དོན་དམ་པར་ལས་བདག་གིས་བྱས་པ་དང་། གཞན་གྱིས་"
+  ],
+  "karma_formula": [
+   "ལས་བདག་གིར་བྱ་བ་དང་།",
+   "ལས་ཀྱི་སྐྱེ་གནས་པ་དང་།",
+   "ལས་ཀྱི་རྗེས་སུ་འབྲང་བ་དང་།",
+   "ལས་ཀྱི་བགོ་སྐལ་བའོ"
+  ]
+ },
+ "alignment": {
+  "method": "bdrc-canvas-label → esukhia folio marker, verified by sampled reads",
+  "read_engine": "bdrc-yigdzin-woodblock@5fa7588ef1",
+  "samples": 5,
+  "min_identity": 0.828,
+  "max_control": 0.201
+ },
+ "draft": {
+  "model": "gemini-3-flash-preview",
+  "drafted_at": "2026-10-03T22:35:13.852Z",
+  "text": "Alternatively, to establish the position of the materialists as the opposing view in order to refute it:\n\nIf the body, senses, and intellect are not accepted as being produced by one's own karma, then because they perish, like a vase, there is no other world.\n\nThis establishes the opposing view. If you Buddhists claim that beings are the owners of their karma, inherit their karma, are born from their karma, follow their karma, and have karma as their portion, and thus you assert that the body, senses, and intellect are produced by one's own karma; we [the materialists] do not accept this. This is because these things perish, just like a vase.\n\nThe response to this is as follows:\n\nThat was not made by itself, nor was it made by another. Therefore, the world is not produced by its own karma. How does this other point harm our position?\n\nThis means that in our investigation of karma, from the perspective of ultimate truth, karma is not made by the self nor by another [illegible: …]"
+ },
+ "repairs": [
+  {
+   "source": "tengyur-draft-repairs-5497",
+   "issue": 5797,
+   "reason": "leftover repairs (#5797): false page-final <unclear> → …",
+   "at": "2026-10-04T08:33:33.254Z",
+   "diff": [
+    [
+     "same",
+     "Alternatively, to establish the position of the materialists as the opposing view in order to refute it:\n\nIf the body, senses, and intellect are not accepted as being produced by one's own karma, then because they perish, like a vase, there is no other world.\n\nThis establishes the opposing view. If you Buddhists claim that beings are the owners of their karma, inherit their karma, are born from their karma, follow their karma, and have karma as their portion, and thus you assert that the body, senses, and intellect are produced by one's own karma; we [the materialists] do not accept this. This is because these things perish, just like a vase.\n\nThe response to this is as follows:\n\nThat was not made by itself, nor was it made by another. Therefore, the world is not produced by its own karma. How does this other point harm our position?\n\nThis means that in our investigation of karma, from the perspective of ultimate truth, karma is not made by the self nor by "
+    ],
+    [
+     "del",
+     "another [illegible: …]"
+    ],
+    [
+     "ins",
+     "another…"
+    ]
+   ]
+  },
+  {
+   "source": "claude-review-5800",
+   "issue": 5800,
+   "reason": "Corrections from the #5800 pilot review, read from text by Claude (not a human Tibetologist): verse line made into a heading; \"an Noble One\"; Cārvāka verse reason attached to the wrong clause; an added fifth item (\"inherit their karma\") in the karma formula; ལས་བརྟག་པའི་སྐབས་ is the chapter examining action.",
+   "at": "2026-10-04T16:01:16.395Z",
+   "diff": [
+    [
+     "same",
+     "Alternatively, to establish the position of the materialists as the opposing view in order to refute it:\n\n"
+    ],
+    [
+     "del",
+     "If the "
+    ],
+    [
+     "ins",
+     "The "
+    ],
+    [
+     "same",
+     "body, senses, and intellect are not accepted as "
+    ],
+    [
+     "del",
+     "being "
+    ],
+    [
+     "same",
+     "produced by one's own karma, "
+    ],
+    [
+     "del",
+     "then "
+    ],
+    [
+     "same",
+     "because they perish, like a "
+    ],
+    [
+     "del",
+     "vase, "
+    ],
+    [
+     "ins",
+     "vase; therefore "
+    ],
+    [
+     "same",
+     "there is no other world.\n\nThis establishes the opposing view. If you Buddhists claim that beings are the owners of their karma, "
+    ],
+    [
+     "del",
+     "inherit their karma, "
+    ],
+    [
+     "same",
+     "are born from their karma, follow their karma, and have karma as their portion, and thus you assert that the body, senses, and intellect are produced by one's own karma; we [the materialists] do not accept this. This is because these things perish, just like a vase.\n\nThe response to this is as follows:\n\nThat was not made by itself, nor was it made by another. Therefore, the world is not produced by its own karma. How does this other point harm our position?\n\nThis means that in our "
+    ],
+    [
+     "del",
+     "investigation of "
+    ],
+    [
+     "ins",
+     "chapter examining "
+    ],
+    [
+     "same",
+     "karma, from the perspective of ultimate truth, karma is not made by the self nor by another…"
+    ]
+   ]
+  }
+ ],
+ "published_text": "Alternatively, to establish the position of the materialists as the opposing view in order to refute it:\n\nThe body, senses, and intellect are not accepted as produced by one's own karma, because they perish, like a vase; therefore there is no other world.\n\nThis establishes the opposing view. If you Buddhists claim that beings are the owners of their karma, are born from their karma, follow their karma, and have karma as their portion, and thus you assert that the body, senses, and intellect are produced by one's own karma; we [the materialists] do not accept this. This is because these things perish, just like a vase.\n\nThe response to this is as follows:\n\nThat was not made by itself, nor was it made by another. Therefore, the world is not produced by its own karma. How does this other point harm our position?\n\nThis means that in our chapter examining karma, from the perspective of ultimate truth, karma is not made by the self nor by another…",
+ "tracked": [
+  [
+   "Alternatively, to establish the position of the materialists as the opposing view in order to refute it:\n\n",
+   null,
+   null
+  ],
+  [
+   "If the ",
+   null,
+   1
+  ],
+  [
+   "The ",
+   1,
+   null
+  ],
+  [
+   "body, senses, and intellect are not accepted as ",
+   null,
+   null
+  ],
+  [
+   "being ",
+   null,
+   1
+  ],
+  [
+   "produced by one's own karma, ",
+   null,
+   null
+  ],
+  [
+   "then ",
+   null,
+   1
+  ],
+  [
+   "because they perish, like a ",
+   null,
+   null
+  ],
+  [
+   "vase, ",
+   null,
+   1
+  ],
+  [
+   "vase; therefore ",
+   1,
+   null
+  ],
+  [
+   "there is no other world.\n\nThis establishes the opposing view. If you Buddhists claim that beings are the owners of their karma, ",
+   null,
+   null
+  ],
+  [
+   "inherit their karma, ",
+   null,
+   1
+  ],
+  [
+   "are born from their karma, follow their karma, and have karma as their portion, and thus you assert that the body, senses, and intellect are produced by one's own karma; we [the materialists] do not accept this. This is because these things perish, just like a vase.\n\nThe response to this is as follows:\n\nThat was not made by itself, nor was it made by another. Therefore, the world is not produced by its own karma. How does this other point harm our position?\n\nThis means that in our ",
+   null,
+   null
+  ],
+  [
+   "investigation of ",
+   null,
+   1
+  ],
+  [
+   "chapter examining ",
+   1,
+   null
+  ],
+  [
+   "karma, from the perspective of ultimate truth, karma is not made by the self nor by ",
+   null,
+   null
+  ],
+  [
+   "another [illegible: …]",
+   null,
+   0
+  ],
+  [
+   "another…",
+   0,
+   null
+  ]
+ ]
+}
