@@ -9,13 +9,22 @@
  *
  * book-class-5768 — handwritten / printed / mixed + script family for every book (#5768).
  *
- * Stages (each writes a cache under scripts/eval/output/book-class-5768/, resumable):
- *   --labels    $0. Per book: 8 spread pages → OCR `<script>` tag + `pages.script_type`, letter
- *               counts by Unicode block of the OCR text (script family), metadata signals, the
- *               #5643 census answer, and the 3 spread text-page thumbnails the classifier uses.
- *   --summary   agreement between the free sources; prints counts.
+ * Stages, in order (each writes a cache under scripts/eval/output/book-class-5768/, resumable):
+ *   --labels      $0. Per book: 8 spread pages → OCR `<script>` tag + `pages.script_type`, letter
+ *                 counts by Unicode block of the OCR text (script family), metadata signals, the
+ *                 #5643 census answer, and the page thumbnails the classifier uses.
+ *   --plan        training pages (tagged, stratified family × tag) and 3 target pages per unlabelled book.
+ *   --embed --set=train|target [--shard=i/n]   CLIP vectors in-process; run under `nice -n 19`.
+ *   --evaluate    held-out (by book) accuracy of the kNN classifier → clip-heldout.summary.json.
+ *   --classify    kNN vote per unlabelled book → clip-classes.jsonl.
+ *   --siku        四庫全書 hand copies (OCR header, CADAL series) → siku.json.
+ *   --submit [--limit=N --only=free|cjk] / --collect   the paid contact-sheet fallback (Batch).
+ *   --decide      one class per book with its evidence → classes.jsonl.
+ *   --write [--apply]   books.book_class + one sweep_log row per book. Dry run without --apply.
+ *   --byeye-sheets=<json> [--out=dir]   9-page viewing sheets for a by-eye check.
  *
  *   node --env-file=.env.production.local scripts/eval/book-class-5768.mjs --labels
+ * Write-up: scripts/eval/experiments/2026-10-04-book-class-5768.md
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -365,7 +374,7 @@ function evaluate() {
 }
 
 /** Per unlabelled book: classify its target pages, vote, flag low confidence. */
-function apply() {
+function classify() {
   const emb = loadEmbeddings();
   const tr = trainSet(emb, { excludeHeldOut: false });
   const target = JSON.parse(fs.readFileSync(TARGET_FILE, 'utf8'));
@@ -397,20 +406,42 @@ function apply() {
 // 2026-10-04: 3 of 3 such volumes claimed printed were hand-copied). The collection was never
 // typeset or cut in blocks, so its own header — 欽定四庫全書 on a sampled page's OCR — decides.
 export const SIKU_FILE = path.join(OUT_DIR, 'siku.json');
+export const SIKU_SERIES = /·卷.*\(vol \d+\)\s*$/;
 async function siku() {
-  const rows = readJsonl(LABELS_FILE).filter((r) => (r.family_ocr?.family || r.family_lang) === 'cjk' && r.pages.some((p) => p.has_ocr));
+  // Every page of every CJK book, not the 8 sampled: the header sits on the first leaf of each juan,
+  // so the sample missed it on 51 of 60 volumes whose OCR does carry it (2026-10-04).
+  const rows = readJsonl(LABELS_FILE).filter((r) => (r.family_ocr?.family || r.family_lang) === 'cjk' || SIKU_SERIES.test(r.title || ''));
   const client = new MongoClient(process.env.MONGODB_URI); await client.connect();
   const db = client.db('bookstore');
   const hits = {};
-  for (let i = 0; i < rows.length; i += 40) {
-    const batch = rows.slice(i, i + 40);
-    const ps = await db.collection('pages').find({ $or: batch.map((r) => ({ book_id: r.book_id, page_number: { $in: r.pages.map((p) => p.n) } })), 'ocr.data': /四庫全書/ }, { projection: { _id: 0, id: 1, book_id: 1 } }).toArray();
-    for (const p of ps) (hits[p.book_id] ||= []).push(p.id);
-    if (i % 2000 === 0) console.log(`${i}/${rows.length} siku books so far ${Object.keys(hits).length}`);
+  for (let i = 0; i < rows.length; i += 20) {
+    const ids = rows.slice(i, i + 20).map((r) => r.book_id);
+    const ps = await db.collection('pages').aggregate([
+      { $match: { book_id: { $in: ids }, 'ocr.data': /四庫全書/ } },
+      { $sort: { page_number: 1 } },
+      { $project: { _id: 0, id: 1, book_id: 1, head: { $substrCP: ['$ocr.data', 0, 800] } } },
+    ]).toArray();
+    // Outside the series a MENTION is not enough (海國圖志, 1840s, cites the collection in its text):
+    // the page's own running head must be 欽定四庫全書.
+    const series = new Set(rows.slice(i, i + 20).filter((r) => SIKU_SERIES.test(r.title || '')).map((r) => r.book_id));
+    for (const p of ps) {
+      if (!series.has(p.book_id) && !/<(header|meta)>[^<]*欽定四庫全書/.test(p.head || '')) continue;
+      (hits[p.book_id] ||= { rule: 'header', pages: [] }).pages.length < 5 && hits[p.book_id].pages.push(p.id);
+    }
+    if (i % 2000 === 0) console.log(`${i}/${rows.length} with header so far ${Object.keys(hits).length}`);
+  }
+  // The same CADAL series without a header in its OCR (or with no OCR): a collection rule, labelled as
+  // one. Of 60 random series volumes classed "printed", 51 carry the header and the 2 viewed without it
+  // are the hand copy too (one is the 四庫全書薈要). Confined to CADAL-sponsored `.cn` Archive items.
+  const series = rows.filter((r) => !hits[r.book_id] && SIKU_SERIES.test(r.title || '')).map((r) => r.book_id);
+  for (let i = 0; i < series.length; i += 500) {
+    const bs = await db.collection('books').find({ id: { $in: series.slice(i, i + 500) } }, { projection: { _id: 0, id: 1, ia_identifier: 1, 'image_source.sponsor': 1 } }).toArray();
+    for (const b of bs) if (/\.cn$/.test(b.ia_identifier || '') && /CADAL/.test(b.image_source?.sponsor || '')) hits[b.id] = { rule: 'series', pages: [] };
   }
   await client.close();
   fs.writeFileSync(SIKU_FILE, JSON.stringify(hits));
-  console.log(`CJK books checked ${rows.length}; 欽定四庫全書 on a sampled page: ${Object.keys(hits).length}`);
+  const by = {}; for (const h of Object.values(hits)) by[h.rule] = (by[h.rule] || 0) + 1;
+  console.log(`books checked ${rows.length}; 四庫全書:`, by);
 }
 
 // ── paid fallback: one contact sheet per uncertain book, Batch flash-lite (#5768 step 3) ─────────
@@ -422,7 +453,7 @@ async function siku() {
 const PAID_MODEL = 'gemini-3.1-flash-lite';
 const ENDPOINT = 'eval/book-class-5768';
 const PAID_FILE = path.join(OUT_DIR, 'paid.jsonl');
-const LEDGER = path.join(OUT_DIR, 'paid-jobs.summary.json');
+const LEDGER = path.join(OUT_DIR, 'paid-jobs.json'); // resumable ledger, not tracked
 const PER_SHEET = 16, CELL_PX = 384;
 export const FAMILIES = ['latin', 'greek', 'cyrillic', 'coptic', 'armenian', 'georgian', 'hebrew', 'arabic', 'syriac', 'ethiopic', 'indic', 'tibetan', 'mongolian', 'cjk', 'southeast-asian', 'cuneiform', 'egyptian', 'other'];
 // v2 (after the by-eye dev set): a facsimile of handwriting is handwritten (the class is about the
@@ -526,6 +557,13 @@ async function submitPaid() {
   }));
   await new Promise((r) => w.end(r));
   await client.close();
+  if (!built) { // every picked book was unfetchable: record them, send nothing
+    fs.unlinkSync(chunkFile);
+    L.unfetchable = [...(L.unfetchable || []), ...unfetchable];
+    fs.writeFileSync(LEDGER, JSON.stringify(L));
+    console.log(`no sheet built; ${unfetchable.length} unfetchable recorded`);
+    return;
+  }
   const key = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
   const keyEnv = process.env.GEMINI_API_KEY_TIER3 ? 'GEMINI_API_KEY_TIER3' : 'GEMINI_API_KEY';
   const bytes = fs.statSync(chunkFile).size;
@@ -603,7 +641,8 @@ function decide() {
     const ocrModels = [...new Set(r.pages.filter((p) => p.tag || p.script_type).map((p) => p.ocr_model).filter(Boolean))];
     const c = clip.get(r.book_id), s = paid.get(r.book_id);
     let cls = null, source = null, pages = [], model = null;
-    if (sikuHits[r.book_id]) { cls = 'handwritten'; source = 'siku-header'; pages = sikuHits[r.book_id].map((id) => ({ page_id: id, answer: 'handwritten (欽定四庫全書 header in OCR)' })); }
+    const sk = sikuHits[r.book_id];
+    if (sk) { cls = 'handwritten'; source = sk.rule === 'header' ? 'siku-header' : 'siku-series'; pages = sk.pages.map((id) => ({ page_id: id, answer: 'handwritten (欽定四庫全書 header in OCR)' })); }
     else if (tier === 'strong') { cls = r.tag_class; source = 'ocr-script-tags'; pages = tagged; model = ocrModels.join(',') || null; }
     else if (s) { cls = s.class; source = 'contact-sheet'; pages = s.pages.map((id) => ({ page_id: id, answer: `${s.class} (sheet of ${s.pages.length})` })); model = s.model; }
     else if (c && !c.low_confidence) { cls = c.class; source = 'clip-knn'; pages = c.pages.map((p) => ({ page_id: p.page_id, answer: p.answer, vote: p.vote })); model = `clip-vit-base-patch32 knn-${K}`; }
@@ -628,16 +667,16 @@ function decide() {
     if (r.meta && cls) inc(`meta(handwritten) vs class: ${cls}`);
     out.write(JSON.stringify({
       book_id: r.book_id, language: r.language, visible: r.visible, hold: r.hold, title: r.title,
-      page_class: cls ? { class: cls, script_family: family, evidence: { source, pages, family_source: familySource, ...(r.family_ocr?.secondary ? { secondary_family: r.family_ocr.secondary } : {}), ...(r.meta ? { metadata: r.meta.why } : {}) }, model, version: CLASS_VERSION } : null,
+      book_class: cls ? { class: cls, script_family: family, evidence: { source, pages, family_source: familySource, ...(r.family_ocr?.secondary ? { secondary_family: r.family_ocr.secondary } : {}), ...(r.meta ? { metadata: r.meta.why } : {}) }, model, version: CLASS_VERSION } : null,
     }) + '\n');
   }
   out.end();
   for (const k of Object.keys(T).sort()) console.log(k, T[k]);
 }
 
-/** Write `books.page_class` + one sweep_log row per book. Dry-run unless --apply. Touches nothing else. */
+/** Write `books.book_class` + one sweep_log row per book. Dry-run unless --apply. Touches nothing else. */
 async function write() {
-  const rows = readJsonl(CLASSES_FILE).filter((r) => r.page_class);
+  const rows = readJsonl(CLASSES_FILE).filter((r) => r.book_class);
   const apply = flag('apply');
   console.log(`${rows.length} books with a class; ${apply ? 'WRITING' : 'dry run (pass --apply)'}`);
   if (!apply) return;
@@ -647,9 +686,9 @@ async function write() {
   let matched = 0, modified = 0;
   for (let i = 0; i < rows.length; i += 500) {
     const chunk = rows.slice(i, i + 500);
-    const res = await db.collection('books').bulkWrite(chunk.map((r) => ({ updateOne: { filter: { id: r.book_id }, update: { $set: { page_class: { ...r.page_class, at } } } } })), { ordered: false });
+    const res = await db.collection('books').bulkWrite(chunk.map((r) => ({ updateOne: { filter: { id: r.book_id }, update: { $set: { book_class: { ...r.book_class, at } } } } })), { ordered: false });
     matched += res.matchedCount; modified += res.modifiedCount;
-    await recordSweepActions(db, chunk.map((r) => ({ sweep: CLASS_VERSION, book_id: r.book_id, action: 'set page_class', detail: { class: r.page_class.class, script_family: r.page_class.script_family, source: r.page_class.evidence.source } })));
+    await recordSweepActions(db, chunk.map((r) => ({ sweep: CLASS_VERSION, book_id: r.book_id, action: 'set book_class', detail: { class: r.book_class.class, script_family: r.book_class.script_family, source: r.book_class.evidence.source } })));
     if (i % 10000 === 0) console.log(`${i + chunk.length}/${rows.length}`);
   }
   await client.close();
@@ -673,7 +712,7 @@ async function byeyeSheets() {
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   if (flag('evaluate')) evaluate();
-  if (flag('apply')) apply();
+  if (flag('classify')) classify();
   if (flag('siku')) await siku();
   if (flag('decide')) decide();
   if (flag('write')) await write();
