@@ -33,6 +33,15 @@ const ARMS = {
   'v17-study': { name: 'Standard Translation (study)', version: 17 },
   'v17-reading': { name: 'Standard Translation (reading)', version: 17 },
 };
+// EXPLORATORY, after unblinding (experiment file, "As executed"): the study row with the two edits the result
+// named, built in memory (no prompt row is seeded for it). Run with --arms v17-study-fix; mechanical scoring only.
+const FIX = [
+  ['- <note>type: X</note> — OUR notes, each opening with its type: original, clarification, context, alternative or image (see "Notes are a typed apparatus")\n',
+   '- <note>X</note> — OUR notes. X opens with one of five type words: original, clarification, context, alternative or image (see "Notes are a typed apparatus"). <term> and <gloss> are their own tags and keep their own syntax: never write <note>term: …</note> or <note>gloss: …</note>\n'],
+  ['- Do not stack notes: at most one note of each type on a phrase.\n',
+   '- Do not stack notes: at most one note of each type on a phrase.\n- The five type words are the only ones. A term kept in transliteration is still <term>X</term> <gloss>meaning</gloss>, exactly as before; it is never a note.\n- An alternative must differ in SENSE from the text. A synonym or a restyling ("or \\"enduring\\"") is not an alternative: leave it out.\n'],
+];
+const ONLY = opt('arms') ? opt('arms').split(',') : null;
 const maxOutputTokensFor = (ocrChars) => Math.min(32768, Math.max(4096, Math.ceil(ocrChars) + 1200)); // translate-worker, one page
 
 const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
@@ -43,6 +52,12 @@ for (const [arm, q] of Object.entries(ARMS)) {
   if (!row) throw new Error(`prompt row for ${arm} not found — seed it first (translation-prompt-v17-typed-notes.mjs --apply)`);
   rows[arm] = { text: row.content, ref: { id: String(row._id), name: row.name, version: row.version, content_hash: row.content_hash } };
   console.log(`${arm.padEnd(12)} ${row.name} v${row.version} ${row.content_hash.slice(0, 8)} default=${!!row.is_default} ${row.content.length} chars`);
+}
+{
+  let t = rows['v17-study'].text;
+  for (const [find, rep] of FIX) { if (t.split(find).length !== 2) throw new Error(`fix anchor not found once: ${find.slice(0, 60)}`); t = t.replace(find, rep); }
+  rows['v17-study-fix'] = { text: t, ref: { id: null, name: 'Standard Translation (study) + fix [in memory]', version: 17, content_hash: (await import('node:crypto')).createHash('md5').update(t).digest('hex') } };
+  console.log(`v17-study-fix in-memory ${rows['v17-study-fix'].ref.content_hash.slice(0, 8)} ${t.length} chars`);
 }
 if (rows['v13-a'].text === rows['v17-study'].text || rows['v17-study'].text === rows['v17-reading'].text) throw new Error('two arms load the SAME prompt text');
 if (!rows['v13-a'].ref || (await db.collection('prompts').findOne({ type: 'translation', is_default: true })).version !== 13) throw new Error('the live default is no longer v13 — the baseline arm is not production');
@@ -96,7 +111,7 @@ async function runOne(arm, r) {
 }
 
 try {
-  for (const arm of Object.keys(ARMS)) {
+  for (const arm of (ONLY || Object.keys(ARMS))) {
     const queue = [...recs];
     await Promise.all(Array.from({ length: CONC }, async () => { while (queue.length) await runOne(arm, queue.shift()); }));
     console.log(`${arm}: done; run spend so far $${runUsd.toFixed(4)}`);
