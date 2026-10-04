@@ -113,6 +113,7 @@ async function phaseCandidates() {
 // (book-class-5768.mjs, 2026-10-04: 9,577 429s). A book whose page image lives only there is deferred.
 const RATE_LIMITED_HOSTS = /(^|\.)(digitale-sammlungen\.de|vatlib\.it)$/;
 const SKIP_TYPES = /blank|cover|binding|endpaper|flyleaf|spine|colou?r.?(chart|target)|calibration/i;
+const picksPath0 = () => inDir('picks.jsonl');
 const hostOf = (u) => { try { return new URL(u).host; } catch { return null; } };
 
 /** Page numbers nearest a fraction of the book, alternating outward. */
@@ -131,28 +132,38 @@ function around(pagesCount, fraction, k = 6) {
  */
 async function phasePick() {
   const { imageUrlFor } = await import('../eval/langid-5777.mjs');
-  const second = has('second');
+  const READ = has('second') ? 2 : Number(args[args.indexOf('--read') + 1]) || 1;
+  const second = READ > 1;
   let cands = readJsonl(inDir('candidates.jsonl'));
-  const firstPage = new Map();
-  if (second) {
+  const firstPage = new Map(), seen = new Map();
+  if (READ === 2) {
     const fr = firstReads().filter((r) => r.disagrees || (r.compound && r.reads.length));
     for (const r of fr) firstPage.set(r.book_id, r.reads.find((x) => x.read === 1)?.page_number);
     cands = cands.filter((c) => firstPage.has(c.book_id));
+  } else if (READ > 2) {
+    // Reads 3 and 4 (gate 1 found a Greek–Latin edition whose two sampled pages were preface and notes):
+    // only for books two reads already agree on, in the patterns named by --gate-patterns.
+    const want = new Set(String(args[args.indexOf('--gate-patterns') + 1] || '').split('|'));
+    const two = new Map(readJsonl(inDir('proposals.jsonl')).filter((p) => /^flip/.test(p.decision) && want.has(p.gate_pattern)).map((p) => [p.book_id, p]));
+    for (const [id, p] of two) seen.set(id, new Set(p.reads.map((r) => r.page_number)));
+    for (const k of readJsonl(picksPath0())) if (k.real_book_id && k.book_id !== k.real_book_id) seen.get(k.real_book_id)?.add(k.target_page);
+    cands = cands.filter((c) => two.has(c.book_id));
   }
-  const fraction = second ? 0.72 : 0.4;
+  const fraction = { 1: 0.4, 2: 0.72, 3: 0.22, 4: 0.56 }[READ];
   const picksPath = inDir('picks.jsonl');
   const have = new Set(readJsonl(picksPath).map((p) => p.book_id));
-  for (const d of readJsonl(inDir('deferred.jsonl'))) have.add(d.read === 2 ? `${d.book_id}~2` : d.book_id);
+  for (const d of readJsonl(inDir('deferred.jsonl'))) have.add(d.read > 1 ? `${d.book_id}~${d.read}` : d.book_id);
   const deferred = [];
   let written = 0;
   await withDb(async (db) => {
     const pages = db.collection('pages');
     for (const c of cands) {
-      const key = second ? `${c.book_id}~2` : c.book_id;
+      const key = second ? `${c.book_id}~${READ}` : c.book_id;
       if (have.has(key)) continue;
       let order = around(c.pages_count, fraction, second ? 10 : 6);
       // The confirming read takes a page of the OTHER parity, so a facing-page edition shows both sides.
-      if (second) { const p1 = firstPage.get(c.book_id); order = order.filter((n) => p1 == null || (n % 2 !== p1 % 2 && Math.abs(n - p1) > 1)); }
+      if (READ === 2) { const p1 = firstPage.get(c.book_id); order = order.filter((n) => p1 == null || (n % 2 !== p1 % 2 && Math.abs(n - p1) > 1)); }
+      if (READ > 2) { const used = seen.get(c.book_id) || new Set(); order = order.filter((n) => ![...used].some((u) => Math.abs(u - n) <= 1) && (READ === 3 ? n % 2 === 1 : n % 2 === 0)); }
       const docs = await pages.find({ book_id: c.book_id, page_number: { $in: order } }, { projection: { id: 1, page_number: 1, photo: 1, photo_original: 1, display_photo: 1, archived_photo: 1, enhanced_photo: 1, cropped_photo: 1, split_from_spread: 1, crop: 1, page_type: 1, 'image_characteristics.flags.is_blank': 1 } }).toArray();
       const byNum = new Map(docs.map((d) => [d.page_number, d]));
       const good = [], poor = [];
@@ -163,7 +174,7 @@ async function phasePick() {
         (skip ? poor : good).push({ page_number: n, page_id: p.id, ...img });
       }
       const candidates = [...good, ...poor].filter((x) => !RATE_LIMITED_HOSTS.test(hostOf(x.url) || ''));
-      if (!candidates.length) { deferred.push({ book_id: c.book_id, pattern: c.pattern, visible: c.visible, read: second ? 2 : 1, reason: good.length + poor.length ? 'rate-limited host only (BSB / Vatican)' : 'no page image' }); continue; }
+      if (!candidates.length) { deferred.push({ book_id: c.book_id, pattern: c.pattern, visible: c.visible, read: READ, reason: good.length + poor.length ? 'rate-limited host only (BSB / Vatican)' : 'no page image' }); continue; }
       fs.appendFileSync(picksPath, JSON.stringify({ book_id: key, real_book_id: c.book_id, pattern: c.pattern, stored_language: c.language, pages_count: c.pages_count, provider: c.provider, target_page: order[0], candidates }) + '\n');
       written++;
     }
@@ -189,7 +200,7 @@ function firstReads() {
     if (r.error || !r.verdict) continue;
     const [id, n] = r.book_id.split('~');
     if (!reads.has(id)) reads.set(id, new Map());
-    reads.get(id).set(`${n || 1}:${r.page_number}`, { read: Number(n || 1), page_number: r.page_number, ...r.verdict, codes: observedCodes(r.verdict) });
+    reads.get(id).set(`${n || 1}`, { read: Number(n || 1), page_number: r.page_number, ...r.verdict, codes: observedCodes(r.verdict) });
   }
   const out = [];
   for (const [id, c] of cands) {
@@ -206,6 +217,7 @@ function firstReads() {
 // ── --propose ──────────────────────────────────────────────────────────────────────────────────
 
 const MIN_CONFIDENCE = 0.8;
+const MIN_READS_TO_WRITE = 4;
 const TRANSLATION_ROLES = new Set(['modern-translation', 'period-translation', 'translation']);
 /** language-fields.md: provenance and tradition, not a mislabel. Label family → observed family never flipped. */
 const NEVER_FLIP = new Set(['kor>zho', 'jpn>zho', 'vie>zho', 'bod>san', 'mon>bod', 'mnc>zho']);
@@ -238,6 +250,8 @@ export function decide(row, tags) {
   const usable = row.reads.filter((r) => r.codes.length && r.content === 'text' && (r.confidence ?? 0) >= MIN_CONFIDENCE);
   const r1 = usable.find((r) => r.read === 1), r2 = usable.find((r) => r.read === 2);
   if (!row.reads.length) return { decision: 'unread' };
+  const first = row.reads.find((r) => r.read === 1);
+  if (first && !first.codes.length) return { decision: 'report', why: /^(none|unknown)$/i.test(first.language) || first.content === 'no_text' ? 'no language readable on the page' : 'reader named a language outside the vocabulary' };
   if (!row.disagrees) return { decision: 'label-confirmed' };
   if (!r1 || !r2) return { decision: 'report', why: 'fewer than two confident text reads' };
   const labelFams = new Set(row.label.map(codeFamily));
@@ -246,7 +260,6 @@ export function decide(row, tags) {
   if (labelFams.has(f2)) return { decision: 'report', why: `mixed: one page ${languageName(r1.codes[0])}, one page in the label's language` };
   if (f1 !== f2) return { decision: 'report', why: `two reads disagree (${languageName(r1.codes[0])} / ${languageName(r2.codes[0])})` };
   if (NEVER_FLIP.has(`${codeFamily(row.label[0])}>${f1}`)) return { decision: 'report', why: 'tradition class (language-fields.md): never flipped' };
-  if (TRANSLATION_ROLES.has(row.text_role)) return { decision: 'report', why: `text_role ${row.text_role}` };
   if (row.compound) return { decision: 'report', why: 'compound label: curatorial' };
   if (tags && tags.tagged >= 10) {
     const top = Object.keys(tags.shares)[0];
@@ -256,13 +269,40 @@ export function decide(row, tags) {
   }
   // Same code on both reads keeps it; two stages of one family fall back to the family's own code.
   const to = r1.codes[0] === r2.codes[0] ? r1.codes[0] : f1;
-  return { decision: 'flip', to, instruments: tags && tags.tagged >= 10 ? 'two page reads + OCR tags' : 'two page reads' };
+  // Reads 3 and 4, where taken: any page in the label's language, or in a third language, stops the flip.
+  const extra = row.reads.filter((r) => r.read > 2);
+  for (const r of extra) {
+    if (r.codes.some((x) => labelFams.has(codeFamily(x)))) return { decision: 'report', why: `mixed: read ${r.read} is in the label's language`, to };
+    if (r.codes.length && r.content === 'text' && codeFamily(r.codes[0]) !== f1) return { decision: 'report', why: 'two reads disagree', to };
+  }
+  const agreeing = 2 + extra.filter((r) => r.codes.length === 1 && r.content === 'text' && (r.confidence ?? 0) >= MIN_CONFIDENCE && codeFamily(r.codes[0]) === f1).length;
+  const instruments = `${agreeing} page reads${tags && tags.tagged >= 10 ? ' + OCR tags' : ''}`;
+  // Gate 1 (2026-10-04): two reads were 14/15 on Greek → Latin; the write needs four.
+  return { decision: agreeing >= MIN_READS_TO_WRITE ? 'flip' : 'flip-2-reads', to, agreeing, instruments };
 }
 
-/** Pattern = what the write would change, by name: "Greek → Latin". Rare targets fold into the script. */
+/**
+ * Pattern = what the write would change, by name: "Greek → Latin". A translation edition (text_role)
+ * catalogued under its source's language is its own pattern (#2184): there the old label is the
+ * work's language, so the write also fills an empty `original_language` with it.
+ */
 function writePattern(row, to) {
   const from = languageName(row.label[0]);
+  if (TRANSLATION_ROLES.has(row.text_role)) return `translation edition: ${from} → ${languageName(to)}`;
   return `${from} → ${languageName(to)}`;
+}
+
+const VERNACULAR = new Set(['German', 'Italian', 'French', 'Spanish', 'English', 'Dutch']);
+/** The by-eye gate judges groups it can sample: named pairs with ≥ 10 books, Greek → any vernacular, translation editions, and the rare-pair tail. */
+function gatePatterns(out) {
+  const flips = out.filter((o) => /^flip/.test(o.decision));
+  const size = {}; for (const f of flips) size[f.pattern] = (size[f.pattern] || 0) + 1;
+  for (const f of flips) {
+    const [from, to] = f.pattern.split(' → ');
+    if (f.pattern.startsWith('translation edition:')) f.gate_pattern = 'translation edition → its own language';
+    else if (from === 'Greek' && VERNACULAR.has(to)) f.gate_pattern = 'Greek → Latin-script vernacular';
+    else f.gate_pattern = size[f.pattern] >= 10 ? f.pattern : 'rare pairs (< 10 books each)';
+  }
 }
 
 async function phasePropose() {
@@ -271,7 +311,7 @@ async function phasePropose() {
   await withDb(async (db) => {
     for (const row of rows) {
       const pre = decide(row, null);
-      const tags = pre.decision === 'flip' && row.pages_ocr > 0 ? await tagTally(db, row.book_id) : null;
+      const tags = /^flip/.test(pre.decision) && row.pages_ocr > 0 ? await tagTally(db, row.book_id) : null;
       const d = tags ? decide(row, tags) : pre;
       out.push({
         book_id: row.book_id, candidate_pattern: row.pattern, title: row.title, visible: row.visible, text_role: row.text_role, language: row.language,
@@ -281,12 +321,16 @@ async function phasePropose() {
       });
     }
   });
+  gatePatterns(out);
   fs.writeFileSync(inDir('proposals.jsonl'), out.map((o) => JSON.stringify(o)).join('\n') + '\n');
   const tally = (f, src = out) => { const t = {}; for (const o of src) { const k = f(o); t[k] = (t[k] || 0) + 1; } return Object.fromEntries(Object.entries(t).sort((a, b) => b[1] - a[1])); };
   const summary = {
     generated_at: new Date().toISOString(), candidates: out.length, by_decision: tally((o) => o.decision),
-    first_read_disagrees_by_candidate_pattern: tally((o) => o.candidate_pattern, rows.filter((r) => r.disagrees)),
-    read_by_candidate_pattern: tally((o) => o.candidate_pattern, rows.filter((r) => r.reads.length)),
+    first_read_disagrees_by_candidate_pattern: tally((o) => o.pattern, rows.filter((r) => r.disagrees)),
+    read_by_candidate_pattern: tally((o) => o.pattern, rows.filter((r) => r.reads.length)),
+    flips_by_gate_pattern: tally((o) => o.gate_pattern, out.filter((o) => o.decision === 'flip')),
+    two_read_only_by_gate_pattern: tally((o) => o.gate_pattern, out.filter((o) => o.decision === 'flip-2-reads')),
+    flips_visible_by_gate_pattern: tally((o) => o.gate_pattern, out.filter((o) => o.decision === 'flip' && o.visible)),
     flips_by_pattern: tally((o) => o.pattern, out.filter((o) => o.decision === 'flip')),
     flips_visible_by_pattern: tally((o) => o.pattern, out.filter((o) => o.decision === 'flip' && o.visible)),
     report_reasons: tally((o) => o.why.replace(/\(.*\)|\d+%|: one page .*/g, '').trim(), out.filter((o) => o.decision === 'report')),
@@ -295,9 +339,154 @@ async function phasePropose() {
   console.log(JSON.stringify(summary, null, 1));
 }
 
+// ── --eye-sample ───────────────────────────────────────────────────────────────────────────────
+
+/** Deterministic PRNG (mulberry32) so the by-eye draw can be re-drawn. */
+function rng(seed) { let a = seed >>> 0; return () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+
+/**
+ * 40 proposed relabels for the by-eye gate, stratified across write patterns: every pattern gets
+ * a share in proportion to the square root of its size. Each sample is the two pages the
+ * reader saw, side by side; the file name carries no label.
+ */
+async function phaseEyeSample() {
+  const sharp = (await import('sharp')).default;
+  const WORK = process.env.LANGID_WORK_DIR || '/data/scratch/sl/relabel-4884';
+  const N = Number(args[args.indexOf('--n') + 1]) || 40;
+  const only = args.includes('--gate-patterns') ? new Set(String(args[args.indexOf('--gate-patterns') + 1]).split('|')) : null;
+  const flips = readJsonl(inDir('proposals.jsonl')).filter((p) => p.decision === 'flip' && (!only || only.has(p.gate_pattern)));
+  const by = new Map(); for (const f of flips) { if (!by.has(f.gate_pattern)) by.set(f.gate_pattern, []); by.get(f.gate_pattern).push(f); }
+  const rand = rng(4884);
+  const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const patterns = [...by.entries()].sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]));
+  for (const [, v] of patterns) { v.sort((a, b) => a.book_id.localeCompare(b.book_id)); shuffle(v); }
+  // Square-root allocation (largest remainder): the big pattern does not crowd out the small ones.
+  const w = patterns.map(([, v]) => Math.sqrt(v.length)), W = w.reduce((x, y) => x + y, 0);
+  const quota = patterns.map(([k, v], i) => ({ k, max: v.length, q: N * w[i] / W }));
+  const take = new Map(quota.map((x) => [x.k, Math.min(x.max, Math.max(1, Math.floor(x.q)))]));
+  for (const x of [...quota].sort((p, q) => (q.q % 1) - (p.q % 1))) { if ([...take.values()].reduce((s2, y) => s2 + y, 0) >= N) break; if (take.get(x.k) < x.max) take.set(x.k, take.get(x.k) + 1); }
+  const sample = shuffle(patterns.flatMap(([k, v]) => v.slice(0, take.get(k))));
+  const eyeDir = path.join(WORK, args.includes('--dir') ? args[args.indexOf('--dir') + 1] : 'eye'); fs.mkdirSync(eyeDir, { recursive: true });
+  const rows = [];
+  for (const [i, f] of sample.entries()) {
+    const files = f.reads.map((r) => path.join(WORK, 'img', r.read === 1 ? `${f.book_id}.r1.jpg` : `${f.book_id}~${r.read}.r1.jpg`));
+    const H = files.length > 2 ? 900 : 1100;
+    const imgs = await Promise.all(files.map((x) => sharp(x).resize({ height: H, withoutEnlargement: false }).toBuffer({ resolveWithObject: true })));
+    const file = path.join(eyeDir, `${String(i + 1).padStart(2, '0')}.jpg`);
+    let left = 0; const comp = imgs.map((im) => { const c = { input: im.data, left, top: 0 }; left += im.info.width + 12; return c; });
+    await sharp({ create: { width: left - 12, height: H, channels: 3, background: '#000' } }).composite(comp).jpeg({ quality: 85 }).toFile(file);
+    rows.push({ n: i + 1, book_id: f.book_id, gate_pattern: f.gate_pattern, pattern: f.pattern, from: f.language, to: f.to_name, visible: f.visible, pages: f.reads.map((r) => r.page_number), title: f.title });
+  }
+  fs.writeFileSync(inDir(args.includes('--dir') ? `eye-sample-${args[args.indexOf('--dir') + 1]}.json` : 'eye-sample.json'), JSON.stringify({ seed: 4884, n: rows.length, drawn_from: flips.length, per_pattern: Object.fromEntries([...take].filter(([, n]) => n)), rows }, null, 2) + '\n');
+  console.log(`eye sample: ${rows.length} of ${flips.length} flips → ${eyeDir}`); console.log(Object.fromEntries([...take].filter(([, n]) => n)));
+}
+
+// ── --write / --undo ───────────────────────────────────────────────────────────────────────────
+
+/** Book statuses and job states in which a worker may be holding the book's language right now. */
+const IN_FLIGHT_STATUS = new Set(['ocr_queued', 'enrolled', 'ocr_processing', 'translating', 'translation_queued', 'processing']);
+const LIVE_JOB = ['pending', 'processing', 'in_progress', 'running', 'submitted'];
+
+/** Books with a live row in `jobs` (sequential translation / OCR) or `batch_jobs` (Batch lanes). */
+async function booksWithLiveJobs(db, ids) {
+  const live = new Map();
+  for (let i = 0; i < ids.length; i += 500) {
+    const chunk = ids.slice(i, i + 500);
+    for (const j of await db.collection('jobs').find({ book_id: { $in: chunk }, status: { $in: LIVE_JOB } }, { projection: { book_id: 1, type: 1, status: 1 } }).toArray()) live.set(j.book_id, `jobs ${j.type} ${j.status}`);
+  }
+  const want = new Set(ids);
+  for (const j of await db.collection('batch_jobs').find({ status: { $in: LIVE_JOB } }, { projection: { book_id: 1, book_ids: 1, type: 1, status: 1 } }).toArray()) {
+    for (const id of [j.book_id, ...(j.book_ids || [])]) if (id && want.has(id)) live.set(id, `batch_jobs ${j.type} ${j.status}`);
+  }
+  return live;
+}
+
+async function phaseWrite() {
+  const { getOcrModelForBook } = await import('../lib/ocr-routing.mjs');
+  const { getTranslateModelForBook } = await import('../lib/translate-core.mjs');
+  const { recordSweepAction } = await import('../lib/sweep-log.mjs');
+  const commit = has('commit');
+  const accepted = new Set(JSON.parse(fs.readFileSync(inDir('accepted-patterns.json'), 'utf8')).accepted);
+  const flips = readJsonl(inDir('proposals.jsonl')).filter((p) => p.decision === 'flip' && accepted.has(p.gate_pattern));
+  const written = [], skipped = [];
+  await withDb(async (db) => {
+    const books = db.collection('books');
+    const done = new Set((await db.collection('sweep_log').find({ sweep: SWEEP, action: 'relabel language' }, { projection: { book_id: 1 } }).toArray()).map((r) => r.book_id));
+    const live = await booksWithLiveJobs(db, flips.map((p) => p.book_id));
+    for (const p of flips) {
+      if (live.has(p.book_id)) { skipped.push({ book_id: p.book_id, why: `live job (${live.get(p.book_id)})` }); continue; }
+      if (done.has(p.book_id)) { skipped.push({ book_id: p.book_id, why: 'already written' }); continue; }
+      const b = await books.findOne({ id: p.book_id }, { projection: { id: 1, language: 1, languages: 1, language_multi: 1, original_language: 1, text_role: 1, visible: 1, created_at: 1, 'image_source.provider': 1, 'field_provenance.language': 1, 'pipeline_auto.status': 1, 'pipeline_auto.hold': 1, pages_count: 1, pages_ocr: 1, pages_translated: 1 } });
+      if (!b) { skipped.push({ book_id: p.book_id, why: 'book not found' }); continue; }
+      if (b.language !== p.language) { skipped.push({ book_id: p.book_id, why: `language changed since the read (${JSON.stringify(b.language)})` }); continue; }
+      const status = b.pipeline_auto?.status || null;
+      if (!b.pipeline_auto?.hold && status && IN_FLIGHT_STATUS.has(status)) { skipped.push({ book_id: p.book_id, why: `pipeline status ${status}: possibly mid-run` }); continue; }
+      const after = { language: p.to_name, languages: [p.to_name], language_multi: false };
+      const now = new Date();
+      const provenance = {
+        source: SWEEP, value: p.to_name, chosen_from: 'page-read',
+        claims: [{ source: 'catalogue (previous value)', value: String(b.language) }, ...p.reads.map((r) => ({ source: `langid page read p.${r.page_number} (gemini-3.1-flash-lite)`, value: r.language }))],
+        date: now,
+      };
+      // A translation edition catalogued under its source's language: the old label IS the work's
+      // language, so it moves to an EMPTY original_language (language-fields.md: never delete the source).
+      const setOriginal = TRANSLATION_ROLES.has(b.text_role) && !b.original_language ? languageName(toLanguageCodes(b.language).codes[0]) : null;
+      const routing = {
+        ocr: [getOcrModelForBook(b), getOcrModelForBook({ ...b, ...after })],
+        translate: [getTranslateModelForBook(b), getTranslateModelForBook({ ...b, ...after })],
+      };
+      const row = {
+        book_id: b.id, pattern: p.pattern, visible: !!b.visible, status, hold: b.pipeline_auto?.hold?.reason || null,
+        pages_count: b.pages_count, pages_ocr: b.pages_ocr || 0, pages_translated: b.pages_translated || 0,
+        before: { language: b.language, languages: b.languages ?? null, language_multi: b.language_multi ?? null, field_provenance_language: b.field_provenance?.language ?? null },
+        after, original_language: b.original_language ?? null, original_language_set: setOriginal, text_role: b.text_role ?? null, routing,
+      };
+      if (commit) {
+        // The filter repeats the stored label, so a concurrent relabel is not overwritten.
+        const res = await books.updateOne({ id: b.id, language: b.language }, { $set: { ...after, ...(setOriginal ? { original_language: setOriginal } : {}), 'field_provenance.language': provenance, updated_at: now } });
+        if (res.modifiedCount !== 1) { skipped.push({ book_id: p.book_id, why: 'not modified (changed underneath)' }); continue; }
+        await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'relabel language', detail: { pattern: p.pattern, gate_pattern: p.gate_pattern, before: row.before, after, ...(setOriginal ? { original_language_set: setOriginal } : {}), routing, instruments: p.instruments, reads: p.reads.map((r) => ({ page_number: r.page_number, language: r.language, confidence: r.confidence })) } });
+      }
+      written.push(row);
+    }
+  });
+  fs.writeFileSync(inDir(commit ? 'written.jsonl' : 'write-dry-run.jsonl'), written.map((o) => JSON.stringify(o)).join('\n') + '\n');
+  const t = {}; for (const w of written) { const k = `${w.pattern} | OCR ${w.routing.ocr.join(' → ')} | translate ${w.routing.translate.join(' → ')} | ${w.visible ? 'visible' : 'hidden'}${w.hold ? ' held' : ''}`; t[k] = (t[k] || 0) + 1; }
+  console.log(`${commit ? 'WROTE' : 'DRY RUN'}: ${written.length} books; skipped ${skipped.length}`);
+  for (const [k, n] of Object.entries(t).sort((a, b) => b[1] - a[1])) console.log(`${String(n).padStart(5)}  ${k}`);
+  const st = {}; for (const x of skipped) st[x.why.replace(/\(.*\)/, '')] = (st[x.why.replace(/\(.*\)/, '')] || 0) + 1; console.log('skipped:', st);
+  if (skipped.length) fs.writeFileSync(inDir(commit ? 'write-skipped.jsonl' : 'write-dry-run-skipped.jsonl'), skipped.map((o) => JSON.stringify(o)).join('\n') + '\n');
+}
+
+/** Restore every book written by this sweep from its own sweep_log row. Skips a book relabelled again since. */
+async function phaseUndo() {
+  const { recordSweepAction } = await import('../lib/sweep-log.mjs');
+  const commit = has('commit');
+  await withDb(async (db) => {
+    const rows = await db.collection('sweep_log').find({ sweep: SWEEP, action: 'relabel language' }).toArray();
+    const undone = new Set((await db.collection('sweep_log').find({ sweep: SWEEP, action: 'undo relabel' }, { projection: { book_id: 1 } }).toArray()).map((r) => r.book_id));
+    let n = 0, skipped = 0;
+    for (const r of rows) {
+      if (undone.has(r.book_id)) continue;
+      const { before, after } = r.detail;
+      const set = { language: before.language, updated_at: new Date() }, unset = {};
+      for (const k of ['languages', 'language_multi']) { if (before[k] == null) unset[k] = ''; else set[k] = before[k]; }
+      if (before.field_provenance_language == null) unset['field_provenance.language'] = ''; else set['field_provenance.language'] = before.field_provenance_language;
+      if (r.detail.original_language_set) unset.original_language = '';
+      if (!commit) { n++; continue; }
+      const res = await db.collection('books').updateOne({ id: r.book_id, language: after.language }, { $set: set, ...(Object.keys(unset).length ? { $unset: unset } : {}) });
+      if (res.modifiedCount === 1) { n++; await recordSweepAction(db, { sweep: SWEEP, book_id: r.book_id, action: 'undo relabel', detail: { restored: before } }); } else skipped++;
+    }
+    console.log(`${commit ? 'UNDONE' : 'DRY RUN, would undo'}: ${n}; skipped (label changed since): ${skipped}`);
+  });
+}
+
 if (import.meta.url === `file://${process.argv[1]}`) {
   if (has('candidates')) await phaseCandidates();
   else if (has('pick')) await phasePick();
   else if (has('propose')) await phasePropose();
+  else if (has('eye-sample')) await phaseEyeSample();
+  else if (has('write')) await phaseWrite();
+  else if (has('undo')) await phaseUndo();
   else console.log('usage: --candidates | --pick | --propose | --write [--commit] | --undo [--commit]');
 }

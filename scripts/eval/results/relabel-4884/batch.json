@@ -1043,7 +1043,14 @@
       "input_mb": 33.6,
       "estimate_usd": 0.0392,
       "approved_usd": 0.7,
-      "submitted_at": "2026-10-04T17:00:24.509Z"
+      "submitted_at": "2026-10-04T17:00:24.509Z",
+      "collected_at": "2026-10-04T17:04:35.137Z",
+      "state": "BATCH_STATE_SUCCEEDED",
+      "responses": 150,
+      "errors": 0,
+      "in_tokens": 226948,
+      "out_tokens": 10958,
+      "cost_usd": 0.03659
     },
     {
       "round": 1,
@@ -1054,7 +1061,14 @@
       "input_mb": 34.9,
       "estimate_usd": 0.0392,
       "approved_usd": 0.7,
-      "submitted_at": "2026-10-04T17:00:37.373Z"
+      "submitted_at": "2026-10-04T17:00:37.373Z",
+      "collected_at": "2026-10-04T17:03:27.143Z",
+      "state": "BATCH_STATE_SUCCEEDED",
+      "responses": 150,
+      "errors": 0,
+      "in_tokens": 227084,
+      "out_tokens": 11010,
+      "cost_usd": 0.03664
     },
     {
       "round": 1,
@@ -1065,7 +1079,14 @@
       "input_mb": 33.4,
       "estimate_usd": 0.0392,
       "approved_usd": 0.7,
-      "submitted_at": "2026-10-04T17:00:50.011Z"
+      "submitted_at": "2026-10-04T17:00:50.011Z",
+      "collected_at": "2026-10-04T17:03:27.980Z",
+      "state": "BATCH_STATE_SUCCEEDED",
+      "responses": 150,
+      "errors": 0,
+      "in_tokens": 227081,
+      "out_tokens": 10904,
+      "cost_usd": 0.03656
     },
     {
       "round": 1,
@@ -1076,7 +1097,14 @@
       "input_mb": 33,
       "estimate_usd": 0.0392,
       "approved_usd": 0.7,
-      "submitted_at": "2026-10-04T17:01:02.703Z"
+      "submitted_at": "2026-10-04T17:01:02.703Z",
+      "collected_at": "2026-10-04T17:03:28.765Z",
+      "state": "BATCH_STATE_SUCCEEDED",
+      "responses": 150,
+      "errors": 0,
+      "in_tokens": 226662,
+      "out_tokens": 10927,
+      "cost_usd": 0.03653
     },
     {
       "round": 1,
@@ -1087,7 +1115,14 @@
       "input_mb": 35.2,
       "estimate_usd": 0.0392,
       "approved_usd": 0.7,
-      "submitted_at": "2026-10-04T17:01:14.790Z"
+      "submitted_at": "2026-10-04T17:01:14.790Z",
+      "collected_at": "2026-10-04T17:03:29.537Z",
+      "state": "BATCH_STATE_SUCCEEDED",
+      "responses": 150,
+      "errors": 0,
+      "in_tokens": 226863,
+      "out_tokens": 10736,
+      "cost_usd": 0.03641
     },
     {
       "round": 1,
@@ -1098,7 +1133,14 @@
       "input_mb": 34.3,
       "estimate_usd": 0.0392,
       "approved_usd": 0.7,
-      "submitted_at": "2026-10-04T17:01:25.943Z"
+      "submitted_at": "2026-10-04T17:01:25.943Z",
+      "collected_at": "2026-10-04T17:03:30.328Z",
+      "state": "BATCH_STATE_SUCCEEDED",
+      "responses": 150,
+      "errors": 0,
+      "in_tokens": 226871,
+      "out_tokens": 10785,
+      "cost_usd": 0.03645
     },
     {
       "round": 1,
@@ -1109,7 +1151,14 @@
       "input_mb": 34,
       "estimate_usd": 0.0392,
       "approved_usd": 0.7,
-      "submitted_at": "2026-10-04T17:01:38.604Z"
+      "submitted_at": "2026-10-04T17:01:38.604Z",
+      "collected_at": "2026-10-04T17:03:31.089Z",
+      "state": "BATCH_STATE_SUCCEEDED",
+      "responses": 150,
+      "errors": 0,
+      "in_tokens": 227042,
+      "out_tokens": 10739,
+      "cost_usd": 0.03643
     },
     {
       "round": 1,
@@ -1120,7 +1169,14 @@
       "input_mb": 33.1,
       "estimate_usd": 0.0392,
       "approved_usd": 0.7,
-      "submitted_at": "2026-10-04T17:01:50.906Z"
+      "submitted_at": "2026-10-04T17:01:50.906Z",
+      "collected_at": "2026-10-04T17:04:35.979Z",
+      "state": "BATCH_STATE_SUCCEEDED",
+      "responses": 150,
+      "errors": 0,
+      "in_tokens": 227266,
+      "out_tokens": 10893,
+      "cost_usd": 0.03658
     },
     {
       "round": 1,
@@ -1131,7 +1187,14 @@
       "input_mb": 31.8,
       "estimate_usd": 0.0392,
       "approved_usd": 0.7,
-      "submitted_at": "2026-10-04T17:02:02.951Z"
+      "submitted_at": "2026-10-04T17:02:02.951Z",
+      "collected_at": "2026-10-04T17:04:36.742Z",
+      "state": "BATCH_STATE_SUCCEEDED",
+      "responses": 150,
+      "errors": 0,
+      "in_tokens": 226853,
+      "out_tokens": 10965,
+      "cost_usd": 0.03658
     },
     {
       "round": 1,
@@ -1142,7 +1205,14 @@
       "input_mb": 33.1,
       "estimate_usd": 0.0392,
       "approved_usd": 0.7,
-      "submitted_at": "2026-10-04T17:02:14.789Z"
+      "submitted_at": "2026-10-04T17:02:14.789Z",
+      "collected_at": "2026-10-04T17:03:32.357Z",
+      "state": "BATCH_STATE_SUCCEEDED",
+      "responses": 150,
+      "errors": 0,
+      "in_tokens": 227160,
+      "out_tokens": 11015,
+      "cost_usd": 0.03666
     },
     {
       "round": 1,
@@ -1153,7 +1223,14 @@
       "input_mb": 31.7,
       "estimate_usd": 0.0392,
       "approved_usd": 0.7,
-      "submitted_at": "2026-10-04T17:02:25.669Z"
+      "submitted_at": "2026-10-04T17:02:25.669Z",
+      "collected_at": "2026-10-04T17:05:40.453Z",
+      "state": "BATCH_STATE_SUCCEEDED",
+      "responses": 150,
+      "errors": 0,
+      "in_tokens": 226900,
+      "out_tokens": 10908,
+      "cost_usd": 0.03654
     },
     {
       "round": 1,
@@ -1164,7 +1241,14 @@
       "input_mb": 32.4,
       "estimate_usd": 0.0392,
       "approved_usd": 0.7,
-      "submitted_at": "2026-10-04T17:02:38.297Z"
+      "submitted_at": "2026-10-04T17:02:38.297Z",
+      "collected_at": "2026-10-04T17:04:37.748Z",
+      "state": "BATCH_STATE_SUCCEEDED",
+      "responses": 150,
+      "errors": 0,
+      "in_tokens": 227123,
+      "out_tokens": 10912,
+      "cost_usd": 0.03657
     },
     {
       "round": 1,
@@ -1175,7 +1259,14 @@
       "input_mb": 35.1,
       "estimate_usd": 0.0392,
       "approved_usd": 0.7,
-      "submitted_at": "2026-10-04T17:02:50.423Z"
+      "submitted_at": "2026-10-04T17:02:50.423Z",
+      "collected_at": "2026-10-04T17:04:38.573Z",
+      "state": "BATCH_STATE_SUCCEEDED",
+      "responses": 150,
+      "errors": 0,
+      "in_tokens": 227098,
+      "out_tokens": 10970,
+      "cost_usd": 0.03661
     },
     {
       "round": 1,
@@ -1186,7 +1277,14 @@
       "input_mb": 35.7,
       "estimate_usd": 0.0392,
       "approved_usd": 0.7,
-      "submitted_at": "2026-10-04T17:03:02.858Z"
+      "submitted_at": "2026-10-04T17:03:02.858Z",
+      "collected_at": "2026-10-04T17:04:39.299Z",
+      "state": "BATCH_STATE_SUCCEEDED",
+      "responses": 150,
+      "errors": 0,
+      "in_tokens": 227076,
+      "out_tokens": 11253,
+      "cost_usd": 0.03682
     },
     {
       "round": 1,
@@ -1197,7 +1295,14 @@
       "input_mb": 36.7,
       "estimate_usd": 0.0392,
       "approved_usd": 0.7,
-      "submitted_at": "2026-10-04T17:03:14.489Z"
+      "submitted_at": "2026-10-04T17:03:14.489Z",
+      "collected_at": "2026-10-04T17:07:42.437Z",
+      "state": "BATCH_STATE_SUCCEEDED",
+      "responses": 150,
+      "errors": 0,
+      "in_tokens": 227063,
+      "out_tokens": 11192,
+      "cost_usd": 0.03678
     },
     {
       "round": 1,
@@ -1208,7 +1313,190 @@
       "input_mb": 23.9,
       "estimate_usd": 0.028,
       "approved_usd": 0.7,
-      "submitted_at": "2026-10-04T17:03:24.894Z"
+      "submitted_at": "2026-10-04T17:03:24.894Z",
+      "collected_at": "2026-10-04T17:07:43.280Z",
+      "state": "BATCH_STATE_SUCCEEDED",
+      "responses": 107,
+      "errors": 0,
+      "in_tokens": 161886,
+      "out_tokens": 8049,
+      "cost_usd": 0.02627
+    },
+    {
+      "round": 1,
+      "attempt": 5,
+      "chunk": 0,
+      "job_name": "batches/c7d7zvdw9gymvzceakym6dwvk8jafrjaue51",
+      "requests": 150,
+      "input_mb": 38.9,
+      "estimate_usd": 0.0392,
+      "approved_usd": 0.65,
+      "submitted_at": "2026-10-04T17:38:30.743Z"
+    },
+    {
+      "round": 1,
+      "attempt": 5,
+      "chunk": 1,
+      "job_name": "batches/tnxpalfhemy2tae7nq986qrgrmwupgcb76o1",
+      "requests": 150,
+      "input_mb": 40,
+      "estimate_usd": 0.0392,
+      "approved_usd": 0.65,
+      "submitted_at": "2026-10-04T17:38:43.130Z"
+    },
+    {
+      "round": 1,
+      "attempt": 5,
+      "chunk": 2,
+      "job_name": "batches/u1w4wuaul8n1yw2vbtgc5r4m7luz00s87hvk",
+      "requests": 150,
+      "input_mb": 39,
+      "estimate_usd": 0.0392,
+      "approved_usd": 0.65,
+      "submitted_at": "2026-10-04T17:38:56.918Z"
+    },
+    {
+      "round": 1,
+      "attempt": 5,
+      "chunk": 3,
+      "job_name": "batches/tzptktjb9vgqvo5yr1p7ums16x5749tx2tlb",
+      "requests": 150,
+      "input_mb": 38.8,
+      "estimate_usd": 0.0392,
+      "approved_usd": 0.65,
+      "submitted_at": "2026-10-04T17:39:10.313Z"
+    },
+    {
+      "round": 1,
+      "attempt": 5,
+      "chunk": 4,
+      "job_name": "batches/7tri0olchcf88sbhfopng20iermbjxe9d813",
+      "requests": 150,
+      "input_mb": 38.6,
+      "estimate_usd": 0.0392,
+      "approved_usd": 0.65,
+      "submitted_at": "2026-10-04T17:39:22.179Z"
+    },
+    {
+      "round": 1,
+      "attempt": 5,
+      "chunk": 5,
+      "job_name": "batches/qxf0bcldaxlhuvecmvsbvid8tt2o8fuepiuz",
+      "requests": 150,
+      "input_mb": 37.2,
+      "estimate_usd": 0.0392,
+      "approved_usd": 0.65,
+      "submitted_at": "2026-10-04T17:39:34.581Z"
+    },
+    {
+      "round": 1,
+      "attempt": 5,
+      "chunk": 6,
+      "job_name": "batches/kgqlovlf82ryh06zseho1v382sfmq83tsbou",
+      "requests": 150,
+      "input_mb": 37.9,
+      "estimate_usd": 0.0392,
+      "approved_usd": 0.65,
+      "submitted_at": "2026-10-04T17:39:47.642Z"
+    },
+    {
+      "round": 1,
+      "attempt": 5,
+      "chunk": 7,
+      "job_name": "batches/grv73mqr07d5qp8evs2mao5fmfedd0th5lip",
+      "requests": 150,
+      "input_mb": 38.2,
+      "estimate_usd": 0.0392,
+      "approved_usd": 0.65,
+      "submitted_at": "2026-10-04T17:40:00.862Z"
+    },
+    {
+      "round": 1,
+      "attempt": 5,
+      "chunk": 8,
+      "job_name": "batches/k75we7u6qat81cnoozgn81v3ij8qo0u24bi0",
+      "requests": 150,
+      "input_mb": 39.7,
+      "estimate_usd": 0.0392,
+      "approved_usd": 0.65,
+      "submitted_at": "2026-10-04T17:40:12.841Z"
+    },
+    {
+      "round": 1,
+      "attempt": 5,
+      "chunk": 9,
+      "job_name": "batches/rv6x47tfl9k99yt181iwv9bs2riz52h6m60z",
+      "requests": 150,
+      "input_mb": 38.8,
+      "estimate_usd": 0.0392,
+      "approved_usd": 0.65,
+      "submitted_at": "2026-10-04T17:40:25.522Z"
+    },
+    {
+      "round": 1,
+      "attempt": 5,
+      "chunk": 10,
+      "job_name": "batches/7h1oxs458k3uaezrxwjlvbck1mpmd4gv7d3i",
+      "requests": 150,
+      "input_mb": 38.4,
+      "estimate_usd": 0.0392,
+      "approved_usd": 0.65,
+      "submitted_at": "2026-10-04T17:40:36.861Z"
+    },
+    {
+      "round": 1,
+      "attempt": 5,
+      "chunk": 11,
+      "job_name": "batches/na78kqbnefql5g7g6m7y0g5zzxwzdekz9xby",
+      "requests": 150,
+      "input_mb": 38.9,
+      "estimate_usd": 0.0392,
+      "approved_usd": 0.65,
+      "submitted_at": "2026-10-04T17:40:49.832Z"
+    },
+    {
+      "round": 1,
+      "attempt": 5,
+      "chunk": 12,
+      "job_name": "batches/nagufr7sp4s6ttolow4lfdu86nhv39dy9733",
+      "requests": 150,
+      "input_mb": 38.3,
+      "estimate_usd": 0.0392,
+      "approved_usd": 0.65,
+      "submitted_at": "2026-10-04T17:41:01.333Z"
+    },
+    {
+      "round": 1,
+      "attempt": 5,
+      "chunk": 13,
+      "job_name": "batches/113wg6p1bx22m66d1zull5a665v56lskdfjp",
+      "requests": 150,
+      "input_mb": 36.2,
+      "estimate_usd": 0.0392,
+      "approved_usd": 0.65,
+      "submitted_at": "2026-10-04T17:41:12.840Z"
+    },
+    {
+      "round": 1,
+      "attempt": 5,
+      "chunk": 14,
+      "job_name": "batches/wrru8c6ahmsho6isvv7njwwqwa1cimecfat2",
+      "requests": 150,
+      "input_mb": 38.4,
+      "estimate_usd": 0.0392,
+      "approved_usd": 0.65,
+      "submitted_at": "2026-10-04T17:41:24.173Z"
+    },
+    {
+      "round": 1,
+      "attempt": 5,
+      "chunk": 15,
+      "job_name": "batches/69lx5l9sfpmyd8rqx34e3vaddgwnjd7htqld",
+      "requests": 78,
+      "input_mb": 19.8,
+      "estimate_usd": 0.0204,
+      "approved_usd": 0.65,
+      "submitted_at": "2026-10-04T17:41:34.495Z"
     }
   ],
   "key_env": "GEMINI_API_KEY_TIER3"
