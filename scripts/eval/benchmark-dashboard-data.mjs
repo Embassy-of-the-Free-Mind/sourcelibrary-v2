@@ -121,8 +121,12 @@ for (const [stratum, file] of latest) {
       // against the reference. That is COVERAGE, and it must not vanish into a smaller n.
       const aligned = isTier ? !!e.aligned : true;
       const reg = registry.get(p.slug) || {};
-      const language = cleanLanguage(p.language ?? reg.language);
-      const year = p.year ?? reg.year ?? null;
+      // A reference that is a CORRECTION of a served read (the #5695 T1 transcriptions sealed beside
+      // latin-period-5126) leans toward the engine it was corrected from. It stays visible in its own
+      // stratum/substratum rows and never enters a pooled language or period cell (#5126 prereg).
+      const correctedRef = /corrected-OCR reference/.test(p.substratum ?? reg.substratum ?? '');
+      const language = correctedRef ? null : cleanLanguage(p.language ?? reg.language);
+      const year = correctedRef ? null : (p.year ?? reg.year ?? null);
       rows.push({
         stratum, slug: p.slug, engine, referenced, aligned,
         substratum: p.substratum ?? null,

@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA historicapolitica/besold4",
+  "edition": "Operis Politici Editio Nova. — Argentorati : Zetzner, 1626.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "14/14",
+    "pb_aligned_pages": "14/14"
+  },
+  "origin": "library",
+  "book_id": "697a6e5cb981745f5fac1d7e",
+  "page_number": 31,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 66464,
+    "to_char": 69243,
+    "overlap": 0.886,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'lant. Pasquier. 4. des recherch.' (p.29, running head 'Speciebus. Discursus I.'); ends 'Welser. rer. Augustanar. 8. à' then sig. D3; ref pads 'hommes et femmes de corps' before and 'princ. Sic' after; Latin with French/German citations (Fraktur 'Leibeygenschafft').",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:08.974Z",
+  "text_location": "repo",
+  "text_sha256": "3b0fadfb22c369abd63d68c438e4b26f4b2e7c951c865fc77ac29a19e60852a8",
+  "unit": {
+    "chars": 2779
+  },
+  "stratum": "latin-period-5126"
+}

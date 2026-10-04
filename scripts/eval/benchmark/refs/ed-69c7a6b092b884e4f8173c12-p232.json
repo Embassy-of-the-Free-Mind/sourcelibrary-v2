@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA historicapolitica/besold14",
+  "edition": "Tractatus Posthumus Iuris Publici De Origine, Et Successione, Variisque Imperii Romani Mutationibus, Imperatoris item ac — Augsburg: Weh; Ingolstadt: Eder, 1646.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "9/14",
+    "pb_aligned_pages": "9/9"
+  },
+  "origin": "library",
+  "book_id": "69c7a6b092b884e4f8173c12",
+  "page_number": 232,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 168622,
+    "to_char": 169528,
+    "overlap": 0.851,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'curatores, non jure proprio'; ends 'eaq; commoda'; printed p.206 'Pars Secunda'; small duodecimo photographed in bound state; ref pads 'faciunt, ut Ministri Caesaris, eiusue' and 'fiscalia percipiendi, quae'.",
+    "leaf_language": "lat (with German phrases in Fraktur)",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:45.480Z",
+  "text_location": "repo",
+  "text_sha256": "4d9710aef62a85bb6bddf375d7967f59fc7da62229d15f368482366e70168d21",
+  "unit": {
+    "chars": 906
+  },
+  "stratum": "latin-period-5126"
+}

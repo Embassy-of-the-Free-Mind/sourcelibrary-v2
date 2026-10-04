@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA historicapolitica/besold2",
+  "edition": "Operis Politici Editio Nova. — Argentorati : Zetzner, 1626.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "10/10",
+    "pb_aligned_pages": "10/10"
+  },
+  "origin": "library",
+  "book_id": "697a8014e680cef7cedae395",
+  "page_number": 31,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 59065,
+    "to_char": 61890,
+    "overlap": 0.884,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'cipimus, pigrius ac remissius volitant'; ends 'traict. de la souveraineté du Roy & de' then catchword 'son'; page numbered 25 with running head 'De Majestate in genere'. Ref has a few OCR-like slips (Porto, Goldaesti, Clemente U, 'IIII' for 1111).",
+    "leaf_language": "lat (a few French words in a citation)",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:59.373Z",
+  "text_location": "repo",
+  "text_sha256": "cbfa4dff67bee981b859b112389fa930151743cd6b536b9af1964d8c82e45919",
+  "unit": {
+    "chars": 2825
+  },
+  "stratum": "latin-period-5126"
+}

@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA cera/hessus2",
+  "edition": "Tertius Libellus Epistolarum H. Eobani Hessi Et Aliorum Quorundam Virorum, Autoritate, Virtute, Sapientia, Doctrinaque e — Leipzig: M. Ernestus Voegelin, 1561.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "14/14",
+    "pb_aligned_pages": "14/14"
+  },
+  "origin": "library",
+  "book_id": "6a9078467f9d520dd42e41e2",
+  "page_number": 18,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 10768,
+    "to_char": 11792,
+    "overlap": 0.752,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'cundum Horatium. Te & ego, mi Crispine amo'; ends 'Dom. Dom. Georgij' (catchword); one Greek word (enebalomen) omitted by ref, 'dns' mis-expanded as 'domins'.",
+    "leaf_language": "mixed (lat + one Greek word)",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:03:59.122Z",
+  "text_location": "repo",
+  "text_sha256": "de406cfd42b29b3f76ff661eb00932c8e11ca8c19045510f4c0bfdaabebdf427",
+  "unit": {
+    "chars": 1024
+  },
+  "stratum": "latin-period-5126"
+}

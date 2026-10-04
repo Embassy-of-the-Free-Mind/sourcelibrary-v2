@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA historicapolitica/knipschild1",
+  "edition": "Tractatus Politico-Historico-Iuridicus De Iuribus Et Privilegiis Civitatum Imperialium, Tam Generalibus, Quam Specialibu — Stra�burg: Johann Beck, 1740.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "6/10",
+    "pb_aligned_pages": "6/6"
+  },
+  "origin": "library",
+  "book_id": "6a4f22748afd506469a564d5",
+  "page_number": 18,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 12294,
+    "to_char": 17089,
+    "overlap": 0.95,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'Sic quoque in reliquis Philosophiae partibus' (header 'EPISTOLA'); ends 'qui hasce / meas' (catchword); full-width single column; ref pads 'Medicorum manuductiones habuerit et indagaverit.' and 'lucubrationes viderunt'.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:18:19.860Z",
+  "text_location": "repo",
+  "text_sha256": "61d3f41082f242d4216b3190490dd70a52fdb02af5408f55504e702ec9f43a59",
+  "unit": {
+    "chars": 4795
+  },
+  "stratum": "latin-period-5126"
+}
