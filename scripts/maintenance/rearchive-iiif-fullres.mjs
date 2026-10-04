@@ -85,6 +85,8 @@
  *   --limit N                  max books
  *   --dry-run                  no writes
  *   --min-upgrade-ratio R      only refetch if maxres/current >= R (default 1.5)
+ *   --max-chunk N              tile-stitch stride ceiling (default 1024). Raise only for a
+ *                              host checked by hand to serve N×N regions (Manchester: 2000)
  *
  * Examples:
  *   set -a; source .env.production.local; set +a
@@ -137,6 +139,7 @@ const MIN_UPGRADE_RATIO = parseFloat(ARG('--min-upgrade-ratio', '1.5'));
 const SHARP_MAX_WIDTH = parseInt(ARG('--max-width', '6000'));
 const JPEG_QUALITY = parseInt(ARG('--jpeg-quality', '90'));
 const SKIP_UPGRADED = FLAG('--skip-upgraded');
+const MAX_CHUNK = parseInt(ARG('--max-chunk', '1024'));
 // The consistency guard is ON by default and cannot be silently skipped — it is
 // the fix for the e-rara off-by-one incident (#3186). --no-guard exists only for
 // explicit, audited one-offs on a provider already proven aligned.
@@ -328,7 +331,12 @@ async function fetchUpgraded(url) {
         // lie as the tile size is what produced 64%-white masters in July 2026
         // (#4523). 1024 is the empirically safe stride; fetchIiifNativeRes probes
         // and shrinks further if even that is capped.
-        const maxChunk = Math.min(pageInfo.maxWidth || 1024, pageInfo.maxHeight || 1024, 1024);
+        // --max-chunk raises the 1024 ceiling for a host verified to serve full
+        // regions at its advertised cap (Manchester: 2000×2000, checked by hand
+        // 2026-10-04) — ~4× fewer requests under the same per-host rate limit.
+        // Still safe if wrong: the probe shrinks the stride and tileFits throws
+        // on any short tile, so the failure is a skipped page, not a gapped one.
+        const maxChunk = Math.min(pageInfo.maxWidth || MAX_CHUNK, pageInfo.maxHeight || MAX_CHUNK, MAX_CHUNK);
         ({ buffer: raw } = await fetchIiifNativeRes(url, { info: pageInfo, maxChunk, timeout: 60_000 }));
       } else if (upgraded === url) {
         // Nothing to gain: the URL already requests native AND this host honours
