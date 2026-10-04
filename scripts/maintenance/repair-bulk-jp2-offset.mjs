@@ -79,10 +79,29 @@ async function uploadToR2(key, buffer, contentType = 'image/jpeg') {
   return `${R2_PUBLIC_URL}/${key}`;
 }
 
-const IA_LEAF_RE = /\/page\/n\d+/;
-const thumbnail = u => String(u).replace(/\/full\/pct:\d+\//, '/full/pct:12/');
-// Repair at a generous width; the archive is the full-res master the variants derive from.
-const fullRes = u => String(u).replace(/\/full\/pct:\d+\//, '/full/pct:100/');
+// Which writer's pages to repair, and how to address their per-page source.
+//   bulk_jp2  (#3368) IA *_jp2.zip indexed by IIIF number; source = IA BookReader leaf.
+//   erara_pdf (#5803) e-rara PDF archived with e-rara's generated cover sheet as page 1,
+//             so every archived image is one leaf behind photo (the e-rara IIIF canvas).
+//             Same shape, same gates; only the source URL scheme differs.
+const SOURCES = {
+  bulk_jp2: {
+    re: /\/page\/n\d+/,
+    thumb: u => String(u).replace(/\/full\/pct:\d+\//, '/full/pct:12/'),
+    // Repair at a generous width; the archive is the full-res master the variants derive from.
+    full: u => String(u).replace(/\/full\/pct:\d+\//, '/full/pct:100/'),
+    reocrReason: 'jp2-offset-repair-#3368',
+  },
+  erara_pdf: {
+    re: /e-rara\.ch\/i3f\/v21\/\d+\/full\//,
+    thumb: u => String(u).replace(/\/full\/[^/]+\/0\//, '/full/400,/0/'),
+    full: u => String(u).replace(/\/full\/[^/]+\/0\//, '/full/full/0/'),
+    reocrReason: 'erara-cover-sheet-repair-#5803',
+  },
+};
+const SOURCE = flag('source', 'bulk_jp2');
+if (!SOURCES[SOURCE]) { console.error(`--source must be one of ${Object.keys(SOURCES)}`); process.exit(1); }
+const { re: IA_LEAF_RE, thumb: thumbnail, full: fullRes } = SOURCES[SOURCE];
 
 /**
  * Fetch with backoff. A dropped page here is not cosmetic: it leaves ONE page
@@ -130,14 +149,15 @@ async function verifyRepair(db, bookId, { settleMs = 20_000 } = {}) {
     hashUrl: u => hashUrl(u.startsWith(R2_PUBLIC_URL) ? bust(u) : u),
     sourceUrlFor: p => thumbnail(p.photo_original || p.photo),
     isUsableSource: p => IA_LEAF_RE.test(String(p.photo_original || p.photo)),
-    candidates: fresh.filter(p => p.archive_metadata?.source === 'bulk_jp2'),
+    candidates: fresh.filter(p => p.archive_metadata?.source === SOURCE),
     samples: SAMPLES,
   });
 }
 
 async function repairBook(db, bookId) {
   const book = await db.collection('books').findOne(
-    { $expr: { $eq: [{ $toString: '$_id' }, bookId] } },
+    // id OR _id: books with a re-minted _id are invisible to an _id-only lookup (book-deletion-and-identity.md)
+    { $or: [{ id: bookId }, { $expr: { $eq: [{ $toString: '$_id' }, bookId] } }] },
     { projection: { title: 1, id: 1, visible: 1 } },
   );
   if (!book) return console.log(`[SKIP] ${bookId}: book not found`);
@@ -146,12 +166,12 @@ async function repairBook(db, bookId) {
     .project({ id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1,
                display_photo: 1, archive_metadata: 1, 'ocr.updated_at': 1, 'ocr.created_at': 1 })
     .sort({ page_number: 1 }).toArray();
-  const bulk = pages.filter(p => p.archive_metadata?.source === 'bulk_jp2');
+  const bulk = pages.filter(p => p.archive_metadata?.source === SOURCE);
 
   console.log(`\n=== ${book.title?.slice(0, 66)}`);
-  console.log(`    ${bookId} | ${pages.length} pages, ${bulk.length} bulk_jp2 | visible=${book.visible === true}`);
+  console.log(`    ${bookId} | ${pages.length} pages, ${bulk.length} ${SOURCE} | visible=${book.visible === true}`);
 
-  if (bulk.length < 10) return console.log('  [SKIP] not a bulk_jp2 book');
+  if (bulk.length < 10) return console.log(`  [SKIP] not a ${SOURCE} book`);
 
   // Gate 1 — the archive must actually be shifted.
   const before = await checkAlignment(pages, {
@@ -254,7 +274,7 @@ async function recordOutcome(db, book, bulk, after, split, failed) {
     }).map(p => p._id);
     await db.collection('pages').updateMany(
       { _id: { $in: stale } },
-      { $set: { needs_reocr: true, needs_reocr_reason: 'jp2-offset-repair-#3368' } },
+      { $set: { needs_reocr: true, needs_reocr_reason: SOURCES[SOURCE].reocrReason } },
     );
     console.log(`  flagged ${stale.length} pages needs_reocr (their OCR read the shifted image)`);
   }
