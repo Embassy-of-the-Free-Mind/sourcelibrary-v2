@@ -515,6 +515,14 @@ async function refetchOne(book) {
     const url = page.photo_original || page.photo;
     if (!isIiifUrl(url)) { skipped++; return; }
     const result = await fetchUpgraded(url);
+    // A page we could not fetch is a FAILURE, not a skip: counted as a skip, the
+    // book was stamped upgraded with that page still low-res, and --skip-upgraded
+    // never came back for it (Pali MS 53, 6 pages, 2026-10-04).
+    if (result.skipped === 'fetch-fail' || result.skipped === 'sharp-fail') {
+      console.error(`    page ${page.page_number} ${result.skipped}: ${result.error?.substring(0, 120)}`);
+      failed++;
+      return;
+    }
     if (result.skipped) { skipped++; return; }
     // Per page, never replace with something no larger than what we hold. The
     // book-level decision is a median; individual leaves differ (an inserted
@@ -819,11 +827,14 @@ async function main() {
   await parallelMap(queue, async (book) => {
     try {
       const result = (MODE === 'recover-split') ? await recoverOne(book) : await refetchOne(book);
-      if (result.skipped) {
+      // refetchOne also returns a per-page skip COUNT under `skipped`; only a
+      // string is a book-level skip.
+      if (typeof result.skipped === 'string') {
         skipped++;
         console.log(`  skip: ${(book.title || '').substring(0, 55)} — ${result.skipped}`);
       } else {
         processed++;
+        if (result.failed) console.log(`  PARTIAL ${(book.title || '').substring(0, 50)} — ${result.updated} updated, ${result.failed} failed (not stamped; a re-run retries it)`);
       }
     } catch (e) {
       failed++;
