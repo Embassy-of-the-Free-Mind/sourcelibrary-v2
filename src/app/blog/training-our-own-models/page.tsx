@@ -53,7 +53,7 @@ export default function TrainingOurOwnModelsPage() {
       header={
         <ContentHeader
           title={TITLE}
-          subtitle="Our pages are good training data where we have measured them to be good. Reading the scripts Gemini gets wrong needs human-made text. A first open translation model is being trained now."
+          subtitle="Our pages are good training data where we have measured them to be good. Reading the scripts Gemini gets wrong needs human-made text. Our first open translation model, trained on 18,600 Latin pages, is cheap to run but not yet good enough."
           image={HERO}
           imageAlt={HERO_ALT}
         >
@@ -79,8 +79,9 @@ export default function TrainingOurOwnModelsPage() {
           publish, and hand to other libraries? Our answer, after measuring: yes for some of the work,
           not yet for the rest. Where our evaluations show the text is good, it is usable training data.
           Where Gemini reads badly, as in early Greek print, copying Gemini cannot do better than Gemini,
-          and we need text that people made. A first test of an open translation model trained on our
-          Latin pages started today.
+          and we need text that people made. Our first open translation model, trained on our Latin
+          pages, failed its test: it would cost very little to run, but it is clearly less faithful than
+          Gemini.
         </p>
 
         <hr className="border-border-light my-12" />
@@ -171,7 +172,7 @@ export default function TrainingOurOwnModelsPage() {
                 </tr>
               </thead>
               <tbody>
-                <tr><td className={TD}>Oct 2026</td><td className={TD}>An open translation model trained on our Latin pages (<Issue n={5793} />)</td><td className={TD}>Started; judged against published human translations</td></tr>
+                <tr><td className={TD}>Oct 2026</td><td className={TD}>An open translation model trained on our Latin pages (<Issue n={5793} />)</td><td className={TD}>Failed the preset bar: against published human translations of 71 pages it scored 3.32 of 5, Gemini 4.16. Training helped (the untrained model scored 2.75), but it often reverses the sense of a clause</td></tr>
                 <tr><td className={TD}>Oct 2026</td><td className={TD}>Kraken, an open line-by-line reader, fine-tuned on Latin print of 1500–1699 (<Issue n={5730} />)</td><td className={TD}>Running</td></tr>
                 <tr><td className={TD}>Oct 2026</td><td className={TD}>Open page-reading models against Gemini on the same 632 pages (<Issue n={5660} />)</td><td className={TD}>olmOCR wins only on English of 1600–1699 (3.6% vs 5.3%), where it reads the long s correctly; on Greek every open model failed badly (48–51% error)</td></tr>
                 <tr><td className={TD}>Aug 2026</td><td className={TD}>A Gemini model tuned on 15,332 of our Greek translations, for $42 (<Issue n={4320} />)</td><td className={TD}>Preferred on 158 of 200 test pages, but graded against our own translations, so the test was circular. It also learned to copy our editorial notes into its output</td></tr>
@@ -204,11 +205,16 @@ export default function TrainingOurOwnModelsPage() {
             <li>
               <strong>Translation, as a test.</strong> Because 93 percent of our Latin-script
               translations measure as faithful, a student trained on the good ones might match Gemini at
-              a fraction of the price. The test started today (<Issue n={5793} />): an open model of 8 to
-              12 billion parameters, trained with LoRA on filtered Latin pages, then judged against
-              published human translations beside Gemini’s. It passes only if it is no worse than Gemini
-              and invents no more. We will not retrain a model on its own output; errors compound that
-              way.
+              a fraction of the price. We tested that on 4 October (<Issue n={5793} />): Qwen3-8B, an
+              open model of 8 billion parameters, trained with LoRA on 18,587 filtered Latin pages, then
+              judged blind against published human translations beside Gemini’s, on 71 pages from books
+              it never saw. The bar, set before training, was “no worse than Gemini”. It scored 3.32 of 5
+              to Gemini’s 4.16 and lost on 54 of the 71 pages. Its typical error is fluent English that
+              reverses the Latin: “not counted among” for <em>numerantur</em>, “the learned” for{' '}
+              <em>indocti</em>. Cost is not the obstacle: on our own GPU it would translate for about
+              €0.15 per thousand pages. Quality is. A larger model, cleaner data, or training
+              against human translations are the next levers; we will not retrain a model on its own
+              output, because errors compound that way.
             </li>
             <li>
               <strong>Search across languages.</strong> Our semantic search only finds translated books.
@@ -229,8 +235,9 @@ export default function TrainingOurOwnModelsPage() {
           <p className={P}>
             The sums are modest. The 10.5 million pages still waiting to be read would cost Gemini about
             $4,700 in batch mode; open models would save part of that only where they read at least as
-            well, which so far is one cell. If the translation test passes, translating the backlog on
-            our own machine would save something like $6,000 to $17,000 once. The larger gain is reach.
+            well, which so far is one cell. Translating the backlog on our own machine could have saved
+            $6,000 to $17,000 once, but our first open translation model is not good enough yet. The
+            larger gain is reach.
             Some 24,500 Latin books we hold are not yet public because nobody has read them; with our own
             models, reading them becomes a matter of machine time rather than a budget decision.
           </p>

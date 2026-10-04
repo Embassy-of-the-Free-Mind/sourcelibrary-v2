@@ -29,7 +29,7 @@ export const posts: BlogPost[] = [
     slug: 'training-our-own-models',
     title: 'Should a library train its own AI models?',
     subtitle:
-      'Gemini reads and translates almost every page here. We measured that work slice by slice: where it is good, it can train a smaller open model of our own; where it is weak, as in early Greek print, only human-made text helps. What we have tried, what it would save, who else is doing this, and a first open translation model now in training.',
+      'Gemini reads and translates almost every page here. We measured that work slice by slice: where it is good, it can train a smaller open model of our own; where it is weak, as in early Greek print, only human-made text helps. What we have tried, what it would save, who else is doing this, and how our first open translation model fell short.',
     date: '4 October 2026',
     readTime: '10 min read',
     tag: 'Methodology',
