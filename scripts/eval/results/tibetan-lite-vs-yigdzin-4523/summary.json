@@ -1,0 +1,56 @@
+{
+ "sample_pages": 494,
+ "undefined_both_empty": 0,
+ "agreement": {
+  "n": 494,
+  "median": 0.1066,
+  "q1": 0.0579,
+  "q3": 0.4395,
+  "mean": 0.2528,
+  "bins": {
+   "<0.2": 291,
+   "0.2-0.5": 88,
+   "0.5-0.8": 106,
+   ">=0.8": 9
+  }
+ },
+ "by_provider": {
+  "bdrc": {
+   "n": 369,
+   "median": 0.2222,
+   "q1": 0.0746,
+   "q3": 0.5686,
+   "mean": 0.3132,
+   "bins": {
+    "<0.2": 176,
+    "0.5-0.8": 106,
+    "0.2-0.5": 78,
+    ">=0.8": 9
+   }
+  },
+  "bl": {
+   "n": 125,
+   "median": 0.056,
+   "q1": 0.0309,
+   "q3": 0.0745,
+   "mean": 0.0743,
+   "bins": {
+    "<0.2": 115,
+    "0.2-0.5": 10
+   }
+  }
+ },
+ "ratio_lite_over_yig": {
+  "median": 0.847,
+  "share_lite_longer_by_20pct": 0.095
+ },
+ "valid_share_median": {
+  "lite": 1.0,
+  "yig": 0.9942
+ },
+ "arbitration": {
+  "disagreement_pages_below_0.5": 379,
+  "drawn": 40,
+  "filled_from_ascending": 0
+ }
+}
