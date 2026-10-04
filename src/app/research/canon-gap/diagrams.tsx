@@ -278,7 +278,7 @@ export function TraditionProgress({ rows, n }: { rows: TraditionProgressRow[]; n
           squares are the same size in every tradition, so the areas compare directly. A page is transcribed when we
           hold its text (read from the image, or matched from an open typed edition) and translated when it has a
           draft English translation. &ldquo;Open typed text&rdquo; is the size of the openly licensed typed canon for
-          that tradition in the table below, converted to pages at our average page length in that language.
+          that tradition in the canon table, converted to pages at our average page length in that language.
           Each square opens a book whose pages it stands for; squares for books not yet public have no
           link. &ldquo;Read by&rdquo; and &ldquo;English by&rdquo; are shares of pages, from the engine each
           page records.

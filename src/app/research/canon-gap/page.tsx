@@ -251,17 +251,21 @@ function CorpusRow({ r }: { r: Row }) {
           {lang && LANG_PAGE[lang] && <A href={LANG_PAGE[lang]}>Our {LANG_NAME[lang]} books</A>}
           {st?.owner_issue && <A href={`${ISSUE_URL}${st.owner_issue}`}>Work log #{st.owner_issue}</A>}
         </div>
-        {st?.next_action && (
-          <p className="font-body text-sm text-stone-700 mt-3">
-            <span className="font-semibold">Next:</span> {st.next_action}
-          </p>
-        )}
-        {(st?.done || r.licence.quote) && (
+        {(st?.next_action || st?.done || r.licence.quote) && (
           <details className="font-body text-sm text-stone-600 mt-2">
             <summary className="cursor-pointer text-stone-500 hover:text-stone-800">
-              {st?.done ? 'Done so far, and the licence' : 'The licence, as the source states it'}
+              {st?.next_action || st?.done ? 'Progress, next step and licence' : 'The licence, as the source states it'}
             </summary>
-            {st?.done && <p className="mt-2 text-stone-700">{st.done}</p>}
+            {st?.done && (
+              <p className="mt-2 text-stone-700">
+                <span className="font-semibold">Done:</span> {st.done}
+              </p>
+            )}
+            {st?.next_action && (
+              <p className="mt-2 text-stone-700">
+                <span className="font-semibold">Next:</span> {st.next_action}
+              </p>
+            )}
             {r.licence.quote && (
               <blockquote className="mt-2 pl-3 border-l-2 border-stone-300 italic break-words">
                 &ldquo;{r.licence.quote}&rdquo;{' '}
