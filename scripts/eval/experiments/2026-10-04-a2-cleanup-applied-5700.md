@@ -4,7 +4,7 @@ PRIOR ART: `2026-10-03-quality-census-backfill-sizes-5700.md` sized the classes 
 
 **Question.** For each cleanup class the census proposed: is the deterministic rule at least 98% clean by eye ((a), (c)) or 95% ((b))? Apply the ones that are; say why the others are not.
 
-**Design.** `measure: count` plus by-eye precision; no model, $0. Script: `scripts/maintenance/translation-cleanup-a2-5700.mjs`, one pure function per class, 31 unit tests on excerpts of real pages. Detectors are the census's own (`scripts/eval/lib/quality-census-detectors.mjs`, moved out of the score script unchanged) and `verifyQuote()`.
+**Design.** `measure: count` plus by-eye precision; no model, $0. Script: `scripts/maintenance/translation-cleanup-a2-5700.mjs`, one pure function per class, 31 unit tests on excerpts of real pages. Detectors are the census's own (`scripts/eval/lib/quality-census-detectors.mjs`, moved out of the score script) and `verifyQuote()`.
 - **Dry run**: every live translated book, book by book: 21,245 books, 4,939,007 translated pages read.
 - **Gate**: 40 seeded pages per class, before/after rendered through the reader's `NotesRenderer`. A rule that failed was tightened and re-judged on a FRESH seed, never on the sample that exposed the fault.
 - **Writes**: `translation.data` + `translation.content_hash`, one `page_revisions` row per page (source `cleanup-a2-5700`, the replaced text, before and after hash). `translation.updated_at` is not moved. Human-edited pages are skipped (1 found).

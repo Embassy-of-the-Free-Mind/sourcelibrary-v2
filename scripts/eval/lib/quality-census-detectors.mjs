@@ -1,5 +1,6 @@
 // PRIOR ART: scripts/eval/quality-census-score.mjs — these detectors were written there (#5700 A1)
-// and are MOVED here unchanged, so the A2/A3 cleanup (scripts/maintenance/
+// and are MOVED here (one change: classifyNote's bare tag strip is now stripMarkupTags, #5564 — this
+// directory is under tests/unit/bare-tag-strip-guard), so the A2/A3 cleanup (scripts/maintenance/
 // translation-cleanup-a2-5700.mjs) fixes exactly the pages the census counted. The score script
 // runs its census on import and pulls in the reader's TSX renderer, so nothing could import
 // them from it. scripts/lib/page-terms-parse.mjs (the original-note verifier) stays where it is.
@@ -7,6 +8,7 @@
  * Detectors for the 2026-10 quality census (#5700): which translation <note>s describe the scan
  * rather than the text, and which markup leaks into the served English. Pure, no I/O, no React.
  */
+import { stripMarkupTags } from '../../lib/strip-markup-tags.mjs';
 
 // ── (a) note classes ─────────────────────────────────────────────────────────────────────────
 const NOT_A_LETTER = '(?!\\s+(?:stage|phase|state|step|steps|part|section|word|words|sentence|condition|pattern|position|position|value|values|letters? of (?:each|the words)|sound|vowel|consonant))';
@@ -41,7 +43,7 @@ export function isScanWarning(t) {
 }
 
 export function classifyNote(body) {
-  const t = String(body).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  const t = stripMarkupTags(body).replace(/\s+/g, ' ').trim();
   if (/^\s*(?:original|orig\.|lit\.|literally|alt\.|alternative|or\b|cf\.|i\.e\.|continu\w+ from)/i.test(t)) return null;
   if (INITIAL_RE.test(t)) return 'initial';
   if (isScanWarning(t)) return 'scan';
