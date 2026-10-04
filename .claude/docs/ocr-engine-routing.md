@@ -43,14 +43,14 @@ books, visible or not). Ordered by pages.
 | German | 1.6M | lite | Lite reads Fraktur well (0.5% CER, 29 refs). The agreement study flagged one invented page. | directional (35); periods exploratory | #4729, #5660 |
 | Tibetan | 0.93M | Yigdzin lane | Yigdzin: Kangyur identity 0.947, replicated. Manuscripts outside the Kangyur e-text: unmeasured (#5004). | decision (Kangyur) | #4523, #5497 |
 | French | 0.45M | lite | `agr` 0.951, under the 0.956 bar. No reference CER. | exploratory (0 refs) | #4729, #5124 |
-| Sanskrit | 0.36M | lite | `agr` 0.38 with 6/20 catastrophic. Nothing measured against a reference. | none | #4729 |
+| Sanskrit | 0.36M | lite → flash for visible/new (this PR) | `agr` 0.38 with 6/20 catastrophic. A flash re-read lifts the English +0.75 [0.30, 1.35] (#5700 A5). | none | #4729 |
 | Italian | 0.24M | lite | Never drawn. | none | #5573 |
 | und / unknown | 0.40M | lite | Language unknown, so it can't be routed. | — | #4884, #5650 |
 | Dutch | 0.15M | lite | `agr` 0.921, under the bar. | none | #4729, #5573 |
 | Russian | 0.14M | lite | `agr` 0.996, passes. | exploratory | #4729 |
-| Arabic | 0.11M | lite | `agr` 0.929, flash only. No reference CER. | none | #4729 |
+| Arabic | 0.11M | lite → flash for visible/new (this PR) | `agr` 0.929, flash only. A flash re-read lifts the English +0.39 [−0.06, 0.78], +0.72 with flash translating too (#5700 A5). | none | #4729 |
 | Hebrew | 0.11M | lite | 4 refs. | exploratory | — |
-| Persian | 0.09M | lite | Typeset reads well apart from column order. **Manuscripts: no engine passes** (0.41 sequence accuracy). | exploratory (21) | #5525, #5559 |
+| Persian | 0.09M | lite → flash for visible/new (this PR) | Typeset reads well apart from column order. A flash re-read lifts the English +1.00 [0.33, 1.67] (#5700 A5). **Manuscripts: no engine passes** (0.41 sequence accuracy). | exploratory (21) | #5525, #5559 |
 | Mongolian | 0.08M | lite | Nothing. | none | #5664 |
 | Syriac | 0.07M | Kraken lane | Kraken (Sophro MS 19% line CER, 40/0 vs lite). Gemini fabricates. | directional | #4746, #4883 |
 | Korean | 0.07M | lite | Nothing. | none | — |
@@ -58,7 +58,7 @@ books, visible or not). Ordered by pages.
 | Javanese | 0.06M | lite | Nothing. | none | — |
 | Japanese | 0.05M | lite (+ NDL pilot) | Cursive pre-1868: **NDL v3**; Gemini invents text. Typeset: unmeasured. | exploratory (0 refs; by-eye checks) | #4743, #5100 |
 | Armenian | 0.03M | lite | `agr` 0.963, passes; 9 refs. | exploratory | #4729 |
-| Ge'ez | 0.02M | lite | `agr` 0.47, 9/20 catastrophic. | none | #4729 |
+| Ge'ez | 0.02M | lite → flash for visible/new (this PR) | `agr` 0.47, 9/20 catastrophic. | none | #4729 |
 
 ## Recommendations the evidence already supports
 
@@ -77,8 +77,8 @@ references is the real work.** Per `eval-design.md`: one page per book, sealed d
 
 | # | experiment | pages it governs | decision it changes | references | issue |
 |---|---|---:|---|---|---|
-| E1 | **OCR error → translation error curve** per script: CER bins × judged fidelity on the same pages | all | Whether better OCR changes the English enough to pay for. Sets the value of every row below. | existing referenced pages + #5695 judges | #5700 (gap) |
-| E2 | **Latin by period to decision grade**: ≥ 50 refs each for pre-1500, 1500s, 1600s, 1700s; lite vs flash | 14M | Route early Latin print to flash. This is the largest spend lever in the corpus. | Latin Wikisource, CAMENA, Perseus/DLL, EEBO-TCP Latin | #4925 |
+| E1 | ~~OCR error → translation error curve~~ **ANSWERED 2026-10-04** by job reocr-lift-5700 (#5700 A5, PR #5760): fidelity steps down at 5% CER; a flash re-read of a lite-read page lifts the English by +0.75 [0.51, 0.99], while a flash re-read of a flash-read page adds nothing | all | Done. It drives recommendation 1 and the ranked re-OCR backfill (Greek, Persian, Sanskrit first) | — | #5700 |
+| E2 | **RUNNING** (job latin-period-5126, 2026-10-04) **Latin by period to decision grade**: ≥ 50 refs each for pre-1500, 1500s, 1600s, 1700s; lite vs flash | 14M | Route early Latin print to flash. This is the largest spend lever in the corpus. | Latin Wikisource, CAMENA, Perseus/DLL, EEBO-TCP Latin | #4925 |
 | E3 | **Chinese edition check, then woodblock/typeset arms** (lite / flash / Paddle) | ~1M non-SKQS | Paddle or flash for non-SKQS Chinese. The router holds Chinese out until this lands. | Kanripo, CBETA, ctext; #5574 by-eye check first | #5574 |
 | E4 | **Sanskrit against reference** (lite / flash, plus one open Indic engine if a candidate exists) | 0.36M | Agreement is 0.38, so Sanskrit may need its own lane, as Syriac did. | GRETIL, DCS | none |
 | E5 | **German Fraktur by period to decision grade** | 1.6M | Confirms lite, or flags early print. Cheap, because DTA is page-aligned. | Deutsches Textarchiv | none |
