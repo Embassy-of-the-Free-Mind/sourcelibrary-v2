@@ -9,7 +9,10 @@
  *
  * Usage:
  *   set -a; source .env.production.local; set +a
- *   node scripts/qa/render-scholarly-pdf.mjs <bookId> [--pages 120-180] [--refresh] [--keep-typ] [--out path.pdf] [--dedication text | --dedication-file path]
+ *   node scripts/qa/render-scholarly-pdf.mjs <bookId> [--pages 120-180] [--refresh] [--keep-typ] [--no-plates] [--out path.pdf] [--dedication text | --dedication-file path]
+ *
+ * Illustrations (gallery_images crops) are fetched fresh on every run — they
+ * need MONGODB_URI even when the book is cached; --no-plates skips them.
  *
  * The book + pages are cached under scripts/output/scholarly-cache/ after the
  * first fetch, so design iteration needs no database (pass --refresh to
@@ -19,7 +22,7 @@
 import { MongoClient } from 'mongodb';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { dirname, join } from 'path';
-import { generateScholarlyPdf, generateTypstSource, fetchFrontispiece, editionCredits, resolveDedication } from '../lib/scholarly-typst.mjs';
+import { generateScholarlyPdf, generateTypstSource, fetchFrontispiece, fetchIllustrations, editionCredits, resolveDedication } from '../lib/scholarly-typst.mjs';
 
 const args = process.argv.slice(2);
 const bookId = args.find(a => !a.startsWith('--'));
@@ -78,11 +81,16 @@ const options = {
   // --dedication "text" previews wording without writing it anywhere
   dedication: opt('dedication') || (opt('dedication-file') ? readFileSync(opt('dedication-file'), 'utf-8') : resolveDedication(book, collections)),
 };
+if (!flag('no-plates')) {
+  const client = new MongoClient(process.env.MONGODB_URI);
+  try { options.illustrations = await fetchIllustrations(client.db('bookstore'), book); } finally { await client.close(); }
+  console.log(`${options.illustrations.length} illustrations`);
+}
 if (!options.frontispiece) console.warn('no frontispiece: cover image missing, unreachable, or not keyed to this book');
 
 const out = opt('out') || join('scripts', 'output', `${book.id}-scholarly${range ? `-p${range}` : ''}.pdf`);
 mkdirSync(dirname(out), { recursive: true });
-if (flag('keep-typ')) writeFileSync(out.replace(/\.pdf$/, '.typ'), generateTypstSource(book, body, options));
+if (flag('keep-typ')) writeFileSync(out.replace(/\.pdf$/, '.typ'), generateTypstSource(book, body, { ...options, illustrations: (options.illustrations || []).map((il, i) => ({ ...il, file: `plate-${i + 1}.jpg` })) }));
 
 const started = Date.now();
 const pdf = await generateScholarlyPdf(book, body, options);

@@ -512,6 +512,36 @@ const TYPST_PREAMBLE = `
   else { text(size: 10.5pt, style: "italic", body) }
 })
 
+// The book's own illustrations, cropped from the page images. The image keeps
+// the hairline frame of a tipped-in plate; the caption names the source page,
+// which links to the facsimile like the margin numbers do.
+#show figure.where(kind: "plate"): it => block(above: 1.4em, below: 1.4em, width: 100%, {
+  set align(center)
+  it.body
+  v(0.5em)
+  set par(justify: false, first-line-indent: 0pt, leading: 0.45em)
+  text(size: 8.5pt, fill: muted, number-type: "lining", [#smallcaps[Fig. #it.counter.display()]#h(0.6em)#it.caption.body])
+})
+#let plate(file, width, n, label-text, inscriptions: ()) = figure(
+  kind: "plate",
+  supplement: [Fig.],
+  placement: auto,
+  caption: [#label-text, source page #link(page-url + n)[#n]],
+  {
+    box(stroke: 0.4pt + hairline, inset: 1.2mm, image(file, width: width))
+    // Text engraved on the plate, as translated: under the image, not in the list of illustrations
+    if inscriptions.len() > 0 {
+      v(0.6em)
+      block(width: width, {
+        set align(left)
+        set par(justify: false, first-line-indent: 0pt, leading: 0.45em, spacing: 0.5em)
+        set text(size: 8.5pt, style: "italic")
+        for t in inscriptions { par(t) }
+      })
+    }
+  },
+)
+
 // Lists the source sets in short lines (indexes, plant names): two columns
 #let listcols(body) = block(width: 100%, above: 1em, below: 1em, {
   set par(justify: false, first-line-indent: 0pt, hanging-indent: 1em)
@@ -626,7 +656,9 @@ export function translationLine(language) {
 export function generateTypstSource(book, pages, options = {}) {
   // frontispieceFile is a filename beside the .typ (generateScholarlyPdf puts
   // it there); absent, the cover falls back to the Source Library mark
-  const { introduction, methodology, doi, version, frontispieceFile, credits = [], includeOriginal = true, dedication = resolveDedication(book) } = options;
+  // illustrations: [{ page_number, file, type, width, height }] beside the .typ
+  // (see fetchIllustrations); each is set as a figure at its source page
+  const { introduction, methodology, doi, version, frontispieceFile, credits = [], includeOriginal = true, dedication = resolveDedication(book), illustrations = [] } = options;
   const bookTitle = book.display_title || book.title;
   const bookSlug = book.slug || book.id;
   const bookUrl = `https://sourcelibrary.org/book/${bookSlug}`;
@@ -870,6 +902,21 @@ ${TYPST_PREAMBLE}
   outline(title: none, depth: ${outlineDepth}, indent: 1.2em)
 }
 `);
+  // Only figures whose page made it into the body: the list must not point
+  // at a plate a --pages render left out
+  const bodyPageNumbers = new Set(translatedPages.map(p => p.page_number));
+  const plates = illustrations.filter(il => bodyPageNumbers.has(il.page_number));
+  if (plates.length) {
+    doc.push(`
+#heading(level: 1, outlined: false)[Illustrations]
+
+#{
+  set par(first-line-indent: 0pt, justify: false)
+  set text(number-type: "lining")
+  outline(title: none, target: figure.where(kind: "plate"))
+}
+`);
+  }
 
   // ── About this edition ──
   doc.push(`
@@ -973,6 +1020,14 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
   const anchored = (body, there, label) => body.replace(/%%SRC:([to]):(\d+):(none|"[^"]*")%%/, (_, side, n, printed) =>
     `#src("${n}", printed: ${printed}, side: "${side}"${there.has(Number(n)) ? `, other: ${typstString(label)}` : ''});`);
 
+  // A plate floats to the top or bottom of a nearby page; it is emitted
+  // between paragraphs, never inside one, so a page whose text continues the
+  // previous sentence hands its plates on to the next paragraph start.
+  const platesByPage = new Map();
+  for (const il of plates) platesByPage.set(il.page_number, [...(platesByPage.get(il.page_number) || []), il]);
+  let pendingPlates = [];
+  const flushPlates = () => { const out = pendingPlates.map(plateTypst); pendingPlates = []; return out; };
+
   let chapterIdx = 0;
   let prevBody = null;
   let pendingHeads = [];
@@ -990,14 +1045,22 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
       heads.push(`#heading(level: ${(ch.level || 1) <= 1 ? 2 : 3})[${escapeTypst(title)}]`);
       heads.push(`#running-chapter.update(${typstString(shorten(title, 46))})`);
     }
+    const pagePlates = (platesByPage.get(page.page_number) || []).map(il => ({ ...il }));
+    pendingPlates.push(...pagePlates);
     if (!english.has(page.page_number)) { pendingHeads.push(...heads); continue; }
-    const body = english.get(page.page_number);
+    let body = english.get(page.page_number);
+    if (pagePlates.length) {
+      const taken = takeInscriptions(body);
+      // A page that was ALL inscription keeps its anchor and loses only the notes
+      if (taken.inscriptions.length && taken.body.trim()) { body = taken.body; pagePlates[0].inscriptions = taken.inscriptions; }
+    }
     if (continues(prevBody, body)) { doc.push(anchored(joinedForm(body), original, language)); pendingHeads.push(...heads); }
-    else { doc.push(''); doc.push(...pendingHeads, ...heads); pendingHeads = []; doc.push(''); doc.push('#pagegap'); doc.push(anchored(body, original, language)); }
+    else { doc.push(''); doc.push(...pendingHeads, ...heads); pendingHeads = []; doc.push(''); doc.push(...flushPlates()); doc.push('#pagegap'); doc.push(anchored(body, original, language)); }
     prevBody = body;
   }
   doc.push('');
   doc.push(...pendingHeads);
+  doc.push(...flushPlates());
 
   doc.push(`#in-body.update(false)\n#running-chapter.update("")`);
 
@@ -1346,8 +1409,112 @@ export async function fetchFrontispiece(book) {
   }
 }
 
+// gallery_images.type → the caption's word for it
+const PLATE_KINDS = {
+  engraving: 'Engraving', woodcut: 'Woodcut', diagram: 'Diagram', frontispiece: 'Frontispiece',
+  emblem: 'Emblem', portrait: 'Portrait', map: 'Map', chart: 'Chart', table: 'Table',
+  botanical: 'Botanical illustration', anatomical: 'Anatomical illustration',
+};
+// The text block is 125mm wide; a plate taller than this would leave no room
+// on its page for the caption and running head
+const PLATE_MAX_W_MM = 125;
+const PLATE_MAX_H_MM = 175;
+
+function plateTypst(il) {
+  const aspect = il.height / il.width;
+  const widthMm = Math.min(PLATE_MAX_W_MM, PLATE_MAX_H_MM / aspect);
+  const kind = PLATE_KINDS[il.type] || 'Illustration';
+  const insc = il.inscriptions?.length ? `, inscriptions: (${il.inscriptions.map(t => `[${t}]`).join(', ')},)` : '';
+  return `#plate(${typstString(il.file)}, ${widthMm.toFixed(1)}mm, "${il.page_number}", [${kind}]${insc})`;
+}
+
+/** The content of each `#footnote[…];` at the start of `s`, bracket-balanced, and where they end. */
+function leadingFootnotes(s) {
+  const notes = [];
+  let i = 0;
+  while (s.startsWith('#footnote[', i)) {
+    let depth = 0, j = i + '#footnote'.length;
+    for (; j < s.length; j++) {
+      if (s[j] === '\\') { j++; continue; }
+      if (s[j] === '[') depth++;
+      else if (s[j] === ']' && --depth === 0) break;
+    }
+    if (depth !== 0) return null;
+    notes.push(s.slice(i + '#footnote['.length, j));
+    i = j + 1;
+    if (s[i] === ';') i++;
+    while (/\s/.test(s[i] || '')) i++;
+  }
+  return i === s.length && notes.length ? notes : null;
+}
+
 /**
- * options: { introduction, methodology, doi, version, frontispiece }
+ * A paragraph that is nothing but footnotes prints as a bare superscript on a
+ * line of its own. On a page with a plate it is almost always the translated
+ * text engraved on the plate (labels, mottoes) — the model has nowhere else
+ * to put it — so it moves under the image, when the translation labels it so
+ * ("Gloss:", "Inscription:"…; the label itself is dropped). A note nested
+ * inside one (a gloss on the gloss) is kept in parentheses.
+ */
+const INSCRIPTION_LABEL = /^\s*(?:gloss|inscription|label|motto|legend)\s*:\s*/i;
+
+export function takeInscriptions(body) {
+  const inscriptions = [];
+  const kept = body.split(/\n{2,}/).filter(para => {
+    const notes = leadingFootnotes(para.trim());
+    // Only what the translation itself labels as text on the image: a bare
+    // note is as often the model describing the picture, which is not the
+    // plate's to carry
+    if (!notes || !notes.every(n => INSCRIPTION_LABEL.test(n))) return true;
+    for (const n of notes) {
+      const text = n.replace(/#footnote\[([^\[\]]*)\];?/g, ' ($1)')
+        .replace(INSCRIPTION_LABEL, '').replace(/\s+\(/g, ' (').trim();
+      if (text) inscriptions.push(text);
+    }
+    return false;
+  });
+  return { body: kept.join('\n\n'), inscriptions };
+}
+
+/**
+ * The book's illustrations from `gallery_images`, fetched as JPEG buffers for
+ * the edition's figures. Same selection as the scholarly EPUB (download route,
+ * generateScholarlyEpubDownload): quality ≥ 0.7, no decorative initials or
+ * headpieces. The cover page is skipped — the frontispiece already shows it.
+ * Like the frontispiece, every failure is soft (a missing plate is left out,
+ * never substituted), and a crop URL must carry the book's own id (#3362).
+ */
+export async function fetchIllustrations(db, book, { concurrency = 6 } = {}) {
+  const docs = await db.collection('gallery_images')
+    .find({ book_id: book.id, gallery_quality: { $gte: 0.7 }, type: { $nin: ['decorative'] } },
+      { projection: { page_number: 1, detection_index: 1, type: 1, extracted_url: 1 } })
+    .sort({ page_number: 1, detection_index: 1 })
+    .toArray();
+  const coverPage = Number(book.cover_page_number || book.cover_page) || null;
+  const wanted = docs.filter(d => d.extracted_url && d.extracted_url.includes(String(book.id)) && d.page_number !== coverPage);
+  const { default: sharp } = await import('sharp');
+  const out = new Array(wanted.length).fill(null);
+  let next = 0;
+  await Promise.all(Array.from({ length: concurrency }, async () => {
+    while (next < wanted.length) {
+      const i = next++;
+      const d = wanted[i];
+      try {
+        const res = await fetch(d.extracted_url, { signal: AbortSignal.timeout(30000), headers: { 'User-Agent': 'SourceLibrary-scholarly-pdf/1.0 (+https://sourcelibrary.org)' } });
+        if (!res.ok) continue;
+        const raw = Buffer.from(await res.arrayBuffer());
+        const { data, info } = await sharp(raw).rotate().resize(1600, 1600, { fit: 'inside', withoutEnlargement: true })
+          .jpeg({ quality: 82 }).toBuffer({ resolveWithObject: true });
+        out[i] = { page_number: d.page_number, type: d.type, buffer: data, width: info.width, height: info.height };
+      } catch { /* soft: the plate is left out */ }
+    }
+  }));
+  return out.filter(Boolean);
+}
+
+/**
+ * options: { introduction, methodology, doi, version, frontispiece, illustrations }
+ * `illustrations` is the output of fetchIllustrations; omit for none.
  * `frontispiece` is a JPEG/PNG buffer (see fetchFrontispiece); omit for none.
  */
 export async function generateScholarlyPdf(book, pages, options = {}) {
@@ -1363,6 +1530,11 @@ export async function generateScholarlyPdf(book, pages, options = {}) {
     writeFileSync(join(tmpDir, `frontispiece.${ext}`), frontispiece);
     rest.frontispieceFile = `frontispiece.${ext}`;
   }
+  rest.illustrations = (options.illustrations || []).map((il, i) => {
+    const file = `plate-${i + 1}.jpg`;
+    writeFileSync(join(tmpDir, file), il.buffer);
+    return { page_number: il.page_number, type: il.type, width: il.width, height: il.height, file };
+  });
 
   writeFileSync(typFile, generateTypstSource(book, pages, rest), 'utf-8');
 
