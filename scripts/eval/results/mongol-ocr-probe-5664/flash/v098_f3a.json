@@ -1,0 +1,42 @@
+{
+ "key": "v098_f3a",
+ "page": {
+  "key": "v098_f3a",
+  "vol": 98,
+  "book_id": "6ac02a519a86d56c1aa28898",
+  "page_number": 5,
+  "page_label": "f. 3a",
+  "bdrc_canvas": "I1PD1103660008.jpg",
+  "ligeti": "Mng1.1130",
+  "mng_span": "vol. 98 p. 2 (start of volume)",
+  "toh": "D2",
+  "skt": "Prātimokṣasūtra",
+  "derge_vol": 5,
+  "derge_file": "005_འདུལ་བ།_ཅ.txt"
+ },
+ "model": "gemini-3-flash-preview",
+ "ocr_prompt": {
+  "name": "Standard OCR",
+  "version": "19.1",
+  "content_hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "translation_prompt": {
+  "name": "Standard Translation",
+  "version": "13",
+  "hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Mongolian</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<warning>Handwritten Mongolian script (Vertical/Hudum). The image is oriented horizontally but the script is vertical; transcription follows the vertical columns from left to right as they appear in the landscape orientation.</warning>\n\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">The text is enclosed within a double-lined rectangular red border (frame).</image-desc>\n\n<margin>\n律師戒行經第六卷上三\n</margin>\n\n<unclear>32 columns of Mongolian script, not transcribed</unclear>\n\n<meta>The text appears to be a Mongolian translation of a Buddhist sutra, specifically the \"Vinaya-viniścaya-upāli-paripṛcchā-sūtra\" or a related Vinaya text, as indicated by the Chinese marginalia '律師戒行經' (Sutra on the Vinaya Master's Conduct).</meta>\n\n<vocab>Vinaya, Buddhist sutra, Mongolian script</vocab>",
+  "finishReason": "STOP",
+  "inputTokens": 4297,
+  "outputTokens": 251,
+  "cost_usd": 0.0029015
+ },
+ "translation": {
+  "text": "<margin>\nSutra on the Vinaya Master's Conduct, Volume Six, Part One, Page Three\n</margin>\n\n<note>The page is enclosed within a double-lined rectangular red border, a common decorative feature in formal Buddhist manuscripts.</note>\n\n<unclear>32 columns of Mongolian script, not transcribed</unclear>\n\n<meta>The marginal note in Chinese refers to the Vinaya-viniścaya-upāli-paripṛcchā-sūtra, which records the Buddha answering the monk Upali's questions regarding monastic discipline and the ethical conduct of a Vinaya master. The Mongolian text within the frame would contain the corresponding translation of these precepts.</meta>\n\n<summary>This page contains the Mongolian translation of the sixth volume of a Buddhist sutra focusing on monastic discipline and the conduct of Vinaya masters. The text is presented in a formal manuscript style with traditional red borders.</summary>\n<keywords>Vinaya, Upali, Buddhist precepts, monastic discipline, Mongolian Buddhist canon, sutra translation</keywords>",
+  "finishReason": "STOP",
+  "inputTokens": 1981,
+  "outputTokens": 222,
+  "cost_usd": 0.0016565
+ }
+}
