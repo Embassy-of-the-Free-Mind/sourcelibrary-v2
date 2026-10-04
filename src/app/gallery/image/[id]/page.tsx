@@ -925,7 +925,7 @@ export default function ImageDetailPage({
               <ImageWithMagnifier
                 src={data.imageUrl}
                 thumbnail={data.imageUrl}
-                alt={data.description}
+                alt={[data.description, data.book?.title && `from ${data.book.title}`, data.book?.author && data.book.author !== 'Various' && `by ${data.book.author}`].filter(Boolean).join(' ')}
                 className="w-full h-full"
                 magnifierSize={250}
                 zoomLevel={4}
@@ -1061,7 +1061,7 @@ export default function ImageDetailPage({
               killed the magnifier lens across the lower fifth of every plate.
               The same title and caption are selectable in the details section below. */}
           <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-20 px-5 pb-5 pt-24 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-serif text-white leading-snug line-clamp-2">{data.description}</h1>
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-serif text-white leading-snug line-clamp-2">{data.description}</h2>
             <p className="text-base sm:text-lg text-white/60 mt-1.5">
               {data.book.title}{data.book.author && data.book.author !== 'Various' ? ` \u2014 ${data.book.author}` : ''}{data.book.year ? ` (${data.book.year})` : ''}, p.{data.pageNumber}
             </p>
@@ -1097,9 +1097,9 @@ export default function ImageDetailPage({
                   </div>
                 ) : (
                   <div className="group relative">
-                    <h1 className="text-2xl sm:text-3xl font-serif text-stone-100 leading-relaxed">
+                    <h2 className="text-2xl sm:text-3xl font-serif text-stone-100 leading-relaxed">
                       {data.description}
-                    </h1>
+                    </h2>
                     {isAdmin && (
                       <button onClick={() => setEditingTitle(true)} className="absolute top-0 right-0 text-xs text-accent-gold hover:text-accent-gold opacity-0 group-hover:opacity-100 transition-opacity">
                         Edit
