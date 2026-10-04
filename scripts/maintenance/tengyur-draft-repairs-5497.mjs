@@ -26,10 +26,9 @@
  *
  * `--leftovers` (#5797) runs three further deterministic repairs instead, one page_revisions row per page:
  *   4. Esukhia correction pairs `{a,b}` / `(a,b)` leaked into the English (mechanical.mjs corrLeak).
- *      A pair becomes `b`, the editors' reading (as mechanical.mjs cleanSource reads it). A <note>,
- *      <gloss> or <meta> that holds a pair AND talks about the markup ("the OCR reads", "two
- *      spellings", "corrected to") is removed whole: it describes the e-text's apparatus, not the text,
- *      and with the pair resolved it would assert something false.
+ *      A pair becomes `b`, the editors' reading (as mechanical.mjs cleanSource reads it); inside a
+ *      <note>/<gloss>/<meta> that talks about the markup ("two spellings", "corrected to") it becomes
+ *      `a / b`, so the note keeps its meaning.
  *   5. The false `<unclear>` on a page-final broken word. The source is a complete e-text, so a side
  *      ending mid-sentence continues on the next side; nothing is illegible. When the LAST thing in the
  *      body is `<unclear>` whose content only describes a gap ("…", "one line of text not
@@ -73,25 +72,30 @@ const TIB = /[ༀ-࿿]/;
 const PAIR = /[({]([^(){},\n]{0,40}),([^(){},\n]{0,40})[)}]/g;
 const MARKUP_TALK = /\bOCR\b|variant|spelling|correct|\breads?\b|\btwo\b|alternat|emend|transcri|curly|bracket|scribal|edition/i;
 
-/** 4. Resolve leaked Esukhia correction pairs to the editors' reading; drop notes that discuss the markup. */
+/**
+ * 4. Resolve leaked Esukhia correction pairs. In running text and plain notes a pair becomes `b`, the
+ * editors' reading. In a note that discusses the markup ("variant spellings", "the OCR reads") it
+ * becomes `a / b`, so the note still says what it said; dropping such a note would hide the one sign
+ * that the English followed the uncorrected reading (v169 p406: "this meadow" for དེ་རིང་, today).
+ */
 export function fixCorrectionPairs(text) {
   // Both readings Tibetan: a model's own "(རྫུན་, false)" gloss is not an Esukhia pair.
   const isPair = (a, b) => TIB.test(a) && TIB.test(b);
-  const hasPair = (s) => [...s.matchAll(PAIR)].some((m) => isPair(m[1], m[2]));
-  let removed = 0, resolved = 0;
-  let out = String(text).replace(/ ?<(note|gloss|meta)\b[^>]*>([\s\S]*?)<\/\1>/gi, (m, tag, body) => {
-    if (hasPair(body) && MARKUP_TALK.test(body)) { removed++; return ''; }
-    return m;
+  let resolved = 0, kept_both = 0;
+  let out = String(text).replace(/<(note|gloss|meta)\b[^>]*>([\s\S]*?)<\/\1>/gi, (m) => {
+    if (!MARKUP_TALK.test(m)) return m;
+    return m.replace(PAIR, (pm, a, b) => { if (!isPair(a, b)) return pm; kept_both++; return `${a.trim()} / ${b.trim()}`; });
   });
   out = out.replace(PAIR, (m, a, b) => {
     if (!isPair(a, b)) return m;
     resolved++;
     return b.trim();
   });
-  return { text: out, removed, resolved };
+  return { text: out, resolved, kept_both };
 }
 
 const GAP_TALK = /obscur|illegib|unreadable|missing|cut off|continu|incomplete|\blines?\b|\btext\b|\bwords?\b|syllable|fragment|partial|broken|damag|next (?:page|side)|truncat|transcri|character|lacuna|not visible|\bends?\b/i;
+const GAP_OPENS = /^(?:\.\.\.|…|\[|\(|(?:one|two|three) (?:or|line|lines|word|words|syllable|syllables|character|characters|half|more|partial|incomplete|broken|truncated|illegible|unclear|continu)|a few\b|few\b|several\b|half\b|\d|remain|rest\b|final\b|last\b|end\b|text\b|sentence\b|lines?\b|words?\b|syllables?\b|characters?\b|unclear\b|unreadable\b|illegible\b|unfinished\b|incomplete\b|portion\b|continu|partial|not (?:transcribed|legible|visible|fully)|the (?:line|text|sentence|rest|remainder|remaining|final|last|next|following)\b|is continued\b|missing\b|obscured\b|cut off\b|truncated\b|broken (?:off|text|line|word)|page break|end of)/i;
 const TAIL_TAGS = /<(summary|keywords|meta|vocab|vocabulary)\b[^>]*>[\s\S]*?<\/\1>/gi;
 
 /**
@@ -109,7 +113,9 @@ export function fixFinalUnclear(text, src) {
   if (content.includes('<') || /[A-Za-zÀ-ɏༀ-࿿]|<(?!\/?(?:summary|keywords|meta|vocab|vocabulary)\b)/.test(rest.replace(TAIL_TAGS, ''))) return { kind: 'not_final', text: s, content };
   const srcEnd = String(src || '').replace(/[\s\\#]+$/, '').slice(-60);
   if (/\[/.test(srcEnd.replace(/\[\d+\.?[ab]\]/g, '').slice(-30))) return { kind: 'src_doubtful', text: s, content };
-  const gap = /^[\s.…]*$/.test(content) || (GAP_TALK.test(content) && content.trim().split(/\s+/).length <= 10);
+  // A description of a gap opens like one ("one line …", "2 characters …", "text continues …"); words that
+  // merely contain "obscured" or "broken" ("the obscuration of knowledge") are a rendering, not a description.
+  const gap = /^[\s.…]*$/.test(content) || (GAP_TALK.test(content) && GAP_OPENS.test(content.trim()) && content.trim().split(/\s+/).length <= 10);
   if (!gap) return { kind: 'words', text: s, content };
   // "…men <unclear>one line not transcribed</unclear>." → "…men…"
   const head = s.slice(0, at).replace(/[ \t]+$/, '');
@@ -122,6 +128,13 @@ export function fixAttributeNote(text) {
   const s = String(text);
   if (noteTagBalance(s).balanced) return s;
   return s.replace(/<note\s+(original|sanskrit|tibetan)\s*:\s*"([^"<>]*)"\s*>/gi, (m, k, v) => `<note>${k}: ${v}</note>`);
+}
+
+/** The first changed stretch, ±150 characters, for the dry-run diff file. */
+function around(a, b) {
+  let i = 0; while (i < a.length && a[i] === b[i]) i++;
+  let j = 0; while (j < a.length - i && j < b.length - i && a[a.length - 1 - j] === b[b.length - 1 - j]) j++;
+  return { before: a.slice(Math.max(0, i - 150), a.length - j + 150), after: b.slice(Math.max(0, i - 150), b.length - j + 150) };
 }
 
 const OUT_OF_SCOPE_VOLS = new Set([74, 75, 76, 77, 78, 79, ...Array.from({ length: 20 }, (_, i) => 194 + i)]);
@@ -141,7 +154,7 @@ async function leftovers() {
     apply: APPLY, books: books.length, books_in_scope: inScope.length,
     skipped_books: { out_of_scope_volume: books.filter((b) => OUT_OF_SCOPE_VOLS.has(volOf(b))).length, open_run: books.filter((b) => !OUT_OF_SCOPE_VOLS.has(volOf(b)) && open.has(b.id)).map((b) => volOf(b)) },
     pages_scanned: 0,
-    pairs: { pages: 0, resolved: 0, notes_removed: 0 }, unclear: { gap_pages: 0, words_pages: 0, src_doubtful: 0, not_final: 0, gap_content: {} },
+    pairs: { pages: 0, resolved: 0, kept_both: 0 }, unclear: { gap_pages: 0, words_pages: 0, src_doubtful: 0, not_final: 0, gap_content: {} },
     attr_note: { pages: 0 }, still_unbalanced: [], written: 0, skipped: {}, words_list: [],
   };
   const diffs = fs.createWriteStream(OUT.replace(/\.json$/, '') + '-diffs.jsonl');
@@ -156,7 +169,7 @@ async function leftovers() {
       const why = [];
       const cp = fixCorrectionPairs(en);
       let text = cp.text;
-      if (cp.resolved || cp.removed) { report.pairs.pages++; report.pairs.resolved += cp.resolved; report.pairs.notes_removed += cp.removed; why.push(`correction pairs: ${cp.resolved} resolved, ${cp.removed} markup notes removed`); }
+      if (cp.resolved || cp.kept_both) { report.pairs.pages++; report.pairs.resolved += cp.resolved; report.pairs.kept_both += cp.kept_both; why.push(`correction pairs: ${cp.resolved} resolved to the editors' reading, ${cp.kept_both} written a / b in a note about the markup`); }
       const fu = fixFinalUnclear(text, p.ocr?.data);
       if (fu.kind === 'gap') {
         report.unclear.gap_pages++; text = fu.text; why.push('false page-final <unclear> → …');
@@ -176,7 +189,7 @@ async function leftovers() {
       const r = await repairTranslationText(db, p, text, { expectBefore: en, source: 'tengyur-draft-repairs-5497', reason: `leftover repairs (#5797): ${why.join('; ')}`, issue: 5797, jobId: 'tengyur-check-5497', apply: APPLY });
       if (r.status === 'written') { report.written++; touched.push(p.id); }
       else if (r.status !== 'dry_run') report.skipped[r.why] = (report.skipped[r.why] || 0) + 1;
-      diffs.write(JSON.stringify({ vol, page: p.page_number, page_id: p.id, why, status: r.status, before_tail: en.slice(-260), after_tail: text.slice(-260) }) + '\n');
+      diffs.write(JSON.stringify({ vol, page: p.page_number, page_id: p.id, why, status: r.status, before: around(en, text).before, after: around(en, text).after }) + '\n');
     }
   }
   await new Promise((r) => diffs.end(r));
