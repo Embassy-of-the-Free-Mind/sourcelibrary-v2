@@ -379,7 +379,11 @@ export function decideMarkdown(d) {
 }
 function runDecide({ resultsFile, ruleFiles, outBase }) {
   const d = decide(readJson(resultsFile), ruleFiles.map(readJson));
-  d.inputs = { results: resultsFile, rules: ruleFiles };
+  // A rule file is preregistered when `arms` pinned its hash before the first engine call (prompt.json).
+  // null = the run has no pin (it predates this tool, or the rule was written afterwards): post hoc.
+  const pinFile = path.join(path.dirname(resultsFile), 'prompt.json'); const pin = fs.existsSync(pinFile) ? readJson(pinFile).rules : null;
+  d.inputs = { results: resultsFile, rules: ruleFiles, rule_unchanged_since_arms: Object.fromEntries(ruleFiles.map((f) => [f, pin?.[f] ? pin[f] === sha256(fs.readFileSync(f)) : null])) };
+  for (const [f, okay] of Object.entries(d.inputs.rule_unchanged_since_arms)) if (okay !== true) console.log(`NOTE ${f}: ${okay === false ? 'CHANGED since the arms ran' : 'not pinned before the arms ran'} — its verdicts are post hoc unless a preregistration says otherwise`);
   writeJson(`${outBase}.json`, d); fs.writeFileSync(`${outBase}.md`, decideMarkdown(d));
   for (const [g, r] of Object.entries(d.groups)) console.log(g.padEnd(6), Object.entries(r).map(([i, v]) => `${i}: ${v.verdict}`).join('  |  '));
   console.log(`wrote ${outBase}.json and .md`);
@@ -397,9 +401,10 @@ async function runAll(run) {
     if (!opt('spend-cap')) return stop(`${missing} engine reads are owed (≈ $${(missing * USD_PER_CALL).toFixed(2)} realtime at the #5795 rate, more with retries). This is the only step that spends. Create the "${run.run_id}" envelope with set-scope.mjs and run again with --spend-cap <usd>.`);
     await arms(run);
   }
+  const adjFile = `${R}/adjudication.json`;
+  if (fs.existsSync(adjFile) && readJson(adjFile).pages.some((p) => !p.blind_key)) unblind(run);
   await score(run);
-  if (!fs.existsSync(`${R}/adjudication.json`)) return adjudicate(run);
-  if (readJson(`${R}/adjudication.json`).pages.some((p) => p.verdict === 'A' || p.verdict === 'B')) { unblind(run); await score(run); }
+  if (!fs.existsSync(adjFile)) return adjudicate(run);
   runDecide({ resultsFile: `${R}/results.json`, ruleFiles: run.rules, outBase: `${R}/routing-eval` });
   return true;
 }

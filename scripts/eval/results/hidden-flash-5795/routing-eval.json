@@ -885,6 +885,10 @@
   "rules": [
    "scripts/eval/routing-eval/rules/hidden-flash-5795-registered.json",
    "scripts/eval/routing-eval/rules/margin-v1.json"
-  ]
+  ],
+  "rule_unchanged_since_arms": {
+   "scripts/eval/routing-eval/rules/hidden-flash-5795-registered.json": null,
+   "scripts/eval/routing-eval/rules/margin-v1.json": null
+  }
  }
 }
