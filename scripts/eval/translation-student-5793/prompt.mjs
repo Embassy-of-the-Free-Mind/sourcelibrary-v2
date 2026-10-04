@@ -13,6 +13,10 @@ export const PROMPT = 'Translate this page of a historical Latin book into Engli
  *   removed with content: <note>, <gloss>, <meta> (continuation summaries)
  *   unwrapped (content kept): <term>, <margin>, <unclear>, <insert>, <foreign>, <italic>, <i>, <b>, <bold>, <sup>,
  *   <center>, <red>, <p> and any other tag; empty tags (<column-break/>, <br>) removed
+ * KNOWN DEFECT (found after judging, kept so the run reproduces): <summary> and <keywords> are UNWRAPPED, not
+ * removed. Every served/v13 output carries both, so on Gemini output this leaves a summary paragraph and a keyword
+ * line in the English (#5793: 35 of lite's 41 invention flags). Training targets carry neither. Reusing this on
+ * served English? Add summary|keywords to the removed set first.
  */
 export function cleanTranslation(t) {
   let s = String(t || '');

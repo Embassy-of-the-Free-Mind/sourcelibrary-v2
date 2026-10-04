@@ -4,7 +4,7 @@
 // host will serve it (the bucket is fronted by images.sourcelibrary.org, so "private" must be checked, not assumed).
 /**
  *   node --env-file=/root/sourcelibrary/.env.production.local upload-adapter.mjs <adapter.tar.gz>
- * Prints the key and whether https://images.sourcelibrary.org/<key> answers.
+ * Prints the key (keep it out of public places) and whether https://images.sourcelibrary.org/<key> answers.
  */
 import fs from 'node:fs';
 import crypto from 'node:crypto';
@@ -14,7 +14,9 @@ const file = process.argv[2];
 if (!file || !fs.existsSync(file)) throw new Error('usage: upload-adapter.mjs <adapter.tar.gz>');
 const body = fs.readFileSync(file);
 const sha = crypto.createHash('sha256').update(body).digest('hex');
-const key = `private/models/translation-student-5793/${sha.slice(0, 16)}/adapter-qwen3-8b-lora.tar.gz`;
+// images.sourcelibrary.org serves ANY key in the bucket (checked: 200), so the only protection is an unguessable
+// segment that is never published; anyone with the R2 keys finds it by listing the prefix.
+const key = `private/models/translation-student-5793/${crypto.randomBytes(16).toString('hex')}/adapter-qwen3-8b-lora.tar.gz`;
 const s3 = new S3Client({ region: 'auto', endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
   credentials: { accessKeyId: process.env.R2_ACCESS_KEY_ID, secretAccessKey: process.env.R2_SECRET_ACCESS_KEY } });
 await s3.send(new PutObjectCommand({ Bucket: process.env.R2_BUCKET_NAME, Key: key, Body: body, ContentType: 'application/gzip',
