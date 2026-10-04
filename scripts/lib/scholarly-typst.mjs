@@ -741,9 +741,11 @@ export function generateTypstSource(book, pages, options = {}) {
 
   // "Title: Subtitle" reads better on a title page as two lines of different weight
   const coverDisplay = displayTitle(bookTitle, { author });
-  const colon = coverDisplay.indexOf(': ');
-  const mainTitle = colon > 0 ? coverDisplay.slice(0, colon) : coverDisplay;
-  const subTitle = colon > 0 ? coverDisplay.slice(colon + 2) : '';
+  // A catalogue title often joins work and volume with a spaced dash
+  // ("Utriusque Cosmi Historia - Tomus Primus"): that is a subtitle too
+  const sep = coverDisplay.match(/: | [-–—] /);
+  const mainTitle = sep ? coverDisplay.slice(0, sep.index) : coverDisplay;
+  const subTitle = sep ? coverDisplay.slice(sep.index + sep[0].length) : '';
   // The original-language line above the title, when it says something the
   // English title does not
   const coverOriginal = displayTitle(book.title, { author });
@@ -901,11 +903,11 @@ ${TYPST_PREAMBLE}
   #set par(first-line-indent: 0pt, justify: false, leading: 0.42em)
   #set text(fill: gold, hyphenate: false)
   #align(center, block(width: 140mm, {
-    v(${frontispieceFile ? 30 : 58}mm)
+    v(${frontispieceFile ? 24 : 58}mm)
     ${frontispieceFile
-      ? `box(stroke: 0.9pt + gold, inset: 1.6mm, box(stroke: 0.4pt + gold, image(${typstString(frontispieceFile)}, height: 100mm, fit: "contain")))`
+      ? `box(stroke: 0.9pt + gold, inset: 1.6mm, box(stroke: 0.4pt + gold, image(${typstString(frontispieceFile)}, height: 122mm, fit: "contain")))`
       : 'sl-mark(40mm, gold)'}
-    v(15mm)
+    v(${frontispieceFile ? 10 : 15}mm)
     ${coverOriginal && coverOriginal !== coverDisplay ? `text(size: 16pt, style: "italic")[${escapeTypst(shorten(coverOriginal, 90))}]
     v(7mm)` : ''}
     text(size: ${coverTitleSize}pt, weight: "bold", tracking: 0.1em, fill: foil, upper[${escapeTypst(coverTitle)}])
@@ -1510,6 +1512,24 @@ function plateTypst(il) {
   return `#plate(${typstString(il.file)}, ${widthMm.toFixed(1)}mm, "${il.page_number}", ${parts.join(', ')})`;
 }
 
+/**
+ * The caption pass's model output, keys repaired: it sometimes writes
+ * "box_ 2d" or "label" for "box_2d" and "title". A box must be four numbers
+ * on the 0–1000 scale with positive area, or it is dropped (null).
+ */
+export function normalizeCaptionFigure(fig) {
+  const out = {};
+  for (const [k, v] of Object.entries(fig || {})) {
+    const key = k.replace(/\s+/g, '').toLowerCase();
+    if (/^box/.test(key)) out.box_2d = v;
+    else if (key === 'title' || key === 'label' || key === 'caption') out.title ??= v;
+    else out[key] = v;
+  }
+  const b = Array.isArray(out.box_2d) ? out.box_2d.map(Number) : null;
+  out.box_2d = b && b.length === 4 && b.every(n => n >= 0 && n <= 1000) && b[2] > b[0] && b[3] > b[1] ? b : null;
+  return out;
+}
+
 const isBareMark = s => /^[\p{L}\p{N}]{1,2}[.,]?$/u.test(String(s).trim());
 
 /**
@@ -1621,10 +1641,13 @@ export async function fetchIllustrations(db, book, { concurrency = 6, captions =
   const captioned = new Set();
   for (const d of wanted) {
     const cap = captions?.[d.page_number];
-    if (cap?.figures?.length && cap.scan_url?.includes(String(book.id))) {
+    const figs = (cap?.figures || []).map(normalizeCaptionFigure);
+    // Every figure needs a usable box, or the page keeps its gallery crop: a
+    // missing box would otherwise print the whole page, text and all
+    if (figs.length && figs.every(f => f.box_2d) && cap.scan_url?.includes(String(book.id))) {
       if (captioned.has(d.page_number)) continue;
       captioned.add(d.page_number);
-      cap.figures.forEach(fig => jobs.push({ page_number: d.page_number, type: d.type, url: cap.scan_url, box: fig.box_2d, caption: fig }));
+      figs.forEach(fig => jobs.push({ page_number: d.page_number, type: d.type, url: cap.scan_url, box: fig.box_2d, caption: fig }));
     } else {
       jobs.push({ page_number: d.page_number, type: d.type, url: d.extracted_url });
     }
@@ -1634,7 +1657,9 @@ export async function fetchIllustrations(db, book, { concurrency = 6, captions =
   const scans = new Map(); // one fetch per page, however many figures it holds
   const getImage = url => {
     if (!scans.has(url)) {
-      scans.set(url, fetch(url, { signal: AbortSignal.timeout(30000), headers: { 'User-Agent': 'SourceLibrary-scholarly-pdf/1.0 (+https://sourcelibrary.org)' } })
+      // Full page scans run to several MB and arrive six at a time: the
+      // timeout covers the body too, and 30s dropped a fifth of the plates
+      scans.set(url, fetch(url, { signal: AbortSignal.timeout(120000), headers: { 'User-Agent': 'SourceLibrary-scholarly-pdf/1.0 (+https://sourcelibrary.org)' } })
         .then(res => (res.ok ? res.arrayBuffer() : null)).then(b => (b ? Buffer.from(b) : null)));
     }
     return scans.get(url);
@@ -1647,12 +1672,14 @@ export async function fetchIllustrations(db, book, { concurrency = 6, captions =
       const j = jobs[i];
       try {
         const raw = await getImage(j.url);
-        if (!raw) continue;
+        if (!raw) { console.warn(`plate on source page ${j.page_number} left out: image fetch failed`); continue; }
         let img = sharp(raw).rotate();
         if (j.box) {
           // box_2d is [ymin, xmin, ymax, xmax] on 0–1000 of the whole page
           const { width: W, height: H } = await sharp(raw).rotate().metadata();
-          const [y0, x0, y1, x1] = j.box.map(Number);
+          // A model's box hugs the ink and clips a corner; give it a little paper
+          const pad = 12;
+          const [y0, x0, y1, x1] = j.box.map(Number).map((v, k) => (k < 2 ? Math.max(0, v - pad) : Math.min(1000, v + pad)));
           const left = Math.max(0, Math.floor((x0 / 1000) * W)), top = Math.max(0, Math.floor((y0 / 1000) * H));
           const w = Math.min(W - left, Math.ceil(((x1 - x0) / 1000) * W)), h = Math.min(H - top, Math.ceil(((y1 - y0) / 1000) * H));
           if (!(w > 20 && h > 20)) continue;
@@ -1661,7 +1688,10 @@ export async function fetchIllustrations(db, book, { concurrency = 6, captions =
         const { data, info } = await img.resize(1800, 1800, { fit: 'inside', withoutEnlargement: true })
           .jpeg({ quality: 84 }).toBuffer({ resolveWithObject: true });
         out[i] = { page_number: j.page_number, type: j.type, caption: j.caption || null, buffer: data, width: info.width, height: info.height };
-      } catch { /* soft: the plate is left out */ }
+      } catch (err) {
+        // Soft — the edition is complete without it — but never silent
+        console.warn(`plate on source page ${j.page_number} left out: ${err.message}`);
+      }
     }
   }));
   return out.filter(Boolean);

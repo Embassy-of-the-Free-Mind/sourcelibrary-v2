@@ -27,6 +27,7 @@ import sharp from 'sharp';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { callGemini } from '../lib/gemini-script-client.mjs';
+import { normalizeCaptionFigure } from '../lib/scholarly-typst.mjs';
 
 const MODEL = 'gemini-3-flash-preview';
 const args = process.argv.slice(2);
@@ -62,7 +63,7 @@ Return only JSON: {"figures": [ ... ]}`;
 function parseJson(text) {
   const m = text.match(/\{[\s\S]*\}/);
   if (!m) throw new Error(`no JSON in reply: ${text.slice(0, 200)}`);
-  return JSON.parse(m[0]);
+  try { return JSON.parse(m[0]); } catch (err) { throw new Error(`${err.message} — reply starts: ${m[0].slice(0, 120)}`); }
 }
 
 const client = new MongoClient(process.env.MONGODB_URI);
@@ -91,7 +92,8 @@ try {
     const raw = Buffer.from(await (await fetch(scanUrl)).arrayBuffer());
     const meta = await sharp(raw).metadata();
     const image = await sharp(raw).rotate().resize(1600, 1600, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85 }).toBuffer();
-    try {
+    // Malformed JSON is the common failure and a second ask usually clears it
+    for (let attempt = 1; attempt <= 2; attempt++) try {
       const { text } = await callGemini({
         model: MODEL,
         prompt: PROMPT({ ocr: page?.ocr?.data || '', translation: page?.translation?.data || '', count: byPage.get(n).length }),
@@ -101,12 +103,14 @@ try {
         bookId,
         pageIds: page?._id ? [String(page._id)] : undefined,
         maxOutputTokens: 4000,
+        responseMimeType: 'application/json',
       });
-      const { figures } = parseJson(text);
+      const figures = parseJson(text).figures.map(normalizeCaptionFigure);
       cache.pages[n] = { scan_url: scanUrl, scan_width: meta.width, scan_height: meta.height, figures };
       console.log(`p${n}: ${figures.length} figure(s) — ${figures.map(f => `${f.title} [${(f.inscriptions || []).length} insc, ${(f.key || []).length} key]`).join(' | ')}`);
+      break;
     } catch (err) {
-      console.warn(`p${n}: ${err.message}`);
+      console.warn(`p${n} (attempt ${attempt}): ${err.message}`);
     }
     writeFileSync(outFile, JSON.stringify(cache, null, 1));
   }
