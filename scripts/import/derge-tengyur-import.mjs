@@ -357,7 +357,7 @@ async function measureSegments(vol, canvases, pages, ig) {
           const far = (side + Math.floor(pages.length / 2)) % pages.length;
           const score = scoreRead(texts.get(ci) ?? '', pages, side, { far, floor: ALIGN_RULES.informativeFloor });
           const cls = sampleClass(score);
-          seg.samples.push({ canvas: ci, side: pages[side].label, read_sha: sha16(texts.get(ci) ?? ''), class: cls, score });
+          seg.samples.push({ canvas: ci, label: `→ ${pages[side].label}`, side: pages[side].label, read_sha: sha16(texts.get(ci) ?? ''), class: cls, score });
           log(`  v${vol} verify [${seg.from}–${seg.to}] canvas ${ci} → side ${pages[side].label}: identity ${score.identity} shift ${score.measured_shift} control ${score.control} → ${cls}`);
         }
         const vd = volumeVerdict(seg.samples, { ...ALIGN_RULES, minScored: SR.minSegmentAligned });
