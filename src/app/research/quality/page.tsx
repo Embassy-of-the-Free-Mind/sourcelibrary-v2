@@ -481,6 +481,50 @@ function CeilingTable() {
   );
 }
 
+/* Transcription floor (#5762): two human transcriptions of the same printed page, and our OCR against each.
+   Source: scripts/eval/results/human-ceiling-5762-2026-10/transcription/table.md (pooled CER, 95% CI over books). */
+type FloorRow = { label: string; sub?: boolean; pages: string; human: string; second: string; ours: string; grade: string };
+const FLOOR_ROWS: FloorRow[] = [
+  { label: 'English, same edition', pages: '84 (31)', human: '0.14% (0.08–0.21)', second: '0.23% (0.13–0.33)', ours: '2.61% (0.33–5.91) / 2.61% (0.33–5.94); median page 0.06% / 0.00%; 67 pages, 26 books', grade: 'directional' },
+  { label: 'Wikisource × Project Gutenberg', sub: true, pages: '62 (24)', human: '0.11% (0.05–0.19)', second: '0.16%', ours: '3.25% / 3.28%; median page 0.00%; 47 pages', grade: 'exploratory' },
+  { label: 'EEBO-TCP × Project Gutenberg (pre-1700)', sub: true, pages: '15 (5)', human: '0.13% (0.03–0.27)', second: '0.26%', ours: '0.77% (0.26–1.04) / 0.73% (0.16–1.02); 15 pages', grade: 'exploratory' },
+  { label: 'Wikisource × EEBO-TCP', sub: true, pages: '7 (3)', human: '0.36% (0.30–0.51)', second: '0.69%', ours: '2.95% / 2.74%; 5 pages', grade: 'exploratory' },
+  { label: 'Greek, same edition', pages: '41 (24)', human: '0.43% (0.08–0.76)', second: '1.09% (0.69–1.44)', ours: '0.15% / 0.12%; 4 pages of 2 books, a note only', grade: 'exploratory' },
+  { label: 'Perseus × First1KGreek', sub: true, pages: '24 (15)', human: '0.39% (0.03–0.67)', second: '0.76%', ours: '–', grade: 'exploratory' },
+  { label: 'Chinese, Taishō, CBETA × SAT', pages: '54 (52)', human: '2.87% (2.61–3.14)', second: '0.28% (0.20–0.38)', ours: '12%, 14%, 44% against CBETA; 3 pages of one volume, a note only', grade: 'decision-grade' },
+];
+
+function FloorTable() {
+  return (
+    <div className="overflow-x-auto my-4">
+      <table className="w-full min-w-[820px] text-sm">
+        <thead>
+          <tr className="border-b border-light text-left text-muted align-bottom">
+            <th className="py-2 pr-3 font-medium">Two transcriptions</th>
+            <th className="py-2 pr-3 font-medium text-right">Pages (books)</th>
+            <th className="py-2 pr-3 font-medium">Human against human, letters</th>
+            <th className="py-2 pr-3 font-medium">Second normalisation</th>
+            <th className="py-2 pr-3 font-medium">Our OCR against A / B</th>
+            <th className="py-2 font-medium">Grade</th>
+          </tr>
+        </thead>
+        <tbody className="tabular-nums">
+          {FLOOR_ROWS.map(r => (
+            <tr key={r.label} className="border-b border-light align-top">
+              <td className={`py-2 pr-3 leading-snug ${r.sub ? 'pl-4 text-secondary' : 'text-primary'}`}>{r.label}</td>
+              <td className="py-2 pr-3 text-right text-secondary">{r.pages}</td>
+              <td className="py-2 pr-3 text-secondary">{r.human}</td>
+              <td className="py-2 pr-3 text-secondary">{r.second}</td>
+              <td className="py-2 pr-3 text-secondary">{r.ours}</td>
+              <td className="py-2 text-muted">{r.grade}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 /* ── Page furniture for the results part: block headings, callouts, key findings, contents ── */
 function Block({ id, title, lede, children }: { id: string; title: string; lede?: ReactNode; children: ReactNode }) {
   return (
@@ -1205,7 +1249,7 @@ export default function ResearchQualityPage() {
       </div>
 
       <article className="prose-content max-w-none">
-        {/* ── Abstract (Derek's draft, verbatim, except the paragraph on published translations and the first sentence of the last, added 2026-10-03 for #5695) ── */}
+        {/* ── Abstract (Derek's draft, verbatim, except the paragraph on published translations and the first sentence of the last, added 2026-10-03 for #5695, and that paragraph's last sentence, added 2026-10-04 for #5762) ── */}
         <section className="border-l-2 border-accent-rust pl-5 md:pl-6 mb-10">
           <h2 className="text-xs uppercase tracking-[0.16em] text-muted font-semibold mb-4">Abstract</h2>
           <p className="text-secondary leading-relaxed mb-4">
@@ -1218,7 +1262,7 @@ export default function ResearchQualityPage() {
             <strong className="text-primary">Translation.</strong> A source-grounded model judge (Claude Opus) rated one random page from each of 311 books. With planted controls passing, it rated 89% of pages faithful to their transcription (95% CI 85–92), and 71% for non-Latin scripts. The judge reads text only. A model check of 20 of those pages against their scans found two that showed a different page from the one transcribed. The judge could not have seen either.
           </p>
           <p className="text-secondary leading-relaxed mb-4">
-            <strong className="text-primary">Against published translations.</strong> On 321 pages in 14 languages we also scored the served English against a published human translation of the same passage, with two model judges. It scores 4.4 of 5 on German, French, Italian, Dutch and Spanish print, 4.2 on Latin, 3.6 on Greek and on Sanskrit, Pali and Chinese, and 3.4 on Hebrew, Arabic and Persian. In Greek, Hebrew, Arabic and Persian most low pages begin with a wrong transcription, which no translator recovers. Flash translates more faithfully than Flash-Lite in every language group, and since 3 October it translates new pages in Greek, Hebrew, Aramaic, Arabic, Persian, Sanskrit, Pali and Chinese.
+            <strong className="text-primary">Against published translations.</strong> On 321 pages in 14 languages we also scored the served English against a published human translation of the same passage, with two model judges. It scores 4.4 of 5 on German, French, Italian, Dutch and Spanish print, 4.2 on Latin, 3.6 on Greek and on Sanskrit, Pali and Chinese, and 3.4 on Hebrew, Arabic and Persian. In Greek, Hebrew, Arabic and Persian most low pages begin with a wrong transcription, which no translator recovers. Flash translates more faithfully than Flash-Lite in every language group, and since 3 October it translates new pages in Greek, Hebrew, Aramaic, Arabic, Persian, Sanskrit, Pali and Chinese. A second published translator, scored the same way against the first, gets 4.2 on Greek and 4.1 on Latin, and on pages with a correct transcription Flash is at that level, but one of its pages in five scores 3 or lower, against one human page in thirty.
           </p>
           <p className="text-secondary leading-relaxed mb-4">
             <strong className="text-primary">By language.</strong> The picture is uneven. Latin, English and German, two-thirds of translated pages, have measured transcription (0.6–5.3% character error on the current engine) and the judge rated 92–97% of their pages faithful. Greek, a tenth of the library, is the largest gap: 11% character error on the current engine (6.6% on Flash) and 75% rated faithful. French, Italian, Dutch and Spanish, about 13% of translated pages, have no transcription measurement at all, and most smaller languages have too few judged books to compare with each other. Chinese shows 19–25% character error, but against other editions of the same texts, so part of that may be variant characters rather than misreads. The grid below gives every language.
@@ -1432,6 +1476,16 @@ export default function ResearchQualityPage() {
           </P>
           <P>
             On Latin, with {LATIN_FLASH.books} referenced books, the median character error rate is {pc1(LATIN_FLASH.median)} for Gemini 3 Flash ({LATIN_FLASH.pages} aligned pages, 95% CI {pc1(LATIN_FLASH.ci[0])}–{pc1(LATIN_FLASH.ci[1])}) and {pc1(LATIN_LITE.median)} for Gemini 3.1 Flash-Lite, the cheaper engine that has read every new page in every language since 11 September 2026 ({LATIN_LITE.pages} pages, CI {pc1(LATIN_LITE.ci[0])}–{pc1(LATIN_LITE.ci[1])}). Both cells are decision-grade.<N n={1} /> Most cells are not. Of the {n0(ocrEvidence.totals.cells)} cells in the evidence table, {CELL_GRADES['decision-grade']} are decision-grade, {CELL_GRADES.directional} directional and {n0(CELL_GRADES.exploratory)} exploratory.<N n={1} /> The language grid above shows where the decision-grade cells fall. Japanese, Sanskrit, Arabic, Korean, Persian, Ge&rsquo;ez and Pali have no reference pages at all, and Hebrew has four, all in square script.<N n={2} /> For those scripts we cannot yet say how accurate the transcription is.
+          </P>
+          <P>
+            <strong id="transcription-floor" className="scroll-mt-24">How far apart are two human transcriptions?</strong> Every character error rate above is measured against one human transcription, which has errors of its own. To see how large they are, we found 183 pages, from 104 printed books or works, that two independent projects had transcribed from the same edition, and scored the two against each other with the same normalisation used for our OCR. The edition was checked on every pair: 22 pages were read against the page image, first and last line on both cuts, and the rest by title page, TEI header or shared line numbering; a pair from a different edition was kept apart, not forced. Pairs where one source was copied from the other were rejected (51 candidates, including the Kanripo and CBETA pair, which share a base text). This is agreement between two references, neither of them the truth; our OCR against each is accuracy against that reference.<N n={32} />
+          </P>
+          <FloorTable />
+          <p className="text-xs text-muted leading-relaxed mt-1 mb-4">
+            Pooled character error over each pair, both directions, with a 95% interval over books. Letters only: case, punctuation, spacing, diacritics and line breaks are folded. The second normalisation keeps diacritics (English, Greek accents and breathings) or, for Chinese, folds the 41 character pairs that recur five or more times in the same direction, a rule derived from these same pages. The Greek and Chinese pages we hold are too few to grade. Grades count books: under 30 exploratory, 30 to 49 directional, 50 or more decision-grade.<N n={32} />
+          </p>
+          <P>
+            Two careful transcriptions of English print differ by about one letter in 700 (0.14%), and 58% of pages have no letter difference. Our OCR&rsquo;s median page is inside that (0.06%), and on 46 of 67 pages it is no further from one transcription than the other transcription is. The pooled 2.6% is a tail: 10 of 67 pages exceed 1%, against 1 of 84 for the humans, and three pages of two books, set with shoulder notes or in two columns, reach 34–71% (<em>Thoughts on Art and Life</em>, <Link href="/book/6991eb102f801130a473f7be?page=66" className="text-accent-rust hover:underline">p. 66</Link> and <Link href="/book/6991eb102f801130a473f7be?page=84" className="text-accent-rust hover:underline">p. 84</Link>; <em>The Invention of Printing</em>, <Link href="/book/699200c37c226bdd25f97afd?page=395" className="text-accent-rust hover:underline">p. 395</Link>) because our text keeps marginal notes that both transcriptions leave out. Without them our figure is 0.59%. On the pre-1700 pages it is 0.75% against a human floor of 0.13%. Polytonic Greek has a floor of 0.43% on letters and 1.09% with accents and breathings: two keyings of one edition disagree on a diacritic about once in 90–180 letters. CBETA and SAT differ on 2.87% of the characters of the same Taishō page, and almost all of it is convention: one writes standard forms, the other the forms printed. Folded, they differ on 0.28%. So any Chinese character error measured against a reference in another glyph convention carries about 2.6 points of convention distance. In practice, a reported error below about 0.2% for English, 0.5% for Greek letters or 0.3% for Chinese is at the floor of the references themselves and should not be ranked. The floor is measured on clean prose pages; tables, verse and pages heavy with apparatus are under-represented.<N n={32} />
           </P>
           <P>
             One narrower accuracy check reads the numbers. On English books printed 1800–1930, every printed number on which two engines disagreed was cropped from the page image and read blind by a model, with no engine&rsquo;s reading on the sheet. Of 5,212 printed numbers across 82 books, the Internet Archive&rsquo;s own OCR had 5.1% wrong (CI 3.8–7.4) and Flash-Lite 1.8% (CI 1.1–3.1). This is directional, and the reader of the crops was a model, not a person.<N n={3} />
