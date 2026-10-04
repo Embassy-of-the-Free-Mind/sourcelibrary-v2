@@ -138,7 +138,7 @@ export async function GET() {
   // 5. Warm browse A-Z pages
   const browseResults = await warmBatch(
     baseUrl,
-    BROWSE_LETTERS.flatMap(l => [`/browse/titles/${l}`, `/browse/authors/${l}`]),
+    [...BROWSE_LETTERS.flatMap(l => [`/browse/titles/${l}`, `/browse/authors/${l}`]), '/browse/titles/other'],
     4
   );
 
