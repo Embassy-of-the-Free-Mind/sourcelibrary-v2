@@ -29,4 +29,4 @@ corpus-wide self-hosted run possible instead of per-token billing.
 one laptop. *Replicated?* The Jev arm replicates the 2026-09-24 pilot. **Artifact:**
 `scripts/eval/jev/clef-vs-jev-instruction.py`; summary `scripts/eval/results/clef-vs-jev-instruction-2026-10-04.json`.
 Clef is called at `api.cloudflare.com/client/v4/accounts/<acct>/ai/run/@cf/cloudflare/clef[-flash]` with
-`CF_ANALYTICS_TOKEN` (the only SL Cloudflare token with Workers AI scope; `CLOUDFLARE_API_TOKEN` 401s). Total $0.155.
+`CF_ANALYTICS_TOKEN` (the only SL Cloudflare token with Workers AI scope; `CLOUDFLARE_API_TOKEN` 401s). The Clef dollar figures are list price; the account is on the Workers **free** plan (10,000 neurons/day), which this run fit inside and a follow-up image test then exhausted (HTTP 429). Real spend $0.019 (Jev).
