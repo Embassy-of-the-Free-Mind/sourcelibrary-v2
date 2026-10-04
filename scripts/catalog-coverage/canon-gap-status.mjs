@@ -41,9 +41,9 @@ const SHELF = 'scripts/catalog-coverage/eternity-shelf-5513.json';
 // status: done | running | next | blocked. cost_usd: the next action's cost where it has one.
 const STATUS = {
   'derge-tengyur': { status: 'running', owner_issue: 5497,
-    done: '213 volumes imported hidden and held, 128,369 of 128,639 pages carry the Esukhia public-domain text, aligned folio by folio to the BDRC scans and verified on sampled reads. Translation pilot on 5 volumes: 1,269 pages for $1.90.',
-    next_action: 'Draft English for every page (approved by Derek, hard cap $200): gemini-3-flash-preview, one page per request, chosen over the pilot\'s chained blocks on 113 pages judged against 84000 (#5497). Volumes stay hidden; publishing them as an unreviewed machine draft is Derek\'s decision once the reader shows the licence and draft label (#5571).',
-    cost_usd: 200 },
+    done: '213 volumes imported hidden and held; 128,369 of 128,639 pages carry the Esukhia public-domain text, aligned folio by folio to the BDRC scans. Draft English for 110,952 pages (187 volumes) with gemini-3-flash-preview, one page per request, for about $197; an unreviewed machine draft, with about 2 to 5 reversed statements per 100 pages measured against 84000.',
+    next_action: 'Publishing the drafted volumes as an unreviewed machine draft is Derek\'s decision once the reader shows the licence and draft label (#5571). The last 26 volumes (17,400 pages: the end of the tantra commentaries, grammar, medicine, miscellany and the catalogue) need about $31 more at the measured rate.',
+    cost_usd: 31 },
   'derge-kangyur': { status: 'running', owner_issue: 5665,
     next_action: 'Import running (held_books / pages_with_text count it): BDRC W4CZ5369, the Library of Congress copy the e-text transcribes, plus the Esukhia public-domain text, aligned folio by folio, with the texts 84000 has published or has in progress marked per page. Then archive the images ($0 model spend) and price a draft English for the texts 84000 has not begun.',
     cost_usd: 0 },
