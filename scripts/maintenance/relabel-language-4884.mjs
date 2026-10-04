@@ -133,13 +133,16 @@ async function phasePick() {
   const { imageUrlFor } = await import('../eval/langid-5777.mjs');
   const second = has('second');
   let cands = readJsonl(inDir('candidates.jsonl'));
+  const firstPage = new Map();
   if (second) {
-    const want = new Set(firstReads().filter((r) => r.disagrees || r.compound).map((r) => r.book_id));
-    cands = cands.filter((c) => want.has(c.book_id));
+    const fr = firstReads().filter((r) => r.disagrees || (r.compound && r.reads.length));
+    for (const r of fr) firstPage.set(r.book_id, r.reads.find((x) => x.read === 1)?.page_number);
+    cands = cands.filter((c) => firstPage.has(c.book_id));
   }
   const fraction = second ? 0.72 : 0.4;
   const picksPath = inDir('picks.jsonl');
   const have = new Set(readJsonl(picksPath).map((p) => p.book_id));
+  for (const d of readJsonl(inDir('deferred.jsonl'))) have.add(d.read === 2 ? `${d.book_id}~2` : d.book_id);
   const deferred = [];
   let written = 0;
   await withDb(async (db) => {
@@ -147,7 +150,9 @@ async function phasePick() {
     for (const c of cands) {
       const key = second ? `${c.book_id}~2` : c.book_id;
       if (have.has(key)) continue;
-      const order = around(c.pages_count, fraction);
+      let order = around(c.pages_count, fraction, second ? 10 : 6);
+      // The confirming read takes a page of the OTHER parity, so a facing-page edition shows both sides.
+      if (second) { const p1 = firstPage.get(c.book_id); order = order.filter((n) => p1 == null || (n % 2 !== p1 % 2 && Math.abs(n - p1) > 1)); }
       const docs = await pages.find({ book_id: c.book_id, page_number: { $in: order } }, { projection: { id: 1, page_number: 1, photo: 1, photo_original: 1, display_photo: 1, archived_photo: 1, enhanced_photo: 1, cropped_photo: 1, split_from_spread: 1, crop: 1, page_type: 1, 'image_characteristics.flags.is_blank': 1 } }).toArray();
       const byNum = new Map(docs.map((d) => [d.page_number, d]));
       const good = [], poor = [];
@@ -168,10 +173,131 @@ async function phasePick() {
   console.log(`picks written: ${written}; deferred: ${deferred.length}`); console.log(t);
 }
 
-function firstReads() { return []; }
+// ── reads ──────────────────────────────────────────────────────────────────────────────────────
+
+/** The reader's free-text language → ordered vocabulary codes ("Sanskrit and Hindi" → [san, hin]). */
+export function observedCodes(verdict) {
+  if (!verdict || verdict.content === 'no_text' || /^(none|unknown)$/i.test(verdict.language || '')) return [];
+  return toLanguageCodes(verdict.language).codes;
+}
+
+/** One row per candidate book: its label, its page reads, and whether the first read contradicts the label. */
+function firstReads() {
+  const cands = new Map(readJsonl(inDir('candidates.jsonl')).map((c) => [c.book_id, c]));
+  const reads = new Map();
+  for (const r of readJsonl(inDir('raw.jsonl'))) {
+    if (r.error || !r.verdict) continue;
+    const [id, n] = r.book_id.split('~');
+    if (!reads.has(id)) reads.set(id, new Map());
+    reads.get(id).set(`${n || 1}:${r.page_number}`, { read: Number(n || 1), page_number: r.page_number, ...r.verdict, codes: observedCodes(r.verdict) });
+  }
+  const out = [];
+  for (const [id, c] of cands) {
+    const rs = [...(reads.get(id)?.values() || [])].sort((a, b) => a.read - b.read);
+    const label = toLanguageCodes(c.language).codes;
+    const labelFams = new Set(label.map(codeFamily));
+    const r1 = rs.find((r) => r.read === 1);
+    const disagrees = !!r1 && r1.codes.length > 0 && !r1.codes.some((x) => labelFams.has(codeFamily(x)));
+    out.push({ ...c, label, compound: label.length > 1 || c.language_multi === true, reads: rs, disagrees });
+  }
+  return out;
+}
+
+// ── --propose ──────────────────────────────────────────────────────────────────────────────────
+
+const MIN_CONFIDENCE = 0.8;
+const TRANSLATION_ROLES = new Set(['modern-translation', 'period-translation', 'translation']);
+/** language-fields.md: provenance and tradition, not a mislabel. Label family → observed family never flipped. */
+const NEVER_FLIP = new Set(['kor>zho', 'jpn>zho', 'vie>zho', 'bod>san', 'mon>bod', 'mnc>zho']);
+
+/** The second instrument where the book has OCR: the per-page <language> tag, one vote per family per page. */
+async function tagTally(db, bookId) {
+  const rows = await db.collection('pages').aggregate([
+    { $match: { book_id: bookId, 'ocr.data': { $type: 'string' } } },
+    { $project: { m: { $regexFind: { input: '$ocr.data', regex: '<language>([^<]{0,200})</language>' } } } },
+    { $group: { _id: { $arrayElemAt: ['$m.captures', 0] }, n: { $sum: 1 } } },
+  ]).toArray();
+  const fam = new Map(); let tagged = 0;
+  for (const r of rows) {
+    if (!r._id) continue;
+    const fams = new Set(toLanguageCodes(r._id).codes.map(codeFamily));
+    if (!fams.size) continue;
+    tagged += r.n;
+    for (const f of fams) fam.set(f, (fam.get(f) || 0) + r.n);
+  }
+  return { tagged, shares: Object.fromEntries([...fam].sort((a, b) => b[1] - a[1]).map(([f, n]) => [f, +(n / tagged).toFixed(3)])) };
+}
+
+/**
+ * The decision for one book. `flip` needs TWO page reads from different parts of the book (opposite
+ * page parity, so a facing-page edition shows both of its sides) naming one language family the label
+ * does not carry, each at confidence ≥ 0.8 on a text page; and, where the book has ≥ 10 OCR-tagged
+ * pages, the tags must put that family first at ≥ 60% and the label's family under 10%.
+ */
+export function decide(row, tags) {
+  const usable = row.reads.filter((r) => r.codes.length && r.content === 'text' && (r.confidence ?? 0) >= MIN_CONFIDENCE);
+  const r1 = usable.find((r) => r.read === 1), r2 = usable.find((r) => r.read === 2);
+  if (!row.reads.length) return { decision: 'unread' };
+  if (!row.disagrees) return { decision: 'label-confirmed' };
+  if (!r1 || !r2) return { decision: 'report', why: 'fewer than two confident text reads' };
+  const labelFams = new Set(row.label.map(codeFamily));
+  const f1 = codeFamily(r1.codes[0]), f2 = codeFamily(r2.codes[0]);
+  if (r1.codes.length > 1 || r2.codes.length > 1) return { decision: 'report', why: 'a read names two languages on one page' };
+  if (labelFams.has(f2)) return { decision: 'report', why: `mixed: one page ${languageName(r1.codes[0])}, one page in the label's language` };
+  if (f1 !== f2) return { decision: 'report', why: `two reads disagree (${languageName(r1.codes[0])} / ${languageName(r2.codes[0])})` };
+  if (NEVER_FLIP.has(`${codeFamily(row.label[0])}>${f1}`)) return { decision: 'report', why: 'tradition class (language-fields.md): never flipped' };
+  if (TRANSLATION_ROLES.has(row.text_role)) return { decision: 'report', why: `text_role ${row.text_role}` };
+  if (row.compound) return { decision: 'report', why: 'compound label: curatorial' };
+  if (tags && tags.tagged >= 10) {
+    const top = Object.keys(tags.shares)[0];
+    const labelShare = Math.max(0, ...[...labelFams].map((f) => tags.shares[f] || 0));
+    if (top !== f1 || tags.shares[top] < 0.6) return { decision: 'report', why: `OCR tags do not put ${languageName(r1.codes[0])} first at ≥ 60%` };
+    if (labelShare >= 0.1) return { decision: 'report', why: `label language on ${Math.round(labelShare * 100)}% of OCR-tagged pages: bilingual, curatorial` };
+  }
+  // Same code on both reads keeps it; two stages of one family fall back to the family's own code.
+  const to = r1.codes[0] === r2.codes[0] ? r1.codes[0] : f1;
+  return { decision: 'flip', to, instruments: tags && tags.tagged >= 10 ? 'two page reads + OCR tags' : 'two page reads' };
+}
+
+/** Pattern = what the write would change, by name: "Greek → Latin". Rare targets fold into the script. */
+function writePattern(row, to) {
+  const from = languageName(row.label[0]);
+  return `${from} → ${languageName(to)}`;
+}
+
+async function phasePropose() {
+  const rows = firstReads();
+  const out = [];
+  await withDb(async (db) => {
+    for (const row of rows) {
+      const pre = decide(row, null);
+      const tags = pre.decision === 'flip' && row.pages_ocr > 0 ? await tagTally(db, row.book_id) : null;
+      const d = tags ? decide(row, tags) : pre;
+      out.push({
+        book_id: row.book_id, candidate_pattern: row.pattern, title: row.title, visible: row.visible, text_role: row.text_role, language: row.language,
+        languages: row.languages, language_multi: row.language_multi, original_language: row.original_language, status: row.status, hold: row.hold, provider: row.provider,
+        pages_count: row.pages_count, pages_ocr: row.pages_ocr, ...d, to_name: d.to ? languageName(d.to) : null, pattern: d.to ? writePattern(row, d.to) : null, ocr_tags: tags,
+        reads: row.reads.map((r) => ({ read: r.read, page_number: r.page_number, script: r.script, language: r.language, content: r.content, production: r.production, confidence: r.confidence, note: r.note })),
+      });
+    }
+  });
+  fs.writeFileSync(inDir('proposals.jsonl'), out.map((o) => JSON.stringify(o)).join('\n') + '\n');
+  const tally = (f, src = out) => { const t = {}; for (const o of src) { const k = f(o); t[k] = (t[k] || 0) + 1; } return Object.fromEntries(Object.entries(t).sort((a, b) => b[1] - a[1])); };
+  const summary = {
+    generated_at: new Date().toISOString(), candidates: out.length, by_decision: tally((o) => o.decision),
+    first_read_disagrees_by_candidate_pattern: tally((o) => o.candidate_pattern, rows.filter((r) => r.disagrees)),
+    read_by_candidate_pattern: tally((o) => o.candidate_pattern, rows.filter((r) => r.reads.length)),
+    flips_by_pattern: tally((o) => o.pattern, out.filter((o) => o.decision === 'flip')),
+    flips_visible_by_pattern: tally((o) => o.pattern, out.filter((o) => o.decision === 'flip' && o.visible)),
+    report_reasons: tally((o) => o.why.replace(/\(.*\)|\d+%|: one page .*/g, '').trim(), out.filter((o) => o.decision === 'report')),
+  };
+  fs.writeFileSync(inDir('proposals.summary.json'), JSON.stringify(summary, null, 2) + '\n');
+  console.log(JSON.stringify(summary, null, 1));
+}
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   if (has('candidates')) await phaseCandidates();
   else if (has('pick')) await phasePick();
+  else if (has('propose')) await phasePropose();
   else console.log('usage: --candidates | --pick | --propose | --write [--commit] | --undo [--commit]');
 }

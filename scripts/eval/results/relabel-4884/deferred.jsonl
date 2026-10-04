@@ -2026,3 +2026,500 @@
 {"book_id":"6a508cb078825bd7fdeb9f61","pattern":"greek-label/unread","visible":false,"read":1,"reason":"rate-limited host only (BSB / Vatican)"}
 {"book_id":"6a50571178825bd7fddb3251","pattern":"greek-label/unread","visible":false,"read":1,"reason":"rate-limited host only (BSB / Vatican)"}
 {"book_id":"6a508a6578825bd7fde9e1f2","pattern":"greek-label/unread","visible":false,"read":1,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"69e11af2b625c99d5585448d","pattern":"egyptian-label/greek-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69e11afeb625c99d5585449b","pattern":"egyptian-label/coptic-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69e11b0bb625c99d558544a9","pattern":"egyptian-label/other-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69e11b10b625c99d558544af","pattern":"egyptian-label/arabic-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69e11b52b625c99d558544d7","pattern":"egyptian-label/coptic-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69e11b65918f5a3cda71f88f","pattern":"egyptian-label/other-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"6a508f8d78825bd7fdee777c","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"6a94942e31b41d9c5744a91c","pattern":"indic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c1bfa18522835be846c2c8","pattern":"arabic-script/confusable","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"6992cc33b81ed280ee32680b","pattern":"cjk-label/latin-ocr-letters","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69937dc1d85e1d5bbdf32957","pattern":"greek-label/latin-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69c1bf4b8522835be846c282","pattern":"hebrew-label/syriac-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69c1bf678522835be846c28c","pattern":"arabic-label/latin-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69dea1f74d19ec2e9ba75a72","pattern":"indic-label/latin-ocr-letters","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"6a09ff1dfa20006dbaba89aa","pattern":"latin-label/latin-ocr-letters","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69e11aeeb625c99d55854488","pattern":"egyptian-label/latin-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69e11b14b625c99d558544b3","pattern":"egyptian-label/latin-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69e11b48b625c99d558544d4","pattern":"egyptian-label/latin-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69e11b58b625c99d558544d9","pattern":"egyptian-label/latin-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69e11b64b625c99d558544dc","pattern":"egyptian-label/latin-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69e11bb8b625c99d55854500","pattern":"egyptian-label/latin-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"6a37d7e4d07939943b24cbb5","pattern":"tibetan-label/cuneiform-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"6a508d7378825bd7fdec60a8","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3f91f2de785d8a2265d66","pattern":"arabic-script/confusable","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3f8652de785d8a2265d61","pattern":"arabic-script/confusable","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3ef102de785d8a2265ce4","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"6a37ca2206d55b107dad4816","pattern":"tibetan-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c1be778522835be846c1a9","pattern":"hebrew-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3c32b2de785d8a2265861","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3c22f2de785d8a226583e","pattern":"arabic-label/syriac-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3eb752de785d8a2265ca3","pattern":"arabic-label/syriac-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3ec0c2de785d8a2265cb2","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3ec352de785d8a2265cb7","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3ec892de785d8a2265cc1","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3fa392de785d8a2265d70","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3f0732de785d8a2265cf8","pattern":"cjk-label/syriac-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3fda62de785d8a2265d98","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3f6932de785d8a2265d4d","pattern":"cjk-label/syriac-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3f6492de785d8a2265d48","pattern":"cjk-label/syriac-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3f0f42de785d8a2265cfd","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3eec32de785d8a2265cdf","pattern":"cjk-label/syriac-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3fbae2de785d8a2265d7f","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3f8232de785d8a2265d5c","pattern":"arabic-script/confusable","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3f53d2de785d8a2265d39","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c405602de785d8a2265de3","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c4060d2de785d8a2265de8","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c409f22de785d8a2265e0b","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c419462de785d8a2265eab","pattern":"cjk-label/syriac-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c4082d2de785d8a2265dfc","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c404f72de785d8a2265dde","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c401cb2de785d8a2265dc0","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c424012de785d8a2265f28","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c438412de785d8a2265f64","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c41b952de785d8a2265ec4","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c437ef2de785d8a2265f41","pattern":"cjk-label/syriac-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c438d62de785d8a2265fa5","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c438ea2de785d8a2265faf","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c41d352de785d8a2265ed8","pattern":"cjk-label/hebrew-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c440032de785d8a2266075","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c441222de785d8a2266084","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c43fad2de785d8a2266070","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c4405d2de785d8a226607a","pattern":"cjk-label/syriac-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c445d42de785d8a22660a7","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c439362de785d8a2265fd2","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c459032de785d8a226616a","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c453c32de785d8a226612e","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c44d572de785d8a22660e3","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c44cc22de785d8a22660de","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c450cf2de785d8a226610b","pattern":"arabic-script/confusable","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c44c272de785d8a22660d9","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c44ace2de785d8a22660cf","pattern":"cjk-label/syriac-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c447862de785d8a22660b6","pattern":"arabic-script/confusable","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c4588a2de785d8a2266165","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c456f42de785d8a2266151","pattern":"cjk-label/syriac-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c454492de785d8a2266133","pattern":"cjk-label/arabic-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c451f12de785d8a226611a","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c450242de785d8a2266101","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c447292de785d8a22660b1","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c462332de785d8a22661ce","pattern":"arabic-label/syriac-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c4603d2de785d8a22661ba","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c39be12de785d8a22641bc","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c1bf748522835be846c29b","pattern":"arabic-script/confusable","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c1bf948522835be846c2c0","pattern":"hebrew-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c1bf608522835be846c288","pattern":"hebrew-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c398462de785d8a2263e7e","pattern":"greek-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c39a1b2de785d8a226401d","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c39c852de785d8a2264257","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c39c952de785d8a2264266","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c39e1a2de785d8a22643b0","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c39f5d2de785d8a22644da","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c39f002de785d8a2264482","pattern":"arabic-label/syriac-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3a2f22de785d8a22647e6","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3a3132de785d8a2264804","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3a2d02de785d8a22647c8","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3a2d62de785d8a22647cd","pattern":"arabic-label/syriac-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3a7f12de785d8a2264c37","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3a7f72de785d8a2264c3c","pattern":"arabic-label/syriac-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3a83c2de785d8a2264c6e","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3a8b52de785d8a2264ce1","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3a84f2de785d8a2264c7d","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3a8c42de785d8a2264cf0","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3a8552de785d8a2264c82","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"6a9499f531b41d9c5744d549","pattern":"indic-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"6a94a739bf723b215d8becd3","pattern":"devanagari/confusable","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"6a94c60b8e2a2ffc91d2493e","pattern":"indic-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c1bc5b8522835be84622f2","pattern":"hebrew-label/latin-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"6a2032c918654bf8e19037c4","pattern":"arabic-label/latin-ocr-letters","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69c1bbaf8522835be846058c","pattern":"hebrew-label/syriac-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69c1bbb78522835be8460590","pattern":"hebrew-label/syriac-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69c1be708522835be846c19d","pattern":"hebrew-label/latin-ocr-letters","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69c1bf288522835be846c264","pattern":"hebrew-label/syriac-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69c1bf6b8522835be846c28f","pattern":"hebrew-label/latin-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69e11af0918f5a3cda71f7dd","pattern":"egyptian-label/latin-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69e11af6918f5a3cda71f7ea","pattern":"egyptian-label/latin-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"6a19646a0e0fa2b70b0e2f1e","pattern":"southeast-asian-label/arabic-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69e11b8fb625c99d558544df","pattern":"egyptian-label/latin-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69c419cb2de785d8a2265eb0","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c41b332de785d8a2265ebf","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3d9462de785d8a2265afa","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3e61c2de785d8a2265c4e","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3ee222de785d8a2265cd5","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3f4992de785d8a2265d2f","pattern":"cjk-label/hebrew-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c4114f2de785d8a2265e5b","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c418ed2de785d8a2265ea6","pattern":"cjk-label/syriac-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c40d682de785d8a2265e29","pattern":"cjk-label/hebrew-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c437cb2de785d8a2265f32","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c4385e2de785d8a2265f73","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c41c132de785d8a2265ec9","pattern":"cjk-label/syriac-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c439512de785d8a2265fdc","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3959a2de785d8a2263c45","pattern":"arabic-label/mongolian-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"6a507f5578825bd7fde3f539","pattern":"greek-label/unread","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"6a19652cbc198340eea9311e","pattern":"southeast-asian-label/latin-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"6a19657dbc198340eea93130","pattern":"southeast-asian-label/latin-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69c3f3d12de785d8a2265d2a","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3ffb52de785d8a2265dac","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c452b22de785d8a2266124","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c44a252de785d8a22660ca","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c45ea02de785d8a22661a6","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c44eae2de785d8a22660f2","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c394c92de785d8a2263b1f","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3c23d2de785d8a2265843","pattern":"arabic-label/syriac-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3fc692de785d8a2265d89","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3fa942de785d8a2265d75","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3fe042de785d8a2265d9d","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3fcd32de785d8a2265d8e","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3f9ac2de785d8a2265d6b","pattern":"arabic-label/mongolian-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c3f7a92de785d8a2265d57","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c4005c2de785d8a2265db1","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c438282de785d8a2265f5a","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c4380f2de785d8a2265f50","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c421e02de785d8a2265f0a","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c438722de785d8a2265f82","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c41ff42de785d8a2265ef1","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c438a72de785d8a2265f91","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c438be2de785d8a2265f9b","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c437e42de785d8a2265f3c","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c442fd2de785d8a2266093","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c446a12de785d8a22660ac","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c44df62de785d8a22660e8","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c449582de785d8a22660c5","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c45e402de785d8a22661a1","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c451292de785d8a2266110","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c45f002de785d8a22661ab","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c45fd72de785d8a22661b5","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c447fc2de785d8a22660bb","pattern":"cjk-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c1bf0d8522835be846c240","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c395402de785d8a2263bca","pattern":"cjk-label/syriac-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c394f32de785d8a2263b5e","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c395332de785d8a2263bb8","pattern":"cjk-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"69c395132de785d8a2263b8b","pattern":"arabic-label/latin-pages","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"6a94d191c3eaca06302663fa","pattern":"indic-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"6a94d299c3eaca0630266680","pattern":"indic-label/latin-ocr-letters","visible":false,"read":2,"reason":"no page image"}
+{"book_id":"6a2032c618654bf8e19037b6","pattern":"arabic-label/latin-ocr-letters","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"69bfcd578ab50eb88e8c8301","pattern":"greek-label/latin-ocr-letters","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"6a1965d1bc198340eea93142","pattern":"southeast-asian-label/latin-pages","visible":true,"read":2,"reason":"no page image"}
+{"book_id":"6a50595b78825bd7fddc36e2","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5066ff78825bd7fdde9e1d","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50896578825bd7fde920da","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508ab178825bd7fdea21eb","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50594078825bd7fddc28a7","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50555778825bd7fdda9c8a","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a506f4f78825bd7fddfaba3","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508d5478825bd7fdec4393","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508f4778825bd7fdee384c","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50867b78825bd7fde6f982","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a505ae578825bd7fddcb32e","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a506ce978825bd7fddf826c","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50808178825bd7fde448b0","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508f7178825bd7fdee5d65","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508e0378825bd7fdecefdb","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a51ee13689f6d0dbe2e450a","pattern":"greek-label/latin-ocr-letters","visible":true,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507fba78825bd7fde4244d","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50556678825bd7fddaa001","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507db578825bd7fde35479","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5065a778825bd7fdde1147","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508bd378825bd7fdead2c6","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508ff278825bd7fdeec5a7","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50572a78825bd7fddb4e38","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50756e78825bd7fde18ab6","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507c7678825bd7fde2bef3","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50840378825bd7fde63df0","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50640278825bd7fddd72d3","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508bec78825bd7fdeaeeb8","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50891c78825bd7fde8e210","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50816878825bd7fde49912","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5083b678825bd7fde60814","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507e7778825bd7fde3675b","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5066e278825bd7fdde939c","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507f0f78825bd7fde3cb28","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508f6778825bd7fdee5582","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50897a78825bd7fde93a4d","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a506e0078825bd7fddf9065","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5089d978825bd7fde9821f","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5069dd78825bd7fddef9c0","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5085d578825bd7fde6a99e","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508d4a78825bd7fdec3ab4","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5089b978825bd7fde96cce","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5057b378825bd7fddbac79","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507f1d78825bd7fde3d42b","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508e7778825bd7fded6dc3","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50753178825bd7fde16526","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50767178825bd7fde22d89","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50906878825bd7fdef3a12","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50880178825bd7fde82b26","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5074c178825bd7fde10c7e","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50841f78825bd7fde653ef","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50887d78825bd7fde88e85","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50899778825bd7fde956e0","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507bfd78825bd7fde29ee2","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5083ef78825bd7fde6231f","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508b5778825bd7fdea79ed","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a505a0678825bd7fddc8792","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5064b878825bd7fddde427","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5072ec78825bd7fde039ad","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50582c78825bd7fddbd98b","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508f9878825bd7fdee7fe3","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50805978825bd7fde43df8","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50901278825bd7fdeee8f4","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5073d478825bd7fde06591","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508dba78825bd7fdec9f80","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5086af78825bd7fde72292","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50639578825bd7fddd5163","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50573c78825bd7fddb5de7","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50577d78825bd7fddb852d","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a505bc078825bd7fddd118f","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507ff578825bd7fde43295","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50831d78825bd7fde5c77a","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5087d178825bd7fde7f94f","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508cb378825bd7fdeba5c6","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50840978825bd7fde64375","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508a3478825bd7fde9bbd7","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508ff278825bd7fdeec652","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50875a78825bd7fde79880","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5070f278825bd7fde008a3","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50755c78825bd7fde17cdd","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5055b178825bd7fddab8a7","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50897d78825bd7fde93b1f","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50808178825bd7fde44949","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50751f78825bd7fde1578a","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50759878825bd7fde1aa46","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508c4178825bd7fdeb4b5b","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50611f78825bd7fddd37a6","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50754078825bd7fde16b90","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50666a78825bd7fdde563b","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a506ff078825bd7fddfeb7a","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508bc478825bd7fdeac39e","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508dd578825bd7fdecc67a","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5086ea78825bd7fde74507","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508b1a78825bd7fdea6195","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508a3878825bd7fde9c024","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508ea178825bd7fded9a6c","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5059ff78825bd7fddc83c6","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508ce678825bd7fdebd136","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508d8578825bd7fdec6d44","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50641478825bd7fddd7b75","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5066ec78825bd7fdde9741","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508e1778825bd7fded06a7","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508c9778825bd7fdeb8bc3","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508a9a78825bd7fdea098f","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50760478825bd7fde1ef12","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5088b878825bd7fde89c8f","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508c2878825bd7fdeb2974","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5088f878825bd7fde8bfdc","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a505b5778825bd7fddcdff8","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50865d78825bd7fde6db71","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508a5378825bd7fde9d08c","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50566d78825bd7fddb04be","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5087c378825bd7fde7e96b","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507d2278825bd7fde30276","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a505bc078825bd7fddd12a4","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50842478825bd7fde654d6","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50840678825bd7fde64079","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50631c78825bd7fddd4908","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50894e78825bd7fde90e09","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508e7f78825bd7fded755b","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50672778825bd7fddeaf63","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50733078825bd7fde03b13","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5075d278825bd7fde1d070","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508bb178825bd7fdeaadf4","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a506ad078825bd7fddf6687","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5074f678825bd7fde13e76","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507f3378825bd7fde3e029","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50677278825bd7fdded6f1","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5076cd78825bd7fde23f7d","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a505ab478825bd7fddc9e2f","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50590678825bd7fddc0db6","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508fc378825bd7fdee9db4","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507d4178825bd7fde31660","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507f2578825bd7fde3da11","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50710078825bd7fde0155d","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5074ad78825bd7fde0fb5d","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50868e78825bd7fde70b43","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508f3078825bd7fdee2a4b","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50657678825bd7fdddf437","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50844b78825bd7fde67798","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50884378825bd7fde861db","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507e8678825bd7fde36f75","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50666178825bd7fdde52f1","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50566578825bd7fddb0284","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5075ed78825bd7fde1de22","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50749e78825bd7fde0eb7a","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50781578825bd7fde25155","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50882578825bd7fde8451c","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50888278825bd7fde8908f","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5074da78825bd7fde126a5","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5066a478825bd7fdde8125","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50674b78825bd7fddecafc","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50764c78825bd7fde2183e","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50580878825bd7fddbd494","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5066a078825bd7fdde7b0e","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5086fb78825bd7fde75799","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507cb778825bd7fde2c8a2","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508a5c78825bd7fde9d7e0","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50875278825bd7fde78c01","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508e0978825bd7fdecf4c7","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50565178825bd7fddaf965","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507d4178825bd7fde317f9","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a506ffe78825bd7fddff3bc","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508f6a78825bd7fdee5905","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50903b78825bd7fdef0770","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a505cbc78825bd7fddd2291","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508e3578825bd7fded1c81","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508e7b78825bd7fded6f83","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5083b078825bd7fde60409","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5073a678825bd7fde05335","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507c0d78825bd7fde2a22a","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50814578825bd7fde4910f","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508dfc78825bd7fdece739","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508f7f78825bd7fdee68d8","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5057f978825bd7fddbca6c","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a506ac778825bd7fddf61b4","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507e9378825bd7fde376a1","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50900a78825bd7fdeee630","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50584978825bd7fddbe091","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508f2378825bd7fdee2059","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50902c78825bd7fdeef5b8","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a505ab778825bd7fddca1b2","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507c3578825bd7fde2b459","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508da078825bd7fdec88c4","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50801b78825bd7fde4340e","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50896078825bd7fde91e41","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507f9478825bd7fde41b5e","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5081d178825bd7fde4ec9f","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508e8378825bd7fded799c","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50578c78825bd7fddb92bc","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507f3378825bd7fde3e1b0","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5063c378825bd7fddd584b","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508fda78825bd7fdeeb1a1","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50884e78825bd7fde86dbf","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50578578825bd7fddb8d20","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508faa78825bd7fdee8eef","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50657678825bd7fdddf5e4","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508f2c78825bd7fdee2528","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508f9f78825bd7fdee8452","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a506aab78825bd7fddf472c","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508a6078825bd7fde9dbb4","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507f7678825bd7fde40bc5","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508fde78825bd7fdeeb5d3","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50740f78825bd7fde079d1","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508f0c78825bd7fdee0053","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a506f6b78825bd7fddfc074","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507cd778825bd7fde2d474","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50885e78825bd7fde8776c","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508f2378825bd7fdee1e64","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507eec78825bd7fde3b5ee","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508fcc78825bd7fdeea3eb","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50813d78825bd7fde48dd5","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5074aa78825bd7fde0f86b","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508bfe78825bd7fdeb03db","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508e5f78825bd7fded5510","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508ddc78825bd7fdeccc24","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5066b078825bd7fdde8cfb","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50898078825bd7fde93dc4","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508e8978825bd7fded7ec3","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50756978825bd7fde1881d","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508f9b78825bd7fdee81b8","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507a3678825bd7fde26432","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5087f178825bd7fde81439","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508f5878825bd7fdee454c","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508de778825bd7fdecd630","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50887978825bd7fde887b5","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5059f178825bd7fddc7c7e","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5089a178825bd7fde95f85","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50757678825bd7fde18f88","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5082bf78825bd7fde5826e","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5080cd78825bd7fde458c9","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a506d7a78825bd7fddf88d4","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50900578825bd7fdeee174","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50577678825bd7fddb8092","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50745178825bd7fde0a747","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50746d78825bd7fde0b997","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50878e78825bd7fde7c165","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507d3078825bd7fde30c63","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508d4078825bd7fdec2b30","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508e5678825bd7fded4956","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508edb78825bd7fdedd8c8","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507d6378825bd7fde320ab","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508a9f78825bd7fdea0f64","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508e0978825bd7fdecf6a8","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508ac078825bd7fdea286d","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50882b78825bd7fde84ff5","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508c8278825bd7fdeb771e","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508c3578825bd7fdeb3834","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507d8c78825bd7fde33686","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50648878825bd7fdddc28c","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50862978825bd7fde6ca5a","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5063cd78825bd7fddd5ac5","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507d6e78825bd7fde325ba","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5081cb78825bd7fde4e7b9","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508c7678825bd7fdeb6e27","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50586e78825bd7fddbe885","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5081fc78825bd7fde5096d","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50673d78825bd7fddec15c","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50752b78825bd7fde15f3d","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508a4f78825bd7fde9cb48","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508cca78825bd7fdebb8a9","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508de778825bd7fdecd62f","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50583878825bd7fddbdd68","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507d1578825bd7fde2facd","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508ed878825bd7fdedd47e","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508e4a78825bd7fded3c98","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50573878825bd7fddb57c0","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5086f278825bd7fde74bc2","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508ff878825bd7fdeece74","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50903578825bd7fdeefdfb","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50843c78825bd7fde663b6","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5082c578825bd7fde58724","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508f5178825bd7fdee3ec7","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50881b78825bd7fde83acb","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5074bd78825bd7fde1092b","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50846f78825bd7fde68a44","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50649b78825bd7fdddd17a","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a506a3878825bd7fddf0070","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50749178825bd7fde0dce7","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5074d178825bd7fde11e9d","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50904578825bd7fdef1802","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a506a6c78825bd7fddf19cb","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507d2a78825bd7fde3076f","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507e4378825bd7fde3621a","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50641878825bd7fddd800a","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50671c78825bd7fddea47c","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50742578825bd7fde0894d","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5065e278825bd7fdde3129","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50758d78825bd7fde19efc","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50825c78825bd7fde54717","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50890978825bd7fde8c91f","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508e3978825bd7fded230e","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a505a0e78825bd7fddc89c2","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507b7778825bd7fde28801","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5087fe78825bd7fde8273d","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50869978825bd7fde71658","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5076cd78825bd7fde24106","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5055d478825bd7fddac71f","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508c4778825bd7fdeb4e89","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a506aa378825bd7fddf409f","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508cd278825bd7fdebbce8","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50722878825bd7fde02e91","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508c0c78825bd7fdeb11b1","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5080a578825bd7fde44dd3","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5070cc78825bd7fde0026b","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5088e278825bd7fde8b43c","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50580378825bd7fddbcf7e","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5089bf78825bd7fde970a3","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5081c178825bd7fde4dd4e","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508be178825bd7fdeade75","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a507cdd78825bd7fde2d78a","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508be978825bd7fdeaea47","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a506a7778825bd7fddf2167","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a506a6878825bd7fddf1523","pattern":"greek-label/latin-pages","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50904978825bd7fdef1d5c","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a50884a78825bd7fde867a5","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5074c978825bd7fde1166b","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5063a878825bd7fddd52a7","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5082d178825bd7fde58e34","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508a1978825bd7fde9a954","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a5066a878825bd7fdde840d","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
+{"book_id":"6a508a2478825bd7fde9b0c6","pattern":"greek-label/unread","visible":false,"read":2,"reason":"rate-limited host only (BSB / Vatican)"}
