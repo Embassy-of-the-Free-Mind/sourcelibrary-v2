@@ -17,10 +17,13 @@
 // No section is ever emptied: when every candidate is taken, the section keeps
 // its original pick.
 
-/** A gallery crop's book: R2 gallery keys are `/gallery/<book_id>/<page>-<n>…`
- *  (page-image keys always carry their book id — see src/lib/r2-key.ts). */
+/** The book behind an image on our R2 host. Every page-image key carries its
+ *  book id as a path segment (src/lib/r2-key.ts) — gallery crops
+ *  (`gallery/<book_id>/<page>-<n>…`) and archived page scans
+ *  (`archived/<book_id>/<n>.jpg`) alike — so take the first 24-hex segment.
+ *  Gallery-only matching missed the archived scans a showcase card can use. */
 export function bookIdFromImageUrl(url: string | null | undefined): string | null {
-  const m = url?.match(/\/gallery\/([0-9a-f]{24})\//i);
+  const m = url?.match(/images\.sourcelibrary\.org\/(?:[^/?#]+\/)*?([0-9a-f]{24})\//i);
   return m ? m[1].toLowerCase() : null;
 }
 
