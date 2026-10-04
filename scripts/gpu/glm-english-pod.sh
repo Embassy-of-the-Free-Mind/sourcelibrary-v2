@@ -60,8 +60,8 @@ run)
   rev=$(bash $S ssh "ls /root/.cache/huggingface/hub/models--zai-org--GLM-OCR/snapshots/ | head -1" < /dev/null)
   gpu=$(bash $S ssh "nvidia-smi --query-gpu=name --format=csv,noheader | head -1" < /dev/null)
   vv=$(bash $S ssh "/root/pz/vl/bin/python -c 'import vllm;print(vllm.__version__)'" < /dev/null)
-  python3 -c "import json,sys; json.dump({'pod_id':sys.argv[1],'host':'runpod:'+sys.argv[1],'gpu':sys.argv[2],'revision':sys.argv[3] or None,'vllm_version':sys.argv[4],'clients':int(sys.argv[5]),'max_tokens':int(sys.argv[6]),'cost_per_hr':float(open(sys.argv[7]).read())}, open(sys.argv[8],'w'))" \
-    "$PODID" "$gpu" "$rev" "$vv" "$CLIENTS" "$MAX_TOKENS" "$D/cost-per-hr" "$LANE_DIR/box.json"
+  python3 -c "import json,sys; json.dump({'pod_id':sys.argv[1],'host':'runpod:'+sys.argv[1],'gpu':sys.argv[2],'revision':sys.argv[3] or None,'vllm_version':sys.argv[4],'clients':int(sys.argv[5]),'max_tokens':int(sys.argv[6]),'cost_per_hr':float(open(sys.argv[7]).read()),'code_rev':sys.argv[9]}, open(sys.argv[8],'w'))" \
+    "$PODID" "$gpu" "$rev" "$vv" "$CLIENTS" "$MAX_TOKENS" "$D/cost-per-hr" "$LANE_DIR/box.json" "$(git -C "$HERE" rev-parse HEAD)"
   log "box: $(cat $LANE_DIR/box.json)"
   # the pod reads the manifest as it is NOW; re-run `run` after planning more books (the server stays up)
   bash $S ssh "mkdir -p /root/pz/code" < /dev/null

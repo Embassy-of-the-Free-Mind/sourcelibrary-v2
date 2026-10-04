@@ -210,7 +210,7 @@ export function ocrSetFields(text, { run, now = new Date(), imageUrl = null, box
       model_label: GLM.label, repo: GLM.repo, model_url: GLM.model_url, licence: GLM.licence,
       prompt: GLM.prompt, conventions: GLM.conventions,
       generation: { temperature: 0, max_tokens: meta.max_tokens ?? null, finish: meta.finish ?? null, out_tok: meta.out_tok ?? null },
-      run: run || LANE, issue: LANE_ISSUE, secs: meta.secs ?? null, host: box.host || null, gpu: box.gpu || null,
+      run: run || LANE, code_version: box.code_rev || null, issue: LANE_ISSUE, secs: meta.secs ?? null, host: box.host || null, gpu: box.gpu || null,
       serving: { backend: 'vllm', vllm: box.vllm_version || null, clients: box.clients ?? null },
       input: imageUrl ? { image_url: imageUrl } : { status: 'not_recorded', reason: 'caller passed no image url' },
     },
