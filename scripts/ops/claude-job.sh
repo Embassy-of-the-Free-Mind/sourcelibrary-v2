@@ -40,6 +40,9 @@
 # already running the old copy keeps it; new starts, restarts and ExecStopPost get the new one.
 set -u
 export HOME="${HOME:-/root}" PATH="$PATH:/root/.local/bin:/usr/local/bin:/usr/sbin:/sbin"  # cron's PATH is /usr/bin:/bin, and units inherit ours
+# The tmux era got its PATH from the login shell that started the tmux server. A cron start has none of it,
+# so when claude is not found, take the login shell's PATH: the unit must see what the tmux job saw.
+command -v claude >/dev/null 2>&1 || PATH="$PATH:$(bash -lc 'printf %s "$PATH"' 2>/dev/null)"
 case "$0" in /*) SELF="$0" ;; *) SELF="$PWD/$0" ;; esac  # absolute and NOT resolved: units must follow the /root/bin symlink, so a rollback reaches restarts too
 # ---- HOST block ----
 if [ -d /data/scratch/sl/sourcelibrary ] && systemctl cat sourcelibrary.slice >/dev/null 2>&1; then
@@ -249,6 +252,7 @@ pass_env() { local v; ENVARGS=(); for v in $PASS_ENV; do [ -n "${!v:-}" ] && ENV
 # Start job <name> as the unit sl-job-<name>. $2 = fresh | manual. Admission is the CALLER's job (dispatch).
 launch() {
   local name="$1" mode="${2:-fresh}" d="$WT/job-$1" log="$LOGD/$1.log" f
+  command -v claude >/dev/null 2>&1 || { echo "claude is not on PATH ($PATH)"; return 6; }
   if [ ! -d "$d" ]; then
     git -C "$SL" fetch -q origin main && git -C "$SL" worktree add -q "$d" -b "job-$name" origin/main || return 3
     ln -s "$SL/node_modules" "$d/node_modules"
@@ -285,6 +289,11 @@ post() {
       ntfy_job high skull "Job DIED$([ "$r" = oom-kill ] && echo ' (OOM)'): $name ($HOST)" "result=$r after $U_NRestarts restart(s)$([ "$r" = oom-kill ] && echo "; it went over its $JOB_MEM cap"). \`claude-job.sh resume $name\` by hand."
       collect_decisions "$name"
     fi
+  elif [ -f "$JD/$name.ran" ] && [ ! -f "$JD/$name.done" ]; then
+    # A clean end with the run loop unfinished: someone ran `systemctl stop` on the unit. That is a
+    # STOP, and without this marker the sweep would read the leftover .ran as a lost job and re-queue it.
+    echo "[claude-job] unit sl-job-$name was stopped from outside the run loop $(date -u +%FT%TZ)" >> "$log"
+    touch "$JD/$name.stopped"; rm -f "${JD:?}/${name:?}.ran"
   fi
   kick 5
 }
