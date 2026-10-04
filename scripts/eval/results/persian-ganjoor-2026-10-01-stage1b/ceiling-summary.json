@@ -1,0 +1,288 @@
+{
+ "folded": {
+  "controls_sequence": {
+   "exact": {
+    "n": 2,
+    "median": 1.0,
+    "min": 1.0,
+    "max": 1.0
+   },
+   "noise-0.05": {
+    "n": 2,
+    "median": 0.9467,
+    "min": 0.9428,
+    "max": 0.9507
+   },
+   "wrong-page": {
+    "n": 2,
+    "median": 0.7551,
+    "min": 0.744,
+    "max": 0.7663
+   },
+   "wrong-place-same-poet": {
+    "n": 2,
+    "median": 0.2655,
+    "min": 0.2655,
+    "max": 0.2655
+   }
+  },
+  "controls_line": {
+   "exact": {
+    "n": 2,
+    "median": 1.0,
+    "min": 1.0,
+    "max": 1.0
+   },
+   "noise-0.05": {
+    "n": 2,
+    "median": 0.9532,
+    "min": 0.9528,
+    "max": 0.9536
+   },
+   "wrong-place-same-poet": {
+    "n": 2,
+    "median": 0.3574,
+    "min": 0.3438,
+    "max": 0.3711
+   },
+   "wrong-poet-global": {
+    "n": 2,
+    "median": 0.4457,
+    "min": 0.444,
+    "max": 0.4474
+   }
+  },
+  "separate_sequence": true,
+  "separate_line": true,
+  "status": {
+   "scored": 2
+  },
+  "acc": {
+   "all": {
+    "n": 2,
+    "median": 0.7551,
+    "min": 0.744,
+    "max": 0.7663
+   },
+   "manuscript": {
+    "n": 2,
+    "median": 0.7551,
+    "min": 0.744,
+    "max": 0.7663
+   }
+  },
+  "precision": {
+   "all": {
+    "n": 2,
+    "median": 0.718,
+    "min": 0.7075,
+    "max": 0.7284
+   },
+   "manuscript": {
+    "n": 2,
+    "median": 0.718,
+    "min": 0.7075,
+    "max": 0.7284
+   }
+  },
+  "line_local": {
+   "all": {
+    "n": 2,
+    "median": 0.9228,
+    "min": 0.9126,
+    "max": 0.933
+   },
+   "manuscript": {
+    "n": 2,
+    "median": 0.9228,
+    "min": 0.9126,
+    "max": 0.933
+   }
+  },
+  "lines_ok_local": {
+   "all": {
+    "n": 2,
+    "median": 0.8334,
+    "min": 0.8056,
+    "max": 0.8611
+   },
+   "manuscript": {
+    "n": 2,
+    "median": 0.8334,
+    "min": 0.8056,
+    "max": 0.8611
+   }
+  },
+  "line_global": {
+   "all": {
+    "n": 2,
+    "median": 0.9191,
+    "min": 0.9052,
+    "max": 0.933
+   },
+   "manuscript": {
+    "n": 2,
+    "median": 0.9191,
+    "min": 0.9052,
+    "max": 0.933
+   }
+  },
+  "lines_ok_global": {
+   "all": {
+    "n": 2,
+    "median": 0.8334,
+    "min": 0.8056,
+    "max": 0.8611
+   },
+   "manuscript": {
+    "n": 2,
+    "median": 0.8334,
+    "min": 0.8056,
+    "max": 0.8611
+   }
+  }
+ },
+ "strict": {
+  "controls_sequence": {
+   "exact": {
+    "n": 2,
+    "median": 1.0,
+    "min": 1.0,
+    "max": 1.0
+   },
+   "noise-0.05": {
+    "n": 2,
+    "median": 0.9508,
+    "min": 0.9507,
+    "max": 0.9509
+   },
+   "wrong-page": {
+    "n": 2,
+    "median": 0.7497,
+    "min": 0.7347,
+    "max": 0.7647
+   },
+   "wrong-place-same-poet": {
+    "n": 2,
+    "median": 0.2508,
+    "min": 0.2496,
+    "max": 0.252
+   }
+  },
+  "controls_line": {
+   "exact": {
+    "n": 2,
+    "median": 1.0,
+    "min": 1.0,
+    "max": 1.0
+   },
+   "noise-0.05": {
+    "n": 2,
+    "median": 0.935,
+    "min": 0.9313,
+    "max": 0.9387
+   },
+   "wrong-place-same-poet": {
+    "n": 2,
+    "median": 0.3479,
+    "min": 0.3315,
+    "max": 0.3644
+   },
+   "wrong-poet-global": {
+    "n": 2,
+    "median": 0.4293,
+    "min": 0.4264,
+    "max": 0.4322
+   }
+  },
+  "separate_sequence": true,
+  "separate_line": true,
+  "status": {
+   "scored": 2
+  },
+  "acc": {
+   "all": {
+    "n": 2,
+    "median": 0.7491,
+    "min": 0.7409,
+    "max": 0.7573
+   },
+   "manuscript": {
+    "n": 2,
+    "median": 0.7491,
+    "min": 0.7409,
+    "max": 0.7573
+   }
+  },
+  "precision": {
+   "all": {
+    "n": 2,
+    "median": 0.7157,
+    "min": 0.7045,
+    "max": 0.7269
+   },
+   "manuscript": {
+    "n": 2,
+    "median": 0.7157,
+    "min": 0.7045,
+    "max": 0.7269
+   }
+  },
+  "line_local": {
+   "all": {
+    "n": 2,
+    "median": 0.9214,
+    "min": 0.9097,
+    "max": 0.933
+   },
+   "manuscript": {
+    "n": 2,
+    "median": 0.9214,
+    "min": 0.9097,
+    "max": 0.933
+   }
+  },
+  "lines_ok_local": {
+   "all": {
+    "n": 2,
+    "median": 0.8334,
+    "min": 0.8056,
+    "max": 0.8611
+   },
+   "manuscript": {
+    "n": 2,
+    "median": 0.8334,
+    "min": 0.8056,
+    "max": 0.8611
+   }
+  },
+  "line_global": {
+   "all": {
+    "n": 2,
+    "median": 0.9173,
+    "min": 0.9016,
+    "max": 0.933
+   },
+   "manuscript": {
+    "n": 2,
+    "median": 0.9173,
+    "min": 0.9016,
+    "max": 0.933
+   }
+  },
+  "lines_ok_global": {
+   "all": {
+    "n": 2,
+    "median": 0.8334,
+    "min": 0.8056,
+    "max": 0.8611
+   },
+   "manuscript": {
+    "n": 2,
+    "median": 0.8334,
+    "min": 0.8056,
+    "max": 0.8611
+   }
+  }
+ }
+}
