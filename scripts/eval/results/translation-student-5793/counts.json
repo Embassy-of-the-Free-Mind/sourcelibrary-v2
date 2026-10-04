@@ -1,0 +1,22 @@
+{
+ "presample": 20315,
+ "presample_books": 4540,
+ "presample_works": 3240,
+ "not_train_split": 0,
+ "excluded_book": 308,
+ "excluded_work": 917,
+ "short_after_clean": 37,
+ "ratio_after_clean": 382,
+ "kept": 18587,
+ "dev_pages": 20,
+ "train_books": 4249,
+ "train_works": 3139,
+ "ref_books_excluded_set": 435,
+ "ref_works_excluded_set": 346,
+ "test_pages": 71,
+ "test_books": 71,
+ "test_overlap_train_books": 0,
+ "prompt_version": "student-5793-v1",
+ "target_chars_median": 2014,
+ "source_chars_median": 1705
+}

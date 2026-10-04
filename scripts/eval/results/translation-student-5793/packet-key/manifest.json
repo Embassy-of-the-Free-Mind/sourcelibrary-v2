@@ -1,0 +1,2190 @@
+{
+ "built": "2026-10-04T09:52:09.439Z",
+ "seed": 5793,
+ "input": "/root/student-5793/run/records.jsonl",
+ "input_sha": "bede8f9387fbf535",
+ "any_private": false,
+ "n_items": 71,
+ "n_gate": 9,
+ "n_main": 62,
+ "chunk": 6,
+ "judges": [
+  "j1",
+  "j2"
+ ],
+ "chunks": [
+  {
+   "judge": "j1",
+   "phase": "gate",
+   "packet": "/root/student-5793/run/packet/packets/j1/gate-01.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j1/gate-01.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j1",
+   "phase": "gate",
+   "packet": "/root/student-5793/run/packet/packets/j1/gate-02.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j1/gate-02.jsonl",
+   "n": 3
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/root/student-5793/run/packet/packets/j1/main-01.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j1/main-01.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/root/student-5793/run/packet/packets/j1/main-02.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j1/main-02.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/root/student-5793/run/packet/packets/j1/main-03.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j1/main-03.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/root/student-5793/run/packet/packets/j1/main-04.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j1/main-04.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/root/student-5793/run/packet/packets/j1/main-05.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j1/main-05.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/root/student-5793/run/packet/packets/j1/main-06.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j1/main-06.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/root/student-5793/run/packet/packets/j1/main-07.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j1/main-07.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/root/student-5793/run/packet/packets/j1/main-08.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j1/main-08.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/root/student-5793/run/packet/packets/j1/main-09.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j1/main-09.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/root/student-5793/run/packet/packets/j1/main-10.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j1/main-10.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/root/student-5793/run/packet/packets/j1/main-11.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j1/main-11.jsonl",
+   "n": 2
+  },
+  {
+   "judge": "j2",
+   "phase": "gate",
+   "packet": "/root/student-5793/run/packet/packets/j2/gate-01.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j2/gate-01.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j2",
+   "phase": "gate",
+   "packet": "/root/student-5793/run/packet/packets/j2/gate-02.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j2/gate-02.jsonl",
+   "n": 3
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/root/student-5793/run/packet/packets/j2/main-01.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j2/main-01.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/root/student-5793/run/packet/packets/j2/main-02.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j2/main-02.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/root/student-5793/run/packet/packets/j2/main-03.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j2/main-03.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/root/student-5793/run/packet/packets/j2/main-04.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j2/main-04.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/root/student-5793/run/packet/packets/j2/main-05.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j2/main-05.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/root/student-5793/run/packet/packets/j2/main-06.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j2/main-06.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/root/student-5793/run/packet/packets/j2/main-07.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j2/main-07.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/root/student-5793/run/packet/packets/j2/main-08.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j2/main-08.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/root/student-5793/run/packet/packets/j2/main-09.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j2/main-09.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/root/student-5793/run/packet/packets/j2/main-10.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j2/main-10.jsonl",
+   "n": 6
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/root/student-5793/run/packet/packets/j2/main-11.jsonl",
+   "verdicts": "/root/student-5793/run/packet/verdicts/j2/main-11.jsonl",
+   "n": 2
+  }
+ ],
+ "warnings": [],
+ "records": [
+  {
+   "id": "c87fadfa-1543-44b9-a138-573c144246e6_00328",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "c87fadfa-1543-44b9-a138-573c144246e6",
+   "page_number": 328,
+   "reference_meta": {
+    "title": "A Tract of Great Price concerning the Philosophical Stone (Concerning the Generation of Metals), in The Hermetic Museum, Restored and Enlarged, vol. I",
+    "translator": "A. E. Waite",
+    "year": 1893,
+    "licence": "Public domain (US, pre-1929; archive.org scan, Wellcome Library)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Hermetic Museum vol. I, pp. 249-250 (end of ch. I to start of ch. II)",
+    "url": "https://archive.org/download/b24927363_0001/b24927363_0001_djvu.txt",
+    "source_edition_used_by_translator": "Musaeum Hermeticum reformatum et amplificatum, Frankfurt 1678 (same edition as ours)",
+    "coverage_note": "~90%. Waite smooths several clauses: 'quo ex itidem aurum fieri potest quam ex aliis metallis, nisi aestu suo destituatur vel naturalis operatio illi non adimatur' becomes 'Like all the other metals it may still be developed into gold, if it remain under the influence of its natural heat'; 'nec etiam est materia quae ad impuram aliquam formam spectat, qualia imperfecta metalla sunt' becomes 'that which has once become perfectly pure can never become impure again'; 'quam finis fiet ad quem natura laborando tendit' becomes 'because gold is the highest possible stage of metallic development'. Page opens mid-word ('[albumque] naturae sulphur'); the English cut starts at 'and white sulphur'."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "695203a5ab34727b1f041c53_00250",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "695203a5ab34727b1f041c53",
+   "page_number": 250,
+   "reference_meta": {
+    "title": "The Glory of the World, or, Table of Paradise (An Account of the True Art), in The Hermetic Museum, Restored and Enlarged, vol. I",
+    "translator": "A. E. Waite",
+    "year": 1893,
+    "licence": "Public domain (US, pre-1929; archive.org scan, Wellcome Library)",
+    "private": false,
+    "publishable": true,
+    "style": "free",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Hermetic Museum vol. I, pp. 190-191, section 'An Account of the True Art'",
+    "url": "https://archive.org/download/b24927363_0001/b24927363_0001_djvu.txt",
+    "source_edition_used_by_translator": "Musaeum Hermeticum reformatum et amplificatum, Frankfurt 1678 (same edition as ours)",
+    "coverage_note": "~80%. Waite compresses and paraphrases here: 'Sufficit itaque ut gratis reperiatur' is omitted; 'aquas fortes ustularunt' is folded in; 'nihilominus tamen in contrario isto sensu perrexerunt, pertinacibusque suis capitibus obsecundarunt' becomes 'Nor do they seem able to perceive their error...'; 'operationem naturae ejusdemque res illico combusserunt et in nihilum redegerunt' becomes 'reduce their substance to ashes, instead of developing its inherent principles by vitalizing warmth' (gloss added); 'propria namque ipsorum ignorantia... interpretati sunt' is condensed. Page ends mid-sentence at 'quae nullam in [se]'; the following [context] sentence renders that continuation."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "698255ef792a04eb812c4860_00190",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "698255ef792a04eb812c4860",
+   "page_number": 190,
+   "reference_meta": {
+    "title": "The Sophic Hydrolith; or, Water Stone of the Wise, in The Hermetic Museum, Restored and Enlarged, vol. I",
+    "translator": "A. E. Waite",
+    "year": 1893,
+    "licence": "Public domain (US, pre-1929; archive.org scan, Wellcome Library)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Hermetic Museum vol. I, pp. 115-116 (Sophic Hydrolith, end of the first part / epilogue section)",
+    "url": "https://archive.org/download/b24927363_0001/b24927363_0001_djvu.txt",
+    "source_edition_used_by_translator": "Musaeum Hermeticum reformatum et amplificatum, Frankfurt 1678 (same edition as ours)",
+    "coverage_note": "~85%. Waite drops the scripture references (Eccles. 7, Sapien. 1, Eccles. 18 & 29) and the author's apology for digressing ('Ne autem commemoratione ista a meo proposito forsan plus justo longius progrediar, sed illud iterum adtingam, et denique ad finem perducam'); 'eatenus in lapidis ac laboris sui progressu cottidie omnibusque etiam horis insignem utilitatem percepturus erit' and 'ut postmodum in utroque opere eo feliciorem finem consequi valeat' are paraphrased ('the best preparation ... is a diligent amendment of heart and life'). Page ends mid-sentence at 'aliqui repe-[riantur]'; English cut at 'the objection that'."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "8a9eea4b-6be1-4424-9a38-b7a0deb58f95_00256",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "8a9eea4b-6be1-4424-9a38-b7a0deb58f95",
+   "page_number": 256,
+   "reference_meta": {
+    "title": "Alchemy, the Third Column of Medicine (Paragranum, Tractatus III), in The Hermetic and Alchemical Writings of Paracelsus, vol. II",
+    "translator": "A. E. Waite",
+    "year": 1894,
+    "licence": "Public domain (US, pre-1929; archive.org scan, Cornell University Library)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Hermetic and Alchemical Writings of Paracelsus vol. II, pp. 160-161",
+    "url": "https://archive.org/download/cu31924092287113/cu31924092287113_djvu.txt",
+    "source_edition_used_by_translator": "Paracelsus, Opera omnia medico-chemico-chirurgica, Geneva (de Tournes) 1658, the same edition as ours",
+    "coverage_note": "~97%. All sentences rendered in order. The marginal notes (Alchimiae finis non aurum et argentum sed arcana; Venenum etiam in reb. optimis; Correctio Medicorum ventilatur; Diagridion; Corrigo Medicu quid; Ignis omnia perficit; Officinae reprehend.) are NOT translated by Waite, so the reference has no [margin] lines. Translator slips: 'Cotonea' (quince) rendered 'Comfrey'; 'Ut vero simplicitatem vestram tueamini' rendered 'See your own simplicity'; 'penes ipsas situm est, non penes te' rendered 'The power is in them, not in you'; 'sell their skill for money' expands 'venditant'. Waite's 'how it is separated' adds 'these elements'."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b4d643853c26e0d15603c8_00136",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69b4d643853c26e0d15603c8",
+   "page_number": 136,
+   "reference_meta": {
+    "title": "The Archidoxies of Theophrastus Paracelsus, Book IV (Concerning the Quintessence): 'Concerning the Extraction of the Quintessence out of Growing Things', in The Hermetic and Alchemical Writings of Paracelsus, vol. II",
+    "translator": "A. E. Waite",
+    "year": 1894,
+    "licence": "Public domain (US, pre-1929; archive.org scan, Cornell University Library)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Hermetic and Alchemical Writings of Paracelsus vol. II, pp. 33-34",
+    "url": "https://archive.org/download/cu31924092287113/cu31924092287113_djvu.txt",
+    "source_edition_used_by_translator": "Waite translated from the Latin of the Geneva 1658 Opera omnia (Archidoxis in ten books, where this is Book IV). Ours is the 1569 Latin Archidoxae (Rupertus Finck dedication), where the same chapter is Lib. III, Cap. VI 'De extractione Quintae Essentiae ex Crescentibus'.",
+    "coverage_note": "~95%. The page opens mid-clause ('[cum oporteat absque omni infectione aliarum] additionum eas fieri'). The first English sentence 'But they should be extracted without the admixture of anything' straddles the page break: its main verb ('eas fieri') is on this page, but 'without the admixture' renders the end of the previous page. The page ends mid-word at 'quatu-[or dies]', so the English cut ends at 'digest for four days'. Small differences: 'lilies, spike, leaf (Lilijs, Spica, Folio)' becomes 'the lily, spike, leaves'; 'quas impositas ollae' becomes 'Put them in some fitting vessel'; 'quem cola, colatum distilla per balneum, et exibit corpus' is condensed to 'Abstract this by means of the balneum maris, when the body will disappear'. Sentences otherwise correspond one to one."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "697947a145e954e8a877872d_00218",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "697947a145e954e8a877872d",
+   "page_number": 218,
+   "reference_meta": {
+    "title": "The Triumphal Chariot of Antimony, by Basilius Valentinus (with the commentary of Theodore Kerckringius)",
+    "translator": "A. E. Waite",
+    "year": 1893,
+    "licence": "Public domain (US, pre-1929; archive.org scan, UC Berkeley/Internet Archive)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "The Triumphal Chariot of Antimony (London: James Elliott, 1893), pp. 59-60",
+    "url": "https://archive.org/download/triumphalchariot00basirich/triumphalchariot00basirich_djvu.txt",
+    "source_edition_used_by_translator": "Currus triumphalis antimonii, Latin version with Kerckring's commentary, Amsterdam 1685 (a reissue of the Amsterdam 1671 Kerckring Latin we hold); Waite gives only Basil Valentine's text, not the commentary",
+    "coverage_note": "~90%. Every sentence is rendered, but loosely: 'Nota deinde hoc experimenti genus' becomes 'Any similar experiment would yield the same result'; 'unicornu illud spirituali sua virtute nummum a se depellet, ut fugiat, non secus atque anas, quae per aquam natitans fugit, dum insidias aucupis, glandem sibi plumbeam intentantis, animadvertit' is condensed ('repelled ... as the duck which sees the sportsman taking aim at it with his gun'); 'Contra vero natura mirum in modum amat et sequitur quod sibi est simile; ut patet hoc exemplo' becomes 'That homogeneous substances always attract each other you may learn from the fact'; 'in scutella aqua repleta' becomes 'in a bowl of water'. The marginal note 'Et attrahit sibi simile' is not translated. The page opens mid-word ('[ara]nea exire, ipsumque venenum sibi simile pertransire')."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "697e23cca90e1780032ca2f2_00176",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "697e23cca90e1780032ca2f2",
+   "page_number": 176,
+   "reference_meta": {
+    "title": "An Open Entrance to the Closed Palace of the King, in The Hermetic Museum, Restored and Enlarged, vol. II",
+    "translator": "A. E. Waite",
+    "year": 1893,
+    "licence": "Public domain (US, pre-1929; archive.org scan, Wellcome Library)",
+    "private": false,
+    "publishable": true,
+    "style": "free",
+    "canonical": false,
+    "reference_kind": "translation-from-other-version",
+    "located": "Hermetic Museum vol. II, pp. 195-196 (end of 'Of the Regimen of Mars' and 'Of the Regimen of the Sun')",
+    "url": "https://archive.org/download/b24927363_0002/b24927363_0002_djvu.txt",
+    "source_edition_used_by_translator": "Introitus apertus as printed in the Musaeum Hermeticum, Frankfurt 1678 ('e manuscripto correctior editus'). Ours is the 1667 Amsterdam first edition.",
+    "coverage_note": "~80%. Waite abridges and paraphrases this chapter. 'jam omnia instar auri obryzi videntur' becomes 'the substance receives a golden tinge'. 'Immortales jam Deo omnium bonorum largitori redde gratias, qui hucusque opus perduxit, quem supplex ora, ut tuum consilium sic deinceps regat, ne forte opus fere jam perfectum praecipitare studens penitus perdas' is reduced to 'Pray to God to keep you from haste and impatience'. 'Cautè vero si progressus fueris occurrent tibi haec notabilia' is omitted. 'interdum et obscura purpura' becomes 'and a darkish purple'. 'Post duodecim aut quatuordecim dierum' appears as 'fourteen or fifteen days' (a 1678-text or translator difference: the Latin has twelve or fourteen). The heading is CAPUT XXX here; Waite's chapter number is illegible in the OCR."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "690986dccf28baa1b4cae0e3_00081",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "690986dccf28baa1b4cae0e3",
+   "page_number": 81,
+   "reference_meta": {
+    "title": "The New Chemical Light (Novum lumen chymicum), part II 'Concerning Mercury' (the parable of Neptune and Saturn), in The Hermetic Museum, Restored and Enlarged, vol. II",
+    "translator": "A. E. Waite",
+    "year": 1893,
+    "licence": "Public domain (US, pre-1929; archive.org scan, Wellcome Library)",
+    "private": false,
+    "publishable": true,
+    "style": "free",
+    "canonical": false,
+    "reference_kind": "translation-from-other-version",
+    "located": "Hermetic Museum vol. II, pp. 112-113",
+    "url": "https://archive.org/download/b24927363_0002/b24927363_0002_djvu.txt",
+    "source_edition_used_by_translator": "Novum lumen chemicum as printed in the Musaeum Hermeticum, Frankfurt 1678. Ours is a 1628 printing.",
+    "coverage_note": "~80%. This scan page holds TWO printed pages (pp. 76-77, a spread split at 500). The page opens mid-word ('[Prata floribus variis distin]cta, iucundissimo aspectu, suavissime redolebant'), so the first English sentence straddles the break: only 'beautiful and fragrant flowers' renders this page. Waite condenses and reorders: the orange/lemon groves come after the roads; 'Ut paucis dicam, quicquid in toto mundo est, ibi videbatur' becomes 'the island was an epitome of earthly beauty'; 'Et quamvis in hac insula omnia ad nutum essent, unicum tamen ipsi deerat' is folded into 'The only thing which it was difficult to obtain'; 'sed frustraneus erat attentatus labor, quia illic locorum nullo poterat haberi medio' and 'quod pauci praestare potuerunt, et qui in hoc perficiendo fortunam habuit propitiam' are condensed; 'et dum illam aquam contemplarer, valde mutatus sum' and 'fatigatus illa consideratione' become 'While I stood wrapt in admiration'. Page ends mid-word at 'de fru-[ctu]'."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69520185ab34727b1f0416bc_00029",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69520185ab34727b1f0416bc",
+   "page_number": 29,
+   "reference_meta": {
+    "title": "The Aurora of the Philosophers, by Theophrastus Paracelsus, which he otherwise calls his Monarchia (ch. IX/X, those who sought the Stone in minerals), in The Hermetic and Alchemical Writings of Paracelsus, vol. I",
+    "translator": "A. E. Waite",
+    "year": 1894,
+    "licence": "Public domain (US, pre-1929; archive.org scan, Cornell University Library)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Hermetic and Alchemical Writings of Paracelsus vol. I, p. 58",
+    "url": "https://archive.org/download/cu31924092287121/cu31924092287121_djvu.txt",
+    "source_edition_used_by_translator": "Geneva 1658 Opera omnia Latin text of the Aurora. Ours is the 1577 Basel first Latin edition (Gerard Dorn circle); the wording is essentially the same.",
+    "coverage_note": "~97%. Sentence for sentence. Differences: 'urinis acerrimis' (sharpest urines) appears as 'sharpest wines' (a variant in Waite's text or a translator slip); 'Venerem ad hunc modum larvatam atque fucatam' becomes 'this counterfeit Venus'; 'ex aequo cognitum habeat' becomes 'knows well'; 'idque multoties' becomes 'repeating the process several times'. Waite adds a footnote recipe on fixing arsenic (not included). Page opens with the tail of the previous sentence ('se tulit') and ends mid-word at 'crudum fixare mercu-[rium]'; the English is cut accordingly."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "694f3d6cbe37f451a5324e10_00084",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "694f3d6cbe37f451a5324e10",
+   "page_number": 84,
+   "reference_meta": {
+    "title": "Hermes Mercurius Trismegistus his Divine Pymander in seventeen books (The Seventh Book, His Secret Sermon in the Mount of Regeneration)",
+    "translator": "John Everard",
+    "year": 1657,
+    "licence": "CC0 1.0 (EEBO-TCP A43420)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Seventh Book (= CH XIII), §§43 (end)-51 (beginning)",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A43420/master/A43420.xml",
+    "source_edition_used_by_translator": "Everard's translation (1st ed. 1650) works from Ficino's Latin collated with the Greek (Foix-Candalle); this TCP text is the 1657 2nd edition",
+    "coverage_note": "~90%. Everard follows the Greek where Ficino differs: 'in corpore: ante corpus: atque post corpus' rendered 'in the Womb, every where'; 'Numerique undecim sunt: unus omniformisque secundum ideas naturae ad hominis peruagationem atque circuitum' rendered 'the Idea of one; but all formed Nature admits of divers Conjugations to the deceiving of Man'; 'eatenus interuallum quatenus' not rendered. 'By the dead' is the printed text (misprint for 'Decad', also in 1650 and 1884 reprint), kept as printed. Gaps in TCP ('tumultu…rily') filled from the 1650 edition (archive.org b30329619)."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69b43d2706b196d69f66f14f_00015",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69b43d2706b196d69f66f14f",
+   "page_number": 15,
+   "reference_meta": {
+    "title": "Hermes Mercurius Trismegistus his Divine Pymander in seventeen books (The Second Book, called Poemander)",
+    "translator": "John Everard",
+    "year": 1657,
+    "licence": "CC0 1.0 (EEBO-TCP A43420)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Second Book (= CH I, Poemander), §15 (mid)-§20",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A43420/master/A43420.xml",
+    "source_edition_used_by_translator": "Everard (1st ed. 1650) from Ficino's Latin collated with the Greek; TCP text is the 1657 2nd edition",
+    "coverage_note": "~95%. Everard follows the Greek in places: 'Horum profecto cunctorum circuitus' = 'the Circulation, or running round of these'; 'Deus enim ut uera propria forma ... delectatus' and 'humane mentis meditatione gaudentes' ('but they loved him') are free; Ficino's 'congratulatus est' rendered 'whom he loved as his proper Birth'. Reader's marginal note 'nota peccatum philosophorum' is a later annotation with no translator rendering. TCP illegible-gaps ('four-foo…ed', 'b…ought', '…nto') filled with the obvious letters."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "694f3d6ebe37f451a5324e95_00107",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "694f3d6ebe37f451a5324e95",
+   "page_number": 107,
+   "reference_meta": {
+    "title": "Thrice-Greatest Hermes, vol. II: The Perfect Sermon, or the Asclepius",
+    "translator": "G.R.S. Mead",
+    "year": 1906,
+    "licence": "Public domain (pub. 1906)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Asclepius ch. XIX.1 (end)-XX.1 (beginning); TGH vol. II pp. 340-343",
+    "url": "https://archive.org/download/thricegreatesthe02hermuoft/thricegreatesthe02hermuoft_djvu.txt",
+    "source_edition_used_by_translator": "Mead translated the Latin Asclepius (Hildebrand/Goldbacher text tradition of Apuleius), not Lefevre's 1505 edition",
+    "coverage_note": "~97%. Mead's bracketed insertions kept; his footnotes omitted. Lefevre's marginal headings (GENTILIA; Jupiter; Lumen; Horoscopij; Pantomorphos) have no translator rendering. Mead renders 'mouentibus' as 'related' (reading admoventibus); 'summo illi domino paret' as 'seems to Him [who is] the Highest Lord'."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "690989d5cf28baa1b4cae1c9_00159",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "690989d5cf28baa1b4cae1c9",
+   "page_number": 159,
+   "reference_meta": {
+    "title": "Thrice-Greatest Hermes, vol. II: The Perfect Sermon, or the Asclepius",
+    "translator": "G.R.S. Mead",
+    "year": 1906,
+    "licence": "Public domain (pub. 1906)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Asclepius ch. XXIX.3-5; TGH vol. II pp. 365-366",
+    "url": "https://archive.org/download/thricegreatesthe02hermuoft/thricegreatesthe02hermuoft_djvu.txt",
+    "source_edition_used_by_translator": "Mead translated the Latin Asclepius from a 19th-c. critical text (Hildebrand/Goldbacher), not the 1532 Basel text",
+    "coverage_note": "~90%. The passage 'Viuentis etenim uniuscuiusque partis, quae in ipso mundo, sicut in uno eodemque animali, semper uiuente, nullus est mortalitatis locus' is a corrupt place (Mead's note) and Mead's rendering ('For of an ever-living thing, it is [the same] of every part ...') follows a different reading; 'He further doth preserve them by a law' paraphrases 'dispensauit aeterna lege' and Mead's 'He' (God) renders 1532's 'Deus ergo ... gubernator' (1532 reads the Sun as subject). Mead's bracketed insertions kept; footnotes omitted."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "6952daa277f38f6761bc6551_00202",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "6952daa277f38f6761bc6551",
+   "page_number": 202,
+   "reference_meta": {
+    "title": "Three Books of Occult Philosophy",
+    "translator": "J.F. [John French]",
+    "year": 1651,
+    "licence": "CC0 1.0 (EEBO-TCP A26565)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Book II, ch. XLV (whole) and ch. XLVI (beginning, through the seventh mansion)",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A26565/master/A26565.xml",
+    "source_edition_used_by_translator": "A Latin edition of the full De occulta philosophia (1533 or a later reprint)",
+    "coverage_note": "~97%. Woodcut (image-desc) not text. Minor divergences: French adds 'and misfortune' to 'ad anxietatem et infirmitatem'; 'aureo geminatoque baltheo' = 'golden Belt full of Jewels'; 'cuius mensura erat quadrata' = 'whose table was square'; 'ungula aromatica' = 'Calamus Aromaticus'; 'renouat cum exuuiis' = 'reneweth his age with his skin'. One TCP gap ('Sil…m') restored as 'Silver the'."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "694bf8d2343422769f237558_00277",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "694bf8d2343422769f237558",
+   "page_number": 277,
+   "reference_meta": {
+    "title": "Three Books of Occult Philosophy",
+    "translator": "J.F. [John French]",
+    "year": 1651,
+    "licence": "CC0 1.0 (EEBO-TCP A26565)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Book II, ch. XXIV (Of Musicall Harmony, of the force and power thereof), middle",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A26565/master/A26565.xml",
+    "source_edition_used_by_translator": "A Latin edition of the full De occulta philosophia (1533 or later)",
+    "coverage_note": "~95%. French paraphrases 'Megaris saxum quoddam ad singulos ictus fidicinat' ('makes a sound like a Harpe every time the string of a Harpe is struck'); 'Lapsos et desperatos reuocat' = 'calls back them that are desperate'; 'habilitationem' = 'strength'; 'Arionem Me[thymnaeum]' = 'Arion of Lesbos'. TCP gap '…ead' restored as 'lead'."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69904fcd7d19f3f2aac1da09_00076",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69904fcd7d19f3f2aac1da09",
+   "page_number": 76,
+   "reference_meta": {
+    "title": "The Vanity of Arts and Sciences",
+    "translator": "anonymous reviser of James Sanford's 1569 translation ('Englished by Ja. San.')",
+    "year": 1676,
+    "licence": "CC0 1.0 (EEBO-TCP A26566)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Chap. XXIII, Of Optick and Perspective (second half)",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A26566/master/A26566.xml",
+    "source_edition_used_by_translator": "A Latin edition of De incertitudine et vanitate (later than 1530; chapter numbering differs by one: English ch. XXIII)",
+    "coverage_note": "~90%. The English omits the sentence on the Epicureans ('Epicurei autem simulacra eorum quae apparent, sese oculis ingerere affirmant'), renders 'refractiones' not at all, 'speculorum fabricae' as 'making of Landskips', and turns 'Augustino uidetur ... quod a sapientiae studiosis necdum sit peruestigatum' into 'which St. Austin thinks to be most true ... above humane Wisdome to find out'. The page's first word 'sunt' closes the preceding sentence, given as [context]. TCP gap 'Alchindu…' restored as 'Alchindus'."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69bd9d416120d54bd037457f_00263",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69bd9d416120d54bd037457f",
+   "page_number": 263,
+   "reference_meta": {
+    "title": "The Vanity of Arts and Sciences",
+    "translator": "anonymous reviser of James Sanford's 1569 translation ('Englished by Ja. San.')",
+    "year": 1676,
+    "licence": "CC0 1.0 (EEBO-TCP A26566)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "end of Chap. LIV (Of Moral Philosophy) and opening of Chap. LV (Of Politicks)",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A26566/master/A26566.xml",
+    "source_edition_used_by_translator": "A Latin edition of De incertitudine et vanitate; chapter numbering agrees with 1584 here (LV)",
+    "coverage_note": "~90% of the real page. The English misrenders 'de omnibus bene merendum esse' as 'to desire the Good Will of all Men'; 'falsa est et inanis' = 'vain and empty'; 'rationesque confirmans' unrendered; 'Kingly Soveraignty' added. The page's first fragment 'criter afficiatur' ends a sentence begun on the previous page (English sentence given as [context])."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69905e262fd6a039938a154f_00067",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69905e262fd6a039938a154f",
+   "page_number": 67,
+   "reference_meta": {
+    "title": "Henry Cornelius Agrippa his Fourth Book of Occult Philosophy ... Magical Elements of Peter de Abano (Heptameron)",
+    "translator": "Robert Turner",
+    "year": 1655,
+    "licence": "CC0 1.0 (EEBO-TCP A26564)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Heptameron, 'Of the Circle, and the composition thereof'",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A26564/master/A26564.xml",
+    "source_edition_used_by_translator": "A Latin edition of the Heptameron as printed with Agrippa's Opera / Liber quartus (16th c.)",
+    "coverage_note": "~98%. Turner renders 'In superiore circulo' as 'in the outermost Circle' and 'In inferiore circulo' as 'In the inner Circle', and attaches 'In medio circuli' to the preceding clause ('with crosses interposed in the middle of the Circle'). Long s normalised to s."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6956eaf4f23ebf30578dba35_00088",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "6956eaf4f23ebf30578dba35",
+   "page_number": 88,
+   "reference_meta": {
+    "title": "Three Books of Occult Philosophy",
+    "translator": "J.F. [John French]",
+    "year": 1651,
+    "licence": "CC0 1.0 (EEBO-TCP A26565)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Book I, chapter 'Of such things as have vertues ... only in their life time, and such as remain in them even after their death' (ch. XLII in the 1533 numbering)",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A26565/master/A26565.xml",
+    "source_edition_used_by_translator": "The complete 1533 De occulta philosophia (or later reprint); our book is the 1531 first printing of Book I",
+    "coverage_note": "~95%. French renders 'Vpupa' (hoopoe) as 'Lapwing', 'eo adhuc uiuente et palpitante' as 'whilest it is yet warm with naturall heat', omits 'reminiscentiam' and 'dormienti' (the woman is asleep in the Latin), and 'Pastinacae radius' = 'the ray of the fork fish'."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6953e59377f38f6761bf0e81_00213",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "6953e59377f38f6761bf0e81",
+   "page_number": 213,
+   "reference_meta": {
+    "title": "On the Magnet, Magnetick Bodies also, and on the Great Magnet the Earth",
+    "translator": "Silvanus P. Thompson (Gilbert Club)",
+    "year": 1900,
+    "licence": "Public domain (Project Gutenberg #33810; published 1900)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Book V, end of chap. II and heading of chap. III (Thompson p. {191})",
+    "url": "https://www.gutenberg.org/cache/epub/33810/pg33810.txt",
+    "source_edition_used_by_translator": "London 1600 first edition (page-for-page; Thompson marks the 1600 page numbers in braces)",
+    "coverage_note": "Full page covered (~100%). The Latin first word 'etiam modo' renders as 'In the same way also'; the opening sentence fragment's subject (a circular iron disc) begins on this page. Image labels (Orbis Virtutis, Axis) are not running text."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6953e46f77f38f6761bee559_00040",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "6953e46f77f38f6761bee559",
+   "page_number": 40,
+   "reference_meta": {
+    "title": "The Sidereal Messenger of Galileo Galilei",
+    "translator": "Edward Stafford Carlos",
+    "year": 1880,
+    "licence": "Public domain (Project Gutenberg #46036; published 1880)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Sidereal Messenger, section on the Milky Way and nebulae (Gutenberg text, before the Jupiter-satellites section)",
+    "url": "https://www.gutenberg.org/cache/epub/46036/pg46036.txt",
+    "source_edition_used_by_translator": "Venice 1610",
+    "coverage_note": "~100% covered. Latin page opens mid-sentence at 'coetum offendes' (the 'Stellarum constipatarum' falls on the previous page); Carlos's 'you will find a cluster of stars packed close together' renders 'Stellarum constipatarum coetum offendes', so the first clause slightly over-covers by the genitive. Diagram captions NEBVLOSA ORIONIS / PRAESEPE not separately translated (Carlos uses illustration captions 'Star-cluster in Orion's Head', 'Star-cluster of Praesepe in Cancer')."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69af0cfc067c0c26ee26cd3c_00151",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69af0cfc067c0c26ee26cd3c",
+   "page_number": 151,
+   "reference_meta": {
+    "title": "Exercitatio Anatomica de Motu Cordis et Sanguinis in Animalibus (An Anatomical Disquisition on the Motion of the Heart and Blood in Animals), in The Works of William Harvey",
+    "translator": "Robert Willis",
+    "year": 1847,
+    "licence": "Public domain (published 1847; archive.org scan)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "De motu cordis, chap. XII opening (Willis, Works 1847, pp. 60-61)",
+    "url": "https://archive.org/download/worksofwilliamha01harv/worksofwilliamha01harv_djvu.txt",
+    "source_edition_used_by_translator": "Frankfurt 1628 (Willis translated from the original edition); our volume is the Rotterdam 1660 reprint - text identical for this passage",
+    "coverage_note": "~100%. Page ends mid-sentence at 'vi & impetu suppeditari, & vi impingi'; English cut after 'urged with force' (the following 'infra ligaturam' = 'below the fillet' is on the next page, given as [context]). Note: our OCR omits the chapter heading 'Cap. XII. Esse sanguinis circuitum, ex secundo supposito confirmato' which is printed at the top of the page (verified on the image); the reference includes Willis's rendering of it."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "15c5d8e4-cea3-4b5b-9859-f3528660ecc8_00347",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "15c5d8e4-cea3-4b5b-9859-f3528660ecc8",
+   "page_number": 347,
+   "reference_meta": {
+    "title": "The Mathematical Principles of Natural Philosophy",
+    "translator": "Andrew Motte",
+    "year": 1729,
+    "licence": "Public domain (1729); Wikisource transcription CC BY-SA",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Book II, Section VI, Prop. XXX Theor. XXIV, end of demonstration and Corollary",
+    "url": "https://en.wikisource.org/wiki/The_Mathematical_Principles_of_Natural_Philosophy_(1729)/Book_2/Section_6",
+    "source_edition_used_by_translator": "3rd Latin edition, London 1726 (the same edition as our scan: despite the catalogue year 1687, the scan A297190 is the 1726 third edition, running head 'PRINCIPIA MATHEMATICA', p.305)",
+    "coverage_note": "~100%. Page opens mid-sentence at 'motu continuo ducatur in totam longitudinem Aa'. Wikisource transcription slips corrected: 'rectangle under 3/2Ba and Aa' -> '½Ba' (Latin and 1846 reprint have ½), 'os'->'of', 'ot'->'of', 'OVx=.BO'->'OV.BO'. Math notation flattened (Aa.BO = Aa x BO)."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "695d0e044afae5c3b3aead52_00353",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "695d0e044afae5c3b3aead52",
+   "page_number": 353,
+   "reference_meta": {
+    "title": "The Philosophical Works of Descartes, vol. II: Reply to Objections IV",
+    "translator": "Elizabeth S. Haldane and G. R. T. Ross",
+    "year": 1912,
+    "licence": "Public domain in the US (published 1912, Cambridge University Press; archive.org scan)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Reply to Objections IV (Arnauld), section on the souls of brutes; H-R vol. II pp. 103-104",
+    "url": "https://archive.org/download/philosophicalwor015731mbp/philosophicalwor015731mbp_djvu.txt",
+    "source_edition_used_by_translator": "Adam-Tannery Latin text with variants from the 1647 French version (they bracket French additions)",
+    "coverage_note": "~100%. Page opens mid-sentence ('omnia plane organa...'): the governing 'unless' is on the previous page (given as [context]). Page ends mid-sentence at 'Cumque hoc in nobis ipsis pro certo' - English cut after 'in ourselves' ('experiamur' = 'experience' is strictly on the next page; English word order forces it into the cut). Removed H-R's bracketed French-version addition '[(or the soul)]' after 'the mind', which has no Latin counterpart; removed footnote markers. 'subtle fluid styled the animal spirits' renders plain Latin 'spiritus' (H-R follow French)."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69ac7ee520878c5c9ba51e75_00098",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69ac7ee520878c5c9ba51e75",
+   "page_number": 98,
+   "reference_meta": {
+    "title": "Novum Organum (Translation of the Novum Organum), in The Works of Francis Bacon",
+    "translator": "James Spedding, Robert Leslie Ellis and Douglas Denon Heath",
+    "year": 1858,
+    "licence": "Public domain (Boston reprint 1860-64 of the London 1858 edition; archive.org scan)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Novum Organum Book I, end of Aphorism 70 (Boston ed. vol. VIII pp. 101-102; London ed. vol. IV)",
+    "url": "https://archive.org/download/worksoffrancisba08bacouoft/worksoffrancisba08bacouoft_djvu.txt",
+    "source_edition_used_by_translator": "London 1620 (Instauratio Magna first edition - the same edition as our book)",
+    "coverage_note": "~100%. Page opens mid-sentence at 'inutiliter in reliquis versaturos' ('that it is worth their while to go on'); the 'fidem faciant' / 'assurance for themselves' clause is on the previous page and given as [context]. Ends at aphorism end ('iuuant')."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69a5b8f3486a857b0587c7b8_00329",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69a5b8f3486a857b0587c7b8",
+   "page_number": 329,
+   "reference_meta": {
+    "title": "De Re Metallica, Translated from the First Latin Edition of 1556",
+    "translator": "Herbert Clark Hoover and Lou Henry Hoover",
+    "year": 1912,
+    "licence": "Public domain (Project Gutenberg #38015; published 1912)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Book IX (smelting), lead-smelting of gold/silver ores (Gutenberg text, 'At the fourth hour the master begins his work')",
+    "url": "https://www.gutenberg.org/cache/epub/38015/pg38015.txt",
+    "source_edition_used_by_translator": "Basel 1556 first edition (same as ours)",
+    "coverage_note": "~95%. Page opens mid-sentence at 'ignem excitet' (= 'blows up the fire'); ends mid-sentence at '& circa nares ferruminatur,' (= 'would form sows around the nozzle,'). Hoover modernises technical terms (sows, forehearth, tap-hole) and paraphrases in places: 'Is certe in praestantium excoctorum numero semper habitus est, qui quatuor elementa potest temperare. Temperat autem qui...' is rendered loosely as 'This, indeed, is the custom of many most excellent smelters, who know how to govern the four elements. They combine...'; 'tot carbones quot recipit alueus' as 'one wicker basket full of charcoal'. Footnote markers removed."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b6e791f8a84d859cde1de2_00473",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69b6e791f8a84d859cde1de2",
+   "page_number": 473,
+   "reference_meta": {
+    "title": "Anatomical Exercises on the Generation of Animals, in The Works of William Harvey",
+    "translator": "Robert Willis",
+    "year": 1847,
+    "licence": "Public domain (published 1847; archive.org scan)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "De generatione animalium, Exercise 54 area (Willis, Works 1847, pp. 428-429, 'On Generation')",
+    "url": "https://archive.org/download/worksofwilliamha01harv/worksofwilliamha01harv_djvu.txt",
+    "source_edition_used_by_translator": "London 1651 first edition; our book is the Leiden 1737 Opera reprint - no differences seen in this passage",
+    "coverage_note": "~97%. Page opens mid-word ('per-ficitur ante primam'): English begins at 'is perfect before the first'. Ends mid-sentence at 'oriuntur; in' (= 'in which'). Willis expands slightly ('soul or vital principle', 'with consummate art', 'once or twice removed' for 'nepotes'). The page's outer-margin marginalia are cropped in the scan (OCR gives only fragments like 'a ube-', 'eniunt.') and are not rendered; they are not part of the reference."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6953e50577f38f6761bef758_00274",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "6953e50577f38f6761bef758",
+   "page_number": 274,
+   "reference_meta": {
+    "title": "Novum Organum (Translation of the Novum Organum), in The Works of Francis Bacon",
+    "translator": "James Spedding, Robert Leslie Ellis and Douglas Denon Heath",
+    "year": 1858,
+    "licence": "Public domain (Boston reprint 1860-64 of the London 1858 edition; archive.org scan)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Novum Organum Book II, Aphorism 36 (Instances of the Fingerpost), on gunpowder and the transitory nature of flame (Boston ed. vol. VIII pp. 266-267)",
+    "url": "https://archive.org/download/worksoffrancisba08bacouoft/worksoffrancisba08bacouoft_djvu.txt",
+    "source_edition_used_by_translator": "London 1620 first edition; our book is a 1762 reprint - text identical in this passage",
+    "coverage_note": "~98%. Page opens mid-word ('flam-mam fugiunt'): the subject 'those bodies which' is on the previous page. Page ends mid-word at 'sed a con-[trariis]': English cut after 'remain with us,' because Spedding restructures 'sed a contrariis ... violentiam patiatur' as 'suffers violence and is destroyed by the contrary natures' (given as [context]); the words 'but by con-' on this page therefore fall in the context line."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69529499b184004c526a1dc9_00175",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69529499b184004c526a1dc9",
+   "page_number": 175,
+   "reference_meta": {
+    "title": "The Wisdom of the Ancients (De Sapientia Veterum), XXVI. Prometheus, or the State of Man",
+    "translator": "James Spedding",
+    "year": 1858,
+    "licence": "Public domain (pre-1929; archive.org scan)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "De Sapientia Veterum c. 26 'Prometheus, sive Status Hominis'; Boston ed. vol. 13 (1860) pp. 152-153 (= London ed. vol. 6, 1858)",
+    "url": "https://archive.org/download/worksoffrancisba13bacouoft/worksoffrancisba13bacouoft_djvu.txt",
+    "source_edition_used_by_translator": "Bacon's Latin text of 1609 as printed in Spedding's edition",
+    "coverage_note": "Full page covered (~100%). The page opens with the tail of 'repe-riuntur'; the English verb 'is found' sits in the preceding context line."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69529509b184004c526a2793_00237",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69529509b184004c526a2793",
+   "page_number": 237,
+   "reference_meta": {
+    "title": "History of Life and Death (Historia Vitae et Mortis), Operation on the Spirits, §§38-39",
+    "translator": "James Spedding et al. (Spedding, Ellis & Heath edition)",
+    "year": 1858,
+    "licence": "Public domain (pre-1929; archive.org scan)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Historia Vitae et Mortis, 'The operation upon the spirits', §§38-39; Boston ed. vol. 10 (1860s) pp. 89-90 (= London ed. vol. 5)",
+    "url": "https://archive.org/download/worksfrancisbaco10bacoiala/worksfrancisbaco10bacoiala_djvu.txt",
+    "source_edition_used_by_translator": "Latin text of 1623 as printed in Spedding vol. 2",
+    "coverage_note": "~100%. The page opens with the single verb 'inquiremus' closing the sentence begun on p.236 (§38 opening); the English sentence containing 'inquire' is given as a [context] line. The OCR's stray '[Marginal note: 04]' at top is not running text; catchword 'Aer' excluded."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b2ff9f5545150b61b48a36_00075",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69b2ff9f5545150b61b48a36",
+   "page_number": 75,
+   "reference_meta": {
+    "title": "History of the Winds (Historia Ventorum), 'Extraordinary Winds and Sudden Gusts' §§2-6",
+    "translator": "James Spedding et al. (Spedding, Ellis & Heath edition)",
+    "year": 1858,
+    "licence": "Public domain (pre-1929; archive.org scan)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Historia Ventorum, 'Extraordinary winds and sudden gusts' (Article 10 of inquiry), §§2-6; Boston ed. vol. 9 (1860s) p. 419 (= London ed. vol. 5)",
+    "url": "https://archive.org/download/worksoffrancisba09bacouoft/worksoffrancisba09bacouoft_djvu.txt",
+    "source_edition_used_by_translator": "Latin text of 1622 (Historia Naturalis et Experimentalis) as printed in Spedding vol. 2",
+    "coverage_note": "~100%. Page ends mid-word 'corri-[pi]' in §6; English cut after 'caught up'. Catchword excluded."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6952872cab34727b1f04d284_00499",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "6952872cab34727b1f04d284",
+   "page_number": 499,
+   "reference_meta": {
+    "title": "The True Christian Religion, ch. XIV §VII 'The Mohammedans in the Spiritual World', nn. 828-833",
+    "translator": "not named in the scan (Rotch Edition, Houghton Mifflin; American standard translation, commonly identified with John C. Ager)",
+    "year": 1907,
+    "licence": "Public domain (1907; archive.org scan, Cornell copy, 'no known copyright restrictions')",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "nn. 828 (end)-833 (beginning); Rotch Edition vol. III pp. 1032-1034",
+    "url": "https://archive.org/download/TrueChristianReligionVolIII1907/True%20Christian%20Religion%20Vol%20III%20-%201907_djvu.txt",
+    "source_edition_used_by_translator": "Amsterdam 1771 first edition (same as ours)",
+    "coverage_note": "~100%. Page begins mid-word '[con]fessionem' at the end of n. 828 and ends mid-word 'idololatri-[cus]' in n. 833; English cut accordingly. Catchword excluded. Translator attribution to Ager is not confirmed from the scan itself."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "695594f97bd6d2cd1d61e685_00331",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "695594f97bd6d2cd1d61e685",
+   "page_number": 331,
+   "reference_meta": {
+    "title": "Arcana Coelestia (Heavenly Arcana), Genesis ch. XXXVII, nn. 4712 (end)-4715",
+    "translator": "John Clowes (revised; American Swedenborg Printing and Publishing Society edition)",
+    "year": 1870,
+    "licence": "Public domain (1870; archive.org scan)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "nn. 4712-4715; vol. V (New York 1870) pp. 312-313",
+    "url": "https://archive.org/download/arcanacoelestiah05swed_0/arcanacoelestiah05swed_0_djvu.txt",
+    "source_edition_used_by_translator": "London Latin first edition (1749-56)",
+    "coverage_note": "~100%. Page opens mid-word '[ad]ventus' inside n. 4712 and ends at 'Apud Jeremiam,' mid-n. 4715. Isaiah 'quid tibi hic . . .' ellipsis is in the translation as in the Latin. Clowes renders 'Chebron' as 'Hebron'."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a2198155ce215cb9ac70f53_00209",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "6a2198155ce215cb9ac70f53",
+   "page_number": 209,
+   "reference_meta": {
+    "title": "Arcana Coelestia (Heavenly Arcana), Genesis ch. XXIV interchapter (on the light of heaven), nn. 3222-3224",
+    "translator": "John Clowes (revised; American Swedenborg Printing and Publishing Society edition)",
+    "year": 1870,
+    "licence": "Public domain (1870; archive.org scan)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "nn. 3222-3224; vol. III (New York 1870) pp. 425-427",
+    "url": "https://archive.org/download/arcanacoelestiah03swed_0/arcanacoelestiah03swed_0_djvu.txt",
+    "source_edition_used_by_translator": "London Latin first edition (1749-56)",
+    "coverage_note": "~100%. Page ends after 'amore erga proximum' (catchword 'sunt' excluded); English cut after 'love towards their neighbour'. Latin 'in amore in Dominum' rendered 'in love to the Lord'."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b6fb4a3c7947b468d7aa52_00309",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69b6fb4a3c7947b468d7aa52",
+   "page_number": 309,
+   "reference_meta": {
+    "title": "Novum Organum, Book II, Aphorism XLIII (Dissecting Instances) and end of XLII",
+    "translator": "James Spedding (Spedding, Ellis & Heath edition)",
+    "year": 1858,
+    "licence": "Public domain (pre-1929; archive.org scan)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Novum Organum II.42 (end)-II.43; Works vol. IV (London) pp. ~210-211",
+    "url": "https://archive.org/download/worksoffrancisba015843mbp/worksoffrancisba015843mbp_djvu.txt",
+    "source_edition_used_by_translator": "Instauratio Magna, London 1620",
+    "coverage_note": "~100%. Page opens with '[ultimi] perfugii' mid-sentence at the close of II.42 and ends at 'quod exiguo' in II.43; English cut accordingly. Running head 'VERULAMII' excluded."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69b2ffad5545150b61b4901a_00389",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69b2ffad5545150b61b4901a",
+   "page_number": 389,
+   "reference_meta": {
+    "title": "The History of Fluidity and Firmness (in Certain Physiological Essays and Other Tracts, 2nd ed.), Of Firmness: the fourth way corpuscles give stable consistence",
+    "translator": "Robert Boyle (author's English original)",
+    "year": 1669,
+    "licence": "CC0 1.0 (EEBO-TCP)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "author-original",
+    "located": "'The History of Fluidity and Firmness', Of Firmness, the fourth and last way whereby entering corpuscles give consistence (EEBO-TCP A28944)",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A28944/master/A28944.xml",
+    "source_edition_used_by_translator": "The Latin 1667 volume (which bundles the Fluidity/Firmness essay after Nova Experimenta) was translated from the English Certain Physiological Essays (1st ed. 1661); the TCP text used here is the enlarged 2nd ed. of 1669",
+    "coverage_note": "~100%. The page opens mid-sentence ('[a duobus] recitatis duobus proximis distinximus'), so the English starts at 'but we have distinguish'd it from the two last recited'. One known discrepancy: the 1669 English reads 'though perhaps but in a very considerable proportion' where the Latin has 'licet forsan in exigua tantum quantitate' (a small quantity) — evidently a misprint for 'inconsiderable' in the English; a judge should not penalise 'small quantity'. Page ends 'in quibus nuda' = 'wherein by the bare'."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b18a89c4be2cdd0edc810d_00135",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69b18a89c4be2cdd0edc810d",
+   "page_number": 135,
+   "reference_meta": {
+    "title": "Philosophicall Rudiments concerning Government and Society, ch. VI (Dominion): annotation to Art. I and Art. II",
+    "translator": "Thomas Hobbes (authorised English version; translator's identity debated, published under Hobbes's name)",
+    "year": 1651,
+    "licence": "CC0 1.0 (EEBO-TCP)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "author-original",
+    "located": "Chapter VI, end of the annotation '[Multitude, &c.]' to Art. I, and Art. II with its marginal note (EEBO-TCP A86417; also Wikisource ch. VI)",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A86417/master/A86417.xml",
+    "source_edition_used_by_translator": "De Cive, 2nd ed. Amsterdam 1647 (with the annotations); our 1657 Elzevir reprint has the same text",
+    "coverage_note": "~100%. Page opens mid-sentence at '[acquirere, jus] transferre' inside the annotation, ends mid-word 'co[nstituent]' in Art. II; English cut accordingly. NB reference_kind: the 1651 English is the authorised (Hobbes-sanctioned) version of a work first written in Latin, so strictly 'author-original-or-authorised' per brief, not an original English composition. Long s modernised; spelling kept."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b18a55c4be2cdd0edc727d_00552",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69b18a55c4be2cdd0edc727d",
+   "page_number": 552,
+   "reference_meta": {
+    "title": "Elements of Chemistry: being the annual lectures of Herman Boerhaave, vol. II, Part III (Practice of the Art), Processes LXXVII-LXXIX",
+    "translator": "Timothy Dallowe",
+    "year": 1735,
+    "licence": "Public domain (1735; archive.org scan, Wellcome Library copy)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Vol. II pp. 186-188, Processes 77, 78, 79 (vegetable processes on tartar)",
+    "url": "https://archive.org/download/b30414301_0002/b30414301_0002_djvu.txt",
+    "source_edition_used_by_translator": "Elementa Chemiae, Leiden 1732 (the edition of our book)",
+    "coverage_note": "~95%. Full page rendered. Dallowe is close but slightly expansive/free in places: 'Dein in phiala sola charta obturata' -> 'With a Paper only stop the Mouth of the Glass'; 'leni igne' -> 'moderate Heat'; in Proc. 78 Usus he expands 'ut diaphoresi sanet' into 'makes the animal powers to throw off the morbific Matter by Sweat'; 'suo titulo' -> 'This is Dr. Harvey's Tincture of Salt of Tartar'; 'cacoethe' and 'cuniculatim depascentia' are folded into 'fistulous, as sinuous'. Page ends at 'absit' -> 'provided'. Long s modernised in this reference."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "698255f1861f3361ae3249e0_00198",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "698255f1861f3361ae3249e0",
+   "page_number": 198,
+   "reference_meta": {
+    "title": "A New Light of Alchymie ... to which is added a Treatise of Sulphur",
+    "translator": "John French (J.F. M.D.)",
+    "year": 1650,
+    "licence": "Public domain (pre-1929; archive.org scan)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Treatise of Sulphur, pp. 117-118 of the 1650 London edition (running head 'A new Light of Alchymie')",
+    "url": "https://archive.org/download/newlightofalchym00sedz/newlightofalchym00sedz_djvu.txt",
+    "source_edition_used_by_translator": "a Latin edition of Novum lumen chymicum with De sulphure (pre-1650; not stated)",
+    "coverage_note": "full page covered (~100%); English cleaned from archive.org OCR (long-s, OCR misreads such as 'mutter'->'matter', 'aude'->'crude' corrected)"
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "697b07990411081cde5f4e66_00153",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "697b07990411081cde5f4e66",
+   "page_number": 153,
+   "reference_meta": {
+    "title": "Enchyridion physicae restitutae, or, The summary of physicks recovered",
+    "translator": "anonymous (attributed to John Everard)",
+    "year": 1651,
+    "licence": "CC0 1.0 (EEBO-TCP)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "aphorisms 166 (end) - 167, pp. 109-110 of the 1651 London edition",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A38619/master/A38619.xml",
+    "source_edition_used_by_translator": "Latin Enchiridion physicae restitutae (Paris 1623 or later reprint)",
+    "coverage_note": "full page covered (~100%)"
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "695262d8ab34727b1f046ade_00167",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "695262d8ab34727b1f046ade",
+   "page_number": 167,
+   "reference_meta": {
+    "title": "The Works of Geber ... faithfully Englished by R. Russel: The Sum of Perfection, Book IV",
+    "translator": "Richard Russell",
+    "year": 1678,
+    "licence": "CC0 1.0 (EEBO-TCP)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Sum of Perfection, Book IV, Part 1, ch. 13 'Of Medicines citrinating (or colouring)', pp. 200-201 of the 1678 edition",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A46731/master/A46731.xml",
+    "source_edition_used_by_translator": "a Latin Summa perfectionis (probably the Gdansk 1682-type text family / Bern 1545 Golius), not the 1542 Nuremberg/Strasbourg text",
+    "coverage_note": "~95% covered. Our page's sentence 'Citrinatur vero & Luna similiter cum Martis solutione' (a repetition in this edition; Russell renders the Mars sentence once, before this page) has no rendering at this point. Russell has one extra sentence absent from our Latin, bracketed: '[For the Medicine of Argentvive is not in this first Order ...]'."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69526191ab34727b1f046982_00108",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69526191ab34727b1f046982",
+   "page_number": 108,
+   "reference_meta": {
+    "title": "The Works of Geber ... faithfully Englished by R. Russel: The Sum of Perfection",
+    "translator": "Richard Russell",
+    "year": 1678,
+    "licence": "CC0 1.0 (EEBO-TCP)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Sum of Perfection, Book I, Fourth Part, ch. IV 'Of Calcination', pp. 123-125 of the 1678 edition",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A46731/master/A46731.xml",
+    "source_edition_used_by_translator": "a Latin Summa perfectionis (17th-c. text; not the 1545 Bern edition itself)",
+    "coverage_note": "~100% of running text covered. Handwritten marginalia/glosses on our page (e.g. 'secundus', 'Saturni et Iovis', cross-references) are a reader's annotations, not printed text, and have no English. TCP typos fixed ('Calcinatitn'->'Calcination', 'no reduced'->'not reduced')."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69905e372fd6a039938a1793_00028",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69905e372fd6a039938a1793",
+   "page_number": 28,
+   "reference_meta": {
+    "title": "The boke of secretes of Albertus Magnus of the vertues of herbes, stones, and certayne beastes",
+    "translator": "anonymous",
+    "year": 1560,
+    "licence": "CC0 1.0 (EEBO-TCP)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Second Book (of stones): Esmundus (end), Amaristus, Berillus, Celonites, Corallus; unpaginated, sig. c-range of the c.1560 London edition",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A15531/master/A15531.xml",
+    "source_edition_used_by_translator": "a printed Latin Liber aggregationis (late 15th/early 16th c.)",
+    "coverage_note": "~95% covered. Translator leaves the Chelonites moon clause in Latin ('Prima cum fuerit accensa, et crescens monoytes in vltima descendente') as in the source; he says the stone is found 'in the head of the snayle' where our Latin has 'in corpore testudinis' (tortoise) — a translator rendering/variant, not a page difference. The Coral heading 'Si vis pacificare' lacks the ¶ in our print. TCP 'cūfuerit' split to 'cum fuerit'; 'drū kennes' joined."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6953ea3e1479a63c1108641e_00241",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "6953ea3e1479a63c1108641e",
+   "page_number": 241,
+   "reference_meta": {
+    "title": "Natural Magick by John Baptista Porta, a Neapolitane; in twenty books",
+    "translator": "anonymous",
+    "year": 1658,
+    "licence": "CC0 1.0 (EEBO-TCP)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Book IV (Of increasing Houshold-stuff), end of ch. XX ('The Epimenidian composition') and start of ch. XXI 'Of what fruits wines may be made', pp. 147-148 of the 1658 London edition",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A55484/master/A55484.xml",
+    "source_edition_used_by_translator": "the 20-book Magiae naturalis (Naples 1589 or a reprint); our 1619 edition is a reprint of that text",
+    "coverage_note": "~100% covered. Translator renders 'super carbones imponendo' (set on coals) as 'set them in cold' (mistranslation or misprint in the English, kept as is). 'Wine of Dates' is the English rendering of the sub-heading 'Vinum ex palmis'."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "1a8485e5-5331-41df-bfc1-6efd65238f55_00581",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "1a8485e5-5331-41df-bfc1-6efd65238f55",
+   "page_number": 581,
+   "reference_meta": {
+    "title": "Natural Magick by John Baptista Porta, a Neapolitane; in twenty books",
+    "translator": "anonymous",
+    "year": 1658,
+    "licence": "Public domain (1658 printing; archive.org scan, Boston Public Library copy)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Book XV (Of Hunting, Fowling, Fishing), last chapter (experiments), end of book, pp. 362-363 of the 1658 London edition",
+    "url": "https://archive.org/download/naturalmagick00port/naturalmagick00port_djvu.txt",
+    "source_edition_used_by_translator": "the 20-book Magiae naturalis (Naples 1589 or reprint); our 1607 Frankfurt edition is a reprint of that text",
+    "coverage_note": "~97% covered. Translator compresses the subject 'tenentem / habeant' into 'about you'; Latin 'peristereon herbam' = 'Vervain'; 'Alas si oleo illeveris' (anoint the wings) rendered 'under the shoulders'; the Latin clause 'pro vehementi, ac nimis in pugnam procliui' is paraphrased by 'ready and earnest to fight'. EEBO-TCP A55484 has many gaps on this page, so the archive.org OCR of the 1658 print was used and cleaned (long-s, OCR misreads); the Greek word was garbled by OCR and is restored from the Latin (form uncertain). Final word 'in' supplied where the OCR is cut ('ho*')."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6952855fab34727b1f04b383_00434",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "6952855fab34727b1f04b383",
+   "page_number": 434,
+   "reference_meta": {
+    "title": "Oriatrike, or, Physick refined (reissued 1664 as Van Helmont's Works)",
+    "translator": "John Chandler (J.C.)",
+    "year": 1662,
+    "licence": "CC0 1.0 (EEBO-TCP)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "ch. L 'A Cautery or Searing Remedy', §§15-17, pp. 383-384 of the 1662/1664 London edition",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A43285/master/A43285.xml",
+    "source_edition_used_by_translator": "Ortus medicinae (Amsterdam, Elzevir 1648 or 1652)",
+    "coverage_note": "~100% covered. The TCP text is the 1664 reissue (Wing H1397, same Chandler translation and sheets as the 1662 Oriatrike). The section numbers 15/16/17 are marginal in our Latin and are given as [margin]; Chandler does not print them at these points, so their placement follows the Latin. TCP gap 'And a •• ength' restored as 'And at length'; 'come the into' corrected to 'come into'."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6952d05477f38f6761bc511e_00428",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "6952d05477f38f6761bc511e",
+   "page_number": 428,
+   "reference_meta": {
+    "title": "Bazilica chymica, & Praxis chymiatricae, or, Royal and practical chymistry in three treatises",
+    "translator": "'a lover of chymistry' (anonymous)",
+    "year": 1670,
+    "licence": "CC0 1.0 (EEBO-TCP)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Royal Chymistry, closing section after the viper antidote ('Of Astral, Spiritual, Imaginary... diseases'), pp. 158-159 of the 1670 London edition",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A35064/master/A35064.xml",
+    "source_edition_used_by_translator": "a later Latin Basilica chymica (probably with Hartmann's notes, 1630s-1650s); the main text matches our 1609 edition here",
+    "coverage_note": "~100% of running text covered. Marginal notes: the first margin note begins on the previous page (here only its tail 'Astrali, Venenali, ac Spirituali, & in Flagellum videlicet Quintum' is on the page), so only the corresponding tail of the English margin is given; the TCP margin text is damaged ('obtaired', 'Phytian hath to know and capell' — corrected to 'obtained', 'Physitian', 'expell', with '...' where the English is garbled). The English renders the four simples (Persicaria, Solidago maior, Dracunculus, Symphytum maius) in a different order/identification ('Arsemart, the greater Comphry, Dragonwort, and the greater Wallwort')."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6976f5fb7b4366f057e0e974_00631",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "6976f5fb7b4366f057e0e974",
+   "page_number": 631,
+   "reference_meta": {
+    "title": "Bazilica chymica, & Praxis chymiatricae, or, Royal and practical chymistry in three treatises",
+    "translator": "'a lover of chymistry' (anonymous)",
+    "year": 1670,
+    "licence": "CC0 1.0 (EEBO-TCP)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Royal Chymistry, 'Hydropicum' (Specifick against the Dropsie), annotation (l), Hartmann's commentary",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A35064/master/A35064.xml",
+    "source_edition_used_by_translator": "Latin Basilica chymica with Johann Hartmann's annotations (the same commentary printed in our 1658 Geneva edition)",
+    "coverage_note": "~100% covered. The page is part of the lettered annotation (l) to the Hydropicum specific. 'radice asari' (asarabacca) is rendered 'root of Colts-foot'; the Greek 'ὕστερον πρότερον' is a gap in the TCP text and is restored from the Latin. Page ends mid-clause: Latin 'quae pollet sulphure potius quam liquore | [Mercuriali, in quo purgandi vis consistit, attractionem]' — the English cut stops at 'then the'; the rest of that sentence (on p.632) is given as [context]. TCP 'Wrine'/'neaful' normalised to 'Urine'/'needful'."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69905d2a2fd6a0399389f0c0_00180",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69905d2a2fd6a0399389f0c0",
+   "page_number": 180,
+   "reference_meta": {
+    "title": "Utopia",
+    "translator": "Gilbert Burnet (ed. Henry Morley)",
+    "year": 1684,
+    "licence": "Public domain (Project Gutenberg)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Book II, 'Of their Trades, and Manner of Life' (Gutenberg #2130 lines 1703-1716)",
+    "url": "https://www.gutenberg.org/cache/epub/2130/pg2130.txt",
+    "source_edition_used_by_translator": "Latin Utopia (Burnet's 1684 translation; base edition not stated)",
+    "coverage_note": "~95%: all running text rendered; Burnet is somewhat free ('without either paying for it or leaving anything in exchange' for 'sine pecunia, sine omni prorsus hostimento'). Marginal note 'Sic excludi potest ociosa turba ministrorum' not translated by Burnet."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69b2ff0ea1a4246ddb45adbb_00062",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69b2ff0ea1a4246ddb45adbb",
+   "page_number": 62,
+   "reference_meta": {
+    "title": "Utopia (The fyrste boke)",
+    "translator": "Ralph Robinson (ed. J. H. Lupton)",
+    "year": 1551,
+    "licence": "Public domain (pre-1929; archive.org scan of Lupton 1895)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Book I, Lupton 1895 ed. pp. 94-96 (Latin 1518 pp. 60-61)",
+    "url": "https://archive.org/download/utopiaofsirthom00more/utopiaofsirthom00more_djvu.txt",
+    "source_edition_used_by_translator": "Robinson worked from an early Latin edition; Lupton prints it facing the March 1518 Basel Latin - the same edition as our book",
+    "coverage_note": "~98%: all running text rendered; Robinson expands slightly ('hurtinge no man', 'take a waye the occasions of offences'). 'magnis adhibitis sacrificiis' rendered loosely as 'by a solempne othe'. Marginal note 'Mira lex Macarensium' not rendered."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69b2ff19a1a4246ddb45ae6a_00196",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69b2ff19a1a4246ddb45ae6a",
+   "page_number": 196,
+   "reference_meta": {
+    "title": "The Praise of Folly",
+    "translator": "John Wilson (ed. Mrs P. S. Allen, Oxford 1913)",
+    "year": 1668,
+    "licence": "Public domain (pre-1929; archive.org scan)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Allen 1913 ed. pp. 95-96 (section on grammarians)",
+    "url": "https://archive.org/download/thepraiseoffolly00erasuoft/thepraiseoffolly00erasuoft_djvu.txt",
+    "source_edition_used_by_translator": "Latin Moriae Encomium (Wilson 1668; base edition not stated)",
+    "coverage_note": "~95%: Wilson omits 'de suo' nuances and renders 'nemini non inuidens, si quid quantumlibet inepte moliatur' loosely. Note: Gutenberg #9371 drops a line here (jumps from 'how' to 'to be pitied than happy') - do not use it for this page."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69b4cce5d5b6c3815e1a2931_00094",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69b4cce5d5b6c3815e1a2931",
+   "page_number": 94,
+   "reference_meta": {
+    "title": "A Book called in Latin Enchiridion militis christiani and in English The Manual of the Christian Knight",
+    "translator": "anonymous (attrib. William Tyndale), Methuen 1905 modernised-spelling reprint",
+    "year": 1533,
+    "licence": "Public domain (pre-1929; archive.org scan of 1905 reprint)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Chapter XV (the sixth rule), 1905 ed. pp. 213-215",
+    "url": "https://archive.org/download/bookcalledinlati00erasuoft/bookcalledinlati00erasuoft_djvu.txt",
+    "source_edition_used_by_translator": "a post-1518 Latin edition (with the Volz preface); text of this passage matches our 1515 edition",
+    "coverage_note": "~97%: all running text rendered; translator glosses ('that is to say, thou shalt make him to love fervently') and doubles words ('malice and froward audacity'). The 1905 reprint modernises spelling. Marginal notes (Inimici diligendi; Luce 6; Paulus legum consultus; Ro. 12; Deutro. 32; Iniuriarum pati quam facere...; Christianismi decretum) not included - the 1905 margins are partly illegible in the OCR."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b21c6c429e087c6f8646f6_00223",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69b21c6c429e087c6f8646f6",
+   "page_number": 223,
+   "reference_meta": {
+    "title": "The Colloquies of Erasmus, Vol. I ('The Penitent Virgin')",
+    "translator": "N. Bailey (1878 reprint, ed. E. Johnson)",
+    "year": 1725,
+    "licence": "Public domain (Project Gutenberg)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Colloquy 'The Penitent Virgin' (Virgo Poenitens), opening exchanges",
+    "url": "https://www.gutenberg.org/cache/epub/14031/pg14031.txt",
+    "source_edition_used_by_translator": "18th-c. Latin vulgate of the Colloquia; matches our 1636 text here",
+    "coverage_note": "~92%: all speeches rendered, but Bailey is free in places: 'Age obtestabor tibi, quae mihi noluisti' -> 'I'll be so good natur'd as to hearken to you, though you would not to me'; 'Quod mihi dixeris, amico tuo dixeris' -> 'Come, tell me freely, you know I'm your Friend'; 'Ne subducito te' expanded; 'minitabantur horribile malum exitium' -> 'preach'd Damnation to him'."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b2f3bfa9a500a45e5e857c_00165",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69b2f3bfa9a500a45e5e857c",
+   "page_number": 165,
+   "reference_meta": {
+    "title": "Institutes of the Christian Religion",
+    "translator": "John Allen",
+    "year": 1813,
+    "licence": "Public domain (Project Gutenberg)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Book II, ch. XI, §§3 (end)-5 (Gutenberg #45001, vol. 1)",
+    "url": "https://www.gutenberg.org/cache/epub/45001/pg45001.txt",
+    "source_edition_used_by_translator": "the definitive 1559 Latin (Allen translated the final Latin text)",
+    "coverage_note": "~98%: close rendering of all running text. Marginal scripture references (Ps. 110; Heb. 7, 9, 10; Matt. 26; Gal. 3-4; Matt. 11; Col. 2) appear in Allen only as footnote numbers, which were removed. Allen omits the scholastic gloss '(ut vulgus loquitur) accessoria' and 'vel certe accessiones ac annexa' is compressed to 'accidents or concomitants'."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69b21cc8429e087c6f8659be_00184",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69b21cc8429e087c6f8659be",
+   "page_number": 184,
+   "reference_meta": {
+    "title": "Two Bookes of Constancie",
+    "translator": "John Stradling",
+    "year": 1594,
+    "licence": "CC0 1.0 (EEBO-TCP)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Book II, end of ch. XXVI (Stradling's XXVI) and opening of ch. XXVII (= Latin Cap. XXVI)",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A05575/master/A05575.xml",
+    "source_edition_used_by_translator": "an early Plantin Latin edition (1584 or later)",
+    "coverage_note": "~98%: full rendering, with doublets typical of Stradling ('communication or participation', 'humane, or appertaining to men'). Stradling numbers the final chapter XXVII where our Latin has CAPVT XXVI. Stradling's own marginal note 'The Conclusion and exhortation' (not on our page) omitted; 'CONSTACIE' in the TCP text corrected to 'CONSTANCIE'."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69aea708971abe996d21b4aa_00471",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69aea708971abe996d21b4aa",
+   "page_number": 471,
+   "reference_meta": {
+    "title": "Phisicke against Fortune, aswell prosperous, as aduerse",
+    "translator": "Thomas Twyne",
+    "year": 1579,
+    "licence": "CC0 1.0 (EEBO-TCP)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Book II, end of Dialogue xxv and Dialogue xxvi 'Of shame procured by meanes of vnwoorthy commendation'",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A09530/master/A09530.xml",
+    "source_edition_used_by_translator": "16th-c. Latin De remediis (Twyne 1579); our 1649 edition has the same dialogue numbering (Dial. XXVI) here",
+    "coverage_note": "~90%: all dialogue exchanges rendered, but (1) the verse motto 'Parce laudato, nam cum laudaris inique / Si rursus damnes, pars leuitatis erit' at the head of Dial. XXVI is not in Twyne; (2) in Reason's first reply the TCP text is defective ('springeth from a good roter and good and innocent persons') - the clause 'Boni enim, & innocui, quales ipsi sunt' is garbled in the source; (3) 'Haec quidem pro te volens patior' expanded to 'All these thynges ... doo I wyllyngly susteyne for thy sake'. Long s normalised to s."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6991e171b53cae6bb6024476_00216",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "6991e171b53cae6bb6024476",
+   "page_number": 216,
+   "reference_meta": {
+    "title": "Grotius on the Rights of War and Peace: an abridged translation",
+    "translator": "William Whewell",
+    "year": 1853,
+    "licence": "Public domain (pre-1929; archive.org scan)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Book II, ch. X ('Of the obligation which arises from property'), §§2 (end)-9; Whewell 1853 pp. 143-144",
+    "url": "https://archive.org/download/cu31924007467040/cu31924007467040_djvu.txt",
+    "source_edition_used_by_translator": "the later revised Latin text (Whewell's 1853 edition with Barbeyrac's notes), not the 1625 first edition",
+    "coverage_note": "~95%: this passage is translated in full (Whewell abridges mainly notes and quotations elsewhere); Whewell adds bracketed glosses ('(belonging to another)', '[and recovered it]'). Marginal legal citations (Soto, Covarruvias, Silvester, Medina, Lessius, Navarrus, Suetonius, Digest leges) and the footnote 'a L. Si in emtione' are not rendered; Whewell's own footnotes removed. Hint A.C. Campbell (1814/1901) was checked and rejected for this page: it paraphrases loosely and mistranslates §§5, 7, 8."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e9c962625ec74a14473399_00093",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69e9c962625ec74a14473399",
+   "page_number": 93,
+   "reference_meta": {
+    "title": "De Orbe Novo: The Eight Decades of Peter Martyr d'Anghera, vol. 1",
+    "translator": "Francis Augustus MacNutt",
+    "year": 1912,
+    "licence": "Public domain (Project Gutenberg)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Third Decade, Book I (Vasco Núñez de Balboa, the tiger, Pacra)",
+    "url": "https://www.gutenberg.org/cache/epub/12425/pg12425.txt",
+    "source_edition_used_by_translator": "the complete 1530 Alcalá edition of the eight Decades; Decades I-III text as in the 1516 editio princeps",
+    "coverage_note": "~92%: all sentences rendered, but MacNutt paraphrases in places (e.g. 'Excauatam scrobem cratibus & egesta terra ... strauerunt' -> 'digging a ditch which they covered over with boughs and earth'; 'quae dat accipimus' -> 'let us accept what they give us'; the dogs passage partly expanded 'as if they were timid deer or fierce boars' where our OCR is garbled). MacNutt's editorial notes [3]-[5] removed. Marginal notes (Indole tigris; quid de tigride; Redit Pachra; Qualis sit Pacra; quid contra sceleratos; mira de canibus; quibus armis bella gerunt; 30 librae auri a Pacra) not rendered by MacNutt."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b3027416f06ae4cdc55939_00088",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69b3027416f06ae4cdc55939",
+   "page_number": 88,
+   "reference_meta": {
+    "title": "A Defence of the People of England, in answer to Salmasius's Defence of the King",
+    "translator": "Joseph Washington",
+    "year": 1692,
+    "licence": "CC0 1.0 (EEBO-TCP)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Chapter III (on 1 Peter 2:13-16 and Romans 13)",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A50893/master/A50893.xml",
+    "source_edition_used_by_translator": "probably the revised 1658 Latin edition; this passage matches our 1651 text",
+    "coverage_note": "~90%: Washington omits Aristotle's Greek 'ἡ δὲ τάξις νόμος' (renders only 'the law ... is order'), reduces 'cum rex, tum praeses' to 'a King', drops 'dispersi' and 'non praetores' ('no Consuls, no Magistrates'), and expands 'ad crucem & perniciem bonorum ... regnent' into 'pervert the design of Magistracy...'. The Greek word ὑποτάγητε (a non-Latin-alphabet gap in the TCP text) restored from the Latin page. Long s normalised."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b30404983e01f74b987740_00366",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69b30404983e01f74b987740",
+   "page_number": 366,
+   "reference_meta": {
+    "title": "A Geographical Historie of Africa",
+    "translator": "John Pory",
+    "year": 1600,
+    "licence": "CC0 1.0 (EEBO-TCP)",
+    "private": false,
+    "publishable": true,
+    "style": "early-modern",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Third Book, description of new Fez (the mint and goldsmiths)",
+    "url": "https://raw.githubusercontent.com/textcreationpartnership/A05331/master/A05331.xml",
+    "source_edition_used_by_translator": "John Florianus's Latin version (Antwerp 1556) - the same Latin version as our 1632 Elzevir edition",
+    "coverage_note": "~97%: close rendering of the whole page; minor liberties ('nec annulus, nec aliud quidpiam' -> 'neither ring nor any other Iewell or commoditie'; 'expenditur' -> 'is weighed as if it were money')."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6991e1b0339ebc850994ab9e_00551",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "6991e1b0339ebc850994ab9e",
+   "page_number": 551,
+   "reference_meta": {
+    "title": "The Summa Theologica of St. Thomas Aquinas, Part II-II (Secunda Secundae)",
+    "translator": "Fathers of the English Dominican Province",
+    "year": 1920,
+    "licence": "Public domain in the US (Project Gutenberg)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "II-II q.111 a.4 (end of corpus, from 'a man takes pleasure in the pretense itself') through q.112 prologue and a.1 up to end of Reply Obj. 2",
+    "url": "https://www.gutenberg.org/cache/epub/18755/pg18755.txt",
+    "source_edition_used_by_translator": "Leonine-era Latin text (2nd revised ed., 1920)",
+    "coverage_note": "~90% covered: all running text of the page is rendered. Not rendered: the editor's footnote summarising Art. 1 from Cajetan (OCR tags it <margin>) and two textual footnotes (Vulgate variant; 'In Nicol. deest verbum utrobique') — these are apparatus of the Latin edition, not Aquinas's text. The first line of the page begins mid-sentence ('aliquis in ipsa fictione delectatur'); the cut starts at 'man takes pleasure in the pretense itself', with the preceding words given as context on the same line."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69dbcc3e0f8c5edf20f484a0_00330",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69dbcc3e0f8c5edf20f484a0",
+   "page_number": 330,
+   "reference_meta": {
+    "title": "The Summa Theologica of St. Thomas Aquinas, Part I (Prima Pars)",
+    "translator": "Fathers of the English Dominican Province",
+    "year": 1920,
+    "licence": "Public domain in the US (Project Gutenberg)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "I q.85 a.3, from the article title through Reply Obj. 3 to 'But as parts' (page ends mid-sentence 'sed secundum quod sunt partes')",
+    "url": "https://www.gutenberg.org/cache/epub/17611/pg17611.txt",
+    "source_edition_used_by_translator": "Leonine-era Latin text (2nd revised ed., 1920)",
+    "coverage_note": "~100% of running text covered. Printed marginal cross-reference numbers (426, 425, 54, 380, 581, 427) and letter keys are not text. The OCR of this abbreviated incunable is heavily garbled; the image was read to fix the page boundaries."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "699062f5ef12272ffdc8e9d5_00505",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "699062f5ef12272ffdc8e9d5",
+   "page_number": 505,
+   "reference_meta": {
+    "title": "The City of God, Volume II",
+    "translator": "Marcus Dods",
+    "year": 1871,
+    "licence": "Public domain (Project Gutenberg)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Book XIX, ch. 23 (Porphyry's oracles; 'He that sacrificeth unto any god...'), from 'to God, and command it to worship Him' to 'would offer one sacrifice.'",
+    "url": "https://www.gutenberg.org/cache/epub/45305/pg45305.txt",
+    "source_edition_used_by_translator": "Benedictine (Maurist) text",
+    "coverage_note": "~90% covered. Dods omits Augustine's sentence 'ne forte quia ait domino soli, deum Solem credat esse quispiam cui sacrificandum putet. Quod non ita esse intellegendum in scripturis Graecis facillime reperitur' and replaces it with his footnote 661 (included inline in brackets); the second repetition 'Sacrificans diis eradicabitur, inquit, nisi domino tantum' is abridged to '\"He that sacrifices,\" He says'. 'ubique' in the first line is not rendered."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69afd0df775a23a98ee93a30_00420",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69afd0df775a23a98ee93a30",
+   "page_number": 420,
+   "reference_meta": {
+    "title": "The Natural History of Pliny",
+    "translator": "John Bostock and H. T. Riley",
+    "year": 1855,
+    "licence": "Public domain (Perseus Digital Library transcription, CC BY-SA)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Book XXVIII, chs. 77 (from 'in unwashed wool') to 80 (to 'as distilling from mares when covered')",
+    "url": "https://www.perseus.tufts.edu/hopper/text?doc=Perseus:text:1999.02.0137:book=28:chapter=77 (and chapters 78, 79, 80)",
+    "source_edition_used_by_translator": "Sillig / Hardouin-based text (1850s)",
+    "coverage_note": "~90% covered. Edition differences with the 1481 Venice text: the 1481 has 'E boue silvestri nigro... dicit Aeschines' where Bostock-Riley read ticks of a black wild bull 'According to Osthanes'; 1481 'Lyen vituli in melle' where B-R have ox's milt; the 1481 'Lupi adeps... Dolores earum' passage is garbled/duplicated in our OCR. B-R chapter headings and footnotes omitted (not on the page). The last Latin words 'Item a coitu equi Virgilio' break off mid-phrase; the cut ends with the B-R clause that renders it."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69523495ab34727b1f044a45_00063",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69523495ab34727b1f044a45",
+   "page_number": 63,
+   "reference_meta": {
+    "title": "The Malleus Maleficarum of Heinrich Kramer and James Sprenger",
+    "translator": "Montague Summers",
+    "year": 1928,
+    "licence": "Public domain in the US (published 1928; US term expired 2024)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Part I, Question IX, 'Solutions of the Arguments' (entire) and Question X from its opening to 'he does so either by projecting himself'",
+    "url": "https://archive.org/download/MalleusMaleficarumHeinrichKramer/Malleus%20Maleficarum%2C%20Heinrich%20Kramer_djvu.txt",
+    "source_edition_used_by_translator": "Summers used a later printed edition (not stated precisely; text matches the 1486 editio princeps here)",
+    "coverage_note": "~100% covered. The archive.org text is OCR of a printout of the Windhaven online edition of Summers 1928; OCR errors corrected ('deviis'->'devils', 'ciear'->'clear', '2ncl'->'2nd'); Summers' own wording kept, including his 'so also can devils taken off that member'. Summers renders the canon reference 'xxvi. q. v. Episcopi ex concilio Ancyrensi' only as 'Episcopus (XXVI, 5)'. Marginal headings rendered by Summers' section titles."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69bd9c796120d54bd036f318_00389",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69bd9c796120d54bd036f318",
+   "page_number": 389,
+   "reference_meta": {
+    "title": "The Malleus Maleficarum of Heinrich Kramer and James Sprenger",
+    "translator": "Montague Summers",
+    "year": 1928,
+    "licence": "Public domain in the US (published 1928; US term expired 2024)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": false,
+    "reference_kind": "translation",
+    "located": "Part II, Question II, Chapter VI (remedies; the superstitious arguments for images and rings), from 'saying faithfully' to 'Wherefore S. Thomas, II, q. 96, art. 2, speaking of this matter, says'",
+    "url": "https://archive.org/download/MalleusMaleficarumHeinrichKramer/Malleus%20Maleficarum%2C%20Heinrich%20Kramer_djvu.txt",
+    "source_edition_used_by_translator": "not stated precisely; matches the 1511 text here",
+    "coverage_note": "~95% covered. The page's first fragment '[orationem dominic]am fideliter dicentes' begins mid-phrase; the English starts at 'saying faithfully', and 'the Creed or the Lord's Prayer' is only partly on our page ('-am'). Summers renders 'in pede questionis' loosely as 'speaking of this matter'. OCR errors in the archive.org text (a printout of the Windhaven online edition) corrected ('deviis'->'devils')."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69dbc9491040d1d5e20a1afd_00087",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69dbc9491040d1d5e20a1afd",
+   "page_number": 87,
+   "reference_meta": {
+    "title": "Cicero, De Officiis (Loeb Classical Library)",
+    "translator": "Walter Miller",
+    "year": 1913,
+    "licence": "Public domain (LacusCurtius transcription of the 1913 Loeb)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Book II, §§27 (end)–30 (start): from 'actually embraced whole provinces' to 'But we do not all feel this need to the same extent'",
+    "url": "https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Cicero/de_Officiis/2A*.html",
+    "source_edition_used_by_translator": "Miller's Loeb Latin text (1913)",
+    "coverage_note": "~95% covered. The rubric 'De caritate adipiscenda' (added in the 1465 print) has no counterpart in Miller. The page ends with 'Sed ea non pariter' (sentence completed on the next page: 'omnes egemus'); the cut ends at Miller's rendering of that clause. Miller's section numbers and page markers removed."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69dbc89d1040d1d5e209ab64_00305",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69dbc89d1040d1d5e209ab64",
+   "page_number": 305,
+   "reference_meta": {
+    "title": "The Consolation of Philosophy",
+    "translator": "H. R. James",
+    "year": 1897,
+    "licence": "Public domain (Project Gutenberg)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Book V, Prose 3, from 'In what way, then, are we to suppose that God foreknows' to 'no shadow of uncertainty'",
+    "url": "https://www.gutenberg.org/cache/epub/14328/pg14328.txt",
+    "source_edition_used_by_translator": "Peiper (Teubner, 1871) text",
+    "coverage_note": "100% covered. The page has only Boethius' text (no commentary). Last Latin words 'nichil incerti' break off before 'esse potest'; the cut ends at 'no shadow of uncertainty'. James renders 'Quid igitur? Quonam modo...' as one question ('In what way, then, ...'), and 'ridiculo Tiresiae' as 'the absurd vaticination of Teiresias', setting the oracle as verse."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "6949af986ef4a68b726b7fa9_00358",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "6949af986ef4a68b726b7fa9",
+   "page_number": 358,
+   "reference_meta": {
+    "title": "Vitruvius: The Ten Books on Architecture",
+    "translator": "Morris Hicky Morgan",
+    "year": 1914,
+    "licence": "Public domain (Project Gutenberg)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Book X, ch. 6 §§3 (end)–4 and closing sentence ('I have now described ... through their revolutions'), before ch. 7 (pump of Ctesibius)",
+    "url": "https://www.gutenberg.org/cache/epub/20239/pg20239.txt",
+    "source_edition_used_by_translator": "Rose-Müller-Strübing / Rose 1899 Teubner text",
+    "coverage_note": "~90% covered. The page is half woodcut (Archimedean screw); its running text is ~11 lines. Morgan's closing sentence is included whole, but its main clause ('I have now described as clearly as I could, to make them better known') renders Latin that falls on the next page ('ut sint notiora, quam apertissime potui perscripsi'); only its subordinate clauses are on this page. Morgan's 'right on the back' (in ipso tergo) is absent from the 1522 text, which reads only 'in extremo libro'. The 1522 editor's figure labels (a. coclea ad rationem trigoni pythagorici erecta; b. tigna in qua versatur coclea) have no counterpart in Morgan."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69b302c23613a84e68067a81_00098",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69b302c23613a84e68067a81",
+   "page_number": 98,
+   "reference_meta": {
+    "title": "The Imitation of Christ",
+    "translator": "William Benham",
+    "year": 1874,
+    "licence": "Public domain (Project Gutenberg)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Book III, ch. 3 ('That the words of God are to be heard with humility'), §3 from 'but many are deaf' through §5 end",
+    "url": "https://www.gutenberg.org/cache/epub/1653/pg1653.txt",
+    "source_edition_used_by_translator": "standard Latin text (Hirsche-type)",
+    "coverage_note": "100% covered. Benham renders the margin citation 'Isai. 23.' as a footnote 'Isaiah xxiii. 4.' (given here as [margin]); he sets the Sidon line as verse and adds quotation marks for the Lord's speech. Section numbers 4 and 5 are in both texts."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69b21d1a429e087c6f866ee7_00452",
+   "track": "student-5793",
+   "lang": "Latin",
+   "book_id": "69b21d1a429e087c6f866ee7",
+   "page_number": 452,
+   "reference_meta": {
+    "title": "Physical Science in the Time of Nero, being a translation of the Quaestiones Naturales of Seneca",
+    "translator": "John Clarke",
+    "year": 1910,
+    "licence": "Public domain (pre-1929; archive.org scan)",
+    "private": false,
+    "publishable": true,
+    "style": "literal",
+    "canonical": true,
+    "reference_kind": "translation",
+    "located": "Naturales Quaestiones Book VII, ch. 25 (end, 'the character of their paths') – ch. 26 – ch. 27 §3 ('does not correspond to the type'); Clarke pp. 299–301 (his chapter numbering XXVI–XXVII)",
+    "url": "https://archive.org/download/physicalsciencei00seneiala/physicalsciencei00seneiala_djvu.txt",
+    "source_edition_used_by_translator": "Gercke (Teubner, 1907) text",
+    "coverage_note": "~95% covered. Clarke inserts the name 'Apollonius' for the 1515 'inquit' (his reading of the opponent); Clarke's 'Aries again rises in a moment' follows the reading 'exoritur' given as a marginal variant in the 1515 print (text: 'excolitur'). OCR junk (running heads, page and section numbers, hyphenation) removed. The page ends mid-sentence 'nec sit [ceteris similis]'."
+   },
+   "arms": [
+    "lite",
+    "base",
+    "student"
+   ],
+   "canonical": true
+  }
+ ]
+}
