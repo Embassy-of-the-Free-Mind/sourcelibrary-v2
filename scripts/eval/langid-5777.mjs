@@ -17,6 +17,7 @@
  *   --pick               enumerate + choose candidate pages             FREE  → picks.jsonl
  *   --fetch [--round N]  download + downscale one image per book        FREE  → <work>/img, fetched.jsonl
  *   --submit [--round N] Batch job(s), gemini-3.1-flash-lite            PAID, needs --approved-usd ≥ estimate
+ *            [--retry]   resubmit only the round's requests with no answer yet (cancelled / errored)
  *   --collect [--wait-min M]  poll, download, meter to gemini_usage     FREE  → raw.jsonl
  *   --summary            one row per book + distribution                FREE  → results.jsonl, summary.json
  *
@@ -43,7 +44,7 @@ const API = 'https://generativelanguage.googleapis.com';
 const NO_LANGUAGE = ['und', 'Unknown'];
 const TARGET_FRACTION = 0.4;
 const MAX_EDGE = 1024;
-const CHUNK = 450;
+const CHUNK = Number(process.env.LANGID_CHUNK || 150);
 const SKIP_TYPES = /blank|cover|binding|endpaper|flyleaf|spine|colou?r.?(chart|target)|calibration/i;
 
 const args = process.argv.slice(2);
@@ -209,7 +210,8 @@ const isUnread = (v) => !v || v.content === 'no_text' || /^none$/i.test(v.script
 /** Books whose round-N read gave nothing to classify (blank, cover, error, no row). */
 function needsAnotherPage(round) {
   const raw = readJsonl(inDir('raw.jsonl')).filter((r) => r.round === round);
-  const byBook = new Map(raw.map((r) => [r.book_id, r]));
+  const byBook = new Map();
+  for (const r of raw) if (!byBook.has(r.book_id) || byBook.get(r.book_id).error) byBook.set(r.book_id, r); // an answer beats a cancelled attempt
   const fetched = readJsonl(path.join(WORK, 'fetched.jsonl')).filter((f) => f.round === round);
   const out = [];
   for (const f of fetched) {
@@ -227,8 +229,15 @@ const loadBatchRec = () => (fs.existsSync(batchRecPath()) ? JSON.parse(fs.readFi
 
 async function phaseSubmit() {
   const rec = loadBatchRec();
-  if (rec.jobs.some((j) => j.round === ROUND)) throw new Error(`round ${ROUND} already submitted (batch.json)`);
-  const items = readJsonl(path.join(WORK, 'fetched.jsonl')).filter((f) => f.round === ROUND && f.page_number);
+  const retry = has('retry');
+  if (!retry && rec.jobs.some((j) => j.round === ROUND)) throw new Error(`round ${ROUND} already submitted (batch.json); --retry resubmits the unanswered`);
+  if (rec.jobs.some((j) => !j.collected_at)) throw new Error('uncollected job(s) in batch.json; run --collect first');
+  // A Batch job can end SUCCEEDED or CANCELLED with requests inside it answered "The operation was
+  // cancelled." (translate-batch-seam.mjs records the same on 2026-09-24). --retry sends only those again.
+  const answered = new Set(readJsonl(inDir('raw.jsonl')).filter((r) => !r.error).map((r) => `${r.book_id}:${r.page_number}`));
+  const attempt = rec.jobs.filter((j) => j.round === ROUND).reduce((m, j) => Math.max(m, j.attempt || 1), 0) + 1;
+  const items = readJsonl(path.join(WORK, 'fetched.jsonl')).filter((f) => f.round === ROUND && f.page_number && !answered.has(`${f.book_id}:${f.page_number}`));
+  if (!items.length) { console.log('nothing to submit'); return; }
   // Estimate: one ≤1024px image (~1,100 tokens at default media resolution) + prompt (~450) in, ~90 out.
   const p = priceFor(MODEL);
   const estimate = items.length * BATCH_MULTIPLIER * ((1550 / 1e6) * p.input + (90 / 1e6) * p.output);
@@ -250,7 +259,7 @@ async function phaseSubmit() {
     const start = await fetch(`${API}/upload/v1beta/files?key=${key}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-Goog-Upload-Protocol': 'resumable', 'X-Goog-Upload-Command': 'start', 'X-Goog-Upload-Header-Content-Length': String(bytes), 'X-Goog-Upload-Header-Content-Type': 'text/plain' },
-      body: JSON.stringify({ file: { display_name: `langid-5777-r${ROUND}-${c}` } }),
+      body: JSON.stringify({ file: { display_name: `langid-5777-r${ROUND}a${attempt}-${c}` } }),
     });
     if (!start.ok) throw new Error(`upload start ${start.status} ${(await start.text()).slice(0, 300)}`);
     const up = await fetch(start.headers.get('X-Goog-Upload-URL'), { method: 'PUT', headers: { 'Content-Type': 'text/plain', 'X-Goog-Upload-Command': 'upload, finalize', 'X-Goog-Upload-Offset': '0' }, body: jsonl });
@@ -262,14 +271,14 @@ async function phaseSubmit() {
       create: async () => {
         const r = await fetch(`${API}/v1beta/models/${MODEL}:batchGenerateContent?key=${key}`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ batch: { display_name: `langid-5777-r${ROUND}-${c}`, input_config: { file_name: fileName } } }),
+          body: JSON.stringify({ batch: { display_name: `langid-5777-r${ROUND}a${attempt}-${c}`, input_config: { file_name: fileName } } }),
         });
         if (!r.ok) throw new Error(`batch create ${r.status} ${(await r.text()).slice(0, 500)}`);
         return r.json();
       },
     });
     rec.key_env = envName;
-    rec.jobs.push({ round: ROUND, chunk: c, job_name: job.name, requests: chunk.length, input_mb: +(bytes / 1e6).toFixed(1), estimate_usd: +(estimate * chunk.length / items.length).toFixed(4), approved_usd: approved, submitted_at: new Date().toISOString() });
+    rec.jobs.push({ round: ROUND, attempt, chunk: c, job_name: job.name, requests: chunk.length, input_mb: +(bytes / 1e6).toFixed(1), estimate_usd: +(estimate * chunk.length / items.length).toFixed(4), approved_usd: approved, submitted_at: new Date().toISOString() });
     writeJson('batch.json', rec);
     console.log(`submitted ${job.name} (${chunk.length} requests, ${(bytes / 1e6).toFixed(1)} MB)`);
   }
@@ -288,8 +297,13 @@ async function phaseCollect() {
       const data = await (await fetch(`${API}/v1beta/${j.job_name}?key=${key}`)).json();
       const state = data.metadata?.state || data.state;
       console.log(`${j.job_name} ${state}`);
-      if (/FAILED|CANCELLED|EXPIRED/.test(state || '')) throw new Error(`batch ${state} ${JSON.stringify(data.error || '').slice(0, 300)}`);
       const rf = data.metadata?.output?.responsesFile || data.response?.responsesFile;
+      if (!rf && /FAILED|CANCELLED|EXPIRED/.test(state || '')) {
+        // A dead job hands back no responses file, so even its answered requests are lost; --submit --retry resends them.
+        Object.assign(j, { collected_at: new Date().toISOString(), state, responses: 0, errors: j.requests, in_tokens: 0, out_tokens: 0, cost_usd: 0, batch_stats: data.metadata?.batchStats || null, dead: JSON.stringify(data.error || '').slice(0, 200) });
+        writeJson('batch.json', rec);
+        continue;
+      }
       if (!rf) { pending++; continue; }
       const text = await (await fetch(`${API}/download/v1beta/${rf}:download?alt=media&key=${key}`)).text();
       let inTok = 0, outTok = 0, n = 0, errors = 0;
@@ -308,7 +322,7 @@ async function phaseCollect() {
         }
         fs.appendFileSync(inDir('raw.jsonl'), JSON.stringify(it) + '\n'); n++;
       }
-      Object.assign(j, { collected_at: new Date().toISOString(), responses: n, errors, in_tokens: inTok, out_tokens: outTok,
+      Object.assign(j, { collected_at: new Date().toISOString(), state, responses: n, errors, in_tokens: inTok, out_tokens: outTok,
         cost_usd: +(BATCH_MULTIPLIER * ((inTok / 1e6) * p.input + (outTok / 1e6) * p.output)).toFixed(5) });
       console.log(`collected ${n} (${errors} errors) $${j.cost_usd}`);
       try {
