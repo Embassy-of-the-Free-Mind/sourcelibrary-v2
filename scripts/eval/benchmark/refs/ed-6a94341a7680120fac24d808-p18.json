@@ -1,0 +1,46 @@
+{
+  "source": "EEBO-TCP A21194",
+  "edition": "Duellum poeticum. Contendentibus, Georgio Eglisemmio medico regio, & Georgio Buchanano regio praecep — 7547 (1618)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/textcreationpartnership/A21194",
+  "same_edition": {
+    "evidence": "catalogue-number",
+    "text_match_pages": "13/13",
+    "pb_aligned_pages": "13/13"
+  },
+  "origin": "library",
+  "book_id": "6a94341a7680120fac24d808",
+  "page_number": 18,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 11246,
+    "to_char": 12511,
+    "overlap": 0.758,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'Secundò solaecismum turpiter commisit, his versibus.'; ends 'literae vnius resonantia, vt. / Fluctibus' (catchword); italic verse quotations; ref pads '...de nouo) deductam.' and 'vt fuso'.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:09.538Z",
+  "text_location": "repo",
+  "text_sha256": "1972670c5a2afdaf82afb10038dd9b23a7ccaa7ecd8eb281aa47a9dd5ad20342",
+  "unit": {
+    "chars": 1265
+  },
+  "stratum": "latin-period-5126"
+}

@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA historicapolitica/welser1",
+  "edition": "Opera Historica Et Philologica, Sacra Et Profana : In quibus Historia Boica, Res Augustanae, Conversio & Passio SS. Mart — N�rnberg: Wolfgang Moritz; Johannes Andreas Endter S�hne, 1682.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "7/10",
+    "pb_aligned_pages": "7/7"
+  },
+  "origin": "library",
+  "book_id": "6a0b351d688e6a8e15f6759f",
+  "page_number": 18,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 1848710,
+    "to_char": 1851915,
+    "overlap": 0.937,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'prisca stirpe della nascità, accopiasti'; ends 'nobili Augustano' (hyphenated 'Augu-/stano'); the left-margin notes (Francof. An. 1594, Memor. Welsch., etc.) are included by the ref and placed at paragraph starts. The first lines are Italian, the rest Latin; the ref has replacement-character glitches.",
+    "leaf_language": "mixed (Latin with Italian: a long Italian passage at top)",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:05:03.618Z",
+  "text_location": "repo",
+  "text_sha256": "3ef9b7d0874fdc5b40029a41ec07822a35310fe1c75f44f986db374931f7f2d0",
+  "unit": {
+    "chars": 3205
+  },
+  "stratum": "latin-period-5126"
+}

@@ -17,8 +17,11 @@
  *              --camena=<clone of the mirror>; TCP and Wikisource are fetched.
  *   draw       per candidate: build-edition-refs --draw=8 --seed=5126 (report only; the same permutation read further if none is accepted), then the accepted
  *              pages in page order, middle first → <work>/worklist.json, and the page images for the check.
- *   write      reads <work>/leaf-check.json (by-eye verdicts) and, for each `ok`, runs build-edition-refs
- *              --pages=<n> --write, then stamps leaf_check + same-edition evidence into the record.
+ *   write      reads <work>/leaf-check.json (by-eye verdicts) and, for each accepted row, runs build-edition-refs
+ *              --pages=<n> --write, then stamps leaf_check + same-edition evidence into the record and
+ *              publishes the (openly licensed) text beside it. Two kinds have no window to cut and are
+ *              written whole: a transcription PAGE located on our leaf by eye (books with no stored OCR),
+ *              and the #5695 T1 transcriptions corrected against the image (`corrected-served-ocr`).
  *
  * Candidates (results/latin-period-5126/candidates.jsonl) are pairs already shown to be the same text by
  * the stored OCR of ≥ 2–3 pages; `same_edition` says how the EDITION was established: `page-breaks`
@@ -32,6 +35,7 @@ import path from 'path';
 import { execFileSync } from 'child_process';
 import { fileURLToPath } from 'url';
 import { cleanPageText } from './lib/wikisource-text.mjs';
+import { writePrivateRef, privateRefsDir, sha256 } from './lib/private-refs.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const args = Object.fromEntries(process.argv.slice(2).map(a => { const m = a.match(/^--([^=]+)(?:=(.*))?$/); return m ? [m[1], m[2] ?? true] : [a, true]; }));
@@ -39,7 +43,8 @@ const STAGE = args.stage, WORK = args.work, SEED = 5126;
 const RES = path.join(__dirname, 'results', 'latin-period-5126');
 const REFS = path.join(__dirname, 'benchmark', 'refs');
 const CANDS = path.join(RES, 'candidates.jsonl');
-if (!STAGE || !WORK) { console.error('required: --stage=editions|draw|write --work=<dir>'); process.exit(1); }
+const MAIN = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+if (MAIN && (!STAGE || !WORK)) { console.error('required: --stage=editions|draw|write --work=<dir>'); process.exit(1); }
 const UA = { 'User-Agent': 'SourceLibraryEval/1.0 (https://sourcelibrary.org)' };
 const readJsonl = f => fs.readFileSync(f, 'utf8').trim().split('\n').filter(Boolean).map(l => JSON.parse(l));
 const nat = (a, b) => a.localeCompare(b, 'en', { numeric: true });
@@ -75,7 +80,7 @@ async function wsApi(params) {
   throw new Error('la.wikisource API failed');
 }
 // Proofread (quality ≥ 3) pages only: quality 1 is the uploader's raw OCR, not a transcription.
-async function wikisourceEdition(liber) {
+export async function wikisourceEdition(liber) {
   const file = liber.replace(/^Liber:/, ''); const titles = []; let cont = {};
   do {
     const j = await wsApi({ action: 'query', generator: 'allpages', gapnamespace: '104', gapprefix: file + '/', gaplimit: '500', prop: 'proofread', ...cont });
@@ -171,28 +176,49 @@ async function stageDraw() {
 }
 
 // ── write ────────────────────────────────────────────────────────────────────
+// Every source here is openly licensed, so the text is published beside its record (as the EEBO-TCP
+// references are). build-edition-refs always writes through the private store; this moves it over.
+function publish(slug, patch) {
+  const recP = path.join(REFS, `${slug}.json`); const rec = JSON.parse(fs.readFileSync(recP, 'utf8'));
+  const priv = path.join(privateRefsDir(), `${slug}.txt`); const text = fs.readFileSync(priv, 'utf8');
+  if (sha256(text) !== rec.text_sha256) throw new Error(`${slug}: text does not match its record`);
+  fs.writeFileSync(path.join(REFS, `${slug}.txt`), text); fs.unlinkSync(priv);
+  fs.writeFileSync(recP, JSON.stringify({ ...rec, ...patch, text_location: 'repo', stratum: 'latin-period-5126' }, null, 2) + '\n');
+}
+const leafCheck = row => ({ status: 'ok', by: row.checker || 'model-eye', at: row.at, note: row.note, leaf_language: row.leaf_language || 'lat', page_type: row.page_type || null, abbreviations: row.abbreviations || null, human_spot_check: null });
+// The T1 corrected transcriptions (#5695, PR #5721) carry the OCR's tags; the reference is the text.
+const stripOcrTags = t => t.replace(/<(scan-quality|language|script|page-type|page-num|columns|meta|image-desc|warning)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ').replace(/<\/?[a-z-]+>/gi, ' ').replace(/[ \t]+/g, ' ').replace(/\s*\n\s*/g, '\n').trim();
 function stageWrite() {
+  if (!process.env.SL_PRIVATE_REFS_DIR) throw new Error('set SL_PRIVATE_REFS_DIR to a scratch dir: the builder writes there and this stage publishes from it');
   const checks = JSON.parse(fs.readFileSync(path.join(WORK, 'leaf-check.json'), 'utf8')).rows;
   const cands = Object.fromEntries(readJsonl(CANDS).map(c => [c.book_id, c]));
   const packed = [];
-  for (const row of checks.filter(r => r.verdict === 'ok')) {
+  for (const row of checks.filter(r => r.accepted)) {
     const c = cands[row.book_id]; if (!c) { console.log(`! ${row.book_id}: not a candidate`); continue; }
-    const rep = runBuilder(c, [`--pages=${row.page}`, '--write']);
-    packed.push({ book_id: c.book_id, key: c.key, ...rep });
-    const slug = `ed-${shortId(c.book_id)}-p${row.page}`; const recP = path.join(REFS, `${slug}.json`);
-    if (!fs.existsSync(recP)) { console.log(`! ${slug}: builder refused the page at write time (${rep.rows[0]?.skipped})`); continue; }
-    const rec = JSON.parse(fs.readFileSync(recP, 'utf8'));
-    rec.leaf_check = { status: 'ok', by: row.checker || 'model-eye', at: row.at, note: row.note, leaf_language: row.leaf_language || 'lat', human_spot_check: null };
-    rec.same_edition = { evidence: c.same_edition, pb_aligned_pages: c.pb_aligned ?? null, by_eye: row.same_edition_note || null };
-    rec.stratum = 'latin-period-5126';
-    fs.writeFileSync(recP, JSON.stringify(rec, null, 2) + '\n');
+    const slug = `ed-${shortId(c.book_id)}-p${row.page}`;
+    if (c.same_edition === 'page-unit-by-eye' || c.source === 'xlref-t1') {
+      // No window to cut: the reference is a whole transcribed page that a reader placed on our leaf
+      // (a book with no stored OCR), or a transcription corrected against the image in #5695 T1.
+      const text = c.source === 'xlref-t1' ? stripOcrTags(fs.readFileSync(path.join(__dirname, c.source_file), 'utf8')) : fs.readFileSync(path.join(WORK, 'noocr', `${c.book_id}.target.txt`), 'utf8').replace(/^.*\|\d+px\s*$/gm, '').trim();
+      const meta = c.source === 'xlref-t1'
+        ? { source: 'xlref-t1 corrected transcription', edition: 'the served OCR of this leaf, corrected against the image (#5695 T1, PR #5721)', licence: 'CC0-1.0', kind: 'corrected-served-ocr', canonical: !!c.canonical, memorization_risk: c.canonical ? 'high' : 'low', anchored_on: c.anchored_on, source_url: c.source_file }
+        : metaFor(c);
+      writePrivateRef(REFS, slug, text, { ...meta, origin: 'library', book_id: c.book_id, page_number: row.page, script: 'latin', reference_kind: meta.kind,
+        window: c.source === 'xlref-t1' ? null : { unit: 'transcription-page', page_break_index: row.target_pb, probe: 'none (located by eye)' }, reference_error_rate: null, built_by: 'latin-period-refs-5126.mjs', built_at: new Date().toISOString() });
+    } else {
+      const rep = runBuilder(c, [`--pages=${row.page}`, '--write']);
+      packed.push({ book_id: c.book_id, key: c.key, ...rep });
+      if (!fs.existsSync(path.join(REFS, `${slug}.json`))) { console.log(`! ${slug}: builder refused the page at write time (${rep.rows[0]?.skipped})`); continue; }
+    }
+    publish(slug, { leaf_check: leafCheck(row), same_edition: { evidence: c.same_edition, text_match_pages: c.text_match_pages ?? null, pb_aligned_pages: c.pb_aligned ?? null } });
     console.log(`${slug}: written`);
   }
   fs.mkdirSync(RES, { recursive: true });
   fs.writeFileSync(path.join(RES, 'edition-refs-written.jsonl'), packed.map(p => JSON.stringify(p)).join('\n') + '\n');
 }
 
-if (STAGE === 'editions') await stageEditions();
+if (!MAIN) { /* imported for flattenTei / wikisourceEdition */ }
+else if (STAGE === 'editions') await stageEditions();
 else if (STAGE === 'draw') await stageDraw();
 else if (STAGE === 'write') stageWrite();
 else { console.error(`unknown stage ${STAGE}`); process.exit(1); }

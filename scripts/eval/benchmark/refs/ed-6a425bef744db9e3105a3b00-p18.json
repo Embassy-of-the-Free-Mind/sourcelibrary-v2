@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA cera/reinesius4",
+  "edition": "Epistolarum ad Nesteros, Patrem Et Filium, Conscriptarum Farrago : In Qua Varia Medica Et Philologica Lectu Iucunda Cont — Leipzig: Sch�rers Erben, G�tz' Erben, Johann Fritsch, 1670.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "7/8",
+    "pb_aligned_pages": "7/7"
+  },
+  "origin": "library",
+  "book_id": "6a425bef744db9e3105a3b00",
+  "page_number": 18,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 13590,
+    "to_char": 15092,
+    "overlap": 0.603,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts '℞. Rhob. junip.' (recipe at end of letter, printed p.4 'Thomae Reinesii'); ends with verse 'Epistola III' and catchword 'Me'; single leaf with adjacent page edge visible; ref pads 'expertus sum aliquoties, talis est: rum.' and 'Me miserum'.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "many",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:47.958Z",
+  "text_location": "repo",
+  "text_sha256": "37b4fcb99072b2bc4b3d21289908f458220facefdeef3388aee1353b3db213c0",
+  "unit": {
+    "chars": 1502
+  },
+  "stratum": "latin-period-5126"
+}
