@@ -80,6 +80,9 @@
  *   --skip-upgraded            skip books already stamped image_resolution_upgraded_at
  *                              (resume flag for long interruptible runs; the stamp is
  *                              only written when a book completes with zero failures)
+ *   --skip-upgraded-pages      within a book, leave pages already carrying image_metadata.upgraded_at
+ *                              alone — the gap pass for books stamped while some pages had failed
+ *                              to fetch (counted as skips before 2026-10-04; 104 gallica books)
  *   --concurrency N            books processed in parallel (default 2)
  *   --page-concurrency N       pages per book (default 4)
  *   --limit N                  max books
@@ -140,6 +143,7 @@ const SHARP_MAX_WIDTH = parseInt(ARG('--max-width', '6000'));
 const JPEG_QUALITY = parseInt(ARG('--jpeg-quality', '90'));
 const SKIP_UPGRADED = FLAG('--skip-upgraded');
 const MAX_CHUNK = parseInt(ARG('--max-chunk', '1024'));
+const SKIP_UPGRADED_PAGES = FLAG('--skip-upgraded-pages');
 // The consistency guard is ON by default and cannot be silently skipped — it is
 // the fix for the e-rara off-by-one incident (#3186). --no-guard exists only for
 // explicit, audited one-offs on a provider already proven aligned.
@@ -469,12 +473,15 @@ async function refetchOne(book) {
   ).sort({ page_number: 1 }).toArray();
 
   if (!pages.length) return { skipped: 'no-pages' };
-  const toWrite = PAGES_WITH_IMAGES ? pages.filter(showsAnImage) : pages;
+  let toWrite = PAGES_WITH_IMAGES ? pages.filter(showsAnImage) : pages;
+  if (SKIP_UPGRADED_PAGES) toWrite = toWrite.filter(p => !p.image_metadata?.upgraded_at);
   if (!toWrite.length) return { skipped: 'no-image-pages' };
   if (isAlreadySplit(pages)) return { skipped: 'already-split (use --recover-split)' };
 
   // Decide once per book, from the median of three interior pages (measureBook).
-  const iiifPages = pages.filter(p => isIiifUrl(p.photo_original || p.photo));
+  // In a gap pass, judge eligibility on the pages still to do: measured on the
+  // already-upgraded ones, a mostly-done book reads as "not low-res".
+  const iiifPages = (SKIP_UPGRADED_PAGES ? toWrite : pages).filter(p => isIiifUrl(p.photo_original || p.photo));
   if (!iiifPages.length) return { skipped: 'no-iiif-source' };
   const sourceUrl = iiifPages[0].photo_original || iiifPages[0].photo;
   const cap = getIiifSizeCap(sourceUrl);
