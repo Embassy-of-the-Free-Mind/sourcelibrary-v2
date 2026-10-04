@@ -161,6 +161,9 @@ export async function browseBooks(opts: {
   yearMin?: number;
   yearMax?: number;
   titlePrefix?: string;
+  /** Titles that start with no Latin letter (CJK, Greek, Arabic, digits,
+   *  brackets) — the bucket the A–Z title index otherwise has no home for. */
+  titleNonLatin?: boolean;
   authorPrefix?: string;
   search?: string;
   sort?: SortOption;
@@ -207,6 +210,11 @@ export async function browseBooks(opts: {
   if (opts.yearMin != null) query = query.gte('year', opts.yearMin);
   if (opts.yearMax != null) query = query.lte('year', opts.yearMax);
   if (opts.titlePrefix) { const s = sanitizeFilterValue(opts.titlePrefix); query = query.or(`display_title.ilike.${s}%,title.ilike.${s}%`); }
+  if (opts.titleNonLatin) {
+    query = query
+      .or('display_title.is.null,display_title.not.imatch.^[a-z]')
+      .not('title', 'imatch', '^[a-z]');
+  }
   if (opts.authorPrefix) query = query.ilike('author', `${sanitizeFilterValue(opts.authorPrefix)}%`);
   if (opts.search) { const s = sanitizeFilterValue(opts.search); query = query.or(`title.ilike.%${s}%,display_title.ilike.%${s}%,author.ilike.%${s}%`); }
 

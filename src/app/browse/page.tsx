@@ -53,6 +53,15 @@ export default async function BrowsePage() {
                 {letter}
               </Link>
             ))}
+            {!tenantSlug && (
+              <Link
+                href={`${base}/titles/other`}
+                className="h-10 px-3 flex items-center justify-center rounded-lg text-sm font-medium transition-colors hover:opacity-80"
+                style={{ background: 'var(--bg-warm)', color: 'var(--text-primary)', border: '1px solid var(--border-light)' }}
+              >
+                Other scripts &amp; numbers
+              </Link>
+            )}
           </div>
         </section>
 

@@ -1898,6 +1898,17 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
           provider={provider}
           defaultView={(collection as { all_books_default_view?: 'grid' | 'list' }).all_books_default_view}
         />
+
+        {/* Server-rendered link to the complete A–Z list: the grid above is
+            client-rendered, so this is the crawl path to every member (#2266).
+            Apex only — the catalog route 404s on partner subdomains. */}
+        {!tenantSlug && total > 0 && (
+          <p className="mt-6 text-sm" style={{ color: 'var(--text-muted)' }}>
+            <Link href={`/collections/${id}/catalog`} className="underline hover:opacity-70">
+              All {total.toLocaleString('en-US')} {total === 1 ? 'book' : 'books'} in this collection, as a list
+            </Link>
+          </p>
+        )}
       </div>
 
       {/* Further reading — adjacent works we hold, and the ones we don't. Sits
