@@ -114,3 +114,48 @@ same other-engine set as Paddle's was. Scored files go to `results/open-engine-p
 the cost-lane file is `cost-lane-olmocr.json`. Five pages by eye (`read-from-image`), including one
 long-s page and one Greek page: the worst olmOCR page per decision cell plus the largest olmOCR-vs-lite
 disagreement on the agreement strata.
+
+## Amendment 2 — round 3: six more arms, and 25 more Latin library references (job ocr-bakeoff-5660c, written 2026-10-04 before any round-3 output was scored)
+
+Nothing above changes: same cells, same scorer (`benchmark-score.mjs`), same `open-engine-markup@1` convention rule
+(unchanged — it does not touch a VLM's figure/`<img>` descriptions, so their text counts against the engine; the
+number of pages carrying one is reported), same `benchmark-cost-lane.mjs --cells` rule, same 632 JPEGs. Each arm is
+scored in its OWN bench root holding lite, lite-b and (where rounds 1-2 had it) flash-preview, never another open
+engine's output, so `invention` is measured against the same other-engine set Paddle and olmOCR faced.
+
+**References added before any round-3 run (the brief: Latin pre-1600 under 30 references).** EEBO-TCP (CC0) same-edition
+transcriptions for Latin library books on our EEBO-microfilm (`bim_`) scans, matched by title + year to `TCP.csv`
+(not by STC: our records carry none), cut by `build-edition-refs.mjs` (`--draw=8 --seed=1`, the middle accepted page),
+leaf-checked by Claude reading each page image (`results/edition-refs/leaf-check-eebo-tcp-latin-2026-10-04.json`;
+rule: ok = window's first/last lines match the page body within about one line; a page must be Latin-majority by
+eye, one alternate tried). 31 checked, **25 written** (1500–1599: 4; 1600–1699: 21), new stratum `eebo-tcp-latin-5660`,
+lite / lite-b / flash-preview run on it through `benchmark-run-api.mjs` (generic prompt, as before). Cell map:
+`results/open-engine-print-5660/cells-r3.json` = `cells.json` + these 25 in `latin-1500-1699` (origin library).
+`latin-1500-1699` becomes 61 pages, 40 library — still under 50, so **directional**. Its 1500–1599 part is 14 pages
+(10 Wikisource + 4 library): **no winner is called on it** (the brief's 30-page floor); it is reported descriptively.
+Every arm (old and new) is reported on the original 632-page cells AND on the 657-page `cells-r3` map; the round-1/2
+arms (Paddle, olmOCR) were not run on the 25 new pages and are compared only on the 632.
+
+**Arms** (all on one RunPod SECURE RTX PRO 4000 Blackwell, vLLM 0.30.0 / torch 2.13 / transformers 5.18 in one uv venv,
+`--max-model-len 32768 --gpu-memory-utilization 0.85 --limit-mm-per-prompt '{"image":1}'`; temperature 0, one attempt,
+8 client threads, the page JPEG sent as is; warm-up on the 16-page `tput.tsv`, discarded; s/page = arm wall ÷ 657
+with the server up; install-and-serve budget 30 min per arm, else "not run"; HF snapshot hashes recorded):
+
+| label | weights | prompt / call (each model's own documented one) | max tokens |
+|---|---|---|---|
+| `glm-ocr` | `zai-org/GLM-OCR` (0.9B), MTP speculative decoding as the vLLM recipe serves it (else plain) | image + `Text Recognition:` (vLLM recipe) | 4500 |
+| `dots-ocr` | `dots-studio/dots.ocr` (was `rednote-hilab/dots.ocr`), `--trust-remote-code` | image + `<\|img\|><\|imgpad\|><\|endofimg\|>` + `prompt_layout_all_en` (repo `dots_ocr/utils/prompts.py`); page text = the layout JSON's `text` fields in the model's order, `Picture` skipped; truncated JSON recovered by regex (counted) | 8000 (JSON + bbox overhead) |
+| `nanonets-ocr2` | `nanonets/Nanonets-OCR2-3B` | system "You are a helpful assistant." + image + the model card's OCR prompt | 4500 |
+| `mineru25-pro` | `opendatalab/MinerU2.5-Pro-2605-1.2B` — a 1.2B VLM, a different model from the MinerU 3.4 CPU *pipeline* (`-m ocr`) run in #5182 | `mineru-vl-utils` 2.0 `MinerUClient(backend="http-client").two_step_extract` (layout, then content), server with `MinerULogitsProcessor` (else without); page text = every block's content in returned order | client-managed |
+| `kraken-catmus` | Kraken 7.1, default `blla` segmentation + `catmus-print-fondue-large` (CATMuS-Print), CPU on the pod | `kraken -a … segment -bl ocr -m catmus` ; text = ALTO TextLine order | — |
+| `calamari-gt4histocr` | Calamari 2.3.1 + `gt4histocr` (calamari_models 2.2, 5-checkpoint voting ensemble, trained on GT4HistOCR 1500–1900 print), CPU on the pod | the SAME Kraken line polygons, cropped grey, outside-polygon white, 2 px pad; text = lines in Kraken's order | — |
+
+The two CPU arms run on the non-Greek pages only (397 of 657: every non-Greek cell page plus the four agreement strata);
+neither has a Greek model in this setup, and Greek is already decided for lite. Client-side handling beyond the above:
+a ```` ``` ```` code-fence line is dropped (glm, nanonets); nothing else. A failed request is an empty output.
+
+**Reported per arm, per cell:** the prereg table (lite CER, arm CER, median Δ [95% CI], W/L/T, catastrophic, invention,
+loops, verdict), the answered-only view, s/page and $/1,000 pages on the GEX45, the long-s tally (`tally`, ſ→f misreads
+on EEBO-TCP — now also on the 25 new pages), and by-eye reads (`read-from-image`) of the worst page per arm on the two
+priority cells (English 1600–1699, Latin 1500–1699). The headline compares each arm with **lite** under the rule and, for
+English 1600–1699, also names olmOCR's numbers beside it (no new rule: olmOCR is the cell's current passing arm).
