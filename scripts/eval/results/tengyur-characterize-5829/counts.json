@@ -1,0 +1,1569 @@
+{
+ "measured_at": "2026-10-04T16:28:50.737Z",
+ "total_with_english": 116703,
+ "by_section": {
+  "Praises": {
+   "vols": 1,
+   "pages": 515,
+   "with_english": 514
+  },
+  "Tantra commentary": {
+   "vols": 78,
+   "pages": 46603,
+   "with_english": 44887
+  },
+  "Prajñāpāramitā": {
+   "vols": 16,
+   "pages": 9137,
+   "with_english": 9117
+  },
+  "Madhyamaka": {
+   "vols": 17,
+   "pages": 10868,
+   "with_english": 10845
+  },
+  "Sūtra commentary": {
+   "vols": 10,
+   "pages": 5572,
+   "with_english": 5562
+  },
+  "Cittamātra": {
+   "vols": 16,
+   "pages": 8913,
+   "with_english": 8887
+  },
+  "Abhidharma": {
+   "vols": 11,
+   "pages": 6347,
+   "with_english": 6335
+  },
+  "Vinaya": {
+   "vols": 18,
+   "pages": 10248,
+   "with_english": 10229
+  },
+  "Jātaka": {
+   "vols": 5,
+   "pages": 2959,
+   "with_english": 2954
+  },
+  "Letters": {
+   "vols": 1,
+   "pages": 373,
+   "with_english": 373
+  },
+  "Pramāṇa": {
+   "vols": 20,
+   "pages": 12810,
+   "with_english": 12784
+  },
+  "Grammar & sciences": {
+   "vols": 10,
+   "pages": 7013,
+   "with_english": 4216
+  },
+  "Miscellaneous": {
+   "vols": 9,
+   "pages": 6275,
+   "with_english": 0
+  },
+  "Catalogue": {
+   "vols": 1,
+   "pages": 1006,
+   "with_english": 0
+  }
+ },
+ "by_volume": [
+  {
+   "vol": 1,
+   "book_id": "6abe824e59b86b7d32a65774",
+   "section": "Praises",
+   "pages": 515,
+   "with_english": 514
+  },
+  {
+   "vol": 2,
+   "book_id": "6abe82fa433559215a997a85",
+   "section": "Tantra commentary",
+   "pages": 549,
+   "with_english": 548
+  },
+  {
+   "vol": 3,
+   "book_id": "6abe8366433559215a997cad",
+   "section": "Tantra commentary",
+   "pages": 587,
+   "with_english": 586
+  },
+  {
+   "vol": 4,
+   "book_id": "6abe83b7433559215a997efb",
+   "section": "Tantra commentary",
+   "pages": 593,
+   "with_english": 592
+  },
+  {
+   "vol": 5,
+   "book_id": "6abe84986a920ffd924d328a",
+   "section": "Tantra commentary",
+   "pages": 641,
+   "with_english": 640
+  },
+  {
+   "vol": 6,
+   "book_id": "6abe84ce6a920ffd924d350e",
+   "section": "Tantra commentary",
+   "pages": 625,
+   "with_english": 624
+  },
+  {
+   "vol": 7,
+   "book_id": "6abe850f6a920ffd924d3782",
+   "section": "Tantra commentary",
+   "pages": 631,
+   "with_english": 630
+  },
+  {
+   "vol": 8,
+   "book_id": "6abe85c46a920ffd924d39fc",
+   "section": "Tantra commentary",
+   "pages": 659,
+   "with_english": 658
+  },
+  {
+   "vol": 9,
+   "book_id": "6abe86096a920ffd924d3c92",
+   "section": "Tantra commentary",
+   "pages": 683,
+   "with_english": 682
+  },
+  {
+   "vol": 10,
+   "book_id": "6abe86656a920ffd924d3f40",
+   "section": "Tantra commentary",
+   "pages": 733,
+   "with_english": 730
+  },
+  {
+   "vol": 11,
+   "book_id": "6abe86b96a920ffd924d4220",
+   "section": "Tantra commentary",
+   "pages": 553,
+   "with_english": 552
+  },
+  {
+   "vol": 12,
+   "book_id": "6abe87926a920ffd924d444c",
+   "section": "Tantra commentary",
+   "pages": 593,
+   "with_english": 592
+  },
+  {
+   "vol": 13,
+   "book_id": "6abe88866a920ffd924d46a0",
+   "section": "Tantra commentary",
+   "pages": 605,
+   "with_english": 604
+  },
+  {
+   "vol": 14,
+   "book_id": "6abe89136a920ffd924d4900",
+   "section": "Tantra commentary",
+   "pages": 655,
+   "with_english": 654
+  },
+  {
+   "vol": 15,
+   "book_id": "6abe89c46a920ffd924d4b92",
+   "section": "Tantra commentary",
+   "pages": 621,
+   "with_english": 620
+  },
+  {
+   "vol": 16,
+   "book_id": "6abe8a146a920ffd924d4e02",
+   "section": "Tantra commentary",
+   "pages": 629,
+   "with_english": 627
+  },
+  {
+   "vol": 17,
+   "book_id": "6abeab96896ea18127c8080a",
+   "section": "Tantra commentary",
+   "pages": 899,
+   "with_english": 895
+  },
+  {
+   "vol": 18,
+   "book_id": "6abe8add6a920ffd924d507a",
+   "section": "Tantra commentary",
+   "pages": 463,
+   "with_english": 462
+  },
+  {
+   "vol": 19,
+   "book_id": "6abe8bab6a920ffd924d524c",
+   "section": "Tantra commentary",
+   "pages": 523,
+   "with_english": 519
+  },
+  {
+   "vol": 20,
+   "book_id": "6abe8c706a920ffd924d545a",
+   "section": "Tantra commentary",
+   "pages": 635,
+   "with_english": 634
+  },
+  {
+   "vol": 21,
+   "book_id": "6abe8cd66a920ffd924d56d8",
+   "section": "Tantra commentary",
+   "pages": 741,
+   "with_english": 740
+  },
+  {
+   "vol": 22,
+   "book_id": "6abe8dbb6a920ffd924d59c0",
+   "section": "Tantra commentary",
+   "pages": 756,
+   "with_english": 756
+  },
+  {
+   "vol": 23,
+   "book_id": "6abe8ebe6a920ffd924d5cb7",
+   "section": "Tantra commentary",
+   "pages": 497,
+   "with_english": 496
+  },
+  {
+   "vol": 24,
+   "book_id": "6abe8f0c6a920ffd924d5eab",
+   "section": "Tantra commentary",
+   "pages": 527,
+   "with_english": 525
+  },
+  {
+   "vol": 25,
+   "book_id": "6abe8fd66a920ffd924d60bd",
+   "section": "Tantra commentary",
+   "pages": 627,
+   "with_english": 626
+  },
+  {
+   "vol": 26,
+   "book_id": "6abe90286a920ffd924d6333",
+   "section": "Tantra commentary",
+   "pages": 877,
+   "with_english": 876
+  },
+  {
+   "vol": 27,
+   "book_id": "6abe90fc6a920ffd924d66a3",
+   "section": "Tantra commentary",
+   "pages": 623,
+   "with_english": 622
+  },
+  {
+   "vol": 28,
+   "book_id": "6abe914a6a920ffd924d6915",
+   "section": "Tantra commentary",
+   "pages": 581,
+   "with_english": 578
+  },
+  {
+   "vol": 29,
+   "book_id": "6abe91a66a920ffd924d6b5d",
+   "section": "Tantra commentary",
+   "pages": 647,
+   "with_english": 646
+  },
+  {
+   "vol": 30,
+   "book_id": "6abe91fc6a920ffd924d6de7",
+   "section": "Tantra commentary",
+   "pages": 467,
+   "with_english": 465
+  },
+  {
+   "vol": 31,
+   "book_id": "6abe92686a920ffd924d6fbd",
+   "section": "Tantra commentary",
+   "pages": 422,
+   "with_english": 422
+  },
+  {
+   "vol": 32,
+   "book_id": "6abe92d06a920ffd924d7166",
+   "section": "Tantra commentary",
+   "pages": 583,
+   "with_english": 582
+  },
+  {
+   "vol": 33,
+   "book_id": "6abe932b6a920ffd924d73b0",
+   "section": "Tantra commentary",
+   "pages": 409,
+   "with_english": 408
+  },
+  {
+   "vol": 34,
+   "book_id": "6abe938e6a920ffd924d754c",
+   "section": "Tantra commentary",
+   "pages": 439,
+   "with_english": 438
+  },
+  {
+   "vol": 35,
+   "book_id": "6abe93ef6a920ffd924d7706",
+   "section": "Tantra commentary",
+   "pages": 567,
+   "with_english": 565
+  },
+  {
+   "vol": 36,
+   "book_id": "6abe94e86a920ffd924d7940",
+   "section": "Tantra commentary",
+   "pages": 615,
+   "with_english": 614
+  },
+  {
+   "vol": 37,
+   "book_id": "6abe95d56a920ffd924d7baa",
+   "section": "Tantra commentary",
+   "pages": 553,
+   "with_english": 552
+  },
+  {
+   "vol": 38,
+   "book_id": "6abeac51896ea18127c80b90",
+   "section": "Tantra commentary",
+   "pages": 487,
+   "with_english": 483
+  },
+  {
+   "vol": 39,
+   "book_id": "6abe974b6a920ffd924d7dd6",
+   "section": "Tantra commentary",
+   "pages": 635,
+   "with_english": 633
+  },
+  {
+   "vol": 40,
+   "book_id": "6abe98196a920ffd924d8054",
+   "section": "Tantra commentary",
+   "pages": 649,
+   "with_english": 648
+  },
+  {
+   "vol": 41,
+   "book_id": "6abe98e76a920ffd924d82e0",
+   "section": "Tantra commentary",
+   "pages": 625,
+   "with_english": 621
+  },
+  {
+   "vol": 42,
+   "book_id": "6abe998b6a920ffd924d8554",
+   "section": "Tantra commentary",
+   "pages": 461,
+   "with_english": 460
+  },
+  {
+   "vol": 43,
+   "book_id": "6abe99ba6a920ffd924d8724",
+   "section": "Tantra commentary",
+   "pages": 437,
+   "with_english": 435
+  },
+  {
+   "vol": 44,
+   "book_id": "6abe9a356a920ffd924d88dc",
+   "section": "Tantra commentary",
+   "pages": 577,
+   "with_english": 575
+  },
+  {
+   "vol": 45,
+   "book_id": "6abe9b0d6a920ffd924d8b20",
+   "section": "Tantra commentary",
+   "pages": 533,
+   "with_english": 530
+  },
+  {
+   "vol": 46,
+   "book_id": "6abe9b4b6a920ffd924d8d38",
+   "section": "Tantra commentary",
+   "pages": 673,
+   "with_english": 672
+  },
+  {
+   "vol": 47,
+   "book_id": "6abe9bd76a920ffd924d8fdc",
+   "section": "Tantra commentary",
+   "pages": 489,
+   "with_english": 486
+  },
+  {
+   "vol": 48,
+   "book_id": "6abe9c216a920ffd924d91c8",
+   "section": "Tantra commentary",
+   "pages": 435,
+   "with_english": 434
+  },
+  {
+   "vol": 49,
+   "book_id": "6abe9cd56a920ffd924d937e",
+   "section": "Tantra commentary",
+   "pages": 689,
+   "with_english": 688
+  },
+  {
+   "vol": 50,
+   "book_id": "6abe9d656a920ffd924d9632",
+   "section": "Tantra commentary",
+   "pages": 499,
+   "with_english": 494
+  },
+  {
+   "vol": 51,
+   "book_id": "6abe9d9d6a920ffd924d9828",
+   "section": "Tantra commentary",
+   "pages": 651,
+   "with_english": 649
+  },
+  {
+   "vol": 52,
+   "book_id": "6abeace1896ea18127c80d7a",
+   "section": "Tantra commentary",
+   "pages": 611,
+   "with_english": 610
+  },
+  {
+   "vol": 53,
+   "book_id": "6abe9e9a6a920ffd924d9ab6",
+   "section": "Tantra commentary",
+   "pages": 553,
+   "with_english": 552
+  },
+  {
+   "vol": 54,
+   "book_id": "6abe9ec86a920ffd924d9ce2",
+   "section": "Tantra commentary",
+   "pages": 703,
+   "with_english": 702
+  },
+  {
+   "vol": 55,
+   "book_id": "6abe9ef86a920ffd924d9fa4",
+   "section": "Tantra commentary",
+   "pages": 489,
+   "with_english": 487
+  },
+  {
+   "vol": 56,
+   "book_id": "6abe9f2c6a920ffd924da190",
+   "section": "Tantra commentary",
+   "pages": 565,
+   "with_english": 564
+  },
+  {
+   "vol": 57,
+   "book_id": "6abe9f6f6a920ffd924da3c8",
+   "section": "Tantra commentary",
+   "pages": 703,
+   "with_english": 702
+  },
+  {
+   "vol": 58,
+   "book_id": "6abea00c6a920ffd924da68a",
+   "section": "Tantra commentary",
+   "pages": 633,
+   "with_english": 631
+  },
+  {
+   "vol": 59,
+   "book_id": "6abea0b56a920ffd924da906",
+   "section": "Tantra commentary",
+   "pages": 483,
+   "with_english": 482
+  },
+  {
+   "vol": 60,
+   "book_id": "6abea1016a920ffd924daaec",
+   "section": "Tantra commentary",
+   "pages": 703,
+   "with_english": 700
+  },
+  {
+   "vol": 61,
+   "book_id": "6abea14b6a920ffd924dadae",
+   "section": "Tantra commentary",
+   "pages": 723,
+   "with_english": 722
+  },
+  {
+   "vol": 62,
+   "book_id": "6abea1d86a920ffd924db084",
+   "section": "Tantra commentary",
+   "pages": 723,
+   "with_english": 722
+  },
+  {
+   "vol": 63,
+   "book_id": "6abea2356a920ffd924db35a",
+   "section": "Tantra commentary",
+   "pages": 601,
+   "with_english": 599
+  },
+  {
+   "vol": 64,
+   "book_id": "6abea2b96a920ffd924db5b6",
+   "section": "Tantra commentary",
+   "pages": 549,
+   "with_english": 548
+  },
+  {
+   "vol": 65,
+   "book_id": "6abea35a6a920ffd924db7de",
+   "section": "Tantra commentary",
+   "pages": 548,
+   "with_english": 546
+  },
+  {
+   "vol": 66,
+   "book_id": "6abea3fd6a920ffd924dba05",
+   "section": "Tantra commentary",
+   "pages": 681,
+   "with_english": 680
+  },
+  {
+   "vol": 67,
+   "book_id": "6abead0e896ea18127c80fe0",
+   "section": "Tantra commentary",
+   "pages": 579,
+   "with_english": 578
+  },
+  {
+   "vol": 68,
+   "book_id": "6abead3a896ea18127c81226",
+   "section": "Tantra commentary",
+   "pages": 677,
+   "with_english": 676
+  },
+  {
+   "vol": 69,
+   "book_id": "6abea5606a920ffd924dbcb1",
+   "section": "Tantra commentary",
+   "pages": 701,
+   "with_english": 700
+  },
+  {
+   "vol": 70,
+   "book_id": "6abea60a6a920ffd924dbf71",
+   "section": "Tantra commentary",
+   "pages": 569,
+   "with_english": 568
+  },
+  {
+   "vol": 71,
+   "book_id": "6abea6ac6a920ffd924dc1ad",
+   "section": "Tantra commentary",
+   "pages": 659,
+   "with_english": 658
+  },
+  {
+   "vol": 72,
+   "book_id": "6abea6da6a920ffd924dc443",
+   "section": "Tantra commentary",
+   "pages": 667,
+   "with_english": 665
+  },
+  {
+   "vol": 73,
+   "book_id": "6abea70a6a920ffd924dc6e1",
+   "section": "Tantra commentary",
+   "pages": 693,
+   "with_english": 692
+  },
+  {
+   "vol": 74,
+   "book_id": "6abea7436a920ffd924dc999",
+   "section": "Tantra commentary",
+   "pages": 641,
+   "with_english": 638
+  },
+  {
+   "vol": 75,
+   "book_id": "6abea76e6a920ffd924dcc1d",
+   "section": "Tantra commentary",
+   "pages": 451,
+   "with_english": 449
+  },
+  {
+   "vol": 76,
+   "book_id": "6abea80b6a920ffd924dcde3",
+   "section": "Tantra commentary",
+   "pages": 497,
+   "with_english": 0
+  },
+  {
+   "vol": 77,
+   "book_id": "6abea8976a920ffd924dcfd7",
+   "section": "Tantra commentary",
+   "pages": 689,
+   "with_english": 0
+  },
+  {
+   "vol": 78,
+   "book_id": "6abea8c76a920ffd924dd28b",
+   "section": "Tantra commentary",
+   "pages": 415,
+   "with_english": 0
+  },
+  {
+   "vol": 79,
+   "book_id": "6abea8fd6a920ffd924dd42d",
+   "section": "Tantra commentary",
+   "pages": 449,
+   "with_english": 448
+  },
+  {
+   "vol": 80,
+   "book_id": "6abea9346a920ffd924dd5f1",
+   "section": "Prajñāpāramitā",
+   "pages": 424,
+   "with_english": 422
+  },
+  {
+   "vol": 81,
+   "book_id": "6abea9646a920ffd924dd79c",
+   "section": "Prajñāpāramitā",
+   "pages": 485,
+   "with_english": 483
+  },
+  {
+   "vol": 82,
+   "book_id": "6abea98e6a920ffd924dd984",
+   "section": "Prajñāpāramitā",
+   "pages": 629,
+   "with_english": 628
+  },
+  {
+   "vol": 83,
+   "book_id": "6abeadbd896ea18127c814ce",
+   "section": "Prajñāpāramitā",
+   "pages": 613,
+   "with_english": 612
+  },
+  {
+   "vol": 84,
+   "book_id": "6abeaad26a920ffd924ddbfc",
+   "section": "Prajñāpāramitā",
+   "pages": 683,
+   "with_english": 682
+  },
+  {
+   "vol": 85,
+   "book_id": "6abeab0e6a920ffd924ddeaa",
+   "section": "Prajñāpāramitā",
+   "pages": 681,
+   "with_english": 680
+  },
+  {
+   "vol": 86,
+   "book_id": "6abeab456a920ffd924de156",
+   "section": "Prajñāpāramitā",
+   "pages": 549,
+   "with_english": 548
+  },
+  {
+   "vol": 87,
+   "book_id": "6abeadc8896ea18127c81736",
+   "section": "Prajñāpāramitā",
+   "pages": 521,
+   "with_english": 520
+  },
+  {
+   "vol": 88,
+   "book_id": "6abedef7a43718d234bf0d12",
+   "section": "Prajñāpāramitā",
+   "pages": 539,
+   "with_english": 538
+  },
+  {
+   "vol": 89,
+   "book_id": "6abeae7a896ea18127c81942",
+   "section": "Prajñāpāramitā",
+   "pages": 479,
+   "with_english": 478
+  },
+  {
+   "vol": 90,
+   "book_id": "6abeaef8896ea18127c81b24",
+   "section": "Prajñāpāramitā",
+   "pages": 469,
+   "with_english": 467
+  },
+  {
+   "vol": 91,
+   "book_id": "6abeaf6b896ea18127c81cfc",
+   "section": "Prajñāpāramitā",
+   "pages": 661,
+   "with_english": 660
+  },
+  {
+   "vol": 92,
+   "book_id": "6abeafa0896ea18127c81f94",
+   "section": "Prajñāpāramitā",
+   "pages": 503,
+   "with_english": 502
+  },
+  {
+   "vol": 93,
+   "book_id": "6abeafd3896ea18127c8218e",
+   "section": "Prajñāpāramitā",
+   "pages": 629,
+   "with_english": 627
+  },
+  {
+   "vol": 94,
+   "book_id": "6abedf36a43718d234bf0f30",
+   "section": "Prajñāpāramitā",
+   "pages": 639,
+   "with_english": 638
+  },
+  {
+   "vol": 95,
+   "book_id": "6abeb11e896ea18127c82406",
+   "section": "Prajñāpāramitā",
+   "pages": 633,
+   "with_english": 632
+  },
+  {
+   "vol": 96,
+   "book_id": "6abeb158896ea18127c82682",
+   "section": "Madhyamaka",
+   "pages": 567,
+   "with_english": 565
+  },
+  {
+   "vol": 97,
+   "book_id": "6abeb1dc896ea18127c828bc",
+   "section": "Madhyamaka",
+   "pages": 578,
+   "with_english": 575
+  },
+  {
+   "vol": 98,
+   "book_id": "6abeb20a896ea18127c82b01",
+   "section": "Madhyamaka",
+   "pages": 659,
+   "with_english": 658
+  },
+  {
+   "vol": 99,
+   "book_id": "6abeb246896ea18127c82d97",
+   "section": "Madhyamaka",
+   "pages": 573,
+   "with_english": 572
+  },
+  {
+   "vol": 100,
+   "book_id": "6abeb286896ea18127c82fd7",
+   "section": "Madhyamaka",
+   "pages": 675,
+   "with_english": 674
+  },
+  {
+   "vol": 101,
+   "book_id": "6abeb2b1896ea18127c8327d",
+   "section": "Madhyamaka",
+   "pages": 681,
+   "with_english": 680
+  },
+  {
+   "vol": 102,
+   "book_id": "6abe825059b86b7d32a6597a",
+   "section": "Madhyamaka",
+   "pages": 695,
+   "with_english": 692
+  },
+  {
+   "vol": 103,
+   "book_id": "6abeb2ec896ea18127c83529",
+   "section": "Madhyamaka",
+   "pages": 749,
+   "with_english": 748
+  },
+  {
+   "vol": 104,
+   "book_id": "6abeb325896ea18127c83819",
+   "section": "Madhyamaka",
+   "pages": 729,
+   "with_english": 728
+  },
+  {
+   "vol": 105,
+   "book_id": "6abeb35b896ea18127c83af5",
+   "section": "Madhyamaka",
+   "pages": 697,
+   "with_english": 695
+  },
+  {
+   "vol": 106,
+   "book_id": "6abeb39f896ea18127c83db1",
+   "section": "Madhyamaka",
+   "pages": 569,
+   "with_english": 568
+  },
+  {
+   "vol": 107,
+   "book_id": "6abeb3d6896ea18127c83fed",
+   "section": "Madhyamaka",
+   "pages": 581,
+   "with_english": 580
+  },
+  {
+   "vol": 108,
+   "book_id": "6abeb404896ea18127c84235",
+   "section": "Madhyamaka",
+   "pages": 633,
+   "with_english": 632
+  },
+  {
+   "vol": 109,
+   "book_id": "6abeb43e896ea18127c844b1",
+   "section": "Madhyamaka",
+   "pages": 625,
+   "with_english": 624
+  },
+  {
+   "vol": 110,
+   "book_id": "6abeb4ad896ea18127c84725",
+   "section": "Madhyamaka",
+   "pages": 715,
+   "with_english": 714
+  },
+  {
+   "vol": 111,
+   "book_id": "6abeb4e5896ea18127c849f3",
+   "section": "Madhyamaka",
+   "pages": 625,
+   "with_english": 624
+  },
+  {
+   "vol": 112,
+   "book_id": "6abeb51b896ea18127c84c67",
+   "section": "Madhyamaka",
+   "pages": 517,
+   "with_english": 516
+  },
+  {
+   "vol": 113,
+   "book_id": "6abeb583896ea18127c84e6f",
+   "section": "Sūtra commentary",
+   "pages": 531,
+   "with_english": 530
+  },
+  {
+   "vol": 114,
+   "book_id": "6abeb5fd896ea18127c85085",
+   "section": "Sūtra commentary",
+   "pages": 537,
+   "with_english": 536
+  },
+  {
+   "vol": 115,
+   "book_id": "6abeb628896ea18127c852a1",
+   "section": "Sūtra commentary",
+   "pages": 545,
+   "with_english": 544
+  },
+  {
+   "vol": 116,
+   "book_id": "6abeb666896ea18127c854c5",
+   "section": "Sūtra commentary",
+   "pages": 553,
+   "with_english": 552
+  },
+  {
+   "vol": 117,
+   "book_id": "6abeb6dc896ea18127c856f1",
+   "section": "Sūtra commentary",
+   "pages": 537,
+   "with_english": 536
+  },
+  {
+   "vol": 118,
+   "book_id": "6abeb70e896ea18127c8590d",
+   "section": "Sūtra commentary",
+   "pages": 581,
+   "with_english": 580
+  },
+  {
+   "vol": 119,
+   "book_id": "6abeb74e896ea18127c85b55",
+   "section": "Sūtra commentary",
+   "pages": 543,
+   "with_english": 542
+  },
+  {
+   "vol": 120,
+   "book_id": "6abeb782896ea18127c85d77",
+   "section": "Sūtra commentary",
+   "pages": 603,
+   "with_english": 602
+  },
+  {
+   "vol": 121,
+   "book_id": "6abeb7ec896ea18127c85fd5",
+   "section": "Sūtra commentary",
+   "pages": 523,
+   "with_english": 522
+  },
+  {
+   "vol": 122,
+   "book_id": "6abeb822896ea18127c861e3",
+   "section": "Sūtra commentary",
+   "pages": 619,
+   "with_english": 618
+  },
+  {
+   "vol": 123,
+   "book_id": "6abeb863896ea18127c86451",
+   "section": "Cittamātra",
+   "pages": 519,
+   "with_english": 512
+  },
+  {
+   "vol": 124,
+   "book_id": "6abedf77a43718d234bf11b2",
+   "section": "Cittamātra",
+   "pages": 689,
+   "with_english": 688
+  },
+  {
+   "vol": 125,
+   "book_id": "6abeb8ed896ea18127c8665b",
+   "section": "Cittamātra",
+   "pages": 566,
+   "with_english": 564
+  },
+  {
+   "vol": 126,
+   "book_id": "6abeb92e896ea18127c86894",
+   "section": "Cittamātra",
+   "pages": 531,
+   "with_english": 530
+  },
+  {
+   "vol": 127,
+   "book_id": "6abeb963896ea18127c86aaa",
+   "section": "Cittamātra",
+   "pages": 565,
+   "with_english": 564
+  },
+  {
+   "vol": 128,
+   "book_id": "6abeb99b896ea18127c86ce2",
+   "section": "Cittamātra",
+   "pages": 389,
+   "with_english": 388
+  },
+  {
+   "vol": 129,
+   "book_id": "6abeb9d7896ea18127c86e6a",
+   "section": "Cittamātra",
+   "pages": 425,
+   "with_english": 424
+  },
+  {
+   "vol": 130,
+   "book_id": "6abeba0b896ea18127c87016",
+   "section": "Cittamātra",
+   "pages": 577,
+   "with_english": 576
+  },
+  {
+   "vol": 131,
+   "book_id": "6abeba43896ea18127c8725a",
+   "section": "Cittamātra",
+   "pages": 669,
+   "with_english": 668
+  },
+  {
+   "vol": 132,
+   "book_id": "6abeba78896ea18127c874fa",
+   "section": "Cittamātra",
+   "pages": 441,
+   "with_english": 440
+  },
+  {
+   "vol": 133,
+   "book_id": "6abebaa5896ea18127c876b6",
+   "section": "Cittamātra",
+   "pages": 675,
+   "with_english": 674
+  },
+  {
+   "vol": 134,
+   "book_id": "6abebae6896ea18127c8795c",
+   "section": "Cittamātra",
+   "pages": 721,
+   "with_english": 717
+  },
+  {
+   "vol": 135,
+   "book_id": "6abebc98896ea18127c87c30",
+   "section": "Cittamātra",
+   "pages": 585,
+   "with_english": 584
+  },
+  {
+   "vol": 136,
+   "book_id": "6abebd37896ea18127c87e7c",
+   "section": "Cittamātra",
+   "pages": 499,
+   "with_english": 498
+  },
+  {
+   "vol": 137,
+   "book_id": "6abebdc9896ea18127c88072",
+   "section": "Cittamātra",
+   "pages": 601,
+   "with_english": 600
+  },
+  {
+   "vol": 138,
+   "book_id": "6abebe51896ea18127c882ce",
+   "section": "Cittamātra",
+   "pages": 461,
+   "with_english": 460
+  },
+  {
+   "vol": 139,
+   "book_id": "6abebe9a896ea18127c8849e",
+   "section": "Abhidharma",
+   "pages": 457,
+   "with_english": 456
+  },
+  {
+   "vol": 140,
+   "book_id": "6abebeed896ea18127c8866a",
+   "section": "Abhidharma",
+   "pages": 515,
+   "with_english": 513
+  },
+  {
+   "vol": 141,
+   "book_id": "6abebf33896ea18127c88870",
+   "section": "Abhidharma",
+   "pages": 531,
+   "with_english": 530
+  },
+  {
+   "vol": 142,
+   "book_id": "6abebf71896ea18127c88a86",
+   "section": "Abhidharma",
+   "pages": 659,
+   "with_english": 658
+  },
+  {
+   "vol": 143,
+   "book_id": "6abebfd1896ea18127c88d1c",
+   "section": "Abhidharma",
+   "pages": 665,
+   "with_english": 664
+  },
+  {
+   "vol": 144,
+   "book_id": "6abec01d896ea18127c88fb8",
+   "section": "Abhidharma",
+   "pages": 693,
+   "with_english": 692
+  },
+  {
+   "vol": 145,
+   "book_id": "6abec068896ea18127c89270",
+   "section": "Abhidharma",
+   "pages": 643,
+   "with_english": 642
+  },
+  {
+   "vol": 146,
+   "book_id": "6abec12d896ea18127c894f6",
+   "section": "Abhidharma",
+   "pages": 573,
+   "with_english": 572
+  },
+  {
+   "vol": 147,
+   "book_id": "6abec1df896ea18127c89736",
+   "section": "Abhidharma",
+   "pages": 645,
+   "with_english": 644
+  },
+  {
+   "vol": 148,
+   "book_id": "6abec24c896ea18127c899be",
+   "section": "Abhidharma",
+   "pages": 445,
+   "with_english": 444
+  },
+  {
+   "vol": 149,
+   "book_id": "6abec2d0896ea18127c89b7e",
+   "section": "Abhidharma",
+   "pages": 521,
+   "with_english": 520
+  },
+  {
+   "vol": 150,
+   "book_id": "6abec330896ea18127c89d8a",
+   "section": "Vinaya",
+   "pages": 477,
+   "with_english": 476
+  },
+  {
+   "vol": 151,
+   "book_id": "6abec470896ea18127c89f6a",
+   "section": "Vinaya",
+   "pages": 535,
+   "with_english": 534
+  },
+  {
+   "vol": 152,
+   "book_id": "6abec4ee896ea18127c8a184",
+   "section": "Vinaya",
+   "pages": 623,
+   "with_english": 622
+  },
+  {
+   "vol": 153,
+   "book_id": "6abec54c896ea18127c8a3f6",
+   "section": "Vinaya",
+   "pages": 561,
+   "with_english": 560
+  },
+  {
+   "vol": 154,
+   "book_id": "6abec5ca896ea18127c8a62a",
+   "section": "Vinaya",
+   "pages": 449,
+   "with_english": 448
+  },
+  {
+   "vol": 155,
+   "book_id": "6abec6fb896ea18127c8a7ee",
+   "section": "Vinaya",
+   "pages": 491,
+   "with_english": 489
+  },
+  {
+   "vol": 156,
+   "book_id": "6abec767896ea18127c8a9dc",
+   "section": "Vinaya",
+   "pages": 650,
+   "with_english": 650
+  },
+  {
+   "vol": 157,
+   "book_id": "6abec7fa896ea18127c8ac69",
+   "section": "Vinaya",
+   "pages": 413,
+   "with_english": 412
+  },
+  {
+   "vol": 158,
+   "book_id": "6abec9bf896ea18127c8ae09",
+   "section": "Vinaya",
+   "pages": 629,
+   "with_english": 628
+  },
+  {
+   "vol": 159,
+   "book_id": "6abeca4e896ea18127c8b081",
+   "section": "Vinaya",
+   "pages": 518,
+   "with_english": 516
+  },
+  {
+   "vol": 160,
+   "book_id": "6abecb0a896ea18127c8b28a",
+   "section": "Vinaya",
+   "pages": 555,
+   "with_english": 554
+  },
+  {
+   "vol": 161,
+   "book_id": "6abecc3d896ea18127c8b4b8",
+   "section": "Vinaya",
+   "pages": 547,
+   "with_english": 546
+  },
+  {
+   "vol": 162,
+   "book_id": "6abecd0e896ea18127c8b6de",
+   "section": "Vinaya",
+   "pages": 775,
+   "with_english": 774
+  },
+  {
+   "vol": 163,
+   "book_id": "6abece70896ea18127c8b9e8",
+   "section": "Vinaya",
+   "pages": 779,
+   "with_english": 778
+  },
+  {
+   "vol": 164,
+   "book_id": "6abecf09896ea18127c8bcf6",
+   "section": "Vinaya",
+   "pages": 525,
+   "with_english": 524
+  },
+  {
+   "vol": 165,
+   "book_id": "6abecf9e896ea18127c8bf06",
+   "section": "Vinaya",
+   "pages": 687,
+   "with_english": 686
+  },
+  {
+   "vol": 166,
+   "book_id": "6abed040896ea18127c8c1b8",
+   "section": "Vinaya",
+   "pages": 527,
+   "with_english": 526
+  },
+  {
+   "vol": 167,
+   "book_id": "6abed08d896ea18127c8c3ca",
+   "section": "Vinaya",
+   "pages": 507,
+   "with_english": 506
+  },
+  {
+   "vol": 168,
+   "book_id": "6abed0ea896ea18127c8c5c8",
+   "section": "Jātaka",
+   "pages": 679,
+   "with_english": 678
+  },
+  {
+   "vol": 169,
+   "book_id": "6abed155896ea18127c8c872",
+   "section": "Jātaka",
+   "pages": 503,
+   "with_english": 502
+  },
+  {
+   "vol": 170,
+   "book_id": "6abed1ac896ea18127c8ca6c",
+   "section": "Jātaka",
+   "pages": 731,
+   "with_english": 730
+  },
+  {
+   "vol": 171,
+   "book_id": "6abed259896ea18127c8cd4a",
+   "section": "Jātaka",
+   "pages": 657,
+   "with_english": 656
+  },
+  {
+   "vol": 172,
+   "book_id": "6abed33b896ea18127c8cfde",
+   "section": "Jātaka",
+   "pages": 389,
+   "with_english": 388
+  },
+  {
+   "vol": 173,
+   "book_id": "6abed3c3896ea18127c8d166",
+   "section": "Letters",
+   "pages": 373,
+   "with_english": 373
+  },
+  {
+   "vol": 174,
+   "book_id": "6abed3fc896ea18127c8d272",
+   "section": "Pramāṇa",
+   "pages": 730,
+   "with_english": 723
+  },
+  {
+   "vol": 175,
+   "book_id": "6abed42c896ea18127c8d54f",
+   "section": "Pramāṇa",
+   "pages": 718,
+   "with_english": 717
+  },
+  {
+   "vol": 176,
+   "book_id": "6abed47a896ea18127c8d820",
+   "section": "Pramāṇa",
+   "pages": 655,
+   "with_english": 654
+  },
+  {
+   "vol": 177,
+   "book_id": "6abed4cd896ea18127c8dab2",
+   "section": "Pramāṇa",
+   "pages": 563,
+   "with_english": 562
+  },
+  {
+   "vol": 178,
+   "book_id": "6abed518896ea18127c8dce8",
+   "section": "Pramāṇa",
+   "pages": 615,
+   "with_english": 614
+  },
+  {
+   "vol": 179,
+   "book_id": "6abed57e896ea18127c8df52",
+   "section": "Pramāṇa",
+   "pages": 563,
+   "with_english": 562
+  },
+  {
+   "vol": 180,
+   "book_id": "6abed5db896ea18127c8e188",
+   "section": "Pramāṇa",
+   "pages": 729,
+   "with_english": 728
+  },
+  {
+   "vol": 181,
+   "book_id": "6abed619896ea18127c8e464",
+   "section": "Pramāṇa",
+   "pages": 623,
+   "with_english": 622
+  },
+  {
+   "vol": 182,
+   "book_id": "6abed65f896ea18127c8e6d6",
+   "section": "Pramāṇa",
+   "pages": 795,
+   "with_english": 794
+  },
+  {
+   "vol": 183,
+   "book_id": "6abed698896ea18127c8e9f4",
+   "section": "Pramāṇa",
+   "pages": 573,
+   "with_english": 572
+  },
+  {
+   "vol": 184,
+   "book_id": "6abed724896ea18127c8ec34",
+   "section": "Pramāṇa",
+   "pages": 521,
+   "with_english": 520
+  },
+  {
+   "vol": 185,
+   "book_id": "6abed76c896ea18127c8ee40",
+   "section": "Pramāṇa",
+   "pages": 655,
+   "with_english": 654
+  },
+  {
+   "vol": 186,
+   "book_id": "6abed7ad896ea18127c8f0d2",
+   "section": "Pramāṇa",
+   "pages": 501,
+   "with_english": 500
+  },
+  {
+   "vol": 187,
+   "book_id": "6abed7f8896ea18127c8f2ca",
+   "section": "Pramāṇa",
+   "pages": 589,
+   "with_english": 588
+  },
+  {
+   "vol": 188,
+   "book_id": "6abed85e896ea18127c8f51a",
+   "section": "Pramāṇa",
+   "pages": 577,
+   "with_english": 576
+  },
+  {
+   "vol": 189,
+   "book_id": "6abed8c2896ea18127c8f75e",
+   "section": "Pramāṇa",
+   "pages": 653,
+   "with_english": 652
+  },
+  {
+   "vol": 190,
+   "book_id": "6abed90a896ea18127c8f9ee",
+   "section": "Pramāṇa",
+   "pages": 737,
+   "with_english": 736
+  },
+  {
+   "vol": 191,
+   "book_id": "6abed95d896ea18127c8fcd2",
+   "section": "Pramāṇa",
+   "pages": 725,
+   "with_english": 724
+  },
+  {
+   "vol": 192,
+   "book_id": "6abed9a6896ea18127c8ffaa",
+   "section": "Pramāṇa",
+   "pages": 661,
+   "with_english": 660
+  },
+  {
+   "vol": 193,
+   "book_id": "6abed9f5896ea18127c90242",
+   "section": "Pramāṇa",
+   "pages": 627,
+   "with_english": 626
+  },
+  {
+   "vol": 194,
+   "book_id": "6abeda5a896ea18127c904b8",
+   "section": "Grammar & sciences",
+   "pages": 555,
+   "with_english": 552
+  },
+  {
+   "vol": 195,
+   "book_id": "6abedb29896ea18127c906e6",
+   "section": "Grammar & sciences",
+   "pages": 632,
+   "with_english": 630
+  },
+  {
+   "vol": 196,
+   "book_id": "6abedb94896ea18127c90961",
+   "section": "Grammar & sciences",
+   "pages": 605,
+   "with_english": 604
+  },
+  {
+   "vol": 197,
+   "book_id": "6abedbe1896ea18127c90bc1",
+   "section": "Grammar & sciences",
+   "pages": 777,
+   "with_english": 771
+  },
+  {
+   "vol": 198,
+   "book_id": "6abedc75896ea18127c90ecd",
+   "section": "Grammar & sciences",
+   "pages": 820,
+   "with_english": 819
+  },
+  {
+   "vol": 199,
+   "book_id": "6abedcc7896ea18127c91204",
+   "section": "Grammar & sciences",
+   "pages": 842,
+   "with_english": 840
+  },
+  {
+   "vol": 200,
+   "book_id": "6abedd7f896ea18127c91551",
+   "section": "Grammar & sciences",
+   "pages": 591,
+   "with_english": 0
+  },
+  {
+   "vol": 201,
+   "book_id": "6abeddd2896ea18127c917a3",
+   "section": "Grammar & sciences",
+   "pages": 680,
+   "with_english": 0
+  },
+  {
+   "vol": 202,
+   "book_id": "6abede62896ea18127c91a4e",
+   "section": "Grammar & sciences",
+   "pages": 608,
+   "with_english": 0
+  },
+  {
+   "vol": 203,
+   "book_id": "6abee1cca43718d234bf15db",
+   "section": "Miscellaneous",
+   "pages": 553,
+   "with_english": 0
+  },
+  {
+   "vol": 204,
+   "book_id": "6abee265a43718d234bf1807",
+   "section": "Miscellaneous",
+   "pages": 753,
+   "with_english": 0
+  },
+  {
+   "vol": 205,
+   "book_id": "6abee2a5a43718d234bf1afb",
+   "section": "Miscellaneous",
+   "pages": 585,
+   "with_english": 0
+  },
+  {
+   "vol": 206,
+   "book_id": "6abee32da43718d234bf1d47",
+   "section": "Miscellaneous",
+   "pages": 619,
+   "with_english": 0
+  },
+  {
+   "vol": 207,
+   "book_id": "6abee360a43718d234bf1fb5",
+   "section": "Miscellaneous",
+   "pages": 720,
+   "with_english": 0
+  },
+  {
+   "vol": 208,
+   "book_id": "6abee417a43718d234bf2288",
+   "section": "Grammar & sciences",
+   "pages": 903,
+   "with_english": 0
+  },
+  {
+   "vol": 209,
+   "book_id": "6abee45ea43718d234bf2612",
+   "section": "Miscellaneous",
+   "pages": 848,
+   "with_english": 0
+  },
+  {
+   "vol": 210,
+   "book_id": "6abee496a43718d234bf2965",
+   "section": "Miscellaneous",
+   "pages": 773,
+   "with_english": 0
+  },
+  {
+   "vol": 211,
+   "book_id": "6abee4eaa43718d234bf2c6d",
+   "section": "Miscellaneous",
+   "pages": 771,
+   "with_english": 0
+  },
+  {
+   "vol": 212,
+   "book_id": "6abee53da43718d234bf2f73",
+   "section": "Miscellaneous",
+   "pages": 653,
+   "with_english": 0
+  },
+  {
+   "vol": 213,
+   "book_id": "6abee585a43718d234bf3203",
+   "section": "Catalogue",
+   "pages": 1006,
+   "with_english": 0
+  }
+ ]
+}
