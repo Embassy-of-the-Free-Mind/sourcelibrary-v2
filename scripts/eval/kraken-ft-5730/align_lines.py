@@ -21,7 +21,8 @@ Per page:
 A page enters training only if ≥ 50 % of its lines are kept (otherwise it is "low-confidence" and dropped whole —
 reading-order or segmentation trouble that would teach the wrong thing at the kept lines' edges too).
 
-Normalisation of the TRUTH (stated in the prereg): TCP characters as keyed (ſ, abbreviation strokes, ę, &, æ, ꝰ),
+Normalisation of the TRUTH (stated in the prereg, Amendment 2): TCP characters as keyed (abbreviation strokes, ę, &, æ, ꝰ)
+except ſ, which is folded to s (TCP keys it in only 24 of the 44 training books),
 EOL hyphen kept as "-", whitespace collapsed, then Unicode NFD (the base model's codec is NFD).
 """
 import argparse, json, os, re, unicodedata
@@ -104,16 +105,35 @@ def write_alto(path, image, w, h, lines):
         fh.write('\n'.join(parts))
 
 
-def best_side(read_f, sides_f):
+def dice_g(ga, gb, na, nb):
+    if not na or not nb:
+        return 0.0
+    if len(ga) > len(gb):
+        ga, gb = gb, ga
+    return 2 * sum(min(c, gb.get(k, 0)) for k, c in ga.items()) / (na + nb)
+
+
+def side_grams(sides_f):
+    """Trigram counts of every side and of every consecutive pair, computed once per book."""
+    single = [grams(s) if len(s) >= 40 else None for s in sides_f]
+    pair = [(single[i] + single[i + 1]) if single[i] is not None and i + 1 < len(single) and single[i + 1] is not None else None for i in range(len(single))]
+    tot = lambda g: sum(g.values()) if g is not None else 0
+    return [(g, tot(g)) for g in single], [(g, tot(g)) for g in pair]
+
+
+def best_side(read_f, sg):
+    single, pair = sg
+    gr = grams(read_f); nr = sum(gr.values())
     best = (0.0, None)
-    for i, s in enumerate(sides_f):
-        if len(s) < 40:
+    for i, (g, n) in enumerate(single):
+        if g is None:
             continue
-        d = dice(read_f, s)
+        d = dice_g(gr, g, nr, n)
         if d > best[0]:
             best = (d, (i,))
-        if i + 1 < len(sides_f):
-            d2 = dice(read_f, s + sides_f[i + 1])
+        g2, n2 = pair[i]
+        if g2 is not None:
+            d2 = dice_g(gr, g2, nr, n2)
             if d2 > best[0] + 0.05:
                 best = (d2, (i, i + 1))
     return best
@@ -171,7 +191,8 @@ def align_page(lines, side_text):
         cer = lev(hf, tf) / len(tf)
         if cer > LINE_MAX:
             out.append((l, None, f'cer>{LINE_MAX}')); continue
-        out.append((l, unicodedata.normalize('NFD', truth), f'ok:{cer:.3f}'))
+        # ſ → s (prereg Amendment 2): TCP keys long s in 24 of the 44 books and folds it in 20; CATMuS's codec has no ſ
+        out.append((l, unicodedata.normalize('NFD', truth.replace('ſ', 's')), f'ok:{cer:.3f}'))
     return out
 
 
@@ -186,6 +207,7 @@ def main():
     m = json.load(open(a.map))
     sides = [s['text'] for s in m['sides']]
     sides_f = [fold(s) for s in sides]
+    sg = side_grams(sides_f)
     os.makedirs(a.out, exist_ok=True)
     st = {'book_id': m['book_id'], 'tcp': m['tcp'], 'pages': 0, 'pages_kept': 0, 'page_drop': Counter(), 'lines': 0, 'lines_kept': 0, 'line_drop': Counter(), 'kept_cer': [], 'per_page': []}
     for f in sorted(os.listdir(a.alto_dir)):
@@ -201,7 +223,7 @@ def main():
         read_f = fold(' '.join(l['text'] for l in lines))
         if len(read_f) < 100:
             st['page_drop']['too-little-text'] += 1; st['line_drop']['page-dropped'] += len(lines); continue
-        score, which = best_side(read_f, sides_f)
+        score, which = best_side(read_f, sg)
         if score < PAGE_MIN:
             st['page_drop']['no-page-match'] += 1; st['line_drop']['page-dropped'] += len(lines)
             st['per_page'].append({'page': pn, 'match': round(score, 3), 'kept': 0, 'lines': len(lines)}); continue

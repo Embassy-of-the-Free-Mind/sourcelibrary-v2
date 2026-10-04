@@ -101,3 +101,12 @@ Nothing else changes. The images and stored reads of the 2,115 pages dropped are
 
 Also recorded: the image host returns Cloudflare error 1010 to Python's default User-Agent; the fetch sends
 `SourceLibrary-eval/1.0 (kraken fine-tune #5730)`.
+
+## Amendment 2 — ſ folded to s in the training truth (2026-10-04 02:58Z, before any training step)
+
+A count over the 44 verified TCP texts: **24 key long s as ſ, 20 key it as s** (e.g. Morison A51379 writes
+`siliquas` where the page prints ſiliquas). Kept as keyed, the same glyph would carry two labels depending on the
+book. CATMuS-Print's codec has no ſ, production stores s (prompt v16; #5521 folds ſ before storing), and the scorer
+folds ſ → s. So the truth is **folded ſ → s**; everything else stays as keyed (abbreviation strokes, ꝰ, ę, &, æ,
+`-` at line ends). A long-s misread is still an error the model can unlearn: the target is `s` where the page
+prints ſ and the base model reads `f` (seen on the first aligned pages: CATMuS `filiquas`, `dispofitas`).

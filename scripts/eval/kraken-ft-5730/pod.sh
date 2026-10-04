@@ -75,9 +75,8 @@ read)
   log "read: $(find $W/alto -name '*.xml' | wc -l) alto total" ;;
 align)
   mkdir -p $W/train $W/stats
-  for d in $W/alto/*/; do b=$(basename $d)
-    $K/python $W/code/align_lines.py --map=$W/map/$b.json --alto-dir=$d --img-dir=$W/img/$b --out=$W/train/$b --stats=$W/stats/$b.json 2>&1 | tail -1 | tee -a $W/align.log
-  done ;;
+  ls $W/alto | xargs -P ${READERS:-7} -I{} sh -c "$K/python $W/code/align_lines.py --map=$W/map/{}.json --alto-dir=$W/alto/{} --img-dir=$W/img/{} --out=$W/train/{} --stats=$W/stats/{}.json 2>&1 | tail -1 >> $W/align.log"
+  log "align: $(find $W/train -name '*.xml' | wc -l) training pages" ;;
 compile)
   find $W/train -name '*.xml' | sort > $W/all.txt
   $K/python -c "
