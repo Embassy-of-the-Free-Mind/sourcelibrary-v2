@@ -57,7 +57,7 @@ elif cmd == 'crop':
                 h, v, w, ht = l['box']
                 if w < 4 or ht < 4: continue
                 crop = im.crop((h, v, h + w, v + ht))
-            crop.save(os.path.join(d, f'{i:05d}.png')); n += 1
+            crop.save(os.path.join(d, f'{slug}__{i:05d}.png')); n += 1   # unique basenames: Calamari keys .pred.txt by basename
     print('line crops', n)
 elif cmd == 'join':
     a, L, o = sys.argv[2:5]; os.makedirs(o, exist_ok=True); n = 0
