@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { getReadDb } from '@/lib/mongodb';
 import { posts as blogPostList } from '@/app/blog/page';
+import { canonWorkForWorkId } from '@/lib/canon-works';
 
 // Next.js sitemap with generateSitemaps() for multi-file output.
 // Google handles chunked sitemaps much better for large sites (10K+ URLs).
@@ -90,7 +91,7 @@ async function computeSitemapIds() {
   // Count books to determine how many chunks we need
   const bookCount = await safeQuery('book-count', async (db) => {
     return db.collection('books').countDocuments(
-      { visible: true, slug: { $exists: true, $ne: null }, pages_ocr: { $gt: 0 } },
+      { visible: true, slug: { $exists: true, $ne: null }, pages_count: { $gt: 0 } },
       { maxTimeMS: 30000 }
     );
   }, 10000);
@@ -269,7 +270,9 @@ async function getBooks(chunkIndex: number): Promise<MetadataRoute.Sitemap> {
         visible: true,
         // Only include books with slugs — hex IDs are bad for SEO
         slug: { $exists: true, $ne: null },
-        pages_ocr: { $gt: 0 },
+        // Canonical live filter (same as /api/books/library): every readable
+        // book is listed, including untranslated and short ones.
+        pages_count: { $gt: 0 },
       },
       {
         projection: { slug: 1, updated_at: 1, pages_ocr: 1, pages_translated: 1, is_first_translation: 1, read_count: 1 },
@@ -281,7 +284,7 @@ async function getBooks(chunkIndex: number): Promise<MetadataRoute.Sitemap> {
     ).toArray();
 
     return books
-      .filter((book) => book.slug && (book.pages_ocr > 3 || book.pages_translated > 0))
+      .filter((book) => book.slug)
       .map((book) => {
         let lastModified: Date;
         try {
@@ -334,7 +337,7 @@ async function getIndexablePages(chunkIndex: number): Promise<MetadataRoute.Site
     const pages = await pagesColl.find(
       { seo_indexable: true, _id: { $gte: start._id } },
       {
-        projection: { _id: 0, seo_url: 1, updated_at: 1 },
+        projection: { _id: 0, seo_url: 1, updated_at: 1, book_id: 1 },
         sort: { _id: 1 },
         limit: PAGES_PER_CHUNK,
         hint: 'seo_indexable_id_partial',
@@ -342,8 +345,19 @@ async function getIndexablePages(chunkIndex: number): Promise<MetadataRoute.Site
       }
     ).toArray();
 
+    // Drop pages whose parent book is no longer public. seo_indexable is set
+    // once by flag-indexable-pages.mjs and never cleared, so pages of books
+    // later hidden (e.g. hidden_reason 'duplicate') stayed listed while their
+    // /book/<slug>/page/<id> URL 404s (~2.5% of this chunk range, #2266).
+    const bookIds = [...new Set(pages.map((p) => p.book_id).filter((b): b is string => typeof b === 'string'))];
+    const liveBooks = await db.collection('books').find(
+      { id: { $in: bookIds }, visible: true },
+      { projection: { _id: 0, id: 1 }, maxTimeMS: 30000 }
+    ).toArray();
+    const liveBookIds = new Set(liveBooks.map((b) => b.id as string));
+
     return pages
-      .filter((p) => typeof p.seo_url === 'string' && p.seo_url.startsWith('/book/'))
+      .filter((p) => typeof p.seo_url === 'string' && p.seo_url.startsWith('/book/') && liveBookIds.has(p.book_id))
       .map((p) => {
         let lastModified: Date;
         try {
@@ -489,16 +503,29 @@ async function getLanguages(): Promise<MetadataRoute.Sitemap> {
   }, [] as MetadataRoute.Sitemap);
 }
 
+// List each work once, at the URL its page declares as <link rel=canonical>
+// (generateMetadata in src/app/work/[id]/page.tsx). Raw work_id forms such as
+// `kr:KR6q0012` redirect to a canon slug or canonicalise to the editions'
+// work_slug; listing them put ~2.8K redirecting URLs in the sitemap (#2266).
 async function getWorks(): Promise<MetadataRoute.Sitemap> {
   return safeQuery('works', async (db) => {
     const works = await db.collection('books').aggregate([
       { $match: { work_id: { $exists: true, $ne: null }, visible: true } },
-      { $group: { _id: '$work_id', count: { $sum: 1 } } },
+      // $min skips null/missing: a work_slug if any edition carries one.
+      { $group: { _id: '$work_id', count: { $sum: 1 }, work_slug: { $min: '$work_slug' } } },
       { $match: { count: { $gte: 2 } } },
     ], { maxTimeMS: 10000 }).toArray();
 
-    return works.map((w) => ({
-      url: `${BASE_URL}/work/${w._id}`,
+    const paths = new Set<string>();
+    for (const w of works) {
+      const workId = String(w._id);
+      const canon = canonWorkForWorkId(workId);
+      const slug = canon ? canon.slug : (typeof w.work_slug === 'string' && w.work_slug ? w.work_slug : workId);
+      paths.add(`/work/${encodeURIComponent(slug)}`);
+    }
+
+    return [...paths].sort().map((path) => ({
+      url: `${BASE_URL}${path}`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.5,
