@@ -1,0 +1,141 @@
+{
+ "seed": 5695,
+ "input": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-coptic-5778/scripts/eval/results/coptic-5778/english-records-served.jsonl",
+ "input_sha": "48f63a0aad8a537c",
+ "judges": [
+  "j1",
+  "j2"
+ ],
+ "controls": {
+  "wrong_page": {
+   "69e012c74e6773d06085687d_00152": {
+    "donor": "69af55d3ec9e6c278212dcf1_00115",
+    "donor_arm": "served",
+    "text": "that the Lord established with you. And I stayed on the mountain forty days and forty nights; I did not eat bread or drink water.\n<margin>10</margin> And the Lord gave me the two stone tablets written with the finger of God; and on them were written all the words that the Lord spoke to you on the mountain, on the day you were gathered together.\n<margin>11</margin> And it happened after forty days and forty nights, the Lord gave me the two stone tablets, the tablets of the covenant.\n<margin>12</margin> And the Lord said to me, \"Arise and go down quickly from here, for your people whom you brought out of the land of Egypt have acted wickedly <note>original: \"aϥaнoмєi\", Greek: ἠνόμησεν</note>. They have turned aside <note>original: \"aυpapaвa\", Greek: παρέβησαν</note> quickly from the way that I commanded them; they have made for themselves a molten image.\"\n<margin>13</margin> And the Lord said to me, \"I have spoken to you once and twice, saying: 'I have seen this people, and behold, they are a stiff-necked <note>original: \"naϣt мakϩ\", translated as stubborn/stiff-necked</note> people.'\n<margin>14</margin> Let me alone, so that I may destroy them and blot out their name from under heaven; and I will make you into a great and strong nation, and more numerous than these.\"\n\n<summary>Moses recounts the Lord's instructions to descend the mountain after the people made a golden calf, and God's threat to destroy them and raise a new nation through Moses.</summary>\n<keywords>Moses, Mount Sinai, Commandments, Golden Calf, Apostasy, Stiff-necked people</keywords>"
+   }
+  },
+  "planted": {
+   "69af55d3ec9e6c278212dcf1_00216": {
+    "base_arm": "served",
+    "text": "# JONAH I. 12—II. 3\n\n...Jonah said to them, \"Take me and cast me into the sea, and the sea will be calm for you, because I know for my sake this great storm is upon you.\" \n13 But the men were struggling to bring the boat back to land, but they could not, because the sea was raging very much against them. \n14 And they cried out to the Lord, saying, \"Do not be angry with us, O Lord, do let us die because of the soul of this man, and do not bring upon us innocent blood, because you, O Lord, have done as you wished.\" \n15 And they took Jonah and cast him into the sea, and the sea became calm. \n16 And the men feared the Lord with a great fear, and they sacrificed a sacrifice to the Lord. \n\n<margin>Fol. 55 a </margin>\nChap. II. 1\n17 And the Lord ordered a great sea creature <term>ketos</term> to swallow Jonah. And Jonah was inside the <insert>creature</insert> for three days and three nights. \n2 And Jonah prayed to the Lord his God while he was inside the sea creature, \n3 saying, \"I cried out of my distress to the Lord my God, and he heard...\"\n\n<note>¹ Greek: παραβιάζοντο (they were forcing/struggling).</note>\n<note>² 'Be not wroth with us, O Lord'; Greek: μηδαμῶς κύριε.</note>\n\n<summary>Jonah is thrown into the sea, which then calms, and he is swallowed by a great sea creature by the Lord's command.</summary>\n<keywords>Jonah, Coptic, Sahidic, sea, storm, sacrifice, Lord, sea creature</keywords>",
+    "op": "drop-negation",
+    "from": "do not",
+    "to": "do",
+    "at": 384,
+    "before_context": ". \n14 And they cried out to the Lord, saying, \"Do not be angry with us, O Lord, do not let us die because of the soul of this man, and do not bring upon us innocent b",
+    "after_context": ". \n14 And they cried out to the Lord, saying, \"Do not be angry with us, O Lord, do let us die because of the soul of this man, and do not bring upon us innocent b"
+   }
+  },
+  "duplicate": {
+   "69e012c74e6773d06085687d_00077": {
+    "arm": "served"
+   }
+  }
+ },
+ "items": {
+  "j1": {
+   "69920b7de0a548a13d883364_00192": {
+    "T1": "served"
+   },
+   "69920b7de0a548a13d883364_00498": {
+    "T1": "served"
+   },
+   "69af55d3ec9e6c278212dcf1_00115": {
+    "T1": "served"
+   },
+   "69af55d3ec9e6c278212dcf1_00216": {
+    "T1": "control:planted",
+    "T2": "served"
+   },
+   "69e012c74e6773d06085687d_00077": {
+    "T1": "served",
+    "T2": "served#dup"
+   },
+   "69e012c74e6773d06085687d_00152": {
+    "T1": "served",
+    "T2": "control:wrong_page"
+   }
+  },
+  "j2": {
+   "69920b7de0a548a13d883364_00192": {
+    "T1": "served"
+   },
+   "69920b7de0a548a13d883364_00498": {
+    "T1": "served"
+   },
+   "69af55d3ec9e6c278212dcf1_00115": {
+    "T1": "served"
+   },
+   "69af55d3ec9e6c278212dcf1_00216": {
+    "T1": "served",
+    "T2": "control:planted"
+   },
+   "69e012c74e6773d06085687d_00077": {
+    "T1": "served",
+    "T2": "served#dup"
+   },
+   "69e012c74e6773d06085687d_00152": {
+    "T1": "served",
+    "T2": "control:wrong_page"
+   }
+  }
+ },
+ "text_hash": {
+  "j1": {
+   "69920b7de0a548a13d883364_00192": {
+    "T1": "fb698911d40fdcc8"
+   },
+   "69920b7de0a548a13d883364_00498": {
+    "T1": "6506fe2d458827a4"
+   },
+   "69af55d3ec9e6c278212dcf1_00115": {
+    "T1": "928c480141b35dd2"
+   },
+   "69af55d3ec9e6c278212dcf1_00216": {
+    "T1": "c229a0fab944664d",
+    "T2": "6890cdff17f1d863"
+   },
+   "69e012c74e6773d06085687d_00077": {
+    "T1": "f172365e2cad86bd",
+    "T2": "f172365e2cad86bd"
+   },
+   "69e012c74e6773d06085687d_00152": {
+    "T1": "8d94fb6039a3f966",
+    "T2": "928c480141b35dd2"
+   }
+  },
+  "j2": {
+   "69920b7de0a548a13d883364_00192": {
+    "T1": "fb698911d40fdcc8"
+   },
+   "69920b7de0a548a13d883364_00498": {
+    "T1": "6506fe2d458827a4"
+   },
+   "69af55d3ec9e6c278212dcf1_00115": {
+    "T1": "928c480141b35dd2"
+   },
+   "69af55d3ec9e6c278212dcf1_00216": {
+    "T1": "6890cdff17f1d863",
+    "T2": "c229a0fab944664d"
+   },
+   "69e012c74e6773d06085687d_00077": {
+    "T1": "f172365e2cad86bd",
+    "T2": "f172365e2cad86bd"
+   },
+   "69e012c74e6773d06085687d_00152": {
+    "T1": "8d94fb6039a3f966",
+    "T2": "928c480141b35dd2"
+   }
+  }
+ },
+ "gate_items": [
+  "69e012c74e6773d06085687d_00152",
+  "69af55d3ec9e6c278212dcf1_00216",
+  "69e012c74e6773d06085687d_00077"
+ ],
+ "main_items": [
+  "69920b7de0a548a13d883364_00192",
+  "69920b7de0a548a13d883364_00498",
+  "69af55d3ec9e6c278212dcf1_00115"
+ ]
+}

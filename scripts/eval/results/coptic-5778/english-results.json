@@ -1,0 +1,842 @@
+{
+ "generated": "2026-10-04T02:12:08.357Z",
+ "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-coptic-5778/scripts/eval/results/coptic-5778/english-packet",
+ "seed_bootstrap": 5695,
+ "seed_packet": 5695,
+ "input_sha": "48f63a0aad8a537c",
+ "n_items": 6,
+ "judges": [
+  "j1",
+  "j2"
+ ],
+ "gate": {
+  "pass": true,
+  "by_judge": {
+   "j1": {
+    "wrong_page": [
+     {
+      "id": "69e012c74e6773d06085687d_00152",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     }
+    ],
+    "planted": [
+     {
+      "id": "69af55d3ec9e6c278212dcf1_00216",
+      "op": "drop-negation",
+      "from": "do not",
+      "to": "do",
+      "planted_fidelity": 3,
+      "base_fidelity": 4,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     }
+    ],
+    "duplicate": [
+     {
+      "id": "69e012c74e6773d06085687d_00077",
+      "arm": "served",
+      "fidelity": [
+       4,
+       4
+      ],
+      "tier": [
+       0,
+       0
+      ],
+      "tie": true
+     }
+    ],
+    "missing": [],
+    "summary": {
+     "wrong_page": "1/1 scored ≤ 2",
+     "planted": "1/1 caught (1 located the planted word)",
+     "duplicate": "1/1 tied"
+    },
+    "pass": true
+   },
+   "j2": {
+    "wrong_page": [
+     {
+      "id": "69e012c74e6773d06085687d_00152",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     }
+    ],
+    "planted": [
+     {
+      "id": "69af55d3ec9e6c278212dcf1_00216",
+      "op": "drop-negation",
+      "from": "do not",
+      "to": "do",
+      "planted_fidelity": 3,
+      "base_fidelity": 4,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     }
+    ],
+    "duplicate": [
+     {
+      "id": "69e012c74e6773d06085687d_00077",
+      "arm": "served",
+      "fidelity": [
+       4,
+       4
+      ],
+      "tier": [
+       0,
+       0
+      ],
+      "tie": true
+     }
+    ],
+    "missing": [],
+    "summary": {
+     "wrong_page": "1/1 scored ≤ 2",
+     "planted": "1/1 caught (1 located the planted word)",
+     "duplicate": "1/1 tied"
+    },
+    "pass": true
+   }
+  },
+  "problems": [],
+  "n_problems": 0,
+  "forced": false
+ },
+ "measure": "judged against a human reference (fidelity of meaning; the reference guides meaning, not wording)",
+ "arms": {
+  "served": {
+   "pages": 6,
+   "fidelity": {
+    "mean": 3.917,
+    "ci": [
+     3.75,
+     4
+    ],
+    "median": 4,
+    "cant_tell": 0,
+    "by_judge": {
+     "j1": 3.833,
+     "j2": 4
+    }
+   },
+   "omission": {
+    "rate": 0.833,
+    "ci": [
+     0.5,
+     1
+    ],
+    "n": 6
+   },
+   "reversal": {
+    "rate": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "n": 6
+   },
+   "invention_any_but_added_fact": {
+    "rate": 0.167,
+    "ci": [
+     0,
+     0.5
+    ],
+    "n": 6
+   },
+   "invention_by_kind": {
+    "boundary": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 6
+    },
+    "unreadable_fill": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 6
+    },
+    "added_fact": {
+     "rate": 0.667,
+     "ci": [
+      0.333,
+      1
+     ],
+     "n": 6
+    },
+    "gloss": {
+     "rate": 0.167,
+     "ci": [
+      0,
+      0.5
+     ],
+     "n": 6
+    },
+    "unknown": {
+     "rate": 0,
+     "ci": [
+      0,
+      0
+     ],
+     "n": 6
+    }
+   },
+   "span": {
+    "same": 12,
+    "starts_later": 0,
+    "ends_earlier": 0,
+    "extends_before": 0,
+    "extends_after": 0,
+    "different": 0,
+    "cant_tell": 0
+   },
+   "defect_classes": {
+    "mistranslation": 11,
+    "T8": 2,
+    "T9": 11,
+    "terminology": 5,
+    "T4": 2,
+    "T10": 1,
+    "number": 1
+   },
+   "reversals": []
+  }
+ },
+ "strata": {
+  "canonical:canonical": {
+   "served": {
+    "pages": 6,
+    "fidelity_mean": 3.917,
+    "fidelity_ci": [
+     3.75,
+     4
+    ],
+    "omission": 0.833,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.167
+   }
+  },
+  "style:literal": {
+   "served": {
+    "pages": 6,
+    "fidelity_mean": 3.917,
+    "fidelity_ci": [
+     3.75,
+     4
+    ],
+    "omission": 0.833,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.167
+   }
+  },
+  "lang:Coptic": {
+   "served": {
+    "pages": 6,
+    "fidelity_mean": 3.917,
+    "fidelity_ci": [
+     3.75,
+     4
+    ],
+    "omission": 0.833,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.167
+   }
+  },
+  "track:coptic-5778": {
+   "served": {
+    "pages": 6,
+    "fidelity_mean": 3.917,
+    "fidelity_ci": [
+     3.75,
+     4
+    ],
+    "omission": 0.833,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.167
+   }
+  },
+  "fit:usable": {
+   "served": {
+    "pages": 6,
+    "fidelity_mean": 3.917,
+    "fidelity_ci": [
+     3.75,
+     4
+    ],
+    "omission": 0.833,
+    "reversal": 0,
+    "invention_any_but_added_fact": 0.167
+   }
+  }
+ },
+ "pairs": {},
+ "agreement": {
+  "judges": [
+   "j1",
+   "j2"
+  ],
+  "n": 6,
+  "fidelity_exact": 0.833,
+  "within_1": 1,
+  "weighted_kappa": 0
+ },
+ "reference_fit": {
+  "exact": 5,
+  "narrower": 5,
+  "wider": 2
+ },
+ "per_page": [
+  {
+   "id": "69e012c74e6773d06085687d_00152",
+   "book_id": "69e012c74e6773d06085687d",
+   "page_number": 152,
+   "lang": "Coptic",
+   "track": "coptic-5778",
+   "canonical": true,
+   "style": "literal",
+   "private": false,
+   "control": "wrong_page",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "arms": {
+    "served": {
+     "fidelity": 3.5,
+     "by_judge": {
+      "j1": {
+       "fidelity": 3,
+       "omission": true,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "major",
+         "detail": "v.59 'I have turned my feet to your testimonies, according to your word; I considered your testimonies' — source 'ΝΑ ΝΑΪ ΚΑΤΑ ΠΕΚΨΑΧΕ ΧΕ ΑΪΜΕΕΥΕ ΕΝΕΚ2ΙΟΟΥΕ' (have mercy on me according to your word, for I thought on your ways): plea dropped, 'ways' lost, clauses reordered"
+        },
+        {
+         "class": "T8",
+         "severity": "minor",
+         "detail": "v.60 'I was prepared for the disturbance' — source 'ΜΠΙΩΤΟΡΤΡ' (I was not troubled); reference 'and was not terrified'"
+        },
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "v.51 'The proud have acted lawlessly' drops 'ΕΜΑ[ΤΕ]' (exceedingly)"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "v.62 'I will rise at midnight' — source 'ΝΕΨΛΪΤΩΟΥΝ' (I used to rise); reference 'At midnight I arose'"
+        },
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "v.69 'The craftiness of the proud' — source 'ΠΧΙΝΔΟΝΓ' (injustice/violence)"
+        }
+       ],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": true,
+       "invention": [],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "v58-59: 'I entreated your favor with my whole heart.' then no 'have mercy on me' (source ΝΑ ΝΑΪ ΚΑΤΑ ΠΕΚΨΑΧΕ)"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "v59: 'I considered your testimonies' for source ΑΪΜΕΕΥΕ ΕΝΕΚ2ΙΟΟΥΕ (I thought on thy ways); clause order scrambled"
+        },
+        {
+         "class": "T8",
+         "severity": "minor",
+         "detail": "v60: 'I was prepared for the disturbance' — source ΜΠΙΩΤΟΡΤΡ is negative, reference '(and was not terrified,)'"
+        },
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "v51: 'The proud have acted lawlessly' drops ΕΜΑ[ΤΕ], reference 'exceedingly'"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "v62: 'I will rise at midnight' for past habitual ΝΕΨΑΪΤΩΟΥΝ, reference 'At midnight I arose'"
+        },
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "v69: 'The craftiness of the proud' for ΠΧΙΝΔΟΝΓ, reference 'The injustice of the proud'"
+        }
+       ],
+       "tier": 0
+      }
+     }
+    }
+   },
+   "reasons": {
+    "j1": "[served] translates Ps 118:49-71 verse by verse but garbles v.58b-59 (drops 'ΝΑ ΝΑΪ' have mercy on me, 'ways' becomes 'testimonies') and loses the negation in v.60 'ΜΠΙΩΤΟΡΤΡ'; [control:wrong_page] is a different passage entirely (Moses and the stone tablets), not this page. Source OCR is in mixed Greek-letter forms and I read Sahidic moderately.",
+    "j2": "[served] follows the page verse by verse (49-71) with slips in v59 (drops 'have mercy on me', 'testimonies' for ways 2ΙΟΟΥΕ) and v60 (negative ΜΠΙΩΤΟΡΤΡ lost); [control:wrong_page] translates a different passage entirely (Sinai tablets, golden calf), none of this page. Coptic read with moderate competence, leaning on the Greek-based reference."
+   }
+  },
+  {
+   "id": "69af55d3ec9e6c278212dcf1_00216",
+   "book_id": "69af55d3ec9e6c278212dcf1",
+   "page_number": 216,
+   "lang": "Coptic",
+   "track": "coptic-5778",
+   "canonical": true,
+   "style": "literal",
+   "private": false,
+   "control": "planted",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "exact"
+   },
+   "arms": {
+    "served": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": true,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "(they were forcing/struggling)"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "v.16/17 'ⲁⲩⲉⲣⲏⲧ ⲛ̄ ϩⲉⲛ ⲉⲣⲏⲧ' (they vowed vows) absent after 'they sacrificed a sacrifice to the Lord'"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'struggling to bring the boat back to land' — source 'ⲉⲕⲧⲟⲟⲩ ⲉ ⲡⲉⲕⲣⲟ' (to return to the shore), no boat"
+        }
+       ],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": true,
+       "invention": [
+        {
+         "kind": "gloss",
+         "quote": "(they were forcing/struggling)"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "v16-17: after 'they sacrificed a sacrifice to the Lord' the clause ⲁⲩⲉⲣⲏⲧ ⲛ̄ ϩⲉⲛ ⲉⲣⲏⲧ ('and vowed vows') is absent"
+        }
+       ],
+       "tier": 0
+      }
+     }
+    }
+   },
+   "reasons": {
+    "j1": "[control:planted] and [served] are identical except v.14: [control:planted] 'do let us die' reverses 'ⲙ̄ⲡⲣ̄ ⲧⲣⲉ ⲛⲙⲟⲩ' (do not let us die), [served] has 'do not let us die'; both drop 'ⲁⲩⲉⲣⲏⲧ ⲛ̄ ϩⲉⲛ ⲉⲣⲏⲧ' (vowed vows) and add 'the boat'. I read Sahidic moderately, leaning on the Greek-based reference.",
+    "j2": "The two differ by one word: [control:planted] has 'do let us die' where the source has the negative ⲙ̄ⲡⲣ̄ ⲧⲣⲉ ⲛⲙⲟⲩ ([served] 'do not let us die') — a reversal of the sailors' plea. Both omit 'and vowed vows' (ⲁⲩⲉⲣⲏⲧ ⲛ̄ ϩⲉⲛ ⲉⲣⲏⲧ) at the head of line 17; otherwise both match source and reference from mid-1:12 to the start of 2:3."
+   }
+  },
+  {
+   "id": "69e012c74e6773d06085687d_00077",
+   "book_id": "69e012c74e6773d06085687d",
+   "page_number": 77,
+   "lang": "Coptic",
+   "track": "coptic-5778",
+   "canonical": true,
+   "style": "literal",
+   "private": false,
+   "control": "duplicate",
+   "reference_fit": {
+    "j1": "exact",
+    "j2": "narrower"
+   },
+   "arms": {
+    "served": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "detailing David's distress over betrayal by an acquaintance"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "v.18 'from those who are against me' — source 'ⲛⲉⲧϩⲛ ⲉⲣⲟⲓ' (those who draw near to me)"
+        },
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "v.9 'Confuse, O Lord' — source 'ⲟⲙⲥⲟⲩ ⲡϫⲟⲉⲓⲥ' (sink/drown them); reference 'Destroy'"
+        }
+       ],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": false,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "detailing David's distress over betrayal by an acquaintance"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "v9: 'Confuse, O Lord' for ⲟⲙⲥⲟⲩ ⲡϫⲟⲉⲓⲥ (sink/drown them), reference 'Destroy, O Lord'"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "v18: 'from those who are against me' for ⲛⲉⲧϩⲛ ⲉⲣⲟⲓ, reference 'them that draw nigh to me'"
+        }
+       ],
+       "tier": 0
+      }
+     }
+    }
+   },
+   "reasons": {
+    "j1": "[served] and [served#dup] are identical text: all of vv.4-21 present in order, both diapsalmas kept; slips at v.9 'Confuse' for 'ⲟⲙⲥⲟⲩ' and v.18 'against me' for 'ⲛⲉⲧϩⲛ ⲉⲣⲟⲓ'; v.20 'he has defiled' follows the OCR's 'ⲁϥⲥⲱϣ' (reference has plural), not counted. Reference verse numbers run one ahead of the Coptic. I read Sahidic moderately.",
+    "j2": "[served] and [served#dup] are identical text: one tie. Both track the page's vv. 4-21 closely (Coptic numbering runs one behind the reference; the page's v21 falls in the reference's trailing [context] line); only term-level slips at v9 ⲟⲙⲥⲟⲩ and v18 ⲛⲉⲧϩⲛ ⲉⲣⲟⲓ. 'he has defiled' in v20 follows the source OCR ⲁϥⲥⲱϣ. Coptic read with moderate competence."
+   }
+  },
+  {
+   "id": "69920b7de0a548a13d883364_00192",
+   "book_id": "69920b7de0a548a13d883364",
+   "page_number": 192,
+   "lang": "Coptic",
+   "track": "coptic-5778",
+   "canonical": true,
+   "style": "literal",
+   "private": false,
+   "control": null,
+   "reference_fit": {
+    "j1": "narrower",
+    "j2": "narrower"
+   },
+   "arms": {
+    "served": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": true,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "It maintains the scholarly focus of Horner's edition"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Ammonian Sections (46) and Eusebian Canons (1)"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Letters like א (Sinaiticus) or B (Vaticanus)"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "implying a heart undivided in its devotion to God"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T4",
+         "severity": "minor",
+         "detail": "apparatus sigla shifted onto the following reading: 'Manuscripts $D_{1, 2, 3, 4}$ and $\\Delta$: **\"they disfigure\"** ... construct state. Manuscript B' — source 'ⲉϣⲁⲩⲧⲱⲕⲉⲙ ⲛ̅ⲡⲟⲩ, plur., ⲇ₁.₂.₃.₄ Δ: ⲉϣⲁⲩⲧⲟⲕⲉⲙ ⲛⲟⲩ, construct state, ⲃ'"
+        },
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "last entry merges two variants and drops the first sigla list: '\"of your Father\" in B, $E_2$ (corrected), $\\Phi_2$, G' — source 'ⲉⲡⲉⲕⲓⲱⲧ, ⲃⲉ₂ᶜ ⲫ₂: ⲙ̅ⲡⲉⲕⲓⲱⲧ, ⲅⲇ₁.₂ Δ'"
+        },
+        {
+         "class": "T10",
+         "severity": "minor",
+         "detail": "'Letters like א (Sinaiticus) or B (Vaticanus)' — in this apparatus Greek witnesses are marked 'cf. Gr.'; unmarked 'ⲃ' is a Coptic manuscript siglum"
+        }
+       ],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": true,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "This numeral \"12\" marks a traditional section or lesson division within the Coptic Gospel text."
+        },
+        {
+         "kind": "added_fact",
+         "quote": "refer to the Ammonian Sections (46) and Eusebian Canons (1)"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "implying a heart undivided in its devotion to God"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T4",
+         "severity": "minor",
+         "detail": "apparatus witnesses shifted: '\"to your Father\" in $I_3$, L, O, Hunt 18' — source gives 'ⲓ₃ ⲗ ⲟ Hunt 18' for the lemma ⲡⲉⲕⲓⲱⲧ, and 'ⲉⲡⲉⲕⲓⲱⲧ, ⲃⲉ₂ᶜ ⲫ₂'"
+        },
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "sigla 'ⲛⲁⲥⲅⲏⲑᶜ' before ⲓ₃ ⲗ ⲟ dropped; 'they have received their reward' drops ⲁⲩⲕⲏⲛ (already)"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'Manuscript B: \"disfigure.\"' — source 'construct state, ⲃ. ⲧⲁⲕⲉ ⲡⲟⲩϩⲟ] ⲧⲁⲕⲉ ⲛ̅ⲡⲟⲩϩⲟ': B closes the previous variant, ⲧⲁⲕⲉ ⲡⲟⲩϩⲟ is the next lemma"
+        }
+       ],
+       "tier": 0
+      }
+     }
+    }
+   },
+   "reasons": {
+    "j1": "Gospel text 6:16b–23 matches the source throughout (ⲑⲱϩⲥ ⲛ̅ⲧⲉⲕⲁⲫⲉ, ⲧϩⲟⲗⲓ ⲛⲉⲙ ⲧⲭⲟⲗⲓ, ⲟⲩϩⲁⲡⲗⲟⲩⲥ, ⲉϥⲟⲓ ⲛ̅ⲭⲁⲕⲓ) with numerals converted correctly; the faults are in the apparatus, where sigla are attached to the wrong readings, the ⲉⲡⲉⲕⲓⲱⲧ / ⲙ̅ⲡⲉⲕⲓⲱⲧ variants are merged, and a note misidentifies the sigla. Reference main cut is vv17–22 while the page runs from v16b to v23. I read Bohairic moderately and the source OCR of the apparatus is itself partly garbled.",
+    "j2": "Gospel text (Mt 6:16b-23a) matches source and reference throughout, incl. ⲑⲱϩⲥ/ⲓⲁ ⲡⲉⲕϩⲟ, ϩⲟⲗⲓ/ⲭⲟⲗⲓ, ϩⲁⲡⲗⲟⲩⲥ; marginal numerals κβ, μϛ/α, μζ/ε read correctly; slips are confined to the apparatus (lemma mis-segmented at ⲧⲁⲕⲉ ⲡⲟⲩϩⲟ, witnesses of ⲡⲉⲕⲓⲱⲧ variants reassigned, some sigla dropped). Reference covers 17-22 as main lines, page runs 16b-23a plus apparatus. I read Bohairic moderately; apparatus sigla in the source are themselves OCR-garbled."
+   }
+  },
+  {
+   "id": "69920b7de0a548a13d883364_00498",
+   "book_id": "69920b7de0a548a13d883364",
+   "page_number": 498,
+   "lang": "Coptic",
+   "track": "coptic-5778",
+   "canonical": true,
+   "style": "literal",
+   "private": false,
+   "control": null,
+   "reference_fit": {
+    "j1": "wider",
+    "j2": "wider"
+   },
+   "arms": {
+    "served": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": true,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "referring to Jesus' name"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Huntington MS 18"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Herod Antipas"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "likely a scribal error in the gender of the pronoun"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "apparatus v14: '+ⲟⲩⲟϩ, B' and '(om. A)' after ⲛϫⲉ are absent from '**by the king Herod**] spelled \"Herotes\" in manuscript A'"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'**revealed**] \"becoming revealed\" in manuscripts G, θ, K, and M' — source 'ⲟⲩⲟⲛϩϥ] ⲟⲩⲱⲛϩ' is a form variant, not a change of sense"
+        }
+       ],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": true,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "referring to Jesus' name"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Huntington MS 18"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "likely a scribal error in the gender of the pronoun"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "King Herod hears of Jesus' miracles and fearfully concludes"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "apparatus v.14: source '+ⲟⲩⲟϩ, B' and '(om. A)' after ⲛϫⲉ absent; 'Greek manuscripts 13, 69, 131, 346' drops 'M' and 'cf.?'"
+        },
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'For Herod himself had seized John' — source 'ⲏⲣⲱⲇⲏⲥ ⲅⲁⲣ ⲛⲉⲁϥⲁⲙⲟⲛⲓ ⲛⲓⲱⲁⲛⲛⲏⲥ' has no 'himself' (Greek/reference wording)"
+        }
+       ],
+       "tier": 0
+      }
+     }
+    }
+   },
+   "reasons": {
+    "j1": "Gospel text vv14–20 agrees with the source throughout (ⲡⲉϥⲣⲁⲛ ⲅⲁⲣ ⲁϥⲟⲩⲟⲛϩϥ ⲉⲃⲟⲗ, ⲛⲁⲥⲙ̅ⲃⲟⲛ ⲉⲣⲟϥ, ⲛⲁϥⲁⲣⲉϩ ⲉⲣⲟϥ, break at 'ⲟⲩⲟϩ ⲛⲁϥ-' kept) and the section numerals are converted correctly (ⲣⲝⲉ = 165); only the apparatus loses '+ⲟⲩⲟϩ, B' and '(om. A)' and over-reads one spelling variant. Reference runs past the page end in v20. I read Bohairic moderately, not fluently.",
+    "j2": "Mk 6:14-20a rendered faithfully against the Coptic: 'ⲡⲉϥⲣⲁⲛ ⲅⲁⲣ ⲁϥⲟⲩⲟⲛϩϥ ⲉⲃⲟⲗ', 'ⲛ̅ⲛⲓⲡⲣⲟⲫⲏⲧⲏⲥ ⲛⲁⲣⲭⲉⲟⲥ' (ancient prophets, where the Greek-based reference differs), 'ⲥϣⲉ ⲛⲁⲕ ⲁⲛ', and the page-end break 'ⲟⲩⲟϩ ⲛⲁϥ-' kept as 'and he was—' without filling from the next page; section numerals IE/νζ/νη/νθ/ξ/ρξε correct. Only small apparatus drops (+ⲟⲩⲟϩ B; om. A) and an imported 'himself'. Reference ends v.20 complete, page stops mid-verse. Moderate Bohairic reading ability."
+   }
+  },
+  {
+   "id": "69af55d3ec9e6c278212dcf1_00115",
+   "book_id": "69af55d3ec9e6c278212dcf1",
+   "page_number": 115,
+   "lang": "Coptic",
+   "track": "coptic-5778",
+   "canonical": true,
+   "style": "literal",
+   "private": false,
+   "control": null,
+   "reference_fit": {
+    "j1": "narrower",
+    "j2": "narrower"
+   },
+   "arms": {
+    "served": {
+     "fidelity": 4,
+     "by_judge": {
+      "j1": {
+       "fidelity": 4,
+       "omission": true,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "after the people made a golden calf"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Mount Sinai"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "mistranslation",
+         "severity": "minor",
+         "detail": "'the way that I commanded them' — source 'ⲧⲉϩⲓⲏ ⲉⲛⲧ ⲁⲕϩⲱⲛ ⲙ̄ⲙⲟⲥ ⲉ ⲧⲟⲟⲧⲟⲩ' is 2nd person (you commanded); candidate follows the Greek-based reference"
+        },
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "footnotes 1 'ἡμέρᾳ ἐκκλησίας' and 4 'χώνευμα' and the cross-reference in note 5 ('compare ⲣⲟⲭ for ⲣⲟⲕϩ̄, Chap. VII, v. 25') are absent"
+        },
+        {
+         "class": "number",
+         "severity": "minor",
+         "detail": "'more numerous than these' — source 'ⲉ ϩⲟⲩⲉ ⲡⲁⲓ̈' is singular (than this)"
+        }
+       ],
+       "tier": 0
+      },
+      "j2": {
+       "fidelity": 4,
+       "omission": true,
+       "invention": [
+        {
+         "kind": "added_fact",
+         "quote": "after the people made a golden calf"
+        },
+        {
+         "kind": "added_fact",
+         "quote": "Mount Sinai"
+        }
+       ],
+       "reversal": null,
+       "span": "same",
+       "defects": [
+        {
+         "class": "T9",
+         "severity": "minor",
+         "detail": "editor's footnotes 1, 4 and 5 absent ('ἡμέρᾳ ἐκκλησίας', 'χώνευμα', 'compare ⲣⲟⲭ for ⲣⲟⲕϩ̄, Chap. VII, v. 25'); 2-3 kept only as inline notes"
+        },
+        {
+         "class": "terminology",
+         "severity": "minor",
+         "detail": "'a molten image' for 'ⲟⲩⲛⲟⲩⲧⲉ ⲛ̄ ⲟⲩⲱⲧⲥ̄' (a molten god); 'more numerous than these' drops ⲉⲙⲁⲧⲉ and makes ⲡⲁⲓ̈ plural"
+        }
+       ],
+       "tier": 0
+      }
+     }
+    }
+   },
+   "reasons": {
+    "j1": "Verses 9b–14 match the source clause by clause (ⲁϥⲁⲛⲟⲙⲉⲓ, ⲁⲩⲡⲁⲣⲁⲃⲁ ⲛ̄ⲧⲉⲩⲛⲟⲩ, ⲛⲁϣⲧ ⲙⲁⲕϩ all rendered correctly); slips are 'I commanded' for ⲁⲕϩⲱⲛ (you commanded), plural 'these' for ⲡⲁⲓ̈, and two of the five Greek footnotes dropped. Reference main cut starts at v10 while the page starts inside v9. I read Sahidic moderately, not fluently.",
+    "j2": "Deut 9:9b-14 follows the Sahidic closely: 'ⲉⲛⲧⲁ ⲡϫⲟⲉⲓⲥ ⲥⲙⲛⲧⲟⲩ ⲛⲙ̄ⲙⲏⲧⲛ̄', 'ⲉⲩⲥⲏϩ ⲙ̄ ⲡⲧⲏⲏⲃⲉ ⲙ̄ ⲡⲛⲟⲩⲧⲉ', 'ϩⲛ̄ ⲟⲩϭⲉⲡⲏ', 'ⲛ̄ ⲟⲩⲥⲟⲡ ⲁⲩⲱ ⲛ̄ⲥⲛⲁⲩ', 'ⲕⲁⲁⲧ ⲛ̄ⲧⲁⲧⲁⲕⲟⲟⲩ' all rendered with the same sense as source and reference; no reversal. Losses are the editor's Greek footnotes and 'molten image' where the Coptic says 'god' (reference wording). Reference main lines start at v.10 while the page opens in v.9b (covered only by the [context] line). Summary's 'golden calf'/'Sinai' are not on the page (text has Horeb context, calf comes in v.16). Moderate Sahidic reading ability."
+   }
+  }
+ ]
+}
