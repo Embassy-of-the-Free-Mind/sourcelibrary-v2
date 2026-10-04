@@ -64,6 +64,38 @@ function cleanForNote(text) {
 // footnote labelled as marginal instead.
 const MARGIN_NOTE_MAX_CHARS = 220;
 
+// A gloss longer than this is a quotation, not a term: it stays a footnote
+// rather than interrupt the sentence
+const ORIGINAL_TERM_MAX_WORDS = 5;
+
+/**
+ * A third of a translation's notes are `original: "ardorem," meaning heat…` —
+ * the source word behind an English rendering, sometimes with a gloss. Split
+ * into the term (set inline, see #orig) and the explanation (still a note).
+ * Null when the note is not of that shape or the term is a whole quotation.
+ */
+export function splitOriginalTerm(content) {
+  const m = String(content).match(/^\s*original(?:\s+(?:latin|greek|hebrew|german|french|italian|text|word|term))?\s*:\s*([\s\S]+)$/i);
+  if (!m) return null;
+  let s = m[1].trim();
+  let term, rest;
+  const quoted = s.match(/^["“'‘]([^"”'’]+)["”'’]\s*([\s\S]*)$/);
+  if (quoted) {
+    term = quoted[1];
+    rest = quoted[2];
+  } else {
+    // Unquoted: the term runs to the first sentence break or dash
+    const cut = s.match(/^([^.;:—–(]+?)(?:\s*[.;:—–]\s+|\s*(?=\())([\s\S]*)$/);
+    term = cut ? cut[1] : s;
+    rest = cut ? cut[2] : '';
+  }
+  term = term.replace(/[\s,.;:]+$/, '').trim();
+  rest = rest.replace(/^[\s,.;:—–-]+/, '').trim();
+  if (!term || term.split(/\s+/).length > ORIGINAL_TERM_MAX_WORDS) return null;
+  if (rest) rest = rest[0].toUpperCase() + rest.slice(1);
+  return { term, rest };
+}
+
 /**
  * The source's printed running head, when the model transcribed it as the
  * page's first line instead of tagging it: "**Cap. V. On the globe of the
@@ -210,7 +242,13 @@ export function translationToTypst(text, { runningHeads = new Set(), anchor = ()
   // Notes become placeholders now and Typst calls after escaping
   const inserts = [];
   const hold = typst => { inserts.push(typst); return `%%IN${inserts.length - 1}%%`; };
-  const footnote = content => hold(`#footnote[${escapeTypst(content)}];`);
+  const footnote = content => {
+    // "original: «term»" names the word the translation renders: set it in the
+    // line, after that word, and keep only any explanation as a note
+    const orig = splitOriginalTerm(content);
+    if (orig) return hold(`#orig[${escapeTypst(orig.term)}]${orig.rest ? `#footnote[${escapeTypst(orig.rest)}]` : ''};`);
+    return hold(`#footnote[${escapeTypst(content)}];`);
+  };
   const marginal = content => {
     const clean = cleanForNote(content);
     if (!clean || clean.length < 3) return '';
@@ -321,6 +359,8 @@ export function translationToTypst(text, { runningHeads = new Set(), anchor = ()
   for (let pass = 0; pass < 3 && /%%IN\d+%%/.test(body); pass++) {
     body = body.replace(/%%IN(\d+)%%/g, (_, i) => inserts[Number(i)]);
   }
+  // An inline source term reads as a word: exactly one space before it
+  body = body.replace(/[ \t]*#orig\[/g, ' #orig[');
 
   return { body: body.trim(), printedPage };
 }
@@ -507,40 +547,60 @@ const TYPST_PREAMBLE = `
 #let dline(level, body) = block(above: if level <= 2 { 1.6em } else { 1.2em }, below: 0.9em, width: 100%, sticky: true, {
   set align(center)
   set par(justify: false, first-line-indent: 0pt, leading: 0.55em)
-  if level == 1 { text(size: 13pt, tracking: 0.02em, body) }
+  // The source's chapter heads, letter-spaced as the printed book sets them
+  if level == 1 { text(size: 11.5pt, tracking: 0.16em, upper(body)) }
   else if level == 2 { text(size: 11.5pt, style: "italic", body) }
   else { text(size: 10.5pt, style: "italic", body) }
 })
 
+// The source's own word for what the translation just said, after it in the line
+#let orig(body) = text(size: 0.86em, fill: muted, style: "italic", hyphenate: false)[(#body)]
+
 // The book's own illustrations, cropped from the page images. The image keeps
 // the hairline frame of a tipped-in plate; the caption names the source page,
 // which links to the facsimile like the margin numbers do.
-#show figure.where(kind: "plate"): it => block(above: 1.4em, below: 1.4em, width: 100%, {
+// A plate's caption carries its title AND the translation of every word on
+// it; the list of illustrations shows the title alone
+#let in-outline = state("in-outline", false)
+#show outline: it => { in-outline.update(true); it; in-outline.update(false) }
+#let plate-caption-w = state("plate-caption-w", 100mm)
+#show figure.where(kind: "plate"): it => block(above: 1.6em, below: 1.6em, width: 100%, breakable: false, {
   set align(center)
   it.body
-  v(0.5em)
-  set par(justify: false, first-line-indent: 0pt, leading: 0.45em)
-  text(size: 8.5pt, fill: muted, number-type: "lining", [#smallcaps[Fig. #it.counter.display()]#h(0.6em)#it.caption.body])
+  v(0.7em)
+  context block(width: plate-caption-w.get(), {
+    set par(justify: false, first-line-indent: 0pt, leading: 0.5em, spacing: 0.55em)
+    set text(size: 8.8pt, number-type: "lining", hyphenate: false)
+    it.caption.body
+  })
 })
-#let plate(file, width, n, label-text, inscriptions: ()) = figure(
-  kind: "plate",
-  supplement: [Fig.],
-  placement: auto,
-  caption: [#label-text, source page #link(page-url + n)[#n]],
-  {
-    box(stroke: 0.4pt + hairline, inset: 1.2mm, image(file, width: width))
-    // Text engraved on the plate, as translated: under the image, not in the list of illustrations
-    if inscriptions.len() > 0 {
-      v(0.6em)
-      block(width: width, {
-        set align(left)
-        set par(justify: false, first-line-indent: 0pt, leading: 0.45em, spacing: 0.5em)
-        set text(size: 8.5pt, style: "italic")
-        for t in inscriptions { par(t) }
-      })
+#let plate(file, width, n, title: none, kind: [Illustration], labels: (), lines: (), key: ()) = {
+  plate-caption-w.update(calc.max(width, 100mm))
+  let head = [#text(fill: rust, tracking: 0.04em, smallcaps[Fig. #context counter(figure.where(kind: "plate")).display()])#h(0.6em)#if title != none [#emph(title)] else [#kind]]
+  let src-link = text(fill: muted, size: 7.8pt)[source page #link(page-url + n)[#n]]
+  let full = {
+    align(center)[#head#h(0.8em)#src-link]
+    // Labels: the English, with the word as engraved after it
+    if labels.len() > 0 {
+      align(center, labels.map(((o, e)) => box[#e #text(fill: muted, style: "italic")[(#o)]]).join([#h(0.5em)·#h(0.5em)]))
     }
-  },
-)
+    // Mottoes and sentences engraved on the plate, one to a line
+    for (o, e) in lines {
+      align(left, par(hanging-indent: 1em)[#e#if o != none [ #text(fill: muted, style: "italic", size: 0.92em)[(#o)]]])
+    }
+    // The page's own key to the letters on the plate
+    if key.len() > 0 {
+      align(left, par(hanging-indent: 1em, key.map(((m, e)) => [#text(fill: rust)[#m]#h(0.35em)#e]).join([#h(0.4em)·#h(0.4em)])))
+    }
+  }
+  figure(
+    kind: "plate",
+    supplement: [Fig.],
+    placement: auto,
+    caption: context if in-outline.get() { if title != none { title } else [#kind, source page #n] } else { full },
+    box(stroke: 0.4pt + hairline, inset: 1.2mm, image(file, width: width)),
+  )
+}
 
 // Lists the source sets in short lines (indexes, plant names): two columns
 #let listcols(body) = block(width: 100%, above: 1em, below: 1em, {
@@ -623,6 +683,17 @@ const CATALOGUE_PARENTHETICAL = new RegExp(
  * and existing hyphens made non-breaking so a name like `Ghāyat al-Ḥakīm`
  * cannot be split across two lines of a cover.
  */
+/**
+ * The running head's title: the work's own name, before a volume or part
+ * designation ("Utriusque Cosmi Historia - Tomus Primus (De Macrocosmi)" →
+ * "Utriusque Cosmi Historia"), so it is never cut off mid-word with an ellipsis.
+ */
+export function runningTitle(title) {
+  const t = String(title || '').trim();
+  const head = t.split(/\s+[-–—:]\s+|\s*\(/)[0].trim();
+  return shorten(head.length >= 8 ? head : t, 52);
+}
+
 export function displayTitle(title, { author = '' } = {}) {
   let t = String(title ?? '').trim();
   // A trailing imprint tail — ", Augsburg 1518", ", London, 1653"
@@ -698,7 +769,7 @@ export function generateTypstSource(book, pages, options = {}) {
 )
 #let page-url = ${typstString(`${bookUrl}/page-number/`)}
 ${TYPST_PREAMBLE}
-#running-title.update(${typstString(shorten(mainTitle, 52))})
+#running-title.update(${typstString(runningTitle(mainTitle))})
 
 #set page(
   paper: "a4",
@@ -727,7 +798,8 @@ ${TYPST_PREAMBLE}
     // 940-page book take five minutes to compile instead of thirty seconds
     let n = current-src.get()
     if n != none {
-      align(center)[Source Library #h(0.6em)·#h(0.6em) #link(page-url + n)[${escapeTypst(urlDisplay(`sourcelibrary.org/book/${bookSlug}/page-number/`))}#n]]
+      // The link carries the full address; the line shows only what a reader needs
+      align(center)[Source Library #h(0.6em)·#h(0.6em) #link(page-url + n)[facsimile of source page #n #sym.arrow.tr]]
     } else {
       align(center)[Source Library #h(0.6em)·#h(0.6em) ${escapeTypst(footerId)}]
     }
@@ -941,7 +1013,7 @@ This AI-assisted translation has *not* been reviewed by human editors or transla
 
 The translation follows the source page by page. A number in the margin marks where each page of the digitized copy begins; it is the number to cite, and it is a link: it opens that page's facsimile at sourcelibrary.org/book/${escapeTypst(bookSlug)}/page-number/_n_, where the translation can be checked against the original. Where the source prints a page number of its own, it follows in grey.
 
-${includeOriginal ? `The ${escapeTypst(language)} text the translation was made from is printed at the back; under each margin number a small link leads to the same page on the other side. ` : ''}Notes printed in the margins of the original are set in the margin here. Footnotes are not the author's: they are explanatory notes supplied in the course of translation, and carry the same caution as the translation itself. Words in square brackets are supplied by the translation; [?] marks a reading the transcription was unsure of.
+${includeOriginal ? `The ${escapeTypst(language)} text the translation was made from is printed at the back; under each margin number a small link leads to the same page on the other side. ` : ''}Notes printed in the margins of the original are set in the margin here. Footnotes are not the author's: they are explanatory notes supplied in the course of translation, and carry the same caution as the translation itself. A word in grey italics, in parentheses, is the source's own term for what the translation has just said. Words in square brackets are supplied by the translation; [?] marks a reading the transcription was unsure of.
 
 This work is licensed under Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0).
 `);
@@ -1001,7 +1073,7 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
   // are set as one paragraph. The translation marks its halves with an
   // ellipsis; the transcription simply stops without a full stop.
   const textOf = body => stripLeadingApparatus(
-    body.replace(/^(?:%%SRC:[^%]*%%|\s)+/, '').replace(/#(?:footnote|mnote)\[[^\]]*\];?/g, ''),
+    body.replace(/^(?:%%SRC:[^%]*%%|\s)+/, '').replace(/#(?:footnote|mnote|orig)\[[^\]]*\](?:#footnote\[[^\]]*\])?;?/g, ''),
   );
   const endsMidSentence = body => {
     // An unclear-reading marker at the very end ("[?money]") is a word, not punctuation
@@ -1049,6 +1121,7 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
     pendingPlates.push(...pagePlates);
     if (!english.has(page.page_number)) { pendingHeads.push(...heads); continue; }
     let body = english.get(page.page_number);
+    body = attachOrphanNotes(body);
     if (pagePlates.length) {
       const taken = takeInscriptions(body);
       // A page that was ALL inscription keeps its anchor and loses only the notes
@@ -1424,8 +1497,40 @@ function plateTypst(il) {
   const aspect = il.height / il.width;
   const widthMm = Math.min(PLATE_MAX_W_MM, PLATE_MAX_H_MM / aspect);
   const kind = PLATE_KINDS[il.type] || 'Illustration';
-  const insc = il.inscriptions?.length ? `, inscriptions: (${il.inscriptions.map(t => `[${t}]`).join(', ')},)` : '';
-  return `#plate(${typstString(il.file)}, ${widthMm.toFixed(1)}mm, "${il.page_number}", [${kind}]${insc})`;
+  const c = plateCaption(il.caption);
+  const pairs = list => `(${list.map(([a, b]) => `([${escapeTypst(a)}], [${escapeTypst(b)}])`).join(', ')},)`;
+  const parts = [`kind: [${kind}]`];
+  if (c?.title) parts.push(`title: [${escapeTypst(c.title)}]`);
+  if (c?.labels.length) parts.push(`labels: ${pairs(c.labels)}`);
+  // Glosses the translation set as notes on this page are the same words; the
+  // caption pass read them from the plate itself, so they are used only without it
+  const lines = c?.lines.length ? c.lines : (il.inscriptions || []).map(t => [null, t]);
+  if (lines.length) parts.push(`lines: (${lines.map(([o, e]) => `(${o ? `[${escapeTypst(o)}]` : 'none'}, [${o ? escapeTypst(e) : e}])`).join(', ')},)`);
+  if (c?.key.length) parts.push(`key: ${pairs(c.key)}`);
+  return `#plate(${typstString(il.file)}, ${widthMm.toFixed(1)}mm, "${il.page_number}", ${parts.join(', ')})`;
+}
+
+const isBareMark = s => /^[\p{L}\p{N}]{1,2}[.,]?$/u.test(String(s).trim());
+
+/**
+ * A caption-pass figure (scripts/qa/plate-captions.mjs) → what the plate
+ * prints: a title, short labels run together, longer inscriptions one to a
+ * line, and the page's letter key. Bare letters and numbers are reference
+ * marks, not words, and repeats (a label printed on both sides) print once.
+ */
+export function plateCaption(fig) {
+  if (!fig) return null;
+  const seen = new Set();
+  const labels = [], lines = [];
+  for (const { original, english } of fig.inscriptions || []) {
+    const o = String(original || '').trim(), e = String(english || '').trim();
+    if (!o || !e || isBareMark(o) || seen.has(o.toLowerCase())) continue;
+    seen.add(o.toLowerCase());
+    (o.split(/\s+/).length <= 3 && e.split(/\s+/).length <= 5 ? labels : lines).push([o, e]);
+  }
+  const key = (fig.key || []).filter(k => k.mark && k.english).map(k => [String(k.mark).trim(), String(k.english).trim().replace(/\.$/, '')]);
+  const title = String(fig.title || '').trim().replace(/\.$/, '') || null;
+  return { title, labels, lines, key };
 }
 
 /** The content of each `#footnote[…];` at the start of `s`, bracket-balanced, and where they end. */
@@ -1456,6 +1561,23 @@ function leadingFootnotes(s) {
  * ("Gloss:", "Inscription:"…; the label itself is dropped). A note nested
  * inside one (a gloss on the gloss) is kept in parentheses.
  */
+/**
+ * A paragraph that is nothing but footnotes prints as a bare superscript on a
+ * line of its own; its notes go to the end of the paragraph before, where the
+ * marker reads as belonging to that text. A labelled gloss is left in place
+ * for takeInscriptions, and the page's first paragraph has nothing before it.
+ */
+export function attachOrphanNotes(body) {
+  const paras = body.split(/\n{2,}/);
+  const out = [];
+  for (const para of paras) {
+    const notes = leadingFootnotes(para.trim());
+    if (notes && out.length && !notes.some(n => INSCRIPTION_LABEL.test(n))) out[out.length - 1] = out[out.length - 1].trimEnd() + para.trim();
+    else out.push(para);
+  }
+  return out.join('\n\n');
+}
+
 const INSCRIPTION_LABEL = /^\s*(?:gloss|inscription|label|motto|legend)\s*:\s*/i;
 
 export function takeInscriptions(body) {
@@ -1484,7 +1606,7 @@ export function takeInscriptions(body) {
  * Like the frontispiece, every failure is soft (a missing plate is left out,
  * never substituted), and a crop URL must carry the book's own id (#3362).
  */
-export async function fetchIllustrations(db, book, { concurrency = 6 } = {}) {
+export async function fetchIllustrations(db, book, { concurrency = 6, captions = null } = {}) {
   const docs = await db.collection('gallery_images')
     .find({ book_id: book.id, gallery_quality: { $gte: 0.7 }, type: { $nin: ['decorative'] } },
       { projection: { page_number: 1, detection_index: 1, type: 1, extracted_url: 1 } })
@@ -1492,20 +1614,53 @@ export async function fetchIllustrations(db, book, { concurrency = 6 } = {}) {
     .toArray();
   const coverPage = Number(book.cover_page_number || book.cover_page) || null;
   const wanted = docs.filter(d => d.extracted_url && d.extracted_url.includes(String(book.id)) && d.page_number !== coverPage);
+
+  // A page the caption pass has read is cut again from the full scan with its
+  // tighter box, one plate per figure it found; the rest use the gallery crop
+  const jobs = [];
+  const captioned = new Set();
+  for (const d of wanted) {
+    const cap = captions?.[d.page_number];
+    if (cap?.figures?.length && cap.scan_url?.includes(String(book.id))) {
+      if (captioned.has(d.page_number)) continue;
+      captioned.add(d.page_number);
+      cap.figures.forEach(fig => jobs.push({ page_number: d.page_number, type: d.type, url: cap.scan_url, box: fig.box_2d, caption: fig }));
+    } else {
+      jobs.push({ page_number: d.page_number, type: d.type, url: d.extracted_url });
+    }
+  }
+
   const { default: sharp } = await import('sharp');
-  const out = new Array(wanted.length).fill(null);
+  const scans = new Map(); // one fetch per page, however many figures it holds
+  const getImage = url => {
+    if (!scans.has(url)) {
+      scans.set(url, fetch(url, { signal: AbortSignal.timeout(30000), headers: { 'User-Agent': 'SourceLibrary-scholarly-pdf/1.0 (+https://sourcelibrary.org)' } })
+        .then(res => (res.ok ? res.arrayBuffer() : null)).then(b => (b ? Buffer.from(b) : null)));
+    }
+    return scans.get(url);
+  };
+  const out = new Array(jobs.length).fill(null);
   let next = 0;
   await Promise.all(Array.from({ length: concurrency }, async () => {
-    while (next < wanted.length) {
+    while (next < jobs.length) {
       const i = next++;
-      const d = wanted[i];
+      const j = jobs[i];
       try {
-        const res = await fetch(d.extracted_url, { signal: AbortSignal.timeout(30000), headers: { 'User-Agent': 'SourceLibrary-scholarly-pdf/1.0 (+https://sourcelibrary.org)' } });
-        if (!res.ok) continue;
-        const raw = Buffer.from(await res.arrayBuffer());
-        const { data, info } = await sharp(raw).rotate().resize(1600, 1600, { fit: 'inside', withoutEnlargement: true })
-          .jpeg({ quality: 82 }).toBuffer({ resolveWithObject: true });
-        out[i] = { page_number: d.page_number, type: d.type, buffer: data, width: info.width, height: info.height };
+        const raw = await getImage(j.url);
+        if (!raw) continue;
+        let img = sharp(raw).rotate();
+        if (j.box) {
+          // box_2d is [ymin, xmin, ymax, xmax] on 0–1000 of the whole page
+          const { width: W, height: H } = await sharp(raw).rotate().metadata();
+          const [y0, x0, y1, x1] = j.box.map(Number);
+          const left = Math.max(0, Math.floor((x0 / 1000) * W)), top = Math.max(0, Math.floor((y0 / 1000) * H));
+          const w = Math.min(W - left, Math.ceil(((x1 - x0) / 1000) * W)), h = Math.min(H - top, Math.ceil(((y1 - y0) / 1000) * H));
+          if (!(w > 20 && h > 20)) continue;
+          img = sharp(await img.extract({ left, top, width: w, height: h }).toBuffer());
+        }
+        const { data, info } = await img.resize(1800, 1800, { fit: 'inside', withoutEnlargement: true })
+          .jpeg({ quality: 84 }).toBuffer({ resolveWithObject: true });
+        out[i] = { page_number: j.page_number, type: j.type, caption: j.caption || null, buffer: data, width: info.width, height: info.height };
       } catch { /* soft: the plate is left out */ }
     }
   }));
@@ -1533,7 +1688,7 @@ export async function generateScholarlyPdf(book, pages, options = {}) {
   rest.illustrations = (options.illustrations || []).map((il, i) => {
     const file = `plate-${i + 1}.jpg`;
     writeFileSync(join(tmpDir, file), il.buffer);
-    return { page_number: il.page_number, type: il.type, width: il.width, height: il.height, file };
+    return { page_number: il.page_number, type: il.type, caption: il.caption, width: il.width, height: il.height, file };
   });
 
   writeFileSync(typFile, generateTypstSource(book, pages, rest), 'utf-8');

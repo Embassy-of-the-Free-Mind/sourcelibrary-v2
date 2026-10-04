@@ -12,7 +12,8 @@
  *   node scripts/qa/render-scholarly-pdf.mjs <bookId> [--pages 120-180] [--refresh] [--keep-typ] [--no-plates] [--out path.pdf] [--dedication text | --dedication-file path]
  *
  * Illustrations (gallery_images crops) are fetched fresh on every run — they
- * need MONGODB_URI even when the book is cached; --no-plates skips them.
+ * need MONGODB_URI even when the book is cached; --no-plates skips them. Run
+ * scripts/qa/plate-captions.mjs first for tight crops and translated captions.
  *
  * The book + pages are cached under scripts/output/scholarly-cache/ after the
  * first fetch, so design iteration needs no database (pass --refresh to
@@ -83,8 +84,11 @@ const options = {
 };
 if (!flag('no-plates')) {
   const client = new MongoClient(process.env.MONGODB_URI);
-  try { options.illustrations = await fetchIllustrations(client.db('bookstore'), book); } finally { await client.close(); }
-  console.log(`${options.illustrations.length} illustrations`);
+  // Caption-pass output (scripts/qa/plate-captions.mjs), when it has been run for this book
+  const capFile = join('scripts', 'output', 'plate-captions', `${book.id}.json`);
+  const captions = existsSync(capFile) ? JSON.parse(readFileSync(capFile, 'utf-8')).pages : null;
+  try { options.illustrations = await fetchIllustrations(client.db('bookstore'), book, { captions }); } finally { await client.close(); }
+  console.log(`${options.illustrations.length} illustrations${captions ? `, ${Object.keys(captions).length} captioned pages` : ''}`);
 }
 if (!options.frontispiece) console.warn('no frontispiece: cover image missing, unreachable, or not keyed to this book');
 
