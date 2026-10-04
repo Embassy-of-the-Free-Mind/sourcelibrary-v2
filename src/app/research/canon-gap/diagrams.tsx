@@ -545,3 +545,93 @@ export function ImprovementChart({ rows, n }: { rows: Improvement[]; n: number }
     </Figure>
   );
 }
+
+/* ---------- How a translation is checked: the loop behind the improvement chart ---------- */
+
+function LoopStation({ k, title, what, example }: { k: number; title: string; what: string; example: ReactNode }) {
+  return (
+    <div className="rounded-sm bg-amber-50 border border-amber-300 px-3 py-3 font-body min-w-0">
+      <div className="flex items-baseline gap-2">
+        <span className="font-serif text-lg text-amber-800 tabular-nums leading-none">{k}</span>
+        <span className="text-sm font-semibold text-stone-900 leading-tight">{title}</span>
+      </div>
+      <div className="text-sm text-stone-700 mt-1.5 leading-snug">{what}</div>
+      <div className="text-xs text-stone-500 mt-2 pt-2 border-t border-amber-200 leading-snug">{example}</div>
+    </div>
+  );
+}
+
+export function QualityLoop({ n, adopted, tested, issueUrl }: { n: number; adopted: number; tested: number; issueUrl: string }) {
+  const stations = [
+    {
+      title: 'Compare with an outside text',
+      what: 'Set our English beside a published human translation of the same passage, and our reading beside a typed edition.',
+      example: '84000, SuttaCentral, GRETIL, Ganjoor, the Derge e-text',
+    },
+    {
+      title: 'Judge blind',
+      what: 'Two AI judges score fidelity from 1 to 5 without knowing which version is ours.',
+      example: 'A defect counts only when both judges flag it.',
+    },
+    {
+      title: 'Open the page',
+      what: 'Trace every low score on the page image: was the page misread, or mistranslated?',
+      example: '6 of the 20 worst Sanskrit, Pali and Chinese pages were misread, not mistranslated.',
+    },
+    {
+      title: 'Change one thing, retest',
+      what: 'Run the new method and the old one side by side on the same pages, with the same reference.',
+      example: 'Tengyur, one page at a time: English on the wrong page fell from 13.3 to 0.9 per 100.',
+    },
+  ];
+  return (
+    <Figure
+      n={n}
+      title="How we check the English"
+      caption={
+        <>
+          The same four steps run for each language and script, and again after every change. A change becomes the
+          default only when it beats the old method on the same pages; Figure {n + 1} shows each result. AI judges find
+          errors quickly and cheaply, but they are not scholars: a scholar&rsquo;s reading is the test the machine
+          checks are calibrated against, and the first one, on the Tengyur draft, is planned.{' '}
+          <a href={`${issueUrl}5800`} className="text-amber-800 underline underline-offset-2">#5800</a>
+        </>
+      }
+    >
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] gap-1 md:gap-2">
+        {stations.flatMap((s, i) => {
+          const card = <LoopStation key={s.title} k={i + 1} {...s} />;
+          return i === 0 ? [card] : [<Arrow key={`ar${i}`} />, card];
+        })}
+      </div>
+      <div aria-hidden className="hidden md:block mx-[12%] h-5 border-x border-b border-stone-300 rounded-b-md" />
+      <div className="font-body text-xs text-stone-500 text-center mt-1 md:mt-1.5">
+        <span aria-hidden>↺ </span>repeat with the next change
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-6">
+        <div className="rounded-sm border border-teal-700/40 bg-teal-50 px-3 py-3 font-body text-sm">
+          <div className="font-semibold text-teal-900">Better: it becomes the default</div>
+          <div className="text-stone-700 mt-1 leading-snug">
+            {adopted} of the {tested} changes in Figure {n + 1} passed and are in use.
+          </div>
+        </div>
+        <div className="rounded-sm border border-stone-300 bg-stone-50 px-3 py-3 font-body text-sm">
+          <div className="font-semibold text-stone-900">Not good enough: we hold back or withdraw</div>
+          <div className="text-stone-700 mt-1 leading-snug">
+            Persian manuscripts are not translated until a reading matches 90% of a typed text. English for the
+            Bhutanese Kangyur manuscripts was taken down when a reading model was found writing text that is not on
+            the page.
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-3 rounded-sm bg-stone-800 text-white px-3 py-3 font-body text-sm leading-snug">
+        <span className="font-semibold">On every page, for the reader:</span>{' '}
+        <span className="text-stone-300">
+          the scan, the reading and the English side by side, so any sentence can be checked against the original.
+        </span>
+      </div>
+    </Figure>
+  );
+}

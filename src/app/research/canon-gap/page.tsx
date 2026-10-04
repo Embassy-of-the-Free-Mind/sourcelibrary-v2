@@ -6,7 +6,7 @@ import gapStatus from '../../../../scripts/catalog-coverage/results/canon-gap-st
 import folio from '../../../../scripts/catalog-coverage/results/canon-gap-folio-2026-10.json';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
 import FolioPipeline, { type CritiqueGate, type FolioSnapshot } from './FolioPipeline';
-import { CanonBars, RoutesDiagram, StatusBoard, STATUS_STYLE, TengyurProgress, TraditionProgress, ImprovementChart, short, type CanonBar, type Improvement, type TraditionProgressRow } from './diagrams';
+import { CanonBars, RoutesDiagram, StatusBoard, STATUS_STYLE, TengyurProgress, TraditionProgress, ImprovementChart, QualityLoop, short, type CanonBar, type Improvement, type TraditionProgressRow } from './diagrams';
 
 // Built for the Eternity Foundation working session (#5513): read once, seated, as a
 // table with a short argument. Sizes, licences, English shares and draft costs come from
@@ -515,7 +515,8 @@ export default function CanonGapPage() {
             the cause of every low score. These are model-scored samples, not a scholar&rsquo;s review. The full
             write-up is on <a href="/research/quality" className="text-amber-800 underline underline-offset-2">our translation quality page</a>.
           </p>
-          <ImprovementChart n={6} rows={IMPROVEMENTS} />
+          <QualityLoop n={6} adopted={IMPROVEMENTS.filter((r) => r.inUse).length} tested={IMPROVEMENTS.length} issueUrl={ISSUE_URL} />
+          <ImprovementChart n={7} rows={IMPROVEMENTS} />
           <ul className="list-disc pl-5 space-y-3 text-base">
             <li>
               <strong>Sanskrit, Pali and classical Chinese.</strong> On 64 pages from 64 books, 58% of the English we
