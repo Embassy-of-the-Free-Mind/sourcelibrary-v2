@@ -6,7 +6,7 @@
 import { describe, it, expect } from 'vitest';
 import { execSync } from 'child_process';
 // @ts-expect-error — plain .mjs script library, no types
-import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus, resolveSourceImages } from '../../scripts/lib/scholarly-typst.mjs';
+import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus, resolveSourceImages, takeInscriptions } from '../../scripts/lib/scholarly-typst.mjs';
 
 const page = (n: number, data: string, ocr?: string) => ({ page_number: n, translation: { data }, ...(ocr ? { ocr: { data: ocr } } : {}) });
 
@@ -159,6 +159,49 @@ describe('generateTypstSource', () => {
   const hasTypst = (() => { try { execSync('typst --version', { stdio: 'pipe' }); return true; } catch { return false; } })();
   it.skipIf(!hasTypst)('compiles', async () => {
     const pdf = await generateScholarlyPdf(book, pages, { introduction: '## Context\n\nAn *intro* with https://example.org/x.' });
+    expect(pdf.subarray(0, 5).toString()).toBe('%PDF-');
+  }, 60000);
+});
+
+describe('plates', () => {
+  const book = { id: 'b3', slug: 'plates', title: 'T', author: 'A', language: 'Latin' };
+  const plate = (n: number) => ({ page_number: n, type: 'engraving', width: 800, height: 1200, file: `plate-${n}.jpg` });
+
+  it('sets a plate at its source page, sized to fit the page, and lists it', () => {
+    const src = generateTypstSource(book, [page(1, 'One.'), page(2, 'Two.')], { illustrations: [plate(2)] });
+    // 1200/800 × 125mm would overrun the page; the height cap sets the width
+    expect(src).toMatch(/#plate\("plate-2\.jpg", 116\.7mm, "2", \[Engraving\]\)\n#pagegap\n#src\("2"/);
+    expect(src).toContain('outline(title: none, target: figure.where(kind: "plate"))');
+  });
+
+  it('never sets a plate inside a sentence that runs across the page break', () => {
+    const src = generateTypstSource(book, [page(1, 'It is graver...'), page(2, '...in mourning. Next.'), page(3, 'Third.')], { illustrations: [plate(2)] });
+    expect(src).toMatch(/It is graver\.\.\.\n#src\("2"/);
+    expect(src).toMatch(/#plate\("plate-2\.jpg"[^\n]*\n#pagegap\n#src\("3"/);
+  });
+
+  it('leaves out a plate whose page is not in the body, and the list with it', () => {
+    const src = generateTypstSource(book, [page(1, 'One.')], { illustrations: [plate(9)] });
+    expect(src).not.toContain('#plate("');
+    expect(src).not.toContain('target: figure.where(kind: "plate")');
+  });
+
+  it('moves labelled text-on-the-image notes under the plate, and nothing else', () => {
+    const body = 'The demonstration is clear.\n\n#footnote[Gloss: That most divine object #footnote[The Trinity]; seen in the mirror.];\n\n#footnote[This diagram illustrates a fire engine.];';
+    const { body: rest, inscriptions } = takeInscriptions(body);
+    expect(inscriptions).toEqual(['That most divine object (The Trinity) seen in the mirror.']);
+    expect(rest).toContain('The demonstration is clear.');
+    // The model describing the picture is a note, not an inscription
+    expect(rest).toContain('#footnote[This diagram illustrates a fire engine.];');
+  });
+
+  const hasTypst = (() => { try { execSync('typst --version', { stdio: 'pipe' }); return true; } catch { return false; } })();
+  it.skipIf(!hasTypst)('compiles with a plate', async () => {
+    const sharp = (await import('sharp')).default;
+    const buffer = await sharp({ create: { width: 40, height: 60, channels: 3, background: '#888888' } }).jpeg().toBuffer();
+    const pdf = await generateScholarlyPdf(book, [page(1, 'Text.'), page(2, 'More.')], {
+      illustrations: [{ page_number: 1, type: 'diagram', width: 40, height: 60, buffer }],
+    });
     expect(pdf.subarray(0, 5).toString()).toBe('%PDF-');
   }, 60000);
 });
