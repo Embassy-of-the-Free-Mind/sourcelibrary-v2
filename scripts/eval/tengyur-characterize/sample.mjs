@@ -71,6 +71,11 @@ for (const p of picks) {
   const next = nb.find((x) => x.page_number === pg.page_number + 1)?.ocr?.data || '';
   const bo = pg.ocr?.data || '';
   const op = openingAt(await marks(p.book_id), pg.page_number);
+  // A text that runs on from an earlier volume: take the last opening in the volumes before.
+  for (let v = p.vol - 1; !op.current && v >= 1; v--) {
+    const pb = counts.find((x) => x.vol === v);
+    if (pb) op.current = (await marks(pb.book_id)).flatMap((r) => r.marks).pop() || null;
+  }
   const m = {
     g: p.g, vol: p.vol, section: p.section, book_id: p.book_id, page_id: pg.id, page_number: pg.page_number,
     folio: pg.ocr?.text_edition?.folio || null, text_toh: op.current, opens_text: op.opensHere, colophon: isColophon(bo),

@@ -60,7 +60,7 @@ export function renderEnglish(en) {
     .replace(/<(summary|keywords|meta)[^>]*>[\s\S]*?<\/\1>/g, '')
     .replace(/<term>([\s\S]*?)<\/term>/g, '($1)')
     .replace(/<note>([\s\S]*?)<\/note>/g, '[note: $1]')
-    .replace(/<\/?(gloss|unclear|page-type)[^>]*>/g, '')
+    .replace(/<\/?[a-z][a-z-]*(\s[^>]*)?>/g, '')
     .replace(/[“”]/g, '"').replace(/[‘’]/g, "'")
     .replace(/\n{3,}/g, '\n\n').trim();
 }
