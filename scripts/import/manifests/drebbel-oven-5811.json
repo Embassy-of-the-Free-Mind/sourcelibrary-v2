@@ -1,0 +1,63 @@
+{
+  "note": "#5811 (Drebbel's self-regulating oven), job drebbel-oven-5811, 2026-10-04. Printed witnesses from Keller, Nuncius 28 (2013). Every id was confirmed against the item's own _djvu.txt: the Drebbel/Kuffler passage is present and the volume was identified from its text, not from IA's title metadata. All are imported HELD and released into envelope drebbel-oven-5811 one at a time, in brief priority order. Not imported: Jaeger 1922 (not on IA; DBNL has no title page for it; no Delpher importer exists) and Sorbière's Paris 1664 edition (Gallica 429 from Hetzner; the 1666 Cologne printing is used instead).",
+  "campaign": "drebbel-oven-5811",
+  "collections": ["natural-philosophy"],
+  "BOOKS": [
+    {
+      "id": "bub_gb_3jrvzQ2QRn4C",
+      "title": "Journal des voyages de Monsieur de Monconys … Seconde partie (Voyage d'Angleterre, Païs-Bas, Allemagne & Italie)",
+      "author": "Monconys, Balthazar de",
+      "year": 1666,
+      "lang": "French",
+      "note": "#5811 priority 1. Lyon, Boissat & Remeus 1666, Part II (the text reads 'SECONDE PARTIE'). Visit to 'Docteur Keiffer gendre de M. Drebel' at Stratford-Bow (1663). Part III's index cites 'Four de Drebel qui cuit en 24 heures 2000 L. de pain, p.54' (Keller: p.54, Wren's reproduction of Drebbel's oven). Naples copy, Google scan. Part I is held as 6a44359d0235c9147000dd12."
+    },
+    {
+      "id": "diaryjohnevelyn01wheagoog",
+      "title": "The Diary of John Evelyn, Esq., F.R.S. (Bray/Wheatley ed., 1906), Vol. II",
+      "author": "Evelyn, John",
+      "year": 1906,
+      "lang": "English",
+      "note": "#5811 priority 2. London, Bickers & Son 1906: the same edition as the held vol. III + index, 6a08f61e50bd891addfba9dc, whose index reads 'Drebbell, chemist, ii. 198; Keffler, Dr., ii. 198'. Printed p.198 (Aug. 1st 1666): 'I went to Dr. Keffler, who married ye daughter of ye famous chymist Drebbell … to see his yron ovens'. IA's title metadata says 'Volume IV'; the text shows it is vol. II. University of Michigan copy, Google scan."
+    },
+    {
+      "id": "referenceindexp00offigoog",
+      "title": "Appendix to the Reference Index of Patents of Invention, from 1617 to 1852",
+      "author": "Woodcroft, Bennet",
+      "year": 1855,
+      "lang": "English",
+      "note": "#5811 priority 3. London 1855. Printed p.16: A.D. 1634 No. 75, Prusen and Strachy, 'Stoves or Furnaces for Drying and Heating' ('John and Jacob Drebble, and Abraham Kuffeler'). Oxford copy, Google scan."
+    },
+    {
+      "id": "bub_gb_e2EVAAAAQAAJ",
+      "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. I",
+      "author": "Birch, Thomas",
+      "year": 1756,
+      "lang": "English",
+      "note": "#5811 priority 4. London, A. Millar 1756, vol. I (years 1660–1664; the text reads 'VOL. I'). Goddard 'suggested Drebbel's method'."
+    },
+    {
+      "id": "bub_gb_lWEVAAAAQAAJ",
+      "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+      "author": "Birch, Thomas",
+      "year": 1756,
+      "lang": "English",
+      "note": "#5811 priority 4. London, A. Millar 1756, vol. II (years 1666–1672). 'Dr. Kuffler might be desired to give a perfect description of his new oven, both stationary and portable'; 'Dr. Keffler's brother'."
+    },
+    {
+      "id": "ldpd_6423433_000",
+      "title": "Relation d'un voyage en Angleterre, où sont touchées plusieurs choses qui regardent l'estat des sciences & de la religion & autres matieres curieuses",
+      "author": "Sorbière, Samuel",
+      "year": 1666,
+      "lang": "French",
+      "note": "#5811 priority 5. Cologne, Pierre Michel 1666 ([12], 192 p.), Columbia Seligman copy. A fallback for the Paris 1664 first edition (Gallica 429 from Hetzner). Has 'D'un fourneau de M. Kuffler, gendre de Drebbel'."
+    },
+    {
+      "id": "oudholland21docugoog",
+      "title": "Oud Holland, jaargang 22 (1904)",
+      "author": "Various",
+      "year": 1904,
+      "lang": "Dutch",
+      "note": "#5811 priority 7. The whole journal volume; Naber, 'Cornelis Jacobsz. Drebbel, 1572–1634' begins at printed p.195. The table of contents also lists 'Perpetuum Mobile van Cornelis Jacobsz. Drebbel, getoond aan Jacobus I ± 1604'. Google scan."
+    }
+  ]
+}
