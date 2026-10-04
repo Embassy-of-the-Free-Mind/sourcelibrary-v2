@@ -7,7 +7,7 @@
 # driver is alive, a heartbeat file in its progress dir. The EXIT trap terminates the pod and confirms it gone.
 set -u
 set -a; . /root/sourcelibrary/.env.production.local; set +a
-export LANE_DIR=/root/ocr-bakeoff-5660c/lane POD=r3 MINUTES=${MINUTES:-360}
+export LANE_DIR=/root/ocr-bakeoff-5660c/lane POD=${POD:-r3} MINUTES=${MINUTES:-360}
 S=$LANE_DIR/code/paddle-zh-runpod.sh
 log() { echo "$(date -u +%FT%TZ) $*"; }
 if [ -z "${RESUME:-}" ]; then
@@ -21,7 +21,7 @@ trap 'bash $S terminate; echo RUN-DONE' EXIT
 if [ -z "${RESUME:-}" ]; then
 bash $S push
 bash $S ssh "nproc; free -g | head -2; nvidia-smi --query-gpu=name,driver_version,memory.total --format=csv,noheader" < /dev/null | tee $LANE_DIR/pod-info.txt
-bash $S ssh "nohup bash /root/pz/code/cpu-arms.sh > /root/pz/cpu-arms.out 2>&1 < /dev/null & echo cpu-track-started" < /dev/null
+[ -n "${NOCPU:-}" ] || bash $S ssh "nohup bash /root/pz/code/cpu-arms.sh > /root/pz/cpu-arms.out 2>&1 < /dev/null & echo cpu-track-started" < /dev/null
 
 t0=$(date +%s)
 bash $S ssh 'curl -LsSf https://astral.sh/uv/install.sh | sh > /dev/null 2>&1; U=/root/.local/bin/uv; $U venv -p 3.12 /root/pz/vl > /dev/null 2>&1 && VIRTUAL_ENV=/root/pz/vl timeout 1800 $U pip install -U vllm mineru-vl-utils --torch-backend auto > /root/pz/vl-setup.log 2>&1; tail -n 2 /root/pz/vl-setup.log; /root/pz/vl/bin/python -c "import vllm,torch,transformers,mineru_vl_utils as m;print(\"vllm\",vllm.__version__,\"torch\",torch.__version__,\"transformers\",transformers.__version__,\"mineru-vl-utils\",getattr(m,\"__version__\",\"?\"),\"cuda\",torch.cuda.is_available())"' < /dev/null | tee $LANE_DIR/vl-versions.txt
@@ -31,7 +31,7 @@ fi
 serve() {  # serve <arm> <hf model> <extra vllm args...>: 0 if up within the budget
   local arm=$1 model=$2; shift 2
   bash $S ssh "pkill -f '[v]llm serve'; sleep 8; true" < /dev/null
-  bash $S ssh "cd /root/pz && (VLLM_USE_FLASHINFER_SAMPLER=0 nohup /root/pz/vl/bin/vllm serve $model --served-model-name m --max-model-len 32768 --gpu-memory-utilization 0.85 --limit-mm-per-prompt '{\"image\":1}' --port 8200 $* > srv-$arm.log 2>&1 < /dev/null &); echo serving $arm" < /dev/null
+  bash $S ssh "cd /root/pz && (VLLM_USE_FLASHINFER_SAMPLER=0 nohup /root/pz/vl/bin/vllm serve $model --served-model-name m --max-model-len ${MAXLEN:-32768} --gpu-memory-utilization 0.85 --limit-mm-per-prompt '{\"image\":1}' --port 8200 $* > srv-$arm.log 2>&1 < /dev/null &); echo serving $arm" < /dev/null
   local t1=$(date +%s)
   until bash $S ssh "curl -sf http://127.0.0.1:8200/v1/models >/dev/null" < /dev/null; do
     if [ $(( $(date +%s) - t1 )) -gt ${SERVE_BUDGET:-1500} ] || bash $S ssh "! pgrep -f '[v]llm serve' >/dev/null" < /dev/null; then
@@ -74,7 +74,7 @@ bash $S ssh "pkill -f '[v]llm serve'; /root/pz/vl/bin/pip freeze 2>/dev/null | g
 
 log "GPU-ARMS-DONE; waiting for the CPU track"
 t2=$(date +%s)
-until bash $S ssh "grep -q CPU-END /root/pz/cpu/cpu.log" < /dev/null; do
+until [ -n "${NOCPU:-}" ] || bash $S ssh "grep -q CPU-END /root/pz/cpu/cpu.log" < /dev/null; do
   [ $(( $(date +%s) - t2 )) -gt 5400 ] && { log "CPU track not done after 90 min more — pulling what exists"; break; }
   bash $S ssh "tail -n1 /root/pz/cpu/cpu.log; ls /root/pz/cpu/alto | wc -l" < /dev/null | tr '\n' ' '; echo; sleep 60; done
 bash $S ssh "cat /root/pz/cpu/cpu.log" < /dev/null > $LANE_DIR/cpu.log
