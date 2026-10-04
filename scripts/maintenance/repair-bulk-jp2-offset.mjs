@@ -58,6 +58,10 @@ const BOOKS = args.reduce((a, x, i) => (x === '--book' ? [...a, args[i + 1]] : a
 // Page fetches per book, against archive.org. Kept modest deliberately: this
 // sweep pulls a quarter-million full-res images and a 429 storm helps nobody.
 const CONCURRENCY = Math.max(1, parseInt(flag('concurrency', '6'), 10));
+// Interior pages the dHash gate samples (#5803). Three is enough on most books, but
+// on near-identical layouts (an Italian octavo of uniform text blocks) dHash abstains
+// on most picks and a real shift gets 1 vote of 3. More samples, same gate.
+const SAMPLES = Math.max(3, parseInt(flag('samples', '3'), 10));
 
 const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary.org';
 const s3 = new S3Client({
@@ -127,6 +131,7 @@ async function verifyRepair(db, bookId, { settleMs = 20_000 } = {}) {
     sourceUrlFor: p => thumbnail(p.photo_original || p.photo),
     isUsableSource: p => IA_LEAF_RE.test(String(p.photo_original || p.photo)),
     candidates: fresh.filter(p => p.archive_metadata?.source === 'bulk_jp2'),
+    samples: SAMPLES,
   });
 }
 
@@ -153,6 +158,7 @@ async function repairBook(db, bookId) {
     hashUrl, sourceUrlFor: p => thumbnail(p.photo_original || p.photo),
     isUsableSource: p => IA_LEAF_RE.test(String(p.photo_original || p.photo)),
     candidates: bulk,
+    samples: SAMPLES,
   });
   console.log(`  pre-check: ${before.verdict} (${before.detail})`);
   // Gate on VOTES, not the verdict. The verdict wants unanimity, so one flaky
