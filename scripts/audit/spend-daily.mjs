@@ -46,7 +46,7 @@
  * job only composes and posts: the last 7 daily checks and ledgers, every envelope with its spend, its
  * week of paid and pages summed from the stored daily rows (never a 7-day scan of `pages`, which
  * exceeds Mongo's time limit), and its owning issue, every running machine with its price, and the vendor bills
- * that can be read ($0 APIs: BigQuery Gemini export, Vercel FOCUS charges; Atlas and Cloudflare have
+ * that can be read ($0 APIs: BigQuery Gemini export, Vercel FOCUS charges, Scaleway consumption; Atlas and Cloudflare have
  * no token on this box, so they are reported as not readable).
  *
  * Usage:
@@ -393,13 +393,14 @@ async function readPods() {
   } catch (e) { return { pods: null, error: `RunPod API: ${e.message}` }; }
 }
 
-/** --week: every Scaleway instance, with list price (€). */
-async function readScaleway() {
+/** --week: every Scaleway instance with its list price (€), and the Scaleway bill. */
+export async function readScaleway() {
   const key = clean(process.env.SCALEWAY_SECRET_KEY);
   if (!key) return { error: 'SCALEWAY_SECRET_KEY not set' };
   const zones = (process.env.SCALEWAY_ZONES || 'fr-par-1,fr-par-2,fr-par-3,nl-ams-1,nl-ams-2,nl-ams-3,pl-waw-1,pl-waw-2,pl-waw-3').split(',');
   const get = async (u) => { const r = await fetch(`https://api.scaleway.com${u}`, { headers: { 'X-Auth-Token': key }, signal: AbortSignal.timeout(30_000) }); if (!r.ok) throw new Error(`${u} → ${r.status}`); return r.json(); };
   const servers = [];
+  let org = clean(process.env.SCALEWAY_ORGANIZATION_ID) || null;
   try {
     for (const z of zones) {
       const list = (await get(`/instance/v1/zones/${z}/servers?per_page=100`)).servers || [];
@@ -407,11 +408,28 @@ async function readScaleway() {
       const prices = (await get(`/instance/v1/zones/${z}/products/servers?per_page=100`)).servers || {};
       for (const s of list) {
         const p = prices[s.commercial_type];
+        org ||= s.organization;
         servers.push({ provider: 'scaleway', name: s.name, type: s.commercial_type, zone: z, state: s.state, tags: s.tags || [],
           eur_month: s.state === 'running' && p ? r2(p.monthly_price ?? p.hourly_price * 730) : 0 });
       }
     }
-    return { servers };
+    // The bill (consumption by product, € excl. VAT), this month so far and last month. Monthly
+    // granularity is all the API gives; read with the same key as the instance list.
+    const bill = {};
+    if (org) {
+      const now = new Date();
+      for (const back of [0, 1]) {
+        const d = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - back, 1));
+        const period = d.toISOString().slice(0, 7);
+        try {
+          const rows = (await get(`/billing/v2beta1/consumptions?billing_period=${period}&organization_id=${org}&page_size=100`)).consumptions || [];
+          const by = {};
+          for (const c of rows) by[`${c.product_name} (${c.category_name})`] = (by[`${c.product_name} (${c.category_name})`] || 0) + Number(c.value?.units || 0) + (c.value?.nanos || 0) / 1e9;
+          bill[period] = { total_eur: r2(Object.values(by).reduce((a, v) => a + v, 0)), top: Object.entries(by).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([k, v]) => ({ k, eur: r2(v) })) };
+        } catch (e) { bill[period] = { error: e.message }; }
+      }
+    }
+    return { servers, bill: org ? bill : 'not readable (no organization id)' };
   } catch (e) { return { error: e.message, servers }; }
 }
 

@@ -22,7 +22,7 @@ nothing measurable. Then at most 5 numbered cuts, costliest first.
 
 ## Steps (one tool call each where possible)
 
-1. Facts. This takes about 5 min and can outrun one foreground call, so detach it and then wait
+1. Facts. This takes 10–15 min, longer than one foreground call, so detach it and then wait
    in the foreground (two calls):
    ```
    # from your job worktree (the current directory; it is a fresh origin/main)
@@ -54,7 +54,7 @@ cannot see it. Vendors marked not readable are named as such, never counted as $
 
 ## The comment, exactly this shape
 ```
-**Week <window>: paid ≈ $<total> (Gemini billed $<g>, Vercel $<v>, machines ≈ $<m>; Atlas, Cloudflare, Hetzner not readable) — $<w> (<p>%) bought nothing measurable.** Unmetered Gemini: $<u>.
+**Week <window>: paid ≈ $<total> (Gemini billed $<g>, Vercel $<v>, Scaleway €<s> this month so far; Atlas, Cloudflare, Hetzner not readable) — $<w> (<p>%) bought nothing measurable.** Unmetered Gemini: $<u>.
 
 Daily checks: <PASS n · WARN n · FAIL n · UNKNOWN n> — <the one recurring reason, if any>.
 
