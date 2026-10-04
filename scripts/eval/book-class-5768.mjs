@@ -28,6 +28,7 @@ import { getPageSource } from '../lib/page-image-url.mjs';
 import { sheetFor } from './lib/contact-sheet.mjs';
 import { priceFor, BATCH_MULTIPLIER } from '../lib/model-pricing.mjs';
 import { createThenDeleteInput } from '../lib/gemini-batch-input-file.mjs';
+import { recordSweepActions } from '../lib/sweep-log.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 export const OUT_DIR = path.join(ROOT, 'scripts/eval/output/book-class-5768');
@@ -557,10 +558,98 @@ async function collectPaid() {
   console.log(`spent $${spentOf(L).toFixed(4)} of $${L.cap_usd}; pending ${L.jobs.filter((j) => !j.collected_at).length}`);
 }
 
+// ── decide: one class per book, with its evidence (#5768) ─────────────────────────────────────
+// Precedence, strongest evidence first:
+//   1. 欽定四庫全書 on a sampled page's OCR → handwritten (see siku()).
+//   2. Strong OCR tags (tierOf === 'strong').
+//   3. The paid contact sheet (every book whose free labels are thinner, and every unlabelled book
+//      CLIP was unsure of or could not see, or that is CJK).
+//   4. A confident CLIP vote (unlabelled books only).
+// A book none of these decide gets no class: absent, not guessed.
+// Script family: the OCR text's own letters where it has ≥ 80, else the sheet's answer, else the
+// edition language, else CLIP (62% recall on Greek — last for that reason).
+export const CLASSES_FILE = path.join(OUT_DIR, 'classes.jsonl');
+export const CLASS_VERSION = 'book-class-5768-v1';
+function decide() {
+  const labels = readJsonl(LABELS_FILE);
+  const clip = new Map(readJsonl(CLIP_FILE).map((r) => [r.book_id, r]));
+  const paid = new Map(readJsonl(PAID_FILE).filter((r) => r.class).map((r) => [r.book_id, r]));
+  const sikuHits = fs.existsSync(SIKU_FILE) ? JSON.parse(fs.readFileSync(SIKU_FILE, 'utf8')) : {};
+  const out = fs.createWriteStream(CLASSES_FILE);
+  const T = {}; const inc = (k) => (T[k] = (T[k] || 0) + 1);
+  for (const r of labels) {
+    const tier = tierOf(r);
+    const tagged = r.pages.filter((p) => p.tag || p.script_type).map((p) => ({ page_id: p.page_id, answer: p.tag || p.script_type }));
+    const ocrModels = [...new Set(r.pages.filter((p) => p.tag || p.script_type).map((p) => p.ocr_model).filter(Boolean))];
+    const c = clip.get(r.book_id), s = paid.get(r.book_id);
+    let cls = null, source = null, pages = [], model = null;
+    if (sikuHits[r.book_id]) { cls = 'handwritten'; source = 'siku-header'; pages = sikuHits[r.book_id].map((id) => ({ page_id: id, answer: 'handwritten (欽定四庫全書 header in OCR)' })); }
+    else if (tier === 'strong') { cls = r.tag_class; source = 'ocr-script-tags'; pages = tagged; model = ocrModels.join(',') || null; }
+    else if (s) { cls = s.class; source = 'contact-sheet'; pages = s.pages.map((id) => ({ page_id: id, answer: `${s.class} (sheet of ${s.pages.length})` })); model = s.model; }
+    else if (c && !c.low_confidence) { cls = c.class; source = 'clip-knn'; pages = c.pages.map((p) => ({ page_id: p.page_id, answer: p.answer, vote: p.vote })); model = `clip-vit-base-patch32 knn-${K}`; }
+    let family = null, familySource = null;
+    if (r.family_ocr && r.family_ocr.letters >= 80) { family = r.family_ocr.family; familySource = 'ocr-text-letters'; }
+    else if (s?.script_family) { family = s.script_family; familySource = 'contact-sheet'; }
+    else if (r.family_lang) { family = r.family_lang; familySource = 'books.language'; }
+    else if (c?.family) { family = c.family; familySource = 'clip-knn'; }
+    inc(`class ${cls}`); inc(`source ${source}`); inc(`family ${family}`);
+    // disagreement bookkeeping, for the report
+    const free = r.tag_class || r.census?.script || null;
+    if (s && free) inc(`sheet-vs-free ${tier}: ${free === s.class ? 'agree' : `free=${free} sheet=${s.class}`}`);
+    if (s && c && !c.low_confidence) inc(`sheet-vs-clip: ${c.class === s.class ? 'agree' : `clip=${c.class} sheet=${s.class}`}`);
+    if (r.meta && cls) inc(`meta(handwritten) vs class: ${cls}`);
+    out.write(JSON.stringify({
+      book_id: r.book_id, language: r.language, visible: r.visible, hold: r.hold, title: r.title,
+      page_class: cls ? { class: cls, script_family: family, evidence: { source, pages, family_source: familySource, ...(r.family_ocr?.secondary ? { secondary_family: r.family_ocr.secondary } : {}), ...(r.meta ? { metadata: r.meta.why } : {}) }, model, version: CLASS_VERSION } : null,
+    }) + '\n');
+  }
+  out.end();
+  for (const k of Object.keys(T).sort()) console.log(k, T[k]);
+}
+
+/** Write `books.page_class` + one sweep_log row per book. Dry-run unless --apply. Touches nothing else. */
+async function write() {
+  const rows = readJsonl(CLASSES_FILE).filter((r) => r.page_class);
+  const apply = flag('apply');
+  console.log(`${rows.length} books with a class; ${apply ? 'WRITING' : 'dry run (pass --apply)'}`);
+  if (!apply) return;
+  const client = new MongoClient(process.env.MONGODB_URI); await client.connect();
+  const db = client.db('bookstore');
+  const at = new Date();
+  let matched = 0, modified = 0;
+  for (let i = 0; i < rows.length; i += 500) {
+    const chunk = rows.slice(i, i + 500);
+    const res = await db.collection('books').bulkWrite(chunk.map((r) => ({ updateOne: { filter: { id: r.book_id }, update: { $set: { page_class: { ...r.page_class, at } } } } })), { ordered: false });
+    matched += res.matchedCount; modified += res.modifiedCount;
+    await recordSweepActions(db, chunk.map((r) => ({ sweep: CLASS_VERSION, book_id: r.book_id, action: 'set page_class', detail: { class: r.page_class.class, script_family: r.page_class.script_family, source: r.page_class.evidence.source } })));
+    if (i % 10000 === 0) console.log(`${i + chunk.length}/${rows.length}`);
+  }
+  await client.close();
+  console.log(`matched ${matched}, modified ${modified}`);
+}
+
+/** Viewing sheets (9 spread pages, 420 px) for a by-eye check: --byeye-sheets=<json of [{book_id, pages_count}]>. */
+async function byeyeSheets() {
+  const picks = JSON.parse(fs.readFileSync(opt('byeye-sheets'), 'utf8'));
+  const dir = opt('out', '/tmp/byeye');
+  fs.mkdirSync(dir, { recursive: true });
+  const client = new MongoClient(process.env.MONGODB_URI); await client.connect();
+  const db = client.db('bookstore');
+  for (const b of picks) {
+    const file = path.join(dir, `${b.book_id}.jpg`); if (fs.existsSync(file)) continue;
+    const ps = (await db.collection('pages').find({ book_id: b.book_id, page_number: { $in: spreadPages(b.pages_count, 9) } }).toArray()).sort((x, y) => x.page_number - y.page_number);
+    fs.writeFileSync(file, await sheetFor(ps, { perSheet: 9, cellPx: 420, urlOf: sheetUrl }));
+  }
+  await client.close();
+}
+
 if (import.meta.url === `file://${process.argv[1]}`) {
   if (flag('evaluate')) evaluate();
   if (flag('apply')) apply();
   if (flag('siku')) await siku();
+  if (flag('decide')) decide();
+  if (flag('write')) await write();
+  if (opt('byeye-sheets')) await byeyeSheets();
   if (flag('submit')) await submitPaid();
   if (flag('collect')) await collectPaid();
   if (flag('labels')) await labels();

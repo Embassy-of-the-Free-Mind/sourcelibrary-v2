@@ -110,6 +110,13 @@ export const BOOK_FIELDS = Object.freeze([
   // sync-worker and stampNextStep() in scripts/lib/pipeline-next-step.mjs, one
   // rule. OBSERVE ONLY until each lane's cutover (#5469 step 5). Registered in
   // books-known-fields.json for the $set lint.
+  // NOT here either: `page_class` — { class: printed|handwritten|mixed, script_family,
+  // evidence: { source, pages: [{ page_id, answer }], family_source }, model, version, at },
+  // what the book's writing IS: set in type/blocks, written by hand (including a
+  // facsimile of handwriting), or both in substance (#5768). Derived from page images
+  // and the OCR's own tags by scripts/eval/book-class-5768.mjs, never imported; read by
+  // OCR routing (#5737) and the translate-side OCR trust gate (#5700). Registered in
+  // books-known-fields.json for the $set lint.
   // pages carrying a Spanish edition (translations.es / legacy translation_es);
   // synced by scripts/maintenance/sync-pages-translated-es.mjs, read by /es
   'pages_translated_es',
