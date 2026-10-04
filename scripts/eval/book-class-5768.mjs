@@ -25,6 +25,9 @@ import { MongoClient } from 'mongodb';
 import { extractScriptType } from '../lib/ocr-result-parse.mjs';
 import { routeBook, editionYear } from '../lib/syriac-kraken-lane.mjs';
 import { getPageSource } from '../lib/page-image-url.mjs';
+import { sheetFor } from './lib/contact-sheet.mjs';
+import { priceFor, BATCH_MULTIPLIER } from '../lib/model-pricing.mjs';
+import { createThenDeleteInput } from '../lib/gemini-batch-input-file.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 export const OUT_DIR = path.join(ROOT, 'scripts/eval/output/book-class-5768');
@@ -216,6 +219,17 @@ export const EMB_FILE = path.join(OUT_DIR, 'page-clip.jsonl');
 const TRAIN_FILE = path.join(OUT_DIR, 'train-pages.json');
 const TARGET_FILE = path.join(OUT_DIR, 'target-pages.json');
 const freeClass = (r) => r.tag_class || r.census?.script || null;
+/**
+ * How much the free labels can be trusted. `strong`: ≥ 3 tagged pages and one answer on ≥ 75% of
+ * them. Anything less is a claim to check — on the 24-book by-eye dev set (2026-10-04) single-page
+ * tags and census-only answers were wrong on 6 of 13, and "mixed" from ≤ 2 pages on 3 of 4.
+ */
+export function tierOf(r) {
+  const c = r.tag_counts || {};
+  const n = (c.printed || 0) + (c.handwritten || 0) + (c.mixed || 0);
+  if (n >= 3) return Math.max(c.printed || 0, c.handwritten || 0, c.mixed || 0) / n >= 0.75 ? 'strong' : 'split';
+  return n ? 'weak' : r.census?.script ? 'census' : 'none';
+}
 const tagN = (r) => Object.values(r.tag_counts || {}).reduce((a, b) => a + b, 0);
 const textish = (p) => !p.page_type || TEXTISH.has(p.page_type);
 
@@ -373,9 +387,182 @@ function apply() {
   console.log(`classified ${n} books`, tally);
 }
 
+// ── 四庫全書 hand copies (#5768) ──────────────────────────────────────────────────────────────
+// The CADAL volumes of the Siku Quanshu are the Wenyuange HAND COPY (or a photo-reprint of it):
+// regular kaishu that the OCR tag and the descriptor both often call "printed" (by-eye dev set,
+// 2026-10-04: 3 of 3 such volumes claimed printed were hand-copied). The collection was never
+// typeset or cut in blocks, so its own header — 欽定四庫全書 on a sampled page's OCR — decides.
+export const SIKU_FILE = path.join(OUT_DIR, 'siku.json');
+async function siku() {
+  const rows = readJsonl(LABELS_FILE).filter((r) => (r.family_ocr?.family || r.family_lang) === 'cjk' && r.pages.some((p) => p.has_ocr));
+  const client = new MongoClient(process.env.MONGODB_URI); await client.connect();
+  const db = client.db('bookstore');
+  const hits = {};
+  for (let i = 0; i < rows.length; i += 40) {
+    const batch = rows.slice(i, i + 40);
+    const ps = await db.collection('pages').find({ $or: batch.map((r) => ({ book_id: r.book_id, page_number: { $in: r.pages.map((p) => p.n) } })), 'ocr.data': /四庫全書/ }, { projection: { _id: 0, id: 1, book_id: 1 } }).toArray();
+    for (const p of ps) (hits[p.book_id] ||= []).push(p.id);
+    if (i % 2000 === 0) console.log(`${i}/${rows.length} siku books so far ${Object.keys(hits).length}`);
+  }
+  await client.close();
+  fs.writeFileSync(SIKU_FILE, JSON.stringify(hits));
+  console.log(`CJK books checked ${rows.length}; 欽定四庫全書 on a sampled page: ${Object.keys(hits).length}`);
+}
+
+// ── paid fallback: one contact sheet per uncertain book, Batch flash-lite (#5768 step 3) ─────────
+// 16 pages spread across the book, 384 px cells (the #5009 grid builder), one enum answer per
+// sheet, thinking off. Metered per job as `gemini_usage` rows under ENDPOINT, and stopped by a
+// hard cap read from this run's own ledger before every submit. NOT a processing_control envelope:
+// an `allow_scopes` entry's book_ids is also the selective-unpause allowlist (getScopeConfig
+// ignores `lanes`), so listing these books there would let a paused pipeline OCR them.
+const PAID_MODEL = 'gemini-3.1-flash-lite';
+const ENDPOINT = 'eval/book-class-5768';
+const PAID_FILE = path.join(OUT_DIR, 'paid.jsonl');
+const LEDGER = path.join(OUT_DIR, 'paid-jobs.summary.json');
+const PER_SHEET = 16, CELL_PX = 384;
+export const FAMILIES = ['latin', 'greek', 'cyrillic', 'coptic', 'armenian', 'georgian', 'hebrew', 'arabic', 'syriac', 'ethiopic', 'indic', 'tibetan', 'mongolian', 'cjk', 'southeast-asian', 'cuneiform', 'egyptian', 'other'];
+// v2 (after the by-eye dev set): a facsimile of handwriting is handwritten (the class is about the
+// writing a reader and an OCR engine meet, not the printing of the reproduction), and a printed book
+// annotated by hand on most pages is mixed, while occasional notes or one handwritten flyleaf are not.
+const PAID_PROMPT_VERSION = 'book-class-5768-v2';
+const PAID_PROMPT = `This is a contact sheet: ${PER_SHEET} pages spread across ONE book, numbered left-to-right, top-to-bottom.
+
+Answer two questions about the BOOK as a whole.
+
+1. "class": how was the writing on these pages produced?
+   - "printed": set in type, cut in woodblocks, or engraved. Occasional handwritten notes, a signature, or one handwritten flyleaf do not change this.
+   - "handwritten": written by hand — a manuscript, codex, scroll, letter, notebook or hand-copied book, INCLUDING a photographic or lithographic facsimile of handwriting.
+   - "mixed": substantial printed AND substantial handwritten text — e.g. printed pages annotated by hand on most pages, printed and manuscript leaves bound together, or printed forms filled in by hand throughout.
+2. "script_family": the writing system of the main text.
+
+Ignore blank pages, bindings, colour charts and library stamps.`;
+const PAID_SCHEMA = { type: 'OBJECT', properties: { class: { type: 'STRING', enum: CLASSES_ALL() }, script_family: { type: 'STRING', enum: FAMILIES } }, required: ['class', 'script_family'] };
+function CLASSES_ALL() { return ['printed', 'handwritten', 'mixed']; }
+const API = 'https://generativelanguage.googleapis.com';
+const isR2 = (u) => typeof u === 'string' && u.startsWith('https://images.sourcelibrary.org/');
+const sheetUrl = (p) => [p.display_photo, p.cropped_photo].find(isR2) || getPageSource(p) || p.thumbnail_blob || p.image_thumb || null;
+
+function ledger() { return fs.existsSync(LEDGER) ? JSON.parse(fs.readFileSync(LEDGER, 'utf8')) : { cap_usd: 10, jobs: [] }; }
+const spentOf = (L) => L.jobs.reduce((s, j) => s + (j.cost_usd ?? j.estimate_usd ?? 0), 0);
+
+/** Books that go to the paid step: CLIP low-confidence, CJK (CLIP is near chance there), and books CLIP could not see. */
+export function paidCandidates() {
+  const labels = readJsonl(LABELS_FILE);
+  const clip = new Map(readJsonl(CLIP_FILE).map((r) => [r.book_id, r]));
+  const sikuHits = fs.existsSync(SIKU_FILE) ? JSON.parse(fs.readFileSync(SIKU_FILE, 'utf8')) : {};
+  const done = new Set(readJsonl(PAID_FILE).filter((r) => r.class).map((r) => r.book_id));
+  for (const j of ledger().jobs) if (!j.collected_at) for (const id of j.book_ids || []) done.add(id);
+  const out = [];
+  for (const r of labels) {
+    if (done.has(r.book_id) || sikuHits[r.book_id] || tierOf(r) === 'strong') continue;
+    const tier = tierOf(r);
+    const fam = r.family_ocr?.family || r.family_lang || null;
+    if (tier !== 'none') { out.push({ book_id: r.book_id, pages_count: r.pages_count, family: fam, why: `free label ${tier}` }); continue; }
+    const c = clip.get(r.book_id);
+    const cjk = (fam || c?.family) === 'cjk';
+    if (!c || c.low_confidence || cjk) out.push({ book_id: r.book_id, pages_count: r.pages_count, family: fam, why: cjk ? 'cjk' : !c ? 'no clip vector' : 'clip low confidence' });
+  }
+  return out;
+}
+
+async function submitPaid() {
+  const L = ledger();
+  const limit = Number(opt('limit', 50));
+  const cands = paidCandidates();
+  // --only=cjk: CJK books always go to the paid step (CLIP is near chance there), so they can be
+  // priced before the CLIP pass has finished deciding which other books are uncertain.
+  // --only=free: books whose free labels are too thin to trust; they need no CLIP answer first.
+  const only = opt('only');
+  const pool = only === 'cjk' ? cands.filter((c) => c.why === 'cjk' || (c.why === 'no clip vector' && c.family === 'cjk'))
+    : only === 'free' ? cands.filter((c) => c.why.startsWith('free label') || c.why === 'cjk') : cands;
+  const pick = pool.slice(0, limit);
+  console.log(`paid candidates ${cands.length}; this job ${pick.length}; spent so far $${spentOf(L).toFixed(4)} of $${L.cap_usd}`);
+  if (!pick.length) return;
+  // Projection from what the collected jobs actually cost per sheet; a first job is capped at 50.
+  const collected = L.jobs.filter((j) => j.cost_usd != null && j.responses);
+  const perSheet = collected.length ? collected.reduce((s, j) => s + j.cost_usd, 0) / collected.reduce((s, j) => s + j.responses, 0) : null;
+  if (perSheet == null && pick.length > 50) throw new Error('price the first 50 before sending more (--limit=50)');
+  const est = perSheet == null ? 0.002 * pick.length : perSheet * pick.length * 1.2;
+  if (spentOf(L) + est > L.cap_usd) { console.error(`REFUSING: spent $${spentOf(L).toFixed(4)} + this job ~$${est.toFixed(4)} > cap $${L.cap_usd}`); process.exit(2); }
+  const client = new MongoClient(process.env.MONGODB_URI); await client.connect();
+  const db = client.db('bookstore');
+  const proj = { _id: 0, id: 1, book_id: 1, page_number: 1, display_photo: 1, cropped_photo: 1, split_from_spread: 1, photo: 1, archived_photo: 1, enhanced_photo: 1, photo_original: 1, thumbnail_blob: 1, image_thumb: 1 };
+  const chunkFile = path.join(OUT_DIR, `paid-input-${Date.now()}.jsonl`);
+  const w = fs.createWriteStream(chunkFile);
+  const sheetPages = {};
+  let built = 0;
+  const CONC = Number(opt('concurrency', 6)); let i = 0;
+  await Promise.all(Array.from({ length: CONC }, async () => {
+    while (i < pick.length) {
+      const b = pick[i++];
+      const want = spreadPages(b.pages_count, PER_SHEET);
+      const ps = (await db.collection('pages').find({ book_id: b.book_id, page_number: { $in: want } }, { projection: proj }).toArray()).sort((x, y) => x.page_number - y.page_number);
+      if (!ps.length) continue;
+      const jpeg = await sheetFor(ps, { perSheet: PER_SHEET, cellPx: CELL_PX, urlOf: sheetUrl });
+      sheetPages[b.book_id] = ps.map((p) => p.id);
+      w.write(JSON.stringify({ key: b.book_id, request: { contents: [{ parts: [{ inline_data: { mime_type: 'image/jpeg', data: jpeg.toString('base64') } }, { text: PAID_PROMPT }] }], generationConfig: { maxOutputTokens: 100, responseMimeType: 'application/json', responseSchema: PAID_SCHEMA, thinkingConfig: { thinkingBudget: 0 } } } }) + '\n');
+      if (++built % 100 === 0) console.log(`sheets ${built}/${pick.length}`);
+    }
+  }));
+  await new Promise((r) => w.end(r));
+  await client.close();
+  const key = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
+  const keyEnv = process.env.GEMINI_API_KEY_TIER3 ? 'GEMINI_API_KEY_TIER3' : 'GEMINI_API_KEY';
+  const bytes = fs.statSync(chunkFile).size;
+  const start = await fetch(`${API}/upload/v1beta/files?key=${key}`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Goog-Upload-Protocol': 'resumable', 'X-Goog-Upload-Command': 'start', 'X-Goog-Upload-Header-Content-Length': String(bytes), 'X-Goog-Upload-Header-Content-Type': 'text/plain' }, body: JSON.stringify({ file: { displayName: 'book-class-5768' } }) });
+  if (!start.ok) throw new Error(`upload start ${start.status} ${(await start.text()).slice(0, 300)}`);
+  const up = await fetch(start.headers.get('X-Goog-Upload-URL'), { method: 'PUT', headers: { 'Content-Type': 'text/plain', 'X-Goog-Upload-Command': 'upload, finalize', 'X-Goog-Upload-Offset': '0' }, body: fs.readFileSync(chunkFile) });
+  if (!up.ok) throw new Error(`upload ${up.status} ${(await up.text()).slice(0, 300)}`);
+  const fileName = (await up.json()).file?.name;
+  const job = await createThenDeleteInput({ fileName, apiKey: key, create: async () => {
+    const r = await fetch(`${API}/v1beta/models/${PAID_MODEL}:batchGenerateContent?key=${key}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ batch: { display_name: 'book-class-5768', input_config: { file_name: fileName } } }) });
+    if (!r.ok) throw new Error(`batch create ${r.status} ${(await r.text()).slice(0, 500)}`);
+    return r.json();
+  } });
+  fs.unlinkSync(chunkFile);
+  L.jobs.push({ job_name: job.name, key_env: keyEnv, model: PAID_MODEL, prompt_version: PAID_PROMPT_VERSION, requests: built, bytes, estimate_usd: +est.toFixed(4), submitted_at: new Date().toISOString(), book_ids: Object.keys(sheetPages), sheet_pages: sheetPages });
+  fs.writeFileSync(LEDGER, JSON.stringify(L));
+  console.log(`submitted ${job.name}: ${built} sheets, ${(bytes / 1e6).toFixed(0)} MB, estimate $${est.toFixed(4)}`);
+}
+
+async function collectPaid() {
+  const L = ledger();
+  const p = priceFor(PAID_MODEL);
+  const { logUsage } = await import('../workers/lib/supabase-usage-logger.mjs');
+  for (const j of L.jobs) {
+    if (j.collected_at) continue;
+    const key = process.env[j.key_env];
+    const data = await (await fetch(`${API}/v1beta/${j.job_name}?key=${key}`)).json();
+    const state = data.metadata?.state || data.state;
+    const rf = data.metadata?.output?.responsesFile || data.response?.responsesFile;
+    console.log(`${j.job_name} ${state}`);
+    if (/FAILED|CANCELLED|EXPIRED/.test(state || '')) { j.collected_at = new Date().toISOString(); j.failed = state; j.cost_usd = 0; continue; }
+    if (!rf) continue;
+    const text = await (await fetch(`${API}/download/v1beta/${rf}:download?alt=media&key=${key}`)).text();
+    let inTok = 0, outTok = 0, n = 0, errors = 0;
+    for (const line of text.split('\n').filter(Boolean)) {
+      const r = JSON.parse(line); const book_id = r.key || r.metadata?.key;
+      const resp = r.response, u = resp?.usageMetadata || {};
+      const row = { book_id, job: j.job_name, model: j.model, pages: j.sheet_pages?.[book_id] || [] };
+      try { Object.assign(row, JSON.parse((resp.candidates?.[0]?.content?.parts || []).map((x) => x.text || '').join(''))); } catch { row.error = JSON.stringify(r.error || resp?.candidates?.[0]?.finishReason || 'unparsable').slice(0, 200); errors++; }
+      inTok += u.promptTokenCount || 0; outTok += (u.candidatesTokenCount || 0) + (u.thoughtsTokenCount || 0);
+      fs.appendFileSync(PAID_FILE, JSON.stringify(row) + '\n'); n++;
+    }
+    j.collected_at = new Date().toISOString(); j.responses = n; j.errors = errors; j.in_tokens = inTok; j.out_tokens = outTok;
+    j.cost_usd = +(BATCH_MULTIPLIER * ((inTok / 1e6) * p.input + (outTok / 1e6) * p.output)).toFixed(5);
+    try { await logUsage({ type: 'eval', mode: 'batch', model: j.model, page_count: n - errors, input_tokens: inTok, output_tokens: outTok, cost_usd: j.cost_usd, batch_job_id: j.job_name, endpoint: ENDPOINT, triggered_by: 'manual', prompt_version: j.prompt_version || 'book-class-5768-v1' }); } catch (e) { console.warn(`logUsage failed: ${e.message}`); }
+    console.log(`collected ${n} (${errors} errors): ${inTok} in / ${outTok} out tokens, $${j.cost_usd} ($${(j.cost_usd / Math.max(1, n)).toFixed(6)}/sheet)`);
+  }
+  fs.writeFileSync(LEDGER, JSON.stringify(L));
+  console.log(`spent $${spentOf(L).toFixed(4)} of $${L.cap_usd}; pending ${L.jobs.filter((j) => !j.collected_at).length}`);
+}
+
 if (import.meta.url === `file://${process.argv[1]}`) {
   if (flag('evaluate')) evaluate();
   if (flag('apply')) apply();
+  if (flag('siku')) await siku();
+  if (flag('submit')) await submitPaid();
+  if (flag('collect')) await collectPaid();
   if (flag('labels')) await labels();
   if (flag('plan')) plan();
   if (flag('embed')) await embed();
