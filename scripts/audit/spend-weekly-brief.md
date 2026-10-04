@@ -69,14 +69,18 @@ Answer in one line, e.g. `1y 2n 3 defaults`. Nothing is changed until you answer
 envelopes (tag · issue · spent/cap · paid and pages this week · last spend · verdict line), machines, Vercel top services, ledgers by day
 </details>
 ```
-- Every item line must contain `recommended default:`. The board's parser keys on it, and it reads
-  only the first 5 such lines.
+- Every item line must contain `recommended default:`. The board's parser (`decisionLines()` in
+  scripts/maintenance/work-board-push.mjs) keys on it, and it reads only the first 5 such lines. Never
+  put the word "decided" or Derek's name in an item line: the parser takes those lines as already
+  answered and drops them.
+- The board shows the issue only while this comment is the LAST one on #5743. Post nothing else there.
 - Candidates, pick the 5 with the most at stake: an idle or unleased machine (one item per box,
   €/month); envelopes that are open with stored spend and whose owning issue's verdict says done or is
   closed ("close N envelopes, $X authority" as ONE item); envelopes at or over cap still configured
   (ONE item, "remove from config", $0 at stake but they muddy the meter, so rank them low); an envelope
   paying for no pages; a recurring ledger FAIL cause; a Vercel service that grew week on week; a
-  Gemini billed-vs-metered gap above 10 %.
+  Gemini billed-vs-metered gap above 10 %; a Scaleway product line (`machines.scaleway.bill`) that no
+  issue or script owns. The baseline (2026-10-03, on #5743) is the worked example.
 - The recommended default is the cheaper safe choice: "close" for stored spend on a finished issue,
   "keep" when the owning issue is still running and producing pages, "tag" for a server someone may
   own (lease it or label role=permanent), "yes" to delete only when the box is idle AND its owner issue
