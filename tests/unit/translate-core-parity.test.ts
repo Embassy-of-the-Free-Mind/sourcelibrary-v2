@@ -271,10 +271,14 @@ describe('OCR_LITE_ONLY measured-script exception (#5700 A5, 2026-10-04): Persia
     }
   });
 
-  it('keeps the hidden backlog on lite (a separate spend decision)', () => {
-    for (const language of MEASURED) {
+  it('keeps the hidden backlog on lite, except Persian (#5795, Derek 2026-10-04)', () => {
+    for (const language of MEASURED.filter((l) => !['Persian', 'Farsi'].includes(l))) {
       expect(ocrMjs({ language, visible: false, created_at: before }, liteOnly)).toBe(MODEL_LITE);
       expect(ocrMjs({ language }, liteOnly)).toBe(MODEL_LITE);
+    }
+    for (const language of ['Persian', 'Farsi']) {
+      expect(ocrMjs({ language, visible: false, created_at: before }, liteOnly)).toBe(MODEL_FLASH);
+      expect(ocrMjs({ language }, liteOnly)).toBe(MODEL_FLASH);
     }
   });
 
