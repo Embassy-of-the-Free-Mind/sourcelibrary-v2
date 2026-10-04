@@ -82,3 +82,35 @@ worst Paddle page per decision cell and the largest Paddle-vs-lite disagreements
 `results/open-engine-print-5660/` (cells, cost-lane JSON, throughput, weak-spot tally),
 `results/benchmark/<stratum>-<date>.json` (scorer), `experiments/2026-10-0X-open-engine-print-5660.md`,
 one comment on #5660.
+
+## Amendment 1 — the olmOCR-2 arm (job olmocr-5660b, written 2026-10-03 before any olmOCR output was scored)
+
+The "optional second open engine" row, now run on its own pod because the first attempt's outputs were
+lost to the RunPod watchdog (see the experiment file). Nothing above changes: same 632 JPEGs
+(`<lane>/bench/acc.tsv`), same `cells.json`, same scorer, same convention rule, same decision rule.
+
+| | |
+|---|---|
+| engine label | `olmocr-2-7b-fp8` |
+| weights | `allenai/olmOCR-2-7B-1025-FP8` (Hugging Face; snapshot hash recorded in the run's `olmocr-arm-run.json`) |
+| server | vLLM in the venv recipe that served it on 2026-10-03 (`paddleocr install_genai_server_deps vllm` → vLLM 0.10.2, flash-attn 2.8.3 wheel); `--max-model-len 12000 --gpu-memory-utilization 0.90 --limit-mm-per-prompt '{"image":1}'`; exact pip versions recorded |
+| client | `olm-run.py` (in the lane's `code/`), 8 threads, temperature 0, `max_tokens` 4500, one attempt per page (no retry ladder, no anchor text), page scaled to longest side 1288 px, sent as PNG; the YAML front matter is stripped before scoring |
+| hardware | one RunPod SECURE RTX PRO 4000 Blackwell (else L4 SECURE) |
+| warm-up | the 16-page `tput.tsv` set first, discarded |
+| s/page | arm wall ÷ 632 pages (the server is up before the clock starts) |
+
+Prompt, verbatim (olmOCR-2's own `build_no_anchoring_v4_yaml_prompt`, the prompt it was trained on):
+
+> Attached is one page of a document that you must process. Just return the plain text representation of this document as if you were reading it naturally. Convert equations to LateX and tables to HTML.
+> If there are any figures or charts, label them with the following markdown syntax ![Alt text describing the contents of the figure](page_startx_starty_width_height.png)
+> Return your output as markdown, with a front matter section on top specifying values for the primary_language, is_rotation_valid, rotation_correction, is_table, and is_diagram parameters.
+
+Scoring: `open-engine-print-5660.mjs paddle-in --engine=olmocr-2-7b-fp8` (the same `open-engine-markup@1`
+rule, UNCHANGED — it does not touch olmOCR's figure placeholders `![alt](page_….png)`, so their alt text
+counts against olmOCR; the number of pages carrying one is reported, and a placeholder-stripped view is
+descriptive only) into a SEPARATE bench root that holds the lite, lite-b and flash-preview outputs but not
+Paddle's, so that `invention` ("in neither the reference nor any other engine") is measured against the
+same other-engine set as Paddle's was. Scored files go to `results/open-engine-print-5660/scored-olmocr/`;
+the cost-lane file is `cost-lane-olmocr.json`. Five pages by eye (`read-from-image`), including one
+long-s page and one Greek page: the worst olmOCR page per decision cell plus the largest olmOCR-vs-lite
+disagreement on the agreement strata.

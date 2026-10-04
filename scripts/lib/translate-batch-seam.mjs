@@ -59,6 +59,7 @@ import {
 } from './translate-core.mjs';
 import { codeVersion, host, notRecorded, NOT_RECORDED } from './write-provenance.mjs';
 import { isHeld } from './pipeline-hold.mjs';
+import { ocrTrustGate } from './ocr-trust-gate.mjs';
 import { dropDriftedPages, translationProse } from './block-drift.mjs';
 import { echoedSource, readingLength } from './page-integrity.mjs';
 import { sumBatchResponseUsage } from '../workers/lib/supabase-usage-logger.mjs';
@@ -471,11 +472,15 @@ function meterComplete(deps, db, { run, jobName, pageCount, kind, responses, sta
  * Plan a run for one book without touching Gemini: the blocks, the seams, the refusals.
  * Returns { ok, reason?, book, pages, blocks, excluded, model }.
  */
-export async function planRun(db, bookId, { limit = MAX_PAGES_PER_RUN, pageIds = null, excludeWithheld = false } = {}) {
+export async function planRun(db, bookId, { limit = MAX_PAGES_PER_RUN, pageIds = null, excludeWithheld = false, recordRefusal = false } = {}) {
   const book = await db.collection('books').findOne({ id: bookId });
   if (!book) return { ok: false, reason: 'book-not-found' };
   if (isHeld(book)) return { ok: false, reason: `book-held (${book.pipeline_auto.hold.reason})`, book };
   if (sameLanguageReason({ book })) return { ok: false, reason: 'english-book (not translated, #5154)', book };
+  // #5700: a book in a stratum whose OCR was measured untrusted is not translated until re-read.
+  // A bare plan is read-only; the submit path passes recordRefusal so its refusal is recorded.
+  const trust = await ocrTrustGate(db, book, { lane: 'seam', record: recordRefusal });
+  if (!trust.ok) return { ok: false, reason: trust.reason, book };
   // The realtime lane owns a book in translate_submitted; running both would pay twice.
   if (book.pipeline_auto?.status === 'translate_submitted') return { ok: false, reason: 'realtime-lane-owns-book (pipeline_auto.status=translate_submitted)', book };
   const open = await db.collection(RUNS_COLLECTION).findOne({ book_id: bookId, phase: { $nin: TERMINAL_PHASES } });
@@ -493,7 +498,7 @@ export async function planRun(db, bookId, { limit = MAX_PAGES_PER_RUN, pageIds =
  */
 export async function startRun(db, bookId, deps, { prompts, approvedUsd, shadow = false, limit } = {}) {
   const log = deps.log || console.log;
-  const plan = await planRun(db, bookId, { limit });
+  const plan = await planRun(db, bookId, { limit, recordRefusal: true });
   if (!plan.ok) return plan;
   const { book, blocks, model } = plan;
   const estimate = estimateRunUsd({ prompts, book, blocks, model });

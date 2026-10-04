@@ -1,0 +1,45 @@
+{
+ "key": "v049_f2a",
+ "arm": "hinted",
+ "page": {
+  "key": "v049_f2a",
+  "vol": 49,
+  "book_id": "6ac029e99a86d56c1aa1f863",
+  "page_number": 3,
+  "page_label": "f. 2a",
+  "bdrc_canvas": "I1PD1103170006.jpg",
+  "ligeti": "Mng1.797",
+  "mng_span": "Kha Erdeni dabqurliq 1b–90a",
+  "toh": "D50",
+  "skt": "Akṣobhyatathāgatasya vyūha (Ratnakūṭa 6)",
+  "derge_vol": 40,
+  "derge_file": "040_དཀོན་བརྩེགས།_ཁ.txt"
+ },
+ "model": "gemini-3-flash-preview",
+ "ocr_prompt": {
+  "arm": "hinted",
+  "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "content_hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "translation_prompt": {
+  "name": "Standard Translation",
+  "version": "13",
+  "hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>24</columns>\n<page-num>3</page-num>\n<header>大寶積經第二卷上三</header>\n\n<margin>\nᠨᠢ\nᠭᠤᠲᠠᠭᠠᠷ\nᠳᠡᠪᠲᠡᠷ\nᠭᠤᠷᠪᠠ\n</margin>\n\n<image-desc size=\"large\" type=\"woodcut\" significance=\"low\">The text is enclosed within a rectangular border featuring a decorative floral scroll pattern (rinceau) in red ink.</image-desc>\n\nᠪᠢ ᠪᠡᠷ ᠬᠠᠮᠤᠭ ᠬᠠᠮᠤᠭ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\nᠪᠠ ᠪᠤᠰᠤᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ ᠊ᠨᠤᠭᠤᠳ ᠄\n\n<vocab>ᠪᠤᠷᠬᠠᠨ, ᠪᠤᠳᠢᠰᠠᠳᠤᠸᠠ, ᠪᠡᠷ, ᠬᠠᠮᠤᠭ, ᠳᠡᠪᠲᠡᠷ</vocab>",
+  "finishReason": "STOP",
+  "inputTokens": 4341,
+  "outputTokens": 2102,
+  "cost_usd": 0.0084765
+ },
+ "translation": {
+  "text": "<meta>The text is a page from the Mongolian translation of the Maharatnakuta Sutra (The Great Heap of Jewels Sutra). The header is in Chinese script, while the main body and marginalia are in Classical Mongolian. The layout consists of repeated invocations.</meta>\n\n### Great Heap of Jewels Sutra, Volume Two, Part One, Page Three <note>original Chinese header: 大寶積經第二卷上三</note>\n\n<margin>\nVolume\nThree\nThree\n</margin>\n\n<note>The text is enclosed within a rectangular border featuring a decorative floral scroll pattern in red ink.</note>\n\nI, by all and every <term>Buddha</term> <gloss>Enlightened One</gloss> and <term>Bodhisattvas</term> <gloss>those on the path to enlightenment</gloss>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\nAnd other <term>Buddhas</term> and <term>Bodhisattvas</term>;\n\n<summary>This page contains a repetitive liturgical invocation or list of Buddhas and Bodhisattvas from the Maharatnakuta Sutra. The structure emphasizes the vast assembly of enlightened beings typical of Mahayana Buddhist literature.</summary>\n<keywords>Buddha, Bodhisattva, Maharatnakuta Sutra, liturgy, Mongolian Buddhism</keywords>",
+  "finishReason": "STOP",
+  "inputTokens": 3832,
+  "outputTokens": 758,
+  "cost_usd": 0.00419
+ }
+}

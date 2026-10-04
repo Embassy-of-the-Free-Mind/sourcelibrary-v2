@@ -1,0 +1,150 @@
+{
+ "folded": {
+  "controls_sequence": {},
+  "controls_line": {
+   "exact": {
+    "n": 16,
+    "median": 1.0,
+    "q1": 1.0,
+    "q3": 1.0,
+    "min": 1.0,
+    "max": 1.0
+   },
+   "noise-0.05": {
+    "n": 16,
+    "median": 0.9555,
+    "q1": 0.9462,
+    "q3": 0.9597,
+    "min": 0.9274,
+    "max": 0.9785
+   },
+   "wrong-poet-global": {
+    "n": 16,
+    "median": 0.4019,
+    "q1": 0.3874,
+    "q3": 0.4057,
+    "min": 0.2686,
+    "max": 0.4213
+   }
+  },
+  "separate_sequence": false,
+  "separate_line": true,
+  "status": {
+   "no_reference": 20
+  },
+  "acc": {},
+  "precision": {},
+  "line_local": {},
+  "lines_ok_local": {},
+  "line_global": {
+   "all": {
+    "n": 16,
+    "median": 0.4524,
+    "q1": 0.4128,
+    "q3": 0.5181,
+    "min": 0.3106,
+    "max": 0.5446
+   },
+   "manuscript": {
+    "n": 16,
+    "median": 0.4524,
+    "q1": 0.4128,
+    "q3": 0.5181,
+    "min": 0.3106,
+    "max": 0.5446
+   }
+  },
+  "lines_ok_global": {
+   "all": {
+    "n": 16,
+    "median": 0.0,
+    "q1": 0.0,
+    "q3": 0.0,
+    "min": 0.0,
+    "max": 0.037
+   },
+   "manuscript": {
+    "n": 16,
+    "median": 0.0,
+    "q1": 0.0,
+    "q3": 0.0,
+    "min": 0.0,
+    "max": 0.037
+   }
+  }
+ },
+ "strict": {
+  "controls_sequence": {},
+  "controls_line": {
+   "exact": {
+    "n": 16,
+    "median": 1.0,
+    "q1": 1.0,
+    "q3": 1.0,
+    "min": 1.0,
+    "max": 1.0
+   },
+   "noise-0.05": {
+    "n": 16,
+    "median": 0.9555,
+    "q1": 0.9462,
+    "q3": 0.9597,
+    "min": 0.9274,
+    "max": 0.9785
+   },
+   "wrong-poet-global": {
+    "n": 16,
+    "median": 0.3894,
+    "q1": 0.3809,
+    "q3": 0.3971,
+    "min": 0.2602,
+    "max": 0.4109
+   }
+  },
+  "separate_sequence": false,
+  "separate_line": true,
+  "status": {
+   "no_reference": 20
+  },
+  "acc": {},
+  "precision": {},
+  "line_local": {},
+  "lines_ok_local": {},
+  "line_global": {
+   "all": {
+    "n": 16,
+    "median": 0.4389,
+    "q1": 0.4077,
+    "q3": 0.5017,
+    "min": 0.3146,
+    "max": 0.5234
+   },
+   "manuscript": {
+    "n": 16,
+    "median": 0.4389,
+    "q1": 0.4077,
+    "q3": 0.5017,
+    "min": 0.3146,
+    "max": 0.5234
+   }
+  },
+  "lines_ok_global": {
+   "all": {
+    "n": 16,
+    "median": 0.0,
+    "q1": 0.0,
+    "q3": 0.0,
+    "min": 0.0,
+    "max": 0.037
+   },
+   "manuscript": {
+    "n": 16,
+    "median": 0.0,
+    "q1": 0.0,
+    "q3": 0.0,
+    "min": 0.0,
+    "max": 0.037
+   }
+  }
+ }
+}

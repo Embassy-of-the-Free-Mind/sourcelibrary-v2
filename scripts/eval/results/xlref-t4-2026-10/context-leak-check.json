@@ -1,0 +1,782 @@
+[
+ {
+  "id": "699ef9fd15618a982bb1ebd9_790",
+  "lang": "Hebrew",
+  "book_title": "Shenei Luchot HaBerit (Amsterdam 1698)",
+  "translator": "Eliyahu Munk",
+  "latin_share_page": 0.01,
+  "latin_share_neighbours": {
+   "-2": 0,
+   "-1": 0,
+   "+1": 0.02,
+   "+2": null
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "699ef9f2c2bcb75dbdbaad92_102",
+  "lang": "Hebrew",
+  "book_title": "Sha'arei Orah (Gates of Light), Joseph Gikatilla, 1715 ed.",
+  "translator": "Amiram Markel and Yehudah S. Markel",
+  "latin_share_page": 0.04,
+  "latin_share_neighbours": {
+   "-2": 0.06,
+   "-1": 0.03,
+   "+1": 0.01,
+   "+2": 0.04
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69c7e216295ea01b70c8d7d2_39",
+  "lang": "Hebrew",
+  "book_title": "Seder Olam Rabbah (with Zuta, Megillat Ta'anit, Sefer ha-Kabbalah etc.), 1711",
+  "translator": "Mike Feuer (Jerusalem Anthology)",
+  "latin_share_page": 0.01,
+  "latin_share_neighbours": {
+   "-2": 0.01,
+   "-1": 0.01,
+   "+1": 0.01,
+   "+2": 0.01
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69b52593cced70d8e6d72941_37",
+  "lang": "Hebrew",
+  "book_title": "Sefer ha-Yirah, Iggeret ha-Teshuvah etc. (1627)",
+  "translator": "Justin S. Kerber",
+  "latin_share_page": 0.03,
+  "latin_share_neighbours": {
+   "-2": 0.03,
+   "-1": 0.02,
+   "+1": 0.02,
+   "+2": 0.05
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69920befebe5b0fa6be5d569_199",
+  "lang": "Hebrew",
+  "book_title": "Mishnah: Kaufmann Manuscript (Complete)",
+  "translator": "Dr. Joshua Kulp",
+  "latin_share_page": 0.92,
+  "latin_share_neighbours": {
+   "-2": 0.02,
+   "-1": 0.05,
+   "+1": 0.02,
+   "+2": 0.03
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "69d5ac5f4dc55b8478ddd6b5_335",
+  "lang": "Aramaic",
+  "book_title": "Talmud Bavli (Vilna: Romm, 1884), Moed volume",
+  "translator": "Rabbi Adin Even-Israel Steinsaltz",
+  "latin_share_page": 0.15,
+  "latin_share_neighbours": {
+   "-2": 0.01,
+   "-1": 0,
+   "+1": 0,
+   "+2": 0
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69d5ad004dc55b8478dde8b5_1455",
+  "lang": "Hebrew",
+  "book_title": "Torah Mikraot Gedolot (Vilna: Romm, 1899) - appended Shacharit liturgy",
+  "translator": "Simeon Singer (liturgy); Jewish Publication Society committee, ed. Max Margolis (JPS 1917 biblical passages)",
+  "latin_share_page": 0.02,
+  "latin_share_neighbours": {
+   "-2": 0.06,
+   "-1": 0.05,
+   "+1": 0.02,
+   "+2": 0.02
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69e7518610ee9075bcdcde12_71",
+  "lang": "Hebrew",
+  "book_title": "ספר תהלים (Sepher Tehillim / Psalms), 1685",
+  "translator": "Jewish Publication Society committee (ed. Max L. Margolis)",
+  "latin_share_page": 0.34,
+  "latin_share_neighbours": {
+   "-2": 0.26,
+   "-1": 0.26,
+   "+1": 0.11,
+   "+2": 0.36
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "6990633def12272ffdc907b0_211",
+  "lang": "Aramaic",
+  "book_title": "Sefer ha-Zohar (Mantua 1558-1560)",
+  "translator": "Harry Sperling, Maurice Simon and Paul P. Levertoff",
+  "latin_share_page": 0.12,
+  "latin_share_neighbours": {
+   "-2": 0.19,
+   "-1": 0.16,
+   "+1": 0.2,
+   "+2": 0.11
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69e9617a2beefe2f6f72ba14_253",
+  "lang": "Hebrew",
+  "book_title": "מסעות בנימין (Masa'ot Binyamin / Itinerary)",
+  "translator": "A. Asher",
+  "latin_share_page": 0.04,
+  "latin_share_neighbours": {
+   "-2": 0.03,
+   "-1": 0.06,
+   "+1": 0.14,
+   "+2": 0.05
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "6953af0577f38f6761bd92a5_210",
+  "lang": "Aramaic",
+  "book_title": "Aramaic Incantation Texts from Nippur",
+  "translator": "James A. Montgomery",
+  "latin_share_page": 0.81,
+  "latin_share_neighbours": {
+   "-2": 0.85,
+   "-1": 0.88,
+   "+1": 0.91,
+   "+2": 0.1
+  },
+  "page_has_printed_english": true,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "69c79fed92b884e4f817374f_107",
+  "lang": "Hebrew",
+  "book_title": "Sha'arei Orah (Gates of Light), Joseph Gikatilla — Riva di Trento 1561",
+  "translator": "Rabbi Amiram Markel and Rabbi Yehudah S. Markel",
+  "latin_share_page": 0.03,
+  "latin_share_neighbours": {
+   "-2": 0.03,
+   "-1": 0.05,
+   "+1": 0.01,
+   "+2": 0.05
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69b4cd44d5b6c3815e1a52de_215",
+  "lang": "Hebrew",
+  "book_title": "Misnaioth (Mishnah, ed. Menasseh ben Israel, Amsterdam 1633)",
+  "translator": "Joshua Kulp",
+  "latin_share_page": 0.08,
+  "latin_share_neighbours": {
+   "-2": 0,
+   "-1": 0.02,
+   "+1": 0,
+   "+2": 0.03
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69920bb1e0a548a13d884da7_342",
+  "lang": "Hebrew",
+  "book_title": "Der Hebräische Pentateuch der Samaritaner",
+  "translator": "Jewish Publication Society translation committee (ed.-in-chief Max L. Margolis)",
+  "latin_share_page": 0.11,
+  "latin_share_neighbours": {
+   "-2": 0.14,
+   "-1": 0.07,
+   "+1": 0.1,
+   "+2": 0.12
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69e7934280b52390feb18445_49",
+  "lang": "Arabic",
+  "book_title": "Hayy ibn Yaqzan (Philosophus Autodidactus), ed. Pococke 1671",
+  "translator": "Simon Ockley",
+  "latin_share_page": 0.03,
+  "latin_share_neighbours": {
+   "-2": 1,
+   "-1": 1,
+   "+1": 0.09,
+   "+2": 1
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "69e8b0fd839ca3f47ec56c17_48",
+  "lang": "Arabic",
+  "book_title": "Kitab al-Jabr wa'l-Muqabala (Rosen 1831 Arabic text)",
+  "translator": "Frederic Rosen",
+  "latin_share_page": 0.02,
+  "latin_share_neighbours": {
+   "-2": 0.02,
+   "-1": 0.02,
+   "+1": 0.04,
+   "+2": 0.02
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69e8b2ac2ff2a8dc09e7883c_25",
+  "lang": "Arabic",
+  "book_title": "Fasl al-Maqal (in M. J. Müller, Philosophie und Theologie von Averroes, 1859)",
+  "translator": "Mohammad Jamil-ur-Rehman",
+  "latin_share_page": 0.01,
+  "latin_share_neighbours": {
+   "-2": 0.02,
+   "-1": 0.01,
+   "+1": 0.01,
+   "+2": 0.01
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "6953dd4277f38f6761be739a_57",
+  "lang": "Arabic",
+  "book_title": "Falsafat Ibn Rushd (Cairo 1910): al-Kashf 'an Manahij al-Adilla",
+  "translator": "Mohammad Jamil-ur-Rehman",
+  "latin_share_page": 0.01,
+  "latin_share_neighbours": {
+   "-2": 0.01,
+   "-1": 0.01,
+   "+1": 0.01,
+   "+2": 0.01
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "6a08f8b89c1b82475e157ff4_16",
+  "lang": "Arabic",
+  "book_title": "al-Munqidh min al-Dalal",
+  "translator": "Claud Field",
+  "latin_share_page": 0.13,
+  "latin_share_neighbours": {
+   "-2": 0.07,
+   "-1": 0.02,
+   "+1": 0.05,
+   "+2": 0.07
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69d5ac07d0bd3547a5654dcc_313",
+  "lang": "Arabic",
+  "book_title": "Tahqiq ma li-l-Hind (ed. Sachau 1887)",
+  "translator": "Edward C. Sachau",
+  "latin_share_page": 0.06,
+  "latin_share_neighbours": {
+   "-2": 0.02,
+   "-1": 0.11,
+   "+1": 0.09,
+   "+2": 0.04
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69e9614d2beefe2f6f72addf_295",
+  "lang": "Arabic",
+  "book_title": "Kitab al-Hind (Hyderabad 1958)",
+  "translator": "Edward C. Sachau",
+  "latin_share_page": 0.02,
+  "latin_share_neighbours": {
+   "-2": 0.02,
+   "-1": 0.02,
+   "+1": 0.02,
+   "+2": 0.02
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "6a2198371994d1df1e5e0235_118",
+  "lang": "Arabic",
+  "book_title": "al-Athar al-Baqiya 'an al-Qurun al-Khaliya (BnF manuscript)",
+  "translator": "C. Edward Sachau",
+  "latin_share_page": 0.09,
+  "latin_share_neighbours": {
+   "-2": 0.26,
+   "-1": 0.51,
+   "+1": 0.13,
+   "+2": 0.21
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69e53454d48480a386965c84_230",
+  "lang": "Arabic",
+  "book_title": "Kalila wa-Dimna (ed. L. Cheikho, Beirut 1905)",
+  "translator": "Wyndham Knatchbull",
+  "latin_share_page": 0.06,
+  "latin_share_neighbours": {
+   "-2": 0.07,
+   "-1": 0.07,
+   "+1": 0.1,
+   "+2": 0.06
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69908ac1c0656c0b3bcc0813_50",
+  "lang": "Arabic",
+  "book_title": "Kalila wa-Dimna (BnF manuscript, c. 1300)",
+  "translator": "Wyndham Knatchbull",
+  "latin_share_page": 0.08,
+  "latin_share_neighbours": {
+   "-2": 0.02,
+   "-1": 0.01,
+   "+1": 0.04,
+   "+2": 0.01
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69e7933580b52390feb18277_263",
+  "lang": "Arabic",
+  "book_title": "Maqamat al-Hariri (1846 edition with Persian glosses)",
+  "translator": "Francis Joseph Steingass",
+  "latin_share_page": 0.56,
+  "latin_share_neighbours": {
+   "-2": 0.27,
+   "-1": 0.25,
+   "+1": 0.53,
+   "+2": 0.16
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "69e7933d80b52390feb1841a_27",
+  "lang": "Arabic",
+  "book_title": "Maqamat Badi' al-Zaman al-Hamadhani",
+  "translator": "W. J. Prendergast",
+  "latin_share_page": 0.07,
+  "latin_share_neighbours": {
+   "-2": 0.03,
+   "-1": 0.04,
+   "+1": 0.19,
+   "+2": 0.02
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69d5ac5f4dc55b8478ddd6b6_299",
+  "lang": "Arabic",
+  "book_title": "Alf Layla wa-Layla (BnF Galland-type manuscript)",
+  "translator": "Richard F. Burton",
+  "latin_share_page": 0.07,
+  "latin_share_neighbours": {
+   "-2": 0.14,
+   "-1": 0.02,
+   "+1": 0.02,
+   "+2": 0.04
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69ea3e91300d991d0f1d37ee_92",
+  "lang": "Arabic",
+  "book_title": "Ahsan al-Taqasim fi Ma'rifat al-Aqalim (BGA III, ed. de Goeje)",
+  "translator": "G. S. A. Ranking and R. F. Azoo",
+  "latin_share_page": 0.13,
+  "latin_share_neighbours": {
+   "-2": 0.06,
+   "-1": 0.16,
+   "+1": 0.07,
+   "+2": 0.12
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69e96123390d3ed634590b97_226",
+  "lang": "Arabic",
+  "book_title": "Rihlat Ibn Battuta (Tuhfat al-nuzzar)",
+  "translator": "H. A. R. Gibb",
+  "latin_share_page": 0.01,
+  "latin_share_neighbours": {
+   "-2": 0.02,
+   "-1": 0.03,
+   "+1": 0.01,
+   "+2": 0.01
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69e9612a390d3ed634590dd2_365",
+  "lang": "Arabic",
+  "book_title": "Voyages d'Ibn Batoutah (Arabic + French, ed. Defrémery & Sanguinetti), vol. III",
+  "translator": "H. A. R. Gibb",
+  "latin_share_page": 0.7,
+  "latin_share_neighbours": {
+   "-2": 0.67,
+   "-1": 0.68,
+   "+1": 0.66,
+   "+2": 0.67
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "699209b5bed8f4b5ff5b25ac_590",
+  "lang": "Arabic",
+  "book_title": "Al-Coranus s. Lex Islamitica Muhammedis (ed. Abraham Hinckelmann, Hamburg 1694)",
+  "translator": "Marmaduke Pickthall",
+  "latin_share_page": 0.13,
+  "latin_share_neighbours": {
+   "-2": 0.19,
+   "-1": 0.31,
+   "+1": 0.16,
+   "+2": 0.18
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69920bcde0a548a13d885a90_940",
+  "lang": "Arabic",
+  "book_title": "Al-Kitab al-Muqaddas (Arabic Bible, Van Dyck–Bustani, 1865)",
+  "translator": "King James translators (Lancelot Andrewes et al.)",
+  "latin_share_page": 0.05,
+  "latin_share_neighbours": {
+   "-2": 0.01,
+   "-1": 0.01,
+   "+1": 0.01,
+   "+2": 0.11
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "6a06cdd7c749b698e5b2c9a4_104",
+  "lang": "Arabic",
+  "book_title": "al-Rawd al-'atir fi nuzhat al-khatir (The Perfumed Garden), Arabic MS (Gafsa)",
+  "translator": "Sir Richard F. Burton (attrib.; Kama Shastra Society), from the French version of 'Baron R***' (1876)",
+  "latin_share_page": 0.07,
+  "latin_share_neighbours": {
+   "-2": 0.05,
+   "-1": 0.06,
+   "+1": 0.1,
+   "+2": 0.15
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69d5abf3d0bd3547a5654427_104",
+  "lang": "Arabic",
+  "book_title": "Kitab al-Qanun fi al-Tibb (Rome: Typographia Medicea, 1593)",
+  "translator": "O. Cameron Gruner",
+  "latin_share_page": 0.1,
+  "latin_share_neighbours": {
+   "-2": 0,
+   "-1": 0,
+   "+1": 0,
+   "+2": 0
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69935b208e28d8f4c5d3c445_228",
+  "lang": "Persian",
+  "book_title": "Kashf al-Mahjub (Zhukovsky critical edition, 1926)",
+  "translator": "Reynold A. Nicholson",
+  "latin_share_page": 0.1,
+  "latin_share_neighbours": {
+   "-2": 0.01,
+   "-1": 0.04,
+   "+1": 0.08,
+   "+2": 0.01
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69e7299ba409200ea79f0b56_211",
+  "lang": "Persian",
+  "book_title": "Masnavi-yi Ma'navi, Books 1-2 (Bulaq 1851, with Ottoman Turkish verse translation)",
+  "translator": "Reynold A. Nicholson",
+  "latin_share_page": 0.01,
+  "latin_share_neighbours": {
+   "-2": 0.03,
+   "-1": 0.03,
+   "+1": 0.01,
+   "+2": 0.03
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69e729a1a409200ea79f0ca5_257",
+  "lang": "Persian",
+  "book_title": "Masnavi-yi Ma'navi, Books 3-4 (Bulaq 1851, with Ottoman Turkish verse translation)",
+  "translator": "Reynold A. Nicholson",
+  "latin_share_page": 0.02,
+  "latin_share_neighbours": {
+   "-2": 0.04,
+   "-1": 0.03,
+   "+1": 0.03,
+   "+2": 0.02
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69e729a7a409200ea79f0e08_279",
+  "lang": "Persian",
+  "book_title": "Masnavi-yi Ma'navi, Books 5-7 (Bulaq 1851, with Ottoman Turkish verse translation)",
+  "translator": "Reynold A. Nicholson",
+  "latin_share_page": 0.03,
+  "latin_share_neighbours": {
+   "-2": 0.63,
+   "-1": 0.01,
+   "+1": 0.08,
+   "+2": 0.02
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "69afd049ae982b9d51d6dd32_292",
+  "lang": "Persian",
+  "book_title": "Selected Poems from the Divani Shamsi Tabriz (Nicholson, Cambridge 1898)",
+  "translator": "Reynold A. Nicholson",
+  "latin_share_page": 0.03,
+  "latin_share_neighbours": {
+   "-2": 0.04,
+   "-1": 1,
+   "+1": 1,
+   "+2": 0.05
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "6a21994b4b61907ea5ffb7e5_27",
+  "lang": "Persian",
+  "book_title": "Lawa'ih of Jami (facsimile of a Persian manuscript, with Whinfield & Kazvini's translation, London 1906)",
+  "translator": "E. H. Whinfield and Mirza Muhammad Kazvini",
+  "latin_share_page": 0.05,
+  "latin_share_neighbours": {
+   "-2": 0.06,
+   "-1": 0.14,
+   "+1": 0.17,
+   "+2": 0.05
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "699249c5a2d53df4853bfdaf_12",
+  "lang": "Persian",
+  "book_title": "Kitab-i-Iqan (Bombay lithograph, 1882)",
+  "translator": "Ali Kuli Khan",
+  "latin_share_page": 0.04,
+  "latin_share_neighbours": {
+   "-2": 0.06,
+   "-1": 0.01,
+   "+1": 0,
+   "+2": 0
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69e74eeb5cf1eaf3ad80ddc1_237",
+  "lang": "Persian",
+  "book_title": "Divan-e Hafez (illuminated manuscript)",
+  "translator": "H. Wilberforce Clarke",
+  "latin_share_page": 0.1,
+  "latin_share_neighbours": {
+   "-2": 0.07,
+   "-1": 0.13,
+   "+1": 0.1,
+   "+2": 0.94
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "69f33c97876dd827cbc5a94f_258",
+  "lang": "Persian",
+  "book_title": "Gulistan (Harvard MS Persian 62)",
+  "translator": "John T. Platts",
+  "latin_share_page": 0.12,
+  "latin_share_neighbours": {
+   "-2": 0.19,
+   "-1": 0.08,
+   "+1": 0.16,
+   "+2": 0.21
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "6992cf0970ab3737555456ae_100",
+  "lang": "Persian",
+  "book_title": "Shahnama (1907 Nawal Kishore lithograph)",
+  "translator": "Arthur George Warner and Edmond Warner",
+  "latin_share_page": 0,
+  "latin_share_neighbours": {
+   "-2": 0,
+   "-1": 0.01,
+   "+1": 0.01,
+   "+2": 0
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69e74ef95cf1eaf3ad80e04c_131",
+  "lang": "Persian",
+  "book_title": "Sharafnama (Nizami Ganjavi), Persian edition with editor's footnotes",
+  "translator": "H. Wilberforce Clarke",
+  "latin_share_page": 0.03,
+  "latin_share_neighbours": {
+   "-2": 0.02,
+   "-1": 0.03,
+   "+1": 0.02,
+   "+2": 0.02
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69e748da49abba5e98281b25_103",
+  "lang": "Persian",
+  "book_title": "Haft Paykar (Nizami Ganjavi)",
+  "translator": "C. E. Wilson",
+  "latin_share_page": 0.02,
+  "latin_share_neighbours": {
+   "-2": 0.05,
+   "-1": 0.05,
+   "+1": 0.07,
+   "+2": 0.02
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "699243fabc722ec0ee80b251_66",
+  "lang": "Hebrew",
+  "book_title": "Prague Haggadah (1526)",
+  "translator": "A. P. Mendes",
+  "latin_share_page": 0.3,
+  "latin_share_neighbours": {
+   "-2": 0.41,
+   "-1": 0.29,
+   "+1": 0.76,
+   "+2": 0.3
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "6990630be7b7642c081de08b_353",
+  "lang": "Aramaic",
+  "book_title": "Sefer ha-Zohar (Cremona 1558)",
+  "translator": "Harry Sperling and Maurice Simon (vols. III–IV with Paul P. Levertoff)",
+  "latin_share_page": 0.11,
+  "latin_share_neighbours": {
+   "-2": 0.17,
+   "-1": 0.13,
+   "+1": 0.18,
+   "+2": 0.18
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "6a7de037fd8615d37af98df8_106",
+  "lang": "Aramaic",
+  "book_title": "Studies and Texts in Folklore, Magic, Medieval Romance, Hebrew Apocrypha and Samaritan Archaeology, Vol. III",
+  "translator": "Moses Gaster",
+  "latin_share_page": 0.33,
+  "latin_share_neighbours": {
+   "-2": 0.01,
+   "-1": 0.01,
+   "+1": 0.15,
+   "+2": 0.06
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "69c1bbc68522835be8460774_281",
+  "lang": "Hebrew",
+  "book_title": "New Testament in Hebrew translation (Rylands Gaster Hebrew MS 1616)",
+  "translator": "James Murdock",
+  "latin_share_page": 0.01,
+  "latin_share_neighbours": {
+   "-2": 0.01,
+   "-1": 0.13,
+   "+1": 0.16,
+   "+2": 0.01
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69b2f3b821208ea9dc278c50_277",
+  "lang": "Hebrew",
+  "book_title": "Duodecim prophetae (Hebrew text with Kimhi's commentary, Estienne 1539)",
+  "translator": "Alexander McCaul",
+  "latin_share_page": 0.01,
+  "latin_share_neighbours": {
+   "-2": 0.11,
+   "-1": 0.01,
+   "+1": 0.02,
+   "+2": 0
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69906606ef12272ffdc94dd0_106",
+  "lang": "Hebrew",
+  "book_title": "Hekhalot and Kabbalistic Texts (Vat. ebr. 228)",
+  "translator": "Hugo Odeberg",
+  "latin_share_page": 0.07,
+  "latin_share_neighbours": {
+   "-2": 0.07,
+   "-1": 0.08,
+   "+1": 0.07,
+   "+2": 0.05
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ }
+]

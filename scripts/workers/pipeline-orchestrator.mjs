@@ -30,6 +30,7 @@ import {
 import { VISIBLE_PAGE_MATCH, notBlockedForModel } from '../lib/page-counts.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { getTranslateModelForBook, SKIP_TRANSLATION_PAGE_TYPES, loadTranslationPrompts } from '../lib/translate-core.mjs';
+import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
 import { phase4Lane, phase4ExcludedBookIds, enrolForPhase4, PHASE4_MAX_OPEN, REALTIME_PRIORITY_FLOOR, MODE as CHAINED_MODE, TERMINAL_PHASES as CHAINED_TERMINAL } from '../lib/translate-batch-chained.mjs';
 import { RUNS_COLLECTION as TRANSLATE_RUNS_COLLECTION } from '../lib/translate-batch-seam.mjs';
 import { batchJobProvenance, contentHash } from '../lib/write-provenance.mjs';
@@ -5014,6 +5015,15 @@ Rules:
             }
 
             const label = (book.title || '').substring(0, 50);
+
+            // #5700: a book in a stratum whose OCR was measured untrusted is not translated by
+            // EITHER lane until it is re-read (scripts/lib/ocr-trust-gate.mjs). Its status is
+            // left where it is — it is still owed translation — and the refusal is recorded.
+            const trust = await ocrTrustGate(db, book, { lane: 'orchestrator-phase4', record: !DRY_RUN });
+            if (!trust.ok) {
+              console.log(`  Not dispatched (${trust.reason}): ${label}`);
+              continue;
+            }
 
             if (phase4Lane(book) === 'chained') {
               if (chainedRoom <= 0) {

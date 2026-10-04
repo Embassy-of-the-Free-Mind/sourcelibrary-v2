@@ -35,11 +35,11 @@ function Swatch({ style, label }: { style: CSSProperties; label: string }) {
 
 function Figure({ n, title, caption, children }: { n: number; title: string; caption: ReactNode; children: ReactNode }) {
   return (
-    <figure className="my-8">
-      <div className="font-body text-xs tracking-wider uppercase text-stone-500 mb-1">Figure {n}</div>
-      <div className="font-serif text-xl text-stone-900 mb-4">{title}</div>
+    <figure className="my-10 rounded-sm border border-stone-200 bg-white px-4 py-6 md:px-8 md:py-8">
+      <div className="font-body text-xs tracking-wider uppercase text-stone-400 mb-1">Figure {n}</div>
+      <div className="font-serif text-xl text-stone-900 mb-5">{title}</div>
       {children}
-      <figcaption className="font-body text-sm text-stone-500 mt-3 leading-snug">{caption}</figcaption>
+      <figcaption className="font-body text-sm text-stone-500 mt-5 pt-4 border-t border-stone-100 leading-snug">{caption}</figcaption>
     </figure>
   );
 }
@@ -158,7 +158,9 @@ export function CanonBars({ rows, n }: { rows: CanonBar[]; n: number }) {
               title={tip}
               className="grid grid-cols-[minmax(0,3fr)_minmax(0,1fr)] md:grid-cols-[11rem_minmax(0,3fr)_minmax(0,1fr)] gap-x-4 items-center py-1.5 border-b border-stone-100"
             >
-              <div className="col-span-2 md:col-span-1 font-body text-sm text-stone-800 leading-tight">{r.name}</div>
+              <a href={`#${r.id}`} className="col-span-2 md:col-span-1 font-body text-sm text-stone-800 leading-tight hover:text-amber-800 hover:underline underline-offset-2">
+                {r.name}
+              </a>
               <div className="flex items-center gap-2 min-w-0">
                 <div className="flex h-4 gap-[2px]" style={{ width: pct(r.chars, maxChars) }}>
                   {r.english == null ? (
@@ -203,6 +205,8 @@ export type TraditionProgressRow = {
   translation_models: [string, number][];
   /** [id, title, public, pages scanned, transcribed, translated], most-translated first */
   book_pages: [string, string, boolean, number, number, number][];
+  /** our shelf for this tradition, when one exists */
+  href?: string;
 };
 
 // Plain names for the engine ids the page records carry.
@@ -274,7 +278,7 @@ export function TraditionProgress({ rows, n }: { rows: TraditionProgressRow[]; n
           squares are the same size in every tradition, so the areas compare directly. A page is transcribed when we
           hold its text (read from the image, or matched from an open typed edition) and translated when it has a
           draft English translation. &ldquo;Open typed text&rdquo; is the size of the openly licensed typed canon for
-          that tradition in the table below, converted to pages at our average page length in that language.
+          that tradition in the canon table, converted to pages at our average page length in that language.
           Each square opens a book whose pages it stands for; squares for books not yet public have no
           link. &ldquo;Read by&rdquo; and &ldquo;English by&rdquo; are shares of pages, from the engine each
           page records.
@@ -293,36 +297,27 @@ export function TraditionProgress({ rows, n }: { rows: TraditionProgressRow[]; n
           const tx = Math.min(Math.max(squares(t.pages_transcribed) - tr, 0), total - tr);
           const pct = (v: number) => (t.pages_scanned ? `${Math.round((v / t.pages_scanned) * 100)}%` : '—');
           return (
-            <div key={t.id} className="py-4 md:grid md:grid-cols-[14rem_minmax(0,1fr)] md:gap-6">
-              <div className="font-body text-sm mb-2 md:mb-0">
-                <div className="font-serif text-lg text-stone-900 leading-tight">{t.name}</div>
-                <div className="text-stone-600 mt-1">
+            <div key={t.id} className="py-5 md:grid md:grid-cols-[13rem_minmax(0,1fr)] md:gap-6">
+              <div className="font-body text-sm mb-3 md:mb-0">
+                <div className="font-serif text-lg text-stone-900 leading-tight">
+                  {t.href ? (
+                    <a href={t.href} className="hover:text-amber-800 hover:underline underline-offset-2">
+                      {t.name}
+                    </a>
+                  ) : (
+                    t.name
+                  )}
+                </div>
+                <div className="text-stone-600 mt-1 tabular-nums">
                   {fmt(t.books)} books · {fmt(t.pages_scanned)} pages
                 </div>
-                <div className="text-stone-500 text-xs mt-1 leading-snug">
-                  {pct(t.pages_transcribed)} transcribed · {pct(t.pages_translated)} translated
+                <div className="text-stone-500 text-xs mt-1 leading-snug tabular-nums">
+                  {pct(t.pages_translated)} translated · {pct(t.pages_transcribed)} transcribed
                   <br />
                   {fmt(t.readable_books)} books readable in English
-                  {t.canon_page_equivalents > 0 && (
-                    <>
-                      <br />
-                      open typed text: ≈ {short(t.canon_page_equivalents)} pages
-                    </>
-                  )}
-                  {engineLine(t.ocr_engines) && (
-                    <>
-                      <br />
-                      <span className="text-stone-600">Read by:</span> {engineLine(t.ocr_engines)}
-                    </>
-                  )}
-                  {engineLine(t.translation_models) && (
-                    <>
-                      <br />
-                      <span className="text-stone-600">English by:</span> {engineLine(t.translation_models)}
-                    </>
-                  )}
                 </div>
               </div>
+              <div className="min-w-0">
               <div
                 className="flex flex-wrap gap-[2px] content-start"
                 role="img"
@@ -342,6 +337,24 @@ export function TraditionProgress({ rows, n }: { rows: TraditionProgressRow[]; n
                       );
                     }),
                 )}
+              </div>
+              <div className="font-body text-xs text-stone-500 mt-3 leading-relaxed space-y-0.5">
+                {t.canon_page_equivalents > 0 && (
+                  <div>
+                    <span className="text-stone-700">Open typed text:</span> ≈ {short(t.canon_page_equivalents)} pages
+                  </div>
+                )}
+                {engineLine(t.ocr_engines) && (
+                  <div>
+                    <span className="text-stone-700">Read by:</span> {engineLine(t.ocr_engines)}
+                  </div>
+                )}
+                {engineLine(t.translation_models) && (
+                  <div>
+                    <span className="text-stone-700">English by:</span> {engineLine(t.translation_models)}
+                  </div>
+                )}
+              </div>
               </div>
             </div>
           );
@@ -375,9 +388,9 @@ export function TengyurProgress({
   const partly = perVolume.filter((v) => stateOf(v) === 'partly').length;
   const COLOR = { done: ENGLISH, partly: `${ENGLISH}66`, none: '#d6d3d1' } as const;
   const TITLE = { done: 'draft English for the whole volume', partly: 'draft English for part of the volume', none: 'imported and aligned, not yet translated' } as const;
-  const stages = [
-    { n: fmt(pagesImaged), label: 'page images imported from BDRC (W23703)' },
-    { n: fmt(pagesWithText), label: 'pages carrying the Esukhia public-domain text, aligned folio by folio' },
+  const stages: { n: string; label: string; href?: string }[] = [
+    { n: fmt(pagesImaged), label: 'page images imported from BDRC (W23703)', href: 'https://library.bdrc.io/show/bdr:W23703' },
+    { n: fmt(pagesWithText), label: 'pages carrying the Esukhia public-domain text, aligned folio by folio', href: 'https://github.com/Esukhia/derge-tengyur' },
     { n: fmt(pagesTranslated), label: `pages with a draft English translation, for $${fmt(Math.round(spendUsd))} in model costs` },
     { n: `${drafted} / ${perVolume.length}`, label: 'volumes drafted in full; every page is an unreviewed machine draft' },
   ];
@@ -402,7 +415,15 @@ export function TengyurProgress({
           <li key={i} className="bg-stone-50 px-4 py-4">
             <div className="font-body text-[11px] uppercase tracking-wider text-stone-400">Step {i + 1}</div>
             <div className="font-serif text-2xl text-stone-900 mt-1">{s.n}</div>
-            <div className="font-body text-sm text-stone-600 leading-snug mt-1">{s.label}</div>
+            <div className="font-body text-sm text-stone-600 leading-snug mt-1">
+              {s.href ? (
+                <a href={s.href} className="underline decoration-stone-300 underline-offset-2 hover:text-amber-800">
+                  {s.label}
+                </a>
+              ) : (
+                s.label
+              )}
+            </div>
           </li>
         ))}
       </ol>
@@ -450,6 +471,76 @@ export function StatusBoard({ items, n }: { items: { id: string; name: string; s
             </div>
           );
         })}
+      </div>
+    </Figure>
+  );
+}
+
+/* ---------- What the measured fixes changed ---------- */
+
+export type Improvement = {
+  change: string;
+  measure: string;
+  /** both on a 0–100 scale (a rate per 100 pages, or a percentage) */
+  before: number;
+  after: number;
+  /** true when lower is better */
+  lowerBetter: boolean;
+  inUse: boolean;
+  status: string;
+  /** what was measured on what, against what, by whom, when: the row's provenance in one line */
+  basis: string;
+  /** the write-up the numbers are copied from (a file pinned to a commit, or the issue comment that reports them) */
+  source: string;
+};
+
+export function ImprovementChart({ rows, n }: { rows: Improvement[]; n: number }) {
+  const BEFORE = '#a8a29e';
+  return (
+    <Figure
+      n={n}
+      title="What each measured change did"
+      caption="Each row is one change tested on the same pages against the same reference, old method and new. The grey dot is the old method, the coloured dot the new one, on a scale of 0 to 100 (a percentage, or a count per 100 pages). Solid rows are in use; faded rows were tested and not adopted. Under each row: the sample, the reference, who judged it and when, and a link to the write-up the numbers are copied from. These are measured samples, not a census of the corpus."
+    >
+      <div className="font-body text-xs text-stone-600 mb-4 flex flex-wrap gap-y-1">
+        <Swatch style={{ backgroundColor: BEFORE }} label="before" />
+        <Swatch style={{ backgroundColor: ENGLISH }} label="after" />
+      </div>
+      <div className="divide-y divide-stone-200 border-y border-stone-200">
+        {rows.map((r) => {
+          const lo = Math.min(r.before, r.after);
+          const hi = Math.max(r.before, r.after);
+          return (
+            <div key={r.change} className={`py-4 md:grid md:grid-cols-[18rem_minmax(0,1fr)] md:gap-6 ${r.inUse ? '' : 'opacity-60'}`}>
+              <div className="font-body text-sm mb-2 md:mb-0">
+                <div className="font-serif text-base text-stone-900 leading-tight">{r.change}</div>
+                <div className="text-stone-600 mt-1 leading-snug">{r.measure} ({r.lowerBetter ? 'lower is better' : 'higher is better'})</div>
+                <div className="text-xs mt-1">
+                  <span className={r.inUse ? 'text-teal-800 font-semibold' : 'text-stone-500'}>{r.status}</span>
+                </div>
+                <div className="text-[11px] text-stone-500 mt-1 leading-snug">
+                  {r.basis}.{' '}
+                  <a href={r.source} className="text-amber-800 underline underline-offset-2">Source</a>
+                </div>
+              </div>
+              <div className="relative h-10 self-center mx-4" role="img" aria-label={`${r.measure}: ${r.before} before, ${r.after} after`}>
+                <div className="absolute inset-x-0 top-1/2 h-px bg-stone-200" />
+                <div className="absolute top-1/2 h-[3px] -translate-y-1/2 rounded" style={{ left: `${lo}%`, width: `${hi - lo}%`, backgroundColor: ENGLISH, opacity: 0.35 }} />
+                {([[r.before, BEFORE, 'before'], [r.after, ENGLISH, 'after']] as const).map(([v, c, k]) => (
+                  <div key={k} className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center" style={{ left: `${v}%` }}>
+                    <div className="w-3 h-3 rounded-full ring-2 ring-white" style={{ backgroundColor: c }} />
+                    <div className={`absolute ${k === 'before' ? '-top-5' : 'top-4'} font-body text-xs tabular-nums ${k === 'after' ? 'text-stone-900 font-semibold' : 'text-stone-500'}`}>{v}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <div className="hidden md:flex justify-between font-body text-[11px] text-stone-400 mt-1 md:ml-[20.5rem] md:mr-4">
+        <span>0</span>
+        <span>50</span>
+        <span>100</span>
       </div>
     </Figure>
   );

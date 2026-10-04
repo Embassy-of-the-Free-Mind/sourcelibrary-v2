@@ -81,10 +81,14 @@ const SHEET_DISMISS_PULL = 90;
 /** Width of the desktop tool rail, the first column of the desktop grid. */
 const DESKTOP_RAIL_W = 66;
 /** Width over height at which a scan counts as a wide leaf (palm-leaf, pothi,
- *  pecha) and the desktop panes stack instead of sitting side by side. Above
- *  an unsplit two-page spread (about 1.3 to 1.6), so an ordinary book keeps
- *  its columns (#5352). */
-const WIDE_LEAF_RATIO = 1.7;
+ *  pecha) and the desktop panes stack instead of sitting side by side (#5352).
+ *  Was 1.7, above an unsplit two-page spread (about 1.3 to 1.6), so ordinary
+ *  books kept their columns. Lowered to 1.4 (#5746): a photograph of two pecha
+ *  leaves, one above the other, is about 1.5 (the British Library's EAP
+ *  volumes are 3888×2592), and in a column the leaves' long lines wrapped four
+ *  or five times. Shape alone cannot tell that photo from a spread, and Derek
+ *  chose one shape rule over a per-language one: unsplit spreads now stack too. */
+const WIDE_LEAF_RATIO = 1.4;
 /** Most of the screen a stacked wide leaf may take before the text beneath it
  *  gets too short to read. */
 const WIDE_LEAF_MAX_H = '50dvh';
@@ -1130,21 +1134,36 @@ function TranslitProgress({ ocrLength }: { ocrLength: number }) {
  * Suppressed when a paired critical edition is showing, because that surface
  * already carries its own, more specific version of the same warning and two
  * stacked disclaimers read as boilerplate.
+ *
+ * A page read by the specialist engine gets the quieter `caution` form: the
+ * text is good but unchecked, which is worth saying without the alarm (#5746).
  */
 function UnreliableTranscriptionNotice({
   book,
   page,
   paired,
 }: {
-  book: { language?: string | null };
+  book: { language?: string | null; title?: string | null };
   page: Pick<Page, 'ocr'>;
   paired: boolean;
 }) {
-  const flag = transcriptionReliability(book);
+  const flag = transcriptionReliability(book, page);
   // The flag is about OUR OCR of the script. A page whose text is an open
   // e-text fitted to the scan (#5571) was not read by it, and saying it was
   // contradicts the source line directly above.
   if (!flag || paired || pageTextSource(page)) return null;
+  if (flag.level === 'caution') {
+    return (
+      <aside
+        className="mb-5 pl-2.5 border-l-2 text-[12.5px] leading-snug"
+        style={{ color: 'var(--text-secondary, #6b6560)', borderColor: 'rgba(158,74,58,0.45)' }}
+        data-transcription-caution
+      >
+        <p className="m-0">{flag.message}</p>
+        <p className="m-0 mt-1 text-[11.5px]">{flag.evidence}</p>
+      </aside>
+    );
+  }
   return (
     <aside
       className="mb-5 rounded-md px-4 py-3 text-[13.5px] leading-snug"

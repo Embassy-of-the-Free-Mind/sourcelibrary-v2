@@ -1,0 +1,3420 @@
+{
+ "generated": "2026-10-03T21:07:22.416Z",
+ "arm": "served",
+ "note": "fidelity for our English is copied from results.json (the blind fidelity pass); the reference has no fidelity score — it is the guide the fidelity pass was judged against",
+ "n_pages": 52,
+ "profiles": {
+  "all": {
+   "pages": 52,
+   "ours": {
+    "fidelity": {
+     "mean": 3.442,
+     "ci": [
+      3.192,
+      3.683
+     ],
+     "n": 52
+    },
+    "readability": {
+     "mean": 3.423,
+     "ci": [
+      3.154,
+      3.673
+     ],
+     "n": 52
+    },
+    "register": {
+     "mean": 3.462,
+     "ci": [
+      3.25,
+      3.654
+     ],
+     "n": 52
+    },
+    "terminology": {
+     "mean": 3.481,
+     "ci": [
+      3.269,
+      3.692
+     ],
+     "n": 52
+    },
+    "ambiguity": {
+     "mean": 3.712,
+     "ci": [
+      3.462,
+      3.942
+     ],
+     "n": 52
+    },
+    "transparency": {
+     "mean": 3.404,
+     "ci": [
+      3.154,
+      3.635
+     ],
+     "n": 52
+    }
+   },
+   "reference": {
+    "readability": {
+     "mean": 4.115,
+     "ci": [
+      3.904,
+      4.308
+     ],
+     "n": 52
+    },
+    "register": {
+     "mean": 4.288,
+     "ci": [
+      4.096,
+      4.462
+     ],
+     "n": 52
+    },
+    "terminology": {
+     "mean": 4.058,
+     "ci": [
+      3.865,
+      4.25
+     ],
+     "n": 52
+    },
+    "ambiguity": {
+     "mean": 4.019,
+     "ci": [
+      3.827,
+      4.212
+     ],
+     "n": 52
+    },
+    "transparency": {
+     "mean": 3.481,
+     "ci": [
+      3.192,
+      3.769
+     ],
+     "n": 52
+    }
+   },
+   "stance_ours": {
+    "balanced": 11,
+    "literal": 40,
+    "free": 1
+   },
+   "stance_reference": {
+    "free": 14,
+    "literal": 17,
+    "balanced": 21
+   }
+  },
+  "lang:Hebrew": {
+   "pages": 15,
+   "ours": {
+    "fidelity": {
+     "mean": 3.8,
+     "ci": [
+      3.433,
+      4.133
+     ],
+     "n": 15
+    },
+    "readability": {
+     "mean": 3.8,
+     "ci": [
+      3.4,
+      4.2
+     ],
+     "n": 15
+    },
+    "register": {
+     "mean": 3.6,
+     "ci": [
+      3.267,
+      3.933
+     ],
+     "n": 15
+    },
+    "terminology": {
+     "mean": 3.667,
+     "ci": [
+      3.333,
+      3.933
+     ],
+     "n": 15
+    },
+    "ambiguity": {
+     "mean": 3.8,
+     "ci": [
+      3.2,
+      4.333
+     ],
+     "n": 15
+    },
+    "transparency": {
+     "mean": 3.467,
+     "ci": [
+      3,
+      3.867
+     ],
+     "n": 15
+    }
+   },
+   "reference": {
+    "readability": {
+     "mean": 4,
+     "ci": [
+      3.667,
+      4.333
+     ],
+     "n": 15
+    },
+    "register": {
+     "mean": 4.4,
+     "ci": [
+      4.067,
+      4.667
+     ],
+     "n": 15
+    },
+    "terminology": {
+     "mean": 4.4,
+     "ci": [
+      4.133,
+      4.667
+     ],
+     "n": 15
+    },
+    "ambiguity": {
+     "mean": 4.267,
+     "ci": [
+      4,
+      4.533
+     ],
+     "n": 15
+    },
+    "transparency": {
+     "mean": 3.8,
+     "ci": [
+      3.4,
+      4.2
+     ],
+     "n": 15
+    }
+   },
+   "stance_ours": {
+    "balanced": 5,
+    "literal": 10
+   },
+   "stance_reference": {
+    "free": 2,
+    "literal": 7,
+    "balanced": 6
+   }
+  },
+  "lang:Aramaic": {
+   "pages": 5,
+   "ours": {
+    "fidelity": {
+     "mean": 3.3,
+     "ci": [
+      2.8,
+      3.8
+     ],
+     "n": 5
+    },
+    "readability": {
+     "mean": 2.8,
+     "ci": [
+      1.8,
+      3.8
+     ],
+     "n": 5
+    },
+    "register": {
+     "mean": 3.4,
+     "ci": [
+      2.6,
+      4
+     ],
+     "n": 5
+    },
+    "terminology": {
+     "mean": 3.2,
+     "ci": [
+      2.4,
+      4
+     ],
+     "n": 5
+    },
+    "ambiguity": {
+     "mean": 3,
+     "ci": [
+      2.2,
+      3.8
+     ],
+     "n": 5
+    },
+    "transparency": {
+     "mean": 3,
+     "ci": [
+      2.4,
+      3.6
+     ],
+     "n": 5
+    }
+   },
+   "reference": {
+    "readability": {
+     "mean": 4.6,
+     "ci": [
+      3.8,
+      5
+     ],
+     "n": 5
+    },
+    "register": {
+     "mean": 4.4,
+     "ci": [
+      4,
+      4.8
+     ],
+     "n": 5
+    },
+    "terminology": {
+     "mean": 4,
+     "ci": [
+      3.4,
+      4.6
+     ],
+     "n": 5
+    },
+    "ambiguity": {
+     "mean": 3.8,
+     "ci": [
+      3.2,
+      4.4
+     ],
+     "n": 5
+    },
+    "transparency": {
+     "mean": 3.6,
+     "ci": [
+      3,
+      4.4
+     ],
+     "n": 5
+    }
+   },
+   "stance_ours": {
+    "literal": 4,
+    "balanced": 1
+   },
+   "stance_reference": {
+    "balanced": 2,
+    "free": 2,
+    "literal": 1
+   }
+  },
+  "lang:Arabic": {
+   "pages": 20,
+   "ours": {
+    "fidelity": {
+     "mean": 3.5,
+     "ci": [
+      3.05,
+      3.925
+     ],
+     "n": 20
+    },
+    "readability": {
+     "mean": 3.55,
+     "ci": [
+      3.2,
+      3.85
+     ],
+     "n": 20
+    },
+    "register": {
+     "mean": 3.55,
+     "ci": [
+      3.25,
+      3.8
+     ],
+     "n": 20
+    },
+    "terminology": {
+     "mean": 3.55,
+     "ci": [
+      3.2,
+      3.85
+     ],
+     "n": 20
+    },
+    "ambiguity": {
+     "mean": 4,
+     "ci": [
+      3.7,
+      4.3
+     ],
+     "n": 20
+    },
+    "transparency": {
+     "mean": 3.5,
+     "ci": [
+      3.1,
+      3.85
+     ],
+     "n": 20
+    }
+   },
+   "reference": {
+    "readability": {
+     "mean": 4.2,
+     "ci": [
+      3.85,
+      4.5
+     ],
+     "n": 20
+    },
+    "register": {
+     "mean": 4.35,
+     "ci": [
+      4.1,
+      4.6
+     ],
+     "n": 20
+    },
+    "terminology": {
+     "mean": 3.8,
+     "ci": [
+      3.45,
+      4.15
+     ],
+     "n": 20
+    },
+    "ambiguity": {
+     "mean": 3.95,
+     "ci": [
+      3.65,
+      4.3
+     ],
+     "n": 20
+    },
+    "transparency": {
+     "mean": 2.9,
+     "ci": [
+      2.5,
+      3.35
+     ],
+     "n": 20
+    }
+   },
+   "stance_ours": {
+    "literal": 17,
+    "balanced": 3
+   },
+   "stance_reference": {
+    "free": 9,
+    "balanced": 9,
+    "literal": 2
+   }
+  },
+  "lang:Persian": {
+   "pages": 12,
+   "ours": {
+    "fidelity": {
+     "mean": 2.958,
+     "ci": [
+      2.458,
+      3.417
+     ],
+     "n": 12
+    },
+    "readability": {
+     "mean": 3,
+     "ci": [
+      2.417,
+      3.583
+     ],
+     "n": 12
+    },
+    "register": {
+     "mean": 3.167,
+     "ci": [
+      2.667,
+      3.583
+     ],
+     "n": 12
+    },
+    "terminology": {
+     "mean": 3.25,
+     "ci": [
+      2.75,
+      3.667
+     ],
+     "n": 12
+    },
+    "ambiguity": {
+     "mean": 3.417,
+     "ci": [
+      3.167,
+      3.667
+     ],
+     "n": 12
+    },
+    "transparency": {
+     "mean": 3.333,
+     "ci": [
+      2.75,
+      3.917
+     ],
+     "n": 12
+    }
+   },
+   "reference": {
+    "readability": {
+     "mean": 3.917,
+     "ci": [
+      3.5,
+      4.333
+     ],
+     "n": 12
+    },
+    "register": {
+     "mean": 4,
+     "ci": [
+      3.417,
+      4.5
+     ],
+     "n": 12
+    },
+    "terminology": {
+     "mean": 4.083,
+     "ci": [
+      3.833,
+      4.333
+     ],
+     "n": 12
+    },
+    "ambiguity": {
+     "mean": 3.917,
+     "ci": [
+      3.5,
+      4.25
+     ],
+     "n": 12
+    },
+    "transparency": {
+     "mean": 4,
+     "ci": [
+      3.333,
+      4.583
+     ],
+     "n": 12
+    }
+   },
+   "stance_ours": {
+    "literal": 9,
+    "free": 1,
+    "balanced": 2
+   },
+   "stance_reference": {
+    "balanced": 4,
+    "literal": 7,
+    "free": 1
+   }
+  }
+ },
+ "disagreements": {
+  "n": 151,
+  "by_right": {
+   "reference": 94,
+   "ours": 32,
+   "both_defensible": 21,
+   "neither": 1,
+   "cant_tell": 3
+  },
+  "pages_with_ours_right_reference_wrong": 20,
+  "pages_with_reference_right_ours_wrong": 44
+ },
+ "legit_choice_pages": [
+  {
+   "id": "699ef9fd15618a982bb1ebd9_00790",
+   "lang": "Hebrew",
+   "note": "A stays close to the Hebrew sentence by sentence with bracketed glosses and ellipses at damaged spots; B is an expansive explanatory paraphrase that keeps Hebrew terms in Hebrew script and adds unmarked commentary.",
+   "stance_ours": "balanced",
+   "stance_reference": "free"
+  },
+  {
+   "id": "699ef9f2c2bcb75dbdbaad92_00102",
+   "lang": "Hebrew",
+   "note": "A glosses each term once in notes and then uses plain English, also attempting the marginal commentary; B carries every key term as an English-transliteration-Hebrew triple and gives only the main text.",
+   "stance_ours": "balanced",
+   "stance_reference": "literal"
+  },
+  {
+   "id": "69c7e216295ea01b70c8d7d2_00039",
+   "lang": "Hebrew",
+   "note": "A keeps the source's clipped verse stubs with 'and so on' and attempts the preceding paragraph and gloss; B completes the quoted verses, supplies references and smooths the chronicle, starting only at the chapter.",
+   "stance_ours": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "69920befebe5b0fa6be5d569_00199",
+   "lang": "Hebrew",
+   "note": "A keeps Hebrew terms (bikkurim, onen, terumah) and supplies sense in square brackets; B Englishes the terms and moves explanation into notes and glosses.",
+   "stance_ours": "balanced",
+   "stance_reference": "literal"
+  },
+  {
+   "id": "69d5ad004dc55b8478dde8b5_01455",
+   "lang": "Hebrew",
+   "note": "A uses archaic biblical English, 'Law' for Torah, and adds Reader/Cong. cues; B uses modern English, keeps 'Torah', and renders the page's rubrics and the longer Kaddish wording.",
+   "stance_ours": "literal",
+   "stance_reference": "literal"
+  },
+  {
+   "id": "69e7518610ee9075bcdcde12_00071",
+   "lang": "Hebrew",
+   "note": "A keeps thee/thou, verse lineation and brackets the supplied '[a Psalm]'; B runs the verses as prose, modernises to capitalised 'You' and leaves the supplied word unmarked.",
+   "stance_ours": "literal",
+   "stance_reference": "literal"
+  },
+  {
+   "id": "69e9617a2beefe2f6f72ba14_00253",
+   "lang": "Hebrew",
+   "note": "A is a close modern rendering with notes on mats, Holy Tongue and Yemen; B is an 1840 reading version that recasts sentences, adds 'The Khalif' and paraphrases idioms (trustworthy, kind-hearted, glory).",
+   "stance_ours": "literal",
+   "stance_reference": "free"
+  },
+  {
+   "id": "6953af0577f38f6761bd92a5_00210",
+   "lang": "Aramaic",
+   "note": "A keeps the editor's bare line-numbered scholarly rendering and transliteration (bath, Hallelia); B normalises names, glosses Liliths, Rophiel and Selah, and translates the whole page including commentary.",
+   "stance_ours": "literal",
+   "stance_reference": "literal"
+  },
+  {
+   "id": "69920bb1e0a548a13d884da7_00342",
+   "lang": "Hebrew",
+   "note": "A keeps 1917 biblical idiom (made it smoke, dashed, consecration, passive constructions); B gives plain modern active wording (burned, sprinkled, ordination) tracking this page's text.",
+   "stance_ours": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "69e7934280b52390feb18445_00049",
+   "lang": "Arabic",
+   "note": "A is a word-for-word crib keeping the plural voice and Sufi-philosophical terms (taqlid, insight, aspiration); B is an early-modern reading version that recasts metaphors and expands for English idiom.",
+   "stance_ours": "literal",
+   "stance_reference": "free"
+  },
+  {
+   "id": "69e8b0fd839ca3f47ec56c17_00048",
+   "lang": "Arabic",
+   "note": "A explains as it goes (capital for mal, added connectives and 'if you assume'); B keeps mal untranslated and follows the Arabic clause order as a bare crib.",
+   "stance_ours": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "6a08f8b89c1b82475e157ff4_00016",
+   "lang": "Arabic",
+   "note": "A is a recasting reading version that explains 'their sciences' as mathematics/exact sciences and smooths the syntax; B keeps the source's wording, images ('reins of piety') and apparatus notes.",
+   "stance_ours": "literal",
+   "stance_reference": "free"
+  },
+  {
+   "id": "69e53454d48480a386965c84_00230",
+   "lang": "Arabic",
+   "note": "A is an 1819 free retelling in indirect speech (and evidently from a fuller recension, adding speeches absent here); B is a close line-by-line crib that keeps the dialogue and idioms.",
+   "stance_ours": "literal",
+   "stance_reference": "free"
+  },
+  {
+   "id": "69908ac1c0656c0b3bcc0813_00050",
+   "lang": "Arabic",
+   "note": "A recasts the list of royal dangers and the fable into ornate continuous period prose; B keeps the enumerated structure, the dialogue turns and the Arabic key terms with notes.",
+   "stance_ours": "literal",
+   "stance_reference": "free"
+  },
+  {
+   "id": "69e9612a390d3ed634590dd2_00365",
+   "lang": "Arabic",
+   "note": "A gives an interpretive reading version with period spellings (Dihli) and no apparatus; B stays word-close, modernises names (Delhi) and glosses Ma'bar and Ta Ha/Ya Sin in notes.",
+   "stance_ours": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "699209b5bed8f4b5ff5b25ac_00590",
+   "lang": "Arabic",
+   "note": "A uses archaic scriptural English, keeps 'Allah' and adds bracketed addressees; B uses plain modern English, 'God', and glosses A'rab and bur in notes.",
+   "stance_ours": "literal",
+   "stance_reference": "literal"
+  },
+  {
+   "id": "69920bcde0a548a13d885a90_00940",
+   "lang": "Arabic",
+   "note": "A is an early-modern English Bible made from the Hebrew, in period idiom with no apparatus; B translates this Arabic version directly into modern English with explanatory notes.",
+   "stance_ours": "balanced",
+   "stance_reference": "literal"
+  },
+  {
+   "id": "6a06cdd7c749b698e5b2c9a4_00104",
+   "lang": "Arabic",
+   "note": "A is a tagged literal crib that keeps obscure lines and flags an unclear one; B is a Victorian reading version that expands, embellishes and names the heroine without notice.",
+   "stance_ours": "literal",
+   "stance_reference": "free"
+  },
+  {
+   "id": "69935b208e28d8f4c5d3c445_00228",
+   "lang": "Persian",
+   "note": "A keeps honorifics, the closing rhymed triad and transliterated terms with glosses; B compresses, names Ghazna for 'that city', drops honorifics and the final clause, and uses established equivalents with transliteration.",
+   "stance_ours": "literal",
+   "stance_reference": "balanced"
+  },
+  {
+   "id": "6a21994b4b61907ea5ffb7e5_00027",
+   "lang": "Persian",
+   "note": "A paraphrases freely into Victorian theological English (modes, One Real Being) with silent expansion; B keeps and glosses the Arabic terms (jala, istijla, aniyyat) in a close crib.",
+   "stance_ours": "literal",
+   "stance_reference": "free"
+  },
+  {
+   "id": "69e74eeb5cf1eaf3ad80ddc1_00237",
+   "lang": "Persian",
+   "note": "A is a word-order crib with bracketed Sufi glosses that resolve the wine/love imagery; B is a plain modern couplet rendering that leaves the imagery open.",
+   "stance_ours": "balanced",
+   "stance_reference": "literal"
+  },
+  {
+   "id": "699243fabc722ec0ee80b251_00066",
+   "lang": "Hebrew",
+   "note": "A keeps King James liturgical idiom and joins each verse to its refrain as chanted; B uses modern English, mirrors the two-column page layout and adds explanatory notes.",
+   "stance_ours": "literal",
+   "stance_reference": "balanced"
+  }
+ ],
+ "per_page": [
+  {
+   "id": "699ef9fd15618a982bb1ebd9_00790",
+   "book_id": "699ef9fd15618a982bb1ebd9",
+   "page_number": 790,
+   "lang": "Hebrew",
+   "genre": "kabbalah",
+   "reference_style": "free",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 3.5,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 3,
+    "transparency": 2,
+    "stance": "free"
+   },
+   "disagreements": [
+    {
+     "source": "וסודו רמז לי' גוים שכח' לאו עובדי ע\"ז הם",
+     "ours": "the ten nations were not merely idolaters",
+     "reference": "in the rest of the world are not considered as idol worshipers",
+     "right": "reference",
+     "why": "The OCR garbles the Chullin 13b dictum on gentiles outside the Land; A reads the damaged letters as 'ten nations' and inverts the sense."
+    },
+    {
+     "source": "אם הוא מסטרא דמסאבא או מסטרא דקרושה",
+     "ours": "from the side of impurity or the side of holiness",
+     "reference": "irrelevant whether the soul originated in the \"left\" or the \"right\" side",
+     "right": "ours",
+     "why": "Source says the signs indicate whether the spark is from impurity or holiness; B makes the distinction irrelevant and recasts it as left/right."
+    },
+    {
+     "source": "כילולי זה אסור לחסור באולם רשע",
+     "ours": "forbidden for a wicked person to enter the hall",
+     "reference": "forbidden to show himself i.e. to look upon the faces of רשעים",
+     "right": "reference",
+     "why": "Behind the OCR is the dictum that one may not look at the image of a wicked man; A builds 'enter the hall' from the corrupt letters."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A stays close to the Hebrew sentence by sentence with bracketed glosses and ellipses at damaged spots; B is an expansive explanatory paraphrase that keeps Hebrew terms in Hebrew script and adds unmarked commentary.",
+   "reason": "A is a close, flagged rendering that stumbles where the OCR is corrupt; B reads the underlying text better but silently expands and resolves much that the source leaves terse."
+  },
+  {
+   "id": "699ef9f2c2bcb75dbdbaad92_00102",
+   "book_id": "699ef9f2c2bcb75dbdbaad92",
+   "page_number": 102,
+   "lang": "Hebrew",
+   "genre": "kabbalah",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 3,
+    "register": 4,
+    "terminology": 5,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "disagreements": [
+    {
+     "source": "משפט וצדקה ביעקב אתה עשית",
+     "ours": "Justice and Righteousness in Jacob You have made",
+     "reference": "You made the justice-Mishpat and righteousness-Tzedakah of Yaakov",
+     "right": "ours",
+     "why": "The preposition is 'in Jacob', which the argument needs (justice located in Jacob as the middle line)."
+    },
+    {
+     "source": "אינו גוזר את הדין אלא תמים פעלו",
+     "ours": "does not decree judgment until His work is perfect",
+     "reference": "Rather, \"His action is perfect\"",
+     "right": "reference",
+     "why": "אלא is adversative ('rather'), introducing the verse phrase; A turns it into a temporal condition."
+    },
+    {
+     "source": "באה מדת אל שהיא למעלה ועשתה צדקה ועבד המשפט",
+     "ours": "performs Righteousness, and the strict Judgment passes",
+     "reference": "overrides justice-Mishpat-משפט and does charity-Tzedakah-צדקה",
+     "right": "both_defensible",
+     "why": "The OCR reading ועבד/ועבר is uncertain; either 'judgment passes away' or 'El passes over justice' fits."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A glosses each term once in notes and then uses plain English, also attempting the marginal commentary; B carries every key term as an English-transliteration-Hebrew triple and gives only the main text.",
+   "reason": "Both convey the argument accurately; A reads more smoothly but adds bullet formatting and a speculative rendering of the garbled commentary, while B is terminologically exact but cluttered and omits the commentary."
+  },
+  {
+   "id": "69c7e216295ea01b70c8d7d2_00039",
+   "book_id": "69c7e216295ea01b70c8d7d2",
+   "page_number": 39,
+   "lang": "Hebrew",
+   "genre": "history",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 4,
+    "readability": 3,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "disagreements": [
+    {
+     "source": "בכלל ובפרט אינן אלא לא' אלף ושלוש מאות וששי'",
+     "ours": "they were only forty-one thousand and three hundred and sixty",
+     "reference": "they are only thirty thousand three hundred and sixty",
+     "right": "reference",
+     "why": "The arithmetic (42,360 less the 12,000 from other tribes) requires thirty thousand; A follows a corrupt OCR numeral."
+    },
+    {
+     "source": "בכ'ג בסיון כתב מרדכי ספרים",
+     "ours": "On the twenty-third of Sivan, Mordecai wrote letters",
+     "reference": "On the twenty-third of Nisan Mordecai wrote letters",
+     "right": "ours",
+     "why": "The source says Sivan, matching Esther 8:9."
+    },
+    {
+     "source": "על אשר שטנה על יושבי יהודה וירושלים",
+     "ours": "because they had been adversaries against the inhabitants of Judah",
+     "reference": "they wrote an accusation against the dwellers of Judea and Jerusalem",
+     "right": "reference",
+     "why": "שטנה here is the written accusation of Ezra 4:6, not general enmity."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A keeps the source's clipped verse stubs with 'and so on' and attempts the preceding paragraph and gloss; B completes the quoted verses, supplies references and smooths the chronicle, starting only at the chapter.",
+   "reason": "A is a faithful but choppy crib with one numeral error; B is more readable but fills out verses beyond the source, drops the opening paragraph and gloss, and misnames a month."
+  },
+  {
+   "id": "69b52593cced70d8e6d72941_00037",
+   "book_id": "69b52593cced70d8e6d72941",
+   "page_number": 37,
+   "lang": "Hebrew",
+   "genre": "ethics",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 4,
+    "terminology": 3,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "disagreements": [
+    {
+     "source": "והוי זהיר בענתה כי דמעתה מצויה",
+     "ours": "Be careful regarding her tears, for her tears are frequent",
+     "reference": "be careful not to hurt her feelings, for her tears are frequent",
+     "right": "reference",
+     "why": "The word is אונאתה (wronging or hurting her), not her tears; B collapses it into the following clause."
+    },
+    {
+     "source": "באשתו אמרו קל וחומר באשת חבירו",
+     "ours": "Regarding one's own wife, they said this is a lesser degree",
+     "reference": "do not increase conversation with them, even with your wife",
+     "right": "neither",
+     "why": "The source gives an a fortiori to another man's wife; A drops that clause and B's text mangles it, recovering it only in a note."
+    },
+    {
+     "source": "ומי שיכול להוכיח ואינו מוכיח חוטא",
+     "ours": "whoever is able to rebuke and does not, he is a sinner",
+     "reference": "does not rebuke the transgressor, the transgression is on his head",
+     "right": "ours",
+     "why": "The source simply says he sins; A expands it into bearing the other's transgression."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "Both are readable and close; A reorders the columns and silently adds a Talmudic phrase and expansions, while B follows the page order with flagged glosses but misrenders two terms."
+  },
+  {
+   "id": "69920befebe5b0fa6be5d569_00199",
+   "book_id": "69920befebe5b0fa6be5d569",
+   "page_number": 199,
+   "lang": "Hebrew",
+   "genre": "halakha",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 4,
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 3,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 3,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "disagreements": [
+    {
+     "source": "וַאֲסוּרִין כָּל שֶׁהֵן לֵאָכֵל בִּירוּשָׁלַיִם",
+     "ours": "forbidden to eat even the smallest amount of them outside of Jerusalem",
+     "reference": "in Jerusalem the slightest mixture of them ... renders it forbidden",
+     "right": "reference",
+     "why": "Source says 'in Jerusalem' and kol shehen is the any-amount mixture rule; B silently flips it to 'outside' and reads it as a quantity eaten."
+    },
+    {
+     "source": "וְגִדּוּלֵיהֶן אֲסוּרִין מִלֶּאֱכֹל בִּירוּשָׁלַיִם",
+     "ours": "their offshoots are forbidden to be eaten in Jerusalem",
+     "reference": "what grows from them in Jerusalem is forbidden ... [outside of Jerusalem]",
+     "right": "both_defensible",
+     "why": "B follows the bare wording; A follows the traditional commentary and brackets its addition."
+    },
+    {
+     "source": "וַאֲסוּרִין לְאוֹנֵן; רַבִּי שִׁמְעוֹן מַתִּיר",
+     "ours": "Rabbi Shimon permits a mourner to eat them",
+     "reference": "Rabbi Shimon permits [bikkurim to an onen]",
+     "right": "both_defensible",
+     "why": "Source leaves the object open; A narrows to bikkurim in brackets (traditional), B leaves both tithe and first fruits."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A keeps Hebrew terms (bikkurim, onen, terumah) and supplies sense in square brackets; B Englishes the terms and moves explanation into notes and glosses.",
+   "reason": "A is a bracketed study crib, fully flagged but stiff; B reads smoothly with helpful notes but silently inserts 'outside of Jerusalem' against the source."
+  },
+  {
+   "id": "69d5ac5f4dc55b8478ddd6b5_00335",
+   "book_id": "69d5ac5f4dc55b8478ddd6b5",
+   "page_number": 335,
+   "lang": "Aramaic",
+   "genre": "halakha",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 2.5,
+    "readability": 1,
+    "register": 2,
+    "terminology": 2,
+    "ambiguity": 3,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 5,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 4,
+    "transparency": 5,
+    "stance": "balanced"
+   },
+   "disagreements": [
+    {
+     "source": "כל ידות האכלין שבסמן בגורן טהורות",
+     "ours": "handles of foods that are in the stack at the threshing floor",
+     "reference": "handles of food that one besasan on the threshing floor",
+     "right": "reference",
+     "why": "OCR בסמן is בססן, a verb whose meaning the sugya debates; B turns it into a location and loses the argument."
+    },
+    {
+     "source": "ממדת אכזריות למדת רחמנות",
+     "ours": "from the attribute of judgment to the attribute of mercy",
+     "reference": "from the attribute of cruelty to the attribute of mercy",
+     "right": "reference",
+     "why": "Source reads akhzariyut (cruelty); B substitutes the more familiar 'judgment'."
+    },
+    {
+     "source": "ומר סבר כיון דמהוות לבור גזרינן",
+     "ours": "since they serve as a partition, we do issue a decree",
+     "reference": "since they have departed from the halakhic status of being joined [lavud]",
+     "right": "reference",
+     "why": "The term is lavud (gaps under three handbreadths); B guesses from a corrupt OCR string."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A is an elucidated edition with literal text in bold and expansion marked; B renders a badly corrupted OCR word for word and is largely unintelligible, losing the Mishna, Shmuel's view and key terms."
+  },
+  {
+   "id": "69d5ad004dc55b8478dde8b5_01455",
+   "book_id": "69d5ad004dc55b8478dde8b5",
+   "page_number": 1455,
+   "lang": "Hebrew",
+   "genre": "liturgy",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "disagreements": [
+    {
+     "source": "בשובו אל נותן כתיב",
+     "ours": "When He returns to the Giver, it is written",
+     "reference": "when he returneth to his habitation, as it is written",
+     "right": "reference",
+     "why": "OCR נותן is נוהו (his habitation); B translates the misreading into a phrase with no sense in context."
+    },
+    {
+     "source": "ובטחה ואמר שובה ה' רבבות אלפי ישראל",
+     "ours": "And with trust, it says, \"Return, O Lord",
+     "reference": "And when it rested, he said, Return, O Lord",
+     "right": "reference",
+     "why": "Quotation of Num 10:36 (uvenuḥo yomar); B follows the OCR corruption."
+    },
+    {
+     "source": "ברוך אדני יום יום יעמס לנו האל ישועתנו",
+     "ours": "God bears our burden, He is our salvation",
+     "reference": "if one burdeneth us, God is our salvation",
+     "right": "both_defensible",
+     "why": "Ps 68:20 is genuinely ambiguous between 'loads us' and 'bears for us'; each picks one reading."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A uses archaic biblical English, 'Law' for Torah, and adds Reader/Cong. cues; B uses modern English, keeps 'Torah', and renders the page's rubrics and the longer Kaddish wording.",
+   "reason": "Both are close liturgical renderings; A silently skips rubrics and the Kaddish messianic clause not in its rite, B silently drops the 'redeemer to Zion' verse and turns corrupt rubrics into nonsense."
+  },
+  {
+   "id": "69e7518610ee9075bcdcde12_00071",
+   "book_id": "69e7518610ee9075bcdcde12",
+   "page_number": 71,
+   "lang": "Hebrew",
+   "genre": "scripture",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 5,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 3,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 4,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "disagreements": [
+    {
+     "source": "לִרְקָמוֹת תּוּבַל לַמֶּלֶךְ",
+     "ours": "She shall be led unto the king in raiment of needlework",
+     "reference": "She shall be led unto the king on richly woven stuff",
+     "right": "both_defensible",
+     "why": "The lamed allows either embroidered garments worn or woven carpets walked on."
+    },
+    {
+     "source": "קֹדֶשׁ מִשְׁכְּנֵי עֶלְיוֹן",
+     "ours": "the holy place of the tabernacles of the Most High",
+     "reference": "The holiest dwelling-place of the Most High",
+     "right": "both_defensible",
+     "why": "A reads a superlative construct, B keeps the plural 'dwellings' literally."
+    },
+    {
+     "source": "מִמִּשְׁבְּצוֹת זָהָב לְבוּשָׁהּ",
+     "ours": "her clothing is inwrought with gold",
+     "reference": "Her raiment is of chequer work inwrought with gold",
+     "right": "reference",
+     "why": "B drops mishbetsot (settings / chequer work), leaving only the gold."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A keeps thee/thou, verse lineation and brackets the supplied '[a Psalm]'; B runs the verses as prose, modernises to capitalised 'You' and leaves the supplied word unmarked.",
+   "reason": "Near-identical wording; B's capitalised 'You' for the king adds a divine-address reading the Hebrew does not mark, and it silently adds 'a Psalm' and drops chequer work."
+  },
+  {
+   "id": "6990633def12272ffdc907b0_00211",
+   "book_id": "6990633def12272ffdc907b0",
+   "page_number": 211,
+   "lang": "Aramaic",
+   "genre": "kabbalah",
+   "reference_style": "free",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 3,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 2,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 5,
+    "register": 4,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "free"
+   },
+   "disagreements": [
+    {
+     "source": "ולא לוחא אינוס חכחא והשבע וארוי קדמיתא ומה דישתאר לתן למסכני",
+     "ours": "should first satisfy himself and then give what remains to the poor",
+     "reference": "A man should not say, I will first satisfy myself",
+     "right": "reference",
+     "why": "The source forbids eating first and giving leftovers; the guests' share comes first. B inverts the ruling."
+    },
+    {
+     "source": "השתא דאזמנין ליה ולכלהו צדיקייא ולדוד מלכא ולא יהבין לון חולקהון",
+     "ours": "Now that [the poor] invite him, and all the righteous ones",
+     "reference": "when a man invites him and all the righteous",
+     "right": "reference",
+     "why": "The inviter is the host in the sukkah, not the poor; B's bracketed subject is a wrong guess."
+    },
+    {
+     "source": "כלהו קיימי קמיה ואמרי אל תלחם את לחם רע עין",
+     "ours": "all of them stand over him and say",
+     "reference": "they all hold aloof from him, saying",
+     "right": "both_defensible",
+     "why": "OCR reads 'stand before him'; the received text reads 'rise away from him', which A follows."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A is a smooth free version that silently drops the Malachi verse and the Ra'aya Meheimna paragraph and flattens terms; B keeps and glosses terms and notes difficulty but invents sense from garbled OCR and reverses the charity ruling."
+  },
+  {
+   "id": "69e9617a2beefe2f6f72ba14_00253",
+   "book_id": "69e9617a2beefe2f6f72ba14",
+   "page_number": 253,
+   "lang": "Hebrew",
+   "genre": "travel",
+   "reference_style": "early-modern",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "free"
+   },
+   "disagreements": [
+    {
+     "source": "וּמַזְכִּירִין אוֹתָם שָׂרֵי הַשּׁוּק",
+     "ours": "The officers of the market announce them",
+     "reference": "which his officers sell in the public market",
+     "right": "both_defensible",
+     "why": "A follows the printed 'mazkirin'; B reads or emends to 'mokhrin' (sell) and makes the officers his."
+    },
+    {
+     "source": "וּבְאוֹתָהּ שָׁעָה יָרִים וּמַנִּיחַ כְּנַף בִּגְדוֹ מִן הַחַלּוֹן",
+     "ours": "he lifts and places the corner of his garment",
+     "reference": "he rises and puts one corner of his garment out",
+     "right": "ours",
+     "why": "The verb is transitive, lifting the garment's hem; B makes the caliph himself rise."
+    },
+    {
+     "source": "וְהַתּוֹעִים הַבָּאִים מֵאֶרֶץ מֶרְחָק לָלֶכֶת לְמֶכָּה",
+     "ours": "the travelers who come from a distant land",
+     "reference": "The pilgrims, which come hither from distant countries",
+     "right": "reference",
+     "why": "The word is the medieval Jewish term for Muslim pilgrims ('the erring'); 'travelers' loses it, though neither keeps the polemic edge."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A is a close modern rendering with notes on mats, Holy Tongue and Yemen; B is an 1840 reading version that recasts sentences, adds 'The Khalif' and paraphrases idioms (trustworthy, kind-hearted, glory).",
+   "reason": "Both convey the passage accurately; A is literal and flagged, B fluent early-modern prose with unflagged smoothing and small additions."
+  },
+  {
+   "id": "6953af0577f38f6761bd92a5_00210",
+   "book_id": "6953af0577f38f6761bd92a5",
+   "page_number": 210,
+   "lang": "Aramaic",
+   "genre": "magic",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 3,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "disagreements": [
+    {
+     "source": "בשׁום טרדי בת אוני",
+     "ours": "In the name of Tardi, daughter of Oni",
+     "reference": "Ṭardi bath Oni",
+     "right": "ours",
+     "why": "The transcribed line opens with 'in the name'; A's translation starts at the client's name without it."
+    },
+    {
+     "source": "אמן אמן אמן אמן סאלה הלליה",
+     "ours": "Amen, Amen, Amen, Amen, Selah, Hallelujah",
+     "reference": "Amen, Amen, Amen, Amen, Hallelia, Selah",
+     "right": "ours",
+     "why": "Source order is Selah then Hallelujah; no real change of meaning, and B's second copy follows A's order."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A keeps the editor's bare line-numbered scholarly rendering and transliteration (bath, Hallelia); B normalises names, glosses Liliths, Rophiel and Selah, and translates the whole page including commentary.",
+   "reason": "The texts are nearly identical for the incantation; B adds helpful glosses but duplicates the translation, adds a heading not on the page and rewrites the commentary inside notes with unflagged expansion."
+  },
+  {
+   "id": "69c79fed92b884e4f817374f_00107",
+   "book_id": "69c79fed92b884e4f817374f",
+   "page_number": 107,
+   "lang": "Hebrew",
+   "genre": "kabbalah",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 2,
+    "readability": 3,
+    "register": 3,
+    "terminology": 2,
+    "ambiguity": 1,
+    "transparency": 1,
+    "stance": "balanced"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 3,
+    "register": 4,
+    "terminology": 5,
+    "ambiguity": 4,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "disagreements": [
+    {
+     "source": "סוכר המחילות. וסורח מחורי הלחט",
+     "ours": "the Rememberer of forgotten things ... Back of the Throne",
+     "reference": "Who forms the luminaries ... Who creates the lights of fire",
+     "right": "reference",
+     "why": "The garbled OCR stands for the blessings 'yotzer ha-me'orot' and 'bore me'orei ha-esh'; B invents phrases."
+    },
+    {
+     "source": "סתכתר כעליון מחיר פניו למט'",
+     "ours": "He is crowned in the Supreme, hiding His face below",
+     "reference": "when the Supernal Crown-Keter Elyon shines His face below",
+     "right": "reference",
+     "why": "The text says the Supernal Keter shines its face downward; B reverses shining into hiding."
+    },
+    {
+     "source": "כי יוס סלס מלות ועטרה פניס של יעם",
+     "ours": "The day of three attributes and the crown of the face",
+     "reference": "there are 310 facets-Panim-פנים of wrath-Za'am-זעם",
+     "right": "reference",
+     "why": "The source speaks of 310 faces of wrath attached to Pachad Yitzchak; B reads OCR noise as words."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A is an accurate, heavily glossed literal version whose triple term-labelling clutters reading but brackets its expansions; B translates corrupt OCR as if sound, producing confident invented doctrine with no flag of uncertainty."
+  },
+  {
+   "id": "69b4cd44d5b6c3815e1a52de_00215",
+   "book_id": "69b4cd44d5b6c3815e1a52de",
+   "page_number": 215,
+   "lang": "Hebrew",
+   "genre": "halakha",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 3,
+    "readability": 3,
+    "register": 3,
+    "terminology": 3,
+    "ambiguity": 3,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "disagreements": [
+    {
+     "source": "שתה מים טמאים טבל והקיא טהורים",
+     "ours": "If he drank pure liquids, he immersed and vomited",
+     "reference": "If one drank unclean water and immersed and then vomited",
+     "right": "reference",
+     "why": "Source says טמאים (unclean) water; B reverses it to pure, destroying the contrast with the preceding case."
+    },
+    {
+     "source": "פרים בני שתים שנא' ופר שני בן בקר",
+     "ours": "heifers [are used] at two years old ... a heifer of the herd",
+     "reference": "bulls must be no more than two years old ... the second bull",
+     "right": "reference",
+     "why": "פרים/פר are bulls and the prooftext turns on שני ('second'); B makes them heifers and drops the word the derivation depends on."
+    },
+    {
+     "source": "החבל שהוא קשור בקופה אינו חבור אלא אם כן תפר",
+     "ours": "not considered a connection unless one has tied it [with a knot]",
+     "reference": "not counted as a connection unless it has been sewn on",
+     "right": "reference",
+     "why": "תפר is 'sewed'; the rope is already tied (קשור), so B's 'tied' makes the ruling circular."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A is a clear, lightly bracketed reading version with a few silent smoothings (drops 'and one day' in Parah 1:3); B is a bracket-heavy crib that follows OCR noise and makes real halakhic errors (pure/unclean, bulls/heifers, asham as sin offering, Hillel's ruling merged into the next clause)."
+  },
+  {
+   "id": "69920bb1e0a548a13d884da7_00342",
+   "book_id": "69920bb1e0a548a13d884da7",
+   "page_number": 342,
+   "lang": "Hebrew",
+   "genre": "scripture",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 4,
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "disagreements": [
+    {
+     "source": "ואת הפר ואת עורו ואת בשרו ואת פרשו שרף",
+     "ours": "the bull and his skin and his flesh he burned",
+     "reference": "the bullock, and its skin, and its flesh, and its dung",
+     "right": "reference",
+     "why": "B silently drops ואת פרשו ('and its dung'), which is in the source."
+    },
+    {
+     "source": "ואת הפדר ואת הקרב והכרעים רחץ במים",
+     "ours": "burned ... the fat and the entrails. And the legs he washed",
+     "reference": "when the inwards and the legs were washed with water",
+     "right": "ours",
+     "why": "This page's text reads ואת הקרב with the burned parts and only the legs washed; A follows the Masoretic division instead."
+    },
+    {
+     "source": "ויזרק משה את הדם על המזבח סביב",
+     "ours": "Moses sprinkled the blood on the altar round about",
+     "reference": "Moses dashed the blood against the altar round about",
+     "right": "both_defensible",
+     "why": "זרק is a throwing/dashing motion, so A is more exact, but 'sprinkled' is the long-standing traditional rendering."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A keeps 1917 biblical idiom (made it smoke, dashed, consecration, passive constructions); B gives plain modern active wording (burned, sprinkled, ordination) tracking this page's text.",
+   "reason": "Both are accurate scripture renderings; A is the dignified period version with precise cultic vocabulary but follows the Masoretic text, B is modern and close to the page's wording but drops 'its dung' and flattens the cultic verbs."
+  },
+  {
+   "id": "69e7934280b52390feb18445_00049",
+   "book_id": "69e7934280b52390feb18445",
+   "page_number": 49,
+   "lang": "Arabic",
+   "genre": "philosophy",
+   "reference_style": "early-modern",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 5,
+    "readability": 3,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 5,
+    "terminology": 3,
+    "ambiguity": 3,
+    "transparency": 2,
+    "stance": "free"
+   },
+   "disagreements": [
+    {
+     "source": "ونسبح بك في البحر الذي عبرناه اولا",
+     "ours": "make you swim in the sea we crossed first",
+     "reference": "make you steer by the same Compass",
+     "right": "ours",
+     "why": "The source image is swimming a sea already crossed; B substitutes an unrelated compass metaphor."
+    },
+    {
+     "source": "وان عرضت الان الي لمحة يسيرة علي التشويق",
+     "ours": "if there has presented itself now a slight glimpse of the longing",
+     "reference": "I perceive some Glimmerings now, by the help of which I shall inflame",
+     "right": "reference",
+     "why": "The sense is the author now offering a brief glimpse to whet desire; A's conditional follows an OCR slip, though B's 'I perceive' is also loose."
+    },
+    {
+     "source": "وتكون قد ارضيت ربك وارضاك",
+     "ours": "you will have pleased your Lord, and He will have pleased you",
+     "reference": "take delight in your Lord, and he will delight in you",
+     "right": "ours",
+     "why": "ارضيت ربك is 'you satisfied your Lord'; B turns the first half into the reader's own delight."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A is a word-for-word crib keeping the plural voice and Sufi-philosophical terms (taqlid, insight, aspiration); B is an early-modern reading version that recasts metaphors and expands for English idiom.",
+   "reason": "A is stiff but faithful and carries a spurious though flagged page note; B is lively period prose that silently adds explanatory clauses, swaps images and drops 'this art'."
+  },
+  {
+   "id": "69e8b0fd839ca3f47ec56c17_00048",
+   "book_id": "69e8b0fd839ca3f47ec56c17",
+   "page_number": 48,
+   "lang": "Arabic",
+   "genre": "science",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 3,
+    "readability": 3,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "disagreements": [
+    {
+     "source": "يعدل ثلثة اثمان مال وثلث وصايا وخمسة اثمان وصية",
+     "ours": "three-eighths of a mal plus one-third of a legacy and five-eighths",
+     "reference": "three-eighths of the capital plus three and five-eighth times the legacy",
+     "right": "reference",
+     "why": "ثلث وصايا with a plural noun is 'three legacies', as the next step (three and five-eighths) confirms; B's one-third breaks the arithmetic."
+    },
+    {
+     "source": "تقيم الفريضة من اثني عشر سهما لكل اخت ثلث",
+     "ours": "at twelve shares for each sister, a third of what remains",
+     "reference": "heritage as consisting of twelve parts. Each sister receives one-third",
+     "right": "reference",
+     "why": "The estate is divided into twelve shares in total; 'each sister' begins the next clause, not twelve shares apiece."
+    },
+    {
+     "source": "فان تركت اختين وامرأة واوصي لرجل",
+     "ours": "If you leave two sisters and a wife",
+     "reference": "If some one leaves two sisters and a wife",
+     "right": "reference",
+     "why": "The testator is a third party throughout; the second person in this text is the calculator, so 'you leave' misreads the unvocalised verb."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A explains as it goes (capital for mal, added connectives and 'if you assume'); B keeps mal untranslated and follows the Arabic clause order as a bare crib.",
+   "reason": "A is a clear 1831 mathematical rendering with silent explanatory expansions; B is closer in form and keeps the key term but has two parsing slips that garble the computation and leaves mal unglossed."
+  },
+  {
+   "id": "69e8b2ac2ff2a8dc09e7883c_00025",
+   "book_id": "69e8b2ac2ff2a8dc09e7883c",
+   "page_number": 25,
+   "lang": "Arabic",
+   "genre": "philosophy",
+   "reference_style": "free",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 1,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 1,
+    "stance": "balanced"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 4,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "free"
+   },
+   "disagreements": [],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "MISALIGNED: B (machine) translates the FOLLOWING page (three kinds of proof, apparent/hidden, Abu Hamid), not this source page, so nothing of the source is rendered and no passage can be compared; A covers the page as a readable free version but flattens terms (ijtihad as 'judges rightly'/'capacity of arbitration', 'mental sciences' for intellectual first principles, 'in universals' for what comes after the principles) with no flags."
+  },
+  {
+   "id": "6953dd4277f38f6761be739a_00057",
+   "book_id": "6953dd4277f38f6761be739a",
+   "page_number": 57,
+   "lang": "Arabic",
+   "genre": "philosophy",
+   "reference_style": "free",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 4.5,
+    "readability": 5,
+    "register": 4,
+    "terminology": 5,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 2,
+    "register": 3,
+    "terminology": 2,
+    "ambiguity": 3,
+    "transparency": 2,
+    "stance": "free"
+   },
+   "disagreements": [
+    {
+     "source": "الارادة هي التي تخص أحد المتماثلين",
+     "ours": "the will is what specifies one of two identical options",
+     "reference": "intention which fixes the shape of a thing",
+     "right": "ours",
+     "why": "The source speaks of will selecting one of two similars (takhsis), not of fixing a shape."
+    },
+    {
+     "source": "الارادة لا يكون عنها الا مراد محدث",
+     "ours": "nothing but a temporally created object can proceed from the will",
+     "reference": "intention is nothing but a created thing",
+     "right": "ours",
+     "why": "The premise is about what proceeds from the will (a created willed object), not that the will itself is created."
+    },
+    {
+     "source": "صرح بما الا ظهر منه ان الارادة موجدة موجودات حادثة",
+     "ours": "the Will is what brings created beings into existence",
+     "reference": "has only said that it exists and the things are created",
+     "right": "ours",
+     "why": "mujida is active/causative: the will brings originated beings into existence; A misses the causal claim."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A garbles the scholastic argument (correlatives as 'adjuncts', act/potency blurred, 'his act of placing the void is bad') and is hard to follow; B is clear, glosses every technical term and cites the verse, but silently adds 'leading to an infinite regress', 'Divine' and reorders the eternal/created pair."
+  },
+  {
+   "id": "6a08f8b89c1b82475e157ff4_00016",
+   "book_id": "6a08f8b89c1b82475e157ff4",
+   "page_number": 16,
+   "lang": "Arabic",
+   "genre": "philosophy",
+   "reference_style": "free",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 5,
+    "register": 4,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 2,
+    "stance": "free"
+   },
+   "disagreements": [
+    {
+     "source": "لكن الله إذا تجلى لشيء خضع له",
+     "ours": "when God manifests Himself to something, it humbles itself before Him",
+     "reference": "When God reveals Himself in anything, He abases Himself thereto",
+     "right": "ours",
+     "why": "The subject of khada'a is the thing, which submits to God; A inverts it."
+    },
+    {
+     "source": "فأنكر جميع علومهم وادعى جهلهم فيها",
+     "ours": "denies all their sciences and claims they are ignorant of them",
+     "reference": "Accusing their professors of being astray",
+     "right": "ours",
+     "why": "Source says he alleged their ignorance in those sciences, not that they are astray."
+    },
+    {
+     "source": "علم الحساب المعرف بمسير الشمس والقمر",
+     "ours": "the science of arithmetic, which tracks the paths",
+     "reference": "the astronomical calculations which define the orbits",
+     "right": "reference",
+     "why": "In context hisab is the computation of solar and lunar motion; 'arithmetic' is too narrow."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A is a recasting reading version that explains 'their sciences' as mathematics/exact sciences and smooths the syntax; B keeps the source's wording, images ('reins of piety') and apparatus notes.",
+   "reason": "A reads fluently but silently expands (mathematicians, exact sciences, 'birth or the death') and softens zajr; B is closer and keeps the editor's notes, yet silently drops the opening sentence fragment and weakens zajr to 'warned'."
+  },
+  {
+   "id": "69d5ac07d0bd3547a5654dcc_00313",
+   "book_id": "69d5ac07d0bd3547a5654dcc",
+   "page_number": 313,
+   "lang": "Arabic",
+   "genre": "geography",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 3.5,
+    "readability": 3,
+    "register": 4,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 4,
+    "terminology": 5,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "disagreements": [
+    {
+     "source": "لان كرته متبد وفيها الهناءة",
+     "ours": "because its sphere is changing, and in it is tranquility",
+     "reference": "because the moon's globe is watery, which is a blessing",
+     "right": "reference",
+     "why": "The OCR word is corrupt; 'watery' (ma'iyya) fits the cold-ray argument, 'changing' follows the OCR error."
+    },
+    {
+     "source": "آدت يران",
+     "ours": "Adityas",
+     "reference": "The Suns according to the Aditya-purana",
+     "right": "reference",
+     "why": "The column heading names the Aditya-purana as a source, not the Adityas as a class."
+    },
+    {
+     "source": "قوت لانه يمون الناس",
+     "ours": "Strength, because he sustains the people",
+     "reference": "Nourishment, for he nourishes men",
+     "right": "reference",
+     "why": "The explanatory clause (provisioning people) requires qut 'nourishment', not quwwa 'strength'."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A follows the OCR word for word with tagged term glosses but inherits its errors (Soma-kara for -graha, 'changing', 'Daitya', 'suns of the months ... defect of the disagreement' left opaque); B is the expert's restored reading with correct Sanskrit names, though it recasts ('names of the months', 'Vernacular Names', 'which means the left eye') and adds a cross-reference without marking its emendations."
+  },
+  {
+   "id": "69e9614d2beefe2f6f72addf_00295",
+   "book_id": "69e9614d2beefe2f6f72addf",
+   "page_number": 295,
+   "lang": "Arabic",
+   "genre": "history",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 4,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 3,
+    "transparency": 2,
+    "stance": "balanced"
+   },
+   "disagreements": [
+    {
+     "source": "من جهة التعديل و التجويز",
+     "ours": "through the concepts of modification and possibility",
+     "reference": "declaring one thing as just, another as admissible",
+     "right": "reference",
+     "why": "ta'dil is the kalam term for declaring (God) just, not 'modification'; A keeps the theological sense, B flattens it."
+    },
+    {
+     "source": "غير مرخص في سماع كلامه",
+     "ours": "they are not permitted to have their speech heard",
+     "reference": "they will not allow him to hear the word of the Koran",
+     "right": "ours",
+     "why": "The pronoun is the dissenter's own speech: no one may listen to him; the Koran is not mentioned here."
+    },
+    {
+     "source": "إلا أن القوم بها مضطرون في إقامة السنن ... إلى الحسابات النجومية",
+     "ours": "compelled by the necessity of performing their rituals",
+     "reference": "have been wheedled into a predilection for astronomical calculation",
+     "right": "ours",
+     "why": "mudtarrun ila = they are in need of astronomical reckoning for their rites; nothing about being wheedled."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A is fluent Victorian prose but silently expands (added sentence on Islam, 'Unique and Eternal God', 'from his books') and misreads whose speech is banned; B tracks the Arabic closely with flagged terms but botches ta'dil/tajwiz; both read 'dun' as 'worse than' Pharaoh's words."
+  },
+  {
+   "id": "6a2198371994d1df1e5e0235_00118",
+   "book_id": "6a2198371994d1df1e5e0235",
+   "page_number": 118,
+   "lang": "Arabic",
+   "genre": "science",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 4,
+    "terminology": 3,
+    "ambiguity": 5,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "disagreements": [
+    {
+     "source": "لأن التعديل للميلاد به أسهل",
+     "ours": "adjusting for birth times with it is easier",
+     "reference": "more easily find the equation for the moled",
+     "right": "reference",
+     "why": "al-milad here is the Jewish molad (conjunction) and ta'dil the astronomical equation; 'birth times' is a mistranslation."
+    },
+    {
+     "source": "لعرض بيت المقدس أربع عشرة ساعة وشئ",
+     "ours": "fourteen hours and some fraction",
+     "reference": "13h. plus a fraction",
+     "right": "ours",
+     "why": "The source as transcribed reads fourteen; A's 13 follows a different reading or emendation."
+    },
+    {
+     "source": "بالحساب الذي أورده اليهود في الجدول الذي حللناه",
+     "ours": "calculation provided by the Jews in the table we analyzed",
+     "reference": "traditional calculation of the Jews, or by means of the table",
+     "right": "cant_tell",
+     "why": "This transcription has no 'or' and reads 'analysed', supporting B, but A may follow a manuscript variant (aw / 'amilnahu)."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "Both are accurate technical prose on the whole; A handles the calendrical terms expertly (moled, Table of Limits) with bracketed supplements but an unflagged inserted heading and Greek gloss; B is transparent and glossed but misreads al-milad as birth times."
+  },
+  {
+   "id": "69e53454d48480a386965c84_00230",
+   "book_id": "69e53454d48480a386965c84",
+   "page_number": 230,
+   "lang": "Arabic",
+   "genre": "adab",
+   "reference_style": "free",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 1,
+    "stance": "free"
+   },
+   "disagreements": [
+    {
+     "source": "دخل عليه القاضي وطائفة من وجوه اصحابه بكتاب",
+     "ours": "the judge entered to see him, accompanied by a group",
+     "reference": "his attendants had waited two hours in expectation",
+     "right": "ours",
+     "why": "The source has the judge and notables bringing the record; the two-hour wait and early rising are not in this text."
+    },
+    {
+     "source": "فان ظنونهم قد اجتمعت على انك مجرم",
+     "ours": "their suspicions have converged that you are a criminal",
+     "reference": "information which we had already received was sufficient",
+     "right": "ours",
+     "why": "The judge argues from the unanimous suspicion of the silent assembly, not from prior information or the king's will."
+    },
+    {
+     "source": "سيهيج عليك ما لا تقعد له ولا تقوم",
+     "ours": "incite against you something you will not be able to sit",
+     "reference": "risk of being deceived by the specious arguments",
+     "right": "ours",
+     "why": "The mother warns that delay will let Dimna stir up trouble the king cannot cope with; A recasts it as being deceived."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A is an 1819 free retelling in indirect speech (and evidently from a fuller recension, adding speeches absent here); B is a close line-by-line crib that keeps the dialogue and idioms.",
+   "reason": "A reads as a polished period paraphrase but drops the mother's dialogue and the death-over-shame maxim and adds whole speeches not on this page; B is faithful and clear, slightly stiff in idiom."
+  },
+  {
+   "id": "69908ac1c0656c0b3bcc0813_00050",
+   "book_id": "69908ac1c0656c0b3bcc0813",
+   "page_number": 50,
+   "lang": "Arabic",
+   "genre": "adab",
+   "reference_style": "free",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 4,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 2,
+    "stance": "free"
+   },
+   "disagreements": [
+    {
+     "source": "وأما الزمان فالقحط وكسر الثمرات",
+     "ours": "marred by drought and the failure of harvests",
+     "reference": "age and infirmities of the sovereign, or famine or war",
+     "right": "ours",
+     "why": "The source names only drought and failed crops; the sovereign's old age and war are A's additions."
+    },
+    {
+     "source": "وأما الفصاحه والافراط في الشتم والضرب",
+     "ours": "eloquence, it is ruined by excess in cursing and striking",
+     "reference": "unfeeling and inhuman passions, by which calumny is engendered",
+     "right": "reference",
+     "why": "The manuscript word is a corruption of fazaza (harshness), defined as excess in abuse and blows; B keeps 'eloquence' and invents 'ruined by'."
+    },
+    {
+     "source": "مثل العلجوم البجاع الذي اراد",
+     "ours": "the likeness of the heron",
+     "reference": "the fate of the swan, who perished",
+     "right": "both_defensible",
+     "why": "'Uljum is an uncertain water-bird (drake/heron-like); swan and heron are both conventional guesses, B flags the doubt."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A recasts the list of royal dangers and the fable into ornate continuous period prose; B keeps the enumerated structure, the dialogue turns and the Arabic key terms with notes.",
+   "reason": "A is an elegant free expansion that blurs the enumerated categories, drops 'black' and the Kalila exchange, and adds matter silently; B is close and annotated but follows a corrupt reading literally and normalises the bull's name (flagged)."
+  },
+  {
+   "id": "69e7933580b52390feb18277_00263",
+   "book_id": "69e7933580b52390feb18277",
+   "page_number": 263,
+   "lang": "Arabic",
+   "genre": "adab",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 2,
+    "readability": 2,
+    "register": 2,
+    "terminology": 2,
+    "ambiguity": 3,
+    "transparency": 2,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "disagreements": [
+    {
+     "source": "أُخْرَاهُ اللهُ (i.e. أخزاه الله)",
+     "ours": "May God protect his end",
+     "reference": "may Allah put him to shame",
+     "right": "reference",
+     "why": "The phrase is the curse akhzahu Allah; A translates the OCR misreading as a blessing."
+    },
+    {
+     "source": "أَبُوزَيْدٍ الَّذِي جَرَحَهُ جَبَّارٌ",
+     "ours": "The one who was wounded by a tyrant",
+     "reference": "for whose wound there is no retaliation",
+     "right": "reference",
+     "why": "jurhuhu jubar is the legal idiom for an injury that goes unavenged, not a tyrant wounding him."
+    },
+    {
+     "source": "وَكَانَ أَصْحَابُكَ مَا أَصَابَكَ (i.e. واكتم أصحابك)",
+     "ours": "Let your companions remember what befell you",
+     "reference": "conceal from thy friends what has befallen thee",
+     "right": "reference",
+     "why": "The judge advises hiding the mishap from companions; A inverts the sense while following a corrupt OCR line."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "The machine version cribs a corrupt OCR line by line into non-sequiturs (shaved head, house of a poem) and adds an unsupported marginal summary; the 1898 version reads from a sound text and keeps the rhymed-prose voice, including clauses absent from the OCR."
+  },
+  {
+   "id": "69e7933d80b52390feb1841a_00027",
+   "book_id": "69e7933d80b52390feb1841a",
+   "page_number": 27,
+   "lang": "Arabic",
+   "genre": "adab",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 2,
+    "readability": 3,
+    "register": 3,
+    "terminology": 3,
+    "ambiguity": 3,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "disagreements": [
+    {
+     "source": "وَأَنَا لَمْ تَرَ هَذَا اللَّيْسَ (i.e. التيس)",
+     "ours": "and I did not see this \"not.\"",
+     "reference": "and that we have never seen this he-goat",
+     "right": "reference",
+     "why": "The word is al-tays (he-goat), an insult to the head's owner; A renders the OCR slip as a noun 'not'."
+    },
+    {
+     "source": "فَقُلْتُ: مِنْ فَمٍ (i.e. من قم)",
+     "ours": "From Famm",
+     "reference": "Qum",
+     "right": "reference",
+     "why": "The city of Qum is meant, a Shi'i town, which makes the barber's 'city of the Sunnis' reply the joke."
+    },
+    {
+     "source": "أَنَّ الْمِبْرَدَ فِي النَّحْوِ حَدِيدُ الْمُوسَى",
+     "ours": "the file in grammar is the sharpness of the razor",
+     "reference": "Mubarrad in grammar wields a keen razor",
+     "right": "reference",
+     "why": "The grammarian al-Mubarrad is named; A's common-noun reading loses the reference, though a pun on 'file' is present."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "The machine version follows OCR slips and replaces the three long food descriptions with flagged summary notes, so most of the second maqama is missing; the 1915 version translates the whole page, including the rare food vocabulary."
+  },
+  {
+   "id": "69d5ac5f4dc55b8478ddd6b6_00299",
+   "book_id": "69d5ac5f4dc55b8478ddd6b6",
+   "page_number": 299,
+   "lang": "Arabic",
+   "genre": "adab",
+   "reference_style": "early-modern",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 3,
+    "readability": 2,
+    "register": 2,
+    "terminology": 2,
+    "ambiguity": 3,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 2,
+    "stance": "free"
+   },
+   "disagreements": [
+    {
+     "source": "فعل منها كيسًا ملاه رجاجًا",
+     "ours": "a bag from it, which he filled with pebbles",
+     "reference": "a bag which he filled with broken glass",
+     "right": "reference",
+     "why": "The word is zujaj (glass), which the story needs later; 'pebbles' has no basis."
+    },
+    {
+     "source": "عمد الى خزنه",
+     "ours": "he intended to go to her treasury",
+     "reference": "he took a piece of stuff",
+     "right": "reference",
+     "why": "The bag is made from it, so a cloth (khirqa) fits; 'her treasury' misreads the OCR form and the pronoun."
+    },
+    {
+     "source": "وهو مع ذلك يعاهدها للخروج وينظر اليها",
+     "ours": "he was still promising to go out and looking",
+     "reference": "he used to watch the old woman, tracking her",
+     "right": "reference",
+     "why": "yata'ahaduha means he kept an eye on her comings and goings, not that he made a promise."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "The 1885 version is a fluent, period-styled reading translation that silently expands (trap door, Allah's protection, the brother's name); the machine version is a word-for-word crib of a poor handwritten OCR and translates illegible scribal lines as if they were text."
+  },
+  {
+   "id": "69ea3e91300d991d0f1d37ee_00092",
+   "book_id": "69ea3e91300d991d0f1d37ee",
+   "page_number": 92,
+   "lang": "Arabic",
+   "genre": "geography",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 3,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 5,
+    "register": 4,
+    "terminology": 5,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "disagreements": [
+    {
+     "source": "والموقف منها على صبيحة عند جبل متلاط",
+     "ours": "The standing place is on its plain near a mountain",
+     "reference": "at the reach of a man's voice from it",
+     "right": "reference",
+     "why": "The phrase is 'ala sayha, a shout's distance; 'plain' is not in the text and 'low, flat' is dropped by B."
+    },
+    {
+     "source": "وعلى جبال بقربه لاضية (i.e. لاطية)",
+     "ours": "On the mountains near it are lamps",
+     "reference": "on low flat hills in the neighbourhood",
+     "right": "reference",
+     "why": "latiya describes low-lying hills where the people stand; B invents lamps from the OCR form."
+    },
+    {
+     "source": "ولا يرى بها ديار",
+     "ours": "but no dwellings are seen there",
+     "reference": "but not a person is to be found in it",
+     "right": "reference",
+     "why": "dayyar in this negative idiom means 'anyone'; B reads it as the plural of dar, though a village with a mosque has dwellings."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "Both are clear and close to the source; the 1897 version gets the idioms right but silently adds small explanatory phrases, while the machine version flags its glosses but misreads several words, starting with the mountain Thabir as 'wells'."
+  },
+  {
+   "id": "69e96123390d3ed634590b97_00226",
+   "book_id": "69e96123390d3ed634590b97",
+   "page_number": 226,
+   "lang": "Arabic",
+   "genre": "travel",
+   "reference_style": "literal",
+   "reference_private": true,
+   "ours": {
+    "fidelity": 3.5,
+    "readability": 4,
+    "register": 4,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 5,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "disagreements": [
+    {
+     "source": "وكانت قبله اشقية موسى فنزل عنها",
+     "ours": "belonged to the Ispahsalār (military commander) Musa",
+     "reference": "belonged formerly to his uterine brother Musa",
+     "right": "reference",
+     "why": "OCR garbles li-shaqiqihi 'his full brother'; B invents a military title that is not in the Arabic."
+    },
+    {
+     "source": "وقد جرى لي ذلك مع بعضهم وسألت كره",
+     "ours": "and I asked about it",
+     "reference": "as I shall relate in due course",
+     "right": "reference",
+     "why": "The garbled word is wa-sa-adhkuruhu 'I shall mention it'; B translates the OCR error at face value."
+    },
+    {
+     "source": "النواعي بالداخل والخارج منها تسقى البساتين",
+     "ours": "The water from the inside and outside of it",
+     "reference": "There are norias on it, both inside and outside the city",
+     "right": "reference",
+     "why": "The source names water-wheels (nawa'ir) watering the gardens; B silently drops them."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A is a fluent scholarly version that reads through the OCR damage but drops the vocalisation asides; B flags those asides in notes yet mistranslates three OCR-damaged spots and modernises place names (Aksaray, Niğde, Kayseri)."
+  },
+  {
+   "id": "69e9612a390d3ed634590dd2_00365",
+   "book_id": "69e9612a390d3ed634590dd2",
+   "page_number": 365,
+   "lang": "Arabic",
+   "genre": "travel",
+   "reference_style": "literal",
+   "reference_private": true,
+   "ours": {
+    "fidelity": 4.5,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 5,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "disagreements": [
+    {
+     "source": "وقتل نواب السلطان وعماله",
+     "ours": "killed the Sultan's deputies and agents",
+     "reference": "killed the Sultan's military and civil officers",
+     "right": "both_defensible",
+     "why": "Nuwwab/'ummal are literally deputies and agents; A interprets them as the two branches of administration."
+    },
+    {
+     "source": "لان البلاد اسفل الجبل",
+     "ours": "for the lands are at the foot of the mountain",
+     "reference": "because they possess the lands at the bottom of the mountain",
+     "right": "both_defensible",
+     "why": "The Arabic states only location; A makes the implied possession explicit, as the French does."
+    },
+    {
+     "source": "وفي الصفحة الاخرى الواثق",
+     "ours": "He who trusts in the support of the Merciful, Ahsan Shah",
+     "reference": "and on the other side 'He who puts his trust",
+     "right": "reference",
+     "why": "The page's Arabic stops at al-Wathiq; B completes the legend with words not on this page, unflagged."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A gives an interpretive reading version with period spellings (Dihli) and no apparatus; B stays word-close, modernises names (Delhi) and glosses Ma'bar and Ta Ha/Ya Sin in notes.",
+   "reason": "Both convey the same content accurately; B is closer word-for-word and annotated but silently runs past the end of the page, A smooths slightly without flagging."
+  },
+  {
+   "id": "699209b5bed8f4b5ff5b25ac_00590",
+   "book_id": "699209b5bed8f4b5ff5b25ac",
+   "page_number": 590,
+   "lang": "Arabic",
+   "genre": "scripture",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 5,
+    "readability": 4,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 3,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 3,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "disagreements": [
+    {
+     "source": "وَتُعَزِّرُوهُ وَتُوَقِّرُوهُ وَتُسَبِّحُوهُ",
+     "ours": "honor him, respect him, and exalt Him",
+     "reference": "may honour Him, and may revere Him, and may glorify Him",
+     "right": "both_defensible",
+     "why": "The pronouns' referent (God or the Messenger) is a classic exegetical crux; each resolves it differently by capitalisation."
+    },
+    {
+     "source": "فَمَن يَمْلِكُ لَكُم مِّنَ اللَّهِ شَيْئًا",
+     "ours": "who could prevent God from anything",
+     "reference": "Who can avail you aught against Allah",
+     "right": "reference",
+     "why": "The idiom is 'who has any power on your behalf against God'; B drops 'for you' and shifts the sense."
+    },
+    {
+     "source": "عَلَيْهِمْ دَائِرَةُ السَّوْءِ",
+     "ours": "Upon them is a circle of evil",
+     "reference": "For them is the evil turn of fortune",
+     "right": "reference",
+     "why": "Da'ira here means a turn or reversal of fortune; B's calque is opaque and misses the idiom."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A uses archaic scriptural English, keeps 'Allah' and adds bracketed addressees; B uses plain modern English, 'God', and glosses A'rab and bur in notes.",
+   "reason": "Both are close verse-by-verse renderings; A sustains a scriptural voice and flags its insertions, B is modern and annotated but stiff in places and weaker on two idioms; both close the pronoun ambiguity in verse 9."
+  },
+  {
+   "id": "69920bcde0a548a13d885a90_00940",
+   "book_id": "69920bcde0a548a13d885a90",
+   "page_number": 940,
+   "lang": "Arabic",
+   "genre": "scripture",
+   "reference_style": "early-modern",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 3,
+    "register": 5,
+    "terminology": 3,
+    "ambiguity": 5,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "disagreements": [
+    {
+     "source": "وعوض المنطقة حبل",
+     "ours": "instead of a sash, a rope",
+     "reference": "instead of a girdle a rent",
+     "right": "ours",
+     "why": "The Arabic habl is plainly 'rope'; A reflects a different reading of the underlying Hebrew."
+    },
+    {
+     "source": "سحابة نهاراً ودخاناً ولمعان نار ملتهبة ليلاً",
+     "ours": "a cloud by day and smoke and the shining",
+     "reference": "a cloud and smoke by day",
+     "right": "ours",
+     "why": "The Arabic places 'by day' after cloud alone, so smoke goes with the fire by night."
+    },
+    {
+     "source": "والعطف والاردية والاكياس",
+     "ours": "the capes, the cloaks, and the money purses",
+     "reference": "the mantles, and the wimples, and the crisping pins",
+     "right": "ours",
+     "why": "Akyas is 'purses/bags'; A's 'crisping pins' does not match this Arabic text."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A is an early-modern English Bible made from the Hebrew, in period idiom with no apparatus; B translates this Arabic version directly into modern English with explanatory notes.",
+   "reason": "A has the canonical prophetic voice but archaic vocabulary and several readings that diverge from this Arabic text; B follows the Arabic more closely, with interpretive notes, markup clutter, an unflagged 'fertile' in 5:1, and 'scabs' where the Arabic says baldness."
+  },
+  {
+   "id": "6a06cdd7c749b698e5b2c9a4_00104",
+   "book_id": "6a06cdd7c749b698e5b2c9a4",
+   "page_number": 104,
+   "lang": "Arabic",
+   "genre": "erotology",
+   "reference_style": "free",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 3,
+    "readability": 3,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 5,
+    "register": 4,
+    "terminology": 3,
+    "ambiguity": 3,
+    "transparency": 2,
+    "stance": "free"
+   },
+   "disagreements": [
+    {
+     "source": "بحق امك الا ما ادخلته في فرجي",
+     "ours": "By the right of your mother, enter it into my vulva",
+     "reference": "by the religion of my father it must penetrate",
+     "right": "ours",
+     "why": "Source swears by 'your mother' (امك); B substitutes a different oath."
+    },
+    {
+     "source": "فنظرت الى وجهها ينجلي وينفلق كالبرق الخاطف اذا دنا منها الحصان",
+     "ours": "her face, which shone and broke out like a flash of lightning",
+     "reference": "It opened like that of a mare on the approach of a stallion",
+     "right": "cant_tell",
+     "why": "OCR reads 'face' and 'lightning' but the stallion clause fits B's mare simile; the manuscript reading is likely corrupt or a different recension."
+    },
+    {
+     "source": "وجعلت تخرجه من اليمين وتخرجه من اليسار",
+     "ours": "began moving it from the right and from the left",
+     "reference": "drew it towards her thighs",
+     "right": "ours",
+     "why": "Source has right/left, no thighs; B paraphrases or follows another recension."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A is a tagged literal crib that keeps obscure lines and flags an unclear one; B is a Victorian reading version that expands, embellishes and names the heroine without notice.",
+   "reason": "A tracks a corrupt manuscript page closely with glosses but reads awkwardly and has garbled spots (boy's hand, well); B is fluent period prose but silently adds and omits much relative to this source."
+  },
+  {
+   "id": "69d5abf3d0bd3547a5654427_00104",
+   "book_id": "69d5abf3d0bd3547a5654427",
+   "page_number": 104,
+   "lang": "Arabic",
+   "genre": "medicine",
+   "reference_style": "free",
+   "reference_private": true,
+   "ours": {
+    "fidelity": 3,
+    "readability": 3,
+    "register": 3,
+    "terminology": 3,
+    "ambiguity": 3,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 3,
+    "transparency": 3,
+    "stance": "free"
+   },
+   "disagreements": [
+    {
+     "source": "وكل استفراغ افرط فانه يحدث جي في الاكثر",
+     "ours": "Every evacuation that is excessive often causes harm",
+     "reference": "is to bring about febrile conditions",
+     "right": "reference",
+     "why": "The OCR 'جي' is حمى (fever); B flattens it to generic harm."
+    },
+    {
+     "source": "وربما كفاه للهم فيه الرياضة والدلك والحجام",
+     "ours": "Perhaps exercise, massage, and cupping are sufficient for them",
+     "reference": "may be excused even from exercises, bathing, and massage",
+     "right": "ours",
+     "why": "كفاه means these suffice for him, not that he is excused from them; B's 'cupping' follows the OCR, though 'bath' is likelier."
+    },
+    {
+     "source": "فصدا او استفراغا بمثل الخريف",
+     "ours": "phlebotomy or evacuation, such as in autumn",
+     "reference": "purgation (by hellebore and similar violent medicines)",
+     "right": "reference",
+     "why": "Text is خربق (hellebore), misread by OCR as خريف; begin with bleeding, not a vomiting clause."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A is a fluent explanatory clinical version that paraphrases and adds parenthetical glosses, some unflagged; B follows a badly OCR'd page word for word, repeating garbled lines and producing nonsense such as 'milk and stars' and diarrhea for purgation, with only partial flagging."
+  },
+  {
+   "id": "69935b208e28d8f4c5d3c445_00228",
+   "book_id": "69935b208e28d8f4c5d3c445",
+   "page_number": 228,
+   "lang": "Persian",
+   "genre": "sufism",
+   "reference_style": "free",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 5,
+    "register": 4,
+    "terminology": 5,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "disagreements": [
+    {
+     "source": "سخن اندر بیان آن مقسوم گردانم",
+     "ours": "I shall set forth the speech in explanation of that",
+     "reference": "I will briefly divide their sayings in explanation of Sufiism",
+     "right": "reference",
+     "why": "مقسوم گردانم is 'I will divide', echoing the preceding 'divided'; A loses the verb."
+    },
+    {
+     "source": "این گروهی پراکندگان کی اندران شهر راه یافته اند",
+     "ours": "this group of wanderers who have found their way",
+     "reference": "those wretches (parāgandagān) who have found their way",
+     "right": "both_defensible",
+     "why": "پراکندگان is literally 'scattered ones', here pejorative for dissolute pretenders; B flags the word, A stays literal."
+    },
+    {
+     "source": "فنون علم آگاهست",
+     "ours": "he possessed knowledge of the arts",
+     "reference": "he is acquainted with various branches of science",
+     "right": "reference",
+     "why": "Present tense and 'branches of knowledge'; A shifts to past and its note guesses at 'arts'."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A keeps honorifics, the closing rhymed triad and transliterated terms with glosses; B compresses, names Ghazna for 'that city', drops honorifics and the final clause, and uses established equivalents with transliteration.",
+   "reason": "Both are sound; A is a close glossed rendering with a few stiff or imprecise spots, B is polished scholarly prose with consistent Sufi terminology but silent explicitation and omissions."
+  },
+  {
+   "id": "69e7299ba409200ea79f0b56_00211",
+   "book_id": "69e7299ba409200ea79f0b56",
+   "page_number": 211,
+   "lang": "Persian",
+   "genre": "sufism",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 2,
+    "readability": 3,
+    "register": 4,
+    "terminology": 3,
+    "ambiguity": 3,
+    "transparency": 2,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 3,
+    "terminology": 5,
+    "ambiguity": 4,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "disagreements": [
+    {
+     "source": "هر کر اباسط طمع اکن شود",
+     "ours": "Whoever becomes a sower of greed",
+     "reference": "Whosoever hath (such) desire becomes a stammerer",
+     "right": "reference",
+     "why": "The line is 'whoever has greed becomes الکن (tongue-tied)'; A misreads the garbled OCR."
+    },
+    {
+     "source": "گرچه بد هی کنجها او سر بود",
+     "ours": "Even if he is in a corner, he is the master",
+     "reference": "though you give (him) treasures (vast riches), he is free",
+     "right": "reference",
+     "why": "بدهی گنجها = 'though you give treasures', and the rhyme word is حر (free)."
+    },
+    {
+     "source": "گاه ماهی باشد او گاه شست",
+     "ours": "Sometimes it is a fishing hook, sometimes it is the moon",
+     "reference": "now he is a fish and now a hook",
+     "right": "reference",
+     "why": "ماهی is 'fish' paired with شست 'hook'; 'moon' is a misreading."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A keeps a verse layout but misreads many corrupt lines and silently blends in lines from the parallel Ottoman Turkish paraphrase as though they were Rumi's Persian; B is an accurate bracketed prose crib whose every supplement is marked, at some cost to flow and verse feel."
+  },
+  {
+   "id": "69e729a1a409200ea79f0ca5_00257",
+   "book_id": "69e729a1a409200ea79f0ca5",
+   "page_number": 257,
+   "lang": "Persian",
+   "genre": "sufism",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 3,
+    "readability": 2,
+    "register": 2,
+    "terminology": 3,
+    "ambiguity": 3,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "disagreements": [
+    {
+     "source": "فمن غلب عقله شهوته فهو اعلی من الملائکة",
+     "ours": "whoever overcomes his intellect with his desire, he is higher",
+     "reference": "he whose reason prevails over his lust is higher",
+     "right": "reference",
+     "why": "The Arabic makes reason the victor over lust; A inverts the hadith so that desire winning raises man above angels."
+    },
+    {
+     "source": "آن فرشته است او نداند سجود",
+     "ours": "That is the angel, he does not know prostration",
+     "reference": "he knoweth naught but prostration in worship",
+     "right": "reference",
+     "why": "The verse needs 'juz' (nothing but), dropped by the OCR; A follows the faulty OCR and then adds a note rationalising the wrong sense."
+    },
+    {
+     "source": "از شقاوت عاقل است و از شرف",
+     "ours": "From misery he is intelligent, and from nobility",
+     "reference": "it is heedless of (future) misery and glory",
+     "right": "reference",
+     "why": "OCR 'عاقل' is for 'غافل' (heedless), as the Turkish column's 'غافل' confirms; A's line is senseless in context."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A renders the three-column Persian/Turkish table cell by cell into fragmentary, often garbled lines with a reversed hadith; B is Nicholson's coherent bracketed literal version of the Persian couplets only."
+  },
+  {
+   "id": "69e729a7a409200ea79f0e08_00279",
+   "book_id": "69e729a7a409200ea79f0e08",
+   "page_number": 279,
+   "lang": "Persian",
+   "genre": "sufism",
+   "reference_style": "literal",
+   "reference_private": true,
+   "ours": {
+    "fidelity": 1,
+    "readability": 2,
+    "register": 2,
+    "terminology": 2,
+    "ambiguity": 3,
+    "transparency": 1,
+    "stance": "free"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "disagreements": [
+    {
+     "source": "که کسی خواهم که تاز در سه روز تا سمرقند",
+     "ours": "He made a proclamation: \"Whoever [can get there] in five days,\"",
+     "reference": "some one to run to Samarcand in three days",
+     "right": "reference",
+     "why": "The source says three days (سه روز); B's five days is not on this page."
+    },
+    {
+     "source": "چند اسب تازی از در راه کشت",
+     "ours": "Two mounts died on that road",
+     "reference": "has killed several Arab horses on the way",
+     "right": "reference",
+     "why": "Source has 'several Arab horses' (چند اسب تازی), not two mounts."
+    },
+    {
+     "source": "تا بگویم من ندارم آن توان",
+     "ours": "saying: \"I can go; this task is not [for me].\"",
+     "reference": "in order to say that I am not able",
+     "right": "reference",
+     "why": "Dalqak says he lacks the ability; B's 'I can go' contradicts the source."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "B does not translate this page: it gives a prose heading and repetitive invented stanzas loosely about the same story, omitting nearly all thirty couplets, while A follows the Persian line by line with bracketed supplements."
+  },
+  {
+   "id": "69afd049ae982b9d51d6dd32_00292",
+   "book_id": "69afd049ae982b9d51d6dd32",
+   "page_number": 292,
+   "lang": "Persian",
+   "genre": "poetry",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 3,
+    "readability": 3,
+    "register": 3,
+    "terminology": 3,
+    "ambiguity": 3,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "disagreements": [
+    {
+     "source": "چو وفا نبود در كُل چه روی تو سوی هر كُل",
+     "ours": "Since there is no loyalty in any whole",
+     "reference": "Since in the rose there is no constancy",
+     "right": "reference",
+     "why": "The word is gul (rose), the stock emblem of inconstancy; B reads the OCR's kaf as kull (whole), which makes no sense."
+    },
+    {
+     "source": "تو دو صد يوسفِ جانرا ز دل و عقل بُريدی",
+     "ours": "cut two hundred Josephs of the soul with your heart and intellect",
+     "reference": "bereft of soul and reason two hundred spiritual Josephs",
+     "right": "reference",
+     "why": "'ز دل و عقل بریدی' is cut off FROM heart and reason, not cut with them as instrument; A has the construction (though 'soul' for dil is loose)."
+    },
+    {
+     "source": "كه كُريزد بدو فرسنگ وَی از بوی پليدی",
+     "ours": "From the scent of which the foul-smelling flees for two leagues",
+     "reference": "That he may flee two leagues from the odour of foulness",
+     "right": "reference",
+     "why": "The subject 'vay' is the created person fleeing the smell of foulness; B invents a foul-smelling party fleeing the form's scent."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A is Nicholson's archaising verse-line version, accurate but with silent smoothing; B is plainer modern English with a flagged gloss and translated apparatus but several misreadings (whole for rose, greed for desire)."
+  },
+  {
+   "id": "6a21994b4b61907ea5ffb7e5_00027",
+   "book_id": "6a21994b4b61907ea5ffb7e5",
+   "page_number": 27,
+   "lang": "Persian",
+   "genre": "sufism",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 3,
+    "readability": 3,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 3,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 4,
+    "terminology": 3,
+    "ambiguity": 4,
+    "transparency": 2,
+    "stance": "free"
+   },
+   "disagreements": [
+    {
+     "source": "و نمای مطلق لازم کمال آنیت و مغنی غنای مطلق است که",
+     "ours": "The Absolute Manifestation is a necessary consequence of the perfection of His I-ness",
+     "reference": "Absolute self-sufficiency is a quality involved in Divine Perfection",
+     "right": "reference",
+     "why": "OCR 'نمای' and 'مغنی' stand for 'غنای' and 'معنی': the sentence defines absolute self-sufficiency, as the following clause shows; B follows the OCR slips."
+    },
+    {
+     "source": "در جمله مراتب حقایق آلی و کونی",
+     "ours": "through all the levels of instruments and cosmic realities",
+     "reference": "manifested in all grades of substances, Divine and mundane",
+     "right": "reference",
+     "why": "'آلی' is OCR for 'الهی' (divine), the standard pair with 'kawni'; 'instruments' is a misreading."
+    },
+    {
+     "source": "چون ظهور و مجمل مفصل",
+     "ours": "like the appearance of the detailed within the concise",
+     "reference": "just as the whole is represented by its parts",
+     "right": "reference",
+     "why": "'ظهور مجمل مفصل' is the summary appearing in detailed form; B reverses the direction here and again in the second simile, which A omits."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A paraphrases freely into Victorian theological English (modes, One Real Being) with silent expansion; B keeps and glosses the Arabic terms (jala, istijla, aniyyat) in a close crib.",
+   "reason": "A reads smoothly and gets the argument right but silently adds and drops phrases; B is transparent and term-preserving yet stumbles on OCR errors and reverses the mujmal/mufassal similes."
+  },
+  {
+   "id": "699249c5a2d53df4853bfdaf_00012",
+   "book_id": "699249c5a2d53df4853bfdaf",
+   "page_number": 12,
+   "lang": "Persian",
+   "genre": "theology",
+   "reference_style": "free",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 4.5,
+    "readability": 3,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "disagreements": [
+    {
+     "source": "بعضی از عبارات نسبت بارباب لسان مجاز می نماید",
+     "ours": "in the eyes of the masters of language, appear metaphorical",
+     "reference": "texts of the Prophets in wonderful harmonies of Hijaz",
+     "right": "reference",
+     "why": "OCR line is corrupt; A matches the received text (Hijazi/Iraqi melodies), B translates the misreading at face value."
+    },
+    {
+     "source": "تشنگان صحرای بعد را بجسر قرب دلالت نماید",
+     "ours": "those thirsty in the desert of remoteness to the bridge of nearness",
+     "reference": "those athirst in the deserts of remoteness to the Sea of Nearness",
+     "right": "reference",
+     "why": "The thirsty are led to a sea (بحر); 'bridge' (جسر) is an OCR misreading B follows."
+    },
+    {
+     "source": "این دو عبارت فی الحقیقة کیفیت لوائح فی مظاهر التوحید",
+     "ours": "the essence of the signs regarding the Manifestations of Unity",
+     "reference": "These two statements are in reality one",
+     "right": "reference",
+     "why": "The argument requires the two sayings to be one; B renders a garbled OCR line as if sound."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A is a fluent period rendering from a sound text with a few unflagged interpretive additions; B is heavily annotated and transparent but faithfully translates OCR corruptions, giving wrong sense in several places."
+  },
+  {
+   "id": "69e74eeb5cf1eaf3ad80ddc1_00237",
+   "book_id": "69e74eeb5cf1eaf3ad80ddc1",
+   "page_number": 237,
+   "lang": "Persian",
+   "genre": "poetry",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 3,
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 2,
+    "register": 2,
+    "terminology": 4,
+    "ambiguity": 2,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "disagreements": [
+    {
+     "source": "عشقت مفلسی و جوانی و نوبهار عذرم پذیر",
+     "ours": "Your love is poverty, youth, and the new spring",
+     "reference": "Love and poverty, and youth, and the new spring,— (all this) is my excuse",
+     "right": "reference",
+     "why": "The four are listed together as the speaker's excuse; B turns the list into a predicate of 'your love'."
+    },
+    {
+     "source": "پروانه مراد رسید ای محب خموش",
+     "ours": "The butterfly of desire has arrived, O silent lover",
+     "reference": "O friend! the moth of thy desire hath arrived. Silence!",
+     "right": "reference",
+     "why": "خموش is a command to be silent, answering the candle's tongue; B makes it an epithet."
+    },
+    {
+     "source": "زهره در رقص آمد و بربط زنان بگرفت گوش",
+     "ours": "the harpist to perk up her ears",
+     "reference": "the lute-striker (player) kept saying \"Drink!\"",
+     "right": "cant_tell",
+     "why": "A follows the standard reading (میگفت نوش); B follows the OCR as transcribed, which may be a variant or misreading."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A is a word-order crib with bracketed Sufi glosses that resolve the wine/love imagery; B is a plain modern couplet rendering that leaves the imagery open.",
+   "reason": "A is transparent and term-preserving but barely readable and over-resolves the poem in parentheses; B reads well and keeps the ambiguity but has several real misconstruals and one garbled couplet."
+  },
+  {
+   "id": "69f33c97876dd827cbc5a94f_00258",
+   "book_id": "69f33c97876dd827cbc5a94f",
+   "page_number": 258,
+   "lang": "Persian",
+   "genre": "adab",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 3.5,
+    "readability": 3,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 3,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "disagreements": [
+    {
+     "source": "حریف سفره در پایان مستی نباید شد زر روزی",
+     "ours": "One should not be a companion of the table",
+     "reference": "The wretched fellow, in the extreme of intoxication, Was not apprehensive",
+     "right": "reference",
+     "why": "The couplet is about the base man not thinking of the day of want; B builds a new sense out of OCR garble."
+    },
+    {
+     "source": "زر روزی ملخ دستی",
+     "ours": "Wealth is like a handful of locusts in a day",
+     "reference": "the day of distress",
+     "right": "reference",
+     "why": "Corrupt OCR of 'روز تنگدستی' (day of empty-handedness); B's locust image is invented from misread letters."
+    },
+    {
+     "source": "که فرزند مرا چنان پرور کن که یکی از فرزندان خود",
+     "ours": "Nurture my son just as you nurture your own children",
+     "reference": "He is thy son; educate him in the same way as a son",
+     "right": "both_defensible",
+     "why": "B matches this manuscript's wording; A reflects a fuller recension with an added reply from the teacher."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "The prose anecdote agrees in both; the difference is the opening verse, where A gives the real sense and B silently translates a corrupt transcription into nonsense. A carries a few phrases from a fuller recension."
+  },
+  {
+   "id": "6992cf0970ab3737555456ae_00100",
+   "book_id": "6992cf0970ab3737555456ae",
+   "page_number": 100,
+   "lang": "Persian",
+   "genre": "poetry",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 3,
+    "readability": 4,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "disagreements": [
+    {
+     "source": "بسے گفت و بشنید ... سرانجام او گشت هم داستان",
+     "ours": "Rudaba became part of this unfolding story",
+     "reference": "Sam hummed and hawed but in the end consented",
+     "right": "reference",
+     "why": "هم داستان means 'in agreement' and the subject is Sam; B misreads the idiom and the subject."
+    },
+    {
+     "source": "بها گفت بگذار بر چشم من",
+     "ours": "\"Come,\" said Sindukht, \"place them before my eyes\"",
+     "reference": "\"Show me the purchase-money,\" said Sindukht",
+     "right": "reference",
+     "why": "بها is the price; the woman's reply that payment is due tomorrow only makes sense as an answer to that."
+    },
+    {
+     "source": "بیفکند او را هم آنجا ببست همی کوفت پای و همی زد بدست",
+     "ours": "The woman struck out with her feet and hands in pain",
+     "reference": "bound and spurned and smote her",
+     "right": "reference",
+     "why": "Sindukht is the one kicking and striking the bound woman; B reverses the agent."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A is condensed blank verse that keeps the epic voice but silently compresses or drops half-lines; B is a line-by-line annotated rendering that is fuller but misconstrues several couplets and smooths over OCR damage."
+  },
+  {
+   "id": "69e74ef95cf1eaf3ad80e04c_00131",
+   "book_id": "69e74ef95cf1eaf3ad80e04c",
+   "page_number": 131,
+   "lang": "Persian",
+   "genre": "poetry",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 2.5,
+    "readability": 1,
+    "register": 2,
+    "terminology": 2,
+    "ambiguity": 3,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 3,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "disagreements": [
+    {
+     "source": "ملک را بوقت عنان تافتن / بدزدی نشاید ظفر یافتن",
+     "ours": "To the kingdom, at the time of tightening the rein",
+     "reference": "At the time of rein-twisting (assaulting) — for a king",
+     "right": "reference",
+     "why": "malik here is 'king' (it is not fitting for a king to win by stealth); A also splits the couplet across columns."
+    },
+    {
+     "source": "که دارانه چندان پیه ساز کرد",
+     "ours": "That Dara made so much fat",
+     "reference": "Dara prepared not such an army",
+     "right": "reference",
+     "why": "OCR پیه is for سپه (army) and نه is the negative; A follows the OCR slip and drops the negation."
+    },
+    {
+     "source": "یکی انجمن ساخت بیرون و جام",
+     "ours": "They made an assembly outside and in the cup",
+     "reference": "He prepared an assembly (muster) — without wine-cup or music",
+     "right": "reference",
+     "why": "the phrase is bī rūd u jām, 'without lute and cup'; A reads the OCR 'bīrūn' as 'outside' and yields nonsense."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A translates the two hemistich columns separately so no couplet is ever joined and several lines follow OCR slips; B is a bracket-glossed Victorian crib that pairs the couplets and is mostly right, though it follows variant readings (hide, six hundred thousand) against this print."
+  },
+  {
+   "id": "69e748da49abba5e98281b25_00103",
+   "book_id": "69e748da49abba5e98281b25",
+   "page_number": 103,
+   "lang": "Persian",
+   "genre": "poetry",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 3,
+    "readability": 3,
+    "register": 3,
+    "terminology": 2,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 5,
+    "stance": "literal"
+   },
+   "disagreements": [
+    {
+     "source": "چون توانی بزیر پای نوشت",
+     "ours": "How are you able to walk beneath your feet?",
+     "reference": "how can you walk up to the top of it?",
+     "right": "reference",
+     "why": "'to fold underfoot' is to traverse/climb the sixty steps; A's word-for-word version is meaningless."
+    },
+    {
+     "source": "از چنین پایه مانده کی گردم",
+     "ours": "How could I remain from such a base?",
+     "reference": "how should I (then) be wearied by such steps?",
+     "right": "reference",
+     "why": "mānda gardīdan is 'to become tired' and pāya here is 'step', not 'base'."
+    },
+    {
+     "source": "شصت پایه چنان برد یک دست که نسازد بهیچ پایه نشست",
+     "ours": "carries the sixty-step one by one hand",
+     "reference": "bears it sixty steps up at a stretch, not resting",
+     "right": "reference",
+     "why": "yak dast is 'in one go' and the second hemistich says she rests on no step; A misreads both."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A is line-faithful in layout but mistranslates the idioms that carry the anecdote, invents a gloss for 'faqam' and appends an apparatus note not in the source; B is a close line-by-line version in blank verse with bracketed supplements and gets the sense right."
+  },
+  {
+   "id": "699243fabc722ec0ee80b251_00066",
+   "book_id": "699243fabc722ec0ee80b251",
+   "page_number": 66,
+   "lang": "Hebrew",
+   "genre": "liturgy",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 4.5,
+    "readability": 3,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 5,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "disagreements": [
+    {
+     "source": "וְנִעֵר פַּרְעֹה וְחֵילוֹ בְּיַם סוּף",
+     "ours": "And shook off Pharaoh and his army in the Sea of Reeds",
+     "reference": "But overthrew Pharaoh, and his host in the Red Sea",
+     "right": "both_defensible",
+     "why": "ni'er is literally 'shook off' and yam suf 'Sea of Reeds'; A keeps the traditional KJV equivalents."
+    },
+    {
+     "source": "לְסִיחוֹן מֶלֶךְ הָאֱמֹרִי",
+     "ours": "To Sihon, king of the Amorites",
+     "reference": "Sihon king of the Amorites",
+     "right": "both_defensible",
+     "why": "the lamed marks the object of 'slew'; A absorbs it idiomatically, B keeps it as a calque 'To'."
+    }
+   ],
+   "legit_choice": true,
+   "legit_note": "A keeps King James liturgical idiom and joins each verse to its refrain as chanted; B uses modern English, mirrors the two-column page layout and adds explanatory notes.",
+   "reason": "Both are accurate; A reads as usable liturgy while B separates refrain from verses by column and loads a simple psalm with meta and notes, some speculative."
+  },
+  {
+   "id": "6990630be7b7642c081de08b_00353",
+   "book_id": "6990630be7b7642c081de08b",
+   "page_number": 353,
+   "lang": "Aramaic",
+   "genre": "kabbalah",
+   "reference_style": "free",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 3,
+    "readability": 2,
+    "register": 3,
+    "terminology": 2,
+    "ambiguity": 2,
+    "transparency": 2,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 3,
+    "transparency": 3,
+    "stance": "free"
+   },
+   "disagreements": [
+    {
+     "source": "ווי לעילא ווי לתתא וכלהו במתקלא חד סלקין",
+     "ours": "Woe above, woe below, and all of them rise",
+     "reference": "Hooks above, hooks below (six above, six below)",
+     "right": "reference",
+     "why": "vavin are the 'hooks of the pillars' and the letter vav, not the interjection 'woe'; A misreads the whole section."
+    },
+    {
+     "source": "רבי אלעזר ... יצחק דיכא קטיא חמיל לחולקיה",
+     "ours": "Isaac was \"crushed\" and took pity on his portion",
+     "reference": "Isaac laid hold on this attribute as his portion",
+     "right": "reference",
+     "why": "the garbled OCR stands for dina qashya (severe judgment) which Isaac took as his portion; A invents a 'crushed one'."
+    },
+    {
+     "source": "ערוה לבין ונערות חמך לא תגלה",
+     "ours": "Do not uncover the nakedness of a daughter-in-law or a youth",
+     "reference": "The nakedness of thy father, or the nakedness of thy mother",
+     "right": "reference",
+     "why": "the corrupt OCR is the verse Lev. 18:7 (father and mother), which B identifies; A translates the corruption."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "The OCR source is badly corrupt and A renders the corruption word by word into confident but spurious sense, with glosses that do not flag the uncertainty; B is a fluent, free, explanatory version that expands and smooths, sometimes silently, but conveys the actual argument and parable."
+  },
+  {
+   "id": "6a7de037fd8615d37af98df8_00106",
+   "book_id": "6a7de037fd8615d37af98df8",
+   "page_number": 106,
+   "lang": "Aramaic",
+   "genre": "magic",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 4,
+    "readability": 3,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 5,
+    "register": 4,
+    "terminology": 4,
+    "ambiguity": 3,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "disagreements": [
+    {
+     "source": "לשנאה",
+     "ours": "For hatred",
+     "reference": "Against an enemy",
+     "right": "ours",
+     "why": "The heading means 'for hatred'; the second spell separates a couple, it does not target an enemy."
+    },
+    {
+     "source": "ונקטא אכסתא דבני אינשא",
+     "ours": "holds the akhasta ... a vessel or cup",
+     "reference": "takes away healing from man",
+     "right": "reference",
+     "why": "The word reads most naturally as a form of asuta 'healing'; B's 'vessel or cup' gloss has no basis in the page."
+    },
+    {
+     "source": "ומיא מן נהרא",
+     "ours": "water from the river",
+     "reference": "water from fire",
+     "right": "ours",
+     "why": "The printed text has nahara 'river'; A silently emends to nura 'fire' to get a cleaner antithesis."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A is a smooth reading version that silently emends and resolves cruxes (fire, 'swiftly and quickly', the affliction names); B keeps cruxes open with unclear-tags and transliterations but clutters the text with stray line numbers, speculative glosses and an invented continuation note about chariot wheels."
+  },
+  {
+   "id": "69c1bbc68522835be8460774_00281",
+   "book_id": "69c1bbc68522835be8460774",
+   "page_number": 281,
+   "lang": "Hebrew",
+   "genre": "scripture",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 4,
+    "readability": 5,
+    "register": 3,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 3,
+    "stance": "balanced"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "disagreements": [
+    {
+     "source": "וכומר של מלאך אלדים",
+     "ours": "the priest of the messenger of God",
+     "reference": "the priest of the Lord of the Gods",
+     "right": "both_defensible",
+     "why": "A renders the Hebrew as printed (mal'akh); B renders the underlying Syriac 'lord of the gods', which the Hebrew probably garbles."
+    },
+    {
+     "source": "ראוהו העם ואמרו ששום אדם לא יזבח להם זבח",
+     "ours": "the people saw it and said that no man should offer",
+     "reference": "they with difficulty prevented the people from offering sacrifice",
+     "right": "ours",
+     "why": "The Hebrew page says the people saw and said no one should sacrifice; B follows the Syriac wording, not this text."
+    },
+    {
+     "source": "וסוברין אנחנו שמין אילו דברים בטלים תסורו",
+     "ours": "We believe you should turn from these vain things",
+     "reference": "who preach to you, that ye should turn",
+     "right": "both_defensible",
+     "why": "Hebrew sovrin means 'think', but it calques Syriac msabrin 'announce/preach', which B gives."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "The published version translates the Syriac Peshitta rather than this Hebrew rendering, so most meaning differences are base-text differences; A follows the Hebrew in plain modern prose but shifts the verse numbers and silently drops the garbled name before 'threw him', while B keeps a scriptural register and brackets its one supplied word."
+  },
+  {
+   "id": "69b2f3b821208ea9dc278c50_00277",
+   "book_id": "69b2f3b821208ea9dc278c50",
+   "page_number": 277,
+   "lang": "Hebrew",
+   "genre": "biblical commentary",
+   "reference_style": "literal",
+   "reference_private": false,
+   "ours": {
+    "fidelity": 3,
+    "readability": 2,
+    "register": 2,
+    "terminology": 3,
+    "ambiguity": 2,
+    "transparency": 3,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 5,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 5,
+    "transparency": 4,
+    "stance": "balanced"
+   },
+   "disagreements": [
+    {
+     "source": "ולז' זכר השחורים כי כבר עבר עתק מלכות בבל",
+     "ours": "And he mentioned the black ones because",
+     "reference": "He does not mention the red horses",
+     "right": "reference",
+     "why": "The argument requires 'did not mention the red' since Babylon had already passed; B translates an OCR corruption into a non sequitur."
+    },
+    {
+     "source": "כי רומי היא שנונית",
+     "ours": "for Rome is distinct",
+     "reference": "for Rome is to the north",
+     "right": "reference",
+     "why": "The contrast with Egypt 'which is southerly' needs tsefonit 'northern'; B renders a corrupted word."
+    },
+    {
+     "source": "הם רמז למלכות ישמעאל",
+     "ours": "They are a hint to the kingdom of Ishmael",
+     "reference": "These signify the Turkish empire",
+     "right": "ours",
+     "why": "The source says 'kingdom of Ishmael'; A silently modernises it to the Turkish empire."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "A is a clear, articulated commentary translation with parenthesised additions and verse references, though it turns Ishmael into 'Turkish' and garbles Julius as 'Lulianus'; B cribs a badly corrupted OCR word for word, producing nonsense such as 'son of black' and 'holy in their passing' with no flag that the text is damaged."
+  },
+  {
+   "id": "69906606ef12272ffdc94dd0_00106",
+   "book_id": "69906606ef12272ffdc94dd0",
+   "page_number": 106,
+   "lang": "Hebrew",
+   "genre": "hekhalot / merkavah mysticism",
+   "reference_style": "literal",
+   "reference_private": true,
+   "ours": {
+    "fidelity": 4,
+    "readability": 4,
+    "register": 5,
+    "terminology": 4,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "reference": {
+    "fidelity": null,
+    "readability": 4,
+    "register": 5,
+    "terminology": 5,
+    "ambiguity": 4,
+    "transparency": 4,
+    "stance": "literal"
+   },
+   "disagreements": [
+    {
+     "source": "שהוא שומר מפתחי היכלי ערבות רקיע",
+     "ours": "who guards the entrances of the palaces",
+     "reference": "the prince who keeps the keys of the heavenly Halls",
+     "right": "reference",
+     "why": "Maftehei means 'keys of', not entrances."
+    },
+    {
+     "source": "שחומות ארבעה ראשי נהר נור מסורות בידו",
+     "ours": "the walls of the four headwaters ... are entrusted",
+     "reference": "the seals of the fiery river are entrusted to him",
+     "right": "both_defensible",
+     "why": "This manuscript reads homot 'walls'; B follows the reading hotamot 'seals' of another witness."
+    },
+    {
+     "source": "והוא כותר אשי של נהר נור",
+     "ours": "he is the crown of fire of the River of Fire",
+     "reference": "he stirs up the fire of the river",
+     "right": "both_defensible",
+     "why": "A follows this witness's koter; B follows the reading soter behind the name Sother Ashiel."
+    }
+   ],
+   "legit_choice": false,
+   "legit_note": "",
+   "reason": "Both are close literal versions in the right hymnic, formulaic register; the differences come mostly from the published version following a different textual witness (names, seals, 7000 myriads, 'rebukes'), while A follows this manuscript, bracketing its name etymologies but misreading 'keys' and inventing 'from whom a voice goes out'."
+  }
+ ]
+}

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Check, X } from 'lucide-react';
+import { Check, Heart, X } from 'lucide-react';
 import { cn, getBookThumbnailUrl, getBookCardUrl } from '@/lib/utils';
 import { bookCoverResponsiveLoader } from '@/lib/book-cover-loader';
 import { isPublishedFirstTranslation } from '@/lib/book';
@@ -55,6 +55,9 @@ export interface CollectionBook {
   published?: string;
   translation_percent?: number;
   resource_type?: string;
+  /** Readers' hearts. Only a surface that ranks by likes sets it; the card
+   *  then shows a ♥ count on the cover. Absent everywhere else. */
+  like_count?: number;
 }
 
 /** The card's few words of chrome, so a Spanish surface can render it in Spanish. */
@@ -247,6 +250,16 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
             at, and on /es the page already sorts into "in Spanish" and
             "not yet", so the heading above the grid has said it. Stacked over
             First Translation it read as the more important of the two. */}
+        {(book.like_count ?? 0) > 0 && (
+          <span
+            className="absolute top-2 left-2 z-10 inline-flex items-center gap-1 text-[11px] font-medium text-white px-2 py-1 backdrop-blur-sm"
+            style={{ background: 'rgba(20,16,12,0.5)' }}
+            aria-label={`${book.like_count} ${book.like_count === 1 ? 'like' : 'likes'}`}
+          >
+            <Heart className="w-3 h-3 fill-current" aria-hidden /> {book.like_count!.toLocaleString(lang === 'es' ? 'es-ES' : 'en-US')}
+          </span>
+        )}
+
         {(isPublishedFirstTranslation(book) || book.has_doi) && (
           <div className="absolute top-2 right-2 z-10 flex flex-col gap-1.5 items-end">
             {isPublishedFirstTranslation(book) && (

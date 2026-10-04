@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import { getReadDb } from '@/lib/mongodb';
 import { Book } from '@/lib/types';
 import { type CollectionForGrid } from '@/components/book/BookLibrary';
@@ -434,6 +435,61 @@ async function getRecentlyTranslated(): Promise<CatalogBook[]> {
   return out;
 }
 
+// ---------- Most liked ----------
+
+const MOST_LIKED_COUNT = 15;
+// A like count shown on a card has to read as a crowd, not a lonely vote: a
+// book needs at least this many hearts to make the shelf.
+const MOST_LIKED_MIN = 3;
+
+export type LikedBook = Book & { like_count: number };
+
+// The books readers have hearted most, all time. Likes are anonymous visitor
+// votes (`likes`, target_type 'book'); a page like cascades to its book, so
+// this counts both. Counted site-wide (no tenant scope), matching the number
+// the book page's own LikeButton shows. A like's target_id is the book's `id`,
+// but 16K books carry a re-minted `_id`, so look up by either
+// (.claude/docs/invariants/book-deletion-and-identity.md). Same live filter as
+// every public list, real covers only, one card per work.
+async function getMostLiked(): Promise<LikedBook[]> {
+  const db = await getReadDb();
+  const top = await db.collection('likes').aggregate<{ _id: string; n: number }>([
+    { $match: { target_type: 'book' } },
+    { $group: { _id: '$target_id', n: { $sum: 1 } } },
+    { $match: { n: { $gte: MOST_LIKED_MIN } } },
+    { $sort: { n: -1 } },
+    { $limit: 80 },
+  ], { maxTimeMS: 5000 }).toArray();
+  if (top.length === 0) return [];
+
+  const ids = top.map((t) => String(t._id));
+  const oids = ids.filter((id) => /^[0-9a-f]{24}$/i.test(id)).map((id) => new ObjectId(id));
+  const books = await db.collection('books').aggregate([
+    { $match: { $or: [{ id: { $in: ids } }, { _id: { $in: oids } }], visible: true, pages_count: { $gt: 0 }, content_type: { $ne: 'artwork' } } },
+    { $project: { ...BOOK_PROJECTION, _oid: { $toString: '$_id' }, rawId: '$id' } },
+  ], { maxTimeMS: 5000 }).toArray();
+  const byId = new Map<string, any>();
+  for (const b of books) {
+    if (b.rawId) byId.set(String(b.rawId), b);
+    byId.set(b._oid, b);
+  }
+
+  const seen = new Set<string>();
+  const out: LikedBook[] = [];
+  for (const { _id, n } of top) {
+    const b = byId.get(String(_id));
+    if (!b || seen.has(b.id) || !hasRenderableCover(b as CatalogBook)) continue;
+    const key = workKey(b as CatalogBook);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    seen.add(b.id);
+    const { _oid, rawId, ...rest } = b;
+    out.push({ ...rest, like_count: n } as LikedBook);
+    if (out.length >= MOST_LIKED_COUNT) break;
+  }
+  return JSON.parse(JSON.stringify(out)) as LikedBook[];
+}
+
 // How often the gallery selection rotates. It stays identical to everyone within
 // a window (so it does NOT reshuffle on every refresh) and picks a fresh 48 each
 // window. Tune this one number to change the cadence.
@@ -708,6 +764,8 @@ export interface HomeData {
   featuredItems: FeaturedItem[];
   discoverBooks: Book[];
   recentlyTranslated: CatalogBook[];
+  /** Most-hearted books, each carrying its like count for the card badge. */
+  mostLiked: LikedBook[];
   galleryPlates: Plate[];
   counts: HomeCounts;
   collections: CollectionForGrid[];
@@ -730,10 +788,11 @@ export interface HomeData {
 // this file).
 export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
   const emptyShowcase: CuratedShowcase = { items: [], total: 0 };
-  const [featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts] = await Promise.all([
+  const [featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts] = await Promise.all([
     withTimeout(getFeaturedCollections(), 20000, [] as FeaturedItem[]),
     withTimeout(getDiscoverBooks(), 20000, FALLBACK_DISCOVER_BOOKS),
     withTimeout(getRecentlyTranslated(), 20000, [] as CatalogBook[]),
+    withTimeout(getMostLiked(), 8000, [] as LikedBook[]),
     withTimeout(getHomeGalleryPlates(), 20000, [] as Plate[]),
     getBookCounts(),
     withTimeout(getRemainingCollections(), 20000, SORTED_FALLBACK_COLLECTIONS),
@@ -744,5 +803,5 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
       : withTimeout(getLocalizedCollectionCounts(lang), 8000, {} as Record<string, number>),
   ]);
 
-  return { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, curatedShowcase, blogPosts: BLOG_POSTS, spanishCollection, localizedCollectionCounts };
+  return { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, blogPosts: BLOG_POSTS, spanishCollection, localizedCollectionCounts };
 }
