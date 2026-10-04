@@ -42,7 +42,7 @@ import { getPageSource } from '../lib/page-image-url.mjs';
 import { holdBook, isHeld, releaseBook } from '../lib/pipeline-hold.mjs';
 import {
   LANE, LANE_ISSUE, REVISION_REASON, GUARD_SOURCE, BOOK_EVENT, HOLD_REASON, HOLD_RELEASE, MIN_LETTERS, GLM,
-  cleanGlm, letterStats, guardVerdict, bookMedianChars, envelope, ocrSetFields, isHumanEdited, STALE_OCR_FIELDS, markTranslationsStale,
+  cleanGlmWithStats, letterStats, guardVerdict, bookMedianChars, envelope, ocrSetFields, isHumanEdited, STALE_OCR_FIELDS, markTranslationsStale,
 } from '../lib/glm-english-lane.mjs';
 
 const argv = process.argv.slice(2);
@@ -192,7 +192,7 @@ async function apply() {
       if (book.pipeline_auto?.hold?.reason !== HOLD_REASON) { log(`${bid} NOT held for ${HOLD_REASON} — refusing to write`); totals.not_held++; continue; }
       const pages = await P.find({ id: { $in: rows.map((r) => r.pid) } }, { projection: { id: 1, page_number: 1, ocr: 1 } }).toArray();
       const byId = new Map(pages.map((p) => [p.id, p]));
-      const reads = rows.map((r) => ({ r, body: cleanGlm(fs.readFileSync(outFile(bid, r.pn, 'txt'), 'utf8')), meta: readJson(outFile(bid, r.pn, 'json'), {}) }));
+      const reads = rows.map((r) => { const c = cleanGlmWithStats(fs.readFileSync(outFile(bid, r.pn, 'txt'), 'utf8')); return { r, body: c.text, meta: { ...readJson(outFile(bid, r.pn, 'json'), {}), postprocess: c.postprocess } }; });
       const median = bookMedianChars(reads.map((x) => x.body.length));
       const run = `${LANE}/${box.pod_id || 'unknown-pod'}`;
       const writes = [];

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
-  cleanGlm, scriptGuard, truncationGuard, guardVerdict, endsClosed, bookMedianChars, longestWordRun, envelope, ocrSetFields,
+  cleanGlm, cleanGlmWithStats, fixHomoglyphs, scriptGuard, truncationGuard, guardVerdict, endsClosed, bookMedianChars, longestWordRun, envelope, ocrSetFields,
 } from '../../scripts/lib/glm-english-lane.mjs';
 import { missingProvenance } from '../../scripts/lib/write-provenance.mjs';
 
@@ -18,8 +18,17 @@ describe('script guard', () => {
   it('refuses any Greek in an English book — GLM is not trusted on Greek (60/114 catastrophic)', () => {
     expect(scriptGuard(`${PROSE} λόγος τοῦ θεοῦ`).reasons).toEqual(['non_latin_script']);
   });
-  it('refuses a Latin-script word repeated three times in a row', () => {
-    expect(scriptGuard(`${PROSE} the the the Elements`).reasons).toEqual(['repeated_word']);
+  it('refuses a Latin-script word repeated four times in a row', () => {
+    expect(scriptGuard(`${PROSE} the the the the Elements`).reasons).toEqual(['repeated_word']);
+  });
+  it('passes rhetoric and price tables (pilot false positives, Winstanley 1650 and a 1601 jewel table)', () => {
+    expect(scriptGuard(`${PROSE} Therefore woe, woe, woe, to the Inhabitants of the Earth.`).pass).toBe(true);
+    expect(longestWordRun('Of 1 1/2 30\nOf 2 40\nOf 3/4 of one Mangelin. 22\nOf 1 6').run).toBe(1);
+  });
+  it('maps a Cyrillic look-alike inside an English word to Latin, and counts it', () => {
+    expect(fixHomoglyphs('when they see a loss\u0435 evidently')).toEqual({ text: 'when they see a losse evidently', fixed: 1 });
+    expect(fixHomoglyphs('\u0441\u043b\u043e\u0432\u043e and word').fixed).toBe(0);
+    expect(cleanGlmWithStats('a loss\u0435').postprocess).toEqual({ homoglyphs_fixed: 1 });
   });
   it('passes English print, long-s, ligatures, thorn and symbols', () => {
     const g = scriptGuard(`${PROSE} ſo þe Æther ☉ ♀ — &c. &c. &c. that that is`);

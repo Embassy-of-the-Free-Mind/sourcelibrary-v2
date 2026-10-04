@@ -50,8 +50,8 @@ export const HOLD_RELEASE = 'the GLM-read English 1600–1699 cohort is OCR only
 export const MIN_LETTERS = 10;
 /** Script guard: this many letters of a non-Latin script refuse the page. */
 export const MAX_NON_LATIN = 2;
-/** Script guard: the same word this many times in a row refuses the page. */
-export const REPEAT_RUN = 3;
+/** Script guard: the same word this many times in a row refuses the page. Not 3: "woe, woe, woe" is English (pilot, Winstanley 1650). */
+export const REPEAT_RUN = 4;
 /** Truncation guard: a page ending mid-line is flagged when shorter than this share of the book's median read. */
 export const SHORT_SHARE = 0.5;
 /** Truncation guard: the book median counts only when this many of its reads have ≥ MEDIAN_MIN_CHARS. */
@@ -70,7 +70,7 @@ export const GLM = {
   model_url: 'https://huggingface.co/zai-org/GLM-OCR',
   licence: 'MIT',
   prompt: 'Text Recognition:',
-  conventions: 'the model\'s own Markdown, as returned; a leading/trailing ``` fence line dropped; NFC; trailing blank lines dropped',
+  conventions: 'the model\'s own Markdown, as returned; a leading/trailing ``` fence line dropped; NFC; trailing blank lines dropped; a Cyrillic look-alike inside a Latin-letter word mapped to its Latin twin (count in postprocess)',
   measured: '#5660 round 3 (PR #5786): English 1600–1699, 59 library pages, median CER 0.034 vs flash-lite 0.053, Δ −0.021 [−0.026, −0.002], 41 better / 14 worse',
 };
 
@@ -80,10 +80,16 @@ const FENCE = /^\s*```[a-zA-Z]*\s*$/;
 
 /** The model's raw output → page body: fence lines dropped, NFC, trailing whitespace and blank tail removed. */
 export function cleanGlm(raw) {
-  const lines = String(raw || '').normalize('NFC').split(/\r?\n/).filter((l) => !FENCE.test(l)).map((l) => l.replace(/\s+$/, ''));
+  return cleanGlmWithStats(raw).text;
+}
+
+/** cleanGlm and what it changed: `{ text, postprocess: { homoglyphs_fixed } }`. */
+export function cleanGlmWithStats(raw) {
+  const h = fixHomoglyphs(String(raw || '').normalize('NFC'));
+  const lines = h.text.split(/\r?\n/).filter((l) => !FENCE.test(l)).map((l) => l.replace(/\s+$/, ''));
   while (lines.length && !lines[lines.length - 1]) lines.pop();
   while (lines.length && !lines[0]) lines.shift();
-  return lines.join('\n');
+  return { text: lines.join('\n'), postprocess: { homoglyphs_fixed: h.fixed } };
 }
 
 /** Letters in a text, and how many are in a script other than Latin, by script. */
@@ -108,17 +114,40 @@ function scriptOf(ch) {
   return 'other';
 }
 
-/** Longest run of one word repeated back to back: `{ word, run }`. A word has ≥ 2 letters. */
+/**
+ * Longest run of one word repeated back to back: `{ word, run }`. A word has ≥ 2 letters; a token with no
+ * letter (a number, a rule) BREAKS a run — a price table's "Of 1 1/2 30 / Of 2 40 / Of 3 …" is not "of of of".
+ */
 export function longestWordRun(text) {
-  const words = String(text || '').toLowerCase().split(/\s+/)
-    .map((w) => w.replace(/[^\p{L}\p{M}]/gu, ''))
-    .filter(Boolean);
+  const words = String(text || '').toLowerCase().split(/\s+/).filter(Boolean)
+    .map((w) => w.replace(/[^\p{L}\p{M}]/gu, ''));
   let best = { word: null, run: 0 }, cur = 0;
   for (let i = 0; i < words.length; i++) {
+    if (!words[i]) { cur = 0; continue; }
     cur = i > 0 && words[i] === words[i - 1] ? cur + 1 : 1;
     if ([...words[i]].length >= 2 && cur > best.run) best = { word: words[i], run: cur };
   }
   return best;
+}
+
+/** Cyrillic letters GLM sometimes emits inside an English word ("lossе" with Cyrillic е), and their Latin twins. */
+const HOMOGLYPH = { 'а': 'a', 'е': 'e', 'о': 'o', 'р': 'p', 'с': 'c', 'у': 'y', 'х': 'x', 'і': 'i', 'ѕ': 's', 'ј': 'j', 'ԁ': 'd', 'ӏ': 'l',
+  'А': 'A', 'В': 'B', 'Е': 'E', 'К': 'K', 'М': 'M', 'Н': 'H', 'О': 'O', 'Р': 'P', 'С': 'C', 'Т': 'T', 'Х': 'X', 'І': 'I', 'Ѕ': 'S', 'Ј': 'J' };
+const HOMO_RE = new RegExp(`[${Object.keys(HOMOGLYPH).join('')}]`, 'gu');
+
+/**
+ * A Cyrillic look-alike INSIDE a word that also carries Latin letters is the Latin letter (measured on the
+ * pilot: "lossе", "seene"). A word with no Latin letter is left alone — that is Cyrillic text, and the
+ * script guard refuses it. Returns `{ text, fixed }`; `fixed` is stored on the page (engine.postprocess).
+ */
+export function fixHomoglyphs(text) {
+  let fixed = 0;
+  const out = String(text || '').replace(/[\p{L}\p{M}]+/gu, (w) => {
+    if (!LATIN.test(w) || !HOMO_RE.test(w)) { HOMO_RE.lastIndex = 0; return w; }
+    HOMO_RE.lastIndex = 0;
+    return w.replace(HOMO_RE, (c) => { fixed++; return HOMOGLYPH[c]; });
+  });
+  return { text: out, fixed };
 }
 
 /**
@@ -212,6 +241,7 @@ export function ocrSetFields(text, { run, now = new Date(), imageUrl = null, box
       generation: { temperature: 0, max_tokens: meta.max_tokens ?? null, finish: meta.finish ?? null, out_tok: meta.out_tok ?? null },
       run: run || LANE, code_version: box.code_rev || null, issue: LANE_ISSUE, secs: meta.secs ?? null, host: box.host || null, gpu: box.gpu || null,
       serving: { backend: 'vllm', vllm: box.vllm_version || null, clients: box.clients ?? null },
+      postprocess: meta.postprocess || null,
       input: imageUrl ? { image_url: imageUrl } : { status: 'not_recorded', reason: 'caller passed no image url' },
     },
     'ocr.guards': guards,
