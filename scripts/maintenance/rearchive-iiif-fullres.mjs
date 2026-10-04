@@ -82,7 +82,9 @@
  *                              only written when a book completes with zero failures)
  *   --skip-upgraded-pages      within a book, leave pages already carrying image_metadata.upgraded_at
  *                              alone — the gap pass for books stamped while some pages had failed
- *                              to fetch (counted as skips before 2026-10-04; 104 gallica books)
+ *                              to fetch (counted as skips before 2026-10-04). Pages with no
+ *                              upgraded_at mark may already be at master (written by another
+ *                              archiver); the per-book eligibility check skips those.
  *   --concurrency N            books processed in parallel (default 2)
  *   --page-concurrency N       pages per book (default 4)
  *   --limit N                  max books
