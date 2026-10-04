@@ -7,7 +7,9 @@ import sharp from 'sharp';
 /**
  * @param {object[]} pages  page docs; each tile is `archived_photo || photo` unless `urlOf` says otherwise
  * @param {{ perSheet: number, cellPx: number, urlOf?: (p: object) => string|null }} o
- * @returns {Promise<Buffer>} the sheet; a page whose image fails to load is a blank white cell
+ * @returns {Promise<Buffer>} the sheet; a page whose image fails to load is a blank white cell, and the
+ *   returned Buffer carries `failedTiles` (how many) so a caller can refuse a mostly-blank sheet —
+ *   a model asked about a white grid still answers.
  */
 export async function sheetFor(pages, { perSheet, cellPx, urlOf = (p) => p.archived_photo || p.photo }) {
   const cols = Math.ceil(Math.sqrt(perSheet));
@@ -26,6 +28,8 @@ export async function sheetFor(pages, { perSheet, cellPx, urlOf = (p) => p.archi
   const composites = tiles.map((t, i) => ({
     input: t || blank, left: (i % cols) * cellPx, top: Math.floor(i / cols) * cellPx,
   }));
-  return sharp({ create: { width: cols * cellPx, height: rows * cellPx, channels: 3, background: '#fff' } })
+  const sheet = await sharp({ create: { width: cols * cellPx, height: rows * cellPx, channels: 3, background: '#fff' } })
     .composite(composites).jpeg({ quality: 80 }).toBuffer();
+  sheet.failedTiles = tiles.filter((t) => !t).length;
+  return sheet;
 }

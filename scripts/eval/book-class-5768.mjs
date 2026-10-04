@@ -88,6 +88,9 @@ const LANG_FAMILY = {
   sanskrit: 'indic', hindi: 'indic', bengali: 'indic', tamil: 'indic', pali: 'indic', marathi: 'indic', tibetan: 'tibetan',
   chinese: 'cjk', 'classical chinese': 'cjk', japanese: 'cjk', korean: 'cjk', mongolian: 'mongolian', manchu: 'mongolian',
   sumerian: 'cuneiform', akkadian: 'cuneiform', 'egyptian': 'egyptian', thai: 'southeast-asian', burmese: 'southeast-asian',
+  // Turfan fragments (Manichaean, Sogdian, Old Uyghur scripts): no family of their own in the list, and
+  // their OCR is a Latin transliteration, so the language must not fall through to the OCR's letters.
+  sogdian: 'other', parthian: 'other', 'middle persian': 'other', 'old turkic': 'other', 'old uyghur': 'other', bactrian: 'other', tocharian: 'other',
 };
 export const languageFamily = (lang) => LANG_FAMILY[String(lang || '').trim().toLowerCase()] ?? null;
 
@@ -446,16 +449,29 @@ const sheetUrl = (p) => [p.display_photo, p.cropped_photo].find(isR2) || getPage
 function ledger() { return fs.existsSync(LEDGER) ? JSON.parse(fs.readFileSync(LEDGER, 'utf8')) : { cap_usd: 10, jobs: [] }; }
 const spentOf = (L) => L.jobs.reduce((s, j) => s + (j.cost_usd ?? j.estimate_usd ?? 0), 0);
 
+// Hosts that ration us per day. BSB's IIIF answers `x-ratelimit-limit: 25001` per client per day and
+// the box's archivers draw on the same budget: the CLIP pass of 2026-10-04 got 9,577 429s and left it
+// at 49 requests. A book whose images exist ONLY there is deferred until it is archived to R2, never
+// fetched again by this script. Vatican's digi.vatlib.it answered 403.
+const RATE_LIMITED_HOSTS = /(^|\.)(digitale-sammlungen\.de|vatlib\.it)$/;
+export function rateLimitedOnly(r) {
+  const hosts = r.pages.map((p) => { try { return new URL(p.thumb).host; } catch { return null; } }).filter(Boolean);
+  return hosts.length > 0 && hosts.filter((h) => RATE_LIMITED_HOSTS.test(h)).length > hosts.length / 2;
+}
+
 /** Books that go to the paid step: CLIP low-confidence, CJK (CLIP is near chance there), and books CLIP could not see. */
 export function paidCandidates() {
   const labels = readJsonl(LABELS_FILE);
   const clip = new Map(readJsonl(CLIP_FILE).map((r) => [r.book_id, r]));
   const sikuHits = fs.existsSync(SIKU_FILE) ? JSON.parse(fs.readFileSync(SIKU_FILE, 'utf8')) : {};
   const done = new Set(readJsonl(PAID_FILE).filter((r) => r.class).map((r) => r.book_id));
-  for (const j of ledger().jobs) if (!j.collected_at) for (const id of j.book_ids || []) done.add(id);
+  const L0 = ledger();
+  for (const j of L0.jobs) if (!j.collected_at) for (const id of j.book_ids || []) done.add(id);
+  for (const u of L0.unfetchable || []) done.add(u.book_id);
   const out = [];
   for (const r of labels) {
     if (done.has(r.book_id) || sikuHits[r.book_id] || tierOf(r) === 'strong') continue;
+    if (rateLimitedOnly(r)) continue; // deferred, see RATE_LIMITED_HOSTS
     const tier = tierOf(r);
     const fam = r.family_ocr?.family || r.family_lang || null;
     if (tier !== 'none') { out.push({ book_id: r.book_id, pages_count: r.pages_count, family: fam, why: `free label ${tier}` }); continue; }
@@ -491,6 +507,7 @@ async function submitPaid() {
   const chunkFile = path.join(OUT_DIR, `paid-input-${Date.now()}.jsonl`);
   const w = fs.createWriteStream(chunkFile);
   const sheetPages = {};
+  const unfetchable = [];
   let built = 0;
   const CONC = Number(opt('concurrency', 6)); let i = 0;
   await Promise.all(Array.from({ length: CONC }, async () => {
@@ -500,6 +517,8 @@ async function submitPaid() {
       const ps = (await db.collection('pages').find({ book_id: b.book_id, page_number: { $in: want } }, { projection: proj }).toArray()).sort((x, y) => x.page_number - y.page_number);
       if (!ps.length) continue;
       const jpeg = await sheetFor(ps, { perSheet: PER_SHEET, cellPx: CELL_PX, urlOf: sheetUrl });
+      // A mostly-white sheet would still get a confident answer. Refuse it; the book stays unclassified.
+      if (jpeg.failedTiles > ps.length / 2) { unfetchable.push({ book_id: b.book_id, failed: jpeg.failedTiles, of: ps.length }); continue; }
       sheetPages[b.book_id] = ps.map((p) => p.id);
       w.write(JSON.stringify({ key: b.book_id, request: { contents: [{ parts: [{ inline_data: { mime_type: 'image/jpeg', data: jpeg.toString('base64') } }, { text: PAID_PROMPT }] }], generationConfig: { maxOutputTokens: 100, responseMimeType: 'application/json', responseSchema: PAID_SCHEMA, thinkingConfig: { thinkingBudget: 0 } } } }) + '\n');
       if (++built % 100 === 0) console.log(`sheets ${built}/${pick.length}`);
@@ -521,6 +540,7 @@ async function submitPaid() {
     return r.json();
   } });
   fs.unlinkSync(chunkFile);
+  L.unfetchable = [...(L.unfetchable || []), ...unfetchable];
   L.jobs.push({ job_name: job.name, key_env: keyEnv, model: PAID_MODEL, prompt_version: PAID_PROMPT_VERSION, requests: built, bytes, estimate_usd: +est.toFixed(4), submitted_at: new Date().toISOString(), book_ids: Object.keys(sheetPages), sheet_pages: sheetPages });
   fs.writeFileSync(LEDGER, JSON.stringify(L));
   console.log(`submitted ${job.name}: ${built} sheets, ${(bytes / 1e6).toFixed(0)} MB, estimate $${est.toFixed(4)}`);
@@ -588,7 +608,12 @@ function decide() {
     else if (s) { cls = s.class; source = 'contact-sheet'; pages = s.pages.map((id) => ({ page_id: id, answer: `${s.class} (sheet of ${s.pages.length})` })); model = s.model; }
     else if (c && !c.low_confidence) { cls = c.class; source = 'clip-knn'; pages = c.pages.map((p) => ({ page_id: p.page_id, answer: p.answer, vote: p.vote })); model = `clip-vit-base-patch32 knn-${K}`; }
     let family = null, familySource = null;
-    if (r.family_ocr && r.family_ocr.letters >= 80) { family = r.family_ocr.family; familySource = 'ocr-text-letters'; }
+    // The OCR's letters, unless they are Latin while the edition language is written in another
+    // script: then the transcription is a transliteration (Turfan "M" fragments, ETCSL Sumerian).
+    const langFam = languageFamily(String(r.language || '').split(/[;,]/)[0]);
+    const translit = r.family_ocr?.family === 'latin' && langFam && langFam !== 'latin';
+    if (r.family_ocr && r.family_ocr.letters >= 80 && !translit) { family = r.family_ocr.family; familySource = 'ocr-text-letters'; }
+    else if (translit) { family = langFam; familySource = 'books.language (OCR is a transliteration)'; }
     else if (s?.script_family) { family = s.script_family; familySource = 'contact-sheet'; }
     else if (r.family_lang) { family = r.family_lang; familySource = 'books.language'; }
     else if (c?.family) { family = c.family; familySource = 'clip-knn'; }
@@ -597,6 +622,9 @@ function decide() {
     const free = r.tag_class || r.census?.script || null;
     if (s && free) inc(`sheet-vs-free ${tier}: ${free === s.class ? 'agree' : `free=${free} sheet=${s.class}`}`);
     if (s && c && !c.low_confidence) inc(`sheet-vs-clip: ${c.class === s.class ? 'agree' : `clip=${c.class} sheet=${s.class}`}`);
+    // routeBook's provider list is for SYRIAC holdings; for Gallica it is wrong in general (628 of 748
+    // tagged Gallica books are printed), so it is not kept as evidence of a manuscript.
+    if (r.meta) { r.meta.why = r.meta.why.filter((w) => w !== 'provider gallica'); if (!r.meta.why.length) r.meta = null; }
     if (r.meta && cls) inc(`meta(handwritten) vs class: ${cls}`);
     out.write(JSON.stringify({
       book_id: r.book_id, language: r.language, visible: r.visible, hold: r.hold, title: r.title,
