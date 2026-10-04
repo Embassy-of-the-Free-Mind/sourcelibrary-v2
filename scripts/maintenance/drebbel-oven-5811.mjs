@@ -93,6 +93,21 @@ await withMongo(async (db) => {
       for (const b of before) await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'processing_priority', detail: { before: b.processing_priority ?? null, after: 85 } });
     }
   }
+  // A chained run whose single-page fallbacks outgrew Phase 4's auto-approval (1.2× estimate) sits
+  // at round_ready "approval exhausted" forever. Same raise rule and CAS write as
+  // scripts/batch/stranded-text-repair-5309.mjs; the envelope still caps the job's total.
+  if (process.argv.includes('--raise-approval')) {
+    const { RUNS_COLLECTION, TERMINAL_PHASES } = await import('../lib/translate-batch-seam.mjs');
+    const runId = process.argv[process.argv.indexOf('--raise-approval') + 1];
+    const r = await db.collection(RUNS_COLLECTION).findOne({ id: runId });
+    if (!r || TERMINAL_PHASES.includes(r.phase)) { console.log(`${runId}: not found or terminal`); return; }
+    const next = +Math.min(r.page_count * 0.008, r.approved_usd * 1.5 + 0.1).toFixed(2);
+    console.log(`${r.book_id} run ${runId}: allowance $${r.approved_usd} → $${next} (est spent $${(r.spent_est_usd || 0).toFixed(4)}) ${APPLY ? '' : '(dry run)'}`);
+    if (APPLY) {
+      await db.collection(RUNS_COLLECTION).updateOne({ id: runId, approved_usd: r.approved_usd }, { $set: { approved_usd: next, updated_at: new Date() } });
+      await recordSweepAction(db, { sweep: SWEEP, book_id: r.book_id, action: 'raise_run_approval', detail: { run: runId, before: r.approved_usd, after: next } });
+    }
+  }
   if (process.argv.includes('--evelyn-per-page')) {
     const id = '6ac2798602c7f994f850646a';
     const reason = 'archive.org HTTP 500 on the JP2 zip (and _djvu.xml) on every attempt 2026-10-04, single page images 200 (#5811)';
