@@ -1,0 +1,45 @@
+{
+ "key": "v098_f3a",
+ "arm": "hinted",
+ "page": {
+  "key": "v098_f3a",
+  "vol": 98,
+  "book_id": "6ac02a519a86d56c1aa28898",
+  "page_number": 5,
+  "page_label": "f. 3a",
+  "bdrc_canvas": "I1PD1103660008.jpg",
+  "ligeti": "Mng1.1130",
+  "mng_span": "vol. 98 p. 2 (start of volume)",
+  "toh": "D2",
+  "skt": "Prātimokṣasūtra",
+  "derge_vol": 5,
+  "derge_file": "005_འདུལ་བ།_ཅ.txt"
+ },
+ "model": "gemini-3-flash-preview",
+ "ocr_prompt": {
+  "arm": "hinted",
+  "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "content_hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "translation_prompt": {
+  "name": "Standard Translation",
+  "version": "13",
+  "hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>26</columns>\n<page-num>3</page-num>\n<header>律師戒行經第六卷上三</header>\n<meta>Beijing Kanjur woodblock print, red ink (cinnabar). Marginal Chinese text indicates: Vinaya-vibhāga, Volume 6, Part 1, Folio 3.</meta>\n\n<margin>\n律\n師\n戒\n行\n經\n第\n六\n卷\n上\n三\n</margin>\n\nᠪᠤᠰᠤᠳ ᠤᠨ ᠭᠡᠷ ᠲᠦ ᠪᠡᠶᠡ ᠪᠡᠨ ᠵᠢᠭᠰᠠᠭᠠᠵᠤ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠪᠥᠭᠲᠦᠷᠦᠭᠦᠯᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠩᠳᠠᠭᠤᠯᠵᠤ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠡᠩᠭᠡᠷ ᠢᠶᠡᠨ ᠳᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠡᠪᠡᠷ ᠳᠡᠭᠡᠷ᠎ᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠲᠠᠯᠪᠢᠵᠤ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠬᠥᠯ ᠢᠶᠡᠨ ᠠᠴᠢᠵᠤ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠬᠥᠯ ᠢᠶᠡᠨ ᠵᠢᠭᠰᠠᠭᠠᠵᠤ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠬᠥᠯ ᠢᠶᠡᠨ ᠳᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠡᠪᠡᠷ ᠳᠡᠭᠡᠷ᠎ᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠲᠠᠯᠪᠢᠵᠤ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠡᠷᠡᠭᠦᠦ ᠪᠡᠨ ᠲᠤᠯᠵᠤ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠪᠡᠰᠡᠯᠡᠵᠦ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ ᠢᠶᠡᠨ ᠬᠠᠪᠰᠤᠷᠤᠨ ᠰᠠᠭᠤᠬᠤ ᠦᠭᠡᠢ ᠪᠡᠶᠡ ᠪᠡᠨ ᠭᠠᠷ⠂\n\n<vocab>ᠪᠤᠰᠤᠳ ᠤᠨ ᠭᠡᠷ (others' houses), ᠪᠡᠶᠡ (body), ᠰᠠᠭᠤᠬᠤ (to sit), ᠭᠠᠷ (hand), ᠬᠥᠯ (foot), ᠪᠡᠰᠡᠯᠡᠬᠦ (to gird/waist), ᠬᠠᠪᠰᠤᠷᠤᠨ (clasping/folding)</vocab>",
+  "finishReason": "STOP",
+  "inputTokens": 4359,
+  "outputTokens": 6309,
+  "cost_usd": 0.0211065
+ },
+ "translation": {
+  "text": "<margin>\nSutra of the Precepts and Conduct of the Vinaya Master\nVolume 6\nPart 1\nPage 3\n</margin>\n\n<meta>continues from previous page: instructions on comportment when visiting lay households.</meta>\n\nOne shall not sit in the houses of others with the body swaying. One shall not sit with the body hunched. One shall not sit with the body stiffened. One shall not sit with the body with the lap of one's robe spread open. One shall not sit with one's hands placed upon one's knees. One shall not sit with one's legs crossed. One shall not sit with the legs swaying. One shall not sit with the legs splayed. One shall not sit with one's hands placed upon one's knees. One shall not sit with one's chin propped up. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands on one's waist. One shall not sit with one's hands clasped. One shall not sit with one's hands \n\n<summary>This page details the specific prohibited sitting postures for monks when visiting the homes of laypeople. It emphasizes the importance of maintaining a disciplined and modest physical presence through a repetitive list of forbidden actions.</summary>\n<keywords>Vinaya, Buddhist discipline, sitting postures, monastic conduct, etiquette, lay households</keywords>",
+  "finishReason": "STOP",
+  "inputTokens": 8039,
+  "outputTokens": 892,
+  "cost_usd": 0.0066955
+ }
+}

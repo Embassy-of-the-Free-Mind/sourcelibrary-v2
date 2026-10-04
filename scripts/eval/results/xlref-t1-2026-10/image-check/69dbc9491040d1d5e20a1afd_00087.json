@@ -1,0 +1,116 @@
+{
+ "id": "69dbc9491040d1d5e20a1afd_00087",
+ "image_legible": true,
+ "ocr_word_errors": 48,
+ "ocr_words_approx": 190,
+ "ocr_errors": [
+  {
+   "image": "dũ metui. q̃ȝ cari esse ⁊ diligi maluimus (dum metui quam cari esse et diligi)",
+   "ocr": "du mes tui. q. cari esset diligi maluimus",
+   "effect_on_english": "'metui quam' lost: 'we preferred to be loved when we wished to be dear' (reversal)"
+  },
+  {
+   "image": "iniuste imperãti accidere potuerũt (iniuste imperanti ... potuerunt)",
+   "ocr": "iuste imperati accidere potuerit",
+   "effect_on_english": "'the Roman people, who were rightly governed' (polarity reversed)"
+  },
+  {
+   "image": "semen ⁊ causa deerit. dũ hoĩes perditi hastã illã cruentã",
+   "ocr": "semen a causa uerit. du hoies pdia hasta illa crues ta",
+   "effect_on_english": "'seed ... ever arisen from any other cause than when men' instead of 'will never be wanting while'"
+  },
+  {
+   "image": "Itaqȝ p̄ietes urbis modo stãt et manẽt (parietes ... stant et manent)",
+   "ocr": "Itaq. pietes urbis modo stat et manet",
+   "effect_on_english": "'stands only by the piety of others' for 'only the walls stand'"
+  },
+  {
+   "image": "Quã L. silla cũ vibrasset dictatore ꝓpinquo suo",
+   "ocr": "Qua lhilla cu vibrass dictatore ppinquo hio",
+   "effect_on_english": "Sulla's name lost: 'When that man flourished with the spear, with the dictator close by'"
+  },
+  {
+   "image": "a sceleratiore. hasta eadẽ nõ recessit",
+   "ocr": "a sceleratioze hasta eate no recessit",
+   "effect_on_english": "'the evil did not recede from that wicked spear until the thirty-sixth year'"
+  },
+  {
+   "image": "genere ꝯprehendẽt (comprehenderet)",
+   "ocr": "genere splendet",
+   "effect_on_english": "translator bracketed '[destroyed]'; minor"
+  },
+  {
+   "image": "vexatis ac perditis exteris nationibȝ ad exemplũ amissi imperii",
+   "ocr": "vexatus ac pdiis exteris nationibus ad exemplum amissis impn.",
+   "effect_on_english": "'Massilia, harassed and lost to the example of foreign nations'"
+  },
+  {
+   "image": "⁊ ex ea urbe triũphari. sine qua",
+   "ocr": "rex ea vrbe triumphari. sme qua",
+   "effect_on_english": "'triumph over that city' dropped"
+  },
+  {
+   "image": "nunq̃ȝ ad unũ tãta peruenisset licẽtia",
+   "ocr": "nunq. ad unu rata puemss licentia",
+   "effect_on_english": "'to one man' lost: 'would never have reached such a point'"
+  },
+  {
+   "image": "ad paucos. cupiditatũ ad multos venit hereditas",
+   "ocr": "ad paucos cupiditati. ad multos venit hereditas",
+   "effect_on_english": "'greed for the family estate came to a few' (estate/ambitions contrast scrambled)"
+  },
+  {
+   "image": "nunq̃ȝ defutura bella ciuilia",
+   "ocr": "nunq. se futura bella ciuilia",
+   "effect_on_english": "none (translator guessed 'never be absent')"
+  }
+ ],
+ "page_cause": "ocr_abbrev",
+ "causes": [
+  {
+   "finding": "Reversal: 'we preferred to be loved when we wished to be dear' loses 'metui quam cari'",
+   "cause": "ocr_misread",
+   "image": "dũ metui. q̃ȝ cari esse ⁊ diligi maluimus",
+   "ocr": "du mes tui. q. cari esset diligi maluimus",
+   "english": "if we preferred to be loved when we wished to be dear"
+  },
+  {
+   "finding": "Reversal: 'Roman people, who were rightly governed' for iniuste imperanti",
+   "cause": "ocr_misread",
+   "image": "pplo rõno iniuste imperãti",
+   "ocr": "pplo rono iuste imperati",
+   "english": "the Roman people, who were rightly governed"
+  },
+  {
+   "finding": "'seed of civil wars ever arisen from any other cause than when' for 'semen et causa deerit, dum'",
+   "cause": "ocr_misread",
+   "image": "semen ⁊ causa deerit. dũ hoĩes perditi",
+   "ocr": "semen a causa uerit. du hoies pdia",
+   "english": "ever arisen from any other cause than when men"
+  },
+  {
+   "finding": "Sulla sentence garbled: 'flourished with the spear ... did not recede ... until the thirty-sixth year'",
+   "cause": "ocr_abbrev",
+   "image": "Quã L. silla cũ vibrasset dictatore ꝓpinquo suo ... hasta eadẽ nõ recessit",
+   "ocr": "Qua lhilla cu vibrass dictatore ppinquo hio ... hasta eate no recessit",
+   "english": "When that man flourished with the spear, with the dictator close by"
+  },
+  {
+   "finding": "'by the piety of others' misreads parietes (walls)",
+   "cause": "ocr_abbrev",
+   "image": "p̄ietes urbis modo stãt et manẽt",
+   "ocr": "pietes urbis modo stat et manet",
+   "english": "the city stands and remains only by the piety of others"
+  },
+  {
+   "finding": "Massilia sentence drops 'ex ea urbe triumphari'",
+   "cause": "ocr_misread",
+   "image": "⁊ ex ea urbe triũphari. sine qua",
+   "ocr": "rex ea vrbe triumphari. sme qua",
+   "english": "carried in a triumph, a city without which"
+  }
+ ],
+ "share_of_served_error_from_ocr": "all",
+ "fixed_transcription_written": true,
+ "note": "1465 Fust-Schoeffer type; OCR dropped nearly every tilde/abbreviation and misread ⁊ (et) as a/r and d-rotunda as u/t/e (deerit→uerit, debet→exbs, clades→claes). Image clearly has 'dũ me-/tui. q̃ȝ cari esse ⁊ diligi' and 'iniuste imperãti'. Image prints 'solo ... indignus' (edition's own reading) and Sulla's initial looks like L., kept as printed."
+}

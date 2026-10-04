@@ -102,11 +102,15 @@ describe('groundQuotes', () => {
     const pages = Array.from({ length: 400 }, (_, i) => page(i + 1, filler(i + 1)));
     const quotes = [{ text: LOREM, page: 1 }];
 
+    // A queued macrotask, not a 1 ms timer: on a fast runner the whole run can
+    // finish inside a millisecond and the timer never gets its turn, which made
+    // this test fail about 3 runs in 4 (#5747). The callback below runs only if
+    // groundQuotes hands the loop back at least once before it resolves.
     let timerFired = false;
-    const timer = setTimeout(() => { timerFired = true; }, 1);
+    const timer = setImmediate(() => { timerFired = true; });
 
     await groundQuotes(quotes, buildPageIndex(pages));
-    clearTimeout(timer);
+    clearImmediate(timer);
 
     // The old synchronous version blocked the loop, so the timer could not run until it finished —
     // which is why the per-book timeout and seven other books' awaits all froze behind one book.

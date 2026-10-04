@@ -1,0 +1,4452 @@
+{
+ "run_id": "xlref-t5-2026-10",
+ "n_pages": 68,
+ "n_served": 64,
+ "gate": {
+  "pass": true,
+  "by_judge": {
+   "j1": {
+    "wrong_page": [
+     {
+      "id": "69e8b2642ff2a8dc09e778a1_00439",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     },
+     {
+      "id": "69b99e496ed9e04909909f8f_00220",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     },
+     {
+      "id": "6a09ff5dfa20006dbaba9200_00274",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     }
+    ],
+    "planted": [
+     {
+      "id": "69e80670fdad300064d9ef9d_00599",
+      "op": "drop-negation",
+      "from": "will not",
+      "to": "will",
+      "planted_fidelity": 3,
+      "base_fidelity": 4,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     },
+     {
+      "id": "6a3c61b1879008ba7e15fba1_00068",
+      "op": "drop-negation",
+      "from": "has not",
+      "to": "has",
+      "planted_fidelity": 3,
+      "base_fidelity": 4,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     },
+     {
+      "id": "69e7267ca409200ea79ef51d_00353",
+      "op": "drop-negation",
+      "from": "is not",
+      "to": "is",
+      "planted_fidelity": 3,
+      "base_fidelity": 3,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     }
+    ],
+    "duplicate": [
+     {
+      "id": "6a09ff43fa20006dbaba8d78_00193",
+      "arm": "flash",
+      "fidelity": [
+       5,
+       5
+      ],
+      "tier": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "69e72698a409200ea79ef8c3_00129",
+      "arm": "flash",
+      "fidelity": [
+       3,
+       3
+      ],
+      "tier": [
+       2,
+       2
+      ],
+      "tie": true
+     },
+     {
+      "id": "6a3c61b5879008ba7e15fd28_00117",
+      "arm": "lite2",
+      "fidelity": [
+       3,
+       3
+      ],
+      "tier": [
+       4,
+       4
+      ],
+      "tie": true
+     }
+    ],
+    "missing": [],
+    "summary": {
+     "wrong_page": "3/3 scored ≤ 2",
+     "planted": "3/3 caught (3 located the planted word)",
+     "duplicate": "3/3 tied"
+    },
+    "pass": true
+   },
+   "j2": {
+    "wrong_page": [
+     {
+      "id": "69e8b2642ff2a8dc09e778a1_00439",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     },
+     {
+      "id": "69b99e496ed9e04909909f8f_00220",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     },
+     {
+      "id": "6a09ff5dfa20006dbaba9200_00274",
+      "fidelity": 1,
+      "span": "different",
+      "pass": true
+     }
+    ],
+    "planted": [
+     {
+      "id": "69e80670fdad300064d9ef9d_00599",
+      "op": "drop-negation",
+      "from": "will not",
+      "to": "will",
+      "planted_fidelity": 3,
+      "base_fidelity": 4,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     },
+     {
+      "id": "6a3c61b1879008ba7e15fba1_00068",
+      "op": "drop-negation",
+      "from": "has not",
+      "to": "has",
+      "planted_fidelity": 3,
+      "base_fidelity": 4,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     },
+     {
+      "id": "69e7267ca409200ea79ef51d_00353",
+      "op": "drop-negation",
+      "from": "is not",
+      "to": "is",
+      "planted_fidelity": 3,
+      "base_fidelity": 3,
+      "reversal_flagged": true,
+      "located": true,
+      "pass": true
+     }
+    ],
+    "duplicate": [
+     {
+      "id": "6a09ff43fa20006dbaba8d78_00193",
+      "arm": "flash",
+      "fidelity": [
+       5,
+       5
+      ],
+      "tier": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "69e72698a409200ea79ef8c3_00129",
+      "arm": "flash",
+      "fidelity": [
+       3,
+       3
+      ],
+      "tier": [
+       2,
+       2
+      ],
+      "tie": true
+     },
+     {
+      "id": "6a3c61b5879008ba7e15fd28_00117",
+      "arm": "lite2",
+      "fidelity": [
+       4,
+       4
+      ],
+      "tier": [
+       3,
+       3
+      ],
+      "tie": true
+     }
+    ],
+    "missing": [],
+    "summary": {
+     "wrong_page": "3/3 scored ≤ 2",
+     "planted": "3/3 caught (3 located the planted word)",
+     "duplicate": "3/3 tied"
+    },
+    "pass": true
+   }
+  },
+  "problems": [],
+  "n_problems": 0,
+  "forced": false
+ },
+ "agreement": {
+  "judges": [
+   "j1",
+   "j2"
+  ],
+  "n": 491,
+  "fidelity_exact": 0.784,
+  "within_1": 0.996,
+  "weighted_kappa": 0.822
+ },
+ "reference_fit": {
+  "wider": 88,
+  "narrower": 31,
+  "exact": 10,
+  "offset": 7
+ },
+ "reference_set": {
+  "by_lang": {
+   "Pali": 16,
+   "Sanskrit": 28,
+   "Chinese": 24
+  },
+  "canonical": {
+   "True": 46,
+   "False": 22
+  },
+  "style": {
+   "literal": 57,
+   "free": 11
+  },
+  "licence_private": 0,
+  "translators": {
+   "Bhikkhu Sujato": 14,
+   "Bhikkhu Brahmali": 2,
+   "H. H. Wilson": 1,
+   "George Thibaut": 2,
+   "James Haughton Woods": 1,
+   "H. Kern": 1,
+   "William Dwight Whitney": 1,
+   "Kisari Mohan Ganguli": 2,
+   "Edwin Arnold": 1,
+   "C. H. Tawney": 1,
+   "Arthur W. Ryder": 2,
+   "Ralph T. H. Griffith": 1,
+   "Manmatha Nath Dutt": 1,
+   "K. T. Telang": 2,
+   "R. Shamasastry": 1,
+   "G. Bühler": 1,
+   "V. N. Mandlik": 1,
+   "Pancham Sinh": 1,
+   "Th. Stcherbatsky": 1,
+   "Richard Garbe (tr.)": 1,
+   "James Legge": 10,
+   "Lionel Giles": 1,
+   "Y. P. Mei": 1,
+   "Homer H. Dubs": 1,
+   "Timothy Richard (with Yang Wen Hwui)": 2,
+   "William Gemmell": 3,
+   "Daisetz Teitaro Suzuki": 1,
+   "W. E. Soothill": 1,
+   "Herbert A. Giles": 2,
+   "H. Bencraft Joly": 1,
+   "C. H. Brewitt-Taylor": 1,
+   "Henry Thomas Colebrooke": 1,
+   "Ebenezer Burgess": 1,
+   "Richard F. Burton & F. F. Arbuthnot": 1,
+   "Francis Johnson": 1,
+   "Kaviraj Kunja Lal Bhishagratna": 1,
+   "Avinash Chandra Kaviratna / Pareshnath Sarma": 1
+  },
+  "edition_period": {
+   "1800-1899": 23,
+   "1900-1949": 15,
+   "unknown": 13,
+   "1950+": 5,
+   "<1500": 3,
+   "1500-1799": 9
+  },
+  "genre": {
+   "pali canon (sutta/vinaya)": 16,
+   "veda": 2,
+   "sastra / sutra + commentary": 4,
+   "buddhist sutra / sastra": 8,
+   "epic": 3,
+   "kavya": 3,
+   "story literature": 1,
+   "gita": 2,
+   "sastra (polity)": 1,
+   "sastra (law, commentary)": 1,
+   "yoga manual + commentary": 1,
+   "buddhist philosophy (commentary)": 1,
+   "philosophy (sutra + vrtti)": 1,
+   "daoist classic + commentary": 7,
+   "confucian classic + commentary": 4,
+   "philosophy (Mozi)": 1,
+   "philosophy (Xunzi)": 1,
+   "fiction (tales)": 2,
+   "fiction (novel)": 1,
+   "fiction (novel) + commentary": 1,
+   "mathematics + commentary": 1,
+   "astronomy + commentary": 1,
+   "sastra (kama) + commentary": 1,
+   "fable (didactic)": 2,
+   "medicine": 2
+  }
+ },
+ "served": {
+  "all": {
+   "fidelity": {
+    "n": 64,
+    "mean": 3.625,
+    "ci": [
+     3.422,
+     3.82
+    ]
+   },
+   "share_ge4": {
+    "k": 37,
+    "n": 64,
+    "rate": 0.578,
+    "ci": [
+     0.456,
+     0.691
+    ]
+   },
+   "share_le3": {
+    "k": 20,
+    "n": 64,
+    "rate": 0.312,
+    "ci": [
+     0.212,
+     0.434
+    ]
+   },
+   "omission": {
+    "n": 64,
+    "mean": 0.516,
+    "ci": [
+     0.398,
+     0.633
+    ]
+   },
+   "reversal": {
+    "n": 64,
+    "mean": 0.109,
+    "ci": [
+     0.047,
+     0.18
+    ]
+   },
+   "unreadable_fill": {
+    "n": 64,
+    "mean": 0.086,
+    "ci": [
+     0.039,
+     0.148
+    ]
+   },
+   "boundary": {
+    "n": 64,
+    "mean": 0.18,
+    "ci": [
+     0.094,
+     0.273
+    ]
+   }
+  },
+  "by_lang": {
+   "Chinese": {
+    "fidelity": {
+     "n": 22,
+     "mean": 3.75,
+     "ci": [
+      3.409,
+      4.045
+     ]
+    },
+    "share_ge4": {
+     "k": 14,
+     "n": 22,
+     "rate": 0.636,
+     "ci": [
+      0.43,
+      0.803
+     ]
+    },
+    "share_le3": {
+     "k": 5,
+     "n": 22,
+     "rate": 0.227,
+     "ci": [
+      0.101,
+      0.434
+     ]
+    },
+    "omission": {
+     "n": 22,
+     "mean": 0.364,
+     "ci": [
+      0.182,
+      0.545
+     ]
+    },
+    "reversal": {
+     "n": 22,
+     "mean": 0.136,
+     "ci": [
+      0.023,
+      0.273
+     ]
+    },
+    "unreadable_fill": {
+     "n": 22,
+     "mean": 0.091,
+     "ci": [
+      0.023,
+      0.182
+     ]
+    },
+    "boundary": {
+     "n": 22,
+     "mean": 0.023,
+     "ci": [
+      0.0,
+      0.068
+     ]
+    }
+   },
+   "Pali": {
+    "fidelity": {
+     "n": 15,
+     "mean": 3.667,
+     "ci": [
+      3.233,
+      4.067
+     ]
+    },
+    "share_ge4": {
+     "k": 9,
+     "n": 15,
+     "rate": 0.6,
+     "ci": [
+      0.357,
+      0.802
+     ]
+    },
+    "share_le3": {
+     "k": 4,
+     "n": 15,
+     "rate": 0.267,
+     "ci": [
+      0.109,
+      0.52
+     ]
+    },
+    "omission": {
+     "n": 15,
+     "mean": 0.433,
+     "ci": [
+      0.233,
+      0.667
+     ]
+    },
+    "reversal": {
+     "n": 15,
+     "mean": 0.133,
+     "ci": [
+      0.0,
+      0.333
+     ]
+    },
+    "unreadable_fill": {
+     "n": 15,
+     "mean": 0.0,
+     "ci": [
+      0.0,
+      0.0
+     ]
+    },
+    "boundary": {
+     "n": 15,
+     "mean": 0.3,
+     "ci": [
+      0.1,
+      0.533
+     ]
+    }
+   },
+   "Sanskrit": {
+    "fidelity": {
+     "n": 27,
+     "mean": 3.5,
+     "ci": [
+      3.185,
+      3.778
+     ]
+    },
+    "share_ge4": {
+     "k": 14,
+     "n": 27,
+     "rate": 0.519,
+     "ci": [
+      0.34,
+      0.693
+     ]
+    },
+    "share_le3": {
+     "k": 11,
+     "n": 27,
+     "rate": 0.407,
+     "ci": [
+      0.245,
+      0.593
+     ]
+    },
+    "omission": {
+     "n": 27,
+     "mean": 0.685,
+     "ci": [
+      0.519,
+      0.852
+     ]
+    },
+    "reversal": {
+     "n": 27,
+     "mean": 0.074,
+     "ci": [
+      0.0,
+      0.167
+     ]
+    },
+    "unreadable_fill": {
+     "n": 27,
+     "mean": 0.13,
+     "ci": [
+      0.037,
+      0.241
+     ]
+    },
+    "boundary": {
+     "n": 27,
+     "mean": 0.241,
+     "ci": [
+      0.093,
+      0.407
+     ]
+    }
+   }
+  },
+  "by_canonical": {
+   "canonical": {
+    "fidelity": {
+     "n": 43,
+     "mean": 3.663,
+     "ci": [
+      3.407,
+      3.907
+     ]
+    },
+    "share_ge4": {
+     "k": 25,
+     "n": 43,
+     "rate": 0.581,
+     "ci": [
+      0.433,
+      0.716
+     ]
+    },
+    "share_le3": {
+     "k": 13,
+     "n": 43,
+     "rate": 0.302,
+     "ci": [
+      0.186,
+      0.451
+     ]
+    },
+    "omission": {
+     "n": 43,
+     "mean": 0.442,
+     "ci": [
+      0.302,
+      0.581
+     ]
+    },
+    "reversal": {
+     "n": 43,
+     "mean": 0.116,
+     "ci": [
+      0.047,
+      0.209
+     ]
+    },
+    "unreadable_fill": {
+     "n": 43,
+     "mean": 0.105,
+     "ci": [
+      0.035,
+      0.186
+     ]
+    },
+    "boundary": {
+     "n": 43,
+     "mean": 0.174,
+     "ci": [
+      0.07,
+      0.291
+     ]
+    }
+   },
+   "non-canonical": {
+    "fidelity": {
+     "n": 21,
+     "mean": 3.548,
+     "ci": [
+      3.238,
+      3.857
+     ]
+    },
+    "share_ge4": {
+     "k": 12,
+     "n": 21,
+     "rate": 0.571,
+     "ci": [
+      0.365,
+      0.755
+     ]
+    },
+    "share_le3": {
+     "k": 7,
+     "n": 21,
+     "rate": 0.333,
+     "ci": [
+      0.172,
+      0.546
+     ]
+    },
+    "omission": {
+     "n": 21,
+     "mean": 0.667,
+     "ci": [
+      0.476,
+      0.857
+     ]
+    },
+    "reversal": {
+     "n": 21,
+     "mean": 0.095,
+     "ci": [
+      0.0,
+      0.238
+     ]
+    },
+    "unreadable_fill": {
+     "n": 21,
+     "mean": 0.048,
+     "ci": [
+      0.0,
+      0.119
+     ]
+    },
+    "boundary": {
+     "n": 21,
+     "mean": 0.19,
+     "ci": [
+      0.048,
+      0.357
+     ]
+    }
+   }
+  },
+  "by_reference_style": {
+   "free": {
+    "fidelity": {
+     "n": 11,
+     "mean": 3.409,
+     "ci": [
+      2.864,
+      3.955
+     ]
+    },
+    "share_ge4": {
+     "k": 5,
+     "n": 11,
+     "rate": 0.455,
+     "ci": [
+      0.213,
+      0.72
+     ]
+    },
+    "share_le3": {
+     "k": 4,
+     "n": 11,
+     "rate": 0.364,
+     "ci": [
+      0.152,
+      0.646
+     ]
+    },
+    "omission": {
+     "n": 11,
+     "mean": 0.682,
+     "ci": [
+      0.455,
+      0.909
+     ]
+    },
+    "reversal": {
+     "n": 11,
+     "mean": 0.091,
+     "ci": [
+      0.0,
+      0.273
+     ]
+    },
+    "unreadable_fill": {
+     "n": 11,
+     "mean": 0.045,
+     "ci": [
+      0.0,
+      0.136
+     ]
+    },
+    "boundary": {
+     "n": 11,
+     "mean": 0.227,
+     "ci": [
+      0.0,
+      0.455
+     ]
+    }
+   },
+   "literal": {
+    "fidelity": {
+     "n": 53,
+     "mean": 3.67,
+     "ci": [
+      3.453,
+      3.887
+     ]
+    },
+    "share_ge4": {
+     "k": 32,
+     "n": 53,
+     "rate": 0.604,
+     "ci": [
+      0.469,
+      0.724
+     ]
+    },
+    "share_le3": {
+     "k": 16,
+     "n": 53,
+     "rate": 0.302,
+     "ci": [
+      0.195,
+      0.435
+     ]
+    },
+    "omission": {
+     "n": 53,
+     "mean": 0.481,
+     "ci": [
+      0.358,
+      0.604
+     ]
+    },
+    "reversal": {
+     "n": 53,
+     "mean": 0.113,
+     "ci": [
+      0.047,
+      0.198
+     ]
+    },
+    "unreadable_fill": {
+     "n": 53,
+     "mean": 0.094,
+     "ci": [
+      0.038,
+      0.17
+     ]
+    },
+    "boundary": {
+     "n": 53,
+     "mean": 0.17,
+     "ci": [
+      0.075,
+      0.274
+     ]
+    }
+   }
+  },
+  "by_edition_period": {
+   "1500-1799": {
+    "n": 9,
+    "note": "n < 10, not reported"
+   },
+   "1800-1899": {
+    "fidelity": {
+     "n": 22,
+     "mean": 3.636,
+     "ci": [
+      3.364,
+      3.909
+     ]
+    },
+    "share_ge4": {
+     "k": 14,
+     "n": 22,
+     "rate": 0.636,
+     "ci": [
+      0.43,
+      0.803
+     ]
+    },
+    "share_le3": {
+     "k": 7,
+     "n": 22,
+     "rate": 0.318,
+     "ci": [
+      0.164,
+      0.527
+     ]
+    },
+    "omission": {
+     "n": 22,
+     "mean": 0.409,
+     "ci": [
+      0.227,
+      0.591
+     ]
+    },
+    "reversal": {
+     "n": 22,
+     "mean": 0.068,
+     "ci": [
+      0.0,
+      0.182
+     ]
+    },
+    "unreadable_fill": {
+     "n": 22,
+     "mean": 0.068,
+     "ci": [
+      0.0,
+      0.182
+     ]
+    },
+    "boundary": {
+     "n": 22,
+     "mean": 0.182,
+     "ci": [
+      0.045,
+      0.364
+     ]
+    }
+   },
+   "1900-1949": {
+    "fidelity": {
+     "n": 14,
+     "mean": 3.571,
+     "ci": [
+      3.107,
+      4.036
+     ]
+    },
+    "share_ge4": {
+     "k": 7,
+     "n": 14,
+     "rate": 0.5,
+     "ci": [
+      0.268,
+      0.732
+     ]
+    },
+    "share_le3": {
+     "k": 5,
+     "n": 14,
+     "rate": 0.357,
+     "ci": [
+      0.163,
+      0.612
+     ]
+    },
+    "omission": {
+     "n": 14,
+     "mean": 0.714,
+     "ci": [
+      0.5,
+      0.929
+     ]
+    },
+    "reversal": {
+     "n": 14,
+     "mean": 0.179,
+     "ci": [
+      0.0,
+      0.393
+     ]
+    },
+    "unreadable_fill": {
+     "n": 14,
+     "mean": 0.036,
+     "ci": [
+      0.0,
+      0.107
+     ]
+    },
+    "boundary": {
+     "n": 14,
+     "mean": 0.321,
+     "ci": [
+      0.107,
+      0.571
+     ]
+    }
+   },
+   "1950+": {
+    "n": 5,
+    "note": "n < 10, not reported"
+   },
+   "<1500": {
+    "n": 3,
+    "note": "n < 10, not reported"
+   },
+   "unknown": {
+    "fidelity": {
+     "n": 11,
+     "mean": 4.045,
+     "ci": [
+      3.727,
+      4.364
+     ]
+    },
+    "share_ge4": {
+     "k": 9,
+     "n": 11,
+     "rate": 0.818,
+     "ci": [
+      0.523,
+      0.949
+     ]
+    },
+    "share_le3": {
+     "k": 1,
+     "n": 11,
+     "rate": 0.091,
+     "ci": [
+      0.016,
+      0.377
+     ]
+    },
+    "omission": {
+     "n": 11,
+     "mean": 0.364,
+     "ci": [
+      0.136,
+      0.636
+     ]
+    },
+    "reversal": {
+     "n": 11,
+     "mean": 0.045,
+     "ci": [
+      0.0,
+      0.136
+     ]
+    },
+    "unreadable_fill": {
+     "n": 11,
+     "mean": 0.091,
+     "ci": [
+      0.0,
+      0.227
+     ]
+    },
+    "boundary": {
+     "n": 11,
+     "mean": 0.0,
+     "ci": [
+      0.0,
+      0.0
+     ]
+    }
+   }
+  },
+  "by_served_model": {
+   "flash": {
+    "fidelity": {
+     "n": 12,
+     "mean": 3.958,
+     "ci": [
+      3.625,
+      4.292
+     ]
+    },
+    "share_ge4": {
+     "k": 9,
+     "n": 12,
+     "rate": 0.75,
+     "ci": [
+      0.468,
+      0.911
+     ]
+    },
+    "share_le3": {
+     "k": 2,
+     "n": 12,
+     "rate": 0.167,
+     "ci": [
+      0.047,
+      0.448
+     ]
+    },
+    "omission": {
+     "n": 12,
+     "mean": 0.667,
+     "ci": [
+      0.417,
+      0.917
+     ]
+    },
+    "reversal": {
+     "n": 12,
+     "mean": 0.042,
+     "ci": [
+      0.0,
+      0.125
+     ]
+    },
+    "unreadable_fill": {
+     "n": 12,
+     "mean": 0.083,
+     "ci": [
+      0.0,
+      0.25
+     ]
+    },
+    "boundary": {
+     "n": 12,
+     "mean": 0.292,
+     "ci": [
+      0.083,
+      0.542
+     ]
+    }
+   },
+   "lite": {
+    "fidelity": {
+     "n": 52,
+     "mean": 3.548,
+     "ci": [
+      3.317,
+      3.769
+     ]
+    },
+    "share_ge4": {
+     "k": 28,
+     "n": 52,
+     "rate": 0.538,
+     "ci": [
+      0.405,
+      0.667
+     ]
+    },
+    "share_le3": {
+     "k": 18,
+     "n": 52,
+     "rate": 0.346,
+     "ci": [
+      0.232,
+      0.482
+     ]
+    },
+    "omission": {
+     "n": 52,
+     "mean": 0.481,
+     "ci": [
+      0.356,
+      0.606
+     ]
+    },
+    "reversal": {
+     "n": 52,
+     "mean": 0.125,
+     "ci": [
+      0.048,
+      0.221
+     ]
+    },
+    "unreadable_fill": {
+     "n": 52,
+     "mean": 0.087,
+     "ci": [
+      0.038,
+      0.144
+     ]
+    },
+    "boundary": {
+     "n": 52,
+     "mean": 0.154,
+     "ci": [
+      0.067,
+      0.25
+     ]
+    }
+   }
+  },
+  "by_lang_canonical": {
+   "Chinese / canonical": {
+    "fidelity": {
+     "n": 17,
+     "mean": 3.794,
+     "ci": [
+      3.412,
+      4.176
+     ]
+    },
+    "share_ge4": {
+     "k": 11,
+     "n": 17,
+     "rate": 0.647,
+     "ci": [
+      0.413,
+      0.827
+     ]
+    },
+    "share_le3": {
+     "k": 4,
+     "n": 17,
+     "rate": 0.235,
+     "ci": [
+      0.096,
+      0.473
+     ]
+    },
+    "omission": {
+     "n": 17,
+     "mean": 0.294,
+     "ci": [
+      0.118,
+      0.5
+     ]
+    },
+    "reversal": {
+     "n": 17,
+     "mean": 0.118,
+     "ci": [
+      0.0,
+      0.265
+     ]
+    },
+    "unreadable_fill": {
+     "n": 17,
+     "mean": 0.118,
+     "ci": [
+      0.029,
+      0.235
+     ]
+    },
+    "boundary": {
+     "n": 17,
+     "mean": 0.0,
+     "ci": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "Chinese / non-canonical": {
+    "n": 5,
+    "note": "n < 10, not reported"
+   },
+   "Pali / canonical": {
+    "fidelity": {
+     "n": 15,
+     "mean": 3.667,
+     "ci": [
+      3.2,
+      4.067
+     ]
+    },
+    "share_ge4": {
+     "k": 9,
+     "n": 15,
+     "rate": 0.6,
+     "ci": [
+      0.357,
+      0.802
+     ]
+    },
+    "share_le3": {
+     "k": 4,
+     "n": 15,
+     "rate": 0.267,
+     "ci": [
+      0.109,
+      0.52
+     ]
+    },
+    "omission": {
+     "n": 15,
+     "mean": 0.433,
+     "ci": [
+      0.233,
+      0.633
+     ]
+    },
+    "reversal": {
+     "n": 15,
+     "mean": 0.133,
+     "ci": [
+      0.0,
+      0.333
+     ]
+    },
+    "unreadable_fill": {
+     "n": 15,
+     "mean": 0.0,
+     "ci": [
+      0.0,
+      0.0
+     ]
+    },
+    "boundary": {
+     "n": 15,
+     "mean": 0.3,
+     "ci": [
+      0.1,
+      0.533
+     ]
+    }
+   },
+   "Sanskrit / canonical": {
+    "fidelity": {
+     "n": 11,
+     "mean": 3.455,
+     "ci": [
+      2.909,
+      3.955
+     ]
+    },
+    "share_ge4": {
+     "k": 5,
+     "n": 11,
+     "rate": 0.455,
+     "ci": [
+      0.213,
+      0.72
+     ]
+    },
+    "share_le3": {
+     "k": 5,
+     "n": 11,
+     "rate": 0.455,
+     "ci": [
+      0.213,
+      0.72
+     ]
+    },
+    "omission": {
+     "n": 11,
+     "mean": 0.682,
+     "ci": [
+      0.409,
+      0.909
+     ]
+    },
+    "reversal": {
+     "n": 11,
+     "mean": 0.091,
+     "ci": [
+      0.0,
+      0.227
+     ]
+    },
+    "unreadable_fill": {
+     "n": 11,
+     "mean": 0.227,
+     "ci": [
+      0.0,
+      0.455
+     ]
+    },
+    "boundary": {
+     "n": 11,
+     "mean": 0.273,
+     "ci": [
+      0.0,
+      0.545
+     ]
+    }
+   },
+   "Sanskrit / non-canonical": {
+    "fidelity": {
+     "n": 16,
+     "mean": 3.531,
+     "ci": [
+      3.156,
+      3.906
+     ]
+    },
+    "share_ge4": {
+     "k": 9,
+     "n": 16,
+     "rate": 0.562,
+     "ci": [
+      0.332,
+      0.769
+     ]
+    },
+    "share_le3": {
+     "k": 6,
+     "n": 16,
+     "rate": 0.375,
+     "ci": [
+      0.185,
+      0.614
+     ]
+    },
+    "omission": {
+     "n": 16,
+     "mean": 0.688,
+     "ci": [
+      0.438,
+      0.875
+     ]
+    },
+    "reversal": {
+     "n": 16,
+     "mean": 0.062,
+     "ci": [
+      0.0,
+      0.188
+     ]
+    },
+    "unreadable_fill": {
+     "n": 16,
+     "mean": 0.062,
+     "ci": [
+      0.0,
+      0.156
+     ]
+    },
+    "boundary": {
+     "n": 16,
+     "mean": 0.219,
+     "ci": [
+      0.062,
+      0.406
+     ]
+    }
+   }
+  },
+  "fit_not_wrong_n": 68
+ },
+ "arms": {
+  "flash": {
+   "pages": 68,
+   "fidelity": {
+    "mean": 4.132,
+    "ci": [
+     3.985,
+     4.272
+    ]
+   },
+   "share_ge4": {
+    "k": 56,
+    "n": 68,
+    "rate": 0.824,
+    "ci": [
+     0.716,
+     0.896
+    ]
+   },
+   "omission": {
+    "rate": 0.25,
+    "ci": [
+     0.162,
+     0.338
+    ],
+    "n": 68
+   },
+   "reversals_per_100_pages": {
+    "rate": 5.9,
+    "ci": [
+     1.5,
+     11.8
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.132,
+    "ci": [
+     0.066,
+     0.206
+    ],
+    "n": 68
+   },
+   "boundary": {
+    "rate": 0.11,
+    "ci": [
+     0.044,
+     0.184
+    ],
+    "n": 68
+   },
+   "added_fact": {
+    "rate": 0.544,
+    "ci": [
+     0.449,
+     0.647
+    ],
+    "n": 68
+   },
+   "cost": {
+    "usd_per_page_batch": 0.00178,
+    "n": 68
+   },
+   "by_lang": {
+    "Pali": {
+     "n": 16,
+     "mean": 4.438,
+     "ci": [
+      4.094,
+      4.719
+     ]
+    },
+    "Sanskrit": {
+     "n": 28,
+     "mean": 4.036,
+     "ci": [
+      3.839,
+      4.214
+     ]
+    },
+    "Chinese": {
+     "n": 24,
+     "mean": 4.042,
+     "ci": [
+      3.792,
+      4.292
+     ]
+    }
+   },
+   "by_canonical": {
+    "canonical": {
+     "n": 46,
+     "mean": 4.228,
+     "ci": [
+      4.043,
+      4.402
+     ]
+    },
+    "non-canonical": {
+     "n": 22,
+     "mean": 3.932,
+     "ci": [
+      3.727,
+      4.136
+     ]
+    }
+   }
+  },
+  "lite": {
+   "pages": 68,
+   "fidelity": {
+    "mean": 3.735,
+    "ci": [
+     3.544,
+     3.926
+    ]
+   },
+   "share_ge4": {
+    "k": 44,
+    "n": 68,
+    "rate": 0.647,
+    "ci": [
+     0.528,
+     0.75
+    ]
+   },
+   "omission": {
+    "rate": 0.397,
+    "ci": [
+     0.294,
+     0.5
+    ],
+    "n": 68
+   },
+   "reversals_per_100_pages": {
+    "rate": 15.4,
+    "ci": [
+     8.1,
+     23.5
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.118,
+    "ci": [
+     0.059,
+     0.184
+    ],
+    "n": 68
+   },
+   "boundary": {
+    "rate": 0.037,
+    "ci": [
+     0,
+     0.088
+    ],
+    "n": 68
+   },
+   "added_fact": {
+    "rate": 0.265,
+    "ci": [
+     0.176,
+     0.36
+    ],
+    "n": 68
+   },
+   "cost": {
+    "usd_per_page_batch": 0.00084,
+    "n": 68
+   },
+   "by_lang": {
+    "Pali": {
+     "n": 16,
+     "mean": 3.906,
+     "ci": [
+      3.312,
+      4.406
+     ]
+    },
+    "Sanskrit": {
+     "n": 28,
+     "mean": 3.661,
+     "ci": [
+      3.393,
+      3.893
+     ]
+    },
+    "Chinese": {
+     "n": 24,
+     "mean": 3.708,
+     "ci": [
+      3.438,
+      3.979
+     ]
+    }
+   },
+   "by_canonical": {
+    "canonical": {
+     "n": 46,
+     "mean": 3.815,
+     "ci": [
+      3.554,
+      4.054
+     ]
+    },
+    "non-canonical": {
+     "n": 22,
+     "mean": 3.568,
+     "ci": [
+      3.341,
+      3.773
+     ]
+    }
+   }
+  },
+  "lite2": {
+   "pages": 68,
+   "fidelity": {
+    "mean": 3.684,
+    "ci": [
+     3.507,
+     3.86
+    ]
+   },
+   "share_ge4": {
+    "k": 35,
+    "n": 68,
+    "rate": 0.515,
+    "ci": [
+     0.398,
+     0.629
+    ]
+   },
+   "omission": {
+    "rate": 0.419,
+    "ci": [
+     0.316,
+     0.522
+    ],
+    "n": 68
+   },
+   "reversals_per_100_pages": {
+    "rate": 14.0,
+    "ci": [
+     6.6,
+     22.1
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.132,
+    "ci": [
+     0.074,
+     0.206
+    ],
+    "n": 68
+   },
+   "boundary": {
+    "rate": 0.044,
+    "ci": [
+     0.007,
+     0.096
+    ],
+    "n": 68
+   },
+   "added_fact": {
+    "rate": 0.257,
+    "ci": [
+     0.169,
+     0.353
+    ],
+    "n": 68
+   },
+   "cost": {
+    "usd_per_page_batch": 0.00083,
+    "n": 68
+   },
+   "by_lang": {
+    "Pali": {
+     "n": 16,
+     "mean": 4.062,
+     "ci": [
+      3.594,
+      4.469
+     ]
+    },
+    "Sanskrit": {
+     "n": 28,
+     "mean": 3.607,
+     "ci": [
+      3.357,
+      3.839
+     ]
+    },
+    "Chinese": {
+     "n": 24,
+     "mean": 3.521,
+     "ci": [
+      3.271,
+      3.771
+     ]
+    }
+   },
+   "by_canonical": {
+    "canonical": {
+     "n": 46,
+     "mean": 3.783,
+     "ci": [
+      3.543,
+      4.011
+     ]
+    },
+    "non-canonical": {
+     "n": 22,
+     "mean": 3.477,
+     "ci": [
+      3.25,
+      3.705
+     ]
+    }
+   }
+  },
+  "served": {
+   "pages": 64,
+   "fidelity": {
+    "mean": 3.625,
+    "ci": [
+     3.422,
+     3.82
+    ]
+   },
+   "share_ge4": {
+    "k": 37,
+    "n": 64,
+    "rate": 0.578,
+    "ci": [
+     0.456,
+     0.691
+    ]
+   },
+   "omission": {
+    "rate": 0.516,
+    "ci": [
+     0.398,
+     0.633
+    ],
+    "n": 64
+   },
+   "reversals_per_100_pages": {
+    "rate": 10.9,
+    "ci": [
+     4.7,
+     18.0
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.086,
+    "ci": [
+     0.039,
+     0.141
+    ],
+    "n": 64
+   },
+   "boundary": {
+    "rate": 0.18,
+    "ci": [
+     0.094,
+     0.273
+    ],
+    "n": 64
+   },
+   "added_fact": {
+    "rate": 0.172,
+    "ci": [
+     0.102,
+     0.258
+    ],
+    "n": 64
+   },
+   "cost": null,
+   "by_lang": {
+    "Pali": {
+     "n": 15,
+     "mean": 3.667,
+     "ci": [
+      3.233,
+      4.067
+     ]
+    },
+    "Sanskrit": {
+     "n": 27,
+     "mean": 3.5,
+     "ci": [
+      3.204,
+      3.796
+     ]
+    },
+    "Chinese": {
+     "n": 22,
+     "mean": 3.75,
+     "ci": [
+      3.409,
+      4.068
+     ]
+    }
+   },
+   "by_canonical": {
+    "canonical": {
+     "n": 43,
+     "mean": 3.663,
+     "ci": [
+      3.419,
+      3.907
+     ]
+    },
+    "non-canonical": {
+     "n": 21,
+     "mean": 3.548,
+     "ci": [
+      3.214,
+      3.857
+     ]
+    }
+   }
+  },
+  "flash-think": {
+   "pages": 68,
+   "fidelity": {
+    "mean": 4.206,
+    "ci": [
+     4.059,
+     4.346
+    ]
+   },
+   "share_ge4": {
+    "k": 59,
+    "n": 68,
+    "rate": 0.868,
+    "ci": [
+     0.767,
+     0.929
+    ]
+   },
+   "omission": {
+    "rate": 0.235,
+    "ci": [
+     0.147,
+     0.331
+    ],
+    "n": 68
+   },
+   "reversals_per_100_pages": {
+    "rate": 6.6,
+    "ci": [
+     2.2,
+     12.5
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.103,
+    "ci": [
+     0.044,
+     0.169
+    ],
+    "n": 68
+   },
+   "boundary": {
+    "rate": 0.132,
+    "ci": [
+     0.066,
+     0.213
+    ],
+    "n": 68
+   },
+   "added_fact": {
+    "rate": 0.566,
+    "ci": [
+     0.463,
+     0.662
+    ],
+    "n": 68
+   },
+   "cost": {
+    "usd_per_page_batch": 0.00184,
+    "n": 68,
+    "thinking_tokens_per_page": 0,
+    "spent_realtime_usd": 0.2498
+   },
+   "by_lang": {
+    "Pali": {
+     "n": 16,
+     "mean": 4.531,
+     "ci": [
+      4.219,
+      4.781
+     ]
+    },
+    "Sanskrit": {
+     "n": 28,
+     "mean": 4.107,
+     "ci": [
+      3.911,
+      4.304
+     ]
+    },
+    "Chinese": {
+     "n": 24,
+     "mean": 4.104,
+     "ci": [
+      3.875,
+      4.333
+     ]
+    }
+   },
+   "by_canonical": {
+    "canonical": {
+     "n": 46,
+     "mean": 4.272,
+     "ci": [
+      4.098,
+      4.435
+     ]
+    },
+    "non-canonical": {
+     "n": 22,
+     "mean": 4.068,
+     "ci": [
+      3.841,
+      4.295
+     ]
+    }
+   }
+  },
+  "lite-ctx": {
+   "pages": 68,
+   "fidelity": {
+    "mean": 3.75,
+    "ci": [
+     3.566,
+     3.926
+    ]
+   },
+   "share_ge4": {
+    "k": 41,
+    "n": 68,
+    "rate": 0.603,
+    "ci": [
+     0.484,
+     0.711
+    ]
+   },
+   "omission": {
+    "rate": 0.346,
+    "ci": [
+     0.25,
+     0.441
+    ],
+    "n": 68
+   },
+   "reversals_per_100_pages": {
+    "rate": 19.1,
+    "ci": [
+     11.0,
+     27.9
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.14,
+    "ci": [
+     0.074,
+     0.221
+    ],
+    "n": 68
+   },
+   "boundary": {
+    "rate": 0.162,
+    "ci": [
+     0.088,
+     0.25
+    ],
+    "n": 68
+   },
+   "added_fact": {
+    "rate": 0.346,
+    "ci": [
+     0.25,
+     0.441
+    ],
+    "n": 68
+   },
+   "cost": {
+    "usd_per_page_batch": 0.00091,
+    "n": 68,
+    "thinking_tokens_per_page": 0,
+    "spent_realtime_usd": 0.1239
+   },
+   "by_lang": {
+    "Pali": {
+     "n": 16,
+     "mean": 4.062,
+     "ci": [
+      3.656,
+      4.438
+     ]
+    },
+    "Sanskrit": {
+     "n": 28,
+     "mean": 3.482,
+     "ci": [
+      3.232,
+      3.714
+     ]
+    },
+    "Chinese": {
+     "n": 24,
+     "mean": 3.854,
+     "ci": [
+      3.562,
+      4.146
+     ]
+    }
+   },
+   "by_canonical": {
+    "canonical": {
+     "n": 46,
+     "mean": 3.826,
+     "ci": [
+      3.576,
+      4.054
+     ]
+    },
+    "non-canonical": {
+     "n": 22,
+     "mean": 3.591,
+     "ci": [
+      3.318,
+      3.864
+     ]
+    }
+   }
+  },
+  "lite-check": {
+   "pages": 67,
+   "fidelity": {
+    "mean": 3.896,
+    "ci": [
+     3.724,
+     4.052
+    ]
+   },
+   "share_ge4": {
+    "k": 48,
+    "n": 67,
+    "rate": 0.716,
+    "ci": [
+     0.599,
+     0.81
+    ]
+   },
+   "omission": {
+    "rate": 0.291,
+    "ci": [
+     0.194,
+     0.388
+    ],
+    "n": 67
+   },
+   "reversals_per_100_pages": {
+    "rate": 10.4,
+    "ci": [
+     4.5,
+     17.9
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0.112,
+    "ci": [
+     0.06,
+     0.172
+    ],
+    "n": 67
+   },
+   "boundary": {
+    "rate": 0.075,
+    "ci": [
+     0.022,
+     0.134
+    ],
+    "n": 67
+   },
+   "added_fact": {
+    "rate": 0.239,
+    "ci": [
+     0.157,
+     0.328
+    ],
+    "n": 67
+   },
+   "cost": {
+    "usd_per_page_batch": 0.00167,
+    "n": 67,
+    "thinking_tokens_per_page": 0,
+    "spent_realtime_usd": 0.2237
+   },
+   "by_lang": {
+    "Pali": {
+     "n": 15,
+     "mean": 4.133,
+     "ci": [
+      3.7,
+      4.567
+     ]
+    },
+    "Sanskrit": {
+     "n": 28,
+     "mean": 3.714,
+     "ci": [
+      3.464,
+      3.946
+     ]
+    },
+    "Chinese": {
+     "n": 24,
+     "mean": 3.958,
+     "ci": [
+      3.729,
+      4.167
+     ]
+    }
+   },
+   "by_canonical": {
+    "canonical": {
+     "n": 45,
+     "mean": 3.956,
+     "ci": [
+      3.722,
+      4.178
+     ]
+    },
+    "non-canonical": {
+     "n": 22,
+     "mean": 3.773,
+     "ci": [
+      3.591,
+      3.955
+     ]
+    }
+   }
+  },
+  "opus": {
+   "pages": 20,
+   "fidelity": {
+    "mean": 4.875,
+    "ci": [
+     4.75,
+     4.975
+    ]
+   },
+   "share_ge4": {
+    "k": 20,
+    "n": 20,
+    "rate": 1.0,
+    "ci": [
+     0.839,
+     1
+    ]
+   },
+   "omission": {
+    "rate": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "n": 20
+   },
+   "reversals_per_100_pages": {
+    "rate": 0,
+    "ci": [
+     0,
+     0
+    ]
+   },
+   "unreadable_fill": {
+    "rate": 0,
+    "ci": [
+     0,
+     0
+    ],
+    "n": 20
+   },
+   "boundary": {
+    "rate": 0.075,
+    "ci": [
+     0,
+     0.15
+    ],
+    "n": 20
+   },
+   "added_fact": {
+    "rate": 0.925,
+    "ci": [
+     0.8,
+     1
+    ],
+    "n": 20
+   },
+   "cost": null,
+   "by_lang": {
+    "Pali": {
+     "n": 6,
+     "mean": 4.917,
+     "ci": [
+      4.75,
+      5.0
+     ]
+    },
+    "Sanskrit": {
+     "n": 7,
+     "mean": 4.929,
+     "ci": [
+      4.786,
+      5.0
+     ]
+    },
+    "Chinese": {
+     "n": 7,
+     "mean": 4.786,
+     "ci": [
+      4.5,
+      5.0
+     ]
+    }
+   },
+   "by_canonical": {
+    "canonical": {
+     "n": 12,
+     "mean": 4.958,
+     "ci": [
+      4.875,
+      5.0
+     ]
+    },
+    "non-canonical": {
+     "n": 8,
+     "mean": 4.75,
+     "ci": [
+      4.5,
+      4.938
+     ]
+    }
+   }
+  }
+ },
+ "noise_floor_X1": {
+  "n": 68,
+  "fidelity_delta": {
+   "n": 68,
+   "mean": -0.051,
+   "ci": [
+    -0.199,
+    0.125
+   ]
+  },
+  "reversal_delta_pp": {
+   "mean": -1.5,
+   "ci": [
+    -8.1,
+    5.1
+   ]
+  },
+  "omission_delta_pp": {
+   "mean": 2.2,
+   "ci": [
+    -7.4,
+    12.5
+   ]
+  },
+  "unreadable_fill_delta_pp": {
+   "mean": 1.5,
+   "ci": [
+    -5.9,
+    8.8
+   ]
+  },
+  "boundary_delta_pp": {
+   "mean": 0.7,
+   "ci": [
+    0.0,
+    2.2
+   ]
+  },
+  "rank": {
+   "a_wins": 21,
+   "ties": 18,
+   "b_wins": 29
+  },
+  "sign_p": 0.322
+ },
+ "levers": {
+  "flash_vs_lite": {
+   "n": 68,
+   "fidelity_delta": {
+    "n": 68,
+    "mean": 0.397,
+    "ci": [
+     0.221,
+     0.581
+    ]
+   },
+   "reversal_delta_pp": {
+    "mean": -9.6,
+    "ci": [
+     -16.9,
+     -3.7
+    ]
+   },
+   "omission_delta_pp": {
+    "mean": -14.7,
+    "ci": [
+     -25.7,
+     -4.4
+    ]
+   },
+   "unreadable_fill_delta_pp": {
+    "mean": 1.5,
+    "ci": [
+     -5.9,
+     8.1
+    ]
+   },
+   "boundary_delta_pp": {
+    "mean": 7.4,
+    "ci": [
+     0.7,
+     14.7
+    ]
+   },
+   "rank": {
+    "a_wins": 46,
+    "ties": 10,
+    "b_wins": 12,
+    "cant_tell": 0
+   },
+   "sign_p": 0,
+   "beyond_floor": true
+  },
+  "flash_vs_lite2": {
+   "n": 68,
+   "fidelity_delta": {
+    "n": 68,
+    "mean": 0.449,
+    "ci": [
+     0.301,
+     0.603
+    ]
+   },
+   "reversal_delta_pp": {
+    "mean": -8.1,
+    "ci": [
+     -14.0,
+     -2.9
+    ]
+   },
+   "omission_delta_pp": {
+    "mean": -16.9,
+    "ci": [
+     -27.9,
+     -6.6
+    ]
+   },
+   "unreadable_fill_delta_pp": {
+    "mean": 0.0,
+    "ci": [
+     -5.9,
+     5.9
+    ]
+   },
+   "boundary_delta_pp": {
+    "mean": 6.6,
+    "ci": [
+     0.0,
+     13.2
+    ]
+   },
+   "rank": {
+    "a_wins": 50,
+    "ties": 10,
+    "b_wins": 8,
+    "cant_tell": 0
+   },
+   "sign_p": 0,
+   "beyond_floor": true
+  },
+  "thinking_X2 (flash-think vs flash)": {
+   "n": 68,
+   "fidelity_delta": {
+    "n": 68,
+    "mean": 0.074,
+    "ci": [
+     -0.051,
+     0.213
+    ]
+   },
+   "reversal_delta_pp": {
+    "mean": 0.7,
+    "ci": [
+     -3.7,
+     5.9
+    ]
+   },
+   "omission_delta_pp": {
+    "mean": -1.5,
+    "ci": [
+     -11.0,
+     8.1
+    ]
+   },
+   "unreadable_fill_delta_pp": {
+    "mean": -2.9,
+    "ci": [
+     -9.6,
+     3.7
+    ]
+   },
+   "boundary_delta_pp": {
+    "mean": 2.2,
+    "ci": [
+     -3.7,
+     8.1
+    ]
+   },
+   "rank": {
+    "a_wins": 28,
+    "ties": 19,
+    "b_wins": 21
+   },
+   "sign_p": 0.392,
+   "beyond_floor": false
+  },
+  "continuity_context (lite-ctx vs lite)": {
+   "n": 68,
+   "fidelity_delta": {
+    "n": 68,
+    "mean": 0.015,
+    "ci": [
+     -0.162,
+     0.221
+    ]
+   },
+   "reversal_delta_pp": {
+    "mean": 3.7,
+    "ci": [
+     -6.6,
+     13.2
+    ]
+   },
+   "omission_delta_pp": {
+    "mean": -5.1,
+    "ci": [
+     -15.4,
+     4.4
+    ]
+   },
+   "unreadable_fill_delta_pp": {
+    "mean": 2.2,
+    "ci": [
+     -5.1,
+     10.3
+    ]
+   },
+   "boundary_delta_pp": {
+    "mean": 12.5,
+    "ci": [
+     4.4,
+     21.3
+    ]
+   },
+   "rank": {
+    "a_wins": 32,
+    "ties": 11,
+    "b_wins": 25
+   },
+   "sign_p": 0.427,
+   "beyond_floor": false
+  },
+  "check_and_fix (lite-check vs lite)": {
+   "n": 67,
+   "fidelity_delta": {
+    "n": 67,
+    "mean": 0.119,
+    "ci": [
+     0.022,
+     0.216
+    ]
+   },
+   "reversal_delta_pp": {
+    "mean": -5.2,
+    "ci": [
+     -12.7,
+     1.5
+    ]
+   },
+   "omission_delta_pp": {
+    "mean": -9.7,
+    "ci": [
+     -16.4,
+     -3.7
+    ]
+   },
+   "unreadable_fill_delta_pp": {
+    "mean": -0.7,
+    "ci": [
+     -3.7,
+     1.5
+    ]
+   },
+   "boundary_delta_pp": {
+    "mean": 3.7,
+    "ci": [
+     0.0,
+     8.2
+    ]
+   },
+   "rank": {
+    "a_wins": 29,
+    "ties": 27,
+    "b_wins": 11
+   },
+   "sign_p": 0.006,
+   "beyond_floor": false
+  },
+  "flash_vs_lite-check": {
+   "n": 67,
+   "fidelity_delta": {
+    "n": 67,
+    "mean": 0.224,
+    "ci": [
+     0.075,
+     0.373
+    ]
+   },
+   "reversal_delta_pp": {
+    "mean": -4.5,
+    "ci": [
+     -11.9,
+     3.0
+    ]
+   },
+   "omission_delta_pp": {
+    "mean": -3.7,
+    "ci": [
+     -13.4,
+     6.0
+    ]
+   },
+   "unreadable_fill_delta_pp": {
+    "mean": 2.2,
+    "ci": [
+     -4.5,
+     9.0
+    ]
+   },
+   "boundary_delta_pp": {
+    "mean": 3.7,
+    "ci": [
+     -4.5,
+     11.9
+    ]
+   },
+   "rank": {
+    "a_wins": 41,
+    "ties": 8,
+    "b_wins": 18,
+    "cant_tell": 0
+   },
+   "sign_p": 0.004,
+   "beyond_floor": true
+  },
+  "flash_vs_served": {
+   "n": 64,
+   "fidelity_delta": {
+    "n": 64,
+    "mean": 0.492,
+    "ci": [
+     0.305,
+     0.68
+    ]
+   },
+   "reversal_delta_pp": {
+    "mean": -4.7,
+    "ci": [
+     -11.7,
+     2.3
+    ]
+   },
+   "omission_delta_pp": {
+    "mean": -25.8,
+    "ci": [
+     -36.7,
+     -15.6
+    ]
+   },
+   "unreadable_fill_delta_pp": {
+    "mean": 4.7,
+    "ci": [
+     -2.3,
+     12.5
+    ]
+   },
+   "boundary_delta_pp": {
+    "mean": -7.0,
+    "ci": [
+     -18.0,
+     3.1
+    ]
+   },
+   "rank": {
+    "a_wins": 41,
+    "ties": 11,
+    "b_wins": 12,
+    "cant_tell": 0
+   },
+   "sign_p": 0,
+   "beyond_floor": true
+  },
+  "lite_vs_served": {
+   "n": 64,
+   "fidelity_delta": {
+    "n": 64,
+    "mean": 0.125,
+    "ci": [
+     -0.078,
+     0.32
+    ]
+   },
+   "reversal_delta_pp": {
+    "mean": 5.5,
+    "ci": [
+     -3.1,
+     14.1
+    ]
+   },
+   "omission_delta_pp": {
+    "mean": -12.5,
+    "ci": [
+     -26.6,
+     1.6
+    ]
+   },
+   "unreadable_fill_delta_pp": {
+    "mean": 3.9,
+    "ci": [
+     -3.1,
+     10.9
+    ]
+   },
+   "boundary_delta_pp": {
+    "mean": -14.1,
+    "ci": [
+     -23.4,
+     -4.7
+    ]
+   },
+   "rank": {
+    "a_wins": 30,
+    "ties": 7,
+    "b_wins": 27,
+    "cant_tell": 0
+   },
+   "sign_p": 0.791,
+   "beyond_floor": false
+  },
+  "opus_X3_vs_flash": {
+   "n": 20,
+   "fidelity_delta": {
+    "n": 20,
+    "mean": 0.85,
+    "ci": [
+     0.575,
+     1.125
+    ]
+   },
+   "reversal_delta_pp": {
+    "mean": -7.5,
+    "ci": [
+     -20.0,
+     0.0
+    ]
+   },
+   "omission_delta_pp": {
+    "mean": -17.5,
+    "ci": [
+     -32.5,
+     -5.0
+    ]
+   },
+   "unreadable_fill_delta_pp": {
+    "mean": -10.0,
+    "ci": [
+     -20.0,
+     -2.5
+    ]
+   },
+   "boundary_delta_pp": {
+    "mean": -5.0,
+    "ci": [
+     -22.5,
+     7.5
+    ]
+   },
+   "rank": {
+    "a_wins": 18,
+    "ties": 2,
+    "b_wins": 0
+   },
+   "sign_p": 0,
+   "beyond_floor": true
+  },
+  "opus_X3_vs_served": {
+   "n": 20,
+   "fidelity_delta": {
+    "n": 20,
+    "mean": 1.275,
+    "ci": [
+     0.975,
+     1.575
+    ]
+   },
+   "reversal_delta_pp": {
+    "mean": -10.0,
+    "ci": [
+     -25.0,
+     0.0
+    ]
+   },
+   "omission_delta_pp": {
+    "mean": -47.5,
+    "ci": [
+     -67.5,
+     -27.5
+    ]
+   },
+   "unreadable_fill_delta_pp": {
+    "mean": -5.0,
+    "ci": [
+     -12.5,
+     0.0
+    ]
+   },
+   "boundary_delta_pp": {
+    "mean": -22.5,
+    "ci": [
+     -45.0,
+     -2.5
+    ]
+   },
+   "rank": {
+    "a_wins": 19,
+    "ties": 1,
+    "b_wins": 0
+   },
+   "sign_p": 0,
+   "beyond_floor": true
+  },
+  "opus_X3_vs_lite": {
+   "n": 20,
+   "fidelity_delta": {
+    "n": 20,
+    "mean": 1.275,
+    "ci": [
+     0.975,
+     1.6
+    ]
+   },
+   "reversal_delta_pp": {
+    "mean": -15.0,
+    "ci": [
+     -30.0,
+     0.0
+    ]
+   },
+   "omission_delta_pp": {
+    "mean": -35.0,
+    "ci": [
+     -52.5,
+     -17.5
+    ]
+   },
+   "unreadable_fill_delta_pp": {
+    "mean": -7.5,
+    "ci": [
+     -15.0,
+     0.0
+    ]
+   },
+   "boundary_delta_pp": {
+    "mean": 2.5,
+    "ci": [
+     -12.5,
+     15.0
+    ]
+   },
+   "rank": {
+    "a_wins": 20,
+    "ties": 0,
+    "b_wins": 0
+   },
+   "sign_p": 0,
+   "beyond_floor": true
+  },
+  "opus_X3_vs_flash-think": {
+   "n": 20,
+   "fidelity_delta": {
+    "n": 20,
+    "mean": 0.775,
+    "ci": [
+     0.5,
+     1.05
+    ]
+   },
+   "reversal_delta_pp": {
+    "mean": -7.5,
+    "ci": [
+     -20.0,
+     0.0
+    ]
+   },
+   "omission_delta_pp": {
+    "mean": -17.5,
+    "ci": [
+     -35.0,
+     -2.5
+    ]
+   },
+   "unreadable_fill_delta_pp": {
+    "mean": -10.0,
+    "ci": [
+     -22.5,
+     0.0
+    ]
+   },
+   "boundary_delta_pp": {
+    "mean": -12.5,
+    "ci": [
+     -30.0,
+     5.0
+    ]
+   },
+   "rank": {
+    "a_wins": 17,
+    "ties": 3,
+    "b_wins": 0
+   },
+   "sign_p": 0,
+   "beyond_floor": true
+  }
+ },
+ "levers_by_lang": {
+  "Pali": {
+   "flash_vs_lite": {
+    "n": 16,
+    "fidelity_delta": {
+     "n": 16,
+     "mean": 0.531,
+     "ci": [
+      0.031,
+      1.156
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": 0.0,
+     "ci": [
+      0.0,
+      0.0
+     ]
+    },
+    "omission_delta_pp": {
+     "mean": -15.6,
+     "ci": [
+      -43.8,
+      15.6
+     ]
+    },
+    "unreadable_fill_delta_pp": {
+     "mean": -3.1,
+     "ci": [
+      -12.5,
+      6.2
+     ]
+    },
+    "boundary_delta_pp": {
+     "mean": 15.6,
+     "ci": [
+      0.0,
+      34.4
+     ]
+    },
+    "rank": {
+     "a_wins": 46,
+     "ties": 10,
+     "b_wins": 12,
+     "cant_tell": 0
+    },
+    "sign_p": 0
+   },
+   "lite2_vs_lite (floor)": {
+    "n": 16,
+    "fidelity_delta": {
+     "n": 16,
+     "mean": 0.156,
+     "ci": [
+      -0.25,
+      0.781
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": 6.2,
+     "ci": [
+      0.0,
+      18.8
+     ]
+    },
+    "omission_delta_pp": {
+     "mean": -6.2,
+     "ci": [
+      -31.2,
+      18.8
+     ]
+    },
+    "unreadable_fill_delta_pp": {
+     "mean": -3.1,
+     "ci": [
+      -9.4,
+      0.0
+     ]
+    },
+    "boundary_delta_pp": {
+     "mean": 3.1,
+     "ci": [
+      0.0,
+      9.4
+     ]
+    },
+    "rank": {
+     "a_wins": 21,
+     "ties": 18,
+     "b_wins": 29
+    },
+    "sign_p": 0.322
+   },
+   "flash-think_vs_flash": {
+    "n": 16,
+    "fidelity_delta": {
+     "n": 16,
+     "mean": 0.094,
+     "ci": [
+      -0.125,
+      0.312
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": 0.0,
+     "ci": [
+      0.0,
+      0.0
+     ]
+    },
+    "omission_delta_pp": {
+     "mean": -9.4,
+     "ci": [
+      -25.0,
+      6.2
+     ]
+    },
+    "unreadable_fill_delta_pp": {
+     "mean": -3.1,
+     "ci": [
+      -9.4,
+      0.0
+     ]
+    },
+    "boundary_delta_pp": {
+     "mean": 3.1,
+     "ci": [
+      -9.4,
+      18.8
+     ]
+    },
+    "rank": {
+     "a_wins": 28,
+     "ties": 19,
+     "b_wins": 21
+    },
+    "sign_p": 0.392
+   },
+   "lite-check_vs_lite": {
+    "n": 15,
+    "fidelity_delta": {
+     "n": 15,
+     "mean": 0.033,
+     "ci": [
+      0.0,
+      0.1
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": 0.0,
+     "ci": [
+      0.0,
+      0.0
+     ]
+    },
+    "omission_delta_pp": {
+     "mean": -6.7,
+     "ci": [
+      -16.7,
+      0.0
+     ]
+    },
+    "unreadable_fill_delta_pp": {
+     "mean": 0.0,
+     "ci": [
+      0.0,
+      0.0
+     ]
+    },
+    "boundary_delta_pp": {
+     "mean": 10.0,
+     "ci": [
+      0.0,
+      23.3
+     ]
+    },
+    "rank": {
+     "a_wins": 29,
+     "ties": 27,
+     "b_wins": 11
+    },
+    "sign_p": 0.006
+   }
+  },
+  "Sanskrit": {
+   "flash_vs_lite": {
+    "n": 28,
+    "fidelity_delta": {
+     "n": 28,
+     "mean": 0.375,
+     "ci": [
+      0.107,
+      0.643
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": -14.3,
+     "ci": [
+      -28.6,
+      -1.8
+     ]
+    },
+    "omission_delta_pp": {
+     "mean": -5.4,
+     "ci": [
+      -19.6,
+      8.9
+     ]
+    },
+    "unreadable_fill_delta_pp": {
+     "mean": 5.4,
+     "ci": [
+      -7.1,
+      17.9
+     ]
+    },
+    "boundary_delta_pp": {
+     "mean": -1.8,
+     "ci": [
+      -10.7,
+      5.4
+     ]
+    },
+    "rank": {
+     "a_wins": 46,
+     "ties": 10,
+     "b_wins": 12,
+     "cant_tell": 0
+    },
+    "sign_p": 0
+   },
+   "lite2_vs_lite (floor)": {
+    "n": 28,
+    "fidelity_delta": {
+     "n": 28,
+     "mean": -0.054,
+     "ci": [
+      -0.232,
+      0.125
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": -3.6,
+     "ci": [
+      -14.3,
+      7.1
+     ]
+    },
+    "omission_delta_pp": {
+     "mean": 3.6,
+     "ci": [
+      -10.7,
+      16.1
+     ]
+    },
+    "unreadable_fill_delta_pp": {
+     "mean": 1.8,
+     "ci": [
+      -10.7,
+      14.3
+     ]
+    },
+    "boundary_delta_pp": {
+     "mean": 0.0,
+     "ci": [
+      0.0,
+      0.0
+     ]
+    },
+    "rank": {
+     "a_wins": 21,
+     "ties": 18,
+     "b_wins": 29
+    },
+    "sign_p": 0.322
+   },
+   "flash-think_vs_flash": {
+    "n": 28,
+    "fidelity_delta": {
+     "n": 28,
+     "mean": 0.071,
+     "ci": [
+      -0.143,
+      0.304
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": 1.8,
+     "ci": [
+      -3.6,
+      7.1
+     ]
+    },
+    "omission_delta_pp": {
+     "mean": -8.9,
+     "ci": [
+      -25.0,
+      7.1
+     ]
+    },
+    "unreadable_fill_delta_pp": {
+     "mean": -7.1,
+     "ci": [
+      -17.9,
+      3.6
+     ]
+    },
+    "boundary_delta_pp": {
+     "mean": 0.0,
+     "ci": [
+      -5.4,
+      5.4
+     ]
+    },
+    "rank": {
+     "a_wins": 28,
+     "ties": 19,
+     "b_wins": 21
+    },
+    "sign_p": 0.392
+   },
+   "lite-check_vs_lite": {
+    "n": 28,
+    "fidelity_delta": {
+     "n": 28,
+     "mean": 0.054,
+     "ci": [
+      -0.107,
+      0.214
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": -1.8,
+     "ci": [
+      -12.5,
+      8.9
+     ]
+    },
+    "omission_delta_pp": {
+     "mean": -3.6,
+     "ci": [
+      -10.7,
+      0.0
+     ]
+    },
+    "unreadable_fill_delta_pp": {
+     "mean": -3.6,
+     "ci": [
+      -8.9,
+      0.0
+     ]
+    },
+    "boundary_delta_pp": {
+     "mean": 0.0,
+     "ci": [
+      0.0,
+      0.0
+     ]
+    },
+    "rank": {
+     "a_wins": 29,
+     "ties": 27,
+     "b_wins": 11
+    },
+    "sign_p": 0.006
+   }
+  },
+  "Chinese": {
+   "flash_vs_lite": {
+    "n": 24,
+    "fidelity_delta": {
+     "n": 24,
+     "mean": 0.333,
+     "ci": [
+      0.167,
+      0.5
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": -10.4,
+     "ci": [
+      -20.8,
+      -2.1
+     ]
+    },
+    "omission_delta_pp": {
+     "mean": -25.0,
+     "ci": [
+      -41.7,
+      -8.3
+     ]
+    },
+    "unreadable_fill_delta_pp": {
+     "mean": 0.0,
+     "ci": [
+      -8.3,
+      8.3
+     ]
+    },
+    "boundary_delta_pp": {
+     "mean": 12.5,
+     "ci": [
+      2.1,
+      25.0
+     ]
+    },
+    "rank": {
+     "a_wins": 46,
+     "ties": 10,
+     "b_wins": 12,
+     "cant_tell": 0
+    },
+    "sign_p": 0
+   },
+   "lite2_vs_lite (floor)": {
+    "n": 24,
+    "fidelity_delta": {
+     "n": 24,
+     "mean": -0.188,
+     "ci": [
+      -0.375,
+      0.0
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": -4.2,
+     "ci": [
+      -16.7,
+      6.2
+     ]
+    },
+    "omission_delta_pp": {
+     "mean": 6.2,
+     "ci": [
+      -10.4,
+      22.9
+     ]
+    },
+    "unreadable_fill_delta_pp": {
+     "mean": 4.2,
+     "ci": [
+      -8.3,
+      16.7
+     ]
+    },
+    "boundary_delta_pp": {
+     "mean": 0.0,
+     "ci": [
+      0.0,
+      0.0
+     ]
+    },
+    "rank": {
+     "a_wins": 21,
+     "ties": 18,
+     "b_wins": 29
+    },
+    "sign_p": 0.322
+   },
+   "flash-think_vs_flash": {
+    "n": 24,
+    "fidelity_delta": {
+     "n": 24,
+     "mean": 0.062,
+     "ci": [
+      -0.188,
+      0.292
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": 0.0,
+     "ci": [
+      -12.5,
+      12.5
+     ]
+    },
+    "omission_delta_pp": {
+     "mean": 12.5,
+     "ci": [
+      0.0,
+      27.1
+     ]
+    },
+    "unreadable_fill_delta_pp": {
+     "mean": 2.1,
+     "ci": [
+      -10.4,
+      16.7
+     ]
+    },
+    "boundary_delta_pp": {
+     "mean": 4.2,
+     "ci": [
+      -6.2,
+      18.8
+     ]
+    },
+    "rank": {
+     "a_wins": 28,
+     "ties": 19,
+     "b_wins": 21
+    },
+    "sign_p": 0.392
+   },
+   "lite-check_vs_lite": {
+    "n": 24,
+    "fidelity_delta": {
+     "n": 24,
+     "mean": 0.25,
+     "ci": [
+      0.083,
+      0.438
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": -12.5,
+     "ci": [
+      -29.2,
+      2.1
+     ]
+    },
+    "omission_delta_pp": {
+     "mean": -18.8,
+     "ci": [
+      -35.4,
+      -6.2
+     ]
+    },
+    "unreadable_fill_delta_pp": {
+     "mean": 2.1,
+     "ci": [
+      0.0,
+      6.2
+     ]
+    },
+    "boundary_delta_pp": {
+     "mean": 4.2,
+     "ci": [
+      0.0,
+      12.5
+     ]
+    },
+    "rank": {
+     "a_wins": 29,
+     "ties": 27,
+     "b_wins": 11
+    },
+    "sign_p": 0.006
+   }
+  }
+ },
+ "X3_same_20_pages": {
+  "served": {
+   "n": 20,
+   "mean": 3.6,
+   "ci": [
+    3.3,
+    3.85
+   ]
+  },
+  "lite": {
+   "n": 20,
+   "mean": 3.6,
+   "ci": [
+    3.3,
+    3.875
+   ]
+  },
+  "flash": {
+   "n": 20,
+   "mean": 4.025,
+   "ci": [
+    3.775,
+    4.3
+   ]
+  },
+  "flash-think": {
+   "n": 20,
+   "mean": 4.1,
+   "ci": [
+    3.875,
+    4.35
+   ]
+  },
+  "opus": {
+   "n": 20,
+   "mean": 4.875,
+   "ci": [
+    4.75,
+    4.975
+   ]
+  }
+ },
+ "X2_thinking": {
+  "gate_pass": true,
+  "agreement": {
+   "judges": [
+    "j1",
+    "j2"
+   ],
+   "n": 136,
+   "fidelity_exact": 0.912,
+   "within_1": 1,
+   "weighted_kappa": 0.882
+  },
+  "budget_arm_note": "arm flash-think sent thinkingBudget 2048: thinking was billed on 1 of 68 pages (2 tokens). It is a second no-thinking flash run = flash A-vs-A floor, see levers.",
+  "flash_A_vs_A_floor": {
+   "n": 68,
+   "fidelity_delta": {
+    "n": 68,
+    "mean": 0.074,
+    "ci": [
+     -0.059,
+     0.206
+    ]
+   },
+   "reversal_delta_pp": {
+    "mean": 0.7,
+    "ci": [
+     -3.7,
+     5.1
+    ]
+   },
+   "omission_delta_pp": {
+    "mean": -1.5,
+    "ci": [
+     -10.3,
+     8.1
+    ]
+   },
+   "unreadable_fill_delta_pp": {
+    "mean": -2.9,
+    "ci": [
+     -9.6,
+     3.7
+    ]
+   },
+   "boundary_delta_pp": {
+    "mean": 2.2,
+    "ci": [
+     -2.9,
+     8.1
+    ]
+   },
+   "rank": {
+    "a_wins": 28,
+    "ties": 19,
+    "b_wins": 21
+   },
+   "sign_p": 0.392
+  },
+  "arms": {
+   "flash": {
+    "fidelity": 3.963,
+    "ci": [
+     3.816,
+     4.103
+    ],
+    "reversals_per_100_pages": 6.6,
+    "reversal_ci": [
+     1.5,
+     12.5
+    ],
+    "omission": 0.368,
+    "unreadable_fill": 0.25
+   },
+   "flash-thinkon": {
+    "fidelity": 4.081,
+    "ci": [
+     3.941,
+     4.213
+    ],
+    "reversals_per_100_pages": 2.9,
+    "reversal_ci": [
+     0,
+     7.4
+    ],
+    "omission": 0.279,
+    "unreadable_fill": 0.243
+   }
+  },
+  "paired": {
+   "n": 68,
+   "fidelity_delta": {
+    "n": 68,
+    "mean": 0.118,
+    "ci": [
+     -0.007,
+     0.25
+    ]
+   },
+   "reversal_delta_pp": {
+    "mean": -3.7,
+    "ci": [
+     -10.3,
+     2.2
+    ]
+   }
+  },
+  "by_lang": {
+   "Pali": {
+    "n": 16,
+    "fidelity_delta": {
+     "n": 16,
+     "mean": 0.0,
+     "ci": [
+      -0.219,
+      0.25
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": 0.0,
+     "ci": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "Sanskrit": {
+    "n": 28,
+    "fidelity_delta": {
+     "n": 28,
+     "mean": 0.089,
+     "ci": [
+      -0.125,
+      0.304
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": -1.8,
+     "ci": [
+      -12.5,
+      8.9
+     ]
+    }
+   },
+   "Chinese": {
+    "n": 24,
+    "fidelity_delta": {
+     "n": 24,
+     "mean": 0.229,
+     "ci": [
+      0.042,
+      0.438
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": -8.3,
+     "ci": [
+      -20.8,
+      0.0
+     ]
+    }
+   }
+  },
+  "rank": {
+   "a_wins": 20,
+   "ties": 16,
+   "b_wins": 32,
+   "cant_tell": 0
+  },
+  "sign_p": 0.126,
+  "thinkingConfig": "absent (model default, dynamic)",
+  "thinking_tokens_per_page": 2118,
+  "pages_that_thought": 68,
+  "usd_per_page_batch": 0.00508
+ },
+ "corrected_ocr": {
+  "gate": {
+   "pass": true,
+   "by_judge": {
+    "j1": {
+     "wrong_page": [
+      {
+       "id": "69e7490d85f786e884a4d40e_00180",
+       "fidelity": 1,
+       "span": "different",
+       "pass": true
+      }
+     ],
+     "planted": [
+      {
+       "id": "69e8b2642ff2a8dc09e778a1_00439",
+       "op": "drop-negation",
+       "from": "are not",
+       "to": "are",
+       "planted_fidelity": 3,
+       "base_fidelity": 4,
+       "reversal_flagged": true,
+       "located": true,
+       "pass": true
+      }
+     ],
+     "duplicate": [
+      {
+       "id": "69bd014bf403a9ca2380f091_00054",
+       "arm": "flash",
+       "fidelity": [
+        2,
+        2
+       ],
+       "tier": [
+        2,
+        2
+       ],
+       "tie": true
+      }
+     ],
+     "missing": [],
+     "summary": {
+      "wrong_page": "1/1 scored ≤ 2",
+      "planted": "1/1 caught (1 located the planted word)",
+      "duplicate": "1/1 tied"
+     },
+     "pass": true
+    },
+    "j2": {
+     "wrong_page": [
+      {
+       "id": "69e7490d85f786e884a4d40e_00180",
+       "fidelity": 1,
+       "span": "different",
+       "pass": true
+      }
+     ],
+     "planted": [
+      {
+       "id": "69e8b2642ff2a8dc09e778a1_00439",
+       "op": "drop-negation",
+       "from": "are not",
+       "to": "are",
+       "planted_fidelity": 3,
+       "base_fidelity": 4,
+       "reversal_flagged": true,
+       "located": true,
+       "pass": true
+      }
+     ],
+     "duplicate": [
+      {
+       "id": "69bd014bf403a9ca2380f091_00054",
+       "arm": "flash",
+       "fidelity": [
+        2,
+        2
+       ],
+       "tier": [
+        2,
+        2
+       ],
+       "tie": true
+      }
+     ],
+     "missing": [],
+     "summary": {
+      "wrong_page": "1/1 scored ≤ 2",
+      "planted": "1/1 caught (1 located the planted word)",
+      "duplicate": "1/1 tied"
+     },
+     "pass": true
+    }
+   },
+   "problems": [],
+   "n_problems": 0,
+   "forced": false
+  },
+  "agreement": {
+   "judges": [
+    "j1",
+    "j2"
+   ],
+   "n": 135,
+   "fidelity_exact": 0.778,
+   "within_1": 1,
+   "weighted_kappa": 0.854
+  },
+  "n_pages": 27,
+  "all": {
+   "lite-corr_vs_lite": {
+    "n": 27,
+    "a_mean": {
+     "n": 27,
+     "mean": 3.926,
+     "ci": [
+      3.741,
+      4.111
+     ]
+    },
+    "b_mean": {
+     "n": 27,
+     "mean": 3.278,
+     "ci": [
+      2.963,
+      3.574
+     ]
+    },
+    "delta": {
+     "n": 27,
+     "mean": 0.648,
+     "ci": [
+      0.315,
+      1.037
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": -18.5,
+     "ci": [
+      -37.0,
+      0.0
+     ]
+    }
+   },
+   "flash-corr_vs_flash": {
+    "n": 27,
+    "a_mean": {
+     "n": 27,
+     "mean": 4.074,
+     "ci": [
+      3.815,
+      4.296
+     ]
+    },
+    "b_mean": {
+     "n": 27,
+     "mean": 3.685,
+     "ci": [
+      3.389,
+      3.981
+     ]
+    },
+    "delta": {
+     "n": 27,
+     "mean": 0.389,
+     "ci": [
+      0.056,
+      0.759
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": -9.3,
+     "ci": [
+      -22.2,
+      1.9
+     ]
+    }
+   },
+   "lite-corr_vs_served": {
+    "n": 27,
+    "a_mean": {
+     "n": 27,
+     "mean": 3.926,
+     "ci": [
+      3.759,
+      4.111
+     ]
+    },
+    "b_mean": {
+     "n": 27,
+     "mean": 2.963,
+     "ci": [
+      2.63,
+      3.296
+     ]
+    },
+    "delta": {
+     "n": 27,
+     "mean": 0.963,
+     "ci": [
+      0.593,
+      1.37
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": -16.7,
+     "ci": [
+      -35.2,
+      1.9
+     ]
+    }
+   },
+   "flash-corr_vs_lite-corr": {
+    "n": 27,
+    "a_mean": {
+     "n": 27,
+     "mean": 4.074,
+     "ci": [
+      3.815,
+      4.315
+     ]
+    },
+    "b_mean": {
+     "n": 27,
+     "mean": 3.926,
+     "ci": [
+      3.759,
+      4.111
+     ]
+    },
+    "delta": {
+     "n": 27,
+     "mean": 0.148,
+     "ci": [
+      -0.167,
+      0.426
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": 0.0,
+     "ci": [
+      -11.1,
+      11.1
+     ]
+    }
+   }
+  },
+  "pages_with_primary_cause_ocr": {
+   "lite-corr_vs_lite": {
+    "n": 9,
+    "a_mean": {
+     "n": 9,
+     "mean": 3.833,
+     "ci": [
+      3.5,
+      4.222
+     ]
+    },
+    "b_mean": {
+     "n": 9,
+     "mean": 2.556,
+     "ci": [
+      2.056,
+      3.056
+     ]
+    },
+    "delta": {
+     "n": 9,
+     "mean": 1.278,
+     "ci": [
+      0.444,
+      2.167
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": -33.3,
+     "ci": [
+      -66.7,
+      -11.1
+     ]
+    }
+   },
+   "flash-corr_vs_flash": {
+    "n": 9,
+    "a_mean": {
+     "n": 9,
+     "mean": 4.278,
+     "ci": [
+      4.0,
+      4.611
+     ]
+    },
+    "b_mean": {
+     "n": 9,
+     "mean": 3.111,
+     "ci": [
+      2.556,
+      3.556
+     ]
+    },
+    "delta": {
+     "n": 9,
+     "mean": 1.167,
+     "ci": [
+      0.556,
+      1.889
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": -27.8,
+     "ci": [
+      -66.7,
+      5.6
+     ]
+    }
+   }
+  },
+  "pages_with_other_primary_cause": {
+   "lite-corr_vs_lite": {
+    "n": 18,
+    "a_mean": {
+     "n": 18,
+     "mean": 3.972,
+     "ci": [
+      3.778,
+      4.167
+     ]
+    },
+    "b_mean": {
+     "n": 18,
+     "mean": 3.639,
+     "ci": [
+      3.389,
+      3.917
+     ]
+    },
+    "delta": {
+     "n": 18,
+     "mean": 0.333,
+     "ci": [
+      0.111,
+      0.583
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": -11.1,
+     "ci": [
+      -33.3,
+      11.1
+     ]
+    }
+   },
+   "flash-corr_vs_flash": {
+    "n": 18,
+    "a_mean": {
+     "n": 18,
+     "mean": 3.972,
+     "ci": [
+      3.639,
+      4.278
+     ]
+    },
+    "b_mean": {
+     "n": 18,
+     "mean": 3.972,
+     "ci": [
+      3.667,
+      4.278
+     ]
+    },
+    "delta": {
+     "n": 18,
+     "mean": 0.0,
+     "ci": [
+      -0.278,
+      0.278
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": 0.0,
+     "ci": [
+      0.0,
+      0.0
+     ]
+    }
+   }
+  },
+  "low_pages_only": {
+   "lite-corr_vs_lite": {
+    "n": 18,
+    "a_mean": {
+     "n": 18,
+     "mean": 3.889,
+     "ci": [
+      3.694,
+      4.083
+     ]
+    },
+    "b_mean": {
+     "n": 18,
+     "mean": 3.028,
+     "ci": [
+      2.639,
+      3.361
+     ]
+    },
+    "delta": {
+     "n": 18,
+     "mean": 0.861,
+     "ci": [
+      0.417,
+      1.389
+     ]
+    },
+    "reversal_delta_pp": {
+     "mean": -16.7,
+     "ci": [
+      -38.9,
+      5.6
+     ]
+    }
+   },
+   "served": {
+    "n": 18,
+    "mean": 2.472,
+    "ci": [
+     2.194,
+     2.75
+    ]
+   }
+  },
+  "arms": {
+   "flash": {
+    "fidelity": 3.685,
+    "ci": [
+     3.389,
+     3.981
+    ],
+    "reversal": 0.148,
+    "omission": 0.537
+   },
+   "lite": {
+    "fidelity": 3.278,
+    "ci": [
+     2.944,
+     3.593
+    ],
+    "reversal": 0.241,
+    "omission": 0.759
+   },
+   "served": {
+    "fidelity": 2.963,
+    "ci": [
+     2.63,
+     3.278
+    ],
+    "reversal": 0.222,
+    "omission": 0.796
+   },
+   "lite-corr": {
+    "fidelity": 3.926,
+    "ci": [
+     3.741,
+     4.093
+    ],
+    "reversal": 0.056,
+    "omission": 0.444
+   },
+   "flash-corr": {
+    "fidelity": 4.074,
+    "ci": [
+     3.815,
+     4.315
+    ],
+    "reversal": 0.056,
+    "omission": 0.333
+   }
+  }
+ },
+ "image_pass": {
+  "low_pages": {
+   "translation": {
+    "k": 12,
+    "n": 20,
+    "rate": 0.6,
+    "ci": [
+     0.387,
+     0.781
+    ]
+   },
+   "ocr_misread": {
+    "k": 6,
+    "n": 20,
+    "rate": 0.3,
+    "ci": [
+     0.145,
+     0.519
+    ]
+   },
+   "page_seam": {
+    "k": 2,
+    "n": 20,
+    "rate": 0.1,
+    "ci": [
+     0.028,
+     0.301
+    ]
+   },
+   "reading_order": {
+    "k": 0,
+    "n": 20,
+    "rate": 0.0,
+    "ci": [
+     0,
+     0.161
+    ]
+   },
+   "language_label": {
+    "k": 0,
+    "n": 20,
+    "rate": 0.0,
+    "ci": [
+     0,
+     0.161
+    ]
+   },
+   "reference_or_judge": {
+    "k": 0,
+    "n": 20,
+    "rate": 0.0,
+    "ci": [
+     0,
+     0.161
+    ]
+   },
+   "none": {
+    "k": 0,
+    "n": 20,
+    "rate": 0.0,
+    "ci": [
+     0,
+     0.161
+    ]
+   },
+   "cant_tell": {
+    "k": 0,
+    "n": 20,
+    "rate": 0.0,
+    "ci": [
+     0,
+     0.161
+    ]
+   }
+  },
+  "random_pages": {
+   "translation": {
+    "k": 6,
+    "n": 10,
+    "rate": 0.6,
+    "ci": [
+     0.313,
+     0.832
+    ]
+   },
+   "ocr_misread": {
+    "k": 3,
+    "n": 10,
+    "rate": 0.3,
+    "ci": [
+     0.108,
+     0.603
+    ]
+   },
+   "page_seam": {
+    "k": 0,
+    "n": 10,
+    "rate": 0.0,
+    "ci": [
+     0,
+     0.278
+    ]
+   },
+   "reading_order": {
+    "k": 0,
+    "n": 10,
+    "rate": 0.0,
+    "ci": [
+     0,
+     0.278
+    ]
+   },
+   "language_label": {
+    "k": 0,
+    "n": 10,
+    "rate": 0.0,
+    "ci": [
+     0,
+     0.278
+    ]
+   },
+   "reference_or_judge": {
+    "k": 0,
+    "n": 10,
+    "rate": 0.0,
+    "ci": [
+     0,
+     0.278
+    ]
+   },
+   "none": {
+    "k": 1,
+    "n": 10,
+    "rate": 0.1,
+    "ci": [
+     0.018,
+     0.404
+    ]
+   },
+   "cant_tell": {
+    "k": 0,
+    "n": 10,
+    "rate": 0.0,
+    "ci": [
+     0,
+     0.278
+    ]
+   }
+  },
+  "defect_level_low_pages": {
+   "ocr_misread": {
+    "k": 30,
+    "n": 98,
+    "rate": 0.306,
+    "ci": [
+     0.224,
+     0.403
+    ]
+   },
+   "translation": {
+    "k": 59,
+    "n": 98,
+    "rate": 0.602,
+    "ci": [
+     0.503,
+     0.693
+    ]
+   },
+   "page_seam": {
+    "k": 8,
+    "n": 98,
+    "rate": 0.082,
+    "ci": [
+     0.042,
+     0.153
+    ]
+   },
+   "reference_or_judge": {
+    "k": 1,
+    "n": 98,
+    "rate": 0.01,
+    "ci": [
+     0.002,
+     0.056
+    ]
+   }
+  },
+  "pages_with_any_verified_ocr_error": {
+   "k": 29,
+   "n": 30,
+   "rate": 0.967,
+   "ci": [
+    0.833,
+    0.994
+   ]
+  },
+  "secondary_language_label_or_reading_order": 5,
+  "legibility": {
+   "good": 24,
+   "partial": 6
+  }
+ },
+ "dimensions": {
+  "profile": {
+   "Chinese / reference": {
+    "fidelity": null,
+    "readability": 4.23,
+    "register": 3.95,
+    "terminology": 2.82,
+    "ambiguity": 2.36,
+    "transparency": 2.64,
+    "n": 22,
+    "stance": {
+     "literal": 1,
+     "free": 13,
+     "balanced": 8
+    }
+   },
+   "Chinese / served": {
+    "fidelity": 3.75,
+    "readability": 3.23,
+    "register": 3.27,
+    "terminology": 3.45,
+    "ambiguity": 3.32,
+    "transparency": 3.73,
+    "n": 22,
+    "stance": {
+     "balanced": 4,
+     "literal": 18
+    }
+   },
+   "Pali / reference": {
+    "fidelity": null,
+    "readability": 4.73,
+    "register": 3.73,
+    "terminology": 3.27,
+    "ambiguity": 2.8,
+    "transparency": 2.27,
+    "n": 15,
+    "stance": {
+     "balanced": 4,
+     "free": 11
+    }
+   },
+   "Pali / served": {
+    "fidelity": 3.667,
+    "readability": 3.53,
+    "register": 3.87,
+    "terminology": 3.87,
+    "ambiguity": 3.27,
+    "transparency": 3.53,
+    "n": 15,
+    "stance": {
+     "literal": 12,
+     "balanced": 3
+    }
+   },
+   "Sanskrit / reference": {
+    "fidelity": null,
+    "readability": 3.74,
+    "register": 4.41,
+    "terminology": 3.41,
+    "ambiguity": 3.07,
+    "transparency": 3.04,
+    "n": 27,
+    "stance": {
+     "balanced": 8,
+     "literal": 7,
+     "free": 12
+    }
+   },
+   "Sanskrit / served": {
+    "fidelity": 3.5,
+    "readability": 3.78,
+    "register": 3.52,
+    "terminology": 4.0,
+    "ambiguity": 2.93,
+    "transparency": 3.59,
+    "n": 27,
+    "stance": {
+     "literal": 11,
+     "balanced": 15,
+     "free": 1
+    }
+   },
+   "all / reference": {
+    "fidelity": null,
+    "readability": 4.14,
+    "register": 4.09,
+    "terminology": 3.17,
+    "ambiguity": 2.77,
+    "transparency": 2.72,
+    "n": 64,
+    "stance": {
+     "balanced": 20,
+     "literal": 8,
+     "free": 36
+    }
+   },
+   "all / served": {
+    "fidelity": 3.625,
+    "readability": 3.53,
+    "register": 3.52,
+    "terminology": 3.78,
+    "ambiguity": 3.14,
+    "transparency": 3.62,
+    "n": 64,
+    "stance": {
+     "literal": 41,
+     "balanced": 22,
+     "free": 1
+    }
+   }
+  },
+  "meaning_disagreements_who_is_right": {
+   "reference": 29,
+   "served": 16,
+   "both_defensible": 17,
+   "none": 2
+  },
+  "by_lang": {
+   "Sanskrit": {
+    "reference": 13,
+    "served": 8,
+    "both_defensible": 5,
+    "none": 1
+   },
+   "Chinese": {
+    "served": 6,
+    "both_defensible": 7,
+    "reference": 8,
+    "none": 1
+   },
+   "Pali": {
+    "served": 2,
+    "reference": 8,
+    "both_defensible": 5
+   }
+  },
+  "different_legitimate_choice_pages": 59
+ },
+ "scale": {
+  "translated_pages": {
+   "Sanskrit": 109625,
+   "Pali": 13423,
+   "Chinese": 134665
+  },
+  "cost_to_retranslate_all_translated_pages_usd": {
+   "lite": {
+    "Sanskrit": 92.0,
+    "Pali": 11.0,
+    "Chinese": 113.0
+   },
+   "flash": {
+    "Sanskrit": 195.0,
+    "Pali": 24.0,
+    "Chinese": 240.0
+   },
+   "lite-check": {
+    "Sanskrit": 183.0,
+    "Pali": 22.0,
+    "Chinese": 225.0
+   }
+  },
+  "flash_with_thinking_usd": {
+   "Sanskrit": 557.0,
+   "Pali": 68.0,
+   "Chinese": 684.0
+  },
+  "note": "lite-check cost is the CHECK pass only (add lite). Batch rate = realtime x 0.5. Opus ran on the subscription: no API price measured."
+ }
+}

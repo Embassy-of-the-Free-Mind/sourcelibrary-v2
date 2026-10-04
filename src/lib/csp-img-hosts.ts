@@ -71,11 +71,21 @@ export const CSP_IMG_HOSTS = [
   'https://media.getty.edu',
 ] as const;
 
+/**
+ * In the CSP but deliberately NOT "renderable": archive.org/download/<id>/page/nN/...
+ * 302s to ia<NNN>.us.archive.org and serves IA's full master whatever size is
+ * asked for. Only the reader's hi-res zoom loads it (page-image-url.ts
+ * iaMasterUrl, #5679); a stored ia*.us.archive.org URL must not start passing
+ * isBrowserRenderableImageUrl, or thumb/display tiers would pull masters.
+ */
+export const CSP_ONLY_IMG_HOSTS = ['https://*.us.archive.org'];
+
 /** The full img-src directive value, consumed by next.config.ts. */
-export const CSP_IMG_SRC = `img-src 'self' data: blob: ${CSP_IMG_HOSTS.join(' ')}`;
+export const CSP_IMG_SRC = `img-src 'self' data: blob: ${[...CSP_IMG_HOSTS, ...CSP_ONLY_IMG_HOSTS].join(' ')}`;
 
 const EXACT_HOSTS = new Set<string>();
 const WILDCARD_SUFFIXES: string[] = [];
+
 for (const entry of CSP_IMG_HOSTS) {
   const host = entry.replace(/^https:\/\//, '');
   if (host.startsWith('*.')) WILDCARD_SUFFIXES.push(host.slice(1)); // keep leading '.'

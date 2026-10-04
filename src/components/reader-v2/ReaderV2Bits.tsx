@@ -9,7 +9,7 @@ import { getPageDisplayUrl, getPageThumbUrl } from '@/lib/utils';
 import { getPageImageUrl } from '@/lib/page-image-url';
 import type { Book, Page } from '@/lib/types';
 import type { CdliWitness } from '@/lib/types/book';
-import { transcriptProvenance, transcriptProvenanceLabel, type CorpusInfo } from '@/lib/text-provenance';
+import { transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation, type CorpusInfo } from '@/lib/text-provenance';
 import type { ReaderSettings } from './useReaderV2';
 import { PaneEmptyState, GatedPane } from './PaneEmptyState';
 
@@ -106,6 +106,9 @@ export function TranscriptProvenanceChip({ page }: { page: Pick<Page, 'ocr'> }) 
   const t = getReaderStrings(useLocale()).info;
   const prov = transcriptProvenance(page);
   if (!prov) return null;
+  // An open e-text says so in TextSourceLine, at the top of the pane body: in a
+  // narrow pane this chip truncates, and a truncated licence is no licence (#5571).
+  if (prov.kind === 'text_source') return null;
   const isArchive = prov.kind === 'ia';
   return (
     <span
@@ -116,6 +119,47 @@ export function TranscriptProvenanceChip({ page }: { page: Pick<Page, 'ocr'> }) 
     >
       {transcriptProvenanceLabel(prov, t, 'short')}
     </span>
+  );
+}
+
+/**
+ * First line of the transcription pane on a page whose text is an open e-text
+ * fitted to the scan (#5571): where the TEXT came from and its licence, which is
+ * not the scan's. A line rather than a header chip so it wraps instead of
+ * truncating in a narrow pane or on a phone.
+ */
+export function TextSourceLine({ page }: { page: Pick<Page, 'ocr'> }) {
+  const t = getReaderStrings(useLocale()).info;
+  const prov = transcriptProvenance(page);
+  if (prov?.kind !== 'text_source') return null;
+  const href = prov.source.licenseUrl || prov.source.url;
+  return (
+    <p data-text-source="" className="font-sans text-[11.5px] leading-snug mb-3" style={{ color: 'var(--text-muted)' }}>
+      {t.transcriptChipTextSource(prov.source.name, prov.source.license)}
+      {href && (
+        <>
+          {' · '}
+          <a href={href} target="_blank" rel="noreferrer" className="underline underline-offset-2">
+            {prov.source.licenseUrl ? t.licenceLink : t.sourceLink}
+          </a>
+        </>
+      )}
+    </p>
+  );
+}
+
+/**
+ * First line of the translation pane when the English is a machine translation
+ * nobody has reviewed (#5571). Toned like the Archive-OCR caution; absent on
+ * corpus, Sefaria and hand-edited translations.
+ */
+export function MachineDraftLine({ page }: { page: Pick<Page, 'translation'> }) {
+  const t = getReaderStrings(useLocale()).info;
+  if (!isUnreviewedMachineTranslation(page)) return null;
+  return (
+    <p data-machine-draft="" className="font-sans text-[11.5px] leading-snug mb-3" style={{ color: 'var(--accent-gold-dark)' }}>
+      {t.machineDraftNotice}
+    </p>
   );
 }
 
@@ -338,7 +382,7 @@ const LENS_MAG_MAX = 6;
  */
 export function ScanViewer({
   page, book, zoom, onZoomChange, lensOn = false, scrollRef, onScroll, fullRes = false,
-  srcOverride, nativeSrcOverride, altOverride, onNaturalSize, onEdgePageTurn,
+  srcOverride, nativeSrcOverride, altOverride, onNaturalSize, onEdgePageTurn, wheelZooms = true, onMaxZoom,
 }: {
   page: Page;
   book: Book;
@@ -374,6 +418,13 @@ export function ScanViewer({
    *  Judged at finger-lift from the leftover travel, so drifting back before
    *  release cancels it. */
   onEdgePageTurn?: (dir: 'next' | 'prev') => void;
+  /** A plain two-finger scroll / mouse wheel zooms at the cursor (the map
+   *  and image-viewer convention). Off where the scan sits inside a scrolling
+   *  column, so a wheel over it still scrolls the page; a pinch zooms either way. */
+  wheelZooms?: boolean;
+  /** Reports how far this page can usefully zoom (see maxZoom), so the
+   *  parent's + button can stop there too. */
+  onMaxZoom?: (max: number) => void;
 }) {
   const t = getReaderStrings(useLocale()).panes;
   const resolved = resolveScanUrls(page);
@@ -418,6 +469,7 @@ export function ScanViewer({
     const el = imgRef.current;
     if (el?.complete && el.naturalWidth) {
       natural.current = { w: el.naturalWidth, h: el.naturalHeight };
+      noteLoaded(el.naturalWidth);
       onNaturalSize?.(natural.current);
       measure();
     }
@@ -439,6 +491,7 @@ export function ScanViewer({
       if (natural.current) return;
       if (el.naturalWidth && el.naturalHeight) {
         natural.current = { w: el.naturalWidth, h: el.naturalHeight };
+        noteLoaded(el.naturalWidth);
         onNaturalSize?.(natural.current);
         measure();
         return;
@@ -451,6 +504,30 @@ export function ScanViewer({
   }, []);
 
   const zoomed = zoom > 1;
+  const [nativeFailed, setNativeFailed] = useState<string | null>(null);
+
+  // Zoom stops where the scan runs out of pixels: one image pixel per screen
+  // pixel of the fitted page. Past that the page only gets blurrier, which a
+  // reader takes for a bad scan. Measured from the widest image this page has
+  // loaded, so the cap rises once the high-res copy swaps in past 1.5x; never
+  // below 2x, so a small scan can still be enlarged a little.
+  // Keyed by page rather than reset in an effect: the cached-image effect
+  // above records the new page's width first, and a reset would wipe it.
+  const [sharpest, setSharpest] = useState<{ id: string; w: number }>({ id: '', w: 0 });
+  const sharpestW = sharpest.id === page.id ? sharpest.w : 0;
+  const noteLoaded = (w: number) => setSharpest(prev =>
+    prev.id === page.id ? (w > prev.w ? { id: page.id, w } : prev) : { id: page.id, w });
+  const maxZoom = fit && sharpestW
+    ? Math.min(SCAN_ZOOM_MAX, Math.max(2, Math.round((sharpestW / fit.w) * 100) / 100))
+    : SCAN_ZOOM_MAX;
+  const maxZoomRef = useRef(maxZoom);
+  maxZoomRef.current = maxZoom;
+  useEffect(() => { onMaxZoom?.(maxZoom); }, [maxZoom, onMaxZoom]);
+  // Zoom set from outside (the header's steps) is pulled back to the cap.
+  useEffect(() => {
+    if (zoom > maxZoom + 0.001) onZoomChange(maxZoom);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [zoom, maxZoom]);
 
   // Scroll offsets computed alongside a zoom change, applied before paint so
   // the anchored point does not visibly move.
@@ -486,7 +563,7 @@ export function ScanViewer({
    */
   const applyZoom = (next: number, anchor?: { x: number; y: number }) => {
     const current = prevZoom.current;
-    const clamped = Math.min(SCAN_ZOOM_MAX, Math.max(1, Math.round(next * 1000) / 1000));
+    const clamped = Math.min(maxZoomRef.current, Math.max(1, Math.round(next * 1000) / 1000));
     if (Math.abs(clamped - current) < 0.002) return;
     const c = containerRef.current;
     const sp = spacerRef.current;
@@ -547,12 +624,14 @@ export function ScanViewer({
   };
 
   /**
-   * Wheel does one of three things, depending on what is on:
-   * lens up   → dial the lens's magnification (what a loupe's focus does)
-   * ctrl/⌘    → zoom the scan, which is what a trackpad pinch sends
-   * otherwise → nothing, so a zoomed pane scrolls natively
+   * Wheel, depending on what is on:
+   * lens up        → dial the lens's magnification (what a loupe's focus does)
+   * ctrl/⌘         → zoom the scan, which is what a trackpad pinch sends
+   * vertical wheel → zoom the scan at the cursor (when wheelZooms)
+   * otherwise      → nothing, so a sideways or shift-scroll pans natively;
+   *                  a zoomed page also pans by dragging
    */
-  const onWheel = (e: React.WheelEvent) => {
+  const onWheel = (e: WheelEvent) => {
     if (lensOn && !zoomed) {
       e.preventDefault();
       const next = Math.min(LENS_MAG_MAX, Math.max(LENS_MAG_MIN, lensMag * Math.exp(-e.deltaY * 0.0022)));
@@ -568,8 +647,31 @@ export function ScanViewer({
       // deliberately small: a pinch fires dozens of events per second, so
       // anything punchier runs the page to 600% in half a gesture.
       queueZoom(queueBase() * Math.exp(-e.deltaY * 0.0025), { x: e.clientX, y: e.clientY });
+      return;
+    }
+    if (wheelZooms && !e.shiftKey && Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      e.preventDefault();
+      // Scroll deltas run larger than pinch deltas (a mouse notch is ~100px,
+      // in line mode ~3 lines), so normalise to pixels and cap each event:
+      // one notch is a comfortable step and trackpad momentum cannot fling
+      // the page to the limit.
+      const px = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaMode === 2 ? e.deltaY * 400 : e.deltaY;
+      const d = Math.max(-100, Math.min(100, px));
+      queueZoom(queueBase() * Math.exp(-d * 0.002), { x: e.clientX, y: e.clientY });
     }
   };
+  // React attaches wheel listeners as passive, so preventDefault there is
+  // ignored and the browser page-zooms or scrolls along with us. Bind it
+  // natively; the ref keeps the listener on the latest render's closure.
+  const onWheelRef = useRef(onWheel);
+  onWheelRef.current = onWheel;
+  useEffect(() => {
+    const c = containerRef.current;
+    if (!c) return;
+    const h = (e: WheelEvent) => onWheelRef.current(e);
+    c.addEventListener('wheel', h, { passive: false });
+    return () => c.removeEventListener('wheel', h);
+  }, [containerRef]);
 
   // A new page starts at the top of the scan. This touches the DOM, so it
   // belongs in an effect rather than in the render pass.
@@ -681,7 +783,10 @@ export function ScanViewer({
     );
   }
   const brightness = (page as unknown as { display_brightness?: number }).display_brightness;
-  const src = (fullRes || zoom > 1.5) && native ? native : display;
+  // The hi-res copy can live on a provider (IA's master, #5679); if it fails
+  // to load, stay on the display copy rather than show a broken image.
+  const useNative = (fullRes || zoom > 1.5) && native && nativeFailed !== native;
+  const src = useNative ? native : display;
 
   return (
     <div
@@ -712,7 +817,6 @@ export function ScanViewer({
         // so the page read as unscrollable until you found the text below it.
         overscrollBehavior: zoomed ? 'contain' : 'auto',
       }}
-      onWheel={onWheel}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
@@ -740,9 +844,11 @@ export function ScanViewer({
           src={src}
           alt={alt}
           draggable={false}
+          onError={() => { if (src === native && native !== display) setNativeFailed(native); }}
           onLoad={e => {
             const el = e.currentTarget;
             natural.current = { w: el.naturalWidth, h: el.naturalHeight };
+            noteLoaded(el.naturalWidth);
             onNaturalSize?.(natural.current);
             measure();
           }}

@@ -10,6 +10,7 @@ import {
   type Ladder, type LibraryDashboard, type Rung,
 } from '@/lib/library-dashboard';
 import { Bars, HBars, Legend, LineChart, Panel, PipelineCumulative } from './DashboardCharts';
+import { Grid2, Section, Tiles } from './dashboard-layout';
 import { RAMP, SERIES, dayLabel, fmtFull, fmtK, fmtUsd, monthLabel } from './dashboard-format';
 
 /**
@@ -29,37 +30,6 @@ const signed = (n: number) => `${n >= 0 ? '+' : '−'}${fmtK(Math.abs(n))}`;
 const ago = (ms: number) => ms < 3600e3 ? `${Math.max(1, Math.round(ms / 60e3))} min ago` : ms < 48 * 3600e3 ? `${Math.round(ms / 3600e3)} h ago` : `${Math.round(ms / 86400e3)} days ago`;
 const RUNG_NAME: Record<Rung, string> = { no_text: 'No text', transcribing: 'Transcribing', transcribed: 'Transcribed', translating: 'Translating', readable: 'Readable', complete: 'Complete' };
 const usdRange = (lo: number, hi: number) => `${fmtUsd(lo)} – ${fmtUsd(hi)}`;
-
-function Section({ id, title, intro, link, children }: { id: string; title: string; intro?: ReactNode; link?: { href: string; label: string }; children: ReactNode }) {
-  return (
-    <section id={id} className="grid gap-3 content-start min-w-0 scroll-mt-16">
-      <div className="flex items-baseline justify-between gap-3 flex-wrap">
-        <h2 className="text-xl font-semibold text-stone-900">{title}</h2>
-        {link && <Link href={link.href} className="text-xs text-accent-rust hover:underline">{link.label} →</Link>}
-      </div>
-      {intro && <p className="text-sm text-stone-600 max-w-3xl leading-snug">{intro}</p>}
-      {children}
-    </section>
-  );
-}
-
-function Tiles({ tiles }: { tiles: { l: string; v: string; n?: string; up?: boolean }[] }) {
-  return (
-    <div className="grid gap-px rounded border border-stone-200 bg-stone-200 overflow-hidden" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))' }}>
-      {tiles.map(t => (
-        <div key={t.l} className="bg-white px-4 py-3 grid gap-0.5 content-start min-w-0">
-          <div className="text-xs text-stone-600">{t.l}</div>
-          <div className="text-2xl font-semibold text-stone-900 leading-tight">{t.v}</div>
-          {t.n && <div className={`text-[11px] font-mono ${t.up ? 'text-green-800' : 'text-stone-500'}`}>{t.n}</div>}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function Grid2({ children }: { children: ReactNode }) {
-  return <div className="grid gap-3 min-w-0" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 440px), 1fr))' }}>{children}</div>;
-}
 
 const NAV = [['glance', 'At a glance'], ['library', 'The library'], ['pipeline', 'Pipeline'], ['backlog', 'What’s left'], ['spend', 'Spend'], ['readers', 'Readers'], ['storage', 'Storage'], ['defs', 'Definitions']] as const;
 

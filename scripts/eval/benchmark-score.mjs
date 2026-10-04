@@ -246,7 +246,9 @@ for (const stratum of strata) {
   const cjk = CJK_STRATA.has(stratum), greek = GREEK_STRATA.has(stratum);
   const regPath = path.join(__dirname, 'benchmark', `${stratum}.json`);
   const reg = fs.existsSync(regPath) ? JSON.parse(fs.readFileSync(regPath, 'utf8')) : null;
-  const meta = new Map((reg?.pages || []).map(p => [p.slug, p]));
+  // english-ia-5124 (#5216) keeps its registry as `rows` (catalogue nested); a referenced, non-excluded row is a sealed page
+  const regPages = reg?.pages || (reg?.rows || []).filter(r => r.reference && !r.excluded).map(r => ({ slug: r.slug, substratum: r.substratum || null, title: r.catalogue?.title || null, year: r.catalogue?.published ?? null }));
+  const meta = new Map(regPages.map(p => [p.slug, p]));
   const outRoot = path.join(ROOT, stratum, 'out');
   const engines = fs.readdirSync(outRoot).filter(e => fs.statSync(path.join(outRoot, e)).isDirectory() && fs.readdirSync(path.join(outRoot, e)).some(f => f.endsWith('.txt'))).sort();
   // SCRIPT CLASS per page (out/script-class/<slug>.json, written by the flash-preview page classifier and

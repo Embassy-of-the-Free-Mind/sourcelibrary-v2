@@ -1,0 +1,42 @@
+{
+ "key": "v061_f2a",
+ "page": {
+  "key": "v061_f2a",
+  "vol": 61,
+  "book_id": "6ac02a0a9a86d56c1aa219a0",
+  "page_number": 3,
+  "page_label": "f. 2a",
+  "bdrc_canvas": "I1PD1103290006.jpg",
+  "ligeti": "Mng1.850",
+  "mng_span": "Kha Eldeb 1b–312a",
+  "toh": "D95",
+  "skt": "Lalitavistara",
+  "derge_vol": 46,
+  "derge_file": "046_མདོ་སྡེ།_ཁ.txt"
+ },
+ "model": "gemini-3-flash-preview",
+ "ocr_prompt": {
+  "name": "Standard OCR",
+  "version": "19.1",
+  "content_hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "translation_prompt": {
+  "name": "Standard Translation",
+  "version": "13",
+  "hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Manchu</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<warning>Handwritten Manchu script. The page also contains a Chinese title in the right margin. The text is oriented vertically, read from left to right in the Manchu tradition for this specific format.</warning>\n\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">The text is enclosed within a rectangular border featuring a red ink floral and vine pattern (rinceau style).</image-desc>\n\n<margin>\n諸品經第二卷上二\n</margin>\n\n<margin>\n<unclear>10</unclear>\nᠪᠠ\nᠰᡳᡩᠠ\nᠮᡝᠨ\nᡩᡝᡵᡤᡳ\n</margin>\n\nᡝᠨᡩᡠᡵᡳ ᡩᡝ ᡥᡝᠰᡝᡳ ᡶᡠᡤᡳᠶᡝᠨ ᠈\nᡝᡵᡩᡝᠮᡠ ᡩᡝᡵᡤᡳ ᡩᡝ ᡥᡝᠰᡝᡳ ᠈\nᡥᡝᠰᡝᡳ ᡩᡝᡵᡤᡳ ᡥᡝᠰᡝᡳ ᠈\nᡥᡝᠰᡝᡳ ᡩᡝ ᡥᡝᠰᡝᡳ ᠪᡝ ᡩᡝᡵᡤᡳ ᡩᡝ ᠈\nᠰᡝᡩᡠ ᡥᡝᠰᡝᡳ ᡶᡠᡤᡳᠶᡝᠨ ᠈\nᠮᡝᡩᡝᡵᡳ ᡩᡝᡵᡤᡳ ᡥᡝᠰᡝᡳ ᠪᡝ ᡩᡝᡵᡤᡳ ᠈\nᠰᡝᡩᡠ ᡥᡝᠰᡝᡳ ᡥᡝᠰᡝᡳ ᡩᡝᡵᡤᡳ ᠈\nᡥᡝᠰᡝᡳ ᡩᡝᡵᡤᡳ ᡥᡝᠰᡝᡳ ᠈\nᡥᡝᠰᡝᡳ ᡩᡝ ᡥᡝᠰᡝᡳ ᠪᡝ ᡩᡝᡵᡤᡳ ᡩᡝ ᠈\nᠰᡝᡩᡠ ᡥᡝᠰᡝᡳ ᡶᡠᡤᡳᠶᡝᠨ ᠈\nᡥᡝᠰᡝᡳ ᡩᡝᡵᡤᡳ ᡥᡝᠰᡝᡳ ᠪᡝ ᡩᡝᡵᡤᡳ ᠈\nᡥᡝᠰᡝᡳ ᡩᡝᡵᡤᡳ ᡥᡝᠰᡝᡳ ᠈\nᡥᡝᠰᡝᡳ ᡩᡝ ᡥᡝᠰᡝᡳ ᠪᡝ ᡩᡝᡵᡤᡳ ᡩᡝ ᠈\nᠰᡝᡩᡠ ᡥᡝᠰᡝᡳ ᡶᡠᡤᡳᠶᡝᠨ ᠈\nᡥᡝᠰᡝᡳ ᡩᡝᡵᡤᡳ ᡥᡝᠰᡝᡳ ᠪᡝ ᡩᡝᡵᡤᡳ ᠈\nᡥᡝᠰᡝᡳ ᡩᡝᡵᡤᡳ ᡥᡝᠰᡝᡳ ᠈\nᡥᡝᠰᡝᡳ ᡩᡝ ᡥᡝᠰᡝᡳ ᠪᡝ ᡩᡝᡵᡤᡳ ᡩᡝ ᠈\nᠰᡝᡩᡠ ᡥᡝᠰᡝᡳ ᡶᡠᡤᡳᠶᡝᠨ ᠈\nᡥᡝᠰᡝᡳ ᡩᡝᡵᡤᡳ ᡥᡝᠰᡝᡳ ᠪᡝ ᡩᡝᡵᡤᡳ ᠈\nᡥᡝᠰᡝᡳ ᡩᡝᡵᡤᡳ ᡥᡝᠰᡝᡳ ᠈\nᡥᡝᠰᡝᡳ ᡩᡝ ᡥᡝᠰᡝᡳ ᠪᡝ ᡩᡝᡵᡤᡳ ᡩᡝ ᠈\nᠰᡝᡩᡠ ᡥᡝᠰᡝᡳ ᡶᡠᡤᡳᠶᡝᠨ ᠈\n\n<vocab>ᡥᡝᠰᡝᡳ (hese-i), ᡩᡝᡵᡤᡳ (dergi), ᡶᡠᡤᡳᠶᡝᠨ (fugiyen), 諸品經 (Zhupinjing)</vocab>",
+  "finishReason": "STOP",
+  "inputTokens": 4279,
+  "outputTokens": 1285,
+  "cost_usd": 0.0059945
+ },
+ "translation": {
+  "text": "<meta>The source language was identified by the user as Mongolian, but the OCR contains Manchu script and language. The translation has been performed from Manchu to English accordingly.</meta>\n\n<note>The text is enclosed within a rectangular border featuring a red ink floral and vine pattern in a rinceau style.</note>\n\n<margin>\nVarious Sutras, Volume 2, Part 1, Page 2 <note>original Chinese: 諸品經第二卷上二</note>\n</margin>\n\n<margin>\n<unclear>10</unclear>\nplace\n<term>Siddham</term> <gloss>a Sanskrit script used for Buddhist texts</gloss>\nupper\n</margin>\n\nBy the command of the Deity, the foundation.\nBy the command of the upper virtue.\nBy the command, the upper command.\nBy the command, that which is in the command, in the upper.\nBy the <term>Siddhu</term> <gloss>perfection or success</gloss> command, the foundation.\nBy the command of the upper ocean, the upper.\nBy the <term>Siddhu</term> command, the upper command.\nBy the command, the upper command.\nBy the command, that which is in the command, in the upper.\nBy the <term>Siddhu</term> command, the foundation.\nBy the command, the upper command, the upper.\nBy the command, the upper command.\nBy the command, that which is in the command, in the upper.\nBy the <term>Siddhu</term> command, the foundation.\nBy the command, the upper command, the upper.\nBy the command, the upper command.\nBy the command, that which is in the command, in the upper.\nBy the <term>Siddhu</term> command, the foundation.\nBy the command, the upper command, the upper.\nBy the command, the upper command.\nBy the command, that which is in the command, in the upper.\nBy the <term>Siddhu</term> command, the foundation.\n\n<summary>This page contains a repetitive liturgical or ritualistic text in Manchu, likely part of a Buddhist dharani or invocation. The text emphasizes commands, foundations, and the concept of the upper or celestial realm.</summary>\n<keywords>Manchu Buddhism, liturgy, Siddham, ritual commands, Zhupinjing</keywords>",
+  "finishReason": "STOP",
+  "inputTokens": 3015,
+  "outputTokens": 531,
+  "cost_usd": 0.0031005
+ }
+}

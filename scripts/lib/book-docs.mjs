@@ -155,6 +155,11 @@ export const PAGE_FIELDS = Object.freeze([
   // every translation writer, never by a list. A fact about the page's current
   // state, not a job's action.
   'translation_stale',
+  // #4291: the page number printed on the leaf ("217", "xii", "12v"), fitted per book
+  // from the OCR's <page-num> / running heads by fitPrintedPages — { label, numbering,
+  // rate, method, source?, run_len, fit_share, fitter, run, at }. Absent where the book's
+  // own sequence does not vouch for it. Cited as "p. 217 [scan 219]".
+  'printed_page',
   // pipeline
   'status', 'archive_metadata',
   // host record: the source's own catalogue entry for THIS page, verbatim, as

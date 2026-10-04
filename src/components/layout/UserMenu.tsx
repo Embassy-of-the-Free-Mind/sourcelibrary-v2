@@ -239,6 +239,16 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
                 >
                   Feedback
                 </Link>
+                {/* What the headless jobs are doing, which died, and what is
+                    waiting on a decision (#5705). Same admin gate as the page. */}
+                <Link
+                  href="/admin/work"
+                  className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+                  style={{ color: 'var(--text-primary)' }}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Work in flight
+                </Link>
                 {/* Spend (#5225) is allow-listed on the server, narrower than
                     "admin". The JWT can't see that list, but a superadmin role
                     is minted from the same sources the page gate re-checks

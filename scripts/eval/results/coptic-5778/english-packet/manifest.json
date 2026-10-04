@@ -1,0 +1,186 @@
+{
+ "built": "2026-10-04T02:10:40.262Z",
+ "seed": 5695,
+ "input": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-coptic-5778/scripts/eval/results/coptic-5778/english-records-served.jsonl",
+ "input_sha": "48f63a0aad8a537c",
+ "any_private": false,
+ "n_items": 6,
+ "n_gate": 3,
+ "n_main": 3,
+ "chunk": 6,
+ "judges": [
+  "j1",
+  "j2"
+ ],
+ "chunks": [
+  {
+   "judge": "j1",
+   "phase": "gate",
+   "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-coptic-5778/scripts/eval/results/coptic-5778/english-packet/packets/j1/gate-01.jsonl",
+   "verdicts": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-coptic-5778/scripts/eval/results/coptic-5778/english-packet/verdicts/j1/gate-01.jsonl",
+   "n": 3
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-coptic-5778/scripts/eval/results/coptic-5778/english-packet/packets/j1/main-01.jsonl",
+   "verdicts": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-coptic-5778/scripts/eval/results/coptic-5778/english-packet/verdicts/j1/main-01.jsonl",
+   "n": 3
+  },
+  {
+   "judge": "j2",
+   "phase": "gate",
+   "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-coptic-5778/scripts/eval/results/coptic-5778/english-packet/packets/j2/gate-01.jsonl",
+   "verdicts": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-coptic-5778/scripts/eval/results/coptic-5778/english-packet/verdicts/j2/gate-01.jsonl",
+   "n": 3
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-coptic-5778/scripts/eval/results/coptic-5778/english-packet/packets/j2/main-01.jsonl",
+   "verdicts": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-coptic-5778/scripts/eval/results/coptic-5778/english-packet/verdicts/j2/main-01.jsonl",
+   "n": 3
+  }
+ ],
+ "warnings": [],
+ "records": [
+  {
+   "id": "69920b7de0a548a13d883364_00192",
+   "track": "coptic-5778",
+   "lang": "Coptic",
+   "book_id": "69920b7de0a548a13d883364",
+   "page_number": 192,
+   "reference_meta": {
+    "title": "World English Bible",
+    "translator": "WEB (ebible.org)",
+    "year": 2000,
+    "licence": "public domain",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Matthew 6:17 – Matthew 6:22",
+    "url": "https://github.com/CopticScriptorium/corpora",
+    "coverage_note": "Verse-aligned to the Coptic by Coptic SCRIPTORIUM (bohairic.nt). It translates the GREEK text, not this Coptic version: small differences of wording between the Coptic and the reference are expected and are not errors. The page also carries apparatus or notes that the reference does not cover."
+   },
+   "arms": [
+    "served"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69920b7de0a548a13d883364_00498",
+   "track": "coptic-5778",
+   "lang": "Coptic",
+   "book_id": "69920b7de0a548a13d883364",
+   "page_number": 498,
+   "reference_meta": {
+    "title": "World English Bible",
+    "translator": "WEB (ebible.org)",
+    "year": 2000,
+    "licence": "public domain",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Mark 6:14 – Mark 6:20",
+    "url": "https://github.com/CopticScriptorium/corpora",
+    "coverage_note": "Verse-aligned to the Coptic by Coptic SCRIPTORIUM (bohairic.nt). It translates the GREEK text, not this Coptic version: small differences of wording between the Coptic and the reference are expected and are not errors. The page also carries apparatus or notes that the reference does not cover."
+   },
+   "arms": [
+    "served"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69af55d3ec9e6c278212dcf1_00115",
+   "track": "coptic-5778",
+   "lang": "Coptic",
+   "book_id": "69af55d3ec9e6c278212dcf1",
+   "page_number": 115,
+   "reference_meta": {
+    "title": "The Septuagint Version of the Old Testament",
+    "translator": "L. C. L. Brenton",
+    "year": 1851,
+    "licence": "public domain",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Deuteronomy 9:10 – Deuteronomy 9:14",
+    "url": "https://github.com/CopticScriptorium/corpora",
+    "coverage_note": "Verse-aligned to the Coptic by Coptic SCRIPTORIUM (sahidic.ot). It translates the GREEK text, not this Coptic version: small differences of wording between the Coptic and the reference are expected and are not errors. The page also carries apparatus or notes that the reference does not cover."
+   },
+   "arms": [
+    "served"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69af55d3ec9e6c278212dcf1_00216",
+   "track": "coptic-5778",
+   "lang": "Coptic",
+   "book_id": "69af55d3ec9e6c278212dcf1",
+   "page_number": 216,
+   "reference_meta": {
+    "title": "The Septuagint Version of the Old Testament",
+    "translator": "L. C. L. Brenton",
+    "year": 1851,
+    "licence": "public domain",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Jonah 1:12 – Jonah 2:2",
+    "url": "https://github.com/CopticScriptorium/corpora",
+    "coverage_note": "Verse-aligned to the Coptic by Coptic SCRIPTORIUM (sahidic.ot). It translates the GREEK text, not this Coptic version: small differences of wording between the Coptic and the reference are expected and are not errors. The page also carries apparatus or notes that the reference does not cover."
+   },
+   "arms": [
+    "served"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e012c74e6773d06085687d_00077",
+   "track": "coptic-5778",
+   "lang": "Coptic",
+   "book_id": "69e012c74e6773d06085687d",
+   "page_number": 77,
+   "reference_meta": {
+    "title": "The Septuagint Version of the Old Testament",
+    "translator": "L. C. L. Brenton",
+    "year": 1851,
+    "licence": "public domain",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Psalms 54:5 – Psalms 54:21",
+    "url": "https://github.com/CopticScriptorium/corpora",
+    "coverage_note": "Verse-aligned to the Coptic by Coptic SCRIPTORIUM (sahidic.ot). It translates the GREEK text, not this Coptic version: small differences of wording between the Coptic and the reference are expected and are not errors. The page also carries apparatus or notes that the reference does not cover."
+   },
+   "arms": [
+    "served"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e012c74e6773d06085687d_00152",
+   "track": "coptic-5778",
+   "lang": "Coptic",
+   "book_id": "69e012c74e6773d06085687d",
+   "page_number": 152,
+   "reference_meta": {
+    "title": "The Septuagint Version of the Old Testament",
+    "translator": "L. C. L. Brenton",
+    "year": 1851,
+    "licence": "public domain",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Psalms 118:49 – Psalms 118:71",
+    "url": "https://github.com/CopticScriptorium/corpora",
+    "coverage_note": "Verse-aligned to the Coptic by Coptic SCRIPTORIUM (sahidic.ot). It translates the GREEK text, not this Coptic version: small differences of wording between the Coptic and the reference are expected and are not errors. The page also carries apparatus or notes that the reference does not cover."
+   },
+   "arms": [
+    "served"
+   ],
+   "canonical": true
+  }
+ ]
+}

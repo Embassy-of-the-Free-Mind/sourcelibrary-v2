@@ -1,0 +1,2038 @@
+{
+ "built": "2026-10-03T20:36:07.940Z",
+ "seed": 5695,
+ "input": "/data/scratch/sl/xlref-t3-work/records-arms.jsonl",
+ "input_sha": "6e52e999745f453f",
+ "any_private": false,
+ "n_items": 59,
+ "n_gate": 9,
+ "n_main": 50,
+ "chunk": 5,
+ "judges": [
+  "j1",
+  "j2"
+ ],
+ "chunks": [
+  {
+   "judge": "j1",
+   "phase": "gate",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j1/gate-01.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j1/gate-01.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "gate",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j1/gate-02.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j1/gate-02.jsonl",
+   "n": 4
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j1/main-01.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j1/main-01.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j1/main-02.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j1/main-02.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j1/main-03.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j1/main-03.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j1/main-04.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j1/main-04.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j1/main-05.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j1/main-05.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j1/main-06.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j1/main-06.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j1/main-07.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j1/main-07.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j1/main-08.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j1/main-08.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j1/main-09.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j1/main-09.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j1/main-10.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j1/main-10.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "gate",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j2/gate-01.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j2/gate-01.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "gate",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j2/gate-02.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j2/gate-02.jsonl",
+   "n": 4
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j2/main-01.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j2/main-01.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j2/main-02.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j2/main-02.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j2/main-03.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j2/main-03.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j2/main-04.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j2/main-04.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j2/main-05.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j2/main-05.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j2/main-06.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j2/main-06.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j2/main-07.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j2/main-07.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j2/main-08.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j2/main-08.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j2/main-09.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j2/main-09.jsonl",
+   "n": 5
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/xlref-t3-work/packet/packets/j2/main-10.jsonl",
+   "verdicts": "/data/scratch/sl/xlref-t3-work/packet/verdicts/j2/main-10.jsonl",
+   "n": 5
+  }
+ ],
+ "warnings": [],
+ "records": [
+  {
+   "id": "69c86fc56c6f3cc53c85715c_00045",
+   "track": "T3",
+   "lang": "German",
+   "book_id": "69c86fc56c6f3cc53c85715c",
+   "page_number": 45,
+   "reference_meta": {
+    "title": "The Chymical Marriage of Christian Rosencreutz (Foxcroft's 'The Hermetick Romance: or The Chymical Wedding', 1690, as reprinted in A. E. Waite, The Real History of the Rosicrucians, 1887)",
+    "translator": "Ezechiel Foxcroft (ed. A. E. Waite)",
+    "year": 1690,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "German Chymische Hochzeit (Strassburg: Zetzner 1616)",
+    "located": "Third Day (the weighing), Waite 1887 pp. 125-126: from 'Whereupon one of the pages ... THAT IS HE' to 'with the Virgin as president'",
+    "url": "https://archive.org/download/realhistoryofros00waituoft/realhistoryofros00waituoft_djvu.txt",
+    "ref_file": "refs/waite-real-history-rosicrucians-1887.txt",
+    "coverage_note": "Cross-checked against the 1690 Foxcroft print (IA hermetickromance00rose / EEBO scan): same wording, Waite modernised spelling only. The English condenses the end of the page: the council's members are 'the seven captains' (source OCR: '5. Obersten'), and the page's 'Es wolt jeder sein meinung geben...' plus the first vote (kill them all, some harder than others, as having come in wilfully against the conditions) and the second vote (keep them prisoner, which neither the president nor the narrator liked) are omitted entirely; the English jumps to the council's conclusion, which is on the next page (given as [context]). Marginal glosses (Der ists, Probatissimus, Liberat. 1. Caesarem, Autor rosam donat Virgini, Hora 10. Actus, Iudicium de reprobatis, Votum 1.) are not rendered in English text."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6da19aeb-aec0-411c-b890-73035c92273d_00038",
+   "track": "T3",
+   "lang": "German",
+   "book_id": "6da19aeb-aec0-411c-b890-73035c92273d",
+   "page_number": 38,
+   "reference_meta": {
+    "title": "Fama Fraternitatis; or, a Discovery of the Fraternity of the most Laudable Order of the Rosy Cross (Thomas Vaughan's 1652 English, as reprinted in A. E. Waite, The Real History of the Rosicrucians, 1887)",
+    "translator": "Thomas Vaughan (Eugenius Philalethes), ed. A. E. Waite",
+    "year": 1652,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "German Fama Fraternitatis (Vaughan's 1652 'Fame and Confession of the Fraternity of R: C:'; German original of the Fama)",
+    "located": "Fama, Waite 1887 pp. 74-75, from 'thirty-seven reasons' to 'the third row and succession'",
+    "url": "https://archive.org/download/realhistoryofros00waituoft/realhistoryofros00waituoft_djvu.txt",
+    "ref_file": "refs/waite-real-history-rosicrucians-1887.txt",
+    "coverage_note": "Full coverage. The page starts mid-sentence ('warumb wir an itzo...'), so the English sentence head is given as [context]; the page ends mid-sentence ('...durch verborgene Reden von' / next page 'den 100. Jahren vns dem dritten Reyen vertrawet'), whose verb completes on the next page, so the cut runs to the semicolon after 'third row and succession'. Waite's djvu OCR reads 'Brother E. C.' after the death of I. O.; corrected to 'R. C.' (the German has 'Fr. R. C.'). Vaughan renders 'Fr. O' as 'I. O.'."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69c83edd6c6f3cc53c8502c3_00204",
+   "track": "T3",
+   "lang": "German",
+   "book_id": "69c83edd6c6f3cc53c8502c3",
+   "page_number": 204,
+   "reference_meta": {
+    "title": "The Triumphal Chariot of Antimony, by Basilius Valentinus, with the commentary of Theodore Kerckringius (London: James Elliott, 1893) — appendix 'On the Triumphal Chariot of Antimony, and the Nature of the Fire Stone'",
+    "translator": "anonymous (A. E. Waite's circle; published by James Elliott)",
+    "year": 1893,
+    "licence": "public-domain",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "indirect": false,
+    "relay_via": "Latin version (Kerckring, Amsterdam 1685), not the German directly",
+    "translates_edition": "Latin Currus triumphalis antimonii (Amsterdam 1685), itself translated from the German Triumph-Wagen",
+    "located": "Appendix 'On the Triumphal Chariot of Antimony, and the Nature of the Fire Stone', pp. 183-185, from 'But, when I approached the sun too closely' to 'reduced to a tangible shape by the elements'",
+    "url": "https://archive.org/download/triumphalchariot00basirich/triumphalchariot00basirich_djvu.txt",
+    "ref_file": "refs/waite-triumphal-chariot-antimony-1893.txt",
+    "coverage_note": "Covers the whole page in order but paraphrastically and condensed (relay through Latin): the German's 'there opened a great depth of a very high mountain, into which I afterwards went' becomes 'caused a great mountain to arise ... I ascended it'; 'as the children of men say, a friendship and community from the upper into the lower' is rendered 'that correspondence between things below and things above of which so much has been said'; the disciples 'who bear true desire to follow and confirm a ground thereby' clause is dropped; 'wässerigen Dampff, Rauch oder Wasser-Schwaden' is reduced to 'a certain aqueous vapour'. The page's first word ('[anrieff] / rieff') completes the previous page's clause, so the whole English sentence from 'But, when I approached the sun' is included. The English's last clause ('after being nourished by the stars ... reduced to a tangible shape by the elements') renders the start of the next page. Translator's footnotes omitted."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "699064b2ef12272ffdc93da9_00206",
+   "track": "T3",
+   "lang": "German",
+   "book_id": "699064b2ef12272ffdc93da9",
+   "page_number": 206,
+   "reference_meta": {
+    "title": "The Sermons and Conferences of John Tauler ... First Complete English Translation (Sermon for the Second Sunday after the Epiphany, 'If any man thirst')",
+    "translator": "Walter Elliott, C.S.P. (d. 1928)",
+    "year": 1910,
+    "licence": "public-domain",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Julius Hamberger's modernized German edition (Frankfurt 1864), consulting Surius's Latin and Sainte-Foi's French",
+    "located": "Sermon for the Second Sunday after the Epiphany, pp. 125-126, from 'And, again, it may happen that when the big hounds are shaken off' to 'finally and forever won'",
+    "url": "https://archive.org/download/sermonsconferenc00tauluoft/sermonsconferenc00tauluoft_djvu.txt",
+    "ref_file": "refs/elliott-tauler-sermons-1910.txt",
+    "coverage_note": "The page starts mid-sentence ('[versehret wird ... daß er] sehr, so muß er von dieser Versehrung faulen'), inside the little-dogs image whose English sentence begins on the previous page, so the whole English sentence is included. Elliott paraphrases and expands: his 'idle recreations, vain companionship, vanity in dress, human solace and comfort' renders 'Gespielen oder Gesellschaft, Kleinode, Kurzweil, der Menschen Gütigkeit'; 'Zu gleicher Weise, wie alle Dinge viel schädlicher sind, die man nicht bekennet...' becomes the 'disguised enemy' sentence; 'So, therefore, let a man resist all kinds of temptations with equal courage and vigilence' and 'he knew that his enemies directly sought his life' have no direct counterpart on the page; the German's 'in dem Thiergarten' and 'ein Tropfen in den Mund seines Herzens' are rendered loosely ('a refreshing draught from His sacred heart'). The page's footnote '*) Ed. 1543.' is an editor's note, not rendered. Winkworth 1857 (25 sermons) does not contain this sermon."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC",
+    "O"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69c814536c6f3cc53c848191_00054",
+   "track": "T3",
+   "lang": "German",
+   "book_id": "69c814536c6f3cc53c848191",
+   "page_number": 54,
+   "reference_meta": {
+    "title": "Theologia Germanica (Golden Treasury reprint of the 1854 translation)",
+    "translator": "Susanna Winkworth",
+    "year": 1854,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Franz Pfeiffer's edition (1851) of the Würzburg 1497 manuscript text; our book is the Luther-line Basel 1523 print, whose chapter XXXI = Winkworth's ch. XXXIII",
+    "located": "End of ch. XXXII and start of ch. XXXIII, pp. 116-119 of the 1893 reprint, from 'So it is good and just and right to deem' to 'for I am and have nothing else'",
+    "url": "https://archive.org/download/theologiagermani00winkuoft/theologiagermani00winkuoft_djvu.txt",
+    "ref_file": "refs/winkworth-theologia-germanica-1893.txt",
+    "coverage_note": "Page starts mid-sentence ('[were icht] bessers dann gott, das müst geliebt werden vor gott'), so the whole English sentence is included. The page ends mid-sentence at 'gleich als gott auß der menscheit [sprech]'; the whole English sentence, i.e. God's quoted speech (on the next page in the German), is included to its end. The source's stray 'Vñ Got liebt sich' at the end of the first line (likely a printed running gloss/catchphrase) has no separate English. Winkworth adds a chapter title ('How when a Man is made truly Godlike...') that the 1523 print gives only as a margin summary ('Natur und eygenschafft der rechten liebe, die sich erstrecket allein und fürnemlich zu unsern feynden'); the two margin glosses are not otherwise rendered. Winkworth's 'and rejoice in their welfare', 'Thou desirest and rejoicest in My affliction' are small expansions of the German."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6952603cab34727b1f04647b_00194",
+   "track": "T3",
+   "lang": "German",
+   "book_id": "6952603cab34727b1f04647b",
+   "page_number": 194,
+   "reference_meta": {
+    "title": "Signatura Rerum: The Signature of All Things (Everyman's Library no. 569, text of William Law's edition), ch. X 'Of the Inward and Outward Cure of Man'",
+    "translator": "John Ellistone (1651), as revised in the Law edition (1764-81)",
+    "year": 1651,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "German De signatura rerum (1622 / Amsterdam editions)",
+    "located": "Ch. X, §§2-3 (Everyman pp. 107-108)",
+    "url": "https://archive.org/download/bwb_C0-CEY-112/bwb_C0-CEY-112_djvu.txt",
+    "ref_file": "refs/boehme-signatura-rerum-everyman-1912-law-text.txt",
+    "coverage_note": "Page starts mid-sentence ('[In Adam verlosch das Göttliche Liecht] vnd die Liebe'), so the whole of §2 is included; page ends mid-sentence ('mit der fewer Welt, das ist die [ewige Natur ...]'), so §3 is included to its end ('...viz. the corporality'), whose last two clauses are on the next page. Close rendering. The scan used is a 1926 printing of the Everyman edition (first 1912), which follows Law's 1764-81 text of Ellistone's 1651 translation."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC",
+    "O"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69528702ab34727b1f04cf65_00153",
+   "track": "T3",
+   "lang": "German",
+   "book_id": "69528702ab34727b1f04cf65",
+   "page_number": 153,
+   "reference_meta": {
+    "title": "The Way to Christ, described in the following treatises: Of True Repentance, Of True Resignation, Of Regeneration, Of the Super-Sensual Life (Canterbury: G. Moreton, 1894), treatise 'Of Regeneration'",
+    "translator": "18th-century English text of William Law's edition (1764-81), republished by G. Moreton",
+    "year": 1764,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "German Der Weg zu Christo (Von der Wiedergeburt), 1624 / later editions",
+    "located": "Of Regeneration, §§116-119 (Moreton 1894 p. 79), from 'For he was a Scorner' to 'envious, and malicious'",
+    "url": "https://archive.org/download/waytochristdesc00begoog/waytochristdesc00begoog_djvu.txt",
+    "ref_file": "refs/boehme-way-to-christ-moreton-1894.txt",
+    "coverage_note": "Page starts mid-sentence ('[so lange er ein solcher war,] so war er nicht in der rechten Erbschafft...'); the English sentence begins 'For he was a Scorner', which is on the previous page, so it is included whole. The German's separate sentence 'Welches ein Fürbilde der zukünfftigen Christenheit war' is joined to the preceding sentence in English. The page ends mid-clause ('dem Thier der Eitelkeit keine ruhe in Christi Reiche [eynräumen]'); the English sentence runs on to 'nor suffering it to grow wanton, proud, covetous, envious, and malicious', which renders the first line of the next page. The German 'immer gerne in Christi Todte der Sünden absterben' is 'ever in Will dying from Sin'. Fixes of the scan's OCR in the English: 'Iscuic'->'Isaac', 'cc^t'->'cast', 'being'->'bring' (sense of 'führen'), 'Beast ^ Vanity'->'Beast of Vanity', 'Inlieritorol'->'Inheritor of'."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b51e6947b06ecd5818faf1_00131",
+   "track": "T3",
+   "lang": "German",
+   "book_id": "69b51e6947b06ecd5818faf1",
+   "page_number": 131,
+   "reference_meta": {
+    "title": "Coelum Terrae; or, The Magician's Heavenly Chaos (1650), in The Magical Writings of Thomas Vaughan, a verbatim reprint ed. A. E. Waite (1888)",
+    "translator": "none — Thomas Vaughan's own English original (1650); the German book translates it",
+    "year": 1650,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": true,
+    "translates_edition": "n/a: the English is the original; the German 'Magia Adamica oder das Alterthum der Magie' (1704) translates Vaughan's English treatises (here the Coelum Terrae section)",
+    "located": "Coelum Terrae, Waite 1888 p. 136 (the eagle/lion and 'five litigious gates' passage); also in Waite's 1919 Works of Thomas Vaughan p. 207-208",
+    "url": "https://archive.org/download/magicalwritings00waitgoog/magicalwritings00waitgoog_djvu.txt",
+    "ref_file": "refs/vaughan-magical-writings-waite-1888.txt",
+    "coverage_note": "Full coverage, same order; the German is a close translation of this English. Page starts mid-word ('[Lö]wen-Blut'), so the preceding sentence is given as [context]; the page ends mid-word at 'Das fünffs[te]', and the English sentence 'The fifth gate serves only for metals' is included whole. German renders 'Projection' as 'der Gebrauch der Aufwerffung'. Reference OCR fixed: 'Hon'->'lion', 'I'his'->'This', footnote marker removed."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b51dc947b06ecd581849ee_00128",
+   "track": "T3",
+   "lang": "German",
+   "book_id": "69b51dc947b06ecd581849ee",
+   "page_number": 128,
+   "reference_meta": {
+    "title": "The Last Will and Testament of Basil Valentine, Monke of the Order of St. Bennet (London 1671), section 'Of the Mystery of the Microcosme'",
+    "translator": "anonymous 17th-century English translator",
+    "year": 1671,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "German Basilius corpus ('Von der grossen Heimlichkeit der Welt und ihrer Artzney', printed with 'Von dem grossen Stein der Uhralten' and in the 'Letztes Testament'); first English 1657/58",
+    "located": "'Of the Mystery of the Microcosme', 1671 ed. p. 400 (the ASA paragraph ending 'whereby such Sores, Ulcers, &c. are fundamentally cured'); same text in the 1670 EEBO scan p. 459",
+    "url": "https://archive.org/download/lastvvilltestame00basi/lastvvilltestame00basi_djvu.txt",
+    "ref_file": "refs/basil-valentine-last-will-1671-ia.txt",
+    "coverage_note": "The English is a CONDENSED free rendering of this page: it keeps the sequence (cures where no physician's plaisters help -> not for common cut/stab wounds, for which gentler balsams, oils, plaisters outwardly and powders/potions inwardly suffice -> inner causes need searching remedies -> things joined from the generation of ABIHAIL with the three principles of the first essence, brought to highest perfection) but drops the German's 'Was außwendig in Gebrechen der Wunden auffgelegt wird, kan keinem Schaden zu hülffe kommen, der seinen Ursprung von innen hat', the physician needing experience to know the origin of 'Leibs-Schäden' and common wounds and to discern remedies, and 'alle Leibs-Schäden und Flüße kommen alle gesampt auß einer Corruption ... Fäulung, darumb müssen sie durch Mittel curirt werden, so ihnen starck widerstreben können'. Page starts mid-sentence (the list of sores 'an welchem Glied ... sich ungesundes ... vermercken läßt'), so the English sentence from 'it consumeth' is included (its head as [context]); page ends mid-sentence ('zum höchsten vollständig und als[o]'). The English text was cleaned of 17th-c. scan OCR noise (long-s, 'Fiftulaes', 'I e'p' = 'help', etc.) by collating the IA 1671 and EEBO 1670 scans; long-s normalised to s."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "698255f1dec6220cc3bf1b25_00154",
+   "track": "T3",
+   "lang": "German",
+   "book_id": "698255f1dec6220cc3bf1b25",
+   "page_number": 154,
+   "reference_meta": {
+    "title": "The New Chemical Light, Part II: Concerning Sulphur (Michael Sendivogius), in The Hermetic Museum, Restored and Enlarged, vol. II (1893)",
+    "translator": "A. E. Waite (ed./tr.)",
+    "year": 1893,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": true,
+    "translates_edition": "Latin Tractatus de Sulphure as printed in Musaeum Hermeticum (Frankfurt 1678); the German book (Nuremberg 1766) is itself a translation of Sendivogius's Latin",
+    "located": "Hermetic Museum vol. II pp. 130-131: end of the elements introduction ('four pillars of the world') and start of 'Concerning Elementary Earth' to '...that which it should manifest'",
+    "url": "https://archive.org/download/b24927363_0002/b24927363_0002_djvu.txt",
+    "ref_file": "refs/waite-hermetic-museum-1893-vol2.txt",
+    "coverage_note": "Indirect: German and English are parallel translations of the Latin. The page starts mid-word ('[...]tiret wird'), the end of the clause 'each element has at its centre another element which makes it what it is', so the English sentence head is given as [context]. The page ends mid-sentence ('gleichwie ein Schwamm, welcher [nichts aus sich herfür bringet]'); the English sentence is completed ('produces nothing of itself ... which it should manifest'), most of which renders the next page. German 'die vier Statuen der Welt' = English 'the four pillars of the world'; German 'durch Neigung der himmlischen Kräfte' = 'through the virtue of celestial influences'; German 'Centrum der Welt, und auch der andern Elementen: durch dessen Mittel-Punct gehet die Axis der Welt beyder Poli' = English 'axis of the earth to both poles'. Reference OCR fixed: 'ave latent'->'are latent', 'Itisgross'->'It is gross', 'EavtA'->'Earth', 'whatitis'->'what it is', stray quote marks removed."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC",
+    "O"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b51dcc47b06ecd58184b91_00073",
+   "track": "T3",
+   "lang": "German",
+   "book_id": "69b51dcc47b06ecd58184b91",
+   "page_number": 73,
+   "reference_meta": {
+    "title": "The Works of the Highly Experienced and Famous Chymist, John Rudolph Glauber (The Continuation of Miraculum Mundi)",
+    "translator": "Christopher Packe",
+    "year": 1689,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": true,
+    "translates_edition": "Packe worked mainly from Glauber's Latin editions (Amsterdam, Jansson); this treatise existed in Latin, so the English is via the Latin version of the German original",
+    "located": "The Continuation of Miraculum Mundi, second arcanum (improvement of gold and silver), paragraph 'But first it seems good to me to exhibit a proof...'",
+    "url": "https://archive.org/download/worksofhighlyexp00glau/worksofhighlyexp00glau_djvu.txt",
+    "ref_file": "refs/glauber-works-packe-1689.txt",
+    "coverage_note": "Covers the whole page in order; the English is somewhat condensed (German 'braunes pulver'/'Schwarz-Braunen Kalch' rendered 'reddish powder'; 'Gieß-puckell' as 'Cone'; the separate 'purify the silver from the scoria' step merged). First sentence begins on the previous page. Long-s and OCR errors of the archive.org text silently corrected."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69ade6cc2fcf4ffa86cec233_00093",
+   "track": "T3",
+   "lang": "German",
+   "book_id": "69ade6cc2fcf4ffa86cec233",
+   "page_number": 93,
+   "reference_meta": {
+    "title": "Kant's Prolegomena to Any Future Metaphysics",
+    "translator": "J. P. Mahaffy and J. H. Bernard (1872), revised and edited by Paul Carus",
+    "year": 1902,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Prolegomena (Riga 1783)",
+    "located": "§ 21a, whole section",
+    "url": "https://www.gutenberg.org/cache/epub/52821/pg52821.txt",
+    "ref_file": "refs/kant-prolegomena-carus-1902.txt",
+    "coverage_note": "Covers the full page; the page ends mid-sentence ('als an sich be-'), so the reference runs to the end of that sentence ('...logical function of judgments.'), which finishes on the next page."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC",
+    "O"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69afe1b02aed98f61157f6f6_00130",
+   "track": "T3",
+   "lang": "German",
+   "book_id": "69afe1b02aed98f61157f6f6",
+   "page_number": 130,
+   "reference_meta": {
+    "title": "Outlines of a Philosophy of the History of Man",
+    "translator": "T. Churchill",
+    "year": 1800,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Ideen zur Philosophie der Geschichte der Menschheit (Riga/Leipzig 1784-91)",
+    "located": "Book III, ch. on organic powers, para beginning 'If the accurate investigation of these questions in particular animals'",
+    "url": "https://archive.org/download/b22010282/b22010282_djvu.txt",
+    "ref_file": "refs/herder-outlines-churchill-1800.txt",
+    "coverage_note": "Full page covered. Page begins mid-sentence ('einzelner, zumal dem Menschen nahen Geschöpfen...'); the reference starts at the beginning of that sentence, whose first clause is on the previous page. Herder's '— —' and '* * *' separators not rendered. Long-s OCR silently corrected; italics of proposition 1 dropped."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69ade7165426286aa40cf430_00374",
+   "track": "T3",
+   "lang": "German",
+   "book_id": "69ade7165426286aa40cf430",
+   "page_number": 374,
+   "reference_meta": {
+    "title": "Goethe's Theory of Colours",
+    "translator": "Charles Lock Eastlake",
+    "year": 1840,
+    "licence": "public-domain",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Zur Farbenlehre, didactic part (Tübingen 1810)",
+    "located": "Part VI, end of § 870 through first sentence of § 872",
+    "url": "https://www.gutenberg.org/cache/epub/50572/pg50572.txt",
+    "ref_file": "refs/goethe-theory-of-colours-eastlake-1840.txt",
+    "coverage_note": "Covers the page. Eastlake omits the German heading 'Colorit' before § 871 and renders 'Colorit des Orts' as 'COLOUR IN GENERAL NATURE'; § 870 is paraphrased ('Haltung' as 'keeping'). Page ends mid-word 'Luftpers-'; reference runs to end of that sentence."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e792379adaf7b110e3a437_00146",
+   "track": "T3",
+   "lang": "German",
+   "book_id": "69e792379adaf7b110e3a437",
+   "page_number": 146,
+   "reference_meta": {
+    "title": "Wilhelm Meister's Apprenticeship and Travels, vol. 1",
+    "translator": "Thomas Carlyle",
+    "year": 1824,
+    "licence": "public-domain",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Wilhelm Meisters Lehrjahre (Berlin 1795-96)",
+    "located": "Book II, ch. 4, paragraphs on Wilhelm's chamber and his image of the players' life",
+    "url": "https://www.gutenberg.org/cache/epub/36483/pg36483.txt",
+    "ref_file": "refs/goethe-wilhelm-meister-carlyle-vol1.txt",
+    "coverage_note": "Page begins mid-sentence ('Schärpe um den Leib...'); reference starts with that whole sentence. Page ends at 'Etwa wie'; Carlyle joins the simile into the same sentence with a semicolon, so the reference runs to its end ('...cleansed of all foreign mixture'), which is mostly on the next page. Carlyle renders 'Dolch' as 'sword'."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC",
+    "O"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "698fb77b6b95eeda7d2d1eaf_00187",
+   "track": "T3",
+   "lang": "German",
+   "book_id": "698fb77b6b95eeda7d2d1eaf",
+   "page_number": 187,
+   "reference_meta": {
+    "title": "Cosmos: A Sketch of a Physical Description of the Universe, Vol. 1",
+    "translator": "E. C. Otté",
+    "year": 1849,
+    "licence": "public-domain",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Kosmos Bd. 1 (Stuttgart/Tübingen 1845); text from the 1858 Harper reprint of Otté's translation",
+    "located": "Vol. 1, General Survey (Delineation of Nature), terrestrial phenomena: depth of strata, before 'The consideration of the increase of heat'",
+    "url": "https://www.gutenberg.org/cache/epub/14565/pg14565.txt",
+    "ref_file": "refs/humboldt-cosmos-v1-otte.txt",
+    "coverage_note": "Covers the whole page. Page starts mid-sentence; reference starts at the beginning of that sentence. Translator's typos kept ('montains', 'Dhawalagigi'). Figures differ: German '1 7/10 Meile' → 'about seven miles'; James Ross '25400 Fuß' → '27,600 feet of line' (converted/updated). Footnote 95 (Von Dechen on coal basins) omitted, as it is not on this page. Page ends mid-sentence ('über das Gesetz der zunehmenden'); reference completes it."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69ef3d8c72c1376fdf2b04e9_00105",
+   "track": "T3",
+   "lang": "German",
+   "book_id": "69ef3d8c72c1376fdf2b04e9",
+   "page_number": 105,
+   "reference_meta": {
+    "title": "Laocoon: An Essay upon the Limits of Painting and Poetry",
+    "translator": "Ellen Frothingham",
+    "year": 1873,
+    "licence": "public-domain",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Laokoon (Berlin 1766)",
+    "located": "Chapter VIII, second sentence of first paragraph to 'says Ovid in his solemn invocation to Bacchus'",
+    "url": "https://www.gutenberg.org/cache/epub/73078/pg73078.txt",
+    "ref_file": "refs/lessing-laocoon-frothingham.txt",
+    "coverage_note": "Page begins mid-sentence ('Gebothe stehen, welche die Mahlerey...'); reference starts with the whole English sentence ('That poetry has the wider sphere...'). Page ends on the catchword-like 'heißt' after the Ovid quotation; reference ends with 'says Ovid in his solemn invocation to Bacchus.' Lessing's marginal footnote 'a) Polymetis Dial. IX. p. 129.' is not in the reference (translator's notes renumbered). Frothingham quotes Spence's English for the paraphrased reasons."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC",
+    "O"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6954347b1479a63c11089b35_00091",
+   "track": "T3",
+   "lang": "German",
+   "book_id": "6954347b1479a63c11089b35",
+   "page_number": 91,
+   "reference_meta": {
+    "title": "Kant's Critique of Judgement",
+    "translator": "J. H. Bernard",
+    "year": 1914,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Kritik der Urtheilskraft, 2nd ed. (1793) with first-edition variants (first ed. of Bernard's translation 1892)",
+    "located": "First Part, § 4 'The satisfaction in the good is bound up with interest', paragraph beginning 'Even in common speech' and Kant's footnote",
+    "url": "https://www.gutenberg.org/cache/epub/48433/pg48433.txt",
+    "ref_file": "refs/kant-critique-of-judgement-bernard.txt",
+    "coverage_note": "Covers the full page, including Kant's own footnote '*)' (given at the end, marked [Footnote]). Page begins mid-sentence ('nicht gut sei'), so the reference starts with the whole English sentence. The running head ('Das Wohlgefallen am Guten ist mit Interesse verbunden.') and the modern editor's variant notes a)-c) are not translated; Bernard marks 'absolute' as a second-edition reading. Bernard reorders the 'Daß aber eines Menschen Existenz...' sentence (Reason as subject first)."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a22d6e168f6a1498e2ffe6a_00160",
+   "track": "T3",
+   "lang": "German",
+   "book_id": "6a22d6e168f6a1498e2ffe6a",
+   "page_number": 160,
+   "reference_meta": {
+    "title": "Organon of Medicine, 6th edition",
+    "translator": "William Boericke (revising R. E. Dudgeon)",
+    "year": 1922,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Organon der Heilkunst, 6th ed., ed. Richard Haehl from Hahnemann's 1842 manuscript (Leipzig 1921)",
+    "located": "§ 188 (end) to § 190 (first sentence) with the footnote to § 188",
+    "url": "https://archive.org/details/organon-of-medicine-6th-edition-completed-1842-german-edition-published-1921-eng",
+    "ref_file": "refs/hahnemann-organon-6th-boericke-1922.txt",
+    "coverage_note": "Page starts mid-§ 188 ('nannte sie desshalb Local-Uebel...'); reference gives the whole of § 188, which is a single sentence. Page ends with the first words of § 190; reference gives that full sentence. Footnote 1) of § 188 is on the page and is included at the end. OCR noise of the archive.org text corrected (hyphenation, '§ 1809' → '§ 189')."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a26bc86d6b178e5aad842b9_00022",
+   "track": "T3",
+   "lang": "German",
+   "book_id": "6a26bc86d6b178e5aad842b9",
+   "page_number": 22,
+   "reference_meta": {
+    "title": "The Hermetic and Alchemical Writings of Paracelsus, vol. 1: The Book concerning the Tincture of the Philosophers",
+    "translator": "Arthur Edward Waite",
+    "year": 1894,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": true,
+    "translates_edition": "Waite states his text is the Latin Geneva folio (1658) of Paracelsus' works, not the German; the Latin is itself a translation of the German treatise",
+    "located": "Tincture of the Philosophers, ch. on the process of the ancients, pp. 26-27 of Waite vol. 1 ('as in Gastaynum ... Venus is produced from Saturn')",
+    "url": "https://archive.org/download/hermeticalchemic00para/hermeticalchemic00para_djvu.txt",
+    "ref_file": "refs/paracelsus-waite-1894-vol1.txt",
+    "coverage_note": "Covers the page. Page starts mid-sentence ('Luna Solem zum machen' = 'in Hungary, Sol out of Luna'); reference starts at the head of that sentence. Page ends inside the sentence about the tincture for gems ('unnd et-'); reference completes it. Via the Latin: German 'Leonem im anfang' vs English 'Lion in the East'; German 'in Jovis sulphure' (sulphur of Jupiter/tin) vs English 'in the fire of Sulphur'."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69ade7946a6b945bbdfa2d0a_00091",
+   "track": "T3",
+   "lang": "German",
+   "book_id": "69ade7946a6b945bbdfa2d0a",
+   "page_number": 91,
+   "reference_meta": {
+    "title": "The Vocation of Man",
+    "translator": "William Smith",
+    "year": 1848,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Die Bestimmung des Menschen (Berlin 1800)",
+    "located": "Book II 'Knowledge', dialogue between Spirit and I, from 'I would not weary of repeating it' to 'see, hear, and feel objects'",
+    "url": "https://archive.org/download/cu31924029040744/cu31924029040744_djvu.txt",
+    "ref_file": "refs/fichte-vocation-of-man-smith.txt",
+    "coverage_note": "Covers the whole page (text from the 1906 Open Court reprint of Smith's 1848 translation). German speaker tags 'D. G.' (der Geist) and 'J.' (Ich) rendered 'Spirit' and 'I' (the archive OCR reads '/.'). Page ends mid-sentence 'Du siehst, fühlst, hörst'; reference ends with that English sentence. The emphasis on 'In aller Wahrnehmung ... Zustand wahr' is not marked."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC",
+    "O"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a26c3beaad44c98627cb64a_00013",
+   "track": "T3",
+   "lang": "German",
+   "book_id": "6a26c3beaad44c98627cb64a",
+   "page_number": 13,
+   "reference_meta": {
+    "title": "The Works of the Highly Experienced and Famous Chymist, John Rudolph Glauber (Philosophical Furnaces, Fifth Part)",
+    "translator": "Christopher Packe",
+    "year": 1689,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": true,
+    "translates_edition": "Packe worked mainly from Glauber's Latin editions (Furni novi philosophici, Amsterdam 1651 ff.), not the German 1649 Part 5",
+    "located": "Philosophical Furnaces, Fifth Part, 'A Lute for the erecting of Furnaces' (end) and 'Of the closing of the Joints, hindering the evaporation of subtle Spirits'",
+    "url": "https://archive.org/download/worksofhighlyexp00glau/worksofhighlyexp00glau_djvu.txt",
+    "ref_file": "refs/glauber-works-packe-1689.txt",
+    "coverage_note": "Covers the page but condensed: German 'Laimen vnd Sand nur mit einem Saltz-wasser' = 'clay and sand with brine'; 'Hammerschlag' rendered 'filings of iron'; the German remark that such lute is good for coating glasses 'darinn zu scheiden oder darauß zu distilliren' kept; 'mit einem pinsel' = 'with a pencil'. Packe's colon-chained period continues past the page end ('dann' + next page); cut after 'it cannot be mollify'ed;' with the next clause as context. Long-s and OCR errors silently corrected."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69593274b91a6184ea943873_00315",
+   "track": "T3",
+   "lang": "French",
+   "book_id": "69593274b91a6184ea943873",
+   "page_number": 315,
+   "reference_meta": {
+    "title": "Transcendental Magic, its Doctrine and Ritual",
+    "translator": "Arthur Edward Waite",
+    "year": 1896,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Dogme et Rituel de la Haute Magie (French, 1856/1861)",
+    "located": "Part I (Doctrine), ch. XVI 'Bewitchments', para 'The method of ceremonial bewitchments...', from 'To pamper the weaknesses'",
+    "url": "https://archive.org/download/transcendentalma00leviuoft/transcendentalma00leviuoft_djvu.txt",
+    "ref_file": "refs/levi-transcendental-magic-waite1896.txt",
+    "coverage_note": "Full coverage; page ends mid-word 'représenta-', cut ends at end of that English sentence. Waite merges Lévi's paragraph breaks."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69593291b91a6184ea943bbe_00122",
+   "track": "T3",
+   "lang": "French",
+   "book_id": "69593291b91a6184ea943bbe",
+   "page_number": 122,
+   "reference_meta": {
+    "title": "The History of Magic, including a clear and precise exposition of its procedure, its rites and its mysteries",
+    "translator": "Arthur Edward Waite",
+    "year": 1913,
+    "licence": "public-domain",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Histoire de la Magie (Paris, 1860)",
+    "located": "Book I ch. 6 (Magic in Greece), para 'Orphic initiation may, according to Ballanche...' (p. 88 of 1922 reprint)",
+    "url": "https://archive.org/download/historyofmagicin00lv/historyofmagicin00lv_djvu.txt",
+    "ref_file": "refs/levi-history-of-magic-waite.txt",
+    "coverage_note": "Page begins mid-sentence ('quels termes, suivant Ballanche'); the English sentence is whole. Waite runs the separate quoted maxims together, recasts the Tree-of-Life/astrology sentence order, and omits Lévi's footnote (Ballanche, Orphée, liv. VIII, p. 169, 1833)."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "698255eeaf854f912ffb30e6_00404",
+   "track": "T3",
+   "lang": "French",
+   "book_id": "698255eeaf854f912ffb30e6",
+   "page_number": 404,
+   "reference_meta": {
+    "title": "Man: His True Nature and Ministry",
+    "translator": "Edward Burton Penny",
+    "year": 1864,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Le Ministère de l'Homme-Esprit (Paris, Migneret, 1802)",
+    "located": "Part III, 'The Hand of the Lord upon Man', pp. 360-361, from 'Why art thou depressed?' to '...holy gate of eternal mercy'",
+    "url": "https://archive.org/download/le-ministere-de-l-homme-esprit-man-his/Le_minist%C3%A8re_de_l_homme_esprit_Man_his_djvu.txt",
+    "ref_file": "refs/saint-martin-man-true-nature-penny1864.txt",
+    "coverage_note": "Full coverage. Source page opens 'Pourquoi perdre la confiance ?' mid-quotation; the [context] line gives the preceding English sentence from the previous page. Penny adds a scripture reference '(vi. 13.)' not printed on this source page; source has '(15 : 1.)' rendered '(xv. 1.)'. Page ends mid-word 'figura-tive'."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69c85cf76c6f3cc53c854dca_00117",
+   "track": "T3",
+   "lang": "French",
+   "book_id": "69c85cf76c6f3cc53c854dca",
+   "page_number": 117,
+   "reference_meta": {
+    "title": "A Short and Easy Method of Prayer",
+    "translator": "Thomas Digby Brooke",
+    "year": 1775,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Moyen court et très facile de faire oraison (French; edition used not stated)",
+    "located": "End of ch. XIII 'Of Rest before God' and opening of ch. XIV 'Of Internal Silence' (1812 reprint pp. 89-90)",
+    "url": "https://archive.org/download/gpl_1821433/gpl_1821433_djvu.txt",
+    "ref_file": "refs/guyon-short-easy-method-brooke-1812reprint.txt",
+    "coverage_note": "Text from the 1812 reprint of Brooke's 1775 translation (wording identical to the 1775 ECCO copy bim_eighteenth-century_a-short-and-easy-method-_guyon-jeanne-marie-bouv_1775, whose OCR is garbled). Brooke omits the source's numbered paragraph markers and the chapter summary lines ('1. 2. Du Silence intérieur : sa raison : Dieu le recommande. 3. Le Silence extérieur, la retraite, & le retours en foi, y contribuent.'); expands 'germe de vie & de fécondité' as 'the living spring within'. Source page ends mid-sentence ('que toute la terre demeure'); cut ends with the verse."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC",
+    "O"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69906485ef12272ffdc93acc_00116",
+   "track": "T3",
+   "lang": "French",
+   "book_id": "69906485ef12272ffdc93acc",
+   "page_number": 116,
+   "reference_meta": {
+    "title": "The True Prophecies or Prognostications of Michael Nostradamus",
+    "translator": "Theophilus de Garencières",
+    "year": 1672,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Les Prophéties / Vrayes Centuries (French; Garencières prints his own French text, close to the 1605/1668 editions)",
+    "located": "Century VI, quatrains XXXI (lines 2-4) to XXXVI, 'English' versions only",
+    "url": "https://archive.org/download/b30334494/b30334494_djvu.txt",
+    "ref_file": "refs/nostradamus-garencieres1672.txt",
+    "coverage_note": "Only Garencières's English verse renderings are cut; his French re-print and 'ANNOT.' commentaries are excluded. Page opens with lines 2-4 of VI.31, so line 1 is given as [context]. Reference OCR (Wellcome copy) is rough: long-s normalised to s; 'Peruia' in the OCR read as 'Perusia'; junk 'SU à' before 'Pisa' dropped; 'frivilous' normalised to 'frivolous' (OCR or period spelling uncertain). Garencières' VI.34 renders 'au grand chef assiegez' as 'the Captain of the Besieged' (his French reads 'le Chef des Assiegez')."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6909f75fcf28baa1b4cb0f71_00197",
+   "track": "T3",
+   "lang": "French",
+   "book_id": "6909f75fcf28baa1b4cb0f71",
+   "page_number": 197,
+   "reference_meta": {
+    "title": "The History of a Voyage to the Malouine (or Falkland) Islands, made in 1763 and 1764",
+    "translator": "anonymous",
+    "year": 1771,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Journal historique d'un voyage fait aux Isles Malouines (Berlin, 1769); our book is the 1770 Paris 'Histoire d'un voyage' revision of the same text",
+    "located": "Description of the luminous fly from Rio de la Plata, pp. 92-93 ('The next morning I took one out of the vessel...')",
+    "url": "https://archive.org/download/historyavoyaget00perngoog/historyavoyaget00perngoog_djvu.txt",
+    "ref_file": "refs/pernety-voyage-malouine-1771.txt",
+    "coverage_note": "Full coverage. Source page ends mid-sentence ('petits poils fins très-courts, &'); cut ends at the end of that English sentence ('...of a yellow orange colour'). Long-s normalised. Translator renders 'deux yeux noirs' without 'two', and 'noir velouté' as 'black velvet lace' (as printed in the OCR)."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC",
+    "O"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6988a5a067c850b3e65d943e_00339",
+   "track": "T3",
+   "lang": "French",
+   "book_id": "6988a5a067c850b3e65d943e",
+   "page_number": 339,
+   "reference_meta": {
+    "title": "The Ruins; or, Meditation on the Revolutions of Empires: and The Law of Nature",
+    "translator": "Thomas Jefferson and Joel Barlow (anonymous in the 1802 Paris edition)",
+    "year": 1802,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Les Ruines (revised French text, Paris 1799/1802); our book is the 1792 edition",
+    "located": "Chapter XXIII 'Identity of the Object of Religions', exchange between the 'simple men' and the doctors, from '\"What!\" said he' to '\"In our books,\" answered the doctors.'",
+    "url": "https://www.gutenberg.org/cache/epub/1397/pg1397.txt",
+    "ref_file": "refs/volney-ruins-pg1397.txt",
+    "coverage_note": "Full coverage. Source page begins mid-sentence ('apprenions tant d'histoires...'); the whole English sentence beginning '\"What!\" said he' is included, so its opening clauses render text on the previous source page. Gutenberg text is the 1890 New York reprint of the 1802 Paris English translation."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC",
+    "O"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e8b18b2ff2a8dc09e76378_00076",
+   "track": "T3",
+   "lang": "French",
+   "book_id": "69e8b18b2ff2a8dc09e76378",
+   "page_number": 76,
+   "reference_meta": {
+    "title": "Elements of Chemistry, in a New Systematic Order, Containing All the Modern Discoveries",
+    "translator": "Robert Kerr",
+    "year": 1790,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Traité élémentaire de chimie, Paris 1789",
+    "located": "Part I, Ch. I (Of the Combinations of Caloric), paras 'When the thermometer rises' and 'The most simple and most exact method'",
+    "url": "https://www.gutenberg.org/cache/epub/30775/pg30775.txt",
+    "ref_file": "refs/lavoisier-kerr-1790.txt",
+    "coverage_note": "Page begins with the last word ('calorique.') of the sentence beginning 'When the thermometer rises', so that whole sentence is included; page ends mid-sentence ('convertir les'), so the full English sentence through 'conversion into solids' is included. Kerr splits the opening French sentence at the colon into two sentences. Kerr renders 'année 1780' as 'No. 1780'; French 'degrés du thermomètre' rendered 'degrees of temperature'."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6953e58d77f38f6761bf0cfc_00123",
+   "track": "T3",
+   "lang": "French",
+   "book_id": "6953e58d77f38f6761bf0cfc",
+   "page_number": 123,
+   "reference_meta": {
+    "title": "Treatise on Light",
+    "translator": "Silvanus P. Thompson",
+    "year": 1912,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Traité de la lumière, Leiden: Pierre van der Aa, 1690",
+    "located": "Chapter VI (On the Figures of Transparent Bodies), para 'As for the manner in which Mr. Des Cartes discovered these lines' and following",
+    "url": "https://www.gutenberg.org/cache/epub/14725/pg14725.txt",
+    "ref_file": "refs/huygens-thompson-1912.txt",
+    "coverage_note": "Page begins mid-sentence ('dans la droite A B'), so the full English sentence from 'Then considering this other curve' is included; page ends mid-sentence ('en' / next page 'prenant G K pour rayon du cercle'), so the English sentence is completed through 'radius of the circle'. Thompson writes 'this other curve' for 'cette courbe'. Diagram on page not rendered."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69c7ac9e92b884e4f8173e9c_00046",
+   "track": "T3",
+   "lang": "French",
+   "book_id": "69c7ac9e92b884e4f8173e9c",
+   "page_number": 46,
+   "reference_meta": {
+    "title": "Conversations on the Plurality of Worlds (with notes by Jérôme de La Lande)",
+    "translator": "Elizabeth Gunning",
+    "year": 1803,
+    "licence": "public-domain",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "'a late Paris Edition' (Lalande's annotated edition, c. 1800)",
+    "located": "Second Evening, pp. 55-58 of the 1803 edition, from 'Several persons have discovered a method of fixing on wings' to 'that of our neighbours'",
+    "url": "https://archive.org/download/conversationsonp00font_0/conversationsonp00font_0_djvu.txt",
+    "ref_file": "refs/fontenelle-gunning-1803.txt",
+    "coverage_note": "Page begins with the last word ('Monde.') of the sentence about planks vs great ships; Gunning folds that into one long sentence beginning 'Several persons have discovered', included whole. Page ends mid-sentence ('& qu'ap-[paremment...]'); Gunning runs that into the next French sentence ('Quand nous aurons bien connu notre habitation...') with a colon, so the cut ends at 'that of our neighbours', slightly beyond the page. Free rendering: 'parce que toute la Terre n'est pas découverte' is condensed to 'we may yet know much more of our own world'; 'Les Gens de la Lune seroient donc déja venus' rendered 'if the people in the moon were so expert, they would have been here before this time'; 'je sçay bien ce que j'ajoûterai encore pour le fortifier' → 'I shall easily corroborate them'. Lalande's footnote on Montgolfier balloons omitted (not on the page). Reference text is IA djvu OCR, de-hyphenated and lightly corrected (wTill→will, wre→we, vou→you, discover v→discovery)."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "699047e512d83c216b7e8c3f_00086",
+   "track": "T3",
+   "lang": "French",
+   "book_id": "699047e512d83c216b7e8c3f",
+   "page_number": 86,
+   "reference_meta": {
+    "title": "A Philosophical Essay on Probabilities",
+    "translator": "Frederick Wilson Truscott and Frederick Lincoln Emory",
+    "year": 1902,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Sixth French edition (posthumous, 1840) — NOT the 1814 first edition of this book; wording differs in places",
+    "located": "Chapter 'Concerning institutions based upon the probability of events', pp. 152-154 of the 1902 edition, from 'Forming, then, a series of fractions' to 'ought to be advantageous'",
+    "url": "https://archive.org/download/philosophicaless00lapluoft/philosophicaless00lapluoft_djvu.txt",
+    "ref_file": "refs/laplace-truscott-emory-1902.txt",
+    "coverage_note": "Page begins mid-sentence ('sives de l'unité augmentée du taux...'), so the whole English sentence 'Forming, then, a series of fractions...' is included; page ends mid-word ('le cer-[tain]'), sentence completed through 'ought to be advantageous'. Edition differences (6th ed. vs 1814): English 'borrows in life at a bank this capital' lacks the 1814 'ce capital divisé par l'unité augmentée du taux de l'intérêt'; 'caisse' → 'bank'; 1814 'la considération de l'espérance morale' vs English 'the moral disadvantage attached to an uncertainty'; 1814 'l'assureur [sic] ... il faut donc qu'il paie' vs English plural 'the persons assured ... they should pay a sum much greater'. Reference is IA djvu OCR, de-hyphenated."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "699068a7249ce014347d715a_00159",
+   "track": "T3",
+   "lang": "French",
+   "book_id": "699068a7249ce014347d715a",
+   "page_number": 159,
+   "reference_meta": {
+    "title": "The Analytical Theory of Heat",
+    "translator": "Alexander Freeman",
+    "year": 1878,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Théorie analytique de la chaleur, Paris: Didot, 1822",
+    "located": "Chapter II, Section VI, end of art. 134 through start of art. 136 (pp. 106-107 of the 1878 edition)",
+    "url": "https://archive.org/download/analyticaltheory00four/analyticaltheory00four_djvu.txt",
+    "ref_file": "refs/fourier-freeman-1878.txt",
+    "coverage_note": "Page begins mid-sentence ('celle qu'il a, et ses températures...'), so the whole English sentence 'If the quantity of heat...' (end of art. 134) is included; page ends mid-word ('les différences des tem-'), English sentence completed through 'increased in the same ratio'. Freeman's lemma omits the symbol K in 'produit du premier flux K, multiplié par g' ('the first flow multiplied by g'). Reference is IA djvu OCR, de-hyphenated; OCR garbles corrected (JV→N, ivhich→which, fi/μ restored, minus signs)."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC",
+    "O"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69a6827ed5bf106c72bb8d6f_00286",
+   "track": "T3",
+   "lang": "French",
+   "book_id": "69a6827ed5bf106c72bb8d6f",
+   "page_number": 286,
+   "reference_meta": {
+    "title": "Palissy the Potter: The Life of Bernard Palissy, of Saintes ... with a translation of illustrative selections from his works, Vol. II",
+    "translator": "Henry Morley",
+    "year": 1852,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Discours admirables (1580), treatise 'De l'art de terre', probably via the 1777 Faujas de Saint-Fond / 1844 Cap edition",
+    "located": "Vol. II, 'Writings of Palissy — The Artist in Earth', pp. 214-215, from 'I have seen such contempt of sculpture' to 'practising this art'",
+    "url": "https://archive.org/download/palissypotterlif02morluoft/palissypotterlif02morluoft_djvu.txt",
+    "ref_file": "refs/palissy-morley-1852-vol2.txt",
+    "coverage_note": "Morley translates selections; this passage is complete. Page begins mid-sentence ('a porter des ceintures & autres habits a la busque'), so the whole English sentence from 'I have seen such contempt of sculpture' is included (its first half is on the previous page). Page ends mid-sentence ('Secondement il te faut'), completed through 'practising this art'. Morley renders 'habits a la busque' as 'tight dresses' and 'crucifix a la busque' as 'tightly dressed' (with a footnote, omitted); 'de tous les ars, desquels le nombre est trop grand' rendered 'in all those parts at which there are too many labourers' (verified in two scans). Reference is IA djvu OCR, de-hyphenated; 'Hards' corrected to 'liards'."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6991bd4370254d38471e38f8_00044",
+   "track": "T3",
+   "lang": "French",
+   "book_id": "6991bd4370254d38471e38f8",
+   "page_number": 44,
+   "reference_meta": {
+    "title": "Report of Dr. Benjamin Franklin, and other commissioners, charged by the King of France, with the examination of the animal magnetism, as now practised at Paris",
+    "translator": "anonymous (attributed to William Godwin)",
+    "year": 1785,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Rapport des commissaires chargés par le Roi de l'examen du magnétisme animal, Paris: Imprimerie royale, 1784",
+    "located": "pp. 74-76 of the London 1785 edition (J. Johnson), the Jumelin speech-loss experiment, from 'It has a correspondence with each of the senses' to 'organs of speech were the same'",
+    "url": "https://archive.org/download/b22393857/b22393857_djvu.txt",
+    "ref_file": "refs/franklin-report-english-1785.txt",
+    "coverage_note": "Page begins mid-sentence ('reconnu par une expérience dont ils vont rendre compte'); the English splits the French sentence differently, so the cut starts at 'It has a correspondence with each of the senses' (= 'L'imagination répond à tous les sens', on the previous page) and runs on into the Jumelin experiment, which the English joins to the same paragraph. Page ends mid-sentence ('les organes de la [voix ont été les mêmes]'), completed through 'organs of speech were the same'. The marginal heading ('Douzième expérience...') is not rendered in the English. English 'without performing the operation' for 'sans la magnétiser'; 'a number of the symptoms which she had felt under the operation of M. Jumelin' for 'qu'elle avoit éprouvés la première fois'. Reference transcribed from IA djvu OCR of an 18th-c. print: long-s normalised to s, ligature/OCR garbles corrected (fhe→she, file→she, obftrudion→obstruction), de-hyphenated; wording unchanged."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC",
+    "O"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69a6849d7ab725b59be41319_00173",
+   "track": "T3",
+   "lang": "Italian",
+   "book_id": "69a6849d7ab725b59be41319",
+   "page_number": 173,
+   "reference_meta": {
+    "title": "Dialogues Concerning Two New Sciences",
+    "translator": "Henry Crew and Alfonso de Salvio",
+    "year": 1914,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Favaro's Edizione Nazionale text (vol. VIII), bracketed numbers = its pages",
+    "located": "Third Day, Naturally Accelerated Motion, Ed. Naz. pp. [200]-[201], English pp. 164-165, from 'I hardly think you will refuse to grant'",
+    "url": "https://archive.org/details/cu31924012322701",
+    "ref_file": "refs/galileo-two-new-sciences-crew-1914.txt",
+    "coverage_note": "Full coverage. Crew starts the page mid-sentence of Sagredo's long speech; the opening Italian fragment 'velocità del sasso cadente... possa farsi co'l medesimo ordine' belongs to the included sentence. Page ends mid-sentence ('quell'eccesso, che'); the English sentence is completed to 'caused the body to rise'. Crew's bracketed Italian glosses kept; OCR ligature errors of the IA text silently corrected (fact, projecting). Crew d.1953; de Salvio's death date not verified."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC",
+    "O"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b1da4879939cb4065ddf2e_00044",
+   "track": "T3",
+   "lang": "Italian",
+   "book_id": "69b1da4879939cb4065ddf2e",
+   "page_number": 44,
+   "reference_meta": {
+    "title": "A Discourse Presented to the Most Serene Don Cosimo II, Great Duke of Tuscany, concerning the Natation of Bodies upon, and Submersion in, the Water (in Mathematical Collections and Translations, vol. 1)",
+    "translator": "Thomas Salusbury",
+    "year": 1663,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Second edition (Florence 1612), with Galileo's additions printed in italics",
+    "located": "Discourse, passage on muddy waters / 'What then is this Crassitude of the water', Gutenberg #37729 marginal notes 58-61",
+    "url": "https://www.gutenberg.org/cache/epub/37729/pg37729.txt",
+    "ref_file": "refs/galileo-natation-salusbury-1663.txt",
+    "coverage_note": "Page opens mid-sentence ('...posizione d'alcune ore ancora'); the whole English question from 'And, what greater proof' is included. Salusbury's italic second-edition insertion ('Nor let them say, that the seeing of such small Bodies...') is ABSENT from this first-edition page and was omitted from the cut. Page ends on 'ma' mid-sentence; cut stops at the colon after 'some downwards' (the English sentence runs on for several lines onto the next page's content). Marginal notes and footnote numbers stripped; translator's bracket '[i. e. out of the water]' kept. 'Grain of Musterd-seed' renders 'grano di miglio' (millet)."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC",
+    "O"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69aebfa1c337b1e6a4d58005_00358",
+   "track": "T3",
+   "lang": "Italian",
+   "book_id": "69aebfa1c337b1e6a4d58005",
+   "page_number": 358,
+   "reference_meta": {
+    "title": "Discourses on the First Decade of Titus Livius",
+    "translator": "Ninian Hill Thomson",
+    "year": 1883,
+    "licence": "public-domain",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "standard Italian text of the Discorsi (not the 1554 edition specifically)",
+    "located": "Book III, ch. 6 (Of Conspiracies), dangers after execution: 'Giovann' Andrea of Lampognano' through Caesar's avengers",
+    "url": "https://www.gutenberg.org/cache/epub/10827/pg10827.txt",
+    "ref_file": "refs/machiavelli-discourses-thomson.txt",
+    "coverage_note": "Page opens mid-sentence ('...ni dette di sopra, che faccino questa uendetta'); the whole English sentence is included from 'And such persons are suffered to live'. Thomson bowdlerises Caterina's gesture (Italian: she showed them her genitals, saying she still had the means to make more) as 'told them scoffingly that she knew how others could be got'; 'scarsi di consiglio' rendered 'having no leader to advise them'. Page ends mid-sentence ('furono tutti, et in uarii'); English sentence completed to 'came to violent ends'."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6a06d39b9a48d5139996355a_00151",
+   "track": "T3",
+   "lang": "Italian",
+   "book_id": "6a06d39b9a48d5139996355a",
+   "page_number": 151,
+   "reference_meta": {
+    "title": "The Arte of Warre (in Machiavelli, vol. I, Tudor Translations)",
+    "translator": "Peter Whitehorne",
+    "year": 1560,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Italian Arte della guerra (Whitehorne's 1560 version, reprinted 1905)",
+    "located": "Third Book, end of Fabrizio's exposition of the square battle; Zanobi's two questions (voice vs sound; pioneers)",
+    "url": "https://www.gutenberg.org/cache/epub/15772/pg15772.txt",
+    "ref_file": "refs/machiavelli-artofwar.txt",
+    "coverage_note": "Page opens mid-sentence ('care i Capitani, et i Prencipi'); Whitehorne's sentence is very long, so the cut starts at the clause after the colon ('the whiche exercises and uses bee necessarie...'), slightly more than the page's first words. Page ends mid-sentence ('però questa uoce'); English completed to 'retire you'. Sidenote stripped. Close, almost word-for-word rendering."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69aebfa4c337b1e6a4d582f3_00161",
+   "track": "T3",
+   "lang": "Italian",
+   "book_id": "69aebfa4c337b1e6a4d582f3",
+   "page_number": 161,
+   "reference_meta": {
+    "title": "The Book of the Courtier",
+    "translator": "Leonard Eckstein Opdycke",
+    "year": 1901,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Italian text of Il Cortegiano (modern critical text, not the 1528 Aldine specifically)",
+    "located": "Book II, §§42-44 (end of 42 'at present some call them arguzie' to Federico's 'Here are the masters of witticism')",
+    "url": "https://archive.org/details/bookofcourtier0000coun",
+    "ref_file": "refs/castiglione-1901.txt",
+    "coverage_note": "Page opens mid-sentence ('adesso alcuni le chiamano argutie'); the whole English sentence 'By the ancients also they were called apothegms...' is included. Page ends at 'Eccoui i maestri di questo:'; the English sentence is completed ('from whom I must first learn...' is on the next source page). Section numbers (43, 44) and footnote markers stripped. The IA scan is a 1929 reprint of Opdycke's 1901/1903 translation; Opdycke died 1914."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69520588ab34727b1f042d0c_00165",
+   "track": "T3",
+   "lang": "Italian",
+   "book_id": "69520588ab34727b1f042d0c",
+   "page_number": 165,
+   "reference_meta": {
+    "title": "The Heroic Enthusiasts (Gli Eroici Furori), Part the First",
+    "translator": "L. Williams",
+    "year": 1887,
+    "licence": "public-domain",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Italian De gli eroici furori (London 1585)",
+    "located": "Part I, Dialogue V, end of stanza 38 through emblem XV ('Idem, itidem non idem') and first six lines of sonnet 39",
+    "url": "https://www.gutenberg.org/cache/epub/19817/pg19817.txt",
+    "ref_file": "refs/bruno-heroic-1.txt",
+    "coverage_note": "Page opens with the last two lines of the preceding poem ('Tropp' in rubbarmi et forte, / Mai non mi scuote, mai non mi dá morte'); Williams' verse is free and the mapping of these two lines to 'All things time takes from me, / And gives me naught, not even death' is approximate. Page ends after the 6th line of the sonnet 'Languida serpe' (catchword 'E s''); the English is cut after its 6th line, but Williams' verse paraphrases loosely (e.g. 'ti rintorci, contrahi, solleui, inondi' -> 'Twisting and turning here and there'). Prose part is close. Stanza number '39.' stripped. Translator's death date not verified."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69de989b1b234a773e438e19_00234",
+   "track": "T3",
+   "lang": "Italian",
+   "book_id": "69de989b1b234a773e438e19",
+   "page_number": 234,
+   "reference_meta": {
+    "title": "The Treatises of Benvenuto Cellini on Goldsmithing and Sculpture",
+    "translator": "C. R. Ashbee",
+    "year": 1898,
+    "licence": "public-domain",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Milanesi's edition (1857) from the Marciana manuscript, which differs in places from the 1568 printed text this book reprints",
+    "located": "Treatise on Sculpture, Ch. II (Ashbee p. 120), casting the Fontainebleau nymph: walling the channel, tallow candles, the mandriano",
+    "url": "https://archive.org/details/treatisesofbenve00cell_0",
+    "ref_file": "refs/cellini-treatises-ashbee-1898.txt",
+    "coverage_note": "Page opens mid-sentence ('acciochè ogni cosa sia bene asciutta; e perciò si debbe rinnovare il fuoco più volte...'); the whole English sentence is included from 'When you have carefully joined together', so the cut begins with material from the preceding source page. Ashbee follows the manuscript text (first-person, more detail): e.g. 'heap up more and more fire of green wood' vs the printed 'mantenendo il fuoco continuamente... con nuove legne'; 'throw... into the channel' vs 'mettere su per lo detto canale'; the 1568 text omits 'run to' details. Page ends mid-sentence ('la qual de-'); English completed through 'stopped up with wind'. Footnote markers stripped. Ashbee d. 1942."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC",
+    "O"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69de98b71b234a773e43917f_00095",
+   "track": "T3",
+   "lang": "Italian",
+   "book_id": "69de98b71b234a773e43917f",
+   "page_number": 95,
+   "reference_meta": {
+    "title": "The Book of the Art of Cennino Cennini",
+    "translator": "Christiana J. Herringham",
+    "year": 1899,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Milanesi's 1859 Florence edition (the same text as this book)",
+    "located": "Chap. 72, 'The manner of colouring walls in secco, and the proper temperas', pp. 67-69",
+    "url": "https://archive.org/details/bookartcenninoc00herrgoog",
+    "ref_file": "refs/cennini-herringham-1899.txt",
+    "coverage_note": "Page opens mid-sentence ('si può lavorare, come orpimento...'); the whole English first sentence of Chap. 72 is included. Page ends mid-sentence ('...sopra tutto il lavoro, che'); English completed to 'colour freely as you please'. Translator's footnote glosses of pigment names omitted; pigment names left in Italian by Herringham. 'a dichiararli' (to lighten) rendered 'made lighter'. Herringham d. 1929."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC",
+    "O"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "f20894c1-495f-4afe-815b-e8bf3c8938a5_00129",
+   "track": "T3",
+   "lang": "Italian",
+   "book_id": "f20894c1-495f-4afe-815b-e8bf3c8938a5",
+   "page_number": 129,
+   "reference_meta": {
+    "title": "The Four Books of Andrea Palladio's Architecture",
+    "translator": "Isaac Ware",
+    "year": 1738,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Italian I Quattro Libri (Venice 1570)",
+    "located": "Second Book, ch. XIV (villas), Plate 49: house of Girolamo Ragona at Le Ghizzole",
+    "url": "https://archive.org/details/gri_33125011569684",
+    "ref_file": "refs/palladio-ware-1738.txt",
+    "coverage_note": "Full coverage of the page's text paragraph; the rest of the page is a plan and an elevation (plates, not text). IA OCR of the 1738 print normalised: long-s read as 'f' restored to 's', and obvious OCR errors corrected ('Viceii-thie' -> Vicentine, 'mailer's' -> master's, 'flairs' -> stairs; IA text reads 'Gioralamo', given as Girolamo). Plate reference in margin stripped."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "6991eac02f801130a473e424_00074",
+   "track": "T3",
+   "lang": "Italian",
+   "book_id": "6991eac02f801130a473e424",
+   "page_number": 74,
+   "reference_meta": {
+    "title": "A Treatise on Painting",
+    "translator": "John Francis Rigaud",
+    "year": 1802,
+    "licence": "public-domain",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Italian Trattato della pittura (Paris 1651 editio princeps), chapters rearranged by subject",
+    "located": "Rigaud chs. XI 'Of the Proportion of Members', XXXVI 'Of the Joint of the Wrist', XXXVII 'Of the Joint of the Foot' (= 1651 caps. CLXXV-CLXXVII)",
+    "url": "https://www.gutenberg.org/cache/epub/46915/pg46915.txt",
+    "ref_file": "refs/leonardo-treatise.txt",
+    "coverage_note": "Rigaud reorders the chapters, so the cut joins three non-contiguous English chapters that render the page's three chapters in the page's order. Rigaud's chapter numbers dropped from the headings. Condensations: 'muscoli domestici' / 'domestici e siluestri' simplified to 'the muscles' / 'the same muscles'; 'parte siluestre' rendered 'that side where the tendons are seen'; Rigaud's '_Plate I._' reference stripped. Gutenberg text follows the 1802 edition (Rigaud d. 1810)."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69790e9eeb0dcfd399123423_00297",
+   "track": "T3",
+   "lang": "Dutch",
+   "book_id": "69790e9eeb0dcfd399123423",
+   "page_number": 297,
+   "reference_meta": {
+    "title": "The Adornment of the Spiritual Marriage; The Sparkling Stone; The Book of Supreme Truth",
+    "translator": "C. A. Wynschenk Dom (ed. Evelyn Underhill)",
+    "year": 1916,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Middle Dutch text (Die chierheit der gheestelijker brulocht), ed. J. B. David (Maetschappy der Vlaemsche Bibliophilen, 1858-68); the 1624 Brussels print is an early-modernised version of the same Dutch text",
+    "located": "Book II, Chapter LIX 'Showing how one possesses God in union and rest, above all likeness through grace', from 'In this unity we are taken possession of' to chapter end",
+    "url": "https://archive.org/download/adornmentofthesp00ruysuoft/adornmentofthesp00ruysuoft_djvu.txt",
+    "ref_file": "refs/ruusbroec-adornment-dom1916.txt",
+    "coverage_note": "Full coverage. Page opens with the last words of the previous sentence ('der middel' = 'without means'), given as [context]. Two marginal notes ('Hoe edel dese eenicheyt is'; 'Al soo saen als hem den mensch van sonden keert...') are 1624 editorial additions with no English counterpart. Translator's note marker (23) and page number stripped; OCR 'rcBt'/'chanty' in the IA text corrected to 'rest'/'charity'."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69a5d924a63a00aaae8aae3b_00105",
+   "track": "T3",
+   "lang": "Dutch",
+   "book_id": "69a5d924a63a00aaae8aae3b",
+   "page_number": 105,
+   "reference_meta": {
+    "title": "Ephemeri vita: or the Natural History and Anatomy of the Ephemeron, a Fly that Lives but Five Hours",
+    "translator": "Edward Tyson (publisher/translator)",
+    "year": 1681,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Swammerdam, Ephemeri vita, Amsterdam 1675 (Low-Dutch); the pious contemplations and poetry are omitted",
+    "located": "Chap. VI 'The Anatomy of the inward parts of this Insect', opening two paragraphs (pp. 13-14)",
+    "url": "https://archive.org/details/McGillLibrary-rbsc_blacker-wood_ephemeri-vita_G160S84-15381",
+    "ref_file": "refs/swammerdam-tyson-1681-ephemeri-vita.txt",
+    "coverage_note": "The page's first lines (end of a sentence 'mint. Soo dat den Man Gods ... magh uytroepen' and the quoted prayer 'Ik ben ellendigh ende noot-druftigh ... O mijn Godt en vertoeft niet') belong to the devotional contemplation that Tyson's translation omits; they have no English. Everything from the chapter heading to the page end is covered. Reference transcribed from IA OCR with long-s normalised; 'Chains' in the OCR is 'Clutius'."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC",
+    "O"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69a5d8d3a63a00aaae8aab0d_00322",
+   "track": "T3",
+   "lang": "Dutch",
+   "book_id": "69a5d8d3a63a00aaae8aab0d",
+   "page_number": 322,
+   "reference_meta": {
+    "title": "John Huighen van Linschoten his Discours of Voyages into ye Easte & West Indies",
+    "translator": "William Phillip",
+    "year": 1598,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Linschoten, Itinerario / Beschryvinghe van ... America, Amsterdam 1595-96",
+    "located": "The 2. booke (description of America/Peru), section 'The way by land from Truxillo to Lima', from 'In this towne are faire houses' to 'according to the manner of the country' (sig. Aa4, c. p. 255)",
+    "url": "https://archive.org/details/bim_early-english-books-1475-1640_john-huighen-van-linscho_linschoten-jan-huygen-v_1598",
+    "ref_file": "refs/linschoten-wolfe-1598-discours.txt",
+    "coverage_note": "Full coverage, same order. Reference hand-transcribed from a noisy black-letter OCR: long-s and r-rotunda normalised, u/v left as early-modern reading, obvious OCR letter errors corrected (e.g. 'Rings towne' -> 'Kings towne', 'water mules' -> 'water milles'); 'canwoorden' (Dutch 'Cauwaerden', calabashes) is an uncertain reading. The Dutch has 'als die schandale oneenicheden en oorloge daer niet en ware' where the English adds 'of the Spaniards ... without a cause'."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC",
+    "O"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b21d9894025df5d2908acf_00250",
+   "track": "T3",
+   "lang": "Dutch",
+   "book_id": "69b21d9894025df5d2908acf",
+   "page_number": 250,
+   "reference_meta": {
+    "title": "An Embassy from the East-India Company of the United Provinces, to the Grand Tartar Cham, Emperour of China",
+    "translator": "John Ogilby",
+    "year": 1669,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Nieuhof, Het Gezantschap der Neerlandtsche Oost-Indische Compagnie, Amsterdam 1665",
+    "located": "Part I, the negotiations at Peking, para 'The Chancellour hereupon desired to know of the Embassadours...' to 'propose to the Council the point of coming to trade yearly at Canton' (p. ~120)",
+    "url": "https://archive.org/details/McGillLibrary-126081-3026",
+    "ref_file": "refs/nieuhof-ogilby-1669-embassy.txt",
+    "coverage_note": "Ogilby condenses this page: he omits the 'three hundred teil of silver' spent by the Jesuits, the Commissary who had been at Canton three years before and the Tutang bribed by Macao, and the explanation of the credential phrase 'te mogen gaan en keeren' (= to trade); he turns the paid 3500 teil into 'thirty five hundred Toel'. He also adds that the Jesuits were bribed by the Portuguese. The last line of the English is illegible in both IA OCRs; bracketed words [many], [business], [deceived] and the final [...] are conjectural/illegible. Long-s normalised."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b1de4ea205bd982d8285bd_00396",
+   "track": "T3",
+   "lang": "Dutch",
+   "book_id": "69b1de4ea205bd982d8285bd",
+   "page_number": 396,
+   "reference_meta": {
+    "title": "Atlas Japannensis: being Remarkable Addresses by way of Embassy from the East-India Company of the United Provinces to the Emperor of Japan",
+    "translator": "John Ogilby",
+    "year": 1670,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Montanus, Gedenkwaerdige Gesantschappen der Oost-Indische Maatschappy ... aan de Kaisaren van Japan, Amsterdam 1669",
+    "located": "'Several Memoires taken ...' (the Breskens prisoners Schaep and Byleveld at Jedo), pp. 255-256, from 'Schaep and Byleveld now well observ'd' to 'another Hearing about their Business'",
+    "url": "https://archive.org/details/india.history.resource.75454",
+    "ref_file": "refs/montanus-ogilby-1670-atlas-japannensis.txt",
+    "coverage_note": "Full coverage, same order; Ogilby is close. Differences: Dutch 's Kaisars minne-moeder' (the Emperor's wet-nurse) is rendered 'the Emperors Mother'; 'spits-broeder' (fellow interpreter) rendered 'Brother'; the page's last sentence runs on to the next page (English sentence given whole). The IA OCR interleaves margin notes and runs lines out of order; reference reassembled by hand, long-s normalised; bracketed [therein], [delay] are illegible words conjectured. The page ends mid-sentence after 'ten huize van Sicungodonne'."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b185e9c4be2cdd0edc464c_00489",
+   "track": "T3",
+   "lang": "Dutch",
+   "book_id": "69b185e9c4be2cdd0edc464c",
+   "page_number": 489,
+   "reference_meta": {
+    "title": "The Select Works of Antony van Leeuwenhoek, containing his Microscopical Discoveries in many of the Works of Nature, vol. I",
+    "translator": "Samuel Hoole",
+    "year": 1798,
+    "licence": "public-domain",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Leeuwenhoek's Dutch Send-brieven (1718) and Latin Epistolae physiologicae; letter of 10 Sept 1717 to Baron van Rhede",
+    "located": "Vol. I, section 'An extraordinary quantity of Fish on the sea coast near Delft' (pp. 283-284), first two paragraphs",
+    "url": "https://archive.org/details/selectworksofant01leeu",
+    "ref_file": "refs/leeuwenhoek-hoole-select-works-v01.txt",
+    "coverage_note": "Hoole omits the letter's dateline and the address to Baron van Rhede (heading of the page) and substitutes his own section title. He condenses the body: he drops that many of the haddock were 'onbestorven' (still alive, 'Krimp-schelvis'), that they sold for less than a stuiver apiece, and that the same had happened some years before; 'sold at a low price' and 'very fresh and good' render these loosely. The rest is covered in order. Long-s normalised from IA OCR."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69b525ba6be60460830310a9_00065",
+   "track": "T3",
+   "lang": "Dutch",
+   "book_id": "69b525ba6be60460830310a9",
+   "page_number": 65,
+   "reference_meta": {
+    "title": "The Natural and Moral History of the Indies (Hakluyt Society reprint, ed. C. R. Markham), vol. I",
+    "translator": "Edward Grimston",
+    "year": 1604,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": true,
+    "translates_edition": "Acosta, Historia natural y moral de las Indias (Seville 1590), Spanish; our page is the anonymous Dutch version, Leyden 1706, made from the Spanish",
+    "located": "End of Book III (last chapter, on the shape of the land) and Book IV chap. i 'Of three kindes of mixtures or compounds', Hakluyt Society 1880 vol. I pp. 181-184",
+    "url": "https://archive.org/details/naturalmoralhist01acos",
+    "ref_file": "refs/acosta-grimston-1604-v1.txt",
+    "coverage_note": "INDIRECT: the Dutch 1706 is a free, condensing version of the Spanish; Grimston translates the Spanish. The Dutch omits several things the English has: the conjecture that the islands are peaks rising from the sea floor and the pilot's report of the Islands of Wolves and Cocos; the comparison of America to a heart with the lungs, Brazil-Peru-Magellan-Florida; the reference to the Spaniards' commentaries and Acosta's Peregrination; the Book IV chapter heading. The Dutch reduces 'Plants, Beasts' structure to 'vierderley ... driederley' (four kinds reduced to three). Judge should treat English material absent from the Dutch as not on the page. The page ends mid-sentence at 'als zijnde'; the English sentence is given whole."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "695910f2ecb01322b3068302_00444",
+   "track": "T3",
+   "lang": "Spanish",
+   "book_id": "695910f2ecb01322b3068302",
+   "page_number": 444,
+   "reference_meta": {
+    "title": "The Natural & Moral History of the Indies, Vol. II (The Moral History)",
+    "translator": "Edward Grimston (1604), ed. Clements R. Markham (Hakluyt Society, 1880)",
+    "year": 1604,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Historia natural y moral de las Indias (Seville 1590 / later Spanish eds.)",
+    "located": "Book VI, Chap. xxii 'Of the greatest and most famous Ynca called Guaynacapa' (pp. 433-434 of Hakluyt vol. 61)",
+    "url": "https://archive.org/download/naturalmoralhist61acosrich/naturalmoralhist61acosrich_djvu.txt",
+    "ref_file": "refs/acosta-grimston-1604-v2.txt",
+    "coverage_note": "Covers the whole printed text of the page; final sentence completed past the page break ('vn hijo suyo' -> through 'mighty armie'). Markham's 1880 reprint regularises some proper names (Ynca, Cusco, Caxamarca, Mamaocllo, Tumi-bamba) against the 1604 text. The page's manuscript marginal annotation (<margin>) is a later handwritten note, not in the printed work, and has no reference. Two djvu OCR slips fixed (earned->carried, bis->his); Markham's footnotes dropped."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e7518010ee9075bcdcdaf0_00223",
+   "track": "T3",
+   "lang": "Spanish",
+   "book_id": "69e7518010ee9075bcdcdaf0",
+   "page_number": 223,
+   "reference_meta": {
+    "title": "The Complete Works of Saint John of the Cross, Vol. I (The Ascent of Mount Carmel)",
+    "translator": "David Lewis",
+    "year": 1864,
+    "licence": "public-domain",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Spanish Obras (Lewis worked from the later Spanish editions; chapter numbering matches the 1618 Alcalá here)",
+    "located": "Ascent of Mount Carmel, Book II, end of Ch. XX ('For if God makes known...') through Ch. XXI first paragraph (pp. 146-147)",
+    "url": "https://archive.org/download/completeworksofs01johnuoft/completeworksofs01johnuoft_djvu.txt",
+    "ref_file": "refs/johncross-lewis-1864-v1.txt",
+    "coverage_note": "Page opens mid-sentence ('para otra: si aquello va fundado...'); the reference starts at the whole English sentence 'For if God makes known...', whose first half is on the previous page. Page ends mid-word ('conueniente-'); reference completes the sentence through 'displeasing unto God' (spills into p224). Lewis condenses the chapter rubric ('Y prueua como aunque condesciende, y responde, muchas vezes se enoja' -> 'Illustrations of His anger with such prayers') and paraphrases loosely ('afecto, o seruicio, o ofensa' -> 'obedience or disobedience'; 'terminos racionales' -> 'natural and reasonable laws')."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC",
+    "O"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69ef286585daccce30f2cc10_00302",
+   "track": "T3",
+   "lang": "Spanish",
+   "book_id": "69ef286585daccce30f2cc10",
+   "page_number": 302,
+   "reference_meta": {
+    "title": "Joyfull newes out of the new-found worlde",
+    "translator": "John Frampton",
+    "year": 1596,
+    "licence": "public-domain",
+    "private": false,
+    "style": "early-modern",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Monardes, Historia medicinal, Primera y segunda y tercera partes (Seville 1574); bezoar chapter is in the Third Part (added to Frampton's 1580 ed.; this text from the 1596 ed.)",
+    "located": "'Of the Bezaar stone and of the Hearbe Escuerconera', fol. 129r last lines ('This being perceiued...') to fol. 129v ('...as great as a Date.')",
+    "url": "https://archive.org/details/b30328251_0001/page/n270",
+    "ref_file": "refs/monardes-frampton-1596-fol129-transcribed.txt",
+    "coverage_note": "Hand-transcribed from the 1596 page images (blackletter; djvu OCR saved as refs/monardes-frampton-1596-djvu.txt is unusable); long-s/r-rotunda normalised, original spelling kept. Page opens mid-sentence ('que le deuiamos dar cada mañana...'): reference starts at the whole English sentence 'This being perceiued...', whose first clauses (the doctrine of physicians) are on the previous source page; Frampton renders that clause wrongly ('medicines which doe not heale' vs Spanish 'que nos curan'). Page ends 'y despues' mid-sentence; reference completes the sentence through 'as great as a Date' (on next source page). Frampton omits 'sin boluer' (without coming round) and the marginal 'Historia.' is not rendered in the text (it is a margin note 'Historie.' in the English too)."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69ea0f6013a685002bb8ded8_00260",
+   "track": "T3",
+   "lang": "Spanish",
+   "book_id": "69ea0f6013a685002bb8ded8",
+   "page_number": 260,
+   "reference_meta": {
+    "title": "First Part of the Royal Commentaries of the Yncas, Vol. II",
+    "translator": "Clements R. Markham",
+    "year": 1871,
+    "licence": "public-domain",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Comentarios reales, Primera parte (Lisbon 1609)",
+    "located": "Book V, Chap. XXVII, pp. 85-87 ('They also visited two famous fortresses...' to '...grandeur and magnificence.')",
+    "url": "https://archive.org/download/firstpartofroyal02vega/firstpartofroyal02vega_djvu.txt",
+    "ref_file": "refs/garcilaso-markham-1871-v2.txt",
+    "coverage_note": "Page opens mid-sentence ('asimismo dos famosas fortalezas'); reference starts at the whole English sentence 'They also visited...'. Page ends mid-sentence ('mandó hacer en él muchos'); reference completes it through 'magnificence' (next page has 'yo alcancé alguna parte de ellos' = 'I have seen some of them', excluded). Markham condenses: omits 'con los negocios de paz y de guerra que perpetuamente se ofrecen', 'de lindas aguas', 'corzos, gamos'; 'sin moscas ni mosquitos ni otras sabandijas' -> 'flies and mosquitoes'; 'mucha pesquería' -> 'full of fish'; says Hanco-huallu stayed in 'one of them' where Spanish says 'en ellas'. Markham's Quechua spellings (Uira-ccocha, Surumarca, Challcu-marca, huanucos) differ from the modernised Spanish."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC",
+    "O"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69ea0f5413a685002bb8dc8a_00107",
+   "track": "T3",
+   "lang": "Spanish",
+   "book_id": "69ea0f5413a685002bb8dc8a",
+   "page_number": 107,
+   "reference_meta": {
+    "title": "The Memoirs of the Conquistador Bernal Diaz del Castillo, Vol. 1",
+    "translator": "John Ingram Lockhart",
+    "year": 1844,
+    "licence": "public-domain",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "Historia verdadera (Madrid 1632, Remón edition) — the same text family as this scan, not the Guatemala MS used by Maudslay",
+    "located": "End of Chap. LXV ('We, nevertheless, kept up our spirits...') through Chap. LXVI to '...to a considerable distance.' (Gutenberg #32474)",
+    "url": "https://www.gutenberg.org/cache/epub/32474/pg32474.txt",
+    "ref_file": "refs/bernal-diaz-lockhart-1844-v1.txt",
+    "coverage_note": "Page opens mid-sentence ('velas y rondas'); reference starts with the whole English sentence (Lockhart's 'outposts and the patrols'). Lockhart is paraphrastic and omits the transition 'Y dexallo he aqui; e diré lo que otro dia hizimos en esta batalla, y prendimos tres Indios principales', compresses the rubric, omits 'y dize que no les quisieron escuchar de buena gana' nuance, the 'varas con sus tiraderas', 'espadas y macanas, y montantes', and 'E boluamos a los Papas'; adds details not in the Spanish ('our cannon loaded', 'cut among them so vigorously with our swords'). Page ends 'y hazia luna' mid-sentence; reference completes the sentence (cavalry pursuit). Marginal notes have no English."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69ea0f5913a685002bb8deaf_00030",
+   "track": "T3",
+   "lang": "Spanish",
+   "book_id": "69ea0f5913a685002bb8deaf",
+   "page_number": 30,
+   "reference_meta": {
+    "title": "The Narrative of Alvar Nuñez Cabeça de Vaca (in Spanish Explorers in the Southern United States, 1528-1543, ed. F. W. Hodge, 1907)",
+    "translator": "Buckingham Smith",
+    "year": 1871,
+    "licence": "public-domain",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "indirect": false,
+    "translates_edition": "La relacion y comentarios (Valladolid 1555) — the text family of this scan ('frisoles y calabazas', not 1542 'melones')",
+    "located": "Chapter 30, from 'The sick having recovered...' to 'Thus they boil their food.' + Chapter 31 heading (Gutenberg #42841)",
+    "url": "https://www.gutenberg.org/cache/epub/42841/pg42841.txt",
+    "ref_file": "refs/cabeza-de-vaca-smith-1871-spanish-explorers-1907.txt",
+    "coverage_note": "Page = second half of ch. 30 from its paragraph start, plus the ch. 31 heading; reference covers the same span in order. Hodge's footnotes and markers stripped. Smith adds 'after talking with the Indians, Castillo returned at the end of three days' where the scan's OCR line is garbled ('Aquí llegaron Castillo y Estebanico adonde nos había dejado'); Smith's 'otherwise in a journey of seventeen days' differs in logic from the Spanish ('en diez y siete jornadas no hallaríamos...'); 'mayor viveza y habilidad' -> 'greatest activity and strength'."
+   },
+   "arms": [
+    "served",
+    "L1",
+    "L2",
+    "F0",
+    "FT",
+    "NC"
+   ],
+   "canonical": false
+  }
+ ]
+}

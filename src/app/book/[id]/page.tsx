@@ -14,7 +14,7 @@ import { isHiddenBook, findVisibleDuplicateKeeper } from '@/lib/book-access';
 import { artworkRedirectSlug } from '@/lib/artwork-slug';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail, browseBooks, getLanguageCounts, type CatalogBook } from '@/lib/books-catalog';
-import { Calendar, Globe, FileText, BookMarked, Images, BookOpen } from 'lucide-react';
+import { Calendar, Globe, FileText, BookMarked, Images, BookOpen, Paintbrush } from 'lucide-react';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import TextReader from '@/components/text/TextReader';
 import SearchPanel from '@/components/search/SearchPanel';
@@ -1829,6 +1829,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   </AuthCheck>
                   <CiteButton bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} holdingLibrary={book.image_source?.contributing_library} shelfmark={book.image_source?.shelfmark} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
                   <DownloadButton bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" />
+                  {/* Cover maker (concepts, admin only): sourcelibrary.org only, never on a partner embed or tenant room. */}
+                  {!isEmbedded && !tenantSlug && pages.length > 0 && (
+                    <AuthCheck role="admin">
+                      <Link href={`/admin/covers/${book.id}`} className="flex items-center gap-1.5 px-3 py-1.5 text-[13px] text-stone-100 hover:text-white hover:bg-white/15 transition-colors" title="Admin: make a concept cover from this book's binding, title page and plates">
+                        <Paintbrush className="w-4 h-4" />Make a cover
+                      </Link>
+                    </AuthCheck>
+                  )}
                   <BookShare bookId={book.slug || book.id} title={book.display_title || book.title} author={book.author || ''} year={book.published} doi={book.doi} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
                   <span className="w-px h-5 mx-1" style={{ background: 'rgba(245,240,232,0.18)' }} />
                   <div className="flex items-center gap-2.5 px-2 py-1.5">

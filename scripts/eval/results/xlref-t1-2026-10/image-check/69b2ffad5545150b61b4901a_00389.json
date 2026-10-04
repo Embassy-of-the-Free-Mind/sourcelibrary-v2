@@ -1,0 +1,27 @@
+{
+ "id": "69b2ffad5545150b61b4901a_00389",
+ "image_legible": true,
+ "ocr_word_errors": 0,
+ "ocr_words_approx": 165,
+ "ocr_errors": [],
+ "page_cause": "page_seam",
+ "causes": [
+  {
+   "finding": "Served English translates the previous page (Sect. XLVIII–XLIX opening) instead of this page",
+   "cause": "page_seam",
+   "image": "recitatis duobus proximis distinximus, quia in iis supponimus",
+   "ocr": "recitatis duobus proximis distinximus, quia in iis supponimus",
+   "english": "SECT. XLVIII. The fourth and final mode, by which corpuscles"
+  },
+  {
+   "finding": "Stops at 'distinguished it from the two'; nothing from 'quia in iis supponimus' to 'in quibus nuda' rendered",
+   "cause": "page_seam",
+   "image": "quia in iis supponimus ... in quibus nuda [te-]",
+   "ocr": "quia in iis supponimus ... in quibus nuda",
+   "english": "yet we have distinguished it from the two [ends]"
+  }
+ ],
+ "share_of_served_error_from_ocr": "none",
+ "fixed_transcription_written": false,
+ "note": "Image is printed p. 372 'DE FLUIDITATE', beginning 'recitatis duobus proximis' and ending 'in quibus nuda' (catchword te-); the OCR matches it word for word. The served English is the text of the preceding page (p. 371) and ends exactly where this page starts, so the fault is a page-offset in the translation, not OCR."
+}

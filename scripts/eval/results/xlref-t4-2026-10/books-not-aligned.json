@@ -1,0 +1,834 @@
+[
+ {
+  "book_id": "6988a5a0a23e0a8ef27fec91",
+  "title": "[Hebrew: Sefer Yetzirah]",
+  "book_language_label": "Hebrew",
+  "reason": "Mantua 1562 Sefer Yetzirah prints the short mishnah text embedded in the commentaries of Raavad, Ramban, Saadia and Eleazar of Worms; the only open named-human English (Kalisch 1877) covers the mishnah alone, which is far below 60% of any candidate page. Ramban/Raavad/Saadia commentaries have no named-human English (Sefaria has only a Community Translation for Ramban).",
+  "skipped": [
+   {
+    "page": 33,
+    "reason": "Raavad's introduction (Job 39 exegesis): no English reference"
+   },
+   {
+    "page": 193,
+    "reason": "Ramban + Raavad commentary on 6:4; mishnah text <60% of page"
+   },
+   {
+    "page": 50,
+    "reason": "1:1 mishnah (3 lines) inside Raavad/Ramban commentary; <60% coverage"
+   },
+   {
+    "page": 195,
+    "reason": "Saadia and Eleazar of Worms commentaries on 1:1; no English"
+   },
+   {
+    "page": 30,
+    "reason": "Raavad's introduction; no English"
+   },
+   {
+    "page": 24,
+    "reason": "Raavad's introduction (preface); no English"
+   },
+   {
+    "page": 97,
+    "reason": "Ramban/Raavad on 1:8; mishnah <60% of page"
+   },
+   {
+    "page": 54,
+    "reason": "Raavad/Ramban commentary columns, ch. 1; no English for commentary"
+   },
+   {
+    "page": 99,
+    "reason": "Ramban/Raavad on 1:6; mishnah <60% of page"
+   },
+   {
+    "page": 120,
+    "reason": "Raavad/Ramban on 1:11; mishnah <60% of page"
+   }
+  ]
+ },
+ {
+  "book_id": "69d5ac824dc55b8478dddb9a",
+  "title": "Ein Yaakov",
+  "book_language_label": "Hebrew",
+  "reason": "Vilna 1883 Ein Yaakov pages carry the Ein Yaakov text surrounded by Rashi, Maharsha, Iyun Yaakov, Etz Yosef, Anaf Yosef, HaKotev, Yad Yosef etc.; by eye (pp. 188, 121) the main text is ~25–35% of the page, and Glick 1916 translates only the main text, so no candidate reaches the 60% coverage threshold. No named-human English exists for the commentaries.",
+  "skipped": [
+   {
+    "page": 188,
+    "reason": "main text ~1/3 of page (image checked); commentaries unreferenced, <60%"
+   },
+   {
+    "page": 217,
+    "reason": "main text surrounded by Rashi/HaKotev/Anaf Yosef; <60%"
+   },
+   {
+    "page": 66,
+    "reason": "Maharsha/Rashi/Iyun Yaakov/Etz Yosef dominate; <60%"
+   },
+   {
+    "page": 68,
+    "reason": "Maharsha-dominated page; <60%"
+   },
+   {
+    "page": 179,
+    "reason": "Rashi/Maharsha/Etz Yosef dominate; <60%"
+   },
+   {
+    "page": 123,
+    "reason": "Rashi-dominated page; <60%"
+   },
+   {
+    "page": 214,
+    "reason": "commentary layout; main text <60%"
+   },
+   {
+    "page": 33,
+    "reason": "'מדרש א' section of commentary/aggadot; not in Glick"
+   },
+   {
+    "page": 154,
+    "reason": "Chiddushei Geonim commentary page; not in Glick"
+   },
+   {
+    "page": 121,
+    "reason": "main text ~25% of page by image (OCR truncated commentary into a <note>); <60%"
+   }
+  ]
+ },
+ {
+  "book_id": "699243ebbc722ec0ee80a9d1",
+  "title": "Midrash Bereshit Rabbah (Theodor-Albeck Critical Edition)",
+  "book_language_label": "Hebrew",
+  "reason": "Theodor–Albeck critical edition: every text page is main midrash text (~5–15 lines, ~20–30% of page) above the variant apparatus and Albeck's Minchat Yehuda commentary; the Sefaria Midrash Rabbah 2022 (Schreier) covers the main text only, so no candidate reaches 60% coverage. Other candidates are title pages / sigla tables.",
+  "skipped": [
+   {
+    "page": 313,
+    "reason": "84:1 main text 6 lines; apparatus + commentary unreferenced, <60%"
+   },
+   {
+    "page": 111,
+    "reason": "title page"
+   },
+   {
+    "page": 60,
+    "reason": "98 main text ~25% of page by image; <60%"
+   },
+   {
+    "page": 251,
+    "reason": "91 main text brief; apparatus/commentary dominate, <60%"
+   },
+   {
+    "page": 262,
+    "reason": "German title page"
+   },
+   {
+    "page": 301,
+    "reason": "82 main text brief; apparatus/commentary dominate, <60%"
+   },
+   {
+    "page": 344,
+    "reason": "85 main text brief; apparatus/commentary dominate, <60%"
+   },
+   {
+    "page": 117,
+    "reason": "91 main text 2–3 lines; <60%"
+   },
+   {
+    "page": 64,
+    "reason": "98 main text brief; apparatus/commentary dominate, <60%"
+   },
+   {
+    "page": 264,
+    "reason": "table of sigla (front matter)"
+   }
+  ]
+ },
+ {
+  "book_id": "69d5ac8c4dc55b8478dddcab",
+  "title": "Shulhan Arukh, Hoshen ha-Mishpat",
+  "book_language_label": "Hebrew",
+  "reason": "No open named-translator English for the simanim on the candidate pages (Denburg 1955 on Sefaria covers CM 1-27 only); the nearest covered pages (26-30) are dominated by commentary, garbled, or untranslated.",
+  "skipped": [
+   {
+    "page": 125,
+    "reason": "CM 102-103 (Gevi'at milveh); Denburg's Code of Hebrew Law (Sefaria, CC-BY) covers only simanim 1-27; no other open named-translator English (Wikisource version has no named translator, licence unknown)"
+   },
+   {
+    "page": 243,
+    "reason": "CM 231-232; outside Denburg's range (1-27)"
+   },
+   {
+    "page": 225,
+    "reason": "later simanim (>200); outside Denburg's range"
+   },
+   {
+    "page": 245,
+    "reason": "CM 232-233; outside Denburg's range"
+   },
+   {
+    "page": 188,
+    "reason": "CM 171; outside Denburg's range"
+   },
+   {
+    "page": 278,
+    "reason": "later simanim; outside Denburg's range"
+   },
+   {
+    "page": 176,
+    "reason": "CM ~155 (nezikin/harhakot); outside Denburg's range"
+   },
+   {
+    "page": 168,
+    "reason": "later simanim (>100); outside Denburg's range"
+   },
+   {
+    "page": 128,
+    "reason": "CM 105; outside Denburg's range"
+   },
+   {
+    "page": 251,
+    "reason": "CM 241; outside Denburg's range"
+   },
+   {
+    "page": 30,
+    "reason": "nearest covered page (CM 26-27): commentary column (Sma/perush) is >50% of running text, OCR garbled, and page untranslated (tr=0); pages 28-31 also untranslated"
+   },
+   {
+    "page": 27,
+    "reason": "CM 21-22: commentary is >50% of OCR running text and main text OCR is garbled letter-swapped Rashi-script readings; reference would cover <60%"
+   },
+   {
+    "page": 26,
+    "reason": "CM 21-22: OCR captured only the perush commentary (duplicated), no Shulchan Arukh main text"
+   }
+  ]
+ },
+ {
+  "book_id": "69d5aca44dc55b8478dddf51",
+  "title": "Siddur Ozar ha-Tefillot",
+  "book_language_label": "Hebrew",
+  "reason": "Every candidate page is dominated by commentary (Etz Yosef, Anaf Yosef, Iyyun Tefillah) or halakhic notes, so Singer's prayer-book translation covers <60% of the running text; the one page that is pure liturgy (1404) is a piyyut with no open English.",
+  "skipped": [
+   {
+    "page": 699,
+    "reason": "Shema (Deut 11:15-20) is only ~10% of the OCR running text; the rest is Anaf Yosef commentary (no open English); reference would cover <60%"
+   },
+   {
+    "page": 746,
+    "reason": "Shabbat Musaf Kedusha ~19% of running text; rest is Anaf Yosef / Tikkun Tefillah commentary"
+   },
+   {
+    "page": 727,
+    "reason": "Haftarah blessing is a few lines; page dominated by halakhic notes and Etz Yosef / Iyyun Tefillah commentary"
+   },
+   {
+    "page": 702,
+    "reason": "Shabbat Shacharit (Tzur Yisrael, Amidah opening, Nakdishach): liturgy ~58% of OCR words, and the Sefard 'Nakdishach' Kedusha has no counterpart in Singer's Ashkenazi text; reference would cover ~52% (<60%)"
+   },
+   {
+    "page": 570,
+    "reason": "weekday Maariv: liturgy ~7% of running text; rest Iyyun Tefillah commentary"
+   },
+   {
+    "page": 556,
+    "reason": "Minchah: halakhic notes on the time of Minchah only, no liturgy"
+   },
+   {
+    "page": 1143,
+    "reason": "Yom Kippur Al Het: liturgy ~4%; rest Nimukei ha-Grib / Etz Yosef / Dover Shalom / Iyyun Tefillah commentary"
+   },
+   {
+    "page": 489,
+    "reason": "'Derekh ha-Hayyim' halakhic compendium page; no named-translator open English"
+   },
+   {
+    "page": 170,
+    "reason": "Shacharit: liturgy ~20% of running text; rest commentary"
+   },
+   {
+    "page": 1404,
+    "reason": "Kallir's Yotzer for Shabbat Parah (piyyut) with commentary; no open named-translator English of this yotzer (not in Singer)"
+   }
+  ]
+ },
+ {
+  "book_id": "699067ef249ce014347d4e4f",
+  "title": "Sefer ha-Zohar (Book of Splendour)",
+  "book_language_label": "Hebrew",
+  "reason": "The OCR of this faded Vatican manuscript (Vat. ebr. 226) is largely model-composed: candidate pages either reproduce famous Zohar passages that are not on the leaf, or match no Zohar segment at all; the two pages that may be genuine (Idra Rabba, Idra Zuta) have no Soncino translation. No honest alignment possible.",
+  "skipped": [
+   {
+    "page": 442,
+    "reason": "OCR is a fabricated recitation of the famous Terumah 161a passage ('He looked into the Torah and created the world'): short OCR lines with ellipses don't match the faded leaf's ~24 long lines, and the leaf visibly reads 'אר' יוסי' in line 2, which the OCR lacks; true text unidentified"
+   },
+   {
+    "page": 310,
+    "reason": "OCR (claimed end of Pekudei / opening of Vayikra) has no bigram match to Sefaria's Zohar Vayikra or Pekudei; appears model-composed; true text unidentified"
+   },
+   {
+    "page": 284,
+    "reason": "OCR (claimed Bereshit on Gen 3:22) has no matching Zohar Bereshit segment (max bigram overlap 0.21); image line 1 does not match OCR line 1; OCR appears model-composed"
+   },
+   {
+    "page": 464,
+    "reason": "OCR claims Idra Rabba (Naso); Soncino 1933 does not translate the Idra Rabba, and no other open named-translator English"
+   },
+   {
+    "page": 480,
+    "reason": "OCR claims Idra Zuta (Ha'azinu) and itself warns it 'relies on known textual parallels'; Soncino does not translate the Idra Zuta"
+   },
+   {
+    "page": 385,
+    "reason": "OCR (claimed Lech Lecha 95a, circumcision) has no matching Zohar Lech Lecha segment (max overlap 0.21); 121 words only; appears model-composed"
+   },
+   {
+    "page": 548,
+    "reason": "unidentified Kabbalistic text (OCR says 'likely Zohar or Tikkunei Zohar'); no matching Zohar segment found"
+   },
+   {
+    "page": 382,
+    "reason": "OCR claims the Zohar prologue (Rose among thorns, Zohar I 1a), but the leaf shows a section heading (apparently 'אחרי מות') and different opening lines; OCR fabricated the famous opening"
+   },
+   {
+    "page": 266,
+    "reason": "OCR (Heikhalot) has no matching segment in Sefaria's Zohar Pekudei/Bereshit (max overlap 0.23); unidentified"
+   },
+   {
+    "page": 260,
+    "reason": "OCR (Pekudei Heikhalot) has no matching segment (max overlap 0.26); unidentified"
+   }
+  ]
+ },
+ {
+  "book_id": "6988a5a3d8fdf4cf94c34930",
+  "title": "[Hebrew: Sefer matzat shimurim]",
+  "book_language_label": "Hebrew",
+  "reason": "No open human English translation of Nathan Spira's Matzat Shimurim exists (not on Sefaria as a text — only bibliographic mentions in Shem HaGedolim/Seder HaDorot; nothing on archive.org). Volume is not a composite: all candidates are the author's own Lurianic kavvanot on Hilkhot Tzitzit/Tefillin/Mezuzah; embedded Talmud/Zohar/Tikkunim quotations are a few lines each, far below 60% of any page.",
+  "skipped": [
+   {
+    "page": 90,
+    "reason": "Spira's own Lurianic commentary on tefillin (Hilkhot Tefillin); only a 2-line quotation of b. Menachot 34b (totafot/four sections), <60% of page; no English translation of Matzat Shimurim exists"
+   },
+   {
+    "page": 111,
+    "reason": "Spira's Lurianic commentary; only a short quotation of b. Menachot 36b (R. Eliezer/R. Yochanan on tefillin after sunset), <60% of page; no translation of the commentary"
+   },
+   {
+    "page": 112,
+    "reason": "Spira's own Lurianic commentary (Rachel/Ze'ir Anpin, Amidah); no English translation exists"
+   },
+   {
+    "page": 52,
+    "reason": "Hilkhot Tzitzit, Spira's own Lurianic commentary; no English translation exists"
+   },
+   {
+    "page": 124,
+    "reason": "Hilkhot Tefillin commentary; brief Zohar/Talmud allusions only, <60%; no translation of the commentary"
+   },
+   {
+    "page": 41,
+    "reason": "Tzitzit commentary; one-line Ra'aya Meheimna citation only; no English translation exists"
+   },
+   {
+    "page": 145,
+    "reason": "Hilkhot Mezuzah, Spira's own commentary; no English translation exists"
+   },
+   {
+    "page": 119,
+    "reason": "Tefillin commentary with a short Tikkunei Zohar (daf 30b) quotation, <60% of page; no translation of the rest"
+   },
+   {
+    "page": 113,
+    "reason": "Spira's own Lurianic commentary (order of hand/head tefillin); no English translation exists"
+   },
+   {
+    "page": 55,
+    "reason": "Tzitzit commentary (mochin of Abba/Imma); no English translation exists"
+   }
+  ]
+ },
+ {
+  "book_id": "6988a59fa4de5da34fd130e0",
+  "title": "[Hebrew: Sha'arei zedek]",
+  "book_language_label": "Hebrew",
+  "reason": "Volume is Gikatilla's Sha'arei Tzedek (verified: p.23 Hebrew matches Sefaria 'Sha'arei Tzedek' Hebrew text verbatim — עטרה/צדק/ירושלם/נשר names; not Sha'arei Orah, whose Markel CC-BY translation does not apply). no open named-human English translation of Gikatilla's Sha'arei Tzedek exists (Sefaria offers only 'Sefaria Community Translation', forbidden; archive.org has none).",
+  "skipped": [
+   {
+    "page": 23,
+    "reason": "no open named-human English translation of Gikatilla's Sha'arei Tzedek exists (Sefaria offers only 'Sefaria Community Translation', forbidden; archive.org has none)"
+   },
+   {
+    "page": 44,
+    "reason": "no open named-human English translation of Gikatilla's Sha'arei Tzedek exists (Sefaria offers only 'Sefaria Community Translation', forbidden; archive.org has none)"
+   },
+   {
+    "page": 88,
+    "reason": "no open named-human English translation of Gikatilla's Sha'arei Tzedek exists (Sefaria offers only 'Sefaria Community Translation', forbidden; archive.org has none)"
+   },
+   {
+    "page": 108,
+    "reason": "no open named-human English translation of Gikatilla's Sha'arei Tzedek exists (Sefaria offers only 'Sefaria Community Translation', forbidden; archive.org has none)"
+   },
+   {
+    "page": 103,
+    "reason": "no open named-human English translation of Gikatilla's Sha'arei Tzedek exists (Sefaria offers only 'Sefaria Community Translation', forbidden; archive.org has none)"
+   },
+   {
+    "page": 43,
+    "reason": "no open named-human English translation of Gikatilla's Sha'arei Tzedek exists (Sefaria offers only 'Sefaria Community Translation', forbidden; archive.org has none)"
+   },
+   {
+    "page": 27,
+    "reason": "no open named-human English translation of Gikatilla's Sha'arei Tzedek exists (Sefaria offers only 'Sefaria Community Translation', forbidden; archive.org has none)"
+   },
+   {
+    "page": 13,
+    "reason": "no open named-human English translation of Gikatilla's Sha'arei Tzedek exists (Sefaria offers only 'Sefaria Community Translation', forbidden; archive.org has none)"
+   },
+   {
+    "page": 39,
+    "reason": "no open named-human English translation of Gikatilla's Sha'arei Tzedek exists (Sefaria offers only 'Sefaria Community Translation', forbidden; archive.org has none)"
+   },
+   {
+    "page": 110,
+    "reason": "no open named-human English translation of Gikatilla's Sha'arei Tzedek exists (Sefaria offers only 'Sefaria Community Translation', forbidden; archive.org has none)"
+   }
+  ]
+ },
+ {
+  "book_id": "69c7b45e25ec2ba5ccd7f5be",
+  "title": "[Hebrew: Sefer shiv'im tikunei ha-zohar]",
+  "book_language_label": "Hebrew",
+  "reason": "Only named-human English with a licence is Solomon (Tiqqunei ha-Zohar, Margalya 2024, CC-BY-NC), and on Sefaria it covers only Tikkunei Zohar 17a-63a (Patach Eliyahu to end of Tikkun 21). Every candidate is either outside that range or fails the 60% rule: the 1706 Amsterdam layout surrounds a small block of Tikkunei Zohar with the much longer Chemdat Zevi commentary, which has no translation. Also checked the fallback page nearest candidate 1 in the covered range (p.212, end of Tikkun 21): main text is about 25% of the page. Pages 213-215 have no OCR.",
+  "skipped": [
+   {
+    "page": 285,
+    "reason": "Tikkun 69 = Sefaria 109b-110b; Solomon English is not on Sefaria past 63a. The 1706 text also orders the passages differently from Sefaria (the 110b:6-7 'אדהכי...דור הולך' block sits inside 110a)"
+   },
+   {
+    "page": 273,
+    "reason": "Tikkunim 61-62, outside the Solomon range (17a-63a)"
+   },
+   {
+    "page": 193,
+    "reason": "Opening of Tikkun 21 (Sefaria ~43a, in range), but the Tikkunei Zohar text is about 15 lines; about 75% of the page is Chemdat Zevi commentary, so the reference would cover under 60%. OCR is also truncated and duplicated"
+   },
+   {
+    "page": 269,
+    "reason": "Tikkunim 57-58, outside the Solomon range"
+   },
+   {
+    "page": 129,
+    "reason": "Tikkun 5 (in range), but the main text is about 20% of the page; the rest is untranslated Chemdat Zevi commentary"
+   },
+   {
+    "page": 251,
+    "reason": "Tikkun 47, outside the Solomon range"
+   },
+   {
+    "page": 266,
+    "reason": "Tikkun 56, title page only / outside the Solomon range"
+   },
+   {
+    "page": 177,
+    "reason": "End of Tikkun 19 and start of Tikkun 20 (in range); estimated by line and character count, the main text is about 50% of the page's running text, with commentary in the side column and at the bottom. Below 60%"
+   },
+   {
+    "page": 174,
+    "reason": "Tikkun 19 (in range), but the main text is about 25% of the page; commentary dominates"
+   },
+   {
+    "page": 73,
+    "reason": "Hakdamah (1706 daf 2a); Solomon's English is not on Sefaria before 17a"
+   },
+   {
+    "page": 212,
+    "reason": "Fallback (covered page nearest candidate 1, end of Tikkun 21): the main text is about 25% of the page, so under 60%"
+   }
+  ]
+ },
+ {
+  "book_id": "69e748fb85f786e884a4ce41",
+  "title": "المعلقات (al-Muʿallaqāt / The Suspended Odes)",
+  "book_language_label": "Arabic",
+  "reason": "Book is Ithra's 'The Mu'allaqat for Millennials' (2020s): every text page pairs a few verses with modern Arabic prose commentary that has no English translation (the book's own English pages translate the verses only), so no candidate reaches 60% reference coverage; remaining candidates are title pages / illustrations.",
+  "skipped": [
+   {
+    "page": 93,
+    "reason": "section title page (two-line heading, no running text)"
+   },
+   {
+    "page": 52,
+    "reason": "verses are only ~25% of the page's running text; the rest is modern (c. 2020) Arabic commentary/glossary by Ithra's commentators, which no published translation covers (<60%); facing English p.53 translates the verses only"
+   },
+   {
+    "page": 216,
+    "reason": "illustration page, no text"
+   },
+   {
+    "page": 222,
+    "reason": "verses are only ~30% of the page's running text; the rest is modern (c. 2020) Arabic commentary/glossary by Ithra's commentators, which no published translation covers (<60%)"
+   },
+   {
+    "page": 354,
+    "reason": "modern Arabic introduction to al-Harith's ode (no verses); no reference exists"
+   },
+   {
+    "page": 233,
+    "reason": "poet title page (name only)"
+   },
+   {
+    "page": 271,
+    "reason": "illustration page, no text"
+   },
+   {
+    "page": 320,
+    "reason": "verses are only ~18% of the page's running text; the rest is modern (c. 2020) Arabic commentary/glossary by Ithra's commentators, which no published translation covers (<60%)"
+   },
+   {
+    "page": 134,
+    "reason": "verses are only ~14% of the page's running text; the rest is modern (c. 2020) Arabic commentary/glossary by Ithra's commentators, which no published translation covers (<60%)"
+   },
+   {
+    "page": 194,
+    "reason": "verses are only ~23% of the page's running text; the rest is modern (c. 2020) Arabic commentary/glossary by Ithra's commentators, which no published translation covers (<60%)"
+   }
+  ]
+ },
+ {
+  "book_id": "69e961342beefe2f6f72a891",
+  "title": "مروج الذهب (Murūj al-Dhahab / Meadows of Gold)",
+  "book_language_label": "Arabic",
+  "reason": "Book is Aloys Sprenger's 1841 English translation of Mas'udi (vol. 1), not the Arabic text: every candidate page's running text is English with only scattered Arabic glosses in footnotes/parentheses, so there is no T4 source text to align (the book is itself the reference).",
+  "skipped": [
+   {
+    "page": 483,
+    "reason": "page is Sprenger's printed ENGLISH translation (only isolated Arabic words/footnotes), not T4 source text"
+   },
+   {
+    "page": 132,
+    "reason": "page is Sprenger's printed ENGLISH translation (only isolated Arabic words/footnotes), not T4 source text"
+   },
+   {
+    "page": 361,
+    "reason": "page is Sprenger's printed ENGLISH translation (only isolated Arabic words/footnotes), not T4 source text"
+   },
+   {
+    "page": 139,
+    "reason": "page is Sprenger's printed ENGLISH translation (only isolated Arabic words/footnotes), not T4 source text"
+   },
+   {
+    "page": 83,
+    "reason": "page is Sprenger's printed ENGLISH translation (only isolated Arabic words/footnotes), not T4 source text"
+   },
+   {
+    "page": 262,
+    "reason": "page is Sprenger's printed ENGLISH translation (only isolated Arabic words/footnotes), not T4 source text"
+   },
+   {
+    "page": 481,
+    "reason": "page is Sprenger's printed ENGLISH translation (only isolated Arabic words/footnotes), not T4 source text"
+   },
+   {
+    "page": 241,
+    "reason": "page is Sprenger's printed ENGLISH translation (only isolated Arabic words/footnotes), not T4 source text"
+   },
+   {
+    "page": 452,
+    "reason": "page is Sprenger's printed ENGLISH translation (only isolated Arabic words/footnotes), not T4 source text"
+   },
+   {
+    "page": 492,
+    "reason": "page is Sprenger's printed ENGLISH translation (only isolated Arabic words/footnotes), not T4 source text"
+   }
+  ]
+ },
+ {
+  "book_id": "69935b2b8e28d8f4c5d3c6f6",
+  "title": "Kīmiyā-yi Saʿādat (Alchemy of Happiness, Persian Original)",
+  "book_language_label": "Persian",
+  "reason": "All ten candidates (and every page with page_number > 0, pp. 1-43) are the 20th-c. editor's introduction (Khadivjam ed., Tehran) — biography, essays and quotations — not the Kimiya-yi Sa'adat text. The other 738 records have negative page_numbers and are all OCR'd as the same calligraphic cover/title design (e.g. page -500, image 0500.jpg), so the Kimiya text itself is not present in the book's pages (likely an import fault worth a separate check). Field's 1910 'The Alchemy of Happiness' (an abridgement made via Hindustani) cannot be aligned to intro pages.",
+  "skipped": [
+   {
+    "page": 30,
+    "reason": "page is in the modern editor's (Khadivjam) Persian introduction, not Ghazali's text; Field 1910 'Alchemy of Happiness' does not cover it; ~40% is a Persian paraphrase of al-Munqidh (could be matched to Field's 1909 'Confessions') but ~60% is a Zarrinkub quotation with no reference: reference would cover <60% of the page"
+   },
+   {
+    "page": 9,
+    "reason": "page is in the modern editor's (Khadivjam) Persian introduction, not Ghazali's text; Field 1910 'Alchemy of Happiness' does not cover it (editor's preface, modern prose)"
+   },
+   {
+    "page": 22,
+    "reason": "page is in the modern editor's (Khadivjam) Persian introduction, not Ghazali's text; Field 1910 'Alchemy of Happiness' does not cover it; short Kimiya excerpts quoted inside modern commentary cover well under 60% of the page"
+   },
+   {
+    "page": 10,
+    "reason": "page is in the modern editor's (Khadivjam) Persian introduction, not Ghazali's text; Field 1910 'Alchemy of Happiness' does not cover it (biography of Ghazali)"
+   },
+   {
+    "page": 12,
+    "reason": "page is in the modern editor's (Khadivjam) Persian introduction, not Ghazali's text; Field 1910 'Alchemy of Happiness' does not cover it (biography; one anecdote quoted from a later source)"
+   },
+   {
+    "page": 38,
+    "reason": "page is in the modern editor's (Khadivjam) Persian introduction, not Ghazali's text; Field 1910 'Alchemy of Happiness' does not cover it (editorial method)"
+   },
+   {
+    "page": 24,
+    "reason": "page is in the modern editor's (Khadivjam) Persian introduction, not Ghazali's text; Field 1910 'Alchemy of Happiness' does not cover it (essay on Ghazali and philosophy)"
+   },
+   {
+    "page": 26,
+    "reason": "page is in the modern editor's (Khadivjam) Persian introduction, not Ghazali's text; Field 1910 'Alchemy of Happiness' does not cover it (essay; introduces Homa'i's summary of al-Munqidh)"
+   },
+   {
+    "page": 20,
+    "reason": "page is in the modern editor's (Khadivjam) Persian introduction, not Ghazali's text; Field 1910 'Alchemy of Happiness' does not cover it (essay)"
+   },
+   {
+    "page": 29,
+    "reason": "page is in the modern editor's (Khadivjam) Persian introduction, not Ghazali's text; Field 1910 'Alchemy of Happiness' does not cover it; text is Homa'i's free Persian summary of al-Munqidh, not a translation of it, so no human English reference can be cut to its span honestly"
+   }
+  ]
+ },
+ {
+  "book_id": "69e748aa85f786e884a4ca1f",
+  "title": "رباعیات عمر خیام (Rubāʿiyyāt)",
+  "book_language_label": "Persian",
+  "reason": "Book is Dole's 1896 English variorum (vol. I) of the Rubaiyat: all 400 pages are English (some German/French); no Persian text page exists to align.",
+  "skipped": [
+   {
+    "page": 118,
+    "reason": "English introduction (not T4)"
+   },
+   {
+    "page": 321,
+    "reason": "English text (not T4)"
+   },
+   {
+    "page": 245,
+    "reason": "English/French text (not T4)"
+   },
+   {
+    "page": 65,
+    "reason": "English preface"
+   },
+   {
+    "page": 272,
+    "reason": "German translation (not T4)"
+   },
+   {
+    "page": 98,
+    "reason": "English preface"
+   },
+   {
+    "page": 304,
+    "reason": "English/German text (not T4)"
+   },
+   {
+    "page": 86,
+    "reason": "English preface"
+   },
+   {
+    "page": 71,
+    "reason": "English preface"
+   },
+   {
+    "page": 112,
+    "reason": "English preface"
+   }
+  ]
+ },
+ {
+  "book_id": "69e74ef15cf1eaf3ad80df69",
+  "title": "بوستان (Būstān)",
+  "book_language_label": "Persian",
+  "reason": "Lithographed Bustan with dense marginal Persian commentary (sharh) on every page; the verse block is well under 60% of the running text and Clarke's Bustan translates only the verse.",
+  "skipped": [
+   {
+    "page": 142,
+    "reason": "marginal commentary on three sides ~ half or more of running text (checked image); reference covers <60%"
+   },
+   {
+    "page": 136,
+    "reason": "same layout, dense marginal sharh (checked image); <60%"
+   },
+   {
+    "page": 47,
+    "reason": "same layout, commentary exceeds verse (checked image); <60%; OCR also nearly empty"
+   },
+   {
+    "page": 111,
+    "reason": "same commented lithograph layout (OCR records marginal commentary); reference would cover <60%"
+   },
+   {
+    "page": 85,
+    "reason": "same commented lithograph layout (OCR records marginal commentary); reference would cover <60%"
+   },
+   {
+    "page": 197,
+    "reason": "same commented lithograph layout (OCR records marginal commentary); reference would cover <60%"
+   },
+   {
+    "page": 153,
+    "reason": "same commented lithograph layout (OCR records marginal commentary); reference would cover <60%"
+   },
+   {
+    "page": 29,
+    "reason": "same commented lithograph layout (OCR records marginal commentary); reference would cover <60%"
+   },
+   {
+    "page": 49,
+    "reason": "same commented lithograph layout (OCR records marginal commentary); reference would cover <60%"
+   },
+   {
+    "page": 180,
+    "reason": "same commented lithograph layout (OCR records marginal commentary); reference would cover <60%"
+   }
+  ]
+ },
+ {
+  "book_id": "6a08fdf7cba2f4fe3ad82fcf",
+  "title": "Humāyūn-nāma (ہمایوں نامہ) — Gulbadan Begum, Persian memoir of Emperor Humayun by his sister",
+  "book_language_label": "Persian",
+  "reason": "This item is Usman Haidar Mirza's Urdu translation of the Humayun-nama (NCPUL); all OCR'd pages (1-25) are Urdu, not Persian, so not T4.",
+  "skipped": [
+   {
+    "page": 10,
+    "reason": "Urdu (translator's preface / Urdu translation), not T4"
+   },
+   {
+    "page": 20,
+    "reason": "Urdu (translator's preface / Urdu translation), not T4"
+   },
+   {
+    "page": 21,
+    "reason": "Urdu (translator's preface / Urdu translation), not T4"
+   },
+   {
+    "page": 24,
+    "reason": "Urdu (translator's preface / Urdu translation), not T4"
+   },
+   {
+    "page": 15,
+    "reason": "Urdu (translator's preface / Urdu translation), not T4"
+   },
+   {
+    "page": 19,
+    "reason": "Urdu (translator's preface / Urdu translation), not T4"
+   },
+   {
+    "page": 23,
+    "reason": "Urdu (translator's preface / Urdu translation), not T4"
+   },
+   {
+    "page": 13,
+    "reason": "Urdu (translator's preface / Urdu translation), not T4"
+   },
+   {
+    "page": 14,
+    "reason": "Urdu (translator's preface / Urdu translation), not T4"
+   },
+   {
+    "page": 11,
+    "reason": "Urdu (translator's preface / Urdu translation), not T4"
+   }
+  ]
+ },
+ {
+  "book_id": "6a357f1ac6e2d5bb56a64539",
+  "title": "Talmud Yerushalmi",
+  "book_language_label": "Hebrew",
+  "reason": "Every candidate page of this Vilna (Romm) Talmud Yerushalmi is dominated by the surrounding commentaries (Pnei Moshe, Mar'eh ha-Panim, Ridbaz, marginal apparatus). The only open named-human English, Guggenheimer (Sefaria, CC-BY), translates the Yerushalmi text alone, which measured against the page OCR is 9–47% of the running text on all ten candidates, so none reaches the 60% coverage rule. The reference covers the whole work, so the nearest-covered-page allowance does not apply; the layout is the same throughout the volume.",
+  "skipped": [
+   {
+    "page": 473,
+    "reason": "Vilna-type page of Sanhedrin 7:9–10: the Yerushalmi text is only c. 20% of the page's running text, the rest is Pnei Moshe, Mar'eh ha-Panim and other commentaries that Guggenheimer does not translate (<60%)"
+   },
+   {
+    "page": 98,
+    "reason": "Vilna-type page of Bava Kamma 10:1–2: the Yerushalmi text is only c. 31% of the page's running text, the rest is Pnei Moshe, Mar'eh ha-Panim and other commentaries that Guggenheimer does not translate (<60%)"
+   },
+   {
+    "page": 438,
+    "reason": "Vilna-type page of Sanhedrin 3:11–12: the Yerushalmi text is only c. 28% of the page's running text, the rest is Pnei Moshe, Mar'eh ha-Panim and other commentaries that Guggenheimer does not translate (<60%)"
+   },
+   {
+    "page": 296,
+    "reason": "Vilna-type page of Shevuot 5:4: the Yerushalmi text is only c. 13% of the page's running text, the rest is Pnei Moshe, Mar'eh ha-Panim and other commentaries that Guggenheimer does not translate (<60%)"
+   },
+   {
+    "page": 495,
+    "reason": "Vilna-type page of Sanhedrin 9:6–7: the Yerushalmi text is only c. 13% of the page's running text, the rest is Pnei Moshe, Mar'eh ha-Panim and other commentaries that Guggenheimer does not translate (<60%)"
+   },
+   {
+    "page": 311,
+    "reason": "Vilna-type page of Shevuot 6:8: the Yerushalmi text is only c. 28% of the page's running text, the rest is Pnei Moshe, Mar'eh ha-Panim and other commentaries that Guggenheimer does not translate (<60%)"
+   },
+   {
+    "page": 141,
+    "reason": "Vilna-type page of Bava Metzia 5:1: the Yerushalmi text is only c. 12% of the page's running text, the rest is Pnei Moshe, Mar'eh ha-Panim and other commentaries that Guggenheimer does not translate (<60%)"
+   },
+   {
+    "page": 457,
+    "reason": "Vilna-type page of Sanhedrin 7:1: the Yerushalmi text is only c. 9% of the page's running text, the rest is Pnei Moshe, Mar'eh ha-Panim and other commentaries that Guggenheimer does not translate (<60%)"
+   },
+   {
+    "page": 504,
+    "reason": "Vilna-type page of Sanhedrin 10:4–5: the Yerushalmi text is only c. 47% of the page's running text, the rest is Pnei Moshe, Mar'eh ha-Panim and other commentaries that Guggenheimer does not translate (<60%); the OCR also merges the commentary column into the main-text lines and loops in the lower commentaries"
+   },
+   {
+    "page": 476,
+    "reason": "Vilna-type page of Sanhedrin 7:10–11: the Yerushalmi text is only c. 35% of the page's running text, the rest is Pnei Moshe, Mar'eh ha-Panim and other commentaries that Guggenheimer does not translate (<60%)"
+   }
+  ]
+ },
+ {
+  "book_id": "69b3e67c304c1c6b3950b7c3",
+  "title": "Collection of Kabbalah and Hekhalot texts (MS. Michael 9)",
+  "book_language_label": "Hebrew",
+  "reason": "No open named-human English exists for the texts on any candidate page of this Hekhalot miscellany (Bodleian MS Michael 9). The Hekhalot Rabbati pages (54, 49, 69, 80) are covered only by Morton Smith's in-copyright translation (a private reference would be possible there if in-copyright sources are acceptable for this book); the one Sefer Yetzirah page (208) is a different recension from the one Kalisch 1877 and Westcott 1887 translate; the rest are magical or Shi'ur Qomah material with no English.",
+  "skipped": [
+   {
+    "page": 54,
+    "reason": "Hekhalot Rabbati (the decree against Rome, R. Ishmael's report); the only named-human English is Morton Smith's (ed. Don Karr 2009; on Sefaria with licence 'unknown', in copyright), not an open translation as this book requires"
+   },
+   {
+    "page": 325,
+    "reason": "instructions for writing amulets for the sick and for women in labour; no English translation"
+   },
+   {
+    "page": 110,
+    "reason": "Hekhalot ascent text ('in the first palace I was pious…', Ma'aseh Merkavah type); no open named-human English"
+   },
+   {
+    "page": 49,
+    "reason": "Hekhalot Rabbati (end of a halakhah and the opening hymns of the descender to the Merkavah); the only named-human English is Morton Smith's (ed. Don Karr 2009; on Sefaria with licence 'unknown', in copyright), not an open translation as this book requires"
+   },
+   {
+    "page": 144,
+    "reason": "Hekhalot prayer/hymn of sanctification; no open named-human English"
+   },
+   {
+    "page": 208,
+    "reason": "Sefer Yetzirah ch. 4 (image checked: the OCR reads the page), but in the recension that assigns Bet–Saturn–Sabbath–mouth, Gimel–Jupiter–Sunday–right eye, etc.; Kalisch 1877 and Westcott 1887 translate the other recension (Bet–Moon–first day–right eye…, 'in wisdom', 'male and female'), so every one of the seven central sentences would disagree in planet, day and organ; only the first three and last two lines (c. 30%) correspond"
+   },
+   {
+    "page": 152,
+    "reason": "Shi'ur Qomah (measurements of the divine body); no open English (Cohen 1985 is in copyright)"
+   },
+   {
+    "page": 69,
+    "reason": "Hekhalot Rabbati (who may descend to the Merkavah); the only named-human English is Morton Smith's (ed. Don Karr 2009; on Sefaria with licence 'unknown', in copyright), not an open translation as this book requires"
+   },
+   {
+    "page": 240,
+    "reason": "magical adjurations with strings of names (Metatron, healing formula); no English translation"
+   },
+   {
+    "page": 80,
+    "reason": "Hekhalot Rabbati (Sar Torah section); the only named-human English is Morton Smith's (ed. Don Karr 2009; on Sefaria with licence 'unknown', in copyright), not an open translation as this book requires"
+   }
+  ]
+ }
+]

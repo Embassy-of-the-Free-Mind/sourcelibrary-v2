@@ -251,6 +251,17 @@ Checks (follow-up issues; design here):
 5. After the change, the stability loop watches the affected stratum for 30 days (a free signal; not a quality claim).
 6. The store is never read by a production lane; a job that wants to act on eval evidence goes through steps 2–4. Writing to a store a job reads is actuation (`ingest_is_actuation`).
 
+### 10.1 Before changing an OCR or translation prompt (2026-10-04, #5700)
+
+Most prompt clauses measured **no effect**: the restraint line #5349, v14 items 3–7, seam-only #5675, and v20 #5681. The wins were structural: the v19.1 blank/show-through rule, one page per request (#5497), and routing and gates. So:
+
+1. **Name the error class** (`page-error-taxonomy.md`) and **pick the lever first**: routing by script (#5737), gate, re-OCR, open edition, prompt, or a person. A prompt is the right lever only when the engine can read the page and is misled by its instructions. Lite on Tibetan cursive invents text under any prompt.
+2. **The regression set and the example-text lint run before any A/B** (#5686). A fix lost between versions (v17's specimen removal came back in v18–v19.1) is caught there, not in production.
+3. **Before a default flips, run a by-eye spot check on scripts outside the A/B pool.** One page per book: open the image and compare against the old prompt and the candidate. In 2026-10, 12 pages found what no A/B had covered (a recited psalm, Tibetan invention).
+4. **Every gate or flag ships with a counter that does not depend on an unindexed `pages` field**, and its first refusals are read by eye (#5685, #5733).
+5. **Bump the version on every change to what is sent**, including request shape and page-break rules. `PAGE_BREAK_SCOPED` changed the live translation request with no bump, and pages still say v13 (#5672).
+6. After deploy, the change is judged by the reader-level score (#5274): did the error class it named fall?
+
 ## 11. Gap table (measured 2026-09-25)
 
 Source: Atlas `books` (live = `visible && pages_count > 0`, 41,928 books, 8,806,456 pages), stratified by **catalogue** language × period (§3.2 says these are not the final strata; page classification is the first step of every row). Reference counts are from `scripts/eval/benchmark/*.json` + `refs/` (library pages) and `scripts/eval/results/benchmark/ref-ws-*/ref-pinned-*` (external Wikisource-hosted scans and pinned canonical pages). Grades use the dashboard thresholds (30 / 50 referenced books). Cost model: per referenced page, model spend ≈ $0.02 (production lite + flash + two specialists; #4925 puts seven decisions at ≈ $10 API); human time 3 min/page when an e-text aligns (assumed 70% of draws), else 20 min/page print or 45 min/page manuscript. Scripts and raw outputs: `.claude/docs/eval-design-census/` (snapshot; #5121 turns it into `scripts/eval/registry/`).

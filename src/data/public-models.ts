@@ -102,8 +102,8 @@ export const MODELS: PublicModel[] = [
     maker: 'Buddhist Digital Resource Center', access: 'open model', status: 'in use',
     books: 'Tibetan books.',
     why: 'Its text matched the Derge e-text with 0.88 identity, against 0.41 for Gemini; Flash-Lite failed on about a third of Tibetan pages.',
-    weakness: 'It reads Tibetan only, and unusual page layouts need our own handling before it can find the lines.',
-    evidence: [issue(4523, 'test, #4523')],
+    weakness: 'It reads Tibetan only. Given a page in another script, it still writes fluent Tibetan, so we check that a book is written in Tibetan before it reads it. Unusual page layouts need our own handling before it can find the lines.',
+    evidence: [issue(4523, 'test, #4523'), issue(5737, 'routing by script, #5737')],
     match: { lane: 'ocr', models: [/^bdrc-/], sources: ['bdrc'] },
   },
   {
@@ -173,7 +173,7 @@ export const MODELS: PublicModel[] = [
   {
     id: 'tr-flash-lite', job: 'translate', name: 'Gemini 3.1 Flash-Lite', version: 'gemini-3.1-flash-lite, earlier gemini-3.1-flash-lite-preview',
     maker: 'Google', access: 'commercial service', status: 'in use',
-    books: 'Every book except the books of the Bibliotheca Philosophica Hermetica and Tibetan books. The same model writes the Spanish translations and the modern-spelling versions of English books printed before 1700.',
+    books: 'Books in Latin, the European vernaculars and every language not listed under Gemini 3 Flash. The same model writes the Spanish translations and the modern-spelling versions of English books printed before 1700.',
     why: 'Set against Flash on 303 pages from 137 books in non-Latin scripts, a blind judge found no passage it failed to understand.',
     weakness: 'It translates whatever the transcription says: if the reading is wrong, the English is fluent and wrong.',
     evidence: [issue(4759, 'test, #4759'), issue(4765, 'the failure, #4765')],
@@ -182,10 +182,10 @@ export const MODELS: PublicModel[] = [
   {
     id: 'tr-flash', job: 'translate', name: 'Gemini 3 Flash', version: 'gemini-3-flash-preview',
     maker: 'Google', access: 'commercial service', status: 'in use',
-    books: 'Books of the Bibliotheca Philosophica Hermetica, our partner library in Amsterdam, and Tibetan books. Many older translations of other books were also written by it.',
-    why: 'For Tibetan the choice is still open: against human translations from 84000 on 21 pages, Flash and Flash-Lite both scored a median 5 of 5.',
+    books: 'Books of the Bibliotheca Philosophica Hermetica, our partner library in Amsterdam, and books in Tibetan, Greek, Hebrew, Aramaic, Arabic, Persian, Sanskrit, Pali and Chinese. Many older translations of other books were also written by it.',
+    why: 'Against published human translations of the same passages (191 pages), Flash was more faithful than Flash-Lite in Greek, Hebrew, Arabic, Persian, Sanskrit, Pali and Chinese, and reversed the meaning of a sentence less often.',
     weakness: 'The same as Flash-Lite: a wrong transcription becomes fluent, wrong English.',
-    evidence: [issue(4742, 'Tibetan test, #4742')],
+    evidence: [issue(4742, 'Tibetan test, #4742'), issue(5695, 'Tests against human translations, #5695')],
     match: { lane: 'translation', models: [/^gemini-3-flash/] },
   },
   {

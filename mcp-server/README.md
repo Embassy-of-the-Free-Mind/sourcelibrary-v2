@@ -141,7 +141,7 @@ Read a book. Prefer `chapter` for chapter-at-a-time reading; falls back to `from
 
 #### get_quote
 
-Get the exact translated text of a single page for quoting. Returns the verbatim translation, original OCR, and a formatted citation. The response headline is `citation_link` — the stable `sourcelibrary.org/q/…` shortlink to present alongside the quote and its page number. Always use this before putting text in quotation marks — never paraphrase from memory. Suggested render: `> [quote]` then `— [Author], p. [N]. [citation_link]`.
+Get the exact translated text of a single page for quoting. Returns the verbatim translation, original OCR, and a formatted citation. The response headline is `citation_link` — the stable `sourcelibrary.org/q/…` shortlink to present alongside the quote and its page number. Always use this before putting text in quotation marks — never paraphrase from memory. Suggested render: `> [quote]` then `— [Author], [citation.locator]. [citation_link]` — the locator is "p. 217 [scan 219]" where the printed page is known, else "p. 219".
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|

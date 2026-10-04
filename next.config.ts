@@ -231,6 +231,15 @@ const nextConfig: NextConfig = {
         source: '/admin/quality',
         headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
       },
+      // Work in flight (#5705): same belt and braces as the spend and quality pages.
+      {
+        source: '/admin/work/:path*',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
+      },
+      {
+        source: '/admin/work',
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' }, { key: 'Cache-Control', value: 'private, no-store' }],
+      },
       {
         // Short TTL for embed scripts so partner sites pick up fixes within minutes.
         // stale-while-revalidate means no latency hit during revalidation.

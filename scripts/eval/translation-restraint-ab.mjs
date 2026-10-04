@@ -42,6 +42,7 @@ import { buildTranslationPrompt, SAFETY_SETTINGS, sanitizeTranslationTags, getTr
 import { priceFor } from '../lib/model-pricing.mjs';
 import { sourceEndsOpen, openEnd } from '../audit/translation-bridging.mjs';
 import { resetSeed, seededRand } from './lib/paired-stats.mjs';
+import { createThenDeleteInput } from '../lib/gemini-batch-input-file.mjs';
 
 const args = process.argv.slice(2);
 const opt = (n, d = null) => { const i = args.indexOf(`--${n}`); return i === -1 ? d : args[i + 1]; };
@@ -192,6 +193,49 @@ function estimate(sample, arms) {
 const API = 'https://generativelanguage.googleapis.com';
 const batchKeyEnv = () => (process.env.GEMINI_API_KEY_TIER3 ? 'GEMINI_API_KEY_TIER3' : 'GEMINI_API_KEY');
 
+/**
+ * Upload one JSONL of `{key, request}` lines and create a Batch job on it. Shared with
+ * translation-prompt-v14-ab.mjs. The input file is deleted straight after create (#5544: inputs left
+ * in place filled key 0's 20 GiB File API quota); Gemini snapshots it at create time.
+ */
+export async function submitBatchFile({ model, lines, displayName, key }) {
+  const jsonl = lines.join('\n') + '\n', bytes = Buffer.byteLength(jsonl);
+  const start = await fetch(`${API}/upload/v1beta/files?key=${key}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-Goog-Upload-Protocol': 'resumable', 'X-Goog-Upload-Command': 'start', 'X-Goog-Upload-Header-Content-Length': String(bytes), 'X-Goog-Upload-Header-Content-Type': 'text/plain' },
+    body: JSON.stringify({ file: { displayName } }),
+  });
+  if (!start.ok) throw new Error(`upload start ${start.status} ${(await start.text()).slice(0, 300)}`);
+  const up = await fetch(start.headers.get('X-Goog-Upload-URL'), { method: 'PUT', headers: { 'Content-Type': 'text/plain', 'X-Goog-Upload-Command': 'upload, finalize', 'X-Goog-Upload-Offset': '0' }, body: jsonl });
+  if (!up.ok) throw new Error(`upload ${up.status} ${(await up.text()).slice(0, 300)}`);
+  const fileName = (await up.json()).file?.name;
+  if (!fileName) throw new Error('upload response missing file.name');
+  const job = await createThenDeleteInput({
+    fileName, apiKey: key,
+    create: async () => {
+      const create = await fetch(`${API}/v1beta/models/${model}:batchGenerateContent?key=${key}`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ batch: { display_name: displayName, input_config: { file_name: fileName } } }),
+      });
+      if (!create.ok) throw new Error(`batch create ${create.status} ${(await create.text()).slice(0, 500)}`);
+      return create.json();
+    },
+  });
+  console.log(`submitted ${job.name} (${model}, ${lines.length} requests)`);
+  return { model, job_name: job.name, file_name: fileName, requests: lines.length, submitted_at: new Date().toISOString() };
+}
+
+/** The job's output JSONL as text, or null while it is still running. Throws on a dead job. */
+export async function fetchBatchOutput(j, key) {
+  const data = await (await fetch(`${API}/v1beta/${j.job_name}?key=${key}`)).json();
+  const state = data.metadata?.state || data.state;
+  console.log(`${j.job_name} ${state} ${JSON.stringify(data.metadata?.batchStats || {})}`);
+  if (/FAILED|CANCELLED|EXPIRED/.test(state || '')) throw new Error(`batch ${state}`);
+  const rf = data.metadata?.output?.responsesFile || data.response?.responsesFile;
+  if (!rf) return null;
+  return (await fetch(`${API}/download/v1beta/${rf}:download?alt=media&key=${key}`)).text();
+}
+
 async function phaseSubmit() {
   const sample = readJsonl(path.join(DIR, 'sample.jsonl'));
   const { text: arms } = JSON.parse(fs.readFileSync(path.join(DIR, 'arms.json'), 'utf8'));
@@ -209,27 +253,7 @@ async function phaseSubmit() {
   const envName = batchKeyEnv(), key = process.env[envName];
   if (!key) throw new Error(`no ${envName}`);
   const jobs = [];
-  for (const [model, lines] of Object.entries(byModel)) {
-    const jsonl = lines.join('\n') + '\n', bytes = Buffer.byteLength(jsonl);
-    const start = await fetch(`${API}/upload/v1beta/files?key=${key}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Goog-Upload-Protocol': 'resumable', 'X-Goog-Upload-Command': 'start', 'X-Goog-Upload-Header-Content-Length': String(bytes), 'X-Goog-Upload-Header-Content-Type': 'text/plain' },
-      body: JSON.stringify({ file: { displayName: `restraint-ab-5305-${model}` } }),
-    });
-    if (!start.ok) throw new Error(`upload start ${start.status} ${(await start.text()).slice(0, 300)}`);
-    const up = await fetch(start.headers.get('X-Goog-Upload-URL'), { method: 'PUT', headers: { 'Content-Type': 'text/plain', 'X-Goog-Upload-Command': 'upload, finalize', 'X-Goog-Upload-Offset': '0' }, body: jsonl });
-    if (!up.ok) throw new Error(`upload ${up.status} ${(await up.text()).slice(0, 300)}`);
-    const fileName = (await up.json()).file?.name;
-    if (!fileName) throw new Error('upload response missing file.name');
-    const create = await fetch(`${API}/v1beta/models/${model}:batchGenerateContent?key=${key}`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ batch: { display_name: `restraint-ab-5305-${model}`, input_config: { file_name: fileName } } }),
-    });
-    if (!create.ok) throw new Error(`batch create ${create.status} ${(await create.text()).slice(0, 500)}`);
-    const job = await create.json();
-    jobs.push({ model, job_name: job.name, file_name: fileName, requests: lines.length, submitted_at: new Date().toISOString() });
-    console.log(`submitted ${job.name} (${model}, ${lines.length} requests)`);
-  }
+  for (const [model, lines] of Object.entries(byModel)) jobs.push(await submitBatchFile({ model, lines, displayName: `restraint-ab-5305-${model}`, key }));
   fs.writeFileSync(path.join(DIR, 'batch.json'), JSON.stringify({ key_env: envName, estimate_usd: est.usd, jobs }, null, 2));
 }
 
@@ -242,13 +266,8 @@ async function phaseCollect() {
     let pending = 0;
     for (const j of rec.jobs) {
       if (j.collected_at) continue;
-      const data = await (await fetch(`${API}/v1beta/${j.job_name}?key=${key}`)).json();
-      const state = data.metadata?.state || data.state;
-      console.log(`${j.job_name} ${state} ${JSON.stringify(data.metadata?.batchStats || {})}`);
-      if (/FAILED|CANCELLED|EXPIRED/.test(state || '')) throw new Error(`batch ${state}`);
-      const rf = data.metadata?.output?.responsesFile || data.response?.responsesFile;
-      if (!rf) { pending++; continue; }
-      const text = await (await fetch(`${API}/download/v1beta/${rf}:download?alt=media&key=${key}`)).text();
+      const text = await fetchBatchOutput(j, key);
+      if (text == null) { pending++; continue; }
       let inTok = 0, outTok = 0, n = 0, errors = 0;
       const p = priceFor(j.model);
       for (const line of text.split('\n').filter(Boolean)) {
@@ -316,7 +335,7 @@ function phasePackets() {
 }
 
 // ── score ───────────────────────────────────────────────────────────────────
-function mcnemar(b, c) {  // exact two-sided on discordant pairs
+export function mcnemar(b, c) {  // exact two-sided on discordant pairs
   const n = b + c; if (!n) return 1;
   const k = Math.min(b, c); let p = 0;
   const lf = (x) => { let s = 0; for (let i = 2; i <= x; i++) s += Math.log(i); return s; };

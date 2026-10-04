@@ -26,7 +26,7 @@ import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
 import { isTrivialGalleryDetection } from '../lib/gallery-image-types.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
-import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON } from '../lib/translate-core.mjs';
+import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, STRAY_SCRIPT_REASON } from '../lib/translate-core.mjs';
 import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
 
 /** Provenance identity of this collector (#4613): recorded on every page it writes as `run.collected_by`. */
@@ -557,7 +557,8 @@ async function processOneJob(db, job) {
       for (const r of pageResults) r.text = foldLongS(r.text);
     }
 
-    for (const { pageId, text, usage } of pageResults) {
+    for (const { pageId, text: resultText, usage } of pageResults) {
+      let text = resultText;
       if (staleDropPages?.has(pageId)) { continue; } // generation guard (#2449)
       if (humanEditedIds.has(pageId)) {
         console.log(`  PROTECTED: page ${pageId} has a human-edited ${job.type === 'ocr' ? 'ocr' : 'translation'} — skipping (#3749)`);
@@ -768,6 +769,11 @@ async function processOneJob(db, job) {
           failCount++; noteFail(HIDDEN_META_REASON); failedPageIds.set(pageId, HIDDEN_META_REASON);
           continue;
         }
+        // #5734: Korean 그-for-"that" repaired; any other script in the English that is in neither
+        // the source nor the book's language (outside note/term/gloss…) is refused the same way.
+        const stray = await strayScriptGate(db, { id: pageId, book_id: job.book_id }, text, { language: job.language, jobId: jobIdStr, model: job.model, dryRun: DRY_RUN });
+        if (stray.refused) { failCount++; noteFail(STRAY_SCRIPT_REASON); failedPageIds.set(pageId, STRAY_SCRIPT_REASON); continue; }
+        text = stray.text;
         bulkOps.push({
           updateOne: {
             filter: { id: pageId },

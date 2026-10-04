@@ -1,0 +1,18 @@
+{
+ "pages": 864,
+ "pages_with_terms": 864,
+ "median_terms": 18,
+ "max_terms": 40,
+ "per_text_list_size": {
+  "toh1183": 557,
+  "toh1189": 675,
+  "toh1777": 29,
+  "toh1996": 21,
+  "toh3808": 1249,
+  "toh3990": 43,
+  "toh4377": 82,
+  "toh4400a": 42
+ },
+ "mvy_entries": 8471,
+ "generic_dropped": 32
+}
