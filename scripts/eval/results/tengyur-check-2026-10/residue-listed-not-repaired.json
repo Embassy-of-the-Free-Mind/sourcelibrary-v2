@@ -1,0 +1,2611 @@
+{
+ "generated_from": "tengyur-complete-5497 QA dump of 2026-10-04T05:35Z (110,952 pages), same screens as the 05:53Z verdict on #5497",
+ "tibetan_left_outside_notes_ge20": [
+  {
+   "vol": 4,
+   "page": 415,
+   "folio": "208b",
+   "url": "https://sourcelibrary.org/book/6abe83b7433559215a997efb?page=415",
+   "tibetan_chars_outside_notes": 22
+  },
+  {
+   "vol": 8,
+   "page": 199,
+   "folio": "100b",
+   "url": "https://sourcelibrary.org/book/6abe85c46a920ffd924d39fc?page=199",
+   "tibetan_chars_outside_notes": 25
+  },
+  {
+   "vol": 14,
+   "page": 490,
+   "folio": "246a",
+   "url": "https://sourcelibrary.org/book/6abe89136a920ffd924d4900?page=490",
+   "tibetan_chars_outside_notes": 37
+  },
+  {
+   "vol": 29,
+   "page": 365,
+   "folio": "183b",
+   "url": "https://sourcelibrary.org/book/6abe91a66a920ffd924d6b5d?page=365",
+   "tibetan_chars_outside_notes": 116
+  },
+  {
+   "vol": 32,
+   "page": 528,
+   "folio": "265a",
+   "url": "https://sourcelibrary.org/book/6abe92d06a920ffd924d7166?page=528",
+   "tibetan_chars_outside_notes": 25
+  },
+  {
+   "vol": 40,
+   "page": 396,
+   "folio": "199a",
+   "url": "https://sourcelibrary.org/book/6abe98196a920ffd924d8054?page=396",
+   "tibetan_chars_outside_notes": 73
+  },
+  {
+   "vol": 49,
+   "page": 106,
+   "folio": "54a",
+   "url": "https://sourcelibrary.org/book/6abe9cd56a920ffd924d937e?page=106",
+   "tibetan_chars_outside_notes": 430
+  },
+  {
+   "vol": 57,
+   "page": 244,
+   "folio": "123a",
+   "url": "https://sourcelibrary.org/book/6abe9f6f6a920ffd924da3c8?page=244",
+   "tibetan_chars_outside_notes": 46
+  },
+  {
+   "vol": 62,
+   "page": 98,
+   "folio": "50a",
+   "url": "https://sourcelibrary.org/book/6abea1d86a920ffd924db084?page=98",
+   "tibetan_chars_outside_notes": 36
+  },
+  {
+   "vol": 87,
+   "page": 32,
+   "folio": "17a",
+   "url": "https://sourcelibrary.org/book/6abeadc8896ea18127c81736?page=32",
+   "tibetan_chars_outside_notes": 36
+  },
+  {
+   "vol": 93,
+   "page": 244,
+   "folio": "123a",
+   "url": "https://sourcelibrary.org/book/6abeafd3896ea18127c8218e?page=244",
+   "tibetan_chars_outside_notes": 119
+  },
+  {
+   "vol": 99,
+   "page": 155,
+   "folio": "78b",
+   "url": "https://sourcelibrary.org/book/6abeb246896ea18127c82d97?page=155",
+   "tibetan_chars_outside_notes": 28
+  },
+  {
+   "vol": 99,
+   "page": 292,
+   "folio": "147a",
+   "url": "https://sourcelibrary.org/book/6abeb246896ea18127c82d97?page=292",
+   "tibetan_chars_outside_notes": 24
+  },
+  {
+   "vol": 102,
+   "page": 620,
+   "folio": "312a",
+   "url": "https://sourcelibrary.org/book/6abe825059b86b7d32a6597a?page=620",
+   "tibetan_chars_outside_notes": 29
+  },
+  {
+   "vol": 103,
+   "page": 59,
+   "folio": "30b",
+   "url": "https://sourcelibrary.org/book/6abeb2ec896ea18127c83529?page=59",
+   "tibetan_chars_outside_notes": 50
+  },
+  {
+   "vol": 106,
+   "page": 179,
+   "folio": "90b",
+   "url": "https://sourcelibrary.org/book/6abeb39f896ea18127c83db1?page=179",
+   "tibetan_chars_outside_notes": 65
+  },
+  {
+   "vol": 106,
+   "page": 383,
+   "folio": "192b",
+   "url": "https://sourcelibrary.org/book/6abeb39f896ea18127c83db1?page=383",
+   "tibetan_chars_outside_notes": 58
+  },
+  {
+   "vol": 109,
+   "page": 610,
+   "folio": "306a",
+   "url": "https://sourcelibrary.org/book/6abeb43e896ea18127c844b1?page=610",
+   "tibetan_chars_outside_notes": 33
+  },
+  {
+   "vol": 124,
+   "page": 23,
+   "folio": "12b",
+   "url": "https://sourcelibrary.org/book/6abedf77a43718d234bf11b2?page=23",
+   "tibetan_chars_outside_notes": 132
+  },
+  {
+   "vol": 124,
+   "page": 492,
+   "folio": "247a",
+   "url": "https://sourcelibrary.org/book/6abedf77a43718d234bf11b2?page=492",
+   "tibetan_chars_outside_notes": 51
+  },
+  {
+   "vol": 126,
+   "page": 303,
+   "folio": "152b",
+   "url": "https://sourcelibrary.org/book/6abeb92e896ea18127c86894?page=303",
+   "tibetan_chars_outside_notes": 21
+  },
+  {
+   "vol": 131,
+   "page": 549,
+   "folio": "275b",
+   "url": "https://sourcelibrary.org/book/6abeba43896ea18127c8725a?page=549",
+   "tibetan_chars_outside_notes": 64
+  },
+  {
+   "vol": 135,
+   "page": 51,
+   "folio": "26b",
+   "url": "https://sourcelibrary.org/book/6abebc98896ea18127c87c30?page=51",
+   "tibetan_chars_outside_notes": 23
+  },
+  {
+   "vol": 145,
+   "page": 491,
+   "folio": "246b",
+   "url": "https://sourcelibrary.org/book/6abec068896ea18127c89270?page=491",
+   "tibetan_chars_outside_notes": 134
+  },
+  {
+   "vol": 148,
+   "page": 119,
+   "folio": "60b",
+   "url": "https://sourcelibrary.org/book/6abec24c896ea18127c899be?page=119",
+   "tibetan_chars_outside_notes": 31
+  },
+  {
+   "vol": 151,
+   "page": 390,
+   "folio": "196a",
+   "url": "https://sourcelibrary.org/book/6abec470896ea18127c89f6a?page=390",
+   "tibetan_chars_outside_notes": 25
+  },
+  {
+   "vol": 153,
+   "page": 300,
+   "folio": "151a",
+   "url": "https://sourcelibrary.org/book/6abec54c896ea18127c8a3f6?page=300",
+   "tibetan_chars_outside_notes": 53
+  },
+  {
+   "vol": 157,
+   "page": 197,
+   "folio": "99b",
+   "url": "https://sourcelibrary.org/book/6abec7fa896ea18127c8ac69?page=197",
+   "tibetan_chars_outside_notes": 252
+  },
+  {
+   "vol": 162,
+   "page": 351,
+   "folio": "176b",
+   "url": "https://sourcelibrary.org/book/6abecd0e896ea18127c8b6de?page=351",
+   "tibetan_chars_outside_notes": 168
+  },
+  {
+   "vol": 164,
+   "page": 106,
+   "folio": "54a",
+   "url": "https://sourcelibrary.org/book/6abecf09896ea18127c8bcf6?page=106",
+   "tibetan_chars_outside_notes": 29
+  },
+  {
+   "vol": 170,
+   "page": 68,
+   "folio": "35a",
+   "url": "https://sourcelibrary.org/book/6abed1ac896ea18127c8ca6c?page=68",
+   "tibetan_chars_outside_notes": 594
+  },
+  {
+   "vol": 170,
+   "page": 638,
+   "folio": "320a",
+   "url": "https://sourcelibrary.org/book/6abed1ac896ea18127c8ca6c?page=638",
+   "tibetan_chars_outside_notes": 616
+  },
+  {
+   "vol": 171,
+   "page": 217,
+   "folio": "109b",
+   "url": "https://sourcelibrary.org/book/6abed259896ea18127c8cd4a?page=217",
+   "tibetan_chars_outside_notes": 831
+  },
+  {
+   "vol": 178,
+   "page": 333,
+   "folio": "167b",
+   "url": "https://sourcelibrary.org/book/6abed518896ea18127c8dce8?page=333",
+   "tibetan_chars_outside_notes": 47
+  },
+  {
+   "vol": 186,
+   "page": 419,
+   "folio": "210b",
+   "url": "https://sourcelibrary.org/book/6abed7ad896ea18127c8f0d2?page=419",
+   "tibetan_chars_outside_notes": 109
+  },
+  {
+   "vol": 193,
+   "page": 336,
+   "folio": "169a",
+   "url": "https://sourcelibrary.org/book/6abed9f5896ea18127c90242?page=336",
+   "tibetan_chars_outside_notes": 20
+  },
+  {
+   "vol": 193,
+   "page": 620,
+   "folio": "311a",
+   "url": "https://sourcelibrary.org/book/6abed9f5896ea18127c90242?page=620",
+   "tibetan_chars_outside_notes": 21
+  }
+ ],
+ "body_text_swallowed_into_note_ge12_words": [
+  {
+   "vol": 2,
+   "page": 454,
+   "folio": "228a",
+   "url": "https://sourcelibrary.org/book/6abe82fa433559215a997a85?page=454",
+   "swallowed_words": 14,
+   "opening": "<note>original: <term>jnana</term>; non-duality itself is the <term>Tathagata</term> <gloss>Thus Gone One/Buddha</gloss>.\" Regarding the ph"
+  },
+  {
+   "vol": 7,
+   "page": 452,
+   "folio": "227a",
+   "url": "https://sourcelibrary.org/book/6abe850f6a920ffd924d3782?page=452",
+   "swallowed_words": 39,
+   "opening": "<note>original: <term>Sahaja</term>, it is because its essence exists as a single taste within that bliss. If one asks what this is like, th"
+  },
+  {
+   "vol": 11,
+   "page": 358,
+   "folio": "180a",
+   "url": "https://sourcelibrary.org/book/6abe86b96a920ffd924d4220?page=358",
+   "swallowed_words": 25,
+   "opening": "<note>original: <term>Tirthika</term>, I shall describe the examination of the syllables of names. Because the cycle of births, vowels, and "
+  },
+  {
+   "vol": 15,
+   "page": 155,
+   "folio": "78b",
+   "url": "https://sourcelibrary.org/book/6abe89c46a920ffd924d4b92?page=155",
+   "swallowed_words": 75,
+   "opening": "<note>original: <term>jnana-sambhara</term>, I shall now describe the accumulation of merit. Because he perfects the previously explained <t"
+  },
+  {
+   "vol": 28,
+   "page": 56,
+   "folio": "29a",
+   "url": "https://sourcelibrary.org/book/6abe914a6a920ffd924d6915?page=56",
+   "swallowed_words": 14,
+   "opening": "<note>original: <term>jnanasattva</term>; the actual wisdom aspect of the deity invited to merge with the visualized form</note>"
+  },
+  {
+   "vol": 32,
+   "page": 124,
+   "folio": "63a",
+   "url": "https://sourcelibrary.org/book/6abe92d06a920ffd924d7166?page=124",
+   "swallowed_words": 43,
+   "opening": "<note>original: <term>pramana</term>, who wish to enter this path just by hearing the treatises established through logic, are one group. Ho"
+  },
+  {
+   "vol": 37,
+   "page": 126,
+   "folio": "64a",
+   "url": "https://sourcelibrary.org/book/6abe95d56a920ffd924d7baa?page=126",
+   "swallowed_words": 13,
+   "opening": "<note>Tibetan: <term>bskyed pa'i rim pa</term>; the initial stage of tantric practice where one visualizes oneself as a deity</note>"
+  },
+  {
+   "vol": 45,
+   "page": 442,
+   "folio": "222a",
+   "url": "https://sourcelibrary.org/book/6abe9b0d6a920ffd924d8b20?page=442",
+   "swallowed_words": 29,
+   "opening": "<note>original: <term>ayatana</term>, and the sense faculties of that body. \"The eyes, the ears, and the nose, as well as the tongue, the b"
+  },
+  {
+   "vol": 51,
+   "page": 261,
+   "folio": "131b",
+   "url": "https://sourcelibrary.org/book/6abe9d9d6a920ffd924d9828?page=261",
+   "swallowed_words": 13,
+   "opening": "<note>original: <term>dhāraṇī</term>, used here in the sense of a female practitioner who \"holds\" the wisdom</note>"
+  },
+  {
+   "vol": 52,
+   "page": 366,
+   "folio": "184a",
+   "url": "https://sourcelibrary.org/book/6abeace1896ea18127c80d7a?page=366",
+   "swallowed_words": 13,
+   "opening": "<note>original: <term>sandhyabhasha</term>; a coded or twilight language used in tantric texts to convey secret meanings</note>"
+  },
+  {
+   "vol": 54,
+   "page": 73,
+   "folio": "37b",
+   "url": "https://sourcelibrary.org/book/6abe9ec86a920ffd924d9ce2?page=73",
+   "swallowed_words": 13,
+   "opening": "<note>Tibetan: <term>dgongs pa'i tshig</term>; refers to <term>sandhyabhasha</term> or twilight language, the coded symbolic language used i"
+  },
+  {
+   "vol": 56,
+   "page": 95,
+   "folio": "48b",
+   "url": "https://sourcelibrary.org/book/6abe9f2c6a920ffd924da190?page=95",
+   "swallowed_words": 93,
+   "opening": "<note>original: <term>Vishvashvara</term>, the wisdom of making others rejoice is shown. Regarding the phrase, The great seal of the Lord of"
+  },
+  {
+   "vol": 71,
+   "page": 348,
+   "folio": "175a",
+   "url": "https://sourcelibrary.org/book/6abea6ac6a920ffd924dc1ad?page=348",
+   "swallowed_words": 14,
+   "opening": "<note>original: <term>dang ba'i dad pa</term>; the clarity of mind produced by reflecting on the qualities of the Triple Gem</note>"
+  },
+  {
+   "vol": 71,
+   "page": 378,
+   "folio": "190a",
+   "url": "https://sourcelibrary.org/book/6abea6ac6a920ffd924dc1ad?page=378",
+   "swallowed_words": 152,
+   "opening": "<note>original: <term>bodhicitta</term>, may all latent tendencies of the mental afflictions be pacified. That concludes the explanation of "
+  },
+  {
+   "vol": 80,
+   "page": 120,
+   "folio": "60b",
+   "url": "https://sourcelibrary.org/book/6abea9346a920ffd924dd5f1?page=120",
+   "swallowed_words": 12,
+   "opening": "<note>original: <term>dhyanas</term>, the immeasurables, and the formless absorptions; for these are mundane in nature.</note>"
+  },
+  {
+   "vol": 94,
+   "page": 317,
+   "folio": "159b",
+   "url": "https://sourcelibrary.org/book/6abedf36a43718d234bf0f30?page=317",
+   "swallowed_words": 147,
+   "opening": "<note>original: <term>samklesha</term>, because all phenomena are pure by their very nature, desire and the other passions do not exist. The"
+  },
+  {
+   "vol": 97,
+   "page": 564,
+   "folio": "282b",
+   "url": "https://sourcelibrary.org/book/6abeb1dc896ea18127c828bc?page=564",
+   "swallowed_words": 13,
+   "opening": "<note>original: <term>prishtha-labdha-jnana</term>, the wisdom used to interact with the world after returning from deep meditation</note>"
+  },
+  {
+   "vol": 99,
+   "page": 291,
+   "folio": "146b",
+   "url": "https://sourcelibrary.org/book/6abeb246896ea18127c82d97?page=291",
+   "swallowed_words": 51,
+   "opening": "<note>original: <term>saṃvṛti</term>, it is not fitting for Time to be the cause of the birth of all beings because it is the cause of both "
+  },
+  {
+   "vol": 99,
+   "page": 449,
+   "folio": "225b",
+   "url": "https://sourcelibrary.org/book/6abeb246896ea18127c82d97?page=449",
+   "swallowed_words": 14,
+   "opening": "<note>original: <term>Vaisheshika</term>, a school of Indian philosophy that posited movement as a distinct category of reality</note>"
+  },
+  {
+   "vol": 101,
+   "page": 116,
+   "folio": "59a",
+   "url": "https://sourcelibrary.org/book/6abeb2b1896ea18127c8327d?page=116",
+   "swallowed_words": 17,
+   "opening": "<note>original: <term>asādhāraṇa-anaikāntika</term>; a logical fallacy where the reason is too specific to the subject to prove a general ru"
+  },
+  {
+   "vol": 101,
+   "page": 117,
+   "folio": "59b",
+   "url": "https://sourcelibrary.org/book/6abeb2b1896ea18127c8327d?page=117",
+   "swallowed_words": 27,
+   "opening": "<note>original: <term>sapakṣa</term>; cases where the quality to be proven is already known to exist</note>"
+  },
+  {
+   "vol": 101,
+   "page": 146,
+   "folio": "74a",
+   "url": "https://sourcelibrary.org/book/6abeb2b1896ea18127c8327d?page=146",
+   "swallowed_words": 55,
+   "opening": "<note>original: <term>prakriti</term>, then a certainty of knowledge arises in that intellect: I am one thing, and nature is another. Just a"
+  },
+  {
+   "vol": 104,
+   "page": 421,
+   "folio": "211b",
+   "url": "https://sourcelibrary.org/book/6abeb325896ea18127c83819?page=421",
+   "swallowed_words": 13,
+   "opening": "<note>original: <term>neyartha</term>, meaning teachings that require further explanation and are not the final, literal truth</note>"
+  },
+  {
+   "vol": 105,
+   "page": 52,
+   "folio": "26b",
+   "url": "https://sourcelibrary.org/book/6abeb35b896ea18127c83af5?page=52",
+   "swallowed_words": 14,
+   "opening": "<note>Tibetan: <term>dal 'byor</term>, referring to the precious human rebirth with the freedom and opportunity to practice Dharma</note>"
+  },
+  {
+   "vol": 110,
+   "page": 191,
+   "folio": "96b",
+   "url": "https://sourcelibrary.org/book/6abeb4ad896ea18127c84725?page=191",
+   "swallowed_words": 19,
+   "opening": "<note>original: <term>satra</term>, a great city, a wilderness, or a remote place where it is easy to obtain the necessities of life. </note"
+  },
+  {
+   "vol": 111,
+   "page": 130,
+   "folio": "66a",
+   "url": "https://sourcelibrary.org/book/6abeb4e5896ea18127c849f3?page=130",
+   "swallowed_words": 14,
+   "opening": "<note>original: <term>prapancha</term>; refers to the mental tendency to diversify and complicate reality through thought and language</note"
+  },
+  {
+   "vol": 115,
+   "page": 425,
+   "folio": "213b",
+   "url": "https://sourcelibrary.org/book/6abeb628896ea18127c852a1?page=425",
+   "swallowed_words": 13,
+   "opening": "<note>Tibetan: <term>mi gyo ba</term>; Sanskrit: <term>āniñjya</term>; refers to the stable meditative states of the higher realms</note>"
+  },
+  {
+   "vol": 116,
+   "page": 273,
+   "folio": "137b",
+   "url": "https://sourcelibrary.org/book/6abeb666896ea18127c854c5?page=273",
+   "swallowed_words": 15,
+   "opening": "<note>original: <term>nirvedha-bhagiya</term>, the four levels of the Path of Preparation: Heat, Peak, Patience, and Supreme Mundane Dharma<"
+  },
+  {
+   "vol": 117,
+   "page": 403,
+   "folio": "202b",
+   "url": "https://sourcelibrary.org/book/6abeb6dc896ea18127c856f1?page=403",
+   "swallowed_words": 17,
+   "opening": "<note>original: <term>mi gnas pa'i mya ngan las 'adhas pa</term>; the state where a Buddha remains in the world to help others without being"
+  },
+  {
+   "vol": 118,
+   "page": 561,
+   "folio": "281b",
+   "url": "https://sourcelibrary.org/book/6abeb70e896ea18127c8590d?page=561",
+   "swallowed_words": 12,
+   "opening": "<note>original: <term>bstan bcos rnam par bshad pa</term>; likely referring to the Vyakhyayukti or a commentary on the Samdhinirmocana Sutra"
+  },
+  {
+   "vol": 125,
+   "page": 139,
+   "folio": "70a",
+   "url": "https://sourcelibrary.org/book/6abeb8ed896ea18127c8665b?page=139",
+   "swallowed_words": 12,
+   "opening": "<note>Tibetan: <term>shin tu ring song</term>; Sanskrit: <term>dūrangamā</term>, the name of the seventh level of a bodhisattva's path</note"
+  },
+  {
+   "vol": 126,
+   "page": 378,
+   "folio": "190a",
+   "url": "https://sourcelibrary.org/book/6abeb92e896ea18127c86894?page=378",
+   "swallowed_words": 12,
+   "opening": "<note>original: <term>upadhyaya</term>, a spiritual teacher or abbot who guides a student in monastic discipline</note>"
+  },
+  {
+   "vol": 127,
+   "page": 381,
+   "folio": "191b",
+   "url": "https://sourcelibrary.org/book/6abeb963896ea18127c86aaa?page=381",
+   "swallowed_words": 12,
+   "opening": "<note>original: <term>mgal me</term>, a torch or stick with a burning tip swung in a circle</note>"
+  },
+  {
+   "vol": 132,
+   "page": 425,
+   "folio": "213b",
+   "url": "https://sourcelibrary.org/book/6abeba78896ea18127c874fa?page=425",
+   "swallowed_words": 15,
+   "opening": "<note>original: <term>shad</term>, the vertical stroke used in Tibetan to mark the end of a sentence or phrase</note>"
+  },
+  {
+   "vol": 133,
+   "page": 171,
+   "folio": "86b",
+   "url": "https://sourcelibrary.org/book/6abebaa5896ea18127c876b6?page=171",
+   "swallowed_words": 191,
+   "opening": "<note>original: <term>paramitas</term>, such as generosity and so forth, through their practical application, is given to generate joyful ef"
+  },
+  {
+   "vol": 133,
+   "page": 533,
+   "folio": "267b",
+   "url": "https://sourcelibrary.org/book/6abebaa5896ea18127c876b6?page=533",
+   "swallowed_words": 22,
+   "opening": "<note>Tibetan: <term>mos pas spyod pa'i gnas skabs</term>; Sanskrit: <term>adhimukticaryā-avasthā</term>, the stage before reaching the firs"
+  },
+  {
+   "vol": 134,
+   "page": 504,
+   "folio": "253a",
+   "url": "https://sourcelibrary.org/book/6abebae6896ea18127c8795c?page=504",
+   "swallowed_words": 23,
+   "opening": "<note>original: <term>mu bzhi</term>, a standard Buddhist logical tool for analyzing categories: is A but not B, is B but not A, is both, or"
+  },
+  {
+   "vol": 136,
+   "page": 498,
+   "folio": "250a",
+   "url": "https://sourcelibrary.org/book/6abebd37896ea18127c87e7c?page=498",
+   "swallowed_words": 13,
+   "opening": "<note>original: <term>sabha-ga</term>, meaning to have a shared function or to be of the same type</note>"
+  },
+  {
+   "vol": 138,
+   "page": 67,
+   "folio": "34b",
+   "url": "https://sourcelibrary.org/book/6abebe51896ea18127c882ce?page=67",
+   "swallowed_words": 14,
+   "opening": "<note>original: <term>jig tshogs la lta ba</term>; Sanskrit: <term>satkāyadṛṣṭi</term>, the mistaken view of a permanent self within the tra"
+  },
+  {
+   "vol": 139,
+   "page": 107,
+   "folio": "54b",
+   "url": "https://sourcelibrary.org/book/6abebe9a896ea18127c8849e?page=107",
+   "swallowed_words": 14,
+   "opening": "<note>Tibetan: <term>tā la</term>, from the Sanskrit <term>tāla</term>, the palmyra tree, used as a standard unit of height</note>"
+  },
+  {
+   "vol": 140,
+   "page": 90,
+   "folio": "46a",
+   "url": "https://sourcelibrary.org/book/6abebeed896ea18127c8866a?page=90",
+   "swallowed_words": 17,
+   "opening": "<note>original: <term>tat-sabhaga</term>; refers to an element that is not currently performing its function but is of the same class</note>"
+  },
+  {
+   "vol": 141,
+   "page": 439,
+   "folio": "220b",
+   "url": "https://sourcelibrary.org/book/6abebf33896ea18127c88870?page=439",
+   "swallowed_words": 15,
+   "opening": "<note>original: <term>nirvedhabhagiya</term>, the four stages of the path of preparation: heat, peaks, patience, and supreme mundane qualiti"
+  },
+  {
+   "vol": 142,
+   "page": 618,
+   "folio": "310a",
+   "url": "https://sourcelibrary.org/book/6abebf71896ea18127c88a86?page=618",
+   "swallowed_words": 39,
+   "opening": "<note>original: <term>Arya</term>, it is said that giving to a Bodhisattva possesses immeasurable qualities. Since this is superior even to "
+  },
+  {
+   "vol": 146,
+   "page": 468,
+   "folio": "235a",
+   "url": "https://sourcelibrary.org/book/6abec12d896ea18127c894f6?page=468",
+   "swallowed_words": 22,
+   "opening": "<note>Original: <term>Anantarya</term>; these include killing one's father, mother, or an Arhat, drawing the blood of a Buddha, and creating"
+  },
+  {
+   "vol": 147,
+   "page": 334,
+   "folio": "168a",
+   "url": "https://sourcelibrary.org/book/6abec1df896ea18127c89736?page=334",
+   "swallowed_words": 12,
+   "opening": "<note>original: <term>avijñapti</term>; a subtle form that persists even when not actively performing an act</note>"
+  },
+  {
+   "vol": 149,
+   "page": 307,
+   "folio": "154b",
+   "url": "https://sourcelibrary.org/book/6abec2d0896ea18127c89b7e?page=307",
+   "swallowed_words": 16,
+   "opening": "<note>original: <term>ajanya</term>, literally a person of noble birth or a well-bred horse, signifying a person of high realization</note>"
+  },
+  {
+   "vol": 150,
+   "page": 113,
+   "folio": "57b",
+   "url": "https://sourcelibrary.org/book/6abec330896ea18127c89d8a?page=113",
+   "swallowed_words": 12,
+   "opening": "<note>original: <term>Sanghadisesa</term>, a category of monastic offense requiring confession and penance before the assembly</note>"
+  },
+  {
+   "vol": 151,
+   "page": 150,
+   "folio": "76a",
+   "url": "https://sourcelibrary.org/book/6abec470896ea18127c89f6a?page=150",
+   "swallowed_words": 14,
+   "opening": "<note>original: <term>nges par 'dzin pa</term>; likely referring to the formal legal recognition of the specific nature of the offense</note"
+  },
+  {
+   "vol": 153,
+   "page": 19,
+   "folio": "10b",
+   "url": "https://sourcelibrary.org/book/6abec54c896ea18127c8a3f6?page=19",
+   "swallowed_words": 57,
+   "opening": "<note>Tibetan: <term>spang ba'i ltung byེད་</term>; Sanskrit: <term>Naiḥsargika Pāyattika</term>; a category of monastic downfall requiring "
+  },
+  {
+   "vol": 155,
+   "page": 244,
+   "folio": "123a",
+   "url": "https://sourcelibrary.org/book/6abec6fb896ea18127c8a7ee?page=244",
+   "swallowed_words": 22,
+   "opening": "<note>original: <term>gdeng med par</term>; refers to wearing someone else's garment without being certain of their permission or before the"
+  },
+  {
+   "vol": 159,
+   "page": 418,
+   "folio": "209b",
+   "url": "https://sourcelibrary.org/book/6abeca4e896ea18127c8b081?page=418",
+   "swallowed_words": 41,
+   "opening": "<note>original: <term>smyos pa'i gnang ba</term>, a legal status allowing the community to proceed with rituals despite the absence or errat"
+  },
+  {
+   "vol": 160,
+   "page": 252,
+   "folio": "127a",
+   "url": "https://sourcelibrary.org/book/6abecb0a896ea18127c8b28a?page=252",
+   "swallowed_words": 32,
+   "opening": "<note>original: <term>Saṅghāvaśeṣa</term>; a category of thirteen serious offenses for monks requiring confession and a period of probation<"
+  },
+  {
+   "vol": 162,
+   "page": 89,
+   "folio": "45b",
+   "url": "https://sourcelibrary.org/book/6abecd0e896ea18127c8b6de?page=89",
+   "swallowed_words": 13,
+   "opening": "<note>original: <term>basro khang</term>, a heated steam room or sauna used for medicinal purposes in the Vinaya</note>"
+  },
+  {
+   "vol": 162,
+   "page": 413,
+   "folio": "207b",
+   "url": "https://sourcelibrary.org/book/6abecd0e896ea18127c8b6de?page=413",
+   "swallowed_words": 12,
+   "opening": "<note>original: <term>nihsargika-patayantika</term>; an infraction requiring the forfeiture of the item and a formal confession</note>"
+  },
+  {
+   "vol": 162,
+   "page": 643,
+   "folio": "322b",
+   "url": "https://sourcelibrary.org/book/6abecd0e896ea18127c8b6de?page=643",
+   "swallowed_words": 28,
+   "opening": "<note>original: <term>byin len</term>; the ritual acceptance of food or items by a monk from a donor</note>"
+  },
+  {
+   "vol": 166,
+   "page": 360,
+   "folio": "181a",
+   "url": "https://sourcelibrary.org/book/6abed040896ea18127c8c1b8?page=360",
+   "swallowed_words": 12,
+   "opening": "<note>Tibetan: <term>bsnyil bar bya ba</term>, referring to the <term>Parajika</term> or defeat that entails removal from the monkhood</note"
+  },
+  {
+   "vol": 166,
+   "page": 413,
+   "folio": "207b",
+   "url": "https://sourcelibrary.org/book/6abed040896ea18127c8c1b8?page=413",
+   "swallowed_words": 13,
+   "opening": "<note>original: <term>bakar ba</term>, referring to a monk or nun legally separated or punished by the community</note>"
+  },
+  {
+   "vol": 167,
+   "page": 251,
+   "folio": "126b",
+   "url": "https://sourcelibrary.org/book/6abed08d896ea18127c8c3ca?page=251",
+   "swallowed_words": 26,
+   "opening": "<note>original: <term>las brjod pa</term>, the formal motion or proclamation made during a legal assembly of the Sangha</note>"
+  },
+  {
+   "vol": 170,
+   "page": 23,
+   "folio": "12b",
+   "url": "https://sourcelibrary.org/book/6abed1ac896ea18127c8ca6c?page=23",
+   "swallowed_words": 15,
+   "opening": "<note>Sanskrit: <term>Manobhava</term>, often referring to the god of desire or the state of being struck by love-sickness</note>"
+  },
+  {
+   "vol": 171,
+   "page": 148,
+   "folio": "75a",
+   "url": "https://sourcelibrary.org/book/6abed259896ea18127c8cd4a?page=148",
+   "swallowed_words": 15,
+   "opening": "<note>original: <term>kaka-taliya</term>; referring to a fruit falling exactly when a crow lands, implying chance rather than causality</not"
+  },
+  {
+   "vol": 171,
+   "page": 166,
+   "folio": "84a",
+   "url": "https://sourcelibrary.org/book/6abed259896ea18127c8cd4a?page=166",
+   "swallowed_words": 53,
+   "opening": "<note>original: <term>rigs chad</term>, the steadfast one spoke again: If a girl can be found whose beauty and complexion are equal to this"
+  },
+  {
+   "vol": 174,
+   "page": 160,
+   "folio": "80b",
+   "url": "https://sourcelibrary.org/book/6abed3fc896ea18127c8d272?page=160",
+   "swallowed_words": 12,
+   "opening": "<note>original: <term>anvaya</term>; the logical rule that the reason must exist wherever the predicate exists</note>"
+  },
+  {
+   "vol": 175,
+   "page": 145,
+   "folio": "73a",
+   "url": "https://sourcelibrary.org/book/6abed42c896ea18127c8d54f?page=145",
+   "swallowed_words": 24,
+   "opening": "<note>original: <term>khyab par byed pa 'gal ba dmigs pa</term>; a logical term for perceiving something that excludes the necessary pervadi"
+  },
+  {
+   "vol": 176,
+   "page": 35,
+   "folio": "18b",
+   "url": "https://sourcelibrary.org/book/6abed47a896ea18127c8d820?page=35",
+   "swallowed_words": 14,
+   "opening": "<note>original: <term>phyogs kyi chos</term>; technical term for the presence of the reason in the subject of an argument</note>"
+  },
+  {
+   "vol": 176,
+   "page": 80,
+   "folio": "41a",
+   "url": "https://sourcelibrary.org/book/6abed47a896ea18127c8d820?page=80",
+   "swallowed_words": 12,
+   "opening": "<note>original: <term>karya-hetu</term>, where an effect is used to prove the existence of its cause</note>"
+  },
+  {
+   "vol": 176,
+   "page": 514,
+   "folio": "258a",
+   "url": "https://sourcelibrary.org/book/6abed47a896ea18127c8d820?page=514",
+   "swallowed_words": 28,
+   "opening": "<note>original: <term>don dam pa'i 'brel pa</term>; refers to a real, inherent connection as opposed to a conventional one</note>"
+  },
+  {
+   "vol": 178,
+   "page": 245,
+   "folio": "123b",
+   "url": "https://sourcelibrary.org/book/6abed518896ea18127c8dce8?page=245",
+   "swallowed_words": 88,
+   "opening": "<note>original: <term>vāsanā</term>; They do not exist in the ultimate sense. Thus, in the ultimate sense, everything is indeed suffering. R"
+  },
+  {
+   "vol": 178,
+   "page": 490,
+   "folio": "246a",
+   "url": "https://sourcelibrary.org/book/6abed518896ea18127c8dce8?page=490",
+   "swallowed_words": 14,
+   "opening": "<note>original: <term>gzhan sel</term>; the theory of <term>apoha</term> where a word functions by excluding what it is not</note>"
+  },
+  {
+   "vol": 181,
+   "page": 6,
+   "folio": "4a",
+   "url": "https://sourcelibrary.org/book/6abed619896ea18127c8e464?page=6",
+   "swallowed_words": 13,
+   "opening": "<note>original: <term>Uttarakuru</term>, the northern continent in Buddhist cosmology where inhabitants have \"unpleasant\" or fixed voices.</"
+  },
+  {
+   "vol": 181,
+   "page": 304,
+   "folio": "153a",
+   "url": "https://sourcelibrary.org/book/6abed619896ea18127c8e464?page=304",
+   "swallowed_words": 202,
+   "opening": "<note>original: <term>vikalpa</term>, the triad alone is the reality. The thought that there is no conventional expression without conceptua"
+  },
+  {
+   "vol": 181,
+   "page": 530,
+   "folio": "266a",
+   "url": "https://sourcelibrary.org/book/6abed619896ea18127c8e464?page=530",
+   "swallowed_words": 12,
+   "opening": "<note>original: <term>apoha</term>; the logic that a thing is defined by what it is not</note>"
+  },
+  {
+   "vol": 182,
+   "page": 25,
+   "folio": "13b",
+   "url": "https://sourcelibrary.org/book/6abed65f896ea18127c8e6d6?page=25",
+   "swallowed_words": 29,
+   "opening": "<note>Tibetan: <term>mi dmigs pa</term>; Sanskrit: <term>anupalabdhi</term>. This is a technical term in Buddhist logic for the valid cognit"
+  },
+  {
+   "vol": 182,
+   "page": 165,
+   "folio": "83b",
+   "url": "https://sourcelibrary.org/book/6abed65f896ea18127c8e6d6?page=165",
+   "swallowed_words": 12,
+   "opening": "<note>Tibetan: <term>khyab pa</term>, the logical necessity that if the reason exists, the predicate must exist</note>"
+  },
+  {
+   "vol": 182,
+   "page": 383,
+   "folio": "192b",
+   "url": "https://sourcelibrary.org/book/6abed65f896ea18127c8e6d6?page=383",
+   "swallowed_words": 16,
+   "opening": "<note>Tibetan: <term>ldog pa</term>, refers to <term>apoha</term>, the theory that words and concepts function by excluding what they are no"
+  },
+  {
+   "vol": 185,
+   "page": 127,
+   "folio": "64b",
+   "url": "https://sourcelibrary.org/book/6abed76c896ea18127c8ee40?page=127",
+   "swallowed_words": 15,
+   "opening": "<note>original: <term>vyāpti</term>, a logical necessity where the presence of the reason entails the presence of the predicate</note>"
+  },
+  {
+   "vol": 186,
+   "page": 171,
+   "folio": "86b",
+   "url": "https://sourcelibrary.org/book/6abed7ad896ea18127c8f0d2?page=171",
+   "swallowed_words": 12,
+   "opening": "<note>Tibetan: <term>rgyu mtshan</term>; here referring to the logical basis or defining characteristic of a term</note>"
+  },
+  {
+   "vol": 187,
+   "page": 263,
+   "folio": "132b",
+   "url": "https://sourcelibrary.org/book/6abed7f8896ea18127c8f2ca?page=263",
+   "swallowed_words": 12,
+   "opening": "<note>original: <term>apoha</term>, referring to the process of defining something by what it is not</note>"
+  },
+  {
+   "vol": 188,
+   "page": 490,
+   "folio": "246a",
+   "url": "https://sourcelibrary.org/book/6abed85e896ea18127c8f51a?page=490",
+   "swallowed_words": 18,
+   "opening": "<note>original: <term>anvaya</term>, the logical connection where the presence of the reason entails the presence of the property to be prov"
+  },
+  {
+   "vol": 189,
+   "page": 174,
+   "folio": "88a",
+   "url": "https://sourcelibrary.org/book/6abed8c2896ea18127c8f75e?page=174",
+   "swallowed_words": 13,
+   "opening": "<note>original: <term>vyāpti</term>; the logical necessity that if the reason exists, the property must also exist</note>"
+  },
+  {
+   "vol": 189,
+   "page": 345,
+   "folio": "173b",
+   "url": "https://sourcelibrary.org/book/6abed8c2896ea18127c8f75e?page=345",
+   "swallowed_words": 12,
+   "opening": "<note>original: <term>med na mi 'byung ba</term>; literally \"not occurring without it,\" referring to logical necessity or invariable concomi"
+  },
+  {
+   "vol": 192,
+   "page": 81,
+   "folio": "41b",
+   "url": "https://sourcelibrary.org/book/6abed9a6896ea18127c8ffaa?page=81",
+   "swallowed_words": 19,
+   "opening": "<note>Tibetan: <term>abra go</term>, likely a transliteration of the Sanskrit <term>āmra</term> (mango) or <term>kapittha</term>, though tra"
+  },
+  {
+   "vol": 193,
+   "page": 552,
+   "folio": "277a",
+   "url": "https://sourcelibrary.org/book/6abed9f5896ea18127c90242?page=552",
+   "swallowed_words": 61,
+   "opening": "<note>original: <term>rigs</term>, likely translating Sanskrit <term>jāti</term> or <term>gotra</term> is expressed, it completely excludes "
+  }
+ ],
+ "colophon_side_english_omits_ending": [
+  {
+   "vol": 5,
+   "page": 225,
+   "folio": "113b",
+   "url": "https://sourcelibrary.org/book/6abe84986a920ffd924d328a?page=225",
+   "tibetan_ending": "་ཤེས་ཀྱི་རང་བཞིན་ཅན་ནོ། །གང་དེ་ཞེས་པ་ནི་གཏན་ལ་ཕབ་པར་མི་"
+  },
+  {
+   "vol": 5,
+   "page": 486,
+   "folio": "244a",
+   "url": "https://sourcelibrary.org/book/6abe84986a920ffd924d328a?page=486",
+   "tibetan_ending": "ིན་ནོ། །བསྟན་པ་མིང་བསྡུས་པ་ནི་ལྷན་སྐྱེས་གཏན་ལ་ཕབ་པའམ་སེ"
+  },
+  {
+   "vol": 6,
+   "page": 153,
+   "folio": "77b",
+   "url": "https://sourcelibrary.org/book/6abe84ce6a920ffd924d350e?page=153",
+   "tibetan_ending": "ས་པ་ལ་ནི་ས་བོན་བསྡུ། །གསུམ་པ་ལ་ནི་གཟུགས་རྫོགས་ཏེ། །བཞ"
+  },
+  {
+   "vol": 6,
+   "page": 515,
+   "folio": "258b",
+   "url": "https://sourcelibrary.org/book/6abe84ce6a920ffd924d350e?page=515",
+   "tibetan_ending": "ག་ཏུ་ཞེས་པ་ནི་ཡི་གེ་གཉིས་ཀྱི་སྒོའི་མཆོག་གཏན་ལ་ཕབ་པའོ། །"
+  },
+  {
+   "vol": 8,
+   "page": 10,
+   "folio": "6a",
+   "url": "https://sourcelibrary.org/book/6abe85c46a920ffd924d39fc?page=10",
+   "tibetan_ending": "་མེད་པས་ཤེས་བྱ་མ་ཡིན་ཞིང་རྗེས་སུ་དཔག་པས་གཏན་ལ་ཕབ་པའི་རྟ"
+  },
+  {
+   "vol": 8,
+   "page": 589,
+   "folio": "295b",
+   "url": "https://sourcelibrary.org/book/6abe85c46a920ffd924d39fc?page=589",
+   "tibetan_ending": "འི་དུས་སུ་ཇི་ལྟར་ཡེ་ཤེས་ཉམས་སུ་མྱོང་ཞིང་གཏན་ལ་ཕབ་པ་དེ་བ"
+  },
+  {
+   "vol": 9,
+   "page": 142,
+   "folio": "72a",
+   "url": "https://sourcelibrary.org/book/6abe86096a920ffd924d3c92?page=142",
+   "tibetan_ending": "ས་པ་ལ་ནི་ས་བོན་བསྡུ། །གསུམ་པ་ལ་ནི་གཟུགས་རྫོགས་ཏེ། །བཞ"
+  },
+  {
+   "vol": 9,
+   "page": 550,
+   "folio": "276a",
+   "url": "https://sourcelibrary.org/book/6abe86096a920ffd924d3c92?page=550",
+   "tibetan_ending": "ས་ཅད་སྒྲིབ་པ་རྣམ་པ་གཉིས་བྱང་། ཚོགས་གཉིས་རྫོགས་ཏེ། འདི"
+  },
+  {
+   "vol": 10,
+   "page": 266,
+   "folio": "134a",
+   "url": "https://sourcelibrary.org/book/6abe86656a920ffd924d3f40?page=266",
+   "tibetan_ending": "ེར་གྱུར་ཅིག །སློབ་དཔོན་དྷརྨཱ་པ་ཀས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 10,
+   "page": 282,
+   "folio": "141a",
+   "url": "https://sourcelibrary.org/book/6abe86656a920ffd924d3f40?page=282",
+   "tibetan_ending": "ཅོལ་ལོ། །བཟོད་གསོལ་བྱས་ལ་གཤེགས་སུ་གསོལ། རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 11,
+   "page": 155,
+   "folio": "78b",
+   "url": "https://sourcelibrary.org/book/6abe86b96a920ffd924d4220?page=155",
+   "tibetan_ending": "ས་སྦྱིན་བྱེད་པ། །དེ་ དག་བསོད་ནམས་ཡེ་ཤེས་རྫོགས་ཏེ་མཆོག"
+  },
+  {
+   "vol": 13,
+   "page": 357,
+   "folio": "179b",
+   "url": "https://sourcelibrary.org/book/6abe88866a920ffd924d46a0?page=357",
+   "tibetan_ending": "ནང་དུ་ལུས་ པོ་དང་། །ཕྱི་རོལ་དམ་ཚིག་སེམས་རྫོགས་སོ། །མང"
+  },
+  {
+   "vol": 14,
+   "page": 412,
+   "folio": "207a",
+   "url": "https://sourcelibrary.org/book/6abe89136a920ffd924d4900?page=412",
+   "tibetan_ending": "་ལ་སོགས་པར་གསུངས་པ་སྦྱོར་བ་ཡན་ལག་དྲུག་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 14,
+   "page": 496,
+   "folio": "249a",
+   "url": "https://sourcelibrary.org/book/6abe89136a920ffd924d4900?page=496",
+   "tibetan_ending": "འ་བ་ནི་ ལོངས་སྤྱོད་ཀྱི་འཁོར་ལོར་ཡོངས་སུ་རྫོགས་སོ། །དེ"
+  },
+  {
+   "vol": 15,
+   "page": 371,
+   "folio": "186b",
+   "url": "https://sourcelibrary.org/book/6abe89c46a920ffd924d4b92?page=371",
+   "tibetan_ending": "བརྗོད་པར་བྱའོ། །འདིར་རྗོད་ པར་བྱེད་པ་ནི་ལེའུ་བཅུ་བཞིའི་ཚིག་དང་ཡི་གེའི་ཚོགས་སུ་གནས་པའོ། །ཡང"
+  },
+  {
+   "vol": 18,
+   "page": 415,
+   "folio": "208b",
+   "url": "https://sourcelibrary.org/book/6abe8add6a920ffd924d507a?page=415",
+   "tibetan_ending": "་མེད་ད་ལྟར་བསྟན་བཅོས་དོན་རྣམ་པར་ངེས་ཤིང་གཏན་ལ་ཕབ་པ་མངོན"
+  },
+  {
+   "vol": 20,
+   "page": 4,
+   "folio": "3a",
+   "url": "https://sourcelibrary.org/book/6abe8c706a920ffd924d545a?page=4",
+   "tibetan_ending": "ྷ་ག་རྣམས་སུ་ནི་རྡོ་རྗེ་ཕག་མོ་ལ་སོགས་པའི་ལེའུ་རྣམས་སུ་རྩེན་པ་དང་ལྡན་པར་འགྱུར་བའོ། །"
+  },
+  {
+   "vol": 20,
+   "page": 21,
+   "folio": "11b",
+   "url": "https://sourcelibrary.org/book/6abe8c706a920ffd924d545a?page=21",
+   "tibetan_ending": "་ཚུལ་གྱིས་བཅོམ་ལྡན་འདས་ཀྱི་རྣམ་པར་གཞག་པ་ལེའུ་ཐམས་ཅད་དམ་དུམ་བུ་ཡང་རུང་རྒྱུད་རྣམས་ཀྱིས་ཡང་རྗོད་པར་བྱེད་པའོ། ། བ"
+  },
+  {
+   "vol": 21,
+   "page": 4,
+   "folio": "3a",
+   "url": "https://sourcelibrary.org/book/6abe8cd66a920ffd924d56d8?page=4",
+   "tibetan_ending": "ི་དགོས་པ་རྣམས་ཀྱང་བརྗོད་པར་བྱའོ། །དེ་ལ་ ལེའུ་སུམ་ཅུ་རྩ་གསུམ་གྱི་བདག་ཉིད་ཅན་གྱི་རྒྱུད་འདི་ནི་རྗོད་པར་བྱེད་པའོ། །རི"
+  },
+  {
+   "vol": 21,
+   "page": 727,
+   "folio": "364b",
+   "url": "https://sourcelibrary.org/book/6abe8cd66a920ffd924d56d8?page=727",
+   "tibetan_ending": "ས་ཀྱི་རིམ་པའི་འགྲེལ་པ་བསྟན་པ་སྟེ་གཉིས་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 23,
+   "page": 288,
+   "folio": "145a",
+   "url": "https://sourcelibrary.org/book/6abe8ebe6a920ffd924d5cb7?page=288",
+   "tibetan_ending": "ུ་དང་མི་རྒྱུ་བ། ། དབང་བསྐུར་སྐད་ཅིག་གིས་རྫོགས་སོ། །གང"
+  },
+  {
+   "vol": 23,
+   "page": 390,
+   "folio": "196a",
+   "url": "https://sourcelibrary.org/book/6abe8ebe6a920ffd924d5cb7?page=390",
+   "tibetan_ending": "ཱི་ཀ་རས་མཛད་པའི་རྣལ་འབྱོར་མའི་སྒྲུབ་ཐབས་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 23,
+   "page": 391,
+   "folio": "196b",
+   "url": "https://sourcelibrary.org/book/6abe8ebe6a920ffd924d5cb7?page=391",
+   "tibetan_ending": "་རྡོ་རྗེ་རྣལ་འབྱོར་མ་དམར་མོའི་སྒྲུབ་ཐབས་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 24,
+   "page": 209,
+   "folio": "105b",
+   "url": "https://sourcelibrary.org/book/6abe8f0c6a920ffd924d5eab?page=209",
+   "tibetan_ending": "འི་རིམ་པའི་རྗེས་སུ་གནང་བ་སྦྱིན་པའི་ཆོ་ག་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 25,
+   "page": 535,
+   "folio": "268b",
+   "url": "https://sourcelibrary.org/book/6abe8fd66a920ffd924d60bd?page=535",
+   "tibetan_ending": "་བྱའོ། །སློབ་དཔོན་ཆེན་པོ་ནག་པོ་པས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 26,
+   "page": 688,
+   "folio": "345a",
+   "url": "https://sourcelibrary.org/book/6abe90286a920ffd924d6333?page=688",
+   "tibetan_ending": "་སེར་བ་འབེབས་པའོ། །བྱང་ཕྱོགས་(གྱི་,ཀྱི་)ལེའུ་ཚེ་ལ་ནམ་མཁའི་སྤྱན་ལྡན་མའི་པདྨའི་དཀྱིལ་འཁོར་ལ་མིག་གིས་མཚན་པའོ། །ལྷ"
+  },
+  {
+   "vol": 26,
+   "page": 690,
+   "folio": "346a",
+   "url": "https://sourcelibrary.org/book/6abe90286a920ffd924d6333?page=690",
+   "tibetan_ending": "པའི་དབུ་རྒྱན་རྩེ་ལྔ་པའོ། །ལྷོ་ཕྱོགས་ཀྱི་ལེའུ་ཚེ་ལ་གཏེར་གྱི་བུམ་པའོ། །ནུ"
+  },
+  {
+   "vol": 27,
+   "page": 199,
+   "folio": "100b",
+   "url": "https://sourcelibrary.org/book/6abe90fc6a920ffd924d66a3?page=199",
+   "tibetan_ending": "་པ་ནི་མི་གནས་པའི་མྱ་ངན་ལས་འདས་པ་ཡོངས་སུ་རྫོགས་ཏེ་དེའི"
+  },
+  {
+   "vol": 27,
+   "page": 615,
+   "folio": "308b",
+   "url": "https://sourcelibrary.org/book/6abe90fc6a920ffd924d66a3?page=615",
+   "tibetan_ending": "་མཛད་རིན་ཆེན་ཚོགས། །དོན་ཀུན་སྣང་བའི་གནས་རྫོགས་ཏེ། །སང"
+  },
+  {
+   "vol": 28,
+   "page": 64,
+   "folio": "33a",
+   "url": "https://sourcelibrary.org/book/6abe914a6a920ffd924d6915?page=64",
+   "tibetan_ending": "མས་ཆོམ་རྐུན་བཅིང་བ་ཞེས་བྱ་བའི་སྒྲུབ་ཐབས་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 28,
+   "page": 221,
+   "folio": "111b",
+   "url": "https://sourcelibrary.org/book/6abe914a6a920ffd924d6915?page=221",
+   "tibetan_ending": "མ་སྒྲོལ་མའི་མན་ངག་མེ་ལོང་དངས་པ་ཞེས་བྱ་བ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 28,
+   "page": 230,
+   "folio": "116a",
+   "url": "https://sourcelibrary.org/book/6abe914a6a920ffd924d6915?page=230",
+   "tibetan_ending": "ནའི་རྣལ་འབྱོར་ལ་འཇུག་པའི་མན་ངག་ཅེས་བྱ་བ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 30,
+   "page": 439,
+   "folio": "220b",
+   "url": "https://sourcelibrary.org/book/6abe91fc6a920ffd924d6de7?page=439",
+   "tibetan_ending": "བྱེ་བས་ཕྱེ་བ་ཡིན། །ཞེས་པ་ནི། སྔར་རྩ་བའི་ལེའུ་དེ་དག་ཏུ་གསལ་བར་བཤད་པའོ། །འད"
+  },
+  {
+   "vol": 32,
+   "page": 339,
+   "folio": "170b",
+   "url": "https://sourcelibrary.org/book/6abe92d06a920ffd924d7166?page=339",
+   "tibetan_ending": "འི་བར་དུ་དཀྱིལ་འཁོར་རྒྱལ་བ་མཆོག་ཡོངས་སུ་རྫོགས་ཏེ་ལས་ཀ"
+  },
+  {
+   "vol": 35,
+   "page": 388,
+   "folio": "195a",
+   "url": "https://sourcelibrary.org/book/6abe93ef6a920ffd924d7706?page=388",
+   "tibetan_ending": "་བཤད་པ་རྣལ་འབྱོར་པའི་ཡིད་འཕྲོག་ཅེས་བྱ་བ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 39,
+   "page": 225,
+   "folio": "113b",
+   "url": "https://sourcelibrary.org/book/6abe974b6a920ffd924d7dd6?page=225",
+   "tibetan_ending": "་དགབ། །ཡི་དམ་ལྷ་ཡི་ས་བོན་གྱིས། །ཧོམ་ཁུང་རྫོགས་ཏེ་ལྷ་ཡ"
+  },
+  {
+   "vol": 40,
+   "page": 606,
+   "folio": "304a",
+   "url": "https://sourcelibrary.org/book/6abe98196a920ffd924d8054?page=606",
+   "tibetan_ending": "པས་ས་བོན་སྡུད་པ་ཡིན། །གསུམ་པ་ལ་ནི་གཟུགས་རྫོགས་ཏེ། །བཞ"
+  },
+  {
+   "vol": 41,
+   "page": 213,
+   "folio": "107b",
+   "url": "https://sourcelibrary.org/book/6abe98e76a920ffd924d82e0?page=213",
+   "tibetan_ending": "། །མཆོག་ཅེས་བྱ་བ་ནི་དམ་པའོ། །སྒྲུབ་ པའི་ལེའུ་རྣམས་ཀྱི་སྦས་པའི་ཚིག་གི་དོན་བཤད་པ་ཞར་ལ་འོངས་པ་དང་བཅས་པའོ། །ཐབ"
+  },
+  {
+   "vol": 42,
+   "page": 39,
+   "folio": "20b",
+   "url": "https://sourcelibrary.org/book/6abe998b6a920ffd924d8554?page=39",
+   "tibetan_ending": "ཏུ་བརྡུང་བར་བྱ། །ཡོངས་སུ་བསྲུང་བའི་ཆོ་ག་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 44,
+   "page": 178,
+   "folio": "90a",
+   "url": "https://sourcelibrary.org/book/6abe9a356a920ffd924d88dc?page=178",
+   "tibetan_ending": "འཁོར་ལོ་ཞེས་བྱ་བ་བསམ་གཏན་གྱི་དཀྱིལ་འཁོར་རྫོགས་སོ་ཞེས་"
+  },
+  {
+   "vol": 44,
+   "page": 213,
+   "folio": "107b",
+   "url": "https://sourcelibrary.org/book/6abe9a356a920ffd924d88dc?page=213",
+   "tibetan_ending": "ཁོར་རྒྱལ་པོ་མཆོག་ཅེས་བྱ་བའི་ཏིང་ངེ་འཛིན་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 44,
+   "page": 214,
+   "folio": "108a",
+   "url": "https://sourcelibrary.org/book/6abe9a356a920ffd924d88dc?page=214",
+   "tibetan_ending": "་ཀྱི་རྒྱལ་བ་མཆོག་ཅེས་བྱ་བའི་ཏིང་ངེ་འཛིན་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 44,
+   "page": 569,
+   "folio": "285b",
+   "url": "https://sourcelibrary.org/book/6abe9a356a920ffd924d88dc?page=569",
+   "tibetan_ending": "མས་ཅད་ལ་ནི་མི་བསྐྱོད་པས་དབུ་བརྒྱན་པའོ། །རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 44,
+   "page": 570,
+   "folio": "286a",
+   "url": "https://sourcelibrary.org/book/6abe9a356a920ffd924d88dc?page=570",
+   "tibetan_ending": "སློང་འོད་སྲུངས་གཞོན་ནུའི་ཞལ་སྔ་ནས་མཛད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 46,
+   "page": 600,
+   "folio": "301a",
+   "url": "https://sourcelibrary.org/book/6abe9b4b6a920ffd924d8d38?page=600",
+   "tibetan_ending": "དཔའ་རྫོགས་ཏེ། ཕྱག"
+  },
+  {
+   "vol": 47,
+   "page": 178,
+   "folio": "90a",
+   "url": "https://sourcelibrary.org/book/6abe9bd76a920ffd924d8fdc?page=178",
+   "tibetan_ending": "ན་མཁས་པ་ཆེན་པོ་དཔལ་རྡོ་རྗེའི་བློས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 47,
+   "page": 365,
+   "folio": "184b",
+   "url": "https://sourcelibrary.org/book/6abe9bd76a920ffd924d8fdc?page=365",
+   "tibetan_ending": "་ཤར་ཕྱོགས་ཀྱི་པཎྜི་ཏ་ཨ་མོ་གྷ་བཛྲས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 47,
+   "page": 420,
+   "folio": "212a",
+   "url": "https://sourcelibrary.org/book/6abe9bd76a920ffd924d8fdc?page=420",
+   "tibetan_ending": "་དང་ལྡན་པར་བྱའོ། །དྲག་པོའི་འཁོར་ལོའི་ལས་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 47,
+   "page": 423,
+   "folio": "213b",
+   "url": "https://sourcelibrary.org/book/6abe9bd76a920ffd924d8fdc?page=423",
+   "tibetan_ending": " །དམ་རྫས་རྨད་དུ་བསྒྱུར་ཏེ་བསྟན་པའི་ཆོ་ག་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 47,
+   "page": 433,
+   "folio": "218b",
+   "url": "https://sourcelibrary.org/book/6abe9bd76a920ffd924d8fdc?page=433",
+   "tibetan_ending": "་གཡོས་པའི། ། མཉམ་ཉིད་སྐུ་ལ་ཕྱག་འཚལ་ལོ། །རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 48,
+   "page": 38,
+   "folio": "20a",
+   "url": "https://sourcelibrary.org/book/6abe9c216a920ffd924d91c8?page=38",
+   "tibetan_ending": "ྱ་ཀླུའི་གདོན་གྱིས་ཟིན་པར་བྱ་བའི་སྦྱོར་བ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 48,
+   "page": 43,
+   "folio": "22b",
+   "url": "https://sourcelibrary.org/book/6abe9c216a920ffd924d91c8?page=43",
+   "tibetan_ending": "ྱུང་པོ་སྨྱོ་འདྲེས་ཟིན་པར་བྱ་བའི་སྦྱོར་བ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 48,
+   "page": 67,
+   "folio": "34b",
+   "url": "https://sourcelibrary.org/book/6abe9c216a920ffd924d91c8?page=67",
+   "tibetan_ending": "ས་རྩ་བ་རྒྱས་པའི་འཁོར་ལོ་ཞེས་བྱ་བ་བསྟན་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 48,
+   "page": 80,
+   "folio": "41a",
+   "url": "https://sourcelibrary.org/book/6abe9c216a920ffd924d91c8?page=80",
+   "tibetan_ending": "ེ་བར་བསྐུལ་བ་ ཞེས་བྱ་བའི་བདག་ཉིད་བསྟན་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 48,
+   "page": 126,
+   "folio": "64a",
+   "url": "https://sourcelibrary.org/book/6abe9c216a920ffd924d91c8?page=126",
+   "tibetan_ending": "མཚན་ཉིད་ཅེས་བྱ་བ་ཉེ་བར་བསྟན་པའི་མཚན་ཉིད་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 48,
+   "page": 151,
+   "folio": "76b",
+   "url": "https://sourcelibrary.org/book/6abe9c216a920ffd924d91c8?page=151",
+   "tibetan_ending": "་ཇི་ལྟར་རྙེད་པ་ཀླུའི་བྱང་ཆུབ་ཀྱིས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 48,
+   "page": 188,
+   "folio": "95a",
+   "url": "https://sourcelibrary.org/book/6abe9c216a920ffd924d91c8?page=188",
+   "tibetan_ending": "ཏེ་གཏན་ལ་ཕབ་པའོ།། "
+  },
+  {
+   "vol": 48,
+   "page": 271,
+   "folio": "136b",
+   "url": "https://sourcelibrary.org/book/6abe9c216a920ffd924d91c8?page=271",
+   "tibetan_ending": "ཆེན་པོ་འཇིགས་མེད་འབྱུང་གནས་སྦས་པས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 48,
+   "page": 306,
+   "folio": "154a",
+   "url": "https://sourcelibrary.org/book/6abe9c216a920ffd924d91c8?page=306",
+   "tibetan_ending": "གྱུར་ བའི་དགའ་བྱེད་ཅེས་བྱ་བའི་སྒྲུབ་ཐབས་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 48,
+   "page": 425,
+   "folio": "213b",
+   "url": "https://sourcelibrary.org/book/6abe9c216a920ffd924d91c8?page=425",
+   "tibetan_ending": "རང་བཞིན་དུ་རྫོགས་ཏེ་བསམ་"
+  },
+  {
+   "vol": 49,
+   "page": 306,
+   "folio": "154a",
+   "url": "https://sourcelibrary.org/book/6abe9cd56a920ffd924d937e?page=306",
+   "tibetan_ending": "ཆེན་པོས་བླང་ངོ་། །རྡོ་རྗེ་གླུའི་གདམས་ངག་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 50,
+   "page": 176,
+   "folio": "89a",
+   "url": "https://sourcelibrary.org/book/6abe9d656a920ffd924d9632?page=176",
+   "tibetan_ending": "ང་། དགོས་པ་དང་། དགོས་པའི་ཡང་དགོས་པ་རྣམས་གཏན་ལ་ཕབ་པ་སྔོན"
+  },
+  {
+   "vol": 51,
+   "page": 134,
+   "folio": "68a",
+   "url": "https://sourcelibrary.org/book/6abe9d9d6a920ffd924d9828?page=134",
+   "tibetan_ending": "ལ་བའི་རྗེས་སུ་འགྲོ་བ་དེ་ཁོ་ན་ཉིད་གྲུབ་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 51,
+   "page": 152,
+   "folio": "77a",
+   "url": "https://sourcelibrary.org/book/6abe9d9d6a920ffd924d9828?page=152",
+   "tibetan_ending": "ཁོ་ན་ཉིད་རྣལ་དུ་མཚོན་པ་དོན་དམ་པའི་ཡི་གེ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 51,
+   "page": 175,
+   "folio": "88b",
+   "url": "https://sourcelibrary.org/book/6abe9d9d6a920ffd924d9828?page=175",
+   "tibetan_ending": "ལ་སོགས་པ་བླ་ན་མེད་པའི་བསོད་ནམས་ཀྱི་ཚོགས་རྫོགས་ཏེ་ཚེ་འ"
+  },
+  {
+   "vol": 51,
+   "page": 281,
+   "folio": "141b",
+   "url": "https://sourcelibrary.org/book/6abe9d9d6a920ffd924d9828?page=281",
+   "tibetan_ending": "་སྤྲོ། །ཨུ་པ་དེ་ཤ་པ་ར་མ་པ་ཡ། གསང་བ་དམ་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 52,
+   "page": 47,
+   "folio": "24b",
+   "url": "https://sourcelibrary.org/book/6abeace1896ea18127c80d7a?page=47",
+   "tibetan_ending": "ང་འགྲེལ་ལྷ་ལྕམ་རྗེ་བཙུན་མ་དཔལ་མོས་མཛད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 52,
+   "page": 211,
+   "folio": "106b",
+   "url": "https://sourcelibrary.org/book/6abeace1896ea18127c80d7a?page=211",
+   "tibetan_ending": "ངས་པའི་གླུ། འདི་དཔེ་དོན་མ་ལུས་པར་བསྟན་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 52,
+   "page": 224,
+   "folio": "113a",
+   "url": "https://sourcelibrary.org/book/6abeace1896ea18127c80d7a?page=224",
+   "tibetan_ending": "ུའི་མཛོད་འཆི་མེད་རྡོ་རྗེའི་གླུ་ཞེས་བྱ་བ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 52,
+   "page": 303,
+   "folio": "152b",
+   "url": "https://sourcelibrary.org/book/6abeace1896ea18127c80d7a?page=303",
+   "tibetan_ending": "ྡོ་རྗེའི་གླུ་བརྡ་བརྒྱུད་གསང་བའི་སྒྲོན་མ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 52,
+   "page": 603,
+   "folio": "302b",
+   "url": "https://sourcelibrary.org/book/6abeace1896ea18127c80d7a?page=603",
+   "tibetan_ending": "་བ་མཁའ་འགྲོ་མའི་གསང་ཚིག་ཏིལླི་པས་བཀོད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 53,
+   "page": 1,
+   "folio": "1b",
+   "url": "https://sourcelibrary.org/book/6abe9e9a6a920ffd924d9ab6?page=1",
+   "tibetan_ending": "རྣལ་འབྱོར་གྱི་དབང་ཕྱུག་ཤཱནྟ་དེ་བས་མཛད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 53,
+   "page": 20,
+   "folio": "11a",
+   "url": "https://sourcelibrary.org/book/6abe9e9a6a920ffd924d9ab6?page=20",
+   "tibetan_ending": "མན་ངག་ཅེས་བྱ་བ་སློབ་དཔོན་མི་ནཱ་པས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 53,
+   "page": 48,
+   "folio": "25a",
+   "url": "https://sourcelibrary.org/book/6abe9e9a6a920ffd924d9ab6?page=48",
+   "tibetan_ending": "དཔོན་བི་རཱུ་པ་ནས་བརྒྱུད་པ་ཀ་མ་རིས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 53,
+   "page": 49,
+   "folio": "25b",
+   "url": "https://sourcelibrary.org/book/6abe9e9a6a920ffd924d9ab6?page=49",
+   "tibetan_ending": "མ་པ་ཞེས་བྱ་བ་སློབ་དཔོན་ཛཱ་ལནྡྷ་རས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 53,
+   "page": 57,
+   "folio": "29b",
+   "url": "https://sourcelibrary.org/book/6abe9e9a6a920ffd924d9ab6?page=57",
+   "tibetan_ending": "ྣལ་འབྱོར་ཞེས་བྱ་བ་སློབ་དཔོན་གནྡྷས་མཛད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 53,
+   "page": 62,
+   "folio": "32a",
+   "url": "https://sourcelibrary.org/book/6abe9e9a6a920ffd924d9ab6?page=62",
+   "tibetan_ending": "ྲམ་པ་ཞེས་བྱ་བ་སློབ་དཔོན་ལུ་ཙི་ཀིས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 53,
+   "page": 72,
+   "folio": "37a",
+   "url": "https://sourcelibrary.org/book/6abe9e9a6a920ffd924d9ab6?page=72",
+   "tibetan_ending": "མས་ངག་ཅེས་བྱ་བ་སློབ་དཔོན་ཀོ་ཀི་ལས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 53,
+   "page": 132,
+   "folio": "67a",
+   "url": "https://sourcelibrary.org/book/6abe9e9a6a920ffd924d9ab6?page=132",
+   "tibetan_ending": "མགུར་ཆེན་པོ་བརྒྱད་ལས་བརྡ་སྐོར་རྣམ་པ་བཞི་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 53,
+   "page": 169,
+   "folio": "85b",
+   "url": "https://sourcelibrary.org/book/6abe9e9a6a920ffd924d9ab6?page=169",
+   "tibetan_ending": "ི་མན་ངག་ཐིག་ལེ་གསེར་གྱི་ཕྲེང་བ་ཞེས་བྱ་བ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 53,
+   "page": 410,
+   "folio": "206a",
+   "url": "https://sourcelibrary.org/book/6abe9e9a6a920ffd924d9ab6?page=410",
+   "tibetan_ending": "་དང་ཡན་ལག་གི་དམ་ཚིག་དངོས་གཞི་དང་སྦྱོར་བ་རྫོགས་ཏེ། ཉམས"
+  },
+  {
+   "vol": 53,
+   "page": 552,
+   "folio": "277a",
+   "url": "https://sourcelibrary.org/book/6abe9e9a6a920ffd924d9ab6?page=552",
+   "tibetan_ending": "ར་བསྡུས་པ་སློབ་དཔོན་གཟུགས་བཟང་གིས་མཛད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 56,
+   "page": 152,
+   "folio": "77a",
+   "url": "https://sourcelibrary.org/book/6abe9f2c6a920ffd924da190?page=152",
+   "tibetan_ending": "བྱ་བའི་དཀྱིལ་འཁོར་གྱི་ཆོ་ག་རྒྱས་པ་རྫོགས་སོ་ཞེས་"
+  },
+  {
+   "vol": 56,
+   "page": 329,
+   "folio": "165b",
+   "url": "https://sourcelibrary.org/book/6abe9f2c6a920ffd924da190?page=329",
+   "tibetan_ending": "་ཀོ་ས་ལའི་རྒྱན་ལས་རྒྱུད་ཕྱི་མའི་འགྲེལ་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 56,
+   "page": 341,
+   "folio": "171b",
+   "url": "https://sourcelibrary.org/book/6abe9f2c6a920ffd924da190?page=341",
+   "tibetan_ending": "།རྡོ་རྗེ་རིགས་ཀྱི་ཡོ་བྱད་དང་ཆོ་ག་རྒྱས་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 58,
+   "page": 22,
+   "folio": "12a",
+   "url": "https://sourcelibrary.org/book/6abea00c6a920ffd924da68a?page=22",
+   "tibetan_ending": "བ་ལས་ཕྱི་རོལ་གྱི་རྡོ་རྗེ་རིགས་ཀྱི་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 58,
+   "page": 320,
+   "folio": "161a",
+   "url": "https://sourcelibrary.org/book/6abea00c6a920ffd924da68a?page=320",
+   "tibetan_ending": "ོའི་རིགས་ཀྱི་ཕྱག་རྒྱ་བཞི་པའི་དཀྱིལ་འཁོར་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 58,
+   "page": 514,
+   "folio": "258a",
+   "url": "https://sourcelibrary.org/book/6abea00c6a920ffd924da68a?page=514",
+   "tibetan_ending": "་ཀྱི་དཀྱིལ་འཁོར་གྱི་རྒྱུད་ཕྱི་མའི་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 58,
+   "page": 539,
+   "folio": "270b",
+   "url": "https://sourcelibrary.org/book/6abea00c6a920ffd924da68a?page=539",
+   "tibetan_ending": "ཐམས་ཅད་ཀྱི་ལས་ཀྱི་དཀྱིལ་འཁོར་གྱི་ བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 58,
+   "page": 600,
+   "folio": "301a",
+   "url": "https://sourcelibrary.org/book/6abea00c6a920ffd924da68a?page=600",
+   "tibetan_ending": "་པ་ཐམས་ཅད་ཀྱི་རྒྱུད་ཕྱི་མའི་ཕྱི་མ་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 59,
+   "page": 237,
+   "folio": "119b",
+   "url": "https://sourcelibrary.org/book/6abea0b56a920ffd924da906?page=237",
+   "tibetan_ending": "། །སློབ་མ་གཞུག་པ་ལ་སོགས་པའི་ཆོ་ག་རྒྱས་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 59,
+   "page": 365,
+   "folio": "183b",
+   "url": "https://sourcelibrary.org/book/6abea0b56a920ffd924da906?page=365",
+   "tibetan_ending": "ུག་པར་བྱའོ། །སློབ་ དཔོན་གྱི་ལས་ཀྱི་ཆོ་ག་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 59,
+   "page": 463,
+   "folio": "232b",
+   "url": "https://sourcelibrary.org/book/6abea0b56a920ffd924da906?page=463",
+   "tibetan_ending": "ཆོག་དང་པོའི་མ་མོའི་དཀྱིལ་འཁོར་གྱི་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 60,
+   "page": 73,
+   "folio": "37b",
+   "url": "https://sourcelibrary.org/book/6abea1016a920ffd924daaec?page=73",
+   "tibetan_ending": "ུག་པར་བྱའོ། །སློབ་ དཔོན་གྱི་ལས་ཀྱི་ཆོ་ག་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 60,
+   "page": 152,
+   "folio": "77a",
+   "url": "https://sourcelibrary.org/book/6abea1016a920ffd924daaec?page=152",
+   "tibetan_ending": "པར་བྱའོ། །སློབ་མ་གཞུག་པ་ལ་སོགས་པའི་ཆོ་ག་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 60,
+   "page": 187,
+   "folio": "94b",
+   "url": "https://sourcelibrary.org/book/6abea1016a920ffd924daaec?page=187",
+   "tibetan_ending": "ཞུག་པར་བྱའོ། །སློབ་དཔོན་གྱི་ལས་ཀྱི་ཆོ་ག་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 60,
+   "page": 334,
+   "folio": "168a",
+   "url": "https://sourcelibrary.org/book/6abea1016a920ffd924daaec?page=334",
+   "tibetan_ending": "།སྲིང་མོ་བཞིའི་ཕྱག་རྒྱའི་རྟོག་པའི་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 60,
+   "page": 561,
+   "folio": "281b",
+   "url": "https://sourcelibrary.org/book/6abea1016a920ffd924daaec?page=561",
+   "tibetan_ending": "། །སློབ་མ་གཞུག་པ་ལ་སོགས་པའི་ཆོ་ག་རྒྱས་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 60,
+   "page": 626,
+   "folio": "314a",
+   "url": "https://sourcelibrary.org/book/6abea1016a920ffd924daaec?page=626",
+   "tibetan_ending": "་བར་བྱའོ། །སློབ་དཔོན་ལས་ཀྱི་ཆོ་ག་རྒྱས་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 60,
+   "page": 702,
+   "folio": "352a",
+   "url": "https://sourcelibrary.org/book/6abea1016a920ffd924daaec?page=702",
+   "tibetan_ending": "འཕགས་པ་ནམ་མཁའི་སྙིང་པོའི་རྟོག་པའི་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 61,
+   "page": 8,
+   "folio": "5a",
+   "url": "https://sourcelibrary.org/book/6abea14b6a920ffd924dadae?page=8",
+   "tibetan_ending": "ཇིག་རྟེན་གསུམ་འབྱིན་པའི་རྒྱུད་ཀྱི་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 61,
+   "page": 12,
+   "folio": "7a",
+   "url": "https://sourcelibrary.org/book/6abea14b6a920ffd924dadae?page=12",
+   "tibetan_ending": "བསྔལ་ཐམས་ཅད་ལས་འདོན་པའི་རྒྱུད་ཀྱི་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 61,
+   "page": 139,
+   "folio": "70b",
+   "url": "https://sourcelibrary.org/book/6abea14b6a920ffd924dadae?page=139",
+   "tibetan_ending": "གསང་བའི་རས་རིས་ཀྱི་དཀྱིལ་འཁོར་གྱི་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 61,
+   "page": 165,
+   "folio": "83b",
+   "url": "https://sourcelibrary.org/book/6abea14b6a920ffd924dadae?page=165",
+   "tibetan_ending": "གས་ཀྱི་རས་རིས་ཀྱི་ དཀྱིལ་འཁོར་གྱི་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 62,
+   "page": 241,
+   "folio": "121b",
+   "url": "https://sourcelibrary.org/book/6abea1d86a920ffd924db084?page=241",
+   "tibetan_ending": "བྱའོ། །སློབ་དཔོན་གྱི་ལས་ཀྱི་ཆོ་ག་རྒྱས་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 63,
+   "page": 589,
+   "folio": "295b",
+   "url": "https://sourcelibrary.org/book/6abea2356a920ffd924db35a?page=589",
+   "tibetan_ending": "པས་ནི་སྦྱིན་པའི་ཕ་རོལ་ཏུ་ཕྱིན་པ་ཡོངས་སུ་རྫོགས་སོ། །མི"
+  },
+  {
+   "vol": 64,
+   "page": 104,
+   "folio": "53a",
+   "url": "https://sourcelibrary.org/book/6abea2b96a920ffd924db5b6?page=104",
+   "tibetan_ending": "ང་ལྡན་པས་ཉན་ཐོས་པའོ། །ཚུལ་ཁྲིམས་མཐའ་ དག་རྫོགས་ཏེ་ཟླ་བ"
+  },
+  {
+   "vol": 64,
+   "page": 152,
+   "folio": "77a",
+   "url": "https://sourcelibrary.org/book/6abea2b96a920ffd924db5b6?page=152",
+   "tibetan_ending": "ཐམས་ཅད་སོ་སོར་རིག་ཅིང་ཆོས་ཀྱི་དབྱིངས་སུ་རྫོགས་ཏེ། ཅི་"
+  },
+  {
+   "vol": 64,
+   "page": 466,
+   "folio": "234a",
+   "url": "https://sourcelibrary.org/book/6abea2b96a920ffd924db5b6?page=466",
+   "tibetan_ending": "ི། རྣམ་པ་ཉི་ཤུ་བྱང་ཆུབ་འཆང་། །ཞེས་བྱ་བར་རྫོགས་སོ། །རྫ"
+  },
+  {
+   "vol": 65,
+   "page": 28,
+   "folio": "14b",
+   "url": "https://sourcelibrary.org/book/6abea35a6a920ffd924db7de?page=28",
+   "tibetan_ending": "།སློབ་དཔོན་འཇམ་དཔལ་བཤེས་གཉེན་གྱིས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 65,
+   "page": 31,
+   "folio": "16a",
+   "url": "https://sourcelibrary.org/book/6abea35a6a920ffd924db7de?page=31",
+   "tibetan_ending": "ཛད་དབུགས་དབྱུང་བའི་དཀྱིལ་འཁོར་གྱི་ཆོ་ ག་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 65,
+   "page": 35,
+   "folio": "18a",
+   "url": "https://sourcelibrary.org/book/6abea35a6a920ffd924db7de?page=35",
+   "tibetan_ending": "ལྡན་དབུགས་དབྱུང་བའི་དཀྱིལ་འཁོར་གྱི་ཆོ་ག་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 65,
+   "page": 38,
+   "folio": "19b",
+   "url": "https://sourcelibrary.org/book/6abea35a6a920ffd924db7de?page=38",
+   "tibetan_ending": "་སློབ་དཔོན་འཇམ་དཔལ་བཤེས་གཉེན་གྱིས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 65,
+   "page": 60,
+   "folio": "30b",
+   "url": "https://sourcelibrary.org/book/6abea35a6a920ffd924db7de?page=60",
+   "tibetan_ending": "གཏན་ལ་ཕབ་པའོ།། "
+  },
+  {
+   "vol": 65,
+   "page": 138,
+   "folio": "69b",
+   "url": "https://sourcelibrary.org/book/6abea35a6a920ffd924db7de?page=138",
+   "tibetan_ending": "ལུས་སུ་བསྐྱེད་པར་ངེས། །དེ་ནི་བཅུ་གཉིས་ས་རྫོགས་ཏེ། །ཀུ"
+  },
+  {
+   "vol": 65,
+   "page": 214,
+   "folio": "107b",
+   "url": "https://sourcelibrary.org/book/6abea35a6a920ffd924db7de?page=214",
+   "tibetan_ending": "ོབ་པར་ཤོག །སློབ་དཔོན་ཤཱནྟིཾ་གརྦྷས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 65,
+   "page": 302,
+   "folio": "151b",
+   "url": "https://sourcelibrary.org/book/6abea35a6a920ffd924db7de?page=302",
+   "tibetan_ending": "ྲྀ་ཏིས་བསྒྲིགས་ནས་སྒྲ་རང་འགྱུར་དུ་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 66,
+   "page": 68,
+   "folio": "35a",
+   "url": "https://sourcelibrary.org/book/6abea3fd6a920ffd924dba05?page=68",
+   "tibetan_ending": "པ་སྨྲྀ་ཏི་ཛྙཱ་ན་ཀཱིརྟིས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 66,
+   "page": 412,
+   "folio": "207a",
+   "url": "https://sourcelibrary.org/book/6abea3fd6a920ffd924dba05?page=412",
+   "tibetan_ending": "ྤཱ་ད་ ཡ་མི་ཞེས་བརྗོད་པས་ཡེ་ཤེས་ཀྱི་ཚོགས་རྫོགས་སོ། །ཡི"
+  },
+  {
+   "vol": 66,
+   "page": 642,
+   "folio": "322a",
+   "url": "https://sourcelibrary.org/book/6abea3fd6a920ffd924dba05?page=642",
+   "tibetan_ending": "ས་དེ་ས་བཅུ་ལ་ཤིན་ཏུ་སྦྱངས་པས། ས་ཡོངས་སུ་རྫོགས་ཏེ། སངས"
+  },
+  {
+   "vol": 67,
+   "page": 466,
+   "folio": "234a",
+   "url": "https://sourcelibrary.org/book/6abead0e896ea18127c80fe0?page=466",
+   "tibetan_ending": "་ཐ་ཚིག་གོ། །སྦྱོར་བ་དང་པོའི་ཏིང་ངེ་འཛིན་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 68,
+   "page": 222,
+   "folio": "112a",
+   "url": "https://sourcelibrary.org/book/6abead3a896ea18127c81226?page=222",
+   "tibetan_ending": "་ཅད་ཀྱི་སྤྱིའི་རིམ་པ་ཞལ་དང་འདྲ་བས་མཛད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 68,
+   "page": 409,
+   "folio": "205b",
+   "url": "https://sourcelibrary.org/book/6abead3a896ea18127c81226?page=409",
+   "tibetan_ending": "ནས་བྱང་ཆུབ་པར། །སེམས་བསྐྱེད་ཙམ་གྱིས་དོན་རྫོགས་ཏེ། །གས"
+  },
+  {
+   "vol": 68,
+   "page": 435,
+   "folio": "218b",
+   "url": "https://sourcelibrary.org/book/6abead3a896ea18127c81226?page=435",
+   "tibetan_ending": "་དཀྱིལ་འཁོར་རྒྱལ་བ་མཆོག་ གི་ཏིང་ངེ་འཛིན་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 68,
+   "page": 518,
+   "folio": "260a",
+   "url": "https://sourcelibrary.org/book/6abead3a896ea18127c81226?page=518",
+   "tibetan_ending": "སློབ་དཔོན་ཆེན་པོ་ཀུན་དགའ་སྙིང་པོས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 69,
+   "page": 78,
+   "folio": "40a",
+   "url": "https://sourcelibrary.org/book/6abea5606a920ffd924dbcb1?page=78",
+   "tibetan_ending": "ས་པ་ལས་བྱུང་བའི་ཤེས་རབ་ཀྱིས་སེམས་ཤིན་ཏུ་གཏན་ལ་ཕབ་པ་སྟེ།"
+  },
+  {
+   "vol": 69,
+   "page": 242,
+   "folio": "122a",
+   "url": "https://sourcelibrary.org/book/6abea5606a920ffd924dbcb1?page=242",
+   "tibetan_ending": "མེད་ན་ཆུང་ཚད་དང་འདྲ། །ཞེས་པ་ནི་ཡོན་ཏན་མ་རྫོགས་ཏེ་གཞོན"
+  },
+  {
+   "vol": 69,
+   "page": 550,
+   "folio": "276a",
+   "url": "https://sourcelibrary.org/book/6abea5606a920ffd924dbcb1?page=550",
+   "tibetan_ending": "ི་ཡོན་ཏན་སོ་སོ་ནས་བརྗོད་ན་བསྐལ་པར་ཡང་མི་རྫོགས་ཏེ། བརྗ"
+  },
+  {
+   "vol": 69,
+   "page": 562,
+   "folio": "282a",
+   "url": "https://sourcelibrary.org/book/6abea5606a920ffd924dbcb1?page=562",
+   "tibetan_ending": "་ཤེས་རབ་མཆོག་ཁྱད་པར་དུ་རྟོགས་པ་ལ་བྱའོ། །གཏན་ལ་ཕབ་པའི་སེ"
+  },
+  {
+   "vol": 71,
+   "page": 466,
+   "folio": "234a",
+   "url": "https://sourcelibrary.org/book/6abea6ac6a920ffd924dc1ad?page=466",
+   "tibetan_ending": "འི་ཞི་བའི་འཁྲུལ་ འཁོར་གྱི་རྣམ་པར་བྱེད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 71,
+   "page": 501,
+   "folio": "251b",
+   "url": "https://sourcelibrary.org/book/6abea6ac6a920ffd924dc1ad?page=501",
+   "tibetan_ending": "རྣམ་པར་གྲག་པར་བསམ་མོ། །སྒྲའི་ལྷ་བསྒོམ་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 73,
+   "page": 144,
+   "folio": "73a",
+   "url": "https://sourcelibrary.org/book/6abea70a6a920ffd924dc6e1?page=144",
+   "tibetan_ending": "ར་ཤོག །རྗེ་བཙུན་དམ་ པ་རྒྱ་གར་གྱི་གདམས་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 73,
+   "page": 151,
+   "folio": "76b",
+   "url": "https://sourcelibrary.org/book/6abea70a6a920ffd924dc6e1?page=151",
+   "tibetan_ending": "་པའི་བསྟོད་པ་པཎྜི་ཏ་ཐིག་ལེ་བུམ་པས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 73,
+   "page": 167,
+   "folio": "84b",
+   "url": "https://sourcelibrary.org/book/6abea70a6a920ffd924dc6e1?page=167",
+   "tibetan_ending": "ིས་ བརླབས་པའི་པཎྜི་ཏ་ཆེན་པོ་མ་ཏིས་མཛད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 73,
+   "page": 213,
+   "folio": "107b",
+   "url": "https://sourcelibrary.org/book/6abea70a6a920ffd924dc6e1?page=213",
+   "tibetan_ending": "་རབ་ཏུ་བསྟོད། །དགེ་སློང་མ་དཔལ་མོས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 73,
+   "page": 219,
+   "folio": "110b",
+   "url": "https://sourcelibrary.org/book/6abea70a6a920ffd924dc6e1?page=219",
+   "tibetan_ending": "ཙནྡྲ་གོ་མིས་བསྟོད་པ་སྨྲེ་སྔགས་སུ་གསོལ་བ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 73,
+   "page": 222,
+   "folio": "112a",
+   "url": "https://sourcelibrary.org/book/6abea70a6a920ffd924dc6e1?page=222",
+   "tibetan_ending": "པོན་ཆེན་པོ་ཟླ་བ་གྲགས་པའི་ཞལ་སྔ་ནས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 73,
+   "page": 283,
+   "folio": "142b",
+   "url": "https://sourcelibrary.org/book/6abea70a6a920ffd924dc6e1?page=283",
+   "tibetan_ending": "་བྱའོ། །ཐུགས་རྗེ་ཆེན་པོའི་མཎྜལ་གྱི་ཆོ་ག་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 73,
+   "page": 299,
+   "folio": "150b",
+   "url": "https://sourcelibrary.org/book/6abea70a6a920ffd924dc6e1?page=299",
+   "tibetan_ending": "། །ཏིང་ངེ་འཛིན་བརྟན་པར་བྱེད་པའི་གདམས་ངག་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 73,
+   "page": 300,
+   "folio": "151a",
+   "url": "https://sourcelibrary.org/book/6abea70a6a920ffd924dc6e1?page=300",
+   "tibetan_ending": "ཉེ་བར་ཞི་བའོ། །བྱིན་རླབས་མི་ཟད་པའི་ཆོ་ག་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 73,
+   "page": 331,
+   "folio": "166b",
+   "url": "https://sourcelibrary.org/book/6abea70a6a920ffd924dc6e1?page=331",
+   "tibetan_ending": "ིན་སྤྱད། །བུམ་པ་བཟང་པོ་ཅན་གྱི་སྒྲུབ་ཐབས་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 73,
+   "page": 337,
+   "folio": "169b",
+   "url": "https://sourcelibrary.org/book/6abea70a6a920ffd924dc6e1?page=337",
+   "tibetan_ending": "བཅིངས་པར་ཤེས་པར་བྱ། །ར་བ་བསྲུང་བའི་ཆོ་ག་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 73,
+   "page": 354,
+   "folio": "178a",
+   "url": "https://sourcelibrary.org/book/6abea70a6a920ffd924dc6e1?page=354",
+   "tibetan_ending": "ས་བཤད། །སློབ་མ་བྱིན་གྱིས་བརླབ་པའི་མན་ངག་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 73,
+   "page": 363,
+   "folio": "182b",
+   "url": "https://sourcelibrary.org/book/6abea70a6a920ffd924dc6e1?page=363",
+   "tibetan_ending": "པོ་སྦྱིན་པར་བྱ། །ཚེ་འདས་པ་ལ་བྱ་བའི་ཆོ་ག་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 73,
+   "page": 415,
+   "folio": "208b",
+   "url": "https://sourcelibrary.org/book/6abea70a6a920ffd924dc6e1?page=415",
+   "tibetan_ending": "།#སློབ་དཔོན་འཕགས་པ་ཀླུ་སྒྲུབ་ཀྱིས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 73,
+   "page": 436,
+   "folio": "219a",
+   "url": "https://sourcelibrary.org/book/6abea70a6a920ffd924dc6e1?page=436",
+   "tibetan_ending": "།སློབ་དཔོན་སུ་ཝཱ་གཱི་ཤྭ་ར་ཀཱིརྟིས་མཛད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 73,
+   "page": 437,
+   "folio": "219b",
+   "url": "https://sourcelibrary.org/book/6abea70a6a920ffd924dc6e1?page=437",
+   "tibetan_ending": " སློབ་དཔོན་སུ་བཱ་གཱི་ཤྭ་ར་ཀཱིརྟིས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 73,
+   "page": 523,
+   "folio": "262b",
+   "url": "https://sourcelibrary.org/book/6abea70a6a920ffd924dc6e1?page=523",
+   "tibetan_ending": "ཐོབ་ཤོག །རྡོ་རྗེ་འཛིན་པའི་གཏོར་མའི་ཆོ་ག་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 73,
+   "page": 574,
+   "folio": "288a",
+   "url": "https://sourcelibrary.org/book/6abea70a6a920ffd924dc6e1?page=574",
+   "tibetan_ending": "ི་བརྗེད་པས་ལྡང་བར་བྱའོ། །བསྙེན་པའི་ཆོ་ག་རྫོགས་སོ། །དེ"
+  },
+  {
+   "vol": 73,
+   "page": 583,
+   "folio": "292b",
+   "url": "https://sourcelibrary.org/book/6abea70a6a920ffd924dc6e1?page=583",
+   "tibetan_ending": "ས་སུ་གསོལ་ལོ། །སྟ་གོན་གྱི་ཆོ་ག་བསྒྲུབ་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 73,
+   "page": 673,
+   "folio": "337b",
+   "url": "https://sourcelibrary.org/book/6abea70a6a920ffd924dc6e1?page=673",
+   "tibetan_ending": "ྱས་པའི་འཁྲུལ་འཁོར་གྱི་ལས་སུ་རིག་པར་བྱ་བ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 81,
+   "page": 313,
+   "folio": "157b",
+   "url": "https://sourcelibrary.org/book/6abea9646a920ffd924dd79c?page=313",
+   "tibetan_ending": "པ་ལ་སོགས་པའི་བྱང་ཆུབ་ཀྱི་ཕྱོགས་ཡོངས་སུ་ རྫོགས་ཏེ། མཐོ"
+  },
+  {
+   "vol": 87,
+   "page": 39,
+   "folio": "20b",
+   "url": "https://sourcelibrary.org/book/6abeadc8896ea18127c81736?page=39",
+   "tibetan_ending": "འི་འོག་ཏུ་རི་མ་ལ་ཡ་ལ་སོགས་པར་ཆོས་མངོན་པ་གཏན་ལ་ཕབ་པའི་སྡ"
+  },
+  {
+   "vol": 88,
+   "page": 362,
+   "folio": "182a",
+   "url": "https://sourcelibrary.org/book/6abedef7a43718d234bf0d12?page=362",
+   "tibetan_ending": "ེམས་ལ་གནས་སོ་ཞེས་བྱ་བ་ནི་སོང་བ་ གཉིས་ཏེ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 89,
+   "page": 467,
+   "folio": "234b",
+   "url": "https://sourcelibrary.org/book/6abeae7a896ea18127c81942?page=467",
+   "tibetan_ending": "ཆེན་འདོད་པ་སྐད་ཅིག་མ། །བཅུ་དྲུག་ གིས་ནི་རྫོགས་སོ་ཞེས།"
+  },
+  {
+   "vol": 90,
+   "page": 309,
+   "folio": "155b",
+   "url": "https://sourcelibrary.org/book/6abeaef8896ea18127c81b24?page=309",
+   "tibetan_ending": "ི་ངོ་མཚར་རྨད་དུ་བྱུང་བའི་ཆོས་བསྟན་པའོ། །གཏན་ལ་ཕབ་པ་ནི་ག"
+  },
+  {
+   "vol": 91,
+   "page": 158,
+   "folio": "80a",
+   "url": "https://sourcelibrary.org/book/6abeaf6b896ea18127c81cfc?page=158",
+   "tibetan_ending": "ྱིན་པ་ཡོངས་སུ་རྫོགས་པར་འགྱུར་ཏེ་ཡོངས་སུ་རྫོགས་སོ། །ཡོ"
+  },
+  {
+   "vol": 93,
+   "page": 301,
+   "folio": "151b",
+   "url": "https://sourcelibrary.org/book/6abeafd3896ea18127c8218e?page=301",
+   "tibetan_ending": "བ་དང་བཅས་པའི་སྤྱོད་པའི་ས་ཐམས་ཅད་ཡོངས་སུ་རྫོགས་ཏེ། དགེ"
+  },
+  {
+   "vol": 94,
+   "page": 19,
+   "folio": "10b",
+   "url": "https://sourcelibrary.org/book/6abedf36a43718d234bf0f30?page=19",
+   "tibetan_ending": "རྗོད་བྱེད་གཉིས་པ་སྟོང་ཕྲག་ཉི་ཤུ་ལྔ་པའི་ རྫོགས་སོ་ཡང་ད"
+  },
+  {
+   "vol": 104,
+   "page": 629,
+   "folio": "315b",
+   "url": "https://sourcelibrary.org/book/6abeb325896ea18127c83819?page=629",
+   "tibetan_ending": "ི་དོན་བྱས་པ་ལས་སངས་རྒྱས་ཀྱི་ཆོས་ཡོངས་སུ་རྫོགས་ཏེ། འཁོ"
+  },
+  {
+   "vol": 105,
+   "page": 95,
+   "folio": "48b",
+   "url": "https://sourcelibrary.org/book/6abeb35b896ea18127c83af5?page=95",
+   "tibetan_ending": "ངས་ཏེ། ཤིན་ཏུ་ངེས་པར་བརྟགས་ཤིང་ཡང་དག་པར་གཏན་ལ་ཕབ་པ་ཞེས་"
+  },
+  {
+   "vol": 105,
+   "page": 482,
+   "folio": "242a",
+   "url": "https://sourcelibrary.org/book/6abeb35b896ea18127c83af5?page=482",
+   "tibetan_ending": "མེད་པ་བསྒོམ་པ་མཆོག་ཡིན་ནོ། །ཞར་ལ་བྱུང་བ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 108,
+   "page": 465,
+   "folio": "233b",
+   "url": "https://sourcelibrary.org/book/6abeb404896ea18127c84235?page=465",
+   "tibetan_ending": "ེས་པའོ། །སྡུག་བསྔལ་ལ་ཆོས་ཤེས་པ་ཡང་དག་པར་རྫོགས་ཏེ་གནས་"
+  },
+  {
+   "vol": 110,
+   "page": 140,
+   "folio": "71a",
+   "url": "https://sourcelibrary.org/book/6abeb4ad896ea18127c84725?page=140",
+   "tibetan_ending": "ོ་རྗེ་ལྟ་བུ་ཞེས་བྱ་བ་དཔལ་ཀ་མ་པ་ལས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 111,
+   "page": 596,
+   "folio": "299a",
+   "url": "https://sourcelibrary.org/book/6abeb4e5896ea18127c849f3?page=596",
+   "tibetan_ending": "བ་སེམས་དཔའ་དཱི་པཾ་ཀ་ར་ཤྲཱི་ཛྙཱ་ནས་མཛད་པ་རྫོགས་སོ།། {D"
+  },
+  {
+   "vol": 113,
+   "page": 144,
+   "folio": "73a",
+   "url": "https://sourcelibrary.org/book/6abeb583896ea18127c84e6f?page=144",
+   "tibetan_ending": "་དཔལ་ལས་ བརྩམས་ཏེ་བསྟན་པ་དང་། དེས་ཞུས་པ་གཏན་ལ་ཕབ་པར་བསྟ"
+  },
+  {
+   "vol": 113,
+   "page": 307,
+   "folio": "154b",
+   "url": "https://sourcelibrary.org/book/6abeb583896ea18127c84e6f?page=307",
+   "tibetan_ending": "ས་པ་ས་བཅུ་པ་#ལས། ས་དང་པོའི་རྣམ་པར་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 113,
+   "page": 333,
+   "folio": "167b",
+   "url": "https://sourcelibrary.org/book/6abeb583896ea18127c84e6f?page=333",
+   "tibetan_ending": "་པ་ས་བཅུ་པ་#ལས་ས་གཉིས་ པའི་རྣམ་པར་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 113,
+   "page": 414,
+   "folio": "208a",
+   "url": "https://sourcelibrary.org/book/6abeb583896ea18127c84e6f?page=414",
+   "tibetan_ending": "་པ་ས་བཅུ་པ་#ལས་ས་དྲུག་པའི་རྣམ་པར་ བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 114,
+   "page": 25,
+   "folio": "13b",
+   "url": "https://sourcelibrary.org/book/6abeb5fd896ea18127c85085?page=25",
+   "tibetan_ending": "་ཅེས་བྱའོ། །ཆོས་ཐམས་ཅད་ཇི་ལྟ་བ་བཞིན་དུ་#གཏན་ལ་ཕབ་པར་བསྟ"
+  },
+  {
+   "vol": 114,
+   "page": 288,
+   "folio": "145a",
+   "url": "https://sourcelibrary.org/book/6abeb5fd896ea18127c85085?page=288",
+   "tibetan_ending": "་ལྟ་#ཉིད་ཀྱི་དུས་ན་#དགེ་བ་དེ་དག་ཡོངས་སུ་རྫོགས་ཏེ། བླ་"
+  },
+  {
+   "vol": 115,
+   "page": 23,
+   "folio": "12b",
+   "url": "https://sourcelibrary.org/book/6abeb628896ea18127c852a1?page=23",
+   "tibetan_ending": "ྱུང་བ་བཤད་པ་ལས་མ་རིག་པའི་རྣམ་པར་འབྱེད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 115,
+   "page": 74,
+   "folio": "38a",
+   "url": "https://sourcelibrary.org/book/6abeb628896ea18127c852a1?page=74",
+   "tibetan_ending": "ར་འབྱུང་བ་བཤད་པ་ལས་སྲེད་པ་རྣམ་པར་དབྱེ་བ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 115,
+   "page": 82,
+   "folio": "42a",
+   "url": "https://sourcelibrary.org/book/6abeb628896ea18127c852a1?page=82",
+   "tibetan_ending": "པར་འབྱུང་བ་བཤད་པ་ལས་ལེན་པ་རྣམ་པར་དབྱེ་བ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 120,
+   "page": 583,
+   "folio": "292b",
+   "url": "https://sourcelibrary.org/book/6abeb782896ea18127c85d77?page=583",
+   "tibetan_ending": "ནི་ཐེག་པ་ཆེན་པོ་ལ་ཞུགས་པས་ཡོན་ཏན་ཐམས་ཅད་རྫོགས་ཏེ། ཇི་"
+  },
+  {
+   "vol": 121,
+   "page": 32,
+   "folio": "17a",
+   "url": "https://sourcelibrary.org/book/6abeb7ec896ea18127c85fd5?page=32",
+   "tibetan_ending": "ལ་བྱ་ལ་སོགས་པ་ཚིག་གི་ དོན་བཅུ་དྲུག་རྣམས་གཏན་ལ་ཕབ་པ་ཡོངས"
+  },
+  {
+   "vol": 122,
+   "page": 389,
+   "folio": "195b",
+   "url": "https://sourcelibrary.org/book/6abeb822896ea18127c861e3?page=389",
+   "tibetan_ending": "ྦྲང་རྩི་ཕུལ་བ་ལ་སོགས་པ་བསྟན་པ་ལྟ་བུའོ། །གཏན་ལ་ཕབ་པར་བསྟ"
+  },
+  {
+   "vol": 125,
+   "page": 310,
+   "folio": "155b",
+   "url": "https://sourcelibrary.org/book/6abeb8ed896ea18127c8665b?page=310",
+   "tibetan_ending": "ི་ཐེ་ཚོམ་མེད་པར་བྱས་ནས། ཆོས་ཀྱི་མཚན་ཉིད་གཏན་ལ་ཕབ་པར་ཤེས"
+  },
+  {
+   "vol": 127,
+   "page": 320,
+   "folio": "161a",
+   "url": "https://sourcelibrary.org/book/6abeb963896ea18127c86aaa?page=320",
+   "tibetan_ending": "ས་ལས་སེམས་ཡོད་པའི་ས་དང་། སེམས་མེད་པའི་ས་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 127,
+   "page": 562,
+   "folio": "282a",
+   "url": "https://sourcelibrary.org/book/6abeb963896ea18127c86aaa?page=562",
+   "tibetan_ending": "བྱོར་སྤྱོད་པའི་ས་ལས་ཕུང་པོ་དང་བཅས་པའི་ས་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 129,
+   "page": 206,
+   "folio": "104a",
+   "url": "https://sourcelibrary.org/book/6abeb9d7896ea18127c86e6a?page=206",
+   "tibetan_ending": "ི་ཆོས་འདུལ་བ་ལས་རབ་ཏུ་བྱུང་ཞིང་བསྙེན་པར་རྫོགས་ཏེ། དགེ"
+  },
+  {
+   "vol": 131,
+   "page": 646,
+   "folio": "324a",
+   "url": "https://sourcelibrary.org/book/6abeba43896ea18127c8725a?page=646",
+   "tibetan_ending": "དེ་ཡང་དབང་པོ་ཉི་ཤུ་རྩ་གཉིས་ཀྱིས་ཡོངས་སུ་རྫོགས་ཏེ། དེ་"
+  },
+  {
+   "vol": 135,
+   "page": 278,
+   "folio": "140a",
+   "url": "https://sourcelibrary.org/book/6abebc98896ea18127c87c30?page=278",
+   "tibetan_ending": "པར་རིག་པར་བྱའོ། །ཞར་ལ་བྱུང་བ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 135,
+   "page": 426,
+   "folio": "214a",
+   "url": "https://sourcelibrary.org/book/6abebc98896ea18127c87c30?page=426",
+   "tibetan_ending": "}བཞིན་ནོ། །འགོག་པའི་བདེན་པ་རྣམ་པར་ངེས་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 135,
+   "page": 465,
+   "folio": "233b",
+   "url": "https://sourcelibrary.org/book/6abebc98896ea18127c87c30?page=465",
+   "tibetan_ending": "ི་ངོ་མཚར་རྨད་དུ་བྱུང་བའི་ཆོས་བསྟན་པའོ། །གཏན་ལ་ཕབ་པ་བསྟན"
+  },
+  {
+   "vol": 137,
+   "page": 87,
+   "folio": "44b",
+   "url": "https://sourcelibrary.org/book/6abebdc9896ea18127c88072?page=87",
+   "tibetan_ending": "ོད་པ་མི་སྐྱེ་བའོ། །ཚོར་བའི་ཕུང་པོ་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 137,
+   "page": 118,
+   "folio": "60a",
+   "url": "https://sourcelibrary.org/book/6abebdc9896ea18127c88072?page=118",
+   "tibetan_ending": "བའི་ལས་བྱེད་པའོ། །དགེ་བ་བཅུ་ གཅིག་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 137,
+   "page": 248,
+   "folio": "125a",
+   "url": "https://sourcelibrary.org/book/6abebdc9896ea18127c88072?page=248",
+   "tibetan_ending": "་བའི་བར་དུའོ། །སྐྱེ་མཆེད་བཅུ་གཉིས་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 140,
+   "page": 207,
+   "folio": "104b",
+   "url": "https://sourcelibrary.org/book/6abebeed896ea18127c8866a?page=207",
+   "tibetan_ending": "་དགེ་བ་དང་། མི་སློབ་པའོ། །སེམས་བཅུ་གཉིས་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 140,
+   "page": 350,
+   "folio": "176a",
+   "url": "https://sourcelibrary.org/book/6abebeed896ea18127c8866a?page=350",
+   "tibetan_ending": "སུངས་སོ་ཞེས་བརྗོད་པར་བྱའོ། །ཞར་ལ་འོངས་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 140,
+   "page": 359,
+   "folio": "180b",
+   "url": "https://sourcelibrary.org/book/6abebeed896ea18127c8866a?page=359",
+   "tibetan_ending": "འདུལ་བ་པ་#རྣམས་ན་རེ་རྣམ་པ་བཅུས་བསྙེན་པར་རྫོགས་སོ་ཞེས་"
+  },
+  {
+   "vol": 140,
+   "page": 485,
+   "folio": "243b",
+   "url": "https://sourcelibrary.org/book/6abebeed896ea18127c8866a?page=485",
+   "tibetan_ending": "་དུ་མ་ཡིན་པའི་ཕྱིར་རོ། །ཞར་ལ་འོངས་པ་འདི་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 141,
+   "page": 259,
+   "folio": "130b",
+   "url": "https://sourcelibrary.org/book/6abebf33896ea18127c88870?page=259",
+   "tibetan_ending": "པ་དང་སེམས་བཞི་འབྱུང་ངོ་། །སེམས་བཅུ་གཉིས་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 141,
+   "page": 516,
+   "folio": "259a",
+   "url": "https://sourcelibrary.org/book/6abebf33896ea18127c88870?page=516",
+   "tibetan_ending": "་དགེ་བ་ཡང་མ་ཡིན་ནོ། །བསམ་གཏན་གྱི་དགོས་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 142,
+   "page": 291,
+   "folio": "146b",
+   "url": "https://sourcelibrary.org/book/6abebf71896ea18127c88a86?page=291",
+   "tibetan_ending": "སུ་ཟད་པའི་ཕྱིར་ཏེ། དེའི་འབྲས་བུ་ཡོངས་སུ་རྫོགས་སོ་ཞེས་"
+  },
+  {
+   "vol": 144,
+   "page": 177,
+   "folio": "89b",
+   "url": "https://sourcelibrary.org/book/6abec01d896ea18127c88fb8?page=177",
+   "tibetan_ending": "ྗོངས་ཀྱི་མི་ དང་ལྗོངས་ཀྱི་མི་ངེས་པ་སྟེ། གཏན་ལ་ཕབ་པའི་ཚི"
+  },
+  {
+   "vol": 145,
+   "page": 386,
+   "folio": "194a",
+   "url": "https://sourcelibrary.org/book/6abec068896ea18127c89270?page=386",
+   "tibetan_ending": "་ངེས་པར་འབྱུང་བའི་ཕྱིར་རོ། །ཞར་ལ་འོངས་པ་རྫོགས་སོ་ཞེས་"
+  },
+  {
+   "vol": 147,
+   "page": 241,
+   "folio": "121b",
+   "url": "https://sourcelibrary.org/book/6abec1df896ea18127c89736?page=241",
+   "tibetan_ending": "་ན་བཞིན་དུ་སྐྱེ་སྟེ། རྒྱུ་རྒྱ་ཆེར་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 147,
+   "page": 290,
+   "folio": "146a",
+   "url": "https://sourcelibrary.org/book/6abec1df896ea18127c89736?page=290",
+   "tibetan_ending": "ཇུག་པར་བྱེད་པ་ཡང་མ་ཡིན་ནོ། །ཞར་ལ་འོངས་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 149,
+   "page": 341,
+   "folio": "171b",
+   "url": "https://sourcelibrary.org/book/6abec2d0896ea18127c89b7e?page=341",
+   "tibetan_ending": "་ནི་ཐོབ་པ་ལ་ འཇུག་སྟེ་བདག་གི་སློང་མོ་ནི་རྫོགས་ཏེ་ཐོབ་"
+  },
+  {
+   "vol": 150,
+   "page": 8,
+   "folio": "5a",
+   "url": "https://sourcelibrary.org/book/6abec330896ea18127c89d8a?page=8",
+   "tibetan_ending": "ི་ཐམས་ཅད་མཁྱེན་པ་ལུང་ཤིན་ཏུ་རྣམ་པར་དག་པ་གཏན་ལ་ཕབ་པ་བསྟན"
+  },
+  {
+   "vol": 151,
+   "page": 287,
+   "folio": "144b",
+   "url": "https://sourcelibrary.org/book/6abec470896ea18127c89f6a?page=287",
+   "tibetan_ending": "ང་དང་། གྲི་གུ་བཅང་བར་བྱའོ། །ཞར་ལ་འོངས་པ་རྫོགས་ཏེ་བླང་"
+  },
+  {
+   "vol": 153,
+   "page": 196,
+   "folio": "99a",
+   "url": "https://sourcelibrary.org/book/6abec54c896ea18127c8a3f6?page=196",
+   "tibetan_ending": "་འདུན་ལ་གསོལ་ནས་རབ་ཏུ་བྱུང་ཞིང་བསྙེན་པར་རྫོགས་སོ། །མཉ"
+  },
+  {
+   "vol": 155,
+   "page": 235,
+   "folio": "118b",
+   "url": "https://sourcelibrary.org/book/6abec6fb896ea18127c8a7ee?page=235",
+   "tibetan_ending": "་འབྱུང་བ་དང་སྦྱོར་ཅིག །ལྟུང་བ་དྲུག་ཅུ་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 156,
+   "page": 122,
+   "folio": "62a",
+   "url": "https://sourcelibrary.org/book/6abec767896ea18127c8a9dc?page=122",
+   "tibetan_ending": "ནི་སྔར་བཤད་པ་བཞིན་ནོ། །ལྷག་མ་བཅུ་བདུན་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 157,
+   "page": 212,
+   "folio": "107a",
+   "url": "https://sourcelibrary.org/book/6abec7fa896ea18127c8ac69?page=212",
+   "tibetan_ending": "ྷག་མ་སྟེ། བཅུ་གཉིས་པའི་ཚིག་རྣམ་པར་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 157,
+   "page": 215,
+   "folio": "108b",
+   "url": "https://sourcelibrary.org/book/6abec7fa896ea18127c8ac69?page=215",
+   "tibetan_ending": "པར་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 157,
+   "page": 218,
+   "folio": "110a",
+   "url": "https://sourcelibrary.org/book/6abec7fa896ea18127c8ac69?page=218",
+   "tibetan_ending": "བའི་སྤང་བ་སྟེ་དང་པོའི་ཚིག་རྣམ་ པར་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 157,
+   "page": 238,
+   "folio": "120a",
+   "url": "https://sourcelibrary.org/book/6abec7fa896ea18127c8ac69?page=238",
+   "tibetan_ending": "སྤང་བ་སྟེ་བཅུ་གཅིག་པའི་ཚིག་རྣམ་པར་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 157,
+   "page": 260,
+   "folio": "131a",
+   "url": "https://sourcelibrary.org/book/6abec7fa896ea18127c8ac69?page=260",
+   "tibetan_ending": "ི་ལྟུང་བྱེད་དེ་དང་པོའི་ཚིག་རྣམ་པར་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 157,
+   "page": 264,
+   "folio": "133a",
+   "url": "https://sourcelibrary.org/book/6abec7fa896ea18127c8ac69?page=264",
+   "tibetan_ending": "་ལྟུང་བྱེད་དེ་གསུམ་པའི་ཚིག་རྣམ་པར་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 157,
+   "page": 274,
+   "folio": "138a",
+   "url": "https://sourcelibrary.org/book/6abec7fa896ea18127c8ac69?page=274",
+   "tibetan_ending": "ྟུང་བྱེད་དེ་བཅོ་ལྔ་པའི་ཚིག་རྣམ་པར་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 157,
+   "page": 292,
+   "folio": "147a",
+   "url": "https://sourcelibrary.org/book/6abec7fa896ea18127c8ac69?page=292",
+   "tibetan_ending": "བྱེད་དེ་ཉི་ཤུ་གཅིག་པའི་ཚིག་རྣམ་པར་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 157,
+   "page": 296,
+   "folio": "149a",
+   "url": "https://sourcelibrary.org/book/6abec7fa896ea18127c8ac69?page=296",
+   "tibetan_ending": "ུང་བྱེད་དེ་སུམ་ཅུ་པའི་ཚིག་རྣམ་པར་ བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 157,
+   "page": 307,
+   "folio": "154b",
+   "url": "https://sourcelibrary.org/book/6abec7fa896ea18127c8ac69?page=307",
+   "tibetan_ending": "བྱེད་དེ་སུམ་ཅུ་བཞི་པའི་ཚིག་རྣམ་པར་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 157,
+   "page": 317,
+   "folio": "159b",
+   "url": "https://sourcelibrary.org/book/6abec7fa896ea18127c8ac69?page=317",
+   "tibetan_ending": "ེད་དེ་བཞི་བཅུ་བདུན་པའི་ཚིག་རྣམ་པར་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 157,
+   "page": 326,
+   "folio": "164a",
+   "url": "https://sourcelibrary.org/book/6abec7fa896ea18127c8ac69?page=326",
+   "tibetan_ending": "ེད་དེ་ལྔ་བཅུ་བརྒྱད་པའི་ཚིག་རྣམ་པར་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 157,
+   "page": 333,
+   "folio": "167b",
+   "url": "https://sourcelibrary.org/book/6abec7fa896ea18127c8ac69?page=333",
+   "tibetan_ending": "དེ་དྲུག་ཅུ་རྩ་གཉིས་པའི་ཚིག་རྣམ་པར་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 157,
+   "page": 337,
+   "folio": "169b",
+   "url": "https://sourcelibrary.org/book/6abec7fa896ea18127c8ac69?page=337",
+   "tibetan_ending": "་དེ་དྲུག་ཅུ་རྩ་དགུ་པའི་ཚིག་རྣམ་པར་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 157,
+   "page": 341,
+   "folio": "171b",
+   "url": "https://sourcelibrary.org/book/6abec7fa896ea18127c8ac69?page=341",
+   "tibetan_ending": "ད་དེ་བདུན་ཅུ་གཉིས་པའི་ཚིག་རྣམ་པར་ བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 157,
+   "page": 345,
+   "folio": "173b",
+   "url": "https://sourcelibrary.org/book/6abec7fa896ea18127c8ac69?page=345",
+   "tibetan_ending": "ད་དེ་བདུན་ཅུ་རྩ་ལྔ་པའི་ཚིག་རྣམ་པར་བཤད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 159,
+   "page": 204,
+   "folio": "102b",
+   "url": "https://sourcelibrary.org/book/6abeca4e896ea18127c8b081?page=204",
+   "tibetan_ending": " །དགེ་བསྙེན་ཉིད་དུ་ཉེ་བར་སྒྲུབ་པའི་ཆོ་ག་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 159,
+   "page": 230,
+   "folio": "115b",
+   "url": "https://sourcelibrary.org/book/6abeca4e896ea18127c8b081?page=230",
+   "tibetan_ending": "ཞག་པར་མི་འོས་པས་རབ་ཏུ་བྱུང་ཞིང་བསྙེན་པར་རྫོགས་སོ། །དེ"
+  },
+  {
+   "vol": 164,
+   "page": 5,
+   "folio": "3b",
+   "url": "https://sourcelibrary.org/book/6abecf09896ea18127c8bcf6?page=5",
+   "tibetan_ending": "ས་པའི་ཆོས་འདུལ་བ་ལ་རབ་ཏུ་འབྱུང་བསྙེན་པར་རྫོགས་ཏེ། དགེ"
+  },
+  {
+   "vol": 164,
+   "page": 286,
+   "folio": "144a",
+   "url": "https://sourcelibrary.org/book/6abecf09896ea18127c8bcf6?page=286",
+   "tibetan_ending": "ེགས་པའི་ན་བཟར་གཏོགས་#པའོ། །ལྟུང་བ་ཉི་ཚེ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 165,
+   "page": 268,
+   "folio": "135a",
+   "url": "https://sourcelibrary.org/book/6abecf9e896ea18127c8bf06?page=268",
+   "tibetan_ending": "་ཕྱིར་ཆོས་འཆད་དོ་ཞེས་སྨྲ་བའི་ལྟུང་བ་སྟེ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 165,
+   "page": 271,
+   "folio": "136b",
+   "url": "https://sourcelibrary.org/book/6abecf9e896ea18127c8bf06?page=271",
+   "tibetan_ending": "སློང་མ་དང་གྲུའི་ནང་དུ་འགྲོགས་པའི་ལྟུང་བ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 165,
+   "page": 396,
+   "folio": "199a",
+   "url": "https://sourcelibrary.org/book/6abecf9e896ea18127c8bf06?page=396",
+   "tibetan_ending": " བའོ། །བླན་པའོ། །སྟན་མ་བརྟུལ་བའི་ལྟུང་བ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 166,
+   "page": 237,
+   "folio": "119b",
+   "url": "https://sourcelibrary.org/book/6abed040896ea18127c8c1b8?page=237",
+   "tibetan_ending": "གྲེལ་པ་ལས་བསླབ་པའི་གཞི་གཉིས་པའི་འགྲེལ་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 166,
+   "page": 280,
+   "folio": "141a",
+   "url": "https://sourcelibrary.org/book/6abed040896ea18127c8c1b8?page=280",
+   "tibetan_ending": "་སོགས་པ་སྤོང་བ་སྟེ་བསླབ་པའི་གཞི་བརྒྱད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 166,
+   "page": 313,
+   "folio": "157b",
+   "url": "https://sourcelibrary.org/book/6abed040896ea18127c8c1b8?page=313",
+   "tibetan_ending": "་འདིར་ཐ་སྙད་ཀྱི་རྒྱུ་ཡིན་ནོ་ཞར་ལ་འོངས་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 166,
+   "page": 322,
+   "folio": "162a",
+   "url": "https://sourcelibrary.org/book/6abed040896ea18127c8c1b8?page=322",
+   "tibetan_ending": "ཀྱི་གསུང་ཉིད་དུ་མི་འགལ་ལོ། །ཞར་ལ་འོངས་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 166,
+   "page": 390,
+   "folio": "196a",
+   "url": "https://sourcelibrary.org/book/6abed040896ea18127c8c1b8?page=390",
+   "tibetan_ending": "ིན་པའི་ཕྱིར་ཡང་ན་གནས་ལས་སྤགས་པའི་འོག་ཏུ་གཏན་ལ་ཕབ་པར་གྱུ"
+  },
+  {
+   "vol": 169,
+   "page": 445,
+   "folio": "223b",
+   "url": "https://sourcelibrary.org/book/6abed155896ea18127c8c872?page=445",
+   "tibetan_ending": "ོགས་མོ་དགའ་མ་ཁྱོད་ཀྱིས་ཡིད་ཀྱི་ཤིང་རྟ་མ་རྫོགས་སོ་ཞེས་"
+  },
+  {
+   "vol": 170,
+   "page": 41,
+   "folio": "21b",
+   "url": "https://sourcelibrary.org/book/6abed1ac896ea18127c8ca6c?page=41",
+   "tibetan_ending": "་རྨ་ལཿ། །ས་ སུ་གྱུར། །དེ་ནས་དུས་ནི་ཡོངས་རྫོགས་ཏེ། །མཁ"
+  },
+  {
+   "vol": 170,
+   "page": 112,
+   "folio": "57a",
+   "url": "https://sourcelibrary.org/book/6abed1ac896ea18127c8ca6c?page=112",
+   "tibetan_ending": "་བརྣག་པ་རྒྱ་ཆེ་བའི། །སློང་བ་སུ་ཡིས་ཡོངས་རྫོགས་ཏེ། །ཨ་"
+  },
+  {
+   "vol": 171,
+   "page": 409,
+   "folio": "205b",
+   "url": "https://sourcelibrary.org/book/6abed259896ea18127c8cd4a?page=409",
+   "tibetan_ending": "། །ས་བདག་རིད་པ་ལ་ཞུས་ནས། །བསམ་པ་ཡོངས་སུ་རྫོགས་ཏེ་སོང་"
+  },
+  {
+   "vol": 173,
+   "page": 141,
+   "folio": "71b",
+   "url": "https://sourcelibrary.org/book/6abed3c3896ea18127c8d166?page=141",
+   "tibetan_ending": "ི་ཛྙཱ་ནས། རྒྱལ་པོ་ནིརྱ་#ཕ་ལ་ལ་བརྫོངས་#པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 190,
+   "page": 400,
+   "folio": "201a",
+   "url": "https://sourcelibrary.org/book/6abed90a896ea18127c8f9ee?page=400",
+   "tibetan_ending": "བྱས་པ། ། སློབ་དཔོན་དགེ་སྲུངས་ཀྱིས་མཛད་པ་རྫོགས་སོ།། །།"
+  },
+  {
+   "vol": 191,
+   "page": 491,
+   "folio": "246b",
+   "url": "https://sourcelibrary.org/book/6abed95d896ea18127c8fcd2?page=491",
+   "tibetan_ending": "དྲན་པ་དང་། ཐེ་ཚོམ་སྔོན་དུ་འགྲོ་བ་ཅན་གྱི་གཏན་ལ་ཕབ་པ་དང་།"
+  },
+  {
+   "vol": 192,
+   "page": 81,
+   "folio": "41b",
+   "url": "https://sourcelibrary.org/book/6abed9a6896ea18127c8ffaa?page=81",
+   "tibetan_ending": "ྱ་བ་ལ་སོགས་པ་སྨོས་ཏེ། ངེས་པར་རྟོགས་པ་ནི་གཏན་ལ་ཕབ་པའོ། །"
+  }
+ ]
+}
