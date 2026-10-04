@@ -1,0 +1,191 @@
+{
+ "job": "a2-cleanup-5700",
+ "issue": 5700,
+ "revision_source": "cleanup-a2-5700",
+ "population": {
+  "live_translated_books": 21245,
+  "translated_pages_read": 4939007
+ },
+ "dry_run": {
+  "generated_at": "2026-10-03T23:12:26.977Z",
+  "books_scanned": 21245,
+  "pages_with_any": 297067,
+  "by_class": {
+   "a_initial": {
+    "pages": 172737,
+    "edits": 274069
+   },
+   "c_tags": {
+    "pages": 99556,
+    "edits": 179434
+   },
+   "c_visible": {
+    "pages": 10442,
+    "edits": 13982
+   },
+   "a_scan": {
+    "pages": 8269,
+    "edits": 8687
+   },
+   "b_original": {
+    "pages": 12221,
+    "edits": 16907
+   }
+  },
+  "c_visible_ops": {
+   "heading_hashes": 6359,
+   "dangling_open": 4017,
+   "reversed": 2432,
+   "closer": 271,
+   "inner_open": 903
+  },
+  "skipped": {
+   "c_tags:far-rejoin": 77775,
+   "c_tags:tag-moved": 2089,
+   "c_tags:tag-added": 20940,
+   "c_tags:unknown-tag": 39087,
+   "c_tags:text-changed": 3296,
+   "c_tags:numbered-tag": 462
+  },
+  "excluded": {
+   "human_edited": 1
+  },
+  "union": {
+   "a2": 285541
+  }
+ },
+ "by_eye": {
+  "a_initial": {
+   "sample": 40,
+   "clean": 40,
+   "gate": 0.98,
+   "pass": true,
+   "seed": 5700
+  },
+  "a_scan": {
+   "sample": 40,
+   "clean": 29,
+   "gate": 0.98,
+   "pass": false,
+   "seed": 5700,
+   "why": "lead-in notes, truncation notices, content and glosses caught by the scan detector"
+  },
+  "c_tags": {
+   "sample": 40,
+   "clean": 40,
+   "gate": 0.98,
+   "pass": true,
+   "seed": 5701,
+   "first_sample": {
+    "seed": 5700,
+    "clean": 35,
+    "faults": "nested note closed early (AI note text became body text); <unclear> inside a rejoined <margin> lost its ? — rule tightened, re-judged on a fresh seed"
+   }
+  },
+  "c_visible": {
+   "sample": 40,
+   "clean": 40,
+   "gate": 0.98,
+   "pass": true,
+   "seed": 5701,
+   "first_sample": {
+    "seed": 5700,
+    "clean": 39,
+    "faults": "a -> whose <- was paragraphs away: removing it stranded the <- — rule fixed, re-judged on a fresh seed"
+   }
+  },
+  "b_original": {
+   "sample": 40,
+   "clean": 27,
+   "gate": 0.95,
+   "pass": false,
+   "seed": 5700,
+   "quotes_checked": 63,
+   "quotes_absent_from_page_and_neighbours": 62,
+   "why": "the quote is absent, but the note is a mislabelled gloss, citation or source-language term about a third of the time; deleting it loses it",
+   "verifier_absent_but_on_page_share_a1_draw": {
+    "absent_quotes": 940,
+    "near_match_60pct_plus": 302
+   }
+  }
+ },
+ "applied": {
+  "classes": [
+   "a_initial",
+   "c_tags",
+   "c_visible"
+  ],
+  "pages_written": 277832,
+  "books": 14931,
+  "skipped": 0,
+  "errors": 0,
+  "pages_by_class": {
+   "a_initial": 172737,
+   "c_tags": 99556,
+   "c_visible": 10442
+  },
+  "pages_by_combination": {
+   "a_initial": 167973,
+   "c_tags": 94872,
+   "c_visible": 10095,
+   "a_initial+c_tags": 4545,
+   "a_initial+c_visible": 208,
+   "c_tags+c_visible": 128,
+   "a_initial+c_tags+c_visible": 11
+  },
+  "pilot_pages": 2982,
+  "spot_check": {
+   "pages": 400,
+   "page_hash_equals_revision_after_hash": 400
+  },
+  "undo_round_trip": {
+   "pages": 1,
+   "byte_identical": true,
+   "note": "page 69f6bd9e8bea6f443e06914e carries three revision rows: cleanup, undo, cleanup"
+  }
+ },
+ "residual": {
+  "scanned_after": "2026-10-04T00:09Z",
+  "books": 21204,
+  "by_class": {
+   "a_scan": {
+    "pages": 8258,
+    "edits": 8675
+   },
+   "b_original": {
+    "pages": 12215,
+    "edits": 16897
+   },
+   "c_tags": {
+    "pages": 2,
+    "edits": 132
+   },
+   "c_visible": {
+    "pages": 13,
+    "edits": 15
+   }
+  },
+  "note": "a_initial 0; c_tags 2 pages and c_visible 13 pages are second-pass effects on pages already written (doubled markers); a_scan and b_original were not applied"
+ },
+ "mirrors": {
+  "supabase_pages": {
+   "pushed": 277832,
+   "updated": 233788,
+   "sample": {
+    "pages": 2985,
+    "row_missing_in_mirror": 459,
+    "equal_to_mongo": 2526,
+    "differs": 0
+   }
+  },
+  "page_translations": {
+   "rewritten": 0,
+   "why": "235 ms/row measured (HNSW re-insert) against 4 ms/row for pages; left for a decision",
+   "how": "--resync --snippets"
+  }
+ },
+ "downstream": {
+  "books_with_published_editions_touched": 137,
+  "pages_in_those_books": 4598
+ }
+}
