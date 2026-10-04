@@ -96,12 +96,17 @@ run)
   trap 'delete_box; log "RUN-DONE spend \$$(spend)"' EXIT
   if ! on "curl -sf http://127.0.0.1:8200/v1/models >/dev/null"; then
     on 'mkdir -p /root/pz/code /root/pz/out; nvidia-smi --query-gpu=name,driver_version --format=csv,noheader; command -v rsync >/dev/null || (apt-get -qq update && apt-get -qq install -y rsync >/dev/null 2>&1); curl -LsSf https://astral.sh/uv/install.sh | sh > /dev/null 2>&1; U=/root/.local/bin/uv; $U venv -p 3.12 /root/pz/vl > /dev/null 2>&1 && VIRTUAL_ENV=/root/pz/vl timeout 1800 $U pip install -U vllm pillow --torch-backend auto > /root/pz/vl-setup.log 2>&1; tail -n 2 /root/pz/vl-setup.log; /root/pz/vl/bin/python -c "import vllm,torch;print(vllm.__version__, torch.__version__, torch.cuda.is_available())"' | tee "$LANE_DIR/vl-versions-$BOX.txt"
-    on "cd /root/pz && (nohup /root/pz/vl/bin/vllm serve zai-org/GLM-OCR --served-model-name m --max-model-len 32768 --gpu-memory-utilization 0.85 --limit-mm-per-prompt '{\"image\":1}' --port 8200 --speculative-config '{\"method\":\"mtp\",\"num_speculative_tokens\":1}' > srv.log 2>&1 < /dev/null &); echo serving"
-    t1=$(date +%s)
-    until on "curl -sf http://127.0.0.1:8200/v1/models >/dev/null"; do
-      if [ $(( $(date +%s) - t1 )) -gt 1500 ] || ! on "pgrep -f '[v]llm serve' >/dev/null"; then log "SERVE-FAIL"; on "tail -n 40 /root/pz/srv.log" | tee "$LANE_DIR/srv-fail-$BOX.log"; exit 1; fi
-      sleep 20; done
-    log "SERVE-UP after $(( $(date +%s) - t1 )) s"
+    serve() {  # serve <label> <env> <extra args>: 0 when the server answers within the budget
+      on "pkill -f '[v]llm serve'; sleep 5; cd /root/pz && ($2 nohup /root/pz/vl/bin/vllm serve zai-org/GLM-OCR --served-model-name m --max-model-len 32768 --gpu-memory-utilization 0.85 --limit-mm-per-prompt '{\"image\":1}' --port 8200 $3 > srv-$1.log 2>&1 < /dev/null &); echo serving $1"
+      t1=$(date +%s)
+      until on "curl -sf http://127.0.0.1:8200/v1/models >/dev/null"; do
+        if [ $(( $(date +%s) - t1 )) -gt 1500 ] || ! on "pgrep -f '[v]llm serve' >/dev/null"; then
+          log "SERVE-FAIL $1"; on "grep -v '^(APIServer' /root/pz/srv-$1.log | grep -iE 'error|exception|cuda|out of memory' | head -n 40; echo ...; tail -n 200 /root/pz/srv-$1.log" > "$LANE_DIR/srv-fail-$BOX-$1.log"; return 1; fi
+        sleep 20; done
+      log "SERVE-UP $1 after $(( $(date +%s) - t1 )) s"
+    }
+    MTP="--speculative-config '{\"method\":\"mtp\",\"num_speculative_tokens\":1}'"
+    serve mtp "" "$MTP" || serve mtp-nofi "VLLM_USE_FLASHINFER_SAMPLER=0" "$MTP" || serve plain "VLLM_USE_FLASHINFER_SAMPLER=0" "" || exit 1
   fi
   rev=$(on "ls /root/.cache/huggingface/hub/models--zai-org--GLM-OCR/snapshots/ | head -1")
   gpu=$(on "nvidia-smi --query-gpu=name --format=csv,noheader | head -1")
