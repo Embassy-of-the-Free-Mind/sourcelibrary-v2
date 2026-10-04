@@ -23,6 +23,25 @@
  *      source carries a `{D…}` marker, and reports the pages whose English dropped it.
  *
  *   node --env-file=.env.production.local scripts/maintenance/tengyur-draft-repairs-5497.mjs [--apply] [--out=FILE]
+ *
+ * `--leftovers` (#5797) runs three further deterministic repairs instead, one page_revisions row per page:
+ *   4. Esukhia correction pairs `{a,b}` / `(a,b)` leaked into the English (mechanical.mjs corrLeak).
+ *      A pair becomes `b`, the editors' reading (as mechanical.mjs cleanSource reads it). A <note>,
+ *      <gloss> or <meta> that holds a pair AND talks about the markup ("the OCR reads", "two
+ *      spellings", "corrected to") is removed whole: it describes the e-text's apparatus, not the text,
+ *      and with the pair resolved it would assert something false.
+ *   5. The false `<unclear>` on a page-final broken word. The source is a complete e-text, so a side
+ *      ending mid-sentence continues on the next side; nothing is illegible. When the LAST thing in the
+ *      body is `<unclear>` whose content only describes a gap ("…", "one line of text not
+ *      transcribed") and the source side does not end on a `[x]` doubtful mark, the tag becomes "…".
+ *      An `<unclear>` that wraps English words (a rendering of the fragment, or a guess at it) is
+ *      LISTED, not repaired: unwrapping would present a guess as the translation.
+ *   6. A `<note` whose content was written as an attribute (`<note original: "…">`) and never closed
+ *      becomes `<note>original: …</note>`.
+ * It skips v74–79 and v194–213 (job tengyur-finish-5497) and every book with an open
+ * translate_batch_runs run, re-checked per book just before writing.
+ *
+ *   node --env-file=… scripts/maintenance/tengyur-draft-repairs-5497.mjs --leftovers [--apply] [--out=FILE]
  */
 import fs from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -48,6 +67,123 @@ export function stripHashMarks(text) {
       return m.includes(' ') && before !== undefined && after !== undefined && !/[\s.,;:!?)\]<]/.test(after) && !/[\s(\[>]/.test(before) ? ' ' : '';
     });
   }).join('\n');
+}
+
+const TIB = /[ༀ-࿿]/;
+const PAIR = /[({]([^(){},\n]{0,40}),([^(){},\n]{0,40})[)}]/g;
+const MARKUP_TALK = /\bOCR\b|variant|spelling|correct|\breads?\b|\btwo\b|alternat|emend|transcri|curly|bracket|scribal|edition/i;
+
+/** 4. Resolve leaked Esukhia correction pairs to the editors' reading; drop notes that discuss the markup. */
+export function fixCorrectionPairs(text) {
+  // Both readings Tibetan: a model's own "(རྫུན་, false)" gloss is not an Esukhia pair.
+  const isPair = (a, b) => TIB.test(a) && TIB.test(b);
+  const hasPair = (s) => [...s.matchAll(PAIR)].some((m) => isPair(m[1], m[2]));
+  let removed = 0, resolved = 0;
+  let out = String(text).replace(/ ?<(note|gloss|meta)\b[^>]*>([\s\S]*?)<\/\1>/gi, (m, tag, body) => {
+    if (hasPair(body) && MARKUP_TALK.test(body)) { removed++; return ''; }
+    return m;
+  });
+  out = out.replace(PAIR, (m, a, b) => {
+    if (!isPair(a, b)) return m;
+    resolved++;
+    return b.trim();
+  });
+  return { text: out, removed, resolved };
+}
+
+const GAP_TALK = /obscur|illegib|unreadable|missing|cut off|continu|incomplete|\blines?\b|\btext\b|\bwords?\b|syllable|fragment|partial|broken|damag|next (?:page|side)|truncat|transcri|character|lacuna|not visible|\bends?\b/i;
+const TAIL_TAGS = /<(summary|keywords|meta|vocab|vocabulary)\b[^>]*>[\s\S]*?<\/\1>/gi;
+
+/**
+ * 5. Classify (and for the gap-description class, repair) a page-final `<unclear>`.
+ * @returns {{kind: 'none'|'not_final'|'src_doubtful'|'words'|'gap', text: string, content?: string}}
+ */
+export function fixFinalUnclear(text, src) {
+  const s = String(text);
+  const at = s.lastIndexOf('<unclear>');
+  if (at < 0) return { kind: 'none', text: s };
+  const close = s.indexOf('</unclear>', at);
+  if (close < 0) return { kind: 'not_final', text: s };
+  const content = s.slice(at + 9, close);
+  const rest = s.slice(close + 10);
+  if (content.includes('<') || /[A-Za-zÀ-ɏༀ-࿿]|<(?!\/?(?:summary|keywords|meta|vocab|vocabulary)\b)/.test(rest.replace(TAIL_TAGS, ''))) return { kind: 'not_final', text: s, content };
+  const srcEnd = String(src || '').replace(/[\s\\#]+$/, '').slice(-60);
+  if (/\[/.test(srcEnd.replace(/\[\d+\.?[ab]\]/g, '').slice(-30))) return { kind: 'src_doubtful', text: s, content };
+  const gap = /^[\s.…]*$/.test(content) || (GAP_TALK.test(content) && content.trim().split(/\s+/).length <= 10);
+  if (!gap) return { kind: 'words', text: s, content };
+  // "…men <unclear>one line not transcribed</unclear>." → "…men…"
+  const head = s.slice(0, at).replace(/[ \t]+$/, '');
+  const tail = rest.replace(/^[ \t]*[.,;:]*/, '');
+  return { kind: 'gap', text: `${head}…${tail}`, content };
+}
+
+/** 6. `<note original: "X">` (content written as an attribute, never closed) → `<note>original: X</note>`. */
+export function fixAttributeNote(text) {
+  const s = String(text);
+  if (noteTagBalance(s).balanced) return s;
+  return s.replace(/<note\s+(original|sanskrit|tibetan)\s*:\s*"([^"<>]*)"\s*>/gi, (m, k, v) => `<note>${k}: ${v}</note>`);
+}
+
+const OUT_OF_SCOPE_VOLS = new Set([74, 75, 76, 77, 78, 79, ...Array.from({ length: 20 }, (_, i) => 194 + i)]);
+
+async function openRunBooks(db, bookIds) {
+  const TERMINAL = ['complete', 'parked', 'failed'];
+  return new Set((await db.collection('translate_batch_runs').find({ book_id: { $in: bookIds }, phase: { $nin: TERMINAL } }, { projection: { book_id: 1 } }).toArray()).map((r) => r.book_id));
+}
+
+async function leftovers() {
+  const c = new MongoClient(process.env.MONGODB_URI); await c.connect(); const db = c.db('bookstore');
+  const books = await db.collection('books').find({ $or: [{ 'pipeline_auto.hold.reason': HOLD }, { title: /Derge Tengyur, vol\./ }] }, { projection: { id: 1, title: 1, 'catalog_ids.derge_tengyur_volume': 1 } }).toArray();
+  const volOf = (b) => b.catalog_ids?.derge_tengyur_volume ?? +((b.title || '').match(/vol\. (\d+)/) || [])[1];
+  const open = await openRunBooks(db, books.map((b) => b.id));
+  const inScope = books.filter((b) => !OUT_OF_SCOPE_VOLS.has(volOf(b)) && !open.has(b.id));
+  const report = {
+    apply: APPLY, books: books.length, books_in_scope: inScope.length,
+    skipped_books: { out_of_scope_volume: books.filter((b) => OUT_OF_SCOPE_VOLS.has(volOf(b))).length, open_run: books.filter((b) => !OUT_OF_SCOPE_VOLS.has(volOf(b)) && open.has(b.id)).map((b) => volOf(b)) },
+    pages_scanned: 0,
+    pairs: { pages: 0, resolved: 0, notes_removed: 0 }, unclear: { gap_pages: 0, words_pages: 0, src_doubtful: 0, not_final: 0, gap_content: {} },
+    attr_note: { pages: 0 }, still_unbalanced: [], written: 0, skipped: {}, words_list: [],
+  };
+  const diffs = fs.createWriteStream(OUT.replace(/\.json$/, '') + '-diffs.jsonl');
+  const touched = [];
+  for (const b of inScope) {
+    const vol = volOf(b);
+    const pending = [];
+    const cur = db.collection('pages').find({ book_id: b.id, 'translation.data': { $exists: true, $nin: [null, ''] } }, { projection: { id: 1, book_id: 1, page_number: 1, translation: 1, 'ocr.data': 1 } });
+    for await (const p of cur) {
+      report.pages_scanned++;
+      const en = p.translation.data;
+      const why = [];
+      const cp = fixCorrectionPairs(en);
+      let text = cp.text;
+      if (cp.resolved || cp.removed) { report.pairs.pages++; report.pairs.resolved += cp.resolved; report.pairs.notes_removed += cp.removed; why.push(`correction pairs: ${cp.resolved} resolved, ${cp.removed} markup notes removed`); }
+      const fu = fixFinalUnclear(text, p.ocr?.data);
+      if (fu.kind === 'gap') {
+        report.unclear.gap_pages++; text = fu.text; why.push('false page-final <unclear> → …');
+        const k = fu.content.trim().toLowerCase().slice(0, 50) || '(empty)'; report.unclear.gap_content[k] = (report.unclear.gap_content[k] || 0) + 1;
+      } else if (fu.kind === 'words') { report.unclear.words_pages++; report.words_list.push({ vol, page: p.page_number, page_id: p.id, url: `https://sourcelibrary.org/book/${b.id}?page=${p.page_number}`, content: fu.content.slice(0, 120) }); }
+      else if (fu.kind === 'src_doubtful') report.unclear.src_doubtful++;
+      else if (fu.kind === 'not_final') report.unclear.not_final++;
+      const an = fixAttributeNote(text);
+      if (an !== text) { report.attr_note.pages++; text = an; why.push('attribute-style <note> closed'); }
+      if (!noteTagBalance(text).balanced) report.still_unbalanced.push(`https://sourcelibrary.org/book/${b.id}?page=${p.page_number}`);
+      if (text !== en) pending.push({ p, en, text, why });
+    }
+    if (!pending.length) continue;
+    // Re-check just before writing: a run opened on this book since the scan started means hands off.
+    if (APPLY && (await openRunBooks(db, [b.id])).has(b.id)) { report.skipped.open_run_at_write = (report.skipped.open_run_at_write || 0) + pending.length; continue; }
+    for (const { p, en, text, why } of pending) {
+      const r = await repairTranslationText(db, p, text, { expectBefore: en, source: 'tengyur-draft-repairs-5497', reason: `leftover repairs (#5797): ${why.join('; ')}`, issue: 5797, jobId: 'tengyur-check-5497', apply: APPLY });
+      if (r.status === 'written') { report.written++; touched.push(p.id); }
+      else if (r.status !== 'dry_run') report.skipped[r.why] = (report.skipped[r.why] || 0) + 1;
+      diffs.write(JSON.stringify({ vol, page: p.page_number, page_id: p.id, why, status: r.status, before_tail: en.slice(-260), after_tail: text.slice(-260) }) + '\n');
+    }
+  }
+  await new Promise((r) => diffs.end(r));
+  if (APPLY && touched.length) report.resync = await resyncMirrors(db, touched);
+  await c.close();
+  fs.writeFileSync(OUT, JSON.stringify(report, null, 1));
+  console.log(JSON.stringify({ ...report, words_list: report.words_list.length, unclear: { ...report.unclear, gap_content: Object.entries(report.unclear.gap_content).sort((a, b) => b[1] - a[1]).slice(0, 25) } }, null, 1));
 }
 
 async function main() {
@@ -93,4 +229,4 @@ async function main() {
   console.log(JSON.stringify({ ...report, notes: { ...report.notes, ids: report.notes.ids.length }, tohoku: { ...report.tohoku, field_missing: report.tohoku.field_missing.length } }, null, 1));
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) main().catch((e) => { console.error(e); process.exit(1); });
+if (import.meta.url === `file://${process.argv[1]}`) (process.argv.includes('--leftovers') ? leftovers : main)().catch((e) => { console.error(e); process.exit(1); });
