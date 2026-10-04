@@ -1,0 +1,3984 @@
+{
+ "issue": 5795,
+ "run_id": "hidden-flash-5795",
+ "scored_at": "2026-10-04T08:19:55.195Z",
+ "prompt": {
+  "name": "Standard OCR",
+  "version": "19.1",
+  "content_hash": "9d8f959e053491362b2c4acec1e20c9a",
+  "text_sha256": "34f12611ca3d77e97d115d8a043b262b998d745218b7a12fdea3384072d7584b"
+ },
+ "generation": {
+  "temperature": 0,
+  "maxOutputTokens": 16384,
+  "thinkingBudget": 0
+ },
+ "models": {
+  "lite": "gemini-3.1-flash-lite",
+  "flash": "gemini-3-flash-preview"
+ },
+ "spend": {
+  "calls": 242,
+  "usd_realtime_from_tokens": 1.3497,
+  "cap_usd": 3
+ },
+ "families": {
+  "fas": {
+   "sealed": 30,
+   "with_text": 27,
+   "label": {
+    "yes": 25,
+    "no": 1,
+    "unsure": 1,
+    "na": 3,
+    "share_yes": 0.926,
+    "wilson95": [
+     0.766,
+     0.979
+    ],
+    "not_yes": [
+     {
+      "slug": "fas-21",
+      "book_id": "6a09ea953ca4edcd1ef0210b",
+      "label_ok": "no"
+     },
+     {
+      "slug": "fas-27",
+      "book_id": "69c1b9898522835be8452377",
+      "label_ok": "unsure"
+     }
+    ]
+   },
+   "catastrophic": {
+    "lite": {
+     "count": 0,
+     "n": 30,
+     "wilson95": [
+      0,
+      0.114
+     ],
+     "by_kind": {},
+     "slugs": []
+    },
+    "flash": {
+     "count": 1,
+     "n": 30,
+     "wilson95": [
+      0.006,
+      0.167
+     ],
+     "by_kind": {
+      "loop": 1
+     },
+     "slugs": [
+      "fas-20"
+     ]
+    }
+   },
+   "agreement_chars": {
+    "n": 27,
+    "median": 0.803,
+    "q1": 0.637,
+    "q3": 0.893,
+    "min": 0.259
+   },
+   "adjudication": null,
+   "rule": {
+    "a": true,
+    "b": false,
+    "c": null
+   },
+   "verdict": "pending adjudication"
+  },
+  "san": {
+   "sealed": 30,
+   "with_text": 30,
+   "label": {
+    "yes": 22,
+    "no": 4,
+    "unsure": 4,
+    "na": 0,
+    "share_yes": 0.733,
+    "wilson95": [
+     0.556,
+     0.858
+    ],
+    "not_yes": [
+     {
+      "slug": "san-02",
+      "book_id": "6a94a2c2bf723b215d8bd779",
+      "label_ok": "unsure"
+     },
+     {
+      "slug": "san-03",
+      "book_id": "6a949eb6f4b599840a464ee7",
+      "label_ok": "no"
+     },
+     {
+      "slug": "san-09",
+      "book_id": "6a94e1e5eb0a31948266f6ce",
+      "label_ok": "unsure"
+     },
+     {
+      "slug": "san-19",
+      "book_id": "6a94cf538e2a2ffc91d27812",
+      "label_ok": "no"
+     },
+     {
+      "slug": "san-24",
+      "book_id": "6a94988d31b41d9c5744c793",
+      "label_ok": "unsure"
+     },
+     {
+      "slug": "san-26",
+      "book_id": "6a91e14e051d1f3e8eaa3df2",
+      "label_ok": "no"
+     },
+     {
+      "slug": "san-27",
+      "book_id": "6a94a20ebf723b215d8bd634",
+      "label_ok": "unsure"
+     },
+     {
+      "slug": "san-28",
+      "book_id": "6a9498a231b41d9c5744c855",
+      "label_ok": "no"
+     }
+    ]
+   },
+   "catastrophic": {
+    "lite": {
+     "count": 7,
+     "n": 30,
+     "wilson95": [
+      0.118,
+      0.409
+     ],
+     "by_kind": {
+      "loop": 7
+     },
+     "slugs": [
+      "san-09",
+      "san-13",
+      "san-20",
+      "san-24",
+      "san-25",
+      "san-27",
+      "san-30"
+     ]
+    },
+    "flash": {
+     "count": 3,
+     "n": 30,
+     "wilson95": [
+      0.035,
+      0.256
+     ],
+     "by_kind": {
+      "loop": 2,
+      "refusal": 1
+     },
+     "slugs": [
+      "san-13",
+      "san-27",
+      "san-30"
+     ]
+    }
+   },
+   "agreement_chars": {
+    "n": 30,
+    "median": 0.297,
+    "q1": 0.185,
+    "q3": 0.968,
+    "min": 0
+   },
+   "adjudication": null,
+   "rule": {
+    "a": false,
+    "b": true,
+    "c": null
+   },
+   "verdict": "relabel (#4884)"
+  },
+  "pli": {
+   "sealed": 26,
+   "with_text": 26,
+   "label": {
+    "yes": 18,
+    "no": 0,
+    "unsure": 8,
+    "na": 0,
+    "share_yes": 0.692,
+    "wilson95": [
+     0.5,
+     0.835
+    ],
+    "not_yes": [
+     {
+      "slug": "pli-02",
+      "book_id": "69c1bdae8522835be846b363",
+      "label_ok": "unsure"
+     },
+     {
+      "slug": "pli-05",
+      "book_id": "69c1bdbe8522835be846b933",
+      "label_ok": "unsure"
+     },
+     {
+      "slug": "pli-09",
+      "book_id": "69c1bdc48522835be846bab6",
+      "label_ok": "unsure"
+     },
+     {
+      "slug": "pli-11",
+      "book_id": "69c1bdd28522835be846bdc6",
+      "label_ok": "unsure"
+     },
+     {
+      "slug": "pli-14",
+      "book_id": "69c1bdcb8522835be846bb95",
+      "label_ok": "unsure"
+     },
+     {
+      "slug": "pli-19",
+      "book_id": "69c1bdbb8522835be846b779",
+      "label_ok": "unsure"
+     },
+     {
+      "slug": "pli-25",
+      "book_id": "69c1bdb08522835be846b4a5",
+      "label_ok": "unsure"
+     },
+     {
+      "slug": "pli-26",
+      "book_id": "69c1bdc08522835be846b9d2",
+      "label_ok": "unsure"
+     }
+    ]
+   },
+   "catastrophic": {
+    "lite": {
+     "count": 8,
+     "n": 26,
+     "wilson95": [
+      0.165,
+      0.5
+     ],
+     "by_kind": {
+      "loop": 6,
+      "refusal": 2
+     },
+     "slugs": [
+      "pli-02",
+      "pli-03",
+      "pli-04",
+      "pli-05",
+      "pli-09",
+      "pli-18",
+      "pli-24",
+      "pli-26"
+     ]
+    },
+    "flash": {
+     "count": 5,
+     "n": 26,
+     "wilson95": [
+      0.085,
+      0.379
+     ],
+     "by_kind": {
+      "loop": 3,
+      "refusal": 2
+     },
+     "slugs": [
+      "pli-07",
+      "pli-09",
+      "pli-18",
+      "pli-24",
+      "pli-25"
+     ]
+    }
+   },
+   "agreement_chars": {
+    "n": 24,
+    "median": 0.847,
+    "q1": 0.028,
+    "q3": 0.955,
+    "min": 0
+   },
+   "adjudication": null,
+   "rule": {
+    "a": false,
+    "b": true,
+    "c": null
+   },
+   "verdict": "relabel (#4884)"
+  },
+  "ara": {
+   "sealed": 30,
+   "with_text": 30,
+   "label": {
+    "yes": 23,
+    "no": 4,
+    "unsure": 3,
+    "na": 0,
+    "share_yes": 0.767,
+    "wilson95": [
+     0.591,
+     0.882
+    ],
+    "not_yes": [
+     {
+      "slug": "ara-10",
+      "book_id": "6a9529efd5f269de866d585b",
+      "label_ok": "unsure"
+     },
+     {
+      "slug": "ara-16",
+      "book_id": "6a91e184051d1f3e8eaa5298",
+      "label_ok": "no"
+     },
+     {
+      "slug": "ara-18",
+      "book_id": "69b9a438caec562cc8874ebf",
+      "label_ok": "no"
+     },
+     {
+      "slug": "ara-24",
+      "book_id": "6a9f341a9a132af385445c23",
+      "label_ok": "no"
+     },
+     {
+      "slug": "ara-27",
+      "book_id": "6a91e209bb7a47bd0f19dd1a",
+      "label_ok": "no"
+     },
+     {
+      "slug": "ara-29",
+      "book_id": "6a9529e7d5f269de866d57cf",
+      "label_ok": "unsure"
+     },
+     {
+      "slug": "ara-30",
+      "book_id": "6a9529a0d5f269de866d5673",
+      "label_ok": "unsure"
+     }
+    ]
+   },
+   "catastrophic": {
+    "lite": {
+     "count": 3,
+     "n": 30,
+     "wilson95": [
+      0.035,
+      0.256
+     ],
+     "by_kind": {
+      "loop": 2,
+      "refusal": 1
+     },
+     "slugs": [
+      "ara-17",
+      "ara-24",
+      "ara-28"
+     ]
+    },
+    "flash": {
+     "count": 3,
+     "n": 30,
+     "wilson95": [
+      0.035,
+      0.256
+     ],
+     "by_kind": {
+      "loop": 2,
+      "refusal": 1
+     },
+     "slugs": [
+      "ara-17",
+      "ara-24",
+      "ara-28"
+     ]
+    }
+   },
+   "agreement_chars": {
+    "n": 29,
+    "median": 0.849,
+    "q1": 0.384,
+    "q3": 0.958,
+    "min": 0.173
+   },
+   "adjudication": null,
+   "rule": {
+    "a": false,
+    "b": true,
+    "c": null
+   },
+   "verdict": "relabel (#4884)"
+  },
+  "gez": {
+   "sealed": 1,
+   "with_text": 1,
+   "label": {
+    "yes": 1,
+    "no": 0,
+    "unsure": 0,
+    "na": 0,
+    "share_yes": 1,
+    "wilson95": [
+     0.207,
+     1
+    ],
+    "not_yes": []
+   },
+   "catastrophic": {
+    "lite": {
+     "count": 0,
+     "n": 1,
+     "wilson95": [
+      0,
+      0.793
+     ],
+     "by_kind": {},
+     "slugs": []
+    },
+    "flash": {
+     "count": 0,
+     "n": 1,
+     "wilson95": [
+      0,
+      0.793
+     ],
+     "by_kind": {},
+     "slugs": []
+    }
+   },
+   "agreement_chars": {
+    "n": 1,
+    "median": 0.554,
+    "q1": 0.554,
+    "q3": 0.554,
+    "min": 0.554
+   },
+   "adjudication": null,
+   "rule": {
+    "a": true,
+    "b": true,
+    "c": null
+   },
+   "verdict": "undecided: n too small"
+  }
+ },
+ "pages": [
+  {
+   "slug": "fas-01",
+   "family": "fas",
+   "book_id": "69c1b9c58522835be845430f",
+   "page_number": 67,
+   "page_class": "blank",
+   "label_ok": "n/a",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 142,
+     "letters": 0,
+     "outputTokens": 49,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 290,
+     "letters": 0,
+     "outputTokens": 80,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": null,
+   "adjudication_key": null
+  },
+  {
+   "slug": "fas-02",
+   "family": "fas",
+   "book_id": "69c1b9ae8522835be84538f5",
+   "page_number": 527,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1616,
+     "letters": 1067,
+     "outputTokens": 609,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1765,
+     "letters": 1097,
+     "outputTokens": 667,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9143,
+   "adjudication_key": 0.9143117593436645
+  },
+  {
+   "slug": "fas-03",
+   "family": "fas",
+   "book_id": "69c1b9d18522835be8454825",
+   "page_number": 320,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1100,
+     "letters": 637,
+     "outputTokens": 409,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1331,
+     "letters": 667,
+     "outputTokens": 499,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.3298,
+   "adjudication_key": 0.3298350824587706
+  },
+  {
+   "slug": "fas-04",
+   "family": "fas",
+   "book_id": "69c1b9e58522835be8454f27",
+   "page_number": 92,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1075,
+     "letters": 640,
+     "outputTokens": 392,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1155,
+     "letters": 651,
+     "outputTokens": 411,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9124,
+   "adjudication_key": 0.9124423963133641
+  },
+  {
+   "slug": "fas-05",
+   "family": "fas",
+   "book_id": "69c1b9498522835be84501a3",
+   "page_number": 134,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2584,
+     "letters": 1384,
+     "outputTokens": 957,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2112,
+     "letters": 930,
+     "outputTokens": 813,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.3244,
+   "adjudication_key": 0.3244219653179191
+  },
+  {
+   "slug": "fas-06",
+   "family": "fas",
+   "book_id": "69c1b7c28522835be8449386",
+   "page_number": 375,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1809,
+     "letters": 1103,
+     "outputTokens": 789,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 3872,
+     "letters": 2529,
+     "outputTokens": 1403,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.2594,
+   "adjudication_key": 0.2593910636615263
+  },
+  {
+   "slug": "fas-07",
+   "family": "fas",
+   "book_id": "69c1ba048522835be8455df3",
+   "page_number": 356,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1127,
+     "letters": 680,
+     "outputTokens": 400,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1191,
+     "letters": 696,
+     "outputTokens": 422,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9224,
+   "adjudication_key": 0.9224137931034483
+  },
+  {
+   "slug": "fas-08",
+   "family": "fas",
+   "book_id": "69c1ba108522835be845638b",
+   "page_number": 107,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1161,
+     "letters": 633,
+     "outputTokens": 407,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1266,
+     "letters": 634,
+     "outputTokens": 425,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.8155,
+   "adjudication_key": 0.8154574132492114
+  },
+  {
+   "slug": "fas-09",
+   "family": "fas",
+   "book_id": "69bf6987dd5a136c308e2826",
+   "page_number": 34,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 935,
+     "letters": 484,
+     "outputTokens": 334,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 997,
+     "letters": 497,
+     "outputTokens": 376,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.4064,
+   "adjudication_key": 0.40643863179074446
+  },
+  {
+   "slug": "fas-10",
+   "family": "fas",
+   "book_id": "6a08fd1d9c1b82475e15be68",
+   "page_number": 152,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2687,
+     "letters": 1790,
+     "outputTokens": 921,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2717,
+     "letters": 1815,
+     "outputTokens": 928,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.978,
+   "adjudication_key": 0.977961432506887
+  },
+  {
+   "slug": "fas-11",
+   "family": "fas",
+   "book_id": "69c1b9fb8522835be8455637",
+   "page_number": 164,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 970,
+     "letters": 560,
+     "outputTokens": 360,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1270,
+     "letters": 604,
+     "outputTokens": 454,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.803,
+   "adjudication_key": 0.8029801324503312
+  },
+  {
+   "slug": "fas-12",
+   "family": "fas",
+   "book_id": "69b90581cdb14f317fb523a3",
+   "page_number": 201,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2076,
+     "letters": 1173,
+     "outputTokens": 813,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2528,
+     "letters": 1410,
+     "outputTokens": 903,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.6376,
+   "adjudication_key": 0.6375886524822695
+  },
+  {
+   "slug": "fas-13",
+   "family": "fas",
+   "book_id": "69c1b9688522835be84509b5",
+   "page_number": 70,
+   "page_class": "blank",
+   "label_ok": "n/a",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 276,
+     "letters": 0,
+     "outputTokens": 92,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 488,
+     "letters": 0,
+     "outputTokens": 140,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": null,
+   "adjudication_key": null
+  },
+  {
+   "slug": "fas-14",
+   "family": "fas",
+   "book_id": "69c1b97c8522835be845195d",
+   "page_number": 168,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1661,
+     "letters": 1023,
+     "outputTokens": 630,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1634,
+     "letters": 942,
+     "outputTokens": 610,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.7908,
+   "adjudication_key": 0.7908113391984359
+  },
+  {
+   "slug": "fas-15",
+   "family": "fas",
+   "book_id": "69c1b94b8522835be8450347",
+   "page_number": 160,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 512,
+     "letters": 195,
+     "outputTokens": 201,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 506,
+     "letters": 189,
+     "outputTokens": 197,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9282,
+   "adjudication_key": 0.9282051282051282
+  },
+  {
+   "slug": "fas-16",
+   "family": "fas",
+   "book_id": "69c1b9648522835be84506eb",
+   "page_number": 165,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1039,
+     "letters": 565,
+     "outputTokens": 370,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1214,
+     "letters": 571,
+     "outputTokens": 438,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.8564,
+   "adjudication_key": 0.8563922942206655
+  },
+  {
+   "slug": "fas-17",
+   "family": "fas",
+   "book_id": "69c1ba618522835be8458a1b",
+   "page_number": 249,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1596,
+     "letters": 843,
+     "outputTokens": 605,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1634,
+     "letters": 799,
+     "outputTokens": 603,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.6358,
+   "adjudication_key": 0.6358244365361803
+  },
+  {
+   "slug": "fas-18",
+   "family": "fas",
+   "book_id": "69c1b92c8522835be844e9bf",
+   "page_number": 91,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 682,
+     "letters": 319,
+     "outputTokens": 258,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 774,
+     "letters": 329,
+     "outputTokens": 285,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.8997,
+   "adjudication_key": 0.8996960486322189
+  },
+  {
+   "slug": "fas-19",
+   "family": "fas",
+   "book_id": "69c1ba298522835be8456d17",
+   "page_number": 235,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1288,
+     "letters": 782,
+     "outputTokens": 455,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1358,
+     "letters": 806,
+     "outputTokens": 486,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.8002,
+   "adjudication_key": 0.8002481389578164
+  },
+  {
+   "slug": "fas-20",
+   "family": "fas",
+   "book_id": "69b90588cdb14f317fb5251e",
+   "page_number": 152,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2010,
+     "letters": 1198,
+     "outputTokens": 738,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "MAX_TOKENS",
+     "retried": false,
+     "chars": 37748,
+     "letters": 3000,
+     "outputTokens": 16380,
+     "loop_share": 0.952,
+     "catastrophic": "loop"
+    }
+   },
+   "agreement_chars": 0.2857,
+   "adjudication_key": 0
+  },
+  {
+   "slug": "fas-21",
+   "family": "fas",
+   "book_id": "6a09ea953ca4edcd1ef0210b",
+   "page_number": 152,
+   "page_class": "text",
+   "label_ok": "no",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2206,
+     "letters": 1481,
+     "outputTokens": 619,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2339,
+     "letters": 1479,
+     "outputTokens": 668,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9986,
+   "adjudication_key": 0.9986495611073599
+  },
+  {
+   "slug": "fas-22",
+   "family": "fas",
+   "book_id": "69c1b9ce8522835be845471f",
+   "page_number": 82,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1041,
+     "letters": 610,
+     "outputTokens": 350,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1094,
+     "letters": 639,
+     "outputTokens": 379,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.8717,
+   "adjudication_key": 0.8716744913928013
+  },
+  {
+   "slug": "fas-23",
+   "family": "fas",
+   "book_id": "69c1b9668522835be845092b",
+   "page_number": 119,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1125,
+     "letters": 546,
+     "outputTokens": 426,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1052,
+     "letters": 562,
+     "outputTokens": 385,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.7989,
+   "adjudication_key": 0.798932384341637
+  },
+  {
+   "slug": "fas-24",
+   "family": "fas",
+   "book_id": "69c1b7c78522835be84496d2",
+   "page_number": 450,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 3039,
+     "letters": 1979,
+     "outputTokens": 1146,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 3532,
+     "letters": 2185,
+     "outputTokens": 1266,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.6508,
+   "adjudication_key": 0.6508009153318077
+  },
+  {
+   "slug": "fas-25",
+   "family": "fas",
+   "book_id": "69c1ba5f8522835be84589bb",
+   "page_number": 80,
+   "page_class": "blank",
+   "label_ok": "n/a",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 194,
+     "letters": 0,
+     "outputTokens": 65,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 319,
+     "letters": 0,
+     "outputTokens": 89,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": null,
+   "adjudication_key": null
+  },
+  {
+   "slug": "fas-26",
+   "family": "fas",
+   "book_id": "69c1ba278522835be8456c7f",
+   "page_number": 63,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1989,
+     "letters": 1325,
+     "outputTokens": 737,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2054,
+     "letters": 1345,
+     "outputTokens": 750,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.8743,
+   "adjudication_key": 0.8743494423791822
+  },
+  {
+   "slug": "fas-27",
+   "family": "fas",
+   "book_id": "69c1b9898522835be8452377",
+   "page_number": 260,
+   "page_class": "text",
+   "label_ok": "unsure",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2569,
+     "letters": 717,
+     "outputTokens": 988,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2461,
+     "letters": 748,
+     "outputTokens": 1078,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.3917,
+   "adjudication_key": 0.3917112299465241
+  },
+  {
+   "slug": "fas-28",
+   "family": "fas",
+   "book_id": "69c1b9b38522835be8453cdf",
+   "page_number": 179,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1102,
+     "letters": 631,
+     "outputTokens": 397,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1251,
+     "letters": 633,
+     "outputTokens": 436,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.8088,
+   "adjudication_key": 0.8088467614533965
+  },
+  {
+   "slug": "fas-29",
+   "family": "fas",
+   "book_id": "69c1ba638522835be8458b35",
+   "page_number": 182,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1179,
+     "letters": 731,
+     "outputTokens": 440,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1298,
+     "letters": 751,
+     "outputTokens": 468,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.8868,
+   "adjudication_key": 0.8868175765645806
+  },
+  {
+   "slug": "fas-30",
+   "family": "fas",
+   "book_id": "69c1ba098522835be845610f",
+   "page_number": 81,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 963,
+     "letters": 536,
+     "outputTokens": 341,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1184,
+     "letters": 655,
+     "outputTokens": 402,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.7527,
+   "adjudication_key": 0.7526717557251908
+  },
+  {
+   "slug": "san-01",
+   "family": "san",
+   "book_id": "69c666a35ee2cfa2f502d0d3",
+   "page_number": 68,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1287,
+     "letters": 495,
+     "outputTokens": 531,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1705,
+     "letters": 501,
+     "outputTokens": 702,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9701,
+   "adjudication_key": 0.9700598802395209
+  },
+  {
+   "slug": "san-02",
+   "family": "san",
+   "book_id": "6a94a2c2bf723b215d8bd779",
+   "page_number": 24,
+   "page_class": "text",
+   "label_ok": "unsure",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2021,
+     "letters": 337,
+     "outputTokens": 1058,
+     "loop_share": 0.05,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 3306,
+     "letters": 443,
+     "outputTokens": 1570,
+     "loop_share": 0.097,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.2325,
+   "adjudication_key": 0.23250564334085777
+  },
+  {
+   "slug": "san-03",
+   "family": "san",
+   "book_id": "6a949eb6f4b599840a464ee7",
+   "page_number": 54,
+   "page_class": "text",
+   "label_ok": "no",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 568,
+     "letters": 237,
+     "outputTokens": 235,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 650,
+     "letters": 238,
+     "outputTokens": 279,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9832,
+   "adjudication_key": 0.9831932773109243
+  },
+  {
+   "slug": "san-04",
+   "family": "san",
+   "book_id": "6a949fd7bf723b215d8bc7c3",
+   "page_number": 9,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1902,
+     "letters": 628,
+     "outputTokens": 838,
+     "loop_share": 0.102,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1529,
+     "letters": 529,
+     "outputTokens": 637,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.1831,
+   "adjudication_key": 0.18312101910828027
+  },
+  {
+   "slug": "san-05",
+   "family": "san",
+   "book_id": "6a94c19756cac2f882c8306a",
+   "page_number": 17,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 832,
+     "letters": 333,
+     "outputTokens": 411,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1162,
+     "letters": 387,
+     "outputTokens": 470,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.2093,
+   "adjudication_key": 0.2093023255813954
+  },
+  {
+   "slug": "san-06",
+   "family": "san",
+   "book_id": "6a94d811b24b5a49c27d7478",
+   "page_number": 92,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 355,
+     "letters": 76,
+     "outputTokens": 155,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 453,
+     "letters": 95,
+     "outputTokens": 173,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.3368,
+   "adjudication_key": 0.33684210526315794
+  },
+  {
+   "slug": "san-07",
+   "family": "san",
+   "book_id": "6a94a139bf723b215d8bd2b5",
+   "page_number": 67,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 673,
+     "letters": 94,
+     "outputTokens": 244,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 905,
+     "letters": 272,
+     "outputTokens": 319,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.1728,
+   "adjudication_key": 0.17279411764705888
+  },
+  {
+   "slug": "san-08",
+   "family": "san",
+   "book_id": "6a91e20dbb7a47bd0f19de12",
+   "page_number": 295,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 4082,
+     "letters": 1844,
+     "outputTokens": 1875,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 4370,
+     "letters": 1873,
+     "outputTokens": 1948,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9253,
+   "adjudication_key": 0.9252536038441004
+  },
+  {
+   "slug": "san-09",
+   "family": "san",
+   "book_id": "6a94e1e5eb0a31948266f6ce",
+   "page_number": 16,
+   "page_class": "text",
+   "label_ok": "unsure",
+   "arms": {
+    "lite": {
+     "finishReason": "MAX_TOKENS",
+     "retried": false,
+     "chars": 32471,
+     "letters": 221,
+     "outputTokens": 16380,
+     "loop_share": 0.931,
+     "catastrophic": "loop"
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 3639,
+     "letters": 291,
+     "outputTokens": 1877,
+     "loop_share": 0.069,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.2405,
+   "adjudication_key": 0
+  },
+  {
+   "slug": "san-10",
+   "family": "san",
+   "book_id": "6a91e1e9bb7a47bd0f19d54d",
+   "page_number": 150,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 796,
+     "letters": 255,
+     "outputTokens": 330,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 811,
+     "letters": 258,
+     "outputTokens": 328,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9806,
+   "adjudication_key": 0.9806201550387597
+  },
+  {
+   "slug": "san-11",
+   "family": "san",
+   "book_id": "6a94a765bf723b215d8bf124",
+   "page_number": 25,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 512,
+     "letters": 144,
+     "outputTokens": 191,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 695,
+     "letters": 173,
+     "outputTokens": 279,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.1908,
+   "adjudication_key": 0.19075144508670516
+  },
+  {
+   "slug": "san-12",
+   "family": "san",
+   "book_id": "6a94916031b41d9c5744866a",
+   "page_number": 285,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1383,
+     "letters": 521,
+     "outputTokens": 496,
+     "loop_share": 0.374,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1123,
+     "letters": 407,
+     "outputTokens": 542,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.2265,
+   "adjudication_key": 0.22648752399232241
+  },
+  {
+   "slug": "san-13",
+   "family": "san",
+   "book_id": "6a948aac31b41d9c57444b98",
+   "page_number": 5,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "MAX_TOKENS",
+     "retried": false,
+     "chars": 39679,
+     "letters": 3000,
+     "outputTokens": 16380,
+     "loop_share": 0.999,
+     "catastrophic": "loop"
+    },
+    "flash": {
+     "finishReason": "MAX_TOKENS",
+     "retried": false,
+     "chars": 41014,
+     "letters": 3000,
+     "outputTokens": 16380,
+     "loop_share": 1,
+     "catastrophic": "loop"
+    }
+   },
+   "agreement_chars": 0.1537,
+   "adjudication_key": 0
+  },
+  {
+   "slug": "san-14",
+   "family": "san",
+   "book_id": "6a3082a2558372a29b37197c",
+   "page_number": 81,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1131,
+     "letters": 423,
+     "outputTokens": 467,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1200,
+     "letters": 426,
+     "outputTokens": 491,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9789,
+   "adjudication_key": 0.9788732394366197
+  },
+  {
+   "slug": "san-15",
+   "family": "san",
+   "book_id": "6a94cc2e8e2a2ffc91d265fb",
+   "page_number": 13,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 715,
+     "letters": 250,
+     "outputTokens": 370,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 833,
+     "letters": 279,
+     "outputTokens": 375,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.5806,
+   "adjudication_key": 0.5806451612903225
+  },
+  {
+   "slug": "san-16",
+   "family": "san",
+   "book_id": "6a9488e731b41d9c57443cf7",
+   "page_number": 40,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 501,
+     "letters": 138,
+     "outputTokens": 222,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 829,
+     "letters": 308,
+     "outputTokens": 298,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.2565,
+   "adjudication_key": 0.25649350649350644
+  },
+  {
+   "slug": "san-17",
+   "family": "san",
+   "book_id": "6a9498c931b41d9c5744c96e",
+   "page_number": 8,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 487,
+     "letters": 149,
+     "outputTokens": 221,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 658,
+     "letters": 161,
+     "outputTokens": 243,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.3789,
+   "adjudication_key": 0.3788819875776398
+  },
+  {
+   "slug": "san-18",
+   "family": "san",
+   "book_id": "6a94e2e9eb0a31948266fd63",
+   "page_number": 58,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 938,
+     "letters": 330,
+     "outputTokens": 444,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1130,
+     "letters": 371,
+     "outputTokens": 451,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.5364,
+   "adjudication_key": 0.5363881401617251
+  },
+  {
+   "slug": "san-19",
+   "family": "san",
+   "book_id": "6a94cf538e2a2ffc91d27812",
+   "page_number": 78,
+   "page_class": "text",
+   "label_ok": "no",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1664,
+     "letters": 606,
+     "outputTokens": 541,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1764,
+     "letters": 600,
+     "outputTokens": 566,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9769,
+   "adjudication_key": 0.976897689768977
+  },
+  {
+   "slug": "san-20",
+   "family": "san",
+   "book_id": "6a94a5ebbf723b215d8be757",
+   "page_number": 12,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "MAX_TOKENS",
+     "retried": false,
+     "chars": 40894,
+     "letters": 3000,
+     "outputTokens": 16380,
+     "loop_share": 0.964,
+     "catastrophic": "loop"
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1785,
+     "letters": 642,
+     "outputTokens": 791,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.039,
+   "adjudication_key": 0
+  },
+  {
+   "slug": "san-21",
+   "family": "san",
+   "book_id": "6a30825e675ed2bdbe36f107",
+   "page_number": 265,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1718,
+     "letters": 695,
+     "outputTokens": 749,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1768,
+     "letters": 704,
+     "outputTokens": 777,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9688,
+   "adjudication_key": 0.96875
+  },
+  {
+   "slug": "san-22",
+   "family": "san",
+   "book_id": "6a94bf4656cac2f882c81fa7",
+   "page_number": 26,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 660,
+     "letters": 162,
+     "outputTokens": 303,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 734,
+     "letters": 167,
+     "outputTokens": 289,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.5509,
+   "adjudication_key": 0.5508982035928144
+  },
+  {
+   "slug": "san-23",
+   "family": "san",
+   "book_id": "6a308902eb59f1191697c941",
+   "page_number": 541,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1191,
+     "letters": 422,
+     "outputTokens": 523,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1181,
+     "letters": 424,
+     "outputTokens": 530,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.967,
+   "adjudication_key": 0.9669811320754716
+  },
+  {
+   "slug": "san-24",
+   "family": "san",
+   "book_id": "6a94988d31b41d9c5744c793",
+   "page_number": 11,
+   "page_class": "text",
+   "label_ok": "unsure",
+   "arms": {
+    "lite": {
+     "finishReason": "MAX_TOKENS",
+     "retried": false,
+     "chars": 9518,
+     "letters": 2330,
+     "outputTokens": 16379,
+     "loop_share": 0.991,
+     "catastrophic": "loop"
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 3391,
+     "letters": 438,
+     "outputTokens": 1668,
+     "loop_share": 0.044,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0,
+   "adjudication_key": 0
+  },
+  {
+   "slug": "san-25",
+   "family": "san",
+   "book_id": "6a94d783b24b5a49c27d732c",
+   "page_number": 14,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "MAX_TOKENS",
+     "retried": false,
+     "chars": 16524,
+     "letters": 3000,
+     "outputTokens": 16380,
+     "loop_share": 0.994,
+     "catastrophic": "loop"
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1014,
+     "letters": 426,
+     "outputTokens": 426,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0,
+   "adjudication_key": 0
+  },
+  {
+   "slug": "san-26",
+   "family": "san",
+   "book_id": "6a91e14e051d1f3e8eaa3df2",
+   "page_number": 50,
+   "page_class": "text",
+   "label_ok": "no",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 731,
+     "letters": 264,
+     "outputTokens": 316,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 823,
+     "letters": 264,
+     "outputTokens": 363,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9962,
+   "adjudication_key": 0.9962121212121212
+  },
+  {
+   "slug": "san-27",
+   "family": "san",
+   "book_id": "6a94a20ebf723b215d8bd634",
+   "page_number": 30,
+   "page_class": "text",
+   "label_ok": "unsure",
+   "arms": {
+    "lite": {
+     "finishReason": "MAX_TOKENS",
+     "retried": false,
+     "chars": 19928,
+     "letters": 74,
+     "outputTokens": 16380,
+     "loop_share": 0.906,
+     "catastrophic": "loop"
+    },
+    "flash": {
+     "finishReason": "RECITATION",
+     "retried": true,
+     "chars": 0,
+     "letters": 0,
+     "outputTokens": 0,
+     "loop_share": 0,
+     "catastrophic": "refusal"
+    }
+   },
+   "agreement_chars": 0,
+   "adjudication_key": 0
+  },
+  {
+   "slug": "san-28",
+   "family": "san",
+   "book_id": "6a9498a231b41d9c5744c855",
+   "page_number": 132,
+   "page_class": "text",
+   "label_ok": "no",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2494,
+     "letters": 1674,
+     "outputTokens": 803,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2489,
+     "letters": 1678,
+     "outputTokens": 827,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9779,
+   "adjudication_key": 0.9779499404052443
+  },
+  {
+   "slug": "san-29",
+   "family": "san",
+   "book_id": "6a94e2c0eb0a31948266fa54",
+   "page_number": 52,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 588,
+     "letters": 167,
+     "outputTokens": 219,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 916,
+     "letters": 237,
+     "outputTokens": 348,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.2025,
+   "adjudication_key": 0.20253164556962022
+  },
+  {
+   "slug": "san-30",
+   "family": "san",
+   "book_id": "6a949caf31b41d9c5744e306",
+   "page_number": 21,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "MAX_TOKENS",
+     "retried": false,
+     "chars": 32820,
+     "letters": 3000,
+     "outputTokens": 16380,
+     "loop_share": 0.998,
+     "catastrophic": "loop"
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1241,
+     "letters": 427,
+     "outputTokens": 558,
+     "loop_share": 0.6,
+     "catastrophic": "loop"
+    }
+   },
+   "agreement_chars": 0.1087,
+   "adjudication_key": 0
+  },
+  {
+   "slug": "pli-01",
+   "family": "pli",
+   "book_id": "69c1bda58522835be846acd6",
+   "page_number": 633,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 947,
+     "letters": 417,
+     "outputTokens": 636,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1361,
+     "letters": 477,
+     "outputTokens": 790,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.3333,
+   "adjudication_key": 0.33333333333333337
+  },
+  {
+   "slug": "pli-02",
+   "family": "pli",
+   "book_id": "69c1bdae8522835be846b363",
+   "page_number": 68,
+   "page_class": "text",
+   "label_ok": "unsure",
+   "arms": {
+    "lite": {
+     "finishReason": "MAX_TOKENS",
+     "retried": false,
+     "chars": 22095,
+     "letters": 3000,
+     "outputTokens": 16380,
+     "loop_share": 0.998,
+     "catastrophic": "loop"
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1020,
+     "letters": 415,
+     "outputTokens": 275,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.0227,
+   "adjudication_key": 0
+  },
+  {
+   "slug": "pli-03",
+   "family": "pli",
+   "book_id": "69c1bdac8522835be846b291",
+   "page_number": 71,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1184,
+     "letters": 541,
+     "outputTokens": 852,
+     "loop_share": 0.855,
+     "catastrophic": "loop"
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1756,
+     "letters": 1176,
+     "outputTokens": 772,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0,
+   "adjudication_key": 0
+  },
+  {
+   "slug": "pli-04",
+   "family": "pli",
+   "book_id": "69c1bda78522835be846afae",
+   "page_number": 622,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "MAX_TOKENS",
+     "retried": false,
+     "chars": 24669,
+     "letters": 3000,
+     "outputTokens": 16380,
+     "loop_share": 0.992,
+     "catastrophic": "loop"
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1445,
+     "letters": 574,
+     "outputTokens": 803,
+     "loop_share": 0.489,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.0277,
+   "adjudication_key": 0
+  },
+  {
+   "slug": "pli-05",
+   "family": "pli",
+   "book_id": "69c1bdbe8522835be846b933",
+   "page_number": 99,
+   "page_class": "text",
+   "label_ok": "unsure",
+   "arms": {
+    "lite": {
+     "finishReason": "MAX_TOKENS",
+     "retried": false,
+     "chars": 5754,
+     "letters": 2728,
+     "outputTokens": 16380,
+     "loop_share": 0.997,
+     "catastrophic": "loop"
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 959,
+     "letters": 421,
+     "outputTokens": 241,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.0007,
+   "adjudication_key": 0
+  },
+  {
+   "slug": "pli-06",
+   "family": "pli",
+   "book_id": "69bd00f7f403a9ca2380efbf",
+   "page_number": 50,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1712,
+     "letters": 738,
+     "outputTokens": 1039,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1694,
+     "letters": 755,
+     "outputTokens": 1043,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.8993,
+   "adjudication_key": 0.8993377483443709
+  },
+  {
+   "slug": "pli-07",
+   "family": "pli",
+   "book_id": "6a30904dd8c6b8a005c7bea9",
+   "page_number": 367,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2030,
+     "letters": 1452,
+     "outputTokens": 814,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "MAX_TOKENS",
+     "retried": false,
+     "chars": 33087,
+     "letters": 1194,
+     "outputTokens": 16380,
+     "loop_share": 0,
+     "catastrophic": "loop"
+    }
+   },
+   "agreement_chars": 0.8003,
+   "adjudication_key": 0
+  },
+  {
+   "slug": "pli-08",
+   "family": "pli",
+   "book_id": "6a308280558372a29b371088",
+   "page_number": 401,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2255,
+     "letters": 1607,
+     "outputTokens": 1008,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2271,
+     "letters": 1587,
+     "outputTokens": 1013,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9851,
+   "adjudication_key": 0.985065339141257
+  },
+  {
+   "slug": "pli-09",
+   "family": "pli",
+   "book_id": "69c1bdc48522835be846bab6",
+   "page_number": 32,
+   "page_class": "text",
+   "label_ok": "unsure",
+   "arms": {
+    "lite": {
+     "finishReason": "MAX_TOKENS",
+     "retried": false,
+     "chars": 22346,
+     "letters": 3000,
+     "outputTokens": 16380,
+     "loop_share": 0.996,
+     "catastrophic": "loop"
+    },
+    "flash": {
+     "finishReason": "MAX_TOKENS",
+     "retried": false,
+     "chars": 39681,
+     "letters": 3000,
+     "outputTokens": 16380,
+     "loop_share": 0.997,
+     "catastrophic": "loop"
+    }
+   },
+   "agreement_chars": 0,
+   "adjudication_key": 0
+  },
+  {
+   "slug": "pli-10",
+   "family": "pli",
+   "book_id": "69bc7a3f8888fef520b73c1e",
+   "page_number": 138,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2091,
+     "letters": 1504,
+     "outputTokens": 841,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2170,
+     "letters": 1538,
+     "outputTokens": 926,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9467,
+   "adjudication_key": 0.9466840052015605
+  },
+  {
+   "slug": "pli-11",
+   "family": "pli",
+   "book_id": "69c1bdd28522835be846bdc6",
+   "page_number": 472,
+   "page_class": "text",
+   "label_ok": "unsure",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 760,
+     "letters": 375,
+     "outputTokens": 190,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 3721,
+     "letters": 1609,
+     "outputTokens": 2096,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0,
+   "adjudication_key": 0
+  },
+  {
+   "slug": "pli-12",
+   "family": "pli",
+   "book_id": "6a09ff0029abf62080bbd95f",
+   "page_number": 131,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2417,
+     "letters": 1664,
+     "outputTokens": 1007,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2592,
+     "letters": 1848,
+     "outputTokens": 1037,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.8929,
+   "adjudication_key": 0.8928571428571429
+  },
+  {
+   "slug": "pli-13",
+   "family": "pli",
+   "book_id": "69bd014bf403a9ca2380f091",
+   "page_number": 102,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2509,
+     "letters": 1119,
+     "outputTokens": 1544,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2540,
+     "letters": 1116,
+     "outputTokens": 1569,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9321,
+   "adjudication_key": 0.9320822162645219
+  },
+  {
+   "slug": "pli-14",
+   "family": "pli",
+   "book_id": "69c1bdcb8522835be846bb95",
+   "page_number": 174,
+   "page_class": "text",
+   "label_ok": "unsure",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 832,
+     "letters": 276,
+     "outputTokens": 215,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 615,
+     "letters": 78,
+     "outputTokens": 187,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.2138,
+   "adjudication_key": 0.21376811594202894
+  },
+  {
+   "slug": "pli-15",
+   "family": "pli",
+   "book_id": "6a09ff48fa20006dbaba8ee1",
+   "page_number": 37,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1736,
+     "letters": 1194,
+     "outputTokens": 681,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": true,
+     "chars": 1883,
+     "letters": 1196,
+     "outputTokens": 738,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9891,
+   "adjudication_key": 0.9891304347826086
+  },
+  {
+   "slug": "pli-16",
+   "family": "pli",
+   "book_id": "6a31c88a4400787ae5a9d5e4",
+   "page_number": 337,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2014,
+     "letters": 1436,
+     "outputTokens": 803,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2000,
+     "letters": 1471,
+     "outputTokens": 787,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9735,
+   "adjudication_key": 0.973487423521414
+  },
+  {
+   "slug": "pli-17",
+   "family": "pli",
+   "book_id": "6a09ff5dfa20006dbaba9200",
+   "page_number": 317,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2113,
+     "letters": 1507,
+     "outputTokens": 783,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2146,
+     "letters": 1515,
+     "outputTokens": 826,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9855,
+   "adjudication_key": 0.9854785478547855
+  },
+  {
+   "slug": "pli-18",
+   "family": "pli",
+   "book_id": "6a09ff43fa20006dbaba8d78",
+   "page_number": 131,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "RECITATION",
+     "retried": true,
+     "chars": 0,
+     "letters": 0,
+     "outputTokens": 0,
+     "loop_share": 0,
+     "catastrophic": "refusal"
+    },
+    "flash": {
+     "finishReason": "RECITATION",
+     "retried": true,
+     "chars": 0,
+     "letters": 0,
+     "outputTokens": 0,
+     "loop_share": 0,
+     "catastrophic": "refusal"
+    }
+   },
+   "agreement_chars": null,
+   "adjudication_key": 0
+  },
+  {
+   "slug": "pli-19",
+   "family": "pli",
+   "book_id": "69c1bdbb8522835be846b779",
+   "page_number": 277,
+   "page_class": "text",
+   "label_ok": "unsure",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 3040,
+     "letters": 1554,
+     "outputTokens": 1817,
+     "loop_share": 0.142,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 3276,
+     "letters": 1430,
+     "outputTokens": 1939,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.1544,
+   "adjudication_key": 0.15444015444015446
+  },
+  {
+   "slug": "pli-20",
+   "family": "pli",
+   "book_id": "6a09ff23fa20006dbaba89ae",
+   "page_number": 194,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1524,
+     "letters": 805,
+     "outputTokens": 743,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1654,
+     "letters": 805,
+     "outputTokens": 798,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9826,
+   "adjudication_key": 0.9826086956521739
+  },
+  {
+   "slug": "pli-21",
+   "family": "pli",
+   "book_id": "6a09fef929abf62080bbd82a",
+   "page_number": 140,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2214,
+     "letters": 1570,
+     "outputTokens": 842,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2222,
+     "letters": 1570,
+     "outputTokens": 899,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9484,
+   "adjudication_key": 0.9484076433121019
+  },
+  {
+   "slug": "pli-22",
+   "family": "pli",
+   "book_id": "69bc7fe6173577a33741d428",
+   "page_number": 124,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1948,
+     "letters": 1443,
+     "outputTokens": 767,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1949,
+     "letters": 1438,
+     "outputTokens": 766,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9875,
+   "adjudication_key": 0.9875259875259875
+  },
+  {
+   "slug": "pli-23",
+   "family": "pli",
+   "book_id": "69bd01cdf403a9ca2380f152",
+   "page_number": 169,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1564,
+     "letters": 1089,
+     "outputTokens": 661,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1577,
+     "letters": 1089,
+     "outputTokens": 688,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9311,
+   "adjudication_key": 0.931129476584022
+  },
+  {
+   "slug": "pli-24",
+   "family": "pli",
+   "book_id": "6a09ff4ffa20006dbaba901a",
+   "page_number": 197,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "RECITATION",
+     "retried": true,
+     "chars": 0,
+     "letters": 0,
+     "outputTokens": 0,
+     "loop_share": 0,
+     "catastrophic": "refusal"
+    },
+    "flash": {
+     "finishReason": "RECITATION",
+     "retried": true,
+     "chars": 0,
+     "letters": 0,
+     "outputTokens": 0,
+     "loop_share": 0,
+     "catastrophic": "refusal"
+    }
+   },
+   "agreement_chars": null,
+   "adjudication_key": 0
+  },
+  {
+   "slug": "pli-25",
+   "family": "pli",
+   "book_id": "69c1bdb08522835be846b4a5",
+   "page_number": 66,
+   "page_class": "text",
+   "label_ok": "unsure",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 902,
+     "letters": 350,
+     "outputTokens": 222,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "MAX_TOKENS",
+     "retried": false,
+     "chars": 36772,
+     "letters": 3000,
+     "outputTokens": 16380,
+     "loop_share": 0.999,
+     "catastrophic": "loop"
+    }
+   },
+   "agreement_chars": 0.064,
+   "adjudication_key": 0
+  },
+  {
+   "slug": "pli-26",
+   "family": "pli",
+   "book_id": "69c1bdc08522835be846b9d2",
+   "page_number": 38,
+   "page_class": "text",
+   "label_ok": "unsure",
+   "arms": {
+    "lite": {
+     "finishReason": "MAX_TOKENS",
+     "retried": false,
+     "chars": 16704,
+     "letters": 3000,
+     "outputTokens": 16380,
+     "loop_share": 0.998,
+     "catastrophic": "loop"
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1756,
+     "letters": 594,
+     "outputTokens": 1000,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.0277,
+   "adjudication_key": 0
+  },
+  {
+   "slug": "ara-01",
+   "family": "ara",
+   "book_id": "6a952a02d5f269de866d5a2c",
+   "page_number": -67,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1420,
+     "letters": 933,
+     "outputTokens": 476,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1570,
+     "letters": 935,
+     "outputTokens": 535,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9786,
+   "adjudication_key": 0.9786096256684492
+  },
+  {
+   "slug": "ara-02",
+   "family": "ara",
+   "book_id": "6a08c0e49b57265ed7f10eee",
+   "page_number": 38,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1820,
+     "letters": 1118,
+     "outputTokens": 710,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1937,
+     "letters": 1119,
+     "outputTokens": 761,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.983,
+   "adjudication_key": 0.9830205540661304
+  },
+  {
+   "slug": "ara-03",
+   "family": "ara",
+   "book_id": "6a952a78d5f269de866d6214",
+   "page_number": 230,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2182,
+     "letters": 1517,
+     "outputTokens": 830,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2547,
+     "letters": 1713,
+     "outputTokens": 949,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.7513,
+   "adjudication_key": 0.7513134851138354
+  },
+  {
+   "slug": "ara-04",
+   "family": "ara",
+   "book_id": "69b8f3ab97a3fe83080f4d83",
+   "page_number": 511,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1399,
+     "letters": 881,
+     "outputTokens": 520,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1367,
+     "letters": 846,
+     "outputTokens": 517,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9501,
+   "adjudication_key": 0.9500567536889898
+  },
+  {
+   "slug": "ara-05",
+   "family": "ara",
+   "book_id": "69d5ac20d0bd3547a565543a",
+   "page_number": 105,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2090,
+     "letters": 1462,
+     "outputTokens": 756,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2197,
+     "letters": 1485,
+     "outputTokens": 765,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.6734,
+   "adjudication_key": 0.6734006734006734
+  },
+  {
+   "slug": "ara-06",
+   "family": "ara",
+   "book_id": "6a952aafd5f269de866d64c4",
+   "page_number": 109,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 707,
+     "letters": 354,
+     "outputTokens": 298,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 787,
+     "letters": 254,
+     "outputTokens": 267,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.3842,
+   "adjudication_key": 0.384180790960452
+  },
+  {
+   "slug": "ara-07",
+   "family": "ara",
+   "book_id": "6a952a0bd5f269de866d5ab0",
+   "page_number": 80,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1321,
+     "letters": 852,
+     "outputTokens": 478,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1466,
+     "letters": 855,
+     "outputTokens": 512,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9673,
+   "adjudication_key": 0.9672514619883041
+  },
+  {
+   "slug": "ara-08",
+   "family": "ara",
+   "book_id": "69c1b7b1fe4b8f25b92010ef",
+   "page_number": 54,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 982,
+     "letters": 512,
+     "outputTokens": 364,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 996,
+     "letters": 523,
+     "outputTokens": 353,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9579,
+   "adjudication_key": 0.9579349904397706
+  },
+  {
+   "slug": "ara-09",
+   "family": "ara",
+   "book_id": "69b93eaf5a66bb81efc0636d",
+   "page_number": 330,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 3769,
+     "letters": 2847,
+     "outputTokens": 1282,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 3986,
+     "letters": 2950,
+     "outputTokens": 1404,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9203,
+   "adjudication_key": 0.9203389830508475
+  },
+  {
+   "slug": "ara-10",
+   "family": "ara",
+   "book_id": "6a9529efd5f269de866d585b",
+   "page_number": 37,
+   "page_class": "text",
+   "label_ok": "unsure",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 916,
+     "letters": 555,
+     "outputTokens": 288,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2108,
+     "letters": 1098,
+     "outputTokens": 842,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.2222,
+   "adjudication_key": 0.2222222222222222
+  },
+  {
+   "slug": "ara-11",
+   "family": "ara",
+   "book_id": "69bf69f5dd5a136c308e2b58",
+   "page_number": 378,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2405,
+     "letters": 1747,
+     "outputTokens": 903,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2436,
+     "letters": 1764,
+     "outputTokens": 891,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9728,
+   "adjudication_key": 0.9727891156462585
+  },
+  {
+   "slug": "ara-12",
+   "family": "ara",
+   "book_id": "69c1b7b98522835be8448e25",
+   "page_number": 58,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 935,
+     "letters": 516,
+     "outputTokens": 367,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 979,
+     "letters": 467,
+     "outputTokens": 349,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.8488,
+   "adjudication_key": 0.8488372093023255
+  },
+  {
+   "slug": "ara-13",
+   "family": "ara",
+   "book_id": "6a997b23b2c0cbae441cd102",
+   "page_number": 2,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1541,
+     "letters": 1057,
+     "outputTokens": 517,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1905,
+     "letters": 1189,
+     "outputTokens": 623,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.841,
+   "adjudication_key": 0.8410428931875525
+  },
+  {
+   "slug": "ara-14",
+   "family": "ara",
+   "book_id": "69af0cf0ca8f47eb1206ae5c",
+   "page_number": 65,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 4274,
+     "letters": 3000,
+     "outputTokens": 1583,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 4370,
+     "letters": 3000,
+     "outputTokens": 1557,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9543,
+   "adjudication_key": 0.9543333333333334
+  },
+  {
+   "slug": "ara-15",
+   "family": "ara",
+   "book_id": "69b87c6861fdd27e264a6d37",
+   "page_number": 51,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1814,
+     "letters": 1212,
+     "outputTokens": 618,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1828,
+     "letters": 1214,
+     "outputTokens": 627,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9984,
+   "adjudication_key": 0.9983525535420099
+  },
+  {
+   "slug": "ara-16",
+   "family": "ara",
+   "book_id": "6a91e184051d1f3e8eaa5298",
+   "page_number": 214,
+   "page_class": "text",
+   "label_ok": "no",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1135,
+     "letters": 442,
+     "outputTokens": 445,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1074,
+     "letters": 352,
+     "outputTokens": 419,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.6471,
+   "adjudication_key": 0.6470588235294117
+  },
+  {
+   "slug": "ara-17",
+   "family": "ara",
+   "book_id": "6a952a8ad5f269de866d62fd",
+   "page_number": 74,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "MAX_TOKENS",
+     "retried": false,
+     "chars": 32889,
+     "letters": 3000,
+     "outputTokens": 16380,
+     "loop_share": 0.994,
+     "catastrophic": "loop"
+    },
+    "flash": {
+     "finishReason": "MAX_TOKENS",
+     "retried": false,
+     "chars": 42682,
+     "letters": 3000,
+     "outputTokens": 16380,
+     "loop_share": 0,
+     "catastrophic": "loop"
+    }
+   },
+   "agreement_chars": 0.1747,
+   "adjudication_key": 0
+  },
+  {
+   "slug": "ara-18",
+   "family": "ara",
+   "book_id": "69b9a438caec562cc8874ebf",
+   "page_number": 245,
+   "page_class": "text",
+   "label_ok": "no",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 935,
+     "letters": 547,
+     "outputTokens": 330,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 969,
+     "letters": 546,
+     "outputTokens": 365,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9909,
+   "adjudication_key": 0.9908592321755028
+  },
+  {
+   "slug": "ara-19",
+   "family": "ara",
+   "book_id": "69c1b8828522835be844a673",
+   "page_number": 245,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2674,
+     "letters": 1187,
+     "outputTokens": 1343,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2847,
+     "letters": 1259,
+     "outputTokens": 1365,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9269,
+   "adjudication_key": 0.9269261318506752
+  },
+  {
+   "slug": "ara-20",
+   "family": "ara",
+   "book_id": "6a952a42d5f269de866d5e58",
+   "page_number": 49,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1654,
+     "letters": 1143,
+     "outputTokens": 560,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1807,
+     "letters": 1169,
+     "outputTokens": 612,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9136,
+   "adjudication_key": 0.913601368691189
+  },
+  {
+   "slug": "ara-21",
+   "family": "ara",
+   "book_id": "6a952a27d5f269de866d5b33",
+   "page_number": 143,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 832,
+     "letters": 429,
+     "outputTokens": 284,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1415,
+     "letters": 787,
+     "outputTokens": 407,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.4282,
+   "adjudication_key": 0.4282083862770013
+  },
+  {
+   "slug": "ara-22",
+   "family": "ara",
+   "book_id": "6a9530dfdd238097cc3c816e",
+   "page_number": 79,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2923,
+     "letters": 2172,
+     "outputTokens": 975,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 3539,
+     "letters": 2497,
+     "outputTokens": 1202,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.7649,
+   "adjudication_key": 0.7649179014817782
+  },
+  {
+   "slug": "ara-23",
+   "family": "ara",
+   "book_id": "69c1b7a8fe4b8f25b9200a59",
+   "page_number": 53,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1269,
+     "letters": 586,
+     "outputTokens": 495,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1654,
+     "letters": 609,
+     "outputTokens": 682,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.3842,
+   "adjudication_key": 0.3842364532019704
+  },
+  {
+   "slug": "ara-24",
+   "family": "ara",
+   "book_id": "6a9f341a9a132af385445c23",
+   "page_number": 415,
+   "page_class": "text",
+   "label_ok": "no",
+   "arms": {
+    "lite": {
+     "finishReason": "RECITATION",
+     "retried": true,
+     "chars": 0,
+     "letters": 0,
+     "outputTokens": 0,
+     "loop_share": 0,
+     "catastrophic": "refusal"
+    },
+    "flash": {
+     "finishReason": "RECITATION",
+     "retried": true,
+     "chars": 0,
+     "letters": 0,
+     "outputTokens": 0,
+     "loop_share": 0,
+     "catastrophic": "refusal"
+    }
+   },
+   "agreement_chars": null,
+   "adjudication_key": 0
+  },
+  {
+   "slug": "ara-25",
+   "family": "ara",
+   "book_id": "69b635ae8ab57a1de53a6a1d",
+   "page_number": 233,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1959,
+     "letters": 1305,
+     "outputTokens": 699,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1954,
+     "letters": 1309,
+     "outputTokens": 699,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9794,
+   "adjudication_key": 0.9793735676088617
+  },
+  {
+   "slug": "ara-26",
+   "family": "ara",
+   "book_id": "6a952ab7d5f269de866d654a",
+   "page_number": 151,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 936,
+     "letters": 414,
+     "outputTokens": 389,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1611,
+     "letters": 504,
+     "outputTokens": 719,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.2659,
+   "adjudication_key": 0.2658730158730159
+  },
+  {
+   "slug": "ara-27",
+   "family": "ara",
+   "book_id": "6a91e209bb7a47bd0f19dd1a",
+   "page_number": 100,
+   "page_class": "text",
+   "label_ok": "no",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 774,
+     "letters": 216,
+     "outputTokens": 286,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 807,
+     "letters": 215,
+     "outputTokens": 282,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.9213,
+   "adjudication_key": 0.9212962962962963
+  },
+  {
+   "slug": "ara-28",
+   "family": "ara",
+   "book_id": "6a953189dd238097cc3c82d3",
+   "page_number": 84,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "MAX_TOKENS",
+     "retried": false,
+     "chars": 38022,
+     "letters": 3000,
+     "outputTokens": 16380,
+     "loop_share": 0.997,
+     "catastrophic": "loop"
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 4083,
+     "letters": 2959,
+     "outputTokens": 1980,
+     "loop_share": 0.711,
+     "catastrophic": "loop"
+    }
+   },
+   "agreement_chars": 0.1743,
+   "adjudication_key": 0
+  },
+  {
+   "slug": "ara-29",
+   "family": "ara",
+   "book_id": "6a9529e7d5f269de866d57cf",
+   "page_number": 62,
+   "page_class": "text",
+   "label_ok": "unsure",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1018,
+     "letters": 584,
+     "outputTokens": 327,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2636,
+     "letters": 1611,
+     "outputTokens": 909,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.1726,
+   "adjudication_key": 0.1725636250775916
+  },
+  {
+   "slug": "ara-30",
+   "family": "ara",
+   "book_id": "6a9529a0d5f269de866d5673",
+   "page_number": 73,
+   "page_class": "text",
+   "label_ok": "unsure",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 1404,
+     "letters": 923,
+     "outputTokens": 455,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 2785,
+     "letters": 1903,
+     "outputTokens": 843,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.2627,
+   "adjudication_key": 0.2627430373095113
+  },
+  {
+   "slug": "gez-01",
+   "family": "gez",
+   "book_id": "69c1bd4c8522835be8468de5",
+   "page_number": 331,
+   "page_class": "text",
+   "label_ok": "yes",
+   "arms": {
+    "lite": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 683,
+     "letters": 321,
+     "outputTokens": 528,
+     "loop_share": 0,
+     "catastrophic": null
+    },
+    "flash": {
+     "finishReason": "STOP",
+     "retried": false,
+     "chars": 807,
+     "letters": 321,
+     "outputTokens": 531,
+     "loop_share": 0,
+     "catastrophic": null
+    }
+   },
+   "agreement_chars": 0.5545,
+   "adjudication_key": 0.5545171339563864
+  }
+ ]
+}

@@ -1,0 +1,166 @@
+{
+ "fas-20": {
+  "A": "lite",
+  "B": "flash"
+ },
+ "fas-06": {
+  "A": "flash",
+  "B": "lite"
+ },
+ "fas-05": {
+  "A": "lite",
+  "B": "flash"
+ },
+ "fas-03": {
+  "A": "lite",
+  "B": "flash"
+ },
+ "fas-27": {
+  "A": "flash",
+  "B": "lite"
+ },
+ "fas-09": {
+  "A": "lite",
+  "B": "flash"
+ },
+ "fas-17": {
+  "A": "lite",
+  "B": "flash"
+ },
+ "fas-12": {
+  "A": "lite",
+  "B": "flash"
+ },
+ "fas-24": {
+  "A": "lite",
+  "B": "flash"
+ },
+ "fas-30": {
+  "A": "lite",
+  "B": "flash"
+ },
+ "san-09": {
+  "A": "flash",
+  "B": "lite"
+ },
+ "san-13": {
+  "A": "lite",
+  "B": "flash"
+ },
+ "san-20": {
+  "A": "lite",
+  "B": "flash"
+ },
+ "san-24": {
+  "A": "flash",
+  "B": "lite"
+ },
+ "san-25": {
+  "A": "flash",
+  "B": "lite"
+ },
+ "san-27": {
+  "A": "flash",
+  "B": "lite"
+ },
+ "san-30": {
+  "A": "flash",
+  "B": "lite"
+ },
+ "san-07": {
+  "A": "lite",
+  "B": "flash"
+ },
+ "san-04": {
+  "A": "flash",
+  "B": "lite"
+ },
+ "san-11": {
+  "A": "lite",
+  "B": "flash"
+ },
+ "pli-02": {
+  "A": "lite",
+  "B": "flash"
+ },
+ "pli-03": {
+  "A": "flash",
+  "B": "lite"
+ },
+ "pli-04": {
+  "A": "lite",
+  "B": "flash"
+ },
+ "pli-05": {
+  "A": "flash",
+  "B": "lite"
+ },
+ "pli-07": {
+  "A": "lite",
+  "B": "flash"
+ },
+ "pli-09": {
+  "A": "flash",
+  "B": "lite"
+ },
+ "pli-11": {
+  "A": "lite",
+  "B": "flash"
+ },
+ "pli-18": {
+  "A": "lite",
+  "B": "flash"
+ },
+ "pli-24": {
+  "A": "lite",
+  "B": "flash"
+ },
+ "pli-25": {
+  "A": "lite",
+  "B": "flash"
+ },
+ "ara-17": {
+  "A": "flash",
+  "B": "lite"
+ },
+ "ara-24": {
+  "A": "lite",
+  "B": "flash"
+ },
+ "ara-28": {
+  "A": "flash",
+  "B": "lite"
+ },
+ "ara-29": {
+  "A": "flash",
+  "B": "lite"
+ },
+ "ara-10": {
+  "A": "flash",
+  "B": "lite"
+ },
+ "ara-30": {
+  "A": "lite",
+  "B": "flash"
+ },
+ "ara-26": {
+  "A": "flash",
+  "B": "lite"
+ },
+ "ara-06": {
+  "A": "lite",
+  "B": "flash"
+ },
+ "ara-23": {
+  "A": "flash",
+  "B": "lite"
+ },
+ "ara-21": {
+  "A": "flash",
+  "B": "lite"
+ },
+ "gez-01": {
+  "A": "flash",
+  "B": "lite"
+ }
+}
