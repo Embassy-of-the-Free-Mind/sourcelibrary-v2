@@ -25,6 +25,17 @@ describe('dedupeHomeSections', () => {
     expect(bookIdFromImageUrl('https://example.org/cover.jpg')).toBeNull();
   });
 
+  // 2026-10-04 live render: a showcase card used Fludd's archived scan, which
+  // a gallery-only parser could not attribute, so Fludd still showed twice.
+  it('reads the book id out of an archived page-scan URL', () => {
+    expect(bookIdFromImageUrl(`https://images.sourcelibrary.org/archived/${FLUDD}/13.jpg`)).toBe(FLUDD);
+    const s = sections();
+    s.showcaseItems[0].imageCandidates = [`https://images.sourcelibrary.org/archived/${FLUDD}/13.jpg`, img(OTHER)];
+    s.showcaseItems[0].leadImageCandidates = s.showcaseItems[0].imageCandidates;
+    const out = dedupeHomeSections(s);
+    expect(bookIdFromImageUrl(out.showcaseItems[0].imageCandidates[0])).toBe(OTHER);
+  });
+
   it('shows one Fludd, not three', () => {
     const out = dedupeHomeSections(sections());
     // favorites keeps it (ranked shelf claims first) but drops the book already under Recently translated
