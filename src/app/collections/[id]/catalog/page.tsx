@@ -3,7 +3,6 @@ import CollectionCatalogPage, {
   type CollectionCatalogProps,
 } from '@/components/collections/CollectionCatalogPage';
 
-export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
 
 export async function generateMetadata({ params, searchParams }: CollectionCatalogProps) {

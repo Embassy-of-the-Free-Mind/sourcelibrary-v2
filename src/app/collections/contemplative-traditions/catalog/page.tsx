@@ -7,7 +7,6 @@ import CollectionCatalogPage, {
 // never matches it; the full crawlable list lives here instead.
 const SLUG = 'contemplative-traditions';
 
-export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
 
 export async function generateMetadata({ searchParams }: Pick<CollectionCatalogProps, 'searchParams'>) {
