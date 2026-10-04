@@ -598,18 +598,18 @@ async function main() {
     } else if (!APPLY) {
       console.error(`(dry run — nothing written. --apply would upsert ops_reports ${report._id}${status === 'FAIL' ? ' and email on FAIL (7-day cooldown per failure set)' : ''}.)`);
     } else {
-    await db.collection('ops_reports').replaceOne({ _id: report._id }, report, { upsert: true });
-    console.error(`wrote ops_reports ${report._id}`);
-    const dir = process.env.SPEND_DAILY_STATE_DIR || path.join(os.homedir(), '.spend-daily');
-    fs.mkdirSync(dir, { recursive: true });
-    const stateFile = path.join(dir, 'state.json');
-    const state = fs.existsSync(stateFile) ? JSON.parse(fs.readFileSync(stateFile, 'utf8')) : {};
-    if (shouldMail({ status, fingerprint: report.fingerprint, state, now })) {
-      try {
-        console.error(await mail(report.line.slice(0, 120), `${text}\n\nDetails: https://sourcelibrary.org/admin/work · issue https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5743\nNothing was stopped or changed. Same failures are not re-mailed for ${MAIL_COOLDOWN_DAYS} days.`));
-        fs.writeFileSync(stateFile, JSON.stringify({ fingerprint: report.fingerprint, last_mailed_at: now.toISOString() }, null, 1));
-      } catch (e) { console.error(`email failed: ${e.message}`); }
-    } else if (status === 'FAIL') console.error('FAIL already mailed with the same failures inside the cooldown — not re-sent');
+      await db.collection('ops_reports').replaceOne({ _id: report._id }, report, { upsert: true });
+      console.error(`wrote ops_reports ${report._id}`);
+      const dir = process.env.SPEND_DAILY_STATE_DIR || path.join(os.homedir(), '.spend-daily');
+      fs.mkdirSync(dir, { recursive: true });
+      const stateFile = path.join(dir, 'state.json');
+      const state = fs.existsSync(stateFile) ? JSON.parse(fs.readFileSync(stateFile, 'utf8')) : {};
+      if (shouldMail({ status, fingerprint: report.fingerprint, state, now })) {
+        try {
+          console.error(await mail(report.line.slice(0, 120), `${text}\n\nDetails: https://sourcelibrary.org/admin/work · issue https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5743\nNothing was stopped or changed. Same failures are not re-mailed for ${MAIL_COOLDOWN_DAYS} days.`));
+          fs.writeFileSync(stateFile, JSON.stringify({ fingerprint: report.fingerprint, last_mailed_at: now.toISOString() }, null, 1));
+        } catch (e) { console.error(`email failed: ${e.message}`); }
+      } else if (status === 'FAIL') console.error('FAIL already mailed with the same failures inside the cooldown — not re-sent');
     }
   } finally {
     await client.close().catch(() => {});
