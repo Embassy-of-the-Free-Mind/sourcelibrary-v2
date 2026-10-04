@@ -1,7 +1,7 @@
 {
  "issue": 5795,
  "run_id": "hidden-flash-5795",
- "scored_at": "2026-10-04T08:19:55.195Z",
+ "scored_at": "2026-10-04T08:29:43.858Z",
  "prompt": {
   "name": "Standard OCR",
   "version": "19.1",
@@ -82,13 +82,23 @@
     "q3": 0.893,
     "min": 0.259
    },
-   "adjudication": null,
+   "adjudication": {
+    "pages": 10,
+    "judged": 10,
+    "flash": 9,
+    "lite": 0,
+    "both": 1,
+    "neither": 0,
+    "cannot_tell": 0,
+    "flash_invented": [],
+    "lite_invented": []
+   },
    "rule": {
     "a": true,
     "b": false,
-    "c": null
+    "c": true
    },
-   "verdict": "pending adjudication"
+   "verdict": "stay on lite"
   },
   "san": {
    "sealed": 30,
@@ -192,11 +202,25 @@
     "q3": 0.968,
     "min": 0
    },
-   "adjudication": null,
+   "adjudication": {
+    "pages": 10,
+    "judged": 10,
+    "flash": 5,
+    "lite": 0,
+    "both": 0,
+    "neither": 5,
+    "cannot_tell": 0,
+    "flash_invented": [],
+    "lite_invented": [
+     "san-13",
+     "san-20",
+     "san-11"
+    ]
+   },
    "rule": {
     "a": false,
     "b": true,
-    "c": null
+    "c": true
    },
    "verdict": "relabel (#4884)"
   },
@@ -306,11 +330,25 @@
     "q3": 0.955,
     "min": 0
    },
-   "adjudication": null,
+   "adjudication": {
+    "pages": 10,
+    "judged": 10,
+    "flash": 0,
+    "lite": 1,
+    "both": 0,
+    "neither": 9,
+    "cannot_tell": 0,
+    "flash_invented": [
+     "pli-11"
+    ],
+    "lite_invented": [
+     "pli-03"
+    ]
+   },
    "rule": {
     "a": false,
     "b": true,
-    "c": null
+    "c": false
    },
    "verdict": "relabel (#4884)"
   },
@@ -408,11 +446,25 @@
     "q3": 0.958,
     "min": 0.173
    },
-   "adjudication": null,
+   "adjudication": {
+    "pages": 10,
+    "judged": 10,
+    "flash": 4,
+    "lite": 0,
+    "both": 0,
+    "neither": 4,
+    "cannot_tell": 2,
+    "flash_invented": [
+     "ara-28"
+    ],
+    "lite_invented": [
+     "ara-28"
+    ]
+   },
    "rule": {
     "a": false,
     "b": true,
-    "c": null
+    "c": false
    },
    "verdict": "relabel (#4884)"
   },
@@ -460,11 +512,21 @@
     "q3": 0.554,
     "min": 0.554
    },
-   "adjudication": null,
+   "adjudication": {
+    "pages": 1,
+    "judged": 1,
+    "flash": 1,
+    "lite": 0,
+    "both": 0,
+    "neither": 0,
+    "cannot_tell": 0,
+    "flash_invented": [],
+    "lite_invented": []
+   },
    "rule": {
     "a": true,
     "b": true,
-    "c": null
+    "c": true
    },
    "verdict": "undecided: n too small"
   }
@@ -558,7 +620,53 @@
     }
    },
    "agreement_chars": 0.3298,
-   "adjudication_key": 0.3298350824587706
+   "adjudication_key": 0.3298350824587706,
+   "adjudication": {
+    "slug": "fas-03",
+    "family": "fas",
+    "blind_key": {
+     "A": "lite",
+     "B": "flash"
+    },
+    "verdict": "flash",
+    "confidence": "high",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Couplets correctly paired, rhyme (-امت) kept throughout; a few slips (دعا for مها, هجرت for رهزن, second hemistich of couplet 4 guessed); catchword noted.",
+    "lite_note": "Reads column by column; loses the گفتا/گفتم alternation (all گفتم) and truncates the rhyme word of nearly every line; catchword misread as a margin note.",
+    "places_checked": [
+     {
+      "where": "first couplet (upper panel)",
+      "on_leaf": "هر که ولی داشت ببالین فتاد / هر که سری او سر منبر گرفت",
+      "A": "هر که ولی و شهرت بالیش فتاد / هر که سری او سر منبر گرفت",
+      "B": "هر که ولی داشت ببالین فتاد | هر که سری او سر منبر گرفت"
+     },
+     {
+      "where": "upper panel couplet 4",
+      "on_leaf": "خاک بتدریج بدانجا رسید / کز فر او هر دو جهان در گرفت",
+      "A": "خاک بدین پیچ بدانجا رسید / کفر ادر هر دو جهان در گرفت",
+      "B": "خاک بتدریج بدانجا رسید | کز اثر او پرده چادر گرفت"
+     },
+     {
+      "where": "lower panel, first couplet (middle of page)",
+      "on_leaf": "گفتا که کیست بر در گفتم کمین غلامت / گفتا چه کار داری گفتم مها سلامت",
+      "A": "گفتم که کیست گفت کمین من است / گفتم چه کار داری گفتم عیال است",
+      "B": "گفتا که کیست بر در گفتم کمین غلامت | گفتا چه کار داری گفتم دعا سلامت"
+     },
+     {
+      "where": "last couplet",
+      "on_leaf": "گفتا چراست خاکی گفتم ز بیم رهزن / گفتا که کیست رهزن گفتم که این ملامت",
+      "A": "گفتم چه است خاکی گفتم زهمین / گفتم که دیدت زهرن گفتم که آن ماست",
+      "B": "گفتا چه راست خاکی گفتم ز بیم هجرت | گفتا که کیست رهزن گفتم که آن ملامت"
+     }
+    ],
+    "note": "B is translatable throughout the lower ghazal; A is not.",
+    "blind": {
+     "verdict": "B"
+    }
+   }
   },
   {
    "slug": "fas-04",
@@ -618,7 +726,53 @@
     }
    },
    "agreement_chars": 0.3244,
-   "adjudication_key": 0.3244219653179191
+   "adjudication_key": 0.3244219653179191,
+   "adjudication": {
+    "slug": "fas-05",
+    "family": "fas",
+    "blind_key": {
+     "A": "lite",
+     "B": "flash"
+    },
+    "verdict": "flash",
+    "confidence": "high",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Hemistichs correctly paired; the small diagonal phrases at each line end are separated out as margin, some read correctly (یعنی که عیان شد ; خود فاکهه خوان), several guessed.",
+    "lite_note": "Every line emitted twice (once inside <margin>, once as text); reads column by column; several hemistichs badly misread; small diagonal phrases folded into the line or dropped.",
+    "places_checked": [
+     {
+      "where": "first couplet (top panel)",
+      "on_leaf": "این دم نه نهانست ببین گر نه بصیری ... / اینست کزو اینهمه انوار برآمد",
+      "A": "این دم نه نهانست پس آن نه پیداست / اینست کز اینهمه انوار برآمد",
+      "B": "این دم نه نهایت پس که نه پس یک ذره / اینست کز و اینهمه انوار برآمد"
+     },
+     {
+      "where": "top panel line 3-5",
+      "on_leaf": "خفاکه همو بود که میگفت اناالحق ; رومی سخن کفر نگفتست و نگوید ; خود شمس به تبریز شد اندر دل ملا",
+      "A": "خفاش همی بود که میگفت انا الحق ; رومی سخن کفر نگفت مگویید بشنوید ; خوش شمس تبریز شد اندر دل ما",
+      "B": "خفاکه همو بود که میگفت انا الحق ; روحی سخن کفر نگفت و نگوید نشنیدی ; خورشید تبریز شد اندر دل ملا"
+     },
+     {
+      "where": "lower panel, lines 2-3 and 6 (middle)",
+      "on_leaf": "در کسوت پشم آمد و ابریشم و پنبه / خود بر صفت جبه و دستار برآمد ; از بهر خود ایوان سرا خواست که سازد ; بر سینه خود نیش جفا زد ز سر قهر",
+      "A": "در کسوت پشم و ابریشم و پنبه به خلق / خود بر صفت جود و ستار برآمد ; از بهر خود الوان سراخوت که نشانی ; رسیده خویش به جان و به تن خود هم",
+      "B": "در کسوت پشم آمد و ابریشم و پنبه / خود بر صفت جبه و دستار برآمد ; از بهر خود ایوان سراخواست که سازد ; بر سینه خود نیش جفا زد ز سر قهر"
+     },
+     {
+      "where": "last couplet",
+      "on_leaf": "اشعار پدید آر اگر چشم خردت ... / تا که ز زبان و دل عطار برآمد",
+      "A": "اشعار پدیدار از چشم خودت به یقین / تا که ز زبان و دل عطار برآمد",
+      "B": "اشعار پدیدار از چشم خودت / تا که ز زبان و دل عطار برآمد"
+     }
+    ],
+    "note": "Both follow the leaf line for line; B is clearly closer on the middle lines (three hemistichs exact where A is unusable). B's short margin phrases correspond to real diagonal phrases on the leaf, some misread - errors, not invention.",
+    "blind": {
+     "verdict": "B"
+    }
+   }
   },
   {
    "slug": "fas-06",
@@ -648,7 +802,53 @@
     }
    },
    "agreement_chars": 0.2594,
-   "adjudication_key": 0.2593910636615263
+   "adjudication_key": 0.2593910636615263,
+   "adjudication": {
+    "slug": "fas-06",
+    "family": "fas",
+    "blind_key": {
+     "A": "flash",
+     "B": "lite"
+    },
+    "verdict": "flash",
+    "confidence": "high",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Complete: all four columns, all ~33 rows, rubrics caught; scattered misreadings (کفن→کف, ثانیست→نانست). Did not transcribe the neighbouring leaf's sliver at right (correct).",
+    "lite_note": "Truncated at well under half the page; six lines repeated verbatim in a second block; words fused with ZWNJ into non-words (تن‌ماهیستان, طفل‌باردیستان); hemistich pairing wrong.",
+    "places_checked": [
+     {
+      "where": "first line, rightmost two columns",
+      "on_leaf": "در کفن خویشتن رقص کنان مردگان / نفخه صورست یا عیسی ثانیست آن",
+      "A": "در کف خوشتر برقص آیان مردگان | نفخه صورست یا عیسیٰ نانست آن",
+      "B": "در لجن خویش رقص‌کنان مردگان / نفخه صور است یا عیسی‌ئی نانستان"
+     },
+     {
+      "where": "rubric line near the middle (red)",
+      "on_leaf": "یک غزل آغاز کن بر صفت حاضران ; and lower red: باز فرو ریخت عشق در و دیوار من",
+      "A": "یک غزل آغاز کن بر صفت حاضران ; باز فرو ریخت عشق در و دیوار من",
+      "B": "absent - B stops about 14 rows down and never reaches these"
+     },
+     {
+      "where": "lower rubric + line after",
+      "on_leaf": "سیر نشد چشم و دل از نظر شاه من / سیر مشو هم تو نیز زین دل آگاه من",
+      "A": "سیر نشد چشم و دل از نظر شاه من | سیر مشو هم تو نیز زین دل آگاه من",
+      "B": "absent"
+     },
+     {
+      "where": "last line, leftmost column",
+      "on_leaf": "شمع رخ او بس است در شب بیگاه من",
+      "A": "شمع رخ او بس است در شب بیگاه من",
+      "B": "absent; B's last line is هر‌دین‌روز‌کار‌در‌از‌کار‌وبار / بندم‌شد‌ست‌شکار‌بار‌مرا‌همچنین (row ~14 of ~33)"
+     }
+    ],
+    "note": "A reads the whole page closely; B covers the top third badly and stops.",
+    "blind": {
+     "verdict": "A"
+    }
+   }
   },
   {
    "slug": "fas-07",
@@ -738,7 +938,53 @@
     }
    },
    "agreement_chars": 0.4064,
-   "adjudication_key": 0.40643863179074446
+   "adjudication_key": 0.40643863179074446,
+   "adjudication": {
+    "slug": "fas-09",
+    "family": "fas",
+    "blind_key": {
+     "A": "lite",
+     "B": "flash"
+    },
+    "verdict": "flash",
+    "confidence": "medium",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Hemistichs paired correctly; roughly half read right, the rest are plausible-sounding guesses at words that are there (e.g. دل شاد بکنج کافر خویش); catchword noted.",
+    "lite_note": "Runs the two hemistichs of each couplet together into one string and misreads most of them; an image-desc for a 'floral border' that is the book's cover behind the leaf.",
+    "places_checked": [
+     {
+      "where": "upper panel, couplets 3-4",
+      "on_leaf": "آتش بنشانم ار توانی / نی آنکه بر آتشم نشانی ; زین رهگذرم ... چون ...م / نی آنکه فرو بری بآبم",
+      "A": "آتش بنه غم از تو ای آنکه به چشم نشانی ; زین نگر مرا چون جانم ای آنکه فزون‌تری با هم",
+      "B": "آتش بنشاند غم از تو | نی آنکه بر آتشم نشانی ; زین رهگذر ار چون حبابم | نی آنکه فرو بری بآبم"
+     },
+     {
+      "where": "upper panel, couplet 2",
+      "on_leaf": "... بفسون ... / بر مرده چه سود زخم ...",
+      "A": "مؤان مجنون غمش سر مرده چه سود و زخم",
+      "B": "نتوان بمفسون غمش تپش | بر مرده چه سود وز خحم"
+     },
+     {
+      "where": "lower panel, couplet 2 (middle)",
+      "on_leaf": "چون مرغ پریش ... بود / وز چوب معلقش قفس بود",
+      "A": "چو منع پریش سوز و چو سر مست عشق بود",
+      "B": "چشم مرغ پرینش سوزد | وز چوب معلقش فزون بود"
+     },
+     {
+      "where": "last couplet",
+      "on_leaf": "عاجز چو شد از ... / از خانه و از کتاب بگریخت(؟)",
+      "A": "عاجز چو شد از هر جوی ز خانه وارت به دست",
+      "B": "عاجز چو شد از جفای خویش | از خانه و از کتاب خویش"
+     }
+    ],
+    "note": "Small, loose shikasta-leaning nasta'liq; I could read several hemistichs with certainty and others only in part. On every hemistich I could read securely B has it and A does not. B is only just translatable; A is not.",
+    "blind": {
+     "verdict": "B"
+    }
+   }
   },
   {
    "slug": "fas-10",
@@ -828,7 +1074,53 @@
     }
    },
    "agreement_chars": 0.6376,
-   "adjudication_key": 0.6375886524822695
+   "adjudication_key": 0.6375886524822695,
+   "adjudication": {
+    "slug": "fas-12",
+    "family": "fas",
+    "blind_key": {
+     "A": "lite",
+     "B": "flash"
+    },
+    "verdict": "flash",
+    "confidence": "high",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Grid and heading right; rhyme words mostly intact; the very first hemistich and a few others misread.",
+    "lite_note": "Follows the four-column grid but clips or garbles the end of most hemistichs, destroying the rhyme; heading panel misread.",
+    "places_checked": [
+     {
+      "where": "first row (4 hemistichs, right to left)",
+      "on_leaf": "او بود و شبی و درد و داغی / کس مونس نه بجز چراغی / پروانه صفت بشب نمی‌خفت / وز شب گله با چراغ می‌گفت",
+      "A": "او بود و شبی چو هره و لوعی | کسی مو نس به چراغی | پروانه صفت بشب حجتی | وز شب کله با چراغی",
+      "B": "ای توده و تیره و دل غمی | کسی مونس نه بجز چراغی | پروانه صفت بشب بحجت | وز شب کله با چراغ گفتی"
+     },
+     {
+      "where": "rows beside the heading panel (middle)",
+      "on_leaf": "چون خسرو صبح ... شادان / بر تخت نشست بامدادان ; heading: نشستن لیلی و مجنون با یکدیگر بشرط عصمت",
+      "A": "چون خسر صبح خیمه داد آن / بر تخت نشست با مداد آن ; heading نستن لیلی و مجنون با لکشر بشرط عصمت",
+      "B": "چون خسرو صبح تخت شادان / بر تخت نشست بامدادان ; heading نشستن لیلی و مجنون با یکدیگر بشرط عصمت"
+     },
+     {
+      "where": "second-last row, left pair",
+      "on_leaf": "کامروز نه روز انتظارست / روز طرب و وصال یارست",
+      "A": "کاروز نه روز انتظار | رد طرب و وصال یارت",
+      "B": "کامروز نه روز انتظارست | روز طرب و وصال یارست"
+     },
+     {
+      "where": "last row",
+      "on_leaf": "برخیز جهان خوشست برخیز / پیش آر شکر بگل برآمیز / هم خوابه ... کن ... را / در دسته لاله کن سمن را",
+      "A": "بر خیز جهان خوشت برین | پیش آر شکر بگل برآین | هم خوابه بود کن جزا | در دسته لاله کن بمن را",
+      "B": "برخیز جهان خوشت برخیز | پیش آر شکر بگل برآمیز | هم خوابه سوگنی جزیرا | در دسته لاله کن سمن را"
+     }
+    ],
+    "note": "Both track the layout; B is clearly closer in all three regions.",
+    "blind": {
+     "verdict": "B"
+    }
+   }
   },
   {
    "slug": "fas-13",
@@ -978,7 +1270,53 @@
     }
    },
    "agreement_chars": 0.6358,
-   "adjudication_key": 0.6358244365361803
+   "adjudication_key": 0.6358244365361803,
+   "adjudication": {
+    "slug": "fas-17",
+    "family": "fas",
+    "blind_key": {
+     "A": "lite",
+     "B": "flash"
+    },
+    "verdict": "flash",
+    "confidence": "medium",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Main lines slightly closer (داد, بر وعده, سموم هموم, الا جعلته); interlinear Persian glosses of the Arabic read closely. The last gloss is completed to ...باز گردندگانیم, a word or two past what I can make out on the leaf (the standard gloss of راجعون) - small completion, not counted as invention.",
+    "lite_note": "Main lines mostly followed; literal <color>سرخ</color> tags injected in place of the red verse separators; interlinear glosses badly misread (دیده آن باغ را که در آن گل‌های بهاری بود و خزان آن باغ را).",
+    "places_checked": [
+     {
+      "where": "first line",
+      "on_leaf": "مالش باید داد و عنان امور بدست تصرف یحکم ما یرید باید نهاد",
+      "A": "مایست باید دل و عنان امور بدست تصرف یک حکم ما یرید باید نهاد",
+      "B": "مایش باید داد و عنان امور بدست تصرف یکم مرید باید نهاد"
+     },
+     {
+      "where": "line 2-3",
+      "on_leaf": "و بحبل المتین صبر و تحمل بر وعده ان الله یحب الصابرین متمسک / باید بود و صدای عظمت انتمای لا راد لقضایه و لا معقب لحکمه",
+      "A": "و بحبل المتین صبر و تحمل برود ... إن الله یحب الصابرین متمسک / ... عظمت انتهای لاراد لقضایه و لا معقب لحکمه",
+      "B": "و بحبل المتین صبر و تحمل بر وعده ان الله یحب الصابرین متمسک / ... عظمت انتمای لا راد لقضایه ولا معقب لحکمه"
+     },
+     {
+      "where": "line 12 (middle-lower)",
+      "on_leaf": "سوختگان آتش حرمان از سموم هموم هجران صفت ما تذر من",
+      "A": "سوختگان آتش حرمان از سموم هجران صفت ما تذرمین زر",
+      "B": "سوختگان آتش حرمان از سموم هموم هجران صفت ما تذر من ... ذر"
+     },
+     {
+      "where": "last line + gloss beneath",
+      "on_leaf": "شیء اتت علیه الا جعلته کالرمیم پذیرفت انا لله و انا الیه ; gloss: بدرستی که ما برای خداییم و ما بسوی او ...",
+      "A": "شے انت علیه لا تجعله کالرمیم پذیرفت انا لله و انا الیه ; gloss: به راستی که باران ضایع و ما یبور او",
+      "B": "شی انت علیه الا جعلته کالرمیم پذیرفت انا لله وانا الیه ; gloss: بدرستی که ما برای خداییم و ما بسوی او باز گردندگانیم"
+     }
+    ],
+    "note": "Both follow the prose closely enough to translate the main text; B is closer on three of four places and clearly better on the glosses, which carry real content here.",
+    "blind": {
+     "verdict": "B"
+    }
+   }
   },
   {
    "slug": "fas-18",
@@ -1068,7 +1406,59 @@
     }
    },
    "agreement_chars": 0.2857,
-   "adjudication_key": 0
+   "adjudication_key": 0,
+   "adjudication": {
+    "slug": "fas-20",
+    "family": "fas",
+    "blind_key": {
+     "A": "lite",
+     "B": "flash"
+    },
+    "verdict": "flash",
+    "confidence": "low",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "LOOP: after the marginal verse the line «نیش آن کرد در جلالت خویش» repeats for ~35,000 characters until the length limit (also a 3x repeat of «نور تو از نور خدا در گذشت» earlier). Central block read well; marginal verse read poorly.",
+    "lite_note": "Follows the 17 central couplets line for line but misreads roughly half the hemistichs; diagonal marginal poem missed entirely (margin tags just duplicate the central text).",
+    "places_checked": [
+     {
+      "where": "central block, couplet 1",
+      "on_leaf": "خانه را خوار کن خورش را خورد / از جهان جان چنین تواند برد",
+      "A": "خانه را خوار کن خورش را خورد | از جان جان چنین تواند برد",
+      "B": "خانه را خوار کن خورش را خورد | از جهان جان چنین تواند برد"
+     },
+     {
+      "where": "central block, couplets 2-4",
+      "on_leaf": "درد و چیزست زندگانی مرد / آنکه بسیار داد یا کم خورد ; هر که در مهتری برآرد نام ; هیچ بسیار خوار پایه ندید / هیچ کم ده بپایه نرسید",
+      "A": "درد و چیزت زندگانی مرد | آنکه بی رادیا کم خورد ; مر که مهتری برآرد نام ; هیچ بسیار خوار باید دید | هیچ کم به پایه نرسید",
+      "B": "درد و چیز است زندگانی مرد | آنکه بی درد داد یا کم خورد ; هر که در مهتری برآرد نام ; هیچ بسیار خوار پایه ندید | هیچ کم ده بپایه نرسید"
+     },
+     {
+      "where": "central block, couplet 9 (middle)",
+      "on_leaf": "مور ماری(؟) که زیر افلاک است / خاک بر سر کنش که خود خاک است",
+      "A": "سر عمارت که زیرا خاک است | خاک بر سرش که خود خاک است",
+      "B": "مور ماری که زیر افلاک است | خاک بر سر کنش که خود خاک است"
+     },
+     {
+      "where": "central block, last couplet",
+      "on_leaf": "حکم نیک و بدی که در دهرست / نیش در نوش و نوش در زهرست",
+      "A": "حکم نیک و بدی که در درست | نیش در نوش و نوش در زشت",
+      "B": "حکم نیک و بدی که در دهر است | نیش در نوش و نوش در زهر است"
+     },
+     {
+      "where": "diagonal marginal verse (right and bottom margins)",
+      "on_leaf": "a second poem written diagonally: ... یارب آن کن ... / نظامی در کرم ... / ... آسمان دارد / زان مروت که بوی مشک دهد / لؤلؤ تر ز خاک خشک دهد / از زمین تا به ...",
+      "A": "not transcribed at all; the two <margin> blocks merely repeat the central block's right and left hemistichs",
+      "B": "attempted with many misreadings (نظامی در کرم تو غرق شد ; در نظامی که آسمان دارد ; زان مروت که بوی نیش دهد / لؤلؤ تر ز خاک نیش دهد), then collapses into the loop"
+     }
+    ],
+    "note": "Judged on the transcription of the leaf's text, B is clearly closer on every central line checked and is the only one that attempts the margins. But ~93% of B's output is a runaway loop that hit the length limit; if a loop anywhere in the output is to count as a failed read, this verdict flips to A (A is usable only roughly). The loop is recorded as a loop, not an invention. B's marginal lines are loose misreadings of marginal verse that is really on the leaf (anchor words نظامی, آسمان دارد, زان مروت, لؤلؤ تر ز خاک match), so not flagged as invention, though some of them may be partly confabulated.",
+    "blind": {
+     "verdict": "B"
+    }
+   }
   },
   {
    "slug": "fas-21",
@@ -1188,7 +1578,53 @@
     }
    },
    "agreement_chars": 0.6508,
-   "adjudication_key": 0.6508009153318077
+   "adjudication_key": 0.6508009153318077,
+   "adjudication": {
+    "slug": "fas-24",
+    "family": "fas",
+    "blind_key": {
+     "A": "lite",
+     "B": "flash"
+    },
+    "verdict": "flash",
+    "confidence": "high",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Grid kept; most hemistichs right or near; some weak hemistichs filled with fluent Shahnama-sounding guesses at the same slot (e.g. بدست تو کوشیده کلاه و کمر ; که در دم سیاوش دل بر سوخت) - misreadings of lines that are there, not extra text; catchword ایشان caught.",
+    "lite_note": "Keeps the 25x4 grid but a large share of hemistichs are non-words or nonsense; catchword missed; empty column-break at the end.",
+    "places_checked": [
+     {
+      "where": "first row",
+      "on_leaf": "چو بشنید قارن سخنهای نغز / از آن نامور خسرو پاک مغز / بیامد بر شاه ایران بگفت / که پیغامها با خرد بود جفت",
+      "A": "چو بشنید قارن سخنهای فغز | از آن موی پر پاک مغز | بیامد شاه ایران بگفت | که پیغام ما با تو دو جفت",
+      "B": "چو بشنید قارن سخنهای نغز | از آن نامور چرب پاک مغز | بیامد بشاه ایران بگفت | که پیغامها با خرد بود جفت"
+     },
+     {
+      "where": "rows 2-4, left columns",
+      "on_leaf": "بخندید خسرو ز کار نیا / از آن جستن چاره و کیمیا ; بکوشد مگر دل ببخشایدم / به پیش لشکر بفرسایدم ; بداند که گردنده چرخ بلند",
+      "A": "بخندید چون دید و کار نیا | از آن پس بگفتش که ای کهن‌کیا ; بکوشند مردان بشایدیم | به پیش لشکر بفرساییم ; بدان که روند چنین چند بند",
+      "B": "بخندید چهر و بکار ریا | از آن بست بر چاره و کیمیا ; بکوشند و دل بر نبخشایدم | به پیش لشکر بفرسایدم ; بداند که روند چرخ بلند"
+     },
+     {
+      "where": "rightmost column, rows 11-15 (middle)",
+      "on_leaf": "کسی نیست ما را ز تخم کیان ; همی پوزش آرد ازین بد که کرد ; جز از نامور رستم پهلوان ; همی لب بدندان بخایید شاه",
+      "A": "کنی نیست ما را ز تخم کیان ; همی بونش آید ازین بگرد ; خزان ما و رستم بدو پاد ; همی لب به دندان بخاید شاه",
+      "B": "کسی نیست ما را ز تخم کیان ; می پوزش آرد از این بگذرد ; جز از نامور رستم پهلوان ; همی لب بدندان بخایید شاه"
+     },
+     {
+      "where": "last row",
+      "on_leaf": "... / جز از شاهشان این دلیری نکرد / نخواهد مگر خسرو و موبدان / که بر ما بود ننگ ما جاودان",
+      "A": "سپای زوشان بشت نیز | زاز شاهان بنه تیری که ریز | نخواهد که حسن و موید | که ما و کسان ما جاودان",
+      "B": "سپاسی ز نوشان نبشت نبرد | جز از شاهشان این دلیری نکرد | نخواهد مگر خسرو و موبدان | که بر ما بود ننگ ما جاودان"
+     }
+    ],
+    "note": "B is translatable for most of the page; A is not.",
+    "blind": {
+     "verdict": "B"
+    }
+   }
   },
   {
    "slug": "fas-25",
@@ -1278,7 +1714,59 @@
     }
    },
    "agreement_chars": 0.3917,
-   "adjudication_key": 0.3917112299465241
+   "adjudication_key": 0.3917112299465241,
+   "adjudication": {
+    "slug": "fas-27",
+    "family": "fas",
+    "blind_key": {
+     "A": "flash",
+     "B": "lite"
+    },
+    "verdict": "flash",
+    "confidence": "high",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "All four columns in order, entry numbers right wherever checked; a handful of name slips (ثانی→خاقانی, حسن بیک→خوش بیک, قاینی→قزوینی); the struck-through line and the small insertions beside entries are skipped.",
+    "lite_note": "Entry numbers wrong in most rows (e.g. first column 87,85,86,84,88... for 74-88; third column 92,93,94,118 for 104-107); more name errors (ارشد شیرازی for ارادت علی رسای, حضرت for حیرت, سید شجاع for سید علی جدای); a few names better than A (حسن بیک رفیع, میر خسرو قاینی).",
+    "places_checked": [
+     {
+      "where": "first entries, rightmost column",
+      "on_leaf": "74 حسین ثنای ; 75 سید محمد ثاقب ; 76 میر محمد افضل ثابت",
+      "A": "74 حزینی ثنای ; 75 سید محمد قاسم ; 76 میر محمد افضل ثابت",
+      "B": "۸۷ حسین ثنائی ; ۸۵ سید محمد آفتاب ; ۸۶ میر محمد افضل ثابت"
+     },
+     {
+      "where": "bottom of rightmost column",
+      "on_leaf": "84 سید علی جدای ; 85 هارون(؟) ... جامی ; 86 میرزا محمد ایوب جودت ; 87 حسینی لاهوری ; 88 حکیم حاذق",
+      "A": "84 سید علی جدای ; 85 هارون خلیفه جامی ; 86 میرزا محمد ایوب جودت ; 87 حسینی لاهوری ; 88 حکیم حاذق",
+      "B": "۸۲ سید شجاع ; ۸۵ هارون افغانی جامی ; ۸۷ میرزا محمد ایوب جودت ; ۸۸ حسینی لاهوری ; ۸۹ حکیم حاذق"
+     },
+     {
+      "where": "second column, lower (middle of page)",
+      "on_leaf": "99 میرزا اسمعیل حجاب ; 100 حمدی کشمیری ; 101 محمد حیات ; 102 حیرت",
+      "A": "99 میر اسماعیل حجاب ; 100 حمدی کشمیری ; 101 محمد حیات ; 102 حیرت",
+      "B": "۹۹ میرزا اسمعیل جاب ; ۱۰۰ حمدی کثیری ; ۱۰۱ محمد حیات ; ۱۰۲ حضرت"
+     },
+     {
+      "where": "top of leftmost column",
+      "on_leaf": "119 میر رضی دانش ; 120 ارادت علی رسای ; 121 حسن بیک رفیع ; 122 ملا عبدالرشید",
+      "A": "119 میر رضی دانش ; 120 ارادت علی رسای ; 121 خوش بیک رفیع ; 122 ملا عبد الرشید",
+      "B": "۱۱۹ میر رضی دانش ; ۱۲۱ ارشد شیرازی ; ۱۲۲ حسن بیک رفیع ; ۱۲۳ ملا عبد الرشید"
+     },
+     {
+      "where": "last entry, leftmost column",
+      "on_leaf": "133 احسن الله خان راضی",
+      "A": "133 احسن الله خان راضی",
+      "B": "۱۳۴ احسن الله خان راضی"
+     }
+    ],
+    "note": "An index of poets with entry numbers: the numbers matter, and B's are unreliable. Both follow the leaf's layout; A is clearly closer.",
+    "blind": {
+     "verdict": "A"
+    }
+   }
   },
   {
    "slug": "fas-28",
@@ -1368,7 +1856,53 @@
     }
    },
    "agreement_chars": 0.7527,
-   "adjudication_key": 0.7526717557251908
+   "adjudication_key": 0.7526717557251908,
+   "adjudication": {
+    "slug": "fas-30",
+    "family": "fas",
+    "blind_key": {
+     "A": "lite",
+     "B": "flash"
+    },
+    "verdict": "both",
+    "confidence": "medium",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "All 13 lines, line for line; بحر read right both times and فاخته ضرب kept; slips: دوایر→دو دایره, فروداشت→دو فرداشت; image-desc for the binding stain at the top corner.",
+    "lite_note": "All 13 lines, line for line; two meaning-bearing slips on the rhythmic-cycle terms (به بحر دیگر→آنچه بجود ; بحر→بجز) and چار ضرب→جا فر ضرب; فروداشت and دوایر right.",
+    "places_checked": [
+     {
+      "where": "first line",
+      "on_leaf": "باشد آن را قول مستهل گویند و شرط درین تصنیف آنست",
+      "A": "باشد آن را قول مستهل گویند و شرط در این تصنیف آنست",
+      "B": "باشد آن را قول مستهل گویند و شرط درین تصنیف آنست"
+     },
+     {
+      "where": "lines 5-6",
+      "on_leaf": "شرط بعضی خلاف کرده اند اما به بحر دیگر که فاخته ضرب علی سبیل / العموم و چار ضرب و ضرب الفتح است هر تصنیف که درین دوایر",
+      "A": "شرط بعضی خلاف کرده اند اما آنچه بجود که فاخته نیز علی سبیل / العموم و جا فر ضرب بالفتح است هر تصنیف که در این دوایر",
+      "B": "شرط بعضی خلاف کرده اند اما بـ بحر دیگر که فاخته ضرب علی سبیل / العموم و جار ضرب ضرب الفتح است هر تصنیف که درین دو دایره"
+     },
+     {
+      "where": "line 10 (middle-lower)",
+      "on_leaf": "تصنیف که در یکی ازین بحر قول واقع می شود و ترتیب",
+      "A": "تصنیف که در یکی از آن بجز قول واقع می شود و بترتیب",
+      "B": "تصنیف که در یکی ازین بحر قول واقع می شود و ترتیب"
+     },
+     {
+      "where": "last two lines",
+      "on_leaf": "بود و کار سیوم ترانه و چهارم را ... فروداشت میگویند / و نظم در و التزام نکرده اند و قسم دیگر تالیف ما...ین است",
+      "A": "بود و کار سیوم ترانه و چهارم را فروداشت میگویند / و نظم در التزام نکرده اند و قسم دیگر تالیف مابین است",
+      "B": "بود و کار سیوم ترانه و چهارم را دو فرداشت میگویند / و نظم در و التزام نکرده اند و قسم دیگر تالیف مائین است"
+     }
+    ],
+    "note": "Clear prose on musical forms; both outputs are translatable and differ in three or four words. B has a slight edge on the technical terms in lines 5 and 10, A on two others - not a clear margin.",
+    "blind": {
+     "verdict": "both"
+    }
+   }
   },
   {
    "slug": "san-01",
@@ -1488,7 +2022,59 @@
     }
    },
    "agreement_chars": 0.1831,
-   "adjudication_key": 0.18312101910828027
+   "adjudication_key": 0.18312101910828027,
+   "adjudication": {
+    "slug": "san-04",
+    "family": "san",
+    "blind_key": {
+     "A": "flash",
+     "B": "lite"
+    },
+    "verdict": "flash",
+    "confidence": "medium",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "24 lines for 24 on the leaf, numerals and the pigment deletion in the right places; a good deal of the wording between the anchors is smoothed into plausible Sanskrit ('केन कर्तव्यं स्तुतिः कुतः') that I could not confirm akṣara by akṣara; vertical right-margin note left untranscribed (flagged as unclear); page number given as 68.",
+    "lite_note": "Loop in the shape of a page: 'ततः पञ्चात्ताः' fills every line and the margin; only the first akṣaras of a few lines (सक.., दी.., वरं, मैः) echo the leaf.",
+    "places_checked": [
+     {
+      "where": "line 1",
+      "on_leaf": "begins 'सकृत्प्रवि...', three or four short words each closed by visarga, last word 'पञ्चि...ताः'-like",
+      "A": "'सकृत्प्रविष्टाः सकृदभ्युपगताः मताः पण्डितैः'",
+      "B": "'सकलं ततः । ततः परं ततः । ततः पञ्चात्ताः ।'"
+     },
+     {
+      "where": "line 5",
+      "on_leaf": "one akṣara, a yellow-pigment deletion, then a word ending in visarga + double daṇḍa, then further text",
+      "A": "'भा <unclear>---</unclear> ॥ कवयितव्यः ॥ अथ वक्ष्ये रूपभान'",
+      "B": "'ततः । ततः पञ्चात्ताः ॥ ततः परं ततः पञ्चात्ताः'"
+     },
+     {
+      "where": "line 8 (numerals)",
+      "on_leaf": "a string of numbers separated by single daṇḍas: two-digit, two-digit, one digit, a dot/zero, one digit, two-digit",
+      "A": "'७७।३३।३।०।३।३३।'",
+      "B": "no numerals anywhere in the output"
+     },
+     {
+      "where": "lines 20-23",
+      "on_leaf": "'...।३।' ; '...विंशतिभि...' + two-digit number, the same phrase again two lines later",
+      "A": "'सभुभान ३। ततो वृद्धिं ...' ; 'भान कुविंशतिभिः नैः ११' ; '... कुविंशतिभिः नैः ११'",
+      "B": "'ततः पञ्चात्ताः पञ्चात्ताः ।' repeated"
+     },
+     {
+      "where": "last line (24)",
+      "on_leaf": "word + ':' , '।३।', then 'मिष्ट...'-like words",
+      "A": "'भुभान ३। अथ मिष्टान्निरूपमं सकृत्'",
+      "B": "'ततः पञ्चात्ताः पञ्चात्ताः । ततः पञ्चात्ताः । ततः पञ्चात्ताः ।'"
+     }
+    ],
+    "note": "Faded Sharada leaf with numerals (a computational or astrological text). A is clearly the only output that follows the leaf; its numerals and line starts check out. Its connecting words should be treated as unverified, so 'translate from' holds for the structure and figures more than for every word.",
+    "blind": {
+     "verdict": "A"
+    }
+   }
   },
   {
    "slug": "san-05",
@@ -1578,7 +2164,59 @@
     }
    },
    "agreement_chars": 0.1728,
-   "adjudication_key": 0.17279411764705888
+   "adjudication_key": 0.17279411764705888,
+   "adjudication": {
+    "slug": "san-07",
+    "family": "san",
+    "blind_key": {
+     "A": "lite",
+     "B": "flash"
+    },
+    "verdict": "neither",
+    "confidence": "medium",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Six lines aligned with the leaf, but the words are fluent substitutes built on a few akṣaras of each line ('भ्रमरनिकरं हस्तहस्ते' where the leaf has 'मधुकरमकरन्दं'); verse number repeated at the end. Borderline with invention: I count it as heavy misreading because every line is anchored to the leaf's line and keeps some of its akṣaras.",
+    "lite_note": "Six lines aligned with the leaf, but a look-alike transliteration (Sharada sa/ma/dha read as Devanagari म/भ/प, daṇḍas inserted for akṣaras): no Sanskrit words result.",
+    "places_checked": [
+     {
+      "where": "line 1",
+      "on_leaf": "about 16 akṣaras, visarga after the third or fourth, red double daṇḍa near the end followed by two akṣaras",
+      "A": "'इडेमभिः॥एयडिकम॥एकमिमम॥॥' (daṇḍas inserted mid-line where the leaf has akṣaras)",
+      "B": "'इन्दुं मूर्द्ध्नः स्रवयति कलं कुम्भिकुम्भप्रणामो'"
+     },
+     {
+      "where": "line 2 end",
+      "on_leaf": "'...शिवमपि सभामानतमसा' -like sequence (śi-va/ya-ma-vi-sa-bhā-mā-na-...)",
+      "A": "'...मियभविमभामनभम' (akṣara count right, look-alike letters)",
+      "B": "'...मुखं यस्य मत्तप्रमत्तं ।' (different words)"
+     },
+     {
+      "where": "line 3 end",
+      "on_leaf": "'...धुकरमकरन्दं विकिरति ॥'",
+      "A": "'...दपकरभकरअंविकिडि॥॥'",
+      "B": "'...भ्रमरनिकरं हस्तहस्ते विकिरति ॥' (only 'विकिरति' is the leaf's word)"
+     },
+     {
+      "where": "line 6 (last)",
+      "on_leaf": "one akṣara, red daṇḍas enclosing a two-digit number, then about 12 akṣaras with two visargas",
+      "A": "'भ॥॥॥पुगगउन्नःपुअमभिउउःइम' (number lost)",
+      "B": "'म<unclear>हा</unclear>॥ ७३ ॥ पुरगउरतः परमभिरुतः ॥ ७३ ॥' (number duplicated at the end where the leaf has none)"
+     },
+     {
+      "where": "left margin",
+      "on_leaf": "two abbreviated akṣaras with dots over a number",
+      "A": "'भो· नं· २३'",
+      "B": "'सौ· न· २३'"
+     }
+    ],
+    "note": "Sharada verse leaf. I could read line 3's ending with certainty ('...धुकरमकरन्दं विकिरति') and neither output has it: A is unreadable as Sanskrit, B is readable Sanskrit that is not what the leaf says. A translation from either would be wrong.",
+    "blind": {
+     "verdict": "neither"
+    }
+   }
   },
   {
    "slug": "san-08",
@@ -1638,7 +2276,59 @@
     }
    },
    "agreement_chars": 0.2405,
-   "adjudication_key": 0
+   "adjudication_key": 0,
+   "adjudication": {
+    "slug": "san-09",
+    "family": "san",
+    "blind_key": {
+     "A": "flash",
+     "B": "lite"
+    },
+    "verdict": "flash",
+    "confidence": "low",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Complete, 14 note lines for 14 on the leaf; numerals are read by shape (Sharada digits mapped to look-alike Devanagari digits, rows of mixed digits flattened to '५'); adds a row index 7..20 in the first column that is not on the leaf.",
+    "lite_note": "Loop: '| ५ |' repeated from table row 12 to the 32K length limit; last 3 rows and last 3 note lines lost; calls the script 'printed'. Reads the day abbreviation as 'दि' where A has 'वि'.",
+    "places_checked": [
+     {
+      "where": "prose line between the two tables",
+      "on_leaf": "one line of Sharada abbreviations and numerals beginning with a cluster that looks like 'मुठमंवडा' followed by a 4-digit number and '३१।७८'-like figure",
+      "A": "मुठमं वडा ५०४१ का० शु० वि० ३१।३८ उ० भ० ३ जं० सु० ४ ...",
+      "B": "मुठमंवडा ५०१ काउमि ३११७ उभव जंयठै ... (same line, same shape-level reading)"
+     },
+     {
+      "where": "notes column, lines 2-4 (right of lower table)",
+      "on_leaf": "'कं यं रा ७।१७ ध्रुवतः ।' / a short word + ':।' / 'गरा:।'",
+      "A": "कं यं रा ७।१७ ध्रुवतः । / कयः । / गराः ।",
+      "B": "लंयंगठा७ थ्वतः। / मय:। / गण:। (inlined in table rows)"
+     },
+     {
+      "where": "notes column, line 10",
+      "on_leaf": "two akṣaras + day-abbreviation + '५।०३।' + 'सौम्यः'",
+      "A": "शु० सं वि ५।०३। सौम्यः",
+      "B": "रूंसी दि ५।०३।सौम्य:"
+     },
+     {
+      "where": "last three note lines and last three table rows",
+      "on_leaf": "three further lines of abbreviations and times ending in a long last line; rows 12-14 of the table",
+      "A": "present: '५३ च वि ३।१५ हनः शिवभयं ... स्थिरः', 'मं यं रा ७।३५ ...', 'गं सं ४।४८ पं सं मं १।०७ ...'",
+      "B": "absent: output falls into a '| ५ | ५ | ५ |' loop inside table row 12 and runs to the length limit"
+     },
+     {
+      "where": "upper table, row 2 and row 8",
+      "on_leaf": "alternating small Sharada digits (two or three different shapes per row)",
+      "A": "every cell '५'",
+      "B": "every cell '५'"
+     }
+    ],
+    "note": "Sharada almanac. Evidence used: line counts, numerals with daṇḍa separators (७।१७, ५।०३), recognisable words in the notes column. I cannot vouch for the cell-by-cell numerals of either output; both transliterate digit shapes rather than values. A wins because it covers the whole leaf and B loops.",
+    "blind": {
+     "verdict": "A"
+    }
+   }
   },
   {
    "slug": "san-10",
@@ -1698,7 +2388,53 @@
     }
    },
    "agreement_chars": 0.1908,
-   "adjudication_key": 0.19075144508670516
+   "adjudication_key": 0.19075144508670516,
+   "adjudication": {
+    "slug": "san-11",
+    "family": "san",
+    "blind_key": {
+     "A": "lite",
+     "B": "flash"
+    },
+    "verdict": "neither",
+    "confidence": "low",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": true,
+    "lite_invented_quote": "ॐ नमः शिवाय ॐ नमः शिवाय ॐ नमः शिवाय (eight lines, 24 times)",
+    "flash_note": "Eight lines aligned with the leaf, digit and margin caught, one phrase right ('नमकल्पना भाव'); otherwise a look-alike transliteration padded into Sanskrit-looking strings ('काउरुपास्तमृते', 'भीष्टुंरिकंमीहेहेमभवत्त'); calls the script Devanagari.",
+    "lite_note": "Not a reading: the five-syllable Śiva mantra repeated three times per line for eight lines. The leaf's lines are all different, 20+ akṣaras each, with a daṇḍa, a digit and a margin note that the output lacks.",
+    "places_checked": [
+     {
+      "where": "line 1",
+      "on_leaf": "8 lines of continuous Sharada; line 1 starts with an akṣara carrying anusvāra and ends with a 4-akṣara cluster that recurs on lines 6 and 7",
+      "A": "'ॐ नमः शिवाय ॐ नमः शिवाय ॐ नमः शिवाय'",
+      "B": "'कुंमिदंलिप्तोऽहं पुनर्भुवस्त उभाभ्यामेव' (the recurring cluster comes out as '...भुवस्त' here, '...देिवस्त' on line 6, '...त्वस्त' on line 7)"
+     },
+     {
+      "where": "line 3 end",
+      "on_leaf": "'...नमकल्पना। भाव' (daṇḍa before the last two akṣaras)",
+      "A": "'ॐ नमः शिवाय ...'",
+      "B": "'...पुनश्चिषेनमकल्पना भावा'"
+     },
+     {
+      "where": "line 5 end and left margin at line 7",
+      "on_leaf": "line 5 ends with visarga + a digit; margin has two akṣaras over a digit",
+      "A": "no digit, no margin",
+      "B": "'...ऊरुतस्त्वमस्तुतः ५' ; '<margin>महे १</margin>'"
+     },
+     {
+      "where": "line 8 (last)",
+      "on_leaf": "about 22 akṣaras, no word breaks, a doubled numeral-like sign in the middle",
+      "A": "'ॐ नमः शिवाय ॐ नमः शिवाय ॐ नमः शिवाय'",
+      "B": "'भीष्टुंरिकंमीहेहेमभवत्त पहुंमिदिस मे' (follows the akṣara shapes; not Sanskrit words)"
+     }
+    ],
+    "note": "Sharada leaf in a thick hand. I cannot read it fluently; evidence used is line count, the daṇḍa/digit/margin positions, the one legible phrase and the recurring cluster. B is the only output tracking the leaf and is far closer than A, but its text is not something one could translate from; if the rule is read as 'which output is closer', the answer is B.",
+    "blind": {
+     "verdict": "neither"
+    }
+   }
   },
   {
    "slug": "san-12",
@@ -1758,7 +2494,47 @@
     }
    },
    "agreement_chars": 0.1537,
-   "adjudication_key": 0
+   "adjudication_key": 0,
+   "adjudication": {
+    "slug": "san-13",
+    "family": "san",
+    "blind_key": {
+     "A": "lite",
+     "B": "flash"
+    },
+    "verdict": "neither",
+    "confidence": "high",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": true,
+    "lite_invented_quote": "ॐ नमो भगवते वासुदेवाय नमः ॥ अथ श्री नृसिंह मन्त्रराजस्य",
+    "flash_note": "Loop to the length limit (41K chars) of 'इन्द्राय नमः ३'; the leaf does carry '-आय नमः <number>' items so the looped unit may be a real item, but nothing else is transcribed; calls the script Devanagari.",
+    "lite_note": "Loop to the length limit (39.7K chars) of a phrase that is not on the leaf; no line of the leaf transcribed.",
+    "places_checked": [
+     {
+      "where": "first line of the main (black) text",
+      "on_leaf": "a clause ending in '...य नमः' followed by a two-digit number, then another name in the dative",
+      "A": "'ॐ नमो भगवते वासुदेवाय नमः ॥ अथ श्री नृसिंह मन्त्रराजस्य' then the second phrase repeated",
+      "B": "'ॐ इन्द्राय नमः ३' repeated"
+     },
+     {
+      "where": "middle of main text (lines 6-9)",
+      "on_leaf": "series of different '<name>-आय नमः <number>' items, numbers increasing, each name different",
+      "A": "nothing but 'अथ श्री नृसिंह मन्त्रराजस्य'",
+      "B": "nothing but 'इन्द्राय नमः ३'"
+     },
+     {
+      "where": "last line of main text and red marginalia (top, bottom, both sides)",
+      "on_leaf": "last black line ends '...नमः' + two-digit number; four blocks of red marginal text",
+      "A": "not transcribed",
+      "B": "not transcribed"
+     }
+    ],
+    "note": "Both outputs are a single repeated phrase. A's phrase is a formulaic opening (Vāsudeva salutation + 'now of the Nṛsiṃha mantrarāja') with no counterpart: the leaf is a numbered list of 'X-āya namaḥ' items, and no line starts or reads that way. Sure of the non-match from line structure and numerals, not from a full reading of the Sharada.",
+    "blind": {
+     "verdict": "neither"
+    }
+   }
   },
   {
    "slug": "san-14",
@@ -1968,7 +2744,65 @@
     }
    },
    "agreement_chars": 0.039,
-   "adjudication_key": 0
+   "adjudication_key": 0,
+   "adjudication": {
+    "slug": "san-20",
+    "family": "san",
+    "blind_key": {
+     "A": "lite",
+     "B": "flash"
+    },
+    "verdict": "flash",
+    "confidence": "medium",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": true,
+    "lite_invented_quote": "तथा च श्रुतिः—यथा नद्यः स्यन्दमानाः समुद्रे, अस्तं गच्छन्ति नामरूपे विहाय। ... तथा विद्वान् नामरूपाद्विमुक्तः, परात्परं पुरुषमुपैति दिव्यम्॥",
+    "flash_note": "Follows the 14 main lines, both red lemmata and the 14-line left marginal block; several words smoothed or doubled (e.g. 'प्रकाशात्मना' repeated as glosses), interlinear glosses only partly matched.",
+    "lite_note": "Recites Muṇḍaka Upaniṣad 3.2.8 and a 'paramapuruṣa' passage that are not on the leaf, then loops '<margin>विष्णुं</margin>' to the length limit (40.9K chars).",
+    "places_checked": [
+     {
+      "where": "line 2 with its right-margin gloss",
+      "on_leaf": "line ends with a word I read as 'सूर्य...मसो...' and a small gloss in the right margin reading 'परंशक्ति'",
+      "A": "'रुद्रपरमं यं विदुस्तं, सुरिमपि मुनयस्तं विदुः परमं।' (no gloss)",
+      "B": "'इति परः प्रपञ्चः विसृज्यते ॥ सूर्यचन्द्रमसोः प्रपञ्चः <margin>परं शक्ति</margin>'"
+     },
+     {
+      "where": "line 8 (red-highlighted lemma with a dash)",
+      "on_leaf": "red-marked lemma, a long dash, then text ending '...कलाकला'",
+      "A": "no counterpart (by here A is in a '<margin>विष्णुं</margin>' loop)",
+      "B": "'उन्मेषोऽयं नियम्यते - भवत्येव कलाकला'"
+     },
+     {
+      "where": "line 10 end",
+      "on_leaf": "'...विकल्पदण्डमभवं कवलीकरोति ॥'",
+      "A": "no counterpart",
+      "B": "'स्वस्वविकल्पदण्डमभवं कवलीकरोति ॥'"
+     },
+     {
+      "where": "line 11 (second red lemma with dash)",
+      "on_leaf": "red-marked '...वलयविधि' — dash — 'यद्भवल्लयं याति स एव'",
+      "A": "no counterpart",
+      "B": "'रश्मिपुञ्जवलयविधि - यदभवत्लयं याति स एव'"
+     },
+     {
+      "where": "last line and the small word under it",
+      "on_leaf": "'इत्थ... ...वेशात्, यं समावेशमाप्नोति' and a small centred word like 'विमर्शनी॥'",
+      "A": "no counterpart",
+      "B": "'इत्थं मयि मज्जनमिति योऽसौ संभवावेशमवाप्नोति' / 'विमर्शिनी ॥'"
+     },
+     {
+      "where": "first line",
+      "on_leaf": "begins 'पर...शक्ति...', ends with 'मूर्ति... कल्प...'-like words; small gloss above the line",
+      "A": "'परमपुरुषं यं मुनयोऽपि न जानन्ति, तं परमपुरुषं'",
+      "B": "'परप्रभृतयः शक्तिः कल्पयन्त्यः मूर्तिभेदैः कल्पयन्त्यः' (gloss given as unclear 'कृतदिमिवउं')"
+     }
+    ],
+    "note": "Sharada commentary leaf with interlinear and marginal glosses. B is anchored to the leaf at every place checked (the 'परंशक्ति' gloss, both dashes, 'कवलीकरोति', the final 'आवेशमाप्नोति'). A's verse about rivers losing name and form in the sea is a well-known śruti quotation and no line of the leaf has it: the leaf's lines carry lemmata with dashes and 'कवलीकरोति', none of which A has.",
+    "blind": {
+     "verdict": "B"
+    }
+   }
   },
   {
    "slug": "san-21",
@@ -2088,7 +2922,59 @@
     }
    },
    "agreement_chars": 0,
-   "adjudication_key": 0
+   "adjudication_key": 0,
+   "adjudication": {
+    "slug": "san-24",
+    "family": "san",
+    "blind_key": {
+     "A": "flash",
+     "B": "lite"
+    },
+    "verdict": "flash",
+    "confidence": "low",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Complete; table structure and the two saṃvat lines follow the leaf; lower table is a rough shape-level reading (abbreviations collapsed to म/मं/मि, last two rows duplicated, words such as 'सूर्योदयः', 'श्री कश्यप ऋषि गोत्रैः' look like guesses at smudged clusters).",
+    "lite_note": "Loop: '𑆑𑆶 𑆫' repeated from the first row to the length limit (9.5K chars); nothing below row 1.",
+    "places_checked": [
+     {
+      "where": "upper table, row 2",
+      "on_leaf": "run of the same small digit about seven times, then varied digits",
+      "A": "'३ ३ ३ ३ ३ ३ ३ ५ ३ ६ ५ ५ ५ ५ ७ ...'",
+      "B": "no counterpart (loop begins inside row 1)"
+     },
+     {
+      "where": "upper table, row 8",
+      "on_leaf": "two digits alternating across the whole row",
+      "A": "'५ १ ५ १ ५ १ ...'",
+      "B": "no counterpart"
+     },
+     {
+      "where": "the two prose lines under the upper table",
+      "on_leaf": "first line begins 'सप्तर्षि संवत्' + digits; second begins 'विक्रम संवत्' + a 4-digit year",
+      "A": "'सप्तर्षि संवत् २६ - ३ - ...' / 'विक्रम संवत् २००१ शके १९ ...'",
+      "B": "no counterpart"
+     },
+     {
+      "where": "upper table, row 1 (first cells)",
+      "on_leaf": "mixed digit groups and single akṣaras (weekday/abbreviation letters)",
+      "A": "'७ ५ ७ धि कु ० ६ कु म २३ ५ क ह म ...'",
+      "B": "Sharada Unicode '𑆱𑆁 𑆠𑆴 𑆢𑆴 𑆑𑆶 𑆠𑆴 𑆩𑆴 𑆑𑆶 𑆥 ...' then '𑆑𑆶 𑆫' repeated to the limit"
+     },
+     {
+      "where": "lower table, last rows",
+      "on_leaf": "about 15 rows of digits + abbreviations + a notes column; small sun-like mark at lower left",
+      "A": "15 rows of digits and 'मं/मि/म' abbreviations; last two rows nearly identical; mentions the sun-like mark",
+      "B": "no counterpart"
+     }
+    ],
+    "note": "Sharada almanac, small and smudged in the lower half. Evidence used: row/column counts, digit-run patterns, the two saṃvat headings. I could not verify individual numerals in the lower table. A is the only output that covers the leaf; whether its lower table is good enough to translate from is doubtful.",
+    "blind": {
+     "verdict": "A"
+    }
+   }
   },
   {
    "slug": "san-25",
@@ -2118,7 +3004,59 @@
     }
    },
    "agreement_chars": 0,
-   "adjudication_key": 0
+   "adjudication_key": 0,
+   "adjudication": {
+    "slug": "san-25",
+    "family": "san",
+    "blind_key": {
+     "A": "flash",
+     "B": "lite"
+    },
+    "verdict": "flash",
+    "confidence": "low",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "16 lines for 16 on the leaf, margin signature caught; many akṣaras read by look-alike shape (strings such as 'गामभ्ठिमुकुवत्', 'कायबुद्ध्यागच्छेधपमभमभडयेगभे' are not Sanskrit), verse numbers shortened, akṣaras read as '७६७८' in the last line.",
+    "lite_note": "Loop: avagraha 'ऽ' repeated from line 4 to the length limit (16.5K chars); only three lines attempted, with spurious avagrahas.",
+    "places_checked": [
+     {
+      "where": "line 1",
+      "on_leaf": "begins 'किं' + about 14 akṣaras, ends in an akṣara with anusvāra",
+      "A": "'किंवाभैत्सीद्विषमनयनेन्द्रावयुं'",
+      "B": "'किंऽवभेन्नाऽदिवमनेयस्यनेऽसावाऽयं' (avagrahas inserted that are not on the leaf)"
+     },
+     {
+      "where": "line 2",
+      "on_leaf": "'किंवा' + '...ष्टंभकल्पवयसं...'",
+      "A": "'किंवास्तम्भकलवयसं विबुधेनयद्'",
+      "B": "'किंवाऽष्टभकलवयसंविशऽतेनयऽ'"
+     },
+     {
+      "where": "line 5 and line 9 (verse ends)",
+      "on_leaf": "line 5 opens with two akṣaras then a two-digit verse number; line 9 ends '...वाप्तिः' + two-digit number",
+      "A": "'णृभा ॥ ३ ॥ यत्पङ्कजं ...' / '...नुगमेषुवाप्तिः ॥ ४ ॥' (numbers reduced to one digit)",
+      "B": "no counterpart (line 4 onward is 'ऽऽऽऽ...')"
+     },
+     {
+      "where": "lines 10-12",
+      "on_leaf": "line 10 begins 'किञ्चित्किञ्चि...'; line 12 contains 'किमपि परमं'",
+      "A": "'किञ्चित्किञ्चिन्मनसि यपि ...' / 'नु मन्तुर्बुधं किमपि परमं देहमेमसि'",
+      "B": "no counterpart"
+     },
+     {
+      "where": "last line (16) and left margin",
+      "on_leaf": "line of akṣaras with no digits in it; margin has two abbreviated akṣaras over a digit",
+      "A": "'वत्सरुतः ७६७८ शमनभसनभक्त' (four akṣaras misread as digits); margin 'सां. पं. / ७'",
+      "B": "no counterpart"
+     }
+    ],
+    "note": "Sharada stotra leaf (margin signature suggests Sāmbapañcāśikā). A follows the leaf line for line and has real words where I can read them (किंवा, किञ्चित्किञ्चित्, किमपि परमं, भगवति), so it is clearly the closer output; but roughly half its lines are shape-level strings, and a translation from it would need the known text alongside. B fails by loop.",
+    "blind": {
+     "verdict": "A"
+    }
+   }
   },
   {
    "slug": "san-26",
@@ -2178,7 +3116,47 @@
     }
    },
    "agreement_chars": 0,
-   "adjudication_key": 0
+   "adjudication_key": 0,
+   "adjudication": {
+    "slug": "san-27",
+    "family": "san",
+    "blind_key": {
+     "A": "flash",
+     "B": "lite"
+    },
+    "verdict": "neither",
+    "confidence": "high",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Refusal: the engine declined the page, 0 characters.",
+    "lite_note": "Loop ('८' then '*') from the third row of the lower table to the length limit (19.9K chars); the part before the loop is shape-level digits and does not recognise the saṃvat headings.",
+    "places_checked": [
+     {
+      "where": "page numbers and upper table row 1",
+      "on_leaf": "two numbers at the top (left and centre); a row of 3-digit numbers each followed by one akṣara",
+      "A": "(declined, no text)",
+      "B": "'२५ २४' / '१३०° ४ ७०१ द्वि ७०३ म ३०४ मं ३०५ म ...'"
+     },
+     {
+      "where": "two prose lines under the upper table",
+      "on_leaf": "first line begins with the 'सप्तर्षि संवत्'-type heading + 4 digits; second begins with the 'विक्रम संवत्'-type heading + 4 digits",
+      "A": "(no text)",
+      "B": "'मप्रवि म८ग ५०१३ मच्चावि ५१ म८ म८ म८ ६८ करणी ...' / 'दिरूनमं८३ १०१३ ५°८म। ...' (headings not recognised, '८' and '°' scattered among akṣaras)"
+     },
+     {
+      "where": "lower table rows 3-14 and notes column",
+      "on_leaf": "about 14 rows of digits and abbreviations, each with a note in running Sharada to the right",
+      "A": "(no text)",
+      "B": "three rows, then '८८८८...' and '*' loops to the length limit"
+     }
+    ],
+    "note": "Sharada almanac. A gives nothing; B covers the upper table and three rows at shape level, then loops, losing about eleven rows and the whole notes column.",
+    "blind": {
+     "verdict": "neither"
+    }
+   }
   },
   {
    "slug": "san-28",
@@ -2268,7 +3246,47 @@
     }
    },
    "agreement_chars": 0.1087,
-   "adjudication_key": 0
+   "adjudication_key": 0,
+   "adjudication": {
+    "slug": "san-30",
+    "family": "san",
+    "blind_key": {
+     "A": "flash",
+     "B": "lite"
+    },
+    "verdict": "neither",
+    "confidence": "high",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Soft loop: after a correct opening clause and three partly right names in lines 3-5, every item becomes 'ॐ ह्रीं भैरवनाथाय', a form that is not on the leaf (the leaf has '...भैरवः' nominatives); the second bīja is dropped throughout.",
+    "lite_note": "Loop from the first line: 'ॐ ह्रीं भद्ररूपाय नमः ।' to the length limit (32.8K chars); the leaf has no 'नमः' in its items.",
+    "places_checked": [
+     {
+      "where": "line 1",
+      "on_leaf": "'शिवारुद्रस्तथैव च' then 'ॐ' + bīja(s) + a name ending '...भैरवः', then 'ॐ' + bījas + another name",
+      "A": "'शिवरुद्रस्तथैव च। ॐ ह्रीं भैरवनाथाय ॐ ह्रीं भैरव-'",
+      "B": "'ॐ भैरवाय नमः । ॐ ह्रीं भद्ररूपाय नमः ।'"
+     },
+     {
+      "where": "lines 3-5",
+      "on_leaf": "items alternate: '<name>भैरवः' and '<name>...श्चैव / ...मूर्तिः', every name different; line 3 starts '...लभैरवः' and has 'बुद्धि...'",
+      "A": "'शूलभैरवः ॐ ह्रीं बुद्धिनाथाय ॐ ह्रीं भैरवनाथाय' / '... त्रैलोक्यनाथाय ...' / 'कालभैरवः ...' then only 'भैरवनाथाय'",
+      "B": "'ॐ ह्रीं भद्ररूपाय नमः ।' repeated"
+     },
+     {
+      "where": "lines 10-18 (to the last line)",
+      "on_leaf": "the list continues with distinct names to the last line, which ends mid-item",
+      "A": "'ॐ ह्रीं भैरवनाथाय' in every position, 18 lines laid out like the leaf",
+      "B": "'ॐ ह्रीं भद्ररूपाय नमः ।' to the length limit"
+     }
+    ],
+    "note": "Sharada list of Bhairava names with bīja prefixes. The content of the leaf is the sequence of distinct names; both outputs replace it with one repeated filler. A's 18-line layout mimics the leaf but carries almost none of its names.",
+    "blind": {
+     "verdict": "neither"
+    }
+   }
   },
   {
    "slug": "pli-01",
@@ -2328,7 +3346,59 @@
     }
    },
    "agreement_chars": 0.0227,
-   "adjudication_key": 0
+   "adjudication_key": 0,
+   "adjudication": {
+    "slug": "pli-02",
+    "family": "pli",
+    "blind_key": {
+     "A": "lite",
+     "B": "flash"
+    },
+    "verdict": "neither",
+    "confidence": "high",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Declines to transcribe (unclear block only); names the text as Dhammapadatthakatha without reading any of it.",
+    "lite_note": "Wrong script (Burmese for a Sinhala-script leaf) and a repetition loop to the length limit; the opening clause before the loop is suspected not to be on the leaf but unverifiable at this resolution.",
+    "places_checked": [
+     {
+      "where": "script of the whole leaf (full image + tile r1c1)",
+      "on_leaf": "Sinhala script, two palm leaves, about 10 lines each, very small; individual letters mostly not resolvable by me",
+      "A": "Burmese (Myanmar) script throughout - not the script on the leaf",
+      "B": "no transcription at all"
+     },
+     {
+      "where": "top leaf, first line",
+      "on_leaf": "a dense, non-repeating line of Sinhala letters with two dash marks near the middle",
+      "A": "'tato punapunam parikappetva parikappetva evam cintesi etam nu kho etam nu khoti...' then the same ~20-word clause repeated without change",
+      "B": "nothing (unclear block saying a transcription is not provided)"
+     },
+     {
+      "where": "top leaf, middle lines (around the string hole)",
+      "on_leaf": "short broken lines either side of the hole, several long dash strokes, text varies line to line",
+      "A": "the same clause 'evam anuparidhavanto ekam samayam agantva etadavoca aham bhante evam cintemi' repeating",
+      "B": "nothing"
+     },
+     {
+      "where": "bottom leaf, last line",
+      "on_leaf": "line with three long dash marks and varied text",
+      "A": "still the same repeated clause, cut off at the length limit (22,095 chars) - no dashes, no change of text",
+      "B": "nothing"
+     },
+     {
+      "where": "folio number",
+      "on_leaf": "pencilled 61 at right end of top leaf",
+      "A": "page-num 61",
+      "B": "page-num 61"
+     }
+    ],
+    "note": "Verdict does not depend on my reading the small letters: A is in the wrong script and loops, B gives no text.",
+    "blind": {
+     "verdict": "neither"
+    }
+   }
   },
   {
    "slug": "pli-03",
@@ -2358,7 +3428,59 @@
     }
    },
    "agreement_chars": 0,
-   "adjudication_key": 0
+   "adjudication_key": 0,
+   "adjudication": {
+    "slug": "pli-03",
+    "family": "pli",
+    "blind_key": {
+     "A": "flash",
+     "B": "lite"
+    },
+    "verdict": "neither",
+    "confidence": "medium",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": true,
+    "lite_invented_quote": "විභඞ්ගප්පකරණං පඤ්චමං … සුත්තන්තභාජනීයං තතියං පඤ්චමස්ස වග්ගස්ස පඨමො විභඞ්ගො",
+    "flash_note": "Romanised instead of Sinhala script; follows the leaf line by line (17 lines, same breaks) but roughly half the words are wrong, including a systematic misreading of the key formula 'yathābhūtaṃ pajānāti' and the invented-looking compound 'atītānāgatapaccuppannaṃ' in lines 1-3 (a misreading of words that are there, counted as error).",
+    "lite_note": "Colophon-like chapter headings that are not on this page (it is running text with no heading or colophon), then a repetition loop of one phrase for 13 lines.",
+    "places_checked": [
+     {
+      "where": "line 1",
+      "on_leaf": "viññāṇaṃ ayaṃ nibbidā ti yathābhūtaṃ pajānāti maggo ... ti yathā-",
+      "A": "vattabbaṃ. atītānāgatapaccuppannaṃ. paññatti vannaṃ saṅkhayā atītānāgatapaccuppannaṃ. paññatti ... (only 'paññatti' for pajānāti is near; the rest are other words)",
+      "B": "vibhaṅgappakaraṇaṃ pañcamaṃ pañcamassa vaggassa paṭhamo vibhaṅgo (Sinhala script) - nothing of the line"
+     },
+     {
+      "where": "line 3",
+      "on_leaf": "sukhaṃ vā dukkhaṃ vā tam pi ayaṃ nibbidā ti yathābhūtaṃ pajānāti ayaṃ bhāvanā",
+      "A": "dukkhaṃ. dukkhaṃ vā. tasmā atītānāgatapaccuppannaṃ. paññatti ayaṃ bhāvanā (start and end right, middle wrong)",
+      "B": "suttantabhājanīyaṃ tatiyaṃ pañcamassa vaggassa paṭhamo vibhaṅgo - not the line"
+     },
+     {
+      "where": "lines 5-7 (middle)",
+      "on_leaf": "...paññatti nirodhassa rūpaṃ rādha vikiratha vidhamatha / viddhaṃsetha vikīḷanikaṃ karotha paññāya taṇhakkhayāya paṭipajjatha / taṇhakkhayā dukkhakkhayo dukkhakkhayā nibbānaṃ vedanaṃ --",
+      "A": "paññatti nirodhaṃ vannaṃ rūpaṃ rūpavikiranaṃ vibhaṅgaṃ vā / vidhaṃ. seṭṭhavikiranaṃ. kathaṃ karoti paññatti tatra kathaṃ vā paṭipatti / tatra kathaṃ vā dukkhaṃ vā dukkhaṃ vā dukkhaṃ vā ti nirodhaṃ. vedanaṃ. (same line positions, but the verbs and 'taṇhakkhaya' are lost)",
+      "B": "the loop 'pañcamassa vaggassa pañcamo vibhaṅgo pañcamassa vaggassa paṭhamo vibhaṅgo'"
+     },
+     {
+      "where": "line 13",
+      "on_leaf": "-dhassa idaṃ dukkhan ti yathābhūtaṃ pajānāti ayaṃ dukkhasamudayo ti yathā-",
+      "A": "dhaṃ vannaṃ idaṃ dukkhaṃ ti vā bhūtaṃ. paññatti ayaṃ. dukkhasamudayo ti vā bhū- (follows the line; 'yathābhūtaṃ pajānāti' consistently misread as 'vā bhūtaṃ. paññatti')",
+      "B": "loop"
+     },
+     {
+      "where": "last line (17)",
+      "on_leaf": "āsavanirodho ti yathābhūtaṃ pajānāti ayaṃ āsavanirodhagāminīpaṭi-",
+      "A": "āsvanirodho ti vā bhūtaṃ. paññatti ayaṃ. āsvanirodhagāminīpaṭi-",
+      "B": "loop line"
+     }
+    ],
+    "note": "The page is clearly legible to me (Nettipakaraṇa-type passage on paññatti). A is far closer than B and tracks the lines, but I judged it not close enough to translate from: the verbs and several nouns per line are wrong. If the rule is read as 'which is closer', the answer is A.",
+    "blind": {
+     "verdict": "neither"
+    }
+   }
   },
   {
    "slug": "pli-04",
@@ -2388,7 +3510,53 @@
     }
    },
    "agreement_chars": 0.0277,
-   "adjudication_key": 0
+   "adjudication_key": 0,
+   "adjudication": {
+    "slug": "pli-04",
+    "family": "pli",
+    "blind_key": {
+     "A": "lite",
+     "B": "flash"
+    },
+    "verdict": "neither",
+    "confidence": "high",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Repetition loop ('පන පන පතිතං') for 20 lines; only stray syllables (avita-ka-) echo the leaf.",
+    "lite_note": "Repetition loop ('අකුසල ධම්මා') to the length limit after one opening sentence that does not match line 1.",
+    "places_checked": [
+     {
+      "where": "line 1",
+      "on_leaf": "faint pencil/ink Sinhala: '... -- savitakka ... ' (Paṭṭhāna-style vitakka triad; a dash after the first word)",
+      "A": "dhammā sabbe akusalā akusala mūlā akusala paccayā ... then 'akusala dhammā' repeated",
+      "B": "sabbaṃ pana paṭhamaṃ uppādakkhaṇe nirujjhantassa aññamaññaṃ pana pa-"
+     },
+     {
+      "where": "lines 3-7 (upper middle)",
+      "on_leaf": "repeated terms avitakka- / savitakka- / savicāra with 'dhammassa' and 'paccayena'-type endings, varying from line to line",
+      "A": "'akusala dhammā' loop",
+      "B": "'avitatakatassa pana pana patitaṃ kataṃ' - 'avitatakatassa' looks like a misreading of avitakka-, but the rest is a loop of 'pana pana patitaṃ'"
+     },
+     {
+      "where": "lines 11-17 (middle)",
+      "on_leaf": "several long dashes (lines 9, 10, 11, 16) and the word purejātaṃ / vatthuṃ visible more than once",
+      "A": "'akusala dhammā' loop, no dashes",
+      "B": "'pana pana patitaṃ' loop, no dashes"
+     },
+     {
+      "where": "last line (21)",
+      "on_leaf": "'...kkā ... savitakkassa dhammassa kammapaccayena ...' (varied text)",
+      "A": "'akusala dhammā akusala' (cut at length limit, 24,669 chars)",
+      "B": "'pana pana patitaṃ pana pana patitaṃ ...'"
+     }
+    ],
+    "note": "The page has 21 varied lines; neither output has more than one non-looping line and neither of those matches.",
+    "blind": {
+     "verdict": "neither"
+    }
+   }
   },
   {
    "slug": "pli-05",
@@ -2418,7 +3586,53 @@
     }
    },
    "agreement_chars": 0.0007,
-   "adjudication_key": 0
+   "adjudication_key": 0,
+   "adjudication": {
+    "slug": "pli-05",
+    "family": "pli",
+    "blind_key": {
+     "A": "flash",
+     "B": "lite"
+    },
+    "verdict": "neither",
+    "confidence": "high",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Declines to transcribe (two 'unclear' placeholders). Line count of 8 per leaf is correct.",
+    "lite_note": "Wrong script (Cham code block) and a repetition loop to the length limit - garbage.",
+    "places_checked": [
+     {
+      "where": "script and layout (full image + tile r1c1)",
+      "on_leaf": "Sinhala script, two leaves of 8 lines, very many dash marks and the abbreviation 'pe' between dashes",
+      "A": "no transcription; says '8 lines ... not fully transcribed'",
+      "B": "Cham-block characters (ꩪꨠꨆꨔ...) - not Sinhala, not any script on the leaf"
+     },
+     {
+      "where": "top leaf, line 1",
+      "on_leaf": "short phrase -- longer phrase -- 'pe' -- phrase ... (dash-separated)",
+      "A": "nothing",
+      "B": "one garbage cluster repeated without break; no dashes"
+     },
+     {
+      "where": "top leaf, middle lines",
+      "on_leaf": "short lines either side of the string hole, each with '-- pe --'",
+      "A": "nothing",
+      "B": "same repeated cluster"
+     },
+     {
+      "where": "bottom leaf, last line",
+      "on_leaf": "long line with at least three dashes and 'pe'",
+      "A": "nothing",
+      "B": "same repeated cluster, cut at the length limit"
+     }
+    ],
+    "note": "I cannot read the small letters word for word, but that is not needed: one output has no text and the other is a looping string in a script that is not on the leaf.",
+    "blind": {
+     "verdict": "neither"
+    }
+   }
   },
   {
    "slug": "pli-06",
@@ -2478,7 +3692,59 @@
     }
    },
    "agreement_chars": 0.8003,
-   "adjudication_key": 0
+   "adjudication_key": 0,
+   "adjudication": {
+    "slug": "pli-07",
+    "family": "pli",
+    "blind_key": {
+     "A": "lite",
+     "B": "flash"
+    },
+    "verdict": "lite",
+    "confidence": "high",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Loop: runs away on the printed ellipsis dots after 'tena mohena⁶' and hits the length limit; loses the last five text lines and all footnotes. Up to that point it is slightly MORE accurate than A.",
+    "lite_note": "Complete page including footnotes; a handful of small slips (sasaṅkhārika -> saṅkhārika, dosenā -> dosena, ekekena -> ekena, samuṭṭhānan -> samuṭṭhānaṃ).",
+    "places_checked": [
+     {
+      "where": "first text line",
+      "on_leaf": "hi cattāri diṭṭhisahagatāni vicikicchāsahagatañ cā ti pañca",
+      "A": "hi cattāri diṭṭhisahagatāni vicikicchāsahagatañ cā ti pañca",
+      "B": "hi cattāri diṭṭhisahagatāni vicikicchāsahagatañ cā ti pañca"
+     },
+     {
+      "where": "line 6",
+      "on_leaf": "Diṭṭhisampayuttasasaṅkhārikacittesu pi",
+      "A": "Diṭṭhisampayuttasaṅkhārikacittesu (drops 'sa')",
+      "B": "Diṭṭhisampayuttasasaṅkhārikacittesu (correct)"
+     },
+     {
+      "where": "para 720, lines 2-4",
+      "on_leaf": "tena dosenā ti evaṃ ekekena sampayuttatā dīpetabbā. Tattha lobhe gahite moho māno thīnaṃ uddhaccaṃ",
+      "A": "tena dosena ti evaṃ ekena sampayuttatā ... moho thīnaṃ (three slips: dosena, ekena, 'māno' dropped)",
+      "B": "tena dosenā ti evaṃ ekekena sampayuttatā ... moho thīnaṃ ('māno' dropped)"
+     },
+     {
+      "where": "para 721 and what follows",
+      "on_leaf": "721. Taṃ samuṭṭhānan ti tena mohena⁶ . . . . pe . . . . tena anottappena samuṭṭhitan ti attho. Ime dhammā dassanena pahātabbā ti ettha dassanaṃ nāma sotāpattimaggo ...",
+      "A": "721. Taṃ samuṭṭhānaṃ ti tena mohena⁶ . . . pe . . . tena anottappena samuṭṭhitan ti attho. Ime dhammā dassanena pahātabbā ti ettha dassanaṃ nāma sotāpattimaggo ...",
+      "B": "721. Taṃ samuṭṭhānan ti tena mohena⁶ . . . . then dots only, to the length limit (33,087 chars); 'pe ... samuṭṭhitan ti attho' and the whole next paragraph are missing"
+     },
+     {
+      "where": "last text line and footnotes",
+      "on_leaf": "maṃ nibbānaṃ dassanato na nu gotrabhū paṭhamataraṃ / ¹ Dhs. § 1006. ² sampayuttena T. ... ⁶ lobhena M.",
+      "A": "paṭhamaṃ nibbānaṃ dassanato na nu gotrabhū paṭhamataram / footnotes 1-6 present and correct",
+      "B": "absent (output ends in the dot loop)"
+     }
+    ],
+    "note": "Printed romanised page, fully legible. Both read the first ~85% well; B is marginally better word for word there, but B fails the last-line check entirely because of the dot loop, so only A gives the whole page.",
+    "blind": {
+     "verdict": "A"
+    }
+   }
   },
   {
    "slug": "pli-08",
@@ -2538,7 +3804,53 @@
     }
    },
    "agreement_chars": 0,
-   "adjudication_key": 0
+   "adjudication_key": 0,
+   "adjudication": {
+    "slug": "pli-09",
+    "family": "pli",
+    "blind_key": {
+     "A": "flash",
+     "B": "lite"
+    },
+    "verdict": "neither",
+    "confidence": "high",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Repetition loop to the length limit; romanised; misidentifies the script. Opening sentence suspected not on the leaf - suspected, unverifiable (letters too small for me to read words).",
+    "lite_note": "Repetition loop to the length limit, in Burmese script for a Sinhala-script leaf. Opening sentence suspected not on the leaf - suspected, unverifiable.",
+    "places_checked": [
+     {
+      "where": "script and layout (full image + tile r1c1)",
+      "on_leaf": "Sinhala script, two leaves of 8 dense lines, few dashes; a Sinhala letter-numeral in the left margin of the lower leaf",
+      "A": "romanised Pali; calls the script 'Burmese-style (Tham or similar)'; page-num 'gi'",
+      "B": "Burmese (Myanmar) script - not the script on the leaf; page-num 91"
+     },
+     {
+      "where": "top leaf, line 1",
+      "on_leaf": "dense varied line with comma-like marks, no repetition visible",
+      "A": "tassaṃ kho pana samaye rājā, amaccānaṃ paṭivedesi ... then 'mahārāja amaccā pana rājānaṃ etadavocuṃ' repeated",
+      "B": "tatthakathāyaṃ pana ayaṃ attho ... then 'evaṃ sante pi ettha attho viññātuṃ na sakkā' repeated"
+     },
+     {
+      "where": "top leaf, middle (line 7 has the one clear long dash)",
+      "on_leaf": "varied text; one long dash stroke left of centre",
+      "A": "same repeated sentence, no break",
+      "B": "same repeated sentence, no break"
+     },
+     {
+      "where": "bottom leaf, last line",
+      "on_leaf": "full-width varied line",
+      "A": "'mahārāja amaccā pana rāj' cut at the length limit (39,681 chars)",
+      "B": "'evaṃ sante' cut at the length limit (22,346 chars)"
+     }
+    ],
+    "note": "Both loop; each carries about 20-40 thousand characters for a pair of leaves that hold roughly 2-3 thousand letters. The two openings also disagree with each other completely.",
+    "blind": {
+     "verdict": "neither"
+    }
+   }
   },
   {
    "slug": "pli-10",
@@ -2598,7 +3910,59 @@
     }
    },
    "agreement_chars": 0,
-   "adjudication_key": 0
+   "adjudication_key": 0,
+   "adjudication": {
+    "slug": "pli-11",
+    "family": "pli",
+    "blind_key": {
+     "A": "lite",
+     "B": "flash"
+    },
+    "verdict": "neither",
+    "confidence": "medium",
+    "flash_invented": true,
+    "flash_invented_quote": "ඉති ඛුද්දකපාඨෙ --- මඞ්ගලසුත්තං --- රතනසුත්තං --- කරණීයමෙත්තසුත්තං … යං කිඤ්චි විත්තං ඉධ වා හුරං වා … එතෙන සච්චෙන සුවත්ථි හොතු",
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Recites a paritta table of contents and the Ratana Sutta from memory; only the first word 'pubbe' touches the leaf. Layout of the leaf (single titles between verses, no refrain, ~27 dashes) contradicts it.",
+    "lite_note": "Declines to transcribe (unclear block only).",
+    "places_checked": [
+     {
+      "where": "line 1, first segment (tile r1c1)",
+      "on_leaf": "begins 'පුබ්බෙව ස...' - I read it as 'pubbeva sannivāsena paccuppannahitena vā' (about 15 letters), then a dash",
+      "A": "nothing (declines)",
+      "B": "'පුබ්බෙ නිවාසං යො වෙදි සග්ගාපායඤ්ච පස්සති ---' - same first word, then a different, well-known verse"
+     },
+     {
+      "where": "line 1, right half (tile r1c2)",
+      "on_leaf": "long verse, dash, a short word ending '-jāti/-jātakaṃ', dash, another short title, dash, another verse",
+      "A": "nothing",
+      "B": "'atho jātikkhayaṃ patto abhiññāvosito muni ... brāhmaṇanti --- iti khuddakapāṭhe ---' then 33 short titles in a row each followed by a dash (maṅgalasuttaṃ --- ratanasuttaṃ --- ... mahāmaṅgalacakkavāḷaparittanti)"
+     },
+     {
+      "where": "middle lines 4-6",
+      "on_leaf": "verses of differing wording, each closed by a dash and a short title of 4-7 letters before the next verse; no refrain repeated",
+      "A": "nothing",
+      "B": "Ratana-sutta stanzas each ending in the identical refrain 'idampi ... ratanaṃ paṇītaṃ etena saccena suvatthi hotu' (12 times) - no such repeated string is visible before the dashes on the leaf"
+     },
+     {
+      "where": "last line (8)",
+      "on_leaf": "verse -- short title -- verse running to the right edge",
+      "A": "nothing",
+      "B": "'ratanasuttaṃ niṭṭhitaṃ --- seyyathāpi mahārāja puriso aggiṃ jaleyya ... bhagavato paññā jalati ---'"
+     },
+     {
+      "where": "dash count",
+      "on_leaf": "about 27 dash marks on the whole leaf, single short titles between long verses",
+      "A": "n/a",
+      "B": "about 57 '---' separators, 33 of them between consecutive short titles"
+     }
+    ],
+    "note": "I can read only some words on this leaf (it looks like a verse collection with short '-jātaka'-type titles between dashes, opening 'pubbeva sannivāsena ...'). That is enough to say B's text is another work: a run of 33 consecutive short titles and a stanza refrain repeated 12 times have no counterpart in the leaf's dash pattern. I could not verify the leaf word for word, hence medium.",
+    "blind": {
+     "verdict": "neither"
+    }
+   }
   },
   {
    "slug": "pli-12",
@@ -2808,7 +4172,47 @@
     }
    },
    "agreement_chars": null,
-   "adjudication_key": 0
+   "adjudication_key": 0,
+   "adjudication": {
+    "slug": "pli-18",
+    "family": "pli",
+    "blind_key": {
+     "A": "lite",
+     "B": "flash"
+    },
+    "verdict": "neither",
+    "confidence": "high",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Refusal - engine declined the page, 0 characters.",
+    "lite_note": "Refusal - engine declined the page, 0 characters.",
+    "places_checked": [
+     {
+      "where": "header and first line",
+      "on_leaf": "112 RATHAKÂRA-VAGGA. [III. 15. 2. / yâvatikâ abhisaṅkhârassa gati tâvatikaṃ gantvâ ciṅgulâyitvâ",
+      "A": "declined, no text",
+      "B": "declined, no text"
+     },
+     {
+      "where": "middle (para 'Yam idaṃ deva cakkaṃ chahi divasehi niṭṭhitaṃ tassa nemî pi savaṅkâ sadosâ sakasâvâ')",
+      "on_leaf": "printed romanised Pali, legible though the scan is soft",
+      "A": "declined, no text",
+      "B": "declined, no text"
+     },
+     {
+      "where": "last line",
+      "on_leaf": "hîno vacîdoso vacîkasâvo, manovaṅko appahîno manodoso",
+      "A": "declined, no text",
+      "B": "declined, no text"
+     }
+    ],
+    "note": "The page itself is a legible printed romanised edition (Aṅguttara, Rathakāra-vagga, p. 112); both engines returned nothing.",
+    "blind": {
+     "verdict": "neither"
+    }
+   }
   },
   {
    "slug": "pli-19",
@@ -2988,7 +4392,47 @@
     }
    },
    "agreement_chars": null,
-   "adjudication_key": 0
+   "adjudication_key": 0,
+   "adjudication": {
+    "slug": "pli-24",
+    "family": "pli",
+    "blind_key": {
+     "A": "lite",
+     "B": "flash"
+    },
+    "verdict": "neither",
+    "confidence": "high",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Refusal - engine declined the page, 0 characters.",
+    "lite_note": "Refusal - engine declined the page, 0 characters.",
+    "places_checked": [
+     {
+      "where": "header and first line",
+      "on_leaf": "180 Aṅguttara-Nikāya. CLVI. 9—12 / 9. Puna ca paraṃ bhikkhave bhikkhū subbacā¹ honti",
+      "A": "declined, no text",
+      "B": "declined, no text"
+     },
+     {
+      "where": "middle (para 11)",
+      "on_leaf": "11. Puna ca paraṃ bhikkhave therā⁴ bhikkhū na bāhulikā honti na sāthalikā okkamane nikkhittadhurā paviveke",
+      "A": "declined, no text",
+      "B": "declined, no text"
+     },
+     {
+      "where": "last text line and footnotes",
+      "on_leaf": "tiyā asammosāya anantaradhānāya saṃvattantī ti. / ¹ S. subacā; M₇ suvacā. ... ⁸ S. pariccajā. ⁹ S. hoti.",
+      "A": "declined, no text",
+      "B": "declined, no text"
+     }
+    ],
+    "note": "Clean, sharply printed romanised page (Aṅguttara-Nikāya p. 180); both engines returned nothing.",
+    "blind": {
+     "verdict": "neither"
+    }
+   }
   },
   {
    "slug": "pli-25",
@@ -3018,7 +4462,53 @@
     }
    },
    "agreement_chars": 0.064,
-   "adjudication_key": 0
+   "adjudication_key": 0,
+   "adjudication": {
+    "slug": "pli-25",
+    "family": "pli",
+    "blind_key": {
+     "A": "lite",
+     "B": "flash"
+    },
+    "verdict": "neither",
+    "confidence": "high",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Repetition loop of two phrases to the length limit; romanised, script misidentified. Whether 'manoviññāṇadhātu' occurs on the leaf at all is unverifiable at this resolution.",
+    "lite_note": "Declines to transcribe (unclear block only).",
+    "places_checked": [
+     {
+      "where": "script, layout, folio (full image + tile r1c1)",
+      "on_leaf": "Sinhala script, two leaves of about 10 lines, text in three blocks around two string holes; pencilled 62 in the left margin of the top leaf",
+      "A": "no transcription; page-num 62",
+      "B": "romanised; calls the script 'Burmese-style (Tham or similar)'; margin 62, columns 3"
+     },
+     {
+      "where": "top leaf, line 1",
+      "on_leaf": "varied line with one long dash about two-thirds along",
+      "A": "nothing",
+      "B": "manovinnāṇadhātūti tividhā manodhātu. tividhā manovinnāṇadhātūti. tividhā manodhātu. ... (two phrases alternating)"
+     },
+     {
+      "where": "top leaf, middle lines",
+      "on_leaf": "short lines beside the string hole, several dashes, wording changes line to line",
+      "A": "nothing",
+      "B": "the same two phrases alternating"
+     },
+     {
+      "where": "bottom leaf, last line",
+      "on_leaf": "full-width varied line ending with a dash near the right",
+      "A": "nothing",
+      "B": "'tividhā manovinnāṇadhātūti. tividhā' cut at the length limit (36,772 chars)"
+     }
+    ],
+    "note": "I cannot read the leaf word for word, but one output has no text and the other is a two-phrase loop about ten times longer than the leaves could hold.",
+    "blind": {
+     "verdict": "neither"
+    }
+   }
   },
   {
    "slug": "pli-26",
@@ -3228,7 +4718,53 @@
     }
    },
    "agreement_chars": 0.3842,
-   "adjudication_key": 0.384180790960452
+   "adjudication_key": 0.384180790960452,
+   "adjudication": {
+    "slug": "ara-06",
+    "family": "ara",
+    "blind_key": {
+     "A": "lite",
+     "B": "flash"
+    },
+    "verdict": "flash",
+    "confidence": "medium",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Missed column: Syriac declared and skipped. Arabic column clean except lines 2-4, where it rewrote the leaf toward the familiar aphorism ('وفي الصيف من تحت' for 'ردي / الثالث عشر / من يحتاج'): a three-word substitution of words that are there, counted as misreading, and it loses a section heading.",
+    "lite_note": "Wrong reading order: the two columns are merged line by line, with the Syriac turned into Arabic-letter nonsense; only the last five Arabic lines come out clean. Missed the heading الثالث عشر.",
+    "places_checked": [
+     {
+      "where": "Arabic column, lines 1-4",
+      "on_leaf": "في الشتا فاستفراغه / بالدوا من فوق ردي / الثالث عشر / من يحتاج ان يسقا الخربق (marginal gloss: احتياج)",
+      "A": "حجمه محجمه في الشفا باستفراغه / حجامة من فوق ردي / مع حده / بدله حمصة <margin>إجماع</margin> / سريعة عصره بضع حصة من تحتاج أن يستقا الحقيق (Arabic words buried in Arabic-letter strings made from the Syriac column; heading الثالث عشر lost)",
+      "B": "في الشتاء يستفرغ / بالدواء من فوق وفي / الصيف / من تحت ان يستقا المحبق (ردي -> وفي, الثالث عشر -> الصيف, يحتاج -> تحت, الخربق -> المحبق)"
+     },
+     {
+      "where": "Arabic column, lines 5-8 (middle)",
+      "on_leaf": "وكان استفراغه من لا يواتيه / بسهوله فينبغي ان يرطب / بدنه من قبل اسقايه اياه / بغذا اكثر وبراحه",
+      "A": "حسوم دة وكان استفراغه من لا يأتيه / فطره منه دم سهوله ينبغي أن يطب / من خلاء بمره مر بدنه من قبل استقابه اياه / ورم / عصمه ج منها بغذا أكثر وبراحه (the Arabic is there but interleaved with junk)",
+      "B": "وكان استفراغه من لا يواتيه / بسهولة فينبغي ان يرطب / بدنه من قبل استقائه اياه / بغذاء اكثر وبراحة (exact)"
+     },
+     {
+      "where": "Arabic column, last five lines",
+      "on_leaf": "الرابع عشر / اذا اسقيت انسانا خربقا / فليكن قصدك لتحريك / بدنه اكثر ولتنويمه وتسكينه / اقل وقد يدل",
+      "A": "الرابع عسر / اذا استقيت انسانا خريقا / فليكن قصدك لتحريك / بدنه اكثر ولتنويمه وتسكينه / اقل وقد يلب (good)",
+      "B": "الرابع عشر / اذا اسقيت انسانا خربقا / فليكن قصدك لتحريك / بدنه اكثر ولتنويمه وتسكينه / اقل وقد يدل (exact)"
+     },
+     {
+      "where": "Syriac column (right), c. 20 lines",
+      "on_leaf": "Serto Syriac, 20 lines",
+      "A": "no Syriac script; the column appears as meaningless Arabic-letter lines ('حصحص ملاته / ه حششه / و اذ به حصة / معادفة ...') mixed into and after the Arabic",
+      "B": "not transcribed: '<unclear>Syriac text in right column, approximately 20 lines</unclear>'"
+     }
+    ],
+    "note": "Hippocratic Aphorisms IV (headings 'thirteenth', 'fourteenth'), Syriac beside Arabic. Neither output carries the Syriac in Syriac, so on the two-script rule neither reads the whole page; on the Arabic, B is clearly the one to translate from (10 of 13 lines exact) while A's first eight lines are tangled with junk. Verdict B on 'clearly closer'; caveat that half the page (the Syriac) is in neither.",
+    "blind": {
+     "verdict": "B"
+    }
+   }
   },
   {
    "slug": "ara-07",
@@ -3348,7 +4884,53 @@
     }
    },
    "agreement_chars": 0.2222,
-   "adjudication_key": 0.2222222222222222
+   "adjudication_key": 0.2222222222222222,
+   "adjudication": {
+    "slug": "ara-10",
+    "family": "ara",
+    "blind_key": {
+     "A": "flash",
+     "B": "lite"
+    },
+    "verdict": "cannot_tell",
+    "confidence": "low",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Right script (Hebrew letters), right subject (parallels cut by a transversal), and its line layout tracks the leaf (short lines at 30 and 32). I cannot confirm the words; if the recurring dotted word is Hebrew זוית, the leaf is Hebrew and A's Judeo-Arabic (זאויה, יואזי) would be a re-composition rather than a reading. Invention suspected, unverifiable.",
+    "lite_note": "Not a transcription whatever the leaf says: Arabic script for a Hebrew-script leaf, three formulaic statements each ending 'فالخطان متوازيان وهذا هو المطلوب', 9 lines against c. 19. Reads as a summary of what the figures suggest. Invention suspected, unverifiable.",
+    "places_checked": [
+     {
+      "where": "first line (short line closing the previous proposition, ends with a double-stroke end mark)",
+      "on_leaf": "Three or four word-groups in a very cursive Hebrew-script hand, ending with an end-of-section mark; unreadable to me with confidence.",
+      "A": "פיהא זאויה א' ב' ג' תסאוי זאויה ד' ה' ו' (Judeo-Arabic, Hebrew letters; no section end here)",
+      "B": "فصل في بيان توازي الخطوط (Arabic script, a heading the leaf does not have)"
+     },
+     {
+      "where": "middle: three short lines beside the first diagram, red margin number 30",
+      "on_leaf": "Three short lines to the right of a figure of two parallels cut by a transversal; a four-letter word with dots above recurs (possibly זוית 'angle'); words not securely readable.",
+      "A": "<margin>30</margin> פאן לם יכן כדלך פליכן ד' ז' / יואזי א' ב' פתכון זאויה א' ב' ג' / תסאוי זאויה ד' ז' ה' אלכארג'ה (three short lines: layout matches)",
+      "B": "كل خطين إذا قطعها خط ثالث وحدثت الزوايا المتبادلة متساوية / فالخطان متوازيان / وهذا هو المطلوب"
+     },
+     {
+      "where": "last two short lines beside the third diagram, red margin number 32",
+      "on_leaf": "Two short lines; the dotted four-letter word occurs three times.",
+      "A": "לנרסם א' ב' יואזי ג' ד' <margin>32</margin> / ונכרג' בינהמא כט ה' ו' ז' ח' פנקול אן זאויה (two short lines: layout matches)",
+      "B": "وإذا قطع خط خطين وحدثت الزاوية الخارجية مساوية للداخلة والمقابلة لها / فالخطان متوازيان / وهذا هو المطلوب"
+     },
+     {
+      "where": "quantity and structure",
+      "on_leaf": "c. 19 lines, three enlarged rubric words, three figures, margin numbers 30/31/32",
+      "A": "16 lines, three figures, margin numbers 30/31/32 in the right places; no rubric words marked",
+      "B": "9 short formulaic lines, two figures"
+     }
+    ],
+    "note": "What stopped me: a very cursive Hebrew-script hand that I cannot read letter by letter at 1050x1500. B fails on structure alone. A cannot be confirmed or refuted by me, so the page is either 'A' or 'neither' and I cannot say which.",
+    "blind": {
+     "verdict": "cannot_tell"
+    }
+   }
   },
   {
    "slug": "ara-11",
@@ -3558,7 +5140,53 @@
     }
    },
    "agreement_chars": 0.1747,
-   "adjudication_key": 0
+   "adjudication_key": 0,
+   "adjudication": {
+    "slug": "ara-17",
+    "family": "ara",
+    "blind_key": {
+     "A": "flash",
+     "B": "lite"
+    },
+    "verdict": "neither",
+    "confidence": "high",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Reads the first ~2 lines of the main text and one margin note, then a repetition loop to the length limit (42.7K chars); roughly 28 of 30 main-text lines, the 4-line top block and nearly all marginalia are missing.",
+    "lite_note": "Loop ('ا ب ج د' repeated to the length limit). Its two opening 'margin' sentences about 'زاوية محيطة بقطاع دائرة' (circle sectors) match nothing I could read on a leaf that is about solid angles: invention suspected, unverifiable because I cannot read every one of the dense small marginal notes.",
+    "places_checked": [
+     {
+      "where": "first line of the main text block (after the red-rubricated opening)",
+      "on_leaf": "كل زاوية مجسمة فان جميع الزوايا المسطحة المحيطة بها اصغر من اربع قوائم مثلا احاط بزاوية ب زوايا ...",
+      "A": "كل زاوية مجسمة فان سطح الزوايا المسطحة المحيطة بها اصغر من اربع قوائم مثلا ا ب ج د ر ... (follows the leaf for about two lines, then diverges)",
+      "B": "nothing corresponding; opens with 'قوله كل زاوية محيطة بقطاع دائرة هي التي يحيط بها نصفا قطريها وقوسها' (not the main text)"
+     },
+     {
+      "where": "right-margin note beside the first diagram",
+      "on_leaf": "قد تبين مما مر ان الزوايا المحيطة بنقطة ... كانت الزوايا مساوية لاربع قوائم فلا حاجة الى هذا البيان",
+      "A": "فقد تبين مما مر ان الزوايا المحيطة بكل راس كانت النقطة فذلك كانت الزوايا مساوية لاربع قوائم ففي حاجة الى هذا البيان (close)",
+      "B": "absent"
+     },
+     {
+      "where": "middle of the main text (about line 14)",
+      "on_leaf": "... فان كانت الاوتار متساوية كان كل اثنين منها اعظم من الثالث وان كانت مختلفة فليكن ...",
+      "A": "absent: by this point A is inside a repetition loop ('لان زوايا مثلثات هـ ط ك ... اعني ثماني قوائم' repeated to the length limit)",
+      "B": "absent: loop of 'ا ب ج د' to the length limit"
+     },
+     {
+      "where": "last line of the main text",
+      "on_leaf": "... والا لكانت الباقية قائمتين واعظم وذلك محال",
+      "A": "absent (output ends mid-loop)",
+      "B": "absent (output ends mid-loop)"
+     }
+    ],
+    "note": "Arabic geometry (solid angles; al-Tusi-style Euclid XI) with heavy marginalia. Both outputs hit the length limit in loops. A did start on the right text, B never did, but neither carries the page.",
+    "blind": {
+     "verdict": "neither"
+    }
+   }
   },
   {
    "slug": "ara-18",
@@ -3678,7 +5306,47 @@
     }
    },
    "agreement_chars": 0.4282,
-   "adjudication_key": 0.4282083862770013
+   "adjudication_key": 0.4282083862770013,
+   "adjudication": {
+    "slug": "ara-21",
+    "family": "ara",
+    "blind_key": {
+     "A": "flash",
+     "B": "lite"
+    },
+    "verdict": "flash",
+    "confidence": "medium",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Follows all six text lines; three or four misread words (النشادر, حتى يظهر, المودج for الفوذنج). Missed the small faint glosses beside the plants and the label above the left plant.",
+    "lite_note": "Follows the same lines but with roughly twice the errors, several changing the sense (الجنب, الثداء, يستعمل, 'هو مع أحمر'); catches the small labels ('رادك', 'العودج') that A skips. Small glosses beside the plants missed.",
+    "places_checked": [
+     {
+      "where": "first text line",
+      "on_leaf": "ينفع من الحكة والجرب واليرقان وعصارته الرطبة تنفع اوجاع الحنجرة",
+      "A": "ينفع من الحكة والجرب واليرقان وعصارته الرطبة تنفع اوجاع الحنجرة (exact)",
+      "B": "ينفع من الحكة والجرب واليرقان وعصارته الرطبة تنفع أوجاع الجنب (last word wrong)"
+     },
+     {
+      "where": "lines 2-4",
+      "on_leaf": "واللهاة والقلاع ويسهل فضلات الاذن مع دهن السوسن ومع اللبن / لاوجاع الاذن ويعمل منه ومن البصل والسماق دوا ... واذا ترك / في الشمس وقت ظهور كلب الجبار اربعين يوما طرد الهوام",
+      "A": "واللهاة والقلاع وتسهل فضلات الاذن مع دهن السوسن ومع اللبن / لوجع الاذن ويعمل منه ومن البصل والنشادر دواء منقياً واذا ترك / في الشمس حتى يظهر كلب الجبار اربعين يوماً طرد الهوام (النشادر for السماق; حتى يظهر for وقت ظهور)",
+      "B": "والثداء والقلاع ويستعمل فضلات الأذن مع دهن السوس ومع اللبن / لأوجاع الأذن ويعمل منه ومن البصل والشباب دواء منقيا وإذا ترك / والنشر وفي ظهوره كلب الجيا أربعين يوما طرد الهوام (الثداء, يستعمل, السوس, الشباب, والنشر, الجيا)"
+     },
+     {
+      "where": "caption among the plants and the last two text lines",
+      "on_leaf": "انواع الفوذنج / اونيطيس هو نوع اخر من الفوذنج اوراقه اكثر بياضا من الاخر / واشبه بالزوفا وزهره ... متحدة وقوته كقوة النوع الاول",
+      "A": "انواع المودج / أونييطيس هو نوع اخر من المودج اوراقه اكثر بياضاً من الاخر / واشبه بالزوفا وزهوره كبارة بيض متحدة وقوته كقوة النوع الاول",
+      "B": "رادك / أنواع النوذج / أو بيطبيس هو مع أحمر من النوذج وأوراقه أكثر بياضا من الآخر / وأشد بالزوفاء زهره كأنه بصل المتحد وقوته كقوة النوع الأول / العودج"
+     }
+    ],
+    "note": "Illustrated Dioscorides (the origanum/فوذنج kinds; 'onitis'), six lines of clear naskh round four plant paintings. Both follow the leaf; A is clearly closer on every line checked. B is not unusable, so 'both' was considered and rejected on error count and on the sense-changing errors.",
+    "blind": {
+     "verdict": "A"
+    }
+   }
   },
   {
    "slug": "ara-22",
@@ -3738,7 +5406,59 @@
     }
    },
    "agreement_chars": 0.3842,
-   "adjudication_key": 0.3842364532019704
+   "adjudication_key": 0.3842364532019704,
+   "adjudication": {
+    "slug": "ara-23",
+    "family": "ara",
+    "blind_key": {
+     "A": "flash",
+     "B": "lite"
+    },
+    "verdict": "flash",
+    "confidence": "medium",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Keeps the whole grid (longitude sign/degree/minute, direction, latitude degree/minute, magnitude). Latitude and magnitude cells are mostly right; longitude cells are shifted in several rows (an extra cell inserted); a few label misreadings. Skips the sliver of the facing page.",
+    "lite_note": "Collapses the table to one longitude cell and one latitude cell per row, so minutes, magnitudes and most longitudes are lost and several remaining values are wrong; headers misaligned with the cells. Labels slightly better than A in two rows. Its <margin> block is an attempt at the cut-off edge of the facing page (fragments such as 'من صورة' are visible there), not part of this leaf.",
+    "places_checked": [
+     {
+      "where": "table title",
+      "on_leaf": "جدول كوكبة قيقاوس بزيادة [red numerals] عليها في المجسطي",
+      "A": "جدول كواكب مفاوس بزيادة سـ جـ عليها في المجسطي (قيقاوس misread, structure right)",
+      "B": "جدول كوكب معاوية مبينة على ما في المجسطي (name and 'بزيادة ... عليها' both wrong)"
+     },
+     {
+      "where": "row 2 (first clean row): label and numerals",
+      "on_leaf": "الذي على الرجل اليسرى ; latitude سد, minutes له (red), magnitude د",
+      "A": "الذي على الرجل اليسرى | ... | سد | له | د (exact for latitude/minutes/magnitude)",
+      "B": "ب | برج | ه | سد | الذي على الرجل اليسرى (one longitude cell and the latitude degrees only; minutes and magnitude dropped)"
+     },
+     {
+      "where": "rows 4-5 and 9, labels",
+      "on_leaf": "المماس من فوق للمنكب الايمن / المماس من فوق للمرفق الايسر / الجنوبي من الثلثة التي على القلنسوة",
+      "A": "الخامس من فوق المرفق الايمن / السادس من فوق المرفق الايسر / الجنوبي من الثلاثة التي على العضد (المماس misread as ordinals; المنكب -> المرفق)",
+      "B": "الممس من فوق المنكب الايمن / الممس من فوق المرفق الايسر / الكوكب من الثلاثة التي على العلو (closer than A on rows 4-5)"
+     },
+     {
+      "where": "rows 7, 10, 11: latitude / minutes / magnitude",
+      "on_leaf": "سه ل ه ; سا له د ; سا ك و",
+      "A": "سه ل هـ ; سا له د ; سا كـ و (exact)",
+      "B": "ك | ه ; ا | سه ; ب | سو (not the leaf's values)"
+     },
+     {
+      "where": "last two rows and closing line",
+      "on_leaf": "row: سد . ه ; row: نط ل ج ; closing: فذلك كوكبان احدهما في الرابع والاخر في الخامس",
+      "A": "... سد | حـ | هـ ; ... نط | ل | جـ ; فذلك كوكبان احدهما في الرابع والاوفى الخامس",
+      "B": "الو | س ; ى | نط ; فذلك كوكبان احدهما في الرابع والاوفى الخامس"
+     }
+    ],
+    "note": "Star catalogue table for Cepheus (11 stars + 2 outside the figure) in abjad numerals. In a table the numbers are the text; A carries them and B mostly does not. Both follow the leaf; A clearly closer.",
+    "blind": {
+     "verdict": "A"
+    }
+   }
   },
   {
    "slug": "ara-24",
@@ -3768,7 +5488,47 @@
     }
    },
    "agreement_chars": null,
-   "adjudication_key": 0
+   "adjudication_key": 0,
+   "adjudication": {
+    "slug": "ara-24",
+    "family": "ara",
+    "blind_key": {
+     "A": "lite",
+     "B": "flash"
+    },
+    "verdict": "neither",
+    "confidence": "high",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Refusal: declined the page, 0 characters.",
+    "lite_note": "Refusal: declined the page, 0 characters.",
+    "places_checked": [
+     {
+      "where": "first text line",
+      "on_leaf": "Lorsque les Arabes conquirent l'Espagne, ils y trouvè-",
+      "A": "(empty: engine declined)",
+      "B": "(empty: engine declined)"
+     },
+     {
+      "where": "middle (line 10, marginal 157)",
+      "on_leaf": "L'autre édifice avait été fermé par vingt-quatre serrures,",
+      "A": "(empty)",
+      "B": "(empty)"
+     },
+     {
+      "where": "last body line and footnote",
+      "on_leaf": "les savants pour donner une preuve sensible de la divine / 1) Cette section ne se trouve que dans le man. B et ne semble pas appartenir à l'ouvrage d'Ibn Khordâdhbeh.",
+      "A": "(empty)",
+      "B": "(empty)"
+     }
+    ],
+    "note": "Clean printed French page (p. 118, translation of Ibn Khordadhbeh), perfectly legible; both engines returned nothing.",
+    "blind": {
+     "verdict": "neither"
+    }
+   }
   },
   {
    "slug": "ara-25",
@@ -3828,7 +5588,53 @@
     }
    },
    "agreement_chars": 0.2659,
-   "adjudication_key": 0.2658730158730159
+   "adjudication_key": 0.2658730158730159,
+   "adjudication": {
+    "slug": "ara-26",
+    "family": "ara",
+    "blind_key": {
+     "A": "flash",
+     "B": "lite"
+    },
+    "verdict": "flash",
+    "confidence": "high",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Carries both scripts. Arabic column good (a handful of misread words). Syriac column is in Syriac script and line-aligned but only approximate; A itself marks every Syriac line unclear and parts look re-composed from the Arabic sense rather than read (e.g. 'ܘܚܙܝܬ ܚܕܝܗ̈̇ ܚܡܝܫܝܢ' where the leaf has 'ܕܡܬܩܛܢܝܢ ܬܕܝܗ ...'): not safe to translate the Syriac from.",
+    "lite_note": "Arabic column recognisable but with sense-changing errors (الايسر for الايمن, 'بطن عظيم'); Syriac column rendered as meaningless Arabic-letter strings, i.e. one of the two scripts is dropped. No loop, no refusal.",
+    "places_checked": [
+     {
+      "where": "Arabic column, lines 1-3",
+      "on_leaf": "التي تعقبه [red rubric word] / اذا كانت المراه حاملا فضمر / ثدياها بغتة فانها تسقط [red] لد",
+      "A": "التي تعقبه بالتدليس / اذا كانت المراه حاملاً فنظر / ثديها بعينه فانها تسقط لد (فنظر for فضمر, بعينه for بغتة)",
+      "B": "التي تقع للمرأة / اذا كانت المرأة حاملا فـ / ـليها بعنه فانها تسقط له (first line wrong, verb dropped)"
+     },
+     {
+      "where": "Arabic column, lines 7-9 (middle)",
+      "on_leaf": "فان كان الضامر هو الثدي / الايمن اسقطت الذكر وان / كان الضامر هو الايسر اسقطت",
+      "A": "فان كان الضامر هو الثدي / الايمن اسقطت الذكر وان / كان الضامر هو الايسر اسقطت (exact)",
+      "B": "فان كان الضامر هو الثدي / الايسر اسقطت الذكر وان / كان الضامر هو الايسر اسقطت (الايسر for الايمن: reverses the aphorism)"
+     },
+     {
+      "where": "Arabic column, last four lines",
+      "on_leaf": "ثم كان لها لبن فطمثها قد انقطع / [red] لو اذا انعقد للمراه في / ثدييها دم دل ذلك من حالها / على جنون",
+      "A": "ثم كان لها لبن في ثديها قد انقطع / لو اذا انعقد اللبن في / ثديها دل ذلك وحالها / على جنون (فطمثها misread, دم dropped, اللبن for للمراه)",
+      "B": "ثم كان لها بطن عظيم فانقطع / لو اذا اعتدل له في / ثديها دم ذلك حالها / على جنون (keeps دم; 'بطن عظيم' and 'اعتدل' wrong)"
+     },
+     {
+      "where": "Syriac column, lines 1-2 and section numbers",
+      "on_leaf": "Serto Syriac: line 1 ends with red ܠܓ; line 2 'ܐܢܬܬܐ ܕܒܛܢܐ ܐܢܗܘ'; red numerals ܠܕ, ܠܗ, ܠܘ further down; 19 lines",
+      "A": "Syriac script, every line tagged unclear: 'ܢܗܘܐ ܣܗܕܐ ܠܓ / ܐܢ ܐܢܬܬܐ ܒܛܝܢܐ / ...' with ܠܓ ܠܕ ܠܗ ܠܘ in the right places; wording only loosely matches the letters (the right lexemes, re-ordered or re-composed)",
+      "B": "Arabic letters with no meaning: 'به اراه سقط لا / اياه وجها لامه / ...' (Syriac shapes read as Arabic letters: the Syriac is lost)"
+     }
+    ],
+    "note": "Hippocratic Aphorisms V (nos. 33-36 by the red numerals), Syriac right column with Arabic left column. A is clearly closer in the Arabic and is the only output with any Syriac.",
+    "blind": {
+     "verdict": "A"
+    }
+   }
   },
   {
    "slug": "ara-27",
@@ -3888,7 +5694,47 @@
     }
    },
    "agreement_chars": 0.1743,
-   "adjudication_key": 0
+   "adjudication_key": 0,
+   "adjudication": {
+    "slug": "ara-28",
+    "family": "ara",
+    "blind_key": {
+     "A": "flash",
+     "B": "lite"
+    },
+    "verdict": "neither",
+    "confidence": "high",
+    "flash_invented": true,
+    "flash_invented_quote": "על נתיב המעגל אשר יתחלקו בו קשתות שוות לא יתכן כי אם במרחק הישר",
+    "lite_invented": true,
+    "lite_invented_quote": "עוד מן הספר העשירי מן היסודות אמר אוקלידס אם היו שני קוים בלתי משתתפים והוצאנו מן האחד מהם קוים מרובעים",
+    "flash_note": "Invented Hebrew prose about circles and arcs plus two repetition loops; the leaf is Judeo-Arabic number theory (ratios of numbers), no circle appears in the text or the diagrams (the figures are rows of line segments).",
+    "lite_note": "Invented Hebrew passage ('Book X of the Elements', incommensurable lines) followed by a repetition loop to the length limit (38K chars).",
+    "places_checked": [
+     {
+      "where": "large heading at the top of the right-hand page",
+      "on_leaf": "נריד אן נבין כיף נגד אקל אלאעדאד מתואליה (Judeo-Arabic: 'we wish to show how to find the least numbers in continued ...'), followed by 'עלי נסב ... פלתכן אלנסב ...'",
+      "A": "## נרצה לדון בקו ישר חותך שני קוים מקבילים (Hebrew, about a straight line cutting two parallels: different words, different language)",
+      "B": "עוד מן הספר העשירי מן היסודות / אמר אוקלידס אם היו שני קוים בלתי משתתפים ... (Hebrew; nothing like it on the leaf)"
+     },
+     {
+      "where": "body, middle of the left-hand page",
+      "on_leaf": "Judeo-Arabic ratio text, recurring words נסבה ('ratio'), כנסבה, אקל, יעד, עדד, with letter-labels (א אלי ב, ג אלי ד)",
+      "A": "repetition loop: 'בכלל מה שיעלה בו המרחק המקבל עליו ויעקב עליהם קו המעגל ולכן יתעגלו' x15 and 'על נתיב קשתות אשר יתעגלו ויתחלקו' x40",
+      "B": "repetition loop: '... הנה הקוים האלה הם משתתפים בכח וזה כי אם היו שני קוים בלתי משתתפים ...' to the length limit"
+     },
+     {
+      "where": "large heading and last line at the foot of the left-hand page",
+      "on_leaf": "כל עדדין מסטחין פנסבה אחדהמא אלי אל / אכר מולפה מן נסבה אצלאעהמא פלתכן א ב מסטחין ... (every two plane numbers, the ratio of one to the other is compounded of the ratios of their sides)",
+      "A": "## כל מעגלים המקיפים המעגל יתחלקו על ע' / הקו המקבל מן המעגל קשתות המעגל ... (circles; only the outline 'כל ... על ע' resembles the leaf)",
+      "B": "absent (output ends mid-loop)"
+     }
+    ],
+    "note": "Square/semi-cursive Hebrew script, language Judeo-Arabic (Euclid, number-theory books: 'נסבה', 'עדדין מסטחין'). The headings are legible to me and neither output has them; both outputs are Hebrew-language text on other subjects. Sure of invention because the legible headings and the recurring vocabulary on the leaf (נסבה, אעדאד, מסטחין) are absent from both outputs while their subject matter (circles/arcs; commensurable lines) is absent from the leaf.",
+    "blind": {
+     "verdict": "neither"
+    }
+   }
   },
   {
    "slug": "ara-29",
@@ -3918,7 +5764,53 @@
     }
    },
    "agreement_chars": 0.1726,
-   "adjudication_key": 0.1725636250775916
+   "adjudication_key": 0.1725636250775916,
+   "adjudication": {
+    "slug": "ara-29",
+    "family": "ara",
+    "blind_key": {
+     "A": "flash",
+     "B": "lite"
+    },
+    "verdict": "neither",
+    "confidence": "low",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Arabic-script rendering of a Hebrew-script leaf; fluent textbook proofs with full tanwin (مساوياً، مساوٍ), under half the leaf's line count, no rubrics; the Pythagoras proof it gives has no matching figure on the page it assigns it to. Invention suspected, unverifiable: I cannot read this cursive hand at this resolution.",
+    "lite_note": "Arabic-script; two generic textbook paragraphs (area of rectilinear figures; area of the circle) for c. 36 lines of text: a summary/guess, not a transcription. Invention suspected, unverifiable for the same reason.",
+    "places_checked": [
+     {
+      "where": "first line, right-hand page (beside the top diagrams)",
+      "on_leaf": "A full line of very cursive Hebrew-script writing, c. 9-10 words; I cannot read it word for word (letters c. 5 px high in the image).",
+      "A": "Arabic script: 'في كل سطح متوازي الاضلاع فان متممات السطوح المتوازية الاضلاع التي حول القطر تكون متساوية' (placed second, after its 'left page' block)",
+      "B": "Arabic script: 'فصل في بيان مساحة السطوح المستقيمة الخطوط. كل سطح يحيط به خطوط مستقيمة ...'"
+     },
+     {
+      "where": "middle: large rubric words and short lines beside the diagrams (4 enlarged rubric words across the opening; margin numbers 30, 31, 32, 33)",
+      "on_leaf": "Four enlarged rubric words each opening a proposition; short lines wrapped round a rectangle figure (right page) and a triangle figure (left page). Unreadable to me letter by letter.",
+      "A": "No rubric/proposition openings at those places; gives two proofs only (Pythagoras I.47 and complements I.43); puts '32 شكل من المقالة', '30', '31' as margins",
+      "B": "Two 'فصل في بيان ...' paragraphs only"
+     },
+     {
+      "where": "last lines, left-hand page (above the two circle diagrams)",
+      "on_leaf": "Ten full lines of text above two circle figures with radii (margin number 33).",
+      "A": "Ends its left-page block with '... فالمربع الكائن من ب جـ مساوٍ للمربعين الكائنين من ا ب ا جـ وذلك ما اردناه' (squares on the sides of a right triangle; the figures there are circles and a plain triangle, no squares)",
+      "B": "'فصل في بيان مساحة الدائرة. مساحة الدائرة هي حاصل ضرب نصف قطرها في نصف محيطها ...' (3 sentences)"
+     },
+     {
+      "where": "quantity of text",
+      "on_leaf": "c. 36 written lines over the two pages (about 18 each)",
+      "A": "16 lines in all (10 + 6), i.e. under half",
+      "B": "2 short paragraphs (c. 60 words)"
+     }
+    ],
+    "note": "Hebrew-script, very cursive hand (Judeo-Arabic or Hebrew, I cannot tell which) on a 1500x1068 two-page image; I could not read the words, so the lexical check was impossible. The verdict rests on what can be checked without reading: neither output carries anything like the leaf's amount of text or its structure (B: 2 paragraphs; A: 16 of c. 36 lines, no rubric openings, content that does not fit the figures). If the protocol wants a lexical check for 'neither', treat this page as cannot_tell.",
+    "blind": {
+     "verdict": "neither"
+    }
+   }
   },
   {
    "slug": "ara-30",
@@ -3948,7 +5840,53 @@
     }
    },
    "agreement_chars": 0.2627,
-   "adjudication_key": 0.2627430373095113
+   "adjudication_key": 0.2627430373095113,
+   "adjudication": {
+    "slug": "ara-30",
+    "family": "ara",
+    "blind_key": {
+     "A": "lite",
+     "B": "flash"
+    },
+    "verdict": "cannot_tell",
+    "confidence": "low",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "Arabic-script rendering; a fluent preface listing the thirteen books of the Almagest. Quantity is plausible; correspondence to the letters on the leaf is not checkable by me. Invention suspected, unverifiable.",
+    "lite_note": "Arabic-script rendering of a Hebrew-script leaf. Carries only about a third of the leaf's volume and ends with a Muslim closing doxology and a first-person observation 'in Marrakesh in 576 AH' where the leaf simply runs on to the next page: A fails on coverage whatever the words are. Invention suspected (the doxology), unverifiable because I cannot read the hand.",
+    "places_checked": [
+     {
+      "where": "first line",
+      "on_leaf": "A full line of c. 18 words in minute cursive Hebrew script; a section-end mark closes the line. Unreadable to me (letters c. 4 px high).",
+      "A": "وذكر بطلميوس في كتابه المجسطي ان ميل فلك البروج عن معدل النهار هو جزء من اربعة وعشرين جزءا ...",
+      "B": "وكذلك في سائر البروج ووجوه الكواكب في كل واحد منها من قبل حركة فلك البروج من المشرق إلى المغرب ..."
+     },
+     {
+      "where": "middle (lines 16-17, each closed by a section-end mark)",
+      "on_leaf": "Two consecutive lines ending in section marks; words unreadable to me.",
+      "A": "single unbroken paragraph; at this point '... الرصد الذي رصدناه نحن في مدينة مراكش في سنة ست وسبعين وخمسمائة للهجرة ...'",
+      "B": "single unbroken paragraph; at this point '... ورتبناه على ثلاثة عشر مقالة ... فالمقالة الأولى نذكر فيها هيئة العالم بأسره ...'"
+     },
+     {
+      "where": "last line",
+      "on_leaf": "A full-width line running to the left margin like the others, with no closing formula set off and no end-of-text layout: the text continues overleaf.",
+      "A": "والحمد لله رب العالمين وصلى الله على سيدنا محمد وعلى اله وصحبه وسلم تسليما كثيرا دائما ابدا الى يوم الدين (a closing doxology)",
+      "B": "والمقالة الثالثة عشرة نذكر فيها ميل أفلاك الكواكب الخمسة عن فلك البروج وما يعرض لها من ذلك في العرض."
+     },
+     {
+      "where": "quantity",
+      "on_leaf": "33 full lines, roughly 550-650 words",
+      "A": "c. 230 words: about a third of the leaf",
+      "B": "c. 480 words: plausible quantity"
+     }
+    ],
+    "note": "What stopped me: 33 lines of minute cursive Hebrew script on a 1027x1500 image; I cannot read a single line securely, so I cannot say whether either Arabic-script transliteration corresponds to the letters. A is out on coverage; the open question is only whether B reads the page ('B') or not ('neither').",
+    "blind": {
+     "verdict": "cannot_tell"
+    }
+   }
   },
   {
    "slug": "gez-01",
@@ -3978,7 +5916,59 @@
     }
    },
    "agreement_chars": 0.5545,
-   "adjudication_key": 0.5545171339563864
+   "adjudication_key": 0.5545171339563864,
+   "adjudication": {
+    "slug": "gez-01",
+    "family": "gez",
+    "blind_key": {
+     "A": "flash",
+     "B": "lite"
+    },
+    "verdict": "flash",
+    "confidence": "high",
+    "flash_invented": false,
+    "flash_invented_quote": null,
+    "lite_invented": false,
+    "lite_invented_quote": null,
+    "flash_note": "All 23 lines, line for line, with a few misread words (line 4 verb, line 22 'ከርሥከ', line 23 'ወዲበ'). No loop, no omission.",
+    "lite_note": "All 23 lines present and aligned, but many words are wrong in every line checked (ተአምራት for ትእምርተ throughout, እግዚአብሔር for እግዚእነ, names John/Paul for የኃልፍ/ኢየኃልፍ, መስቀል missing twice): misreadings of words that are there, not added text. Uses a middle dot for some word dividers and puts its metadata after the text.",
+    "places_checked": [
+     {
+      "where": "line 1",
+      "on_leaf": "ውደሙ፡ በነገረ፡ ዕብራይስጥ። ወይ",
+      "A": "ውዳሙ፡ በነገረ፡ ዕብራይስጥ። ወይ",
+      "B": "ው·ጸሐፈ፡በነገረ፡ተአምራቲሁ፡ወደ፡ (ዕብራይስጥ 'Hebrew' replaced by ተአምራቲሁ)"
+     },
+     {
+      "where": "lines 2-3",
+      "on_leaf": "ቤሎሙ። ስምዑ፡ ሰማይ፡ ወምድር፡ / የኃልፍ፡ ወቃልየሰ፡ ኢየኃልፍ። ወ",
+      "A": "ቤሉሙ፡ ስምዑ፡ ሰማይ፡ ወምድር፡ / የኃልፍ፡ ወቃለ፡ ኢየኃልፍ። ወ",
+      "B": "ቤሉ·ውስተ፡ሰማያት፡ወምድር፡ / ዮሐንስ፡ወጳውሎስ፡ኢዮሐንስ፡ወ (የኃልፍ ... ኢየኃልፍ turned into the names John and Paul)"
+     },
+     {
+      "where": "lines 12-13 (middle)",
+      "on_leaf": "ር። ወበይእቲ፡ ሰዓት። ነጸሩ፡ ሐዋር / ያት። ኀበ፡ ዓምድ፡ ዘእብን፡ ዘእንተ፡",
+      "A": "ር። ወበይእቲ፡ ሰዓት፡ ነጸሩ፡ ሐዋር / ያት፡ ኀበ፡ ዓምድ፡ ዘእብን፡ ዘእንተ፡ (exact)",
+      "B": "ር፡ወበደእቱ፡ሰዓት፡ነጸሩ፡ሐዋር / ያት፡ነጸሩ፡ምስለ፡ዘአብነ፡ዘአንተ፡ (ኀበ ዓምድ 'to the pillar' lost)"
+     },
+     {
+      "where": "line 16",
+      "on_leaf": "ሊሁ፡ በትእምርተ፡ መስቀል። ወሰፍ",
+      "A": "ሊሁ፡ በታእምርተ፡ መስቀል፡ ወሰፋ",
+      "B": "ሊ፡በተአምራት፡ወለቀሳ፡ወአፍ (መስቀል 'cross' lost)"
+     },
+     {
+      "where": "last two lines (22-23)",
+      "on_leaf": "አውፅእ፡ እምታሕቴከ፡ ማየ፡ እደ / ን፡ ላዕለ፡ ዛቲ፡ ሀገር፡ ወይቤ። ኵ",
+      "A": "አውፅእ፡ እምታሕተ፡ ከርሥከ፡ እ / ንተ፡ ላዕለ፡ ዛቲ፡ ሀገር፡ ወዲበ፡ ኵ (ከርሥከ for ...ከ ማየ; ወዲበ for ወይቤ)",
+      "B": "አውፅ፡እምታሕቱ፡በማይ፡እደ / ን፡ለዕለ፡ዘተ፡ሀገረ፡ወደቢ፡በ፡ (keeps ማይ 'water' where A does not)"
+     }
+    ],
+    "note": "Ge'ez, a clear large hand, 23 lines (apostles, the pillar with the image, the sign of the cross: an apocryphal Acts narrative). Both follow the lines; A is clearly closer and is the one to translate from. B is right against A in one or two places (line 22 ማይ).",
+    "blind": {
+     "verdict": "A"
+    }
+   }
   }
  ]
 }

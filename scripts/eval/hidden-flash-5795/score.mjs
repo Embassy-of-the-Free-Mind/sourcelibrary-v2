@@ -51,7 +51,7 @@ for (const fam of FAMILIES) {
   const cat = Object.fromEntries(ARMS.map((arm) => { const k = P.filter((x) => x.arms[arm].catastrophic); const by = {}; for (const x of k) by[x.arms[arm].catastrophic] = (by[x.arms[arm].catastrophic] || 0) + 1; return [arm, { count: k.length, n: P.length, wilson95: ci(k.length, P.length), by_kind: by, slugs: k.map((x) => x.slug) }]; }));
   const ag = T.map((x) => x.agreement_chars).filter((x) => x != null);
   const pick = [...T].sort((a, b) => a.adjudication_key - b.adjudication_key || a.slug.localeCompare(b.slug)).slice(0, PICKS).map((x) => x.slug); picks[fam] = pick;
-  const A = adj ? pick.map((s) => adj.get(s)).filter(Boolean) : []; const tally = { flash: 0, lite: 0, both: 0, neither: 0 }; for (const x of A) tally[x.verdict]++;
+  const A = adj ? pick.map((s) => adj.get(s)).filter(Boolean) : []; const tally = { flash: 0, lite: 0, both: 0, neither: 0, cannot_tell: 0 }; for (const x of A) tally[x.verdict]++;
   const flashInvented = adj ? [...adj.values()].filter((x) => x.family === fam && x.flash_invented).map((x) => x.slug) : [];
   const liteInvented = adj ? [...adj.values()].filter((x) => x.family === fam && x.lite_invented).map((x) => x.slug) : [];
   const a = T.length ? yes / T.length >= 0.9 : false; const b = cat.flash.count <= cat.lite.count; const c = adj && A.length === pick.length ? tally.flash > tally.lite && flashInvented.length === 0 : null;

@@ -43,14 +43,14 @@ books, visible or not). Ordered by pages.
 | German | 1.6M | lite | Lite reads Fraktur well (0.5% CER, 29 refs). The agreement study flagged one invented page. | directional (35); periods exploratory | #4729, #5660 |
 | Tibetan | 0.93M | Yigdzin lane | Yigdzin: Kangyur identity 0.947, replicated. Manuscripts outside the Kangyur e-text: unmeasured (#5004). | decision (Kangyur) | #4523, #5497 |
 | French | 0.45M | lite | `agr` 0.951, under the 0.956 bar. No reference CER. | exploratory (0 refs) | #4729, #5124 |
-| Sanskrit | 0.36M | lite → flash for visible/new (this PR) | `agr` 0.38 with 6/20 catastrophic. A flash re-read lifts the English +0.75 [0.30, 1.35] (#5700 A5). | none | #4729 |
+| Sanskrit | 0.36M | lite → flash for visible/new (this PR) | `agr` 0.38 with 6/20 catastrophic. A flash re-read lifts the English +0.75 [0.30, 1.35] (#5700 A5). **Hidden backlog stays lite** (#5795): 8 of 30 sampled hidden pages are not confirmably Sanskrit (Urdu, Hindi, English, Sharada almanac tables); on Sharada manuscripts lite loops or recites and flash is closer but not translatable. | none | #4729, #5795 |
 | Italian | 0.24M | lite | Never drawn. | none | #5573 |
 | und / unknown | 0.40M | lite | Language unknown, so it can't be routed. | — | #4884, #5650 |
 | Dutch | 0.15M | lite | `agr` 0.921, under the bar. | none | #4729, #5573 |
 | Russian | 0.14M | lite | `agr` 0.996, passes. | exploratory | #4729 |
-| Arabic | 0.11M | lite → flash for visible/new (this PR) | `agr` 0.929, flash only. A flash re-read lifts the English +0.39 [−0.06, 0.78], +0.72 with flash translating too (#5700 A5). | none | #4729 |
+| Arabic | 0.11M | lite → flash for visible/new (this PR) | `agr` 0.929, flash only. A flash re-read lifts the English +0.39 [−0.06, 0.78], +0.72 with flash translating too (#5700 A5). **Hidden backlog stays lite** (#5795): 7 of 30 sampled hidden pages fail the label (Persian, French, Hebrew-script); both engines invented Hebrew on a Judeo-Arabic leaf. | none | #4729, #5795 |
 | Hebrew | 0.11M | lite | 4 refs. | exploratory | — |
-| Persian | 0.09M | lite → flash for visible/new (this PR) | Typeset reads well apart from column order. A flash re-read lifts the English +1.00 [0.33, 1.67] (#5700 A5). **Manuscripts: no engine passes** (0.41 sequence accuracy). | exploratory (21) | #5525, #5559 |
+| Persian | 0.09M | lite → flash for visible/new (this PR) | Typeset reads well apart from column order. A flash re-read lifts the English +1.00 [0.33, 1.67] (#5700 A5). **Manuscripts: no engine passes** (0.41 sequence accuracy). **Hidden backlog stays lite** (#5795): label holds (25/27) and flash wins 9–0 by eye on manuscripts, but flash looped on 1 of 30 pages against 0 for lite, which fails the preregistered rule. | exploratory (21) | #5525, #5559, #5795 |
 | Mongolian | 0.08M | lite | Nothing. | none | #5664 |
 | Syriac | 0.07M | Kraken lane | Kraken (Sophro MS 19% line CER, 40/0 vs lite). Gemini fabricates. | directional | #4746, #4883 |
 | Korean | 0.07M | lite | Nothing. | none | — |
@@ -58,7 +58,7 @@ books, visible or not). Ordered by pages.
 | Javanese | 0.06M | lite | Nothing. | none | — |
 | Japanese | 0.05M | lite (+ NDL pilot) | Cursive pre-1868: **NDL v3**; Gemini invents text. Typeset: unmeasured. | exploratory (0 refs; by-eye checks) | #4743, #5100 |
 | Armenian | 0.03M | lite | `agr` 0.963, passes; 9 refs. | exploratory | #4729 |
-| Ge'ez | 0.02M | lite → flash for visible/new (this PR) | `agr` 0.47, 9/20 catastrophic. | none | #4729 |
+| Ge'ez | 0.02M | lite → flash for visible/new (this PR) | `agr` 0.47, 9/20 catastrophic. Hidden backlog: 2 books not held, 1 page sampled, undecided (#5795). | none | #4729, #5795 |
 
 ## Recommendations the evidence already supports
 
