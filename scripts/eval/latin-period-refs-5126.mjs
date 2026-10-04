@@ -53,6 +53,21 @@ const shortId = id => String(id).replace(/[^0-9a-z]/gi, '');
 // ── edition files ────────────────────────────────────────────────────────────
 const ent = s => s.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&apos;/g, "'")
   .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16))).replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(+n));
+// Some CAMENA files are UTF-8 with stray Latin-1 bytes (â, ô, ë in an otherwise UTF-8 file). Decoded as
+// UTF-8 those become U+FFFD inside the reference; decode each invalid byte as Latin-1 instead.
+// (Found after the first scoring run, 8 references, 40 characters; see the experiment file.)
+export function decodeLenient(buf) {
+  const strict = new TextDecoder('utf-8', { fatal: true });
+  try { return strict.decode(buf); } catch { /* fall through to the byte walk */ }
+  let out = '', i = 0;
+  while (i < buf.length) {
+    const b = buf[i]; const len = b < 0x80 ? 1 : (b >= 0xC2 && b <= 0xDF) ? 2 : (b >= 0xE0 && b <= 0xEF) ? 3 : (b >= 0xF0 && b <= 0xF4) ? 4 : 0;
+    let ok = len > 0 && i + len <= buf.length;
+    for (let k = 1; ok && k < len; k++) if ((buf[i + k] & 0xC0) !== 0x80) ok = false;
+    if (ok) { out += buf.subarray(i, i + len).toString('utf8'); i += len; } else { out += String.fromCharCode(b); i += 1; }
+  }
+  return out;
+}
 // TEI → printed text + the character offset of every page break. Where the markup records the printed
 // form beside a regularised one (<reg orig>, <corr sic>) the PRINTED form is kept: the page is the truth.
 export function flattenTei(xml, kind) {
@@ -109,9 +124,10 @@ async function stageEditions() {
     let ed;
     if (c.source === 'CAMENA') {
       if (!args.camena) throw new Error('--camena=<clone of nevenjovanovic/camena-neolatinlit> required');
+      if (!Array.isArray(c.source_files)) { console.log(`! ${c.key}: no source_files on the candidate — skipped`); continue; }
       let text = ''; const pbs = [];
       for (const f of [...c.source_files].sort((a, b) => (/_front/.test(b) - /_front/.test(a)) || nat(a, b))) {
-        const r = flattenTei(fs.readFileSync(path.join(args.camena, f), 'utf8'), 'camena');
+        const r = flattenTei(decodeLenient(fs.readFileSync(path.join(args.camena, f))), 'camena');
         pbs.push(text.length, ...r.pbs.map(x => x + text.length)); text += r.text + '\n';
       }
       ed = { text, pbs };

@@ -20,7 +20,7 @@
   "window": {
     "from_char": 66212,
     "to_char": 67287,
-    "overlap": 0.805,
+    "overlap": 0.841,
     "probe": "production-ocr",
     "pad_words": 3
   },
@@ -36,9 +36,9 @@
   },
   "reference_error_rate": null,
   "built_by": "build-edition-refs.mjs",
-  "built_at": "2026-10-04T16:05:07.839Z",
+  "built_at": "2026-10-04T16:18:22.499Z",
   "text_location": "repo",
-  "text_sha256": "93096712e11b63b7345222d341024169a5185038a6f86db16f10d61706433b95",
+  "text_sha256": "2a2921c22e64b5d6f8ef938ef5bc15cb5b8e31f7419fe02329765a8892fdbff0",
   "unit": {
     "chars": 1075
   },
