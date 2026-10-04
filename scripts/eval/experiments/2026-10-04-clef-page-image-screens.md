@@ -41,3 +41,17 @@ Each page was scored against its own stored OCR. Clef put **3/199 below 0.5** an
 first pass of 1–3 pages per book over the visible corpus is on the order of $10–30 (Clef, ~$0.0003/page with
 text). A full-book pass on each flagged book costs ~$0.10. Today's alternative is a reader report; this book's
 mismatch was unreported.
+
+### Follow-up: a random subset of 1,497 books ($0.59) + a neighbour check ($0.06) → #5803
+
+36 pages scored below 0.5 (2.4%). `scripts/eval/jev/clef-shift-check.mjs` then scored each flagged image against the
+texts of N±1, and each text against the images of N±1:
+- **11 clean one-page shifts**: a neighbour matches at ≥ 0.95 in both directions. Two were confirmed by eye
+  (Century Magazine leaf 113: image p.90 / text p.91; Kant *Critik* leaf 568: image p.548 / text p.547). 6 of the 11
+  are IA books (#5683 offset is a candidate cause).
+- 7 one-sided neighbour matches: multi-folio Tibetan/Hebrew photos or near-identical layouts; ambiguous.
+- 16 match no neighbour: unverified (missing/garbled OCR, compilations, or misses).
+
+**Rate:** ≥ 12 of 1,497 books (≈ 0.8%, counting #5782) carry text from another page on the ONE page sampled, so
+this is a lower bound. The screen-plus-neighbour-check pattern costs ~$0.0004 per book and separates shifts from
+other mismatches without a person; by-eye checks are then needed only to confirm direction before a repair.
