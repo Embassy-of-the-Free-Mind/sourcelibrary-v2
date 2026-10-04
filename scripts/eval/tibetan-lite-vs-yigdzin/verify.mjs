@@ -6,7 +6,7 @@ import { MongoClient } from 'mongodb';
 const EXCL = JSON.parse(fs.readFileSync('/root/sourcelibrary/.claude/worktrees/job-yigdzin-527/scripts/eval/tibetan-lite-vs-yigdzin/exclude-books.json', 'utf8')).books;
 const books = fs.readFileSync('books-527.jsonl', 'utf8').trim().split('\n').map(JSON.parse);
 const m = new MongoClient(process.env.MONGODB_URI); await m.connect(); const db = m.db('bookstore');
-const c = { books: 0, held_same: 0, held_changed: [], visible_changed: [], yig_pages: 0, translated_pages: 0 };
+const c = { books: 0, held_same: 0, held_changed: [], visible_changed: [], yig_pages: 0 };
 const priorIds = [];
 for (const l of fs.readFileSync('todo-all.jsonl', 'utf8').split('\n')) { if (!l) continue; const r = JSON.parse(l); if (r.prior !== 'none') priorIds.push(r.id); }
 for (const b of books) {

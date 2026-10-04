@@ -99,7 +99,7 @@ WRAP
 run)
   $SSH root@$(ip) "nohup bash /root/tib2/idle-poweroff.sh run -- bash /root/tib2/run-wrap.sh > /root/tib2/idle.log 2>&1 < /dev/null & echo launched" | tee -a "$S/driver.log" ;;
 status)
-  echo "$(state)"; $SSH root@$(ip) 'tail -n 2 /root/tib2/run.log 2>/dev/null; ls /root/tib2/run/txt 2>/dev/null | wc -l; cat /root/tib2/run.exit 2>/dev/null; tail -n 3 /root/yig/setup.log 2>/dev/null; nvidia-smi --query-gpu=utilization.gpu,memory.used --format=csv,noheader' ;;
+  echo "$(state)"; $SSH root@$(ip) 'for d in /root/tib2 /root/tib2/g*; do [ -f $d/run.log ] || continue; echo "== $d"; grep -a " done " $d/run.log | tail -n 1; ls $d/run/txt 2>/dev/null | wc -l; cat $d/run.exit 2>/dev/null; done; tail -n 3 /root/yig/setup.log 2>/dev/null; nvidia-smi --query-gpu=utilization.gpu,memory.used --format=csv,noheader' ;;
 lease) lease "${2:-$LEASE_H}" "${3:-}" ;;
 stop)
   curl -s -X POST "${H[@]}" $API/servers/$(sid)/action -d '{"action":"poweroff"}'; echo

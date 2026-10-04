@@ -49,7 +49,6 @@ def box_hours(b, t):
 def tend_box(k, b, s):
     t = now()
     srv = api(b["zone"], b["sid"])["server"]; state = srv["state"]; ip = (srv.get("public_ip") or {}).get("address")
-    out = f"{D}/run-{k}"; os.makedirs(f"{out}/txt", exist_ok=True)
     if state not in ("running", "starting"):
         if b.get("running_since"): b["billed_h"] = box_hours(b, t); b["running_since"] = None
         if b.get("final_pulled") or b.get("exit"): b["done"] = True
