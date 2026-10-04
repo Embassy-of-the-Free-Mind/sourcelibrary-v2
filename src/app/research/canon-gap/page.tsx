@@ -185,11 +185,11 @@ const TRADITIONS = ([...gapStatus.traditions] as unknown as TraditionProgressRow
   .sort((a, b) => b.pages_scanned - a.pages_scanned);
 
 const CONTENTS = [
+  ['library', 'What we already hold'],
   ['gap', 'How much is in English'],
   ['cost', 'Why typed text matters'],
   ['tengyur', 'The Derge Tengyur'],
   ['canons', 'Each canon, and what is next'],
-  ['library', 'What we already hold'],
   ['quality', 'How good the English is'],
   ['eternity', 'The Eternity reading list'],
   ['method', 'Method and caveats'],
@@ -362,6 +362,15 @@ export default function CanonGapPage() {
           </ol>
         </nav>
 
+        <Section id="library" title="What we already hold">
+          <p>
+            Pages scanned, transcribed and translated in each tradition, across every edition in our library. The
+            Tibetan figure includes the Derge Tengyur and Kangyur imported this month; the Mongolian Kanjur is scans
+            only so far. Each square opens a book; each tradition&rsquo;s name opens its shelf.
+          </p>
+          <TraditionProgress n={1} rows={TRADITIONS} />
+        </Section>
+
         <Section id="gap" title="How much of each canon is in English">
           <p>
             Three catalogues publish how much of their canon has been translated: <A href={L.k84000}>84000</A> for the
@@ -370,7 +379,7 @@ export default function CanonGapPage() {
             cost assumes none of it is in English. Click a canon to see its row in{' '}
             <a href="#canons" className="text-amber-800 underline underline-offset-2">the table</a>.
           </p>
-          <CanonBars n={1} rows={bars} />
+          <CanonBars n={2} rows={bars} />
         </Section>
 
         <Section id="cost" title="Why typed text matters">
@@ -386,7 +395,7 @@ export default function CanonGapPage() {
             does not replace a translator. Review money goes furthest on canons that are openly licensed, typed, paired
             with scans, and have little English.
           </p>
-          <RoutesDiagram n={2} />
+          <RoutesDiagram n={3} />
         </Section>
 
         <Section id="tengyur" title="The first canon: the Derge Tengyur">
@@ -399,7 +408,7 @@ export default function CanonGapPage() {
             <A href={TENGYUR.url}>Work log #{TENGYUR.owner_issue}</A>
           </p>
           <TengyurProgress
-            n={3}
+            n={4}
             perVolume={TENGYUR.per_volume as [number, number, number][]}
             pagesImaged={TENGYUR.pages_imaged}
             pagesWithText={TENGYUR.pages_with_text}
@@ -422,7 +431,7 @@ export default function CanonGapPage() {
         </Section>
 
         <Section id="canons" title="Each canon, and what happens next">
-          <StatusBoard n={4} items={rows.map((r) => ({ id: r.id, name: nameOf(r.id, r.corpus), status: STATUS.get(r.id)?.status ?? 'next' }))} />
+          <StatusBoard n={5} items={rows.map((r) => ({ id: r.id, name: nameOf(r.id, r.corpus), status: STATUS.get(r.id)?.status ?? 'next' }))} />
           <p className="mb-6 text-base text-stone-600">
             Ordered by how much untranslated text each canon holds, weighted by how open its licence is and whether
             open scans of the same edition exist. &ldquo;We hold&rdquo; counts our books for that canon: how many are
@@ -438,15 +447,6 @@ export default function CanonGapPage() {
           {rows.map((r) => (
             <CorpusRow key={r.id} r={r} />
           ))}
-        </Section>
-
-        <Section id="library" title="What we already hold">
-          <p>
-            Pages scanned, transcribed and translated in each tradition, across every edition in our library. The
-            Tibetan figure includes the Derge Tengyur and Kangyur imported this month; the Mongolian Kanjur is scans
-            only so far. Each square opens a book; each tradition&rsquo;s name opens its shelf.
-          </p>
-          <TraditionProgress n={5} rows={TRADITIONS} />
         </Section>
 
         <Section id="quality" title="How good the English is">
