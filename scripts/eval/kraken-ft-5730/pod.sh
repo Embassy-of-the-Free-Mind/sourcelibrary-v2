@@ -23,6 +23,11 @@ setup)
   [ -f $W/.setup ] && exit 0
   (command -v rsync >/dev/null && dpkg -s libgl1 >/dev/null 2>&1) || (apt-get -qq update && apt-get -qq install -y rsync libgl1 libglib2.0-0 python3-venv parallel >/dev/null 2>&1)
   python3 -m venv $W/venv && $K/pip install -q --upgrade pip && $K/pip install -q "kraken==7.1" edlib lxml pillow >> $W/setup.log 2>&1
+  # kraken pins its torch; if that wheel's CUDA is newer than the pod's driver, reinstall the same torch from a cu12x index
+  if ! $K/python -c "import torch,sys; sys.exit(0 if torch.cuda.is_available() else 1)"; then
+    TV=$($K/python -c "import torch;print(torch.__version__.split('+')[0])")
+    for cu in cu129 cu128 cu126; do $K/pip install -q --force-reinstall --no-deps "torch==$TV" --index-url https://download.pytorch.org/whl/$cu >> $W/setup.log 2>&1 && $K/python -c "import torch,sys; sys.exit(0 if torch.cuda.is_available() else 1)" && { log "torch $TV from $cu"; break; }; done
+  fi
   $K/python -c "import torch,kraken; print('torch',torch.__version__,'cuda',torch.cuda.is_available(), torch.cuda.get_device_name(0) if torch.cuda.is_available() else '')" | tee -a $W/pod.log
   $K/pip freeze | grep -iE "^(kraken|torch|lightning|pytorch-lightning)==" | tee $W/versions.txt
   touch $W/.setup ;;
@@ -41,7 +46,8 @@ def one(r):
     if os.path.exists(f): return 'cached'
     for attempt in range(3):
         try:
-            with urllib.request.urlopen(url, timeout=120) as resp: b = resp.read()
+            req = urllib.request.Request(url, headers={'User-Agent': 'SourceLibrary-eval/1.0 (kraken fine-tune #5730; +https://sourcelibrary.org)'})
+            with urllib.request.urlopen(req, timeout=120) as resp: b = resp.read()
             im = Image.open(io.BytesIO(b)); im.load()
             if im.mode not in ('L', 'RGB'): im = im.convert('RGB')
             if im.width > 2400: im = im.resize((2400, round(im.height * 2400 / im.width)), Image.LANCZOS)
@@ -57,15 +63,15 @@ PY
   log "fetch: $(find $W/img -name '*.jpg' | wc -l) images"
   touch $W/.fetch ;;
 read)
-  # 3 kraken processes share the GPU; each takes every 3rd book. A page already read is skipped.
+  # Kraken's CLI is single-threaded and CPU-bound here (blla vectorisation, line extraction): N readers share the GPU,
+  # N = the container's CPU quota (7.65 cores on the A40 pod). Pages are dealt round-robin; a page already read is skipped.
   mkdir -p $W/alto
-  for k in 0 1 2; do (
-    i=0; for d in $W/img/*/; do i=$((i+1)); [ $((i % 3)) -eq $k ] || continue
-      b=$(basename $d); mkdir -p $W/alto/$b
-      todo=(); for f in $d*.jpg; do p=$(basename $f .jpg); [ -s $W/alto/$b/$p.xml ] || todo+=("-i" "$f" "$W/alto/$b/$p.xml"); done
-      [ ${#todo[@]} -gt 0 ] && $K/kraken -d cuda:0 -a "${todo[@]}" segment -bl ocr -m $BASE > $W/read-$k.log 2>&1
-      log "read $b: $(ls $W/alto/$b | wc -l) alto"
-    done ) & done; wait
+  N=${READERS:-7}
+  find $W/img -name '*.jpg' | sort | awk -v n=$N '{print > "/root/kf/readq-" (NR % n)}'
+  for k in $(seq 0 $((N-1))); do (
+    todo=(); while read f; do b=$(basename $(dirname $f)); p=$(basename $f .jpg); mkdir -p $W/alto/$b; [ -s $W/alto/$b/$p.xml ] || todo+=("-i" "$f" "$W/alto/$b/$p.xml"); done < $W/readq-$k
+    [ ${#todo[@]} -gt 0 ] && $K/kraken -d cuda:0 -a "${todo[@]}" segment -bl ocr -m $BASE > $W/read-$k.log 2>&1
+    log "reader $k done" ) & done; wait
   log "read: $(find $W/alto -name '*.xml' | wc -l) alto total" ;;
 align)
   mkdir -p $W/train $W/stats

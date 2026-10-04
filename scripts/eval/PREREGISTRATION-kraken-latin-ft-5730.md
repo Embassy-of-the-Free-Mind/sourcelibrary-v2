@@ -90,3 +90,14 @@ abbreviation-mark tally (`open-engine-print-5660.mjs tally`); s/page on Hetzner 
 - If fewer than 20,000 training lines survive alignment, the run continues but the result is labelled
   *small-data*.
 - Training never sees a test book; a leak found after the fact voids the run.
+
+## Amendment 1 — training pages capped lower (2026-10-04 02:25Z, before any training step)
+
+On the pod, `blla` + CATMuS reading is CPU-bound (Kraken's CLI is single-threaded; the A40 pod's CPU quota is 7.65
+cores): ≈ 16 s per page per process, so the 4,104 offered pages would take ≈ 3 h of reading alone. The English cap
+drops from 80 to **20 pages per book** (a second seeded draw from the 80, seed `5730b-<book>`); the three catalogued
+Latin books stay whole. Offered pages: **1,989** (1,169 catalogued Latin + 820 English, 44 books). Readers per pod: 7.
+Nothing else changes. The images and stored reads of the 2,115 pages dropped are not used.
+
+Also recorded: the image host returns Cloudflare error 1010 to Python's default User-Agent; the fetch sends
+`SourceLibrary-eval/1.0 (kraken fine-tune #5730)`.
