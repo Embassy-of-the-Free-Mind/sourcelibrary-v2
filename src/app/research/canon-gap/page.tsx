@@ -383,21 +383,6 @@ export default function CanonGapPage() {
           <Stat href="#eternity" n={`${SHELF.readable} / ${SHELF.listed}`} label="books on the Eternity reading list readable in English here" />
         </div>
 
-        <div className="mt-10">
-          <FolioPipeline
-            folio={folio as unknown as FolioSnapshot}
-            tengyur={{
-              perVolume: TENGYUR.per_volume as [number, number, number][],
-              pagesWithText: TENGYUR.pages_with_text,
-              pagesTranslated: TENGYUR.pages_translated,
-              usdPerPage: TENGYUR.usd_per_page,
-              countedAt: TENGYUR.counted_at,
-            }}
-            gates={GATES}
-            draftLabel={READER_UI_STRINGS.en.info.machineDraftNotice}
-          />
-        </div>
-
         <nav aria-label="Contents" className="mt-10 mb-4">
           <div className="font-body text-xs tracking-[0.16em] uppercase text-stone-400 mb-3">Contents</div>
           <ol className="grid sm:grid-cols-2 gap-x-8 gap-y-1.5 text-base">
@@ -411,6 +396,30 @@ export default function CanonGapPage() {
             ))}
           </ol>
         </nav>
+
+        <section aria-labelledby="one-page" className="py-14 border-t border-stone-200">
+          <div className="font-body text-xs tracking-[0.16em] uppercase text-amber-700 font-semibold mb-3">Interactive</div>
+          <h2 id="one-page" className="font-serif text-2xl md:text-3xl text-stone-900 mb-5 tracking-tight">
+            One page through the pipeline
+          </h2>
+          <p className="mb-6">
+            Follow a single page of the Derge Tengyur through the six stages of Eternity&rsquo;s translation pipeline, from
+            the woodblock scan to the page a reader sees. It plays on its own; click any stage to jump to it, or choose
+            &ldquo;Show all stages&rdquo; to read it as one page.
+          </p>
+          <FolioPipeline
+            folio={folio as unknown as FolioSnapshot}
+            tengyur={{
+              perVolume: TENGYUR.per_volume as [number, number, number][],
+              pagesWithText: TENGYUR.pages_with_text,
+              pagesTranslated: TENGYUR.pages_translated,
+              usdPerPage: TENGYUR.usd_per_page,
+              countedAt: TENGYUR.counted_at,
+            }}
+            gates={GATES}
+            draftLabel={READER_UI_STRINGS.en.info.machineDraftNotice}
+          />
+        </section>
 
         <Section id="library" title="What we already hold">
           <p>
