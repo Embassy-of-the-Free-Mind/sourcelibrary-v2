@@ -13,7 +13,8 @@
  * URLs); this file is the Mongo half and never talks to a GPU.
  *
  *   census   the cohort: `pipeline_next.step = ocr`, an English edition (isEnglishOriginal), year 1600–1699;
- *            a held book or one with a `hidden_reason` is LEFT OUT (listed with why). → cohort.json. Read-only.
+ *            a held book, one with a `hidden_reason`, or one whose already-read pages are mostly tagged
+ *            another language (a Latin book labelled English) is LEFT OUT, with why. → cohort.json. Read-only.
  *   plan     per book: list pages with no OCR text → plan/<bid>.json + manifest.tsv (bid, page, image URL).
  *            With --apply, HOLD the book first (HOLD_REASON). --books <file> / --limit N.
  *   apply    per book whose planned pages are all back from the pod: guards (script, truncation), textless
@@ -71,6 +72,19 @@ const readJsonl = (file) => fs.existsSync(file) ? fs.readFileSync(file, 'utf8').
 const readJson = (file, d) => fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : d;
 const key = (r) => `${r.bid}/${r.pn}`;
 const yearOf = (b) => { for (const v of [b.year, b.published]) { const m = String(v ?? '').match(/1[0-9]{3}/); if (m) return +m[0]; } return null; };
+/** A book is read only when at least this share of its language-tagged OCR pages say English (none tagged = read). */
+const MIN_ENGLISH_SHARE = 0.5;
+const NO_LANGUAGE = new Set(['none', '?', 'n', 'unknown', 'undetermined']);
+
+/** The `<language>` tags on a book's already-read pages (up to 60): `{ tally, english, tagged, share }`. */
+async function previewLanguage(db, bookId) {
+  const ps = await db.collection('pages').find({ book_id: bookId, 'ocr.data': { $type: 'string', $ne: '' } }, { projection: { 'ocr.data': 1 } }).limit(60).toArray();
+  const tally = {};
+  for (const p of ps) { const m = p.ocr.data.match(/<language>([^<]*)<\/language>/); const k = m ? m[1].trim().split(/[,;/ ]/)[0] : '?'; tally[k] = (tally[k] || 0) + 1; }
+  const tagged = Object.entries(tally).filter(([k]) => !NO_LANGUAGE.has(k.toLowerCase())).reduce((n, [, v]) => n + v, 0);
+  const english = (tally.English || 0) + (tally.en || 0);
+  return { tally, english, tagged, share: tagged ? +(english / tagged).toFixed(3) : null };
+}
 const NO_TEXT = { $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] };
 
 // ── census ─────────────────────────────────────────────────────────────────────────────
@@ -83,12 +97,16 @@ async function census() {
     const keep = [], out = [];
     for (const b of eng.sort((x, y) => x.id.localeCompare(y.id))) {
       const row = { id: b.id, title: b.title, year: yearOf(b), pages_count: b.pages_count || 0, pages_ocr: b.pages_ocr || 0, visible: b.visible ?? null, status: b.pipeline_auto?.status ?? null };
-      if (isHeld(b)) out.push({ ...row, why: `held: ${b.pipeline_auto.hold.reason}` });
-      else if (b.hidden_reason) out.push({ ...row, why: `hidden_reason: ${String(b.hidden_reason).slice(0, 60)}` });
-      else keep.push(row);
+      if (isHeld(b)) { out.push({ ...row, why: `held: ${b.pipeline_auto.hold.reason}` }); continue; }
+      if (b.hidden_reason) { out.push({ ...row, why: `hidden_reason: ${String(b.hidden_reason).slice(0, 60)}` }); continue; }
+      // `books.language` says English on every book here, yet 42 of 124 are Latin by their own preview pages
+      // (measured 2026-10-04). The bake-off routes ENGLISH print to GLM, so the pages decide.
+      const lang = await previewLanguage(db, b.id);
+      if (lang.share != null && lang.share < MIN_ENGLISH_SHARE) out.push({ ...row, why: `preview pages are not English (${lang.english}/${lang.tagged} tagged English)`, preview_lang: lang.tally });
+      else keep.push({ ...row, english_share: lang.share, preview_lang: lang.tally });
     }
     const unread = (rows) => rows.reduce((s, r) => s + Math.max(0, r.pages_count - r.pages_ocr), 0);
-    const summary = { generated_at: new Date().toISOString(), rule: 'pipeline_next.step = ocr, isEnglishOriginal(language), year (year|published) 1600–1699; held or hidden_reason left out', english_1600s: eng.length, keep_books: keep.length, keep_pages_unread: unread(keep), left_out_books: out.length, left_out_pages_unread: unread(out) };
+    const summary = { generated_at: new Date().toISOString(), rule: `pipeline_next.step = ocr, isEnglishOriginal(language), year (year|published) 1600–1699; held, hidden_reason, or < ${MIN_ENGLISH_SHARE} of language-tagged OCR pages English: left out`, english_1600s: eng.length, keep_books: keep.length, keep_pages_unread: unread(keep), left_out_books: out.length, left_out_pages_unread: unread(out) };
     fs.writeFileSync(F.cohort, JSON.stringify({ summary, keep, left_out: out }, null, 1));
     log(`CENSUS ${JSON.stringify(summary)}`);
   });
