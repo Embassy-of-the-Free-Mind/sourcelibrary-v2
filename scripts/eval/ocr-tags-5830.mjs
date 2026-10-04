@@ -209,7 +209,7 @@ const langNorm = (s) => { const l = (s || '').toLowerCase(); let best = null, at
 const isMulti = (P) => P.colBreak || Number(first(P, 'columns')) >= 2;
 
 /** Greedy one-to-one match of arm instances to reference instances. */
-function match(armT, refT, name) {
+export function match(armT, refT, name) {
   const pairs = [];
   for (let i = 0; i < armT.length; i++) for (let j = 0; j < refT.length; j++) {
     const s = name === 'page-num' ? (pnum(armT[i].content) && pnum(armT[i].content) === pnum(refT[j].content) ? 1 : 0) : sim(armT[i].content, refT[j].content);
@@ -222,7 +222,7 @@ function match(armT, refT, name) {
 }
 
 /** Where does a T anchor sit in the GLM text (fraction), or null. */
-function anchorPos(anchor, glmNorm) {
+export function anchorPos(anchor, glmNorm) {
   const a = norm(anchor);
   if (!a || !glmNorm.length) return null;
   const i = glmNorm.indexOf(a);
@@ -339,14 +339,22 @@ function stageScore() {
   const eyeF = path.join(RESULTS_DIR, 'eye-truth.json');
   if (fs.existsSync(eyeF)) {
     const truth = JSON.parse(fs.readFileSync(eyeF, 'utf8')).pages;
-    const fields = { page_type: (P) => first(P, 'page-type')?.trim(), page_num: (P) => pnum(first(P, 'page-num') || '') || null, header: (P) => (first(P, 'header') ? true : false), sig: (P) => (first(P, 'sig') ? true : false), margin_count: (P) => all(P, 'margin').length, illustration: (P) => all(P, 'image-desc').some((x) => /high/i.test(x.attrs.significance || '') || /large|medium/i.test(x.attrs.size || '')), multi_column: (P) => isMulti(P) };
-    eye = { n: truth.length, label: 'read from image', fields: {}, errors: [] };
+    const fields = { page_type: (P) => first(P, 'page-type')?.trim(), page_num: (P) => pnum(first(P, 'page-num') || '') || null, header: (P) => (first(P, 'header') ? true : false), sig: (P) => (first(P, 'sig') ? true : false), margin_count: (P) => all(P, 'margin').length, illustration: (P) => all(P, 'image-desc').some((x) => /high/i.test(x.attrs.significance || '') || /large|medium/i.test(x.attrs.size || '')), multi_column: (P) => isMulti(P),
+      // not preregistered (added after reading the pages): catchwords, which v19.1 puts in <meta>
+      catchword: (P) => all(P, 'meta').length > 0 };
+    // R is the preregistered comparison; T and D against the same truth are an addition, reported as such
+    const armParse = { R: (b) => b.R, T: (b) => { const r = ok('T', b.p.uid); return r ? parse(r.text) : null; }, D: (b) => deterministic(b.glm, b.p.language) };
+    eye = { n: truth.length, label: 'read from image', fields: {}, errors: [], margins: {} };
     for (const [f, fn] of Object.entries(fields)) {
-      let agree = 0, n = 0;
-      for (const t of truth) { const b = base.find((x) => x.p.uid === t.uid); if (!b || t[f] === undefined) continue; n++; const rv = fn(b.R), tv = f === 'page_num' ? (t[f] == null ? null : pnum(String(t[f]))) : t[f];
-        if (rv === tv) agree++; else eye.errors.push({ uid: t.uid, field: f, reference: rv, image: tv, note: t.note || null }); }
-      eye.fields[f] = { n, reference_correct: n ? r4(agree / n) : null };
+      eye.fields[f] = {};
+      for (const [arm, get] of Object.entries(armParse)) {
+        let agree = 0, n = 0;
+        for (const t of truth) { const b = base.find((x) => x.p.uid === t.uid); const P = b && get(b); if (!P || t[f] === undefined) continue; n++; const v = fn(P), tv = f === 'page_num' ? (t[f] == null ? null : pnum(String(t[f]))) : t[f];
+          if (v === tv) agree++; else if (arm !== 'D') eye.errors.push({ arm, uid: t.uid, field: f, arm_value: v, image: tv, note: t.note || null }); }
+        eye.fields[f][arm] = { n, correct: n ? r4(agree / n) : null };
+      }
     }
+    for (const arm of ['R', 'T']) eye.margins[arm] = truth.reduce((a, t) => { const b = base.find((x) => x.p.uid === t.uid); const P = b && armParse[arm](b); return P ? { emitted: a.emitted + all(P, 'margin').length, on_page: a.on_page + t.margin_count } : a; }, { emitted: 0, on_page: 0 });
   }
   const est = JSON.parse(fs.readFileSync(F('estimate-main.json'), 'utf8'));
   const actual = rec.jobs.reduce((s, j) => s + (j.cost_usd || 0), 0);
@@ -354,7 +362,9 @@ function stageScore() {
     prompts: est.prompts, generation: est.generation, image: est.image, pages: { drawn: pages.length, scored: base.length }, run_outcomes: outcomes,
     reference_positive_pages: Object.fromEntries(PRESENCE.map((n) => [n, base.filter((b) => has(b.R, n)).length])),
     l2_pages: [...reads.values()].filter((r) => r.arm === 'L2').length,
-    arms, zero_cost_bound: bound, cost, spend_usd: r4(actual), eye,
+    arms, zero_cost_bound: bound,
+    // descriptive: what T wrote in <language> (the prompt gave no example; v19.1's does)
+    t_language_values: base.reduce((a, b) => { const r = ok('T', b.p.uid); const v = r ? first(parse(r.text), 'language') : null; a[v] = (a[v] || 0) + 1; return a; }, {}), cost, spend_usd: r4(actual), eye,
     per_page: base.map((b) => ({ uid: b.p.uid, stratum: b.p.stratum, book_id: b.p.book_id, page_number: b.p.page_number, glm_chars: b.glm.length,
       R: Object.fromEntries(['page-type', 'page-num', 'header', 'sig', 'language'].map((n) => [n, first(b.R, n)])), R_margins: all(b.R, 'margin').length, R_images: all(b.R, 'image-desc').length })) };
   fs.mkdirSync(RESULTS_DIR, { recursive: true });
