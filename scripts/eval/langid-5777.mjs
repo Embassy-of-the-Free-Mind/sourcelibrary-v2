@@ -19,7 +19,11 @@
  *   --submit [--round N] Batch job(s), gemini-3.1-flash-lite            PAID, needs --approved-usd ≥ estimate
  *            [--retry]   resubmit only the round's requests with no answer yet (cancelled / errored)
  *   --collect [--wait-min M]  poll, download, meter to gemini_usage     FREE  → raw.jsonl
+ *   --ia-meta            archive.org `language` for the books whose page 403s (lending-only scans)
+ *                                                                        FREE  → ia-metadata.jsonl
  *   --summary            one row per book + distribution                FREE  → results.jsonl, summary.json
+ *
+ * eye-check.jsonl is hand-written (the by-eye readings); --summary folds it in as `script_final`.
  *
  * Round 2 re-reads, on the next candidate page, the books whose round-1 page came back
  * blank / cover / no text / errored.
@@ -337,6 +341,26 @@ async function phaseCollect() {
   }
 }
 
+// ── --ia-meta ──────────────────────────────────────────────────────────────────────────────────
+
+/** A lending-only archive.org scan serves no page image (HTTP 403), but its catalogue record names the language. */
+async function phaseIaMeta() {
+  const picks = readJsonl(inDir('picks.jsonl'));
+  const fetchedOk = new Set(readJsonl(path.join(WORK, 'fetched.jsonl')).filter((f) => f.page_number).map((f) => f.book_id));
+  const out = [];
+  for (const p of picks.filter((x) => !fetchedOk.has(x.book_id))) {
+    const ident = /archive\.org\/download\/([^/]+)\//.exec(p.candidates[0]?.url || '')?.[1];
+    if (!ident) continue;
+    try {
+      const md = (await (await fetch(`https://archive.org/metadata/${ident}/metadata`)).json()).result || {};
+      out.push({ book_id: p.book_id, ia_identifier: ident, ia_language: [].concat(md.language || []), ia_date: md.date || null, ia_access_restricted: md['access-restricted-item'] === 'true' });
+    } catch (e) { out.push({ book_id: p.book_id, ia_identifier: ident, error: e.message }); }
+    await new Promise((r) => setTimeout(r, 300));
+  }
+  fs.writeFileSync(inDir('ia-metadata.jsonl'), out.map((o) => JSON.stringify(o)).join('\n') + '\n');
+  console.log(`ia-metadata.jsonl: ${out.length} rows`);
+}
+
 // ── --summary ──────────────────────────────────────────────────────────────────────────────────
 
 /** Fold the model's free-text script names onto one label per writing system. */
@@ -355,6 +379,8 @@ function phaseSummary() {
   const picks = readJsonl(inDir('picks.jsonl'));
   const fetched = readJsonl(path.join(WORK, 'fetched.jsonl'));
   const raw = readJsonl(inDir('raw.jsonl'));
+  const eye = new Map(readJsonl(inDir('eye-check.jsonl')).map((e) => [e.book_id, e]));
+  const ia = new Map(readJsonl(inDir('ia-metadata.jsonl')).map((e) => [e.book_id, e]));
   const rows = [];
   for (const p of picks) {
     const reads = raw.filter((r) => r.book_id === p.book_id).sort((a, b) => a.round - b.round);
@@ -363,11 +389,19 @@ function phaseSummary() {
     const f = best ? fetched.find((x) => x.book_id === p.book_id && x.page_number === best.page_number) : fetched.filter((x) => x.book_id === p.book_id).at(-1);
     const v = best?.verdict || null;
     const cand = p.candidates.find((c) => c.page_number === best?.page_number);
+    const e = eye.get(p.book_id);
+    // Turfan fragments (Berlin shelfmarks M / MIK / So, via IDP): the model's script label is not usable there —
+    // by eye 1 of 9 right, at confidence 0.8–1.0 — so they are one stratum, named from the shelfmark.
+    const turfan = p.provider === 'idp_dunhuang';
+    const scriptModel = v ? normScript(v.script) : null;
+    const scriptFinal = !v || isUnread(v) ? null : turfan ? 'Turfan fragment (script unverified)' : e?.script_verdict === 'disagree' ? e.eye_script : scriptModel;
     rows.push({
       book_id: p.book_id, title: p.title, stored_language: p.stored_language, provider: p.provider, visible: p.visible,
       pages_count: p.pages_count, pages_ocr: p.pages_ocr, page_number: best?.page_number ?? null, image_url: f?.url || null, image_via: f?.via || null,
       rounds: reads.length, status: v ? (isUnread(v) ? 'no_text_found' : 'classified') : (f?.error ? 'fetch_failed' : 'no_verdict'),
-      script: v ? normScript(v.script) : null, script_raw: v?.script ?? null, other_scripts: v?.other_scripts ?? [], language: v?.language ?? null,
+      script: scriptModel, script_final: scriptFinal, script_final_basis: !scriptFinal ? null : turfan ? 'stratum' : e && e.script_verdict !== 'unjudged' ? 'by eye' : 'model',
+      language_final: !scriptFinal ? null : turfan ? 'unknown' : e?.language_verdict === 'disagree' ? e.eye_language : (v?.language ?? null),
+      ia_language: ia.get(p.book_id)?.ia_language ?? null, script_raw: v?.script ?? null, other_scripts: v?.other_scripts ?? [], language: v?.language ?? null,
       production: v?.production ?? null, content: v?.content ?? null, confidence: v?.confidence ?? null, note: v?.note || '',
       ocr_language_tag: cand?.ocr_language_tag ?? null, error: !v ? (reads.at(-1)?.error || f?.error || null) : null, model: MODEL,
     });
@@ -384,13 +418,27 @@ function phaseSummary() {
     generated_at: new Date().toISOString(), model: MODEL, filter: { language: NO_LANGUAGE, pages_count: '> 0' },
     books: rows.length, pages: rows.reduce((s, r) => s + r.pages_count, 0), pages_ocr: rows.reduce((s, r) => s + r.pages_ocr, 0),
     by_stored_language: tally((r) => r.stored_language), by_status: tally((r) => r.status),
-    by_script: tally((r) => r.script, cls), by_language: tally((r) => r.language, cls), by_script_language: tally((r) => `${r.script} / ${r.language}`, cls),
+    by_script_final: tally((r) => r.script_final, cls), by_language_final: tally((r) => r.language_final, cls), by_script_language_final: tally((r) => `${r.script_final} / ${r.language_final}`, cls),
+    by_script_production_final: tally((r) => `${r.script_final} / ${r.production}`, cls),
+    by_script_model: tally((r) => r.script, cls), by_language_model: tally((r) => r.language, cls),
+    turfan_fragments_model_labels: tally((r) => r.script, cls.filter((r) => r.provider === 'idp_dunhuang')),
+    turfan_fragments_by_shelfmark: tally((r) => (/^[A-Za-z]+/.exec(r.title || '')?.[0] || '(none)'), rows.filter((r) => r.provider === 'idp_dunhuang')),
+    fetch_failed_ia_language: tally((r) => (r.ia_language || ['(not archive.org)']).join('+'), rows.filter((r) => r.status === 'fetch_failed')),
+    ocr_tag_check: (() => { const t = cls.filter((r) => r.ocr_language_tag && r.provider !== 'idp_dunhuang'); const norm = (x) => String(x).toLowerCase().split(/[\s,;/(]/)[0]; return { books_with_ocr_language_tag: t.length, model_language_matches_tag: t.filter((r) => norm(r.ocr_language_tag) === norm(r.language)).length }; })(),
+    eye_check: (() => { const a = [...eye.values()]; const c = (f) => a.filter(f).length; const st = (o) => o.set === 'stratified'; return {
+      stratified: { books: c(st), script_agree: c((o) => st(o) && o.script_verdict === 'agree'), script_disagree: c((o) => st(o) && o.script_verdict === 'disagree'), unjudged: c((o) => st(o) && o.script_verdict === 'unjudged') },
+      stratified_excluding_turfan: { books: c((o) => st(o) && o.provider !== 'idp_dunhuang'), script_agree: c((o) => st(o) && o.provider !== 'idp_dunhuang' && o.script_verdict === 'agree'), script_disagree: c((o) => st(o) && o.provider !== 'idp_dunhuang' && o.script_verdict === 'disagree'), unjudged: c((o) => st(o) && o.provider !== 'idp_dunhuang' && o.script_verdict === 'unjudged') },
+      stratified_turfan: { books: c((o) => st(o) && o.provider === 'idp_dunhuang'), script_agree: c((o) => st(o) && o.provider === 'idp_dunhuang' && o.script_verdict === 'agree'), script_disagree: c((o) => st(o) && o.provider === 'idp_dunhuang' && o.script_verdict === 'disagree') },
+      rare_label_follow_up: { books: c((o) => !st(o)), script_agree: c((o) => !st(o) && o.script_verdict === 'agree'), script_disagree: c((o) => !st(o) && o.script_verdict === 'disagree'), unjudged: c((o) => !st(o) && o.script_verdict === 'unjudged') },
+    }; })(),
     by_production: tally((r) => r.production, cls), by_content: tally((r) => r.content, cls), by_provider: tally((r) => r.provider),
     low_confidence_books: cls.filter((r) => r.confidence != null && r.confidence < 0.7).length,
     spend: { jobs: rec.jobs.length, requests: rec.jobs.reduce((s, j) => s + (j.responses || 0), 0), in_tokens: rec.jobs.reduce((s, j) => s + (j.in_tokens || 0), 0), out_tokens: rec.jobs.reduce((s, j) => s + (j.out_tokens || 0), 0), cost_usd: +rec.jobs.reduce((s, j) => s + (j.cost_usd || 0), 0).toFixed(4) },
   };
   writeJson('summary.json', summary);
-  console.log(JSON.stringify({ books: summary.books, pages: summary.pages, by_status: summary.by_status, by_script: summary.by_script, spend: summary.spend }, null, 1));
+  const flat = (o) => Object.entries(o).map(([k, v]) => `${k}: ${v.books}b/${v.pages}p`).join(' | ');
+  for (const k of ['by_status', 'turfan_fragments_by_shelfmark', 'by_script_final', 'by_language_final', 'by_script_production_final', 'by_content', 'fetch_failed_ia_language']) console.log(`${k} → ${flat(summary[k])}`);
+  console.log(JSON.stringify({ books: summary.books, pages: summary.pages, ocr_tag_check: summary.ocr_tag_check, eye_check: summary.eye_check, spend: summary.spend }));
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
@@ -399,6 +447,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   else if (has('fetch')) await phaseFetch();
   else if (has('submit')) await phaseSubmit();
   else if (has('collect')) await phaseCollect();
+  else if (has('ia-meta')) await phaseIaMeta();
   else if (has('summary')) phaseSummary();
-  else console.log('usage: --pick | --fetch [--round N] | --submit [--round N] --approved-usd X | --collect [--wait-min M] | --summary');
+  else console.log('usage: --pick | --fetch [--round N] | --submit [--round N] --approved-usd X | --collect [--wait-min M] | --ia-meta | --summary');
 }

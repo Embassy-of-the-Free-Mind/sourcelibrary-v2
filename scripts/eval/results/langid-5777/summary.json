@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-04T02:57:05.611Z",
+  "generated_at": "2026-10-04T03:14:58.809Z",
   "model": "gemini-3.1-flash-lite",
   "filter": {
     "language": [
@@ -25,9 +25,9 @@
   },
   "by_status": {
     "classified": {
-      "books": 1571,
-      "pages": 371378,
-      "pages_ocr": 20518
+      "books": 1585,
+      "pages": 372446,
+      "pages_ocr": 20540
     },
     "fetch_failed": {
       "books": 57,
@@ -35,20 +35,1078 @@
       "pages_ocr": 0
     },
     "no_text_found": {
-      "books": 42,
-      "pages": 3737,
-      "pages_ocr": 223
+      "books": 28,
+      "pages": 2669,
+      "pages_ocr": 201
     }
   },
-  "by_script": {
+  "by_script_final": {
     "Latin": {
-      "books": 899,
-      "pages": 198164,
-      "pages_ocr": 19797
+      "books": 892,
+      "pages": 198820,
+      "pages_ocr": 19782
     },
     "Arabic": {
-      "books": 221,
-      "pages": 54856,
+      "books": 211,
+      "pages": 55108,
+      "pages_ocr": 164
+    },
+    "Turfan fragment (script unverified)": {
+      "books": 110,
+      "pages": 241,
+      "pages_ocr": 235
+    },
+    "Hebrew": {
+      "books": 79,
+      "pages": 19107,
+      "pages_ocr": 118
+    },
+    "Armenian": {
+      "books": 72,
+      "pages": 29744,
+      "pages_ocr": 0
+    },
+    "Cyrillic": {
+      "books": 50,
+      "pages": 28795,
+      "pages_ocr": 0
+    },
+    "Han": {
+      "books": 36,
+      "pages": 12802,
+      "pages_ocr": 25
+    },
+    "Coptic": {
+      "books": 33,
+      "pages": 5622,
+      "pages_ocr": 34
+    },
+    "Tamil": {
+      "books": 18,
+      "pages": 5655,
+      "pages_ocr": 0
+    },
+    "Malayalam": {
+      "books": 18,
+      "pages": 3714,
+      "pages_ocr": 0
+    },
+    "Burmese": {
+      "books": 11,
+      "pages": 1472,
+      "pages_ocr": 0
+    },
+    "Greek": {
+      "books": 10,
+      "pages": 2391,
+      "pages_ocr": 174
+    },
+    "Syriac": {
+      "books": 10,
+      "pages": 3208,
+      "pages_ocr": 0
+    },
+    "Devanagari": {
+      "books": 9,
+      "pages": 2098,
+      "pages_ocr": 3
+    },
+    "Ge'ez": {
+      "books": 9,
+      "pages": 2311,
+      "pages_ocr": 0
+    },
+    "Thai": {
+      "books": 4,
+      "pages": 481,
+      "pages_ocr": 0
+    },
+    "Khmer": {
+      "books": 3,
+      "pages": 182,
+      "pages_ocr": 0
+    },
+    "Sinhala": {
+      "books": 3,
+      "pages": 328,
+      "pages_ocr": 0
+    },
+    "Egyptian hieroglyphs": {
+      "books": 2,
+      "pages": 45,
+      "pages_ocr": 3
+    },
+    "Kana": {
+      "books": 2,
+      "pages": 208,
+      "pages_ocr": 0
+    },
+    "Odia": {
+      "books": 1,
+      "pages": 2,
+      "pages_ocr": 2
+    },
+    "Tibetan": {
+      "books": 1,
+      "pages": 28,
+      "pages_ocr": 0
+    },
+    "Newar": {
+      "books": 1,
+      "pages": 84,
+      "pages_ocr": 0
+    }
+  },
+  "by_language_final": {
+    "Latin": {
+      "books": 468,
+      "pages": 82109,
+      "pages_ocr": 10612
+    },
+    "German": {
+      "books": 285,
+      "pages": 70112,
+      "pages_ocr": 6971
+    },
+    "Arabic": {
+      "books": 150,
+      "pages": 43420,
+      "pages_ocr": 6
+    },
+    "unknown": {
+      "books": 112,
+      "pages": 321,
+      "pages_ocr": 272
+    },
+    "Hebrew": {
+      "books": 76,
+      "pages": 17705,
+      "pages_ocr": 118
+    },
+    "Armenian": {
+      "books": 60,
+      "pages": 24850,
+      "pages_ocr": 0
+    },
+    "Church Slavonic": {
+      "books": 48,
+      "pages": 28161,
+      "pages_ocr": 0
+    },
+    "Persian": {
+      "books": 38,
+      "pages": 4978,
+      "pages_ocr": 133
+    },
+    "Coptic": {
+      "books": 32,
+      "pages": 4552,
+      "pages_ocr": 34
+    },
+    "French": {
+      "books": 30,
+      "pages": 7946,
+      "pages_ocr": 238
+    },
+    "Classical Chinese": {
+      "books": 30,
+      "pages": 10698,
+      "pages_ocr": 25
+    },
+    "English": {
+      "books": 22,
+      "pages": 4753,
+      "pages_ocr": 1059
+    },
+    "Vietnamese": {
+      "books": 19,
+      "pages": 8210,
+      "pages_ocr": 0
+    },
+    "Ottoman Turkish": {
+      "books": 18,
+      "pages": 4629,
+      "pages_ocr": 25
+    },
+    "Tamil": {
+      "books": 17,
+      "pages": 5033,
+      "pages_ocr": 0
+    },
+    "Malayalam": {
+      "books": 17,
+      "pages": 3432,
+      "pages_ocr": 0
+    },
+    "Latin and German": {
+      "books": 13,
+      "pages": 2062,
+      "pages_ocr": 377
+    },
+    "Portuguese": {
+      "books": 12,
+      "pages": 5826,
+      "pages_ocr": 25
+    },
+    "Syriac": {
+      "books": 10,
+      "pages": 3208,
+      "pages_ocr": 0
+    },
+    "Italian": {
+      "books": 9,
+      "pages": 2378,
+      "pages_ocr": 92
+    },
+    "Classical Armenian": {
+      "books": 8,
+      "pages": 2786,
+      "pages_ocr": 0
+    },
+    "Ge'ez": {
+      "books": 8,
+      "pages": 1635,
+      "pages_ocr": 0
+    },
+    "Sanskrit": {
+      "books": 7,
+      "pages": 1344,
+      "pages_ocr": 3
+    },
+    "Latin and Classical Chinese": {
+      "books": 7,
+      "pages": 5111,
+      "pages_ocr": 0
+    },
+    "Burmese": {
+      "books": 7,
+      "pages": 1167,
+      "pages_ocr": 0
+    },
+    "Ancient Greek": {
+      "books": 6,
+      "pages": 1540,
+      "pages_ocr": 125
+    },
+    "Spanish": {
+      "books": 6,
+      "pages": 2739,
+      "pages_ocr": 25
+    },
+    "Dutch": {
+      "books": 5,
+      "pages": 1657,
+      "pages_ocr": 55
+    },
+    "Thai": {
+      "books": 4,
+      "pages": 481,
+      "pages_ocr": 0
+    },
+    "Greek": {
+      "books": 3,
+      "pages": 187,
+      "pages_ocr": 1
+    },
+    "Khmer": {
+      "books": 3,
+      "pages": 182,
+      "pages_ocr": 0
+    },
+    "Armenian and Latin": {
+      "books": 3,
+      "pages": 2066,
+      "pages_ocr": 0
+    },
+    "Pali": {
+      "books": 3,
+      "pages": 259,
+      "pages_ocr": 0
+    },
+    "Sinhala": {
+      "books": 3,
+      "pages": 328,
+      "pages_ocr": 0
+    },
+    "German and Latin": {
+      "books": 2,
+      "pages": 1198,
+      "pages_ocr": 75
+    },
+    "Lower Sorbian": {
+      "books": 2,
+      "pages": 1774,
+      "pages_ocr": 100
+    },
+    "none": {
+      "books": 2,
+      "pages": 79,
+      "pages_ocr": 25
+    },
+    "Classical Japanese": {
+      "books": 2,
+      "pages": 830,
+      "pages_ocr": 0
+    },
+    "Aramaic": {
+      "books": 2,
+      "pages": 1209,
+      "pages_ocr": 0
+    },
+    "Classical Chinese and Spanish": {
+      "books": 2,
+      "pages": 1087,
+      "pages_ocr": 0
+    },
+    "Japanese": {
+      "books": 2,
+      "pages": 208,
+      "pages_ocr": 0
+    },
+    "Russian": {
+      "books": 2,
+      "pages": 634,
+      "pages_ocr": 0
+    },
+    "Greek and Latin": {
+      "books": 1,
+      "pages": 664,
+      "pages_ocr": 48
+    },
+    "Old Spanish": {
+      "books": 1,
+      "pages": 194,
+      "pages_ocr": 41
+    },
+    "Egyptian": {
+      "books": 1,
+      "pages": 3,
+      "pages_ocr": 3
+    },
+    "Czech": {
+      "books": 1,
+      "pages": 454,
+      "pages_ocr": 25
+    },
+    "Latin and Ancient Greek": {
+      "books": 1,
+      "pages": 26,
+      "pages_ocr": 25
+    },
+    "Middle High German": {
+      "books": 1,
+      "pages": 640,
+      "pages_ocr": 0
+    },
+    "Catalan": {
+      "books": 1,
+      "pages": 162,
+      "pages_ocr": 0
+    },
+    "Odia": {
+      "books": 1,
+      "pages": 2,
+      "pages_ocr": 2
+    },
+    "Middle Korean": {
+      "books": 1,
+      "pages": 38,
+      "pages_ocr": 0
+    },
+    "Ancient Egyptian": {
+      "books": 1,
+      "pages": 42,
+      "pages_ocr": 0
+    },
+    "Tamil and Portuguese": {
+      "books": 1,
+      "pages": 622,
+      "pages_ocr": 0
+    },
+    "Old Icelandic": {
+      "books": 1,
+      "pages": 107,
+      "pages_ocr": 0
+    },
+    "Vietnamese and Portuguese": {
+      "books": 1,
+      "pages": 624,
+      "pages_ocr": 0
+    },
+    "Amharic": {
+      "books": 1,
+      "pages": 676,
+      "pages_ocr": 0
+    },
+    "Berber": {
+      "books": 1,
+      "pages": 81,
+      "pages_ocr": 0
+    },
+    "Croatian": {
+      "books": 1,
+      "pages": 412,
+      "pages_ocr": 0
+    },
+    "Armenian and Italian": {
+      "books": 1,
+      "pages": 42,
+      "pages_ocr": 0
+    },
+    "Bohairic Coptic and Arabic": {
+      "books": 1,
+      "pages": 1070,
+      "pages_ocr": 0
+    },
+    "Latin and Malayalam": {
+      "books": 1,
+      "pages": 316,
+      "pages_ocr": 0
+    },
+    "Malayalam and Portuguese": {
+      "books": 1,
+      "pages": 282,
+      "pages_ocr": 0
+    },
+    "Braj Bhasha and Italian": {
+      "books": 1,
+      "pages": 320,
+      "pages_ocr": 0
+    },
+    "Burmese and Italian": {
+      "books": 1,
+      "pages": 46,
+      "pages_ocr": 0
+    },
+    "Hindi": {
+      "books": 1,
+      "pages": 232,
+      "pages_ocr": 0
+    },
+    "Urdu": {
+      "books": 1,
+      "pages": 724,
+      "pages_ocr": 0
+    },
+    "Hindi and Italian": {
+      "books": 1,
+      "pages": 286,
+      "pages_ocr": 0
+    },
+    "Tibetan": {
+      "books": 1,
+      "pages": 28,
+      "pages_ocr": 0
+    },
+    "Malay": {
+      "books": 1,
+      "pages": 54,
+      "pages_ocr": 0
+    },
+    "Yiddish": {
+      "books": 1,
+      "pages": 193,
+      "pages_ocr": 0
+    },
+    "Arabic and Malay": {
+      "books": 1,
+      "pages": 334,
+      "pages_ocr": 0
+    },
+    "Classical Arabic": {
+      "books": 1,
+      "pages": 888,
+      "pages_ocr": 0
+    }
+  },
+  "by_script_language_final": {
+    "Latin / Latin": {
+      "books": 468,
+      "pages": 82109,
+      "pages_ocr": 10612
+    },
+    "Latin / German": {
+      "books": 285,
+      "pages": 70112,
+      "pages_ocr": 6971
+    },
+    "Arabic / Arabic": {
+      "books": 150,
+      "pages": 43420,
+      "pages_ocr": 6
+    },
+    "Turfan fragment (script unverified) / unknown": {
+      "books": 110,
+      "pages": 241,
+      "pages_ocr": 235
+    },
+    "Hebrew / Hebrew": {
+      "books": 76,
+      "pages": 17705,
+      "pages_ocr": 118
+    },
+    "Armenian / Armenian": {
+      "books": 60,
+      "pages": 24850,
+      "pages_ocr": 0
+    },
+    "Cyrillic / Church Slavonic": {
+      "books": 48,
+      "pages": 28161,
+      "pages_ocr": 0
+    },
+    "Arabic / Persian": {
+      "books": 38,
+      "pages": 4978,
+      "pages_ocr": 133
+    },
+    "Coptic / Coptic": {
+      "books": 32,
+      "pages": 4552,
+      "pages_ocr": 34
+    },
+    "Latin / French": {
+      "books": 30,
+      "pages": 7946,
+      "pages_ocr": 238
+    },
+    "Han / Classical Chinese": {
+      "books": 30,
+      "pages": 10698,
+      "pages_ocr": 25
+    },
+    "Latin / English": {
+      "books": 22,
+      "pages": 4753,
+      "pages_ocr": 1059
+    },
+    "Arabic / Ottoman Turkish": {
+      "books": 18,
+      "pages": 4629,
+      "pages_ocr": 25
+    },
+    "Latin / Vietnamese": {
+      "books": 18,
+      "pages": 8061,
+      "pages_ocr": 0
+    },
+    "Tamil / Tamil": {
+      "books": 17,
+      "pages": 5033,
+      "pages_ocr": 0
+    },
+    "Malayalam / Malayalam": {
+      "books": 17,
+      "pages": 3432,
+      "pages_ocr": 0
+    },
+    "Latin / Latin and German": {
+      "books": 13,
+      "pages": 2062,
+      "pages_ocr": 377
+    },
+    "Latin / Portuguese": {
+      "books": 12,
+      "pages": 5826,
+      "pages_ocr": 25
+    },
+    "Syriac / Syriac": {
+      "books": 10,
+      "pages": 3208,
+      "pages_ocr": 0
+    },
+    "Latin / Italian": {
+      "books": 9,
+      "pages": 2378,
+      "pages_ocr": 92
+    },
+    "Armenian / Classical Armenian": {
+      "books": 8,
+      "pages": 2786,
+      "pages_ocr": 0
+    },
+    "Ge'ez / Ge'ez": {
+      "books": 8,
+      "pages": 1635,
+      "pages_ocr": 0
+    },
+    "Latin / Latin and Classical Chinese": {
+      "books": 7,
+      "pages": 5111,
+      "pages_ocr": 0
+    },
+    "Burmese / Burmese": {
+      "books": 7,
+      "pages": 1167,
+      "pages_ocr": 0
+    },
+    "Greek / Ancient Greek": {
+      "books": 6,
+      "pages": 1540,
+      "pages_ocr": 125
+    },
+    "Latin / Spanish": {
+      "books": 6,
+      "pages": 2739,
+      "pages_ocr": 25
+    },
+    "Devanagari / Sanskrit": {
+      "books": 6,
+      "pages": 1260,
+      "pages_ocr": 3
+    },
+    "Latin / Dutch": {
+      "books": 5,
+      "pages": 1657,
+      "pages_ocr": 55
+    },
+    "Thai / Thai": {
+      "books": 4,
+      "pages": 481,
+      "pages_ocr": 0
+    },
+    "Greek / Greek": {
+      "books": 3,
+      "pages": 187,
+      "pages_ocr": 1
+    },
+    "Khmer / Khmer": {
+      "books": 3,
+      "pages": 182,
+      "pages_ocr": 0
+    },
+    "Armenian / Armenian and Latin": {
+      "books": 3,
+      "pages": 2066,
+      "pages_ocr": 0
+    },
+    "Burmese / Pali": {
+      "books": 3,
+      "pages": 259,
+      "pages_ocr": 0
+    },
+    "Sinhala / Sinhala": {
+      "books": 3,
+      "pages": 328,
+      "pages_ocr": 0
+    },
+    "Latin / German and Latin": {
+      "books": 2,
+      "pages": 1198,
+      "pages_ocr": 75
+    },
+    "Latin / Lower Sorbian": {
+      "books": 2,
+      "pages": 1774,
+      "pages_ocr": 100
+    },
+    "Latin / none": {
+      "books": 2,
+      "pages": 79,
+      "pages_ocr": 25
+    },
+    "Latin / unknown": {
+      "books": 2,
+      "pages": 80,
+      "pages_ocr": 37
+    },
+    "Hebrew / Aramaic": {
+      "books": 2,
+      "pages": 1209,
+      "pages_ocr": 0
+    },
+    "Han / Classical Chinese and Spanish": {
+      "books": 2,
+      "pages": 1087,
+      "pages_ocr": 0
+    },
+    "Cyrillic / Russian": {
+      "books": 2,
+      "pages": 634,
+      "pages_ocr": 0
+    },
+    "Greek / Greek and Latin": {
+      "books": 1,
+      "pages": 664,
+      "pages_ocr": 48
+    },
+    "Latin / Old Spanish": {
+      "books": 1,
+      "pages": 194,
+      "pages_ocr": 41
+    },
+    "Egyptian hieroglyphs / Egyptian": {
+      "books": 1,
+      "pages": 3,
+      "pages_ocr": 3
+    },
+    "Latin / Czech": {
+      "books": 1,
+      "pages": 454,
+      "pages_ocr": 25
+    },
+    "Latin / Latin and Ancient Greek": {
+      "books": 1,
+      "pages": 26,
+      "pages_ocr": 25
+    },
+    "Latin / Middle High German": {
+      "books": 1,
+      "pages": 640,
+      "pages_ocr": 0
+    },
+    "Latin / Catalan": {
+      "books": 1,
+      "pages": 162,
+      "pages_ocr": 0
+    },
+    "Odia / Odia": {
+      "books": 1,
+      "pages": 2,
+      "pages_ocr": 2
+    },
+    "Han / Classical Japanese": {
+      "books": 1,
+      "pages": 824,
+      "pages_ocr": 0
+    },
+    "Han / Middle Korean": {
+      "books": 1,
+      "pages": 38,
+      "pages_ocr": 0
+    },
+    "Han / Japanese": {
+      "books": 1,
+      "pages": 6,
+      "pages_ocr": 0
+    },
+    "Egyptian hieroglyphs / Ancient Egyptian": {
+      "books": 1,
+      "pages": 42,
+      "pages_ocr": 0
+    },
+    "Tamil / Tamil and Portuguese": {
+      "books": 1,
+      "pages": 622,
+      "pages_ocr": 0
+    },
+    "Latin / Old Icelandic": {
+      "books": 1,
+      "pages": 107,
+      "pages_ocr": 0
+    },
+    "Latin / Vietnamese and Portuguese": {
+      "books": 1,
+      "pages": 624,
+      "pages_ocr": 0
+    },
+    "Ge'ez / Amharic": {
+      "books": 1,
+      "pages": 676,
+      "pages_ocr": 0
+    },
+    "Arabic / Berber": {
+      "books": 1,
+      "pages": 81,
+      "pages_ocr": 0
+    },
+    "Latin / Croatian": {
+      "books": 1,
+      "pages": 412,
+      "pages_ocr": 0
+    },
+    "Kana / Classical Japanese": {
+      "books": 1,
+      "pages": 6,
+      "pages_ocr": 0
+    },
+    "Kana / Japanese": {
+      "books": 1,
+      "pages": 202,
+      "pages_ocr": 0
+    },
+    "Armenian / Armenian and Italian": {
+      "books": 1,
+      "pages": 42,
+      "pages_ocr": 0
+    },
+    "Coptic / Bohairic Coptic and Arabic": {
+      "books": 1,
+      "pages": 1070,
+      "pages_ocr": 0
+    },
+    "Latin / Latin and Malayalam": {
+      "books": 1,
+      "pages": 316,
+      "pages_ocr": 0
+    },
+    "Malayalam / Malayalam and Portuguese": {
+      "books": 1,
+      "pages": 282,
+      "pages_ocr": 0
+    },
+    "Devanagari / Braj Bhasha and Italian": {
+      "books": 1,
+      "pages": 320,
+      "pages_ocr": 0
+    },
+    "Burmese / Burmese and Italian": {
+      "books": 1,
+      "pages": 46,
+      "pages_ocr": 0
+    },
+    "Devanagari / Hindi": {
+      "books": 1,
+      "pages": 232,
+      "pages_ocr": 0
+    },
+    "Arabic / Urdu": {
+      "books": 1,
+      "pages": 724,
+      "pages_ocr": 0
+    },
+    "Devanagari / Hindi and Italian": {
+      "books": 1,
+      "pages": 286,
+      "pages_ocr": 0
+    },
+    "Tibetan / Tibetan": {
+      "books": 1,
+      "pages": 28,
+      "pages_ocr": 0
+    },
+    "Newar / Sanskrit": {
+      "books": 1,
+      "pages": 84,
+      "pages_ocr": 0
+    },
+    "Han / Vietnamese": {
+      "books": 1,
+      "pages": 149,
+      "pages_ocr": 0
+    },
+    "Arabic / Malay": {
+      "books": 1,
+      "pages": 54,
+      "pages_ocr": 0
+    },
+    "Hebrew / Yiddish": {
+      "books": 1,
+      "pages": 193,
+      "pages_ocr": 0
+    },
+    "Arabic / Arabic and Malay": {
+      "books": 1,
+      "pages": 334,
+      "pages_ocr": 0
+    },
+    "Arabic / Classical Arabic": {
+      "books": 1,
+      "pages": 888,
+      "pages_ocr": 0
+    }
+  },
+  "by_script_production_final": {
+    "Latin / print": {
+      "books": 771,
+      "pages": 159113,
+      "pages_ocr": 19365
+    },
+    "Arabic / manuscript": {
+      "books": 190,
+      "pages": 48617,
+      "pages_ocr": 34
+    },
+    "Latin / manuscript": {
+      "books": 116,
+      "pages": 38880,
+      "pages_ocr": 362
+    },
+    "Turfan fragment (script unverified) / manuscript": {
+      "books": 109,
+      "pages": 239,
+      "pages_ocr": 233
+    },
+    "Hebrew / manuscript": {
+      "books": 69,
+      "pages": 16779,
+      "pages_ocr": 0
+    },
+    "Armenian / manuscript": {
+      "books": 67,
+      "pages": 28445,
+      "pages_ocr": 0
+    },
+    "Cyrillic / manuscript": {
+      "books": 41,
+      "pages": 23642,
+      "pages_ocr": 0
+    },
+    "Coptic / manuscript": {
+      "books": 33,
+      "pages": 5622,
+      "pages_ocr": 34
+    },
+    "Arabic / print": {
+      "books": 21,
+      "pages": 6491,
+      "pages_ocr": 130
+    },
+    "Han / print": {
+      "books": 18,
+      "pages": 8331,
+      "pages_ocr": 25
+    },
+    "Han / manuscript": {
+      "books": 18,
+      "pages": 4471,
+      "pages_ocr": 0
+    },
+    "Malayalam / manuscript": {
+      "books": 18,
+      "pages": 3714,
+      "pages_ocr": 0
+    },
+    "Tamil / manuscript": {
+      "books": 12,
+      "pages": 2831,
+      "pages_ocr": 0
+    },
+    "Burmese / manuscript": {
+      "books": 11,
+      "pages": 1472,
+      "pages_ocr": 0
+    },
+    "Hebrew / print": {
+      "books": 10,
+      "pages": 2328,
+      "pages_ocr": 118
+    },
+    "Syriac / manuscript": {
+      "books": 9,
+      "pages": 3041,
+      "pages_ocr": 0
+    },
+    "Cyrillic / print": {
+      "books": 9,
+      "pages": 5153,
+      "pages_ocr": 0
+    },
+    "Ge'ez / manuscript": {
+      "books": 8,
+      "pages": 1635,
+      "pages_ocr": 0
+    },
+    "Greek / print": {
+      "books": 7,
+      "pages": 1925,
+      "pages_ocr": 149
+    },
+    "Devanagari / manuscript": {
+      "books": 7,
+      "pages": 1020,
+      "pages_ocr": 3
+    },
+    "Tamil / print": {
+      "books": 6,
+      "pages": 2824,
+      "pages_ocr": 0
+    },
+    "Armenian / print": {
+      "books": 5,
+      "pages": 1299,
+      "pages_ocr": 0
+    },
+    "Latin / mixed": {
+      "books": 5,
+      "pages": 827,
+      "pages_ocr": 55
+    },
+    "Thai / manuscript": {
+      "books": 4,
+      "pages": 481,
+      "pages_ocr": 0
+    },
+    "Khmer / manuscript": {
+      "books": 3,
+      "pages": 182,
+      "pages_ocr": 0
+    },
+    "Sinhala / manuscript": {
+      "books": 3,
+      "pages": 328,
+      "pages_ocr": 0
+    },
+    "Devanagari / print": {
+      "books": 2,
+      "pages": 1078,
+      "pages_ocr": 0
+    },
+    "Greek / manuscript": {
+      "books": 2,
+      "pages": 186,
+      "pages_ocr": 0
+    },
+    "Kana / manuscript": {
+      "books": 2,
+      "pages": 208,
+      "pages_ocr": 0
+    },
+    "Egyptian hieroglyphs / none": {
+      "books": 1,
+      "pages": 3,
+      "pages_ocr": 3
+    },
+    "Turfan fragment (script unverified) / none": {
+      "books": 1,
+      "pages": 2,
+      "pages_ocr": 2
+    },
+    "Greek / mixed": {
+      "books": 1,
+      "pages": 280,
+      "pages_ocr": 25
+    },
+    "Odia / manuscript": {
+      "books": 1,
+      "pages": 2,
+      "pages_ocr": 2
+    },
+    "Egyptian hieroglyphs / manuscript": {
+      "books": 1,
+      "pages": 42,
+      "pages_ocr": 0
+    },
+    "Syriac / print": {
+      "books": 1,
+      "pages": 167,
+      "pages_ocr": 0
+    },
+    "Ge'ez / print": {
+      "books": 1,
+      "pages": 676,
+      "pages_ocr": 0
+    },
+    "Tibetan / manuscript": {
+      "books": 1,
+      "pages": 28,
+      "pages_ocr": 0
+    },
+    "Newar / manuscript": {
+      "books": 1,
+      "pages": 84,
+      "pages_ocr": 0
+    }
+  },
+  "by_script_model": {
+    "Latin": {
+      "books": 908,
+      "pages": 198445,
+      "pages_ocr": 19819
+    },
+    "Arabic": {
+      "books": 222,
+      "pages": 55132,
       "pages_ocr": 188
     },
     "Hebrew": {
@@ -77,18 +1135,18 @@
       "pages_ocr": 71
     },
     "Han": {
-      "books": 34,
-      "pages": 12588,
+      "books": 36,
+      "pages": 12802,
       "pages_ocr": 25
+    },
+    "Tamil": {
+      "books": 18,
+      "pages": 5655,
+      "pages_ocr": 0
     },
     "Malayalam": {
       "books": 18,
       "pages": 3714,
-      "pages_ocr": 0
-    },
-    "Tamil": {
-      "books": 17,
-      "pages": 5609,
       "pages_ocr": 0
     },
     "Greek": {
@@ -136,6 +1194,11 @@
       "pages": 182,
       "pages_ocr": 0
     },
+    "Sinhala": {
+      "books": 3,
+      "pages": 328,
+      "pages_ocr": 0
+    },
     "Mongolian or Manchu": {
       "books": 2,
       "pages": 4,
@@ -154,11 +1217,6 @@
     "Balinese": {
       "books": 2,
       "pages": 54,
-      "pages_ocr": 0
-    },
-    "Sinhala": {
-      "books": 2,
-      "pages": 77,
       "pages_ocr": 0
     },
     "Manichaean": {
@@ -187,11 +1245,11 @@
       "pages_ocr": 0
     }
   },
-  "by_language": {
+  "by_language_model": {
     "Latin": {
-      "books": 470,
-      "pages": 82032,
-      "pages_ocr": 10609
+      "books": 476,
+      "pages": 82126,
+      "pages_ocr": 10629
     },
     "German": {
       "books": 285,
@@ -229,18 +1287,18 @@
       "pages_ocr": 0
     },
     "Persian": {
-      "books": 40,
-      "pages": 4708,
+      "books": 41,
+      "pages": 4984,
       "pages_ocr": 139
     },
     "Classical Chinese": {
-      "books": 30,
-      "pages": 10639,
+      "books": 32,
+      "pages": 10853,
       "pages_ocr": 25
     },
     "French": {
-      "books": 29,
-      "pages": 7802,
+      "books": 30,
+      "pages": 7946,
       "pages_ocr": 238
     },
     "English": {
@@ -258,14 +1316,14 @@
       "pages": 8061,
       "pages_ocr": 0
     },
+    "Tamil": {
+      "books": 17,
+      "pages": 5033,
+      "pages_ocr": 0
+    },
     "Malayalam": {
       "books": 17,
       "pages": 3432,
-      "pages_ocr": 0
-    },
-    "Tamil": {
-      "books": 16,
-      "pages": 4987,
       "pages_ocr": 0
     },
     "Latin and German": {
@@ -293,15 +1351,15 @@
       "pages": 1348,
       "pages_ocr": 7
     },
+    "Italian": {
+      "books": 9,
+      "pages": 2378,
+      "pages_ocr": 92
+    },
     "Classical Armenian": {
       "books": 8,
       "pages": 2786,
       "pages_ocr": 0
-    },
-    "Italian": {
-      "books": 8,
-      "pages": 2337,
-      "pages_ocr": 92
     },
     "Latin and Classical Chinese": {
       "books": 7,
@@ -343,6 +1401,11 @@
       "pages": 32,
       "pages_ocr": 4
     },
+    "none": {
+      "books": 3,
+      "pages": 81,
+      "pages_ocr": 27
+    },
     "Khmer": {
       "books": 3,
       "pages": 182,
@@ -351,6 +1414,11 @@
     "Armenian and Latin": {
       "books": 3,
       "pages": 2066,
+      "pages_ocr": 0
+    },
+    "Sinhala": {
+      "books": 3,
+      "pages": 328,
       "pages_ocr": 0
     },
     "Egyptian": {
@@ -367,11 +1435,6 @@
       "books": 2,
       "pages": 1774,
       "pages_ocr": 100
-    },
-    "none": {
-      "books": 2,
-      "pages": 79,
-      "pages_ocr": 25
     },
     "Classical Japanese": {
       "books": 2,
@@ -401,11 +1464,6 @@
     "Balinese": {
       "books": 2,
       "pages": 54,
-      "pages_ocr": 0
-    },
-    "Sinhala": {
-      "books": 2,
-      "pages": 77,
       "pages_ocr": 0
     },
     "Russian": {
@@ -569,427 +1627,205 @@
       "pages_ocr": 0
     }
   },
-  "by_script_language": {
-    "Latin / Latin": {
-      "books": 470,
-      "pages": 82032,
-      "pages_ocr": 10609
-    },
-    "Latin / German": {
-      "books": 285,
-      "pages": 70112,
-      "pages_ocr": 6971
-    },
-    "Arabic / Arabic": {
-      "books": 157,
-      "pages": 43436,
-      "pages_ocr": 22
-    },
-    "Hebrew / Hebrew": {
-      "books": 82,
-      "pages": 17717,
-      "pages_ocr": 130
-    },
-    "Armenian / Armenian": {
-      "books": 60,
-      "pages": 24850,
-      "pages_ocr": 0
-    },
-    "Syriac / Syriac": {
-      "books": 56,
-      "pages": 3308,
+  "turfan_fragments_model_labels": {
+    "Syriac": {
+      "books": 46,
+      "pages": 100,
       "pages_ocr": 95
     },
-    "Coptic / Coptic": {
-      "books": 47,
-      "pages": 4590,
-      "pages_ocr": 71
-    },
-    "Cyrillic / Church Slavonic": {
-      "books": 47,
-      "pages": 27841,
-      "pages_ocr": 0
-    },
-    "Arabic / Persian": {
-      "books": 40,
-      "pages": 4708,
-      "pages_ocr": 139
-    },
-    "Han / Classical Chinese": {
-      "books": 30,
-      "pages": 10639,
-      "pages_ocr": 25
-    },
-    "Latin / French": {
-      "books": 29,
-      "pages": 7802,
-      "pages_ocr": 238
-    },
-    "Latin / English": {
-      "books": 22,
-      "pages": 4753,
-      "pages_ocr": 1059
-    },
-    "Arabic / Ottoman Turkish": {
-      "books": 18,
-      "pages": 4629,
-      "pages_ocr": 25
-    },
-    "Latin / Vietnamese": {
-      "books": 18,
-      "pages": 8061,
-      "pages_ocr": 0
-    },
-    "Malayalam / Malayalam": {
+    "Latin": {
       "books": 17,
-      "pages": 3432,
-      "pages_ocr": 0
+      "pages": 37,
+      "pages_ocr": 37
     },
-    "Tamil / Tamil": {
-      "books": 16,
-      "pages": 4987,
-      "pages_ocr": 0
+    "Coptic": {
+      "books": 15,
+      "pages": 38,
+      "pages_ocr": 37
     },
-    "Latin / Latin and German": {
-      "books": 13,
-      "pages": 2062,
-      "pages_ocr": 377
+    "Arabic": {
+      "books": 11,
+      "pages": 24,
+      "pages_ocr": 24
     },
-    "Latin / Portuguese": {
-      "books": 12,
-      "pages": 5826,
-      "pages_ocr": 25
-    },
-    "Latin / unknown": {
-      "books": 10,
-      "pages": 98,
-      "pages_ocr": 55
-    },
-    "Greek / Ancient Greek": {
-      "books": 9,
-      "pages": 1546,
-      "pages_ocr": 131
-    },
-    "Armenian / Classical Armenian": {
-      "books": 8,
-      "pages": 2786,
-      "pages_ocr": 0
-    },
-    "Latin / Italian": {
-      "books": 8,
-      "pages": 2337,
-      "pages_ocr": 92
-    },
-    "Latin / Latin and Classical Chinese": {
-      "books": 7,
-      "pages": 5111,
-      "pages_ocr": 0
-    },
-    "Ge'ez / Ge'ez": {
-      "books": 7,
-      "pages": 1611,
-      "pages_ocr": 0
-    },
-    "Latin / Spanish": {
+    "Hebrew": {
       "books": 6,
-      "pages": 2739,
-      "pages_ocr": 25
+      "pages": 12,
+      "pages_ocr": 12
     },
-    "Devanagari / Sanskrit": {
-      "books": 6,
-      "pages": 1260,
-      "pages_ocr": 3
-    },
-    "Burmese / Burmese": {
-      "books": 6,
-      "pages": 1144,
-      "pages_ocr": 0
-    },
-    "Greek / Greek": {
+    "Greek": {
       "books": 5,
-      "pages": 191,
-      "pages_ocr": 5
+      "pages": 10,
+      "pages_ocr": 10
     },
-    "Latin / Dutch": {
-      "books": 5,
-      "pages": 1657,
-      "pages_ocr": 55
-    },
-    "Thai / Thai": {
-      "books": 4,
-      "pages": 481,
-      "pages_ocr": 0
-    },
-    "Tibetan / Tibetan": {
-      "books": 3,
-      "pages": 32,
-      "pages_ocr": 4
-    },
-    "Khmer / Khmer": {
-      "books": 3,
-      "pages": 182,
-      "pages_ocr": 0
-    },
-    "Armenian / Armenian and Latin": {
-      "books": 3,
-      "pages": 2066,
-      "pages_ocr": 0
-    },
-    "Egyptian hieroglyphs / Egyptian": {
-      "books": 2,
-      "pages": 5,
-      "pages_ocr": 5
-    },
-    "Mongolian or Manchu / unknown": {
+    "Tibetan": {
       "books": 2,
       "pages": 4,
       "pages_ocr": 4
     },
-    "Brahmi / Sanskrit": {
+    "Mongolian or Manchu": {
       "books": 2,
       "pages": 4,
       "pages_ocr": 4
     },
-    "Latin / German and Latin": {
+    "Brahmi": {
       "books": 2,
-      "pages": 1198,
-      "pages_ocr": 75
+      "pages": 4,
+      "pages_ocr": 4
     },
-    "Latin / Lower Sorbian": {
-      "books": 2,
-      "pages": 1774,
-      "pages_ocr": 100
-    },
-    "Latin / none": {
-      "books": 2,
-      "pages": 79,
-      "pages_ocr": 25
-    },
-    "Hebrew / Aramaic": {
-      "books": 2,
-      "pages": 1209,
-      "pages_ocr": 0
-    },
-    "Han / Classical Chinese and Spanish": {
-      "books": 2,
-      "pages": 1087,
-      "pages_ocr": 0
-    },
-    "Glagolitic / Old Church Slavonic": {
-      "books": 2,
-      "pages": 436,
-      "pages_ocr": 0
-    },
-    "Burmese / Pali": {
-      "books": 2,
-      "pages": 228,
-      "pages_ocr": 0
-    },
-    "Balinese / Balinese": {
-      "books": 2,
-      "pages": 54,
-      "pages_ocr": 0
-    },
-    "Sinhala / Sinhala": {
-      "books": 2,
-      "pages": 77,
-      "pages_ocr": 0
-    },
-    "Cyrillic / Russian": {
-      "books": 2,
-      "pages": 634,
-      "pages_ocr": 0
-    },
-    "Greek / Greek and Latin": {
-      "books": 1,
-      "pages": 664,
-      "pages_ocr": 48
-    },
-    "Latin / Old Spanish": {
-      "books": 1,
-      "pages": 194,
-      "pages_ocr": 41
-    },
-    "Manichaean / Middle Persian": {
+    "Manichaean": {
       "books": 1,
       "pages": 2,
       "pages_ocr": 2
     },
-    "Arabic / Coptic": {
+    "Kannada": {
       "books": 1,
       "pages": 2,
       "pages_ocr": 2
     },
-    "Kannada / Kannada": {
+    "Egyptian hieroglyphs": {
       "books": 1,
       "pages": 2,
       "pages_ocr": 2
     },
-    "Georgian / Georgian": {
+    "Georgian": {
+      "books": 1,
+      "pages": 2,
+      "pages_ocr": 2
+    }
+  },
+  "turfan_fragments_by_shelfmark": {
+    "M": {
+      "books": 111,
+      "pages": 243,
+      "pages_ocr": 237
+    },
+    "(none)": {
+      "books": 2,
+      "pages": 70,
+      "pages_ocr": 70
+    },
+    "MIK": {
       "books": 1,
       "pages": 2,
       "pages_ocr": 2
     },
-    "Latin / Czech": {
+    "So": {
       "books": 1,
-      "pages": 454,
-      "pages_ocr": 25
-    },
-    "Latin / Latin and Ancient Greek": {
-      "books": 1,
-      "pages": 26,
-      "pages_ocr": 25
-    },
-    "Latin / Middle High German": {
-      "books": 1,
-      "pages": 640,
+      "pages": 2,
+      "pages_ocr": 2
+    }
+  },
+  "fetch_failed_ia_language": {
+    "eng": {
+      "books": 29,
+      "pages": 12969,
       "pages_ocr": 0
     },
-    "Latin / Catalan": {
+    "eng+lat": {
+      "books": 11,
+      "pages": 5300,
+      "pages_ocr": 0
+    },
+    "lat+eng": {
+      "books": 3,
+      "pages": 1236,
+      "pages_ocr": 0
+    },
+    "eng+grc": {
+      "books": 2,
+      "pages": 1222,
+      "pages_ocr": 0
+    },
+    "lat+fre": {
+      "books": 2,
+      "pages": 776,
+      "pages_ocr": 0
+    },
+    "(not archive.org)": {
+      "books": 2,
+      "pages": 876,
+      "pages_ocr": 0
+    },
+    "enm+lat": {
+      "books": 1,
+      "pages": 446,
+      "pages_ocr": 0
+    },
+    "eng+egy": {
+      "books": 1,
+      "pages": 372,
+      "pages_ocr": 0
+    },
+    "ger": {
+      "books": 1,
+      "pages": 778,
+      "pages_ocr": 0
+    },
+    "eng+fre+per": {
       "books": 1,
       "pages": 162,
       "pages_ocr": 0
     },
-    "Odia / Odia": {
+    "eng+ara": {
       "books": 1,
-      "pages": 2,
-      "pages_ocr": 2
-    },
-    "Han / Classical Japanese": {
-      "books": 1,
-      "pages": 824,
+      "pages": 102,
       "pages_ocr": 0
     },
-    "Han / Middle Korean": {
+    "eng+grc+grc": {
       "books": 1,
-      "pages": 38,
+      "pages": 94,
       "pages_ocr": 0
     },
-    "Egyptian hieroglyphs / Ancient Egyptian": {
+    "eng+cze+lat": {
       "books": 1,
-      "pages": 42,
+      "pages": 254,
       "pages_ocr": 0
     },
-    "Tamil / Tamil and Portuguese": {
+    "eng+chi": {
       "books": 1,
-      "pages": 622,
+      "pages": 330,
       "pages_ocr": 0
+    }
+  },
+  "ocr_tag_check": {
+    "books_with_ocr_language_tag": 380,
+    "model_language_matches_tag": 363
+  },
+  "eye_check": {
+    "stratified": {
+      "books": 42,
+      "script_agree": 29,
+      "script_disagree": 10,
+      "unjudged": 3
     },
-    "Latin / Old Icelandic": {
-      "books": 1,
-      "pages": 107,
-      "pages_ocr": 0
+    "stratified_excluding_turfan": {
+      "books": 32,
+      "script_agree": 28,
+      "script_disagree": 2,
+      "unjudged": 2
     },
-    "Latin / Vietnamese and Portuguese": {
-      "books": 1,
-      "pages": 624,
-      "pages_ocr": 0
+    "stratified_turfan": {
+      "books": 10,
+      "script_agree": 1,
+      "script_disagree": 8
     },
-    "Ge'ez / Amharic": {
-      "books": 1,
-      "pages": 676,
-      "pages_ocr": 0
-    },
-    "Arabic / Berber": {
-      "books": 1,
-      "pages": 81,
-      "pages_ocr": 0
-    },
-    "Kana / Classical Japanese": {
-      "books": 1,
-      "pages": 6,
-      "pages_ocr": 0
-    },
-    "Kana / Japanese": {
-      "books": 1,
-      "pages": 202,
-      "pages_ocr": 0
-    },
-    "Armenian / Armenian and Italian": {
-      "books": 1,
-      "pages": 42,
-      "pages_ocr": 0
-    },
-    "Coptic / Bohairic Coptic and Arabic": {
-      "books": 1,
-      "pages": 1070,
-      "pages_ocr": 0
-    },
-    "Latin / Latin and Malayalam": {
-      "books": 1,
-      "pages": 316,
-      "pages_ocr": 0
-    },
-    "Malayalam / Malayalam and Portuguese": {
-      "books": 1,
-      "pages": 282,
-      "pages_ocr": 0
-    },
-    "Devanagari / Braj Bhasha and Italian": {
-      "books": 1,
-      "pages": 320,
-      "pages_ocr": 0
-    },
-    "Burmese / Burmese and Italian": {
-      "books": 1,
-      "pages": 46,
-      "pages_ocr": 0
-    },
-    "Devanagari / Hindi": {
-      "books": 1,
-      "pages": 232,
-      "pages_ocr": 0
-    },
-    "Arabic / Urdu": {
-      "books": 1,
-      "pages": 724,
-      "pages_ocr": 0
-    },
-    "Devanagari / Hindi and Italian": {
-      "books": 1,
-      "pages": 286,
-      "pages_ocr": 0
-    },
-    "Newar / Sanskrit": {
-      "books": 1,
-      "pages": 84,
-      "pages_ocr": 0
-    },
-    "Arabic / Malay": {
-      "books": 1,
-      "pages": 54,
-      "pages_ocr": 0
-    },
-    "Glagolitic / Church Slavonic": {
-      "books": 1,
-      "pages": 320,
-      "pages_ocr": 0
-    },
-    "Hebrew / Yiddish": {
-      "books": 1,
-      "pages": 193,
-      "pages_ocr": 0
-    },
-    "Arabic / Arabic and Malay": {
-      "books": 1,
-      "pages": 334,
-      "pages_ocr": 0
-    },
-    "Arabic / Classical Arabic": {
-      "books": 1,
-      "pages": 888,
-      "pages_ocr": 0
+    "rare_label_follow_up": {
+      "books": 10,
+      "script_agree": 3,
+      "script_disagree": 3,
+      "unjudged": 4
     }
   },
   "by_production": {
     "print": {
-      "books": 846,
-      "pages": 189138,
-      "pages_ocr": 19767
+      "books": 851,
+      "pages": 189385,
+      "pages_ocr": 19787
     },
     "manuscript": {
-      "books": 718,
-      "pages": 181130,
+      "books": 726,
+      "pages": 181949,
       "pages_ocr": 668
     },
     "mixed": {
@@ -998,21 +1834,21 @@
       "pages_ocr": 80
     },
     "none": {
-      "books": 1,
-      "pages": 3,
-      "pages_ocr": 3
+      "books": 2,
+      "pages": 5,
+      "pages_ocr": 5
     }
   },
   "by_content": {
     "text": {
-      "books": 1521,
-      "pages": 360517,
-      "pages_ocr": 20057
+      "books": 1533,
+      "pages": 361542,
+      "pages_ocr": 20077
     },
     "mostly_image": {
-      "books": 50,
-      "pages": 10861,
-      "pages_ocr": 461
+      "books": 52,
+      "pages": 10904,
+      "pages_ocr": 463
     }
   },
   "by_provider": {
@@ -1094,10 +1930,10 @@
   },
   "low_confidence_books": 2,
   "spend": {
-    "jobs": 10,
-    "requests": 2370,
-    "in_tokens": 2439970,
-    "out_tokens": 117140,
-    "cost_usd": 0.3928
+    "jobs": 11,
+    "requests": 2411,
+    "in_tokens": 2501917,
+    "out_tokens": 120112,
+    "cost_usd": 0.4028
   }
 }

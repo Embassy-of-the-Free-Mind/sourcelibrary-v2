@@ -176,6 +176,24 @@
       "in_tokens": 10560,
       "out_tokens": 544,
       "cost_usd": 0.00173
+    },
+    {
+      "round": 2,
+      "attempt": 1,
+      "chunk": 0,
+      "job_name": "batches/5huvolf9c89jxlqj36krvembpz67hxj4ekiw",
+      "requests": 41,
+      "input_mb": 4.4,
+      "estimate_usd": 0.0107,
+      "approved_usd": 0.05,
+      "submitted_at": "2026-10-04T03:09:18.387Z",
+      "collected_at": "2026-10-04T03:12:20.550Z",
+      "state": "BATCH_STATE_SUCCEEDED",
+      "responses": 41,
+      "errors": 0,
+      "in_tokens": 61947,
+      "out_tokens": 2972,
+      "cost_usd": 0.00997
     }
   ],
   "key_env": "GEMINI_API_KEY_TIER3"
