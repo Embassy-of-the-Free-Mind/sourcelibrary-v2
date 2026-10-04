@@ -290,7 +290,92 @@ async function embed() {
   console.log(`embedded ${ok}, failed ${fail}, ${((Date.now() - t0) / 1000).toFixed(0)}s`);
 }
 
+// ── classify (#5768 step 2) ──────────────────────────────────────────────────────────────────
+// k-nearest-neighbours over the tagged training pages, cosine on unit CLIP vectors. Measured on
+// the held-out books first (2026-10-04): a softmax logistic regression on the same vectors scored
+// 69.3% on three classes and 78.8% on two; kNN-15 scored 85.7% on two, 95.2% where ≥ 80% of the
+// neighbours agree. "mixed" is not separable at 224 px (LR: 43% recall, 30% precision), so a PAGE
+// is handwritten or not; a BOOK is mixed when its confident pages split.
+export const CLIP_FILE = path.join(OUT_DIR, 'clip-classes.jsonl');
+const K = 15, VOTE_FLOOR = 0.8;
+function loadEmbeddings() {
+  const m = new Map();
+  for (const f of fs.readdirSync(OUT_DIR).filter((f) => /^page-clip(\.\d+)?\.jsonl$/.test(f))) {
+    for (const r of readJsonl(path.join(OUT_DIR, f))) if (r.e) { const b = Buffer.from(r.e, 'base64'); m.set(r.page_id, new Float32Array(b.buffer.slice(b.byteOffset, b.byteOffset + b.length))); }
+  }
+  return m;
+}
+const heldOut = (bookId) => { let x = 5768; for (const c of bookId) x = (x * 31 + c.charCodeAt(0)) >>> 0; return x % 100 < 25; };
+
+/** Neighbour vote for one vector: share handwritten, and the family vote. */
+function knn(train, v) {
+  const best = []; // [sim, idx], kept sorted ascending, length ≤ K
+  for (let i = 0; i < train.length; i++) {
+    const e = train[i].e; let s = 0;
+    for (let j = 0; j < 512; j++) s += e[j] * v[j];
+    if (best.length < K) { best.push([s, i]); best.sort((a, b) => a[0] - b[0]); } else if (s > best[0][0]) { best[0] = [s, i]; best.sort((a, b) => a[0] - b[0]); }
+  }
+  const hw = best.filter(([, i]) => train[i].label === 'handwritten').length / best.length;
+  const fam = {}; for (const [, i] of best) fam[train[i].family] = (fam[train[i].family] || 0) + 1;
+  const ftop = Object.entries(fam).sort((a, b) => b[1] - a[1])[0];
+  return { hw, answer: hw >= 0.5 ? 'handwritten' : 'printed', vote: Math.max(hw, 1 - hw), family: ftop[0], fvote: ftop[1] / best.length };
+}
+function trainSet(emb, { excludeHeldOut }) {
+  return JSON.parse(fs.readFileSync(TRAIN_FILE, 'utf8')).filter((x) => emb.has(x.page_id) && !(excludeHeldOut && heldOut(x.book_id))).map((x) => ({ ...x, e: emb.get(x.page_id) }));
+}
+
+function evaluate() {
+  const emb = loadEmbeddings();
+  const tr = trainSet(emb, { excludeHeldOut: true });
+  const te = JSON.parse(fs.readFileSync(TRAIN_FILE, 'utf8')).filter((x) => emb.has(x.page_id) && heldOut(x.book_id));
+  const res = te.map((x) => ({ ...x, truth: x.label === 'handwritten' ? 'handwritten' : 'printed', ...knn(tr, emb.get(x.page_id)) }));
+  const acc = (a) => ({ n: a.length, acc: a.length ? +(a.filter((r) => r.answer === r.truth).length / a.length).toFixed(3) : null });
+  const confident = res.filter((r) => r.vote >= VOTE_FLOOR);
+  const report = {
+    k: K, vote_floor: VOTE_FLOOR, n_train: tr.length, n_test: res.length, label_rule: 'page tag handwritten → handwritten; printed and mixed → printed',
+    overall: acc(res), confident: { ...acc(confident), coverage: +(confident.length / res.length).toFixed(3) },
+    by_truth: Object.fromEntries(['printed', 'handwritten'].map((c) => [c, { recall: acc(res.filter((r) => r.truth === c)), precision: acc(res.filter((r) => r.answer === c)) }])),
+    by_tag: Object.fromEntries(['printed', 'handwritten', 'mixed'].map((c) => [c, acc(res.filter((r) => r.label === c))])),
+    by_family: Object.fromEntries([...new Set(res.map((r) => r.family))].sort().map((f) => [f, { all: acc(res.filter((r) => r.family === f)), confident: acc(confident.filter((r) => r.family === f)) }])),
+    family_vote: { ...(() => { const a = res; return { n: a.length, acc: +(a.filter((r) => r.family === r.family).length / a.length).toFixed(3) }; })() },
+  };
+  // family: the knn's family answer vs the OCR-text family
+  const fres = te.map((x) => ({ truth: x.family, ...knn(tr, emb.get(x.page_id)) }));
+  report.family_vote = { n: fres.length, acc: +(fres.filter((r) => r.family === r.truth).length / fres.length).toFixed(3), by: Object.fromEntries([...new Set(fres.map((r) => r.truth))].sort().map((f) => [f, { n: fres.filter((r) => r.truth === f).length, recall: +(fres.filter((r) => r.truth === f && r.family === f).length / Math.max(1, fres.filter((r) => r.truth === f).length)).toFixed(3) }])) };
+  fs.writeFileSync(path.join(OUT_DIR, 'clip-heldout.summary.json'), JSON.stringify(report, null, 1));
+  console.log(JSON.stringify(report, null, 1));
+}
+
+/** Per unlabelled book: classify its target pages, vote, flag low confidence. */
+function apply() {
+  const emb = loadEmbeddings();
+  const tr = trainSet(emb, { excludeHeldOut: false });
+  const target = JSON.parse(fs.readFileSync(TARGET_FILE, 'utf8'));
+  const byBook = new Map();
+  for (const t of target) { if (!emb.has(t.page_id)) continue; if (!byBook.has(t.book_id)) byBook.set(t.book_id, []); byBook.get(t.book_id).push(t); }
+  const out = fs.createWriteStream(CLIP_FILE);
+  const tally = {};
+  let n = 0;
+  for (const [book_id, ts] of byBook) {
+    const pages = ts.map((t) => { const r = knn(tr, emb.get(t.page_id)); return { page_id: t.page_id, answer: r.answer, vote: +r.vote.toFixed(2), family: r.family, fvote: +r.fvote.toFixed(2) }; });
+    const conf = pages.filter((p) => p.vote >= VOTE_FLOOR);
+    const hw = conf.filter((p) => p.answer === 'handwritten').length, pr = conf.length - hw;
+    const cls = hw && pr ? 'mixed' : hw ? 'handwritten' : pr ? 'printed' : null;
+    // Confident only when at least two pages are confident, they agree, and no page contradicts them.
+    const low = !(cls && cls !== 'mixed' && conf.length >= 2 && pages.every((p) => p.answer === pages[0].answer));
+    const fv = {}; for (const p of pages) fv[p.family] = (fv[p.family] || 0) + 1;
+    const row = { book_id, class: cls, low_confidence: low, family: Object.entries(fv).sort((a, b) => b[1] - a[1])[0][0], pages };
+    out.write(JSON.stringify(row) + '\n');
+    const k = `${cls}${low ? ' (low)' : ''}`; tally[k] = (tally[k] || 0) + 1;
+    if (++n % 5000 === 0) console.log(n, tally);
+  }
+  out.end();
+  console.log(`classified ${n} books`, tally);
+}
+
 if (import.meta.url === `file://${process.argv[1]}`) {
+  if (flag('evaluate')) evaluate();
+  if (flag('apply')) apply();
   if (flag('labels')) await labels();
   if (flag('plan')) plan();
   if (flag('embed')) await embed();
