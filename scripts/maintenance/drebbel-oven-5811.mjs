@@ -79,6 +79,20 @@ await withMongo(async (db) => {
   // (and its _djvu.xml) on every attempt, while single /page/nN images serve 200. archive-bulk would
   // strike it 5 times and then mark it BLOCKED, which archive-ocr also skips. Its own route for
   // "zip unusable, pages fetchable" is bulk_unsuitable → archive-ocr per-page IIIF; set exactly that.
+  // Phase 4 (and 2, 8) take the top N books corpus-wide BEFORE confining to the envelope, so an
+  // envelope book outside the global top 60 ocr_complete is never selected: English books never
+  // leave ocr_complete, the rest are never translated. processing_priority is the documented queue
+  // lever (image-storage-architecture.md; fresh imports get 80). 85 tops the live queue (max 80)
+  // and stays under REALTIME_PRIORITY_FLOOR (90), so translation stays on the chained Batch lane.
+  if (process.argv.includes('--priority')) {
+    const ids = ['6ac27d29058764b16bdc390b', '6a44359d0235c9147000dd12', '6a906d3f32545072610bae03', '6a42727728e9db2e39c14050', '6a9058b07f6818cc17cd5a93', '6a42761d28e9db2e39c1b5d4', '6ac2798602c7f994f850646a', '6ac2798802c7f994f8506684', '6ac2798b02c7f994f85066f6', '6ac2798d02c7f994f8506911', '6ac2798f02c7f994f8506b1e', '6ac2799102c7f994f8506bef'];
+    const before = await B.find({ id: { $in: ids } }).project({ id: 1, processing_priority: 1 }).toArray();
+    console.log(`${APPLY ? 'SET' : 'would set'} processing_priority 85 on ${ids.length} books; before:`, JSON.stringify(before.map((b) => [b.id, b.processing_priority ?? null])));
+    if (APPLY) {
+      await B.updateMany({ id: { $in: ids } }, { $set: { processing_priority: 85, updated_at: new Date() } });
+      for (const b of before) await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'processing_priority', detail: { before: b.processing_priority ?? null, after: 85 } });
+    }
+  }
   if (process.argv.includes('--evelyn-per-page')) {
     const id = '6ac2798602c7f994f850646a';
     const reason = 'archive.org HTTP 500 on the JP2 zip (and _djvu.xml) on every attempt 2026-10-04, single page images 200 (#5811)';
