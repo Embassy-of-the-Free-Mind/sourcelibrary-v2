@@ -1,0 +1,2694 @@
+{
+ "generated": "2026-10-03T23:39:15.849Z",
+ "counted": "live books (visible, pages_count > 0), pages with a non-empty translation; exact page counts, no sampling",
+ "rates_usd_per_page_batch": {
+  "ocr_flash": 0.002826451834862385,
+  "tr_lite": 0.0010239763157894738,
+  "tr_flash": 0.0021804578947368426
+ },
+ "rate_basis": "pilot tokens × list price × 0.5 (Batch). cost_usd is computed, not billed (#3576).",
+ "by_script": {
+  "Greek": {
+   "pages": 456839,
+   "lite": 123511,
+   "flash": 333181,
+   "other": 147
+  },
+  "Persian": {
+   "pages": 14996,
+   "lite": 6222,
+   "flash": 8774,
+   "other": 0
+  },
+  "Sanskrit": {
+   "pages": 120261,
+   "lite": 49278,
+   "flash": 70982,
+   "other": 1
+  },
+  "Pali": {
+   "pages": 8334,
+   "lite": 7479,
+   "flash": 855,
+   "other": 0
+  },
+  "Arabic": {
+   "pages": 59763,
+   "lite": 26562,
+   "flash": 33201,
+   "other": 0
+  },
+  "Chinese": {
+   "pages": 137999,
+   "lite": 45388,
+   "flash": 92590,
+   "other": 21
+  },
+  "Latin": {
+   "pages": 345788,
+   "lite": 216778,
+   "flash": 129009,
+   "other": 1
+  },
+  "Hebrew/Aramaic": {
+   "pages": 73936,
+   "lite": 13751,
+   "flash": 60144,
+   "other": 41
+  }
+ },
+ "counter_check": {
+  "Latin": {
+   "books": 1565,
+   "counter": 341215,
+   "counted": 345788
+  },
+  "Chinese": {
+   "books": 1062,
+   "counter": 137139,
+   "counted": 137999
+  },
+  "Greek": {
+   "books": 1086,
+   "counter": 445346,
+   "counted": 456839
+  },
+  "Arabic": {
+   "books": 276,
+   "counter": 58260,
+   "counted": 59763
+  },
+  "Hebrew/Aramaic": {
+   "books": 284,
+   "counter": 68534,
+   "counted": 73936
+  },
+  "Sanskrit": {
+   "books": 393,
+   "counter": 102417,
+   "counted": 120261
+  },
+  "Persian": {
+   "books": 62,
+   "counter": 13755,
+   "counted": 14996
+  },
+  "Pali": {
+   "books": 26,
+   "counter": 8319,
+   "counted": 8334
+  }
+ },
+ "strata": [
+  {
+   "script": "Greek",
+   "period": "1800+",
+   "kind": "print",
+   "books": 265,
+   "pages": 88614,
+   "lite": 53434,
+   "flash": 35180,
+   "other": 0,
+   "pilot_n": 14,
+   "lift_lite": 1.04,
+   "lift_lite_ci": [
+    0.61,
+    1.5
+   ],
+   "lift_reocr_plus_flash": 1.14,
+   "lift_reocr_plus_flash_ci": [
+    0.79,
+    1.54
+   ],
+   "usd_reocr_plus_lite": 206,
+   "usd_reocr_plus_flash": 268,
+   "page_points_per_1k_usd_lite": 270100,
+   "page_points_per_1k_usd_flash": 227685
+  },
+  {
+   "script": "Greek",
+   "period": "1501–1599",
+   "kind": "print",
+   "books": 142,
+   "pages": 40869,
+   "lite": 25105,
+   "flash": 15764,
+   "other": 0,
+   "pilot_n": 14,
+   "lift_lite": 1.04,
+   "lift_lite_ci": [
+    0.61,
+    1.5
+   ],
+   "lift_reocr_plus_flash": 1.14,
+   "lift_reocr_plus_flash_ci": [
+    0.79,
+    1.54
+   ],
+   "usd_reocr_plus_lite": 97,
+   "usd_reocr_plus_flash": 126,
+   "page_points_per_1k_usd_lite": 270100,
+   "page_points_per_1k_usd_flash": 227685
+  },
+  {
+   "script": "Greek",
+   "period": "1600–1799",
+   "kind": "print",
+   "books": 54,
+   "pages": 21211,
+   "lite": 17388,
+   "flash": 3823,
+   "other": 0,
+   "pilot_n": 14,
+   "lift_lite": 1.04,
+   "lift_lite_ci": [
+    0.61,
+    1.5
+   ],
+   "lift_reocr_plus_flash": 1.14,
+   "lift_reocr_plus_flash_ci": [
+    0.79,
+    1.54
+   ],
+   "usd_reocr_plus_lite": 67,
+   "usd_reocr_plus_flash": 87,
+   "page_points_per_1k_usd_lite": 270100,
+   "page_points_per_1k_usd_flash": 227685
+  },
+  {
+   "script": "Greek",
+   "period": "to 1500",
+   "kind": "manuscript",
+   "books": 109,
+   "pages": 23631,
+   "lite": 16420,
+   "flash": 7211,
+   "other": 0,
+   "pilot_n": 14,
+   "lift_lite": 1.04,
+   "lift_lite_ci": [
+    0.61,
+    1.5
+   ],
+   "lift_reocr_plus_flash": 1.14,
+   "lift_reocr_plus_flash_ci": [
+    0.79,
+    1.54
+   ],
+   "usd_reocr_plus_lite": 63,
+   "usd_reocr_plus_flash": 82,
+   "page_points_per_1k_usd_lite": 270100,
+   "page_points_per_1k_usd_flash": 227685
+  },
+  {
+   "script": "Greek",
+   "period": "1501–1599",
+   "kind": "manuscript",
+   "books": 95,
+   "pages": 7966,
+   "lite": 6482,
+   "flash": 1484,
+   "other": 0,
+   "pilot_n": 14,
+   "lift_lite": 1.04,
+   "lift_lite_ci": [
+    0.61,
+    1.5
+   ],
+   "lift_reocr_plus_flash": 1.14,
+   "lift_reocr_plus_flash_ci": [
+    0.79,
+    1.54
+   ],
+   "usd_reocr_plus_lite": 25,
+   "usd_reocr_plus_flash": 32,
+   "page_points_per_1k_usd_lite": 270100,
+   "page_points_per_1k_usd_flash": 227685
+  },
+  {
+   "script": "Greek",
+   "period": "to 1500",
+   "kind": "print",
+   "books": 82,
+   "pages": 5281,
+   "lite": 3248,
+   "flash": 2033,
+   "other": 0,
+   "pilot_n": 14,
+   "lift_lite": 1.04,
+   "lift_lite_ci": [
+    0.61,
+    1.5
+   ],
+   "lift_reocr_plus_flash": 1.14,
+   "lift_reocr_plus_flash_ci": [
+    0.79,
+    1.54
+   ],
+   "usd_reocr_plus_lite": 13,
+   "usd_reocr_plus_flash": 16,
+   "page_points_per_1k_usd_lite": 270100,
+   "page_points_per_1k_usd_flash": 227685
+  },
+  {
+   "script": "Greek",
+   "period": "undated",
+   "kind": "print",
+   "books": 28,
+   "pages": 4345,
+   "lite": 509,
+   "flash": 3836,
+   "other": 0,
+   "pilot_n": 14,
+   "lift_lite": 1.04,
+   "lift_lite_ci": [
+    0.61,
+    1.5
+   ],
+   "lift_reocr_plus_flash": 1.14,
+   "lift_reocr_plus_flash_ci": [
+    0.79,
+    1.54
+   ],
+   "usd_reocr_plus_lite": 2,
+   "usd_reocr_plus_flash": 3,
+   "page_points_per_1k_usd_lite": 270100,
+   "page_points_per_1k_usd_flash": 227685
+  },
+  {
+   "script": "Greek",
+   "period": "to 1500",
+   "kind": "script type not recorded",
+   "books": 277,
+   "pages": 80436,
+   "lite": 186,
+   "flash": 80250,
+   "other": 0,
+   "pilot_n": 14,
+   "lift_lite": 1.04,
+   "lift_lite_ci": [
+    0.61,
+    1.5
+   ],
+   "lift_reocr_plus_flash": 1.14,
+   "lift_reocr_plus_flash_ci": [
+    0.79,
+    1.54
+   ],
+   "usd_reocr_plus_lite": 1,
+   "usd_reocr_plus_flash": 1,
+   "page_points_per_1k_usd_lite": 270100,
+   "page_points_per_1k_usd_flash": 227685
+  },
+  {
+   "script": "Greek",
+   "period": "1800+",
+   "kind": "script type not recorded",
+   "books": 328,
+   "pages": 104545,
+   "lite": 176,
+   "flash": 104223,
+   "other": 146,
+   "pilot_n": 14,
+   "lift_lite": 1.04,
+   "lift_lite_ci": [
+    0.61,
+    1.5
+   ],
+   "lift_reocr_plus_flash": 1.14,
+   "lift_reocr_plus_flash_ci": [
+    0.79,
+    1.54
+   ],
+   "usd_reocr_plus_lite": 1,
+   "usd_reocr_plus_flash": 1,
+   "page_points_per_1k_usd_lite": 270100,
+   "page_points_per_1k_usd_flash": 227685
+  },
+  {
+   "script": "Greek",
+   "period": "1800+",
+   "kind": "manuscript",
+   "books": 86,
+   "pages": 590,
+   "lite": 172,
+   "flash": 418,
+   "other": 0,
+   "pilot_n": 14,
+   "lift_lite": 1.04,
+   "lift_lite_ci": [
+    0.61,
+    1.5
+   ],
+   "lift_reocr_plus_flash": 1.14,
+   "lift_reocr_plus_flash_ci": [
+    0.79,
+    1.54
+   ],
+   "usd_reocr_plus_lite": 1,
+   "usd_reocr_plus_flash": 1,
+   "page_points_per_1k_usd_lite": 270100,
+   "page_points_per_1k_usd_flash": 227685
+  },
+  {
+   "script": "Greek",
+   "period": "undated",
+   "kind": "manuscript",
+   "books": 12,
+   "pages": 553,
+   "lite": 136,
+   "flash": 417,
+   "other": 0,
+   "pilot_n": 14,
+   "lift_lite": 1.04,
+   "lift_lite_ci": [
+    0.61,
+    1.5
+   ],
+   "lift_reocr_plus_flash": 1.14,
+   "lift_reocr_plus_flash_ci": [
+    0.79,
+    1.54
+   ],
+   "usd_reocr_plus_lite": 1,
+   "usd_reocr_plus_flash": 1,
+   "page_points_per_1k_usd_lite": 270100,
+   "page_points_per_1k_usd_flash": 227685
+  },
+  {
+   "script": "Greek",
+   "period": "1501–1599",
+   "kind": "script type not recorded",
+   "books": 183,
+   "pages": 56597,
+   "lite": 122,
+   "flash": 56475,
+   "other": 0,
+   "pilot_n": 14,
+   "lift_lite": 1.04,
+   "lift_lite_ci": [
+    0.61,
+    1.5
+   ],
+   "lift_reocr_plus_flash": 1.14,
+   "lift_reocr_plus_flash_ci": [
+    0.79,
+    1.54
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 1,
+   "page_points_per_1k_usd_lite": 270100,
+   "page_points_per_1k_usd_flash": 227685
+  },
+  {
+   "script": "Greek",
+   "period": "1600–1799",
+   "kind": "manuscript",
+   "books": 25,
+   "pages": 398,
+   "lite": 106,
+   "flash": 292,
+   "other": 0,
+   "pilot_n": 14,
+   "lift_lite": 1.04,
+   "lift_lite_ci": [
+    0.61,
+    1.5
+   ],
+   "lift_reocr_plus_flash": 1.14,
+   "lift_reocr_plus_flash_ci": [
+    0.79,
+    1.54
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 1,
+   "page_points_per_1k_usd_lite": 270100,
+   "page_points_per_1k_usd_flash": 227685
+  },
+  {
+   "script": "Greek",
+   "period": "1600–1799",
+   "kind": "script type not recorded",
+   "books": 75,
+   "pages": 21747,
+   "lite": 27,
+   "flash": 21719,
+   "other": 1,
+   "pilot_n": 14,
+   "lift_lite": 1.04,
+   "lift_lite_ci": [
+    0.61,
+    1.5
+   ],
+   "lift_reocr_plus_flash": 1.14,
+   "lift_reocr_plus_flash_ci": [
+    0.79,
+    1.54
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 270100,
+   "page_points_per_1k_usd_flash": 227685
+  },
+  {
+   "script": "Greek",
+   "period": "undated",
+   "kind": "script type not recorded",
+   "books": 6,
+   "pages": 56,
+   "lite": 0,
+   "flash": 56,
+   "other": 0,
+   "pilot_n": 14,
+   "lift_lite": 1.04,
+   "lift_lite_ci": [
+    0.61,
+    1.5
+   ],
+   "lift_reocr_plus_flash": 1.14,
+   "lift_reocr_plus_flash_ci": [
+    0.79,
+    1.54
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 270100,
+   "page_points_per_1k_usd_flash": 227685
+  },
+  {
+   "script": "Persian",
+   "period": "1800+",
+   "kind": "print",
+   "books": 19,
+   "pages": 3287,
+   "lite": 2065,
+   "flash": 1222,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": 1,
+   "lift_lite_ci": [
+    0.33,
+    1.67
+   ],
+   "lift_reocr_plus_flash": 1.58,
+   "lift_reocr_plus_flash_ci": [
+    1.25,
+    1.92
+   ],
+   "usd_reocr_plus_lite": 8,
+   "usd_reocr_plus_flash": 10,
+   "page_points_per_1k_usd_lite": 259711,
+   "page_points_per_1k_usd_flash": 315564
+  },
+  {
+   "script": "Persian",
+   "period": "to 1500",
+   "kind": "print",
+   "books": 14,
+   "pages": 2043,
+   "lite": 1396,
+   "flash": 647,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": 1,
+   "lift_lite_ci": [
+    0.33,
+    1.67
+   ],
+   "lift_reocr_plus_flash": 1.58,
+   "lift_reocr_plus_flash_ci": [
+    1.25,
+    1.92
+   ],
+   "usd_reocr_plus_lite": 5,
+   "usd_reocr_plus_flash": 7,
+   "page_points_per_1k_usd_lite": 259711,
+   "page_points_per_1k_usd_flash": 315564
+  },
+  {
+   "script": "Persian",
+   "period": "to 1500",
+   "kind": "manuscript",
+   "books": 10,
+   "pages": 1138,
+   "lite": 736,
+   "flash": 402,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": 1,
+   "lift_lite_ci": [
+    0.33,
+    1.67
+   ],
+   "lift_reocr_plus_flash": 1.58,
+   "lift_reocr_plus_flash_ci": [
+    1.25,
+    1.92
+   ],
+   "usd_reocr_plus_lite": 3,
+   "usd_reocr_plus_flash": 4,
+   "page_points_per_1k_usd_lite": 259711,
+   "page_points_per_1k_usd_flash": 315564
+  },
+  {
+   "script": "Persian",
+   "period": "1501–1599",
+   "kind": "manuscript",
+   "books": 2,
+   "pages": 948,
+   "lite": 714,
+   "flash": 234,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": 1,
+   "lift_lite_ci": [
+    0.33,
+    1.67
+   ],
+   "lift_reocr_plus_flash": 1.58,
+   "lift_reocr_plus_flash_ci": [
+    1.25,
+    1.92
+   ],
+   "usd_reocr_plus_lite": 3,
+   "usd_reocr_plus_flash": 4,
+   "page_points_per_1k_usd_lite": 259711,
+   "page_points_per_1k_usd_flash": 315564
+  },
+  {
+   "script": "Persian",
+   "period": "1800+",
+   "kind": "manuscript",
+   "books": 17,
+   "pages": 1230,
+   "lite": 695,
+   "flash": 535,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": 1,
+   "lift_lite_ci": [
+    0.33,
+    1.67
+   ],
+   "lift_reocr_plus_flash": 1.58,
+   "lift_reocr_plus_flash_ci": [
+    1.25,
+    1.92
+   ],
+   "usd_reocr_plus_lite": 3,
+   "usd_reocr_plus_flash": 3,
+   "page_points_per_1k_usd_lite": 259711,
+   "page_points_per_1k_usd_flash": 315564
+  },
+  {
+   "script": "Persian",
+   "period": "1600–1799",
+   "kind": "manuscript",
+   "books": 7,
+   "pages": 1282,
+   "lite": 208,
+   "flash": 1074,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": 1,
+   "lift_lite_ci": [
+    0.33,
+    1.67
+   ],
+   "lift_reocr_plus_flash": 1.58,
+   "lift_reocr_plus_flash_ci": [
+    1.25,
+    1.92
+   ],
+   "usd_reocr_plus_lite": 1,
+   "usd_reocr_plus_flash": 1,
+   "page_points_per_1k_usd_lite": 259711,
+   "page_points_per_1k_usd_flash": 315564
+  },
+  {
+   "script": "Persian",
+   "period": "undated",
+   "kind": "print",
+   "books": 6,
+   "pages": 267,
+   "lite": 193,
+   "flash": 74,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": 1,
+   "lift_lite_ci": [
+    0.33,
+    1.67
+   ],
+   "lift_reocr_plus_flash": 1.58,
+   "lift_reocr_plus_flash_ci": [
+    1.25,
+    1.92
+   ],
+   "usd_reocr_plus_lite": 1,
+   "usd_reocr_plus_flash": 1,
+   "page_points_per_1k_usd_lite": 259711,
+   "page_points_per_1k_usd_flash": 315564
+  },
+  {
+   "script": "Persian",
+   "period": "undated",
+   "kind": "manuscript",
+   "books": 4,
+   "pages": 188,
+   "lite": 184,
+   "flash": 4,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": 1,
+   "lift_lite_ci": [
+    0.33,
+    1.67
+   ],
+   "lift_reocr_plus_flash": 1.58,
+   "lift_reocr_plus_flash_ci": [
+    1.25,
+    1.92
+   ],
+   "usd_reocr_plus_lite": 1,
+   "usd_reocr_plus_flash": 1,
+   "page_points_per_1k_usd_lite": 259711,
+   "page_points_per_1k_usd_flash": 315564
+  },
+  {
+   "script": "Persian",
+   "period": "1800+",
+   "kind": "script type not recorded",
+   "books": 12,
+   "pages": 2893,
+   "lite": 13,
+   "flash": 2880,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": 1,
+   "lift_lite_ci": [
+    0.33,
+    1.67
+   ],
+   "lift_reocr_plus_flash": 1.58,
+   "lift_reocr_plus_flash_ci": [
+    1.25,
+    1.92
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 259711,
+   "page_points_per_1k_usd_flash": 315564
+  },
+  {
+   "script": "Persian",
+   "period": "to 1500",
+   "kind": "script type not recorded",
+   "books": 10,
+   "pages": 1577,
+   "lite": 7,
+   "flash": 1570,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": 1,
+   "lift_lite_ci": [
+    0.33,
+    1.67
+   ],
+   "lift_reocr_plus_flash": 1.58,
+   "lift_reocr_plus_flash_ci": [
+    1.25,
+    1.92
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 259711,
+   "page_points_per_1k_usd_flash": 315564
+  },
+  {
+   "script": "Persian",
+   "period": "undated",
+   "kind": "script type not recorded",
+   "books": 2,
+   "pages": 4,
+   "lite": 4,
+   "flash": 0,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": 1,
+   "lift_lite_ci": [
+    0.33,
+    1.67
+   ],
+   "lift_reocr_plus_flash": 1.58,
+   "lift_reocr_plus_flash_ci": [
+    1.25,
+    1.92
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 259711,
+   "page_points_per_1k_usd_flash": 315564
+  },
+  {
+   "script": "Persian",
+   "period": "1501–1599",
+   "kind": "script type not recorded",
+   "books": 1,
+   "pages": 4,
+   "lite": 4,
+   "flash": 0,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": 1,
+   "lift_lite_ci": [
+    0.33,
+    1.67
+   ],
+   "lift_reocr_plus_flash": 1.58,
+   "lift_reocr_plus_flash_ci": [
+    1.25,
+    1.92
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 259711,
+   "page_points_per_1k_usd_flash": 315564
+  },
+  {
+   "script": "Persian",
+   "period": "1600–1799",
+   "kind": "script type not recorded",
+   "books": 5,
+   "pages": 9,
+   "lite": 2,
+   "flash": 7,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": 1,
+   "lift_lite_ci": [
+    0.33,
+    1.67
+   ],
+   "lift_reocr_plus_flash": 1.58,
+   "lift_reocr_plus_flash_ci": [
+    1.25,
+    1.92
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 259711,
+   "page_points_per_1k_usd_flash": 315564
+  },
+  {
+   "script": "Persian",
+   "period": "1501–1599",
+   "kind": "print",
+   "books": 5,
+   "pages": 96,
+   "lite": 1,
+   "flash": 95,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": 1,
+   "lift_lite_ci": [
+    0.33,
+    1.67
+   ],
+   "lift_reocr_plus_flash": 1.58,
+   "lift_reocr_plus_flash_ci": [
+    1.25,
+    1.92
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 259711,
+   "page_points_per_1k_usd_flash": 315564
+  },
+  {
+   "script": "Persian",
+   "period": "1600–1799",
+   "kind": "print",
+   "books": 4,
+   "pages": 30,
+   "lite": 0,
+   "flash": 30,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": 1,
+   "lift_lite_ci": [
+    0.33,
+    1.67
+   ],
+   "lift_reocr_plus_flash": 1.58,
+   "lift_reocr_plus_flash_ci": [
+    1.25,
+    1.92
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 259711,
+   "page_points_per_1k_usd_flash": 315564
+  },
+  {
+   "script": "Sanskrit",
+   "period": "1800+",
+   "kind": "print",
+   "books": 153,
+   "pages": 57790,
+   "lite": 45516,
+   "flash": 12274,
+   "other": 0,
+   "pilot_n": 10,
+   "lift_lite": 0.75,
+   "lift_lite_ci": [
+    0.3,
+    1.35
+   ],
+   "lift_reocr_plus_flash": 1.15,
+   "lift_reocr_plus_flash_ci": [
+    0.65,
+    1.7
+   ],
+   "usd_reocr_plus_lite": 175,
+   "usd_reocr_plus_flash": 228,
+   "page_points_per_1k_usd_lite": 194784,
+   "page_points_per_1k_usd_flash": 229683
+  },
+  {
+   "script": "Sanskrit",
+   "period": "to 1500",
+   "kind": "manuscript",
+   "books": 10,
+   "pages": 1777,
+   "lite": 1675,
+   "flash": 102,
+   "other": 0,
+   "pilot_n": 10,
+   "lift_lite": 0.75,
+   "lift_lite_ci": [
+    0.3,
+    1.35
+   ],
+   "lift_reocr_plus_flash": 1.15,
+   "lift_reocr_plus_flash_ci": [
+    0.65,
+    1.7
+   ],
+   "usd_reocr_plus_lite": 6,
+   "usd_reocr_plus_flash": 8,
+   "page_points_per_1k_usd_lite": 194784,
+   "page_points_per_1k_usd_flash": 229683
+  },
+  {
+   "script": "Sanskrit",
+   "period": "to 1500",
+   "kind": "print",
+   "books": 10,
+   "pages": 1571,
+   "lite": 1450,
+   "flash": 121,
+   "other": 0,
+   "pilot_n": 10,
+   "lift_lite": 0.75,
+   "lift_lite_ci": [
+    0.3,
+    1.35
+   ],
+   "lift_reocr_plus_flash": 1.15,
+   "lift_reocr_plus_flash_ci": [
+    0.65,
+    1.7
+   ],
+   "usd_reocr_plus_lite": 6,
+   "usd_reocr_plus_flash": 7,
+   "page_points_per_1k_usd_lite": 194784,
+   "page_points_per_1k_usd_flash": 229683
+  },
+  {
+   "script": "Sanskrit",
+   "period": "1800+",
+   "kind": "manuscript",
+   "books": 37,
+   "pages": 489,
+   "lite": 211,
+   "flash": 278,
+   "other": 0,
+   "pilot_n": 10,
+   "lift_lite": 0.75,
+   "lift_lite_ci": [
+    0.3,
+    1.35
+   ],
+   "lift_reocr_plus_flash": 1.15,
+   "lift_reocr_plus_flash_ci": [
+    0.65,
+    1.7
+   ],
+   "usd_reocr_plus_lite": 1,
+   "usd_reocr_plus_flash": 1,
+   "page_points_per_1k_usd_lite": 194784,
+   "page_points_per_1k_usd_flash": 229683
+  },
+  {
+   "script": "Sanskrit",
+   "period": "undated",
+   "kind": "print",
+   "books": 7,
+   "pages": 2192,
+   "lite": 208,
+   "flash": 1984,
+   "other": 0,
+   "pilot_n": 10,
+   "lift_lite": 0.75,
+   "lift_lite_ci": [
+    0.3,
+    1.35
+   ],
+   "lift_reocr_plus_flash": 1.15,
+   "lift_reocr_plus_flash_ci": [
+    0.65,
+    1.7
+   ],
+   "usd_reocr_plus_lite": 1,
+   "usd_reocr_plus_flash": 1,
+   "page_points_per_1k_usd_lite": 194784,
+   "page_points_per_1k_usd_flash": 229683
+  },
+  {
+   "script": "Sanskrit",
+   "period": "1501–1599",
+   "kind": "manuscript",
+   "books": 1,
+   "pages": 87,
+   "lite": 87,
+   "flash": 0,
+   "other": 0,
+   "pilot_n": 10,
+   "lift_lite": 0.75,
+   "lift_lite_ci": [
+    0.3,
+    1.35
+   ],
+   "lift_reocr_plus_flash": 1.15,
+   "lift_reocr_plus_flash_ci": [
+    0.65,
+    1.7
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 194784,
+   "page_points_per_1k_usd_flash": 229683
+  },
+  {
+   "script": "Sanskrit",
+   "period": "undated",
+   "kind": "manuscript",
+   "books": 2,
+   "pages": 82,
+   "lite": 75,
+   "flash": 7,
+   "other": 0,
+   "pilot_n": 10,
+   "lift_lite": 0.75,
+   "lift_lite_ci": [
+    0.3,
+    1.35
+   ],
+   "lift_reocr_plus_flash": 1.15,
+   "lift_reocr_plus_flash_ci": [
+    0.65,
+    1.7
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 194784,
+   "page_points_per_1k_usd_flash": 229683
+  },
+  {
+   "script": "Sanskrit",
+   "period": "1800+",
+   "kind": "script type not recorded",
+   "books": 185,
+   "pages": 39358,
+   "lite": 47,
+   "flash": 39310,
+   "other": 1,
+   "pilot_n": 10,
+   "lift_lite": 0.75,
+   "lift_lite_ci": [
+    0.3,
+    1.35
+   ],
+   "lift_reocr_plus_flash": 1.15,
+   "lift_reocr_plus_flash_ci": [
+    0.65,
+    1.7
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 194784,
+   "page_points_per_1k_usd_flash": 229683
+  },
+  {
+   "script": "Sanskrit",
+   "period": "1600–1799",
+   "kind": "manuscript",
+   "books": 2,
+   "pages": 49,
+   "lite": 4,
+   "flash": 45,
+   "other": 0,
+   "pilot_n": 10,
+   "lift_lite": 0.75,
+   "lift_lite_ci": [
+    0.3,
+    1.35
+   ],
+   "lift_reocr_plus_flash": 1.15,
+   "lift_reocr_plus_flash_ci": [
+    0.65,
+    1.7
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 194784,
+   "page_points_per_1k_usd_flash": 229683
+  },
+  {
+   "script": "Sanskrit",
+   "period": "1501–1599",
+   "kind": "print",
+   "books": 1,
+   "pages": 3,
+   "lite": 3,
+   "flash": 0,
+   "other": 0,
+   "pilot_n": 10,
+   "lift_lite": 0.75,
+   "lift_lite_ci": [
+    0.3,
+    1.35
+   ],
+   "lift_reocr_plus_flash": 1.15,
+   "lift_reocr_plus_flash_ci": [
+    0.65,
+    1.7
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 194784,
+   "page_points_per_1k_usd_flash": 229683
+  },
+  {
+   "script": "Sanskrit",
+   "period": "to 1500",
+   "kind": "script type not recorded",
+   "books": 31,
+   "pages": 5040,
+   "lite": 1,
+   "flash": 5039,
+   "other": 0,
+   "pilot_n": 10,
+   "lift_lite": 0.75,
+   "lift_lite_ci": [
+    0.3,
+    1.35
+   ],
+   "lift_reocr_plus_flash": 1.15,
+   "lift_reocr_plus_flash_ci": [
+    0.65,
+    1.7
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 194784,
+   "page_points_per_1k_usd_flash": 229683
+  },
+  {
+   "script": "Sanskrit",
+   "period": "1600–1799",
+   "kind": "print",
+   "books": 2,
+   "pages": 5,
+   "lite": 1,
+   "flash": 4,
+   "other": 0,
+   "pilot_n": 10,
+   "lift_lite": 0.75,
+   "lift_lite_ci": [
+    0.3,
+    1.35
+   ],
+   "lift_reocr_plus_flash": 1.15,
+   "lift_reocr_plus_flash_ci": [
+    0.65,
+    1.7
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 194784,
+   "page_points_per_1k_usd_flash": 229683
+  },
+  {
+   "script": "Sanskrit",
+   "period": "1600–1799",
+   "kind": "script type not recorded",
+   "books": 30,
+   "pages": 9050,
+   "lite": 0,
+   "flash": 9050,
+   "other": 0,
+   "pilot_n": 10,
+   "lift_lite": 0.75,
+   "lift_lite_ci": [
+    0.3,
+    1.35
+   ],
+   "lift_reocr_plus_flash": 1.15,
+   "lift_reocr_plus_flash_ci": [
+    0.65,
+    1.7
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 194784,
+   "page_points_per_1k_usd_flash": 229683
+  },
+  {
+   "script": "Sanskrit",
+   "period": "1501–1599",
+   "kind": "script type not recorded",
+   "books": 15,
+   "pages": 2768,
+   "lite": 0,
+   "flash": 2768,
+   "other": 0,
+   "pilot_n": 10,
+   "lift_lite": 0.75,
+   "lift_lite_ci": [
+    0.3,
+    1.35
+   ],
+   "lift_reocr_plus_flash": 1.15,
+   "lift_reocr_plus_flash_ci": [
+    0.65,
+    1.7
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 194784,
+   "page_points_per_1k_usd_flash": 229683
+  },
+  {
+   "script": "Pali",
+   "period": "1800+",
+   "kind": "print",
+   "books": 24,
+   "pages": 7518,
+   "lite": 7062,
+   "flash": 456,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": 0.58,
+   "lift_lite_ci": [
+    0,
+    1.58
+   ],
+   "lift_reocr_plus_flash": 0.42,
+   "lift_reocr_plus_flash_ci": [
+    -0.5,
+    1.5
+   ],
+   "usd_reocr_plus_lite": 27,
+   "usd_reocr_plus_flash": 35,
+   "page_points_per_1k_usd_lite": 150633,
+   "page_points_per_1k_usd_flash": 83884
+  },
+  {
+   "script": "Pali",
+   "period": "1600–1799",
+   "kind": "manuscript",
+   "books": 1,
+   "pages": 356,
+   "lite": 339,
+   "flash": 17,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": 0.58,
+   "lift_lite_ci": [
+    0,
+    1.58
+   ],
+   "lift_reocr_plus_flash": 0.42,
+   "lift_reocr_plus_flash_ci": [
+    -0.5,
+    1.5
+   ],
+   "usd_reocr_plus_lite": 1,
+   "usd_reocr_plus_flash": 2,
+   "page_points_per_1k_usd_lite": 150633,
+   "page_points_per_1k_usd_flash": 83884
+  },
+  {
+   "script": "Pali",
+   "period": "undated",
+   "kind": "print",
+   "books": 1,
+   "pages": 98,
+   "lite": 74,
+   "flash": 24,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": 0.58,
+   "lift_lite_ci": [
+    0,
+    1.58
+   ],
+   "lift_reocr_plus_flash": 0.42,
+   "lift_reocr_plus_flash_ci": [
+    -0.5,
+    1.5
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 150633,
+   "page_points_per_1k_usd_flash": 83884
+  },
+  {
+   "script": "Pali",
+   "period": "1800+",
+   "kind": "script type not recorded",
+   "books": 18,
+   "pages": 351,
+   "lite": 1,
+   "flash": 350,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": 0.58,
+   "lift_lite_ci": [
+    0,
+    1.58
+   ],
+   "lift_reocr_plus_flash": 0.42,
+   "lift_reocr_plus_flash_ci": [
+    -0.5,
+    1.5
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 150633,
+   "page_points_per_1k_usd_flash": 83884
+  },
+  {
+   "script": "Pali",
+   "period": "1800+",
+   "kind": "manuscript",
+   "books": 1,
+   "pages": 1,
+   "lite": 1,
+   "flash": 0,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": 0.58,
+   "lift_lite_ci": [
+    0,
+    1.58
+   ],
+   "lift_reocr_plus_flash": 0.42,
+   "lift_reocr_plus_flash_ci": [
+    -0.5,
+    1.5
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 150633,
+   "page_points_per_1k_usd_flash": 83884
+  },
+  {
+   "script": "Pali",
+   "period": "1600–1799",
+   "kind": "script type not recorded",
+   "books": 1,
+   "pages": 5,
+   "lite": 1,
+   "flash": 4,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": 0.58,
+   "lift_lite_ci": [
+    0,
+    1.58
+   ],
+   "lift_reocr_plus_flash": 0.42,
+   "lift_reocr_plus_flash_ci": [
+    -0.5,
+    1.5
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 150633,
+   "page_points_per_1k_usd_flash": 83884
+  },
+  {
+   "script": "Pali",
+   "period": "1600–1799",
+   "kind": "print",
+   "books": 1,
+   "pages": 5,
+   "lite": 1,
+   "flash": 4,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": 0.58,
+   "lift_lite_ci": [
+    0,
+    1.58
+   ],
+   "lift_reocr_plus_flash": 0.42,
+   "lift_reocr_plus_flash_ci": [
+    -0.5,
+    1.5
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 150633,
+   "page_points_per_1k_usd_flash": 83884
+  },
+  {
+   "script": "Arabic",
+   "period": "1800+",
+   "kind": "print",
+   "books": 99,
+   "pages": 17255,
+   "lite": 12502,
+   "flash": 4753,
+   "other": 0,
+   "pilot_n": 9,
+   "lift_lite": 0.39,
+   "lift_lite_ci": [
+    -0.06,
+    0.78
+   ],
+   "lift_reocr_plus_flash": 0.72,
+   "lift_reocr_plus_flash_ci": [
+    0.28,
+    1.17
+   ],
+   "usd_reocr_plus_lite": 48,
+   "usd_reocr_plus_flash": 63,
+   "page_points_per_1k_usd_lite": 101287,
+   "page_points_per_1k_usd_flash": 143801
+  },
+  {
+   "script": "Arabic",
+   "period": "to 1500",
+   "kind": "manuscript",
+   "books": 59,
+   "pages": 8814,
+   "lite": 5026,
+   "flash": 3788,
+   "other": 0,
+   "pilot_n": 9,
+   "lift_lite": 0.39,
+   "lift_lite_ci": [
+    -0.06,
+    0.78
+   ],
+   "lift_reocr_plus_flash": 0.72,
+   "lift_reocr_plus_flash_ci": [
+    0.28,
+    1.17
+   ],
+   "usd_reocr_plus_lite": 19,
+   "usd_reocr_plus_flash": 25,
+   "page_points_per_1k_usd_lite": 101287,
+   "page_points_per_1k_usd_flash": 143801
+  },
+  {
+   "script": "Arabic",
+   "period": "to 1500",
+   "kind": "print",
+   "books": 58,
+   "pages": 4307,
+   "lite": 3645,
+   "flash": 662,
+   "other": 0,
+   "pilot_n": 9,
+   "lift_lite": 0.39,
+   "lift_lite_ci": [
+    -0.06,
+    0.78
+   ],
+   "lift_reocr_plus_flash": 0.72,
+   "lift_reocr_plus_flash_ci": [
+    0.28,
+    1.17
+   ],
+   "usd_reocr_plus_lite": 14,
+   "usd_reocr_plus_flash": 18,
+   "page_points_per_1k_usd_lite": 101287,
+   "page_points_per_1k_usd_flash": 143801
+  },
+  {
+   "script": "Arabic",
+   "period": "1600–1799",
+   "kind": "print",
+   "books": 13,
+   "pages": 1630,
+   "lite": 1594,
+   "flash": 36,
+   "other": 0,
+   "pilot_n": 9,
+   "lift_lite": 0.39,
+   "lift_lite_ci": [
+    -0.06,
+    0.78
+   ],
+   "lift_reocr_plus_flash": 0.72,
+   "lift_reocr_plus_flash_ci": [
+    0.28,
+    1.17
+   ],
+   "usd_reocr_plus_lite": 6,
+   "usd_reocr_plus_flash": 8,
+   "page_points_per_1k_usd_lite": 101287,
+   "page_points_per_1k_usd_flash": 143801
+  },
+  {
+   "script": "Arabic",
+   "period": "1800+",
+   "kind": "manuscript",
+   "books": 78,
+   "pages": 4177,
+   "lite": 1047,
+   "flash": 3130,
+   "other": 0,
+   "pilot_n": 9,
+   "lift_lite": 0.39,
+   "lift_lite_ci": [
+    -0.06,
+    0.78
+   ],
+   "lift_reocr_plus_flash": 0.72,
+   "lift_reocr_plus_flash_ci": [
+    0.28,
+    1.17
+   ],
+   "usd_reocr_plus_lite": 4,
+   "usd_reocr_plus_flash": 5,
+   "page_points_per_1k_usd_lite": 101287,
+   "page_points_per_1k_usd_flash": 143801
+  },
+  {
+   "script": "Arabic",
+   "period": "1501–1599",
+   "kind": "print",
+   "books": 2,
+   "pages": 1032,
+   "lite": 998,
+   "flash": 34,
+   "other": 0,
+   "pilot_n": 9,
+   "lift_lite": 0.39,
+   "lift_lite_ci": [
+    -0.06,
+    0.78
+   ],
+   "lift_reocr_plus_flash": 0.72,
+   "lift_reocr_plus_flash_ci": [
+    0.28,
+    1.17
+   ],
+   "usd_reocr_plus_lite": 4,
+   "usd_reocr_plus_flash": 5,
+   "page_points_per_1k_usd_lite": 101287,
+   "page_points_per_1k_usd_flash": 143801
+  },
+  {
+   "script": "Arabic",
+   "period": "undated",
+   "kind": "print",
+   "books": 5,
+   "pages": 1190,
+   "lite": 594,
+   "flash": 596,
+   "other": 0,
+   "pilot_n": 9,
+   "lift_lite": 0.39,
+   "lift_lite_ci": [
+    -0.06,
+    0.78
+   ],
+   "lift_reocr_plus_flash": 0.72,
+   "lift_reocr_plus_flash_ci": [
+    0.28,
+    1.17
+   ],
+   "usd_reocr_plus_lite": 2,
+   "usd_reocr_plus_flash": 3,
+   "page_points_per_1k_usd_lite": 101287,
+   "page_points_per_1k_usd_flash": 143801
+  },
+  {
+   "script": "Arabic",
+   "period": "1600–1799",
+   "kind": "manuscript",
+   "books": 22,
+   "pages": 1699,
+   "lite": 517,
+   "flash": 1182,
+   "other": 0,
+   "pilot_n": 9,
+   "lift_lite": 0.39,
+   "lift_lite_ci": [
+    -0.06,
+    0.78
+   ],
+   "lift_reocr_plus_flash": 0.72,
+   "lift_reocr_plus_flash_ci": [
+    0.28,
+    1.17
+   ],
+   "usd_reocr_plus_lite": 2,
+   "usd_reocr_plus_flash": 3,
+   "page_points_per_1k_usd_lite": 101287,
+   "page_points_per_1k_usd_flash": 143801
+  },
+  {
+   "script": "Arabic",
+   "period": "1501–1599",
+   "kind": "manuscript",
+   "books": 6,
+   "pages": 1049,
+   "lite": 360,
+   "flash": 689,
+   "other": 0,
+   "pilot_n": 9,
+   "lift_lite": 0.39,
+   "lift_lite_ci": [
+    -0.06,
+    0.78
+   ],
+   "lift_reocr_plus_flash": 0.72,
+   "lift_reocr_plus_flash_ci": [
+    0.28,
+    1.17
+   ],
+   "usd_reocr_plus_lite": 1,
+   "usd_reocr_plus_flash": 2,
+   "page_points_per_1k_usd_lite": 101287,
+   "page_points_per_1k_usd_flash": 143801
+  },
+  {
+   "script": "Arabic",
+   "period": "undated",
+   "kind": "manuscript",
+   "books": 7,
+   "pages": 704,
+   "lite": 199,
+   "flash": 505,
+   "other": 0,
+   "pilot_n": 9,
+   "lift_lite": 0.39,
+   "lift_lite_ci": [
+    -0.06,
+    0.78
+   ],
+   "lift_reocr_plus_flash": 0.72,
+   "lift_reocr_plus_flash_ci": [
+    0.28,
+    1.17
+   ],
+   "usd_reocr_plus_lite": 1,
+   "usd_reocr_plus_flash": 1,
+   "page_points_per_1k_usd_lite": 101287,
+   "page_points_per_1k_usd_flash": 143801
+  },
+  {
+   "script": "Arabic",
+   "period": "to 1500",
+   "kind": "script type not recorded",
+   "books": 51,
+   "pages": 6669,
+   "lite": 47,
+   "flash": 6622,
+   "other": 0,
+   "pilot_n": 9,
+   "lift_lite": 0.39,
+   "lift_lite_ci": [
+    -0.06,
+    0.78
+   ],
+   "lift_reocr_plus_flash": 0.72,
+   "lift_reocr_plus_flash_ci": [
+    0.28,
+    1.17
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 101287,
+   "page_points_per_1k_usd_flash": 143801
+  },
+  {
+   "script": "Arabic",
+   "period": "1800+",
+   "kind": "script type not recorded",
+   "books": 29,
+   "pages": 6143,
+   "lite": 25,
+   "flash": 6118,
+   "other": 0,
+   "pilot_n": 9,
+   "lift_lite": 0.39,
+   "lift_lite_ci": [
+    -0.06,
+    0.78
+   ],
+   "lift_reocr_plus_flash": 0.72,
+   "lift_reocr_plus_flash_ci": [
+    0.28,
+    1.17
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 101287,
+   "page_points_per_1k_usd_flash": 143801
+  },
+  {
+   "script": "Arabic",
+   "period": "1600–1799",
+   "kind": "script type not recorded",
+   "books": 19,
+   "pages": 3535,
+   "lite": 7,
+   "flash": 3528,
+   "other": 0,
+   "pilot_n": 9,
+   "lift_lite": 0.39,
+   "lift_lite_ci": [
+    -0.06,
+    0.78
+   ],
+   "lift_reocr_plus_flash": 0.72,
+   "lift_reocr_plus_flash_ci": [
+    0.28,
+    1.17
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 101287,
+   "page_points_per_1k_usd_flash": 143801
+  },
+  {
+   "script": "Arabic",
+   "period": "undated",
+   "kind": "script type not recorded",
+   "books": 1,
+   "pages": 1,
+   "lite": 1,
+   "flash": 0,
+   "other": 0,
+   "pilot_n": 9,
+   "lift_lite": 0.39,
+   "lift_lite_ci": [
+    -0.06,
+    0.78
+   ],
+   "lift_reocr_plus_flash": 0.72,
+   "lift_reocr_plus_flash_ci": [
+    0.28,
+    1.17
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 101287,
+   "page_points_per_1k_usd_flash": 143801
+  },
+  {
+   "script": "Arabic",
+   "period": "1501–1599",
+   "kind": "script type not recorded",
+   "books": 6,
+   "pages": 1558,
+   "lite": 0,
+   "flash": 1558,
+   "other": 0,
+   "pilot_n": 9,
+   "lift_lite": 0.39,
+   "lift_lite_ci": [
+    -0.06,
+    0.78
+   ],
+   "lift_reocr_plus_flash": 0.72,
+   "lift_reocr_plus_flash_ci": [
+    0.28,
+    1.17
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 101287,
+   "page_points_per_1k_usd_flash": 143801
+  },
+  {
+   "script": "Chinese",
+   "period": "1600–1799",
+   "kind": "print",
+   "books": 169,
+   "pages": 19861,
+   "lite": 14494,
+   "flash": 5367,
+   "other": 0,
+   "pilot_n": 5,
+   "lift_lite": 0.3,
+   "lift_lite_ci": [
+    -0.6,
+    1.3
+   ],
+   "lift_reocr_plus_flash": 0.9,
+   "lift_reocr_plus_flash_ci": [
+    0.1,
+    1.8
+   ],
+   "usd_reocr_plus_lite": 56,
+   "usd_reocr_plus_flash": 73,
+   "page_points_per_1k_usd_lite": 77913,
+   "page_points_per_1k_usd_flash": 179752
+  },
+  {
+   "script": "Chinese",
+   "period": "1800+",
+   "kind": "print",
+   "books": 76,
+   "pages": 17315,
+   "lite": 11838,
+   "flash": 5477,
+   "other": 0,
+   "pilot_n": 5,
+   "lift_lite": 0.3,
+   "lift_lite_ci": [
+    -0.6,
+    1.3
+   ],
+   "lift_reocr_plus_flash": 0.9,
+   "lift_reocr_plus_flash_ci": [
+    0.1,
+    1.8
+   ],
+   "usd_reocr_plus_lite": 46,
+   "usd_reocr_plus_flash": 59,
+   "page_points_per_1k_usd_lite": 77913,
+   "page_points_per_1k_usd_flash": 179752
+  },
+  {
+   "script": "Chinese",
+   "period": "undated",
+   "kind": "print",
+   "books": 236,
+   "pages": 22073,
+   "lite": 9070,
+   "flash": 13003,
+   "other": 0,
+   "pilot_n": 5,
+   "lift_lite": 0.3,
+   "lift_lite_ci": [
+    -0.6,
+    1.3
+   ],
+   "lift_reocr_plus_flash": 0.9,
+   "lift_reocr_plus_flash_ci": [
+    0.1,
+    1.8
+   ],
+   "usd_reocr_plus_lite": 35,
+   "usd_reocr_plus_flash": 45,
+   "page_points_per_1k_usd_lite": 77913,
+   "page_points_per_1k_usd_flash": 179752
+  },
+  {
+   "script": "Chinese",
+   "period": "to 1500",
+   "kind": "print",
+   "books": 43,
+   "pages": 6801,
+   "lite": 5285,
+   "flash": 1516,
+   "other": 0,
+   "pilot_n": 5,
+   "lift_lite": 0.3,
+   "lift_lite_ci": [
+    -0.6,
+    1.3
+   ],
+   "lift_reocr_plus_flash": 0.9,
+   "lift_reocr_plus_flash_ci": [
+    0.1,
+    1.8
+   ],
+   "usd_reocr_plus_lite": 20,
+   "usd_reocr_plus_flash": 26,
+   "page_points_per_1k_usd_lite": 77913,
+   "page_points_per_1k_usd_flash": 179752
+  },
+  {
+   "script": "Chinese",
+   "period": "1501–1599",
+   "kind": "print",
+   "books": 40,
+   "pages": 7533,
+   "lite": 4322,
+   "flash": 3211,
+   "other": 0,
+   "pilot_n": 5,
+   "lift_lite": 0.3,
+   "lift_lite_ci": [
+    -0.6,
+    1.3
+   ],
+   "lift_reocr_plus_flash": 0.9,
+   "lift_reocr_plus_flash_ci": [
+    0.1,
+    1.8
+   ],
+   "usd_reocr_plus_lite": 17,
+   "usd_reocr_plus_flash": 22,
+   "page_points_per_1k_usd_lite": 77913,
+   "page_points_per_1k_usd_flash": 179752
+  },
+  {
+   "script": "Chinese",
+   "period": "to 1500",
+   "kind": "manuscript",
+   "books": 27,
+   "pages": 131,
+   "lite": 100,
+   "flash": 31,
+   "other": 0,
+   "pilot_n": 5,
+   "lift_lite": 0.3,
+   "lift_lite_ci": [
+    -0.6,
+    1.3
+   ],
+   "lift_reocr_plus_flash": 0.9,
+   "lift_reocr_plus_flash_ci": [
+    0.1,
+    1.8
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 1,
+   "page_points_per_1k_usd_lite": 77913,
+   "page_points_per_1k_usd_flash": 179752
+  },
+  {
+   "script": "Chinese",
+   "period": "1800+",
+   "kind": "manuscript",
+   "books": 26,
+   "pages": 227,
+   "lite": 81,
+   "flash": 146,
+   "other": 0,
+   "pilot_n": 5,
+   "lift_lite": 0.3,
+   "lift_lite_ci": [
+    -0.6,
+    1.3
+   ],
+   "lift_reocr_plus_flash": 0.9,
+   "lift_reocr_plus_flash_ci": [
+    0.1,
+    1.8
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 77913,
+   "page_points_per_1k_usd_flash": 179752
+  },
+  {
+   "script": "Chinese",
+   "period": "1600–1799",
+   "kind": "manuscript",
+   "books": 98,
+   "pages": 391,
+   "lite": 81,
+   "flash": 310,
+   "other": 0,
+   "pilot_n": 5,
+   "lift_lite": 0.3,
+   "lift_lite_ci": [
+    -0.6,
+    1.3
+   ],
+   "lift_reocr_plus_flash": 0.9,
+   "lift_reocr_plus_flash_ci": [
+    0.1,
+    1.8
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 77913,
+   "page_points_per_1k_usd_flash": 179752
+  },
+  {
+   "script": "Chinese",
+   "period": "undated",
+   "kind": "manuscript",
+   "books": 161,
+   "pages": 374,
+   "lite": 39,
+   "flash": 335,
+   "other": 0,
+   "pilot_n": 5,
+   "lift_lite": 0.3,
+   "lift_lite_ci": [
+    -0.6,
+    1.3
+   ],
+   "lift_reocr_plus_flash": 0.9,
+   "lift_reocr_plus_flash_ci": [
+    0.1,
+    1.8
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 77913,
+   "page_points_per_1k_usd_flash": 179752
+  },
+  {
+   "script": "Chinese",
+   "period": "1501–1599",
+   "kind": "manuscript",
+   "books": 19,
+   "pages": 101,
+   "lite": 30,
+   "flash": 71,
+   "other": 0,
+   "pilot_n": 5,
+   "lift_lite": 0.3,
+   "lift_lite_ci": [
+    -0.6,
+    1.3
+   ],
+   "lift_reocr_plus_flash": 0.9,
+   "lift_reocr_plus_flash_ci": [
+    0.1,
+    1.8
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 77913,
+   "page_points_per_1k_usd_flash": 179752
+  },
+  {
+   "script": "Chinese",
+   "period": "1800+",
+   "kind": "script type not recorded",
+   "books": 116,
+   "pages": 14470,
+   "lite": 16,
+   "flash": 14454,
+   "other": 0,
+   "pilot_n": 5,
+   "lift_lite": 0.3,
+   "lift_lite_ci": [
+    -0.6,
+    1.3
+   ],
+   "lift_reocr_plus_flash": 0.9,
+   "lift_reocr_plus_flash_ci": [
+    0.1,
+    1.8
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 77913,
+   "page_points_per_1k_usd_flash": 179752
+  },
+  {
+   "script": "Chinese",
+   "period": "to 1500",
+   "kind": "script type not recorded",
+   "books": 69,
+   "pages": 6621,
+   "lite": 13,
+   "flash": 6600,
+   "other": 8,
+   "pilot_n": 5,
+   "lift_lite": 0.3,
+   "lift_lite_ci": [
+    -0.6,
+    1.3
+   ],
+   "lift_reocr_plus_flash": 0.9,
+   "lift_reocr_plus_flash_ci": [
+    0.1,
+    1.8
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 77913,
+   "page_points_per_1k_usd_flash": 179752
+  },
+  {
+   "script": "Chinese",
+   "period": "1600–1799",
+   "kind": "script type not recorded",
+   "books": 299,
+   "pages": 32865,
+   "lite": 10,
+   "flash": 32850,
+   "other": 5,
+   "pilot_n": 5,
+   "lift_lite": 0.3,
+   "lift_lite_ci": [
+    -0.6,
+    1.3
+   ],
+   "lift_reocr_plus_flash": 0.9,
+   "lift_reocr_plus_flash_ci": [
+    0.1,
+    1.8
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 77913,
+   "page_points_per_1k_usd_flash": 179752
+  },
+  {
+   "script": "Chinese",
+   "period": "undated",
+   "kind": "script type not recorded",
+   "books": 17,
+   "pages": 20,
+   "lite": 6,
+   "flash": 6,
+   "other": 8,
+   "pilot_n": 5,
+   "lift_lite": 0.3,
+   "lift_lite_ci": [
+    -0.6,
+    1.3
+   ],
+   "lift_reocr_plus_flash": 0.9,
+   "lift_reocr_plus_flash_ci": [
+    0.1,
+    1.8
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 77913,
+   "page_points_per_1k_usd_flash": 179752
+  },
+  {
+   "script": "Chinese",
+   "period": "1501–1599",
+   "kind": "script type not recorded",
+   "books": 74,
+   "pages": 9216,
+   "lite": 3,
+   "flash": 9213,
+   "other": 0,
+   "pilot_n": 5,
+   "lift_lite": 0.3,
+   "lift_lite_ci": [
+    -0.6,
+    1.3
+   ],
+   "lift_reocr_plus_flash": 0.9,
+   "lift_reocr_plus_flash_ci": [
+    0.1,
+    1.8
+   ],
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": 77913,
+   "page_points_per_1k_usd_flash": 179752
+  },
+  {
+   "script": "Latin",
+   "period": "to 1500",
+   "kind": "print",
+   "books": 1214,
+   "pages": 208930,
+   "lite": 197938,
+   "flash": 10992,
+   "other": 0,
+   "pilot_n": 0,
+   "lift_lite": null,
+   "lift_lite_ci": null,
+   "lift_reocr_plus_flash": null,
+   "lift_reocr_plus_flash_ci": null,
+   "usd_reocr_plus_lite": 762,
+   "usd_reocr_plus_flash": 991,
+   "page_points_per_1k_usd_lite": null,
+   "page_points_per_1k_usd_flash": null
+  },
+  {
+   "script": "Latin",
+   "period": "to 1500",
+   "kind": "manuscript",
+   "books": 1031,
+   "pages": 56818,
+   "lite": 16534,
+   "flash": 40284,
+   "other": 0,
+   "pilot_n": 0,
+   "lift_lite": null,
+   "lift_lite_ci": null,
+   "lift_reocr_plus_flash": null,
+   "lift_reocr_plus_flash_ci": null,
+   "usd_reocr_plus_lite": 64,
+   "usd_reocr_plus_flash": 83,
+   "page_points_per_1k_usd_lite": null,
+   "page_points_per_1k_usd_flash": null
+  },
+  {
+   "script": "Hebrew/Aramaic",
+   "period": "1800+",
+   "kind": "print",
+   "books": 20,
+   "pages": 5875,
+   "lite": 5262,
+   "flash": 613,
+   "other": 0,
+   "pilot_n": 0,
+   "lift_lite": null,
+   "lift_lite_ci": null,
+   "lift_reocr_plus_flash": null,
+   "lift_reocr_plus_flash_ci": null,
+   "usd_reocr_plus_lite": 20,
+   "usd_reocr_plus_flash": 26,
+   "page_points_per_1k_usd_lite": null,
+   "page_points_per_1k_usd_flash": null
+  },
+  {
+   "script": "Hebrew/Aramaic",
+   "period": "1600–1799",
+   "kind": "print",
+   "books": 33,
+   "pages": 3738,
+   "lite": 2818,
+   "flash": 920,
+   "other": 0,
+   "pilot_n": 0,
+   "lift_lite": null,
+   "lift_lite_ci": null,
+   "lift_reocr_plus_flash": null,
+   "lift_reocr_plus_flash_ci": null,
+   "usd_reocr_plus_lite": 11,
+   "usd_reocr_plus_flash": 14,
+   "page_points_per_1k_usd_lite": null,
+   "page_points_per_1k_usd_flash": null
+  },
+  {
+   "script": "Latin",
+   "period": "to 1500",
+   "kind": "script type not recorded",
+   "books": 1033,
+   "pages": 80040,
+   "lite": 2306,
+   "flash": 77733,
+   "other": 1,
+   "pilot_n": 0,
+   "lift_lite": null,
+   "lift_lite_ci": null,
+   "lift_reocr_plus_flash": null,
+   "lift_reocr_plus_flash_ci": null,
+   "usd_reocr_plus_lite": 9,
+   "usd_reocr_plus_flash": 12,
+   "page_points_per_1k_usd_lite": null,
+   "page_points_per_1k_usd_flash": null
+  },
+  {
+   "script": "Hebrew/Aramaic",
+   "period": "1501–1599",
+   "kind": "print",
+   "books": 11,
+   "pages": 2260,
+   "lite": 1949,
+   "flash": 311,
+   "other": 0,
+   "pilot_n": 0,
+   "lift_lite": null,
+   "lift_lite_ci": null,
+   "lift_reocr_plus_flash": null,
+   "lift_reocr_plus_flash_ci": null,
+   "usd_reocr_plus_lite": 8,
+   "usd_reocr_plus_flash": 10,
+   "page_points_per_1k_usd_lite": null,
+   "page_points_per_1k_usd_flash": null
+  },
+  {
+   "script": "Hebrew/Aramaic",
+   "period": "1600–1799",
+   "kind": "manuscript",
+   "books": 30,
+   "pages": 1325,
+   "lite": 1275,
+   "flash": 50,
+   "other": 0,
+   "pilot_n": 0,
+   "lift_lite": null,
+   "lift_lite_ci": null,
+   "lift_reocr_plus_flash": null,
+   "lift_reocr_plus_flash_ci": null,
+   "usd_reocr_plus_lite": 5,
+   "usd_reocr_plus_flash": 6,
+   "page_points_per_1k_usd_lite": null,
+   "page_points_per_1k_usd_flash": null
+  },
+  {
+   "script": "Hebrew/Aramaic",
+   "period": "to 1500",
+   "kind": "manuscript",
+   "books": 11,
+   "pages": 1453,
+   "lite": 895,
+   "flash": 558,
+   "other": 0,
+   "pilot_n": 0,
+   "lift_lite": null,
+   "lift_lite_ci": null,
+   "lift_reocr_plus_flash": null,
+   "lift_reocr_plus_flash_ci": null,
+   "usd_reocr_plus_lite": 3,
+   "usd_reocr_plus_flash": 4,
+   "page_points_per_1k_usd_lite": null,
+   "page_points_per_1k_usd_flash": null
+  },
+  {
+   "script": "Hebrew/Aramaic",
+   "period": "1800+",
+   "kind": "manuscript",
+   "books": 20,
+   "pages": 829,
+   "lite": 824,
+   "flash": 5,
+   "other": 0,
+   "pilot_n": 0,
+   "lift_lite": null,
+   "lift_lite_ci": null,
+   "lift_reocr_plus_flash": null,
+   "lift_reocr_plus_flash_ci": null,
+   "usd_reocr_plus_lite": 3,
+   "usd_reocr_plus_flash": 4,
+   "page_points_per_1k_usd_lite": null,
+   "page_points_per_1k_usd_flash": null
+  },
+  {
+   "script": "Hebrew/Aramaic",
+   "period": "1501–1599",
+   "kind": "manuscript",
+   "books": 13,
+   "pages": 1383,
+   "lite": 597,
+   "flash": 786,
+   "other": 0,
+   "pilot_n": 0,
+   "lift_lite": null,
+   "lift_lite_ci": null,
+   "lift_reocr_plus_flash": null,
+   "lift_reocr_plus_flash_ci": null,
+   "usd_reocr_plus_lite": 2,
+   "usd_reocr_plus_flash": 3,
+   "page_points_per_1k_usd_lite": null,
+   "page_points_per_1k_usd_flash": null
+  },
+  {
+   "script": "Hebrew/Aramaic",
+   "period": "undated",
+   "kind": "print",
+   "books": 2,
+   "pages": 321,
+   "lite": 97,
+   "flash": 224,
+   "other": 0,
+   "pilot_n": 0,
+   "lift_lite": null,
+   "lift_lite_ci": null,
+   "lift_reocr_plus_flash": null,
+   "lift_reocr_plus_flash_ci": null,
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": null,
+   "page_points_per_1k_usd_flash": null
+  },
+  {
+   "script": "Hebrew/Aramaic",
+   "period": "1600–1799",
+   "kind": "script type not recorded",
+   "books": 125,
+   "pages": 23142,
+   "lite": 16,
+   "flash": 23085,
+   "other": 41,
+   "pilot_n": 0,
+   "lift_lite": null,
+   "lift_lite_ci": null,
+   "lift_reocr_plus_flash": null,
+   "lift_reocr_plus_flash_ci": null,
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": null,
+   "page_points_per_1k_usd_flash": null
+  },
+  {
+   "script": "Hebrew/Aramaic",
+   "period": "to 1500",
+   "kind": "print",
+   "books": 4,
+   "pages": 10,
+   "lite": 9,
+   "flash": 1,
+   "other": 0,
+   "pilot_n": 0,
+   "lift_lite": null,
+   "lift_lite_ci": null,
+   "lift_reocr_plus_flash": null,
+   "lift_reocr_plus_flash_ci": null,
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": null,
+   "page_points_per_1k_usd_flash": null
+  },
+  {
+   "script": "Hebrew/Aramaic",
+   "period": "1501–1599",
+   "kind": "script type not recorded",
+   "books": 35,
+   "pages": 8710,
+   "lite": 5,
+   "flash": 8705,
+   "other": 0,
+   "pilot_n": 0,
+   "lift_lite": null,
+   "lift_lite_ci": null,
+   "lift_reocr_plus_flash": null,
+   "lift_reocr_plus_flash_ci": null,
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": null,
+   "page_points_per_1k_usd_flash": null
+  },
+  {
+   "script": "Hebrew/Aramaic",
+   "period": "1800+",
+   "kind": "script type not recorded",
+   "books": 67,
+   "pages": 15341,
+   "lite": 2,
+   "flash": 15339,
+   "other": 0,
+   "pilot_n": 0,
+   "lift_lite": null,
+   "lift_lite_ci": null,
+   "lift_reocr_plus_flash": null,
+   "lift_reocr_plus_flash_ci": null,
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": null,
+   "page_points_per_1k_usd_flash": null
+  },
+  {
+   "script": "Hebrew/Aramaic",
+   "period": "to 1500",
+   "kind": "script type not recorded",
+   "books": 36,
+   "pages": 9531,
+   "lite": 2,
+   "flash": 9529,
+   "other": 0,
+   "pilot_n": 0,
+   "lift_lite": null,
+   "lift_lite_ci": null,
+   "lift_reocr_plus_flash": null,
+   "lift_reocr_plus_flash_ci": null,
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": null,
+   "page_points_per_1k_usd_flash": null
+  },
+  {
+   "script": "Hebrew/Aramaic",
+   "period": "undated",
+   "kind": "manuscript",
+   "books": 1,
+   "pages": 18,
+   "lite": 0,
+   "flash": 18,
+   "other": 0,
+   "pilot_n": 0,
+   "lift_lite": null,
+   "lift_lite_ci": null,
+   "lift_reocr_plus_flash": null,
+   "lift_reocr_plus_flash_ci": null,
+   "usd_reocr_plus_lite": 0,
+   "usd_reocr_plus_flash": 0,
+   "page_points_per_1k_usd_lite": null,
+   "page_points_per_1k_usd_flash": null
+  }
+ ],
+ "ranked_by_script": [
+  {
+   "script": "Greek",
+   "pages": 456839,
+   "lite": 123511,
+   "flash": 333181,
+   "other": 147,
+   "pilot_n": 14,
+   "lift_lite": {
+    "n": 14,
+    "mean": 1.04,
+    "ci": [
+     0.61,
+     1.5
+    ],
+    "better": 11,
+    "same": 3,
+    "worse": 0
+   },
+   "lift_both": {
+    "n": 14,
+    "mean": 1.14,
+    "ci": [
+     0.79,
+     1.54
+    ],
+    "better": 12,
+    "same": 2,
+    "worse": 0
+   },
+   "usd_lite": 476,
+   "usd_flash": 618,
+   "pp_lite": 270100,
+   "pp_flash": 227685,
+   "clears_floor": true
+  },
+  {
+   "script": "Persian",
+   "pages": 14996,
+   "lite": 6222,
+   "flash": 8774,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": {
+    "n": 6,
+    "mean": 1,
+    "ci": [
+     0.33,
+     1.67
+    ],
+    "better": 4,
+    "same": 2,
+    "worse": 0
+   },
+   "lift_both": {
+    "n": 6,
+    "mean": 1.58,
+    "ci": [
+     1.25,
+     1.92
+    ],
+    "better": 6,
+    "same": 0,
+    "worse": 0
+   },
+   "usd_lite": 24,
+   "usd_flash": 31,
+   "pp_lite": 259711,
+   "pp_flash": 315564,
+   "clears_floor": true
+  },
+  {
+   "script": "Sanskrit",
+   "pages": 120261,
+   "lite": 49278,
+   "flash": 70982,
+   "other": 1,
+   "pilot_n": 10,
+   "lift_lite": {
+    "n": 10,
+    "mean": 0.75,
+    "ci": [
+     0.3,
+     1.35
+    ],
+    "better": 7,
+    "same": 3,
+    "worse": 0
+   },
+   "lift_both": {
+    "n": 10,
+    "mean": 1.15,
+    "ci": [
+     0.65,
+     1.7
+    ],
+    "better": 9,
+    "same": 1,
+    "worse": 0
+   },
+   "usd_lite": 190,
+   "usd_flash": 247,
+   "pp_lite": 194784,
+   "pp_flash": 229683,
+   "clears_floor": true
+  },
+  {
+   "script": "Pali",
+   "pages": 8334,
+   "lite": 7479,
+   "flash": 855,
+   "other": 0,
+   "pilot_n": 6,
+   "lift_lite": {
+    "n": 6,
+    "mean": 0.58,
+    "ci": [
+     0,
+     1.58
+    ],
+    "better": 2,
+    "same": 4,
+    "worse": 0
+   },
+   "lift_both": {
+    "n": 6,
+    "mean": 0.42,
+    "ci": [
+     -0.5,
+     1.5
+    ],
+    "better": 2,
+    "same": 2,
+    "worse": 2
+   },
+   "usd_lite": 29,
+   "usd_flash": 37,
+   "pp_lite": 150633,
+   "pp_flash": 83884,
+   "clears_floor": false
+  },
+  {
+   "script": "Arabic",
+   "pages": 59763,
+   "lite": 26562,
+   "flash": 33201,
+   "other": 0,
+   "pilot_n": 9,
+   "lift_lite": {
+    "n": 9,
+    "mean": 0.39,
+    "ci": [
+     -0.06,
+     0.78
+    ],
+    "better": 5,
+    "same": 3,
+    "worse": 1
+   },
+   "lift_both": {
+    "n": 9,
+    "mean": 0.72,
+    "ci": [
+     0.28,
+     1.17
+    ],
+    "better": 7,
+    "same": 1,
+    "worse": 1
+   },
+   "usd_lite": 102,
+   "usd_flash": 133,
+   "pp_lite": 101287,
+   "pp_flash": 143801,
+   "clears_floor": false
+  },
+  {
+   "script": "Chinese",
+   "pages": 137999,
+   "lite": 45388,
+   "flash": 92590,
+   "other": 21,
+   "pilot_n": 5,
+   "lift_lite": {
+    "n": 5,
+    "mean": 0.3,
+    "ci": [
+     -0.6,
+     1.3
+    ],
+    "better": 2,
+    "same": 1,
+    "worse": 2
+   },
+   "lift_both": {
+    "n": 5,
+    "mean": 0.9,
+    "ci": [
+     0.1,
+     1.8
+    ],
+    "better": 4,
+    "same": 0,
+    "worse": 1
+   },
+   "usd_lite": 175,
+   "usd_flash": 227,
+   "pp_lite": 77913,
+   "pp_flash": 179752,
+   "clears_floor": false
+  },
+  {
+   "script": "Latin",
+   "pages": 345788,
+   "lite": 216778,
+   "flash": 129009,
+   "other": 1,
+   "pilot_n": 1,
+   "lift_lite": null,
+   "lift_both": null,
+   "usd_lite": 835,
+   "usd_flash": 1085,
+   "pp_lite": null,
+   "pp_flash": null,
+   "clears_floor": null
+  },
+  {
+   "script": "Hebrew/Aramaic",
+   "pages": 73936,
+   "lite": 13751,
+   "flash": 60144,
+   "other": 41,
+   "pilot_n": 1,
+   "lift_lite": null,
+   "lift_both": null,
+   "usd_lite": 53,
+   "usd_flash": 69,
+   "pp_lite": null,
+   "pp_flash": null,
+   "clears_floor": null
+  }
+ ]
+}
