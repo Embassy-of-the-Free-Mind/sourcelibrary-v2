@@ -19,7 +19,7 @@
  *               without recompute is drift).
  *
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/maintenance/drebbel-oven-5811.mjs --compare
- *   node --env-file=… scripts/maintenance/drebbel-oven-5811.mjs --fix-meta [--apply]
+ *   node --env-file=… scripts/maintenance/drebbel-oven-5811.mjs --fix-meta [--only <id>] [--apply]
  */
 import { withMongo } from '../lib/mongo.mjs';
 import { sourceFingerprints } from '../lib/source-fingerprints.mjs';
@@ -27,6 +27,7 @@ import { computeIdentityFields } from '../lib/identity-fields.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
 
 const APPLY = process.argv.includes('--apply');
+const ONLY = (() => { const i = process.argv.indexOf('--only'); return i > 0 ? process.argv[i + 1] : null; })(); // re-running a fix would overwrite its previous_value
 const SWEEP = 'drebbel-oven-5811';
 const BECHER = ['6a42727728e9db2e39c14050', '6a94036e351189dcd3082557'];
 
@@ -40,6 +41,11 @@ const FIXES = [
     id: '6a42727728e9db2e39c14050',
     set: { published: '1707', year: 1707 },
     basis: 'e-rara 19571363 (doi:10.3931/e-rara-71948) catalogue Impressum "[S.l.], 1707", ed. J. F. Reimmann; [40] Bl., 208 S.',
+  },
+  {
+    id: '6a44359d0235c9147000dd12',
+    set: { title: "Journal des voyages de Monsieur de Monconys … Seconde partie (Voyage d'Angleterre, Païs-Bas, Allemagne & Italie)" },
+    basis: 'title page (page 5) and first text page (page 9): "SECONDE PARTIE. VOYAGE D\'ANGLETERRE", May 1663. The record said "Première partie"; Part I (Lyon 1665) is a different volume (imported as 6ac27d29058764b16bdc390b)',
   },
 ];
 
@@ -56,7 +62,7 @@ await withMongo(async (db) => {
     }
   }
   if (process.argv.includes('--fix-meta')) {
-    for (const f of FIXES) {
+    for (const f of FIXES.filter((x) => !ONLY || x.id === ONLY)) {
       const b = await B.findOne({ id: f.id });
       const next = { ...b, ...f.set };
       const identity = computeIdentityFields(next);
