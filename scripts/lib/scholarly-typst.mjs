@@ -439,7 +439,25 @@ function markdownToTypst(md) {
 
 // ── Page filtering ──────────────────────────────────────────────────
 
-const SKIP_PAGE_TYPES = new Set(['blank']);
+const SKIP_PAGE_TYPES = new Set(['blank', 'digitizer-insert']);
+
+// Leaves that belong to the COPY, not the work: flyleaves, a dealer's
+// catalogue slip, shelfmarks, bookplates, the digitiser's colour chart. Fludd
+// UCH I opened its translation with 'Vault (6-6) Book # 71 … Collated'. The
+// words alone are not enough (real pages mention a flyleaf), so this applies
+// only before the work's title page, and to very short pages at the back.
+const COPY_MATTER = /\b(fly-?leaf|end-?paper|paste-?down|shelf-?mark|bookplate|ex-?libris|library stamp|catalog(ue)? (description|slip|entry|clipping)|collation (mark|note)|digiti[sz]ation (target|card)|colou?r (chart|checker|calibration)|scale bar|call number)\b/i;
+const bodyText = page => String(page.translation?.data || '').replace(/<(note|gloss|image-desc|summary|keywords|meta|page-num|header|sig|vocab|lang|language|margin)\b[^>]*>[\s\S]*?<\/\1>/g, '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+export function dropCopyMatter(pages, titlePageNumber) {
+  const lastN = pages.length ? pages[pages.length - 1].page_number : 0;
+  return pages.filter(p => {
+    const body = bodyText(p);
+    const copyish = COPY_MATTER.test(p.translation?.data || '') || !body;
+    if (titlePageNumber != null && p.page_number < titlePageNumber) return !(copyish && body.length < 600);
+    if (p.page_number > lastN - 4) return !(copyish && body.length < 200);
+    return true;
+  });
+}
 
 function isContentPage(page) {
   if (!page.translation?.data) return false;
@@ -801,7 +819,9 @@ export function generateTypstSource(book, pages, options = {}) {
   const bookUrl = `https://sourcelibrary.org/book/${bookSlug}`;
   const now = new Date().toISOString().split('T')[0];
   const year = now.slice(0, 4);
-  const translatedPages = pages.filter(isContentPage);
+  // The first title page: a page typed so, or the first full-page plate
+  const titleAt = [pages.find(p => p.page_type === 'title-page')?.page_number, ...illustrations.filter(il => il.full).map(il => il.page_number)].filter(n => n != null).sort((a, b) => a - b)[0];
+  const translatedPages = dropCopyMatter(pages.filter(isContentPage), titleAt);
   const author = String(book.author || 'Anonymous').replace(/\s*\|\s*/g, ', ');
   const language = book.language || 'source language';
 
@@ -1213,6 +1233,7 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
     pendingPlates.push(...pagePlates);
     if (!english.has(page.page_number)) { pendingHeads.push(...heads); continue; }
     let body = english.get(page.page_number);
+    body = dropDescriptiveNotes(body, { figures: (platesByPage.get(page.page_number) || []).length > 0 });
     body = attachOrphanNotes(body);
     if (pagePlates.length) {
       const taken = takeInscriptions(body);
@@ -1434,6 +1455,33 @@ export function closeSplitWord(typ, prevText, nextText) {
   return at < 0 ? typ : typ.slice(0, at).replace(/\s+$/, '') + typ.slice(at + m[1].length + 1);
 }
 
+/**
+ * The translation describes what it sees as well as translating it: "This page
+ * is blank … foxing", "An engraving shows a seven-tiered pedestal". The first
+ * is never the author's and always goes. The second is the only sign of a
+ * figure in a text-only edition, so it goes only where the plate itself is
+ * printed (`figures`): Fludd UCH I carried 342 such notes beside its plates.
+ */
+const PAGE_DESC_NOTE = /^(This|The) (page|leaf|flyleaf|verso|recto|page surface)\b[\s\S]*\b(blank|foxing|stain|faded|bleed-?through|torn|worn|damaged|no (legible |primary )?(printed |handwritten )?text|ink transfer|ghosting|spotting|discolou?r)/i;
+const FIGURE_DESC_NOTE = /^(A|An|This|The)\s+(?:[\w-]+\s+){0,4}(engraving|woodcut|illustration|diagram|image|ornament|tailpiece|headpiece|figure|vignette|plate|cut|border)s?\b/i;
+export function dropDescriptiveNotes(body, { figures = false } = {}) {
+  let out = '', i = 0;
+  for (let at = body.indexOf('#footnote[', i); at >= 0; at = body.indexOf('#footnote[', i)) {
+    let d = 0, j = at + 10;
+    for (; j < body.length; j++) {
+      if (body[j] === '\\') { j++; continue; }
+      if (body[j] === '[') d++;
+      else if (body[j] === ']') { if (d === 0) break; d--; }
+    }
+    const note = body.slice(at + 10, j);
+    const end = body[j + 1] === ';' ? j + 2 : j + 1;
+    const drop = PAGE_DESC_NOTE.test(note) || (figures && FIGURE_DESC_NOTE.test(note));
+    out += body.slice(i, at) + (drop ? '' : body.slice(at, end));
+    i = end;
+  }
+  return out + body.slice(i);
+}
+
 export function stripLeadingApparatus(text) {
   let t = String(text ?? '');
   for (let i = 0; i < 6; i++) {
@@ -1462,6 +1510,7 @@ const INDEX_MAX_ENTRIES = 240;
  * a 940-page herbal `botany` carries 300 locators, which is the subject of
  * the book rather than an index entry.
  */
+const PAGE_CONDITION_TERM = /^(blank( page| leaf| verso| recto)?|bleed-?through|show-?through|foxing|stain(s|ing)?|water ?damage|fly-?leaf|end-?paper|paste-?down|binding|bookplate|shelf-?mark|ink transfer|ghosting|scan(ning)?|digiti[sz]ation|marginalia|catchword|signature mark|page number|running head)$/i;
 export function indexEntries(entries, pageCount = 0) {
   if (!entries?.length) return [];
   // A term on more than a quarter of the pages is the book's subject, not a
@@ -1471,7 +1520,9 @@ export function indexEntries(entries, pageCount = 0) {
   const merged = new Map();
   for (const entry of entries) {
     const term = String(entry?.term ?? '').trim();
-    if (!term) continue;
+    // The index is built from page metadata, which also records the state of
+    // the PAGE (Fludd UCH I indexed 'blank page' and 'bleed-through')
+    if (!term || PAGE_CONDITION_TERM.test(term)) continue;
     const key = term.toLocaleLowerCase();
     const existing = merged.get(key);
     if (existing) {
