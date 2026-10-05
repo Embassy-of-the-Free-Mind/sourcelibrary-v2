@@ -65,6 +65,14 @@ await withMongo(async (db) => {
       await recordSweepAction(db, { sweep: SWEEP, book_id: id, action: 'bulk_unsuitable', detail: { reason } });
     }
   }
+  // This job's own spend, over its own books only: envelope drebbel-oven-5811 is shared with other
+  // #5811 jobs (drebbel-oven-5811's leftovers, drebbel-creative-5811), so the envelope total is not
+  // this job's number. Same measure the envelope gate uses (both usage stores), scoped to our ids.
+  if (process.argv.includes('--spend')) {
+    const { getScopeSpendUsd } = await import('../lib/spend-guard.mjs');
+    const { usd, rows, meterError } = await getScopeSpendUsd(db, { ids, since: new Date("2026-10-05T10:45:00Z") });
+    console.log(`drebbel-later-5811 spend on its ${ids.length} books since 2026-10-05T10:45Z: $${usd.toFixed(2)} (cap $10; ${rows} usage rows${meterError ? `; METER ERROR ${meterError}` : ""})`);
+  }
   if (process.argv.includes('--priority')) {
     const before = await B.find({ id: { $in: ids } }).project({ id: 1, processing_priority: 1 }).toArray();
     console.log(`${APPLY ? 'SET' : 'would set'} processing_priority 85 on ${before.length} books; before:`, JSON.stringify(before.map((b) => [b.id, b.processing_priority ?? null])));
