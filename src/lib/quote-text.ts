@@ -117,7 +117,16 @@ export const MARGINALIA_NOTE =
  * `translation.data` is nothing but a `<meta>` block has no verbatim text in it,
  * and serving an empty string as a quote is worse than saying so.
  */
-export function resolveQuoteText(page: Page, bookId: string, lang: string = 'en'): QuotableText | null {
+export function resolveQuoteText(
+  page: Page,
+  bookId: string,
+  lang: string = 'en',
+  // `mark: false` for text that is not leaving the building as an export — the
+  // Librarian's model context (#5867). The watermark belongs on what a caller
+  // copies out, not on what a model reads and paraphrases.
+  { mark = true }: { mark?: boolean } = {},
+): QuotableText | null {
+  const stamp = (text: string) => (mark ? markForExport(text, bookId) : text);
   // A non-English edition is tried FIRST and falls back to English, reporting
   // which one it served. Never the other way round, and never silently: the
   // Spanish edition covers 103 books out of 22,000, so the fallback is the
@@ -131,14 +140,14 @@ export function resolveQuoteText(page: Page, bookId: string, lang: string = 'en'
       // the words are the leaf's own — see SOURCE_COLUMN_NOTE.
       const source: QuoteTextSource =
         localized?.source === SOURCE_COLUMN_PROVENANCE ? 'source_column' : 'translation';
-      return { text: markForExport(cleaned, bookId), source, lang };
+      return { text: stamp(cleaned), source, lang };
     }
   }
 
   const translation = page.translation?.data
     ? stripEditorialWrappers(page.translation.data).trim()
     : '';
-  if (translation) return { text: markForExport(translation, bookId), source: 'translation', lang: 'en' };
+  if (translation) return { text: stamp(translation), source: 'translation', lang: 'en' };
 
   const ocrRaw = page.ocr?.data || '';
   const ocr = ocrRaw ? stripEditorialWrappers(ocrRaw).trim() : '';
