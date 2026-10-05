@@ -632,7 +632,7 @@ const TYPST_PREAMBLE = `
   let words-on = {
     // Labels: the English, with the word as engraved after it
     if labels.len() > 0 {
-      align(center, labels.map(((o, e)) => box[#e #text(fill: muted, style: "italic")[(#o)]]).join([#h(0.5em)·#h(0.5em)]))
+      align(center, labels.map(((o, e)) => box[#e#if o != none [ #text(fill: muted, style: "italic")[(#o)]]]).join([#h(0.5em)·#h(0.5em)]))
     }
     // Mottoes and sentences engraved on the plate, one to a line
     for (o, e) in lines {
@@ -1616,6 +1616,7 @@ const PLATE_KINDS = {
 // The text block is 125mm wide; a plate taller than this would leave no room
 // on its page for the caption and running head
 const PLATE_MAX_W_MM = 125;
+const SMALL_CUT_MIN_W_MM = 35;
 // 140mm, not the 175mm the page allows: a 1,000-page book with 600 plates ran
 // to 1,800 pages, and a smaller plate still reads at print size
 const PLATE_MAX_H_MM = 140;
@@ -1665,13 +1666,18 @@ function plateTypst(il) {
   let widthMm = il.full
     ? Math.min(FULL_PLATE_MAX_W_MM, FULL_PLATE_MAX_H_MM / aspect)
     : Math.min(PLATE_MAX_W_MM, PLATE_MAX_H_MM / aspect);
+  // A small cut prints small: scaled by how much of the source page's width it
+  // takes (the 1617 text block is ~80% of the page, ours 125mm), never below
+  // 35mm. A plate that filled the page is held by the caps above.
+  if (!il.full && il.pageShare) widthMm = Math.min(widthMm, Math.max(SMALL_CUT_MIN_W_MM, (il.pageShare / 0.8) * PLATE_MAX_W_MM));
   const kind = PLATE_KINDS[il.type] || 'Illustration';
   const c = plateCaption(il.caption);
   const pairs = list => `(${list.map(([a, b]) => `([${captionCell(a)}], [${captionCell(b)}])`).join(', ')},)`;
   const parts = [`kind: [${kind}]`];
   if (il.full) parts.push('full: true');
   if (c?.title) parts.push(`title: [${escapeTypst(c.title)}]`);
-  if (c?.labels.length) parts.push(`labels: ${pairs(c.labels)}`);
+  // A label that reads the same in English (a number, a name) prints once
+  if (c?.labels.length) parts.push(`labels: (${c.labels.map(([o, e]) => `(${String(o).trim() === String(e).trim() ? 'none' : `[${captionCell(o)}]`}, [${captionCell(e)}])`).join(', ')},)`);
   // Glosses the translation set as notes on this page are the same words; the
   // caption pass read them from the plate itself, so they are used only without it
   const lines = il.textFollows ? [] : c?.lines.length ? c.lines : (il.inscriptions || []).map(t => [null, t]);
@@ -1864,20 +1870,25 @@ export async function fetchIllustrations(db, book, { concurrency = 6, captions =
         const raw = await getImage(j.url);
         if (!raw) { console.warn(`plate on source page ${j.page_number} left out: image fetch failed`); continue; }
         let img = sharp(raw).rotate();
+        let pageShare = null;
         if (j.box) {
           // box_2d is [ymin, xmin, ymax, xmax] on 0–1000 of the whole page
           const { width: W, height: H } = await sharp(raw).rotate().metadata();
-          // A model's box hugs the ink and clips a corner; give it a little paper
-          const pad = 12;
-          const [y0, x0, y1, x1] = j.box.map(Number).map((v, k) => (k < 2 ? Math.max(0, v - pad) : Math.min(1000, v + pad)));
+          // A model's box hugs the ink and clips a corner; give it a little paper,
+          // in proportion: a fixed 12/1000 around a cut 90/1000 wide took in the
+          // words beside it (Fludd UCH I, pp. 248–249)
+          const [by0, bx0, by1, bx1] = j.box.map(Number);
+          const padY = Math.min(12, 0.06 * (by1 - by0)), padX = Math.min(12, 0.06 * (bx1 - bx0));
+          const [y0, x0, y1, x1] = [Math.max(0, by0 - padY), Math.max(0, bx0 - padX), Math.min(1000, by1 + padY), Math.min(1000, bx1 + padX)];
           const left = Math.max(0, Math.floor((x0 / 1000) * W)), top = Math.max(0, Math.floor((y0 / 1000) * H));
           const w = Math.min(W - left, Math.ceil(((x1 - x0) / 1000) * W)), h = Math.min(H - top, Math.ceil(((y1 - y0) / 1000) * H));
           if (!(w > 20 && h > 20)) continue;
           img = sharp(await img.extract({ left, top, width: w, height: h }).toBuffer());
+          pageShare = (x1 - x0) / 1000;
         }
         const { data, info } = await img.resize(1800, 1800, { fit: 'inside', withoutEnlargement: true })
           .jpeg({ quality: 84 }).toBuffer({ resolveWithObject: true });
-        out[i] = { page_number: j.page_number, type: j.type, full: Boolean(j.full), caption: j.caption || null, buffer: data, width: info.width, height: info.height };
+        out[i] = { page_number: j.page_number, type: j.type, full: Boolean(j.full), caption: j.caption || null, buffer: data, width: info.width, height: info.height, pageShare };
       } catch (err) {
         // Soft — the edition is complete without it — but never silent
         console.warn(`plate on source page ${j.page_number} left out: ${err.message}`);
@@ -1954,7 +1965,7 @@ export async function generateScholarlyPdf(book, pages, options = {}) {
   rest.illustrations = (options.illustrations || []).map((il, i) => {
     const file = `plate-${i + 1}.jpg`;
     writeFileSync(join(tmpDir, file), il.buffer);
-    return { page_number: il.page_number, type: il.type, full: il.full, caption: il.caption, width: il.width, height: il.height, file };
+    return { page_number: il.page_number, type: il.type, full: il.full, caption: il.caption, width: il.width, height: il.height, pageShare: il.pageShare, file };
   });
 
   writeFileSync(typFile, generateTypstSource(book, pages, rest), 'utf-8');
