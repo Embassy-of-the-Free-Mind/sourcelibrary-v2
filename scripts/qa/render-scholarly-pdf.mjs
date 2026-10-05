@@ -72,9 +72,12 @@ if (range) {
 
 // Front matter as the mint would pass it: the newest edition that has any
 const edition = [...(book.editions || [])].reverse().find(e => e.front_matter?.introduction);
+// A rewritten, fact-checked draft in scripts/qa/edition-texts/<id>/ wins over
+// the stored front matter, so it can be read in a render before it is adopted
+const draft = name => { const f = join('scripts', 'qa', 'edition-texts', bookId, `${name}.md`); return existsSync(f) ? readFileSync(f, 'utf-8') : null; };
 const options = {
-  introduction: edition?.front_matter?.introduction,
-  methodology: edition?.front_matter?.methodology,
+  introduction: draft('introduction') ?? edition?.front_matter?.introduction,
+  methodology: draft('methodology') ?? edition?.front_matter?.methodology,
   doi: edition?.doi,
   version: edition?.version,
   frontispiece: await fetchFrontispiece(book),
