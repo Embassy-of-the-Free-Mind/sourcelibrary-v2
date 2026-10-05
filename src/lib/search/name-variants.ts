@@ -36,7 +36,7 @@ import { getDb } from '@/lib/mongodb';
 /** Upper bound on variant terms added to one query. */
 export const MAX_NAME_VARIANTS = 40;
 /** Upper bound on exact-match candidates sent to `entities` per lookup. */
-const MAX_LOOKUP_CANDIDATES = 40;
+const MAX_LOOKUP_CANDIDATES = 80;
 /** A name longer than this many words is not looked up. */
 const MAX_NAME_WORDS = 4;
 /** A query longer than this is prose, not a name lookup. */
@@ -259,7 +259,7 @@ export function nameSpans(query: string): NameSpan[] {
 /**
  * Exact strings to look up in `entities.name` / `entities.aliases`. Those indexes are
  * case-sensitive, so each span is tried as typed, in Title Case, and with Latin diacritics
- * removed. Longest spans first; bounded.
+ * removed. Bounded: an 8-word query has 26 spans and at most 78 forms.
  */
 export function lookupCandidates(query: string): string[] {
   const out = new Set<string>();

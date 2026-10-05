@@ -62,6 +62,29 @@ The implementation uses two parallel calls: an unquoted full-text search (finds 
 - `src/app/api/books/[id]/search/route.ts` — `isPhrase`/`matchQuery` for within-book search
 - `src/app/[tenant]/search/page.tsx` — `passageResults` state, parallel search for quoted queries
 
+## Person-name variants in the keyword page lanes (#5888)
+
+`pages_search` is `lucene.standard`: no stemming and no diacritic folding, so "Drebbel" does not
+match Drebelius, Drebelii or Küffler-for-Kuffler. `expandPersonNames()` in
+`src/lib/search/name-variants.ts` bridges that at query time. When a query names a person in
+`entities` (name or alias; two indexed finds, cached 10 min, 400 ms cap, fails open), it returns
+up to 40 extra terms: the alias spellings of the same name token, doubled consonants written
+single, umlauted forms that `entities` confirms, and Latin case forms (-us/-ius, -i/-ii, -o/-io,
+-um/-ium, -ianus/-iana).
+
+- `/api/search`, `/api/books/[id]/search` and the Librarian's collection-scoped keyword list pass
+  them to `buildPageSearchStage(query, bookIds, { nameVariants })`, which ORs them in at
+  `NAME_VARIANT_BOOST` (1/40). That low on purpose: a variant is a rarer word, BM25 scores it
+  higher, and at 1/4 "Plato" lost all 48 of its top pages to "Platone".
+- The Librarian's global search runs them as a separate RRF list (`kwv`, weight 0.98), because
+  its keyword list reads only the top 48.
+- Not covered: quoted phrases (exact by request), the `?lang=<iso>` Postgres lane, the book-title
+  lanes, tenant library search, and a surname that is no entity's whole name or alias ("Kufler"
+  exists only inside "Abraham Kufler").
+- Aliases in `entities` include epithets and other people (Mercury → Hermes). Only alias tokens
+  that are a near spelling of the typed token are used — `isSpellingOf`. Do not widen it to
+  "all aliases".
+
 ## Atlas Search Indexes
 
 ### `books_search` on `books` collection

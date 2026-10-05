@@ -112,12 +112,13 @@ describe('isSpellingOf', () => {
 });
 
 describe('lookupCandidates', () => {
-  it('tries each span as typed and in Title Case, longest first, bounded', () => {
+  it('tries each span as typed and in Title Case, bounded', () => {
     const c = lookupCandidates('cornelis drebbel submarine');
     expect(c).toEqual(expect.arrayContaining(['Cornelis Drebbel', 'cornelis drebbel', 'Drebbel']));
-    expect(c.indexOf('cornelis drebbel submarine')).toBeLessThan(c.indexOf('drebbel'));
     expect(lookupCandidates('a b c d e f g h i j k l').length).toBe(0); // prose, not a name
-    expect(lookupCandidates('one two three four five six seven eight').length).toBeLessThanOrEqual(40);
+    const long = lookupCandidates('what did johann kuffler invent with cornelis drebbel');
+    expect(long.length).toBeLessThanOrEqual(80);
+    expect(long).toEqual(expect.arrayContaining(['Kuffler', 'Drebbel', 'Cornelis Drebbel'])); // none cut by the bound
   });
 
   it('adds the plain form of a name typed with diacritics', () => {
