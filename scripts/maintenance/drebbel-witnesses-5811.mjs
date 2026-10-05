@@ -34,12 +34,14 @@ const TAG = {
 export const RELEASED = [
   '6ac3ade2864e04424c043050', // Tymme, Dialogue Philosophicall 1612
   '6ac3ade5864e04424c0430a4', // Rubens, Correspondance III (1900)
-  '6ac3ade7864e04424c0432a5', // Rubens, Correspondance V (1907)
   '6a0a24020eca358f15e84edc', // Schwenter, Deliciae 1636
   '69b6ae73dc00a90e322b11c7', // Grotius, Poemata 1670
   '69aebe60c0472fef6455a8f3', // Wilkins, Mathematicall Magick 1648
 ];
-const HELD = ['6ac3adea864e04424c043491']; // Kepler/Hansch, Epistolae 1718 — awaits Derek (spend)
+const HELD = [
+  '6ac3adea864e04424c043491', // Kepler/Hansch, Epistolae 1718 — held at import, awaits Derek (spend)
+  '6ac3ade7864e04424c0432a5', // Rubens, Correspondance V (1907) — held after OCR reached the Drebbel letter (pp.166-172), before translation, to stay under the $5 cap
+];
 
 await withMongo(async (db) => {
   const B = db.collection('books');
