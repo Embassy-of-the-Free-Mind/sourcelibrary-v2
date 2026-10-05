@@ -621,13 +621,15 @@ const TYPST_PREAMBLE = `
     it.caption.body
   })
 }))
-#let plate(file, width, n, title: none, kind: [Illustration], labels: (), lines: (), key: (), full: false, follows: false) = {
+#let plate(file, width, n, title: none, kind: [Illustration], labels: (), lines: (), key: (), full: false, follows: false, words: false) = {
   plate-caption-w.update(calc.max(width, 100mm))
   plate-shift.update(if full { 105mm - margin-l - text-w / 2 } else { 0mm })
   let head = [#text(fill: rust, tracking: 0.04em, smallcaps[Fig. #context counter(figure.where(kind: "plate")).display()])#h(0.6em)#if title != none [#emph(title)] else [#kind]]
   let src-link = text(fill: muted, size: 7.8pt)[source page #link(page-url + n)[#n]]
-  let details = {
-    align(center)[#head#h(0.8em)#src-link]
+  // The words on the plate: under it, or — when they would push plate and
+  // caption past the foot of a page (a float cannot break) — in the text
+  // straight after it, where they may run on (words: true)
+  let words-on = {
     // Labels: the English, with the word as engraved after it
     if labels.len() > 0 {
       align(center, labels.map(((o, e)) => box[#e #text(fill: muted, style: "italic")[(#o)]]).join([#h(0.5em)·#h(0.5em)]))
@@ -640,6 +642,10 @@ const TYPST_PREAMBLE = `
     if key.len() > 0 {
       align(left, par(hanging-indent: 1em, key.map(((m, e)) => [#text(fill: rust)[#m]#h(0.35em)#e]).join([#h(0.4em)·#h(0.4em)])))
     }
+  }
+  let details = {
+    align(center)[#head#h(0.8em)#src-link]
+    if not words { words-on }
     if follows { align(center, text(fill: muted, style: "italic")[Its text is translated on the following page.]) }
   }
   // A frontispiece or title page has a page to itself, as in the book
@@ -651,6 +657,14 @@ const TYPST_PREAMBLE = `
     caption: context if in-outline.get() { if title != none { title } else [#kind, source page #n] } else { details },
     box(stroke: 0.4pt + hairline, inset: 1.2mm, image(file, width: width)),
   )
+  if words {
+    block(above: 1em, below: 1.2em, breakable: true, {
+      set par(justify: false, first-line-indent: 0pt, leading: 0.5em, spacing: 0.55em)
+      set text(size: 8.8pt, number-type: "lining", hyphenate: false)
+      align(center, text(fill: rust, tracking: 0.04em, smallcaps[Words on Fig. #context counter(figure.where(kind: "plate")).display()]))
+      words-on
+    })
+  }
   if full { pagebreak(weak: true) }
 }
 
@@ -1627,9 +1641,26 @@ export function captionCell(text) {
   return escapeTypst(text).replace(/^(\s*)(\d+)\./, '$1$2\\.').replace(/^(\s*)([-+=])(?=\s|$)/, '$1\\$2');
 }
 
+// A plate and its caption float as one unbreakable block, so together they
+// must fit the 237mm text height. The caption's height is estimated from its
+// characters (8.8pt: ~1.75mm a character, 4.6mm a line); a Fludd contents
+// table with a long caption ran past the foot of its page (UCH I, p. 1020).
+const PLATE_PAGE_MM = 222;
+const PLATE_MIN_H_MM = 100;
+export function captionHeightMm({ labels = [], lines = [], key = [], follows = false }, widthMm) {
+  const cpl = Math.max(100, widthMm) / 1.75;
+  const rows = chars => Math.ceil(chars / cpl);
+  const text = v => String(v ?? '').length;
+  let h = 4.6 + 2.2; // title line, gap under the image
+  h += rows(labels.reduce((n, [o, e]) => n + text(o) + text(e) + 6, 0)) * 4.6;
+  for (const [o, e] of lines) h += rows(text(e) + (o ? text(o) + 3 : 0)) * 4.6 + 1.7;
+  h += rows(key.reduce((n, [m, e]) => n + text(m) + text(e) + 4, 0)) * 4.6;
+  return h + (follows ? 4.6 : 0);
+}
+
 function plateTypst(il) {
   const aspect = il.height / il.width;
-  const widthMm = il.full
+  let widthMm = il.full
     ? Math.min(FULL_PLATE_MAX_W_MM, FULL_PLATE_MAX_H_MM / aspect)
     : Math.min(PLATE_MAX_W_MM, PLATE_MAX_H_MM / aspect);
   const kind = PLATE_KINDS[il.type] || 'Illustration';
@@ -1645,6 +1676,14 @@ function plateTypst(il) {
   if (il.textFollows) parts.push('follows: true');
   if (lines.length) parts.push(`lines: (${lines.map(([o, e]) => `(${o ? `[${captionCell(o)}]` : 'none'}, [${o ? captionCell(e) : e}])`).join(', ')},)`);
   if (c?.key.length) parts.push(`key: ${pairs(c.key)}`);
+  // Shrink the plate to make room for its words; when even the smallest
+  // plate leaves no room, the words follow it in the text instead
+  const capH = captionHeightMm({ labels: c?.labels || [], lines, key: c?.key || [], follows: il.textFollows }, widthMm);
+  const imgH = w => w * aspect + 2.4;
+  if (imgH(widthMm) + capH > PLATE_PAGE_MM) {
+    if (PLATE_PAGE_MM - capH >= PLATE_MIN_H_MM) widthMm = (PLATE_PAGE_MM - capH - 2.4) / aspect;
+    else parts.push('words: true');
+  }
   return `#plate(${typstString(il.file)}, ${widthMm.toFixed(1)}mm, "${il.page_number}", ${parts.join(', ')})`;
 }
 
