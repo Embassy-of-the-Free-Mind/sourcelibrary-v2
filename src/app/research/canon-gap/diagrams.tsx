@@ -563,7 +563,7 @@ function LoopStation({ k, title, what, example }: { k: number; title: string; wh
   );
 }
 
-export function QualityLoop({ n, adopted, tested, issueUrl }: { n: number; adopted: number; tested: number; issueUrl: string }) {
+export function QualityLoop({ n, adopted, tested, issueUrl, resultsHref }: { n: number; adopted: number; tested: number; issueUrl: string; resultsHref: string }) {
   const stations = [
     {
       title: 'Compare with an outside text',
@@ -593,7 +593,8 @@ export function QualityLoop({ n, adopted, tested, issueUrl }: { n: number; adopt
       caption={
         <>
           The same four steps run for each language and script, and again after every change. A change becomes the
-          default only when it beats the old method on the same pages; Figure {n + 1} shows each result. AI judges find
+          default only when it beats the old method on the same pages;{' '}
+          <a href={resultsHref} className="text-amber-800 underline underline-offset-2">each result is charted here</a>. AI judges find
           errors quickly and cheaply, but they are not scholars: a scholar&rsquo;s reading is the test the machine
           checks are calibrated against, and the first one, on the Tengyur draft, is planned.{' '}
           <a href={`${issueUrl}5800`} className="text-amber-800 underline underline-offset-2">#5800</a>
@@ -608,14 +609,14 @@ export function QualityLoop({ n, adopted, tested, issueUrl }: { n: number; adopt
       </div>
       <div aria-hidden className="hidden md:block mx-[12%] h-5 border-x border-b border-stone-300 rounded-b-md" />
       <div className="font-body text-xs text-stone-500 text-center mt-1 md:mt-1.5">
-        <span aria-hidden>↺ </span>repeat with the next change
+        then repeat with the next change
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-6">
         <div className="rounded-sm border border-teal-700/40 bg-teal-50 px-3 py-3 font-body text-sm">
           <div className="font-semibold text-teal-900">Better: it becomes the default</div>
           <div className="text-stone-700 mt-1 leading-snug">
-            {adopted} of the {tested} changes in Figure {n + 1} passed and are in use.
+            {adopted} of the {tested} changes tested so far passed and are in use.
           </div>
         </div>
         <div className="rounded-sm border border-stone-300 bg-stone-50 px-3 py-3 font-body text-sm">
