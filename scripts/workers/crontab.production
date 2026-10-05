@@ -282,3 +282,7 @@
 50 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-printed-page.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/backfill-printed-page-4291.mjs --apply --ocr-since=26h" >> /var/log/sourcelibrary/printed-page.log 2>&1
 # Vercel prod build watcher (#5708)
 7,22,37,52 * * * * cd /root/sourcelibrary && [ -f scripts/audit/vercel-prod-watch.mjs ] && flock -n /tmp/sl-vercel-prod-watch.lock bash -c "set -a; source .env.production.local; set +a; VERCEL_TOKEN=\$VERCEL_API_TOKEN node scripts/audit/vercel-prod-watch.mjs" >> /var/log/sourcelibrary/vercel-prod-watch.log 2>&1  # #5708
+# routing drift audit (#5871): DECISIONS.md against the live routers (getOcrModelForBook, getTranslateModelForBook, OCR_TRUST_TABLE)
+# and the generated table in .claude/docs/ocr-engine-routing.md. No model call, no database. --apply files, rewrites or closes ONE
+# GitHub issue per finding class (label routing-drift); nothing automated reads those issues. Guarded on the script so the line is inert until it is on main.
+40 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/routing-drift.mjs ] && flock -n /tmp/sl-routing-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/routing-drift.mjs --apply" >> /var/log/sourcelibrary/routing-drift.log 2>&1
