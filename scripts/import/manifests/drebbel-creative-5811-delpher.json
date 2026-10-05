@@ -1,0 +1,10 @@
+{
+  "campaign": "drebbel-creative-5811",
+  "collections": ["drebbel"],
+  "BOOKS": [
+    { "urn": "MMKB02:100007776", "title": "Cornelis Drebbel en zijne tijdgenooten", "author": "Jaeger, F. M. (Frans Maurits)", "year": 1922, "lang": "Dutch",
+      "place": "Groningen", "publisher": "P. Noordhoff",
+      "rights": "Public domain: author F. M. Jaeger d. 1945 (life+70 expired 2016); pre-1929 US. Delpher marks it freely accessible.",
+      "note": "#5811. Title page (scan 7): 'Cornelis Drebbel en zijne tijdgenooten door Prof. Dr. F. M. Jaeger. P. Noordhoff - 1922 - Groningen'. Appendix XII (printed pp.123ff, scan 127ff) prints Peiresc's 'Relation de ce que j'ay appris de la vie et inventions de Cornelius Derbbel ... par Abraham Kuffler ... septembre 1624' (Carpentras MS 1776 fol. 407-413), the earliest description of the oven: printed p.126 (scan 130), 'des inventions de fourneaux admirables entres aultres un pour conserver le feu en pareil degré de chaleur selon que l'on le desire plus ou moins ardant [Fol. 409]'." }
+  ]
+}
