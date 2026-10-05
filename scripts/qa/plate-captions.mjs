@@ -18,15 +18,19 @@
  * Usage:
  *   node --env-file=.env.production.local scripts/qa/plate-captions.mjs <bookId> [--limit N] [--pages 23,74] [--refresh]
  *
+ *   … --batch      submit every uncached page as ONE Gemini Batch job (half price; the default for a whole book)
+ *   … --collect    collect that job into the cache; pages that failed stay uncached for a realtime re-ask
+ *
  * Writes scripts/output/plate-captions/<bookId>.json (gitignored scratch); a page
  * already in the cache is not re-asked unless --refresh. Every call is metered
- * through gemini-script-client (endpoint scripts/qa/plate-captions.mjs).
+ * (realtime through gemini-script-client, Batch through gemini-rest-batch).
  */
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { callGemini } from '../lib/gemini-script-client.mjs';
+import { buildRequest, submitBatch, collectBatch } from '../lib/gemini-rest-batch.mjs';
 import { normalizeCaptionFigure, illustrationQuery } from '../lib/scholarly-typst.mjs';
 
 const MODEL = 'gemini-3-flash-preview';
@@ -98,30 +102,76 @@ try {
   if (opt('limit')) pageNumbers = pageNumbers.slice(0, Number(opt('limit')));
   console.log(`${pageNumbers.length} pages to caption`);
 
-  for (const n of pageNumbers) {
+  const isTitle = n => titleNumbers.has(n) || byPage.get(n).some(g => ['frontispiece', 'title-page'].includes(g.type));
+  // The scan, the prompt and the page id for one page, or null when the scan is not this book's
+  async function prepare(n) {
     const scanUrl = byPage.get(n)[0].image_url;
     // A page image key must carry its own book id (#3362)
-    if (!scanUrl?.includes(bookId)) { console.warn(`p${n}: scan URL not keyed to this book, skipped`); continue; }
+    if (!scanUrl?.includes(bookId)) { console.warn(`p${n}: scan URL not keyed to this book, skipped`); return null; }
     const page = await db.collection('pages').findOne({ book_id: bookId, page_number: n }, { projection: { _id: 1, 'ocr.data': 1, 'translation.data': 1 } });
     const raw = Buffer.from(await (await fetch(scanUrl)).arrayBuffer());
     const meta = await sharp(raw).metadata();
     const image = await sharp(raw).rotate().resize(1600, 1600, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 85 }).toBuffer();
+    const prompt = PROMPT({ ocr: page?.ocr?.data || '', translation: page?.translation?.data || '', count: isTitle(n) ? 1 : byPage.get(n).length, title: isTitle(n) });
+    return { n, scanUrl, scanWidth: meta.width, scanHeight: meta.height, image, prompt, pageId: page?._id ? String(page._id) : undefined };
+  }
+  const accept = (n, { scanUrl, scanWidth, scanHeight }, text) => {
+    const figures = parseJson(text).figures.map(normalizeCaptionFigure);
+    cache.pages[n] = { scan_url: scanUrl, scan_width: scanWidth, scan_height: scanHeight, figures };
+    console.log(`p${n}: ${figures.length} figure(s) — ${figures.map(f => `${f.title} [${(f.inscriptions || []).length} insc, ${(f.key || []).length} key]`).join(' | ')}`);
+  };
+
+  if (args.includes('--collect')) {
+    if (!cache.batch) throw new Error('no batch job recorded in the cache; run --batch first');
+    const res = await collectBatch(cache.batch, { endpoint: 'scripts/qa/plate-captions.mjs', bookId });
+    if (!res) { console.log(`${cache.batch.job_name}: still running`); process.exitCode = 3; }
+    else {
+      let failed = 0;
+      for (const row of res.rows) {
+        try {
+          if (row.outcome !== 'text') throw new Error(`${row.outcome}${row.error ? ` ${row.error}` : ''}`);
+          accept(Number(row.key), cache.batch.pages[row.key], row.text);
+        } catch (err) { failed++; console.warn(`p${row.key}: ${err.message}`); }
+      }
+      console.log(`${res.state}: ${res.rows.length} replies, ${failed} failed (re-ask those realtime), $${res.cost_usd.toFixed(4)}`);
+      const { pages, ...job } = cache.batch;
+      cache.batches = [...(cache.batches || []), { ...job, collected_at: new Date().toISOString(), state: res.state, cost_usd: res.cost_usd, failed }];
+      delete cache.batch;
+      writeFileSync(outFile, JSON.stringify(cache, null, 1));
+    }
+  } else if (args.includes('--batch')) {
+    if (cache.batch) throw new Error(`batch ${cache.batch.job_name} already submitted; --collect it first`);
+    const lines = [], pages = {};
+    // Eight scans at a time: the fetch, not the model, is the slow part of building the job
+    for (let i = 0; i < pageNumbers.length; i += 8) {
+      for (const p of await Promise.all(pageNumbers.slice(i, i + 8).map(prepare))) {
+        if (!p) continue;
+        lines.push({ key: String(p.n), request: buildRequest({ model: MODEL, prompt: p.prompt, images: [p.image], maxOutputTokens: 4000, responseMimeType: 'application/json' }) });
+        pages[p.n] = { scanUrl: p.scanUrl, scanWidth: p.scanWidth, scanHeight: p.scanHeight };
+      }
+      console.log(`prepared ${Math.min(i + 8, pageNumbers.length)}/${pageNumbers.length}`);
+    }
+    const job = await submitBatch({ model: MODEL, name: `plate-captions-${bookId}-${Date.now()}`, lines, issue: 5849, note: 'illustrated-edition caption pass (scripts/qa/plate-captions.mjs); results go to scripts/output only, never to pages' });
+    cache.batch = { ...job, pages };
+    writeFileSync(outFile, JSON.stringify(cache, null, 1));
+    console.log(`submitted ${job.job_name}: ${job.requests} pages, ${(job.bytes / 1e6).toFixed(0)} MB`);
+  } else for (const n of pageNumbers) {
+    const p = await prepare(n);
+    if (!p) continue;
     // Malformed JSON is the common failure and a second ask usually clears it
     for (let attempt = 1; attempt <= 2; attempt++) try {
       const { text } = await callGemini({
         model: MODEL,
-        prompt: PROMPT({ ocr: page?.ocr?.data || '', translation: page?.translation?.data || '', count: titleNumbers.has(n) || byPage.get(n).some(g => ['frontispiece', 'title-page'].includes(g.type)) ? 1 : byPage.get(n).length, title: titleNumbers.has(n) || byPage.get(n).some(g => ['frontispiece', 'title-page'].includes(g.type)) }),
-        imageParts: image,
+        prompt: p.prompt,
+        imageParts: p.image,
         endpoint: 'scripts/qa/plate-captions.mjs',
         type: 'image_extraction',
         bookId,
-        pageIds: page?._id ? [String(page._id)] : undefined,
+        pageIds: p.pageId ? [p.pageId] : undefined,
         maxOutputTokens: 4000,
         responseMimeType: 'application/json',
       });
-      const figures = parseJson(text).figures.map(normalizeCaptionFigure);
-      cache.pages[n] = { scan_url: scanUrl, scan_width: meta.width, scan_height: meta.height, figures };
-      console.log(`p${n}: ${figures.length} figure(s) — ${figures.map(f => `${f.title} [${(f.inscriptions || []).length} insc, ${(f.key || []).length} key]`).join(' | ')}`);
+      accept(n, p, text);
       break;
     } catch (err) {
       console.warn(`p${n} (attempt ${attempt}): ${err.message}`);
