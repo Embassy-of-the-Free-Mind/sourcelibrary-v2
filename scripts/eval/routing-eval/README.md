@@ -70,6 +70,18 @@ pass. The rule refuses a planted arm that fails 20 % more pages (the negative co
 but it cannot tell a 3 % failure rate from a 10 % one. For a tighter margin draw more books: about 150
 pages give ±5 points at a 10 % rate (`benchmark-dashboard-data.mjs`, `N_RATE`).
 
+## Is one run enough? The decision cards
+
+A rule file answers "is the candidate no worse on these pages?". It does not answer "was this run big
+enough for the money at stake?". That is `eval-design.md` §10.2, encoded as `DECISION_CARDS` and
+`cardVerdict(card, evidence)` in `scripts/eval/lib/routing-rules.mjs` (cards: `routing`, `backfill`,
+`prompt`, `gate`). Read the card before the seal: it fixes the books per language, the pooling rule, the
+minimum effect and whether a replication is owed. A routing-eval verdict (by eye and failure counts, no
+reference) can make a small or medium routing change sufficient, never a large one.
+
+`node scripts/eval/decision-cards-audit.mjs` replays the decisions of 2026-10 through the cards from
+stored results ($0); `tests/unit/decision-cards.test.ts` pins them.
+
 ## Replaying a stored run ($0)
 
 ```
