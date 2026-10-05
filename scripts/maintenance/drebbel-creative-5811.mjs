@@ -7,10 +7,12 @@
  * drebbel-creative-5811 — one-off job helper for #5811 (hard-to-reach Drebbel sources).
  *   --status    read-only per-book progress
  *   --priority  processing_priority 85 (Phase 4 takes the global top 60 before the envelope filter)
+ *   --spend     this job's books, both usage stores, per book and total
  *   --tag       add `drebbel` to books already held that carry a Drebbel text (dry run unless --apply)
  */
 import { withMongo } from '../lib/mongo.mjs';
 import { recordSweepAction } from '../lib/sweep-log.mjs';
+import { getScopeSpendUsd } from '../lib/spend-guard.mjs';
 
 const APPLY = process.argv.includes('--apply');
 const SWEEP = 'drebbel-creative-5811';
@@ -37,6 +39,11 @@ await withMongo(async (db) => {
       ]);
       console.log(`${b.id} ${String(b.pipeline_auto?.status).padEnd(16)} p${b.processing_priority ?? '-'} ${b.visible ? 'VISIBLE' : 'hidden '} arch ${arch}/${b.pages_count} ocr ${ocr} tr ${tr} ${b.language} ${(b.title || '').slice(0, 50)} /book/${b.slug}`);
     }
+  }
+  if (process.argv.includes('--spend')) {
+    let total = 0;
+    for (const id of IDS) { const s = await getScopeSpendUsd(db, { ids: [id] }); total += s.usd; console.log(`${id} $${s.usd.toFixed(3)} (${s.rows} rows)${s.meterError ? ' METER ERROR ' + s.meterError : ''}`); }
+    console.log(`TOTAL $${total.toFixed(3)}`);
   }
   if (process.argv.includes('--priority')) {
     const before = await B.find({ id: { $in: IDS } }).project({ id: 1, processing_priority: 1 }).toArray();
