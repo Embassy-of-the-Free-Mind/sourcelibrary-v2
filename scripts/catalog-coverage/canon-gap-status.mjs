@@ -41,9 +41,9 @@ const SHELF = 'scripts/catalog-coverage/eternity-shelf-5513.json';
 // status: done | running | next | blocked. cost_usd: the next action's cost where it has one.
 const STATUS = {
   'derge-tengyur': { status: 'running', owner_issue: 5497,
-    done: '213 volumes imported hidden and held; 128,369 of 128,639 pages carry the Esukhia public-domain text, aligned folio by folio to the BDRC scans. Draft English for 110,952 pages (187 volumes) with gemini-3-flash-preview, one page per request, for about $197; an unreviewed machine draft, with about 2 to 5 reversed statements per 100 pages measured against 84000.',
-    next_action: 'Drafting the last 26 volumes (17,400 pages: the end of the tantra commentaries, grammar, medicine, miscellany and the catalogue; about $31, approved 4 October). The volumes are published as an unreviewed machine draft only once the reader shows the licence and the draft label (#5571).',
-    cost_usd: 31 },
+    done: '213 volumes imported hidden and held; 128,369 of 128,639 pages carry the Esukhia public-domain text, aligned folio by folio to the BDRC scans. 125,918 of 128,369 pages (210 of 213 volumes) have a draft English, made with gemini-3-flash-preview one page per request, for about $228. The last three volumes (miscellany and the catalogue, 2,404 pages) were left when the approved budget ran out. It is an unreviewed machine draft, with about 2 to 5 reversed statements per 100 pages measured against 84000.',
+    next_action: 'Published as an unreviewed machine draft once the reader shows the licence and the draft label (#5571); Derek decides.',
+    cost_usd: 0 },
   'derge-kangyur': { status: 'running', owner_issue: 5665,
     done: '103 volumes imported from BDRC (W4CZ5369, the copy the Esukhia text transcribes), held and hidden; 62,375 pages carry the Esukhia public-domain text, aligned folio by folio, in every volume but one. The 40 texts 84000 lists as not begun have a draft English (1,835 pages, $3.39).',
     next_action: 'Align the last volume (vol. 20), then price a draft English for the rest of what 84000 has not translated. Publication waits on the reader showing the licence and draft label (#5571).',
