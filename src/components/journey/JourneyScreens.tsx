@@ -7,14 +7,38 @@
  * Trace toggle, the machine-draft line, the Cite panel) but are not the
  * reader's components, which are bound to live reader state.
  */
-import type { ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import type { JourneyData } from '@/lib/journey/types';
 import type { ScreenKey } from './journey-timeline';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
+import { trimImage } from '@/lib/journey/page-trim';
 import s from './JourneyFilm.module.css';
 
 /** The reader's own wording, so the film can never paraphrase the label. */
 const MACHINE_DRAFT_NOTICE = READER_UI_STRINGS.en.info.machineDraftNotice;
+
+/**
+ * A scan with any dark scanner bed around the page trimmed off (page-trim.ts).
+ * Shows the untrimmed image until the trimmed copy is ready, and keeps it if
+ * there is nothing to trim or the pixels cannot be read.
+ */
+function PageImg({ src, alt }: { src: string; alt: string }) {
+  const [trimmed, setTrimmed] = useState<{ from: string; url: string } | null>(null);
+  useEffect(() => {
+    let live = true;
+    const im = new Image();
+    im.crossOrigin = 'anonymous';
+    im.onload = () => {
+      const out = trimImage(im);
+      if (live && out !== im) setTrimmed({ from: src, url: (out as HTMLCanvasElement).toDataURL('image/jpeg', 0.9) });
+    };
+    im.src = src;
+    return () => { live = false; };
+  }, [src]);
+  const shown = trimmed?.from === src ? trimmed.url : src;
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={shown} alt={alt} decoding="async" crossOrigin="anonymous" />;
+}
 
 /** Wrap the first occurrence of each span; `hl` spans get the highlight class. */
 function marked(text: string, spans: { text: string; hl: boolean }[]): ReactNode[] {
@@ -62,8 +86,7 @@ function ReaderPane({ d, variant, originalFont }: { d: JourneyData; variant: Scr
       <div className={s.cols}>
         <div className={`${s.col} ${s.colScan}`}>
           <div className={s.colHead}>Scan</div>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={d.scan.url} alt={`Page ${d.pageNumber} of ${d.title}`} loading="lazy" decoding="async" crossOrigin="anonymous" />
+          <PageImg src={d.scan.url} alt={`Page ${d.pageNumber} of ${d.title}`} />
         </div>
         <div className={s.col}>
           <div className={s.colHead}>{d.language}</div>
@@ -94,11 +117,9 @@ function OverviewPane({ d }: { d: JourneyData }) {
     <div className={s.pane}>
       <div className={s.overview}>
         {d.cover ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={d.cover.url} alt="" loading="lazy" decoding="async" crossOrigin="anonymous" />
+          <PageImg src={d.cover.url} alt="" />
         ) : (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={d.scan.url} alt="" loading="lazy" decoding="async" crossOrigin="anonymous" />
+          <PageImg src={d.scan.url} alt="" />
         )}
         <div>
           <h3 className={s.ovTitle}>{d.displayTitle || d.title}</h3>

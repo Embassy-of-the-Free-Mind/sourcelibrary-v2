@@ -11,6 +11,11 @@
 import * as THREE from 'three';
 import type { JourneyData } from '@/lib/journey/types';
 import { clamp, S, lerp } from './journey-timeline';
+import { trimImage } from '@/lib/journey/page-trim';
+
+/** A loaded scene image, already trimmed of any dark scanner bed around the page. */
+export type SceneImage = HTMLImageElement | HTMLCanvasElement;
+const arOf = (im: SceneImage) => im.width / im.height;
 
 type V3 = THREE.Vector3;
 const V = (x: number, y: number, z: number) => new THREE.Vector3(x, y, z);
@@ -40,24 +45,24 @@ export interface JourneyScene {
   canvas: HTMLCanvasElement;
 }
 
-function loadImage(url: string): Promise<HTMLImageElement | null> {
+function loadImage(url: string): Promise<SceneImage | null> {
   return new Promise(res => {
     const im = new Image();
     // A slow image must not hold the whole film; it is drawn as plain paper instead.
     const timer = setTimeout(() => res(null), 10000);
     im.crossOrigin = 'anonymous';
     im.decoding = 'async';
-    im.onload = () => { clearTimeout(timer); res(im); };
+    im.onload = () => { clearTimeout(timer); res(trimImage(im)); };
     im.onerror = () => { clearTimeout(timer); res(null); };
     im.src = url;
   });
 }
 
 export async function loadSceneImages(d: JourneyData): Promise<{
-  scan: HTMLImageElement | null;
-  cover: HTMLImageElement | null;
-  vault: (HTMLImageElement | null)[];
-  shelf: (HTMLImageElement | null)[];
+  scan: SceneImage | null;
+  cover: SceneImage | null;
+  vault: (SceneImage | null)[];
+  shelf: (SceneImage | null)[];
 }> {
   const [scan, cover, vault, shelf] = await Promise.all([
     loadImage(d.scan.url),
@@ -102,7 +107,7 @@ export function createJourneyScene(
     tex.anisotropy = 8;
     return tex;
   }
-  function imgTex(im: HTMLImageElement | null | undefined): THREE.Texture | null {
+  function imgTex(im: SceneImage | null | undefined): THREE.Texture | null {
     if (!im) return null;
     const t = keep(new THREE.Texture(im));
     t.colorSpace = THREE.SRGBColorSpace;
@@ -153,7 +158,7 @@ export function createJourneyScene(
   const scanTex = imgTex(imgs.scan);
   const coverTex = imgTex(imgs.cover) || scanTex;
   const PH = 4;
-  const scanAr = imgs.scan ? imgs.scan.naturalWidth / imgs.scan.naturalHeight : (d.scan.ar || 0.7);
+  const scanAr = imgs.scan ? arOf(imgs.scan) : (d.scan.ar || 0.7);
   const PW = PH * clamp(scanAr, 0.45, 1.6);
   const pageGeo = geo(new THREE.PlaneGeometry(PW, PH));
   const pageMat = (tex: THREE.Texture | null) => keep(new THREE.MeshStandardMaterial({
@@ -182,13 +187,13 @@ export function createJourneyScene(
       const l = new THREE.Mesh(ledgeGeo, ledgeMat);
       l.position.set(0, ROW_Y(r) - ROW_H / 2 - .04, WALL_Z + .05); scene.add(l);
     }
-    const covers = imgs.shelf.filter((x): x is HTMLImageElement => !!x);
+    const covers = imgs.shelf.filter((x): x is SceneImage => !!x);
     let k = 0;
     for (let r = 0; r < ROWS && k < covers.length; r++) {
       const items: { k?: number; tw: number; gap?: boolean }[] = [];
       let w = 0;
       while (k < covers.length) {
-        const ar = covers[k].naturalWidth / covers[k].naturalHeight || .7;
+        const ar = arOf(covers[k]) || .7;
         const tw = ROW_H * Math.min(ar, 1.6);
         if (w + tw + (items.length ? .08 : 0) + (r === HERO_ROW ? HERO_GAP : 0) > WALL_W) break;
         items.push({ k, tw }); w += tw + (items.length > 1 ? .08 : 0); k++;
