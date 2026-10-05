@@ -29,6 +29,7 @@ export const IDS = [
   '6ac382ee966464312757c976', // Réaumur, Art of Hatching (1750)
   '6ac382ef966464312757cb83', // Bolton 1900
   '6ac382f2966464312757cbf8', // Boyle, Usefulnesse 1663
+  '6ac391b421755a8abfd8e653', // Phil. Trans. vols 11-12 (1676-78): prints Graves, Cairo ovens
 ];
 const extra = (() => { const i = process.argv.indexOf('--also'); return i > 0 ? process.argv[i + 1].split(',') : []; })();
 const ids = [...IDS, ...extra];
