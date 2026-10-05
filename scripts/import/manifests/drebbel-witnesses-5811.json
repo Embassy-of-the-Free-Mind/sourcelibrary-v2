@@ -1,0 +1,17 @@
+{
+  "note": "#5811 contemporaries who wrote about Drebbel (job drebbel-witnesses-5811, 2026-10-05). Every volume was identified from its own _djvu.txt title page and the Drebbel passage was found in its text before import. Imported HELD; released into envelope drebbel-oven-5811 within this job's $5 cap. Not imported (see #5811): Huygens BMHG 18 (1897) and Briefwisseling (Worp) — DBNL text only, no page-image scan reachable (IA none, Google Books API over quota, HathiTrust 403); Revius, Over-ysselsche sangen — not on IA; Galileo Ed. Naz. XIII (IA le-opere-di-galileo-galilei-edizione-nazionale-volume-13, Gallica scan) — its text has the 1624 'occhialino' letters but never names Drebbel, so not imported on this brief; Hiesserle, Raisbuch — no printed PD edition found.",
+  "campaign": "drebbel-witnesses-5811",
+  "collections": ["drebbel"],
+  "BOOKS": [
+    { "id": "bim_early-english-books-1475-1640_a-dialogue-philosophical_tymme-thomas_1612", "title": "A Dialogue Philosophicall, wherein Natures Secret Closet is Opened", "author": "Tymme, Thomas", "year": 1612, "lang": "English",
+      "note": "#5811 item 3. London 1612 (STC 24416). Dedication to Sir Edward Coke; the title-page summary describes 'an artificiall perpetuall motion ... by Cornelius Drebble of Alchmar' presented to King James, and Chap. 2 'herein is described an Instrument of perpetuall Motion' (with the figure). EEBO microfilm images (IA bim_early-english-books collection)." },
+    { "id": "correspondanced01roosgoog", "title": "Correspondance de Rubens et documents épistolaires concernant sa vie et ses œuvres (Codex diplomaticus Rubenianus), Tome troisième: du 27 juillet 1622 au 22 octobre 1626", "author": "Rubens, Peter Paul; Rooses, Max; Ruelens, Charles (eds.)", "year": 1900, "lang": "French",
+      "languages": ["French", "Italian"],
+      "note": "#5811 item 3. Anvers, Jos. Maes 1900 (title page: 'TOME TROISIÈME, DU 27 JUILLET 1622 AU 22 OCTOBRE 1626'). Peiresc's 1622 memorandum to Rubens asking for 'l'instrument de Drebbels' (the perpetuum mobile) with Rooses's commentary; Rubens–Peiresc letters of 3 Aug 1623 and 10 Jan 1625 on it. Harvard copy, Google scan." },
+    { "id": "correspondanced00roosgoog", "title": "Correspondance de Rubens et documents épistolaires concernant sa vie et ses œuvres (Codex diplomaticus Rubenianus), Tome cinquième: du 6 septembre 1628 au 26 décembre 1631", "author": "Rubens, Peter Paul; Rooses, Max (ed.)", "year": 1907, "lang": "French",
+      "languages": ["French", "Italian"],
+      "note": "#5811 item 3. Anvers, Jos. Maes (title page: 'TOME CINQUIÈME, DU 6 SEPTEMBRE 1628 AU 26 DÉCEMBRE 1631', 'Max Rooses et feu Ch. Ruelens'). Rubens from London, 1629: 'Il famosiss° filosofo Drebbel non ho visto si non d'incontro ...' with Rooses's French translation and note on Drebbel. University of Wisconsin copy, Google scan." },
+    { "id": "bub_gb_wMlXk6yNaigC", "title": "Epistolae ad Joannem Kepplerum mathematicum Caesareum scriptae, insertis ad easdem responsionibus Kepplerianis", "author": "Kepler, Johannes; Hansch, Michael Gottlieb (ed.)", "year": 1718, "lang": "Latin",
+      "note": "#5811 item 3 (Kepler and the Prague perpetual motion: the PD printed source). Leipzig 1718, ed. M. G. Hansch. Printed p.393 (letter of 1607): 'Jam si Drublerus spiritus ... vel si creare poterit animam novam, quae instrumenta ejus sine ponderibus ... moveat, et in motu conservet: tunc mihi erit magnus Apollo' (cited by Tierie 1932 n.1, p.64). Rome BNC copy, Google scan, Public Domain Mark." }
+  ]
+}
