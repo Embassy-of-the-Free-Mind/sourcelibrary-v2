@@ -6,7 +6,7 @@
 import { describe, it, expect } from 'vitest';
 import { execSync } from 'child_process';
 // @ts-expect-error — plain .mjs script library, no types
-import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus, resolveSourceImages, takeInscriptions, splitOriginalTerm, plateCaption, runningTitle, attachOrphanNotes, illustrationQuery, closeSplitWord, captionCell, captionHeightMm, dropCopyMatter, dropDescriptiveNotes, dropArchivedSpreads, dropEdgeFragments } from '../../scripts/lib/scholarly-typst.mjs';
+import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus, resolveSourceImages, takeInscriptions, splitOriginalTerm, plateCaption, runningTitle, attachOrphanNotes, illustrationQuery, closeSplitWord, captionCell, captionHeightMm, dropCopyMatter, dropDescriptiveNotes, dropArchivedSpreads, dropEdgeFragments, separateModelText, isUngroundedTranslation } from '../../scripts/lib/scholarly-typst.mjs';
 
 const page = (n: number, data: string, ocr?: string) => ({ page_number: n, translation: { data }, ...(ocr ? { ocr: { data: ocr } } : {}) });
 
@@ -443,6 +443,28 @@ describe('resolveSourceImages', () => {
 
   it('returns no link when the book records neither', () => {
     expect(resolveSourceImages({})).toEqual({ url: null, label: 'Source images' });
+  });
+});
+
+describe('the translation\'s own voice (Fludd UCH I)', () => {
+  it('turns a bracketed figure description into a note and drops page and glossary talk', () => {
+    const out = separateModelText('the object.\n\n[A diagram illustrating height measurement of a tower using lines of sight.]\n\n[Diagram of a 3x3 square with a 10th unit excluded]\n\nVocabulary used in this section: * Tower — The object. * Height — vertical.\n\nNext. [?The following lines are centered but the ink has faded. They likely contained a dedication.] [This page is blank.] [?mun] real [A] text.');
+    expect(out).toContain('<note>A diagram illustrating height measurement of a tower using lines of sight.</note>');
+    expect(out).toContain('<note>Diagram of a 3x3 square with a 10th unit excluded</note>');
+    expect(out).not.toMatch(/Vocabulary used|page is blank/);
+    expect(out).toContain('Next. [illegible]');
+    expect(out).toContain('[?mun] real [A] text.');
+  });
+
+  it('keeps a note inside a note inside it, instead of leaking the rest into the text (p. 280)', () => {
+    const { body } = translationToTypst('as in the mirror.\n\n<note>A circular diagram or mirror <note>original: "speculum"</note> represents progressions in rings.</note>\n\nRule II.');
+    expect(body).toContain('#footnote[A circular diagram or mirror ("speculum") represents progressions in rings.];');
+    expect(body).not.toMatch(/\n\s*represents progressions/);
+  });
+
+  it('flags a translation with no source text under it (a full-page engraving), not a page with text', () => {
+    expect(isUngroundedTranslation({ ocr: { data: '<page-num>414</page-num>\n<header>TRACT. II.</header>\n<vocab>ladder</vocab>' }, translation: { data: 'inserted into the hole of the next rod, so that they are joined together. '.repeat(5) } })).toBe(true);
+    expect(isUngroundedTranslation({ ocr: { data: '->EPIGRAMMA II.<-\n\nRomulus hirta lupae pressisse, sed ubera caprae' }, translation: { data: 'Romulus is said to have pressed the shaggy teats of a she-wolf. '.repeat(5) } })).toBe(false);
   });
 });
 

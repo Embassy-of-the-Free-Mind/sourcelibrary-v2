@@ -241,6 +241,25 @@ export function dropEdgeFragments(text, vocab = null) {
   return lines.filter((_, k) => keep[k]).join('\n');
 }
 
+/**
+ * The translation sometimes talks in its own voice inside the text, and that
+ * prints as if it were the author's (Fludd UCH I, 25 passages):
+ *   "[An engraving occupies the lower half of the page …]", "[Diagram of a 3x3 square]"
+ *     → made a note, so dropDescriptiveNotes treats it like any figure description
+ *   "[?The following lines are centered but the ink has faded … likely …]" → [illegible]
+ *   "[This page is blank.]" and "Vocabulary used in this section: * Tower — …" → gone
+ */
+const FIGURE_NOUN = '(?:diagram|illustration|woodcut|engraving|figure|image|table|chart|drawing|map|emblem|portrait|ornament|plate|vignette|picture|depiction|scheme|schematic)';
+const BRACKET_FIGURE = new RegExp(`\\[\\s*((?:(?:A|An|The|This|Two|Three|Several)\\s+(?:[\\w-]+\\s+){0,4}${FIGURE_NOUN}s?\\b|${FIGURE_NOUN}\\s*(?::|(?:of|showing|illustrating|depicting)\\b))[^\\[\\]]{20,})\\]`, 'gi');
+export const isIllegibleGuess = c => String(c).length > 40 && /\b(illegible|faded|legible|unreadable|likely|probably|ink|letters|shapes|cannot be read)\b/i.test(c);
+export function separateModelText(text) {
+  return String(text)
+    .replace(BRACKET_FIGURE, (_, c) => `<note>${c.trim()}</note>`)
+    .replace(/\[\?([^\[\]]{40,})\]/g, (m, c) => (isIllegibleGuess(c) ? '[illegible]' : m))
+    .replace(/[\[(]\s*\*?(?:This|The) page is (?:blank|empty)[^\])]*[\])]/gi, '')
+    .replace(/^[ \t]*\**(?:Vocabulary used in this section|Key (?:terms|vocabulary)(?: used)?(?: in this section)?|Glossary(?: of terms)?)\**\s*:[\s\S]*?(?=\n[ \t]*\n|(?![\s\S]))/gim, '');
+}
+
 export function translationToTypst(text, { runningHeads = new Set(), anchor = () => '', reflow = false, vocab = null } = {}) {
   if (!text) return { body: '', printedPage: null };
 
@@ -253,6 +272,7 @@ export function translationToTypst(text, { runningHeads = new Set(), anchor = ()
 
   out = out.replace(new RegExp(`<(${DROP_TAGS})(?:\\s[^>]*)?>[\\s\\S]*?<\\/\\1>`, 'gi'), '');
   out = dropEdgeFragments(out, vocab);
+  out = separateModelText(out);
 
   // Remove AI preambles — the canonical guard (#3108) catches conversational
   // openers ("Note: the text in the image is in French...") that the narrow
@@ -304,6 +324,13 @@ export function translationToTypst(text, { runningHeads = new Set(), anchor = ()
   // "[Marginal note:]" followed by its lines up to the next blank line
   out = extractLabelledMarginalia(out, marginal);
 
+  // A note inside a note ("<note>A circular diagram or mirror <note>original:
+  // \"speculum\"</note> represents …</note>") closed at the inner end and leaked the
+  // rest of the outer note into the text (Fludd UCH I p. 280; 116 in that book).
+  // The inner one becomes a parenthesis inside the outer.
+  for (let i = 0; i < 5 && /<note>(?:(?!<\/note>)[\s\S])*?<(?:note|gloss)>/i.test(out); i++) {
+    out = out.replace(/(<note>(?:(?!<\/?note>)[\s\S])*?)<(note|gloss)>([\s\S]*?)<\/\2>/gi, (_, before, __, inner) => `${before}(${inner.replace(/^original:\s*/i, '').trim()})`);
+  }
   out = out.replace(/<note>([\s\S]*?)<\/note>/gi, (_, c) => {
     const clean = cleanForNote(c);
     return clean ? footnote(clean) : '';
@@ -326,7 +353,7 @@ export function translationToTypst(text, { runningHeads = new Set(), anchor = ()
     return clean.length > 40 || /:\s/.test(clean) ? footnote(clean) : clean;
   });
 
-  out = out.replace(/<unclear>([\s\S]*?)<\/unclear>/gi, '[?$1]');
+  out = out.replace(/<unclear>([\s\S]*?)<\/unclear>/gi, (_, c) => (isIllegibleGuess(c) ? '[illegible]' : `[?${c}]`));
   out = out.replace(/<column-break\s*\/?>/gi, '\n\n');
   // <leaf-break/> (#5260): two leaves on one page image, not continuous — a paragraph break.
   out = out.replace(/<leaf-break\s*\/?>/gi, '\n\n');
@@ -505,6 +532,23 @@ const bodyText = page => String(page.translation?.data || '').replace(/<(note|gl
  * spreads before the 146 pages that repeat them. The spreads are the text only
  * when there is nothing else.
  */
+/**
+ * A translation with nothing under it. Where the transcription of a page has
+ * no text — a full-page engraving, a blank leaf with show-through — the model
+ * still wrote a "translation": a description of the picture, the next page's
+ * chapter, index entries, the show-through. Fludd UCH I had 22 such pages
+ * (pp. 228, 383, 483, 591, 648 …, each checked against the scan). The page
+ * keeps its place, so its plate still prints, but the text goes.
+ */
+const sourceText = s => String(s || '').replace(/->|<-/g, ' ')
+  .replace(/<detected-images>[\s\S]*?<\/detected-images>/g, '')
+  .replace(/<(note|meta|vocab|summary|keywords|image-desc|lang|language|page-num|header|sig|page-type|scan-quality|script|warning|columns|gloss|margin)\b[^>]*>[\s\S]*?<\/\1>/g, '')
+  .replace(/<[^>]+>/g, '').replace(/[#*|:\-\s>]+/g, ' ').trim();
+export function isUngroundedTranslation(page) {
+  if (!page.ocr?.data || !page.translation?.data) return false;
+  return sourceText(page.ocr.data).length < 30 && sourceText(page.translation.data).length > 200;
+}
+
 export function dropArchivedSpreads(pages) {
   const isSpread = p => p.page_type === 'archived-spread';
   return pages.some(p => !isSpread(p) && p.translation?.data) ? pages.filter(p => !isSpread(p)) : pages;
@@ -886,7 +930,8 @@ export function generateTypstSource(book, pages, options = {}) {
   const year = now.slice(0, 4);
   // The first title page: a page typed so, or the first full-page plate
   const titleAt = [pages.find(p => p.page_type === 'title-page')?.page_number, ...illustrations.filter(il => il.full).map(il => il.page_number)].filter(n => n != null).sort((a, b) => a - b)[0];
-  const translatedPages = dropCopyMatter(dropArchivedSpreads(pages).filter(isContentPage), titleAt);
+  const translatedPages = dropCopyMatter(dropArchivedSpreads(pages).filter(isContentPage), titleAt)
+    .map(p => (isUngroundedTranslation(p) ? { ...p, translation: { ...p.translation, data: '' } } : p));
   const author = String(book.author || 'Anonymous').replace(/\s*\|\s*/g, ', ');
   const language = book.language || 'source language';
 
@@ -1532,7 +1577,7 @@ export function closeSplitWord(typ, prevText, nextText) {
  * printed (`figures`): Fludd UCH I carried 342 such notes beside its plates.
  */
 const PAGE_DESC_NOTE = /^(This|The) (page|leaf|flyleaf|verso|recto|page surface)\b[\s\S]*\b(blank|foxing|stain|faded|bleed-?through|torn|worn|damaged|no (legible |primary )?(printed |handwritten )?text|ink transfer|ghosting|spotting|discolou?r)/i;
-const FIGURE_DESC_NOTE = /^(A|An|This|The)\s+(?:[\w-]+\s+){0,4}(engraving|woodcut|illustration|diagram|image|ornament|tailpiece|headpiece|figure|vignette|plate|cut|border)s?\b/i;
+const FIGURE_DESC_NOTE = /^(?:(A|An|This|The|Two|Three|Several)\s+(?:[\w-]+\s+){0,4}(engraving|woodcut|illustration|diagram|image|ornament|tailpiece|headpiece|figure|vignette|plate|cut|border|table|chart|drawing|map|emblem|portrait|picture|depiction|scheme|schematic)s?\b|(diagram|illustration|woodcut|engraving|figure|image|table|chart|drawing|emblem|picture)\s*(?::|(?:of|showing|illustrating|depicting)\b))/i;
 export function dropDescriptiveNotes(body, { figures = false } = {}) {
   let out = '', i = 0;
   for (let at = body.indexOf('#footnote[', i); at >= 0; at = body.indexOf('#footnote[', i)) {
