@@ -514,6 +514,8 @@ export default function CanonGapPage() {
             page from 1 to 5 for fidelity without knowing which version is which, and we open the page images to find
             the cause of every low score. These are model-scored samples, not a scholar&rsquo;s review. The full
             write-up is on <a href="/research/quality" className="text-amber-800 underline underline-offset-2">our translation quality page</a>.
+            Canon by canon, with what checks each one and what we would ask of a scholar:{' '}
+            <a href="/research/canon-quality" className="text-amber-800 underline underline-offset-2">how we check each canon</a>.
           </p>
           <QualityLoop n={6} adopted={IMPROVEMENTS.filter((r) => r.inUse).length} tested={IMPROVEMENTS.length} issueUrl={ISSUE_URL} />
           <ImprovementChart n={7} rows={IMPROVEMENTS} />
