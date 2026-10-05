@@ -6,7 +6,7 @@
 import { describe, it, expect } from 'vitest';
 import { execSync } from 'child_process';
 // @ts-expect-error — plain .mjs script library, no types
-import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus, resolveSourceImages, takeInscriptions, splitOriginalTerm, plateCaption, runningTitle, attachOrphanNotes, illustrationQuery } from '../../scripts/lib/scholarly-typst.mjs';
+import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus, resolveSourceImages, takeInscriptions, splitOriginalTerm, plateCaption, runningTitle, attachOrphanNotes, illustrationQuery, closeSplitWord } from '../../scripts/lib/scholarly-typst.mjs';
 
 const page = (n: number, data: string, ocr?: string) => ({ page_number: n, translation: { data }, ...(ocr ? { ocr: { data: ocr } } : {}) });
 
@@ -442,5 +442,26 @@ describe('resolveSourceImages', () => {
 
   it('returns no link when the book records neither', () => {
     expect(resolveSourceImages({})).toEqual({ url: null, label: 'Source images' });
+  });
+});
+
+describe('closeSplitWord', () => {
+  it('drops the fragment when the next page renders the whole word (Fludd UCH I, p. 175)', () => {
+    expect(closeSplitWord('The midpoint of each py-', 'The midpoint of each py-', 'of the pyramids is the true location of the Sun'))
+      .toBe('The midpoint of each');
+  });
+
+  it('finds the word behind an editorial bracket ("mat-" | "…[prime] matter")', () => {
+    expect(closeSplitWord('into the first mat-#footnote[A note.];', 'into the first mat-', '…[prime] matter of things'))
+      .toBe('into the first#footnote[A note.];');
+  });
+
+  it('keeps the fragment when the next page lost the word — guessing it would be inventing it', () => {
+    expect(closeSplitWord('where mon-', 'where mon-', 'rocks or cliffs are not found at all')).toBe('where mon-');
+  });
+
+  it('leaves a page that ends on a dash or a whole word alone', () => {
+    expect(closeSplitWord('the body —', 'the body —', 'bodies of the heavens')).toBe('the body —');
+    expect(closeSplitWord('the body', 'the body', 'bodies of the heavens')).toBe('the body');
   });
 });

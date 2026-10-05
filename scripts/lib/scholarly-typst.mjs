@@ -533,7 +533,12 @@ const TYPST_PREAMBLE = `
 // links to that page's facsimile on the site; the small line under it jumps to
 // the same page on the other side, when the edition has one.
 #let current-src = state("current-src", none)
-#let src(n, printed: none, side: "t", other: none) = in-margin(drop: -0.7em, {
+// A chapter that would run past 99 notes (sparse chapter lists: one Fludd book
+// carries 470) restarts them at the source page that would cross 99 instead —
+// notes: is how many that page carries — so a marker stays two digits. The
+// count only falls at the reset, so every number on the page it lands on is
+// still distinct (… 97 98 1 2).
+#let src(n, printed: none, side: "t", other: none, notes: 0) = { context if counter(footnote).get().first() + notes > 99 { counter(footnote).update(0) }; in-margin(drop: -0.7em, {
   set par(justify: false, leading: 0.4em, first-line-indent: 0pt)
   [#metadata(n)#label(side + "-" + n)]
   current-src.update(n)
@@ -545,7 +550,7 @@ const TYPST_PREAMBLE = `
     linebreak()
     link(label((if side == "t" { "o" } else { "t" }) + "-" + n), text(size: 7pt, fill: muted)[#other #sym.arrow.r])
   }
-})
+})}
 
 // Headings of the source itself — display lines, never outline entries
 #let dline(level, body) = block(above: if level <= 2 { 1.6em } else { 1.2em }, below: 0.9em, width: 100%, sticky: true, {
@@ -821,7 +826,10 @@ ${TYPST_PREAMBLE}
     let opens = query(heading.where(level: 1)).filter(h => h.location().page() == pg)
     if opens.len() == 0 {
       set text(size: 8pt, fill: muted, number-type: "lining")
-      let chapter = running-chapter.get()
+      // The state holds what was current at the top of the page; a chapter that
+      // opens on this page (a book opening under its headpiece) names the page
+      let starts = query(<chapter-start>).filter(m => m.location().page() == pg)
+      let chapter = if starts.len() > 0 { starts.first().value } else { running-chapter.get() }
       box(width: text-w + gutter + mcol, grid(
         columns: (text-w, gutter, mcol),
         [#text(tracking: 0.12em, smallcaps(running-title.get()))#h(1fr)#emph(chapter)], [],
@@ -909,6 +917,7 @@ ${TYPST_PREAMBLE}
   }
 }
 #show heading.where(level: 3): it => context {
+  restart-notes
   if in-body.get() { place(hide(box(width: 0pt, height: 0pt))) } else {
     block(above: 1.3em, below: 0.6em, sticky: true, text(size: 10.5pt, weight: "regular", tracking: 0.04em, smallcaps(it.body)))
   }
@@ -1135,7 +1144,8 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
   const joinedForm = body => body.replace(/^((?:%%SRC:[^%]*%%)?\s*)(?:\.\.\.|…)\s*/, '$1');
 
   const anchored = (body, there, label) => body.replace(/%%SRC:([to]):(\d+):(none|"[^"]*")%%/, (_, side, n, printed) =>
-    `#src("${n}", printed: ${printed}, side: "${side}"${there.has(Number(n)) ? `, other: ${typstString(label)}` : ''});`);
+    `#src("${n}", printed: ${printed}, side: "${side}"${there.has(Number(n)) ? `, other: ${typstString(label)}` : ''}${notesIn(body) ? `, notes: ${notesIn(body)}` : ''});`);
+  const notesIn = body => (body.match(/#footnote\[/g) || []).length;
 
   // A plate floats to the top or bottom of a nearby page; it is emitted
   // between paragraphs, never inside one, so a page whose text continues the
@@ -1149,6 +1159,7 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
 
   let chapterIdx = 0;
   let prevBody = null;
+  let prevIdx = -1;
   let pendingHeads = [];
   for (const page of translatedPages) {
     // Every chapter that starts at or before this page and has not been
@@ -1162,7 +1173,7 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
       const ch = chapters[chapterIdx++];
       const title = ch.titleEn || ch.title;
       heads.push(`#heading(level: ${(ch.level || 1) <= 1 ? 2 : 3})[${escapeTypst(title)}]`);
-      heads.push(`#running-chapter.update(${typstString(shorten(title, 46))})`);
+      heads.push(`#running-chapter.update(${typstString(shorten(title, 46))})#metadata(${typstString(shorten(title, 46))})<chapter-start>`);
     }
     // A full-page plate whose page is translated in the body (a title page)
     // does not repeat that text in its caption
@@ -1180,13 +1191,16 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
     const head = orn.filter(o => o.kind === 'headpiece').slice(0, 1).map(o => `#headpiece(${typstString(o.file)})`);
     const tail = orn.filter(o => o.kind === 'tailpiece').map((o, k) => `#tailpiece(${typstString(o.file)}, ${Math.min(42, Math.max(24, 30 * Math.sqrt(o.width / o.height))).toFixed(0)}mm, "tp-${page.page_number}-${k}")`);
     // A headpiece opens a new paragraph by nature; on a continued sentence it waits
-    if (continues(prevBody, body)) { doc.push(anchored(joinedForm(body), original, language)); pendingHeads.push(...heads); }
+    if (continues(prevBody, body)) {
+      doc[prevIdx] = closeSplitWord(doc[prevIdx], textOf(prevBody), textOf(body));
+      prevIdx = doc.push(anchored(joinedForm(body), original, language)) - 1; pendingHeads.push(...heads);
+    }
     else if (head.length) {
       // A book opening reads headpiece, book title, contents — and then its
       // plate (the contents table): the plates follow the opening text
-      doc.push(''); doc.push(...head); doc.push(...pendingHeads, ...heads); pendingHeads = []; doc.push(''); doc.push('#pagegap'); doc.push(anchored(body, original, language)); doc.push(''); doc.push(...flushPlates());
+      doc.push(''); doc.push(...head); doc.push(...pendingHeads, ...heads); pendingHeads = []; doc.push(''); doc.push('#pagegap'); prevIdx = doc.push(anchored(body, original, language)) - 1; doc.push(''); doc.push(...flushPlates());
     }
-    else { doc.push(''); doc.push(...pendingHeads, ...heads); pendingHeads = []; doc.push(''); doc.push(...flushPlates()); doc.push('#pagegap'); doc.push(anchored(body, original, language)); }
+    else { doc.push(''); doc.push(...pendingHeads, ...heads); pendingHeads = []; doc.push(''); doc.push(...flushPlates()); doc.push('#pagegap'); prevIdx = doc.push(anchored(body, original, language)) - 1; }
     if (tail.length) { doc.push(''); doc.push(...tail); }
     prevBody = body;
   }
@@ -1367,6 +1381,25 @@ export function urlDisplay(url) {
  * a change to a live reading surface and belongs in its own PR.
  */
 const APPARATUS_PHRASE = /^\[[^\]]{0,80}?(?:catchword|signature mark|sig\.? mark|page number|folio number|running head|(?:bottom|top)\s+(?:center|centre|left|right))[^\]]{0,40}\]/i;
+
+/**
+ * A word the printer split across a page break ("py-" | "ramids") reaches the
+ * translation as two pages, each translated alone: the first ends on the
+ * fragment, and the second usually renders the whole word ("…of the pyramids").
+ * Joined into one paragraph that reads "each py- of the pyramids". When one of
+ * the next page's first words starts with the fragment, the fragment goes;
+ * otherwise it stays, since guessing the word would be inventing it.
+ * `typ` is the earlier page's Typst; the two texts are the pages' plain prose.
+ */
+export function closeSplitWord(typ, prevText, nextText) {
+  const m = String(prevText).trimEnd().match(/(?:^|[^\p{L}])(\p{L}+)-$/u);
+  if (!m) return typ;
+  const frag = m[1].toLowerCase();
+  const words = String(nextText).replace(/^(?:\.\.\.|…)\s*/, '').replace(/[\[\]*_\\]/g, '').split(/\s+/).slice(0, 4);
+  if (!words.some(w => { const l = w.toLowerCase().replace(/^\P{L}+/u, ''); return l.length > frag.length && l.startsWith(frag); })) return typ;
+  const at = typ.lastIndexOf(`${m[1]}-`);
+  return at < 0 ? typ : typ.slice(0, at).replace(/\s+$/, '') + typ.slice(at + m[1].length + 1);
+}
 
 export function stripLeadingApparatus(text) {
   let t = String(text ?? '');
@@ -1804,7 +1837,11 @@ export async function fetchOrnaments(book, cache) {
       const raw = Buffer.from(await res.arrayBuffer());
       const { width: W, height: H } = await sharp(raw).metadata();
       for (const o of verified) {
-        const [y0, x0, y1, x1] = o.box_2d.map(Number);
+        // The finder's tailpiece boxes stop at the tip of the cul-de-lampe and
+        // clip it (Fludd UCH I, p. 23); a tailpiece stands in blank paper, which
+        // levels to white, so a margin costs nothing. A headpiece sits on text.
+        const pad = o.kind === 'tailpiece' ? 12 : 0;
+        const [y0, x0, y1, x1] = o.box_2d.map(Number).map((v, i) => Math.min(1000, Math.max(0, v + (i < 2 ? -pad : pad))));
         const left = Math.max(0, Math.floor((x0 / 1000) * W)), top = Math.max(0, Math.floor((y0 / 1000) * H));
         const width = Math.min(W - left, Math.ceil(((x1 - x0) / 1000) * W)), height = Math.min(H - top, Math.ceil(((y1 - y0) / 1000) * H));
         // Printed, not pasted: the scanned paper is levelled to the page's
