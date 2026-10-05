@@ -20,6 +20,7 @@ export const IDS = [
   '6ac3af023b2f03f7e59cba4e', // Boyle, General History of the Air (1692)
   '6ac3af043b2f03f7e59cbb6d', // Lettres de Peiresc I (1888)
   '6ac3af063b2f03f7e59cbf1c', // Lettres de Peiresc VI (1896)
+  '6ac3b18341429f5df9e8ac3a', // Sorbière, Relation (Paris 1664), Gallica
 ];
 const TAG = [
   ['69b51dbdefd8df28f2daa158', 'Basil Valentine, Offenbahrung (Erfurt 1624) with Drebbel, Tractatus von Natur der Elementen bound in (pp. 93ff)'],
