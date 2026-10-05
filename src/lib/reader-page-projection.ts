@@ -51,8 +51,6 @@ export const READER_PAGE_PROJECTION = {
   photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1,
   display_photo: 1, image_thumb: 1, thumbnail_blob: 1, thumbnail: 1,
   split_from_spread: 1, crop: 1,
-  // Where the page sits inside the scan, shown cropped to it (#5876).
-  page_frame: 1,
   columns: 1, display_brightness: 1, image_width: 1, image_height: 1, deepzoom: 1,
   ocr: 1, translation: 1, translations: 1, translation_es: 1, translation_withheld: 1,
   summary: 1, modernized: 1, transliteration: 1,
