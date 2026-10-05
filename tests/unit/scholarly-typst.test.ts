@@ -6,7 +6,7 @@
 import { describe, it, expect } from 'vitest';
 import { execSync } from 'child_process';
 // @ts-expect-error — plain .mjs script library, no types
-import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus, resolveSourceImages, takeInscriptions, splitOriginalTerm, plateCaption, runningTitle, attachOrphanNotes, illustrationQuery, closeSplitWord, captionCell, captionHeightMm, dropCopyMatter, dropDescriptiveNotes } from '../../scripts/lib/scholarly-typst.mjs';
+import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus, resolveSourceImages, takeInscriptions, splitOriginalTerm, plateCaption, runningTitle, attachOrphanNotes, illustrationQuery, closeSplitWord, captionCell, captionHeightMm, dropCopyMatter, dropDescriptiveNotes, dropArchivedSpreads } from '../../scripts/lib/scholarly-typst.mjs';
 
 const page = (n: number, data: string, ocr?: string) => ({ page_number: n, translation: { data }, ...(ocr ? { ocr: { data: ocr } } : {}) });
 
@@ -443,6 +443,16 @@ describe('resolveSourceImages', () => {
 
   it('returns no link when the book records neither', () => {
     expect(resolveSourceImages({})).toEqual({ url: null, label: 'Source images' });
+  });
+});
+
+describe('dropArchivedSpreads', () => {
+  const spread = (n: number) => ({ ...page(n, 'spread text'), page_type: 'archived-spread' });
+  it('leaves out a split book\'s spreads, which repeat its single pages (Indagine, Chiromantzey)', () => {
+    expect(dropArchivedSpreads([spread(-2), spread(-1), page(1, 'a'), page(2, 'b')]).map((p: { page_number: number }) => p.page_number)).toEqual([1, 2]);
+  });
+  it('keeps the spreads when they are the only text', () => {
+    expect(dropArchivedSpreads([spread(-2), spread(-1)])).toHaveLength(2);
   });
 });
 

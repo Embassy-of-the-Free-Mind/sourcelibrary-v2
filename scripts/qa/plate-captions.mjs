@@ -31,7 +31,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { callGemini } from '../lib/gemini-script-client.mjs';
 import { buildRequest, submitBatch, collectBatch } from '../lib/gemini-rest-batch.mjs';
-import { normalizeCaptionFigure, illustrationQuery } from '../lib/scholarly-typst.mjs';
+import { normalizeCaptionFigure, illustrationQuery, spreadPageNumbers } from '../lib/scholarly-typst.mjs';
 
 const MODEL = 'gemini-3-flash-preview';
 const args = process.argv.slice(2);
@@ -98,7 +98,9 @@ try {
   const titlePages = await db.collection('pages').find({ book_id: bookId, page_type: 'title-page' }, { projection: { page_number: 1, archived_photo: 1 } }).toArray();
   const titleNumbers = new Set(titlePages.map(p => p.page_number));
   for (const p of titlePages) if (!byPage.has(p.page_number)) byPage.set(p.page_number, [{ page_number: p.page_number, image_url: p.archived_photo, type: 'title-page' }]);
-  let pageNumbers = [...byPage.keys()].sort((a, b) => a - b);
+  // Not the archived spreads of a split book: their figures are the single pages' figures
+  const spreads = await spreadPageNumbers(db, bookId);
+  let pageNumbers = [...byPage.keys()].filter(n => !spreads.has(n)).sort((a, b) => a - b);
   if (opt('pages')) { const want = new Set(opt('pages').split(',').map(Number)); pageNumbers = pageNumbers.filter(n => want.has(n)); }
   pageNumbers = pageNumbers.filter(n => !cache.pages[n]);
   if (opt('limit')) pageNumbers = pageNumbers.slice(0, Number(opt('limit')));
@@ -146,7 +148,8 @@ try {
     const lines = [], pages = {};
     // Eight scans at a time: the fetch, not the model, is the slow part of building the job
     for (let i = 0; i < pageNumbers.length; i += 8) {
-      for (const p of await Promise.all(pageNumbers.slice(i, i + 8).map(prepare))) {
+      // A page whose scan will not download is left uncached for the next run, not fatal
+      for (const p of await Promise.all(pageNumbers.slice(i, i + 8).map(n => prepare(n).catch(err => { console.warn(`p${n}: ${err.message}`); return null; })))) {
         if (!p) continue;
         lines.push({ key: String(p.n), request: buildRequest({ model: MODEL, prompt: p.prompt, images: [p.image], maxOutputTokens: MAX_TOKENS, responseMimeType: 'application/json' }) });
         pages[p.n] = { scanUrl: p.scanUrl, scanWidth: p.scanWidth, scanHeight: p.scanHeight };
