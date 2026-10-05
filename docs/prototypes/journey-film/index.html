@@ -1,0 +1,797 @@
+<title>A Human Life Is Rare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Tiro+Devanagari+Sanskrit&display=swap">
+<style>
+/* Type: the faces sourcelibrary.org uses (Newsreader for reading, Inter for labels). Layout: full-bleed WebGL stage on a paper ground; caption set like a printed page, lower-left; a thin ruled transport along the bottom. Single light look by choice: the scans are the colour. */
+:root{
+  --paper:#ece3cf; --paper-2:#e2d7bf; --ink:#2b2219; --ink-soft:#5d5143; --rule:rgba(43,34,25,.28);
+  --rubric:#9a2f1f; --lapis:#2f4a72;
+  --f-display:"Newsreader", Georgia, serif;
+  --f-label:"Inter", -apple-system, "Segoe UI", sans-serif;
+  --f-body:"Newsreader", Georgia, serif;
+  color-scheme:light;
+}
+html,body{height:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);overflow:hidden;margin:0}
+#stage{position:fixed;inset:0}
+#stage canvas{display:block;width:100%;height:100%;cursor:pointer}
+.ui{transition:opacity .5s ease}
+body.clean .ui{opacity:0;pointer-events:none}
+
+.brand{position:fixed;top:calc(env(safe-area-inset-top,0px) + 18px);left:20px;display:flex;flex-direction:column;gap:3px}
+.brand .eyebrow{font:600 10px/1 var(--f-label);letter-spacing:.12em;text-transform:uppercase;color:var(--rubric)}
+.brand .name{font:400 20px/1.15 var(--f-display);color:var(--ink)}
+
+.caption{position:fixed;left:20px;bottom:calc(env(safe-area-inset-bottom,0px) + 80px);max-width:min(26rem,calc(34vw + 10px));display:flex;flex-direction:column;gap:6px;
+  padding:14px 18px 16px;background:rgba(236,227,207,.86);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  transition:opacity .35s ease, transform .35s ease}
+.caption.swap{opacity:0;transform:translateY(6px)}
+.caption .tag{font:600 11px/1.2 var(--f-label);letter-spacing:.12em;text-transform:uppercase;color:var(--rubric)}
+.caption h2{margin:0;font:500 clamp(24px,2.8vw,34px)/1.1 var(--f-display);color:var(--ink);text-wrap:balance}
+.caption p{margin:0;font:400 16px/1.5 var(--f-body);color:var(--ink-soft);max-width:65ch}
+
+.controls{position:fixed;left:16px;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);display:flex;align-items:center;gap:12px;
+  padding:8px 4px;border-top:1px solid var(--rule)}
+.btn{flex:none;width:36px;height:36px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--rule);background:transparent;color:var(--ink);cursor:pointer}
+.btn:hover{border-color:var(--rubric);color:var(--rubric)}
+.btn:focus-visible,.seg:focus-visible{outline:2px solid var(--rubric);outline-offset:2px}
+.btn svg{width:14px;height:14px;fill:currentColor}
+.track{flex:1;min-width:0;display:flex;gap:6px;height:36px;align-items:stretch;cursor:pointer;touch-action:none}
+.seg{position:relative;min-width:0;border:0;padding:0;background:transparent;color:var(--ink-soft);cursor:pointer;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;text-align:left}
+.seg .bar{height:2px;background:var(--rule);overflow:hidden;position:relative}
+.seg .fill{position:absolute;inset:0;transform-origin:left;transform:scaleX(0);background:var(--rubric)}
+.seg .lbl{font:600 10px/1 var(--f-label);letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.seg.on .lbl{color:var(--ink)}
+.time{flex:none;font:500 12px/1 var(--f-label);color:var(--ink-soft);font-variant-numeric:tabular-nums oldstyle-nums;min-width:84px;text-align:right}
+.hint{position:fixed;top:calc(env(safe-area-inset-top,0px) + 20px);right:20px;font:400 12px/1.4 var(--f-label);color:var(--ink-soft);text-align:right}
+.hint kbd{font:inherit;font-style:normal;color:var(--ink)}
+
+.outro{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;pointer-events:none;opacity:0;padding-inline:16px;
+  background:rgba(236,227,207,.9)}
+.outro .o-eyebrow{font:600 12px/1 var(--f-label);letter-spacing:.12em;text-transform:uppercase;color:var(--rubric)}
+.outro h1{margin:0;font:400 clamp(30px,5vw,60px)/1.08 var(--f-display);max-width:20ch;color:var(--ink);text-wrap:balance}
+.outro .o-link{pointer-events:auto;font:600 13px/1 var(--f-label);letter-spacing:.12em;text-transform:uppercase;color:var(--rubric);text-decoration:none;border-bottom:1px solid var(--rubric);padding:6px 2px;margin-top:10px}
+.outro .o-link:hover{color:var(--ink);border-color:var(--ink)}
+.outro p{margin:0;font:italic 400 clamp(15px,2vw,20px)/1.4 var(--f-body);color:var(--ink-soft);max-width:44rem}
+
+.card{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;pointer-events:none;opacity:0;visibility:hidden;padding-inline:16px;background:rgba(236,227,207,.97)}
+.card .k-eyebrow{font:600 13px/1 var(--f-label);letter-spacing:.12em;text-transform:uppercase;color:var(--rubric)}
+.card h1{margin:0;font:500 clamp(36px,6vw,72px)/1.04 var(--f-display);letter-spacing:-.01em;color:var(--ink);text-wrap:balance;max-width:16ch}
+.card p{margin:0;font:italic 400 clamp(16px,2vw,21px)/1.45 var(--f-body);color:var(--ink-soft);max-width:36rem;text-wrap:pretty}
+.card .k-rule{width:120px;height:1px;background:var(--ink);opacity:.5}
+.card ol{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 28px;font:500 14px/1 var(--f-label);color:var(--ink)}
+.card ol li span{color:var(--rubric);margin-right:6px}
+.screen-bg{position:fixed;inset:0;background:var(--paper);opacity:0;pointer-events:none;z-index:2}
+.caption,.controls,.brand,.hint{z-index:6}
+.screen{z-index:3}
+.card,.outro{z-index:5}
+.screen{position:fixed;top:calc(env(safe-area-inset-top,0px) + 76px);right:24px;bottom:calc(env(safe-area-inset-bottom,0px) + 76px);left:calc(min(28rem,34vw) + 44px);display:flex;flex-direction:column;opacity:0;visibility:hidden;
+  background:#1a1612;border:1px solid var(--ink);box-shadow:0 18px 50px rgba(43,34,25,.25)}
+.screen-bar{flex:none;height:30px;display:flex;align-items:center;padding-inline:12px;background:#ece3cf;border-bottom:1px solid var(--rule)}
+.screen-url{font:400 12px/1 var(--f-label);color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.screen-view{position:relative;flex:1;overflow:hidden;min-height:0}
+.screen-img{position:absolute;left:0;top:0;background-size:100% 100%;transform-origin:0 0}
+.screen-hl{position:absolute;border:2px solid var(--rubric);background:rgba(154,47,31,.08);opacity:0}
+@media (max-width:900px){.caption{max-width:none;right:16px}.screen{left:16px;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 300px)}}
+.loading[hidden]{display:none}
+.loading{position:fixed;inset:0;display:grid;place-items:center;font:italic 18px var(--f-body);color:var(--ink-soft);background:var(--paper)}
+
+@media (max-width:640px){
+  .caption{left:16px;right:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 84px);gap:6px}
+  .caption p{font-size:14px}
+  .seg .lbl{display:none}
+  .track{height:22px}
+  .hint{display:none}
+  .time{min-width:0}
+}
+</style>
+
+<div id="stage"></div>
+
+<header class="brand ui">
+  <span class="eyebrow">Source Library</span>
+  <span class="name">Śāntideva, <i>Bodhicaryāvatāra</i> 1.4</span>
+</header>
+
+<div class="hint ui"><kbd>Space</kbd> play · <kbd>←</kbd> <kbd>→</kbd> chapters · <kbd>H</kbd> hide · <kbd>F</kbd> fullscreen</div>
+
+<section class="caption ui" id="caption" aria-live="polite">
+  <div class="tag" id="cap-tag"></div>
+  <h2 id="cap-title"></h2>
+  <p id="cap-body"></p>
+</section>
+
+<div class="screen-bg" id="screen-bg" aria-hidden="true"></div>
+<div class="screen" id="screen" aria-hidden="true">
+  <div class="screen-bar"><span class="screen-url" id="screen-url"></span></div>
+  <div class="screen-view" id="screen-view"><div class="screen-img" id="screen-img"></div></div>
+</div>
+
+<div class="card" id="card" aria-live="polite">
+  <div class="k-eyebrow" id="k-eyebrow"></div>
+  <h1 id="k-title"></h1>
+  <div class="k-rule"></div>
+  <p id="k-body"></p>
+  <ol id="k-steps"></ol>
+</div>
+
+<div class="outro" id="outro" aria-hidden="true">
+  <div class="o-eyebrow">Bodhicaryāvatāra 1.4</div>
+  <h1>“How will such a meeting ever occur again?”</h1>
+  <p>Śāntideva, with Prajñākaramati’s commentary, ed. Louis de La Vallée Poussin (Calcutta, 1901), page 13. Sanskrit, with an English translation by Source Library.</p>
+  <a class="o-link" href="https://sourcelibrary.org/book/6a308272675ed2bdbe36f649?page=13" target="_blank" rel="noopener">Read this page on Source Library</a>
+</div>
+
+<nav class="controls ui" aria-label="Film controls">
+  <button class="btn" id="play" type="button" aria-label="Pause"></button>
+  <div class="track" id="track"></div>
+  <span class="time" id="time">0:00</span>
+  <button class="btn" id="clean" type="button" aria-label="Hide controls" title="Hide controls (H)"><svg viewBox="0 0 16 16"><path d="M8 3C4 3 1.5 6.2 1 8c.5 1.8 3 5 7 5s6.5-3.2 7-5c-.5-1.8-3-5-7-5zm0 8a3 3 0 110-6 3 3 0 010 6z"/></svg></button>
+  <button class="btn" id="fs" type="button" aria-label="Fullscreen" title="Fullscreen (F)"><svg viewBox="0 0 16 16"><path d="M2 2h5v2H4v3H2zm7 0h5v5h-2V4H9zM2 9h2v3h3v2H2zm10 0h2v5H9v-2h3z"/></svg></button>
+</nav>
+
+<div class="loading" id="loading">Setting the type…</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(() => {
+'use strict';
+
+// ---------- timeline ----------
+// Seven chapters in four parts. Each timeline segment is a part card, a stretch of the 3D scene,
+// or a real Source Library screen (screenshot) with a slow move and a highlight.
+const ACTS = [
+  { short: 'Find',      title: 'Finding the book',
+    body: 'This is the Sanskrit edition of the Bodhicaryāvatāra with Prajñākaramati’s commentary, printed in Calcutta in 1901. The scan was made by the Digital Library of India and is on the Internet Archive.' },
+  { short: 'Copy',      title: 'Copying every page',
+    body: 'First, all 610 page images are copied into our own storage, so the book stays readable if the original scan moves.' },
+  { short: 'Read',      title: 'Reading the page',
+    body: 'Next, Gemini reads each page image. On page 13 it finds verse 4 of the first chapter, the commentary around it, and the editor’s footnotes in English.' },
+  { short: 'Translate', title: 'Translating it',
+    body: 'Then the Sanskrit is translated into English, page by page.' },
+  { short: 'Check',     title: 'Checking it',
+    body: '' },
+  { short: 'Describe',  title: 'Describing the page',
+    body: 'The page also gets a short summary, a list of its key terms, and the cross-references its editor gave in the footnotes.' },
+  { short: 'Publish',   title: 'Publishing it',
+    body: '' },
+];
+const CARDS_TXT = {
+  pro: { eyebrow: 'Śāntideva · eighth century', title: 'The Way of the Bodhisattva',
+    body: 'Tradition places Śāntideva at Nalanda, and says he first recited this poem there. This film follows one page of it, from a scan of a 1901 Sanskrit edition to an English page that anyone can read and cite.' },
+  p1: { eyebrow: 'Part I', title: 'Getting the book', body: 'Find a scan, and keep our own copy of it.', steps: [1, 2] },
+  p2: { eyebrow: 'Part II', title: 'Reading it', body: 'Turn the page image into text, then the Sanskrit into English.', steps: [3, 4] },
+  p3: { eyebrow: 'Part III', title: 'Checking it', body: 'Show where every English sentence came from, and say plainly what a person has and has not checked.', steps: [5] },
+  p4: { eyebrow: 'Part IV', title: 'Publishing it', body: 'Describe the page and put it online, ready to read and cite.', steps: [6, 7] },
+};
+// Screens: real screenshots of sourcelibrary.org. view = [centre x, centre y, width] as fractions of the image.
+const SCREENS = {
+  ocr: { img: 'ui-reader', url: 'sourcelibrary.org/book/…/bodhicaryavatara?page=13', from: [.5, .5, 1], to: [.47, .42, .5], hl: [[.385, .335, .53, .455]],
+    title: 'The Sanskrit, as read', body: 'In the reader, the transcription sits beside the scan. The editor’s footnotes and cross-references are kept with it.' },
+  english: { img: 'ui-reader', url: 'sourcelibrary.org/book/…/bodhicaryavatara?page=13', from: [.5, .5, 1], to: [.82, .62, .44], hl: [[.70, .64, .965, .89]],
+    title: 'The English, beside it', body: 'The translation keeps the verse as a verse, and puts the original Sanskrit terms in notes.' },
+  trace: { img: 'ui-trace', url: 'sourcelibrary.org/book/…/bodhicaryavatara?page=13 · Trace', from: [.5, .5, 1], to: [.67, .43, .62], hl: [[.388, .332, .497, .364], [.708, .468, .948, .536]],
+    title: 'Tracing each line', body: 'With Trace on, clicking any phrase shows its partner in the other language. Here the third line of the verse is matched to its English.' },
+  draft: { img: 'ui-reader', url: 'sourcelibrary.org/book/…/bodhicaryavatara?page=13', from: [.67, .43, .62], to: [.80, .2, .36], hl: [[.676, .132, .862, .158]],
+    title: 'Saying what is checked', body: 'Until a scholar has reviewed it, every translated page carries this label. Readers can report a problem on any page.' },
+  overview: { img: 'ui-overview', url: 'sourcelibrary.org/book/bodhicaryavatara-with-prajnakaramati-s-panjika…', from: [.5, .5, 1], to: [.48, .4, .74], hl: [[.268, .487, .368, .52]],
+    title: 'The book online', body: 'The edition, its 610 scans, the Sanskrit text and the English are at one address, free to read.' },
+  cite: { img: 'ui-cite', url: 'sourcelibrary.org/book/…/bodhicaryavatara?page=13 · Cite', from: [.5, .5, 1], to: [.2, .3, .44], hl: [[.042, .07, .252, .37]],
+    title: 'Citing it', body: 'The Cite button gives a reference to this exact page, with a link that will keep working.' },
+};
+// scene 18–27 (a split detector) and the abstract search cloud are left out: neither happened to this book in a way worth showing.
+const SEGS = [
+  { card: 'pro', d: 8, ch: 0 }, { card: 'p1', d: 4, ch: 0 },
+  { s: 0, e: 9, ch: 0 }, { s: 9, e: 18, ch: 1 },
+  { card: 'p2', d: 4, ch: 2 }, { s: 27, e: 36.4, ch: 2 }, { screen: 'ocr', d: 6.5, ch: 2 },
+  { s: 36.4, e: 44, ch: 3 }, { screen: 'english', d: 6.5, ch: 3 },
+  { card: 'p3', d: 4.5, ch: 4 }, { screen: 'trace', d: 8, ch: 4 }, { screen: 'draft', d: 7, ch: 4 },
+  { card: 'p4', d: 4, ch: 5 }, { s: 45, e: 53, ch: 5 }, { screen: 'overview', d: 6.5, ch: 6 }, { screen: 'cite', d: 7, ch: 6 },
+  { end: true, d: 7, ch: 6 },
+];
+{ let f0 = 0; SEGS.forEach(g => { g.d = g.d ?? g.e - g.s; g.f0 = f0; f0 += g.d; }); }
+const FILM_TOTAL = SEGS.reduce((n, g) => n + g.d, 0);
+function segAt(T) {
+  let i = 0; while (i < SEGS.length - 1 && T >= SEGS[i + 1].f0) i++;
+  const g = SEGS[i], local = T - g.f0;
+  if (g.s !== undefined) return { g, local, t: Math.min(g.e, g.s + local) };
+  const nx = SEGS.slice(i).find(x => x.s !== undefined) || SEGS[SEGS.length - 1];
+  const pv = SEGS.slice(0, i).reverse().find(x => x.s !== undefined);
+  if (g.end) return { g, local, t: 53.5 };
+  return { g, local, t: g.screen && pv ? pv.e : nx.s };
+}
+const CH_START = ACTS.map((_, c) => SEGS.find(g => g.ch === c).f0);
+
+// Page 13: verse 1.4, as the pipeline read and translated it.
+const LATIN = [
+  'क्षणसंपदियं सुदुर्लभा',
+  'प्रतिलब्ध्या पुरुषार्थसाधनी ।',
+  'यदि नात्र विचिन्त्यते हितं',
+  'पुनरप्येष समागमः कुतः ॥ ४ ॥',
+];
+const ENGLISH = [
+  'This opportunity and wealth of a human life is very difficult to obtain.',
+  'Having attained it, it is the means to accomplish the goals of human existence.',
+  'If one does not consider what is beneficial in this life,',
+  'how will such a meeting ever occur again?',
+];
+const LINE_FX = 0.205, LINE_FY0 = 0.192, LINE_FDY = 0.0385;
+const BOOK_URL = 'https://sourcelibrary.org/book/6a308272675ed2bdbe36f649?page=13';
+const COVER_AR = [0.787, 0.647, 0.67, 0.58, 1.5, 1.5, 1.5, 1.5, 1.333, 1.333, 1.333, 1.5, 1.333, 1.333, 1.5, 1.5, 1.5, 1.5, 1.333, 1.5, 1.333, 1.5, 1.333, 1.5, 1.5, 1.5, 1.5, 1.5, 1.333, 1.333, 1.333, 1.333, 1.5, 1.333, 1.333, 1.333, 1.333, 1.333, 1.333, 1.5, 1.5, 1.333, 1.333, 1.5, 1.5, 1.5, 1.333, 1.5, 1.333, 1.5, 1.333, 1.5, 1.333, 1.5, 1.333, 1.5, 1.5, 1.5, 1.5, 1.5, 1.333, 1.5, 1.5, 1.333, 1.333, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5];
+const COVERS = COVER_AR.map((_, i) => 'c' + String(i).padStart(2, '0'));
+const VAULT_IMGS = ['p0001', 'p0005', 'p0020', 'p0045', 'p0070', 'p0095', 'p0120', 'p0150', 'p0180', 'p0210', 'p0240', 'p0270', 'p0300', 'p0330', 'p0360', 'p0390', 'p0420', 'p0450', 'p0480'];
+
+// ---------- math ----------
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const S = (a, b, x) => { x = clamp((x - a) / (b - a)); return x * x * (3 - 2 * x); };
+const lerp = (a, b, s) => a + (b - a) * s;
+const V = (x, y, z) => new THREE.Vector3(x, y, z);
+const lerpV = (a, b, s) => a.clone().lerp(b, s);
+const bez = (a, c, b, s) => { const u = 1 - s; return a.clone().multiplyScalar(u * u).add(c.clone().multiplyScalar(2 * u * s)).add(b.clone().multiplyScalar(s * s)); };
+function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+// ---------- canvas textures ----------
+function makeCanvas(w, h, draw) {
+  const c = document.createElement('canvas'); c.width = w; c.height = h;
+  const g = c.getContext('2d'); draw(g, w, h);
+  const tex = new THREE.CanvasTexture(c); tex.encoding = THREE.sRGBEncoding; tex.anisotropy = 8;
+  return { canvas: c, tex };
+}
+
+function drawLine(g, w, h, text, en) {
+  g.clearRect(0, 0, w, h);
+  g.textBaseline = 'middle';
+  g.font = en ? 'italic 40px "Newsreader"' : '46px "Tiro Devanagari Sanskrit"';
+  const tw = g.measureText(text).width;
+  g.fillStyle = 'rgba(244,237,222,.94)'; g.fillRect(0, 6, tw + 24, h - 12);
+  g.fillStyle = en ? '#2f4a72' : '#2b2219';
+  g.fillText(text, 8, h / 2);
+}
+function glowTexture(color) {
+  return makeCanvas(128, 128, (g, w, h) => {
+    const r = g.createRadialGradient(w / 2, h / 2, 0, w / 2, h / 2, w / 2);
+    r.addColorStop(0, color); r.addColorStop(.25, color.replace(/[\d.]+\)$/, '.35)')); r.addColorStop(1, 'rgba(0,0,0,0)');
+    g.fillStyle = r; g.fillRect(0, 0, w, h);
+  }).tex;
+}
+function labelSprite(text, { color = '#9a2f1f', size = 0.45, font = '600 40px "Inter"', spacing = 4 } = {}) {
+  const meas = document.createElement('canvas').getContext('2d'); meas.font = font;
+  const t = text.toUpperCase();
+  const tw = meas.measureText(t).width + spacing * t.length + 40;
+  const { tex } = makeCanvas(Math.ceil(tw), 72, (g, w, h) => {
+    g.font = font; g.fillStyle = color; g.textBaseline = 'middle';
+    let x = 20; for (const ch of t) { g.fillText(ch, x, h / 2); x += g.measureText(ch).width + spacing; }
+  });
+  const m = new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite: false, fog: false });
+  const s = new THREE.Sprite(m); s.scale.set(size * tw / 72, size, 1); return s;
+}
+
+function wrap(g, text, x, y, maxW, lh) {
+  let line = '';
+  for (const word of text.split(' ')) {
+    const test = line ? line + ' ' + word : word;
+    if (g.measureText(test).width > maxW && line) { g.fillText(line, x, y); y += lh; line = word; } else line = test;
+  }
+  if (line) g.fillText(line, x, y);
+  return y + lh;
+}
+
+// ---------- boot ----------
+const fontsReady = Promise.race([
+  Promise.all(['600 40px "Inter"', '500 24px "Inter"', '28px "Newsreader"', 'italic 40px "Newsreader"', '46px "Tiro Devanagari Sanskrit"'].map(f => document.fonts.load(f))),
+  new Promise(r => setTimeout(r, 3000)),
+]);
+const IMG = {};
+const loadImg = name => new Promise(res => { const im = new Image(); im.onload = () => { IMG[name] = im; res(); }; im.onerror = () => res(); im.src = `img/${name}.jpg`; });
+Promise.all([fontsReady.catch(() => {}), ...['hero', 'big0510', 'big0005', 'big0001', 'ui-reader', 'ui-cite', 'ui-trace', 'ui-overview', ...VAULT_IMGS, ...COVERS].map(loadImg)]).then(init);
+
+function imgTex(name) {
+  const t = new THREE.Texture(IMG[name]); t.encoding = THREE.sRGBEncoding; t.anisotropy = 8; t.needsUpdate = true; return t;
+}
+
+function init() {
+  document.getElementById('loading').hidden = true;
+  const stage = document.getElementById('stage');
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.NoToneMapping;
+  stage.appendChild(renderer.domElement);
+
+  const BG = 0xece3cf;
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(BG);
+  scene.fog = new THREE.FogExp2(BG, 0.03);
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 400);
+
+  scene.add(new THREE.HemisphereLight(0xfff6e6, 0x8a7a62, 1.0));
+  const sun = new THREE.DirectionalLight(0xfff1dc, 0.55); sun.position.set(6, 12, 9); scene.add(sun);
+  const focusLight = new THREE.PointLight(0xfff1dc, 0.0, 16, 1.6); scene.add(focusLight);
+
+  // floor + the thread that runs between stations
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(700, 80), new THREE.MeshBasicMaterial({ color: 0xe2d7bf }));
+  floor.rotation.x = -Math.PI / 2; floor.position.set(110, 0, 0); scene.add(floor);
+  const threadGeo = new THREE.PlaneGeometry(1, 0.05); threadGeo.translate(.5, 0, 0);
+  const threadBase = new THREE.Mesh(threadGeo, new THREE.MeshBasicMaterial({ color: 0xc9bc9f }));
+  threadBase.rotation.x = -Math.PI / 2; threadBase.position.set(0, .01, 3); threadBase.scale.x = 215;
+  const thread = new THREE.Mesh(threadGeo, new THREE.MeshBasicMaterial({ color: 0x9a2f1f }));
+  thread.rotation.x = -Math.PI / 2; thread.position.set(0, .012, 3);
+
+  // dust
+  {
+    const r = rng(7), n = 900, pos = new Float32Array(n * 3);
+    for (let i = 0; i < n; i++) { pos[i * 3] = -15 + r() * 245; pos[i * 3 + 1] = r() * 12; pos[i * 3 + 2] = -14 + r() * 22; }
+    const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    var dust = new THREE.Points(g, new THREE.PointsMaterial({ size: .06, map: glowTexture('rgba(255,225,170,1)'), transparent: true, opacity: .55, depthWrite: false, blending: THREE.AdditiveBlending }));
+    dust.visible = false; scene.add(dust);
+  }
+
+  // ---------- Act 0: a wall of real covers, face out ----------
+  const wallCovers = [];
+  // Rows packed left to right; the hero edition takes a gap at the centre of row 3.
+  const WALL_Z = -1.4, ROWS = 7, ROW_H = .82, ROW_Y = r => .9 + r * 1.0, WALL_W = 10.4, HERO_ROW = 3, HERO_GAP = .9;
+  {
+    const back = new THREE.Mesh(new THREE.PlaneGeometry(11.2, 7.6), new THREE.MeshStandardMaterial({ color: 0xd6c8aa, roughness: 1 }));
+    back.position.set(0, 3.9, WALL_Z - .12); scene.add(back);
+    const ledgeMat = new THREE.MeshStandardMaterial({ color: 0x6d553d, roughness: .8 });
+    for (let r = 0; r < ROWS; r++) { const l = new THREE.Mesh(new THREE.BoxGeometry(10.8, .05, .3), ledgeMat); l.position.set(0, ROW_Y(r) - ROW_H / 2 - .04, WALL_Z + .05); scene.add(l); }
+    let k = 0;
+    for (let r = 0; r < ROWS && k < COVERS.length; r++) {
+      const items = []; let w = 0;
+      while (k < COVERS.length) {
+        const tw = ROW_H * Math.min(COVER_AR[k], 1.6);
+        if (w + tw + (items.length ? .08 : 0) + (r === HERO_ROW ? HERO_GAP : 0) > WALL_W) break;
+        items.push({ k, tw }); w += tw + (items.length > 1 ? .08 : 0); k++;
+      }
+      if (r === HERO_ROW) { const mid = Math.floor(items.length / 2); items.splice(mid, 0, { gap: true, tw: HERO_GAP - .08 }); w += HERO_GAP; }
+      let x = -w / 2;
+      items.forEach(it => {
+        if (!it.gap) {
+          const m = new THREE.Mesh(new THREE.PlaneGeometry(it.tw, ROW_H), new THREE.MeshStandardMaterial({ map: imgTex(COVERS[it.k]), roughness: .9 }));
+          m.position.set(x + it.tw / 2, ROW_Y(r), WALL_Z + .02); m.rotation.x = -.05; scene.add(m); wallCovers.push(m);
+        }
+        x += it.tw + .08;
+      });
+    }
+    const lab = labelSprite('Buddhist texts in the library: Bhutanese manuscripts and printed editions', { size: .26, color: '#2b2219' }); lab.position.set(0, 7.75, WALL_Z); scene.add(lab);
+  }
+
+  // the hero book (local: covers in xy, thickness along z, spine at x = -1.6)
+  const heroLeather = '#d9d3c4';
+  const coverTex = imgTex('big0001');
+  const heroSpineTex = makeCanvas(120, 420, (g, w, h) => {
+    g.fillStyle = heroLeather; g.fillRect(0, 0, w, h);
+    g.fillStyle = '#5d5143'; g.font = '600 22px "Inter"';
+    g.save(); g.translate(w / 2, h / 2); g.rotate(-Math.PI / 2); g.font = '600 22px "Inter"'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#5d5143'; g.fillText('Bodhicaryāvatāra', 0, 0); g.restore();
+  }).tex;
+  const endpaperTex = makeCanvas(320, 420, (g, w, h) => {
+    g.fillStyle = '#d8c9a8'; g.fillRect(0, 0, w, h);
+    const r = rng(5); g.lineWidth = 2;
+    for (let i = 0; i < 0; i++) { g.strokeStyle = ['#8a6e48', '#9a2f1f', '#6d5a44', '#b39a72'][i % 4]; g.globalAlpha = .35; g.beginPath(); const x = r() * w, y = r() * h; g.ellipse(x, y, 8 + r() * 30, 4 + r() * 14, r() * 3, 0, Math.PI * 2); g.stroke(); }
+    g.globalAlpha = 1;
+  }).tex;
+  const leatherMat = () => new THREE.MeshStandardMaterial({ color: heroLeather, roughness: .6, transparent: true });
+  const paperEdge = new THREE.MeshStandardMaterial({ color: 0xe8dcbc, roughness: .9, transparent: true });
+  const book = new THREE.Group(); scene.add(book);
+  const titleMat = new THREE.MeshStandardMaterial({ map: imgTex('big0005'), roughness: .9, transparent: true });
+  const block = new THREE.Mesh(new THREE.BoxGeometry(3, 4, .8), [paperEdge, paperEdge, paperEdge, paperEdge, titleMat, paperEdge]);
+  book.add(block);
+  const back = new THREE.Mesh(new THREE.BoxGeometry(3.2, 4.2, .1), leatherMat()); back.position.set(.1, 0, -.45); book.add(back);
+  const spineMats = [leatherMat(), new THREE.MeshStandardMaterial({ map: heroSpineTex, roughness: .55, transparent: true }), leatherMat(), leatherMat(), leatherMat(), leatherMat()];
+  const spine = new THREE.Mesh(new THREE.BoxGeometry(.12, 4.2, 1.0), spineMats); spine.position.set(-1.56, 0, 0); book.add(spine);
+  const hinge = new THREE.Group(); hinge.position.set(-1.5, 0, .45); book.add(hinge);
+  const coverMats = [leatherMat(), leatherMat(), leatherMat(), leatherMat(),
+    new THREE.MeshStandardMaterial({ map: coverTex, roughness: .55, transparent: true }),
+    new THREE.MeshStandardMaterial({ map: endpaperTex, roughness: .8, transparent: true })];
+  const cover = new THREE.Mesh(new THREE.BoxGeometry(3.2, 4.2, .1), coverMats); cover.position.set(1.6, 0, 0); hinge.add(cover);
+  const bookMats = [paperEdge, titleMat, back.material, ...spineMats, ...coverMats];
+  const selectGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture('rgba(255,200,110,1)'), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false }));
+  selectGlow.scale.set(2.2, 2.2, 1);
+
+  const SLOT = V(0, ROW_Y(HERO_ROW), WALL_Z - .1);
+  const SC0 = (ROW_H + .06) / 4.2;
+  const BOOK_AT = V(31, 3.3, 0);
+
+  // ---------- Act 1: pages fly into the vault ----------
+  const heroTex = imgTex('hero'), leftTex = imgTex('big0510');
+  const PW = 4 * 1200 / 1719, PH = 4;
+  const pageGeo = new THREE.PlaneGeometry(PW, PH);
+  const pageMat = (tex) => new THREE.MeshStandardMaterial({ map: tex, roughness: .9, side: THREE.DoubleSide, transparent: true });
+  const VAULT = V(38, 4.3, -1.6);
+  const vault = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(8, 8.2, 2.2)), new THREE.LineBasicMaterial({ color: 0x2b2219, transparent: true, opacity: 0 }));
+  vault.position.copy(VAULT); scene.add(vault);
+  const vaultLabel = labelSprite('Page images, stored', { size: .32, color: '#2b2219' }); vaultLabel.position.set(VAULT.x, VAULT.y + 4.6, VAULT.z); scene.add(vaultLabel);
+  const vaultPages = [];
+  for (let j = 0; j < 20; j++) {
+    const m = new THREE.Mesh(pageGeo, pageMat(j === 19 ? heroTex : imgTex(VAULT_IMGS[j])));
+    const col = j % 5, row = Math.floor(j / 5);
+    m.userData.slot = V(VAULT.x + (col - 2) * 1.45, VAULT.y + (1.5 - row) * 1.85, VAULT.z);
+    m.visible = false; scene.add(m); vaultPages.push(m);
+  }
+
+  // ---------- Act 2: split ----------
+  const SPREAD = V(60, 3.2, 0);
+  const pageL = new THREE.Mesh(pageGeo, pageMat(leftTex)); scene.add(pageL);
+  const pageR = new THREE.Mesh(pageGeo, pageMat(heroTex)); scene.add(pageR);
+  const laserGeo = new THREE.PlaneGeometry(.05, 4); laserGeo.translate(0, -2, 0);
+  const laser = new THREE.Mesh(laserGeo, new THREE.MeshBasicMaterial({ color: 0x9a2f1f, transparent: true, depthWrite: false, fog: false }));
+  scene.add(laser);
+  const laserTip = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture('rgba(156,195,255,1)'), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, fog: false }));
+  laserTip.scale.set(1, 1, 1);
+
+  // ---------- Act 3–4: OCR lines, translation flips ----------
+  const OCR_AT = V(90, 3.2, 0);
+  const beam = new THREE.Group(); scene.add(beam);
+  const beamCore = new THREE.Mesh(new THREE.PlaneGeometry(PW + .6, .04), new THREE.MeshBasicMaterial({ color: 0x9a2f1f, transparent: true, depthWrite: false, fog: false }));
+  const beamGlowTex = makeCanvas(32, 128, (g, w, h) => { const l = g.createLinearGradient(0, 0, 0, h); l.addColorStop(0, 'rgba(154,47,31,0)'); l.addColorStop(.5, 'rgba(154,47,31,.16)'); l.addColorStop(1, 'rgba(154,47,31,0)'); g.fillStyle = l; g.fillRect(0, 0, w, h); }).tex;
+  const beamGlow = new THREE.Mesh(new THREE.PlaneGeometry(PW + .8, .7), new THREE.MeshBasicMaterial({ map: beamGlowTex, transparent: true, depthWrite: false, fog: false }));
+  beam.add(beamGlow, beamCore);
+  const ocrLabel = labelSprite('Gemini reads the page', { size: .26 }); scene.add(ocrLabel);
+  const TRANS_AT = V(120, 3.2, 0);
+  const transLabel = labelSprite('Sanskrit into English', { size: .28, color: '#2f4a72' }); transLabel.position.set(TRANS_AT.x - .6, TRANS_AT.y + 2.35, 0); scene.add(transLabel);
+
+  const LINE_W = 6.8, LINE_H = LINE_W * 80 / 2048;
+  const lineGeo = new THREE.PlaneGeometry(LINE_W, LINE_H); lineGeo.translate(LINE_W / 2, 0, 0); // origin at the left edge
+  const pageTop = OCR_AT.y + 2, pageLeft = OCR_AT.x - PW / 2 + LINE_FX * PW;
+  const lineScale0 = (0.58 - LINE_FX) * PW / 1.75;
+  const lines = LATIN.map((la, i) => {
+    const g = new THREE.Group();
+    const mk = (txt, en) => new THREE.MeshBasicMaterial({ map: makeCanvas(2048, 80, (c, w, h) => drawLine(c, w, h, txt, en)).tex, transparent: true, depthWrite: false, side: THREE.FrontSide, fog: false });
+    const front = new THREE.Mesh(lineGeo, mk(la, false));
+    const backM = new THREE.Mesh(lineGeo, mk(ENGLISH[i], true)); backM.rotation.x = Math.PI; backM.position.z = -.005;
+    g.add(front, backM); scene.add(g);
+    const yi = pageTop - (LINE_FY0 + i * LINE_FDY) * PH;
+    return { g, front, back: backM, yi, x0: pageLeft - 8 / (2048 / LINE_W) };
+  });
+
+  const descTex = makeCanvas(1000, 330, (g, w, h) => {
+    g.fillStyle = '#f4edde'; g.fillRect(0, 0, w, h);
+    g.strokeStyle = '#2b2219'; g.lineWidth = 2; g.strokeRect(8, 8, w - 16, h - 16); g.lineWidth = .8; g.strokeRect(14, 14, w - 28, h - 28);
+    g.fillStyle = '#9a2f1f'; g.font = '600 24px "Inter"'; g.fillText('FOOTNOTE 4, READ AS TEXT', 36, 60);
+    g.fillStyle = '#2b2219'; g.font = '30px "Newsreader"';
+    wrap(g, '“It is as unlikely to happen as if a tortoise should put its neck into a hole opening every yuga in the world’s ocean.” (Kern, quoted by the editor)', 36, 110, w - 72, 42);
+  }).tex;
+  const descCard = new THREE.Mesh(new THREE.PlaneGeometry(3.0, 0.99), new THREE.MeshBasicMaterial({ map: descTex, transparent: true, depthWrite: false, fog: false }));
+  scene.add(descCard);
+
+  // ---------- Act 5: enrichment ----------
+  const CORE = V(150, 3.4, 0);
+  const core = new THREE.Group(); core.position.copy(CORE); scene.add(core);
+  const coreWire = new THREE.Mesh(new THREE.IcosahedronGeometry(.75, 1), new THREE.MeshBasicMaterial({ color: 0x2b2219, wireframe: true, transparent: true }));
+  const coreGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture('rgba(255,200,110,1)'), transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+  coreGlow.scale.set(3.2, 3.2, 1); coreWire.visible = false;
+  const corePage = new THREE.Mesh(new THREE.PlaneGeometry(1.25, 1.25 / (1200 / 1719)), new THREE.MeshBasicMaterial({ map: heroTex, transparent: true }));
+  core.add(corePage);
+  const CARDS = [
+    { h: 'Summary', b: 'The rarity and value of a human life as a chance for liberation, told through the image of a blind tortoise in a vast ocean.' },
+    { h: 'Terms', b: 'kṣaṇasaṃpad · puruṣārthasādhanī · tathāgatotpāda' },
+    { h: 'Cross-references', b: 'Lotus Sūtra · Mahāvyutpatti 120 · Śikṣāsamuccaya · Mahāvastu' },
+    { h: 'Keywords', b: 'human rebirth · liberation · Buddhist metaphors' },
+    { h: 'Collection', b: 'Nalanda' },
+  ];
+  const cards = CARDS.map((c, k) => {
+    const tex = makeCanvas(512, 300, (g, w, h) => {
+      g.fillStyle = '#f4edde'; g.fillRect(0, 0, w, h);
+      g.strokeStyle = '#2b2219'; g.lineWidth = 2; g.strokeRect(8, 8, w - 16, h - 16); g.lineWidth = .8; g.strokeRect(14, 14, w - 28, h - 28);
+      g.fillStyle = '#9a2f1f'; g.font = '600 22px "Inter"'; g.fillText(c.h.toUpperCase(), 32, 58);
+      g.fillStyle = '#2b2219'; g.font = '28px "Newsreader"';
+      wrap(g, c.b, 32, 112, w - 64, 42);
+    }).tex;
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 1.52), new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false, side: THREE.DoubleSide }));
+    scene.add(m); return m;
+  });
+
+  // ---------- Act 6: embedding space ----------
+  const CLOUD = V(186, 4.4, -5);
+  const CLUSTERS = ['Bodhisattva path', 'Madhyamaka', 'Prajñāpāramitā', 'Yogācāra', 'Abhidharma', 'Jātaka', 'Tibetan canon', 'Pali canon', 'Vedānta', 'Hermetica', 'Neoplatonism', 'Daoism'];
+  const clusterCol = ['#9a2f1f', '#6b4a2b', '#2f4a72', '#4f3d63', '#3d5e4a', '#7a3b4a', '#6a6a2e', '#41556e', '#3f6340', '#5d5143', '#7a4a66', '#3f5f5f'];
+  const rc = rng(42);
+  const centers = CLUSTERS.map((_, i) => {
+    const a = i / CLUSTERS.length * Math.PI * 2 + rc() * .3, rr = 4 + rc() * 4;
+    return V(CLOUD.x + Math.cos(a) * rr, CLOUD.y + (rc() - .5) * 6, CLOUD.z + Math.sin(a) * rr);
+  });
+  const cloudN = 4200, cpos = new Float32Array(cloudN * 3), ccol = new Float32Array(cloudN * 3), owner = [];
+  const gauss = () => { let u = 0, v = 0; while (!u) u = rc(); while (!v) v = rc(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+  const tmpC = new THREE.Color();
+  for (let i = 0; i < cloudN; i++) {
+    const k = i < 400 ? 0 : Math.floor(rc() * CLUSTERS.length); owner.push(k);
+    const c = centers[k], sp = 1.15;
+    cpos[i * 3] = c.x + gauss() * sp; cpos[i * 3 + 1] = c.y + gauss() * sp * .8; cpos[i * 3 + 2] = c.z + gauss() * sp;
+    tmpC.set(clusterCol[k]); ccol[i * 3] = tmpC.r; ccol[i * 3 + 1] = tmpC.g; ccol[i * 3 + 2] = tmpC.b;
+  }
+  const dotTex = makeCanvas(32, 32, (g, w, h) => { g.fillStyle = '#fff'; g.beginPath(); g.arc(16, 16, 13, 0, Math.PI * 2); g.fill(); }).tex;
+  const cloudGeo = new THREE.BufferGeometry();
+  cloudGeo.setAttribute('position', new THREE.BufferAttribute(cpos, 3));
+  cloudGeo.setAttribute('color', new THREE.BufferAttribute(ccol, 3));
+  const cloud = new THREE.Points(cloudGeo, new THREE.PointsMaterial({ size: .1, map: dotTex, alphaTest: .3, vertexColors: true, transparent: true, opacity: 0, depthWrite: false, fog: false }));
+  scene.add(cloud);
+  const clusterLabels = CLUSTERS.map((name, i) => { const s = labelSprite(name, { size: .3, color: clusterCol[i] }); s.position.copy(centers[i]).add(V(0, 2.1, 0)); scene.add(s); return s; });
+  const STAR_AT = centers[0].clone().add(V(.4, .3, .6));
+  const near = [];
+  for (let i = 0; i < cloudN; i++) if (owner[i] === 0) near.push({ i, d: (cpos[i * 3] - STAR_AT.x) ** 2 + (cpos[i * 3 + 1] - STAR_AT.y) ** 2 + (cpos[i * 3 + 2] - STAR_AT.z) ** 2 });
+  near.sort((a, b) => a.d - b.d);
+  const linkPos = new Float32Array(10 * 6);
+  near.slice(0, 10).forEach((n, k) => { linkPos.set([STAR_AT.x, STAR_AT.y, STAR_AT.z, cpos[n.i * 3], cpos[n.i * 3 + 1], cpos[n.i * 3 + 2]], k * 6); });
+  const starTex = makeCanvas(64, 64, (g, w, h) => { g.strokeStyle = '#fff'; g.fillStyle = '#fff'; g.lineWidth = 3; g.beginPath(); g.arc(32, 32, 9, 0, Math.PI * 2); g.fill(); g.beginPath(); g.arc(32, 32, 20, 0, Math.PI * 2); g.stroke(); }).tex;
+  const linkGeo = new THREE.BufferGeometry(); linkGeo.setAttribute('position', new THREE.BufferAttribute(linkPos, 3));
+  const links = new THREE.LineSegments(linkGeo, new THREE.LineBasicMaterial({ color: 0x9a2f1f, transparent: true, opacity: 0, depthWrite: false, fog: false }));
+  scene.add(links);
+  const star = new THREE.Sprite(new THREE.SpriteMaterial({ map: starTex, transparent: true, depthWrite: false, fog: false }));
+  scene.add(star);
+  star.material.color.set(0x9a2f1f);
+  const queryLabel = labelSprite('how rare a human life is', { size: .3, color: '#9a2f1f' }); scene.add(queryLabel);
+
+  // ---------- Act 7: the reader (real screenshots of sourcelibrary.org) ----------
+  const READER = V(210, 3.6, 0), RW = 8, RH = 4.5;
+  const reader = new THREE.Mesh(new THREE.PlaneGeometry(RW, RH), new THREE.MeshBasicMaterial({ map: imgTex('ui-reader'), transparent: true, fog: false }));
+  reader.position.copy(READER); scene.add(reader);
+  const citeView = new THREE.Mesh(new THREE.PlaneGeometry(RW, RH), new THREE.MeshBasicMaterial({ map: imgTex('ui-cite'), transparent: true, depthWrite: false, fog: false }));
+  citeView.position.copy(READER).add(V(0, 0, .005)); scene.add(citeView);
+  const readerShadow = new THREE.Mesh(new THREE.PlaneGeometry(RW, RH), new THREE.MeshBasicMaterial({ color: 0x2b2219, transparent: true, opacity: 0, depthWrite: false, fog: false }));
+  readerShadow.position.copy(READER).add(V(.12, -.12, -.02)); scene.add(readerShadow);
+
+  // ---------- camera ----------
+  const K = [
+    [0, [0, 4.7, 17.5], [0, 4.4, 0]], [2.5, [.3, 4.4, 8.6], [0, 4.2, -1.4]], [5, [9, 6, 13], [12, 4.5, 0]],
+    [8.5, [29, 4.6, 10.5], [31.5, 3.3, 0]], [11.5, [30.5, 4, 8.5], [32, 3.3, -.5]], [16.5, [36, 5, 15.5], [37, 4, -1.4]],
+    [18.5, [50, 5, 13], [56, 3.4, 0]], [21, [60, 3.6, 9], [60, 3.2, 0]], [24.5, [61, 3.6, 9.5], [60.5, 3.2, 0]],
+    [27.6, [87, 4, 8], [90, 3.2, 0]], [30.5, [88.6, 3.6, 6.6], [90.2, 3.2, .4]], [33.5, [93, 3.8, 7.5], [90.5, 3.2, 1]],
+    [37, [118.5, 3.6, 9.5], [120.3, 3.2, 0]], [43, [121.8, 4.1, 8.8], [120.3, 3.2, 0]],
+    [46.5, [146, 5.6, 10.5], [150, 3.4, 0]], [52.5, [154, 4.4, 9.5], [150, 3.4, 0]],
+    [56, [171, 9, 17], [184, 4.4, -4]], [60.5, [196, 6.5, 13], [186, 4.4, -5]],
+    [63.5, [205, 4.4, 9.5], [210, 3.6, 0]], [66, [210, 3.6, 8.6], [210, 3.6, 0]], [67.6, [209.2, 4.0, 7.6], [208.8, 4.0, 0]], [70, [206.7, 4.7, 6.2], [206.4, 4.6, 0]],
+    [73, [210, 5.5, 17], [210, 3.6, 0]], [78, [210, 6.5, 21], [210, 3.6, 0]],
+  ].map(([t, p, l]) => ({ t, p: V(...p), l: V(...l) }));
+  const cr = (p0, p1, p2, p3, s) => {
+    const s2 = s * s, s3 = s2 * s;
+    return p1.clone().multiplyScalar(2)
+      .add(p2.clone().sub(p0).multiplyScalar(s))
+      .add(p0.clone().multiplyScalar(2).sub(p1.clone().multiplyScalar(5)).add(p2.clone().multiplyScalar(4)).sub(p3).multiplyScalar(s2))
+      .add(p0.clone().negate().add(p1.clone().multiplyScalar(3)).sub(p2.clone().multiplyScalar(3)).add(p3).multiplyScalar(s3))
+      .multiplyScalar(.5);
+  };
+  let distK = 1;
+  function placeCamera(t) {
+    let i = 0; while (i < K.length - 2 && t >= K[i + 1].t) i++;
+    const a = K[i], b = K[i + 1], s = clamp((t - a.t) / (b.t - a.t));
+    const p0 = (K[i - 1] || a), p3 = (K[i + 2] || b);
+    const pos = cr(p0.p, a.p, b.p, p3.p, s), look = cr(p0.l, a.l, b.l, p3.l, s);
+    pos.sub(look).multiplyScalar(distK).add(look);
+    pos.y -= .75; look.y -= .75;
+    pos.x += Math.sin(t * .31) * .08; pos.y += Math.sin(t * .23) * .05;
+    camera.position.copy(pos); camera.lookAt(look);
+    return look;
+  }
+
+  // ---------- per-frame state: everything is a pure function of t, so scrubbing just works ----------
+  const setOp = (obj, o) => { obj.material.opacity = o; obj.visible = o > .003; };
+  function update(t) {
+    const look = placeCamera(t);
+    focusLight.position.copy(look).add(V(0, 2.5, 3.5));
+    thread.scale.x = Math.max(.001, Math.min(215, look.x + 1));
+
+    // book
+    let bp, sc = SC0, ry = 0, rz = 0;
+    const slide = S(2, 3.5, t), fly = S(3.5, 8.5, t);
+    const P1 = SLOT.clone().add(V(0, 0, 1.4));
+    if (t < 3.5) bp = SLOT.clone().add(V(0, 0, 1.4 * slide));
+    else { bp = bez(P1, V(15, 9, 4), BOOK_AT, fly); sc = SC0 + (1 - SC0) * S(4, 8.5, t); ry = Math.sin(fly * Math.PI) * .5; rz = Math.sin(fly * Math.PI) * .12; }
+    book.position.copy(bp); book.scale.setScalar(sc); book.rotation.set(0, ry, rz);
+    hinge.rotation.y = -.93 * Math.PI * S(10, 12, t);
+    const bo = 1 - S(16, 17.5, t);
+    bookMats.forEach(m => m.opacity = bo); book.visible = bo > .003;
+    selectGlow.position.copy(bp).add(V(0, 0, -.2));
+    setOp(selectGlow, S(.6, 1.6, t) * (1 - S(4, 5.5, t)) * .9);
+
+    const dimWall = 1 - .55 * S(1, 2.4, t) * (1 - S(7, 9, t));
+    wallCovers.forEach(m => m.material.color.setScalar(dimWall));
+
+    // vault
+    const vo = S(10.5, 12.2, t);
+    setOp(vault, vo * .55); setOp(vaultLabel, vo);
+    vaultPages.forEach((m, j) => {
+      const sj = 11.8 + j * .22, e = S(sj, sj + 1.6, t);
+      const shown = t > sj && !(j === 19 && t > 18);
+      m.visible = shown; if (!shown) return;
+      const start = BOOK_AT.clone().add(V(0, 0, .5)), slot = m.userData.slot;
+      m.position.copy(bez(start, start.clone().lerp(slot, .5).add(V(0, 3, 3)), slot, e));
+      m.rotation.set(0, j % 2 ? Math.PI * 2 * e : 0, Math.sin(e * Math.PI) * .2 * (j % 3 - 1));
+      m.scale.setScalar(1 - .58 * e);
+      m.material.opacity = S(sj, sj + .25, t);
+    });
+
+    // split
+    const se = S(18, 20.2, t), center = lerpV(vaultPages[19].userData.slot, SPREAD, se);
+    const ssc = .42 + .58 * se, sp = S(22.6, 24.4, t);
+    const spreadOn = t > 18;
+    pageL.visible = spreadOn; pageR.visible = spreadOn;
+    pageL.position.copy(center).add(V((-PW / 2 - .9 * sp) * ssc, 0, .3 * sp)); pageL.rotation.set(0, .3 * sp, 0); pageL.scale.setScalar(ssc);
+    pageL.material.opacity = S(18, 18.4, t) * (1 - S(24.8, 26.2, t)); pageL.visible = spreadOn && pageL.material.opacity > .003;
+    const rStart = center.clone().add(V((PW / 2 + .9 * sp) * ssc, 0, .3 * sp));
+    const rf = S(24.6, 27.4, t);
+    pageR.position.copy(lerpV(rStart, OCR_AT, rf)).add(V(0, 1.6 * Math.sin(Math.PI * rf), 0));
+    pageR.rotation.set(0, -.3 * sp * (1 - rf), 0); pageR.scale.setScalar(ssc);
+    pageR.material.opacity = S(18, 18.4, t);
+    pageR.material.color.setScalar(1 - .5 * S(32.8, 34.6, t));
+    const lz = S(20.6, 22.6, t);
+    laser.position.copy(SPREAD).add(V(0, 2, .03)); laser.scale.y = Math.max(.001, lz);
+    setOp(laser, S(20.4, 20.7, t) * (1 - S(22.8, 23.6, t)));
+    laserTip.position.copy(SPREAD).add(V(0, 2 - 4 * lz, .05)); setOp(laserTip, laser.material.opacity * (lz < 1 ? 1 : .4));
+
+    // OCR beam
+    const bs = clamp((t - 28.3) / 3.3), by = pageTop + .1 - 4.2 * bs;
+    beam.position.set(OCR_AT.x, by, .06);
+    const bo2 = S(27.9, 28.4, t) * (1 - S(31.6, 32.2, t));
+    beamCore.material.opacity = bo2; beamGlow.material.opacity = bo2 * .9; beam.visible = bo2 > .003;
+    ocrLabel.position.set(OCR_AT.x, OCR_AT.y + 2.75, .2); setOp(ocrLabel, S(28, 29, t) * (1 - S(33, 34, t)));
+    setOp(transLabel, S(37.2, 38.2, t) * (1 - S(43.2, 44.2, t)));
+
+    // lines: rise → travel → flip → converge
+    lines.forEach((L, i) => {
+      const tb = 29.0 + i * .45, r = S(tb, tb + .9, t);
+      const p3 = lerpV(V(L.x0, L.yi, .02), V(OCR_AT.x - 1.4, OCR_AT.y + .45 - i * .36, 1.4), r);
+      const m = S(33.6 + i * .12, 36.6 + i * .12, t);
+      const p4 = V(TRANS_AT.x - 3.3, TRANS_AT.y + (2.0 - i) * .8, 0);
+      let p = lerpV(p3, p4, m).add(V(0, 0, 1.5 * Math.sin(Math.PI * m)));
+      let s = lerp(lerp(lineScale0, .8, r), 1.5, m), o = S(0, .2, r);
+      const c = S(43.6 + i * .08, 46.2 + i * .08, t);
+      if (c > 0) { p = lerpV(p4, CORE, c); s *= 1 - .9 * c; o *= 1 - S(.7, 1, c); }
+      L.g.position.copy(p); L.g.scale.setScalar(Math.max(.001, s));
+      L.g.rotation.x = Math.PI * S(38.5 + i * .45, 39.4 + i * .45, t);
+      L.front.material.opacity = o; L.back.material.opacity = o; L.g.visible = o > .003;
+    });
+
+    const dr = S(31.2, 32.4, t);
+    descCard.position.copy(lerpV(V(OCR_AT.x, OCR_AT.y - 1.5, .05), V(OCR_AT.x + 1.9, OCR_AT.y - .9, 1.3), dr));
+    descCard.scale.setScalar(Math.max(.001, .3 + .5 * dr));
+    setOp(descCard, S(31.2, 31.5, t) * (1 - S(34.2, 35, t)));
+
+    // enrichment
+    const cs = S(45, 47, t) * (1 - S(52.4, 53.6, t));
+    core.visible = cs > .003; core.scale.setScalar(Math.max(.001, cs));
+    corePage.quaternion.copy(camera.quaternion);
+    cards.forEach((m, k) => {
+      const a = S(46.4 + k * .5, 47.4 + k * .5, t), gone = S(52, 53.4, t);
+      const rad = 3.7 * a * (1 - gone), ang = k * Math.PI * 2 / 5 + (t - 46) * .33;
+      m.position.set(CORE.x + rad * Math.cos(ang), CORE.y + .55 * Math.sin(ang * 2 + k), CORE.z + rad * Math.sin(ang) * .85);
+      m.quaternion.copy(camera.quaternion);
+      m.scale.setScalar(Math.max(.001, .6 + .4 * a));
+      setOp(m, a * (1 - gone));
+    });
+
+    // embedding space
+    const co = S(52, 55.5, t);
+    cloud.material.opacity = co * .9; cloud.visible = co > .003;
+    cloud.rotation.y = 0;
+    clusterLabels.forEach(l => setOp(l, S(55, 57, t) * .9));
+    const se2 = S(53, 57.6, t);
+    star.visible = t > 52.6;
+    star.position.copy(bez(CORE, CORE.clone().lerp(STAR_AT, .5).add(V(0, 6, 5)), STAR_AT, se2));
+    const pulse = t > 57.6 ? 1 + .18 * Math.sin((t - 57.6) * 4) : 1;
+    star.scale.setScalar(.55 * pulse); star.material.opacity = S(52.6, 53.2, t);
+    setOp(links, S(57.6, 59.4, t) * .85);
+    queryLabel.position.copy(STAR_AT).add(V(0, -1.1, .5)); setOp(queryLabel, S(58.2, 59.4, t) * (1 - S(62, 63, t)));
+
+    // reader
+    const ro = S(63.2, 64.8, t);
+    setOp(reader, ro); reader.scale.setScalar(.92 + .08 * ro); citeView.scale.copy(reader.scale);
+    setOp(readerShadow, ro * .18);
+    setOp(citeView, S(66.6, 67.4, t));
+
+    dust.position.y = Math.sin(t * .2) * .2;
+  }
+
+  // ---------- transport ----------
+  const playBtn = document.getElementById('play'), track = document.getElementById('track'), timeEl = document.getElementById('time');
+  const capEl = document.getElementById('caption'), capTag = document.getElementById('cap-tag'), capTitle = document.getElementById('cap-title'), capBody = document.getElementById('cap-body');
+  const outro = document.getElementById('outro');
+  const ICON_PLAY = '<svg viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5z"/></svg>';
+  const ICON_PAUSE = '<svg viewBox="0 0 16 16"><path d="M3.5 2h3v12h-3zm6 0h3v12h-3z"/></svg>';
+  const cardEl = document.getElementById('card'), kEyebrow = document.getElementById('k-eyebrow'), kTitle = document.getElementById('k-title'), kBody = document.getElementById('k-body'), kSteps = document.getElementById('k-steps');
+  const screenBg = document.getElementById('screen-bg'), screenEl = document.getElementById('screen'), screenView = document.getElementById('screen-view'), screenImg = document.getElementById('screen-img'), screenUrl = document.getElementById('screen-url');
+  const segs = ACTS.map((a, i) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'seg';
+    b.style.flex = String((CH_START[i + 1] ?? FILM_TOTAL) - CH_START[i]);
+    b.setAttribute('aria-label', `Chapter ${i + 1}: ${a.short}`);
+    b.innerHTML = `<span class="lbl">${i + 1} ${a.short}</span><span class="bar"><span class="fill"></span></span>`;
+    track.appendChild(b); return b;
+  });
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let T = 0, t = 0, playing = !reduce, last = performance.now(), shownCap = '', swapTimer = 0, shownCard = null, shownScreen = null;
+  const fmt = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+  function setPlaying(p) { playing = p; playBtn.innerHTML = p ? ICON_PAUSE : ICON_PLAY; playBtn.setAttribute('aria-label', p ? 'Pause' : 'Play'); last = performance.now(); }
+  setPlaying(playing);
+  function seek(nT) { T = clamp(nT, 0, FILM_TOTAL - .001); }
+  const chapterAtFilm = x => { let i = 0; while (i < ACTS.length - 1 && x >= CH_START[i + 1]) i++; return i; };
+  const fade = (local, d, k = .6) => S(0, k, local) * (1 - S(d - k, d, local));
+  function setCaption(key, tag, title, body) {
+    if (key === shownCap) return;
+    shownCap = key; clearTimeout(swapTimer); capEl.classList.add('swap');
+    swapTimer = setTimeout(() => { capTag.textContent = tag; capTitle.textContent = title; capBody.textContent = body; capBody.hidden = !body; capEl.classList.remove('swap'); }, 300);
+  }
+  function placeScreen(sc, local, d) {
+    const W = screenView.clientWidth, H = screenView.clientHeight, im = IMG[sc.img], R = im.naturalWidth / im.naturalHeight;
+    const k = S(.4, d - 1.2, local), v = [0, 1, 2].map(j => lerp(sc.from[j], sc.to[j], k));
+    const iw = W / v[2], ih = iw / R;
+    screenImg.style.width = iw + 'px'; screenImg.style.height = ih + 'px';
+    screenImg.style.transform = `translate(${W / 2 - v[0] * iw}px, ${H / 2 - v[1] * ih}px)`;
+    const ho = S(d * .45, d * .45 + .6, local);
+    screenImg.querySelectorAll('.screen-hl').forEach(h => h.style.opacity = ho);
+  }
+  function syncUI(m) {
+    const g = m.g, ch = g.ch;
+    // part cards
+    const co = g.card ? fade(m.local, g.d, .7) : 0;
+    if (g.card && shownCard !== g.card) {
+      shownCard = g.card; const C = CARDS_TXT[g.card];
+      kEyebrow.textContent = C.eyebrow; kTitle.textContent = C.title; kBody.textContent = C.body;
+      kSteps.innerHTML = (C.steps || []).map(n => `<li><span>${n}</span>${ACTS[n - 1].short}</li>`).join('');
+    }
+    cardEl.style.opacity = co; cardEl.style.visibility = co > .01 ? 'visible' : 'hidden';
+    // real screens
+    const so = g.screen ? fade(m.local, g.d, .5) : 0;
+    if (g.screen) {
+      const sc = SCREENS[g.screen];
+      if (shownScreen !== g.screen) {
+        shownScreen = g.screen; screenUrl.textContent = sc.url;
+        screenImg.style.backgroundImage = `url(img/${sc.img}.jpg)`;
+        screenImg.innerHTML = sc.hl.map(r => `<div class="screen-hl" style="left:${r[0] * 100}%;top:${r[1] * 100}%;width:${(r[2] - r[0]) * 100}%;height:${(r[3] - r[1]) * 100}%"></div>`).join('');
+      }
+      placeScreen(sc, m.local, g.d);
+      setCaption('s:' + g.screen, `Chapter ${ch + 1} · ${ACTS[ch].short}`, sc.title, sc.body);
+    } else if (!g.card) {
+      setCaption('c:' + ch, `Chapter ${ch + 1} · ${ACTS[ch].short}`, ACTS[ch].title, ACTS[ch].body);
+    }
+    screenEl.style.opacity = so; screenEl.style.visibility = so > .01 ? 'visible' : 'hidden'; screenBg.style.opacity = g.end ? 1 : so * .94;
+    // progress
+    const cur = chapterAtFilm(T);
+    segs.forEach((b, i) => {
+      const s0 = CH_START[i], s1 = CH_START[i + 1] ?? FILM_TOTAL;
+      b.querySelector('.fill').style.transform = `scaleX(${clamp((T - s0) / (s1 - s0))})`;
+      b.classList.toggle('on', i === cur);
+    });
+    timeEl.textContent = `${fmt(T)} / ${fmt(FILM_TOTAL)}`;
+    const oo = g.end ? S(.2, 1.4, m.local) * (1 - S(g.d - .6, g.d, m.local)) : 0;
+    outro.style.opacity = oo; outro.style.visibility = oo > .01 ? 'visible' : 'hidden';
+    capEl.style.opacity = g.card || g.end ? '0' : '';
+  }
+  segs.forEach((b, i) => b.addEventListener('click', e => { e.stopPropagation(); seek(CH_START[i] + .01); }));
+  let dragging = false;
+  const seekFromX = x => { const r = track.getBoundingClientRect(); seek(clamp((x - r.left) / r.width) * FILM_TOTAL); };
+  track.addEventListener('pointerdown', e => { dragging = true; track.setPointerCapture(e.pointerId); seekFromX(e.clientX); });
+  track.addEventListener('pointermove', e => { if (dragging) seekFromX(e.clientX); });
+  track.addEventListener('pointerup', () => { dragging = false; });
+  playBtn.addEventListener('click', () => setPlaying(!playing));
+  const toggleClean = () => document.body.classList.toggle('clean');
+  document.getElementById('clean').addEventListener('click', toggleClean);
+  const toggleFs = () => { try { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen().catch(() => {}); } catch (_) {} };
+  document.getElementById('fs').addEventListener('click', toggleFs);
+  renderer.domElement.addEventListener('click', () => { if (document.body.classList.contains('clean')) toggleClean(); else setPlaying(!playing); });
+  window.addEventListener('keydown', e => {
+    if (e.code === 'Space') { e.preventDefault(); setPlaying(!playing); }
+    else if (e.key === 'ArrowRight') { seek(CH_START[Math.min(ACTS.length - 1, chapterAtFilm(T) + 1)] + .01); }
+    else if (e.key === 'ArrowLeft') { const c = chapterAtFilm(T); seek(CH_START[T - CH_START[c] > 1.5 ? c : Math.max(0, c - 1)] + .01); }
+    else if (e.key === 'h' || e.key === 'H') toggleClean();
+    else if (e.key === 'f' || e.key === 'F') toggleFs();
+  });
+
+  function resize() {
+    const w = window.innerWidth, h = window.innerHeight;
+    renderer.setSize(w, h); camera.aspect = w / h; camera.updateProjectionMatrix();
+    distK = Math.max(1, 1.3 / camera.aspect);
+  }
+  window.__film = { seek: x => { seek(x); setPlaying(false); } };
+  window.addEventListener('resize', resize); resize();
+
+  function frame(now) {
+    const dt = Math.min(.1, (now - last) / 1000); last = now;
+    if (playing && !dragging) { T += dt; if (T >= FILM_TOTAL) T = 0; }
+    const m = segAt(T); t = m.t;
+    update(t); syncUI(m);
+    renderer.render(scene, camera);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+})();
+</script>
