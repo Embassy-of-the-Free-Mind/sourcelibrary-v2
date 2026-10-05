@@ -564,21 +564,25 @@ const TYPST_PREAMBLE = `
 #let in-outline = state("in-outline", false)
 #show outline: it => { in-outline.update(true); it; in-outline.update(false) }
 #let plate-caption-w = state("plate-caption-w", 100mm)
-#show figure.where(kind: "plate"): it => block(above: 1.6em, below: 1.6em, width: 100%, breakable: false, {
+// A full-page plate is centred on the PAGE, not the text column: the column
+// sits left of centre to make room for the margin notes
+#let plate-shift = state("plate-shift", 0mm)
+#show figure.where(kind: "plate"): it => context move(dx: plate-shift.get(), block(above: 1.6em, below: 1.6em, width: 100%, breakable: false, {
   set align(center)
   it.body
   v(0.7em)
-  context block(width: plate-caption-w.get(), {
+  block(width: plate-caption-w.get(), {
     set par(justify: false, first-line-indent: 0pt, leading: 0.5em, spacing: 0.55em)
     set text(size: 8.8pt, number-type: "lining", hyphenate: false)
     it.caption.body
   })
-})
-#let plate(file, width, n, title: none, kind: [Illustration], labels: (), lines: (), key: ()) = {
+}))
+#let plate(file, width, n, title: none, kind: [Illustration], labels: (), lines: (), key: (), full: false, follows: false) = {
   plate-caption-w.update(calc.max(width, 100mm))
+  plate-shift.update(if full { 105mm - margin-l - text-w / 2 } else { 0mm })
   let head = [#text(fill: rust, tracking: 0.04em, smallcaps[Fig. #context counter(figure.where(kind: "plate")).display()])#h(0.6em)#if title != none [#emph(title)] else [#kind]]
   let src-link = text(fill: muted, size: 7.8pt)[source page #link(page-url + n)[#n]]
-  let full = {
+  let details = {
     align(center)[#head#h(0.8em)#src-link]
     // Labels: the English, with the word as engraved after it
     if labels.len() > 0 {
@@ -592,14 +596,18 @@ const TYPST_PREAMBLE = `
     if key.len() > 0 {
       align(left, par(hanging-indent: 1em, key.map(((m, e)) => [#text(fill: rust)[#m]#h(0.35em)#e]).join([#h(0.4em)·#h(0.4em)])))
     }
+    if follows { align(center, text(fill: muted, style: "italic")[Its text is translated on the following page.]) }
   }
+  // A frontispiece or title page has a page to itself, as in the book
+  if full { pagebreak(weak: true) }
   figure(
     kind: "plate",
     supplement: [Fig.],
-    placement: auto,
-    caption: context if in-outline.get() { if title != none { title } else [#kind, source page #n] } else { full },
+    placement: if full { none } else { auto },
+    caption: context if in-outline.get() { if title != none { title } else [#kind, source page #n] } else { details },
     box(stroke: 0.4pt + hairline, inset: 1.2mm, image(file, width: width)),
   )
+  if full { pagebreak(weak: true) }
 }
 
 // Lists the source sets in short lines (indexes, plant names): two columns
@@ -1119,7 +1127,9 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
       heads.push(`#heading(level: ${(ch.level || 1) <= 1 ? 2 : 3})[${escapeTypst(title)}]`);
       heads.push(`#running-chapter.update(${typstString(shorten(title, 46))})`);
     }
-    const pagePlates = (platesByPage.get(page.page_number) || []).map(il => ({ ...il }));
+    // A full-page plate whose page is translated in the body (a title page)
+    // does not repeat that text in its caption
+    const pagePlates = (platesByPage.get(page.page_number) || []).map(il => ({ ...il, textFollows: il.full && english.has(page.page_number) }));
     pendingPlates.push(...pagePlates);
     if (!english.has(page.page_number)) { pendingHeads.push(...heads); continue; }
     let body = english.get(page.page_number);
@@ -1494,19 +1504,37 @@ const PLATE_KINDS = {
 // on its page for the caption and running head
 const PLATE_MAX_W_MM = 125;
 const PLATE_MAX_H_MM = 175;
+// A frontispiece or title page gets a page of its own, centred on the page and
+// wider than the text column (A4 is 210mm; this leaves 20mm a side)
+const FULL_PLATE_MAX_W_MM = 170;
+const FULL_PLATE_MAX_H_MM = 188;
+const FULL_PAGE_TYPES = new Set(['frontispiece', 'title-page']);
+// Kinds that are always worth printing, whatever their gallery score: a
+// typographic table or a faint diagram scores low as a gallery picture but is
+// part of the argument
+const ALWAYS_PLATE_TYPES = ['diagram', 'frontispiece', 'title-page', 'map', 'chart', 'table'];
+
+/** The gallery_images query for an edition's plates (shared with the caption pass). */
+export function illustrationQuery(book) {
+  return { book_id: book.id, type: { $ne: 'decorative' }, $or: [{ gallery_quality: { $gte: 0.7 } }, { type: { $in: ALWAYS_PLATE_TYPES } }] };
+}
 
 function plateTypst(il) {
   const aspect = il.height / il.width;
-  const widthMm = Math.min(PLATE_MAX_W_MM, PLATE_MAX_H_MM / aspect);
+  const widthMm = il.full
+    ? Math.min(FULL_PLATE_MAX_W_MM, FULL_PLATE_MAX_H_MM / aspect)
+    : Math.min(PLATE_MAX_W_MM, PLATE_MAX_H_MM / aspect);
   const kind = PLATE_KINDS[il.type] || 'Illustration';
   const c = plateCaption(il.caption);
   const pairs = list => `(${list.map(([a, b]) => `([${escapeTypst(a)}], [${escapeTypst(b)}])`).join(', ')},)`;
   const parts = [`kind: [${kind}]`];
+  if (il.full) parts.push('full: true');
   if (c?.title) parts.push(`title: [${escapeTypst(c.title)}]`);
   if (c?.labels.length) parts.push(`labels: ${pairs(c.labels)}`);
   // Glosses the translation set as notes on this page are the same words; the
   // caption pass read them from the plate itself, so they are used only without it
-  const lines = c?.lines.length ? c.lines : (il.inscriptions || []).map(t => [null, t]);
+  const lines = il.textFollows ? [] : c?.lines.length ? c.lines : (il.inscriptions || []).map(t => [null, t]);
+  if (il.textFollows) parts.push('follows: true');
   if (lines.length) parts.push(`lines: (${lines.map(([o, e]) => `(${o ? `[${escapeTypst(o)}]` : 'none'}, [${o ? escapeTypst(e) : e}])`).join(', ')},)`);
   if (c?.key.length) parts.push(`key: ${pairs(c.key)}`);
   return `#plate(${typstString(il.file)}, ${widthMm.toFixed(1)}mm, "${il.page_number}", ${parts.join(', ')})`;
@@ -1622,18 +1650,31 @@ export function takeInscriptions(body) {
  * The book's illustrations from `gallery_images`, fetched as JPEG buffers for
  * the edition's figures. Same selection as the scholarly EPUB (download route,
  * generateScholarlyEpubDownload): quality ≥ 0.7, no decorative initials or
- * headpieces. The cover page is skipped — the frontispiece already shows it.
+ * headpieces — plus every diagram, map, table, frontispiece and title page
+ * whatever its score (illustrationQuery). Frontispieces and title pages are
+ * marked `full` and print at full page.
  * Like the frontispiece, every failure is soft (a missing plate is left out,
  * never substituted), and a crop URL must carry the book's own id (#3362).
  */
 export async function fetchIllustrations(db, book, { concurrency = 6, captions = null } = {}) {
   const docs = await db.collection('gallery_images')
-    .find({ book_id: book.id, gallery_quality: { $gte: 0.7 }, type: { $nin: ['decorative'] } },
-      { projection: { page_number: 1, detection_index: 1, type: 1, extracted_url: 1 } })
+    .find(illustrationQuery(book), { projection: { page_number: 1, detection_index: 1, type: 1, extracted_url: 1 } })
     .sort({ page_number: 1, detection_index: 1 })
     .toArray();
-  const coverPage = Number(book.cover_page_number || book.cover_page) || null;
-  const wanted = docs.filter(d => d.extracted_url && d.extracted_url.includes(String(book.id)) && d.page_number !== coverPage);
+  const wanted = docs.filter(d => d.extracted_url && d.extracted_url.includes(String(book.id)));
+  // Title pages print whole, at full page, even where the gallery holds no
+  // record for them (a typeset title page is not a "picture" to the detector)
+  const titlePages = await db.collection('pages')
+    .find({ book_id: book.id, page_type: 'title-page' }, { projection: { page_number: 1, archived_photo: 1 } })
+    .toArray();
+  const titleNumbers = new Set(titlePages.map(p => p.page_number));
+  for (const p of titlePages) {
+    if (!wanted.some(d => d.page_number === p.page_number) && p.archived_photo?.includes(String(book.id))) {
+      wanted.push({ page_number: p.page_number, detection_index: 0, type: 'title-page', extracted_url: p.archived_photo });
+    }
+  }
+  wanted.sort((a, b) => a.page_number - b.page_number || a.detection_index - b.detection_index);
+  const isFull = d => FULL_PAGE_TYPES.has(d.type) || titleNumbers.has(d.page_number);
 
   // A page the caption pass has read is cut again from the full scan with its
   // tighter box, one plate per figure it found; the rest use the gallery crop
@@ -1647,9 +1688,9 @@ export async function fetchIllustrations(db, book, { concurrency = 6, captions =
     if (figs.length && figs.every(f => f.box_2d) && cap.scan_url?.includes(String(book.id))) {
       if (captioned.has(d.page_number)) continue;
       captioned.add(d.page_number);
-      figs.forEach(fig => jobs.push({ page_number: d.page_number, type: d.type, url: cap.scan_url, box: fig.box_2d, caption: fig }));
+      figs.forEach(fig => jobs.push({ page_number: d.page_number, type: d.type, full: isFull(d), url: cap.scan_url, box: fig.box_2d, caption: fig }));
     } else {
-      jobs.push({ page_number: d.page_number, type: d.type, url: d.extracted_url });
+      jobs.push({ page_number: d.page_number, type: d.type, full: isFull(d), url: d.extracted_url });
     }
   }
 
@@ -1687,7 +1728,7 @@ export async function fetchIllustrations(db, book, { concurrency = 6, captions =
         }
         const { data, info } = await img.resize(1800, 1800, { fit: 'inside', withoutEnlargement: true })
           .jpeg({ quality: 84 }).toBuffer({ resolveWithObject: true });
-        out[i] = { page_number: j.page_number, type: j.type, caption: j.caption || null, buffer: data, width: info.width, height: info.height };
+        out[i] = { page_number: j.page_number, type: j.type, full: Boolean(j.full), caption: j.caption || null, buffer: data, width: info.width, height: info.height };
       } catch (err) {
         // Soft — the edition is complete without it — but never silent
         console.warn(`plate on source page ${j.page_number} left out: ${err.message}`);
@@ -1718,7 +1759,7 @@ export async function generateScholarlyPdf(book, pages, options = {}) {
   rest.illustrations = (options.illustrations || []).map((il, i) => {
     const file = `plate-${i + 1}.jpg`;
     writeFileSync(join(tmpDir, file), il.buffer);
-    return { page_number: il.page_number, type: il.type, caption: il.caption, width: il.width, height: il.height, file };
+    return { page_number: il.page_number, type: il.type, full: il.full, caption: il.caption, width: il.width, height: il.height, file };
   });
 
   writeFileSync(typFile, generateTypstSource(book, pages, rest), 'utf-8');

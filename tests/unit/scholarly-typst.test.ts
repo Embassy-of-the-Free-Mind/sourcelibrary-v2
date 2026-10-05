@@ -6,7 +6,7 @@
 import { describe, it, expect } from 'vitest';
 import { execSync } from 'child_process';
 // @ts-expect-error — plain .mjs script library, no types
-import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus, resolveSourceImages, takeInscriptions, splitOriginalTerm, plateCaption, runningTitle, attachOrphanNotes } from '../../scripts/lib/scholarly-typst.mjs';
+import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus, resolveSourceImages, takeInscriptions, splitOriginalTerm, plateCaption, runningTitle, attachOrphanNotes, illustrationQuery } from '../../scripts/lib/scholarly-typst.mjs';
 
 const page = (n: number, data: string, ocr?: string) => ({ page_number: n, translation: { data }, ...(ocr ? { ocr: { data: ocr } } : {}) });
 
@@ -205,6 +205,17 @@ describe('plates', () => {
     const src = generateTypstSource(book, [page(1, 'It is graver...'), page(2, '...in mourning. Next.'), page(3, 'Third.')], { illustrations: [plate(2)] });
     expect(src).toMatch(/It is graver\.\.\.\n#src\("2"/);
     expect(src).toMatch(/#plate\("plate-2\.jpg"[^\n]*\n#pagegap\n#src\("3"/);
+  });
+
+  it('gives a title page a page of its own and does not repeat text the body translates', () => {
+    const caption = { title: 'Title page', inscriptions: [{ original: 'Macrocosmus', english: 'Macrocosm' }, { original: 'Utriusque cosmi maioris scilicet et minoris historia', english: 'History of both worlds, the greater and the lesser' }] };
+    const src = generateTypstSource(book, [page(1, 'History of both worlds.'), page(2, 'Two.')], { illustrations: [{ ...plate(1), type: 'frontispiece', full: true, caption }] });
+    expect(src).toMatch(/#plate\("plate-1\.jpg", [\d.]+mm, "1", kind: \[Frontispiece\], full: true, title: \[Title page\], labels: \(\(\[Macrocosmus\], \[Macrocosm\]\),\), follows: true\)/);
+    expect(src).not.toContain('History of both worlds, the greater');
+  });
+
+  it('prints every diagram and title page whatever its gallery score', () => {
+    expect(illustrationQuery({ id: 'b' })).toEqual({ book_id: 'b', type: { $ne: 'decorative' }, $or: [{ gallery_quality: { $gte: 0.7 } }, { type: { $in: ['diagram', 'frontispiece', 'title-page', 'map', 'chart', 'table'] } }] });
   });
 
   it('leaves out a plate whose page is not in the body, and the list with it', () => {
