@@ -16,6 +16,7 @@
  * src/lib/word-alignment.ts supplies the Trace pairs; nothing here generates them.
  */
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { stripMarkupTags } from '@/lib/strip-markup-tags';
 import type { AlignmentPair } from '@/lib/word-alignment';
 
 /** Longest line the 3D strip can set legibly (≈ 2048px canvas at the line font). */
@@ -43,13 +44,12 @@ export function cleanPageLines(raw: string): string {
   const paragraphs = base.split(/\n{2,}/).map(par => {
     const margins: string[] = [];
     const body = par.replace(/<margin(?:\s[^>]*)?>([\s\S]*?)<\/margin>/gi, (_, m: string) => {
-      margins.push(m.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim());
+      margins.push(stripMarkupTags(m, '').replace(/\s+/g, ' ').trim());
       return '';
     });
     return [body, ...margins.filter(Boolean)].join('\n');
   });
-  return paragraphs.join('\n\n')
-    .replace(/<[^>]+>/g, '')
+  return stripMarkupTags(paragraphs.join('\n\n'), '')
     .replace(/[ \t]+/g, ' ')
     .replace(/ +([,.;:!?])/g, '$1')
     .replace(/ *\n */g, '\n')
@@ -156,7 +156,7 @@ export function pickFilmLines(
 export function readPageDescription(rawTranslation: string): { summary?: string; keywords: string[] } {
   const grab = (tag: string) => {
     const m = rawTranslation.match(new RegExp(`<${tag}(?:\\s[^>]*)?>([\\s\\S]*?)<\\/${tag}>`, 'i'));
-    return m ? m[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim() : '';
+    return m ? stripMarkupTags(m[1], '').replace(/\s+/g, ' ').trim() : '';
   };
   const summary = grab('summary') || undefined;
   const keywords = grab('keywords').split(/[,;]/).map(s => s.trim()).filter(Boolean).slice(0, 6);
@@ -167,7 +167,7 @@ export function readPageDescription(rawTranslation: string): { summary?: string;
 export function readTerms(rawTranslation: string, max = 4): string[] {
   const out: string[] = [];
   for (const m of rawTranslation.matchAll(/<term(?:\s[^>]*)?>([\s\S]*?)<\/term>/gi)) {
-    const t = m[1].replace(/<[^>]+>/g, '').trim();
+    const t = stripMarkupTags(m[1], '').trim();
     if (t && t.length <= 40 && !out.some(x => x.toLowerCase() === t.toLowerCase())) out.push(t);
     if (out.length >= max) break;
   }
@@ -178,7 +178,7 @@ export function readTerms(rawTranslation: string, max = 4): string[] {
 export function firstMarginNote(rawOcr: string, minChars = 40): string | undefined {
   const s = stripEditorialWrappers(rawOcr);
   for (const m of s.matchAll(/<margin(?:\s[^>]*)?>([\s\S]*?)<\/margin>/gi)) {
-    const t = m[1].replace(DROP_INLINE, '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+    const t = stripMarkupTags(m[1].replace(DROP_INLINE, ''), '').replace(/\s+/g, ' ').trim();
     if (t.length >= minChars) return t;
   }
   return undefined;
