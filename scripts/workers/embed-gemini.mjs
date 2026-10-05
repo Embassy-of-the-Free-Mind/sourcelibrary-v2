@@ -199,6 +199,17 @@ async function flushEmbedUsage(force = false) {
   usageTotalChars += chars;
 }
 
+// A stopped run (budget stop, operator Ctrl-C) still spent what it embedded
+// since the last flush — up to FLUSH_EVERY_TEXTS texts per process. Record it
+// before exiting, or the ledger and any envelope meter read low (#5869: a
+// killed driver left 6,750 pages, ~$1, unrecorded).
+for (const sig of ['SIGTERM', 'SIGINT']) {
+  process.once(sig, async () => {
+    try { await flushEmbedUsage(true); } catch {}
+    process.exit(128 + (sig === 'SIGTERM' ? 15 : 2));
+  });
+}
+
 async function embedBatch(items) {
   const texts = items.map(i => i.text);
   const requests = texts.map(t => ({
