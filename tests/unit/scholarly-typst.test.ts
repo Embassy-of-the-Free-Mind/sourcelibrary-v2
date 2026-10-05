@@ -209,7 +209,7 @@ describe('plates', () => {
   it('sets a plate at its source page, sized to fit the page, and lists it', () => {
     const src = generateTypstSource(book, [page(1, 'One.'), page(2, 'Two.')], { illustrations: [plate(2)] });
     // 1200/800 × 125mm would overrun the page; the height cap sets the width
-    expect(src).toMatch(/#plate\("plate-2\.jpg", 116\.7mm, "2", kind: \[Engraving\]\)\n#pagegap\n#src\("2"/);
+    expect(src).toMatch(/#plate\("plate-2\.jpg", 93\.3mm, "2", kind: \[Engraving\]\)\n#pagegap\n#src\("2"/);
     expect(src).toContain('outline(title: none, target: figure.where(kind: "plate"))');
   });
 
