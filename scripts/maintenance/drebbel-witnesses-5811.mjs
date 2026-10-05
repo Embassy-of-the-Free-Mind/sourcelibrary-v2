@@ -35,7 +35,7 @@ export const RELEASED = [
   '6ac3ade2864e04424c043050', // Tymme, Dialogue Philosophicall 1612
   '6ac3ade5864e04424c0430a4', // Rubens, Correspondance III (1900)
   '6a0a24020eca358f15e84edc', // Schwenter, Deliciae 1636
-  '69b6ae73dc00a90e322b11c7', // Grotius, Poemata 1670
+  '69b6ae73dc00a90e322b11c7', // Grotius, Poemata 1670 — OCR done, then held before translation (cap); see HELD
   '69aebe60c0472fef6455a8f3', // Wilkins, Mathematicall Magick 1648
 ];
 const HELD = [
