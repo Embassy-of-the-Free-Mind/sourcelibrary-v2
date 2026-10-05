@@ -28,6 +28,7 @@ import sharp from 'sharp';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { callGemini } from '../lib/gemini-script-client.mjs';
+import { spreadPageNumbers } from '../lib/scholarly-typst.mjs';
 import { buildRequest, submitBatch, collectBatch } from '../lib/gemini-rest-batch.mjs';
 
 const MODEL = 'gemini-3-flash-preview';
@@ -53,9 +54,21 @@ Do NOT include: decorated initial letters, illustrations or diagrams, rules or l
 For each ornament return {"kind": "headpiece" | "tailpiece", "box_2d": [ymin, xmin, ymax, xmax]} on a 0–1000 scale of the whole page, TIGHT around the ornament's printed ink. Return {"ornaments": []} if there are none.`;
 
 // A book or treatise heading in the page's first lines (a running head may come first)
-const OPENS_BOOK = /\b(?:LIBER|TRACTATUS|SECTIO)\s+(?:PRIMUS|SECUNDUS|TERTIUS|QUARTUS|QUINTUS|SEXTUS|SEPTIMUS|OCTAVUS|NONUS|DECIMUS|[IVX]+\b)/i;
+// Latin first (Fludd), then the vernaculars the collection holds most: German,
+// French, Italian, Dutch, Spanish, English — book, part, chapter and preface headings
+const OPENS_BOOK = new RegExp([
+  '\\b(?:LIBER|TRACTATUS|SECTIO|PARS)\\s+(?:PRIMUS|SECUNDUS|TERTIUS|QUARTUS|QUINTUS|SEXTUS|SEPTIMUS|OCTAVUS|NONUS|DECIMUS|PRIMA|SECUNDA|TERTIA|[IVX]+\\b)',
+  '\\b(?:PRAEFATIO|PRÆFATIO|PROOEMIUM|PROŒMIUM|AD LECTOREM|DEDICATIO)\\b',
+  '\\b(?:Das|Der|Die)\\s+(?:erste|ander|andere|zweite|dritte|vierte|fünffte|fünfte)\\s+(?:Buch|Theil|Teil|Capitel|Kapitel)',
+  '\\b(?:Vorrede|Vorred|Zuschrifft|Zuschrift)\\b',
+  '\\b(?:LIVRE|CHAPITRE|PARTIE)\\s+(?:PREMIER|PREMIERE|SECOND|SECONDE|TROISIESME|TROISIÈME|[IVX]+\\b)',
+  '\\b(?:PREFACE|PRÉFACE|AU LECTEUR)\\b',
+  '\\b(?:LIBRO|CAPITOLO|PARTE)\\s+(?:PRIMO|SECONDO|TERZO|[IVX]+\\b)',
+  '\\b(?:Het|Den)\\s+(?:eerste|tweede|derde)\\s+(?:Boek|Deel|Hooftstuck|Hoofdstuk)',
+  '\\b(?:THE\\s+)?(?:FIRST|SECOND|THIRD)\\s+BOOKE?\\b',
+].join('|'), 'i');
 // Tailpieces follow the end of a section
-const ENDS_SECTION = /\bFINIS\b/;
+const ENDS_SECTION = /\b(?:FINIS|ENDE|FIN|IL FINE|EYNDE|THE END)\b/;
 const GALLERY_ORNAMENT = /headpiece|tailpiece|vignette|cul-de-lampe|printer'?s ornament|fleuron/i;
 
 const client = new MongoClient(process.env.MONGODB_URI);
@@ -67,7 +80,8 @@ try {
     .sort({ page_number: 1 }).toArray();
   const gallery = await db.collection('gallery_images').find({ book_id: bookId, type: 'decorative' }, { projection: { page_number: 1, description: 1 } }).toArray();
   const fromGallery = new Set(gallery.filter(g => GALLERY_ORNAMENT.test(g.description || '')).map(g => g.page_number));
-  let candidates = pages.filter(p => fromGallery.has(p.page_number) || OPENS_BOOK.test(String(p.ocr?.data || '').slice(0, 600)) || ENDS_SECTION.test(String(p.ocr?.data || '')));
+  const spreads = await spreadPageNumbers(db, bookId);
+  let candidates = pages.filter(p => !spreads.has(p.page_number)).filter(p => fromGallery.has(p.page_number) || OPENS_BOOK.test(String(p.ocr?.data || '').slice(0, 600)) || ENDS_SECTION.test(String(p.ocr?.data || '')));
   if (opt('pages')) { const want = new Set(opt('pages').split(',').map(Number)); candidates = pages.filter(p => want.has(p.page_number)); }
   candidates = candidates.filter(p => !cache.pages[p.page_number]);
   console.log(`${candidates.length} candidate pages: ${candidates.map(p => p.page_number).join(' ')}`);
@@ -108,7 +122,7 @@ try {
     if (cache.batch) throw new Error(`batch ${cache.batch.job_name} already submitted; --collect it first`);
     const lines = [], pages = {};
     for (let i = 0; i < candidates.length; i += 8) {
-      for (const c of await Promise.all(candidates.slice(i, i + 8).map(prepare))) {
+      for (const c of await Promise.all(candidates.slice(i, i + 8).map(p => prepare(p).catch(err => { console.warn(`p${p.page_number}: ${err.message}`); return null; })))) {
         if (!c) continue;
         lines.push({ key: String(c.p.page_number), request: buildRequest({ model: MODEL, prompt: PROMPT, images: [c.image], maxOutputTokens: 1000, responseMimeType: 'application/json' }) });
         pages[c.p.page_number] = c.scanUrl;

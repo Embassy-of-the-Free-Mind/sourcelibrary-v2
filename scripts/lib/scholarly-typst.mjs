@@ -457,6 +457,18 @@ const SKIP_PAGE_TYPES = new Set(['blank', 'digitizer-insert']);
 // only before the work's title page, and to very short pages at the back.
 const COPY_MATTER = /\b(fly-?leaf|end-?paper|paste-?down|shelf-?mark|bookplate|ex-?libris|library stamp|catalog(ue)? (description|slip|entry|clipping)|collation (mark|note)|digiti[sz]ation (target|card)|colou?r (chart|checker|calibration)|scale bar|call number)\b/i;
 const bodyText = page => String(page.translation?.data || '').replace(/<(note|gloss|image-desc|summary|keywords|meta|page-num|header|sig|vocab|lang|language|margin)\b[^>]*>[\s\S]*?<\/\1>/g, '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+/**
+ * A split book keeps its original two-page photographs as `archived-spread`
+ * pages (numbered below 1) beside the single pages cut from them, and both
+ * carry a translation: an edition of Indagine's Chiromantzey printed 74
+ * spreads before the 146 pages that repeat them. The spreads are the text only
+ * when there is nothing else.
+ */
+export function dropArchivedSpreads(pages) {
+  const isSpread = p => p.page_type === 'archived-spread';
+  return pages.some(p => !isSpread(p) && p.translation?.data) ? pages.filter(p => !isSpread(p)) : pages;
+}
+
 export function dropCopyMatter(pages, titlePageNumber) {
   const lastN = pages.length ? pages[pages.length - 1].page_number : 0;
   return pages.filter(p => {
@@ -833,7 +845,7 @@ export function generateTypstSource(book, pages, options = {}) {
   const year = now.slice(0, 4);
   // The first title page: a page typed so, or the first full-page plate
   const titleAt = [pages.find(p => p.page_type === 'title-page')?.page_number, ...illustrations.filter(il => il.full).map(il => il.page_number)].filter(n => n != null).sort((a, b) => a - b)[0];
-  const translatedPages = dropCopyMatter(pages.filter(isContentPage), titleAt);
+  const translatedPages = dropCopyMatter(dropArchivedSpreads(pages).filter(isContentPage), titleAt);
   const author = String(book.author || 'Anonymous').replace(/\s*\|\s*/g, ', ');
   const language = book.language || 'source language';
 
@@ -1874,12 +1886,22 @@ export function takeInscriptions(body) {
  * Like the frontispiece, every failure is soft (a missing plate is left out,
  * never substituted), and a crop URL must carry the book's own id (#3362).
  */
+/** Page numbers of a split book's archived spreads (empty when the book was never split). */
+export async function spreadPageNumbers(db, bookId) {
+  const spreads = await db.collection('pages').distinct('page_number', { book_id: bookId, page_type: 'archived-spread' });
+  if (!spreads.length) return new Set();
+  const singles = await db.collection('pages').countDocuments({ book_id: bookId, page_type: { $ne: 'archived-spread' }, 'translation.data': { $exists: true, $ne: '' } });
+  return singles ? new Set(spreads) : new Set();
+}
+
 export async function fetchIllustrations(db, book, { concurrency = 6, captions = null } = {}) {
   const docs = await db.collection('gallery_images')
     .find(illustrationQuery(book), { projection: { page_number: 1, detection_index: 1, type: 1, extracted_url: 1 } })
     .sort({ page_number: 1, detection_index: 1 })
     .toArray();
-  const wanted = docs.filter(d => d.extracted_url && d.extracted_url.includes(String(book.id)));
+  // A figure on an archived spread is the same figure as on the page cut from it
+  const spreads = await spreadPageNumbers(db, book.id);
+  const wanted = docs.filter(d => d.extracted_url && d.extracted_url.includes(String(book.id)) && !spreads.has(d.page_number));
   // Title pages print whole, at full page, even where the gallery holds no
   // record for them (a typeset title page is not a "picture" to the detector)
   const titlePages = await db.collection('pages')
