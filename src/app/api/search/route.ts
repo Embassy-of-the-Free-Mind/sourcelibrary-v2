@@ -4,6 +4,7 @@ import { textRoleRank } from '@/lib/text-role';
 import { Book } from '@/lib/types';
 import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search';
 import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
+import { expandPersonNames } from '@/lib/search/name-variants';
 import { CONTENT_LICENSE } from '@/lib/license-info';
 import { searchBookIds } from '@/lib/books-catalog';
 import { semanticBookSearch, semanticPageSearchGlobal, lexicalPageSearchLang } from '@/lib/semantic-search';
@@ -431,8 +432,11 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             }
           }
 
+          // Other spellings of a person the query names (Drebbel → Drebelius); [] otherwise (#5888).
+          const nameVariants = await expandPersonNames(query);
+
           return await db.collection('pages').aggregate([
-            buildPageSearchStage(query, filteredBookIds),
+            buildPageSearchStage(query, filteredBookIds, { nameVariants }),
             { $match: { page_number: { $gt: 0 }, page_type: { $nin: NON_CONTENT_PAGE_TYPES } } },
             { $limit: pageLimit },
             {
