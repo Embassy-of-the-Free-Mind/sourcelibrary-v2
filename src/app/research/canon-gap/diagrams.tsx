@@ -7,7 +7,7 @@ import type { CSSProperties, ReactNode } from 'react';
 // neutral hatch, because it is an absence of data, not a third category.
 export const ENGLISH = '#0b9488';
 export const NO_ENGLISH = '#c2610c';
-const HATCH: CSSProperties = {
+export const HATCH: CSSProperties = {
   backgroundColor: '#e7e5e4',
   backgroundImage: 'repeating-linear-gradient(135deg, #a8a29e 0 1.5px, transparent 1.5px 6px)',
 };
@@ -24,7 +24,7 @@ export function short(n: number): string {
   return String(n);
 }
 
-function Swatch({ style, label }: { style: CSSProperties; label: string }) {
+export function Swatch({ style, label }: { style: CSSProperties; label: string }) {
   return (
     <span className="inline-flex items-center gap-1.5 mr-4">
       <span className="inline-block w-3 h-3 rounded-[2px]" style={style} />
@@ -33,7 +33,7 @@ function Swatch({ style, label }: { style: CSSProperties; label: string }) {
   );
 }
 
-function Figure({ n, title, caption, children }: { n: number; title: string; caption: ReactNode; children: ReactNode }) {
+export function Figure({ n, title, caption, children }: { n: number; title: string; caption: ReactNode; children: ReactNode }) {
   return (
     <figure className="my-10 rounded-sm border border-stone-200 bg-white px-4 py-6 md:px-8 md:py-8">
       <div className="font-body text-xs tracking-wider uppercase text-stone-400 mb-1">Figure {n}</div>
@@ -46,12 +46,14 @@ function Figure({ n, title, caption, children }: { n: number; title: string; cap
 
 /* ---------- The two routes from a canon to English ---------- */
 
-function Step({ label, sub, skipped, tone }: { label: string; sub?: string; skipped?: boolean; tone?: 'source' | 'review' }) {
+export function Step({ label, sub, skipped, tone }: { label: string; sub?: string; skipped?: boolean; tone?: 'source' | 'review' | 'planned' }) {
   const base = 'rounded-sm px-3 py-2 font-body text-sm leading-tight min-w-0';
   const cls = skipped
     ? `${base} border border-dashed border-stone-300 text-stone-400 bg-transparent`
     : tone === 'review'
       ? `${base} bg-stone-800 text-white`
+      : tone === 'planned'
+        ? `${base} border border-dashed border-amber-400 bg-white text-stone-900`
       : tone === 'source'
         ? `${base} bg-white border border-stone-300 text-stone-900`
         : `${base} bg-amber-50 border border-amber-300 text-stone-900`;
@@ -63,7 +65,7 @@ function Step({ label, sub, skipped, tone }: { label: string; sub?: string; skip
   );
 }
 
-const Arrow = () => (
+export const Arrow = () => (
   <div aria-hidden className="text-stone-400 text-center md:self-center leading-none max-md:rotate-90 max-md:my-0.5">→</div>
 );
 
