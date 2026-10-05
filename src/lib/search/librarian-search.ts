@@ -24,6 +24,8 @@ import { buildBookSearchStage, buildPageSearchStage } from '@/lib/atlas-search';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { authorSlug as toAuthorSlug } from '@/lib/slugify';
 import { editionYear } from '@/lib/dedup';
+import { resolveQuoteText } from '@/lib/quote-text';
+import type { Page } from '@/lib/types';
 
 // ── Types ────────────────────────────────────────────────────────────
 
@@ -483,6 +485,44 @@ function stripAnnotations(text: string): string {
 
 // ── Public API ───────────────────────────────────────────────────────
 
+const pageKey = (bookId: string, pageNumber: number) => `${bookId}:${pageNumber}`;
+
+/**
+ * The page text the Librarian should read for each hit, from Mongo (#5867).
+ *
+ * The semantic lanes carry `page_translations.translation`, which is EMPTY by
+ * design whenever a page was embedded without a translation — every
+ * English-original page (its OCR is the reading text) and any page embedded
+ * before its translation landed (scripts/lib/page-embedding-text.mjs). The
+ * vector still ranks, so the hit arrives with no words in it. It is also cut to
+ * 300 chars. `resolveQuoteText` is the one place that decides what a page's
+ * quotable English is, so use it rather than the lane's copy.
+ */
+async function loadPassageTexts(hits: RawHit[]): Promise<Map<string, string>> {
+  const out = new Map<string, string>();
+  if (hits.length === 0) return out;
+  try {
+    const db = await getDb();
+    const pages = await db.collection('pages')
+      .find({ $or: hits.map(h => ({ book_id: h.book_id, page_number: h.page_number })) })
+      .project({ book_id: 1, page_number: 1, 'translation.data': 1, 'ocr.data': 1 })
+      .toArray();
+    for (const p of pages) {
+      const resolved = resolveQuoteText(p as unknown as Page, p.book_id, 'en', { mark: false });
+      if (resolved) out.set(pageKey(p.book_id, p.page_number), resolved.text);
+    }
+  } catch {
+    // Fall back to the lanes' own text — degraded, never broken.
+  }
+  return out;
+}
+
+/** Mongo text when it resolved, else the lane's own; cleaned and capped. */
+export function passageText(hit: Pick<RawHit, 'book_id' | 'page_number' | 'text'>, pageTexts: Map<string, string>): string {
+  const raw = pageTexts.get(pageKey(hit.book_id, hit.page_number)) || hit.text || '';
+  return stripAnnotations(raw).slice(0, 1200);
+}
+
 /**
  * Hybrid search. Fans out to keyword + book-then-page + global-page in
  * parallel, RRF-merges, optionally cross-encoder reranks, and resolves
@@ -528,6 +568,12 @@ export async function hybridSearch(
     [1, 1, 1, collectionWeight, collectionWeight],
   );
 
+  // Real page text for the head of the list BEFORE the rerank reads it — an
+  // English-original page would otherwise be scored on an empty string (#5867).
+  // The window covers the rerank's top 20 and the passage build's limit * 3.
+  const pageTexts = await loadPassageTexts(merged.slice(0, Math.max(20, limit * 3)));
+  merged = merged.map(h => ({ ...h, text: passageText(h, pageTexts) }));
+
   // Optional cross-encoder rerank (no-op without API key)
   merged = await maybeRerank(query, merged);
 
@@ -556,6 +602,8 @@ export async function hybridSearch(
   for (const hit of merged) {
     const book = bookMap.get(hit.book_id);
     if (!book) continue; // tenant-foreign or hidden
+    const text = hit.text;
+    if (!text) continue; // nothing quotable on the page — an empty passage only misleads the model
     passages.push({
       book_id: hit.book_id,
       bookTitle: book.display_title || book.title || 'Unknown',
@@ -565,7 +613,7 @@ export async function hybridSearch(
       language: typeof book.language === 'string' ? book.language : undefined,
       textRole: typeof book.text_role === 'string' ? book.text_role : undefined,
       page_number: hit.page_number,
-      text: stripAnnotations(hit.text || '').slice(0, 1200),
+      text,
       score: hit.score,
       source: hit.source,
     });
