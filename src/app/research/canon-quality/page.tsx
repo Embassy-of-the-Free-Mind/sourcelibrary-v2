@@ -542,7 +542,7 @@ function WhatPagesBuy({ n }: { n: number }) {
   const bands: Band[] = [
     {
       label: 'No pages read by a person',
-      sub: 'Tibetan and Chinese today: no estimate can be made',
+      sub: 'every canon on this page today: no estimate can be made',
     },
     {
       label: 'About 35 pages',
@@ -577,9 +577,8 @@ function WhatPagesBuy({ n }: { n: number }) {
           rows are the sample-size arithmetic in our review design, not results; the 90% is an assumption. The last row
           is a measured result, for comparison: 150 random Tengyur pages read by AI reviewers. A scholar&rsquo;s 30
           pages do two things: they give a direct estimate at about the second row&rsquo;s precision, and they tell us
-          how far to trust the AI reviewers, who can read every page.
-          <S href={SRC.review} />
-          <S href={SRC.tengyurRandom} />
+          how far to trust the AI reviewers, who can read every page. Sources: <A href={SRC.review}>review design</A>,{' '}
+          <A href={SRC.tengyurRandom}>Tengyur sample</A>.
         </>
       }
     >
@@ -614,7 +613,7 @@ function WhatPagesBuy({ n }: { n: number }) {
           <div className="flex justify-between font-body text-[11px] text-stone-400">
             <span>0%</span>
             <span>50%</span>
-            <span>100% of pages sound</span>
+            <span>100% of pages</span>
           </div>
         </div>
       </div>
