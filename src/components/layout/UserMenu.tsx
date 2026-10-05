@@ -207,6 +207,17 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
                 >
                   Progress
                 </Link>
+                {/* The canons for the Eternity working session: what we hold,
+                    each canon, and how we check quality (#5513). Unlisted, so
+                    the menu is the way back to it. */}
+                <Link
+                  href="/research/canon-gap"
+                  className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+                  style={{ color: 'var(--text-primary)' }}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Open Canons
+                </Link>
                 {/* People first. Introductions is what readers WROTE about
                     themselves and who offered to help — it lived only inside
                     AdminNav, which renders on /admin/* pages, so you could only
