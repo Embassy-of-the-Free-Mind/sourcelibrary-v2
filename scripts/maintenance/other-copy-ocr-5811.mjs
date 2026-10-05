@@ -180,7 +180,7 @@ await withMongo(async (db) => {
         other_copy: { reason: 'RECITATION refused on every Gemini tier for this scan; text from another scan of the same edition (#5811)',
           item, leaf: r.leaf, offset: r.offset, bracket: { before_page: r.bracket[0], after_page: r.bracket[1], before_agreement: r.bracket[2], after_agreement: r.bracket[3] },
           catchword: r.catchword, copy_median_agreement: median, cutoff,
-          long_s_restored: { words: restored[r.leaf].n, rule: "f→s where the f-form is absent from and the s-form present in this book's own model-read pages", lexicon_words: lex.size, lexicon_books: [BOOK, ...LEX_BOOKS] } },
+          long_s_restored: { words: restored[r.leaf].n, rule: "f→s where the s-form is ≥5× as frequent as the f-form in the model-read pages of the lexicon books", lexicon_words: lex.size, lexicon_books: [BOOK, ...LEX_BOOKS] } },
       };
       // Only an EMPTY page is written (the filter is in the update itself, so a concurrent writer wins).
       const res = await db.collection('pages').updateOne({ id: pages.find((x) => x.page_number === r.page).id, $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': '' }, { 'ocr.data': null }] },

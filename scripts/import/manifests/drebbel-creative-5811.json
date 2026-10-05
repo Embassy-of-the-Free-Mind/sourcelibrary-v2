@@ -1,0 +1,14 @@
+{
+  "campaign": "drebbel-creative-5811",
+  "collections": ["drebbel"],
+  "BOOKS": [
+    { "id": "bub_gb_YBjEecxlbaAC", "title": "Journal des voyages de Monsieur de Monconys … Troisième partie", "author": "Monconys, Balthazar de", "year": 1666, "lang": "French",
+      "note": "#5811. Title page: 'Iournal des voyages de Monsieur de Monconys … Troisieme partie', Lyon, Horace Boissat & George Remeus, M.DC.LXVI. Completes the set with Parts I (6ac27d29058764b16bdc390b) and II (6a44359d0235c9147000dd12); its index cites the Part II p.54 oven (Wren's reproduction)." },
+    { "id": "b30332291", "title": "The General History of the Air", "author": "Boyle, Robert", "year": 1692, "lang": "English",
+      "note": "#5811. Title page: 'The General History of the Air, designed and begun by the Hon(ble) Robert Boyle Esq.', London, Awnsham and John Churchill, MDCXCII (Imprimatur 29 June 1692). Wellcome copy, Public Domain Mark. Prints a correspondent's letter: 'Drebble, that great, singular, learned Mechanick … found out a Furnace which he could govern to any Degree of Heat' (thermometer section)." },
+    { "id": "lettresdepeiresc01peiruoft", "title": "Lettres de Peiresc aux frères Dupuy, tome premier (décembre 1617 – décembre 1628)", "author": "Peiresc, Nicolas-Claude Fabri de; Tamizey de Larroque, Philippe (ed.)", "year": 1888, "lang": "French",
+      "note": "#5811. Title page: Lettres de Peiresc, tome I, Paris, Imprimerie nationale, MDCCCLXXXVIII (Collection de documents inédits). p.486 (8 Jan 1628) on Drebbel's lenses, n.1 cites Peiresc's autograph 'Relation de ce que j'ai apprins de la vie et des inventions de Corneille Drebbel par Abraham Kuffler … septembre 1624' (Carpentras, registre VII)." },
+    { "id": "lettresdepeiresc06peiruoft", "title": "Lettres de Peiresc, tome sixième: lettres de Peiresc à sa famille et principalement à son frère, 1602–1637", "author": "Peiresc, Nicolas-Claude Fabri de; Tamizey de Larroque, Philippe (ed.)", "year": 1896, "lang": "French",
+      "note": "#5811. Title page: tome VI, Paris, Imprimerie nationale, MDCCCXCVI (IA metadata wrongly says 'aux frères Dupuy', 1888). pp.29–30 (1622, to Valavez): introduces 'le s' Kuffler de Cologne' and his 'nouvelle invention de lunette'; p.55 (1624) 'lunettes de cez Kufllers'; p.117, p.156 ('le livre des Éléments de Corn. Drebels')." }
+  ]
+}
