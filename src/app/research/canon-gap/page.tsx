@@ -3,6 +3,9 @@ import type { ReactNode } from 'react';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import gapMap from '../../../../scripts/catalog-coverage/results/canon-gap-map-2026-10.json';
 import gapStatus from '../../../../scripts/catalog-coverage/results/canon-gap-status-2026-10.json';
+import folio from '../../../../scripts/catalog-coverage/results/canon-gap-folio-2026-10.json';
+import { READER_UI_STRINGS } from '@/lib/reader-strings';
+import FolioPipeline, { type CritiqueGate, type FolioSnapshot } from './FolioPipeline';
 import { CanonBars, RoutesDiagram, StatusBoard, STATUS_STYLE, TengyurProgress, TraditionProgress, ImprovementChart, short, type CanonBar, type Improvement, type TraditionProgressRow } from './diagrams';
 
 // Built for the Eternity Foundation working session (#5513): read once, seated, as a
@@ -106,6 +109,38 @@ const IMPROVEMENTS: Improvement[] = [
     inUse: false, status: 'tested; still below the 90% needed to translate',
     basis: 'manuscript pages of classical poetry located in Ganjoor (9 and 13 pages); 1 Oct 2026; a small sample',
     source: 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5525#issuecomment-5936907070',
+  },
+];
+
+// The three automated checks in the "one page through the pipeline" figure (#5846). Each rate is
+// copied from the issue comment that reports it; "This page" is what changed on vol. 98 fol. 106b,
+// read from its revision rows (canon-gap-folio.mjs).
+const GATES: [CritiqueGate, CritiqueGate, CritiqueGate] = [
+  {
+    name: 'Against a human translation',
+    result: '6.2 reversed statements per 100 pages by either of two AI judges, 3.4 by both',
+    basis: '354 pages that 84000 has also translated, from 8 texts, none of them Madhyamaka or Pramāṇa; two blind Claude Opus judges',
+    source: `${ISSUE_URL}5797#issuecomment-5978287405`,
+    onThisPage: 'not in that sample: 84000 has published nothing from this section.',
+  },
+  {
+    name: 'False “illegible” marks',
+    result: '16,157 pages repaired, with no new model calls',
+    basis: 'every drafted page scanned for an “illegible” tag at the page end that only marks where the side breaks off',
+    source: `${ISSUE_URL}5797#issuecomment-5978287405`,
+    onThisPage: 'the side ends mid-sentence and the draft called the break illegible. Now “…”.',
+  },
+  {
+    name: 'AI specialist review against the Tibetan',
+    result: 'on 150 random pages, 75% need only light edits; about 38 per 100 pages have a reversed statement or a wrong speaker or agent (95% CI 23–50)',
+    basis: 'a random draw from all 116,703 pages with English; two blind Claude Opus reviewers acting as Tibetologists; rate adjusted for the share of their findings that held up when checked',
+    source: `${ISSUE_URL}5829#issuecomment-5982612936`,
+    onThisPage: (
+      <>
+        a Claude reviewer reading the Tibetan removed a fifth item the draft had added to a four-part list (&ldquo;inherit their
+        karma&rdquo;) and moved the materialists&rsquo; reason back to its clause. <A href={`${ISSUE_URL}5800`}>#5800</A>
+      </>
+    ),
   },
 ];
 
@@ -361,6 +396,30 @@ export default function CanonGapPage() {
             ))}
           </ol>
         </nav>
+
+        <section aria-labelledby="one-page" className="py-14 border-t border-stone-200">
+          <div className="font-body text-xs tracking-[0.16em] uppercase text-amber-700 font-semibold mb-3">Interactive</div>
+          <h2 id="one-page" className="font-serif text-2xl md:text-3xl text-stone-900 mb-5 tracking-tight">
+            One page through the pipeline
+          </h2>
+          <p className="mb-6">
+            Follow a single page of the Derge Tengyur through the six stages of Eternity&rsquo;s translation pipeline, from
+            the woodblock scan to the page a reader sees. It plays on its own; click any stage to jump to it, or choose
+            &ldquo;Show all stages&rdquo; to read it as one page.
+          </p>
+          <FolioPipeline
+            folio={folio as unknown as FolioSnapshot}
+            tengyur={{
+              perVolume: TENGYUR.per_volume as [number, number, number][],
+              pagesWithText: TENGYUR.pages_with_text,
+              pagesTranslated: TENGYUR.pages_translated,
+              usdPerPage: TENGYUR.usd_per_page,
+              countedAt: TENGYUR.counted_at,
+            }}
+            gates={GATES}
+            draftLabel={READER_UI_STRINGS.en.info.machineDraftNotice}
+          />
+        </section>
 
         <Section id="library" title="What we already hold">
           <p>

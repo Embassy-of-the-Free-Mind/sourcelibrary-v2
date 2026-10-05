@@ -1,0 +1,46 @@
+{
+  "source": "la.wikisource Liber:Johannes Kepler - Harmonices Mundi Libri V.pdf",
+  "edition": "Liber:Johannes Kepler - Harmonices Mundi Libri V.pdf — ",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://la.wikisource.org/wiki/Liber%3AJohannes_Kepler_-_Harmonices_Mundi_Libri_V.pdf",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "10/12",
+    "pb_aligned_pages": "9/10"
+  },
+  "origin": "library",
+  "book_id": "6a26c136aad44c98627bfb47",
+  "page_number": 21,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 19116,
+    "to_char": 22263,
+    "overlap": 0.973,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'templationum physicarum sit usus' (page no. 5, 'Demonstratione. Lib. I.'); ends 'in lucem pro-/ferrem'; marginal note 'Occasio hujus Libri I.' appears inline in ref; Greek στοιχείωσις words present and rendered by ref.",
+    "leaf_language": "mixed (lat with a few grc words)",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:44.257Z",
+  "text_location": "repo",
+  "text_sha256": "8c33adf4c443a07cd4538665508d42f1ae329e85bda494e35151257da77ee18b",
+  "unit": {
+    "chars": 3147
+  },
+  "stratum": "latin-period-5126"
+}

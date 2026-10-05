@@ -108,11 +108,21 @@ export const FLASH_OCR_FROM = Object.freeze({
   gez: new Date('2026-10-04T00:00:00Z'),
 });
 
+/**
+ * Families whose HIDDEN backlog also reads on flash. Persian only (Derek 2026-10-04, after #5795):
+ * labels held on 93% of hidden pages and flash read 9 of the 10 hardest pages to lite's 0, with
+ * nothing invented. It missed the preregistered rule by one looping flash page in 30; a loop is
+ * refused at write time by the collector's loop guard (ocr-loop-guard.mjs), so it is not served.
+ * Sanskrit, Arabic and Pali failed on labels or legibility and wait for #4884 / better scans.
+ */
+export const FLASH_OCR_INCLUDES_HIDDEN = Object.freeze(new Set(['fas']));
+
 export function isFlashOcrBook(book) {
   const first = toLanguageCodes(book?.language).codes[0];
-  const from = first ? FLASH_OCR_FROM[codeFamily(first)] : undefined;
+  const family = first ? codeFamily(first) : undefined;
+  const from = family ? FLASH_OCR_FROM[family] : undefined;
   if (!from) return false;
-  if (book?.visible === true) return true;
+  if (book?.visible === true || FLASH_OCR_INCLUDES_HIDDEN.has(family)) return true;
   const created = book?.created_at ? new Date(book.created_at) : null;
   return !!created && !Number.isNaN(created.getTime()) && created >= from;
 }

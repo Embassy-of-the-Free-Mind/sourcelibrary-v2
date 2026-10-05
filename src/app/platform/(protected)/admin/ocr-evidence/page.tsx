@@ -76,6 +76,27 @@ interface ImageArm {
   verdict?: 'confirmed' | 'denied' | 'exploratory' | null;
 }
 
+// A judged translation-fidelity cell (#5695 served English vs published translations; #5700 A5 re-read lift).
+// Its measure is a judge's 1–5 rating against a human reference, never CER, so it has its own table (#5828).
+interface FidelityCell {
+  cell_id: string;
+  measure: string;
+  measure_note: string;
+  kind: 'served' | 'reocr_lift';
+  run_id: string;
+  issue: number;
+  language: string;
+  n: number;
+  grade: string;
+  fidelity_mean?: number | null;
+  fidelity_ci95?: Interval;
+  flash_minus_lite?: { n: number; delta: number; ci95: Interval; better: number; worse: number } | null;
+  served_ocr_engine?: string;
+  fidelity_served_ocr?: number | null;
+  fidelity_reread?: number | null;
+  reread_lift?: { mean: number; ci95: Interval; better: number; same: number; worse: number } | null;
+}
+
 const DATA = evidence as unknown as {
   generated_from: { file: string }[];
   production_engine: string;
@@ -84,6 +105,7 @@ const DATA = evidence as unknown as {
   sufficiency: Sufficiency[];
   cells: Cell[];
   image_arms?: ImageArm[];
+  translation_fidelity?: FidelityCell[];
 };
 
 // The Tibetan table carries three metrics; the page shows the one an omission lowers (matched syllables).
@@ -322,6 +344,56 @@ export default async function OcrEvidencePage({ searchParams }: { searchParams: 
                     </td>
                   </tr>
                 ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+
+      {(DATA.translation_fidelity?.length ?? 0) > 0 && (
+        <section id="translation-fidelity" style={{ marginBottom: 28 }}>
+          <h2 style={{ fontSize: 15, fontWeight: 600, margin: '0 0 4px' }}>Translation fidelity, judged against published translations (#5695, #5700)</h2>
+          <p style={{ ...C.dim, fontSize: 13, margin: '0 0 10px', maxWidth: 860 }}>
+            Not accuracy and not CER: two blind judges rate the served English from 1 to 5 against a published human translation, one
+            page per book. &ldquo;Flash − Lite&rdquo; is the same page translated by each model. &ldquo;Re-read&rdquo; is the same
+            page read again by Flash and translated again, split by the engine that made the served transcription.
+          </p>
+          <div style={{ ...C.card, overflowX: 'auto' }}>
+            <table style={{ borderCollapse: 'collapse', width: '100%', minWidth: 900 }}>
+              <thead>
+                <tr>
+                  <th style={C.th}>Language</th>
+                  <th style={C.th}>Cell</th>
+                  <th style={{ ...C.th, ...C.num }}>Books</th>
+                  <th style={{ ...C.th, ...C.num }}>Fidelity</th>
+                  <th style={{ ...C.th, ...C.num }}>Difference</th>
+                  <th style={C.th}>95 % interval</th>
+                  <th style={C.th}>Better / worse</th>
+                  <th style={C.th}>Grade</th>
+                </tr>
+              </thead>
+              <tbody>
+                {DATA.translation_fidelity!.map(c => {
+                  const d = c.kind === 'served' ? c.flash_minus_lite : c.reread_lift;
+                  const delta = c.kind === 'served' ? c.flash_minus_lite?.delta : c.reread_lift?.mean;
+                  return (
+                    <tr key={c.cell_id} id={c.cell_id}>
+                      <td style={C.td}>{c.language}</td>
+                      <td style={C.td}>
+                        {c.kind === 'served' ? 'served; Flash − Lite' : `re-read by Flash; served OCR by ${c.served_ocr_engine}`}{' '}
+                        <span style={C.dim}>· #{c.issue}</span>
+                      </td>
+                      <td style={{ ...C.td, ...C.num }}>{c.n}</td>
+                      <td style={{ ...C.td, ...C.num }}>
+                        {c.kind === 'served' ? (c.fidelity_mean ?? '—') : `${c.fidelity_served_ocr ?? '—'} → ${c.fidelity_reread ?? '—'}`}
+                      </td>
+                      <td style={{ ...C.td, ...C.num }}>{delta == null ? '—' : delta > 0 ? `+${delta}` : delta}</td>
+                      <td style={{ ...C.td, ...C.dim }}>{d?.ci95 ? `${d.ci95[0]} to ${d.ci95[1]}` : '—'}</td>
+                      <td style={{ ...C.td, fontVariantNumeric: 'tabular-nums' }}>{d ? `${d.better} / ${d.worse}` : '—'}</td>
+                      <td style={{ ...C.td, ...C.dim }}>{c.grade}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

@@ -1,0 +1,46 @@
+{
+  "source": "EEBO-TCP A66675",
+  "edition": "Carmen panegyricum, sive, Paræneticum, postridie inaugurationis Dom. Protectori ab Auguo. Wingfieldo — W3027 (1656)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/textcreationpartnership/A66675",
+  "same_edition": {
+    "evidence": "catalogue-number",
+    "text_match_pages": "14/14",
+    "pb_aligned_pages": "14/14"
+  },
+  "origin": "library",
+  "book_id": "6a9437f67e41ac276318823e",
+  "page_number": 21,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 25236,
+    "to_char": 27166,
+    "overlap": 0.613,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'manat ad animum, &c. Et in Pisonem'; ends 'Astraea Regina dominetur atque praevaleat' (catchword 'Exulet'); page no. 15, very dark high-contrast scan, ref pads 'est, usque eo per' before and 'Exulet omne Nefas' after.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:39.302Z",
+  "text_location": "repo",
+  "text_sha256": "af90f00b50a8a4fe940fb5395b3a6e8596f3dd559033c485bdb447db72b04a77",
+  "unit": {
+    "chars": 1930
+  },
+  "stratum": "latin-period-5126"
+}

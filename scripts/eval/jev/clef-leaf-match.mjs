@@ -15,7 +15,8 @@ const CF_ACCOUNT = 'eb0562555fd5ce2a4ec0f29b6df10e7b';
 const PRICE = { clef: 0.24, 'clef-flash': 0.09 }; // $/M input tokens
 const N_BOOKS = Number(process.env.N_BOOKS || 60);
 const OUT = process.env.OUT || '.';
-const CAP_USD = 2.0;
+const CAP_USD = Number(process.env.CAP_USD || 2);
+const MODELS = (process.env.MODELS || 'clef-flash,clef').split(',');
 const QUESTIONS = {
   same_page: { type: 'noul', instructions: 'The text in the state is a transcription of the page shown in the image (the same page, not a neighbouring page or a different book).' },
   relation: {
@@ -101,8 +102,9 @@ for (let i = 0; i < samples.length; i++) {
   const conds = [['match', s.own], ['next', s.next], ['other', other]].filter(([c]) => (process.env.CONDS || 'match,next,other').split(',').includes(c));
   for (const [cond, text] of conds) {
     const row = { book_id: s.book_id, title: s.title, language: s.language, page: s.page, cond };
-    for (const model of ['clef-flash', 'clef']) row[model] = await ask(model, image, text);
+    for (const model of MODELS) row[model] = await ask(model, image, text);
     rows.push(row);
+    fs.appendFileSync(path.join(OUT, 'clef-leaf-match-progress.jsonl'), JSON.stringify(row) + '\n'); // survives a crash mid-run
   }
   if (i % 10 === 9) console.log(i + 1, 'books done, $', spent.toFixed(3));
 }
@@ -110,7 +112,7 @@ fs.writeFileSync(path.join(OUT, 'clef-leaf-match-rows.jsonl'), rows.map((r) => J
 
 const auc = (pos, neg) => pos.length && neg.length ? pos.reduce((a, p) => a + neg.reduce((b, q) => b + (p > q) + 0.5 * (p === q), 0), 0) / (pos.length * neg.length) : null;
 const summary = { n_books: new Set(rows.map((r) => r.book_id)).size, cost_usd: +spent.toFixed(4) };
-for (const model of ['clef-flash', 'clef']) {
+for (const model of MODELS) {
   const v = (c) => rows.filter((r) => r.cond === c && r[model]).map((r) => r[model].same);
   const ms = rows.map((r) => r[model]?.ms).filter(Boolean).sort((a, b) => a - b);
   const relAcc = (c, want) => { const R = rows.filter((r) => r.cond === c && r[model]); return `${R.filter((r) => r[model].rel === want).length}/${R.length}`; };

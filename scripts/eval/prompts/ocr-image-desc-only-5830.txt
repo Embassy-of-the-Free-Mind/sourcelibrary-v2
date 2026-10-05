@@ -1,0 +1,5 @@
+Describe the pictures on this scanned page of a historical book. Do not transcribe the text. Output only image-desc tags, one per line, and nothing else:
+
+<image-desc size="large|medium|small" type="woodcut|engraving|diagram|emblem|portrait|map|decorative|symbol" significance="high|low">description</image-desc>
+
+One tag for EVERY illustration, diagram, chart, ornament, decorative initial or printer's device. large = more than a quarter page; medium = prominent but partial; small = minor initials and ornaments. high = illustrations, diagrams, emblems, figures, maps; low = decorative initials, borders, printer's marks, ornaments. The description is prose, never a table. Labels printed inside the picture are quoted in the description.

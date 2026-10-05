@@ -5748,11 +5748,16 @@ Rules:
     if (shouldRun(8.9) || shouldRun(9)) {
       console.log('\n--- Phase 8.9: Cover selection + page cleanup ---');
 
+      // Scoped mode raises the window (#4823, the #2713 idiom): with a literal 50 sorted
+      // visible-first, an allowlisted hidden book never reached it, the scope filter below
+      // returned nothing, and every envelope book stopped one step short of finalize.
+      // Cover selection makes no model call, so the wider window costs DB reads only.
+      const COVER_LIMIT = SCOPED_MODE ? 100000 : 50;
       let coverBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'images_complete' })
         .sort({ hidden: 1 })
         .project({ id: 1, title: 1, thumbnail: 1, thumbnail_source: 1 })
-        .limit(50)
+        .limit(COVER_LIMIT)
         .toArray();
       if (SCOPE_ACTIVE) coverBooks = await applyBookOverride(db, coverBooks, { id: 1, title: 1, thumbnail: 1, thumbnail_source: 1 });
 
