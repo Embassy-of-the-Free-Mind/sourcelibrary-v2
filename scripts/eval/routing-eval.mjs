@@ -349,7 +349,7 @@ function unblind(run) {
 
 // ── decide: rule files applied mechanically. No Mongo, no model. ─────────────────────────────────
 export function decide(results, rules) {
-  const out = { run_id: results.run_id, issue: results.issue ?? null, measure: 'by eye (label check, blinded A/B adjudication) plus engine-to-engine agreement and a catastrophic count; not accuracy', models: results.models, rules: {}, groups: {} };
+  const out = { run_id: results.run_id, issue: results.issue ?? null, measure: results.measure ?? 'by eye (label check, blinded A/B adjudication) plus engine-to-engine agreement and a catastrophic count; not accuracy', models: results.models, rules: {}, groups: {} };
   for (const rule of rules) {
     out.rules[rule.id] = { registered: rule.registered ?? null, candidate: rule.candidate, baseline: rule.baseline, min_text_pages: rule.min_text_pages, checks: rule.checks, verdicts: rule.verdicts };
     for (const g of Object.keys(results.families)) {

@@ -19,11 +19,14 @@
  *   records   harness records (source = corrected transcription; candidates served / flash / kraken English).
  *             Private references are read from the #5695 track archive (--private), so --out goes OUTSIDE the repo.
  *   results   harness results.json → routing-eval results.json (fidelity + catastrophic per arm per page).
+ *   lift      $0. Lift over today's English per script and served engine, page-points per $1K, Kraken wall clock,
+ *             the A5 plan repriced → results/engine-contest-5870/lift.json.
  * Writes nothing to books or pages.
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import os from 'node:os';
 import { execFileSync, spawnSync } from 'node:child_process';
 
 const argv = process.argv.slice(2); const STAGE = argv[0];
@@ -85,6 +88,8 @@ async function seal() {
 // ── kraken ────────────────────────────────────────────────────────────────────────────────────────────────────
 function kraken() {
   preregistered();
+  const pinFile = `${RES}/prompt.json`;
+  if (!fs.existsSync(pinFile)) writeJson(pinFile, { rules: Object.fromEntries(RUN.rules.map((f) => [f, sha256(fs.readFileSync(f))])), pinned_at: new Date().toISOString(), pinned_by: 'contest.mjs kraken, before the first engine read' });
   const lane = opt('lane', 'all'); const sealed = readJson(`${RES}/sealed.json`).sealed.filter((p) => lane === 'all' || (lane === 'greek') === (p.model_key === 'greek'));
   for (const p of sealed) {
     const f = W('out', 'kraken', `${p.slug}.json`); if (fs.existsSync(f)) continue;
@@ -126,7 +131,8 @@ async function submit() {
     const env = await envelope(db); const prompts = await loadTranslationPrompts(db);
     if (prompts.translation.ref.content_hash !== V13_HASH) throw new Error(`live default translation prompt is v${prompts.translation.ref.version} ${prompts.translation.ref.content_hash}, not A5's v13 — refusing`);
     const rec = fs.existsSync(BATCH_REC()) ? readJson(BATCH_REC()) : { jobs: [] };
-    const done = new Set(rec.jobs.flatMap((j) => j.keys_answered || []));
+    // In flight or answered: never sent twice. A dead job's unanswered slugs go again.
+    const done = new Set(rec.jobs.flatMap((j) => (j.collected_at ? j.keys_answered || [] : j.slugs)));
     const sealed = readJson(`${RES}/sealed.json`).sealed; const reqs = [];
     for (const p of sealed) {
       const text = krakenText(p.slug); if (!text || done.has(p.slug)) continue;
@@ -223,11 +229,47 @@ function results() {
       fidelity: fid, arms: { flash: { catastrophic: fills(pp, 'flash') ? 'unreadable_fill' : null }, kraken: { catastrophic: !kOk ? 'no_read' : fills(pp, 'kraken') ? 'unreadable_fill' : null, finishReason: k?.finishReason ?? null, seconds: k?.seconds ?? null, chars: k?.text?.length ?? 0 } } };
   });
   const families = Object.fromEntries(Object.keys(RUN.population.groups).map((g) => [g, { sealed: pages.filter((x) => x.family === g).length, with_text: pages.filter((x) => x.family === g).length, adjudication: null }]));
-  writeJson(`${RES}/results.json`, { issue: 5870, run_id: RUN.run_id, scored_at: new Date().toISOString(), measure: RUN.translation, models: { kraken: 'kraken 7.1 (greek-cllg | openiti persian_best | openiti arabic_best)', flash: 'gemini-3-flash-preview (A5 reocr)' }, baseline: 'flash', candidate: 'kraken',
+  // The reads and the English, committed beside the verdict (no reference text in either).
+  const outs = sealed.map((p) => { const f = W('out', 'kraken', `${p.slug}.json`); return fs.existsSync(f) ? readJson(f) : { slug: p.slug, finishReason: 'MISSING' }; });
+  fs.writeFileSync(`${RES}/outputs-kraken.jsonl`, outs.map((x) => JSON.stringify(x)).join('\n') + '\n');
+  const trs = sealed.map((p) => { const f = W('tr', 'lite-kraken', `${p.slug}.json`); return fs.existsSync(f) ? readJson(f) : null; }).filter(Boolean);
+  fs.writeFileSync(`${RES}/translations-kraken.jsonl`, trs.map((x) => JSON.stringify(x)).join('\n') + '\n');
+  const rec = readJson(BATCH_REC());
+  writeJson(`${RES}/spend.json`, { envelope: SCOPE, pseudo_book_id: PSEUDO_BOOK, model: TR_MODEL, mode: 'batch', jobs: rec.jobs.map(({ job_name, requests, keys_answered, in_tokens, out_tokens, cost_usd, state }) => ({ job_name, requests, answered: keys_answered?.length ?? 0, in_tokens, out_tokens, cost_usd, state })),
+    total_usd: +rec.jobs.reduce((s, j) => s + (j.cost_usd || 0), 0).toFixed(6), kraken_cpu_seconds: +outs.reduce((s, x) => s + (x.seconds || 0), 0).toFixed(1) });
+  writeJson(`${RES}/results.json`, { issue: 5870, run_id: RUN.run_id, scored_at: new Date().toISOString(), measure: 'judged against a human reference: two blind Opus judges score the Lite (prompt v13) English made from each engine\'s read, fidelity 1–5, source = the by-eye corrected transcription; not accuracy', protocol: RUN.translation, models: { kraken: 'kraken 7.1 (greek-cllg | openiti persian_best | openiti arabic_best)', flash: 'gemini-3-flash-preview (A5 reocr)' }, baseline: 'flash', candidate: 'kraken',
     gate: H.gate, agreement: H.agreement, families, pages });
   console.log(`wrote ${RES}/results.json (${pages.length} pages)`);
 }
 
-const STAGES = { seal, kraken, submit, collect, records, results };
+// ── lift, per dollar, wall clock, the repriced A5 plan ────────────────────────────────────────────────────────
+// Prices per page, Batch: Flash re-OCR $0.00283 and Lite retranslation $0.00102 are A5's (sizing.md); the Kraken
+// arm's translation is this run's measured spend / pages. Kraken's marginal cost is $0 (Hetzner CPU, already paid).
+async function lift() {
+  const { makeRng } = await import('../lib/paired-stats.mjs'); const { bootstrapItems } = await import('../lib/agreement-stats.mjs');
+  const R = readJson(`${RES}/results.json`); const spend = readJson(`${RES}/spend.json`);
+  const PRICE = { flash_reocr: 0.00283, lite_translate: 0.00102, kraken_translate: +(spend.total_usd / R.pages.length).toFixed(5) };
+  const r2 = (x) => (x == null ? null : Math.round(x * 100) / 100);
+  const ci = (d) => (d.length < 2 ? [null, null] : bootstrapItems(d, (s) => s.reduce((a, x) => a + x, 0) / s.length, makeRng(5870), 4000).map(r2));
+  const cut = (P) => { const m = (k) => r2(P.reduce((a, p) => a + p.fidelity[k], 0) / P.length); const d = (a, b) => P.map((p) => p.fidelity[a] - p.fidelity[b]);
+    return { n: P.length, served: m('served'), flash: m('flash'), kraken: m('kraken'), lift_flash: r2(d('flash', 'served').reduce((a, x) => a + x, 0) / P.length), lift_flash_ci: ci(d('flash', 'served')),
+      lift_kraken: r2(d('kraken', 'served').reduce((a, x) => a + x, 0) / P.length), lift_kraken_ci: ci(d('kraken', 'served')), kraken_minus_flash: r2(d('kraken', 'flash').reduce((a, x) => a + x, 0) / P.length), kraken_minus_flash_ci: ci(d('kraken', 'flash')) }; };
+  const cuts = {};
+  for (const [name, f] of [['Greek print ≤1699', (p) => p.script === 'Greek'], ['Persian print', (p) => p.script === 'Persian'], ['Arabic print', (p) => p.script === 'Arabic'], ['Arabic-script print', (p) => p.script !== 'Greek']])
+    for (const [se, g] of [['all', () => true], ['served lite', (p) => p.served_engine === 'lite'], ['served flash', (p) => p.served_engine === 'flash']]) { const P = R.pages.filter((p) => f(p) && g(p)); if (P.length) cuts[`${name} | ${se}`] = cut(P); }
+  const secs = (f) => { const s = R.pages.filter(f).map((p) => p.arms.kraken.seconds).sort((a, b) => a - b); return { n: s.length, mean: r2(s.reduce((a, x) => a + x, 0) / s.length), median: s[Math.floor(s.length / 2)], hours_per_10k_one_process: Math.round(s.reduce((a, x) => a + x, 0) / s.length * 1e4 / 3600) }; };
+  const wall = { greek_cllg: secs((p) => p.script === 'Greek'), openiti: secs((p) => p.script !== 'Greek'), conditions: `two Kraken processes side by side (one Greek, one Arabic-script), nice 19, box load average 8–13 over ${os.cpus().length} cores shared with every worker` };
+  const perPage = { flash: PRICE.flash_reocr + PRICE.lite_translate, kraken: PRICE.kraken_translate };
+  const ppk = (l, usd) => (l == null ? null : Math.round(l / usd)); // page-points per $1K, in thousands (= lift ÷ $ per page)
+  const perDollar = Object.fromEntries(Object.entries(cuts).filter(([k]) => / \| all$/.test(k)).map(([k, c]) => [k.replace(/ \| all$/, ''), { flash_usd_per_1k_pages: r2(perPage.flash * 1000), kraken_usd_per_1k_pages: r2(perPage.kraken * 1000), lift_flash: c.lift_flash, lift_kraken: c.lift_kraken, page_points_per_1k_usd_flash_thousands: ppk(c.lift_flash, perPage.flash), page_points_per_1k_usd_kraken_thousands: ppk(c.lift_kraken, perPage.kraken) }]));
+  const PLAN = { Greek: 123511, Persian: 6222, Sanskrit: 49278, Pali: 7479 };
+  const plan = Object.fromEntries(Object.entries(PLAN).map(([s, n]) => [s, { lite_read_pages: n, winner: 'flash re-read', flash_reocr_plus_lite_usd: Math.round(n * perPage.flash), if_kraken_usd: s === 'Greek' || s === 'Persian' ? Math.round(n * perPage.kraken) : null,
+    if_kraken_cpu_days_one_process: s === 'Greek' ? Math.round(n * wall.greek_cllg.mean / 86400) : s === 'Persian' ? Math.round(n * wall.openiti.mean / 86400) : null }]));
+  writeJson(`${RES}/lift.json`, { generated: new Date().toISOString(), prices_per_page: PRICE, cuts, per_dollar: perDollar, wall_clock: wall, plan,
+    plan_total_usd: Object.values(plan).reduce((a, x) => a + x.flash_reocr_plus_lite_usd, 0) });
+  console.log(JSON.stringify({ cuts, perDollar, wall, plan }, null, 1));
+}
+
+const STAGES = { seal, kraken, submit, collect, records, results, lift };
 if (!STAGES[STAGE]) { console.error(`usage: contest.mjs ${Object.keys(STAGES).join(' | ')}`); process.exit(2); }
 await STAGES[STAGE]();
