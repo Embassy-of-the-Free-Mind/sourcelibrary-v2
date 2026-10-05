@@ -1,0 +1,21 @@
+{
+  "note": "#5811 later history of Drebbel's oven (job drebbel-later-5811, 2026-10-05). Every volume was identified from its own _djvu.txt title page, not IA metadata. Imported HELD, released into envelope drebbel-oven-5811. Royal Society manuscripts (RBO/3/78, CLP/17/3) go through iiif-direct-import.mjs with drebbel-later-5811-royal-society.json.",
+  "campaign": "drebbel-later-5811",
+  "collections": ["drebbel"],
+  "BOOKS": [
+    { "id": "bub_gb_o2EVAAAAQAAJ", "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. III", "author": "Birch, Thomas", "year": 1757, "lang": "English",
+      "note": "#5811 item 2. London, A. Millar MDCCLVII; title page reads 'VOL. III'; text opens 1671/2 (Newton elected). Ghent University copy, Google scan: the same series as held vols I-II (bub_gb_e2EVAAAAQAAJ, bub_gb_lWEVAAAAQAAJ)." },
+    { "id": "bub_gb_q2EVAAAAQAAJ", "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. IV", "author": "Birch, Thomas", "year": 1757, "lang": "English",
+      "note": "#5811 item 2. London, A. Millar MDCCLVII; title page reads 'VOL. IV'; text opens January 1679/80. Ghent University copy, Google scan, same series as vols I-III." },
+    { "id": "bub_gb_O68KmfD_WmgC", "title": "Art de faire éclorre et d'élever en toute saison des oiseaux domestiques de toutes especes, Tome premier", "author": "Réaumur, René-Antoine Ferchault de", "year": 1749, "lang": "French",
+      "note": "#5811 item 3. Paris, Imprimerie Royale 1749; title page reads 'Tome Premier'. Premier Mémoire: 'Des Fours, au moyen desquels on fait éclorre les Poulets en Égypte'. Naples (BN Vittorio Emanuele III) copy, Google scan." },
+    { "id": "bub_gb_ah1wJF4BExIC", "title": "Art de faire éclorre et d'élever en toute saison des oiseaux domestiques de toutes especes, Tome second", "author": "Réaumur, René-Antoine Ferchault de", "year": 1749, "lang": "French",
+      "note": "#5811 item 3. De l'Imprimerie Royale MDCCXLIX; title page reads 'Tome Second'. Naples copy, Google scan; same series as Tome I." },
+    { "id": "b30503991", "title": "The Art of Hatching and Bringing up Domestick Fowls of All Kinds, at Any Time of the Year", "author": "Réaumur, René-Antoine Ferchault de", "year": 1750, "lang": "English",
+      "note": "#5811 item 3. London, C. Davis, A. Millar and J. Nourse MDCCL (title page). The English translation of the 1749 Art de faire éclorre. Wellcome Library copy (Public Domain Mark)." },
+    { "id": "evolutionoftherm00boltrich", "title": "Evolution of the Thermometer, 1592-1743", "author": "Bolton, Henry Carrington", "year": 1900, "lang": "English",
+      "note": "#5811 item 4. Easton, PA, The Chemical Publishing Co. 1900 (title page). University of California copy; IA status NOT_IN_COPYRIGHT." },
+    { "id": "someconsideratio00boyl", "title": "Some Considerations Touching the Usefulnesse of Experimental Naturall Philosophy", "author": "Boyle, Robert", "year": 1663, "lang": "English",
+      "note": "#5811 item 5. Oxford, Hen. Hall for Ric. Davis 1663 (second part's printed title: 'In the year of our Lord, 1663'; the engraved title OCRs as 1665). Boston College copy. Keller's 'much admir'd digesting furnace' (n.34, Hunter Works vol. 13 p.298) is NOT in this text, nor in the 1671 Part II: Hunter vol. 13 is 'Unpublished Writings 1645-c.1670' (discarded Usefulness sections), so that phrase was never printed in the 17th century. This edition carries the printed Drebbel passages instead: 'a Disciple of Cornelius Drebell ... knew a way of Furnaces that was yet fitter to bring heat to the superlative Degree', 'portable digesting Furnaces, without Fire', and 'a Childe of Cornelius Drebell's' (cancer cure)." }
+  ]
+}

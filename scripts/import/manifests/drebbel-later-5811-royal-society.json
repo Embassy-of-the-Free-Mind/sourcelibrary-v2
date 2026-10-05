@@ -1,0 +1,34 @@
+[
+  {
+    "manifest_url": "https://makingscience.royalsociety.org/items/rbo_3_78/manifest.json",
+    "title": "The manner of Hatching Chicken at Cairo observed by Mr John Graves 1639, communicated to the Royal Society by George Ent (Royal Society RBO/3/78)",
+    "author": "Graves, John; Ent, George",
+    "year": 1668,
+    "language": "English",
+    "collections": ["drebbel"],
+    "provider": "royal_society",
+    "provider_name": "The Royal Society: Science in the Making",
+    "source_url": "https://makingscience.royalsociety.org/items/rbo_3_78",
+    "source_id": "RBO/3/78",
+    "license": "CC BY 4.0. Attribution: The Royal Society",
+    "license_url": "http://creativecommons.org/licenses/by/4.0/legalcode",
+    "contributing_library": "The Royal Society",
+    "note": "#5811 later-history item 1. Register Book Original copy, dated 1668 by the Royal Society (Graves observed 1639; read 5 Mar 1668 per #5811). 3 images with oven drawings. CC BY 4.0; attribution 'The Royal Society' (manifest requiredStatement)."
+  },
+  {
+    "manifest_url": "https://makingscience.royalsociety.org/items/clp_17_3/manifest.json",
+    "title": "Account of the Egyptian ovens for the hatching of chickens, by Monsieur Monconis (Royal Society CLP/17/3)",
+    "author": "Monconys, Balthazar de",
+    "year": 1663,
+    "language": "French",
+    "collections": ["drebbel"],
+    "provider": "royal_society",
+    "provider_name": "The Royal Society: Science in the Making",
+    "source_url": "https://makingscience.royalsociety.org/items/clp_17_3",
+    "source_id": "CLP/17/3",
+    "license": "CC BY 4.0. Attribution: The Royal Society",
+    "license_url": "http://creativecommons.org/licenses/by/4.0/legalcode",
+    "contributing_library": "The Royal Society",
+    "note": "#5811 later-history item 1. Classified Papers; 'Read to the Royal Society on 1 July 1663' (catalogue). Monconys describes the Cairo hatching ovens ('les fours'). 4 images. CC BY 4.0; attribution 'The Royal Society'."
+  }
+]
