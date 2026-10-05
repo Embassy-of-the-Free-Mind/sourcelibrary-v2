@@ -334,7 +334,9 @@ export function translationToTypst(text, { runningHeads = new Set(), anchor = ()
     const display = para.match(/^%%DL(\d)%%([\s\S]*?)%%\/DL%%$/);
     if (display && !/[\p{L}\p{N}]/u.test(display[2].replace(/%%IN\d+%%/g, ''))) continue; // "***" ornaments
     if (display) {
-      rendered.push(`#dline(${display[1]})[${takeAnchor()}${display[2]}]`);
+      // "BOOK TWO", "TREATISE ONE": the source opens a book here, and sets it larger than a chapter
+      const level = /^(?:\*|_)*(?:the\s+)?(?:book|treatise|tractate)\s+(?:[ivxlc]+\b|the\s+\w+|\w+)\.?(?:\*|_)*\s*$/i.test(display[2].replace(/%%[^%]*%%/g, '').trim()) ? 0 : display[1];
+      rendered.push(`#dline(${level})[${takeAnchor()}${display[2]}]`);
       continue;
     }
     para = para.replace(/%%\/?DL\d?%%/g, '');
@@ -548,10 +550,36 @@ const TYPST_PREAMBLE = `
   set align(center)
   set par(justify: false, first-line-indent: 0pt, leading: 0.55em)
   // The source's chapter heads, letter-spaced as the printed book sets them
-  if level == 1 { text(size: 11.5pt, tracking: 0.16em, upper(body)) }
+  // A book or treatise opening, set large like the original's LIBER SECUNDUS
+  if level == 0 { v(2mm); text(size: 17pt, tracking: 0.2em, upper(body)); v(1mm) }
+  else if level == 1 { text(size: 11.5pt, tracking: 0.16em, upper(body)) }
   else if level == 2 { text(size: 11.5pt, style: "italic", body) }
   else { text(size: 10.5pt, style: "italic", body) }
 })
+
+// The book's own printer's ornaments, where the book prints them: a headpiece
+// opens a book on a fresh page, a tailpiece closes a section
+#let headpiece(file) = {
+  pagebreak(weak: true)
+  align(center, block(above: 0pt, below: 5mm, image(file, width: text-w)))
+}
+// A tailpiece belongs to the end of its section: where the page has no room
+// left for it, it is dropped rather than given a page of its own
+#let tailpiece(file, width, id) = {
+  // Measured from where the section's text ENDS (this marker), not from where
+  // the ornament would land: once spilled to the next page it always "fits"
+  [#metadata(none)#label(id)]
+  context {
+    let at = locate(label(id)).position()
+    let notes = query(footnote).filter(f => f.location().page() == at.page).len()
+    let room = page.height - 30mm - at.y - notes * 4.6mm - if notes > 0 { 6mm } else { 0mm }
+    let orn = align(center, block(above: 1.6em, below: 1.6em, image(file, width: width)))
+    // An ornament never opens a page: if the text ended at the foot of the
+    // last one, the marker itself lands at the top of this one
+    let opens-page = at.y < 30mm + 12mm
+    if not opens-page and measure(block(width: text-w, orn)).height + 8mm <= room { orn }
+  }
+}
 
 // The source's own word for what the translation just said, after it in the line
 #let orig(body) = text(size: 0.86em, fill: muted, style: "italic", hyphenate: false)[(#body)]
@@ -737,7 +765,7 @@ export function generateTypstSource(book, pages, options = {}) {
   // it there); absent, the cover falls back to the Source Library mark
   // illustrations: [{ page_number, file, type, width, height }] beside the .typ
   // (see fetchIllustrations); each is set as a figure at its source page
-  const { introduction, methodology, doi, version, frontispieceFile, credits = [], includeOriginal = true, dedication = resolveDedication(book), illustrations = [] } = options;
+  const { introduction, methodology, doi, version, frontispieceFile, credits = [], includeOriginal = true, dedication = resolveDedication(book), illustrations = [], ornaments = [] } = options;
   const bookTitle = book.display_title || book.title;
   const bookSlug = book.slug || book.id;
   const bookUrl = `https://sourcelibrary.org/book/${bookSlug}`;
@@ -794,7 +822,7 @@ ${TYPST_PREAMBLE}
       let chapter = running-chapter.get()
       box(width: text-w + gutter + mcol, grid(
         columns: (text-w, gutter, mcol),
-        [#emph(running-title.get())#h(1fr)#chapter], [],
+        [#text(tracking: 0.12em, smallcaps(running-title.get()))#h(1fr)#emph(chapter)], [],
         align(left, counter(page).display(page.numbering)),
       ))
     }
@@ -809,7 +837,7 @@ ${TYPST_PREAMBLE}
     let n = current-src.get()
     if n != none {
       // The link carries the full address; the line shows only what a reader needs
-      align(center)[Source Library #h(0.6em)·#h(0.6em) #link(page-url + n)[facsimile of source page #n #sym.arrow.tr]]
+      align(center)[#box(baseline: 0.6mm, sl-mark(2.8mm, muted))#h(0.4em)Source Library #h(0.6em)·#h(0.6em) #link(page-url + n)[facsimile of source page #n #sym.arrow.tr]]
     } else {
       align(center)[Source Library #h(0.6em)·#h(0.6em) ${escapeTypst(footerId)}]
     }
@@ -1108,6 +1136,8 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
   const platesByPage = new Map();
   for (const il of plates) platesByPage.set(il.page_number, [...(platesByPage.get(il.page_number) || []), il]);
   let pendingPlates = [];
+  const ornamentsByPage = new Map();
+  for (const o of ornaments) if (bodyPageNumbers.has(o.page_number)) ornamentsByPage.set(o.page_number, [...(ornamentsByPage.get(o.page_number) || []), o]);
   const flushPlates = () => { const out = pendingPlates.map(plateTypst); pendingPlates = []; return out; };
 
   let chapterIdx = 0;
@@ -1139,8 +1169,18 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
       // A page that was ALL inscription keeps its anchor and loses only the notes
       if (taken.inscriptions.length && taken.body.trim()) { body = taken.body; pagePlates[0].inscriptions = taken.inscriptions; }
     }
+    const orn = ornamentsByPage.get(page.page_number) || [];
+    const head = orn.filter(o => o.kind === 'headpiece').slice(0, 1).map(o => `#headpiece(${typstString(o.file)})`);
+    const tail = orn.filter(o => o.kind === 'tailpiece').map((o, k) => `#tailpiece(${typstString(o.file)}, ${Math.min(42, Math.max(24, 30 * Math.sqrt(o.width / o.height))).toFixed(0)}mm, "tp-${page.page_number}-${k}")`);
+    // A headpiece opens a new paragraph by nature; on a continued sentence it waits
     if (continues(prevBody, body)) { doc.push(anchored(joinedForm(body), original, language)); pendingHeads.push(...heads); }
+    else if (head.length) {
+      // A book opening reads headpiece, book title, contents — and then its
+      // plate (the contents table): the plates follow the opening text
+      doc.push(''); doc.push(...head); doc.push(...pendingHeads, ...heads); pendingHeads = []; doc.push(''); doc.push('#pagegap'); doc.push(anchored(body, original, language)); doc.push(''); doc.push(...flushPlates());
+    }
     else { doc.push(''); doc.push(...pendingHeads, ...heads); pendingHeads = []; doc.push(''); doc.push(...flushPlates()); doc.push('#pagegap'); doc.push(anchored(body, original, language)); }
+    if (tail.length) { doc.push(''); doc.push(...tail); }
     prevBody = body;
   }
   doc.push('');
@@ -1739,6 +1779,43 @@ export async function fetchIllustrations(db, book, { concurrency = 6, captions =
 }
 
 /**
+ * The book's own headpieces and tailpieces (scripts/qa/plate-ornaments.mjs),
+ * cut from the page scans. Only ornaments marked `verified` are used: the
+ * finder also boxes rules and lines of type, which nothing about the box
+ * shape separates from a woodcut, so a person (or a by-eye pass) signs off.
+ * Soft like the plates: a failed fetch leaves the ornament out.
+ */
+export async function fetchOrnaments(book, cache) {
+  const { default: sharp } = await import('sharp');
+  const out = [];
+  for (const [n, p] of Object.entries(cache || {})) {
+    const verified = (p.ornaments || []).filter(o => o.verified);
+    if (!verified.length || !p.scan_url?.includes(String(book.id))) continue;
+    try {
+      const res = await fetch(p.scan_url, { signal: AbortSignal.timeout(120000) });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const raw = Buffer.from(await res.arrayBuffer());
+      const { width: W, height: H } = await sharp(raw).metadata();
+      for (const o of verified) {
+        const [y0, x0, y1, x1] = o.box_2d.map(Number);
+        const left = Math.max(0, Math.floor((x0 / 1000) * W)), top = Math.max(0, Math.floor((y0 / 1000) * H));
+        const width = Math.min(W - left, Math.ceil(((x1 - x0) / 1000) * W)), height = Math.min(H - top, Math.ceil(((y1 - y0) / 1000) * H));
+        // Printed, not pasted: the scanned paper is levelled to the page's
+        // white and the woodcut kept as ink, so the ornament sits on the page
+        // the way the original's sits on its paper
+        const { data, info } = await sharp(raw).extract({ left, top, width, height }).resize(1600, 1600, { fit: 'inside', withoutEnlargement: true })
+          .grayscale().normalise({ lower: 1, upper: 55 }).gamma(1.4)
+          .jpeg({ quality: 88 }).toBuffer({ resolveWithObject: true });
+        out.push({ page_number: Number(n), kind: o.kind, buffer: data, width: info.width, height: info.height });
+      }
+    } catch (err) {
+      console.warn(`ornaments on source page ${n} left out: ${err.message}`);
+    }
+  }
+  return out;
+}
+
+/**
  * options: { introduction, methodology, doi, version, frontispiece, illustrations }
  * `illustrations` is the output of fetchIllustrations; omit for none.
  * `frontispiece` is a JPEG/PNG buffer (see fetchFrontispiece); omit for none.
@@ -1756,6 +1833,11 @@ export async function generateScholarlyPdf(book, pages, options = {}) {
     writeFileSync(join(tmpDir, `frontispiece.${ext}`), frontispiece);
     rest.frontispieceFile = `frontispiece.${ext}`;
   }
+  rest.ornaments = (options.ornaments || []).map((o, i) => {
+    const file = `ornament-${i + 1}.jpg`;
+    writeFileSync(join(tmpDir, file), o.buffer);
+    return { page_number: o.page_number, kind: o.kind, width: o.width, height: o.height, file };
+  });
   rest.illustrations = (options.illustrations || []).map((il, i) => {
     const file = `plate-${i + 1}.jpg`;
     writeFileSync(join(tmpDir, file), il.buffer);

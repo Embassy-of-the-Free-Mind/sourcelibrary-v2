@@ -23,7 +23,7 @@
 import { MongoClient } from 'mongodb';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { dirname, join } from 'path';
-import { generateScholarlyPdf, generateTypstSource, fetchFrontispiece, fetchIllustrations, editionCredits, resolveDedication } from '../lib/scholarly-typst.mjs';
+import { generateScholarlyPdf, generateTypstSource, fetchFrontispiece, fetchIllustrations, fetchOrnaments, editionCredits, resolveDedication } from '../lib/scholarly-typst.mjs';
 
 const args = process.argv.slice(2);
 const bookId = args.find(a => !a.startsWith('--'));
@@ -89,6 +89,12 @@ if (!flag('no-plates')) {
   const captions = existsSync(capFile) ? JSON.parse(readFileSync(capFile, 'utf-8')).pages : null;
   try { options.illustrations = await fetchIllustrations(client.db('bookstore'), book, { captions }); } finally { await client.close(); }
   console.log(`${options.illustrations.length} illustrations${captions ? `, ${Object.keys(captions).length} captioned pages` : ''}`);
+  // The book's own headpieces and tailpieces (scripts/qa/plate-ornaments.mjs), verified ones only
+  const ornFile = join('scripts', 'output', 'plate-ornaments', `${book.id}.json`);
+  if (existsSync(ornFile)) {
+    options.ornaments = await fetchOrnaments(book, JSON.parse(readFileSync(ornFile, 'utf-8')).pages);
+    console.log(`${options.ornaments.length} ornaments`);
+  }
 }
 if (!options.frontispiece) console.warn('no frontispiece: cover image missing, unreachable, or not keyed to this book');
 
