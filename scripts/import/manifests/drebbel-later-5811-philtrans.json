@@ -1,0 +1,89 @@
+{
+  "note": "#5811 item 6, job drebbel-later-5811: Philosophical Transactions volumes 1669-1686 not held (held: vols 1-2 695676aa..., vol 3 1668 6a3e6f4c... (titled '1669'), vol 16 69567835...). Natural History Museum London copies unless noted. Imported earliest-first only while the $10 job cap allows; v.11-12 first because it prints Graves on the Cairo ovens.",
+  "campaign": "drebbel-later-5811-philtrans",
+  "collections": [
+    "drebbel"
+  ],
+  "BOOKS": [
+    {
+      "id": "philosophicaltra1112roya",
+      "title": "Philosophical Transactions of the Royal Society of London, Vols. 11-12 (1676-1678)",
+      "author": "Royal Society of London",
+      "year": 1676,
+      "lang": "English",
+      "note": "#5811 item 6. Contains the printed Graves paper 'The manner of Hatching Chicken at Cairo, observed by Mr. John Graves ... communicated by Sr. George Ent' (Numb. 137, 1677): the print counterpart of RS RBO/3/78. Imported first for that reason."
+    },
+    {
+      "id": "philosophicaltra4166roya",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 4 (1669)",
+      "author": "Royal Society of London",
+      "year": 1669,
+      "lang": "English",
+      "note": "#5811 item 6. Issues from April 1669 (text)."
+    },
+    {
+      "id": "philosophicaltra5167roya",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 5 (1670)",
+      "author": "Royal Society of London",
+      "year": 1670,
+      "lang": "English",
+      "note": "#5811 item 6."
+    },
+    {
+      "id": "philosophicaltra6167roya",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 6 (1671)",
+      "author": "Royal Society of London",
+      "year": 1671,
+      "lang": "English",
+      "note": "#5811 item 6. Issues April-July 1671 seen in text."
+    },
+    {
+      "id": "Philosophicaltrv7Roya",
+      "title": "Philosophical Transactions of the Royal Society of London, Vols. 7-8 (1672-1673)",
+      "author": "Royal Society of London",
+      "year": 1672,
+      "lang": "English",
+      "note": "#5811 item 6. Smithsonian copy (same series as held vols 1-2 and 16); text has Oct. 14 1672."
+    },
+    {
+      "id": "philosophicaltra9167roya",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 9 (1674)",
+      "author": "Royal Society of London",
+      "year": 1674,
+      "lang": "English",
+      "note": "#5811 item 6. Issues May-July 1674 in text; one Drebbel mention."
+    },
+    {
+      "id": "philosophicaltra1016roya",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 10 (1675)",
+      "author": "Royal Society of London",
+      "year": 1675,
+      "lang": "English",
+      "note": "#5811 item 6."
+    },
+    {
+      "id": "philosophicaltra1316roya",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 13 (1683)",
+      "author": "Royal Society of London",
+      "year": 1683,
+      "lang": "English",
+      "note": "#5811 item 6. Dedication to the Earl Marshal; Tyson, Lumbricus teres."
+    },
+    {
+      "id": "philosophicaltra1416roya",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 14 (1684)",
+      "author": "Royal Society of London",
+      "year": 1684,
+      "lang": "English",
+      "note": "#5811 item 6. Opens Feb. 20 1683/4 (Marsh, Doctrine of Sounds)."
+    },
+    {
+      "id": "philosophicaltra1516roya",
+      "title": "Philosophical Transactions of the Royal Society of London, Vol. 15 (1685)",
+      "author": "Royal Society of London",
+      "year": 1685,
+      "lang": "English",
+      "note": "#5811 item 6. Nov. 26 1685 issue (Boyle, self-moving liquor)."
+    }
+  ]
+}
