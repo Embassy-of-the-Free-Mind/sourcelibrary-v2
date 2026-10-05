@@ -73,6 +73,23 @@ await withMongo(async (db) => {
     const { usd, rows, meterError } = await getScopeSpendUsd(db, { ids, since: new Date("2026-10-05T10:45:00Z") });
     console.log(`drebbel-later-5811 spend on its ${ids.length} books since 2026-10-05T10:45Z: $${usd.toFixed(2)} (cap $10; ${rows} usage rows${meterError ? `; METER ERROR ${meterError}` : ""})`);
   }
+  // Art of Hatching (b30503991) leaves 63, 68, 117, 270 are MIRROR-IMAGE scans (63 = printed p.46
+  // photographed reversed). Ink coverage reads 0.16%, so the #4149 blank guard refuses every read —
+  // correctly — but batch-collector records a blank refusal WITHOUT bumping ocr.fail_count (loop
+  // refusals do), so the page never reaches fail_blocked and the orchestrator resubmits it forever
+  // (20 refusals each by 2026-10-05 15:00Z) and the book never finalizes. Stamp exactly the
+  // collector's own give-up shape (batch-collector.mjs "Per-page give-up"), scoped to the model.
+  if (process.argv.includes('--block-mirrored')) {
+    const book = '6ac382ee966464312757c976', pages = [63, 68, 117, 270], model = 'gemini-3.1-flash-lite';
+    const rows = await db.collection('pages').find({ book_id: book, page_number: { $in: pages } }).project({ id: 1, page_number: 1, ocr: 1 }).toArray();
+    for (const p of rows) {
+      if (p.ocr?.data) { console.log(`${p.page_number}: has text — skip`); continue; }
+      console.log(`${p.page_number} ${APPLY ? 'SET' : 'would set'} ocr.fail_blocked (blank-guard-refused, mirrored scan) — before ${JSON.stringify(p.ocr || {})}`);
+      if (!APPLY) continue;
+      await db.collection('pages').updateOne({ id: p.id, 'ocr.data': { $in: [null, ''] } }, { $set: { 'ocr.fail_count': 3, 'ocr.fail_reason': 'blank-guard-refused', 'ocr.fail_blocked': true, 'ocr.fail_blocked_model': model, 'ocr.fail_blocked_at': new Date() } });
+      await recordSweepAction(db, { sweep: SWEEP, book_id: book, action: 'ocr_fail_blocked', detail: { page_id: p.id, page_number: p.page_number, reason: 'mirror-image scan leaf; #4149 guard refuses every read and the collector never stamps fail_count', before: p.ocr || {} } });
+    }
+  }
   if (process.argv.includes('--priority')) {
     const before = await B.find({ id: { $in: ids } }).project({ id: 1, processing_priority: 1 }).toArray();
     console.log(`${APPLY ? 'SET' : 'would set'} processing_priority 85 on ${before.length} books; before:`, JSON.stringify(before.map((b) => [b.id, b.processing_priority ?? null])));
