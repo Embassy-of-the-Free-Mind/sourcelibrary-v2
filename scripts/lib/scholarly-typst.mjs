@@ -887,8 +887,8 @@ ${TYPST_PREAMBLE}
 
 #set par(
   justify: true,
-  leading: 0.68em,
-  spacing: 0.68em,
+  leading: 0.62em,
+  spacing: 0.62em,
   first-line-indent: 1.3em,
 )
 
@@ -947,8 +947,8 @@ ${TYPST_PREAMBLE}
 }
 
 #set footnote.entry(separator: line(length: 18mm, stroke: 0.4pt + hairline), gap: 0.45em, clearance: 1.2em)
-#show footnote.entry: set text(size: 8.3pt)
-#show footnote.entry: set par(leading: 0.5em)
+#show footnote.entry: set text(size: 7.9pt)
+#show footnote.entry: set par(leading: 0.45em)
 // A URL must never be hyphenated: Typst breaks at the hyphens already in a
 // slug, so ...commentarii-insignes-fuchs-2 acquired a line break mid-slug and
 // the printed reference read as two broken URLs.
@@ -1616,7 +1616,9 @@ const PLATE_KINDS = {
 // The text block is 125mm wide; a plate taller than this would leave no room
 // on its page for the caption and running head
 const PLATE_MAX_W_MM = 125;
-const PLATE_MAX_H_MM = 175;
+// 140mm, not the 175mm the page allows: a 1,000-page book with 600 plates ran
+// to 1,800 pages, and a smaller plate still reads at print size
+const PLATE_MAX_H_MM = 140;
 // A frontispiece or title page gets a page of its own, centred on the page and
 // wider than the text column (A4 is 210mm; this leaves 20mm a side)
 const FULL_PLATE_MAX_W_MM = 170;

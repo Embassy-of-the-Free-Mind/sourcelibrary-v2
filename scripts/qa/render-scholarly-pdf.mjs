@@ -9,7 +9,7 @@
  *
  * Usage:
  *   set -a; source .env.production.local; set +a
- *   node scripts/qa/render-scholarly-pdf.mjs <bookId> [--pages 120-180] [--refresh] [--keep-typ] [--no-plates] [--out path.pdf] [--dedication text | --dedication-file path]
+ *   node scripts/qa/render-scholarly-pdf.mjs <bookId> [--pages 120-180] [--refresh] [--keep-typ] [--no-plates] [--no-original] [--out path.pdf] [--dedication text | --dedication-file path]
  *
  * Illustrations (gallery_images crops) are fetched fresh on every run — they
  * need MONGODB_URI even when the book is cached; --no-plates skips them. Run
@@ -82,6 +82,8 @@ const options = {
   // --dedication "text" previews wording without writing it anywhere
   dedication: opt('dedication') || (opt('dedication-file') ? readFileSync(opt('dedication-file'), 'utf-8') : resolveDedication(book, collections)),
 };
+// --no-original leaves out the source transcription at the back (each page still links its facsimile)
+if (flag('no-original')) options.includeOriginal = false;
 if (!flag('no-plates')) {
   const client = new MongoClient(process.env.MONGODB_URI);
   // Caption-pass output (scripts/qa/plate-captions.mjs), when it has been run for this book
