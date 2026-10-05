@@ -6,7 +6,7 @@
 import { describe, it, expect } from 'vitest';
 import { execSync } from 'child_process';
 // @ts-expect-error — plain .mjs script library, no types
-import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus, resolveSourceImages, takeInscriptions, splitOriginalTerm, plateCaption, runningTitle, attachOrphanNotes, illustrationQuery, closeSplitWord, captionCell, captionHeightMm } from '../../scripts/lib/scholarly-typst.mjs';
+import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus, resolveSourceImages, takeInscriptions, splitOriginalTerm, plateCaption, runningTitle, attachOrphanNotes, illustrationQuery, closeSplitWord, captionCell, captionHeightMm, dropCopyMatter, dropDescriptiveNotes } from '../../scripts/lib/scholarly-typst.mjs';
 
 const page = (n: number, data: string, ocr?: string) => ({ page_number: n, translation: { data }, ...(ocr ? { ocr: { data: ocr } } : {}) });
 
@@ -443,6 +443,29 @@ describe('resolveSourceImages', () => {
 
   it('returns no link when the book records neither', () => {
     expect(resolveSourceImages({})).toEqual({ url: null, label: 'Source images' });
+  });
+});
+
+describe('copy matter and descriptive notes (Fludd UCH I)', () => {
+  it('drops a dealer\'s slip before the title page, keeps a real page that mentions a flyleaf', () => {
+    const pages = [
+      page(2, 'Vault (6-6) Book # 71 Collated G. M.<note>The page is a flyleaf with a pasted catalogue description.</note>'),
+      page(5, 'THE HISTORY OF BOTH WORLDS'),
+      page(191, 'lesser density of the material it inhabits.<note>A flyleaf was bound in here.</note>'),
+      page(900, 'FINIS.'),
+    ];
+    expect(dropCopyMatter(pages, 5).map((p: { page_number: number }) => p.page_number)).toEqual([5, 191, 900]);
+  });
+
+  it('drops page-condition notes always and figure descriptions only beside a printed plate', () => {
+    const body = 'a#footnote[This page is blank, with foxing.]; b#footnote[Gloss: x]; c#footnote[An engraving shows Saturn.];';
+    expect(dropDescriptiveNotes(body, { figures: true })).toBe('a b#footnote[Gloss: x]; c');
+    expect(dropDescriptiveNotes(body, { figures: false })).toBe('a b#footnote[Gloss: x]; c#footnote[An engraving shows Saturn.];');
+  });
+
+  it('keeps the state of the page out of the index', () => {
+    const terms = indexEntries([{ term: 'blank page', pages: [6] }, { term: 'Bleed-through', pages: [8] }, { term: 'Monochord', pages: [90] }], 100).map((e: { term: string }) => e.term);
+    expect(terms).toEqual(['Monochord']);
   });
 });
 
