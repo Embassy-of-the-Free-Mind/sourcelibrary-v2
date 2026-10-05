@@ -227,6 +227,18 @@ async function fetchSourceInfo(url) {
   }
 }
 
+/**
+ * Did an earlier run already write this page at its master? `upgraded_at` alone
+ * is not enough (a plate can be upgraded to less than the book's median master),
+ * so compare the stored width with the master this script recorded for it,
+ * capped as the write was capped (--max-width).
+ */
+function pageAtRecordedMaster(page) {
+  const m = page.image_metadata;
+  if (!m?.upgraded_at || !m.width || !m.source_max_width) return false;
+  return m.width >= 0.95 * Math.min(m.source_max_width, SHARP_MAX_WIDTH);
+}
+
 async function jpegDims(buf) {
   try {
     const meta = await sharp(buf).metadata();
@@ -480,10 +492,34 @@ async function refetchOne(book) {
   if (!toWrite.length) return { skipped: 'no-image-pages' };
   if (isAlreadySplit(pages)) return { skipped: 'already-split (use --recover-split)' };
 
+  // Resume of an interrupted or partly failed book: pages an earlier run already
+  // wrote at their master are not fetched again. Fetching them only to discard
+  // them at the per-page held check cost Bodleian ~9 tile requests a page for 90
+  // minutes and wrote nothing (MS. Barocci 50.2, 2026-10-05).
+  const remaining = toWrite.filter(p => !pageAtRecordedMaster(p));
+  if (!remaining.length) {
+    if (!DRY_RUN && !PAGES_WITH_IMAGES && !book.image_resolution_upgraded_at) {
+      // Every page reached its master across earlier runs, but none of them
+      // finished clean, so the book was never stamped and has no provenance event.
+      const master = Math.max(...toWrite.map(p => p.image_metadata.source_max_width));
+      const firstSrc = pages.find(p => isIiifUrl(p.photo_original || p.photo));
+      const importCap = firstSrc ? getIiifSizeCap(firstSrc.photo_original || firstSrc.photo) : null;
+      await db.collection('books').updateOne(
+        { id: book.id },
+        { $set: { image_resolution_upgraded_at: new Date(), image_resolution_upgrade_source: master, updated_at: new Date() } },
+      );
+      await recordUpgradeEvent(book, { fromWidthCap: importCap, toMasterWidth: master, pagesUpdated: toWrite.length });
+      return { updated: 0, skipped: toWrite.length, failed: 0, completed: true };
+    }
+    return { skipped: 'all-pages-at-master' };
+  }
+  const resumed = remaining.length < toWrite.length;
+  toWrite = remaining;
+
   // Decide once per book, from the median of three interior pages (measureBook).
-  // In a gap pass, judge eligibility on the pages still to do: measured on the
-  // already-upgraded ones, a mostly-done book reads as "not low-res".
-  const iiifPages = (SKIP_UPGRADED_PAGES ? toWrite : pages).filter(p => isIiifUrl(p.photo_original || p.photo));
+  // On a gap pass or a resume, judge eligibility on the pages still to do:
+  // measured on the already-upgraded ones, a mostly-done book reads as "not low-res".
+  const iiifPages = (SKIP_UPGRADED_PAGES || resumed ? toWrite : pages).filter(p => isIiifUrl(p.photo_original || p.photo));
   if (!iiifPages.length) return { skipped: 'no-iiif-source' };
   const sourceUrl = iiifPages[0].photo_original || iiifPages[0].photo;
   const cap = getIiifSizeCap(sourceUrl);
@@ -637,7 +673,7 @@ async function recordUpgradeEvent(book, { fromWidthCap, toMasterWidth, pagesUpda
           flagged_at: now,
           ocr_input_width: fromWidthCap,
           new_width: toMasterWidth,
-          upgrade_ratio: Math.round((toMasterWidth / fromWidthCap) * 10) / 10,
+          upgrade_ratio: fromWidthCap ? Math.round((toMasterWidth / fromWidthCap) * 10) / 10 : null,
         },
       } },
     );
@@ -825,7 +861,7 @@ async function main() {
   }
 
   const books = await db.collection('books').find(buildBookQuery(), {
-    projection: { id: 1, slug: 1, title: 1, 'image_source.provider': 1 },
+    projection: { id: 1, slug: 1, title: 1, 'image_source.provider': 1, image_resolution_upgraded_at: 1 },
   }).limit(LIMIT || 0).toArray();
   console.log(`Found ${books.length} books to process\n`);
 
@@ -843,6 +879,7 @@ async function main() {
         console.log(`  skip: ${(book.title || '').substring(0, 55)} — ${result.skipped}`);
       } else {
         processed++;
+        if (result.completed) console.log(`  COMPLETED ${(book.title || '').substring(0, 50)} — every page already at master; stamped`);
         if (result.failed) console.log(`  PARTIAL ${(book.title || '').substring(0, 50)} — ${result.updated} updated, ${result.failed} failed (not stamped; a re-run retries it)`);
       }
     } catch (e) {
