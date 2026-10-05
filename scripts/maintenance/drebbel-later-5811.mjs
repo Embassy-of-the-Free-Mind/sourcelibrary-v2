@@ -50,6 +50,21 @@ await withMongo(async (db) => {
       console.log(`${b.id} ${String(b.pipeline_auto?.status).padEnd(16)} p${b.processing_priority ?? '-'} ${b.visible ? 'VISIBLE' : 'hidden '} arch ${arch}/${b.pages_count} ocr ${ocr} tr ${tr} ${b.language} ${(b.title || '').slice(0, 50)} /book/${b.slug}`);
     }
   }
+  // Same route drebbel-oven-5811 used for Evelyn II: archive.org answers HTTP 500 for the item's
+  // JP2 zip while single /page/nN images serve 200, so archive-bulk strikes it toward BLOCKED.
+  // bulk_unsuitable is the archiver's own "zip unusable, pages fetchable" → per-page IIIF route.
+  if (process.argv.includes('--per-page')) {
+    const id = process.argv[process.argv.indexOf('--per-page') + 1];
+    const reason = 'archive.org HTTP 500 on the JP2 zip on every attempt 2026-10-05, single page images 200 (#5811)';
+    console.log(`${id} ${APPLY ? 'SET' : 'would set'} archive_metadata.bulk_unsuitable — ${reason}`);
+    if (APPLY) {
+      await B.updateOne({ id }, {
+        $set: { 'archive_metadata.bulk_unsuitable': true, 'archive_metadata.bulk_unsuitable_at': new Date(), 'archive_metadata.bulk_unsuitable_reason': reason, updated_at: new Date() },
+        $unset: { 'archive_metadata.bulk_failures': '', 'archive_metadata.bulk_last_error': '', 'archive_metadata.bulk_last_failed_at': '' },
+      });
+      await recordSweepAction(db, { sweep: SWEEP, book_id: id, action: 'bulk_unsuitable', detail: { reason } });
+    }
+  }
   if (process.argv.includes('--priority')) {
     const before = await B.find({ id: { $in: ids } }).project({ id: 1, processing_priority: 1 }).toArray();
     console.log(`${APPLY ? 'SET' : 'would set'} processing_priority 85 on ${before.length} books; before:`, JSON.stringify(before.map((b) => [b.id, b.processing_priority ?? null])));
