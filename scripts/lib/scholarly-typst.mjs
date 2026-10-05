@@ -480,7 +480,9 @@ const FONT_STACK = '("Libertinus Serif", "Noto Naskh Arabic", "Noto Serif Hebrew
 const LANG_CODES = { latin: 'la', german: 'de', french: 'fr', italian: 'it', greek: 'el', dutch: 'nl', spanish: 'es', english: 'en', portuguese: 'pt' };
 
 // Standing credits, printed on the imprint page of every edition
-const STANDING_CREDITS = ['Creative direction: Derek Lomas'];
+const STANDING_CREDITS = ['Editor and creative director: Derek Lomas'];
+// Named in the citation itself, so a reference to the edition carries its editor
+const EDITION_EDITOR = 'Derek Lomas';
 
 const TYPST_PREAMBLE = `
 #let rust = rgb("#9e4a3a")
@@ -787,7 +789,7 @@ export function generateTypstSource(book, pages, options = {}) {
   const coverOriginal = displayTitle(book.title, { author });
 
   const place = book.place_published || book.publication_place;
-  const imprintLine = [[place, book.publisher].filter(Boolean).join(': '), book.published].filter(Boolean).join(', ');
+  const imprintLine = [[place, book.publisher && String(book.publisher).replace(/\s*\|\s*/g, ' and ')].filter(Boolean).join(': '), book.published].filter(Boolean).join(', ');
   const holder = book.image_source?.contributing_library || book.contributing_library;
   const provider = book.image_source?.provider_name;
   const { url: sourceUrl, label: sourceLabel } = resolveSourceImages(book);
@@ -972,7 +974,9 @@ ${TYPST_PREAMBLE}
 
   // ── Imprint page ──
   const creditLines = [...STANDING_CREDITS, ...credits].map(c => escapeTypst(c)).join(' \\\n  ');
-  const citation = `${author}. ${bookTitle}. English translation by Source Library (AI-assisted). Amsterdam: Embassy of the Free Mind, ${year}.${version ? ` Version ${version}.` : ''} ${persistentUrl}`;
+  // The persistent link goes on a line of its own, unbroken: a DOI split
+  // across lines ("https:// / doi.org/…") is the one thing a reader copies
+  const citation = `${author}. ${bookTitle}. English translation by Source Library (AI-assisted), edited by ${EDITION_EDITOR}. Amsterdam: Embassy of the Free Mind, ${year}.${version ? ` Version ${version}.` : ''}`;
   doc.push(`
 #page(header: none, footer: none)[
   #set par(first-line-indent: 0pt, justify: false, leading: 0.55em, spacing: 1.1em)
@@ -983,10 +987,13 @@ ${TYPST_PREAMBLE}
 
   ${holder || provider ? `Translated from the copy ${holder ? `held by ${escapeTypst(holder)}` : ''}${provider && provider !== holder ? `${holder ? ', ' : ''}digitized by ${escapeTypst(provider)}` : ''}${sourceUrl ? `: #link(${typstString(sourceUrl)})[${escapeTypst(urlDisplay(sourceUrl))}]` : ''}.` : ''}
 
-  ${version ? `Version ${escapeTypst(version)}, ` : ''}${now}. ${doi ? `DOI #link(${typstString(persistentUrl)})[${escapeTypst(doi)}]. ` : ''}Each version of this edition is deposited separately and does not change; corrections appear as new versions. The current text, with page facsimiles, is at #link(${typstString(bookUrl)})[${escapeTypst(urlDisplay(`sourcelibrary.org/book/${bookSlug}`))}].
+  ${version ? `Version ${escapeTypst(version)}, ` : ''}${now}.${doi ? ` \\
+  DOI #box(link(${typstString(persistentUrl)})[${escapeTypst(doi)}]) \\
+ ` : ''} Each version of this edition is deposited separately and does not change; corrections appear as new versions. The current text, with page facsimiles, is at #link(${typstString(bookUrl)})[${escapeTypst(urlDisplay(`sourcelibrary.org/book/${bookSlug}`))}].
 
   #text(fill: rust, tracking: 0.08em, size: 7.8pt)[#upper[Cite as]] \\
-  ${escapeTypst(citation)}
+  ${escapeTypst(citation)} \\
+  #box(link(${typstString(persistentUrl)})[${escapeTypst(persistentUrl)}])
 
   To cite a passage, give the page number printed in the margin, e.g. "p. ${translatedPages[Math.min(10, translatedPages.length - 1)]?.page_number ?? 1}".
 
