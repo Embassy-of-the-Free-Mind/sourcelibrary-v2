@@ -1,6 +1,6 @@
 {
  "issue": 5513,
- "generated_at": "2026-10-03T22:05:16.671Z",
+ "generated_at": "2026-10-04T05:48:31.274Z",
  "script": "scripts/catalog-coverage/canon-gap-status.mjs",
  "gap_map": "scripts/catalog-coverage/results/canon-gap-map-2026-10.json",
  "fields": {
@@ -23,46 +23,47 @@
    "corpus": "Derge Tengyur",
    "status": "running",
    "owner_issue": 5497,
-   "done": "213 volumes imported hidden and held, 128,369 of 128,639 pages carry the Esukhia public-domain text, aligned folio by folio to the BDRC scans and verified on sampled reads. Translation pilot on 5 volumes: 1,269 pages for $1.90.",
-   "next_action": "Draft English for every page (approved by Derek, hard cap $200): gemini-3-flash-preview, one page per request, chosen over the pilot's chained blocks on 113 pages judged against 84000 (#5497). Volumes stay hidden; publishing them as an unreviewed machine draft is Derek's decision once the reader shows the licence and draft label (#5571).",
-   "cost_usd": 200,
+   "done": "213 volumes imported hidden and held; 128,369 of 128,639 pages carry the Esukhia public-domain text, aligned folio by folio to the BDRC scans. Draft English for 110,952 pages (187 volumes) with gemini-3-flash-preview, one page per request, for about $197; an unreviewed machine draft, with about 2 to 5 reversed statements per 100 pages measured against 84000.",
+   "next_action": "Drafting the last 26 volumes (17,400 pages: the end of the tantra commentaries, grammar, medicine, miscellany and the catalogue; about $31, approved 4 October). The volumes are published as an unreviewed machine draft only once the reader shows the licence and the draft label (#5571).",
+   "cost_usd": 31,
    "held_books": 213,
    "live_books": 0,
-   "pipeline_held": 201,
-   "readable_books": 0,
+   "pipeline_held": 213,
+   "readable_books": 169,
    "pages_with_text": 128369,
    "holdings_method": "language=Tibetan, title/source matches Derge Tengyur (bstan 'gyur + sde dge, BDRC W23703, Esukhia)",
-   "updated_at": "2026-10-03T22:05:16.671Z"
+   "updated_at": "2026-10-04T05:48:31.274Z"
   },
   {
    "id": "derge-kangyur",
    "corpus": "Derge Kangyur",
    "status": "running",
    "owner_issue": 5665,
-   "next_action": "Import running (held_books / pages_with_text count it): BDRC W4CZ5369, the Library of Congress copy the e-text transcribes, plus the Esukhia public-domain text, aligned folio by folio, with the texts 84000 has published or has in progress marked per page. Then archive the images ($0 model spend) and price a draft English for the texts 84000 has not begun.",
+   "next_action": "Align the last volume (vol. 20), then price a draft English for the rest of what 84000 has not translated. Publication waits on the reader showing the licence and draft label (#5571).",
    "cost_usd": 0,
-   "held_books": 102,
+   "held_books": 103,
    "live_books": 0,
-   "pipeline_held": 102,
+   "pipeline_held": 103,
    "readable_books": 0,
-   "pages_with_text": 38188,
+   "pages_with_text": 62375,
    "holdings_method": "language=Tibetan, title/source matches Derge Kangyur (bka' 'gyur + sde dge, BDRC W4CZ5369 / W22084, Esukhia)",
-   "updated_at": "2026-10-03T22:05:16.671Z"
+   "updated_at": "2026-10-04T05:48:31.274Z",
+   "done": "103 volumes imported from BDRC (W4CZ5369, the copy the Esukhia text transcribes), held and hidden; 62,375 pages carry the Esukhia public-domain text, aligned folio by folio, in every volume but one. The 40 texts 84000 lists as not begun have a draft English (1,835 pages, $3.39)."
   },
   {
    "id": "cbeta",
    "corpus": "CBETA (whole Chinese Buddhist canon)",
    "status": "next",
    "owner_issue": 2554,
-   "next_action": "Whole-canon CBETA → facsimile reader books (#2554) after the Chan subset (#5566) proves the fit-and-translate lane. CC BY-NC-SA: each page shows its licence (#5571).",
+   "next_action": "Pair the whole CBETA canon with our scans once the Chan texts below are translated and published. CBETA's licence is non-commercial with attribution, so every page will show it (#5571).",
    "cost_usd": 306,
    "held_books": 136,
    "live_books": 133,
    "pipeline_held": 55,
-   "readable_books": 70,
+   "readable_books": 71,
    "pages_with_text": 11885,
    "holdings_method": "Chinese-language books in buddhist-canon / chinese-buddhist-texts / zen-chan, SAT Daizōkyō scans, metadata.cbeta_id, or works-catalog cbeta holdings",
-   "updated_at": "2026-10-03T22:05:16.671Z"
+   "updated_at": "2026-10-04T05:48:31.274Z"
   },
   {
    "id": "cbeta-chan",
@@ -70,7 +71,7 @@
    "status": "running",
    "owner_issue": 5566,
    "done": "Chan texts fitted to our scans; 74 of 79 books visible with the CBETA text and its licence.",
-   "next_action": "Translate the 19 texts listed on #5566 under envelope cbeta-chan-2026-10 (unblocked 2026-10-02 07:58Z).",
+   "next_action": "Translate the remaining 19 texts listed on #5566.",
    "cost_usd": 9,
    "held_books": 99,
    "live_books": 94,
@@ -78,15 +79,15 @@
    "readable_books": 16,
    "pages_with_text": 9985,
    "holdings_method": "Chinese-language books whose title contains 景德傳燈錄 / 祖堂集 / 五燈會元 / 語錄 / 廣錄 / 語要, or in zen-chan",
-   "updated_at": "2026-10-03T22:05:16.671Z"
+   "updated_at": "2026-10-04T05:48:31.274Z"
   },
   {
    "id": "pali-mula",
    "corpus": "Pali Chaṭṭha Saṅgāyana — root texts (mūla)",
    "status": "running",
    "owner_issue": 5668,
-   "done": "Eternity A+B pass (#5513): OCR + draft English on the Pali books we hold (hidden ones stay hidden).",
-   "next_action": "Fit the VRI Chaṭṭha Saṅgāyana text (non-commercial, attribution) to our Pali scans instead of relying on OCR; re-translate changed pages.",
+   "done": "The Pali books we hold have been read by OCR and drafted in English (hidden books stay hidden).",
+   "next_action": "Replace the OCR with the VRI Chaṭṭha Saṅgāyana typed text (non-commercial, with attribution), matched to our scans, and retranslate the pages that change.",
    "cost_usd": 4,
    "held_books": 57,
    "live_books": 26,
@@ -94,15 +95,15 @@
    "readable_books": 34,
    "pages_with_text": 16892,
    "holdings_method": "language=Pali (any edition; not matched to the VRI CSCD edition)",
-   "updated_at": "2026-10-03T22:05:16.671Z"
+   "updated_at": "2026-10-04T05:48:31.274Z"
   },
   {
    "id": "pali-atthakatha",
    "corpus": "Pali Chaṭṭha Saṅgāyana — commentaries (aṭṭhakathā)",
    "status": "running",
    "owner_issue": 5668,
-   "done": "Eternity A+B pass covered the commentaries we hold except five aṭṭhakathā owned by the quality-round-1 eval (#5438).",
-   "next_action": "As root texts: fit the VRI text; translate the five aṭṭhakathā once the eval releases them.",
+   "done": "The commentaries we hold are drafted in English, except five held back for a quality test (#5438).",
+   "next_action": "As for the root texts: match the VRI typed text to our scans; translate the five held commentaries when the test releases them.",
    "cost_usd": 11,
    "held_books": 57,
    "live_books": 26,
@@ -110,14 +111,14 @@
    "readable_books": 34,
    "pages_with_text": 16892,
    "holdings_method": "language=Pali (any edition; not matched to the VRI CSCD edition)",
-   "updated_at": "2026-10-03T22:05:16.671Z"
+   "updated_at": "2026-10-04T05:48:31.274Z"
   },
   {
    "id": "pali-tika",
    "corpus": "Pali Chaṭṭha Saṅgāyana — sub-commentaries (ṭīkā)",
    "status": "next",
    "owner_issue": 5668,
-   "next_action": "As root texts: fit the VRI text where we hold a scan; English coverage unknown (upper bound priced).",
+   "next_action": "As for the root texts: match the VRI typed text wherever we hold a scan. How much is in English is unknown, so the cost is an upper bound.",
    "cost_usd": 4,
    "held_books": 57,
    "live_books": 26,
@@ -125,7 +126,7 @@
    "readable_books": 34,
    "pages_with_text": 16892,
    "holdings_method": "language=Pali (any edition; not matched to the VRI CSCD edition)",
-   "updated_at": "2026-10-03T22:05:16.671Z"
+   "updated_at": "2026-10-04T05:48:31.274Z"
   },
   {
    "id": "gretil-buddhist",
@@ -133,15 +134,15 @@
    "status": "blocked",
    "owner_issue": 5513,
    "blocker": "GRETIL licence, quoted from its files: \"THIS GRETIL TEXT FILE IS FOR REFERENCE PURPOSES ONLY! COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE.\" Each file inherits its source edition's terms, so no file can be published without clearing that edition.",
-   "next_action": "Clear per source edition, or OCR our own scans instead (the A+B pass did this for the Sanskrit books we hold).",
+   "next_action": "Clear the rights edition by edition, or read our own scans of the printed editions instead, as we already do for the Sanskrit books we hold.",
    "cost_usd": null,
    "held_books": 95,
    "live_books": 37,
    "pipeline_held": 2,
-   "readable_books": 34,
+   "readable_books": 35,
    "pages_with_text": 14679,
    "holdings_method": "Sanskrit books in buddhism collections or Buddhist title terms",
-   "updated_at": "2026-10-03T22:05:16.671Z"
+   "updated_at": "2026-10-04T05:48:31.274Z"
   },
   {
    "id": "gretil-vedanta",
@@ -149,15 +150,15 @@
    "status": "blocked",
    "owner_issue": 5513,
    "blocker": "GRETIL \"FOR REFERENCE PURPOSES ONLY! COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE.\"",
-   "next_action": "As GRETIL Buddhist.",
+   "next_action": "As for GRETIL Buddhist texts.",
    "cost_usd": null,
    "held_books": 59,
    "live_books": 14,
    "pipeline_held": 0,
-   "readable_books": 11,
-   "pages_with_text": 6028,
+   "readable_books": 12,
+   "pages_with_text": 6053,
    "holdings_method": "Sanskrit books in vedanta-darshana or Vedānta title terms",
-   "updated_at": "2026-10-03T22:05:16.671Z"
+   "updated_at": "2026-10-04T05:48:31.274Z"
   },
   {
    "id": "gretil-gaudiya",
@@ -165,7 +166,7 @@
    "status": "blocked",
    "owner_issue": 5513,
    "blocker": "GRETIL \"FOR REFERENCE PURPOSES ONLY! COPYRIGHT AND TERMS OF USAGE AS FOR SOURCE FILE.\"",
-   "next_action": "As GRETIL Buddhist.",
+   "next_action": "As for GRETIL Buddhist texts.",
    "cost_usd": null,
    "held_books": 6,
    "live_books": 1,
@@ -173,7 +174,7 @@
    "readable_books": 1,
    "pages_with_text": 535,
    "holdings_method": "Sanskrit books with Gauḍīya author/title terms",
-   "updated_at": "2026-10-03T22:05:16.671Z"
+   "updated_at": "2026-10-04T05:48:31.274Z"
   },
   {
    "id": "sefaria-zohar",
@@ -181,7 +182,7 @@
    "status": "blocked",
    "owner_issue": 5560,
    "blocker": "Licence: every Sefaria Zohar Hebrew version reports its licence as `unknown` (Sefaria API, version licence field), so no Zohar text is fitted (#5560: 0 of 175 refused pages of the Bodley Zohar written).",
-   "next_action": "Re-read the refused pages with the loop-guarded OCR re-read (#3878), not a Sefaria fit.",
+   "next_action": "Re-read the pages our OCR refused from our own scans (#3878) instead of using Sefaria's text.",
    "cost_usd": null,
    "held_books": 23,
    "live_books": 15,
@@ -189,31 +190,31 @@
    "readable_books": 10,
    "pages_with_text": 7582,
    "holdings_method": "Zohar / Tikkunei Zohar by title",
-   "updated_at": "2026-10-03T22:05:16.671Z"
+   "updated_at": "2026-10-04T05:48:31.274Z"
   },
   {
    "id": "sefaria-lurianic",
    "corpus": "Sefaria Kabbalah — Lurianic corpus (Arizal & Chaim Vital, 11 titles)",
    "status": "running",
    "owner_issue": 5560,
-   "done": "Fit lane built and run; Luria's Zohar commentary MS does not follow the public-domain Sha'ar Ma'amarei Rashbi (79 of 602 pages locate), so it is not fitted.",
-   "next_action": "Loop-guarded OCR re-read of the refused pages (#3878).",
+   "done": "Matching Sefaria's text to our scans was tried. Luria's Zohar commentary manuscript does not follow the public-domain Sha'ar Ma'amarei Rashbi (only 79 of 602 pages could be located), so it was not used.",
+   "next_action": "Re-read the pages our OCR refused (#3878).",
    "cost_usd": null,
    "held_books": 9,
-   "live_books": 7,
+   "live_books": 6,
    "pipeline_held": 0,
    "readable_books": 2,
    "pages_with_text": 1366,
    "holdings_method": "Lurianic corpus by title (Etz Chaim, Vital, Shemonah She`arim …)",
-   "updated_at": "2026-10-03T22:05:16.671Z"
+   "updated_at": "2026-10-04T05:48:31.274Z"
   },
   {
    "id": "sefaria-cordovero",
    "corpus": "Sefaria Kabbalah — Cordovero (Ramak)",
    "status": "running",
    "owner_issue": 5560,
-   "done": "Pardes Rimmonim: 12 refused pages filled with verified public-domain Sefaria text, now translating in the A+B pass.",
-   "next_action": "46 pages refused with reasons; loop-guarded OCR re-read (#3878).",
+   "done": "Pardes Rimmonim: 12 pages our OCR refused were filled with checked public-domain Sefaria text and are being translated.",
+   "next_action": "Re-read the other 46 refused pages (#3878).",
    "cost_usd": null,
    "held_books": 4,
    "live_books": 3,
@@ -221,22 +222,22 @@
    "readable_books": 1,
    "pages_with_text": 658,
    "holdings_method": "Cordovero by title (Pardes Rimonim, Tomer Devorah, Or Ne`erav)",
-   "updated_at": "2026-10-03T22:05:16.671Z"
+   "updated_at": "2026-10-04T05:48:31.274Z"
   },
   {
    "id": "openiti-sufi",
    "corpus": "OpenITI — Sufi subset (incl. Ibn ʿArabī)",
    "status": "next",
    "owner_issue": null,
-   "next_action": "No owner. CC BY-NC-SA like CBETA; the Chan lane (#5566) is the template once it publishes. Persian manuscript OCR is parked (#5559).",
+   "next_action": "Not started. The licence is non-commercial with attribution, like CBETA's, so the Chan texts (#5566) are the model once they are published. Reading Persian manuscripts is paused until it is accurate enough (#5559).",
    "cost_usd": 29,
    "held_books": 161,
    "live_books": 126,
-   "pipeline_held": 1,
-   "readable_books": 131,
-   "pages_with_text": 26417,
+   "pipeline_held": 13,
+   "readable_books": 132,
+   "pages_with_text": 26418,
    "holdings_method": "Arabic/Persian books in sufism collections, Ibn ʿArabī title terms, or works-catalog openiti holdings",
-   "updated_at": "2026-10-03T22:05:16.671Z"
+   "updated_at": "2026-10-04T05:48:31.274Z"
   },
   {
    "id": "ganjoor",
@@ -248,19 +249,19 @@
    "cost_usd": null,
    "held_books": 54,
    "live_books": 23,
-   "pipeline_held": 0,
+   "pipeline_held": 21,
    "readable_books": 22,
-   "pages_with_text": 9757,
+   "pages_with_text": 9909,
    "holdings_method": "Persian books in persian-literary-tradition or with classical poetry title terms (any edition)",
-   "updated_at": "2026-10-03T22:05:16.671Z"
+   "updated_at": "2026-10-04T05:48:31.274Z"
   },
   {
    "id": "mongolian-kanjur",
    "corpus": "Mongolian Kanjur (BDRC)",
    "status": "running",
    "owner_issue": 5664,
-   "done": "Scans-only import of BDRC W4CZ5370 (108 volumes) under way, held and hidden.",
-   "next_action": "OCR feasibility is open: flash-lite drops ~70% of columns (#5664); needs a reference text or a Mongolist first.",
+   "done": "Scans of BDRC W4CZ5370 (108 volumes) imported, held and hidden.",
+   "next_action": "Find a way to read it: our cheapest model drops about 70% of the text columns (#5664). This needs a typed reference text or a Mongolist first.",
    "cost_usd": 0,
    "held_books": 108,
    "live_books": 0,
@@ -268,7 +269,7 @@
    "readable_books": 0,
    "pages_with_text": 0,
    "holdings_method": "language=Mongolian or Mongolian Kanjur by title/source",
-   "updated_at": "2026-10-03T22:05:16.671Z"
+   "updated_at": "2026-10-04T05:48:31.274Z"
   },
   {
    "id": "tripitaka-koreana",
@@ -284,14 +285,14 @@
    "readable_books": 0,
    "pages_with_text": 0,
    "holdings_method": "Korean/Chinese books with Tripitaka Koreana / 高麗 / 海印寺 title terms",
-   "updated_at": "2026-10-03T22:05:16.671Z"
+   "updated_at": "2026-10-04T05:48:31.274Z"
   },
   {
    "id": "kanripo",
    "corpus": "Kanripo (Kanseki Repository), excl. KR6 Buddhist section (= CBETA)",
    "status": "next",
    "owner_issue": 5568,
-   "next_action": "Align Kanripo text (CC BY-SA 4.0) to the held Siku Quanshu scans instead of OCR: 7,001 books have covering juan files, 36/40 pilot books align (#5568).",
+   "next_action": "Match the Kanripo typed text (CC BY-SA 4.0) to our Siku Quanshu scans instead of reading them by OCR: 7,001 of our books have matching chapters, and 36 of 40 pilot books aligned (#5568).",
    "cost_usd": null,
    "held_books": 170,
    "live_books": 167,
@@ -299,7 +300,7 @@
    "readable_books": 155,
    "pages_with_text": 32306,
    "holdings_method": "works-catalog work_holdings for kanripo works (build-holdings.mjs title-auto match; a floor)",
-   "updated_at": "2026-10-03T22:05:16.671Z"
+   "updated_at": "2026-10-04T05:48:31.274Z"
   }
  ],
  "traditions": [
@@ -310,11 +311,11 @@
     "derge-tengyur",
     "derge-kangyur"
    ],
-   "books": 530,
-   "readable_books": 122,
-   "pages_scanned": 288999,
-   "pages_transcribed": 260279,
-   "pages_translated": 97882,
+   "books": 531,
+   "readable_books": 291,
+   "pages_scanned": 289537,
+   "pages_transcribed": 283751,
+   "pages_translated": 195337,
    "canon_page_equivalents": 132416,
    "ocr_engines": [
     [
@@ -327,7 +328,7 @@
     ],
     [
      "esukhia-derge-kangyur",
-     38188
+     62375
     ],
     [
      "gemini-3.1-flash-lite-preview",
@@ -349,14 +350,34 @@
    "translation_models": [
     [
      "gemini-3-flash-preview",
-     99481
+     195308
     ],
     [
      "gemini-3.1-flash-lite",
      26
+    ],
+    [
+     "unrecorded",
+     3
     ]
    ],
    "book_pages": [
+    [
+     "6abeab96896ea18127c8080a",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། མ (Derge Tengyur, vol. 17)",
+     false,
+     899,
+     898,
+     895
+    ],
+    [
+     "6abe90286a920ffd924d6333",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ར (Derge Tengyur, vol. 26)",
+     false,
+     877,
+     876,
+     876
+    ],
     [
      "6abed65f896ea18127c8e6d6",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། པེ (Derge Tengyur, vol. 182)",
@@ -366,12 +387,68 @@
      794
     ],
     [
+     "6abece70896ea18127c8b9e8",
+     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཡུ (Derge Tengyur, vol. 163)",
+     false,
+     779,
+     778,
+     778
+    ],
+    [
+     "6abecd0e896ea18127c8b6de",
+     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། འུ (Derge Tengyur, vol. 162)",
+     false,
+     775,
+     774,
+     774
+    ],
+    [
+     "6abe8dbb6a920ffd924d59c0",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཞ (Derge Tengyur, vol. 22)",
+     false,
+     756,
+     756,
+     756
+    ],
+    [
      "6abeb2ec896ea18127c83529",
      "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཡ (Derge Tengyur, vol. 103)",
      false,
      749,
      748,
      748
+    ],
+    [
+     "6abe8cd66a920ffd924d56d8",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཝ (Derge Tengyur, vol. 21)",
+     false,
+     741,
+     740,
+     740
+    ],
+    [
+     "6abed90a896ea18127c8f9ee",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཞེ (Derge Tengyur, vol. 190)",
+     false,
+     737,
+     736,
+     736
+    ],
+    [
+     "6abe86656a920ffd924d3f40",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཏ (Derge Tengyur, vol. 10)",
+     false,
+     733,
+     730,
+     730
+    ],
+    [
+     "6abed1ac896ea18127c8ca6c",
+     "བསྟན་འགྱུར། སྡེ་དགེ། འཁྲི་ཤིང། ཀེ (Derge Tengyur, vol. 170)",
+     false,
+     731,
+     730,
+     730
     ],
     [
      "6abeb325896ea18127c83819",
@@ -390,12 +467,92 @@
      728
     ],
     [
+     "6abed95d896ea18127c8fcd2",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཟེ (Derge Tengyur, vol. 191)",
+     false,
+     725,
+     724,
+     724
+    ],
+    [
      "6abed3fc896ea18127c8d272",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཅེ (Derge Tengyur, vol. 174)",
      false,
      730,
      723,
      723
+    ],
+    [
+     "6abea14b6a920ffd924dadae",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཨི (Derge Tengyur, vol. 61)",
+     false,
+     723,
+     722,
+     722
+    ],
+    [
+     "6abea1d86a920ffd924db084",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཀུ (Derge Tengyur, vol. 62)",
+     false,
+     723,
+     722,
+     722
+    ],
+    [
+     "6abebae6896ea18127c8795c",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། རི (Derge Tengyur, vol. 134)",
+     false,
+     721,
+     717,
+     717
+    ],
+    [
+     "6abed42c896ea18127c8d54f",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཆེ (Derge Tengyur, vol. 175)",
+     false,
+     718,
+     717,
+     717
+    ],
+    [
+     "6abeb4ad896ea18127c84725",
+     "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཀི (Derge Tengyur, vol. 110)",
+     false,
+     715,
+     714,
+     714
+    ],
+    [
+     "6abe9ec86a920ffd924d9ce2",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། འི (Derge Tengyur, vol. 54)",
+     false,
+     703,
+     702,
+     702
+    ],
+    [
+     "6abe9f6f6a920ffd924da3c8",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ལི (Derge Tengyur, vol. 57)",
+     false,
+     703,
+     702,
+     702
+    ],
+    [
+     "6abea1016a920ffd924daaec",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཧི (Derge Tengyur, vol. 60)",
+     false,
+     703,
+     702,
+     700
+    ],
+    [
+     "6abea5606a920ffd924dbcb1",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཉུ (Derge Tengyur, vol. 69)",
+     false,
+     701,
+     700,
+     700
     ],
     [
      "6abeb35b896ea18127c83af5",
@@ -414,12 +571,100 @@
      692
     ],
     [
+     "6abea70a6a920ffd924dc6e1",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ནུ (Derge Tengyur, vol. 73)",
+     false,
+     693,
+     692,
+     692
+    ],
+    [
+     "6abec01d896ea18127c88fb8",
+     "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཅུ (Derge Tengyur, vol. 144)",
+     false,
+     693,
+     692,
+     692
+    ],
+    [
+     "6abe9cd56a920ffd924d937e",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཚི (Derge Tengyur, vol. 49)",
+     false,
+     689,
+     688,
+     688
+    ],
+    [
+     "6abedf77a43718d234bf11b2",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། བི (Derge Tengyur, vol. 124)",
+     false,
+     689,
+     688,
+     688
+    ],
+    [
+     "6abecf9e896ea18127c8bf06",
+     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ལུ (Derge Tengyur, vol. 165)",
+     false,
+     687,
+     686,
+     686
+    ],
+    [
+     "6abe86096a920ffd924d3c92",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཉ (Derge Tengyur, vol. 9)",
+     false,
+     683,
+     682,
+     682
+    ],
+    [
+     "6abeaad26a920ffd924ddbfc",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཅ (Derge Tengyur, vol. 84)",
+     false,
+     683,
+     682,
+     682
+    ],
+    [
+     "6abea3fd6a920ffd924dba05",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཅུ (Derge Tengyur, vol. 66)",
+     false,
+     681,
+     680,
+     680
+    ],
+    [
+     "6abeab0e6a920ffd924ddeaa",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཆ (Derge Tengyur, vol. 85)",
+     false,
+     681,
+     680,
+     680
+    ],
+    [
      "6abeb2b1896ea18127c8327d",
      "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཟ (Derge Tengyur, vol. 101)",
      false,
      681,
      680,
      680
+    ],
+    [
+     "6abed0ea896ea18127c8c5c8",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སྐྱེས་རབས། ཧུ (Derge Tengyur, vol. 168)",
+     false,
+     679,
+     678,
+     678
+    ],
+    [
+     "6abead3a896ea18127c81226",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཇུ (Derge Tengyur, vol. 68)",
+     false,
+     677,
+     676,
+     676
     ],
     [
      "6abeb286896ea18127c82fd7",
@@ -430,12 +675,220 @@
      674
     ],
     [
+     "6abebaa5896ea18127c876b6",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཡི (Derge Tengyur, vol. 133)",
+     false,
+     675,
+     674,
+     674
+    ],
+    [
+     "6abe9b4b6a920ffd924d8d38",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། བི (Derge Tengyur, vol. 46)",
+     false,
+     673,
+     672,
+     672
+    ],
+    [
+     "6abeba43896ea18127c8725a",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཟི (Derge Tengyur, vol. 131)",
+     false,
+     669,
+     668,
+     668
+    ],
+    [
+     "6abea6da6a920ffd924dc443",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། དུ (Derge Tengyur, vol. 72)",
+     false,
+     667,
+     666,
+     665
+    ],
+    [
+     "6abebfd1896ea18127c88d1c",
+     "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ངུ (Derge Tengyur, vol. 143)",
+     false,
+     665,
+     664,
+     664
+    ],
+    [
+     "6abeaf6b896ea18127c81cfc",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ན (Derge Tengyur, vol. 91)",
+     false,
+     661,
+     660,
+     660
+    ],
+    [
+     "6abed9a6896ea18127c8ffaa",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། འེ (Derge Tengyur, vol. 192)",
+     false,
+     661,
+     660,
+     660
+    ],
+    [
+     "6abe85c46a920ffd924d39fc",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཇ (Derge Tengyur, vol. 8)",
+     false,
+     659,
+     658,
+     658
+    ],
+    [
+     "6abea6ac6a920ffd924dc1ad",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཐུ (Derge Tengyur, vol. 71)",
+     false,
+     659,
+     658,
+     658
+    ],
+    [
+     "6abeb20a896ea18127c82b01",
+     "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཛ (Derge Tengyur, vol. 98)",
+     false,
+     659,
+     658,
+     658
+    ],
+    [
+     "6abebf71896ea18127c88a86",
+     "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། གུ (Derge Tengyur, vol. 142)",
+     false,
+     659,
+     658,
+     658
+    ],
+    [
+     "6abed259896ea18127c8cd4a",
+     "བསྟན་འགྱུར། སྡེ་དགེ། འཁྲི་ཤིང། ཁེ (Derge Tengyur, vol. 171)",
+     false,
+     657,
+     656,
+     656
+    ],
+    [
+     "6abe89136a920ffd924d4900",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། པ (Derge Tengyur, vol. 14)",
+     false,
+     655,
+     654,
+     654
+    ],
+    [
      "6abed47a896ea18127c8d820",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཇེ (Derge Tengyur, vol. 176)",
      false,
      655,
      654,
      654
+    ],
+    [
+     "6abed76c896ea18127c8ee40",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། མེ (Derge Tengyur, vol. 185)",
+     false,
+     655,
+     654,
+     654
+    ],
+    [
+     "6abed8c2896ea18127c8f75e",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཝེ (Derge Tengyur, vol. 189)",
+     false,
+     653,
+     652,
+     652
+    ],
+    [
+     "6abec767896ea18127c8a9dc",
+     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཙུ (Derge Tengyur, vol. 156)",
+     false,
+     650,
+     650,
+     650
+    ],
+    [
+     "6abe9d9d6a920ffd924d9828",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཝི (Derge Tengyur, vol. 51)",
+     false,
+     651,
+     650,
+     649
+    ],
+    [
+     "6abe98196a920ffd924d8054",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཏི (Derge Tengyur, vol. 40)",
+     false,
+     649,
+     648,
+     648
+    ],
+    [
+     "6abe91a66a920ffd924d6b5d",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ས (Derge Tengyur, vol. 29)",
+     false,
+     647,
+     646,
+     646
+    ],
+    [
+     "6abec1df896ea18127c89736",
+     "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཉུ (Derge Tengyur, vol. 147)",
+     false,
+     645,
+     644,
+     644
+    ],
+    [
+     "6abec068896ea18127c89270",
+     "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཆུ (Derge Tengyur, vol. 145)",
+     false,
+     643,
+     642,
+     642
+    ],
+    [
+     "6abe84986a920ffd924d328a",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ང (Derge Tengyur, vol. 5)",
+     false,
+     641,
+     640,
+     640
+    ],
+    [
+     "6abedf36a43718d234bf0f30",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། བ (Derge Tengyur, vol. 94)",
+     false,
+     639,
+     638,
+     638
+    ],
+    [
+     "6abe8c706a920ffd924d545a",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཛ (Derge Tengyur, vol. 20)",
+     false,
+     635,
+     634,
+     634
+    ],
+    [
+     "6abe974b6a920ffd924d7dd6",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཉི (Derge Tengyur, vol. 39)",
+     false,
+     635,
+     634,
+     633
+    ],
+    [
+     "6abeb11e896ea18127c82406",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། མ (Derge Tengyur, vol. 95)",
+     false,
+     633,
+     632,
+     632
     ],
     [
      "6abeb404896ea18127c84235",
@@ -446,12 +899,108 @@
      632
     ],
     [
+     "6abea00c6a920ffd924da68a",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཤི (Derge Tengyur, vol. 58)",
+     false,
+     633,
+     632,
+     631
+    ],
+    [
+     "6abe850f6a920ffd924d3782",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཆ (Derge Tengyur, vol. 7)",
+     false,
+     631,
+     630,
+     630
+    ],
+    [
+     "6abea98e6a920ffd924dd984",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ག (Derge Tengyur, vol. 82)",
+     false,
+     629,
+     628,
+     628
+    ],
+    [
+     "6abec9bf896ea18127c8ae09",
+     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཛུ (Derge Tengyur, vol. 158)",
+     false,
+     629,
+     628,
+     628
+    ],
+    [
+     "6abe8a146a920ffd924d4e02",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། བ (Derge Tengyur, vol. 16)",
+     false,
+     629,
+     628,
+     627
+    ],
+    [
+     "6abeafd3896ea18127c8218e",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཕ (Derge Tengyur, vol. 93)",
+     false,
+     629,
+     628,
+     627
+    ],
+    [
+     "6abe8fd66a920ffd924d60bd",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཡ (Derge Tengyur, vol. 25)",
+     false,
+     627,
+     626,
+     626
+    ],
+    [
+     "6abed9f5896ea18127c90242",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཡེ (Derge Tengyur, vol. 193)",
+     false,
+     627,
+     626,
+     626
+    ],
+    [
+     "6abe84ce6a920ffd924d350e",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཅ (Derge Tengyur, vol. 6)",
+     false,
+     625,
+     624,
+     624
+    ],
+    [
      "6abeb43e896ea18127c844b1",
      "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཨ (Derge Tengyur, vol. 109)",
      false,
      625,
      624,
      624
+    ],
+    [
+     "6abeb4e5896ea18127c849f3",
+     "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཁི (Derge Tengyur, vol. 111)",
+     false,
+     625,
+     624,
+     624
+    ],
+    [
+     "6abe90fc6a920ffd924d66a3",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ལ (Derge Tengyur, vol. 27)",
+     false,
+     623,
+     622,
+     622
+    ],
+    [
+     "6abec4ee896ea18127c8a184",
+     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། པུ (Derge Tengyur, vol. 152)",
+     false,
+     623,
+     622,
+     622
     ],
     [
      "6abed619896ea18127c8e464",
@@ -462,12 +1011,196 @@
      622
     ],
     [
+     "6abe98e76a920ffd924d82e0",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཐི (Derge Tengyur, vol. 41)",
+     false,
+     625,
+     624,
+     621
+    ],
+    [
+     "6abe89c46a920ffd924d4b92",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཕ (Derge Tengyur, vol. 15)",
+     false,
+     621,
+     620,
+     620
+    ],
+    [
+     "6abeb822896ea18127c861e3",
+     "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། པི (Derge Tengyur, vol. 122)",
+     false,
+     619,
+     618,
+     618
+    ],
+    [
+     "6abe94e86a920ffd924d7940",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཅི (Derge Tengyur, vol. 36)",
+     false,
+     615,
+     614,
+     614
+    ],
+    [
      "6abed518896ea18127c8dce8",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཏེ (Derge Tengyur, vol. 178)",
      false,
      615,
      614,
      614
+    ],
+    [
+     "6abeadbd896ea18127c814ce",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ང (Derge Tengyur, vol. 83)",
+     false,
+     613,
+     612,
+     612
+    ],
+    [
+     "6abeace1896ea18127c80d7a",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཞི (Derge Tengyur, vol. 52)",
+     false,
+     611,
+     610,
+     610
+    ],
+    [
+     "6abe88866a920ffd924d46a0",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ན (Derge Tengyur, vol. 13)",
+     false,
+     605,
+     604,
+     604
+    ],
+    [
+     "6abeb782896ea18127c85d77",
+     "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། དི (Derge Tengyur, vol. 120)",
+     false,
+     603,
+     602,
+     602
+    ],
+    [
+     "6abebdc9896ea18127c88072",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། སི (Derge Tengyur, vol. 137)",
+     false,
+     601,
+     600,
+     600
+    ],
+    [
+     "6abea2356a920ffd924db35a",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཁུ (Derge Tengyur, vol. 63)",
+     false,
+     601,
+     600,
+     599
+    ],
+    [
+     "6abe83b7433559215a997efb",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ག (Derge Tengyur, vol. 4)",
+     false,
+     593,
+     592,
+     592
+    ],
+    [
+     "6abe87926a920ffd924d444c",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ད (Derge Tengyur, vol. 12)",
+     false,
+     593,
+     592,
+     592
+    ],
+    [
+     "6abed7f8896ea18127c8f2ca",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཚེ (Derge Tengyur, vol. 187)",
+     false,
+     589,
+     588,
+     588
+    ],
+    [
+     "6abe8366433559215a997cad",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཁ (Derge Tengyur, vol. 3)",
+     false,
+     587,
+     586,
+     586
+    ],
+    [
+     "6abebc98896ea18127c87c30",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ལི (Derge Tengyur, vol. 135)",
+     false,
+     585,
+     584,
+     584
+    ],
+    [
+     "6abe92d06a920ffd924d7166",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཀི (Derge Tengyur, vol. 32)",
+     false,
+     583,
+     582,
+     582
+    ],
+    [
+     "6abeb3d6896ea18127c83fed",
+     "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ས (Derge Tengyur, vol. 107)",
+     false,
+     581,
+     580,
+     580
+    ],
+    [
+     "6abeb70e896ea18127c8590d",
+     "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཏི (Derge Tengyur, vol. 118)",
+     false,
+     581,
+     580,
+     580
+    ],
+    [
+     "6abe914a6a920ffd924d6915",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཤ (Derge Tengyur, vol. 28)",
+     false,
+     581,
+     580,
+     578
+    ],
+    [
+     "6abead0e896ea18127c80fe0",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཆུ (Derge Tengyur, vol. 67)",
+     false,
+     579,
+     578,
+     578
+    ],
+    [
+     "6abeba0b896ea18127c87016",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཞི (Derge Tengyur, vol. 130)",
+     false,
+     577,
+     576,
+     576
+    ],
+    [
+     "6abed85e896ea18127c8f51a",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཛེ (Derge Tengyur, vol. 188)",
+     false,
+     577,
+     576,
+     576
+    ],
+    [
+     "6abe9a356a920ffd924d88dc",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། པི (Derge Tengyur, vol. 44)",
+     false,
+     577,
+     576,
+     575
     ],
     [
      "6abeb1dc896ea18127c828bc",
@@ -486,12 +1219,28 @@
      572
     ],
     [
+     "6abec12d896ea18127c894f6",
+     "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཇུ (Derge Tengyur, vol. 146)",
+     false,
+     573,
+     572,
+     572
+    ],
+    [
      "6abed698896ea18127c8e9f4",
      "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཕེ (Derge Tengyur, vol. 183)",
      false,
      573,
      572,
      572
+    ],
+    [
+     "6abea60a6a920ffd924dbf71",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཏུ (Derge Tengyur, vol. 70)",
+     false,
+     569,
+     568,
+     568
     ],
     [
      "6abeb39f896ea18127c83db1",
@@ -502,12 +1251,44 @@
      568
     ],
     [
+     "6abe93ef6a920ffd924d7706",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ངི (Derge Tengyur, vol. 35)",
+     false,
+     567,
+     566,
+     565
+    ],
+    [
      "6abeb158896ea18127c82682",
      "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཙ (Derge Tengyur, vol. 96)",
      false,
      567,
      565,
      565
+    ],
+    [
+     "6abeb8ed896ea18127c8665b",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། མི (Derge Tengyur, vol. 125)",
+     false,
+     566,
+     564,
+     564
+    ],
+    [
+     "6abe9f2c6a920ffd924da190",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། རི (Derge Tengyur, vol. 56)",
+     false,
+     565,
+     564,
+     564
+    ],
+    [
+     "6abeb963896ea18127c86aaa",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཚི (Derge Tengyur, vol. 127)",
+     false,
+     565,
+     564,
+     564
     ],
     [
      "6abed4cd896ea18127c8dab2",
@@ -526,11 +1307,179 @@
      562
     ],
     [
+     "6abec54c896ea18127c8a3f6",
+     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཕུ (Derge Tengyur, vol. 153)",
+     false,
+     561,
+     560,
+     560
+    ],
+    [
+     "6abecb0a896ea18127c8b28a",
+     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཞུ (Derge Tengyur, vol. 160)",
+     false,
+     555,
+     554,
+     554
+    ],
+    [
+     "6abe86b96a920ffd924d4220",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཐ (Derge Tengyur, vol. 11)",
+     false,
+     553,
+     552,
+     552
+    ],
+    [
+     "6abe95d56a920ffd924d7baa",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཆི (Derge Tengyur, vol. 37)",
+     false,
+     553,
+     552,
+     552
+    ],
+    [
+     "6abe9e9a6a920ffd924d9ab6",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཟི (Derge Tengyur, vol. 53)",
+     false,
+     553,
+     552,
+     552
+    ],
+    [
+     "6abeb666896ea18127c854c5",
+     "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཇི (Derge Tengyur, vol. 116)",
+     false,
+     553,
+     552,
+     552
+    ],
+    [
+     "6abe82fa433559215a997a85",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཀ (Derge Tengyur, vol. 2)",
+     false,
+     549,
+     548,
+     548
+    ],
+    [
+     "6abea2b96a920ffd924db5b6",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། གུ (Derge Tengyur, vol. 64)",
+     false,
+     549,
+     548,
+     548
+    ],
+    [
+     "6abeab456a920ffd924de156",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཇ (Derge Tengyur, vol. 86)",
+     false,
+     549,
+     548,
+     548
+    ],
+    [
+     "6abea35a6a920ffd924db7de",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ངུ (Derge Tengyur, vol. 65)",
+     false,
+     548,
+     546,
+     546
+    ],
+    [
+     "6abecc3d896ea18127c8b4b8",
+     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཟུ (Derge Tengyur, vol. 161)",
+     false,
+     547,
+     546,
+     546
+    ],
+    [
+     "6abeb628896ea18127c852a1",
+     "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཆི (Derge Tengyur, vol. 115)",
+     false,
+     545,
+     544,
+     544
+    ],
+    [
+     "6abeb74e896ea18127c85b55",
+     "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཐི (Derge Tengyur, vol. 119)",
+     false,
+     543,
+     542,
+     542
+    ],
+    [
+     "6abedef7a43718d234bf0d12",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཏ (Derge Tengyur, vol. 88)",
+     false,
+     539,
+     538,
+     538
+    ],
+    [
+     "6abeb5fd896ea18127c85085",
+     "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཅི (Derge Tengyur, vol. 114)",
+     false,
+     537,
+     536,
+     536
+    ],
+    [
+     "6abeb6dc896ea18127c856f1",
+     "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཉི (Derge Tengyur, vol. 117)",
+     false,
+     537,
+     536,
+     536
+    ],
+    [
+     "6abec470896ea18127c89f6a",
+     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ནུ (Derge Tengyur, vol. 151)",
+     false,
+     535,
+     534,
+     534
+    ],
+    [
+     "6abe9b0d6a920ffd924d8b20",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཕི (Derge Tengyur, vol. 45)",
+     false,
+     533,
+     532,
+     530
+    ],
+    [
+     "6abeb583896ea18127c84e6f",
+     "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ངི (Derge Tengyur, vol. 113)",
+     false,
+     531,
+     530,
+     530
+    ],
+    [
+     "6abeb92e896ea18127c86894",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཙི (Derge Tengyur, vol. 126)",
+     false,
+     531,
+     530,
+     530
+    ],
+    [
+     "6abebf33896ea18127c88870",
+     "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཁུ (Derge Tengyur, vol. 141)",
+     false,
+     531,
+     530,
+     530
+    ],
+    [
      "69e7abd65f1a22ab19a9f151",
      "Neyphug Kanjur rGyud Cha",
      true,
      565,
-     550,
+     549,
      528
     ],
     [
@@ -538,7 +1487,7 @@
      "Neyphug Kanjur rGyud Na",
      true,
      622,
-     622,
+     621,
      527
     ],
     [
@@ -546,8 +1495,56 @@
      "Thadrak Kanjur 'Bum Nya",
      true,
      554,
-     541,
+     534,
      527
+    ],
+    [
+     "6abed040896ea18127c8c1b8",
+     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཤུ (Derge Tengyur, vol. 166)",
+     false,
+     527,
+     526,
+     526
+    ],
+    [
+     "6abe8f0c6a920ffd924d5eab",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། འ (Derge Tengyur, vol. 24)",
+     false,
+     527,
+     526,
+     525
+    ],
+    [
+     "6abecf09896ea18127c8bcf6",
+     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། རུ (Derge Tengyur, vol. 164)",
+     false,
+     525,
+     524,
+     524
+    ],
+    [
+     "6abeb7ec896ea18127c85fd5",
+     "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ནི (Derge Tengyur, vol. 121)",
+     false,
+     523,
+     522,
+     522
+    ],
+    [
+     "6abeadc8896ea18127c81736",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཉ (Derge Tengyur, vol. 87)",
+     false,
+     521,
+     520,
+     520
+    ],
+    [
+     "6abec2d0896ea18127c89b7e",
+     "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཐུ (Derge Tengyur, vol. 149)",
+     false,
+     521,
+     520,
+     520
     ],
     [
      "6abed724896ea18127c8ec34",
@@ -558,11 +1555,19 @@
      520
     ],
     [
+     "6abe8bab6a920ffd924d524c",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཚ (Derge Tengyur, vol. 19)",
+     false,
+     523,
+     522,
+     519
+    ],
+    [
      "69e7ab345f1a22ab19a94976",
      "Thadrak Kanjur Phal chen Kha",
      true,
      527,
-     527,
+     523,
      518
     ],
     [
@@ -570,7 +1575,23 @@
      "Thadrak Kanjur mDo sde Ta",
      true,
      529,
-     529,
+     528,
+     516
+    ],
+    [
+     "6abeca4e896ea18127c8b081",
+     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཝུ (Derge Tengyur, vol. 159)",
+     false,
+     518,
+     516,
+     516
+    ],
+    [
+     "6abeb51b896ea18127c84c67",
+     "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། གི (Derge Tengyur, vol. 112)",
+     false,
+     517,
+     516,
      516
     ],
     [
@@ -578,15 +1599,39 @@
      "Thadrak Kanjur rGyud 'bum Ka",
      true,
      526,
-     526,
+     523,
      514
+    ],
+    [
+     "6abe824e59b86b7d32a65774",
+     "བསྟན་འགྱུར། སྡེ་དགེ། བསྟོད་ཚོགས། ཀ (Derge Tengyur, vol. 1)",
+     false,
+     515,
+     514,
+     514
+    ],
+    [
+     "6abebeed896ea18127c8866a",
+     "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཀུ (Derge Tengyur, vol. 140)",
+     false,
+     515,
+     513,
+     513
+    ],
+    [
+     "6abeb863896ea18127c86451",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཕི (Derge Tengyur, vol. 123)",
+     false,
+     519,
+     512,
+     512
     ],
     [
      "69e7ab365f1a22ab19a94b87",
      "Thadrak Kanjur Phal chen Ga",
      true,
      542,
-     542,
+     537,
      509
     ],
     [
@@ -594,8 +1639,32 @@
      "Thadrak Kanjur Nyi khri A",
      true,
      538,
-     538,
+     532,
      507
+    ],
+    [
+     "6abed08d896ea18127c8c3ca",
+     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། སུ (Derge Tengyur, vol. 167)",
+     false,
+     507,
+     506,
+     506
+    ],
+    [
+     "6abeafa0896ea18127c81f94",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། པ (Derge Tengyur, vol. 92)",
+     false,
+     503,
+     502,
+     502
+    ],
+    [
+     "6abed155896ea18127c8c872",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སྐྱེས་རབས། ཨུ (Derge Tengyur, vol. 169)",
+     false,
+     503,
+     502,
+     502
     ],
     [
      "69e7abe75f1a22ab19aa00d4",
@@ -618,7 +1687,7 @@
      "Kanjur 'Dul ba Cha",
      true,
      582,
-     548,
+     547,
      498
     ],
     [
@@ -626,7 +1695,15 @@
      "Thadrak Kanjur rGyud 'bum Na",
      true,
      516,
-     516,
+     514,
+     498
+    ],
+    [
+     "6abebd37896ea18127c87e7c",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཤི (Derge Tengyur, vol. 136)",
+     false,
+     499,
+     498,
      498
     ],
     [
@@ -634,15 +1711,31 @@
      "Neyphug Kanjur rGyud Ka",
      true,
      526,
-     517,
+     516,
      497
+    ],
+    [
+     "6abe8ebe6a920ffd924d5cb7",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཟ (Derge Tengyur, vol. 23)",
+     false,
+     497,
+     496,
+     496
     ],
     [
      "69e7aaf75f1a22ab19a907e7",
      "Thadrak Kanjur mDo sde Pa",
      true,
      508,
-     508,
+     507,
+     494
+    ],
+    [
+     "6abe9d656a920ffd924d9632",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཛི (Derge Tengyur, vol. 50)",
+     false,
+     499,
+     498,
      494
     ],
     [
@@ -658,32 +1751,88 @@
      "Thadrak Kanjur mDo sde Ka",
      true,
      523,
-     505,
+     504,
      490
+    ],
+    [
+     "6abec6fb896ea18127c8a7ee",
+     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། མུ (Derge Tengyur, vol. 155)",
+     false,
+     491,
+     490,
+     489
     ],
     [
      "69e7ab5f5f1a22ab19a978df",
      "Thadrak Kanjur Nyi khri Kha (EAP310-1-1-102)",
      true,
      541,
-     539,
+     527,
      488
+    ],
+    [
+     "6abe9ef86a920ffd924d9fa4",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཡི (Derge Tengyur, vol. 55)",
+     false,
+     489,
+     488,
+     487
+    ],
+    [
+     "6abe9bd76a920ffd924d8fdc",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། མི (Derge Tengyur, vol. 47)",
+     false,
+     489,
+     486,
+     486
     ],
     [
      "69e7ab325f1a22ab19a94758",
      "Thadrak Kanjur Phal chen Ka",
      true,
      540,
-     502,
+     499,
      484
+    ],
+    [
+     "6abeac51896ea18127c80b90",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཇི (Derge Tengyur, vol. 38)",
+     false,
+     487,
+     486,
+     483
+    ],
+    [
+     "6abea9646a920ffd924dd79c",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཁ (Derge Tengyur, vol. 81)",
+     false,
+     485,
+     483,
+     483
+    ],
+    [
+     "6abea0b56a920ffd924da906",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། སི (Derge Tengyur, vol. 59)",
+     false,
+     483,
+     482,
+     482
     ],
     [
      "69e7abec5f1a22ab19aa0707",
      "Neyphug Kanjur rGyud Tsha",
      true,
      536,
-     526,
+     524,
      480
+    ],
+    [
+     "6abeae7a896ea18127c81942",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཐ (Derge Tengyur, vol. 89)",
+     false,
+     479,
+     478,
+     478
     ],
     [
      "69e7abdb5f1a22ab19a9f8e2",
@@ -694,11 +1843,19 @@
      477
     ],
     [
+     "6abec330896ea18127c89d8a",
+     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། དུ (Derge Tengyur, vol. 150)",
+     false,
+     477,
+     476,
+     476
+    ],
+    [
      "69e7aabd80b52390feb19d0a",
      "Thadrak Kanjur rGyud 'bum Nga",
      true,
      482,
-     482,
+     479,
      472
     ],
     [
@@ -714,7 +1871,7 @@
      "Thadrak Kanjur mDo sde Pha",
      true,
      481,
-     480,
+     479,
      469
     ],
     [
@@ -722,7 +1879,15 @@
      "Thadrak Kanjur rGyud 'bum Cha",
      true,
      472,
-     472,
+     470,
+     467
+    ],
+    [
+     "6abeaef8896ea18127c81b24",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ད (Derge Tengyur, vol. 90)",
+     false,
+     469,
+     468,
      467
     ],
     [
@@ -730,7 +1895,7 @@
      "Thadrak Kanjur 'Dus 'khor 'grel pa",
      true,
      572,
-     486,
+     481,
      466
     ],
     [
@@ -738,15 +1903,47 @@
      "Thadrak Kanjur rNying rgyud Ka",
      true,
      478,
-     477,
+     476,
      466
+    ],
+    [
+     "6abe91fc6a920ffd924d6de7",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཧ (Derge Tengyur, vol. 30)",
+     false,
+     467,
+     466,
+     465
+    ],
+    [
+     "6abe8add6a920ffd924d507a",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཙ (Derge Tengyur, vol. 18)",
+     false,
+     463,
+     462,
+     462
+    ],
+    [
+     "6abe998b6a920ffd924d8554",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། དི (Derge Tengyur, vol. 42)",
+     false,
+     461,
+     460,
+     460
+    ],
+    [
+     "6abebe51896ea18127c882ce",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཧི (Derge Tengyur, vol. 138)",
+     false,
+     461,
+     460,
+     460
     ],
     [
      "69e7abf95f1a22ab19aa14b2",
      "Kanjur 'Dul ba Ca",
      true,
      539,
-     509,
+     505,
      458
     ],
     [
@@ -754,15 +1951,23 @@
      "Thadrak Kanjur mDo sde Da",
      true,
      498,
-     464,
+     463,
      457
+    ],
+    [
+     "6abebe9a896ea18127c8849e",
+     "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཨི (Derge Tengyur, vol. 139)",
+     false,
+     457,
+     456,
+     456
     ],
     [
      "69e7abda5f1a22ab19a9f702",
      "Neyphug Kanjur rGyud Tha",
      true,
      478,
-     478,
+     477,
      455
     ],
     [
@@ -778,7 +1983,7 @@
      "Thadrak Kanjur mDo sde La",
      true,
      471,
-     471,
+     468,
      453
     ],
     [
@@ -786,7 +1991,7 @@
      "Thadrak Kanjur mDo sde Ma",
      true,
      469,
-     468,
+     465,
      453
     ],
     [
@@ -794,7 +1999,7 @@
      "Thadrak Kanjur mDo sde Cha",
      true,
      461,
-     461,
+     460,
      452
     ],
     [
@@ -802,8 +2007,16 @@
      "Thadrak Kanjur 'Bum Da",
      true,
      543,
-     532,
+     517,
      451
+    ],
+    [
+     "6abec5ca896ea18127c8a62a",
+     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། བུ (Derge Tengyur, vol. 154)",
+     false,
+     449,
+     448,
+     448
     ],
     [
      "69e7abfc5f1a22ab19aa1917",
@@ -818,7 +2031,7 @@
      "Kanjur 'Dul ba Ta",
      true,
      501,
-     476,
+     475,
      447
     ],
     [
@@ -826,7 +2039,7 @@
      "Thadrak Kanjur mDo sde Tsa",
      true,
      488,
-     473,
+     471,
      446
     ],
     [
@@ -834,7 +2047,7 @@
      "Thadrak Kanjur 'Dus 'khor 'grel pa sTod cha",
      true,
      520,
-     465,
+     456,
      446
     ],
     [
@@ -842,7 +2055,15 @@
      "Kanjur 'Dul ba Na",
      true,
      461,
-     461,
+     459,
+     444
+    ],
+    [
+     "6abec24c896ea18127c899be",
+     "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཏུ (Derge Tengyur, vol. 148)",
+     false,
+     445,
+     444,
      444
     ],
     [
@@ -858,7 +2079,7 @@
      "Thadrak Kanjur mDo sde Na",
      true,
      461,
-     461,
+     458,
      442
     ],
     [
@@ -866,7 +2087,7 @@
      "Kanjur 'Dul ba Tha",
      true,
      510,
-     490,
+     489,
      440
     ],
     [
@@ -874,7 +2095,15 @@
      "Thadrak Kanjur mDo sde Nya",
      true,
      493,
-     455,
+     453,
+     440
+    ],
+    [
+     "6abeba78896ea18127c874fa",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། འི (Derge Tengyur, vol. 132)",
+     false,
+     441,
+     440,
      440
     ],
     [
@@ -882,7 +2111,7 @@
      "Thadrak Kanjur 'Bum Ca",
      true,
      556,
-     556,
+     543,
      439
     ],
     [
@@ -890,7 +2119,7 @@
      "Neyphug Kanjur mDo sde Ja",
      true,
      458,
-     458,
+     457,
      438
     ],
     [
@@ -910,11 +2139,19 @@
      438
     ],
     [
+     "6abe938e6a920ffd924d754c",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། གི (Derge Tengyur, vol. 34)",
+     false,
+     439,
+     438,
+     438
+    ],
+    [
      "69e7aac85f1a22ab19a8d43f",
      "Thadrak Kanjur rGyud 'bum Tha",
      true,
      462,
-     447,
+     446,
      437
     ],
     [
@@ -922,7 +2159,7 @@
      "Neyphug Kanjur rGyud Nga",
      true,
      496,
-     496,
+     495,
      436
     ],
     [
@@ -930,7 +2167,7 @@
      "Thadrak Kanjur rNying rgyud Kha",
      true,
      467,
-     456,
+     454,
      436
     ],
     [
@@ -938,15 +2175,31 @@
      "Thadrak Kanjur mDo sde Zha",
      true,
      449,
-     449,
+     448,
      436
+    ],
+    [
+     "6abe99ba6a920ffd924d8724",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ནི (Derge Tengyur, vol. 43)",
+     false,
+     437,
+     436,
+     435
+    ],
+    [
+     "6abe9c216a920ffd924d91c8",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཙི (Derge Tengyur, vol. 48)",
+     false,
+     435,
+     434,
+     434
     ],
     [
      "69e7abcd5f1a22ab19a9e54b",
      "Neyphug Kanjur mDo sde Ji",
      true,
      460,
-     460,
+     456,
      433
     ],
     [
@@ -954,7 +2207,7 @@
      "Neyphug Kanjur mDo sde Kha",
      true,
      468,
-     447,
+     446,
      433
     ],
     [
@@ -962,7 +2215,7 @@
      "Thadrak Kanjur mDo sde Ba",
      true,
      466,
-     447,
+     445,
      431
     ],
     [
@@ -970,7 +2223,7 @@
      "Thadrak Kanjur mDo sde Ra",
      true,
      467,
-     438,
+     435,
      431
     ],
     [
@@ -994,7 +2247,7 @@
      "Thadrak Kanjur 'Bum A",
      true,
      512,
-     512,
+     505,
      429
     ],
     [
@@ -1002,7 +2255,7 @@
      "Thadrak Kanjur rGyud 'bum Ja",
      true,
      439,
-     439,
+     437,
      429
     ],
     [
@@ -1010,7 +2263,7 @@
      "Thadrak Kanjur mDo sde Za",
      true,
      440,
-     440,
+     439,
      428
     ],
     [
@@ -1018,7 +2271,7 @@
      "Thadrak Kanjur rGyud 'bum Ma",
      true,
      440,
-     437,
+     433,
      428
     ],
     [
@@ -1026,7 +2279,7 @@
      "Thadrak Kanjur mDo sde Ca",
      true,
      437,
-     437,
+     432,
      427
     ],
     [
@@ -1034,7 +2287,7 @@
      "Thadrak Kanjur mDo sde Ya",
      true,
      439,
-     439,
+     438,
      425
     ],
     [
@@ -1050,7 +2303,7 @@
      "Neyphug Kanjur mDo sde Na",
      true,
      468,
-     451,
+     450,
      424
     ],
     [
@@ -1058,7 +2311,15 @@
      "Neyphug Kanjur mDo sde Ci",
      true,
      446,
-     446,
+     444,
+     424
+    ],
+    [
+     "6abeb9d7896ea18127c86e6a",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཝི (Derge Tengyur, vol. 129)",
+     false,
+     425,
+     424,
      424
     ],
     [
@@ -1066,7 +2327,7 @@
      "Neyphug Kanjur rGyud Pa",
      true,
      448,
-     448,
+     447,
      422
     ],
     [
@@ -1074,7 +2335,7 @@
      "Thadrak Kanjur mDo sde Dza",
      true,
      467,
-     444,
+     440,
      422
     ],
     [
@@ -1090,7 +2351,23 @@
      "Thadrak Kanjur dKon brtsegs Ca",
      true,
      438,
-     438,
+     435,
+     422
+    ],
+    [
+     "6abea9346a920ffd924dd5f1",
+     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཀ (Derge Tengyur, vol. 80)",
+     false,
+     424,
+     422,
+     422
+    ],
+    [
+     "6abe92686a920ffd924d6fbd",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཨ (Derge Tengyur, vol. 31)",
+     false,
+     422,
+     422,
      422
     ],
     [
@@ -1098,7 +2375,7 @@
      "Kanjur 'Dul ba Nya",
      true,
      474,
-     474,
+     472,
      421
     ],
     [
@@ -1106,7 +2383,7 @@
      "Thadrak Kanjur Kanjur 'Dul ba Da",
      true,
      489,
-     454,
+     452,
      420
     ],
     [
@@ -1114,7 +2391,7 @@
      "Thadrak Kanjur 'Dus 'khor 'grel pa sMad cha",
      true,
      444,
-     441,
+     436,
      420
     ],
     [
@@ -1122,7 +2399,7 @@
      "Thadrak Kanjur mDo sde AM",
      true,
      431,
-     431,
+     428,
      420
     ],
     [
@@ -1130,7 +2407,7 @@
      "Kanjur Khri brgyad stong pa Kha",
      true,
      444,
-     444,
+     443,
      419
     ],
     [
@@ -1138,7 +2415,7 @@
      "Thadrak Kanjur mDo sde Ha",
      true,
      430,
-     430,
+     427,
      419
     ],
     [
@@ -1154,7 +2431,7 @@
      "Kanjur 'Dul ba Da",
      true,
      475,
-     467,
+     465,
      417
     ],
     [
@@ -1162,7 +2439,7 @@
      "Thadrak Kanjur Kanjur 'Dul ba Ta",
      true,
      463,
-     463,
+     459,
      417
     ],
     [
@@ -1178,15 +2455,7 @@
      "Thadrak Kanjur rGyud 'bum Kha",
      true,
      436,
-     436,
-     417
-    ],
-    [
-     "69e7ab1d5f1a22ab19a93200",
-     "Thadrak Kanjur Kanjur 'Dul ba Ga",
-     true,
-     453,
-     429,
+     434,
      417
     ],
     [
@@ -1194,7 +2463,15 @@
      "Thadrak Kanjur dKon brtsegs Ga",
      true,
      429,
-     429,
+     428,
+     417
+    ],
+    [
+     "69e7ab1d5f1a22ab19a93200",
+     "Thadrak Kanjur Kanjur 'Dul ba Ga",
+     true,
+     453,
+     426,
      417
     ],
     [
@@ -1202,7 +2479,7 @@
      "Thadrak Kanjur Khri pa Nga",
      true,
      435,
-     435,
+     431,
      416
     ],
     [
@@ -1210,7 +2487,7 @@
      "Thadrak Kanjur 'Dul ba Pa",
      true,
      446,
-     446,
+     444,
      415
     ],
     [
@@ -1218,7 +2495,7 @@
      "Neyphug Kanjur mDo sde Da",
      true,
      442,
-     439,
+     437,
      415
     ],
     [
@@ -1242,7 +2519,7 @@
      "Neyphug Kanjur mDo sde Tsha",
      true,
      452,
-     431,
+     430,
      412
     ],
     [
@@ -1250,7 +2527,15 @@
      "Thadrak Kanjur dKon brtsegs Nga",
      true,
      425,
-     424,
+     422,
+     412
+    ],
+    [
+     "6abec7fa896ea18127c8ac69",
+     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཚུ (Derge Tengyur, vol. 157)",
+     false,
+     413,
+     412,
      412
     ],
     [
@@ -1266,7 +2551,7 @@
      "Thadrak Kanjur Nyi khri Ga",
      true,
      465,
-     459,
+     458,
      410
     ],
     [
@@ -1282,7 +2567,7 @@
      "Neyphug Kanjur rGyud Pha",
      true,
      450,
-     444,
+     441,
      409
     ],
     [
@@ -1298,7 +2583,15 @@
      "Thadrak Kanjur mDo sde Kha",
      true,
      420,
-     420,
+     418,
+     408
+    ],
+    [
+     "6abe932b6a920ffd924d73b0",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཁི (Derge Tengyur, vol. 33)",
+     false,
+     409,
+     408,
      408
     ],
     [
@@ -1306,7 +2599,7 @@
      "Thadrak Kanjur mDo sde Wa",
      true,
      463,
-     438,
+     430,
      407
     ],
     [
@@ -1314,7 +2607,7 @@
      "Thadrak Kanjur Kanjur 'Dul ba Kha",
      true,
      446,
-     418,
+     414,
      407
     ],
     [
@@ -1322,7 +2615,7 @@
      "Thadrak Kanjur Kanjur 'Dul ba Ca",
      true,
      449,
-     449,
+     440,
      406
     ],
     [
@@ -1330,7 +2623,7 @@
      "Neyphug Kanjur mDo sde Nya",
      true,
      433,
-     433,
+     432,
      405
     ],
     [
@@ -1346,7 +2639,7 @@
      "Thadrak Kanjur mDo sde Ga",
      true,
      486,
-     451,
+     443,
      404
     ],
     [
@@ -1354,7 +2647,7 @@
      "Thadrak Kanjur mDo sde Nga",
      true,
      433,
-     433,
+     428,
      404
     ],
     [
@@ -1370,7 +2663,7 @@
      "Neyphug Kanjur mDo sde A",
      true,
      416,
-     416,
+     415,
      403
     ],
     [
@@ -1378,7 +2671,7 @@
      "Thadrak Kanjur 'Bum Tha",
      true,
      508,
-     503,
+     500,
      402
     ],
     [
@@ -1386,7 +2679,7 @@
      "Thadrak Kanjur mDo sde Tsha",
      true,
      448,
-     448,
+     444,
      402
     ],
     [
@@ -1394,7 +2687,7 @@
      "Thadrak Kanjur Kanjur 'Dul ba Nga",
      true,
      445,
-     445,
+     441,
      402
     ],
     [
@@ -1402,7 +2695,7 @@
      "Kanjur Nyi khri Nga",
      true,
      426,
-     426,
+     425,
      401
     ],
     [
@@ -1410,15 +2703,23 @@
      "Thadrak Kanjur rGyud 'bum Ba",
      true,
      435,
-     435,
+     427,
      400
+    ],
+    [
+     "6ac0c90ef427c9bb0692ebba",
+     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཚ (Derge Kangyur, vol. 94)",
+     false,
+     535,
+     535,
+     399
     ],
     [
      "69e7ab0f5f1a22ab19a92347",
      "Thadrak Kanjur mDo sde Sa",
      true,
      449,
-     431,
+     428,
      399
     ],
     [
@@ -1442,7 +2743,7 @@
      "Neyphug Kanjur mDo sde Cha",
      true,
      420,
-     420,
+     417,
      395
     ],
     [
@@ -1450,7 +2751,7 @@
      "Thadrak Kanjur Phal chen Nga",
      true,
      505,
-     499,
+     493,
      394
     ],
     [
@@ -1458,7 +2759,7 @@
      "Thadrak Kanjur Khri brgyad stong pa Kha (EAP310-1-1-81)",
      true,
      446,
-     446,
+     440,
      394
     ],
     [
@@ -1466,7 +2767,7 @@
      "Thadrak Kanjur 'Bum Nga",
      true,
      517,
-     517,
+     504,
      393
     ],
     [
@@ -1474,7 +2775,7 @@
      "Kanjur 'Dul ba Ka",
      true,
      478,
-     478,
+     476,
      393
     ],
     [
@@ -1490,7 +2791,7 @@
      "Thadrak Kanjur Shes rab sna tshogs",
      true,
      425,
-     419,
+     415,
      392
     ],
     [
@@ -1498,7 +2799,7 @@
      "Thadrak Kanjur Kanjur 'Dul ba Na",
      true,
      452,
-     438,
+     431,
      391
     ],
     [
@@ -1514,7 +2815,7 @@
      "Thadrak Kanjur rGyud 'bum Ga",
      true,
      410,
-     401,
+     398,
      391
     ],
     [
@@ -1530,7 +2831,7 @@
      "Thadrak Kanjur Kanjur 'Dul ba Tha",
      true,
      447,
-     447,
+     444,
      389
     ],
     [
@@ -1538,7 +2839,7 @@
      "Kanjur 'Dul ba Kha",
      true,
      474,
-     463,
+     462,
      388
     ],
     [
@@ -1546,7 +2847,23 @@
      "Thadrak Kanjur rGyud 'bum Da",
      true,
      455,
-     431,
+     424,
+     388
+    ],
+    [
+     "6abeb99b896ea18127c86ce2",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཛི (Derge Tengyur, vol. 128)",
+     false,
+     389,
+     388,
+     388
+    ],
+    [
+     "6abed33b896ea18127c8cfde",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སྐྱེས་རབས། གེ (Derge Tengyur, vol. 172)",
+     false,
+     389,
+     388,
      388
     ],
     [
@@ -1554,7 +2871,7 @@
      "Neyphug Kanjur mDo sde Ta",
      true,
      418,
-     418,
+     414,
      387
     ],
     [
@@ -1562,7 +2879,7 @@
      "Thadrak Kanjur mDo sde AH",
      true,
      398,
-     398,
+     394,
      387
     ],
     [
@@ -1582,19 +2899,19 @@
      385
     ],
     [
-     "69e7abad5f1a22ab19a9c315",
-     "Neyphug Kanjur mDo sde Ma",
-     true,
-     404,
-     404,
-     385
-    ],
-    [
      "69e7ac225f1a22ab19aa42a0",
      "Kanjur dKon brtsegs Ka",
      true,
      426,
-     402,
+     401,
+     385
+    ],
+    [
+     "69e7abad5f1a22ab19a9c315",
+     "Neyphug Kanjur mDo sde Ma",
+     true,
+     404,
+     400,
      385
     ],
     [
@@ -1602,7 +2919,7 @@
      "Thadrak Kanjur mDo sde 'A",
      true,
      472,
-     472,
+     468,
      383
     ],
     [
@@ -1618,7 +2935,7 @@
      "Neyphug Kanjur rGyud Ma",
      true,
      564,
-     563,
+     560,
      381
     ],
     [
@@ -1626,7 +2943,7 @@
      "Thadrak Kanjur 'Bum Ga",
      true,
      509,
-     493,
+     475,
      381
     ],
     [
@@ -1634,7 +2951,7 @@
      "Thadrak Kanjur brGyad stong Ka",
      true,
      419,
-     419,
+     414,
      381
     ],
     [
@@ -1642,7 +2959,7 @@
      "Thadrak Kanjur mDo sde Sha",
      true,
      450,
-     419,
+     409,
      379
     ],
     [
@@ -1674,7 +2991,7 @@
      "Thadrak Kanjur dKon brtsegs Kha",
      true,
      398,
-     398,
+     397,
      374
     ],
     [
@@ -1682,8 +2999,16 @@
      "Thadrak Kanjur rNying rgyud Ga",
      true,
      391,
-     383,
+     382,
      374
+    ],
+    [
+     "6abed3c3896ea18127c8d166",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སྤྲིང་ཡིག ངེ (Derge Tengyur, vol. 173)",
+     false,
+     373,
+     373,
+     373
     ],
     [
      "69e7abc05f1a22ab19a9d6b0",
@@ -1714,7 +3039,7 @@
      "Thadrak Kanjur rGyud 'bum Nya",
      true,
      398,
-     380,
+     378,
      369
     ],
     [
@@ -1730,7 +3055,7 @@
      "Thadrak Kanjur rGyud 'bum Pha",
      true,
      405,
-     388,
+     386,
      368
     ],
     [
@@ -1746,7 +3071,7 @@
      "Thadrak Kanjur Kanjur 'Dul ba Cha",
      true,
      419,
-     400,
+     398,
      367
     ],
     [
@@ -1770,7 +3095,7 @@
      "Thadrak Kanjur 'Bum Ka",
      true,
      524,
-     521,
+     501,
      366
     ],
     [
@@ -1778,7 +3103,7 @@
      "Kanjur Nyi khri Ga",
      true,
      438,
-     423,
+     421,
      366
     ],
     [
@@ -1794,7 +3119,7 @@
      "Thadrak Kanjur rGyud 'bum Wa",
      true,
      370,
-     370,
+     368,
      362
     ],
     [
@@ -1826,7 +3151,7 @@
      "Thadrak Kanjur Kanjur 'Dul ba Ka",
      true,
      442,
-     442,
+     420,
      359
     ],
     [
@@ -1834,15 +3159,7 @@
      "Thadrak Kanjur 'Bum Cha",
      true,
      534,
-     518,
-     355
-    ],
-    [
-     "69e7ab3a5f1a22ab19a94fa2",
-     "Thadrak Kanjur Khri brgyad stong pa Ka",
-     true,
-     423,
-     404,
+     485,
      355
     ],
     [
@@ -1854,11 +3171,19 @@
      355
     ],
     [
+     "69e7ab3a5f1a22ab19a94fa2",
+     "Thadrak Kanjur Khri brgyad stong pa Ka",
+     true,
+     423,
+     399,
+     355
+    ],
+    [
      "69e7aad45f1a22ab19a8e058",
      "Thadrak Kanjur rGyud 'bum Tsa",
      true,
      412,
-     373,
+     371,
      355
     ],
     [
@@ -1866,7 +3191,7 @@
      "Thadrak Kanjur rGyud 'bum Ca",
      true,
      422,
-     416,
+     414,
      354
     ],
     [
@@ -1874,7 +3199,7 @@
      "Thadrak Kanjur gZungs 'dus WaM",
      true,
      369,
-     369,
+     366,
      354
     ],
     [
@@ -1882,7 +3207,7 @@
      "Kanjur dKon brtsegs Ca",
      true,
      500,
-     500,
+     499,
      353
     ],
     [
@@ -1898,7 +3223,7 @@
      "Thadrak Kanjur 'Bum Ta",
      true,
      504,
-     493,
+     482,
      350
     ],
     [
@@ -1906,7 +3231,7 @@
      "Thadrak Kanjur Kanjur 'Dul ba Nya",
      true,
      392,
-     366,
+     365,
      350
     ],
     [
@@ -1914,7 +3239,7 @@
      "Thadrak Kanjur rGyud 'bum Ta",
      true,
      385,
-     385,
+     384,
      348
     ],
     [
@@ -1962,7 +3287,7 @@
      "Neyphug Kanjur Myang 'das Ka",
      true,
      364,
-     345,
+     343,
      337
     ],
     [
@@ -1970,7 +3295,7 @@
      "Kanjur Nyi khri Ka",
      true,
      410,
-     409,
+     407,
      335
     ],
     [
@@ -1978,7 +3303,7 @@
      "Kanjur Phal chen Kha",
      true,
      349,
-     349,
+     348,
      335
     ],
     [
@@ -1986,7 +3311,7 @@
      "Kanjur Nyi khri Kha",
      true,
      388,
-     374,
+     373,
      334
     ],
     [
@@ -2010,23 +3335,15 @@
      "Thadrak Kanjur gZungs 'dus E",
      true,
      339,
-     334,
+     331,
      325
-    ],
-    [
-     "6abeb583896ea18127c84e6f",
-     "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ངི (Derge Tengyur, vol. 113)",
-     false,
-     531,
-     530,
-     324
     ],
     [
      "69e7ac185f1a22ab19aa3838",
      "Kanjur 'Bum Pha",
      true,
      389,
-     387,
+     385,
      322
     ],
     [
@@ -2034,7 +3351,7 @@
      "Thadrak Kanjur 'Bum Ja",
      true,
      512,
-     510,
+     502,
      320
     ],
     [
@@ -2042,7 +3359,7 @@
      "Thadrak Kanjur rGyud 'bum Tsha",
      true,
      382,
-     363,
+     361,
      318
     ],
     [
@@ -2050,7 +3367,7 @@
      "Kanjur 'Bum Ba",
      true,
      400,
-     388,
+     387,
      315
     ],
     [
@@ -2058,7 +3375,7 @@
      "Kanjur 'Bum Ma",
      true,
      362,
-     362,
+     361,
      309
     ],
     [
@@ -2066,7 +3383,7 @@
      "Kanjur 'Bum Ja",
      true,
      401,
-     380,
+     378,
      305
     ],
     [
@@ -2074,23 +3391,15 @@
      "Thadrak Kanjur rGyud 'bum Pa",
      true,
      370,
-     370,
+     368,
      305
-    ],
-    [
-     "6abe932b6a920ffd924d73b0",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཁི (Derge Tengyur, vol. 33)",
-     false,
-     409,
-     408,
-     300
     ],
     [
      "69e7ac2c5f1a22ab19aa4d48",
      "Kanjur Shes rab khri pa",
      true,
      338,
-     333,
+     332,
      299
     ],
     [
@@ -2098,7 +3407,7 @@
      "Kanjur 'Bum Ca",
      true,
      399,
-     383,
+     382,
      298
     ],
     [
@@ -2114,7 +3423,7 @@
      "Kanjur 'Bum Pa",
      true,
      353,
-     353,
+     352,
      291
     ],
     [
@@ -2130,7 +3439,7 @@
      "Kanjur 'Bum Nya",
      true,
      384,
-     383,
+     381,
      283
     ],
     [
@@ -2138,7 +3447,7 @@
      "Thadrak Kanjur 'Bum Kha",
      true,
      534,
-     527,
+     490,
      282
     ],
     [
@@ -2154,7 +3463,7 @@
      "Kanjur 'Bum Da",
      true,
      389,
-     389,
+     381,
      277
     ],
     [
@@ -2162,7 +3471,7 @@
      "Kanjur 'Bum Kha",
      true,
      398,
-     396,
+     395,
      273
     ],
     [
@@ -2178,7 +3487,7 @@
      "Kanjur 'Bum Cha",
      true,
      364,
-     364,
+     361,
      268
     ],
     [
@@ -2186,7 +3495,7 @@
      "Kanjur 'Bum Ka",
      true,
      378,
-     367,
+     364,
      259
     ],
     [
@@ -2196,6 +3505,22 @@
      295,
      285,
      251
+    ],
+    [
+     "6ac0cf0df427c9bb0692f770",
+     "བཀའ་འགྱུར། སྡེ་དགེ། རྙིང་རྒྱུད། ག (Derge Kangyur, vol. 99)",
+     false,
+     570,
+     568,
+     250
+    ],
+    [
+     "6ac0ceadf427c9bb0692f4ff",
+     "བཀའ་འགྱུར། སྡེ་དགེ། རྙིང་རྒྱུད། ཁ (Derge Kangyur, vol. 98)",
+     false,
+     622,
+     621,
+     243
     ],
     [
      "69e7ac125f1a22ab19aa3256",
@@ -2214,11 +3539,35 @@
      217
     ],
     [
+     "6ac0c746f427c9bb0692e956",
+     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཙ (Derge Kangyur, vol. 93)",
+     false,
+     609,
+     609,
+     210
+    ],
+    [
+     "6ac0b6fff427c9bb0692cebd",
+     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཅ (Derge Kangyur, vol. 81)",
+     false,
+     614,
+     614,
+     162
+    ],
+    [
+     "6ac0b529f427c9bb0692cc11",
+     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ང (Derge Kangyur, vol. 80)",
+     false,
+     681,
+     681,
+     144
+    ],
+    [
      "69e7ab2e5f1a22ab19a94515",
      "Thadrak Kanjur Kanjur Khri pa Ga",
      true,
      140,
-     140,
+     139,
      127
     ],
     [
@@ -2226,24 +3575,88 @@
      "Neyphug Kanjur rGyud Ca",
      true,
      504,
-     496,
+     494,
      111
     ],
     [
-     "6abec7fa896ea18127c8ac69",
-     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཚུ (Derge Tengyur, vol. 157)",
+     "6ac197d40bfddaf1932d4b8d",
+     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཏ (Derge Kangyur, vol. 85)",
      false,
-     413,
-     412,
-     104
+     538,
+     538,
+     96
+    ],
+    [
+     "6ac0b910f427c9bb0692d126",
+     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཆ (Derge Kangyur, vol. 82)",
+     false,
+     660,
+     660,
+     88
+    ],
+    [
+     "6ac0bdbef427c9bb0692d885",
+     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཐ (Derge Kangyur, vol. 86)",
+     false,
+     641,
+     641,
+     73
+    ],
+    [
+     "6ac0b3aff427c9bb0692c9c7",
+     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ག (Derge Kangyur, vol. 79)",
+     false,
+     583,
+     583,
+     68
+    ],
+    [
+     "6ac0ba11f427c9bb0692d3bd",
+     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཇ (Derge Kangyur, vol. 83)",
+     false,
+     672,
+     671,
+     53
     ],
     [
      "6a14e173311a9edd462215c9",
      "Thor bu Kanjur dkar chag sogs",
      true,
      204,
-     193,
+     61,
      46
+    ],
+    [
+     "6ac0c0fef427c9bb0692dd73",
+     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ན (Derge Kangyur, vol. 88)",
+     false,
+     702,
+     701,
+     33
+    ],
+    [
+     "6ac0afecf427c9bb0692c231",
+     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཨཱཾཿ (Derge Kangyur, vol. 76)",
+     false,
+     578,
+     577,
+     8
+    ],
+    [
+     "6ac0aa09f427c9bb0692b8a3",
+     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ས (Derge Kangyur, vol. 72)",
+     false,
+     620,
+     619,
+     4
+    ],
+    [
+     "6ac03d7ed2d554a6d39b3050",
+     "བཀའ་འགྱུར། སྡེ་དགེ། གཟུངས་འདུས། ཨེ (Derge Kangyur, vol. 100)",
+     false,
+     551,
+     548,
+     4
     ],
     [
      "6abee585a43718d234bf3203",
@@ -2259,22 +3672,6 @@
      false,
      903,
      902,
-     0
-    ],
-    [
-     "6abeab96896ea18127c8080a",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། མ (Derge Tengyur, vol. 17)",
-     false,
-     899,
-     898,
-     0
-    ],
-    [
-     "6abe90286a920ffd924d6333",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ར (Derge Tengyur, vol. 26)",
-     false,
-     877,
-     876,
      0
     ],
     [
@@ -2318,6 +3715,38 @@
      0
     ],
     [
+     "6ac05724f427c9bb06922ddc",
+     "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ཅ (Derge Kangyur, vol. 18)",
+     false,
+     790,
+     789,
+     0
+    ],
+    [
+     "6ac05db7f427c9bb06924330",
+     "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ན (Derge Kangyur, vol. 25)",
+     false,
+     790,
+     789,
+     0
+    ],
+    [
+     "6ac053c7f427c9bb06922196",
+     "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ཀ (Derge Kangyur, vol. 14)",
+     false,
+     788,
+     787,
+     0
+    ],
+    [
+     "6ac05f82f427c9bb06924948",
+     "བཀའ་འགྱུར། སྡེ་དགེ། ཉི་ཁྲི། ཁ (Derge Kangyur, vol. 27)",
+     false,
+     786,
+     785,
+     0
+    ],
+    [
      "6ac06e82f427c9bb06925d4e",
      "བཀའ་འགྱུར། སྡེ་དགེ། ཕལ་ཆེན། ཀ (Derge Kangyur, vol. 35)",
      false,
@@ -2326,19 +3755,11 @@
      0
     ],
     [
-     "6abece70896ea18127c8b9e8",
-     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཡུ (Derge Tengyur, vol. 163)",
+     "6ac05a25f427c9bb0692370a",
+     "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ཉ (Derge Kangyur, vol. 21)",
      false,
-     779,
      778,
-     0
-    ],
-    [
-     "6abecd0e896ea18127c8b6de",
-     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། འུ (Derge Tengyur, vol. 162)",
-     false,
-     775,
-     774,
+     778,
      0
     ],
     [
@@ -2346,6 +3767,14 @@
      "བསྟན་འགྱུར། སྡེ་དགེ། སྒྲ་མདོ། སེ (Derge Tengyur, vol. 197)",
      false,
      777,
+     773,
+     0
+    ],
+    [
+     "6ac05c0af427c9bb06923d1a",
+     "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ཐ (Derge Kangyur, vol. 23)",
+     false,
+     774,
      773,
      0
     ],
@@ -2358,6 +3787,14 @@
      0
     ],
     [
+     "6ac05ad7f427c9bb06923a17",
+     "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ཏ (Derge Kangyur, vol. 22)",
+     false,
+     768,
+     767,
+     0
+    ],
+    [
      "6ac05ee1f427c9bb06924649",
      "བཀའ་འགྱུར། སྡེ་དགེ། ཉི་ཁྲི། ཀ (Derge Kangyur, vol. 26)",
      false,
@@ -2366,19 +3803,19 @@
      0
     ],
     [
-     "6ac06186f427c9bb06924c5d",
-     "བཀའ་འགྱུར། སྡེ་དགེ། ཉི་ཁྲི། ག (Derge Kangyur, vol. 28)",
+     "6ac05672f427c9bb06922adf",
+     "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ང (Derge Kangyur, vol. 17)",
      false,
      762,
      761,
      0
     ],
     [
-     "6abe8dbb6a920ffd924d59c0",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཞ (Derge Tengyur, vol. 22)",
+     "6ac06186f427c9bb06924c5d",
+     "བཀའ་འགྱུར། སྡེ་དགེ། ཉི་ཁྲི། ག (Derge Kangyur, vol. 28)",
      false,
-     756,
-     756,
+     762,
+     761,
      0
     ],
     [
@@ -2398,35 +3835,11 @@
      0
     ],
     [
-     "6abe8cd66a920ffd924d56d8",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཝ (Derge Tengyur, vol. 21)",
+     "6ac0b0d3f427c9bb0692c476",
+     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཀ (Derge Kangyur, vol. 77)",
      false,
-     741,
      740,
-     0
-    ],
-    [
-     "6abed90a896ea18127c8f9ee",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཞེ (Derge Tengyur, vol. 190)",
-     false,
-     737,
-     736,
-     0
-    ],
-    [
-     "6abe86656a920ffd924d3f40",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཏ (Derge Tengyur, vol. 10)",
-     false,
      733,
-     730,
-     0
-    ],
-    [
-     "6abed1ac896ea18127c8ca6c",
-     "བསྟན་འགྱུར། སྡེ་དགེ། འཁྲི་ཤིང། ཀེ (Derge Tengyur, vol. 170)",
-     false,
-     731,
-     730,
      0
     ],
     [
@@ -2438,30 +3851,6 @@
      0
     ],
     [
-     "6abed95d896ea18127c8fcd2",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཟེ (Derge Tengyur, vol. 191)",
-     false,
-     725,
-     724,
-     0
-    ],
-    [
-     "6abea14b6a920ffd924dadae",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཨི (Derge Tengyur, vol. 61)",
-     false,
-     723,
-     722,
-     0
-    ],
-    [
-     "6abea1d86a920ffd924db084",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཀུ (Derge Tengyur, vol. 62)",
-     false,
-     723,
-     722,
-     0
-    ],
-    [
      "6abee360a43718d234bf1fb5",
      "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། ཉོ (Derge Tengyur, vol. 207)",
      false,
@@ -2470,91 +3859,11 @@
      0
     ],
     [
-     "6abebae6896ea18127c8795c",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། རི (Derge Tengyur, vol. 134)",
-     false,
-     721,
-     717,
-     0
-    ],
-    [
-     "6abed42c896ea18127c8d54f",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཆེ (Derge Tengyur, vol. 175)",
-     false,
-     718,
-     717,
-     0
-    ],
-    [
-     "6abeb4ad896ea18127c84725",
-     "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཀི (Derge Tengyur, vol. 110)",
+     "6ac0cca5f427c9bb0692f231",
+     "བཀའ་འགྱུར། སྡེ་དགེ། རྙིང་རྒྱུད། ཀ (Derge Kangyur, vol. 97)",
      false,
      715,
      714,
-     0
-    ],
-    [
-     "6abe9ec86a920ffd924d9ce2",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། འི (Derge Tengyur, vol. 54)",
-     false,
-     703,
-     702,
-     0
-    ],
-    [
-     "6abe9f6f6a920ffd924da3c8",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ལི (Derge Tengyur, vol. 57)",
-     false,
-     703,
-     702,
-     0
-    ],
-    [
-     "6abea1016a920ffd924daaec",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཧི (Derge Tengyur, vol. 60)",
-     false,
-     703,
-     702,
-     0
-    ],
-    [
-     "6ac0c0fef427c9bb0692dd73",
-     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ན (Derge Kangyur, vol. 88)",
-     false,
-     702,
-     701,
-     0
-    ],
-    [
-     "6abea5606a920ffd924dbcb1",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཉུ (Derge Tengyur, vol. 69)",
-     false,
-     701,
-     700,
-     0
-    ],
-    [
-     "6abea70a6a920ffd924dc6e1",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ནུ (Derge Tengyur, vol. 73)",
-     false,
-     693,
-     692,
-     0
-    ],
-    [
-     "6abec01d896ea18127c88fb8",
-     "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཅུ (Derge Tengyur, vol. 144)",
-     false,
-     693,
-     692,
-     0
-    ],
-    [
-     "6abe9cd56a920ffd924d937e",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཚི (Derge Tengyur, vol. 49)",
-     false,
-     689,
-     688,
      0
     ],
     [
@@ -2566,59 +3875,11 @@
      0
     ],
     [
-     "6abedf77a43718d234bf11b2",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། བི (Derge Tengyur, vol. 124)",
-     false,
-     689,
-     688,
-     0
-    ],
-    [
-     "6abecf9e896ea18127c8bf06",
-     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ལུ (Derge Tengyur, vol. 165)",
+     "6ac093adf427c9bb0692941d",
+     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། པ (Derge Kangyur, vol. 57)",
      false,
      687,
      686,
-     0
-    ],
-    [
-     "6abe86096a920ffd924d3c92",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཉ (Derge Tengyur, vol. 9)",
-     false,
-     683,
-     682,
-     0
-    ],
-    [
-     "6abeaad26a920ffd924ddbfc",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཅ (Derge Tengyur, vol. 84)",
-     false,
-     683,
-     682,
-     0
-    ],
-    [
-     "6ac0b529f427c9bb0692cc11",
-     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ང (Derge Kangyur, vol. 80)",
-     false,
-     681,
-     681,
-     0
-    ],
-    [
-     "6abea3fd6a920ffd924dba05",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཅུ (Derge Tengyur, vol. 66)",
-     false,
-     681,
-     680,
-     0
-    ],
-    [
-     "6abeab0e6a920ffd924ddeaa",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཆ (Derge Tengyur, vol. 85)",
-     false,
-     681,
-     680,
      0
     ],
     [
@@ -2630,11 +3891,11 @@
      0
     ],
     [
-     "6abed0ea896ea18127c8c5c8",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སྐྱེས་རབས། ཧུ (Derge Tengyur, vol. 168)",
+     "6ac07e0ef427c9bb0692773a",
+     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཀ (Derge Kangyur, vol. 45)",
      false,
+     680,
      679,
-     678,
      0
     ],
     [
@@ -2654,147 +3915,11 @@
      0
     ],
     [
-     "6abead3a896ea18127c81226",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཇུ (Derge Tengyur, vol. 68)",
-     false,
-     677,
-     676,
-     0
-    ],
-    [
-     "6abebaa5896ea18127c876b6",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཡི (Derge Tengyur, vol. 133)",
-     false,
-     675,
-     674,
-     0
-    ],
-    [
-     "6abe9b4b6a920ffd924d8d38",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། བི (Derge Tengyur, vol. 46)",
-     false,
-     673,
-     672,
-     0
-    ],
-    [
-     "6ac0ba11f427c9bb0692d3bd",
-     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཇ (Derge Kangyur, vol. 83)",
-     false,
-     672,
-     671,
-     0
-    ],
-    [
-     "6abeba43896ea18127c8725a",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཟི (Derge Tengyur, vol. 131)",
-     false,
-     669,
-     668,
-     0
-    ],
-    [
-     "6abea6da6a920ffd924dc443",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། དུ (Derge Tengyur, vol. 72)",
-     false,
-     667,
-     666,
-     0
-    ],
-    [
      "6ac0500cf427c9bb06921ac3",
      "བཀའ་འགྱུར། སྡེ་དགེ། འདུལ་བ། ད (Derge Kangyur, vol. 11)",
      false,
      666,
      665,
-     0
-    ],
-    [
-     "6abebfd1896ea18127c88d1c",
-     "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ངུ (Derge Tengyur, vol. 143)",
-     false,
-     665,
-     664,
-     0
-    ],
-    [
-     "6abeaf6b896ea18127c81cfc",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ན (Derge Tengyur, vol. 91)",
-     false,
-     661,
-     660,
-     0
-    ],
-    [
-     "6abed9a6896ea18127c8ffaa",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། འེ (Derge Tengyur, vol. 192)",
-     false,
-     661,
-     660,
-     0
-    ],
-    [
-     "6ac0b910f427c9bb0692d126",
-     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཆ (Derge Kangyur, vol. 82)",
-     false,
-     660,
-     660,
-     0
-    ],
-    [
-     "6abe85c46a920ffd924d39fc",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཇ (Derge Tengyur, vol. 8)",
-     false,
-     659,
-     658,
-     0
-    ],
-    [
-     "6abea6ac6a920ffd924dc1ad",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཐུ (Derge Tengyur, vol. 71)",
-     false,
-     659,
-     658,
-     0
-    ],
-    [
-     "6abeb20a896ea18127c82b01",
-     "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཛ (Derge Tengyur, vol. 98)",
-     false,
-     659,
-     658,
-     0
-    ],
-    [
-     "6abebf71896ea18127c88a86",
-     "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། གུ (Derge Tengyur, vol. 142)",
-     false,
-     659,
-     658,
-     0
-    ],
-    [
-     "6abed259896ea18127c8cd4a",
-     "བསྟན་འགྱུར། སྡེ་དགེ། འཁྲི་ཤིང། ཁེ (Derge Tengyur, vol. 171)",
-     false,
-     657,
-     656,
-     0
-    ],
-    [
-     "6abe89136a920ffd924d4900",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། པ (Derge Tengyur, vol. 14)",
-     false,
-     655,
-     654,
-     0
-    ],
-    [
-     "6abed76c896ea18127c8ee40",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། མེ (Derge Tengyur, vol. 185)",
-     false,
-     655,
-     654,
      0
     ],
     [
@@ -2806,83 +3931,11 @@
      0
     ],
     [
-     "6abed8c2896ea18127c8f75e",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཝེ (Derge Tengyur, vol. 189)",
-     false,
-     653,
-     652,
-     0
-    ],
-    [
      "6abee53da43718d234bf2f73",
      "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། པོ (Derge Tengyur, vol. 212)",
      false,
      653,
      652,
-     0
-    ],
-    [
-     "6abe9d9d6a920ffd924d9828",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཝི (Derge Tengyur, vol. 51)",
-     false,
-     651,
-     650,
-     0
-    ],
-    [
-     "6abec767896ea18127c8a9dc",
-     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཙུ (Derge Tengyur, vol. 156)",
-     false,
-     650,
-     650,
-     0
-    ],
-    [
-     "6abe98196a920ffd924d8054",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཏི (Derge Tengyur, vol. 40)",
-     false,
-     649,
-     648,
-     0
-    ],
-    [
-     "6abe91a66a920ffd924d6b5d",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ས (Derge Tengyur, vol. 29)",
-     false,
-     647,
-     646,
-     0
-    ],
-    [
-     "6abec1df896ea18127c89736",
-     "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཉུ (Derge Tengyur, vol. 147)",
-     false,
-     645,
-     644,
-     0
-    ],
-    [
-     "6abec068896ea18127c89270",
-     "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཆུ (Derge Tengyur, vol. 145)",
-     false,
-     643,
-     642,
-     0
-    ],
-    [
-     "6ac0bdbef427c9bb0692d885",
-     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཐ (Derge Kangyur, vol. 86)",
-     false,
-     641,
-     641,
-     0
-    ],
-    [
-     "6abe84986a920ffd924d328a",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ང (Derge Tengyur, vol. 5)",
-     false,
-     641,
-     640,
      0
     ],
     [
@@ -2894,14 +3947,6 @@
      0
     ],
     [
-     "6abedf36a43718d234bf0f30",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། བ (Derge Tengyur, vol. 94)",
-     false,
-     639,
-     638,
-     0
-    ],
-    [
      "6ac0a462f427c9bb0692ac62",
      "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། འ (Derge Kangyur, vol. 67)",
      false,
@@ -2910,18 +3955,18 @@
      0
     ],
     [
-     "6abe8c706a920ffd924d545a",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཛ (Derge Tengyur, vol. 20)",
+     "6ac095d4f427c9bb069296cf",
+     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཕ (Derge Kangyur, vol. 58)",
      false,
      635,
-     634,
+     635,
      0
     ],
     [
-     "6abe974b6a920ffd924d7dd6",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཉི (Derge Tengyur, vol. 39)",
+     "6ac0a4f6f427c9bb0692aee3",
+     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཡ (Derge Kangyur, vol. 68)",
      false,
-     635,
+     636,
      634,
      0
     ],
@@ -2934,19 +3979,11 @@
      0
     ],
     [
-     "6abea00c6a920ffd924da68a",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཤི (Derge Tengyur, vol. 58)",
+     "6ac08f92f427c9bb06928f47",
+     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ད (Derge Kangyur, vol. 55)",
      false,
-     633,
      632,
-     0
-    ],
-    [
-     "6abeb11e896ea18127c82406",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། མ (Derge Tengyur, vol. 95)",
-     false,
-     633,
-     632,
+     631,
      0
     ],
     [
@@ -2966,86 +4003,6 @@
      0
     ],
     [
-     "6abe850f6a920ffd924d3782",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཆ (Derge Tengyur, vol. 7)",
-     false,
-     631,
-     630,
-     0
-    ],
-    [
-     "6abe8a146a920ffd924d4e02",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། བ (Derge Tengyur, vol. 16)",
-     false,
-     629,
-     628,
-     0
-    ],
-    [
-     "6abea98e6a920ffd924dd984",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ག (Derge Tengyur, vol. 82)",
-     false,
-     629,
-     628,
-     0
-    ],
-    [
-     "6abeafd3896ea18127c8218e",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཕ (Derge Tengyur, vol. 93)",
-     false,
-     629,
-     628,
-     0
-    ],
-    [
-     "6abec9bf896ea18127c8ae09",
-     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཛུ (Derge Tengyur, vol. 158)",
-     false,
-     629,
-     628,
-     0
-    ],
-    [
-     "6abe8fd66a920ffd924d60bd",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཡ (Derge Tengyur, vol. 25)",
-     false,
-     627,
-     626,
-     0
-    ],
-    [
-     "6abed9f5896ea18127c90242",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཡེ (Derge Tengyur, vol. 193)",
-     false,
-     627,
-     626,
-     0
-    ],
-    [
-     "6abe84ce6a920ffd924d350e",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཅ (Derge Tengyur, vol. 6)",
-     false,
-     625,
-     624,
-     0
-    ],
-    [
-     "6abe98e76a920ffd924d82e0",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཐི (Derge Tengyur, vol. 41)",
-     false,
-     625,
-     624,
-     0
-    ],
-    [
-     "6abeb4e5896ea18127c849f3",
-     "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ཁི (Derge Tengyur, vol. 111)",
-     false,
-     625,
-     624,
-     0
-    ],
-    [
      "6ac0a78ff427c9bb0692b3cb",
      "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ལ (Derge Kangyur, vol. 70)",
      false,
@@ -3054,27 +4011,11 @@
      0
     ],
     [
-     "6abe90fc6a920ffd924d66a3",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ལ (Derge Tengyur, vol. 27)",
+     "6ac0970bf427c9bb0692994d",
+     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། བ (Derge Kangyur, vol. 59)",
      false,
-     623,
+     626,
      622,
-     0
-    ],
-    [
-     "6abec4ee896ea18127c8a184",
-     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། པུ (Derge Tengyur, vol. 152)",
-     false,
-     623,
-     622,
-     0
-    ],
-    [
-     "6ac0ceadf427c9bb0692f4ff",
-     "བཀའ་འགྱུར། སྡེ་དགེ། རྙིང་རྒྱུད། ཁ (Derge Kangyur, vol. 98)",
-     false,
-     622,
-     621,
      0
     ],
     [
@@ -3083,22 +4024,6 @@
      false,
      622,
      620,
-     0
-    ],
-    [
-     "6abe89c46a920ffd924d4b92",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཕ (Derge Tengyur, vol. 15)",
-     false,
-     621,
-     620,
-     0
-    ],
-    [
-     "6abeb822896ea18127c861e3",
-     "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། པི (Derge Tengyur, vol. 122)",
-     false,
-     619,
-     618,
      0
     ],
     [
@@ -3118,6 +4043,14 @@
      0
     ],
     [
+     "6ac0aabef427c9bb0692bb12",
+     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཧ (Derge Kangyur, vol. 73)",
+     false,
+     618,
+     617,
+     0
+    ],
+    [
      "6ac09a9ef427c9bb06929e15",
      "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཙ (Derge Kangyur, vol. 61)",
      false,
@@ -3126,24 +4059,16 @@
      0
     ],
     [
-     "6abe94e86a920ffd924d7940",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཅི (Derge Tengyur, vol. 36)",
+     "6ac0b19cf427c9bb0692c75d",
+     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཁ (Derge Kangyur, vol. 78)",
      false,
      615,
-     614,
+     615,
      0
     ],
     [
      "6ac0a2b8f427c9bb0692a9f9",
      "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཟ (Derge Kangyur, vol. 66)",
-     false,
-     614,
-     614,
-     0
-    ],
-    [
-     "6ac0b6fff427c9bb0692cebd",
-     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཅ (Derge Kangyur, vol. 81)",
      false,
      614,
      614,
@@ -3174,14 +4099,6 @@
      0
     ],
     [
-     "6abeadbd896ea18127c814ce",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ང (Derge Tengyur, vol. 83)",
-     false,
-     613,
-     612,
-     0
-    ],
-    [
      "6ac06939f427c9bb0692566d",
      "བཀའ་འགྱུར། སྡེ་དགེ། ཁྲི་པ། ང (Derge Kangyur, vol. 32)",
      false,
@@ -3198,14 +4115,6 @@
      0
     ],
     [
-     "6abeace1896ea18127c80d7a",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཞི (Derge Tengyur, vol. 52)",
-     false,
-     611,
-     610,
-     0
-    ],
-    [
      "6ac0a985f427c9bb0692b63e",
      "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཤ (Derge Kangyur, vol. 71)",
      false,
@@ -3214,11 +4123,11 @@
      0
     ],
     [
-     "6ac0c746f427c9bb0692e956",
-     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཙ (Derge Kangyur, vol. 93)",
+     "6ac09b8ef427c9bb0692a080",
+     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཚ (Derge Kangyur, vol. 62)",
      false,
      609,
-     609,
+     608,
      0
     ],
     [
@@ -3246,14 +4155,6 @@
      0
     ],
     [
-     "6abe88866a920ffd924d46a0",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ན (Derge Tengyur, vol. 13)",
-     false,
-     605,
-     604,
-     0
-    ],
-    [
      "6abedb94896ea18127c90961",
      "བསྟན་འགྱུར། སྡེ་དགེ། སྒྲ་མདོ། ཤེ (Derge Tengyur, vol. 196)",
      false,
@@ -3262,35 +4163,11 @@
      0
     ],
     [
-     "6abeb782896ea18127c85d77",
-     "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། དི (Derge Tengyur, vol. 120)",
-     false,
-     603,
-     602,
-     0
-    ],
-    [
      "6ac05209f427c9bb06921d60",
      "བཀའ་འགྱུར། སྡེ་དགེ། འདུལ་བ། ན (Derge Kangyur, vol. 12)",
      false,
      602,
      601,
-     0
-    ],
-    [
-     "6abea2356a920ffd924db35a",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཁུ (Derge Tengyur, vol. 63)",
-     false,
-     601,
-     600,
-     0
-    ],
-    [
-     "6abebdc9896ea18127c88072",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། སི (Derge Tengyur, vol. 137)",
-     false,
-     601,
-     600,
      0
     ],
     [
@@ -3358,18 +4235,18 @@
      0
     ],
     [
-     "6abe83b7433559215a997efb",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ག (Derge Tengyur, vol. 4)",
+     "6ac09c93f427c9bb0692a2e4",
+     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཛ (Derge Kangyur, vol. 63)",
      false,
+     594,
      593,
-     592,
      0
     ],
     [
-     "6abe87926a920ffd924d444c",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ད (Derge Tengyur, vol. 12)",
+     "6ac07890f427c9bb06926de2",
+     "བཀའ་འགྱུར། སྡེ་དགེ། དཀོན་བརྩེགས། ག (Derge Kangyur, vol. 41)",
      false,
-     593,
+     594,
      592,
      0
     ],
@@ -3382,19 +4259,27 @@
      0
     ],
     [
+     "6ac09817f427c9bb06929bc2",
+     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། མ (Derge Kangyur, vol. 60)",
+     false,
+     592,
+     591,
+     0
+    ],
+    [
+     "6ac067fdf427c9bb06925418",
+     "བཀའ་འགྱུར། སྡེ་དགེ། ཁྲི་བརྒྱད། ག (Derge Kangyur, vol. 31)",
+     false,
+     594,
+     590,
+     0
+    ],
+    [
      "6abedd7f896ea18127c91551",
      "བསྟན་འགྱུར། སྡེ་དགེ། གསོ་རིག ཀོ (Derge Tengyur, vol. 200)",
      false,
      591,
      590,
-     0
-    ],
-    [
-     "6abed7f8896ea18127c8f2ca",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཚེ (Derge Tengyur, vol. 187)",
-     false,
-     589,
-     588,
      0
     ],
     [
@@ -3406,11 +4291,11 @@
      0
     ],
     [
-     "6abe8366433559215a997cad",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཁ (Derge Tengyur, vol. 3)",
+     "6ac08c9df427c9bb06928cf8",
+     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཐ (Derge Kangyur, vol. 54)",
      false,
+     588,
      587,
-     586,
      0
     ],
     [
@@ -3418,14 +4303,6 @@
      "བཀའ་འགྱུར། སྡེ་དགེ། འདུལ་བ། ག (Derge Kangyur, vol. 3)",
      false,
      587,
-     584,
-     0
-    ],
-    [
-     "6abebc98896ea18127c87c30",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ལི (Derge Tengyur, vol. 135)",
-     false,
-     585,
      584,
      0
     ],
@@ -3446,14 +4323,6 @@
      0
     ],
     [
-     "6ac0b3aff427c9bb0692c9c7",
-     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ག (Derge Kangyur, vol. 79)",
-     false,
-     583,
-     583,
-     0
-    ],
-    [
      "6ac0ca39f427c9bb0692edd4",
      "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཛ (Derge Kangyur, vol. 95)",
      false,
@@ -3462,75 +4331,19 @@
      0
     ],
     [
-     "6abe92d06a920ffd924d7166",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཀི (Derge Tengyur, vol. 32)",
-     false,
-     583,
-     582,
-     0
-    ],
-    [
-     "6abe914a6a920ffd924d6915",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཤ (Derge Tengyur, vol. 28)",
+     "6ac0845cf427c9bb069280b5",
+     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཅ (Derge Kangyur, vol. 49)",
      false,
      581,
-     580,
-     0
-    ],
-    [
-     "6abeb3d6896ea18127c83fed",
-     "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། ས (Derge Tengyur, vol. 107)",
-     false,
-     581,
-     580,
-     0
-    ],
-    [
-     "6abeb70e896ea18127c8590d",
-     "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཏི (Derge Tengyur, vol. 118)",
-     false,
-     581,
-     580,
-     0
-    ],
-    [
-     "6abead0e896ea18127c80fe0",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཆུ (Derge Tengyur, vol. 67)",
-     false,
      579,
+     0
+    ],
+    [
+     "6ac0c3edf427c9bb0692e494",
+     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། བ (Derge Kangyur, vol. 91)",
+     false,
+     580,
      578,
-     0
-    ],
-    [
-     "6ac0afecf427c9bb0692c231",
-     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཨཱཾཿ (Derge Kangyur, vol. 76)",
-     false,
-     578,
-     577,
-     0
-    ],
-    [
-     "6abe9a356a920ffd924d88dc",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། པི (Derge Tengyur, vol. 44)",
-     false,
-     577,
-     576,
-     0
-    ],
-    [
-     "6abeba0b896ea18127c87016",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཞི (Derge Tengyur, vol. 130)",
-     false,
-     577,
-     576,
-     0
-    ],
-    [
-     "6abed85e896ea18127c8f51a",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཛེ (Derge Tengyur, vol. 188)",
-     false,
-     577,
-     576,
      0
     ],
     [
@@ -3542,11 +4355,11 @@
      0
     ],
     [
-     "6abec12d896ea18127c894f6",
-     "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཇུ (Derge Tengyur, vol. 146)",
+     "6ac08302f427c9bb06927e74",
+     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ང (Derge Kangyur, vol. 48)",
      false,
+     574,
      573,
-     572,
      0
     ],
     [
@@ -3566,19 +4379,11 @@
      0
     ],
     [
-     "6abea60a6a920ffd924dbf71",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཏུ (Derge Tengyur, vol. 70)",
+     "6ac0c360f427c9bb0692e255",
+     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཕ (Derge Kangyur, vol. 90)",
      false,
+     572,
      569,
-     568,
-     0
-    ],
-    [
-     "6abe93ef6a920ffd924d7706",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ངི (Derge Tengyur, vol. 35)",
-     false,
-     567,
-     566,
      0
     ],
     [
@@ -3590,43 +4395,11 @@
      0
     ],
     [
-     "6abeb8ed896ea18127c8665b",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། མི (Derge Tengyur, vol. 125)",
-     false,
-     566,
-     564,
-     0
-    ],
-    [
-     "6abe9f2c6a920ffd924da190",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། རི (Derge Tengyur, vol. 56)",
-     false,
-     565,
-     564,
-     0
-    ],
-    [
-     "6abeb963896ea18127c86aaa",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཚི (Derge Tengyur, vol. 127)",
-     false,
-     565,
-     564,
-     0
-    ],
-    [
      "6ac0d282f427c9bb0692fbda",
      "བཀའ་འགྱུར། སྡེ་དགེ། དྲི་མེད་འོད། ཤྲཱི (Derge Kangyur, vol. 102)",
      false,
      563,
      562,
-     0
-    ],
-    [
-     "6abec54c896ea18127c8a3f6",
-     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཕུ (Derge Tengyur, vol. 153)",
-     false,
-     561,
-     560,
      0
     ],
     [
@@ -3638,11 +4411,11 @@
      0
     ],
     [
-     "6abecb0a896ea18127c8b28a",
-     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཞུ (Derge Tengyur, vol. 160)",
+     "6ac0d0cef427c9bb0692f9ad",
+     "བཀའ་འགྱུར། སྡེ་དགེ། གཟུངས་འདུས། ཝཾ (Derge Kangyur, vol. 101)",
      false,
-     555,
      554,
+     553,
      0
     ],
     [
@@ -3650,38 +4423,6 @@
      "བསྟན་འགྱུར། སྡེ་དགེ། སྒྲ་མདོ། རེ (Derge Tengyur, vol. 194)",
      false,
      555,
-     552,
-     0
-    ],
-    [
-     "6abe86b96a920ffd924d4220",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཐ (Derge Tengyur, vol. 11)",
-     false,
-     553,
-     552,
-     0
-    ],
-    [
-     "6abe95d56a920ffd924d7baa",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཆི (Derge Tengyur, vol. 37)",
-     false,
-     553,
-     552,
-     0
-    ],
-    [
-     "6abe9e9a6a920ffd924d9ab6",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཟི (Derge Tengyur, vol. 53)",
-     false,
-     553,
-     552,
-     0
-    ],
-    [
-     "6abeb666896ea18127c854c5",
-     "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཇི (Derge Tengyur, vol. 116)",
-     false,
-     553,
      552,
      0
     ],
@@ -3694,59 +4435,11 @@
      0
     ],
     [
-     "6abe82fa433559215a997a85",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཀ (Derge Tengyur, vol. 2)",
+     "6ac0baf0f427c9bb0692d660",
+     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཉ (Derge Kangyur, vol. 84)",
      false,
-     549,
-     548,
-     0
-    ],
-    [
-     "6abea2b96a920ffd924db5b6",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། གུ (Derge Tengyur, vol. 64)",
-     false,
-     549,
-     548,
-     0
-    ],
-    [
-     "6abeab456a920ffd924de156",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཇ (Derge Tengyur, vol. 86)",
-     false,
-     549,
-     548,
-     0
-    ],
-    [
-     "6abea35a6a920ffd924db7de",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ངུ (Derge Tengyur, vol. 65)",
-     false,
-     548,
      546,
-     0
-    ],
-    [
-     "6abecc3d896ea18127c8b4b8",
-     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཟུ (Derge Tengyur, vol. 161)",
-     false,
-     547,
      546,
-     0
-    ],
-    [
-     "6abeb628896ea18127c852a1",
-     "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཆི (Derge Tengyur, vol. 115)",
-     false,
-     545,
-     544,
-     0
-    ],
-    [
-     "6abeb74e896ea18127c85b55",
-     "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཐི (Derge Tengyur, vol. 119)",
-     false,
-     543,
-     542,
      0
     ],
     [
@@ -3758,11 +4451,11 @@
      0
     ],
     [
-     "6abedef7a43718d234bf0d12",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཏ (Derge Tengyur, vol. 88)",
+     "6ac074ecf427c9bb06926972",
+     "བཀའ་འགྱུར། སྡེ་དགེ། དཀོན་བརྩེགས། ཀ (Derge Kangyur, vol. 39)",
      false,
+     540,
      539,
-     538,
      0
     ],
     [
@@ -3774,59 +4467,11 @@
      0
     ],
     [
-     "6abeb5fd896ea18127c85085",
-     "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཅི (Derge Tengyur, vol. 114)",
-     false,
-     537,
-     536,
-     0
-    ],
-    [
-     "6abeb6dc896ea18127c856f1",
-     "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཉི (Derge Tengyur, vol. 117)",
-     false,
-     537,
-     536,
-     0
-    ],
-    [
      "6ac04c0bf427c9bb069213aa",
      "བཀའ་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཉ (Derge Kangyur, vol. 8)",
      false,
      537,
      535,
-     0
-    ],
-    [
-     "6abec470896ea18127c89f6a",
-     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ནུ (Derge Tengyur, vol. 151)",
-     false,
-     535,
-     534,
-     0
-    ],
-    [
-     "6abe9b0d6a920ffd924d8b20",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཕི (Derge Tengyur, vol. 45)",
-     false,
-     533,
-     532,
-     0
-    ],
-    [
-     "6abeb92e896ea18127c86894",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཙི (Derge Tengyur, vol. 126)",
-     false,
-     531,
-     530,
-     0
-    ],
-    [
-     "6abebf33896ea18127c88870",
-     "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཁུ (Derge Tengyur, vol. 141)",
-     false,
-     531,
-     530,
      0
     ],
     [
@@ -3838,155 +4483,11 @@
      0
     ],
     [
-     "6abe8f0c6a920ffd924d5eab",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། འ (Derge Tengyur, vol. 24)",
-     false,
-     527,
-     526,
-     0
-    ],
-    [
-     "6abed040896ea18127c8c1b8",
-     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཤུ (Derge Tengyur, vol. 166)",
-     false,
-     527,
-     526,
-     0
-    ],
-    [
-     "6abecf09896ea18127c8bcf6",
-     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། རུ (Derge Tengyur, vol. 164)",
-     false,
-     525,
-     524,
-     0
-    ],
-    [
-     "6abe8bab6a920ffd924d524c",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཚ (Derge Tengyur, vol. 19)",
-     false,
-     523,
-     522,
-     0
-    ],
-    [
-     "6abeb7ec896ea18127c85fd5",
-     "བསྟན་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ནི (Derge Tengyur, vol. 121)",
-     false,
-     523,
-     522,
-     0
-    ],
-    [
-     "6abeadc8896ea18127c81736",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཉ (Derge Tengyur, vol. 87)",
-     false,
-     521,
-     520,
-     0
-    ],
-    [
-     "6abec2d0896ea18127c89b7e",
-     "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཐུ (Derge Tengyur, vol. 149)",
-     false,
-     521,
-     520,
-     0
-    ],
-    [
      "6ac04a97f427c9bb0692118f",
      "བཀའ་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཇ (Derge Kangyur, vol. 7)",
      false,
      536,
      516,
-     0
-    ],
-    [
-     "6abeca4e896ea18127c8b081",
-     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཝུ (Derge Tengyur, vol. 159)",
-     false,
-     518,
-     516,
-     0
-    ],
-    [
-     "6abeb51b896ea18127c84c67",
-     "བསྟན་འགྱུར། སྡེ་དགེ། དབུ་མ། གི (Derge Tengyur, vol. 112)",
-     false,
-     517,
-     516,
-     0
-    ],
-    [
-     "6abe824e59b86b7d32a65774",
-     "བསྟན་འགྱུར། སྡེ་དགེ། བསྟོད་ཚོགས། ཀ (Derge Tengyur, vol. 1)",
-     false,
-     515,
-     514,
-     0
-    ],
-    [
-     "6abebeed896ea18127c8866a",
-     "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཀུ (Derge Tengyur, vol. 140)",
-     false,
-     515,
-     513,
-     0
-    ],
-    [
-     "6abeb863896ea18127c86451",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཕི (Derge Tengyur, vol. 123)",
-     false,
-     519,
-     512,
-     0
-    ],
-    [
-     "6abed08d896ea18127c8c3ca",
-     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། སུ (Derge Tengyur, vol. 167)",
-     false,
-     507,
-     506,
-     0
-    ],
-    [
-     "6abeafa0896ea18127c81f94",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། པ (Derge Tengyur, vol. 92)",
-     false,
-     503,
-     502,
-     0
-    ],
-    [
-     "6abed155896ea18127c8c872",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སྐྱེས་རབས། ཨུ (Derge Tengyur, vol. 169)",
-     false,
-     503,
-     502,
-     0
-    ],
-    [
-     "6abe9d656a920ffd924d9632",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཛི (Derge Tengyur, vol. 50)",
-     false,
-     499,
-     498,
-     0
-    ],
-    [
-     "6abebd37896ea18127c87e7c",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཤི (Derge Tengyur, vol. 136)",
-     false,
-     499,
-     498,
-     0
-    ],
-    [
-     "6abe8ebe6a920ffd924d5cb7",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཟ (Derge Tengyur, vol. 23)",
-     false,
-     497,
-     496,
      0
     ],
     [
@@ -3998,123 +4499,11 @@
      0
     ],
     [
-     "6abec6fb896ea18127c8a7ee",
-     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། མུ (Derge Tengyur, vol. 155)",
-     false,
-     491,
-     490,
-     0
-    ],
-    [
-     "6abe9ef86a920ffd924d9fa4",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཡི (Derge Tengyur, vol. 55)",
-     false,
-     489,
-     488,
-     0
-    ],
-    [
-     "6abe9bd76a920ffd924d8fdc",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། མི (Derge Tengyur, vol. 47)",
-     false,
-     489,
-     486,
-     0
-    ],
-    [
-     "6abeac51896ea18127c80b90",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཇི (Derge Tengyur, vol. 38)",
-     false,
-     487,
-     486,
-     0
-    ],
-    [
-     "6abea9646a920ffd924dd79c",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཁ (Derge Tengyur, vol. 81)",
-     false,
-     485,
-     483,
-     0
-    ],
-    [
-     "6abea0b56a920ffd924da906",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། སི (Derge Tengyur, vol. 59)",
-     false,
-     483,
-     482,
-     0
-    ],
-    [
-     "6abeae7a896ea18127c81942",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཐ (Derge Tengyur, vol. 89)",
-     false,
-     479,
-     478,
-     0
-    ],
-    [
-     "6abec330896ea18127c89d8a",
-     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། དུ (Derge Tengyur, vol. 150)",
-     false,
-     477,
-     476,
-     0
-    ],
-    [
      "6ac052fff427c9bb06921fbd",
      "བཀའ་འགྱུར། སྡེ་དགེ། འདུལ་བ། པ (Derge Kangyur, vol. 13)",
      false,
      470,
      468,
-     0
-    ],
-    [
-     "6abeaef8896ea18127c81b24",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ད (Derge Tengyur, vol. 90)",
-     false,
-     469,
-     468,
-     0
-    ],
-    [
-     "6abe91fc6a920ffd924d6de7",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཧ (Derge Tengyur, vol. 30)",
-     false,
-     467,
-     466,
-     0
-    ],
-    [
-     "6abe8add6a920ffd924d507a",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཙ (Derge Tengyur, vol. 18)",
-     false,
-     463,
-     462,
-     0
-    ],
-    [
-     "6abe998b6a920ffd924d8554",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། དི (Derge Tengyur, vol. 42)",
-     false,
-     461,
-     460,
-     0
-    ],
-    [
-     "6abebe51896ea18127c882ce",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཧི (Derge Tengyur, vol. 138)",
-     false,
-     461,
-     460,
-     0
-    ],
-    [
-     "6abebe9a896ea18127c8849e",
-     "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཨི (Derge Tengyur, vol. 139)",
-     false,
-     457,
-     456,
      0
     ],
     [
@@ -4134,83 +4523,11 @@
      0
     ],
     [
-     "6abec5ca896ea18127c8a62a",
-     "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། བུ (Derge Tengyur, vol. 154)",
-     false,
-     449,
-     448,
-     0
-    ],
-    [
      "69e7ab125f1a22ab19a926ba",
      "Thadrak Kanjur mDo sde A",
      false,
      447,
      446,
-     0
-    ],
-    [
-     "6abec24c896ea18127c899be",
-     "བསྟན་འགྱུར། སྡེ་དགེ། མངོན་པ། ཏུ (Derge Tengyur, vol. 148)",
-     false,
-     445,
-     444,
-     0
-    ],
-    [
-     "6abeba78896ea18127c874fa",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། འི (Derge Tengyur, vol. 132)",
-     false,
-     441,
-     440,
-     0
-    ],
-    [
-     "6abe938e6a920ffd924d754c",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། གི (Derge Tengyur, vol. 34)",
-     false,
-     439,
-     438,
-     0
-    ],
-    [
-     "6abe99ba6a920ffd924d8724",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ནི (Derge Tengyur, vol. 43)",
-     false,
-     437,
-     436,
-     0
-    ],
-    [
-     "6abe9c216a920ffd924d91c8",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཙི (Derge Tengyur, vol. 48)",
-     false,
-     435,
-     434,
-     0
-    ],
-    [
-     "6abeb9d7896ea18127c86e6a",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཝི (Derge Tengyur, vol. 129)",
-     false,
-     425,
-     424,
-     0
-    ],
-    [
-     "6abea9346a920ffd924dd5f1",
-     "བསྟན་འགྱུར། སྡེ་དགེ། ཤེར་ཕྱིན། ཀ (Derge Tengyur, vol. 80)",
-     false,
-     424,
-     422,
-     0
-    ],
-    [
-     "6abe92686a920ffd924d6fbd",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཨ (Derge Tengyur, vol. 31)",
-     false,
-     422,
-     422,
      0
     ],
     [
@@ -4246,22 +4563,6 @@
      0
     ],
     [
-     "6abeb99b896ea18127c86ce2",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སེམས་ཙམ། ཛི (Derge Tengyur, vol. 128)",
-     false,
-     389,
-     388,
-     0
-    ],
-    [
-     "6abed33b896ea18127c8cfde",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སྐྱེས་རབས། གེ (Derge Tengyur, vol. 172)",
-     false,
-     389,
-     388,
-     0
-    ],
-    [
      "6ac05464f427c9bb069224ad",
      "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ཁ (Derge Kangyur, vol. 15)",
      false,
@@ -4270,99 +4571,11 @@
      0
     ],
     [
-     "6abed3c3896ea18127c8d166",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སྤྲིང་ཡིག ངེ (Derge Tengyur, vol. 173)",
+     "6ac0d300f427c9bb0692fe10",
+     "བཀའ་འགྱུར། སྡེ་དགེ། དཀར་ཆག (Derge Kangyur, vol. 103)",
      false,
-     373,
-     373,
-     0
-    ],
-    [
-     "6ac05916f427c9bb069233ed",
-     "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ཇ (Derge Kangyur, vol. 20)",
-     false,
-     794,
-     0,
-     0
-    ],
-    [
-     "6ac05724f427c9bb06922ddc",
-     "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ཅ (Derge Kangyur, vol. 18)",
-     false,
-     790,
-     0,
-     0
-    ],
-    [
-     "6ac05db7f427c9bb06924330",
-     "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ན (Derge Kangyur, vol. 25)",
-     false,
-     790,
-     0,
-     0
-    ],
-    [
-     "6ac053c7f427c9bb06922196",
-     "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ཀ (Derge Kangyur, vol. 14)",
-     false,
-     788,
-     0,
-     0
-    ],
-    [
-     "6ac05f82f427c9bb06924948",
-     "བཀའ་འགྱུར། སྡེ་དགེ། ཉི་ཁྲི། ཁ (Derge Kangyur, vol. 27)",
-     false,
-     786,
-     0,
-     0
-    ],
-    [
-     "6ac0552bf427c9bb069227d1",
-     "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ག (Derge Kangyur, vol. 16)",
-     false,
-     779,
-     0,
-     0
-    ],
-    [
-     "6ac05a25f427c9bb0692370a",
-     "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ཉ (Derge Kangyur, vol. 21)",
-     false,
-     778,
-     0,
-     0
-    ],
-    [
-     "6ac05cd0f427c9bb06924023",
-     "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ད (Derge Kangyur, vol. 24)",
-     false,
-     778,
-     0,
-     0
-    ],
-    [
-     "6ac05c0af427c9bb06923d1a",
-     "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ཐ (Derge Kangyur, vol. 23)",
-     false,
-     774,
-     0,
-     0
-    ],
-    [
-     "6ac05ad7f427c9bb06923a17",
-     "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ཏ (Derge Kangyur, vol. 22)",
-     false,
-     768,
-     0,
-     0
-    ],
-    [
-     "6ac05672f427c9bb06922adf",
-     "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ང (Derge Kangyur, vol. 17)",
-     false,
-     762,
-     0,
+     344,
+     341,
      0
     ],
     [
@@ -4370,230 +4583,30 @@
      "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ཆ (Derge Kangyur, vol. 19)",
      false,
      757,
-     0,
+     325,
      0
     ],
     [
-     "6ac0b0d3f427c9bb0692c476",
-     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཀ (Derge Kangyur, vol. 77)",
+     "6ac05cd0f427c9bb06924023",
+     "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ད (Derge Kangyur, vol. 24)",
      false,
-     740,
-     0,
+     778,
+     268,
      0
     ],
     [
-     "6ac0cca5f427c9bb0692f231",
-     "བཀའ་འགྱུར། སྡེ་དགེ། རྙིང་རྒྱུད། ཀ (Derge Kangyur, vol. 97)",
+     "6ac0552bf427c9bb069227d1",
+     "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ག (Derge Kangyur, vol. 16)",
      false,
-     715,
-     0,
+     779,
+     152,
      0
     ],
     [
-     "6ac093adf427c9bb0692941d",
-     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། པ (Derge Kangyur, vol. 57)",
+     "6ac05916f427c9bb069233ed",
+     "བཀའ་འགྱུར། སྡེ་དགེ། འབུམ། ཇ (Derge Kangyur, vol. 20)",
      false,
-     687,
-     0,
-     0
-    ],
-    [
-     "6ac07e0ef427c9bb0692773a",
-     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཀ (Derge Kangyur, vol. 45)",
-     false,
-     680,
-     0,
-     0
-    ],
-    [
-     "6ac0a4f6f427c9bb0692aee3",
-     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཡ (Derge Kangyur, vol. 68)",
-     false,
-     636,
-     0,
-     0
-    ],
-    [
-     "6ac095d4f427c9bb069296cf",
-     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཕ (Derge Kangyur, vol. 58)",
-     false,
-     635,
-     0,
-     0
-    ],
-    [
-     "6ac08f92f427c9bb06928f47",
-     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ད (Derge Kangyur, vol. 55)",
-     false,
-     632,
-     0,
-     0
-    ],
-    [
-     "6ac0970bf427c9bb0692994d",
-     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། བ (Derge Kangyur, vol. 59)",
-     false,
-     626,
-     0,
-     0
-    ],
-    [
-     "6ac0aa09f427c9bb0692b8a3",
-     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ས (Derge Kangyur, vol. 72)",
-     false,
-     620,
-     0,
-     0
-    ],
-    [
-     "6ac0aabef427c9bb0692bb12",
-     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཧ (Derge Kangyur, vol. 73)",
-     false,
-     618,
-     0,
-     0
-    ],
-    [
-     "6ac0b19cf427c9bb0692c75d",
-     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཁ (Derge Kangyur, vol. 78)",
-     false,
-     615,
-     0,
-     0
-    ],
-    [
-     "6ac09b8ef427c9bb0692a080",
-     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཚ (Derge Kangyur, vol. 62)",
-     false,
-     609,
-     0,
-     0
-    ],
-    [
-     "6ac067fdf427c9bb06925418",
-     "བཀའ་འགྱུར། སྡེ་དགེ། ཁྲི་བརྒྱད། ག (Derge Kangyur, vol. 31)",
-     false,
-     594,
-     0,
-     0
-    ],
-    [
-     "6ac07890f427c9bb06926de2",
-     "བཀའ་འགྱུར། སྡེ་དགེ། དཀོན་བརྩེགས། ག (Derge Kangyur, vol. 41)",
-     false,
-     594,
-     0,
-     0
-    ],
-    [
-     "6ac09c93f427c9bb0692a2e4",
-     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཛ (Derge Kangyur, vol. 63)",
-     false,
-     594,
-     0,
-     0
-    ],
-    [
-     "6ac09817f427c9bb06929bc2",
-     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། མ (Derge Kangyur, vol. 60)",
-     false,
-     592,
-     0,
-     0
-    ],
-    [
-     "6ac08c9df427c9bb06928cf8",
-     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཐ (Derge Kangyur, vol. 54)",
-     false,
-     588,
-     0,
-     0
-    ],
-    [
-     "6ac0845cf427c9bb069280b5",
-     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ཅ (Derge Kangyur, vol. 49)",
-     false,
-     581,
-     0,
-     0
-    ],
-    [
-     "6ac0c3edf427c9bb0692e494",
-     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། བ (Derge Kangyur, vol. 91)",
-     false,
-     580,
-     0,
-     0
-    ],
-    [
-     "6ac08302f427c9bb06927e74",
-     "བཀའ་འགྱུར། སྡེ་དགེ། མདོ་སྡེ། ང (Derge Kangyur, vol. 48)",
-     false,
-     574,
-     0,
-     0
-    ],
-    [
-     "6ac0c360f427c9bb0692e255",
-     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཕ (Derge Kangyur, vol. 90)",
-     false,
-     572,
-     0,
-     0
-    ],
-    [
-     "6ac0cf0df427c9bb0692f770",
-     "བཀའ་འགྱུར། སྡེ་དགེ། རྙིང་རྒྱུད། ག (Derge Kangyur, vol. 99)",
-     false,
-     570,
-     0,
-     0
-    ],
-    [
-     "6ac0d0cef427c9bb0692f9ad",
-     "བཀའ་འགྱུར། སྡེ་དགེ། གཟུངས་འདུས། ཝཾ (Derge Kangyur, vol. 101)",
-     false,
-     554,
-     0,
-     0
-    ],
-    [
-     "6ac03d7ed2d554a6d39b3050",
-     "བཀའ་འགྱུར། སྡེ་དགེ། གཟུངས་འདུས། ཨེ (Derge Kangyur, vol. 100)",
-     false,
-     551,
-     0,
-     0
-    ],
-    [
-     "6ac0baf0f427c9bb0692d660",
-     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཉ (Derge Kangyur, vol. 84)",
-     false,
-     546,
-     0,
-     0
-    ],
-    [
-     "6ac074ecf427c9bb06926972",
-     "བཀའ་འགྱུར། སྡེ་དགེ། དཀོན་བརྩེགས། ཀ (Derge Kangyur, vol. 39)",
-     false,
-     540,
-     0,
-     0
-    ],
-    [
-     "6ac0c90ef427c9bb0692ebba",
-     "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཚ (Derge Kangyur, vol. 94)",
-     false,
-     535,
-     0,
-     0
-    ],
-    [
-     "6ac0d300f427c9bb0692fe10",
-     "བཀའ་འགྱུར། སྡེ་དགེ། དཀར་ཆག (Derge Kangyur, vol. 103)",
-     false,
-     344,
+     794,
      0,
      0
     ]
@@ -4606,7 +4619,7 @@
     "cbeta"
    ],
    "books": 170,
-   "readable_books": 78,
+   "readable_books": 79,
    "pages_scanned": 21408,
    "pages_transcribed": 17515,
    "pages_translated": 10274,
@@ -6757,7 +6770,7 @@
     ],
     [
      "6a0a4e9a7cd8e1e3d0f4964a",
-     "皇極經世書 (Huangji Jingshi Shu, juan slice 1 of 24) — Shao Yong Neo-Confucian cosmic numerolog",
+     "皇極經世書 卷一下 (Huangji Jingshi Shu, juan 1, lower) — Shao Yong Neo-Confucian cosmic numerology",
      true,
      138,
      138,
@@ -7955,9 +7968,9 @@
     "gretil-gaudiya"
    ],
    "books": 2109,
-   "readable_books": 385,
+   "readable_books": 386,
    "pages_scanned": 355193,
-   "pages_transcribed": 162312,
+   "pages_transcribed": 162357,
    "pages_translated": 109625,
    "canon_page_equivalents": 48672,
    "ocr_engines": [
@@ -7967,7 +7980,7 @@
     ],
     [
      "gemini-3.1-flash-lite",
-     57990
+     58035
     ],
     [
      "gemini-3.1-flash-lite-preview",
@@ -11898,6 +11911,14 @@
      0
     ],
     [
+     "6a94d4a88e2a2ffc91d29c68",
+     "Pancha Tantra Samvatsara Shraddha Shraddha Brahmana Ritu Naryana Vishnu Purana Sharada Man",
+     false,
+     134,
+     59,
+     0
+    ],
+    [
      "6a948ac231b41d9c57444bc1",
      "4196 UPSS Sharada Vishnu Karna Pitra Sukta 1 20 Complete",
      false,
@@ -12222,6 +12243,14 @@
      "Kuliyat Hakim Mohd. Azeem Kashmiri Urdu Pahari Munshi Mohd. Yusuf",
      false,
      352,
+     49,
+     0
+    ],
+    [
+     "6a30905cd8c6b8a005c7c5f3",
+     "Bhagavad-gītā — with Śaṅkara’s Bhāṣya (Sanskrit)",
+     false,
+     313,
      49,
      0
     ],
@@ -14134,14 +14163,6 @@
      "Jyotish Related Sharada Manuscript Manuscript 2 Of 3 From A Pulwama Resident",
      false,
      136,
-     39,
-     0
-    ],
-    [
-     "6a94d4a88e2a2ffc91d29c68",
-     "Pancha Tantra Samvatsara Shraddha Shraddha Brahmana Ritu Naryana Vishnu Purana Sharada Man",
-     false,
-     134,
      39,
      0
     ],
@@ -20194,14 +20215,6 @@
      0
     ],
     [
-     "6a30905cd8c6b8a005c7c5f3",
-     "Bhagavad-gītā — with Śaṅkara’s Bhāṣya (Sanskrit)",
-     false,
-     313,
-     24,
-     0
-    ],
-    [
      "6a91e259bb7a47bd0f19ee44",
      "MS Indic alpha 978.",
      false,
@@ -24884,10 +24897,10 @@
     "sefaria-cordovero"
    ],
    "books": 598,
-   "readable_books": 342,
+   "readable_books": 345,
    "pages_scanned": 158476,
-   "pages_transcribed": 123626,
-   "pages_translated": 110384,
+   "pages_transcribed": 123653,
+   "pages_translated": 111105,
    "canon_page_equivalents": 8860,
    "ocr_engines": [
     [
@@ -24900,7 +24913,7 @@
     ],
     [
      "gemini-3.1-flash-lite",
-     10244
+     10271
     ],
     [
      "kraken/sophro-mhiro",
@@ -24934,7 +24947,7 @@
    "translation_models": [
     [
      "gemini-3-flash-preview",
-     77459
+     77485
     ],
     [
      "gemini-3.1-flash-lite-preview",
@@ -24942,11 +24955,11 @@
     ],
     [
      "gemini-3.1-flash-lite",
-     9302
+     10200
     ],
     [
      "unrecorded",
-     3888
+     3889
     ],
     [
      "gemini-2.5-flash",
@@ -25967,6 +25980,14 @@
      336
     ],
     [
+     "69c1bb138522835be845ca86",
+     "Meʾirat ʿEnayim (Gaster Hebrew MS 713)",
+     true,
+     374,
+     360,
+     334
+    ],
+    [
      "69b51dc2768235dc65987739",
      "Mosaic Philosophy",
      true,
@@ -26021,14 +26042,6 @@
      330,
      330,
      318
-    ],
-    [
-     "69c1bb138522835be845ca86",
-     "Meʾirat ʿEnayim (Gaster Hebrew MS 713)",
-     true,
-     374,
-     340,
-     315
     ],
     [
      "6984e8498a2f054f912420bd",
@@ -26575,6 +26588,14 @@
      187
     ],
     [
+     "69b51e4547b06ecd5818ca2a",
+     "Daemonomania Pistoriana",
+     true,
+     192,
+     192,
+     187
+    ],
+    [
      "69b525992379d2fed6c299da",
      " Sefer nišmat ḥayyim : kōlel derūšīm yeqarīm weniśegavīm ʻal ʻinyan hanešamah haṭ... ",
      true,
@@ -26716,6 +26737,14 @@
      true,
      176,
      172,
+     161
+    ],
+    [
+     "69b51e5847b06ecd5818e2ad",
+     "New Clarifications on the Life and Works of Guillaume Postel",
+     true,
+     162,
+     162,
      161
     ],
     [
@@ -26879,6 +26908,22 @@
      135
     ],
     [
+     "69b51e45ff09e4fe943aaec9",
+     "Apologia Fratris Archangelus de Burgonovo ... pro defensione doctrinae Cabalae : contra re",
+     true,
+     624,
+     624,
+     132
+    ],
+    [
+     "69b51e4ecf111105c429a518",
+     "Petri Galatini De Arcanis Catholicae Veritatis, Libri XII. : Quibus Pleraque Religionis Ch",
+     true,
+     478,
+     462,
+     132
+    ],
+    [
      "699ef9fc7543a5cb5d64cf08",
      "The Contest of Wisdom with Folly",
      true,
@@ -26943,6 +26988,14 @@
      122
     ],
     [
+     "69b51e9dcf111105c42a176b",
+     "Henrici Cornelii Agrippae armatae militiae equitis aurati et utriusq[ue] iuris doctoris In",
+     true,
+     298,
+     298,
+     120
+    ],
+    [
      "697c8e11e6dd503e0113aed5",
      "Free Thoughts on God, the Universe, Man, Freemasons, Rosicrucians, and the Philosopher's S",
      true,
@@ -26957,6 +27010,14 @@
      132,
      132,
      120
+    ],
+    [
+     "69c1bae58522835be845b540",
+     "Incantations and amulets (Gaster Hebrew MS 177)",
+     true,
+     138,
+     131,
+     118
     ],
     [
      "697e23ca0293c2dd47709e4e",
@@ -27015,28 +27076,12 @@
      113
     ],
     [
-     "69c1bae58522835be845b540",
-     "Incantations and amulets (Gaster Hebrew MS 177)",
-     true,
-     138,
-     126,
-     113
-    ],
-    [
      "6a19b91920d27c2cd050764e",
      "Lurianic kabbalah",
      true,
      160,
      119,
      112
-    ],
-    [
-     "69b51e4ecf111105c429a518",
-     "Petri Galatini De Arcanis Catholicae Veritatis, Libri XII. : Quibus Pleraque Religionis Ch",
-     true,
-     478,
-     462,
-     111
     ],
     [
      "695930dc3bfe3bb44b6fbffd",
@@ -27311,6 +27356,14 @@
      86
     ],
     [
+     "69b51e3f47b06ecd5818c17c",
+     "Petri Galatini Opus de arcanis catholicae veritatis: Hoc est, In omnia difficilia loca Vet",
+     true,
+     718,
+     714,
+     84
+    ],
+    [
      "69b4cd36d5b6c3815e1a4e66",
      "Joseph Solomon Delmedigo — Sefer Elim (1629)",
      true,
@@ -27389,6 +27442,14 @@
      69,
      69,
      69
+    ],
+    [
+     "69b51e3bcf111105c4298b05",
+     "Petri Galatini Opus de arcanis catholicae veritatis : hoc est, in omnia difficilia loca ve",
+     true,
+     956,
+     949,
+     68
     ],
     [
      "690c27e6e0787282ad593281",
@@ -27575,20 +27636,20 @@
      38
     ],
     [
+     "69b51e36ff09e4fe943aa09d",
+     "The Nine Hundred Theses for Debate in Rome in 1486",
+     true,
+     44,
+     43,
+     37
+    ],
+    [
      "6a267db96c1f37c9c4f3b512",
      "Magia Abraham oder Underricht von der Heiligen Cabala - Mscr.Dresd.N.111",
      true,
      302,
      37,
      37
-    ],
-    [
-     "69b51e36ff09e4fe943aa09d",
-     "The Nine Hundred Theses for Debate in Rome in 1486",
-     true,
-     44,
-     43,
-     36
     ],
     [
      "69b51e3c47b06ecd5818c130",
@@ -27599,28 +27660,20 @@
      36
     ],
     [
+     "69b3e612304c1c6b3950b1a3",
+     "Astronomical and Astrological Treatises",
+     true,
+     76,
+     72,
+     34
+    ],
+    [
      "69c1b73bb82ba5d5bed95e83",
      "Catechismen seiner Rosenkreuzer-Grade, 1771 [Omslagtitel]",
      false,
      34,
      34,
      33
-    ],
-    [
-     "69b3e612304c1c6b3950b1a3",
-     "Astronomical and Astrological Treatises",
-     true,
-     76,
-     70,
-     32
-    ],
-    [
-     "69b51e3bcf111105c4298b05",
-     "Petri Galatini Opus de arcanis catholicae veritatis : hoc est, in omnia difficilia loca ve",
-     true,
-     956,
-     949,
-     31
     ],
     [
      "69c1bafe8522835be845c110",
@@ -27681,7 +27734,7 @@
     [
      "69b51cf847b06ecd58182923",
      "The Universal Magnesia of the Philosophers",
-     true,
+     false,
      190,
      28,
      25
@@ -27727,27 +27780,11 @@
      25
     ],
     [
-     "69b51e3f47b06ecd5818c17c",
-     "Petri Galatini Opus de arcanis catholicae veritatis: Hoc est, In omnia difficilia loca Vet",
-     true,
-     718,
-     714,
-     24
-    ],
-    [
      "69b501241e6119e2dd8fae43",
      "Von hylealischen Das ist pri-materialischen catholischen oder Algemeinem natürlichen Chaos",
      true,
      508,
      387,
-     24
-    ],
-    [
-     "69b51e5847b06ecd5818e2ad",
-     "New Clarifications on the Life and Works of Guillaume Postel",
-     true,
-     162,
-     162,
      24
     ],
     [
@@ -27913,7 +27950,7 @@
     [
      "69b51ea3cf111105c42a23a4",
      "The Great Art of Knowledge",
-     true,
+     false,
      540,
      26,
      21
@@ -27961,7 +27998,7 @@
     [
      "69b51e80ff09e4fe943b02d5",
      "The Pamphilian Obelisk",
-     true,
+     false,
      672,
      26,
      16
@@ -28079,14 +28116,6 @@
      0
     ],
     [
-     "69b51e45ff09e4fe943aaec9",
-     "Apologia Fratris Archangelus de Burgonovo ... pro defensione doctrinae Cabalae : contra re",
-     true,
-     624,
-     624,
-     0
-    ],
-    [
      "69b4cc4dd2bf9b45ea47a455",
      "Omnia quae extant opera",
      true,
@@ -28111,27 +28140,11 @@
      0
     ],
     [
-     "69b51e9dcf111105c42a176b",
-     "Henrici Cornelii Agrippae armatae militiae equitis aurati et utriusq[ue] iuris doctoris In",
-     true,
-     298,
-     298,
-     0
-    ],
-    [
      "69b18625c4be2cdd0edc549e",
      "Seder Olam, or the Order of Ages",
      true,
      247,
      228,
-     0
-    ],
-    [
-     "69b51e4547b06ecd5818ca2a",
-     "Daemonomania Pistoriana",
-     true,
-     192,
-     192,
      0
     ],
     [
@@ -29751,10 +29764,10 @@
     "openiti-sufi"
    ],
    "books": 161,
-   "readable_books": 131,
+   "readable_books": 132,
    "pages_scanned": 28271,
-   "pages_transcribed": 26417,
-   "pages_translated": 24976,
+   "pages_transcribed": 26418,
+   "pages_translated": 24977,
    "canon_page_equivalents": 52285,
    "ocr_engines": [
     [
@@ -29767,7 +29780,7 @@
     ],
     [
      "gemini-3.1-flash-lite",
-     1638
+     1639
     ],
     [
      "gemini-2.5-flash",
@@ -29793,7 +29806,7 @@
     ],
     [
      "gemini-3-flash-preview",
-     9883
+     9884
     ],
     [
      "gemini-3.1-flash-lite",
@@ -30810,6 +30823,14 @@
      17
     ],
     [
+     "6a20330018654bf8e1903fdc",
+     "[A booklet on Dhikr, possibly Turunan, as the word turun is written several times in the m",
+     true,
+     25,
+     25,
+     15
+    ],
+    [
      "6a2032d418654bf8e1903850",
      "[Treatise about Dhikr] Or. 7179",
      true,
@@ -30824,14 +30845,6 @@
      15,
      15,
      15
-    ],
-    [
-     "6a20330018654bf8e1903fdc",
-     "[A booklet on Dhikr, possibly Turunan, as the word turun is written several times in the m",
-     true,
-     25,
-     24,
-     14
     ],
     [
      "6992cad0d4d545ae73feeb43",
@@ -31108,7 +31121,7 @@
    "books": 54,
    "readable_books": 22,
    "pages_scanned": 24556,
-   "pages_transcribed": 9757,
+   "pages_transcribed": 9909,
    "pages_translated": 7185,
    "canon_page_equivalents": 41462,
    "ocr_engines": [
@@ -31122,7 +31135,7 @@
     ],
     [
      "gemini-3.1-flash-lite",
-     2548
+     2700
     ],
     [
      "gemini-2.5-flash",
@@ -31381,6 +31394,14 @@
      0
     ],
     [
+     "69b90588cdb14f317fb5251e",
+     "هفت پیکر (Haft Paykar / Seven Beauties)",
+     false,
+     180,
+     177,
+     0
+    ],
+    [
      "69c1b9178522835be844dbc5",
      "Dīvān-i Amīr Khusraw Dihlavī",
      false,
@@ -31553,14 +31574,6 @@
      "مثنوی معنوی — دفتر ٣–٤ (Masnavi, Books III–IV, Bulaq 1851)",
      false,
      352,
-     25,
-     0
-    ],
-    [
-     "69b90588cdb14f317fb5251e",
-     "هفت پیکر (Haft Paykar / Seven Beauties)",
-     false,
-     180,
      25,
      0
     ],
@@ -32467,388 +32480,388 @@
  "eternity_shelf": {
   "listed": 278,
   "found": 278,
-  "readable": 224,
+  "readable": 225,
   "list": "scripts/catalog-coverage/eternity-shelf-5513.json",
   "owner_issue": 5513,
-  "counted_at": "2026-10-03T22:05:16.671Z"
+  "counted_at": "2026-10-04T05:48:31.274Z"
  },
  "tengyur_draft": {
   "owner_issue": 5497,
   "volumes": 213,
-  "volumes_translated": 25,
-  "volumes_partly": 4,
+  "volumes_translated": 187,
+  "volumes_partly": 0,
   "pages_imaged": 128639,
   "pages_with_text": 128369,
-  "pages_translated": 16957,
-  "spend_usd": 28.86,
-  "usage_rows": 293,
-  "usd_per_page": 0.0017,
+  "pages_translated": 110952,
+  "spend_usd": 196.8,
+  "usage_rows": 614,
+  "usd_per_page": 0.00177,
   "model": "gemini-3-flash-preview, prompt v13, Batch API, one page per request without neighbour context (#5497 arm B); the 5-volume pilot used 8-page chained blocks",
   "per_volume": [
    [
     1,
     514,
-    0
+    514
    ],
    [
     2,
     548,
-    0
+    548
    ],
    [
     3,
     586,
-    0
+    586
    ],
    [
     4,
     592,
-    0
+    592
    ],
    [
     5,
     640,
-    0
+    640
    ],
    [
     6,
     624,
-    0
+    624
    ],
    [
     7,
     630,
-    0
+    630
    ],
    [
     8,
     658,
-    0
+    658
    ],
    [
     9,
     682,
-    0
+    682
    ],
    [
     10,
     730,
-    0
+    730
    ],
    [
     11,
     552,
-    0
+    552
    ],
    [
     12,
     592,
-    0
+    592
    ],
    [
     13,
     604,
-    0
+    604
    ],
    [
     14,
     654,
-    0
+    654
    ],
    [
     15,
     620,
-    0
+    620
    ],
    [
     16,
     628,
-    0
+    627
    ],
    [
     17,
     898,
-    0
+    895
    ],
    [
     18,
     462,
-    0
+    462
    ],
    [
     19,
     522,
-    0
+    519
    ],
    [
     20,
     634,
-    0
+    634
    ],
    [
     21,
     740,
-    0
+    740
    ],
    [
     22,
     756,
-    0
+    756
    ],
    [
     23,
     496,
-    0
+    496
    ],
    [
     24,
     526,
-    0
+    525
    ],
    [
     25,
     626,
-    0
+    626
    ],
    [
     26,
     876,
-    0
+    876
    ],
    [
     27,
     622,
-    0
+    622
    ],
    [
     28,
     580,
-    0
+    578
    ],
    [
     29,
     646,
-    0
+    646
    ],
    [
     30,
     466,
-    0
+    465
    ],
    [
     31,
     422,
-    0
+    422
    ],
    [
     32,
     582,
-    0
+    582
    ],
    [
     33,
     408,
-    300
+    408
    ],
    [
     34,
     438,
-    0
+    438
    ],
    [
     35,
     566,
-    0
+    565
    ],
    [
     36,
     614,
-    0
+    614
    ],
    [
     37,
     552,
-    0
+    552
    ],
    [
     38,
     486,
-    0
+    483
    ],
    [
     39,
     634,
-    0
+    633
    ],
    [
     40,
     648,
-    0
+    648
    ],
    [
     41,
     624,
-    0
+    621
    ],
    [
     42,
     460,
-    0
+    460
    ],
    [
     43,
     436,
-    0
+    435
    ],
    [
     44,
     576,
-    0
+    575
    ],
    [
     45,
     532,
-    0
+    530
    ],
    [
     46,
     672,
-    0
+    672
    ],
    [
     47,
     486,
-    0
+    486
    ],
    [
     48,
     434,
-    0
+    434
    ],
    [
     49,
     688,
-    0
+    688
    ],
    [
     50,
     498,
-    0
+    494
    ],
    [
     51,
     650,
-    0
+    649
    ],
    [
     52,
     610,
-    0
+    610
    ],
    [
     53,
     552,
-    0
+    552
    ],
    [
     54,
     702,
-    0
+    702
    ],
    [
     55,
     488,
-    0
+    487
    ],
    [
     56,
     564,
-    0
+    564
    ],
    [
     57,
     702,
-    0
+    702
    ],
    [
     58,
     632,
-    0
+    631
    ],
    [
     59,
     482,
-    0
+    482
    ],
    [
     60,
     702,
-    0
+    700
    ],
    [
     61,
     722,
-    0
+    722
    ],
    [
     62,
     722,
-    0
+    722
    ],
    [
     63,
     600,
-    0
+    599
    ],
    [
     64,
     548,
-    0
+    548
    ],
    [
     65,
     546,
-    0
+    546
    ],
    [
     66,
     680,
-    0
+    680
    ],
    [
     67,
     578,
-    0
+    578
    ],
    [
     68,
     676,
-    0
+    676
    ],
    [
     69,
     700,
-    0
+    700
    ],
    [
     70,
     568,
-    0
+    568
    ],
    [
     71,
     658,
-    0
+    658
    ],
    [
     72,
     666,
-    0
+    665
    ],
    [
     73,
     692,
-    0
+    692
    ],
    [
     74,
@@ -32883,82 +32896,82 @@
    [
     80,
     422,
-    0
+    422
    ],
    [
     81,
     483,
-    0
+    483
    ],
    [
     82,
     628,
-    0
+    628
    ],
    [
     83,
     612,
-    0
+    612
    ],
    [
     84,
     682,
-    0
+    682
    ],
    [
     85,
     680,
-    0
+    680
    ],
    [
     86,
     548,
-    0
+    548
    ],
    [
     87,
     520,
-    0
+    520
    ],
    [
     88,
     538,
-    0
+    538
    ],
    [
     89,
     478,
-    0
+    478
    ],
    [
     90,
     468,
-    0
+    467
    ],
    [
     91,
     660,
-    0
+    660
    ],
    [
     92,
     502,
-    0
+    502
    ],
    [
     93,
     628,
-    0
+    627
    ],
    [
     94,
     638,
-    0
+    638
    ],
    [
     95,
     632,
-    0
+    632
    ],
    [
     96,
@@ -32973,7 +32986,7 @@
    [
     98,
     658,
-    0
+    658
    ],
    [
     99,
@@ -33018,7 +33031,7 @@
    [
     107,
     580,
-    0
+    580
    ],
    [
     108,
@@ -33033,322 +33046,322 @@
    [
     110,
     714,
-    301
+    714
    ],
    [
     111,
     624,
-    0
+    624
    ],
    [
     112,
     516,
-    0
+    516
    ],
    [
     113,
     530,
-    324
+    530
    ],
    [
     114,
     536,
-    0
+    536
    ],
    [
     115,
     544,
-    0
+    544
    ],
    [
     116,
     552,
-    0
+    552
    ],
    [
     117,
     536,
-    0
+    536
    ],
    [
     118,
     580,
-    0
+    580
    ],
    [
     119,
     542,
-    0
+    542
    ],
    [
     120,
     602,
-    0
+    602
    ],
    [
     121,
     522,
-    0
+    522
    ],
    [
     122,
     618,
-    0
+    618
    ],
    [
     123,
     512,
-    0
+    512
    ],
    [
     124,
     688,
-    0
+    688
    ],
    [
     125,
     564,
-    0
+    564
    ],
    [
     126,
     530,
-    0
+    530
    ],
    [
     127,
     564,
-    0
+    564
    ],
    [
     128,
     388,
-    0
+    388
    ],
    [
     129,
     424,
-    0
+    424
    ],
    [
     130,
     576,
-    0
+    576
    ],
    [
     131,
     668,
-    0
+    668
    ],
    [
     132,
     440,
-    0
+    440
    ],
    [
     133,
     674,
-    0
+    674
    ],
    [
     134,
     717,
-    0
+    717
    ],
    [
     135,
     584,
-    0
+    584
    ],
    [
     136,
     498,
-    0
+    498
    ],
    [
     137,
     600,
-    0
+    600
    ],
    [
     138,
     460,
-    0
+    460
    ],
    [
     139,
     456,
-    0
+    456
    ],
    [
     140,
     513,
-    0
+    513
    ],
    [
     141,
     530,
-    0
+    530
    ],
    [
     142,
     658,
-    0
+    658
    ],
    [
     143,
     664,
-    0
+    664
    ],
    [
     144,
     692,
-    0
+    692
    ],
    [
     145,
     642,
-    0
+    642
    ],
    [
     146,
     572,
-    0
+    572
    ],
    [
     147,
     644,
-    0
+    644
    ],
    [
     148,
     444,
-    0
+    444
    ],
    [
     149,
     520,
-    0
+    520
    ],
    [
     150,
     476,
-    0
+    476
    ],
    [
     151,
     534,
-    0
+    534
    ],
    [
     152,
     622,
-    0
+    622
    ],
    [
     153,
     560,
-    0
+    560
    ],
    [
     154,
     448,
-    0
+    448
    ],
    [
     155,
     490,
-    0
+    489
    ],
    [
     156,
     650,
-    0
+    650
    ],
    [
     157,
     412,
-    104
+    412
    ],
    [
     158,
     628,
-    0
+    628
    ],
    [
     159,
     516,
-    0
+    516
    ],
    [
     160,
     554,
-    0
+    554
    ],
    [
     161,
     546,
-    0
+    546
    ],
    [
     162,
     774,
-    0
+    774
    ],
    [
     163,
     778,
-    0
+    778
    ],
    [
     164,
     524,
-    0
+    524
    ],
    [
     165,
     686,
-    0
+    686
    ],
    [
     166,
     526,
-    0
+    526
    ],
    [
     167,
     506,
-    0
+    506
    ],
    [
     168,
     678,
-    0
+    678
    ],
    [
     169,
     502,
-    0
+    502
    ],
    [
     170,
     730,
-    0
+    730
    ],
    [
     171,
     656,
-    0
+    656
    ],
    [
     172,
     388,
-    0
+    388
    ],
    [
     173,
     373,
-    0
+    373
    ],
    [
     174,
@@ -33358,7 +33371,7 @@
    [
     175,
     717,
-    0
+    717
    ],
    [
     176,
@@ -33408,7 +33421,7 @@
    [
     185,
     654,
-    0
+    654
    ],
    [
     186,
@@ -33423,12 +33436,12 @@
    [
     188,
     576,
-    0
+    576
    ],
    [
     189,
     652,
-    0
+    652
    ],
    [
     190,
@@ -33438,17 +33451,17 @@
    [
     191,
     724,
-    0
+    724
    ],
    [
     192,
     660,
-    0
+    660
    ],
    [
     193,
     626,
-    0
+    626
    ],
    [
     194,
@@ -33551,6 +33564,6 @@
     0
    ]
   ],
-  "counted_at": "2026-10-03T22:05:16.671Z"
+  "counted_at": "2026-10-04T05:48:31.274Z"
  }
 }
