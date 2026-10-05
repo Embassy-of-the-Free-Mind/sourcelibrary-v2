@@ -201,7 +201,47 @@ export function findRunningHeads(pages) {
  *   which reads as noise in print)
  * - running heads, metadata tags, HTML remnants and entities stripped
  */
-export function translationToTypst(text, { runningHeads = new Set(), anchor = () => '', reflow = false } = {}) {
+/**
+ * When a spread is cut into single pages, the crop can keep a sliver of the
+ * facing page, and its clipped line-ends are transcribed one per line: "sph |
+ * la l | te | dir" (Bovelles, Geometrie practique, p. 100). A run of five or
+ * more lines of five characters or fewer goes — unless it is a table or a
+ * letter key (kept), or words the book uses elsewhere (`vocab`), which are real
+ * text set narrow beside a figure and are joined into one line.
+ * A one-term list ("Line | Straight, | Oblique.") mixes in longer entries and
+ * is never a run.
+ */
+export function dropEdgeFragments(text, vocab = null) {
+  const lines = String(text).split('\n');
+  const tiny = l => { const t = l.trim(); return t.length > 0 && t.length <= 5 && !/^[#<>*-]/.test(t); };
+  const keep = lines.map(() => true);
+  for (let i = 0; i < lines.length;) {
+    if (!tiny(lines[i])) { i++; continue; }
+    let j = i; const run = [];
+    while (j < lines.length && (tiny(lines[j]) || !lines[j].trim())) { if (lines[j].trim()) run.push(j); j++; }
+    if (run.length >= 5) {
+      const t = run.map(k => lines[k].trim());
+      const share = re => t.filter(x => re.test(x)).length / t.length;
+      // A table or a letter key, one entry to a line (Fludd UCH I: "24 | 12 | 6", "gg | ff | ee"): keep
+      if (share(/^[\d\s().,;:ℓ]+$|^(\p{L})\1?\.?(\s+\d+)?$/u) >= 0.5) { i = j; continue; }
+      // Real words set narrow beside a figure ("par- | al- | lel- | o- | gram", "and | one | said")
+      // are words the book uses elsewhere; clipped syllables ("sph | dir | esg") are not.
+      // Without the book's vocabulary nothing is dropped, only joined.
+      const words = t.join(' ').replace(/(\p{L})- (?=\p{Ll})/gu, '$1').toLowerCase().match(/\p{L}{3,}/gu) || [];
+      // Words of three letters or more: a French edge sliver's "de | la | en" also
+      // occur in the translation's own glosses of source terms
+      const known = vocab ? words.filter(w => (vocab.get(w) || 0) >= 3).length / (words.length || 1) : 1;
+      if (known >= 0.7) {
+        lines[run[0]] = t.join(' ').replace(/(\p{L})- (?=\p{Ll})/gu, '$1');
+        for (const k of run.slice(1)) keep[k] = false;
+      } else for (const k of run) keep[k] = false;
+    }
+    i = j;
+  }
+  return lines.filter((_, k) => keep[k]).join('\n');
+}
+
+export function translationToTypst(text, { runningHeads = new Set(), anchor = () => '', reflow = false, vocab = null } = {}) {
   if (!text) return { body: '', printedPage: null };
 
   let out = text;
@@ -212,6 +252,7 @@ export function translationToTypst(text, { runningHeads = new Set(), anchor = ()
   out = out.replace(/<page-num>[\s\S]*?<\/page-num>/gi, '');
 
   out = out.replace(new RegExp(`<(${DROP_TAGS})(?:\\s[^>]*)?>[\\s\\S]*?<\\/\\1>`, 'gi'), '');
+  out = dropEdgeFragments(out, vocab);
 
   // Remove AI preambles — the canonical guard (#3108) catches conversational
   // openers ("Note: the text in the image is in French...") that the narrow
@@ -1174,11 +1215,15 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
   const asText = field => p => ({ page_number: p.page_number, translation: { data: p[field]?.data || '' } });
   const render = (list, side) => {
     const runningHeads = findRunningHeads(list);
+    // The book's own words, to tell narrow text beside a figure from clipped debris
+    const vocab = new Map();
+    for (const p of list) for (const w of String(p.translation.data).toLowerCase().match(/\p{L}+/gu) || []) vocab.set(w, (vocab.get(w) || 0) + 1);
     const out = new Map();
     for (const p of list) {
       const { body } = translationToTypst(p.translation.data, {
         runningHeads,
         reflow: side === 'o',
+        vocab,
         anchor: printedPage => `%%SRC:${side}:${p.page_number}:${printedPage ? typstString(printedPage) : 'none'}%%`,
       });
       if (body) out.set(p.page_number, body);

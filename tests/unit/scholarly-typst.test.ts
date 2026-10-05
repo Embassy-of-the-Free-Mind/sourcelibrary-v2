@@ -6,7 +6,7 @@
 import { describe, it, expect } from 'vitest';
 import { execSync } from 'child_process';
 // @ts-expect-error — plain .mjs script library, no types
-import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus, resolveSourceImages, takeInscriptions, splitOriginalTerm, plateCaption, runningTitle, attachOrphanNotes, illustrationQuery, closeSplitWord, captionCell, captionHeightMm, dropCopyMatter, dropDescriptiveNotes, dropArchivedSpreads } from '../../scripts/lib/scholarly-typst.mjs';
+import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus, resolveSourceImages, takeInscriptions, splitOriginalTerm, plateCaption, runningTitle, attachOrphanNotes, illustrationQuery, closeSplitWord, captionCell, captionHeightMm, dropCopyMatter, dropDescriptiveNotes, dropArchivedSpreads, dropEdgeFragments } from '../../scripts/lib/scholarly-typst.mjs';
 
 const page = (n: number, data: string, ocr?: string) => ({ page_number: n, translation: { data }, ...(ocr ? { ocr: { data: ocr } } : {}) });
 
@@ -443,6 +443,24 @@ describe('resolveSourceImages', () => {
 
   it('returns no link when the book records neither', () => {
     expect(resolveSourceImages({})).toEqual({ url: null, label: 'Source images' });
+  });
+});
+
+describe('dropEdgeFragments (Bovelles, Geometrie practique)', () => {
+  const vocab = new Map(['and', 'one', 'said', 'for', 'the', 'earth', 'that', 'this', 'parallelogram', 'man'].map(w => [w, 10] as [string, number]));
+  it('drops a sliver of the facing page, clipped one syllable to a line', () => {
+    expect(dropEdgeFragments('Text before.\nsph\nla l\nte\ndir\ngal\ncer\nText after.', vocab)).toBe('Text before.\nText after.');
+  });
+  it('joins real words set narrow beside a figure, closing their hyphens', () => {
+    expect(dropEdgeFragments('say\nthat\nthis\npar-\nal-\nlel-\no-\ngram', vocab)).toBe('say that this parallelogram');
+    expect(dropEdgeFragments('and\none\nsaid\nfor\nthe\nearth', vocab)).toBe('and one said for the earth');
+  });
+  it('keeps a table or a letter key, one entry to a line (Fludd UCH I)', () => {
+    expect(dropEdgeFragments('24\n12\n6\n3\n24\n12', vocab)).toBe('24\n12\n6\n3\n24\n12');
+    expect(dropEdgeFragments('gg\nff\nee\ndd\ncc', vocab)).toBe('gg\nff\nee\ndd\ncc');
+  });
+  it('never drops without the book\'s vocabulary', () => {
+    expect(dropEdgeFragments('sph\nla l\nte\ndir\ngal')).toBe('sph la l te dir gal');
   });
 });
 
