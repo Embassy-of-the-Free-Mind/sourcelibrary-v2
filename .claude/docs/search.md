@@ -72,12 +72,15 @@ up to 40 extra terms: the alias spellings of the same name token, doubled conson
 single, umlauted forms that `entities` confirms, and Latin case forms (-us/-ius, -i/-ii, -o/-io,
 -um/-ium, -ianus/-iana).
 
-- `/api/search`, `/api/books/[id]/search` and the Librarian's collection-scoped keyword list pass
-  them to `buildPageSearchStage(query, bookIds, { nameVariants })`, which ORs them in at
+- `/api/books/[id]/search` and the Librarian's collection-scoped keyword list pass them to
+  `buildPageSearchStage(query, bookIds, { nameVariants })`, which ORs them in at
   `NAME_VARIANT_BOOST` (1/40). That low on purpose: a variant is a rarer word, BM25 scores it
   higher, and at 1/4 "Plato" lost all 48 of its top pages to "Platone".
-- The Librarian's global search runs them as a separate RRF list (`kwv`, weight 0.98), because
-  its keyword list reads only the top 48.
+- `/api/search` and the Librarian's global search run them as a SECOND query that must match a
+  variant (`requireNameVariant`): appended after the main page hits in `/api/search` (10 pages),
+  and a separate RRF list (`kwv`, weight 0.98) in the Librarian. OR-ing them in does nothing
+  there — both read only the top 25–48 pages, which for any well-attested name all print the
+  typed spelling.
 - Not covered: quoted phrases (exact by request), the `?lang=<iso>` Postgres lane, the book-title
   lanes, tenant library search, and a surname that is no entity's whole name or alias ("Kufler"
   exists only inside "Abraham Kufler").
