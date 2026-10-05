@@ -69,6 +69,9 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // Cleopatra); the nightly leak audit flagged it on bph.sourcelibrary.org the
   // day it shipped (2026-09-30).
   '/connect',
+  // The journey film's curated instance (#5861): Source Library's own story,
+  // told through one global (non-partner) book, with links into it.
+  '/how-it-works',
   // Volunteer review queues. Items are drawn from `review_candidates`, a pool
   // built across every visible book in the corpus, so a partner reading room
   // would hand its visitors other libraries' pages to judge — the same content
