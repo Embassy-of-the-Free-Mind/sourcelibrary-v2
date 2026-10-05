@@ -37,6 +37,8 @@ const MODEL = 'gemini-3-flash-preview';
 const args = process.argv.slice(2);
 const bookId = args.find(a => !a.startsWith('--'));
 const opt = name => { const i = args.indexOf(`--${name}`); return i >= 0 ? args[i + 1] : null; };
+// A dense labelled table can need more than the default (Fludd UCH I, p. 440); --max-tokens for its re-ask
+const MAX_TOKENS = Number(opt('max-tokens')) || 4000;
 if (!bookId) { console.error('usage: plate-captions.mjs <bookId> [--limit N] [--pages a,b] [--refresh]'); process.exit(1); }
 
 const outDir = join('scripts', 'output', 'plate-captions');
@@ -146,7 +148,7 @@ try {
     for (let i = 0; i < pageNumbers.length; i += 8) {
       for (const p of await Promise.all(pageNumbers.slice(i, i + 8).map(prepare))) {
         if (!p) continue;
-        lines.push({ key: String(p.n), request: buildRequest({ model: MODEL, prompt: p.prompt, images: [p.image], maxOutputTokens: 4000, responseMimeType: 'application/json' }) });
+        lines.push({ key: String(p.n), request: buildRequest({ model: MODEL, prompt: p.prompt, images: [p.image], maxOutputTokens: MAX_TOKENS, responseMimeType: 'application/json' }) });
         pages[p.n] = { scanUrl: p.scanUrl, scanWidth: p.scanWidth, scanHeight: p.scanHeight };
       }
       console.log(`prepared ${Math.min(i + 8, pageNumbers.length)}/${pageNumbers.length}`);
@@ -168,7 +170,7 @@ try {
         type: 'image_extraction',
         bookId,
         pageIds: p.pageId ? [p.pageId] : undefined,
-        maxOutputTokens: 4000,
+        maxOutputTokens: MAX_TOKENS,
         responseMimeType: 'application/json',
       });
       accept(n, p, text);

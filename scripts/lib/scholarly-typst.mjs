@@ -534,11 +534,12 @@ const TYPST_PREAMBLE = `
 // the same page on the other side, when the edition has one.
 #let current-src = state("current-src", none)
 // A chapter that would run past 99 notes (sparse chapter lists: one Fludd book
-// carries 470) restarts them at the source page that would cross 99 instead —
-// notes: is how many that page carries — so a marker stays two digits. The
-// count only falls at the reset, so every number on the page it lands on is
-// still distinct (… 97 98 1 2).
-#let src(n, printed: none, side: "t", other: none, notes: 0) = { context if counter(footnote).get().first() + notes > 99 { counter(footnote).update(0) }; in-margin(drop: -0.7em, {
+// carries 470) restarts them at the source page that would cross 99 instead, so
+// a marker stays two digits; every number on the page it lands on is still
+// distinct (… 97 98 1 2). The generator decides where (reset: true): a reset
+// computed here from the counter chains one layout pass per reset, and a
+// 1,000-page book stopped converging (a tailpiece then dropped at random).
+#let src(n, printed: none, side: "t", other: none, reset: false) = { if reset { counter(footnote).update(0) }; in-margin(drop: -0.7em, {
   set par(justify: false, leading: 0.4em, first-line-indent: 0pt)
   [#metadata(n)#label(side + "-" + n)]
   current-src.update(n)
@@ -572,7 +573,7 @@ const TYPST_PREAMBLE = `
 }
 // A tailpiece belongs to the end of its section: where the page has no room
 // left for it, it is dropped rather than given a page of its own
-#let tailpiece(file, width, id) = {
+#let tailpiece(file, width, id, height: none) = {
   // Measured from where the section's text ENDS (this marker), not from where
   // the ornament would land: once spilled to the next page it always "fits"
   [#metadata(none)#label(id)]
@@ -584,7 +585,15 @@ const TYPST_PREAMBLE = `
     // An ornament never opens a page: if the text ended at the foot of the
     // last one, the marker itself lands at the top of this one
     let opens-page = at.y < 30mm + 12mm
-    if not opens-page and measure(block(width: text-w, orn)).height + 8mm <= room { orn }
+    // Height from the image's known proportions when the generator passes it
+    let need = if height != none { (height + 3.2em + 8mm).to-absolute() } else { measure(block(width: text-w, orn)).height + 8mm }
+    let fits = not opens-page and need <= room
+    // Never an empty result: when this context rendered nothing, Fludd UCH I's
+    // p. 23 tailpiece was dropped on a page with 80 mm free (its values read
+    // 'fits' the moment anything else was rendered here). Measured, not
+    // explained; keep the box.
+    box(width: 0pt, height: 0pt)
+    if fits { orn }
   }
 }
 
@@ -1144,8 +1153,17 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
   const joinedForm = body => body.replace(/^((?:%%SRC:[^%]*%%)?\s*)(?:\.\.\.|…)\s*/, '$1');
 
   const anchored = (body, there, label) => body.replace(/%%SRC:([to]):(\d+):(none|"[^"]*")%%/, (_, side, n, printed) =>
-    `#src("${n}", printed: ${printed}, side: "${side}"${there.has(Number(n)) ? `, other: ${typstString(label)}` : ''}${notesIn(body) ? `, notes: ${notesIn(body)}` : ''});`);
-  const notesIn = body => (body.match(/#footnote\[/g) || []).length;
+    `#src("${n}", printed: ${printed}, side: "${side}"${there.has(Number(n)) ? `, other: ${typstString(label)}` : ''}${resetNotes(body) ? ', reset: true' : ''});`);
+  // Notes since the last restart, mirrored from the Typst side: a chapter
+  // heading restarts them, and so does a source page that would cross 99
+  let noteCount = 0;
+  const resetNotes = body => {
+    const n = (body.match(/#footnote\[/g) || []).length;
+    const reset = noteCount + n > 99;
+    noteCount = reset ? n : noteCount + n;
+    return reset;
+  };
+  const placeHeads = list => { if (list.some(h => /^#heading\(level: [23]\)/.test(h))) noteCount = 0; return list; };
 
   // A plate floats to the top or bottom of a nearby page; it is emitted
   // between paragraphs, never inside one, so a page whose text continues the
@@ -1189,7 +1207,7 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
     }
     const orn = ornamentsByPage.get(page.page_number) || [];
     const head = orn.filter(o => o.kind === 'headpiece').slice(0, 1).map(o => `#headpiece(${typstString(o.file)})`);
-    const tail = orn.filter(o => o.kind === 'tailpiece').map((o, k) => `#tailpiece(${typstString(o.file)}, ${Math.min(42, Math.max(24, 30 * Math.sqrt(o.width / o.height))).toFixed(0)}mm, "tp-${page.page_number}-${k}")`);
+    const tail = orn.filter(o => o.kind === 'tailpiece').map((o, k) => `#tailpiece(${typstString(o.file)}, ${Math.min(42, Math.max(24, 30 * Math.sqrt(o.width / o.height))).toFixed(0)}mm, "tp-${page.page_number}-${k}", height: ${(Math.min(42, Math.max(24, 30 * Math.sqrt(o.width / o.height))) * o.height / o.width).toFixed(1)}mm)`);
     // A headpiece opens a new paragraph by nature; on a continued sentence it waits
     if (continues(prevBody, body)) {
       doc[prevIdx] = closeSplitWord(doc[prevIdx], textOf(prevBody), textOf(body));
@@ -1198,9 +1216,9 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
     else if (head.length) {
       // A book opening reads headpiece, book title, contents — and then its
       // plate (the contents table): the plates follow the opening text
-      doc.push(''); doc.push(...head); doc.push(...pendingHeads, ...heads); pendingHeads = []; doc.push(''); doc.push('#pagegap'); prevIdx = doc.push(anchored(body, original, language)) - 1; doc.push(''); doc.push(...flushPlates());
+      doc.push(''); doc.push(...head); doc.push(...placeHeads([...pendingHeads, ...heads])); pendingHeads = []; doc.push(''); doc.push('#pagegap'); prevIdx = doc.push(anchored(body, original, language)) - 1; doc.push(''); doc.push(...flushPlates());
     }
-    else { doc.push(''); doc.push(...pendingHeads, ...heads); pendingHeads = []; doc.push(''); doc.push(...flushPlates()); doc.push('#pagegap'); prevIdx = doc.push(anchored(body, original, language)) - 1; }
+    else { doc.push(''); doc.push(...placeHeads([...pendingHeads, ...heads])); pendingHeads = []; doc.push(''); doc.push(...flushPlates()); doc.push('#pagegap'); prevIdx = doc.push(anchored(body, original, language)) - 1; }
     if (tail.length) { doc.push(''); doc.push(...tail); }
     prevBody = body;
   }
@@ -1215,6 +1233,7 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
   // without leaving the PDF. It is the OCR transcription, unreviewed, and says so.
   if (original.size) {
     const code = LANG_CODES[String(language).toLowerCase()];
+    noteCount = 0; // its part heading restarts the notes
     doc.push(`
 = The ${escapeTypst(language)} Text
 
@@ -1895,7 +1914,10 @@ export async function generateScholarlyPdf(book, pages, options = {}) {
       // Large books legitimately take minutes, and a loaded machine (this box
       // often runs concurrent pipeline jobs) stretches that further
       timeout: 300000,
-      stdio: ['pipe', 'pipe', 'pipe'],
+      // stderr passes through: a 'layout did not converge' warning means a
+      // context-measured element (a tailpiece's room check) may have been set
+      // on a stale measurement, and must not go unseen
+      stdio: ['pipe', 'pipe', 'inherit'],
     });
 
     return readFileSync(pdfFile);

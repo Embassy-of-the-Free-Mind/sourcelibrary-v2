@@ -231,7 +231,7 @@ describe('plates', () => {
       illustrations: [plate(2)],
       ornaments: [{ page_number: 2, kind: 'headpiece', file: 'ornament-1.jpg', width: 1600, height: 400 }, { page_number: 1, kind: 'tailpiece', file: 'ornament-2.jpg', width: 600, height: 600 }],
     });
-    expect(src).toMatch(/Last words of the epistle\.\n\n#tailpiece\("ornament-2\.jpg", 30mm, "tp-1-0"\)/);
+    expect(src).toMatch(/Last words of the epistle\.\n\n#tailpiece\("ornament-2\.jpg", 30mm, "tp-1-0", height: [\d.]+mm\)/);
     // headpiece, then the book's title set large (level 0), then its plate
     expect(src).toMatch(/#headpiece\("ornament-1\.jpg"\)[\s\S]*#dline\(0\)\[[^\]]*BOOK THE SECOND\.\][\s\S]*#plate\("plate-2\.jpg"/);
   });
