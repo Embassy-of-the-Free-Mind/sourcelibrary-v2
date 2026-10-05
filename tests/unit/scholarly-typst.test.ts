@@ -214,6 +214,16 @@ describe('plates', () => {
     expect(src).not.toContain('History of both worlds, the greater');
   });
 
+  it('opens a book under its headpiece, title before plates, and closes a section with its tailpiece', () => {
+    const src = generateTypstSource(book, [page(1, 'Last words of the epistle.'), page(2, '## BOOK THE SECOND.\n\nContents of the second book.'), page(3, 'Next.')], {
+      illustrations: [plate(2)],
+      ornaments: [{ page_number: 2, kind: 'headpiece', file: 'ornament-1.jpg', width: 1600, height: 400 }, { page_number: 1, kind: 'tailpiece', file: 'ornament-2.jpg', width: 600, height: 600 }],
+    });
+    expect(src).toMatch(/Last words of the epistle\.\n\n#tailpiece\("ornament-2\.jpg", 30mm, "tp-1-0"\)/);
+    // headpiece, then the book's title set large (level 0), then its plate
+    expect(src).toMatch(/#headpiece\("ornament-1\.jpg"\)[\s\S]*#dline\(0\)\[[^\]]*BOOK THE SECOND\.\][\s\S]*#plate\("plate-2\.jpg"/);
+  });
+
   it('prints every diagram and title page whatever its gallery score', () => {
     expect(illustrationQuery({ id: 'b' })).toEqual({ book_id: 'b', type: { $ne: 'decorative' }, $or: [{ gallery_quality: { $gte: 0.7 } }, { type: { $in: ['diagram', 'frontispiece', 'title-page', 'map', 'chart', 'table'] } }] });
   });
