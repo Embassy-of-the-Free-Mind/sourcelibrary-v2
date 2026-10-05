@@ -1618,6 +1618,15 @@ export function illustrationQuery(book) {
   return { book_id: book.id, type: { $ne: 'decorative' }, $or: [{ gallery_quality: { $gte: 0.7 } }, { type: { $in: ALWAYS_PLATE_TYPES } }] };
 }
 
+/**
+ * One caption value as Typst content. A value is its own content block, so a
+ * leading "13." opens a numbered list and "- " a bullet: the Peter/Pierre
+ * plate of Fludd UCH I (p. 266) lost its number lines that way.
+ */
+export function captionCell(text) {
+  return escapeTypst(text).replace(/^(\s*)(\d+)\./, '$1$2\\.').replace(/^(\s*)([-+=])(?=\s|$)/, '$1\\$2');
+}
+
 function plateTypst(il) {
   const aspect = il.height / il.width;
   const widthMm = il.full
@@ -1625,7 +1634,7 @@ function plateTypst(il) {
     : Math.min(PLATE_MAX_W_MM, PLATE_MAX_H_MM / aspect);
   const kind = PLATE_KINDS[il.type] || 'Illustration';
   const c = plateCaption(il.caption);
-  const pairs = list => `(${list.map(([a, b]) => `([${escapeTypst(a)}], [${escapeTypst(b)}])`).join(', ')},)`;
+  const pairs = list => `(${list.map(([a, b]) => `([${captionCell(a)}], [${captionCell(b)}])`).join(', ')},)`;
   const parts = [`kind: [${kind}]`];
   if (il.full) parts.push('full: true');
   if (c?.title) parts.push(`title: [${escapeTypst(c.title)}]`);
@@ -1634,7 +1643,7 @@ function plateTypst(il) {
   // caption pass read them from the plate itself, so they are used only without it
   const lines = il.textFollows ? [] : c?.lines.length ? c.lines : (il.inscriptions || []).map(t => [null, t]);
   if (il.textFollows) parts.push('follows: true');
-  if (lines.length) parts.push(`lines: (${lines.map(([o, e]) => `(${o ? `[${escapeTypst(o)}]` : 'none'}, [${o ? escapeTypst(e) : e}])`).join(', ')},)`);
+  if (lines.length) parts.push(`lines: (${lines.map(([o, e]) => `(${o ? `[${captionCell(o)}]` : 'none'}, [${o ? captionCell(e) : e}])`).join(', ')},)`);
   if (c?.key.length) parts.push(`key: ${pairs(c.key)}`);
   return `#plate(${typstString(il.file)}, ${widthMm.toFixed(1)}mm, "${il.page_number}", ${parts.join(', ')})`;
 }
