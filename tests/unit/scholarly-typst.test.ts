@@ -163,6 +163,17 @@ describe('generateTypstSource', () => {
   }, 60000);
 });
 
+describe('imprint', () => {
+  it('names the editor, and sets the DOI on its own unbroken line', () => {
+    const src = generateTypstSource({ id: 'b9', slug: 's', title: 'T', author: 'A', language: 'Latin', publisher: 'de Bry | Galleri' }, [page(1, 'One.')], { doi: '10.5281/zenodo.1', version: '1.0.0' });
+    expect(src).toContain('edited by Derek Lomas.');
+    expect(src).toContain('Editor and creative director: Derek Lomas');
+    // A line break, then the link boxed so it never splits ("//" is escaped: it opens a Typst comment)
+    expect(src).toMatch(/ \\\n {2}#box\(link\("https:\/\/doi\.org\/10\.5281\/zenodo\.1"\)\[https:\\\/\\\/doi\.org\/10\.5281\/zenodo\.1\]\)/);
+    expect(src).toContain('de Bry and Galleri');
+  });
+});
+
 describe('source terms inline', () => {
   it('takes the quoted term and keeps the explanation as the note', () => {
     expect(splitOriginalTerm('original: "ardorem," meaning heat or burning light.')).toEqual({ term: 'ardorem', rest: 'Meaning heat or burning light.' });
