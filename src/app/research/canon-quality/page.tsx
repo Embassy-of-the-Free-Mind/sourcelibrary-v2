@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
 import type { CSSProperties, ReactNode } from 'react';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import { ENGLISH, HATCH, Figure, Step, Swatch } from '../canon-gap/diagrams';
+import { ENGLISH, HATCH, Figure, Step, Swatch, ImprovementChart } from '../canon-gap/diagrams';
+import { IMPROVEMENTS } from '../canon-gap/improvements';
 
 // Built for the Eternity Foundation working session (#5513, #5864): how each core canon's text and
 // English are checked, and where a scholar's time would go. No new numbers: every figure is copied
@@ -628,6 +629,7 @@ const CONTENTS = [
   ['strip', 'What has been checked'],
   ['canons', 'Canon by canon'],
   ['ask', 'What we would ask of a scholar'],
+  ['changes', 'What each measured change did'],
   ['method', 'How to read these numbers'],
 ] as const;
 
@@ -779,6 +781,14 @@ export default function CanonQualityPage() {
             of 0.61. A scholar&rsquo;s reading is the check that remains.
             <S href={SRC.tengyurRandom} />
           </p>
+        </Section>
+
+        <Section id="changes" title="What each measured change did">
+          <p className="text-base">
+            Every change to how we read or translate is tested on the same pages as the method it would replace, against
+            the same reference. These are the results so far, across all languages.
+          </p>
+          <ImprovementChart n={4} rows={IMPROVEMENTS} />
         </Section>
 
         <Section id="method" title="How to read these numbers">
