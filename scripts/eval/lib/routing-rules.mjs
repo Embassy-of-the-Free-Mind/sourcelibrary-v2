@@ -1,5 +1,6 @@
 // Routing-decision rules for an engine-vs-engine OCR eval: label precision, a catastrophic-count
-// comparison with and without a margin, the by-eye adjudication tally, and the invention veto.
+// comparison with and without a margin, the by-eye adjudication tally, the invention veto, and
+// (#5870) non-inferiority of the ENGLISH made from each engine's read, judged against a human reference.
 // Pure functions over counts and per-page flags; no I/O, no model call.
 //
 // PRIOR ART: scripts/eval/benchmark-cost-lane.mjs — the house non-inferiority rule (median CER Δ ≤
@@ -84,6 +85,34 @@ export function adjudicationWins({ wins, losses }, { mode = 'majority', min = 0.
   return { pass, wins, losses, untied, win_share_wilson95: ci, p_sign: untied ? r3(binomTwoSided(wins, untied)) : null, mode };
 }
 
+/**
+ * Non-inferiority on TRANSLATION FIDELITY against a human reference (#5870), paired by page.
+ * `pairs` is one row per page: { candidate: number, baseline: number }, each the mean of the blind
+ * judges' 1–5 fidelity for the English made from that engine's read (translation-vs-reference/).
+ *
+ * pass ⇔ n ≥ min_pairs ∧ lower 95 % bound of mean(candidate − baseline) ≥ −margin.
+ * The interval is a seeded percentile bootstrap over pages (bootstrapItems), so the pairing is kept.
+ * A failed check whose point estimate is still within the margin is `inconclusive`: the interval is
+ * wider than the margin at this n, which is not the same as the candidate being worse.
+ * `max_margin_passed` is −(lower bound): the rule passes for any margin at or above it.
+ */
+export function translationLift(pairs, { margin = 0.25, min_pairs = 6, seed = 5870, iters = 4000, tie = 0.25 } = {}) {
+  const P = pairs.filter((p) => Number.isFinite(p.candidate) && Number.isFinite(p.baseline));
+  const n = P.length;
+  if (n < min_pairs) return { pass: null, n, margin, min_pairs };
+  const d = P.map((p) => p.candidate - p.baseline);
+  const mean = d.reduce((a, x) => a + x, 0) / n;
+  const ci = d.every((x) => x === d[0]) ? [d[0], d[0]] : bootstrapItems(d, (s) => s.reduce((a, x) => a + x, 0) / s.length, makeRng(seed), iters);
+  const better = d.filter((x) => x > tie).length, worse = d.filter((x) => x < -tie).length;
+  const pass = ci[0] >= -margin - EPS;
+  return {
+    pass, inconclusive: !pass && mean >= -margin - EPS,
+    n, margin, mean_candidate: r3(P.reduce((a, p) => a + p.candidate, 0) / n), mean_baseline: r3(P.reduce((a, p) => a + p.baseline, 0) / n),
+    mean_diff: r3(mean), mean_diff_ci95: [r3(ci[0]), r3(ci[1])], better, same: n - better - worse, worse,
+    p_sign: better + worse ? r3(binomTwoSided(better, better + worse)) : null, max_margin_passed: r3(Math.max(0, -ci[0])),
+  };
+}
+
 /** The invention veto: a candidate that wrote text which is not on the leaf does not pass. */
 export function inventionVeto({ candidateInvented = [], baselineInvented = [] }, { max = 0 } = {}) {
   return { pass: candidateInvented.length <= max, candidate_invented: candidateInvented, baseline_invented: baselineInvented, max };
@@ -101,6 +130,8 @@ export function groupInputs(results, group, { candidate, baseline }) {
     group, n_pages: P.length, n_text: T.length,
     label: { yes: T.filter((p) => p.label_ok === 'yes').length, n: T.length },
     pairs: P.map((p) => ({ slug: p.slug, candidate: !!p.arms[candidate]?.catastrophic, baseline: !!p.arms[baseline]?.catastrophic })),
+    // Present only on runs judged against a human reference (#5870): page.fidelity = { <arm>: mean judge fidelity }.
+    fidelity: T.some((p) => p.fidelity) ? T.map((p) => ({ slug: p.slug, candidate: p.fidelity?.[candidate] ?? null, baseline: p.fidelity?.[baseline] ?? null })) : null,
     adjudication: adj && adj.judged === adj.pages ? {
       pages: adj.pages, wins: adj[candidate] ?? 0, losses: adj[baseline] ?? 0, both: adj.both ?? 0, neither: adj.neither ?? 0, cannot_tell: adj.cannot_tell ?? 0,
       candidateInvented: adj[`${candidate}_invented`] ?? [], baselineInvented: adj[`${baseline}_invented`] ?? [],
@@ -124,10 +155,26 @@ export function plantInferior(inputs, { share = 0.2, seed = 5828 } = {}) {
   return { ...inputs, planted: k, pairs: base.map((p, i) => (hit.has(i) ? { ...p, candidate: true } : p)) };
 }
 
+/**
+ * The same control on fidelity: the planted candidate is never better than the baseline on any page
+ * (min of the two), and on `share` of the pages (at least 2, seeded) its English scores 1, the floor
+ * a failed read produces. A translation rule that passes it has no power at this n.
+ */
+export function plantInferiorFidelity(inputs, { share = 0.2, seed = 5828 } = {}) {
+  const rng = makeRng(seed);
+  const base = inputs.fidelity.map((p) => ({ ...p, candidate: Math.min(p.candidate ?? 1, p.baseline ?? 1) }));
+  const ok = base.map((p, i) => (p.candidate > 1 ? i : -1)).filter((i) => i >= 0);
+  for (let i = ok.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [ok[i], ok[j]] = [ok[j], ok[i]]; }
+  const k = Math.min(ok.length, Math.max(2, Math.ceil(base.length * share)));
+  const hit = new Set(ok.slice(0, k));
+  return { ...inputs, planted: k, fidelity: base.map((p, i) => (hit.has(i) ? { ...p, candidate: 1 } : p)) };
+}
+
 const CHECKS = {
   labelPrecision: (c, x) => labelPrecision(x.label, c),
   countNoWorse: (c, x) => countNoWorse({ candidate: x.pairs.filter((p) => p.candidate).length, baseline: x.pairs.filter((p) => p.baseline).length }, c),
   rateNonInferior: (c, x) => rateNonInferior(x.pairs, c),
+  translationLift: (c, x) => (x.fidelity ? translationLift(x.fidelity, c) : { pass: null, pending: 'no fidelity scores (judge against a reference first)' }),
   adjudication: (c, x) => {
     if (!x.adjudication) return { pass: null, pending: 'adjudication not complete' };
     const w = adjudicationWins(x.adjudication, c), v = inventionVeto(x.adjudication, { max: c.invention_max ?? 0 });
@@ -156,7 +203,9 @@ export function applyRule(rule, inputs) {
   if (inputs.n_text < (rule.min_text_pages ?? 10)) verdict = V.small_n;
   else if (own) verdict = own.on_fail;
   else if (Object.values(checks).some((c) => c.pass == null)) verdict = V.pending;
-  else verdict = Object.values(checks).every((c) => c.pass) ? V.pass : V.fail;
+  else if (Object.values(checks).every((c) => c.pass)) verdict = V.pass;
+  // Every failed check only failed for want of n (translationLift): the rule's own `inconclusive`, if it names one.
+  else verdict = V.inconclusive && Object.values(checks).filter((c) => !c.pass).every((c) => c.inconclusive) ? V.inconclusive : V.fail;
   return { rule: rule.id, group: inputs.group, n_pages: inputs.n_pages, n_text: inputs.n_text, checks, passed: Object.fromEntries(Object.entries(checks).map(([k, v]) => [k, v.pass])), verdict };
 }
 
@@ -166,8 +215,21 @@ export function applyRule(rule, inputs) {
  */
 export function negativeControl(rule, inputs, opts) {
   const countChecks = rule.checks.filter((c) => c.rule === 'countNoWorse' || c.rule === 'rateNonInferior');
-  if (!countChecks.length || inputs.n_text < (rule.min_text_pages ?? 10)) return null;
-  const planted = plantInferior(inputs, opts);
-  const out = Object.fromEntries(countChecks.map((c) => [c.id, CHECKS[c.rule](c, planted)]));
-  return { planted_pages: planted.planted, baseline_failures: planted.pairs.filter((p) => p.baseline).length, candidate_failures: planted.pairs.filter((p) => p.candidate).length, held: Object.values(out).some((c) => c.pass === false), checks: Object.fromEntries(Object.entries(out).map(([k, v]) => [k, v.pass])) };
+  const liftChecks = inputs.fidelity ? rule.checks.filter((c) => c.rule === 'translationLift') : [];
+  if ((!countChecks.length && !liftChecks.length) || inputs.n_text < (rule.min_text_pages ?? 10)) return null;
+  const out = {}; const res = {};
+  if (countChecks.length) {
+    const planted = plantInferior(inputs, opts);
+    for (const c of countChecks) out[c.id] = CHECKS[c.rule](c, planted);
+    Object.assign(res, { planted_pages: planted.planted, baseline_failures: planted.pairs.filter((p) => p.baseline).length, candidate_failures: planted.pairs.filter((p) => p.candidate).length });
+  }
+  if (liftChecks.length) {
+    const planted = plantInferiorFidelity(inputs, opts);
+    for (const c of liftChecks) out[c.id] = CHECKS[c.rule](c, planted);
+    const lift = out[liftChecks[0].id];
+    res.fidelity = { planted_pages: planted.planted, mean_diff: lift.mean_diff, mean_diff_ci95: lift.mean_diff_ci95, held: liftChecks.some((c) => out[c.id].pass === false) };
+  }
+  // Each planted arm (count, fidelity) must be refused by at least one of its own checks.
+  const held = (!countChecks.length || countChecks.some((c) => out[c.id].pass === false)) && (!liftChecks.length || res.fidelity.held);
+  return { ...res, held, checks: Object.fromEntries(Object.entries(out).map(([k, v]) => [k, v.pass])) };
 }

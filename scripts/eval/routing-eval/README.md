@@ -54,12 +54,17 @@ A rule file names a candidate, a baseline, a floor on pages with text, and a lis
 | `countNoWorse` | candidate failures ≤ baseline failures + `slack` | `slack` (0) |
 | `rateNonInferior` | count within `slack` AND the upper 95 % bound of (candidate rate − baseline rate), paired by page, ≤ `margin` | `slack` (1), `margin` (0.10), `seed`, `iters` |
 | `adjudication` | the candidate wins more pages than it loses by eye, and invented text on no page | `mode`: `majority` or `wilson_lower`; `invention_max` (0) |
+| `translationLift` | the lower 95 % bound of mean(candidate − baseline) judge fidelity of the ENGLISH made from each read, paired by page, is ≥ −`margin`. Needs `page.fidelity = { <arm>: score }` in results.json (from `translation-vs-reference/`). Fails with `inconclusive` when the point estimate is inside the margin but the interval is not; a rule's `verdicts.inconclusive` then names the verdict | `margin` (0.25), `min_pairs` (6), `tie` (0.25), `seed`, `iters` |
 
 Reading order: fewer pages with text than `min_text_pages` → `small_n`, the rule is not applied; a
 failed check with its own `on_fail` wins; an unanswered check → `pending`; all pass → `pass`; else `fail`.
 
 - `margin-v1.json` is the default for new runs. It differs from #5795's rule only in (b).
 - `hidden-flash-5795-registered.json` is #5795's rule as it was registered, kept so that run replays.
+- `translation-lift-v1.json` (#5870) scores an engine by the English its read produces, judged blind against a
+  published human translation, with the A5 Flash re-read as the bar. Its negative control plants an arm that is
+  never better than the baseline and scores 1 on a fifth of the pages. Driver for the first run:
+  `scripts/eval/engine-contest-5870/contest.mjs` (it writes a results.json that `decide --results` reads).
 
 Write a new rule file BEFORE the seal and commit it. A rule changed after the arms ran is post hoc and
 the write-up says so.
