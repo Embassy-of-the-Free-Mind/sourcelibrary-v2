@@ -446,6 +446,15 @@ describe('resolveSourceImages', () => {
   });
 });
 
+describe('glosses', () => {
+  it('sets a short gloss in the line, keeps a long one as a note, drops one that repeats its word', () => {
+    const { body } = translationToTypst('The Horology<gloss>clock-making</gloss> and the Macrocosm<gloss>the greater world or universe considered as an ordered whole</gloss> of Fludd<gloss>Fludd</gloss>.');
+    expect(body).toContain('Horology #gl[clock-making];');
+    expect(body).toContain('#footnote[Gloss: the greater world or universe considered as an ordered whole];');
+    expect(body).toMatch(/of Fludd\.$/);
+  });
+});
+
 describe('copy matter and descriptive notes (Fludd UCH I)', () => {
   it('drops a dealer\'s slip before the title page, keeps a real page that mentions a flyleaf', () => {
     const pages = [

@@ -267,9 +267,16 @@ export function translationToTypst(text, { runningHeads = new Set(), anchor = ()
     const clean = cleanForNote(c);
     return clean ? footnote(clean) : '';
   });
-  out = out.replace(/<gloss>([\s\S]*?)<\/gloss>/gi, (_, c) => {
-    const clean = cleanForNote(c);
-    return clean.length >= 3 ? footnote(`Gloss: ${clean}`) : '';
+  // A gloss of a word or two ("clock-making" for Horology) is set in the
+  // line, in grey; a footnote for each made half of Fludd UCH I's 6,300 notes.
+  // A gloss that only repeats the word before it is dropped, and a longer
+  // explanation stays a footnote.
+  out = out.replace(/<gloss>([\s\S]*?)<\/gloss>/gi, (_, c, at, whole) => {
+    const clean = cleanForNote(c).replace(/[.;,]$/, '');
+    if (clean.length < 3) return '';
+    const before = whole.slice(Math.max(0, at - 60), at).replace(/<[^>]*>/g, ' ').trim().toLowerCase();
+    if (before.endsWith(clean.toLowerCase())) return '';
+    return isShortGloss(clean) ? hold(`#gl[${escapeTypst(clean)}];`) : footnote(`Gloss: ${clean}`);
   });
   // <term> is used two ways: wrapping a word (keep the word) or carrying an
   // explanation of the preceding word ("hypophetas: from the Greek…") — a note
@@ -362,10 +369,12 @@ export function translationToTypst(text, { runningHeads = new Set(), anchor = ()
     body = body.replace(/%%IN(\d+)%%/g, (_, i) => inserts[Number(i)]);
   }
   // An inline source term reads as a word: exactly one space before it
-  body = body.replace(/[ \t]*#orig\[/g, ' #orig[');
+  body = body.replace(/[ \t]*#(orig|gl)\[/g, ' #$1[');
 
   return { body: body.trim(), printedPage };
 }
+
+export const isShortGloss = text => String(text).trim().split(/\s+/).length <= 6 && String(text).length <= 45;
 
 function escapeTypst(text) {
   // Escape characters special in Typst content mode
@@ -617,6 +626,9 @@ const TYPST_PREAMBLE = `
 
 // The source's own word for what the translation just said, after it in the line
 #let orig(body) = text(size: 0.86em, fill: muted, style: "italic", hyphenate: false)[(#body)]
+// A short gloss of the word before it: grey and upright, so it never reads as
+// the source's own term (grey italic)
+#let gl(body) = text(size: 0.86em, fill: muted, hyphenate: false)[(#body)]
 
 // The book's own illustrations, cropped from the page images. The image keeps
 // the hairline frame of a tipped-in plate; the caption names the source page,
@@ -1110,7 +1122,7 @@ This AI-assisted translation has *not* been reviewed by human editors or transla
 
 The translation follows the source page by page. A number in the margin marks where each page of the digitized copy begins; it is the number to cite, and it is a link: it opens that page's facsimile at sourcelibrary.org/book/${escapeTypst(bookSlug)}/page-number/_n_, where the translation can be checked against the original. Where the source prints a page number of its own, it follows in grey.
 
-${includeOriginal ? `The ${escapeTypst(language)} text the translation was made from is printed at the back; under each margin number a small link leads to the same page on the other side. ` : ''}Notes printed in the margins of the original are set in the margin here. Footnotes are not the author's: they are explanatory notes supplied in the course of translation, and carry the same caution as the translation itself. A word in grey italics, in parentheses, is the source's own term for what the translation has just said. Words in square brackets are supplied by the translation; [?] marks a reading the transcription was unsure of.
+${includeOriginal ? `The ${escapeTypst(language)} text the translation was made from is printed at the back; under each margin number a small link leads to the same page on the other side. ` : ''}Notes printed in the margins of the original are set in the margin here. Footnotes are not the author's: they are explanatory notes supplied in the course of translation, and carry the same caution as the translation itself. A word in grey italics, in parentheses, is the source's own term for what the translation has just said; one in grey upright type glosses the word before it. Words in square brackets are supplied by the translation; [?] marks a reading the transcription was unsure of.
 
 This work is licensed under Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0).
 `);
@@ -1170,7 +1182,7 @@ This work is licensed under Creative Commons Attribution-ShareAlike 4.0 Internat
   // are set as one paragraph. The translation marks its halves with an
   // ellipsis; the transcription simply stops without a full stop.
   const textOf = body => stripLeadingApparatus(
-    body.replace(/^(?:%%SRC:[^%]*%%|\s)+/, '').replace(/#(?:footnote|mnote|orig)\[[^\]]*\](?:#footnote\[[^\]]*\])?;?/g, ''),
+    body.replace(/^(?:%%SRC:[^%]*%%|\s)+/, '').replace(/#(?:footnote|mnote|orig|gl)\[[^\]]*\](?:#footnote\[[^\]]*\])?;?/g, ''),
   );
   const endsMidSentence = body => {
     // An unclear-reading marker at the very end ("[?money]") is a word, not punctuation
