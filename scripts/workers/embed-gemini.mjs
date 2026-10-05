@@ -27,7 +27,10 @@
  *
  * Modes:
  *   --full        Process all pages with OCR or translation
- *   --incremental Process pages newer than latest in Supabase (default)
+ *   --incremental Process pages whose source changed after this worker's own
+ *                 watermark (system_config 'embed_gemini_watermark', default).
+ *                 The mark advances only after an unscoped, complete,
+ *                 error-free run — see scripts/lib/embed-watermark.mjs (#5869).
  *   --missing-only Process only books that have pages with embedding IS NULL (~3-4h vs 85h for --full)
  *   --restale     Re-embed rows whose Mongo source is newer than the
  *                 Supabase mongo_updated_at watermark (catches re-OCR /
@@ -35,6 +38,8 @@
  *                 watermark column + backfill (see add-page-translations-
  *                 watermark.sql and backfill-page-translations-watermark.mjs).
  *   --book ID     Process a single book
+ *   --books-file PATH  Embed every page with text and no row, for a JSON array
+ *                 of book ids (translated or not)
  *   --limit N     Stop after N pages
  *   --dry-run     Count pages without embedding
  *
@@ -52,6 +57,7 @@ import fs from 'node:fs';
 import { cleanPageText, buildPageEmbeddingRow } from '../lib/page-embedding-text.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, estimateUsd, FLUSH_EVERY_TEXTS } from '../lib/embedding-usage.mjs';
+import { pageSourceTs, incrementalSourceFilter, nextWatermark, readWatermark, writeWatermark } from '../lib/embed-watermark.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -78,13 +84,19 @@ const MISSING_ONLY = args.includes('--missing-only');
 const RESTALE = args.includes('--restale');
 const DRY_RUN = args.includes('--dry-run');
 const BOOK_ID = args.find((_, i, a) => a[i - 1] === '--book');
-// --books-file PATH: embed pages for a fixed JSON array of book ids, skipping
-// pages already present in page_translations. Built for the OCR-tail backfill
-// (untranslated books never added to the table — --missing-only can't reach
-// them because it only scans books already present). Reuses the OCR fallback
-// (textToEmbed = ocrText when no translation), so untranslated originals get a
+// --books-file PATH: embed every page that has text and no row in
+// page_translations, for a fixed JSON array of book ids — translated pages and
+// untranslated ones alike. --missing-only can't reach these books (it only
+// scans rows that exist), and until #5869 this mode streamed only UNtranslated
+// OCR pages, so it skipped exactly the translated pages the incremental
+// watermark had passed over (Pepys's Diary, 2026-10-05). Untranslated pages
+// still use the OCR fallback (textToEmbed = ocrText), so they get a
 // work-specific vector with an EMPTY translation column (no search pollution).
 const BOOKS_FILE = args.find((_, i, a) => a[i - 1] === '--books-file');
+// --translated-only (with --books-file): embed only missing pages that HAVE a
+// translation. For budget-capped backfills, where translated pages are the ones
+// readers and the Librarian search by meaning (#5869).
+const TRANSLATED_ONLY = args.includes('--translated-only');
 const LIMIT = parseInt(args.find((_, i, a) => a[i - 1] === '--limit') || '0') || 0;
 const WORKER_ID = parseInt(args.find((_, i, a) => a[i - 1] === '--worker-id') || '0');
 const WORKER_COUNT = parseInt(args.find((_, i, a) => a[i - 1] === '--worker-count') || '1');
@@ -142,7 +154,43 @@ const embedUsage = newEmbedUsage();
 let usageRows = 0;         // gemini_usage rows written this run
 let usageTotalChars = 0;   // characters recorded, for the closing summary
 
+// Per-book attribution for runs over a known book set (--books-file, --book).
+// A scope envelope meters spend BY book_id (spend-guard getScopeSpendUsd), so a
+// book_id-less row is invisible to it: an envelope-funded backfill logged that
+// way would read $0 against its budget however much it spent (#5869). The
+// streaming incremental run keeps one unattributed accumulator — its pages span
+// thousands of books per flush window and it is never envelope-capped by book.
+const ATTRIBUTE_PER_BOOK = Boolean(BOOKS_FILE || BOOK_ID);
+const bookUsage = new Map(); // book_id → accumulator
+let bookUsageTexts = 0;
+
+function recordUsage(items) {
+  if (!ATTRIBUTE_PER_BOOK) {
+    addEmbedUsage(embedUsage, items.map(i => i.text));
+    return;
+  }
+  for (const item of items) {
+    const id = item.page.book_id;
+    if (!bookUsage.has(id)) bookUsage.set(id, newEmbedUsage());
+    addEmbedUsage(bookUsage.get(id), [item.text]);
+  }
+  bookUsageTexts += items.length;
+}
+
 async function flushEmbedUsage(force = false) {
+  if (ATTRIBUTE_PER_BOOK) {
+    if (!force && bookUsageTexts < FLUSH_EVERY_TEXTS) return;
+    for (const [bookId, usage] of bookUsage) {
+      const chars = usage.chars;
+      if (!chars) continue;
+      await logEmbeddingUsage(usage, { model: MODEL, bookId, endpoint: 'worker/embed-gemini' });
+      usageRows += 1;
+      usageTotalChars += chars;
+    }
+    bookUsage.clear();
+    bookUsageTexts = 0;
+    return;
+  }
   if (!force && embedUsage.texts < FLUSH_EVERY_TEXTS) return;
   const chars = embedUsage.chars;
   if (!chars) return;
@@ -151,7 +199,8 @@ async function flushEmbedUsage(force = false) {
   usageTotalChars += chars;
 }
 
-async function embedBatch(texts) {
+async function embedBatch(items) {
+  const texts = items.map(i => i.text);
   const requests = texts.map(t => ({
     model: `models/${MODEL}`,
     content: { parts: [{ text: t }] },
@@ -169,7 +218,7 @@ async function embedBatch(texts) {
     rateLimitBackoff = Math.min(rateLimitBackoff + 5, 60);
     console.log(`  Rate limited — backing off ${rateLimitBackoff}s`);
     await sleep(rateLimitBackoff * 1000);
-    return embedBatch(texts); // Retry
+    return embedBatch(items); // Retry
   }
 
   if (!res.ok) {
@@ -184,7 +233,7 @@ async function embedBatch(texts) {
     throw new Error(`Expected ${texts.length} embeddings, got ${data.embeddings?.length || 0}`);
   }
   // Counted only on success — a 429 retried above was not billed for a result.
-  addEmbedUsage(embedUsage, texts);
+  recordUsage(items);
   await flushEmbedUsage();
   return data.embeddings.map(e => e.values);
 }
@@ -202,7 +251,10 @@ function cleanText(text) {
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-async function getLastSyncTime() {
+// Legacy mark: max(updated_at) over every writer's rows. Used ONCE, to seed the
+// worker-owned watermark when none exists yet; never as the selection rule
+// (#5869 — other writers advance it past pages this worker never read).
+async function getLegacySyncTime() {
   const { data } = await supabase
     .from('page_translations')
     .select('updated_at')
@@ -219,6 +271,9 @@ console.log(`Mode: ${FULL_MODE ? 'full' : RESTALE ? 'restale' : MISSING_ONLY ? '
 
 /** Books the open scope envelope allows, when the global dial is closed (#4865). */
 let ENVELOPE_IDS = null;
+/** The worker-owned incremental watermark this run selected from (#5869). */
+let incrementalMark = null;
+const RUN_STARTED_AT = new Date();
 
 const mongoClient = new MongoClient(MONGODB_URI, { maxPoolSize: 3 });
 await mongoClient.connect();
@@ -324,7 +379,7 @@ if (BOOK_ID) {
     console.log(`Worker ${WORKER_ID}/${WORKER_COUNT}: ${targetIds.length.toLocaleString()}/${all.length.toLocaleString()} books`);
   }
   // Fetch page_ids already embedded for these books (REST, chunked) so we skip
-  // them in the loop and only embed the not-yet-present (untranslated) pages.
+  // them in the loop and only embed the not-yet-present pages.
   console.log(`Loading ${targetIds.length.toLocaleString()} target books; finding already-embedded pages...`);
   const existing = new Set();
   for (let i = 0; i < targetIds.length; i += 200) {
@@ -342,15 +397,16 @@ if (BOOK_ID) {
   }
   globalThis.SKIP_PAGE_IDS = existing;
   pageQuery.book_id = { $in: targetIds };
-  // Scope the stream to UNtranslated OCR pages only — the embeddable tail.
-  // Without this we'd drag every already-embedded page (full ocr.data text)
-  // of these partially-translated books over the wire just to skip it. The
-  // skip-set above stays as a correctness backstop for the rare untranslated
-  // page that was somehow already embedded.
-  delete pageQuery.$or;
-  pageQuery['ocr.data'] = { $exists: true, $type: 'string' };
-  pageQuery['translation.data'] = { $exists: false };
-  console.log(`${existing.size.toLocaleString()} pages already embedded — streaming only untranslated OCR pages.`);
+  // Keep the base $or (OCR OR translation text). This used to narrow the stream
+  // to `translation.data: {$exists: false}`, which made a translated page with
+  // no row unreachable from every mode (#5869). The skip-set does the
+  // "no row yet" filtering; the cost is streaming already-embedded pages over
+  // the wire to discard them, which is Mongo egress, not Gemini spend.
+  if (TRANSLATED_ONLY) {
+    delete pageQuery.$or;
+    pageQuery['translation.data'] = { $exists: true, $type: 'string' };
+  }
+  console.log(`${existing.size.toLocaleString()} pages already embedded — streaming every ${TRANSLATED_ONLY ? 'translated ' : ''}page with text, skipping those.`);
 } else if (RESTALE) {
   // Find rows whose Mongo source has moved past the Supabase mongo_updated_at
   // watermark — re-OCR or re-translation in Mongo without a re-embed. The
@@ -414,23 +470,26 @@ if (BOOK_ID) {
   globalThis.MISSING_PAGE_IDS = stalePageIds; // reuse the same per-page gate as --missing-only
   pageQuery.book_id = { $in: [...staleBookIds] };
 } else if (!FULL_MODE) {
-  const lastSync = await getLastSyncTime();
-  if (lastSync) {
-    // Use $or with both updated_at fields for incremental
-    pageQuery.$and = [
-      pageQuery.$or ? { $or: pageQuery.$or } : {},
-      {
-        $or: [
-          { 'translation.updated_at': { $gt: lastSync } },
-          { 'ocr.updated_at': { $gt: lastSync } },
-        ],
-      },
-    ];
-    delete pageQuery.$or;
-    console.log(`Incremental from: ${lastSync.toISOString()}`);
-  } else {
-    console.log('No existing data — doing full backfill');
+  incrementalMark = await readWatermark(db);
+  if (!incrementalMark) {
+    // First run under the worker-owned mark: seed it from the legacy value so
+    // the cron does not fall through to a ~$180 full pass. Pages already behind
+    // the legacy mark are the #5869 backfill's job, not this run's.
+    incrementalMark = await getLegacySyncTime();
+    if (!incrementalMark) {
+      console.error('No watermark and no legacy mark — refusing an implicit full pass. Run --full deliberately.');
+      await mongoClient.close();
+      process.exit(1);
+    }
+    await writeWatermark(db, incrementalMark, 'embed-gemini: seed worker-owned watermark from legacy max(updated_at) (#5869)');
+    console.log(`Seeded watermark from legacy mark: ${incrementalMark.toISOString()}`);
   }
+  pageQuery.$and = [
+    pageQuery.$or ? { $or: pageQuery.$or } : {},
+    incrementalSourceFilter(incrementalMark),
+  ];
+  delete pageQuery.$or;
+  console.log(`Incremental from worker watermark: ${incrementalMark.toISOString()}`);
 }
 
 // Narrow whatever the mode branch selected to the envelope's books (#4865).
@@ -487,6 +546,13 @@ async function getBook(bookId) {
   return meta;
 }
 
+// Watermark bookkeeping (#5869). Anything that confines the book set makes the
+// run "scoped": it may read new pages, but it cannot vouch for the pages it
+// did not look at, so it must not move the mark.
+const INCREMENTAL = !FULL_MODE && !RESTALE && !MISSING_ONLY && !BOOKS_FILE && !BOOK_ID;
+const RUN_SCOPED = Boolean(ENVELOPE_IDS) || WORKER_COUNT > 1;
+let maxReadTs = null;
+
 // Stream pages
 const cursor = db.collection('pages')
   .find(pageQuery)
@@ -512,8 +578,11 @@ let batch = [];
 let consecutiveFailures = 0;
 let supabaseBackoff = 0;
 
+let hitLimit = false;
 for await (const page of cursor) {
-  if (LIMIT && processed >= LIMIT) break;
+  if (LIMIT && processed >= LIMIT) { hitLimit = true; break; }
+  const ts = pageSourceTs(page);
+  if (ts && (!maxReadTs || ts > maxReadTs)) maxReadTs = ts;
 
   // In --missing-only / --restale modes, only embed pages identified by the
   // pre-scan (missing embedding, or Mongo newer than Supabase watermark).
@@ -573,6 +642,23 @@ if (batch.length > 0) await processBatch(batch);
 // Record the tail. Without this, everything since the last flush is spend that
 // happened and was never written down — the exact hole #4162 is about.
 await flushEmbedUsage(true);
+
+if (INCREMENTAL && !DRY_RUN) {
+  const next = nextWatermark({
+    prior: incrementalMark,
+    maxReadTs,
+    startedAt: RUN_STARTED_AT,
+    scoped: RUN_SCOPED,
+    limited: hitLimit,
+    errors,
+  });
+  if (next) {
+    await writeWatermark(db, next, `embed-gemini --incremental: unscoped clean run, ${embedded} embedded (#5869)`);
+    console.log(`Watermark advanced: ${incrementalMark?.toISOString() ?? '(none)'} → ${next.toISOString()}`);
+  } else {
+    console.log(`Watermark held at ${incrementalMark?.toISOString() ?? '(none)'} (scoped=${RUN_SCOPED} limited=${hitLimit} errors=${errors}).`);
+  }
+}
 
 await mongoClient.close();
 if (pgClient) await pgClient.end();
@@ -673,8 +759,7 @@ async function upsertToSupabase(rows) {
 
 async function processBatch(items) {
   try {
-    const texts = items.map(i => i.text);
-    const embeddings = await embedBatch(texts);
+    const embeddings = await embedBatch(items);
 
     // Shared row builder — see the import note above.
     const rows = items.map((item, i) => buildPageEmbeddingRow({
