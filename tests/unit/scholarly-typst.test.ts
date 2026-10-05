@@ -6,7 +6,7 @@
 import { describe, it, expect } from 'vitest';
 import { execSync } from 'child_process';
 // @ts-expect-error — plain .mjs script library, no types
-import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus, resolveSourceImages, takeInscriptions, splitOriginalTerm, plateCaption, runningTitle, attachOrphanNotes, illustrationQuery, closeSplitWord } from '../../scripts/lib/scholarly-typst.mjs';
+import { translationToTypst, findRunningHeads, generateTypstSource, generateScholarlyPdf, resolveDedication, dedicationToTypst, displayTitle, translationLine, indexEntries, urlDisplay, stripLeadingApparatus, resolveSourceImages, takeInscriptions, splitOriginalTerm, plateCaption, runningTitle, attachOrphanNotes, illustrationQuery, closeSplitWord, captionCell } from '../../scripts/lib/scholarly-typst.mjs';
 
 const page = (n: number, data: string, ocr?: string) => ({ page_number: n, translation: { data }, ...(ocr ? { ocr: { data: ocr } } : {}) });
 
@@ -443,6 +443,14 @@ describe('resolveSourceImages', () => {
 
   it('returns no link when the book records neither', () => {
     expect(resolveSourceImages({})).toEqual({ url: null, label: 'Source images' });
+  });
+});
+
+describe('captionCell', () => {
+  it('keeps a leading number or dash from opening a list (Fludd UCH I, p. 266)', () => {
+    expect(captionCell('13. 22. 8. 22. 13.')).toBe('13\\. 22. 8. 22. 13.');
+    expect(captionCell('- Earth')).toBe('\\- Earth');
+    expect(captionCell('P e t e r.')).toBe('P e t e r.');
   });
 });
 
