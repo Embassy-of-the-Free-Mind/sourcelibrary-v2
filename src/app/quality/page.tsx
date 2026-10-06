@@ -9,6 +9,7 @@ import feedback from '@/data/quality-feedback-themes.json';
 import { listExperiments, latestCanonStatus, typedPages } from '@/lib/quality-center';
 import { AS_OF as OPEN_WORK_AS_OF, GROUPS } from '../research/quality/open/issues';
 import { LEAF, leafHref, PROSE_AS_OF, WAYS } from './content';
+import ParetoCharts from './ParetoCharts';
 
 // The Quality Center (#5918): where text quality stands, what we are doing about it, and how
 // people take part. Every number and list is read at build time from files committed on main
@@ -413,6 +414,24 @@ export default function QualityCenterPage() {
             The quality figures above come from experiments, and each experiment has a written record: the question, how
             it was run, the result, and the decision it led to. Null results and retractions are recorded too.
           </p>
+
+          <Sub>Cost against accuracy, by script</Sub>
+          <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
+            Each OCR engine we have measured: what it costs to read 1,000 pages, and how accurately it reads them against
+            a typed reference. Within a figure, the engines are compared only on pages every one of them read. The bar is
+            the 95% interval. The dashed ring grows with the share of words that appear nowhere in the reference
+            (invented text). The teal line joins the engines no other engine beats on both cost and accuracy. Gemini
+            costs are metered Batch spend. A hollow marker (<sup>c</sup> in the table) is a self-hosted engine
+            priced on its inference time alone, which assumes the machine does nothing else, so it reads low.
+          </p>
+          <ParetoCharts />
+          <Source>
+            Generated from the benchmark results by{' '}
+            <A href={`${GH}blob/main/scripts/eval/build-ocr-pareto.mjs`}>scripts/eval/build-ocr-pareto.mjs</A> whenever
+            the results change. Costs: <A href={`${GH}blob/main/scripts/eval/ocr-cost-snapshot.mjs`}>the Gemini meter</A> and{' '}
+            <A href={`${GH}blob/main/scripts/eval/ocr-engine-gpu-costs.json`}>each self-hosted run&rsquo;s record</A>.
+            Testing the engines not yet tried is separate, priced work (<IssueLink num={5983} />).
+          </Source>
 
           <Sub>Running now</Sub>
           <ul className="space-y-2 text-stone-700 leading-relaxed">

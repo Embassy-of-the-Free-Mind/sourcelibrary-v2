@@ -29,6 +29,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { execFileSync } from 'node:child_process';
 import { readBenchmarkRows } from './lib/benchmark-rows.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -272,6 +273,10 @@ const out = {
 fs.writeFileSync(OUT, JSON.stringify(out) + '\n');
 console.log(`rows ${rows.length} · pages ${out.totals.pages} · cells ${cells.length} · ${JSON.stringify(gradeCount)}`);
 console.log(`self-check vs scorer summary: OK · wrote ${path.relative(process.cwd(), OUT)}`);
+
+// The /quality cost/accuracy charts read the same rows (#5983). Rebuilt here, in the same commit as this
+// table, because the Vercel build cannot: .vercelignore drops scripts/eval/results. CI refuses a stale one.
+execFileSync(process.execPath, [path.join(__dirname, 'build-ocr-pareto.mjs')], { stdio: 'inherit' });
 
 // --html=<path>: inline the table into the dashboard template (a single self-contained page).
 const htmlArg = process.argv.find(a => a.startsWith('--html='));

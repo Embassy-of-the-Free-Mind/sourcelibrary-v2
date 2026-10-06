@@ -8,7 +8,9 @@
  * evidence, without cost. scripts/eval/bench2-escalation-report.mjs — a blended-cost table for
  * one 11-page bench with its prices typed into the script. None draws a frontier.
  *
- * Reads only committed files, so `npm run build` can run it (prebuild):
+ * Run by benchmark-dashboard-data.mjs after every re-score, so the charts move with the evidence
+ * table in the same commit (the Vercel build cannot run it: .vercelignore drops scripts/eval/results).
+ * tests/unit/ocr-pareto.test.ts runs --check, so CI refuses a stale file. Reads only committed files:
  *   accuracy   scripts/eval/lib/benchmark-rows.mjs (the evidence table's own rows) and the Syriac
  *              ground-truth retest (results/benchmark/syriac-retest-2026-09-16/score.json)
  *   cost       Gemini: the latest results/ocr-cost/ocr-cost-<date>.json (ocr-cost-snapshot.mjs,
@@ -16,6 +18,8 @@
  *              its run's write-up, and this script refuses an entry whose quote is not in it)
  *   production scripts/lib/ocr-routing.mjs, the router that picks the model for new pages
  * Writes src/data/ocr-pareto.json. No timestamps: unchanged inputs give an identical file.
+ *   node scripts/eval/build-ocr-pareto.mjs           # write
+ *   node scripts/eval/build-ocr-pareto.mjs --check   # exit 1 if the committed file is stale
  *
  * The rules (.claude/docs/eval-design.md §7):
  *   - engines are compared ONLY on pages every plotted engine read, against a typed reference,
@@ -267,7 +271,15 @@ const out = {
   charts,
   no_chart: [...noChart, ...NO_REFERENCE],
 };
-fs.writeFileSync(OUT, JSON.stringify(out, null, 1) + '\n');
+const json = JSON.stringify(out, null, 1) + '\n';
+// --check: fail when the committed file is not what the inputs give (CI test); writes nothing.
+if (process.argv.includes('--check')) {
+  const have = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';
+  if (have !== json) { console.error(`${path.relative(process.cwd(), OUT)} is stale — run node scripts/eval/build-ocr-pareto.mjs`); process.exit(1); }
+  console.log('ocr-pareto.json is current');
+  process.exit(0);
+}
+fs.writeFileSync(OUT, json);
 for (const c of charts) for (const p of c.panels) console.log(`${c.title} [${p.kind}] ${p.n_pages} pages / ${p.n_books} books · ${p.placed.map(x => `${x.engine} ${x.accuracy}@$${x.cost.usd_per_1k}${x.on_frontier ? '*' : ''}`).join(', ')}${p.no_cost.length ? ` · no cost: ${p.no_cost.map(x => `${x.engine} ${x.accuracy}`).join(', ')}` : ''}`);
 for (const n of out.no_chart) console.log(`no chart: ${n.title} — ${n.why}`);
 console.log(`wrote ${path.relative(process.cwd(), OUT)}`);
