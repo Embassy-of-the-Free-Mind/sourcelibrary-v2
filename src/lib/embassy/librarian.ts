@@ -113,8 +113,10 @@ export interface LibrarianStep {
   // last and persisted on the AI message; never rendered to the user.
   usage?: TurnUsage;
   notebook?: {
-    findingCount: number;
+    findingCount?: number;
     topic?: string;
+    // The comparative synthesis just saved (save_synthesis, #6077).
+    synthesis?: string;
     // The finding just saved — lets the client render the notebook live
     // instead of only exposing a count badge.
     finding?: {
@@ -164,8 +166,20 @@ async function saveNotebookFinding(threadId: string, finding: NotebookFinding, t
   return result?.findings?.length || 1;
 }
 
+async function saveNotebookSynthesis(threadId: string, synthesis: string, topic?: string): Promise<void> {
+  const db = await getDb();
+  await db.collection('research_notebooks').updateOne(
+    { threadId: new ObjectId(threadId) },
+    {
+      $set: { synthesis, updatedAt: new Date(), ...(topic ? { topic } : {}) },
+      $setOnInsert: { threadId: new ObjectId(threadId), findings: [], bibliography: [], createdAt: new Date() },
+    },
+    { upsert: true },
+  );
+}
+
 function formatNotebookForPrompt(notebook: ResearchNotebook | null): string {
-  if (!notebook || notebook.findings.length === 0) return '';
+  if (!notebook || ((notebook.findings?.length ?? 0) === 0 && !notebook.synthesis)) return '';
 
   let text = `\n## Your Research Notebook (${notebook.findings.length} findings so far)\n`;
   if (notebook.topic) text += `**Topic:** ${notebook.topic}\n\n`;
@@ -175,6 +189,10 @@ function formatNotebookForPrompt(notebook: ResearchNotebook | null): string {
     const url = `https://sourcelibrary.org/book/${f.source.bookSlug || f.source.bookId}/page-number/${f.source.pageNumber}`;
     text += `${i + 1}. "${f.quote.slice(0, 200)}${f.quote.length > 200 ? '...' : ''}" — *${f.source.bookTitle}* by ${f.source.bookAuthor}, [Page ${f.source.pageNumber}](${url})\n`;
     if (f.note) text += `   *Note:* ${f.note}\n`;
+  }
+
+  if (notebook.synthesis) {
+    text += `\n**Saved synthesis** (save_synthesis replaces it; revise rather than repeat):\n${notebook.synthesis.slice(0, 1500)}${notebook.synthesis.length > 1500 ? '…' : ''}\n`;
   }
 
   text += `\nBuild on these findings. Don't repeat searches you've already done. Suggest new angles or deeper dives.\n`;
@@ -212,6 +230,36 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
         sort: { type: Type.STRING, description: 'oldest (default) | newest | title | most_translated' },
         limit: { type: Type.NUMBER, description: 'How many books to list back, 1-30 (default 15). The total count is exact no matter how few are listed.' },
       },
+    },
+  },
+  {
+    name: 'compare_traditions',
+    description: 'Search SEVERAL traditions side by side for one idea — "how do Chan, Sufi and Kabbalist texts describe the annihilation of the self?", "is there a parallel to the Zhuangzi on X in the Ikhwān al-Ṣafāʾ?". Runs a separate search inside each tradition\'s own books, so no tradition can crowd out another (plain `search` returns one list in which the most-translated tradition takes most of the slots). For each tradition it returns passages with the page link, the English, a snippet of the original-language transcription, and how many books we hold and can read in English — or says outright that nothing was found. Use this for EVERY question that compares or crosses traditions.',
+    parameters: {
+      type: Type.OBJECT,
+      properties: {
+        query: { type: Type.STRING, description: 'The idea, in plain English (e.g. "annihilation of the self in the divine", "the heavenly and the human"). Not the tradition names — those go in `traditions`.' },
+        traditions: {
+          type: Type.ARRAY,
+          items: { type: Type.STRING },
+          description: '2-4 traditions. Known: sufi, islamic, kabbalistic, chan (Chan/Zen), buddhist, daoist, vedantic, hermetic, neoplatonic, christian-mystical, gnostic, alchemical, rosicrucian. Anything else is matched to a collection.',
+        },
+        per_tradition: { type: Type.NUMBER, description: 'Passages per tradition, 1-5 (default 3).' },
+        scope: { type: Type.STRING, description: 'Optional collection slug that HARD-limits every search to that shelf. On a reviewed shelf (e.g. "eternity-spot-check") only books marked SHOW are searched. Set it when the reader or your instructions name a shelf.' },
+      },
+      required: ['query', 'traditions'],
+    },
+  },
+  {
+    name: 'save_synthesis',
+    description: 'Save your comparative synthesis to the reader\'s research notebook so they can keep and export it. Call it once, at the end of a comparison answer, with the synthesis section of what you wrote: the convergences and divergences, each claim with its page link. Replaces any earlier synthesis in this thread.',
+    parameters: {
+      type: Type.OBJECT,
+      properties: {
+        synthesis: { type: Type.STRING, description: 'Markdown. Convergences, divergences, and what is not held or not translated — every claim tied to a cited page link from this turn.' },
+        topic: { type: Type.STRING, description: 'Short title for the notebook, e.g. "Annihilation of the self: Chan, Sufi, Kabbalah".' },
+      },
+      required: ['synthesis'],
     },
   },
   {
@@ -1025,6 +1073,88 @@ async function executeTool(
       };
     }
 
+    case 'compare_traditions': {
+      const query = String(args.query || '');
+      const traditions = Array.isArray(args.traditions) ? (args.traditions as unknown[]).map(String) : [];
+      if (traditions.length < 2) {
+        return {
+          result: { found: 0, context: 'compare_traditions needs at least 2 traditions. For one tradition, use `search` (with `collection`).' },
+          step: { type: 'tool_result', name: 'compare_traditions', query, found: 0, summary: 'Needs 2+ traditions' },
+        };
+      }
+      const { compareTraditions } = await import('@/lib/search/tradition-search');
+      const data = await compareTraditions(query, traditions, {
+        perTradition: typeof args.per_tradition === 'number' ? args.per_tradition : 3,
+        scope: (args.scope as string | undefined) || null,
+      });
+      const all = data.results.flatMap(r => r.passages);
+      const localized = await loadLocalizedTexts(lang, all.map(p => ({ book_id: p.book_id, page_number: p.page_number })));
+
+      let context = `Side-by-side search for "${query}". Each tradition was searched ONLY inside its own books, so the lists are independent.\n`;
+      if (data.scopeAsked && !data.scope) {
+        context += `\nScope: no collection matches "${data.scopeAsked}", so the search ran across the whole library. Tell the reader the shelf was not found.\n`;
+      } else if (data.scope) {
+        context += data.scope.verdictShelf
+          ? `\nScope: the shelf "${data.scope.name}". Only its ${data.scope.bookIds.size} books marked SHOW by a by-eye review were searched; ${data.scope.withheld} books it marks for fixing were left out. Where a shelf note carries a caveat about a page, respect it.\n`
+          : `\nScope: the collection "${data.scope.name}" (${data.scope.bookIds.size} books); nothing outside it was searched.\n`;
+      }
+      for (const r of data.results) {
+        const t = r.tradition;
+        context += `\n=== ${t.label}${t.key && t.key !== t.asked.toLowerCase() ? ` (asked: "${t.asked}")` : ''} ===\n`;
+        if (!t.key) {
+          context += `We have no tradition or collection called "${t.asked}". No passage found: do not invent one, and say this tradition could not be searched.\n`;
+          continue;
+        }
+        context += `Coverage: ${r.held} held book${r.held === 1 ? '' : 's'}${data.scope ? ' inside the scope' : ''}, ${r.readable} readable in English; ${r.passages.length} passage${r.passages.length === 1 ? '' : 's'} below.\n`;
+        if (r.passages.length === 0) {
+          context += r.held === 0
+            ? `No passage found in ${t.label}: we hold no books here${data.scope ? ' on this shelf' : ''}. Do not invent one; say the tradition is not represented.\n`
+            : `No passage found in ${t.label} for this idea${r.readable === 0 ? ' — none of these books is readable in English yet, so their pages cannot be searched' : ''}. Do not invent one; say so.\n`;
+          continue;
+        }
+        for (const p of r.passages) {
+          const url = `${base}/book/${p.bookSlug || p.book_id}/page-number/${p.page_number}`;
+          const loc = localized.get(`${p.book_id}:${p.page_number}`);
+          const text = loc ? loc.slice(0, 1200) : p.text;
+          const langTag = lang === 'en' ? '' : (loc ? ` [text: ${LANG_NAMES[lang]} edition]` : ` [text: English only — no ${LANG_NAMES[lang]} edition of this page]`);
+          context += `\n--- ${p.bookTitle}${editionTag(p)} by ${p.bookAuthor}, Page ${p.page_number} (${url})${langTag} ---\n`;
+          if (p.shelfNote) context += `Shelf note: ${p.shelfNote.slice(0, 300)}\n`;
+          context += `English: ${text}\n`;
+          if (p.original && !/^english$/i.test(p.language || '')) {
+            context += `Original (${p.language || 'source language'}, start of the page's transcription — quote the original ONLY from these words): ${p.original}\n`;
+          }
+        }
+      }
+
+      const sources: SourceCard[] = all.map(p => ({
+        book_id: p.book_id, bookTitle: p.bookTitle, bookAuthor: p.bookAuthor, bookSlug: p.bookSlug,
+        pageNumber: p.page_number, snippet: stripAnnotations(p.text).slice(0, 200), inCollection: true,
+      }));
+      const perTrad = data.results.map(r => `${r.tradition.label} ${r.passages.length}`).join(', ');
+      return {
+        result: { found: all.length, context },
+        step: { type: 'tool_result', name: 'compare_traditions', query, found: all.length,
+          summary: `${all.length} passages — ${perTrad}${data.scope ? `, scoped to ${data.scope.slug}` : ''}` },
+        sources,
+      };
+    }
+
+    case 'save_synthesis': {
+      if (!threadId) {
+        return { result: { error: 'No thread ID — cannot save to notebook' }, step: { type: 'tool_result', name: 'save_synthesis', summary: 'No thread', found: 0 } };
+      }
+      const synthesis = String(args.synthesis || '').trim();
+      if (!synthesis) {
+        return { result: { error: 'Empty synthesis' }, step: { type: 'tool_result', name: 'save_synthesis', summary: 'Empty', found: 0 } };
+      }
+      const topic = args.topic as string | undefined;
+      await saveNotebookSynthesis(threadId, synthesis, topic);
+      return {
+        result: { saved: true },
+        step: { type: 'notebook_update', name: 'save_synthesis', summary: 'Saved synthesis', notebook: { topic, synthesis } },
+      };
+    }
+
     case 'search_site': {
       // The site's own writing (#1180), from `site_pages` (main site only, like
       // the Librarian). Every URL is final: absolute, and locale-prefixed only
@@ -1338,12 +1468,20 @@ For visual or symbolic topics (emblems, alchemical apparatus, diagrams, seals, p
 
 **Catalogue questions are a different tool.** "What do you have in Spanish?", "how many books from before 1600?", "list everything in the astrology collection", "how many first translations are there?" are questions about the SHELF, not about passages. \`search\` ranks passages and returns only the strongest handful, so counting books from its results undercounts the library by orders of magnitude — asked for "all the books published in Spanish" it once answered with the 5 books its 8 passages happened to come from, out of 74. Call **browse_catalog** for anything of the form how many / what do you have / list them all / everything by X, report the exact total it returns, show a representative handful with their links, and link the browse URL it hands you so the reader can see the rest — and when it tells you there is no such page, write no browse link at all, because a URL you compose for a filter (\`/books?year_to=1599\`) does not exist. If a question is both ("what do you have in Spanish about alchemy?"), browse for the count and search for the passages.
 
+**Questions that compare or cross traditions go to compare_traditions.** "How do Chan, Sufi and Kabbalist texts describe the annihilation of the self?", "is there a parallel to the Zhuangzi in the Ikhwān al-Ṣafāʾ?", "what do the Hermetica and the Upanishads say about X?" — call **compare_traditions** with the idea and 2-4 traditions, not \`search\`: one ranked list hands most of its slots to whichever tradition has the most English pages, and the reader asked to hear each one. If the reader or your instructions name a shelf (e.g. a reviewed shelf like \`eternity-spot-check\`), pass it as \`scope\`. Then write the answer in this order:
+
+1. **Each tradition in its own terms, one section each.** Name its own word for the idea where the passage uses it (fanāʾ, wu-wei, biṭṭul, śūnyatā) and gloss it. For each, 2-3 passages: a short quote of the original from the tool's "Original" line when it is notable (only words that appear there — never reconstruct an original from the English), the English, and the page link. A tradition the tool reports as having no passage gets one honest sentence saying so — never a quote from memory, never a page you did not receive.
+2. **Where they meet and where they part.** Convergences and divergences, every claim tied to a cited page above. If the texts disagree, say so plainly. Do not flatten them into "all paths say the same thing": a Sufi annihilation in God, a Chan emptiness with no God, and a Kabbalist nullification before the Ein Sof are different claims, and the reader is here for the difference as much as the likeness.
+3. **What we do not hold or cannot yet read** — from the coverage lines (held vs readable in English), in a sentence or two.
+
+For comparison questions the "2-4 sources" rule below becomes **2-3 passages per tradition**. When the answer is written, call **save_synthesis** once with section 2 (and 3), so the reader can keep and export it; then you may mention the notebook as described in Step 5.
+
 **Questions about Source Library itself are a third tool.** "How do I identify an engraving?", "is there an ngram viewer?", "how do you measure OCR quality?", "how can I support the project?", "what have you written about first translations?" are answered by the site's own pages, not by the books. Call **search_site**, answer from the passage it returns, and link the page with the exact URL it gives. \`search\` cannot find these pages. When search_site finds nothing, link no Source Library page for it.
 
 **Step 5: Save and cite with links.**
 Use add_to_notebook for quotes directly relevant to the research question. The notebook persists across messages.
 
-**Only speak of the notebook in a turn where add_to_notebook succeeded, and then say exactly where it is:** "Saved to your research notebook — the *Research notebook* button under the message box on this page opens it." Never describe an icon, a sidebar, or a menu for it (there is none), and never tell the reader to look for it on any other page: it exists only on the Librarian page, for this thread. If you did not save anything, do not mention the notebook at all — a reader once went looking for a button that was not there.
+**Only speak of the notebook in a turn where add_to_notebook or save_synthesis succeeded, and then say exactly where it is:** "Saved to your research notebook — the *Research notebook* button under the message box on this page opens it." Never describe an icon, a sidebar, or a menu for it (there is none), and never tell the reader to look for it on any other page: it exists only on the Librarian page, for this thread. If you did not save anything, do not mention the notebook at all — a reader once went looking for a button that was not there.
 
 Cite with page-level links: "quoted text" — *[Title](https://sourcelibrary.org/book/SLUG)* by [Author](https://sourcelibrary.org/author/AUTHOR-SLUG), [Page N](https://sourcelibrary.org/book/SLUG?page=N).
 
@@ -1388,7 +1526,7 @@ ${collectionSection}## Formatting
 - Use blockquotes (>) for important quotations from primary sources — always with page citation
 - Use paragraph breaks between distinct ideas — leave a blank line between paragraphs. Don't write walls of text
 - Conversational but substantive — a research conversation, not a lecture
-- Cite 2-4 key passages rather than dumping everything. Every passage needs a page number and link
+- Cite 2-4 key passages rather than dumping everything (2-3 per tradition when comparing traditions). Every passage needs a page number and link
 - Link authors to their author pages ONLY with the author link supplied in the tool results — never a self-built /author/... URL. No tool-supplied link → plain text name.
 - Link books to their book pages: *[Book Title](https://sourcelibrary.org/book/slug)* — slug copied exactly from a tool result this turn, never built from the title
 - Link quotes to specific pages: [Page 42](https://sourcelibrary.org/book/slug?page=42)

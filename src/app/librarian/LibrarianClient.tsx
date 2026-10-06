@@ -224,12 +224,14 @@ function SearchSteps({ steps, t }: { steps: SearchStep[]; t: LibrarianStrings })
 
 function NotebookPanel({
   findings,
+  synthesis,
   topic,
   threadId,
   onClose,
   t,
 }: {
   findings: NotebookFinding[];
+  synthesis?: string;
   topic?: string;
   threadId: string | null;
   onClose: () => void;
@@ -261,7 +263,13 @@ function NotebookPanel({
         </div>
       </div>
       <div className="max-h-[40vh] overflow-y-auto px-4 pb-3 space-y-3">
-        {findings.length === 0 && (
+        {synthesis && (
+          <div className="rounded-lg border border-[#e8e4dc] bg-white px-3 py-2.5">
+            <p className="text-[11px] font-sans uppercase tracking-wide text-[#8a8480]">Synthesis</p>
+            <p className="mt-1 whitespace-pre-wrap text-[13px] font-body text-[#444] leading-relaxed">{synthesis}</p>
+          </div>
+        )}
+        {findings.length === 0 && !synthesis && (
           <p className="text-[13px] text-[#8a8480] font-sans">
             Nothing saved yet. When the Librarian finds a passage that answers your question, it saves the quote and a note here; the notebook stays with this conversation.
           </p>
@@ -361,6 +369,8 @@ export default function LibrarianClient({ featuredPassage, lang = 'en' }: Librar
   // Research notebook accumulated live across the thread (from notebook_update).
   const [notebookFindings, setNotebookFindings] = useState<NotebookFinding[]>([]);
   const [notebookTopic, setNotebookTopic] = useState<string | undefined>();
+  // The comparative synthesis saved by save_synthesis (#6077).
+  const [notebookSynthesis, setNotebookSynthesis] = useState<string | undefined>();
   const [notebookOpen, setNotebookOpen] = useState(false);
   const [showThinking, setShowThinking] = useState(true);
   const [visibleThreads, setVisibleThreads] = useState(5);
@@ -706,10 +716,11 @@ export default function LibrarianClient({ featuredPassage, lang = 'en' }: Librar
                 case 'notebook_update':
                   updateLastAssistant(m => ({
                     ...m,
-                    notebookCount: event.notebook?.findingCount,
+                    notebookCount: event.notebook?.findingCount ?? m.notebookCount,
                     notebookTopic: event.notebook?.topic || m.notebookTopic,
                   }));
                   if (event.notebook?.topic) setNotebookTopic(event.notebook.topic);
+                  if (event.notebook?.synthesis) setNotebookSynthesis(event.notebook.synthesis);
                   if (event.notebook?.finding) {
                     const f = event.notebook.finding;
                     const key = `${f.bookId}:${f.pageNumber}:${(f.quote || '').slice(0, 48)}`;
@@ -890,6 +901,7 @@ export default function LibrarianClient({ featuredPassage, lang = 'en' }: Librar
     setThreadId(null);
     setNotebookFindings([]);
     setNotebookTopic(undefined);
+    setNotebookSynthesis(undefined);
     setNotebookOpen(false);
     // Fresh chips for a fresh conversation.
     const real = lang === 'en' ? threads.map(th => th.preview.question).filter(looksLikeGoodQuestion) : [];
@@ -1109,6 +1121,7 @@ export default function LibrarianClient({ featuredPassage, lang = 'en' }: Librar
                 {notebookOpen && (threadId || notebookFindings.length > 0) && (
                   <NotebookPanel
                     findings={notebookFindings}
+                    synthesis={notebookSynthesis}
                     topic={notebookTopic}
                     threadId={threadId}
                     onClose={() => setNotebookOpen(false)}
