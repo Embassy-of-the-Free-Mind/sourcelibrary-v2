@@ -10,12 +10,16 @@
 set -u
 set -a; . /root/sourcelibrary/.env.production.local; set +a
 export LANE_DIR=${LANE_DIR:-/root/latin-r4-5924/lane} POD=${POD:-r4} MINUTES=${MINUTES:-300}
-S=$LANE_DIR/code/paddle-zh-runpod.sh
+# BACKEND=scw: one leased Scaleway L4 through scw-box.sh (RunPod refused to rent on 2026-10-06: balance −$0.06)
+if [ "${BACKEND:-runpod}" = scw ]; then S=$LANE_DIR/code/scw-box.sh; else S=$LANE_DIR/code/paddle-zh-runpod.sh; fi
 log() { echo "$(date -u +%FT%TZ) $*"; }
 if [ -z "${RESUME:-}" ]; then
+if [ "${BACKEND:-runpod}" = scw ]; then bash $S create || { echo NO-GPU; exit 1; }
+else
 MIN_VCPU=16 GPU="NVIDIA RTX PRO 4000 Blackwell" CLOUD=SECURE bash $S create \
   || MIN_VCPU=8 GPU="NVIDIA RTX PRO 4000 Blackwell" CLOUD=SECURE bash $S create \
   || { export POD=r4l4; MIN_VCPU=8 GPU="NVIDIA L4" CLOUD=SECURE bash $S create; } || { echo NO-GPU; exit 1; }
+fi
 fi
 PODID=$(cat $LANE_DIR/runpod-pods/$POD/pod-id); WD=/root/paddle-zh-5600/runpod/$PODID; mkdir -p $WD
 ( while kill -0 $$ 2>/dev/null; do touch $WD/progress; sleep 120; done ) &

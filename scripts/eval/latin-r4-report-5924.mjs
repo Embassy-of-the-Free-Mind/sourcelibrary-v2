@@ -11,9 +11,8 @@
  *           the src engine's text with ſ restored where Calamari's aligned word has ſ (rule below); --abbr adds the
  *           abbreviation restore (flash+Calamari arm)
  *   norm    --root --out-root --refs-out --strata [--stats]   the latin-norm@1 folded copy (primary view)
- *   report  --scored=<dir per arm, comma list arm:dir> --work=<refs work dir> --root=<bench root> --out=<json>
- *           per century cell and arm: book-level Δ vs lite, bootstrap CI by book, sign test, the checks, verdict;
- *           seams; long-s and abbreviation counts; population failure rates and agreement
+ *   report  --work --raw --norm --unfolded --out [--arms]   per century cell: the most accurate arm by book (prereg
+ *           Amendment 3 J), runner-up, noise floor, Δ vs lite; seams; long-s and abbreviation counts; population rates
  *
  * ſ RESTORE (fixed in prereg Amendment 3 before any engine call). Words = maximal runs of letters (incl. ſ,
  * combining marks). Each word gets a KEY: NFD, marks dropped, lower case, ſ/f/s → s, v → u, j → i. The two pages'
@@ -188,111 +187,139 @@ const ngrams = (ws, n) => { const s = new Set(); for (let i = 0; i + n <= ws.len
 const letters = t => (String(t).match(/\p{L}/gu) || []).length;
 const ABBR = /[āēīōūǣ̄ꝑꝓꝗꝙꝯꝫ̃ẽõũ⁊]|q;/gu;
 
+/**
+ * report --work=<refs work dir> --raw=<raw bench root> --norm=<scored dir, latin-norm@1> --unfolded=<scored dir, raw>
+ *        --out=<json> [--arms=a,b,…]   the prereg Amendment 3 rule, per century cell, the BOOK as unit
+ */
+const capCer = (m) => (m == null || m.missing ? null : m.refused ? 1 : typeof m.cer === 'number' ? Math.min(1, m.cer) : null);
+const quant = (xs, q) => { const s = [...xs].sort((a, b) => a - b); return s.length ? s[Math.min(s.length - 1, Math.floor(q * s.length))] : null; };
+function bookTable(S, al, lc, arms, rawText) {
+  // book → { century, pages: [{ slug, kind: text|blank }], cer: { arm: book CER | null } }
+  const P = new Map(S.pages.map(p => [p.slug, p])); const out = []; const excluded = [];
+  for (const [book, a] of Object.entries(al)) {
+    if (a.status !== 'aligned') continue;
+    const pages = [];
+    for (const pg of a.pages) {
+      const v = lc.get(`${book}|${pg.page}`);
+      if (v?.verdict === 'ok' && v.leaf_language === 'lat') {
+        const p = P.get(pg.slug);
+        if (!p) { excluded.push({ slug: pg.slug, why: 'not in scorer output (textless?)' }); continue; }
+        if (!p.has_ref) { excluded.push({ slug: pg.slug, why: 'no reference at score time' }); continue; }
+        if (S.ref_mismatch?.includes(pg.slug)) { excluded.push({ slug: pg.slug, why: 'scorer reference-mismatch guard' }); continue; }
+        pages.push({ slug: pg.slug, kind: 'text', p });
+      } else if (v?.verdict === 'no-text') pages.push({ slug: pg.slug, kind: 'blank' });
+      else if (v) excluded.push({ slug: pg.slug, why: `leaf ${v.verdict}${v.verdict === 'ok' ? '/' + v.leaf_language : ''}` });
+    }
+    if (!pages.some(x => x.kind === 'text')) continue;
+    const cer = {}, cata = {}, blankInv = {};
+    for (const e of arms) {
+      const vals = []; let c = 0, bi = 0, ok = true;
+      for (const x of pages) {
+        if (x.kind === 'text') { const v = capCer(x.p.engines[e]); if (v == null) { ok = false; break; } vals.push(v); if (v > 0.5) c++; }
+        else { const t = rawText(e, 'latin-r4-acc', x.slug); if (t == null) { ok = false; break; } const inv = letters(t) > 25; vals.push(inv ? 1 : 0); if (inv) { c++; bi++; } }
+      }
+      cer[e] = ok ? mean(vals) : null; cata[e] = ok ? c : null; blankInv[e] = ok ? bi : null;
+    }
+    out.push({ book, century: a.century, n_text: pages.filter(x => x.kind === 'text').length, n_blank: pages.filter(x => x.kind === 'blank').length, cer, cata, blankInv });
+  }
+  return { books: out, excluded };
+}
+function pairStats(bs, a, b) {
+  const d = bs.filter(x => x.cer[a] != null && x.cer[b] != null).map(x => x.cer[a] - x.cer[b]);
+  const w = d.filter(x => x < -1e-9).length, l = d.filter(x => x > 1e-9).length;
+  return { n: d.length, median: r3(median(d)), mean: r3(mean(d)), ci95: bootMedianCI(d), wins: w, losses: l, ties: d.length - w - l, p_sign: d.length ? r3(binomTwoSided(Math.max(w, l), w + l)) : null };
+}
+function rankCell(bs, arms) {
+  const full = arms.filter(e => bs.every(x => x.cer[e] != null));
+  const stat = Object.fromEntries(full.map(e => [e, { median: median(bs.map(x => x.cer[e])), mean: mean(bs.map(x => x.cer[e])) }]));
+  const order = full.sort((a, b) => stat[a].median - stat[b].median || stat[a].mean - stat[b].mean);
+  const d0 = bs.filter(x => x.cer[LITE_B] != null).map(x => Math.abs(x.cer[LITE_B] - x.cer[LITE]));
+  const floor = { n: d0.length, p95_abs_delta0: r3(quant(d0, 0.95)), median_abs_delta0: r3(median(d0)), identical_books: d0.filter(x => x < 1e-9).length };
+  const [win, run] = order;
+  const vsRun = run ? pairStats(bs, win, run) : null;
+  const separated = !!vsRun && vsRun.p_sign < 0.05 && Math.abs(vsRun.median) > (floor.p95_abs_delta0 ?? 0);
+  return { ranking: order.map(e => ({ arm: e, median_book_cer: r3(stat[e].median), mean_book_cer: r3(stat[e].mean) })), winner: win, runner_up: run, winner_vs_runner_up: vsRun, noise_floor: floor, separated,
+    verdict: separated ? win : `tie: ${win} / ${run} (not separated)`, not_ranked: arms.filter(e => !order.includes(e)) };
+}
 function report() {
-  const WORK = args.work, ROOT = args.root;
+  const WORK = args.work, RAW = args.raw;
   const al = readJson(path.join(WORK, 'align.json'));
   const lc = new Map(readJson(path.join(WORK, 'leaf-check.json')).rows.map(r => [`${r.book_id}|${r.page}`, r]));
   const pd = readJson(path.join(WORK, 'popdraw.json'));
-  const arms = String(args.scored).split(',').map(x => x.split(':'));   // engine:scored-dir (each in its own bench root)
-  const out = { built_at: new Date().toISOString(), unit: 'book (3-page run)', arms: {}, population: {}, seams: {}, longs: {} };
-  const text = (eng, st, slug) => { for (const [e, , rt] of arms) if (e === eng || eng === LITE || eng === LITE_B) { const f = path.join(rt || ROOT, st, 'out', eng, `${slug}.txt`); if (fs.existsSync(f)) return fs.readFileSync(f, 'utf8'); } return null; };
-  for (const [engine, dir] of arms) {
+  const rawText = (e, st, slug) => { const f = path.join(RAW, st, 'out', e, `${slug}.txt`); return fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : null; };
+  const out = { built_at: new Date().toISOString(), unit: 'book (3-page run): mean of the run\'s scored pages; page CER capped at 1; refusal = 1; no-text page = 1 if > 25 letters written, else 0', views: {} };
+  for (const [view, dir] of [['latin-norm@1', args.norm], ['unfolded', args.unfolded]]) {
+    if (!dir) continue;
     const S = latestFile(dir, 'latin-r4-acc'); if (!S) { console.log(`! no scored latin-r4-acc in ${dir}`); continue; }
-    const P = new Map(S.pages.map(p => [p.slug, p]));
-    const cells = {};
-    for (const [book, a] of Object.entries(al)) {
-      if (a.status !== 'aligned') continue;
-      const textPages = [], blank = [];
-      for (const pg of a.pages) {
-        const v = lc.get(`${book}|${pg.page}`)?.verdict;
-        if (v === 'ok') textPages.push(pg); else if (v === 'no-text') blank.push(pg);
-      }
-      if (!textPages.length) continue;
-      const rows = textPages.map(pg => P.get(pg.slug)).filter(p => p && typeof p.engines?.[engine]?.cer === 'number' && typeof p.engines?.[LITE]?.cer === 'number');
-      if (!rows.length) continue;
-      const blankFail = e => blank.filter(pg => letters(text(e, 'latin-r4-acc', pg.slug) || '') > 25).length;
-      const b = {
-        book, n_text: rows.length, n_blank: blank.length,
-        cer: { [engine]: mean(rows.map(p => p.engines[engine].cer)), [LITE]: mean(rows.map(p => p.engines[LITE].cer)) },
-        cer_b: rows.every(p => typeof p.engines[LITE_B]?.cer === 'number') ? mean(rows.map(p => p.engines[LITE_B].cer)) : null,
-        cata: { [engine]: rows.filter(p => p.engines[engine].cer > 0.5).length + blankFail(engine), [LITE]: rows.filter(p => p.engines[LITE].cer > 0.5).length + blankFail(LITE) },
-        blank_invented: { [engine]: blankFail(engine), [LITE]: blankFail(LITE) },
-        inv: { [engine]: mean(rows.map(p => p.engines[engine].invention_ref ?? 0)), [LITE]: mean(rows.map(p => p.engines[LITE].invention_ref ?? 0)) },
-        loop: { [engine]: rows.some(p => p.engines[engine].loop), [LITE]: rows.some(p => p.engines[LITE].loop) },
-      };
-      (cells[a.century] ||= []).push(b);
-    }
-    out.arms[engine] = {};
-    for (const [cen, bs] of Object.entries(cells)) {
-      const d = bs.map(b => b.cer[engine] - b.cer[LITE]); const d0 = bs.filter(b => b.cer_b != null).map(b => b.cer_b - b.cer[LITE]);
-      const wins = d.filter(x => x < 0).length, losses = d.filter(x => x > 0).length;
-      const medD = median(d), ci = bootMedianCI(d), medD0 = median(d0);
-      const cata = e => bs.filter(b => b.cata[e] > 0).length, loops = e => bs.filter(b => b.loop[e]).length;
-      const inv = e => median(bs.map(b => b.inv[e]));
-      const minN = cen === '1600s' ? 50 : 30;
-      const checks = { median_delta_le_002: medD <= 0.02, ci_upper_le_005: !!ci && ci[1] <= 0.05, noise_lt_002: d0.length ? Math.abs(medD0) < 0.02 : null,
-        catastrophic_books_le_lite_plus_1: cata(engine) <= cata(LITE) + 1, invention_le_lite: inv(engine) <= inv(LITE), loops_le_lite: loops(engine) <= loops(LITE) };
-      const pass = Object.values(checks).every(v => v !== false);
-      const p = binomTwoSided(wins, wins + losses);
-      out.arms[engine][cen] = {
-        books: bs.length, text_pages: bs.reduce((s, b) => s + b.n_text, 0), blank_pages: bs.reduce((s, b) => s + b.n_blank, 0), grade: bs.length >= minN ? 'decision' : 'not enough refs',
-        median_book_cer: { [engine]: r3(median(bs.map(b => b.cer[engine]))), [LITE]: r3(median(bs.map(b => b.cer[LITE]))) },
-        delta: { median: r3(medD), ci95: ci, wins, losses, ties: d.length - wins - losses, p_sign: r3(p) }, noise: { n: d0.length, median_delta0: r3(medD0) },
-        catastrophic_books: { [engine]: cata(engine), [LITE]: cata(LITE) }, catastrophic_pages: { [engine]: bs.reduce((s, b) => s + b.cata[engine], 0), [LITE]: bs.reduce((s, b) => s + b.cata[LITE], 0) },
-        blank_invented: { [engine]: bs.reduce((s, b) => s + b.blank_invented[engine], 0), [LITE]: bs.reduce((s, b) => s + b.blank_invented[LITE], 0) },
-        invention_median: { [engine]: r3(inv(engine)), [LITE]: r3(inv(LITE)) }, loop_books: { [engine]: loops(engine), [LITE]: loops(LITE) },
-        checks, passes_rule: pass, better_than_lite: p < 0.05 && wins > losses && medD < 0,
-        verdict: bs.length < minN ? 'not enough refs' : pass ? `${engine} (no worse than lite)` : 'keep lite',
-      };
+    const arms = args.arms ? String(args.arms).split(',') : [...new Set(S.pages.flatMap(p => Object.keys(p.engines)))].sort();
+    const { books, excluded } = bookTable(S, al, lc, arms, rawText);
+    const V = out.views[view] = { arms, excluded_pages: excluded, cells: {}, books };
+    for (const cen of ['1500s', '1600s', '1700s']) {
+      const bs = books.filter(b => b.century === cen); if (!bs.length) continue;
+      const minN = cen === '1600s' ? 50 : cen === '1500s' ? 30 : Infinity;
+      const R = rankCell(bs, arms);
+      const vsLite = Object.fromEntries(arms.filter(e => e !== LITE).map(e => [e, pairStats(bs, e, LITE)]));
+      const per = Object.fromEntries(arms.map(e => { const b = bs.filter(x => x.cer[e] != null); return [e, { books: b.length, median_book_cer: r3(median(b.map(x => x.cer[e]))), mean_book_cer: r3(mean(b.map(x => x.cer[e]))), catastrophic_pages: b.reduce((s, x) => s + x.cata[e], 0), books_with_catastrophic: b.filter(x => x.cata[e] > 0).length, blank_invented: b.reduce((s, x) => s + x.blankInv[e], 0) }]; }));
+      V.cells[cen] = { books: bs.length, text_pages: bs.reduce((s, b) => s + b.n_text, 0), blank_pages: bs.reduce((s, b) => s + b.n_blank, 0), grade: bs.length >= minN ? 'decision' : 'not enough refs (exploratory)', ...R, verdict: bs.length >= minN ? R.verdict : `not enough refs (exploratory lean: ${R.verdict})`, vs_lite: vsLite, per_arm: per };
     }
   }
-  // seams + long-s + abbreviations, per arm, on both strata
-  const engines = [...new Set([LITE, LITE_B, ...arms.map(a => a[0])])];
-  const runsAcc = Object.entries(al).filter(([, a]) => a.status === 'aligned').map(([book, a]) => ({ book, st: 'latin-r4-acc', century: a.century, slugs: a.pages.map(p => p.slug) }));
+  // seams, long-s and abbreviation counts on RAW text, both strata
+  const S0 = args.norm ? latestFile(args.norm, 'latin-r4-acc') : null;
+  const engines = args.arms ? String(args.arms).split(',') : [...new Set((S0?.pages || []).flatMap(p => Object.keys(p.engines)))].sort();
+  const runsAcc = Object.entries(al).filter(([b, a]) => a.status === 'aligned' && fs.existsSync(path.join(RAW, 'latin-r4-acc', `${a.pages[0].slug}.jpg`))).map(([book, a]) => ({ book, st: 'latin-r4-acc', century: a.century, slugs: a.pages.map(p => p.slug) }));
   const runsPop = Object.entries(pd.strata).flatMap(([st, s]) => s.drawn.filter(x => !x.skip).map(b => ({ book: b.book_id, st: 'latin-r4-pop', century: st, slugs: b.pages.map(pn => `r4p-${b.book_id.replace(/[^0-9a-z]/gi, '')}-p${pn}`), meta: b })));
   const refText = slug => { const f = path.join(__dirname, 'benchmark', 'refs', `${slug}.txt`); return fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : null; };
   const refWords = new Set(); for (const r of runsAcc) for (const s of r.slugs) { const t = refText(s); if (t) for (const w of fwords(t)) refWords.add(w); }
+  out.seams = {}; out.longs = {};
   for (const e of engines) {
-    const sm = { seams: 0, duplicated_across_boundary: 0, pulled_from_neighbour: 0, seams_with_ref: 0 }; const ls = { pages: 0, long_s_glyph: 0, f_for_s: 0, abbrev_marks: 0, ref_abbrev_marks: 0 };
-    for (const r of [...runsAcc, ...runsPop]) {
-      const T = r.slugs.map(s => text(e, r.st, s)); if (T.some(t => t == null)) continue;
-      for (let i = 0; i + 1 < 3; i++) {
-        sm.seams++;
-        const a = ngrams(fwords(T[i]), 10), b = ngrams(fwords(T[i + 1]), 10);
-        if ([...a].some(g => b.has(g))) sm.duplicated_across_boundary++;
-        if (r.st === 'latin-r4-acc') {
-          const ri = refText(r.slugs[i]), rj = refText(r.slugs[i + 1]); if (!ri || !rj) continue; sm.seams_with_ref++;
-          const own = [ngrams(fwords(ri), 10), ngrams(fwords(rj), 10)], nb = [own[1], own[0]];
-          for (const [k, g] of [[0, a], [1, b]]) if ([...g].some(x => nb[k].has(x) && !own[k].has(x))) sm.pulled_from_neighbour++;
+    for (const [lab, runs] of [['acc', runsAcc], ['pop', runsPop]]) {
+      const sm = { seams: 0, duplicated_across_boundary: 0, pulled_from_neighbour: 0, seams_with_ref: 0 }; const ls = { pages: 0, long_s_glyph: 0, f_for_s: 0, abbrev_marks: 0 };
+      for (const r of runs) {
+        const T = r.slugs.map(s => rawText(e, r.st, s));
+        for (let i = 0; i + 1 < T.length; i++) {
+          if (T[i] == null || T[i + 1] == null) continue; sm.seams++;
+          const a = ngrams(fwords(T[i]), 10), b = ngrams(fwords(T[i + 1]), 10);
+          if ([...a].some(g => b.has(g))) sm.duplicated_across_boundary++;
+          if (r.st === 'latin-r4-acc') {
+            const ri = refText(r.slugs[i]), rj = refText(r.slugs[i + 1]); if (!ri || !rj) continue; sm.seams_with_ref++;
+            const own = [ngrams(fwords(ri), 10), ngrams(fwords(rj), 10)], nb = [own[1], own[0]];
+            for (const [k, g] of [[0, a], [1, b]]) if ([...g].some(x => nb[k].has(x) && !own[k].has(x))) sm.pulled_from_neighbour++;
+          }
+        }
+        for (const [k, t] of T.entries()) {
+          if (t == null) continue; ls.pages++; ls.long_s_glyph += (t.match(/ſ/g) || []).length; ls.abbrev_marks += (t.normalize('NFC').match(ABBR) || []).length;
+          const ref = r.st === 'latin-r4-acc' ? refText(r.slugs[k]) : null; const known = ref ? new Set(fwords(ref)) : refWords;
+          for (const w of fwords(t)) if (w.includes('f') && !known.has(w) && known.has(w.replace(/f/g, 's'))) ls.f_for_s++;
         }
       }
-      for (const [k, t] of T.entries()) {
-        ls.pages++; ls.long_s_glyph += (t.match(/ſ/g) || []).length; ls.abbrev_marks += (t.normalize('NFC').match(ABBR) || []).length;
-        const ref = r.st === 'latin-r4-acc' ? refText(r.slugs[k]) : null; if (ref) ls.ref_abbrev_marks += (ref.normalize('NFC').match(ABBR) || []).length;
-        // f-for-s: an output word with f that is not a known word but becomes one with f→s (known = this page's
-        // reference where there is one, else every reference word of the accuracy sample — the population has none)
-        const known = ref ? new Set(fwords(ref)) : refWords;
-        for (const w of fwords(t)) if (w.includes('f') && !known.has(w) && known.has(w.replace(/f/g, 's'))) ls.f_for_s++;
-      }
+      (out.seams[e] ||= {})[lab] = sm; (out.longs[e] ||= {})[lab] = ls;
     }
-    out.seams[e] = sm; out.longs[e] = ls;
   }
-  // population: failure rates per arm (no reference)
-  for (const [engine, dir, rt] of arms) {
-    const S = latestFile(dir, 'latin-r4-pop'); if (!S) continue; const P = new Map(S.pages.map(p => [p.slug, p]));
-    const by = {};
-    for (const r of runsPop) for (const s of r.slugs) {
-      const p = P.get(s); if (!p) continue; const m = p.engines?.[engine]; const l = p.engines?.[LITE]; if (!m) continue;
-      const v = (by[r.century] ||= { pages: 0, empty_where_others_read: 0, loops: 0, refused: 0, agree_with_lite: [], catastrophic_vs_lite: 0, lite_loops: 0, lite_refused: 0 });
-      v.pages++; const others = Object.entries(p.engines).filter(([k]) => k !== engine).some(([, x]) => x.n_content >= 200);
-      if (m.n_content < 30 && others) v.empty_where_others_read++; if (m.loop) v.loops++; if (m.refused) v.refused++;
-      if (l?.loop) v.lite_loops++; if (l?.refused) v.lite_refused++;
-      const ag = m.agree?.[LITE] ?? (typeof m.cer === 'number' && engine !== LITE ? 1 - m.cer : null); if (ag != null) { v.agree_with_lite.push(ag); if (ag < 0.5) v.catastrophic_vs_lite++; }
+  // population: failure rates per arm and stratum, from the latin-norm@1 scored pop file (CER there is vs lite)
+  out.population = {};
+  const SP = args.norm ? latestFile(args.norm, 'latin-r4-pop') : null;
+  if (SP) {
+    const P = new Map(SP.pages.map(p => [p.slug, p]));
+    for (const e of engines) {
+      const by = {};
+      for (const r of runsPop) for (const s of r.slugs) {
+        const t = rawText(e, 'latin-r4-pop', s); if (t == null) continue; const p = P.get(s); const m = p?.engines?.[e];
+        const v = (by[r.century] ||= { pages: 0, textless_all: 0, empty_where_others_read: 0, loops: 0, refused: 0, dist_to_lite: [], far_from_lite: 0 });
+        v.pages++; if (!p) { v.textless_all++; continue; }
+        const others = Object.entries(p.engines).filter(([k, x]) => k !== e && !x.missing).some(([, x]) => x.n_content >= 200);
+        if (m && m.n_content < 30 && others) v.empty_where_others_read++; if (m?.loop) v.loops++; if (m?.refused) v.refused++;
+        if (e !== LITE && typeof m?.cer === 'number') { v.dist_to_lite.push(Math.min(1, m.cer)); if (m.cer > 0.5) v.far_from_lite++; }
+      }
+      out.population[e] = Object.fromEntries(Object.entries(by).map(([k, v]) => [k, { ...v, dist_to_lite: r3(median(v.dist_to_lite)) }]));
     }
-    out.population[engine] = Object.fromEntries(Object.entries(by).map(([k, v]) => [k, { ...v, agree_with_lite: r3(median(v.agree_with_lite)) }]));
   }
   fs.writeFileSync(args.out, JSON.stringify(out, null, 1) + '\n');
-  for (const [e, cs] of Object.entries(out.arms)) for (const [c, v] of Object.entries(cs)) console.log(`${e.padEnd(26)} ${c} books ${v.books} lite ${v.median_book_cer[LITE]} arm ${v.median_book_cer[e]} Δ ${v.delta.median} ${JSON.stringify(v.delta.ci95)} ${v.delta.wins}/${v.delta.losses} p ${v.delta.p_sign} cata ${v.catastrophic_books[e]}/${v.catastrophic_books[LITE]} → ${v.verdict}`);
+  for (const [view, V] of Object.entries(out.views)) for (const [c, v] of Object.entries(V.cells)) {
+    console.log(`\n[${view}] ${c}: ${v.books} books (${v.text_pages} text, ${v.blank_pages} blank) — ${v.grade} → ${v.verdict}; floor p95 |Δ0| ${v.noise_floor.p95_abs_delta0}`);
+    for (const r of v.ranking) { const s = v.vs_lite[r.arm]; console.log(`  ${r.arm.padEnd(28)} med ${r.median_book_cer} mean ${r.mean_book_cer}  vs lite ${s ? `Δ ${s.median} ${JSON.stringify(s.ci95)} ${s.wins}/${s.losses} p ${s.p_sign}` : '—'}  cata ${v.per_arm[r.arm].catastrophic_pages}`); }
+    if (v.winner_vs_runner_up) console.log(`  winner vs runner-up: ${JSON.stringify(v.winner_vs_runner_up)}`);
+    if (v.not_ranked.length) console.log(`  not ranked (incomplete): ${v.not_ranked.join(', ')}`);
+  }
 }
 
 const MAIN = { hybrid, report, norm };
