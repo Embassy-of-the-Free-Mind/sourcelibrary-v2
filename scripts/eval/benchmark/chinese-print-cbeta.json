@@ -1,0 +1,3818 @@
+{
+ "stratum": "chinese-print-cbeta",
+ "issue": 6101,
+ "seed": 6101,
+ "sealed_at": "2026-10-06T23:12:54.974Z",
+ "max_width": 2400,
+ "draw_rule": "Mulberry32(6101): the frame's PRINT books (by-eye class woodblock or typeset) shuffled, each book's pages shuffled, then round-robin one page per book per round until 200 (54 print books → 3 or 4 per book). Pool: print-book frame pages with an image and ≥ 30 Han characters of reference.",
+ "book_class": "by eye, one mid-book page per book (book-class.json in results/cbeta-ref-6101/)",
+ "frame": {
+  "books": 66,
+  "pages": 4287,
+  "pool": 2702,
+  "rule": "books: #5566's 79 fitted books (report.json) that are visible:true && pages_count > 0; pages: ocr.source = 'cbeta-xml-p5' && page_number > 0"
+ },
+ "reference_plan": "CBETA XML P5 (CC BY-NC-SA 4.0) as fitted to the page by #5566; text private (Hetzner), sha256 public",
+ "pages": [
+  {
+   "slug": "chinese-print-cbeta-9b8041-p53",
+   "book_id": "6abef31cea0ee3a64e9b8041",
+   "page_number": 53,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "無準師範禪師語錄 卷2–3 (vol 2 of 4)",
+   "year": null,
+   "published": "Gozan edition (五山版), 應安3 [1370]",
+   "language": "Chinese",
+   "cbeta_id": "X1382",
+   "cbeta_lines": [
+    "0250c01",
+    "0250c22"
+   ],
+   "ref_sha256": "29ec19c76cab2771b23cc4e7564501f2a5da35727209c2f54598d3cdca827883",
+   "ref_chars": 402,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef31cea0ee3a64e9b8041/0053.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-5594e0-p19",
+   "book_id": "6abec51d9a6d02ff1a5594e0",
+   "page_number": 19,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷10–12 (vol 4 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0280b17",
+    "0280c24"
+   ],
+   "ref_sha256": "d58d811144c8d649072464b4baca5a6b44e4e1434e3a5789a0afd7739d5ba66b",
+   "ref_chars": 589,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec51d9a6d02ff1a5594e0/0019.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-1de632-p45",
+   "book_id": "6abef33e4c777f224e1de632",
+   "page_number": 45,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "天如惟則禪師語錄 卷3–5 (vol 2 of 4)",
+   "year": null,
+   "published": "師子林天如和尚語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1403",
+   "cbeta_lines": [
+    "0789a12",
+    "0789b07"
+   ],
+   "ref_sha256": "35913db09bfeb9fa3940212416084902ed7cb577f0deb9987a0ba0ad142bd596",
+   "ref_chars": 336,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef33e4c777f224e1de632/0045.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-559426-p47",
+   "book_id": "6abec5189a6d02ff1a559426",
+   "page_number": 47,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷1–3 (vol 1 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0219b26",
+    "0220a07"
+   ],
+   "ref_sha256": "effe0e4a6be0ffe992c527d5f75a26b46172223829ec0eaaf1c2b82046a20775",
+   "ref_chars": 789,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5189a6d02ff1a559426/0047.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-d932a3-p14",
+   "book_id": "6abee93080b99e80d7d932a3",
+   "page_number": 14,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "虛堂和尚語錄 卷3–4 (vol 1 of 4)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), Keichō era [1596–1615]",
+   "language": "Chinese",
+   "cbeta_id": "T2000",
+   "cbeta_lines": [
+    "1005a22",
+    "1005b08"
+   ],
+   "ref_sha256": "faeb5c4ccef1e6c24b0cd0f59eed08a5b483c02b1f9677057ed9e3272b9a7de2",
+   "ref_chars": 235,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee93080b99e80d7d932a3/0014.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-bae269-p18",
+   "book_id": "6abedf23e54ec11ac8bae269",
+   "page_number": 18,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "雲門匡真禪師廣錄 卷2 (vol 2 of 3)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), 慶長18 [1613], 宗鐵重刊",
+   "language": "Chinese",
+   "cbeta_id": "T1988",
+   "cbeta_lines": [
+    "0558a09",
+    "0558b03"
+   ],
+   "ref_sha256": "03c0c81e04ca13dd0fe2eaab70962e74f2c2e470f501d1296302a1cabe240ab1",
+   "ref_chars": 347,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf23e54ec11ac8bae269/0018.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p10",
+   "book_id": "6abef33d4c777f224e1de5d3",
+   "page_number": 10,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "天如惟則禪師語錄 卷1–2 (vol 1 of 4)",
+   "year": null,
+   "published": "師子林天如和尚語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1403",
+   "cbeta_lines": [
+    "0755b13",
+    "0755c08"
+   ],
+   "ref_sha256": "52bea69160f2b4769c759d1676054e0b2c3073d669669c9b56531afd857774a0",
+   "ref_chars": 375,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef33d4c777f224e1de5d3/0010.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-98b321-p56",
+   "book_id": "6abedf411b2cd9635f98b321",
+   "page_number": 56,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "續古尊宿語要 卷4 (vol 3 of 5)",
+   "year": null,
+   "published": "Song print, Fuzhou Gushan (福州鼓山寺版), 紹興9 [1139]; surviving juan 2, 4–6",
+   "language": "Chinese",
+   "cbeta_id": "X1318",
+   "cbeta_lines": [
+    "0447b19",
+    "0447c21"
+   ],
+   "ref_sha256": "5aed9f0d59087e38f8f9461582a2d11d060a4e8286dabe83b3daf9faeb90f753",
+   "ref_chars": 454,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf411b2cd9635f98b321/0056.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-5595f2-p15",
+   "book_id": "6abec5259a6d02ff1a5595f2",
+   "page_number": 15,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷22–24 (vol 8 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0384c11",
+    "0385a20"
+   ],
+   "ref_sha256": "4b867518d707981f26a91baf3d977e9067c09553e0708de786eadb0678f7c7ac",
+   "ref_chars": 618,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5259a6d02ff1a5595f2/0015.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-559523-p43",
+   "book_id": "6abec51f9a6d02ff1a559523",
+   "page_number": 43,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷13–15 (vol 5 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0317b23",
+    "0318a03"
+   ],
+   "ref_sha256": "0c8687ede237d0478bba5fbd0bacc546cb358f8b32c387b7ad27132df26d7379",
+   "ref_chars": 689,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec51f9a6d02ff1a559523/0043.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-eb15a5-p26",
+   "book_id": "6abedf47ee13871d17eb15a5",
+   "page_number": 26,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "應菴曇華禪師語錄",
+   "year": null,
+   "published": "Gozan edition (五山版), 正應元 [1288]",
+   "language": "Chinese",
+   "cbeta_id": "X1359",
+   "cbeta_lines": [
+    "0513c05",
+    "0514a02"
+   ],
+   "ref_sha256": "131ac2a929d54d41b35d47d3f103ed82e6e197ccb369393024ac5e7530033c27",
+   "ref_chars": 375,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf47ee13871d17eb15a5/0026.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-7c04ee-p39",
+   "book_id": "6abedf4d446ab1dad37c04ee",
+   "page_number": 39,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "破菴祖先禪師語錄",
+   "year": null,
+   "published": "Gozan edition (五山版), 應安3 [1370]",
+   "language": "Chinese",
+   "cbeta_id": "X1381",
+   "cbeta_lines": [
+    "0216c15",
+    "0217a10"
+   ],
+   "ref_sha256": "0e8dcaca311dac199ec2c79221af105c4d27a2dac8006369a145c84b82e63def",
+   "ref_chars": 399,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf4d446ab1dad37c04ee/0039.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-5595ab-p41",
+   "book_id": "6abec5239a6d02ff1a5595ab",
+   "page_number": 41,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷19–21 (vol 7 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0369a17",
+    "0369b23"
+   ],
+   "ref_sha256": "580e7f996ca535d5b689db2193cad998dcb524ec3df401c3055c703d837614bf",
+   "ref_chars": 572,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5239a6d02ff1a5595ab/0041.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-1de682-p45",
+   "book_id": "6abef3404c777f224e1de682",
+   "page_number": 45,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "天如惟則禪師語錄 卷5–7 (vol 3 of 4)",
+   "year": null,
+   "published": "師子林天如和尚語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1403",
+   "cbeta_lines": [
+    "0808c08",
+    "0808c17"
+   ],
+   "ref_sha256": "6db2ca54f014143483dfaa0369853fc426e9af5215e123ff24b21cf97eae5c5d",
+   "ref_chars": 157,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef3404c777f224e1de682/0045.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-55963c-p52",
+   "book_id": "6abec5269a6d02ff1a55963c",
+   "page_number": 52,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷25–27 (vol 9 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0427b08",
+    "0427c13"
+   ],
+   "ref_sha256": "b4763813812a33a12b2c49dbfafc18ece854c3f4c85a78db064bfe706d242b42",
+   "ref_chars": 549,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5269a6d02ff1a55963c/0052.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-be00f4-p67",
+   "book_id": "6abee1bb3bb95eea9ebe00f4",
+   "page_number": 67,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "圓悟佛果禪師語錄 卷8–13 (vol 2 of 3)",
+   "year": null,
+   "published": "明暦3 [1657] edition",
+   "language": "Chinese",
+   "cbeta_id": "T1997",
+   "cbeta_lines": [
+    "0764a04",
+    "0764a26"
+   ],
+   "ref_sha256": "4915665c3f3fc60b298f7527e34acda92a55d9011b6a7567f2fe8dbb45a913f2",
+   "ref_chars": 363,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee1bb3bb95eea9ebe00f4/0067.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-bae241-p24",
+   "book_id": "6abedf20e54ec11ac8bae241",
+   "page_number": 24,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "雲門匡真禪師廣錄 卷1 (vol 1 of 3)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), 慶長18 [1613], 宗鐵重刊",
+   "language": "Chinese",
+   "cbeta_id": "T1988",
+   "cbeta_lines": [
+    "0550b25",
+    "0550c20"
+   ],
+   "ref_sha256": "607705f74521c4bd17a386c94421d7a6523d2119a39ea20a679e315be20d4a7e",
+   "ref_chars": 370,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf20e54ec11ac8bae241/0024.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p30",
+   "book_id": "6abedf327ca0bb7fcd9e6c38",
+   "page_number": 30,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "佛果圜悟禪師碧巖錄 卷1–2 (vol 1 of 5)",
+   "year": null,
+   "published": "Gozan edition (五山版), Muromachi period",
+   "language": "Chinese",
+   "cbeta_id": "T2003",
+   "cbeta_lines": [
+    "0145b17",
+    "0145c12"
+   ],
+   "ref_sha256": "1ab72dea71674219ce76f06b7fd33a5b23de3c467291c78d1705800d65f122d5",
+   "ref_chars": 429,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf327ca0bb7fcd9e6c38/0030.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p50",
+   "book_id": "6abedf367ca0bb7fcd9e6d1d",
+   "page_number": 50,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "佛果圜悟禪師碧巖錄 卷7–8 (vol 4 of 5)",
+   "year": null,
+   "published": "Gozan edition (五山版), Muromachi period",
+   "language": "Chinese",
+   "cbeta_id": "T2003",
+   "cbeta_lines": [
+    "0205c04",
+    "0206a02"
+   ],
+   "ref_sha256": "d5e3126f15ea7ae4b169bda66ee9b162bf6495e79486dfbcbfd8e73903b741f2",
+   "ref_chars": 452,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf367ca0bb7fcd9e6d1d/0050.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p52",
+   "book_id": "6abedf387ca0bb7fcd9e6d5b",
+   "page_number": 52,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "佛果圜悟禪師碧巖錄 卷9–10 (vol 5 of 5)",
+   "year": null,
+   "published": "Gozan edition (五山版), Muromachi period",
+   "language": "Chinese",
+   "cbeta_id": "T2003",
+   "cbeta_lines": [
+    "0220b03",
+    "0220c01"
+   ],
+   "ref_sha256": "3872bfb02bda34a9e45263983a87f1c0f17e316b8b9b2e72f2c5968b3cbedf64",
+   "ref_chars": 462,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf387ca0bb7fcd9e6d5b/0052.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-f80792-p44",
+   "book_id": "6abedf4b7ca26f5b50f80792",
+   "page_number": 44,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "松源崇嶽禪師語錄",
+   "year": null,
+   "published": "元祿4 [1691] edition",
+   "language": "Chinese",
+   "cbeta_id": "X1377",
+   "cbeta_lines": [
+    "0087b22",
+    "0087c16"
+   ],
+   "ref_sha256": "ff685a075007da126f86893ad825621f471df4ef9dbef4223904460f60b2cf00",
+   "ref_chars": 306,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf4b7ca26f5b50f80792/0044.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-d933ba-p19",
+   "book_id": "6abee93580b99e80d7d933ba",
+   "page_number": 19,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "虛堂和尚語錄 卷10 (vol 4 of 4)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), Keichō era [1596–1615]",
+   "language": "Chinese",
+   "cbeta_id": "T2000",
+   "cbeta_lines": [
+    "1061a24",
+    "1061b10"
+   ],
+   "ref_sha256": "1dabc80a8438e7b97a7cc4682a3302f3f966fbd90c81bcc16b4b5d8bbbb959b7",
+   "ref_chars": 252,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee93580b99e80d7d933ba/0019.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-d9334e-p66",
+   "book_id": "6abee93380b99e80d7d9334e",
+   "page_number": 66,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "虛堂和尚語錄 卷8–9 (vol 3 of 4)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), Keichō era [1596–1615]",
+   "language": "Chinese",
+   "cbeta_id": "T2000",
+   "cbeta_lines": [
+    "1055c03",
+    "1055c20"
+   ],
+   "ref_sha256": "f185a5396b90252fce3fb4c48dd1066ad73994c2c01ec593f0a92fc695ae7ed5",
+   "ref_chars": 263,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee93380b99e80d7d9334e/0066.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-2904bf-p79",
+   "book_id": "6abef35ed8d3fdd6362904bf",
+   "page_number": 79,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "楚石梵琦禪師語錄 卷9–12 (vol 3 of 5)",
+   "year": null,
+   "published": "佛日普照慧辯楚石禪師語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1420",
+   "cbeta_lines": [
+    "0610b24",
+    "0610c19"
+   ],
+   "ref_sha256": "75168a9757838e2400877519c91a4de265209d732f69a0854eede236de89340d",
+   "ref_chars": 360,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef35ed8d3fdd6362904bf/0079.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-98b382-p54",
+   "book_id": "6abedf431b2cd9635f98b382",
+   "page_number": 54,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "續古尊宿語要 卷5 (vol 4 of 5)",
+   "year": null,
+   "published": "Song print, Fuzhou Gushan (福州鼓山寺版), 紹興9 [1139]; surviving juan 2, 4–6",
+   "language": "Chinese",
+   "cbeta_id": "X1318",
+   "cbeta_lines": [
+    "0478a19",
+    "0478b21"
+   ],
+   "ref_sha256": "16e1782b2f6351985e99da292d923e33f9febd6123678931c923b92f1cfc6e43",
+   "ref_chars": 476,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf431b2cd9635f98b382/0054.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-be0167-p25",
+   "book_id": "6abee1bd3bb95eea9ebe0167",
+   "page_number": 25,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "圓悟佛果禪師語錄 卷14–20 (vol 3 of 3)",
+   "year": null,
+   "published": "明暦3 [1657] edition",
+   "language": "Chinese",
+   "cbeta_id": "T1997",
+   "cbeta_lines": [
+    "0781b18",
+    "0781c11"
+   ],
+   "ref_sha256": "3dfdafd33624231a20028a1cc100adaa9440059901264d009ba74094f9694e90",
+   "ref_chars": 378,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee1bd3bb95eea9ebe0167/0025.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-559564-p23",
+   "book_id": "6abec5219a6d02ff1a559564",
+   "page_number": 23,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷16–18 (vol 6 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0334b26",
+    "0334c27"
+   ],
+   "ref_sha256": "81bc15f4089e197bb2015589c49a551c5a1db2e27f350cf5a1f4f2580a0dd8ea",
+   "ref_chars": 420,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5219a6d02ff1a559564/0023.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p19",
+   "book_id": "6abedf199f894b562076797f",
+   "page_number": 19,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "鎮州臨濟慧照禪師語錄",
+   "year": null,
+   "published": "Gozan edition (五山版), Nanbokuchō period [1336–1392]",
+   "language": "Chinese",
+   "cbeta_id": "T1985",
+   "cbeta_lines": [
+    "0501a10",
+    "0501b07"
+   ],
+   "ref_sha256": "a44b3b4e46b2830375728124d6fb3dc1e618cb2071816fb7326a25a40cf03c41",
+   "ref_chars": 441,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf199f894b562076797f/0019.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p49",
+   "book_id": "6abedf357ca0bb7fcd9e6cdd",
+   "page_number": 49,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "佛果圜悟禪師碧巖錄 卷5–6 (vol 3 of 5)",
+   "year": null,
+   "published": "Gozan edition (五山版), Muromachi period",
+   "language": "Chinese",
+   "cbeta_id": "T2003",
+   "cbeta_lines": [
+    "0190c18",
+    "0191a15"
+   ],
+   "ref_sha256": "baab4909ef0bf8f92c95930e965192cb3521973babb3938171c0e7e9d17e9398",
+   "ref_chars": 444,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf357ca0bb7fcd9e6cdd/0049.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-f94cbc-p54",
+   "book_id": "6abedf29fb1708126df94cbc",
+   "page_number": 54,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "大慧普覺禪師語錄 卷5–8 (vol 2 of 3)",
+   "year": null,
+   "published": "Edo-period edition, 12 juan",
+   "language": "Chinese",
+   "cbeta_id": "T1998A",
+   "cbeta_lines": [
+    "0845b10",
+    "0845c07"
+   ],
+   "ref_sha256": "924547bcf365d18ea6c88b4e4e9b8b13a5337fe9442d91ec925ab152cefd9310",
+   "ref_chars": 416,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf29fb1708126df94cbc/0054.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-25f3a6-p44",
+   "book_id": "6abedf2f0f33d7676e25f3a6",
+   "page_number": 44,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "密菴和尚語錄 卷1 (vol 2 of 2)",
+   "year": null,
+   "published": "Gozan edition (五山版), Nanbokuchō period [1336–1392]",
+   "language": "Chinese",
+   "cbeta_id": "T1999",
+   "cbeta_lines": [
+    "0981a29",
+    "0981b25"
+   ],
+   "ref_sha256": "60c28f953ebde30426306bcbb3e9d93166e750352633939f07ad5df12accbbb1",
+   "ref_chars": 400,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf2f0f33d7676e25f3a6/0044.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-f94c74-p56",
+   "book_id": "6abedf28fb1708126df94c74",
+   "page_number": 56,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "大慧普覺禪師語錄 卷1–4 (vol 1 of 3)",
+   "year": null,
+   "published": "Edo-period edition, 12 juan",
+   "language": "Chinese",
+   "cbeta_id": "T1998A",
+   "cbeta_lines": [
+    "0825c14",
+    "0826a09"
+   ],
+   "ref_sha256": "de56add592c937aa9d7b7922e2892904e727b0c90e5dd8f5a1a440c2286af2cc",
+   "ref_chars": 407,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf28fb1708126df94c74/0056.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9b8007-p14",
+   "book_id": "6abef31aea0ee3a64e9b8007",
+   "page_number": 14,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "無準師範禪師語錄 卷1 (vol 1 of 4)",
+   "year": null,
+   "published": "Gozan edition (五山版), 應安3 [1370]",
+   "language": "Chinese",
+   "cbeta_id": "X1382",
+   "cbeta_lines": [
+    "0223a08",
+    "0223b05"
+   ],
+   "ref_sha256": "8565793334c855fb16b147dd5f28020b0c3afaf4c84638d517398986bf492de0",
+   "ref_chars": 382,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef31aea0ee3a64e9b8007/0014.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c95-p27",
+   "book_id": "6abedf337ca0bb7fcd9e6c95",
+   "page_number": 27,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "佛果圜悟禪師碧巖錄 卷3–4 (vol 2 of 5)",
+   "year": null,
+   "published": "Gozan edition (五山版), Muromachi period",
+   "language": "Chinese",
+   "cbeta_id": "T2003",
+   "cbeta_lines": [
+    "0167c19",
+    "0168a14"
+   ],
+   "ref_sha256": "9b5b8a80250946d1fcce5b1d41a940a0743cd4c3a0758890a5faaea0dfe3aa87",
+   "ref_chars": 443,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf337ca0bb7fcd9e6c95/0027.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-2690a0-p46",
+   "book_id": "6abef3343eeeaaa3202690a0",
+   "page_number": 46,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "高峰原妙禪師語錄",
+   "year": null,
+   "published": "高峰大師語録, 明暦3 [1657]",
+   "language": "Chinese",
+   "cbeta_id": "X1400",
+   "cbeta_lines": [
+    "0686b15",
+    "0686c08"
+   ],
+   "ref_sha256": "0b3601ef854d82e37c2e9c202ec78f196b68a4a2043680f5ff45082bee6df7e0",
+   "ref_chars": 317,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef3343eeeaaa3202690a0/0046.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-290464-p65",
+   "book_id": "6abef35cd8d3fdd636290464",
+   "page_number": 65,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "楚石梵琦禪師語錄 卷5–8 (vol 2 of 5)",
+   "year": null,
+   "published": "佛日普照慧辯楚石禪師語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1420",
+   "cbeta_lines": [
+    "0583c22",
+    "0584a17"
+   ],
+   "ref_sha256": "eae6dde0817a0539ffc3c69dce6c7cfed41d6bb13f5661d838968eac839c5290",
+   "ref_chars": 373,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef35cd8d3fdd636290464/0065.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-290525-p72",
+   "book_id": "6abef35fd8d3fdd636290525",
+   "page_number": 72,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "楚石梵琦禪師語錄 卷13–16 (vol 4 of 5)",
+   "year": null,
+   "published": "佛日普照慧辯楚石禪師語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1420",
+   "cbeta_lines": [
+    "0634c03",
+    "0634c22"
+   ],
+   "ref_sha256": "a154a92f7ac79d0c2a224dcd2bc1b63830862e6fc6d8a608b278f19499ccb331",
+   "ref_chars": 297,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef35fd8d3fdd636290525/0072.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-559462-p10",
+   "book_id": "6abec5199a6d02ff1a559462",
+   "page_number": 10,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷4–6 (vol 2 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0228a12",
+    "0228b20"
+   ],
+   "ref_sha256": "40153ad7c55a36c91f5b4ae40c1b851338d94dd0787ff411c0d95a9e448be123",
+   "ref_chars": 624,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5199a6d02ff1a559462/0010.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-bae2a1-p4",
+   "book_id": "6abedf24e54ec11ac8bae2a1",
+   "page_number": 4,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "雲門匡真禪師廣錄 卷2–3 (vol 3 of 3)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), 慶長18 [1613], 宗鐵重刊",
+   "language": "Chinese",
+   "cbeta_id": "T1988",
+   "cbeta_lines": [
+    "0567c16",
+    "0568a10"
+   ],
+   "ref_sha256": "37221855570446246d7b8ad5ba8d511f493d6202fb89e2d7582eaf90d4c74c2c",
+   "ref_chars": 390,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf24e54ec11ac8bae2a1/0004.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-98b2c2-p58",
+   "book_id": "6abedf3f1b2cd9635f98b2c2",
+   "page_number": 58,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "續古尊宿語要 卷2 (vol 2 of 5)",
+   "year": null,
+   "published": "Song print, Fuzhou Gushan (福州鼓山寺版), 紹興9 [1139]; surviving juan 2, 4–6",
+   "language": "Chinese",
+   "cbeta_id": "X1318",
+   "cbeta_lines": [
+    "0386c07",
+    "0387a08"
+   ],
+   "ref_sha256": "195bcdf08b404dfc51ef22ae9a9b6b27831f0787a991eb72f91c46138739eb85",
+   "ref_chars": 377,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf3f1b2cd9635f98b2c2/0058.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9b80b5-p28",
+   "book_id": "6abef31fea0ee3a64e9b80b5",
+   "page_number": 28,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "無準師範禪師語錄 卷5 (vol 4 of 4)",
+   "year": null,
+   "published": "Gozan edition (五山版), 應安3 [1370]",
+   "language": "Chinese",
+   "cbeta_id": "X1382",
+   "cbeta_lines": [
+    "0274b04",
+    "0274b24"
+   ],
+   "ref_sha256": "e1f947dfcd2c8acffed60bde0276505122fa12edc1ad6f2719774db67bbc7a04",
+   "ref_chars": 301,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef31fea0ee3a64e9b80b5/0028.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-f94cf9-p60",
+   "book_id": "6abedf2bfb1708126df94cf9",
+   "page_number": 60,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "大慧普覺禪師語錄 卷9–12 (vol 3 of 3)",
+   "year": null,
+   "published": "Edo-period edition, 12 juan",
+   "language": "Chinese",
+   "cbeta_id": "T1998A",
+   "cbeta_lines": [
+    "0862a09",
+    "0862b05"
+   ],
+   "ref_sha256": "ecd438184a046325110ac7924428435ca11761f2a56d6cc17bfdb4ea3e82b9f4",
+   "ref_chars": 311,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf2bfb1708126df94cf9/0060.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-62ec23-p73",
+   "book_id": "6abef30b38586aecb162ec23",
+   "page_number": 73,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "法演禪師語錄",
+   "year": null,
+   "published": "舒州白雲山海會演和尚語録, preface 文政12 [1829]",
+   "language": "Chinese",
+   "cbeta_id": "T1995",
+   "cbeta_lines": [
+    "0666c23",
+    "0667a15"
+   ],
+   "ref_sha256": "98a3ecade8583a4de943e4e55440182a699cbbc6dd2b23d3205b0a994a46fa1b",
+   "ref_chars": 266,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef30b38586aecb162ec23/0073.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-290417-p66",
+   "book_id": "6abef35bd8d3fdd636290417",
+   "page_number": 66,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "楚石梵琦禪師語錄 卷1–4 (vol 1 of 5)",
+   "year": null,
+   "published": "佛日普照慧辯楚石禪師語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1420",
+   "cbeta_lines": [
+    "0564c23",
+    "0565a18"
+   ],
+   "ref_sha256": "9fe0d1bb135c8beb92f1e396bad6842b5a4daee43e0bdfa53eb18b66e02c3956",
+   "ref_chars": 372,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef35bd8d3fdd636290417/0066.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-e24f00-p42",
+   "book_id": "6abedf4914590c1068e24f00",
+   "page_number": 42,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "笑隱大訢禪師語錄",
+   "year": null,
+   "published": "Gozan edition (五山版), early Muromachi",
+   "language": "Chinese",
+   "cbeta_id": "X1367",
+   "cbeta_lines": [
+    "0710b07",
+    "0710c02"
+   ],
+   "ref_sha256": "241f3ee4c63321142881cdc6826b4d0ef2e288ee04ace5c8d1c30f2757c93fe9",
+   "ref_chars": 330,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf4914590c1068e24f00/0042.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-55968d-p65",
+   "book_id": "6abec5289a6d02ff1a55968d",
+   "page_number": 65,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷28–30 (vol 10 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0464a17",
+    "0464b14"
+   ],
+   "ref_sha256": "a9a475e7c4fb1a10902a4563fcd31823d4b5976fee666e45a2a3be84da509ab3",
+   "ref_chars": 406,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5289a6d02ff1a55968d/0065.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-5594a6-p26",
+   "book_id": "6abec51c9a6d02ff1a5594a6",
+   "page_number": 26,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷7–9 (vol 3 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0261b03",
+    "0261c11"
+   ],
+   "ref_sha256": "8cc09c82dca31128b7be5d6d9213a87f46879d244548d50d6e88b4a23054ace6",
+   "ref_chars": 699,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec51c9a6d02ff1a5594a6/0026.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9b807d-p4",
+   "book_id": "6abef31dea0ee3a64e9b807d",
+   "page_number": 4,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "無準師範禪師語錄 卷3–5 (vol 3 of 4)",
+   "year": null,
+   "published": "Gozan edition (五山版), 應安3 [1370]",
+   "language": "Chinese",
+   "cbeta_id": "X1382",
+   "cbeta_lines": [
+    "0252a10",
+    "0252b07"
+   ],
+   "ref_sha256": "f694351b24bc3e35aa512ca554ceb37c7b4b79b3f25ed505f8124a0bceda04f1",
+   "ref_chars": 396,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef31dea0ee3a64e9b807d/0004.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-1de6cf-p4",
+   "book_id": "6abef3414c777f224e1de6cf",
+   "page_number": 4,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "天如惟則禪師語錄 卷7–9 (vol 4 of 4)",
+   "year": null,
+   "published": "師子林天如和尚語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1403",
+   "cbeta_lines": [
+    "0816b11",
+    "0816c06"
+   ],
+   "ref_sha256": "92081e4f0bdd619fb3d029b8dbbb6e720fd67fedf51ba514b6c00d314b509069",
+   "ref_chars": 366,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef3414c777f224e1de6cf/0004.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-be006b-p42",
+   "book_id": "6abee1b83bb95eea9ebe006b",
+   "page_number": 42,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "圓悟佛果禪師語錄 卷1–7 (vol 1 of 3)",
+   "year": null,
+   "published": "明暦3 [1657] edition",
+   "language": "Chinese",
+   "cbeta_id": "T1997",
+   "cbeta_lines": [
+    "0723a29",
+    "0723b22"
+   ],
+   "ref_sha256": "130264167fde5711d1a2f7ec4bb63303c3a58b456d94ce1ab5532fb2fd54fbda",
+   "ref_chars": 364,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee1b83bb95eea9ebe006b/0042.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-d93308-p48",
+   "book_id": "6abee93180b99e80d7d93308",
+   "page_number": 48,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "虛堂和尚語錄 卷6–7 (vol 2 of 4)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), Keichō era [1596–1615]",
+   "language": "Chinese",
+   "cbeta_id": "T2000",
+   "cbeta_lines": [
+    "1038a03",
+    "1038a18"
+   ],
+   "ref_sha256": "23855e3dcd7a67dbd4f6fd553d39df2595409bd4c11b09059620906fc7745173",
+   "ref_chars": 168,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee93180b99e80d7d93308/0048.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-29057c-p47",
+   "book_id": "6abef360d8d3fdd63629057c",
+   "page_number": 47,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "楚石梵琦禪師語錄 卷17–20 (vol 5 of 5)",
+   "year": null,
+   "published": "佛日普照慧辯楚石禪師語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1420",
+   "cbeta_lines": [
+    "0649b12",
+    "0649c07"
+   ],
+   "ref_sha256": "73d29524086b9ae76fc466f41a45e8a7806c548882e087168139e257a9b89a6c",
+   "ref_chars": 215,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef360d8d3fdd63629057c/0047.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-25f375-p40",
+   "book_id": "6abedf2d0f33d7676e25f375",
+   "page_number": 40,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "密菴和尚語錄 卷1 (vol 1 of 2)",
+   "year": null,
+   "published": "Gozan edition (五山版), Nanbokuchō period [1336–1392]",
+   "language": "Chinese",
+   "cbeta_id": "T1999",
+   "cbeta_lines": [
+    "0968a05",
+    "0968b01"
+   ],
+   "ref_sha256": "11eec1affa7bc319e0ff62ed0c26f30f3e73473c2cdc6f3ea57ccdcb17466b02",
+   "ref_chars": 398,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf2d0f33d7676e25f375/0040.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-98b3e6-p27",
+   "book_id": "6abedf441b2cd9635f98b3e6",
+   "page_number": 27,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "續古尊宿語要 卷6 (vol 5 of 5)",
+   "year": null,
+   "published": "Song print, Fuzhou Gushan (福州鼓山寺版), 紹興9 [1139]; surviving juan 2, 4–6",
+   "language": "Chinese",
+   "cbeta_id": "X1318",
+   "cbeta_lines": [
+    "0500c06",
+    "0501a08"
+   ],
+   "ref_sha256": "13038b61512f1b4c1c74f583c9f109c0727412609d02d11d39ee18bd23951385",
+   "ref_chars": 479,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf441b2cd9635f98b3e6/0027.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9b8041-p18",
+   "book_id": "6abef31cea0ee3a64e9b8041",
+   "page_number": 18,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "無準師範禪師語錄 卷2–3 (vol 2 of 4)",
+   "year": null,
+   "published": "Gozan edition (五山版), 應安3 [1370]",
+   "language": "Chinese",
+   "cbeta_id": "X1382",
+   "cbeta_lines": [
+    "0239c23",
+    "0240a20"
+   ],
+   "ref_sha256": "8ee27b390fee5c381074ef735159361d1146eeece63fabf4ec68e8663f01a51f",
+   "ref_chars": 403,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef31cea0ee3a64e9b8041/0018.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-5594e0-p12",
+   "book_id": "6abec51d9a6d02ff1a5594e0",
+   "page_number": 12,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷10–12 (vol 4 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0277b14",
+    "0277c24"
+   ],
+   "ref_sha256": "48a33934b9f5f9796abdaf976fc1b5526defc5d27380c0c9aaa566199c835bed",
+   "ref_chars": 718,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec51d9a6d02ff1a5594e0/0012.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-1de632-p15",
+   "book_id": "6abef33e4c777f224e1de632",
+   "page_number": 15,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "天如惟則禪師語錄 卷3–5 (vol 2 of 4)",
+   "year": null,
+   "published": "師子林天如和尚語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1403",
+   "cbeta_lines": [
+    "0780c19",
+    "0781a14"
+   ],
+   "ref_sha256": "2d87b7c3cd848832f70f7cf8635f970d0bc781e8d3c1f0e67b99675aa109c9d0",
+   "ref_chars": 374,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef33e4c777f224e1de632/0015.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-559426-p29",
+   "book_id": "6abec5189a6d02ff1a559426",
+   "page_number": 29,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷1–3 (vol 1 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0211c01",
+    "0212a11"
+   ],
+   "ref_sha256": "f634ac8b8328e0cbe3f6e9a025189352eba7e9c8015c394c0b5c77082c674378",
+   "ref_chars": 610,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5189a6d02ff1a559426/0029.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-d932a3-p78",
+   "book_id": "6abee93080b99e80d7d932a3",
+   "page_number": 78,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "虛堂和尚語錄 卷3–4 (vol 1 of 4)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), Keichō era [1596–1615]",
+   "language": "Chinese",
+   "cbeta_id": "T2000",
+   "cbeta_lines": [
+    "1016b03",
+    "1016b19"
+   ],
+   "ref_sha256": "8833d906665f69b5224feeeaeaed496c7db59dca8463337982ac7c7fe94609a5",
+   "ref_chars": 272,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee93080b99e80d7d932a3/0078.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-bae269-p35",
+   "book_id": "6abedf23e54ec11ac8bae269",
+   "page_number": 35,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "雲門匡真禪師廣錄 卷2 (vol 2 of 3)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), 慶長18 [1613], 宗鐵重刊",
+   "language": "Chinese",
+   "cbeta_id": "T1988",
+   "cbeta_lines": [
+    "0562b24",
+    "0562c20"
+   ],
+   "ref_sha256": "fe68e8661f87194a3427e5ec74a72c80063775a7c00f2c5166511586c52a1c9d",
+   "ref_chars": 388,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf23e54ec11ac8bae269/0035.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p55",
+   "book_id": "6abef33d4c777f224e1de5d3",
+   "page_number": 55,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "天如惟則禪師語錄 卷1–2 (vol 1 of 4)",
+   "year": null,
+   "published": "師子林天如和尚語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1403",
+   "cbeta_lines": [
+    "0767c20",
+    "0768a15"
+   ],
+   "ref_sha256": "1b46cd4adc99f366372fdaf98eae13367bb1403737c89f98ea512b4d44a92a02",
+   "ref_chars": 400,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef33d4c777f224e1de5d3/0055.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-98b321-p53",
+   "book_id": "6abedf411b2cd9635f98b321",
+   "page_number": 53,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "續古尊宿語要 卷4 (vol 3 of 5)",
+   "year": null,
+   "published": "Song print, Fuzhou Gushan (福州鼓山寺版), 紹興9 [1139]; surviving juan 2, 4–6",
+   "language": "Chinese",
+   "cbeta_id": "X1318",
+   "cbeta_lines": [
+    "0446b10",
+    "0446c12"
+   ],
+   "ref_sha256": "891715ee8831d30aeb1ec29637298b30ece7ed5fe14db0b236372a6c54c8cac2",
+   "ref_chars": 515,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf411b2cd9635f98b321/0053.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-5595f2-p69",
+   "book_id": "6abec5259a6d02ff1a5595f2",
+   "page_number": 69,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷22–24 (vol 8 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0406c10",
+    "0407a08"
+   ],
+   "ref_sha256": "ff14303bbbfcb780239e4d5e1624ae2ceb7e254ec3a9c3c03be4f3c2b5b9c14a",
+   "ref_chars": 399,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5259a6d02ff1a5595f2/0069.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-559523-p49",
+   "book_id": "6abec51f9a6d02ff1a559523",
+   "page_number": 49,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷13–15 (vol 5 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0320a22",
+    "0320c02"
+   ],
+   "ref_sha256": "e7d017242d0802f152fe37a52d1e12decea355c112efbe10bb52e7cc12696e4d",
+   "ref_chars": 647,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec51f9a6d02ff1a559523/0049.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-eb15a5-p31",
+   "book_id": "6abedf47ee13871d17eb15a5",
+   "page_number": 31,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "應菴曇華禪師語錄",
+   "year": null,
+   "published": "Gozan edition (五山版), 正應元 [1288]",
+   "language": "Chinese",
+   "cbeta_id": "X1359",
+   "cbeta_lines": [
+    "0515b01",
+    "0515b21"
+   ],
+   "ref_sha256": "d85ba6898541e79f9c5848f3a228c34b18a4aac13591e6214dd978dfe03160d2",
+   "ref_chars": 362,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf47ee13871d17eb15a5/0031.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-7c04ee-p25",
+   "book_id": "6abedf4d446ab1dad37c04ee",
+   "page_number": 25,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "破菴祖先禪師語錄",
+   "year": null,
+   "published": "Gozan edition (五山版), 應安3 [1370]",
+   "language": "Chinese",
+   "cbeta_id": "X1381",
+   "cbeta_lines": [
+    "0213a21",
+    "0213b16"
+   ],
+   "ref_sha256": "cfae6bfcaa88c038dd8e1f1cb0129620fd82e3762a03df601f465286cd4761dc",
+   "ref_chars": 384,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf4d446ab1dad37c04ee/0025.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-5595ab-p32",
+   "book_id": "6abec5239a6d02ff1a5595ab",
+   "page_number": 32,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷19–21 (vol 7 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0365b05",
+    "0365c13"
+   ],
+   "ref_sha256": "666dd0587d6751f511b1112e6ef3275654f8544a7ae062e5aadcbd6f69f49748",
+   "ref_chars": 579,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5239a6d02ff1a5595ab/0032.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-1de682-p37",
+   "book_id": "6abef3404c777f224e1de682",
+   "page_number": 37,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "天如惟則禪師語錄 卷5–7 (vol 3 of 4)",
+   "year": null,
+   "published": "師子林天如和尚語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1403",
+   "cbeta_lines": [
+    "0806b21",
+    "0806c16"
+   ],
+   "ref_sha256": "65b12c6d6ea82edf0a37965d5c253cfd152d8f2de9c097a844af95e94edacb65",
+   "ref_chars": 369,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef3404c777f224e1de682/0037.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-55963c-p48",
+   "book_id": "6abec5269a6d02ff1a55963c",
+   "page_number": 48,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷25–27 (vol 9 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0425c08",
+    "0426a13"
+   ],
+   "ref_sha256": "b3621e62278be5af4714eb041107e86057c2f8ea6c89fb142ea6a5da569f4bbc",
+   "ref_chars": 549,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5269a6d02ff1a55963c/0048.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-be00f4-p7",
+   "book_id": "6abee1bb3bb95eea9ebe00f4",
+   "page_number": 7,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "圓悟佛果禪師語錄 卷8–13 (vol 2 of 3)",
+   "year": null,
+   "published": "明暦3 [1657] edition",
+   "language": "Chinese",
+   "cbeta_id": "T1997",
+   "cbeta_lines": [
+    "0748b02",
+    "0748b26"
+   ],
+   "ref_sha256": "ae19f5b14a98923ca7ac9385192c285618b3ca9f58d1523ad688a86e3cd2861a",
+   "ref_chars": 381,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee1bb3bb95eea9ebe00f4/0007.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-bae241-p7",
+   "book_id": "6abedf20e54ec11ac8bae241",
+   "page_number": 7,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "雲門匡真禪師廣錄 卷1 (vol 1 of 3)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), 慶長18 [1613], 宗鐵重刊",
+   "language": "Chinese",
+   "cbeta_id": "T1988",
+   "cbeta_lines": [
+    "0546a10",
+    "0546b04"
+   ],
+   "ref_sha256": "defd8dceea0f99585952d4bd475708c70925195b6c3e3aeaea83b47ce5798212",
+   "ref_chars": 381,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf20e54ec11ac8bae241/0007.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p18",
+   "book_id": "6abedf327ca0bb7fcd9e6c38",
+   "page_number": 18,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "佛果圜悟禪師碧巖錄 卷1–2 (vol 1 of 5)",
+   "year": null,
+   "published": "Gozan edition (五山版), Muromachi period",
+   "language": "Chinese",
+   "cbeta_id": "T2003",
+   "cbeta_lines": [
+    "0141c27",
+    "0142a20"
+   ],
+   "ref_sha256": "faaaa18ac5d09d9f6343a964a51122aa12cab724c79ba2f2a027600e177e7f40",
+   "ref_chars": 428,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf327ca0bb7fcd9e6c38/0018.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p55",
+   "book_id": "6abedf367ca0bb7fcd9e6d1d",
+   "page_number": 55,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "佛果圜悟禪師碧巖錄 卷7–8 (vol 4 of 5)",
+   "year": null,
+   "published": "Gozan edition (五山版), Muromachi period",
+   "language": "Chinese",
+   "cbeta_id": "T2003",
+   "cbeta_lines": [
+    "0207a19",
+    "0207b02"
+   ],
+   "ref_sha256": "ee8e28545ff6020e69f845f014f504b144f40b1f23258e4989a3e80cd1196de5",
+   "ref_chars": 205,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf367ca0bb7fcd9e6d1d/0055.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p69",
+   "book_id": "6abedf387ca0bb7fcd9e6d5b",
+   "page_number": 69,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "佛果圜悟禪師碧巖錄 卷9–10 (vol 5 of 5)",
+   "year": null,
+   "published": "Gozan edition (五山版), Muromachi period",
+   "language": "Chinese",
+   "cbeta_id": "T2003",
+   "cbeta_lines": [
+    "0224c20",
+    "0224c28"
+   ],
+   "ref_sha256": "9c35a3e97ae9c72e59557dc03bc5e34c7140b976ec5a76d73424bdbc7473fe7f",
+   "ref_chars": 137,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf387ca0bb7fcd9e6d5b/0069.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-f80792-p79",
+   "book_id": "6abedf4b7ca26f5b50f80792",
+   "page_number": 79,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "松源崇嶽禪師語錄",
+   "year": null,
+   "published": "元祿4 [1691] edition",
+   "language": "Chinese",
+   "cbeta_id": "X1377",
+   "cbeta_lines": [
+    "0096a17",
+    "0096b10"
+   ],
+   "ref_sha256": "b1fa985d3c844b2366b60bf12009d982dc2e9fd88f2c7fa55c3f4d95a5dfbe3c",
+   "ref_chars": 307,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf4b7ca26f5b50f80792/0079.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-d933ba-p28",
+   "book_id": "6abee93580b99e80d7d933ba",
+   "page_number": 28,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "虛堂和尚語錄 卷10 (vol 4 of 4)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), Keichō era [1596–1615]",
+   "language": "Chinese",
+   "cbeta_id": "T2000",
+   "cbeta_lines": [
+    "1062c24",
+    "1063a10"
+   ],
+   "ref_sha256": "6700273264924c74a1d7862530a42865237f2675e176eef61dac36273362ce29",
+   "ref_chars": 204,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee93580b99e80d7d933ba/0028.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-d9334e-p18",
+   "book_id": "6abee93380b99e80d7d9334e",
+   "page_number": 18,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "虛堂和尚語錄 卷8–9 (vol 3 of 4)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), Keichō era [1596–1615]",
+   "language": "Chinese",
+   "cbeta_id": "T2000",
+   "cbeta_lines": [
+    "1046b27",
+    "1046c14"
+   ],
+   "ref_sha256": "02e6f02e6d930c48421a00c674123e011b4e3c84c5d6a0e769708fd6ba157a18",
+   "ref_chars": 241,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee93380b99e80d7d9334e/0018.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-2904bf-p36",
+   "book_id": "6abef35ed8d3fdd6362904bf",
+   "page_number": 36,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "楚石梵琦禪師語錄 卷9–12 (vol 3 of 5)",
+   "year": null,
+   "published": "佛日普照慧辯楚石禪師語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1420",
+   "cbeta_lines": [
+    "0598c16",
+    "0599a11"
+   ],
+   "ref_sha256": "029889528862214b5dd7669e46c504926228afff4f20d8df1ed3f5b46e4b49be",
+   "ref_chars": 381,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef35ed8d3fdd6362904bf/0036.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-98b382-p39",
+   "book_id": "6abedf431b2cd9635f98b382",
+   "page_number": 39,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "續古尊宿語要 卷5 (vol 4 of 5)",
+   "year": null,
+   "published": "Song print, Fuzhou Gushan (福州鼓山寺版), 紹興9 [1139]; surviving juan 2, 4–6",
+   "language": "Chinese",
+   "cbeta_id": "X1318",
+   "cbeta_lines": [
+    "0473a02",
+    "0473a21"
+   ],
+   "ref_sha256": "ed14a3b2921a27cbb5776082872b2e01c09a69dd5621cafcf02f0b0de6a3f7f3",
+   "ref_chars": 285,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf431b2cd9635f98b382/0039.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-be0167-p51",
+   "book_id": "6abee1bd3bb95eea9ebe0167",
+   "page_number": 51,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "圓悟佛果禪師語錄 卷14–20 (vol 3 of 3)",
+   "year": null,
+   "published": "明暦3 [1657] edition",
+   "language": "Chinese",
+   "cbeta_id": "T1997",
+   "cbeta_lines": [
+    "0788a21",
+    "0788b15"
+   ],
+   "ref_sha256": "eda85a9f7647f8d93d6ea610ad2a02360b1901f5fc8f32c5807c99255d590d38",
+   "ref_chars": 377,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee1bd3bb95eea9ebe0167/0051.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-559564-p60",
+   "book_id": "6abec5219a6d02ff1a559564",
+   "page_number": 60,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷16–18 (vol 6 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0349c25",
+    "0350b03"
+   ],
+   "ref_sha256": "a8f7b02e944bf008b047fca4921c835110727c0c10955bbfb6959a64ed9052d7",
+   "ref_chars": 657,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5219a6d02ff1a559564/0060.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p16",
+   "book_id": "6abedf199f894b562076797f",
+   "page_number": 16,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "鎮州臨濟慧照禪師語錄",
+   "year": null,
+   "published": "Gozan edition (五山版), Nanbokuchō period [1336–1392]",
+   "language": "Chinese",
+   "cbeta_id": "T1985",
+   "cbeta_lines": [
+    "0500a19",
+    "0500b16"
+   ],
+   "ref_sha256": "2fc064e43f04aa8f5520f1d8cfe0b140a64fee0bad092fdc2c5f89b1c8ed45d2",
+   "ref_chars": 440,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf199f894b562076797f/0016.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p6",
+   "book_id": "6abedf357ca0bb7fcd9e6cdd",
+   "page_number": 6,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "佛果圜悟禪師碧巖錄 卷5–6 (vol 3 of 5)",
+   "year": null,
+   "published": "Gozan edition (五山版), Muromachi period",
+   "language": "Chinese",
+   "cbeta_id": "T2003",
+   "cbeta_lines": [
+    "0178c09",
+    "0178c21"
+   ],
+   "ref_sha256": "86ccbec44e29f947831681ae44ff34ceca3704de371a647b6f813836f7b1c3f0",
+   "ref_chars": 191,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf357ca0bb7fcd9e6cdd/0006.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-f94cbc-p39",
+   "book_id": "6abedf29fb1708126df94cbc",
+   "page_number": 39,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "大慧普覺禪師語錄 卷5–8 (vol 2 of 3)",
+   "year": null,
+   "published": "Edo-period edition, 12 juan",
+   "language": "Chinese",
+   "cbeta_id": "T1998A",
+   "cbeta_lines": [
+    "0840c28",
+    "0841a24"
+   ],
+   "ref_sha256": "eacd7538a4f012cf98866a7fa15f5d5ca3685b383f46a08a6bd45122f2c2bff3",
+   "ref_chars": 399,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf29fb1708126df94cbc/0039.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-25f3a6-p2",
+   "book_id": "6abedf2f0f33d7676e25f3a6",
+   "page_number": 2,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "密菴和尚語錄 卷1 (vol 2 of 2)",
+   "year": null,
+   "published": "Gozan edition (五山版), Nanbokuchō period [1336–1392]",
+   "language": "Chinese",
+   "cbeta_id": "T1999",
+   "cbeta_lines": [
+    "0969b19",
+    "0969c02"
+   ],
+   "ref_sha256": "8863a07cfedf0eef65fee36b978a509dc88ad1aa794e6ff94fdec8b931eae4fd",
+   "ref_chars": 172,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf2f0f33d7676e25f3a6/0002.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-f94c74-p65",
+   "book_id": "6abedf28fb1708126df94c74",
+   "page_number": 65,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "大慧普覺禪師語錄 卷1–4 (vol 1 of 3)",
+   "year": null,
+   "published": "Edo-period edition, 12 juan",
+   "language": "Chinese",
+   "cbeta_id": "T1998A",
+   "cbeta_lines": [
+    "0828b14",
+    "0828c11"
+   ],
+   "ref_sha256": "9ba4106ff1f29b553765cd9f6d9f63ade4f657c8636852f0a73a6ddcd864ae0c",
+   "ref_chars": 403,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf28fb1708126df94c74/0065.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9b8007-p11",
+   "book_id": "6abef31aea0ee3a64e9b8007",
+   "page_number": 11,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "無準師範禪師語錄 卷1 (vol 1 of 4)",
+   "year": null,
+   "published": "Gozan edition (五山版), 應安3 [1370]",
+   "language": "Chinese",
+   "cbeta_id": "X1382",
+   "cbeta_lines": [
+    "0222a14",
+    "0222b11"
+   ],
+   "ref_sha256": "f5ac78a579c347ac3ae9db9fe556ff65ce7bdc4f3a94725c4c0bf80f4aee8237",
+   "ref_chars": 339,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef31aea0ee3a64e9b8007/0011.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c95-p26",
+   "book_id": "6abedf337ca0bb7fcd9e6c95",
+   "page_number": 26,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "佛果圜悟禪師碧巖錄 卷3–4 (vol 2 of 5)",
+   "year": null,
+   "published": "Gozan edition (五山版), Muromachi period",
+   "language": "Chinese",
+   "cbeta_id": "T2003",
+   "cbeta_lines": [
+    "0167b21",
+    "0167c19"
+   ],
+   "ref_sha256": "422388e26a95ab0586cb3a6e8597140465927f49f3a1a4a7930eaa32049c7808",
+   "ref_chars": 446,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf337ca0bb7fcd9e6c95/0026.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-2690a0-p63",
+   "book_id": "6abef3343eeeaaa3202690a0",
+   "page_number": 63,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "高峰原妙禪師語錄",
+   "year": null,
+   "published": "高峰大師語録, 明暦3 [1657]",
+   "language": "Chinese",
+   "cbeta_id": "X1400",
+   "cbeta_lines": [
+    "0690b02",
+    "0690b18"
+   ],
+   "ref_sha256": "876de3508d811fb7a7186c761c5c65bfc0a0029fc1efa0293fb80e8df6911979",
+   "ref_chars": 324,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef3343eeeaaa3202690a0/0063.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-290464-p69",
+   "book_id": "6abef35cd8d3fdd636290464",
+   "page_number": 69,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "楚石梵琦禪師語錄 卷5–8 (vol 2 of 5)",
+   "year": null,
+   "published": "佛日普照慧辯楚石禪師語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1420",
+   "cbeta_lines": [
+    "0585a06",
+    "0585b01"
+   ],
+   "ref_sha256": "e27dd094e0ff281d0ee54cc44caeaf3566fc132940a331a1ed1d09be962edc74",
+   "ref_chars": 395,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef35cd8d3fdd636290464/0069.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-290525-p3",
+   "book_id": "6abef35fd8d3fdd636290525",
+   "page_number": 3,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "楚石梵琦禪師語錄 卷13–16 (vol 4 of 5)",
+   "year": null,
+   "published": "佛日普照慧辯楚石禪師語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1420",
+   "cbeta_lines": [
+    "0615c01",
+    "0615c11"
+   ],
+   "ref_sha256": "6d5e391dc2c6731cb00b41b6587f2bd7f661b7a98900ddd9f15c1e443a3497f0",
+   "ref_chars": 133,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef35fd8d3fdd636290525/0003.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-559462-p8",
+   "book_id": "6abec5199a6d02ff1a559462",
+   "page_number": 8,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷4–6 (vol 2 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0227a25",
+    "0227c05"
+   ],
+   "ref_sha256": "20885d7ec333280ace0b3c609cb6ada7b2793854e1e1ed32b45c0feef5cbf357",
+   "ref_chars": 749,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5199a6d02ff1a559462/0008.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-bae2a1-p34",
+   "book_id": "6abedf24e54ec11ac8bae2a1",
+   "page_number": 34,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "雲門匡真禪師廣錄 卷2–3 (vol 3 of 3)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), 慶長18 [1613], 宗鐵重刊",
+   "language": "Chinese",
+   "cbeta_id": "T1988",
+   "cbeta_lines": [
+    "0575c29",
+    "0576a24"
+   ],
+   "ref_sha256": "2e50c5c7e77235d150133e24dc532fe971c642e3b84b60a71c49bffd3abd2ac0",
+   "ref_chars": 373,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf24e54ec11ac8bae2a1/0034.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-98b2c2-p56",
+   "book_id": "6abedf3f1b2cd9635f98b2c2",
+   "page_number": 56,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "續古尊宿語要 卷2 (vol 2 of 5)",
+   "year": null,
+   "published": "Song print, Fuzhou Gushan (福州鼓山寺版), 紹興9 [1139]; surviving juan 2, 4–6",
+   "language": "Chinese",
+   "cbeta_id": "X1318",
+   "cbeta_lines": [
+    "0385c24",
+    "0386b04"
+   ],
+   "ref_sha256": "c53fcfdcb91f5dd5aab182740d1d21041d5a35083a65f21a077e9220cb1ad41c",
+   "ref_chars": 494,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf3f1b2cd9635f98b2c2/0056.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9b80b5-p22",
+   "book_id": "6abef31fea0ee3a64e9b80b5",
+   "page_number": 22,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "無準師範禪師語錄 卷5 (vol 4 of 4)",
+   "year": null,
+   "published": "Gozan edition (五山版), 應安3 [1370]",
+   "language": "Chinese",
+   "cbeta_id": "X1382",
+   "cbeta_lines": [
+    "0272b18",
+    "0272c15"
+   ],
+   "ref_sha256": "bb88198dfca0dcdf0d944e2d53f6901539581de50f1e9ee6d4c3a34a4450a627",
+   "ref_chars": 316,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef31fea0ee3a64e9b80b5/0022.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-f94cf9-p26",
+   "book_id": "6abedf2bfb1708126df94cf9",
+   "page_number": 26,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "大慧普覺禪師語錄 卷9–12 (vol 3 of 3)",
+   "year": null,
+   "published": "Edo-period edition, 12 juan",
+   "language": "Chinese",
+   "cbeta_id": "T1998A",
+   "cbeta_lines": [
+    "0852b15",
+    "0852c10"
+   ],
+   "ref_sha256": "2e100dd5d590d6ea3e22d64ed993059c2f0cc845eaa3f5e0fb2b74af3611ada1",
+   "ref_chars": 308,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf2bfb1708126df94cf9/0026.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-62ec23-p58",
+   "book_id": "6abef30b38586aecb162ec23",
+   "page_number": 58,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "法演禪師語錄",
+   "year": null,
+   "published": "舒州白雲山海會演和尚語録, preface 文政12 [1829]",
+   "language": "Chinese",
+   "cbeta_id": "T1995",
+   "cbeta_lines": [
+    "0662c22",
+    "0663a17"
+   ],
+   "ref_sha256": "d4b87a3d6747aa8cd9ad0111f5dcf872b583266b2f52a7329f5a4f4ebe614f17",
+   "ref_chars": 374,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef30b38586aecb162ec23/0058.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-290417-p46",
+   "book_id": "6abef35bd8d3fdd636290417",
+   "page_number": 46,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "楚石梵琦禪師語錄 卷1–4 (vol 1 of 5)",
+   "year": null,
+   "published": "佛日普照慧辯楚石禪師語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1420",
+   "cbeta_lines": [
+    "0559b18",
+    "0559c13"
+   ],
+   "ref_sha256": "fd63819ba9804a6f2a09949a0d68d9f892debcd8311b56576e51437c84438774",
+   "ref_chars": 377,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef35bd8d3fdd636290417/0046.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-e24f00-p49",
+   "book_id": "6abedf4914590c1068e24f00",
+   "page_number": 49,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "笑隱大訢禪師語錄",
+   "year": null,
+   "published": "Gozan edition (五山版), early Muromachi",
+   "language": "Chinese",
+   "cbeta_id": "X1367",
+   "cbeta_lines": [
+    "0712b03",
+    "0712b22"
+   ],
+   "ref_sha256": "20b1191dd76dd761a3ef5585a7ab6b42da069065b65373d6c42499118569a799",
+   "ref_chars": 349,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf4914590c1068e24f00/0049.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-55968d-p64",
+   "book_id": "6abec5289a6d02ff1a55968d",
+   "page_number": 64,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷28–30 (vol 10 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0463c10",
+    "0464a17"
+   ],
+   "ref_sha256": "15049ede019da62c148dff0530a455bd61e05395313efc24ce3b8ace8d6823fa",
+   "ref_chars": 630,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5289a6d02ff1a55968d/0064.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-5594a6-p21",
+   "book_id": "6abec51c9a6d02ff1a5594a6",
+   "page_number": 21,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷7–9 (vol 3 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0259a23",
+    "0259c02"
+   ],
+   "ref_sha256": "5f472aca10ad2b071646a4a663dc31741167a307bb9b5bfe02adfbdbe5b00e54",
+   "ref_chars": 634,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec51c9a6d02ff1a5594a6/0021.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9b807d-p43",
+   "book_id": "6abef31dea0ee3a64e9b807d",
+   "page_number": 43,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "無準師範禪師語錄 卷3–5 (vol 3 of 4)",
+   "year": null,
+   "published": "Gozan edition (五山版), 應安3 [1370]",
+   "language": "Chinese",
+   "cbeta_id": "X1382",
+   "cbeta_lines": [
+    "0263c10",
+    "0264a07"
+   ],
+   "ref_sha256": "053afe039c66aedc3dc56ce751431d38e3c778e6578de51a75a73e2e0b694e93",
+   "ref_chars": 319,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef31dea0ee3a64e9b807d/0043.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-1de6cf-p3",
+   "book_id": "6abef3414c777f224e1de6cf",
+   "page_number": 3,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "天如惟則禪師語錄 卷7–9 (vol 4 of 4)",
+   "year": null,
+   "published": "師子林天如和尚語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1403",
+   "cbeta_lines": [
+    "0816b01",
+    "0816b10"
+   ],
+   "ref_sha256": "58b180557ef95dc68a08c050782d15c594c7c2a1f227d3a361f09aff8419e2ed",
+   "ref_chars": 142,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef3414c777f224e1de6cf/0003.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-be006b-p88",
+   "book_id": "6abee1b83bb95eea9ebe006b",
+   "page_number": 88,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "圓悟佛果禪師語錄 卷1–7 (vol 1 of 3)",
+   "year": null,
+   "published": "明暦3 [1657] edition",
+   "language": "Chinese",
+   "cbeta_id": "T1997",
+   "cbeta_lines": [
+    "0735b14",
+    "0735c09"
+   ],
+   "ref_sha256": "837bf3ce4f14999444cd2dad88a7f5dd8fa5cad1691e4532ceaaf2220864368c",
+   "ref_chars": 400,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee1b83bb95eea9ebe006b/0088.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-d93308-p51",
+   "book_id": "6abee93180b99e80d7d93308",
+   "page_number": 51,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "虛堂和尚語錄 卷6–7 (vol 2 of 4)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), Keichō era [1596–1615]",
+   "language": "Chinese",
+   "cbeta_id": "T2000",
+   "cbeta_lines": [
+    "1038b22",
+    "1038c08"
+   ],
+   "ref_sha256": "cc43b4f16df8522157b7e2dc3b951dd84a22a49840c4c905b4ae811b390f5fab",
+   "ref_chars": 186,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee93180b99e80d7d93308/0051.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-29057c-p44",
+   "book_id": "6abef360d8d3fdd63629057c",
+   "page_number": 44,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "楚石梵琦禪師語錄 卷17–20 (vol 5 of 5)",
+   "year": null,
+   "published": "佛日普照慧辯楚石禪師語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1420",
+   "cbeta_lines": [
+    "0648c03",
+    "0648c22"
+   ],
+   "ref_sha256": "a66eb3b70d30ba19b0b9f201f3734d27614c30628d9c108d972f155087024e89",
+   "ref_chars": 305,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef360d8d3fdd63629057c/0044.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-25f375-p3",
+   "book_id": "6abedf2d0f33d7676e25f375",
+   "page_number": 3,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "密菴和尚語錄 卷1 (vol 1 of 2)",
+   "year": null,
+   "published": "Gozan edition (五山版), Nanbokuchō period [1336–1392]",
+   "language": "Chinese",
+   "cbeta_id": "T1999",
+   "cbeta_lines": [
+    "0957c11",
+    "0958a05"
+   ],
+   "ref_sha256": "c14524669e157c84facfc4781300ba8505091c63f0c96a16c815f78b151f3842",
+   "ref_chars": 288,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf2d0f33d7676e25f375/0003.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-98b3e6-p88",
+   "book_id": "6abedf441b2cd9635f98b3e6",
+   "page_number": 88,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "續古尊宿語要 卷6 (vol 5 of 5)",
+   "year": null,
+   "published": "Song print, Fuzhou Gushan (福州鼓山寺版), 紹興9 [1139]; surviving juan 2, 4–6",
+   "language": "Chinese",
+   "cbeta_id": "X1318",
+   "cbeta_lines": [
+    "0522b12",
+    "0522c11"
+   ],
+   "ref_sha256": "b85c0964e2d6ce646077f0134120dd549adb05899e0ab82f1a0a1bbf8081de97",
+   "ref_chars": 332,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf441b2cd9635f98b3e6/0088.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9b8041-p11",
+   "book_id": "6abef31cea0ee3a64e9b8041",
+   "page_number": 11,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "無準師範禪師語錄 卷2–3 (vol 2 of 4)",
+   "year": null,
+   "published": "Gozan edition (五山版), 應安3 [1370]",
+   "language": "Chinese",
+   "cbeta_id": "X1382",
+   "cbeta_lines": [
+    "0237c13",
+    "0238a10"
+   ],
+   "ref_sha256": "02718eea0ee27df148f0fef1a7b0b29a3f836dc7d67f1d8de9f94f25a0197fa5",
+   "ref_chars": 360,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef31cea0ee3a64e9b8041/0011.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-5594e0-p13",
+   "book_id": "6abec51d9a6d02ff1a5594e0",
+   "page_number": 13,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷10–12 (vol 4 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0277c24",
+    "0278b05"
+   ],
+   "ref_sha256": "2c5526b1a6e6d9cd4bc8d32287bb3c18e1211b872f643032d11fdc18d3d1d21b",
+   "ref_chars": 654,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec51d9a6d02ff1a5594e0/0013.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-1de632-p57",
+   "book_id": "6abef33e4c777f224e1de632",
+   "page_number": 57,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "天如惟則禪師語錄 卷3–5 (vol 2 of 4)",
+   "year": null,
+   "published": "師子林天如和尚語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1403",
+   "cbeta_lines": [
+    "0792b12",
+    "0792c08"
+   ],
+   "ref_sha256": "44c04a5844d94b473528e05fe4de983e985cfe8d825f454d249f4669f3493774",
+   "ref_chars": 231,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef33e4c777f224e1de632/0057.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-559426-p38",
+   "book_id": "6abec5189a6d02ff1a559426",
+   "page_number": 38,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷1–3 (vol 1 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0215b27",
+    "0216a07"
+   ],
+   "ref_sha256": "6900557366d8b212b51ecf7de83a0dbe8229d175607e64ab069a1ff343a29cb4",
+   "ref_chars": 611,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5189a6d02ff1a559426/0038.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-d932a3-p77",
+   "book_id": "6abee93080b99e80d7d932a3",
+   "page_number": 77,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "虛堂和尚語錄 卷3–4 (vol 1 of 4)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), Keichō era [1596–1615]",
+   "language": "Chinese",
+   "cbeta_id": "T2000",
+   "cbeta_lines": [
+    "1016a16",
+    "1016b03"
+   ],
+   "ref_sha256": "a7cf221b99cf04310e9aa54d978c5a560b80072e58f94db702665e609a0e02b5",
+   "ref_chars": 272,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee93080b99e80d7d932a3/0077.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-bae269-p28",
+   "book_id": "6abedf23e54ec11ac8bae269",
+   "page_number": 28,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "雲門匡真禪師廣錄 卷2 (vol 2 of 3)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), 慶長18 [1613], 宗鐵重刊",
+   "language": "Chinese",
+   "cbeta_id": "T1988",
+   "cbeta_lines": [
+    "0560c07",
+    "0560c29"
+   ],
+   "ref_sha256": "f43cec6483361c9d95a62466efd28f889eb4130bdd9504143b23406f81f22a2d",
+   "ref_chars": 320,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf23e54ec11ac8bae269/0028.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p6",
+   "book_id": "6abef33d4c777f224e1de5d3",
+   "page_number": 6,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "天如惟則禪師語錄 卷1–2 (vol 1 of 4)",
+   "year": null,
+   "published": "師子林天如和尚語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1403",
+   "cbeta_lines": [
+    "0754a14",
+    "0754b13"
+   ],
+   "ref_sha256": "351fa7e8f4b6a74780b652ca3df6d34a3a1ae4dcd73491566fcc8c527fb7a84b",
+   "ref_chars": 352,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef33d4c777f224e1de5d3/0006.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-98b321-p52",
+   "book_id": "6abedf411b2cd9635f98b321",
+   "page_number": 52,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "續古尊宿語要 卷4 (vol 3 of 5)",
+   "year": null,
+   "published": "Song print, Fuzhou Gushan (福州鼓山寺版), 紹興9 [1139]; surviving juan 2, 4–6",
+   "language": "Chinese",
+   "cbeta_id": "X1318",
+   "cbeta_lines": [
+    "0446a07",
+    "0446b10"
+   ],
+   "ref_sha256": "1ab040e8b6fa5cc1e079e4788ea06c68618f8140e384ceea8749dd4894457201",
+   "ref_chars": 486,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf411b2cd9635f98b321/0052.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-5595f2-p29",
+   "book_id": "6abec5259a6d02ff1a5595f2",
+   "page_number": 29,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷22–24 (vol 8 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0390b15",
+    "0390c23"
+   ],
+   "ref_sha256": "e40c0536a90058223cacf8e6558259d99668966b1c4fa4dbd579a88fbcfaf87f",
+   "ref_chars": 559,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5259a6d02ff1a5595f2/0029.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-559523-p42",
+   "book_id": "6abec51f9a6d02ff1a559523",
+   "page_number": 42,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷13–15 (vol 5 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0317a21",
+    "0317b23"
+   ],
+   "ref_sha256": "b27ab7d6561486e00bed28e6d61d549c2a2523178a0ad3b42218c96dc052828c",
+   "ref_chars": 435,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec51f9a6d02ff1a559523/0042.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-eb15a5-p13",
+   "book_id": "6abedf47ee13871d17eb15a5",
+   "page_number": 13,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "應菴曇華禪師語錄",
+   "year": null,
+   "published": "Gozan edition (五山版), 正應元 [1288]",
+   "language": "Chinese",
+   "cbeta_id": "X1359",
+   "cbeta_lines": [
+    "0509c07",
+    "0510a02"
+   ],
+   "ref_sha256": "49dedf48e1abb592b1e8bae3318789a42ad81cb491529546ddb3fe0074ac635d",
+   "ref_chars": 359,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf47ee13871d17eb15a5/0013.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-7c04ee-p31",
+   "book_id": "6abedf4d446ab1dad37c04ee",
+   "page_number": 31,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "破菴祖先禪師語錄",
+   "year": null,
+   "published": "Gozan edition (五山版), 應安3 [1370]",
+   "language": "Chinese",
+   "cbeta_id": "X1381",
+   "cbeta_lines": [
+    "0214c15",
+    "0215a06"
+   ],
+   "ref_sha256": "06f4830078453b1280ea81f6393462087faa32c95c48412d0b6dc31d03166620",
+   "ref_chars": 271,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf4d446ab1dad37c04ee/0031.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-5595ab-p66",
+   "book_id": "6abec5239a6d02ff1a5595ab",
+   "page_number": 66,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷19–21 (vol 7 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0379b04",
+    "0379b27"
+   ],
+   "ref_sha256": "95bcdb66a70fe1892fac94ef5ec14f07a18ebb27ed1160e16b619c007cbbfb1a",
+   "ref_chars": 383,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5239a6d02ff1a5595ab/0066.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-1de682-p24",
+   "book_id": "6abef3404c777f224e1de682",
+   "page_number": 24,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "天如惟則禪師語錄 卷5–7 (vol 3 of 4)",
+   "year": null,
+   "published": "師子林天如和尚語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1403",
+   "cbeta_lines": [
+    "0803a08",
+    "0803b03"
+   ],
+   "ref_sha256": "273e7d10ddc22cf8d3cd4f9b4c26910dff85a1031717c2f5921cca8fb828384e",
+   "ref_chars": 370,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef3404c777f224e1de682/0024.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-55963c-p34",
+   "book_id": "6abec5269a6d02ff1a55963c",
+   "page_number": 34,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷25–27 (vol 9 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0419c27",
+    "0420b05"
+   ],
+   "ref_sha256": "386f5f87effc72ac0f36b6f4de2c2592fe767f21f6a9a56123da5cb73259a52f",
+   "ref_chars": 578,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5269a6d02ff1a55963c/0034.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-be00f4-p5",
+   "book_id": "6abee1bb3bb95eea9ebe00f4",
+   "page_number": 5,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "圓悟佛果禪師語錄 卷8–13 (vol 2 of 3)",
+   "year": null,
+   "published": "明暦3 [1657] edition",
+   "language": "Chinese",
+   "cbeta_id": "T1997",
+   "cbeta_lines": [
+    "0747c14",
+    "0748a09"
+   ],
+   "ref_sha256": "7d6483325d88dbb823aaee57df547366b382afe5a6b0d7805005685b91c39a11",
+   "ref_chars": 389,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee1bb3bb95eea9ebe00f4/0005.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-bae241-p15",
+   "book_id": "6abedf20e54ec11ac8bae241",
+   "page_number": 15,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "雲門匡真禪師廣錄 卷1 (vol 1 of 3)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), 慶長18 [1613], 宗鐵重刊",
+   "language": "Chinese",
+   "cbeta_id": "T1988",
+   "cbeta_lines": [
+    "0548a20",
+    "0548b14"
+   ],
+   "ref_sha256": "83fb0a4d8f5b4a7cc58dc50d9cbd01c62be9e7909fc521c8ec1ff64468ec01dc",
+   "ref_chars": 391,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf20e54ec11ac8bae241/0015.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p21",
+   "book_id": "6abedf327ca0bb7fcd9e6c38",
+   "page_number": 21,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "佛果圜悟禪師碧巖錄 卷1–2 (vol 1 of 5)",
+   "year": null,
+   "published": "Gozan edition (五山版), Muromachi period",
+   "language": "Chinese",
+   "cbeta_id": "T2003",
+   "cbeta_lines": [
+    "0142c16",
+    "0143a11"
+   ],
+   "ref_sha256": "736e8fd10d7242a6369680ba6995ad4526320bee48f607e91f84327e277f5dd2",
+   "ref_chars": 428,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf327ca0bb7fcd9e6c38/0021.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p46",
+   "book_id": "6abedf367ca0bb7fcd9e6d1d",
+   "page_number": 46,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "佛果圜悟禪師碧巖錄 卷7–8 (vol 4 of 5)",
+   "year": null,
+   "published": "Gozan edition (五山版), Muromachi period",
+   "language": "Chinese",
+   "cbeta_id": "T2003",
+   "cbeta_lines": [
+    "0204b21",
+    "0204c18"
+   ],
+   "ref_sha256": "c21b3aec725b687fa0c1e3cb81663a2a8924463cb2f4830f3cf852cc81a38fd7",
+   "ref_chars": 453,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf367ca0bb7fcd9e6d1d/0046.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p51",
+   "book_id": "6abedf387ca0bb7fcd9e6d5b",
+   "page_number": 51,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "佛果圜悟禪師碧巖錄 卷9–10 (vol 5 of 5)",
+   "year": null,
+   "published": "Gozan edition (五山版), Muromachi period",
+   "language": "Chinese",
+   "cbeta_id": "T2003",
+   "cbeta_lines": [
+    "0220a08",
+    "0220b03"
+   ],
+   "ref_sha256": "74a9c3343e35cabad042ed58dd1085f09011c874d3c3983bb2bdf05945925c2f",
+   "ref_chars": 415,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf387ca0bb7fcd9e6d5b/0051.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-f80792-p25",
+   "book_id": "6abedf4b7ca26f5b50f80792",
+   "page_number": 25,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "松源崇嶽禪師語錄",
+   "year": null,
+   "published": "元祿4 [1691] edition",
+   "language": "Chinese",
+   "cbeta_id": "X1377",
+   "cbeta_lines": [
+    "0083a06",
+    "0083a23"
+   ],
+   "ref_sha256": "d033cea933d8758384b2cc9aa3ae220e3bd5a66a19fd598ed8d455057bec0745",
+   "ref_chars": 306,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf4b7ca26f5b50f80792/0025.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-d933ba-p16",
+   "book_id": "6abee93580b99e80d7d933ba",
+   "page_number": 16,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "虛堂和尚語錄 卷10 (vol 4 of 4)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), Keichō era [1596–1615]",
+   "language": "Chinese",
+   "cbeta_id": "T2000",
+   "cbeta_lines": [
+    "1060c06",
+    "1060c21"
+   ],
+   "ref_sha256": "85a75819b290a78f673a4ae062114c2675ac925f1128b330a63d8ec5b2abc4aa",
+   "ref_chars": 195,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee93580b99e80d7d933ba/0016.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-d9334e-p65",
+   "book_id": "6abee93380b99e80d7d9334e",
+   "page_number": 65,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "虛堂和尚語錄 卷8–9 (vol 3 of 4)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), Keichō era [1596–1615]",
+   "language": "Chinese",
+   "cbeta_id": "T2000",
+   "cbeta_lines": [
+    "1055b16",
+    "1055c03"
+   ],
+   "ref_sha256": "425d96e3d98eaa11f78555ca73a3084c0793ecae882c4fe798645e674cb1aa09",
+   "ref_chars": 259,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee93380b99e80d7d9334e/0065.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-2904bf-p70",
+   "book_id": "6abef35ed8d3fdd6362904bf",
+   "page_number": 70,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "楚石梵琦禪師語錄 卷9–12 (vol 3 of 5)",
+   "year": null,
+   "published": "佛日普照慧辯楚石禪師語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1420",
+   "cbeta_lines": [
+    "0608a12",
+    "0608b07"
+   ],
+   "ref_sha256": "c7dcdbe57145b05e9d07d1000a00a0aec501b788cac052685f1cbca5d9c7aa60",
+   "ref_chars": 354,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef35ed8d3fdd6362904bf/0070.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-98b382-p90",
+   "book_id": "6abedf431b2cd9635f98b382",
+   "page_number": 90,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "續古尊宿語要 卷5 (vol 4 of 5)",
+   "year": null,
+   "published": "Song print, Fuzhou Gushan (福州鼓山寺版), 紹興9 [1139]; surviving juan 2, 4–6",
+   "language": "Chinese",
+   "cbeta_id": "X1318",
+   "cbeta_lines": [
+    "0490b23",
+    "0490c24"
+   ],
+   "ref_sha256": "15c36d8b16b563cd8f4c81a9d7320c7f885c252272b6b966bdd40c25dfdf4cfa",
+   "ref_chars": 439,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf431b2cd9635f98b382/0090.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-be0167-p11",
+   "book_id": "6abee1bd3bb95eea9ebe0167",
+   "page_number": 11,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "圓悟佛果禪師語錄 卷14–20 (vol 3 of 3)",
+   "year": null,
+   "published": "明暦3 [1657] edition",
+   "language": "Chinese",
+   "cbeta_id": "T1997",
+   "cbeta_lines": [
+    "0777c27",
+    "0778a20"
+   ],
+   "ref_sha256": "8a665e82e59020a8289d7cac8a23412ab08d5b9d236472e79e59084402fc927c",
+   "ref_chars": 376,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee1bd3bb95eea9ebe0167/0011.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-559564-p40",
+   "book_id": "6abec5219a6d02ff1a559564",
+   "page_number": 40,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷16–18 (vol 6 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0341c06",
+    "0342a12"
+   ],
+   "ref_sha256": "e5cfdd5574acffd043214f209517ee0079ae6ec9a563eb0450c0a08b227964ad",
+   "ref_chars": 540,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5219a6d02ff1a559564/0040.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p30",
+   "book_id": "6abedf199f894b562076797f",
+   "page_number": 30,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "鎮州臨濟慧照禪師語錄",
+   "year": null,
+   "published": "Gozan edition (五山版), Nanbokuchō period [1336–1392]",
+   "language": "Chinese",
+   "cbeta_id": "T1985",
+   "cbeta_lines": [
+    "0504b04",
+    "0504b29"
+   ],
+   "ref_sha256": "c45a680d1a840699613ae229e110824af6513fc25dea6f8a2e42c76a66c83b25",
+   "ref_chars": 396,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf199f894b562076797f/0030.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p48",
+   "book_id": "6abedf357ca0bb7fcd9e6cdd",
+   "page_number": 48,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "佛果圜悟禪師碧巖錄 卷5–6 (vol 3 of 5)",
+   "year": null,
+   "published": "Gozan edition (五山版), Muromachi period",
+   "language": "Chinese",
+   "cbeta_id": "T2003",
+   "cbeta_lines": [
+    "0190b23",
+    "0190c18"
+   ],
+   "ref_sha256": "159a951802e54c857d9c115278d0fe55db744b2cef55b89fa2dcf1ce183c51cf",
+   "ref_chars": 438,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf357ca0bb7fcd9e6cdd/0048.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-f94cbc-p32",
+   "book_id": "6abedf29fb1708126df94cbc",
+   "page_number": 32,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "大慧普覺禪師語錄 卷5–8 (vol 2 of 3)",
+   "year": null,
+   "published": "Edo-period edition, 12 juan",
+   "language": "Chinese",
+   "cbeta_id": "T1998A",
+   "cbeta_lines": [
+    "0838c23",
+    "0839a20"
+   ],
+   "ref_sha256": "6ad7eaf94042175d5eaed0e59d47d83e7c5d6821bb34679c983d9b733b2a8289",
+   "ref_chars": 422,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf29fb1708126df94cbc/0032.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-25f3a6-p13",
+   "book_id": "6abedf2f0f33d7676e25f3a6",
+   "page_number": 13,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "密菴和尚語錄 卷1 (vol 2 of 2)",
+   "year": null,
+   "published": "Gozan edition (五山版), Nanbokuchō period [1336–1392]",
+   "language": "Chinese",
+   "cbeta_id": "T1999",
+   "cbeta_lines": [
+    "0972b18",
+    "0972c15"
+   ],
+   "ref_sha256": "44772a1dd7b36622cb5d13f1548ccaa902fc27875d915d4dee4c541e8e0d00ac",
+   "ref_chars": 419,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf2f0f33d7676e25f3a6/0013.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-f94c74-p31",
+   "book_id": "6abedf28fb1708126df94c74",
+   "page_number": 31,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "大慧普覺禪師語錄 卷1–4 (vol 1 of 3)",
+   "year": null,
+   "published": "Edo-period edition, 12 juan",
+   "language": "Chinese",
+   "cbeta_id": "T1998A",
+   "cbeta_lines": [
+    "0818c13",
+    "0819a09"
+   ],
+   "ref_sha256": "6120f62ea51d91cb0df88c5fcd7174ca4a49c872909432ea68d21c58823a10ab",
+   "ref_chars": 399,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf28fb1708126df94c74/0031.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9b8007-p15",
+   "book_id": "6abef31aea0ee3a64e9b8007",
+   "page_number": 15,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "無準師範禪師語錄 卷1 (vol 1 of 4)",
+   "year": null,
+   "published": "Gozan edition (五山版), 應安3 [1370]",
+   "language": "Chinese",
+   "cbeta_id": "X1382",
+   "cbeta_lines": [
+    "0223b06",
+    "0223c03"
+   ],
+   "ref_sha256": "ed7bad630634e77c5a5892d1a9b88e7cd788b187345853da0e0b493369e9410d",
+   "ref_chars": 426,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef31aea0ee3a64e9b8007/0015.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c95-p39",
+   "book_id": "6abedf337ca0bb7fcd9e6c95",
+   "page_number": 39,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "佛果圜悟禪師碧巖錄 卷3–4 (vol 2 of 5)",
+   "year": null,
+   "published": "Gozan edition (五山版), Muromachi period",
+   "language": "Chinese",
+   "cbeta_id": "T2003",
+   "cbeta_lines": [
+    "0171a22",
+    "0171b16"
+   ],
+   "ref_sha256": "f7b7544774ee079672b18f50f50b761768ddca30de404c51935a13d50f0bdecd",
+   "ref_chars": 429,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf337ca0bb7fcd9e6c95/0039.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-2690a0-p33",
+   "book_id": "6abef3343eeeaaa3202690a0",
+   "page_number": 33,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "高峰原妙禪師語錄",
+   "year": null,
+   "published": "高峰大師語録, 明暦3 [1657]",
+   "language": "Chinese",
+   "cbeta_id": "X1400",
+   "cbeta_lines": [
+    "0683b18",
+    "0683c10"
+   ],
+   "ref_sha256": "85995bbcc6013a5f5cd454267e12a5ca1ca079b79134a8765faaec6a38f3951a",
+   "ref_chars": 283,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef3343eeeaaa3202690a0/0033.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-290464-p63",
+   "book_id": "6abef35cd8d3fdd636290464",
+   "page_number": 63,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "楚石梵琦禪師語錄 卷5–8 (vol 2 of 5)",
+   "year": null,
+   "published": "佛日普照慧辯楚石禪師語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1420",
+   "cbeta_lines": [
+    "0583b06",
+    "0583c01"
+   ],
+   "ref_sha256": "c1bd204108c56b13444d2e68da1feeb56aa91c35b66c0a00c0b433a1f0f5280e",
+   "ref_chars": 355,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef35cd8d3fdd636290464/0063.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-290525-p67",
+   "book_id": "6abef35fd8d3fdd636290525",
+   "page_number": 67,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "楚石梵琦禪師語錄 卷13–16 (vol 4 of 5)",
+   "year": null,
+   "published": "佛日普照慧辯楚石禪師語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1420",
+   "cbeta_lines": [
+    "0633a23",
+    "0633b18"
+   ],
+   "ref_sha256": "42ed42336f74c1b6579938f9795798e4732f00409374021fc3a68d00c4531c21",
+   "ref_chars": 309,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef35fd8d3fdd636290525/0067.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-559462-p36",
+   "book_id": "6abec5199a6d02ff1a559462",
+   "page_number": 36,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷4–6 (vol 2 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0239a26",
+    "0239c06"
+   ],
+   "ref_sha256": "93b8f5ba6a183933ef21206f45cc2ab9962dae77348d240462da11368c2d1aa4",
+   "ref_chars": 607,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5199a6d02ff1a559462/0036.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-bae2a1-p17",
+   "book_id": "6abedf24e54ec11ac8bae2a1",
+   "page_number": 17,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "雲門匡真禪師廣錄 卷2–3 (vol 3 of 3)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), 慶長18 [1613], 宗鐵重刊",
+   "language": "Chinese",
+   "cbeta_id": "T1988",
+   "cbeta_lines": [
+    "0571b05",
+    "0571b28"
+   ],
+   "ref_sha256": "58c70f344b1225f83a25e6178266137568261473bfb0792945938fc7535f5dd3",
+   "ref_chars": 394,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf24e54ec11ac8bae2a1/0017.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-98b2c2-p32",
+   "book_id": "6abedf3f1b2cd9635f98b2c2",
+   "page_number": 32,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "續古尊宿語要 卷2 (vol 2 of 5)",
+   "year": null,
+   "published": "Song print, Fuzhou Gushan (福州鼓山寺版), 紹興9 [1139]; surviving juan 2, 4–6",
+   "language": "Chinese",
+   "cbeta_id": "X1318",
+   "cbeta_lines": [
+    "0377b12",
+    "0377c14"
+   ],
+   "ref_sha256": "1a0cb54488257f46eb571c45266060aef519670cebcb69f7df772f9819e42889",
+   "ref_chars": 512,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf3f1b2cd9635f98b2c2/0032.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9b80b5-p11",
+   "book_id": "6abef31fea0ee3a64e9b80b5",
+   "page_number": 11,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "無準師範禪師語錄 卷5 (vol 4 of 4)",
+   "year": null,
+   "published": "Gozan edition (五山版), 應安3 [1370]",
+   "language": "Chinese",
+   "cbeta_id": "X1382",
+   "cbeta_lines": [
+    "0269a22",
+    "0269b17"
+   ],
+   "ref_sha256": "bff3b2039caf2b7a770fee65e20d960ee220cf5cbd833f567cdcdaa887367ad0",
+   "ref_chars": 208,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef31fea0ee3a64e9b80b5/0011.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-f94cf9-p24",
+   "book_id": "6abedf2bfb1708126df94cf9",
+   "page_number": 24,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "大慧普覺禪師語錄 卷9–12 (vol 3 of 3)",
+   "year": null,
+   "published": "Edo-period edition, 12 juan",
+   "language": "Chinese",
+   "cbeta_id": "T1998A",
+   "cbeta_lines": [
+    "0851c25",
+    "0852a20"
+   ],
+   "ref_sha256": "420e0ac7e40ffe1d6a9fd6f4559379b4c0ce65a018dccb466264aa317891590b",
+   "ref_chars": 304,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf2bfb1708126df94cf9/0024.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-62ec23-p13",
+   "book_id": "6abef30b38586aecb162ec23",
+   "page_number": 13,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "法演禪師語錄",
+   "year": null,
+   "published": "舒州白雲山海會演和尚語録, preface 文政12 [1829]",
+   "language": "Chinese",
+   "cbeta_id": "T1995",
+   "cbeta_lines": [
+    "0651a29",
+    "0651b24"
+   ],
+   "ref_sha256": "1b12dbd986569becda3be7e0d32f676257747da79bbab8ed0ac55ad5608d457d",
+   "ref_chars": 337,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef30b38586aecb162ec23/0013.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-290417-p50",
+   "book_id": "6abef35bd8d3fdd636290417",
+   "page_number": 50,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "楚石梵琦禪師語錄 卷1–4 (vol 1 of 5)",
+   "year": null,
+   "published": "佛日普照慧辯楚石禪師語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1420",
+   "cbeta_lines": [
+    "0560c02",
+    "0560c21"
+   ],
+   "ref_sha256": "5ca6610d541168d7a7a44c5735cf021b2eeee285f1dc0e8c176a9da3a668ca5d",
+   "ref_chars": 379,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef35bd8d3fdd636290417/0050.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-e24f00-p50",
+   "book_id": "6abedf4914590c1068e24f00",
+   "page_number": 50,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "笑隱大訢禪師語錄",
+   "year": null,
+   "published": "Gozan edition (五山版), early Muromachi",
+   "language": "Chinese",
+   "cbeta_id": "X1367",
+   "cbeta_lines": [
+    "0712b23",
+    "0712c18"
+   ],
+   "ref_sha256": "8b403632f34ea27e9e2700a3c85b9b2853ba947d596997e57deaa2fff57452a8",
+   "ref_chars": 333,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf4914590c1068e24f00/0050.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-55968d-p31",
+   "book_id": "6abec5289a6d02ff1a55968d",
+   "page_number": 31,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷28–30 (vol 10 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0450a19",
+    "0450c06"
+   ],
+   "ref_sha256": "73bbfba1c72d64f1f7bb4c694b4422786fc96de8f58f833626356602895b3b30",
+   "ref_chars": 625,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5289a6d02ff1a55968d/0031.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-5594a6-p5",
+   "book_id": "6abec51c9a6d02ff1a5594a6",
+   "page_number": 5,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷7–9 (vol 3 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0252b15",
+    "0252c23"
+   ],
+   "ref_sha256": "896194ea51674ebf5339136664ad7c3479a2fc1b610286290103a2ac1947d727",
+   "ref_chars": 669,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec51c9a6d02ff1a5594a6/0005.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9b807d-p20",
+   "book_id": "6abef31dea0ee3a64e9b807d",
+   "page_number": 20,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "無準師範禪師語錄 卷3–5 (vol 3 of 4)",
+   "year": null,
+   "published": "Gozan edition (五山版), 應安3 [1370]",
+   "language": "Chinese",
+   "cbeta_id": "X1382",
+   "cbeta_lines": [
+    "0257a02",
+    "0257b03"
+   ],
+   "ref_sha256": "353e872f5c50ec873293c7c5ec25c6cb4082bea40ca8300b3047ccf4cc976574",
+   "ref_chars": 386,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef31dea0ee3a64e9b807d/0020.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-1de6cf-p22",
+   "book_id": "6abef3414c777f224e1de6cf",
+   "page_number": 22,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "天如惟則禪師語錄 卷7–9 (vol 4 of 4)",
+   "year": null,
+   "published": "師子林天如和尚語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1403",
+   "cbeta_lines": [
+    "0821b17",
+    "0821c12"
+   ],
+   "ref_sha256": "13cc717969d42ad4d68eb070c89984bb004d3b6eb24b7df69bb4a712e55fca04",
+   "ref_chars": 381,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef3414c777f224e1de6cf/0022.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-be006b-p73",
+   "book_id": "6abee1b83bb95eea9ebe006b",
+   "page_number": 73,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "圓悟佛果禪師語錄 卷1–7 (vol 1 of 3)",
+   "year": null,
+   "published": "明暦3 [1657] edition",
+   "language": "Chinese",
+   "cbeta_id": "T1997",
+   "cbeta_lines": [
+    "0731b17",
+    "0731c12"
+   ],
+   "ref_sha256": "6b85158e5caf63ae71b9b9badd8015d0650e93ed2f6f8f58fe94b7fd03f93ee9",
+   "ref_chars": 369,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee1b83bb95eea9ebe006b/0073.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-d93308-p61",
+   "book_id": "6abee93180b99e80d7d93308",
+   "page_number": 61,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "虛堂和尚語錄 卷6–7 (vol 2 of 4)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), Keichō era [1596–1615]",
+   "language": "Chinese",
+   "cbeta_id": "T2000",
+   "cbeta_lines": [
+    "1040b08",
+    "1040b23"
+   ],
+   "ref_sha256": "2bf7dfd7d1b196e40b55ee4e9401b79576f390cdbe1ca245aac4de21fc42925a",
+   "ref_chars": 181,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee93180b99e80d7d93308/0061.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-29057c-p77",
+   "book_id": "6abef360d8d3fdd63629057c",
+   "page_number": 77,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "楚石梵琦禪師語錄 卷17–20 (vol 5 of 5)",
+   "year": null,
+   "published": "佛日普照慧辯楚石禪師語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1420",
+   "cbeta_lines": [
+    "0657c17",
+    "0658a12"
+   ],
+   "ref_sha256": "f2c8c4f90f3df6742abd5f5b79d547aca773bf49e3b0f8b8baec0988e50813a2",
+   "ref_chars": 351,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef360d8d3fdd63629057c/0077.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-25f375-p30",
+   "book_id": "6abedf2d0f33d7676e25f375",
+   "page_number": 30,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "密菴和尚語錄 卷1 (vol 1 of 2)",
+   "year": null,
+   "published": "Gozan edition (五山版), Nanbokuchō period [1336–1392]",
+   "language": "Chinese",
+   "cbeta_id": "T1999",
+   "cbeta_lines": [
+    "0965a25",
+    "0965b21"
+   ],
+   "ref_sha256": "08fa5782c4cc9d29e9af7c9053172e344e8765e1b49f182079ffa654b64ae3ae",
+   "ref_chars": 390,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf2d0f33d7676e25f375/0030.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-98b3e6-p50",
+   "book_id": "6abedf441b2cd9635f98b3e6",
+   "page_number": 50,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "續古尊宿語要 卷6 (vol 5 of 5)",
+   "year": null,
+   "published": "Song print, Fuzhou Gushan (福州鼓山寺版), 紹興9 [1139]; surviving juan 2, 4–6",
+   "language": "Chinese",
+   "cbeta_id": "X1318",
+   "cbeta_lines": [
+    "0508c22",
+    "0509a24"
+   ],
+   "ref_sha256": "010cd9d96e9df688f97aaf696d8d1ee824f979cbdc32300f7d6ec928542bccbb",
+   "ref_chars": 434,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf441b2cd9635f98b3e6/0050.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9b8041-p39",
+   "book_id": "6abef31cea0ee3a64e9b8041",
+   "page_number": 39,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "無準師範禪師語錄 卷2–3 (vol 2 of 4)",
+   "year": null,
+   "published": "Gozan edition (五山版), 應安3 [1370]",
+   "language": "Chinese",
+   "cbeta_id": "X1382",
+   "cbeta_lines": [
+    "0246b05",
+    "0246c02"
+   ],
+   "ref_sha256": "de551eb93cc622f95e01c6bcb137bcabd23944a7628d7fff33a627201a32b4d8",
+   "ref_chars": 428,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef31cea0ee3a64e9b8041/0039.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-5594e0-p52",
+   "book_id": "6abec51d9a6d02ff1a5594e0",
+   "page_number": 52,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷10–12 (vol 4 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0294b17",
+    "0294c27"
+   ],
+   "ref_sha256": "dc6cda0275b5e8a3094e226c15c91f2534efa45c7fb71bda236e94c6a0d43b86",
+   "ref_chars": 672,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec51d9a6d02ff1a5594e0/0052.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-1de632-p27",
+   "book_id": "6abef33e4c777f224e1de632",
+   "page_number": 27,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "天如惟則禪師語錄 卷3–5 (vol 2 of 4)",
+   "year": null,
+   "published": "師子林天如和尚語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1403",
+   "cbeta_lines": [
+    "0784a19",
+    "0784b14"
+   ],
+   "ref_sha256": "137334e3b056e8693388b06392a1648d69f72ed291e1b4b113899512cfeb9f0e",
+   "ref_chars": 400,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef33e4c777f224e1de632/0027.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-559426-p31",
+   "book_id": "6abec5189a6d02ff1a559426",
+   "page_number": 31,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷1–3 (vol 1 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0212b21",
+    "0213a01"
+   ],
+   "ref_sha256": "ddb689df1865d86d51963668408305376a895b6e6d2070eeb6d6b510514ec186",
+   "ref_chars": 600,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5189a6d02ff1a559426/0031.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-d932a3-p11",
+   "book_id": "6abee93080b99e80d7d932a3",
+   "page_number": 11,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "虛堂和尚語錄 卷3–4 (vol 1 of 4)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), Keichō era [1596–1615]",
+   "language": "Chinese",
+   "cbeta_id": "T2000",
+   "cbeta_lines": [
+    "1004c03",
+    "1004c18"
+   ],
+   "ref_sha256": "41549b3d326935713c2ee5c875ed29bd0e6af08dd328b1af52c8161cb80ffefd",
+   "ref_chars": 247,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee93080b99e80d7d932a3/0011.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-bae269-p4",
+   "book_id": "6abedf23e54ec11ac8bae269",
+   "page_number": 4,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "雲門匡真禪師廣錄 卷2 (vol 2 of 3)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), 慶長18 [1613], 宗鐵重刊",
+   "language": "Chinese",
+   "cbeta_id": "T1988",
+   "cbeta_lines": [
+    "0554a25",
+    "0554b18"
+   ],
+   "ref_sha256": "e64273d1790cbd64f1efd52b3b09eb1ecf9c5ca1f96d7551bb3e5f5fd129fab3",
+   "ref_chars": 342,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf23e54ec11ac8bae269/0004.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-1de5d3-p64",
+   "book_id": "6abef33d4c777f224e1de5d3",
+   "page_number": 64,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "天如惟則禪師語錄 卷1–2 (vol 1 of 4)",
+   "year": null,
+   "published": "師子林天如和尚語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1403",
+   "cbeta_lines": [
+    "0770b08",
+    "0770c03"
+   ],
+   "ref_sha256": "b5c4b6985934a1fb64cf1004f5ee7a58a5b48e37751e6972321f485a1bb0eff5",
+   "ref_chars": 400,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef33d4c777f224e1de5d3/0064.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-98b321-p40",
+   "book_id": "6abedf411b2cd9635f98b321",
+   "page_number": 40,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "續古尊宿語要 卷4 (vol 3 of 5)",
+   "year": null,
+   "published": "Song print, Fuzhou Gushan (福州鼓山寺版), 紹興9 [1139]; surviving juan 2, 4–6",
+   "language": "Chinese",
+   "cbeta_id": "X1318",
+   "cbeta_lines": [
+    "0441c04",
+    "0442a06"
+   ],
+   "ref_sha256": "0d7ffdf64bd5542ae18390645c2001ed5cd20a060cb24b67086ee3e7debde4ed",
+   "ref_chars": 475,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf411b2cd9635f98b321/0040.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-5595f2-p28",
+   "book_id": "6abec5259a6d02ff1a5595f2",
+   "page_number": 28,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷22–24 (vol 8 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0390a09",
+    "0390b15"
+   ],
+   "ref_sha256": "2e96d69f594acee0d108808f23197467f9267c3a3c7dced0783c931587d605be",
+   "ref_chars": 556,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5259a6d02ff1a5595f2/0028.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-559523-p30",
+   "book_id": "6abec51f9a6d02ff1a559523",
+   "page_number": 30,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷13–15 (vol 5 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0312a25",
+    "0312c07"
+   ],
+   "ref_sha256": "a1f8e3e1c5040c9551aa842f86361f1141a15cea9b1bbd30dcf13e75ec6a60b6",
+   "ref_chars": 678,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec51f9a6d02ff1a559523/0030.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-eb15a5-p30",
+   "book_id": "6abedf47ee13871d17eb15a5",
+   "page_number": 30,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "應菴曇華禪師語錄",
+   "year": null,
+   "published": "Gozan edition (五山版), 正應元 [1288]",
+   "language": "Chinese",
+   "cbeta_id": "X1359",
+   "cbeta_lines": [
+    "0515a03",
+    "0515a24"
+   ],
+   "ref_sha256": "3e4426da2fe658a0a8a2e6c0c66c31e2b2602b7a54840d1bfa89a60f96374781",
+   "ref_chars": 410,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf47ee13871d17eb15a5/0030.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-7c04ee-p19",
+   "book_id": "6abedf4d446ab1dad37c04ee",
+   "page_number": 19,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "破菴祖先禪師語錄",
+   "year": null,
+   "published": "Gozan edition (五山版), 應安3 [1370]",
+   "language": "Chinese",
+   "cbeta_id": "X1381",
+   "cbeta_lines": [
+    "0211c07",
+    "0212a02"
+   ],
+   "ref_sha256": "d9edbb9ffbe81e027e97096a3ed0510692d21c0099b264680156f8bdbc9064f9",
+   "ref_chars": 381,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf4d446ab1dad37c04ee/0019.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-5595ab-p45",
+   "book_id": "6abec5239a6d02ff1a5595ab",
+   "page_number": 45,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷19–21 (vol 7 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0370b27",
+    "0370c28"
+   ],
+   "ref_sha256": "a74b98d137f75eff44df67fa41858f5e9104b659952283f117b5893beb6ad5f4",
+   "ref_chars": 409,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5239a6d02ff1a5595ab/0045.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-1de682-p51",
+   "book_id": "6abef3404c777f224e1de682",
+   "page_number": 51,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "天如惟則禪師語錄 卷5–7 (vol 3 of 4)",
+   "year": null,
+   "published": "師子林天如和尚語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1403",
+   "cbeta_lines": [
+    "0810a22",
+    "0810b17"
+   ],
+   "ref_sha256": "0ecd015228878e5166092b1622a2a8aa24f296c44a21ff7923243f59a54de24e",
+   "ref_chars": 400,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef3404c777f224e1de682/0051.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-55963c-p15",
+   "book_id": "6abec5269a6d02ff1a55963c",
+   "page_number": 15,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷25–27 (vol 9 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0412b02",
+    "0412c09"
+   ],
+   "ref_sha256": "54fc854e118dfe4c703012990786f8036f24d6f13abdac0dfd1b1b551a70d8da",
+   "ref_chars": 596,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5269a6d02ff1a55963c/0015.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-be00f4-p14",
+   "book_id": "6abee1bb3bb95eea9ebe00f4",
+   "page_number": 14,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "圓悟佛果禪師語錄 卷8–13 (vol 2 of 3)",
+   "year": null,
+   "published": "明暦3 [1657] edition",
+   "language": "Chinese",
+   "cbeta_id": "T1997",
+   "cbeta_lines": [
+    "0750a22",
+    "0750b17"
+   ],
+   "ref_sha256": "978f82b636f1b8f0ac30c97ec8ee2a027a6c6bec6259f43a9dee2836498bfee0",
+   "ref_chars": 398,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee1bb3bb95eea9ebe00f4/0014.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-bae241-p17",
+   "book_id": "6abedf20e54ec11ac8bae241",
+   "page_number": 17,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "雲門匡真禪師廣錄 卷1 (vol 1 of 3)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), 慶長18 [1613], 宗鐵重刊",
+   "language": "Chinese",
+   "cbeta_id": "T1988",
+   "cbeta_lines": [
+    "0548c09",
+    "0549a03"
+   ],
+   "ref_sha256": "1d5964dcb943867977b38795ca4cf27d1b5dca2c376cbe496079f6ba7704d534",
+   "ref_chars": 387,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf20e54ec11ac8bae241/0017.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c38-p51",
+   "book_id": "6abedf327ca0bb7fcd9e6c38",
+   "page_number": 51,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "佛果圜悟禪師碧巖錄 卷1–2 (vol 1 of 5)",
+   "year": null,
+   "published": "Gozan edition (五山版), Muromachi period",
+   "language": "Chinese",
+   "cbeta_id": "T2003",
+   "cbeta_lines": [
+    "0151b18",
+    "0151c16"
+   ],
+   "ref_sha256": "3f3b925d9985552ae0d34a8fb58a5481e68621c25a1b940ef41b1d4cc48c2bca",
+   "ref_chars": 462,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf327ca0bb7fcd9e6c38/0051.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d1d-p27",
+   "book_id": "6abedf367ca0bb7fcd9e6d1d",
+   "page_number": 27,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "佛果圜悟禪師碧巖錄 卷7–8 (vol 4 of 5)",
+   "year": null,
+   "published": "Gozan edition (五山版), Muromachi period",
+   "language": "Chinese",
+   "cbeta_id": "T2003",
+   "cbeta_lines": [
+    "0199a12",
+    "0199b09"
+   ],
+   "ref_sha256": "c18f9ba7df89fa1e7337b0572191abb81f147e97f1f6b956ae360102ea248c3d",
+   "ref_chars": 440,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf367ca0bb7fcd9e6d1d/0027.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6d5b-p23",
+   "book_id": "6abedf387ca0bb7fcd9e6d5b",
+   "page_number": 23,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "佛果圜悟禪師碧巖錄 卷9–10 (vol 5 of 5)",
+   "year": null,
+   "published": "Gozan edition (五山版), Muromachi period",
+   "language": "Chinese",
+   "cbeta_id": "T2003",
+   "cbeta_lines": [
+    "0212a09",
+    "0212b07"
+   ],
+   "ref_sha256": "42b7e4963e1194c722c474739644084c6977ec434dacc711e4cda5ba74964f64",
+   "ref_chars": 454,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf387ca0bb7fcd9e6d5b/0023.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-f80792-p115",
+   "book_id": "6abedf4b7ca26f5b50f80792",
+   "page_number": 115,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "松源崇嶽禪師語錄",
+   "year": null,
+   "published": "元祿4 [1691] edition",
+   "language": "Chinese",
+   "cbeta_id": "X1377",
+   "cbeta_lines": [
+    "0104b15",
+    "0104c07"
+   ],
+   "ref_sha256": "5e30a6d7bcdde3d37fea474799c68bc1604d6e671d6548cd12795c8c388b3ca4",
+   "ref_chars": 255,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf4b7ca26f5b50f80792/0115.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-d933ba-p5",
+   "book_id": "6abee93580b99e80d7d933ba",
+   "page_number": 5,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "虛堂和尚語錄 卷10 (vol 4 of 4)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), Keichō era [1596–1615]",
+   "language": "Chinese",
+   "cbeta_id": "T2000",
+   "cbeta_lines": [
+    "1058c18",
+    "1058c25"
+   ],
+   "ref_sha256": "646a67b5923c411ae82e2f8610bbbb10d5ec5a1ff77a954ebbbc2027f6f45b51",
+   "ref_chars": 104,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee93580b99e80d7d933ba/0005.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-d9334e-p24",
+   "book_id": "6abee93380b99e80d7d9334e",
+   "page_number": 24,
+   "substratum": "typeset",
+   "observed_substratum": "typeset",
+   "title": "虛堂和尚語錄 卷8–9 (vol 3 of 4)",
+   "year": null,
+   "published": "old movable-type edition (古活字版), Keichō era [1596–1615]",
+   "language": "Chinese",
+   "cbeta_id": "T2000",
+   "cbeta_lines": [
+    "1047c09",
+    "1047c25"
+   ],
+   "ref_sha256": "c04a9d48aecf2b7f1a78e32eef761b2fd78b5774baf67d3c6a5c2d1f85902e3e",
+   "ref_chars": 245,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee93380b99e80d7d9334e/0024.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-2904bf-p87",
+   "book_id": "6abef35ed8d3fdd6362904bf",
+   "page_number": 87,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "楚石梵琦禪師語錄 卷9–12 (vol 3 of 5)",
+   "year": null,
+   "published": "佛日普照慧辯楚石禪師語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1420",
+   "cbeta_lines": [
+    "0612c16",
+    "0613a11"
+   ],
+   "ref_sha256": "79260e1e1e9b3e8a53a5add393e0d1ac3c68b8ff2c15fb7e49b6112ac28fef7f",
+   "ref_chars": 328,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef35ed8d3fdd6362904bf/0087.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-98b382-p15",
+   "book_id": "6abedf431b2cd9635f98b382",
+   "page_number": 15,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "續古尊宿語要 卷5 (vol 4 of 5)",
+   "year": null,
+   "published": "Song print, Fuzhou Gushan (福州鼓山寺版), 紹興9 [1139]; surviving juan 2, 4–6",
+   "language": "Chinese",
+   "cbeta_id": "X1318",
+   "cbeta_lines": [
+    "0464a16",
+    "0464b21"
+   ],
+   "ref_sha256": "0190a3383fe4332950d5757df9460206a92057925fb27c6e9b0971c2a382c6e6",
+   "ref_chars": 457,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf431b2cd9635f98b382/0015.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-be0167-p30",
+   "book_id": "6abee1bd3bb95eea9ebe0167",
+   "page_number": 30,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "圓悟佛果禪師語錄 卷14–20 (vol 3 of 3)",
+   "year": null,
+   "published": "明暦3 [1657] edition",
+   "language": "Chinese",
+   "cbeta_id": "T1997",
+   "cbeta_lines": [
+    "0782c18",
+    "0783a12"
+   ],
+   "ref_sha256": "6a0e9fe5ab9faeba43ba1b1507eb4d57d530db7f70e3d0b4cdb42422d21faac3",
+   "ref_chars": 364,
+   "image_url": "https://images.sourcelibrary.org/pages/6abee1bd3bb95eea9ebe0167/0030.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-559564-p20",
+   "book_id": "6abec5219a6d02ff1a559564",
+   "page_number": 20,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷16–18 (vol 6 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0333a13",
+    "0333b24"
+   ],
+   "ref_sha256": "4bb0d2290b2c14d2411a1b62b2672e1f41cef6dfc8bfc2f1d92b26d2fa12fafa",
+   "ref_chars": 696,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5219a6d02ff1a559564/0020.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-76797f-p5",
+   "book_id": "6abedf199f894b562076797f",
+   "page_number": 5,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "鎮州臨濟慧照禪師語錄",
+   "year": null,
+   "published": "Gozan edition (五山版), Nanbokuchō period [1336–1392]",
+   "language": "Chinese",
+   "cbeta_id": "T1985",
+   "cbeta_lines": [
+    "0496c22",
+    "0497a18"
+   ],
+   "ref_sha256": "37aabef1c1cbe29acec7fa121b4d46507ded544520d822472486e9b9ad7e5941",
+   "ref_chars": 393,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf199f894b562076797f/0005.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6cdd-p27",
+   "book_id": "6abedf357ca0bb7fcd9e6cdd",
+   "page_number": 27,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "佛果圜悟禪師碧巖錄 卷5–6 (vol 3 of 5)",
+   "year": null,
+   "published": "Gozan edition (五山版), Muromachi period",
+   "language": "Chinese",
+   "cbeta_id": "T2003",
+   "cbeta_lines": [
+    "0184b25",
+    "0184c22"
+   ],
+   "ref_sha256": "b85027cb4b8589f0218a1934340b17a90ca2217af4da4612930e2a9e64e2a324",
+   "ref_chars": 417,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf357ca0bb7fcd9e6cdd/0027.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-f94cbc-p11",
+   "book_id": "6abedf29fb1708126df94cbc",
+   "page_number": 11,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "大慧普覺禪師語錄 卷5–8 (vol 2 of 3)",
+   "year": null,
+   "published": "Edo-period edition, 12 juan",
+   "language": "Chinese",
+   "cbeta_id": "T1998A",
+   "cbeta_lines": [
+    "0831c12",
+    "0832a09"
+   ],
+   "ref_sha256": "f13b10e499b3d3d476bb228525c25a6aa891b6025cca58b8d12349b80268d428",
+   "ref_chars": 425,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf29fb1708126df94cbc/0011.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-25f3a6-p4",
+   "book_id": "6abedf2f0f33d7676e25f3a6",
+   "page_number": 4,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "密菴和尚語錄 卷1 (vol 2 of 2)",
+   "year": null,
+   "published": "Gozan edition (五山版), Nanbokuchō period [1336–1392]",
+   "language": "Chinese",
+   "cbeta_id": "T1999",
+   "cbeta_lines": [
+    "0969c27",
+    "0970a23"
+   ],
+   "ref_sha256": "2fce15d245c7133492cdcac118b5ffd51e5d91f2b5bfe6d8f3e7af84580d52ea",
+   "ref_chars": 383,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf2f0f33d7676e25f3a6/0004.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-f94c74-p24",
+   "book_id": "6abedf28fb1708126df94c74",
+   "page_number": 24,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "大慧普覺禪師語錄 卷1–4 (vol 1 of 3)",
+   "year": null,
+   "published": "Edo-period edition, 12 juan",
+   "language": "Chinese",
+   "cbeta_id": "T1998A",
+   "cbeta_lines": [
+    "0816c06",
+    "0817a02"
+   ],
+   "ref_sha256": "a47d98d014e09edcad940cb45bd475b6cd268771bf877d0d9bc754023b1e3cdd",
+   "ref_chars": 407,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf28fb1708126df94c74/0024.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9b8007-p18",
+   "book_id": "6abef31aea0ee3a64e9b8007",
+   "page_number": 18,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "無準師範禪師語錄 卷1 (vol 1 of 4)",
+   "year": null,
+   "published": "Gozan edition (五山版), 應安3 [1370]",
+   "language": "Chinese",
+   "cbeta_id": "X1382",
+   "cbeta_lines": [
+    "0224a24",
+    "0224b19"
+   ],
+   "ref_sha256": "e3f12d4fee58429587b3362e09fda9851ff7891b91d351cb6c651ebe250e3316",
+   "ref_chars": 340,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef31aea0ee3a64e9b8007/0018.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-9e6c95-p50",
+   "book_id": "6abedf337ca0bb7fcd9e6c95",
+   "page_number": 50,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "佛果圜悟禪師碧巖錄 卷3–4 (vol 2 of 5)",
+   "year": null,
+   "published": "Gozan edition (五山版), Muromachi period",
+   "language": "Chinese",
+   "cbeta_id": "T2003",
+   "cbeta_lines": [
+    "0174b05",
+    "0174c02"
+   ],
+   "ref_sha256": "2a99e4e362e0eaa357a01ee787cc1405e7ba93db9c6277b9d75bad768c7b4f3a",
+   "ref_chars": 456,
+   "image_url": "https://images.sourcelibrary.org/pages/6abedf337ca0bb7fcd9e6c95/0050.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-2690a0-p84",
+   "book_id": "6abef3343eeeaaa3202690a0",
+   "page_number": 84,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "高峰原妙禪師語錄",
+   "year": null,
+   "published": "高峰大師語録, 明暦3 [1657]",
+   "language": "Chinese",
+   "cbeta_id": "X1400",
+   "cbeta_lines": [
+    "0694c17",
+    "0695a08"
+   ],
+   "ref_sha256": "ca5703997f4c50ef141f122643fd3b18adc9df40fe26032519326012b0c2106b",
+   "ref_chars": 225,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef3343eeeaaa3202690a0/0084.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-290464-p49",
+   "book_id": "6abef35cd8d3fdd636290464",
+   "page_number": 49,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "楚石梵琦禪師語錄 卷5–8 (vol 2 of 5)",
+   "year": null,
+   "published": "佛日普照慧辯楚石禪師語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1420",
+   "cbeta_lines": [
+    "0579b20",
+    "0579c15"
+   ],
+   "ref_sha256": "5fc1ec38976ca885e024b2db5917974e5626524a1613012543c03cb3532e307e",
+   "ref_chars": 373,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef35cd8d3fdd636290464/0049.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-290525-p25",
+   "book_id": "6abef35fd8d3fdd636290525",
+   "page_number": 25,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "楚石梵琦禪師語錄 卷13–16 (vol 4 of 5)",
+   "year": null,
+   "published": "佛日普照慧辯楚石禪師語録, Edo-period edition",
+   "language": "Chinese",
+   "cbeta_id": "X1420",
+   "cbeta_lines": [
+    "0621c01",
+    "0621c20"
+   ],
+   "ref_sha256": "f283b162f01f670d855200ab7704743675747e9958d62cc535f3e0ea8f0b3b54",
+   "ref_chars": 270,
+   "image_url": "https://images.sourcelibrary.org/pages/6abef35fd8d3fdd636290525/0025.jpg"
+  },
+  {
+   "slug": "chinese-print-cbeta-559462-p50",
+   "book_id": "6abec5199a6d02ff1a559462",
+   "page_number": 50,
+   "substratum": "woodblock",
+   "observed_substratum": "woodblock",
+   "title": "景德傳燈錄 卷4–6 (vol 2 of 10)",
+   "year": null,
+   "published": "Gozan edition (五山版), 貞和4 [1348]; NDL call no. WA6-45",
+   "language": "Chinese",
+   "cbeta_id": "T2076",
+   "cbeta_lines": [
+    "0245b17",
+    "0245c04"
+   ],
+   "ref_sha256": "b1859c2ac5970a895c9a26c70dcdb05c010e19f0c23a6112c86cb00c78079b8e",
+   "ref_chars": 171,
+   "image_url": "https://images.sourcelibrary.org/pages/6abec5199a6d02ff1a559462/0050.jpg"
+  }
+ ]
+}
