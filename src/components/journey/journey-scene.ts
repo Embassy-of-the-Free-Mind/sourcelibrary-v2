@@ -324,9 +324,9 @@ export function createJourneyScene(
   const corePage = new THREE.Mesh(geo(new THREE.PlaneGeometry(1.25 * PW / PH * 1.4, 1.25 * 1.4)), basic({ map: scanTex, color: scanTex ? 0xffffff : 0xf4edde, transparent: true }));
   core.add(corePage);
   const cardDefs = [
-    d.summary ? { h: 'Summary · machine-written', b: d.summary } : null,
+    d.summary ? { h: 'Summary · written by AI', b: d.summary } : null,
     d.terms.length ? { h: 'Terms', b: d.terms.join(' · ') } : null,
-    d.keywords.length ? { h: 'Keywords · machine-written', b: d.keywords.join(' · ') } : null,
+    d.keywords.length ? { h: 'Keywords · chosen by AI', b: d.keywords.join(' · ') } : null,
     { h: 'Page', b: `${d.citation.locator} of ${d.pagesCount.toLocaleString('en-US')}` },
   ].filter((x): x is { h: string; b: string } => !!x);
   const cardGeo = geo(new THREE.PlaneGeometry(2.6, 1.52));

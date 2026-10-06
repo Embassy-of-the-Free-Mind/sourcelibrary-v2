@@ -43,7 +43,7 @@ const STAGES: Stage[] = [
   {
     name: 'English',
     does: 'A model drafts an English translation of each page from its transcription, in batches.',
-    out: 'English beside every page, labelled a machine draft',
+    out: 'English beside every page, marked as not yet reviewed',
     theirs: 'Draft Translation',
   },
   {

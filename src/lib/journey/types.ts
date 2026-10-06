@@ -173,7 +173,7 @@ export function buildJourneyCopy(d: JourneyData): { steps: JourneyStep[]; parts:
       d.trace ? 'With Trace on, clicking a phrase in the English shows the words it came from, and the other way round.' : '',
       d.machineDraft
         ? `Until a scholar has reviewed it, every translated page carries the label “${READER_UI_STRINGS.en.info.machineDraftNotice}” Readers can report a problem on any page.`
-        : 'A person has edited this page’s English since the machine draft. Readers can report a problem on any page.',
+        : 'A person has edited this page’s English since the first AI translation. Readers can report a problem on any page.',
     ].filter(Boolean).join(' '),
   });
 

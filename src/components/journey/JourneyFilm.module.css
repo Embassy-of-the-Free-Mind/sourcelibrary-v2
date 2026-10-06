@@ -33,11 +33,11 @@
 .ui { transition: opacity .5s ease; }
 .clean .ui { opacity: 0; pointer-events: none; }
 
-.brand { position: absolute; top: 18px; left: 20px; display: flex; flex-direction: column; gap: 3px; z-index: 6; }
+.brand { position: absolute; top: 12px; left: 14px; padding: 6px; background: var(--paper); display: flex; flex-direction: column; gap: 3px; z-index: 6; }
 .eyebrow { font: 600 10px/1 var(--f-label); letter-spacing: .12em; text-transform: uppercase; color: var(--rubric); }
 .brandName { font: 400 20px/1.15 var(--f-display); color: var(--ink); max-width: 36rem; }
 
-.hint { position: absolute; top: 20px; right: 20px; font: 400 12px/1.4 var(--f-label); color: var(--ink-soft); text-align: right; z-index: 6; }
+.hint { position: absolute; top: 14px; right: 14px; padding: 6px; background: var(--paper); font: 400 12px/1.4 var(--f-label); color: var(--ink-soft); text-align: right; z-index: 6; }
 .hint kbd { font: inherit; color: var(--ink); }
 
 .caption {
@@ -45,7 +45,7 @@
   max-width: min(26rem, calc(34vw + 10px));
   display: flex; flex-direction: column; gap: 6px;
   padding: 14px 18px 16px;
-  background: rgba(236, 227, 207, .86);
+  background: var(--paper);
   border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
   transition: opacity .35s ease, transform .35s ease;
 }
@@ -55,9 +55,11 @@
 .capBody { margin: 0; font: 400 16px/1.5 var(--f-body); color: var(--ink-soft); max-width: 65ch; }
 
 .controls {
-  position: absolute; left: 16px; right: 16px; bottom: 14px; z-index: 6;
+  /* A solid band: the scene's thread and pages pass behind the UI, never through it. */
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 6;
   display: flex; align-items: center; gap: 12px;
-  padding: 8px 4px; border-top: 1px solid var(--rule);
+  padding: 10px 20px 14px; border-top: 1px solid var(--rule);
+  background: var(--paper);
 }
 .btn {
   flex: none; width: 36px; height: 36px; display: grid; place-items: center;
