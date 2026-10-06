@@ -44,7 +44,7 @@ while :; do
   n=${SIZES[$i]:-${SIZES[${#SIZES[@]}-1]}}
   i=$((i + 1)); W=$DIR/wave-$i; mkdir -p "$W"
   start=$(date -u +%FT%TZ)
-  node --env-file="$ENVF" scripts/maintenance/page-frame-sweep.mjs --apply \
+  node --env-file="$ENVF" scripts/maintenance/page-frame-sweep.mjs --apply --concurrency="${CONCURRENCY:-8}" \
     --limit-books="$n" --checkpoint="$CK" --stop-file="$STOP" >"$W/sweep.log" 2>&1
   rc=$?
   totals=$(grep '^totals' "$W/sweep.log" | tail -1 | cut -c8-)

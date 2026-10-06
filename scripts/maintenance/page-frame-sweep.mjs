@@ -61,7 +61,8 @@ const STOP_FILE = arg('stop-file', null);
 const MAX_ERROR_RATE = Number(arg('max-error-rate', '0.05'));
 const MIN_TRIES = 500;
 const PROBE = 5;
-const CONCURRENCY = 8;
+// Parallel image reads per book; the work is network wait, not CPU.
+const CONCURRENCY = Number(arg('concurrency', '8'));
 const R2 = /^https:\/\/images\.sourcelibrary\.org\//;
 
 if (PROVIDER && !ALLOWED_PROVIDERS.includes(PROVIDER)) {
