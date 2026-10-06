@@ -1,0 +1,1131 @@
+{
+ "seed": 5919,
+ "input": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-notes-free-5919/scripts/eval/results/translation-notes-free-2026-10/records.jsonl",
+ "input_sha": "91e477d92750e4b0",
+ "judges": [
+  "j1",
+  "j2"
+ ],
+ "controls": {
+  "wrong_page": {
+   "69e72c6ba409200ea79f484e_00102": {
+    "donor": "69935b692c63944063133f67_00112",
+    "donor_arm": "v13-b",
+    "text": "<meta>This page contains commentary on Chapters 48 and 49 of the Tao Te Ching. The layout consists of four distinct commentaries by Su, Lü, Huang Maocai, and Xizhai, followed by the main text of Chapter 49.</meta>\n\n<margin>Su's Commentary <note>Su Zhe, 1039 to 1112, a prominent Song dynasty official and scholar.</note></margin> One who does not know the Way <term>Dao</term> but devotes themselves to learning will find that what they hear and see increases daily. However, without a single principle to unify this knowledge, it inevitably becomes a burden. Confucius said: Hear much and select what is good to follow; see much and remember it; this is the second level of knowledge. If one day you know the Way, you will look back at falsehoods. Every false action is a delusion. To remove delusion and return to one's true nature is called \"decreasing.\" Confucius asked Zigong: Do you think I am one who learns much and remembers it all? He replied: Yes, is it not so? Confucius said: No, I pervade everything with a single principle. To forget the mind in order to restore nature purely is what is meant by \"decreasing.\" If delusions still remain, one must continue until both are forgotten. When the mind is purified and nature is restored without remnant, one abandons forced action <term>wei</term> and attains non-action <term>wu wei</term>. All people have the desire to take hold of the world and manage its affairs. Therefore, when they create trouble and seek results, their intentions are visible externally, and things resist them; thus they find it difficult to achieve their goals. The Sage practices non-action and therefore has no concerns in his heart. His inner state is visible externally, and things are at peace with him. Though he does not strive to take the world or manage its affairs, the affairs of the world naturally follow and find peace.\n\n<margin>Lü's Commentary <note>Lü Huiqing, 1032 to 1111, a key figure in the New Policies of the Song dynasty.</note></margin> Those who practice learning are those who have not yet heard the Way. Since they have not heard the Way, they must seek it broadly; therefore, it is said that they \"increase.\" Those who practice the Way are those who have already heard it. Having heard it, they must practice it by doing nothing other than non-action; therefore, it is said that they \"decrease.\" To decrease and further decrease means one has not yet avoided having some action. One must even decrease the act of decreasing itself. Only then does one reach non-action. Non-action refers to being silent and unmoving. \"Doing nothing left undone\" refers to being moved and then penetrating all the causes under heaven. Reaching non-action through the process of non-action is called the Constant. Learning without worry is called divine. The direction of the divine is what is called the Way. Who can attain such supreme divinity? From this we can see that taking the world is always done through non-action. When one relies on forced action, it is clear they are insufficient to take the world.\n\n<column-break/>\n\n<margin>Huang Maocai's Commentary <note>A Southern Song dynasty scholar known for his works on the Laozi.</note></margin> Only after knowing everything can one speak of learning; therefore, learning desires daily increase. Only after reaching a state where nothing is forced can one speak of the Way; therefore, the Way desires daily decrease. However, increase can be sought through progress, while decrease is sometimes difficult to achieve through force. Only those of supreme clarity can suddenly cast off burdens and reach the realm of non-action. Thus they can leave nothing undone, and their practical application is inexhaustible. When applied to the world, they act with ample freedom.\n\n<margin>Xizhai's Commentary <note>The art name of Wang Tingzhen, a Yuan dynasty scholar.</note></margin> One practices learning to seek knowledge, thus it increases daily. One practices the Way to remove delusion, thus it decreases daily. If knowledge is not perfected, then the decrease will not be complete. Therefore, daily increase serves as the foundation for daily decrease. If one decreases and further decreases until delusion is gone and truth is whole, then one reaches non-action. Upon reaching non-action, even when there is action, it has never not been non-action. This state cannot be easily discussed in terms of decrease or increase. When non-action reaches its peak, though the world is vast, it is unified by a single principle. If one creates trouble through busy-ness, then even a single object in front of them remains entangled and chaotic, let alone the vastness of the world.\n\nThe Sage has no fixed heart; he takes the heart of the people as his own heart. To those who are good, I am good. To those who are not good, I am also good; thus virtue is goodness. To those who are trustworthy, I trust them. To those who are not trustworthy, I also trust them; thus virtue is trust. The Sage is in the world, blending his heart with the world to make it whole. The people all focus their ears and eyes upon him. The Sage <note>The text cuts off here and continues on the next page.</note>\n\n<page-num>Twenty-two</page-num>\n<sig>The Primary Wings of Laozi, Volume Two <note>Title of the specific commentary edition.</note></sig>\n\n<summary>This page contains commentaries on the paradox of \"daily increase\" in learning versus \"daily decrease\" in the Way, culminating in the Sage's practice of non-action and his impartial treatment of the people.</summary>\n<keywords>non-action, wu wei, learning, daily decrease, Sage, virtue, Su Zhe, Lü Huiqing, Tao Te Ching Chapter 48, Tao Te Ching Chapter 49</keywords>"
+   },
+   "69e9617a2beefe2f6f72ba14_00253": {
+    "donor": "69c1bbc68522835be8460774_00281",
+    "donor_arm": "v13-plain",
+    "text": "# The Apostle\n\nthat he began to speak. 12 And the priest of the angel of God, who was outside the city, brought an ox and a wreath to the entrance of the house where they were staying, and he desired to offer a sacrifice to them. 13 When Barnabas and Paul heard this, they tore their garments and leaped and went out to the place of the multitude, and they were crying out, 14 and said, \"Men, why are you doing this? We also are human beings like you, with feelings like yours, and we think that from these vanities you should turn away and turn toward the living God, He who made the heavens and the earth, the seas, and all that is in them. 15 It is He who in previous generations allowed all the nations to walk in the way of their choosing. 16 Even so, He did not leave His essence without witness; He did good for them from the heavens and brought down rain for them, and grew fruits for them in their seasons, and filled them with food and joy in their hearts.\" 17 And when they had said this, the people saw it and said that no man should offer a sacrifice to them. 18 And Jews came there from <term>Konya</term> and from Antioch and incited the people against them and stoned 19 Paul, and they cast him outside the city because they thought that he was dead. 20 But the disciples gathered around him, and he rose and entered the city, and on the second day he and Barnabas went out from there and came to the city of Derbe. 21 And when they had taught the people of that city, and many disciples were added to them, they returned to the city of Lystra and to <term>Konya</term> and to the city of Antioch, 22 and they strengthened themselves in the faith.\n\n<summary>This page translates Acts 14:12-22, describing Paul and Barnabas's rejection of divine honors in Lystra and Paul's subsequent stoning by Jews from Antioch and Iconium. It concludes with their return to various cities to strengthen the new disciples.</summary>\n<keywords>Paul, Barnabas, Lystra, Antioch, Konya, Derbe, sacrifice, stoning, apostles, New Testament Hebrew</keywords>"
+   },
+   "69b2f3b821208ea9dc278c50_00277": {
+    "donor": "699ef9f2c2bcb75dbdbaad92_00102",
+    "donor_arm": "v13-a",
+    "text": "Any portion of the Torah <note>the Five Books of Moses</note> that mentions the name <term>YHVH Elohim</term> refers to actions performed through the combined attributes of the Attribute of Justice <note>Hebrew: Middat ha-Din</note> and the Attribute of Mercy <note>Hebrew: Middat ha-Rachamim</note>. You will find this regarding the creation of the first man, his judgment, his expulsion from Eden, and all those matters. You will find they were all executed through both Justice and Mercy, in perfect completeness, with Justice according to what was strictly true and Mercy according to what was appropriate.\n\nFollowing this principle, the Torah states: The Rock, His work is perfect <note>Deuteronomy 32:4</note>. The explanation of the verse is this: The Rock, who decrees judgment with strength, does not act with cruelty. He does not decree judgment until His work is \"perfect,\" meaning that the decree was first deliberated by both attributes, Loving-kindness <note>Hebrew: Chesed</note> and Justice. This is the meaning of \"His work is perfect\" <term>tamim</term>.\n\nThe term <term>tamim</term> <gloss>perfect/complete</gloss> is a secret referring to two things together. It is as if one said <term>te'omim</term> <gloss>twins</gloss>, but the language of honor uses the term <term>tamim</term> for these two supernal matters, while for earthly things it uses the term <term>te'omim</term>. Thus it says, and they shall be doubled <term>te'omim</term> from below, and they shall be complete <term>tamim</term> together at the top <note>Exodus 26:24</note>. Below they are \"twins\" because they appear as two separate things, opposites like an advocate and an accuser. But above, all is a single intention. Between the advocate and the accuser, both share one purpose. There is no hatred or love there, and no partiality, only true judgment. Therefore it says \"His work is perfect,\" meaning He consulted Justice and Mercy and then decreed the judgment. This is the secret of \"True Judgment.\"\n\nRegarding the phrase, for all His ways are justice <note>Deuteronomy 32:4</note>, it means this is evident to every observer. You already know that <term>Mishpat</term> <gloss>Justice/Judgment</gloss> is comprised of both Justice and Mercy. <term>Mishpat</term> corresponds to Jacob, who is the Middle Pillar, balancing between the two \"tents\" of Abraham and Isaac. Abraham corresponds to Loving-kindness, Isaac corresponds to Justice, and Jacob decides between them: a plain man <term>ish tam</term>, dwelling in tents <note>Genesis 25:27</note>. <term>Mishpat</term> corresponds to Jacob, drawing from the Loving-kindness of Abraham's side and the Justice of Isaac's side. Thus it says, You have executed justice <term>mishpat</term> and righteousness <term>tzedakah</term> in Jacob <note>Psalm 99:4</note>.\n\nThe Prophet said: O Lord <term>YHVH</term>, correct me, but with justice <term>mishpat</term>; not in Your anger, lest You bring me to nothing <note>Jeremiah 10:24</note>. The explanation is: \"Correct me, Lord, but with justice,\" where the word \"but\" <term>ach</term> implies a partition—meaning, through the half of the attribute of Justice that is Mercy. Since <term>Mishpat</term> is half Justice and half Mercy, he says \"but with justice\" and follows with \"not in Your anger,\" revealing the secret of diminishing the half of Justice that stems from \"Anger.\"\n\nTherefore, <term>Mishpat</term> depends on Jacob, who is the \"Father of the Tribes.\" Having known the great pain of children, when the Holy One decrees upon them, Jacob seeks mercy and righteousness for them. The secret is: And the Lord of Hosts shall be exalted in justice <note>Isaiah 5:16</note>. What is written immediately after? And God the Holy One is sanctified in righteousness. This means when the Judgment is collected, the Justice rests and turns toward the attribute of <term>El</term> <gloss>God</gloss>. This is the secret of \"And God the Holy One is sanctified in righteousness.\" Whenever the name <term>YHVH Tzevaot</term> is exalted in justice, the attribute of <term>El</term>, which is higher, arrives and performs righteousness, and Justice is served. This is the secret of the saying that <term>Mishpat</term> is included in Loving-kindness and Justice.\n\nThere is a great secret in the verse: Righteousness <term>Tzedek</term> and Justice <term>Mishpat</term> are the foundation of Your throne <note>Psalm 89:15</note>. Sometimes <term>Tzedek</term> <gloss>Righteousness</gloss> acts as strict Justice depending on how the flow is received, for <term>Tzedek</term> can be a harsh judgment in its strength. However, when <term>Mishpat</term> is partnered with it, the Throne is established with Mercy. And if it is exalted through <term>Mishpat</term> and reaches the point where Loving-kindness and Truth meet, they are called \"The Shining Face.\" Then everything becomes great Mercy, and this is the secret of \"shall go before\n\n->Your Face<-\n\n<meta>Commentary section</meta>\n\nThis hints at \"The Lord our God, the Lord is One.\" They have one single intention. The essence and refinement of it is the distribution of Justice and Kindness according to the recipients who are prepared for them through spiritual awakening. In the Zohar <note>Parashat Balak</note> it is discussed how the Ancient of Ancients <term>Atika de-Atikin</term> is entirely white <note>pure mercy</note>. When everything is unified, everything becomes life. Everything is balanced before the paths separate to the right and left. From our side, Justice appears, but the secret of Justice is surrendered to the Holy Head. It is written, \"The voice of the Lord is upon the waters.\" This means all His ways are <term>Mishpat</term>. <term>Mishpat</term> is a revealed way, visible to all below, whereas supernal matters may be hidden. Thus it is written regarding Job, that he spoke without knowledge. The explanation is that the secret was revealed to him only in part, as the sages said. The attribute of Justice is gathered under the hand of Loving-kindness, included within it as a foundation.\n\n<summary>This page explains the synthesis of Justice (Din) and Mercy (Rachamim) in the divine name YHVH Elohim and the concept of Mishpat (Justice/Balance). It links these attributes to the patriarchs Abraham, Isaac, and Jacob, establishing Jacob as the balancing middle pillar.</summary>\n<keywords>Justice, Mercy, Mishpat, Jacob, Abraham, Isaac, Tamim, Sephirot, Zohar, Divine Names</keywords>"
+   }
+  },
+  "planted": {
+   "69de10185cedf736edb851e4_00244": {
+    "base_arm": "v13-b",
+    "text": "### Chapter 2 | Methods of Cultivating Acquaintance and Advances <note>original: \"Abhiyoga\"</note> 237\n\nA wise man, even if he is confident in his own abilities, should not pursue a woman who is suspicious, closely guarded, fearful, or under the constant supervision of her mother-in-law. (27)\n\nThus ends the second chapter, titled Methods of Cultivating Acquaintance and Advances, in the fifth book on Extramarital Affairs <note>original: \"Paradarika\"</note> of the Kamasutra of Vatsyayana.\n\n<note>The following is the Jayamangala commentary by Yashodhara.</note>\nSuspicious refers to a woman who has developed doubts about the suitor. Guarded means she is watched by powerful attendants. Fearful refers to her fear of her husband. Supervised by a mother-in-law means she is under her mother-in-law's direct authority. One should not pursue her <note>original: \"na tarkayeta\"</note> meaning one should not desire her, while being aware of one's own capabilities, or rather, arriving at the certain conclusion that \"I am unable to succeed here.\" (27)\nThus ends the forty-fourth section on Advances <note>original: \"Abhiyoga\"</note>.\n\nThus ends the second chapter, titled Methods of Cultivating Acquaintance and Advances, in the fifth book on Extramarital Affairs of the Jayamangala commentary on the Kamasutra of Vatsyayana, composed by Yashodhara.\n\n---\n\n### Chapter 3\n### Examination of Intentions <note>original: \"Bhava-pariksha\"</note>\n\nEven when an advance is made, women who are steady and bold must be tested. Because their true feelings are not easily revealed, a specific method of approach is required. Therefore, the examination of intentions is now discussed:\n\nA man making an advance should observe the behavior of the woman; through that observation, her internal state is examined. (1)\n\nJust as one approaches a young maiden, he should observe her behavior, meaning her physical gestures and movements. Indeed, by examining these, her true intention is tested. (1)\n\nHe explains how she is to be won over:\n\nIf she does reveal the secret matter, he should win her over by using a female messenger <note>original: \"dutya\"</note>. (2)\n\nDoes not reveal the secret matter means she does not openly show her sexual feelings. Because of her boldness or reserve, he should win her over through a female messenger. (2)\n\nIf she rejects an advance but continues to associate with the man, he should know that her mind is divided into two. He should win her over gradually. (3)\n\nRejecting an advance means she refuses the proposal made by the hero <note>original: \"nayaka\"</note>. If, after some days have passed, she is found associating with him again, meaning she seeks his company, he should understand her to be of a divided mind. This is because her state must be tested; she feels, \"I do not know what I should do.\" He should win her over step by step and not abandon her suddenly. (3)\n\nHe mentions a specific detail here:\n\nIf she rejects the advance but appears again particularly well-adorned, then likewise...\n\n<summary>This page concludes the chapter on making advances and begins the chapter on testing a woman's true intentions. It emphasizes identifying obstacles like guardians and interpreting complex behavioral cues such as a divided mind.</summary>\n<keywords>Kamasutra, Vatsyayana, Yashodhara, Jayamangala, advances, female messenger, behavioral observation, extramarital affairs, intentions</keywords>",
+    "op": "drop-negation",
+    "from": "does not",
+    "to": "does",
+    "at": 2027,
+    "before_context": "r true intention is tested. (1)\n\nHe explains how she is to be won over:\n\nIf she does not reveal the secret matter, he should win her over by using a female messenger <n",
+    "after_context": "r true intention is tested. (1)\n\nHe explains how she is to be won over:\n\nIf she does reveal the secret matter, he should win her over by using a female messenger <n"
+   },
+   "69b99e8b6ed9e0490990a274_00179": {
+    "base_arm": "v13-plain",
+    "text": "# Chapter of the Eights\n\n836. \"If you do not desire such a jewel,\na woman sought after by many lords of men,\nthen what kind of view, lived according to moral habits and vows,\nand what kind of rebirth in existence do you proclaim?\" <margin>F. 158</margin>\n\n837. \"Māgandiya,\" said the Blessed One,\n\"one does not have the thought 'I proclaim this'\nregarding the teachings, after seizing and forming a settled conclusion;\nbut seeing among views without grasping,\nsearching for inward peace, I saw.\"\n\n838. \"Those settled conclusions which have been constructed,\"\nsaid Māgandiya,\n\"you, sage, speak of them without grasping;\nthis matter which you call 'inward peace,'\nhow indeed is that declared by the wise?\"\n\n839. \"Not by view, not by learning, not by knowledge,\"\nsaid the Blessed One, Māgandiya,\n\"nor by moral habits and vows does one attain purity.\nNor yet by lack of view, lack of learning, lack of knowledge,\nlack of moral habits, or lack of vows.\nRenouncing these without grasping,\npeaceful and independent, one would crave for existence.\"\n\n840. \"If, as it seems, not by view, not by learning, not by knowledge,\"\nsaid Māgandiya,\n\"nor by moral habits and vows does one attain purity,\n\n<summary>This page contains a dialogue between the Brahmin Māgandiya and the Buddha regarding the nature of spiritual purity and inward peace. The Buddha rejects the idea that purity is achieved through dogmatic views, rituals, or their mere absence, advocating instead for non-attachment.</summary>\n<keywords>Magandiya Sutta, Atthakavagga, purity, inward peace, views, moral habits, vows, non-attachment, Buddha</keywords>",
+    "op": "drop-negation",
+    "from": "would not",
+    "to": "would",
+    "at": 1012,
+    "before_context": " lack of vows.\nRenouncing these without grasping,\npeaceful and independent, one would not crave for existence.\"\n\n840. \"If, as it seems, not by view, not by learning, not",
+    "after_context": " lack of vows.\nRenouncing these without grasping,\npeaceful and independent, one would crave for existence.\"\n\n840. \"If, as it seems, not by view, not by learning, not"
+   },
+   "69d5ac07d0bd3547a5654dcc_00313": {
+    "base_arm": "v13-plain",
+    "text": "its companion and follower. Its names are also many, including <term>Soma</term> because it is auspicious, and auspicious things are called <term>Subha-graha</term> while inauspicious ones are called <term>Papa-graha</term>. Other names include <term>Nishisha</term>, meaning master of the night; <term>Nakshatra-natha</term>, meaning master of the lunar mansions; <term>Dvijeshvara</term>, meaning master of the created beings; and <term>Shitansh</term>, meaning cold-rayed. This is because its sphere is crystalline and contains moisture. When light falls upon it, it cools just as the sphere is cold and reflects, illuminating the darkness, cooling the night, and extinguishing what the sun corrupted by burning. For this reason it is also called <term>Chandra</term>. It is the left eye of <term>Narayana</term>, just as the sun is his right eye. I have deposited in this table the suns of the months; the cause of the discrepancy in them arises from the same reasons previously mentioned regarding the definition of the earths.\n\n| Months | <term>Vishnu Dharma</term> according to its suns | Meanings of these names according to <term>Vishnu Dharma</term> | <term>Aditya Purana</term> | Suns from other oral sources |\n| :--- | :--- | :--- | :--- | :--- |\n| <term>Chaitra</term> | <term>Vishnu</term> | Moving in the sky, not resting | <term>Anshuman</term> | <term>Ravi</term> |\n| <term>Vaishakha</term> | <term>Aryaman</term> | Disciplinarian of rebels and their honor, they do oppose him out of fear | <term>Savitar</term> | <term>Vishu</term> |\n| <term>Jyaishtha</term> | <term>Vivasvat</term> | Encompassing all with his gaze without partiality | <term>Bhanu</term> | <term>Dhatar</term> |\n| <term>Ashadha</term> | <term>Ansha</term> | Possessor of rays | <term>Vivasvat</term> | <term>Vidhata</term> |\n| <term>Shravana</term> | <term>Parjanya</term> | Succorer like rain | <term>Vishnu</term> | <term>Aryaman</term> |\n| <term>Bhadrapada</term> | <term>Varuna</term> | Benefactor to all | <term>Indra</term> | <term>Bhaga</term> |\n| <term>Ashvin</term> | <term>Indra</term> | Master and chief | <term>Dhata</term> | <term>Savitar</term> |\n| <term>Karttika</term> | <term>Dhata</term> | Acts kindly toward people and governs them | <term>Bhaga</term> | <term>Pushan</term> |\n| <term>Margashirsha</term> | <term>Mitra</term> | Beloved of the public | <term>Pushan</term> | <term>Tvashtar</term> |\n| <term>Pausha</term> | <term>Pushan</term> | Sustenance, because he feeds the people | <term>Mitra</term> | <term>Arka</term> |\n| <term>Magha</term> | <term>Bhaga</term> | Prosperous one, desired by all | <term>Varuna</term> | <term>Divakara</term> |\n| <term>Phalguna</term> | <term>Tvashtar</term> | Benefactor to everyone with goodness | <term>Aryaman</term> | <term>Ansha</term> |\n\n<margin>(1) <term>Graha</term> (4) <term>Chandra</term> (11) <term>Vivasvat</term> (12) <term>Phalguna</term></margin>\n\n<summary>This page discusses the names and mythological attributes of the moon and provides a comparative table of the deities associated with the sun for each month according to different Hindu traditions. Al-Biruni explains the cooling nature of moonlight and its relation to Narayana.</summary>\n<keywords>astronomy, lunar names, solar deities, Vishnu Dharma, Aditya Purana, months, Indian mythology</keywords>",
+    "op": "drop-negation",
+    "from": "do not",
+    "to": "do",
+    "at": 1480,
+    "before_context": "</term> | <term>Aryaman</term> | Disciplinarian of rebels and their honor, they do not oppose him out of fear | <term>Savitar</term> | <term>Vishu</term> |\n| <term>Jy",
+    "after_context": "</term> | <term>Aryaman</term> | Disciplinarian of rebels and their honor, they do oppose him out of fear | <term>Savitar</term> | <term>Vishu</term> |\n| <term>Jy"
+   }
+  },
+  "duplicate": {
+   "697b079711cc8928b55ea3a8_00659": {
+    "arm": "v13-a"
+   },
+   "6991e171b53cae6bb6024476_00216": {
+    "arm": "v13-plain"
+   },
+   "69bfccd88ab50eb88e8c69fd_00521": {
+    "arm": "v13-b"
+   }
+  }
+ },
+ "items": {
+  "j1": {
+   "6991e171b53cae6bb6024476_00216": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-plain#dup",
+    "T4": "v13-a"
+   },
+   "6976f5fb7b4366f057e0e974_00631": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "69b18a89c4be2cdd0edc810d_00135": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   },
+   "69b2ff9f5545150b61b48a36_00075": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-a"
+   },
+   "6953e46f77f38f6761bee559_00040": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "697947a145e954e8a877872d_00218": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   },
+   "6952872cab34727b1f04d284_00499": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "69bd9c796120d54bd036f318_00389": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-a"
+   },
+   "69affc54b3b18e354e59b7d8_00198": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   },
+   "69938e26d5a98fd66f4307b0_00136": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   },
+   "69bfccd88ab50eb88e8c69fd_00521": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a",
+    "T4": "v13-b#dup"
+   },
+   "69bd9d6a6120d54bd0376a04_00060": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   },
+   "69920bff01d3dcea63458842_00389": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "69557433f63a75710917330c_00146": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "6a26c3beaad44c98627cb64a_00013": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "69b51e6947b06ecd5818faf1_00131": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   },
+   "69a6827ed5bf106c72bb8d6f_00286": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   },
+   "699047e512d83c216b7e8c3f_00086": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "69520588ab34727b1f042d0c_00165": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "69b185e9c4be2cdd0edc464c_00489": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   },
+   "699ef9f2c2bcb75dbdbaad92_00102": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "69b2f3b821208ea9dc278c50_00277": {
+    "T1": "v13-b",
+    "T2": "control:wrong_page",
+    "T3": "v13-plain",
+    "T4": "v13-a"
+   },
+   "69d5ad004dc55b8478dde8b5_01455": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-a"
+   },
+   "69e9617a2beefe2f6f72ba14_00253": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "control:wrong_page",
+    "T4": "v13-plain"
+   },
+   "6990630be7b7642c081de08b_00353": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "69e7933580b52390feb18277_00263": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "69908ac1c0656c0b3bcc0813_00050": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-a"
+   },
+   "69d5ac07d0bd3547a5654dcc_00313": {
+    "T1": "v13-plain",
+    "T2": "control:planted",
+    "T3": "v13-b",
+    "T4": "v13-a"
+   },
+   "6a2198371994d1df1e5e0235_00118": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "69e74ef95cf1eaf3ad80e04c_00131": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "69f33c97876dd827cbc5a94f_00258": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "69e729a1a409200ea79f0ca5_00257": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "69e80670fdad300064d9ef9d_00599": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "69de10185cedf736edb851e4_00244": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "control:planted",
+    "T4": "v13-b"
+   },
+   "69906a861cf6ed5fbc8f5d21_00078": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "69b99e681f30176bf4d3798a_00155": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-a"
+   },
+   "6a09ff43fa20006dbaba8d78_00193": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "69e72c6ba409200ea79f484e_00102": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-a",
+    "T4": "control:wrong_page"
+   },
+   "69935b692c63944063133f67_00112": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   },
+   "69e792f880b52390feb17389_00344": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "697b079711cc8928b55ea3a8_00659": {
+    "T1": "v13-a#dup",
+    "T2": "v13-plain",
+    "T3": "v13-b",
+    "T4": "v13-a"
+   },
+   "6952d05477f38f6761bc511e_00428": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "69c1bbc68522835be8460774_00281": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "69e72c7da409200ea79f4a01_00053": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   },
+   "69b99f256ed9e0490990aa8a_00185": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "6990633def12272ffdc907b0_00211": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   },
+   "69e748da49abba5e98281b25_00103": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "69b99e8b6ed9e0490990a274_00179": {
+    "T1": "control:planted",
+    "T2": "v13-a",
+    "T3": "v13-b",
+    "T4": "v13-plain"
+   }
+  },
+  "j2": {
+   "6991e171b53cae6bb6024476_00216": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b",
+    "T4": "v13-plain#dup"
+   },
+   "6976f5fb7b4366f057e0e974_00631": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "69b18a89c4be2cdd0edc810d_00135": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   },
+   "69b2ff9f5545150b61b48a36_00075": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "6953e46f77f38f6761bee559_00040": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-a"
+   },
+   "697947a145e954e8a877872d_00218": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-a"
+   },
+   "6952872cab34727b1f04d284_00499": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "69bd9c796120d54bd036f318_00389": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "69affc54b3b18e354e59b7d8_00198": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "69938e26d5a98fd66f4307b0_00136": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "69bfccd88ab50eb88e8c69fd_00521": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-b#dup",
+    "T4": "v13-plain"
+   },
+   "69bd9d6a6120d54bd0376a04_00060": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "69920bff01d3dcea63458842_00389": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   },
+   "69557433f63a75710917330c_00146": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   },
+   "6a26c3beaad44c98627cb64a_00013": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   },
+   "69b51e6947b06ecd5818faf1_00131": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-a"
+   },
+   "69a6827ed5bf106c72bb8d6f_00286": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "699047e512d83c216b7e8c3f_00086": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   },
+   "69520588ab34727b1f042d0c_00165": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "69b185e9c4be2cdd0edc464c_00489": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   },
+   "699ef9f2c2bcb75dbdbaad92_00102": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   },
+   "69b2f3b821208ea9dc278c50_00277": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b",
+    "T4": "control:wrong_page"
+   },
+   "69d5ad004dc55b8478dde8b5_01455": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   },
+   "69e9617a2beefe2f6f72ba14_00253": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-a",
+    "T4": "control:wrong_page"
+   },
+   "6990630be7b7642c081de08b_00353": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "69e7933580b52390feb18277_00263": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-a"
+   },
+   "69908ac1c0656c0b3bcc0813_00050": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   },
+   "69d5ac07d0bd3547a5654dcc_00313": {
+    "T1": "v13-plain",
+    "T2": "control:planted",
+    "T3": "v13-b",
+    "T4": "v13-a"
+   },
+   "6a2198371994d1df1e5e0235_00118": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   },
+   "69e74ef95cf1eaf3ad80e04c_00131": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "69f33c97876dd827cbc5a94f_00258": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "69e729a1a409200ea79f0ca5_00257": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "69e80670fdad300064d9ef9d_00599": {
+    "T1": "v13-a",
+    "T2": "v13-plain",
+    "T3": "v13-b"
+   },
+   "69de10185cedf736edb851e4_00244": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "control:planted",
+    "T4": "v13-plain"
+   },
+   "69906a861cf6ed5fbc8f5d21_00078": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "69b99e681f30176bf4d3798a_00155": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "6a09ff43fa20006dbaba8d78_00193": {
+    "T1": "v13-b",
+    "T2": "v13-a",
+    "T3": "v13-plain"
+   },
+   "69e72c6ba409200ea79f484e_00102": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b",
+    "T4": "control:wrong_page"
+   },
+   "69935b692c63944063133f67_00112": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   },
+   "69e792f880b52390feb17389_00344": {
+    "T1": "v13-b",
+    "T2": "v13-plain",
+    "T3": "v13-a"
+   },
+   "697b079711cc8928b55ea3a8_00659": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a#dup",
+    "T4": "v13-a"
+   },
+   "6952d05477f38f6761bc511e_00428": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "69c1bbc68522835be8460774_00281": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "69e72c7da409200ea79f4a01_00053": {
+    "T1": "v13-plain",
+    "T2": "v13-a",
+    "T3": "v13-b"
+   },
+   "69b99f256ed9e0490990aa8a_00185": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "6990633def12272ffdc907b0_00211": {
+    "T1": "v13-plain",
+    "T2": "v13-b",
+    "T3": "v13-a"
+   },
+   "69e748da49abba5e98281b25_00103": {
+    "T1": "v13-a",
+    "T2": "v13-b",
+    "T3": "v13-plain"
+   },
+   "69b99e8b6ed9e0490990a274_00179": {
+    "T1": "control:planted",
+    "T2": "v13-b",
+    "T3": "v13-a",
+    "T4": "v13-plain"
+   }
+  }
+ },
+ "text_hash": {
+  "j1": {
+   "6991e171b53cae6bb6024476_00216": {
+    "T1": "66710ac55a04e2ae",
+    "T2": "835f6924a080e2f0",
+    "T3": "835f6924a080e2f0",
+    "T4": "3ab18b5676690a94"
+   },
+   "6976f5fb7b4366f057e0e974_00631": {
+    "T1": "a4212f0ca8410265",
+    "T2": "a318b33d42117818",
+    "T3": "74a57743fb1de82c"
+   },
+   "69b18a89c4be2cdd0edc810d_00135": {
+    "T1": "74b15ba24d615bcb",
+    "T2": "22dcea0a3c45f281",
+    "T3": "9e719a99568cb283"
+   },
+   "69b2ff9f5545150b61b48a36_00075": {
+    "T1": "bcb06b76290b1323",
+    "T2": "cbbcc94b58ced2f5",
+    "T3": "907f93c943340896"
+   },
+   "6953e46f77f38f6761bee559_00040": {
+    "T1": "788fa17d17a5bb02",
+    "T2": "1b05c256d5c4fe8a",
+    "T3": "e8e63da872413f96"
+   },
+   "697947a145e954e8a877872d_00218": {
+    "T1": "b785b49e48529fd9",
+    "T2": "c42dc9c6557d9c65",
+    "T3": "b79230766e41ca58"
+   },
+   "6952872cab34727b1f04d284_00499": {
+    "T1": "070318b740a23f0b",
+    "T2": "04a2448d3276830e",
+    "T3": "f353cb870b58efff"
+   },
+   "69bd9c796120d54bd036f318_00389": {
+    "T1": "9b5a05f0e40f2e82",
+    "T2": "ca90f1ef4acc592f",
+    "T3": "cc12ede209472b8a"
+   },
+   "69affc54b3b18e354e59b7d8_00198": {
+    "T1": "e2061dc10eea1d35",
+    "T2": "5edc80aad98b92f3",
+    "T3": "e40c0062d940f147"
+   },
+   "69938e26d5a98fd66f4307b0_00136": {
+    "T1": "a3f28de6971245fc",
+    "T2": "0ae86735234b4d1f",
+    "T3": "1ecdcdbc932a982f"
+   },
+   "69bfccd88ab50eb88e8c69fd_00521": {
+    "T1": "dcf5715040794a1b",
+    "T2": "22d8aca45064eeea",
+    "T3": "1ba8f0c5826c7e12",
+    "T4": "22d8aca45064eeea"
+   },
+   "69bd9d6a6120d54bd0376a04_00060": {
+    "T1": "1e4f4324008746a9",
+    "T2": "2b9276f980425097",
+    "T3": "62624e4f527347a6"
+   },
+   "69920bff01d3dcea63458842_00389": {
+    "T1": "35df6a1d5ab78933",
+    "T2": "1b8c5f12797ea95c",
+    "T3": "8ed0830278e6b858"
+   },
+   "69557433f63a75710917330c_00146": {
+    "T1": "c4707bfa7d73f55c",
+    "T2": "f43688824d170972",
+    "T3": "2ea2f024890176c8"
+   },
+   "6a26c3beaad44c98627cb64a_00013": {
+    "T1": "f2b78caaa355a444",
+    "T2": "dba1eda59637c266",
+    "T3": "aeae48e987d2fab4"
+   },
+   "69b51e6947b06ecd5818faf1_00131": {
+    "T1": "b3398778dcb226d8",
+    "T2": "803a02610ee2ee4c",
+    "T3": "d28b0638054bd2e6"
+   },
+   "69a6827ed5bf106c72bb8d6f_00286": {
+    "T1": "5647fdf02560211e",
+    "T2": "9ed0e2ac7e699a21",
+    "T3": "aeddc5dc47bc9f90"
+   },
+   "699047e512d83c216b7e8c3f_00086": {
+    "T1": "d53833510d44bb1c",
+    "T2": "1c6b1e1f70ef2be9",
+    "T3": "c6d8ce4a0a365580"
+   },
+   "69520588ab34727b1f042d0c_00165": {
+    "T1": "8b72f1e1bc17ccba",
+    "T2": "c9847fee73078300",
+    "T3": "3bab193879978c34"
+   },
+   "69b185e9c4be2cdd0edc464c_00489": {
+    "T1": "fc92cdf99690e769",
+    "T2": "ba425737eab7e908",
+    "T3": "a5163ff662c95c61"
+   },
+   "699ef9f2c2bcb75dbdbaad92_00102": {
+    "T1": "d130e68ea4ba9d11",
+    "T2": "8f79af9612c13a06",
+    "T3": "d3c32332662aeecd"
+   },
+   "69b2f3b821208ea9dc278c50_00277": {
+    "T1": "8933780547993aa4",
+    "T2": "8f79af9612c13a06",
+    "T3": "4248abb5bf21b043",
+    "T4": "6fcf29b8b5ff7822"
+   },
+   "69d5ad004dc55b8478dde8b5_01455": {
+    "T1": "19d3290b78923b5c",
+    "T2": "cb3aa365b6a09aa9",
+    "T3": "55f062aed2209c43"
+   },
+   "69e9617a2beefe2f6f72ba14_00253": {
+    "T1": "204923648be770f6",
+    "T2": "3361a04c852c2d5d",
+    "T3": "4c7660afc64e7fbb",
+    "T4": "89ddd2236d46fca3"
+   },
+   "6990630be7b7642c081de08b_00353": {
+    "T1": "cab160ec0cbf1094",
+    "T2": "24aa022cf61706ea",
+    "T3": "c3fa25c7aa02e524"
+   },
+   "69e7933580b52390feb18277_00263": {
+    "T1": "5bab917b09e77e38",
+    "T2": "9d5d0fc98303f776",
+    "T3": "b74b958fe498aa4e"
+   },
+   "69908ac1c0656c0b3bcc0813_00050": {
+    "T1": "6649e4518b62bc5e",
+    "T2": "8ca569c5ff1101a3",
+    "T3": "a76c6d9455c55757"
+   },
+   "69d5ac07d0bd3547a5654dcc_00313": {
+    "T1": "5cf2765ff4ad8bfc",
+    "T2": "a48d172b430c4706",
+    "T3": "2a7534c5ce9705a3",
+    "T4": "d5608bbb45e482c5"
+   },
+   "6a2198371994d1df1e5e0235_00118": {
+    "T1": "4cf40be292465bf2",
+    "T2": "921b3dfef3f53bec",
+    "T3": "853d2a0a46dcd259"
+   },
+   "69e74ef95cf1eaf3ad80e04c_00131": {
+    "T1": "2a4c3e6faa2ea5e4",
+    "T2": "51f32163a2149f1b",
+    "T3": "5d55461b777ba58a"
+   },
+   "69f33c97876dd827cbc5a94f_00258": {
+    "T1": "09e125ab30811c69",
+    "T2": "4c385f478228d5eb",
+    "T3": "49121891060ffcd3"
+   },
+   "69e729a1a409200ea79f0ca5_00257": {
+    "T1": "18ea3513a559777e",
+    "T2": "e166652d5ebaaa9c",
+    "T3": "aeb5a206853a221e"
+   },
+   "69e80670fdad300064d9ef9d_00599": {
+    "T1": "6dbac46e3dbff743",
+    "T2": "aa04035b58dd81a6",
+    "T3": "b0a00fe6f6ca4921"
+   },
+   "69de10185cedf736edb851e4_00244": {
+    "T1": "a1a6f67a814b0b6b",
+    "T2": "90e0c50a3dffee9c",
+    "T3": "3f5621e41a12647a",
+    "T4": "0aee1cac1d9631da"
+   },
+   "69906a861cf6ed5fbc8f5d21_00078": {
+    "T1": "85f09e68d9ec63b7",
+    "T2": "c2c9529dd0057af8",
+    "T3": "223b468d413311ee"
+   },
+   "69b99e681f30176bf4d3798a_00155": {
+    "T1": "9f3d779e733d7860",
+    "T2": "688ff3b3ee55f1af",
+    "T3": "98591c157a0c248a"
+   },
+   "6a09ff43fa20006dbaba8d78_00193": {
+    "T1": "fff9cb9ec97946ce",
+    "T2": "4ddd2dc3ce6d9319",
+    "T3": "1d0bac330bb9065b"
+   },
+   "69e72c6ba409200ea79f484e_00102": {
+    "T1": "7ecfa79c9aa8a9f6",
+    "T2": "05b9c009d9edf75c",
+    "T3": "bdd2c9565870458a",
+    "T4": "1d4c3b6121bf8d8f"
+   },
+   "69935b692c63944063133f67_00112": {
+    "T1": "9c5ecf7797e0b5d0",
+    "T2": "095bb2542a0c2002",
+    "T3": "1d4c3b6121bf8d8f"
+   },
+   "69e792f880b52390feb17389_00344": {
+    "T1": "c6b5b67911109f96",
+    "T2": "8e34390195d2e7ef",
+    "T3": "ac926c0418d1259c"
+   },
+   "697b079711cc8928b55ea3a8_00659": {
+    "T1": "6d5f74904c5797e1",
+    "T2": "078dea01330563a5",
+    "T3": "dd1bc30c456fe0b3",
+    "T4": "6d5f74904c5797e1"
+   },
+   "6952d05477f38f6761bc511e_00428": {
+    "T1": "899e360175f55ca1",
+    "T2": "732c2ab9c6d911e1",
+    "T3": "258e93bc67d494ee"
+   },
+   "69c1bbc68522835be8460774_00281": {
+    "T1": "4c7660afc64e7fbb",
+    "T2": "a68830de5be1d1e4",
+    "T3": "81ef48e8e300ffcb"
+   },
+   "69e72c7da409200ea79f4a01_00053": {
+    "T1": "2985bc4cf62b1ac4",
+    "T2": "4df0d5309c94f78b",
+    "T3": "6520caf9b46e2a35"
+   },
+   "69b99f256ed9e0490990aa8a_00185": {
+    "T1": "58539ae65575f230",
+    "T2": "5275bee9e42ed695",
+    "T3": "cbfcecfca8bcced2"
+   },
+   "6990633def12272ffdc907b0_00211": {
+    "T1": "def28b374a1ba9b4",
+    "T2": "81addab7449faa81",
+    "T3": "0a8404f211cb6049"
+   },
+   "69e748da49abba5e98281b25_00103": {
+    "T1": "7aac27014ad3a046",
+    "T2": "23cb8fdbbb6b799d",
+    "T3": "23b762283c14b378"
+   },
+   "69b99e8b6ed9e0490990a274_00179": {
+    "T1": "0a7c9206ba9787d8",
+    "T2": "d052a53dde0061e6",
+    "T3": "76ceaede54fdd0e0",
+    "T4": "f77773ab33e4aad5"
+   }
+  },
+  "j2": {
+   "6991e171b53cae6bb6024476_00216": {
+    "T1": "835f6924a080e2f0",
+    "T2": "3ab18b5676690a94",
+    "T3": "66710ac55a04e2ae",
+    "T4": "835f6924a080e2f0"
+   },
+   "6976f5fb7b4366f057e0e974_00631": {
+    "T1": "74a57743fb1de82c",
+    "T2": "a4212f0ca8410265",
+    "T3": "a318b33d42117818"
+   },
+   "69b18a89c4be2cdd0edc810d_00135": {
+    "T1": "74b15ba24d615bcb",
+    "T2": "22dcea0a3c45f281",
+    "T3": "9e719a99568cb283"
+   },
+   "69b2ff9f5545150b61b48a36_00075": {
+    "T1": "907f93c943340896",
+    "T2": "cbbcc94b58ced2f5",
+    "T3": "bcb06b76290b1323"
+   },
+   "6953e46f77f38f6761bee559_00040": {
+    "T1": "e8e63da872413f96",
+    "T2": "1b05c256d5c4fe8a",
+    "T3": "788fa17d17a5bb02"
+   },
+   "697947a145e954e8a877872d_00218": {
+    "T1": "c42dc9c6557d9c65",
+    "T2": "b79230766e41ca58",
+    "T3": "b785b49e48529fd9"
+   },
+   "6952872cab34727b1f04d284_00499": {
+    "T1": "04a2448d3276830e",
+    "T2": "f353cb870b58efff",
+    "T3": "070318b740a23f0b"
+   },
+   "69bd9c796120d54bd036f318_00389": {
+    "T1": "cc12ede209472b8a",
+    "T2": "ca90f1ef4acc592f",
+    "T3": "9b5a05f0e40f2e82"
+   },
+   "69affc54b3b18e354e59b7d8_00198": {
+    "T1": "e2061dc10eea1d35",
+    "T2": "e40c0062d940f147",
+    "T3": "5edc80aad98b92f3"
+   },
+   "69938e26d5a98fd66f4307b0_00136": {
+    "T1": "0ae86735234b4d1f",
+    "T2": "a3f28de6971245fc",
+    "T3": "1ecdcdbc932a982f"
+   },
+   "69bfccd88ab50eb88e8c69fd_00521": {
+    "T1": "22d8aca45064eeea",
+    "T2": "1ba8f0c5826c7e12",
+    "T3": "22d8aca45064eeea",
+    "T4": "dcf5715040794a1b"
+   },
+   "69bd9d6a6120d54bd0376a04_00060": {
+    "T1": "1e4f4324008746a9",
+    "T2": "62624e4f527347a6",
+    "T3": "2b9276f980425097"
+   },
+   "69920bff01d3dcea63458842_00389": {
+    "T1": "35df6a1d5ab78933",
+    "T2": "8ed0830278e6b858",
+    "T3": "1b8c5f12797ea95c"
+   },
+   "69557433f63a75710917330c_00146": {
+    "T1": "c4707bfa7d73f55c",
+    "T2": "2ea2f024890176c8",
+    "T3": "f43688824d170972"
+   },
+   "6a26c3beaad44c98627cb64a_00013": {
+    "T1": "aeae48e987d2fab4",
+    "T2": "dba1eda59637c266",
+    "T3": "f2b78caaa355a444"
+   },
+   "69b51e6947b06ecd5818faf1_00131": {
+    "T1": "803a02610ee2ee4c",
+    "T2": "d28b0638054bd2e6",
+    "T3": "b3398778dcb226d8"
+   },
+   "69a6827ed5bf106c72bb8d6f_00286": {
+    "T1": "aeddc5dc47bc9f90",
+    "T2": "9ed0e2ac7e699a21",
+    "T3": "5647fdf02560211e"
+   },
+   "699047e512d83c216b7e8c3f_00086": {
+    "T1": "d53833510d44bb1c",
+    "T2": "c6d8ce4a0a365580",
+    "T3": "1c6b1e1f70ef2be9"
+   },
+   "69520588ab34727b1f042d0c_00165": {
+    "T1": "3bab193879978c34",
+    "T2": "8b72f1e1bc17ccba",
+    "T3": "c9847fee73078300"
+   },
+   "69b185e9c4be2cdd0edc464c_00489": {
+    "T1": "a5163ff662c95c61",
+    "T2": "fc92cdf99690e769",
+    "T3": "ba425737eab7e908"
+   },
+   "699ef9f2c2bcb75dbdbaad92_00102": {
+    "T1": "d3c32332662aeecd",
+    "T2": "8f79af9612c13a06",
+    "T3": "d130e68ea4ba9d11"
+   },
+   "69b2f3b821208ea9dc278c50_00277": {
+    "T1": "4248abb5bf21b043",
+    "T2": "6fcf29b8b5ff7822",
+    "T3": "8933780547993aa4",
+    "T4": "8f79af9612c13a06"
+   },
+   "69d5ad004dc55b8478dde8b5_01455": {
+    "T1": "55f062aed2209c43",
+    "T2": "19d3290b78923b5c",
+    "T3": "cb3aa365b6a09aa9"
+   },
+   "69e9617a2beefe2f6f72ba14_00253": {
+    "T1": "204923648be770f6",
+    "T2": "89ddd2236d46fca3",
+    "T3": "3361a04c852c2d5d",
+    "T4": "4c7660afc64e7fbb"
+   },
+   "6990630be7b7642c081de08b_00353": {
+    "T1": "c3fa25c7aa02e524",
+    "T2": "cab160ec0cbf1094",
+    "T3": "24aa022cf61706ea"
+   },
+   "69e7933580b52390feb18277_00263": {
+    "T1": "5bab917b09e77e38",
+    "T2": "b74b958fe498aa4e",
+    "T3": "9d5d0fc98303f776"
+   },
+   "69908ac1c0656c0b3bcc0813_00050": {
+    "T1": "8ca569c5ff1101a3",
+    "T2": "a76c6d9455c55757",
+    "T3": "6649e4518b62bc5e"
+   },
+   "69d5ac07d0bd3547a5654dcc_00313": {
+    "T1": "5cf2765ff4ad8bfc",
+    "T2": "a48d172b430c4706",
+    "T3": "2a7534c5ce9705a3",
+    "T4": "d5608bbb45e482c5"
+   },
+   "6a2198371994d1df1e5e0235_00118": {
+    "T1": "853d2a0a46dcd259",
+    "T2": "921b3dfef3f53bec",
+    "T3": "4cf40be292465bf2"
+   },
+   "69e74ef95cf1eaf3ad80e04c_00131": {
+    "T1": "2a4c3e6faa2ea5e4",
+    "T2": "51f32163a2149f1b",
+    "T3": "5d55461b777ba58a"
+   },
+   "69f33c97876dd827cbc5a94f_00258": {
+    "T1": "4c385f478228d5eb",
+    "T2": "49121891060ffcd3",
+    "T3": "09e125ab30811c69"
+   },
+   "69e729a1a409200ea79f0ca5_00257": {
+    "T1": "e166652d5ebaaa9c",
+    "T2": "aeb5a206853a221e",
+    "T3": "18ea3513a559777e"
+   },
+   "69e80670fdad300064d9ef9d_00599": {
+    "T1": "aa04035b58dd81a6",
+    "T2": "b0a00fe6f6ca4921",
+    "T3": "6dbac46e3dbff743"
+   },
+   "69de10185cedf736edb851e4_00244": {
+    "T1": "90e0c50a3dffee9c",
+    "T2": "0aee1cac1d9631da",
+    "T3": "3f5621e41a12647a",
+    "T4": "a1a6f67a814b0b6b"
+   },
+   "69906a861cf6ed5fbc8f5d21_00078": {
+    "T1": "223b468d413311ee",
+    "T2": "85f09e68d9ec63b7",
+    "T3": "c2c9529dd0057af8"
+   },
+   "69b99e681f30176bf4d3798a_00155": {
+    "T1": "688ff3b3ee55f1af",
+    "T2": "9f3d779e733d7860",
+    "T3": "98591c157a0c248a"
+   },
+   "6a09ff43fa20006dbaba8d78_00193": {
+    "T1": "fff9cb9ec97946ce",
+    "T2": "4ddd2dc3ce6d9319",
+    "T3": "1d0bac330bb9065b"
+   },
+   "69e72c6ba409200ea79f484e_00102": {
+    "T1": "05b9c009d9edf75c",
+    "T2": "bdd2c9565870458a",
+    "T3": "7ecfa79c9aa8a9f6",
+    "T4": "1d4c3b6121bf8d8f"
+   },
+   "69935b692c63944063133f67_00112": {
+    "T1": "095bb2542a0c2002",
+    "T2": "1d4c3b6121bf8d8f",
+    "T3": "9c5ecf7797e0b5d0"
+   },
+   "69e792f880b52390feb17389_00344": {
+    "T1": "c6b5b67911109f96",
+    "T2": "ac926c0418d1259c",
+    "T3": "8e34390195d2e7ef"
+   },
+   "697b079711cc8928b55ea3a8_00659": {
+    "T1": "078dea01330563a5",
+    "T2": "dd1bc30c456fe0b3",
+    "T3": "6d5f74904c5797e1",
+    "T4": "6d5f74904c5797e1"
+   },
+   "6952d05477f38f6761bc511e_00428": {
+    "T1": "258e93bc67d494ee",
+    "T2": "899e360175f55ca1",
+    "T3": "732c2ab9c6d911e1"
+   },
+   "69c1bbc68522835be8460774_00281": {
+    "T1": "4c7660afc64e7fbb",
+    "T2": "a68830de5be1d1e4",
+    "T3": "81ef48e8e300ffcb"
+   },
+   "69e72c7da409200ea79f4a01_00053": {
+    "T1": "6520caf9b46e2a35",
+    "T2": "2985bc4cf62b1ac4",
+    "T3": "4df0d5309c94f78b"
+   },
+   "69b99f256ed9e0490990aa8a_00185": {
+    "T1": "5275bee9e42ed695",
+    "T2": "cbfcecfca8bcced2",
+    "T3": "58539ae65575f230"
+   },
+   "6990633def12272ffdc907b0_00211": {
+    "T1": "0a8404f211cb6049",
+    "T2": "81addab7449faa81",
+    "T3": "def28b374a1ba9b4"
+   },
+   "69e748da49abba5e98281b25_00103": {
+    "T1": "23b762283c14b378",
+    "T2": "23cb8fdbbb6b799d",
+    "T3": "7aac27014ad3a046"
+   },
+   "69b99e8b6ed9e0490990a274_00179": {
+    "T1": "0a7c9206ba9787d8",
+    "T2": "76ceaede54fdd0e0",
+    "T3": "d052a53dde0061e6",
+    "T4": "f77773ab33e4aad5"
+   }
+  }
+ },
+ "gate_items": [
+  "69e72c6ba409200ea79f484e_00102",
+  "69e9617a2beefe2f6f72ba14_00253",
+  "69b2f3b821208ea9dc278c50_00277",
+  "69de10185cedf736edb851e4_00244",
+  "69b99e8b6ed9e0490990a274_00179",
+  "69d5ac07d0bd3547a5654dcc_00313",
+  "697b079711cc8928b55ea3a8_00659",
+  "6991e171b53cae6bb6024476_00216",
+  "69bfccd88ab50eb88e8c69fd_00521"
+ ],
+ "main_items": [
+  "6976f5fb7b4366f057e0e974_00631",
+  "69b18a89c4be2cdd0edc810d_00135",
+  "69b2ff9f5545150b61b48a36_00075",
+  "6953e46f77f38f6761bee559_00040",
+  "697947a145e954e8a877872d_00218",
+  "6952872cab34727b1f04d284_00499",
+  "69bd9c796120d54bd036f318_00389",
+  "69affc54b3b18e354e59b7d8_00198",
+  "69938e26d5a98fd66f4307b0_00136",
+  "69bd9d6a6120d54bd0376a04_00060",
+  "69920bff01d3dcea63458842_00389",
+  "69557433f63a75710917330c_00146",
+  "6a26c3beaad44c98627cb64a_00013",
+  "69b51e6947b06ecd5818faf1_00131",
+  "69a6827ed5bf106c72bb8d6f_00286",
+  "699047e512d83c216b7e8c3f_00086",
+  "69520588ab34727b1f042d0c_00165",
+  "69b185e9c4be2cdd0edc464c_00489",
+  "699ef9f2c2bcb75dbdbaad92_00102",
+  "69d5ad004dc55b8478dde8b5_01455",
+  "6990630be7b7642c081de08b_00353",
+  "69e7933580b52390feb18277_00263",
+  "69908ac1c0656c0b3bcc0813_00050",
+  "6a2198371994d1df1e5e0235_00118",
+  "69e74ef95cf1eaf3ad80e04c_00131",
+  "69f33c97876dd827cbc5a94f_00258",
+  "69e729a1a409200ea79f0ca5_00257",
+  "69e80670fdad300064d9ef9d_00599",
+  "69906a861cf6ed5fbc8f5d21_00078",
+  "69b99e681f30176bf4d3798a_00155",
+  "6a09ff43fa20006dbaba8d78_00193",
+  "69935b692c63944063133f67_00112",
+  "69e792f880b52390feb17389_00344",
+  "6952d05477f38f6761bc511e_00428",
+  "69c1bbc68522835be8460774_00281",
+  "69e72c7da409200ea79f4a01_00053",
+  "69b99f256ed9e0490990aa8a_00185",
+  "6990633def12272ffdc907b0_00211",
+  "69e748da49abba5e98281b25_00103"
+ ]
+}

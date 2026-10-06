@@ -34,6 +34,7 @@ function extra(r, src) {
   return {
     gloss: count(r.text, /<gloss\b/gi), gloss_chars: inner(r.text, 'gloss'), term: count(r.text, /<term\b/gi),
     image_desc: count(r.text, /<image-desc\b/gi), src_image_desc: count(src, /<image-desc\b/gi), src_gloss: count(src, /<gloss\b/gi), src_note: count(src, /<note\b/gi),
+    brackets_gloss: count(r.text, /<\/term>\s*\[(?!\[)[^\[\]\n]{1,200}\]|\[<term>[^\[\]\n]{1,200}<\/term>\]/gi), meta_chars: inner(r.text, 'meta'),
     brackets: b.length, brackets_words: b.filter((x) => /[A-Za-z]{2}/.test(x) && !/^\s*(sic|\.\.\.|…)\s*$/i.test(x)).length,
     parens: count(translationOnly(r.text), /\([^()\n]{2,200}\)/g), src_parens: count(src, /[(（][^()（）\n]{2,200}[)）]/g),
     translation_chars: translationOnly(r.text).length, total_chars: r.text.length,
@@ -73,7 +74,8 @@ if (!process.argv.includes('--rule')) {
     const med = (k) => { const xs = nl.map((p) => p[arm][k] / Math.max(1, p['v13-a'][k])).sort((x, y) => x - y); return xs[Math.floor(xs.length / 2)]; };
     out.arms[arm] = {
       per_page: Object.fromEntries(METRICS.map((k) => [k, sum(main, arm, k) / main.length])),
-      totals: Object.fromEntries(['notes', 'gloss', 'term', 'image_desc', 'src_image_desc', 'src_gloss', 'src_note', 'brackets', 'brackets_words', 'parens', 'src_parens', 'invented_tags'].map((k) => [k, sum(main, arm, k)])),
+      totals: Object.fromEntries(['notes', 'gloss', 'term', 'image_desc', 'src_image_desc', 'src_gloss', 'src_note', 'brackets', 'brackets_words', 'brackets_gloss', 'meta_chars', 'parens', 'src_parens', 'invented_tags'].map((k) => [k, sum(main, arm, k)])),
+      image_desc_pages_over_source: main.filter((p) => p[arm].image_desc > p[arm].src_image_desc).length, meta_over_200_pages: main.filter((p) => p[arm].meta_chars > 200).map((p) => `${p.id} ${p.lang} ${p[arm].meta_chars}`),
       pages_with: Object.fromEntries(['notes', 'gloss', 'brackets_words', 'image_desc'].map((k) => [k, main.filter((p) => p[arm][k] > 0).length])),
       looped: main.filter((p) => p[arm].looped).length, max_tokens: main.filter((p) => p[arm].max_tokens).length,
       body_ratio_median_vs_v13a: med('body_chars'), translation_ratio_median_vs_v13a: med('translation_chars'),
@@ -135,7 +137,7 @@ const out = { generated: new Date().toISOString(), issue: 5919, n_main: fp.lengt
   gate: fid.gate, agreement: fid.agreement, P1_fidelity: p1, P2_reversals: p2,
   omission_rate: { ...Object.fromEntries(ARMS.map((a) => [a, m(a, (x) => x.omission)])), plain_minus_v13a: pairedCI(scored, (x) => x.omission, 'v13-a', 'v13-plain'), v13b_minus_v13a: pairedCI(scored, (x) => x.omission, 'v13-a', 'v13-b') },
   P3_cost: Object.fromEntries(ARMS.map((a) => [a, { usd_per_page: mech.arms[a].per_page.cost_usd, output_tokens_per_page: mech.arms[a].per_page.outputTokens, output_tokens_ratio_vs_v13a: mech.arms[a].output_tokens_ratio_vs_v13a, cost_ratio_vs_v13a: mech.arms[a].cost_ratio_vs_v13a, by_model: mech.arms[a].by_model }])),
-  P4_leakage: mech.p4, brackets: Object.fromEntries(ARMS.map((a) => [a, { total: mech.arms[a].totals.brackets, with_words: mech.arms[a].totals.brackets_words, pages: mech.arms[a].pages_with.brackets_words }])),
+  P4_leakage: mech.p4, brackets: Object.fromEntries(ARMS.map((a) => [a, { total: mech.arms[a].totals.brackets, with_words: mech.arms[a].totals.brackets_words, definition_after_term: mech.arms[a].totals.brackets_gloss, pages: mech.arms[a].pages_with.brackets_words }])),
   by_judge: perJudge, by_model: byModel, by_lang: byLang,
   decision: { P1: p1.pass, P2: p2.pass, rule: p1.pass && p2.pass ? 'P1 and P2 pass: recommend note-free translation plus a separate, on-demand notes step' : 'P1 or P2 fails: notes stay inline' }, per_page: fp };
 fs.writeFileSync(path.join(DIR, 'results.json'), JSON.stringify(out, null, 1));
