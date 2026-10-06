@@ -28,7 +28,8 @@
  *   hold | envelope | dryrun | ocr [--books N] | reconcile | check | enrol | runs | release | status
  *   run --interval 180 --wave 10 [--shard k/n] [--ocr-only]   loop check → runs → enrol → ocr until done or cap
  * Every command takes --state F and --cap 230 (and --tag/--issue when not the Eternity run).
- * --ocr-cap N stops NEW OCR submissions at $N of envelope spend, leaving the rest of --cap for translation.
+ * --tr-reserve R holds back $R per page still to translate on every book whose OCR is already submitted, so a
+ * book is only sent to OCR when the cap can also pay for its English (default 0: OCR may use the whole cap).
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -70,14 +71,14 @@ const OCR_CALL_SITE = 'scripts/batch/bulk-reocr-local.mjs';
 const ACTIVE_JOB = ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'];
 const CAP = Number(val('cap', IS_ETERNITY ? '230' : 'NaN'));
 if (!(CAP > 0)) throw new Error(`--cap is required with --tag ${TAG}: the $230 default belongs to the Eternity run only`);
-const OCR_CAP = Math.min(CAP, Number(val('ocr-cap', String(CAP))));   // new OCR stops here; the rest of CAP is translation's
+const TR_RESERVE = Number(val('tr-reserve', '0'));   // $/page kept back for the English of pages already sent to OCR
 const OCR_RATE = Number(val('ocr-rate', '0.00225'));   // supabase-usage-logger's lite batch ceiling
 const TR_RATE = 0.0012;                                  // chained AUTO_APPROVAL_USD_PER_PAGE (2× measured)
 const STATE = val('state', `/root/claude-jobs/${STEM}-work/state.json`);
 const LOG_DIR = path.dirname(STATE);
 const MAX_RUNS_PER_BOOK = 12;
 
-const TOP_KEYS = ['cap_hit', 'ocr_cap_hit', 'quota_backoff_until', 'quota_hits'];
+const TOP_KEYS = ['cap_hit', 'ocr_waiting', 'quota_backoff_until', 'quota_hits'];
 // ── state (merge-on-save, as in the #5309 driver: commands may run concurrently) ──
 function loadState() {
   const s = JSON.parse(fs.readFileSync(STATE, 'utf8'));
@@ -257,6 +258,16 @@ async function openTranslationUsd(db, s) {
   return rows.reduce((n, r) => n + Math.max(0, (r.estimate || 0) - (r.spent_est_usd || 0)), 0);
 }
 
+/**
+ * Pages still owed an English translation on books already committed to OCR (an upper bound: blanks and
+ * plates never translate), less what finished runs wrote and what an open run already carries in its estimate.
+ */
+const TR_OWING = ['ocr_submitted', 'ocr_done', 'tr_next', 'tr_enrolled'];
+function translationOwedPages(s) {
+  return s.books.filter((b) => TR_OWING.includes(b.phase)).reduce((n, b) =>
+    n + Math.max(0, b.n + (b.measured?.ocr_no_english || 0) - (b.tr_written || 0) - (b.phase === 'tr_enrolled' ? b.tr_run_pages || 0 : 0)), 0);
+}
+
 // ── OCR ────────────────────────────────────────────────────────────────────
 /** The book's pages still without text, minus any page a live OCR job (any submitter) carries. */
 async function ocrTargets(db, b) {
@@ -286,7 +297,7 @@ async function dryrun(db) {
     const n = r.translatable_now + r.ocr_pages; tot += n;
     console.log(`${l}: ${r.books} books, ${r.ocr_pages} pages to OCR (≤ $${(r.ocr_pages * OCR_RATE).toFixed(2)} at the $${OCR_RATE} ceiling), ${r.translatable_now} translatable now, ≤ ${n} to translate (≤ $${(n * TR_RATE).toFixed(2)} at the lane's $${TR_RATE} approval rate, ~$${(n * TR_RATE / 2).toFixed(2)} measured)`);
   }
-  console.log(`Translation, all languages: ≤ ${tot} pages, ≤ $${(tot * TR_RATE).toFixed(2)} (~$${(tot * TR_RATE / 2).toFixed(2)} measured). Cap $${CAP}${OCR_CAP < CAP ? `, new OCR stops at $${OCR_CAP}` : ''}.`);
+  console.log(`Translation, all languages: ≤ ${tot} pages, ≤ $${(tot * TR_RATE).toFixed(2)} (~$${(tot * TR_RATE / 2).toFixed(2)} measured). Cap $${CAP}${TR_RESERVE ? `, $${TR_RESERVE}/page kept back for translation` : ''}.`);
 }
 
 async function ocr(db) {
@@ -311,7 +322,11 @@ async function ocr(db) {
     const sp = await spend(db, s);
     const openTr = await openTranslationUsd(db, s);
     const add = ids.length * OCR_RATE;
-    if (sp.usd + openTr + add > OCR_CAP) { log(`ocr: CAP — spent $${sp.usd.toFixed(2)} + open translation $${openTr.toFixed(2)} + $${add.toFixed(2)} > $${OCR_CAP}`); s[OCR_CAP < CAP ? 'ocr_cap_hit' : 'cap_hit'] = new Date().toISOString(); break; }
+    if (sp.usd + openTr + add > CAP) { log(`ocr: CAP — spent $${sp.usd.toFixed(2)} + open translation $${openTr.toFixed(2)} + $${add.toFixed(2)} > $${CAP}`); s.cap_hit = new Date().toISOString(); break; }
+    // Not sticky, unlike cap_hit: the reserve shrinks as books finish and as submit-time prices settle, so the next tick asks again.
+    const reserve = TR_RESERVE * (translationOwedPages(s) + ids.length + (b.measured?.ocr_no_english || 0));
+    if (TR_RESERVE && sp.usd + openTr + add + reserve > CAP) { s.ocr_waiting = new Date().toISOString(); log(`ocr: waiting — spent $${sp.usd.toFixed(2)} + open translation $${openTr.toFixed(2)} + $${add.toFixed(2)} + translation reserve $${reserve.toFixed(2)} > $${CAP}; ${b.id} (${b.language}) not submitted`); break; }
+    s.ocr_waiting = null;
     if (!ids.length) { b.phase = 'ocr_submitted'; b.ocr_submitted_at = b.ocr_submitted_at || new Date().toISOString(); saveState(s); continue; }
     const t0 = new Date();
     for (let i = 0; i < ids.length; i += SLICE) {
@@ -471,7 +486,7 @@ async function enrol(db) {
     // An open run on the book (an enrol whose bookkeeping a restart lost) is adopted, not refused.
     const m = out.match(/run (\S+) est \$([\d.]+)/) || ((x) => x && ['', x[1], String(n * 0.0006)])(out.match(/open-run (\S+)/));
     if (m) {
-      b.run_id = m[1]; b.runs = [...(b.runs || []), m[1]]; b.tr_est = Number(m[2]); b.phase = 'tr_enrolled'; open++; enrolled++;
+      b.run_id = m[1]; b.runs = [...(b.runs || []), m[1]]; b.tr_est = Number(m[2]); b.tr_run_pages = n; b.phase = 'tr_enrolled'; open++; enrolled++;
       await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'chained-enrolled', detail: { run: b.run_id, estimate: b.tr_est, approved, pages: n, queue: ids.length } });
     } else {
       const reason = (out.match(/REFUSED[^\n]*|exceeds[^\n]*|Error[^\n]*/) || [out.trim().split('\n').pop()])[0];
@@ -539,7 +554,7 @@ async function status(db) {
   const held = await db.collection('books').countDocuments({ id: { $in: ids }, 'pipeline_auto.hold.reason': HOLD.reason });
   console.log(JSON.stringify({ phases: byPhase, written_by_language: per, held_now: held,
     envelope: { spent_usd: +(sp.usd || 0).toFixed(2), rows: sp.rows, open_translation_est: +openTr.toFixed(2), cap: CAP, err: sp.err },
-    cap_hit: s.cap_hit || null, ocr_cap_hit: s.ocr_cap_hit || null, quota_backoff_until: s.quota_backoff_until || null, updated_at: s.updated_at }, null, 1));
+    cap_hit: s.cap_hit || null, ocr_waiting: s.ocr_waiting || null, translation_owed_pages: translationOwedPages(s), quota_backoff_until: s.quota_backoff_until || null, updated_at: s.updated_at }, null, 1));
 }
 
 async function run(db) {
@@ -551,7 +566,7 @@ async function run(db) {
     if (s.quota_backoff_until && new Date(s.quota_backoff_until) > new Date() && !has('ocr-only')) {
       if (await files(db)) { s.quota_backoff_until = new Date().toISOString(); saveState(s); }
     }
-    if (s.books.some((b) => b.phase === 'pending') && !s.cap_hit && !s.ocr_cap_hit) {
+    if (s.books.some((b) => b.phase === 'pending') && !s.cap_hit) {
       const inflightBooks = s.books.filter((b) => b.phase === 'ocr_submitted').length;
       if (inflightBooks < Number(val('max-inflight-books', '80'))) {
         if (!args.includes('--books')) args.push('--books', val('wave', '10'));
@@ -563,7 +578,7 @@ async function run(db) {
     log(`run: ${live.length} books still moving; ${JSON.stringify(Object.fromEntries(Object.entries(st.books.reduce((m, b) => { m[b.phase] = (m[b.phase] || 0) + 1; return m; }, {}))))}`);
     if (!live.length) { await release(db); log('run: every book finished — released'); return; }
     if (st.cap_hit && !st.books.some((b) => ['tr_enrolled', 'ocr_submitted'].includes(b.phase))) { log('run: CAP HIT and nothing in flight — stopping'); return; }
-    if (st.ocr_cap_hit && live.every((b) => b.phase === 'pending')) { log(`run: OCR cap $${OCR_CAP} hit, every other book finished — stopping (${live.length} books never submitted)`); return; }
+    if (st.ocr_waiting && live.every((b) => b.phase === 'pending')) { await release(db); log(`run: every submitted book finished and the cap cannot pay for the next one — stopping (${live.length} books never sent to OCR; \`release --all\` frees them)`); return; }
     await new Promise((r) => setTimeout(r, interval));
   }
 }
