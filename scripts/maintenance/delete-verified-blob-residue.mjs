@@ -75,7 +75,10 @@ async function retry(fn, n = 8) {
 async function verify(key) {
   const url = `${BLOB_BASE}/${key.split('/').map(encodeURIComponent).join('/')}`;
   const b = await retry(async () => {
-    const r = await fetch(url, { method: 'HEAD', signal: AbortSignal.timeout(30_000) });
+    // identity: with Node's default Accept-Encoding the Blob CDN brotli-encodes
+    // application/octet-stream objects — no Content-Length and a weak ETag — and
+    // every such object fails verification (4,996 of the first 50K).
+    const r = await fetch(url, { method: 'HEAD', headers: { 'accept-encoding': 'identity' }, signal: AbortSignal.timeout(30_000) });
     if (r.status === 404) return null;
     if (!r.ok) throw new Error(`blob HEAD ${r.status}`);
     return { etag: unq(r.headers.get('etag')), size: Number(r.headers.get('content-length')) };
