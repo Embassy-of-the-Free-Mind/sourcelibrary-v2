@@ -241,3 +241,17 @@ One per-work table: R (run 2), A+ / A++, B score (where measured), C+.
 - B covers only works with ≥ 10 translated pages, which skews to visible, curated books.
 - C searches by title and catalogue author, which misses works catalogued under other names; and raw OCR availability
   is checked per edition we hold, not for other editions.
+
+## Amendment 1 — before any passage query (2026-10-06, ~23:50 UTC)
+
+Written after fetching the positive-control web texts and before any count query on any passage.
+1. **Line breaks.** Crawled text keeps the source's line breaks (verse lines, `<l>` in TEI, hard-wrapped
+   Gutenberg/IA text), so a space-joined passage that crosses a line can never match. Cleaning therefore keeps
+   each source line break as a separator. A passage that crosses one is queried in TWO forms, all spaces and
+   with `\n` at the source breaks; it hits if either hits. (Our OCR stores a paragraph per line, so this mostly
+   affects web and IA sources.) The "drop first and last line" rule is unchanged and applied as written.
+2. **CText's API refuses this IP** (`ERR_REQUIRES_AUTHENTICATION`), so P-web takes the Chinese classics from
+   Chinese Wikisource (zh.wikisource) instead, and in layer C CText is `unknown`.
+3. Wikimedia requests carry a descriptive User-Agent; Agrippa (Esoteric Archives URL dead) and Zohar (Sefaria
+   complex ref) are replaced from the list as allowed above, by Euclid's Elements (Perseus) and Lucretius
+   (Gutenberg).
