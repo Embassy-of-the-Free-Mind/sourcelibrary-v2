@@ -28,3 +28,9 @@
 - **What "keeps" does not waive.** Medium tier needs the registered pool at decision grade or a replication. Large tier (Chinese) needs decision grade, a replication on ≥ 30 fresh books and a judge calibrated against readers; this top-up supplies none of the three. If the HAP top-up (43 fresh books) passes the effect test alone it is reported as a replication of the T4 pool.
 - **Reported, not in the rule.** Served fidelity with its interval per language (an absolute judged number; it decides nothing until the judge is calibrated against readers), reversals, omission, canonical against non-canonical, the top-up-only effect.
 - **Cap.** $5 of Gemini. No write to `pages` or `books`.
+
+### Deviations recorded after the draw, before any alignment or arm (2026-10-06)
+
+- **Pali.** The registration assumed about 10 untried live Pali books. The draw found 18 (of T5's 16 Pali books only 8 are among the 26 live, Pali-labelled books). All 18 are tried and every one that aligns is used, so the Pali cell can pass 25 and is a census only if all 18 were tried.
+- **Books prepared.** The seeded order was extended from 40 / 30 / 20 / 10 to 90 / 70 / 120 / 30 books for Hebrew / Arabic / Chinese / Sanskrit (the shuffle is deterministic, so the longer list only appends). A random draw of live books is mostly material nobody has translated: 52 of the first 120 Chinese books are volumes of one rhyme dictionary and other Siku reference works.
+- **Sealed draw:** `results/ref-topup-5873-2026-10/sealed.json` (book order and candidate pages; seed 5873). Alignment brief: `results/ref-topup-5873-2026-10/briefs/ALIGN-BRIEF.md`.
