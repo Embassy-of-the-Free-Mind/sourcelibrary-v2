@@ -1,6 +1,6 @@
 # Quality strata inventory, 2026-10-06 (#5984)
 
-Frame: Atlas books: visible:true, hidden≠true, pages_count>0; strata are CATALOGUE language × period (eval-design §3.2: not yet observed from the page). 42,078 live books, 6,776,649 OCR'd pages, 5,103,781 translated pages.
+Frame: Atlas books: visible:true, hidden≠true, pages_count>0; strata are CATALOGUE language × period (eval-design §3.2: not yet observed from the page). 42,078 live books, 6,776,649 OCR'd pages, 5,103,775 translated pages.
 Measured books: OCR against a reference (dashboard sufficiency), translation judged against its source (402 books over three #5274 audits), translation against a published translation (321 books, #5695).
 Neyman n allocates a 400-book monthly sample over OCR'd pages with S = √(p(1−p)), p = the language's judged major-defect share (0.5 where none).
 
@@ -86,7 +86,7 @@ Neyman n allocates a 400-book monthly sample over OCR'd pages with S = √(p(1�
 | French | unknown | 4 (4) | 932 | 0.0% | 0 | 0 | 0 | 0.0 | 4 | 4 | 4 |
 | Russian | 1600s | 1 (1) | 56 | 0.0% | 0 | 0 | 0 | 0.0 | 1 | 1 | 1 |
 
-Self-reported page types, all pages carrying the tag (≥ 1,000): {"text":5858706,"blank":252627,"archived-spread":181098,"index":165382,"preface":137078,"title-page":111893,"illustration":87223,"dedication":56928,"toc":53653,"null":26334,"appendix":15406,"diagram":14003,"frontispiece":13526,"errata":6457,"digitizer-insert":5502,"map":5432,"colophon":4682}
+Self-reported page types, all pages carrying the tag (≥ 1,000): {"text":5859048,"blank":252640,"archived-spread":181098,"index":165275,"preface":137083,"title-page":111886,"illustration":87222,"dedication":56928,"toc":53667,"null":26334,"appendix":15395,"diagram":14002,"frontispiece":13529,"errata":6455,"digitizer-insert":5495,"map":5432,"colophon":4682}
 Audit page types (489 random interior pages): {"text":417,"unset":62,"dedication":1,"appendix":2,"preface":4,"diagram":3}
 Audit translation models: {"gemini-3.1-flash-lite-preview":157,"gemini-3.1-flash-lite":129,"gemini-3-flash-preview":203}
 Audit translation prompt versions: {"translation v11":109,"translation v1":31,"translation v10":137,"translation v5.2026-02":13,"translation v2":97,"translation v5.1.2026-03b":9,"translation v5.1.2026-03c":1,"translation v0":1,"translation v11-retx":2,"translation v12":4,"translation v13":85}

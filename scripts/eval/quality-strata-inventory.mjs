@@ -174,6 +174,10 @@ for (const [k, r] of merged) {
   const m = measured.get(k) || { ocr_ref: 0, judged: 0, vs_human: 0 };
   rows.push({ language: lang, period, ...r, share_ocr_pages: r.ocr_pages / totals.ocr_pages, prior_p: p, prior_from: priorMajor[lang] != null ? 'audit major-defect share' : 'none (0.5)', S: Math.sqrt(p * (1 - p)), ...m });
 }
+// Measured books whose catalogue cell has no live OCR'd pages (e.g. the book was hidden since) are reported, not dropped.
+const rowKeys = new Set(rows.map(r => `${r.language}||${r.period}`));
+const unplaced = { ocr_ref: 0, judged: 0, vs_human: 0 };
+for (const [k, m] of measured) if (!rowKeys.has(k)) for (const f of Object.keys(unplaced)) unplaced[f] += m[f];
 const sumNS = rows.reduce((s, r) => s + r.ocr_pages * r.S, 0);
 for (const r of rows) {
   r.neyman_n = (MONTHLY_N * r.ocr_pages * r.S) / sumNS;
@@ -208,6 +212,7 @@ const out = {
     vs_human: 'scripts/eval/results/xlref-synthesis-2026-10/served-pages.jsonl (unique books)',
   },
   measured_unique_books: { judged: judgedBooks.size, vs_human: xlBooks.size, not_found_in_atlas: { judged: judgedMissing, vs_human: xlMissing } },
+  measured_outside_live_cells: unplaced,
   page_type_tags_all_pages: Object.fromEntries(pageTypes.filter(t => t.n >= 1000).map(t => [String(t._id), t.n])),
   audit_pages: auditPages.length,
   audit_page_types: typeCount,
