@@ -46,6 +46,7 @@ const APPLY = process.argv.includes('--apply');
 // Blob URL — collections, gallery_images, deleted_books, pages_warehouse… Never deleted.
 const EXCLUDE = arg('--exclude');
 const CONCURRENCY = parseInt(arg('--concurrency', '32'), 10);
+const DEL_CHUNK = parseInt(arg('--del-chunk', '500'), 10);
 // The store's public base URL, e.g. https://<store>.public.blob.vercel-storage.com
 const BLOB_BASE = arg('--blob-base', 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com');
 
@@ -118,8 +119,8 @@ async function main() {
 
   async function deleteVerified(verified, n, checked) {
     if (APPLY) {
-      for (let i = 0; i < verified.length; i += 500) {
-        const chunk = verified.slice(i, i + 500);
+      for (let i = 0; i < verified.length; i += DEL_CHUNK) {
+        const chunk = verified.slice(i, i + DEL_CHUNK);
         await retry(() => del(chunk.map(x => x.url)));
         const t = new Date().toISOString();
         appendFileSync(LEDGER, chunk.map(x => `${x.k}\t${x.k}\t${x.md5}\t${x.size}\t${t}\n`).join(''));
