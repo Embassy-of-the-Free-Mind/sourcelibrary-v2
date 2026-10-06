@@ -23,6 +23,8 @@
  *      source carries a `{D…}` marker, and reports the pages whose English dropped it.
  *
  *   node --env-file=.env.production.local scripts/maintenance/tengyur-draft-repairs-5497.mjs [--apply] [--out=FILE]
+ *     [--since=ISO]  only pages whose translation.updated_at >= ISO (e.g. one pass's new pages)
+ *     [--job=NAME]   jobId on the page_revisions rows (default tengyur-complete-5497)
  *
  * `--leftovers` (#5797) runs three further deterministic repairs instead, one page_revisions row per page:
  *   4. Esukhia correction pairs `{a,b}` / `(a,b)` leaked into the English (mechanical.mjs corrLeak).
@@ -49,6 +51,10 @@ import { repairTranslationText, resyncMirrors, noteTagBalance } from '../lib/tra
 
 const APPLY = process.argv.includes('--apply');
 const OUT = process.argv.find((a) => a.startsWith('--out='))?.slice(6) || '/tmp/tengyur-draft-repairs-5497.json';
+const SINCE_ARG = process.argv.find((a) => a.startsWith('--since='))?.slice(8);
+const SINCE = SINCE_ARG ? new Date(SINCE_ARG) : null;
+if (SINCE && Number.isNaN(SINCE.getTime())) throw new Error(`--since: not a date: ${SINCE_ARG}`);
+const JOB = process.argv.find((a) => a.startsWith('--job='))?.slice(6) || 'tengyur-complete-5497';
 const HOLD = 'tengyur-import-5497';
 const ISSUE = 5497;
 
@@ -202,9 +208,10 @@ async function leftovers() {
 async function main() {
   const c = new MongoClient(process.env.MONGODB_URI); await c.connect(); const db = c.db('bookstore');
   const bookIds = (await db.collection('books').find({ $or: [{ 'pipeline_auto.hold.reason': HOLD }, { title: /Derge Tengyur, vol\./ }] }, { projection: { id: 1 } }).toArray()).map((b) => b.id);
-  const report = { apply: APPLY, books: bookIds.length, pages_translated: 0, hash: { pages: 0, marks: 0, written: 0, skipped: {} }, notes: { pages: 0, ids: [] }, tohoku: { src_pages: 0, field_missing: [], en_dropped: 0 } };
+  const report = { apply: APPLY, since: SINCE?.toISOString() ?? null, job: JOB, books: bookIds.length, pages_translated: 0, hash: { pages: 0, marks: 0, written: 0, skipped: {} }, notes: { pages: 0, ids: [] }, tohoku: { src_pages: 0, field_missing: [], en_dropped: 0 } };
   const touched = [];
-  const cur = db.collection('pages').find({ book_id: { $in: bookIds }, 'translation.data': { $exists: true, $nin: [null, ''] } }, { projection: { id: 1, book_id: 1, page_number: 1, translation: 1, 'ocr.data': 1, 'ocr.text_edition.tohoku': 1 } });
+  const q = { book_id: { $in: bookIds }, 'translation.data': { $exists: true, $nin: [null, ''] }, ...(SINCE ? { 'translation.updated_at': { $gte: SINCE } } : {}) };
+  const cur = db.collection('pages').find(q, { projection: { id: 1, book_id: 1, page_number: 1, translation: 1, 'ocr.data': 1, 'ocr.text_edition.tohoku': 1 } });
   for await (const p of cur) {
     report.pages_translated++;
     const en = p.translation.data;
@@ -222,7 +229,7 @@ async function main() {
     if (next !== en) {
       report.hash.pages++;
       report.hash.marks += (en.match(/#/g) || []).length - (next.match(/#/g) || []).length;
-      const r = await repairTranslationText(db, p, next, { expectBefore: en, source: 'tengyur-draft-repairs-5497', reason: 'strip Esukhia peydurma # marks leaked into the English (QA finding 3)', issue: ISSUE, jobId: 'tengyur-complete-5497', apply: APPLY });
+      const r = await repairTranslationText(db, p, next, { expectBefore: en, source: 'tengyur-draft-repairs-5497', reason: 'strip Esukhia peydurma # marks leaked into the English (QA finding 3)', issue: ISSUE, jobId: JOB, apply: APPLY });
       if (r.status === 'written') { report.hash.written++; touched.push(p.id); text = next; }
       else if (r.status === 'dry_run') text = next;
       else report.hash.skipped[r.why] = (report.hash.skipped[r.why] || 0) + 1;
