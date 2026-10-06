@@ -31,7 +31,7 @@ const TYPE_BIT: Record<string, number> = { publication: 1, author_birth: 2, auth
 /**
  * Collapse the per-(city,type) cache groups into one lightweight record per city.
  * Books are deduped by id across roles (OR-ing their role bits) and stripped to
- * {y: year, m: role-mask} — no titles/authors/slugs/ids ship to the client; those
+ * counted (year, role-mask) triples — no titles/authors/slugs/ids ship to the client; those
  * load lazily per city from /api/explore/map/city.
  */
 function slimLocations(locations: RawLocation[]): BookLocation[] {
@@ -57,9 +57,20 @@ function slimLocations(locations: RawLocation[]): BookLocation[] {
     }
   }
 
+  // Count identical (year, roles) pairs per city — see BookLocation.b.
   const out: BookLocation[] = [];
   for (const e of byCity.values()) {
-    out.push({ city: e.city, country: e.country, lat: e.lat, lng: e.lng, books: [...e.books.values()] });
+    const counts = new Map<string, number>();
+    for (const bk of e.books.values()) {
+      const k = `${bk.y ?? 0}|${bk.m}`;
+      counts.set(k, (counts.get(k) || 0) + 1);
+    }
+    const b: number[] = [];
+    for (const [k, c] of counts) {
+      const [y, m] = k.split('|');
+      b.push(Number(y), Number(m), c);
+    }
+    out.push({ city: e.city, country: e.country, lat: e.lat, lng: e.lng, b });
   }
   return out;
 }
