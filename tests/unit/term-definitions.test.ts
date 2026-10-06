@@ -105,3 +105,30 @@ describe('notes off hides the model definitions (#5895)', () => {
     expect(markdownToHtml(SILVER, { stripNotes: false })).not.toMatch(/gloss/i);
   });
 });
+
+describe('a head the sentence already carries is not printed twice (#5901)', () => {
+  // Excerpts: 6902ed49583dd7d2641408a5 p444 (God’s field), 59e68f94-49d0-4ed7-a610-b1f53e55b2f8 p652
+  // (drachms), 6952727dab34727b1f0485f2 p44 (formal number), 695234baab34727b1f044b50 p34 (Cassia).
+  it.each([
+    ['he stands in God’s field <term>God\'s field: a metaphor for the world or the community of believers</term> and bears',
+      'he stands in God’s field <note>a metaphor for the world or the community of believers</note> and bears'],
+    ['[take] 4 drachms <term>drachm: a unit of weight, approximately 3.9 grams</term> weight',
+      '[take] 4 drachms <note>a unit of weight, approximately 3.9 grams</note> weight'],
+    ['so that your "formal number" <term>Formal number: A number that acts as a shaping principle.</term> may agree',
+      'so that your "formal number" <note>A number that acts as a shaping principle.</note> may agree'],
+    ['as harmless as Cassia or Manna <term>Cassia and Manna: Natural substances used as mild laxatives.</term>. The',
+      'as harmless as Cassia or Manna <note>Natural substances used as mild laxatives.</note>. The'],
+    ['the **melancholic humor** <term>humor: one of the four bodily fluids</term> is',
+      'the **melancholic humor** <note>one of the four bodily fluids</note> is'],
+  ])('%s', (before, after) => {
+    expect(separateTermDefinitions(before)).toBe(after);
+  });
+
+  it('keeps the chip when the head is a different word (the source-language term)', () => {
+    expect(separateTermDefinitions('the tempering agent of **black bile** <term>atra bilis: another name for the melancholic humor</term>, the fuel'))
+      .toBe('the tempering agent of **black bile** <term>atra bilis</term> <note>another name for the melancholic humor</note>, the fuel');
+    expect(separateTermDefinitions('the state <term>statue: a carved figure of stone</term> stood'))
+      .toBe('the state <term>statue</term> <note>a carved figure of stone</note> stood');
+    expect(separateTermDefinitions('<term>Luna: the alchemical name for silver</term>')).toBe('<term>Luna</term> <note>the alchemical name for silver</note>');
+  });
+});

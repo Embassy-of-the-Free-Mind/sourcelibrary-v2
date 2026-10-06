@@ -70,16 +70,28 @@ export function splitTermDefinition(body) {
  */
 export const APPARATUS_HEAD = /^(?:original|lit(?:erally|\.)?|i\.e\.|note|cf\.?)$/i;
 
-/** @param {string} s */
-const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+/** Lower-cased word tokens; apostrophes dropped, so `God’s` and `God's` are one word. @param {string} s */
+const tokens = (s) => s.toLowerCase().replace(/['’‘ʼ]/g, '').match(/[\p{L}\p{M}\p{N}]+/gu) || [];
+/** Words that join a phrase without naming anything: "Cassia or Manna" is the head "Cassia and Manna". */
+const JOINER = new Set(['and', 'or', 'the', 'a', 'an', 'of']);
+/** A word and its English singular: `drachms` before a chip headed `drachm` is the same word. @param {string} w */
+const forms = (w) => [w, w.replace(/ies$/, 'y'), w.replace(/es$/, ''), w.replace(/s$/, '')];
+/** @param {string} a @param {string} b */
+const sameWord = (a, b) => a === b || (a.length > 3 && b.length > 3 && forms(a).some((f) => forms(b).includes(f)));
 
 /**
- * True when `before` ends with `head` (ignoring markdown emphasis), as a whole word.
+ * True when `before` ends with `head` — the sentence already carries the word,
+ * so keeping the chip would print it twice. Read word by word, ignoring case,
+ * emphasis and quote marks, the apostrophe's shape, an English plural, and
+ * joining words: `"formal number" <term>Formal number: …`, `God’s field
+ * <term>God's field: …`, `drachms <term>drachm: …`.
  * @param {string} before @param {string} head
  */
 export function headPrecedes(before, head) {
-  const tail = before.replace(/[\s*_]+$/, '');
-  return new RegExp(`(?:^|[^\\p{L}\\p{N}])${escapeRe(head)}$`, 'iu').test(tail);
+  const want = tokens(head).filter((w) => !JOINER.has(w));
+  if (!want.length) return false;
+  const have = tokens(before).filter((w) => !JOINER.has(w)).slice(-want.length);
+  return have.length === want.length && want.every((w, i) => sameWord(w, have[i]));
 }
 
 /** Annotation spans a `<note>` must not be written into (src/lib/normalize-annotation-spans.ts, plus the panel tags). */
