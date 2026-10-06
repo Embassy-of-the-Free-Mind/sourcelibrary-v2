@@ -65,6 +65,17 @@ const client = new MongoClient(process.env.MONGODB_URI, {
 await client.connect();
 const db = client.db(process.env.MONGODB_DB || 'bookstore');
 
+/** Retry a read a few times across transient network drops. */
+async function withRetry(fn, attempts = 4) {
+  for (let a = 1; ; a++) {
+    try { return await fn(); } catch (err) {
+      if (a >= attempts) throw err;
+      console.warn(`\n  read failed (${err.name}), retrying in ${5 * a}s`);
+      await new Promise(r => setTimeout(r, 5000 * a));
+    }
+  }
+}
+
 /** Write the cover. Flattens provenance so other field_provenance keys survive. */
 async function writeCover(bookId, page, choice) {
   const update = buildCoverUpdate(page, {
@@ -126,7 +137,8 @@ outer:
 for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
   const batch = allBooks.slice(i, i + BATCH_SIZE);
   const ids = batch.map(b => b.id);
-  const [pages, plates] = await Promise.all([
+  // A long sweep outlives the odd dropped connection; retry the batch's reads.
+  const [pages, plates] = await withRetry(() => Promise.all([
     db.collection('pages')
       .find({ book_id: { $in: ids }, page_number: { $gt: 0, $lte: COVER_WINDOW } }, { projection: PAGE_PROJECTION })
       .toArray(),
@@ -134,7 +146,7 @@ for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
       .find({ book_id: { $in: ids }, gallery_quality: { $gte: MIN_PLATE_QUALITY } },
         { projection: { _id: 0, book_id: 1, page_number: 1, gallery_quality: 1, type: 1, bbox: 1 } })
       .toArray(),
-  ]);
+  ]));
   const pagesBy = new Map(), platesBy = new Map();
   for (const p of pages) (pagesBy.get(p.book_id) || pagesBy.set(p.book_id, []).get(p.book_id)).push(p);
   for (const g of plates) (platesBy.get(g.book_id) || platesBy.set(g.book_id, []).get(g.book_id)).push(g);
@@ -143,9 +155,9 @@ for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
   const outside = plates.filter(g => g.page_number > COVER_WINDOW);
   const platePagesBy = new Map();
   if (outside.length) {
-    const docs = await db.collection('pages')
+    const docs = await withRetry(() => db.collection('pages')
       .find({ $or: outside.map(g => ({ book_id: g.book_id, page_number: g.page_number })) }, { projection: PAGE_PROJECTION })
-      .toArray();
+      .toArray());
     for (const d of docs) (platePagesBy.get(d.book_id) || platePagesBy.set(d.book_id, new Map()).get(d.book_id)).set(d.page_number, d);
   }
 
@@ -187,6 +199,8 @@ for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
     if (LIMIT && changes.length >= LIMIT) break outer;
   }
   process.stdout.write(`  Batch ${Math.floor(i / BATCH_SIZE) + 1}/${Math.ceil(allBooks.length / BATCH_SIZE)} — ${changes.length} changes\r`);
+  // Checkpoint the plan so a crash late in a long sweep loses nothing.
+  if (PLAN_OUT && (i / BATCH_SIZE) % 20 === 0) fs.writeFileSync(PLAN_OUT, JSON.stringify(changes, null, 1));
 }
 
 const byRule = {};
