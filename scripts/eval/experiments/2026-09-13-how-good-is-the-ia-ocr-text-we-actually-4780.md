@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: agreement
+languages: []
+scripts: []
+canons: []
+n_books: 742
+n_pages: 742
+verdict: "Delivered IA text in accepted bands has median CER 3.9% vs a fresh lite read, degrading smoothly with no cliff at 0.85; 26% of written books carry wrong-leaf text."
+status: adopted
+decision: "Ingester forces offset 0 and refuses non-zero votes (REF_SHIFTED); 236 books to re-pair (#4790)"
+superseded_by: null
+issue: [4780, 4763, 4790]
+---
 ## 2026-09-13 — How good is the IA OCR text we actually WROTE, and where should the cutoff sit? (#4780, #4763)
 
 **Headline: the delivered text in the accepted bands has a median CER of 3.9% (WER 8%)

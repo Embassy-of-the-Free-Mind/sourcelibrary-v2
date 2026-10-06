@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: accuracy
+languages: [nl]
+scripts: [Latn]
+canons: []
+n_books: null
+n_pages: 20
+verdict: "On held-out VOC Dutch handwriting Loghi beats Gemini by best-line CER (0.161 vs flash 0.252, lite 0.305), on its home ground; a Laypa line-count screen flags omissions but misses some."
+status: informational
+decision: null
+superseded_by: null
+issue: 5648
+---
 ## 2026-10-02 · Loghi (GLOBALISE model) vs Gemini on 17th–18th c. Dutch handwriting (#5648)
 
 PRIOR ART: scripts/eval/experiments/2026-09-15-does-any-current-specialist-ocr-engine-beat-flash-lite-4743.md — same question (does a specialist beat flash-lite?) over five scripts, none of them Dutch handwriting; this is a sixth stratum, and nothing in the repo mentioned Loghi.

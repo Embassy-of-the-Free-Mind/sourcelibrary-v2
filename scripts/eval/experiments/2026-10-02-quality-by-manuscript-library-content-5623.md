@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: [judged, accuracy]
+languages: []
+scripts: []
+canons: []
+n_books: 327
+n_pages: 327
+verdict: "Manuscripts rate faithful less often (66% vs 88%) but are tangled with script (adjusted OR 0.48, CI spans 1); holding library mostly stands in for script; Chinese tables 47.6% CER."
+status: informational
+decision: "One-pager now names manuscript status as partly confounded with script (#5623)"
+superseded_by: null
+issue: 5623
+---
 ## 2026-10-02 · Is the language picture really a manuscript/print picture, or a holding-library picture? (#5623)
 <!-- PRIOR ART: 2026-10-02-quality-by-date-chars-resolution-5615.md (same samples and script, date / characters / resolution only); scripts/lib/syriac-kraken-lane.mjs routeBook (the manuscript fallback rule, reused); no image-only page descriptor existed before scripts/eval/lib/page-descriptor.mjs. -->
 

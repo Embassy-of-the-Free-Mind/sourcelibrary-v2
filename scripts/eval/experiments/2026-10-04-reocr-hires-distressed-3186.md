@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: judged
+languages: [pi, ar]
+scripts: [Sinh, Arab]
+canons: [pali]
+n_books: 27
+n_pages: 40
+verdict: "Flash re-read from upgraded masters: palm-leaf Pali 6 wins / 1 loss but 12 of 31 reads loop; Chester Beatty Arabic 3 wins / 1 loss. Blanket Pali re-OCR not justified."
+status: rejected
+decision: "No blanket re-OCR of upgraded palm-leaf Pali on Flash; nothing written to pages (#3186)"
+superseded_by: null
+issue: 3186
+---
 ## 2026-10-04 · Does re-reading distressed pages from the upgraded master fix them? (#3186 gated re-OCR pilot)
 <!-- PRIOR ART: the July 2026 #3186 pilot (issue comment, 48 pages, LLM judge, distressed pages 8 wins / 3 losses / 2 ties) used the same distress signals but an automated judge and mixed providers; 2026-10-0x reocr-lift-5700 re-read #5695 track pages at the pipeline's 1500 px. This is the first by-eye read of palm-leaf Pali and Chester Beatty Arabic from the upgraded masters. -->
 

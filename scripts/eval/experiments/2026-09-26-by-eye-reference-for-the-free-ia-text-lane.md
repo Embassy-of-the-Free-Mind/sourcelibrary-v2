@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: judged
+languages: [en]
+scripts: [Latn]
+canons: []
+n_books: 184
+n_pages: null
+verdict: "Two-leaf by-eye reads accepted 142 of 184 held IA books (3 of 9 pilot, 139 of 175 cohort); the split follows the scan, not the date. CER and paid-gate agreement unmeasured."
+status: adopted
+decision: "ia-ocr-ingest --by-eye fills held books with method by_eye (PRs #5190, #5197); 3,372 pages written"
+superseded_by: null
+issue: null
+---
 ## 2026-09-26 — by-eye reference for the free IA text lane (pilot, 9 books)
 
 **Question.** Held books have no model pages, so `ia-ocr-ingest.mjs` cannot calibrate them without

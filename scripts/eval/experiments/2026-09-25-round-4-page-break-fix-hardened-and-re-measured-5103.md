@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "Hardened fix Fs2 beats production 10-5-9 on the 24 device breaks, defective 38% vs 58%, duplication 2 vs 6; one seam shape (syllable catchword on an open sentence) fails in both rounds."
+status: adopted
+decision: "Join guards shipped (PR #5169); PAGE_BREAK_SCOPED flipped ON in both worker paths (PR #5170)"
+superseded_by: null
+issue: [5103, 5021]
+---
 ## 2026-09-25 (round 4) — Page-break fix hardened and re-measured on the 24 device breaks (#5103, "I want quality"): Fs2 vs B 10–5–9, defective 38% vs 58%, duplication 2 vs 6; one seam shape fails on the fix arm in both rounds
 
 **What round 3 called the cost was not in the rows.** Round 3 (2026-09-26 entry) counted untranslated 0 → 4 on

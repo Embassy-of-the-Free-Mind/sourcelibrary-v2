@@ -1,334 +1,334 @@
 {
-  "2026-09-02-does-4195-s-blank-page-narrowing-work-4195.md": {
-    "languages": [],
-    "scripts": [],
-    "canons": [],
-    "n_books": null,
-    "n_pages": null,
-    "decision": "v17 not promoted; PR #4605 labelled blocked (#4195)",
-    "superseded_by": null,
-    "stage": "ocr",
-    "measure": "judged",
-    "verdict": "v17 reads the faint-mark page as text on 5/5 runs where v15 said blank, but over-declines elsewhere: a legible Latin note becomes a lacuna.",
-    "status": "rejected",
-    "issue": 4195
-  },
-  "2026-09-02-does-ocr-prompt-v17-reduce-fabrication-vs-v15.md": {
-    "languages": [],
-    "scripts": [],
-    "canons": [],
-    "n_books": null,
-    "n_pages": null,
-    "decision": null,
-    "superseded_by": null,
-    "stage": "ocr",
-    "measure": "stability",
-    "verdict": "Inconclusive: the first-pass cut in fabrication was one draw; two k=5 runs put the runaway repetition loop on opposite arms.",
-    "status": "informational",
-    "issue": [
-      4195,
-      4610
-    ]
-  },
-  "2026-09-02-is-a-similarity-gate-a-workable-way-to-stop.md": {
-    "languages": [],
-    "scripts": [],
-    "canons": [],
-    "n_books": null,
-    "n_pages": null,
-    "decision": "prior-art guard made unconditional (declare prior art); similarity list advisory only",
-    "superseded_by": null,
-    "stage": "pipeline",
-    "measure": "accuracy",
-    "verdict": "No: four rounds of tuning could not get the block rate below about 30% while keeping the true duplicates (0.60 blocks 49%, catching 2/2).",
-    "status": "adopted"
-  },
-  "2026-09-03-bench-2-complete-can-self-hosted-ocr-replace-gemini.md": {
-    "languages": [
-      "la",
-      "grc",
-      "de"
-    ],
-    "scripts": [
-      "Latn",
-      "Grek"
-    ],
-    "canons": [],
-    "n_books": null,
-    "n_pages": 36,
-    "decision": null,
-    "superseded_by": null,
-    "stage": "ocr",
-    "measure": "accuracy",
-    "verdict": "Kraken, Surya and CHURRO-3B are statistically indistinguishable from Gemini on pages they read; coverage (25-28 of 56 aligned) is the limit and per-segment n is a pilot.",
-    "status": "informational",
-    "issue": 4523
-  },
-  "2026-09-03-bench-2-first-arms-superseded-by-the-entry-above.md": {
-    "languages": [
-      "la",
-      "grc",
-      "de"
-    ],
-    "scripts": [
-      "Latn",
-      "Grek"
-    ],
-    "canons": [],
-    "n_books": null,
-    "n_pages": null,
-    "decision": null,
-    "superseded_by": "2026-09-03-bench-2-complete-can-self-hosted-ocr-replace-gemini.md",
-    "stage": "ocr",
-    "measure": "accuracy",
-    "verdict": "Interim: Kraken matches Gemini on Latin and Greek print, loses badly on German Fraktur (72.8-89.1%), and its failures are all guard-visible.",
-    "status": "superseded",
-    "issue": 4523
-  },
-  "2026-09-05-a-fabrication-detector-that-needs-no-reference-track-c-4523.md": {
-    "languages": [
-      "bo",
-      "la",
-      "grc",
-      "de"
-    ],
-    "scripts": [
-      "Tibt",
-      "Latn",
-      "Grek"
-    ],
-    "canons": [
-      "derge-kangyur"
-    ],
-    "n_books": null,
-    "n_pages": 349,
-    "decision": null,
-    "superseded_by": null,
-    "stage": "ocr",
-    "measure": "agreement",
-    "verdict": "A reference-free detector flagged 51/51 known recitation pages with 0/5 false positives, but only 56 of 349 pages are judgeable and the highest-risk pages are abstained.",
-    "status": "informational",
-    "issue": 4523
-  },
-  "2026-09-05-how-wrong-is-the-ground-truth-track-b-item-4523.md": {
-    "languages": [
-      "grc",
-      "de",
-      "la"
-    ],
-    "scripts": [
-      "Grek",
-      "Latn"
-    ],
-    "canons": [],
-    "n_books": null,
-    "n_pages": 69,
-    "decision": null,
-    "superseded_by": null,
-    "stage": "ocr",
-    "measure": "accuracy",
-    "verdict": "Reference error is 0.07% Greek, 0.06% German, 1.15% Latin; Latin engine gaps sit inside it, and our own reference cleaner cost Greek 6.0% of letters.",
-    "status": "informational",
-    "issue": 4523
-  },
-  "2026-09-11-google-cloud-vision-as-a-cheaper-ocr-lane.md": {
-    "languages": [
-      "la",
-      "grc",
-      "de",
-      "hy",
-      "zh",
-      "bo"
-    ],
-    "scripts": [
-      "Latn",
-      "Grek",
-      "Armn",
-      "Hani",
-      "Tibt"
-    ],
-    "canons": [],
-    "n_books": null,
-    "n_pages": 55,
-    "decision": "No routing change; Vision is not a lane for any language",
-    "superseded_by": null,
-    "stage": "ocr",
-    "measure": "accuracy",
-    "verdict": "Cloud Vision aligns 37/55 pages vs lite's 52/55, loses where both align, and is the worst Tibetan engine tested; garbles but does not invent.",
-    "status": "rejected"
-  },
-  "2026-09-11-music-can-a-vlm-read-shaker-letteral-notation-first.md": {
-    "languages": [],
-    "scripts": [],
-    "canons": [],
-    "n_books": null,
-    "n_pages": null,
-    "decision": "VLMs not used on score pages; score against ground-truth first (music-notation.md)",
-    "superseded_by": null,
-    "stage": "ocr",
-    "measure": "accuracy",
-    "verdict": "gemini-3-flash-preview reads Shaker letteral pitch poorly (interval NER 0.19) and rhythm at 0.49; on mensural staff it read the printed syllables, not the staff (0.42).",
-    "status": "rejected"
-  },
-  "2026-09-11-which-languages-can-ocr-on-flash-lite-per-language-4729.md": {
-    "languages": [],
-    "scripts": [],
-    "canons": [],
-    "n_books": null,
-    "n_pages": null,
-    "decision": "Routing unchanged (ledger: UNJUDGED); editing the allowlist awaits Derek (#5090)",
-    "superseded_by": null,
-    "stage": "ocr",
-    "measure": "agreement",
-    "verdict": "Of 14 languages with a verdict, German, French and Dutch (routed lite) did not pass and Russian and Armenian (routed flash) did; Latin and Italian were never sampled.",
-    "status": "undecided",
-    "issue": [
-      4729,
-      4735
-    ]
-  },
-  "2026-09-12-can-flash-lite-text-only-cleanup-rescue-rejected-internet.md": {
-    "languages": [
-      "en"
-    ],
-    "scripts": [
-      "Latn"
-    ],
-    "canons": [],
-    "n_books": 10,
-    "n_pages": 60,
-    "decision": "Not a lane for rejected IA OCR (#4727, #4763)",
-    "superseded_by": null,
-    "stage": "ocr",
-    "measure": "agreement",
-    "verdict": "Text-only lite cleanup raises agreement a little (48/60 improved) but lifts no rejected book over the 0.85 gate, costs 86% of image OCR, and invents on unreadable input.",
-    "status": "rejected",
-    "issue": [
-      4727,
-      4763
-    ]
-  },
-  "2026-09-12-does-translation-prompt-v15-make-original-notes-real-3825.md": {
-    "languages": [],
-    "scripts": [],
-    "canons": [],
-    "n_books": 320,
-    "n_pages": 320,
-    "decision": "v15 not flipped; v13 stays; v16 also not established (PR #5703)",
-    "superseded_by": null,
-    "stage": "translation",
-    "measure": [
-      "accuracy",
-      "judged"
-    ],
-    "verdict": "v15 lifts verified original-note rate 66.7% to 96.3% but cuts interpretive notes by a third and loses 8:1 to a blind judge; not flipped, v16 follows.",
-    "status": "rejected",
-    "issue": 3825
-  },
-  "2026-09-13-how-good-is-the-ia-ocr-text-we-actually-4780.md": {
-    "languages": [],
-    "scripts": [],
-    "canons": [],
-    "n_books": 742,
-    "n_pages": 742,
-    "decision": "Ingester forces offset 0 and refuses non-zero votes (REF_SHIFTED); 236 books to re-pair (#4790)",
-    "superseded_by": null,
-    "stage": "ocr",
-    "measure": "agreement",
-    "verdict": "Delivered IA text in accepted bands has median CER 3.9% vs a fresh lite read, degrading smoothly with no cliff at 0.85; 26% of written books carry wrong-leaf text.",
-    "status": "adopted",
-    "issue": [
-      4780,
-      4763,
-      4790
-    ]
-  },
-  "2026-09-13-which-model-should-translate-classical-chinese-preview-pages-n.md": {
-    "languages": [
-      "lzh"
-    ],
-    "scripts": [
-      "Hani"
-    ],
-    "canons": [],
-    "n_books": 60,
-    "n_pages": 60,
-    "decision": null,
-    "superseded_by": null,
-    "stage": "translation",
-    "measure": "none",
-    "verdict": "Pre-registration: nine-arm blind-ranking comparison on 60 classical Chinese pages with a fixed decision rule that keeps lite unless an arm beats it cheaply.",
-    "status": "informational"
-  },
-  "2026-09-13-which-model-should-translate-classical-chinese-preview-pages-result.md": {
-    "languages": [
-      "lzh"
-    ],
-    "scripts": [
-      "Hani"
-    ],
-    "canons": [],
-    "n_books": 60,
-    "n_pages": 60,
-    "decision": null,
-    "superseded_by": "2026-09-14-which-model-should-translate-classical-chinese-preview-pages-six.md",
-    "stage": "translation",
-    "measure": "judged",
-    "verdict": "Lite and flash-preview are indistinguishable blind (27:26, p=1.0) at 2.2x the price; 2.5-flash is worse (17:33). Lite stays.",
-    "status": "superseded"
-  },
-  "2026-09-14-which-model-should-translate-classical-chinese-preview-pages-six.md": {
-    "languages": [
-      "lzh"
-    ],
-    "scripts": [
-      "Hani"
-    ],
-    "canons": [],
-    "n_books": 60,
-    "n_pages": 60,
-    "decision": "Lite kept for the Chinese ritual-dance books; pre-registered rule applied as written",
-    "superseded_by": null,
-    "stage": "translation",
-    "measure": "judged",
-    "verdict": "No arm displaces lite: preview beats it blind (31-16, p=0.040) at 2.2x cost; Chinese-lab arms write less; the judge's test-retest is only 52%.",
-    "status": "rejected"
-  },
-  "2026-09-15-does-any-current-specialist-ocr-engine-beat-flash-lite-4743.md": {
-    "languages": [],
-    "scripts": [],
-    "canons": [],
-    "n_books": 370,
-    "n_pages": 370,
-    "decision": "NDL lane unjudged in ledger; Paddle adopted as Chinese cost lane (#4925), no other specialist",
-    "superseded_by": null,
-    "stage": "ocr",
-    "measure": "accuracy",
-    "verdict": "Only NDL v3 on cursive Japanese beats lite; elsewhere flash-preview > lite >= best specialist, and Paddle matches flash-preview on Chinese woodblock only.",
-    "status": "undecided",
-    "issue": [
-      4743,
-      4744,
-      4745,
-      4746
-    ]
-  },
-  "2026-09-15-does-gemini-3-1-flash-lite-read-early-modern-4541.md": {
-    "languages": [
-      "la"
-    ],
-    "scripts": [
-      "Latn"
-    ],
-    "canons": [],
-    "n_books": 11,
-    "n_pages": 11,
-    "decision": "18 books held and re-run on gemini-3-flash-preview; global OCR_LITE_ONLY left alone (#4541)",
-    "superseded_by": null,
-    "stage": "ocr",
-    "measure": "judged",
-    "verdict": "No: flash-preview beats lite on 11/11 items; lite loops on 5 of 7 manuscripts and a 1472 incunable and renders long s as f on roman print.",
-    "status": "adopted",
-    "issue": 4541
-  }
+ "2026-09-02-does-4195-s-blank-page-narrowing-work-4195.md": {
+  "languages": [],
+  "scripts": [],
+  "canons": [],
+  "n_books": null,
+  "n_pages": null,
+  "decision": "v17 not promoted; PR #4605 labelled blocked (#4195)",
+  "superseded_by": null,
+  "stage": "ocr",
+  "measure": "judged",
+  "verdict": "v17 reads the faint-mark page as text on 5/5 runs where v15 said blank, but over-declines elsewhere: a legible Latin note becomes a lacuna.",
+  "status": "rejected",
+  "issue": 4195
+ },
+ "2026-09-02-does-ocr-prompt-v17-reduce-fabrication-vs-v15.md": {
+  "languages": [],
+  "scripts": [],
+  "canons": [],
+  "n_books": null,
+  "n_pages": null,
+  "decision": null,
+  "superseded_by": null,
+  "stage": "ocr",
+  "measure": "stability",
+  "verdict": "Inconclusive: the first-pass cut in fabrication was one draw; two k=5 runs put the runaway repetition loop on opposite arms.",
+  "status": "informational",
+  "issue": [
+   4195,
+   4610
+  ]
+ },
+ "2026-09-02-is-a-similarity-gate-a-workable-way-to-stop.md": {
+  "languages": [],
+  "scripts": [],
+  "canons": [],
+  "n_books": null,
+  "n_pages": null,
+  "decision": "No similarity gate; the prior-art guard was made unconditional instead and the similarity list is advisory only",
+  "superseded_by": null,
+  "stage": "pipeline",
+  "measure": "accuracy",
+  "verdict": "No: four rounds of tuning could not get the block rate below about 30% while keeping the true duplicates (0.60 blocks 49%, catching 2/2).",
+  "status": "rejected"
+ },
+ "2026-09-03-bench-2-complete-can-self-hosted-ocr-replace-gemini.md": {
+  "languages": [
+   "la",
+   "grc",
+   "de"
+  ],
+  "scripts": [
+   "Latn",
+   "Grek"
+  ],
+  "canons": [],
+  "n_books": null,
+  "n_pages": 36,
+  "decision": null,
+  "superseded_by": null,
+  "stage": "ocr",
+  "measure": "accuracy",
+  "verdict": "Kraken, Surya and CHURRO-3B are statistically indistinguishable from Gemini on pages they read; coverage (25-28 of 56 aligned) is the limit and per-segment n is a pilot.",
+  "status": "informational",
+  "issue": 4523
+ },
+ "2026-09-03-bench-2-first-arms-superseded-by-the-entry-above.md": {
+  "languages": [
+   "la",
+   "grc",
+   "de"
+  ],
+  "scripts": [
+   "Latn",
+   "Grek"
+  ],
+  "canons": [],
+  "n_books": null,
+  "n_pages": null,
+  "decision": null,
+  "superseded_by": "2026-09-03-bench-2-complete-can-self-hosted-ocr-replace-gemini.md",
+  "stage": "ocr",
+  "measure": "accuracy",
+  "verdict": "Interim: Kraken matches Gemini on Latin and Greek print, loses badly on German Fraktur (72.8-89.1%), and its failures are all guard-visible.",
+  "status": "superseded",
+  "issue": 4523
+ },
+ "2026-09-05-a-fabrication-detector-that-needs-no-reference-track-c-4523.md": {
+  "languages": [
+   "bo",
+   "la",
+   "grc",
+   "de"
+  ],
+  "scripts": [
+   "Tibt",
+   "Latn",
+   "Grek"
+  ],
+  "canons": [
+   "derge-kangyur"
+  ],
+  "n_books": null,
+  "n_pages": 349,
+  "decision": null,
+  "superseded_by": null,
+  "stage": "ocr",
+  "measure": "agreement",
+  "verdict": "A reference-free detector flagged 51/51 known recitation pages with 0/5 false positives, but only 56 of 349 pages are judgeable and the highest-risk pages are abstained.",
+  "status": "informational",
+  "issue": 4523
+ },
+ "2026-09-05-how-wrong-is-the-ground-truth-track-b-item-4523.md": {
+  "languages": [
+   "grc",
+   "de",
+   "la"
+  ],
+  "scripts": [
+   "Grek",
+   "Latn"
+  ],
+  "canons": [],
+  "n_books": null,
+  "n_pages": 69,
+  "decision": null,
+  "superseded_by": null,
+  "stage": "ocr",
+  "measure": "accuracy",
+  "verdict": "Reference error is 0.07% Greek, 0.06% German, 1.15% Latin; Latin engine gaps sit inside it, and our own reference cleaner cost Greek 6.0% of letters.",
+  "status": "informational",
+  "issue": 4523
+ },
+ "2026-09-11-google-cloud-vision-as-a-cheaper-ocr-lane.md": {
+  "languages": [
+   "la",
+   "grc",
+   "de",
+   "hy",
+   "zh",
+   "bo"
+  ],
+  "scripts": [
+   "Latn",
+   "Grek",
+   "Armn",
+   "Hani",
+   "Tibt"
+  ],
+  "canons": [],
+  "n_books": null,
+  "n_pages": 55,
+  "decision": "No routing change; Vision is not a lane for any language",
+  "superseded_by": null,
+  "stage": "ocr",
+  "measure": "accuracy",
+  "verdict": "Cloud Vision aligns 37/55 pages vs lite's 52/55, loses where both align, and is the worst Tibetan engine tested; garbles but does not invent.",
+  "status": "rejected"
+ },
+ "2026-09-11-music-can-a-vlm-read-shaker-letteral-notation-first.md": {
+  "languages": [],
+  "scripts": [],
+  "canons": [],
+  "n_books": null,
+  "n_pages": null,
+  "decision": "VLMs not used on score pages; score against ground-truth first (music-notation.md)",
+  "superseded_by": null,
+  "stage": "ocr",
+  "measure": "accuracy",
+  "verdict": "gemini-3-flash-preview reads Shaker letteral pitch poorly (interval NER 0.19) and rhythm at 0.49; on mensural staff it read the printed syllables, not the staff (0.42).",
+  "status": "rejected"
+ },
+ "2026-09-11-which-languages-can-ocr-on-flash-lite-per-language-4729.md": {
+  "languages": [],
+  "scripts": [],
+  "canons": [],
+  "n_books": null,
+  "n_pages": null,
+  "decision": "Routing unchanged (ledger: UNJUDGED); editing the allowlist awaits Derek (#5090)",
+  "superseded_by": null,
+  "stage": "ocr",
+  "measure": "agreement",
+  "verdict": "Of 14 languages with a verdict, German, French and Dutch (routed lite) did not pass and Russian and Armenian (routed flash) did; Latin and Italian were never sampled.",
+  "status": "undecided",
+  "issue": [
+   4729,
+   4735
+  ]
+ },
+ "2026-09-12-can-flash-lite-text-only-cleanup-rescue-rejected-internet.md": {
+  "languages": [
+   "en"
+  ],
+  "scripts": [
+   "Latn"
+  ],
+  "canons": [],
+  "n_books": 10,
+  "n_pages": 60,
+  "decision": "Not a lane for rejected IA OCR (#4727, #4763)",
+  "superseded_by": null,
+  "stage": "ocr",
+  "measure": "agreement",
+  "verdict": "Text-only lite cleanup raises agreement a little (48/60 improved) but lifts no rejected book over the 0.85 gate, costs 86% of image OCR, and invents on unreadable input.",
+  "status": "rejected",
+  "issue": [
+   4727,
+   4763
+  ]
+ },
+ "2026-09-12-does-translation-prompt-v15-make-original-notes-real-3825.md": {
+  "languages": [],
+  "scripts": [],
+  "canons": [],
+  "n_books": 320,
+  "n_pages": 320,
+  "decision": "v15 not flipped; v13 stays; v16 also not established (PR #5703)",
+  "superseded_by": null,
+  "stage": "translation",
+  "measure": [
+   "accuracy",
+   "judged"
+  ],
+  "verdict": "v15 lifts verified original-note rate 66.7% to 96.3% but cuts interpretive notes by a third and loses 8:1 to a blind judge; not flipped, v16 follows.",
+  "status": "rejected",
+  "issue": 3825
+ },
+ "2026-09-13-how-good-is-the-ia-ocr-text-we-actually-4780.md": {
+  "languages": [],
+  "scripts": [],
+  "canons": [],
+  "n_books": 742,
+  "n_pages": 742,
+  "decision": "Ingester forces offset 0 and refuses non-zero votes (REF_SHIFTED); 236 books to re-pair (#4790)",
+  "superseded_by": null,
+  "stage": "ocr",
+  "measure": "agreement",
+  "verdict": "Delivered IA text in accepted bands has median CER 3.9% vs a fresh lite read, degrading smoothly with no cliff at 0.85; 26% of written books carry wrong-leaf text.",
+  "status": "adopted",
+  "issue": [
+   4780,
+   4763,
+   4790
+  ]
+ },
+ "2026-09-13-which-model-should-translate-classical-chinese-preview-pages-n.md": {
+  "languages": [
+   "lzh"
+  ],
+  "scripts": [
+   "Hani"
+  ],
+  "canons": [],
+  "n_books": 60,
+  "n_pages": 60,
+  "decision": null,
+  "superseded_by": null,
+  "stage": "translation",
+  "measure": "none",
+  "verdict": "Pre-registration: nine-arm blind-ranking comparison on 60 classical Chinese pages with a fixed decision rule that keeps lite unless an arm beats it cheaply.",
+  "status": "informational"
+ },
+ "2026-09-13-which-model-should-translate-classical-chinese-preview-pages-result.md": {
+  "languages": [
+   "lzh"
+  ],
+  "scripts": [
+   "Hani"
+  ],
+  "canons": [],
+  "n_books": 60,
+  "n_pages": 60,
+  "decision": null,
+  "superseded_by": "2026-09-14-which-model-should-translate-classical-chinese-preview-pages-six.md",
+  "stage": "translation",
+  "measure": "judged",
+  "verdict": "Lite and flash-preview are indistinguishable blind (27:26, p=1.0) at 2.2x the price; 2.5-flash is worse (17:33). Lite stays.",
+  "status": "superseded"
+ },
+ "2026-09-14-which-model-should-translate-classical-chinese-preview-pages-six.md": {
+  "languages": [
+   "lzh"
+  ],
+  "scripts": [
+   "Hani"
+  ],
+  "canons": [],
+  "n_books": 60,
+  "n_pages": 60,
+  "decision": "Lite kept for the Chinese ritual-dance books; pre-registered rule applied as written",
+  "superseded_by": null,
+  "stage": "translation",
+  "measure": "judged",
+  "verdict": "No arm displaces lite: preview beats it blind (31-16, p=0.040) at 2.2x cost; Chinese-lab arms write less; the judge's test-retest is only 52%.",
+  "status": "rejected"
+ },
+ "2026-09-15-does-any-current-specialist-ocr-engine-beat-flash-lite-4743.md": {
+  "languages": [],
+  "scripts": [],
+  "canons": [],
+  "n_books": 370,
+  "n_pages": 370,
+  "decision": "NDL lane unjudged in ledger; Paddle adopted as Chinese cost lane (#4925), no other specialist",
+  "superseded_by": null,
+  "stage": "ocr",
+  "measure": "accuracy",
+  "verdict": "Only NDL v3 on cursive Japanese beats lite; elsewhere flash-preview > lite >= best specialist, and Paddle matches flash-preview on Chinese woodblock only.",
+  "status": "undecided",
+  "issue": [
+   4743,
+   4744,
+   4745,
+   4746
+  ]
+ },
+ "2026-09-15-does-gemini-3-1-flash-lite-read-early-modern-4541.md": {
+  "languages": [
+   "la"
+  ],
+  "scripts": [
+   "Latn"
+  ],
+  "canons": [],
+  "n_books": 11,
+  "n_pages": 11,
+  "decision": "18 books held and re-run on gemini-3-flash-preview; global OCR_LITE_ONLY left alone (#4541)",
+  "superseded_by": null,
+  "stage": "ocr",
+  "measure": "judged",
+  "verdict": "No: flash-preview beats lite on 11/11 items; lite loops on 5 of 7 manuscripts and a 1472 incunable and renders long s as f on roman print.",
+  "status": "adopted",
+  "issue": 4541
+ }
 }

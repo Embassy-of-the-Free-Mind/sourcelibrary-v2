@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 30
+n_pages: 30
+verdict: "A lite temp 0.7 re-read with a flash fallback clears 22 of 30 looping pages (realistic about 19-20); production settings re-loop 11/30, and a near-loop passes the gate."
+status: adopted
+decision: "Re-read lane for looping pages: lite 0.7 then flash, with near-loop and script-mismatch checks (PR #5515)"
+superseded_by: null
+issue: 3878
+---
 ## 2026-10-01 — Can a re-read fix pages whose OCR loops? About two-thirds of them, with lite at temp 0.7 and a flash fallback; production settings re-loop a third (#3878)
 
 **Question.** 1,863 pages across 84 books in the readable-20k push (#5467) hold OCR that `loopVerdict()` refuses. Which model and settings re-read them without looping, and how much of the result is a real reading?

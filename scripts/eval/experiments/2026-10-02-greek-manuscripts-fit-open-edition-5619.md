@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: agreement
+languages: [grc]
+scripts: [Grek]
+canons: []
+n_books: 3
+n_pages: null
+verdict: "90 of 316 Greek manuscripts locate in an open edition, but no pilot book reaches the 80% write bar: Grec 1841 76.5% located (only Kraken verifies spans), Marcianus 46.5%."
+status: superseded
+decision: "No write proposed; next step a full Kraken read of Grec 1841 (#5619)"
+superseded_by: "2026-10-06-greek-manuscripts-full-kraken-fit-5619.md"
+issue: 5619
+---
 ## 2026-10-02 · Greek manuscripts: can an open published edition be fitted to the scans instead of re-OCR? (#5619)
 <!-- PRIOR ART: sefaria-fit (#5560) is the method reused here; Kanripo alignment (#5568) is the metric template (located / drift / boundaries); the Greek specialist-OCR benchmark is #4744 (out of scope). -->
 

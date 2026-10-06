@@ -1,3 +1,17 @@
+---
+stage: ocr
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: null
+n_pages: null
+verdict: "v17 reads the faint-mark page as text on 5/5 runs where v15 said blank, but over-declines elsewhere: a legible Latin note becomes a lacuna."
+status: rejected
+decision: "v17 not promoted; PR #4605 labelled blocked (#4195)"
+superseded_by: null
+issue: 4195
+---
 ## 2026-09-02 — Does #4195's blank-page narrowing work?
 
 - **Design.** Same harness, `--cases blank`.

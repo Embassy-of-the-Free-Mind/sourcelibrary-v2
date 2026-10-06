@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged_vs_reference
+languages: []
+scripts: []
+canons: []
+n_books: 321
+n_pages: 321
+verdict: "Served English across 14 languages scores 3.86 vs published translations (71% of pages at 4+); OCR misread is the primary cause of 47% of low pages; Flash beats Lite in most languages."
+status: informational
+decision: "Greek, Hebrew/Aramaic, Arabic, Persian, Sanskrit, Pali, Chinese translate on Flash (PR #5740); Latin and vernaculars stay on Lite"
+superseded_by: null
+issue: 5695
+---
 ## 2026-10-04 · Served English against published human translations in 14 languages: what the five tracks say together (#5695 synthesis)
 <!-- PRIOR ART: the five track files this one summarises and does not repeat — 2026-10-03-xlref-t1-latin-vs-reference-5695.md (T1), 2026-10-03-greek-served-english-vs-published-translations-5695-t2.md (T2), 2026-10-03-translation-vs-reference-vernaculars-t3-5695.md (T3), 2026-10-03-translation-vs-reference-t4-hebrew-arabic-persian-5695.md (T4, PR #5735), 2026-10-03-xlref-t5-sanskrit-pali-chinese-vs-reference.md (T5); the harness smoke run 2026-10-03-translation-vs-reference-harness-smoke-5695.md; the detector test 2026-10-03-reference-free-reversal-detectors-5695.md (PR #5748); Tibetan in 2026-10-03-tengyur-84000-reference-ab-5497.md and 2026-10-03-tengyur-quality-arms-5497.md. None of them puts the languages in one table with one set of definitions. -->
 

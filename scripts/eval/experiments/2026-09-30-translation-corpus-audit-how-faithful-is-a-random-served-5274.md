@@ -1,3 +1,17 @@
+---
+stage: translation
+measure: judged
+languages: []
+scripts: []
+canons: []
+n_books: 311
+n_pages: 311
+verdict: "87-89% of served translated pages read at fidelity >= 4 of 5 and 11-14% carry a major defect; non-Latin script 70.8% >= 4 vs Latin 92.9%; top major class is prose over garbled OCR."
+status: informational
+decision: null
+superseded_by: null
+issue: 5274
+---
 ## 2026-09-30 — Translation corpus audit: how faithful is a random SERVED translation, by language, model and period? (#5274)
 
 **Headline: 87–89% of served pages read at fidelity ≥ 4 of 5; 3.4–3.8% are ≤ 2; 11–14% carry at least one major
