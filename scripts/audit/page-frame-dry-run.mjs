@@ -16,6 +16,13 @@
  *   node --env-file=.env.production.local scripts/audit/page-frame-dry-run.mjs \
  *     [--per-provider=20] [--out=scratchpad/page-frame] [--provider=bl]
  *
+ * Review mode, for the sweep's waves: draw the frames actually WRITTEN, not new
+ * detections. --written-since=<ISO> picks books the sweep framed since then
+ * (sweep_log), one random framed page from each of --random=30 of them, plus the
+ * --tightest=18 books whose most-cropped page kept the least area:
+ *   ... page-frame-dry-run.mjs --written-since=2026-10-06T09:00:00Z --out=<dir>
+ * writes <out>/sheet-random.jpg and <out>/sheet-tightest.jpg (+ .txt keys).
+ *
  * PRIOR ART: scripts/auto-crop-black-borders.mjs — single-book writer that
  * rewrites images; this is a read-only, cross-provider sample with sheets.
  */
@@ -29,6 +36,7 @@ const arg = (k, d) => process.argv.find(a => a.startsWith(`--${k}=`))?.split('='
 const PER = Number(arg('per-provider', '20'));
 const OUT = arg('out', 'scratchpad/page-frame');
 const ONLY = arg('provider', null);
+const WRITTEN_SINCE = arg('written-since', null);
 const R2 = /^https:\/\/images\.sourcelibrary\.org\//;
 const ANALYSIS = 256;
 const TILE = 240;
@@ -37,6 +45,38 @@ fs.mkdirSync(OUT, { recursive: true });
 const client = new MongoClient(process.env.MONGODB_URI);
 await client.connect();
 const db = client.db('bookstore');
+
+if (WRITTEN_SINCE) {
+  const { PAGE_FRAME_VERSION } = await import('../../src/lib/page-frame.ts');
+  const logged = await db.collection('sweep_log').find(
+    { sweep: `page-frame-v${PAGE_FRAME_VERSION}`, action: 'framed', timestamp: { $gte: new Date(WRITTEN_SINCE) }, 'detail.framed': { $gt: 0 } },
+    { projection: { _id: 0, book_id: 1, detail: 1 } },
+  ).toArray();
+  const shuffled = [...logged].sort(() => Math.random() - 0.5).slice(0, Number(arg('random', '30')));
+  const tight = [...logged].filter(r => r.detail?.tightest)
+    .sort((a, b) => a.detail.tightest.area - b.detail.tightest.area).slice(0, Number(arg('tightest', '18')));
+  const toRow = async (r, pn) => {
+    const match = { book_id: r.book_id, page_frame: { $exists: true }, ...(pn ? { page_number: pn } : {}) };
+    const [p] = await db.collection('pages').aggregate([{ $match: match }, { $sample: { size: 1 } },
+      { $project: { _id: 0, page_number: 1, page_frame: 1, display_photo: 1, archived_photo: 1 } }]).toArray();
+    const url = [p?.display_photo, p?.archived_photo].find(u => u && R2.test(u));
+    if (!p || !url) return null;
+    const f = p.page_frame;
+    const w = f.ar >= 1 ? ANALYSIS : Math.round(ANALYSIS * f.ar), h = f.ar >= 1 ? Math.round(ANALYSIS / f.ar) : ANALYSIS;
+    return { id: r.book_id, provider: r.detail.provider ?? '?', pn: p.page_number, url, w, h, verdict: 'frame', frame: f,
+      box: { x: Math.round(f.x * w), y: Math.round(f.y * h), w: Math.round(f.w * w), h: Math.round(f.h * h) } };
+  };
+  const randomRows = (await Promise.all(shuffled.map(r => toRow(r)))).filter(Boolean);
+  const tightRows = (await Promise.all(tight.map(r => toRow(r, r.detail.tightest.page)))).filter(Boolean);
+  await client.close();
+  // sheet() is a hoisted declaration further down.
+  await sheet(randomRows, 'sheet-random.jpg');
+  await sheet(tightRows, 'sheet-tightest.jpg');
+  const errs = logged.reduce((n, r) => n + (r.detail?.errors || 0), 0);
+  console.log(`review: ${logged.length} framed books since ${WRITTEN_SINCE}, ${errs} failed reads; ` +
+    `sheet-random ${randomRows.length}, sheet-tightest ${tightRows.length} (min kept area ${tightRows[0]?.frame ? (tightRows[0].frame.w * tightRows[0].frame.h).toFixed(2) : '-'})`);
+  process.exit(0);
+}
 
 const providers = ONLY ? [ONLY] : (await db.collection('books').aggregate([
   { $match: { visible: true, pages_count: { $gt: 4 } } },
