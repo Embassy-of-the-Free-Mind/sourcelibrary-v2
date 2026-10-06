@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BLOG_KINDS, KIND_INFO, type BlogKind, type BlogPost } from './posts';
@@ -98,7 +98,7 @@ function PostCard({ post }: { post: BlogPost }) {
         <h3 className="font-serif text-lg md:text-xl text-primary group-hover:text-accent-gold-dark transition-colors leading-snug mb-1">
           {post.title}
         </h3>
-        <p className="text-base text-secondary leading-relaxed line-clamp-2 font-body mb-1 hidden sm:block">
+        <p className="text-base text-secondary leading-relaxed line-clamp-3 font-body mb-1 max-sm:hidden">
           {post.subtitle}
         </p>
         <Meta post={post} />
@@ -152,6 +152,7 @@ function KindSection({
 
 export default function BlogIndex({ posts }: { posts: BlogPost[] }) {
   const [filter, setFilter] = useState<Filter>('all');
+  const chipRow = useRef<HTMLDivElement>(null);
 
   // The filter lives in the URL hash (/blog#tours) so a filtered view can be shared.
   useEffect(() => {
@@ -163,6 +164,13 @@ export default function BlogIndex({ posts }: { posts: BlogPost[] }) {
     window.addEventListener('hashchange', fromHash);
     return () => window.removeEventListener('hashchange', fromHash);
   }, []);
+
+  // On a phone the chip row scrolls sideways; keep the active chip in view.
+  useEffect(() => {
+    const row = chipRow.current;
+    const active = row?.querySelector<HTMLElement>('[aria-pressed="true"]');
+    if (row && active) row.scrollLeft = active.offsetLeft - row.offsetLeft - 16;
+  }, [filter]);
 
   const choose = (next: Filter) => {
     setFilter(next);
@@ -202,7 +210,7 @@ export default function BlogIndex({ posts }: { posts: BlogPost[] }) {
         aria-label="Filter notes by kind"
         className="sticky top-0 z-20 -mx-6 px-6 md:-mx-12 md:px-12 py-3 mb-8 bg-cream/95 backdrop-blur border-b border-border-light"
       >
-        <div className="flex gap-2 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
+        <div ref={chipRow} className="flex gap-2 overflow-x-auto md:flex-wrap md:overflow-visible" style={{ scrollbarWidth: 'none' }}>
           {chip('all', 'All', posts.length)}
           {BLOG_KINDS.map((kind) => chip(kind, KIND_INFO[kind].label, byKind[kind].length))}
         </div>

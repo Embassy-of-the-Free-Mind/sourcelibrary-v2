@@ -112,7 +112,7 @@ export const posts: BlogPost[] = [
     date: '15 September 2026',
     readTime: '25 min read',
     kind: 'tours',
-    image: 'https://sourcelibrary.org/blog/techniques-of-the-body/hero-khrul-khor.jpg',
+    image: '/blog/techniques-of-the-body/hero-khrul-khor.jpg',
     imageAlt: 'A Tibetan manuscript of the Nyang tradition: figures drawn in the sequence of the ’khrul ’khor exercises.',
   },
   {
@@ -204,7 +204,7 @@ export const posts: BlogPost[] = [
     date: '30 July 2026',
     readTime: '8 min read',
     kind: 'reading',
-    image: 'https://sourcelibrary.org/blog/reciting-not-reading/mask-rect-zoom.jpg',
+    image: '/blog/reciting-not-reading/mask-rect-zoom.jpg',
     imageAlt:
       'A 1566 Vulgate page with a grey rectangle covering four lines of Genesis 1:2, fragments of the covered lines still visible at the right edge.',
   },
