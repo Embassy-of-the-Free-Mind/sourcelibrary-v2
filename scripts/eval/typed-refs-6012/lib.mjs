@@ -242,16 +242,18 @@ export async function openZip(where) {
     const tailStart = Math.max(0, h.bytes - (where.tailBytes || 24 * 1024 * 1024));
     const r = await r2().send(new GetObjectCommand({ Bucket: BUCKET, Key: where.r2Key, Range: `bytes=${tailStart}-${h.bytes - 1}` }));
     const cs = []; for await (const c of r.Body) cs.push(c);
-    return new Promise((res, rej) => yauzl.fromRandomAccessReader(new R2Reader(where.r2Key, tailStart, Buffer.concat(cs)), h.bytes, { lazyEntries: true, autoClose: false }, (e, z) => (e ? rej(e) : res(z))));
+    return new Promise((res, rej) => yauzl.fromRandomAccessReader(new R2Reader(where.r2Key, tailStart, Buffer.concat(cs)), h.bytes, { lazyEntries: true, autoClose: false, decodeStrings: false }, (e, z) => (e ? rej(e) : res(z))));
   }
-  return new Promise((res, rej) => yauzl.open(where.file, { lazyEntries: true }, (e, z) => (e ? rej(e) : res(z))));
+  return new Promise((res, rej) => yauzl.open(where.file, { lazyEntries: true, decodeStrings: false }, (e, z) => (e ? rej(e) : res(z))));
 }
 export const entryStream = (z, entry) => new Promise((res, rej) => z.openReadStream(entry, (e, s) => (e ? rej(e) : res(s))));
 export async function entryBuffer(z, entry) { const s = await entryStream(z, entry); const cs = []; for await (const c of s) cs.push(c); return Buffer.concat(cs); }
 /** Visit every file entry in order; `fn(entry, read)` may await. */
 export async function eachEntry(z, fn) {
   await new Promise((res, rej) => {
-    z.on('entry', async (entry) => { try { if (!/\/$/.test(entry.fileName)) await fn(entry, () => entryBuffer(z, entry)); z.readEntry(); } catch (e) { rej(e); } });
+    // Names are decoded here, not by yauzl: its name validation refuses the "/" root entry Dropbox writes
+    // into a folder zip, and with it the whole archive.
+    z.on('entry', async (entry) => { try { if (Buffer.isBuffer(entry.fileName)) entry.fileName = entry.fileName.toString('utf8'); if (!/\/$/.test(entry.fileName)) await fn(entry, () => entryBuffer(z, entry)); z.readEntry(); } catch (e) { rej(e); } });
     z.on('end', res); z.on('error', rej); z.readEntry();
   });
 }

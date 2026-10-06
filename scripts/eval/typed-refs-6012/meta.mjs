@@ -72,7 +72,7 @@ export function metaTcp(h, name) {
     place: first(src, /<PUBPLACE>([\s\S]*?)<\/PUBPLACE>/i), printer: first(src, /<PUBLISHER>([\s\S]*?)<\/PUBLISHER>/i),
     language: all(h, /<LANGUAGE ID="([^"]+)"/gi).join(',') || first(h, /<LANGUSAGE ID="([^"]+)"/i) || 'eng',
     subjects: all(h, /<TERM[^>]*>([\s\S]*?)<\/TERM>/gi).slice(0, 12),
-    availability: avail, phase: /Phase\s*(I|1)\b(?!I)/i.test(avail || '') && !/Phase\s*(II|2)/i.test(avail || '') ? 1 : /Phase\s*(II|2)/i.test(avail || '') ? 2 : null,
+    availability: avail,
     ids: { tcp, stc: stc.filter((s) => !/ESTC/i.test(s) || /STC|Wing/i.test(s)), estc, eebo_citation: idno('eebo citation')[0] || null, proquest: idno('proquest')[0] || null, vid: idno('vid')[0] || null },
   };
 }

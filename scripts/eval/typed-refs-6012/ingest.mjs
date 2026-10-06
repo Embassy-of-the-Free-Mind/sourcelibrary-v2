@@ -14,7 +14,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
 import { execFileSync } from 'node:child_process';
-import { argOf, sha256, assertDisk, putVerified, head, keyOf, openZip, eachEntry, decodeBytes, teiPages, PARSE_VERSION } from './lib.mjs';
+import { argOf, sha256, assertDisk, putVerified, head, keyOf, openZip, eachEntry, entryStream, decodeBytes, teiPages, PARSE_VERSION } from './lib.mjs';
 import { metaDta, metaCamena, metaTcp } from './meta.mjs';
 
 const SOURCE = argOf('source');
@@ -26,7 +26,8 @@ fs.mkdirSync(path.join(dir, 'derived'), { recursive: true });
 
 const SHARD = 150;                 // texts per derived shard
 let shard = [], shardNo = 0, shardPrefix = SOURCE;
-const manifest = fs.createWriteStream(path.join(dir, 'manifest.jsonl'), { flags: SOURCE === 'eebo' ? 'a' : 'w' });   // eebo runs once per inner zip
+const manifest = fs.createWriteStream(path.join(dir, 'manifest.jsonl'));
+let writeRow = (line) => manifest.write(line);
 const pendingRows = [];
 async function flushShard() {
   if (!shard.length) return;
@@ -35,7 +36,7 @@ async function flushShard() {
   fs.writeFileSync(file, zlib.gzipSync(shard.map((r) => JSON.stringify(r)).join('\n') + '\n', { level: 6 }));
   let up = { key: null };
   if (UPLOAD) up = await putVerified(`derived/${SOURCE}/${PARSE_VERSION}/${name}`, file, { contentType: 'application/gzip', meta: { parse_version: PARSE_VERSION } });
-  for (const row of pendingRows) manifest.write(JSON.stringify({ ...row, derived_shard: name, derived_key: up.key }) + '\n');
+  for (const row of pendingRows) writeRow(JSON.stringify({ ...row, derived_shard: name, derived_key: up.key }) + '\n');
   shard = []; pendingRows.length = 0;
   assertDisk();
 }
@@ -109,22 +110,52 @@ async function camena() {
   console.log('camena texts', n);
 }
 
-// ── EEBO-TCP: one inner zip at a time (fetched by eebo-stream.mjs), P4 XML ───
-// --inner=<local zip of P4 XML> --raw-key=<its R2 key> --raw-sha=<sha256>; appends to the manifest.
+// ── EEBO-TCP ────────────────────────────────────────────────────────────────
+// The raw package is ONE object on R2 (eebo-stream.mjs put it there; it never touched this disk). Its
+// P4 XML members ("the version that we generally recommend", TCP FAQ) are zips of ~2,000 texts each:
+// one inner zip at a time is pulled to scratch by range read, parsed, and deleted. The phase comes from
+// the folder (eebo_phase1 / eebo_phase2), which is the TCP's own division. Resumable per inner zip.
 async function eebo() {
-  const inner = argOf('inner'); const rawKey = argOf('raw-key', null); const rawSha = argOf('raw-sha', null);
-  shardPrefix = `eebo-${path.basename(inner).replace(/\.zip$/i, '').replace(/[^A-Za-z0-9_-]/g, '_')}`;
-  let n = 0;
-  await eachZipEntry({ file: inner }, async (name, read) => {
-    if (!/\.xml$/i.test(name)) return;
-    const buf = await read();
-    const m = metaTcp(headerOf(buf), name);
-    await addText({ source: 'eebo-tcp', source_id: m.ids.tcp, ...m, url: `https://quod.lib.umich.edu/e/eebo/${m.ids.tcp}.0001.001`, version: argOf('version', 'dropbox eebo_all.zip'),
-      raw_key: rawKey, raw_member: name, raw_package_sha256: rawSha, licence_key: m.phase === 1 ? 'eebo-tcp-phase1-cc0' : 'eebo-tcp-phase2-public-no-licence' }, buf);
-    n++;
-  });
-  await flushShard();
-  console.log('eebo', path.basename(inner), n);
+  const rawKey = keyOf('raw/eebo-tcp/eebo_all.zip');
+  const rawInfo = JSON.parse(fs.readFileSync(path.join(dir, 'raw.json'), 'utf8'));
+  if (rawInfo.key !== rawKey || rawInfo.verified !== 'full read-back') throw new Error('eebo raw.json does not describe a verified upload');
+  const partsDir = path.join(dir, 'manifest.parts'); fs.mkdirSync(partsDir, { recursive: true });
+  const outer = await openZip({ r2Key: rawKey });
+  const inners = [];
+  await eachEntry(outer, async (entry) => { if (/^eebo_phase[12]\/P4_XML_TCP(_Ph2)?\/[A-Z]\d+\.zip$/.test(entry.fileName)) inners.push(entry); });
+  console.log('inner zips', inners.length);
+  let total = 0;
+  for (const entry of inners.sort((x, y) => x.fileName.localeCompare(y.fileName))) {
+    const phase = /^eebo_phase1\//.test(entry.fileName) ? 1 : 2;
+    const tag = `p${phase}-${path.basename(entry.fileName, '.zip')}`;
+    const part = path.join(partsDir, `${tag}.jsonl`);
+    if (fs.existsSync(part)) { total += fs.readFileSync(part, 'utf8').split('\n').filter(Boolean).length; continue; }
+    assertDisk(1);
+    const tmp = path.join(dir, `${tag}.zip`);
+    const w = fs.createWriteStream(tmp);
+    for await (const chunk of await entryStream(outer, entry)) if (!w.write(chunk)) await new Promise((res) => w.once('drain', res));
+    w.end(); await new Promise((res) => w.on('finish', res));
+    const lines = [];
+    writeRow = (line) => lines.push(line);
+    shardPrefix = `eebo-${tag}`; shardNo = 0;
+    let n = 0;
+    await eachZipEntry({ file: tmp }, async (name, read) => {
+      if (!/\.xml$/i.test(name)) return;
+      const buf = await read();
+      const m = metaTcp(headerOf(buf), name);
+      await addText({ source: 'eebo-tcp', source_id: m.ids.tcp, ...m, phase, url: `https://quod.lib.umich.edu/e/eebo/${m.ids.tcp}.0001.001`, version: `eebo_all.zip retrieved ${rawInfo.retrieved_at.slice(0, 10)}`,
+        raw_key: rawKey, raw_member: `${entry.fileName}!${name}`, raw_package_sha256: rawInfo.sha256, licence_key: phase === 1 ? 'eebo-tcp-phase1-cc0' : 'eebo-tcp-phase2-public-no-licence' }, buf);
+      n++;
+    });
+    await flushShard();
+    fs.rmSync(tmp);
+    fs.writeFileSync(part, lines.join(''));
+    total += n;
+    console.log('eebo', tag, n, 'total', total);
+  }
+  writeRow = (line) => manifest.write(line);
+  for (const f of fs.readdirSync(partsDir).sort()) manifest.write(fs.readFileSync(path.join(partsDir, f), 'utf8'));
+  console.log('eebo texts', total);
 }
 
 const run = { dta, camena, eebo }[SOURCE];

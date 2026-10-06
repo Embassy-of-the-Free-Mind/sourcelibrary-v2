@@ -25,7 +25,10 @@ import { MongoClient } from 'mongodb';
 import { bodyText, periodOf, engineOf } from '../ground-truth-5935/lib.mjs';
 import { argOf, foldLatin, PARSE_VERSION } from './lib.mjs';
 
-export const ALIGN_VERSION = 'kgram-vote-v1';   // K, thresholds and the span rule below; change any → bump
+export const ALIGN_VERSION = 'kgram-vote-v2';   // K, thresholds and the span rule below; change any → bump
+// v2 (2026-10-06): the typed page of a span is read 200 letters inside it, not 30; and a page may also END where the typed page's body ends, before its notes. Our body text
+// drops footnote and margin blocks, so under v1 every page with notes failed the page-break test (Menger
+// 1871: same title page by eye, 33% congruent). Sampling and rejection are unchanged from v1.
 const K = 12, GRAMS = 48, BUCKET_W = 64;
 const SEED = 6012;
 const SOURCE = argOf('source');
@@ -100,11 +103,11 @@ function refOf(sourceId) {
   }
   const r = shardRows.get(sourceId);
   // The stream: per typed page, fold(text) then fold(notes). `at[i]` is where page i starts.
-  const at = new Int32Array(r.pages.length + 1); const parts = [];
+  const at = new Int32Array(r.pages.length + 1), bodyEnd = new Int32Array(r.pages.length); const parts = [];
   let off = 0;
-  r.pages.forEach((p, i) => { at[i] = off; const s = foldLatin(p.text) + foldLatin(p.notes.join(' ')); parts.push(s); off += s.length; });
+  r.pages.forEach((p, i) => { at[i] = off; const t = foldLatin(p.text), s = t + foldLatin(p.notes.join(' ')); bodyEnd[i] = off + t.length; parts.push(s); off += s.length; });
   at[r.pages.length] = off;
-  return { L: parts.join(''), at, pages: r.pages.map((p) => ({ n: p.n, facs: p.facs, ref: p.ref })) };
+  return { L: parts.join(''), at, bodyEnd, pages: r.pages.map((p) => ({ n: p.n, facs: p.facs, ref: p.ref })) };
 }
 const pageAt = (at, x) => { let lo = 0, hi = at.length - 2; while (lo < hi) { const mid = (lo + hi + 1) >> 1; if (at[mid] <= x) lo = mid; else hi = mid - 1; } return lo; };
 
@@ -137,7 +140,12 @@ cands.sort((a, b) => (manifest.get(a.source_id).derived_shard + a.source_id).loc
 if (LIMIT) cands = cands.slice(0, LIMIT);
 const donePairs = new Set();
 const pairsFile = path.join(DIR, 'pairs.jsonl'), pagesFile = path.join(DIR, 'aligned-pages.jsonl');
-if (fs.existsSync(pairsFile) && !process.argv.includes('--fresh')) for (const r of readJsonl(pairsFile)) donePairs.add(`${r.source_id}|${r.book_id}`);
+if (process.argv.includes('--recheck')) {
+  // A rule change that touches only pairs whose text was found: rejections are carried over, the rest re-run.
+  const keep = readJsonl(pairsFile).filter((r) => r.verdict === 'text-not-found' || r.verdict === 'no-text').map((r) => ({ ...r, align_version: ALIGN_VERSION }));
+  for (const r of keep) donePairs.add(`${r.source_id}|${r.book_id}`);
+  fs.writeFileSync(pairsFile, keep.map((r) => JSON.stringify(r)).join('\n') + (keep.length ? '\n' : '')); fs.writeFileSync(pagesFile, '');
+} else if (fs.existsSync(pairsFile) && !process.argv.includes('--fresh')) for (const r of readJsonl(pairsFile)) donePairs.add(`${r.source_id}|${r.book_id}`);
 else { fs.writeFileSync(pairsFile, ''); fs.writeFileSync(pagesFile, ''); }
 let curRef = null, curId = null, n = 0;
 for (const c of cands) {
@@ -166,9 +174,13 @@ for (const c of cands) {
     const s = edge(p.q, ref.L, r.pos, 'start'), e = edge(p.q, ref.L, r.pos + p.q.length, 'end');
     const start = Math.max(0, s ?? r.pos), end = Math.min(ref.L.length, e ?? (start + p.q.length));
     if (end - start < 100) continue;
-    const i = pageAt(ref.at, start + 30), j = pageAt(ref.at, Math.max(start, end - 30));
+    // Which typed page the span starts and ends in is read a little way inside the span: an untagged
+    // running head at the top of our page (or a catchword at the foot) pushes the edge a few letters
+    // into the neighbouring typed page, and v1 then took the neighbour for the page.
+    const inset = Math.min(200, Math.floor((end - start) / 4));
+    const i = pageAt(ref.at, start + inset), j = pageAt(ref.at, Math.max(start, end - inset));
     const tol = Math.max(80, Math.round(0.06 * (end - start)));
-    const congruent = s != null && e != null && Math.abs(start - ref.at[i]) <= tol && Math.abs(end - ref.at[j + 1]) <= tol && j - i <= 1;
+    const congruent = s != null && e != null && Math.abs(start - ref.at[i]) <= tol && (Math.abs(end - ref.at[j + 1]) <= tol || Math.abs(end - ref.bodyEnd[j]) <= tol) && j - i <= 1;
     rows.push({ ...base, page_number: p.n, span: [start, end], ref_page_idx: [i, j], ref_pb: [ref.pages[i]?.n ?? null, ref.pages[j]?.n ?? null], ref_facs: ref.pages[i]?.facs ?? null,
       vote_share: Math.round(r.share * 1000) / 1000, overlap: Math.round(overlap(p.q, ref.L.slice(start, end)) * 1000) / 1000, edges: s != null && e != null ? 'both' : s != null ? 'start' : e != null ? 'end' : 'none', congruent, our_letters: p.q.length, engine: p.engine });
   }
