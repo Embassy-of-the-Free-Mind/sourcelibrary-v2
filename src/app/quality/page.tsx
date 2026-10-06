@@ -8,7 +8,7 @@ import ocrEvidence from '@/data/ocr-benchmark-evidence.json';
 import feedback from '@/data/quality-feedback-themes.json';
 import { listExperiments, latestCanonStatus, typedPages } from '@/lib/quality-center';
 import { AS_OF as OPEN_WORK_AS_OF, GROUPS } from '../research/quality/open/issues';
-import { LEAF, leafHref, PROSE_AS_OF, WAYS } from './content';
+import { LEAF, leafHref, PROSE_AS_OF, WAYS, WORKED_FIX } from './content';
 import ParetoCharts, { TRANSLATION } from './ParetoCharts';
 
 // The Quality Center (#5918): where text quality stands, what we are doing about it, and how
@@ -457,6 +457,34 @@ export default function QualityCenterPage() {
             <IssueLink num={5497} />) by{' '}
             <A href={`${GH}blob/main/scripts/eval/build-translation-pareto.mjs`}>scripts/eval/build-translation-pareto.mjs</A>.
           </Source>
+          <Figure
+            title={`One error and its fix: ${WORKED_FIX.title}`}
+            caption={
+              <>
+                From <A href={`${BLOB}${WORKED_FIX.writeup}`}>the write-up</A> and <IssueLink num={WORKED_FIX.issue} />. One
+                of the blank pages: <A href={WORKED_FIX.example.href}>{WORKED_FIX.example.label}</A>.
+              </>
+            }
+          >
+            <Row label="What readers saw">
+              <p className="text-[0.95rem] leading-relaxed">{WORKED_FIX.saw}</p>
+            </Row>
+            <Row label="How we measured">
+              <p className="text-[0.95rem] leading-relaxed">{WORKED_FIX.measured}</p>
+              <p className="font-mono text-sm leading-relaxed text-stone-800 mt-2">
+                printed: {WORKED_FIX.line.scan}
+                <br />
+                read: <span className="underline decoration-amber-700 decoration-2 underline-offset-4">{WORKED_FIX.line.before}</span>
+              </p>
+            </Row>
+            <Row label="The fix">
+              <p className="text-[0.95rem] leading-relaxed">{WORKED_FIX.fix}</p>
+              <p className="font-mono text-sm leading-relaxed text-stone-800 mt-2">repaired: {WORKED_FIX.line.after}</p>
+            </Row>
+            <Row label="After">
+              <p className="text-[0.95rem] leading-relaxed">{WORKED_FIX.after}</p>
+            </Row>
+          </Figure>
 
           <Sub>Running now</Sub>
           <ul className="space-y-2 text-stone-700 leading-relaxed">
