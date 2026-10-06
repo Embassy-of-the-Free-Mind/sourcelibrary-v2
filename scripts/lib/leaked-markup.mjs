@@ -44,7 +44,7 @@ const NAMED_ENTITY = {
   amp: '&', quot: '"', apos: "'", mdash: '—', ndash: '–', hellip: '…',
   lsquo: '‘', rsquo: '’', ldquo: '“', rdquo: '”', sect: '§', para: '¶', middot: '·', shy: '',
 };
-const WS_ENTITY_RUN = /(?:&(?:nbsp|ensp|emsp|thinsp);[ \t]*)+/gi;
+const WS_ENTITY_RUN = /[ \t]*(?:&(?:nbsp|ensp|emsp|thinsp);[ \t]*)+/gi;
 const ENTITY = /&(?:([a-zA-Z]{2,8})|#(\d{2,6})|#[xX]([0-9a-fA-F]{2,5}));/g;
 
 /** The continuity label the translation prompt asks for, as the model writes it. */
