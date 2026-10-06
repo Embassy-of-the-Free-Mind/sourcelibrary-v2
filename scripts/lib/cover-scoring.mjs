@@ -22,6 +22,21 @@ export const HAND_IN_FRAME_RE =
   /\b(?:human|person'?s|scanner'?s|gloved) hand\b|\bhands? (?:is |are )?(?:visible|hold(?:s|ing)|gripping|resting on|in (?:the )?frame|at the (?:edge|corner))|\bfingers? (?:is |are )?(?:visible|hold(?:s|ing)|gripping)|\bthumb (?:is |appears )?(?:visible|hold(?:s|ing)|in (?:the )?frame)/i;
 
 /**
+ * Decorated / pictorial front cover — the one kind of binding photo worth
+ * showing as a cover. Mirrored in src/lib/cover-scoring.ts (parity-tested).
+ */
+export const DECORATED_COVER_RE =
+  /\b(?:ornate|elaborate|richly decorated)\b|\bgold[\s-]?tool(?:ed|ing)\b|\bgilt (?:decoration|border|ornament|design|tooling|stamp(?:ed|ing))\b|\bdecorative (?:border|frame|design|panel|tooling|cartouche)\b|\bpictorial (?:cover|wrapper|binding|boards)\b|\billustrated (?:front )?(?:cover|wrapper|boards)\b|\bembossed (?:design|ornament|decoration|pattern)\b/i;
+/** Wear, library furniture or marbling: still just a binding snapshot. */
+export const PLAIN_BINDING_RE =
+  /\b(?:worn|peel(?:ing|ed)|damaged|scuff(?:ed|s)?|faded|torn|deteriorat\w*|stain(?:ed|s)?|sticker|shelf\s?mark|accession|call number|barcode)\b|library (?:label|stamp|sticker)|\bmarbl(?:ed|ing)\b|\bendpaper\b|\binside cover\b|\bfore-edge\b/i;
+
+function isDecoratedFrontCover(ocr) {
+  const frontCover = ocr.includes('front cover') || /\b(?:book|the) cover\b/.test(ocr) || ocr.includes('pictorial') || ocr.includes('wrapper');
+  return frontCover && DECORATED_COVER_RE.test(ocr) && !PLAIN_BINDING_RE.test(ocr);
+}
+
+/**
  * Extract page type from <page-type> tags in OCR text.
  * Returns null if no tag found.
  */
@@ -65,6 +80,14 @@ export function scorePageForCover(page, options = {}) {
   }
   if (pageType === 'digitizer-notice' || pageType === 'digitizer-insert') {
     return { score: -90, reason: 'digitizer-notice' };
+  }
+
+  // A decorated or pictorial FRONT cover is a real cover, not a binding snapshot:
+  // gold tooling, a decorative border, an illustrated wrapper. It ranks above a
+  // plain title page and below a decorated one or a frontispiece. Wear, library
+  // stickers/shelfmarks and marbling keep it in the binding-photo bucket below.
+  if (isDecoratedFrontCover(ocr)) {
+    return { score: 85 + (pageNum <= 3 ? 5 : 0), reason: 'decorated cover' };
   }
 
   // Physical binding / cover photos
