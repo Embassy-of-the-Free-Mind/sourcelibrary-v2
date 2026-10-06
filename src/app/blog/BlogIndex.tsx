@@ -100,15 +100,18 @@ function KindSection({
   posts,
   preview,
   onShowAll,
+  skip,
 }: {
   kind: BlogKind;
   posts: BlogPost[];
   preview: boolean;
   onShowAll: (kind: BlogKind) => void;
+  // A post already shown above (the Latest card), left out of the preview grid.
+  skip?: string;
 }) {
   const info = KIND_INFO[kind];
   const lead = posts.find((p) => p.slug === info.lead) ?? posts[0];
-  const others = posts.filter((p) => p !== lead);
+  const others = posts.filter((p) => p !== lead && p.slug !== skip);
   const shown = preview ? others.slice(0, PREVIEW_COUNT) : others;
 
   return (
@@ -211,7 +214,7 @@ export default function BlogIndex({ posts }: { posts: BlogPost[] }) {
             <LeadCard post={latest} priority />
           </section>
           {BLOG_KINDS.map((kind) => (
-            <KindSection key={kind} kind={kind} posts={byKind[kind]} preview onShowAll={choose} />
+            <KindSection key={kind} kind={kind} posts={byKind[kind]} preview skip={latest.slug} onShowAll={choose} />
           ))}
         </div>
       ) : (
