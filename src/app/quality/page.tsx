@@ -7,7 +7,7 @@ import ocrEvidence from '@/data/ocr-benchmark-evidence.json';
 import feedback from '@/data/quality-feedback-themes.json';
 import { listExperiments, latestCanonStatus, typedPages } from '@/lib/quality-center';
 import { AS_OF as OPEN_WORK_AS_OF, GROUPS } from '../research/quality/open/issues';
-import { PROSE_AS_OF, WAYS } from './content';
+import { MONTH_NOTE, PROSE_AS_OF, WAYS } from './content';
 
 // The Quality Center (#5918): where text quality stands, what we are doing about it, and how
 // people take part. Every number and list is read at build time from files committed on main
@@ -316,6 +316,13 @@ export default function QualityCenterPage() {
             The quality figures above come from experiments, and each experiment has a written record: the question, how
             it was run, the result, and the decision it led to. Null results and retractions are recorded too.
           </p>
+
+          {MONTH_NOTE && (
+            <>
+              <Sub>What changed this month ({MONTH_NOTE.as_of})</Sub>
+              <p className="text-secondary leading-relaxed mb-4 max-w-3xl">{MONTH_NOTE.text}</p>
+            </>
+          )}
 
           <Sub>Running now</Sub>
           <ul className="space-y-2 text-secondary leading-relaxed">

@@ -1,0 +1,70 @@
+name: Experiment log garden
+
+# The experiment log (scripts/eval/experiments/, #5939) is read by /quality and the canon
+# pages through its headers. Headers drift: a decision owed is forgotten, a later run
+# supersedes an entry a page still cites, two live verdicts disagree. This weekly sweep
+# (scripts/audit/experiments-garden.mjs, $0, no secrets) lists them in ONE tracking issue,
+# comments on it while findings persist, and closes it on the first clean run (CLAUDE.md:
+# a detector closes what it files). It also reminds when /quality's monthly "What changed
+# this month" note is missing or more than 35 days old.
+#
+# Exit 1 is a finding; exit 2 is the instrument (the log could not be read), which fails
+# the job instead of filing, so a broken checkout never reads as "the log is untidy".
+
+on:
+  schedule:
+    - cron: '35 7 * * 1'   # Mondays 07:35 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  garden:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Read the log
+        id: scan
+        run: |
+          set +e
+          node scripts/audit/experiments-garden.mjs > report.md
+          code=$?
+          echo "status=$code" >> "$GITHUB_OUTPUT"
+          cat report.md
+          if [ "$code" = "2" ]; then exit 2; fi
+
+      - name: File, update or close the tracking issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STATUS: ${{ steps.scan.outputs.status }}
+        run: |
+          TITLE="Experiment log: weekly tidy-up"
+          EXISTING=$(gh issue list --search "\"$TITLE\" in:title" --state open --json number --jq '.[0].number')
+          if [ "$STATUS" = "0" ]; then
+            if [ -n "$EXISTING" ]; then
+              gh issue close "$EXISTING" --comment "Clean run of \`scripts/audit/experiments-garden.mjs\` on $(date -u +%F). Closing (the detector closes what it files)."
+            fi
+            exit 0
+          fi
+          {
+            echo "Weekly run of \`scripts/audit/experiments-garden.mjs\` (#5939)."
+            echo
+            cat report.md
+            echo
+            echo "Fixes are header edits in \`scripts/eval/experiments/\` (status, superseded_by; never the body), a page edit, or a new entry. The schema is in \`scripts/eval/experiments/README.md\`. This issue closes itself on the first clean run."
+          } > body.md
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body-file body.md
+          else
+            gh issue create --title "$TITLE" --body-file body.md --label infra
+          fi

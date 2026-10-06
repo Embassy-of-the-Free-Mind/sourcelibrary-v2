@@ -7,6 +7,14 @@
 /** ISO date the prose on /quality was last checked against the data. */
 export const PROSE_AS_OF = '2026-10-06';
 
+/**
+ * "What changed this month" (#5939): a short dated note written by a person, shown at the top of
+ * the Experiments section — what the month's experiments changed, and what they did not settle.
+ * null renders nothing. scripts/audit/experiments-garden.mjs reminds weekly while it is missing or
+ * more than 35 days old. Keep `as_of` a quoted ISO date on the same line as the key.
+ */
+export const MONTH_NOTE: { as_of: string; text: string } | null = null;
+
 export type Door = { label: string; href: string };
 
 export type Way = {
