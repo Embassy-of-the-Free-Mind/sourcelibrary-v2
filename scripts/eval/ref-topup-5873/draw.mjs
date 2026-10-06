@@ -29,20 +29,25 @@ const tried = new Set([
 const shuffle = (a, rng) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const latinShare = (t) => { const w = stripMarkupTags(String(t || '')).split(/\s+/).filter((x) => /\p{L}{2,}/u.test(x)); return w.length ? Math.round(100 * w.filter((x) => /^[\p{Script=Latin}\p{P}\d]+$/u.test(x)).length / w.length) / 100 : null; };
 
+// --hidden: the supplementary draw (Persian and Pali only) from books that are NOT visible but have translated pages. Declared as a
+// deviation before any arm ran: every live Persian and Pali book had been tried and both languages were still short of 30.
+const HIDDEN = args.includes('--hidden');
+if (HIDDEN) for (const k of Object.keys(PREPARE)) if (!['Persian', 'Pali'].includes(k)) delete PREPARE[k];
+const SUB = HIDDEN ? '-hidden' : '';
 const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
 const db = c.db('bookstore'); const sealed = { seed: SEED, at: new Date().toISOString(), pages_per_book: NPAGES, eligible: {}, books: {} };
 try {
-  const all = await db.collection('books').find({ visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 }, language: { $regex: /^\s*(persian|hebrew|heb|arabic|pali|chinese|classical\s+chinese|sanskrit)\b/i } },
+  const all = await db.collection('books').find({ visible: HIDDEN ? { $ne: true } : true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 }, language: { $regex: /^\s*(persian|hebrew|heb|arabic|pali|chinese|classical\s+chinese|sanskrit)\b/i } },
     { projection: { id: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, pages_count: 1, pages_translated: 1 } }).toArray();
   for (const lang of Object.keys(PREPARE)) {
     const pool = all.filter((b) => langOf(b.language) === lang && !tried.has(b.id)).sort((a, b) => (a.id < b.id ? -1 : 1));
     sealed.eligible[lang] = { live_translated_books: all.filter((b) => langOf(b.language) === lang).length, already_tried: all.filter((b) => langOf(b.language) === lang && tried.has(b.id)).length, drawable: pool.length };
-    const order = shuffle(pool, makeRng(SEED + lang.length * 1000 + lang.charCodeAt(0))).slice(0, PREPARE[lang]);
+    const order = shuffle(pool, makeRng(SEED + lang.length * 1000 + lang.charCodeAt(0) + (HIDDEN ? 7 : 0))).slice(0, PREPARE[lang]);
     sealed.books[lang] = [];
     let k = 0;
     for (const b of order) {
       k++;
-      const cf = path.join(OUT, 'cands', lang, `${String(k).padStart(2, '0')}_${b.id}.json`);
+      const cf = path.join(OUT, 'cands', lang + SUB, `${String(k).padStart(2, '0')}_${b.id}.json`);
       if (fs.existsSync(cf)) { const d = JSON.parse(fs.readFileSync(cf, 'utf8')); sealed.books[lang].push({ order: k, book_id: b.id, eligible_pages: d.eligible_pages, candidates: d.candidates.map((x) => x.page_number) }); continue; } // resumable
       const lens = await db.collection('pages').aggregate([{ $match: { book_id: b.id } }, { $project: { page_number: 1, o: { $strLenCP: { $ifNull: ['$ocr.data', ''] } }, t: { $strLenCP: { $ifNull: ['$translation.data', ''] } } } }, { $sort: { page_number: 1 } }]).toArray();
       const max = lens.length ? lens[lens.length - 1].page_number : 0;
@@ -54,7 +59,7 @@ try {
         const by = Object.fromEntries(near.map((p) => [p.page_number, p.ocr?.data || '']));
         cands.push({ page_number: pn, served: true, latin_share_page: latinShare(by[pn]), latin_share_neighbours: [latinShare(by[pn - 1]), latinShare(by[pn + 1])], ocr: by[pn] });
       }
-      const dir = path.join(OUT, 'cands', lang); fs.mkdirSync(dir, { recursive: true });
+      const dir = path.join(OUT, 'cands', lang + SUB); fs.mkdirSync(dir, { recursive: true });
       fs.writeFileSync(cf, JSON.stringify({ order: k, book_id: b.id, lang_label: b.language, title: b.display_title || b.title, author: b.author ?? null, year: b.year ?? null, pages_total: lens.length, eligible_pages: ok.length, candidates: cands }, null, 1));
       sealed.books[lang].push({ order: k, book_id: b.id, eligible_pages: ok.length, candidates: picks });
     }

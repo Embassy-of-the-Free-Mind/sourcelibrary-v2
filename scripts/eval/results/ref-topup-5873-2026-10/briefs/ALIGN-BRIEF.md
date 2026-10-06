@@ -49,7 +49,7 @@ most of the job.
 archive.org (search `https://archive.org/advancedsearch.php?q=...&fl[]=identifier&fl[]=title&fl[]=year&rows=20&output=json`;
 full text `https://archive.org/download/<id>/<id>_djvu.txt`, large: save it under /tmp and grep), Project Gutenberg
 (`https://www.gutenberg.org/cache/epub/<n>/pg<n>.txt`), English Wikisource (`...index.php?title=<Title>&action=raw`),
-the Sefaria API (`https://www.sefaria.org/api/v3/texts/<Ref>?version=english`), the SuttaCentral API
+the Sefaria API (`https://www.sefaria.org/api/v3/texts/<Ref>?version=english`; call it with plain `curl -s`, WITHOUT the `-A` flag, or Cloudflare blocks it; the reply lists each version's title and licence), the SuttaCentral API
 (`https://suttacentral.net/api/bilarasuttas/<uid>/sujato`). ctext.org and sacred-texts.com are blocked.
 
 ## Output: one JSON file per book, written with python (`json.dump(..., ensure_ascii=False, indent=1)`)
