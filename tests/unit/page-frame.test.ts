@@ -127,3 +127,21 @@ describe('detectPageFrame on a tilted page', () => {
     expect(v.box.x + v.box.w).toBeGreaterThan(166);
   });
 });
+
+describe('detectPageFrame keeps printing behind a paper margin', () => {
+  it('does not take a dark headpiece below a top margin for bed', () => {
+    // Bed on the left; at the top, 10% of paper and then a dense ornament band
+    // (the Index Anglicus page in wave 1 of the sweep lost its headpiece this way).
+    // A frame must keep the band; refusing the page (it shows whole) is also safe.
+    const v = detectPageFrame(img(100, 140, (x, y) => (x < 8 ? 20 : y >= 14 && y < 19 ? 30 : undefined)), 100, 140);
+    if (v.kind === 'frame') expect(v.box.y).toBe(0);
+    else expect(v.kind).toBe('skip');
+  });
+
+  it('still trims bed behind a narrow bright sliver', () => {
+    const v = detectPageFrame(img(100, 140, (x, y) => (y < 2 ? 255 : y < 14 ? 20 : undefined)), 100, 140);
+    expect(v.kind).toBe('frame');
+    if (v.kind !== 'frame') return;
+    expect(v.box.y).toBeGreaterThanOrEqual(14);
+  });
+});

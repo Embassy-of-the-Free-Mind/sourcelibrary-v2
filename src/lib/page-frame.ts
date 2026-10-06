@@ -30,8 +30,9 @@ export interface PageFrame {
 }
 
 /** 1: one cut per side from whole-image means. 2: the innermost edge of a tilted
- *  page, so no wedge of bed shows beside it. */
-export const PAGE_FRAME_VERSION = 2;
+ *  page, so no wedge of bed shows beside it. 3: bed must reach the image edge, so
+ *  a dark printed band behind a paper margin (a headpiece, a heavy rule) is kept. */
+export const PAGE_FRAME_VERSION = 3;
 
 /** Box in pixels of the analysed (usually downsampled) image. */
 export interface PixelBox { x: number; y: number; w: number; h: number }
@@ -51,6 +52,12 @@ const MIN_KEEP = 0.6;
 const EDGE_ZONE = 0.3;
 /** A dark band narrower than this (fraction of the size) is a rule or shadow, not bed. */
 const MIN_RUN = 0.02;
+/** Bed reaches the image edge. A dark band behind more than this much PAGE-LIKE
+ *  margin (profile within PAGE_TOLERANCE of the page's brightness) is the page's
+ *  own printing: a headpiece, a heavy rule. Rulers, colour charts and the pure
+ *  white strips some scanners add are not page-like and do not count. */
+const MAX_GAP = 0.04;
+const PAGE_TOLERANCE = 0.12;
 /** Trimming less than this fraction of the area is not worth a frame. */
 const MIN_TRIM_AREA = 0.02;
 /** Bands along each side, so a tilted page edge is found where it comes furthest in. */
@@ -67,18 +74,27 @@ function median(xs: number[]): number {
   return s[Math.floor(s.length / 2)] ?? 0;
 }
 
-/** Innermost cut past a dark band in the outer EDGE_ZONE of one side. */
-function cutFrom(m: number[], thr: number, fromEnd: boolean): number {
+/**
+ * Innermost cut past the bed on one side: the dark bands that run in from the
+ * image edge, within EDGE_ZONE, with no more than MAX_GAP of page-like margin
+ * outside or between them.
+ */
+function cutFrom(m: number[], thr: number, fromEnd: boolean, ref: number): number {
   const n = m.length, zone = Math.floor(n * EDGE_ZONE), minRun = Math.max(2, Math.round(n * MIN_RUN));
-  let cut = fromEnd ? n - 1 : 0, run = 0;
+  const maxGap = Math.max(1, Math.round(n * MAX_GAP));
+  let cut = fromEnd ? n - 1 : 0, run = 0, paper = 0;
   for (let i = 0; i < zone; i++) {
     const k = fromEnd ? n - 1 - i : i;
     if (m[k] < thr) {
       run++;
       // Scanners often leave a thin bright sliver OUTSIDE the bed, so the cut is
       // the innermost qualifying run, not the first bright column from the edge.
-      if (run >= minRun) cut = fromEnd ? k - 1 : k + 1;
-    } else run = 0;
+      if (run >= minRun) { cut = fromEnd ? k - 1 : k + 1; paper = 0; }
+    } else {
+      run = 0;
+      // Past a real paper margin, a dark band is the page's own printing.
+      if (Math.abs(m[k] - ref) <= ref * PAGE_TOLERANCE && ++paper > maxGap) break;
+    }
   }
   // A run still open where the zone ends continues inward: a dark plate, not a border.
   if (run >= minRun) return fromEnd ? n - 1 : 0;
@@ -123,7 +139,7 @@ function innermostCut(
   const centre = (i: number) => a + pad + (len * (i + 0.5)) / BANDS;
   // Bands where the bed shows. Their edges lie on a line; a band mean smears it,
   // so fit the line and take its innermost end over the whole span.
-  const pts = bands.map((m, i) => [centre(i), cutFrom(m, ref * SHADOW_RATIO, fromEnd)]).filter(([, c]) => c !== outer);
+  const pts = bands.map((m, i) => [centre(i), cutFrom(m, ref * SHADOW_RATIO, fromEnd, ref)]).filter(([, c]) => c !== outer);
   if (pts.length === 0) return cut;
   let deepest = fromEnd ? Math.min(...pts.map(p => p[1])) : Math.max(...pts.map(p => p[1]));
   if (pts.length >= 2) {
@@ -179,8 +195,8 @@ export function detectPageFrame(lum: ArrayLike<number>, w: number, h: number): F
   if (ref < 40) return { kind: 'skip', reason: 'dark-page' };
   const thr = ref * DARK_RATIO;
 
-  let l = cutFrom(col, thr, false), r = cutFrom(col, thr, true);
-  let t = cutFrom(row, thr, false), b = cutFrom(row, thr, true);
+  let l = cutFrom(col, thr, false, ref), r = cutFrom(col, thr, true, ref);
+  let t = cutFrom(row, thr, false, ref), b = cutFrom(row, thr, true, ref);
 
   // Column means over the rows [y0, y1], and row means over the columns [x0, x1].
   const colsOver = (y0: number, y1: number) => {
