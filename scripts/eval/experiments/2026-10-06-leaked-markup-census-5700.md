@@ -6,7 +6,7 @@ PRIOR ART: `2026-10-03-quality-census-backfill-sizes-5700.md` sized leaked marku
 
 **Design.** `measure: count` plus by-eye precision; no model, $0, no writes. Script: `scripts/audit/leaked-markup-census.mjs`. Population: every translated page (`page_number ≥ 0`) of every live translated book (`visible`, `pages_count > 0`, `pages_translated > 0`): **22,925 books, 5,184,671 pages, exact**. The fixable classes are counted by `repairLeakedMarkup(text, { fired })` (`scripts/lib/leaked-markup.mjs`), the function the reader, `stripEditorialWrappers` and the EPUB/HTML export now call, so the count is the number of pages the fix changes. By eye: a seeded draw from a reservoir of excerpts per class, before and after.
 
-**Result.** The repair changes **51,472 pages (0.99%) in 8,733 books (38% of live translated books)**.
+**Result.** The repair changes **51,471 pages (0.99%) in 8,733 books (38% of live translated books)**.
 
 | class | example (stored text) | pages | books | by eye |
 |---|---|---:|---:|---|
@@ -17,7 +17,7 @@ PRIOR ART: `2026-10-03-quality-census-backfill-sizes-5700.md` sized leaked marku
 | `break_tag` | `</leaf-break/>`, `</column-break>` | 1,330 | 583 | 12/12 |
 | `tag_attr` | `<note original: "figuram">An astrological chart…</note>` | 765 | 418 | 40/40 |
 | `meta_attr` | `<meta type="catchword">fore</meta>` | 12 | 8 | 8/8 |
-| `stutter` | `two inches <gloss>in</gloss>ches` | 3 | 3 | 3/3 after a fix (below) |
+| `stutter` | `two inches <gloss>in</gloss>ches` | 2 | 2 | 2/2 after two fixes (below) |
 
 What each one looked like to a reader before:
 - `entity`: the reader's Markdown already decoded these. The quote API, snippets, `/text`, the PDF and the EPUB printed `&nbsp;` as six characters. 1,279,711 entities in all; `&nbsp;` is nearly all of them (verse indents, table spacing).
@@ -40,7 +40,7 @@ Counted and left alone:
 **The Tengyur `#`.** No live book is titled Derge Tengyur or Kangyur, so the Esukhia note points are not in the served population today. `stripHashMarks` (`tengyur-draft-repairs-5497.mjs`) removes them from stored text with revision rows. A read-time rule for `#` inside a line would also strip the sharps above, so there is none.
 
 **What the by-eye read changed (before any number above was final).**
-- `stutter` read 3 of 4: on a papyrus read letter by letter (`<unclear>k</unclear>ai <unclear>a</unclear>i`) it deleted a real word. A repeated word must now follow a space or opening punctuation, never `>`. Same guard on `dup_term`; recount on the 3,649 affected books: 13,799 → 13,759 pages.
+- `stutter` read 3 of 4: on a papyrus read letter by letter (`<unclear>k</unclear>ai <unclear>a</unclear>i`) it deleted a real word. A repeated word must now follow a space or opening punctuation, never `>`. Same guard on `dup_term`; recount on the 3,649 affected books: 13,799 → 13,759 pages. The rule then lost `<unclear>` and `<insert>` altogether: they mark what is on the page, and the helper also sees transcriptions (4 → 2 pages).
 - A non-continuity `<meta>` nothing closes was to be closed at its paragraph's end. Both sample hits were pages where the model printed its own instructions (`` `<meta>` `` in backticks). Rule dropped.
 - `<meta catchword="Return"/>`: rewritten as an opener it would pair with the next `</meta>` and hide the text between. A self-closing `<meta/>` is now removed.
 - `<note original: "无羊"> refers to King Xuan…` has no closer. The attribute becomes the whole note; the sentence stays body text.
@@ -49,6 +49,6 @@ Counted and left alone:
 
 **Replicated?** No. One full pass; each by-eye sample is one draw (0/40 bounds a fault rate at about 7%).
 
-**Proposed, not run: the same repair on stored text (A2).** The search snippet column and the embeddings were written from stored text, and the native apps read it raw, so they still carry these. `--apply` through `repairTranslationText` with one `page_revisions` row per page (as `cleanup-a2-5700` did) would cover the 51,472 pages. `entity` should keep the reader form (no-break spaces) there. Snippet rewrite costs 235 ms a row on the live search table.
+**Proposed, not run: the same repair on stored text (A2).** The search snippet column and the embeddings were written from stored text, and the native apps read it raw, so they still carry these. `--apply` through `repairTranslationText` with one `page_revisions` row per page (as `cleanup-a2-5700` did) would cover the 51,471 pages. `entity` should keep the reader form (no-break spaces) there. Snippet rewrite costs 235 ms a row on the live search table.
 
 **Artifact.** `scripts/lib/leaked-markup.mjs`, `scripts/audit/leaked-markup-census.mjs` (`--summary`, `--books-file`), `tests/unit/leaked-markup.test.ts`.

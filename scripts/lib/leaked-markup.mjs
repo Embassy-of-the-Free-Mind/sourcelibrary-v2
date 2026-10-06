@@ -131,10 +131,13 @@ function gapStart(text, at) {
   return i;
 }
 
-/** `inches <gloss>in</gloss>ches` → `inches`. */
+/**
+ * `inches <gloss>in</gloss>ches` → `inches`. Only the two tags the translation prompt owns:
+ * `<unclear>` and `<insert>` mark what is on the page, and this helper also sees transcriptions.
+ */
 function fixStutter(text, fired) {
-  if (!/<\/(?:gloss|term|unclear|insert)>\p{L}/u.test(text)) return text;
-  const RE = /<(gloss|term|unclear|insert)>(\p{L}{1,20})<\/\1>(\p{L}{1,20})/giu;
+  if (!/<\/(?:gloss|term)>\p{L}/u.test(text)) return text;
+  const RE = /<(gloss|term)>(\p{L}{1,20})<\/\1>(\p{L}{1,20})/giu;
   let res = '', cursor = 0, m;
   while ((m = RE.exec(text)) !== null) {
     const word = m[2] + m[3];

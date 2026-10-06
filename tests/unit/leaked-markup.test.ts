@@ -89,7 +89,7 @@ describe('repairLeakedMarkup — one rule per real page', () => {
     expect(repairLeakedMarkup(SATCHAKRA)).toBe('"In the middle of that, two inches above, is the **Vajra** and also the **Chitrini**."');
     // a mark INSIDE a word is transcription (an uncertain syllable, a drop capital) and stays
     // 69cf7d11e721f92aaa5b891e p. 274 — a papyrus read letter by letter: `kai ai`, two words
-    for (const s of ['through the al<unclear>ter</unclear>ation of', '<insert>H</insert>ere he has', 'at two <gloss>in</gloss>ches', '<unclear>k</unclear>ai <unclear>a</unclear>i <unclear>y</unclear>ph']) {
+    for (const s of ['through the al<unclear>ter</unclear>ation of', '<insert>H</insert>ere he has', 'at two <gloss>in</gloss>ches', '<unclear>k</unclear>ai <unclear>a</unclear>i <unclear>y</unclear>ph', 'gain in the <unclear>th</unclear>e Roman Catholic Church']) {
       expect(repairLeakedMarkup(s)).toBe(s);
     }
   });
