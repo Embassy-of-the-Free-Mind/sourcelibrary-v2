@@ -29,7 +29,9 @@ export interface PageFrame {
   v: number;
 }
 
-export const PAGE_FRAME_VERSION = 1;
+/** 1: one cut per side from whole-image means. 2: the innermost edge of a tilted
+ *  page, so no wedge of bed shows beside it. */
+export const PAGE_FRAME_VERSION = 2;
 
 /** Box in pixels of the analysed (usually downsampled) image. */
 export interface PixelBox { x: number; y: number; w: number; h: number }
@@ -51,6 +53,14 @@ const EDGE_ZONE = 0.3;
 const MIN_RUN = 0.02;
 /** Trimming less than this fraction of the area is not worth a frame. */
 const MIN_TRIM_AREA = 0.02;
+/** Bands along each side, so a tilted page edge is found where it comes furthest in. */
+const BANDS = 6;
+/** Most tilt the innermost-edge cut will follow (tan 3°); more than that is not a straight edge. */
+const MAX_TILT = 0.052;
+/** The innermost-edge cut also clears the grey shadow where a page edge lifts off the bed. */
+const SHADOW_RATIO = 0.8;
+/** Paper the tighter cut removes must be this bright (fraction of the page median): blank, no ink. */
+const BLANK_RATIO = 0.9;
 
 function median(xs: number[]): number {
   const s = [...xs].sort((a, b) => a - b);
@@ -86,6 +96,69 @@ function interiorDarkBand(m: number[], thr: number, a: number, b: number): boole
 }
 
 /**
+ * A scan is often slightly tilted, so the bed shows as a wedge: wide at one end
+ * of a side, absent at the other. A cut from whole-side means lands mid-slope and
+ * leaves a triangle of bed. This moves the cut to where the edge comes furthest
+ * in, measured per band, but only when the paper it gives up is blank and the
+ * slope is one a straight edge could have. Otherwise the cut stays where it was.
+ *
+ * `profile(lo, hi)` gives the mean across the band [lo, hi] of the other axis for
+ * every position along this one; `span` is that other axis's [a, b]; `at(k, j)`
+ * is the pixel at position k along this axis and j along the other.
+ */
+function innermostCut(
+  cut: number, fromEnd: boolean, thr: number, ref: number,
+  span: [number, number], profile: (lo: number, hi: number) => number[],
+  at: (k: number, j: number) => number,
+): number {
+  const [a, b] = span;
+  const pad = Math.round((b - a) * 0.04), len = b - a - 2 * pad;
+  if (len < BANDS * 2) return cut;
+  const bands: number[][] = [];
+  for (let i = 0; i < BANDS; i++) {
+    const lo = a + pad + Math.floor((len * i) / BANDS), hi = a + pad + Math.floor((len * (i + 1)) / BANDS) - 1;
+    bands.push(profile(lo, hi));
+  }
+  const n = bands[0].length, outer = fromEnd ? n - 1 : 0;
+  const centre = (i: number) => a + pad + (len * (i + 0.5)) / BANDS;
+  // Bands where the bed shows. Their edges lie on a line; a band mean smears it,
+  // so fit the line and take its innermost end over the whole span.
+  const pts = bands.map((m, i) => [centre(i), cutFrom(m, ref * SHADOW_RATIO, fromEnd)]).filter(([, c]) => c !== outer);
+  if (pts.length === 0) return cut;
+  let deepest = fromEnd ? Math.min(...pts.map(p => p[1])) : Math.max(...pts.map(p => p[1]));
+  if (pts.length >= 2) {
+    const mx = pts.reduce((s, p) => s + p[0], 0) / pts.length, my = pts.reduce((s, p) => s + p[1], 0) / pts.length;
+    const sxx = pts.reduce((s, p) => s + (p[0] - mx) ** 2, 0);
+    const slope = sxx ? pts.reduce((s, p) => s + (p[0] - mx) * (p[1] - my), 0) / sxx : 0;
+    const ends = [a, b].map(z => Math.round(my + slope * (z - mx)));
+    deepest = fromEnd ? Math.min(deepest, ...ends) : Math.max(deepest, ...ends);
+  }
+  const inner = fromEnd ? Math.min(cut, deepest) : Math.max(cut, deepest);
+  if (inner === cut) return cut;
+  if (Math.abs(inner - cut) > Math.ceil(MAX_TILT * (b - a))) return cut;
+  // What is given up must be bed or blank paper. Along each line, walk inward from
+  // the old cut: the bed (and its shadow ramp) runs into it from outside; past that, any pixel as
+  // dark as the bed is ink, and the paper must average clean.
+  const step = fromEnd ? -1 : 1;
+  for (let j = a; j <= b; j++) {
+    let k = cut;
+    // Only a dark run that continues outward past the old cut is bed.
+    const out = cut - step;
+    if (out < 0 || out >= n || at(out, j) < ref * BLANK_RATIO) {
+      while (k !== inner && at(k, j) < ref * BLANK_RATIO) k += step;
+    }
+    let sum = 0, cnt = 0;
+    for (; k !== inner; k += step) {
+      const v = at(k, j);
+      if (v < thr) return cut;
+      sum += v; cnt++;
+    }
+    if (cnt && sum / cnt < ref * BLANK_RATIO) return cut;
+  }
+  return inner;
+}
+
+/**
  * `lum` is a row-major luminance array (0–255) of a `w`×`h` image, usually a
  * copy downsampled to ~256px on the long side.
  */
@@ -108,6 +181,24 @@ export function detectPageFrame(lum: ArrayLike<number>, w: number, h: number): F
 
   let l = cutFrom(col, thr, false), r = cutFrom(col, thr, true);
   let t = cutFrom(row, thr, false), b = cutFrom(row, thr, true);
+
+  // Column means over the rows [y0, y1], and row means over the columns [x0, x1].
+  const colsOver = (y0: number, y1: number) => {
+    const m = new Array<number>(w).fill(0);
+    for (let y = y0; y <= y1; y++) for (let x = 0; x < w; x++) m[x] += lum[y * w + x];
+    return m.map(v => v / (y1 - y0 + 1));
+  };
+  const rowsOver = (x0: number, x1: number) => {
+    const m = new Array<number>(h).fill(0);
+    for (let y = 0; y < h; y++) for (let x = x0; x <= x1; x++) m[y] += lum[y * w + x];
+    return m.map(v => v / (x1 - x0 + 1));
+  };
+  const atX = (x: number, y: number) => lum[y * w + x], atY = (y: number, x: number) => lum[y * w + x];
+  l = innermostCut(l, false, thr, ref, [t, b], colsOver, atX);
+  r = innermostCut(r, true, thr, ref, [t, b], colsOver, atX);
+  t = innermostCut(t, false, thr, ref, [l, r], rowsOver, atY);
+  b = innermostCut(b, true, thr, ref, [l, r], rowsOver, atY);
+
   if (l === 0 && r === w - 1 && t === 0 && b === h - 1) return { kind: 'clean' };
 
   const ix = Math.round(w * INSET), iy = Math.round(h * INSET);
