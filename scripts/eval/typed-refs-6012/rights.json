@@ -1,0 +1,113 @@
+{
+  "issue": 6012,
+  "read_on": "2026-10-06",
+  "read_by": "headless job typed-refs-6012 (pages fetched with curl; sha256 of the fetched HTML recorded per page)",
+  "use": "Internal research, development and quality measurement only. Nothing is served to readers; no text is republished. Not legal advice.",
+  "sources": {
+    "dta": {
+      "name": "Deutsches Textarchiv (DTA), Berlin-Brandenburgische Akademie der Wissenschaften; curated since the project's end by NFDI Text+",
+      "licence_key": "dta-cc-by-sa-4.0",
+      "licence": "CC BY-SA 4.0",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "terms_pages": [
+        { "url": "https://www.deutschestextarchiv.de/doku/nutzungsbedingungen", "sha256_html": "741c86f2da0fcd4e471bf67323c537680dc6b8413e13dd63909cff8234bb5a3b" },
+        { "url": "https://www.deutschestextarchiv.de/download", "sha256_html": "492a81e24b4a9fe4e1f26a23ad19d985d6cbc2c14eeaf716a99eb18c5da967c1" }
+      ],
+      "quotes": [
+        "Die im DTA gespeicherten Volltexte können unter den nachstehend ausgeführten Bedingungen für nicht-kommerzielle Zwecke genutzt werden.",
+        "Alle Volltexte auf den Seiten des DTA stehen – soweit nicht anderweitig gekennzeichnet – unter einer Creative Commons Lizenz (CC BY-SA 4.0) zur Verfügung (das seit dem 16. Juni 2020, vorher CC BY-NC 3.0) und dürfen uneingeschränkt für nichtkommerzielle Zwecke genutzt werden. Bei einer Weiterverwendung der Texte ist auf das DTA als Urheber der elektronischen Fassung in der Form „Deutsches Textarchiv“ hinzuweisen.",
+        "Die reine Textversion eines Werkes ist von einer angegebenen Lizenz (soweit nicht gesondert gekennzeichnet) nicht betroffen. Das heißt: Die Reintext-Version eines Werkes (ohne Annotationen der XML- bzw. HTML-Versionen) kann im Sinne der Gemeinfreiheit ohne jegliche Einschränkungen benutzt werden.",
+        "Alle Inhalte dieser Seite unterstehen, soweit nicht anders gekennzeichnet, einer Creative-Commons-Lizenz. Die Rechte an den angezeigten Bilddigitalisaten, soweit nicht anders gekennzeichnet, liegen bei den besitzenden Bibliotheken.",
+        "Zitierempfehlung: Deutsches Textarchiv. Grundlage für ein Referenzkorpus der neuhochdeutschen Sprache. Herausgegeben von der Berlin-Brandenburgischen Akademie der Wissenschaften, Berlin 2026. URL: https://www.deutschestextarchiv.de/."
+      ],
+      "bulk_download": {
+        "offered": true,
+        "how": "ZIP packages of TEI-P5 XML on the download page. Used: 'DTA-Kernkorpus und Ergänzungstexte, gesamt' (5481 Texte, 579M, MD5 21731464d8a42692106d4bea636b0dd6), version 2026-02-10.",
+        "url": "https://www.deutschestextarchiv.de/media/download/dta_komplett_2026-02-10.zip"
+      },
+      "attribution_required": "Name „Deutsches Textarchiv“ as the maker of the electronic version; share-alike on any redistributed adaptation of the annotated XML. Per-text licences in each TEI header are recorded in the manifest (a few Ergänzungstexte carry their own).",
+      "notes": "The terms page says both 'CC BY-SA 4.0' and 'nichtkommerzielle Zwecke'. Our use is non-commercial internal measurement and nothing is redistributed, so both readings allow it. Page images belong to the holding libraries and are not downloaded.",
+      "verdict": "allowed: bulk download and internal use"
+    },
+    "camena": {
+      "name": "CAMENA – Corpus Automatum Multiplex Electorum Neolatinitatis Auctorum (Heidelberg / Mannheim, 1999–2013)",
+      "licence_key": "camena-cc-by-sa",
+      "licence": "CC BY-SA (the project page links version 3.0; the GitHub republication of the XML carries CC BY-SA 4.0)",
+      "licence_url": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "terms_pages": [
+        { "url": "https://mateo.uni-mannheim.de/camenahtdocs/camena_e.html", "sha256_html": "6dbfdc9adf93631b159f6709c52a16fb2d53625b01fa8fb4b1badafe10945e39", "note": "www2.uni-mannheim.de timed out; www.uni-mannheim.de redirects here" },
+        { "url": "https://github.com/nevenjovanovic/camena-neolatinlit/blob/771bb7f96826dfacdd920e48b8dfb2c33c52efe7/LICENSE.md", "note": "full text of CC BY-SA 4.0 International" },
+        { "url": "https://github.com/nevenjovanovic/camena-neolatinlit/blob/771bb7f96826dfacdd920e48b8dfb2c33c52efe7/README.md" }
+      ],
+      "quotes": [
+        "The machine-readable texts of CAMENA (and MATEO / Alte Drucke) may be used in compliance with the licence Creative Commons Attribution / Share Alike. A summary of this licence and a link to the Legal Code (the full licence) are available here. [link: http://creativecommons.org/licenses/by-sa/3.0/]",
+        "We recommend that in quoting texts reproduced in CAMENA you simply refer to the original edition, probably adding 'as digitized by the CAMENA Project, Heidelberg-Mannheim'. Our machine-readable versions of the original are not to be quoted (see above).",
+        "We ask for your perception of this policy, begging you to use our machine-readable texts with due caution and always to refer to the page images.",
+        "(GitHub README) Since its machine-readable texts were made available under the Creative Commons Attribution / Share Alike license, here we are republishing the XML files of all the CAMENA collections as a Github repository, with all the caveats of the original project regarding citing and reliability",
+        "(GitHub README) As the CAMENA Project did not provide any instructions for downloading sources, the undertaking required some ad-hoc hacks"
+      ],
+      "bulk_download": {
+        "offered": "not by the project itself (HTML/XML per text, no dump); the CC BY-SA republication on GitHub is a complete repository of the XML (1,751 files; the ITALI collection has no XML)",
+        "how": "git clone of nevenjovanovic/camena-neolatinlit at commit 771bb7f96826dfacdd920e48b8dfb2c33c52efe7 (2016-09-26); the Mannheim site is not crawled",
+        "url": "https://github.com/nevenjovanovic/camena-neolatinlit"
+      },
+      "attribution_required": "Attribution ('as digitized by the CAMENA Project, Heidelberg-Mannheim') and share-alike on redistribution. The project asks that its typed texts not be QUOTED as the text of the edition (single-keyed, uncorrected): a reference-quality caveat, recorded as such.",
+      "notes": "CAMENA's own typing is single-keyed and partly machine-normalised (POEMATA); #5126 found typos (Niprius for Nil prius). Its reference error rate is unmeasured.",
+      "verdict": "allowed: bulk download (via the licensed republication) and internal use"
+    },
+    "eebo-tcp-phase1": {
+      "name": "EEBO-TCP Phase I (25,368 texts), Text Creation Partnership, University of Michigan / Oxford",
+      "licence_key": "eebo-tcp-phase1-cc0",
+      "licence": "CC0 1.0 Universal (stated in each text's TEI header); the TCP itself says public domain, no licence terms",
+      "licence_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "terms_pages": [
+        { "url": "https://www.textpartnership.net/pages/eebo-tcp.html", "sha256_html": "9552ed15f2cd45b21351c86aa5d3805f620c4d2f48e802594617b60c3e892d3d", "note": "textcreationpartnership.org redirects here" },
+        { "url": "https://www.textpartnership.net/pages/faq.html", "sha256_html": "bc7ec25ff353351d07e6072bd891fd78857ce54162eaa8aebf5e0116c53d8a48" },
+        { "url": "https://raw.githubusercontent.com/textcreationpartnership/A00002/master/A00002.xml", "note": "a Phase I TEI header, <availability>" }
+      ],
+      "quotes": [
+        "The 25,368 texts in EEBO-TCP Phase I, initially available only to institutions that contributed to their creation, were released to the general public on January 1, 2015, and are therefore currently available for access, distribution, use, or reuse by anyone.",
+        "(TEI header, A00002) This keyboarded and encoded edition of the work described above is co-owned by the institutions providing financial support to the Early English Books Online Text Creation Partnership. This Phase I text is available for reuse, according to the terms of Creative Commons 0 1.0 Universal. The text can be copied, modified, distributed and performed, even for commercial purposes, all without asking permission.",
+        "(FAQ) we impose no restrictions whatever, and (so far as the TCP is concerned) you may do anything with them that you like: you may translate them, edit them, revise them, illustrate them, perform them, or re-publish them, with or without attribution. We regard the texts themselves as being in the public domain, and expressly disclaim any 'light' or 'thin' copyright that may be thought to adhere to our capture and encoding decisions. Nor is access and use of the texts governed by any license terms. We do suggest (not require) that courtesy and scholarly good practice dictate that you indicate who made the texts and where you got them.",
+        "(FAQ) The raw transcripts for EEBO Phases 1 and 2, ECCO, and Evans are all available for bulk download as zipped files for those wishing to do text mining or similar projects. These are substantial file transfers and should not be undertaken casually! [...] Public downloads are available from these Dropbox.com folders: [...] EEBO Phase 1 and 2 bulk files [https://www.dropbox.com/sh/pfx619wnjdck2lj/AAAeQjd_dv29oPymNoKJWfEYa?dl=0]. If for some reason, these links fail, a backup copy is mirrored on Box.com"
+      ],
+      "bulk_download": {
+        "offered": true,
+        "how": "The TCP's own Dropbox folder 'EEBO Phase 1 and 2 bulk files' (one 13.3 GB zip of the folder; P4 XML, SGML and P5 XML), fetched once. Catalogue: github.com/textcreationpartnership/Texts TCP.csv @c8ff5cf9a08a7b003032bf63f6b91cabec4254bb.",
+        "url": "https://www.dropbox.com/sh/pfx619wnjdck2lj/AAAeQjd_dv29oPymNoKJWfEYa?dl=0"
+      },
+      "attribution_required": "None required; suggested: say who made the texts and where they came from. Page images (ProQuest EEBO) are not part of this and are not downloaded.",
+      "verdict": "allowed: bulk download and internal use"
+    },
+    "eebo-tcp-phase2": {
+      "name": "EEBO-TCP Phase II (34,963 texts released), Text Creation Partnership",
+      "licence_key": "eebo-tcp-phase2-public-no-licence",
+      "licence": "No licence instrument on the TCP pages: 'freely available to the public' since 2020-08-01; the TCP regards the texts as public domain and imposes no restrictions. The per-text header statement is recorded in the manifest once the files are read.",
+      "licence_url": "https://www.textpartnership.net/pages/faq.html",
+      "terms_pages": [
+        { "url": "https://www.textpartnership.net/pages/eebo-tcp.html", "sha256_html": "9552ed15f2cd45b21351c86aa5d3805f620c4d2f48e802594617b60c3e892d3d" },
+        { "url": "https://www.textpartnership.net/pages/faq.html", "sha256_html": "bc7ec25ff353351d07e6072bd891fd78857ce54162eaa8aebf5e0116c53d8a48" }
+      ],
+      "quotes": [
+        "Since 2020, the total number of books available in Phase II came to 34,963. Several thousand additional titles may or may not appear online, but are always available 'as is' for the asking.",
+        "As of August 1, 2020, all texts produced under EEBO Phase I and Phase II were freely available to the public and will remain so.",
+        "(FAQ) For all four of the partnerships – Evans, ECCO, and EEBO Phases 1 and 2 – the period of exclusive use has long ago ended and the texts are free to anyone to access and use.",
+        "(FAQ) we impose no restrictions whatever [...] We regard the texts themselves as being in the public domain [...] Nor is access and use of the texts governed by any license terms.",
+        "(FAQ) The P5 version of EEBO-2, since it was restricted at the time of its creation, is not currently available on gitHub, a public platform; we hope to change that."
+      ],
+      "bulk_download": {
+        "offered": true,
+        "how": "Same Dropbox folder as Phase I (the FAQ names it for 'EEBO Phases 1 and 2'). The GitHub organisation holds Phase I only. TCP.csv (2015) still marks Phase II rows 'Restricted'; that column predates the 2020 release.",
+        "url": "https://www.dropbox.com/sh/pfx619wnjdck2lj/AAAeQjd_dv29oPymNoKJWfEYa?dl=0"
+      },
+      "attribution_required": "None required; suggested as for Phase I.",
+      "notes": "Phase II has no CC0 deed on the TCP pages, only the TCP's statement. Texts stay private here either way; if a Phase II text is ever to be published in benchmark/refs, read its header first.",
+      "verdict": "allowed: bulk download and internal use"
+    }
+  },
+  "storage": {
+    "raw": "R2 bucket sl-corpus-snapshots (private: no public domain, not fronted by images.sourcelibrary.org), prefix eval-refs/typed-refs-6012/raw/<source>/",
+    "derived": "same bucket, prefix eval-refs/typed-refs-6012/derived/<source>/ (normalised text with page breaks, parse_version in each row)",
+    "public_repo": "scripts, this file, the manifest (metadata and hashes), match and alignment rows (ids, offsets, scores). No corpus text."
+  }
+}
