@@ -15,7 +15,7 @@ export function Figure({ n, title, caption, children }: { n: number; title: stri
     <figure className="my-12">
       <figcaption className="mb-5">
         <span className="font-sans text-xs font-semibold uppercase tracking-[0.12em] text-accent-rust">Figure {n}</span>
-        <span className="block text-2xl md:text-3xl text-primary leading-tight mt-1">{title}</span>
+        <span className="block font-serif text-2xl md:text-3xl text-primary leading-tight mt-1">{title}</span>
       </figcaption>
       {children}
       {caption && <p className="font-sans text-sm text-muted leading-relaxed mt-4">{caption}</p>}
@@ -89,7 +89,7 @@ export function LineFigure({ books, readable, languages }: { books: number; read
               }`}
             >
               <div className="font-sans text-xs text-accent-rust tabular-nums">{i + 1}</div>
-              <div className="text-xl text-primary leading-tight mb-2">{s.name}</div>
+              <div className="font-serif text-xl text-primary leading-tight mb-2">{s.name}</div>
               <p className="font-sans text-[13px] text-secondary leading-snug mb-3">{s.does}</p>
               <p className={`font-sans text-[13px] leading-snug font-medium ${s.pending ? 'text-accent-rust' : 'text-primary'}`}>
                 {s.out}
