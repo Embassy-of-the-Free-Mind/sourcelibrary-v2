@@ -216,3 +216,22 @@ describe('#5901 gate, third sample', () => {
     expect(separateTermDefinitions(t)).toBe(t);
   });
 });
+
+describe('#5901 re-scan: one head with three different texts is a run of labels the page prints', () => {
+  // 69dc55becb6f7429748b92f5 p13 — captions round a urine wheel
+  const wheel = '-><term>Urine color: yellow like pure and intense gold</term><-\n\n-><term>Urine color: almost yellow like orpiment-like crocus</term><-\n\n-><term>Urine color: almost pale, such that a flame of fire does not remit it</term><-';
+  it('leaves them, and notes-off still prints them', () => {
+    expect(separateTermDefinitions(wheel)).toBe(wheel);
+    expect(applyNotesOff(wheel)).toContain('almost pale, such that a flame of fire does not remit it');
+  });
+  it('still splits one definition a model repeats (695575b157e3b773024f206d p459), and a word that is also a label elsewhere', () => {
+    const d = 'a <term>diapason: the interval of an octave</term>, the <term>diapason: the interval of an octave</term> and the <term>diapason: the interval of an octave</term>';
+    expect(separateTermDefinitions(d)).toBe(d.replace(/<term>diapason: ([^<]+)<\/term>/g, '<term>diapason</term> <note>$1</note>'));
+    expect(separateTermDefinitions('each planet in its terms <term>terms: specific sections of each zodiac sign ruled by a particular planet</term> is'))
+      .toBe('each planet in its terms <note>specific sections of each zodiac sign ruled by a particular planet</note> is');
+  });
+  it('still splits a head defined once or twice', () => {
+    const t = 'the <term>Luna: the alchemical name for silver</term> and again <term>Luna: the alchemical name for silver</term>';
+    expect(separateTermDefinitions(t)).toBe('the <term>Luna</term> <note>the alchemical name for silver</note> and again <term>Luna</term> <note>the alchemical name for silver</note>');
+  });
+});

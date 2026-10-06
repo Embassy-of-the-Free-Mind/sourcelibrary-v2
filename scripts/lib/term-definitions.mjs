@@ -195,6 +195,9 @@ export function headPrecedes(before, head) {
   return false;
 }
 
+/** This many chips with one head and different text on a page are the page's own labels. */
+const REPEATED_LABEL = 3;
+
 /** Annotation spans a `<note>` must not be written into (src/lib/normalize-annotation-spans.ts, plus the panel tags). */
 const SPAN_TAG = /<(\/?)(note|margin|gloss|insert|unclear|image-desc|interp|meta)(?:\s[^>]*)?>/gi;
 
@@ -232,9 +235,21 @@ export function splitInlineTermDefinitions(text, { outsideSpans = false } = {}) 
   const n = { split: 0, head_dropped: 0, apparatus: 0, in_span: 0 };
   if (!text || !/<term>/i.test(text)) return { text, n };
   const inSpan = outsideSpans ? insideSpan(text) : null;
+  // One head given three DIFFERENT "definitions" on a page is a run of labelled entries the
+  // page prints — `Urine color: yellow like pure gold`, `Urine color: almost pale…` round a
+  // urine wheel — not a definition. (A model repeating one definition says the same thing each time.)
+  /** @type {Map<string, Set<string>>} */
+  const seen = new Map();
+  for (const m of text.matchAll(/<term>([^<\n]*?)<\/term>/gi)) {
+    const sp = splitTermDefinition(m[1]);
+    if (!sp || APPARATUS_HEAD.test(sp.head)) continue;
+    const key = sp.head.toLowerCase();
+    seen.set(key, (seen.get(key) || new Set()).add(sp.definition.toLowerCase()));
+  }
   const out = text.replace(/<term>([^<\n]*?)<\/term>/gi, (whole, body, offset) => {
     const split = splitTermDefinition(body);
     if (!split) return whole;
+    if ((seen.get(split.head.toLowerCase())?.size || 0) >= REPEATED_LABEL) return whole;
     if (inSpan && inSpan(offset)) { n.in_span++; return whole; }
     if (APPARATUS_HEAD.test(split.head)) { n.apparatus++; return `<note>${body.trim()}</note>`; }
     const note = `<note>${split.definition}</note>`;
