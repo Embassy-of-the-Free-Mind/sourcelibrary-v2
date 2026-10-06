@@ -65,7 +65,8 @@ const REPEATS = argOf('repeat', 'gemini-3.1-flash-lite-b').split(',').filter(Boo
 // a repeat arm is named <engine>-b; twins never count as independent support for each other
 const isTwin = (a, b) => (REPEATS.includes(a) && a.replace(/-b$/, '') === b) || (REPEATS.includes(b) && b.replace(/-b$/, '') === a);
 const ONLY = argOf('stratum') ? argOf('stratum').split(',') : null;
-const REFS_DIR = path.join(__dirname, 'benchmark', 'refs');
+// --refs-dir: a folded copy of the references (#5924's latin-norm@1 view); default unchanged
+const REFS_DIR = argOf('refs-dir', path.join(__dirname, 'benchmark', 'refs'));
 if (!ROOT) { console.error('--root required'); process.exit(1); }
 
 // ── normalisation ──────────────────────────────────────────────────
