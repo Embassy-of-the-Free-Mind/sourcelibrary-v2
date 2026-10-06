@@ -1,5 +1,6 @@
 import { pipeTableToHtml } from '@/lib/markdown-table-html';
 import { applyNotesOff } from '@/lib/notes-off';
+import { separateTermDefinitions } from '@/lib/term-definitions';
 import { stripEditorialWrapperBlocks } from '@/lib/strip-editorial-wrappers';
 
 /**
@@ -23,6 +24,9 @@ export function markdownToHtml(text: string, opts?: { stripNotes?: boolean }): s
 
   // Remove any standalone URLs
   html = html.replace(/https?:\/\/[^\s\)]+/g, '');
+
+  // The model's definitions inside <term> chips are notes, in both modes (#5895).
+  html = separateTermDefinitions(html);
 
   // Notes off (scholarly EPUB): the AI's commentary goes, the transcription stays.
   // This used to delete <margin>/<gloss> CONTENT along with the note, and to leave

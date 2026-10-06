@@ -14,6 +14,7 @@ import { normalizeAnnotationSpans } from '@/lib/normalize-annotation-spans';
 import { useLocale } from '@/lib/i18n';
 import { getReaderStrings } from '@/lib/reader-strings';
 import { applyNotesOff } from '@/lib/notes-off';
+import { separateTermDefinitions } from '@/lib/term-definitions';
 import AiBadge from '@/components/ui/AiBadge';
 
 /**
@@ -960,7 +961,9 @@ export function prepareNotesMarkdown(
   // notes break every lazy pairing regex below — AI description then renders
   // indistinguishable from the book's own text. Must run before any helper that
   // pairs tags with `<note>[\s\S]*?<\/note>`-style regexes.
-  const withNormalizedSpans = normalizeAnnotationSpans(withBracketTags);
+  // The model's own definitions, written inside <term> or as a <gloss> after one,
+  // become <note>s so they are labelled — and hidden — as commentary (#5895).
+  const withNormalizedSpans = separateTermDefinitions(normalizeAnnotationSpans(withBracketTags));
   // For non-text page types (frontispiece, illustration, etc.), all content is AI description.
   // Check the prop and the model's own <page-type> tag (captured into metadata) — but only
   // treat the page as description-only when no genuine transcribed text survives outside the
