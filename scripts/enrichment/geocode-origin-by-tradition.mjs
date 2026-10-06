@@ -43,6 +43,10 @@ const DRY_RUN = process.argv.includes('--dry-run');
  * Keys are normalized (lowercase, alpha-only). Coordinates point at the
  * historic center of the textual tradition, not a modern administrative seat.
  */
+const YUCATAN      = { city: 'Chichén Itzá', country: 'Mexico',    lat: 20.6843, lng: -88.5678 };
+const QUMARKAJ     = { city: "Q'umarkaj",    country: 'Guatemala', lat: 15.0225, lng: -91.1720 };
+const TENOCHTITLAN = { city: 'Tenochtitlan', country: 'Mexico',    lat: 19.4326, lng: -99.1332 };
+
 const ORIGIN_TRADITIONS = {
   // East / Inner Asia
   tibetan:   { city: 'Lhasa',        country: 'Tibet',        lat: 29.6520, lng: 91.1721 },
@@ -70,6 +74,7 @@ const ORIGIN_TRADITIONS = {
   sumerian:  { city: 'Nippur',       country: 'Iraq',         lat: 32.1264, lng: 45.2317 },
   akkadian:  { city: 'Babylon',      country: 'Iraq',         lat: 32.5355, lng: 44.4275 },
   egyptian:  { city: 'Thebes',       country: 'Egypt',        lat: 25.6872, lng: 32.6396 },
+  hieratic:  { city: 'Thebes',       country: 'Egypt',        lat: 25.6872, lng: 32.6396 },
   coptic:    { city: 'Alexandria',   country: 'Egypt',        lat: 31.2001, lng: 29.9187 },
 
   // Caucasus / Levant
@@ -84,9 +89,20 @@ const ORIGIN_TRADITIONS = {
   // Mendoza, Selden, the Popol Vuh and Chilam Balam manuscripts) carry no
   // imprint, so before this they had no dot while their 19th-century European
   // facsimiles sat at Paris and Berlin.
-  yucatecmaya: { city: 'Chichén Itzá', country: 'Mexico',    lat: 20.6843, lng: -88.5678 },
-  kiche:     { city: "Q'umarkaj",    country: 'Guatemala',    lat: 15.0225, lng: -91.1720 },
-  nahuatl:   { city: 'Tenochtitlan', country: 'Mexico',       lat: 19.4326, lng: -99.1332 },
+  // Labels as stored are keys here, not aliases: the alias table may only join
+  // spellings of ONE language (tests/unit/language-normalize-parity.test.ts),
+  // and Maya glyphs, Yucatec and K'iche' are different languages that share
+  // a heartland.
+  yucatecmaya:            YUCATAN,
+  mayahieroglyphs:        YUCATAN,
+  mayahieroglyphicscript: YUCATAN,
+  kiche:            QUMARKAJ,
+  quiche:           QUMARKAJ,
+  kichemaya:        QUMARKAJ,
+  quichemaya:       QUMARKAJ,
+  kichemayaspanish: QUMARKAJ,
+  nahuatl:        TENOCHTITLAN,
+  nahuatlspanish: TENOCHTITLAN,
   mixtec:    { city: 'Tilantongo',   country: 'Mexico',       lat: 17.2500, lng: -97.2900 },
 
   // More South / Southeast Asia
@@ -103,6 +119,7 @@ const ORIGIN_TRADITIONS = {
   // Turkic, Caucasus
   ottomanturkish: { city: 'Istanbul', country: 'Turkey',      lat: 41.0082, lng: 28.9784 },
   chagataiturkish:{ city: 'Herat',    country: 'Afghanistan', lat: 34.3529, lng: 62.2040 },
+  chagatai:       { city: 'Herat',    country: 'Afghanistan', lat: 34.3529, lng: 62.2040 },
   georgian:  { city: 'Mtskheta',     country: 'Georgia',      lat: 41.8456, lng: 44.7208 },
 
   // Africa, Pacific, Indian Ocean
@@ -129,12 +146,8 @@ function normalizeLanguage(raw) {
     egyptianhieroglyphs: 'egyptian', ancientegyptian: 'egyptian', egyptian: 'egyptian',
     classicalchinese: 'chinese', literarychinese: 'chinese', mandarin: 'chinese',
     classicaltibetan: 'tibetan',
-    demotic: 'egyptian', hieratic: 'egyptian',
+    demotic: 'egyptian',
     oldjavanese: 'javanese',
-    mayahieroglyphs: 'yucatecmaya', mayahieroglyphicscript: 'yucatecmaya', yucatec: 'yucatecmaya',
-    quichemaya: 'kiche', kichemaya: 'kiche', kichemayaspanish: 'kiche', quiche: 'kiche',
-    nahuatlspanish: 'nahuatl',
-    ottoman: 'ottomanturkish', chagatai: 'chagataiturkish',
   };
   if (aliases[k]) return aliases[k];
   return ORIGIN_TRADITIONS[k] ? k : null;
