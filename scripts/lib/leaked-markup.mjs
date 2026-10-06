@@ -33,10 +33,11 @@
  *   hash          heading hashes that are not at the start of a line (`BOOK THREE ###`,
  *                 `25 ### That the cause…`): Markdown prints them.
  *
- * NOT here, on purpose: `<term>X: definition</term>` and model-written `<gloss>` (#5700, 2026-10-06
- * spot check — they need a judgement, not a deletion); a closed continuity `<meta>` that holds
- * page text (`metaPayload()` in page-integrity.mjs, #5305); the Esukhia `#` note points
- * (`stripHashMarks` in tengyur-draft-repairs-5497.mjs — inside a line a `#` can be the source's).
+ * NOT here, on purpose: `<term>X: definition</term>` and a model-written `<gloss>` after a term
+ * (src/lib/term-definitions.ts, #5895 — it runs after this on the reader and the exports); a
+ * closed continuity `<meta>` that holds page text (`metaPayload()` in page-integrity.mjs, #5305);
+ * the Esukhia `#` note points (`stripHashMarks` in tengyur-draft-repairs-5497.mjs — inside a line
+ * a `#` can be the source's: `C#`, `# 2`).
  */
 
 const WS_ENTITY = { nbsp: ' ', ensp: ' ', emsp: ' ', thinsp: ' ' };
