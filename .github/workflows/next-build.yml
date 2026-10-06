@@ -2,12 +2,13 @@ name: Next build check
 
 # Does this PR still compile as a Next.js production build? (#5976, #5990)
 #
-# Vercel previews used to answer that, at ~5 min of paid build time per push
-# and in the ONE build slot production deploys queue behind. Previews are now
-# opt-in (vercel.json `git.deploymentEnabled`: only `main` and `preview/**`
-# deploy), so this job is the build check: compile-only, free (public repo),
-# and skipped in seconds when the PR touches nothing the app bundles — the same
-# buildInputs() list scripts/vercel-ignore-build.mjs uses for production.
+# Vercel previews used to answer that, in the ONE build slot production
+# deploys queue behind. Previews are now opt-in (#5980: `[preview]` in the
+# commit message or a `preview/` branch), so without this job a PR that breaks
+# the Next build would merge and leave production on the previous deploy.
+# Compile-only, free (public repo), and skipped in seconds when the PR touches
+# nothing the app bundles — the same buildInputs() list that
+# scripts/vercel-ignore-build.mjs uses for production.
 #
 # Compile-only means no prerender, so pages that fail only while rendering
 # against production data are NOT caught here; production still is the test
@@ -37,9 +38,14 @@ jobs:
         id: inputs
         env:
           BASE: ${{ github.event.pull_request.base.sha }}
+        # A change to this workflow builds too, so the check is exercised when it changes.
         run: |
           node scripts/vercel-ignore-build.mjs --changed-since "$BASE" | tee inputs.txt
-          grep '^build=' inputs.txt >> "$GITHUB_OUTPUT"
+          if git diff --quiet "$(git merge-base "$BASE" HEAD)" HEAD -- .github/workflows/next-build.yml; then
+            grep '^build=' inputs.txt >> "$GITHUB_OUTPUT"
+          else
+            echo "next-build.yml changed: building"; echo "build=yes" >> "$GITHUB_OUTPUT"
+          fi
 
       - uses: actions/setup-node@v4
         if: steps.inputs.outputs.build == 'yes'

@@ -6,16 +6,17 @@
 
 ---
 
-## Since 2026-10-06 a PR has no Vercel check unless you asked for a preview
+## Since 2026-10-06 a PR's Vercel preview is skipped unless you asked for one
 
-`vercel.json` `git.deploymentEnabled` deploys only `main` and `preview/**` branches (#5976, #5990).
-Preview builds were ~$112/mo of build minutes and held the one build slot production queues behind,
-for previews nobody opened. **The build check is now `next-build`** (`next-build.yml`, compile-only,
-free on Actions, skipped when no build input changed). A FAILED or running `next-build` holds
-`auto-merge.mjs`; an absent one does not. It does not prerender, so a page that fails only when
-rendered against real data still surfaces at the production build, which leaves the previous deploy
-live. **To get a preview** of a branch: `git push origin HEAD:preview/<name>` (or `vercel` from the
-worktree, which ignores the git setting). The rest of this section applies to those previews.
+`scripts/vercel-ignore-build.mjs` skips a git-triggered preview unless the commit message contains
+`[preview]` or the branch starts with `preview/` (#5980). A skipped preview still waits in the
+one-slot queue until it reaches a builder, so its Vercel check can sit PENDING for a while and then
+read as skipped. That is not a build result. **The build check is now `next-build`**
+(`next-build.yml`: compile-only, free on Actions, skipped in seconds when the PR touches no build
+input, #5990). A FAILED or running `next-build` holds `auto-merge.mjs`; an absent one does not. It
+does not prerender, so a page that fails only when rendered against real data still surfaces at the
+production build, which leaves the previous deploy live. The rest of this section applies to the
+previews you do ask for.
 
 ## The Vercel check can be red while the build succeeded
 
