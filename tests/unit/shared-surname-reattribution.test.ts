@@ -6,7 +6,7 @@
  */
 import { describe, it, expect } from 'vitest';
 
-import { applyPlanToBooks, decidePage, SURNAMES, fold } from '../../scripts/audit/shared-surname-reattribution-plan.mjs';
+import { applyPlanToBooks, byEyeVerdict, decidePage, SURNAMES, fold } from '../../scripts/audit/shared-surname-reattribution-plan.mjs';
 import { entityCounters } from '../../scripts/lib/entity-page-match.mjs';
 
 const entry = (book_id: string, pages: number[], extra: Record<string, unknown> = {}) => ({
@@ -25,6 +25,8 @@ describe('applyPlanToBooks', () => {
     expect(out.targets.roger).toEqual([entry('b1', [3])]);
     expect(out.targets.francis).toEqual([entry('b1', [7])]);
     expect(out.moves.map(m => [m.person, m.pages, m.tiers])).toEqual([['roger', [3], ['printed']], ['francis', [7], ['note']]]);
+    // Neither record had the book: a later run must not read these entries as same-book evidence.
+    expect(out.moves.map(m => m.target_had_book)).toEqual([false, false]);
   });
 
   it('drops the bare entry when every page moved, and unions pages into a page-precise target entry', () => {
@@ -35,6 +37,7 @@ describe('applyPlanToBooks', () => {
     });
     expect(out.bare).toEqual([entry('b2', [1])]);
     expect(out.targets.roger).toEqual([entry('b1', [4, 12, 30]), entry('b9', [2])]);
+    expect(out.moves[0].target_had_book).toBe(true);
     // Every mention is still counted once: 3 before on the bare record + 3 on Roger, 1 shared page.
     expect(entityCounters(out.bare).total_mentions + entityCounters(out.targets.roger).total_mentions).toBe(1 + 4);
   });
@@ -93,6 +96,23 @@ describe('decidePage (Bacon)', () => {
     expect(decidePage(rule, { printed: fold('as Rogerius Bacon saith'), editorial: '', bookYear: 1650, sameBook: [] })).toEqual({ person: 'roger', tier: 'printed' });
     expect(decidePage(rule, { printed: fold('Bacon, serjeant'), editorial: '', bookYear: 1329, sameBook: [] }).tier).toBe('date');
     expect(decidePage(rule, { printed: fold('Bacon'), editorial: '', bookYear: 1700, sameBook: ['roger', 'francis'] }).person).toBeNull();
+  });
+});
+
+describe('byEyeVerdict', () => {
+  const rule = SURNAMES.Bacon;
+  it('outranks the tiers for a page that was read, and says nothing about one that was not', () => {
+    // Rozanov names Roger Bacon once in full; "the logic of Bacon" on p.120 is Francis.
+    expect(byEyeVerdict(rule, '69af41912a17c2103c8205a5', 120)).toEqual({ person: 'francis', tier: 'by-eye' });
+    expect(byEyeVerdict(rule, '69c8597a6c6f3cc53c8545c9', -229)).toEqual({ person: null, tier: 'by-eye' });
+    expect(byEyeVerdict(rule, '69af41912a17c2103c8205a5', 9999)).toBeNull();
+    expect(byEyeVerdict(rule, 'no-such-book', 1)).toBeNull();
+  });
+
+  it('every entry names a configured person or "stay"', () => {
+    const keys = new Set([...rule.persons.map(p => p.key), 'stay']);
+    for (const pages of Object.values(rule.byEye)) for (const v of Object.values(pages)) expect(keys.has(v as string)).toBe(true);
+    expect(() => byEyeVerdict({ persons: rule.persons, byEye: { b: { 1: 'nobody' } } }, 'b', 1)).toThrow(/unknown person/);
   });
 });
 

@@ -31,6 +31,13 @@
  *   4 note       the translation's editorial note or keywords on the page name one of them.
  * Tiers 1 and 2 disagreeing, or a tier naming both, leaves the page unresolved.
  *
+ * A by-eye verdict in the surname's `byEye` table comes before all four. It is there because tier 3
+ * is weaker than its first check said (5 of 5): after the Bacon apply every same-book move was
+ * read, and 143 of 163 were right, 15 wrong, 5 undecidable. The wrong ones cluster by book: a
+ * history of logic that names Roger Bacon once in full and means Francis on seven other pages.
+ * Tier 4, read in full: 59 of 61 right, 2 undecidable. Tier 1 was sampled only (12 of 12).
+ * So: READ EVERY same-book and note proposal before an apply, and enter what was read here.
+ *
  * Usage:
  *   node --env-file=.env.production.local scripts/audit/shared-surname-reattribution-plan.mjs --surname Bacon [--out plan.json] [--check verdicts.tsv --sample sample.jsonl]
  *   … --surname Bacon --apply --undo-out undo.json [--out plan.json]
@@ -55,6 +62,32 @@ const arg = (flag, dflt) => { const i = process.argv.indexOf(flag); return i > 0
 export const SURNAMES = {
   Bacon: {
     needle: /\bbac(c?h?o|on)/,
+    // book id → page → who the page means, read by eye on 2026-10-06. 'stay' = neither can be
+    // shown (or it is a third Bacon), so the mention stays on the bare record.
+    byEye: {
+      // Rozanov, O ponimanii (1886): "the logic of Bacon" against Aristotle's, induction.
+      '69af41912a17c2103c8205a5': { 113: 'francis', 120: 'francis', 122: 'francis', 332: 'francis', 457: 'francis', 475: 'francis', 541: 'francis' },
+      // Kittredge, Witchcraft (1929): "the deadliest poisons practised by the West Indians" (Sylva sylvarum).
+      '699069ee1cf6ed5fbc8f4589': { 155: 'francis' },
+      // Dutens, Recherches (1766): "Ramus, Bacon, Gassendi, Descartes, Newton".
+      '69c73f1a6a0f3d112faf7a97': { '-13': 'francis' },
+      // Blavatsky, Isis Unveiled (1877): p.459 Balfour Stewart quoting Bacon; p.107 "conviction
+      // comes not through arguments but through experiments", which could be either man.
+      '69528a4fab34727b1f04eab6': { 459: 'francis', 107: 'stay' },
+      // Ennemoser, History of Magic II (1854): the same saying.
+      '699069e81cf6ed5fbc8f3f00': { 29: 'stay' },
+      // Picard, Superstitions (1733): Bacon on garlic and the lodestone; not decidable from the page.
+      '69c828ae6c6f3cc53c84c46c': { 164: 'stay' },
+      // Wirdig, Nova medicina spirituum (1673): the powers of phantasy "according to Bacon".
+      '69bd9f35f6d63c919747fc30': { 179: 'stay', 191: 'stay' },
+      // Theatrum sympateticum (1709): recipes "from the Physician Bacon", a third man.
+      '69c8597a6c6f3cc53c8545c9': { '-275': 'stay', '-229': 'stay', 367: 'stay', 456: 'stay' },
+      // Francis Bacon, Scripta (1653), Temporis partus masculus: "qualis est Bacon" is Francis on Roger.
+      '69b2ff88a1a4246ddb45b1e1': { 496: 'roger' },
+      // Raynaud, Theologia naturalis (1622): a scholastic "Bacon" on the Intelligences, probably
+      // John Baconthorpe; the translator's note says Roger.
+      '69c7faaf6c6f3cc53c842b61': { 185: 'stay', 187: 'stay' },
+    },
     persons: [
       {
         key: 'roger', name: 'Roger Bacon', wikidata_id: 'Q171677', citedFrom: 1260,
@@ -177,7 +210,7 @@ export function applyPlanToBooks({ bareBooks, targetBooks, rows }) {
           throw new Error(`book ${entry.book_id}: the ${person} record has an unmarked legacy entry with pages; repair it first`);
         }
       }
-      moves.push({ book_id: entry.book_id, person, pages, whole: m.whole, tiers: [...m.tiers].sort(), bare_entry_before: entry });
+      moves.push({ book_id: entry.book_id, person, pages, whole: m.whole, tiers: [...m.tiers].sort(), target_had_book: at !== -1, bare_entry_before: entry });
     }
     const left = (entry.pages || []).filter(n => !gone.has(n));
     if (whole.length === 0 && left.length > 0) bare.push({ ...entry, pages: left });
@@ -249,7 +282,7 @@ async function applyPlan({ client, db, surname, rule, bare, targets, rows, undoO
   const targetOf = Object.fromEntries(rule.persons.map(p => [p.key, { _id: String(targetDocs[p.key]._id), name: p.name, wikidata_id: p.wikidata_id }]));
   await recordSweepActions(db, next.moves.map(m => ({
     sweep: SWEEP, book_id: m.book_id, action: 'entity-mention-moved',
-    detail: { surname, from: { _id: String(bare._id), name: bare.name }, to: targetOf[m.person], pages: m.pages, whole_entry: m.whole, tiers: m.tiers, bare_entry_before: m.bare_entry_before },
+    detail: { surname, from: { _id: String(bare._id), name: bare.name }, to: targetOf[m.person], pages: m.pages, whole_entry: m.whole, tiers: m.tiers, target_had_book: m.target_had_book, bare_entry_before: m.bare_entry_before },
   })));
   for (const w of writes) {
     console.log(`  ${w.doc.name}: books ${w.doc.books?.length ?? 0} -> ${w.counters.book_count}, mentions ${w.doc.total_mentions ?? '?'} -> ${w.counters.total_mentions}`);
@@ -273,9 +306,22 @@ async function undo(file) {
       });
       console.log(`${d.name}: ${res.matchedCount === 1 ? `restored ${d.before.books.length} book entries` : 'NOT restored: changed since the apply (re-run with --force to overwrite)'}`);
     }
+    // The move rows of the undone apply stay in sweep_log; this row marks them as undone.
+    await recordSweepActions(db, [{ sweep: SWEEP, book_id: `entity:${saved.docs[0]._id}`, action: 'entity-moves-undone', detail: { surname: saved.surname, undo_file: file } }]);
   } finally {
     await client.close();
   }
+}
+
+/**
+ * A page read by eye outranks every tier. Pure.
+ * @returns {{ person: string|null, tier: 'by-eye' } | null} null when nobody has read this page
+ */
+export function byEyeVerdict(rule, bookId, page) {
+  const verdict = rule.byEye?.[bookId]?.[String(page)];
+  if (!verdict) return null;
+  if (verdict !== 'stay' && !rule.persons.some(p => p.key === verdict)) throw new Error(`byEye ${bookId} p.${page}: unknown person "${verdict}"`);
+  return { person: verdict === 'stay' ? null : verdict, tier: 'by-eye' };
 }
 
 async function main() {
@@ -305,6 +351,15 @@ async function main() {
       { $limit: 300 },
       { $project: { name: 1, wikidata_id: 1, merged_into: 1, book_ids: '$books.book_id' } },
     ]).toArray();
+    // A book that reached a person's record only through an earlier run of this plan is not
+    // evidence for the same-book tier: counted, the plan would confirm itself (a dry run after
+    // the first Bacon apply proposed 21 more moves on that ground alone).
+    const sweepLog = db.collection('sweep_log');
+    const lastUndo = await sweepLog.find({ sweep: SWEEP, action: 'entity-moves-undone', 'detail.surname': surname }).sort({ timestamp: -1 }).limit(1).next();
+    const planMade = new Set((await sweepLog.find({
+      sweep: SWEEP, action: 'entity-mention-moved', 'detail.surname': surname, 'detail.target_had_book': false,
+      ...(lastUndo ? { timestamp: { $gt: lastUndo.timestamp } } : {}),
+    }).project({ book_id: 1, 'detail.to._id': 1 }).toArray()).map(r => `${r.detail.to._id}:${r.book_id}`));
     const booksOf = new Map(rule.persons.map(p => [p.key, new Set()]));
     const targets = new Map(rule.persons.map(p => [p.key, []]));
     for (const r of full) {
@@ -312,7 +367,7 @@ async function main() {
       const p = rule.persons.find(x => x.wikidata_id === r.wikidata_id);
       if (!p || fold(r.name) === fold(surname)) continue;
       targets.get(p.key).push({ _id: String(r._id), name: r.name, books: (r.book_ids || []).length });
-      for (const id of r.book_ids || []) booksOf.get(p.key).add(id);
+      for (const id of r.book_ids || []) if (!planMade.has(`${r._id}:${id}`)) booksOf.get(p.key).add(id);
     }
 
     const byBook = new Map();
@@ -337,7 +392,7 @@ async function main() {
       for (const n of pages) {
         const text = splitPageText(byNumber.get(n));
         const named = rule.needle.test(text.printed);
-        const d = decidePage(rule, { ...text, bookYear, sameBook });
+        const d = byEyeVerdict(rule, entry.book_id, n) ?? decidePage(rule, { ...text, bookYear, sameBook });
         rows.push({ book_id: entry.book_id, page: n, book_year: bookYear ?? null, ...d, name_printed: named, precision: 'page' });
       }
     }
