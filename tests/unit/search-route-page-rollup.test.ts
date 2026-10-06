@@ -9,6 +9,7 @@ const state = vi.hoisted(() => ({
   bookLaneIds: [] as string[],
   aggregates: [] as any[][],
   logged: [] as any[],
+  facetHangs: false,
 }));
 
 /** 25 title-matching books (b0…b24), and 4 books that only print the name on their pages. */
@@ -45,6 +46,7 @@ const db = {
           state.aggregates.push(pipeline);
           const first = pipeline[0];
           if (first.$searchMeta) {
+            if (state.facetHangs) return { toArray: () => new Promise(() => {}) };
             // Pages printing the name, per book. `study` has the most by far.
             return cursor([{ facet: { book: { buckets: [
               { _id: 'study', count: 51 }, { _id: 'hidden-one', count: 30 },
@@ -82,6 +84,8 @@ beforeEach(() => {
   state.bookLaneIds = [];
   state.aggregates = [];
   state.logged = [];
+  state.facetHangs = false;
+  vi.useRealTimers();
 });
 
 describe('/api/search page-lane roll-up (#5905)', () => {
@@ -132,6 +136,18 @@ describe('/api/search page-lane roll-up (#5905)', () => {
     const body = await search(`q=${encodeURIComponent('of the')}`);
     expect(rollupQueries()).toBe(0);
     expect(body.results.map((r: any) => r.book_id)).toEqual(['old-mention']);
+  });
+
+  it('keeps the lane\'s own pages when the count does not come back in time, and says so', async () => {
+    state.facetHangs = true;
+    vi.useFakeTimers();
+    const pending = search('q=Drebbel');
+    await vi.advanceTimersByTimeAsync(4100); // past the roll-up budget, short of the lane's 8 s cut-off
+    const body = await pending;
+    expect(body.results.map((r: any) => r.book_id)).toEqual(['old-mention']);
+    expect(body.partial).toBe(true);
+    expect(body.degraded_lanes).toEqual(['page_rollup']);
+    expect(state.logged.at(-1).degraded_lanes).toEqual(['page_rollup']);
   });
 
   it('logs which lanes degraded, so the rate can be counted', async () => {
