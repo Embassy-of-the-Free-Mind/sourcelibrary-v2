@@ -19,7 +19,7 @@
   },
   "unit": {
     "kind": "page",
-    "chars": 2058
+    "chars": 2056
   },
   "leaf_check": {
     "status": "ok",
@@ -30,11 +30,14 @@
   },
   "reference_error_rate": null,
   "adjudication": {
-    "status": "pending",
-    "note": "one pass after scoring: the reference is changed only where the image shows it wrong (PREREGISTRATION-kraken-refused-4686.md)"
+    "status": "done",
+    "at": "2026-10-06",
+    "corrections": 2,
+    "note": "one pass after scoring: where both Kraken arms agreed against the reference, or a digit string was missed, the image was reopened; changed only where the image shows the reference wrong (stacked split-years left as [?] in the blind pass; two Latin place names)"
   },
   "built_by": "scripts/eval/kraken-refused-4686 (by hand)",
   "built_at": "2026-10-06T10:20:00.063Z",
   "text_location": "repo",
-  "text_sha256": "2d9dbf4bc62b86b191ea01b105c556dd7e2c9117d0728d3e14668d0e635b7249"
+  "text_sha256": "f613f439fe13dcd40252937a4a7b9a2431f986582f572fc1c99eaead4d812771",
+  "blind_text_sha256": "2d9dbf4bc62b86b191ea01b105c556dd7e2c9117d0728d3e14668d0e635b7249"
 }
