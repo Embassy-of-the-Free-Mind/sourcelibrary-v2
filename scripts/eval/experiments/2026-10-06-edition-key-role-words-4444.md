@@ -37,10 +37,22 @@
 
 The 249 splits are mostly a `books` row and its own `books_warehouse` copy whose year was later corrected on one side (201 by year alone). The 12 merges not caused by this change are pairs whose author or year was corrected after stamping (five Aldine editions stored under `manuzio` whose author is now Cicero, Machiavelli, Dante, Statius, Propertius).
 
+**The re-stamp as run (2026-10-06 22:34 UTC, after #6069 was live).** `scripts/maintenance/materialize-edition-keys.ts --apply`, which writes the edition fields only. `identity-worker.mjs --restamp` was not used: its dry count showed it would also rewrite `normalized_title` or `normalized_author` on 10,471 `books` rows.
+
+| | `books` | `books_warehouse` |
+|---|---:|---:|
+| scanned | 109,090 | 22,542 |
+| written | **4,283** | **122** |
+| … role-word fix | 1,156 | 119 |
+| … BCE year now in the key | 435 | 0 |
+| … other drift | about 2,690 | 3 |
+
+The sweep runs the TypeScript builder, which keeps a negative year where the `.mjs` twin dropped it, so 435 keys of BCE-dated books gained their year; none merged or split. Checked afterwards on a fresh read of both collections (131,632 rows): the stored key equals the builder's on every row, no stored key has a role word in the surname slot, the five pairs above share a key, and the group counts are the predicted ones (21,289 groups of 2+, 48 with 2+ live books; 17 merges and 249 splits against the stored state). `edition-key-integrity.ts`: key drift 0. **`edition_key` is read by the import gate** on the next import and by the admin duplicates queue. Undo: gunzip `scripts/audit/edition-key-replay-4444/restamp-backup-<collection>-2026-10-06.jsonl.gz` and pass it to `--restore` (with `--collection`).
+
 **Not fixed here, measured on the way.**
 - A role word followed by a name still keys on that name: "Thucydides (ed. Henri II Estienne)" → `estienne`. 528 rows end in such a group ("(ed. …)" 254, "(trans. …)" 220, "(tr. …)" 54), 297 of them live.
 - Non-names in the slot: `unknown` 9,658 rows, `sn` 2,142 ("[s.n.]"), `anonymous` 1,394, `collection` 1,244.
-- The `.mjs` twin's `editionYear()` still rejects a negative (BCE) year that the TypeScript side accepts: 435 rows get a different year slot depending on which side stamps them; 433 are stored in the twin's form.
+- The `.mjs` twin's `editionYear()` still rejects a negative (BCE) year that the TypeScript side accepts: 435 rows get a different year slot depending on which side stamps them. The re-stamp stored the TypeScript form; the twin is the side to fix.
 
 **Limits.** One snapshot; rows imported during the run are not in it. "Same printing" for the five merges is a metadata judgement.
 
