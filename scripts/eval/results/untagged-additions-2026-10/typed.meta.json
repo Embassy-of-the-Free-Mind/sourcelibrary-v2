@@ -1,0 +1,22 @@
+{
+ "candidates": 512,
+ "kept": 146,
+ "dropped": {
+  "no stored translation": 256,
+  "typed text does not cover the page (ratio > 1.6)": 1,
+  "English page (no translation to check)": 58,
+  "typed text does not cover the page (ratio < 0.6)": 51
+ },
+ "kept_by_language_and_kind": {
+  "Chinese / e-text-window": 26,
+  "Latin / same-edition-transcription": 21,
+  "Latin / ocr-same-text": 5,
+  "Ancient Greek / e-text-window": 1,
+  "Greek / e-text-window": 19,
+  "Armenian / pinned-passage": 4,
+  "German / pinned-passage": 2,
+  "Greek / pinned-passage": 6,
+  "Hebrew / pinned-passage": 2,
+  "Tibetan / esukhia-folio": 60
+ }
+}
