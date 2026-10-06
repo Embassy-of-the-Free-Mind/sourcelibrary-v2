@@ -61,6 +61,8 @@ const atlasIps = new Set(nodes.flatMap((n) => n.ips));
 write({ t: new Date().toISOString(), kind: 'topology', primary: hello.primary, nodes: nodes.map((n) => ({ host: n.host, ips: n.ips })) });
 
 // ---- sockets ---------------------------------------------------------------
+// Command lines carry credentials (`mongodump --uri=mongodb+srv://user:pass@…`): never store them.
+export const redact = (s) => s.replace(/([a-z][a-z0-9+.-]*:\/\/)[^\s/@]+@/gi, '$1***@').replace(/(--(?:password|pass|token|secret)[= ])\S+/gi, '$1***');
 const cmdCache = new Map();
 function procInfo(pid) {
   if (cmdCache.has(pid)) return cmdCache.get(pid);
@@ -74,7 +76,7 @@ function procInfo(pid) {
     const ppid = readFileSync(`/proc/${pid}/stat`, 'utf8').split(') ')[1].split(' ')[1];
     ppidCmd = readFileSync(`/proc/${ppid}/cmdline`, 'utf8').split('\0').filter(Boolean).join(' ').slice(0, 200);
   } catch {}
-  const info = { cmd, unit, ppidCmd };
+  const info = { cmd: redact(cmd), unit, ppidCmd: redact(ppidCmd) };
   cmdCache.set(pid, info);
   return info;
 }
