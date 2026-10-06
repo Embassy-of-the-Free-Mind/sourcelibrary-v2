@@ -450,7 +450,7 @@ async function stageAQuery() {
       await pool(groups, 2, async (g) => { await solve(g); if (++n % 25 === 0) console.log(`${index} groups ${n}/${groups.length}`); });
     } else {
       let n = 0;
-      await pool(todo, 2, async (q) => { record(q.h, index, await countQ(index, q.text), 'single'); if (++n % 200 === 0) console.log(`${new Date().toISOString().slice(11, 19)} ${index} ${n}/${todo.length}`); });
+      await pool(todo, Number(args.conc || 4), async (q) => { record(q.h, index, await countQ(index, q.text), 'single'); if (++n % 200 === 0) console.log(`${new Date().toISOString().slice(11, 19)} ${index} ${n}/${todo.length}`); });
     }
   }
   // compact to one row per hash (public): counts per index, -1 = error / not run
@@ -485,7 +485,7 @@ async function stageAProv() {
 
 // ---------- dispatch (layers B, C and the report: ai-exposure-r3-6038-bc.mjs) ----------
 export const STAGES = { inputs: stageInputs, 'a-passages': stageAPassages, 'a-controls': stageAControls, 'a-query': stageAQuery, 'a-prov': stageAProv };
-export const ctx = { args, OUT, PRIVATE, mongo, fetchText, wikiText, htmlToText, loadR2, loadWorks, allQueries, UA };
+export const ctx = { args, OUT, PRIVATE, mongo, fetchText, wikiText, htmlToText, loadR2, loadWorks, allQueries, UA, MINI, IG };
 const isMain = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(new URL(import.meta.url).pathname);
 if (isMain) {
   if (!STAGES[stage]) { console.error('--stage=' + Object.keys(STAGES).join('|') + '  (layers B, C and report: scripts/eval/ai-exposure-r3-6038-bc.mjs)'); process.exit(1); }
