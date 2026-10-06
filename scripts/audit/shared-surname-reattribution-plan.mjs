@@ -210,7 +210,7 @@ export function applyPlanToBooks({ bareBooks, targetBooks, rows }) {
           throw new Error(`book ${entry.book_id}: the ${person} record has an unmarked legacy entry with pages; repair it first`);
         }
       }
-      moves.push({ book_id: entry.book_id, person, pages, whole: m.whole, tiers: [...m.tiers].sort(), bare_entry_before: entry });
+      moves.push({ book_id: entry.book_id, person, pages, whole: m.whole, tiers: [...m.tiers].sort(), target_had_book: at !== -1, bare_entry_before: entry });
     }
     const left = (entry.pages || []).filter(n => !gone.has(n));
     if (whole.length === 0 && left.length > 0) bare.push({ ...entry, pages: left });
@@ -282,7 +282,7 @@ async function applyPlan({ client, db, surname, rule, bare, targets, rows, undoO
   const targetOf = Object.fromEntries(rule.persons.map(p => [p.key, { _id: String(targetDocs[p.key]._id), name: p.name, wikidata_id: p.wikidata_id }]));
   await recordSweepActions(db, next.moves.map(m => ({
     sweep: SWEEP, book_id: m.book_id, action: 'entity-mention-moved',
-    detail: { surname, from: { _id: String(bare._id), name: bare.name }, to: targetOf[m.person], pages: m.pages, whole_entry: m.whole, tiers: m.tiers, bare_entry_before: m.bare_entry_before },
+    detail: { surname, from: { _id: String(bare._id), name: bare.name }, to: targetOf[m.person], pages: m.pages, whole_entry: m.whole, tiers: m.tiers, target_had_book: m.target_had_book, bare_entry_before: m.bare_entry_before },
   })));
   for (const w of writes) {
     console.log(`  ${w.doc.name}: books ${w.doc.books?.length ?? 0} -> ${w.counters.book_count}, mentions ${w.doc.total_mentions ?? '?'} -> ${w.counters.total_mentions}`);
@@ -306,6 +306,8 @@ async function undo(file) {
       });
       console.log(`${d.name}: ${res.matchedCount === 1 ? `restored ${d.before.books.length} book entries` : 'NOT restored: changed since the apply (re-run with --force to overwrite)'}`);
     }
+    // The move rows of the undone apply stay in sweep_log; this row marks them as undone.
+    await recordSweepActions(db, [{ sweep: SWEEP, book_id: `entity:${saved.docs[0]._id}`, action: 'entity-moves-undone', detail: { surname: saved.surname, undo_file: file } }]);
   } finally {
     await client.close();
   }
@@ -349,6 +351,15 @@ async function main() {
       { $limit: 300 },
       { $project: { name: 1, wikidata_id: 1, merged_into: 1, book_ids: '$books.book_id' } },
     ]).toArray();
+    // A book that reached a person's record only through an earlier run of this plan is not
+    // evidence for the same-book tier: counted, the plan would confirm itself (a dry run after
+    // the first Bacon apply proposed 21 more moves on that ground alone).
+    const sweepLog = db.collection('sweep_log');
+    const lastUndo = await sweepLog.find({ sweep: SWEEP, action: 'entity-moves-undone', 'detail.surname': surname }).sort({ timestamp: -1 }).limit(1).next();
+    const planMade = new Set((await sweepLog.find({
+      sweep: SWEEP, action: 'entity-mention-moved', 'detail.surname': surname, 'detail.target_had_book': false,
+      ...(lastUndo ? { timestamp: { $gt: lastUndo.timestamp } } : {}),
+    }).project({ book_id: 1, 'detail.to._id': 1 }).toArray()).map(r => `${r.detail.to._id}:${r.book_id}`));
     const booksOf = new Map(rule.persons.map(p => [p.key, new Set()]));
     const targets = new Map(rule.persons.map(p => [p.key, []]));
     for (const r of full) {
@@ -356,7 +367,7 @@ async function main() {
       const p = rule.persons.find(x => x.wikidata_id === r.wikidata_id);
       if (!p || fold(r.name) === fold(surname)) continue;
       targets.get(p.key).push({ _id: String(r._id), name: r.name, books: (r.book_ids || []).length });
-      for (const id of r.book_ids || []) booksOf.get(p.key).add(id);
+      for (const id of r.book_ids || []) if (!planMade.has(`${r._id}:${id}`)) booksOf.get(p.key).add(id);
     }
 
     const byBook = new Map();

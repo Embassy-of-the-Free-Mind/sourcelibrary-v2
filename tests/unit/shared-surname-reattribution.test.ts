@@ -25,6 +25,8 @@ describe('applyPlanToBooks', () => {
     expect(out.targets.roger).toEqual([entry('b1', [3])]);
     expect(out.targets.francis).toEqual([entry('b1', [7])]);
     expect(out.moves.map(m => [m.person, m.pages, m.tiers])).toEqual([['roger', [3], ['printed']], ['francis', [7], ['note']]]);
+    // Neither record had the book: a later run must not read these entries as same-book evidence.
+    expect(out.moves.map(m => m.target_had_book)).toEqual([false, false]);
   });
 
   it('drops the bare entry when every page moved, and unions pages into a page-precise target entry', () => {
@@ -35,6 +37,7 @@ describe('applyPlanToBooks', () => {
     });
     expect(out.bare).toEqual([entry('b2', [1])]);
     expect(out.targets.roger).toEqual([entry('b1', [4, 12, 30]), entry('b9', [2])]);
+    expect(out.moves[0].target_had_book).toBe(true);
     // Every mention is still counted once: 3 before on the bare record + 3 on Roger, 1 shared page.
     expect(entityCounters(out.bare).total_mentions + entityCounters(out.targets.roger).total_mentions).toBe(1 + 4);
   });
