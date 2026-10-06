@@ -56,6 +56,8 @@ jobs:
       - if: steps.inputs.outputs.build == 'yes'
         run: npm ci
 
+      # `npm run build`, not `npx next build`: Vercel runs the npm script, whose
+      # prebuild generates src/lib/vendor/lamejs-bundle.js (gitignored).
       - name: next build (compile only)
         if: steps.inputs.outputs.build == 'yes'
-        run: npx next build --experimental-build-mode compile
+        run: npm run build -- --experimental-build-mode compile
