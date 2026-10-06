@@ -24,6 +24,7 @@ interface BookItem {
   photo?: string | null;
   thumbnail?: string | null;
   thumbnail_blob?: string | null;
+  thumbnail_frame?: unknown;
   published?: string | null;
   read_count?: number;
   is_first_translation?: boolean;
@@ -363,6 +364,7 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages, 
                   pages_ocr: book.pages_ocr || 0,
                   thumbnail: book.thumbnail || undefined,
                   thumbnail_blob: book.thumbnail_blob || undefined,
+                  thumbnail_frame: book.thumbnail_frame,
                   language: book.language || undefined,
                   published: book.published || undefined,
                 }}

@@ -79,6 +79,9 @@ export interface Book {
   // Display and categorization
   thumbnail?: string;          // @deprecated Use image_display. Cover/display image (~1200px for books, full-res for artworks)
   thumbnail_blob?: string;     // @deprecated Use image_thumb. Small preview (150px)
+  /** Where the page sits inside the cover scan: a PageFrame plus `of`, the R2
+   *  identity of the image it was measured on (#6010). Read through coverFrame(). */
+  thumbnail_frame?: unknown;
 
   // Canonical image fields (migration in progress — prefer these over thumbnail/thumbnail_blob)
   image_display?: string;      // Primary display image (1200px) — R2 URL

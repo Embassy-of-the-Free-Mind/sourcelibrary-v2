@@ -19,6 +19,8 @@ import { useBrowserTranslation } from '@/hooks/useBrowserTranslation';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { useEmbedHref } from '@/lib/EmbedContext';
 import { getPageDisplayUrl, getPageThumbUrl, swapToFallback } from '@/lib/utils';
+import { pageImageFrame } from '@/lib/framed-image';
+import FramedImg from '@/components/FramedImg';
 import { pages as pagesApi, books as booksApi, analytics } from '@/lib/api-client';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import NotesRenderer from '@/components/reader/NotesRenderer';
@@ -2144,8 +2146,9 @@ function Filmstrip({
   // show fewer, wider pages in the same bar. Clamped so one freak scan can't
   // make a slot the width of the screen.
   const [aspect, setAspect] = useState(0.78);
-  const onThumbLoad = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
-    const { naturalWidth: w, naturalHeight: h } = e.currentTarget;
+  // The size is the page's: for a scan with a page frame (#6010) that is the
+  // framed page, not the scan with its scanner bed.
+  const onThumbLoad = useCallback((w: number, h: number) => {
     if (!w || !h) return;
     const a = Math.min(6, Math.max(0.25, w / h));
     setAspect(prev => (Math.abs(prev - a) > 0.02 ? a : prev));
@@ -2154,7 +2157,8 @@ function Filmstrip({
   const thumbs = useMemo(
     () => pageList.map(p => {
       const rec = p as unknown as Record<string, unknown>;
-      return { p, thumb: getPageThumbUrl(rec), fallback: getPageDisplayUrl(rec) };
+      const thumb = getPageThumbUrl(rec);
+      return { p, thumb, fallback: getPageDisplayUrl(rec), frame: pageImageFrame(rec, thumb) };
     }),
     [pageList],
   );
@@ -2178,7 +2182,7 @@ function Filmstrip({
             settings change and every scroll that flips the bar, and this map
             ran getPageThumbUrl for all 4,198 pages of the largest book each
             time. */}
-        {thumbs.map(({ p, thumb, fallback }) => {
+        {thumbs.map(({ p, thumb, fallback, frame }) => {
           const isCurrent = p.id === currentPageId;
           return (
             <button
@@ -2206,9 +2210,9 @@ function Filmstrip({
                 }}
               >
                 {thumb && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={thumb} alt="" loading="lazy" decoding="async"
-                    onLoad={onThumbLoad}
+                  <FramedImg frame={frame} fit="cover" wrapperClassName="relative w-full h-full"
+                    src={thumb} alt="" loading="lazy" decoding="async"
+                    onShownSize={onThumbLoad}
                     onError={e => swapToFallback(e.currentTarget, fallback)}
                     className="w-full h-full object-cover transition-opacity duration-200" draggable={false}
                     style={{ opacity: isCurrent ? 1 : 0.72 }} />

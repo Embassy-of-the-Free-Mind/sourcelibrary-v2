@@ -143,7 +143,7 @@ async function browseTenantBooks(opts: BrowseOptions): Promise<BrowseResult> {
     display_title: 1,
     author: 1,
     thumbnail: 1, image_display: 1,
-    thumbnail_blob: 1, image_thumb: 1,
+    thumbnail_blob: 1, image_thumb: 1, thumbnail_frame: 1,
     language: 1,
     published: 1,
     pages_count: 1,
