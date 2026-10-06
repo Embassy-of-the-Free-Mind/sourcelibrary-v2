@@ -106,6 +106,18 @@ const FIXTURES: Fixture[] = [
     page: { page_number: 1, page_type: 'title-page', ocr: { data: 'Digital surrogate cover page provided by Cornell University Library' } },
   },
   { name: 'deep interior text page', page: { page_number: 40, page_type: 'text', ocr: { data: 'Caput primum. De rerum natura.' } } },
+  {
+    name: 'decorated front cover (gold tooling, armorial)',
+    page: { page_number: 1, ocr: { data: 'The front cover of a book bound in red morocco with ornate gold tooling and a gilt-stamped coat of arms.' } },
+  },
+  {
+    name: 'worn front cover stays a binding photo',
+    page: { page_number: 1, ocr: { data: 'Front cover with gold tooling, heavily worn and peeling, with a library sticker.' } },
+  },
+  {
+    name: 'decorative marbled endpaper stays a binding photo',
+    page: { page_number: 2, ocr: { data: 'Front cover interior: decorative marbled endpaper.' } },
+  },
 ];
 
 describe('cover scorer TS/mjs parity', () => {
