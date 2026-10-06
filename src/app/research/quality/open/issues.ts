@@ -72,7 +72,7 @@ export const GROUPS: IssueGroup[] = [
       {
         n: 4686,
         title: 'Pages the transcription engine refuses to read',
-        detail: 'On famous English texts the engine returns nothing, so 715 pages of the Philosophical Transactions are blank. A free engine, Kraken, reads them at 0.9% character error but gets only 79% of printed numbers right, below the 90% bar set before the test. Nothing has been written yet.',
+        detail: 'On famous English texts the engine returns nothing, so 712 pages of the Philosophical Transactions are blank. A free engine, Kraken, reads them at 0.9% character error but gets only 79% of printed numbers right, below the 90% bar set before the test. Nothing has been written yet.',
         status: 'defect',
       },
       {
