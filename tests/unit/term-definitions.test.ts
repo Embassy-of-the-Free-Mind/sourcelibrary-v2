@@ -145,6 +145,8 @@ describe('a colon inside a chip is not always a definition (#5901)', () => {
     'and the following laws <term>law: Eum ad quem</term>, <term>Code: De usufructu</term>',
     // 69e7aad05f1a22ab19a8dce9 p228 — a mantra (Tibetan)
     'these are the words of the secret mantra: <term>Tadyatha: Hume hume, humela, humila, batiye swaha.</term> Venerable One',
+    // 69e787024a6785cfd60c9bec p227 — a mantra whose label stands just before it
+    'join the <term>upati go dhara ya karma guhya manthra</term>. <term>Karma guhya manthra: Om Lam Dhibhi dhara ya, Hum Lam Vajra Maring Jha, Stambhanan</term>. There is no doubt',
     // 69e788a74a6785cfd60d17bf p221, 6a14e14b311a9edd4621ea48 p112 — titles
     'The <term>Mother: Perfection of Wisdom in One Letter</term> is complete.',
     '<term>In the language of India: Yama Tsila Damta Kala Nama Tantra. In the language of Tibet: The Tantra called Black Yama Charka</term>. Homage',

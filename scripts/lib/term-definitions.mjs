@@ -60,7 +60,7 @@ const words = (s) => s.split(/\s+/).filter(Boolean).length;
  * A real definition under one of these heads stays a chip, as before.
  */
 const CITATION_HEAD = /^(?:laws?|lex|l|code|cod|codex|digest|dig|ff|authenti\w+|auth|institutes?|inst|novels?|nov|chapters?|chap|cap|c|canons?|can|sections?|sect|paragraphs?|par|verses?|vers|v|gloss\w*|rubric|titles?|tit|books?|lib|liber|questions?|quaest|qu?|distinctions?|dist|d|articles?|art|arguments?|arg|extra|decretals?|clementines?|psalms?|ps|rules?|reg|ibid(?:em)?|idem)\.?$/i;
-const MANTRA = /(?:tadyath|syadyath|sv[aā]h[aā]|swaha|\bph[aā][tṭ]\b)|^\s*(?:o[mṃṁ]|namo|nama[hḥ])\s/i;
+const MANTRA = /(?:tadyath|syadyath|sv[aā]h[aā]|swaha|\bph[aā][tṭ]\b|\bmant[h]?ra:|\bdh[aā]ra[nṇ][iī]:)|(?:^|:)\s*(?:o[mṃṁ]|namo|nama[hḥ])\s/i;
 /** Small words a title leaves in lower case. */
 const TITLE_SMALL = new Set(['a', 'an', 'the', 'of', 'on', 'in', 'and', 'or', 'to', 'for', 'by', 'with', 'from']);
 /** @param {string} s */
