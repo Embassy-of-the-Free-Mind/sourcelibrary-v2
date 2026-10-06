@@ -27,6 +27,10 @@
  *   --stage=verify     opening quotes vs our OCR, with a cross-book null to set the threshold
  *   --stage=report     prior, fusion, bootstrap CIs, strata, controls, kappa -> report.json/.md
  *
+ * HEADLINE = report.json `recognition` (does the model know OF the work at all?), not the fused
+ * posterior: on the controls, larger models deny having seen the TEXT of famous works (Haiku 6/22),
+ * so self-familiarity "no" is no evidence of absence, while recognition separates cleanly.
+ *
  * node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/ai-exposure-6038.mjs --stage=ids
  */
 import fs from 'node:fs';
@@ -548,8 +552,6 @@ function stageReport() {
     if (!idx.has(key)) idx.set(key, new Map());
     const m = idx.get(key);
     if (!m.has(a.model) || a.set === 'main') m.set(a.model, a);
-    // in-packet control appearances, per model
-    if (a.set !== 'controls' && /^decoy-|^ctlpos/.test(a.id)) { /* handled below */ }
   }
   const modelsSeen = [...new Set(ans.map((a) => a.model))];
   const rep = { run_id: `ai-exposure-6038-${new Date().toISOString().slice(0, 10)}`, measure: 'agreement (work-level recognition); no ground truth except controls', seed: SEED, models: modelsSeen, lr_self: LR_SELF, lr_open: LR_OPEN, disp_prior: DISP_P, verify: JSON.parse(fs.readFileSync(path.join(OUT, 'verify-summary.json'), 'utf8')), spend_usd: +readJsonl(path.join(OUT, 'spend.jsonl')).reduce((s, r) => s + r.usd, 0).toFixed(3) };
