@@ -20,6 +20,7 @@
  *            tr_placeholder  translation.recitation_blocked: the reader shows the "could not be translated" line
  *            dup_text        two consecutive pages with the same ocr.content_hash and > 200 chars: one leaf read
  *                            twice (I2), or one text written onto two leaves; either way a defect on sight
+ *            nonpositive_page  page records numbered < 1 (unsplit spreads stored beside the split pages)
  *          Checkpointed to books.jsonl per book, so a rerun resumes. Summary: books affected with a Wilson 95% CI
  *          and the projection to the frame.
  * hijri  — public Arabic-script books whose stored year is 1200–1450 (a Hijri year read as CE: 1402 AH = 1982)
@@ -86,15 +87,18 @@ async function pagesMode() {
       const a = rows[k - 1], b = rows[k];
       if (a.h && a.h === b.h && a.n > 200 && b.n > 200) dup.push(b.p);
     }
-    const rec = { book_id: bookId, pages: rows.length, refusal_empty: refusal.length, tr_placeholder: trPlaceholder.length, dup_text: dup.length,
-      ex: { refusal_empty: refusal.slice(0, 5), tr_placeholder: trPlaceholder.slice(0, 5), dup_text: dup.slice(0, 5) } };
+    // Page records numbered < 1: in the 2026-10-07 overview these were unsplit two-page spreads stored beside the split
+    // pages (Pardes Rimmonim, Etz Hayyim, Ibn al-Baytar), so readers meet the same text twice and out of order.
+    const nonpos = rows.filter((r) => typeof r.p === 'number' && r.p < 1).map((r) => r.p);
+    const rec = { book_id: bookId, pages: rows.length, refusal_empty: refusal.length, tr_placeholder: trPlaceholder.length, dup_text: dup.length, nonpositive_page: nonpos.length,
+      ex: { refusal_empty: refusal.slice(0, 5), tr_placeholder: trPlaceholder.slice(0, 5), dup_text: dup.slice(0, 5), nonpositive_page: nonpos.slice(0, 5) } };
     appendFileSync(ckpt, JSON.stringify(rec) + '\n');
     done.set(bookId, rec);
     if (i % 100 === 0) console.log(`  ${i}/${sample.length}`);
   }
   const recs = sample.map((id) => done.get(id)).filter(Boolean);
   const summary = { frame_books: frame, sampled_books: recs.length, seed: Number(opt('seed', 6056)), classes: {} };
-  for (const cls of ['refusal_empty', 'tr_placeholder', 'dup_text']) {
+  for (const cls of ['refusal_empty', 'tr_placeholder', 'dup_text', 'nonpositive_page']) {
     const hit = recs.filter((r) => r[cls] > 0);
     const [lo, hi] = wilson(hit.length, recs.length);
     summary.classes[cls] = { books: hit.length, pages: hit.reduce((s, r) => s + r[cls], 0), rate: hit.length / recs.length, ci95: [lo, hi],
