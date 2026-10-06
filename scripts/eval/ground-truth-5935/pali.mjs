@@ -26,6 +26,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { MongoClient } from 'mongodb';
+import { SCRIPTS, scriptOf, normPali } from './pali-norm.mjs';
 import { bodyText, bodyCer, fitAlign, makeRng, engineOf, kindOf, periodOf, resBand, isInterior, CATASTROPHIC_CER, NORMALISER_VERSION } from './lib.mjs';
 
 const argOf = (n, d) => { const a = process.argv.find((x) => x.startsWith(`--${n}=`)); return a ? a.slice(n.length + 3) : d; };
@@ -38,23 +39,7 @@ const TRIES = 4;
 const seedOf = (id) => SEED ^ parseInt(createHash('sha256').update(String(id)).digest('hex').slice(0, 8), 16);
 const VRI_SHA = fs.existsSync(`${WORK}/vri.sha`) ? fs.readFileSync(`${WORK}/vri.sha`, 'utf8').trim() : null;
 
-// ── normalisation ───────────────────────────────────────────────────────────
-// The printed apparatus (lines opening with a superscript note number) and the note markers are not
-// body text; PTS prints them at the foot of the page and our OCR keeps them untagged.
-const SUP = /[¹²³⁴⁵⁶⁷⁸⁹⁰⁻]/g;
-const dropApparatus = (t) => String(t || '').split('\n').filter((l) => !/^\s*[¹²³⁴⁵⁶⁷⁸⁹⁰*†]/.test(l)).join('\n').replace(SUP, '');
-const SCRIPTS = {
-  romn: { re: /\p{Script=Latin}/u, fold: (t) => t.normalize('NFC').toLowerCase().replace(/[ṁŋṃ]/g, 'm').replace(/m̐|ṁ/g, 'm').replace(/â/g, 'ā').replace(/î/g, 'ī').replace(/û/g, 'ū').replace(/[^\p{L}]/gu, '') },
-  deva: { re: /\p{Script=Devanagari}/u, fold: (t) => t.normalize('NFC').replace(/[^\p{Script=Devanagari}]/gu, '').replace(/[।॥०-९]/g, '') },
-  sinh: { re: /\p{Script=Sinhala}/u, fold: (t) => t.normalize('NFC').replace(/[^\p{Script=Sinhala}]/gu, '').replace(/[෴]/g, '') },
-};
-const scriptOf = (t) => {
-  const c = { romn: 0, deva: 0, sinh: 0 };
-  for (const ch of String(t).slice(0, 4000)) for (const [k, v] of Object.entries(SCRIPTS)) if (v.re.test(ch)) c[k]++;
-  const best = Object.entries(c).sort((a, b) => b[1] - a[1])[0];
-  return best[1] >= 100 ? best[0] : null;
-};
-const norm = (t, sc) => SCRIPTS[sc].fold(dropApparatus(bodyText(t)));
+const norm = normPali;
 
 // ── VRI corpus, one stream per script, built once and cached ────────────────
 const corpora = {};
