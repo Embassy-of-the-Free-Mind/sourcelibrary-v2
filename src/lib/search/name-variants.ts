@@ -36,7 +36,7 @@ import { getDb } from '@/lib/mongodb';
 /** Upper bound on variant terms added to one query. */
 export const MAX_NAME_VARIANTS = 40;
 /** Upper bound on exact-match candidates sent to `entities` per lookup. */
-const MAX_LOOKUP_CANDIDATES = 80;
+const MAX_LOOKUP_CANDIDATES = 120;
 /** A name longer than this many words is not looked up. */
 const MAX_NAME_WORDS = 4;
 /** A query longer than this is prose, not a name lookup. */
@@ -127,6 +127,8 @@ export function latinCaseForms(surname: string): string[] {
 const DIACRITIC = /\p{M}/u;
 const hasDiacritics = (s: string) => DIACRITIC.test(s.normalize('NFD'));
 const stripMarks = (s: string) => s.normalize('NFD').replace(/\p{M}+/gu, '').normalize('NFC');
+const umlautDigraph = (s: string) =>
+  s.normalize('NFC').replace(/[äöüÄÖÜ]/g, c => ({ ä: 'ae', ö: 'oe', ü: 'ue', Ä: 'Ae', Ö: 'Oe', Ü: 'Ue' }[c] as string));
 const singleConsonants = (s: string) => s.replace(/([b-df-hj-np-tv-xz])\1/gi, '$1');
 
 /**
@@ -143,8 +145,7 @@ export function spellingVariants(surname: string): string[] {
   add(singleConsonants(surname));
   if (hasDiacritics(surname)) {
     const plain = stripMarks(surname);
-    const digraph = surname.replace(/[äöüÄÖÜ]/g, c => ({ ä: 'ae', ö: 'oe', ü: 'ue', Ä: 'Ae', Ö: 'Oe', Ü: 'Ue' }[c] as string));
-    for (const v of [plain, digraph]) {
+    for (const v of [plain, umlautDigraph(surname)]) {
       add(v);
       add(singleConsonants(v));
     }
@@ -258,13 +259,17 @@ export function nameSpans(query: string): NameSpan[] {
 
 /**
  * Exact strings to look up in `entities.name` / `entities.aliases`. Those indexes are
- * case-sensitive, so each span is tried as typed, in Title Case, and with Latin diacritics
- * removed. Bounded: an 8-word query has 26 spans and at most 78 forms.
+ * case-sensitive, so each span is tried as typed, in Title Case, Sentence case and lowercase,
+ * and with Latin diacritics removed. Bounded: an 8-word query has 26 spans and is cut at 120
+ * forms, longest spans first.
  */
 export function lookupCandidates(query: string): string[] {
   const out = new Set<string>();
   for (const span of nameSpans(query)) {
-    for (const form of [span.text, titleCase(span.text.toLowerCase())]) {
+    const lower = span.text.toLowerCase();
+    // Sentence case too: the concept is "Perpetual motion", and it has to be FOUND to outweigh
+    // the stray person record "Perpetual Motion".
+    for (const form of [span.text, titleCase(lower), lower.replace(/^\p{L}/u, ch => ch.toUpperCase()), lower]) {
       out.add(form);
       if (LATIN_ONLY.test(form.replace(/[\s.\-]/g, ''))) out.add(stripMarks(form));
     }
@@ -280,9 +285,11 @@ function recordNames(r: PersonNameRecord): string[] {
 const isPerson = (r: PersonNameRecord) => (r.type ?? 'person') === 'person';
 
 /**
- * The typed surnames that name a PERSON. A span counts when a person record carries it as its
- * name or an alias — unless a place or concept of the same name is the larger entry ("Paris",
- * "Nature", "Mercury"), in which case the reader most likely means that and nothing is expanded.
+ * The typed surnames that name a PERSON. A span counts when
+ *   - a person record carries it as its NAME, and no place or concept of that name is as large
+ *     ("Nature": person 22 books, concept 182 → not a person; "Mercury": 885 vs 307 → a person); or
+ *   - a person record carries it as an ALIAS and nothing else in `entities` has that name. An
+ *     alias alone is weak evidence: some person is aliased "Motion", and "Motion" is a concept.
  * A span inside a longer matched name is skipped.
  */
 function matchedSurnames(query: string, records: PersonNameRecord[]): string[] {
@@ -290,29 +297,38 @@ function matchedSurnames(query: string, records: PersonNameRecord[]): string[] {
 }
 
 function matchedNames(query: string, records: PersonNameRecord[]): { surnames: string[]; taken: NameSpan[] } {
-  const person = new Map<string, number>();
+  const personName = new Map<string, number>();
+  const personAlias = new Set<string>();
   const other = new Map<string, number>();
   for (const r of records) {
+    if (typeof r.name !== 'string') continue;
     const weight = r.book_count ?? 0;
+    const k = foldName(r.name);
     if (isPerson(r)) {
-      for (const n of recordNames(r)) {
-        const k = foldName(n);
-        person.set(k, Math.max(person.get(k) ?? 0, weight));
-      }
-    } else if (typeof r.name === 'string') {
-      const k = foldName(r.name);
+      personName.set(k, Math.max(personName.get(k) ?? 0, weight));
+      for (const a of recordNames(r).slice(1)) personAlias.add(foldName(a));
+    } else {
       other.set(k, Math.max(other.get(k) ?? 0, weight));
     }
   }
+  const namesPerson = (k: string) => {
+    const asName = personName.get(k);
+    const asOther = other.get(k);
+    if (asName !== undefined) return asOther === undefined || asName > asOther;
+    return personAlias.has(k) && asOther === undefined;
+  };
   const out: string[] = [];
   const taken: NameSpan[] = [];
   for (const span of nameSpans(query)) {
-    const k = foldName(span.text);
-    const weight = person.get(k);
-    if (weight === undefined || (other.get(k) ?? -1) > weight) continue;
+    if (!namesPerson(foldName(span.text))) continue;
     if (taken.some(t => t.start <= span.start && span.end <= t.end)) continue;
     taken.push(span);
-    if (span.surname && !out.includes(span.surname)) out.push(span.surname);
+  }
+  for (const span of taken) {
+    // A lone word directly before another matched name is a given name ("johann kuffler" where
+    // only "Johann" and "Kuffler" are records): it is part of the name, and is not expanded.
+    const givenName = span.end - span.start === 1 && taken.some(t => t.start === span.end);
+    if (!givenName && span.surname && !out.includes(span.surname)) out.push(span.surname);
   }
   return { surnames: out, taken };
 }
@@ -339,7 +355,12 @@ export function secondHopCandidates(query: string, records: PersonNameRecord[]):
   if (surnames.length === 0) return [];
   const already = new Set(lookupCandidates(query));
   const out = new Set<string>();
-  for (const s of surnames) for (const u of umlautCandidates(s)) out.add(u);
+  for (const s of surnames) {
+    for (const u of umlautCandidates(s)) {
+      out.add(u);
+      out.add(titleCase(u.toLowerCase())); // typed "kuffler"; the record is "Küffler"
+    }
+  }
   for (const r of records) {
     if (!isPerson(r)) continue;
     for (const n of recordNames(r)) {
@@ -390,8 +411,16 @@ export function buildNameVariants(
       }
     }
   }
-  for (const base of [...surnames, ...spellings.slice()]) {
-    for (const v of spellingVariants(base)) addSpelling(v);
+  // Rules apply to what the reader typed, not to alias spellings: a rule on top of an alias is
+  // two steps from the name (Drebbel → alias Drebber → Dreber, which matched "Flaschen-dreber").
+  for (const surname of surnames) {
+    for (const v of spellingVariants(surname)) addSpelling(v);
+  }
+  // The one exception: an umlauted spelling `entities` confirmed is also searched in its
+  // digraph form (Küffler → Kueffler), which is the same spelling in other type.
+  for (const s of spellings.slice()) {
+    const digraph = umlautDigraph(s);
+    if (digraph !== s) addSpelling(digraph);
   }
   for (const s of spellings) push(s);
   // Latin text does not print umlauts or accents on a declined name: plain bases only. A

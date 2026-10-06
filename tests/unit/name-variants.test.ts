@@ -117,7 +117,8 @@ describe('lookupCandidates', () => {
     expect(c).toEqual(expect.arrayContaining(['Cornelis Drebbel', 'cornelis drebbel', 'Drebbel']));
     expect(lookupCandidates('a b c d e f g h i j k l').length).toBe(0); // prose, not a name
     const long = lookupCandidates('what did johann kuffler invent with cornelis drebbel');
-    expect(long.length).toBeLessThanOrEqual(80);
+    expect(long.length).toBeLessThanOrEqual(120);
+    expect(lookupCandidates('perpetual motion')).toEqual(expect.arrayContaining(['Perpetual motion', 'Perpetual Motion', 'perpetual motion']));
     expect(long).toEqual(expect.arrayContaining(['Kuffler', 'Drebbel', 'Cornelis Drebbel'])); // none cut by the bound
   });
 
@@ -155,12 +156,32 @@ describe('buildNameVariants', () => {
     expect(v).not.toContain('Quicksilver');
   });
 
+  it('an alias alone does not make a common word a person', () => {
+    // Live shape: some person is aliased "Motion"; "Motion" itself is a concept (94 books).
+    const records: PersonNameRecord[] = [
+      { name: 'Primum Mobile', type: 'person', book_count: 300, aliases: ['Motion'] },
+      { name: 'Motion', type: 'concept', book_count: 94 },
+    ];
+    expect(buildNameVariants('perpetual motion', records)).toEqual([]);
+    // Control: with no other entity of that name, the alias does count (Drebbel is found this way).
+    expect(buildNameVariants('perpetual motion', [records[0]])).not.toEqual([]);
+  });
+
+  it('applies spelling rules to the typed name only, never on top of an alias', () => {
+    const v = buildNameVariants('Drebbel', DREBBEL, DREBBEL_HOP);
+    expect(v).toContain('Drebber'); // the alias itself
+    expect(v).not.toContain('Dreber'); // alias + rule: matched "Flaschen-dreber" on the preview
+    const k = buildNameVariants('Kuffler', [{ name: 'Kuffler', type: 'person', book_count: 3 }], [{ name: 'Küffler', type: 'person', book_count: 4 }]);
+    expect(k).toEqual(expect.arrayContaining(['Küffler', 'Kufler', 'Kueffler']));
+  });
+
   it('does not treat a name as a person when a place or concept of that name is larger', () => {
     const records: PersonNameRecord[] = [
       { name: 'Milan', type: 'person', book_count: 309, aliases: ['Alexander'] },
       { name: 'Milan', type: 'place', book_count: 9000 },
     ];
     expect(buildNameVariants('milan', records)).toEqual([]);
+    expect(buildNameVariants('milan', [records[0], { ...records[1], book_count: 309 }])).toEqual([]); // a tie is not a person
     expect(buildNameVariants('milan', [records[0]])).not.toEqual([]); // the control: the gate is what stops it
   });
 
@@ -178,6 +199,17 @@ describe('buildNameVariants', () => {
     expect(topicWords('Paracelsus', p)).toEqual([]);
     expect(topicWords('Cornelis Drebbel', DREBBEL)).toEqual([]);
     expect(topicWords('on the plague', p)).toEqual([]); // no person: nothing to separate
+  });
+
+  it('does not expand a given name standing before a matched surname', () => {
+    const records: PersonNameRecord[] = [
+      { name: 'Johann', type: 'person', book_count: 900 },
+      { name: 'Kuffler', type: 'person', book_count: 3 },
+    ];
+    const v = buildNameVariants('what did johann kuffler invent', records);
+    expect(v).toContain('kufler');
+    expect(v.some(t => /^joh/i.test(t))).toBe(false);
+    expect(topicWords('what did johann kuffler invent', records)).toEqual(['what', 'invent']);
   });
 
   it('returns nothing when no record names the query', () => {
