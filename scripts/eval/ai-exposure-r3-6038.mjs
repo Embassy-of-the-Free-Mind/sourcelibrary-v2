@@ -386,25 +386,27 @@ async function stageAControls() {
 }
 
 // ---------- stage: a-query ----------
-// amendment 2: 4 of the 7 CC snapshots (rate limit); the other three stay listed for the provenance step only
-export const MINI = ['v2_cc-2025-05', 'v2_cc-2025-13', 'v2_cc-2025-21', 'v2_cc-2025-30', 'v2_dclm_all', 'v2_piletrain'];
-export const MINI_ALL = [...MINI, 'v2_cc-2025-08', 'v2_cc-2025-18', 'v2_cc-2025-26'];
-export const IG = ['v4_dolma-v1_7_llama', 'v4_olmo-mix-1124_llama', 'v4_rpj_llama_s4'];
-// Both APIs sit behind AWS API Gateway and answer 403 ForbiddenException when a client is too fast
-// (observed 2026-10-06 at ~8 requests in flight; lifted after ~1 min). Adaptive per-host token bucket:
-// on 403, pause the host 90 s and cut its rate by 30%; after 300 clean calls, raise it by 10%.
-const HOSTS = { mini: { url: 'https://api.infini-gram-mini.io/', rate: Number(args.rate || 2), next: 0, pauseUntil: 0, ok: 0, blocks: 0 }, ig: { url: 'https://api.infini-gram.io/', rate: Number(args.rate || 2), next: 0, pauseUntil: 0, ok: 0, blocks: 0 } };
-async function takeToken(h) {
-  for (;;) { const now = Date.now(); const at = Math.max(h.next, h.pauseUntil, now); if (at <= now) { h.next = now + 1000 / h.rate; return; } h.next = Math.max(h.next, h.pauseUntil); await sleep(at - now); }
+// amendment 3: CC exists only on infini-gram mini, which has no OR → per passage, 2 snapshots.
+// DCLM-baseline and the Pile move to the original infini-gram (v4_*), which counts "A OR B" as the sum, so passages are
+// group-tested (≤ 1,000 characters per query, the API's limit) and only groups with a hit are split.
+export const MINI = ['v2_cc-2025-30', 'v2_cc-2025-05'];
+export const MINI_ALL = ['v2_cc-2025-05', 'v2_cc-2025-08', 'v2_cc-2025-13', 'v2_cc-2025-18', 'v2_cc-2025-21', 'v2_cc-2025-26', 'v2_cc-2025-30', 'v2_dclm_all', 'v2_piletrain'];
+export const IG = ['v4_dolma-v1_7_llama', 'v4_olmo-mix-1124_llama', 'v4_rpj_llama_s4', 'v4_dclm-baseline_llama', 'v4_piletrain_llama'];
+// Both APIs sit behind AWS API Gateway and answer 403 ForbiddenException when a client is too fast (observed
+// 2026-10-06 at ≥ ~1 request/s summed over both hosts; lifted after ~1 min). One shared token bucket: on 403, pause
+// 90 s and cut the rate by 30%; after 200 clean calls, raise it by 10% (max 3/s).
+const BUCKET = { rate: Number(args.rate || 0.9), next: 0, pauseUntil: 0, ok: 0, blocks: 0 };
+async function takeToken() {
+  for (;;) { const now = Date.now(); const at = Math.max(BUCKET.next, BUCKET.pauseUntil); if (at <= now) { BUCKET.next = now + 1000 / BUCKET.rate; return; } await sleep(at - now); }
 }
 async function countQ(index, query) {
-  const h = MINI_ALL.includes(index) ? HOSTS.mini : HOSTS.ig;
-  for (let t = 0; t < 6; t++) {
-    await takeToken(h);
+  const url = MINI_ALL.includes(index) ? 'https://api.infini-gram-mini.io/' : 'https://api.infini-gram.io/';
+  for (let t = 0; t < 8; t++) {
+    await takeToken();
     try {
-      const r = await fetch(h.url, { method: 'POST', headers: { 'Content-Type': 'application/json', 'User-Agent': UA }, body: JSON.stringify({ index, query_type: 'count', query }), signal: AbortSignal.timeout(90000) });
-      if (r.status === 403 || r.status === 429) { h.blocks++; h.pauseUntil = Date.now() + 90000; h.rate = Math.max(0.3, h.rate * 0.7); console.log(`[${h === HOSTS.mini ? 'mini' : 'ig'}] ${r.status}: pause 90 s, rate → ${h.rate.toFixed(2)}/s`); continue; }
-      if (r.ok) { const j = await r.json(); if (typeof j.count === 'number') { if (++h.ok % 300 === 0) h.rate = Math.min(6, h.rate * 1.1); return j.count; } }
+      const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json', 'User-Agent': UA }, body: JSON.stringify({ index, query_type: 'count', query }), signal: AbortSignal.timeout(90000) });
+      if (r.status === 403 || r.status === 429) { BUCKET.blocks++; BUCKET.pauseUntil = Date.now() + 90000; BUCKET.rate = Math.max(0.2, BUCKET.rate * 0.7); console.log(`${new Date().toISOString().slice(11, 19)} ${r.status}: pause 90 s, rate → ${BUCKET.rate.toFixed(2)}/s`); continue; }
+      if (r.ok) { const j = await r.json(); if (typeof j.count === 'number') { if (++BUCKET.ok % 200 === 0) BUCKET.rate = Math.min(3, BUCKET.rate * 1.1); return j.count; } if (j.error) { console.log('API error', j.error.slice(0, 120)); return -2; } }
     } catch { /* retry */ }
     await sleep(1500 * (t + 1));
   }
@@ -420,27 +422,42 @@ function allQueries() {
   return q;
 }
 async function stageAQuery() {
-  const sets = String(args.sets || 'pweb,pours,neg,main,pia').split(',');
-  const fcount = path.join(OUT, 'counts.jsonl'); // public: hash + counts only
-  const have = new Map(readJsonl(fcount).map((r) => [r.h, r]));
-  const todo = []; const seen = new Set();
-  for (const s of sets) for (const q of allQueries().filter((x) => x.set === s)) { if (seen.has(q.h)) continue; seen.add(q.h); const prev = have.get(q.h); const need = [...MINI, ...IG].filter((ix) => !prev || prev.counts[ix] == null || prev.counts[ix] < 0); if (need.length) todo.push({ ...q, need, prev }); }
-  console.log('queries to run', todo.length, 'index calls', todo.reduce((s, x) => s + x.need.length, 0));
-  const conc = Number(args.conc || 8); let i = 0, doneN = 0; const t0 = Date.now();
-  async function worker() {
-    while (i < todo.length) {
-      const q = todo[i++]; const counts = { ...(q.prev?.counts || {}) };
-      // infini-gram v4 indexes are fast; mini indexes ~0.75 s each, issued in sequence per passage
-      await Promise.all([q.need.filter((ix) => MINI_ALL.includes(ix)), q.need.filter((ix) => !MINI_ALL.includes(ix))].map(async (ixs) => { for (const ix of ixs) counts[ix] = await countQ(ix, q.text); }));
-      appendJsonl(fcount, { h: q.h, set: q.set, counts });
-      if (++doneN % 100 === 0) console.log(`${doneN}/${todo.length} ${((Date.now() - t0) / 1000).toFixed(0)}s`);
+  const order = String(args.sets || 'pweb,pours,neg,main,pia').split(',');
+  const flong = path.join(OUT, 'counts-long.jsonl'); // public: hash, index, count only
+  const have = new Map(); for (const r of readJsonl(flong)) if (r.count >= 0) have.set(`${r.h}|${r.index}`, r.count);
+  const strings = []; const seen = new Set();
+  for (const s of order) for (const q of allQueries().filter((x) => x.set === s)) { if (seen.has(q.h)) continue; seen.add(q.h); strings.push(q); }
+  const record = (h, index, count, how) => { if (count >= 0) have.set(`${h}|${index}`, count); appendJsonl(flong, { h, index, count, how }); };
+  const indexes = String(args.indexes || [...IG, ...MINI].join(',')).split(',');
+  for (const index of indexes) {
+    const todo = strings.filter((q) => !have.has(`${q.h}|${index}`));
+    console.log(index, 'strings to count', todo.length);
+    if (!todo.length) continue;
+    if (IG.includes(index)) {
+      // group testing: greedy groups of ≤ 1,000 characters; a zero group sets every member to 0; a hit splits in two
+      const groups = []; let cur = [];
+      for (const q of todo) { const len = [...cur, q].map((x) => x.text).join(' OR ').length; if (cur.length && len > 990) { groups.push(cur); cur = []; } cur.push(q); }
+      if (cur.length) groups.push(cur);
+      let n = 0;
+      const solve = async (g) => {
+        const c = await countQ(index, g.map((x) => x.text).join(' OR '));
+        if (c === 0) { for (const x of g) record(x.h, index, 0, g.length > 1 ? 'group' : 'single'); return; }
+        if (g.length === 1) { record(g[0].h, index, c, 'single'); return; }
+        if (c < 0) { /* error on a group: fall through to halves */ }
+        const mid = Math.ceil(g.length / 2); await solve(g.slice(0, mid)); await solve(g.slice(mid));
+      };
+      await pool(groups, 2, async (g) => { await solve(g); if (++n % 25 === 0) console.log(`${index} groups ${n}/${groups.length}`); });
+    } else {
+      let n = 0;
+      await pool(todo, 2, async (q) => { record(q.h, index, await countQ(index, q.text), 'single'); if (++n % 200 === 0) console.log(`${new Date().toISOString().slice(11, 19)} ${index} ${n}/${todo.length}`); });
     }
   }
-  await Promise.all(Array.from({ length: conc }, worker));
-  // compact: last row per hash wins
-  const rows = new Map(readJsonl(fcount).map((r) => [r.h, r])); writeJsonl(fcount, [...rows.values()]);
-  console.log('done', rows.size);
+  // compact to one row per hash (public): counts per index, -1 = error / not run
+  const bySet = new Map(strings.map((q) => [q.h, q.set]));
+  writeJsonl(path.join(OUT, 'counts.jsonl'), strings.map((q) => ({ h: q.h, set: bySet.get(q.h), counts: Object.fromEntries([...IG, ...MINI].map((ix) => [ix, have.has(`${q.h}|${ix}`) ? have.get(`${q.h}|${ix}`) : -1])) })));
+  console.log('done; blocks', BUCKET.blocks);
 }
+async function pool(items, conc, fn) { let i = 0; await Promise.all(Array.from({ length: conc }, async () => { while (i < items.length) { const it = items[i++]; await fn(it); } })); }
 
 // ---------- stage: a-prov ----------
 async function stageAProv() {

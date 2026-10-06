@@ -264,3 +264,20 @@ count grid uses **4 of the 7 CC snapshots, evenly spaced: `v2_cc-2025-05`, `-13`
 the three infini-gram indexes); the client throttles per host and backs off 90 s on any 403. The other three
 snapshots are used only to retrieve documents in the provenance step. The 19 partial rows were seen (P-web, before
 any OCR passage was queried) and are re-queried in full. Everything else is unchanged.
+
+## Amendment 3 — rate limit, second pass (2026-10-06, 23:30 UTC)
+
+Throttled to ~1 request/s summed over both hosts, the gateway still blocked repeatedly (21 passages in 5 min), so
+the per-passage grid of amendment 2 would take about a day. Two facts, measured on stock strings: the original
+infini-gram counts `A OR B` as the sum of the two counts (1,248 + 88 = 1,336) and accepts ≤ 1,000 characters per
+query; infini-gram mini does not support OR. The index set and query plan become:
+- **infini-gram (v4, Llama-2 tokens), group-tested:** `v4_dolma-v1_7_llama`, `v4_olmo-mix-1124_llama`,
+  `v4_rpj_llama_s4`, **`v4_dclm-baseline_llama`** and **`v4_piletrain_llama`** (DCLM-baseline and the Pile move here
+  from mini). Passages are OR-ed in groups of ≤ 1,000 characters; a zero group gives every member 0; a group with a
+  hit is split in halves until each hit has its own exact count. Counts are therefore exact, per passage.
+- **infini-gram mini (characters), per passage:** Common Crawl **`v2_cc-2025-30`** and **`v2_cc-2025-05`** only (the
+  newest and oldest snapshot that answer). CC is only available on mini.
+- Order: all v4 indexes, then CC 2025-30, then CC 2025-05; within each, P-web, P-ours, negatives, the 500, P-IA.
+  If the job runs out of time, the report says which index/set pairs were not completed and the CC 2025-05 pass is
+  the first to be cut.
+No count from the partial passes of amendment 2 (11 P-web passages, 0 hits seen) is used; all are re-queried.
