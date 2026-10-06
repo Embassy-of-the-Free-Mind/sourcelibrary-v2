@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import { posts } from '@/app/blog/page';
+import { posts } from '@/app/blog/posts';
 
 export const revalidate = false;
 
