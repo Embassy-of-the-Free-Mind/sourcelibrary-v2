@@ -92,11 +92,15 @@ function summarise(us) {
 const run = validate(join(ROOT, DATE));
 if (run.problems.length) { console.error(`results incomplete or malformed (${run.problems.length}):\n  ${run.problems.join('\n  ')}`); process.exit(2); }
 
+// A run's frame (public library vs canon shelves). The window pools only runs from the same frame — a canon-shelf
+// draw is a different population and would move the public rate for a reason that is not quality.
+const frameOf = (d) => { try { return read(join(ROOT, d, 'draw-log.json')).frame ?? '?'; } catch { return '?'; } };
+const frame = frameOf(DATE);
 const dayMs = 86400000;
 const end = Date.parse(DATE);
 const windowRuns = readdirSync(ROOT).filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d))
   .filter((d) => Date.parse(d) <= end && Date.parse(d) > end - WINDOW_DAYS * dayMs)
-  .filter((d) => existsSync(join(ROOT, d, 'results.json')))
+  .filter((d) => existsSync(join(ROOT, d, 'results.json')) && frameOf(d) === frame)
   .sort();
 const windowResults = [];
 for (const d of windowRuns) {
@@ -112,7 +116,7 @@ writeFileSync(join(ROOT, DATE, 'report.json'), JSON.stringify(report, null, 1));
 
 const pct = (x) => (x == null ? '—' : (100 * x).toFixed(0));
 const ci = (c) => (c ? `${pct(c[0])}–${pct(c[1])}` : '—');
-const row = `| ${DATE} | ${fortnight.books} | ${fortnight.pages} | ${fortnight.pages_with_serious} (${pct(fortnight.page_rate)}%) | ${fortnight.books_on_sight_defect} | ` +
+const row = `| ${DATE} | ${frame} | ${fortnight.books} | ${fortnight.pages} | ${fortnight.pages_with_serious} (${pct(fortnight.page_rate)}%) | ${fortnight.books_on_sight_defect} | ` +
   `${pct(windowSum.page_rate)}% (${ci(windowSum.page_rate_ci)}), ${windowSum.books} books | ${pct(windowSum.book_defect_rate)}% (${ci(windowSum.book_defect_rate_ci)}) | ` +
   `${report.top_classes.map((c) => `${c.class} ${c.pages}p`).join(', ') || '—'} |`;
 const md = [
