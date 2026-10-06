@@ -1,5 +1,12 @@
 {
   "regions": ["fra1"],
+  "git": {
+    "deploymentEnabled": {
+      "**": false,
+      "main": true,
+      "preview/**": true
+    }
+  },
   "ignoreCommand": "node scripts/vercel-ignore-build.mjs",
   "crons": [
     {

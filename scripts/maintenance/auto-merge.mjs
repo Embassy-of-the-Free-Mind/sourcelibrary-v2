@@ -11,7 +11,8 @@
  * ADMISSION (every line must hold):
  *   - label `tier:auto`, no `blocked`, not a draft, mergeable
  *   - gating checks `test` and `DCO` both SUCCESS (Vercel is not gating —
- *     its first result is often a spurious failure, see reap-prs.mjs)
+ *     its first result is often a spurious failure, see reap-prs.mjs), and
+ *     `next-build` not running or failed when the PR has it (next-build.yml)
  *   - last updated ≥ SETTLE_MIN minutes ago, so a session that opened the PR
  *     has time to run /review and add `blocked` before the merge lands
  *   - main's tip is ≥ BUILD_GAP_MIN minutes old: merges are serialised so
@@ -42,8 +43,12 @@ const minutesAgo = (iso) => (Date.now() - new Date(iso).getTime()) / 60000;
 
 function gating(pr) {
   const byName = Object.fromEntries((pr.statusCheckRollup || []).map((c) => [c.name, c.conclusion || c.status]));
-  return { test: byName.test, DCO: byName.DCO };
+  return { test: byName.test, DCO: byName.DCO, nextBuild: byName['next-build'] };
 }
+
+// `next-build` (next-build.yml) gates when present: running or failed holds
+// the PR. Absent passes, so PRs opened before the workflow existed still merge.
+const NEXT_BUILD_OK = new Set([undefined, 'SUCCESS', 'SKIPPED', 'NEUTRAL']);
 
 // `gh pr list` reports mergeable=UNKNOWN for EVERY open PR right after anything
 // lands on main (GitHub invalidates them all at once and recomputes lazily, on a
@@ -74,6 +79,7 @@ function candidates() {
     if (pr.mergeable !== 'MERGEABLE') why.push(`mergeable=${pr.mergeable}`);
     if (g.test !== 'SUCCESS') why.push(`test=${g.test || 'missing'}`);
     if (g.DCO !== 'SUCCESS') why.push(`DCO=${g.DCO || 'missing'}`);
+    if (!NEXT_BUILD_OK.has(g.nextBuild)) why.push(`next-build=${g.nextBuild}`);
     if (minutesAgo(pr.updatedAt) < SETTLE_MIN) why.push(`updated ${minutesAgo(pr.updatedAt).toFixed(0)} min ago (< ${SETTLE_MIN} settle)`);
     out.push({ pr, why });
   }

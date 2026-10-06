@@ -6,6 +6,17 @@
 
 ---
 
+## Since 2026-10-06 a PR has no Vercel check unless you asked for a preview
+
+`vercel.json` `git.deploymentEnabled` deploys only `main` and `preview/**` branches (#5976, #5990).
+Preview builds were ~$112/mo of build minutes and held the one build slot production queues behind,
+for previews nobody opened. **The build check is now `next-build`** (`next-build.yml`, compile-only,
+free on Actions, skipped when no build input changed). A FAILED or running `next-build` holds
+`auto-merge.mjs`; an absent one does not. It does not prerender, so a page that fails only when
+rendered against real data still surfaces at the production build, which leaves the previous deploy
+live. **To get a preview** of a branch: `git push origin HEAD:preview/<name>` (or `vercel` from the
+worktree, which ignores the git setting). The rest of this section applies to those previews.
+
 ## The Vercel check can be red while the build succeeded
 
 The Vercel check often shows "fail" on the first build, then an automatic retry flips it to pass (the
