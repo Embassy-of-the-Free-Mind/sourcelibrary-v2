@@ -126,8 +126,23 @@ export default function ReadingPlanPage() {
             Machine cost only, at the batch rates we pay today, with 15% added for retries and failed pages. An average book
             has about 265 pages.
           </p>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm border-collapse min-w-[36rem]">
+          {/* Phones: one card per level, so the total is visible without sideways scrolling */}
+          <ul className="md:hidden">
+            {LEVELS.map(l => (
+              <li key={l.name} className="py-4 border-b border-stone-200">
+                <div className="font-semibold text-primary">{l.name}</div>
+                <p className="text-secondary text-sm mt-1">{l.how}</p>
+                <dl className="grid grid-cols-2 gap-x-4 gap-y-2 mt-3 text-sm">
+                  <div><dt className="text-muted">Everything we hold</dt><dd className="font-semibold tabular-nums">{l.finish}</dd></div>
+                  <div><dt className="text-muted">Each 100,000 new books</dt><dd className="tabular-nums">{l.perHundredK}</dd></div>
+                  <div><dt className="text-muted">Per book</dt><dd className="tabular-nums">{l.perBook}</dd></div>
+                  <div><dt className="text-muted">Per 1,000 pages</dt><dd className="tabular-nums">{l.perThousand}</dd></div>
+                </dl>
+              </li>
+            ))}
+          </ul>
+          <div className="hidden md:block">
+            <table className="w-full text-sm border-collapse">
               <thead>
                 <tr className="text-left text-muted border-b border-stone-300">
                   <th className="py-2 pr-3 font-semibold">Level</th>
