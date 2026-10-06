@@ -129,12 +129,13 @@ for (const b of books) {
   // Probe a spread of pages; a book with no border on any of them is skipped whole.
   if (!ONLY_PAGES && pages.length > PROBE) {
     const probe = Array.from({ length: PROBE }, (_, k) => pages[Math.floor(((k + 0.5) * pages.length) / PROBE)]);
-    let any = false;
-    for (const p of probe) {
+    // A failed probe is not a border.
+    const hits = await Promise.all(probe.map(async p => {
       const url = imageOf(p, bookId);
-      if (!url) continue;
-      try { if (await frameFor(url)) { any = true; break; } } catch { /* a failed probe is not a border */ }
-    }
+      if (!url) return false;
+      try { return !!(await frameFor(url)); } catch { return false; }
+    }));
+    const any = hits.some(Boolean);
     if (!any) {
       totals.skippedClean++;
       if (APPLY) {
