@@ -39,6 +39,8 @@ export const preferredRegion = 'fra1';
 
 const BOOK_ID = '6991d89a8c1030b12444c076';
 const PAGE = 20;
+/** The printed page number of scan 20, as a reader would cite it. */
+const PAGE_LABEL = 'page 8 of the 1895 Haṭhayogapradīpikā';
 
 const RESULTS = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/scripts/eval/results';
 
@@ -67,7 +69,7 @@ const CONFIG: JourneyInstanceConfig = {
       href: `${RESULTS}/nalanda-readiness-2026-09-30/indic-sa-gretil-scores.jsonl`,
     },
   ],
-  revisionNote: 'A check across the whole library had found explanations run into the English where only the Sanskrit word belonged, and moved each one into a note.',
+  revisionNote: 'A check across the whole library had found explanations written where only the Sanskrit word should stand, and moved each one into a note.',
 };
 
 const TENGYUR = gapStatus.tengyur_draft;
@@ -126,7 +128,7 @@ async function loadPageRecord(db: Db, data: JourneyData): Promise<PageRecord> {
   if (!p) throw new Error(`how-it-works: page record ${data.pageId} not found`);
   const tr = p.translation;
   return {
-    pageLabel: `${data.citation.locator} of the 1895 Haṭhayogapradīpikā`,
+    pageLabel: PAGE_LABEL,
     readerUrl: data.readerPath,
     image: {
       from: data.providerName ?? 'the holding library',
@@ -146,7 +148,7 @@ async function loadPageRecord(db: Db, data: JourneyData): Promise<PageRecord> {
       ? {
           model: tr.engine?.model ?? tr.model,
           modelVersion: tr.engine?.model_version,
-          prompt: tr.prompt_version ? `v${tr.prompt_version}` : undefined,
+          prompt: tr.prompt_version ? `v${tr.prompt_version.replace(/^v/i, "")}` : undefined,
           api: tr.engine?.api === 'batch' ? 'Batch API' : undefined,
           batch: tr.batch_job_id,
           hash: tr.content_hash,
@@ -194,7 +196,7 @@ export default async function HowItWorksPage() {
 
         <TextRoutesFigure
           tengyurPages={TENGYUR.pages_with_text}
-          examplePage={{ model: record.text?.model ?? data.readBy, label: `${data.citation.locator} of the 1895 Haṭhayogapradīpikā in the film below` }}
+          examplePage={{ model: record.text?.model ?? data.readBy, label: `${PAGE_LABEL} in the film below` }}
         />
       </div>
 

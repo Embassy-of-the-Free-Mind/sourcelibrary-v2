@@ -48,6 +48,10 @@ export function cleanPageLines(raw: string): string {
     return [body, ...margins.filter(Boolean)].join('\n');
   });
   return stripMarkupTags(paragraphs.join('\n\n'), '')
+    // The reader renders Markdown; the pane shows plain text, so drop the marks
+    // (bold verses, headings) rather than print them.
+    .replace(/\*\*([^*\n]+?)\*\*/g, '$1')
+    .replace(/^#{1,6} +/gm, '')
     .replace(/[ \t]+/g, ' ')
     .replace(/ +([,.;:!?])/g, '$1')
     .replace(/ *\n */g, '\n')

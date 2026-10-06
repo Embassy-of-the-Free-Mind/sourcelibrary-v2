@@ -79,6 +79,11 @@ describe('journey text', () => {
     expect(l.english[1]).toBe('For those engaged in any form of Yoga, Hatha is the supporting tortoise.');
   });
 
+  it('prints Markdown bold and headings as plain text', () => {
+    const e = paneText(cleanPageLines('# The Lamp on Hatha Yoga\n\n**Hatha Yoga is a sheltering monastery. || 10 ||**\n\nA **bold** word.'));
+    expect(e).toBe('The Lamp on Hatha Yoga\n\nHatha Yoga is a sheltering monastery. || 10 ||\n\nA bold word.');
+  });
+
   it('verifies curated strings loosely but not vacuously', () => {
     const e = paneText(cleanPageLines(EN));
     expect(containsLoose(e, 'How will such a meeting ever occur again?')).toBe(true);
@@ -136,7 +141,7 @@ describe('journey timeline', () => {
     expect(connect).toContain('Allama');
     expect(connect).toContain('the 1867 Sanskrit edition');
     const check = steps.find(s => s.key === 'check')!.body;
-    expect(check).toContain('corrected once, most recently on 6 October 2026');
+    expect(check).toContain('corrected once, on 6 October 2026');
   });
 
   it('never says "machine draft"', () => {

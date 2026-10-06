@@ -184,10 +184,12 @@ export function connectSentences(d: JourneyData): { search?: string; index?: str
       ? `Translated pages are also indexed by meaning, so a page can be found by what it says, not only by its exact words. A search of the whole library for “${search.query}” brings up this page ${search.rank === 1 ? 'first' : `at number ${search.rank}`}.`
       : undefined,
     index: index.length
-      ? `The book’s index ties ${listOf(named)}${index.length > named.length ? ` and ${index.length - named.length} other ${index.length - named.length === 1 ? 'entry' : 'entries'}` : ''} to this page. Each name leads to the other books in the library where it appears.`
+      ? `The book’s index ties ${index.length > named.length
+        ? `${named.join(', ')} and ${index.length - named.length} other ${index.length - named.length === 1 ? 'entry' : 'entries'}`
+        : listOf(named)} to this page. Each name leads to the other books in the library where it appears.`
       : undefined,
     editions: editions.length
-      ? `The library also holds ${editions.length === 1 ? 'another edition' : `${editions.length} other editions`} of the same work: ${listOf(editions.map(editionName))}. Each is linked from this one.`
+      ? `The library also holds ${editions.length === 1 ? 'another edition' : `${editions.length} other editions`} of the same work: ${listOf(editions.map(editionName))}. The book’s page links to ${editions.length === 1 ? 'it' : 'them'}.`
       : undefined,
   };
 }
@@ -199,7 +201,7 @@ export function checkSentences(d: JourneyData): { checks?: string; revisions: st
   return {
     checks: d.config.checks?.length ? d.config.checks.map(c => c.text).join(' ') : undefined,
     revisions: r.count
-      ? `This page has been corrected ${r.count === 1 ? 'once' : `${r.count} times`}${r.latest?.at ? `, most recently on ${DAY(r.latest.at)}, when its ${field} was changed` : ''}.${d.config.revisionNote ? ` ${d.config.revisionNote}` : ''} The earlier version is kept beside the new one, with the reason.`
+      ? `This page has been corrected ${r.count === 1 ? 'once' : `${r.count} times`}${r.latest?.at ? `${r.count === 1 ? ',' : ', most recently'} on ${DAY(r.latest.at)}, when its ${field} was changed` : ''}.${d.config.revisionNote ? ` ${d.config.revisionNote}` : ''} The earlier version is kept beside the new one, with the reason.`
       : 'A correction is saved as a revision of the page, with its reason; the earlier version is never overwritten.',
     queue: 'Readers who know the language can check pages in a review queue, and any reader can report a problem on any page.',
     label: d.machineDraft

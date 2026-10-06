@@ -119,7 +119,13 @@ export default function JourneyFilm({ data }: { data: JourneyData }) {
         col.style.transform = 'none';
         const anchor = col.querySelector<HTMLElement>('[data-hl]') || col.querySelector<HTMLElement>('[data-anchor]');
         const colH = col.parentElement?.clientHeight || H;
-        if (anchor) col.style.transform = `translateY(${-Math.max(0, anchor.offsetTop - colH * .3)}px)`;
+        if (!anchor) return;
+        // "fit": move only as far as it takes to bring the highlight into view (lists);
+        // otherwise set the highlight a third of the way down (running text).
+        const shift = col.dataset.scroll === 'fit'
+          ? anchor.offsetTop + anchor.offsetHeight - colH * .92
+          : anchor.offsetTop - colH * .3;
+        col.style.transform = `translateY(${-Math.max(0, shift)}px)`;
       });
       const base = el.getBoundingClientRect();
       let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;

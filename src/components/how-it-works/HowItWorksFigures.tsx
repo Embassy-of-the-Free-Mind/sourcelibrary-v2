@@ -75,10 +75,10 @@ const SCHOLARS: Stage = {
   pending: true,
 };
 
-function StageBox({ s, n }: { s: Stage; n?: number }) {
+function StageBox({ s, n, fill }: { s: Stage; n?: number; fill?: boolean }) {
   return (
     <div
-      className={`h-full rounded-sm border px-4 py-4 md:px-3 ${
+      className={`${fill ? 'h-full ' : ''}rounded-sm border px-4 py-4 md:px-3 ${
         s.pending ? 'border-dashed border-border-medium bg-transparent' : 'border-border-light bg-white'
       }`}
     >
@@ -110,21 +110,19 @@ export function LineFigure({ books, readable, languages }: { books: number; read
       <ol className="grid gap-3 md:grid-cols-5 md:gap-2">
         {LINE.map((s, i) => (
           <li key={s.name} className="relative">
-            <StageBox s={s} n={i + 1} />
+            <StageBox s={s} n={i + 1} fill />
             {i < LINE.length - 1 && (
               <span aria-hidden className="hidden md:block absolute -right-[7px] top-8 z-10 text-muted text-sm">›</span>
             )}
           </li>
         ))}
       </ol>
-      <div className="relative mt-3 md:mt-2 grid gap-3 md:grid-cols-5 md:gap-2">
-        <div className="md:col-span-4 relative">
-          <span aria-hidden className="block text-center md:text-right md:pr-[9%] font-sans text-sm text-muted leading-none mb-1">
-            ↻ <span className="text-[11px] uppercase tracking-[0.08em]">over every published page</span>
-          </span>
+      <div className="mt-3 rounded-sm border border-accent-rust/40 px-3 pt-2 pb-3 md:px-2">
+        <p className="font-sans text-xs font-semibold uppercase tracking-[0.1em] text-accent-rust mb-2 md:px-1">
+          <span aria-hidden>↻ </span>Then, on every published page, again and again
+        </p>
+        <div className="grid gap-3 md:grid-cols-[3fr_1fr] md:gap-2 items-start">
           <StageBox s={CHECK} n={LINE.length + 1} />
-        </div>
-        <div className="md:pt-5">
           <StageBox s={SCHOLARS} />
         </div>
       </div>

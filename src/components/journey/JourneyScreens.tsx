@@ -176,10 +176,12 @@ function SearchPane({ d }: { d: JourneyData }) {
           {q.results.map((r, i) => (
             <li key={i} className={r.here ? s.hl : undefined} data-hl={r.here ? '' : undefined}>
               <span className={s.rank}>{i + 1}</span>
-              <span className={s.resultTitle}>{r.title}</span>
-              <span className={s.resultPage}>page {r.page}</span>
-              {r.here && <span className={s.tag}>This page</span>}
-              {r.sameWork && <span className={s.tagSoft}>Same work, another edition</span>}
+              <span className={s.resultBody}>
+                <span className={s.resultTitle}>{r.title}</span>
+                <span className={s.resultPage}>page {r.page}</span>
+                {r.here && <span className={s.tag}>This page</span>}
+                {r.sameWork && <span className={s.tagSoft}>Same work, another edition</span>}
+              </span>
             </li>
           ))}
         </ol>
@@ -187,6 +189,9 @@ function SearchPane({ d }: { d: JourneyData }) {
     </div>
   );
 }
+
+/** Names shown on the pane; the rest are counted, so the editions stay in view on a phone. */
+const INDEX_SHOWN = 5;
 
 function LinksPane({ d }: { d: JourneyData }) {
   const { index, editions } = d.connect;
@@ -201,9 +206,10 @@ function LinksPane({ d }: { d: JourneyData }) {
           <section className={`${s.hl}`} data-hl="">
             <div className={s.listHead}>In the book’s index, on this page</div>
             <div className={s.names}>
-              {index.map(x => (
+              {index.slice(0, INDEX_SHOWN).map(x => (
                 <span key={x.name} className={s.name}>{x.name}<i>{x.type}</i></span>
               ))}
+              {index.length > INDEX_SHOWN && <span className={s.name}>+{index.length - INDEX_SHOWN} more</span>}
             </div>
           </section>
         )}
@@ -236,7 +242,7 @@ function ChecksPane({ d }: { d: JourneyData }) {
         <span>{d.citation.locator}</span>
         <span className={`${s.chip} ${s.chipOn}`}>Revision history</span>
       </div>
-      <dl className={s.checks}>
+      <dl className={s.checks} data-scroll="fit">
         {rows.map((r, i) => (
           <div key={i} className={r.hl ? s.hl : undefined} data-hl={r.hl ? '' : undefined}>
             <dt className={s.listHead}>{r.head}</dt>
@@ -296,7 +302,12 @@ export function screenText(d: JourneyData, k: ScreenKey): ScreenText {
     case 'trace':
       return { title: 'Tracing each line', body: 'Checks run on pages that are already published. With Trace on, clicking a phrase shows its partner in the other language, so a reader can check a line against the original.' };
     case 'checks':
-      return { title: 'Checked, and corrected where it stands', body: checkSentences(d).checks || 'Pages are checked after they are published, and corrected where the checks find a fault.' };
+      return {
+        title: 'Checked, and corrected where it stands',
+        body: d.revisions.count
+          ? 'What has been checked on this book, and the correction this page has had. Every revision is kept.'
+          : 'What has been checked on this book. A correction would be kept here as a revision.',
+      };
     case 'draft':
       return { title: 'Saying what is checked', body: 'Until a scholar has reviewed it, every translated page carries this label. Readers can report a problem on any page.' };
   }
