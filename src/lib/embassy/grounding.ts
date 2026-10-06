@@ -509,6 +509,20 @@ function captionFor(img: GroundingImage, base: string): string {
   return `*${what} — ${shortTitle(img.bookTitle)}${img.bookAuthor ? `, by ${img.bookAuthor}` : ''}*`;
 }
 
+function editDistance(a: string, b: string): number {
+  const prev = Array.from({ length: b.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= a.length; i++) {
+    let diag = prev[0];
+    prev[0] = i;
+    for (let j = 1; j <= b.length; j++) {
+      const tmp = prev[j];
+      prev[j] = Math.min(prev[j] + 1, prev[j - 1] + 1, diag + (a[i - 1] === b[j - 1] ? 0 : 1));
+      diag = tmp;
+    }
+  }
+  return prev[b.length];
+}
+
 function captionProblem(
   caption: string,
   img: GroundingImage,
@@ -525,7 +539,10 @@ function captionProblem(
     || (titleWords.length > 0 && titleHits.length === titleWords.length);
   if (!namesOwn) return 'does not name its own book';
   const own = new Set(foldWords(`${img.bookTitle} ${img.bookAuthor ?? ''} ${img.description ?? ''} ${ownPageText}`));
-  const strangers = [...topicNames].filter(n => capWords.has(n) && !own.has(n));
+  // Early-modern names have no fixed spelling (Rosenkreutz / Rosenkreuz /
+  // Rosencreutz): a near spelling in the image's own record is the same name.
+  const ownHas = (n: string) => own.has(n) || [...own].some(w => Math.abs(w.length - n.length) <= 2 && w[0] === n[0] && editDistance(w, n) <= (n.length >= 9 ? 2 : 1));
+  const strangers = [...topicNames].filter(n => capWords.has(n) && !ownHas(n));
   if (strangers.length > 0) return `ties it to ${strangers.join(', ')}, which its own record never mentions`;
   return null;
 }

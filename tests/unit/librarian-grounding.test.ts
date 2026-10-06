@@ -204,6 +204,16 @@ describe('captions', () => {
     expect(out).not.toContain('Drebbel');
     expect(out).toContain('[Page 16](https://sourcelibrary.org/book/warhafftiger-bericht-khunrath/page-number/16)');
   });
+  it('treats a variant spelling of the question\'s name in the image\'s own record as the same name', () => {
+    const tomb: GroundingImage = { url: 'https://images.sourcelibrary.org/archived/fam1/12.jpg', bookId: 'fam1', bookSlug: 'fama', bookTitle: 'Fama Fraternitatis', page: 12,
+      description: 'The brothers open the vault of Christian Rosenkreuz.' };
+    const text = '![tomb](https://images.sourcelibrary.org/archived/fam1/12.jpg)\n*The opening of the tomb of Christian Rosenkreutz — [Fama Fraternitatis](https://sourcelibrary.org/book/fama), [Page 12](https://sourcelibrary.org/book/fama/page-number/12)*';
+    const q = 'What does the Fama say was found in Christian Rosenkreutz\'s tomb?';
+    expect(ground(text, { images: [tomb], question: q }).edits).toEqual([]);
+    // …but a different name is still a stranger.
+    const other = text.replace('Christian Rosenkreutz', 'Christian Drebbel');
+    expect(ground(other, { images: [tomb], question: 'What did Christian Drebbel build?' }).report.captionsRewritten).toBe(1);
+  });
   it('rewrites a caption that links a different book', () => {
     const text = '![athanor](https://images.sourcelibrary.org/archived/khu1/16.jpg)\n*An athanor from [Journal](https://sourcelibrary.org/book/journal-des-voyages-monconys)*';
     expect(ground(text, { images: [athanor] }).report.captionsRewritten).toBe(1);
