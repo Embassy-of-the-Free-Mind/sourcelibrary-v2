@@ -98,3 +98,18 @@ describe('guards', () => {
     expect(isJunkCover(title, {})).toBe(false);
   });
 });
+
+describe('currentCoverPageNumber', () => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore — plain-JS module
+  const load = () => import('../../scripts/lib/cover-choice.mjs');
+  it('reads cover_page, then the cover URL, else null', async () => {
+    const { currentCoverPageNumber } = await load();
+    expect(currentCoverPageNumber({ id: 'b1', cover_page: 7 })).toBe(7);
+    expect(currentCoverPageNumber({ id: 'b1', thumbnail: 'https://images.sourcelibrary.org/archived/b1/12.jpg' })).toBe(12);
+    expect(currentCoverPageNumber({ id: 'b1', image_display: 'https://images.sourcelibrary.org/pages/b1/0034-thumb.jpg' })).toBe(34);
+    expect(currentCoverPageNumber({ id: 'b1', thumbnail: 'https://images.sourcelibrary.org/pages/b1/spppuy-0081.jpg' })).toBe(81);
+    expect(currentCoverPageNumber({ id: 'b1', thumbnail: 'https://archive.org/services/img/x' })).toBeNull();
+    expect(currentCoverPageNumber({ id: 'b1', thumbnail: 'https://images.sourcelibrary.org/archived/other/3.jpg' })).toBeNull();
+  });
+});
