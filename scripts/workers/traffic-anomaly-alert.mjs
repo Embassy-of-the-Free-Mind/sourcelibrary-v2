@@ -163,6 +163,7 @@ export const ENUMERATION_PAGES_PER_BOOK = 5;
 export const EXPECTED_HOSTS = new Set([
   'sourcelibrary.org',
   'bph.sourcelibrary.org',
+  'kloss.sourcelibrary.org', // tenant reading room, same footing as bph
   'ficinosociety.org', // scoped to the society surface since #3438 — see below
 ]);
 
