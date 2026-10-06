@@ -75,3 +75,25 @@ Rules:
 - Commit `<dir>` and open a PR (`tier:auto` expected).
 
 Budget: 6 Opus reviewers ≈ 1.2M subagent tokens, $0 API. Stay within 8 agents a session.
+
+## Hand-picked variant: the curation check (a worklist, NOT a rate)
+Use this when the question is only "which of THESE books can we show <partner>?" and someone has already chosen the
+books for interest. First run: Eternity, 107 books, 2026-10-06
+(`scripts/eval/experiments/2026-10-06-eternity-shelf-review.md`). It shares this skill's tools and differs in three ways:
+
+- **Pick, don't draw.** `strata.json` lists the chosen ids per tradition (`"id"` or `"id:page"`). Run
+  `overview-draw.mjs --picked --strata … --out scripts/eval/results/spot-check/curation-<date>-<tag>`: every id is
+  taken, with two consecutive mid-book pages. Finding candidates is a Mongo query per language (public, mostly
+  translated, sorted by `read_count`), written to the scratchpad.
+- **Reviewer brief:** REVIEWER.md, then `scripts/eval/spot-check/CURATION-ADDENDUM.md` (not the overview addendum).
+  One Opus reviewer per tradition; each writes `<scratchpad>/curation/<tradition>.json`, an array of
+  `{ book_id, tier, title, note, interest }`. Copy them to `<dir>/verdicts/` with Bash; rights notes go to ops only.
+- **No score.** `overview-score.mjs` refuses a `--picked` run. The verdicts go to a PRIVATE collection, where the
+  person choosing what to show opens them:
+  `curation-shelf.mjs --slug <private collection> --verdicts <dir>/verdicts [--apply]` (dry run by default; it
+  refuses a public collection). `--list` prints the shelf.
+
+Never quote its tier shares as quality: the books were chosen, two pages were read, and a tier-1 book can still hold
+bad pages. For a number, run the random draw above. What the curation check is good for is the worklist and new defect
+classes; a class still needs 3 distinct books and a detector (step 5) before it counts as general.
+
