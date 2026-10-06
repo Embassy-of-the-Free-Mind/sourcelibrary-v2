@@ -99,7 +99,7 @@ type XPanel = Omit<Panel, 'placed' | 'no_cost'> & { placed: XPoint[]; no_cost: X
 export function translationPanel(p: XPanel): Panel {
   const pt = (x: XPoint): Point => ({
     engine: x.engine, label: x.label, production: x.production, y: x.fidelity, y_ci95: x.fidelity_ci95,
-    ring: x.reversals.per_100 / 100, ring_text: `${x.reversals.per_100} per 100 pages`,
+    ring: x.reversals.per_100 / 100, ring_text: x.reversals.per_100.toFixed(1),
     cost: x.cost, on_frontier: x.on_frontier, note: x.note ?? null,
     subset: x.subset ? { n_pages: x.subset.n_pages, production_label: x.subset.production_label, production_y: x.subset.production_fidelity, separate_read: x.subset.separate_read } : null,
   });
@@ -139,7 +139,7 @@ export const OCR: Measure = {
 export const TRANSLATION: Measure = {
   key: 'translation', anchor: 'pareto-translation-',
   title: c => `${c.title} into English`,
-  exportTitle: c => `${c.title} into English: what a translation costs, against how faithful it is`,
+  exportTitle: c => `${c.title} into English: translation cost against fidelity`,
   explain:
     'Each dot is a translation engine. Further right costs more per 1,000 pages; higher, the closer its English keeps ' +
     'to the meaning of a published human translation of the same page, scored from 1 to 5 by blind AI judges. ' +
@@ -150,8 +150,8 @@ export const TRANSLATION: Measure = {
   yTick: v => v.toFixed(1),
   fmtY: score,
   yRange: [1, 5],
-  step: span => (span > 1.5 ? 0.5 : span > 0.6 ? 0.2 : 0.1),
-  yColumn: 'fidelity, 1–5', ringColumn: 'reversed', ringTitle: 'pages where either judge quoted a reversed statement, per 100 pages',
+  step: span => (span > 0.8 ? 0.5 : span > 0.3 ? 0.2 : 0.1),
+  yColumn: 'fidelity, 1–5', ringColumn: 'reversed per 100 pages', ringTitle: 'pages where either judge quoted a reversed statement, per 100 pages',
   ringLegend: 'Dashed ring: pages where the English reverses a statement, per 100 (bigger ring, more reversals).',
   verb: 'translated', unit: 'language',
   more: 'scores higher', less: 'scores lower', most: 'scores highest', mostAdj: 'highest-scoring', better: 'scores higher', scoreWord: 'fidelity',
@@ -289,7 +289,7 @@ function PlotBody({ panel, m, W, H, f }: { panel: Panel; m: Measure; W: number; 
         const cx = sx(p.cost!.usd_per_1k), cy = sy(p.y!);
         const ring = p.ring != null ? r + f * 0.2 + p.ring * f * 3 : null;
         const compute = p.cost!.basis === 'compute';
-        const tip = `${p.label}${p.production ? ' (in production)' : ''}: ${m.scoreWord} ${m.fmtY(p.y)}${p.y_ci95 ? ` [${m.fmtY(p.y_ci95[0])}–${m.fmtY(p.y_ci95[1])}]` : ''}, ${usd(p.cost!.usd_per_1k)} per 1,000 pages (${p.cost!.basis})${p.ring_text ? `, ${m.ringColumn} ${p.ring_text}` : ''}${p.on_frontier ? ', on the frontier' : ''}`;
+        const tip = `${p.label}${p.production ? ' (in production)' : ''}: ${m.scoreWord} ${m.fmtY(p.y)}${p.y_ci95 ? ` [${m.fmtY(p.y_ci95[0])}–${m.fmtY(p.y_ci95[1])}]` : ''}, ${usd(p.cost!.usd_per_1k)} per 1,000 pages (${p.cost!.basis})${p.ring_text ? `, ${m.ringColumn}: ${p.ring_text}` : ''}${p.on_frontier ? ', on the frontier' : ''}`;
         return (
           <g key={p.engine}>
             <title>{tip}</title>
@@ -327,8 +327,8 @@ const anchorOf = (m: Measure, chart: Chart, panel?: Panel) =>
 function keyLine(p: Point, i: number, nPlaced: number, m: Measure) {
   const n = i < nPlaced ? `${i + 1}  ` : '–  ';
   const tags = [p.production ? 'in use now' : '', p.on_frontier ? 'on the frontier' : ''].filter(Boolean).join(', ');
-  if (p.subset) return `${n}${p.label}: not plotted; ${subsetText(p, m)}${p.note ? `. ${p.note}` : ''}`;
-  return `${n}${p.label}${tags ? ` (${tags})` : ''}: ${m.scoreWord} ${m.fmtY(p.y)}${p.y_ci95 ? ` [${m.fmtY(p.y_ci95[0], m.key === 'ocr' ? 0 : 2)}–${m.fmtY(p.y_ci95[1], m.key === 'ocr' ? 0 : 2)}]` : ''}; ${p.cost ? `${usd(p.cost.usd_per_1k)} per 1,000 pages${p.cost.basis === 'compute' ? ' (inference time only)' : ''}` : 'cost not measured'}${p.ring_text ? `; ${m.ringColumn} ${p.ring_text}` : ''}`;
+  if (p.subset) return `${n}${p.label}: not plotted; ${subsetText(p, m)}${p.note ? `. ${p.note[0].toUpperCase()}${p.note.slice(1)}.` : '.'}`;
+  return `${n}${p.label}${tags ? ` (${tags})` : ''}: ${m.scoreWord} ${m.fmtY(p.y)}${p.y_ci95 ? ` [${m.fmtY(p.y_ci95[0], m.key === 'ocr' ? 0 : 2)}–${m.fmtY(p.y_ci95[1], m.key === 'ocr' ? 0 : 2)}]` : ''}; ${p.cost ? `${usd(p.cost.usd_per_1k)} per 1,000 pages${p.cost.basis === 'compute' ? ' (inference time only)' : ''}` : 'cost not measured'}${p.ring_text ? `; ${m.ringColumn}: ${p.ring_text}` : ''}`;
 }
 
 /** A self-contained figure for a slide: title, explanation, plot, key, notes. Hidden on the page. */
