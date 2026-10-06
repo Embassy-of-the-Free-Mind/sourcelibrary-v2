@@ -130,7 +130,9 @@ export function splitTermDefinition(body) {
   if (words(definition) < MIN_DEFINITION_WORDS && words(body) <= LONG_TERM_WORDS && !APPARATUS_HEAD.test(head)) return null;
   // The book's own words, not a definition: a numbered or labelled citation, a mantra,
   // shouted text, a title with its subtitle.
-  if (/[\d|]/.test(head) || CITATION_HEAD.test(head) || MANTRA.test(body)) return null;
+  // `aplaneis; original: "ἀπλανεῖς"; literally "unwandering"`: the colon belongs to a label
+  // inside the chip, not to the chip's head.
+  if (/[\d|;]/.test(head) || CITATION_HEAD.test(head) || MANTRA.test(body)) return null;
   if (!/\p{Ll}/u.test(definition) && /\p{Lu}/u.test(definition)) return null;
   if (isTitleCase(definition) && words(definition) > 1 && ((words(head) > 1 && isTitleCase(head)) || !/^["'‘“(*_]*(?:the|an?)\s/i.test(definition))) return null;
   return { head, definition };
