@@ -137,7 +137,7 @@ async function blackMode() {
   const all = (await db.collection('books').find({ ...LIVE, 'image_source.provider': 'internet_archive', 'image_source.identifier': /\.cn$/ },
     { projection: { _id: 0, id: 1, title: 1, pages_count: 1 } }).toArray()).sort((a, b) => (a.id < b.id ? -1 : 1));
   // 12.6K books × 3 fetches is hours from a laptop: default to a uniform sample (--sample N), --all for the census.
-  const books = args.includes('--all') ? all : shuffle(all, Number(opt('seed', 6056))).slice(0, Number(opt('sample', 600)));
+  const books = opt('books') ? all.filter((b) => opt('books').split(',').includes(b.id)) : args.includes('--all') ? all : shuffle(all, Number(opt('seed', 6056))).slice(0, Number(opt('sample', 600)));
   console.log(`CADAL (.cn) public books: ${all.length} · checking ${books.length}`);
   const rows = [];
   for (const b of books) {
