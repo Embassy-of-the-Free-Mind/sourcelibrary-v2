@@ -42,19 +42,11 @@ describe('shape 1 — a definition inside the chip', () => {
   });
 });
 
-describe('shape 2 — a bracketed definition after a chip (#5919)', () => {
+describe('shape 2 — a bracketed definition after a chip the sentence names (#5919)', () => {
   const cases: Array<[string, string]> = [
-    [
-      'the stars that astronomers have called <term>NEBULOSAE</term> [nebulous] until this very day are clusters',
-      'the stars that astronomers have called <term>NEBULOSAE</term> <note>nebulous</note> until this very day are clusters',
-    ],
     [
       'The second contains the <term>NEBULOSAM</term> called <term>PRAESEPE</term> [the Manger], which is not just one star',
       'The second contains the <term>NEBULOSAM</term> called <term>PRAESEPE</term> <note>the Manger</note>, which is not just one star',
-    ],
-    [
-      '-><term>NEBULOSA ORIONIS</term> [Orion Nebula].<-',
-      '-><term>NEBULOSA ORIONIS</term> <note>Orion Nebula</note>.<-',
     ],
     [
       'For the term <term>Tamim</term> [perfect] is the secret of two things, and it is as if it said <term>Teumim</term> [twins], except',
@@ -65,8 +57,20 @@ describe('shape 2 — a bracketed definition after a chip (#5919)', () => {
       'what it said <term>Ach</term> <note>but</note> is a division',
     ],
     [
-      '"and you shall take" <term>pederos</term> [an honor], just as the Holy One',
-      '"and you shall take" <term>pederos</term> <note>an honor</note>, just as the Holy One',
+      'engraved the great Name <term>Jehovah Shammah</term> [The Lord is There]. The second',
+      'engraved the great Name <term>Jehovah Shammah</term> <note>The Lord is There</note>. The second',
+    ],
+    [
+      'more exactly than through the word <term>Geselle</term> [journeyman]. – The responsibility',
+      'more exactly than through the word <term>Geselle</term> <note>journeyman</note>. – The responsibility',
+    ],
+    [
+      'Therefore he said <term>Yotzer</term> [Former]. Darkness, for there was',
+      'Therefore he said <term>Yotzer</term> <note>Former</note>. Darkness, for there was',
+    ],
+    [
+      'goes out from things, which is vulgarly called <term>lotii</term> [urine], because by it',
+      'goes out from things, which is vulgarly called <term>lotii</term> <note>urine</note>, because by it',
     ],
     [
       'which we call <term>Krimp-schelvis</term> [shivering haddock], and for some days',
@@ -78,7 +82,7 @@ describe('shape 2 — a bracketed definition after a chip (#5919)', () => {
   });
 
   it('counts what it changed', () => {
-    const { n } = guardTermDefinitions(cases[3][0]);
+    const { n } = guardTermDefinitions(cases.find(([i]) => i.includes('Tamim'))![0]);
     expect(n.bracket).toBe(2);
   });
 });
@@ -92,6 +96,44 @@ describe('brackets that are the translator’s supplied words stay (#4385)', () 
     '<term>Rabbi Yehuda</term> [said]: all the hidden things',
     '<term>Rabbi Yehuda</term> [opened]: all the hidden things',
     'and they shall be doubled [<term>Teumim</term>] from below together',
+    // Stored v10–v13 pages (random draw, 2026-10-06): the noun or verb the sentence needs.
+    'and passions of the anus, <term>iliac</term> [disorders], and passions',
+    'a plaster is made with them for hot <term>apathetic</term> [conditions], and it is mixed with honey',
+    'If the head is entirely opened, <term>cephalic</term> [vein]. If the stomach and heart',
+    'whose number is 6, <term>Tiphereth</term> [is denoted], which are her ornaments.',
+    '[Ye] have said that <term>Batu</term> [should judge it].',
+    'In Jerusalem, after the wonderful <term>John</term>, <term>Praylius</term> [took] the',
+    'Giovanni in the aforementioned chapter <term>Sunt quidam</term> [states] that he can well dispense',
+    'in the <term>monoculus</term> [it] completes that which was not',
+    'Udāna</term> [aggravated] by suppressing swelling',
+    // A respelling of the term is the translator's correction of the word (long s read as f).
+    '<term>Fufina</term> [fusina] <gloss>a foundry</gloss> 358',
+    'was a bright <term>Saphir</term> [Sapphire], upon which',
+    // Ambiguous with no naming cue and no capital: left as the translator's bracket.
+    '"and you shall take" <term>pederos</term> [an honor], just as the Holy One',
+    // An English cognate is indistinguishable from a respelling: left bracketed.
+    'the stars that astronomers have called <term>NEBULOSAE</term> [nebulous] until this very day are clusters',
+    // With no naming cue, a gloss is not told apart from the rest of a name: both stay bracketed.
+    '-><term>NEBULOSA ORIONIS</term> [Orion Nebula].<-',
+    'When his will is in the <term>Ee</term> [Law] of the Lord',
+    'He argues from the notes in the <term>Clementine</term> [Constitutions] "On Rescripts,"',
+    'according to <term>Vincentius</term> [Hispanus] in the chapter',
+    'and through <term>Innocentius</term> [IV], <term>Hostiensis</term>',
+    // A supplied clause after a naming cue.
+    'M.T. [Cicero] says <term>bustum</term> [is what] the Greeks call',
+    // The `term` in a preceding tag is not a naming cue (stored v13 grammar, p305).
+    'Before <term>DO</term>: <term>dulcedo</term> [sweetness], <term>libido</term> [lust]',
+    'from "to suffer" <term>petho</term>, <term>petho</term> [fut.] <term>peros</term>',
+    // Legal idiom on stored v11/v13 pages: "the said" is "the aforesaid"; a title is a citation.
+    'he refers himself to the said <term>Clementine</term> [Constitutions] "On Simony,"',
+    '§ <term>abbatissa</term> and title <term>de pa. in. fir.</term> [concerning] those on little paths',
+    'Hence some wish it to be called <term>Atherfatha</term> [c], as if',
+    'They also call <term>germanum</term> [one] who has the same father',
+    'his essence called <term>Strengthening the Joy Near to Passion</term> [emerged] from the expanse',
+    'with a double allusion to the name <term>Reitmohren</term> [Bav.] (a)',
+    'But they are called <term>προσλαμβανόμενα</term> [when] they are taken',
+    'Through *Er* he says <term>satyria</term> [comes from] satiety',
+    'and he said <term>Yotzer HaMe\'orot</term> [see *Y.N.H.*], and he said it',
     'according to <term>Para[celsus]</term> one must proceed',
     'the word <term>ꝑ</term> [sic] stands here',
     'the word <term>X</term> [?] stands here',
@@ -106,7 +148,7 @@ describe('brackets that are the translator’s supplied words stay (#4385)', () 
   });
 
   it('a bracket too long to be a gloss is a supplied clause', () => {
-    expect(isBracketDefinition('which is to say the whole of what was said before this')).toBe(false);
+    expect(isBracketDefinition('Which is to say the whole of what was said before this')).toBe(false);
   });
 });
 
