@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import type { CSSProperties, ReactNode } from 'react';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import PageEditMode from '@/components/PageEditMode';
 import { ENGLISH, HATCH, Figure, Step, Swatch, ImprovementChart } from '../canon-gap/diagrams';
 import { IMPROVEMENTS } from '../canon-gap/improvements';
 
@@ -835,6 +836,7 @@ export default function CanonQualityPage() {
           </p>
         </Section>
       </div>
+      <PageEditMode />
     </ContentPageLayout>
   );
 }
