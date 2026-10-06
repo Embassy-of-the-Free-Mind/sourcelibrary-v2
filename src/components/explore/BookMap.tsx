@@ -152,9 +152,14 @@ export default function BookMap({ locations }: BookMapProps) {
     });
     L.control.zoom({ position: 'bottomright' }).addTo(map);
     L.control.attribution({ position: 'bottomleft', prefix: false }).addTo(map);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
-      maxZoom: 18,
+    // Esri's light-gray canvas: keyless, and close to the old CARTO light_all
+    // look. CARTO's basemaps now require an API key and served a watermark
+    // tile ("API KEY REQUIRED") in place of every map tile — dots on a blank
+    // page. If this host ever does the same, the tell is a uniform tile image
+    // across zoom levels; curl one tile and look at it.
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; <a href="https://www.esri.com/">Esri</a> &mdash; Esri, HERE, Garmin, &copy; OpenStreetMap contributors',
+      maxNativeZoom: 16, maxZoom: 18,
     }).addTo(map);
     mapRef.current = map;
     markersRef.current = L.layerGroup().addTo(map);
