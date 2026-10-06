@@ -1,0 +1,63 @@
+name: Next build check
+
+# Does this PR still compile as a Next.js production build? (#5976, #5990)
+#
+# Vercel previews used to answer that, in the ONE build slot production
+# deploys queue behind. Previews are now opt-in (#5980: `[preview]` in the
+# commit message or a `preview/` branch), so without this job a PR that breaks
+# the Next build would merge and leave production on the previous deploy.
+# Compile-only, free (public repo), and skipped in seconds when the PR touches
+# nothing the app bundles — the same buildInputs() list that
+# scripts/vercel-ignore-build.mjs uses for production.
+#
+# Compile-only means no prerender, so pages that fail only while rendering
+# against production data are NOT caught here; production still is the test
+# for those, and a failed production build leaves the previous deploy live.
+#
+# auto-merge.mjs refuses a PR whose `next-build` FAILED. A missing check does
+# not block, so PRs opened before this workflow existed are not stranded.
+
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: next-build-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  next-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Does this PR touch build inputs?
+        id: inputs
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+        # A change to this workflow builds too, so the check is exercised when it changes.
+        run: |
+          node scripts/vercel-ignore-build.mjs --changed-since "$BASE" | tee inputs.txt
+          if git diff --quiet "$(git merge-base "$BASE" HEAD)" HEAD -- .github/workflows/next-build.yml; then
+            grep '^build=' inputs.txt >> "$GITHUB_OUTPUT"
+          else
+            echo "next-build.yml changed: building"; echo "build=yes" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.inputs.outputs.build == 'yes'
+        with:
+          node-version: 22
+          cache: npm
+
+      - if: steps.inputs.outputs.build == 'yes'
+        run: npm ci
+
+      # `npm run build`, not `npx next build`: Vercel runs the npm script, whose
+      # prebuild generates src/lib/vendor/lamejs-bundle.js (gitignored).
+      - name: next build (compile only)
+        if: steps.inputs.outputs.build == 'yes'
+        run: npm run build -- --experimental-build-mode compile

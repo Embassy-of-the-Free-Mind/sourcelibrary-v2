@@ -64,7 +64,23 @@ export function previewWanted({ ref = '', message = '' } = {}) {
   return /\[preview\]/i.test(message) || ref.startsWith('preview/');
 }
 
+/** Build inputs changed between the merge base of `base` and HEAD (next-build.yml). */
+export function changedBuildInputs(base, repo = process.cwd()) {
+  const git = (...args) => execFileSync('git', args, { cwd: repo, encoding: 'utf8' }).trim();
+  const from = git('merge-base', base, 'HEAD');
+  return git('diff', '--name-only', from, 'HEAD', '--', ...buildInputs(repo)).split('\n').filter(Boolean);
+}
+
 function main() {
+  // `--changed-since <sha>`: the PR build check asks the same question for a whole PR.
+  // Prints the changed inputs and `build=yes|no`; always exits 0.
+  const since = process.argv.indexOf('--changed-since');
+  if (since > 0) {
+    const changed = changedBuildInputs(process.argv[since + 1]);
+    console.log(changed.length ? `Build inputs changed:\n${changed.join('\n')}` : 'No build inputs changed');
+    console.log(`build=${changed.length ? 'yes' : 'no'}`);
+    return;
+  }
   // Only git-triggered previews: a CLI `vercel` deploy has no VERCEL_GIT_COMMIT_REF and is always wanted.
   if (process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_GIT_COMMIT_REF && !previewWanted({
     ref: process.env.VERCEL_GIT_COMMIT_REF, message: process.env.VERCEL_GIT_COMMIT_MESSAGE,
