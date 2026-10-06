@@ -1852,7 +1852,7 @@ export async function* streamAgenticResponse(
   // clients apply events in arrival order. Fails open: if the support text
   // cannot be loaded in time, nothing is judged.
   const rawText = generatedChunks.join('');
-  const supportPages = await withTimeout(
+  const support = await withTimeout(
     loadGroundingSupport(rawText, history, retrievedPageKeys, [...groundingImages.values()], lang).catch(err => {
       console.warn('[Librarian] grounding support failed:', err instanceof Error ? err.message : err);
       return null;
@@ -1862,10 +1862,10 @@ export async function* streamAgenticResponse(
   );
   const grounding = groundAnswer({
     text: rawText,
-    pages: supportPages ?? [],
-    supportLoaded: supportPages !== null,
+    pages: support?.pages ?? [],
+    supportLoaded: support !== null,
     extraSupport: toolSupportText.join('\n'),
-    images: [...groundingImages.values()],
+    images: support?.images ?? [...groundingImages.values()],
     question: userMessage,
     siteBase: siteBase(lang),
   });
@@ -2011,7 +2011,11 @@ export async function* streamAgenticResponse(
  * is included with the translation, so a Latin quotation can match its page;
  * in a Spanish conversation the Spanish edition is included too.
  *
- * Returns null-free pages only; throws on a DB error (the caller fails open).
+ * Also returns each image with its book's CURRENT slug and aliases: the
+ * gallery row's `book_slug` is often empty or stale, and a caption that links
+ * its own book by the live slug must not read as "links a different book".
+ *
+ * Throws on a DB error (the caller fails open).
  */
 async function loadGroundingSupport(
   text: string,
@@ -2019,7 +2023,7 @@ async function loadGroundingSupport(
   retrievedPageKeys: Set<string>,
   images: GroundingImage[],
   lang: Locale,
-): Promise<GroundingPage[]> {
+): Promise<{ pages: GroundingPage[]; images: GroundingImage[] }> {
   const db = await getDb();
   const cited = supportCitations(text, history);
   const slugs = [...new Set(cited.map(c => c.slug))];
@@ -2049,7 +2053,7 @@ async function loadGroundingSupport(
     const bookId = key.slice(0, at);
     byBook.set(bookId, [...(byBook.get(bookId) ?? []), page]);
   }
-  if (byBook.size === 0) return [];
+  if (byBook.size === 0) return { pages: [], images };
 
   const localField = lang === 'en' ? null : `translations.${lang}.data`;
   const [pages, books] = await Promise.all([
@@ -2060,12 +2064,21 @@ async function loadGroundingSupport(
       .toArray(),
     db.collection('books')
       .find({ id: { $in: [...byBook.keys()] } })
-      .project({ id: 1, slug: 1, title: 1, display_title: 1 })
+      .project({ id: 1, slug: 1, slug_aliases: 1, title: 1, display_title: 1 })
       .maxTimeMS(3000)
       .toArray(),
   ]);
   const meta = new Map(books.map(b => [b.id as string, b]));
-  return pages.map(p => {
+  const groundedImages = images.map(img => {
+    const b = img.bookId ? meta.get(img.bookId) : undefined;
+    if (!b) return img;
+    return {
+      ...img,
+      bookSlug: (b.slug as string | undefined) || img.bookSlug,
+      bookAliases: [img.bookSlug, ...(Array.isArray(b.slug_aliases) ? b.slug_aliases : [])].filter((x): x is string => typeof x === 'string' && !!x),
+    };
+  });
+  const supportPages = pages.map(p => {
     const b = meta.get(p.book_id);
     const local = localField ? (p.translations as Record<string, { data?: string }> | undefined)?.[lang]?.data : undefined;
     return {
@@ -2076,6 +2089,7 @@ async function loadGroundingSupport(
       text: [p.translation?.data, p.ocr?.data, local].filter((t): t is string => typeof t === 'string').join('\n'),
     };
   });
+  return { pages: supportPages, images: groundedImages };
 }
 
 /**

@@ -72,6 +72,8 @@ export interface GroundingImage {
   url: string;
   bookId?: string;
   bookSlug?: string;
+  /** Other slugs the same book answers to (old gallery slug, slug_aliases). */
+  bookAliases?: string[];
   bookTitle: string;
   bookAuthor?: string;
   page?: number;
@@ -424,9 +426,9 @@ export const ATTACH_MIN_SCORE = 0.5;
 
 function captionFor(img: GroundingImage, base: string): string {
   const desc = (img.description || '').replace(/\s+/g, ' ').trim();
-  const firstSentence = desc.split(/(?<=[.!?])\s/)[0] ?? '';
-  const what = firstSentence && firstSentence.length <= 140
-    ? firstSentence.replace(/[.!?]$/, '')
+  const firstSentence = (desc.split(/(?<=[.!?])\s/)[0] ?? '').replace(/[.!?]$/, '');
+  const what = firstSentence
+    ? (firstSentence.length <= 140 ? firstSentence : `${firstSentence.slice(0, firstSentence.lastIndexOf(' ', 130))}…`)
     : (img.type ? img.type.charAt(0).toUpperCase() + img.type.slice(1) : 'Illustration');
   const book = img.bookSlug ?? img.bookId;
   if (book && img.page) {
@@ -443,7 +445,7 @@ function captionProblem(
   ownPageText: string,
 ): string | null {
   const linked = [...caption.matchAll(/(?<![\w.-])sourcelibrary\.org(?:\/es)?\/book\/([a-z0-9-]+)/g)].map(m => m[1]);
-  const ownIds = new Set([img.bookSlug, img.bookId].filter(Boolean) as string[]);
+  const ownIds = new Set([img.bookSlug, img.bookId, ...(img.bookAliases ?? [])].filter(Boolean) as string[]);
   if (linked.some(s => !ownIds.has(s))) return 'links a different book';
   const capWords = new Set(foldWords(plainText(caption)));
   const titleWords = contentWords(img.bookTitle);

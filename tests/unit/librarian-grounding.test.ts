@@ -162,6 +162,14 @@ describe('captions', () => {
     const text = '![athanor](https://images.sourcelibrary.org/archived/khu1/16.jpg)\n*A philosophical athanor — [Warhafftiger Bericht](https://sourcelibrary.org/book/warhafftiger-bericht-khunrath), [Page 16](https://sourcelibrary.org/book/warhafftiger-bericht-khunrath/page-number/16)*';
     expect(ground(text, { images: [athanor] }).edits).toEqual([]);
   });
+  it('treats a link to the image\'s own book under another of its slugs as its own book', () => {
+    // gallery_images.book_slug is often empty or stale; the live slug and aliases are resolved
+    // from `books` before the check. Measured: every caption in the first after-run read as
+    // "links a different book" until this was fixed.
+    const text = '![athanor](https://images.sourcelibrary.org/archived/khu1/16.jpg)\n*A philosophical athanor — [Bericht](https://sourcelibrary.org/book/khunrath-athanor-old-slug), [Page 16](https://sourcelibrary.org/book/khunrath-athanor-old-slug?page=16)*';
+    expect(ground(text, { images: [{ ...athanor, bookAliases: ['khunrath-athanor-old-slug'] }] }).edits).toEqual([]);
+    expect(ground(text, { images: [athanor] }).report.captionsRewritten).toBe(1);
+  });
   it('leaves an image no tool described this turn alone (prior turn / unknown)', () => {
     const text = '![x](https://images.sourcelibrary.org/archived/other/3.jpg)\n*Drebbel\'s oven*';
     expect(ground(text, { images: [athanor] }).edits).toEqual([]);
