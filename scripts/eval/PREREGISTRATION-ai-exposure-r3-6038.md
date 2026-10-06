@@ -281,3 +281,14 @@ query; infini-gram mini does not support OR. The index set and query plan become
   If the job runs out of time, the report says which index/set pairs were not completed and the CC 2025-05 pass is
   the first to be cut.
 No count from the partial passes of amendment 2 (11 P-web passages, 0 hits seen) is used; all are re-queried.
+
+## Amendment 4 — corrections to amendment 3 (2026-10-06, 23:40 UTC)
+
+1. **Correction.** Amendment 3 said the discarded partial pass had "11 P-web passages, 0 hits seen". That was
+   wrong: I had not looked. Checked now, it held **45 P-web passages, 19 with a hit**. These are positive controls
+   (web text), they do not touch the 500, and they change nothing in the design; all are re-queried.
+2. The OR syntax allows **at most 4 terms per clause** and ≤ 500 tokens, so groups hold ≤ 4 passages.
+3. `v4_dclm-baseline_llama` is dropped: DCLM-baseline is the web portion of the OLMo-2 mix (`v4_olmo-mix-1124_llama`),
+   so it adds no coverage and ~1,150 calls. v4 indexes: OLMo-2 mix, Dolma 1.7, RedPajama, Pile.
+4. Order: P-web, P-ours and negatives on all indexes first (the stop rules), then the 500 and P-IA; per set, CC
+   2025-30, the four v4 indexes, then CC 2025-05.

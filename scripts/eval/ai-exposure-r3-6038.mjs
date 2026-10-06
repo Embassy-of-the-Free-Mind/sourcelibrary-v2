@@ -391,7 +391,8 @@ async function stageAControls() {
 // group-tested (≤ 1,000 characters per query, the API's limit) and only groups with a hit are split.
 export const MINI = ['v2_cc-2025-30', 'v2_cc-2025-05'];
 export const MINI_ALL = ['v2_cc-2025-05', 'v2_cc-2025-08', 'v2_cc-2025-13', 'v2_cc-2025-18', 'v2_cc-2025-21', 'v2_cc-2025-26', 'v2_cc-2025-30', 'v2_dclm_all', 'v2_piletrain'];
-export const IG = ['v4_dolma-v1_7_llama', 'v4_olmo-mix-1124_llama', 'v4_rpj_llama_s4', 'v4_dclm-baseline_llama', 'v4_piletrain_llama'];
+// amendment 4: DCLM-baseline dropped — it is the web part of the OLMo-2 mix (v4_olmo-mix-1124), so it is redundant
+export const IG = ['v4_olmo-mix-1124_llama', 'v4_dolma-v1_7_llama', 'v4_rpj_llama_s4', 'v4_piletrain_llama'];
 // Both APIs sit behind AWS API Gateway and answer 403 ForbiddenException when a client is too fast (observed
 // 2026-10-06 at ≥ ~1 request/s summed over both hosts; lifted after ~1 min). One shared token bucket: on 403, pause
 // 90 s and cut the rate by 30%; after 200 clean calls, raise it by 10% (max 3/s).
@@ -428,15 +429,15 @@ async function stageAQuery() {
   const strings = []; const seen = new Set();
   for (const s of order) for (const q of allQueries().filter((x) => x.set === s)) { if (seen.has(q.h)) continue; seen.add(q.h); strings.push(q); }
   const record = (h, index, count, how) => { if (count >= 0) have.set(`${h}|${index}`, count); appendJsonl(flong, { h, index, count, how }); };
-  const indexes = String(args.indexes || [...IG, ...MINI].join(',')).split(',');
+  const indexes = String(args.indexes || ['v2_cc-2025-30', ...IG, 'v2_cc-2025-05'].join(',')).split(',');
   for (const index of indexes) {
     const todo = strings.filter((q) => !have.has(`${q.h}|${index}`));
     console.log(index, 'strings to count', todo.length);
     if (!todo.length) continue;
     if (IG.includes(index)) {
-      // group testing: greedy groups of ≤ 1,000 characters; a zero group sets every member to 0; a hit splits in two
+      // group testing: greedy groups of ≤ 4 passages and ≤ 1,000 characters (API limits: 4 terms per OR clause, 500 tokens); a zero group sets every member to 0; a hit splits in two
       const groups = []; let cur = [];
-      for (const q of todo) { const len = [...cur, q].map((x) => x.text).join(' OR ').length; if (cur.length && len > 990) { groups.push(cur); cur = []; } cur.push(q); }
+      for (const q of todo) { const len = [...cur, q].map((x) => x.text).join(' OR ').length; if (cur.length && (len > 990 || cur.length >= 4)) { groups.push(cur); cur = []; } cur.push(q); }
       if (cur.length) groups.push(cur);
       let n = 0;
       const solve = async (g) => {
