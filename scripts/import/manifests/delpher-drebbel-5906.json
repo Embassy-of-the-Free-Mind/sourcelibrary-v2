@@ -1,21 +1,61 @@
 {
-  "campaign": "delpher-drebbel-5906",
-  "collections": ["drebbel"],
-  "BOOKS": [
-    { "urn": "MMKB02:100007776", "title": "Cornelis Drebbel en zijne tijdgenooten", "author": "Jaeger, F. M. (Frans Maurits)", "year": 1922, "lang": "Dutch",
-      "place": "Groningen", "publisher": "P. Noordhoff",
-      "license": "publicdomain",
-      "rights": "Our determination: public domain. Sole author F. M. Jaeger d. 1945, so Dutch/EU copyright ran out on 1 Jan 2016; published 1922, so public domain in the US. Delpher itself does NOT say so: its statement for this object is 'Auteursrecht onbekend' (KB has not determined the status).",
-      "note": "#5811 / #5906. Already held as 6ac3a8f04de0ba35e46502b0 (imported 2026-10-05 by job drebbel-creative-5811); the gate declines this entry. Title page (scan 7): 'Cornelis Drebbel en zijne tijdgenooten door Prof. Dr. F. M. Jaeger. P. Noordhoff - 1922 - Groningen'." },
-    { "gbid": "mgU__6VQWTsC", "title": "Over-ysselsche sangen en dichten", "author": "Revius, Jacobus", "year": 1634, "lang": "Dutch",
-      "place": "Leiden", "publisher": "Françoys de Heger", "shelfmark": "KW 764 D 36", "identity_from": "catalog",
-      "license": "https://rightsstatements.org/vocab/NoC-NC/1.0/",
-      "rights": "Work in the public domain (Revius d. 1658; printed 1634). The scan is Google's, made for the KB: Delpher states 'Geen auteursrecht, alleen niet-commercieel gebruik' — copyright-free, commercial reuse barred by KB's agreement with Google.",
-      "note": "#5906. KB catalogue PPN 421808918 (Google vid KBNL:KBNLB030058298). The 1634 Leiden issue is the unsold Deventer 1630 sheets reissued with new preliminaries and pp. 321-370 added (W. A. P. Smit's 1930 edition, introduction), so it holds everything the 1630 printing does. The Drebbel poem is 'De wonderbare wercken C. Drebbels'. Other Delpher scans, not imported: 1634 UBA copy vp4cxnQCBG0C; 1630 copies oldkAAAAcAAJ (UBA), 0dHsK9rF-xcC and S1794sN8rGIC (Athenaeumbibliotheek Deventer). Title, imprint and year are from the KB catalogue, not yet checked against the title page." },
-    { "gbid": "ywp2G7NzX9oC", "title": "Kronijcke van Alckmaer, met sijn dorpen", "author": "Woude, Cornelis van der", "year": 1645, "lang": "Dutch",
-      "place": "Alkmaar", "publisher": "Symon Cornelisz. Breken-Geest", "shelfmark": "OTM: OK 62-9859", "library": "Universiteitsbibliotheek Amsterdam", "identity_from": "catalog",
-      "license": "https://rightsstatements.org/vocab/NoC-NC/1.0/",
-      "rights": "Work in the public domain (printed 1645). The scan is Google's, made through the KB programme from the Amsterdam University Library copy: Delpher states 'Geen auteursrecht, alleen niet-commercieel gebruik' — copyright-free, commercial reuse barred by KB's agreement with Google.",
-      "note": "#5906. KB catalogue PPN 408369337 (Google vid KBNL:UBA000033226), [8], 138 p. First edition; the 1658 enlarged edition is also on Delpher (ttqWlLCQUU0C, KB KW 3105 H 28; k39oAAAAcAAJ, UBA) and is not imported. Title, imprint and year are from the KB catalogue, not yet checked against the title page." }
-  ]
+ "campaign": "delpher-drebbel-5906",
+ "collections": [
+  "drebbel"
+ ],
+ "BOOKS": [
+  {
+   "urn": "MMKB02:100007776",
+   "title": "Cornelis Drebbel en zijne tijdgenooten",
+   "author": "Jaeger, F. M. (Frans Maurits)",
+   "year": 1922,
+   "lang": "Dutch",
+   "place": "Groningen",
+   "publisher": "P. Noordhoff",
+   "license": "publicdomain",
+   "rights": "Our determination: public domain. Sole author F. M. Jaeger d. 1945, so Dutch/EU copyright ran out on 1 Jan 2016; published 1922, so public domain in the US. Delpher itself does NOT say so: its statement for this object is 'Auteursrecht onbekend' (KB has not determined the status).",
+   "note": "#5811 / #5906. Already held as 6ac3a8f04de0ba35e46502b0 (imported 2026-10-05 by job drebbel-creative-5811); the gate declines this entry. Title page (scan 7): 'Cornelis Drebbel en zijne tijdgenooten door Prof. Dr. F. M. Jaeger. P. Noordhoff - 1922 - Groningen'."
+  },
+  {
+   "gbid": "mgU__6VQWTsC",
+   "title": "Over-ysselsche sangen en dichten",
+   "author": "Revius, Jacobus",
+   "year": 1634,
+   "lang": "Dutch",
+   "place": "Leiden",
+   "publisher": "Françoys de Heger",
+   "shelfmark": "KW 764 D 36",
+   "identity_from": "catalog",
+   "license": "https://rightsstatements.org/vocab/NoC-NC/1.0/",
+   "rights": "Work in the public domain (Revius d. 1658; printed 1634). The scan is Google's, made for the KB: Delpher states 'Geen auteursrecht, alleen niet-commercieel gebruik' — copyright-free, commercial reuse barred by KB's agreement with Google.",
+   "note": "#5906. KB catalogue PPN 421808918 (Google vid KBNL:KBNLB030058298). The 1634 Leiden issue is the unsold Deventer 1630 sheets reissued with new preliminaries and pp. 321-370 added (W. A. P. Smit's 1930 edition, introduction), so it holds everything the 1630 printing does. The Drebbel poem is 'De wonderbare wercken C. Drebbels'. Other Delpher scans, not imported: 1634 UBA copy vp4cxnQCBG0C; 1630 copies oldkAAAAcAAJ (UBA), 0dHsK9rF-xcC and S1794sN8rGIC (Athenaeumbibliotheek Deventer). Title, imprint and year are from the KB catalogue, not yet checked against the title page."
+  },
+  {
+   "gbid": "ywp2G7NzX9oC",
+   "title": "Kronijcke van Alckmaer, met sijn dorpen",
+   "author": "Woude, Cornelis van der",
+   "year": 1645,
+   "lang": "Dutch",
+   "place": "Alkmaar",
+   "publisher": "Symon Cornelisz. Breken-Geest",
+   "shelfmark": "OTM: OK 62-9859",
+   "library": "Universiteitsbibliotheek Amsterdam",
+   "identity_from": "catalog",
+   "license": "https://rightsstatements.org/vocab/NoC-NC/1.0/",
+   "rights": "Work in the public domain (printed 1645). The scan is Google's, made through the KB programme from the Amsterdam University Library copy: Delpher states 'Geen auteursrecht, alleen niet-commercieel gebruik' — copyright-free, commercial reuse barred by KB's agreement with Google.",
+   "note": "#5906. KB catalogue PPN 408369337 (Google vid KBNL:UBA000033226), [8], 138 p. First edition; the 1658 enlarged edition is also on Delpher (ttqWlLCQUU0C, KB KW 3105 H 28; k39oAAAAcAAJ, UBA) and is not imported. Title, imprint and year are from the KB catalogue, not yet checked against the title page."
+  },
+  {
+   "urn": "MMKB26:000131001",
+   "title": "Bijdragen en mededeelingen van het Historisch Genootschap (gevestigd te Utrecht), achttiende deel",
+   "author": "Historisch Genootschap (Utrecht); Worp, J. A. (ed., Huygens fragment)",
+   "year": 1897,
+   "lang": "Dutch",
+   "place": "'s-Gravenhage",
+   "publisher": "Martinus Nijhoff",
+   "license": "publicdomain",
+   "rights": "Our determination: public domain. Published 1897; contributors to an 1897 volume died long before 1956 (J. A. Worp, editor of the Huygens fragment, d. 1922). Delpher's own statement is stored verbatim beside this.",
+   "note": "#5811. Holds Constantijn Huygens' Latin autobiographical fragment (ed. Worp); Drebbel at scans 176-181 ('De Drebbelio, quem cum Baconio copulavi ... oculatus testis assero'). Title page scan 7: 'Bijdragen en mededeelingen van het Historisch Genootschap (gevestigd te Utrecht). Achttiende deel. 's Gravenhage, Martinus Nijhoff. 1897.'"
+  }
+ ]
 }
