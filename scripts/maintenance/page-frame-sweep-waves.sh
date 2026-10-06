@@ -38,6 +38,12 @@ say() {  # ... and to Derek's phone: stops and completion only
   curl -s -m 20 -H "Title: page-frame sweep" -d "$1" "$NTFY" >/dev/null || true
 }
 
+# Preflight: the checkout must parse and still frame the reference page (page 13
+# of the Bodhicaryavatara, checked by eye) before any wave writes.
+node --check scripts/maintenance/page-frame-sweep.mjs || { say "preflight: sweep script does not parse"; exit 2; }
+node --env-file="$ENVF" scripts/maintenance/page-frame-sweep.mjs --book=6a308272675ed2bdbe36f649 --pages=13 2>&1 \
+  | grep -q 'pages=1 framed=1' || { say "preflight: reference page 13 no longer frames; detector broken?"; exit 2; }
+
 i=0
 while :; do
   [ -e "$STOP" ] && { say "stopped before wave $((i + 1)): $(cat "$STOP")"; exit 0; }
