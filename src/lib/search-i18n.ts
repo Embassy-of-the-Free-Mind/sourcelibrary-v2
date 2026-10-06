@@ -118,6 +118,12 @@ export interface SearchStrings {
   kindFeature: string;
   kindCollection: string;
 
+  // ---- "Which Bacon?" — people who share a surname (#5950) ----
+  whichName: (surname: string) => string;
+  whichNameBody: string;
+  namedInBooks: (n: number) => string;
+  whichNameAuthor: string;
+
   // ---- unified-view section headings ----
   illustrations: string;
   seeAllImages: string;
@@ -284,6 +290,11 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = {
     kindFeature: 'Tool',
     kindCollection: 'Collection',
 
+    whichName: (surname) => `Which ${surname}?`,
+    whichNameBody: 'More than one person in the library has this name.',
+    namedInBooks: (n) => (n === 1 ? 'named in 1 book' : `named in ${n.toLocaleString('en')} books`),
+    whichNameAuthor: 'Author page',
+
     illustrations: 'Illustrations',
     seeAllImages: 'See all images',
     semanticDegraded: 'Related results couldn’t be loaded just now — you may be seeing fewer matches than we hold. Try again in a moment.',
@@ -417,6 +428,11 @@ export const SEARCH_STRINGS: Record<Locale, SearchStrings> = {
     kindLibrary: 'Biblioteca asociada',
     kindFeature: 'Herramienta',
     kindCollection: 'Colección',
+
+    whichName: (surname) => `¿Qué ${surname}?`,
+    whichNameBody: 'Más de una persona en la biblioteca lleva este nombre.',
+    namedInBooks: (n) => (n === 1 ? 'nombrado en 1 libro' : `nombrado en ${n.toLocaleString('es')} libros`),
+    whichNameAuthor: 'Página del autor',
 
     illustrations: 'Ilustraciones',
     seeAllImages: 'Ver todas las imágenes',
