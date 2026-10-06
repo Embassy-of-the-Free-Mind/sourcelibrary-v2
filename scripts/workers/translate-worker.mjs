@@ -57,6 +57,7 @@ import { phase4Lane, REALTIME_PRIORITY_FLOOR } from '../lib/translate-batch-chai
 import { openRunBookIds, notInOpenRun } from './lib/self-dispatch-lane.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
 import { illegibleGateEnabled, illegibleSourceVerdict, ILLEGIBLE_SOURCE_REASON } from '../lib/illegible-source-gate.mjs';
+import { applyPreTranslationGate } from '../lib/pre-translation-gate.mjs';
 import { geminiEngine, translationInput, translationProvenance, codeVersion, host } from '../lib/write-provenance.mjs';
 import { dropDriftedPages } from '../lib/block-drift.mjs';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
@@ -613,6 +614,9 @@ async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
   })));
 }
 
+// Pages the pre-translation gate refused this run, by reason (#5915) — reported in cron_runs.
+const preGateRefusals = {};
+
 // ── Process one book (sequential batches for context) ──
 async function processBook(db, book, job, globalCounter, deadline) {
   const label = (book.title || book.id).substring(0, 50);
@@ -677,6 +681,33 @@ async function processBook(db, book, job, globalCounter, deadline) {
     console.log(`  [${label}] LOOP SOURCE: refusing to translate ${loopSources.length} page(s) whose OCR is a repetition loop (#4850)`);
     const loopIds = new Set(loopSources.map(p => p.id));
     pages.splice(0, pages.length, ...pages.filter(p => !loopIds.has(p.id)));
+  }
+
+  // ── Pre-translation gate (#5915) — ON unless TRANSLATE_PRE_GATE=0 ─────────
+  // Pages the pipeline could not have read are refused before the call: an image too small for
+  // the text it is said to hold, a transcription that is word fragments, a page with no place in
+  // the book (duplicate number, the previous page's image again). Each refusal is stamped with
+  // its reason and measurement (`translation.refusal_reason`, `translation.refusal`) and with
+  // `translation.health_blocked`, which this query already excludes; a refused page is judged
+  // again whenever its book comes back, and released if its OCR or image has changed. A book
+  // under half transcribed stamps nothing: its job is cancelled and the book is parked, because
+  // "nothing left to translate" below would otherwise mark an unread book translate_complete.
+  const preGate = await applyPreTranslationGate(db, book.id, pages, { lane: `translate-worker (${job?.initiated_by || 'job'})` });
+  for (const [reason, n] of Object.entries(preGate.counts)) preGateRefusals[reason] = (preGateRefusals[reason] || 0) + n;
+  if (preGate.book) {
+    const { read, translatable, share } = preGate.book.detail;
+    const why = `pre-translation gate: ${preGate.book.reason} (${read} of ${translatable} pages transcribed, ${(100 * share).toFixed(1)}%; #5915)`;
+    console.log(`  [${label}] BOOK REFUSED: ${why}`);
+    await db.collection('jobs').updateOne({ id: job.id }, { $set: { status: 'cancelled', cancelled_at: new Date(), cancel_reason: why, updated_at: new Date() } });
+    await db.collection('books').updateOne(
+      { id: book.id, ...NOT_HELD },
+      { $set: { 'pipeline_auto.status': 'needs_attention', 'pipeline_auto.error': why, updated_at: new Date() }, $unset: { job: '' } },
+    );
+    return { translated: 0, failed: 0, completed: 0, inputTokens: 0, outputTokens: 0 };
+  }
+  if (preGate.refused.length > 0) {
+    console.log(`  [${label}] PRE-TRANSLATION GATE: refusing ${preGate.refused.length} page(s) — ${Object.entries(preGate.counts).map(([r, n]) => `${r} ${n}`).join(', ')} (#5915)`);
+    pages.splice(0, pages.length, ...preGate.pages);
   }
 
   // ── Illegible sources (#5305) — OFF unless TRANSLATE_ILLEGIBLE_GATE=1 ─────
@@ -1779,6 +1810,8 @@ async function main() {
         output_tokens: totalOutputTokens,
         cost_usd: totalCost,
         rate_per_hour: rate,
+        pages_refused_pre_gate: Object.values(preGateRefusals).reduce((a, n) => a + n, 0),
+        pre_gate_refusals: preGateRefusals,
       },
       errors: [],
       error_count: totalFailed,

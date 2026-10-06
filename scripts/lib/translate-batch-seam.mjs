@@ -60,6 +60,7 @@ import {
 import { codeVersion, host, notRecorded, NOT_RECORDED } from './write-provenance.mjs';
 import { isHeld } from './pipeline-hold.mjs';
 import { ocrTrustGate } from './ocr-trust-gate.mjs';
+import { applyPreTranslationGate, preGateBookReason } from './pre-translation-gate.mjs';
 import { dropDriftedPages, translationProse } from './block-drift.mjs';
 import { echoedSource, readingLength } from './page-integrity.mjs';
 import { sumBatchResponseUsage } from '../workers/lib/supabase-usage-logger.mjs';
@@ -384,8 +385,11 @@ export function estimateRunUsd({ prompts, book, blocks, model }) {
  * `translation_withheld` — a repair lane (#5309, #4523) owns those, and a finish pass that
  * translated them would race it. The #5309 driver deliberately translates withheld pages, which
  * is why this is not the default.
+ *
+ * The pre-translation gate (#5915, scripts/lib/pre-translation-gate.mjs) runs last, on the pages
+ * that would be queued; `gate.book` is set when the whole book is refused (under half transcribed).
  */
-export async function selectPages(db, bookId, { limit = MAX_PAGES_PER_RUN, pageIds = null, excludeWithheld = false } = {}) {
+export async function selectPages(db, bookId, { limit = MAX_PAGES_PER_RUN, pageIds = null, excludeWithheld = false, recordGate = false, lane = 'batch' } = {}) {
   const docs = await db.collection('pages').find({
     book_id: bookId,
     ...(pageIds ? { id: { $in: [...pageIds] } } : {}),
@@ -409,7 +413,12 @@ export async function selectPages(db, bookId, { limit = MAX_PAGES_PER_RUN, pageI
     pages.push(p);
     if (pages.length >= limit) break;
   }
-  return { pages, excluded };
+  // #5915: the pre-translation gate, on the pages about to be queued. A plan or a dry run judges
+  // and counts (`excluded['pre-gate:<reason>']`) without writing; a real enrol passes recordGate,
+  // which stamps the refused pages so no lane selects them again.
+  const gate = await applyPreTranslationGate(db, bookId, pages, { record: recordGate, lane });
+  for (const [reason, n] of Object.entries(gate.counts)) excluded[`pre-gate:${reason}`] = n;
+  return { pages: gate.pages, excluded, gate };
 }
 
 // ── Run lifecycle ──────────────────────────────────────────────────────────
@@ -485,7 +494,8 @@ export async function planRun(db, bookId, { limit = MAX_PAGES_PER_RUN, pageIds =
   if (book.pipeline_auto?.status === 'translate_submitted') return { ok: false, reason: 'realtime-lane-owns-book (pipeline_auto.status=translate_submitted)', book };
   const open = await db.collection(RUNS_COLLECTION).findOne({ book_id: bookId, phase: { $nin: TERMINAL_PHASES } });
   if (open) return { ok: false, reason: `open-run ${open.id} (${open.phase})`, book };
-  const { pages, excluded } = await selectPages(db, bookId, { limit, pageIds, excludeWithheld });
+  const { pages, excluded, gate } = await selectPages(db, bookId, { limit, pageIds, excludeWithheld, recordGate: recordRefusal, lane: 'seam' });
+  if (gate?.book) return { ok: false, reason: preGateBookReason(gate.book), book, excluded };
   if (pages.length === 0) return { ok: false, reason: 'nothing-to-translate', book, excluded };
   const blocks = planBlocks(pages);
   return { ok: true, book, pages, blocks, excluded, model: getTranslateModelForBook(book) };
