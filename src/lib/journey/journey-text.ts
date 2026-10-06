@@ -5,9 +5,7 @@
  *
  * Every string that leaves here comes out of `stripEditorialWrappers` first,
  * so no `<summary>`/`<meta>`/`<keywords>` prose is ever shown as page text
- * (quote-and-snippet-integrity.md). The two describing blocks the film DOES
- * show — `<summary>` and `<keywords>` — are read separately by
- * `readPageDescription` and are always labelled machine-written where shown.
+ * (quote-and-snippet-integrity.md).
  *
  * PRIOR ART: src/lib/quote-text.ts (resolveQuoteText) — returns one flat
  * quotable string with inline gloss tags kept; the film needs line structure
@@ -104,21 +102,24 @@ export interface FilmLines {
 /**
  * Pick the lines the film lifts off the page.
  *
- * `match` (curated instances) selects the verse run whose text contains it.
+ * `match` (curated instances) selects the verse run whose text contains it;
+ * `count` caps how many lines are lifted (never more than FILM_LINES).
  */
 export function pickFilmLines(
   ocrCleaned: string,
   enCleaned: string,
   pairs: AlignmentPair[] | null,
   match?: string,
+  count: number = FILM_LINES,
 ): FilmLines | null {
+  const max = Math.max(1, Math.min(FILM_LINES, count));
   const oRuns = blockquoteRuns(ocrCleaned);
   const eRuns = blockquoteRuns(enCleaned);
   if (oRuns.length && oRuns.length === eRuns.length) {
     let k = match ? oRuns.findIndex(r => r.join(' ').includes(match)) : -1;
     if (k < 0) k = oRuns.findIndex((r, i) => r.length >= 2 && r.length === eRuns[i].length);
     if (k >= 0 && oRuns[k].length === eRuns[k].length) {
-      const n = Math.min(FILM_LINES, oRuns[k].length);
+      const n = Math.min(max, oRuns[k].length);
       return {
         original: oRuns[k].slice(0, n).map(l => clip(l)),
         english: eRuns[k].slice(0, n).map(l => clip(l)),
@@ -135,43 +136,22 @@ export function pickFilmLines(
       const i = usable.findIndex(p => p.s.includes(match));
       if (i >= 0) start = i;
     }
-    const take = usable.slice(start, start + FILM_LINES);
-    if (take.length >= 2) {
+    const take = usable.slice(start, start + max);
+    if (take.length >= Math.min(2, max)) {
       return {
         original: take.map(p => clip(p.s)),
-        english: take.map(p => clip(p.t)),
+        // A trailing "|| 10 ||" is the verse number, not part of the line.
+        english: take.map(p => clip(p.t.replace(/\s*\|\|\s*\d+\s*\|\|\s*$/, ''))),
         pairing: 'trace',
       };
     }
   }
 
   const bodyLines = (s: string) => paneText(s).split('\n').map(l => l.trim()).filter(l => l.length >= 12);
-  const o = bodyLines(ocrCleaned).slice(0, FILM_LINES).map(l => clip(l));
-  const e = bodyLines(enCleaned).slice(0, FILM_LINES).map(l => clip(l));
+  const o = bodyLines(ocrCleaned).slice(0, max).map(l => clip(l));
+  const e = bodyLines(enCleaned).slice(0, max).map(l => clip(l));
   if (!o.length || !e.length) return null;
   return { original: o, english: e, pairing: 'opening' };
-}
-
-/** `<summary>` and `<keywords>` from the translation — AI-written description. */
-export function readPageDescription(rawTranslation: string): { summary?: string; keywords: string[] } {
-  const grab = (tag: string) => {
-    const m = rawTranslation.match(new RegExp(`<${tag}(?:\\s[^>]*)?>([\\s\\S]*?)<\\/${tag}>`, 'i'));
-    return m ? stripMarkupTags(m[1], '').replace(/\s+/g, ' ').trim() : '';
-  };
-  const summary = grab('summary') || undefined;
-  const keywords = grab('keywords').split(/[,;]/).map(s => s.trim()).filter(Boolean).slice(0, 6);
-  return { summary, keywords };
-}
-
-/** `<term>` spans in the translation: the original-language words it keeps. */
-export function readTerms(rawTranslation: string, max = 4): string[] {
-  const out: string[] = [];
-  for (const m of rawTranslation.matchAll(/<term(?:\s[^>]*)?>([\s\S]*?)<\/term>/gi)) {
-    const t = stripMarkupTags(m[1], '').trim();
-    if (t && t.length <= 40 && !out.some(x => x.toLowerCase() === t.toLowerCase())) out.push(t);
-    if (out.length >= max) break;
-  }
-  return out;
 }
 
 /** First margin/footnote on the transcription long enough to be worth showing. */

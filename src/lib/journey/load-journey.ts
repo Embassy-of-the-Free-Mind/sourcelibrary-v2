@@ -6,7 +6,7 @@
  * `findBookByIdOrSlug` (slug/id/_id/alias), `getPageImageUrl`,
  * `generateCitations` (the quote route's citation apparatus),
  * `transcriptProvenance` + `isUnreviewedMachineTranslation` (the reader's own
- * "how was this read / is this a machine draft" rules) and the stored Trace
+ * "how was this read / has a person reviewed this English" rules) and the stored Trace
  * alignment. It never generates an alignment: Trace is shown only when the
  * page already has a current one, which costs nothing to read.
  *
@@ -29,12 +29,13 @@ import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { hashAlignmentText, WORD_ALIGNMENT_VERSION, type WordAlignmentData } from '@/lib/word-alignment';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { IMPRINT_PLACE_PROJECTION } from '@/lib/imprint';
+import { semanticPageSearchGlobal } from '@/lib/semantic-search';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
 import {
-  cleanPageLines, paneText, pickFilmLines, readPageDescription, readTerms,
+  cleanPageLines, paneText, pickFilmLines,
   firstMarginNote, containsLoose, clip, pickOutroSentence,
 } from './journey-text';
-import type { JourneyData, JourneyImage, JourneyInstanceConfig } from './types';
+import type { JourneyConnect, JourneyData, JourneyImage, JourneyInstanceConfig, JourneyRevisions } from './types';
 
 const SITE = 'https://sourcelibrary.org';
 /** Only our own R2 host sends the CORS header WebGL textures need. */
@@ -42,7 +43,7 @@ const R2 = /^https:\/\/images\.sourcelibrary\.org\//;
 
 const BOOK_PROJECTION = {
   _id: 1, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,
-  language: 1, original_language: 1, visible: 1, pages_count: 1, pages_archived: 1,
+  language: 1, original_language: 1, visible: 1, hidden: 1, pages_count: 1, pages_archived: 1, work_id: 1,
   categories: 1, 'image_source.provider_name': 1, 'image_source.source_url': 1, thumbnail: 1, thumbnail_blob: 1, image_thumb: 1, image_display: 1,
   // generateCitations (see QUOTE_BOOK_PROJECTION in the quote route)
   text_role: 1, is_translation: 1, doi: 1, format: 1, publisher: 1, ustc_id: 1,
@@ -67,6 +68,10 @@ const PAGE_PROJECTION = {
 
 const SHELF_SIZE = 48;
 const VAULT_SIZE = 19;
+const INDEX_MAX = 12;
+const EDITIONS_MAX = 6;
+/** The film shows the top of the results list; a page further down is not "found". */
+const SEARCH_SHOWN = 6;
 
 function r2Image(p: PageImageFields & { image_width?: number; image_height?: number }, size: 'thumb' | 'display'): JourneyImage | null {
   const url = getPageImageUrl(p, size);
@@ -143,6 +148,101 @@ async function loadShelf(db: Db, bookId: string, categories: string[]): Promise<
   return { images, label: `Other books in the library on ${used.join(' and ')}` };
 }
 
+/** The public search's rule (/api/search/semantic): neither `visible: false` nor `hidden: true`. */
+const openToReaders = (b: Document) => !isHiddenBook(b as never) && b.hidden !== true;
+
+const TYPE_ORDER: Record<string, number> = { person: 0, place: 1, concept: 2 };
+
+/**
+ * Names the book's index ties to this page. Only page-precise entries: an
+ * entry with a page range was never verified against this page's text
+ * (entity-page-attribution.md), so it is not a claim about this page.
+ */
+async function loadIndexNames(db: Db, bookId: string, pageNumber: number): Promise<JourneyConnect['index']> {
+  const docs = await db.collection('entities').find(
+    { books: { $elemMatch: { book_id: bookId, page_precision: 'page', pages: pageNumber } } },
+    { projection: { _id: 0, name: 1, type: 1 } },
+  ).limit(60).toArray();
+  const seen = new Set<string>();
+  return docs
+    .filter(e => typeof e.name === 'string' && e.name.trim())
+    .sort((a, b) => (TYPE_ORDER[a.type] ?? 3) - (TYPE_ORDER[b.type] ?? 3))
+    .filter(e => {
+      const k = e.name.trim().toLowerCase();
+      if (seen.has(k)) return false;
+      seen.add(k);
+      return true;
+    })
+    .slice(0, INDEX_MAX)
+    .map(e => ({ name: e.name.trim(), type: String(e.type || 'concept'), href: `/encyclopedia/${encodeURIComponent(e.name.trim())}` }));
+}
+
+/** Other editions of the same work that a reader can open (visible, with pages). */
+async function loadEditions(db: Db, bookId: string, workId: string | undefined): Promise<JourneyConnect['editions']> {
+  if (!workId) return [];
+  const docs = await db.collection('books').find(
+    { work_id: workId, id: { $ne: bookId }, visible: true, pages_count: { $gt: 0 } },
+    { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, language: 1, published: 1, visible: 1, hidden: 1 } },
+  ).limit(EDITIONS_MAX * 2).toArray();
+  return docs
+    .filter(openToReaders)
+    .sort((a, b) => String(a.published ?? '').localeCompare(String(b.published ?? '')))
+    .slice(0, EDITIONS_MAX)
+    .map(b => ({
+      title: (b.display_title || b.title) as string,
+      language: b.language as string | undefined,
+      published: b.published != null ? String(b.published) : undefined,
+      href: `/book/${b.slug || b.id}`,
+    }));
+}
+
+/**
+ * Runs the curated search by meaning and keeps it only if this page is near
+ * the top. A failed search throws (the page's last good render keeps serving,
+ * rendering-and-seo.md); a search that simply no longer finds the page drops
+ * the claim.
+ */
+async function loadSearch(
+  db: Db,
+  query: string,
+  here: { bookId: string; pageId: string; workId?: string },
+): Promise<JourneyConnect['search']> {
+  const rows = await semanticPageSearchGlobal(query, 20);
+  if (!rows.length) throw new Error(`journey: the search "${query}" returned nothing`);
+  const books = await db.collection('books').find(
+    { id: { $in: [...new Set(rows.map(r => r.book_id))] } },
+    { projection: { _id: 0, id: 1, slug: 1, title: 1, display_title: 1, visible: 1, hidden: 1, work_id: 1 } },
+  ).toArray();
+  const byId = new Map(books.filter(openToReaders).map(b => [b.id as string, b]));
+  const results = rows
+    .filter(r => byId.has(r.book_id))
+    .map(r => {
+      const b = byId.get(r.book_id)!;
+      return {
+        title: (b.display_title || b.title) as string,
+        page: r.page_number,
+        href: `/book/${b.slug || b.id}/page/${r.page_id}`,
+        here: r.page_id === here.pageId,
+        sameWork: !!here.workId && b.work_id === here.workId && b.id !== here.bookId,
+      };
+    });
+  const at = results.findIndex(r => r.here);
+  if (at < 0 || at >= SEARCH_SHOWN) return undefined;
+  return { query, rank: at + 1, results: results.slice(0, SEARCH_SHOWN) };
+}
+
+async function loadRevisions(db: Db, pageId: string): Promise<JourneyRevisions> {
+  const [count, latest] = await Promise.all([
+    db.collection('page_revisions').countDocuments({ page_id: pageId }),
+    db.collection('page_revisions').findOne(
+      { page_id: pageId },
+      { sort: { created_at: -1 }, projection: { _id: 0, field: 1, created_at: 1 } },
+    ),
+  ]);
+  const at = latest?.created_at instanceof Date ? latest.created_at.toISOString() : undefined;
+  return { count, latest: latest ? { field: String(latest.field || 'translation'), at } : undefined };
+}
+
 /**
  * Returns null when the book or page does not exist, is hidden, or the page
  * has no English translation (the film is about a translated page).
@@ -172,7 +272,7 @@ export async function loadJourney(
   if (!paneOriginal || !paneEnglish) return null;
 
   const alignment = currentAlignment(page);
-  const lines = pickFilmLines(ocrCleaned, enCleaned, alignment?.pairs ?? null, config.lineMatch);
+  const lines = pickFilmLines(ocrCleaned, enCleaned, alignment?.pairs ?? null, config.lineMatch, config.lineCount);
   if (!lines) return null;
 
   // Trace: the first stored pair that lands on the lifted lines (else any pair)
@@ -194,20 +294,22 @@ export async function loadJourney(
   // A spread of the book's own pages for the "copy" stretch, evenly sampled.
   const n = book.pages_count;
   const wanted = Array.from(new Set(Array.from({ length: VAULT_SIZE }, (_, i) => Math.max(1, Math.round(1 + (i * (n - 1)) / Math.max(1, VAULT_SIZE - 1)))))).filter(x => x !== pageNumber);
-  const [vaultDocs, shelfDocs] = await Promise.all([
+  const workId = (book as { work_id?: string }).work_id;
+  const [vaultDocs, shelfDocs, index, editions, search, revisions] = await Promise.all([
     db.collection('pages').find(
       { book_id: book.id, page_number: { $in: wanted } },
       { projection: { _id: 0, page_number: 1, ...IMAGE_FIELDS } },
     ).sort({ page_number: 1 }).toArray(),
     loadShelf(db, book.id, (book.categories as string[] | undefined) || []),
+    loadIndexNames(db, book.id, pageNumber),
+    loadEditions(db, book.id, workId),
+    config.search?.query ? loadSearch(db, config.search.query, { bookId: book.id, pageId: page.id, workId }) : Promise.resolve(undefined),
+    loadRevisions(db, page.id),
   ]);
   const vault = vaultDocs.map(p => r2Image(p as PageImageFields, 'thumb')).filter((x): x is JourneyImage => !!x);
   const shelf = shelfDocs.images;
   const coverUrl = getBookThumbnailUrl(book, 'thumb');
   const cover = coverUrl && R2.test(coverUrl) ? { url: coverUrl } : undefined;
-
-  const description = readPageDescription(page.translation.data);
-  const terms = readTerms(page.translation.data);
 
   // Curated strings are claims about the page; each must be found on it, or it is dropped.
   let note: JourneyData['note'];
@@ -261,9 +363,6 @@ export async function loadJourney(
     paneOriginal,
     paneEnglish,
     trace,
-    summary: description.summary,
-    keywords: description.keywords,
-    terms,
     note,
     outroQuote,
     outroSource: config.outroSource
@@ -272,6 +371,8 @@ export async function loadJourney(
       locator: cit.locator, chicago: cit.chicago, inline: cit.inline,
       url: cit.url, short_url: cit.short_url, doi_url: cit.doi_url,
     },
+    connect: { search, index, editions },
+    revisions,
     script: scriptOf(lines.original.join(' ')),
     config,
   };

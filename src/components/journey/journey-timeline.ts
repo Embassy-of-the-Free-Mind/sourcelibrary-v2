@@ -6,12 +6,12 @@
  * of segments: a part card, a stretch of 3D scene time [s, e], a "screen"
  * (a rendered reader pane with a slow move and a highlight), or the end card.
  * Segments are built from the data, so a step that did not happen to this
- * page (no copy in our storage, no stored Trace, no description) is simply
- * not in the film.
+ * page (no copy in our storage, no stored Trace, nothing to connect it to) is
+ * simply not in the film.
  */
 import type { JourneyData, JourneyPart, JourneyStep } from '@/lib/journey/types';
 
-export type ScreenKey = 'ocr' | 'english' | 'trace' | 'draft' | 'overview' | 'cite';
+export type ScreenKey = 'ocr' | 'english' | 'search' | 'links' | 'overview' | 'cite' | 'trace' | 'checks' | 'draft';
 
 export interface Seg {
   /** Index into the film's steps (chapters). */
@@ -44,7 +44,7 @@ export function buildTimeline(d: JourneyData, steps: JourneyStep[]): Timeline {
   push({ card: 'pro', d: 8, ch: 0 });
   push({ card: 'p1', d: 4, ch: 0 });
   push({ s: 0, e: 9, ch: ch('find') });
-  if (has('copy')) push({ s: 9, e: 18, ch: ch('copy') });
+  if (d.pagesArchived) push({ s: 9, e: 18, ch: ch('find') });
 
   push({ card: 'p2', d: 4, ch: ch('read') });
   push({ s: 27, e: 36.4, ch: ch('read') });
@@ -52,16 +52,25 @@ export function buildTimeline(d: JourneyData, steps: JourneyStep[]): Timeline {
   push({ s: 36.4, e: 44, ch: ch('translate') });
   push({ screen: 'english', d: 6.5, ch: ch('translate') });
 
-  push({ card: 'p3', d: 4.5, ch: ch('check') });
-  if (d.trace) push({ screen: 'trace', d: 8, ch: ch('check') });
-  if (d.machineDraft) push({ screen: 'draft', d: 7, ch: ch('check') });
+  if (has('connect')) {
+    const c = ch('connect');
+    push({ card: 'p3', d: 4, ch: c });
+    push({ s: 45, e: 53, ch: c });
+    if (d.connect.search) push({ screen: 'search', d: 8, ch: c });
+    if (d.connect.index.length || d.connect.editions.length) push({ screen: 'links', d: 8, ch: c });
+  }
 
   const pubCh = ch('publish');
-  push({ card: 'p4', d: 4, ch: has('describe') ? ch('describe') : pubCh });
-  if (has('describe')) push({ s: 45, e: 53, ch: ch('describe') });
+  push({ card: 'p4', d: 4, ch: pubCh });
   push({ screen: 'overview', d: 6.5, ch: pubCh });
   push({ screen: 'cite', d: 7, ch: pubCh });
-  push({ end: true, d: 7, ch: pubCh });
+
+  const chk = ch('check');
+  push({ card: 'p5', d: 4.5, ch: chk });
+  if (d.trace) push({ screen: 'trace', d: 8, ch: chk });
+  push({ screen: 'checks', d: 9, ch: chk });
+  if (d.machineDraft) push({ screen: 'draft', d: 7, ch: chk });
+  push({ end: true, d: 7, ch: chk });
 
   let f0 = 0;
   const segs: Seg[] = raw.map(g => {

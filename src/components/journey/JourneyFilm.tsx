@@ -1,8 +1,9 @@
 'use client';
 
 /**
- * The journey film (#5861): one translated page, from the scan to a citable
- * English page, in four parts. Ported from the approved prototype
+ * The journey film (#5861, #6074): one translated page, from the scan to a
+ * citable English page and the checks that run on it once it is published,
+ * in the six steps of Figure 1 on /how-it-works. Ported from the approved prototype
  * (feat/journey-film-prototype, docs/prototypes/journey-film/) and driven by
  * `JourneyData`, so the same component renders any translated page.
  *
@@ -28,7 +29,7 @@ const tiro = Tiro_Devanagari_Sanskrit({ weight: '400', subsets: ['devanagari', '
 
 const ICON_PLAY = <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" /></svg>;
 const ICON_PAUSE = <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 2h3v12h-3zm6 0h3v12h-3z" /></svg>;
-const SCREEN_KEYS: ScreenKey[] = ['ocr', 'english', 'trace', 'draft', 'overview', 'cite'];
+const SCREEN_KEYS: ScreenKey[] = ['ocr', 'english', 'search', 'links', 'overview', 'cite', 'trace', 'checks', 'draft'];
 
 const fmt = (x: number) => `${Math.floor(x / 60)}:${String(Math.floor(x % 60)).padStart(2, '0')}`;
 
