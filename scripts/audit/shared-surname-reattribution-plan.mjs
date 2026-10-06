@@ -35,7 +35,7 @@
  * is weaker than its first check said (5 of 5): after the Bacon apply every same-book move was
  * read, and 143 of 163 were right, 15 wrong, 5 undecidable. The wrong ones cluster by book: a
  * history of logic that names Roger Bacon once in full and means Francis on seven other pages.
- * Tier 4, read in full: 59 of 61 right, 2 undecidable. Tier 1 was sampled only (12 of 12).
+ * Tier 4, read in full: 61 of 63 right, 2 undecidable. Tier 1 was sampled only (12 of 12).
  * So: READ EVERY same-book and note proposal before an apply, and enter what was read here.
  *
  * Usage:
