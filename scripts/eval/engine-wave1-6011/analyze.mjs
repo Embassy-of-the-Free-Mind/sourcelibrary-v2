@@ -131,6 +131,8 @@ for (const sc of SCRIPTS) {
 const tibF = path.join(RES, 'tibetan-scores.jsonl');
 if (fs.existsSync(tibF)) {
   const rows = fs.readFileSync(tibF, 'utf8').split('\n').filter(Boolean).map(l => JSON.parse(l));
+  // An output too short to align ("too short": < 6 Tibetan syllables) is a page the arm did not read: identity 0, counted as empty.
+  for (const r of rows) if (r.identity == null) { r.identity = 0; r.empty = true; }
   const by = new Map(); for (const r of rows) { if (!by.has(r.id)) by.set(r.id, {}); by.get(r.id)[r.arm] = r; }
   const offIndex = [...by].filter(([, a]) => Math.max(...Object.values(a).map(r => r.identity ?? 0)) < 0.5).map(([id]) => id);
   const keep = [...by].filter(([id]) => !offIndex.includes(id));
@@ -138,10 +140,10 @@ if (fs.existsSync(tibF)) {
   const tib = { measure: 'syllable identity vs Derge (kanjur_align.py, etext-index-full.pkl); higher is better', pages: by.size, off_index: offIndex, arms: {} };
   for (const arm of arms) {
     const ids = keep.filter(([, a]) => a[arm]).map(([, a]) => a[arm].identity);
-    const s = { n: ids.length, median_identity: r3(median(ids)), ci95: bootCI(ids), below_0_5: ids.filter(x => x < 0.5).length };
+    const s = { n: ids.length, empty: keep.filter(([, a]) => a[arm]?.empty).length, median_identity: r3(median(ids)), ci95: bootCI(ids), below_0_5: ids.filter(x => x < 0.5).length };
     if (arm !== 'bdrc-yigdzin-v1') {
       const d = keep.filter(([, a]) => a[arm] && a['bdrc-yigdzin-v1']).map(([, a]) => a[arm].identity - a['bdrc-yigdzin-v1'].identity);
-      s.vs_yigdzin = paired(d.map(x => x));   // Δ = arm − Yigdzin (positive = arm better)
+      s.vs_yigdzin = paired(d);   // Δ = arm − Yigdzin (positive = arm better)
       for (const [id, a] of keep) if (a[arm] && a['bdrc-yigdzin-v1']) result.by_eye_candidates.push({ script: 'tibetan', arm, slug: id, arm_identity: a[arm].identity, yigdzin_identity: a['bdrc-yigdzin-v1'].identity, delta: r3(a[arm].identity - a['bdrc-yigdzin-v1'].identity) });
     }
     tib.arms[arm] = s;
