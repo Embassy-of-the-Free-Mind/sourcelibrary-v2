@@ -109,17 +109,11 @@ async function main() {
   let queue = [], seen = 0, deleted = 0, bytes = 0, batchNo = 0;
   const skips = {};
 
-  async function flush() {
-    if (!queue.length) return;
-    batchNo++;
-    const verified = [];
-    for (let i = 0; i < queue.length; i += CONCURRENCY) {
-      const res = await Promise.all(queue.slice(i, i + CONCURRENCY).map(async (k) => ({ k, v: await verify(k) })));
-      for (const { k, v } of res) {
-        if (v.ok) verified.push({ k, ...v });
-        else { skips[v.why] = (skips[v.why] || 0) + 1; appendFileSync(`${LEDGER}.skips`, `${k}\tskip:${v.why}\n`); }
-      }
-    }
+  // Verify batch N+1 while batch N deletes: del() is rate-limited (~10 calls of
+  // 500 per ~65 s), so serial verify→delete left each side idle half the time.
+  let pending = Promise.resolve();
+
+  async function deleteVerified(verified, n, checked) {
     if (APPLY) {
       for (let i = 0; i < verified.length; i += 500) {
         const chunk = verified.slice(i, i + 500);
@@ -131,9 +125,24 @@ async function main() {
     } else {
       deleted += verified.length; bytes += verified.reduce((s, x) => s + x.size, 0);
     }
-    log(`batch ${batchNo}: ${queue.length} checked, ${verified.length} ${APPLY ? 'deleted' : 'would delete'}; ` +
+    log(`batch ${n}: ${checked} checked, ${verified.length} ${APPLY ? 'deleted' : 'would delete'}; ` +
         `total ${deleted.toLocaleString()} (${(bytes / 1e9).toFixed(1)} GB); skips ${JSON.stringify(skips)}`);
-    queue = [];
+  }
+
+  async function flush() {
+    if (!queue.length) return;
+    const batch = queue; queue = [];
+    const n = ++batchNo;
+    const verified = [];
+    for (let i = 0; i < batch.length; i += CONCURRENCY) {
+      const res = await Promise.all(batch.slice(i, i + CONCURRENCY).map(async (k) => ({ k, v: await verify(k) })));
+      for (const { k, v } of res) {
+        if (v.ok) verified.push({ k, ...v });
+        else { skips[v.why] = (skips[v.why] || 0) + 1; appendFileSync(`${LEDGER}.skips`, `${k}\tskip:${v.why}\n`); }
+      }
+    }
+    await pending; // at most one batch deleting at a time
+    pending = deleteVerified(verified, n, batch.length);
   }
 
   for await (const line of rl) {
@@ -147,6 +156,7 @@ async function main() {
     if (seen >= LIMIT) break;
   }
   await flush();
+  await pending;
   log(`done: ${deleted.toLocaleString()} ${APPLY ? 'deleted' : 'verifiable'} (${(bytes / 1e9).toFixed(1)} GB); skips ${JSON.stringify(skips)}`);
 }
 
