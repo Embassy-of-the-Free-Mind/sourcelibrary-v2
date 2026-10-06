@@ -9,6 +9,8 @@
 // (its `book_events` counter is the pattern for the book-level record here).
 // scripts/lib/page-integrity.mjs — detectors over finished books, not a gate before the call.
 // scripts/lib/dhash.mjs — perceptual hash; it needs the image bytes, which this gate never fetches.
+// scripts/lib/archive-coverage.mjs `probeStoredDimensions` — an image's real size from its header
+// over a ranged GET; reused to confirm a too-small verdict.
 /**
  * pre-translation-gate — do not translate what the pipeline could not read (#5915).
  *
@@ -42,6 +44,8 @@
 
 import { legibleText } from './illegible-source-gate.mjs';
 import { scriptOfCodePoint, familyOf } from './ocr-garble-score.mjs';
+import { NEVER_TRANSLATED_PAGE_TYPES } from './page-counts.mjs';
+import { probeStoredDimensions } from './archive-coverage.mjs';
 
 /** Bump when a rule or threshold changes, so a stored refusal can be told from a current one. */
 export const PRE_GATE_VERSION = 1;
@@ -110,7 +114,7 @@ export function imageFingerprint(page) {
 }
 
 /** Skip types never reach the model, so they are not part of the book this gate measures. */
-const NEVER_TRANSLATED = new Set(['blank', 'exlibris', 'bookplate', 'digitizer-notice', 'digitizer-insert']);
+const NEVER_TRANSLATED = new Set(NEVER_TRANSLATED_PAGE_TYPES);
 
 /** `has_ocr` as loadBookStructure projects it; a full page document is read directly. */
 const hasTranscription = (p) => p?.has_ocr ?? (typeof p?.ocr?.data === 'string' && p.ocr.data !== '' && p.ocr.unreadable !== true);
@@ -179,7 +183,8 @@ export const MIN_LETTERS_FOR_SIZE = 200;
 /**
  * A strip: a whole scroll, or a row of openings, in one frame. Both numbers are from the draw:
  * every strip seen is 2000 px by 121–220 px (aspect 9–16.5); the narrowest legible pages are
- * Tibetan pecha leaves, short edge ≥ 295 px, aspect ≤ 6.6.
+ * Tibetan pecha leaves, short edge ≥ 286 px, aspect ≤ 6.8. Both conditions must hold, so a tall
+ * scroll photographed at full width (2000×16111) is not a strip.
  */
 export const STRIP_MAX_SHORT_EDGE = 260;
 export const STRIP_MIN_ASPECT = 8;
@@ -188,18 +193,24 @@ export const STRIP_MIN_ASPECT = 8;
  * Floor on pixel area per transcribed letter, by script family. Only families with at least 30
  * sized pages in the draw have a row; any other family is not judged by density.
  *
- * CJK is the one row with an unreadable case under it (the scroll strip, 333 px² per character,
- * against a legible minimum of 1,179). For the other rows no page of the draw is below the floor:
- * the smallest are legible by eye (Latin print at 166, Arabic at 320, Devanagari at 495), so 100 is
- * a backstop for a thumbnail stored as a page, not a cut through the corpus.
+ * CJK is the one row with an unreadable case under it: the scroll strip is 333 px² a character,
+ * and the lowest CJK pages of the draw whose stored size is true are 930–1,179 (the one opened,
+ * 1,179, is large clear woodblock). For the other rows the draw holds no unreadable page at any
+ * density: the smallest opened are legible (a three-column magazine page at 87, Latin print at
+ * 166, Arabic at 320, Devanagari at 495). A first floor of 100 refused that magazine page, so
+ * these rows sit at 50, under every page of the draw: a backstop for a thumbnail stored as a
+ * page, not a cut through the corpus.
  */
 export const PIXELS_PER_LETTER_FLOOR = Object.freeze({
   CJK: 500,
-  Latin: 100,
-  Tibetan: 100,
-  Devanagari: 100,
-  Greek: 100,
-  Arabic: 100,
+  Latin: 50,
+  Tibetan: 50,
+  Devanagari: 50,
+  Greek: 50,
+  Arabic: 50,
+  Hebrew: 50,
+  Cyrillic: 50,
+  Syriac: 50,
 });
 
 /** Rule 1 for one page. Returns null (fine, or not judgeable), or { reason, detail }. */
@@ -292,9 +303,12 @@ export function readabilityVerdict(page, t = transcribed(page?.ocr?.data)) {
  * @param {object} [opts]
  * @param {Map<string,string>} [opts.imageHashes]  page id → image hash (an ETag), where a caller
  *        has fetched one; it overrides the stored-size comparison in both directions
+ * @param {Map<string,{width:number,height:number}>} [opts.imageSizes]  page id → the size read
+ *        from the image file's own header; it overrides `image_width`/`image_height`, which go
+ *        stale when an image is re-archived (a page stored as 1000×667 whose file is 5616×3744)
  * @returns {{ refuse: boolean, reason: string|null, detail: object|null }}
  */
-export function preTranslationVerdict(page, structure = null, { imageHashes = null } = {}) {
+export function preTranslationVerdict(page, structure = null, { imageHashes = null, imageSizes = null } = {}) {
   const out = (v) => (v ? { refuse: true, reason: v.reason, detail: v.detail || null } : { refuse: false, reason: null, detail: null });
   if (!((page?.page_number ?? 0) > 0)) return out({ reason: REFUSAL.PAGE_NUMBER, detail: { page_number: page?.page_number ?? null } });
   const light = structure?.byId?.get(page.id);
@@ -309,7 +323,11 @@ export function preTranslationVerdict(page, structure = null, { imageHashes = nu
     if (same) return out({ reason: REFUSAL.DUPLICATE_IMAGE, detail: { same_as_page: prev.page_number, evidence: hashed ? 'image-hash' : 'stored-size', image: fp } });
   }
   const t = transcribed(full?.ocr?.data);
-  return out(imageSizeVerdict(full, t) || readabilityVerdict(full, t));
+  const measured = imageSizes?.get(page.id);
+  const sized = measured ? { ...full, image_width: measured.width, image_height: measured.height } : full;
+  const small = imageSizeVerdict(sized, t);
+  if (small) small.detail.evidence = measured ? 'image-header' : 'stored-size';
+  return out(small || readabilityVerdict(full, t));
 }
 
 // ── Applying it (the only part that touches the database) ───────────────────────────────────
@@ -318,7 +336,7 @@ export function preTranslationVerdict(page, structure = null, { imageHashes = nu
 export const BOOK_REFUSAL_EVENT = 'pre_translation_gate_refusal';
 
 const LIGHT_PROJECTION = {
-  _id: 0, id: 1, page_number: 1, page_type: 1, image_width: 1, image_height: 1, 'archive_metadata.bytes': 1, crop: 1, archived_photo: 1, photo: 1,
+  _id: 0, id: 1, page_number: 1, page_type: 1, image_width: 1, image_height: 1, 'archive_metadata.bytes': 1, crop: 1, archived_photo: 1,
   has_ocr: { $and: [{ $gt: [{ $strLenCP: { $ifNull: [{ $cond: [{ $eq: [{ $type: '$ocr.data' }, 'string'] }, '$ocr.data', ''] }, ''] } }, 0] }, { $ne: ['$ocr.unreadable', true] }] },
 };
 
@@ -358,20 +376,27 @@ export const PRE_GATE_UNSET = Object.freeze({ 'translation.health_blocked': '', 
 /**
  * Judge the pages a lane is about to translate, and record what is refused.
  *
- * Reads the whole book's light structure once, checks suspected duplicate images by HEAD, and
- * returns the pages that may go to the model. With `record` (the default) each refused page is
+ * Reads the whole book's light structure once and returns the pages that may go to the model.
+ * Two verdicts are checked against the image host before they stand, at the cost of a HEAD or a
+ * ranged GET of the file header, never the image: a duplicate image (the two files' hashes) and
+ * an image too small (the file's real size, because the stored one can be stale). Only our own
+ * copy (`archived_photo`) is asked, never a partner library's server; when there is no copy or the
+ * host does not answer, the verdict from the stored fields stands. With `record` (the default) each refused page is
  * stamped: `translation.health_blocked` (so no selector picks it again), `translation.refusal_reason`
  * and `translation.refusal` (the measurement, and the OCR it was judged on). Pages this gate
  * refused earlier are judged again first, and released if they now pass: a re-read, a re-archived
  * image or a renumbering is the exit. A book-level refusal stamps no page (the condition belongs to
  * the book and lifts when the book is read); it is counted in `book_events`.
  *
+ * `bookRule: false` skips the book rule only: an operator who names the pages to translate (a
+ * pilot on a book still being read) is not translating the book, and the page rules still apply.
+ *
  * Never throws: a gate that cannot run lets the pages through and says so in `error`.
  *
  * @returns {Promise<{ pages: object[], refused: Array<{page, reason, detail}>, counts: object,
  *   book: {reason, detail}|null, released: number, error?: string }>}
  */
-export async function applyPreTranslationGate(db, bookId, pages, { record = true, lane = 'unknown', enabled = preGateEnabled(), now = new Date(), hashOf = fetchImageHash, log = console.log } = {}) {
+export async function applyPreTranslationGate(db, bookId, pages, { record = true, lane = 'unknown', enabled = preGateEnabled(), now = new Date(), bookRule = true, hashOf = fetchImageHash, sizeOf = probeStoredDimensions, log = console.log } = {}) {
   const pass = { pages, refused: [], counts: {}, book: null, released: 0 };
   if (!enabled || !bookId) return pass;
   try {
@@ -380,8 +405,13 @@ export async function applyPreTranslationGate(db, bookId, pages, { record = true
       let v = preTranslationVerdict(page, structure);
       if (v.reason === REFUSAL.DUPLICATE_IMAGE) {
         const prev = structure.previous.get(page.id), me = structure.byId.get(page.id);
-        const [mine, theirs] = await Promise.all([hashOf(me?.archived_photo || me?.photo), hashOf(prev?.archived_photo || prev?.photo)]);
+        const [mine, theirs] = await Promise.all([hashOf(me?.archived_photo), hashOf(prev?.archived_photo)]);
         if (mine && theirs) v = preTranslationVerdict(page, structure, { imageHashes: new Map([[page.id, mine], [prev.id, theirs]]) });
+      }
+      if (v.reason === REFUSAL.IMAGE_TOO_SMALL) {
+        const me = structure.byId.get(page.id) || page;
+        const size = me?.archived_photo ? await sizeOf(me.archived_photo) : null;
+        if (size?.width > 0 && size?.height > 0) v = preTranslationVerdict(page, structure, { imageSizes: new Map([[page.id, size]]) });
       }
       return v;
     };
@@ -402,7 +432,7 @@ export async function applyPreTranslationGate(db, bookId, pages, { record = true
       }
     }
 
-    const book = bookVerdict(structure);
+    const book = bookRule ? bookVerdict(structure) : null;
     if (book) {
       if (record && pages.length) {
         await db.collection('book_events').updateOne(

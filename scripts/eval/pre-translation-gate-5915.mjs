@@ -32,6 +32,7 @@ import {
   applyPreTranslationGate, bookStructure, bookVerdict, preTranslationVerdict, fetchImageHash, transcribed, imageBox, devanagariShape,
   REFUSAL, BOOK_REFUSAL, MIN_LETTERS_FOR_SIZE, READABILITY_MIN_TOKENS,
 } from '../lib/pre-translation-gate.mjs';
+import { probeStoredDimensions } from '../lib/archive-coverage.mjs';
 
 const SEED = 20261006;
 const arg = (name, dflt = null) => { const hit = process.argv.find((a) => a === `--${name}` || a.startsWith(`--${name}=`)); return hit ? (hit.includes('=') ? hit.slice(hit.indexOf('=') + 1) : true) : dflt; };
@@ -113,8 +114,12 @@ async function judgeRow(row) {
   const book = bookVerdict(structure);
   let v = preTranslationVerdict(row.page, structure);
   if (v.reason === REFUSAL.DUPLICATE_IMAGE) {
-    const [mine, theirs] = await Promise.all([fetchImageHash(row.page.archived_photo || row.page.photo), fetchImageHash(row.prev.archived_photo || row.prev.photo)]);
+    const [mine, theirs] = await Promise.all([fetchImageHash(row.page.archived_photo), fetchImageHash(row.prev.archived_photo)]);
     if (mine && theirs) v = preTranslationVerdict(row.page, structure, { imageHashes: new Map([[row.page.id, mine], [row.prev.id, theirs]]) });
+  }
+  if (v.reason === REFUSAL.IMAGE_TOO_SMALL) {
+    const size = row.page.archived_photo ? await probeStoredDimensions(row.page.archived_photo) : null;
+    if (size?.width > 0) v = preTranslationVerdict(row.page, structure, { imageSizes: new Map([[row.page.id, size]]) });
   }
   return { page: v, book };
 }

@@ -159,7 +159,7 @@ function fakeDb(pages: any[]) {
   };
 }
 const inBook = (p: any, n: number, id: string) => ({ ...p, id, book_id: 'B', page_number: n });
-const quiet = { log: () => {}, enabled: true };
+const quiet = { log: () => {}, enabled: true, hashOf: async () => null, sizeOf: async () => null };
 
 describe('applyPreTranslationGate', () => {
   const strip = inBook(C.scroll_strip, 1, 's'), section = inBook(C.scroll_section, 2, 'c'), soup = inBook(C.syllable_soup, 3, 'u');
@@ -205,6 +205,14 @@ describe('applyPreTranslationGate', () => {
     const unreachable = await applyPreTranslationGate(fakeDb([first, second]), 'B', [first, second], { ...quiet, hashOf: async () => null });
     expect(unreachable.refused.map((r: any) => r.detail.evidence)).toEqual(['stored-size']);
   });
+  it('reads the image file before calling it too small: a stale stored size does not refuse a full-size page', async () => {
+    const stale = await applyPreTranslationGate(fakeDb([strip]), 'B', [strip], { ...quiet, sizeOf: async () => ({ width: 10840, height: 5533 }) });
+    expect(stale.refused).toEqual([]);
+    const really = await applyPreTranslationGate(fakeDb([strip]), 'B', [strip], { ...quiet, sizeOf: async () => ({ width: 2000, height: 121 }) });
+    expect(really.refused.map((r: any) => r.detail.evidence)).toEqual(['image-header']);
+    const unreachable = await applyPreTranslationGate(fakeDb([strip]), 'B', [strip], quiet);
+    expect(unreachable.refused.map((r: any) => r.detail.evidence)).toEqual(['stored-size']);
+  });
   it('THE EXIT: a page refused earlier is released once its transcription passes', async () => {
     const reread = { ...soup, ocr: { data: C.sanskrit_read.ocr.data }, translation: { health_blocked: PRE_GATE_BLOCK, refusal_reason: REFUSAL.UNREADABLE } };
     const still = { ...strip, translation: { health_blocked: PRE_GATE_BLOCK, refusal_reason: REFUSAL.IMAGE_TOO_SMALL } };
@@ -224,6 +232,13 @@ describe('applyPreTranslationGate', () => {
     expect(db.writes).toEqual([]);
     expect(db.events).toHaveLength(1);
     expect(db.events[0].filter).toMatchObject({ book_id: 'B', type: BOOK_REFUSAL_EVENT });
+  });
+  it('the book rule is skipped for an operator page list; the page rules still apply', async () => {
+    const pages = Array.from({ length: 40 }, (_, i) => ({ ...C.sanskrit_read, id: `p${i}`, book_id: 'B', page_number: i + 1, archive_metadata: { bytes: 1000 + i }, ocr: i < 5 ? (i === 0 ? C.syllable_soup.ocr : C.sanskrit_read.ocr) : undefined }));
+    const res = await applyPreTranslationGate(fakeDb(pages), 'B', pages.slice(0, 5), { ...quiet, bookRule: false });
+    expect(res.book).toBeNull();
+    expect(res.pages).toHaveLength(4);
+    expect(res.counts).toEqual({ [REFUSAL.UNREADABLE]: 1 });
   });
   it('a gate that cannot run lets the pages through and says so', async () => {
     const broken = { collection: () => { throw new Error('mongo down'); } };

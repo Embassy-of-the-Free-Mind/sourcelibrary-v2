@@ -416,7 +416,8 @@ export async function selectPages(db, bookId, { limit = MAX_PAGES_PER_RUN, pageI
   // #5915: the pre-translation gate, on the pages about to be queued. A plan or a dry run judges
   // and counts (`excluded['pre-gate:<reason>']`) without writing; a real enrol passes recordGate,
   // which stamps the refused pages so no lane selects them again.
-  const gate = await applyPreTranslationGate(db, bookId, pages, { record: recordGate, lane });
+  // An explicit page list is an operator's pilot, not the book: the book rule is not applied to it.
+  const gate = await applyPreTranslationGate(db, bookId, pages, { record: recordGate, lane, bookRule: !pageIds });
   for (const [reason, n] of Object.entries(gate.counts)) excluded[`pre-gate:${reason}`] = n;
   return { pages: gate.pages, excluded, gate };
 }
