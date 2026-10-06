@@ -36,7 +36,9 @@ export const preferredRegion = 'fra1';
 
 type Confidence = 'exact' | 'high' | 'medium' | 'low';
 
-const CONFIDENCE: Record<HoldingReason, Confidence> = {
+// Keyed by string, not by HoldingReason: a reason added to holdings-check.ts
+// must not break this route's build; an unlisted one reads as 'medium'.
+const CONFIDENCE: Record<string, Confidence> = {
   same_book: 'exact',
   same_source_object: 'exact',
   same_iiif_manifest: 'exact',
@@ -45,9 +47,12 @@ const CONFIDENCE: Record<HoldingReason, Confidence> = {
   title_author_near_same_year: 'high',
   other_edition: 'medium',
   same_work: 'medium',
+  same_work_same_year: 'high',
   title_author_near: 'medium',
   near_title: 'low',
 };
+
+const confidenceOf = (reason: string): Confidence => CONFIDENCE[reason] ?? 'medium';
 
 interface Match {
   book_id: string;
@@ -94,7 +99,7 @@ export async function GET(request: NextRequest) {
     year: c.year ?? undefined,
     match_type: c.reason,
     reason: c.reason_detail,
-    confidence: CONFIDENCE[c.reason],
+    confidence: confidenceOf(c.reason),
     url: c.url,
   }));
   const notPublic = holdings.candidates.filter((c) => !isPublic(c));
@@ -133,9 +138,9 @@ export async function GET(request: NextRequest) {
   matches.sort((a, b) => order[a.confidence] - order[b.confidence] || semanticLast(a) - semanticLast(b) || (b.similarity || 0) - (a.similarity || 0));
 
   const strongestHidden = notPublic.length
-    ? notPublic.reduce((a, b) => (order[CONFIDENCE[b.reason]] < order[CONFIDENCE[a.reason]] ? b : a))
+    ? notPublic.reduce((a, b) => (order[confidenceOf(b.reason)] < order[confidenceOf(a.reason)] ? b : a))
     : null;
-  const best = [matches[0]?.confidence, strongestHidden && CONFIDENCE[strongestHidden.reason]]
+  const best = [matches[0]?.confidence, strongestHidden && confidenceOf(strongestHidden.reason)]
     .filter((c): c is Confidence => !!c)
     .sort((a, b) => order[a] - order[b])[0];
   const overall = best ?? 'none';
