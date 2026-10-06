@@ -125,11 +125,16 @@ async function eebo() {
   await eachEntry(outer, async (entry) => { if (/^eebo_phase[12]\/P4_XML_TCP(_Ph2)?\/[A-Z]\d+\.zip$/.test(entry.fileName)) inners.push(entry); });
   console.log('inner zips', inners.length);
   let total = 0;
-  for (const entry of inners.sort((x, y) => x.fileName.localeCompare(y.fileName))) {
+  // Two workers may run at once (one --reverse): a lock file per inner zip keeps them apart.
+  inners.sort((x, y) => x.fileName.localeCompare(y.fileName));
+  if (process.argv.includes('--reverse')) inners.reverse();
+  let skippedLocked = 0;
+  for (const entry of inners) {
     const phase = /^eebo_phase1\//.test(entry.fileName) ? 1 : 2;
     const tag = `p${phase}-${path.basename(entry.fileName, '.zip')}`;
     const part = path.join(partsDir, `${tag}.jsonl`);
     if (fs.existsSync(part)) { total += fs.readFileSync(part, 'utf8').split('\n').filter(Boolean).length; continue; }
+    try { fs.writeFileSync(`${part}.lock`, String(process.pid), { flag: 'wx' }); } catch { skippedLocked++; continue; }
     assertDisk(1);
     const tmp = path.join(dir, `${tag}.zip`);
     const w = fs.createWriteStream(tmp);
@@ -150,11 +155,13 @@ async function eebo() {
     await flushShard();
     fs.rmSync(tmp);
     fs.writeFileSync(part, lines.join(''));
+    fs.rmSync(`${part}.lock`);
     total += n;
     console.log('eebo', tag, n, 'total', total);
   }
   writeRow = (line) => manifest.write(line);
-  for (const f of fs.readdirSync(partsDir).sort()) manifest.write(fs.readFileSync(path.join(partsDir, f), 'utf8'));
+  if (skippedLocked) { console.log('another worker holds', skippedLocked, 'inner zips: manifest not final, run again'); }
+  for (const f of fs.readdirSync(partsDir).filter((x) => x.endsWith('.jsonl')).sort()) manifest.write(fs.readFileSync(path.join(partsDir, f), 'utf8'));
   console.log('eebo texts', total);
 }
 
