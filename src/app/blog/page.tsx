@@ -26,6 +26,16 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'drebbel',
+    title: 'The Engraver Who Went Under the Thames',
+    subtitle:
+      'Cornelis Drebbel built a perpetual-motion clock, a submarine, early microscopes and the first thermostat, and wrote almost nothing. What we know comes from the 57 people around him: an interactive map of his circle, every tie marked by how well it is attested, and the passages in his own book.',
+    date: '6 October 2026',
+    readTime: '12 min read',
+    tag: 'Collection',
+    tagColor: 'bg-accent-violet/10 text-accent-violet',
+  },
+  {
     slug: 'training-our-own-models',
     title: 'Should a library train its own AI models?',
     subtitle:
