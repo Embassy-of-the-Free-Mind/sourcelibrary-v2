@@ -202,7 +202,10 @@ export default function JourneyFilm({ data }: { data: JourneyData }) {
         const tx = screenText(data, g.screen);
         setCaption(`s:${g.screen}`, `Chapter ${g.ch + 1} · ${step.short}`, tx.title, tx.body);
       } else if (!g.card && !g.end) {
-        setCaption(`c:${g.ch}`, `Chapter ${g.ch + 1} · ${step.short}`, step.title, step.body);
+        // Connect's full text is spread over the two screens that follow; over the
+        // scene, the one-line summary keeps the orbit of cards in view on a phone.
+        const body = step.key === 'connect' ? parts.find(p => p.steps.includes('connect'))?.body ?? step.body : step.body;
+        setCaption(`c:${g.ch}`, `Chapter ${g.ch + 1} · ${step.short}`, step.title, body);
       }
       if (screenRef.current) {
         screenRef.current.style.opacity = String(so);
