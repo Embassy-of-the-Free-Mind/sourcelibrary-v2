@@ -8,7 +8,7 @@ import ocrEvidence from '@/data/ocr-benchmark-evidence.json';
 import feedback from '@/data/quality-feedback-themes.json';
 import { listExperiments, latestCanonStatus, typedPages } from '@/lib/quality-center';
 import { AS_OF as OPEN_WORK_AS_OF, GROUPS } from '../research/quality/open/issues';
-import { LEAF, leafHref, PROSE_AS_OF, WAYS, WORKED_FIX } from './content';
+import { GRADES, LEAF, leafHref, PROSE_AS_OF, WAYS } from './content';
 import ParetoCharts, { TRANSLATION } from './ParetoCharts';
 
 // The Quality Center (#5918): where text quality stands, what we are doing about it, and how
