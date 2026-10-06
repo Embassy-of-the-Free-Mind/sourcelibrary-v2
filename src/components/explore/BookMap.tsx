@@ -15,17 +15,20 @@ export const TYPE_BIT: Record<LocationType, number> = {
 const TYPE_BY_PRIORITY: LocationType[] = ['publication', 'author_birth', 'author_death', 'origin'];
 
 /**
- * Lightweight per-city record shipped to the client. To keep the initial payload
- * small (~0.4 MB vs the old ~7 MB), each book is just its year (`y`, null if
- * undated) and a role bitmask (`m`); the full book list loads lazily from
- * /api/explore/map/city on click. Books are already deduped per city server-side.
+ * Lightweight per-city record shipped to the client. The filters only need each
+ * book's year and role bitmask, so a city ships those as COUNTED triples rather
+ * than one object per book: `b = [year, mask, count, year, mask, count, …]`,
+ * year 0 = undated. Books are deduped per city server-side before counting.
+ * Measured 2026-10-06: one `{y, m}` object per book was 36,026 objects and
+ * 1.1 MB of page HTML. The full book list still loads lazily from
+ * /api/explore/map/city on click.
  */
 export interface BookLocation {
   city: string;
   country: string | null;
   lat: number;
   lng: number;
-  books: Array<{ y: number | null; m: number }>;
+  b: number[];
 }
 
 /** Full book record, fetched lazily for the clicked city's sidebar. */
@@ -61,21 +64,9 @@ const TYPE_CONFIG: Record<string, { color: string; label: string; lightBg: strin
   origin:       { color: '#6a8a5a', label: 'Tradition origin', lightBg: 'rgba(106,138,90,0.1)' },
 };
 
-function createLocationIcon(type: string, bookCount: number) {
-  const config = TYPE_CONFIG[type] || { color: '#999' };
-  const size = Math.max(8, Math.min(22, 6 + Math.log2(bookCount + 1) * 3));
-  return L.divIcon({
-    className: 'book-marker',
-    html: `<div style="
-      width: ${size}px; height: ${size}px; border-radius: 50%;
-      background: ${config.color}; opacity: 0.85;
-      border: 1.5px solid rgba(255,255,255,0.9);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-      cursor: pointer;
-    "></div>`,
-    iconSize: [size, size],
-    iconAnchor: [size / 2, size / 2],
-  });
+function pinRadius(bookCount: number) {
+  // Same diameter curve as the old DOM pins (8–22px), as a radius.
+  return Math.max(8, Math.min(22, 6 + Math.log2(bookCount + 1) * 3)) / 2;
 }
 
 export default function BookMap({ locations }: BookMapProps) {
@@ -126,11 +117,13 @@ export default function BookMap({ locations }: BookMapProps) {
     for (const loc of locations) {
       let count = 0;
       let orMask = 0;
-      for (const b of loc.books) {
-        if (!(b.m & selectedMask)) continue;
-        if (b.y != null && (b.y < filters.yearFrom || b.y > filters.yearTo)) continue;
-        count++;
-        orMask |= b.m & selectedMask;
+      const b = loc.b;
+      for (let i = 0; i < b.length; i += 3) {
+        const y = b[i], m = b[i + 1];
+        if (!(m & selectedMask)) continue;
+        if (y !== 0 && (y < filters.yearFrom || y > filters.yearTo)) continue;
+        count += b[i + 2];
+        orMask |= m & selectedMask;
       }
       if (count === 0) continue;
       const roles = TYPE_BY_PRIORITY.filter((t) => orMask & TYPE_BIT[t]);
@@ -190,21 +183,32 @@ export default function BookMap({ locations }: BookMapProps) {
     return () => ctrl.abort();
   }, [selected, filters.types, filters.yearFrom, filters.yearTo]);
 
-  // Render city pins
+  // Small cities hide when zoomed out. Only the THRESHOLD is a dependency of the
+  // pin effect, so zooming within a band no longer rebuilds every pin.
+  const minBooksForZoom = zoom <= 3 ? 20 : zoom <= 4 ? 5 : 1;
+
+  // Render city pins — drawn on ONE shared canvas, not ~3,000 DOM nodes. With
+  // DOM markers every pan/zoom moved thousands of elements; canvas circles keep
+  // tooltips and clicks (Leaflet hit-tests the canvas) at a fraction of the cost.
+  const rendererRef = useRef<L.Canvas | null>(null);
   useEffect(() => {
     const map = mapRef.current;
     const layerGroup = markersRef.current;
     if (!map || !layerGroup) return;
+    if (!rendererRef.current) rendererRef.current = L.canvas({ padding: 0.5 });
+    const renderer = rendererRef.current;
     layerGroup.clearLayers();
-
-    const minBooksForZoom = zoom <= 3 ? 20 : zoom <= 4 ? 5 : 1;
 
     for (const pin of cityPins) {
       if (pin.totalBooks < minBooksForZoom) continue;
       const dominantType = pin.dominantType;
+      const color = TYPE_CONFIG[dominantType]?.color || '#999';
 
-      const marker = L.marker([pin.lat, pin.lng], {
-        icon: createLocationIcon(dominantType, pin.totalBooks),
+      const marker = L.circleMarker([pin.lat, pin.lng], {
+        renderer,
+        radius: pinRadius(pin.totalBooks),
+        fillColor: color, fillOpacity: 0.85,
+        color: 'rgba(255,255,255,0.9)', weight: 1.5,
       });
 
       const typeLabels = pin.roles.map(t => TYPE_CONFIG[t]?.label || t).join(' · ');
@@ -221,7 +225,7 @@ export default function BookMap({ locations }: BookMapProps) {
       });
       layerGroup.addLayer(marker);
     }
-  }, [cityPins, zoom, handleSelect]);
+  }, [cityPins, minBooksForZoom, handleSelect]);
 
   // Track zoom
   useEffect(() => {
