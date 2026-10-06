@@ -47,7 +47,7 @@ describe('applyGroundingEdits', () => {
 
 describe('quotes', () => {
   it('keeps a quote that is on a retrieved page (folded: long s, case)', () => {
-    const text = 'Monconys writes that "with 6 sols de charbon du pays" the oven worked — *[Journal](https://sourcelibrary.org/book/journal-des-voyages-monconys)*, [Page 51](https://sourcelibrary.org/book/journal-des-voyages-monconys/page-number/51).';
+    const text = 'Monconys writes that "auec 6 sols de charbon du pays" the oven worked — *[Journal](https://sourcelibrary.org/book/journal-des-voyages-monconys)*, [Page 51](https://sourcelibrary.org/book/journal-des-voyages-monconys/page-number/51).';
     const { out, report } = ground(text);
     expect(report.quotesUnquoted).toBe(0);
     expect(out).toBe(text);
@@ -58,6 +58,13 @@ describe('quotes', () => {
     expect(report.quotesUnquoted).toBe(1);
     expect(out).toContain('the oven could be opened twenty times an hour without cooling');
     expect(out).not.toContain('"could be');
+  });
+  it('does not let a short quote pass on scattered words (page or pooled tool text)', () => {
+    // "spirit", "within", "body" each occur somewhere in the tool text, never as the phrase.
+    const text = 'The Picatrix defines the talisman as a "spirit within a body" of matter — [Page 51](https://sourcelibrary.org/book/journal-des-voyages-monconys/page-number/51).';
+    const extra = '{"context":"the spirit of the planet ... within the stone ... a body of bronze"}';
+    expect(ground(text, { extraSupport: extra }).report.quotesUnquoted).toBe(1);
+    expect(ground(text, { extraSupport: '{"context":"a talisman is a spirit within a body, says the Picatrix"}' }).report.quotesUnquoted).toBe(0);
   });
   it('checks an elided quote fragment by fragment', () => {
     const ok = 'He saw "a furnace that I have seen … 280 pounds of bread in 24 hours" there — [Page 51](https://sourcelibrary.org/book/journal-des-voyages-monconys/page-number/51).';

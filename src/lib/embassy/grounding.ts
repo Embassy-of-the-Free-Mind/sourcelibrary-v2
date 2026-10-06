@@ -16,9 +16,9 @@
  *
  *  1. Quotes. Text in quotation marks (3+ words) and blockquotes must occur on
  *     a support page, folded for case/diacritics/long-s and compared word by
- *     word, one ellipsis fragment at a time. A near-verbatim paraphrase (80% of
- *     its words on one page) is left alone. Anything else: an inline quote
- *     loses its quotation marks; a blockquote is removed with a visible note,
+ *     word, one ellipsis fragment at a time. A near-verbatim paraphrase (80%
+ *     of its words on one page, for quotes of six words or more) is left
+ *     alone. Anything else: an inline quote loses its quotation marks; a blockquote is removed with a visible note,
  *     because a blockquote under a page link asserts the page says it.
  *  2. Quantities. A number attached to a unit ("280 pounds", "twenty times an
  *     hour", "£10,000") must occur on a support page or in another tool result
@@ -183,7 +183,6 @@ interface SupportIndex {
   pageSeqs: string[];
   pageSets: Array<Set<string>>;
   extraSeq: string;
-  extraSet: Set<string>;
 }
 
 function buildIndex(pages: GroundingPage[], extra: string): SupportIndex {
@@ -193,11 +192,13 @@ function buildIndex(pages: GroundingPage[], extra: string): SupportIndex {
     pageSeqs: pageWords.map(w => ` ${w.join(' ')} `),
     pageSets: pageWords.map(w => new Set(w)),
     extraSeq: ` ${extraWords.join(' ')} `,
-    extraSet: new Set(extraWords),
   };
 }
 
 type QuoteVerdict = 'exact' | 'near' | 'unsupported';
+
+/** Distinct 3+-letter words a quote needs before a near-verbatim match can stand in for an exact one. */
+const NEAR_MIN_WORDS = 6;
 
 function checkQuote(quote: string, idx: SupportIndex): QuoteVerdict {
   const frags = quote.split(/\s*(?:\.{3,}|…|\[\s*\.\.\.\s*\])\s*/)
@@ -206,10 +207,13 @@ function checkQuote(quote: string, idx: SupportIndex): QuoteVerdict {
   if (frags.length === 0) return 'exact';
   const seqs = [...idx.pageSeqs, idx.extraSeq];
   if (frags.every(f => seqs.some(s => s.includes(` ${f.join(' ')} `)))) return 'exact';
+  // A near-verbatim paraphrase only counts for a quote long enough that 80% of
+  // its words landing on ONE page means something. Three words of "a spirit
+  // within a body" are on almost any page — and on the pooled text of every
+  // tool result always (measured: the pooled bag let 3 such quotes through).
   const words = [...new Set(frags.flat().filter(w => w.length >= 3))];
-  if (words.length === 0) return 'exact';
-  const sets = [...idx.pageSets, idx.extraSet];
-  if (sets.some(set => words.filter(w => set.has(w)).length / words.length >= 0.8)) return 'near';
+  if (words.length < NEAR_MIN_WORDS) return 'unsupported';
+  if (idx.pageSets.some(set => words.filter(w => set.has(w)).length / words.length >= 0.8)) return 'near';
   return 'unsupported';
 }
 
