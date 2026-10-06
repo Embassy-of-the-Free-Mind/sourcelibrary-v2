@@ -363,8 +363,22 @@ export async function checkHoldings(
       const rows = await db.collection(coll).find({ edition_key: prefix }, { projection: BOOK_PROJ }).limit(otherLimit).toArray();
       for (const r of rows) {
         if (found.has(idOf(r))) continue;
-        const y = editionYear(r as { year?: number | null; published?: string | null });
-        add(toCandidate(r, coll, 'other_edition', `Same title and author, ${y != null ? `year ${y}` : 'different volume'}.`));
+        // Compared against the edition we are looking for. On the caller's
+        // own title these same-edition rows were already found by tier 2; on
+        // a record-derived key (URL-only lookup) they were not, so classify.
+        const segs = String(r.edition_key || '').split('|');
+        const y = segs.length >= 4 && segs[segs.length - 2] !== '' ? parseInt(segs[segs.length - 2], 10) : null;
+        const volSeg = segs[segs.length - 1] || 'v';
+        const v = volSeg === 'v' ? null : parseInt(volSeg.slice(1), 10);
+        const otherVolume = ek.parts.volume != null && v != null && v !== ek.parts.volume;
+        const otherYear = ek.parts.year != null && y != null && y !== ek.parts.year;
+        if (otherVolume || otherYear) {
+          add(toCandidate(r, coll, 'other_edition', otherYear ? `Same title and author, year ${y}.` : `Same title and author, volume ${v}.`));
+        } else if (ek.parts.year != null && y != null) {
+          add(toCandidate(r, coll, 'same_edition', `Same title, author and year (${y}).`));
+        } else {
+          add(toCandidate(r, coll, 'same_edition_year_unknown', 'Same title and author; a year is missing on one side, so this may be another printing.'));
+        }
       }
     }
   } else if (!ek.key) {
@@ -378,7 +392,7 @@ export async function checkHoldings(
   if (workIds.length > 0) {
     const rows = await db.collection('books').find({ work_id: { $in: workIds } }, { projection: BOOK_PROJ }).limit(otherLimit * 2).toArray();
     for (const r of rows) {
-      if (!found.has(idOf(r))) add(toCandidate(r, 'books', 'same_work', 'Same work (work_id): another edition or translation.'));
+      if (!found.has(idOf(r))) add(toCandidate(r, 'books', 'same_work', 'Same work (work_id): another copy, edition or translation.'));
     }
   }
 
