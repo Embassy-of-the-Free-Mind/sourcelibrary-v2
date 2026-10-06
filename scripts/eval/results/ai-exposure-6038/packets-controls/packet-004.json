@@ -2,7 +2,27 @@
  "packet": 4,
  "prompt_version": "ai-exposure-6038-v1",
  "ids": [
-  "decoy-29"
+  "decoy-25",
+  "6952d08677f38f6761bc5477",
+  "decoy-11",
+  "69ac9bb499d9a0170d090bb2",
+  "69e72c60a409200ea79f46f6",
+  "decoy-32",
+  "decoy-21",
+  "699050d07d19f3f2aac1e6e4",
+  "decoy-26",
+  "0c19cab9-00d4-49b1-ace1-9122b5a45cc9",
+  "decoy-35",
+  "dfb9c1de-d300-4e1b-a9c1-941cdb809764",
+  "69520176ab34727b1f04136b",
+  "4d4089b9-9227-4cc5-b0a2-9b06ee731061",
+  "decoy-38",
+  "69529492b184004c526a1963",
+  "6953e55777f38f6761bf05cf",
+  "decoy-14",
+  "decoy-34",
+  "69b2214608069e96e842f2a2",
+  "decoy-15"
  ],
- "prompt": "You are helping a library find out which of its historical books are already known to AI models. Answer each question from your own memory only. Be honest: \"no\" and \"unknown\" are good answers. Never invent a quotation.\n\nFor each numbered book below, give:\n- \"knows_of\": do you know OF this work — who wrote it and roughly what it is? \"yes\", \"no\" or \"unsure\".\n- \"self_familiar\": did you encounter the TEXT of this work in your training data, not just references to it? Distinguish knowing OF a book from having seen its text. \"yes\", \"no\" or \"unsure\".\n- \"opening\": one sentence from the opening of the work, verbatim, in its original language and script, exactly as you remember it — or the string \"unknown\" if you cannot quote it from memory. Do not translate, paraphrase or reconstruct.\n\nBooks:\n1. Title: ספר מאור הגנוז | Author: ר׳ יהודה בן שמואל מקרקא | Year: 1612 | Language: Hebrew\n\nReturn ONLY a JSON array with one object per book, in order: [{\"i\":1,\"knows_of\":\"...\",\"self_familiar\":\"...\",\"opening\":\"...\"}, ...]"
+ "prompt": "You are helping a library find out which of its historical books are already known to AI models. Answer each question from your own memory only. Be honest: \"no\" and \"unknown\" are good answers. Never invent a quotation.\n\nFor each numbered book below, give:\n- \"knows_of\": do you know OF this work — who wrote it and roughly what it is? \"yes\", \"no\" or \"unsure\".\n- \"self_familiar\": did you encounter the TEXT of this work in your training data, not just references to it? Distinguish knowing OF a book from having seen its text. \"yes\", \"no\" or \"unsure\".\n- \"opening\": one sentence from the opening of the work, verbatim, in its original language and script, exactly as you remember it — or the string \"unknown\" if you cannot quote it from memory. Do not translate, paraphrase or reconstruct.\n\nBooks:\n1. Title: 金液還真論 | Author: 張道沖 | Year: 1610 | Language: Classical Chinese\n2. Title: Amphitheatrum sapientiae aeternae | Author: Khunrath, Heinrich | Year: 1609 | Language: Latin\n3. Title: Kurtzer Bericht von dem Philosophischen Saltz | Author: Georg Andreas Würffel | Year: 1709 | Language: German\n4. Title: Confessions | Author: Augustine of Hippo | Year: 1900 | Language: English\n5. Title: 莊子旁注 (Zhuangzi with Commentary), Vol. 1 | Author: 莊周 (Zhuangzi) | Year: 1699 | Language: Chinese\n6. Title: योगसारमञ्जरी | Author: वासुदेवभट्ट | Year: 1550 | Language: Sanskrit\n7. Title: 養生玄珠集 | Author: 周懷素 | Year: 1592 | Language: Chinese\n8. Title: De Umbris Idearum | Author: Giordano Bruno | Year: 1582 | Language: Latin\n9. Title: رسالة في أسرار المعادن الخفية | Author: أبو الفضل بن يحيى الحرّاني | Year: 1240 | Language: Arabic\n10. Title: De Occulta Philosophia Libri Tres (1533) | Author: Heinrich Cornelius Agrippa | Year: 1533 | Language: Latin\n11. Title: Tractatus de harmonia mundi interiori | Author: Fridericus Ottonius Brennerus | Year: 1661 | Language: Latin\n12. Title: Ars Magna Generalis | Author: Ramon Llull; ed. Bernardus la Vinheta | Year: 1517 | Language: Latin\n13. Title: Utriusque cosmi majoris scilicet et minoris metaphysica, physica atque technica historia | Author: Robert Fludd | Year: 1617 | Language: Latin\n14. Title: Oedipus Aegyptiacus Vol. II | Author: Athanasius Kircher | Year: 1653 | Language: Latin\n15. Title: Gründliche Erklärung der Smaragdinen Tafel | Author: Heinrich Volckmar Krause | Year: 1698 | Language: German\n16. Title: Novum organum scientiarum | Author: Bacon, Francis | Year: 1660 | Language: Latin\n17. Title: De Humani Corporis Fabrica (1543 First Edition) | Author: Andreas Vesalius | Year: 1543 | Language: Latin\n18. Title: Trattato della pietra filosofale e delle sue virtù | Author: Giovan Battista Merlotti | Year: 1588 | Language: Italian\n19. Title: སྨན་དཔྱད་གསེར་གྱི་ཕྲེང་བ | Author: ཀུན་དགའ་རིན་ཆེན | Year: 1650 | Language: Tibetan\n20. Title: Ovid, Metamorphoses (Aldine Press) | Author: Ovid | Year: 1502 | Language: Latin\n21. Title: Traité de la lumière cachée des métaux | Author: Pierre de Vaucelles | Year: 1636 | Language: French\n\nReturn ONLY a JSON array with one object per book, in order: [{\"i\":1,\"knows_of\":\"...\",\"self_familiar\":\"...\",\"opening\":\"...\"}, ...]"
 }

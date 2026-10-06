@@ -199,6 +199,22 @@ const POSITIVES = [
   ['Cicero De officiis', /officiis/i, /cicero/i], ['Aristotle Ethics', /ethic/i, /aristot/i], ['Marcus Aurelius', /meditation|ad se ipsum|τὰ εἰς ἑαυτόν/i, /aurel|antonin/i],
   ['Copernicus De revolutionibus', /revolutionibus/i, /copernic/i], ['Newton Principia', /principia/i, /newton/i], ['Corpus Hermeticum / Pimander', /pimander|poemander|hermes trismegist|mercurii trismegisti/i, null],
 ];
+// Known-but-not-canonical works we hold (added after the first flash-lite pass showed the
+// canonical tier is too easy): a model that knows these must not call them new. Their
+// false-"new" rate is the error that matters for a "new to AI" claim.
+const KNOWN = [
+  ['Agrippa De occulta philosophia', /^De occulta philosophia libri/i, /agripp/i], ['Kircher Oedipus Aegyptiacus', /^Oedipus Aegyptiacus/i, null],
+  ['Maier Atalanta fugiens', /^Atalanta fugiens: Emblemata/i, null], ['Fludd Utriusque cosmi', /^Utriusque cosmi majoris/i, null],
+  ['Dee Monas hieroglyphica', /^Monas hieroglyphica/i, null], ['Kepler Harmonices mundi', /^Harmonices mundi/i, null],
+  ['Della Porta Magia naturalis', /^Magia naturalis/i, null], ['Khunrath Amphitheatrum', /^Amphitheatrum sapientiae/i, null],
+  ['Ficino De vita', /^De vita libri tres/i, null], ['Bruno De umbris idearum', /^De Umbris Idearum/i, null],
+  ['Vesalius Fabrica', /^De Humani Corporis Fabrica/i, null], ['Galileo Sidereus nuncius', /^Sidereus Nuncius/i, null],
+  ['Comenius Orbis pictus', /^Orbis Sensualium Pictus/i, null], ['Andreae Chymische Hochzeit', /^Chymische Hochzeit/i, null],
+  ['Reuchlin De arte cabalistica', /^De Arte Cabalistica/i, null], ['Pico Conclusiones', /^Conclusiones sive Theses/i, null],
+  ['Bacon Novum organum', /^Novum organum/i, null], ['Zohar', /^Sefer ha-Zohar/i, null], ['Mencius', /^孟子 \(Mencius\)/, null],
+  ['Zhuangzi', /^莊子旁注/, null], ['Avicenna Canon', /^Canon Medicinae/i, null], ['Lull Ars magna', /^Ars Magna Generalis/i, null],
+  ['Bencao gangmu', /^本草綱目·卷上之中/, null],
+];
 // Invented decoys: plausible titles, authors and years, in the corpus's languages. None is a real
 // book (checked by the author of this list against memory; a decoy a model "knows" is a finding).
 const DECOYS = [
@@ -228,7 +244,7 @@ async function stageControls() {
   const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
   const pages = c.db('bookstore').collection('pages');
   const out = []; const used = new Set();
-  for (const [label, tre, are] of POSITIVES) {
+  for (const [label, tre, are, kind] of [...POSITIVES, ...KNOWN.map((k) => [...k, 'known'])]) {
     const cands = books.filter((b) => !used.has(b.id) && tre.test(b.title) && (!are || are.test(b.author) || are.test(b.title))).sort((a, b) => (b.visible - a.visible) || String(a.id).localeCompare(String(b.id)));
     let hit = null;
     for (const b of cands.slice(0, 8)) {
@@ -237,12 +253,12 @@ async function stageControls() {
       if (normQuote(text).length >= 300) { hit = b; fs.writeFileSync(path.join(PRIVATE, 'texts', `${b.id}.txt`), text.slice(0, 60000)); break; }
     }
     if (!hit) { console.log('positive not held with text:', label, cands.length); continue; }
-    used.add(hit.id); out.push({ ...pick(hit), control: 'positive', label, lang: langOf(hit) });
+    used.add(hit.id); out.push({ ...pick(hit), control: kind || 'positive', label, lang: langOf(hit) });
   }
   DECOYS.forEach(([title, author, year, language], i) => out.push({ id: `decoy-${String(i + 1).padStart(2, '0')}`, title, author, year, language, lang: language, control: 'decoy', disposition: null, n_tr: 0, ia: false }));
   await c.close();
   writeJsonl(path.join(OUT, 'controls.jsonl'), out);
-  console.log('positives', out.filter((x) => x.control === 'positive').length, 'decoys', out.filter((x) => x.control === 'decoy').length);
+  console.log('positives', out.filter((x) => x.control === 'positive').length, 'known', out.filter((x) => x.control === 'known').length, 'decoys', out.filter((x) => x.control === 'decoy').length);
 }
 
 // ---------- probe ----------
@@ -272,7 +288,7 @@ Return ONLY a JSON array with one object per book, in order: [{"i":1,"knows_of":
 function stagePackets() {
   const set = args.set;
   const controls = readJsonl(path.join(OUT, 'controls.jsonl'));
-  const decoys = controls.filter((x) => x.control === 'decoy'); const positives = controls.filter((x) => x.control === 'positive');
+  const decoys = controls.filter((x) => x.control === 'decoy'); const positives = controls.filter((x) => x.control === 'positive'); const known = controls.filter((x) => x.control === 'known');
   let real;
   if (set === 'controls') real = [];
   else {
@@ -283,7 +299,7 @@ function stagePackets() {
   const order = real.map((b) => ({ b, r: rng() })).sort((x, y) => x.r - y.r).map((o) => o.b);
   const packets = [];
   if (set === 'controls') {
-    const all = [...positives, ...decoys].map((b) => ({ b, r: rng() })).sort((x, y) => x.r - y.r).map((o) => o.b);
+    const all = [...positives, ...known, ...decoys].map((b) => ({ b, r: rng() })).sort((x, y) => x.r - y.r).map((o) => o.b);
     for (let i = 0; i < all.length; i += 21) packets.push(all.slice(i, i + 21));
   } else {
     const nP = Math.ceil(order.length / PACKET_REAL);
@@ -387,15 +403,20 @@ function normQuote(s) {
 }
 const isHan = (s) => /[㐀-鿿豈-﫿]/.test(s);
 function grams(s, n) { const g = new Set(); for (let i = 0; i + n <= s.length; i++) g.add(s.slice(i, i + n)); return g; }
-// Containment: share of the quote's n-grams found in our text. Han text needs a shorter n.
-function containment(quote, text) {
+// Coverage: share of the quote's characters covered by runs of >= L characters that occur
+// verbatim (after normalisation) in our text. Runs survive scattered OCR errors; a 5-gram
+// share did not — generic English sentences scored 0.6–0.75 against unrelated books.
+const gramCache = new Map();
+function containment(quote, text, key) {
   const q = normQuote(quote); const t = normQuote(text);
-  const han = isHan(q); const n = han ? 2 : 5; const minLen = han ? 8 : 20;
+  const han = isHan(q); const L = han ? 4 : 12; const minLen = han ? 8 : 20;
   if (q.length < minLen) return { judgeable: false, why: 'quote too short' };
   if (t.length < 300) return { judgeable: false, why: 'our text too short' };
-  const qg = [...grams(q, n)]; const tg = grams(t, n);
-  const hit = qg.filter((g) => tg.has(g)).length;
-  return { judgeable: true, score: +(hit / qg.length).toFixed(3), qlen: q.length };
+  const ck = `${key}|${L}`;
+  if (!gramCache.has(ck)) gramCache.set(ck, grams(t, L));
+  const tg = gramCache.get(ck); const cov = new Uint8Array(q.length);
+  for (let i = 0; i + L <= q.length; i++) if (tg.has(q.slice(i, i + L))) cov.fill(1, i, i + L);
+  return { judgeable: true, score: +(cov.reduce((s, x) => s + x, 0) / q.length).toFixed(3), qlen: q.length };
 }
 const textCache = new Map();
 function textOf(id) {
@@ -426,10 +447,12 @@ function stageVerify() {
   const out = []; const nullScores = [];
   for (const a of ans) {
     const b = meta.get(a.id); if (!b) continue;
-    const own = b.control === 'decoy' ? { judgeable: false, why: 'decoy (no text exists)' } : containment(a.opening, textOf(a.id));
-    const pool = (byLang.get(b.lang) || []).filter((x) => x !== a.id);
+    const own = b.control === 'decoy' ? { judgeable: false, why: 'decoy (no text exists)' } : containment(a.opening, textOf(a.id), a.id);
+    // Null partner: same language, different author AND different work (a second edition is a true match).
+    const ak = authorKey(b); const wk = b.work_key || workKey(b);
+    const pool = (byLang.get(b.lang) || []).filter((x) => x !== a.id && (!ak || authorKey(meta.get(x)) !== ak) && (meta.get(x).work_key || workKey(meta.get(x))) !== wk && fold(meta.get(x).title).slice(0, 25) !== fold(b.title).slice(0, 25));
     let nul = null;
-    if (pool.length) { const other = pool[Math.floor(rng() * pool.length)]; nul = containment(a.opening, textOf(other)); if (nul.judgeable) nullScores.push(nul.score); }
+    if (pool.length) { const other = pool[Math.floor(rng() * pool.length)]; nul = containment(a.opening, textOf(other), other); if (nul.judgeable) nullScores.push(nul.score); }
     out.push({ id: a.id, set: a.set, model: a.model, ...own, null_score: nul?.judgeable ? nul.score : null });
   }
   nullScores.sort((x, y) => x - y);
@@ -544,7 +567,7 @@ function stageReport() {
         p_gt75: rs.filter((a) => fuse(kind === 'decoy' ? { ...ctlMeta.get(a.id) } : ctlMeta.get(a.id), new Map([[m, a]]), [m], verifyMap).p > 0.75).length,
         p_lt25: rs.filter((a) => fuse(ctlMeta.get(a.id), new Map([[m, a]]), [m], verifyMap).p < 0.25).length };
     };
-    rep.controls[m] = { positive_standalone: cell('positive', 'controls'), decoy_standalone: cell('decoy', 'controls'), positive_in_packets: cell('positive', 'packets'), decoy_in_packets: cell('decoy', 'packets') };
+    rep.controls[m] = { positive_standalone: cell('positive', 'controls'), known_standalone: cell('known', 'controls'), decoy_standalone: cell('decoy', 'controls'), positive_in_packets: cell('positive', 'packets'), decoy_in_packets: cell('decoy', 'packets') };
   }
 
   // Sample posteriors, per arm combination.
