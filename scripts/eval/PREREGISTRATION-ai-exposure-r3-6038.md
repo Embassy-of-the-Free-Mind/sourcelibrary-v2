@@ -255,3 +255,12 @@ Written after fetching the positive-control web texts and before any count query
 3. Wikimedia requests carry a descriptive User-Agent; Agrippa (Esoteric Archives URL dead) and Zohar (Sefaria
    complex ref) are replaced from the list as allowed above, by Euclid's Elements (Perseus) and Lucretius
    (Gutenberg).
+
+## Amendment 2 — rate limit (2026-10-06, 23:15 UTC)
+
+The first query pass (8 requests in flight) was answered `403 ForbiddenException` by both APIs' AWS gateway after
+19 P-web passages, so a rate limit exists that the docs do not state. To finish in hours rather than a day, the
+count grid uses **4 of the 7 CC snapshots, evenly spaced: `v2_cc-2025-05`, `-13`, `-21`, `-30`** (plus DCLM, Pile and
+the three infini-gram indexes); the client throttles per host and backs off 90 s on any 403. The other three
+snapshots are used only to retrieve documents in the provenance step. The 19 partial rows were seen (P-web, before
+any OCR passage was queried) and are re-queried in full. Everything else is unchanged.

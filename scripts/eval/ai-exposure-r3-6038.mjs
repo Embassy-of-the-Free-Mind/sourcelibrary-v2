@@ -386,14 +386,25 @@ async function stageAControls() {
 }
 
 // ---------- stage: a-query ----------
-export const MINI = ['v2_cc-2025-05', 'v2_cc-2025-08', 'v2_cc-2025-13', 'v2_cc-2025-18', 'v2_cc-2025-21', 'v2_cc-2025-26', 'v2_cc-2025-30', 'v2_dclm_all', 'v2_piletrain'];
+// amendment 2: 4 of the 7 CC snapshots (rate limit); the other three stay listed for the provenance step only
+export const MINI = ['v2_cc-2025-05', 'v2_cc-2025-13', 'v2_cc-2025-21', 'v2_cc-2025-30', 'v2_dclm_all', 'v2_piletrain'];
+export const MINI_ALL = [...MINI, 'v2_cc-2025-08', 'v2_cc-2025-18', 'v2_cc-2025-26'];
 export const IG = ['v4_dolma-v1_7_llama', 'v4_olmo-mix-1124_llama', 'v4_rpj_llama_s4'];
+// Both APIs sit behind AWS API Gateway and answer 403 ForbiddenException when a client is too fast
+// (observed 2026-10-06 at ~8 requests in flight; lifted after ~1 min). Adaptive per-host token bucket:
+// on 403, pause the host 90 s and cut its rate by 30%; after 300 clean calls, raise it by 10%.
+const HOSTS = { mini: { url: 'https://api.infini-gram-mini.io/', rate: Number(args.rate || 2), next: 0, pauseUntil: 0, ok: 0, blocks: 0 }, ig: { url: 'https://api.infini-gram.io/', rate: Number(args.rate || 2), next: 0, pauseUntil: 0, ok: 0, blocks: 0 } };
+async function takeToken(h) {
+  for (;;) { const now = Date.now(); const at = Math.max(h.next, h.pauseUntil, now); if (at <= now) { h.next = now + 1000 / h.rate; return; } h.next = Math.max(h.next, h.pauseUntil); await sleep(at - now); }
+}
 async function countQ(index, query) {
-  const url = MINI.includes(index) ? 'https://api.infini-gram-mini.io/' : 'https://api.infini-gram.io/';
-  for (let t = 0; t < 3; t++) {
+  const h = MINI_ALL.includes(index) ? HOSTS.mini : HOSTS.ig;
+  for (let t = 0; t < 6; t++) {
+    await takeToken(h);
     try {
-      const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json', 'User-Agent': UA }, body: JSON.stringify({ index, query_type: 'count', query }), signal: AbortSignal.timeout(90000) });
-      if (r.ok) { const j = await r.json(); if (typeof j.count === 'number') return j.count; }
+      const r = await fetch(h.url, { method: 'POST', headers: { 'Content-Type': 'application/json', 'User-Agent': UA }, body: JSON.stringify({ index, query_type: 'count', query }), signal: AbortSignal.timeout(90000) });
+      if (r.status === 403 || r.status === 429) { h.blocks++; h.pauseUntil = Date.now() + 90000; h.rate = Math.max(0.3, h.rate * 0.7); console.log(`[${h === HOSTS.mini ? 'mini' : 'ig'}] ${r.status}: pause 90 s, rate → ${h.rate.toFixed(2)}/s`); continue; }
+      if (r.ok) { const j = await r.json(); if (typeof j.count === 'number') { if (++h.ok % 300 === 0) h.rate = Math.min(6, h.rate * 1.1); return j.count; } }
     } catch { /* retry */ }
     await sleep(1500 * (t + 1));
   }
@@ -420,7 +431,7 @@ async function stageAQuery() {
     while (i < todo.length) {
       const q = todo[i++]; const counts = { ...(q.prev?.counts || {}) };
       // infini-gram v4 indexes are fast; mini indexes ~0.75 s each, issued in sequence per passage
-      for (const ix of q.need) counts[ix] = await countQ(ix, q.text);
+      await Promise.all([q.need.filter((ix) => MINI_ALL.includes(ix)), q.need.filter((ix) => !MINI_ALL.includes(ix))].map(async (ixs) => { for (const ix of ixs) counts[ix] = await countQ(ix, q.text); }));
       appendJsonl(fcount, { h: q.h, set: q.set, counts });
       if (++doneN % 100 === 0) console.log(`${doneN}/${todo.length} ${((Date.now() - t0) / 1000).toFixed(0)}s`);
     }
@@ -454,13 +465,11 @@ async function stageAProv() {
   }
 }
 
-// ---------- dispatch (layer B, C and report stages are appended below) ----------
+// ---------- dispatch (layers B, C and the report: ai-exposure-r3-6038-bc.mjs) ----------
 export const STAGES = { inputs: stageInputs, 'a-passages': stageAPassages, 'a-controls': stageAControls, 'a-query': stageAQuery, 'a-prov': stageAProv };
 export const ctx = { args, OUT, PRIVATE, mongo, fetchText, wikiText, htmlToText, loadR2, loadWorks, allQueries, UA };
 const isMain = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(new URL(import.meta.url).pathname);
 if (isMain) {
-  const more = await import('./ai-exposure-r3-6038-bc.mjs').catch((e) => { if (!/Cannot find module|ERR_MODULE_NOT_FOUND/.test(String(e))) throw e; return null; });
-  if (more) Object.assign(STAGES, more.STAGES);
-  if (!STAGES[stage]) { console.error('--stage=' + Object.keys(STAGES).join('|')); process.exit(1); }
+  if (!STAGES[stage]) { console.error('--stage=' + Object.keys(STAGES).join('|') + '  (layers B, C and report: scripts/eval/ai-exposure-r3-6038-bc.mjs)'); process.exit(1); }
   await STAGES[stage]();
 }
