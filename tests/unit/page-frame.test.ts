@@ -153,3 +153,13 @@ describe('detectPageFrame refuses a spine', () => {
       .toEqual({ kind: 'skip', reason: 'not-a-page' });
   });
 });
+
+describe('detectPageFrame refuses printing mistaken for bed', () => {
+  it('shows a page whole when a text column sits just past the cut', () => {
+    // Bed on the left, then a dense text column (ink rows alternating with paper):
+    // its column means read as bed. Wave 1b cut a whole Latin column this way.
+    // Downsampled letters: strokes of ink three pixels wide with paper between.
+    const v = detectPageFrame(img(100, 140, x => (x < 4 ? 20 : x < 22 && x % 4 !== 3 ? 30 : undefined)), 100, 140);
+    expect(v.kind).not.toBe('frame');
+  });
+});
