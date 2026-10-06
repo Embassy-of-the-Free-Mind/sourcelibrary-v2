@@ -79,6 +79,10 @@ export default function BookMap({ locations }: BookMapProps) {
   const mapRef = useRef<L.Map | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const markersRef = useRef<L.LayerGroup | null>(null);
+  // One canvas for all pins. It belongs to ONE map instance: reset it whenever
+  // that map is torn down (React dev mode mounts twice), or pins draw onto a
+  // canvas attached to a removed map and the map shows none.
+  const rendererRef = useRef<L.Canvas | null>(null);
 
   const [selected, setSelected] = useState<SelectedCity | null>(null);
   const [cityBooks, setCityBooks] = useState<CityBook[]>([]);
@@ -168,7 +172,7 @@ export default function BookMap({ locations }: BookMapProps) {
     }).addTo(map);
     mapRef.current = map;
     markersRef.current = L.layerGroup().addTo(map);
-    return () => { map.remove(); mapRef.current = null; markersRef.current = null; };
+    return () => { map.remove(); mapRef.current = null; markersRef.current = null; rendererRef.current = null; };
   }, []);
 
   const handleSelect = useCallback((city: SelectedCity) => setSelected(city), []);
@@ -201,7 +205,6 @@ export default function BookMap({ locations }: BookMapProps) {
   // Render city pins — drawn on ONE shared canvas, not ~3,000 DOM nodes. With
   // DOM markers every pan/zoom moved thousands of elements; canvas circles keep
   // tooltips and clicks (Leaflet hit-tests the canvas) at a fraction of the cost.
-  const rendererRef = useRef<L.Canvas | null>(null);
   useEffect(() => {
     const map = mapRef.current;
     const layerGroup = markersRef.current;
