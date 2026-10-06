@@ -54,7 +54,6 @@
     "src/app/api/books/restore/[id]/route.ts": "restore: re-inserts an archived book from deleted_books",
     "src/app/api/books/roadmap/route.ts": "fix-me: #6032 (auth + gate; hold-list)",
     "src/app/api/books/route.ts": "fix-me: #6032 (auth + gate; hold-list)",
-    "src/app/api/scan/create/route.ts": "fix-me: #6032 (auth + gate; hold-list)",
-    "src/lib/import-utils.ts": "fix-me: gated by PR #6033; remove this line once it merges"
+    "src/app/api/scan/create/route.ts": "fix-me: #6032 (auth + gate; hold-list)"
   }
 }
