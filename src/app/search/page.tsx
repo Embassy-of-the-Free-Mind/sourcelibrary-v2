@@ -1066,7 +1066,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
           </div>
 
           {/* Mode tabs */}
-          <div className="mt-3 flex gap-1 border-b border-border-light -mx-4 px-4">
+          <div className="mt-3 flex gap-1 border-b border-border-light -mx-4 px-4 overflow-x-auto">
             {(isBrowseMode
               ? [
                 { mode: defaultMode, label: t.tabBooks, icon: Book },
