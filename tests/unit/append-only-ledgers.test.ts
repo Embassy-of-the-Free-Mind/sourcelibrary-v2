@@ -140,7 +140,7 @@ describe('append-only-ledgers detector', () => {
     expect(res.some((re) => re.test('foo.md'))).toBe(false);
   });
 
-  it('the two generated ledgers are the ones main regenerates', () => {
-    expect(Object.keys(REGENERATED_ON_MAIN).sort()).toEqual(['scripts/eval/EXPERIMENTS.md', 'scripts/eval/INDEX.md']);
+  it('the generated ledgers are the ones main regenerates', () => {
+    expect(Object.keys(REGENERATED_ON_MAIN).sort()).toEqual(['scripts/eval/EXPERIMENTS.md', 'scripts/eval/INDEX.md', 'scripts/eval/experiments/index.json']);
   });
 });

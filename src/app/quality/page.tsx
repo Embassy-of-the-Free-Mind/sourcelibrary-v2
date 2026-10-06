@@ -69,6 +69,13 @@ const running = allIssues.filter(i => i.status === 'running');
 const planned = allIssues.filter(i => i.status === 'planned');
 
 const experiments = listExperiments();
+const STATUS_LABEL = {
+  adopted: 'in use',
+  rejected: 'not adopted',
+  undecided: 'decision pending',
+  informational: 'measurement',
+  superseded: 'replaced',
+} as const;
 const SHOWN = 12;
 
 const canon = latestCanonStatus();
@@ -341,6 +348,7 @@ export default function QualityCenterPage() {
                 <div className="flex flex-wrap items-baseline gap-x-3">
                   <span className="text-xs text-muted tabular-nums whitespace-nowrap">{e.date}</span>
                   <a href={e.href} className="text-primary font-semibold hover:text-accent-rust">{e.question}</a>
+                  {e.status && <span className="text-xs text-muted whitespace-nowrap">{STATUS_LABEL[e.status]}</span>}
                 </div>
                 {e.headline && <p className="text-secondary text-[0.95rem] leading-relaxed mt-1">{e.headline}</p>}
                 {e.issues.length > 0 && (
@@ -366,7 +374,8 @@ export default function QualityCenterPage() {
           )}
           <Source>
             Read from <A href={`${GH}tree/main/scripts/eval/experiments`}>scripts/eval/experiments/</A>, one file per
-            experiment. The line under a title is the write-up&rsquo;s own answer, where it states one in a sentence.
+            experiment. The line under a title is the write-up&rsquo;s own one-line verdict. A write-up that a later run
+            replaced is left off this list and kept in the log.
           </Source>
         </Section>
 

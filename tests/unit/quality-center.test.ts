@@ -1,7 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
-import { parseExperiment, listExperiments, latestCanonStatus, typedPages } from '@/lib/quality-center';
+import { listExperiments, latestCanonStatus, typedPages } from '@/lib/quality-center';
+import { EXPERIMENTS, experiment, type ExperimentRecord } from '@/lib/experiments-index';
 import { FOOTER_NAV_COLUMNS, visibleFooterNavColumns } from '@/lib/footer-nav';
 import { FOOTER_STRINGS } from '@/lib/i18n';
 // @ts-expect-error -- plain ESM script, no types
@@ -15,39 +16,30 @@ import { classify, synthesize } from '../../scripts/analytics/quality-feedback-t
  * privacy of their output, and the footer door.
  */
 
-describe('experiment write-ups', () => {
-  it('takes date, question, issues and an Answer line', () => {
-    const e = parseExperiment(
-      '2026-10-05-engine-contest-5870.md',
-      '<!-- PRIOR ART: x -->\n## 2026-10-05 · Can an open engine replace the re-read? (#5870)\n\n- **Answer.** No script moves off Flash for any of the three groups tested. The rest follows.\n',
-    )!;
-    expect(e.date).toBe('2026-10-05');
-    expect(e.question).toBe('Can an open engine replace the re-read?');
-    expect(e.issues).toEqual([5870]);
-    expect(e.headline).toBe('No script moves off Flash for any of the three groups tested.');
-    expect(e.href).toMatch(/scripts\/eval\/experiments\/2026-10-05-engine-contest-5870\.md$/);
+describe('experiment write-ups (from the #5939 index)', () => {
+  const rec = (file: string, status: ExperimentRecord['status'], verdict: string | null = 'v.'): ExperimentRecord => ({
+    file, date: file.slice(0, 10), question: 'Q?', href: `x/${file}`, stage: 'ocr', measure: ['accuracy'], languages: [], scripts: [],
+    canons: [], n_books: 1, n_pages: 1, verdict, status, decision: null, superseded_by: status === 'superseded' ? 'b.md' : null, issues: [1],
   });
 
-  it('shows no headline rather than a fragment', () => {
-    const table = parseExperiment('2026-10-04-x.md', '## 2026-10-04 · Q?\n\n**Result.**\n\n| a | b |\n');
-    expect(table!.headline).toBeNull();
-    const cut = parseExperiment('2026-10-04-y.md', '## 2026-10-04 · Q?\n\n**Answer.** the parse fails on 22 of 120 blocks and 13 of\n');
-    expect(cut!.headline).toBeNull();
+  it('shows the header verdict and status, and leaves superseded write-ups out', () => {
+    const list = listExperiments([rec('2026-10-05-b.md', 'adopted', 'Flash wins.'), rec('2026-10-04-a.md', 'superseded'), rec('2026-10-03-c.md', null, null)]);
+    expect(list.map(e => e.file)).toEqual(['2026-10-05-b.md', '2026-10-03-c.md']);
+    expect(list[0].headline).toBe('Flash wins.');
+    expect(list[0].status).toBe('adopted');
+    expect(list[1].headline).toBeNull();
   });
 
-  it('ignores files that are not dated entries', () => {
-    expect(parseExperiment('README.md', '# x')).toBeNull();
-    expect(parseExperiment('_series-audit.md', '# x')).toBeNull();
-  });
-
-  it('reads every dated file in the real directory, newest first', () => {
+  it('the committed index lists every dated file in the directory, newest first', () => {
     const dir = path.join(process.cwd(), 'scripts/eval/experiments');
-    const dated = fs.readdirSync(dir).filter(f => /^\d{4}-\d{2}-\d{2}-.+\.md$/.test(f));
-    const list = listExperiments(dir);
-    expect(list.length).toBe(dated.length);
-    expect(list.every(e => e.question.length > 0)).toBe(true);
-    const dates = list.map(e => e.date);
-    expect([...dates].sort().reverse()).toEqual(dates);
+    const dated = fs.readdirSync(dir).filter(f => /^\d{4}-\d{2}-\d{2}-.+\.md$/.test(f)).sort().reverse();
+    expect(EXPERIMENTS.map(e => e.file)).toEqual(dated);
+    expect(EXPERIMENTS.every(e => e.question.length > 0)).toBe(true);
+    expect(listExperiments().some(e => e.status === 'superseded')).toBe(false);
+  });
+
+  it('a cited write-up missing from the index fails loudly', () => {
+    expect(() => experiment('2099-01-01-no-such-file.md')).toThrow(/not in scripts\/eval\/experiments\/index.json/);
   });
 });
 
