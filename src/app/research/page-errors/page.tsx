@@ -277,7 +277,7 @@ export default function PageErrorsPaper() {
           title="What goes wrong on a page"
           subtitle="How AI transcription and translation of historical books fail, class by class, with real pages"
         >
-          <p className="text-stone-400 text-sm mt-4">Working draft &middot; 2 October 2026 &middot; companion to <Link href="/research/quality" className="underline hover:text-stone-200">How page quality is measured</Link></p>
+          <p className="text-stone-400 text-sm mt-4">Working draft &middot; 2 October 2026 &middot; companion to <Link href="/research/quality" className="underline hover:text-stone-200">How page quality is measured</Link> &middot; <Link href="/research/quality/open" className="underline hover:text-stone-200">Open quality work</Link></p>
         </ContentHeader>
       }
       bg="bg-cream"

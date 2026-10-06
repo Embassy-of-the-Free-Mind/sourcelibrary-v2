@@ -1274,7 +1274,7 @@ export default function ResearchQualityPage() {
 
         {/* ── Key findings and contents ── */}
         <section aria-label="Key findings" className="mb-8">
-          <div className="flex flex-wrap items-baseline justify-between gap-2 mb-3"><h2 className="text-xs uppercase tracking-[0.16em] text-muted font-semibold">Key findings</h2><Link href="/research/quality/summary" className="text-sm text-accent-rust hover:underline">One-page summary, for printing</Link></div>
+          <div className="flex flex-wrap items-baseline justify-between gap-2 mb-3"><h2 className="text-xs uppercase tracking-[0.16em] text-muted font-semibold">Key findings</h2><span className="flex flex-wrap gap-x-4 gap-y-1"><Link href="/research/quality/open" className="text-sm text-accent-rust hover:underline">Open quality work</Link><Link href="/research/quality/summary" className="text-sm text-accent-rust hover:underline">One-page summary, for printing</Link></span></div>
           <KeyFindings />
         </section>
         <Contents />
