@@ -411,7 +411,7 @@ function grams(s, n) { const g = new Set(); for (let i = 0; i + n <= s.length; i
 // verbatim (after normalisation) in our text. Runs survive scattered OCR errors; a 5-gram
 // share did not — generic English sentences scored 0.6–0.75 against unrelated books.
 const gramCache = new Map();
-function containment(quote, text, key) {
+export function containment(quote, text, key) {
   const q = normQuote(quote); const t = normQuote(text);
   const han = isHan(q); const L = han ? 4 : 12; const minLen = han ? 8 : 20;
   if (q.length < minLen) return { judgeable: false, why: 'quote too short' };
@@ -423,7 +423,7 @@ function containment(quote, text, key) {
   return { judgeable: true, score: +(cov.reduce((s, x) => s + x, 0) / q.length).toFixed(3), qlen: q.length };
 }
 const textCache = new Map();
-function textOf(id) {
+export function textOf(id) {
   if (!textCache.has(id)) { const f = path.join(PRIVATE, 'texts', `${id}.txt`); textCache.set(id, fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : ''); }
   return textCache.get(id);
 }
