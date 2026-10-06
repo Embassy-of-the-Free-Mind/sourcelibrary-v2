@@ -21,6 +21,10 @@
  *   b_original  <note>original: "…"</note> whose quote is `absent` from the OCR of the page AND of
  *               both neighbouring pages (verifyQuote), on Latin-script pages where not one word of
  *               it is found (strictlyAbsent): the clause is dropped, the rest of the note kept
+ *   d_termdef   (#5901) a model definition stored inside the chip, `<term>X: definition</term>`
+ *               → `<term>X</term> <note>definition</note>`. The rule is the reader's
+ *               (scripts/lib/term-definitions.mjs, shape 1 only); a chip inside another annotation
+ *               span is left. Its own run: source `cleanup-termdef-5901`, never mixed with the others
  *
  * NOT touched: `[Blank page — no translatable content]` (the pipeline's own marker — page-counts
  * and the translate worker read it; an empty translation would be picked up for retranslation),
@@ -29,17 +33,17 @@
  * `<header>`/`<page-num>` echoes, `translations.<iso>` editions, human-edited pages.
  *
  * Writes: `translation.data` (+ its content_hash) and one `page_revisions` row per page holding
- * the text it replaced, source `cleanup-a2-5700` — the undo key. `translation.updated_at` is NOT
+ * the text it replaced, source `cleanup-a2-5700` (`cleanup-termdef-5901` for d_termdef) — the undo key. `translation.updated_at` is NOT
  * moved, so the translate worker, embed-gemini and the pages-content sync cron do not react; the
  * Supabase `pages` mirror is refreshed by `--resync` instead (and the search snippet column by
  * `--resync --snippets`, a separate decision: see resync()).
  *
- *   node --env-file=.env.production.local scripts/maintenance/translation-cleanup-a2-5700.mjs --scan   [--dir D] [--conc 4] [--shard i/n]
+ *   node --env-file=.env.production.local scripts/maintenance/translation-cleanup-a2-5700.mjs --scan   [--dir D] [--conc 4] [--shard i/n] [--classes d_termdef]
  *   node … --summary                                                         # counts per class from the scan
  *   npx tsx … --review --classes a_initial,… [--n 40] [--seed 5700]         # reader-rendered before/after
  *   node … --apply --classes a_initial,c_tags [--limit-per-class 1000] [--conc 4]
  *   node … --resync [--snippets]                                             # Supabase `pages` mirror; --snippets = page_translations (slow)
- *   node … --undo [--ids FILE|id,id]                                         # restore the text each page held before
+ *   node … --undo [--ids FILE|id,id] [--classes d_termdef]                   # restore the text each page held before
  * Every mode is resumable: --scan by book, --apply and --resync by page id (files under --dir).
  */
 import fs from 'node:fs';
@@ -48,15 +52,26 @@ import { classifyNote } from '../eval/lib/quality-census-detectors.mjs';
 import { parseTranslationTerms, hasNonLatinLetter } from '../lib/page-terms-parse.mjs';
 import { sanitizeTranslationTags, TRANSLATION_TAG_VOCABULARY } from '../lib/translate-core.mjs';
 import { stripEditorialWrappers } from '../lib/strip-editorial-wrappers.mjs';
+import { splitInlineTermDefinitions } from '../lib/term-definitions.mjs';
 
 export const SOURCE = 'cleanup-a2-5700';
-export const CLASSES = ['a_initial', 'a_scan', 'c_tags', 'c_visible', 'b_original'];
+export const TERMDEF_SOURCE = 'cleanup-termdef-5901';
+export const CLASSES = ['a_initial', 'a_scan', 'c_tags', 'c_visible', 'b_original', 'd_termdef'];
+/** The classes a run with no --classes means: the #5700 set. d_termdef is always asked for by name. */
+export const A2_CLASSES = CLASSES.filter((c) => c !== 'd_termdef');
+/** Which revision label, issue and job a set of classes writes under. d_termdef has its own undo key, so it runs alone. */
+export function runFor(classes) {
+  if (!classes.includes('d_termdef')) return { source: SOURCE, issue: '#5700', jobId: 'a2-cleanup-5700' };
+  if (classes.length !== 1) throw new Error('d_termdef runs alone: its revision rows carry their own source label');
+  return { source: TERMDEF_SOURCE, issue: '#5901', jobId: 'term-defs-5901' };
+}
 const WHAT = {
   a_initial: 'decorative-initial notes moved to <meta>',
   a_scan: 'scan-condition notes moved to <meta>',
   c_tags: 'empty, orphan and prematurely closed tags repaired by deleting tags only',
   c_visible: 'centre markers the reader printed repaired',
   b_original: 'original: clauses whose quote is not on the page dropped',
+  d_termdef: 'model definitions inside <term> moved to a <note> after the term',
 };
 
 // ── (a) notes about the scan, not the text ───────────────────────────────────────────────────
@@ -301,9 +316,22 @@ export function dropAbsentOriginals(text, ocrs) {
   return { text: out, n: dropped.length, dropped };
 }
 
+// ── (d) model definitions stored inside <term> (#5901) ───────────────────────────────────────
+/**
+ * `<term>X: definition</term>` → `<term>X</term> <note>definition</note>`; when X already stands
+ * right before the chip, or the head is the model's own label (`original:`), the note alone. The
+ * rule and its limits are the reader's own (scripts/lib/term-definitions.mjs, #5908) — imported,
+ * not copied — so the stored text becomes what the reader already shows. `<gloss>` is not touched.
+ * No character of the chip is deleted except the colon that joined head and definition (and a head
+ * the sentence already carries).
+ */
+export function termDefinitionsToNotes(text) {
+  return splitInlineTermDefinitions(String(text), { outsideSpans: true });
+}
+
 // ── one page ─────────────────────────────────────────────────────────────────────────────────
 /** Run the named classes over one page's English. Returns the new text and what each class did. */
-export function cleanupPage(text, { classes = CLASSES, ocrs = null } = {}) {
+export function cleanupPage(text, { classes = A2_CLASSES, ocrs = null } = {}) {
   let t = String(text || '');
   const fired = {};
   const skipped = {};
@@ -330,6 +358,13 @@ export function cleanupPage(text, { classes = CLASSES, ocrs = null } = {}) {
     t = r.text;
     if (r.n) fired.b_original = r.dropped;
   }
+  if (classes.includes('d_termdef') && t.includes('<term>')) {
+    const r = termDefinitionsToNotes(t);
+    t = r.text;
+    const { in_span: inSpan, ...did } = r.n;
+    if (Object.values(did).some(Boolean)) fired.d_termdef = Object.fromEntries(Object.entries(did).filter(([, v]) => v));
+    if (inSpan) skipped.d_termdef = 'in-span';
+  }
   return { text: t, fired, skipped };
 }
 
@@ -344,6 +379,7 @@ const SHARD = arg('--shard', '').replace('/', 'of');
 const fp = (k) => path.join(DIR, SHARD && ['cand', 'books', 'progress'].includes(k) ? F[k].replace(/(\.\w+)$/, `.${SHARD}$1`) : F[k]);
 const shardFiles = (k) => fs.readdirSync(DIR).filter((f) => f === F[k] || new RegExp(`^${F[k].replace(/(\.\w+)$/, '')}\\.\\d+of\\d+\\.\\w+$`).test(f)).map((f) => path.join(DIR, f));
 const readLines = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8').split('\n').filter(Boolean) : []);
+const classesArg = (dflt) => { const cs = arg('--classes', dflt.join(',')).split(',').filter(Boolean); const bad = cs.filter((c) => !CLASSES.includes(c)); if (bad.length) throw new Error(`unknown class ${bad.join(',')}; from ${CLASSES.join(',')}`); return cs; };
 const HAS_TR = { 'translation.data': { $type: 'string', $ne: '' } };
 const LIVE = { visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } };
 
@@ -377,8 +413,12 @@ async function ocrWindow(db, bookId, pageNumbers) {
 async function scan() {
   const { isHumanEditedTranslation } = await import('../lib/translation-text-repair.mjs');
   const { client, db } = await connect();
-  const books = (await db.collection('books').find(LIVE, { projection: { _id: 1, id: 1 } }).toArray()).map((b) => b.id || String(b._id)).sort();
-  const done = new Set(readLines(fp('books')));
+  const classes = classesArg(A2_CLASSES);
+  const wantB = classes.includes('b_original');
+  const bookRows = await db.collection('books').find(LIVE, { projection: { _id: 1, id: 1, language: 1 } }).toArray();
+  const langOf = new Map(bookRows.map((b) => [b.id || String(b._id), b.language || '']));
+  const books = [...langOf.keys()].sort();
+  const done = new Set(readLines(fp('books')).map((l) => l.split('\t')[0]));
   const [shard, shards] = arg('--shard', '0/1').split('/').map(Number);
   const todo = books.filter((b, i) => i % shards === shard && !done.has(b));
   const limit = Number(arg('--limit-books', 0));
@@ -392,14 +432,14 @@ async function scan() {
     const rows = await retry(() => db.collection('pages').find({ book_id: bid, page_number: { $gte: 0 }, ...HAS_TR },
       { projection: { _id: 0, id: 1, page_number: 1, 'translation.data': 1, 'translation.source': 1, 'translation.edited_by': 1, 'translation.edited_at': 1 } })
       .hint({ book_id: 1, page_number: 1 }).maxTimeMS(300000).toArray());
-    const needOcr = rows.filter((r) => /<note>\s*original:/i.test(r.translation.data)).map((r) => r.page_number);
+    const needOcr = wantB ? rows.filter((r) => /<note>\s*original:/i.test(r.translation.data)).map((r) => r.page_number) : [];
     const ocrOf = needOcr.length ? await ocrWindow(db, bid, needOcr) : null;
     const lines = [];
     for (const r of rows) {
-      const res = cleanupPage(r.translation.data, { ocrs: ocrOf && needOcr.includes(r.page_number) ? ocrOf(r.page_number) : null });
+      const res = cleanupPage(r.translation.data, { classes, ocrs: ocrOf && needOcr.includes(r.page_number) ? ocrOf(r.page_number) : null });
       const anySkip = Object.keys(res.skipped).length;
       if (res.text === r.translation.data && !anySkip) continue;
-      const rec = { id: r.id, b: bid, p: r.page_number, f: res.fired };
+      const rec = { id: r.id, b: bid, p: r.page_number, f: res.fired, l: langOf.get(bid) };
       if (anySkip) rec.s = res.skipped;
       if (typeof r.id !== 'string' || !r.id) rec.x = 'no_id';
       else if (isHumanEditedTranslation(r.translation)) rec.x = 'human_edited';
@@ -407,7 +447,7 @@ async function scan() {
     }
     pages += rows.length; hits += lines.length;
     if (lines.length) cand.write(lines.join('\n') + '\n');
-    booksDone.write(bid + '\n');
+    booksDone.write(`${bid}\t${rows.length}\t${langOf.get(bid)}\n`);
     if (++n % 200 === 0) {
       fs.writeFileSync(fp('progress'), JSON.stringify({ mode: 'scan', books_done: done.size + n, books: books.length, pages_read: pages, candidates: hits, elapsed_s: Math.round((Date.now() - t0) / 1000), at: new Date().toISOString() }));
       console.error(`${done.size + n}/${books.length} books · ${pages} pages · ${hits} candidates`);
@@ -426,16 +466,21 @@ function loadCandidates() {
 }
 function summarise(books) {
   const cands = loadCandidates();
-  const s = { generated_at: new Date().toISOString(), books_scanned: shardFiles('books').reduce((n, f) => n + readLines(f).length, 0), live_books: books, pages_with_any: 0, by_class: {}, c_visible_ops: {}, skipped: {}, excluded: {}, union: {} };
+  const bookLines = shardFiles('books').flatMap((f) => readLines(f)).map((l) => l.split('\t'));
+  const s = { generated_at: new Date().toISOString(), books_scanned: bookLines.length, live_books: books, pages_read: bookLines.reduce((n, l) => n + (Number(l[1]) || 0), 0), pages_with_any: 0, books_with_any: 0, by_class: {}, c_visible_ops: {}, d_termdef_ops: {}, skipped: {}, excluded: {}, union: {}, by_language: {} };
+  for (const [, n, lang] of bookLines) if (n !== undefined) (s.by_language[lang || '?'] ||= { pages_read: 0, pages_with_any: 0 }).pages_read += Number(n) || 0;
+  const booksHit = new Set();
   for (const c of cands) {
     if (c.x) { s.excluded[c.x] = (s.excluded[c.x] || 0) + 1; continue; }
     const ks = Object.keys(c.f);
-    if (ks.length) s.pages_with_any++;
+    if (ks.length) { s.pages_with_any++; booksHit.add(c.b); if ('l' in c) (s.by_language[c.l || '?'] ||= { pages_read: 0, pages_with_any: 0 }).pages_with_any++; }
+    for (const [op, v] of Object.entries(c.f.d_termdef || {})) s.d_termdef_ops[op] = (s.d_termdef_ops[op] || 0) + v;
     for (const k of ks) (s.by_class[k] ||= { pages: 0, edits: 0 }, s.by_class[k].pages++, s.by_class[k].edits += typeof c.f[k] === 'number' ? c.f[k] : Array.isArray(c.f[k]) ? c.f[k].length : Object.values(c.f[k]).reduce((a, b) => a + b, 0));
     for (const [op, v] of Object.entries(c.f.c_visible || {})) s.c_visible_ops[op] = (s.c_visible_ops[op] || 0) + v;
     for (const [k, why] of Object.entries(c.s || {})) s.skipped[`${k}:${why}`] = (s.skipped[`${k}:${why}`] || 0) + 1;
-    if (ks.some((k) => k !== 'b_original')) s.union.a2 = (s.union.a2 || 0) + 1;
+    if (ks.some((k) => k !== 'b_original' && k !== 'd_termdef')) s.union.a2 = (s.union.a2 || 0) + 1;
   }
+  s.books_with_any = booksHit.size;
   fs.writeFileSync(fp('scan'), JSON.stringify(s, null, 1));
   console.log(JSON.stringify(s, null, 1));
   return s;
@@ -456,8 +501,10 @@ async function review() {
   const ENT = { '&lt;': '<', '&gt;': '>', '&amp;': '&', '&quot;': '"', '&#x27;': "'", '&#39;': "'", '&nbsp;': ' ' };
   const shown = (tr) => renderToStaticMarkup(React.createElement(NotesRenderer, { text: tr, showMetadata: false }))
     .replace(/<\/(?:p|div|h\d|li|tr|blockquote)>|<br\s*\/?>/g, '\n').replace(/<[^>]+>/g, '').replace(/&(?:lt|gt|amp|quot|nbsp|#x27|#39);/g, (m) => ENT[m]).replace(/[ \t]+/g, ' ').replace(/\n\s*\n+/g, '\n').trim();
-  const classes = arg('--classes', CLASSES.join(',')).split(',');
+  const classes = classesArg(A2_CLASSES);
   const N = Number(arg('--n', 40)); const seed = Number(arg('--seed', 5700));
+  // The reader's text pipeline with notes on and with notes off — what d_termdef has to leave right in both.
+  const prepared = (tr, showNotes) => (mod.prepareNotesMarkdown || mod.default.prepareNotesMarkdown)(tr, { showNotes }).processedText.replace(/[ \t]+/g, ' ').trim();
   const cands = loadCandidates().filter((c) => !c.x);
   const { client, db } = await connect();
   for (const cls of classes) {
@@ -472,16 +519,25 @@ async function review() {
       out.push(`\n## ${++k}. https://sourcelibrary.org/book/${c.b}?page=${c.p}  (page ${c.id})  ${JSON.stringify(res.fired)}`);
       out.push(...hunks(before, res.text, 'RAW'));
       out.push(...hunks(shown(before), shown(res.text), 'READER'));
+      if (cls === 'd_termdef') {
+        // Before the cleanup the reader already applied this rule at display time, so both views
+        // should come out the same as before; what differs is where the stored rule and the display
+        // rule disagree. AFTER lines show the changed regions as the reader will prepare them.
+        out.push(...hunks(prepared(before, true), prepared(res.text, true), 'NOTES-ON'));
+        out.push(...hunks(prepared(before, false), prepared(res.text, false), 'NOTES-OFF'));
+        // After the cleanup, notes on (−) against notes off (+): every place a note is hidden.
+        out.push(...hunks(prepared(res.text, true), prepared(res.text, false), 'AFTER on/off', 60));
+      }
       if (cls === 'b_original') for (const q of res.fired.b_original || []) out.push(`  OCR nearest to "${q}": ${nearest(q, ocrs.join('\n'))}`);
     }
-    const f = path.join(DIR, `review-${cls}.md`);
+    const f = path.join(DIR, `review-${cls}${seed === 5700 ? '' : `-seed${seed}`}.md`);
     fs.writeFileSync(f, out.join('\n') + '\n');
     console.log(`${cls}: ${pick.length} pages → ${f}`);
   }
   await client.close();
 }
 /** Changed regions of two texts, line-based, with the differing lines side by side. */
-function hunks(a, b, label) {
+function hunks(a, b, label, max = 16) {
   if (a === b) return [`  ${label}: (identical)`];
   const A = a.split('\n'), B = b.split('\n');
   const out = [];
@@ -495,7 +551,7 @@ function hunks(a, b, label) {
     const [x, y] = trimPair(A.slice(i, i + di).join(' ⏎ '), B.slice(j, j + dj).join(' ⏎ '));
     out.push(`  ${label} −  ${x}`); out.push(`  ${label} +  ${y}`);
     i += di; j += dj;
-    if (out.length > 16) { out.push(`  ${label} … (more)`); break; }
+    if (out.length > max) { out.push(`  ${label} … (more)`); break; }
   }
   return out;
 }
@@ -523,6 +579,7 @@ async function apply() {
   const { repairTranslationText } = await import('../lib/translation-text-repair.mjs');
   const classes = arg('--classes', '').split(',').filter(Boolean);
   if (!classes.length || classes.some((c) => !CLASSES.includes(c))) throw new Error(`--classes required, from ${CLASSES.join(',')}`);
+  const run = runFor(classes);
   const perClass = Number(arg('--limit-per-class', 0));
   const already = new Set(readLines(fp('applied')).map((l) => JSON.parse(l)).filter((r) => r.status !== 'error').map((r) => r.id));
   let cands = loadCandidates().filter((c) => !c.x && classes.some((k) => c.f[k]));
@@ -551,7 +608,7 @@ async function apply() {
         const before = page.translation?.data;
         const res = cleanupPage(before, { classes, ocrs: ocrOf && wantB.includes(page.page_number) ? ocrOf(page.page_number) : null });
         const fired = Object.keys(res.fired);
-        const r = await repairTranslationText(db, page, res.text, { expectBefore: before, source: SOURCE, issue: '#5700', jobId: 'a2-cleanup-5700', apply: true,
+        const r = await repairTranslationText(db, page, res.text, { expectBefore: before, source: run.source, issue: run.issue, jobId: run.jobId, apply: true,
           reason: `deterministic cleanup: ${fired.map((k) => WHAT[k]).join('; ') || 'none'}. No model, no retranslation` });
         rec = { id: page.id, b: bid, p: page.page_number, status: r.status, why: r.why, f: fired };
       } catch (e) { rec = { id: page.id, b: bid, p: page.page_number, status: 'error', why: String(e.message || e).slice(0, 200) }; }
@@ -619,6 +676,7 @@ async function resync() {
  */
 async function undo() {
   const { repairTranslationText } = await import('../lib/translation-text-repair.mjs');
+  const run = runFor(classesArg(A2_CLASSES));
   const idsArg = arg('--ids', null);
   const ids = idsArg ? (fs.existsSync(idsArg) ? readLines(idsArg) : idsArg.split(',')) : [...new Set(readLines(fp('applied')).map((l) => JSON.parse(l)).filter((r) => r.status === 'written').map((r) => r.id))];
   const { client, db } = await connect();
@@ -627,12 +685,12 @@ async function undo() {
   await pool(ids, CONC, async (id) => {
     let status;
     try {
-      const rev = await db.collection('page_revisions').find({ page_id: id, field: 'translation', source: SOURCE }).sort({ created_at: -1 }).limit(1).next();
+      const rev = await db.collection('page_revisions').find({ page_id: id, field: 'translation', source: run.source }).sort({ created_at: -1 }).limit(1).next();
       const page = await db.collection('pages').findOne({ id }, { projection: { _id: 0, id: 1, book_id: 1, page_number: 1, translation: 1 } });
       if (!rev || !page) status = 'no_revision';
       else if (page.translation?.content_hash !== rev.after_content_hash) status = 'changed_since';
       else {
-        const r = await repairTranslationText(db, page, rev.data, { expectBefore: page.translation.data, source: `${SOURCE}-undo`, issue: '#5700', jobId: 'a2-cleanup-5700', apply: true, reason: `undo of ${SOURCE}: text restored from revision ${rev.id}` });
+        const r = await repairTranslationText(db, page, rev.data, { expectBefore: page.translation.data, source: `${run.source}-undo`, issue: run.issue, jobId: run.jobId, apply: true, reason: `undo of ${run.source}: text restored from revision ${rev.id}` });
         status = r.status === 'written' ? 'restored' : `${r.status}:${r.why}`;
       }
     } catch (e) { status = `error:${String(e.message || e).slice(0, 120)}`; }
