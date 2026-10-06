@@ -9,6 +9,16 @@ const nextConfig: NextConfig = {
   staticPageGenerationTimeout: 180, // Allow 3min for build-time pages (Atlas can be slow under load)
   trailingSlash: false, // Normalize URLs to prevent duplicate content (no trailing slash)
   experimental: {
+    // Turbopack's build cache (on by default since Next 16) is what pushed
+    // prod builds into OOM (#5887). It grows ~0.05–0.3 GB per build inside
+    // Vercel's build cache; at 1.5 GB Vercel throws the whole cache away, and
+    // the clean compile that follows ran out of the builder's 8 GB about half
+    // the time. Turning it off makes every compile a cold one, but a cold
+    // compile WITHOUT the cache layer peaks ~25% lower (measured locally from
+    // an empty .next, compile-only, two runs each: 5.72 → 4.28 GB) and writes
+    // nothing to .next/cache/turbopack, so the reset never comes. Cost: the
+    // ~40s a warm compile used to save. Re-measure before turning it back on.
+    turbopackFileSystemCacheForBuild: false,
     proxyClientMaxBodySize: 50 * 1024 * 1024, // 50MB // TODO: Remove if frontend logic changes to smaller uploads at a time.
   },
   // pdfkit must stay an unbundled runtime require: bundling it rewrites
