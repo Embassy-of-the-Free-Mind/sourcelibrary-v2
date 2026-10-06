@@ -45,11 +45,13 @@ const WIDE_KEEP = 0.5;        // the most-pages panel keeps at least half the pr
 
 // Engines the issue lists as never tested on any script here. Testing them is a separate, priced
 // follow-up; this list only says so on the page.
-const NEVER_TESTED = ['DeepSeek-OCR', 'Qwen3-VL (general)', 'Chandra', 'Mistral OCR', 'Claude (vision)', 'GPT (vision)', 'Google Cloud Vision'];
+// DeepSeek-OCR, Qwen3-VL-8B, Chandra 2, Mistral OCR 4.1 and Claude Opus / Sonnet 5.5 left this list with #6011 wave 1.
+const NEVER_TESTED = ['Qwen3-VL 32B', 'GPT (vision)', 'Google Cloud Vision'];
 // General-purpose engines we HAVE run somewhere. A script whose pages one of them never read lists it as
 // not yet tested there. Script-specific models (a Kraken or Tesseract model for one script, NDL for
 // classical Japanese) are left out: their absence from another script is not a gap.
-const GENERAL = ['gemini-3.1-flash-lite', 'gemini-3-flash-preview', 'paddleocr-vl-1.6', 'olmocr-2-7b-fp8', 'surya2', 'dots-mocr', 'mineru'];
+const GENERAL = ['gemini-3.1-flash-lite', 'gemini-3-flash-preview', 'paddleocr-vl-1.6', 'olmocr-2-7b-fp8', 'surya2', 'dots-mocr', 'mineru',
+  'deepseek-ocr', 'qwen3-vl-8b', 'chandra-ocr-2', 'mistral-ocr-4-1', 'claude-opus-5-5', 'claude-sonnet-5-5'];
 
 const LABEL = {
   'gemini-3.1-flash-lite': 'Gemini 3.1 Flash-Lite', 'gemini-3-flash-preview': 'Gemini 3 Flash',
@@ -60,6 +62,8 @@ const LABEL = {
   'tesseract-chi_tra_vert': 'Tesseract (chi_tra_vert)', omnisyr: 'Kraken (OmniSyr)', 'qoruyo-eastern': 'Kraken (Qoruyo East)',
   'qoruyo-estrangela': 'Kraken (Qoruyo Estrangela)', 'sophro-defaultseg': 'Kraken (Sophro)',
   'olmocr-2-7b-fp8': 'olmOCR 2 7B', mineru: 'MinerU',
+  'deepseek-ocr': 'DeepSeek-OCR', 'qwen3-vl-8b': 'Qwen3-VL 8B', 'chandra-ocr-2': 'Chandra OCR 2', 'mistral-ocr-4-1': 'Mistral OCR 4.1',
+  'claude-opus-5-5': 'Claude Opus 5.5', 'claude-sonnet-5-5': 'Claude Sonnet 5.5',
 };
 // What the typed reference is, by the stratum the page was sealed in (from each registry's reference_plan).
 const REFERENCE = {
@@ -86,7 +90,7 @@ const SCRIPTS = [
 // Scripts with OCR runs but no typed reference the charts could score against. Said on the page so an
 // absence reads as a gap in the evidence, not as a script nobody looked at.
 const NO_REFERENCE = [
-  { title: 'Tibetan', why: 'Flash-Lite and BDRC Yigdzin were compared with each other (agreement), not with a typed text', source: 'scripts/eval/results/tibetan-lite-vs-yigdzin-4523/summary.json' },
+  { title: 'Tibetan', why: 'measured as syllable identity against the Derge e-text (a different measure from page CER): BDRC Yigdzin 0.949, Claude Opus 5.5 0.715, Mistral OCR 4.1 0.564, the three open VLMs ~0 (#6011)', source: 'scripts/eval/results/engine-wave1-6011/summary.json' },
   { title: 'Sanskrit', why: 'only repeat-read consistency has been measured (stability), not accuracy', source: 'scripts/eval/results/sanskrit-consistency-2026-04-24.json' },
   { title: 'Persian', why: 'scored as located windows against Ganjoor verse (a different measure from page CER); only Gemini has a measured cost', source: 'scripts/eval/results/persian-ganjoor-2026-10-01-stage1b/table.json' },
 ];
@@ -126,7 +130,7 @@ for (const [engine, entries] of Object.entries(gpu.engines)) COST[engine] = entr
   if (usd == null) throw new Error(`ocr-engine-gpu-costs.json: ${engine} entry has no eur+pages, eur_per_page or usd_per_1k`);
   return {
     charts: g.charts ?? null, usd_per_1k: r3(usd), basis: g.basis,
-    detail: `${g.hardware}; ${g.basis === 'billed' ? 'whole billed rental' : 'inference time only'}, measured ${g.measured_on}`,
+    detail: `${g.hardware}; ${g.basis === 'billed' ? 'whole billed rental' : g.basis === 'metered-api' ? 'metered API spend, realtime prices' : 'inference time only'}, measured ${g.measured_on}`,
     source: g.source,
   };
 });
@@ -142,18 +146,22 @@ function costOf(engine, chartId) {
 // The benchmark store first; then the #5660 open-engine run, scored by the same scorer against the same
 // references, which adds PaddleOCR-VL and olmOCR to the print strata. Where both scored the same page ×
 // engine, the benchmark store wins (they agree on 681 of 690 such pairs; the rest are separate runs).
-const OPEN_ENGINE_DIRS = ['open-engine-print-5660/scored', 'open-engine-print-5660/scored-olmocr'];
+// Then #6011 wave 1 (results/engine-wave1-6011/scored): the same scorer and references on a seeded subset of the
+// sealed strata. Only its six new engines are taken; its re-scored comparator rows never override the store.
+const OPEN_ENGINE_DIRS = ['open-engine-print-5660/scored', 'open-engine-print-5660/scored-olmocr', 'engine-wave1-6011/scored'];
+const DIR_ENGINES = { 'engine-wave1-6011/scored': new Set(['deepseek-ocr', 'qwen3-vl-8b', 'chandra-ocr-2', 'mistral-ocr-4-1', 'claude-opus-5-5', 'claude-sonnet-5-5']) };
 const isRepeatArm = e => /-b$/.test(e); // the A-vs-A repeat of production; it is the noise floor, not an engine
 const benchRows = [];
 {
   const seen = new Set();
-  for (const dir of [BENCHMARK_DIR, ...OPEN_ENGINE_DIRS.map(d => path.join(__dirname, 'results', d))]) {
+  for (const [d, dir] of [[null, BENCHMARK_DIR], ...OPEN_ENGINE_DIRS.map(d => [d, path.join(__dirname, 'results', d)])]) {
     const { rows, latest } = readBenchmarkRows(dir);
+    const only = DIR_ENGINES[d];
     const dateOf = new Map([...latest].map(([st, f]) => [st, f.match(/(\d{4}-\d{2}-\d{2})\.json$/)[1]]));
     const file = new Map([...latest].map(([st, f]) => [st, path.relative(REPO, path.join(dir, f))]));
     for (const r of rows) {
       const key = `${r.stratum}|${r.slug}|${r.engine}`;
-      if (seen.has(key)) continue;
+      if (seen.has(key) || (only && !only.has(r.engine))) continue;
       seen.add(key);
       benchRows.push({ ...r, date: dateOf.get(r.stratum), file: file.get(r.stratum) });
     }
