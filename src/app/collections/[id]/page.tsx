@@ -395,6 +395,13 @@ function autoLinkPlain(
 
 const COMPACT_LIMIT = 14;
 
+// A reading page that belongs to one collection and is written in code, not in
+// the `collections` doc (#5936). Keyed by slug; the link sits in the hero's
+// meta row and is never shown inside a partner room.
+const COLLECTION_READING_PAGES: Record<string, { href: string; label: string }> = {
+  drebbel: { href: '/collections/drebbel/beeckman', label: 'Beeckman on Drebbel, in his own words' },
+};
+
 /** Sanitize thumbnail URLs: unwrap /api/image?url= wrappers, reject non-http URLs.
  *  The /api/image wrapper crashes Next.js Image during SSR. */
 
@@ -1055,6 +1062,7 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
 
   // The band self-gates on empty, but the hero anchor needs to know in advance.
   const hasFurtherReading = furtherReading.length > 0 || readingListGaps.length > 0;
+  const readingPage = COLLECTION_READING_PAGES[collection.slug || id];
 
   // Collections that carry an Index catalogue (index_catalogs editions) render
   // the catalogue browser as their centrepiece — hide the Visual Art section
@@ -1280,6 +1288,17 @@ async function CollectionDetailContent({ id, tenantId, tenantSlug, provider }: {
               <>
                 <span className="w-px h-4 bg-white/20" />
                 <span>{languages.map((l: { lang: string }) => l.lang).join(', ')}</span>
+              </>
+            )}
+            {!tenantSlug && readingPage && (
+              <>
+                <span className="w-px h-4 bg-white/20" />
+                <Link
+                  href={readingPage.href}
+                  className="hover:text-white/80 transition-colors underline underline-offset-2 decoration-white/30"
+                >
+                  {readingPage.label}
+                </Link>
               </>
             )}
             {/* The bridge only ran one way: the Spanish twin links here ("Ver esta
