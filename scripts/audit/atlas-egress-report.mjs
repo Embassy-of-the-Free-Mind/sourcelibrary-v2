@@ -35,8 +35,12 @@ const HOSTS = {
 };
 const hostLabel = (ip) => HOSTS[ip] || (/^(3|18|35|52|54|63|65|99)\./.test(ip) ? `aws:${ip}` : ip);
 
+// Files written before atlas-egress-sample.mjs redacted command lines still hold credentials.
+const redact = (s) => s.replace(/([a-z][a-z0-9+.-]*:\/\/)[^\s/@]+@/gi, '$1***@').replace(/(--(?:password|pass|token|secret)[= ])\S+/gi, '$1***');
+
 function jobOf(cmd) {
   if (!cmd) return '?';
+  cmd = redact(cmd);
   const m = cmd.match(/(\S*?(?:scripts|code|tools)\/\S+\.(?:mjs|cjs|js|ts|py|sh))/) || cmd.match(/(\S+\.(?:mjs|cjs|js|ts|py|sh))/);
   if (!m) return cmd.slice(0, 80);
   return m[1].replace(/^.*?\/(scripts\/)/, '$1').replace(/^\/root\//, '~/');
