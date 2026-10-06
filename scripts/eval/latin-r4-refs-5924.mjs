@@ -417,7 +417,9 @@ async function stageExport() {
   const acc = path.join(ROOT, 'latin-r4-acc'), pop = path.join(ROOT, 'latin-r4-pop');
   for (const dir of [acc, pop]) fs.mkdirSync(path.join(dir, 'out'), { recursive: true });
   const accRows = [];
-  for (const [book, a] of Object.entries(al)) if (a.status === 'aligned') for (const p of a.pages) {
+  // a book enters the accuracy stratum when ≥ 1 page of its run is leaf-checked ok on a Latin leaf; all 3 pages go in
+  const lc = readJson(W('leaf-check.json')).rows; const scored = new Set(lc.filter(r => r.verdict === 'ok' && r.leaf_language === 'lat').map(r => r.book_id));
+  for (const [book, a] of Object.entries(al)) if (a.status === 'aligned' && scored.has(book)) for (const p of a.pages) {
     const src = W(`runs/${p.slug}.jpg`); const dst = path.join(acc, `${p.slug}.jpg`);
     if (!fs.existsSync(dst)) fs.copyFileSync(src, dst); accRows.push({ slug: p.slug, book_id: book, page_number: p.page, century: a.century });
   }
@@ -432,6 +434,11 @@ async function stageExport() {
     popRows.push(row);
   }
   fs.writeFileSync(path.join(pop, 'manifest.json'), JSON.stringify({ stratum: 'latin-r4-pop', exported_at: new Date().toISOString(), pages: popRows }, null, 1));
+  // benchmark-score registries (only listed slugs are scored)
+  const titleOf = new Map(readJson(W('catalogue.json')).map(b => [b.id, b]));
+  const reg = (stratum, rows) => fs.writeFileSync(path.join(__dirname, 'benchmark', `${stratum}.json`), JSON.stringify({ stratum, issue: 5924, parent: 5660, built_by: 'latin-r4-refs-5924.mjs export', unit: 'book (3-page run)',
+    pages: rows.filter(r => !r.error).map(r => ({ slug: r.slug, book_id: r.book_id, page_number: r.page_number, substratum: r.century || r.stratum, title: String(titleOf.get(r.book_id)?.title || '').slice(0, 120), year: titleOf.get(r.book_id)?.year ?? null })) }, null, 1) + '\n');
+  reg('latin-r4-acc', accRows); reg('latin-r4-pop', popRows);
   await client.close();
   console.log(`acc ${accRows.length} pages, pop ${popRows.filter(r => !r.error).length} pages (${popRows.filter(r => r.error).length} failed)`);
 }

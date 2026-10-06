@@ -1,0 +1,54 @@
+{
+  "source": "EEBO-TCP A00325",
+  "edition": "Familiarium colloquiorum formulae. Et alia quedam per Erasmu[m] recognita; Colloquia. Selections — STC 10450.6; ESTC S119187 (1519)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-06 (job latin-r4-5924)",
+  "source_url": "https://github.com/textcreationpartnership/A00325",
+  "origin": "library",
+  "book_id": "69b637ba1c1c21a373833324",
+  "page_number": 32,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 20093,
+    "to_char": 21026,
+    "overlap": 0.432,
+    "located_by": "tesseract",
+    "probe": "tesseract-5 lat (not an arm)",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "claude-subagent (1500s-1)",
+    "at": "2026-10-06T10:04:50+00:00",
+    "note": "Erasmus formulae p.27; ref starts a few words early ('Uis me tibi morem gerere') and ends at heading 'In causa. Quo minus'; manuscript marginalia not in ref.",
+    "method": "read-from-image",
+    "leaf_language": "lat",
+    "page_type": "body",
+    "typeface": "roman",
+    "human_spot_check": null
+  },
+  "same_edition": {
+    "evidence": null
+  },
+  "run": {
+    "century": "1500s",
+    "pages": [
+      32,
+      33,
+      34
+    ]
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-r4-refs-5924.mjs",
+  "built_at": "2026-10-06T10:15:28.452Z",
+  "stratum": "latin-r4-acc",
+  "text_location": "repo",
+  "text_sha256": "89163fe3e0653d4b4924a5b6d0799637bfd4847f733935c93b0bc6bbeb53a74b",
+  "unit": {
+    "chars": 933
+  }
+}

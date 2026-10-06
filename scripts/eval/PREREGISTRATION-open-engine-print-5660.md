@@ -159,3 +159,140 @@ loops, verdict), the answered-only view, s/page and $/1,000 pages on the GEX45, 
 on EEBO-TCP — now also on the 25 new pages), and by-eye reads (`read-from-image`) of the worst page per arm on the two
 priority cells (English 1600–1699, Latin 1500–1699). The headline compares each arm with **lite** under the rule and, for
 English 1600–1699, also names olmOCR's numbers beside it (no new rule: olmOCR is the cell's current passing arm).
+
+## Amendment 3 — round 4: Latin print by century, the book as unit (job latin-r4-5924, #5924; written 2026-10-06 before any engine call)
+
+Derek's brief (#5924 and its three amendments of 2026-10-06, all before any scoring): Latin print is the only lane big
+enough to keep the GEX45 busy (Latin OCR queue ≈ 7.47M pages, 28,750 books; mean 260 pages/book). Quality first: the
+most accurate arm per century wins; cost is a price tag beside it, never a filter. Rounds 1–3 above are untouched.
+This amendment fixes the sample, arms, fold, rule and caps; the draw files are committed with it.
+
+### Samples (seeds and lists committed in `results/open-engine-print-5660/r4/`)
+
+**Unit = book.** Each sampled book gives ONE run of 3 consecutive pages (page_number order in `pages`), starting at
+index s = 1 + ⌊Mulberry32(5924 ⊕ fnv1a(book_id)) · max(1, n − 2)⌋, n = the book's pages. Front matter, plates and blanks
+stay in where the draw lands.
+
+**A. Accuracy sample (referenced).** Pool = every Latin book in `books` (language matches /latin|lat|la/, > 2 pages,
+catalogue year 1400–1799 from the first 14xx–17xx in `published`) paired with a whole-text transcription by year ± 1,
+title words and author (`latin-r4-refs-5924.mjs candidates`: CAMENA (github mirror, commit 771bb7f), EEBO-TCP Latin
+(TCP.csv, Latin titles to 1700), la.wikisource Liber indexes), and confirmed as the same text on ≥ 2 seeded interior pages
+(stored OCR, else Tesseract 5 `lat`; overlap ≥ 0.35 with `lib/edition-window.mjs`). 532 pairs → 513 verified → **pool:
+1600s 134 books, 1500s 60, 1700s 7, 1400s 0** (`pool.json`). Noscemus (wiki returned HTTP 503 on 2026-10-06) and Corpus
+Corporum (its API requires a login) could not be enumerated; the pool is a lower bound for those two sources. Draw
+(`draw.json`): per century, the pool shuffled by Mulberry32(5924 + century start). Books are taken IN THAT ORDER, in
+batches of 4, until the cell target of books with ≥ 1 leaf-checked Latin text page is met (1600s ≥ 50, 1500s ≥ 30, 1700s
+all 7; 1400s has no pool). Every book taken is reported with its outcome; none is replaced. Per page the reference window
+is cut from the edition with the Tesseract probe (pad 3 words), or, where the probe fails and a neighbour's window sits on
+the edition's page breaks, the adjacent edition page (`pb-neighbour`). **Leaf check by eye** (Claude subagents reading
+each JPEG, `method: read-from-image`, `leaf-check.json`): `ok` | `window-off` | `mismatch` | `edition-differs` | `no-ref`
+| `no-text`; plus page type, typeface, leaf language, scan. Scored: `ok` pages whose leaf is Latin; `no-text` pages are
+scored as "no text expected". Everything else is excluded and listed with its reason.
+**Fixed sample (before any engine call):** the align stage was run to 1600s 60 / 1500s 34 aligned books (a margin for
+leaf-check losses) and EVERY book taken is in the sample. 1600s: 68 taken, 61 aligned, **60 scored books**; 1500s: 44
+taken, 35 aligned, **32 scored books**; 1700s: 7 taken, 6 aligned, **5 scored books** (exploratory). Skips: no page of
+the run located in any edition (16), edition differs (2: an English-glossed Erasmus colloquia; a modern critical
+Columella), leaf not Latin (4 English books catalogued Latin), image fetch 400 (1). 306 pages leaf-checked: in the 97
+scored books, 291 pages = 237 scored text pages (ok, Latin leaf), 5 no-text, 34 window-off, 11 no-ref, 2 mismatch, 2 ok
+on a non-Latin leaf (`leaf-check.json`, `results/open-engine-print-5660/r4/`). References: `benchmark/refs/r4l-*`
+(239 pages), stratum registry `benchmark/latin-r4-acc.json`.
+
+**B. Population sample (no reference)** (`popdraw.json`): the WHOLE Latin OCR queue (`pipeline_next.step = ocr`,
+visible and hidden, launch_curation included: 1600s 11,928 books, 1500s 7,353, undated 4,719, 1700s 3,827, 1400s 923),
+per stratum shuffled by Mulberry32(5925 + stratum index) and taken in order: **1600s 25, 1500s 20, undated 10, 1700s 5,
+1400s 5** books, one run each (193 pages: one 1500s book's pages 33–34 return HTTP 404 from the BSB IIIF server and are
+reported as a backlog finding). hidden_reason, duplicate_of, visibility and provider are covariates, never exclusions.
+
+**C. Secondary cell (not random, out of the verdict):** the round-3 `latin-1500-1699` cell (cells-r3, 61 pages, 40
+library), reported from round 3's scored files as they stand (lite, lite-b, GLM-OCR, Calamari-bin, flash-preview where it
+ran). No new arm is run on it.
+
+**D. Throughput books** (`tp-books.json`): two whole books from the Latin queue with 150–500 pages, Mulberry32(5926)
+order, the first two whose every image fetches — 6a90e7e5544007b776b3806a (1633, 189 pp) and 69b686ec70c69d645a747167
+(1618, 472 pp), 661 pages; the concurrency sweep uses their first 160 pages.
+
+**Deviation from the brief, declared here:** `gpu-lease-watchdog.mjs` and `idle-poweroff.sh` are Scaleway-only (they call
+the Scaleway API and metadata service); a RunPod pod is a container that cannot power off its host. The pod is leased the
+RunPod way, as in round 3: the deadline is in the pod name (`sl-5600-<label>-until-<UTC>`, read by Hetzner's
+`runpod-pod-watchdog.mjs` every 10 min, with the progress path touched by the driver), and the driver's EXIT trap
+terminates the pod and confirms it is gone from the API.
+
+### Arms
+
+Gemini arms run through the **Batch API** (half price; `latin-r4-gemini-5924.mjs`), each job registered in `batch_jobs`
+as `external_eval`. Prompt: the GENERIC transcription prompt of rounds 1–3 (benchmark-run-api.mjs), the bench JPEG as is,
+temperature 0, maxOutputTokens 16,000, thinkingBudget 0 — except Pro (thinking at its default, maxOutputTokens 32,000,
+thinking tokens metered).
+
+| arm | engine | pages |
+|---|---|---|
+| `gemini-3.1-flash-lite` (production model) | Batch | A + B |
+| `gemini-3.1-flash-lite-b` (A-vs-A floor) | Batch, second job | A + B |
+| `gemini-3-flash-preview` | Batch | A + B |
+| `gemini-3.8-flash` | Batch (never measured on our OCR) | A + B |
+| `gemini-3.1-pro-preview` | Batch, default thinking | A-1500s and B-1400s (cut by the pre-flight, below) |
+| `glm-ocr` | the round-3 config, unchanged (vLLM, MTP speculative decoding, `Text Recognition:`, 4,500 tokens, 8 clients) on one RunPod SECURE RTX PRO 4000 Blackwell (L4 fallback) | A + B |
+| `calamari-gt4histocr-bin` | the round-3 binarized config: Kraken 7.1 `nlbin` + `blla` lines, Calamari 2.3.1 + gt4histocr voting ensemble, CPU on the pod | A + B |
+| `glm+longs` | GLM text, ſ restored from Calamari (`latin-r4-report-5924.mjs hybrid`, rule in its header) | derived |
+| `lite+longs` | lite text, ſ restored from Calamari | derived |
+| `flash+cal` | flash-preview text, ſ AND abbreviations restored from Calamari (`hybrid --abbr`) | derived |
+
+**Pre-flight (applied):** countTokens on a sample gives 1,122 input tokens/page; 900 output tokens/page assumed (round-3
+lite: mean 1,981 characters on Latin pages), Pro + 2,500 thinking tokens/page. The full plan estimated **$8.81 > $7**, so
+(Amendment 3 M) Pro was cut to the 1400s and 1500s ($7.20, still > $7), then to the **accuracy 1500s (96 pages) + the
+population 1400s (15 pages)**: the 20 random 1600s books (Mulberry32(5927), listed in `pro-subset.json`) and the population
+1500s are NOT run on Pro. Final estimate **$5.58** (`gemini-estimate.json`): lite $0.39, lite-b $0.39, flash $0.79,
+3.8-flash $1.02, Pro $2.99. Gemini hard cap $7 (the script refuses above it); GPU cap $8.
+
+### Fold and metric
+
+**Primary: `latin-norm@1`** (`latin-r4-report-5924.mjs norm`), applied to the reference and every engine text, then
+`benchmark-score.mjs` UNCHANGED (`--refs-dir` points it at the folded references; its normAlpha lower-cases, folds ſ → s,
+rejoins line-break hyphens, keeps letters only). (1) deterministic, both sides: ligatures split (æ œ ﬀ ﬁ ﬂ ﬃ ﬄ ﬅ ﬆ ꜳ ꝏ),
+sigla expanded (⁊ and & → et, &c → etc, ꝑ → per, ꝓ → pro, ꝙ → quod, ꝯ → con, ꝰ → us, q; → que, b; → bus); (2)
+reference-guided, engine side only: an abbreviated word (combining macron/tilde, ꝗ ꝝ ꝫ ꝭ ꝟ) is replaced by the paired
+reference word when its letters are an ordered subsequence of it, with the same first letter and ≤ 4 extra letters per
+mark (and symmetrically, an expanded engine word paired with an abbreviated reference word takes the reference's form).
+**u/v and i/j stay as printed; f stays f** — an ſ read as f is an error. This is the #5508 skeleton rule; #5508's
+conservative rule table was never implemented, so this is its first use. **Secondary:** the same scorer on the unfolded
+texts (rounds 1–3's view).
+
+Page CER is capped at 1.0. A refusal is CER 1.0. A `no-text` page scores 0 if the arm writes ≤ 25 letters, else 1.0
+(invented text). **Book CER = mean over the run's scored pages.** Page-level numbers are descriptive only.
+
+### Verdict rule per century cell (Amendment 3 J)
+
+- Decision grade: ≥ 50 books (1600s), ≥ 30 books (1500s). The 1700s (≤ 7) and any population-only cell are exploratory:
+  "not enough refs".
+- **Winner = the arm with the lowest median book CER** (ties: lower mean). It is compared with the **runner-up** and with
+  **lite**, paired over books: median Δ, bootstrap 95% CI (5,000 resamples over books, seed 0x4925), sign test over
+  books. **Noise floor** = lite-b vs lite over the same books: the 95th percentile of |Δ₀|. The winner is "separated"
+  from the runner-up iff the sign test p < 0.05 AND |median Δ| exceeds the noise floor; otherwise the cell reports a
+  tie between them and names both.
+- Pro is ranked only in the 1500s cell, where it ran on every book.
+- Reported beside every arm, never as a filter: $/1,000 pages (Gemini Batch at the measured tokens; GLM and Calamari on
+  the GEX45 at €214/mo ≈ $249/mo, 2.63M s), catastrophic pages (CER > 0.5), invented text on no-text pages, loops,
+  refusals, truncations, long-s (ſ written / ſ→f) and abbreviation counts, and the secondary (unfolded) ranking.
+- **Seams** per arm: a 10-gram shared by two consecutive pages' outputs (duplicated across the boundary); on referenced
+  runs, a 10-gram of the NEIGHBOUR's reference that is not in the page's own (pulled from the neighbour). Catchwords are
+  noted by eye.
+
+### Population sample, throughput, translation impact
+
+- Population: per arm and stratum — empty where others read, loops, truncation (MAX_TOKENS / the 4,500-token cap),
+  refusals, invented text on blank pages (by eye), ſ and abbreviation counts, pairwise agreement (1 − CER between arms,
+  latin-norm@1). **≥ 20 runs read by eye** against the images (1600s 6, 1500s 6, undated 3, 1700s 2, 1400s 3; the first
+  books of each stratum in draw order), which engine read better, labelled read-from-image; and whether the referenced
+  pool LOOKS like the backlog (scan quality, typeface, layout) — compared with the accuracy sample's by-eye scan/typeface
+  labels.
+- Throughput (Amendment 2 G): GLM-OCR alone at CLIENTS 4, 8, 16, 32, 64 on the 160-page sweep, GPU utilisation sampled
+  each second; plateau = the smallest concurrency within 95% of the best pages/s. Then the two whole books end to end:
+  GLM at the plateau concurrency AND Kraken binarize+segment+Calamari on the CPU at the same time; CPU-seconds per page per
+  stage recorded. €/1K pages and box-months for (a) the Latin queue 7.47M pp, (b) the whole OCR backlog (re-measured from
+  `books` at report time), (c) 100K books × measured mean pages/book; lite Batch at the measured $/1K (≈ $0.45) beside it;
+  GEX45s needed to finish each in 6 months.
+- Translation impact (Amendment 2 H) runs only if the winning arm's book-level median Δ against lite is within ±0.02:
+  the 20 by-eye population runs, each engine's text through the production translation path, judged side by side
+  against the page image by subscription (Claude) judges; Gemini ≤ $1, inside the $7 cap, else not run and said so.
+
+No routing change, no writes to `books` or `pages`.
