@@ -107,6 +107,9 @@ function refusalOfRow(stratum, slug, engine, e, referenced, isTier) {
   return (isTier ? e.chars === 0 : e.n_content === 0) ? 'inferred' : null;
 }
 
+// Strata whose pages were selected BY an engine's outcome; they never enter a pooled language/period cell.
+const SELECTED_ON_ENGINE = new Set(['refused-en-4686']);
+
 const rows = [];
 const sources = [];
 for (const [stratum, file] of latest) {
@@ -127,8 +130,11 @@ for (const [stratum, file] of latest) {
       // latin-period-5126) leans toward the engine it was corrected from. It stays visible in its own
       // stratum/substratum rows and never enters a pooled language or period cell (#5126 prereg).
       const correctedRef = /corrected-OCR reference/.test(p.substratum ?? reg.substratum ?? '');
-      const language = correctedRef ? null : cleanLanguage(p.language ?? reg.language);
-      const year = correctedRef ? null : (p.year ?? reg.year ?? null);
+      // A stratum DRAWN ON an engine's behaviour (refused-en-4686: pages Gemini refused as RECITATION)
+      // would put 20 certain refusals into the pooled English lite cells. Same rule: own rows only.
+      const selected = correctedRef || SELECTED_ON_ENGINE.has(stratum);
+      const language = selected ? null : cleanLanguage(p.language ?? reg.language);
+      const year = selected ? null : (p.year ?? reg.year ?? null);
       rows.push({
         stratum, slug: p.slug, engine, referenced, aligned,
         substratum: p.substratum ?? null,

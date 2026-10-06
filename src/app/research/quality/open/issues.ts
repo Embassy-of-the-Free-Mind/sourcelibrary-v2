@@ -77,6 +77,12 @@ export const GROUPS: IssueGroup[] = [
         status: 'running',
       },
       {
+        n: 4686,
+        title: 'Pages the transcription engine refuses to read',
+        detail: 'On famous English texts the engine returns nothing, so 712 pages of the Philosophical Transactions are blank. A free engine, Kraken, reads them at 0.9% character error but gets only 79% of printed numbers right, below the 90% bar set before the test. Nothing has been written yet.',
+        status: 'defect',
+      },
+      {
         n: 5575,
         title: 'Greek is the largest weighted gap',
         detail: 'About a tenth of translated pages. Greek manuscripts score 2.5 of 5 against published translations, and no re-read with the current engines rescues them. Fitting an open edition of the same text is being tried instead (#5619).',

@@ -1,0 +1,690 @@
+{
+  "refused-en-4686": {
+    "stratum": "refused-en-4686",
+    "issue": 4686,
+    "date": "2026-10-06",
+    "refusal_source": "finishReason (meter) / inferred",
+    "cer_refusals": "ref.median_cer / mean_cer count a refusal as CER 1.0 (the pre-#5581 headline); *_answered exclude refused pages",
+    "n_pages": 20,
+    "n_with_ref": 20,
+    "ref_mismatch": [],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3.1-flash-lite": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 20,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 20,
+          "median_cer": 1,
+          "mean_cer": 1,
+          "catastrophic": 20,
+          "median_gap": 0,
+          "median_seq": 0,
+          "refused": 20,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": null,
+          "mean": null,
+          "n_engines": 5,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "worst": [
+          {
+            "slug": "rf-6ac2798b02c7f994f85066f6-p29",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. I",
+            "year": 1756,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac2798d02c7f994f8506911-p287",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+            "year": 1756,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac2798d02c7f994f8506911-p352",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+            "year": 1756,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac391b421755a8abfd8e653-p172",
+            "title": "Philosophical Transactions of the Royal Society of London, Vols. 11-12 (1676-1678)",
+            "year": 1676,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "rf-6ac391b421755a8abfd8e653-p315",
+            "title": "Philosophical Transactions of the Royal Society of London, Vols. 11-12 (1676-1678)",
+            "year": 1676,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
+      "ia-abbyy": {
+        "pages_run": 16,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 16,
+          "median_cer": 0.069,
+          "mean_cer": 0.112,
+          "catastrophic": 0,
+          "median_gap": 0.003,
+          "median_seq": 0.72,
+          "refused": 0,
+          "n_answered": 16,
+          "median_cer_answered": 0.069,
+          "mean_cer_answered": 0.112,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.213,
+          "mean": 0.255,
+          "n_engines": 5,
+          "ref_median": 0.411,
+          "ref_mean": 0.44
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 16,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "rf-6ac2798d02c7f994f8506911-p352",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+            "year": 1756,
+            "cer": 0.31,
+            "gap": 0.025,
+            "invention": 0.549,
+            "has_ref": true,
+            "unsupported": [
+              "rotal",
+              "tluc",
+              "hioulj",
+              "dcfircd",
+              "laforin",
+              "fubje",
+              "juncius",
+              "axkl"
+            ]
+          },
+          {
+            "slug": "rf-6ac2798b02c7f994f85066f6-p29",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. I",
+            "year": 1756,
+            "cer": 0.299,
+            "gap": 0.014,
+            "invention": 0.479,
+            "has_ref": true,
+            "unsupported": [
+              "ihall",
+              "likcwifc",
+              "exaifl",
+              "treatifc",
+              "cbalngrafiiy''",
+              "fccond",
+              "whei",
+              "contiininkth"
+            ]
+          },
+          {
+            "slug": "rf-6ac2798d02c7f994f8506911-p287",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+            "year": 1756,
+            "cer": 0.255,
+            "gap": 0.002,
+            "invention": 0.637,
+            "has_ref": true,
+            "unsupported": [
+              "i668",
+              "fiidine",
+              "exccdu",
+              "hsec",
+              "poftta",
+              "fafla",
+              "dictbu",
+              "tnnixa"
+            ]
+          },
+          {
+            "slug": "rf-6ac39abdb102376559ba75ed-p211",
+            "title": "Philosophical Transactions of the Royal Society of London, Vol. 6 (1671)",
+            "year": 1671,
+            "cer": 0.121,
+            "gap": 0.022,
+            "invention": 0.224,
+            "has_ref": true,
+            "unsupported": [
+              "leugbby",
+              "328r",
+              "'young",
+              "itsfull",
+              "eca's",
+              "offlies",
+              "retter",
+              "167r"
+            ]
+          },
+          {
+            "slug": "rf-6ac39a92693fbfc19e37bb27-p211",
+            "title": "Philosophical Transactions of the Royal Society of London, Vol. 4 (1669)",
+            "year": 1669,
+            "cer": 0.114,
+            "gap": 0.004,
+            "invention": 0.237,
+            "has_ref": true,
+            "unsupported": [
+              "firengtb",
+              "andthe",
+              "canfe",
+              "hiinfelf",
+              "grayity",
+              "thelefs",
+              "pare",
+              "propor"
+            ]
+          }
+        ]
+      },
+      "kraken-catmus": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 20,
+          "median_cer": 0.009,
+          "mean_cer": 0.016,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_seq": 0.958,
+          "refused": 0,
+          "n_answered": 20,
+          "median_cer_answered": 0.009,
+          "mean_cer_answered": 0.016,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.032,
+          "mean": 0.044,
+          "n_engines": 5,
+          "ref_median": 0.056,
+          "ref_mean": 0.066
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 20,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "rf-6ac2798d02c7f994f8506911-p352",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+            "year": 1756,
+            "cer": 0.073,
+            "gap": 0.022,
+            "invention": 0.115,
+            "has_ref": true,
+            "unsupported": [
+              "insorm",
+              "junoius",
+              "hexry",
+              "berxley",
+              "clarre",
+              "hosxvns",
+              "mecting",
+              "hosryus"
+            ]
+          },
+          {
+            "slug": "rf-6ac2798b02c7f994f85066f6-p29",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. I",
+            "year": 1756,
+            "cer": 0.037,
+            "gap": 0.007,
+            "invention": 0.064,
+            "has_ref": true,
+            "unsupported": [
+              "chalcograpby",
+              "whercof",
+              "sour",
+              "thuri",
+              "thougnt",
+              "consi",
+              "roore",
+              "clarxe"
+            ]
+          },
+          {
+            "slug": "rf-6ac39a92693fbfc19e37bb27-p211",
+            "title": "Philosophical Transactions of the Royal Society of London, Vol. 4 (1669)",
+            "year": 1669,
+            "cer": 0.033,
+            "gap": 0,
+            "invention": 0.081,
+            "has_ref": true,
+            "unsupported": [
+              "mant",
+              "statichs",
+              "statenanovel",
+              "podlur",
+              "prob",
+              "pued",
+              "gaidie",
+              "finishr"
+            ]
+          },
+          {
+            "slug": "rf-6ac2798d02c7f994f8506911-p287",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+            "year": 1756,
+            "cer": 0.029,
+            "gap": 0.004,
+            "invention": 0.065,
+            "has_ref": true,
+            "unsupported": [
+              "azan",
+              "de2e",
+              "codem",
+              "cadique",
+              "pluviæe",
+              "excrẽct",
+              "seflicet",
+              "estatem"
+            ]
+          },
+          {
+            "slug": "rf-6ac39abdb102376559ba75ed-p211",
+            "title": "Philosophical Transactions of the Royal Society of London, Vol. 6 (1671)",
+            "year": 1671,
+            "cer": 0.027,
+            "gap": 0.014,
+            "invention": 0.031,
+            "has_ref": true,
+            "unsupported": [
+              "ibeca's",
+              "tork",
+              "shellr",
+              "smeet",
+              "nembe"
+            ]
+          }
+        ]
+      },
+      "kraken-catmus-ft-5730": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 20,
+          "median_cer": 0.005,
+          "mean_cer": 0.014,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_seq": 0.98,
+          "refused": 0,
+          "n_answered": 20,
+          "median_cer_answered": 0.005,
+          "mean_cer_answered": 0.014,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.011,
+          "mean": 0.031,
+          "n_engines": 5,
+          "ref_median": 0.022,
+          "ref_mean": 0.043
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 20,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "rf-6ac2798d02c7f994f8506911-p352",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+            "year": 1756,
+            "cer": 0.068,
+            "gap": 0.022,
+            "invention": 0.059,
+            "has_ref": true,
+            "unsupported": [
+              "1665",
+              "juxorus",
+              "couxeir",
+              "hosxyxs",
+              "yearmr",
+              "hyperbolae",
+              "hoseyns",
+              "plonged"
+            ]
+          },
+          {
+            "slug": "rf-6ac2798d02c7f994f8506911-p287",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+            "year": 1756,
+            "cer": 0.042,
+            "gap": 0,
+            "invention": 0.122,
+            "has_ref": true,
+            "unsupported": [
+              "haec",
+              "declinationem",
+              "cspatio",
+              "naturae",
+              "invadere",
+              "saepe",
+              "intlucit",
+              "frequentia"
+            ]
+          },
+          {
+            "slug": "rf-6ac39a92693fbfc19e37bb27-p211",
+            "title": "Philosophical Transactions of the Royal Society of London, Vol. 4 (1669)",
+            "year": 1669,
+            "cer": 0.039,
+            "gap": 0,
+            "invention": 0.081,
+            "has_ref": true,
+            "unsupported": [
+              "declivitres",
+              "libpa",
+              "faindamental",
+              "sive",
+              "romam",
+              "shakewhmwolo",
+              "odsim",
+              "mnwoh"
+            ]
+          },
+          {
+            "slug": "rf-6ac2798b02c7f994f85066f6-p29",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. I",
+            "year": 1756,
+            "cer": 0.028,
+            "gap": 0.007,
+            "invention": 0.05,
+            "has_ref": true,
+            "unsupported": [
+              "1668",
+              "chalcography'",
+              "thursday",
+              "econtribute",
+              "assistanee",
+              "1064",
+              "consided",
+              "wilrins"
+            ]
+          },
+          {
+            "slug": "rf-6ac39abdb102376559ba75ed-p211",
+            "title": "Philosophical Transactions of the Royal Society of London, Vol. 6 (1671)",
+            "year": 1671,
+            "cer": 0.028,
+            "gap": 0.011,
+            "invention": 0.038,
+            "has_ref": true,
+            "unsupported": [
+              "thoco's",
+              "seeding",
+              "vespae",
+              "ichnoumones",
+              "mussota",
+              "nambwhether"
+            ]
+          }
+        ]
+      },
+      "mineru": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 20,
+          "median_cer": 0.05,
+          "mean_cer": 0.075,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_seq": 0.808,
+          "refused": 0,
+          "n_answered": 20,
+          "median_cer_answered": 0.05,
+          "mean_cer_answered": 0.075,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.146,
+          "mean": 0.167,
+          "n_engines": 5,
+          "ref_median": 0.306,
+          "ref_mean": 0.322
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 20,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "rf-6ac39a92693fbfc19e37bb27-p134",
+            "title": "Philosophical Transactions of the Royal Society of London, Vol. 4 (1669)",
+            "year": 1669,
+            "cer": 0.453,
+            "gap": 0,
+            "invention": 0.364,
+            "has_ref": true,
+            "unsupported": [
+              "ceafe",
+              "experimentš",
+              "infeets",
+              "hafband",
+              "expectall",
+              "fummersleifure",
+              "poifon",
+              "odeih"
+            ]
+          },
+          {
+            "slug": "rf-6ac2798d02c7f994f8506911-p352",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. II",
+            "year": 1756,
+            "cer": 0.14,
+            "gap": 0.028,
+            "invention": 0.197,
+            "has_ref": true,
+            "unsupported": [
+              "fhould",
+              "fubjećt",
+              "jungrus",
+              "fend",
+              "fpecimen",
+              "fpecified",
+              "prefent",
+              "prefident"
+            ]
+          },
+          {
+            "slug": "rf-6ac2798b02c7f994f85066f6-p29",
+            "title": "The History of the Royal Society of London for Improving of Natural Knowledge, Vol. I",
+            "year": 1756,
+            "cer": 0.075,
+            "gap": 0.007,
+            "invention": 0.241,
+            "has_ref": true,
+            "unsupported": [
+              "fhall",
+              "likewife",
+              "fpeak",
+              "exaćt",
+              "treatife",
+              "cbalcegrapby",
+              "fecond",
+              "whertof"
+            ]
+          },
+          {
+            "slug": "rf-6ac39abdb102376559ba75ed-p211",
+            "title": "Philosophical Transactions of the Royal Society of London, Vol. 6 (1671)",
+            "year": 1671,
+            "cer": 0.066,
+            "gap": 0.011,
+            "invention": 0.081,
+            "has_ref": true,
+            "unsupported": [
+              "beca's",
+              "fented",
+              "inse",
+              "fome",
+              "fmall",
+              "fhire",
+              "likewife",
+              "meet"
+            ]
+          },
+          {
+            "slug": "rf-6ac39abdb102376559ba75ed-p326",
+            "title": "Philosophical Transactions of the Royal Society of London, Vol. 6 (1671)",
+            "year": 1671,
+            "cer": 0.065,
+            "gap": 0,
+            "invention": 0.138,
+            "has_ref": true,
+            "unsupported": [
+              "objedt",
+              "telefcope",
+              "tranfmitted",
+              "mingicd",
+              "iteddy",
+              "coovene",
+              "croffed",
+              "whitenels"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
