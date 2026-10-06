@@ -140,7 +140,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   const [query, setQuery] = useState(searchParams.get('q') || '');
   const [viewMode, setViewMode] = useState<ViewMode>(initialMode);
   const [loading, setLoading] = useState(false);
-  // Anonymous visitors get 5 free searches/hour; past that the API 401s and we
+  // Anonymous visitors get 10 free searches/hour (ANON_SEARCHES_PER_HOUR); past that the API 401s and we
   // show a sign-in wall instead of results.
   const [signInRequired, setSignInRequired] = useState(false);
 
@@ -1297,7 +1297,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
 
       {/* Results */}
       <main className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-8">
-        {/* Anonymous free-search wall — shown after 5 searches/hour */}
+        {/* Anonymous free-search wall — shown after 10 searches/hour */}
         {signInRequired && (
           <div className="text-center py-16 max-w-lg mx-auto">
             <Search className="w-16 h-16 text-border-medium mx-auto mb-4" />
