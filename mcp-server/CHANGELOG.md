@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 4.7.0 (2026-10-06)
 
 ### `check_duplicate` answers "do we hold this?" (#6019)
 
