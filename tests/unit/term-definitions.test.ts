@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { separateTermDefinitions, splitTermDefinition } from '@/lib/term-definitions';
+import { separateTermDefinitions, splitTermDefinition, readsAsGloss } from '@/lib/term-definitions';
 import { applyNotesOff } from '@/lib/notes-off';
 import { prepareNotesMarkdown } from '@/components/reader/NotesRenderer';
 import { markdownToHtml } from '@/lib/export-markdown-html';
@@ -130,5 +130,55 @@ describe('a head the sentence already carries is not printed twice (#5901)', () 
     expect(separateTermDefinitions('the state <term>statue: a carved figure of stone</term> stood'))
       .toBe('the state <term>statue</term> <note>a carved figure of stone</note> stood');
     expect(separateTermDefinitions('<term>Luna: the alchemical name for silver</term>')).toBe('<term>Luna</term> <note>the alchemical name for silver</note>');
+  });
+});
+
+/**
+ * #5901: chips that carry a colon and are still the BOOK's words. Found on the corpus scan
+ * (212K pages) before any stored text was rewritten; each excerpt is a stored page.
+ * Splitting one would move page text into a note, and notes-off would then hide it.
+ */
+describe('a colon inside a chip is not always a definition (#5901)', () => {
+  it.each([
+    // 69f339bc876dd827cbc5625e p42, 69f339a3876dd827cbc55802 p797 — legal citations
+    'and Bartolus in law 1, "It pleases," <term>Code: Concerning the most holy churches</term>, and by Balbus',
+    'and the following laws <term>law: Eum ad quem</term>, <term>Code: De usufructu</term>',
+    // 69e7aad05f1a22ab19a8dce9 p228 — a mantra (Tibetan)
+    'these are the words of the secret mantra: <term>Tadyatha: Hume hume, humela, humila, batiye swaha.</term> Venerable One',
+    // 69e788a74a6785cfd60d17bf p221, 6a14e14b311a9edd4621ea48 p112 — titles
+    'The <term>Mother: Perfection of Wisdom in One Letter</term> is complete.',
+    '<term>In the language of India: Yama Tsila Damta Kala Nama Tantra. In the language of Tibet: The Tantra called Black Yama Charka</term>. Homage',
+    'in the <term>Book of Jin: Treatise on Astronomy</term>',
+    // 69b51e6d9a81ef7feb3d4a83 p245 — a proportion
+    'then <term>AB² + ab² = EG²</term>, and <term>EG² : AB² = AC + ac : AC</term>. But also',
+    // 6a08549049638a50931c00fb p71 — the source's own phrases
+    '*I will preserve my rank.* <term>tenebo statum meum: locum meum tuebor: dignitatis famam seruabo.</term>',
+    // 69920bbfe0a548a13d885514 p105 — the colon is inside the bracket
+    'of the kingdom of <term>God (original: ΘΥ — a *nomen sacrum* for *Theou*)</term>, and the twelve',
+    'all away; so shall also the coming be," <term>Matthew 24: verses 38, 39</term>',
+  ])('leaves %s', (t) => {
+    expect(separateTermDefinitions(t)).toBe(t);
+    expect(applyNotesOff(t)).toBe(t.replace(/<\/?term>/g, ''));
+  });
+
+  it("turns the model's language label into a note, however short (69a9578965ddd05bbcd3ecd0 p261, 69907cfe5f855ec553e78562 p300)", () => {
+    expect(separateTermDefinitions('the service of the **Master of the Horse** <term>Latin: *magister equitum*; a high-ranking military commander</term>—are'))
+      .toBe('the service of the **Master of the Horse** <note>Latin: *magister equitum*; a high-ranking military commander</note>—are');
+    expect(separateTermDefinitions('**Saturn** <term>original: "Shani"</term>, **Mars** <term>original: "Bhauma"</term>, and'))
+      .toBe('**Saturn** <note>original: "Shani"</note>, **Mars** <note>original: "Bhauma"</note>, and');
+  });
+
+  it('keeps the half of an "English (source)" head the sentence lacks (69906309e7b7642c081dddf5 p23, 6992ce273ea667fbac8284fd p11)', () => {
+    expect(separateTermDefinitions('led to a perception of **utility** <term>utility (utilitas): the practical advantage or common benefit that serves as the basis for Epicurean justice</term>—namely'))
+      .toBe('led to a perception of **utility** <term>utilitas</term> <note>the practical advantage or common benefit that serves as the basis for Epicurean justice</note>—namely');
+    expect(separateTermDefinitions('Durations for the five mourning grades <term>Five Mourning Grades (Wufu): A system of ritual dress and mourning periods.</term> |'))
+      .toBe('Durations for the five mourning grades <term>Wufu</term> <note>A system of ritual dress and mourning periods.</note> |');
+  });
+
+  it('still splits a definition whose head is new to the sentence, when the definition is English prose', () => {
+    expect(separateTermDefinitions('free from all unlawful <term>concupiscence: concupiscentia; a strong or disordered desire, often used by Augustine</term>.'))
+      .toBe('free from all unlawful <term>concupiscence</term> <note>concupiscentia; a strong or disordered desire, often used by Augustine</note>.');
+    expect(readsAsGloss('syrinx', 'a panpipe made of multiple reeds joined together with wax')).toBe(true);
+    expect(readsAsGloss('Gretter vid Þorbiorn Anugul', 'Er þat vel þo vid deilum kallt')).toBe(false);
   });
 });

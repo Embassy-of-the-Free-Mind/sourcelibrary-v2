@@ -52,7 +52,7 @@ import { classifyNote } from '../eval/lib/quality-census-detectors.mjs';
 import { parseTranslationTerms, hasNonLatinLetter } from '../lib/page-terms-parse.mjs';
 import { sanitizeTranslationTags, TRANSLATION_TAG_VOCABULARY } from '../lib/translate-core.mjs';
 import { stripEditorialWrappers } from '../lib/strip-editorial-wrappers.mjs';
-import { splitInlineTermDefinitions } from '../lib/term-definitions.mjs';
+import { splitInlineTermDefinitions, splitTermDefinition } from '../lib/term-definitions.mjs';
 
 export const SOURCE = 'cleanup-a2-5700';
 export const TERMDEF_SOURCE = 'cleanup-termdef-5901';
@@ -525,8 +525,7 @@ async function review() {
         // rule disagree. AFTER lines show the changed regions as the reader will prepare them.
         out.push(...hunks(prepared(before, true), prepared(res.text, true), 'NOTES-ON'));
         out.push(...hunks(prepared(before, false), prepared(res.text, false), 'NOTES-OFF'));
-        // After the cleanup, notes on (−) against notes off (+): every place a note is hidden.
-        out.push(...hunks(prepared(res.text, true), prepared(res.text, false), 'AFTER on/off', 60));
+        out.push(...chipViews(before, prepared(res.text, true), prepared(res.text, false)));
       }
       if (cls === 'b_original') for (const q of res.fired.b_original || []) out.push(`  OCR nearest to "${q}": ${nearest(q, ocrs.join('\n'))}`);
     }
@@ -535,6 +534,28 @@ async function review() {
     console.log(`${cls}: ${pick.length} pages → ${f}`);
   }
   await client.close();
+}
+/** d_termdef, one block per definition chip of the stored page: the chip as stored, then the same
+ *  place as the reader prepares the cleaned page with notes ON and with notes OFF. `LEAK` marks a
+ *  definition still present with notes off. */
+function chipViews(before, on, off) {
+  const out = [];
+  const flat = (x) => x.replace(/\s+/g, ' ');
+  for (const m of before.matchAll(/<term>([^<\n]*?)<\/term>/gi)) {
+    const sp = splitTermDefinition(m[1]);
+    if (!sp) continue;
+    const key = sp.definition.slice(0, 40);
+    out.push(`  CHIP  ${flat(before.slice(Math.max(0, m.index - 70), m.index + m[0].length + 40))}`);
+    const i = on.indexOf(key);
+    if (i < 0) { out.push('    ON   (definition not found in the prepared text)'); continue; }
+    const noteAt = on.lastIndexOf('<note>', i);
+    out.push(`    ON   ${flat(on.slice(Math.max(0, noteAt - 90), i + sp.definition.length + 50))}`);
+    const lead = on.slice(0, noteAt).replace(/<term>[^<]*<\/term>\s*$/, '').replace(/<note>[^<]*<\/note>/g, '').replace(/<\/?(?:term|interp|margin|gloss|insert|unclear)>/g, '');
+    const anchor = lead.slice(-30).trim();
+    const j = anchor.length > 8 ? off.indexOf(anchor) : -1;
+    out.push(`    OFF  ${off.includes(key) ? 'LEAK ' : ''}${j < 0 ? `(anchor "${anchor}" not found)` : flat(off.slice(Math.max(0, j - 50), j + anchor.length + 90))}`);
+  }
+  return out;
 }
 /** Changed regions of two texts, line-based, with the differing lines side by side. */
 function hunks(a, b, label, max = 16) {

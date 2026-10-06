@@ -13,5 +13,6 @@
 export {
   splitTermDefinition,
   splitInlineTermDefinitions,
+  readsAsGloss,
   separateTermDefinitions,
 } from '../../scripts/lib/term-definitions.mjs';

@@ -23,7 +23,10 @@
  *      divination…</note>`, which notes-off hides and notes-on labels as an
  *      editorial note. When the head word already stands right before the chip
  *      (`**Geomancy** <term>Geomancy: …</term>`), only the note is kept —
- *      otherwise the head prints twice.
+ *      otherwise the head prints twice. When it does not, the chip is split
+ *      only if the definition reads as the model's English gloss
+ *      (`readsAsGloss`); a citation, a mantra or a title inside a chip is the
+ *      book's own text and stays as it is.
  *   2. A `<gloss>` straight after a `<term>`. `<gloss>` is the PAGE-MARK tag (a
  *      gloss printed in the original), so the reader titled the model's
  *      definition "Gloss/annotation in original". A gloss in that position is
@@ -47,28 +50,102 @@ const LONG_TERM_WORDS = 7;
 const words = (s) => s.split(/\s+/).filter(Boolean).length;
 
 /**
+ * Chips that carry a colon and are still the BOOK's words — splitting them would
+ * hide page text behind a note (found on the #5901 scan, before any write):
+ *   - a citation: `law: Gracchus, Code, On adultery`, `Code: Concerning the most
+ *     holy churches`, `Psalm 37: verses 35, 36`;
+ *   - a mantra: `Tadyatha: Hume hume, humile humila, batiye svaha`;
+ *   - a title and its subtitle: `Book of Jin: Treatise on Astronomy`,
+ *     `Mother: Perfection of Wisdom in One Letter`.
+ * A real definition under one of these heads stays a chip, as before.
+ */
+const CITATION_HEAD = /^(?:laws?|lex|l|code|cod|codex|digest|dig|ff|authenti\w+|auth|institutes?|inst|novels?|nov|chapters?|chap|cap|c|canons?|can|sections?|sect|paragraphs?|par|verses?|vers|v|gloss\w*|rubric|titles?|tit|books?|lib|liber|questions?|quaest|qu?|distinctions?|dist|d|articles?|art|arguments?|arg|extra|decretals?|clementines?|psalms?|ps|rules?|reg|ibid(?:em)?|idem)\.?$/i;
+const MANTRA = /(?:tadyath|syadyath|sv[aā]h[aā]|swaha|\bph[aā][tṭ]\b)|^\s*(?:o[mṃṁ]|namo|nama[hḥ])\s/i;
+/** Small words a title leaves in lower case. */
+const TITLE_SMALL = new Set(['a', 'an', 'the', 'of', 'on', 'in', 'and', 'or', 'to', 'for', 'by', 'with', 'from']);
+/** @param {string} s */
+const isTitleCase = (s) => {
+  const ws = s.split(/\s+/).filter((w) => /\p{L}/u.test(w) && !TITLE_SMALL.has(w.toLowerCase()));
+  return ws.length > 0 && ws.every((w) => /^[^\p{L}]*\p{Lu}/u.test(w));
+};
+
+/** A head that does not repeat the sentence is split only when it is this short… */
+const MAX_NEW_HEAD_WORDS = 4;
+/** …its definition is a gloss, not a passage… */
+const MAX_NEW_DEFINITION_WORDS = 60;
+/** …and reads as English prose: `tenebo statum meum: locum meum tuebor` and
+ *  `Gretter vid Þorbiorn Anugul: Er þat vel…` are the source text, wrapped in a chip. */
+const ENGLISH_GLUE = /(?:^|[^\p{L}])(?:the|of|or|to|for|by|with|that|which|from|and|used|its|their|this|these|who|where|when|was|were|into|literally|meaning|here|referring|refers|approximately|approx|about|an|is|as|in|on|at|a(?=\s+\p{Ll}{2}))(?:$|[^\p{L}])/iu;
+/** A second `label: ` inside the definition, unless the label is the model's own (`original:`, `Latin:`). */
+const INNER_LABEL = /([\p{L}.]+)["”'’*_)]*:\s/gu;
+
+/**
+ * True when a definition reads as the model's English gloss rather than as more
+ * of the page — the test a chip must pass when its head is NOT already in the
+ * sentence (when it is, the repeat itself shows the chip is the model's).
+ * @param {string} head @param {string} definition
+ */
+export function readsAsGloss(head, definition) {
+  if (words(head) > MAX_NEW_HEAD_WORDS || words(definition) > MAX_NEW_DEFINITION_WORDS) return false;
+  if (!ENGLISH_GLUE.test(definition)) return false;
+  for (const m of definition.matchAll(INNER_LABEL)) if (!APPARATUS_HEAD.test(m[1])) return false;
+  return true;
+}
+
+/**
+ * Where `head: definition` divides: the first colon followed by whitespace that
+ * is not inside brackets. `God (original: ΘΥ — Theou)` has none, so it is not a
+ * definition; `strength (original: "uirtutem"): while often…` divides after the
+ * bracket. A colon with a space before it is a proportion or an apparatus entry
+ * (`EG² : AB² = AC + ac : AC`), never a definition.
+ * @param {string} body
+ */
+function colonAt(body) {
+  let depth = 0;
+  for (let i = 0; i < body.length; i++) {
+    const ch = body[i];
+    if (ch === '(' || ch === '[') depth++;
+    else if (ch === ')' || ch === ']') depth = Math.max(0, depth - 1);
+    else if (ch === ':' && depth === 0 && /\s/.test(body[i + 1] || '')) return /\s/.test(body[i - 1] || ' ') ? -1 : i;
+  }
+  return -1;
+}
+
+/**
  * Split `head: definition`, or null when the chip is a genuine term.
  * @param {string} body
  * @returns {{ head: string, definition: string } | null}
  */
 export function splitTermDefinition(body) {
   // The colon must be followed by whitespace — "Genesis 1:3" is a reference, not a definition.
-  const m = body.match(/^\s*([^:]+?)\s*:\s+([\s\S]+?)\s*$/);
-  if (!m) return null;
-  const [, head, definition] = m;
+  const at = colonAt(body);
+  if (at < 0) return null;
+  const head = body.slice(0, at).trim();
+  const definition = body.slice(at + 1).trim();
+  if (!head || !definition) return null;
   if (words(head) > MAX_HEAD_WORDS) return null;
   // A definition opens with a word (possibly italicised), not a verse or folio number.
   if (!/^[\p{L}"'‘“(*_]/u.test(definition)) return null;
-  if (words(definition) < MIN_DEFINITION_WORDS && words(body) <= LONG_TERM_WORDS) return null;
+  // The model's own label (`original: "Bhauma"`) is commentary however short it is.
+  if (words(definition) < MIN_DEFINITION_WORDS && words(body) <= LONG_TERM_WORDS && !APPARATUS_HEAD.test(head)) return null;
+  // The book's own words, not a definition: a numbered or labelled citation, a mantra,
+  // shouted text, a title with its subtitle.
+  if (/[\d|]/.test(head) || CITATION_HEAD.test(head) || MANTRA.test(body)) return null;
+  if (!/\p{Ll}/u.test(definition) && /\p{Lu}/u.test(definition)) return null;
+  if (isTitleCase(definition) && words(definition) > 1 && ((words(head) > 1 && isTitleCase(head)) || !/^["'‘“(*_]*(?:the|an?)\s/i.test(definition))) return null;
   return { head, definition };
 }
 
 /**
  * Heads that label the model's own apparatus rather than name a term —
- * `<term>original: 足陽明經 (zú yáng míng jīng); a major channel…</term>`. The
- * whole chip is commentary, so it becomes a note with no term chip.
+ * `<term>original: 足陽明經 (zú yáng míng jīng); a major channel…</term>`,
+ * `<term>Latin: *magister equitum*; a high-ranking commander</term>`. The whole
+ * chip is commentary, so it becomes a note with no term chip.
  */
-export const APPARATUS_HEAD = /^(?:original|lit(?:erally|\.)?|i\.e\.|note|cf\.?)$/i;
+export const APPARATUS_HEAD = new RegExp(`^(?:(?:original\\s+)?(?:${[
+  'latin', 'greek', 'hebrew', 'german', 'french', 'italian', 'spanish', 'dutch', 'english', 'arabic', 'persian', 'syriac', 'aramaic',
+  'sanskrit', 'pali', 'tibetan', 'chinese', 'japanese', 'coptic', 'armenian', 'russian', 'irish', 'portuguese', 'catalan', 'text',
+].join('|')})|original|lit(?:erally|\\.)?|i\\.e\\.|note|cf\\.?)$`, 'i');
 
 /** Lower-cased word tokens; apostrophes dropped, so `God’s` and `God's` are one word. @param {string} s */
 const tokens = (s) => s.toLowerCase().replace(/['’‘ʼ]/g, '').match(/[\p{L}\p{M}\p{N}]+/gu) || [];
@@ -137,7 +214,16 @@ export function splitInlineTermDefinitions(text, { outsideSpans = false } = {}) 
     if (inSpan && inSpan(offset)) { n.in_span++; return whole; }
     if (APPARATUS_HEAD.test(split.head)) { n.apparatus++; return `<note>${body.trim()}</note>`; }
     const note = `<note>${split.definition}</note>`;
-    if (headPrecedes(text.slice(Math.max(0, offset - 200), offset), split.head)) { n.head_dropped++; return note; }
+    const before = text.slice(Math.max(0, offset - 200), offset);
+    if (headPrecedes(before, split.head)) { n.head_dropped++; return note; }
+    // `**utility** <term>utility (utilitas): …</term>`: the half of the head the sentence
+    // already carries is dropped, the other half stays the chip.
+    const pair = split.head.match(/^(.+?)\s*\(\s*([^()]+?)\s*\)$/);
+    if (pair && !/:\s/.test(pair[2])) {
+      const keep = headPrecedes(before, pair[1]) ? pair[2] : headPrecedes(before, pair[2]) ? pair[1] : null;
+      if (keep) { n.head_dropped++; return `<term>${keep.replace(/^[*_"“'‘]+|[*_"”'’]+$/g, '')}</term> ${note}`; }
+    }
+    if (!readsAsGloss(split.head, split.definition)) return whole;
     n.split++;
     return `<term>${split.head}</term> ${note}`;
   });
