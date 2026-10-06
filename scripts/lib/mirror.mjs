@@ -20,7 +20,9 @@
  * never the 93%-full root disk):
  *   latest -> snapshots/<id>          atomic symlink, switched only after the manifest is written
  *   snapshots/<id>/manifest.json      counts, snapshot time, per-collection schema + schema_hash
- *   snapshots/<id>/books.parquet      every top-level field; nested objects as JSON
+ *   snapshots/<id>/books.parquet      every top-level field, each typed JSON (books mix types per
+ *                                     field — `year` is number or string): cast where you read,
+ *                                     `WHERE visible::BOOLEAN AND pages_count::INT > 0`, `title->>'$'`
  *   snapshots/<id>/pages/bucket=NN/*.parquet   metadata only (no ocr/translation text;
  *                                              *_bytes columns carry the text lengths)
  *

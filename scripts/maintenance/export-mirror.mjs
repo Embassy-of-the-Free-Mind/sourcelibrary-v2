@@ -30,9 +30,6 @@
  *   ... --limit-chunks 3 --dir /tmp/m  (smoke test; never publishes over a real mirror)
  *
  * Read-only against Atlas. Needs the DuckDB CLI (see scripts/lib/mirror.mjs).
- *
- * Cron (after backup-books.sh's 04:00 dump; heap-capped so a runaway dies alone, not the box):
- *   40 4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-export-mirror.lock node --max-old-space-size=1536 --env-file=.env.production.local scripts/maintenance/export-mirror.mjs >> /var/log/sourcelibrary/export-mirror.log 2>&1
  */
 import { MongoClient, ObjectId, BSON } from 'mongodb';
 import fs from 'node:fs';
@@ -107,7 +104,9 @@ for (const d of fs.readdirSync(stagingRoot)) {
   if (!staging && ageH < RESUME_MAX_AGE_H && c.collections.join() === COLLECTIONS.join()) { staging = path.join(stagingRoot, d); ck = c; log(`resuming ${d} (${ageH.toFixed(1)} h old)`); }
   else { log(`discarding stale staging ${d}`); fs.rmSync(path.join(stagingRoot, d), { recursive: true, force: true }); }
 }
-const saveCk = () => { const p = path.join(staging, 'checkpoint.json'); fs.writeFileSync(p + '.tmp', JSON.stringify(ck, null, 1)); fs.renameSync(p + '.tmp', p); };
+// Wire bytes accumulate across resumed processes: each run adds what its own sockets received.
+let wirePrior = null;
+const saveCk = () => { if (wirePrior !== null) ck.wire_bytes = wirePrior + wireTotal(); const p = path.join(staging, 'checkpoint.json'); fs.writeFileSync(p + '.tmp', JSON.stringify(ck, null, 1)); fs.renameSync(p + '.tmp', p); };
 if (!staging) {
   const id = new Date().toISOString().slice(0, 16).replace(/[-:]/g, '') + 'Z';
   staging = path.join(stagingRoot, id);
@@ -115,6 +114,8 @@ if (!staging) {
   ck = { snapshot_id: id, started_at: new Date().toISOString(), collections: COLLECTIONS, books: null, pages: null };
   saveCk();
 }
+
+wirePrior = ck.wire_bytes || 0;
 
 // ---- Atlas client --------------------------------------------------------------
 const client = new MongoClient(process.env.MONGODB_URI, {
@@ -410,7 +411,8 @@ const TS_COLUMNS = ['created_at', 'updated_at', 'ocr_updated_at', 'translation_u
 // Full walk weekly (or when the changelog cannot vouch for the window); otherwise refetch
 // only the pages the changelog saw change since the base snapshot's as_of.
 const FULL_EVERY_DAYS = Number(arg('full-every-days', '7'));
-const DELTA_MARGIN_MS = 10 * 60_000;
+// Covers clock skew between this box and clusterTime (seconds-truncated); both are NTP-synced.
+const DELTA_MARGIN_MS = 2 * 60_000;
 const CHANGELOG_DIR = path.join(DIR, 'changelog');
 
 function planPages() {
@@ -517,7 +519,6 @@ async function exportPagesDelta() {
 if (COLLECTIONS.includes('books')) await exportBooks();
 if (COLLECTIONS.includes('pages')) await exportPages();
 trackWire();
-ck.wire_bytes_this_run = wireTotal();
 saveCk();
 await client.close();
 if (LIMIT_CHUNKS) log('smoke test: chunk limit reached, converting what was staged');
@@ -548,7 +549,7 @@ if (COLLECTIONS.includes('books')) {
   const where = ck.books.delta
     ? `WHERE NOT (r.filename LIKE '%/books-dump-%' AND EXISTS (SELECT 1 FROM read_json('${staging}/books-changed-ids.ndjson.gz', format = 'newline_delimited', columns = {'_id': 'VARCHAR', 'it': 'VARCHAR'}) c WHERE c._id = r._id AND c.it = r._id_type))`
     : '';
-  runDuckdb(`COPY (SELECT * EXCLUDE (filename) FROM ${src} r ${where}) TO '${out}' (FORMAT parquet, COMPRESSION zstd, ROW_GROUP_SIZE 50000)`, { memoryLimit: '3GB', timeoutMs: 3 * 3600_000 });
+  runDuckdb(`COPY (SELECT * EXCLUDE (filename) FROM ${src} r ${where}) TO '${out}' (FORMAT parquet, COMPRESSION zstd, ROW_GROUP_SIZE 5000)`, { memoryLimit: '6GB', threads: 2, timeoutMs: 3 * 3600_000 });
   const [{ n }] = runDuckdb(`SELECT count(*)::BIGINT AS n FROM read_parquet('${out}')`);
   const [{ dup }] = runDuckdb(`SELECT count(*)::BIGINT AS dup FROM (SELECT _id, _id_type FROM read_parquet('${out}') GROUP BY ALL HAVING count(*) > 1)`);
   const cols = describe(out);
@@ -578,7 +579,7 @@ if (COLLECTIONS.includes('pages')) {
     const hasDelta = fs.readdirSync(staging).some((f) => f.startsWith('pages-delta-'));
     body = `SELECT ${baseCols} FROM read_parquet('${baseGlob}', hive_partitioning = true) b ANTI JOIN ${changedSrc} c ON c._id = b._id AND c.it = b._id_type` + (hasDelta ? ` UNION ALL BY NAME ${fresh}` : '');
   }
-  runDuckdb(`COPY (${body}) TO '${out}' (FORMAT parquet, COMPRESSION zstd, PARTITION_BY (bucket), ROW_GROUP_SIZE 100000)`, { memoryLimit: '3GB', timeoutMs: 4 * 3600_000 });
+  runDuckdb(`COPY (${body}) TO '${out}' (FORMAT parquet, COMPRESSION zstd, PARTITION_BY (bucket), ROW_GROUP_SIZE 100000)`, { memoryLimit: '6GB', threads: 4, timeoutMs: 4 * 3600_000 });
   const [{ n }] = runDuckdb(`SELECT count(*)::BIGINT AS n FROM read_parquet('${out}/*/*.parquet', hive_partitioning = true)`);
   const [{ dup }] = runDuckdb(`SELECT count(*)::BIGINT AS dup FROM (SELECT _id, _id_type FROM read_parquet('${out}/*/*.parquet', hive_partitioning = true) GROUP BY ALL HAVING count(*) > 1)`);
   const byType = runDuckdb(`SELECT _id_type AS t, count(*)::BIGINT AS n FROM read_parquet('${out}/*/*.parquet', hive_partitioning = true) GROUP BY 1`);
@@ -601,7 +602,7 @@ if (COLLECTIONS.includes('pages')) {
 manifest.as_of = Object.values(manifest.collections).map((c) => c.as_of).sort()[0];
 manifest.finished_at = new Date().toISOString();
 manifest.duration_s = Math.round((Date.now() - Date.parse(ck.started_at)) / 1000);
-manifest.wire_bytes_from_atlas = ck.wire_bytes_this_run ?? null;
+manifest.wire_bytes_from_atlas = ck.wire_bytes ?? null;
 manifest.status = 'complete';
 fs.writeFileSync(path.join(snapDir, 'manifest.json'), JSON.stringify(manifest, null, 1));
 
@@ -623,4 +624,4 @@ for (const old of snaps.slice(0, Math.max(0, snaps.length - KEEP))) {
   log(`pruned snapshot ${old}`);
 }
 fs.rmSync(staging, { recursive: true, force: true });
-log(`done in ${((Date.now() - t0) / 60000).toFixed(1)} min; Atlas wire bytes this run: ${((ck.wire_bytes_this_run || 0) / 1e6).toFixed(0)} MB`);
+log(`done in ${((Date.now() - t0) / 60000).toFixed(1)} min; Atlas wire bytes for this snapshot: ${((ck.wire_bytes || 0) / 1e6).toFixed(0)} MB`);
