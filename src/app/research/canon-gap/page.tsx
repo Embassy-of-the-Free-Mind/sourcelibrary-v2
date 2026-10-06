@@ -447,7 +447,7 @@ export default function CanonGapPage() {
               <strong>Pilot quality.</strong> Of 40 sampled pages across five sections, 33 scored 4 or 5 out of 5. The
               weakest section was pramāṇa (logic), 4 of 8, where compressed verse came out as a literal crib. Four pages
               reversed a statement&rsquo;s meaning, three of them in Madhyamaka verse. Every Tengyur page is labelled
-              an unreviewed machine draft.
+              an AI translation not yet reviewed by a scholar.
             </li>
             <li>
               <strong>One page at a time.</strong> Against 84000&rsquo;s translations of the same passages (113
