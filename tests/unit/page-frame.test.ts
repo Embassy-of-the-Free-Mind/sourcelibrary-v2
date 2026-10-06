@@ -170,3 +170,66 @@ describe('detectPageFrame refuses edge-on views of a closed book', () => {
       .toEqual({ kind: 'skip', reason: 'not-a-page' });
   });
 });
+
+describe('detectPageFrame on white canvas (#4276)', () => {
+  // Toned, textured paper (236-247), as a dithered scan reads once downsampled.
+  const paper = (x: number, y: number) => 236 + ((x * 7 + y * 13) % 12);
+  // Lines of text inside a text block.
+  const text = (x: number, y: number, x0: number, x1: number, y0: number, y1: number) =>
+    x >= x0 && x <= x1 && y >= y0 && y <= y1 && y % 4 < 2 ? 30 : undefined;
+
+  it('trims flat white canvas around a smaller page, with no inset', () => {
+    // Bodhicaryāvatāra p5: the page at x 10-79, y 12-119, pure white around it.
+    const v = detectPageFrame(img(100, 140, (x, y) => (
+      x < 10 || x > 79 || y < 12 || y > 119 ? 255 : text(x, y, 20, 70, 24, 108) ?? paper(x, y)
+    )), 100, 140);
+    expect(v).toEqual({ kind: 'frame', box: { x: 10, y: 12, w: 70, h: 108 } });
+  });
+
+  it('keeps near-white paper that fills the image', () => {
+    // The same book's p205: high-contrast paper at 247-254, text, no canvas.
+    const v = detectPageFrame(img(100, 140, (x, y) => text(x, y, 15, 85, 14, 126) ?? 247 + ((x * 7 + y * 13) % 8)), 100, 140);
+    expect(v.kind).toBe('clean');
+  });
+
+  it('keeps the margins of a page whose paper is as white as the canvas', () => {
+    // A binarised Google scan: pure white all over, so no edge can be seen.
+    const v = detectPageFrame(img(100, 140, (x, y) => text(x, y, 22, 78, 24, 116) ?? 255), 100, 140);
+    expect(v.kind).toBe('clean');
+  });
+
+  it('leaves canvas that runs past the edge zone (a small object on a large ground)', () => {
+    const v = detectPageFrame(img(100, 140, (x, y) => (x > 64 ? 255 : text(x, y, 8, 56, 14, 126) ?? paper(x, y))), 100, 140);
+    expect(v.kind).toBe('clean');
+  });
+
+  // A ragged left edge: the page starts at x=10 above y=70 and at x=13 below it.
+  const ragged = (mark: boolean) => img(100, 140, (x, y) => {
+    if (x > 79 || y < 12 || y > 119 || x < (y < 70 ? 10 : 13)) return 255;
+    if (mark && x === 11 && y >= 30 && y <= 50) return 60;
+    return text(x, y, 24, 70, 24, 108) ?? paper(x, y);
+  });
+
+  it('follows a ragged edge in to its innermost line when only blank paper is given up', () => {
+    const v = detectPageFrame(ragged(false), 100, 140);
+    expect(v.kind).toBe('frame');
+    if (v.kind !== 'frame') return;
+    expect(v.box.x).toBeGreaterThanOrEqual(13);
+    expect(v.box.x).toBeLessThanOrEqual(16);
+    expect(v.box.x + v.box.w).toBe(80);
+  });
+
+  it('stays at the outer line of a ragged edge when the strip holds a mark', () => {
+    const v = detectPageFrame(ragged(true), 100, 140);
+    expect(v.kind).toBe('frame');
+    if (v.kind !== 'frame') return;
+    expect(v.box.x).toBe(10);
+  });
+
+  it('gives the dark-bed verdict unchanged when the canvas trim fails a guard', () => {
+    // Page 13: bed on the right, then a white sliver. Canvas adds nothing.
+    const bed = (x: number) => (x >= 98 ? 255 : x >= 86 ? 22 : undefined);
+    const v = detectPageFrame(img(100, 140, x => bed(x)), 100, 140);
+    expect(v).toEqual({ kind: 'frame', box: { x: 0, y: 0, w: 85, h: 140 } });
+  });
+});
