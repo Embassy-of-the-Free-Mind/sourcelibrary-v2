@@ -49,6 +49,19 @@ describe('separateTermDefinitions', () => {
     });
   });
 
+  it('splits a definition that opens in italics (random-draw miss, 2026-10-06)', () => {
+    expect(separateTermDefinitions('<term>slightest negligence: *culpa levissima*, the highest legal standard of care</term>')).toBe(
+      '<term>slightest negligence</term> <note>*culpa levissima*, the highest legal standard of care</note>'
+    );
+  });
+
+  it('turns an "original: …" chip into a note with no term chip', () => {
+    const t = 'the <term>original: 足陽明經 (zú yáng míng jīng); a major energy channel running from the face to the feet</term> runs';
+    expect(separateTermDefinitions(t)).toBe(
+      'the <note>original: 足陽明經 (zú yáng míng jīng); a major energy channel running from the face to the feet</note> runs'
+    );
+  });
+
   it("relabels a gloss right after a term as the model's note", () => {
     expect(separateTermDefinitions(SILVER)).toBe(
       "where <term>Sulphur</term> boils mixed with perennial <term>Silver</term> <note>mercury or 'quicksilver'</note>, fleeing"

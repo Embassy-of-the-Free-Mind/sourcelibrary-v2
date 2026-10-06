@@ -45,11 +45,18 @@ export function splitTermDefinition(body: string): { head: string; definition: s
   if (!m) return null;
   const [, head, definition] = m;
   if (words(head) > MAX_HEAD_WORDS) return null;
-  // A definition opens with a word, not a verse or folio number.
-  if (!/^[\p{L}"'‘“(]/u.test(definition)) return null;
+  // A definition opens with a word (possibly italicised), not a verse or folio number.
+  if (!/^[\p{L}"'‘“(*_]/u.test(definition)) return null;
   if (words(definition) < MIN_DEFINITION_WORDS && words(body) <= LONG_TERM_WORDS) return null;
   return { head, definition };
 }
+
+/**
+ * Heads that label the model's own apparatus rather than name a term —
+ * `<term>original: 足陽明經 (zú yáng míng jīng); a major channel…</term>`. The
+ * whole chip is commentary, so it becomes a note with no term chip.
+ */
+const APPARATUS_HEAD = /^(?:original|lit(?:erally|\.)?|i\.e\.|note|cf\.?)$/i;
 
 const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -67,6 +74,7 @@ export function separateTermDefinitions(text: string): string {
   const out = text.replace(/<term>([^<\n]*?)<\/term>/gi, (whole, body: string, offset: number) => {
     const split = splitTermDefinition(body);
     if (!split) return whole;
+    if (APPARATUS_HEAD.test(split.head)) return `<note>${body.trim()}</note>`;
     const note = `<note>${split.definition}</note>`;
     return headPrecedes(text.slice(Math.max(0, offset - 200), offset), split.head)
       ? note
