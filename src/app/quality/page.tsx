@@ -1,13 +1,14 @@
 import { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import Link from 'next/link';
-import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import ContentPageLayout from '@/components/layout/ContentPageLayout';
+import SiteHeader from '@/components/layout/SiteHeader';
 import byLanguage from '@/data/quality-by-language.json';
 import ocrEvidence from '@/data/ocr-benchmark-evidence.json';
 import feedback from '@/data/quality-feedback-themes.json';
 import { listExperiments, latestCanonStatus, typedPages } from '@/lib/quality-center';
 import { AS_OF as OPEN_WORK_AS_OF, GROUPS } from '../research/quality/open/issues';
-import { PROSE_AS_OF, WAYS } from './content';
+import { LEAF, leafHref, PROSE_AS_OF, WAYS } from './content';
 
 // The Quality Center (#5918): where text quality stands, what we are doing about it, and how
 // people take part. Every number and list is read at build time from files committed on main
@@ -74,49 +75,137 @@ const SHOWN = 12;
 const canon = latestCanonStatus();
 
 type Theme = (typeof feedback.themes)[number];
-const STATUS_STYLE: Record<string, string> = {
-  fixed: 'bg-emerald-50 text-emerald-800 border-emerald-200',
-  'in progress': 'bg-amber-50 text-amber-800 border-amber-200',
-  'not yet': 'bg-stone-100 text-stone-600 border-stone-200',
-};
 
 /* ── small pieces ── */
 
 function Section({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
     <section id={id} className="mb-14 scroll-mt-24">
-      <h2 className="text-2xl md:text-3xl font-serif text-primary mb-4 border-t-2 border-stone-800 pt-4 text-balance">{title}</h2>
+      <h2 className="text-2xl md:text-3xl font-serif text-stone-900 mb-4 border-t border-stone-300 pt-5 text-balance">{title}</h2>
       {children}
     </section>
   );
 }
 
 function Sub({ children }: { children: ReactNode }) {
-  return <h3 className="font-serif text-xl text-primary mt-8 mb-3">{children}</h3>;
+  return <h3 className="font-serif text-xl text-stone-900 mt-8 mb-3">{children}</h3>;
 }
 
 function Source({ children }: { children: ReactNode }) {
-  return <p className="text-xs text-muted leading-relaxed mt-3">{children}</p>;
+  return <p className="text-xs text-stone-500 leading-relaxed mt-3">{children}</p>;
 }
 
 function A({ href, children }: { href: string; children: ReactNode }) {
-  const cls = 'text-accent-rust hover:underline';
+  const cls = LINK;
   return href.startsWith('/') ? <Link href={href} className={cls}>{children}</Link> : <a href={href} className={cls}>{children}</a>;
 }
 
 function IssueLink({ num }: { num: number }) {
-  return <a href={`${ISSUE}${num}`} className="font-mono text-sm text-accent-rust hover:underline whitespace-nowrap">#{num}</a>;
+  return <a href={`${ISSUE}${num}`} className="font-mono text-sm text-amber-800 hover:underline underline-offset-2 whitespace-nowrap">#{num}</a>;
 }
 
-function Chip({ status }: { status: string }) {
+function Status({ status }: { status: string }) {
+  return <span className="whitespace-nowrap text-xs uppercase tracking-wider text-stone-500">{status}</span>;
+}
+
+type Box = { x: number; y: number; w: number; h: number };
+
+/** A region of the leaf, cut from the same image by CSS (no second file to drift from it). */
+function Crop({ box, alt, className = '' }: { box: Box; alt: string; className?: string }) {
   return (
-    <span className={`inline-block whitespace-nowrap rounded-sm border px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider ${STATUS_STYLE[status] ?? STATUS_STYLE['not yet']}`}>
-      {status}
-    </span>
+    <div className={`relative overflow-hidden bg-[#e9dcc4] ${className}`} style={{ aspectRatio: `${box.w} / ${box.h}` }}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={LEAF.image}
+        alt={alt}
+        loading="lazy"
+        className="absolute max-w-none"
+        style={{
+          width: `${(LEAF.width / box.w) * 100}%`,
+          left: `${(-box.x / box.w) * 100}%`,
+          top: `${(-box.y / box.h) * 100}%`,
+        }}
+      />
+    </div>
   );
 }
 
-const th = 'text-left font-semibold text-muted text-xs uppercase tracking-wider px-3 py-2 border-b border-stone-300 align-bottom';
+/** Figure frame from /research/canon-gap's diagrams, without the number. */
+function Figure({ title, caption, children }: { title: string; caption: ReactNode; children: ReactNode }) {
+  return (
+    <figure className="my-8 rounded-sm border border-stone-200 bg-white px-4 py-6 md:px-8 md:py-8 max-w-3xl">
+      <div className="font-serif text-xl text-stone-900 mb-5">{title}</div>
+      {children}
+      <figcaption className="text-sm text-stone-500 mt-5 pt-4 border-t border-stone-100 leading-snug">{caption}</figcaption>
+    </figure>
+  );
+}
+
+function Row({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div className="md:grid md:grid-cols-[9rem_1fr] md:gap-x-5 py-2">
+      <div className="text-xs uppercase tracking-wider text-stone-400 mb-1 md:mb-0 md:pt-1">{label}</div>
+      <div className="min-w-0">{children}</div>
+    </div>
+  );
+}
+
+const PARTS: [string, string][] = [
+  ['stands', 'Where quality stands'],
+  ['experiments', 'Experiments'],
+  ['readers', 'What readers have told us'],
+  ['take-part', 'Take part'],
+];
+
+/** The entry: the leaf, two sentences, and the way in to each part. */
+function Entry() {
+  return (
+    <div className="bg-cream">
+      <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 pt-10 md:pt-14 grid gap-8 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] md:gap-12 md:items-end">
+        <figure>
+          <a href={leafHref} className="block">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={LEAF.image}
+              alt={LEAF.alt}
+              width={LEAF.width}
+              height={LEAF.height}
+              fetchPriority="high"
+              className="w-full h-auto border border-stone-200"
+            />
+          </a>
+          <figcaption className="text-sm text-stone-500 mt-3 leading-snug">
+            <span className="italic">{LEAF.title}</span>, {LEAF.date}, <A href={leafHref}>page {LEAF.page}</A>. An early
+            reader&rsquo;s notes in the margin and at the foot.
+          </figcaption>
+        </figure>
+        <div className="md:pb-10">
+          <h1 className="font-serif text-4xl md:text-5xl tracking-tight text-stone-900 mb-5">Quality Center</h1>
+          <p className="text-lg text-stone-700 leading-relaxed mb-6">
+            Every page here was read by a machine first. This is where we show how good that reading is, what we are doing
+            to improve it, and how you can help.
+          </p>
+          <nav aria-label="On this page">
+            <ul className="space-y-1.5">
+              {PARTS.map(([id, label]) => (
+                <li key={id}>
+                  <a href={`#${id}`} className="text-amber-800 hover:underline underline-offset-2">{label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <p className="text-xs text-stone-500 mt-6">
+            Text as of {longDate(PROSE_AS_OF)}. Figures and lists are read from the library&rsquo;s data files each time the
+            site is built.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const LINK = 'text-amber-800 hover:underline underline-offset-2';
+const th = 'text-left font-semibold text-stone-500 text-xs uppercase tracking-wider px-3 py-2 border-b border-stone-300 align-bottom';
 const td = 'px-3 py-2 border-b border-stone-200 align-top tabular-nums';
 
 /* ── page ── */
@@ -125,43 +214,58 @@ export default function QualityCenterPage() {
   return (
     <ContentPageLayout
       header={
-        <ContentHeader
-          title="Quality Center"
-          subtitle="How good our transcriptions and translations are, how we know, what we are doing about it, and how you can take part"
-        >
-          <p className="text-stone-400 text-sm mt-4">
-            Text as of {longDate(PROSE_AS_OF)}. Figures and lists are read from the library&rsquo;s data files each time the site is built.
-          </p>
-        </ContentHeader>
+        <>
+          <SiteHeader variant="light" />
+          <Entry />
+        </>
       }
       bg="bg-cream"
     >
-      <article className="max-w-4xl">
-        <p className="text-secondary leading-relaxed mb-4 max-w-3xl">
-          Almost every page in Source Library was transcribed and translated by a machine. This page says how good that text
-          is, where we have not measured it, and what is known to be wrong. It lists the experiments we have run and are
-          running, what readers have reported to us, and the ways you can help.
-        </p>
-        <nav aria-label="On this page" className="text-sm text-muted mb-12 flex flex-wrap gap-x-5 gap-y-1">
-          <a href="#stands" className="hover:text-accent-rust">Where quality stands</a>
-          <a href="#experiments" className="hover:text-accent-rust">Experiments</a>
-          <a href="#readers" className="hover:text-accent-rust">What readers have told us</a>
-          <a href="#take-part" className="hover:text-accent-rust">Take part</a>
-          <a href="#further" className="hover:text-accent-rust">Further reading</a>
-        </nav>
-
+      <article className="max-w-4xl text-stone-700">
         {/* ── 1. Where quality stands ── */}
         <Section id="stands" title="Where quality stands">
-          <p className="text-secondary leading-relaxed mb-4 max-w-3xl">
+          <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
             A page can go wrong in two places: the transcription can misread the scan, and the English can misread the
             transcription. We measure each against published texts where they exist. A score from a model judge is a
             model&rsquo;s opinion, not a person&rsquo;s, and the table says which is which.
           </p>
 
+          <Figure
+            title="One line, checked against the scan"
+            caption={
+              <>
+                From the leaf above (<A href={leafHref}>page {LEAF.page}</A>), read by eye while this page was written, 6 October
+                2026. The English happens to be right; the transcription is not, and a reader searching the Latin for{' '}
+                <i>particulas</i> would not find this page. A check of the transcription asks this question of a page: does our
+                text say what the scan says?
+              </>
+            }
+          >
+            <Row label="The scan">
+              <Crop box={LEAF.line} alt="The end of one printed line: natio. Quisquilias. i. vilissimas et abiectissimas, then an abbreviated word broken at the line end." />
+            </Row>
+            <Row label="Our text">
+              <p className="font-mono text-sm leading-relaxed text-stone-800">
+                natio. Quisquilias. i. vilissimas &amp; abiectissimas <span className="underline decoration-amber-700 decoration-2 underline-offset-4">quis-</span>
+              </p>
+            </Row>
+            <Row label="Our English">
+              <p className="text-[0.95rem] leading-relaxed">
+                <b>Scraps.</b> That is, the cheapest and most rejected little bits, like the refuse that is swept up by brooms.
+              </p>
+            </Row>
+            <Row label="The mark">
+              <p className="text-[0.95rem] leading-relaxed">
+                The last word on the line is printed <i>p̄ti-</i>, short for <i>particulas</i>, &ldquo;small pieces&rdquo;. Our
+                transcription reads <i>quis-culas</i>, a word that does not exist.
+              </p>
+            </Row>
+          </Figure>
+
           <Sub>By language</Sub>
-          <p className="md:hidden text-xs text-muted mb-2">The table scrolls sideways.</p>
+          <p className="md:hidden text-xs text-stone-500 mb-2">The table scrolls sideways.</p>
           <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
-            <table className="min-w-[680px] w-full text-sm text-secondary">
+            <table className="min-w-[680px] w-full text-sm text-stone-700">
               <thead>
                 <tr>
                   <th className={th}>Language</th>
@@ -178,27 +282,27 @@ export default function QualityCenterPage() {
                   const tr = row?.translation;
                   return (
                     <tr key={language}>
-                      <td className={`${td} font-semibold text-primary`}>{language}</td>
-                      <td className={td}>{row ? `${row.share_of_translated_pages}%` : <span className="text-muted">—</span>}</td>
+                      <td className={`${td} font-semibold text-stone-900`}>{language}</td>
+                      <td className={td}>{row ? `${row.share_of_translated_pages}%` : <span className="text-stone-500">—</span>}</td>
                       <td className={td}>
                         {ocr?.median_cer != null ? (
-                          <>{pct(ocr.median_cer, 1)} <span className="text-muted text-xs">({ocr.pages_scored} pages)</span></>
+                          <>{pct(ocr.median_cer, 1)} <span className="text-stone-500 text-xs">({ocr.pages_scored} pages)</span></>
                         ) : (
-                          <span className="text-muted">{row ? 'not measured' : '—'}</span>
+                          <span className="text-stone-500">{row ? 'not measured' : '—'}</span>
                         )}
                       </td>
                       <td className={td}>
-                        {tr ? <>{pct(tr.share)} <span className="text-muted text-xs">({tr.books} books)</span></> : <span className="text-muted">—</span>}
+                        {tr ? <>{pct(tr.share)} <span className="text-stone-500 text-xs">({tr.books} books)</span></> : <span className="text-stone-500">—</span>}
                       </td>
                       <td className={td}>
                         {fid?.share_ge4 != null ? (
-                          <>{pct(fid.share_ge4)} <span className="text-muted text-xs">({fid.n} pages)</span></>
+                          <>{pct(fid.share_ge4)} <span className="text-stone-500 text-xs">({fid.n} pages)</span></>
                         ) : (
-                          <span className="text-muted">not measured</span>
+                          <span className="text-stone-500">not measured</span>
                         )}
                       </td>
                       <td className={td}>
-                        {(row?.readers?.answers ?? 0) > 0 ? `${row!.readers.answers} answers` : <span className="text-muted">not yet</span>}
+                        {(row?.readers?.answers ?? 0) > 0 ? `${row!.readers.answers} answers` : <span className="text-stone-500">not yet</span>}
                       </td>
                     </tr>
                   );
@@ -217,7 +321,7 @@ export default function QualityCenterPage() {
           </Source>
 
           <Sub>What we have not measured, and what is known to be wrong</Sub>
-          <ul className="list-disc pl-5 space-y-2 text-secondary leading-relaxed max-w-3xl">
+          <ul className="list-disc pl-5 space-y-2 text-stone-700 leading-relaxed max-w-3xl">
             {noReaders && (
               <li>
                 The reader panel, in which people who read a language score our pages, has no answers yet in any language. So
@@ -258,13 +362,13 @@ export default function QualityCenterPage() {
           </Source>
 
           <Sub>By canon</Sub>
-          <p className="text-secondary leading-relaxed mb-4 max-w-3xl">
+          <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
             For some canons the text beside the scan was typed by people (an open e-text edition aligned page by page to our
             scans) rather than read by a machine. Those pages can still carry errors of alignment, but not misreadings.
           </p>
-          <p className="md:hidden text-xs text-muted mb-2">The table scrolls sideways.</p>
+          <p className="md:hidden text-xs text-stone-500 mb-2">The table scrolls sideways.</p>
           <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
-            <table className="min-w-[560px] w-full text-sm text-secondary">
+            <table className="min-w-[560px] w-full text-sm text-stone-700">
               <thead>
                 <tr>
                   <th className={th}>Canon</th>
@@ -279,13 +383,13 @@ export default function QualityCenterPage() {
                   const typed = typedPages(t);
                   return (
                     <tr key={t.id}>
-                      <td className={`${td} font-semibold text-primary`}>{t.name}</td>
+                      <td className={`${td} font-semibold text-stone-900`}>{t.name}</td>
                       <td className={td}>{n(t.books)}</td>
                       <td className={td}>
-                        {n(t.pages_transcribed)} <span className="text-muted text-xs">of {n(t.pages_scanned)}</span>
+                        {n(t.pages_transcribed)} <span className="text-stone-500 text-xs">of {n(t.pages_scanned)}</span>
                       </td>
                       <td className={td}>
-                        {t.pages_transcribed > 0 ? (typed > 0 ? `${share(typed, t.pages_transcribed)} (${n(typed)} pages)` : 'none') : <span className="text-muted">—</span>}
+                        {t.pages_transcribed > 0 ? (typed > 0 ? `${share(typed, t.pages_transcribed)} (${n(typed)} pages)` : 'none') : <span className="text-stone-500">—</span>}
                       </td>
                       <td className={td}>{n(t.pages_translated)}</td>
                     </tr>
@@ -305,13 +409,13 @@ export default function QualityCenterPage() {
 
         {/* ── 2. Experiments ── */}
         <Section id="experiments" title="Experiments">
-          <p className="text-secondary leading-relaxed mb-4 max-w-3xl">
+          <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
             The quality figures above come from experiments, and each experiment has a written record: the question, how
             it was run, the result, and the decision it led to. Null results and retractions are recorded too.
           </p>
 
           <Sub>Running now</Sub>
-          <ul className="space-y-2 text-secondary leading-relaxed">
+          <ul className="space-y-2 text-stone-700 leading-relaxed">
             {running.map((r, i) => (
               <li key={`${r.n}-${i}`} className="grid grid-cols-[4.5rem_1fr] gap-x-3">
                 <IssueLink num={r.n} />
@@ -321,7 +425,7 @@ export default function QualityCenterPage() {
           </ul>
 
           <Sub>Next</Sub>
-          <ul className="space-y-2 text-secondary leading-relaxed">
+          <ul className="space-y-2 text-stone-700 leading-relaxed">
             {planned.map((r, i) => (
               <li key={`${r.n}-${i}`} className="grid grid-cols-[4.5rem_1fr] gap-x-3">
                 <IssueLink num={r.n} />
@@ -339,10 +443,10 @@ export default function QualityCenterPage() {
             {experiments.slice(0, SHOWN).map(e => (
               <li key={e.file} className="py-3 border-b border-stone-200">
                 <div className="flex flex-wrap items-baseline gap-x-3">
-                  <span className="text-xs text-muted tabular-nums whitespace-nowrap">{e.date}</span>
-                  <a href={e.href} className="text-primary font-semibold hover:text-accent-rust">{e.question}</a>
+                  <span className="text-xs text-stone-500 tabular-nums whitespace-nowrap">{e.date}</span>
+                  <a href={e.href} className="text-stone-900 font-semibold hover:text-amber-800">{e.question}</a>
                 </div>
-                {e.headline && <p className="text-secondary text-[0.95rem] leading-relaxed mt-1">{e.headline}</p>}
+                {e.headline && <p className="text-stone-700 text-[0.95rem] leading-relaxed mt-1">{e.headline}</p>}
                 {e.issues.length > 0 && (
                   <p className="text-xs mt-1 space-x-2">
                     {e.issues.filter((v, i, a) => a.indexOf(v) === i).map(num => <IssueLink key={num} num={num} />)}
@@ -353,12 +457,12 @@ export default function QualityCenterPage() {
           </ul>
           {experiments.length > SHOWN && (
             <details className="mt-4">
-              <summary className="cursor-pointer text-accent-rust hover:underline text-sm">All {n(experiments.length)} write-ups</summary>
+              <summary className="cursor-pointer text-amber-800 hover:underline text-sm">All {n(experiments.length)} write-ups</summary>
               <ul className="mt-3 text-sm">
                 {experiments.slice(SHOWN).map(e => (
                   <li key={e.file} className="py-1.5 border-b border-stone-100 flex flex-wrap gap-x-3">
-                    <span className="text-xs text-muted tabular-nums whitespace-nowrap">{e.date}</span>
-                    <a href={e.href} className="text-secondary hover:text-accent-rust">{e.question}</a>
+                    <span className="text-xs text-stone-500 tabular-nums whitespace-nowrap">{e.date}</span>
+                    <a href={e.href} className="text-stone-700 hover:text-amber-800">{e.question}</a>
                   </li>
                 ))}
               </ul>
@@ -372,7 +476,7 @@ export default function QualityCenterPage() {
 
         {/* ── 3. What readers have told us ── */}
         <Section id="readers" title="What readers have told us">
-          <p className="text-secondary leading-relaxed mb-4 max-w-3xl">
+          <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
             Between {longDate(feedback.window!.first)} and {longDate(feedback.window!.last)} readers sent{' '}
             {n(feedback.reader_reports)} messages through the Feedback button. {n(feedback.themed_reports)} of them were about
             the text itself, and they fall into the themes below. People who write to us choose to, and many write about the
@@ -382,18 +486,18 @@ export default function QualityCenterPage() {
             {feedback.themes.map((t: Theme) => (
               <li key={t.id} className="py-4 border-b border-stone-200">
                 <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                  <h3 className="font-semibold text-primary">{t.label}</h3>
-                  <Chip status={t.status} />
+                  <h3 className="font-semibold text-stone-900">{t.label}</h3>
+                  <Status status={t.status} />
                 </div>
-                <p className="text-sm text-muted mt-1">
+                <p className="text-sm text-stone-500 mt-1">
                   {n(t.reports)} {t.reports === 1 ? 'report' : 'reports'} about {n(t.books)} {t.books === 1 ? 'book' : 'books'};{' '}
                   {n(t.marked_done)} marked done.
                 </p>
-                <p className="text-secondary leading-relaxed mt-2">
-                  <span className="text-muted">A typical report, in our words:</span> {t.paraphrase}
+                <p className="text-stone-700 leading-relaxed mt-2">
+                  <span className="text-stone-500">A typical report, in our words:</span> {t.paraphrase}
                 </p>
-                <p className="text-secondary leading-relaxed mt-1">
-                  <span className="text-muted">What we did:</span> {t.did}
+                <p className="text-stone-700 leading-relaxed mt-1">
+                  <span className="text-stone-500">What we did:</span> {t.did}
                   {t.issues.length > 0 && <> {t.issues.map((num: number) => <span key={num} className="mr-2"><IssueLink num={num} /></span>)}</>}
                 </p>
               </li>
@@ -411,14 +515,39 @@ export default function QualityCenterPage() {
 
         {/* ── 4. Take part ── */}
         <Section id="take-part" title="Take part">
-          <p className="text-secondary leading-relaxed mb-4 max-w-3xl">
-            Readers find what no measurement catches: a page shifted against its scan, a reversed sentence, a wrong date.
-            Here is what you can do now, and what each leaves behind.
+          <p className="leading-relaxed mb-4 max-w-3xl">
+            The book above improved because someone read it closely and wrote in it. Readers here do the same: they find
+            what no measurement catches, a page shifted against its scan, a reversed sentence, a wrong date. Their notes
+            become part of the page.
           </p>
+
+          <Figure
+            title="A reader's note, and where yours would go"
+            caption={
+              <>
+                Left: the foot of the leaf above. As we read the hand: <i>De ea Endelechia plura doctissimus Budeus in libro
+                de Asse primo</i>, &ldquo;more on this <i>endelechia</i> in the most learned Budé, in the first book of{' '}
+                <i>De Asse</i>&rdquo;. Right: blank paper from the same page. No reader has yet left a note here that we may
+                show with their name; when one does, and agrees, it will stand in that margin.
+              </>
+            }
+          >
+            <div className="grid gap-4 sm:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] sm:items-start">
+              <Crop box={LEAF.note} alt="A line of ink handwriting at the foot of the printed page." />
+              <div className="relative">
+                <Crop box={LEAF.margin} alt="Blank paper from the margin of the same page." />
+                <div className="absolute inset-3 border border-dashed border-stone-500/60 flex items-center justify-center p-3">
+                  <span className="text-sm text-stone-600 text-center leading-snug">Your note would go here</span>
+                </div>
+              </div>
+            </div>
+          </Figure>
+
+          <p className="leading-relaxed mb-4 max-w-3xl">Here is what you can do now, and what each leaves behind.</p>
           <ul>
             {WAYS.filter(w => !w.planned).map(w => (
               <li key={w.name} className="py-4 border-b border-stone-200 md:grid md:grid-cols-[12rem_1fr] md:gap-x-6">
-                <div className="font-semibold text-primary mb-1">
+                <div className="font-semibold text-stone-900 mb-1">
                   {w.name}
                   {w.door && (
                     <div className="mt-1 text-sm font-normal">
@@ -426,9 +555,9 @@ export default function QualityCenterPage() {
                     </div>
                   )}
                 </div>
-                <div className="text-secondary leading-relaxed">
+                <div className="text-stone-700 leading-relaxed">
                   <p>{w.what}</p>
-                  <p className="mt-1"><span className="text-muted">What it leaves behind:</span> {w.leaves}</p>
+                  <p className="mt-1"><span className="text-stone-500">What it leaves behind:</span> {w.leaves}</p>
                 </div>
               </li>
             ))}
@@ -438,10 +567,10 @@ export default function QualityCenterPage() {
           <ul>
             {WAYS.filter(w => w.planned).map(w => (
               <li key={w.name} className="py-3 border-b border-stone-200 md:grid md:grid-cols-[12rem_1fr] md:gap-x-6">
-                <div className="font-semibold text-primary mb-1">{w.name}</div>
-                <div className="text-secondary leading-relaxed">
+                <div className="font-semibold text-stone-900 mb-1">{w.name}</div>
+                <div className="text-stone-700 leading-relaxed">
                   <p>{w.what}</p>
-                  <p className="mt-1"><span className="text-muted">What it would leave behind:</span> {w.leaves}</p>
+                  <p className="mt-1"><span className="text-stone-500">What it would leave behind:</span> {w.leaves}</p>
                 </div>
               </li>
             ))}
@@ -450,7 +579,7 @@ export default function QualityCenterPage() {
 
         {/* ── Further reading ── */}
         <Section id="further" title="Further reading">
-          <ul className="space-y-2 text-secondary leading-relaxed">
+          <ul className="space-y-2 text-stone-700 leading-relaxed">
             <li><A href="/research/quality">How page quality is measured</A>: the working paper behind these figures, with methods and intervals.</li>
             <li><A href="/research/quality/open">Open quality work</A>: known defects, work in progress and what has changed, each linked to its issue.</li>
             <li><A href="/research/canon-quality">How we check each canon</A>: per canon, what checks the text and the English.</li>
