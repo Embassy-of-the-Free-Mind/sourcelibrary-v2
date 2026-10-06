@@ -76,7 +76,14 @@ export const OCR_TRUST_TABLE = Object.freeze([
     yearTo: 1599,
     evidence: '#5695 T2: served fidelity 3.40 (n = 15), 40% ≤ 3; OCR primary cause on 6 of 6 low pages in the stratum (16 of 22 low Greek pages overall). Greek print 1600–1799 (3.93) and 1800+ (4.02) are not gated: their low pages were translation or seam.',
     since: OCR_TRUST_GATE_SINCE,
-    readers: DEFAULT_BETTER_READERS,
+    // gemini-3-flash-preview is a better reader of PRINTED Greek than the flash-lite read that was
+    // measured (#5700 A5, reocr-lift-5700: +1.04 [0.61, 1.50] fidelity on lite-read Greek pages;
+    // #5813 pilot by eye on print: 9 better, 6 same, 0 worse, 0 invented). KNOWN LIMITS in this
+    // stratum, from the full run (experiments/2026-10-06-greek-reocr-production-5813.md): one
+    // invented line in six pages checked (a Homer verse written from memory, Nonnus 1589) and
+    // diacritics dropped on 4.1 % of pages. Merging this row is Derek's decision (#5813).
+    // It is NOT added to greek-manuscript: on handwriting it invents text (#5813 pilot, 2 of 5 pages).
+    readers: Object.freeze([...DEFAULT_BETTER_READERS, /^gemini-3-flash-preview$/i]),
   },
   {
     id: 'persian',

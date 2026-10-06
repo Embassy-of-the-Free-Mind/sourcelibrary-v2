@@ -116,9 +116,19 @@ describe('the way out — a re-read by a better reader after the gate date', () 
     expect(isReread({ ocr: { source: 'manual', updated_at: after } }, row)).toBe(true);
     expect(isReread({ ocr: { model: 'gemini-3.1-pro-preview', updated_at: before } }, row)).toBe(false);          // the old read
     expect(isReread({ ocr: { model: 'gemini-3.1-flash-lite', updated_at: after } }, row)).toBe(false);           // the measured reader, again
-    expect(isReread({ ocr: { model: 'gemini-3-flash-preview', updated_at: after } }, row)).toBe(false);
+    expect(isReread({ ocr: { model: 'gemini-3-flash-preview', updated_at: after } }, row)).toBe(false);          // flash invents on manuscripts (#5813)
     expect(isReread({ ocr: { model: 'gemini-3.1-pro-preview' } }, row)).toBe(false);                             // no date, no claim
     expect(new Date(OCR_TRUST_GATE_SINCE) <= after).toBe(true);
+  });
+
+  it('a flash re-read releases printed Greek 1450–1599 only, never a manuscript (#5813)', () => {
+    const print = OCR_TRUST_TABLE.find((r: Doc) => r.id === 'greek-print-1450-1599');
+    expect(isReread({ ocr: { model: 'gemini-3-flash-preview', updated_at: after } }, print)).toBe(true);
+    expect(isReread({ ocr: { model: 'gemini-3-flash-preview', updated_at: before } }, print)).toBe(false);       // a flash read from before the gate
+    expect(isReread({ ocr: { model: 'gemini-3.1-flash-lite', updated_at: after } }, print)).toBe(false);
+    for (const r of OCR_TRUST_TABLE.filter((x: Doc) => x.id !== 'greek-print-1450-1599')) {
+      expect(isReread({ ocr: { model: 'gemini-3-flash-preview', updated_at: after } }, r)).toBe(false);
+    }
   });
 
   it('releases at RELEASE_SHARE of the OCR\'d pages, not before', () => {
