@@ -34,7 +34,7 @@
 import { MongoClient } from 'mongodb';
 import { VISIBLE_PAGE_MATCH } from '../lib/page-counts.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
-import { isTruncatedCandidate, truncationFailReason } from '../lib/truncated-response.mjs';
+import { isTruncatedCandidate, truncationFailReason, candidateText } from '../lib/truncated-response.mjs';
 import {
   getTranslateModelForBook,
   loadTranslationPrompts,
@@ -130,7 +130,7 @@ async function callGemini(promptText, apiKey, model) {
 
   const result = await response.json();
   const candidate = result.candidates?.[0];
-  const text = candidate?.content?.parts?.[0]?.text || '';
+  const text = candidateText(candidate) || '';
   const usage = result.usageMetadata || {};
   return {
     text,

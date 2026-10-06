@@ -17,7 +17,7 @@ import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance } from '../l
 /** Provenance identity of this collector (#4613). */
 const COLLECTOR_CALL_SITE = 'scripts/batch/collect-multipage-ocr.mjs';
 import { liftOcrTags, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
-import { isTruncatedCandidate } from '../lib/truncated-response.mjs';
+import { isTruncatedCandidate, candidateText } from '../lib/truncated-response.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
 
@@ -127,7 +127,7 @@ async function main() {
       let pageCount = 0;
       for (const r of responses) {
         if (r.error) { console.log(`  Response error: ${JSON.stringify(r.error).slice(0, 100)}`); continue; }
-        const text = r.response?.candidates?.[0]?.content?.parts?.[0]?.text;
+        const text = candidateText(r.response?.candidates?.[0]);
         if (!text) { console.log('  Empty response'); continue; }
         const parsed = parseMultiPageOcr(text, { lenient: true });
         pageCount += parsed.size;
@@ -152,7 +152,7 @@ async function main() {
         continue;
       }
       const candidate = result.response?.candidates?.[0];
-      const text = candidate?.content?.parts?.[0]?.text;
+      const text = candidateText(candidate);
       if (!text) {
         console.warn(`  Response ${ri}: empty`);
         failCount++;

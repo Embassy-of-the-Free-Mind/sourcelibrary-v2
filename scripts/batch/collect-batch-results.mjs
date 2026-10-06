@@ -20,7 +20,7 @@ import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance, translation
 const COLLECTOR_CALL_SITE = 'scripts/batch/collect-batch-results.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
 import { liftOcrTags, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
-import { isTruncatedCandidate } from '../lib/truncated-response.mjs';
+import { isTruncatedCandidate, candidateText } from '../lib/truncated-response.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
@@ -172,7 +172,7 @@ async function processOneJob(db, job) {
       for (const result of responses) {
         if (result.error) { failCount++; continue; }
         const candidate = result.response?.candidates?.[0];
-        const text = candidate?.content?.parts?.[0]?.text;
+        const text = candidateText(candidate);
         if (!text) { failCount++; continue; }
         const usage = result.response?.usageMetadata;
         const parsed = [...parseMultiPageOcr(text, { lenient: true })];
@@ -193,7 +193,7 @@ async function processOneJob(db, job) {
         const pageId = result.metadata?.key || (job.page_ids && job.page_ids[idx]);
         if (!pageId) { failCount++; continue; }
         const candidate = result.response?.candidates?.[0];
-        const text = candidate?.content?.parts?.[0]?.text;
+        const text = candidateText(candidate);
         if (!text) { failCount++; continue; }
         // Partial text is a FAILED read, not a short one — it has text and a
         // non-refusal finishReason, so it matched no branch here and was stored
