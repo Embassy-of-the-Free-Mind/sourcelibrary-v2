@@ -11,6 +11,153 @@
     "textless": [],
     "ref_engine": "gemini-3.1-flash-lite",
     "engines": {
+      "chandra-ocr-2": {
+        "pages_run": 11,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 11,
+          "median_cer": 0.33,
+          "mean_cer": 0.262,
+          "catastrophic": 0,
+          "median_gap": 0.006,
+          "median_seq": 0.69,
+          "refused": 0,
+          "n_answered": 11,
+          "median_cer_answered": 0.33,
+          "mean_cer_answered": 0.262,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.213,
+          "mean": 0.329,
+          "n_engines": 10,
+          "ref_median": 0.355,
+          "ref_mean": 0.454
+        },
+        "paired_vs_ref": {
+          "n": 11,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 11,
+          "ties": 0,
+          "median_delta_cer": -0.073,
+          "p_sign": 0.001,
+          "invention_wins": 0,
+          "invention_losses": 11
+        },
+        "worst": [
+          {
+            "slug": "greek-e75fda-p53",
+            "title": "Plutarchu Chaerōneōs Peri Tōn areskontōn tois philosophois, physikōn dogmatōn epithymēs, biblia pente",
+            "year": 1531,
+            "cer": 0.464,
+            "gap": 0.045,
+            "invention": 0.735,
+            "has_ref": true,
+            "unsupported": [
+              "ὀλυόφοις",
+              "ἀνθρώπους",
+              "ἐμπιπτόντες",
+              "θαλούεσθαι",
+              "ἔσται",
+              "πικραὶ",
+              "δάλασσῶν",
+              "ὑγρασίαν"
+            ]
+          },
+          {
+            "slug": "greek-f8ec82-p43",
+            "title": "On the Sublime, chiefly from the text of Weiske",
+            "year": 1838,
+            "cer": 0.463,
+            "gap": 0,
+            "invention": 0.171,
+            "has_ref": true,
+            "unsupported": [
+              "εὐρήσων",
+              "οὕριος",
+              "συνεμπνεί",
+              "μαίνεταί",
+              "ἐγγέσπαλος",
+              "οὖρεσι",
+              "θύκτις",
+              "τρίφω"
+            ]
+          },
+          {
+            "slug": "greek-e28801-p756",
+            "title": "Organum : Hoc est libri omnes ad logicam pertinentes, Graece et Latine ; cum triplici indice",
+            "year": 1592,
+            "cer": 0.443,
+            "gap": 0.047,
+            "invention": 0.533,
+            "has_ref": true,
+            "unsupported": [
+              "πικων",
+              "γδδον",
+              "πικορυμ",
+              "τῶντα",
+              "πᾶσι",
+              "ἑρωτῶν",
+              "ὁρῶντων",
+              "ὀπληχρητέον"
+            ]
+          },
+          {
+            "slug": "greek-da99cc-p426",
+            "title": "Diogenus Laertiu Peri Biōn, Dogmatōn kai apophthegmatōn tōn en philosophia eudokimēsantōn : biblia deka = Diogenis Laert",
+            "year": 1533,
+            "cer": 0.355,
+            "gap": 0.043,
+            "invention": 0.628,
+            "has_ref": true,
+            "unsupported": [
+              "416γυθαγορας",
+              "σελιῶν",
+              "λαμπροῦται",
+              "μέτεχειν",
+              "ἀνθρώπον",
+              "πρὸνοεῖται",
+              "εἰμαρμνήνως",
+              "αὐτὴν"
+            ]
+          },
+          {
+            "slug": "greek-c80c9d-p16",
+            "title": "Anakreontos Tēiou Melē : = Anacreontis Teii odae",
+            "year": 1554,
+            "cer": 0.337,
+            "gap": 0.013,
+            "invention": 0.472,
+            "has_ref": true,
+            "unsupported": [
+              "δαμύντα",
+              "έρος",
+              "ἵππια",
+              "ἐκοπή",
+              "ὄχης",
+              "δύρας",
+              "ἀελάσει",
+              "χίσος"
+            ]
+          }
+        ]
+      },
       "claude-opus-5-5": {
         "pages_run": 11,
         "empty": 0,
@@ -45,7 +192,7 @@
         "invention": {
           "median": 0,
           "mean": 0.017,
-          "n_engines": 8,
+          "n_engines": 10,
           "ref_median": 0.1,
           "ref_mean": 0.108
         },
@@ -116,6 +263,117 @@
           }
         ]
       },
+      "deepseek-ocr": {
+        "pages_run": 11,
+        "empty": 4,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 1,
+        "ref": {
+          "n": 11,
+          "median_cer": 0.42,
+          "mean_cer": 0.538,
+          "catastrophic": 5,
+          "median_gap": 0,
+          "median_seq": 0.223,
+          "refused": 0,
+          "n_answered": 11,
+          "median_cer_answered": 0.42,
+          "mean_cer_answered": 0.538,
+          "catastrophic_answered": 5
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.373,
+          "mean": 0.413,
+          "n_engines": 10,
+          "ref_median": 0.413,
+          "ref_mean": 0.495
+        },
+        "paired_vs_ref": {
+          "n": 11,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 11,
+          "ties": 0,
+          "median_delta_cer": -0.196,
+          "p_sign": 0.001,
+          "invention_wins": 4,
+          "invention_losses": 7
+        },
+        "worst": [
+          {
+            "slug": "greek-c80c9d-p16",
+            "title": "Anakreontos Tēiou Melē : = Anacreontis Teii odae",
+            "year": 1554,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-db6c8d-p219",
+            "title": "Petri Victorii commentarii in VIII libros Aristotelis De optimo statu civitatis : positis ante singulas declarationes gr",
+            "year": 1576,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-e28801-p756",
+            "title": "Organum : Hoc est libri omnes ad logicam pertinentes, Graece et Latine ; cum triplici indice",
+            "year": 1592,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-e75fda-p53",
+            "title": "Plutarchu Chaerōneōs Peri Tōn areskontōn tois philosophois, physikōn dogmatōn epithymēs, biblia pente",
+            "year": 1531,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-da99cc-p426",
+            "title": "Diogenus Laertiu Peri Biōn, Dogmatōn kai apophthegmatōn tōn en philosophia eudokimēsantōn : biblia deka = Diogenis Laert",
+            "year": 1533,
+            "cer": 0.659,
+            "gap": 0.021,
+            "invention": 0.885,
+            "has_ref": true,
+            "unsupported": [
+              "ἰδῳμὸν",
+              "ἂπρὶς",
+              "λοῦς",
+              "ἀλιῶι",
+              "ἀσμπερδία",
+              "ἰλίου",
+              "ἀνθρὰνταμ",
+              "πλῶς"
+            ]
+          }
+        ]
+      },
       "gemini-3-flash-preview": {
         "pages_run": 11,
         "empty": 0,
@@ -149,8 +407,8 @@
         },
         "invention": {
           "median": 0.013,
-          "mean": 0.039,
-          "n_engines": 8,
+          "mean": 0.037,
+          "n_engines": 10,
           "ref_median": 0.157,
           "ref_mean": 0.142
         },
@@ -228,12 +486,11 @@
             "year": 1554,
             "cer": 0.129,
             "gap": 0,
-            "invention": 0.059,
+            "invention": 0.039,
             "has_ref": true,
             "unsupported": [
               "δαμλύτα",
-              "ἔρος",
-              "εἰμὶ"
+              "ἔρος"
             ]
           }
         ]
@@ -272,7 +529,7 @@
         "invention": {
           "median": 0,
           "mean": 0,
-          "n_engines": 8,
+          "n_engines": 10,
           "ref_median": 0.178,
           "ref_mean": 0.186
         },
@@ -363,7 +620,7 @@
         "invention": {
           "median": 0,
           "mean": 0,
-          "n_engines": 8,
+          "n_engines": 10,
           "ref_median": 0.178,
           "ref_mean": 0.186
         },
@@ -465,7 +722,7 @@
         "invention": {
           "median": 0.122,
           "mean": 0.133,
-          "n_engines": 8,
+          "n_engines": 10,
           "ref_median": 0.205,
           "ref_mean": 0.21
         },
@@ -610,9 +867,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.068,
-          "mean": 0.322,
-          "n_engines": 8,
+          "median": 0.041,
+          "mean": 0.311,
+          "n_engines": 10,
           "ref_median": 0.216,
           "ref_mean": 0.413
         },
@@ -634,7 +891,7 @@
             "year": 1576,
             "cer": 0.435,
             "gap": 0,
-            "invention": 0.88,
+            "invention": 0.86,
             "has_ref": true,
             "unsupported": [
               "ἱπανεῖται",
@@ -653,17 +910,17 @@
             "year": 1531,
             "cer": 0.403,
             "gap": 0.019,
-            "invention": 0.778,
+            "invention": 0.759,
             "has_ref": true,
             "unsupported": [
               "συλασσόφοις",
-              "αὐτῷ",
               "ὁδὲς",
               "κοιλότης",
               "ἰμπίπουος",
               "ὀλδύεως",
               "πεσὶ",
-              "ἐμείδη"
+              "ἐμείδη",
+              "πικεω"
             ]
           },
           {
@@ -691,7 +948,7 @@
             "year": 1533,
             "cer": 0.396,
             "gap": 0.013,
-            "invention": 0.705,
+            "invention": 0.684,
             "has_ref": true,
             "unsupported": [
               "γυθατορας",
@@ -700,8 +957,8 @@
               "λίνιω",
               "λαμπέσαι",
               "αἰβρώωρ",
-              "θεοῦ",
-              "συγγύειαν"
+              "συγγύειαν",
+              "αἴβρω"
             ]
           },
           {
@@ -710,12 +967,10 @@
             "year": 1838,
             "cer": 0.392,
             "gap": 0,
-            "invention": 0.068,
+            "invention": 0.041,
             "has_ref": true,
             "unsupported": [
               "ὁλοὸν",
-              "ἰδιόν",
-              "συντεθεικῶς",
               "tαύτην",
               "dιαθέσθαι"
             ]
@@ -754,9 +1009,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.165,
-          "mean": 0.361,
-          "n_engines": 8,
+          "median": 0.145,
+          "mean": 0.325,
+          "n_engines": 10,
           "ref_median": 0.303,
           "ref_mean": 0.446
         },
@@ -778,7 +1033,7 @@
             "year": 1838,
             "cer": 0.441,
             "gap": 0,
-            "invention": 0.158,
+            "invention": 0.145,
             "has_ref": true,
             "unsupported": [
               "ἄργει",
@@ -786,9 +1041,9 @@
               "ὀμηρος",
               "οὐρίος",
               "ἄγωσι",
-              "ἀρης",
               "ὅλον",
-              "ἀπροσ"
+              "ἀπροσ",
+              "θούν"
             ]
           },
           {
@@ -797,7 +1052,7 @@
             "year": 1533,
             "cer": 0.44,
             "gap": 0.021,
-            "invention": 0.677,
+            "invention": 0.656,
             "has_ref": true,
             "unsupported": [
               "βδομὸν",
@@ -835,7 +1090,7 @@
             "year": 1554,
             "cer": 0.402,
             "gap": 0,
-            "invention": 0.66,
+            "invention": 0.585,
             "has_ref": true,
             "unsupported": [
               "κέαπα",
@@ -844,8 +1099,8 @@
               "ἄπισαθίς",
               "ἐκοπὴ",
               "ὀχίας",
-              "ἔφλω",
-              "ἀρελάσει"
+              "ἀρελάσει",
+              "γλός"
             ]
           },
           {
@@ -854,7 +1109,7 @@
             "year": 1531,
             "cer": 0.376,
             "gap": 0.038,
-            "invention": 0.678,
+            "invention": 0.661,
             "has_ref": true,
             "unsupported": [
               "αὐξοφδεῖς",
@@ -864,7 +1119,7 @@
               "ἄλλι",
               "πικραλ",
               "δάλασσαν",
-              "φησὶν"
+              "λειψάνων"
             ]
           }
         ]
@@ -902,8 +1157,8 @@
         },
         "invention": {
           "median": 0.7,
-          "mean": 0.656,
-          "n_engines": 8,
+          "mean": 0.653,
+          "n_engines": 10,
           "ref_median": 0.765,
           "ref_mean": 0.69
         },
@@ -1001,7 +1256,7 @@
             "year": 1821,
             "cer": 0.904,
             "gap": 0,
-            "invention": 0.599,
+            "invention": 0.593,
             "has_ref": true,
             "unsupported": [
               "χηνου",
@@ -1028,6 +1283,53 @@
       "year": 1875,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 1213,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.04,
+          "acc": 0.96,
+          "seq": 0.81,
+          "bow": 0.81,
+          "gap": 0,
+          "len_ratio": 1.002,
+          "invention": 0.106,
+          "invention_indep": 0.106,
+          "invention_ref": 0.232,
+          "unsupported_sample": [
+            "ἦκιν",
+            "ἀνωτάτῳ",
+            "κατεκλίσθη",
+            "παιδιᾶν",
+            "καταηγορούντων",
+            "καταγόνους",
+            "ἄχαν",
+            "φιλανθρωπίᾳς"
+          ],
+          "invention_ref_sample": [
+            "ἦκιν",
+            "ἀνωτάτῳ",
+            "παρελθῶν",
+            "κατεκλίσθη",
+            "παιδιᾶν",
+            "καταηγορούντων",
+            "καταγόνους",
+            "ἡτίμωσε"
+          ],
+          "cer_folded": 0.012,
+          "agree": {
+            "claude-opus-5-5": 0.83,
+            "deepseek-ocr": 0.766,
+            "gemini-3-flash-preview": 0.83,
+            "gemini-3.1-flash-lite": 0.826,
+            "gemini-3.1-flash-lite-b": 0.826,
+            "kraken-greek-cllg": 0.816,
+            "mistral-ocr-4-1": 0.884,
+            "qwen3-vl-8b": 0.804,
+            "tesseract-grc": 0.615
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 1217,
           "empty": false,
@@ -1053,6 +1355,8 @@
           ],
           "cer_folded": 0.007,
           "agree": {
+            "chandra-ocr-2": 0.83,
+            "deepseek-ocr": 0.748,
             "gemini-3-flash-preview": 1,
             "gemini-3.1-flash-lite": 0.982,
             "gemini-3.1-flash-lite-b": 0.982,
@@ -1060,6 +1364,54 @@
             "mistral-ocr-4-1": 0.915,
             "qwen3-vl-8b": 0.866,
             "tesseract-grc": 0.704
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 1215,
+          "empty": false,
+          "refused": false,
+          "finish_reason": "stop",
+          "loop": false,
+          "cer": 0.067,
+          "acc": 0.933,
+          "seq": 0.737,
+          "bow": 0.737,
+          "gap": 0,
+          "len_ratio": 1.003,
+          "invention": 0.227,
+          "invention_indep": 0.227,
+          "invention_ref": 0.312,
+          "unsupported_sample": [
+            "ἤκειν",
+            "ἀπαγειν",
+            "κατεκλίθῃ",
+            "ποῖος",
+            "ἀχαρῖν",
+            "ἐστρατηγικότα",
+            "κατηγοροῦντιον",
+            "κλοπᾶς"
+          ],
+          "invention_ref_sample": [
+            "ἤκειν",
+            "ἀπαγειν",
+            "παρελθῶν",
+            "κατεκλίθῃ",
+            "ποῖος",
+            "ἀχαρῖν",
+            "ἐστρατηγικότα",
+            "κατηγοροῦντιον"
+          ],
+          "cer_folded": 0.026,
+          "agree": {
+            "chandra-ocr-2": 0.766,
+            "claude-opus-5-5": 0.748,
+            "gemini-3-flash-preview": 0.748,
+            "gemini-3.1-flash-lite": 0.744,
+            "gemini-3.1-flash-lite-b": 0.744,
+            "kraken-greek-cllg": 0.752,
+            "mistral-ocr-4-1": 0.775,
+            "qwen3-vl-8b": 0.726,
+            "tesseract-grc": 0.561
           }
         },
         "gemini-3-flash-preview": {
@@ -1086,7 +1438,9 @@
           ],
           "cer_folded": 0.007,
           "agree": {
+            "chandra-ocr-2": 0.83,
             "claude-opus-5-5": 1,
+            "deepseek-ocr": 0.748,
             "gemini-3.1-flash-lite": 0.982,
             "gemini-3.1-flash-lite-b": 0.982,
             "kraken-greek-cllg": 0.918,
@@ -1120,7 +1474,9 @@
           ],
           "cer_folded": 0.007,
           "agree": {
+            "chandra-ocr-2": 0.826,
             "claude-opus-5-5": 0.982,
+            "deepseek-ocr": 0.744,
             "gemini-3-flash-preview": 0.982,
             "gemini-3.1-flash-lite-b": 1,
             "kraken-greek-cllg": 0.909,
@@ -1154,7 +1510,9 @@
           ],
           "cer_folded": 0.007,
           "agree": {
+            "chandra-ocr-2": 0.826,
             "claude-opus-5-5": 0.982,
+            "deepseek-ocr": 0.744,
             "gemini-3-flash-preview": 0.982,
             "gemini-3.1-flash-lite": 1,
             "kraken-greek-cllg": 0.909,
@@ -1198,7 +1556,9 @@
           ],
           "cer_folded": 0.004,
           "agree": {
+            "chandra-ocr-2": 0.816,
             "claude-opus-5-5": 0.918,
+            "deepseek-ocr": 0.752,
             "gemini-3-flash-preview": 0.918,
             "gemini-3.1-flash-lite": 0.909,
             "gemini-3.1-flash-lite-b": 0.909,
@@ -1219,16 +1579,12 @@
           "bow": 0.895,
           "gap": 0,
           "len_ratio": 0.999,
-          "invention": 0.042,
-          "invention_indep": 0.042,
+          "invention": 0.014,
+          "invention_indep": 0.014,
           "invention_ref": 0.098,
           "unsupported_sample": [
-            "ἀφήκε",
             "ἥτιᾶτο",
-            "dίκαιον",
-            "καλῇ",
-            "βροῦτῳ",
-            "ἀναπανομένων"
+            "dίκαιον"
           ],
           "invention_ref_sample": [
             "ἀδικήμασι",
@@ -1242,7 +1598,9 @@
           ],
           "cer_folded": 0.004,
           "agree": {
+            "chandra-ocr-2": 0.884,
             "claude-opus-5-5": 0.915,
+            "deepseek-ocr": 0.775,
             "gemini-3-flash-preview": 0.915,
             "gemini-3.1-flash-lite": 0.911,
             "gemini-3.1-flash-lite-b": 0.911,
@@ -1263,8 +1621,8 @@
           "bow": 0.796,
           "gap": 0,
           "len_ratio": 1.01,
-          "invention": 0.148,
-          "invention_indep": 0.148,
+          "invention": 0.127,
+          "invention_indep": 0.127,
           "invention_ref": 0.204,
           "unsupported_sample": [
             "ἡκειν",
@@ -1274,7 +1632,7 @@
             "καταγνούς",
             "ἤτιμωσε",
             "ἀὐτὸς",
-            "ἐμπροσθεν"
+            "ἴδια"
           ],
           "invention_ref_sample": [
             "ἡκειν",
@@ -1288,7 +1646,9 @@
           ],
           "cer_folded": 0.023,
           "agree": {
+            "chandra-ocr-2": 0.804,
             "claude-opus-5-5": 0.866,
+            "deepseek-ocr": 0.726,
             "gemini-3-flash-preview": 0.866,
             "gemini-3.1-flash-lite": 0.862,
             "gemini-3.1-flash-lite-b": 0.862,
@@ -1333,7 +1693,9 @@
           ],
           "cer_folded": 0.206,
           "agree": {
+            "chandra-ocr-2": 0.615,
             "claude-opus-5-5": 0.704,
+            "deepseek-ocr": 0.561,
             "gemini-3-flash-preview": 0.704,
             "gemini-3.1-flash-lite": 0.69,
             "gemini-3.1-flash-lite-b": 0.69,
@@ -1353,6 +1715,53 @@
       "year": 1899,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 1626,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.17,
+          "acc": 0.83,
+          "seq": 0.739,
+          "bow": 0.746,
+          "gap": 0.006,
+          "len_ratio": 0.971,
+          "invention": 0.086,
+          "invention_indep": 0.086,
+          "invention_ref": 0.237,
+          "unsupported_sample": [
+            "346ωριγενους",
+            "φύόμενα",
+            "ἐπιδεῖν",
+            "ἐπιδεῖς",
+            "εὔρεϊν",
+            "κρείττον",
+            "θεία",
+            "ὑπηρετούμεναις"
+          ],
+          "invention_ref_sample": [
+            "346ωριγενους",
+            "ἐξῆς",
+            "φύόμενα",
+            "ζώων",
+            "μένη",
+            "ἐπιδεῖν",
+            "ἐπιδεῖς",
+            "εὔρεϊν"
+          ],
+          "cer_folded": 0.141,
+          "agree": {
+            "claude-opus-5-5": 0.834,
+            "deepseek-ocr": 0.694,
+            "gemini-3-flash-preview": 0.828,
+            "gemini-3.1-flash-lite": 0.81,
+            "gemini-3.1-flash-lite-b": 0.81,
+            "kraken-greek-cllg": 0.787,
+            "mistral-ocr-4-1": 0.843,
+            "qwen3-vl-8b": 0.842,
+            "tesseract-grc": 0.564
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 1656,
           "empty": false,
@@ -1381,6 +1790,8 @@
           ],
           "cer_folded": 0.146,
           "agree": {
+            "chandra-ocr-2": 0.834,
+            "deepseek-ocr": 0.68,
             "gemini-3-flash-preview": 0.975,
             "gemini-3.1-flash-lite": 0.958,
             "gemini-3.1-flash-lite-b": 0.958,
@@ -1388,6 +1799,54 @@
             "mistral-ocr-4-1": 0.953,
             "qwen3-vl-8b": 0.855,
             "tesseract-grc": 0.626
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 1668,
+          "empty": false,
+          "refused": false,
+          "finish_reason": "stop",
+          "loop": false,
+          "cer": 0.251,
+          "acc": 0.749,
+          "seq": 0.582,
+          "bow": 0.588,
+          "gap": 0.006,
+          "len_ratio": 0.996,
+          "invention": 0.373,
+          "invention_indep": 0.373,
+          "invention_ref": 0.507,
+          "unsupported_sample": [
+            "θέλον",
+            "φούμενα",
+            "φησὶν",
+            "μεῖς",
+            "προσταλταιπροσώτετε",
+            "ἐπιπόνους",
+            "ἀσπαρτα",
+            "ἀνήρτα"
+          ],
+          "invention_ref_sample": [
+            "ωριγενους",
+            "ἐξῆς",
+            "θέλον",
+            "φούμενα",
+            "ζώων",
+            "φησὶν",
+            "μεῖς",
+            "προσταλταιπροσώτετε"
+          ],
+          "cer_folded": 0.214,
+          "agree": {
+            "chandra-ocr-2": 0.694,
+            "claude-opus-5-5": 0.68,
+            "gemini-3-flash-preview": 0.668,
+            "gemini-3.1-flash-lite": 0.656,
+            "gemini-3.1-flash-lite-b": 0.656,
+            "kraken-greek-cllg": 0.629,
+            "mistral-ocr-4-1": 0.692,
+            "qwen3-vl-8b": 0.694,
+            "tesseract-grc": 0.47
           }
         },
         "gemini-3-flash-preview": {
@@ -1419,7 +1878,9 @@
           ],
           "cer_folded": 0.146,
           "agree": {
+            "chandra-ocr-2": 0.828,
             "claude-opus-5-5": 0.975,
+            "deepseek-ocr": 0.668,
             "gemini-3.1-flash-lite": 0.942,
             "gemini-3.1-flash-lite-b": 0.942,
             "kraken-greek-cllg": 0.885,
@@ -1455,7 +1916,9 @@
           ],
           "cer_folded": 0.144,
           "agree": {
+            "chandra-ocr-2": 0.81,
             "claude-opus-5-5": 0.958,
+            "deepseek-ocr": 0.656,
             "gemini-3-flash-preview": 0.942,
             "gemini-3.1-flash-lite-b": 1,
             "kraken-greek-cllg": 0.854,
@@ -1491,7 +1954,9 @@
           ],
           "cer_folded": 0.144,
           "agree": {
+            "chandra-ocr-2": 0.81,
             "claude-opus-5-5": 0.958,
+            "deepseek-ocr": 0.656,
             "gemini-3-flash-preview": 0.942,
             "gemini-3.1-flash-lite": 1,
             "kraken-greek-cllg": 0.854,
@@ -1536,7 +2001,9 @@
           ],
           "cer_folded": 0.144,
           "agree": {
+            "chandra-ocr-2": 0.787,
             "claude-opus-5-5": 0.875,
+            "deepseek-ocr": 0.629,
             "gemini-3-flash-preview": 0.885,
             "gemini-3.1-flash-lite": 0.854,
             "gemini-3.1-flash-lite-b": 0.854,
@@ -1575,7 +2042,9 @@
           ],
           "cer_folded": 0.147,
           "agree": {
+            "chandra-ocr-2": 0.843,
             "claude-opus-5-5": 0.953,
+            "deepseek-ocr": 0.692,
             "gemini-3-flash-preview": 0.938,
             "gemini-3.1-flash-lite": 0.933,
             "gemini-3.1-flash-lite-b": 0.933,
@@ -1596,18 +2065,18 @@
           "bow": 0.733,
           "gap": 0.003,
           "len_ratio": 0.991,
-          "invention": 0.129,
-          "invention_indep": 0.129,
+          "invention": 0.086,
+          "invention_indep": 0.086,
           "invention_ref": 0.25,
           "unsupported_sample": [
             "ἄνήροτα",
             "ὅρῶν",
-            "μένη",
             "ἀνεπιφότος",
-            "ἀνθρώπον",
             "εἴρειν",
             "μέλλοντοι",
-            "πάντη"
+            "ἀμπελονοργικὴν",
+            "ὑπηρετοιμέναις",
+            "ἐξεῖνα"
           ],
           "invention_ref_sample": [
             "ωριγενους",
@@ -1621,7 +2090,9 @@
           ],
           "cer_folded": 0.153,
           "agree": {
+            "chandra-ocr-2": 0.842,
             "claude-opus-5-5": 0.855,
+            "deepseek-ocr": 0.694,
             "gemini-3-flash-preview": 0.852,
             "gemini-3.1-flash-lite": 0.834,
             "gemini-3.1-flash-lite-b": 0.834,
@@ -1666,7 +2137,9 @@
           ],
           "cer_folded": 0.349,
           "agree": {
+            "chandra-ocr-2": 0.564,
             "claude-opus-5-5": 0.626,
+            "deepseek-ocr": 0.47,
             "gemini-3-flash-preview": 0.631,
             "gemini-3.1-flash-lite": 0.64,
             "gemini-3.1-flash-lite-b": 0.64,
@@ -1686,6 +2159,53 @@
       "year": 1821,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 813,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.086,
+          "acc": 0.914,
+          "seq": 0.849,
+          "bow": 0.849,
+          "gap": 0,
+          "len_ratio": 1.057,
+          "invention": 0.126,
+          "invention_indep": 0.126,
+          "invention_ref": 0.172,
+          "unsupported_sample": [
+            "556γαληνου",
+            "ἀνωμάτων",
+            "διακόπτεται",
+            "ἀπλῶς",
+            "τούτο",
+            "δορκαάδας",
+            "τούτον",
+            "ποιῆται"
+          ],
+          "invention_ref_sample": [
+            "556γαληνου",
+            "περι",
+            "διαφορας",
+            "ἀνωμάτων",
+            "αὐτὸς",
+            "ἔστιν",
+            "διακόπτεται",
+            "ἀπλῶς"
+          ],
+          "cer_folded": 0.07,
+          "agree": {
+            "claude-opus-5-5": 0.858,
+            "deepseek-ocr": 0.729,
+            "gemini-3-flash-preview": 0.871,
+            "gemini-3.1-flash-lite": 0.826,
+            "gemini-3.1-flash-lite-b": 0.826,
+            "kraken-greek-cllg": 0.795,
+            "mistral-ocr-4-1": 0.871,
+            "qwen3-vl-8b": 0.839,
+            "tesseract-grc": 0.451
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 817,
           "empty": false,
@@ -1709,6 +2229,8 @@
           ],
           "cer_folded": 0.062,
           "agree": {
+            "chandra-ocr-2": 0.858,
+            "deepseek-ocr": 0.768,
             "gemini-3-flash-preview": 0.961,
             "gemini-3.1-flash-lite": 0.955,
             "gemini-3.1-flash-lite-b": 0.955,
@@ -1716,6 +2238,54 @@
             "mistral-ocr-4-1": 0.948,
             "qwen3-vl-8b": 0.89,
             "tesseract-grc": 0.495
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 814,
+          "empty": false,
+          "refused": false,
+          "finish_reason": "stop",
+          "loop": false,
+          "cer": 0.135,
+          "acc": 0.865,
+          "seq": 0.756,
+          "bow": 0.756,
+          "gap": 0,
+          "len_ratio": 1.059,
+          "invention": 0.267,
+          "invention_indep": 0.267,
+          "invention_ref": 0.314,
+          "unsupported_sample": [
+            "δοξαδίζων",
+            "κληθεῖς",
+            "προσιουῶν",
+            "γένειαν",
+            "τρινακίται",
+            "γενομένος",
+            "ἑπλώς",
+            "ἀνυπέρα"
+          ],
+          "invention_ref_sample": [
+            "γαληνου",
+            "περι",
+            "διαφορας",
+            "δοξαδίζων",
+            "κληθεῖς",
+            "προσιουῶν",
+            "γένειαν",
+            "τρινακίται"
+          ],
+          "cer_folded": 0.108,
+          "agree": {
+            "chandra-ocr-2": 0.729,
+            "claude-opus-5-5": 0.768,
+            "gemini-3-flash-preview": 0.781,
+            "gemini-3.1-flash-lite": 0.742,
+            "gemini-3.1-flash-lite-b": 0.742,
+            "kraken-greek-cllg": 0.699,
+            "mistral-ocr-4-1": 0.774,
+            "qwen3-vl-8b": 0.787,
+            "tesseract-grc": 0.395
           }
         },
         "gemini-3-flash-preview": {
@@ -1740,7 +2310,9 @@
           ],
           "cer_folded": 0.061,
           "agree": {
+            "chandra-ocr-2": 0.871,
             "claude-opus-5-5": 0.961,
+            "deepseek-ocr": 0.781,
             "gemini-3.1-flash-lite": 0.955,
             "gemini-3.1-flash-lite-b": 0.955,
             "kraken-greek-cllg": 0.897,
@@ -1774,7 +2346,9 @@
           ],
           "cer_folded": 0.065,
           "agree": {
+            "chandra-ocr-2": 0.826,
             "claude-opus-5-5": 0.955,
+            "deepseek-ocr": 0.742,
             "gemini-3-flash-preview": 0.955,
             "gemini-3.1-flash-lite-b": 1,
             "kraken-greek-cllg": 0.891,
@@ -1808,7 +2382,9 @@
           ],
           "cer_folded": 0.065,
           "agree": {
+            "chandra-ocr-2": 0.826,
             "claude-opus-5-5": 0.955,
+            "deepseek-ocr": 0.742,
             "gemini-3-flash-preview": 0.955,
             "gemini-3.1-flash-lite": 1,
             "kraken-greek-cllg": 0.891,
@@ -1853,7 +2429,9 @@
           ],
           "cer_folded": 0.061,
           "agree": {
+            "chandra-ocr-2": 0.795,
             "claude-opus-5-5": 0.872,
+            "deepseek-ocr": 0.699,
             "gemini-3-flash-preview": 0.897,
             "gemini-3.1-flash-lite": 0.891,
             "gemini-3.1-flash-lite-b": 0.891,
@@ -1888,7 +2466,9 @@
           ],
           "cer_folded": 0.062,
           "agree": {
+            "chandra-ocr-2": 0.871,
             "claude-opus-5-5": 0.948,
+            "deepseek-ocr": 0.774,
             "gemini-3-flash-preview": 0.961,
             "gemini-3.1-flash-lite": 0.916,
             "gemini-3.1-flash-lite-b": 0.916,
@@ -1909,18 +2489,18 @@
           "bow": 0.863,
           "gap": 0,
           "len_ratio": 1.059,
-          "invention": 0.115,
-          "invention_indep": 0.115,
+          "invention": 0.092,
+          "invention_indep": 0.092,
           "invention_ref": 0.161,
           "unsupported_sample": [
-            "αὐτὸς",
             "προσιούσων",
             "ὅτιοῦν",
             "ἄπλως",
             "ὡκυτέρα",
             "ἐαυτὰ",
             "ὡκυτέραν",
-            "ἐαυτοῖς"
+            "αὐταὶ",
+            "ὀνθμὸν"
           ],
           "invention_ref_sample": [
             "γαληνου",
@@ -1934,7 +2514,9 @@
           ],
           "cer_folded": 0.061,
           "agree": {
+            "chandra-ocr-2": 0.839,
             "claude-opus-5-5": 0.89,
+            "deepseek-ocr": 0.787,
             "gemini-3-flash-preview": 0.89,
             "gemini-3.1-flash-lite": 0.865,
             "gemini-3.1-flash-lite-b": 0.865,
@@ -1954,8 +2536,8 @@
           "bow": 0.473,
           "gap": 0,
           "len_ratio": 1.866,
-          "invention": 0.599,
-          "invention_indep": 0.599,
+          "invention": 0.593,
+          "invention_indep": 0.593,
           "invention_ref": 0.599,
           "unsupported_sample": [
             "χηνου",
@@ -1979,7 +2561,9 @@
           ],
           "cer_folded": 0.886,
           "agree": {
+            "chandra-ocr-2": 0.451,
             "claude-opus-5-5": 0.495,
+            "deepseek-ocr": 0.395,
             "gemini-3-flash-preview": 0.487,
             "gemini-3.1-flash-lite": 0.479,
             "gemini-3.1-flash-lite-b": 0.479,
@@ -1999,6 +2583,53 @@
       "year": 1891,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 1146,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.12,
+          "acc": 0.88,
+          "seq": 0.755,
+          "bow": 0.759,
+          "gap": 0.004,
+          "len_ratio": 1.055,
+          "invention": 0.187,
+          "invention_indep": 0.187,
+          "invention_ref": 0.262,
+          "unsupported_sample": [
+            "τοῦτου",
+            "τὸνναντίον",
+            "ἐντεῦθεν",
+            "ποῦθεν",
+            "προῦτον",
+            "ὄρατόν",
+            "ἔστι",
+            "ἔγερτικά"
+          ],
+          "invention_ref_sample": [
+            "χωριστά",
+            "ἐνόει",
+            "τοῦτου",
+            "τὸνναντίον",
+            "ἐντεῦθεν",
+            "ποῦθεν",
+            "προῦτον",
+            "ὄρατόν"
+          ],
+          "cer_folded": 0.064,
+          "agree": {
+            "claude-opus-5-5": 0.777,
+            "deepseek-ocr": 0.236,
+            "gemini-3-flash-preview": 0.78,
+            "gemini-3.1-flash-lite": 0.773,
+            "gemini-3.1-flash-lite-b": 0.773,
+            "kraken-greek-cllg": 0.772,
+            "mistral-ocr-4-1": 0.799,
+            "qwen3-vl-8b": 0.778,
+            "tesseract-grc": 0.62
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 1148,
           "empty": false,
@@ -2025,6 +2656,8 @@
           ],
           "cer_folded": 0.061,
           "agree": {
+            "chandra-ocr-2": 0.777,
+            "deepseek-ocr": 0.258,
             "gemini-3-flash-preview": 0.981,
             "gemini-3.1-flash-lite": 0.992,
             "gemini-3.1-flash-lite-b": 0.992,
@@ -2032,6 +2665,54 @@
             "mistral-ocr-4-1": 0.954,
             "qwen3-vl-8b": 0.855,
             "tesseract-grc": 0.768
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 1142,
+          "empty": false,
+          "refused": false,
+          "finish_reason": "stop",
+          "loop": false,
+          "cer": 0.26,
+          "acc": 0.74,
+          "seq": 0.223,
+          "bow": 0.239,
+          "gap": 0.016,
+          "len_ratio": 1.052,
+          "invention": 0.602,
+          "invention_indep": 0.602,
+          "invention_ref": 0.648,
+          "unsupported_sample": [
+            "ένόει",
+            "ύψις",
+            "σμικρών",
+            "έώρα",
+            "άλλά",
+            "συγκειμένου",
+            "ήναγκάσθη",
+            "ίδειν"
+          ],
+          "invention_ref_sample": [
+            "χωριστά",
+            "ένόει",
+            "ύψις",
+            "σμικρών",
+            "έώρα",
+            "άλλά",
+            "συγκειμένου",
+            "ήναγκάσθη"
+          ],
+          "cer_folded": 0.076,
+          "agree": {
+            "chandra-ocr-2": 0.236,
+            "claude-opus-5-5": 0.258,
+            "gemini-3-flash-preview": 0.259,
+            "gemini-3.1-flash-lite": 0.258,
+            "gemini-3.1-flash-lite-b": 0.258,
+            "kraken-greek-cllg": 0.252,
+            "mistral-ocr-4-1": 0.263,
+            "qwen3-vl-8b": 0.251,
+            "tesseract-grc": 0.186
           }
         },
         "gemini-3-flash-preview": {
@@ -2059,7 +2740,9 @@
           ],
           "cer_folded": 0.055,
           "agree": {
+            "chandra-ocr-2": 0.78,
             "claude-opus-5-5": 0.981,
+            "deepseek-ocr": 0.259,
             "gemini-3.1-flash-lite": 0.973,
             "gemini-3.1-flash-lite-b": 0.973,
             "kraken-greek-cllg": 0.964,
@@ -2094,7 +2777,9 @@
           ],
           "cer_folded": 0.061,
           "agree": {
+            "chandra-ocr-2": 0.773,
             "claude-opus-5-5": 0.992,
+            "deepseek-ocr": 0.258,
             "gemini-3-flash-preview": 0.973,
             "gemini-3.1-flash-lite-b": 1,
             "kraken-greek-cllg": 0.968,
@@ -2129,7 +2814,9 @@
           ],
           "cer_folded": 0.061,
           "agree": {
+            "chandra-ocr-2": 0.773,
             "claude-opus-5-5": 0.992,
+            "deepseek-ocr": 0.258,
             "gemini-3-flash-preview": 0.973,
             "gemini-3.1-flash-lite": 1,
             "kraken-greek-cllg": 0.968,
@@ -2171,7 +2858,9 @@
           ],
           "cer_folded": 0.065,
           "agree": {
+            "chandra-ocr-2": 0.772,
             "claude-opus-5-5": 0.971,
+            "deepseek-ocr": 0.252,
             "gemini-3-flash-preview": 0.964,
             "gemini-3.1-flash-lite": 0.968,
             "gemini-3.1-flash-lite-b": 0.968,
@@ -2207,7 +2896,9 @@
           ],
           "cer_folded": 0.055,
           "agree": {
+            "chandra-ocr-2": 0.799,
             "claude-opus-5-5": 0.954,
+            "deepseek-ocr": 0.263,
             "gemini-3-flash-preview": 0.973,
             "gemini-3.1-flash-lite": 0.95,
             "gemini-3.1-flash-lite-b": 0.95,
@@ -2228,18 +2919,18 @@
           "bow": 0.833,
           "gap": 0.012,
           "len_ratio": 1.051,
-          "invention": 0.144,
-          "invention_indep": 0.144,
+          "invention": 0.117,
+          "invention_indep": 0.117,
           "invention_ref": 0.198,
           "unsupported_sample": [
             "ἔφρα",
             "ἡναγκάσθη",
             "ἴδειν",
-            "τούναντίον",
             "ἐσται",
             "ἐαυτοῖς",
             "δριζόμενος",
-            "δρᾶται"
+            "δρᾶται",
+            "ὅλκον"
           ],
           "invention_ref_sample": [
             "χωριστά",
@@ -2253,7 +2944,9 @@
           ],
           "cer_folded": 0.06,
           "agree": {
+            "chandra-ocr-2": 0.778,
             "claude-opus-5-5": 0.855,
+            "deepseek-ocr": 0.251,
             "gemini-3-flash-preview": 0.874,
             "gemini-3.1-flash-lite": 0.852,
             "gemini-3.1-flash-lite-b": 0.852,
@@ -2298,7 +2991,9 @@
           ],
           "cer_folded": 0.201,
           "agree": {
+            "chandra-ocr-2": 0.62,
             "claude-opus-5-5": 0.768,
+            "deepseek-ocr": 0.186,
             "gemini-3-flash-preview": 0.781,
             "gemini-3.1-flash-lite": 0.764,
             "gemini-3.1-flash-lite-b": 0.764,
@@ -2318,6 +3013,53 @@
       "year": 1821,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 736,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.071,
+          "acc": 0.929,
+          "seq": 0.768,
+          "bow": 0.768,
+          "gap": 0,
+          "len_ratio": 1.007,
+          "invention": 0.213,
+          "invention_indep": 0.213,
+          "invention_ref": 0.275,
+          "unsupported_sample": [
+            "388γαληνου",
+            "ετηποριστων",
+            "ἐμὲν",
+            "αὐθίς",
+            "διακαίουντο",
+            "ὑδροροδίῳ",
+            "ἄρκευθίδας",
+            "ὑπνου"
+          ],
+          "invention_ref_sample": [
+            "388γαληνου",
+            "περι",
+            "ετηποριστων",
+            "ἐμὲν",
+            "παντοδα",
+            "αὐθίς",
+            "συνέξεργασθήσεται",
+            "ἔξει"
+          ],
+          "cer_folded": 0.037,
+          "agree": {
+            "claude-opus-5-5": 0.789,
+            "deepseek-ocr": 0.613,
+            "gemini-3-flash-preview": 0.774,
+            "gemini-3.1-flash-lite": 0.782,
+            "gemini-3.1-flash-lite-b": 0.782,
+            "kraken-greek-cllg": 0.773,
+            "mistral-ocr-4-1": 0.805,
+            "qwen3-vl-8b": 0.737,
+            "tesseract-grc": 0.343
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 740,
           "empty": false,
@@ -2343,6 +3085,8 @@
           ],
           "cer_folded": 0.026,
           "agree": {
+            "chandra-ocr-2": 0.789,
+            "deepseek-ocr": 0.667,
             "gemini-3-flash-preview": 0.985,
             "gemini-3.1-flash-lite": 0.985,
             "gemini-3.1-flash-lite-b": 0.985,
@@ -2350,6 +3094,54 @@
             "mistral-ocr-4-1": 0.94,
             "qwen3-vl-8b": 0.812,
             "tesseract-grc": 0.388
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 707,
+          "empty": false,
+          "refused": false,
+          "finish_reason": "stop",
+          "loop": false,
+          "cer": 0.13,
+          "acc": 0.87,
+          "seq": 0.643,
+          "bow": 0.651,
+          "gap": 0.008,
+          "len_ratio": 0.967,
+          "invention": 0.373,
+          "invention_indep": 0.373,
+          "invention_ref": 0.413,
+          "unsupported_sample": [
+            "βουλομένους",
+            "κοινώς",
+            "πεπιστευται",
+            "εἶλφόσι",
+            "παραλυτικὰ",
+            "πλείστου",
+            "ὀφείλαιον",
+            "αὐτὸς"
+          ],
+          "invention_ref_sample": [
+            "βουλομένους",
+            "κοινώς",
+            "πεπιστευται",
+            "εἶλφόσι",
+            "παραλυτικὰ",
+            "πλείστου",
+            "ὀφείλαιον",
+            "παντοδα"
+          ],
+          "cer_folded": 0.088,
+          "agree": {
+            "chandra-ocr-2": 0.613,
+            "claude-opus-5-5": 0.667,
+            "gemini-3-flash-preview": 0.651,
+            "gemini-3.1-flash-lite": 0.659,
+            "gemini-3.1-flash-lite-b": 0.659,
+            "kraken-greek-cllg": 0.644,
+            "mistral-ocr-4-1": 0.674,
+            "qwen3-vl-8b": 0.682,
+            "tesseract-grc": 0.279
           }
         },
         "gemini-3-flash-preview": {
@@ -2376,7 +3168,9 @@
           ],
           "cer_folded": 0.023,
           "agree": {
+            "chandra-ocr-2": 0.774,
             "claude-opus-5-5": 0.985,
+            "deepseek-ocr": 0.651,
             "gemini-3.1-flash-lite": 0.97,
             "gemini-3.1-flash-lite-b": 0.97,
             "kraken-greek-cllg": 0.914,
@@ -2410,7 +3204,9 @@
           ],
           "cer_folded": 0.027,
           "agree": {
+            "chandra-ocr-2": 0.782,
             "claude-opus-5-5": 0.985,
+            "deepseek-ocr": 0.659,
             "gemini-3-flash-preview": 0.97,
             "gemini-3.1-flash-lite-b": 1,
             "kraken-greek-cllg": 0.892,
@@ -2444,7 +3240,9 @@
           ],
           "cer_folded": 0.027,
           "agree": {
+            "chandra-ocr-2": 0.782,
             "claude-opus-5-5": 0.985,
+            "deepseek-ocr": 0.659,
             "gemini-3-flash-preview": 0.97,
             "gemini-3.1-flash-lite": 1,
             "kraken-greek-cllg": 0.892,
@@ -2485,7 +3283,9 @@
           ],
           "cer_folded": 0.03,
           "agree": {
+            "chandra-ocr-2": 0.773,
             "claude-opus-5-5": 0.907,
+            "deepseek-ocr": 0.644,
             "gemini-3-flash-preview": 0.914,
             "gemini-3.1-flash-lite": 0.892,
             "gemini-3.1-flash-lite-b": 0.892,
@@ -2524,7 +3324,9 @@
           ],
           "cer_folded": 0.027,
           "agree": {
+            "chandra-ocr-2": 0.805,
             "claude-opus-5-5": 0.94,
+            "deepseek-ocr": 0.674,
             "gemini-3-flash-preview": 0.925,
             "gemini-3.1-flash-lite": 0.932,
             "gemini-3.1-flash-lite-b": 0.932,
@@ -2545,18 +3347,18 @@
           "bow": 0.783,
           "gap": 0,
           "len_ratio": 1.008,
-          "invention": 0.165,
-          "invention_indep": 0.165,
+          "invention": 0.139,
+          "invention_indep": 0.139,
           "invention_ref": 0.215,
           "unsupported_sample": [
             "ὕδρελαιον",
             "αὐθις",
-            "συνέξεργασθήσεται",
             "ἔχει",
             "λειάσας",
             "χαμαιπίτους",
             "ὑπνοῦ",
-            "ψηλαφία"
+            "ὑποβιασθήναι",
+            "μακὸν"
           ],
           "invention_ref_sample": [
             "γαληνοτ",
@@ -2570,7 +3372,9 @@
           ],
           "cer_folded": 0.036,
           "agree": {
+            "chandra-ocr-2": 0.737,
             "claude-opus-5-5": 0.812,
+            "deepseek-ocr": 0.682,
             "gemini-3-flash-preview": 0.797,
             "gemini-3.1-flash-lite": 0.812,
             "gemini-3.1-flash-lite-b": 0.812,
@@ -2615,7 +3419,9 @@
           ],
           "cer_folded": 1.246,
           "agree": {
+            "chandra-ocr-2": 0.343,
             "claude-opus-5-5": 0.388,
+            "deepseek-ocr": 0.279,
             "gemini-3-flash-preview": 0.396,
             "gemini-3.1-flash-lite": 0.388,
             "gemini-3.1-flash-lite-b": 0.388,
@@ -2635,6 +3441,53 @@
       "year": 1554,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 357,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.337,
+          "acc": 0.663,
+          "seq": 0.268,
+          "bow": 0.282,
+          "gap": 0.013,
+          "len_ratio": 1.003,
+          "invention": 0.472,
+          "invention_indep": 0.472,
+          "invention_ref": 0.736,
+          "unsupported_sample": [
+            "δαμύντα",
+            "έρος",
+            "ἵππια",
+            "ἐκοπή",
+            "ὄχης",
+            "δύρας",
+            "ἀελάσει",
+            "χίσος"
+          ],
+          "invention_ref_sample": [
+            "μελη",
+            "κέαται",
+            "κόπω",
+            "δαμύντα",
+            "έρος",
+            "ἵππια",
+            "ἐκοπή",
+            "ὄχης"
+          ],
+          "cer_folded": 0.253,
+          "agree": {
+            "claude-opus-5-5": 0.431,
+            "deepseek-ocr": 0,
+            "gemini-3-flash-preview": 0.395,
+            "gemini-3.1-flash-lite": 0.456,
+            "gemini-3.1-flash-lite-b": 0.456,
+            "kraken-greek-cllg": 0.408,
+            "mistral-ocr-4-1": 0.282,
+            "qwen3-vl-8b": 0.329,
+            "tesseract-grc": 0.215
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 369,
           "empty": false,
@@ -2663,6 +3516,8 @@
           ],
           "cer_folded": 0.112,
           "agree": {
+            "chandra-ocr-2": 0.431,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.792,
             "gemini-3.1-flash-lite": 0.774,
             "gemini-3.1-flash-lite-b": 0.774,
@@ -2670,6 +3525,36 @@
             "mistral-ocr-4-1": 0.301,
             "qwen3-vl-8b": 0.295,
             "tesseract-grc": 0.206
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 0,
+          "empty": true,
+          "refused": false,
+          "finish_reason": "stop",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "cer_folded": 1,
+          "agree": {
+            "chandra-ocr-2": 0,
+            "claude-opus-5-5": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "gemini-3.1-flash-lite-b": 0,
+            "kraken-greek-cllg": 0,
+            "mistral-ocr-4-1": 0,
+            "qwen3-vl-8b": 0,
+            "tesseract-grc": 0
           }
         },
         "gemini-3-flash-preview": {
@@ -2683,13 +3568,12 @@
           "bow": 0.707,
           "gap": 0,
           "len_ratio": 1.051,
-          "invention": 0.059,
-          "invention_indep": 0.059,
+          "invention": 0.039,
+          "invention_indep": 0.039,
           "invention_ref": 0.196,
           "unsupported_sample": [
             "δαμλύτα",
-            "ἔρος",
-            "εἰμὶ"
+            "ἔρος"
           ],
           "invention_ref_sample": [
             "κέαται",
@@ -2703,7 +3587,9 @@
           ],
           "cer_folded": 0.107,
           "agree": {
+            "chandra-ocr-2": 0.395,
             "claude-opus-5-5": 0.792,
+            "deepseek-ocr": 0,
             "gemini-3.1-flash-lite": 0.692,
             "gemini-3.1-flash-lite-b": 0.692,
             "kraken-greek-cllg": 0.784,
@@ -2739,7 +3625,9 @@
           ],
           "cer_folded": 0.149,
           "agree": {
+            "chandra-ocr-2": 0.456,
             "claude-opus-5-5": 0.774,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.692,
             "gemini-3.1-flash-lite-b": 1,
             "kraken-greek-cllg": 0.688,
@@ -2775,7 +3663,9 @@
           ],
           "cer_folded": 0.149,
           "agree": {
+            "chandra-ocr-2": 0.456,
             "claude-opus-5-5": 0.774,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.692,
             "gemini-3.1-flash-lite": 1,
             "kraken-greek-cllg": 0.688,
@@ -2820,7 +3710,9 @@
           ],
           "cer_folded": 0.107,
           "agree": {
+            "chandra-ocr-2": 0.408,
             "claude-opus-5-5": 0.819,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.784,
             "gemini-3.1-flash-lite": 0.688,
             "gemini-3.1-flash-lite-b": 0.688,
@@ -2866,7 +3758,9 @@
           ],
           "cer_folded": 0.281,
           "agree": {
+            "chandra-ocr-2": 0.282,
             "claude-opus-5-5": 0.301,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.229,
             "gemini-3.1-flash-lite": 0.316,
             "gemini-3.1-flash-lite-b": 0.316,
@@ -2887,8 +3781,8 @@
           "bow": 0.248,
           "gap": 0,
           "len_ratio": 1.022,
-          "invention": 0.66,
-          "invention_indep": 0.66,
+          "invention": 0.585,
+          "invention_indep": 0.585,
           "invention_ref": 0.774,
           "unsupported_sample": [
             "κέαπα",
@@ -2897,8 +3791,8 @@
             "ἄπισαθίς",
             "ἐκοπὴ",
             "ὀχίας",
-            "ἔφλω",
-            "ἀρελάσει"
+            "ἀρελάσει",
+            "γλός"
           ],
           "invention_ref_sample": [
             "μελη",
@@ -2912,7 +3806,9 @@
           ],
           "cer_folded": 0.346,
           "agree": {
+            "chandra-ocr-2": 0.329,
             "claude-opus-5-5": 0.295,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.275,
             "gemini-3.1-flash-lite": 0.299,
             "gemini-3.1-flash-lite-b": 0.299,
@@ -2932,8 +3828,8 @@
           "bow": 0.238,
           "gap": 0.026,
           "len_ratio": 1.037,
-          "invention": 0.667,
-          "invention_indep": 0.667,
+          "invention": 0.647,
+          "invention_indep": 0.647,
           "invention_ref": 0.765,
           "unsupported_sample": [
             "μέλη",
@@ -2957,7 +3853,9 @@
           ],
           "cer_folded": 0.382,
           "agree": {
+            "chandra-ocr-2": 0.215,
             "claude-opus-5-5": 0.206,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.226,
             "gemini-3.1-flash-lite": 0.238,
             "gemini-3.1-flash-lite-b": 0.238,
@@ -2977,6 +3875,53 @@
       "year": 1533,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 1029,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.355,
+          "acc": 0.645,
+          "seq": 0.428,
+          "bow": 0.471,
+          "gap": 0.043,
+          "len_ratio": 0.935,
+          "invention": 0.628,
+          "invention_indep": 0.628,
+          "invention_ref": 0.713,
+          "unsupported_sample": [
+            "416γυθαγορας",
+            "σελιῶν",
+            "λαμπροῦται",
+            "μέτεχειν",
+            "ἀνθρώπον",
+            "πρὸνοεῖται",
+            "εἰμαρμνήνως",
+            "αὐτὴν"
+          ],
+          "invention_ref_sample": [
+            "416γυθαγορας",
+            "αὐτῷ",
+            "σελιῶν",
+            "λαμπροῦται",
+            "ἀνθρώπων",
+            "θεοῦ",
+            "μέτεχειν",
+            "ἀνθρώπον"
+          ],
+          "cer_folded": 0.299,
+          "agree": {
+            "claude-opus-5-5": 0.513,
+            "deepseek-ocr": 0.103,
+            "gemini-3-flash-preview": 0.508,
+            "gemini-3.1-flash-lite": 0.477,
+            "gemini-3.1-flash-lite-b": 0.477,
+            "kraken-greek-cllg": 0.498,
+            "mistral-ocr-4-1": 0.341,
+            "qwen3-vl-8b": 0.312,
+            "tesseract-grc": 0.158
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 1027,
           "empty": false,
@@ -3003,6 +3948,8 @@
           ],
           "cer_folded": 0.111,
           "agree": {
+            "chandra-ocr-2": 0.513,
+            "deepseek-ocr": 0.105,
             "gemini-3-flash-preview": 0.901,
             "gemini-3.1-flash-lite": 0.774,
             "gemini-3.1-flash-lite-b": 0.774,
@@ -3010,6 +3957,54 @@
             "mistral-ocr-4-1": 0.381,
             "qwen3-vl-8b": 0.338,
             "tesseract-grc": 0.186
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 866,
+          "empty": false,
+          "refused": false,
+          "finish_reason": "stop",
+          "loop": false,
+          "cer": 0.659,
+          "acc": 0.341,
+          "seq": 0.063,
+          "bow": 0.085,
+          "gap": 0.021,
+          "len_ratio": 0.787,
+          "invention": 0.885,
+          "invention_indep": 0.885,
+          "invention_ref": 0.967,
+          "unsupported_sample": [
+            "ἰδῳμὸν",
+            "ἂπρὶς",
+            "λοῦς",
+            "ἀλιῶι",
+            "ἀσμπερδία",
+            "ἰλίου",
+            "ἀνθρὰνταμ",
+            "πλῶς"
+          ],
+          "invention_ref_sample": [
+            "ἰδῳμὸν",
+            "ἂπρὶς",
+            "λοῦς",
+            "ἀλιῶι",
+            "ἀσμπερδία",
+            "ἰλίου",
+            "ἀνθρὰνταμ",
+            "πλῶς"
+          ],
+          "cer_folded": 0.575,
+          "agree": {
+            "chandra-ocr-2": 0.103,
+            "claude-opus-5-5": 0.105,
+            "gemini-3-flash-preview": 0.099,
+            "gemini-3.1-flash-lite": 0.077,
+            "gemini-3.1-flash-lite-b": 0.077,
+            "kraken-greek-cllg": 0.09,
+            "mistral-ocr-4-1": 0.064,
+            "qwen3-vl-8b": 0.073,
+            "tesseract-grc": 0.074
           }
         },
         "gemini-3-flash-preview": {
@@ -3043,7 +4038,9 @@
           ],
           "cer_folded": 0.11,
           "agree": {
+            "chandra-ocr-2": 0.508,
             "claude-opus-5-5": 0.901,
+            "deepseek-ocr": 0.099,
             "gemini-3.1-flash-lite": 0.828,
             "gemini-3.1-flash-lite-b": 0.828,
             "kraken-greek-cllg": 0.903,
@@ -3064,7 +4061,7 @@
           "gap": 0.026,
           "len_ratio": 0.915,
           "invention": 0,
-          "invention_indep": 0.139,
+          "invention_indep": 0.129,
           "invention_ref": 0.297,
           "unsupported_sample": [],
           "invention_ref_sample": [
@@ -3079,7 +4076,9 @@
           ],
           "cer_folded": 0.153,
           "agree": {
+            "chandra-ocr-2": 0.477,
             "claude-opus-5-5": 0.774,
+            "deepseek-ocr": 0.077,
             "gemini-3-flash-preview": 0.828,
             "gemini-3.1-flash-lite-b": 1,
             "kraken-greek-cllg": 0.783,
@@ -3100,7 +4099,7 @@
           "gap": 0.026,
           "len_ratio": 0.915,
           "invention": 0,
-          "invention_indep": 0.139,
+          "invention_indep": 0.129,
           "invention_ref": 0.297,
           "unsupported_sample": [],
           "invention_ref_sample": [
@@ -3115,7 +4114,9 @@
           ],
           "cer_folded": 0.153,
           "agree": {
+            "chandra-ocr-2": 0.477,
             "claude-opus-5-5": 0.774,
+            "deepseek-ocr": 0.077,
             "gemini-3-flash-preview": 0.828,
             "gemini-3.1-flash-lite": 1,
             "kraken-greek-cllg": 0.783,
@@ -3160,7 +4161,9 @@
           ],
           "cer_folded": 0.12,
           "agree": {
+            "chandra-ocr-2": 0.498,
             "claude-opus-5-5": 0.873,
+            "deepseek-ocr": 0.09,
             "gemini-3-flash-preview": 0.903,
             "gemini-3.1-flash-lite": 0.783,
             "gemini-3.1-flash-lite-b": 0.783,
@@ -3181,8 +4184,8 @@
           "bow": 0.339,
           "gap": 0.013,
           "len_ratio": 0.862,
-          "invention": 0.705,
-          "invention_indep": 0.705,
+          "invention": 0.684,
+          "invention_indep": 0.684,
           "invention_ref": 0.789,
           "unsupported_sample": [
             "γυθατορας",
@@ -3191,8 +4194,8 @@
             "λίνιω",
             "λαμπέσαι",
             "αἰβρώωρ",
-            "θεοῦ",
-            "συγγύειαν"
+            "συγγύειαν",
+            "αἴβρω"
           ],
           "invention_ref_sample": [
             "γυθατορας",
@@ -3206,7 +4209,9 @@
           ],
           "cer_folded": 0.339,
           "agree": {
+            "chandra-ocr-2": 0.341,
             "claude-opus-5-5": 0.381,
+            "deepseek-ocr": 0.064,
             "gemini-3-flash-preview": 0.386,
             "gemini-3.1-flash-lite": 0.386,
             "gemini-3.1-flash-lite-b": 0.386,
@@ -3227,8 +4232,8 @@
           "bow": 0.311,
           "gap": 0.021,
           "len_ratio": 0.864,
-          "invention": 0.677,
-          "invention_indep": 0.677,
+          "invention": 0.656,
+          "invention_indep": 0.656,
           "invention_ref": 0.781,
           "unsupported_sample": [
             "βδομὸν",
@@ -3252,7 +4257,9 @@
           ],
           "cer_folded": 0.387,
           "agree": {
+            "chandra-ocr-2": 0.312,
             "claude-opus-5-5": 0.338,
+            "deepseek-ocr": 0.073,
             "gemini-3-flash-preview": 0.362,
             "gemini-3.1-flash-lite": 0.366,
             "gemini-3.1-flash-lite-b": 0.366,
@@ -3297,7 +4304,9 @@
           ],
           "cer_folded": 0.546,
           "agree": {
+            "chandra-ocr-2": 0.158,
             "claude-opus-5-5": 0.186,
+            "deepseek-ocr": 0.074,
             "gemini-3-flash-preview": 0.182,
             "gemini-3.1-flash-lite": 0.199,
             "gemini-3.1-flash-lite-b": 0.199,
@@ -3317,6 +4326,53 @@
       "year": 1576,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 533,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.33,
+          "acc": 0.67,
+          "seq": 0.421,
+          "bow": 0.439,
+          "gap": 0.019,
+          "len_ratio": 1.035,
+          "invention": 0.36,
+          "invention_indep": 0.36,
+          "invention_ref": 0.62,
+          "unsupported_sample": [
+            "πεινῶ",
+            "δῶναι",
+            "ἀρχεῖν",
+            "δοκίμης",
+            "ἀρετῆ",
+            "τιβερμὴν",
+            "ἀρχικῶν",
+            "δεινὸν"
+          ],
+          "invention_ref_sample": [
+            "πεινῶ",
+            "ἐπαινεῖται",
+            "δῶναι",
+            "ἀρχεῖν",
+            "πολίτης",
+            "δοκίμης",
+            "ἀρετῆ",
+            "ἀγαθὸν"
+          ],
+          "cer_folded": 0.26,
+          "agree": {
+            "claude-opus-5-5": 0.461,
+            "deepseek-ocr": 0,
+            "gemini-3-flash-preview": 0.45,
+            "gemini-3.1-flash-lite": 0.505,
+            "gemini-3.1-flash-lite-b": 0.505,
+            "kraken-greek-cllg": 0.433,
+            "mistral-ocr-4-1": 0.136,
+            "qwen3-vl-8b": 0.439,
+            "tesseract-grc": 0.051
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 547,
           "empty": false,
@@ -3349,6 +4405,8 @@
           ],
           "cer_folded": 0.078,
           "agree": {
+            "chandra-ocr-2": 0.461,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.751,
             "gemini-3.1-flash-lite": 0.746,
             "gemini-3.1-flash-lite-b": 0.746,
@@ -3356,6 +4414,36 @@
             "mistral-ocr-4-1": 0.121,
             "qwen3-vl-8b": 0.44,
             "tesseract-grc": 0.059
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 0,
+          "empty": true,
+          "refused": false,
+          "finish_reason": "length",
+          "loop": true,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "cer_folded": 1,
+          "agree": {
+            "chandra-ocr-2": 0,
+            "claude-opus-5-5": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "gemini-3.1-flash-lite-b": 0,
+            "kraken-greek-cllg": 0,
+            "mistral-ocr-4-1": 0,
+            "qwen3-vl-8b": 0,
+            "tesseract-grc": 0
           }
         },
         "gemini-3-flash-preview": {
@@ -3394,7 +4482,9 @@
           ],
           "cer_folded": 0.148,
           "agree": {
+            "chandra-ocr-2": 0.45,
             "claude-opus-5-5": 0.751,
+            "deepseek-ocr": 0,
             "gemini-3.1-flash-lite": 0.686,
             "gemini-3.1-flash-lite-b": 0.686,
             "kraken-greek-cllg": 0.704,
@@ -3415,7 +4505,7 @@
           "gap": 0.019,
           "len_ratio": 1.027,
           "invention": 0,
-          "invention_indep": 0.189,
+          "invention_indep": 0.151,
           "invention_ref": 0.302,
           "unsupported_sample": [],
           "invention_ref_sample": [
@@ -3430,7 +4520,9 @@
           ],
           "cer_folded": 0.169,
           "agree": {
+            "chandra-ocr-2": 0.505,
             "claude-opus-5-5": 0.746,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.686,
             "gemini-3.1-flash-lite-b": 1,
             "kraken-greek-cllg": 0.708,
@@ -3451,7 +4543,7 @@
           "gap": 0.019,
           "len_ratio": 1.027,
           "invention": 0,
-          "invention_indep": 0.189,
+          "invention_indep": 0.151,
           "invention_ref": 0.302,
           "unsupported_sample": [],
           "invention_ref_sample": [
@@ -3466,7 +4558,9 @@
           ],
           "cer_folded": 0.169,
           "agree": {
+            "chandra-ocr-2": 0.505,
             "claude-opus-5-5": 0.746,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.686,
             "gemini-3.1-flash-lite": 1,
             "kraken-greek-cllg": 0.708,
@@ -3510,7 +4604,9 @@
           ],
           "cer_folded": 0.062,
           "agree": {
+            "chandra-ocr-2": 0.433,
             "claude-opus-5-5": 0.858,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.704,
             "gemini-3.1-flash-lite": 0.708,
             "gemini-3.1-flash-lite-b": 0.708,
@@ -3531,8 +4627,8 @@
           "bow": 0.132,
           "gap": 0,
           "len_ratio": 0.934,
-          "invention": 0.88,
-          "invention_indep": 0.88,
+          "invention": 0.86,
+          "invention_indep": 0.86,
           "invention_ref": 0.96,
           "unsupported_sample": [
             "ἱπανεῖται",
@@ -3556,7 +4652,9 @@
           ],
           "cer_folded": 0.346,
           "agree": {
+            "chandra-ocr-2": 0.136,
             "claude-opus-5-5": 0.121,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.157,
             "gemini-3.1-flash-lite": 0.132,
             "gemini-3.1-flash-lite-b": 0.132,
@@ -3577,8 +4675,8 @@
           "bow": 0.417,
           "gap": 0.01,
           "len_ratio": 1.039,
-          "invention": 0.564,
-          "invention_indep": 0.564,
+          "invention": 0.436,
+          "invention_indep": 0.436,
           "invention_ref": 0.618,
           "unsupported_sample": [
             "πενύν",
@@ -3586,9 +4684,9 @@
             "ἐπαυεῖται",
             "διώαθαι",
             "οὐδὲ",
-            "πολίτης",
             "δοκίμων",
-            "ἀρετὴν"
+            "ἀρετὴν",
+            "αὐδρὸς"
           ],
           "invention_ref_sample": [
             "πενύν",
@@ -3602,7 +4700,9 @@
           ],
           "cer_folded": 0.305,
           "agree": {
+            "chandra-ocr-2": 0.439,
             "claude-opus-5-5": 0.44,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.41,
             "gemini-3.1-flash-lite": 0.427,
             "gemini-3.1-flash-lite-b": 0.427,
@@ -3647,7 +4747,9 @@
           ],
           "cer_folded": 4.977,
           "agree": {
+            "chandra-ocr-2": 0.051,
             "claude-opus-5-5": 0.059,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.068,
             "gemini-3.1-flash-lite": 0.063,
             "gemini-3.1-flash-lite-b": 0.063,
@@ -3667,6 +4769,53 @@
       "year": 1592,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 300,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.443,
+          "acc": 0.557,
+          "seq": 0.372,
+          "bow": 0.419,
+          "gap": 0.047,
+          "len_ratio": 1.014,
+          "invention": 0.533,
+          "invention_indep": 0.533,
+          "invention_ref": 0.567,
+          "unsupported_sample": [
+            "πικων",
+            "γδδον",
+            "πικορυμ",
+            "τῶντα",
+            "πᾶσι",
+            "ἑρωτῶν",
+            "ὁρῶντων",
+            "ὀπληχρητέον"
+          ],
+          "invention_ref_sample": [
+            "αριστοτελους",
+            "πικων",
+            "γδδον",
+            "πικορυμ",
+            "τῶντα",
+            "πᾶσι",
+            "ἑρωτῶν",
+            "ὁρῶντων"
+          ],
+          "cer_folded": 0.375,
+          "agree": {
+            "claude-opus-5-5": 0.439,
+            "deepseek-ocr": 0,
+            "gemini-3-flash-preview": 0.443,
+            "gemini-3.1-flash-lite": 0.416,
+            "gemini-3.1-flash-lite-b": 0.416,
+            "kraken-greek-cllg": 0.365,
+            "mistral-ocr-4-1": 0.403,
+            "qwen3-vl-8b": 0.311,
+            "tesseract-grc": 0.125
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 303,
           "empty": false,
@@ -3693,6 +4842,8 @@
           ],
           "cer_folded": 0.132,
           "agree": {
+            "chandra-ocr-2": 0.439,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.866,
             "gemini-3.1-flash-lite": 0.744,
             "gemini-3.1-flash-lite-b": 0.744,
@@ -3700,6 +4851,36 @@
             "mistral-ocr-4-1": 0.539,
             "qwen3-vl-8b": 0.366,
             "tesseract-grc": 0.172
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 0,
+          "empty": true,
+          "refused": false,
+          "finish_reason": "stop",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "cer_folded": 1,
+          "agree": {
+            "chandra-ocr-2": 0,
+            "claude-opus-5-5": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "gemini-3.1-flash-lite-b": 0,
+            "kraken-greek-cllg": 0,
+            "mistral-ocr-4-1": 0,
+            "qwen3-vl-8b": 0,
+            "tesseract-grc": 0
           }
         },
         "gemini-3-flash-preview": {
@@ -3729,7 +4910,9 @@
           ],
           "cer_folded": 0.132,
           "agree": {
+            "chandra-ocr-2": 0.443,
             "claude-opus-5-5": 0.866,
+            "deepseek-ocr": 0,
             "gemini-3.1-flash-lite": 0.783,
             "gemini-3.1-flash-lite-b": 0.783,
             "kraken-greek-cllg": 0.682,
@@ -3763,7 +4946,9 @@
           ],
           "cer_folded": 0.203,
           "agree": {
+            "chandra-ocr-2": 0.416,
             "claude-opus-5-5": 0.744,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.783,
             "gemini-3.1-flash-lite-b": 1,
             "kraken-greek-cllg": 0.603,
@@ -3797,7 +4982,9 @@
           ],
           "cer_folded": 0.203,
           "agree": {
+            "chandra-ocr-2": 0.416,
             "claude-opus-5-5": 0.744,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.783,
             "gemini-3.1-flash-lite": 1,
             "kraken-greek-cllg": 0.603,
@@ -3842,7 +5029,9 @@
           ],
           "cer_folded": 0.166,
           "agree": {
+            "chandra-ocr-2": 0.365,
             "claude-opus-5-5": 0.707,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.682,
             "gemini-3.1-flash-lite": 0.603,
             "gemini-3.1-flash-lite-b": 0.603,
@@ -3888,7 +5077,9 @@
           ],
           "cer_folded": 0.287,
           "agree": {
+            "chandra-ocr-2": 0.403,
             "claude-opus-5-5": 0.539,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.544,
             "gemini-3.1-flash-lite": 0.556,
             "gemini-3.1-flash-lite-b": 0.556,
@@ -3934,7 +5125,9 @@
           ],
           "cer_folded": 0.365,
           "agree": {
+            "chandra-ocr-2": 0.311,
             "claude-opus-5-5": 0.366,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.385,
             "gemini-3.1-flash-lite": 0.468,
             "gemini-3.1-flash-lite-b": 0.468,
@@ -3979,7 +5172,9 @@
           ],
           "cer_folded": 2.155,
           "agree": {
+            "chandra-ocr-2": 0.125,
             "claude-opus-5-5": 0.172,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.158,
             "gemini-3.1-flash-lite": 0.146,
             "gemini-3.1-flash-lite-b": 0.146,
@@ -3999,6 +5194,53 @@
       "year": 1531,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 1152,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.464,
+          "acc": 0.536,
+          "seq": 0.258,
+          "bow": 0.303,
+          "gap": 0.045,
+          "len_ratio": 0.987,
+          "invention": 0.735,
+          "invention_indep": 0.735,
+          "invention_ref": 0.827,
+          "unsupported_sample": [
+            "ὀλυόφοις",
+            "ἀνθρώπους",
+            "ἐμπιπτόντες",
+            "θαλούεσθαι",
+            "ἔσται",
+            "πικραὶ",
+            "δάλασσῶν",
+            "ὑγρασίαν"
+          ],
+          "invention_ref_sample": [
+            "ὀλυόφοις",
+            "βιβλίον",
+            "ἀνθρώπους",
+            "ἐμπιπτόντες",
+            "θαλούεσθαι",
+            "ἔσται",
+            "πικραὶ",
+            "αναξίμανδρος"
+          ],
+          "cer_folded": 0.386,
+          "agree": {
+            "claude-opus-5-5": 0.327,
+            "deepseek-ocr": 0,
+            "gemini-3-flash-preview": 0.316,
+            "gemini-3.1-flash-lite": 0.351,
+            "gemini-3.1-flash-lite-b": 0.351,
+            "kraken-greek-cllg": 0.292,
+            "mistral-ocr-4-1": 0.182,
+            "qwen3-vl-8b": 0.319,
+            "tesseract-grc": 0.138
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 1224,
           "empty": false,
@@ -4035,6 +5277,8 @@
           ],
           "cer_folded": 0.07,
           "agree": {
+            "chandra-ocr-2": 0.327,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.91,
             "gemini-3.1-flash-lite": 0.706,
             "gemini-3.1-flash-lite-b": 0.706,
@@ -4042,6 +5286,36 @@
             "mistral-ocr-4-1": 0.249,
             "qwen3-vl-8b": 0.349,
             "tesseract-grc": 0.186
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 0,
+          "empty": true,
+          "refused": false,
+          "finish_reason": "stop",
+          "loop": false,
+          "cer": 1,
+          "acc": 0,
+          "seq": 0,
+          "bow": 0,
+          "gap": 0,
+          "len_ratio": 0,
+          "invention": null,
+          "invention_indep": null,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "cer_folded": 1,
+          "agree": {
+            "chandra-ocr-2": 0,
+            "claude-opus-5-5": 0,
+            "gemini-3-flash-preview": 0,
+            "gemini-3.1-flash-lite": 0,
+            "gemini-3.1-flash-lite-b": 0,
+            "kraken-greek-cllg": 0,
+            "mistral-ocr-4-1": 0,
+            "qwen3-vl-8b": 0,
+            "tesseract-grc": 0
           }
         },
         "gemini-3-flash-preview": {
@@ -4080,7 +5354,9 @@
           ],
           "cer_folded": 0.076,
           "agree": {
+            "chandra-ocr-2": 0.316,
             "claude-opus-5-5": 0.91,
+            "deepseek-ocr": 0,
             "gemini-3.1-flash-lite": 0.709,
             "gemini-3.1-flash-lite-b": 0.709,
             "kraken-greek-cllg": 0.782,
@@ -4116,7 +5392,9 @@
           ],
           "cer_folded": 0.16,
           "agree": {
+            "chandra-ocr-2": 0.351,
             "claude-opus-5-5": 0.706,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.709,
             "gemini-3.1-flash-lite-b": 1,
             "kraken-greek-cllg": 0.639,
@@ -4152,7 +5430,9 @@
           ],
           "cer_folded": 0.16,
           "agree": {
+            "chandra-ocr-2": 0.351,
             "claude-opus-5-5": 0.706,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.709,
             "gemini-3.1-flash-lite": 1,
             "kraken-greek-cllg": 0.639,
@@ -4197,7 +5477,9 @@
           ],
           "cer_folded": 0.077,
           "agree": {
+            "chandra-ocr-2": 0.292,
             "claude-opus-5-5": 0.778,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.782,
             "gemini-3.1-flash-lite": 0.639,
             "gemini-3.1-flash-lite-b": 0.639,
@@ -4218,18 +5500,18 @@
           "bow": 0.231,
           "gap": 0.019,
           "len_ratio": 0.896,
-          "invention": 0.778,
-          "invention_indep": 0.778,
+          "invention": 0.759,
+          "invention_indep": 0.759,
           "invention_ref": 0.861,
           "unsupported_sample": [
             "συλασσόφοις",
-            "αὐτῷ",
             "ὁδὲς",
             "κοιλότης",
             "ἰμπίπουος",
             "ὀλδύεως",
             "πεσὶ",
-            "ἐμείδη"
+            "ἐμείδη",
+            "πικεω"
           ],
           "invention_ref_sample": [
             "τοῖς",
@@ -4243,7 +5525,9 @@
           ],
           "cer_folded": 0.342,
           "agree": {
+            "chandra-ocr-2": 0.182,
             "claude-opus-5-5": 0.249,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.25,
             "gemini-3.1-flash-lite": 0.256,
             "gemini-3.1-flash-lite-b": 0.256,
@@ -4264,8 +5548,8 @@
           "bow": 0.324,
           "gap": 0.038,
           "len_ratio": 0.986,
-          "invention": 0.678,
-          "invention_indep": 0.678,
+          "invention": 0.661,
+          "invention_indep": 0.661,
           "invention_ref": 0.8,
           "unsupported_sample": [
             "αὐξοφδεῖς",
@@ -4275,7 +5559,7 @@
             "ἄλλι",
             "πικραλ",
             "δάλασσαν",
-            "φησὶν"
+            "λειψάνων"
           ],
           "invention_ref_sample": [
             "τοῖς",
@@ -4289,7 +5573,9 @@
           ],
           "cer_folded": 0.32,
           "agree": {
+            "chandra-ocr-2": 0.319,
             "claude-opus-5-5": 0.349,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.346,
             "gemini-3.1-flash-lite": 0.359,
             "gemini-3.1-flash-lite-b": 0.359,
@@ -4309,8 +5595,8 @@
           "bow": 0.158,
           "gap": 0.032,
           "len_ratio": 0.95,
-          "invention": 0.828,
-          "invention_indep": 0.828,
+          "invention": 0.819,
+          "invention_indep": 0.819,
           "invention_ref": 0.897,
           "unsupported_sample": [
             "φγλοσόφοιο",
@@ -4334,7 +5620,9 @@
           ],
           "cer_folded": 0.428,
           "agree": {
+            "chandra-ocr-2": 0.138,
             "claude-opus-5-5": 0.186,
+            "deepseek-ocr": 0,
             "gemini-3-flash-preview": 0.178,
             "gemini-3.1-flash-lite": 0.167,
             "gemini-3.1-flash-lite-b": 0.167,
@@ -4354,6 +5642,53 @@
       "year": 1838,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 761,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.463,
+          "acc": 0.537,
+          "seq": 0.69,
+          "bow": 0.69,
+          "gap": 0,
+          "len_ratio": 1.414,
+          "invention": 0.171,
+          "invention_indep": 0.171,
+          "invention_ref": 0.355,
+          "unsupported_sample": [
+            "εὐρήσων",
+            "οὕριος",
+            "συνεμπνεί",
+            "μαίνεταί",
+            "ἐγγέσπαλος",
+            "οὖρεσι",
+            "θύκτις",
+            "τρίφω"
+          ],
+          "invention_ref_sample": [
+            "εὐρήσων",
+            "οὕριος",
+            "συνεμπνεί",
+            "ἀγῶσι",
+            "ἄλλό",
+            "μαίνεταί",
+            "ἀρης",
+            "ἐγγέσπαλος"
+          ],
+          "cer_folded": 0.431,
+          "agree": {
+            "claude-opus-5-5": 0.822,
+            "deepseek-ocr": 0.764,
+            "gemini-3-flash-preview": 0.81,
+            "gemini-3.1-flash-lite": 0.808,
+            "gemini-3.1-flash-lite-b": 0.808,
+            "kraken-greek-cllg": 0.727,
+            "mistral-ocr-4-1": 0.799,
+            "qwen3-vl-8b": 0.789,
+            "tesseract-grc": 0.333
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 736,
           "empty": false,
@@ -4382,6 +5717,8 @@
           ],
           "cer_folded": 0.379,
           "agree": {
+            "chandra-ocr-2": 0.822,
+            "deepseek-ocr": 0.834,
             "gemini-3-flash-preview": 0.951,
             "gemini-3.1-flash-lite": 0.957,
             "gemini-3.1-flash-lite-b": 0.957,
@@ -4389,6 +5726,54 @@
             "mistral-ocr-4-1": 0.933,
             "qwen3-vl-8b": 0.866,
             "tesseract-grc": 0.39
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 733,
+          "empty": false,
+          "refused": false,
+          "finish_reason": "stop",
+          "loop": false,
+          "cer": 0.42,
+          "acc": 0.58,
+          "seq": 0.71,
+          "bow": 0.71,
+          "gap": 0,
+          "len_ratio": 1.362,
+          "invention": 0.164,
+          "invention_indep": 0.164,
+          "invention_ref": 0.301,
+          "unsupported_sample": [
+            "ὁμηρος",
+            "οὗρος",
+            "ὁλονό",
+            "ὑλης",
+            "προσεπιθειρτησέν",
+            "ἴδιον",
+            "γῆρᾳ",
+            "φιλομυθον"
+          ],
+          "invention_ref_sample": [
+            "ὁμηρος",
+            "οὗρος",
+            "ἀγῶσι",
+            "ὁλονό",
+            "ὑλης",
+            "γίνεται",
+            "ἔνεκα",
+            "προσεπιθειρτησέν"
+          ],
+          "cer_folded": 0.398,
+          "agree": {
+            "chandra-ocr-2": 0.764,
+            "claude-opus-5-5": 0.834,
+            "gemini-3-flash-preview": 0.807,
+            "gemini-3.1-flash-lite": 0.813,
+            "gemini-3.1-flash-lite-b": 0.813,
+            "kraken-greek-cllg": 0.737,
+            "mistral-ocr-4-1": 0.824,
+            "qwen3-vl-8b": 0.807,
+            "tesseract-grc": 0.329
           }
         },
         "gemini-3-flash-preview": {
@@ -4420,7 +5805,9 @@
           ],
           "cer_folded": 0.409,
           "agree": {
+            "chandra-ocr-2": 0.81,
             "claude-opus-5-5": 0.951,
+            "deepseek-ocr": 0.807,
             "gemini-3.1-flash-lite": 0.993,
             "gemini-3.1-flash-lite-b": 0.993,
             "kraken-greek-cllg": 0.839,
@@ -4456,7 +5843,9 @@
           ],
           "cer_folded": 0.388,
           "agree": {
+            "chandra-ocr-2": 0.808,
             "claude-opus-5-5": 0.957,
+            "deepseek-ocr": 0.813,
             "gemini-3-flash-preview": 0.993,
             "gemini-3.1-flash-lite-b": 1,
             "kraken-greek-cllg": 0.838,
@@ -4492,7 +5881,9 @@
           ],
           "cer_folded": 0.388,
           "agree": {
+            "chandra-ocr-2": 0.808,
             "claude-opus-5-5": 0.957,
+            "deepseek-ocr": 0.813,
             "gemini-3-flash-preview": 0.993,
             "gemini-3.1-flash-lite": 1,
             "kraken-greek-cllg": 0.838,
@@ -4537,7 +5928,9 @@
           ],
           "cer_folded": 0.364,
           "agree": {
+            "chandra-ocr-2": 0.727,
             "claude-opus-5-5": 0.873,
+            "deepseek-ocr": 0.737,
             "gemini-3-flash-preview": 0.839,
             "gemini-3.1-flash-lite": 0.838,
             "gemini-3.1-flash-lite-b": 0.838,
@@ -4558,13 +5951,11 @@
           "bow": 0.782,
           "gap": 0,
           "len_ratio": 1.366,
-          "invention": 0.068,
-          "invention_indep": 0.068,
+          "invention": 0.041,
+          "invention_indep": 0.041,
           "invention_ref": 0.216,
           "unsupported_sample": [
             "ὁλοὸν",
-            "ἰδιόν",
-            "συντεθεικῶς",
             "tαύτην",
             "dιαθέσθαι"
           ],
@@ -4580,7 +5971,9 @@
           ],
           "cer_folded": 0.385,
           "agree": {
+            "chandra-ocr-2": 0.799,
             "claude-opus-5-5": 0.933,
+            "deepseek-ocr": 0.824,
             "gemini-3-flash-preview": 0.891,
             "gemini-3.1-flash-lite": 0.898,
             "gemini-3.1-flash-lite-b": 0.898,
@@ -4601,8 +5994,8 @@
           "bow": 0.723,
           "gap": 0,
           "len_ratio": 1.385,
-          "invention": 0.158,
-          "invention_indep": 0.158,
+          "invention": 0.145,
+          "invention_indep": 0.145,
           "invention_ref": 0.303,
           "unsupported_sample": [
             "ἄργει",
@@ -4610,9 +6003,9 @@
             "ὀμηρος",
             "οὐρίος",
             "ἄγωσι",
-            "ἀρης",
             "ὅλον",
-            "ἀπροσ"
+            "ἀπροσ",
+            "θούν"
           ],
           "invention_ref_sample": [
             "ἄργει",
@@ -4626,7 +6019,9 @@
           ],
           "cer_folded": 0.403,
           "agree": {
+            "chandra-ocr-2": 0.789,
             "claude-opus-5-5": 0.866,
+            "deepseek-ocr": 0.807,
             "gemini-3-flash-preview": 0.846,
             "gemini-3.1-flash-lite": 0.852,
             "gemini-3.1-flash-lite-b": 0.852,
@@ -4671,7 +6066,9 @@
           ],
           "cer_folded": 2.673,
           "agree": {
+            "chandra-ocr-2": 0.333,
             "claude-opus-5-5": 0.39,
+            "deepseek-ocr": 0.329,
             "gemini-3-flash-preview": 0.402,
             "gemini-3.1-flash-lite": 0.403,
             "gemini-3.1-flash-lite-b": 0.403,

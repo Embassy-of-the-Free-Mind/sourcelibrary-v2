@@ -11,6 +11,140 @@
     "textless": [],
     "ref_engine": "gemini-3.1-flash-lite",
     "engines": {
+      "chandra-ocr-2": {
+        "pages_run": 12,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 12,
+          "median_cer": 0.233,
+          "mean_cer": 0.236,
+          "catastrophic": 0,
+          "median_gap": 0.002,
+          "median_seq": 0.849,
+          "refused": 0,
+          "n_answered": 12,
+          "median_cer_answered": 0.233,
+          "mean_cer_answered": 0.236,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.038,
+          "mean": 0.041,
+          "n_engines": 8,
+          "ref_median": 0.13,
+          "ref_mean": 0.112
+        },
+        "paired_vs_ref": {
+          "n": 12,
+          "excluded_refused": 0,
+          "wins": 9,
+          "losses": 2,
+          "ties": 1,
+          "median_delta_cer": 0.01,
+          "p_sign": 0.065,
+          "invention_wins": 5,
+          "invention_losses": 7
+        },
+        "worst": [
+          {
+            "slug": "chinese-ext-db8875-p45",
+            "title": "佛說大方廣善巧方便經",
+            "year": null,
+            "cer": 0.414,
+            "gap": 0.004,
+            "invention": 0.013,
+            "has_ref": true,
+            "unsupported": [
+              "皆為方",
+              "為方便",
+              "大方便",
+              "第四四",
+              "四四十"
+            ]
+          },
+          {
+            "slug": "chinese-ext-dbda81-p11",
+            "title": "金剛經鳩異",
+            "year": null,
+            "cer": 0.383,
+            "gap": 0.007,
+            "invention": 0.015,
+            "has_ref": true,
+            "unsupported": [
+              "対門存",
+              "限相将",
+              "陵時沙",
+              "時沙陽",
+              "沙陽鎮"
+            ]
+          },
+          {
+            "slug": "chinese-ext-8e07e9-p26",
+            "title": "大乘百法明門論疏",
+            "year": null,
+            "cer": 0.368,
+            "gap": 0,
+            "invention": 0.029,
+            "has_ref": true,
+            "unsupported": [
+              "有開開",
+              "開開義",
+              "開義故"
+            ]
+          },
+          {
+            "slug": "chinese-ext-db2395-p52",
+            "title": "春秋屬辭比事記",
+            "year": null,
+            "cer": 0.366,
+            "gap": 0.007,
+            "invention": 0.031,
+            "has_ref": true,
+            "unsupported": [
+              "晉作搜",
+              "作搜伐",
+              "搜伐而",
+              "属辞記",
+              "辞記事",
+              "記事記"
+            ]
+          },
+          {
+            "slug": "chinese-ext-d9f7a0-p109",
+            "title": "御纂醫宗金鑑 (Golden Mirror of Medicine), Vol. 2",
+            "year": 1742,
+            "cer": 0.321,
+            "gap": 0.007,
+            "invention": 0.051,
+            "has_ref": true,
+            "unsupported": [
+              "湯主治",
+              "主治之",
+              "治之按",
+              "身体尪",
+              "体尪羸",
+              "尪羸即",
+              "註李彥",
+              "李彥曰"
+            ]
+          }
+        ]
+      },
       "claude-opus-5-5": {
         "pages_run": 12,
         "empty": 0,
@@ -43,9 +177,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.034,
-          "mean": 0.057,
-          "n_engines": 6,
+          "median": 0.032,
+          "mean": 0.055,
+          "n_engines": 8,
           "ref_median": 0.109,
           "ref_mean": 0.119
         },
@@ -67,17 +201,17 @@
             "year": null,
             "cer": 0.443,
             "gap": 0.012,
-            "invention": 0.036,
+            "invention": 0.031,
             "has_ref": true,
             "unsupported": [
               "相謀経",
               "謀経仏",
-              "経仏説",
               "第四二",
               "四二十",
               "二十三",
               "十三深",
-              "三深十"
+              "三深十",
+              "深十殺"
             ]
           },
           {
@@ -86,7 +220,7 @@
             "year": null,
             "cer": 0.389,
             "gap": 0.018,
-            "invention": 0.094,
+            "invention": 0.086,
             "has_ref": true,
             "unsupported": [
               "問霊帰",
@@ -142,6 +276,153 @@
           }
         ]
       },
+      "deepseek-ocr": {
+        "pages_run": 12,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 5,
+        "ref": {
+          "n": 12,
+          "median_cer": 0.849,
+          "mean_cer": 6.896,
+          "catastrophic": 8,
+          "median_gap": 0.055,
+          "median_seq": 0.496,
+          "refused": 0,
+          "n_answered": 12,
+          "median_cer_answered": 0.849,
+          "mean_cer_answered": 6.896,
+          "catastrophic_answered": 8
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.311,
+          "mean": 0.297,
+          "n_engines": 8,
+          "ref_median": 0.362,
+          "ref_mean": 0.355
+        },
+        "paired_vs_ref": {
+          "n": 12,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 12,
+          "ties": 0,
+          "median_delta_cer": -0.459,
+          "p_sign": 0,
+          "invention_wins": 0,
+          "invention_losses": 12
+        },
+        "worst": [
+          {
+            "slug": "chinese-ext-e6c5d5-p580",
+            "title": "雲笈七籤 (全122卷) — Yunji qiqian, complete 122 juan",
+            "year": 1573,
+            "cer": 18.292,
+            "gap": 0.017,
+            "invention": 0.313,
+            "has_ref": true,
+            "unsupported": [
+              "角正千",
+              "正千辰",
+              "名曰閩",
+              "曰閩風",
+              "閩風台",
+              "曰玄闥",
+              "玄闥台",
+              "闥台其"
+            ]
+          },
+          {
+            "slug": "chinese-ext-d9f7a0-p109",
+            "title": "御纂醫宗金鑑 (Golden Mirror of Medicine), Vol. 2",
+            "year": 1742,
+            "cer": 17.679,
+            "gap": 0.016,
+            "invention": 0.745,
+            "has_ref": true,
+            "unsupported": [
+              "温温庭",
+              "温庭節",
+              "庭節之",
+              "節之語",
+              "之語該",
+              "語該肢",
+              "該肢節",
+              "身体之"
+            ]
+          },
+          {
+            "slug": "chinese-ext-db2395-p52",
+            "title": "春秋屬辭比事記",
+            "year": null,
+            "cer": 16.259,
+            "gap": 0.12,
+            "invention": 0.36,
+            "has_ref": true,
+            "unsupported": [
+              "十年晋",
+              "年晋師",
+              "晋師伐",
+              "秦秋苗",
+              "秋苗人",
+              "苗人伐",
+              "鄙十五",
+              "五年郤"
+            ]
+          },
+          {
+            "slug": "chinese-ext-db5e4a-p15",
+            "title": "無依道人錄",
+            "year": 1667,
+            "cer": 13.87,
+            "gap": 0.002,
+            "invention": 0.308,
+            "has_ref": true,
+            "unsupported": [
+              "見緯野",
+              "緯野上",
+              "諱超恬",
+              "超恬誠",
+              "恬誠信",
+              "信端慈",
+              "端慈寸",
+              "慈寸歩"
+            ]
+          },
+          {
+            "slug": "chinese-ext-dbbedb-p66",
+            "title": "劉氏春秋意林",
+            "year": null,
+            "cer": 13,
+            "gap": 0.058,
+            "invention": 0.07,
+            "has_ref": true,
+            "unsupported": [
+              "而能称",
+              "能称国",
+              "称国之",
+              "貴也予",
+              "也予之",
+              "予之所",
+              "貴也爵",
+              "也爵及"
+            ]
+          }
+        ]
+      },
       "gemini-3-flash-preview": {
         "pages_run": 12,
         "empty": 0,
@@ -174,9 +455,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.008,
-          "mean": 0.018,
-          "n_engines": 6,
+          "median": 0.007,
+          "mean": 0.017,
+          "n_engines": 8,
           "ref_median": 0.09,
           "ref_mean": 0.092
         },
@@ -291,7 +572,7 @@
         "invention": {
           "median": 0,
           "mean": 0,
-          "n_engines": 6,
+          "n_engines": 8,
           "ref_median": 0.129,
           "ref_mean": 0.122
         },
@@ -382,7 +663,7 @@
         "invention": {
           "median": 0,
           "mean": 0,
-          "n_engines": 6,
+          "n_engines": 8,
           "ref_median": 0.129,
           "ref_mean": 0.122
         },
@@ -483,8 +764,8 @@
         },
         "invention": {
           "median": 0.198,
-          "mean": 0.229,
-          "n_engines": 6,
+          "mean": 0.222,
+          "n_engines": 8,
           "ref_median": 0.249,
           "ref_mean": 0.281
         },
@@ -525,7 +806,7 @@
             "year": null,
             "cer": 0.44,
             "gap": 0.018,
-            "invention": 0.291,
+            "invention": 0.273,
             "has_ref": true,
             "unsupported": [
               "金剛新",
@@ -630,8 +911,8 @@
         },
         "invention": {
           "median": 0.003,
-          "mean": 0.026,
-          "n_engines": 6,
+          "mean": 0.024,
+          "n_engines": 8,
           "ref_median": 0.065,
           "ref_mean": 0.077
         },
@@ -722,6 +1003,15 @@
       "woodblock": {
         "n": 12,
         "engines": {
+          "chandra-ocr-2": {
+            "n": 12,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.233,
+            "catastrophic": 0,
+            "median_unsupported": 0.038
+          },
           "claude-opus-5-5": {
             "n": 12,
             "empty": 0,
@@ -729,7 +1019,16 @@
             "loop": 0,
             "median_cer": 0.231,
             "catastrophic": 0,
-            "median_unsupported": 0.034
+            "median_unsupported": 0.032
+          },
+          "deepseek-ocr": {
+            "n": 12,
+            "empty": 0,
+            "refused": 0,
+            "loop": 5,
+            "median_cer": 0.849,
+            "catastrophic": 8,
+            "median_unsupported": 0.311
           },
           "gemini-3-flash-preview": {
             "n": 12,
@@ -738,7 +1037,7 @@
             "loop": 0,
             "median_cer": 0.234,
             "catastrophic": 0,
-            "median_unsupported": 0.008
+            "median_unsupported": 0.007
           },
           "gemini-3.1-flash-lite": {
             "n": 12,
@@ -790,6 +1089,50 @@
       "year": null,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 171,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.196,
+          "acc": 0.804,
+          "seq": 0.875,
+          "bow": 0.875,
+          "gap": 0,
+          "len_ratio": 0.838,
+          "invention": 0.051,
+          "invention_indep": 0.051,
+          "invention_ref": 0.128,
+          "unsupported_sample": [
+            "斉平皎",
+            "平皎電",
+            "皎電窓",
+            "窓造皎",
+            "造皎電",
+            "左右剗",
+            "右剗刻",
+            "剗刻取"
+          ],
+          "invention_ref_sample": [
+            "串下高",
+            "下高四",
+            "高四尺",
+            "斉平皎",
+            "平皎電",
+            "皎電窓",
+            "窓造皎",
+            "造皎電"
+          ],
+          "agree": {
+            "claude-opus-5-5": 0.92,
+            "deepseek-ocr": 0.869,
+            "gemini-3-flash-preview": 0.982,
+            "gemini-3.1-flash-lite": 0.982,
+            "gemini-3.1-flash-lite-b": 0.982,
+            "mistral-ocr-4-1": 0.942,
+            "qwen3-vl-8b": 0.982
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 179,
           "empty": false,
@@ -826,11 +1169,58 @@
             "六水版"
           ],
           "agree": {
+            "chandra-ocr-2": 0.92,
+            "deepseek-ocr": 0.811,
             "gemini-3-flash-preview": 0.937,
             "gemini-3.1-flash-lite": 0.931,
             "gemini-3.1-flash-lite-b": 0.931,
             "mistral-ocr-4-1": 0.88,
             "qwen3-vl-8b": 0.926
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 149,
+          "empty": false,
+          "refused": false,
+          "finish_reason": "stop",
+          "loop": false,
+          "cer": 0.387,
+          "acc": 0.613,
+          "seq": 0.731,
+          "bow": 0.782,
+          "gap": 0.051,
+          "len_ratio": 0.73,
+          "invention": 0.25,
+          "invention_indep": 0.25,
+          "invention_ref": 0.364,
+          "unsupported_sample": [
+            "坐造三",
+            "造三尺",
+            "三尺窓",
+            "尺窓子",
+            "窓子腰",
+            "子腰串",
+            "尺至映",
+            "至映電"
+          ],
+          "invention_ref_sample": [
+            "坐造三",
+            "造三尺",
+            "三尺窓",
+            "尺窓子",
+            "窓子腰",
+            "子腰串",
+            "串下高",
+            "下高四"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.869,
+            "claude-opus-5-5": 0.811,
+            "gemini-3-flash-preview": 0.869,
+            "gemini-3.1-flash-lite": 0.869,
+            "gemini-3.1-flash-lite-b": 0.869,
+            "mistral-ocr-4-1": 0.863,
+            "qwen3-vl-8b": 0.869
           }
         },
         "gemini-3-flash-preview": {
@@ -859,7 +1249,9 @@
             "厚其名"
           ],
           "agree": {
+            "chandra-ocr-2": 0.982,
             "claude-opus-5-5": 0.937,
+            "deepseek-ocr": 0.869,
             "gemini-3.1-flash-lite": 0.994,
             "gemini-3.1-flash-lite-b": 0.994,
             "mistral-ocr-4-1": 0.942,
@@ -892,7 +1284,9 @@
             "右刻刻"
           ],
           "agree": {
+            "chandra-ocr-2": 0.982,
             "claude-opus-5-5": 0.931,
+            "deepseek-ocr": 0.869,
             "gemini-3-flash-preview": 0.994,
             "gemini-3.1-flash-lite-b": 1,
             "mistral-ocr-4-1": 0.942,
@@ -925,7 +1319,9 @@
             "右刻刻"
           ],
           "agree": {
+            "chandra-ocr-2": 0.982,
             "claude-opus-5-5": 0.931,
+            "deepseek-ocr": 0.869,
             "gemini-3-flash-preview": 0.994,
             "gemini-3.1-flash-lite": 1,
             "mistral-ocr-4-1": 0.942,
@@ -968,7 +1364,9 @@
             "平睽電"
           ],
           "agree": {
+            "chandra-ocr-2": 0.942,
             "claude-opus-5-5": 0.88,
+            "deepseek-ocr": 0.863,
             "gemini-3-flash-preview": 0.942,
             "gemini-3.1-flash-lite": 0.942,
             "gemini-3.1-flash-lite-b": 0.942,
@@ -1008,7 +1406,9 @@
             "造聫電"
           ],
           "agree": {
+            "chandra-ocr-2": 0.982,
             "claude-opus-5-5": 0.926,
+            "deepseek-ocr": 0.869,
             "gemini-3-flash-preview": 0.988,
             "gemini-3.1-flash-lite": 0.982,
             "gemini-3.1-flash-lite-b": 0.982,
@@ -1026,6 +1426,50 @@
       "year": null,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 175,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.269,
+          "acc": 0.731,
+          "seq": 0.824,
+          "bow": 0.829,
+          "gap": 0.005,
+          "len_ratio": 0.785,
+          "invention": 0.077,
+          "invention_indep": 0.077,
+          "invention_ref": 0.131,
+          "unsupported_sample": [
+            "得一般",
+            "一般則",
+            "般則三",
+            "十二個",
+            "二個月",
+            "個月適",
+            "之後師",
+            "後師江"
+          ],
+          "invention_ref_sample": [
+            "年一般",
+            "一般五",
+            "般五年",
+            "得一般",
+            "一般則",
+            "般則三",
+            "省六個",
+            "六個月"
+          ],
+          "agree": {
+            "claude-opus-5-5": 0.949,
+            "deepseek-ocr": 0.865,
+            "gemini-3-flash-preview": 0.946,
+            "gemini-3.1-flash-lite": 0.914,
+            "gemini-3.1-flash-lite-b": 0.914,
+            "mistral-ocr-4-1": 0.496,
+            "qwen3-vl-8b": 0.956
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 175,
           "empty": false,
@@ -1055,11 +1499,58 @@
             "禘祫問"
           ],
           "agree": {
+            "chandra-ocr-2": 0.949,
+            "deepseek-ocr": 0.871,
             "gemini-3-flash-preview": 0.997,
             "gemini-3.1-flash-lite": 0.925,
             "gemini-3.1-flash-lite-b": 0.925,
             "mistral-ocr-4-1": 0.499,
             "qwen3-vl-8b": 0.98
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 167,
+          "empty": false,
+          "refused": false,
+          "finish_reason": "stop",
+          "loop": false,
+          "cer": 0.336,
+          "acc": 0.664,
+          "seq": 0.759,
+          "bow": 0.759,
+          "gap": 0,
+          "len_ratio": 0.749,
+          "invention": 0.256,
+          "invention_indep": 0.256,
+          "invention_ref": 0.294,
+          "unsupported_sample": [
+            "再拾乃",
+            "拾乃又",
+            "増一稀",
+            "一稀于",
+            "稀于裕",
+            "于裕稀",
+            "裕稀之",
+            "稀之間"
+          ],
+          "invention_ref_sample": [
+            "再拾乃",
+            "拾乃又",
+            "増一稀",
+            "一稀于",
+            "稀于裕",
+            "于裕稀",
+            "裕稀之",
+            "稀之間"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.865,
+            "claude-opus-5-5": 0.871,
+            "gemini-3-flash-preview": 0.869,
+            "gemini-3.1-flash-lite": 0.865,
+            "gemini-3.1-flash-lite-b": 0.865,
+            "mistral-ocr-4-1": 0.46,
+            "qwen3-vl-8b": 0.89
           }
         },
         "gemini-3-flash-preview": {
@@ -1090,7 +1581,9 @@
             "禘祫問"
           ],
           "agree": {
+            "chandra-ocr-2": 0.946,
             "claude-opus-5-5": 0.997,
+            "deepseek-ocr": 0.869,
             "gemini-3.1-flash-lite": 0.923,
             "gemini-3.1-flash-lite-b": 0.923,
             "mistral-ocr-4-1": 0.502,
@@ -1109,7 +1602,7 @@
           "gap": 0.005,
           "len_ratio": 0.776,
           "invention": 0,
-          "invention_indep": 0.169,
+          "invention_indep": 0.151,
           "invention_ref": 0.187,
           "unsupported_sample": [],
           "invention_ref_sample": [
@@ -1123,7 +1616,9 @@
             "袷如置"
           ],
           "agree": {
+            "chandra-ocr-2": 0.914,
             "claude-opus-5-5": 0.925,
+            "deepseek-ocr": 0.865,
             "gemini-3-flash-preview": 0.923,
             "gemini-3.1-flash-lite-b": 1,
             "mistral-ocr-4-1": 0.494,
@@ -1142,7 +1637,7 @@
           "gap": 0.005,
           "len_ratio": 0.776,
           "invention": 0,
-          "invention_indep": 0.169,
+          "invention_indep": 0.151,
           "invention_ref": 0.187,
           "unsupported_sample": [],
           "invention_ref_sample": [
@@ -1156,7 +1651,9 @@
             "袷如置"
           ],
           "agree": {
+            "chandra-ocr-2": 0.914,
             "claude-opus-5-5": 0.925,
+            "deepseek-ocr": 0.865,
             "gemini-3-flash-preview": 0.923,
             "gemini-3.1-flash-lite": 1,
             "mistral-ocr-4-1": 0.494,
@@ -1199,7 +1696,9 @@
             "股非再"
           ],
           "agree": {
+            "chandra-ocr-2": 0.496,
             "claude-opus-5-5": 0.499,
+            "deepseek-ocr": 0.46,
             "gemini-3-flash-preview": 0.502,
             "gemini-3.1-flash-lite": 0.494,
             "gemini-3.1-flash-lite-b": 0.494,
@@ -1228,7 +1727,9 @@
             "歲矣又"
           ],
           "agree": {
+            "chandra-ocr-2": 0.956,
             "claude-opus-5-5": 0.98,
+            "deepseek-ocr": 0.89,
             "gemini-3-flash-preview": 0.977,
             "gemini-3.1-flash-lite": 0.938,
             "gemini-3.1-flash-lite-b": 0.938,
@@ -1246,6 +1747,40 @@
       "year": null,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 152,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.368,
+          "acc": 0.632,
+          "seq": 0.772,
+          "bow": 0.772,
+          "gap": 0,
+          "len_ratio": 0.636,
+          "invention": 0.029,
+          "invention_indep": 0.029,
+          "invention_ref": 0.029,
+          "unsupported_sample": [
+            "有開開",
+            "開開義",
+            "開義故"
+          ],
+          "invention_ref_sample": [
+            "有開開",
+            "開開義",
+            "開義故"
+          ],
+          "agree": {
+            "claude-opus-5-5": 0.993,
+            "deepseek-ocr": 0.511,
+            "gemini-3-flash-preview": 0.993,
+            "gemini-3.1-flash-lite": 0.993,
+            "gemini-3.1-flash-lite-b": 0.993,
+            "mistral-ocr-4-1": 0.908,
+            "qwen3-vl-8b": 0.993
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 152,
           "empty": false,
@@ -1264,11 +1799,58 @@
           "unsupported_sample": [],
           "invention_ref_sample": [],
           "agree": {
+            "chandra-ocr-2": 0.993,
+            "deepseek-ocr": 0.511,
             "gemini-3-flash-preview": 1,
             "gemini-3.1-flash-lite": 1,
             "gemini-3.1-flash-lite-b": 1,
             "mistral-ocr-4-1": 0.914,
             "qwen3-vl-8b": 1
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 228,
+          "empty": false,
+          "refused": false,
+          "finish_reason": "stop",
+          "loop": false,
+          "cer": 0.787,
+          "acc": 0.213,
+          "seq": 0.355,
+          "bow": 0.544,
+          "gap": 0.188,
+          "len_ratio": 0.954,
+          "invention": 0.333,
+          "invention_indep": 0.333,
+          "invention_ref": 0.333,
+          "unsupported_sample": [
+            "能緣六",
+            "緣六識",
+            "者四阿",
+            "四阿頼",
+            "六識無",
+            "識無間",
+            "識無所",
+            "緣六種"
+          ],
+          "invention_ref_sample": [
+            "能緣六",
+            "緣六識",
+            "者四阿",
+            "四阿頼",
+            "六識無",
+            "識無間",
+            "識無所",
+            "緣六種"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.511,
+            "claude-opus-5-5": 0.511,
+            "gemini-3-flash-preview": 0.511,
+            "gemini-3.1-flash-lite": 0.511,
+            "gemini-3.1-flash-lite-b": 0.511,
+            "mistral-ocr-4-1": 0.442,
+            "qwen3-vl-8b": 0.511
           }
         },
         "gemini-3-flash-preview": {
@@ -1288,7 +1870,9 @@
           "unsupported_sample": [],
           "invention_ref_sample": [],
           "agree": {
+            "chandra-ocr-2": 0.993,
             "claude-opus-5-5": 1,
+            "deepseek-ocr": 0.511,
             "gemini-3.1-flash-lite": 1,
             "gemini-3.1-flash-lite-b": 1,
             "mistral-ocr-4-1": 0.914,
@@ -1312,7 +1896,9 @@
           "unsupported_sample": [],
           "invention_ref_sample": [],
           "agree": {
+            "chandra-ocr-2": 0.993,
             "claude-opus-5-5": 1,
+            "deepseek-ocr": 0.511,
             "gemini-3-flash-preview": 1,
             "gemini-3.1-flash-lite-b": 1,
             "mistral-ocr-4-1": 0.914,
@@ -1336,7 +1922,9 @@
           "unsupported_sample": [],
           "invention_ref_sample": [],
           "agree": {
+            "chandra-ocr-2": 0.993,
             "claude-opus-5-5": 1,
+            "deepseek-ocr": 0.511,
             "gemini-3-flash-preview": 1,
             "gemini-3.1-flash-lite": 1,
             "mistral-ocr-4-1": 0.914,
@@ -1379,7 +1967,9 @@
             "誠為境"
           ],
           "agree": {
+            "chandra-ocr-2": 0.908,
             "claude-opus-5-5": 0.914,
+            "deepseek-ocr": 0.442,
             "gemini-3-flash-preview": 0.914,
             "gemini-3.1-flash-lite": 0.914,
             "gemini-3.1-flash-lite-b": 0.914,
@@ -1404,7 +1994,9 @@
           "unsupported_sample": [],
           "invention_ref_sample": [],
           "agree": {
+            "chandra-ocr-2": 0.993,
             "claude-opus-5-5": 1,
+            "deepseek-ocr": 0.511,
             "gemini-3-flash-preview": 1,
             "gemini-3.1-flash-lite": 1,
             "gemini-3.1-flash-lite-b": 1,
@@ -1422,6 +2014,50 @@
       "year": 1742,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 232,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.321,
+          "acc": 0.679,
+          "seq": 0.772,
+          "bow": 0.779,
+          "gap": 0.007,
+          "len_ratio": 0.768,
+          "invention": 0.051,
+          "invention_indep": 0.051,
+          "invention_ref": 0.194,
+          "unsupported_sample": [
+            "湯主治",
+            "主治之",
+            "治之按",
+            "身体尪",
+            "体尪羸",
+            "尪羸即",
+            "註李彥",
+            "李彥曰"
+          ],
+          "invention_ref_sample": [
+            "湯主治",
+            "主治之",
+            "治之按",
+            "身体尪",
+            "体尪羸",
+            "尪羸即",
+            "腫如脫",
+            "如脫即"
+          ],
+          "agree": {
+            "claude-opus-5-5": 0.968,
+            "deepseek-ocr": 0.067,
+            "gemini-3-flash-preview": 0.978,
+            "gemini-3.1-flash-lite": 0.914,
+            "gemini-3.1-flash-lite-b": 0.914,
+            "mistral-ocr-4-1": 0.861,
+            "qwen3-vl-8b": 0.87
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 233,
           "empty": false,
@@ -1456,11 +2092,58 @@
             "無黃汗"
           ],
           "agree": {
+            "chandra-ocr-2": 0.968,
+            "deepseek-ocr": 0.07,
             "gemini-3-flash-preview": 0.981,
             "gemini-3.1-flash-lite": 0.912,
             "gemini-3.1-flash-lite-b": 0.912,
             "mistral-ocr-4-1": 0.855,
             "qwen3-vl-8b": 0.872
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 5361,
+          "empty": false,
+          "refused": false,
+          "finish_reason": "length",
+          "loop": true,
+          "cer": 17.679,
+          "acc": 0,
+          "seq": 0.06,
+          "bow": 0.075,
+          "gap": 0.016,
+          "len_ratio": 17.752,
+          "invention": 0.745,
+          "invention_indep": 0.745,
+          "invention_ref": 0.787,
+          "unsupported_sample": [
+            "温温庭",
+            "温庭節",
+            "庭節之",
+            "節之語",
+            "之語該",
+            "語該肢",
+            "該肢節",
+            "身体之"
+          ],
+          "invention_ref_sample": [
+            "当是温",
+            "是温温",
+            "温温庭",
+            "温庭節",
+            "庭節之",
+            "節之語",
+            "之語該",
+            "語該肢"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.067,
+            "claude-opus-5-5": 0.07,
+            "gemini-3-flash-preview": 0.067,
+            "gemini-3.1-flash-lite": 0.071,
+            "gemini-3.1-flash-lite-b": 0.071,
+            "mistral-ocr-4-1": 0.068,
+            "qwen3-vl-8b": 0.068
           }
         },
         "gemini-3-flash-preview": {
@@ -1489,7 +2172,9 @@
             "頭湿者"
           ],
           "agree": {
+            "chandra-ocr-2": 0.978,
             "claude-opus-5-5": 0.981,
+            "deepseek-ocr": 0.067,
             "gemini-3.1-flash-lite": 0.923,
             "gemini-3.1-flash-lite-b": 0.923,
             "mistral-ocr-4-1": 0.865,
@@ -1508,7 +2193,7 @@
           "gap": 0.019,
           "len_ratio": 0.702,
           "invention": 0,
-          "invention_indep": 0.076,
+          "invention_indep": 0.066,
           "invention_ref": 0.182,
           "unsupported_sample": [],
           "invention_ref_sample": [
@@ -1522,7 +2207,9 @@
             "腫如脫"
           ],
           "agree": {
+            "chandra-ocr-2": 0.914,
             "claude-opus-5-5": 0.912,
+            "deepseek-ocr": 0.071,
             "gemini-3-flash-preview": 0.923,
             "gemini-3.1-flash-lite-b": 1,
             "mistral-ocr-4-1": 0.882,
@@ -1541,7 +2228,7 @@
           "gap": 0.019,
           "len_ratio": 0.702,
           "invention": 0,
-          "invention_indep": 0.076,
+          "invention_indep": 0.066,
           "invention_ref": 0.182,
           "unsupported_sample": [],
           "invention_ref_sample": [
@@ -1555,7 +2242,9 @@
             "腫如脫"
           ],
           "agree": {
+            "chandra-ocr-2": 0.914,
             "claude-opus-5-5": 0.912,
+            "deepseek-ocr": 0.071,
             "gemini-3-flash-preview": 0.923,
             "gemini-3.1-flash-lite": 1,
             "mistral-ocr-4-1": 0.882,
@@ -1598,7 +2287,9 @@
             "処即上"
           ],
           "agree": {
+            "chandra-ocr-2": 0.861,
             "claude-opus-5-5": 0.855,
+            "deepseek-ocr": 0.068,
             "gemini-3-flash-preview": 0.865,
             "gemini-3.1-flash-lite": 0.882,
             "gemini-3.1-flash-lite-b": 0.882,
@@ -1641,7 +2332,9 @@
             "自山並"
           ],
           "agree": {
+            "chandra-ocr-2": 0.87,
             "claude-opus-5-5": 0.872,
+            "deepseek-ocr": 0.068,
             "gemini-3-flash-preview": 0.891,
             "gemini-3.1-flash-lite": 0.915,
             "gemini-3.1-flash-lite-b": 0.915,
@@ -1659,6 +2352,48 @@
       "year": null,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 240,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.366,
+          "acc": 0.634,
+          "seq": 0.763,
+          "bow": 0.769,
+          "gap": 0.007,
+          "len_ratio": 0.661,
+          "invention": 0.031,
+          "invention_indep": 0.031,
+          "invention_ref": 0.067,
+          "unsupported_sample": [
+            "晉作搜",
+            "作搜伐",
+            "搜伐而",
+            "属辞記",
+            "辞記事",
+            "記事記"
+          ],
+          "invention_ref_sample": [
+            "巻三十",
+            "三十年",
+            "晉作搜",
+            "作搜伐",
+            "搜伐而",
+            "伐莒春",
+            "莒春秋",
+            "春秋属"
+          ],
+          "agree": {
+            "claude-opus-5-5": 0.99,
+            "deepseek-ocr": 0.46,
+            "gemini-3-flash-preview": 0.985,
+            "gemini-3.1-flash-lite": 0.969,
+            "gemini-3.1-flash-lite-b": 0.969,
+            "mistral-ocr-4-1": 0.967,
+            "qwen3-vl-8b": 0.985
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 241,
           "empty": false,
@@ -1690,11 +2425,58 @@
             "春秋属"
           ],
           "agree": {
+            "chandra-ocr-2": 0.99,
+            "deepseek-ocr": 0.459,
             "gemini-3-flash-preview": 0.983,
             "gemini-3.1-flash-lite": 0.975,
             "gemini-3.1-flash-lite-b": 0.975,
             "mistral-ocr-4-1": 0.965,
             "qwen3-vl-8b": 0.992
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 6000,
+          "empty": false,
+          "refused": false,
+          "finish_reason": "length",
+          "loop": true,
+          "cer": 16.259,
+          "acc": 0,
+          "seq": 0.372,
+          "bow": 0.492,
+          "gap": 0.12,
+          "len_ratio": 16.529,
+          "invention": 0.36,
+          "invention_indep": 0.36,
+          "invention_ref": 0.36,
+          "unsupported_sample": [
+            "十年晋",
+            "年晋師",
+            "晋師伐",
+            "秦秋苗",
+            "秋苗人",
+            "苗人伐",
+            "鄙十五",
+            "五年郤"
+          ],
+          "invention_ref_sample": [
+            "十年晋",
+            "年晋師",
+            "晋師伐",
+            "秦秋苗",
+            "秋苗人",
+            "苗人伐",
+            "鄙十五",
+            "五年郤"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.46,
+            "claude-opus-5-5": 0.459,
+            "gemini-3-flash-preview": 0.461,
+            "gemini-3.1-flash-lite": 0.456,
+            "gemini-3.1-flash-lite-b": 0.456,
+            "mistral-ocr-4-1": 0.452,
+            "qwen3-vl-8b": 0.461
           }
         },
         "gemini-3-flash-preview": {
@@ -1727,7 +2509,9 @@
             "属辞北"
           ],
           "agree": {
+            "chandra-ocr-2": 0.985,
             "claude-opus-5-5": 0.983,
+            "deepseek-ocr": 0.461,
             "gemini-3.1-flash-lite": 0.975,
             "gemini-3.1-flash-lite-b": 0.975,
             "mistral-ocr-4-1": 0.964,
@@ -1760,7 +2544,9 @@
             "伐郳二"
           ],
           "agree": {
+            "chandra-ocr-2": 0.969,
             "claude-opus-5-5": 0.975,
+            "deepseek-ocr": 0.456,
             "gemini-3-flash-preview": 0.975,
             "gemini-3.1-flash-lite-b": 1,
             "mistral-ocr-4-1": 0.943,
@@ -1793,7 +2579,9 @@
             "伐郳二"
           ],
           "agree": {
+            "chandra-ocr-2": 0.969,
             "claude-opus-5-5": 0.975,
+            "deepseek-ocr": 0.456,
             "gemini-3-flash-preview": 0.975,
             "gemini-3.1-flash-lite": 1,
             "mistral-ocr-4-1": 0.943,
@@ -1836,7 +2624,9 @@
             "泰人伐"
           ],
           "agree": {
+            "chandra-ocr-2": 0.967,
             "claude-opus-5-5": 0.965,
+            "deepseek-ocr": 0.452,
             "gemini-3-flash-preview": 0.964,
             "gemini-3.1-flash-lite": 0.943,
             "gemini-3.1-flash-lite-b": 0.943,
@@ -1869,7 +2659,9 @@
             "比事記"
           ],
           "agree": {
+            "chandra-ocr-2": 0.985,
             "claude-opus-5-5": 0.992,
+            "deepseek-ocr": 0.461,
             "gemini-3-flash-preview": 0.992,
             "gemini-3.1-flash-lite": 0.983,
             "gemini-3.1-flash-lite-b": 0.983,
@@ -1887,6 +2679,50 @@
       "year": 1745,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 430,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.173,
+          "acc": 0.827,
+          "seq": 0.886,
+          "bow": 0.893,
+          "gap": 0.007,
+          "len_ratio": 0.919,
+          "invention": 0.022,
+          "invention_indep": 0.022,
+          "invention_ref": 0.134,
+          "unsupported_sample": [
+            "尚書経",
+            "書経義",
+            "経義集",
+            "義集略",
+            "集略巻",
+            "略巻二",
+            "巻二七",
+            "二七巻"
+          ],
+          "invention_ref_sample": [
+            "易学啟",
+            "学啟蒙",
+            "啟蒙蓋",
+            "蒙蓋詳",
+            "蓋詳言",
+            "其方蓋",
+            "方蓋揭",
+            "蓋揭其"
+          ],
+          "agree": {
+            "claude-opus-5-5": 0.985,
+            "deepseek-ocr": 0.843,
+            "gemini-3-flash-preview": 0.96,
+            "gemini-3.1-flash-lite": 0.978,
+            "gemini-3.1-flash-lite-b": 0.978,
+            "mistral-ocr-4-1": 0.964,
+            "qwen3-vl-8b": 0.989
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 429,
           "empty": false,
@@ -1923,11 +2759,58 @@
             "蓋揭其"
           ],
           "agree": {
+            "chandra-ocr-2": 0.985,
+            "deepseek-ocr": 0.841,
             "gemini-3-flash-preview": 0.964,
             "gemini-3.1-flash-lite": 0.977,
             "gemini-3.1-flash-lite-b": 0.977,
             "mistral-ocr-4-1": 0.96,
             "qwen3-vl-8b": 0.988
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 441,
+          "empty": false,
+          "refused": false,
+          "finish_reason": "stop",
+          "loop": false,
+          "cer": 0.395,
+          "acc": 0.605,
+          "seq": 0.726,
+          "bow": 0.805,
+          "gap": 0.079,
+          "len_ratio": 0.942,
+          "invention": 0.103,
+          "invention_indep": 0.103,
+          "invention_ref": 0.178,
+          "unsupported_sample": [
+            "所蓋於",
+            "蓋於陽",
+            "而有為",
+            "有為者",
+            "為者也",
+            "者蓋各",
+            "蓋各異",
+            "各異而"
+          ],
+          "invention_ref_sample": [
+            "其方蓋",
+            "方蓋揭",
+            "蓋揭其",
+            "其所蓋",
+            "所蓋於",
+            "蓋於陽",
+            "以統陰",
+            "統陰而"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.843,
+            "claude-opus-5-5": 0.841,
+            "gemini-3-flash-preview": 0.836,
+            "gemini-3.1-flash-lite": 0.84,
+            "gemini-3.1-flash-lite-b": 0.84,
+            "mistral-ocr-4-1": 0.834,
+            "qwen3-vl-8b": 0.849
           }
         },
         "gemini-3-flash-preview": {
@@ -1960,7 +2843,9 @@
             "蓋揭其"
           ],
           "agree": {
+            "chandra-ocr-2": 0.96,
             "claude-opus-5-5": 0.964,
+            "deepseek-ocr": 0.836,
             "gemini-3.1-flash-lite": 0.964,
             "gemini-3.1-flash-lite-b": 0.964,
             "mistral-ocr-4-1": 0.947,
@@ -1979,7 +2864,7 @@
           "gap": 0.007,
           "len_ratio": 0.904,
           "invention": 0,
-          "invention_indep": 0.045,
+          "invention_indep": 0.04,
           "invention_ref": 0.159,
           "unsupported_sample": [],
           "invention_ref_sample": [
@@ -1993,7 +2878,9 @@
             "蓋揭其"
           ],
           "agree": {
+            "chandra-ocr-2": 0.978,
             "claude-opus-5-5": 0.977,
+            "deepseek-ocr": 0.84,
             "gemini-3-flash-preview": 0.964,
             "gemini-3.1-flash-lite-b": 1,
             "mistral-ocr-4-1": 0.962,
@@ -2012,7 +2899,7 @@
           "gap": 0.007,
           "len_ratio": 0.904,
           "invention": 0,
-          "invention_indep": 0.045,
+          "invention_indep": 0.04,
           "invention_ref": 0.159,
           "unsupported_sample": [],
           "invention_ref_sample": [
@@ -2026,7 +2913,9 @@
             "蓋揭其"
           ],
           "agree": {
+            "chandra-ocr-2": 0.978,
             "claude-opus-5-5": 0.977,
+            "deepseek-ocr": 0.84,
             "gemini-3-flash-preview": 0.964,
             "gemini-3.1-flash-lite": 1,
             "mistral-ocr-4-1": 0.962,
@@ -2069,7 +2958,9 @@
             "蓋揭其"
           ],
           "agree": {
+            "chandra-ocr-2": 0.964,
             "claude-opus-5-5": 0.96,
+            "deepseek-ocr": 0.834,
             "gemini-3-flash-preview": 0.947,
             "gemini-3.1-flash-lite": 0.962,
             "gemini-3.1-flash-lite-b": 0.962,
@@ -2106,7 +2997,9 @@
             "蓋揭其"
           ],
           "agree": {
+            "chandra-ocr-2": 0.989,
             "claude-opus-5-5": 0.988,
+            "deepseek-ocr": 0.849,
             "gemini-3-flash-preview": 0.971,
             "gemini-3.1-flash-lite": 0.979,
             "gemini-3.1-flash-lite-b": 0.979,
@@ -2124,6 +3017,50 @@
       "year": 1667,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 246,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.11,
+          "acc": 0.89,
+          "seq": 0.904,
+          "bow": 0.904,
+          "gap": 0,
+          "len_ratio": 0.969,
+          "invention": 0.045,
+          "invention_indep": 0.045,
+          "invention_ref": 0.176,
+          "unsupported_sample": [
+            "余年軽",
+            "年軽到",
+            "軽到俄",
+            "勝菴正",
+            "菴正法",
+            "正法道",
+            "法道入",
+            "道入集"
+          ],
+          "invention_ref_sample": [
+            "信端慤",
+            "端慤寸",
+            "慤寸歩",
+            "源流脉",
+            "流脉長",
+            "脉長灯",
+            "一首徧",
+            "首徧野"
+          ],
+          "agree": {
+            "claude-opus-5-5": 0.9,
+            "deepseek-ocr": 0.492,
+            "gemini-3-flash-preview": 0.955,
+            "gemini-3.1-flash-lite": 0.938,
+            "gemini-3.1-flash-lite-b": 0.938,
+            "mistral-ocr-4-1": 0.876,
+            "qwen3-vl-8b": 0.946
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 254,
           "empty": false,
@@ -2136,8 +3073,8 @@
           "bow": 0.87,
           "gap": 0,
           "len_ratio": 1,
-          "invention": 0.134,
-          "invention_indep": 0.134,
+          "invention": 0.121,
+          "invention_indep": 0.121,
           "invention_ref": 0.239,
           "unsupported_sample": [
             "無依道",
@@ -2160,11 +3097,58 @@
             "見緑野"
           ],
           "agree": {
+            "chandra-ocr-2": 0.9,
+            "deepseek-ocr": 0.489,
             "gemini-3-flash-preview": 0.915,
             "gemini-3.1-flash-lite": 0.902,
             "gemini-3.1-flash-lite-b": 0.902,
             "mistral-ocr-4-1": 0.854,
             "qwen3-vl-8b": 0.911
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 3716,
+          "empty": false,
+          "refused": false,
+          "finish_reason": "length",
+          "loop": true,
+          "cer": 13.87,
+          "acc": 0,
+          "seq": 0.473,
+          "bow": 0.475,
+          "gap": 0.002,
+          "len_ratio": 14.63,
+          "invention": 0.308,
+          "invention_indep": 0.308,
+          "invention_ref": 0.441,
+          "unsupported_sample": [
+            "見緯野",
+            "緯野上",
+            "諱超恬",
+            "超恬誠",
+            "恬誠信",
+            "信端慈",
+            "端慈寸",
+            "慈寸歩"
+          ],
+          "invention_ref_sample": [
+            "見緯野",
+            "緯野上",
+            "諱超恬",
+            "超恬誠",
+            "恬誠信",
+            "信端慈",
+            "端慈寸",
+            "慈寸歩"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.492,
+            "claude-opus-5-5": 0.489,
+            "gemini-3-flash-preview": 0.484,
+            "gemini-3.1-flash-lite": 0.492,
+            "gemini-3.1-flash-lite-b": 0.492,
+            "mistral-ocr-4-1": 0.484,
+            "qwen3-vl-8b": 0.494
           }
         },
         "gemini-3-flash-preview": {
@@ -2201,7 +3185,9 @@
             "流脉長"
           ],
           "agree": {
+            "chandra-ocr-2": 0.955,
             "claude-opus-5-5": 0.915,
+            "deepseek-ocr": 0.484,
             "gemini-3.1-flash-lite": 0.95,
             "gemini-3.1-flash-lite-b": 0.95,
             "mistral-ocr-4-1": 0.873,
@@ -2220,7 +3206,7 @@
           "gap": 0,
           "len_ratio": 0.937,
           "invention": 0,
-          "invention_indep": 0.064,
+          "invention_indep": 0.055,
           "invention_ref": 0.169,
           "unsupported_sample": [],
           "invention_ref_sample": [
@@ -2234,7 +3220,9 @@
             "守矦有"
           ],
           "agree": {
+            "chandra-ocr-2": 0.938,
             "claude-opus-5-5": 0.902,
+            "deepseek-ocr": 0.492,
             "gemini-3-flash-preview": 0.95,
             "gemini-3.1-flash-lite-b": 1,
             "mistral-ocr-4-1": 0.873,
@@ -2253,7 +3241,7 @@
           "gap": 0,
           "len_ratio": 0.937,
           "invention": 0,
-          "invention_indep": 0.064,
+          "invention_indep": 0.055,
           "invention_ref": 0.169,
           "unsupported_sample": [],
           "invention_ref_sample": [
@@ -2267,7 +3255,9 @@
             "守矦有"
           ],
           "agree": {
+            "chandra-ocr-2": 0.938,
             "claude-opus-5-5": 0.902,
+            "deepseek-ocr": 0.492,
             "gemini-3-flash-preview": 0.95,
             "gemini-3.1-flash-lite": 1,
             "mistral-ocr-4-1": 0.873,
@@ -2286,8 +3276,8 @@
           "bow": 0.85,
           "gap": 0.008,
           "len_ratio": 0.992,
-          "invention": 0.274,
-          "invention_indep": 0.274,
+          "invention": 0.25,
+          "invention_indep": 0.25,
           "invention_ref": 0.343,
           "unsupported_sample": [
             "無色過",
@@ -2310,7 +3300,9 @@
             "野上入"
           ],
           "agree": {
+            "chandra-ocr-2": 0.876,
             "claude-opus-5-5": 0.854,
+            "deepseek-ocr": 0.484,
             "gemini-3-flash-preview": 0.873,
             "gemini-3.1-flash-lite": 0.873,
             "gemini-3.1-flash-lite-b": 0.873,
@@ -2329,18 +3321,16 @@
           "bow": 0.931,
           "gap": 0,
           "len_ratio": 0.937,
-          "invention": 0.038,
-          "invention_indep": 0.038,
+          "invention": 0.025,
+          "invention_indep": 0.025,
           "invention_ref": 0.114,
           "unsupported_sample": [
             "堪笑豈",
             "笑豈人",
             "豈人眼",
-            "紫気遠",
-            "気遠澄",
-            "遠澄潭",
             "百師豈",
-            "師豈憩"
+            "師豈憩",
+            "豈憩錫"
           ],
           "invention_ref_sample": [
             "信端慤",
@@ -2353,7 +3343,9 @@
             "事刀挽"
           ],
           "agree": {
+            "chandra-ocr-2": 0.946,
             "claude-opus-5-5": 0.911,
+            "deepseek-ocr": 0.494,
             "gemini-3-flash-preview": 0.966,
             "gemini-3.1-flash-lite": 0.954,
             "gemini-3.1-flash-lite-b": 0.954,
@@ -2371,6 +3363,50 @@
       "year": null,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 395,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.053,
+          "acc": 0.947,
+          "seq": 0.948,
+          "bow": 0.948,
+          "gap": 0,
+          "len_ratio": 0.997,
+          "invention": 0.035,
+          "invention_indep": 0.035,
+          "invention_ref": 0.068,
+          "unsupported_sample": [
+            "単伝言",
+            "伝言度",
+            "言度出",
+            "行里閤",
+            "里閤或",
+            "閤或吟",
+            "城於闌",
+            "於闌闔"
+          ],
+          "invention_ref_sample": [
+            "撰述南",
+            "述南岳",
+            "南岳単",
+            "岳単伝",
+            "単伝言",
+            "伝言度",
+            "言度出",
+            "余仙衆"
+          ],
+          "agree": {
+            "claude-opus-5-5": 0.98,
+            "deepseek-ocr": 0.95,
+            "gemini-3-flash-preview": 0.977,
+            "gemini-3.1-flash-lite": 0.978,
+            "gemini-3.1-flash-lite-b": 0.978,
+            "mistral-ocr-4-1": 0.929,
+            "qwen3-vl-8b": 0.97
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 397,
           "empty": false,
@@ -2407,11 +3443,58 @@
             "南岳単"
           ],
           "agree": {
+            "chandra-ocr-2": 0.98,
+            "deepseek-ocr": 0.942,
             "gemini-3-flash-preview": 0.98,
             "gemini-3.1-flash-lite": 0.973,
             "gemini-3.1-flash-lite-b": 0.973,
             "mistral-ocr-4-1": 0.927,
             "qwen3-vl-8b": 0.976
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 382,
+          "empty": false,
+          "refused": false,
+          "finish_reason": "stop",
+          "loop": false,
+          "cer": 0.078,
+          "acc": 0.922,
+          "seq": 0.938,
+          "bow": 0.938,
+          "gap": 0,
+          "len_ratio": 0.965,
+          "invention": 0.069,
+          "invention_indep": 0.069,
+          "invention_ref": 0.106,
+          "unsupported_sample": [
+            "解看竟",
+            "看竟封",
+            "竟封潛",
+            "国見雄",
+            "見雄雄",
+            "雄雄之",
+            "雄之上",
+            "於闐闐"
+          ],
+          "invention_ref_sample": [
+            "余仙衆",
+            "仙衆始",
+            "衆始生",
+            "解看竟",
+            "看竟封",
+            "竟封潛",
+            "行里間",
+            "里間或"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.95,
+            "claude-opus-5-5": 0.942,
+            "gemini-3-flash-preview": 0.952,
+            "gemini-3.1-flash-lite": 0.958,
+            "gemini-3.1-flash-lite-b": 0.958,
+            "mistral-ocr-4-1": 0.917,
+            "qwen3-vl-8b": 0.961
           }
         },
         "gemini-3-flash-preview": {
@@ -2444,7 +3527,9 @@
             "封潛日"
           ],
           "agree": {
+            "chandra-ocr-2": 0.977,
             "claude-opus-5-5": 0.98,
+            "deepseek-ocr": 0.952,
             "gemini-3.1-flash-lite": 0.988,
             "gemini-3.1-flash-lite-b": 0.988,
             "mistral-ocr-4-1": 0.931,
@@ -2463,7 +3548,7 @@
           "gap": 0,
           "len_ratio": 0.98,
           "invention": 0,
-          "invention_indep": 0.016,
+          "invention_indep": 0.011,
           "invention_ref": 0.057,
           "unsupported_sample": [],
           "invention_ref_sample": [
@@ -2477,7 +3562,9 @@
             "多迦法"
           ],
           "agree": {
+            "chandra-ocr-2": 0.978,
             "claude-opus-5-5": 0.973,
+            "deepseek-ocr": 0.958,
             "gemini-3-flash-preview": 0.988,
             "gemini-3.1-flash-lite-b": 1,
             "mistral-ocr-4-1": 0.935,
@@ -2496,7 +3583,7 @@
           "gap": 0,
           "len_ratio": 0.98,
           "invention": 0,
-          "invention_indep": 0.016,
+          "invention_indep": 0.011,
           "invention_ref": 0.057,
           "unsupported_sample": [],
           "invention_ref_sample": [
@@ -2510,7 +3597,9 @@
             "多迦法"
           ],
           "agree": {
+            "chandra-ocr-2": 0.978,
             "claude-opus-5-5": 0.973,
+            "deepseek-ocr": 0.958,
             "gemini-3-flash-preview": 0.988,
             "gemini-3.1-flash-lite": 1,
             "mistral-ocr-4-1": 0.935,
@@ -2529,8 +3618,8 @@
           "bow": 0.905,
           "gap": 0.003,
           "len_ratio": 1.003,
-          "invention": 0.139,
-          "invention_indep": 0.139,
+          "invention": 0.134,
+          "invention_indep": 0.134,
           "invention_ref": 0.174,
           "unsupported_sample": [
             "南岳軍",
@@ -2553,7 +3642,9 @@
             "七度出"
           ],
           "agree": {
+            "chandra-ocr-2": 0.929,
             "claude-opus-5-5": 0.927,
+            "deepseek-ocr": 0.917,
             "gemini-3-flash-preview": 0.931,
             "gemini-3.1-flash-lite": 0.935,
             "gemini-3.1-flash-lite-b": 0.935,
@@ -2582,7 +3673,9 @@
             "嘗作檀"
           ],
           "agree": {
+            "chandra-ocr-2": 0.97,
             "claude-opus-5-5": 0.976,
+            "deepseek-ocr": 0.961,
             "gemini-3-flash-preview": 0.986,
             "gemini-3.1-flash-lite": 0.979,
             "gemini-3.1-flash-lite-b": 0.979,
@@ -2600,6 +3693,47 @@
       "year": null,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 411,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.414,
+          "acc": 0.586,
+          "seq": 0.787,
+          "bow": 0.791,
+          "gap": 0.004,
+          "len_ratio": 0.601,
+          "invention": 0.013,
+          "invention_indep": 0.013,
+          "invention_ref": 0.056,
+          "unsupported_sample": [
+            "皆為方",
+            "為方便",
+            "大方便",
+            "第四四",
+            "四四十"
+          ],
+          "invention_ref_sample": [
+            "是時衆",
+            "時衆中",
+            "衆中為",
+            "救度衆",
+            "度衆生",
+            "衆生於",
+            "皆為方",
+            "為方便"
+          ],
+          "agree": {
+            "claude-opus-5-5": 0.966,
+            "deepseek-ocr": 0.311,
+            "gemini-3-flash-preview": 0.979,
+            "gemini-3.1-flash-lite": 0.977,
+            "gemini-3.1-flash-lite-b": 0.977,
+            "mistral-ocr-4-1": 0.956,
+            "qwen3-vl-8b": 0.977
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 438,
           "empty": false,
@@ -2612,18 +3746,18 @@
           "bow": 0.778,
           "gap": 0.012,
           "len_ratio": 0.64,
-          "invention": 0.036,
-          "invention_indep": 0.036,
+          "invention": 0.031,
+          "invention_indep": 0.031,
           "invention_ref": 0.088,
           "unsupported_sample": [
             "相謀経",
             "謀経仏",
-            "経仏説",
             "第四二",
             "四二十",
             "二十三",
             "十三深",
-            "三深十"
+            "三深十",
+            "深十殺"
           ],
           "invention_ref_sample": [
             "是時衆",
@@ -2636,11 +3770,58 @@
             "相謀経"
           ],
           "agree": {
+            "chandra-ocr-2": 0.966,
+            "deepseek-ocr": 0.318,
             "gemini-3-flash-preview": 0.952,
             "gemini-3.1-flash-lite": 0.955,
             "gemini-3.1-flash-lite-b": 0.955,
             "mistral-ocr-4-1": 0.945,
             "qwen3-vl-8b": 0.945
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 670,
+          "empty": false,
+          "refused": false,
+          "finish_reason": "stop",
+          "loop": false,
+          "cer": 0.911,
+          "acc": 0.089,
+          "seq": 0.21,
+          "bow": 0.288,
+          "gap": 0.078,
+          "len_ratio": 0.98,
+          "invention": 0.384,
+          "invention_indep": 0.384,
+          "invention_ref": 0.457,
+          "unsupported_sample": [
+            "身是此",
+            "衆中商",
+            "中商主",
+            "商主善",
+            "主善巧",
+            "摩訶萨",
+            "訶萨雖",
+            "萨雖経"
+          ],
+          "invention_ref_sample": [
+            "是時衆",
+            "時衆中",
+            "衆中為",
+            "為商王",
+            "商王者",
+            "王者即",
+            "身是此",
+            "衆中商"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.311,
+            "claude-opus-5-5": 0.318,
+            "gemini-3-flash-preview": 0.306,
+            "gemini-3.1-flash-lite": 0.311,
+            "gemini-3.1-flash-lite-b": 0.311,
+            "mistral-ocr-4-1": 0.315,
+            "qwen3-vl-8b": 0.302
           }
         },
         "gemini-3-flash-preview": {
@@ -2669,7 +3850,9 @@
             "度衆生"
           ],
           "agree": {
+            "chandra-ocr-2": 0.979,
             "claude-opus-5-5": 0.952,
+            "deepseek-ocr": 0.306,
             "gemini-3.1-flash-lite": 0.97,
             "gemini-3.1-flash-lite-b": 0.97,
             "mistral-ocr-4-1": 0.954,
@@ -2702,7 +3885,9 @@
             "経巻第"
           ],
           "agree": {
+            "chandra-ocr-2": 0.977,
             "claude-opus-5-5": 0.955,
+            "deepseek-ocr": 0.311,
             "gemini-3-flash-preview": 0.97,
             "gemini-3.1-flash-lite-b": 1,
             "mistral-ocr-4-1": 0.945,
@@ -2735,7 +3920,9 @@
             "経巻第"
           ],
           "agree": {
+            "chandra-ocr-2": 0.977,
             "claude-opus-5-5": 0.955,
+            "deepseek-ocr": 0.311,
             "gemini-3-flash-preview": 0.97,
             "gemini-3.1-flash-lite": 1,
             "mistral-ocr-4-1": 0.945,
@@ -2778,7 +3965,9 @@
             "方伝経"
           ],
           "agree": {
+            "chandra-ocr-2": 0.956,
             "claude-opus-5-5": 0.945,
+            "deepseek-ocr": 0.315,
             "gemini-3-flash-preview": 0.954,
             "gemini-3.1-flash-lite": 0.945,
             "gemini-3.1-flash-lite-b": 0.945,
@@ -2803,7 +3992,9 @@
           "unsupported_sample": [],
           "invention_ref_sample": [],
           "agree": {
+            "chandra-ocr-2": 0.977,
             "claude-opus-5-5": 0.945,
+            "deepseek-ocr": 0.302,
             "gemini-3-flash-preview": 0.988,
             "gemini-3.1-flash-lite": 0.978,
             "gemini-3.1-flash-lite-b": 0.978,
@@ -2821,6 +4012,50 @@
       "year": null,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 429,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.106,
+          "acc": 0.894,
+          "seq": 0.913,
+          "bow": 0.913,
+          "gap": 0,
+          "len_ratio": 0.993,
+          "invention": 0.077,
+          "invention_indep": 0.077,
+          "invention_ref": 0.133,
+          "unsupported_sample": [
+            "四庫全",
+            "庫全書",
+            "全書聖",
+            "書聖賢",
+            "聖賢集",
+            "賢集解",
+            "集解巻",
+            "解巻一"
+          ],
+          "invention_ref_sample": [
+            "四庫全",
+            "庫全書",
+            "全書聖",
+            "書聖賢",
+            "聖賢集",
+            "賢集解",
+            "集解巻",
+            "解巻一"
+          ],
+          "agree": {
+            "claude-opus-5-5": 0.949,
+            "deepseek-ocr": 0.742,
+            "gemini-3-flash-preview": 0.96,
+            "gemini-3.1-flash-lite": 0.954,
+            "gemini-3.1-flash-lite-b": 0.954,
+            "mistral-ocr-4-1": 0.942,
+            "qwen3-vl-8b": 0.958
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 431,
           "empty": false,
@@ -2857,11 +4092,58 @@
             "意林巻"
           ],
           "agree": {
+            "chandra-ocr-2": 0.949,
+            "deepseek-ocr": 0.739,
             "gemini-3-flash-preview": 0.958,
             "gemini-3.1-flash-lite": 0.954,
             "gemini-3.1-flash-lite-b": 0.954,
             "mistral-ocr-4-1": 0.945,
             "qwen3-vl-8b": 0.956
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 6000,
+          "empty": false,
+          "refused": false,
+          "finish_reason": "length",
+          "loop": true,
+          "cer": 13,
+          "acc": 0,
+          "seq": 0.69,
+          "bow": 0.748,
+          "gap": 0.058,
+          "len_ratio": 13.889,
+          "invention": 0.07,
+          "invention_indep": 0.07,
+          "invention_ref": 0.132,
+          "unsupported_sample": [
+            "而能称",
+            "能称国",
+            "称国之",
+            "貴也予",
+            "也予之",
+            "予之所",
+            "貴也爵",
+            "也爵及"
+          ],
+          "invention_ref_sample": [
+            "而能称",
+            "能称国",
+            "称国之",
+            "為重已",
+            "重已乎",
+            "已乎是",
+            "貴也予",
+            "也予之"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.742,
+            "claude-opus-5-5": 0.739,
+            "gemini-3-flash-preview": 0.752,
+            "gemini-3.1-flash-lite": 0.747,
+            "gemini-3.1-flash-lite-b": 0.747,
+            "mistral-ocr-4-1": 0.742,
+            "qwen3-vl-8b": 0.752
           }
         },
         "gemini-3-flash-preview": {
@@ -2875,17 +4157,10 @@
           "bow": 0.94,
           "gap": 0,
           "len_ratio": 0.931,
-          "invention": 0.016,
-          "invention_indep": 0.016,
+          "invention": 0,
+          "invention_indep": 0,
           "invention_ref": 0.072,
-          "unsupported_sample": [
-            "之時転",
-            "時転以",
-            "転以全",
-            "之位相",
-            "位相君",
-            "相君之"
-          ],
+          "unsupported_sample": [],
           "invention_ref_sample": [
             "之時転",
             "時転以",
@@ -2897,7 +4172,9 @@
             "重已乎"
           ],
           "agree": {
+            "chandra-ocr-2": 0.96,
             "claude-opus-5-5": 0.958,
+            "deepseek-ocr": 0.752,
             "gemini-3.1-flash-lite": 0.991,
             "gemini-3.1-flash-lite-b": 0.991,
             "mistral-ocr-4-1": 0.956,
@@ -2930,7 +4207,9 @@
             "重已乎"
           ],
           "agree": {
+            "chandra-ocr-2": 0.954,
             "claude-opus-5-5": 0.954,
+            "deepseek-ocr": 0.747,
             "gemini-3-flash-preview": 0.991,
             "gemini-3.1-flash-lite-b": 1,
             "mistral-ocr-4-1": 0.953,
@@ -2963,7 +4242,9 @@
             "重已乎"
           ],
           "agree": {
+            "chandra-ocr-2": 0.954,
             "claude-opus-5-5": 0.954,
+            "deepseek-ocr": 0.747,
             "gemini-3-flash-preview": 0.991,
             "gemini-3.1-flash-lite": 1,
             "mistral-ocr-4-1": 0.953,
@@ -2982,8 +4263,8 @@
           "bow": 0.911,
           "gap": 0,
           "len_ratio": 0.977,
-          "invention": 0.093,
-          "invention_indep": 0.093,
+          "invention": 0.086,
+          "invention_indep": 0.086,
           "invention_ref": 0.147,
           "unsupported_sample": [
             "四頁六",
@@ -3006,7 +4287,9 @@
             "六君瀚"
           ],
           "agree": {
+            "chandra-ocr-2": 0.942,
             "claude-opus-5-5": 0.945,
+            "deepseek-ocr": 0.742,
             "gemini-3-flash-preview": 0.956,
             "gemini-3.1-flash-lite": 0.953,
             "gemini-3.1-flash-lite-b": 0.953,
@@ -3040,7 +4323,9 @@
             "余歲之"
           ],
           "agree": {
+            "chandra-ocr-2": 0.958,
             "claude-opus-5-5": 0.956,
+            "deepseek-ocr": 0.752,
             "gemini-3-flash-preview": 0.99,
             "gemini-3.1-flash-lite": 0.989,
             "gemini-3.1-flash-lite-b": 0.989,
@@ -3058,6 +4343,47 @@
       "year": null,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 344,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.383,
+          "acc": 0.617,
+          "seq": 0.753,
+          "bow": 0.76,
+          "gap": 0.007,
+          "len_ratio": 0.653,
+          "invention": 0.015,
+          "invention_indep": 0.015,
+          "invention_ref": 0.144,
+          "unsupported_sample": [
+            "対門存",
+            "限相将",
+            "陵時沙",
+            "時沙陽",
+            "沙陽鎮"
+          ],
+          "invention_ref_sample": [
+            "問霊巖",
+            "霊巖惟",
+            "巖惟恭",
+            "在霊巖",
+            "霊巖即",
+            "巖即語",
+            "処疑其",
+            "疑其寺"
+          ],
+          "agree": {
+            "claude-opus-5-5": 0.953,
+            "deepseek-ocr": 0.677,
+            "gemini-3-flash-preview": 0.946,
+            "gemini-3.1-flash-lite": 0.941,
+            "gemini-3.1-flash-lite-b": 0.941,
+            "mistral-ocr-4-1": 0.889,
+            "qwen3-vl-8b": 0.97
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 351,
           "empty": false,
@@ -3070,8 +4396,8 @@
           "bow": 0.761,
           "gap": 0.018,
           "len_ratio": 0.666,
-          "invention": 0.094,
-          "invention_indep": 0.094,
+          "invention": 0.086,
+          "invention_indep": 0.086,
           "invention_ref": 0.171,
           "unsupported_sample": [
             "問霊帰",
@@ -3094,11 +4420,58 @@
             "疑其寺"
           ],
           "agree": {
+            "chandra-ocr-2": 0.953,
+            "deepseek-ocr": 0.671,
             "gemini-3-flash-preview": 0.931,
             "gemini-3.1-flash-lite": 0.906,
             "gemini-3.1-flash-lite-b": 0.906,
             "mistral-ocr-4-1": 0.872,
             "qwen3-vl-8b": 0.96
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 445,
+          "empty": false,
+          "refused": false,
+          "finish_reason": "stop",
+          "loop": false,
+          "cer": 0.759,
+          "acc": 0.241,
+          "seq": 0.519,
+          "bow": 0.576,
+          "gap": 0.058,
+          "len_ratio": 0.844,
+          "invention": 0.369,
+          "invention_indep": 0.369,
+          "invention_ref": 0.443,
+          "unsupported_sample": [
+            "及晩迎",
+            "晩迎入",
+            "迎入寺",
+            "声惟若",
+            "惟若已",
+            "若已死",
+            "寺聞称",
+            "聞称竹"
+          ],
+          "invention_ref_sample": [
+            "及晩迎",
+            "晩迎入",
+            "迎入寺",
+            "声惟若",
+            "惟若已",
+            "若已死",
+            "寺聞称",
+            "聞称竹"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.677,
+            "claude-opus-5-5": 0.671,
+            "gemini-3-flash-preview": 0.666,
+            "gemini-3.1-flash-lite": 0.674,
+            "gemini-3.1-flash-lite-b": 0.674,
+            "mistral-ocr-4-1": 0.643,
+            "qwen3-vl-8b": 0.671
           }
         },
         "gemini-3-flash-preview": {
@@ -3136,7 +4509,9 @@
             "疑其寺"
           ],
           "agree": {
+            "chandra-ocr-2": 0.946,
             "claude-opus-5-5": 0.931,
+            "deepseek-ocr": 0.666,
             "gemini-3.1-flash-lite": 0.937,
             "gemini-3.1-flash-lite-b": 0.937,
             "mistral-ocr-4-1": 0.865,
@@ -3155,7 +4530,7 @@
           "gap": 0.012,
           "len_ratio": 0.641,
           "invention": 0,
-          "invention_indep": 0.119,
+          "invention_indep": 0.076,
           "invention_ref": 0.22,
           "unsupported_sample": [],
           "invention_ref_sample": [
@@ -3169,7 +4544,9 @@
             "疑其寺"
           ],
           "agree": {
+            "chandra-ocr-2": 0.941,
             "claude-opus-5-5": 0.906,
+            "deepseek-ocr": 0.674,
             "gemini-3-flash-preview": 0.937,
             "gemini-3.1-flash-lite-b": 1,
             "mistral-ocr-4-1": 0.853,
@@ -3188,7 +4565,7 @@
           "gap": 0.012,
           "len_ratio": 0.641,
           "invention": 0,
-          "invention_indep": 0.119,
+          "invention_indep": 0.076,
           "invention_ref": 0.22,
           "unsupported_sample": [],
           "invention_ref_sample": [
@@ -3202,7 +4579,9 @@
             "疑其寺"
           ],
           "agree": {
+            "chandra-ocr-2": 0.941,
             "claude-opus-5-5": 0.906,
+            "deepseek-ocr": 0.674,
             "gemini-3-flash-preview": 0.937,
             "gemini-3.1-flash-lite": 1,
             "mistral-ocr-4-1": 0.853,
@@ -3221,8 +4600,8 @@
           "bow": 0.697,
           "gap": 0.018,
           "len_ratio": 0.666,
-          "invention": 0.291,
-          "invention_indep": 0.291,
+          "invention": 0.273,
+          "invention_indep": 0.273,
           "invention_ref": 0.363,
           "unsupported_sample": [
             "金剛新",
@@ -3245,7 +4624,9 @@
             "恭上入"
           ],
           "agree": {
+            "chandra-ocr-2": 0.889,
             "claude-opus-5-5": 0.872,
+            "deepseek-ocr": 0.643,
             "gemini-3-flash-preview": 0.865,
             "gemini-3.1-flash-lite": 0.853,
             "gemini-3.1-flash-lite-b": 0.853,
@@ -3288,7 +4669,9 @@
             "疑其寺"
           ],
           "agree": {
+            "chandra-ocr-2": 0.97,
             "claude-opus-5-5": 0.96,
+            "deepseek-ocr": 0.671,
             "gemini-3-flash-preview": 0.945,
             "gemini-3.1-flash-lite": 0.922,
             "gemini-3.1-flash-lite-b": 0.922,
@@ -3306,6 +4689,50 @@
       "year": 1573,
       "has_ref": true,
       "engines": {
+        "chandra-ocr-2": {
+          "n_content": 303,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.078,
+          "acc": 0.922,
+          "seq": 0.945,
+          "bow": 0.945,
+          "gap": 0,
+          "len_ratio": 0.95,
+          "invention": 0.041,
+          "invention_indep": 0.041,
+          "invention_ref": 0.084,
+          "unsupported_sample": [
+            "名曰闐",
+            "曰闐風",
+            "闐風台",
+            "垂蘇珣",
+            "蘇珣以",
+            "珣以為",
+            "天王文",
+            "王文上"
+          ],
+          "invention_ref_sample": [
+            "名曰闐",
+            "曰闐風",
+            "闐風台",
+            "崑崙宮",
+            "崙宮一",
+            "宮一処",
+            "其北戶",
+            "北戶山"
+          ],
+          "agree": {
+            "claude-opus-5-5": 0.921,
+            "deepseek-ocr": 0.403,
+            "gemini-3-flash-preview": 0.954,
+            "gemini-3.1-flash-lite": 0.947,
+            "gemini-3.1-flash-lite-b": 0.947,
+            "mistral-ocr-4-1": 0.869,
+            "qwen3-vl-8b": 0.967
+          }
+        },
         "claude-opus-5-5": {
           "n_content": 327,
           "empty": false,
@@ -3342,11 +4769,58 @@
             "北干辰"
           ],
           "agree": {
+            "chandra-ocr-2": 0.921,
+            "deepseek-ocr": 0.393,
             "gemini-3-flash-preview": 0.927,
             "gemini-3.1-flash-lite": 0.908,
             "gemini-3.1-flash-lite-b": 0.908,
             "mistral-ocr-4-1": 0.852,
             "qwen3-vl-8b": 0.927
+          }
+        },
+        "deepseek-ocr": {
+          "n_content": 6000,
+          "empty": false,
+          "refused": false,
+          "finish_reason": "length",
+          "loop": true,
+          "cer": 18.292,
+          "acc": 0,
+          "seq": 0.376,
+          "bow": 0.394,
+          "gap": 0.017,
+          "len_ratio": 18.809,
+          "invention": 0.313,
+          "invention_indep": 0.313,
+          "invention_ref": 0.363,
+          "unsupported_sample": [
+            "角正千",
+            "正千辰",
+            "名曰閩",
+            "曰閩風",
+            "閩風台",
+            "曰玄闥",
+            "玄闥台",
+            "闥台其"
+          ],
+          "invention_ref_sample": [
+            "角正千",
+            "正千辰",
+            "名曰閩",
+            "曰閩風",
+            "閩風台",
+            "曰玄闥",
+            "玄闥台",
+            "闥台其"
+          ],
+          "agree": {
+            "chandra-ocr-2": 0.403,
+            "claude-opus-5-5": 0.393,
+            "gemini-3-flash-preview": 0.405,
+            "gemini-3.1-flash-lite": 0.404,
+            "gemini-3.1-flash-lite-b": 0.404,
+            "mistral-ocr-4-1": 0.379,
+            "qwen3-vl-8b": 0.401
           }
         },
         "gemini-3-flash-preview": {
@@ -3360,18 +4834,18 @@
           "bow": 0.936,
           "gap": 0.003,
           "len_ratio": 0.95,
-          "invention": 0.057,
-          "invention_indep": 0.057,
+          "invention": 0.054,
+          "invention_indep": 0.054,
           "invention_ref": 0.108,
           "unsupported_sample": [
-            "棲紫鸞",
             "鸞鳳覚",
             "鳳覚白",
             "覚白雀",
             "雀朱鸚",
             "朱鸚鵡",
             "鸚鵡雞",
-            "鵡雞霊"
+            "鵡雞霊",
+            "霊鵠亦"
           ],
           "invention_ref_sample": [
             "崑崙宮",
@@ -3384,7 +4858,9 @@
             "紫鸞鳳"
           ],
           "agree": {
+            "chandra-ocr-2": 0.954,
             "claude-opus-5-5": 0.927,
+            "deepseek-ocr": 0.405,
             "gemini-3.1-flash-lite": 0.957,
             "gemini-3.1-flash-lite-b": 0.957,
             "mistral-ocr-4-1": 0.885,
@@ -3403,7 +4879,7 @@
           "gap": 0,
           "len_ratio": 0.944,
           "invention": 0,
-          "invention_indep": 0.075,
+          "invention_indep": 0.068,
           "invention_ref": 0.13,
           "unsupported_sample": [],
           "invention_ref_sample": [
@@ -3417,7 +4893,9 @@
             "北戶山"
           ],
           "agree": {
+            "chandra-ocr-2": 0.947,
             "claude-opus-5-5": 0.908,
+            "deepseek-ocr": 0.404,
             "gemini-3-flash-preview": 0.957,
             "gemini-3.1-flash-lite-b": 1,
             "mistral-ocr-4-1": 0.872,
@@ -3436,7 +4914,7 @@
           "gap": 0,
           "len_ratio": 0.944,
           "invention": 0,
-          "invention_indep": 0.075,
+          "invention_indep": 0.068,
           "invention_ref": 0.13,
           "unsupported_sample": [],
           "invention_ref_sample": [
@@ -3450,7 +4928,9 @@
             "北戶山"
           ],
           "agree": {
+            "chandra-ocr-2": 0.947,
             "claude-opus-5-5": 0.908,
+            "deepseek-ocr": 0.404,
             "gemini-3-flash-preview": 0.957,
             "gemini-3.1-flash-lite": 1,
             "mistral-ocr-4-1": 0.872,
@@ -3469,8 +4949,8 @@
           "bow": 0.856,
           "gap": 0.013,
           "len_ratio": 0.984,
-          "invention": 0.294,
-          "invention_indep": 0.294,
+          "invention": 0.275,
+          "invention_indep": 0.275,
           "invention_ref": 0.317,
           "unsupported_sample": [
             "雲有房",
@@ -3493,7 +4973,9 @@
             "名曰聞"
           ],
           "agree": {
+            "chandra-ocr-2": 0.869,
             "claude-opus-5-5": 0.852,
+            "deepseek-ocr": 0.379,
             "gemini-3-flash-preview": 0.885,
             "gemini-3.1-flash-lite": 0.872,
             "gemini-3.1-flash-lite-b": 0.872,
@@ -3512,18 +4994,18 @@
           "bow": 0.945,
           "gap": 0,
           "len_ratio": 0.95,
-          "invention": 0.061,
-          "invention_indep": 0.061,
+          "invention": 0.051,
+          "invention_indep": 0.051,
           "invention_ref": 0.081,
           "unsupported_sample": [
-            "淵山竝",
-            "山竝其",
-            "竝其支",
             "樹悉刺",
             "悉刺題",
             "刺題三",
             "棲紫鵞",
-            "紫鵞鳳"
+            "紫鵞鳳",
+            "鵞鳳鸞",
+            "朱鶚鵰",
+            "鶚鵰雞"
           ],
           "invention_ref_sample": [
             "崑崙宮",
@@ -3536,7 +5018,9 @@
             "山竝其"
           ],
           "agree": {
+            "chandra-ocr-2": 0.967,
             "claude-opus-5-5": 0.927,
+            "deepseek-ocr": 0.401,
             "gemini-3-flash-preview": 0.957,
             "gemini-3.1-flash-lite": 0.94,
             "gemini-3.1-flash-lite-b": 0.94,

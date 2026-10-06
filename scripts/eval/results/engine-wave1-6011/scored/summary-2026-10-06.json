@@ -13,6 +13,153 @@
     "textless": [],
     "ref_engine": "gemini-3.1-flash-lite",
     "engines": {
+      "chandra-ocr-2": {
+        "pages_run": 41,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 4,
+        "ref": {
+          "n": 40,
+          "median_cer": 0.132,
+          "mean_cer": 0.353,
+          "catastrophic": 9,
+          "median_gap": 0.006,
+          "median_seq": 0.704,
+          "refused": 0,
+          "n_answered": 40,
+          "median_cer_answered": 0.132,
+          "mean_cer_answered": 0.353,
+          "catastrophic_answered": 9
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.234,
+          "mean": 0.297,
+          "n_engines": 7,
+          "ref_median": 0.335,
+          "ref_mean": 0.41
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "a5-69e7491f85f786e884a4dc2f-p182",
+            "title": null,
+            "year": 1950,
+            "cer": 3.321,
+            "gap": 0.003,
+            "invention": 0.34,
+            "has_ref": true,
+            "unsupported": [
+              "पाण्डवान्सर्वज्ञेभ्याम्यद्य",
+              "अनुयासन्ति",
+              "स्रुतज",
+              "नाराचान्नार्घपक्षांश्च",
+              "अभिगम्यात्रवीद्राजा",
+              "मद्वराजमिदं",
+              "पुत्रस्त्व",
+              "द्विषतामधवर्धन"
+            ]
+          },
+          {
+            "slug": "a5-69e7933580b52390feb18277-p263",
+            "title": null,
+            "year": null,
+            "cer": 1.15,
+            "gap": 0.02,
+            "invention": 0.656,
+            "has_ref": true,
+            "unsupported": [
+              "handwritten",
+              "page",
+              "written",
+              "cursive",
+              "likely",
+              "additional",
+              "information",
+              "main"
+            ]
+          },
+          {
+            "slug": "a5-69906606ef12272ffdc94dd0-p106",
+            "title": null,
+            "year": null,
+            "cer": 1.085,
+            "gap": 0,
+            "invention": 0.812,
+            "has_ref": true,
+            "unsupported": [
+              "ונפול",
+              "כְּהוֹאֵר",
+              "זֶכְרֹתָיו",
+              "שְׁהוֹא",
+              "מְמוּנָה",
+              "לְכָתֵב",
+              "זֶכְרֹתוֹ",
+              "יְשֻׁרָאֵל"
+            ]
+          },
+          {
+            "slug": "a5-69e8b27f2ff2a8dc09e77ed7-p48",
+            "title": null,
+            "year": 1492,
+            "cer": 0.972,
+            "gap": 0,
+            "invention": 0.9,
+            "has_ref": true,
+            "unsupported": [
+              "सिद्धसंघाऽशुवक्तिवायुगिरिश्चयस्कलासि",
+              "रुद्रादित्यावमवायवसाध्या",
+              "विधेयश्चिनीमयुगध्यासा",
+              "श्रीगन्यर्षयश्चाऽसुवक्तिवायुगिरिश्चयस्कलासि",
+              "नृपमसाबादावद्वाहूव्यादवद्वा",
+              "नरुद्रस्यगंभीर्यमभकवद्वा",
+              "गान्कयत्मा",
+              "भक्तिनविन्नामिगमश्चविष्णु"
+            ]
+          },
+          {
+            "slug": "a5-6992cf0970ab3737555456ae-p100",
+            "title": null,
+            "year": null,
+            "cer": 0.761,
+            "gap": 0.327,
+            "invention": 0.514,
+            "has_ref": true,
+            "unsupported": [
+              "شنید",
+              "روزستان",
+              "برادش",
+              "نشانه",
+              "آورد",
+              "پایه",
+              "انگشتی",
+              "لونا"
+            ]
+          }
+        ]
+      },
       "claude-opus-5-5": {
         "pages_run": 41,
         "empty": 0,
@@ -45,9 +192,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.077,
-          "mean": 0.132,
-          "n_engines": 5,
+          "median": 0.068,
+          "mean": 0.125,
+          "n_engines": 7,
           "ref_median": 0.093,
           "ref_mean": 0.2
         },
@@ -69,7 +216,7 @@
             "year": 1950,
             "cer": 3.313,
             "gap": 0.006,
-            "invention": 0.213,
+            "invention": 0.185,
             "has_ref": true,
             "unsupported": [
               "विनयेनोपसंगम्य",
@@ -88,7 +235,7 @@
             "year": null,
             "cer": 1.015,
             "gap": 0,
-            "invention": 0.675,
+            "invention": 0.643,
             "has_ref": true,
             "unsupported": [
               "سواءٌ",
@@ -107,7 +254,7 @@
             "year": null,
             "cer": 0.776,
             "gap": 0.452,
-            "invention": 0.332,
+            "invention": 0.318,
             "has_ref": true,
             "unsupported": [
               "شاهنامهٔ",
@@ -126,17 +273,17 @@
             "year": null,
             "cer": 0.72,
             "gap": 0.342,
-            "invention": 0.077,
+            "invention": 0.068,
             "has_ref": true,
             "unsupported": [
-              "باطمع",
-              "اوله",
               "کوزه",
               "نیجه",
               "گزدردکلریدر",
               "لقمهٔ",
               "گشته",
-              "گریزی"
+              "گریزی",
+              "میگدازد",
+              "ناامیدی"
             ]
           },
           {
@@ -145,17 +292,160 @@
             "year": 1830,
             "cer": 0.582,
             "gap": 0,
-            "invention": 0.574,
+            "invention": 0.519,
             "has_ref": true,
             "unsupported": [
-              "হিতোপদেশঃ",
               "বিগ্রহস্তাবৎ",
               "সমুপস্থিতশ্চক্রোব্রূতে",
               "প্রাগেব",
               "বিগ্রহো",
               "যআদাবেব",
               "যুদ্ধোদ্যোগং",
-              "স্বভূত্যাগং"
+              "স্বভূত্যাগং",
+              "নির্দ্দিশত্যবিচারিতং"
+            ]
+          }
+        ]
+      },
+      "deepseek-ocr": {
+        "pages_run": 41,
+        "empty": 1,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 22,
+        "ref": {
+          "n": 40,
+          "median_cer": 1.059,
+          "mean_cer": 1.837,
+          "catastrophic": 27,
+          "median_gap": 0.002,
+          "median_seq": 0.155,
+          "refused": 0,
+          "n_answered": 40,
+          "median_cer_answered": 1.059,
+          "mean_cer_answered": 1.837,
+          "catastrophic_answered": 27
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.674,
+          "mean": 0.655,
+          "n_engines": 7,
+          "ref_median": 0.736,
+          "ref_mean": 0.704
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "a5-69e7491f85f786e884a4dc2f-p182",
+            "title": null,
+            "year": 1950,
+            "cer": 8.749,
+            "gap": 0.021,
+            "invention": 0.714,
+            "has_ref": true,
+            "unsupported": [
+              "सर्वेभ्यः",
+              "पाण्डवान्तराज्ञेयम्यम्य",
+              "सामगतान्",
+              "दुर्गेभ्यः",
+              "तत्क्रियामि",
+              "मन्यते",
+              "सौपरसङ्गः",
+              "अद्ययात्मन्"
+            ]
+          },
+          {
+            "slug": "a5-6a2198371994d1df1e5e0235-p118",
+            "title": null,
+            "year": null,
+            "cer": 6.822,
+            "gap": 0,
+            "invention": 0.913,
+            "has_ref": true,
+            "unsupported": [
+              "مُقْبَلُ",
+              "الْمَوْقِفِ",
+              "بِنَعْدِدِفِ",
+              "الْقَامَةِ",
+              "الصَّبِيلَ",
+              "لِلْبِلادِ",
+              "الرَّبِّ",
+              "الْعَامِ"
+            ]
+          },
+          {
+            "slug": "a5-69d5ac5f4dc55b8478ddd6b6-p299",
+            "title": null,
+            "year": null,
+            "cer": 5.496,
+            "gap": 0.018,
+            "invention": 0.873,
+            "has_ref": true,
+            "unsupported": [
+              "حملة",
+              "الكلاسية",
+              "ستبالحة",
+              "ترفض",
+              "وإلى",
+              "جفافته",
+              "وعده",
+              "بالدمن"
+            ]
+          },
+          {
+            "slug": "a5-699249c5a2d53df4853bfdaf-p12",
+            "title": null,
+            "year": null,
+            "cer": 5.262,
+            "gap": 0,
+            "invention": 1,
+            "has_ref": true,
+            "unsupported": [
+              "ماںیہن",
+              "دیکھا",
+              "اپنی",
+              "اپنے"
+            ]
+          },
+          {
+            "slug": "a5-69e748da49abba5e98281b25-p103",
+            "title": null,
+            "year": null,
+            "cer": 4.289,
+            "gap": 0.138,
+            "invention": 0.282,
+            "has_ref": true,
+            "unsupported": [
+              "زئین",
+              "کرتو",
+              "جوماه",
+              "بغذا",
+              "جوسره",
+              "جبهش",
+              "جایگاه",
+              "خوشت"
             ]
           }
         ]
@@ -192,9 +482,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.077,
-          "mean": 0.109,
-          "n_engines": 5,
+          "median": 0.066,
+          "mean": 0.103,
+          "n_engines": 7,
           "ref_median": 0.143,
           "ref_mean": 0.199
         },
@@ -216,7 +506,7 @@
             "year": 1950,
             "cer": 3.369,
             "gap": 0.023,
-            "invention": 0.204,
+            "invention": 0.184,
             "has_ref": true,
             "unsupported": [
               "पाण्डवान्सर्वान्जेष्याम्यद्य",
@@ -235,17 +525,17 @@
             "year": null,
             "cer": 0.95,
             "gap": 0.019,
-            "invention": 0.448,
+            "invention": 0.39,
             "has_ref": true,
             "unsupported": [
               "multiple",
               "diagonal",
-              "marginal",
-              "notes",
               "arabic",
-              "providing",
               "lexical",
-              "definitions"
+              "definitions",
+              "grammatical",
+              "سِواهُ",
+              "لِلْقاضِي"
             ]
           },
           {
@@ -254,17 +544,17 @@
             "year": null,
             "cer": 0.709,
             "gap": 0.333,
-            "invention": 0.093,
+            "invention": 0.089,
             "has_ref": true,
             "unsupported": [
               "مویی",
-              "زمستی",
               "اوسه",
               "ایچنده",
               "تاله",
               "حقدر",
               "پرداول",
-              "حرداول"
+              "حرداول",
+              "مکلیدر"
             ]
           },
           {
@@ -292,7 +582,7 @@
             "year": null,
             "cer": 0.233,
             "gap": 0.012,
-            "invention": 0.148,
+            "invention": 0.138,
             "has_ref": true,
             "unsupported": [
               "mixed",
@@ -302,7 +592,7 @@
               "הטבילו",
               "נבובין",
               "בשונה",
-              "שבעת"
+              "ושכל"
             ]
           }
         ]
@@ -339,9 +629,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.286,
-          "mean": 0.376,
-          "n_engines": 5,
+          "median": 0.219,
+          "mean": 0.327,
+          "n_engines": 7,
           "ref_median": 0.342,
           "ref_mean": 0.45
         },
@@ -363,7 +653,7 @@
             "year": 1950,
             "cer": 3.284,
             "gap": 0.006,
-            "invention": 0.343,
+            "invention": 0.333,
             "has_ref": true,
             "unsupported": [
               "1316",
@@ -382,7 +672,7 @@
             "year": null,
             "cer": 2.137,
             "gap": 0.038,
-            "invention": 0.197,
+            "invention": 0.173,
             "has_ref": true,
             "unsupported": [
               "أَشْرَى",
@@ -401,7 +691,7 @@
             "year": null,
             "cer": 1.472,
             "gap": 0.007,
-            "invention": 0.933,
+            "invention": 0.907,
             "has_ref": true,
             "unsupported": [
               "۱۳۹۰",
@@ -439,17 +729,10 @@
             "year": null,
             "cer": 1,
             "gap": 0,
-            "invention": 1,
+            "invention": 0.077,
             "has_ref": true,
             "unsupported": [
-              "jpeg",
-              "biblioteca",
-              "apostolica",
-              "vaticana",
-              "copyright",
-              "http",
-              "digi",
-              "vatlib"
+              "jpeg"
             ]
           }
         ]
@@ -486,9 +769,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.625,
-          "mean": 0.624,
-          "n_engines": 5,
+          "median": 0.572,
+          "mean": 0.599,
+          "n_engines": 7,
           "ref_median": 0.727,
           "ref_mean": 0.686
         },
@@ -548,7 +831,7 @@
             "year": null,
             "cer": 4.504,
             "gap": 0.022,
-            "invention": 0.885,
+            "invention": 0.846,
             "has_ref": true,
             "unsupported": [
               "اسرا",
@@ -567,7 +850,7 @@
             "year": null,
             "cer": 4.306,
             "gap": 0,
-            "invention": 1,
+            "invention": 0.926,
             "has_ref": true,
             "unsupported": [
               "וְנִפְלָא",
@@ -575,9 +858,9 @@
               "יְיַיְּהַר",
               "הַשְּׁרִי",
               "שְׁעִישִׁן",
-              "הַכְּבוֹד",
               "מְעַבִּיר",
-              "כְּבִיד"
+              "שְׁמֹאַו",
+              "שְׁמֹרַר"
             ]
           },
           {
@@ -586,17 +869,14 @@
             "year": null,
             "cer": 4.239,
             "gap": 0.04,
-            "invention": 0.22,
+            "invention": 0.122,
             "has_ref": true,
             "unsupported": [
-              "داخت",
               "صکاخ",
               "توگذشت",
               "شذکه",
-              "آنکه",
               "بمذاگر",
-              "چوسر",
-              "وانکه"
+              "ازمرد"
             ]
           }
         ]
@@ -634,8 +914,8 @@
         },
         "invention": {
           "median": 0.095,
-          "mean": 0.136,
-          "n_engines": 5,
+          "mean": 0.132,
+          "n_engines": 7,
           "ref_median": 0.126,
           "ref_mean": 0.174
         },
@@ -657,7 +937,7 @@
             "year": null,
             "cer": 0.742,
             "gap": 0.328,
-            "invention": 0.192,
+            "invention": 0.188,
             "has_ref": true,
             "unsupported": [
               "زدست",
@@ -712,7 +992,7 @@
             "year": null,
             "cer": 0.39,
             "gap": 0.006,
-            "invention": 0.593,
+            "invention": 0.589,
             "has_ref": true,
             "unsupported": [
               "לכלות",
@@ -754,6 +1034,130 @@
     "textless": [],
     "ref_engine": "gemini-3.1-flash-lite",
     "engines": {
+      "chandra-ocr-2": {
+        "pages_run": 28,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 28,
+          "median_cer": 0.177,
+          "mean_cer": 0.215,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_seq": 0.863,
+          "refused": 0,
+          "n_answered": 28,
+          "median_cer_answered": 0.177,
+          "mean_cer_answered": 0.215,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.029,
+          "mean": 0.038,
+          "n_engines": 9,
+          "ref_median": 0.145,
+          "ref_mean": 0.155
+        },
+        "paired_vs_ref": {
+          "n": 28,
+          "excluded_refused": 0,
+          "wins": 16,
+          "losses": 7,
+          "ties": 5,
+          "median_delta_cer": 0.006,
+          "p_sign": 0.093,
+          "invention_wins": 19,
+          "invention_losses": 6
+        },
+        "worst": [
+          {
+            "slug": "chinese-15291d-p29",
+            "title": "大乘起信論疏",
+            "year": null,
+            "cer": 0.469,
+            "gap": 0.097,
+            "invention": 0.005,
+            "has_ref": true,
+            "unsupported": [
+              "巻上弄",
+              "上弄牒",
+              "弄牒上"
+            ]
+          },
+          {
+            "slug": "chinese-153836-p35",
+            "title": "金剛般若波羅蜜經 (vol 1)",
+            "year": null,
+            "cer": 0.382,
+            "gap": 0.033,
+            "invention": 0.039,
+            "has_ref": true,
+            "unsupported": [
+              "阿囉唵",
+              "囉唵仏",
+              "唵仏囉",
+              "沙罰唵",
+              "罰唵仏",
+              "唎蘇嚩",
+              "蘇嚩蘇",
+              "嚩蘇嚩"
+            ]
+          },
+          {
+            "slug": "chinese-48e6c5-p77",
+            "title": "大戴禮記·卷一~卷三 (vol 1)",
+            "year": null,
+            "cer": 0.381,
+            "gap": 0,
+            "invention": 0.019,
+            "has_ref": true,
+            "unsupported": [
+              "今従伝",
+              "礼記大",
+              "記大戴"
+            ]
+          },
+          {
+            "slug": "chinese-17296e-p92",
+            "title": "五燈會元·卷十五 (vol 15)",
+            "year": null,
+            "cer": 0.38,
+            "gap": 0,
+            "invention": 0.03,
+            "has_ref": true,
+            "unsupported": [
+              "門前鼙",
+              "前鼙鼙",
+              "鼙鼙鼓",
+              "鼙鼓曰"
+            ]
+          },
+          {
+            "slug": "chinese-15f73d-p10",
+            "title": "佛說阿彌陀經 (vol 2)",
+            "year": null,
+            "cer": 0.352,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
       "claude-opus-5-5": {
         "pages_run": 28,
         "empty": 0,
@@ -786,9 +1190,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.026,
-          "mean": 0.031,
-          "n_engines": 7,
+          "median": 0.024,
+          "mean": 0.027,
+          "n_engines": 9,
           "ref_median": 0.127,
           "ref_mean": 0.13
         },
@@ -810,17 +1214,17 @@
             "year": null,
             "cer": 0.474,
             "gap": 0.098,
-            "invention": 0.033,
+            "invention": 0.024,
             "has_ref": true,
             "unsupported": [
               "巻上四",
               "上四十",
-              "四十九",
               "十九故",
               "九故但",
-              "前文三",
-              "文三挙",
-              "之失四"
+              "若有衆",
+              "有衆生",
+              "衆生能",
+              "巻上五"
             ]
           },
           {
@@ -872,6 +1276,153 @@
           }
         ]
       },
+      "deepseek-ocr": {
+        "pages_run": 28,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 5,
+        "ref": {
+          "n": 28,
+          "median_cer": 0.276,
+          "mean_cer": 3.907,
+          "catastrophic": 9,
+          "median_gap": 0.007,
+          "median_seq": 0.799,
+          "refused": 0,
+          "n_answered": 28,
+          "median_cer_answered": 0.276,
+          "mean_cer_answered": 3.907,
+          "catastrophic_answered": 9
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.116,
+          "mean": 0.17,
+          "n_engines": 9,
+          "ref_median": 0.239,
+          "ref_mean": 0.262
+        },
+        "paired_vs_ref": {
+          "n": 28,
+          "excluded_refused": 0,
+          "wins": 4,
+          "losses": 21,
+          "ties": 3,
+          "median_delta_cer": -0.048,
+          "p_sign": 0.001,
+          "invention_wins": 3,
+          "invention_losses": 23
+        },
+        "worst": [
+          {
+            "slug": "chinese-160513-p37",
+            "title": "藥師琉璃光如來本願功德經 (vol 1)",
+            "year": null,
+            "cer": 51.224,
+            "gap": 0,
+            "invention": 0.82,
+            "has_ref": true,
+            "unsupported": [
+              "蜈蚣蛆",
+              "蚣蛆蝮",
+              "蛆蝮蚊",
+              "蝮蚊蛇",
+              "得解脱",
+              "解脱若",
+              "脱若他",
+              "恭敬如"
+            ]
+          },
+          {
+            "slug": "chinese-17296e-p92",
+            "title": "五燈會元·卷十五 (vol 15)",
+            "year": null,
+            "cer": 25.725,
+            "gap": 0.027,
+            "invention": 0.196,
+            "has_ref": true,
+            "unsupported": [
+              "蔵水接",
+              "百惑謬",
+              "惑謬労",
+              "謬労神",
+              "労神是",
+              "神是仏",
+              "曰直是",
+              "直是仏"
+            ]
+          },
+          {
+            "slug": "chinese-1ba275-p97",
+            "title": "禮記纂言·卷四~卷五 (vol 4)",
+            "year": null,
+            "cer": 19.07,
+            "gap": 0.018,
+            "invention": 0.561,
+            "has_ref": true,
+            "unsupported": [
+              "有董桃",
+              "董桃莉",
+              "桃莉於",
+              "莉於大",
+              "夫去莢",
+              "去莢於",
+              "莢於士",
+              "士去莢"
+            ]
+          },
+          {
+            "slug": "chinese-15291d-p29",
+            "title": "大乘起信論疏",
+            "year": null,
+            "cer": 5.722,
+            "gap": 0.262,
+            "invention": 0.349,
+            "has_ref": true,
+            "unsupported": [
+              "静心今",
+              "心今起",
+              "今起微",
+              "海浪歓",
+              "浪歓湛",
+              "歓湛然",
+              "竟覚従",
+              "覚従本"
+            ]
+          },
+          {
+            "slug": "chinese-0db3cb-p118",
+            "title": "玉海·卷一百十八~卷一百十九 (vol 64)",
+            "year": null,
+            "cer": 0.846,
+            "gap": 0.696,
+            "invention": 0.113,
+            "has_ref": true,
+            "unsupported": [
+              "十一唐",
+              "一唐改",
+              "部名万",
+              "名万六",
+              "十五百",
+              "五百七",
+              "十三十",
+              "外官典"
+            ]
+          }
+        ]
+      },
       "gemini-3-flash-preview": {
         "pages_run": 28,
         "empty": 0,
@@ -904,9 +1455,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.02,
-          "mean": 0.026,
-          "n_engines": 7,
+          "median": 0.01,
+          "mean": 0.021,
+          "n_engines": 9,
           "ref_median": 0.126,
           "ref_mean": 0.13
         },
@@ -955,14 +1506,9 @@
             "year": null,
             "cer": 0.377,
             "gap": 0,
-            "invention": 0.025,
+            "invention": 0,
             "has_ref": true,
-            "unsupported": [
-              "今従闕",
-              "従闕本",
-              "闕本黒",
-              "闕本若"
-            ]
+            "unsupported": []
           },
           {
             "slug": "chinese-17296e-p92",
@@ -1023,7 +1569,7 @@
         "invention": {
           "median": 0,
           "mean": 0,
-          "n_engines": 7,
+          "n_engines": 9,
           "ref_median": 0.164,
           "ref_mean": 0.174
         },
@@ -1117,7 +1663,7 @@
         "invention": {
           "median": 0,
           "mean": 0.001,
-          "n_engines": 7,
+          "n_engines": 9,
           "ref_median": 0.165,
           "ref_mean": 0.175
         },
@@ -1226,9 +1772,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.159,
-          "mean": 0.162,
-          "n_engines": 7,
+          "median": 0.155,
+          "mean": 0.153,
+          "n_engines": 9,
           "ref_median": 0.236,
           "ref_mean": 0.25
         },
@@ -1250,7 +1796,7 @@
             "year": null,
             "cer": 0.468,
             "gap": 0,
-            "invention": 0.159,
+            "invention": 0.151,
             "has_ref": true,
             "unsupported": [
               "雖貴声",
@@ -1259,8 +1805,8 @@
               "宏名辞",
               "名辞才",
               "辞才学",
-              "之如鶯",
-              "如鶯王"
+              "如鶯王",
+              "鶯王択"
             ]
           },
           {
@@ -1288,17 +1834,17 @@
             "year": null,
             "cer": 0.447,
             "gap": 0.01,
-            "invention": 0.34,
+            "invention": 0.309,
             "has_ref": true,
             "unsupported": [
               "針祭獣",
               "也初皆",
               "初皆南",
               "皆南門",
-              "門見祭",
-              "見祭此",
-              "祭此月",
-              "東南偶"
+              "東南偶",
+              "南偶非",
+              "偶非皆",
+              "非皆見"
             ]
           },
           {
@@ -1373,9 +1919,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.013,
-          "mean": 0.022,
-          "n_engines": 7,
+          "median": 0,
+          "mean": 0.017,
+          "n_engines": 9,
           "ref_median": 0.093,
           "ref_mean": 0.11
         },
@@ -1414,7 +1960,7 @@
             "year": null,
             "cer": 0.393,
             "gap": 0.033,
-            "invention": 0.109,
+            "invention": 0.07,
             "has_ref": true,
             "unsupported": [
               "囉楞駄",
@@ -1433,12 +1979,11 @@
             "year": null,
             "cer": 0.377,
             "gap": 0.01,
-            "invention": 0.041,
+            "invention": 0.034,
             "has_ref": true,
             "unsupported": [
               "浴案烏",
               "案烏各",
-              "烏各本",
               "女正比",
               "正比鄉",
               "比鄉則"
@@ -1499,8 +2044,8 @@
         },
         "invention": {
           "median": 0.909,
-          "mean": 0.853,
-          "n_engines": 7,
+          "mean": 0.852,
+          "n_engines": 9,
           "ref_median": 0.918,
           "ref_mean": 0.863
         },
@@ -1618,6 +2163,15 @@
       "manuscript-cursive": {
         "n": 1,
         "engines": {
+          "chandra-ocr-2": {
+            "n": 1,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.141,
+            "catastrophic": 0,
+            "median_unsupported": 0.037
+          },
           "claude-opus-5-5": {
             "n": 1,
             "empty": 0,
@@ -1627,6 +2181,15 @@
             "catastrophic": 0,
             "median_unsupported": 0.175
           },
+          "deepseek-ocr": {
+            "n": 1,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.171,
+            "catastrophic": 0,
+            "median_unsupported": 0.207
+          },
           "gemini-3-flash-preview": {
             "n": 1,
             "empty": 0,
@@ -1634,7 +2197,7 @@
             "loop": 0,
             "median_cer": 0.153,
             "catastrophic": 0,
-            "median_unsupported": 0.06
+            "median_unsupported": 0.042
           },
           "gemini-3.1-flash-lite": {
             "n": 1,
@@ -1661,7 +2224,7 @@
             "loop": 0,
             "median_cer": 0.218,
             "catastrophic": 0,
-            "median_unsupported": 0.348
+            "median_unsupported": 0.335
           },
           "qwen3-vl-8b": {
             "n": 1,
@@ -1686,6 +2249,15 @@
       "manuscript-regular": {
         "n": 20,
         "engines": {
+          "chandra-ocr-2": {
+            "n": 20,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.17,
+            "catastrophic": 0,
+            "median_unsupported": 0.036
+          },
           "claude-opus-5-5": {
             "n": 20,
             "empty": 0,
@@ -1693,7 +2265,16 @@
             "loop": 0,
             "median_cer": 0.155,
             "catastrophic": 0,
-            "median_unsupported": 0.033
+            "median_unsupported": 0.029
+          },
+          "deepseek-ocr": {
+            "n": 20,
+            "empty": 0,
+            "refused": 0,
+            "loop": 4,
+            "median_cer": 0.276,
+            "catastrophic": 8,
+            "median_unsupported": 0.116
           },
           "gemini-3-flash-preview": {
             "n": 20,
@@ -1702,7 +2283,7 @@
             "loop": 0,
             "median_cer": 0.151,
             "catastrophic": 0,
-            "median_unsupported": 0.024
+            "median_unsupported": 0.019
           },
           "gemini-3.1-flash-lite": {
             "n": 20,
@@ -1729,7 +2310,7 @@
             "loop": 0,
             "median_cer": 0.243,
             "catastrophic": 0,
-            "median_unsupported": 0.194
+            "median_unsupported": 0.18
           },
           "qwen3-vl-8b": {
             "n": 20,
@@ -1738,7 +2319,7 @@
             "loop": 0,
             "median_cer": 0.148,
             "catastrophic": 0,
-            "median_unsupported": 0.017
+            "median_unsupported": 0
           },
           "tesseract-chi_tra_vert": {
             "n": 20,
@@ -1754,6 +2335,15 @@
       "typeset": {
         "n": 5,
         "engines": {
+          "chandra-ocr-2": {
+            "n": 5,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.352,
+            "catastrophic": 0,
+            "median_unsupported": 0.005
+          },
           "claude-opus-5-5": {
             "n": 5,
             "empty": 0,
@@ -1762,6 +2352,15 @@
             "median_cer": 0.352,
             "catastrophic": 0,
             "median_unsupported": 0
+          },
+          "deepseek-ocr": {
+            "n": 5,
+            "empty": 0,
+            "refused": 0,
+            "loop": 1,
+            "median_cer": 0.36,
+            "catastrophic": 1,
+            "median_unsupported": 0.044
           },
           "gemini-3-flash-preview": {
             "n": 5,
@@ -1822,6 +2421,15 @@
       "woodblock": {
         "n": 2,
         "engines": {
+          "chandra-ocr-2": {
+            "n": 2,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.091,
+            "catastrophic": 0,
+            "median_unsupported": 0.007
+          },
           "claude-opus-5-5": {
             "n": 2,
             "empty": 0,
@@ -1830,6 +2438,15 @@
             "median_cer": 0.098,
             "catastrophic": 0,
             "median_unsupported": 0.016
+          },
+          "deepseek-ocr": {
+            "n": 2,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.176,
+            "catastrophic": 0,
+            "median_unsupported": 0.117
           },
           "gemini-3-flash-preview": {
             "n": 2,
@@ -1901,6 +2518,135 @@
     "textless": [],
     "ref_engine": "gemini-3.1-flash-lite",
     "engines": {
+      "chandra-ocr-2": {
+        "pages_run": 60,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 60,
+          "median_cer": 0.207,
+          "mean_cer": 0.249,
+          "catastrophic": 2,
+          "median_gap": 0,
+          "median_seq": 0.855,
+          "refused": 0,
+          "n_answered": 60,
+          "median_cer_answered": 0.207,
+          "mean_cer_answered": 0.249,
+          "catastrophic_answered": 2
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.039,
+          "mean": 0.052,
+          "n_engines": 8,
+          "ref_median": 0.171,
+          "ref_mean": 0.192
+        },
+        "paired_vs_ref": {
+          "n": 60,
+          "excluded_refused": 0,
+          "wins": 34,
+          "losses": 16,
+          "ties": 10,
+          "median_delta_cer": 0.007,
+          "p_sign": 0.015,
+          "invention_wins": 36,
+          "invention_losses": 21
+        },
+        "worst": [
+          {
+            "slug": "chinese-cohort-5547-5ce0fd-p61",
+            "title": "歷算全書·卷五十四 (vol 35)",
+            "year": null,
+            "cer": 0.917,
+            "gap": 0.56,
+            "invention": 0.221,
+            "has_ref": true,
+            "unsupported": [
+              "三十五",
+              "十五歴",
+              "五歴算",
+              "従丁線",
+              "丁線順",
+              "直線成",
+              "線成一",
+              "直線則"
+            ]
+          },
+          {
+            "slug": "chinese-cohort-5547-5ec75a-p48",
+            "title": "讀書紀數略·卷三十一 (vol 11)",
+            "year": null,
+            "cer": 0.552,
+            "gap": 0.098,
+            "invention": 0.054,
+            "has_ref": true,
+            "unsupported": [
+              "注法目",
+              "理刑丙",
+              "刑丙部",
+              "相如又",
+              "如又七",
+              "縹帯紅",
+              "籤帯綠",
+              "馬懐帯"
+            ]
+          },
+          {
+            "slug": "chinese-cohort-5547-1de82d-p98",
+            "title": "儀禮圖·卷十六~卷十七 (vol 8)",
+            "year": null,
+            "cer": 0.489,
+            "gap": 0,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "chinese-cohort-5547-df91bd-p65",
+            "title": "六書故·卷三十二~卷三十三 (vol 16)",
+            "year": null,
+            "cer": 0.442,
+            "gap": 0,
+            "invention": 0.264,
+            "has_ref": true,
+            "unsupported": [
+              "三療瘕",
+              "療瘕瘕",
+              "瘕瘕都",
+              "瘕都年",
+              "胡寧瘕",
+              "寧瘕我",
+              "瘕我以",
+              "又曰瘕"
+            ]
+          },
+          {
+            "slug": "chinese-cohort-5547-e506a9-p46",
+            "title": "禮記集說·卷一百五十八~卷一百六十 (vol 162)",
+            "year": null,
+            "cer": 0.412,
+            "gap": 0.005,
+            "invention": 0,
+            "has_ref": true,
+            "unsupported": []
+          }
+        ]
+      },
       "claude-sonnet-5-5": {
         "pages_run": 60,
         "empty": 0,
@@ -1933,9 +2679,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.05,
-          "mean": 0.071,
-          "n_engines": 6,
+          "median": 0.039,
+          "mean": 0.065,
+          "n_engines": 8,
           "ref_median": 0.164,
           "ref_mean": 0.188
         },
@@ -2033,17 +2779,164 @@
             "year": null,
             "cer": 0.604,
             "gap": 0.041,
-            "invention": 0.224,
+            "invention": 0.217,
             "has_ref": true,
             "unsupported": [
               "狼瞫以",
               "瞫以因",
               "必有者",
               "有者母",
-              "者母喪",
               "吾当終",
               "当終身",
-              "秦唐李"
+              "秦唐李",
+              "馬斬闞"
+            ]
+          }
+        ]
+      },
+      "deepseek-ocr": {
+        "pages_run": 60,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 15,
+        "ref": {
+          "n": 60,
+          "median_cer": 0.435,
+          "mean_cer": 3.058,
+          "catastrophic": 27,
+          "median_gap": 0.006,
+          "median_seq": 0.706,
+          "refused": 0,
+          "n_answered": 60,
+          "median_cer_answered": 0.435,
+          "mean_cer_answered": 3.058,
+          "catastrophic_answered": 27
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.138,
+          "mean": 0.229,
+          "n_engines": 8,
+          "ref_median": 0.257,
+          "ref_mean": 0.336
+        },
+        "paired_vs_ref": {
+          "n": 60,
+          "excluded_refused": 0,
+          "wins": 9,
+          "losses": 49,
+          "ties": 2,
+          "median_delta_cer": -0.112,
+          "p_sign": 0,
+          "invention_wins": 15,
+          "invention_losses": 45
+        },
+        "worst": [
+          {
+            "slug": "chinese-cohort-5547-209a36-p35",
+            "title": "書畫彙考·卷三十四 (vol 34)",
+            "year": null,
+            "cer": 34.965,
+            "gap": 0.008,
+            "invention": 0.617,
+            "has_ref": true,
+            "unsupported": [
+              "五幅唐",
+              "色高畫",
+              "高畫美",
+              "畫美人",
+              "団扇唐",
+              "扇唐張",
+              "女図唐",
+              "図唐張"
+            ]
+          },
+          {
+            "slug": "chinese-cohort-5547-1f060d-p42",
+            "title": "讀左日鈔·卷三~卷四 (vol 2)",
+            "year": null,
+            "cer": 23.066,
+            "gap": 0.003,
+            "invention": 0.443,
+            "has_ref": true,
+            "unsupported": [
+              "晉語晉",
+              "語晉少",
+              "晉少典",
+              "于有婦",
+              "有婦氏",
+              "婦氏生",
+              "帝之後",
+              "振兵救"
+            ]
+          },
+          {
+            "slug": "chinese-cohort-5547-4912de-p64",
+            "title": "春秋左傳注疏·卷二十五~卷二十六 (vol 14)",
+            "year": null,
+            "cer": 21.166,
+            "gap": 0.046,
+            "invention": 0.145,
+            "has_ref": true,
+            "unsupported": [
+              "在中今",
+              "中今蔡",
+              "今蔡許",
+              "注公略",
+              "公略之",
+              "略之而",
+              "強其夫",
+              "橋魯也"
+            ]
+          },
+          {
+            "slug": "chinese-cohort-5547-e32226-p107",
+            "title": "御定子史精華·卷八十四~卷八十六 (vol 129)",
+            "year": null,
+            "cer": 19.6,
+            "gap": 0,
+            "invention": 0.929,
+            "has_ref": true,
+            "unsupported": [
+              "魚姓薬",
+              "姓薬酒",
+              "薬酒相",
+              "相名魚",
+              "名魚姓",
+              "魚姓氏",
+              "姓氏魚",
+              "氏魚姓"
+            ]
+          },
+          {
+            "slug": "chinese-cohort-5547-5ec75a-p48",
+            "title": "讀書紀數略·卷三十一 (vol 11)",
+            "year": null,
+            "cer": 16.912,
+            "gap": 0.019,
+            "invention": 0.514,
+            "has_ref": true,
+            "unsupported": [
+              "全書子",
+              "書子庫",
+              "集庫録",
+              "庫録経",
+              "録経庫",
+              "牙軸細",
+              "軸細青",
+              "軸細紫"
             ]
           }
         ]
@@ -2080,9 +2973,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.021,
-          "mean": 0.036,
-          "n_engines": 6,
+          "median": 0.02,
+          "mean": 0.031,
+          "n_engines": 8,
           "ref_median": 0.147,
           "ref_mean": 0.167
         },
@@ -2104,17 +2997,17 @@
             "year": null,
             "cer": 0.57,
             "gap": 0.112,
-            "invention": 0.081,
+            "invention": 0.067,
             "has_ref": true,
             "unsupported": [
               "檀軸帯",
               "軸帯紅",
-              "牙籤帯",
               "籤帯緑",
-              "軸朱景",
-              "朱景竜",
               "経庫馮",
-              "庫馮懐"
+              "庫馮懐",
+              "沈佺帯",
+              "佺帯白",
+              "牙籤素"
             ]
           },
           {
@@ -2153,17 +3046,17 @@
             "year": null,
             "cer": 0.405,
             "gap": 0.071,
-            "invention": 0.206,
+            "invention": 0.139,
             "has_ref": true,
             "unsupported": [
               "狼瞫一",
               "瞫一一",
               "一一以",
-              "一以一",
               "一一因",
               "一因禽",
-              "晏嬰一",
-              "嬰一一"
+              "寵反緝",
+              "反緝之",
+              "之也縿"
             ]
           },
           {
@@ -2213,9 +3106,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.048,
-          "mean": 0.081,
-          "n_engines": 6,
+          "median": 0.042,
+          "mean": 0.075,
+          "n_engines": 8,
           "ref_median": 0.203,
           "ref_mean": 0.217
         },
@@ -2245,7 +3138,7 @@
             "year": null,
             "cer": 0.758,
             "gap": 0.366,
-            "invention": 0.287,
+            "invention": 0.23,
             "has_ref": true,
             "unsupported": [
               "角測坡",
@@ -2254,8 +3147,8 @@
               "距至丁",
               "戊即甲",
               "即甲過",
-              "甲過至",
-              "至丁関"
+              "至丁関",
+              "丁関丙"
             ]
           },
           {
@@ -2264,7 +3157,7 @@
             "year": null,
             "cer": 0.637,
             "gap": 0.078,
-            "invention": 0.118,
+            "invention": 0.092,
             "has_ref": true,
             "unsupported": [
               "意賓甲",
@@ -2272,9 +3165,8 @@
               "甲賓酢",
               "賓酢即",
               "酢即酢",
-              "拝坐益",
-              "坐益尊",
-              "降位反"
+              "降位反",
+              "位反右"
             ]
           },
           {
@@ -2283,7 +3175,7 @@
             "year": null,
             "cer": 0.609,
             "gap": 0.083,
-            "invention": 0.211,
+            "invention": 0.189,
             "has_ref": true,
             "unsupported": [
               "一官雅",
@@ -2293,7 +3185,7 @@
               "法録譜",
               "譜牒儀",
               "牒儀注",
-              "儀注法"
+              "注法墨"
             ]
           },
           {
@@ -2302,7 +3194,7 @@
             "year": null,
             "cer": 0.535,
             "gap": 0.126,
-            "invention": 0.366,
+            "invention": 0.361,
             "has_ref": true,
             "unsupported": [
               "時称尚",
@@ -2349,9 +3241,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.181,
-          "mean": 0.21,
-          "n_engines": 6,
+          "median": 0.177,
+          "mean": 0.2,
+          "n_engines": 8,
           "ref_median": 0.274,
           "ref_mean": 0.301
         },
@@ -2411,7 +3303,7 @@
             "year": null,
             "cer": 0.861,
             "gap": 0.544,
-            "invention": 0.182,
+            "invention": 0.176,
             "has_ref": true,
             "unsupported": [
               "吹之四",
@@ -2419,9 +3311,9 @@
               "四畜之",
               "畜之書",
               "之書朱",
-              "語類九",
               "類九只",
-              "九只是"
+              "九只是",
+              "期然得"
             ]
           },
           {
@@ -2430,17 +3322,17 @@
             "year": null,
             "cer": 0.652,
             "gap": 0.023,
-            "invention": 0.472,
+            "invention": 0.456,
             "has_ref": true,
             "unsupported": [
               "日晉裏",
               "晉裏公",
               "裏公縛",
-              "縛秦因",
-              "秦因使",
               "因使菜",
               "使菜駒",
-              "菜駒以"
+              "菜駒以",
+              "因呼菜",
+              "呼菜駒"
             ]
           },
           {
@@ -2496,9 +3388,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.048,
-          "mean": 0.055,
-          "n_engines": 6,
+          "median": 0.047,
+          "mean": 0.053,
+          "n_engines": 8,
           "ref_median": 0.133,
           "ref_mean": 0.147
         },
@@ -2550,10 +3442,9 @@
             "year": null,
             "cer": 0.473,
             "gap": 0.06,
-            "invention": 0.019,
+            "invention": 0.015,
             "has_ref": true,
             "unsupported": [
-              "金定四",
               "楚辞别",
               "辞别集",
               "别集宋"
@@ -2619,9 +3510,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.01,
-          "mean": 0.034,
-          "n_engines": 6,
+          "median": 0.002,
+          "mean": 0.031,
+          "n_engines": 8,
           "ref_median": 0.09,
           "ref_mean": 0.126
         },
@@ -2643,17 +3534,17 @@
             "year": null,
             "cer": 0.967,
             "gap": 0.552,
-            "invention": 0.664,
+            "invention": 0.629,
             "has_ref": true,
             "unsupported": [
-              "全書至",
-              "書至丁",
               "丁得丁",
               "得丁甲",
               "丁甲丁",
               "甲丁角",
               "丁角丙",
-              "角丙丁"
+              "角丙丁",
+              "丙丁亦",
+              "丁亦角"
             ]
           },
           {
@@ -2662,17 +3553,17 @@
             "year": null,
             "cer": 0.616,
             "gap": 0.061,
-            "invention": 0.081,
+            "invention": 0.065,
             "has_ref": true,
             "unsupported": [
-              "出聖治",
               "聖治熱",
               "微赤前",
               "赤前胡",
-              "聖治肺",
               "炮製粳",
               "製粳焙",
-              "粳焙一"
+              "粳焙一",
+              "一両麦",
+              "両麦門"
             ]
           },
           {
@@ -2681,17 +3572,17 @@
             "year": null,
             "cer": 0.512,
             "gap": 0.061,
-            "invention": 0.09,
+            "invention": 0.07,
             "has_ref": true,
             "unsupported": [
               "金石四",
               "石四庫",
               "記法目",
-              "七儒法",
-              "儒法名",
-              "脈医術",
               "書籤伝",
-              "籤伝経"
+              "籤伝経",
+              "伝経籍",
+              "経庫銅",
+              "庫銅白"
             ]
           },
           {
@@ -2725,6 +3616,15 @@
       "manuscript-regular": {
         "n": 60,
         "engines": {
+          "chandra-ocr-2": {
+            "n": 60,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.207,
+            "catastrophic": 2,
+            "median_unsupported": 0.039
+          },
           "claude-sonnet-5-5": {
             "n": 60,
             "empty": 0,
@@ -2732,7 +3632,16 @@
             "loop": 0,
             "median_cer": 0.226,
             "catastrophic": 8,
-            "median_unsupported": 0.05
+            "median_unsupported": 0.039
+          },
+          "deepseek-ocr": {
+            "n": 60,
+            "empty": 0,
+            "refused": 0,
+            "loop": 15,
+            "median_cer": 0.435,
+            "catastrophic": 27,
+            "median_unsupported": 0.138
           },
           "gemini-3-flash-preview": {
             "n": 60,
@@ -2741,7 +3650,7 @@
             "loop": 0,
             "median_cer": 0.196,
             "catastrophic": 1,
-            "median_unsupported": 0.021
+            "median_unsupported": 0.02
           },
           "gemini-3.1-flash-lite": {
             "n": 60,
@@ -2750,7 +3659,7 @@
             "loop": 0,
             "median_cer": 0.255,
             "catastrophic": 6,
-            "median_unsupported": 0.048
+            "median_unsupported": 0.042
           },
           "mistral-ocr-4-1": {
             "n": 60,
@@ -2759,7 +3668,7 @@
             "loop": 1,
             "median_cer": 0.241,
             "catastrophic": 6,
-            "median_unsupported": 0.181
+            "median_unsupported": 0.177
           },
           "paddleocr-vl-1.6": {
             "n": 60,
@@ -2768,7 +3677,7 @@
             "loop": 0,
             "median_cer": 0.184,
             "catastrophic": 1,
-            "median_unsupported": 0.048
+            "median_unsupported": 0.047
           },
           "qwen3-vl-8b": {
             "n": 60,
@@ -2777,7 +3686,7 @@
             "loop": 1,
             "median_cer": 0.175,
             "catastrophic": 3,
-            "median_unsupported": 0.01
+            "median_unsupported": 0.002
           }
         }
       }
@@ -2795,6 +3704,140 @@
     "textless": [],
     "ref_engine": "gemini-3.1-flash-lite",
     "engines": {
+      "chandra-ocr-2": {
+        "pages_run": 12,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 12,
+          "median_cer": 0.233,
+          "mean_cer": 0.236,
+          "catastrophic": 0,
+          "median_gap": 0.002,
+          "median_seq": 0.849,
+          "refused": 0,
+          "n_answered": 12,
+          "median_cer_answered": 0.233,
+          "mean_cer_answered": 0.236,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.038,
+          "mean": 0.041,
+          "n_engines": 8,
+          "ref_median": 0.13,
+          "ref_mean": 0.112
+        },
+        "paired_vs_ref": {
+          "n": 12,
+          "excluded_refused": 0,
+          "wins": 9,
+          "losses": 2,
+          "ties": 1,
+          "median_delta_cer": 0.01,
+          "p_sign": 0.065,
+          "invention_wins": 5,
+          "invention_losses": 7
+        },
+        "worst": [
+          {
+            "slug": "chinese-ext-db8875-p45",
+            "title": "佛說大方廣善巧方便經",
+            "year": null,
+            "cer": 0.414,
+            "gap": 0.004,
+            "invention": 0.013,
+            "has_ref": true,
+            "unsupported": [
+              "皆為方",
+              "為方便",
+              "大方便",
+              "第四四",
+              "四四十"
+            ]
+          },
+          {
+            "slug": "chinese-ext-dbda81-p11",
+            "title": "金剛經鳩異",
+            "year": null,
+            "cer": 0.383,
+            "gap": 0.007,
+            "invention": 0.015,
+            "has_ref": true,
+            "unsupported": [
+              "対門存",
+              "限相将",
+              "陵時沙",
+              "時沙陽",
+              "沙陽鎮"
+            ]
+          },
+          {
+            "slug": "chinese-ext-8e07e9-p26",
+            "title": "大乘百法明門論疏",
+            "year": null,
+            "cer": 0.368,
+            "gap": 0,
+            "invention": 0.029,
+            "has_ref": true,
+            "unsupported": [
+              "有開開",
+              "開開義",
+              "開義故"
+            ]
+          },
+          {
+            "slug": "chinese-ext-db2395-p52",
+            "title": "春秋屬辭比事記",
+            "year": null,
+            "cer": 0.366,
+            "gap": 0.007,
+            "invention": 0.031,
+            "has_ref": true,
+            "unsupported": [
+              "晉作搜",
+              "作搜伐",
+              "搜伐而",
+              "属辞記",
+              "辞記事",
+              "記事記"
+            ]
+          },
+          {
+            "slug": "chinese-ext-d9f7a0-p109",
+            "title": "御纂醫宗金鑑 (Golden Mirror of Medicine), Vol. 2",
+            "year": 1742,
+            "cer": 0.321,
+            "gap": 0.007,
+            "invention": 0.051,
+            "has_ref": true,
+            "unsupported": [
+              "湯主治",
+              "主治之",
+              "治之按",
+              "身体尪",
+              "体尪羸",
+              "尪羸即",
+              "註李彥",
+              "李彥曰"
+            ]
+          }
+        ]
+      },
       "claude-opus-5-5": {
         "pages_run": 12,
         "empty": 0,
@@ -2827,9 +3870,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.034,
-          "mean": 0.057,
-          "n_engines": 6,
+          "median": 0.032,
+          "mean": 0.055,
+          "n_engines": 8,
           "ref_median": 0.109,
           "ref_mean": 0.119
         },
@@ -2851,17 +3894,17 @@
             "year": null,
             "cer": 0.443,
             "gap": 0.012,
-            "invention": 0.036,
+            "invention": 0.031,
             "has_ref": true,
             "unsupported": [
               "相謀経",
               "謀経仏",
-              "経仏説",
               "第四二",
               "四二十",
               "二十三",
               "十三深",
-              "三深十"
+              "三深十",
+              "深十殺"
             ]
           },
           {
@@ -2870,7 +3913,7 @@
             "year": null,
             "cer": 0.389,
             "gap": 0.018,
-            "invention": 0.094,
+            "invention": 0.086,
             "has_ref": true,
             "unsupported": [
               "問霊帰",
@@ -2926,6 +3969,153 @@
           }
         ]
       },
+      "deepseek-ocr": {
+        "pages_run": 12,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 5,
+        "ref": {
+          "n": 12,
+          "median_cer": 0.849,
+          "mean_cer": 6.896,
+          "catastrophic": 8,
+          "median_gap": 0.055,
+          "median_seq": 0.496,
+          "refused": 0,
+          "n_answered": 12,
+          "median_cer_answered": 0.849,
+          "mean_cer_answered": 6.896,
+          "catastrophic_answered": 8
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.311,
+          "mean": 0.297,
+          "n_engines": 8,
+          "ref_median": 0.362,
+          "ref_mean": 0.355
+        },
+        "paired_vs_ref": {
+          "n": 12,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 12,
+          "ties": 0,
+          "median_delta_cer": -0.459,
+          "p_sign": 0,
+          "invention_wins": 0,
+          "invention_losses": 12
+        },
+        "worst": [
+          {
+            "slug": "chinese-ext-e6c5d5-p580",
+            "title": "雲笈七籤 (全122卷) — Yunji qiqian, complete 122 juan",
+            "year": 1573,
+            "cer": 18.292,
+            "gap": 0.017,
+            "invention": 0.313,
+            "has_ref": true,
+            "unsupported": [
+              "角正千",
+              "正千辰",
+              "名曰閩",
+              "曰閩風",
+              "閩風台",
+              "曰玄闥",
+              "玄闥台",
+              "闥台其"
+            ]
+          },
+          {
+            "slug": "chinese-ext-d9f7a0-p109",
+            "title": "御纂醫宗金鑑 (Golden Mirror of Medicine), Vol. 2",
+            "year": 1742,
+            "cer": 17.679,
+            "gap": 0.016,
+            "invention": 0.745,
+            "has_ref": true,
+            "unsupported": [
+              "温温庭",
+              "温庭節",
+              "庭節之",
+              "節之語",
+              "之語該",
+              "語該肢",
+              "該肢節",
+              "身体之"
+            ]
+          },
+          {
+            "slug": "chinese-ext-db2395-p52",
+            "title": "春秋屬辭比事記",
+            "year": null,
+            "cer": 16.259,
+            "gap": 0.12,
+            "invention": 0.36,
+            "has_ref": true,
+            "unsupported": [
+              "十年晋",
+              "年晋師",
+              "晋師伐",
+              "秦秋苗",
+              "秋苗人",
+              "苗人伐",
+              "鄙十五",
+              "五年郤"
+            ]
+          },
+          {
+            "slug": "chinese-ext-db5e4a-p15",
+            "title": "無依道人錄",
+            "year": 1667,
+            "cer": 13.87,
+            "gap": 0.002,
+            "invention": 0.308,
+            "has_ref": true,
+            "unsupported": [
+              "見緯野",
+              "緯野上",
+              "諱超恬",
+              "超恬誠",
+              "恬誠信",
+              "信端慈",
+              "端慈寸",
+              "慈寸歩"
+            ]
+          },
+          {
+            "slug": "chinese-ext-dbbedb-p66",
+            "title": "劉氏春秋意林",
+            "year": null,
+            "cer": 13,
+            "gap": 0.058,
+            "invention": 0.07,
+            "has_ref": true,
+            "unsupported": [
+              "而能称",
+              "能称国",
+              "称国之",
+              "貴也予",
+              "也予之",
+              "予之所",
+              "貴也爵",
+              "也爵及"
+            ]
+          }
+        ]
+      },
       "gemini-3-flash-preview": {
         "pages_run": 12,
         "empty": 0,
@@ -2958,9 +4148,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.008,
-          "mean": 0.018,
-          "n_engines": 6,
+          "median": 0.007,
+          "mean": 0.017,
+          "n_engines": 8,
           "ref_median": 0.09,
           "ref_mean": 0.092
         },
@@ -3075,7 +4265,7 @@
         "invention": {
           "median": 0,
           "mean": 0,
-          "n_engines": 6,
+          "n_engines": 8,
           "ref_median": 0.129,
           "ref_mean": 0.122
         },
@@ -3166,7 +4356,7 @@
         "invention": {
           "median": 0,
           "mean": 0,
-          "n_engines": 6,
+          "n_engines": 8,
           "ref_median": 0.129,
           "ref_mean": 0.122
         },
@@ -3267,8 +4457,8 @@
         },
         "invention": {
           "median": 0.198,
-          "mean": 0.229,
-          "n_engines": 6,
+          "mean": 0.222,
+          "n_engines": 8,
           "ref_median": 0.249,
           "ref_mean": 0.281
         },
@@ -3309,7 +4499,7 @@
             "year": null,
             "cer": 0.44,
             "gap": 0.018,
-            "invention": 0.291,
+            "invention": 0.273,
             "has_ref": true,
             "unsupported": [
               "金剛新",
@@ -3414,8 +4604,8 @@
         },
         "invention": {
           "median": 0.003,
-          "mean": 0.026,
-          "n_engines": 6,
+          "mean": 0.024,
+          "n_engines": 8,
           "ref_median": 0.065,
           "ref_mean": 0.077
         },
@@ -3506,6 +4696,15 @@
       "woodblock": {
         "n": 12,
         "engines": {
+          "chandra-ocr-2": {
+            "n": 12,
+            "empty": 0,
+            "refused": 0,
+            "loop": 0,
+            "median_cer": 0.233,
+            "catastrophic": 0,
+            "median_unsupported": 0.038
+          },
           "claude-opus-5-5": {
             "n": 12,
             "empty": 0,
@@ -3513,7 +4712,16 @@
             "loop": 0,
             "median_cer": 0.231,
             "catastrophic": 0,
-            "median_unsupported": 0.034
+            "median_unsupported": 0.032
+          },
+          "deepseek-ocr": {
+            "n": 12,
+            "empty": 0,
+            "refused": 0,
+            "loop": 5,
+            "median_cer": 0.849,
+            "catastrophic": 8,
+            "median_unsupported": 0.311
           },
           "gemini-3-flash-preview": {
             "n": 12,
@@ -3522,7 +4730,7 @@
             "loop": 0,
             "median_cer": 0.234,
             "catastrophic": 0,
-            "median_unsupported": 0.008
+            "median_unsupported": 0.007
           },
           "gemini-3.1-flash-lite": {
             "n": 12,
@@ -3576,6 +4784,131 @@
     "textless": [],
     "ref_engine": "gemini-3.1-flash-lite",
     "engines": {
+      "chandra-ocr-2": {
+        "pages_run": 60,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 1,
+        "ref": {
+          "n": 60,
+          "median_cer": 0.042,
+          "mean_cer": 0.054,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_seq": 0.952,
+          "refused": 0,
+          "n_answered": 60,
+          "median_cer_answered": 0.042,
+          "mean_cer_answered": 0.054,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.014,
+          "mean": 0.024,
+          "n_engines": 8,
+          "ref_median": 0.051,
+          "ref_mean": 0.077
+        },
+        "paired_vs_ref": {
+          "n": 59,
+          "excluded_refused": 1,
+          "wins": 34,
+          "losses": 19,
+          "ties": 6,
+          "median_delta_cer": 0.005,
+          "p_sign": 0.053,
+          "invention_wins": 36,
+          "invention_losses": 16
+        },
+        "worst": [
+          {
+            "slug": "ed-6a42aecb5207af7c42f5333c-p17",
+            "title": "Linguarum cognatio, seu, De linguis in genere & de variarum linguarum harmonia dissertatio authore Thoma Hayne.",
+            "year": 1648,
+            "cer": 0.249,
+            "gap": 0.115,
+            "invention": 0.04,
+            "has_ref": true,
+            "unsupported": [
+              "disseratio",
+              "falso",
+              "haussissent",
+              "iactassent",
+              "cristia"
+            ]
+          },
+          {
+            "slug": "ed-69905e152fd6a039938a0ebe-p46",
+            "title": "Cases of Conscience Concerning Evil Spirits",
+            "year": 1693,
+            "cer": 0.169,
+            "gap": 0.078,
+            "invention": 0.019,
+            "has_ref": true,
+            "unsupported": [
+              "befitted",
+              "dæmoniæis"
+            ]
+          },
+          {
+            "slug": "ed-699fcd429ff0f1d2c4517fff-p28",
+            "title": "The Most Noble, Auncient, and Learned Playe, Called the Philosophers Game",
+            "year": 1563,
+            "cer": 0.157,
+            "gap": 0.023,
+            "invention": 0.1,
+            "has_ref": true,
+            "unsupported": [
+              "uper",
+              "containeth",
+              "thynde",
+              "lines"
+            ]
+          },
+          {
+            "slug": "ed-6a43001a4e06bc233ecf5ef6-p16",
+            "title": "Amoris Christiani Mnēmoneutikón: sive concio ad clerum, habita in visitatione metropoliticâ Ecclesiæ Cathedralis Sarum. ",
+            "year": 1686,
+            "cer": 0.121,
+            "gap": 0,
+            "invention": 0.096,
+            "has_ref": true,
+            "unsupported": [
+              "ieruant",
+              "pessum",
+              "aliquam",
+              "ansam",
+              "arreptam"
+            ]
+          },
+          {
+            "slug": "ed-6a4f71ca1cba01ec54e763c3-p15",
+            "title": "Inquisitio in fidem Christianorum hujus sæculi. Authore Rogero Boyle, S.T.D. Dec. Corc.",
+            "year": 1665,
+            "cer": 0.113,
+            "gap": 0,
+            "invention": 0.036,
+            "has_ref": true,
+            "unsupported": [
+              "natura",
+              "bonum"
+            ]
+          }
+        ]
+      },
       "claude-sonnet-5-5": {
         "pages_run": 60,
         "empty": 0,
@@ -3608,9 +4941,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.003,
-          "mean": 0.013,
-          "n_engines": 6,
+          "median": 0,
+          "mean": 0.011,
+          "n_engines": 8,
           "ref_median": 0.037,
           "ref_mean": 0.055
         },
@@ -3642,13 +4975,12 @@
             "year": 1693,
             "cer": 0.169,
             "gap": 0.077,
-            "invention": 0.067,
+            "invention": 0.057,
             "has_ref": true,
             "unsupported": [
               "sotted",
               "knowledged",
               "gels",
-              "thyræus",
               "obser",
               "sessed",
               "unerring"
@@ -3682,11 +5014,155 @@
             "year": 1694,
             "cer": 0.107,
             "gap": 0.03,
-            "invention": 0.02,
+            "invention": 0.01,
             "has_ref": true,
             "unsupported": [
-              "epheagree",
-              "sian"
+              "epheagree"
+            ]
+          }
+        ]
+      },
+      "deepseek-ocr": {
+        "pages_run": 60,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 60,
+          "median_cer": 0.074,
+          "mean_cer": 0.102,
+          "catastrophic": 1,
+          "median_gap": 0,
+          "median_seq": 0.863,
+          "refused": 0,
+          "n_answered": 60,
+          "median_cer_answered": 0.074,
+          "mean_cer_answered": 0.102,
+          "catastrophic_answered": 1
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.082,
+          "mean": 0.114,
+          "n_engines": 8,
+          "ref_median": 0.175,
+          "ref_mean": 0.203
+        },
+        "paired_vs_ref": {
+          "n": 59,
+          "excluded_refused": 1,
+          "wins": 17,
+          "losses": 41,
+          "ties": 1,
+          "median_delta_cer": -0.007,
+          "p_sign": 0.002,
+          "invention_wins": 21,
+          "invention_losses": 38
+        },
+        "worst": [
+          {
+            "slug": "ed-6a08fd6325e3a402b23b3e15-p27",
+            "title": "The Famous Tragedy of the Rich Jew of Malta",
+            "year": 1633,
+            "cer": 0.527,
+            "gap": 0.009,
+            "invention": 0.386,
+            "has_ref": true,
+            "unsupported": [
+              "made",
+              "passed",
+              "morn",
+              "fleece",
+              "whom",
+              "hidden",
+              "walk",
+              "treaure"
+            ]
+          },
+          {
+            "slug": "ed-6990619d3d9181cce82fb688-p9",
+            "title": "The Examination of John Walsh",
+            "year": 1566,
+            "cer": 0.354,
+            "gap": 0.091,
+            "invention": 0.385,
+            "has_ref": true,
+            "unsupported": [
+              "home",
+              "world",
+              "excepted",
+              "quite",
+              "sevently",
+              "remembered",
+              "both",
+              "instant"
+            ]
+          },
+          {
+            "slug": "ed-699fcd429ff0f1d2c4517fff-p28",
+            "title": "The Most Noble, Auncient, and Learned Playe, Called the Philosophers Game",
+            "year": 1563,
+            "cer": 0.344,
+            "gap": 0.021,
+            "invention": 0.25,
+            "has_ref": true,
+            "unsupported": [
+              "photographs",
+              "taken",
+              "contaynet",
+              "four",
+              "half",
+              "chief",
+              "beft",
+              "figures"
+            ]
+          },
+          {
+            "slug": "ed-6a58ec9ac6cd8f987106886f-p6",
+            "title": "Women's Speaking Justified, Proved and Allowed of by the Scriptures",
+            "year": 1666,
+            "cer": 0.333,
+            "gap": 0.014,
+            "invention": 0.048,
+            "has_ref": true,
+            "unsupported": [
+              "herod's",
+              "steward",
+              "afterwards",
+              "arthe",
+              "born",
+              "betwixt"
+            ]
+          },
+          {
+            "slug": "ed-6a4f71ca1cba01ec54e763c3-p15",
+            "title": "Inquisitio in fidem Christianorum hujus sæculi. Authore Rogero Boyle, S.T.D. Dec. Corc.",
+            "year": 1665,
+            "cer": 0.332,
+            "gap": 0.011,
+            "invention": 0.554,
+            "has_ref": true,
+            "unsupported": [
+              "judicium",
+              "natitionalem",
+              "amissi",
+              "obiri",
+              "sufficientes",
+              "quoque",
+              "tiam",
+              "circumferentitudinem"
             ]
           }
         ]
@@ -3725,7 +5201,7 @@
         "invention": {
           "median": 0,
           "mean": 0.001,
-          "n_engines": 6,
+          "n_engines": 8,
           "ref_median": 0.174,
           "ref_mean": 0.166
         },
@@ -3816,7 +5292,7 @@
         "invention": {
           "median": 0,
           "mean": 0.001,
-          "n_engines": 6,
+          "n_engines": 8,
           "ref_median": 0.174,
           "ref_mean": 0.168
         },
@@ -3916,9 +5392,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.019,
-          "mean": 0.039,
-          "n_engines": 6,
+          "median": 0.018,
+          "mean": 0.035,
+          "n_engines": 8,
           "ref_median": 0.058,
           "ref_mean": 0.101
         },
@@ -3940,17 +5416,17 @@
             "year": 1563,
             "cer": 0.39,
             "gap": 0.018,
-            "invention": 0.238,
+            "invention": 0.214,
             "has_ref": true,
             "unsupported": [
               "patholophers",
               "propotion",
               "thybe",
               "cheffe",
-              "unto",
               "helfe",
               "fozme",
-              "feinefilynes"
+              "feinefilynes",
+              "conther"
             ]
           },
           {
@@ -3959,11 +5435,10 @@
             "year": 1648,
             "cer": 0.242,
             "gap": 0.12,
-            "invention": 0.063,
+            "invention": 0.056,
             "has_ref": true,
             "unsupported": [
               "promississe",
-              "terarum",
               "fussent",
               "μερίξη",
               "ἐνδοκιμωτάτη",
@@ -4010,7 +5485,7 @@
             "year": 1566,
             "cer": 0.126,
             "gap": 0.005,
-            "invention": 0.241,
+            "invention": 0.215,
             "has_ref": true,
             "unsupported": [
               "docecer",
@@ -4057,9 +5532,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.129,
-          "mean": 0.177,
-          "n_engines": 6,
+          "median": 0.106,
+          "mean": 0.157,
+          "n_engines": 8,
           "ref_median": 0.269,
           "ref_mean": 0.281
         },
@@ -4081,17 +5556,17 @@
             "year": 1633,
             "cer": 3.089,
             "gap": 0.032,
-            "invention": 0.367,
+            "invention": 0.283,
             "has_ref": true,
             "unsupported": [
-              "would",
               "lalt",
               "fecpe",
-              "dream",
               "waike",
               "birin",
               "paratados",
-              "mygana"
+              "mygana",
+              "bıhdı'sı",
+              "nıbna"
             ]
           },
           {
@@ -4100,7 +5575,7 @@
             "year": 1563,
             "cer": 0.367,
             "gap": 0.01,
-            "invention": 0.577,
+            "invention": 0.538,
             "has_ref": true,
             "unsupported": [
               "1000cl",
@@ -4138,7 +5613,7 @@
             "year": 1648,
             "cer": 0.269,
             "gap": 0.093,
-            "invention": 0.417,
+            "invention": 0.409,
             "has_ref": true,
             "unsupported": [
               "comperifse",
@@ -4157,7 +5632,7 @@
             "year": 1566,
             "cer": 0.241,
             "gap": 0,
-            "invention": 0.486,
+            "invention": 0.444,
             "has_ref": true,
             "unsupported": [
               "soceter",
@@ -4204,9 +5679,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.026,
-          "mean": 0.046,
-          "n_engines": 6,
+          "median": 0.018,
+          "mean": 0.034,
+          "n_engines": 8,
           "ref_median": 0.078,
           "ref_mean": 0.115
         },
@@ -4228,17 +5703,17 @@
             "year": 1648,
             "cer": 0.238,
             "gap": 0.126,
-            "invention": 0.079,
+            "invention": 0.071,
             "has_ref": true,
             "unsupported": [
               "transfegisse",
               "facræ",
               "haufissent",
-              "caluissent",
               "ἐυδοκιμωτάτη",
               "ὀρφιαν",
               "αὐτὸς",
-              "ὁρῶνας"
+              "ὁρῶνας",
+              "jactissent"
             ]
           },
           {
@@ -4247,10 +5722,9 @@
             "year": 1693,
             "cer": 0.17,
             "gap": 0.078,
-            "invention": 0.038,
+            "invention": 0.029,
             "has_ref": true,
             "unsupported": [
-              "strangely",
               "obfessed",
               "laid",
               "daemoniacis"
@@ -4262,16 +5736,12 @@
             "year": 1563,
             "cer": 0.157,
             "gap": 0.011,
-            "invention": 0.163,
+            "invention": 0.07,
             "has_ref": true,
             "unsupported": [
-              "superparticular",
               "siper",
-              "proposition",
-              "letter",
               "thryde",
-              "into",
-              "fewell"
+              "into"
             ]
           },
           {
@@ -4280,7 +5750,7 @@
             "year": 1611,
             "cer": 0.116,
             "gap": 0,
-            "invention": 0.217,
+            "invention": 0.174,
             "has_ref": true,
             "unsupported": [
               "nostram",
@@ -4322,6 +5792,153 @@
     "textless": [],
     "ref_engine": "gemini-3.1-flash-lite",
     "engines": {
+      "chandra-ocr-2": {
+        "pages_run": 11,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 11,
+          "median_cer": 0.33,
+          "mean_cer": 0.262,
+          "catastrophic": 0,
+          "median_gap": 0.006,
+          "median_seq": 0.69,
+          "refused": 0,
+          "n_answered": 11,
+          "median_cer_answered": 0.33,
+          "mean_cer_answered": 0.262,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.213,
+          "mean": 0.329,
+          "n_engines": 10,
+          "ref_median": 0.355,
+          "ref_mean": 0.454
+        },
+        "paired_vs_ref": {
+          "n": 11,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 11,
+          "ties": 0,
+          "median_delta_cer": -0.073,
+          "p_sign": 0.001,
+          "invention_wins": 0,
+          "invention_losses": 11
+        },
+        "worst": [
+          {
+            "slug": "greek-e75fda-p53",
+            "title": "Plutarchu Chaerōneōs Peri Tōn areskontōn tois philosophois, physikōn dogmatōn epithymēs, biblia pente",
+            "year": 1531,
+            "cer": 0.464,
+            "gap": 0.045,
+            "invention": 0.735,
+            "has_ref": true,
+            "unsupported": [
+              "ὀλυόφοις",
+              "ἀνθρώπους",
+              "ἐμπιπτόντες",
+              "θαλούεσθαι",
+              "ἔσται",
+              "πικραὶ",
+              "δάλασσῶν",
+              "ὑγρασίαν"
+            ]
+          },
+          {
+            "slug": "greek-f8ec82-p43",
+            "title": "On the Sublime, chiefly from the text of Weiske",
+            "year": 1838,
+            "cer": 0.463,
+            "gap": 0,
+            "invention": 0.171,
+            "has_ref": true,
+            "unsupported": [
+              "εὐρήσων",
+              "οὕριος",
+              "συνεμπνεί",
+              "μαίνεταί",
+              "ἐγγέσπαλος",
+              "οὖρεσι",
+              "θύκτις",
+              "τρίφω"
+            ]
+          },
+          {
+            "slug": "greek-e28801-p756",
+            "title": "Organum : Hoc est libri omnes ad logicam pertinentes, Graece et Latine ; cum triplici indice",
+            "year": 1592,
+            "cer": 0.443,
+            "gap": 0.047,
+            "invention": 0.533,
+            "has_ref": true,
+            "unsupported": [
+              "πικων",
+              "γδδον",
+              "πικορυμ",
+              "τῶντα",
+              "πᾶσι",
+              "ἑρωτῶν",
+              "ὁρῶντων",
+              "ὀπληχρητέον"
+            ]
+          },
+          {
+            "slug": "greek-da99cc-p426",
+            "title": "Diogenus Laertiu Peri Biōn, Dogmatōn kai apophthegmatōn tōn en philosophia eudokimēsantōn : biblia deka = Diogenis Laert",
+            "year": 1533,
+            "cer": 0.355,
+            "gap": 0.043,
+            "invention": 0.628,
+            "has_ref": true,
+            "unsupported": [
+              "416γυθαγορας",
+              "σελιῶν",
+              "λαμπροῦται",
+              "μέτεχειν",
+              "ἀνθρώπον",
+              "πρὸνοεῖται",
+              "εἰμαρμνήνως",
+              "αὐτὴν"
+            ]
+          },
+          {
+            "slug": "greek-c80c9d-p16",
+            "title": "Anakreontos Tēiou Melē : = Anacreontis Teii odae",
+            "year": 1554,
+            "cer": 0.337,
+            "gap": 0.013,
+            "invention": 0.472,
+            "has_ref": true,
+            "unsupported": [
+              "δαμύντα",
+              "έρος",
+              "ἵππια",
+              "ἐκοπή",
+              "ὄχης",
+              "δύρας",
+              "ἀελάσει",
+              "χίσος"
+            ]
+          }
+        ]
+      },
       "claude-opus-5-5": {
         "pages_run": 11,
         "empty": 0,
@@ -4356,7 +5973,7 @@
         "invention": {
           "median": 0,
           "mean": 0.017,
-          "n_engines": 8,
+          "n_engines": 10,
           "ref_median": 0.1,
           "ref_mean": 0.108
         },
@@ -4427,6 +6044,117 @@
           }
         ]
       },
+      "deepseek-ocr": {
+        "pages_run": 11,
+        "empty": 4,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 1,
+        "ref": {
+          "n": 11,
+          "median_cer": 0.42,
+          "mean_cer": 0.538,
+          "catastrophic": 5,
+          "median_gap": 0,
+          "median_seq": 0.223,
+          "refused": 0,
+          "n_answered": 11,
+          "median_cer_answered": 0.42,
+          "mean_cer_answered": 0.538,
+          "catastrophic_answered": 5
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.373,
+          "mean": 0.413,
+          "n_engines": 10,
+          "ref_median": 0.413,
+          "ref_mean": 0.495
+        },
+        "paired_vs_ref": {
+          "n": 11,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 11,
+          "ties": 0,
+          "median_delta_cer": -0.196,
+          "p_sign": 0.001,
+          "invention_wins": 4,
+          "invention_losses": 7
+        },
+        "worst": [
+          {
+            "slug": "greek-c80c9d-p16",
+            "title": "Anakreontos Tēiou Melē : = Anacreontis Teii odae",
+            "year": 1554,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-db6c8d-p219",
+            "title": "Petri Victorii commentarii in VIII libros Aristotelis De optimo statu civitatis : positis ante singulas declarationes gr",
+            "year": 1576,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-e28801-p756",
+            "title": "Organum : Hoc est libri omnes ad logicam pertinentes, Graece et Latine ; cum triplici indice",
+            "year": 1592,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-e75fda-p53",
+            "title": "Plutarchu Chaerōneōs Peri Tōn areskontōn tois philosophois, physikōn dogmatōn epithymēs, biblia pente",
+            "year": 1531,
+            "cer": 1,
+            "gap": 0,
+            "invention": null,
+            "has_ref": true,
+            "unsupported": []
+          },
+          {
+            "slug": "greek-da99cc-p426",
+            "title": "Diogenus Laertiu Peri Biōn, Dogmatōn kai apophthegmatōn tōn en philosophia eudokimēsantōn : biblia deka = Diogenis Laert",
+            "year": 1533,
+            "cer": 0.659,
+            "gap": 0.021,
+            "invention": 0.885,
+            "has_ref": true,
+            "unsupported": [
+              "ἰδῳμὸν",
+              "ἂπρὶς",
+              "λοῦς",
+              "ἀλιῶι",
+              "ἀσμπερδία",
+              "ἰλίου",
+              "ἀνθρὰνταμ",
+              "πλῶς"
+            ]
+          }
+        ]
+      },
       "gemini-3-flash-preview": {
         "pages_run": 11,
         "empty": 0,
@@ -4460,8 +6188,8 @@
         },
         "invention": {
           "median": 0.013,
-          "mean": 0.039,
-          "n_engines": 8,
+          "mean": 0.037,
+          "n_engines": 10,
           "ref_median": 0.157,
           "ref_mean": 0.142
         },
@@ -4539,12 +6267,11 @@
             "year": 1554,
             "cer": 0.129,
             "gap": 0,
-            "invention": 0.059,
+            "invention": 0.039,
             "has_ref": true,
             "unsupported": [
               "δαμλύτα",
-              "ἔρος",
-              "εἰμὶ"
+              "ἔρος"
             ]
           }
         ]
@@ -4583,7 +6310,7 @@
         "invention": {
           "median": 0,
           "mean": 0,
-          "n_engines": 8,
+          "n_engines": 10,
           "ref_median": 0.178,
           "ref_mean": 0.186
         },
@@ -4674,7 +6401,7 @@
         "invention": {
           "median": 0,
           "mean": 0,
-          "n_engines": 8,
+          "n_engines": 10,
           "ref_median": 0.178,
           "ref_mean": 0.186
         },
@@ -4776,7 +6503,7 @@
         "invention": {
           "median": 0.122,
           "mean": 0.133,
-          "n_engines": 8,
+          "n_engines": 10,
           "ref_median": 0.205,
           "ref_mean": 0.21
         },
@@ -4921,9 +6648,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.068,
-          "mean": 0.322,
-          "n_engines": 8,
+          "median": 0.041,
+          "mean": 0.311,
+          "n_engines": 10,
           "ref_median": 0.216,
           "ref_mean": 0.413
         },
@@ -4945,7 +6672,7 @@
             "year": 1576,
             "cer": 0.435,
             "gap": 0,
-            "invention": 0.88,
+            "invention": 0.86,
             "has_ref": true,
             "unsupported": [
               "ἱπανεῖται",
@@ -4964,17 +6691,17 @@
             "year": 1531,
             "cer": 0.403,
             "gap": 0.019,
-            "invention": 0.778,
+            "invention": 0.759,
             "has_ref": true,
             "unsupported": [
               "συλασσόφοις",
-              "αὐτῷ",
               "ὁδὲς",
               "κοιλότης",
               "ἰμπίπουος",
               "ὀλδύεως",
               "πεσὶ",
-              "ἐμείδη"
+              "ἐμείδη",
+              "πικεω"
             ]
           },
           {
@@ -5002,7 +6729,7 @@
             "year": 1533,
             "cer": 0.396,
             "gap": 0.013,
-            "invention": 0.705,
+            "invention": 0.684,
             "has_ref": true,
             "unsupported": [
               "γυθατορας",
@@ -5011,8 +6738,8 @@
               "λίνιω",
               "λαμπέσαι",
               "αἰβρώωρ",
-              "θεοῦ",
-              "συγγύειαν"
+              "συγγύειαν",
+              "αἴβρω"
             ]
           },
           {
@@ -5021,12 +6748,10 @@
             "year": 1838,
             "cer": 0.392,
             "gap": 0,
-            "invention": 0.068,
+            "invention": 0.041,
             "has_ref": true,
             "unsupported": [
               "ὁλοὸν",
-              "ἰδιόν",
-              "συντεθεικῶς",
               "tαύτην",
               "dιαθέσθαι"
             ]
@@ -5065,9 +6790,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.165,
-          "mean": 0.361,
-          "n_engines": 8,
+          "median": 0.145,
+          "mean": 0.325,
+          "n_engines": 10,
           "ref_median": 0.303,
           "ref_mean": 0.446
         },
@@ -5089,7 +6814,7 @@
             "year": 1838,
             "cer": 0.441,
             "gap": 0,
-            "invention": 0.158,
+            "invention": 0.145,
             "has_ref": true,
             "unsupported": [
               "ἄργει",
@@ -5097,9 +6822,9 @@
               "ὀμηρος",
               "οὐρίος",
               "ἄγωσι",
-              "ἀρης",
               "ὅλον",
-              "ἀπροσ"
+              "ἀπροσ",
+              "θούν"
             ]
           },
           {
@@ -5108,7 +6833,7 @@
             "year": 1533,
             "cer": 0.44,
             "gap": 0.021,
-            "invention": 0.677,
+            "invention": 0.656,
             "has_ref": true,
             "unsupported": [
               "βδομὸν",
@@ -5146,7 +6871,7 @@
             "year": 1554,
             "cer": 0.402,
             "gap": 0,
-            "invention": 0.66,
+            "invention": 0.585,
             "has_ref": true,
             "unsupported": [
               "κέαπα",
@@ -5155,8 +6880,8 @@
               "ἄπισαθίς",
               "ἐκοπὴ",
               "ὀχίας",
-              "ἔφλω",
-              "ἀρελάσει"
+              "ἀρελάσει",
+              "γλός"
             ]
           },
           {
@@ -5165,7 +6890,7 @@
             "year": 1531,
             "cer": 0.376,
             "gap": 0.038,
-            "invention": 0.678,
+            "invention": 0.661,
             "has_ref": true,
             "unsupported": [
               "αὐξοφδεῖς",
@@ -5175,7 +6900,7 @@
               "ἄλλι",
               "πικραλ",
               "δάλασσαν",
-              "φησὶν"
+              "λειψάνων"
             ]
           }
         ]
@@ -5213,8 +6938,8 @@
         },
         "invention": {
           "median": 0.7,
-          "mean": 0.656,
-          "n_engines": 8,
+          "mean": 0.653,
+          "n_engines": 10,
           "ref_median": 0.765,
           "ref_mean": 0.69
         },
@@ -5312,7 +7037,7 @@
             "year": 1821,
             "cer": 0.904,
             "gap": 0,
-            "invention": 0.599,
+            "invention": 0.593,
             "has_ref": true,
             "unsupported": [
               "χηνου",
@@ -5341,6 +7066,153 @@
     "textless": [],
     "ref_engine": "gemini-3.1-flash-lite",
     "engines": {
+      "chandra-ocr-2": {
+        "pages_run": 49,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 1,
+        "ref": {
+          "n": 49,
+          "median_cer": 0.26,
+          "mean_cer": 0.269,
+          "catastrophic": 3,
+          "median_gap": 0.009,
+          "median_seq": 0.524,
+          "refused": 0,
+          "n_answered": 49,
+          "median_cer_answered": 0.26,
+          "mean_cer_answered": 0.269,
+          "catastrophic_answered": 3
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.318,
+          "mean": 0.358,
+          "n_engines": 9,
+          "ref_median": 0.495,
+          "ref_mean": 0.496
+        },
+        "paired_vs_ref": {
+          "n": 49,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 49,
+          "ties": 0,
+          "median_delta_cer": -0.085,
+          "p_sign": 0,
+          "invention_wins": 0,
+          "invention_losses": 49
+        },
+        "worst": [
+          {
+            "slug": "greek-ext-42d3fa-p297",
+            "title": "Herodotus, Historiae; Plutarch, Parallel Lives",
+            "year": 1515,
+            "cer": 0.808,
+            "gap": 0.08,
+            "invention": 0.857,
+            "has_ref": true,
+            "unsupported": [
+              "ὤσιν",
+              "κεφαλὴν",
+              "ἀκρόπολις",
+              "ἀγῶναι",
+              "πάμπν'",
+              "ἄφροναν",
+              "σμένος",
+              "εἶκενον"
+            ]
+          },
+          {
+            "slug": "greek-ext-eab76d-p434",
+            "title": "Simplikiu Hypomnēmata",
+            "year": 1526,
+            "cer": 0.524,
+            "gap": 0.07,
+            "invention": 0.438,
+            "has_ref": true,
+            "unsupported": [
+              "ἔπωκείμενα",
+              "ἔπωκείμῳ",
+              "εἰσάντια",
+              "ἐπισώσαστο",
+              "μολογουμένως",
+              "ὑγιαζεσθαι",
+              "ὀλέσκει",
+              "γινόμενα"
+            ]
+          },
+          {
+            "slug": "greek-ext-e765f5-p220",
+            "title": "Πλάτωνος Ἅπαντα (Platonis Opera Omnia)",
+            "year": 1534,
+            "cer": 0.511,
+            "gap": 0.073,
+            "invention": 0.556,
+            "has_ref": true,
+            "unsupported": [
+              "ἕτερόμ",
+              "ὁμοίμ",
+              "ταυτόμ",
+              "ἀνὸμοίμ",
+              "οὐδὲν",
+              "λόγομ",
+              "πεπονθε",
+              "ἄλλοιμ"
+            ]
+          },
+          {
+            "slug": "greek-ext-ddae34-p38",
+            "title": "Libellus de discrimine amici et adulatoris : Graece primum seorsim edidit varietatem lectionis notavit animadversiones H",
+            "year": 1775,
+            "cer": 0.482,
+            "gap": 0,
+            "invention": 0.224,
+            "has_ref": true,
+            "unsupported": [
+              "ἔχθσα",
+              "ὡσπερονόμισμα",
+              "ἐλεγχομένον",
+              "αἰσθήσθαι",
+              "τὰυτό",
+              "φαρμακῶν",
+              "ἑαυτὲς",
+              "οὐτε"
+            ]
+          },
+          {
+            "slug": "greek-ext-e5674a-p163",
+            "title": "Theseus",
+            "year": 1789,
+            "cer": 0.475,
+            "gap": 0,
+            "invention": 0.318,
+            "has_ref": true,
+            "unsupported": [
+              "ἄλοπηγίων",
+              "ἀρίων",
+              "ὁμήρες",
+              "ἐγχερίσαντες",
+              "ἐθρηάμβευσε",
+              "ὀκίωβρίαις",
+              "ἄλλας",
+              "αἰχμαλώτας"
+            ]
+          }
+        ]
+      },
       "claude-opus-5-5": {
         "pages_run": 49,
         "empty": 1,
@@ -5373,9 +7245,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.014,
-          "mean": 0.028,
-          "n_engines": 7,
+          "median": 0.012,
+          "mean": 0.026,
+          "n_engines": 9,
           "ref_median": 0.106,
           "ref_mean": 0.132
         },
@@ -5407,11 +7279,10 @@
             "year": 1789,
             "cer": 0.407,
             "gap": 0,
-            "invention": 0.035,
+            "invention": 0.023,
             "has_ref": true,
             "unsupported": [
               "ἐκστάντες",
-              "ἄψαντες",
               "περιδέῤῥαιον"
             ]
           },
@@ -5450,6 +7321,153 @@
           }
         ]
       },
+      "deepseek-ocr": {
+        "pages_run": 49,
+        "empty": 17,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 7,
+        "ref": {
+          "n": 49,
+          "median_cer": 0.862,
+          "mean_cer": 0.941,
+          "catastrophic": 33,
+          "median_gap": 0.005,
+          "median_seq": 0.095,
+          "refused": 0,
+          "n_answered": 49,
+          "median_cer_answered": 0.862,
+          "mean_cer_answered": 0.941,
+          "catastrophic_answered": 33
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.679,
+          "mean": 0.67,
+          "n_engines": 9,
+          "ref_median": 0.792,
+          "ref_mean": 0.757
+        },
+        "paired_vs_ref": {
+          "n": 49,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 49,
+          "ties": 0,
+          "median_delta_cer": -0.517,
+          "p_sign": 0,
+          "invention_wins": 16,
+          "invention_losses": 33
+        },
+        "worst": [
+          {
+            "slug": "greek-ext-27fcd0-p142",
+            "title": "Alexandri medici De febribus / Galeni Opera quaedam",
+            "year": 1491,
+            "cer": 5.065,
+            "gap": 0,
+            "invention": 1,
+            "has_ref": true,
+            "unsupported": [
+              "διβίς",
+              "σωτίτε",
+              "δετουσι",
+              "πασάμεμου",
+              "σωτίστε",
+              "σιμισθώμεθα",
+              "σιμισθωμεθα",
+              "σιμιθώμεθα"
+            ]
+          },
+          {
+            "slug": "greek-ext-e3dbaa-p165",
+            "title": "Aristotelis Ethicorum Nicomachiorum Paraphrasis",
+            "year": 1607,
+            "cer": 3.45,
+            "gap": 0.016,
+            "invention": 0.767,
+            "has_ref": true,
+            "unsupported": [
+              "ἐκδυσεόμενος",
+              "τινὶ",
+              "μεγαλοπρέπων",
+              "μεγαλοπρέπῳ",
+              "διαφέρῃς",
+              "ἐκδυσεόμενον",
+              "μεγαλῷ",
+              "χάριν"
+            ]
+          },
+          {
+            "slug": "greek-ext-e92d56-p307",
+            "title": "Ammōniu Tu Hermeiu Eis To Tu Aristotelus Peri Hermēneias Hypomnēma = Ammonii Hermiae In Aristotelis De Interpretatione L",
+            "year": 1546,
+            "cer": 3.03,
+            "gap": 0.04,
+            "invention": 0.679,
+            "has_ref": true,
+            "unsupported": [
+              "εγκαλυκεν",
+              "ἀρχὴν",
+              "ἐπόφασιν",
+              "ἀληθόνην",
+              "λέγοντα",
+              "εὖναι",
+              "ὄναρώς",
+              "ἀπόπον"
+            ]
+          },
+          {
+            "slug": "greek-ext-ea4cec-p10",
+            "title": "Peri zōōn poreias",
+            "year": 1561,
+            "cer": 2.733,
+            "gap": 0.03,
+            "invention": 0.827,
+            "has_ref": true,
+            "unsupported": [
+              "επιχειρήσθη",
+              "πίπψιν",
+              "δόξα",
+              "πολυπόδας",
+              "σχόλησεν",
+              "δραμὰ",
+              "δοῦναις",
+              "μόλις"
+            ]
+          },
+          {
+            "slug": "greek-ext-038d86-p345",
+            "title": "5: Aristotelous Ta Ethika megala, kai ethika eydem. Kai ethika nikomax. Kai oikonomika kai politika periechon tomos 5. A",
+            "year": 1552,
+            "cer": 2.408,
+            "gap": 0.032,
+            "invention": 0.818,
+            "has_ref": true,
+            "unsupported": [
+              "ὁρθῶι",
+              "ταῖλαι",
+              "τῇμὲν",
+              "γλυκτῆς",
+              "γινᾶς",
+              "κεῖνιὸς",
+              "ἀγαθοῦ",
+              "γεωῦτα"
+            ]
+          }
+        ]
+      },
       "gemini-3-flash-preview": {
         "pages_run": 49,
         "empty": 0,
@@ -5483,8 +7501,8 @@
         },
         "invention": {
           "median": 0.019,
-          "mean": 0.037,
-          "n_engines": 7,
+          "mean": 0.036,
+          "n_engines": 9,
           "ref_median": 0.119,
           "ref_mean": 0.146
         },
@@ -5594,7 +7612,7 @@
         "invention": {
           "median": 0,
           "mean": 0.011,
-          "n_engines": 7,
+          "n_engines": 9,
           "ref_median": 0.203,
           "ref_mean": 0.24
         },
@@ -5635,17 +7653,17 @@
             "year": 1526,
             "cer": 0.377,
             "gap": 0.087,
-            "invention": 0.14,
+            "invention": 0.136,
             "has_ref": true,
             "unsupported": [
               "ψευδοδοξήσει",
               "ποδὲ",
               "εἶνοῶν",
               "ἐπιστήμη",
-              "παρέχοντος",
               "μεθιστάειν",
               "φοραὰν",
-              "ἔμπροσθω"
+              "ἔμπροσθω",
+              "ὄπισθω"
             ]
           },
           {
@@ -5654,17 +7672,17 @@
             "year": 1491,
             "cer": 0.367,
             "gap": 0.046,
-            "invention": 0.257,
+            "invention": 0.248,
             "has_ref": true,
             "unsupported": [
               "ἀβίε",
-              "ἀπαξ",
               "λάβῃ",
               "χορεῖ",
               "πεπομθήαν",
               "χθηρῶ",
               "ματὰ",
-              "περατωμέμπροαθεν"
+              "περατωμέμπροαθεν",
+              "θείῳ"
             ]
           }
         ]
@@ -5702,8 +7720,8 @@
         },
         "invention": {
           "median": 0,
-          "mean": 0.012,
-          "n_engines": 7,
+          "mean": 0.01,
+          "n_engines": 9,
           "ref_median": 0.203,
           "ref_mean": 0.239
         },
@@ -5774,12 +7792,10 @@
             "year": 1787,
             "cer": 0.367,
             "gap": 0.01,
-            "invention": 0.096,
+            "invention": 0.058,
             "has_ref": true,
             "unsupported": [
               "ἑκάστῳ",
-              "κρόνῳ",
-              "δυῶν",
               "ἡλίῳ",
               "ἑρμῇ"
             ]
@@ -5818,9 +7834,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.131,
-          "mean": 0.139,
-          "n_engines": 7,
+          "median": 0.124,
+          "mean": 0.136,
+          "n_engines": 9,
           "ref_median": 0.229,
           "ref_mean": 0.225
         },
@@ -5963,8 +7979,8 @@
         },
         "invention": {
           "median": 0.318,
-          "mean": 0.388,
-          "n_engines": 7,
+          "mean": 0.369,
+          "n_engines": 9,
           "ref_median": 0.495,
           "ref_mean": 0.498
         },
@@ -6005,7 +8021,7 @@
             "year": 1526,
             "cer": 0.507,
             "gap": 0.07,
-            "invention": 0.633,
+            "invention": 0.624,
             "has_ref": true,
             "unsupported": [
               "ἀποκείμια",
@@ -6024,7 +8040,7 @@
             "year": 1534,
             "cer": 0.484,
             "gap": 0.055,
-            "invention": 0.665,
+            "invention": 0.648,
             "has_ref": true,
             "unsupported": [
               "ἄποις",
@@ -6043,17 +8059,17 @@
             "year": 1775,
             "cer": 0.478,
             "gap": 0,
-            "invention": 0.224,
+            "invention": 0.184,
             "has_ref": true,
             "unsupported": [
               "ἔχασα",
               "χρησῶ",
               "βεβαίε",
-              "κιβδήλον",
               "ὥσπερνομισμα",
               "ἀπολύττες",
-              "ἑαυτὰς",
-              "τᾶτᾶς"
+              "τᾶτᾶς",
+              "ὤφέλιμον",
+              "οἷονταί"
             ]
           },
           {
@@ -6109,9 +8125,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.38,
-          "mean": 0.437,
-          "n_engines": 7,
+          "median": 0.345,
+          "mean": 0.408,
+          "n_engines": 9,
           "ref_median": 0.547,
           "ref_mean": 0.55
         },
@@ -6133,17 +8149,17 @@
             "year": 1515,
             "cer": 2.312,
             "gap": 0.015,
-            "invention": 0.952,
+            "invention": 0.905,
             "has_ref": true,
             "unsupported": [
-              "ἔστι",
               "ταύτῃ",
               "κεφαλῆς",
               "ἀποκοπῆς",
               "ἐκροπτῆς",
               "ἀλλά",
               "τοῦτο",
-              "παύω"
+              "παύω",
+              "ἀφορῶν"
             ]
           },
           {
@@ -6190,17 +8206,17 @@
             "year": 1526,
             "cer": 0.505,
             "gap": 0.077,
-            "invention": 0.606,
+            "invention": 0.588,
             "has_ref": true,
             "unsupported": [
               "ἄποδ",
-              "κείμενα",
               "κενήτεις",
               "κειμένων",
               "σίαυτίων",
               "σίαυτία",
               "ἐδίχο",
-              "ἐποιτωγίας"
+              "ἐποιτωγίας",
+              "ὁμολογουμείας"
             ]
           },
           {
@@ -6209,7 +8225,7 @@
             "year": 1775,
             "cer": 0.499,
             "gap": 0,
-            "invention": 0.38,
+            "invention": 0.36,
             "has_ref": true,
             "unsupported": [
               "ἐχθρῶν",
@@ -6238,6 +8254,140 @@
     "textless": [],
     "ref_engine": "gemini-3.1-flash-lite",
     "engines": {
+      "chandra-ocr-2": {
+        "pages_run": 60,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 60,
+          "median_cer": 0.091,
+          "mean_cer": 0.094,
+          "catastrophic": 0,
+          "median_gap": 0,
+          "median_seq": 0.795,
+          "refused": 0,
+          "n_answered": 60,
+          "median_cer_answered": 0.091,
+          "mean_cer_answered": 0.094,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.035,
+          "mean": 0.041,
+          "n_engines": 8,
+          "ref_median": 0.174,
+          "ref_mean": 0.177
+        },
+        "paired_vs_ref": {
+          "n": 60,
+          "excluded_refused": 0,
+          "wins": 16,
+          "losses": 42,
+          "ties": 2,
+          "median_delta_cer": -0.007,
+          "p_sign": 0.001,
+          "invention_wins": 19,
+          "invention_losses": 38
+        },
+        "worst": [
+          {
+            "slug": "ed-69b649aa18b87551bfc5e743-p59",
+            "title": "Opera Bebeliana sequentia : Triumphus Veneris sex libris co[n]scriptus Heroico carmine : Hecatostichon de victoria Cæsar",
+            "year": 1509,
+            "cer": 0.199,
+            "gap": 0.015,
+            "invention": 0.028,
+            "has_ref": true,
+            "unsupported": [
+              "aluete",
+              "alpestrēs",
+              "cherrime",
+              "sæpe"
+            ]
+          },
+          {
+            "slug": "ed-69b64c9618b87551bfc76fcf-p20",
+            "title": "Praecepta vitae puerilis : cum parte paraenetici Isocratis ad Demonicum in latinum conversa ; Vitae, morumque honestatis",
+            "year": 1536,
+            "cer": 0.189,
+            "gap": 0.021,
+            "invention": 0.127,
+            "has_ref": true,
+            "unsupported": [
+              "priusq",
+              "confabo",
+              "consiliis",
+              "meis",
+              "statim",
+              "vigile",
+              "sine",
+              "feruūtur"
+            ]
+          },
+          {
+            "slug": "ed-6a42b7ee5207af7c42f63a27-p21",
+            "title": "Aulicus politicus: diversis regulis, praeceptis, sive ut ictus iavolenus loquitur, definitionibus selectis, videlicet CC",
+            "year": 1615,
+            "cer": 0.182,
+            "gap": 0.006,
+            "invention": 0.016,
+            "has_ref": true,
+            "unsupported": [
+              "diudicare",
+              "prim"
+            ]
+          },
+          {
+            "slug": "ed-6a42b1d25207af7c42f57a9c-p25",
+            "title": "Commentariorum, de bello. Inter invictissimos imperatores Ferdinandos II. & III. et eorum hostes",
+            "year": 1641,
+            "cer": 0.175,
+            "gap": 0.04,
+            "invention": 0.059,
+            "has_ref": true,
+            "unsupported": [
+              "iussit",
+              "cæsarîs",
+              "irrumperentes",
+              "iuramentum",
+              "matthiæ",
+              "5viro"
+            ]
+          },
+          {
+            "slug": "ed-6a425bef744db9e3105a3b00-p18",
+            "title": "Critici atque Polyhistoris famigeratissimi Epistolarum ad Nesteros, Patrem Et Filium Conscriptarum Farrago: In Qua Varia",
+            "year": 1670,
+            "cer": 0.174,
+            "gap": 0,
+            "invention": 0.047,
+            "has_ref": true,
+            "unsupported": [
+              "4thomæ",
+              "3ijs",
+              "requiret",
+              "sudoris",
+              "hanc",
+              "vago",
+              "reinesus"
+            ]
+          }
+        ]
+      },
       "claude-sonnet-5-5": {
         "pages_run": 60,
         "empty": 0,
@@ -6270,9 +8420,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.014,
-          "mean": 0.032,
-          "n_engines": 6,
+          "median": 0.013,
+          "mean": 0.025,
+          "n_engines": 8,
           "ref_median": 0.161,
           "ref_mean": 0.169
         },
@@ -6294,17 +8444,14 @@
             "year": 1509,
             "cer": 0.2,
             "gap": 0.015,
-            "invention": 0.063,
+            "invention": 0.035,
             "has_ref": true,
             "unsupported": [
-              "casę",
               "pisćosa",
               "atqꝫ",
               "ameręqꝫ",
               "pręterit",
-              "militię",
-              "sępe",
-              "bingenses"
+              "sępe"
             ]
           },
           {
@@ -6326,11 +8473,10 @@
             "year": 1615,
             "cer": 0.179,
             "gap": 0,
-            "invention": 0.016,
+            "invention": 0.008,
             "has_ref": true,
             "unsupported": [
-              "iunctu",
-              "cfmagl"
+              "iunctu"
             ]
           },
           {
@@ -6339,14 +8485,12 @@
             "year": 1670,
             "cer": 0.17,
             "gap": 0,
-            "invention": 0.034,
+            "invention": 0.02,
             "has_ref": true,
             "unsupported": [
-              "melis",
               "ʒiij",
               "ʒijs",
-              "extractio",
-              "cfmagl"
+              "extractio"
             ]
           },
           {
@@ -6355,17 +8499,164 @@
             "year": 1682,
             "cer": 0.152,
             "gap": 0.067,
-            "invention": 0.108,
+            "invention": 0.075,
             "has_ref": true,
             "unsupported": [
               "atqꝫ",
-              "auguftanas",
               "converfas",
               "diverfis",
               "inftituerunt",
               "welfchio",
               "fæpius",
-              "auguftanis"
+              "auguftanis",
+              "illuftris"
+            ]
+          }
+        ]
+      },
+      "deepseek-ocr": {
+        "pages_run": 60,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 3,
+        "ref": {
+          "n": 60,
+          "median_cer": 0.121,
+          "mean_cer": 0.233,
+          "catastrophic": 2,
+          "median_gap": 0,
+          "median_seq": 0.658,
+          "refused": 0,
+          "n_answered": 60,
+          "median_cer_answered": 0.121,
+          "mean_cer_answered": 0.233,
+          "catastrophic_answered": 2
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.216,
+          "mean": 0.217,
+          "n_engines": 8,
+          "ref_median": 0.34,
+          "ref_mean": 0.339
+        },
+        "paired_vs_ref": {
+          "n": 60,
+          "excluded_refused": 0,
+          "wins": 4,
+          "losses": 55,
+          "ties": 1,
+          "median_delta_cer": -0.038,
+          "p_sign": 0,
+          "invention_wins": 0,
+          "invention_losses": 60
+        },
+        "worst": [
+          {
+            "slug": "ed-6a9066caeb8fb726ee3b6d69-p6",
+            "title": "Minister Peccans, Sive Tractatus De Peccatis Ministrorum Principis: Conscientiae Ipsorum Excutiendae Inserviens: Editio ",
+            "year": 1675,
+            "cer": 4.857,
+            "gap": 0.005,
+            "invention": 0.25,
+            "has_ref": true,
+            "unsupported": [
+              "lecior",
+              "omnificio",
+              "nupere",
+              "jufitis",
+              "conscriptis",
+              "consideratione",
+              "concriptis",
+              "conscribis"
+            ]
+          },
+          {
+            "slug": "ed-69c8a3f26c6f3cc53c85e777-p36",
+            "title": "Discursus politici singulares, de informatione et coactione suditorum, ubi agitur",
+            "year": 1626,
+            "cer": 1.293,
+            "gap": 0.002,
+            "invention": 0.326,
+            "has_ref": true,
+            "unsupported": [
+              "differtatio",
+              "perceptis",
+              "refpondit",
+              "vidit",
+              "palatii",
+              "caefella",
+              "invenit",
+              "pofthac"
+            ]
+          },
+          {
+            "slug": "ed-6a9437f67e41ac276318823e-p21",
+            "title": "Carmen panegyricum, sive Paræneticum, postridie inaugurationis Dom. Protectori ab Auguo. Wingfieldo dicatum. Ac nuper cu",
+            "year": 1656,
+            "cer": 0.447,
+            "gap": 0.02,
+            "invention": 0.457,
+            "has_ref": true,
+            "unsupported": [
+              "mahat",
+              "piftonem",
+              "latinum",
+              "propterea",
+              "pallium",
+              "inmunditias",
+              "delinquencibus",
+              "rede"
+            ]
+          },
+          {
+            "slug": "ed-6958e912d3a8928334814c19-p8",
+            "title": "Plantarum historiae universalis Oxoniensis pars secunda",
+            "year": 1669,
+            "cer": 0.385,
+            "gap": 0.01,
+            "invention": 0.169,
+            "has_ref": true,
+            "unsupported": [
+              "fide",
+              "praemio",
+              "iucuit",
+              "digerentur",
+              "intermedis",
+              "firpium",
+              "biceps",
+              "decriptarum"
+            ]
+          },
+          {
+            "slug": "ed-6a425bef744db9e3105a3b00-p18",
+            "title": "Critici atque Polyhistoris famigeratissimi Epistolarum ad Nesteros, Patrem Et Filium Conscriptarum Farrago: In Qua Varia",
+            "year": 1670,
+            "cer": 0.235,
+            "gap": 0,
+            "invention": 0.255,
+            "has_ref": true,
+            "unsupported": [
+              "ratiensii",
+              "alchem",
+              "3jlb",
+              "apifntb",
+              "mclifs",
+              "faffaf",
+              "antifcorbutic",
+              "poft"
             ]
           }
         ]
@@ -6402,9 +8693,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.02,
-          "mean": 0.029,
-          "n_engines": 6,
+          "median": 0.016,
+          "mean": 0.024,
+          "n_engines": 8,
           "ref_median": 0.121,
           "ref_mean": 0.122
         },
@@ -6426,13 +8717,10 @@
             "year": 1641,
             "cer": 0.179,
             "gap": 0.063,
-            "invention": 0.05,
+            "invention": 0.02,
             "has_ref": true,
             "unsupported": [
-              "praehenderent",
               "anno",
-              "nulla",
-              "legitima",
               "septemviromatthias"
             ]
           },
@@ -6538,9 +8826,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.018,
-          "mean": 0.019,
-          "n_engines": 6,
+          "median": 0.013,
+          "mean": 0.016,
+          "n_engines": 8,
           "ref_median": 0.143,
           "ref_mean": 0.152
         },
@@ -6561,11 +8849,10 @@
             "year": 1641,
             "cer": 0.197,
             "gap": 0.047,
-            "invention": 0.02,
+            "invention": 0.01,
             "has_ref": true,
             "unsupported": [
-              "bobemicum",
-              "sæpissime"
+              "bobemicum"
             ]
           },
           {
@@ -6592,7 +8879,7 @@
             "year": 1536,
             "cer": 0.141,
             "gap": 0,
-            "invention": 0.083,
+            "invention": 0.077,
             "has_ref": true,
             "unsupported": [
               "prius",
@@ -6651,7 +8938,7 @@
         "invention": {
           "median": 0,
           "mean": 0,
-          "n_engines": 6,
+          "n_engines": 8,
           "ref_median": 0.153,
           "ref_mean": 0.162
         },
@@ -6751,9 +9038,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.057,
-          "mean": 0.081,
-          "n_engines": 6,
+          "median": 0.044,
+          "mean": 0.061,
+          "n_engines": 8,
           "ref_median": 0.202,
           "ref_mean": 0.218
         },
@@ -6775,17 +9062,17 @@
             "year": 1615,
             "cer": 0.216,
             "gap": 0,
-            "invention": 0.163,
+            "invention": 0.081,
             "has_ref": true,
             "unsupported": [
               "menfes",
               "illuftrifs",
               "vefter",
-              "tranfmiferit",
               "honefta",
               "incuriofus",
               "fplendidum",
-              "infpicere"
+              "difcernere",
+              "preffo"
             ]
           },
           {
@@ -6794,7 +9081,7 @@
             "year": 1509,
             "cer": 0.196,
             "gap": 0.015,
-            "invention": 0.077,
+            "invention": 0.07,
             "has_ref": true,
             "unsupported": [
               "mediss",
@@ -6804,7 +9091,7 @@
               "studiss",
               "sœpe",
               "oleniq",
-              "pluui"
+              "capellq"
             ]
           },
           {
@@ -6813,17 +9100,17 @@
             "year": 1670,
             "cer": 0.196,
             "gap": 0,
-            "invention": 0.108,
+            "invention": 0.095,
             "has_ref": true,
             "unsupported": [
               "nielifs",
-              "deputat",
               "compli",
               "caræ",
               "fuccum",
-              "fucco",
               "hibiti",
-              "foret"
+              "foret",
+              "affe",
+              "ctum"
             ]
           },
           {
@@ -6850,17 +9137,17 @@
             "year": 1536,
             "cer": 0.173,
             "gap": 0.013,
-            "invention": 0.091,
+            "invention": 0.085,
             "has_ref": true,
             "unsupported": [
               "islam",
               "perinistis",
-              "confido",
               "silicensis",
               "charnut",
               "prosta",
               "cogustii",
-              "colloge"
+              "colloge",
+              "suoru"
             ]
           }
         ]
@@ -6897,9 +9184,9 @@
           "mean_cer_answered": null
         },
         "invention": {
-          "median": 0.1,
-          "mean": 0.109,
-          "n_engines": 6,
+          "median": 0.078,
+          "mean": 0.082,
+          "n_engines": 8,
           "ref_median": 0.236,
           "ref_mean": 0.238
         },
@@ -6921,17 +9208,17 @@
             "year": 1598,
             "cer": 0.497,
             "gap": 0.221,
-            "invention": 0.103,
+            "invention": 0.086,
             "has_ref": true,
             "unsupported": [
               "caput",
               "sublcriptum",
-              "femel",
               "dorfi",
               "butyrò",
               "restaurātes",
               "offerātur",
-              "volūtati"
+              "volūtati",
+              "fatishāt"
             ]
           },
           {
@@ -6940,17 +9227,17 @@
             "year": 1509,
             "cer": 0.179,
             "gap": 0.01,
-            "invention": 0.125,
+            "invention": 0.088,
             "has_ref": true,
             "unsupported": [
               "alutere",
-              "dulcefue",
               "piscofa",
-              "generofas",
               "receffit",
               "celfus",
               "notiffimus",
-              "accepiffe"
+              "miferatvrbs",
+              "americq",
+              "militiē"
             ]
           },
           {
@@ -6959,17 +9246,17 @@
             "year": 1641,
             "cer": 0.177,
             "gap": 0.016,
-            "invention": 0.098,
+            "invention": 0.088,
             "has_ref": true,
             "unsupported": [
-              "faciant",
               "hulstia",
               "cancellarium",
               "èseneßtris",
               "crudeliret",
               "sepissimè",
               "respiscerent",
-              "matthiprole"
+              "matthiprole",
+              "virocæsaris"
             ]
           },
           {
@@ -6978,17 +9265,17 @@
             "year": 1557,
             "cer": 0.165,
             "gap": 0,
-            "invention": 0.13,
+            "invention": 0.1,
             "has_ref": true,
             "unsupported": [
               "plecentes",
               "studijis",
               "aligd",
-              "gratij",
               "prorfus",
               "potiff",
-              "qscq",
-              "illorx"
+              "illorx",
+              "effet",
+              "apprij"
             ]
           },
           {
@@ -6997,7 +9284,7 @@
             "year": 1626,
             "cer": 0.159,
             "gap": 0.002,
-            "invention": 0.075,
+            "invention": 0.071,
             "has_ref": true,
             "unsupported": [
               "aqua",
@@ -7006,8 +9293,8 @@
               "epist",
               "praefation",
               "adificiorum",
-              "catum",
-              "cenfortus"
+              "cenfortus",
+              "confenescent"
             ]
           }
         ]
@@ -7025,6 +9312,31 @@
       "Armenian": {
         "n": 9,
         "engines": {
+          "chandra-ocr-2": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
           "claude-opus-5-5": {
             "pages_run": 0,
             "aligned": 0,
@@ -7051,6 +9363,31 @@
             }
           },
           "cllg-qwen3vl-8b": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
+          "deepseek-ocr": {
             "pages_run": 0,
             "aligned": 0,
             "refused": 0,
@@ -7494,6 +9831,31 @@
       "Chinese": {
         "n": 6,
         "engines": {
+          "chandra-ocr-2": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
           "claude-opus-5-5": {
             "pages_run": 0,
             "aligned": 0,
@@ -7520,6 +9882,31 @@
             }
           },
           "cllg-qwen3vl-8b": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
+          "deepseek-ocr": {
             "pages_run": 0,
             "aligned": 0,
             "refused": 0,
@@ -7963,6 +10350,31 @@
       "German": {
         "n": 7,
         "engines": {
+          "chandra-ocr-2": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
           "claude-opus-5-5": {
             "pages_run": 0,
             "aligned": 0,
@@ -7989,6 +10401,31 @@
             }
           },
           "cllg-qwen3vl-8b": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
+          "deepseek-ocr": {
             "pages_run": 0,
             "aligned": 0,
             "refused": 0,
@@ -8432,6 +10869,31 @@
       "Greek": {
         "n": 17,
         "engines": {
+          "chandra-ocr-2": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
           "claude-opus-5-5": {
             "pages_run": 0,
             "aligned": 0,
@@ -8458,6 +10920,31 @@
             }
           },
           "cllg-qwen3vl-8b": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
+          "deepseek-ocr": {
             "pages_run": 0,
             "aligned": 0,
             "refused": 0,
@@ -8901,6 +11388,31 @@
       "Hebrew": {
         "n": 4,
         "engines": {
+          "chandra-ocr-2": {
+            "pages_run": 4,
+            "aligned": 4,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.122,
+            "mean_cer_windowed": 0.137,
+            "mean_acc_windowed": 0.864,
+            "mean_acc_upper": 0.942,
+            "median_cer_refusals_as_1": 0.122,
+            "mean_cer_refusals_as_1": 0.137,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 4,
+              "excluded_refused": 0,
+              "wins": 2,
+              "losses": 2,
+              "ties": 0,
+              "median_delta_cer": -0.009,
+              "p_sign": 1,
+              "ref_engine_aligned": 4,
+              "both_unaligned": 0
+            }
+          },
           "claude-opus-5-5": {
             "pages_run": 4,
             "aligned": 3,
@@ -8939,6 +11451,31 @@
             "mean_cer_refusals_as_1": null,
             "catastrophic": 0,
             "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 4,
+              "both_unaligned": 0
+            }
+          },
+          "deepseek-ocr": {
+            "pages_run": 4,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 4,
+            "catastrophic_answered": 4,
             "paired_vs_ref": {
               "n": 0,
               "excluded_refused": 0,
@@ -9370,6 +11907,31 @@
       "Latin": {
         "n": 12,
         "engines": {
+          "chandra-ocr-2": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
           "claude-opus-5-5": {
             "pages_run": 0,
             "aligned": 0,
@@ -9396,6 +11958,31 @@
             }
           },
           "cllg-qwen3vl-8b": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
+          "deepseek-ocr": {
             "pages_run": 0,
             "aligned": 0,
             "refused": 0,

@@ -45,8 +45,12 @@ def b64(path):
         return base64.b64encode(fh.read()).decode()
 
 
+# DeepSeek-OCR's context is 8,192 tokens and the page image takes ~900: an 8,192-token completion is a 400.
+MAX_TOKENS = 7000 if a.engine == 'deepseek-ocr' else 8192
+
+
 def chat(content, **extra):
-    body = {'model': 'm', 'messages': [{'role': 'user', 'content': content}], 'temperature': 0.0, 'max_tokens': 8192, **extra}
+    body = {'model': 'm', 'messages': [{'role': 'user', 'content': content}], 'temperature': 0.0, 'max_tokens': MAX_TOKENS, **extra}
     r = requests.post(API, json=body, timeout=a.timeout)
     r.raise_for_status()
     j = r.json()

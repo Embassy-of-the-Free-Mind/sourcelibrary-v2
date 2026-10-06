@@ -10,6 +10,31 @@
       "Armenian": {
         "n": 9,
         "engines": {
+          "chandra-ocr-2": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
           "claude-opus-5-5": {
             "pages_run": 0,
             "aligned": 0,
@@ -36,6 +61,31 @@
             }
           },
           "cllg-qwen3vl-8b": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
+          "deepseek-ocr": {
             "pages_run": 0,
             "aligned": 0,
             "refused": 0,
@@ -479,6 +529,31 @@
       "Chinese": {
         "n": 6,
         "engines": {
+          "chandra-ocr-2": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
           "claude-opus-5-5": {
             "pages_run": 0,
             "aligned": 0,
@@ -505,6 +580,31 @@
             }
           },
           "cllg-qwen3vl-8b": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
+          "deepseek-ocr": {
             "pages_run": 0,
             "aligned": 0,
             "refused": 0,
@@ -948,6 +1048,31 @@
       "German": {
         "n": 7,
         "engines": {
+          "chandra-ocr-2": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
           "claude-opus-5-5": {
             "pages_run": 0,
             "aligned": 0,
@@ -974,6 +1099,31 @@
             }
           },
           "cllg-qwen3vl-8b": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
+          "deepseek-ocr": {
             "pages_run": 0,
             "aligned": 0,
             "refused": 0,
@@ -1417,6 +1567,31 @@
       "Greek": {
         "n": 17,
         "engines": {
+          "chandra-ocr-2": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
           "claude-opus-5-5": {
             "pages_run": 0,
             "aligned": 0,
@@ -1443,6 +1618,31 @@
             }
           },
           "cllg-qwen3vl-8b": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
+          "deepseek-ocr": {
             "pages_run": 0,
             "aligned": 0,
             "refused": 0,
@@ -1886,6 +2086,31 @@
       "Hebrew": {
         "n": 4,
         "engines": {
+          "chandra-ocr-2": {
+            "pages_run": 4,
+            "aligned": 4,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": 0.122,
+            "mean_cer_windowed": 0.137,
+            "mean_acc_windowed": 0.864,
+            "mean_acc_upper": 0.942,
+            "median_cer_refusals_as_1": 0.122,
+            "mean_cer_refusals_as_1": 0.137,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 4,
+              "excluded_refused": 0,
+              "wins": 2,
+              "losses": 2,
+              "ties": 0,
+              "median_delta_cer": -0.009,
+              "p_sign": 1,
+              "ref_engine_aligned": 4,
+              "both_unaligned": 0
+            }
+          },
           "claude-opus-5-5": {
             "pages_run": 4,
             "aligned": 3,
@@ -1924,6 +2149,31 @@
             "mean_cer_refusals_as_1": null,
             "catastrophic": 0,
             "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 4,
+              "both_unaligned": 0
+            }
+          },
+          "deepseek-ocr": {
+            "pages_run": 4,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 4,
+            "catastrophic_answered": 4,
             "paired_vs_ref": {
               "n": 0,
               "excluded_refused": 0,
@@ -2355,6 +2605,31 @@
       "Latin": {
         "n": 12,
         "engines": {
+          "chandra-ocr-2": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
           "claude-opus-5-5": {
             "pages_run": 0,
             "aligned": 0,
@@ -2381,6 +2656,31 @@
             }
           },
           "cllg-qwen3vl-8b": {
+            "pages_run": 0,
+            "aligned": 0,
+            "refused": 0,
+            "refused_inferred": 0,
+            "median_cer_windowed": null,
+            "mean_cer_windowed": null,
+            "mean_acc_windowed": null,
+            "mean_acc_upper": null,
+            "median_cer_refusals_as_1": null,
+            "mean_cer_refusals_as_1": null,
+            "catastrophic": 0,
+            "catastrophic_answered": 0,
+            "paired_vs_ref": {
+              "n": 0,
+              "excluded_refused": 0,
+              "wins": 0,
+              "losses": 0,
+              "ties": 0,
+              "median_delta_cer": null,
+              "p_sign": null,
+              "ref_engine_aligned": 0,
+              "both_unaligned": 0
+            }
+          },
+          "deepseek-ocr": {
             "pages_run": 0,
             "aligned": 0,
             "refused": 0,
@@ -2832,10 +3132,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -2899,10 +3205,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -2966,10 +3278,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -3033,10 +3351,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -3100,10 +3424,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -3167,10 +3497,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -3234,10 +3570,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -3301,10 +3643,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -3368,10 +3716,16 @@
       "tier": "pinned",
       "non_canonical": false,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -3435,10 +3789,16 @@
       "tier": "pinned",
       "non_canonical": false,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -3502,10 +3862,16 @@
       "tier": "pinned",
       "non_canonical": false,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -3569,10 +3935,16 @@
       "tier": "pinned",
       "non_canonical": false,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -3636,10 +4008,16 @@
       "tier": "pinned",
       "non_canonical": false,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -3703,10 +4081,16 @@
       "tier": "pinned",
       "non_canonical": false,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -3770,10 +4154,16 @@
       "tier": "pinned",
       "non_canonical": false,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -3837,10 +4227,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -3904,10 +4300,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -3971,10 +4373,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -4038,10 +4446,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -4105,10 +4519,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -4172,10 +4592,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -4239,10 +4665,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -4306,10 +4738,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -4373,10 +4811,16 @@
       "tier": "pinned",
       "non_canonical": false,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -4440,10 +4884,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -4507,10 +4957,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -4574,10 +5030,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -4641,10 +5103,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -4708,10 +5176,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -4775,10 +5249,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -4842,10 +5322,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -4909,10 +5395,16 @@
       "tier": "pinned",
       "non_canonical": false,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -4976,10 +5468,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -5043,10 +5541,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -5110,10 +5614,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -5177,10 +5687,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -5244,10 +5760,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -5311,10 +5833,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -5378,10 +5906,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -5445,6 +5979,16 @@
       "tier": "pinned",
       "non_canonical": false,
       "engines": {
+        "chandra-ocr-2": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.019,
+          "acc_upper": 1,
+          "acc_windowed": 0.99,
+          "cer": 0.01,
+          "span_dispersion": 1.2,
+          "chars": 3309
+        },
         "claude-opus-5-5": {
           "aligned": true,
           "refused": false,
@@ -5457,6 +6001,16 @@
         },
         "cllg-qwen3vl-8b": {
           "missing": true
+        },
+        "deepseek-ocr": {
+          "aligned": false,
+          "refused": false,
+          "guard": 0.942,
+          "acc_upper": 0.67,
+          "acc_windowed": 0.325,
+          "cer": 0.675,
+          "span_dispersion": 1,
+          "chars": 9485
         },
         "gemini-3-flash-preview": {
           "aligned": true,
@@ -5547,6 +6101,16 @@
       "tier": "pinned",
       "non_canonical": false,
       "engines": {
+        "chandra-ocr-2": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.284,
+          "acc_upper": 0.895,
+          "acc_windowed": 0.827,
+          "cer": 0.173,
+          "span_dispersion": 1,
+          "chars": 749
+        },
         "claude-opus-5-5": {
           "aligned": true,
           "refused": false,
@@ -5559,6 +6123,16 @@
         },
         "cllg-qwen3vl-8b": {
           "missing": true
+        },
+        "deepseek-ocr": {
+          "aligned": false,
+          "refused": false,
+          "guard": 0.866,
+          "acc_upper": 0.54,
+          "acc_windowed": 0.387,
+          "cer": 0.613,
+          "span_dispersion": null,
+          "chars": 395
         },
         "gemini-3-flash-preview": {
           "aligned": true,
@@ -5649,6 +6223,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.289,
+          "acc_upper": 0.932,
+          "acc_windowed": 0.707,
+          "cer": 0.293,
+          "span_dispersion": 1,
+          "chars": 757
+        },
         "claude-opus-5-5": {
           "aligned": false,
           "refused": false,
@@ -5661,6 +6245,16 @@
         },
         "cllg-qwen3vl-8b": {
           "missing": true
+        },
+        "deepseek-ocr": {
+          "aligned": false,
+          "refused": false,
+          "guard": 0.663,
+          "acc_upper": 0.54,
+          "acc_windowed": 0.417,
+          "cer": 0.583,
+          "span_dispersion": null,
+          "chars": 762
         },
         "gemini-3-flash-preview": {
           "aligned": true,
@@ -5751,6 +6345,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "aligned": true,
+          "refused": false,
+          "guard": 0.174,
+          "acc_upper": 0.942,
+          "acc_windowed": 0.93,
+          "cer": 0.07,
+          "span_dispersion": null,
+          "chars": 2946
+        },
         "claude-opus-5-5": {
           "aligned": true,
           "refused": false,
@@ -5763,6 +6367,16 @@
         },
         "cllg-qwen3vl-8b": {
           "missing": true
+        },
+        "deepseek-ocr": {
+          "aligned": false,
+          "refused": false,
+          "guard": 0.355,
+          "acc_upper": 0.864,
+          "acc_windowed": 0.849,
+          "cer": 0.151,
+          "span_dispersion": null,
+          "chars": 11339
         },
         "gemini-3-flash-preview": {
           "aligned": true,
@@ -5853,10 +6467,16 @@
       "tier": "pinned",
       "non_canonical": false,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -5920,10 +6540,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -5987,10 +6613,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -6054,10 +6686,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -6121,10 +6759,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -6188,10 +6832,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -6255,10 +6905,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -6322,10 +6978,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -6389,10 +7051,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -6456,10 +7124,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -6523,10 +7197,16 @@
       "tier": "pinned",
       "non_canonical": false,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {
@@ -6590,10 +7270,16 @@
       "tier": "pinned",
       "non_canonical": true,
       "engines": {
+        "chandra-ocr-2": {
+          "missing": true
+        },
         "claude-opus-5-5": {
           "missing": true
         },
         "cllg-qwen3vl-8b": {
+          "missing": true
+        },
+        "deepseek-ocr": {
           "missing": true
         },
         "gemini-3-flash-preview": {

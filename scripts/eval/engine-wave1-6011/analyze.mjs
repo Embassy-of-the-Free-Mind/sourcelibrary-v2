@@ -153,26 +153,27 @@ if (fs.existsSync(tibF)) {
 
 // ── measured cost ──
 for (const arm of NEW) {
-  let usd = 0, n = 0, inTok = 0, outTok = 0, thinkTok = 0, secs = 0; const routes = new Set();
+  const slugs = new Set(); let usd = 0, n = 0, inTok = 0, outTok = 0, thinkTok = 0, secs = 0; const routes = new Set();
   for (const st of fs.existsSync(BENCH) ? fs.readdirSync(BENCH) : []) {
     const f = path.join(BENCH, st, 'out', arm, '_meter.jsonl');
     if (!fs.existsSync(f)) continue;
     for (const r of fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map(l => JSON.parse(l))) {
-      if (r.error) continue; n++; usd += r.costUsd || 0; inTok += r.inputTokens || 0; outTok += r.outputTokens || 0; thinkTok += r.thinkingTokens || 0; secs += (r.durationMs || (r.secs || 0) * 1000) / 1000; if (r.route) routes.add(r.route);
+      if (r.error) continue; n++; slugs.add(`${st}|${r.slug}`); usd += r.costUsd || 0; inTok += r.inputTokens || 0; outTok += r.outputTokens || 0; thinkTok += r.thinkingTokens || 0; secs += (r.durationMs || (r.secs || 0) * 1000) / 1000; if (r.route) routes.add(r.route);
     }
   }
-  result.cost[arm] = { pages: n, usd: r3(usd * 1000) / 1000, usd_per_1k_pages: n ? r3(usd / n * 1000) : null, input_tokens: inTok, output_tokens: outTok, thinking_tokens: thinkTok, routes: [...routes] };
+  result.cost[arm] = { pages: slugs.size, calls: n, usd: r3(usd * 1000) / 1000, usd_per_1k_pages: slugs.size ? r3(usd / slugs.size * 1000) : null, input_tokens: inTok, output_tokens: outTok, thinking_tokens: thinkTok, routes: [...routes] };
 }
 const boxF = path.join(RES, 'gpu-box.json');
 if (fs.existsSync(boxF)) {
   const box = JSON.parse(fs.readFileSync(boxF, 'utf8'));
-  const wall = Object.fromEntries(GPU_ARMS.map(e => [e, box.engines?.[e]?.infer_wall_secs || 0]));
+  // inference wall time of the runs that read pages (DeepSeek's two failed 4.5 s runs read nothing)
+  const wall = Object.fromEntries(GPU_ARMS.map(e => [e, (box.engines?.[e]?.runs || []).filter(r => r.ok > 0).reduce((a, r) => a + r.wall_secs, 0)]));
   const tot = Object.values(wall).reduce((a, b) => a + b, 0);
   const billed = GPU_USD ?? box.billed_usd ?? null;
   for (const e of GPU_ARMS) {
     const n = box.engines?.[e]?.pages_out || 0;
     result.cost[e] = { pages: n, infer_wall_secs: wall[e], usd_per_1k_inference_only: n ? r3(wall[e] / 3600 * box.usd_per_hour / n * 1000) : null,
-      usd_per_1k_billed_share: n && billed != null && tot ? r3(billed * (wall[e] / tot) / n * 1000) : null, hardware: box.gpu };
+      usd_per_1k_billed_share: n && billed != null && tot ? r3(billed * (wall[e] / tot) / n * 1000) : null, hardware: box.hardware || box.gpu };
   }
   result.gpu = { billed_usd: billed, usd_per_hour: box.usd_per_hour, gpu: box.gpu, vllm: box.vllm };
 }
