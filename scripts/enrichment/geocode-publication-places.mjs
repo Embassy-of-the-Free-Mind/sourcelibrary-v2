@@ -38,6 +38,20 @@ const MANUAL_OVERRIDES = {
   'Rheims':       { city: 'Rheims', lat: 49.2583, lng: 3.5752, country: 'France', wikidata_id: 'Q41876' },
   'Königsberg':   { city: 'Königsberg', lat: 54.7104, lng: 20.4522, country: 'Russia', wikidata_id: 'Q1773' },
   'Girard':       null, // Small US town, not a historical publishing center — skip
+  // 2026-10-06 map review: early imprints resolved to small namesakes. "Strassburg"
+  // landed on Straßburg in Carinthia (48 books of 1500s Strasbourg imprints).
+  'Strassburg':   { city: 'Strasbourg', lat: 48.5734, lng: 7.7521, country: 'France', wikidata_id: 'Q6602' },
+  'Straßburg':    { city: 'Strasbourg', lat: 48.5734, lng: 7.7521, country: 'France', wikidata_id: 'Q6602' },
+  'Strasburg':    { city: 'Strasbourg', lat: 48.5734, lng: 7.7521, country: 'France', wikidata_id: 'Q6602' },
+  'Dresden':      { city: 'Dresden', lat: 51.0504, lng: 13.7373, country: 'Germany', wikidata_id: 'Q1731' },
+  'Gera':         { city: 'Gera', lat: 50.8776, lng: 12.0821, country: 'Germany', wikidata_id: 'Q3150' },
+  'Lübeck':       { city: 'Lübeck', lat: 53.8655, lng: 10.6866, country: 'Germany', wikidata_id: 'Q2843' },
+  'Lubeck':       { city: 'Lübeck', lat: 53.8655, lng: 10.6866, country: 'Germany', wikidata_id: 'Q2843' },
+  'Palermo':      { city: 'Palermo', lat: 38.1157, lng: 13.3615, country: 'Italy', wikidata_id: 'Q2656' },
+  'Salamanca':    { city: 'Salamanca', lat: 40.9701, lng: -5.6635, country: 'Spain', wikidata_id: 'Q15695' },
+  'Valencia':     { city: 'Valencia', lat: 39.4699, lng: -0.3763, country: 'Spain', wikidata_id: 'Q8818' },
+  'Toledo':       { city: 'Toledo', lat: 39.8628, lng: -4.0273, country: 'Spain', wikidata_id: 'Q5836' },
+  'Petersburg':   { city: 'Saint Petersburg', lat: 59.9311, lng: 30.3609, country: 'Russia', wikidata_id: 'Q656' },
 };
 
 /**
@@ -56,7 +70,7 @@ const ARCHAIC_NORMALIZE = {
   wittemberga: 'Wittenberg', argentorati: 'Strasbourg', argentina: 'Strasbourg',
   lugduni: 'Lyon', lutetiae: 'Paris', basileae: 'Basel', venetiis: 'Venice',
   köln: 'Cologne', munchen: 'Munich', münchen: 'Munich',
-  strassbourg: 'Strasbourg', strassburg: 'Strasbourg',
+  strassbourg: 'Strasbourg', strassburg: 'Strasbourg', straßburg: 'Strasbourg',
   stpetersburg: 'Saint Petersburg', sintpetersburg: 'Saint Petersburg', leningrad: 'Saint Petersburg',
   pressburg: 'Bratislava', dantzig: 'Gdańsk', gdansk: 'Gdańsk',
   parijs: 'Paris', londen: 'London', weenen: 'Vienna', wien: 'Vienna',
@@ -104,7 +118,9 @@ function cleanPlaceName(raw) {
   if (!s || s.length < 2) return null;
   if (PLACELESS.some((p) => p.test(s))) return null;
 
-  const key = s.toLowerCase().replace(/[^a-zà-ÿ]/g, '');
+  // ß-ÿ, not à-ÿ: ß (U+00DF) sits just below à, and dropping it turned
+  // "Straßburg" into "straburg", which matched no normalisation (2026-10-06).
+  const key = s.toLowerCase().replace(/[^a-zß-ÿ]/g, '');
   return ARCHAIC_NORMALIZE[key] || s;
 }
 

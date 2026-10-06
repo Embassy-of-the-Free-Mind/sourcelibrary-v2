@@ -78,6 +78,39 @@ const ORIGIN_TRADITIONS = {
 
   // Iran
   persian:   { city: 'Isfahan',      country: 'Iran',         lat: 32.6539, lng: 51.6660 },
+  avestan:   { city: 'Yazd',         country: 'Iran',         lat: 31.8974, lng: 54.3569 },
+
+  // Mesoamerica (2026-10-06). The original codices (Dresden, Paris, Borgia,
+  // Mendoza, Selden, the Popol Vuh and Chilam Balam manuscripts) carry no
+  // imprint, so before this they had no dot while their 19th-century European
+  // facsimiles sat at Paris and Berlin.
+  yucatecmaya: { city: 'Chichén Itzá', country: 'Mexico',    lat: 20.6843, lng: -88.5678 },
+  kiche:     { city: "Q'umarkaj",    country: 'Guatemala',    lat: 15.0225, lng: -91.1720 },
+  nahuatl:   { city: 'Tenochtitlan', country: 'Mexico',       lat: 19.4326, lng: -99.1332 },
+  mixtec:    { city: 'Tilantongo',   country: 'Mexico',       lat: 17.2500, lng: -97.2900 },
+
+  // More South / Southeast Asia
+  sundanese: { city: 'Bogor',        country: 'Indonesia',    lat: -6.5971, lng: 106.8060 },
+  burmese:   { city: 'Mandalay',     country: 'Myanmar',      lat: 21.9588, lng: 96.0891 },
+  telugu:    { city: 'Rajahmundry',  country: 'India',        lat: 17.0005, lng: 81.8040 },
+  kannada:   { city: 'Mysore',       country: 'India',        lat: 12.2958, lng: 76.6394 },
+  marathi:   { city: 'Pune',         country: 'India',        lat: 18.5204, lng: 73.8567 },
+  vietnamese:{ city: 'Huế',          country: 'Vietnam',      lat: 16.4637, lng: 107.5909 },
+  tangut:    { city: 'Khara-Khoto',  country: 'China',        lat: 41.7631, lng: 101.0742 },
+
+  dzongkha:  { city: 'Thimphu',      country: 'Bhutan',       lat: 27.4712, lng: 89.6339 },
+
+  // Turkic, Caucasus
+  ottomanturkish: { city: 'Istanbul', country: 'Turkey',      lat: 41.0082, lng: 28.9784 },
+  chagataiturkish:{ city: 'Herat',    country: 'Afghanistan', lat: 34.3529, lng: 62.2040 },
+  georgian:  { city: 'Mtskheta',     country: 'Georgia',      lat: 41.8456, lng: 44.7208 },
+
+  // Africa, Pacific, Indian Ocean
+  hausa:     { city: 'Kano',         country: 'Nigeria',      lat: 12.0022, lng: 8.5920 },
+  yoruba:    { city: 'Ile-Ife',      country: 'Nigeria',      lat: 7.4905,  lng: 4.5521 },
+  zulu:      { city: 'Ulundi',       country: 'South Africa', lat: -28.3352, lng: 31.4162 },
+  malagasy:  { city: 'Antananarivo', country: 'Madagascar',   lat: -18.8792, lng: 47.5079 },
+  hawaiian:  { city: 'Honolulu',     country: 'United States', lat: 21.3069, lng: -157.8583 },
 };
 
 /** Tibetan-script material from Bhutan (Tshamdrak monastery, BL Bhutan corpus). */
@@ -96,6 +129,12 @@ function normalizeLanguage(raw) {
     egyptianhieroglyphs: 'egyptian', ancientegyptian: 'egyptian', egyptian: 'egyptian',
     classicalchinese: 'chinese', literarychinese: 'chinese', mandarin: 'chinese',
     classicaltibetan: 'tibetan',
+    demotic: 'egyptian', hieratic: 'egyptian',
+    oldjavanese: 'javanese',
+    mayahieroglyphs: 'yucatecmaya', mayahieroglyphicscript: 'yucatecmaya', yucatec: 'yucatecmaya',
+    quichemaya: 'kiche', kichemaya: 'kiche', kichemayaspanish: 'kiche', quiche: 'kiche',
+    nahuatlspanish: 'nahuatl',
+    ottoman: 'ottomanturkish', chagatai: 'chagataiturkish',
   };
   if (aliases[k]) return aliases[k];
   return ORIGIN_TRADITIONS[k] ? k : null;
