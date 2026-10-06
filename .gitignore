@@ -64,6 +64,8 @@ src/data/*
 !src/data/image-subjects.json
 !src/data/image-subject-map.json
 !src/data/ocr-benchmark-evidence.json
+!src/data/ocr-pareto.json
+!src/data/translation-pareto.json
 !src/data/quality-feedback-themes.json
 !src/data/carbon-ledger/
 !src/data/carbon-ledger/*.json

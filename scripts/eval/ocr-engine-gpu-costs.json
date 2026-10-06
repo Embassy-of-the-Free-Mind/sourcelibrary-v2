@@ -1,0 +1,60 @@
+{
+  "_about": "Self-hosted OCR engines: what a page cost on the hardware that read the charted pages, as each run recorded it (#5983). Read by scripts/eval/build-ocr-pareto.mjs, which turns every entry into USD per 1,000 pages. There is no machine-readable GPU fleet ledger yet, so each entry copies the run's own figure from its write-up (`source`) and quotes it; the generator refuses an entry whose quote is not in that file. Gemini is not here: its cost comes from the meter (scripts/eval/ocr-cost-snapshot.mjs). An engine missing from both files has no measured cost; the charts list it as such and do not place it. `basis`: `billed` = the whole billed rental, start-up and idle included; `compute` = inference time × the hourly or monthly rate, which reads low because it assumes the box does nothing else. `charts` limits an entry to the script charts whose pages were read on that hardware; an entry without `charts` applies to the rest. Each entry gives `eur` + `pages`, `eur_per_page`, or `usd_per_1k`, whichever the write-up states.",
+  "usd_per_eur": {
+    "value": 1.1636,
+    "derivation": "249 / 214: the same Hetzner GEX45 is priced at $249/month in scripts/eval/experiments/2026-10-03-open-engine-print-5660.md and at €214/month in scripts/eval/PREREGISTRATION-translation-student-5793.md"
+  },
+  "engines": {
+    "paddleocr-vl-1.6": [
+      {
+        "charts": ["chinese-manuscript", "chinese-print"],
+        "basis": "billed",
+        "eur_per_page": 0.00089,
+        "hardware": "1 × Scaleway L4 (pl-waw-2), €0.7875/h",
+        "quote": "€0.00089/page billed",
+        "source": "scripts/eval/experiments/2026-10-01-chinese-ocr-cohort-5547.md",
+        "measured_on": "2026-10-01"
+      },
+      {
+        "charts": ["latin", "english", "latin-script-other", "greek"],
+        "basis": "compute",
+        "usd_per_1k": 0.091,
+        "hardware": "Hetzner GEX45 ($249/month), 0.96 s/page with 8 clients",
+        "quote": "On the GEX45 ($249/mo) that is **$0.091 per 1,000 pages**",
+        "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md",
+        "measured_on": "2026-10-03"
+      }
+    ],
+    "olmocr-2-7b-fp8": [
+      {
+        "basis": "compute",
+        "usd_per_1k": 0.26,
+        "hardware": "Hetzner GEX45 ($249/month), 2.71 s/page with 8 clients",
+        "quote": "On the GEX45 ($249/mo) that is **$0.26 per 1,000 pages**",
+        "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md",
+        "measured_on": "2026-10-03"
+      }
+    ],
+    "ndlkotenocr-v3": [
+      {
+        "basis": "billed",
+        "eur": 1.10,
+        "pages": 1087,
+        "hardware": "1 × Scaleway L4 (pl-waw-2)",
+        "quote": "1,087 pages … ≈ 85 min billed (≈ €1.10) including a missed pull window",
+        "source": "scripts/eval/experiments/2026-09-30-ndl-classical-ocr-lane-20-book-pilot-written-and-4925.md",
+        "measured_on": "2026-09-30"
+      }
+    ],
+    "surya2": [
+      {
+        "basis": "compute",
+        "eur_per_page": 0.00094,
+        "hardware": "1 × Scaleway L4, €0.79/h, 4.3 s/page",
+        "quote": "| surya2-l4 | **−0.04pp** | [−0.62, +0.49] | €0.00094 | 4.3s (98% GPU) |",
+        "source": "scripts/eval/experiments/2026-09-03-bench-2-complete-can-self-hosted-ocr-replace-gemini.md",
+        "measured_on": "2026-09-03"
+      }
+    ]
+  }
+}

@@ -1,0 +1,2322 @@
+{
+ "issue": 5983,
+ "generated_by": "scripts/eval/build-ocr-pareto.mjs",
+ "measure": "accuracy: 1 − median character error rate against a typed reference, on pages every engine in the panel read",
+ "production_rule": "the engine scripts/lib/ocr-routing.mjs assigns to new pages in the script",
+ "cost_sources": {
+  "metered": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json",
+  "self_hosted": "scripts/eval/ocr-engine-gpu-costs.json",
+  "usd_per_eur": {
+   "value": 1.1636,
+   "derivation": "249 / 214: the same Hetzner GEX45 is priced at $249/month in scripts/eval/experiments/2026-10-03-open-engine-print-5660.md and at €214/month in scripts/eval/PREREGISTRATION-translation-student-5793.md"
+  }
+ },
+ "costs": {
+  "gemini-3-flash-preview": [
+   {
+    "charts": null,
+    "usd_per_1k": 2.709,
+    "basis": "metered",
+    "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
+    "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+   }
+  ],
+  "gemini-3.1-flash-lite": [
+   {
+    "charts": null,
+    "usd_per_1k": 1.279,
+    "basis": "metered",
+    "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+    "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+   }
+  ],
+  "paddleocr-vl-1.6": [
+   {
+    "charts": [
+     "chinese-manuscript",
+     "chinese-print"
+    ],
+    "usd_per_1k": 1.036,
+    "basis": "billed",
+    "detail": "1 × Scaleway L4 (pl-waw-2), €0.7875/h; whole billed rental, measured 2026-10-01",
+    "source": "scripts/eval/experiments/2026-10-01-chinese-ocr-cohort-5547.md"
+   },
+   {
+    "charts": [
+     "latin",
+     "english",
+     "latin-script-other",
+     "greek"
+    ],
+    "usd_per_1k": 0.091,
+    "basis": "compute",
+    "detail": "Hetzner GEX45 ($249/month), 0.96 s/page with 8 clients; inference time only, measured 2026-10-03",
+    "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md"
+   }
+  ],
+  "olmocr-2-7b-fp8": [
+   {
+    "charts": null,
+    "usd_per_1k": 0.26,
+    "basis": "compute",
+    "detail": "Hetzner GEX45 ($249/month), 2.71 s/page with 8 clients; inference time only, measured 2026-10-03",
+    "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md"
+   }
+  ],
+  "ndlkotenocr-v3": [
+   {
+    "charts": null,
+    "usd_per_1k": 1.178,
+    "basis": "billed",
+    "detail": "1 × Scaleway L4 (pl-waw-2); whole billed rental, measured 2026-09-30",
+    "source": "scripts/eval/experiments/2026-09-30-ndl-classical-ocr-lane-20-book-pilot-written-and-4925.md"
+   }
+  ],
+  "surya2": [
+   {
+    "charts": null,
+    "usd_per_1k": 1.094,
+    "basis": "compute",
+    "detail": "1 × Scaleway L4, €0.79/h, 4.3 s/page; inference time only, measured 2026-09-03",
+    "source": "scripts/eval/experiments/2026-09-03-bench-2-complete-can-self-hosted-ocr-replace-gemini.md"
+   }
+  ]
+ },
+ "charts": [
+  {
+   "id": "latin",
+   "title": "Latin print",
+   "production_engine": "gemini-3.1-flash-lite",
+   "production_label": "Gemini 3.1 Flash-Lite",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "n_pages": 158,
+     "n_books": 158,
+     "frontier": false,
+     "frontier_note": "too few for a frontier: 2 engines with a measured cost on these pages",
+     "references": [
+      {
+       "stratum": "latin-period-5126",
+       "reference": "Wikisource and corrected transcriptions matched to the leaf",
+       "pages": 82,
+       "date": "2026-10-04"
+      },
+      {
+       "stratum": "ref-ws",
+       "reference": "Wikisource transcriptions",
+       "pages": 53,
+       "date": "2026-09-16"
+      },
+      {
+       "stratum": "eebo-tcp-5488",
+       "reference": "EEBO-TCP keyed transcriptions",
+       "pages": 14,
+       "date": "2026-10-01"
+      },
+      {
+       "stratum": "ref-pinned",
+       "reference": "published e-texts pinned to the leaf",
+       "pages": 9,
+       "date": "2026-09-16"
+      }
+     ],
+     "date": "2026-10-04",
+     "files": [
+      "scripts/eval/results/benchmark/eebo-tcp-5488-2026-10-01.json",
+      "scripts/eval/results/benchmark/latin-period-5126-2026-10-04.json",
+      "scripts/eval/results/benchmark/ref-pinned-2026-09-16.json",
+      "scripts/eval/results/benchmark/ref-ws-2026-09-16.json"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "median_cer": 0.068,
+       "cer_ci95": [
+        0.061,
+        0.076
+       ],
+       "accuracy": 0.933,
+       "accuracy_ci95": [
+        0.924,
+        0.939
+       ],
+       "invented": {
+        "median": 0.15,
+        "n": 96
+       },
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "metered",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": false,
+       "median_cer": 0.056,
+       "cer_ci95": [
+        0.046,
+        0.062
+       ],
+       "accuracy": 0.944,
+       "accuracy_ci95": [
+        0.938,
+        0.954
+       ],
+       "invented": {
+        "median": 0.121,
+        "n": 96
+       },
+       "cost": {
+        "usd_per_1k": 2.709,
+        "basis": "metered",
+        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": []
+    },
+    {
+     "kind": "most-engines",
+     "n_pages": 28,
+     "n_books": 28,
+     "frontier": true,
+     "frontier_note": null,
+     "references": [
+      {
+       "stratum": "ref-ws",
+       "reference": "Wikisource transcriptions",
+       "pages": 28,
+       "date": "2026-10-03"
+      }
+     ],
+     "date": "2026-10-03",
+     "files": [
+      "scripts/eval/results/benchmark/ref-ws-2026-09-16.json",
+      "scripts/eval/results/open-engine-print-5660/scored-olmocr/ref-ws-2026-10-03.json",
+      "scripts/eval/results/open-engine-print-5660/scored/ref-ws-2026-10-03.json"
+     ],
+     "placed": [
+      {
+       "engine": "paddleocr-vl-1.6",
+       "label": "PaddleOCR-VL 1.6",
+       "production": false,
+       "median_cer": 0.021,
+       "cer_ci95": [
+        0.014,
+        0.034
+       ],
+       "accuracy": 0.98,
+       "accuracy_ci95": [
+        0.966,
+        0.986
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.091,
+        "basis": "compute",
+        "detail": "Hetzner GEX45 ($249/month), 0.96 s/page with 8 clients; inference time only, measured 2026-10-03",
+        "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "olmocr-2-7b-fp8",
+       "label": "olmOCR 2 7B",
+       "production": false,
+       "median_cer": 0.01,
+       "cer_ci95": [
+        0.008,
+        0.015
+       ],
+       "accuracy": 0.99,
+       "accuracy_ci95": [
+        0.985,
+        0.992
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.26,
+        "basis": "compute",
+        "detail": "Hetzner GEX45 ($249/month), 2.71 s/page with 8 clients; inference time only, measured 2026-10-03",
+        "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "surya2",
+       "label": "Surya 2",
+       "production": false,
+       "median_cer": 0.006,
+       "cer_ci95": [
+        0.003,
+        0.01
+       ],
+       "accuracy": 0.995,
+       "accuracy_ci95": [
+        0.99,
+        0.997
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 1.094,
+        "basis": "compute",
+        "detail": "1 × Scaleway L4, €0.79/h, 4.3 s/page; inference time only, measured 2026-09-03",
+        "source": "scripts/eval/experiments/2026-09-03-bench-2-complete-can-self-hosted-ocr-replace-gemini.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "median_cer": 0.003,
+       "cer_ci95": [
+        0.002,
+        0.006
+       ],
+       "accuracy": 0.997,
+       "accuracy_ci95": [
+        0.994,
+        0.998
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "metered",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": false,
+       "median_cer": 0.003,
+       "cer_ci95": [
+        0.001,
+        0.004
+       ],
+       "accuracy": 0.997,
+       "accuracy_ci95": [
+        0.996,
+        0.999
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 2.709,
+        "basis": "metered",
+        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "kraken-catmus",
+       "label": "Kraken (CATMuS)",
+       "production": false,
+       "median_cer": 0.005,
+       "cer_ci95": [
+        0.003,
+        0.007
+       ],
+       "accuracy": 0.995,
+       "accuracy_ci95": [
+        0.993,
+        0.997
+       ],
+       "invented": null,
+       "cost": null
+      },
+      {
+       "engine": "tesseract-lat",
+       "label": "Tesseract (lat)",
+       "production": false,
+       "median_cer": 0.04,
+       "cer_ci95": [
+        0.024,
+        0.067
+       ],
+       "accuracy": 0.96,
+       "accuracy_ci95": [
+        0.933,
+        0.976
+       ],
+       "invented": null,
+       "cost": null
+      }
+     ]
+    }
+   ],
+   "not_on_shared_pages": [],
+   "not_tested": [
+    "dots.mocr",
+    "MinerU",
+    "DeepSeek-OCR",
+    "Qwen3-VL (general)",
+    "Chandra",
+    "Mistral OCR",
+    "Claude (vision)",
+    "GPT (vision)",
+    "Google Cloud Vision"
+   ]
+  },
+  {
+   "id": "english",
+   "title": "Early English print",
+   "production_engine": "gemini-3.1-flash-lite",
+   "production_label": "Gemini 3.1 Flash-Lite",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "n_pages": 51,
+     "n_books": 51,
+     "frontier": true,
+     "frontier_note": null,
+     "references": [
+      {
+       "stratum": "eebo-tcp-5488",
+       "reference": "EEBO-TCP keyed transcriptions",
+       "pages": 51,
+       "date": "2026-10-03"
+      }
+     ],
+     "date": "2026-10-03",
+     "files": [
+      "scripts/eval/results/benchmark/eebo-tcp-5488-2026-10-01.json",
+      "scripts/eval/results/open-engine-print-5660/scored-olmocr/eebo-tcp-5488-2026-10-03.json",
+      "scripts/eval/results/open-engine-print-5660/scored/eebo-tcp-5488-2026-10-03.json"
+     ],
+     "placed": [
+      {
+       "engine": "paddleocr-vl-1.6",
+       "label": "PaddleOCR-VL 1.6",
+       "production": false,
+       "median_cer": 0.064,
+       "cer_ci95": [
+        0.057,
+        0.075
+       ],
+       "accuracy": 0.936,
+       "accuracy_ci95": [
+        0.925,
+        0.943
+       ],
+       "invented": {
+        "median": 0.225,
+        "n": 51
+       },
+       "cost": {
+        "usd_per_1k": 0.091,
+        "basis": "compute",
+        "detail": "Hetzner GEX45 ($249/month), 0.96 s/page with 8 clients; inference time only, measured 2026-10-03",
+        "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "olmocr-2-7b-fp8",
+       "label": "olmOCR 2 7B",
+       "production": false,
+       "median_cer": 0.039,
+       "cer_ci95": [
+        0.031,
+        0.048
+       ],
+       "accuracy": 0.961,
+       "accuracy_ci95": [
+        0.952,
+        0.969
+       ],
+       "invented": {
+        "median": 0.043,
+        "n": 51
+       },
+       "cost": {
+        "usd_per_1k": 0.26,
+        "basis": "compute",
+        "detail": "Hetzner GEX45 ($249/month), 2.71 s/page with 8 clients; inference time only, measured 2026-10-03",
+        "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "median_cer": 0.052,
+       "cer_ci95": [
+        0.039,
+        0.06
+       ],
+       "accuracy": 0.948,
+       "accuracy_ci95": [
+        0.94,
+        0.961
+       ],
+       "invented": {
+        "median": 0.117,
+        "n": 51
+       },
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "metered",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": false,
+       "median_cer": 0.034,
+       "cer_ci95": [
+        0.027,
+        0.043
+       ],
+       "accuracy": 0.966,
+       "accuracy_ci95": [
+        0.957,
+        0.973
+       ],
+       "invented": {
+        "median": 0.021,
+        "n": 51
+       },
+       "cost": {
+        "usd_per_1k": 2.709,
+        "basis": "metered",
+        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": true
+      }
+     ],
+     "no_cost": []
+    }
+   ],
+   "not_on_shared_pages": [],
+   "not_tested": [
+    "dots.mocr",
+    "MinerU",
+    "DeepSeek-OCR",
+    "Qwen3-VL (general)",
+    "Chandra",
+    "Mistral OCR",
+    "Claude (vision)",
+    "GPT (vision)",
+    "Google Cloud Vision"
+   ]
+  },
+  {
+   "id": "latin-script-other",
+   "title": "German, French and other Latin-script print",
+   "production_engine": "gemini-3.1-flash-lite",
+   "production_label": "Gemini 3.1 Flash-Lite",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "n_pages": 23,
+     "n_books": 23,
+     "frontier": true,
+     "frontier_note": null,
+     "references": [
+      {
+       "stratum": "ref-ws",
+       "reference": "Wikisource transcriptions",
+       "pages": 23,
+       "date": "2026-10-03"
+      }
+     ],
+     "date": "2026-10-03",
+     "files": [
+      "scripts/eval/results/benchmark/ref-ws-2026-09-16.json",
+      "scripts/eval/results/open-engine-print-5660/scored-olmocr/ref-ws-2026-10-03.json",
+      "scripts/eval/results/open-engine-print-5660/scored/ref-ws-2026-10-03.json"
+     ],
+     "placed": [
+      {
+       "engine": "paddleocr-vl-1.6",
+       "label": "PaddleOCR-VL 1.6",
+       "production": false,
+       "median_cer": 0.051,
+       "cer_ci95": [
+        0.024,
+        0.069
+       ],
+       "accuracy": 0.949,
+       "accuracy_ci95": [
+        0.931,
+        0.976
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.091,
+        "basis": "compute",
+        "detail": "Hetzner GEX45 ($249/month), 0.96 s/page with 8 clients; inference time only, measured 2026-10-03",
+        "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "olmocr-2-7b-fp8",
+       "label": "olmOCR 2 7B",
+       "production": false,
+       "median_cer": 0.014,
+       "cer_ci95": [
+        0.009,
+        0.029
+       ],
+       "accuracy": 0.986,
+       "accuracy_ci95": [
+        0.971,
+        0.991
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.26,
+        "basis": "compute",
+        "detail": "Hetzner GEX45 ($249/month), 2.71 s/page with 8 clients; inference time only, measured 2026-10-03",
+        "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "surya2",
+       "label": "Surya 2",
+       "production": false,
+       "median_cer": 0.02,
+       "cer_ci95": [
+        0.013,
+        0.041
+       ],
+       "accuracy": 0.98,
+       "accuracy_ci95": [
+        0.959,
+        0.987
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 1.094,
+        "basis": "compute",
+        "detail": "1 × Scaleway L4, €0.79/h, 4.3 s/page; inference time only, measured 2026-09-03",
+        "source": "scripts/eval/experiments/2026-09-03-bench-2-complete-can-self-hosted-ocr-replace-gemini.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "median_cer": 0.006,
+       "cer_ci95": [
+        0.003,
+        0.008
+       ],
+       "accuracy": 0.994,
+       "accuracy_ci95": [
+        0.992,
+        0.997
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "metered",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": false,
+       "median_cer": 0.002,
+       "cer_ci95": [
+        0.001,
+        0.004
+       ],
+       "accuracy": 0.998,
+       "accuracy_ci95": [
+        0.996,
+        0.999
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 2.709,
+        "basis": "metered",
+        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": true
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "tesseract-frk",
+       "label": "Tesseract (frk)",
+       "production": false,
+       "median_cer": 0.039,
+       "cer_ci95": [
+        0.03,
+        0.061
+       ],
+       "accuracy": 0.961,
+       "accuracy_ci95": [
+        0.939,
+        0.97
+       ],
+       "invented": null,
+       "cost": null
+      }
+     ]
+    },
+    {
+     "kind": "most-engines",
+     "n_pages": 6,
+     "n_books": 6,
+     "frontier": true,
+     "frontier_note": null,
+     "references": [
+      {
+       "stratum": "ref-ws",
+       "reference": "Wikisource transcriptions",
+       "pages": 6,
+       "date": "2026-10-03"
+      }
+     ],
+     "date": "2026-10-03",
+     "files": [
+      "scripts/eval/results/benchmark/ref-ws-2026-09-16.json",
+      "scripts/eval/results/open-engine-print-5660/scored-olmocr/ref-ws-2026-10-03.json",
+      "scripts/eval/results/open-engine-print-5660/scored/ref-ws-2026-10-03.json"
+     ],
+     "placed": [
+      {
+       "engine": "paddleocr-vl-1.6",
+       "label": "PaddleOCR-VL 1.6",
+       "production": false,
+       "median_cer": 0.033,
+       "cer_ci95": [
+        0.012,
+        0.071
+       ],
+       "accuracy": 0.967,
+       "accuracy_ci95": [
+        0.929,
+        0.988
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.091,
+        "basis": "compute",
+        "detail": "Hetzner GEX45 ($249/month), 0.96 s/page with 8 clients; inference time only, measured 2026-10-03",
+        "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "olmocr-2-7b-fp8",
+       "label": "olmOCR 2 7B",
+       "production": false,
+       "median_cer": 0.008,
+       "cer_ci95": [
+        0.005,
+        0.022
+       ],
+       "accuracy": 0.992,
+       "accuracy_ci95": [
+        0.978,
+        0.995
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.26,
+        "basis": "compute",
+        "detail": "Hetzner GEX45 ($249/month), 2.71 s/page with 8 clients; inference time only, measured 2026-10-03",
+        "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "surya2",
+       "label": "Surya 2",
+       "production": false,
+       "median_cer": 0.015,
+       "cer_ci95": [
+        0.01,
+        0.031
+       ],
+       "accuracy": 0.985,
+       "accuracy_ci95": [
+        0.969,
+        0.99
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 1.094,
+        "basis": "compute",
+        "detail": "1 × Scaleway L4, €0.79/h, 4.3 s/page; inference time only, measured 2026-09-03",
+        "source": "scripts/eval/experiments/2026-09-03-bench-2-complete-can-self-hosted-ocr-replace-gemini.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "median_cer": 0.002,
+       "cer_ci95": [
+        0,
+        0.02
+       ],
+       "accuracy": 0.998,
+       "accuracy_ci95": [
+        0.98,
+        1
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "metered",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": false,
+       "median_cer": 0,
+       "cer_ci95": [
+        0,
+        0.018
+       ],
+       "accuracy": 1,
+       "accuracy_ci95": [
+        0.982,
+        1
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 2.709,
+        "basis": "metered",
+        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": true
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "kraken-austriannewspapers",
+       "label": "Kraken (Austrian newspapers)",
+       "production": false,
+       "median_cer": 0.062,
+       "cer_ci95": [
+        0.021,
+        0.084
+       ],
+       "accuracy": 0.938,
+       "accuracy_ci95": [
+        0.916,
+        0.979
+       ],
+       "invented": null,
+       "cost": null
+      },
+      {
+       "engine": "tesseract-deu",
+       "label": "Tesseract (deu)",
+       "production": false,
+       "median_cer": 0.096,
+       "cer_ci95": [
+        0.065,
+        0.11
+       ],
+       "accuracy": 0.905,
+       "accuracy_ci95": [
+        0.89,
+        0.935
+       ],
+       "invented": null,
+       "cost": null
+      },
+      {
+       "engine": "tesseract-frk",
+       "label": "Tesseract (frk)",
+       "production": false,
+       "median_cer": 0.047,
+       "cer_ci95": [
+        0.028,
+        0.105
+       ],
+       "accuracy": 0.953,
+       "accuracy_ci95": [
+        0.895,
+        0.972
+       ],
+       "invented": null,
+       "cost": null
+      }
+     ]
+    }
+   ],
+   "not_on_shared_pages": [
+    {
+     "engine": "kraken-catmus",
+     "label": "Kraken (CATMuS)",
+     "pages": 8
+    }
+   ],
+   "not_tested": [
+    "MinerU",
+    "DeepSeek-OCR",
+    "Qwen3-VL (general)",
+    "Chandra",
+    "Mistral OCR",
+    "Claude (vision)",
+    "GPT (vision)",
+    "Google Cloud Vision"
+   ]
+  },
+  {
+   "id": "greek",
+   "title": "Greek",
+   "production_engine": "gemini-3-flash-preview",
+   "production_label": "Gemini 3 Flash",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "n_pages": 127,
+     "n_books": 127,
+     "frontier": true,
+     "frontier_note": null,
+     "references": [
+      {
+       "stratum": "greek-ext",
+       "reference": "First1KGreek / Perseus / el.wikisource TEI",
+       "pages": 95,
+       "date": "2026-10-03"
+      },
+      {
+       "stratum": "ref-ws",
+       "reference": "Wikisource transcriptions",
+       "pages": 13,
+       "date": "2026-10-03"
+      },
+      {
+       "stratum": "greek",
+       "reference": "First1KGreek / Perseus TEI",
+       "pages": 11,
+       "date": "2026-10-03"
+      },
+      {
+       "stratum": "greek-ext2",
+       "reference": "First1KGreek / Perseus / el.wikisource TEI",
+       "pages": 8,
+       "date": "2026-10-03"
+      }
+     ],
+     "date": "2026-10-03",
+     "files": [
+      "scripts/eval/results/benchmark/greek-2026-09-21.json",
+      "scripts/eval/results/benchmark/greek-ext-2026-09-21.json",
+      "scripts/eval/results/benchmark/greek-ext2-2026-09-21.json",
+      "scripts/eval/results/benchmark/ref-ws-2026-09-16.json",
+      "scripts/eval/results/open-engine-print-5660/scored-olmocr/greek-2026-10-03.json",
+      "scripts/eval/results/open-engine-print-5660/scored-olmocr/greek-ext-2026-10-03.json",
+      "scripts/eval/results/open-engine-print-5660/scored-olmocr/greek-ext2-2026-10-03.json",
+      "scripts/eval/results/open-engine-print-5660/scored-olmocr/ref-ws-2026-10-03.json",
+      "scripts/eval/results/open-engine-print-5660/scored/greek-2026-10-03.json",
+      "scripts/eval/results/open-engine-print-5660/scored/greek-ext-2026-10-03.json",
+      "scripts/eval/results/open-engine-print-5660/scored/greek-ext2-2026-10-03.json",
+      "scripts/eval/results/open-engine-print-5660/scored/ref-ws-2026-10-03.json"
+     ],
+     "placed": [
+      {
+       "engine": "paddleocr-vl-1.6",
+       "label": "PaddleOCR-VL 1.6",
+       "production": false,
+       "median_cer": 0.48,
+       "cer_ci95": [
+        0.397,
+        0.528
+       ],
+       "accuracy": 0.52,
+       "accuracy_ci95": [
+        0.472,
+        0.603
+       ],
+       "invented": {
+        "median": 0.87,
+        "n": 114
+       },
+       "cost": {
+        "usd_per_1k": 0.091,
+        "basis": "compute",
+        "detail": "Hetzner GEX45 ($249/month), 0.96 s/page with 8 clients; inference time only, measured 2026-10-03",
+        "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "olmocr-2-7b-fp8",
+       "label": "olmOCR 2 7B",
+       "production": false,
+       "median_cer": 0.436,
+       "cer_ci95": [
+        0.341,
+        0.508
+       ],
+       "accuracy": 0.564,
+       "accuracy_ci95": [
+        0.492,
+        0.659
+       ],
+       "invented": {
+        "median": 0.726,
+        "n": 104
+       },
+       "cost": {
+        "usd_per_1k": 0.26,
+        "basis": "compute",
+        "detail": "Hetzner GEX45 ($249/month), 2.71 s/page with 8 clients; inference time only, measured 2026-10-03",
+        "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": false,
+       "median_cer": 0.122,
+       "cer_ci95": [
+        0.107,
+        0.159
+       ],
+       "accuracy": 0.878,
+       "accuracy_ci95": [
+        0.841,
+        0.893
+       ],
+       "invented": {
+        "median": 0.244,
+        "n": 114
+       },
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "metered",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "median_cer": 0.077,
+       "cer_ci95": [
+        0.065,
+        0.094
+       ],
+       "accuracy": 0.923,
+       "accuracy_ci95": [
+        0.906,
+        0.935
+       ],
+       "invented": {
+        "median": 0.145,
+        "n": 114
+       },
+       "cost": {
+        "usd_per_1k": 2.709,
+        "basis": "metered",
+        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": true
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "kraken-greek-cllg",
+       "label": "Kraken (CLLG Greek)",
+       "production": false,
+       "median_cer": 0.079,
+       "cer_ci95": [
+        0.068,
+        0.091
+       ],
+       "accuracy": 0.921,
+       "accuracy_ci95": [
+        0.909,
+        0.932
+       ],
+       "invented": {
+        "median": 0.231,
+        "n": 114
+       },
+       "cost": null
+      }
+     ]
+    },
+    {
+     "kind": "most-engines",
+     "n_pages": 11,
+     "n_books": 11,
+     "frontier": true,
+     "frontier_note": null,
+     "references": [
+      {
+       "stratum": "greek",
+       "reference": "First1KGreek / Perseus TEI",
+       "pages": 11,
+       "date": "2026-10-03"
+      }
+     ],
+     "date": "2026-10-03",
+     "files": [
+      "scripts/eval/results/benchmark/greek-2026-09-21.json",
+      "scripts/eval/results/open-engine-print-5660/scored-olmocr/greek-2026-10-03.json",
+      "scripts/eval/results/open-engine-print-5660/scored/greek-2026-10-03.json"
+     ],
+     "placed": [
+      {
+       "engine": "paddleocr-vl-1.6",
+       "label": "PaddleOCR-VL 1.6",
+       "production": false,
+       "median_cer": 0.482,
+       "cer_ci95": [
+        0.139,
+        0.611
+       ],
+       "accuracy": 0.518,
+       "accuracy_ci95": [
+        0.389,
+        0.861
+       ],
+       "invented": {
+        "median": 0.5,
+        "n": 11
+       },
+       "cost": {
+        "usd_per_1k": 0.091,
+        "basis": "compute",
+        "detail": "Hetzner GEX45 ($249/month), 0.96 s/page with 8 clients; inference time only, measured 2026-10-03",
+        "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "olmocr-2-7b-fp8",
+       "label": "olmOCR 2 7B",
+       "production": false,
+       "median_cer": 0.48,
+       "cer_ci95": [
+        0.157,
+        0.591
+       ],
+       "accuracy": 0.52,
+       "accuracy_ci95": [
+        0.409,
+        0.843
+       ],
+       "invented": {
+        "median": 0.68,
+        "n": 10
+       },
+       "cost": {
+        "usd_per_1k": 0.26,
+        "basis": "compute",
+        "detail": "Hetzner GEX45 ($249/month), 2.71 s/page with 8 clients; inference time only, measured 2026-10-03",
+        "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "surya2",
+       "label": "Surya 2",
+       "production": false,
+       "median_cer": 0.324,
+       "cer_ci95": [
+        0.078,
+        0.384
+       ],
+       "accuracy": 0.676,
+       "accuracy_ci95": [
+        0.616,
+        0.922
+       ],
+       "invented": {
+        "median": 0.351,
+        "n": 11
+       },
+       "cost": {
+        "usd_per_1k": 1.094,
+        "basis": "compute",
+        "detail": "1 × Scaleway L4, €0.79/h, 4.3 s/page; inference time only, measured 2026-09-03",
+        "source": "scripts/eval/experiments/2026-09-03-bench-2-complete-can-self-hosted-ocr-replace-gemini.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": false,
+       "median_cer": 0.171,
+       "cer_ci95": [
+        0.064,
+        0.196
+       ],
+       "accuracy": 0.829,
+       "accuracy_ci95": [
+        0.804,
+        0.936
+       ],
+       "invented": {
+        "median": 0.178,
+        "n": 11
+       },
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "metered",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "median_cer": 0.115,
+       "cer_ci95": [
+        0.061,
+        0.161
+       ],
+       "accuracy": 0.885,
+       "accuracy_ci95": [
+        0.839,
+        0.939
+       ],
+       "invented": {
+        "median": 0.157,
+        "n": 11
+       },
+       "cost": {
+        "usd_per_1k": 2.709,
+        "basis": "metered",
+        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": true
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "cllg-qwen3vl-8b",
+       "label": "Qwen3-VL 8B (CLLG)",
+       "production": false,
+       "median_cer": 0.306,
+       "cer_ci95": [
+        0.06,
+        0.394
+       ],
+       "accuracy": 0.694,
+       "accuracy_ci95": [
+        0.606,
+        0.94
+       ],
+       "invented": {
+        "median": 0.219,
+        "n": 11
+       },
+       "cost": null
+      },
+      {
+       "engine": "dots-mocr",
+       "label": "dots.mocr",
+       "production": false,
+       "median_cer": 0.313,
+       "cer_ci95": [
+        0.036,
+        0.359
+       ],
+       "accuracy": 0.687,
+       "accuracy_ci95": [
+        0.641,
+        0.964
+       ],
+       "invented": {
+        "median": 0.203,
+        "n": 11
+       },
+       "cost": null
+      },
+      {
+       "engine": "kraken-greek-cllg",
+       "label": "Kraken (CLLG Greek)",
+       "production": false,
+       "median_cer": 0.087,
+       "cer_ci95": [
+        0.066,
+        0.156
+       ],
+       "accuracy": 0.913,
+       "accuracy_ci95": [
+        0.844,
+        0.934
+       ],
+       "invented": {
+        "median": 0.205,
+        "n": 11
+       },
+       "cost": null
+      },
+      {
+       "engine": "tesseract-grc",
+       "label": "Tesseract (grc)",
+       "production": false,
+       "median_cer": 0.61,
+       "cer_ci95": [
+        0.379,
+        2.267
+       ],
+       "accuracy": 0.39,
+       "accuracy_ci95": [
+        -1.267,
+        0.621
+       ],
+       "invented": {
+        "median": 0.765,
+        "n": 11
+       },
+       "cost": null
+      }
+     ]
+    }
+   ],
+   "not_on_shared_pages": [],
+   "not_tested": [
+    "MinerU",
+    "DeepSeek-OCR",
+    "Qwen3-VL (general)",
+    "Chandra",
+    "Mistral OCR",
+    "Claude (vision)",
+    "GPT (vision)",
+    "Google Cloud Vision"
+   ]
+  },
+  {
+   "id": "chinese-manuscript",
+   "title": "Chinese manuscript",
+   "production_engine": "gemini-3.1-flash-lite",
+   "production_label": "Gemini 3.1 Flash-Lite",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "n_pages": 503,
+     "n_books": 503,
+     "frontier": true,
+     "frontier_note": null,
+     "references": [
+      {
+       "stratum": "chinese-cohort-5547",
+       "reference": "Kanripo Siku Quanshu witnesses",
+       "pages": 432,
+       "date": "2026-10-01"
+      },
+      {
+       "stratum": "chinese-ext",
+       "reference": "Kanripo (Siku Quanshu) and CBETA",
+       "pages": 50,
+       "date": "2026-09-18"
+      },
+      {
+       "stratum": "chinese",
+       "reference": "Kanripo (Siku Quanshu) and CBETA",
+       "pages": 21,
+       "date": "2026-09-18"
+      }
+     ],
+     "date": "2026-10-01",
+     "files": [
+      "scripts/eval/results/benchmark/chinese-2026-09-18.json",
+      "scripts/eval/results/benchmark/chinese-cohort-5547-2026-10-01.json",
+      "scripts/eval/results/benchmark/chinese-ext-2026-09-18.json"
+     ],
+     "placed": [
+      {
+       "engine": "paddleocr-vl-1.6",
+       "label": "PaddleOCR-VL 1.6",
+       "production": false,
+       "median_cer": 0.183,
+       "cer_ci95": [
+        0.167,
+        0.196
+       ],
+       "accuracy": 0.817,
+       "accuracy_ci95": [
+        0.804,
+        0.833
+       ],
+       "invented": {
+        "median": 0.123,
+        "n": 502
+       },
+       "cost": {
+        "usd_per_1k": 1.036,
+        "basis": "billed",
+        "detail": "1 × Scaleway L4 (pl-waw-2), €0.7875/h; whole billed rental, measured 2026-10-01",
+        "source": "scripts/eval/experiments/2026-10-01-chinese-ocr-cohort-5547.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "median_cer": 0.258,
+       "cer_ci95": [
+        0.239,
+        0.28
+       ],
+       "accuracy": 0.742,
+       "accuracy_ci95": [
+        0.72,
+        0.761
+       ],
+       "invented": {
+        "median": 0.188,
+        "n": 503
+       },
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "metered",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": false,
+       "median_cer": 0.202,
+       "cer_ci95": [
+        0.184,
+        0.218
+       ],
+       "accuracy": 0.798,
+       "accuracy_ci95": [
+        0.782,
+        0.816
+       ],
+       "invented": {
+        "median": 0.14,
+        "n": 503
+       },
+       "cost": {
+        "usd_per_1k": 2.709,
+        "basis": "metered",
+        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": []
+    },
+    {
+     "kind": "most-engines",
+     "n_pages": 21,
+     "n_books": 21,
+     "frontier": true,
+     "frontier_note": null,
+     "references": [
+      {
+       "stratum": "chinese",
+       "reference": "Kanripo (Siku Quanshu) and CBETA",
+       "pages": 21,
+       "date": "2026-09-18"
+      }
+     ],
+     "date": "2026-09-18",
+     "files": [
+      "scripts/eval/results/benchmark/chinese-2026-09-18.json"
+     ],
+     "placed": [
+      {
+       "engine": "paddleocr-vl-1.6",
+       "label": "PaddleOCR-VL 1.6",
+       "production": false,
+       "median_cer": 0.144,
+       "cer_ci95": [
+        0.129,
+        0.195
+       ],
+       "accuracy": 0.856,
+       "accuracy_ci95": [
+        0.805,
+        0.871
+       ],
+       "invented": {
+        "median": 0.138,
+        "n": 21
+       },
+       "cost": {
+        "usd_per_1k": 1.036,
+        "basis": "billed",
+        "detail": "1 × Scaleway L4 (pl-waw-2), €0.7875/h; whole billed rental, measured 2026-10-01",
+        "source": "scripts/eval/experiments/2026-10-01-chinese-ocr-cohort-5547.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "surya2",
+       "label": "Surya 2",
+       "production": false,
+       "median_cer": 0.174,
+       "cer_ci95": [
+        0.153,
+        0.276
+       ],
+       "accuracy": 0.826,
+       "accuracy_ci95": [
+        0.724,
+        0.847
+       ],
+       "invented": {
+        "median": 0.189,
+        "n": 21
+       },
+       "cost": {
+        "usd_per_1k": 1.094,
+        "basis": "compute",
+        "detail": "1 × Scaleway L4, €0.79/h, 4.3 s/page; inference time only, measured 2026-09-03",
+        "source": "scripts/eval/experiments/2026-09-03-bench-2-complete-can-self-hosted-ocr-replace-gemini.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "ndlkotenocr-v3",
+       "label": "NDL Koten OCR v3",
+       "production": false,
+       "median_cer": 0.234,
+       "cer_ci95": [
+        0.201,
+        0.259
+       ],
+       "accuracy": 0.766,
+       "accuracy_ci95": [
+        0.741,
+        0.799
+       ],
+       "invented": {
+        "median": 0.325,
+        "n": 21
+       },
+       "cost": {
+        "usd_per_1k": 1.178,
+        "basis": "billed",
+        "detail": "1 × Scaleway L4 (pl-waw-2); whole billed rental, measured 2026-09-30",
+        "source": "scripts/eval/experiments/2026-09-30-ndl-classical-ocr-lane-20-book-pilot-written-and-4925.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "median_cer": 0.174,
+       "cer_ci95": [
+        0.138,
+        0.284
+       ],
+       "accuracy": 0.826,
+       "accuracy_ci95": [
+        0.716,
+        0.862
+       ],
+       "invented": {
+        "median": 0.175,
+        "n": 21
+       },
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "metered",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": false,
+       "median_cer": 0.151,
+       "cer_ci95": [
+        0.13,
+        0.185
+       ],
+       "accuracy": 0.849,
+       "accuracy_ci95": [
+        0.815,
+        0.87
+       ],
+       "invented": {
+        "median": 0.139,
+        "n": 21
+       },
+       "cost": {
+        "usd_per_1k": 2.709,
+        "basis": "metered",
+        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "dots-mocr",
+       "label": "dots.mocr",
+       "production": false,
+       "median_cer": 0.172,
+       "cer_ci95": [
+        0.129,
+        0.203
+       ],
+       "accuracy": 0.828,
+       "accuracy_ci95": [
+        0.797,
+        0.871
+       ],
+       "invented": {
+        "median": 0.15,
+        "n": 21
+       },
+       "cost": null
+      },
+      {
+       "engine": "tesseract-chi_tra_vert",
+       "label": "Tesseract (chi_tra_vert)",
+       "production": false,
+       "median_cer": 0.722,
+       "cer_ci95": [
+        0.667,
+        0.799
+       ],
+       "accuracy": 0.278,
+       "accuracy_ci95": [
+        0.201,
+        0.333
+       ],
+       "invented": {
+        "median": 0.92,
+        "n": 21
+       },
+       "cost": null
+      }
+     ]
+    }
+   ],
+   "not_on_shared_pages": [],
+   "not_tested": [
+    "olmOCR 2 7B",
+    "MinerU",
+    "DeepSeek-OCR",
+    "Qwen3-VL (general)",
+    "Chandra",
+    "Mistral OCR",
+    "Claude (vision)",
+    "GPT (vision)",
+    "Google Cloud Vision"
+   ]
+  },
+  {
+   "id": "chinese-print",
+   "title": "Chinese print (woodblock and type)",
+   "production_engine": "gemini-3.1-flash-lite",
+   "production_label": "Gemini 3.1 Flash-Lite",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "n_pages": 26,
+     "n_books": 26,
+     "frontier": true,
+     "frontier_note": null,
+     "references": [
+      {
+       "stratum": "chinese-ext",
+       "reference": "Kanripo (Siku Quanshu) and CBETA",
+       "pages": 13,
+       "date": "2026-09-18"
+      },
+      {
+       "stratum": "chinese",
+       "reference": "Kanripo (Siku Quanshu) and CBETA",
+       "pages": 7,
+       "date": "2026-09-18"
+      },
+      {
+       "stratum": "chinese-cohort-5547",
+       "reference": "Kanripo Siku Quanshu witnesses",
+       "pages": 6,
+       "date": "2026-10-01"
+      }
+     ],
+     "date": "2026-10-01",
+     "files": [
+      "scripts/eval/results/benchmark/chinese-2026-09-18.json",
+      "scripts/eval/results/benchmark/chinese-cohort-5547-2026-10-01.json",
+      "scripts/eval/results/benchmark/chinese-ext-2026-09-18.json"
+     ],
+     "placed": [
+      {
+       "engine": "paddleocr-vl-1.6",
+       "label": "PaddleOCR-VL 1.6",
+       "production": false,
+       "median_cer": 0.271,
+       "cer_ci95": [
+        0.175,
+        0.364
+       ],
+       "accuracy": 0.729,
+       "accuracy_ci95": [
+        0.636,
+        0.825
+       ],
+       "invented": {
+        "median": 0.122,
+        "n": 26
+       },
+       "cost": {
+        "usd_per_1k": 1.036,
+        "basis": "billed",
+        "detail": "1 × Scaleway L4 (pl-waw-2), €0.7875/h; whole billed rental, measured 2026-10-01",
+        "source": "scripts/eval/experiments/2026-10-01-chinese-ocr-cohort-5547.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "median_cer": 0.291,
+       "cer_ci95": [
+        0.18,
+        0.363
+       ],
+       "accuracy": 0.71,
+       "accuracy_ci95": [
+        0.637,
+        0.82
+       ],
+       "invented": {
+        "median": 0.141,
+        "n": 26
+       },
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "metered",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": false,
+       "median_cer": 0.275,
+       "cer_ci95": [
+        0.186,
+        0.364
+       ],
+       "accuracy": 0.726,
+       "accuracy_ci95": [
+        0.636,
+        0.814
+       ],
+       "invented": {
+        "median": 0.102,
+        "n": 26
+       },
+       "cost": {
+        "usd_per_1k": 2.709,
+        "basis": "metered",
+        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": []
+    },
+    {
+     "kind": "most-engines",
+     "n_pages": 7,
+     "n_books": 7,
+     "frontier": true,
+     "frontier_note": null,
+     "references": [
+      {
+       "stratum": "chinese",
+       "reference": "Kanripo (Siku Quanshu) and CBETA",
+       "pages": 7,
+       "date": "2026-09-18"
+      }
+     ],
+     "date": "2026-09-18",
+     "files": [
+      "scripts/eval/results/benchmark/chinese-2026-09-18.json"
+     ],
+     "placed": [
+      {
+       "engine": "paddleocr-vl-1.6",
+       "label": "PaddleOCR-VL 1.6",
+       "production": false,
+       "median_cer": 0.273,
+       "cer_ci95": [
+        0.129,
+        0.377
+       ],
+       "accuracy": 0.727,
+       "accuracy_ci95": [
+        0.623,
+        0.871
+       ],
+       "invented": {
+        "median": 0.082,
+        "n": 7
+       },
+       "cost": {
+        "usd_per_1k": 1.036,
+        "basis": "billed",
+        "detail": "1 × Scaleway L4 (pl-waw-2), €0.7875/h; whole billed rental, measured 2026-10-01",
+        "source": "scripts/eval/experiments/2026-10-01-chinese-ocr-cohort-5547.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "surya2",
+       "label": "Surya 2",
+       "production": false,
+       "median_cer": 0.28,
+       "cer_ci95": [
+        0.101,
+        0.386
+       ],
+       "accuracy": 0.72,
+       "accuracy_ci95": [
+        0.614,
+        0.899
+       ],
+       "invented": {
+        "median": 0.085,
+        "n": 7
+       },
+       "cost": {
+        "usd_per_1k": 1.094,
+        "basis": "compute",
+        "detail": "1 × Scaleway L4, €0.79/h, 4.3 s/page; inference time only, measured 2026-09-03",
+        "source": "scripts/eval/experiments/2026-09-03-bench-2-complete-can-self-hosted-ocr-replace-gemini.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "ndlkotenocr-v3",
+       "label": "NDL Koten OCR v3",
+       "production": false,
+       "median_cer": 0.506,
+       "cer_ci95": [
+        0.215,
+        0.937
+       ],
+       "accuracy": 0.494,
+       "accuracy_ci95": [
+        0.063,
+        0.785
+       ],
+       "invented": {
+        "median": 0.377,
+        "n": 7
+       },
+       "cost": {
+        "usd_per_1k": 1.178,
+        "basis": "billed",
+        "detail": "1 × Scaleway L4 (pl-waw-2); whole billed rental, measured 2026-09-30",
+        "source": "scripts/eval/experiments/2026-09-30-ndl-classical-ocr-lane-20-book-pilot-written-and-4925.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "median_cer": 0.276,
+       "cer_ci95": [
+        0.145,
+        0.384
+       ],
+       "accuracy": 0.724,
+       "accuracy_ci95": [
+        0.616,
+        0.855
+       ],
+       "invented": {
+        "median": 0.094,
+        "n": 7
+       },
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "metered",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": false,
+       "median_cer": 0.273,
+       "cer_ci95": [
+        0.113,
+        0.377
+       ],
+       "accuracy": 0.727,
+       "accuracy_ci95": [
+        0.623,
+        0.887
+       ],
+       "invented": {
+        "median": 0.068,
+        "n": 7
+       },
+       "cost": {
+        "usd_per_1k": 2.709,
+        "basis": "metered",
+        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "dots-mocr",
+       "label": "dots.mocr",
+       "production": false,
+       "median_cer": 0.309,
+       "cer_ci95": [
+        0.102,
+        0.462
+       ],
+       "accuracy": 0.691,
+       "accuracy_ci95": [
+        0.538,
+        0.898
+       ],
+       "invented": {
+        "median": 0.071,
+        "n": 7
+       },
+       "cost": null
+      },
+      {
+       "engine": "tesseract-chi_tra_vert",
+       "label": "Tesseract (chi_tra_vert)",
+       "production": false,
+       "median_cer": 0.898,
+       "cer_ci95": [
+        0.463,
+        0.936
+       ],
+       "accuracy": 0.102,
+       "accuracy_ci95": [
+        0.064,
+        0.537
+       ],
+       "invented": {
+        "median": 0.793,
+        "n": 7
+       },
+       "cost": null
+      }
+     ]
+    }
+   ],
+   "not_on_shared_pages": [],
+   "not_tested": [
+    "olmOCR 2 7B",
+    "MinerU",
+    "DeepSeek-OCR",
+    "Qwen3-VL (general)",
+    "Chandra",
+    "Mistral OCR",
+    "Claude (vision)",
+    "GPT (vision)",
+    "Google Cloud Vision"
+   ]
+  },
+  {
+   "id": "armenian",
+   "title": "Armenian",
+   "production_engine": "gemini-3.1-flash-lite",
+   "production_label": "Gemini 3.1 Flash-Lite",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "n_pages": 5,
+     "n_books": 5,
+     "frontier": true,
+     "frontier_note": null,
+     "references": [
+      {
+       "stratum": "ref-pinned",
+       "reference": "published e-texts pinned to the leaf",
+       "pages": 5,
+       "date": "2026-09-16"
+      }
+     ],
+     "date": "2026-09-16",
+     "files": [
+      "scripts/eval/results/benchmark/ref-pinned-2026-09-16.json"
+     ],
+     "placed": [
+      {
+       "engine": "surya2",
+       "label": "Surya 2",
+       "production": false,
+       "median_cer": 0.038,
+       "cer_ci95": [
+        0.023,
+        0.111
+       ],
+       "accuracy": 0.962,
+       "accuracy_ci95": [
+        0.889,
+        0.977
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 1.094,
+        "basis": "compute",
+        "detail": "1 × Scaleway L4, €0.79/h, 4.3 s/page; inference time only, measured 2026-09-03",
+        "source": "scripts/eval/experiments/2026-09-03-bench-2-complete-can-self-hosted-ocr-replace-gemini.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "median_cer": 0.029,
+       "cer_ci95": [
+        0.007,
+        0.042
+       ],
+       "accuracy": 0.971,
+       "accuracy_ci95": [
+        0.958,
+        0.993
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "metered",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": false,
+       "median_cer": 0.007,
+       "cer_ci95": [
+        0.004,
+        0.039
+       ],
+       "accuracy": 0.993,
+       "accuracy_ci95": [
+        0.961,
+        0.996
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 2.709,
+        "basis": "metered",
+        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": true
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "tesseract-hye_calfa",
+       "label": "Tesseract (hye, Calfa)",
+       "production": false,
+       "median_cer": 0.039,
+       "cer_ci95": [
+        0.016,
+        0.165
+       ],
+       "accuracy": 0.961,
+       "accuracy_ci95": [
+        0.835,
+        0.984
+       ],
+       "invented": null,
+       "cost": null
+      }
+     ]
+    }
+   ],
+   "not_on_shared_pages": [],
+   "not_tested": [
+    "PaddleOCR-VL 1.6",
+    "olmOCR 2 7B",
+    "MinerU",
+    "DeepSeek-OCR",
+    "Qwen3-VL (general)",
+    "Chandra",
+    "Mistral OCR",
+    "Claude (vision)",
+    "GPT (vision)",
+    "Google Cloud Vision"
+   ]
+  },
+  {
+   "id": "syriac",
+   "title": "Syriac manuscript",
+   "production_engine": "gemini-3.1-flash-lite",
+   "production_label": "Gemini 3.1 Flash-Lite",
+   "panels": [
+    {
+     "kind": "most-pages",
+     "n_pages": 40,
+     "n_books": 2,
+     "frontier": false,
+     "frontier_note": "too few for a frontier: 2 engines with a measured cost on these pages",
+     "references": [
+      {
+       "stratum": "syriac-gt",
+       "reference": "line-by-line ground truth for two manuscripts",
+       "pages": 40,
+       "date": "2026-09-16"
+      }
+     ],
+     "date": "2026-09-16",
+     "files": [
+      "scripts/eval/results/benchmark/syriac-retest-2026-09-16/score.json"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "median_cer": 0.991,
+       "cer_ci95": [
+        0.778,
+        1
+       ],
+       "accuracy": 0.009,
+       "accuracy_ci95": [
+        0,
+        0.222
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "metered",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": false,
+       "median_cer": 0.767,
+       "cer_ci95": [
+        0.67,
+        0.855
+       ],
+       "accuracy": 0.233,
+       "accuracy_ci95": [
+        0.145,
+        0.33
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 2.709,
+        "basis": "metered",
+        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "omnisyr",
+       "label": "Kraken (OmniSyr)",
+       "production": false,
+       "median_cer": 0.718,
+       "cer_ci95": [
+        0.686,
+        0.724
+       ],
+       "accuracy": 0.282,
+       "accuracy_ci95": [
+        0.276,
+        0.314
+       ],
+       "invented": null,
+       "cost": null
+      },
+      {
+       "engine": "qoruyo-eastern",
+       "label": "Kraken (Qoruyo East)",
+       "production": false,
+       "median_cer": 0.746,
+       "cer_ci95": [
+        0.727,
+        0.761
+       ],
+       "accuracy": 0.254,
+       "accuracy_ci95": [
+        0.239,
+        0.273
+       ],
+       "invented": null,
+       "cost": null
+      },
+      {
+       "engine": "qoruyo-estrangela",
+       "label": "Kraken (Qoruyo Estrangela)",
+       "production": false,
+       "median_cer": 0.688,
+       "cer_ci95": [
+        0.674,
+        0.703
+       ],
+       "accuracy": 0.312,
+       "accuracy_ci95": [
+        0.297,
+        0.326
+       ],
+       "invented": null,
+       "cost": null
+      },
+      {
+       "engine": "sophro-defaultseg",
+       "label": "Kraken (Sophro)",
+       "production": false,
+       "median_cer": 0.376,
+       "cer_ci95": [
+        0.268,
+        0.568
+       ],
+       "accuracy": 0.624,
+       "accuracy_ci95": [
+        0.432,
+        0.732
+       ],
+       "invented": null,
+       "cost": null
+      }
+     ]
+    }
+   ],
+   "not_on_shared_pages": [],
+   "not_tested": [
+    "PaddleOCR-VL 1.6",
+    "olmOCR 2 7B",
+    "Surya 2",
+    "dots.mocr",
+    "MinerU",
+    "DeepSeek-OCR",
+    "Qwen3-VL (general)",
+    "Chandra",
+    "Mistral OCR",
+    "Claude (vision)",
+    "GPT (vision)",
+    "Google Cloud Vision"
+   ]
+  }
+ ],
+ "no_chart": [
+  {
+   "title": "Japanese (kana and kanji)",
+   "why": "no page with a typed reference yet (scored only against another engine)",
+   "source": "scripts/eval/results/benchmark/",
+   "not_tested": [
+    "olmOCR 2 7B",
+    "MinerU",
+    "DeepSeek-OCR",
+    "Qwen3-VL (general)",
+    "Chandra",
+    "Mistral OCR",
+    "Claude (vision)",
+    "GPT (vision)",
+    "Google Cloud Vision"
+   ]
+  },
+  {
+   "title": "Hebrew",
+   "why": "4 pages with a typed reference; at least 5 are needed for an interval",
+   "source": "scripts/eval/results/benchmark/",
+   "not_tested": [
+    "PaddleOCR-VL 1.6",
+    "olmOCR 2 7B",
+    "dots.mocr",
+    "MinerU",
+    "DeepSeek-OCR",
+    "Qwen3-VL (general)",
+    "Chandra",
+    "Mistral OCR",
+    "Claude (vision)",
+    "GPT (vision)",
+    "Google Cloud Vision"
+   ]
+  },
+  {
+   "title": "Tibetan",
+   "why": "Flash-Lite and BDRC Yigdzin were compared with each other (agreement), not with a typed text",
+   "source": "scripts/eval/results/tibetan-lite-vs-yigdzin-4523/summary.json"
+  },
+  {
+   "title": "Sanskrit",
+   "why": "only repeat-read consistency has been measured (stability), not accuracy",
+   "source": "scripts/eval/results/sanskrit-consistency-2026-04-24.json"
+  },
+  {
+   "title": "Persian",
+   "why": "scored as located windows against Ganjoor verse (a different measure from page CER); only Gemini has a measured cost",
+   "source": "scripts/eval/results/persian-ganjoor-2026-10-01-stage1b/table.json"
+  }
+ ]
+}
