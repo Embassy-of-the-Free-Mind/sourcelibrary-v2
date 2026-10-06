@@ -19,6 +19,14 @@ for (const [src, dir] of [['dta', 'dta'], ['camena', 'camena'], ['eebo-tcp', 'ee
   const manifest = readJsonl(`${D}/manifest.jsonl`);
   if (!manifest.length) continue;
   const pairs = readJsonl(`${D}/pairs.jsonl`), pages = readJsonl(`${D}/aligned-pages.jsonl`);
+  // A book we hold undated takes the century of the typed text's edition, but only where the page breaks
+  // say it is that edition. Counted, so the table can say how many cells rest on it.
+  const yearOf = new Map(manifest.map((m) => [m.source_id, m.year]));
+  const bucket = (y) => (y < 1500 ? 'pre-1500' : y < 1600 ? '1500s' : y < 1700 ? '1600s' : y < 1800 ? '1700s' : y < 1900 ? '1800s' : '1900+');
+  let datedByTyped = 0;
+  const fix = (r) => { if (r.period === 'unknown' && r.kind === 'same-edition' && yearOf.get(r.source_id)) { r.period = bucket(yearOf.get(r.source_id)); r.period_from = 'typed-text'; return true; } return false; };
+  for (const p of pairs) if (fix(p)) datedByTyped++;
+  for (const r of pages) fix(r);
   const found = pairs.filter((p) => p.kind);
   // one kind per book (same-edition wins), one row per page (same-edition, then overlap)
   const bookKind = new Map();
@@ -32,7 +40,7 @@ for (const [src, dir] of [['dta', 'dta'], ['camena', 'camena'], ['eebo-tcp', 'ee
   summary[src] = { texts: manifest.length, typed_pages: manifest.reduce((a, m) => a + (m.n_pages || 0), 0), chars: manifest.reduce((a, m) => a + (m.chars || 0), 0), raw_bytes: manifest.reduce((a, m) => a + (m.bytes_raw || 0), 0),
     licences: lic, candidate_pairs: pairs.length, pairs_by_verdict: pairs.reduce((a, p) => { const k = p.kind || p.verdict; a[k] = (a[k] || 0) + 1; return a; }, {}),
     pairs_by_tier_kind: found.reduce((a, p) => { const k = `${p.tier}|${p.kind}`; a[k] = (a[k] || 0) + 1; return a; }, {}),
-    texts_matched: new Set(found.map((p) => p.source_id)).size, books_matched: bookKind.size, books_by_kind: byKind, books_by_language_period: bookCell,
+    texts_matched: new Set(found.map((p) => p.source_id)).size, pairs_dated_by_typed_text: datedByTyped, books_matched: bookKind.size, books_by_kind: byKind, books_by_language_period: bookCell,
     aligned_pages: best.size, aligned_pages_by_language_period: cell, congruent_pages: [...best.values()].filter((r) => r.congruent).length };
   if (process.argv.includes('--pack')) {
     const gz = (name, rows) => fs.writeFileSync(`${OUT}/typed-refs-6012-${DATE}.${src}.${name}.jsonl.gz`, zlib.gzipSync(rows.map((r) => JSON.stringify(r)).join('\n') + '\n', { level: 9 }));
