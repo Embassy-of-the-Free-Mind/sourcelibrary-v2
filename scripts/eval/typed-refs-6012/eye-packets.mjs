@@ -61,7 +61,48 @@ async function saveImage(page, prefix, strips = 0) {
 const IMG = { page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, enhanced_photo: 1, cropped_photo: 1, split_from_spread: 1, 'ocr.data': 1 };
 const index = [];
 
-if (KIND === 'title') {
+if (KIND === 'passage') {
+  // EEBO-TCP translations placed against our pages by word overlap (translation-passage-probe.mjs): one page per pair, seeded.
+  const rowsP = readJsonl(`${DIR}/translation-passages.jsonl`);
+  const per = new Map();
+  for (const r of rowsP) { const k = `${r.source_id}|${r.book_id}`; const b = per.get(k); if (!b || h(`${k}|${r.page_number}`) < h(`${k}|${b.page_number}`)) per.set(k, r); }
+  for (const r of [...per.values()].sort((a, b) => h(`${a.source_id}|${a.book_id}`) - h(`${b.source_id}|${b.book_id}`))) {
+    if (index.length >= N) break;
+    const pg = await pagesCol.findOne({ book_id: r.book_id, page_number: r.page_number }, { projection: IMG });
+    if (!pg) continue;
+    const id = String(index.length + 1).padStart(2, '0');
+    const files = await saveImage(pg, `${OUT}/${id}`, 3).catch(() => null);
+    if (!files) continue;
+    const rp = refPages(r.source_id);
+    const around = [r.typed_page_idx - 1, r.typed_page_idx, r.typed_page_idx + 1].filter((i) => i >= 0 && i < rp.length);
+    fs.writeFileSync(`${OUT}/${id}.txt`, [`PACKET ${id} (${SOURCE}, translation passage)`, `OUR PAGE (Latin or German original): book ${r.book_id}, page ${r.page_number}. Images: ${files.join(', ')}`,
+      `ENGLISH TYPED TEXT ${r.source_id}: ${String(manifest.get(r.source_id).title).slice(0, 160)} (${manifest.get(r.source_id).year})`,
+      '', 'Three consecutive typed pages of the English; the MIDDLE one is the page the placer chose:', '-----', around.map((i) => `[English typed page ${i === r.typed_page_idx ? 'CHOSEN' : i < r.typed_page_idx ? 'before' : 'after'}]\n${rp[i].text}`).join('\n\n').slice(0, 12000), '-----'].join('\n'));
+    index.push({ id, source: SOURCE, source_id: r.source_id, book_id: r.book_id, page_number: r.page_number, typed_page_idx: r.typed_page_idx, score: r.score, margin: r.margin, packet: `${OUT}/${id}.txt`, images: files });
+  }
+} else if (KIND === 'translation') {
+  // EEBO-TCP only: one packet per TCP text claimed to translate a work we hold (high-confidence rows), seeded.
+  const rowsT = readJsonl(`${DIR}/translations.jsonl`).filter((x) => x.book_id && x.confidence === 'high');
+  const per = new Map();
+  for (const x of rowsT) { const b = per.get(x.source_id); if (!b || h(`${x.source_id}|${x.book_id}`) < h(`${b.source_id}|${b.book_id}`)) per.set(x.source_id, x); }
+  for (const p of [...per.values()].sort((a, b) => h(a.source_id) - h(b.source_id))) {
+    if (index.length >= N) break;
+    const m = manifest.get(p.source_id), book = await booksCol.findOne({ id: p.book_id }, { projection: { title: 1, author: 1, published: 1, language: 1 } });
+    const first = await pagesCol.find({ book_id: p.book_id, page_number: { $lte: 14 } }, { projection: IMG }).hint({ book_id: 1, page_number: 1 }).toArray();
+    const want = new Set(titleTokens(book?.title || ''));
+    const score = (t) => { const ts = new Set(titleTokens(t)); let n = 0; for (const w of want) if (ts.has(w)) n++; return n; };
+    const tp = first.map((pg) => ({ pg, s: score(bodyText(pg.ocr?.data || '')) + (/<page-type>\s*title/i.test(pg.ocr?.data || '') ? 3 : 0) })).sort((a, b) => b.s - a.s || a.pg.page_number - b.pg.page_number)[0];
+    if (!tp) continue;
+    const id = String(index.length + 1).padStart(2, '0');
+    const files = await saveImage(tp.pg, `${OUT}/${id}`, 0).catch(() => null);
+    if (!files) continue;
+    const rp = (refPages(p.source_id) || []).filter((x) => x.text.length > 40).slice(0, 2);
+    fs.writeFileSync(`${OUT}/${id}.txt`, [`PACKET ${id} (${SOURCE}, translation)`, `OUR BOOK ${p.book_id} (${book?.language}), page ${tp.pg.page_number}: image ${files[0]}`, `Our catalogue: ${book?.title} / ${book?.author} / ${book?.published}`,
+      '', `ENGLISH TYPED TEXT ${p.source_id}`, `Its catalogue line: ${m.author || ''} | ${m.title || ''} | ${m.place || ''} ${m.year || ''}`,
+      '', 'The English text\'s first leaves as typed (its title page, usually):', '-----', rp.map((x) => x.text).join('\n\n').slice(0, 3000), '-----'].join('\n'));
+    index.push({ id, source: SOURCE, source_id: p.source_id, book_id: p.book_id, page_number: tp.pg.page_number, tier: p.tier, work_id: p.work_id, packet: `${OUT}/${id}.txt`, image: files[0] });
+  }
+} else if (KIND === 'title') {
   // one pair per matched book (same-edition wins, then most aligned pages), seeded order
   const best = new Map();
   for (const p of readJsonl(`${DIR}/pairs.jsonl`).filter((x) => x.kind)) { const b = best.get(p.book_id); if (!b || (p.kind === 'same-edition') > (b.kind === 'same-edition') || (p.kind === b.kind && p.aligned_pages > b.aligned_pages)) best.set(p.book_id, p); }

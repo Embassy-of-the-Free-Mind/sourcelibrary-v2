@@ -99,6 +99,14 @@ for (const r of manifest) {
     else if (am && (n >= 2 || nr >= 1)) add(b, 'author-title', `surname ${rs}, ${n} title tokens (${nr} rare), years ${b._y ?? '?'} vs ${r.year ?? '?'}`, 40 + Math.min(15, n * 2 + nr * 3));
     else if (!am && sameYear && n >= 3 && nr >= 2) add(b, 'title-year', `${n} title tokens (${nr} rare), year ${b._y}~${r.year}, author differs or absent`, 35 + Math.min(15, n * 2));
   }
+  // EEBO-TCP: an English text and a Latin book by the same author are a TRANSLATION pair, not the same
+  // text (11,000 such pairs on the first run). Catalogue fields may only propose a book in the typed
+  // text's own language; a shared catalogue number overrides that (the scan IS the edition).
+  if (SOURCE === 'eebo-tcp') {
+    const L = { eng: ['English', 'Middle English'], sco: ['English', 'Scots'], enm: ['Middle English', 'English'], lat: ['Latin'], fre: ['French'], frm: ['French'], wel: ['Welsh'], ita: ['Italian'], grc: ['Greek'], ger: ['German'], dut: ['Dutch'], spa: ['Spanish'] };
+    const want = new Set(String(r.language || 'eng').split(',').flatMap((x) => L[x] || []));
+    for (const [id, c] of cands) if (c.tier !== 'catalogue-number' && !String(c.book.language || '').split(/[-/]/).some((x) => want.has(x.trim()))) cands.delete(id);
+  }
   const top = [...cands.values()].sort((a, b) => b.score - a.score).slice(0, 8);
   if (!top.length) continue;
   nRef++;

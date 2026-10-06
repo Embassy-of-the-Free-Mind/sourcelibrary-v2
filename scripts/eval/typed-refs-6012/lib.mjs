@@ -140,7 +140,7 @@ export function decodeBytes(buf) {
     const b = buf[i];
     if (b < 0x80) { i++; continue; }
     const need = b >= 0xc2 && b <= 0xdf ? 1 : b >= 0xe0 && b <= 0xef ? 2 : b >= 0xf0 && b <= 0xf4 ? 3 : 0;
-    let ok = need > 0 && i + need < buf.length + 0 && i + need <= buf.length - 0;
+    let ok = need > 0 && i + need < buf.length;
     for (let k = 1; ok && k <= need; k++) if ((buf[i + k] & 0xc0) !== 0x80) ok = false;
     if (ok) { i += need + 1; continue; }
     flush(i); out.push(String.fromCharCode(b)); i++; run = i;

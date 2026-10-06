@@ -111,6 +111,10 @@ async function camena() {
 }
 
 // ── EEBO-TCP ────────────────────────────────────────────────────────────────
+// The licence key is read from each header, not assumed from the phase: every Phase II header and
+// 24,202 Phase I headers carry the CC0 dedication; 1,166 Phase I P4 headers still carry the pre-2015
+// partner-only statement, which the TCP's own pages supersede (released 2015-01-01).
+export const tcpLicenceKey = (phase, availability) => (/CC0 1\.0|Creative Commons 0 1\.0/.test(availability || '') ? `eebo-tcp-phase${phase}-cc0` : `eebo-tcp-phase${phase}-released-header-not-updated`);
 // The raw package is ONE object on R2 (eebo-stream.mjs put it there; it never touched this disk). Its
 // P4 XML members ("the version that we generally recommend", TCP FAQ) are zips of ~2,000 texts each:
 // one inner zip at a time is pulled to scratch by range read, parsed, and deleted. The phase comes from
@@ -149,7 +153,7 @@ async function eebo() {
       const buf = await read();
       const m = metaTcp(headerOf(buf), name);
       await addText({ source: 'eebo-tcp', source_id: m.ids.tcp, ...m, phase, url: `https://quod.lib.umich.edu/e/eebo/${m.ids.tcp}.0001.001`, version: `eebo_all.zip retrieved ${rawInfo.retrieved_at.slice(0, 10)}`,
-        raw_key: rawKey, raw_member: `${entry.fileName}!${name}`, raw_package_sha256: rawInfo.sha256, licence_key: phase === 1 ? 'eebo-tcp-phase1-cc0' : 'eebo-tcp-phase2-public-no-licence' }, buf);
+        raw_key: rawKey, raw_member: `${entry.fileName}!${name}`, raw_package_sha256: rawInfo.sha256, licence_key: tcpLicenceKey(phase, m.availability) }, buf);
       n++;
     });
     await flushShard();

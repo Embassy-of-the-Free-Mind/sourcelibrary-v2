@@ -10,8 +10,14 @@
       "licence": "CC BY-SA 4.0",
       "licence_url": "https://creativecommons.org/licenses/by-sa/4.0/",
       "terms_pages": [
-        { "url": "https://www.deutschestextarchiv.de/doku/nutzungsbedingungen", "sha256_html": "741c86f2da0fcd4e471bf67323c537680dc6b8413e13dd63909cff8234bb5a3b" },
-        { "url": "https://www.deutschestextarchiv.de/download", "sha256_html": "492a81e24b4a9fe4e1f26a23ad19d985d6cbc2c14eeaf716a99eb18c5da967c1" }
+        {
+          "url": "https://www.deutschestextarchiv.de/doku/nutzungsbedingungen",
+          "sha256_html": "741c86f2da0fcd4e471bf67323c537680dc6b8413e13dd63909cff8234bb5a3b"
+        },
+        {
+          "url": "https://www.deutschestextarchiv.de/download",
+          "sha256_html": "492a81e24b4a9fe4e1f26a23ad19d985d6cbc2c14eeaf716a99eb18c5da967c1"
+        }
       ],
       "quotes": [
         "Die im DTA gespeicherten Volltexte können unter den nachstehend ausgeführten Bedingungen für nicht-kommerzielle Zwecke genutzt werden.",
@@ -27,7 +33,19 @@
       },
       "attribution_required": "Name „Deutsches Textarchiv“ as the maker of the electronic version; share-alike on any redistributed adaptation of the annotated XML. Per-text licences in each TEI header are recorded in the manifest (a few Ergänzungstexte carry their own).",
       "notes": "The terms page says both 'CC BY-SA 4.0' and 'nichtkommerzielle Zwecke'. Our use is non-commercial internal measurement and nothing is redistributed, so both readings allow it. Page images belong to the holding libraries and are not downloaded.",
-      "verdict": "allowed: bulk download and internal use"
+      "verdict": "allowed: bulk download and internal use (per-text licence in the manifest; 1,574 texts are NC or otherwise not for redistribution)",
+      "per_text_licences_found": {
+        "read_from": "the <licence target> of each of the 5,481 TEI headers in dta_komplett_2026-02-10.zip",
+        "CC BY-SA 4.0": 2645,
+        "CC BY-NC 3.0 (DE and unported)": 1559,
+        "CC BY-SA 3.0 / 2.0 (DE and unported)": 674,
+        "CC0 1.0": 370,
+        "CC BY 4.0 / 3.0": 218,
+        "Project Gutenberg licence (web.archive.org copy)": 9,
+        "CC BY-NC-SA 4.0": 2,
+        "other rights statements (DDB NUG-KKN, Europeana out-of-copyright non-commercial, rightsstatements.org NoC-NC, MDZ copyright page)": 4,
+        "note": "The terms page says 'soweit nicht anderweitig gekennzeichnet', and 52 % of the texts are marked otherwise in their own header. The manifest carries each text's licence_key. Every one of them allows internal non-commercial analysis; the NC and Gutenberg-licensed texts must not go into a public or commercial export."
+      }
     },
     "camena": {
       "name": "CAMENA – Corpus Automatum Multiplex Electorum Neolatinitatis Auctorum (Heidelberg / Mannheim, 1999–2013)",
@@ -35,9 +53,18 @@
       "licence": "CC BY-SA (the project page links version 3.0; the GitHub republication of the XML carries CC BY-SA 4.0)",
       "licence_url": "http://creativecommons.org/licenses/by-sa/3.0/",
       "terms_pages": [
-        { "url": "https://mateo.uni-mannheim.de/camenahtdocs/camena_e.html", "sha256_html": "6dbfdc9adf93631b159f6709c52a16fb2d53625b01fa8fb4b1badafe10945e39", "note": "www2.uni-mannheim.de timed out; www.uni-mannheim.de redirects here" },
-        { "url": "https://github.com/nevenjovanovic/camena-neolatinlit/blob/771bb7f96826dfacdd920e48b8dfb2c33c52efe7/LICENSE.md", "note": "full text of CC BY-SA 4.0 International" },
-        { "url": "https://github.com/nevenjovanovic/camena-neolatinlit/blob/771bb7f96826dfacdd920e48b8dfb2c33c52efe7/README.md" }
+        {
+          "url": "https://mateo.uni-mannheim.de/camenahtdocs/camena_e.html",
+          "sha256_html": "6dbfdc9adf93631b159f6709c52a16fb2d53625b01fa8fb4b1badafe10945e39",
+          "note": "www2.uni-mannheim.de timed out; www.uni-mannheim.de redirects here"
+        },
+        {
+          "url": "https://github.com/nevenjovanovic/camena-neolatinlit/blob/771bb7f96826dfacdd920e48b8dfb2c33c52efe7/LICENSE.md",
+          "note": "full text of CC BY-SA 4.0 International"
+        },
+        {
+          "url": "https://github.com/nevenjovanovic/camena-neolatinlit/blob/771bb7f96826dfacdd920e48b8dfb2c33c52efe7/README.md"
+        }
       ],
       "quotes": [
         "The machine-readable texts of CAMENA (and MATEO / Alte Drucke) may be used in compliance with the licence Creative Commons Attribution / Share Alike. A summary of this licence and a link to the Legal Code (the full licence) are available here. [link: http://creativecommons.org/licenses/by-sa/3.0/]",
@@ -61,9 +88,19 @@
       "licence": "CC0 1.0 Universal (stated in each text's TEI header); the TCP itself says public domain, no licence terms",
       "licence_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "terms_pages": [
-        { "url": "https://www.textpartnership.net/pages/eebo-tcp.html", "sha256_html": "9552ed15f2cd45b21351c86aa5d3805f620c4d2f48e802594617b60c3e892d3d", "note": "textcreationpartnership.org redirects here" },
-        { "url": "https://www.textpartnership.net/pages/faq.html", "sha256_html": "bc7ec25ff353351d07e6072bd891fd78857ce54162eaa8aebf5e0116c53d8a48" },
-        { "url": "https://raw.githubusercontent.com/textcreationpartnership/A00002/master/A00002.xml", "note": "a Phase I TEI header, <availability>" }
+        {
+          "url": "https://www.textpartnership.net/pages/eebo-tcp.html",
+          "sha256_html": "9552ed15f2cd45b21351c86aa5d3805f620c4d2f48e802594617b60c3e892d3d",
+          "note": "textcreationpartnership.org redirects here"
+        },
+        {
+          "url": "https://www.textpartnership.net/pages/faq.html",
+          "sha256_html": "bc7ec25ff353351d07e6072bd891fd78857ce54162eaa8aebf5e0116c53d8a48"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/textcreationpartnership/A00002/master/A00002.xml",
+          "note": "a Phase I TEI header, <availability>"
+        }
       ],
       "quotes": [
         "The 25,368 texts in EEBO-TCP Phase I, initially available only to institutions that contributed to their creation, were released to the general public on January 1, 2015, and are therefore currently available for access, distribution, use, or reuse by anyone.",
@@ -73,22 +110,35 @@
       ],
       "bulk_download": {
         "offered": true,
-        "how": "The TCP's own Dropbox folder 'EEBO Phase 1 and 2 bulk files' (one 13.3 GB zip of the folder; P4 XML, SGML and P5 XML), fetched once. Catalogue: github.com/textcreationpartnership/Texts TCP.csv @c8ff5cf9a08a7b003032bf63f6b91cabec4254bb.",
+        "how": "The TCP's own Dropbox folder 'EEBO Phase 1 and 2 bulk files': one 13,322,069,370-byte zip of the folder (P4 XML, SGML and P5 XML), fetched once and streamed to private R2 (sha256 fe22f67e9dc1963e5c533357a77bc99071ac7845cf471d6ce9e36f95dd3b52d0, read back). Parsed: the 28 P4 XML archives. Catalogue: github.com/textcreationpartnership/Texts TCP.csv @c8ff5cf9a08a7b003032bf63f6b91cabec4254bb.",
         "url": "https://www.dropbox.com/sh/pfx619wnjdck2lj/AAAeQjd_dv29oPymNoKJWfEYa?dl=0"
       },
       "attribution_required": "None required; suggested: say who made the texts and where they came from. Page images (ProQuest EEBO) are not part of this and are not downloaded.",
-      "verdict": "allowed: bulk download and internal use"
+      "verdict": "allowed: bulk download and internal use",
+      "per_text_licences_found": {
+        "read_from": "the <AVAILABILITY> of each of the 25,368 Phase I P4 headers",
+        "CC0 1.0 dedication": 24202,
+        "pre-2015 partner-only statement, not updated in the P4 file": 1166,
+        "note": "The 1,166 stale headers say 'Searching, reading, printing, or downloading EEBO-TCP texts is reserved for the authorized users of these project partner institutions.' The TCP's own page and FAQ (quoted above) release all Phase I texts from 2015-01-01; the same texts carry CC0 in the P5 files on GitHub (checked on A00002 only). The manifest marks them 'eebo-tcp-phase1-released-header-not-updated' so a later export can treat them apart."
+      }
     },
     "eebo-tcp-phase2": {
       "name": "EEBO-TCP Phase II (34,963 texts released), Text Creation Partnership",
-      "licence_key": "eebo-tcp-phase2-public-no-licence",
-      "licence": "No licence instrument on the TCP pages: 'freely available to the public' since 2020-08-01; the TCP regards the texts as public domain and imposes no restrictions. The per-text header statement is recorded in the manifest once the files are read.",
-      "licence_url": "https://www.textpartnership.net/pages/faq.html",
+      "licence_key": "eebo-tcp-phase2-cc0",
+      "licence": "CC0 1.0 in every Phase II TEI header (34,958 of 34,958 read on 2026-10-06). The TCP's own pages add: 'freely available to the public' since 2020-08-01, no restrictions.",
+      "licence_url": "https://creativecommons.org/publicdomain/zero/1.0/",
       "terms_pages": [
-        { "url": "https://www.textpartnership.net/pages/eebo-tcp.html", "sha256_html": "9552ed15f2cd45b21351c86aa5d3805f620c4d2f48e802594617b60c3e892d3d" },
-        { "url": "https://www.textpartnership.net/pages/faq.html", "sha256_html": "bc7ec25ff353351d07e6072bd891fd78857ce54162eaa8aebf5e0116c53d8a48" }
+        {
+          "url": "https://www.textpartnership.net/pages/eebo-tcp.html",
+          "sha256_html": "9552ed15f2cd45b21351c86aa5d3805f620c4d2f48e802594617b60c3e892d3d"
+        },
+        {
+          "url": "https://www.textpartnership.net/pages/faq.html",
+          "sha256_html": "bc7ec25ff353351d07e6072bd891fd78857ce54162eaa8aebf5e0116c53d8a48"
+        }
       ],
       "quotes": [
+        "(TEI header, every Phase II text in the package) To the extent possible under law, the Text Creation Partnership has waived all copyright and related or neighboring rights to this keyboarded and encoded edition of the work described above, according to the terms of the CC0 1.0 Public Domain Dedication (http://creativecommons.org/publicdomain/zero/1.0/). This waiver does not extend to any page images or other supplementary files associated with this work, which may be protected by copyright or other license restrictions.",
         "Since 2020, the total number of books available in Phase II came to 34,963. Several thousand additional titles may or may not appear online, but are always available 'as is' for the asking.",
         "As of August 1, 2020, all texts produced under EEBO Phase I and Phase II were freely available to the public and will remain so.",
         "(FAQ) For all four of the partnerships – Evans, ECCO, and EEBO Phases 1 and 2 – the period of exclusive use has long ago ended and the texts are free to anyone to access and use.",
@@ -101,13 +151,24 @@
         "url": "https://www.dropbox.com/sh/pfx619wnjdck2lj/AAAeQjd_dv29oPymNoKJWfEYa?dl=0"
       },
       "attribution_required": "None required; suggested as for Phase I.",
-      "notes": "Phase II has no CC0 deed on the TCP pages, only the TCP's statement. Texts stay private here either way; if a Phase II text is ever to be published in benchmark/refs, read its header first.",
+      "notes": "When the pages were first read (before download) Phase II showed no licence deed; the downloaded headers settle it: all 34,958 carry the CC0 dedication. 34,958 texts are in the package against 34,963 on the TCP page.",
       "verdict": "allowed: bulk download and internal use"
     }
   },
   "storage": {
     "raw": "R2 bucket sl-corpus-snapshots (private: no public domain, not fronted by images.sourcelibrary.org), prefix eval-refs/typed-refs-6012/raw/<source>/",
     "derived": "same bucket, prefix eval-refs/typed-refs-6012/derived/<source>/ (normalised text with page breaks, parse_version in each row)",
-    "public_repo": "scripts, this file, the manifest (metadata and hashes), match and alignment rows (ids, offsets, scores). No corpus text."
+    "public_repo": "scripts, this file, the manifest (metadata and hashes), match and alignment rows (ids, offsets, scores). No corpus text.",
+    "objects": {
+      "raw/dta/dta_komplett_2026-02-10.zip": {
+        "bytes": 606937636,
+        "sha256": "76d50522ffb6ece63991dc145c17a229fec4623179c6fb7ec95d3be75217ad35",
+        "md5_on_source_page": "21731464d8a42692106d4bea636b0dd6"
+      },
+      "raw/eebo-tcp/eebo_all.zip": {
+        "bytes": 13322069370,
+        "sha256": "fe22f67e9dc1963e5c533357a77bc99071ac7845cf471d6ce9e36f95dd3b52d0"
+      }
+    }
   }
 }

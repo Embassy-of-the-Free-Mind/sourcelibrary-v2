@@ -556,6 +556,282 @@
      "evidence": "Engraved title in the image reads 'IANI NICII / ERITHRAEI / PINACOTHECA / IMAGINVM ILLVSTRIVM, / doctrinae vel ingenii laude, / VIRORVM, / qui, auctore superstite, / diem suum obierunt. / COLON. AGRIPPINAE, / Apud Cornelium ab Egmond. / CIC IC C XLIII.'; the typed title page has the same wording and line division but the imprint 'Apud Iodocum Kalcovium et Socios. CIC IC CXLV'. Same work, but the 1"
     }
    ]
+  },
+  "eebo-tcp": {
+   "summary": {
+    "read": 20,
+    "judged": 19,
+    "cannot_tell": 1,
+    "same_work_or_closer": 19,
+    "kind_agrees": 17,
+    "claimed_same_edition": 16,
+    "of_those_same_edition_by_eye": 14,
+    "claimed_other_edition": 3,
+    "of_those_other_edition_by_eye": 3,
+    "different_work": []
+   },
+   "rows": [
+    {
+     "id": "01",
+     "source_id": "A16845",
+     "book_id": "69aebe725e312cf82457c95c",
+     "page_number": 9,
+     "claimed_kind": "same-edition",
+     "tier": "author-title-year",
+     "congruent_share": 1,
+     "eye": "same-edition",
+     "eye_confidence": "high",
+     "image_imprint": "Imprinted at London by Thomas Vautrollier, dwelling in the Black-Friers. 1586.",
+     "evidence": "Image: 'A TREATISE OF MELANCHOLIE. CONTAINING THE CAVSES thereof ... phisicke cure ... ad-ioyned ... By T.Bright Doctor of Phisicke', anchor device ANCHORA SPEI, 'Vautrol-lier ... Black-Friers. 1586.' Typed text has identical wording, spelling (phisicke, Phisicke) and the same line-end hyphenations (ad|ioyned, af|fections, par|ticulars, Vautrol|lier)."
+    },
+    {
+     "id": "03",
+     "source_id": "A52251",
+     "book_id": "15c5d8e4-cea3-4b5b-9859-f3528660ecc8",
+     "page_number": 13,
+     "claimed_kind": "same-work-other-edition",
+     "tier": "author-title-year",
+     "congruent_share": 0.031,
+     "eye": "same-work-other-edition",
+     "eye_confidence": "high",
+     "image_imprint": "Londini: Apud Guil. & Joh. Innys, Regiae Societatis typographos. MDCCXXVI (1726)",
+     "evidence": "Image reads 'Auctore Isaaco Newtono, Eq. Aur. Editio tertia aucta & emendata. Londini: Apud Guil. & Joh. Innys ... MDCCXXVI' = third edition 1726; typed text is the first edition 'Autore Is. Newton, Trin. Coll. Cantab. ... Typis Josephi Streater ... MDCLXXXVII' with Pepys imprimatur."
+    },
+    {
+     "id": "05",
+     "source_id": "B29554",
+     "book_id": "6a424e6680ec989e1e67d16f",
+     "page_number": 11,
+     "claimed_kind": "same-edition",
+     "tier": "author-title-year",
+     "congruent_share": 0.8,
+     "eye": "same-edition",
+     "eye_confidence": "high",
+     "image_imprint": "London, Printed for John Starkey, at the Miter in Fleet street, near Temple-Bar. 1674.",
+     "evidence": "Image: 'THE CHYRURGEONS Store-House: Furnished with Forty three TABLES Cut in BRASS, IN WHICH Are all sorts of INSTRUMENTS, both Anti-ent and Modern ... Opperations ... OBSERVATI-ONS ... Written by Johannes Scultetus ... And faithfully Englished. By E. B. London, Printed for John Starkey ... 1674.' Typed text agrees in wording, spelling (Opperations, Choise, Chyrurgion) and hyphenations; our catal"
+    },
+    {
+     "id": "02",
+     "source_id": "A42948",
+     "book_id": "69905cf8aaa7f10ed4cfd202",
+     "page_number": 1,
+     "claimed_kind": "same-edition",
+     "tier": "author-title",
+     "congruent_share": 1,
+     "eye": "same-work-other-edition",
+     "eye_confidence": "medium",
+     "image_imprint": "unreadable (dark microfilm; lower half of the page is black even after enhancement)",
+     "evidence": "Image title reads 'THE MAN IN THE MOONE: OR A DISCOVRSE OF A Voyage thither BY DOMINGO GONSALES The speedy Messenger.' inside rules; the typed title reads 'A DISCOURSE Of a Voyage thither: By F.G. B. of H. To which is added Nuncius Inanimatus ... The Second Edition ... 1657'. Wording, attribution and line division differ (no Gonsales line, no Nuncius/Second Edition lines in the image), so a differ"
+    },
+    {
+     "id": "04",
+     "source_id": "A09011",
+     "book_id": "6958de54cf7070242ed41750",
+     "page_number": 13,
+     "claimed_kind": "same-edition",
+     "tier": "author-title",
+     "congruent_share": 0.905,
+     "eye": "same-edition",
+     "eye_confidence": "medium",
+     "image_imprint": "London, Printed by Tho. Cotes, 1640 (engraved title; year digits small, read as 1640 on an enlarged crop)",
+     "evidence": "Image is the ENGRAVED title page (Adam/Solomon, portrait of Parkinson): 'Theatrum Botanicum. The Theater of Plantes. Or An Universall and Compleate Herball. Composed by John Parkinson Apothecarye of London and the Kings Herbarist. London Printed by Tho. Cotes 1640'. The typed text transcribes the LETTERPRESS title ('...THE THEATER OF PLANTS. OR, AN HERBALL OF A LARGE EXTENT ... Printed by Tho. Cot"
+    },
+    {
+     "id": "06",
+     "source_id": "A42108",
+     "book_id": "69af0a9068bf0754164e4558",
+     "page_number": 11,
+     "claimed_kind": "same-edition",
+     "tier": "author-title",
+     "congruent_share": 0.998,
+     "eye": "cannot-tell",
+     "eye_confidence": "high",
+     "image_imprint": "none on this page (not a title page)",
+     "evidence": "Image is the dedication leaf, not the title page: 'TO THE Most Illustrious THE ROYAL SOCIETY, The following CATALOGUE IS Most Humbly PRESENTED By the Author NEHEMJAH GREW.' No imprint or year is printed on it (only a pencilled shelfmark with '1681'), so it cannot be compared with the typed 1685 Malthus title page."
+    },
+    {
+     "id": "08",
+     "source_id": "A29031",
+     "book_id": "6ac382f2966464312757cbf8",
+     "page_number": 9,
+     "claimed_kind": "same-edition",
+     "tier": "author-title-year",
+     "congruent_share": 0.998,
+     "eye": "same-edition",
+     "eye_confidence": "high",
+     "image_imprint": "Oxford, Printed by Hen: Hall Printer to the University, for Ric: Davis. Anno Domini 1663.",
+     "evidence": "Image: 'SOME CONSIDERATIONS touching the VSEFVLNESSE Of EXPERIMENTAL Naturall Philosophy, Propos'd in Familiar Discourses to a Friend, by way of Invitation to the Study of it. OXFORD Printed by Hen: Hall Printer to the University, for Ric: Davis. Anno Domini 1663.' Typed text agrees word for word in wording, spelling (VSEFVLNESSE, Naturall) and capitalisation."
+    },
+    {
+     "id": "09",
+     "source_id": "A43130",
+     "book_id": "6a42aecb5207af7c42f5333c",
+     "page_number": 1,
+     "claimed_kind": "same-edition",
+     "tier": "catalogue-number",
+     "congruent_share": 1,
+     "eye": "same-edition",
+     "eye_confidence": "high",
+     "image_imprint": "Londini, Imprim. typis Ri. Whitaker, in Coemiterio Paulino. 1648.",
+     "evidence": "Image: 'Linguarum / COGNATIO: / SEU / DE LINGUIS / In genere & / De Variarum Linguarum / HARMONIA / Dissertatio. / Authore THOMA HAYNE, / olim Oxoniensi. e Col. Lincoln. / LONDINI, / Imprim. typis Ri. Whitaker, / in Coemiterio Paulino. / 1648.' Typed text has the same wording, capitalisation and identical line division."
+    },
+    {
+     "id": "10",
+     "source_id": "A54573",
+     "book_id": "6a425a58744db9e31059e5c0",
+     "page_number": 1,
+     "claimed_kind": "same-edition",
+     "tier": "catalogue-number",
+     "congruent_share": 0.938,
+     "eye": "same-edition",
+     "eye_confidence": "high",
+     "image_imprint": "Londini: Ex Officina S. Smith & B. Walford, Reg. Societatis Typograph. ad insignia Principis in Coemeterio D. Pauli. MDCXCV (1695)",
+     "evidence": "Image: 'MUSEI PETIVERIANI Centuria Prima, RARIORA NATURAE Continens: VIZ. Animalia, Fossilia, Plantas, EX Variis MUNDI PLAGIS advecta, Ordine digesta, ET NOMINIBUS PROPRIIS Signata. A JACOBO PETIVER, Pharmacop. Londinens. & Regiae Societatis Socio. Prima laus est ... Aristot. LONDINI: Ex Officina S.Smith & B.Walford ... MDCXCV.' Typed text agrees in wording, capitalisation and imprint (Edinburgh U"
+    },
+    {
+     "id": "07",
+     "source_id": "A01898",
+     "book_id": "6977c24948f877905d75d69b",
+     "page_number": 8,
+     "claimed_kind": "same-work-other-edition",
+     "tier": "author-title",
+     "congruent_share": 0.112,
+     "eye": "same-work-other-edition",
+     "eye_confidence": "medium",
+     "image_imprint": "LONDON, Printed by M. F. for R. D[awlman] ... (year not legible) — read only from mirror-image show-through; the image is the blank verso of the title leaf, not the title page itself",
+     "evidence": "The photographed page is a blank verso; the title shows through reversed and, mirrored, reads 'A CHILDE OF LIGHT VValking in Darknes: OR A TREATISE SHEWING {The Causes, by which / The Cases, wherein / The Ends, for which} God leaves his children to distresse of conscience. TOGETHER With Directions how to walke, so as to come forth of such a condition ... By Tho: Goodwin, B.D. ... LONDON, Printed b"
+    },
+    {
+     "id": "11",
+     "source_id": "A06991",
+     "book_id": "6a08fd6325e3a402b23b3e15",
+     "page_number": 2,
+     "claimed_kind": "same-edition",
+     "tier": "catalogue-number",
+     "congruent_share": 0.983,
+     "eye": "same-edition",
+     "eye_confidence": "high",
+     "image_imprint": "London, Printed by I. B. for Nicholas Vavasour, and are to be sold at his Shop in the Inner-Temple, neere the Church. 1633.",
+     "evidence": "Image (dark microfilm, legible): 'The Famous TRAGEDY OF THE RICH IEVV OF MALTA. AS IT VVAS PLAYD BEFORE THE KING AND QVEENE, IN HIS MAJESTIES Theatre at White-Hall, by her Majesties Servants at the Cock-pit. Written by CHRISTOPHER MARLO. [device] LONDON; Printed by I. B. for Nicholas Vavasour ... neere the Church. 1633.' Typed text agrees in wording, spelling (PLAYD, MARLO, neere) and imprint; its"
+    },
+    {
+     "id": "12",
+     "source_id": "A01086",
+     "book_id": "69ac801eb2472ff2a870d763",
+     "page_number": 11,
+     "claimed_kind": "same-edition",
+     "tier": "author-title",
+     "congruent_share": 0.955,
+     "eye": "same-edition",
+     "eye_confidence": "medium",
+     "image_imprint": "no place, 'Printed for HENRY TOMES.', no year on the title page",
+     "evidence": "Image: 'CERTAINE CONSIDERATIONS touching the better pacification, and Edification of the Church of ENGLAND: Dedicated to his most Excellent Maiestie. Printed for HENRY TOMES.' (ms. note 'by Sr Fr: Bacon'); typed text is word-for-word the same with the same capitalisation and the same undated, place-less imprint. Caveat: with no printed year the title page alone cannot exclude another undated Tomes"
+    },
+    {
+     "id": "13",
+     "source_id": "A39362",
+     "book_id": "6a42e5b006e6ead3ac539c81",
+     "page_number": 1,
+     "claimed_kind": "same-work-other-edition",
+     "tier": "author-title",
+     "congruent_share": 0,
+     "eye": "same-work-other-edition",
+     "eye_confidence": "high",
+     "image_imprint": "Londini, Ex officina S. Streater, & prostant venales apud R. Clavel ad insigne Pavonis in Coemeterio Paulino, Anno Domini, 1677.",
+     "evidence": "Image reads '...THESIS In Celeberrima Academia OXONIENSI Explicata Junii 13. Anno Dom. 1662. CUI Accesserunt ANIMADVERSIONES, In aliqua JANSENII, atque etiam CALVINI Dogmata ... Per EDMUNDUM ELYSIUM, Ecclesiae Anglicanae Filium Obsequentissimum ... LONDINI, Ex officina S. Streater ... 1677'. Typed title lacks the Animadversiones, styles the author 'ELISIUM Evangelii Ministrum', cites M. Anton. and"
+    },
+    {
+     "id": "14",
+     "source_id": "A42100",
+     "book_id": "69af0a90a130fd1a82e1feb6",
+     "page_number": 8,
+     "claimed_kind": "same-edition",
+     "tier": "author-title-year",
+     "congruent_share": 0.983,
+     "eye": "same-edition",
+     "eye_confidence": "high",
+     "image_imprint": "Printed by W. Rawlins, for the Author, 1682. (no place named)",
+     "evidence": "Image: 'THE / ANATOMY / OF / PLANTS. / WITH AN / IDEA / OF A / Philosophical History of Plants. / And several other / LECTURES, / Read before the / ROYAL SOCIETY. / By NEHEMJAH GREW M.D. Fellow / of the ROYAL SOCIETY, and of the / COLLEGE of PHYSICIANS. / Printed by W. Rawlins, for the Author, 1682.' Typed text agrees in wording, spelling (NEHEMJAH), capitalisation and line division (one line pair"
+    },
+    {
+     "id": "15",
+     "source_id": "A04814",
+     "book_id": "6a90e7e5544007b776b3806a",
+     "page_number": 1,
+     "claimed_kind": "same-edition",
+     "tier": "catalogue-number",
+     "congruent_share": 0.875,
+     "eye": "same-edition",
+     "eye_confidence": "high",
+     "image_imprint": "Abredoniae, Excudebat Edwardus Rabanus. 1633.",
+     "evidence": "Image: 'DISPUTATIO THEOLOGICA, De vero discrimine peccati mortalis & venialis, deq; impossibilitate implendi legem Dei ob quotidianam pecca-torum venialium incursionem. CVI Annexa est Appendix ... se-cundum [Greek] Evangelicam. AUTHORE ROBERTO BARONIO, ECCLE-SIASTE ABREDONENSI, S.S. THEO-LOGIAE DOCTORE, & ejusdem in ACA-DEMIA MARESCALLANA PROFESSORE ... ABREDONIAE, Excudebat Edwardus Rabanus. 1633"
+    },
+    {
+     "id": "16",
+     "source_id": "A49865",
+     "book_id": "6991d66e8c1030b12444b4a3",
+     "page_number": 1,
+     "claimed_kind": "same-edition",
+     "tier": "catalogue-number",
+     "congruent_share": 1,
+     "eye": "same-edition",
+     "eye_confidence": "high",
+     "image_imprint": "Printed, and Sold by D. Edwards in Nevils-Ally in Fetter-Lane. 169[4] (last digit cropped at the foot; title line reads 'in this Year. 1694.'); no place named",
+     "evidence": "Image: 'THE Enochian Walks with God, Found out by a SPIRITUAL-TRAVELLER, Whose Face Towards MOUNT-SION Above was Set. Gen. 5. Verse 22 ... WITH An Experimental Account ... Lati-tude of GOD's Love ... re-vealing ... Written by JANE LEAD, in this Year. 1694. [stamp] P. J. DE LOUTHERBOURG. Printed, and Sold by D. Edwards in Nevils-Ally in Fetter-Lane'. Typed text matches wording, hyphenations (Lati|t"
+    },
+    {
+     "id": "17",
+     "source_id": "A49866",
+     "book_id": "6a09097d44b481aa5a37ce84",
+     "page_number": 1,
+     "claimed_kind": "same-edition",
+     "tier": "author-title-year",
+     "congruent_share": 0.988,
+     "eye": "same-work-other-edition",
+     "eye_confidence": "high",
+     "image_imprint": "Printed in the Year 1697. (no place or printer)",
+     "evidence": "Image: 'A FOUNTAIN OF Gardens: WATERED by the Rivers of Divine Pleasure, And Springing up in all the Variety of Spiritual Plants; Blown up by the Pure Breath into A PARADISE. To which is Prefixed A Poem, Introductory to the Philadelphian Age, called SOLOMONS PORCH, or the Beautiful Gate to Wisdoms Temple. By J. LEAD. ... Printed in the Year 1697.' Typed title has no 'Solomons Porch' clause, adds '"
+    },
+    {
+     "id": "18",
+     "source_id": "A16274",
+     "book_id": "6a4765fce602c9fc4bb2c447",
+     "page_number": 9,
+     "claimed_kind": "same-edition",
+     "tier": "author-title-year",
+     "congruent_share": 1,
+     "eye": "same-edition",
+     "eye_confidence": "high",
+     "image_imprint": "London: Printed for Richard More, and are to be sould at his Shop in S. Dunstanes Church-yard. 1614.",
+     "evidence": "Image: 'ENGLANDS HELICON. OR THE MVSES HARMONY. The Courts of Kings heare no such straines, / As daily lull the Rusticke Swaines. [swan device, motto GOD IS MY HELPER] LONDON: Printed for Richard More, and are to be sould at his Shop in S. Dunstanes Church-yard. 1614.' Typed text agrees in wording, spelling (sould, Rusticke), the couplet's line division, the device motto and the imprint."
+    },
+    {
+     "id": "19",
+     "source_id": "A38811",
+     "book_id": "6958e0799659a6529d577120",
+     "page_number": 13,
+     "claimed_kind": "same-edition",
+     "tier": "author-title-year",
+     "congruent_share": 0.979,
+     "eye": "same-edition",
+     "eye_confidence": "high",
+     "image_imprint": "London, Printed for Jo. Martyn, and Ja. Allestry, Printers to the Royal Society. MDCLXX (1670)",
+     "evidence": "Image: 'SYLVA, Or A DISCOURSE Of FOREST-TREES, AND THE Propagation of Timber in His MAJESTIES Dominions. As it was Deliver'd in the ROYAL SOCIETY the xvth of October, CIƆIƆCLXII ... Illustri-ous Assembly ... POMONA ... KALENDARIUM HORTENSE; Or, the Gard'ners Almanac ... All which several Treatises are in this SECOND EDITION much Inlarged and Improved BY JOHN EVELYN Esq; ... LONDON, Printed for Jo."
+    },
+    {
+     "id": "20",
+     "source_id": "A06786",
+     "book_id": "6a8f6267e408ab73f484d31e",
+     "page_number": 1,
+     "claimed_kind": "same-edition",
+     "tier": "catalogue-number",
+     "congruent_share": 1,
+     "eye": "same-edition",
+     "eye_confidence": "high",
+     "image_imprint": "London, Printed by Adam Islip. Anno Dom. 1622.",
+     "evidence": "Image (woodcut border): 'CONSVETVDO, VEL LEX MERCATORIA, OR The Ancient Law-Merchant. Diuided into three Parts: ACCORDING TO THE Essentiall Parts of Trafficke. NECESSARIE FOR ALL Statesmen, Iudges, Magistrates, Tempo-rall and Ciuile Lawyers, Mint-men, Mer-chants, Marriners ... By GERARD MALYNES Merchant. Salus Populi, suprema Lex esto. LONDON, Printed by ADAM ISLIP. Anno Dom. 1622.' Typed text agr"
+    }
+   ]
   }
  },
  "leaf": {
@@ -946,6 +1222,587 @@
      "wording": "same-text-other-setting",
      "typed_errors": 3,
      "note": "Image p. 12 (PRAEFATIO, italic) holds 26 verses that sit in the middle of the two typed pages 6a-6b: typed has 14 verses before ('Meque librumque meum' ...) and 16 after ('Si monitus ullos' ...), with its own page break after 'obesse potest' where the image runs on, so the typed text follows another"
+    }
+   ]
+  },
+  "eebo-tcp": {
+   "summary": {
+    "read": 12,
+    "same_leaf": 11,
+    "wrong_leaf": 1,
+    "claimed_on_page_breaks": 10,
+    "of_those_exact_by_eye": 9,
+    "of_those_same_setting": 9,
+    "claimed_off_page_breaks": 2,
+    "of_those_superset_or_partial": 2,
+    "pages_with_a_typed_error": 5
+   },
+   "rows": [
+    {
+     "id": "01",
+     "source_id": "A30895",
+     "book_id": "69b63eb22a1dde00d5a9fa60",
+     "page_number": 53,
+     "claimed_kind": "same-work-other-edition",
+     "congruent": false,
+     "overlap": 0.919,
+     "engine": "gemini-flash",
+     "leaf": "same-leaf",
+     "boundaries": "partial",
+     "wording": "differs",
+     "typed_errors": 2,
+     "note": "Same passage (Barclay, Of Immediate Revelation) but the image is a modern-spelling later edition with revised readings (syllogism collapsed to 'For where the faith is one...', 'for neither did they' vs 'For nor did they', 'of both our faith' vs 'both our faith'); typed page starts ~1.5 paragraphs be"
+    },
+    {
+     "id": "02",
+     "source_id": "A11954",
+     "book_id": "6a08fcd925e3a402b23b2e51",
+     "page_number": 775,
+     "claimed_kind": "same-work-other-edition",
+     "congruent": false,
+     "overlap": 0.763,
+     "engine": "gemini-flash",
+     "leaf": "same-leaf",
+     "boundaries": "superset",
+     "wording": "same-text-other-setting",
+     "typed_errors": 0,
+     "note": "Antony and Cleopatra p.150 of a later folio (modernised spelling: Widow/thirty/Wars, different line division in prose) against a First-Folio-spelling typed text; typed has one line before ('The Fellow ha's good iudgement.') and most of typed page 354 after the image ends; a handful of later-folio va"
+    },
+    {
+     "id": "03",
+     "source_id": "A01043",
+     "book_id": "69ac7efa20878c5c9ba5211b",
+     "page_number": 23,
+     "claimed_kind": "same-edition",
+     "congruent": true,
+     "overlap": 1,
+     "engine": "gemini-flash",
+     "leaf": "same-leaf",
+     "boundaries": "exact",
+     "wording": "same-setting",
+     "typed_errors": 0,
+     "note": "Bacon's Apophthegmes new and old p.15: all 15 lines agree with the typed page in spelling, punctuation and every line-end hyphen (Rains-/ford, li-/bertie, opini-/on, Eliza-/beth); the '5.' is a marginal number in the image."
+    },
+    {
+     "id": "04",
+     "source_id": "A60487",
+     "book_id": "6955831157e3b773024f7195",
+     "page_number": 135,
+     "claimed_kind": "same-edition",
+     "congruent": true,
+     "overlap": 0.991,
+     "engine": "gemini-flash",
+     "leaf": "same-leaf",
+     "boundaries": "exact",
+     "wording": "same-setting",
+     "typed_errors": 0,
+     "note": "John Smith, Of the Soul p.73: every line-end hyphen and spelling agrees, including the printer's own 'themseves'; the only gap is the Greek phrase (image: ἐκδεδομένοι καὶ μὴ ἐκδεδομένοι, in ligatured type) which the typed text replaces by a 'non-Latin alphabet' placeholder."
+    },
+    {
+     "id": "05",
+     "source_id": "A29031",
+     "book_id": "6ac382f2966464312757cbf8",
+     "page_number": 301,
+     "claimed_kind": "same-edition",
+     "congruent": true,
+     "overlap": 0.986,
+     "engine": "gemini-flash-lite",
+     "leaf": "same-leaf",
+     "boundaries": "exact",
+     "wording": "same-setting",
+     "typed_errors": 0,
+     "note": "Boyle, Usefulness of Experimental Natural Philosophy p.(155): spelling, punctuation and all line-end hyphens (in-/vited, Phy-/sitian, indu-/strious, Mil-/lepedes, diure-/tical, won-/der, strong-/ly) agree line for line."
+    },
+    {
+     "id": "06",
+     "source_id": "A16626",
+     "book_id": "6a42f62b3ad4d80da1237aed",
+     "page_number": 8,
+     "claimed_kind": "same-edition",
+     "congruent": true,
+     "overlap": 0.867,
+     "engine": "gemini-flash",
+     "leaf": "same-leaf",
+     "boundaries": "exact",
+     "wording": "same-setting",
+     "typed_errors": 2,
+     "note": "Savile's 'Lectori' preface to Bradwardine (microfilm): the Chaucer lines, the facing Latin verses and the Latin prose agree line for line with identical hyphenation (Profun-/di, re-/gistro, or-/bem, Bradwar-/dinus, appa-/ret, pe-/titis, hypothesi-/bus, po-/tuit); the typed text gives the two columns"
+    },
+    {
+     "id": "07",
+     "source_id": "A54028",
+     "book_id": "6a58ecd0c6cd8f987106893f",
+     "page_number": 2,
+     "claimed_kind": "same-edition",
+     "congruent": true,
+     "overlap": 1,
+     "engine": "gemini-flash",
+     "leaf": "same-leaf",
+     "boundaries": "exact",
+     "wording": "same-setting",
+     "typed_errors": 0,
+     "note": "Quaker tract p.(2), microfilm with a blotted right edge on lines 5-9: spelling (sence, chuse, dreadfull), punctuation and line-end hyphens (Ter-/ritories, up-/on, first-/born, E-/gyptians, Sal-/vation) agree throughout; nothing read differently from the typed text."
+    },
+    {
+     "id": "08",
+     "source_id": "A06751",
+     "book_id": "69bd9e0b6120d54bd037b199",
+     "page_number": 137,
+     "claimed_kind": "same-edition",
+     "congruent": true,
+     "overlap": 0.927,
+     "engine": "gemini-flash-lite",
+     "leaf": "wrong-leaf",
+     "boundaries": "n/a",
+     "wording": "n/a",
+     "typed_errors": 0,
+     "note": "Off by one page: the image is p.122 (Hieroglyphicorum Lib.3, 'Sol Cœli quis dici potest', Anaxagoras) whose catchword 'Hinc' is the first word of the typed page 123 ('Hinc Ovidius 4. Met. ...'); none of the typed text is on this image, though it is the same book and apparently the same setting."
+    },
+    {
+     "id": "09",
+     "source_id": "A07382",
+     "book_id": "6a42acc65207af7c42f4db34",
+     "page_number": 6,
+     "claimed_kind": "same-edition",
+     "congruent": true,
+     "overlap": 0.976,
+     "engine": "gemini-flash",
+     "leaf": "same-leaf",
+     "boundaries": "exact",
+     "wording": "same-setting",
+     "typed_errors": 3,
+     "note": "Mede, Clavis Apocalyptica Pars I p.4 (soft-focus microfilm): text, accents and line-end hyphens (occu-/pati, Testi-/um, clan-/gorem, San-/ctâ, perden-/dæ, contemporave-/rit, Eremi-/ticæ, Prophe-/tia, Be-/stiæ, redi-/mitæ, cu-/jusdam) agree; the typed page ends by running the catchword into the last "
+    },
+    {
+     "id": "10",
+     "source_id": "A01138",
+     "book_id": "69ac7efb20878c5c9ba5225f",
+     "page_number": 13,
+     "claimed_kind": "same-edition",
+     "congruent": true,
+     "overlap": 0.977,
+     "engine": "gemini-flash-lite",
+     "leaf": "same-leaf",
+     "boundaries": "exact",
+     "wording": "same-setting",
+     "typed_errors": 0,
+     "note": "Bacon's Charge touching Duels p.9: spelling (noe man, soddaine, perticuler, the printer's own 'dan-/ders') and every line-end hyphen agree; the only boundary difference is the half-word 'ginne' (end of 'be-ginne' broken across the page turn), which the typed text keeps whole on the previous page."
+    },
+    {
+     "id": "11",
+     "source_id": "A68054",
+     "book_id": "69bd9e746120d54bd037d283",
+     "page_number": 109,
+     "claimed_kind": "same-edition",
+     "congruent": true,
+     "overlap": 0.976,
+     "engine": "gemini-flash-lite",
+     "leaf": "same-leaf",
+     "boundaries": "exact",
+     "wording": "same-setting",
+     "typed_errors": 1,
+     "note": "Flamel's Hieroglyphicall Figures p.89 (small low-resolution image, right-hand page only): all 24 lines agree in spelling and line division; the only boundary difference is the half-word 'ters' (end of 'wa-ters' from the previous page) which the typed page lacks."
+    },
+    {
+     "id": "12",
+     "source_id": "A43998",
+     "book_id": "69906623ef12272ffdc952c7",
+     "page_number": 297,
+     "claimed_kind": "same-edition",
+     "congruent": true,
+     "overlap": 0.989,
+     "engine": "gemini-flash",
+     "leaf": "same-leaf",
+     "boundaries": "exact",
+     "wording": "same-setting",
+     "typed_errors": 1,
+     "note": "Hobbes, Leviathan Part 3 Chap.42 p.281: spelling (Beleef, hee, himselfe, Kingdome), punctuation, line-end hyphens (con-/verted, A-/postle, Inter-/pret, Inter-/preter, Let-/ters, Apo-/stles, Cano-/nicall, Coun-/sellor) and both marginal notes agree; the typed gaps 's•…lf' and 'j•…dg' are legible in t"
+    }
+   ]
+  }
+ },
+ "translation": {
+  "eebo-tcp": {
+   "summary": {
+    "read": 20,
+    "by_verdict": {
+     "translation-of-this-work": 6,
+     "not-a-translation": 2,
+     "contains-translation-of-this-work": 9,
+     "our-book-contains-the-original": 1,
+     "same-author-different-work": 2
+    },
+    "relation_holds": 16,
+    "by_tier": {
+     "uniform-title": [
+      10,
+      14
+     ],
+     "author+title": [
+      6,
+      6
+     ]
+    }
+   },
+   "rows": [
+    {
+     "id": "01",
+     "source_id": "A66534",
+     "book_id": "69b6b28296dc15d4a16d4b53",
+     "tier": "uniform-title",
+     "eye": "translation-of-this-work",
+     "eye_confidence": "high",
+     "read_from": "catalogue",
+     "evidence": "Image is the e-rara generated cover sheet, not the title page; it and the catalogue give 'Ornithologiae libri tres ... Londini, 1676'. The English title page is the same title word for word ('The Ornithology of Francis Willughby of Middleton in the County of Warwick Esq ... In Three Books') and says 'Translated into English, and enlarged with many Additions' by John Ray, 1678."
+    },
+    {
+     "id": "02",
+     "source_id": "B09910",
+     "book_id": "69b636081c1c21a37382ade6",
+     "tier": "uniform-title",
+     "eye": "not-a-translation",
+     "eye_confidence": "high",
+     "read_from": "catalogue",
+     "evidence": "Unrelated works: ours is the humanist Agostino Dati's Elegantiae with Badius Ascensius's and others' treatises on letter-writing and orthography; the English is 'The Rule of the great S. Augustin expounded by ... Hugh of S. Victor', i.e. the monastic rule of St Augustine of Hippo via a French version. Only the name Augustinus is shared (known: Augustinus Dathus of Siena is not Augustine of Hippo)."
+    },
+    {
+     "id": "03",
+     "source_id": "A95827",
+     "book_id": "69b2210656715b0e3247421f",
+     "tier": "uniform-title",
+     "eye": "contains-translation-of-this-work",
+     "eye_confidence": "medium",
+     "read_from": "image",
+     "evidence": "Our title page reads 'IVVENALIS. PERSIVS.' (the satires of Juvenal and Persius); the English is 'Poems, with The tenth Satyre of Iuvenal Englished. By Henry Vaughan', 1646. The English volume is mostly Vaughan's own original poems and translates only ONE of Juvenal's sixteen satires (Satire 10) and nothing of Persius, so it is a small part of our book, not a substantial one."
+    },
+    {
+     "id": "04",
+     "source_id": "A14494",
+     "book_id": "69b67df170c69d645a709994",
+     "tier": "uniform-title",
+     "eye": "our-book-contains-the-original",
+     "eye_confidence": "high",
+     "read_from": "catalogue",
+     "evidence": "Our book per catalogue is Virgil's complete works with commentaries ('Bucolicorum eclogae X, Georgicorum libri IIII, Aeneidos libri XII ... Servii ... commentarii'); the English (Brinsley, 1620) is 'Virgils Eclogues, with his booke De apibus ... Translated Gramatically', i.e. the Eclogues and Georgics book 4 only. The originals of the English text are two of the works inside our collected Virgil."
+    },
+    {
+     "id": "05",
+     "source_id": "A51674",
+     "book_id": "6a941a87a4ed5935447aa85c",
+     "tier": "uniform-title",
+     "eye": "same-author-different-work",
+     "eye_confidence": "medium",
+     "read_from": "catalogue",
+     "evidence": "Our book per catalogue is Malebranche's 'Réponse à une dissertation de Mr. Arnauld', a polemical reply about an Eclaircissement of the Traité de la nature et de la grace; the English title page lists 'Treatise concerning the Search after Truth', 'Treatise of Nature and Grace', 'Answer to the Animadversions upon the First Volume' and 'Defence against the Accusations of Monsieur De la Ville' and nam"
+    },
+    {
+     "id": "06",
+     "source_id": "A08664",
+     "book_id": "69b67adb70c69d645a6fbd24",
+     "tier": "uniform-title",
+     "eye": "contains-translation-of-this-work",
+     "eye_confidence": "medium",
+     "read_from": "catalogue",
+     "evidence": "Ours is Ovid's Metamorphoses with Sabinus's interpretation; the English is 'The fable of Ouid treting of Narcissus, translated out of Latin into Englysh Mytre, with a moral ther vnto', 1560. It translates ONE episode only (known: Narcissus, Metamorphoses book 3) and adds a long original English verse moral, so it is a small excerpt of our work, not a substantial part; the moral is not Sabinus's. I"
+    },
+    {
+     "id": "07",
+     "source_id": "A35955",
+     "book_id": "6a9437f37e41ac2763187fcd",
+     "tier": "author+title",
+     "eye": "translation-of-this-work",
+     "eye_confidence": "high",
+     "read_from": "image",
+     "evidence": "Our title page: 'THERAPEUTICA SACRA, Seu, De Curandis CASIBUS CONSCIENTIAE Circa Regenerationem ... Authore Davide Dicsono ... Edinburgi ... 1656'. English title page: 'THERAPEUTICA SACRA, Shewing briefly The method of healing the diseases of the Conscience, concerning REGENERATION: Written first in Latine BY DAVID DICKSON ... And thereafter Translated by him', Edinburgh 1664; both even share the "
+    },
+    {
+     "id": "08",
+     "source_id": "A33148",
+     "book_id": "6a90b582bbc2c7c666ac1775",
+     "tier": "author+title",
+     "eye": "contains-translation-of-this-work",
+     "eye_confidence": "high",
+     "read_from": "image",
+     "evidence": "Our title page is the fourth Catilinarian alone: 'INVECTIVARVM contra Catilinam Oratio Quarta', Leipzig 1523. The English is 'CICERO AGAINST Catiline, IN IV. Invective Orations ... Done into English By CHRISTOPHER WASE', 1671, i.e. all four orations, of which ours is the fourth; the other contents are orations I-III."
+    },
+    {
+     "id": "09",
+     "source_id": "A09809",
+     "book_id": "69b6ffdc3c7947b468d9bfcd",
+     "tier": "uniform-title",
+     "eye": "contains-translation-of-this-work",
+     "eye_confidence": "medium",
+     "read_from": "catalogue",
+     "evidence": "The English title page (North, 1602) includes 'the liues of nine excellent Chieftaines of warre, taken out of Latine from EMYLIVS PROBVS, by S. G. S.' (known: 'Aemilius Probus' is the name under which Nepos's Vitae excellentium imperatorum circulated; S.G.S. = Simon Goulart, so the English is at second hand through French). It is only nine of Nepos's lives, alongside lives of Epaminondas, Philip o"
+    },
+    {
+     "id": "10",
+     "source_id": "A80769",
+     "book_id": "6a4f7b4b2a450f51978cf48f",
+     "tier": "uniform-title",
+     "eye": "not-a-translation",
+     "eye_confidence": "high",
+     "read_from": "image",
+     "evidence": "The English is an original English work: 'Concerning the New Church Discipline, an excellent letter written by Mr George Cranmer to Mr R. H.', Oxford 1645. Camden appears only as a short prefatory extract, 'The words of the learned Mr Cambden in his Annals of Queene Elizabeth Anno 42' — and Anno 42 is 1600, whereas our title page says the Annales run only 'ad annum salutis M.D.LXXXIX', so even tha"
+    },
+    {
+     "id": "11",
+     "source_id": "A65576",
+     "book_id": "6a26be700e247ebad6de7455",
+     "tier": "uniform-title",
+     "eye": "contains-translation-of-this-work",
+     "eye_confidence": "medium",
+     "read_from": "image",
+     "evidence": "The English is 'The Works of ... Sir George Wharton ... Collected into one Entire Volume' by Gadbury, 1683, whose first leaves do not name Rothmann; the link rests on its catalogue line 'Rothmann, Johann. Chiromancia. English.' (known: the volume reprints Wharton's 1652 'Keiromantia, or the art of divining by the lines of the hand', Englished from Rothmann's LATIN Chiromantiae theorica practica; o"
+    },
+    {
+     "id": "12",
+     "source_id": "A28237",
+     "book_id": "6a42bcd597284560a2b05acd",
+     "tier": "uniform-title",
+     "eye": "contains-translation-of-this-work",
+     "eye_confidence": "high",
+     "read_from": "image",
+     "evidence": "Our title page: 'RERVM ANGLICARVM HENRICO VIII. EDWARDO VI. ET MARIA Regnantibus, ANNALES'. English title page: 'The History of the Reigns of Henry the Seventh, Henry the Eighth, Edward the Sixth, and Queen Mary. The First written by ... Francis Lord Verulam ... The other Three by ... Francis Godwyn, Lord Bishop of Hereford', 1676: Godwin's three reigns are our work (known: Englished by his son Mo"
+    },
+    {
+     "id": "13",
+     "source_id": "A44427",
+     "book_id": "6a51864fa41b33155ccc689d",
+     "tier": "uniform-title",
+     "eye": "same-author-different-work",
+     "eye_confidence": "medium",
+     "read_from": "image",
+     "evidence": "Ours is Murmellius's school florilegium of selected verses from the elegies of Tibullus, Propertius and Ovid ('FLORES ... SELECTI'); the English is Charles Hopkins's own 'Epistolary Poems ... With several of the Choicest Stories of Ovid's Metamorphoses and Tibullus's Elegies', 1694. Hopkins translates stories from the Metamorphoses (not the elegies) and whole elegies of Tibullus, not Murmellius's "
+    },
+    {
+     "id": "14",
+     "source_id": "A85346",
+     "book_id": "69c771e96a0f3d112faf91b8",
+     "tier": "author+title",
+     "eye": "translation-of-this-work",
+     "eye_confidence": "high",
+     "read_from": "image",
+     "evidence": "Our title page: 'CVRIOSITEZ INOVYES, SVR LA SCVLPTVRE TALISMANIQVE DES PERSANS. HOROSCOPE des Patriarches. ET LECTVRE des Estoilles. Par M. I. GAFFAREL'. English title page renders it phrase for phrase: 'Vnheard-of CURIOSITIES: Concerning the TALISMANICAL Sculpture of the PERSIANS; The HOROSCOPE of the PATRIARKES; And the READING of the STARS. Written in French, by JAMES GAFFAREL. And Englished by"
+    },
+    {
+     "id": "15",
+     "source_id": "A38504",
+     "book_id": "6a906325c21b989bffd76b64",
+     "tier": "uniform-title",
+     "eye": "translation-of-this-work",
+     "eye_confidence": "high",
+     "read_from": "image",
+     "evidence": "Our title page: 'SIMPLICII COMMENTARIUS In ENCHIRIDION EPICTETI ... Cum Versione Hieronymi Wolfii'. English title page: 'EPICTETUS HIS MORALS, WITH SIMPLICIUS HIS COMMENT. Made English from the Greek. By GEORGE STANHOPE', 1694 — the Enchiridion with Simplicius's commentary, the same work; Salmasius's notes in ours are not part of the English."
+    },
+    {
+     "id": "16",
+     "source_id": "A28504",
+     "book_id": "69b3027c01f330f7874aaf50",
+     "tier": "author+title",
+     "eye": "contains-translation-of-this-work",
+     "eye_confidence": "medium",
+     "read_from": "image",
+     "evidence": "The page shown reads 'TRAIANI BOCCALINI LAPIS LYDIVS POLITICVS', i.e. a Latin version of Boccalini's Pietra del paragone politico — NOT the 'Ragguagli di Parnasso' of our catalogue line. The English title page is 'I RAGGVAGLI DI PARNASSO: or Advertisements from Parnassus; in two centuries. WITH THE POLITICK TOVCH-STONE. Written originally in Italian', 1656: its 'Politick Touch-stone' is the same w"
+    },
+    {
+     "id": "17",
+     "source_id": "A02778",
+     "book_id": "69b51e1aefd8df28f2db095d",
+     "tier": "uniform-title",
+     "eye": "contains-translation-of-this-work",
+     "eye_confidence": "high",
+     "read_from": "image",
+     "evidence": "Our title page: 'IATROMATHEMATICA HERMETIS TRISMEGISTI AD AMMONEM Aegyptium'. English title page: John Harvey's own 'An Astrologicall Addition, or supplement ... Whereunto is adioyned his translation of the learned worke, of Hermes Trismegistus, intituled, Iatromathematica', 1583 — the same work appended to Harvey's original tract; made from an earlier edition than our 1597 one."
+    },
+    {
+     "id": "18",
+     "source_id": "A13333",
+     "book_id": "6a517c3c7b27c8e8d57f24e8",
+     "tier": "uniform-title",
+     "eye": "contains-translation-of-this-work",
+     "eye_confidence": "high",
+     "read_from": "image",
+     "evidence": "Our title page is Tacitus's Germania: 'de situ. moribus. et populis Germanie Aureus libellus'. English title page: 'THE ANNALES OF CORNELIVS TACITVS. THE DESCRIPTION OF GERMANIE. M.D.XCVIII' (Greenwey) — the 'Description of Germanie' is our work, printed after the much longer Annals."
+    },
+    {
+     "id": "19",
+     "source_id": "A34613",
+     "book_id": "6a42dd83e76baa13aa861b0d",
+     "tier": "author+title",
+     "eye": "translation-of-this-work",
+     "eye_confidence": "high",
+     "read_from": "image",
+     "evidence": "Our title page: 'HISTORIA Transubstantiationis PAPALIS. Cui Praemittitur, atque opponitur ... Doctrina Catholica ... Joh. Episcopus Dunelmensis'. English title page renders it clause for clause: 'THE HISTORY OF POPISH Transubstantiation. To which is Premised and opposed The CATHOLIC DOCTRIN ... Written in Latine By ... JOHN, Late Lord Bishop of DURHAM', London, for the same Henry Brome, 1679."
+    },
+    {
+     "id": "20",
+     "source_id": "A12609",
+     "book_id": "6a4b67f48fe09ab0ff237bda",
+     "tier": "author+title",
+     "eye": "translation-of-this-work",
+     "eye_confidence": "high",
+     "read_from": "image",
+     "evidence": "Same work on both title pages: ours 'Ottomannus LAZARI SORANZI ... potentiae MAHEMETIS III. ... quidve contra Christianos machinetur ... belli, quod nunc in Hungaria geritur'; English 'THE OTTOMAN OF LAZARO SORANZO ... Mahamet the third ... what hee is plotting against the State of Christendome ... the present Warre in Hungarie'. But the English says 'Translated out of Italian into English, by ABR"
+    }
+   ]
+  }
+ },
+ "passage": {
+  "eebo-tcp": {
+   "summary": {
+    "read": 12,
+    "by_passage": {
+     "same-passage": 12
+    },
+    "by_coverage": {
+     "most": 12
+    }
+   },
+   "rows": [
+    {
+     "id": "01",
+     "source_id": "A08649",
+     "book_id": "69b2221d08069e96e843278f",
+     "page_number": 380,
+     "typed_page_idx": 308,
+     "score": 47.3,
+     "margin": 1.52,
+     "passage": "same-passage",
+     "coverage": "most",
+     "fidelity_note": "Close verse translation (Golding's fourteeners) of Ovid Met. XI: the CHOSEN page renders our lines from 'Stabat opus' to 'Iuppiter aequoreae Thetidis connubia fugit', and the 'after' page renders the rest down to 'Myrtea sylua ... bicoloribus obsita bacis' ('a groue of Myrtletrees with frute of dowl"
+    },
+    {
+     "id": "02",
+     "source_id": "A28630",
+     "book_id": "6974b645457dd8909910b9f1",
+     "page_number": 136,
+     "typed_page_idx": 52,
+     "score": 75.9,
+     "margin": 1.88,
+     "passage": "same-passage",
+     "coverage": "most",
+     "fidelity_note": "Close, nearly clause-for-clause (German with Latin terms; the English anglicises the Latin terms and was probably made from the Latin version); the whole page down to 'einen hundert Jaerigen Mann gleich macht eym zwentzig jarigen ... Wer ist der' falls inside the CHOSEN page ('a man of 100. years ol"
+    },
+    {
+     "id": "03",
+     "source_id": "A06415",
+     "book_id": "69b268052195606b88d9a2f2",
+     "page_number": 166,
+     "typed_page_idx": 175,
+     "score": 66.1,
+     "margin": 1.73,
+     "passage": "same-passage",
+     "coverage": "most",
+     "fidelity_note": "Close couplet translation of Lucan VI (Erictho): the CHOSEN page renders our page from 'Nec cessant a caede manus' to 'Nanque timens ne Mars alium uagus iret in orbem', and the 'after' page renders our last lines 'uetuit transmittere bella Philippos, Tot mortes habitura suas' ('Phillippi feilds ... "
+    },
+    {
+     "id": "04",
+     "source_id": "A31706",
+     "book_id": "6a0857a215c643eb1af5c12c",
+     "page_number": 240,
+     "typed_page_idx": 255,
+     "score": 87.5,
+     "margin": 2.03,
+     "passage": "same-passage",
+     "coverage": "most",
+     "fidelity_note": "Close prose translation of Caesar BG VII.73-74 (Cippi, Lilium, Stimuli, the fourteen-mile outer line); all of our page lies inside the CHOSEN page, which also carries Edmonds's surrounding Observations that are not in our text."
+    },
+    {
+     "id": "05",
+     "source_id": "A43737",
+     "book_id": "699389a6ce15387065947dc0",
+     "page_number": 136,
+     "typed_page_idx": 152,
+     "score": 31.9,
+     "margin": 1.59,
+     "passage": "same-passage",
+     "coverage": "most",
+     "fidelity_note": "Our page is a humanist-hand manuscript of a Latin version of Hierocles; the English was made independently from the Greek, so the two are parallel versions that agree sentence for sentence (mensura/MEDIOCRITY, rationalem animum qui corporis dux est, uestem ... uasa non aurea aut argentea ... domum n"
+    },
+    {
+     "id": "06",
+     "source_id": "A06415",
+     "book_id": "69b222f556715b0e32475ce0",
+     "page_number": 206,
+     "typed_page_idx": 239,
+     "score": 64.5,
+     "margin": 1.82,
+     "passage": "same-passage",
+     "coverage": "most",
+     "fidelity_note": "Close couplet translation of Lucan VIII (Cornelia's lament, Septimius beheading Pompey): our first seven lines are on the 'before' page and the rest, down to 'At postquam trunco ceruix abscissa recessit' ('But when the head was torne Off from the trunke'), is on the CHOSEN page."
+    },
+    {
+     "id": "07",
+     "source_id": "A31706",
+     "book_id": "69b221c408069e96e84310d0",
+     "page_number": 254,
+     "typed_page_idx": 260,
+     "score": 78.2,
+     "margin": 1.54,
+     "passage": "same-passage",
+     "coverage": "most",
+     "fidelity_note": "Close prose translation of Caesar BG VII.82-84: our first sentence ends the 'before' page, then Edmonds's Observations intervene, and the rest of our page (collis a septentrionibus, Antistius Reginus and Caninius, sexaginta millia, Vergasillaunus, 'pugnatur uno tempore omnibus locis') is in the CHOS"
+    },
+    {
+     "id": "08",
+     "source_id": "A28534",
+     "book_id": "69bd9fbff6d63c9197481f25",
+     "page_number": 61,
+     "typed_page_idx": 48,
+     "score": 57.7,
+     "margin": 1.69,
+     "passage": "same-passage",
+     "coverage": "most",
+     "fidelity_note": "Very close, word-for-word rendering of Boehme's German (Ellistone); the whole page is in the CHOSEN page except the last line and a half ('Die andere Eigenschafft nach der Ertoedtung im salnitrischen Schracke ... der metallische Leib'), which opens the 'after' page; paragraph numbers run one higher "
+    },
+    {
+     "id": "09",
+     "source_id": "A34451",
+     "book_id": "6a267ee06c1f37c9c4f3cf53",
+     "page_number": 42,
+     "typed_page_idx": 126,
+     "score": 109.3,
+     "margin": 3.69,
+     "passage": "same-passage",
+     "coverage": "most",
+     "fidelity_note": "Close but slightly expansive English of the German 'Novum Lumen' tract (adds 'Oh friends', doublets like 'distillation or extraction'); the page from Paracelsus/Basilius through the wine-lees simile to 'durch gantz Deutschland an den Wasserfluessen Steine' is in the CHOSEN page, and our last lines ("
+    },
+    {
+     "id": "10",
+     "source_id": "A13126",
+     "book_id": "69b62fba1c1c21a3737f9b57",
+     "page_number": 216,
+     "typed_page_idx": 112,
+     "score": 83.9,
+     "margin": 2.66,
+     "passage": "same-passage",
+     "coverage": "most",
+     "fidelity_note": "Close, slightly amplifying prose translation (Holland) of Suetonius Aug. 96-97; the whole of our small page (Bononia eagle, the Thessalian at Philippi, Perusia sacrifice, the fish in Sicily, Eutychus and Nicon at Actium, 'Mors quoque eius') lies inside the CHOSEN page."
+    },
+    {
+     "id": "11",
+     "source_id": "A01518",
+     "book_id": "69dbca671040d1d5e20abef9",
+     "page_number": 58,
+     "typed_page_idx": 62,
+     "score": 68.4,
+     "margin": 1.72,
+     "passage": "same-passage",
+     "coverage": "most",
+     "fidelity_note": "Fairly close English of the Latin De contemptu mundi (incunable gothic type), with household lists freely expanded and the scripture source tags ('in matheo', 'in psalmo', 'in epistola canonica') and the chapter heading 'De damnabili humane conditionis progressu' dropped; our first six lines are on "
+    },
+    {
+     "id": "12",
+     "source_id": "A96634",
+     "book_id": "69ac83ddf37088db519184d5",
+     "page_number": 188,
+     "typed_page_idx": 95,
+     "score": 179,
+     "margin": 2.36,
+     "passage": "same-passage",
+     "coverage": "most",
+     "fidelity_note": "Close, literal (latinate) prose translation of Willis De Febribus; the whole of our page, from the purge-and-topic method through the 'Juvenis quidam nobilis' case history down to 'ab emetico admodum leni', lies inside the long CHOSEN page."
     }
    ]
   }

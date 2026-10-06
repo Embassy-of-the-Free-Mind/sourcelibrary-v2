@@ -44,6 +44,11 @@ for (const b of ours) {
 const df = new Map();
 for (const b of ours) for (const s of b._stems) df.set(s, (df.get(s) || 0) + 1);
 const distinctive = (s) => (df.get(s) || 0) <= 60;
+// Rarity counted over AUTHORS, not books: we hold Paracelsus' Archidoxa in a dozen editions, and a count
+// over books called its one distinctive word common.
+const adf = new Map();
+for (const b of ours) for (const s of b._stems) { if (!adf.has(s)) adf.set(s, new Set()); adf.get(s).add(b._sur); }
+const authorsWith = (s) => adf.get(s)?.size || 0;
 
 const MARK = /\btranslat|\benglished\b|\bout of (the )?(latin|high[- ]?dutch|german|low[- ]?dutch|teutonick)|\b(done|put|turned|rendered|made) in(to)? english\b|\bwritten (originally |first )?in (latin|high[- ]?dutch|german)|\bfaithfully (rendred|rendered)\b/i;
 const DATES = /,?\s*(?:(?:ca\.|fl\.|b\.|d\.)\s*)?\d{3,4}\??(?:\s*(?:or|-)\s*(?:ca\.\s*)?\d{0,4}\??)*\.?|,?\s*\d+(?:th|st|nd|rd) cent\.?(?:\s*B\.C\.)?/;
@@ -96,7 +101,9 @@ for (const r of manifest) {
       const shared = [...tt].filter((t) => t.length >= 5 && b._stems.has(t) && distinctive(t) && !isName(t) && !/^(teutonic|philosoph|german|engl|latin|compil|translat|world|booke?$|treatis|written|learned)/.test(t));
       // One shared stem is right about half the time (read: 23 pairs, 2026-10-06), so it counts only when the
       // stem is rare in our titles, and then as a candidate, not a match.
-      const strong = shared.length >= 2, weak = shared.length === 1 && (df.get(shared[0]) || 0) <= 8;
+      const mine = cands(main.surname);
+      const within = (t) => mine.filter((x) => x._stems.has(t)).length / Math.max(1, mine.length);   // share of this author's held books whose title has the stem
+      const strong = shared.length >= 2, weak = shared.length === 1 && shared[0].length >= 6 && (authorsWith(shared[0]) <= 3 || within(shared[0]) <= 0.5);
       if (strong || weak) add(b, 'author+title', strong ? 'high' : 'medium', `author ${main.name} = ${b.author}; the English title says it is translated; shared title stems: ${shared.slice(0, 5).join(', ')}`);
       else add(b, 'author-only', 'low', `author ${main.name} = ${b.author}; the English title says it is translated; which work is not established`);
     }

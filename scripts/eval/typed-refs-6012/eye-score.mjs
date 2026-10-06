@@ -39,4 +39,18 @@ for (const [src, dir] of [['dta', 'dta'], ['camena', 'camena'], ['eebo-tcp', 'ee
     console.log(kind, src, JSON.stringify(s));
   }
 }
+// EEBO-TCP translations: the relation (20 texts) and the passage placement (12 pages).
+for (const kind of ['translation', 'passage']) {
+  const d = path.join(WORK, 'eye', kind, 'eebo-tcp');
+  if (!fs.existsSync(`${d}/verdicts.jsonl`)) continue;
+  const idx = new Map(JSON.parse(fs.readFileSync(`${d}/index.json`, 'utf8')).map((i) => [i.id, i]));
+  const rows = readJsonl(`${d}/verdicts.jsonl`).map((v) => { const i = idx.get(v.id); return kind === 'translation'
+    ? { id: v.id, source_id: i.source_id, book_id: i.book_id, tier: i.tier, eye: v.verdict, eye_confidence: v.confidence, read_from: v.read_from, evidence: String(v.evidence || '').slice(0, 400) }
+    : { id: v.id, source_id: i.source_id, book_id: i.book_id, page_number: i.page_number, typed_page_idx: i.typed_page_idx, score: i.score, margin: i.margin, passage: v.passage, coverage: v.coverage, fidelity_note: String(v.fidelity_note || '').slice(0, 300) }; });
+  const count = (k) => rows.reduce((a, r) => { a[r[k]] = (a[r[k]] || 0) + 1; return a; }, {});
+  const s = kind === 'translation' ? { read: rows.length, by_verdict: count('eye'), relation_holds: rows.filter((r) => /^(translation-of-this-work|contains-translation-of-this-work|our-book-contains-the-original)$/.test(r.eye)).length, by_tier: rows.reduce((a, r) => { const ok = /^(translation|contains|our-book)/.test(r.eye); a[r.tier] ??= [0, 0]; a[r.tier][0] += ok ? 1 : 0; a[r.tier][1]++; return a; }, {}) }
+    : { read: rows.length, by_passage: count('passage'), by_coverage: count('coverage') };
+  out[kind] = { 'eebo-tcp': { summary: s, rows } };
+  console.log(kind, JSON.stringify(s));
+}
 fs.writeFileSync('scripts/eval/typed-refs-6012/eye-verdicts.json', JSON.stringify(out, null, 1));
