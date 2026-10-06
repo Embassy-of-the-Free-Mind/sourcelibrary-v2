@@ -30,6 +30,12 @@ claim on the wrong layer is the single most common defect in this cluster.
 
     <normalized title>|<author surname>|<year>|v<volume>
 
+The surname slot drops a role designation that trails a name ("Lazarus Zetzner
+(ed.)", "Kanton Bern [Hrsg.]") — it used to key as `ed` (#4444, 2026-10-06).
+**Replay a builder change before merging it:** `scripts/audit/edition-key-replay.mjs`
+gives keys changed, merges and splits against a git ref, then re-stamp with
+`identity-worker.mjs --restamp` once the change is deployed.
+
 **Never reimplement it.** Three private copies of "same edition" is what this
 layer replaced — `dedup.ts`, `duplicate-integrity-check.mjs` and the admin
 duplicates route each had one, and they disagreed: the same corpus read as 456
