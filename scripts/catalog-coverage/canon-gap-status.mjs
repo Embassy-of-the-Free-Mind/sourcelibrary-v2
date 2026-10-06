@@ -41,12 +41,12 @@ const SHELF = 'scripts/catalog-coverage/eternity-shelf-5513.json';
 // status: done | running | next | blocked. cost_usd: the next action's cost where it has one.
 const STATUS = {
   'derge-tengyur': { status: 'running', owner_issue: 5497,
-    done: '213 volumes imported hidden and held; 128,369 of 128,639 pages carry the Esukhia public-domain text, aligned folio by folio to the BDRC scans. Draft English for 110,952 pages (187 volumes) with gemini-3-flash-preview, one page per request, for about $197; an unreviewed machine draft, with about 2 to 5 reversed statements per 100 pages measured against 84000.',
+    done: '213 volumes imported hidden and held; 128,369 of 128,639 pages carry the Esukhia public-domain text, aligned folio by folio to the BDRC scans. The full run drafted English for 110,952 pages (187 volumes) with gemini-3-flash-preview, one page per request, for about $195; an unreviewed machine draft, with about 2 to 5 reversed statements per 100 pages measured against 84000.',
     next_action: 'Drafting the last 26 volumes (17,400 pages: the end of the tantra commentaries, grammar, medicine, miscellany and the catalogue; about $31, approved 4 October). The volumes are published as an unreviewed machine draft only once the reader shows the licence and the draft label (#5571).',
     cost_usd: 31 },
   'derge-kangyur': { status: 'running', owner_issue: 5665,
     done: '103 volumes imported from BDRC (W4CZ5369, the copy the Esukhia text transcribes), held and hidden; 62,375 pages carry the Esukhia public-domain text, aligned folio by folio, in every volume but one. The 40 texts 84000 lists as not begun have a draft English (1,835 pages, $3.39).',
-    next_action: 'Align the last volume (vol. 20), then price a draft English for the rest of what 84000 has not translated. Publication waits on the reader showing the licence and draft label (#5571).',
+    next_action: 'Fill the Prajñāpāramitā volumes still short of text (vol. 20 and parts of vols. 15, 16, 19 and 24, about 2,600 pages), which needs a new alignment rule; correct the stored 84000 field for texts that run across volumes before pricing a draft English for the rest of what 84000 has not translated. Publication waits on the reader showing the licence and draft label (#5571).',
     cost_usd: 0 },
   cbeta: { status: 'next', owner_issue: 2554,
     next_action: 'Pair the whole CBETA canon with our scans once the Chan texts below are translated and published. CBETA\'s licence is non-commercial with attribution, so every page will show it (#5571).',
@@ -92,12 +92,12 @@ const STATUS = {
     next_action: 'Ask Ganjoor for terms before any import.', cost_usd: null },
   'mongolian-kanjur': { status: 'running', owner_issue: 5664,
     done: 'Scans of BDRC W4CZ5370 (108 volumes) imported, held and hidden.',
-    next_action: 'Find a way to read it: our cheapest model drops about 70% of the text columns (#5664). This needs a typed reference text or a Mongolist first.', cost_usd: 0 },
+    next_action: 'Find a way to read it: no engine we tried reads the script (Gemini Flash read 0 of 31 columns on 10 test pages and wrote fluent English that matches no passage; CrossLing-OCR-Mini returned Tibetan script) (#5664). A recogniser would first need 10 to 20 pages transcribed by a Mongolist, or IMU\'s line data.', cost_usd: 0 },
   'tripitaka-koreana': { status: 'blocked', owner_issue: 5513,
     blocker: 'Licence unverified: the K-Tripitaka e-text was unreachable from our host and no licence was found (gap map priced it via a CBETA proxy).',
     next_action: 'Obtain the e-text and its terms from the Haeinsa / Dongguk project.', cost_usd: null },
   kanripo: { status: 'next', owner_issue: 5568,
-    next_action: 'Match the Kanripo typed text (CC BY-SA 4.0) to our Siku Quanshu scans instead of reading them by OCR: 7,001 of our books have matching chapters, and 36 of 40 pilot books aligned (#5568).',
+    next_action: 'Our Siku Quanshu scans were read with PaddleOCR-VL instead of being replaced by the Kanripo typed text (decided 2 October, #5547; 7,006 books, 1,033,868 pages written by 5 October, #5600): 36 of 40 pilot books aligned, but on 28% of pages Kanripo\'s page break is a column or more off the scan. Kanripo serves as a check on that OCR (6.6% of pages flagged for review). Using it as a second text layer for up to 7,001 books waits on its licence: the Kanripo organisation states CC BY-SA 4.0, and no text states its own (#5568).',
     cost_usd: null },
 };
 
