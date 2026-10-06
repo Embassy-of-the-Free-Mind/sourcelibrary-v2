@@ -110,6 +110,7 @@ export interface FooterStrings {
   developers: string;
   giveFeedback: string;
   checkPages: string;
+  qualityCenter: string;
   licenseLine: string;
 }
 
@@ -235,6 +236,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     developers: 'Developers',
     giveFeedback: 'Give Feedback',
     checkPages: 'Check a few pages',
+    qualityCenter: 'Quality Center',
     licenseLine: 'Public domain originals · Translations CC BY-SA 4.0 · AI training requires a license',
   },
   es: {
@@ -268,6 +270,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     developers: 'Desarrolladores',
     giveFeedback: 'Enviar comentarios',
     checkPages: 'Revisar algunas páginas',
+    qualityCenter: 'Centro de calidad',
     licenseLine: 'Originales de dominio público · Traducciones CC BY-SA 4.0 · El entrenamiento de IA requiere licencia',
   },
 };
