@@ -30,6 +30,8 @@ const ISSUE = `${GH}issues/`;
 
 const n = (v: number) => v.toLocaleString('en-US');
 const pct = (v: number, digits = 0) => `${(v * 100).toFixed(digits)}%`;
+/** A share that rounds to 0% but is not zero reads as "under 1%", not "0%". */
+const share = (part: number, whole: number) => (part > 0 && part / whole < 0.005 ? 'under 1%' : pct(part / whole));
 const longDate = (iso: string) =>
   new Date(`${iso.slice(0, 10)}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
 
@@ -157,6 +159,7 @@ export default function QualityCenterPage() {
           </p>
 
           <Sub>By language</Sub>
+          <p className="md:hidden text-xs text-muted mb-2">The table scrolls sideways.</p>
           <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
             <table className="min-w-[680px] w-full text-sm text-secondary">
               <thead>
@@ -181,7 +184,7 @@ export default function QualityCenterPage() {
                         {ocr?.median_cer != null ? (
                           <>{pct(ocr.median_cer, 1)} <span className="text-muted text-xs">({ocr.pages_scored} pages)</span></>
                         ) : (
-                          <span className="text-muted">not measured</span>
+                          <span className="text-muted">{row ? 'not measured' : '—'}</span>
                         )}
                       </td>
                       <td className={td}>
@@ -239,7 +242,7 @@ export default function QualityCenterPage() {
             )}
             {caveats.map(r => (
               <li key={r.language}>
-                {r.language}: {r.caveat!.text}
+                {r.language} &mdash; {r.caveat!.text}
                 {'issue' in r.caveat! && r.caveat!.issue ? <> <IssueLink num={r.caveat!.issue as number} /></> : null}
               </li>
             ))}
@@ -259,6 +262,7 @@ export default function QualityCenterPage() {
             For some canons the text beside the scan was typed by people (an open e-text edition aligned page by page to our
             scans) rather than read by a machine. Those pages can still carry errors of alignment, but not misreadings.
           </p>
+          <p className="md:hidden text-xs text-muted mb-2">The table scrolls sideways.</p>
           <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
             <table className="min-w-[560px] w-full text-sm text-secondary">
               <thead>
@@ -281,7 +285,7 @@ export default function QualityCenterPage() {
                         {n(t.pages_transcribed)} <span className="text-muted text-xs">of {n(t.pages_scanned)}</span>
                       </td>
                       <td className={td}>
-                        {t.pages_transcribed > 0 ? (typed > 0 ? `${pct(typed / t.pages_transcribed)} (${n(typed)})` : 'none') : <span className="text-muted">—</span>}
+                        {t.pages_transcribed > 0 ? (typed > 0 ? `${share(typed, t.pages_transcribed)} (${n(typed)} pages)` : 'none') : <span className="text-muted">—</span>}
                       </td>
                       <td className={td}>{n(t.pages_translated)}</td>
                     </tr>
@@ -302,8 +306,8 @@ export default function QualityCenterPage() {
         {/* ── 2. Experiments ── */}
         <Section id="experiments" title="Experiments">
           <p className="text-secondary leading-relaxed mb-4 max-w-3xl">
-            Every figure above comes from an experiment with a written record: the question, how it was run, the result,
-            and the decision it led to. Null results and retractions are recorded too.
+            The quality figures above come from experiments, and each experiment has a written record: the question, how
+            it was run, the result, and the decision it led to. Null results and retractions are recorded too.
           </p>
 
           <Sub>Running now</Sub>

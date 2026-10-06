@@ -58,7 +58,7 @@ export const WAYS: Way[] = [
   {
     name: 'Your own project',
     what: 'Use the texts in your own research, teaching or software, through the site or the public API.',
-    leaves: 'Your work, citing the pages it uses. Tell us about it and we will link to it.',
+    leaves: 'Your work, citing the pages it uses. Tell us about it at team@sourcelibrary.org.',
     door: { label: 'For developers', href: '/developers' },
   },
   {
