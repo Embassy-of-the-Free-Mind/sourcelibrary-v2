@@ -72,7 +72,7 @@ const MAX_CHUNKS_PER_PAGE = 12;
 const MAX_PRUNE_FRACTION = 0.2;
 /** A handful of pages may always leave a type (five features retired at once is not a failed crawl). */
 const MIN_PRUNE_ALARM = 5;
-const CRAWL_CONCURRENCY = 4;
+const CRAWL_CONCURRENCY = 2;
 const APP_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), '../../src/app');
 /**
  * Not destinations for a main-site search: localized twins of English pages (the
@@ -164,10 +164,20 @@ const sha = (s) => crypto.createHash('sha256').update(s).digest('hex');
 
 // ── Sources ────────────────────────────────────────────────────────
 
-async function fetchHtml(p) {
+async function fetchOnce(p) {
   const res = await fetch(SITE_BASE + p, { headers: { 'User-Agent': UA }, redirect: 'manual', signal: AbortSignal.timeout(30000) });
   if (!res.ok) return { status: res.status, html: null };
   return { status: res.status, html: await res.text() };
+}
+
+/** One retry on a 5xx or a timeout: the category pages answer 500 now and then (three of 30 on 2026-10-06). */
+async function fetchHtml(p) {
+  try {
+    const first = await fetchOnce(p);
+    if (first.status < 500) return first;
+  } catch { /* retried below */ }
+  await new Promise((r) => setTimeout(r, 3000));
+  return fetchOnce(p);
 }
 
 /** Static routes: every page.tsx under src/app with no dynamic segment. Route groups `(x)` are not part of the URL. */
