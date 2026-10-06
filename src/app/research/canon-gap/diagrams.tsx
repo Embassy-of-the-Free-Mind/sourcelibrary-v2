@@ -394,7 +394,7 @@ export function TengyurProgress({
     { n: fmt(pagesImaged), label: 'page images imported from BDRC (W23703)', href: 'https://library.bdrc.io/show/bdr:W23703' },
     { n: fmt(pagesWithText), label: 'pages carrying the Esukhia public-domain text, aligned folio by folio', href: 'https://github.com/Esukhia/derge-tengyur' },
     { n: fmt(pagesTranslated), label: `pages with a draft English translation, for $${fmt(Math.round(spendUsd))} in model costs` },
-    { n: `${drafted} / ${perVolume.length}`, label: 'volumes drafted in full; every page is an unreviewed machine draft' },
+    { n: `${drafted} / ${perVolume.length}`, label: 'volumes drafted in full; no page has yet been reviewed by a scholar' },
   ];
   return (
     <Figure
