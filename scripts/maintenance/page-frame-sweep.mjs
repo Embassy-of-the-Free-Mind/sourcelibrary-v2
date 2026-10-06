@@ -20,6 +20,9 @@
  *     [--apply] [--book=<id>] [--pages=13,14] [--provider=bph] [--limit-books=N] \
  *     [--checkpoint=scratchpad/page-frame-sweep.done] [--stop-file=<path>] [--max-error-rate=0.05]
  *
+ * Undo: --rollback [--since=<ISO>] [--book=<id>] [--ar-outside=0.5,2.2] [--apply]
+ * removes the stored frames (see the --rollback block).
+ *
  * Exit 3 = stopped on the error-rate guard. For the full run use
  * page-frame-sweep-waves.sh, which runs it in waves with a review sheet each.
  *
@@ -98,6 +101,32 @@ async function pool(items, fn) {
   await Promise.all(Array.from({ length: CONCURRENCY }, async () => {
     while (i < items.length) { const k = i++; await fn(items[k]); }
   }));
+}
+
+// --rollback: remove what the sweep wrote. Frames never touch an image, so taking
+// the field off restores the reader to the full scan. Books come from sweep_log
+// (every page-frame-* sweep, or --since=<ISO>), pages by book_id (indexed; never
+// query pages by page_frame, it has no index). --ar-outside=lo,hi removes only
+// frames whose image shape is outside that range. Dry run unless --apply.
+if (process.argv.includes('--rollback')) {
+  const since = arg('since', null);
+  const shape = arg('ar-outside', null)?.split(',').map(Number);
+  const ids = await db.collection('sweep_log').distinct('book_id', {
+    sweep: { $regex: '^page-frame-v' }, action: 'framed',
+    ...(since ? { timestamp: { $gte: new Date(since) } } : {}),
+    ...(ONE_BOOK ? { book_id: ONE_BOOK } : {}),
+  });
+  const extra = shape ? { $or: [{ 'page_frame.ar': { $lt: shape[0] } }, { 'page_frame.ar': { $gt: shape[1] } }] } : {};
+  let pages = 0;
+  for (const id of ids) {
+    const q = { book_id: id, page_frame: { $exists: true }, ...extra };
+    const n = APPLY ? (await pagesCol.updateMany(q, { $unset: { page_frame: '' } })).modifiedCount : await pagesCol.countDocuments(q);
+    if (n && APPLY) await recordSweepAction(db, { sweep: SWEEP, book_id: id, action: 'rolled-back', detail: { pages: n, ar_outside: shape ?? undefined } });
+    pages += n;
+  }
+  console.log(`${APPLY ? 'ROLLED BACK' : 'DRY RUN: would roll back'} ${pages} frames on ${ids.length} books${shape ? ` (shape outside ${shape})` : ''}`);
+  await client.close();
+  process.exit(0);
 }
 
 const bookFilter = ONE_BOOK
