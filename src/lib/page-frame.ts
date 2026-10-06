@@ -66,9 +66,11 @@ const MAX_PRINTED_LINES = 0.15;
  *  with ink in it, the cut is slicing letters (text that runs up to the bed). */
 const MAX_INKED_LINES = 0.1;
 const CUT_STRIP = 0.01;
-/** An image narrower than this (w/h) is a spine or an edge, not a page; a tall
- *  octavo is ~0.6. Its "bed" is the spine's own ends and label. */
-const MIN_PAGE_AR = 0.4;
+/** Outside this shape (w/h) an image is a spine, or the fore-edge, head or tail
+ *  of a closed book, not a page (a tall octavo is ~0.6, a two-page spread ~1.5).
+ *  Its "bed" is the binding itself. Bounds from the 2026-10-06 sweep reviews. */
+const MIN_PAGE_AR = 0.5;
+const MAX_PAGE_AR = 2.2;
 /** Trimming less than this fraction of the area is not worth a frame. */
 const MIN_TRIM_AREA = 0.02;
 /** Bands along each side, so a tilted page edge is found where it comes furthest in. */
@@ -191,7 +193,7 @@ function innermostCut(
  */
 export function detectPageFrame(lum: ArrayLike<number>, w: number, h: number): FrameVerdict {
   if (w < 16 || h < 16) return { kind: 'skip', reason: 'tiny' };
-  if (w / h < MIN_PAGE_AR) return { kind: 'skip', reason: 'not-a-page' };
+  if (w / h < MIN_PAGE_AR || w / h > MAX_PAGE_AR) return { kind: 'skip', reason: 'not-a-page' };
   const col = new Array<number>(w).fill(0);
   const row = new Array<number>(h).fill(0);
   for (let y = 0; y < h; y++) {

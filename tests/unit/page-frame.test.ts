@@ -163,3 +163,10 @@ describe('detectPageFrame refuses printing mistaken for bed', () => {
     expect(v.kind).not.toBe('frame');
   });
 });
+
+describe('detectPageFrame refuses edge-on views of a closed book', () => {
+  it('leaves a head or tail edge (very wide) whole', () => {
+    expect(detectPageFrame(img(240, 60, (x, y) => (y < 8 || y > 50 ? 20 : undefined)), 240, 60))
+      .toEqual({ kind: 'skip', reason: 'not-a-page' });
+  });
+});
