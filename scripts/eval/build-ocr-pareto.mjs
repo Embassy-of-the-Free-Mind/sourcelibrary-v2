@@ -20,6 +20,8 @@
  * Writes src/data/ocr-pareto.json. No timestamps: unchanged inputs give an identical file.
  *   node scripts/eval/build-ocr-pareto.mjs           # write
  *   node scripts/eval/build-ocr-pareto.mjs --check   # exit 1 if the committed file is stale
+ *   node scripts/eval/build-ocr-pareto.mjs --dump-sets=<file>   # write each chart's most-pages page keys
+ *                                                    # (stratum|slug) and engines, nothing else (#6011 wave 2)
  *
  * The rules (.claude/docs/eval-design.md §7):
  *   - engines are compared ONLY on pages every plotted engine read, against a typed reference,
@@ -245,7 +247,7 @@ function panel(script, kind, byEngine, engines, pages, production) {
   };
 }
 
-const charts = [], noChart = [];
+const charts = [], noChart = [], mostPagesSets = {};
 for (const script of SCRIPTS) {
   const rows = script.source === 'syriac' ? syriacRows : accRows.filter(r => script.match(r.row));
   const byEngine = pagesOf(rows);
@@ -261,6 +263,7 @@ for (const script of SCRIPTS) {
   }
   const wide = greedy(byEngine, production, Math.max(MIN_PAGES, Math.ceil(nProd * WIDE_KEEP)));
   const panels = [panel(script, 'most-pages', byEngine, wide.engines, wide.pages, production)];
+  mostPagesSets[script.id] = { engines: wide.engines, pages: [...wide.pages].sort() };
   const broad = greedy(byEngine, production, MIN_PAGES);
   if (broad.engines.length > wide.engines.length) panels.push(panel(script, 'most-engines', byEngine, broad.engines, broad.pages, production));
   // Engines run with a reference on this script but on too few of the same pages to join either panel.
@@ -280,6 +283,8 @@ const out = {
   no_chart: [...noChart, ...NO_REFERENCE],
 };
 const json = JSON.stringify(out, null, 1) + '\n';
+const dumpTo = process.argv.find(a => a.startsWith('--dump-sets='))?.slice('--dump-sets='.length);
+if (dumpTo) { fs.writeFileSync(dumpTo, JSON.stringify(mostPagesSets, null, 1) + '\n'); console.log(`wrote ${dumpTo}`); process.exit(0); }
 // --check: fail when the committed file is not what the inputs give (CI test); writes nothing.
 if (process.argv.includes('--check')) {
   const have = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8') : '';
