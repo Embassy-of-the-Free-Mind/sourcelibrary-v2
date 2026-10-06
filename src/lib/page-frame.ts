@@ -35,8 +35,9 @@ export interface PageFrame {
 /** 1: one cut per side from whole-image means. 2: the innermost edge of a tilted
  *  page, so no wedge of bed shows beside it. 3: bed must reach the image edge, so
  *  a dark printed band behind a paper margin (a headpiece, a heavy rule) is kept.
- *  4: also trims flat pure-white canvas around a page with toned or textured paper. */
-export const PAGE_FRAME_VERSION = 4;
+ *  4: also trims flat pure-white canvas around a page with toned or textured paper.
+ *  5: a stepped page edge no longer leaves a notch of canvas in a corner of the frame. */
+export const PAGE_FRAME_VERSION = 5;
 
 /** Box in pixels of the analysed (usually downsampled) image. */
 export interface PixelBox { x: number; y: number; w: number; h: number }
@@ -104,6 +105,9 @@ const PAPER_MAX = 250;
 const MIN_PAPER = 0.05;
 /** Paper that must stay blank inside a ragged-edge cut on canvas (fraction of the size). */
 const CLEAR_INSIDE = 0.03;
+/** A corner notch (canvas inside a corner of the box, where the page edge is
+ *  stepped) is closed by moving one cut in by at most this fraction of the size. */
+const NOTCH_MAX = 0.15;
 
 function median(xs: number[]): number {
   const s = [...xs].sort((a, b) => a - b);
@@ -192,9 +196,19 @@ function innermostCut(
   const inner = fromEnd ? Math.min(cut, deepest) : Math.max(cut, deepest);
   if (inner === cut) return cut;
   if (Math.abs(inner - cut) > Math.ceil(MAX_TILT * (b - a))) return cut;
-  // What is given up must be bed or blank paper. Along each line, walk inward from
-  // the old cut: the bed (and its shadow ramp) runs into it from outside; past that, any pixel as
-  // dark as the bed is ink, and the paper must average clean.
+  return givesUpOnlyBlank(cut, inner, fromEnd, thr, ref, span, n, at, clear) ? inner : cut;
+}
+
+/**
+ * True when moving a cut from `cut` in to `inner` gives up only bed, canvas or
+ * blank paper (arguments as for innermostCut). Along each line, walk inward from
+ * the old cut: the bed (and its shadow ramp) runs into it from outside; past
+ * that, any pixel as dark as the bed is ink, and the paper must average clean.
+ */
+function givesUpOnlyBlank(
+  cut: number, inner: number, fromEnd: boolean, thr: number, ref: number,
+  [a, b]: [number, number], n: number, at: (k: number, j: number) => number, clear: number,
+): boolean {
   const step = fromEnd ? -1 : 1;
   for (let j = a; j <= b; j++) {
     let k = cut;
@@ -207,13 +221,13 @@ function innermostCut(
     for (; k !== inner; k += step) {
       const v = at(k, j);
       // On canvas nothing stands between the cut and a faint mark: every pixel must be blank.
-      if (v < (clear ? ref * BLANK_RATIO : thr)) return cut;
+      if (v < (clear ? ref * BLANK_RATIO : thr)) return false;
       sum += v; cnt++;
     }
-    if (cnt && sum / cnt < ref * BLANK_RATIO) return cut;
-    for (let c = 0; c < clear && k >= 0 && k < n; c++, k += step) if (at(k, j) < ref * BLANK_RATIO) return cut;
+    if (cnt && sum / cnt < ref * BLANK_RATIO) return false;
+    for (let c = 0; c < clear && k >= 0 && k < n; c++, k += step) if (at(k, j) < ref * BLANK_RATIO) return false;
   }
-  return inner;
+  return true;
 }
 
 /**
@@ -264,6 +278,12 @@ export function detectPageFrame(lum: ArrayLike<number>, w: number, h: number): F
   // guard, the verdict is the one the dark cuts alone would have had.
   const canvas = canvasCuts(lum, w, h, dark, thr, ref);
   if (canvas) {
+    // Closing a corner notch is tried first, and dropped if it fails any guard.
+    const closed = closeNotches(lum, w, h, canvas, thr, ref);
+    if (closed) {
+      const v = verdictFor(lum, w, h, closed, ref, thr);
+      if (v.kind === 'frame') return v;
+    }
     const v = verdictFor(lum, w, h, canvas, ref, thr);
     if (v.kind === 'frame') return v;
   }
@@ -364,6 +384,65 @@ function canvasCuts(lum: ArrayLike<number>, w: number, h: number, dark: Cuts, th
   }
   if (paper < (cuts.r - cuts.l + 1) * (cuts.b - cuts.t + 1) * MIN_PAPER) return null;
   return cuts;
+}
+
+/**
+ * A page whose edge is stepped (a leaf scanned with a corner missing, or laid
+ * over a larger white sheet) leaves a notch of canvas in a corner of the box,
+ * touching both of its edges (#4276, Bodhicaryavatara p5). For each corner with
+ * a notch deeper than a tilted straight edge could leave, ONE of the two cuts
+ * that meet there moves in just past it: the one that gives up less, and only
+ * when everything it gives up is canvas or blank paper, with blank paper inside
+ * the new cut. Otherwise the notch stays: a white corner costs less than a cut
+ * word. Returns null when no cut moved.
+ */
+function closeNotches(lum: ArrayLike<number>, w: number, h: number, cuts: Cuts, thr: number, ref: number): Cuts | null {
+  let { l, r, t, b } = cuts;
+  const win = Math.max(3, Math.round(Math.min(w, h) * MIN_RUN));
+  const cx = Math.max(3, Math.round(w * CLEAR_INSIDE)), cy = Math.max(3, Math.round(h * CLEAR_INSIDE));
+  let moved = false;
+  for (const [left, top] of [[true, true], [false, true], [true, false], [false, false]]) {
+    const bw = r - l + 1, bh = b - t + 1;
+    // The notch must be deeper than the wedge a tilted edge leaves along the other side.
+    const minW = Math.ceil(MAX_TILT * bh) + 2, minH = Math.ceil(MAX_TILT * bw) + 2;
+    if (minW * 2 > bw || minH * 2 > bh) continue;
+    // Pixel i columns in from this corner's vertical cut and j rows in from its horizontal one.
+    const px = (i: number, j: number) => lum[(top ? t + j : b - j) * w + (left ? l + i : r - i)];
+    // A run of `len` pixels from the box edge is canvas when every pixel is
+    // near-white and every short window of it is flat white (the v4 line test,
+    // on windows: a long white run must not dilute a start of faint paper).
+    const canvasRun = (len: number, at: (k: number) => number) => {
+      let sum = 0;
+      for (let k = 0; k < len; k++) {
+        const v = at(k);
+        if (v < CANVAS_MIN) return false;
+        sum += v;
+        if (k >= win) sum -= at(k - win);
+        if (k >= win - 1 && sum / win < CANVAS_MEAN) return false;
+      }
+      return true;
+    };
+    // Rows (from the horizontal cut) whose first minW pixels are canvas, and the same for columns.
+    let rows = 0, cols = 0;
+    while (rows < bh && canvasRun(minW, i => px(i, rows))) rows++;
+    while (cols < bw && canvasRun(minH, j => px(cols, j))) cols++;
+    if (rows < minH || cols < minW) continue;
+    // Moving the horizontal cut gives up `rows` lines of the box's width; the vertical one, `cols` of its height.
+    const horizontal = rows * bw <= cols * bh;
+    if (horizontal) {
+      if (rows > h * NOTCH_MAX) continue;
+      const to = top ? t + rows : b - rows;
+      if (!givesUpOnlyBlank(top ? t : b, to, !top, thr, ref, [l, r], h, (y, x) => lum[y * w + x], cy)) continue;
+      if (top) t = to; else b = to;
+    } else {
+      if (cols > w * NOTCH_MAX) continue;
+      const to = left ? l + cols : r - cols;
+      if (!givesUpOnlyBlank(left ? l : r, to, !left, thr, ref, [t, b], w, (x, y) => lum[y * w + x], cx)) continue;
+      if (left) l = to; else r = to;
+    }
+    moved = true;
+  }
+  return moved ? { ...cuts, l, r, t, b } : null;
 }
 
 /**

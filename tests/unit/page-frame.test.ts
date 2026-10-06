@@ -226,6 +226,46 @@ describe('detectPageFrame on white canvas (#4276)', () => {
     expect(v.box.x).toBe(10);
   });
 
+  // A stepped top edge (Bodhicaryāvatāra p5): the page's top-left corner is
+  // missing, so canvas fills x 10-44, y 12-29 inside the box the four cuts make.
+  const stepped = (mark: boolean) => img(100, 140, (x, y) => {
+    if (x < 10 || x > 79 || y < 12 || y > 119 || (x < 45 && y < 30)) return 255;
+    if (mark && x >= 62 && x <= 70 && y >= 18 && y <= 21) return 60;
+    return text(x, y, 20, 70, 42, 108) ?? paper(x, y);
+  });
+
+  it('closes a canvas notch in a corner by moving the cut that gives up less', () => {
+    const v = detectPageFrame(stepped(false), 100, 140);
+    // The top cut moves down past the notch (18 lines of 70); the left cut stays.
+    expect(v).toEqual({ kind: 'frame', box: { x: 10, y: 30, w: 70, h: 90 } });
+  });
+
+  it('leaves the notch when closing it would cut a page number beside it', () => {
+    const v = detectPageFrame(stepped(true), 100, 140);
+    expect(v).toEqual({ kind: 'frame', box: { x: 10, y: 12, w: 70, h: 108 } });
+  });
+
+  it('leaves the notch when the text starts right below it', () => {
+    // No blank paper to spare inside the moved cut: the first line of text is at y 32.
+    const v = detectPageFrame(img(100, 140, (x, y) => {
+      if (x < 10 || x > 79 || y < 12 || y > 119 || (x < 45 && y < 30)) return 255;
+      return text(x, y, 20, 70, 32, 108) ?? paper(x, y);
+    }), 100, 140);
+    expect(v).toEqual({ kind: 'frame', box: { x: 10, y: 12, w: 70, h: 108 } });
+  });
+
+  it('does not take the wedge beside a tilted edge for a notch', () => {
+    // The left edge runs from x=10 at the top to x=15 at the bottom, text close to it.
+    const v = detectPageFrame(img(100, 140, (x, y) => {
+      if (x > 79 || y < 12 || y > 119 || x < 10 + Math.round((y - 12) / 22)) return 255;
+      return text(x, y, 18, 70, 24, 108) ?? paper(x, y);
+    }), 100, 140);
+    expect(v.kind).toBe('frame');
+    if (v.kind !== 'frame') return;
+    expect(v.box.y).toBe(12);
+    expect(v.box.y + v.box.h).toBe(120);
+  });
+
   it('gives the dark-bed verdict unchanged when the canvas trim fails a guard', () => {
     // Page 13: bed on the right, then a white sliver. Canvas adds nothing.
     const bed = (x: number) => (x >= 98 ? 255 : x >= 86 ? 22 : undefined);
