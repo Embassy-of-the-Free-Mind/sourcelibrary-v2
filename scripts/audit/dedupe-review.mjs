@@ -339,8 +339,9 @@ async function m3() {
   const multi = [...groups.entries()].filter(([, g]) => g.length > 1);
   const s = {
     erara_fingerprints: groups.size, groups_with_copies: multi.length, books_in_groups: 0, extra_copies: 0,
-    books_with_own_work: 0, groups_two_visible: 0, groups_none_visible: 0, groups_keeper_lacks_something: 0,
-    groups_already_linked: 0, groups_page_count_differs: 0, pages_ocr_to_move: 0, pages_translated_to_move: 0,
+    books_with_own_work: 0, groups_two_visible: 0, groups_none_visible: 0, 
+    groups_already_linked: 0, groups_pointer_inverted: 0, other_copies_with_own_work: 0,
+    other_copies_with_text_keeper_lacks: 0, groups_page_count_differs: 0, pages_ocr_to_move: 0, pages_translated_to_move: 0,
   };
   const plan = [];
   for (const [fp, g] of multi) {
@@ -350,9 +351,10 @@ async function m3() {
     const nVis = g.filter((b) => b.visible === true).length;
     if (nVis > 1) s.groups_two_visible++;
     if (nVis === 0) s.groups_none_visible++;
-    // Keeper: visible first, then most work (translated, then OCR), then most pages, then oldest.
+    // Keeper: visible first, then most work (translated, then OCR), then most
+    // pages, then the one not already marked a duplicate, then oldest.
     const ranked = [...g].sort((a, b) => Number(b.visible === true) - Number(a.visible === true) || work(b) - work(a)
-      || (b.pages_count || 0) - (a.pages_count || 0) || String(a.created_at || '').localeCompare(String(b.created_at || '')));
+      || (b.pages_count || 0) - (a.pages_count || 0) || Number(!!a.duplicate_of) - Number(!!b.duplicate_of) || String(a.created_at || '').localeCompare(String(b.created_at || '')));
     const keeper = ranked[0];
     const state = (b) => ({
       id: idOf(b), _id: b._id, visible: b.visible === true, hidden_reason: b.hidden_reason || null, duplicate_of: b.duplicate_of || null,
@@ -361,27 +363,24 @@ async function m3() {
     });
     const others = ranked.slice(1).map((b) => ({
       ...state(b),
-      has_that_keeper_lacks: {
-        ocr_pages: Math.max(0, (b.pages_ocr || 0) - (keeper.pages_ocr || 0)),
-        translated_pages: Math.max(0, (b.pages_translated || 0) - (keeper.pages_translated || 0)),
-      },
       points_at_keeper: b.duplicate_of != null && [String(keeper.id), String(keeper._id)].includes(String(b.duplicate_of)),
     }));
-    const lacks = others.some((o) => o.has_that_keeper_lacks.ocr_pages > 0 || o.has_that_keeper_lacks.translated_pages > 0);
-    if (lacks) s.groups_keeper_lacks_something++;
     if (others.every((o) => o.points_at_keeper)) s.groups_already_linked++;
+    const inverted = keeper.duplicate_of != null && others.some((o) => [o.id, o._id].includes(String(keeper.duplicate_of)));
+    if (inverted) s.groups_pointer_inverted++;
+    s.other_copies_with_own_work += others.filter((o) => o.pages_ocr > 0 || o.pages_translated > 0).length;
     if (others.some((o) => o.pages_count !== (keeper.pages_count || 0))) s.groups_page_count_differs++;
     plan.push({
       fingerprint: fp, title: String(keeper.title || '').slice(0, 140), author: keeper.author || null,
       keeper: state(keeper), others,
-      action: lacks ? 'MOVE_TEXT_THEN_LINK' : others.every((o) => o.points_at_keeper) ? 'ALREADY_LINKED' : nVis > 1 ? 'HIDE_AND_LINK' : 'LINK_ONLY',
+      pointer_inverted: inverted,
       page_count_differs: others.some((o) => o.pages_count !== (keeper.pages_count || 0)),
     });
   }
 
   // Page-level delta for the groups where a non-keeper holds more: which
   // pages have text on the copy and none on the keeper. `pages.book_id` is indexed.
-  const need = plan.filter((p) => p.action === 'MOVE_TEXT_THEN_LINK');
+  const need = plan.filter((p) => p.others.some((o) => o.pages_ocr > 0 || o.pages_translated > 0));
   await withDb(async (db) => {
     const pageState = async (bookId) => {
       const rows = await db.collection('pages').aggregate([
@@ -395,7 +394,7 @@ async function m3() {
     for (const p of need) {
       const k = await pageState(p.keeper.id);
       for (const o of p.others) {
-        if (!(o.has_that_keeper_lacks.ocr_pages > 0 || o.has_that_keeper_lacks.translated_pages > 0)) continue;
+        if (!(o.pages_ocr > 0 || o.pages_translated > 0)) continue;
         const c = await pageState(o.id);
         const ocrOnly = [], trOnly = [];
         for (const [n, r] of c) {
@@ -408,13 +407,22 @@ async function m3() {
           ocr_pages_keeper_lacks: ocrOnly.length, translated_pages_keeper_lacks: trOnly.length,
           page_numbers_align: c.size === k.size,
         };
+        if (ocrOnly.length || trOnly.length) s.other_copies_with_text_keeper_lacks++;
         s.pages_ocr_to_move += ocrOnly.length;
         s.pages_translated_to_move += trOnly.length;
       }
     }
   });
+  // The action, decided on the page-level delta (a copy with FEWER pages of
+  // text in total can still hold a page the keeper lacks).
   s.by_action = {};
-  for (const p of plan) s.by_action[p.action] = (s.by_action[p.action] || 0) + 1;
+  for (const p of plan) {
+    const lacksText = p.others.some((o) => o.page_level && (o.page_level.ocr_pages_keeper_lacks > 0 || o.page_level.translated_pages_keeper_lacks > 0));
+    const linked = p.others.every((o) => o.points_at_keeper);
+    const twoVisible = p.others.some((o) => o.visible);
+    p.action = [lacksText ? 'MOVE_TEXT' : null, p.pointer_inverted ? 'REPOINT' : !linked ? 'LINK' : null, twoVisible ? 'HIDE_COPY' : null].filter(Boolean).join('+') || 'NOTHING_TO_DO';
+    s.by_action[p.action] = (s.by_action[p.action] || 0) + 1;
+  }
   plan.sort((a, b) => a.action.localeCompare(b.action) || a.fingerprint.localeCompare(b.fingerprint));
   write('m3-erara-merge-plan.json', {
     note: 'PLAN ONLY — nothing here has been executed. Keeper = visible first, then most translated, most OCR, most pages, oldest. Any merge or hide is Derek\'s call (#6019).',
