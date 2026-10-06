@@ -96,10 +96,16 @@ const bump = (lang, period, field, n = 1) => {
 
 // 2a. OCR accuracy: referenced books per language × period (the dashboard's sufficiency rows).
 const evidence = read('src/data/ocr-benchmark-evidence.json');
+// A referenced book with no year is in its `language` row but in no `language_period` row: those go to 'unknown'.
+const periodSum = new Map();
 for (const s of evidence.sufficiency.filter(s => s.factor === 'language_period')) {
   const [lang, per] = s.level.split(' · ');
   bump(lang, periodOfLabel(per), 'ocr_ref', s.referenced);
+  periodSum.set(normLang(lang), (periodSum.get(normLang(lang)) || 0) + s.referenced);
 }
+const langRef = new Map();
+for (const s of evidence.sufficiency.filter(s => s.factor === 'language')) langRef.set(normLang(s.level), (langRef.get(normLang(s.level)) || 0) + s.referenced);
+for (const [lang, n] of langRef) if (n > (periodSum.get(lang) || 0)) bump(lang, 'unknown', 'ocr_ref', n - (periodSum.get(lang) || 0));
 // 2b. Translation judged against its source (the #5274 audits), each book once across runs.
 const AUDITS = ['translation-corpus-audit-2026-09-30', 'translation-corpus-audit-monthly-2026-09', 'translation-corpus-audit-chained-2026-10-01'];
 const judgedBooks = new Map();

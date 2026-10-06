@@ -1,12 +1,12 @@
 # Quality strata inventory, 2026-10-06 (#5984)
 
-Frame: Atlas books: visible:true, hidden≠true, pages_count>0; strata are CATALOGUE language × period (eval-design §3.2: not yet observed from the page). 42,078 live books, 6,776,649 OCR'd pages, 5,103,793 translated pages.
+Frame: Atlas books: visible:true, hidden≠true, pages_count>0; strata are CATALOGUE language × period (eval-design §3.2: not yet observed from the page). 42,078 live books, 6,776,649 OCR'd pages, 5,103,781 translated pages.
 Measured books: OCR against a reference (dashboard sufficiency), translation judged against its source (402 books over three #5274 audits), translation against a published translation (321 books, #5695).
 Neyman n allocates a 400-book monthly sample over OCR'd pages with S = √(p(1−p)), p = the language's judged major-defect share (0.5 where none).
 
 | Language | Period | Live books (with text) | OCR'd pages | Share | OCR ref books | Judged books | vs published | Neyman n of 400 | Gap to 30 (judged) | Gap to 100 | OCR-ref gap to 30 |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Chinese | unknown | 11,543 (11,543) | 1,139,724 | 16.8% | 0 | 2 | 8 | 75.1 | 28 | 98 | 30 |
+| Chinese | unknown | 11,543 (11,543) | 1,139,724 | 16.8% | 518 | 2 | 8 | 75.1 | 28 | 98 | 0 |
 | Latin | 1500s | 3,142 (3,141) | 704,445 | 10.4% | 32 | 30 | 23 | 37.3 | 0 | 70 | 0 |
 | Latin | 1600s | 3,218 (3,214) | 535,154 | 7.9% | 74 | 23 | 31 | 28.4 | 7 | 77 | 0 |
 | English | 1800s | 1,067 (1,067) | 351,669 | 5.2% | 0 | 10 | 0 | 17.1 | 20 | 90 | 30 |
@@ -16,7 +16,7 @@ Neyman n allocates a 400-book monthly sample over OCR'd pages with S = √(p(1�
 | Latin | 1700s | 723 (721) | 196,086 | 2.9% | 16 | 10 | 7 | 10.4 | 20 | 90 | 14 |
 | Tibetan | 1700s | 1,440 (1,367) | 194,337 | 2.9% | 0 | 4 | 0 | 14.5 | 26 | 96 | 30 |
 | Other languages | 1800s | 634 (618) | 180,889 | 2.7% | 0 | 23 | 29 | 16.0 | 7 | 77 | 30 |
-| Latin | unknown | 6,647 (6,647) | 149,397 | 2.2% | 0 | 33 | 0 | 7.9 | 0 | 67 | 30 |
+| Latin | unknown | 6,647 (6,647) | 149,397 | 2.2% | 9 | 33 | 0 | 7.9 | 0 | 67 | 21 |
 | Latin | 1800s | 333 (333) | 143,728 | 2.1% | 27 | 2 | 0 | 7.6 | 28 | 98 | 3 |
 | Greek | 1800s | 235 (235) | 120,274 | 1.8% | 26 | 9 | 25 | 8.8 | 21 | 91 | 4 |
 | German | 1600s | 771 (770) | 116,596 | 1.7% | 0 | 7 | 8 | 4.7 | 23 | 93 | 30 |
@@ -57,15 +57,15 @@ Neyman n allocates a 400-book monthly sample over OCR'd pages with S = √(p(1�
 | Chinese | pre-1500 | 120 (120) | 14,650 | 0.2% | 1 | 2 | 0 | 1.0 | 28 | 98 | 29 |
 | Italian | 1800s | 56 (55) | 14,062 | 0.2% | 0 | 1 | 1 | 0.8 | 29 | 54 | 30 |
 | German | pre-1500 | 61 (61) | 12,239 | 0.2% | 0 | 0 | 0 | 0.5 | 30 | 61 | 30 |
-| Other languages | unknown | 71 (58) | 8,335 | 0.1% | 0 | 0 | 0 | 0.7 | 30 | 58 | 30 |
+| Other languages | unknown | 71 (58) | 8,335 | 0.1% | 13 | 0 | 0 | 0.7 | 30 | 58 | 17 |
 | Chinese | 1900+ | 35 (34) | 7,959 | 0.1% | 0 | 0 | 1 | 0.5 | 30 | 34 | 30 |
 | Dutch | 1500s | 37 (36) | 7,912 | 0.1% | 0 | 0 | 1 | 0.5 | 30 | 36 | 30 |
 | Greek | 1700s | 19 (19) | 7,741 | 0.1% | 63 | 0 | 3 | 0.6 | 19 | 19 | 0 |
 | French | pre-1500 | 32 (31) | 7,381 | 0.1% | 0 | 1 | 0 | 0.3 | 29 | 30 | 30 |
 | Italian | 1700s | 42 (42) | 7,289 | 0.1% | 0 | 1 | 0 | 0.4 | 29 | 41 | 30 |
 | Dutch | 1900+ | 41 (41) | 7,031 | 0.1% | 0 | 1 | 0 | 0.5 | 29 | 40 | 30 |
-| Greek | unknown | 82 (81) | 6,938 | 0.1% | 0 | 3 | 1 | 0.5 | 27 | 78 | 30 |
-| German | unknown | 244 (243) | 5,762 | 0.1% | 0 | 1 | 0 | 0.2 | 29 | 99 | 30 |
+| Greek | unknown | 82 (81) | 6,938 | 0.1% | 17 | 3 | 1 | 0.5 | 27 | 78 | 13 |
+| German | unknown | 244 (243) | 5,762 | 0.1% | 7 | 1 | 0 | 0.2 | 29 | 99 | 23 |
 | Italian | 1900+ | 20 (20) | 5,740 | 0.1% | 0 | 2 | 0 | 0.3 | 18 | 18 | 20 |
 | Sanskrit | pre-1500 | 22 (22) | 5,299 | 0.1% | 0 | 2 | 2 | 0.5 | 20 | 20 | 22 |
 | English | pre-1500 | 25 (25) | 4,717 | 0.1% | 0 | 1 | 0 | 0.2 | 24 | 24 | 25 |
@@ -86,7 +86,7 @@ Neyman n allocates a 400-book monthly sample over OCR'd pages with S = √(p(1�
 | French | unknown | 4 (4) | 932 | 0.0% | 0 | 0 | 0 | 0.0 | 4 | 4 | 4 |
 | Russian | 1600s | 1 (1) | 56 | 0.0% | 0 | 0 | 0 | 0.0 | 1 | 1 | 1 |
 
-Self-reported page types, all pages carrying the tag (≥ 1,000): {"text":5858682,"blank":252626,"archived-spread":181098,"index":165382,"preface":137078,"title-page":111893,"illustration":87223,"dedication":56928,"toc":53653,"null":26334,"appendix":15406,"diagram":14003,"frontispiece":13526,"errata":6457,"digitizer-insert":5502,"map":5432,"colophon":4682}
+Self-reported page types, all pages carrying the tag (≥ 1,000): {"text":5858706,"blank":252627,"archived-spread":181098,"index":165382,"preface":137078,"title-page":111893,"illustration":87223,"dedication":56928,"toc":53653,"null":26334,"appendix":15406,"diagram":14003,"frontispiece":13526,"errata":6457,"digitizer-insert":5502,"map":5432,"colophon":4682}
 Audit page types (489 random interior pages): {"text":417,"unset":62,"dedication":1,"appendix":2,"preface":4,"diagram":3}
 Audit translation models: {"gemini-3.1-flash-lite-preview":157,"gemini-3.1-flash-lite":129,"gemini-3-flash-preview":203}
 Audit translation prompt versions: {"translation v11":109,"translation v1":31,"translation v10":137,"translation v5.2026-02":13,"translation v2":97,"translation v5.1.2026-03b":9,"translation v5.1.2026-03c":1,"translation v0":1,"translation v11-retx":2,"translation v12":4,"translation v13":85}

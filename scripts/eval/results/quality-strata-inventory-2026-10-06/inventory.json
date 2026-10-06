@@ -1,12 +1,12 @@
 {
- "generated_at": "2026-10-06T13:35:42.780Z",
+ "generated_at": "2026-10-06T13:43:15.765Z",
  "issue": 5984,
  "frame": "Atlas books: visible:true, hidden≠true, pages_count>0; strata are CATALOGUE language × period (eval-design §3.2: not yet observed from the page)",
  "totals": {
   "books": 42078,
   "pages": 8752272,
   "ocr_pages": 6776649,
-  "translated_pages": 5103793
+  "translated_pages": 5103781
  },
  "targets": {
   "directional": 30,
@@ -31,8 +31,8 @@
   }
  },
  "page_type_tags_all_pages": {
-  "text": 5858682,
-  "blank": 252626,
+  "text": 5858706,
+  "blank": 252627,
   "archived-spread": 181098,
   "index": 165382,
   "preface": 137078,
@@ -89,7 +89,7 @@
    "prior_p": 0.167,
    "prior_from": "audit major-defect share",
    "S": 0.3729758705332022,
-   "ocr_ref": 0,
+   "ocr_ref": 518,
    "judged": 2,
    "vs_human": 8,
    "neyman_n": 75.12285653991749,
@@ -98,7 +98,7 @@
    "graded_books": 2,
    "gap_directional": 28,
    "gap_rate": 98,
-   "ocr_gap_directional": 30
+   "ocr_gap_directional": 0
   },
   {
    "language": "Latin",
@@ -319,7 +319,7 @@
    "prior_p": 0.1,
    "prior_from": "audit major-defect share",
    "S": 0.30000000000000004,
-   "ocr_ref": 0,
+   "ocr_ref": 9,
    "judged": 33,
    "vs_human": 0,
    "neyman_n": 7.920540062893525,
@@ -328,7 +328,7 @@
    "graded_books": 33,
    "gap_directional": 0,
    "gap_rate": 67,
-   "ocr_gap_directional": 30
+   "ocr_gap_directional": 21
   },
   {
    "language": "Latin",
@@ -336,7 +336,7 @@
    "books": 333,
    "pages": 160786,
    "ocr_pages": 143728,
-   "translated_pages": 136664,
+   "translated_pages": 136662,
    "books_with_text": 333,
    "share_ocr_pages": 0.0212093027099382,
    "prior_p": 0.1,
@@ -359,7 +359,7 @@
    "books": 235,
    "pages": 127173,
    "ocr_pages": 120274,
-   "translated_pages": 115195,
+   "translated_pages": 115193,
    "books_with_text": 235,
    "share_ocr_pages": 0.017748300081648023,
    "prior_p": 0.222,
@@ -428,7 +428,7 @@
    "books": 237,
    "pages": 112866,
    "ocr_pages": 105002,
-   "translated_pages": 99992,
+   "translated_pages": 99991,
    "books_with_text": 237,
    "share_ocr_pages": 0.015494678859713703,
    "prior_p": 0.222,
@@ -612,7 +612,7 @@
    "books": 193,
    "pages": 80557,
    "ocr_pages": 75047,
-   "translated_pages": 73034,
+   "translated_pages": 73028,
    "books_with_text": 193,
    "share_ocr_pages": 0.011074352530284512,
    "prior_p": 0.222,
@@ -1262,7 +1262,7 @@
    "prior_p": 0.5,
    "prior_from": "none (0.5)",
    "S": 0.5,
-   "ocr_ref": 0,
+   "ocr_ref": 13,
    "judged": 0,
    "vs_human": 0,
    "neyman_n": 0.7364907084726994,
@@ -1271,7 +1271,7 @@
    "graded_books": 0,
    "gap_directional": 30,
    "gap_rate": 58,
-   "ocr_gap_directional": 30
+   "ocr_gap_directional": 17
   },
   {
    "language": "Chinese",
@@ -1325,7 +1325,7 @@
    "books": 19,
    "pages": 8023,
    "ocr_pages": 7741,
-   "translated_pages": 7251,
+   "translated_pages": 7250,
    "books_with_text": 19,
    "share_ocr_pages": 0.001142304994695756,
    "prior_p": 0.222,
@@ -1423,7 +1423,7 @@
    "prior_p": 0.222,
    "prior_from": "audit major-defect share",
    "S": 0.4155911452377204,
-   "ocr_ref": 0,
+   "ocr_ref": 17,
    "judged": 3,
    "vs_human": 1,
    "neyman_n": 0.5095563814959365,
@@ -1432,7 +1432,7 @@
    "graded_books": 3,
    "gap_directional": 27,
    "gap_rate": 78,
-   "ocr_gap_directional": 30
+   "ocr_gap_directional": 13
   },
   {
    "language": "German",
@@ -1446,7 +1446,7 @@
    "prior_p": 0.056,
    "prior_from": "audit major-defect share",
    "S": 0.22992172581119863,
-   "ocr_ref": 0,
+   "ocr_ref": 7,
    "judged": 1,
    "vs_human": 0,
    "neyman_n": 0.23412345706264548,
@@ -1455,7 +1455,7 @@
    "graded_books": 1,
    "gap_directional": 29,
    "gap_rate": 99,
-   "ocr_gap_directional": 30
+   "ocr_gap_directional": 23
   },
   {
    "language": "Italian",
