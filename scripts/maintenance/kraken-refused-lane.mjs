@@ -33,9 +33,17 @@
  *   fewer than MIN_LETTERS letters (a plate or blank leaf), the degeneration-loop guard (#4850), and a garble
  *   guard (Kraken fails LOUD on a speckled page, #5660 r3: tokens with no vowel or a high non-letter share).
  *
+ * DIGIT REPAIR (#4686 Amendment 1, job kraken-digits-4686). Kraken reads 17th-c. old-style figures as letters
+ * ("66" → "cé", "10." → "io."). With `--precomputed <dir>` the lane does not run Kraken: it reads the text that
+ * scripts/gpu/kraken-digits-4686-scw.sh produced on a leased GPU (Kraken CATMuS-Print on CUDA, number tokens
+ * arbitrated against GLM-OCR by scripts/lib/glm-digit-repair.mjs, merged by
+ * scripts/eval/kraken-refused-4686/glm-digits.mjs), and records GLM in `ocr.engine.digit_repair` (model,
+ * revision, vLLM version, prompt, GPU run, and every token it changed on that page). The page guards still run.
+ *
  * Usage (on Hetzner, where Kraken is installed; niced — the box is shared):
  *   node --env-file=.env.production.local scripts/maintenance/kraken-refused-lane.mjs --books <id,id> [--apply]
  *        [--limit N] [--batch 6] [--dir /root/kraken-refused-lane] [--kraken <bin>] [--model <file>]
+ *        [--precomputed /root/kraken-digits-4686]
  * Resumable: Kraken outputs are cached under --dir/<book>/; a rerun reads what is there.
  */
 import fs from 'fs';
@@ -53,6 +61,9 @@ export const LANE = 'kraken-refused-4686';
 export const LANE_ISSUE = '#4686';
 export const BOOK_EVENT = 'kraken_refused_fill';
 export const EVAL = 'scripts/eval/experiments/2026-10-06-kraken-refused-english-4686.md';
+export const EVAL_DIGITS = 'scripts/eval/experiments/2026-10-06-glm-digit-repair-4686.md';
+export const GLM_PROMPT = 'Text Recognition:';
+export const MAX_CHANGES_STORED = 60;
 export const MIN_LETTERS = 40;
 /** Measured scope: English print, 1600–1799 (see header). */
 export const SCOPE = { language: /^english$/i, yearFrom: 1600, yearTo: 1799 };
@@ -67,6 +78,7 @@ const BATCH = Number(opt('--batch', '6'));
 const DIR = opt('--dir', '/root/kraken-refused-lane');
 const KRAKEN_BIN = opt('--kraken', '/root/bench2-kraken/venv/bin/kraken');
 const MODEL_FILE = opt('--model', '/root/.local/share/htrmopo/d96caf7a-122e-5576-ab2b-a246c4e64221/catmus-print-fondue-large.mlmodel');
+const PRE = opt('--precomputed', null);
 
 /** The model this lane was measured with; anything else is refused rather than mislabelled. */
 const MODELS = {
@@ -114,7 +126,32 @@ export function inScope(book) {
   return SCOPE.language.test(String(book?.language || '')) && Number.isFinite(y) && y >= SCOPE.yearFrom && y <= SCOPE.yearTo;
 }
 /** The `ocr.engine` block. */
-export function engineBlock({ model, krakenVersion, run, imageUrl, priorOcr, secs, bookLanguage }) {
+/**
+ * The `ocr.engine.digit_repair` block: which GLM-OCR read supplied this page's numbers, and every token it changed.
+ * `box` is the GPU run's box.json; `row` the page's line in merged/changes.jsonl.
+ */
+export function digitRepairBlock({ box, row, gpuRun }) {
+  const vllm = (String(box?.versions || '').match(/vllm\s+([\d.]+)/) || [])[1] || notRecorded('vllm version not in box.json');
+  return {
+    engine: 'glm-ocr',
+    model: 'zai-org/GLM-OCR',
+    revision: box?.glm_revision || notRecorded('GLM revision not in box.json'),
+    server: `vLLM ${vllm}`,
+    prompt: GLM_PROMPT,
+    temperature: 0,
+    image: 'archived master, downscaled to ≤ 2400 px wide',
+    rule: 'scripts/lib/glm-digit-repair.mjs (number tokens only; Kraken\'s letters, lines and furniture kept)',
+    glm_read: !!row?.glm,
+    tokens: row?.tokens ?? null,
+    tokens_changed: row?.changed ?? 0,
+    changes: (row?.changes || []).slice(0, MAX_CHANGES_STORED).map(c => ({ line: c.line, from: c.from, to: c.to })),
+    changes_truncated: (row?.changes || []).length > MAX_CHANGES_STORED,
+    run: gpuRun,
+    eval: EVAL_DIGITS,
+  };
+}
+
+export function engineBlock({ model, krakenVersion, run, imageUrl, priorOcr, secs, bookLanguage, device = 'cpu', digitRepair = null }) {
   const ladder = {};
   for (const k of [...REFUSAL_STAMPS, 'fail_count', 'fail_reason', 'fail_blocked', 'fail_blocked_model']) if (priorOcr && priorOcr[k] !== undefined) ladder[k] = priorOcr[k];
   return {
@@ -128,12 +165,13 @@ export function engineBlock({ model, krakenVersion, run, imageUrl, priorOcr, sec
     model_source: model.source,
     licence: model.licence,
     segmenter: 'blla default baseline segmenter (`segment -bl`)',
-    device: 'cpu',
-    post: 'lines as Kraken wrote them, NFC, trailing whitespace dropped; MIN_LETTERS, loop (#4850) and garble guards',
+    device,
+    post: `lines as Kraken wrote them${digitRepair ? ', number tokens arbitrated against GLM-OCR (digit_repair)' : ''}, NFC, trailing whitespace dropped; MIN_LETTERS, loop (#4850) and garble guards`,
     language_source: `books.language (${bookLanguage}); Kraken does not identify languages`,
     run: { ...run, secs_batch: secs },
     issue: LANE_ISSUE,
     eval: EVAL,
+    ...(digitRepair ? { digit_repair: digitRepair } : {}),
     ladder: Object.keys(ladder).length ? ladder : null,
     input: imageUrl ? { image_url: imageUrl } : notRecorded('page had no image url'),
   };
@@ -161,11 +199,17 @@ async function main() {
   const sha = crypto.createHash('sha256').update(fs.readFileSync(MODEL_FILE)).digest('hex');
   if (!MODELS[sha]) throw new Error(`model ${MODEL_FILE} (sha256 ${sha.slice(0, 12)}…) is not the measured one; refusing`);
   const model = { ...MODELS[sha], sha256: sha, file: path.basename(MODEL_FILE) };
-  const krakenVersion = (String(execFileSync(KRAKEN_BIN, ['--version'])).match(/(\d+\.\d+(?:\.\d+)?)/) || [])[1] || notRecorded('kraken --version unparsed');
+  const box = PRE ? JSON.parse(fs.readFileSync(path.join(PRE, 'box.json'), 'utf8')) : null;
+  const preRows = new Map();
+  if (PRE) for (const l of fs.readFileSync(path.join(PRE, 'merged', 'changes.jsonl'), 'utf8').split('\n').filter(Boolean)) { const r = JSON.parse(l); preRows.set(`${r.bid}/${r.pn}`, r); }
+  const krakenVersion = PRE
+    ? ((String(box.versions).match(/kraken, version (\d+\.\d+(?:\.\d+)?)/) || [])[1] || notRecorded('kraken version not in box.json'))
+    : ((String(execFileSync(KRAKEN_BIN, ['--version'])).match(/(\d+\.\d+(?:\.\d+)?)/) || [])[1] || notRecorded('kraken --version unparsed'));
+  const gpuRun = box ? { id: `kraken-digits-4686/${box.server_id}`, host: box.host, gpu: box.type, code_rev: box.code_rev } : null;
   const run = { id: `${LANE}/${new Date().toISOString().slice(0, 19)}/${host()}`, code_version: await codeVersion(), host: host(), started_at: new Date() };
   fs.mkdirSync(DIR, { recursive: true });
   const runFile = path.join(DIR, `run-${run.started_at.toISOString().slice(0, 19).replace(/:/g, '')}.jsonl`);
-  console.log(`[${LANE}] ${APPLY ? 'APPLY' : 'DRY RUN'} · kraken ${krakenVersion} · ${model.key} · run file ${runFile}`);
+  console.log(`[${LANE}] ${APPLY ? 'APPLY' : 'DRY RUN'} · kraken ${krakenVersion} · ${model.key}${PRE ? ` · precomputed ${PRE} (GPU + GLM digits)` : ''} · run file ${runFile}`);
 
   const client = new MongoClient(process.env.MONGODB_URI);
   await client.connect();
@@ -192,6 +236,7 @@ async function main() {
         const batch = pages.slice(i, i + BATCH);
         const todo = [];
         for (const p of batch) {
+          if (PRE) break;
           const img = path.join(bookDir, `${p.page_number}.jpg`), out = path.join(bookDir, `${p.page_number}.txt`);
           if (fs.existsSync(out)) continue;
           if (!fs.existsSync(img)) {
@@ -212,7 +257,7 @@ async function main() {
         }
         const ops = [];
         for (const p of batch) {
-          const out = path.join(bookDir, `${p.page_number}.txt`);
+          const out = PRE ? path.join(PRE, 'merged', bid, `${p.page_number}.txt`) : path.join(bookDir, `${p.page_number}.txt`);
           if (!fs.existsSync(out)) { t.failed++; append(runFile, { book: bid, page: p.page_number, status: 'no-output' }); continue; }
           t.read++;
           const text = cleanKraken(fs.readFileSync(out, 'utf8'));
@@ -226,7 +271,8 @@ async function main() {
         await saveRevisionsBeforeOverwrite(db, ops.map(o => o.p.id), 'ocr', { reason: 'kraken_refused_fill_4686', keepMeta: true });
         const now = new Date();
         for (const { p, text } of ops) {
-          const engine = engineBlock({ model, krakenVersion, run, imageUrl: imgUrl(p), priorOcr: p.ocr, secs, bookLanguage: book.language });
+          const digitRepair = PRE ? digitRepairBlock({ box, row: preRows.get(`${bid}/${p.page_number}`), gpuRun }) : null;
+          const engine = engineBlock({ model, krakenVersion, run, imageUrl: imgUrl(p), priorOcr: p.ocr, secs: PRE ? null : secs, bookLanguage: book.language, device: PRE ? `cuda (${box.type}, ${box.host})` : 'cpu', digitRepair });
           const $set = setFields(text, { engine, language: book.language, now });
           const check = missingProvenance('ocr', { data: text, content_hash: $set['ocr.content_hash'], updated_at: now, source: 'kraken', engine });
           if (check.missing.length) throw new Error(`provenance incomplete for ${p.id}: ${check.missing.join(', ')}`);
@@ -240,7 +286,7 @@ async function main() {
       if (APPLY) {
         const counts = await recountBook(db, bid, { reason: LANE });
         const { title: _title, ...tally } = t;
-        const detail = { run: run.id, kraken: krakenVersion, model: model.key, ...tally, pages_ocr_after: counts.after?.pages_ocr ?? null };
+        const detail = { run: run.id, kraken: krakenVersion, model: model.key, ...(gpuRun ? { digit_repair: 'glm-ocr', gpu_run: gpuRun.id } : {}), ...tally, pages_ocr_after: counts.after?.pages_ocr ?? null };
         await recordSweepAction(db, { sweep: LANE, book_id: bid, action: t.written ? 'filled' : 'nothing-filled', detail });
         await db.collection('book_events').insertOne({ book_id: bid, type: BOOK_EVENT, at: new Date(), source: LANE, details: { ...detail, issue: LANE_ISSUE, eval: EVAL } });
       }

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 // @ts-expect-error — .mjs module without types
-import { cleanKraken, garbleVerdict, fillFilter, inScope, engineBlock, setFields, LANE } from '../../scripts/maintenance/kraken-refused-lane.mjs';
+import { cleanKraken, garbleVerdict, fillFilter, inScope, engineBlock, setFields, digitRepairBlock, LANE, MAX_CHANGES_STORED } from '../../scripts/maintenance/kraken-refused-lane.mjs';
 // @ts-expect-error — .mjs module without types
 import { missingProvenance } from '../../scripts/lib/write-provenance.mjs';
 
@@ -51,5 +51,23 @@ describe('kraken-refused-lane', () => {
     expect(garbleVerdict(prose).refuse).toBe(false);
     const garble = 'at pir ¡aaquamvopadar iaa ſſt rrnm tlk ¡¡ qzx bnd ſmrt pqr ¢ tthh wxv nrrt ſpl grt mmn ¡ kkl bbr rrst nnd ſſk tpl';
     expect(garbleVerdict(garble).refuse).toBe(true);
+  });
+
+  it('records the GLM digit repair: model, revision, server, and every token it changed', () => {
+    const box = { server_id: 'srv1', host: 'scaleway:pl-waw-2:srv1', type: 'L4-1-24G', glm_revision: 'rev123', versions: 'vllm 0.31.0 2.13.0+cu132 True\nkraken, version 7.1\n', code_rev: 'abc' };
+    const row = { bid: 'b', pn: 1, glm: true, tokens: 300, changed: 2, changes: [{ line: 3, from: 'cé', to: '66', rule: 3 }, { line: 4, from: 'io.', to: '10.', rule: 3 }] };
+    const dr = digitRepairBlock({ box, row, gpuRun: { id: 'kraken-digits-4686/srv1' } });
+    expect(dr).toMatchObject({ engine: 'glm-ocr', model: 'zai-org/GLM-OCR', revision: 'rev123', server: 'vLLM 0.31.0', tokens_changed: 2, changes_truncated: false });
+    expect(dr.changes).toEqual([{ line: 3, from: 'cé', to: '66' }, { line: 4, from: 'io.', to: '10.' }]);
+    const many = digitRepairBlock({ box, row: { ...row, changes: Array.from({ length: MAX_CHANGES_STORED + 5 }, () => row.changes[0]) }, gpuRun: null });
+    expect(many.changes.length).toBe(MAX_CHANGES_STORED);
+    expect(many.changes_truncated).toBe(true);
+    const engine = engineBlock({ model, krakenVersion: '7.1', run, imageUrl: 'https://images.example/p.jpg', priorOcr: { recitation_blocked: true }, secs: null, bookLanguage: 'English', device: 'cuda (L4-1-24G)', digitRepair: dr });
+    expect(engine.digit_repair.engine).toBe('glm-ocr');
+    expect(engine.device).toBe('cuda (L4-1-24G)');
+    const set = setFields('Some 66 text', { engine, language: 'English', now: new Date() });
+    expect(set['ocr.source']).toBe('kraken');
+    const sub = { data: set['ocr.data'], content_hash: set['ocr.content_hash'], updated_at: set['ocr.updated_at'], source: 'kraken', engine };
+    expect(missingProvenance('ocr', sub).missing).toEqual([]);
   });
 });
