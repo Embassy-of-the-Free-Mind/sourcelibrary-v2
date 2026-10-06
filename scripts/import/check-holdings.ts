@@ -10,7 +10,7 @@
  *
  * Usage (from the repo root):
  *   npx tsx --env-file=.env.production.local scripts/import/check-holdings.ts <url-or-identifier>
- *   npx tsx --env-file=.env.production.local scripts/import/check-holdings.ts --title "Närrische Weißheit" --author Becher --year 1682
+ *   npx tsx --env-file=.env.production.local scripts/import/check-holdings.ts --title "Närrische Weißheit" --author Becher --year 1682 [--pages 300]
  *   … --json        machine-readable result
  *
  * Exit code: 0 new, 1 held (same object / same edition / possible), 2 related
@@ -31,6 +31,7 @@ function parseArgs(argv: string[]): { input: HoldingsInput; json: boolean } {
     else if (a === '--author') input.author = next();
     else if (a === '--year') input.year = parseInt(next(), 10) || null;
     else if (a === '--published') input.published = next();
+    else if (a === '--pages') input.pages = parseInt(next(), 10) || null;
     else if (a === '--url') input.url = next();
     else if (a === '--id') input.identifier = next();
     else if (/^https?:\/\//i.test(a)) input.url = a;
