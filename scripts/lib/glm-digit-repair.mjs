@@ -30,7 +30,9 @@
  *      Kraken's.
  */
 
-const isWordChar = (c) => /[\p{L}\p{N}]/u.test(c);
+// A combining mark belongs to the letter before it: Kraken writes some accents decomposed ("ce\u0301"), and a
+// mark left in the trail would survive the repair as "66\u0301" (found on the eval, p. 702, after scoring).
+const isWordChar = (c) => /[\p{L}\p{N}\p{M}]/u.test(c);
 const LETTERS = /\p{L}/gu;
 const DIGIT = /\p{Nd}/u;
 

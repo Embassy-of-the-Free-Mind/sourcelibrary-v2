@@ -47,6 +47,10 @@ describe('glm-digit-repair', () => {
     expect(repairDigits('io. foot', '')).toEqual({ text: 'io. foot', changes: [] });
   });
 
+  it('takes a decomposed accent with the letter it sits on', () => {
+    expect(repairDigits('about ce\u0301 or e\u0301y degrees', 'about 66 or 67 degrees').text).toBe('about 66 or 67 degrees');
+  });
+
   it('token helpers', () => {
     expect(splitToken('(5°.)')).toEqual({ lead: '(', core: '5', trail: '°.)' });
     expect(isNumberToken('5th')).toBe(true);

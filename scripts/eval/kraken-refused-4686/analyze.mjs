@@ -12,6 +12,8 @@
  * Per arm: median CER [bootstrap 95 %] (from the scorer's file), catastrophic pages, long-s words written
  * with f per 100 ſ-words, digit strings reproduced (pooled), reference lines dropped (pooled, worst page),
  * and the paired ΔCER of the fine-tune against stock CATMuS. Then G1–G4 on the chosen Kraken arm.
+ * Amendment 1 (GLM digit repair): `--arm=kraken-catmus-glm-digits --base=kraken-catmus-gpu` gates that arm
+ * instead, and adds G5 (no CER regression against --base: median not higher, no page > 0.005 worse).
  * $0: reads files only.
  */
 import fs from 'fs';
@@ -24,6 +26,8 @@ const ROOT = argOf('root');
 const SCORED = argOf('scored');
 const REFS = argOf('refs', path.join(__dirname, '..', 'benchmark', 'refs'));
 const OUT = argOf('out', null);
+const ARM = argOf('arm', null);
+const BASE = argOf('base', null);
 const STRATUM = 'refused-en-4686';
 if (!ROOT || !SCORED) { console.error('--root and --scored required'); process.exit(1); }
 
@@ -123,6 +127,7 @@ if (res.arms[A] && res.arms[F]) {
   res.paired_ft_minus_catmus = { n: d.length, median: r3(median(d)), ci95: bootMedian(d, 5730), better: d.filter(x => x < 0).length, worse: d.filter(x => x > 0).length };
   if (res.paired_ft_minus_catmus.ci95 && res.paired_ft_minus_catmus.ci95[1] < 0) chosen = F;
 }
+if (ARM) chosen = ARM;
 const c = res.arms[chosen];
 res.gate = c ? {
   arm: chosen,
@@ -131,11 +136,23 @@ res.gate = c ? {
   G3: { rule: 'dropped lines <= 5% pooled and <= 20% on every page', value: { pooled: c.lines.share, worst: c.lines.worst_page.share }, pass: c.lines.share != null && c.lines.share <= 0.05 && (c.lines.worst_page.share ?? 0) <= 0.2 },
   G4: { rule: '>= 90% of reference digit strings reproduced, pooled', value: c.digits.share, pass: c.digits.share != null && c.digits.share >= 0.9 },
 } : null;
-if (res.gate) res.gate.pass = ['G1', 'G2', 'G3', 'G4'].every(k => res.gate[k].pass);
+const GATES = ['G1', 'G2', 'G3', 'G4'];
+if (res.gate && BASE && res.arms[BASE]) {
+  const byB = new Map(res.arms[BASE].pages.map(x => [x.slug, x.cer]));
+  const d = c.pages.filter(x => byB.get(x.slug) != null && x.cer != null).map(x => ({ slug: x.slug, d: x.cer - byB.get(x.slug) }));
+  const worst = d.reduce((w, x) => (x.d > w.d ? x : w), { slug: null, d: -Infinity });
+  res.gate.G5 = {
+    rule: `no CER regression vs ${BASE}: median CER not higher, and no page more than 0.005 worse`,
+    value: { median: c.median_cer, base_median: res.arms[BASE].median_cer, worst_page: { slug: worst.slug, delta: r3(worst.d) }, better: d.filter(x => x.d < 0).length, worse: d.filter(x => x.d > 0).length, same: d.filter(x => x.d === 0).length },
+    pass: c.median_cer <= res.arms[BASE].median_cer && worst.d <= 0.005,
+  };
+  GATES.push('G5');
+}
+if (res.gate) res.gate.pass = GATES.every(k => res.gate[k].pass);
 
 console.log('| arm | n | median CER [95%] | catastrophic | ſ→f per 100 ſ-words | digits reproduced | lines dropped (worst page) | gap |');
 console.log('|---|---:|---|---:|---:|---:|---|---:|');
 for (const [a, s] of Object.entries(res.arms)) console.log(`| ${a} | ${s.n} | ${s.median_cer} [${s.ci95?.join(', ') ?? '—'}] | ${s.catastrophic} | ${s.long_s.per_100} (${s.long_s.as_f}/${s.long_s.ref_words}) | ${s.digits.share} (${s.digits.reproduced}/${s.digits.ref}) | ${s.lines.share} (${s.lines.dropped}/${s.lines.ref}; ${s.lines.worst_page.share} ${s.lines.worst_page.slug || ''}) | ${s.median_gap} |`);
 if (res.paired_ft_minus_catmus) console.log(`paired ft − catmus: median ${res.paired_ft_minus_catmus.median} [${res.paired_ft_minus_catmus.ci95}] better ${res.paired_ft_minus_catmus.better} / worse ${res.paired_ft_minus_catmus.worse}`);
-if (res.gate) console.log(`GATE (${res.gate.arm}): ${['G1', 'G2', 'G3', 'G4'].map(k => `${k} ${res.gate[k].pass ? 'pass' : 'FAIL'} ${JSON.stringify(res.gate[k].value)}`).join(' · ')} → ${res.gate.pass ? 'PASS' : 'STOP'}`);
+if (res.gate) console.log(`GATE (${res.gate.arm}): ${GATES.map(k => `${k} ${res.gate[k].pass ? 'pass' : 'FAIL'} ${JSON.stringify(res.gate[k].value)}`).join(' · ')} → ${res.gate.pass ? 'PASS' : 'STOP'}`);
 if (OUT) { fs.mkdirSync(path.dirname(OUT), { recursive: true }); fs.writeFileSync(OUT, JSON.stringify(res, null, 2) + '\n'); console.log(`wrote ${OUT}`); }

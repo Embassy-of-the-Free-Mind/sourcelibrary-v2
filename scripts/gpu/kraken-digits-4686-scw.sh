@@ -11,7 +11,7 @@
 # driver deletes the box after the pull whatever happens (trap).
 #
 #   LANE_DIR=/root/kraken-digits-4686 CAP_USD=5 scripts/gpu/kraken-digits-4686-scw.sh run | spend | down
-# Env: TYPE (L4-1-24G), ZONE (fr-par-2), LEASE_H (3), EUR_USD (1.17), KRAKEN_MODEL (CATMuS-Print large).
+# Env: TYPE (L4-1-24G), ZONE (fr-par-2; check /products/servers/availability — fr-par L4 was 'shortage' 2026-10-06, pl-waw-2 'scarce'), LEASE_H (3), EUR_USD (1.17), KRAKEN_MODEL (CATMuS-Print large).
 set -u
 set -a; . /root/sourcelibrary/.env.production.local; . /root/.scaleway.env; set +a
 LANE_DIR=${LANE_DIR:-/root/kraken-digits-4686}; BOX=${BOX:-k1}
@@ -74,7 +74,7 @@ run)
     log "created $(sid) $NAME $TYPE $ZONE (€$hp/h ≈ \$$(cat $D/cost-per-hr)/h) lease-until=$until"
     printf '#cloud-config\nssh_authorized_keys:\n  - %s\n' "$(cat /root/.ssh/id_ed25519.pub)" > "$D/user-data"
     curl -s -X PATCH -H "X-Auth-Token: $SCALEWAY_SECRET_KEY" -H "Content-Type: text/plain" --data-binary @"$D/user-data" "$API/servers/$(sid)/user_data/cloud-init" >/dev/null
-    curl -s -X POST "${H[@]}" "$API/servers/$(sid)/action" -d '{"action":"poweron"}' >/dev/null
+    log "poweron: $(curl -s -X POST "${H[@]}" "$API/servers/$(sid)/action" -d '{"action":"poweron"}' | head -c 300)"
     ok=0; for i in $(seq 1 60); do s=$(state); [ "${s%% *}" = running ] && { ok=1; break; }; sleep 10; done
     [ $ok = 1 ] || { log "did not reach running ($(state)) — deleting"; delete_box; exit 1; }
     (cd "$REPO" && node --env-file=/root/sourcelibrary/.env.production.local scripts/maintenance/gpu-lease-watchdog.mjs --lease "$(sid)" --zone "$ZONE" --hours "$LEASE_H" --owner 4686) 2>&1 | tail -1 | tee -a "$D/driver.log"
