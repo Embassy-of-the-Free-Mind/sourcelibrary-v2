@@ -277,7 +277,7 @@
      },
      "margins and page furniture": {
       "share": 0.027,
-      "pages": 16
+      "pages": 17
      }
     },
     "strata": [
@@ -328,8 +328,8 @@
       "pages": 25
      },
      "margins and page furniture": {
-      "share": 0.017,
-      "pages": 10
+      "share": 0.018,
+      "pages": 11
      }
     },
     "strata": [
@@ -500,15 +500,15 @@
     },
     "misread letters and words": {
      "share": 0.098,
-     "pages": 96
+     "pages": 95
     },
     "refusals": {
-     "share": 0.841,
+     "share": 0.84,
      "pages": 28
     },
     "invented or recited text": {
-     "share": 0.017,
-     "pages": 7
+     "share": 0.016,
+     "pages": 6
     },
     "omissions": {
      "share": 0.013,
@@ -523,8 +523,8 @@
      "pages": 14
     },
     "u/v, i/j or capitals differ": {
-     "share": 0.009,
-     "pages": 27
+     "share": 0.01,
+     "pages": 30
     },
     "margins and page furniture": {
      "share": 0.002,
@@ -553,11 +553,11 @@
      "pages": 42
     },
     "misread letters and words": {
-     "share": 0.112,
+     "share": 0.111,
      "pages": 97
     },
     "refusals": {
-     "share": 0.792,
+     "share": 0.791,
      "pages": 24
     },
     "invented or recited text": {
@@ -577,8 +577,8 @@
      "pages": 15
     },
     "u/v, i/j or capitals differ": {
-     "share": 0.009,
-     "pages": 32
+     "share": 0.011,
+     "pages": 36
     },
     "margins and page furniture": {
      "share": 0.01,
@@ -608,10 +608,10 @@
     },
     "misread letters and words": {
      "share": 0.108,
-     "pages": 96
+     "pages": 95
     },
     "refusals": {
-     "share": 0.832,
+     "share": 0.831,
      "pages": 26
     },
     "invented or recited text": {
@@ -631,8 +631,8 @@
      "pages": 14
     },
     "u/v, i/j or capitals differ": {
-     "share": 0.008,
-     "pages": 26
+     "share": 0.009,
+     "pages": 29
     },
     "margins and page furniture": {
      "share": 0.002,
@@ -685,8 +685,8 @@
      "pages": 15
     },
     "u/v, i/j or capitals differ": {
-     "share": 0.023,
-     "pages": 31
+     "share": 0.024,
+     "pages": 33
     },
     "margins and page furniture": {
      "share": 0.005,
@@ -719,11 +719,11 @@
      "pages": 113
     },
     "refusals": {
-     "share": 0.488,
+     "share": 0.487,
      "pages": 7
     },
     "invented or recited text": {
-     "share": 0.058,
+     "share": 0.057,
      "pages": 9
     },
     "omissions": {
@@ -739,8 +739,8 @@
      "pages": 23
     },
     "u/v, i/j or capitals differ": {
-     "share": 0.031,
-     "pages": 41
+     "share": 0.032,
+     "pages": 43
     },
     "margins and page furniture": {
      "share": 0.016,
@@ -773,7 +773,7 @@
      "pages": 103
     },
     "refusals": {
-     "share": 0.769,
+     "share": 0.768,
      "pages": 18
     },
     "invented or recited text": {
@@ -794,7 +794,7 @@
     },
     "u/v, i/j or capitals differ": {
      "share": 0.011,
-     "pages": 35
+     "pages": 37
     },
     "margins and page furniture": {
      "share": 0.011,
@@ -823,36 +823,36 @@
    "answered_median_cer_prompt": 0.045,
    "kinds": {
     "ſ read as f": {
-     "share": 0.125,
+     "share": 0.126,
      "pages": 22
     },
     "misread letters and words": {
-     "share": 0.522,
-     "pages": 95
+     "share": 0.512,
+     "pages": 92
     },
     "refusals": {
      "share": 0,
      "pages": 0
     },
     "invented or recited text": {
-     "share": 0.056,
+     "share": 0.057,
      "pages": 8
     },
     "omissions": {
-     "share": 0.113,
+     "share": 0.114,
      "pages": 28
     },
     "silent modernisation": {
-     "share": 0.041,
-     "pages": 30
+     "share": 0.043,
+     "pages": 31
     },
     "reference defects": {
-     "share": 0.058,
+     "share": 0.059,
      "pages": 30
     },
     "u/v, i/j or capitals differ": {
-     "share": 0.07,
-     "pages": 31
+     "share": 0.074,
+     "pages": 34
     },
     "margins and page furniture": {
      "share": 0.015,
@@ -983,11 +983,11 @@
    "answered_median_cer_prompt": 0.068,
    "kinds": {
     "ſ read as f": {
-     "share": 0.15,
+     "share": 0.149,
      "pages": 9
     },
     "misread letters and words": {
-     "share": 0.472,
+     "share": 0.469,
      "pages": 27
     },
     "refusals": {
@@ -999,11 +999,11 @@
      "pages": 4
     },
     "omissions": {
-     "share": 0.142,
+     "share": 0.141,
      "pages": 17
     },
     "silent modernisation": {
-     "share": 0.039,
+     "share": 0.041,
      "pages": 10
     },
     "reference defects": {
@@ -1011,8 +1011,8 @@
      "pages": 3
     },
     "u/v, i/j or capitals differ": {
-     "share": 0.061,
-     "pages": 10
+     "share": 0.065,
+     "pages": 11
     },
     "margins and page furniture": {
      "share": 0.02,
@@ -1037,11 +1037,11 @@
    "answered_median_cer_prompt": 0.068,
    "kinds": {
     "ſ read as f": {
-     "share": 0.027,
+     "share": 0.028,
      "pages": 24
     },
     "misread letters and words": {
-     "share": 0.675,
+     "share": 0.663,
      "pages": 70
     },
     "refusals": {
@@ -1050,27 +1050,27 @@
     },
     "invented or recited text": {
      "share": 0.056,
-     "pages": 10
+     "pages": 9
     },
     "omissions": {
-     "share": 0.096,
-     "pages": 21
-    },
-    "silent modernisation": {
-     "share": 0.046,
-     "pages": 25
-    },
-    "reference defects": {
-     "share": 0.032,
+     "share": 0.1,
      "pages": 20
     },
+    "silent modernisation": {
+     "share": 0.052,
+     "pages": 26
+    },
+    "reference defects": {
+     "share": 0.031,
+     "pages": 17
+    },
     "u/v, i/j or capitals differ": {
-     "share": 0.039,
-     "pages": 25
+     "share": 0.043,
+     "pages": 27
     },
     "margins and page furniture": {
      "share": 0.028,
-     "pages": 11
+     "pages": 10
     }
    }
   },
@@ -1095,7 +1095,7 @@
      "pages": 3
     },
     "misread letters and words": {
-     "share": 0.716,
+     "share": 0.708,
      "pages": 45
     },
     "refusals": {
@@ -1107,20 +1107,20 @@
      "pages": 3
     },
     "omissions": {
-     "share": 0.04,
+     "share": 0.041,
      "pages": 13
     },
     "silent modernisation": {
-     "share": 0.04,
-     "pages": 16
+     "share": 0.041,
+     "pages": 17
     },
     "reference defects": {
-     "share": 0.061,
+     "share": 0.062,
      "pages": 18
     },
     "u/v, i/j or capitals differ": {
-     "share": 0.085,
-     "pages": 27
+     "share": 0.089,
+     "pages": 28
     },
     "margins and page furniture": {
      "share": 0.023,
@@ -1148,7 +1148,7 @@
      "pages": 1
     },
     "misread letters and words": {
-     "share": 0.606,
+     "share": 0.603,
      "pages": 7
     },
     "refusals": {
@@ -1172,11 +1172,11 @@
      "pages": 3
     },
     "u/v, i/j or capitals differ": {
-     "share": 0.062,
+     "share": 0.063,
      "pages": 3
     },
     "margins and page furniture": {
-     "share": 0.187,
+     "share": 0.188,
      "pages": 2
     }
    }
@@ -1327,36 +1327,36 @@
    "answered_median_cer_prompt": 0.046,
    "kinds": {
     "ſ read as f": {
-     "share": 0.166,
+     "share": 0.168,
      "pages": 24
     },
     "misread letters and words": {
-     "share": 0.44,
-     "pages": 134
+     "share": 0.427,
+     "pages": 131
     },
     "refusals": {
      "share": 0,
      "pages": 0
     },
     "invented or recited text": {
-     "share": 0.092,
+     "share": 0.093,
      "pages": 11
     },
     "omissions": {
-     "share": 0.145,
+     "share": 0.146,
      "pages": 34
     },
     "silent modernisation": {
-     "share": 0.058,
-     "pages": 44
+     "share": 0.06,
+     "pages": 45
     },
     "reference defects": {
-     "share": 0.031,
+     "share": 0.032,
      "pages": 23
     },
     "u/v, i/j or capitals differ": {
-     "share": 0.043,
-     "pages": 39
+     "share": 0.048,
+     "pages": 43
     },
     "margins and page furniture": {
      "share": 0.026,
@@ -1375,11 +1375,11 @@
    "answered_median_cer_prompt": 0.076,
    "kinds": {
     "ſ read as f": {
-     "share": 0.024,
+     "share": 0.025,
      "pages": 36
     },
     "misread letters and words": {
-     "share": 0.688,
+     "share": 0.681,
      "pages": 117
     },
     "refusals": {
@@ -1387,28 +1387,28 @@
      "pages": 0
     },
     "invented or recited text": {
-     "share": 0.035,
-     "pages": 14
+     "share": 0.034,
+     "pages": 13
     },
     "omissions": {
-     "share": 0.07,
-     "pages": 48
+     "share": 0.072,
+     "pages": 47
     },
     "silent modernisation": {
-     "share": 0.033,
-     "pages": 39
+     "share": 0.036,
+     "pages": 41
     },
     "reference defects": {
      "share": 0.055,
-     "pages": 52
+     "pages": 49
     },
     "u/v, i/j or capitals differ": {
-     "share": 0.073,
-     "pages": 59
+     "share": 0.076,
+     "pages": 63
     },
     "margins and page furniture": {
-     "share": 0.022,
-     "pages": 17
+     "share": 0.021,
+     "pages": 16
     }
    }
   }
@@ -3637,8 +3637,9 @@
    "id": 94,
    "refused": false,
    "classes": {
-    "edge: running head / page no. / catchword added": 18,
-    "long-s read as f": 34
+    "edge: running head / page no. / catchword added": 13,
+    "long-s read as f": 34,
+    "marginal note / note marker / furniture order": 7
    },
    "cer_raw": 0.039,
    "cer_prompt": 0.005
@@ -6327,8 +6328,9 @@
    "id": 214,
    "refused": false,
    "classes": {
-    "edge: running head / page no. / catchword added": 18,
-    "long-s read as f": 16
+    "edge: running head / page no. / catchword added": 13,
+    "long-s read as f": 16,
+    "marginal note / note marker / furniture order": 7
    },
    "cer_raw": 0.005,
    "cer_prompt": 0.003
@@ -11937,7 +11939,7 @@
     "inserted word(s)": 77,
     "omitted word(s)": 18,
     "spelling normalised": 8,
-    "word split / joined": 5,
+    "word split / joined": 13,
     "omitted run (≥6 words)": 52
    },
    "cer_raw": 0.085,
@@ -11985,8 +11987,7 @@
    "id": 508,
    "refused": false,
    "classes": {
-    "edge: reference padding not on page": 28,
-    "word split / joined": 6
+    "edge: reference padding not on page": 28
    },
    "cer_raw": 0.066,
    "cer_prompt": 0.036
@@ -12010,7 +12011,8 @@
    "refused": false,
    "classes": {
     "edge: reference padding not on page": 28,
-    "edge: running head / page no. / catchword added": 7
+    "edge: running head / page no. / catchword added": 7,
+    "case only": 6
    },
    "cer_raw": 0.017,
    "cer_prompt": 0.017
@@ -12085,7 +12087,6 @@
    "refused": false,
    "classes": {
     "edge: reference padding not on page": 54,
-    "word split / joined": 9,
     "other misread": 9
    },
    "cer_raw": 0.045,
@@ -12110,11 +12111,11 @@
    "refused": false,
    "classes": {
     "edge: reference padding not on page": 74,
-    "edge: running head / page no. / catchword added": 63,
+    "edge: running head / page no. / catchword added": 67,
     "other misread": 16,
-    "marginal note / note marker / furniture order": 47,
+    "marginal note / note marker / furniture order": 49,
     "omitted run (≥6 words)": 81,
-    "inserted word(s)": 17,
+    "inserted word(s)": 21,
     "word split / joined": 7
    },
    "cer_raw": 0.154,
@@ -12165,7 +12166,7 @@
    "classes": {
     "edge: reference padding not on page": 35,
     "edge: running head / page no. / catchword added": 7,
-    "word split / joined": 37,
+    "word split / joined": 18,
     "other misread": 3
    },
    "cer_raw": 0.017,
@@ -12349,7 +12350,7 @@
     "edge: reference padding not on page": 21,
     "u/v i/j regularised in the reference": 18,
     "u/v i/j modernised by the engine": 4,
-    "word split / joined": 44,
+    "word split / joined": 32,
     "long-s read as f": 8
    },
    "cer_raw": 0.027,
@@ -12377,9 +12378,9 @@
     "long-s read as f": 10,
     "reference illegible-letter gap (engine right)": 9,
     "other misread": 24,
-    "word split / joined": 23,
     "inserted run (≥6 words)": 22,
     "spelling normalised": 16,
+    "word split / joined": 8,
     "marginal note / note marker / furniture order": 16,
     "edge: running head / page no. / catchword added": 24
    },
@@ -12457,7 +12458,7 @@
     "edge: running head / page no. / catchword added": 7,
     "u/v i/j regularised in the reference": 8,
     "garbled phrase": 19,
-    "spelling normalised": 7,
+    "spelling normalised": 8,
     "other misread": 32,
     "inserted word(s)": 3
    },
@@ -12533,7 +12534,7 @@
    "refused": false,
    "classes": {
     "edge: reference padding not on page": 23,
-    "word split / joined": 18,
+    "word split / joined": 10,
     "garbled phrase": 16
    },
    "cer_raw": 0.087,
@@ -12663,9 +12664,8 @@
    "classes": {
     "edge: reference padding not on page": 48,
     "reference illegible-letter gap (engine right)": 10,
-    "word split / joined": 4,
+    "case only": 14,
     "u/v i/j regularised in the reference": 13,
-    "case only": 5,
     "omitted word(s)": 4,
     "other misread": 13,
     "edge: running head / page no. / catchword added": 6
@@ -12824,7 +12824,7 @@
     "garbled phrase": 13,
     "omitted word(s)": 26,
     "omitted run (≥6 words)": 24,
-    "inserted word(s)": 27,
+    "inserted word(s)": 28,
     "marginal note / note marker / furniture order": 26
    },
    "cer_raw": 0.091,
@@ -12898,12 +12898,12 @@
    "id": 543,
    "refused": false,
    "classes": {
-    "garbled phrase": 53,
-    "case only": 27,
+    "garbled phrase": 42,
+    "case only": 32,
+    "other misread": 74,
     "spelling normalised": 35,
     "omitted word(s)": 7,
     "inserted word(s)": 7,
-    "other misread": 63,
     "word split / joined": 9,
     "edge: reference padding not on page": 11
    },
@@ -13044,11 +13044,11 @@
    "id": 548,
    "refused": false,
    "classes": {
-    "garbled phrase": 36,
+    "garbled phrase": 25,
     "omitted word(s)": 7,
     "case only": 61,
+    "spelling normalised": 14,
     "word split / joined": 37,
-    "spelling normalised": 8,
     "other misread": 6,
     "edge: reference padding not on page": 14
    },
@@ -13190,8 +13190,8 @@
    "id": 553,
    "refused": false,
    "classes": {
-    "garbled phrase": 29,
-    "accent or mark differs": 24,
+    "garbled phrase": 17,
+    "accent or mark differs": 36,
     "inserted word(s)": 12,
     "omitted word(s)": 12,
     "long-s read as f": 13,
@@ -13246,10 +13246,10 @@
    "classes": {
     "edge: reference padding not on page": 65,
     "edge: running head / page no. / catchword added": 26,
-    "garbled phrase": 40,
+    "other misread": 28,
     "inserted word(s)": 47,
+    "garbled phrase": 33,
     "long-s read as f": 12,
-    "other misread": 21,
     "inserted run (≥6 words)": 45,
     "omitted word(s)": 5
    },
@@ -13496,9 +13496,10 @@
    "classes": {
     "edge: reference padding not on page": 73,
     "edge: running head / page no. / catchword added": 11,
-    "word split / joined": 93,
+    "case only": 6,
     "other misread": 15,
     "long-s read as f": 10,
+    "word split / joined": 87,
     "reference illegible-letter gap (engine right)": 4
    },
    "cer_raw": 0.076,
@@ -13575,7 +13576,7 @@
     "marginal note / note marker / furniture order": 41,
     "omitted word(s)": 6,
     "inserted word(s)": 3,
-    "spelling normalised": 19,
+    "spelling normalised": 20,
     "other misread": 16,
     "edge: reference padding not on page": 15
    },
@@ -13961,11 +13962,11 @@
     "edge: running head / page no. / catchword added": 3,
     "omitted word(s)": 12,
     "accent or mark differs": 40,
-    "other misread": 31,
+    "other misread": 26,
     "numerals": 4,
-    "word split / joined": 29,
+    "word split / joined": 14,
+    "garbled phrase": 56,
     "f read as s": 7,
-    "garbled phrase": 43,
     "u/v i/j convention": 7
    },
    "cer_raw": 0.078,
@@ -14514,12 +14515,12 @@
     "edge: reference padding not on page": 56,
     "edge: running head / page no. / catchword added": 12,
     "spelling normalised": 9,
-    "word split / joined": 107,
-    "other misread": 9,
-    "accent or mark differs": 27,
-    "garbled phrase": 62,
+    "other misread": 23,
+    "accent or mark differs": 30,
+    "word split / joined": 39,
     "case only": 6,
-    "u/v i/j modernised by the engine": 5
+    "u/v i/j modernised by the engine": 5,
+    "garbled phrase": 14
    },
    "cer_raw": 0.076,
    "cer_prompt": 0.062
@@ -14543,12 +14544,11 @@
    "refused": false,
    "classes": {
     "edge: reference padding not on page": 26,
-    "edge: running head / page no. / catchword added": 9,
-    "word split / joined": 99,
-    "omitted word(s)": 9,
-    "inserted word(s)": 45,
-    "reference illegible-letter gap (engine right)": 18,
-    "garbled phrase": 19
+    "edge: running head / page no. / catchword added": 10,
+    "garbled phrase": 47,
+    "inserted word(s)": 20,
+    "word split / joined": 6,
+    "u/v i/j modernised by the engine": 2
    },
    "cer_raw": 0.073,
    "cer_prompt": 0.073
@@ -14967,12 +14967,11 @@
    "id": 613,
    "refused": false,
    "classes": {
-    "garbled phrase": 80,
-    "u/v i/j modernised by the engine": 21,
-    "word split / joined": 183,
+    "garbled phrase": 27,
+    "u/v i/j modernised by the engine": 28,
     "other misread": 14,
-    "spelling normalised": 17,
-    "reference illegible-letter gap (engine right)": 8,
+    "word split / joined": 41,
+    "spelling normalised": 40,
     "long-s read as f": 18,
     "u/v i/j convention": 5,
     "edge: reference padding not on page": 19
@@ -15032,9 +15031,8 @@
    "refused": false,
    "classes": {
     "edge: running head / page no. / catchword added": 7,
-    "u/v i/j regularised in the reference": 67,
+    "u/v i/j regularised in the reference": 72,
     "other misread": 54,
-    "garbled phrase": 9,
     "word split / joined": 8,
     "spelling normalised": 16,
     "u/v i/j convention": 13,
@@ -15158,7 +15156,7 @@
     "edge: reference padding not on page": 49,
     "edge: running head / page no. / catchword added": 7,
     "other misread": 10,
-    "word split / joined": 26,
+    "word split / joined": 23,
     "u/v i/j convention": 5,
     "u/v i/j regularised in the reference": 8
    },
@@ -15215,7 +15213,6 @@
     "edge: reference padding not on page": 49,
     "edge: running head / page no. / catchword added": 11,
     "accent or mark differs": 37,
-    "word split / joined": 10,
     "omitted word(s)": 8,
     "other misread": 16
    },
@@ -15471,9 +15468,10 @@
    "classes": {
     "edge: reference padding not on page": 43,
     "edge: running head / page no. / catchword added": 11,
-    "garbled phrase": 92,
-    "word split / joined": 72,
-    "other misread": 21,
+    "garbled phrase": 44,
+    "word split / joined": 8,
+    "u/v i/j convention": 9,
+    "other misread": 41,
     "accent or mark differs": 7,
     "reference illegible-letter gap (engine right)": 10
    },
@@ -15648,7 +15646,7 @@
     "edge: reference padding not on page": 64,
     "edge: running head / page no. / catchword added": 10,
     "other misread": 41,
-    "marginal note / note marker / furniture order": 25,
+    "marginal note / note marker / furniture order": 24,
     "u/v i/j regularised in the reference": 21,
     "spelling normalised": 13,
     "omitted word(s)": 8,
@@ -16033,7 +16031,7 @@
     "marginal note / note marker / furniture order": 16,
     "other misread": 39,
     "u/v i/j modernised by the engine": 22,
-    "word split / joined": 52,
+    "word split / joined": 46,
     "abbreviation expanded as the prompt asks": 29,
     "u/v i/j convention": 9,
     "edge: reference padding not on page": 15
@@ -17678,7 +17676,7 @@
    "refused": false,
    "classes": {
     "garbled phrase": 107,
-    "marginal note / note marker / furniture order": 38,
+    "marginal note / note marker / furniture order": 39,
     "accent or mark differs": 16,
     "abbreviation expanded as the prompt asks": 10,
     "inserted word(s)": 7,
@@ -17955,7 +17953,7 @@
     "edge: reference padding not on page": 45,
     "edge: running head / page no. / catchword added": 7,
     "long-s read as f": 250,
-    "other misread": 18,
+    "other misread": 20,
     "u/v i/j modernised by the engine": 7
    },
    "cer_raw": 0.073,
@@ -17983,8 +17981,8 @@
     "edge: reference padding not on page": 59,
     "edge: running head / page no. / catchword added": 7,
     "long-s read as f": 21,
-    "other misread": 48,
-    "garbled phrase": 9,
+    "other misread": 40,
+    "garbled phrase": 21,
     "omitted word(s)": 2,
     "word split / joined": 7,
     "inserted word(s)": 6
@@ -18408,7 +18406,7 @@
     "edge: reference padding not on page": 21,
     "edge: running head / page no. / catchword added": 7,
     "other misread": 57,
-    "reference illegible-letter gap (engine right)": 9,
+    "reference illegible-letter gap (engine right)": 10,
     "word split / joined": 18,
     "inserted word(s)": 8,
     "accent or mark differs": 6,
@@ -18441,8 +18439,7 @@
     "word split / joined": 62,
     "u/v i/j modernised by the engine": 4,
     "omitted word(s)": 38,
-    "inserted run (≥6 words)": 32,
-    "inserted word(s)": 8,
+    "inserted word(s)": 39,
     "u/v i/j convention": 11,
     "other misread": 33,
     "garbled phrase": 30
@@ -18554,14 +18551,13 @@
    "id": 756,
    "refused": false,
    "classes": {
-    "marginal note / note marker / furniture order": 14,
-    "edge: reference padding not on page": 59,
-    "edge: running head / page no. / catchword added": 16,
-    "other misread": 46,
+    "edge: reference padding not on page": 57,
+    "edge: running head / page no. / catchword added": 17,
+    "case only": 16,
+    "other misread": 54,
     "inserted word(s)": 15,
-    "numerals": 4,
-    "inserted run (≥6 words)": 71,
-    "reference illegible-letter gap (engine right)": 13
+    "numerals": 6,
+    "inserted run (≥6 words)": 71
    },
    "cer_raw": 0.13,
    "cer_prompt": 0.087
@@ -18587,7 +18583,6 @@
    "classes": {
     "edge: reference padding not on page": 20,
     "edge: running head / page no. / catchword added": 2,
-    "word split / joined": 6,
     "garbled phrase": 16
    },
    "cer_raw": 0.05,
@@ -18803,7 +18798,8 @@
    "id": 765,
    "refused": false,
    "classes": {
-    "garbled phrase": 48,
+    "garbled phrase": 43,
+    "u/v i/j modernised by the engine": 4,
     "inserted word(s)": 4
    },
    "cer_raw": 0.078,
@@ -18969,7 +18965,7 @@
     "edge: reference padding not on page": 37,
     "accent or mark differs": 21,
     "other misread": 3,
-    "edge: running head / page no. / catchword added": 286
+    "edge: running head / page no. / catchword added": 288
    },
    "cer_raw": 0.117,
    "cer_prompt": 0.098
@@ -19078,7 +19074,7 @@
     "edge: reference padding not on page": 63,
     "edge: running head / page no. / catchword added": 7,
     "other misread": 2,
-    "garbled phrase": 12
+    "u/v i/j modernised by the engine": 12
    },
    "cer_raw": 0.073,
    "cer_prompt": 0.039
@@ -19129,7 +19125,8 @@
    "id": 777,
    "refused": false,
    "classes": {
-    "edge: reference padding not on page": 53
+    "edge: reference padding not on page": 53,
+    "case only": 14
    },
    "cer_raw": 0.11,
    "cer_prompt": 0.11
@@ -19154,8 +19151,8 @@
    "refused": false,
    "classes": {
     "edge: reference padding not on page": 34,
-    "word split / joined": 31,
-    "garbled phrase": 8
+    "case only": 4,
+    "other misread": 8
    },
    "cer_raw": 0.058,
    "cer_prompt": 0.058
@@ -19211,7 +19208,6 @@
    "refused": false,
    "classes": {
     "garbled phrase": 10,
-    "word split / joined": 18,
     "other misread": 26,
     "numerals": 3,
     "edge: reference padding not on page": 11
@@ -19585,7 +19581,8 @@
    "classes": {
     "edge: reference padding not on page": 39,
     "edge: running head / page no. / catchword added": 7,
-    "word split / joined": 11,
+    "word split / joined": 5,
+    "case only": 6,
     "other misread": 39
    },
    "cer_raw": 0.052,
@@ -19878,7 +19875,7 @@
    "refused": false,
    "classes": {
     "edge: reference padding not on page": 50,
-    "edge: running head / page no. / catchword added": 39,
+    "edge: running head / page no. / catchword added": 40,
     "garbled phrase": 19
    },
    "cer_raw": 0.133,
@@ -19905,7 +19902,6 @@
    "classes": {
     "edge: reference padding not on page": 42,
     "edge: running head / page no. / catchword added": 7,
-    "word split / joined": 3,
     "other misread": 18
    },
    "cer_raw": 0.07,
@@ -19932,7 +19928,7 @@
    "classes": {
     "edge: reference padding not on page": 33,
     "edge: running head / page no. / catchword added": 7,
-    "word split / joined": 17
+    "word split / joined": 3
    },
    "cer_raw": 0.017,
    "cer_prompt": 0.017
@@ -20303,9 +20299,9 @@
    "classes": {
     "edge: reference padding not on page": 16,
     "edge: running head / page no. / catchword added": 7,
-    "case only": 4,
+    "case only": 8,
     "spelling normalised": 22,
-    "word split / joined": 10,
+    "word split / joined": 6,
     "u/v i/j regularised in the reference": 4
    },
    "cer_raw": 0.008,
@@ -20597,7 +20593,6 @@
     "edge: reference padding not on page": 27,
     "edge: running head / page no. / catchword added": 5,
     "inserted word(s)": 33,
-    "word split / joined": 12,
     "garbled phrase": 16
    },
    "cer_raw": 0.155,
@@ -20649,7 +20644,6 @@
    "refused": false,
    "classes": {
     "edge: reference padding not on page": 52,
-    "word split / joined": 29,
     "omitted word(s)": 3,
     "long-s read as f": 11
    },
@@ -20806,10 +20800,10 @@
    "classes": {
     "edge: running head / page no. / catchword added": 29,
     "edge: reference padding not on page": 172,
-    "other misread": 195,
+    "other misread": 206,
     "word split / joined": 10,
     "reference illegible-letter gap (engine right)": 45,
-    "garbled phrase": 21,
+    "garbled phrase": 10,
     "omitted word(s)": 1,
     "spelling normalised": 7
    },
@@ -20837,7 +20831,7 @@
    "classes": {
     "markup leaked (html entity / latex)": 10,
     "edge: reference padding not on page": 178,
-    "other misread": 43,
+    "other misread": 44,
     "omitted run (≥6 words)": 213,
     "u/v i/j regularised in the reference": 6,
     "spelling normalised": 16,
@@ -20901,9 +20895,9 @@
    "id": 843,
    "refused": false,
    "classes": {
-    "garbled phrase": 51,
+    "garbled phrase": 52,
     "other misread": 29,
-    "case only": 49,
+    "case only": 56,
     "spelling normalised": 32,
     "word split / joined": 24,
     "edge: reference padding not on page": 10
@@ -20930,8 +20924,7 @@
    "id": 844,
    "refused": false,
    "classes": {
-    "edge: reference padding not on page": 39,
-    "word split / joined": 8
+    "edge: reference padding not on page": 39
    },
    "cer_raw": 0.039,
    "cer_prompt": 0.039
@@ -20985,7 +20978,7 @@
     "edge: running head / page no. / catchword added": 14,
     "omitted word(s)": 112,
     "spelling normalised": 12,
-    "inserted word(s)": 63,
+    "inserted word(s)": 64,
     "other misread": 37,
     "inserted run (≥6 words)": 40
    },
@@ -21100,9 +21093,10 @@
    "classes": {
     "edge: reference padding not on page": 75,
     "edge: running head / page no. / catchword added": 11,
-    "word split / joined": 93,
+    "case only": 6,
     "other misread": 15,
     "long-s read as f": 10,
+    "word split / joined": 87,
     "numerals": 4
    },
    "cer_raw": 0.078,
@@ -21292,7 +21286,7 @@
    "refused": false,
    "classes": {
     "garbled phrase": 21,
-    "word split / joined": 71,
+    "word split / joined": 8,
     "edge: reference padding not on page": 22
    },
    "cer_raw": 0.15,
@@ -21318,7 +21312,6 @@
    "refused": false,
    "classes": {
     "garbled phrase": 23,
-    "word split / joined": 6,
     "inserted word(s)": 4,
     "long-s read as f": 14,
     "edge: running head / page no. / catchword added": 2,
@@ -21497,7 +21490,7 @@
    "classes": {
     "garbled phrase": 12,
     "edge: reference padding not on page": 31,
-    "edge: running head / page no. / catchword added": 40,
+    "edge: running head / page no. / catchword added": 48,
     "other misread": 31
    },
    "cer_raw": 0.061,
@@ -21726,7 +21719,7 @@
     "edge: reference padding not on page": 30,
     "edge: running head / page no. / catchword added": 7,
     "word split / joined": 19,
-    "other misread": 76,
+    "other misread": 77,
     "u/v i/j modernised by the engine": 5,
     "garbled phrase": 48,
     "reference illegible-letter gap (engine right)": 18
@@ -22253,7 +22246,7 @@
     "edge: reference padding not on page": 28,
     "edge: running head / page no. / catchword added": 7,
     "other misread": 69,
-    "reference illegible-letter gap (engine right)": 9,
+    "reference illegible-letter gap (engine right)": 10,
     "word split / joined": 13,
     "inserted word(s)": 8,
     "accent or mark differs": 7
@@ -22282,8 +22275,7 @@
     "edge: running head / page no. / catchword added": 11,
     "word split / joined": 62,
     "omitted word(s)": 38,
-    "inserted run (≥6 words)": 31,
-    "inserted word(s)": 7,
+    "inserted word(s)": 38,
     "u/v i/j convention": 11,
     "other misread": 33,
     "garbled phrase": 13,
@@ -22424,6 +22416,7 @@
    "refused": false,
    "classes": {
     "garbled phrase": 19,
+    "case only": 7,
     "edge: reference padding not on page": 6
    },
    "cer_raw": 0.04,
@@ -22447,8 +22440,8 @@
    "refused": false,
    "classes": {
     "edge: reference padding not on page": 253,
-    "edge: running head / page no. / catchword added": 2311,
-    "garbled phrase": 16,
+    "edge: running head / page no. / catchword added": 2331,
+    "garbled phrase": 19,
     "omitted run (≥6 words)": 37,
     "inserted run (≥6 words)": 43,
     "spelling normalised": 7
@@ -22742,7 +22735,7 @@
    "refused": false,
    "classes": {
     "edge: reference padding not on page": 15,
-    "edge: running head / page no. / catchword added": 63,
+    "edge: running head / page no. / catchword added": 64,
     "accent or mark differs": 18,
     "inserted word(s)": 36,
     "other misread": 42,
@@ -22895,7 +22888,7 @@
    "classes": {
     "edge: reference padding not on page": 53,
     "edge: running head / page no. / catchword added": 7,
-    "word split / joined": 7
+    "case only": 14
    },
    "cer_raw": 0.133,
    "cer_prompt": 0.11
@@ -22920,6 +22913,7 @@
     "markup leaked (html entity / latex)": 10,
     "edge: reference padding not on page": 34,
     "edge: running head / page no. / catchword added": 7,
+    "case only": 4,
     "other misread": 8
    },
    "cer_raw": 0.1,
@@ -23061,7 +23055,7 @@
    "refused": false,
    "classes": {
     "garbled phrase": 29,
-    "accent or mark differs": 68,
+    "accent or mark differs": 69,
     "other misread": 31,
     "word split / joined": 9,
     "edge: reference padding not on page": 13
@@ -23574,7 +23568,7 @@
    "refused": false,
    "classes": {
     "edge: reference padding not on page": 50,
-    "edge: running head / page no. / catchword added": 39,
+    "edge: running head / page no. / catchword added": 40,
     "other misread": 17,
     "garbled phrase": 19
    },
@@ -23955,7 +23949,7 @@
     "other misread": 13,
     "spelling normalised": 22,
     "long-s read as f": 5,
-    "word split / joined": 10,
+    "word split / joined": 6,
     "u/v i/j regularised in the reference": 4
    },
    "cer_raw": 0.009,
@@ -24408,7 +24402,7 @@
    "id": 982,
    "refused": false,
    "classes": {
-    "edge: running head / page no. / catchword added": 1344,
+    "edge: running head / page no. / catchword added": 1346,
     "spelling normalised": 3,
     "other misread": 22,
     "inserted word(s)": 1,
@@ -24442,7 +24436,7 @@
     "omitted word(s)": 12,
     "inserted run (≥6 words)": 184,
     "edge: reference padding not on page": 167,
-    "edge: running head / page no. / catchword added": 36
+    "edge: running head / page no. / catchword added": 38
    },
    "cer_raw": 0.238,
    "cer_prompt": 0.238
@@ -24495,9 +24489,9 @@
    "id": 985,
    "refused": false,
    "classes": {
-    "garbled phrase": 51,
+    "garbled phrase": 52,
     "other misread": 29,
-    "case only": 49,
+    "case only": 56,
     "spelling normalised": 32,
     "word split / joined": 24,
     "edge: reference padding not on page": 10
@@ -24574,7 +24568,7 @@
     "edge: running head / page no. / catchword added": 14,
     "omitted word(s)": 115,
     "spelling normalised": 7,
-    "inserted word(s)": 66,
+    "inserted word(s)": 67,
     "other misread": 26,
     "inserted run (≥6 words)": 40
    },
@@ -25030,7 +25024,7 @@
    "classes": {
     "garbled phrase": 12,
     "edge: reference padding not on page": 37,
-    "edge: running head / page no. / catchword added": 45,
+    "edge: running head / page no. / catchword added": 53,
     "other misread": 31,
     "case only": 10
    },
@@ -25258,7 +25252,7 @@
     "edge: reference padding not on page": 30,
     "edge: running head / page no. / catchword added": 7,
     "word split / joined": 19,
-    "other misread": 108,
+    "other misread": 109,
     "u/v i/j modernised by the engine": 5,
     "garbled phrase": 48,
     "reference illegible-letter gap (engine right)": 18
@@ -25782,7 +25776,7 @@
     "edge: reference padding not on page": 28,
     "edge: running head / page no. / catchword added": 7,
     "other misread": 69,
-    "reference illegible-letter gap (engine right)": 9,
+    "reference illegible-letter gap (engine right)": 10,
     "word split / joined": 13,
     "inserted word(s)": 8,
     "accent or mark differs": 6
@@ -25812,7 +25806,7 @@
     "word split / joined": 58,
     "omitted word(s)": 42,
     "inserted run (≥6 words)": 35,
-    "inserted word(s)": 7,
+    "inserted word(s)": 8,
     "u/v i/j convention": 11,
     "other misread": 33,
     "garbled phrase": 13,
@@ -25954,6 +25948,7 @@
    "refused": false,
    "classes": {
     "garbled phrase": 19,
+    "case only": 7,
     "edge: reference padding not on page": 6
    },
    "cer_raw": 0.04,
@@ -25977,8 +25972,8 @@
    "refused": false,
    "classes": {
     "edge: reference padding not on page": 253,
-    "edge: running head / page no. / catchword added": 2311,
-    "garbled phrase": 16,
+    "edge: running head / page no. / catchword added": 2331,
+    "garbled phrase": 19,
     "omitted run (≥6 words)": 37,
     "inserted run (≥6 words)": 43,
     "spelling normalised": 7
@@ -26263,7 +26258,7 @@
    "refused": false,
    "classes": {
     "edge: reference padding not on page": 37,
-    "edge: running head / page no. / catchword added": 294,
+    "edge: running head / page no. / catchword added": 295,
     "accent or mark differs": 18,
     "other misread": 6
    },
@@ -26413,7 +26408,7 @@
    "classes": {
     "edge: reference padding not on page": 53,
     "edge: running head / page no. / catchword added": 7,
-    "word split / joined": 7
+    "case only": 14
    },
    "cer_raw": 0.133,
    "cer_prompt": 0.11
@@ -26438,6 +26433,7 @@
     "markup leaked (html entity / latex)": 10,
     "edge: reference padding not on page": 34,
     "edge: running head / page no. / catchword added": 7,
+    "case only": 4,
     "other misread": 8
    },
    "cer_raw": 0.1,
@@ -26578,7 +26574,7 @@
    "refused": false,
    "classes": {
     "garbled phrase": 29,
-    "accent or mark differs": 68,
+    "accent or mark differs": 69,
     "other misread": 31,
     "word split / joined": 9,
     "edge: reference padding not on page": 13
@@ -27092,7 +27088,7 @@
    "refused": false,
    "classes": {
     "edge: reference padding not on page": 50,
-    "edge: running head / page no. / catchword added": 49,
+    "edge: running head / page no. / catchword added": 50,
     "garbled phrase": 19
    },
    "cer_raw": 0.128,
@@ -27481,7 +27477,7 @@
     "other misread": 13,
     "spelling normalised": 22,
     "long-s read as f": 5,
-    "word split / joined": 10,
+    "word split / joined": 6,
     "u/v i/j regularised in the reference": 4
    },
    "cer_raw": 0.009,
@@ -27938,7 +27934,7 @@
    "id": 1124,
    "refused": false,
    "classes": {
-    "edge: running head / page no. / catchword added": 1344,
+    "edge: running head / page no. / catchword added": 1346,
     "spelling normalised": 3,
     "other misread": 22,
     "inserted word(s)": 1,
@@ -27972,7 +27968,7 @@
     "omitted word(s)": 12,
     "inserted run (≥6 words)": 184,
     "edge: reference padding not on page": 167,
-    "edge: running head / page no. / catchword added": 36
+    "edge: running head / page no. / catchword added": 38
    },
    "cer_raw": 0.238,
    "cer_prompt": 0.238
@@ -28026,9 +28022,9 @@
    "id": 1127,
    "refused": false,
    "classes": {
-    "garbled phrase": 51,
+    "garbled phrase": 52,
     "other misread": 29,
-    "case only": 49,
+    "case only": 60,
     "spelling normalised": 32,
     "word split / joined": 24,
     "edge: reference padding not on page": 10
@@ -28105,7 +28101,7 @@
     "edge: running head / page no. / catchword added": 14,
     "omitted word(s)": 115,
     "spelling normalised": 12,
-    "inserted word(s)": 66,
+    "inserted word(s)": 67,
     "other misread": 31,
     "inserted run (≥6 words)": 40
    },
@@ -28565,7 +28561,7 @@
    "classes": {
     "garbled phrase": 12,
     "edge: reference padding not on page": 37,
-    "edge: running head / page no. / catchword added": 45,
+    "edge: running head / page no. / catchword added": 53,
     "other misread": 31
    },
    "cer_raw": 0.062,
@@ -28638,9 +28634,9 @@
    "id": 1151,
    "refused": false,
    "classes": {
-    "garbled phrase": 54,
+    "garbled phrase": 74,
     "case only": 10,
-    "other misread": 34,
+    "other misread": 6,
     "marginal note / note marker / furniture order": 13,
     "edge: reference padding not on page": 19,
     "edge: running head / page no. / catchword added": 4
@@ -28802,7 +28798,7 @@
     "edge: reference padding not on page": 30,
     "edge: running head / page no. / catchword added": 7,
     "word split / joined": 19,
-    "other misread": 74,
+    "other misread": 75,
     "u/v i/j modernised by the engine": 5,
     "long-s read as f": 3,
     "garbled phrase": 38,
@@ -28912,7 +28908,7 @@
    "classes": {
     "edge: reference padding not on page": 45,
     "edge: running head / page no. / catchword added": 7,
-    "other misread": 18,
+    "other misread": 20,
     "long-s read as f": 26,
     "u/v i/j modernised by the engine": 7
    },
@@ -28939,8 +28935,8 @@
     "edge: reference padding not on page": 59,
     "edge: running head / page no. / catchword added": 12,
     "long-s read as f": 21,
-    "garbled phrase": 9,
-    "other misread": 59,
+    "garbled phrase": 21,
+    "other misread": 51,
     "omitted word(s)": 2,
     "word split / joined": 6,
     "marginal note / note marker / furniture order": 11
@@ -29443,7 +29439,7 @@
     "edge: running head / page no. / catchword added": 13,
     "spelling normalised": 11,
     "other misread": 7,
-    "word split / joined": 10,
+    "case only": 10,
     "long-s read as f": 14
    },
    "cer_raw": 0.085,
@@ -29521,6 +29517,7 @@
    "refused": false,
    "classes": {
     "garbled phrase": 19,
+    "case only": 7,
     "edge: reference padding not on page": 6
    },
    "cer_raw": 0.04,
@@ -29975,7 +29972,7 @@
     "edge: reference padding not on page": 29,
     "edge: running head / page no. / catchword added": 7,
     "word split / joined": 10,
-    "inserted word(s)": 24
+    "inserted word(s)": 27
    },
    "cer_raw": 0.037,
    "cer_prompt": 0.037
@@ -29998,7 +29995,8 @@
    "refused": false,
    "classes": {
     "edge: reference padding not on page": 53,
-    "edge: running head / page no. / catchword added": 7
+    "edge: running head / page no. / catchword added": 7,
+    "case only": 14
    },
    "cer_raw": 0.11,
    "cer_prompt": 0.11
@@ -30022,6 +30020,7 @@
    "classes": {
     "edge: reference padding not on page": 30,
     "edge: running head / page no. / catchword added": 7,
+    "case only": 8,
     "other misread": 8
    },
    "cer_raw": 0.053,
@@ -31622,7 +31621,7 @@
    "classes": {
     "garbled phrase": 68,
     "other misread": 29,
-    "case only": 45,
+    "case only": 56,
     "spelling normalised": 32,
     "word split / joined": 17,
     "edge: reference padding not on page": 10
@@ -32135,7 +32134,7 @@
    "refused": false,
    "classes": {
     "edge: reference padding not on page": 53,
-    "edge: running head / page no. / catchword added": 88,
+    "edge: running head / page no. / catchword added": 89,
     "other misread": 22,
     "omitted run (≥6 words)": 50,
     "marginal note / note marker / furniture order": 5,
@@ -32388,7 +32387,7 @@
     "edge: reference padding not on page": 30,
     "edge: running head / page no. / catchword added": 7,
     "word split / joined": 19,
-    "other misread": 99,
+    "other misread": 100,
     "u/v i/j modernised by the engine": 5,
     "garbled phrase": 48,
     "reference illegible-letter gap (engine right)": 18
@@ -32497,7 +32496,7 @@
    "classes": {
     "edge: reference padding not on page": 51,
     "edge: running head / page no. / catchword added": 7,
-    "other misread": 21,
+    "other misread": 23,
     "u/v i/j modernised by the engine": 7
    },
    "cer_raw": 0.077,
@@ -32922,12 +32921,11 @@
    "id": 1319,
    "refused": false,
    "classes": {
-    "edge: reference padding not on page": 21,
+    "edge: reference padding not on page": 28,
     "edge: running head / page no. / catchword added": 7,
-    "other misread": 49,
-    "reference illegible-letter gap (engine right)": 9,
+    "other misread": 67,
+    "reference illegible-letter gap (engine right)": 10,
     "word split / joined": 18,
-    "garbled phrase": 33,
     "inserted word(s)": 8,
     "accent or mark differs": 7
    },
@@ -32956,7 +32954,7 @@
     "word split / joined": 58,
     "omitted word(s)": 42,
     "inserted run (≥6 words)": 35,
-    "inserted word(s)": 7,
+    "inserted word(s)": 8,
     "u/v i/j convention": 11,
     "other misread": 33,
     "garbled phrase": 13,
@@ -33108,6 +33106,7 @@
    "refused": false,
    "classes": {
     "garbled phrase": 19,
+    "case only": 7,
     "edge: reference padding not on page": 8
    },
    "cer_raw": 0.069,
@@ -33132,7 +33131,7 @@
    "classes": {
     "garbled phrase": 45,
     "edge: reference padding not on page": 83,
-    "edge: running head / page no. / catchword added": 2309,
+    "edge: running head / page no. / catchword added": 2328,
     "omitted run (≥6 words)": 192,
     "inserted run (≥6 words)": 32,
     "omitted word(s)": 12,
@@ -33607,6 +33606,7 @@
     "markup leaked (html entity / latex)": 10,
     "edge: reference padding not on page": 34,
     "edge: running head / page no. / catchword added": 7,
+    "case only": 4,
     "other misread": 8
    },
    "cer_raw": 0.1,
@@ -34268,7 +34268,7 @@
    "refused": false,
    "classes": {
     "edge: reference padding not on page": 50,
-    "edge: running head / page no. / catchword added": 39,
+    "edge: running head / page no. / catchword added": 40,
     "garbled phrase": 19
    },
    "cer_raw": 0.18,
@@ -34664,7 +34664,7 @@
     "edge: running head / page no. / catchword added": 7,
     "spelling normalised": 22,
     "long-s read as f": 5,
-    "word split / joined": 10,
+    "word split / joined": 6,
     "u/v i/j regularised in the reference": 4
    },
    "cer_raw": 0.033,
@@ -35126,7 +35126,7 @@
    "id": 1408,
    "refused": false,
    "classes": {
-    "edge: running head / page no. / catchword added": 1337,
+    "edge: running head / page no. / catchword added": 1343,
     "spelling normalised": 3,
     "other misread": 13,
     "inserted word(s)": 1,
@@ -35161,7 +35161,7 @@
     "omitted word(s)": 12,
     "inserted run (≥6 words)": 184,
     "edge: reference padding not on page": 167,
-    "edge: running head / page no. / catchword added": 36
+    "edge: running head / page no. / catchword added": 38
    },
    "cer_raw": 0.257,
    "cer_prompt": 0.238
@@ -35215,9 +35215,9 @@
    "id": 1411,
    "refused": false,
    "classes": {
-    "garbled phrase": 51,
+    "garbled phrase": 52,
     "other misread": 29,
-    "case only": 49,
+    "case only": 60,
     "spelling normalised": 32,
     "word split / joined": 24,
     "edge: reference padding not on page": 10
@@ -35293,7 +35293,7 @@
     "edge: reference padding not on page": 33,
     "edge: running head / page no. / catchword added": 14,
     "omitted word(s)": 115,
-    "inserted word(s)": 66,
+    "inserted word(s)": 67,
     "other misread": 29,
     "inserted run (≥6 words)": 40
    },
@@ -35819,9 +35819,9 @@
    "id": 1435,
    "refused": false,
    "classes": {
-    "garbled phrase": 48,
+    "garbled phrase": 68,
     "case only": 10,
-    "other misread": 39,
+    "other misread": 11,
     "marginal note / note marker / furniture order": 13,
     "u/v i/j regularised in the reference": 5,
     "accent or mark differs": 5,
@@ -35994,7 +35994,7 @@
     "edge: running head / page no. / catchword added": 7,
     "word split / joined": 19,
     "u/v i/j convention": 40,
-    "other misread": 53,
+    "other misread": 54,
     "u/v i/j regularised in the reference": 24,
     "u/v i/j modernised by the engine": 17,
     "long-s read as f": 52,
@@ -36108,7 +36108,7 @@
    "classes": {
     "edge: reference padding not on page": 45,
     "edge: running head / page no. / catchword added": 7,
-    "other misread": 18,
+    "other misread": 20,
     "long-s read as f": 20,
     "spelling normalised": 6,
     "u/v i/j modernised by the engine": 7
@@ -36135,8 +36135,8 @@
    "classes": {
     "edge: reference padding not on page": 54,
     "edge: running head / page no. / catchword added": 7,
-    "garbled phrase": 19,
-    "other misread": 43,
+    "garbled phrase": 31,
+    "other misread": 35,
     "omitted word(s)": 2,
     "long-s read as f": 9,
     "word split / joined": 19,
@@ -36565,7 +36565,7 @@
     "marginal note / note marker / furniture order": 31,
     "word split / joined": 18,
     "omitted word(s)": 24,
-    "inserted word(s)": 7,
+    "inserted word(s)": 8,
     "u/v i/j convention": 11,
     "garbled phrase": 18,
     "other misread": 6,
@@ -36721,6 +36721,7 @@
    "refused": false,
    "classes": {
     "garbled phrase": 19,
+    "case only": 7,
     "edge: reference padding not on page": 6
    },
    "cer_raw": 0.066,
@@ -37175,7 +37176,7 @@
    "classes": {
     "marginal note / note marker / furniture order": 17,
     "word split / joined": 10,
-    "inserted word(s)": 24,
+    "inserted word(s)": 27,
     "edge: reference padding not on page": 12
    },
    "cer_raw": 0.069,
@@ -37224,6 +37225,7 @@
    "classes": {
     "edge: reference padding not on page": 30,
     "edge: running head / page no. / catchword added": 7,
+    "case only": 8,
     "other misread": 8
    },
    "cer_raw": 0.095,
@@ -38791,9 +38793,10 @@
    "classes": {
     "edge: reference padding not on page": 175,
     "edge: running head / page no. / catchword added": 165,
-    "other misread": 35,
+    "other misread": 36,
     "omitted run (≥6 words)": 213,
     "long-s read as f": 25,
+    "word split / joined": 9,
     "u/v i/j regularised in the reference": 6,
     "case only": 8,
     "marginal note / note marker / furniture order": 11,
@@ -38854,7 +38857,7 @@
    "classes": {
     "edge: reference padding not on page": 19,
     "other misread": 29,
-    "case only": 45,
+    "case only": 56,
     "garbled phrase": 43,
     "spelling normalised": 32,
     "word split / joined": 24
@@ -38931,7 +38934,7 @@
     "edge: running head / page no. / catchword added": 14,
     "other misread": 82,
     "omitted word(s)": 124,
-    "inserted word(s)": 66,
+    "inserted word(s)": 67,
     "inserted run (≥6 words)": 50,
     "spelling normalised": 8,
     "long-s read as f": 6
@@ -39642,7 +39645,7 @@
     "edge: reference padding not on page": 30,
     "edge: running head / page no. / catchword added": 7,
     "word split / joined": 19,
-    "other misread": 76,
+    "other misread": 77,
     "u/v i/j modernised by the engine": 5,
     "garbled phrase": 38,
     "reference illegible-letter gap (engine right)": 18,
@@ -39756,7 +39759,7 @@
     "edge: reference padding not on page": 51,
     "edge: running head / page no. / catchword added": 7,
     "long-s read as f": 34,
-    "other misread": 21,
+    "other misread": 23,
     "spelling normalised": 6,
     "u/v i/j modernised by the engine": 7
    },
@@ -39783,8 +39786,8 @@
     "edge: reference padding not on page": 54,
     "edge: running head / page no. / catchword added": 7,
     "long-s read as f": 14,
-    "other misread": 52,
-    "garbled phrase": 9,
+    "other misread": 44,
+    "garbled phrase": 21,
     "omitted word(s)": 2,
     "word split / joined": 13,
     "inserted word(s)": 6,
@@ -40362,6 +40365,7 @@
    "refused": false,
    "classes": {
     "garbled phrase": 19,
+    "case only": 7,
     "edge: reference padding not on page": 6
    },
    "cer_raw": 0.04,
@@ -41219,7 +41223,7 @@
    "refused": false,
    "classes": {
     "edge: reference padding not on page": 73,
-    "edge: running head / page no. / catchword added": 752,
+    "edge: running head / page no. / catchword added": 753,
     "other misread": 2
    },
    "cer_raw": 0.079,
@@ -41896,7 +41900,7 @@
     "other misread": 12,
     "omitted word(s)": 16,
     "u/v i/j regularised in the reference": 5,
-    "garbled phrase": 20
+    "garbled phrase": 19
    },
    "cer_raw": 0.059,
    "cer_prompt": 0.031
@@ -42476,7 +42480,7 @@
    "classes": {
     "garbled phrase": 68,
     "other misread": 29,
-    "case only": 45,
+    "case only": 56,
     "spelling normalised": 32,
     "word split / joined": 17,
     "edge: reference padding not on page": 10
@@ -42555,7 +42559,7 @@
     "edge: running head / page no. / catchword added": 14,
     "other misread": 90,
     "omitted word(s)": 115,
-    "inserted word(s)": 66,
+    "inserted word(s)": 67,
     "numerals": 5,
     "inserted run (≥6 words)": 40,
     "long-s read as f": 6
@@ -42650,8 +42654,9 @@
    "classes": {
     "edge: reference padding not on page": 37,
     "edge: running head / page no. / catchword added": 7,
-    "word split / joined": 64,
+    "case only": 6,
     "long-s read as f": 24,
+    "word split / joined": 58,
     "other misread": 11,
     "marginal note / note marker / furniture order": 16,
     "numerals": 12,
@@ -43028,620 +43033,665 @@
    "class": "long-s read as f",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 764,
+   "slug": "6955d3d828a09ca65927ed03-p273",
    "book": "6955d3d828a09ca65927ed03",
    "language": "English",
-   "engine": "necefsary",
+   "engine": "gemini-3-flash-preview",
    "prompt": "label \"v5.2026-02\" (unresolved)",
    "ref_before": "(which I formerly also intimated)",
    "ref": "necessary",
-   "ref_after": "to my present Argument: whereto"
+   "ref_after": "to my present Argument: whereto",
+   "engine_text": "necefsary"
   },
   {
    "kind": "ſ read as f",
    "class": "long-s read as f",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 834,
+   "slug": "69905cfcaaa7f10ed4cfd289-p84",
    "book": "69905cfcaaa7f10ed4cfd289",
    "language": "English",
-   "engine": "friendship,",
+   "engine": "gemini-3-flash-preview",
    "prompt": "label \"v5.2026-02\" (unresolved)",
    "ref_before": "in unity, peace and neighbourly",
    "ref": "sriendship,",
-   "ref_after": "it would not onely be"
+   "ref_after": "it would not onely be",
+   "engine_text": "friendship,"
   },
   {
    "kind": "ſ read as f",
    "class": "long-s read as f",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 848,
+   "slug": "6990618a322e01b1349a5136-p13",
    "book": "6990618a322e01b1349a5136",
    "language": "English",
-   "engine": "finne",
+   "engine": "gemini-3-flash-preview",
    "prompt": "label \"v3.2026-02\" (unresolved)",
    "ref_before": "be free from such, where",
    "ref": "sinne",
-   "ref_after": "and ignorance besides so much"
+   "ref_after": "and ignorance besides so much",
+   "engine_text": "finne"
   },
   {
    "kind": "ſ read as f",
    "class": "long-s read as f",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 768,
+   "slug": "69906537726f64800c10a08c-p3",
    "book": "69906537726f64800c10a08c",
    "language": "English",
-   "engine": "Phyfick.",
+   "engine": "gemini-3-flash-preview",
    "prompt": "label \"v4.2026-02\" (unresolved)",
    "ref_before": "By THOMAS BROVVNE Dr. of",
    "ref": "Physick.",
-   "ref_after": "IUL. SCALIG. Ex Libris colligere"
+   "ref_after": "IUL. SCALIG. Ex Libris colligere",
+   "engine_text": "Phyfick."
   },
   {
    "kind": "ſ read as f",
    "class": "long-s read as f",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 819,
+   "slug": "6991d67a8c1030b12444b537-p27",
    "book": "6991d67a8c1030b12444b537",
    "language": "English",
-   "engine": "Paradifical",
+   "engine": "gemini-3-flash-preview",
    "prompt": "label \"v3.2026-02\" (unresolved)",
    "ref_before": "would recover their Angelical and",
    "ref": "Paradisical",
-   "ref_after": "State, and remove the Curse"
-  },
-  {
-   "kind": "misread letters and words",
-   "class": "word split / joined",
-   "set": "served",
-   "stratum": "long-s-tcp-ab",
-   "slug": 757,
-   "book": "0425b5da-2769-41ae-93dd-76624ba8236a",
-   "language": "English",
-   "engine": "Sa- turn",
-   "prompt": "label \"v4.2026-02\" (unresolved)",
-   "ref_before": "brief, I tell thee that",
-   "ref": "Saturn",
-   "ref_after": "is generated of little Sulphur,"
-  },
-  {
-   "kind": "misread letters and words",
-   "class": "other misread",
-   "set": "served",
-   "stratum": "long-s-tcp-ab",
-   "slug": 760,
-   "book": "69526046ab34727b1f04660c",
-   "language": "English",
-   "engine": "text",
-   "prompt": "no prompt recorded",
-   "ref_before": "and hath againe Tinctured the",
-   "ref": "spirits",
-   "ref_after": "of the Letter, viz. the"
-  },
-  {
-   "kind": "misread letters and words",
-   "class": "word split / joined",
-   "set": "served",
-   "stratum": "long-s-tcp-ab",
-   "slug": 778,
-   "book": "6958e07cd34d35c8156624c8",
-   "language": "English",
-   "engine": "In- oculate",
-   "prompt": "label \"v5.2026-02\" (unresolved)",
-   "ref_before": "may now also begin to",
-   "ref": "Inoculate.",
-   "ref_after": "Let such Olitory-herbs run to"
-  },
-  {
-   "kind": "misread letters and words",
-   "class": "other misread",
-   "set": "served",
-   "stratum": "long-s-tcp-ab",
-   "slug": 863,
-   "book": "69905e152fd6a039938a0ebe",
-   "language": "English",
-   "engine": "Contrary",
-   "prompt": "label \"v3.2026-02\" (unresolved)",
-   "ref_before": "such as are living; The",
-   "ref": "Cont",
-   "ref_after": "is manifest. No Question had"
+   "ref_after": "State, and remove the Curse",
+   "engine_text": "Paradifical"
   },
   {
    "kind": "misread letters and words",
    "class": "garbled phrase",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 805,
+   "slug": "0425b5da-2769-41ae-93dd-76624ba8236a-p148",
+   "book": "0425b5da-2769-41ae-93dd-76624ba8236a",
+   "language": "English",
+   "engine": "gemini-3-flash-preview",
+   "prompt": "label \"v4.2026-02\" (unresolved)",
+   "ref_before": "floates upon the Water, in",
+   "ref": "comparison of that",
+   "ref_after": "",
+   "engine_text": "com-"
+  },
+  {
+   "kind": "misread letters and words",
+   "class": "other misread",
+   "set": "served",
+   "stratum": "long-s-tcp-ab",
+   "slug": "69526046ab34727b1f04660c-p247",
+   "book": "69526046ab34727b1f04660c",
+   "language": "English",
+   "engine": "gemini-3-flash-preview",
+   "prompt": "no prompt recorded",
+   "ref_before": "and hath againe Tinctured the",
+   "ref": "spirits",
+   "ref_after": "of the Letter, viz. the",
+   "engine_text": "text"
+  },
+  {
+   "kind": "misread letters and words",
+   "class": "other misread",
+   "set": "served",
+   "stratum": "long-s-tcp-ab",
+   "slug": "6958e07cd34d35c8156624c8-p72",
+   "book": "6958e07cd34d35c8156624c8",
+   "language": "English",
+   "engine": "gemini-3-flash-preview",
+   "prompt": "label \"v5.2026-02\" (unresolved)",
+   "ref_before": "in May to head in",
+   "ref": "Autumme;",
+   "ref_after": "'tis the best Cabage in",
+   "engine_text": "Autumne;"
+  },
+  {
+   "kind": "misread letters and words",
+   "class": "other misread",
+   "set": "served",
+   "stratum": "long-s-tcp-ab",
+   "slug": "69905e152fd6a039938a0ebe-p11",
+   "book": "69905e152fd6a039938a0ebe",
+   "language": "English",
+   "engine": "gemini-3-flash-preview",
+   "prompt": "label \"v3.2026-02\" (unresolved)",
+   "ref_before": "such as are living; The",
+   "ref": "Cont",
+   "ref_after": "is manifest. No Question had",
+   "engine_text": "Contrary"
+  },
+  {
+   "kind": "misread letters and words",
+   "class": "garbled phrase",
+   "set": "served",
+   "stratum": "long-s-tcp-ab",
+   "slug": "69906056ef12272ffdc8cdee-p4",
    "book": "69906056ef12272ffdc8cdee",
    "language": "English",
-   "engine": "ROBERT HOOKE.",
+   "engine": "gemini-3-flash-preview",
    "prompt": "label \"v3.2026-02\" (unresolved)",
    "ref_before": "obliged, and most humble Servant",
    "ref": "From Gresham Colledge",
-   "ref_after": ""
+   "ref_after": "",
+   "engine_text": "ROBERT HOOKE."
   },
   {
    "kind": "refusals",
    "class": "refusal (empty output)",
    "set": "bench",
    "stratum": "eebo-tcp-5488",
-   "slug": 277,
+   "slug": "ed-69cfa93f80eb0ccd3e739280-p101",
    "book": "69cfa93f80eb0ccd3e739280",
    "language": "English",
-   "engine": "",
+   "engine": "gemini-3.1-flash-lite",
    "prompt": "benchmark generic",
-   "ref": "will, by degrees, be all turn'd into a litharge; for that colour which covers the top being scum'd or shov'd aside, appears to be nothing"
+   "ref": "will, by degrees, be all turn'd into a litharge; for that colour which covers the top being scum'd or shov'd aside, appears to be nothing",
+   "engine_text": ""
   },
   {
    "kind": "refusals",
    "class": "refusal (empty output)",
    "set": "bench",
    "stratum": "eebo-tcp-5488",
-   "slug": 279,
+   "slug": "ed-69de1c99d10d4b0d3f6f3175-p26",
    "book": "69de1c99d10d4b0d3f6f3175",
    "language": "English",
-   "engine": "",
+   "engine": "gemini-3.1-flash-lite",
    "prompt": "benchmark generic",
-   "ref": "and gouernement of the Ladies Chambers, and preparing all places where we shall be present. Moreouer, we will and commaund euery one of them (as"
+   "ref": "and gouernement of the Ladies Chambers, and preparing all places where we shall be present. Moreouer, we will and commaund euery one of them (as",
+   "engine_text": ""
   },
   {
    "kind": "refusals",
    "class": "refusal (empty output)",
    "set": "bench",
    "stratum": "eebo-tcp-5488",
-   "slug": 311,
+   "slug": "ed-6ab5a4019e89e2a1f4139282-p94",
    "book": "6ab5a4019e89e2a1f4139282",
    "language": "English",
-   "engine": "",
+   "engine": "gemini-3.1-flash-lite",
    "prompt": "benchmark generic",
-   "ref": "labour and charge is the cause why so many men fall and undo themselves in this Art; for if the searcher be quallified sufficiently, then"
+   "ref": "labour and charge is the cause why so many men fall and undo themselves in this Art; for if the searcher be quallified sufficiently, then",
+   "engine_text": ""
   },
   {
    "kind": "refusals",
    "class": "refusal (empty output)",
    "set": "bench",
    "stratum": "ref-ws",
-   "slug": 16,
+   "slug": "ws-de-anette-von-droste-h-lshoff-des-arztes-verm-chtni-p3",
    "book": null,
    "language": "German",
-   "engine": "",
+   "engine": "gemini-3.1-flash-lite",
    "prompt": "benchmark generic",
-   "ref": "Des Arztes Vermächtniß. So mild die Landschaft und so kühn, Aus Felsenritzen Ranken blühn; So wild das Wasser stürmt und rauscht, Und drüber Soldanella lauscht!"
+   "ref": "Des Arztes Vermächtniß. So mild die Landschaft und so kühn, Aus Felsenritzen Ranken blühn; So wild das Wasser stürmt und rauscht, Und drüber Soldanella lauscht!",
+   "engine_text": ""
   },
   {
    "kind": "refusals",
    "class": "refusal (empty output)",
    "set": "bench",
    "stratum": "ref-ws",
-   "slug": 43,
+   "slug": "ws-el-apollonii-rhodii-argonautica-1900-djvu-p17",
    "book": null,
    "language": "Greek",
-   "engine": "",
+   "engine": "gemini-3.1-flash-lite",
    "prompt": "benchmark generic",
-   "ref": "ΓΕΝΟΣ ΑΠΟΛΛΩΝΙΟΥ τοῦ ποιητοῦ τῶν Ἀργοναυτικῶν Ἀπολλώνιος ὁ τῶν Ἀργοναυτικῶν ποιητὴς τὸ μὲν γένος ἦν Ἀλεξανδρεύς, υἱὸς δὲ Σιλλέως ὡς δέ τινες Ἰλλέως, φυλῆς Πτολεμαΐδος."
+   "ref": "ΓΕΝΟΣ ΑΠΟΛΛΩΝΙΟΥ τοῦ ποιητοῦ τῶν Ἀργοναυτικῶν Ἀπολλώνιος ὁ τῶν Ἀργοναυτικῶν ποιητὴς τὸ μὲν γένος ἦν Ἀλεξανδρεύς, υἱὸς δὲ Σιλλέως ὡς δέ τινες Ἰλλέως, φυλῆς Πτολεμαΐδος.",
+   "engine_text": ""
   },
   {
    "kind": "invented or recited text",
    "class": "inserted run (≥6 words)",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 841,
+   "slug": "6991d6508c1030b12444acd8-p61",
    "book": "6991d6508c1030b12444acd8",
    "language": "English",
-   "engine": "Tho it seem a Paradox that giving is a richer Trade than lending, evn use upon use: yet it is an infallibly Orthodox Axiom; for he who giveth to",
+   "engine": "gemini-3-flash-preview",
    "prompt": "label \"v5.2026-02\" (unresolved)",
    "ref_before": "could discern the face of",
    "ref": "",
-   "ref_after": "the Skies, Yea, and why"
+   "ref_after": "the Skies, Yea, and why",
+   "engine_text": "Tho it seem a Paradox that giving is a richer Trade than lending, evn use upon use: yet it is an infallibly Orthodox Axiom; for he who giveth to"
   },
   {
    "kind": "invented or recited text",
    "class": "inserted run (≥6 words)",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 839,
+   "slug": "6991e194339ebc850994a230-p54",
    "book": "6991e194339ebc850994a230",
    "language": "English",
-   "engine": "I might here add many more particulars,",
+   "engine": "gemini-3-flash-preview",
    "prompt": "label \"v5.2026-02\" (unresolved)",
    "ref_before": "seldom Husbandmen or Foot Soldiers.",
    "ref": "",
-   "ref_after": "but being the same as"
+   "ref_after": "but being the same as",
+   "engine_text": "I might here add many more particulars,"
   },
   {
    "kind": "invented or recited text",
    "class": "inserted run (≥6 words)",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 846,
+   "slug": "69ee46ef6dd925d126f40e22-p150",
    "book": "69ee46ef6dd925d126f40e22",
    "language": "English",
-   "engine": "The Spear called Hastata. Ausonius. Pausanias",
+   "engine": "gemini-3-flash-preview",
    "prompt": "v12",
    "ref_before": "the Goddess of Victory? Pausanias",
    "ref": "",
-   "ref_after": "writes, That the Cytheraei (taught"
+   "ref_after": "writes, That the Cytheraei (taught",
+   "engine_text": "The Spear called Hastata. Ausonius. Pausanias"
   },
   {
    "kind": "invented or recited text",
    "class": "inserted run (≥6 words)",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 726,
+   "slug": "6a425634dfbbb4d07aa5382e-p24",
    "book": "6a425634dfbbb4d07aa5382e",
    "language": "Latin",
-   "engine": "uox, tonitruque tremenInsonuere aurae, paulatim ascendere montes",
+   "engine": "gemini-3-flash-preview",
    "prompt": "v14",
    "ref_before": "tua vox, tonitru que tremē",
    "ref": "",
-   "ref_after": "do, Insonuere aurae, paulatìm ascēdere"
+   "ref_after": "do, Insonuere aurae, paulatìm ascēdere",
+   "engine_text": "uox, tonitruque tremenInsonuere aurae, paulatim ascendere montes"
   },
   {
    "kind": "invented or recited text",
    "class": "inserted run (≥6 words)",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 752,
-   "book": "6a42d56d1894955eb725e97f",
+   "slug": "6a4376a3e296c55144956689-p8",
+   "book": "6a4376a3e296c55144956689",
    "language": "Latin",
-   "engine": "Praedicanti- In Contro. fol. 106. bus",
+   "engine": "gemini-3-flash-preview",
    "prompt": "v14",
-   "ref_before": "etsi vnum è nostris Praedicantibus",
+   "ref_before": "volunt. A Platone descivisse Aristotelem",
    "ref": "",
-   "ref_after": "eum appelletScribanius Iesuita, in suis"
+   "ref_after": "Sectamque propriam condidisse, notum est:",
+   "engine_text": "(quanquam inter utriusque doctrinam aut omnino nihil, aut certe parum interesset)"
   },
   {
    "kind": "omissions",
    "class": "omitted word(s)",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 820,
+   "slug": "6991d66e8c1030b12444b4a3-p34",
    "book": "6991d66e8c1030b12444b4a3",
    "language": "English",
-   "engine": "",
+   "engine": "gemini-3-flash-preview",
    "prompt": "label \"v3.2026-02\" (unresolved)",
    "ref_before": "was She of whom the",
    "ref": "Or Christ the Lord.",
-   "ref_after": "Lord Christ was born in"
+   "ref_after": "Lord Christ was born in",
+   "engine_text": ""
   },
   {
    "kind": "omissions",
    "class": "omitted word(s)",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 831,
+   "slug": "69aebe60c0472fef6455a8f2-p14",
    "book": "69aebe60c0472fef6455a8f2",
    "language": "English",
-   "engine": "",
+   "engine": "gemini-3-flash-preview",
    "prompt": "label \"v5.2026-02\" (unresolved)",
    "ref_before": "him. This noise lasted about",
    "ref": "⅛",
-   "ref_after": "of an hour, till it"
+   "ref_after": "of an hour, till it",
+   "engine_text": ""
   },
   {
    "kind": "omissions",
    "class": "omitted word(s)",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 762,
+   "slug": "69bf60fd065df5d87d778bb3-p222",
    "book": "69bf60fd065df5d87d778bb3",
    "language": "English",
-   "engine": "",
+   "engine": "gemini-3.1-flash-lite-preview",
    "prompt": "label \"v10\" (unresolved)",
    "ref_before": "form; that for the security",
    "ref": "of",
-   "ref_after": "of the first Troop, there"
+   "ref_after": "of the first Troop, there",
+   "engine_text": ""
   },
   {
    "kind": "omissions",
    "class": "omitted word(s)",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 842,
+   "slug": "69de0cf180210ba13d79fa39-p118",
    "book": "69de0cf180210ba13d79fa39",
    "language": "English",
-   "engine": "",
+   "engine": "gemini-3-flash-preview",
    "prompt": "v12",
    "ref_before": "Heav'n, where he cou'd not",
    "ref": "reign.",
-   "ref_after": "When he with bold ambition"
+   "ref_after": "When he with bold ambition",
+   "engine_text": ""
   },
   {
    "kind": "omissions",
    "class": "omitted word(s)",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 829,
+   "slug": "69e748a685f786e884a4c8c5-p312",
    "book": "69e748a685f786e884a4c8c5",
    "language": "English",
-   "engine": "",
+   "engine": "gemini-3-flash-preview",
    "prompt": "v12",
    "ref_before": "then, what might else be",
    "ref": "wrought",
-   "ref_after": "Fusil or grav'n in mettle."
+   "ref_after": "Fusil or grav'n in mettle.",
+   "engine_text": ""
   },
   {
    "kind": "silent modernisation",
    "class": "u/v i/j modernised by the engine",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 737,
+   "slug": "699061933d9181cce82fb5aa-p50",
    "book": "699061933d9181cce82fb5aa",
    "language": "English",
-   "engine": "unexpected)",
+   "engine": "gemini-3-flash-preview",
    "prompt": "label \"v5.2026-02\" (unresolved)",
    "ref_before": "of nine yeares (a witnesse",
    "ref": "vnexpected)",
-   "ref_after": "to discouer all their Practises,"
+   "ref_after": "to discouer all their Practises,",
+   "engine_text": "unexpected)"
   },
   {
    "kind": "silent modernisation",
    "class": "spelling normalised",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 750,
+   "slug": "6990619a3d9181cce82fb669-p4",
    "book": "6990619a3d9181cce82fb669",
    "language": "English",
-   "engine": "VVitches,",
+   "engine": "gemini-3-flash-preview",
    "prompt": "label \"v3.2026-02\" (unresolved)",
    "ref_before": "doubt whether there be any",
    "ref": "Witches,",
-   "ref_after": "or no, or any such"
+   "ref_after": "or no, or any such",
+   "engine_text": "VVitches,"
   },
   {
    "kind": "silent modernisation",
    "class": "spelling normalised",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 743,
+   "slug": "6990619d3d9181cce82fb688-p11",
    "book": "6990619d3d9181cce82fb688",
    "language": "English",
-   "engine": "first",
+   "engine": "gemini-3-flash-preview",
    "prompt": "label \"v3.2026-02\" (unresolved)",
    "ref_before": "he would not go, except",
    "ref": "fyrst",
-   "ref_after": "two wax candels of Uirgin"
-  },
-  {
-   "kind": "silent modernisation",
-   "class": "spelling normalised",
-   "set": "served",
-   "stratum": "long-s-tcp-ab",
-   "slug": 729,
-   "book": "699fcd429ff0f1d2c4517fff",
-   "language": "English",
-   "engine": "best",
-   "prompt": "label \"v5.2026-02\" (unresolved)",
-   "ref_before": "whether of them he lyketh",
-   "ref": "beste.",
-   "ref_after": "And of all those three,"
+   "ref_after": "two wax candels of Uirgin",
+   "engine_text": "first"
   },
   {
    "kind": "silent modernisation",
    "class": "u/v i/j modernised by the engine",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 735,
-   "book": "6a08fd6325e3a402b23b3e15",
+   "slug": "6991e7dec91ce7d733e50228-p4",
+   "book": "6991e7dec91ce7d733e50228",
    "language": "English",
-   "engine": "Civill",
-   "prompt": "v12",
-   "ref_before": "In Floence, Venice, Antwerpe, London,",
-   "ref": "Ciuill,",
-   "ref_after": "Frankeford, Lubecke, Mosco, and where"
+   "engine": "gemini-3-flash-preview",
+   "prompt": "label \"v3.2026-02\" (unresolved)",
+   "ref_before": "way qualified to perform his",
+   "ref": "Vndertaking,",
+   "ref_after": "being famous for natural and",
+   "engine_text": "Undertaking,"
+  },
+  {
+   "kind": "silent modernisation",
+   "class": "spelling normalised",
+   "set": "served",
+   "stratum": "long-s-tcp-ab",
+   "slug": "699fcd429ff0f1d2c4517fff-p17",
+   "book": "699fcd429ff0f1d2c4517fff",
+   "language": "English",
+   "engine": "gemini-3-flash-preview",
+   "prompt": "label \"v5.2026-02\" (unresolved)",
+   "ref_before": "whether of them he lyketh",
+   "ref": "beste.",
+   "ref_after": "And of all those three,",
+   "engine_text": "best"
   },
   {
    "kind": "reference defects",
    "class": "u/v i/j regularised in the reference",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 825,
+   "slug": "6991d6648c1030b12444b0ec-p63",
    "book": "6991d6648c1030b12444b0ec",
    "language": "English",
-   "engine": "January",
+   "engine": "gemini-3-flash-preview",
    "prompt": "label \"v5.2026-02\" (unresolved)",
    "ref_before": "passed through the Worldly Sanctuary.",
    "ref": "Ianuary",
-   "ref_after": "the 26th. 1676/7. This Word"
+   "ref_after": "the 26th. 1676/7. This Word",
+   "engine_text": "January"
   },
   {
    "kind": "reference defects",
    "class": "reference illegible-letter gap (engine right)",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 727,
+   "slug": "6a08fd2e25e3a402b23b3bca-p107",
    "book": "6a08fd2e25e3a402b23b3bca",
    "language": "English",
-   "engine": "by'a fword.",
+   "engine": "gemini-3.1-flash-lite",
    "prompt": "v12",
    "ref_before": "knew the way To death",
    "ref": "by' a sword.",
-   "ref_after": "Strangle me, I may sleepe:"
+   "ref_after": "Strangle me, I may sleepe:",
+   "engine_text": "by'a fword."
   },
   {
    "kind": "reference defects",
    "class": "reference illegible-letter gap (engine right)",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 731,
+   "slug": "6a425310343d756d34e34ea7-p12",
    "book": "6a425310343d756d34e34ea7",
    "language": "Latin",
-   "engine": "laventur,",
+   "engine": "gemini-3-flash-preview",
    "prompt": "v14",
    "ref_before": "mnus aqua, tantillo aceto permixta",
    "ref": "laven ur,",
-   "ref_after": "spongiola aceto imbuta, quae frequenter"
+   "ref_after": "spongiola aceto imbuta, quae frequenter",
+   "engine_text": "laventur,"
   },
   {
    "kind": "reference defects",
    "class": "reference illegible-letter gap (engine right)",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 756,
-   "book": "6a4376a3e296c55144956689",
+   "slug": "6a42d56d1894955eb725e97f-p23",
+   "book": "6a42d56d1894955eb725e97f",
    "language": "Latin",
-   "engine": "9. S uccessorem",
+   "engine": "gemini-3-flash-preview",
    "prompt": "v14",
-   "ref_before": "exculta, nihil prorsus acceperit incrementi.",
-   "ref": "8. SUccessorem",
-   "ref_after": "Tyrtamum designavit Aristoteles, quem à"
+   "ref_before": "omnes, quique introitum ambiebant, ipsumque",
+   "ref": "Lu iferum,",
+   "ref_after": "qui in Cameram exteriorem, vt",
+   "engine_text": "Luciferum,"
   },
   {
    "kind": "reference defects",
    "class": "u/v i/j regularised in the reference",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 851,
+   "slug": "6a48d985df05f7ea342b77fb-p15",
    "book": "6a48d985df05f7ea342b77fb",
    "language": "Latin",
-   "engine": "justo",
+   "engine": "gemini-3-flash-preview",
    "prompt": "v14",
    "ref_before": "mihi Starent labore, examine Libróque",
    "ref": "iusto",
-   "ref_after": "singula: Me cuncta rerum comperi"
+   "ref_after": "singula: Me cuncta rerum comperi",
+   "engine_text": "justo"
   },
   {
    "kind": "u/v, i/j or capitals differ",
    "class": "case only",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 791,
+   "slug": "69b18625c4be2cdd0edc549e-p217",
+   "book": "69b18625c4be2cdd0edc549e",
+   "language": "English",
+   "engine": "gemini-3.1-flash-lite",
+   "prompt": "v12",
+   "ref_before": "38, and 39? CHAP. XVIII.",
+   "ref": "QUest.",
+   "ref_after": "91. Doth not that Fall",
+   "engine_text": "Quest."
+  },
+  {
+   "kind": "u/v, i/j or capitals differ",
+   "class": "case only",
+   "set": "served",
+   "stratum": "long-s-tcp-ab",
+   "slug": "6a42aecb5207af7c42f5333c-p21",
    "book": "6a42aecb5207af7c42f5333c",
    "language": "Latin",
-   "engine": "Scripturae",
+   "engine": "gemini-3-flash-preview",
    "prompt": "v14",
    "ref_before": "à Mose mutuentur. Secunda Positio.",
    "ref": "SCripturae",
-   "ref_after": "sacrae ostendunt Ebraeum populum linguam"
+   "ref_after": "sacrae ostendunt Ebraeum populum linguam",
+   "engine_text": "Scripturae"
   },
   {
    "kind": "u/v, i/j or capitals differ",
    "class": "case only",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 773,
+   "slug": "6a42ec4006e6ead3ac544b8f-p12",
    "book": "6a42ec4006e6ead3ac544b8f",
    "language": "Latin",
-   "engine": "usurpes",
+   "engine": "gemini-3-flash-preview",
    "prompt": "v14",
    "ref_before": "illius, tua qui sibi condiditora,",
    "ref": "Usurpes",
-   "ref_after": "Nomen, (sanctum venerabile Nomen.) Nil"
+   "ref_after": "Nomen, (sanctum venerabile Nomen.) Nil",
+   "engine_text": "usurpes"
   },
   {
    "kind": "u/v, i/j or capitals differ",
    "class": "case only",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 860,
+   "slug": "6a4308144e06bc233ed03513-p22",
    "book": "6a4308144e06bc233ed03513",
    "language": "English",
-   "engine": "newter?",
+   "engine": "gemini-3-flash-preview",
    "prompt": "v14",
    "ref_before": "Haec. Q. Which of the",
    "ref": "Newter?",
-   "ref_after": "R. Hoc. Q. You say"
+   "ref_after": "R. Hoc. Q. You say",
+   "engine_text": "newter?"
   },
   {
    "kind": "u/v, i/j or capitals differ",
    "class": "case only",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 862,
-   "book": "6a4a4551c0f3ec200c7de18c",
-   "language": "English",
-   "engine": "The",
-   "prompt": "v14",
-   "ref_before": "and at all times, as",
-   "ref": "the",
-   "ref_after": "Governours for the time being"
-  },
-  {
-   "kind": "u/v, i/j or capitals differ",
-   "class": "u/v i/j convention",
-   "set": "served",
-   "stratum": "long-s-tcp-ab",
-   "slug": 766,
-   "book": "6a4f71ca1cba01ec54e763c3",
+   "slug": "6a43851557a09c2c0fcc0005-p17",
+   "book": "6a43851557a09c2c0fcc0005",
    "language": "Latin",
-   "engine": "alij",
-   "prompt": "v15",
-   "ref_before": "vitij ipse viderim, nisi et",
-   "ref": "alii",
-   "ref_after": "quàm plurimi se nihil reperire"
+   "engine": "gemini-3-flash-preview",
+   "prompt": "v14",
+   "ref_before": "1661 Libri Theologici. Octavo. 1",
+   "ref": "BIblia",
+   "ref_after": "S▪ Septuaginta, cum Scholiis— Lond.",
+   "engine_text": "Biblia"
   },
   {
    "kind": "margins and page furniture",
    "class": "marginal note / note marker / furniture order",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 740,
+   "slug": "69e7833a0fc6fc955e36317c-p114",
    "book": "69e7833a0fc6fc955e36317c",
    "language": "English",
-   "engine": "points. 8 Reape",
+   "engine": "gemini-3-flash-preview",
    "prompt": "v12",
    "ref_before": "good eye. 8 Good haruest",
    "ref": "points.Reape",
-   "ref_after": "well, scatter not, gather cleane"
+   "ref_after": "well, scatter not, gather cleane",
+   "engine_text": "points. 8 Reape"
   },
   {
    "kind": "margins and page furniture",
    "class": "marginal note / note marker / furniture order",
    "set": "served",
    "stratum": "long-s-tcp-ab",
-   "slug": 754,
+   "slug": "6a42eff906e6ead3ac54bab4-p18",
    "book": "6a42eff906e6ead3ac54bab4",
    "language": "English",
-   "engine": "(quoth she)",
+   "engine": "gemini-3-flash-preview",
    "prompt": "v14",
    "ref_before": "him she begun: Sweet boy",
    "ref": "(qd.she)",
-   "ref_after": "take what thy hart can"
+   "ref_after": "take what thy hart can",
+   "engine_text": "(quoth she)"
+  },
+  {
+   "kind": "margins and page furniture",
+   "class": "marginal note / note marker / furniture order",
+   "set": "served",
+   "stratum": "long-s-tcp-ab",
+   "slug": "6a4a4551c0f3ec200c7de18c-p25",
+   "book": "6a4a4551c0f3ec200c7de18c",
+   "language": "English",
+   "engine": "gemini-2.5-flash",
+   "prompt": "v14",
+   "ref_before": "from time to time, and",
+   "ref": "at all times, as",
+   "ref_after": "the Governours for the time",
+   "engine_text": "19. (a)"
   },
   {
    "kind": "margins and page furniture",
    "class": "marginal note / note marker / furniture order",
    "set": "served",
    "stratum": "latin-period-5126",
-   "slug": 582,
+   "slug": "ed-697a6e5cb981745f5fac1d7e-p31",
    "book": "697a6e5cb981745f5fac1d7e",
    "language": "Latin",
-   "engine": "August. Vind. l. 2",
+   "engine": "gemini-3-flash-preview",
    "prompt": "label \"v5.2026-02\" (unresolved)",
    "ref_before": "pro nobili usurpatur. Welser. rer.",
    "ref": "Augustanar. 8. a princ. Sic",
-   "ref_after": ""
+   "ref_after": "",
+   "engine_text": "August. Vind. l. 2"
   },
   {
    "kind": "margins and page furniture",
    "class": "marginal note / note marker / furniture order",
    "set": "served",
    "stratum": "latin-period-5126",
-   "slug": 583,
+   "slug": "ed-697a8014e680cef7cedae395-p31",
    "book": "697a8014e680cef7cedae395",
    "language": "Latin",
-   "engine": "1111.",
+   "engine": "gemini-3-flash-preview",
    "prompt": "label \"v5.2026-02\" (unresolved)",
    "ref_before": "Abbas Stadensis, sub Anno Christi,",
    "ref": "II II.",
-   "ref_after": "ubi refert, Henricum IV. hoc"
-  },
-  {
-   "kind": "margins and page furniture",
-   "class": "marginal note / note marker / furniture order",
-   "set": "bench",
-   "stratum": "eebo-tcp-5488",
-   "slug": 255,
-   "book": "69906319ef12272ffdc8f380",
-   "language": "English",
-   "engine": "A World Discovered. 71",
-   "prompt": "benchmark generic",
-   "ref_before": "",
-   "ref": "be recovered out of the",
-   "ref_after": "fright. So that they were"
+   "ref_after": "ubi refert, Henricum IV. hoc",
+   "engine_text": "1111."
   }
  ]
 }

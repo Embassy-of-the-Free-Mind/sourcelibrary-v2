@@ -238,8 +238,11 @@ function score() {
   // word classes (alphabetic pages only), via the classifier's --pages mode
   const alpha = rows.filter((r) => r.script !== 'cjk');
   const greekOnly = (s) => body(s).split(/\s+/).filter((w) => /\p{Script=Greek}/u.test(w)).join(' ');
+  // Markdown emphasis out before the classifier: "*In-*⏎*oculate*" otherwise defeats its line-end hyphen
+  // rejoin and reads as a split word (hand-check 2026-10-06, 2 of 5 "misreads").
+  const unMd = (s) => String(s || '').replace(/\*+|(?<!\w)_+|_+(?!\w)/g, '');
   const inFile = path.join(WORK, 'classify-in.jsonl');
-  fs.writeFileSync(inFile, alpha.map((r) => JSON.stringify({ id: r.id, ref: r.script === 'greek' ? greekOnly(r.ref) : r.ref, hyp: r.refused ? '' : (r.script === 'greek' ? greekOnly(r.hyp) : r.hyp) })).join('\n') + '\n');
+  fs.writeFileSync(inFile, alpha.map((r) => JSON.stringify({ id: r.id, ref: r.script === 'greek' ? greekOnly(r.ref) : r.ref, hyp: r.refused ? '' : (r.script === 'greek' ? greekOnly(r.hyp) : unMd(r.hyp)) })).join('\n') + '\n');
   const cls = new Map(execFileSync('python3', [path.join(HERE, 'ocr-error-classes.py'), `--pages=${inFile}`], { maxBuffer: 1 << 30 }).toString().split('\n').filter(Boolean).map((l) => JSON.parse(l)).map((o) => [o.id, o]));
   for (const r of rows) {
     const c = cls.get(r.id);
@@ -320,7 +323,8 @@ function score() {
       const book = r.book ?? r.slug; if (seenBook.has(book)) continue;
       const c = Object.keys(r.examples).find((cl) => READER_KIND[cl] === kind && r.examples[cl].length); if (!c) continue;
       seenBook.add(book); const e = r.examples[c][0];
-      examples.push({ kind, class: c, set: r.set, stratum: r.stratum, slug: r.slug, book: r.book, language: r.language, engine: r.engine, prompt: r.prompt, ...e });
+      const { slug: _id, engine: engineText, ...ctx } = e; // the classifier's slug is our row id
+      examples.push({ kind, class: c, set: r.set, stratum: r.stratum, slug: r.slug, book: r.book, language: r.language, engine: r.engine, prompt: r.prompt, ...ctx, engine_text: engineText });
     }
   }
 
