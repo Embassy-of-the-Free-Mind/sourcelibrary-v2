@@ -524,7 +524,7 @@ function isNonLatin(language) {
 // Cover choice — book-level policy over the shared page scorer
 // (scripts/lib/cover-choice.mjs: illustrated titles wear a plate, then the best
 // opening page, then a representative plate, then the first non-junk page).
-import { chooseCover, loadCoverCandidates, isManualCover, isJunkCover } from '../lib/cover-choice.mjs';
+import { chooseCover, loadCoverCandidates, isManualCover, isJunkCover, currentCoverPageNumber } from '../lib/cover-choice.mjs';
 import { buildCoverUpdate } from '../lib/cover-write.mjs';
 
 /**
@@ -542,10 +542,12 @@ async function applyChosenCover(db, bookId) {
   const { pages, plates, platePages } = await loadCoverCandidates(db, bookId);
   const choice = chooseCover(book, pages, plates, platePages);
   if (!choice) return null;
-  // The last-resort pick only displaces a cover that is itself junk.
-  if (choice.rule === 'first-ordinary-page' && book.cover_page) {
-    const current = pages.find(p => p.page_number === book.cover_page);
-    if (current && !isJunkCover(current, book)) return null;
+  // The last-resort pick only displaces a cover known to be junk; an existing
+  // cover we cannot tie to a page is left alone.
+  if (choice.rule === 'first-ordinary-page' && (book.image_display || book.thumbnail)) {
+    const curNo = currentCoverPageNumber(book);
+    const current = curNo === null ? null : pages.find(p => p.page_number === curNo);
+    if (!current || !isJunkCover(current, book)) return null;
   }
   const update = buildCoverUpdate(choice.page, {
     source: 'smart_ocr',

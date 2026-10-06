@@ -147,6 +147,22 @@ export function chooseCover(book, pages, plates = [], platePages = new Map()) {
   return null;
 }
 
+/**
+ * The page number a book's current cover shows: `cover_page` when recorded,
+ * else read off the cover URL (archived/<id>/<n>.jpg, pages/<id>/<NNNN>[-variant]).
+ * null = unknown (an external or legacy image) — callers must not treat an
+ * unknown cover as a bad one.
+ */
+export function currentCoverPageNumber(book) {
+  if (Number.isInteger(book?.cover_page) && book.cover_page > 0) return book.cover_page;
+  const url = String(book?.image_display || book?.thumbnail || '');
+  const id = String(book?.id || '');
+  if (!id || !url.includes(id)) return null;
+  const m = url.match(/\/archived\/[^/]+\/(\d+)\.(?:jpe?g|avif|webp)/i)
+    || url.match(/\/pages\/[^/]+\/(?:[a-z]+-)?(\d{4})(?:-[a-z]+)?\.(?:jpe?g|avif|webp)/i);
+  return m ? parseInt(m[1], 10) : null;
+}
+
 /** True when the current cover page is one the policy would never pick. */
 export function isJunkCover(page, book) {
   if (!page) return true;

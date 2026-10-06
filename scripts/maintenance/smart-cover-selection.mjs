@@ -37,7 +37,7 @@ import { MongoClient } from 'mongodb';
 import { buildCoverUpdate } from '../lib/cover-write.mjs';
 import { scorePageForCover } from '../lib/cover-scoring.mjs';
 import {
-  chooseCover, isManualCover, isJunkCover, isIllustratedTitle,
+  chooseCover, isManualCover, isJunkCover, isIllustratedTitle, currentCoverPageNumber,
   COVER_WINDOW, MIN_PLATE_QUALITY, CONFIDENT_SCORE,
 } from '../lib/cover-choice.mjs';
 
@@ -100,10 +100,10 @@ if (APPLY_PLAN) {
   for (const entry of plan) {
     const book = await db.collection('books').findOne(
       { id: entry.bookId },
-      { projection: { id: 1, thumbnail_source: 1, cover_page: 1 } },
+      { projection: { id: 1, thumbnail_source: 1, cover_page: 1, thumbnail: 1, image_display: 1 } },
     );
     // Re-check at apply time: someone may have hand-picked or changed it since.
-    if (!book || isManualCover(book) || book.cover_page !== entry.fromPage) { skipped++; continue; }
+    if (!book || isManualCover(book) || currentCoverPageNumber(book) !== entry.fromPage) { skipped++; continue; }
     const page = await db.collection('pages').findOne(
       { book_id: entry.bookId, page_number: entry.toPage }, { projection: PAGE_PROJECTION },
     );
@@ -122,7 +122,7 @@ if (!BOOK_ID && PROVIDER) bookQuery['image_source.provider'] = PROVIDER;
 if (!BOOK_ID && COLLECTION) bookQuery.collections = COLLECTION;
 
 const allBooks = (await db.collection('books')
-  .find(bookQuery, { projection: { _id: 0, id: 1, title: 1, display_title: 1, thumbnail_source: 1, cover_page: 1 } })
+  .find(bookQuery, { projection: { _id: 0, id: 1, title: 1, display_title: 1, thumbnail_source: 1, cover_page: 1, thumbnail: 1, image_display: 1 } })
   .toArray())
   .filter(b => !isManualCover(b));
 
@@ -131,7 +131,7 @@ console.log(`Mode: ${APPLY_PLAN ? 'APPLY PLAN' : DRY_RUN ? 'DRY RUN' : 'LIVE'}${
 console.log(`Books (manual covers excluded): ${allBooks.length}\n`);
 
 const changes = [];
-let checked = 0;
+let checked = 0, unknownCovers = 0;
 
 outer:
 for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
@@ -167,25 +167,29 @@ for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
     checked++;
     const bookPlates = platesBy.get(book.id) || [];
     const platePages = platePagesBy.get(book.id) || new Map();
-    const current = book.cover_page
-      ? bookPages.find(p => p.page_number === book.cover_page) || platePages.get(book.cover_page)
-      : null;
-    const currentJunk = !current || isJunkCover(current, book);
-    const currentWeak = currentJunk || scorePageForCover(current, { bookTitle: book.title }).score < CONFIDENT_SCORE;
+    // A cover we cannot tie to a page (external or legacy image) is UNKNOWN, not
+    // bad: it is left alone unless --force, and never displaced by a weak pick.
+    const curNo = currentCoverPageNumber(book);
+    if (curNo === null && !FORCE) { unknownCovers++; continue; }
+    const current = curNo === null ? null
+      : bookPages.find(p => p.page_number === curNo) || platePages.get(curNo) || null;
+    const currentJunk = !!current && isJunkCover(current, book);
+    const currentWeak = !current || currentJunk
+      || scorePageForCover(current, { bookTitle: book.title }).score < CONFIDENT_SCORE;
     const illustrated = isIllustratedTitle(book);
-    const currentIsPlate = !!book.cover_page && bookPlates.some(g => g.page_number === book.cover_page);
+    const currentIsPlate = curNo !== null && bookPlates.some(g => g.page_number === curNo);
 
     if (!FORCE && !currentWeak && !(illustrated && !currentIsPlate)) continue;
 
     const choice = chooseCover(book, bookPages, bookPlates, platePages);
-    if (!choice || choice.page.page_number === book.cover_page) continue;
-    // The last-resort pick only displaces a cover that is itself junk.
+    if (!choice || choice.page.page_number === curNo) continue;
+    // The last-resort pick only displaces a cover known to be junk.
     if (choice.rule === 'first-ordinary-page' && !currentJunk) continue;
 
     const entry = {
       bookId: book.id,
       title: (book.display_title || book.title || '').slice(0, 120),
-      fromPage: book.cover_page ?? null,
+      fromPage: curNo,
       fromSource: book.thumbnail_source || null,
       fromJunk: currentJunk,
       fromWeak: currentWeak,
@@ -206,7 +210,7 @@ for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
 const byRule = {};
 for (const c of changes) byRule[c.rule] = (byRule[c.rule] || 0) + 1;
 console.log(`\n\n=== Results ===`);
-console.log(`Books checked: ${checked}`);
+console.log(`Books checked: ${checked} (cover not tied to a page, left alone: ${unknownCovers})`);
 console.log(`${DRY_RUN ? 'Would change' : 'Changed'}: ${changes.length}  ${JSON.stringify(byRule)}`);
 if (PLAN_OUT) {
   fs.writeFileSync(PLAN_OUT, JSON.stringify(changes, null, 1));
