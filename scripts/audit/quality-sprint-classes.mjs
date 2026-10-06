@@ -62,7 +62,8 @@ function shuffle(arr, seed) {
 async function pagesMode() {
   const ids = (await db.collection('books').find(LIVE, { projection: { _id: 0, id: 1 } }).toArray()).map((b) => b.id).filter(Boolean).sort();
   const frame = ids.length;
-  const sample = args.includes('--all') ? ids : shuffle(ids, Number(opt('seed', 6056))).slice(0, Number(opt('sample', 1000)));
+  // --books a,b,c: named books, for positive controls (a detector that cannot fire on a known case measures nothing).
+  const sample = opt('books') ? opt('books').split(',') : args.includes('--all') ? ids : shuffle(ids, Number(opt('seed', 6056))).slice(0, Number(opt('sample', 1000)));
   const ckpt = join(OUT, 'books.jsonl');
   const done = new Map();
   if (existsSync(ckpt)) for (const l of readFileSync(ckpt, 'utf8').split('\n').filter(Boolean)) { const r = JSON.parse(l); done.set(r.book_id, r); }
@@ -133,9 +134,11 @@ async function hijriMode() {
 
 async function blackMode() {
   const { default: sharp } = await import('sharp');
-  const books = await db.collection('books').find({ ...LIVE, 'image_source.provider': 'internet_archive', 'image_source.identifier': /\.cn$/ },
-    { projection: { _id: 0, id: 1, title: 1, pages_count: 1 } }).toArray();
-  console.log(`CADAL (.cn) public books: ${books.length}`);
+  const all = (await db.collection('books').find({ ...LIVE, 'image_source.provider': 'internet_archive', 'image_source.identifier': /\.cn$/ },
+    { projection: { _id: 0, id: 1, title: 1, pages_count: 1 } }).toArray()).sort((a, b) => (a.id < b.id ? -1 : 1));
+  // 12.6K books × 3 fetches is hours from a laptop: default to a uniform sample (--sample N), --all for the census.
+  const books = args.includes('--all') ? all : shuffle(all, Number(opt('seed', 6056))).slice(0, Number(opt('sample', 600)));
+  console.log(`CADAL (.cn) public books: ${all.length} · checking ${books.length}`);
   const rows = [];
   for (const b of books) {
     const picks = [...new Set([2, Math.ceil(b.pages_count / 2), b.pages_count - 1].filter((p) => p >= 1 && p <= b.pages_count))];
@@ -158,8 +161,10 @@ async function blackMode() {
   }
   const hit = rows.filter((r) => r.black > 0);
   const allBlack = rows.filter((r) => r.checked && r.black === r.checked);
-  writeFileSync(join(OUT, 'black-images.json'), JSON.stringify({ cadal_public: books.length, books_with_black: hit.length, all_checked_black: allBlack.length, rows }, null, 2));
-  console.log(`books with ≥1 black page of 3 checked: ${hit.length}/${books.length} · all checked pages black: ${allBlack.length}`);
+  const [lo, hi] = wilson(hit.length, books.length);
+  writeFileSync(join(OUT, 'black-images.json'), JSON.stringify({ cadal_public: all.length, checked: books.length, books_with_black: hit.length, ci95: [lo, hi],
+    projected_books: [Math.round(lo * all.length), Math.round(hi * all.length)], all_checked_black: allBlack.length, rows }, null, 2));
+  console.log(`books with ≥1 black page of 3 checked: ${hit.length}/${books.length} (CI ${pct(lo)}–${pct(hi)}, ≈ ${Math.round(lo * all.length)}–${Math.round(hi * all.length)} of ${all.length}) · all checked pages black: ${allBlack.length}`);
 }
 
 try {
