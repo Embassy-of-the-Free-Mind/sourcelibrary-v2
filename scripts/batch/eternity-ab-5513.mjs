@@ -159,7 +159,6 @@ export const TRADITION_SHELVES = Object.freeze({
 });
 /** Also the order books are worked in: when the cap binds, the languages at the end are what is left. */
 export const TRADITION_LANGUAGES = Object.freeze(['Latin', 'Greek', 'German', 'French', 'Italian']);
-const NO_TEXT = { $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] };
 
 const liveOnShelves = (slugs) => ({ visible: true, pages_count: { $gt: 0 }, collections: { $in: slugs } });
 
