@@ -3,7 +3,7 @@
 
 **Answer. No language reverses. Hebrew, Arabic, Sanskrit and Pali keep Flash and now meet the card. Chinese meets its per-language line, but a $1.7K routing still owes a replication and a judge checked against readers. Persian has the largest effect and stops at 28 books, because the library holds no more Persian books that anyone has translated.** The Hebrew/Arabic/Persian top-up (41 fresh books) passes the rule alone, so it replicates the first run.
 
-**Status.** The registration below was committed (`ad6d2e363`) before the book draw, before any arm ran and before any page was judged. It is not edited; departures are listed as deviations, and the results follow them.
+**Status.** The registration below was committed (first commit of PR #5932, `13c7455f7`, authored 2026-10-06 08:04 UTC; the Batch jobs were submitted at 08:49) before the book draw, before any arm ran and before any page was judged. It is not edited; departures are listed as deviations, and the results follow them.
 
 ### Registration (2026-10-06)
 
