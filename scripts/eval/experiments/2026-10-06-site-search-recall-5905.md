@@ -29,5 +29,5 @@
 - **Latency (local, 30 queries, final pair).** Page lane median 467–610 ms → 631–776 ms, p90 1.1–1.8 s → 1.3–1.6 s, max 1.7–2.1 s → 2.1–2.4 s. The whole request is bounded by the semantic lanes (median 2.4–2.5 s before and 2.4 s after). The roll-up never hit its 4 s budget in 180 requests.
 - **Degraded lanes.** Prod, 60 uncached requests: `semantic_page` 6, `book` 1. Local, 270 requests: `semantic_page` 26, `book` 10. No history exists; `search_queries.degraded_lanes` is added by the PR.
 - **Caveat.** The expected set ranks by the same page count the roll-up orders by, so the gain on names is partly by construction. Result lists for Drebbel, Tsongkhapa, Khunrath, Ibn Arabi, Paracelsus, pranayama, reincarnation and depression were read by eye.
-- *Replicated?* Each shipped and rejected variant was run twice locally; prod preview numbers are on PR.
+- *Replicated?* Each shipped and rejected variant was run twice locally. On the PR's Vercel preview against prod, same minutes: 0.32 / 0.23 → 0.43 / 0.38 (that preview build predates the rebase onto #5893; prod includes it).
 - **Artifacts.** `scripts/eval/search-recall/` (queries, expected, runner, local harness, `results/2026-10-06-*.json`).
