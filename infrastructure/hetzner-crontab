@@ -143,13 +143,15 @@
 # scripts/maintenance/clip-index-repair.mjs). READ-ONLY.
 45 4 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-clip-index.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/clip-index-integrity.mjs" >> /var/log/sourcelibrary/clip-index-integrity.log 2>&1
 
-# Site search index (#1180, weekly Sunday 00:20): re-embed the blog, collection intros,
-# editorial pages and the tool registry (src/lib/site-features.json) into site_pages.
-# Hash-diffed, so a week's edits cost fractions of a cent. Asks the dial; scheduled just
+# Site search index (#1180, #5945; daily 00:20): re-index every public page — the static
+# routes in src/app, the sitemap's pages, collections, author pages and the tool registry
+# (src/lib/site-features.json) — into site_pages, with the names each answers to. Daily,
+# not weekly: a collection published on a Monday was unfindable by name until Sunday.
+# Hash-diffed, so a day's edits cost fractions of a cent. Asks the dial; scheduled just
 # after the daily meter resets because OCR/translation spend the dial before morning and
 # an embedder that runs later is refused every day (#4865). Tell it has regressed: the
-# log says "CEILING REACHED" or site_pages' newest indexed_at is more than a week old.
-20 0 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-site-pages.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/embed-site-pages.mjs" >> /var/log/sourcelibrary/site-pages.log 2>&1
+# log says "CEILING REACHED" or site_pages' newest indexed_at is more than two days old.
+20 0 * * * cd /root/sourcelibrary && flock -n /tmp/sl-site-pages.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/embed-site-pages.mjs" >> /var/log/sourcelibrary/site-pages.log 2>&1
 
 # Warm author pages: regenerate ISR cache (daily 5am)
 0 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-warm-authors.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/warm-author-pages.mjs" >> /var/log/sourcelibrary/warm-authors.log 2>&1
