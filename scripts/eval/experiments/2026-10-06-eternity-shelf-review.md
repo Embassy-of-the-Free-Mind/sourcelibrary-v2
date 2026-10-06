@@ -62,7 +62,7 @@ Pages numbered below 1 are soft-hidden records and are not rendered (`scripts/li
   - `69e748aa85f786e884a4ca1f`: Persian → English-French-German, with the title-page title. It is Dole's 1896 variorum of translations around FitzGerald; `original_language` Persian, `text_role` modern-translation.
   - `69e9617a2beefe2f6f72ba14`: Hebrew → Hebrew-English. Asher's 1840 volume holds the Hebrew text (156 of 319 pages) and his translation (175). The reviewer's "it is English" came from one page.
   - `69920ba8e0a548a13d8846fe`: Persian → Middle Persian-English (Pahlavi text on 193 of 428 pages, English on 210).
-- **A detector for the first class**: `translationReasoningLeak()` and `scripts/audit/translation-reasoning-leak.mjs`. Its corpus count is its own entry.
+- **A detector for the first class**: `translationReasoningLeak()` and `scripts/audit/translation-reasoning-leak.mjs`. Its corpus count is its own entry (`2026-10-06-translation-reasoning-leak-6056.md`): at least 549 pages in 269 public books. One of them is a tier-1 book on this shelf: the Bardo Thödol cycle `69dfee83ce6bb8619e07f177` has seven such pages, none of them the two that were read.
 - **The method** is now a variant of the `shelf-overview` skill: `overview-draw.mjs --picked`, `CURATION-ADDENDUM.md`, `curation-shelf.mjs`. `overview-score.mjs` refuses a picked run, so no rate can be formed from one by accident.
 
 **Limits.**

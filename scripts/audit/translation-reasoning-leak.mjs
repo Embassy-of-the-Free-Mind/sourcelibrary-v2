@@ -7,7 +7,7 @@
 // scripts/audit/quality-sprint-classes.mjs samples per BOOK and never reads page text, so a class that
 // sits on one page in a thousand cannot go through it.
 /**
- * translation-reasoning-leak — pages whose stored English is the model's own reasoning (#6056, #5918).
+ * translation-reasoning-leak — pages whose stored English is the model's own reasoning or a chat reply (#6056, #5918).
  * Model-free. READ-ONLY on Mongo (secondary preferred); writes files only.
  *
  *   node --env-file=.env.production.local scripts/audit/translation-reasoning-leak.mjs walk [--out DIR] [--batch 20000] [--conc 4]
@@ -19,7 +19,7 @@
  *         matches PREFILTER — a deliberately wide net, so page text leaves Atlas only for candidates.
  *         The ranges are planned once and run --conc at a time; candidates are appended to
  *         <out>/candidates.jsonl and each finished range is marked in <out>/checkpoint.json: kill it and run
- *         it again with the same arguments. About 16 s a range from the job box (29M pages ≈ 1.6 h at 4).
+ *         it again with the same arguments. Measured 2026-10-06 from the job box: 28.97M records in 27 minutes at --conc 6.
  * report  Applies translationReasoningLeak() to the candidates, joins each book's visibility, and writes
  *         summary.json and pages.jsonl (ids, page numbers, the matched phrase: no page text) to --to.
  *

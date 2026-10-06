@@ -634,7 +634,7 @@ export function ocrReasoningLeak(ocr) {
   return /the user wants (?:a|me to|the)\b|\*\*\d\.\s*identify (?:the )?language|^\s*thought\s*\n+\s*(?:the user|okay|ok,|let me|i need|i will|\*\*)/i.test(head);
 }
 /**
- * The TRANSLATION model's reasoning stored as the page's English (#6056, taxonomy T-side twin of O15):
+ * The TRANSLATION model's reasoning stored as the page's English (#6056, taxonomy T17, the twin of O15):
  * "*Wait, the prompt says:* Style: warm museum label", drafts and re-drafts, a checklist of its own rules.
  * A reader meets it as plain English under the book's title.
  *
@@ -673,10 +673,10 @@ const TRANSLATION_LEAK_RULE = new RegExp([
   'warm museum',
   'the prompt (?:says|asks|states|specifies|requires|wants|mentions|said|tells)',
   'the user (?:wants|asked|has provided|provided|is asking)',
-  '[*(] ?self-correction',
+  '\\* ?\\(?self-correction|\\(self-correction (?:during|on|while)\\b|\\(self-correction\\)?:',
   '\\*\\(?wait, (?:the (?:prompt|ocr|greek|latin|text|source|original|input|instructions?)\\b|looking at|i need|i should|i must|i missed|actually|let me)',
   'wait, (?:the (?:prompt|ocr|source|input|instructions?|user)\\b|the (?:text|original) (?:says|has|reads)|looking at the (?:ocr|source|image|text|prompt))',
-  '\\*[^*\\n]{3,50} check:\\*|\\*(?:final )?(?:polish|formatting|drafting|refinement|constraints?)\\b[^*\\n]{0,40}:\\*',
+  '\\*(?!(?:we|i|you|they|he|she|let us|to) )[^*\\n]{3,50} check:\\*|\\*(?:final polish|formatting|drafting|constraints?)\\b[^*\\n]{0,40}:\\*',
   '(?:^|[\\n*(])(?:final )?final (?:check|polish|output|plan|structure)\\b[^\\n]{0,20}:',
   '\\(ready\\)\\.? writing response',
   '(?:source|target) language:?\\*\\*',
@@ -686,7 +686,7 @@ const TRANSLATION_LEAK_RULE = new RegExp([
   "i (?:will|should|need to|must|'ll) (?:translate|transcribe|add a note|output|wrap)[^.\\n]{0,100}(?:the ocr|the prompt|the user|`<|museum|xml|markdown|as requested)",
 ].join('|'), 'i');
 /** The model answering whoever sent the request instead of translating: the whole page is a chat reply. */
-const TRANSLATION_REPLY_RULE = /please (?:paste|provide|share|supply) the (?:text|ocr|transcription|source|latin|page)|once you provide|(?:text|input|transcription|ocr) (?:that )?you(?:'ve| have)? provided/i;
+const TRANSLATION_REPLY_RULE = /please (?:paste|provide|share|supply) the (?:text|ocr|transcription|source|latin|page)|once you provide (?:the|me with the) (?:text|ocr|transcription|input|source|latin|page)|(?:text|input|transcription|ocr) (?:that )?you(?:'ve| have)? provided/i;
 /** The model naming its input ("the provided OCR begins mid-word"). Mostly inside <meta>, where no reader sees it. */
 const TRANSLATION_INPUT_TALK = /the provided (?:ocr|transcription|input)\b|the provided text (?:is|was|appears|contains|seems|has)/i;
 /** What the reader's metadata panel holds and the page body does not (NotesRenderer, showMetadata=false). */
