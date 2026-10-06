@@ -602,22 +602,33 @@ async function laneIa(db, resolver, placed) {
   }
   const meta = [...new Set(todo.map((b) => b.ia_identifier))].filter((id) => id in iaCache && !iaCache[id]?.via);
   console.log(`[ia] ${meta.length} identifiers not in the search index → /metadata`);
-  const retried = new Set(); const statuses = {};
+  const statuses = {};
+  const fetchMeta = async (id) => {
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const r = await fetch(`https://archive.org/metadata/${encodeURIComponent(id)}/metadata`, { signal: AbortSignal.timeout(30000), headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)' } });
+        if (r.ok) {
+          const m = (await r.json()).result || {};
+          iaCache[id] = { imprint: [m.imprint].flat()[0] || null, publisher: [m.publisher].flat()[0] || null, via: 'metadata' };
+          return;
+        }
+        statuses[r.status] = (statuses[r.status] || 0) + 1;
+        if (r.status !== 429) return;
+        await new Promise((res) => setTimeout(res, 30000));
+      } catch { statuses.error = (statuses.error || 0) + 1; return; /* left uncached; retried next run */ }
+    }
+  };
+  // Start one request every 500 ms (≤ 2 req/s) with up to 8 in flight, so a
+  // slow response does not stall the queue.
+  const inflight = new Set();
   for (let i = 0; i < meta.length; i++) {
-    const id = meta[i];
-    try {
-      const r = await fetch(`https://archive.org/metadata/${encodeURIComponent(id)}/metadata`, { signal: AbortSignal.timeout(30000), headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)' } });
-      if (r.ok) {
-        const m = (await r.json()).result || {};
-        iaCache[id] = { imprint: [m.imprint].flat()[0] || null, publisher: [m.publisher].flat()[0] || null, via: 'metadata' };
-      } else if (r.status === 429 && !retried.has(id)) {
-        retried.add(id); console.log(`  429 at ${i}; backing off 30s`);
-        await new Promise((res) => setTimeout(res, 30000)); i--; continue;
-      } else statuses[r.status] = (statuses[r.status] || 0) + 1;
-    } catch { statuses.error = (statuses.error || 0) + 1; /* left uncached; retried next run */ }
-    if (i % 100 === 99) { fs.writeFileSync(IA_CACHE, JSON.stringify(iaCache)); console.log(`  ${i + 1}/${meta.length}`, JSON.stringify(statuses)); }
+    while (inflight.size >= 8) await Promise.race(inflight);
+    const p = fetchMeta(meta[i]).finally(() => inflight.delete(p));
+    inflight.add(p);
+    if (i % 200 === 199) { fs.writeFileSync(IA_CACHE, JSON.stringify(iaCache)); console.log(`  ${i + 1}/${meta.length}`, JSON.stringify(statuses)); }
     await new Promise((res) => setTimeout(res, 500));
   }
+  await Promise.all(inflight);
   fs.mkdirSync(path.dirname(IA_CACHE), { recursive: true });
   fs.writeFileSync(IA_CACHE, JSON.stringify(iaCache));
   const byGeo = new Map();
@@ -626,6 +637,7 @@ async function laneIa(db, resolver, placed) {
     if (!rec) continue;
     const geo = (await resolveImprint(rec.imprint, resolver)) || (await resolveImprint(rec.publisher, resolver));
     if (geo) addTo(byGeo, geo, b.id);
+    if (geo && process.argv.includes('--verbose')) console.log(`  ${geo.city.padEnd(18)} ← ${String(rec.imprint || rec.publisher).slice(0, 90)}`);
   }
   return byGeo;
 }
