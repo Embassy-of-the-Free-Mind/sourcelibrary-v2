@@ -532,6 +532,26 @@ function captionProblem(
 
 // ── The pass ──────────────────────────────────────────────────────────
 
+/**
+ * The quoted words of a blockquote body, without the citation the model often
+ * writes on the SAME line: `"…plugs the register…" — *[Journal](…)*, [Page 68](…)`.
+ * Left in, the citation's words ("Journal", "Monconys", "Page") are checked as
+ * part of the quotation and a faithful quote fails (measured: all 3 removals in
+ * one run were this shape).
+ */
+export function blockquoteWords(body: string): string {
+  const t = body.trim();
+  const open = t.match(/^["“«]/)?.[0];
+  if (open) {
+    const close = open === '«' ? '»' : open === '“' ? '”' : '"';
+    const end = t.lastIndexOf(close);
+    if (end > 0) return t.slice(1, end);
+  }
+  // No enclosing quotation marks: cut at a dash that introduces a link.
+  const cite = t.search(/\s[—–]\s*\*?\[[^\]]*\]\(/);
+  return cite > 0 ? t.slice(0, cite) : t;
+}
+
 const REMOVED_QUOTE_NOTE = '*A quotation stood here that I could not find on any page I read, so I removed it.*';
 
 export function groundAnswer(input: GroundingInput): { edits: GroundingEdit[]; report: GroundingReport } {
@@ -578,7 +598,7 @@ export function groundAnswer(input: GroundingInput): { edits: GroundingEdit[]; r
         .map(l => l.trim().replace(/^>\s?/, ''))
         .filter(l => !/^[—–]\s/.test(l.trim()))
         .join(' ');
-      const quote = plainText(body).replace(/^[\s"“”«»]+|[\s"“”«»]+$/g, '').trim();
+      const quote = plainText(blockquoteWords(body)).replace(/^[\s"“”«»]+|[\s"“”«»]+$/g, '').trim();
       if (quote.split(/\s+/).length < 3 || !isMostlyLatin(quote)) return;
       report.quotesChecked++;
       if (checkQuote(quote, idx) !== 'unsupported') return;

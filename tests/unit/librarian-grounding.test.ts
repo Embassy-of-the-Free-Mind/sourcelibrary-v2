@@ -102,6 +102,18 @@ describe('quotes', () => {
     // Without the next page the tail is on no page read.
     expect(ground(text, { pages: [p193] }).report.blockquotesRemoved).toBe(1);
   });
+  it('does not read a citation written on the quote\'s own line as part of the quotation', () => {
+    // Monconys, Journal p.68 (#5904 final run): removed before this fix, though verbatim on the page.
+    const p68: GroundingPage = { bookId: 'm', bookSlug: 'journal-des-voyages', bookTitle: 'Journal', page: 68,
+      text: '<margin>June 1663. Fig. 10.</margin> & half outside, and which is full of mercury; which, rising when the air of the retort that is on the ashes presses it, plugs the register; for the wall of the furnace is like a diaphragm that divides the mercury vessel in two, as this figure will make one remember.' };
+    const sameLine = '> "...full of mercury; which, rising when the air of the retort that is on the ashes presses it, plugs the register; for the wall of the furnace is like a diaphragm that divides the mercury vessel in two..." — *[Journal of the Voyages of Monsieur de Monconys](https://sourcelibrary.org/book/journal-des-voyages)* by [Monconys, Balthazar de](https://sourcelibrary.org/author/monconys-balthazar-de), [Page 68](https://sourcelibrary.org/book/journal-des-voyages?page=68)';
+    expect(ground(sameLine, { pages: [p68] }).report.blockquotesRemoved).toBe(0);
+    const unquoted = '> full of mercury; which, rising when the air of the retort that is on the ashes presses it, plugs the register — *[Journal](https://sourcelibrary.org/book/journal-des-voyages)*, [Page 68](https://sourcelibrary.org/book/journal-des-voyages?page=68)';
+    expect(ground(unquoted, { pages: [p68] }).report.blockquotesRemoved).toBe(0);
+    // Same shape, invented words: still removed.
+    const bad = '> "...full of mercury; and the oven could be opened twenty times an hour without cooling..." — *[Journal](https://sourcelibrary.org/book/journal-des-voyages)*, [Page 68](https://sourcelibrary.org/book/journal-des-voyages?page=68)';
+    expect(ground(bad, { pages: [p68] }).report.blockquotesRemoved).toBe(1);
+  });
   it('checks an elided quote fragment by fragment', () => {
     const ok = 'He saw "a furnace that I have seen … 280 pounds of bread in 24 hours" there — [Page 51](https://sourcelibrary.org/book/journal-des-voyages-monconys/page-number/51).';
     expect(ground(ok).report.quotesUnquoted).toBe(0);
