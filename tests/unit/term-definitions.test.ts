@@ -182,3 +182,28 @@ describe('a colon inside a chip is not always a definition (#5901)', () => {
     expect(readsAsGloss('Gretter vid Þorbiorn Anugul', 'Er þat vel þo vid deilum kallt')).toBe(false);
   });
 });
+
+describe('the head in another form, or a few words back (#5901 gate, second sample)', () => {
+  it('drops the chip when the sentence has the same English word in another form (6953ab7477f38f6761bd729d p717)', () => {
+    expect(separateTermDefinitions('or mixed in order to be calcined <term>calcination: heating a substance to high temperatures to reduce it to a powder</term> or dissolved'))
+      .toBe('or mixed in order to be calcined <note>heating a substance to high temperatures to reduce it to a powder</note> or dissolved');
+  });
+  it('drops the chip when the head stands a few words back (6985ca74e3007574295ea81b p279)', () => {
+    expect(separateTermDefinitions('just as little as at the reception of brothers <term>Reception: The formal initiation ceremony for a new member into the Order</term>. To those'))
+      .toBe('just as little as at the reception of brothers <note>The formal initiation ceremony for a new member into the Order</note>. To those');
+  });
+  it('keeps a chip the sentence leads into: its head is the book\'s own word (6991eaa82f801130a473d90a p42)', () => {
+    expect(separateTermDefinitions('### VERUTUM. — The <term>verutum: a short javelin used by Roman light infantry</term>, according to what I'))
+      .toBe('### VERUTUM. — The <term>verutum</term> <note>a short javelin used by Roman light infantry</note>, according to what I');
+    expect(applyNotesOff('### VERUTUM. — The <term>verutum: a short javelin used by Roman light infantry</term>, according to what I'))
+      .toBe('### VERUTUM. — The verutum, according to what I');
+  });
+  it('keeps a source-language cognate as the chip', () => {
+    expect(separateTermDefinitions('an entirely metallic **substance** <term>substantia: the underlying material essence or physical reality of a thing.</term> which'))
+      .toBe('an entirely metallic **substance** <term>substantia</term> <note>the underlying material essence or physical reality of a thing.</note> which');
+  });
+  it('does not read a note between the sentence and the chip as the sentence', () => {
+    expect(separateTermDefinitions('**striated particles**. <note>original: "ibid."</note> <term>striated particles: These are grooved, screw-like particles of matter.</term> 91.'))
+      .toBe('**striated particles**. <note>original: "ibid."</note> <note>These are grooved, screw-like particles of matter.</note> 91.');
+  });
+});

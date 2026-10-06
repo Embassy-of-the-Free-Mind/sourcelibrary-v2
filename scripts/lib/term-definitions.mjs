@@ -151,24 +151,46 @@ export const APPARATUS_HEAD = new RegExp(`^(?:(?:original\\s+)?(?:${[
 const tokens = (s) => s.toLowerCase().replace(/['’‘ʼ]/g, '').match(/[\p{L}\p{M}\p{N}]+/gu) || [];
 /** Words that join a phrase without naming anything: "Cassia or Manna" is the head "Cassia and Manna". */
 const JOINER = new Set(['and', 'or', 'the', 'a', 'an', 'of']);
-/** A word and its English singular: `drachms` before a chip headed `drachm` is the same word. @param {string} w */
-const forms = (w) => [w, w.replace(/ies$/, 'y'), w.replace(/es$/, ''), w.replace(/s$/, '')];
-/** @param {string} a @param {string} b */
-const sameWord = (a, b) => a === b || (a.length > 3 && b.length > 3 && forms(a).some((f) => forms(b).includes(f)));
+/** Endings English adds to one word: `calcined` / `calcination`, `matrices` / `matrix`, `journeymen` / `journeyman`. */
+const ENDINGS = [[/ies$/, 'y'], [/ices$/, 'ix'], [/men$/, 'man'], [/(?:es|s|ed|d|ing|ation|ion|al|ly)$/, ''], [/(?:ed|ing|ation|ion)$/, 'e']];
+/** @param {string} w */
+const stems = (w) => [w, ...ENDINGS.map(([re, to]) => w.replace(re, to))].filter((x) => x.length > 3);
+/** The same English word in another form. A cognate in the source language (`substance` /
+ *  `substantia`, `nature` / `Natur`) is a different word: that chip is the vocabulary the page gives.
+ *  @param {string} a @param {string} b */
+const sameWord = (a, b) => a === b || stems(a).some((f) => stems(b).includes(f));
+
+/** Words after which a chip is part of the sentence: `and a <term>quality: …</term> is`. */
+const LEADS_ON = new Set(['a', 'an', 'the', 'this', 'that', 'these', 'those', 'of', 'in', 'on', 'at', 'to', 'by', 'with', 'for', 'from', 'into', 'and', 'or', 'but', 'nor', 'as', 'is', 'are', 'was', 'were', 'be', 'been', 'its', 'their', 'his', 'her', 'our', 'your', 'my', 'no', 'not', 'any', 'every', 'each', 'some', 'such', 'than']);
+/** How many words back the head may stand: `reception of brothers <term>Reception: …`. */
+const HEAD_WINDOW = 3;
+/** The sentence before a chip, without the notes and tags the reader does not print inline. @param {string} s */
+const proseOf = (s) => s.replace(/<(note|gloss|margin|meta|image-desc)>[^<]*<\/\1>/gi, ' ').replace(/<\/?[a-zA-Z][^<>]*>/g, ' ');
 
 /**
- * True when `before` ends with `head` — the sentence already carries the word,
- * so keeping the chip would print it twice. Read word by word, ignoring case,
- * emphasis and quote marks, the apostrophe's shape, an English plural, and
- * joining words: `"formal number" <term>Formal number: …`, `God’s field
- * <term>God's field: …`, `drachms <term>drachm: …`.
+ * True when the sentence before the chip already carries `head`, so keeping the
+ * chip would print it twice. Read word by word, ignoring case, emphasis and
+ * quote marks, the apostrophe's shape, English endings and joining words:
+ * `"formal number" <term>Formal number: …`, `God’s field <term>God's field: …`,
+ * `drachms <term>drachm: …`, `to be calcined <term>calcination: …`.
+ * The head may stand a few words back (`reception of brothers <term>Reception:
+ * …`). Never when the word right before the chip leads on to it: `— The
+ * <term>verutum: a short javelin…</term>, according to…` needs its chip to
+ * stay a sentence.
  * @param {string} before @param {string} head
  */
 export function headPrecedes(before, head) {
   const want = tokens(head).filter((w) => !JOINER.has(w));
   if (!want.length) return false;
-  const have = tokens(before).filter((w) => !JOINER.has(w)).slice(-want.length);
-  return have.length === want.length && want.every((w, i) => sameWord(w, have[i]));
+  const all = tokens(proseOf(before));
+  const have = all.filter((w) => !JOINER.has(w));
+  /** @param {number} back */
+  const endsAt = (back) => have.length - back >= want.length && want.every((w, i) => sameWord(w, have[have.length - back - want.length + i]));
+  // `— The <term>verutum: a short javelin…</term>, according to…`: the chip is the sentence's own word.
+  if (!all.length || LEADS_ON.has(all[all.length - 1])) return false;
+  if (endsAt(0)) return true;
+  for (let back = 1; back <= HEAD_WINDOW; back++) if (endsAt(back)) return true;
+  return false;
 }
 
 /** Annotation spans a `<note>` must not be written into (src/lib/normalize-annotation-spans.ts, plus the panel tags). */
