@@ -2,7 +2,8 @@
 
 **Read this when:** writing or reading `edition_key` / `edition_external_ids`,
 building a duplicate queue, deciding whether two books are "the same edition,"
-or adding a surface that shows other scans/copies of a book.
+adding a surface that shows other scans/copies of a book, or recording that two
+books are copies of one edition or bound together (`book_relations`).
 
 Materialized 2026-08-07 (#3260, workstream A of #3258). Companion to
 `work-identity.md` — that file governs the layer above this one. For *why* this
@@ -18,7 +19,8 @@ layer is worth maintaining rather than merely how, see
 | Person | `author_id` | the human | thesaurus build scripts |
 | Work | `work_id` | the abstract creation | `work-coverage.mjs` |
 | **Edition** | **`edition_key`** | **one printing** | `edition-key-integrity.ts` |
-| Copy | `duplicate_of` | one digitization of that printing | `duplicate-integrity-check.mjs` |
+| Copy | `duplicate_of` | the SAME digital object, held twice — hides the record | `duplicate-integrity-check.mjs` |
+| Copy | `book_relations` rows | another copy of the edition, or bound with / contains — hides nothing | unique index; read-side shape check |
 
 Claims attach to exactly one layer. First-translation is work×language.
 Translation completeness is per-edition. Gallery images are per-copy. Putting a
@@ -246,6 +248,50 @@ exits 2 when a same-fingerprint group appears that is not in
 `scripts/audit/baselines/duplicate-fingerprints.json`. It reports; it never
 merges, hides, or deletes. Re-baseline with `--update-baseline` once a human has
 looked.
+
+## `book_relations`: two copies, or two things in one binding — without hiding either (#3102)
+
+**Read this half when:** you are about to set `duplicate_of` on a book, or you
+have compared two records by eye and want the result kept.
+
+`duplicate_of` does two things at once: it says "same thing" and it hides the
+book. That is right for one digital object held under two records (1,138 of
+1,140 e-rara groups, measured 2026-10-06) and wrong for everything else it was
+used for. The #6019 review found a 474-page Sammelband marked a duplicate of an
+89-page tract, and 114 hidden copies holding 1,050 translated pages their
+target lacks; 83% of those had a different page count, so they were another
+scan or a fuller volume, not a redundant record.
+
+So the choice is by what you saw:
+
+| You saw | Write | Effect on the books |
+|---|---|---|
+| the same scan, twice | `duplicate_of` on the redundant record | hides it |
+| two copies of one edition (two libraries, two shelfmarks) | `book_relations`, `other_copy_of_edition` | none |
+| two works in one binding | `book_relations`, `bound_with` | none |
+| a volume and one work inside it | `book_relations`, `contains` (a = the volume, b = the part) | none |
+
+A row is `{ a, b, type, evidence, created_by, created_at }`, unique on
+`(a, b, type)`. Write it through `addRelation()` in `src/lib/book-relations.ts`
+or `scripts/maintenance/book-relation.ts add … --apply`, never by a raw insert:
+the function resolves each book by `id` OR `_id` to one canonical id (a
+re-minted `_id` would otherwise split one book's relations in two), sorts the
+pair for the symmetric types so either entry order is one row, and refuses a
+book that does not resolve. `evidence` is required: say what was compared.
+
+**A relation is a statement, not a switch.** Nothing in the lib writes to
+`books`, nothing automated reads the collection, and a relation never changes
+`visible`, `hidden` or `duplicate_of`. The one reader is `checkHoldings()`,
+which lists the linked record under reason `related_copy` or `bound_with`
+beside the match it hangs from and leaves the verdict alone. If a later job
+wants to act on relations (pick a keeper, build a rail), that is a new decision
+with its own review, because from then on writing a row is actuation.
+
+Two books can carry both: a hidden same-edition copy that already has
+`duplicate_of` may also get an `other_copy_of_edition` row. Do not read one as
+implying the other, and do not migrate `duplicate_of` into relations in bulk;
+which of the existing pointers are same-object and which are copies is a by-eye
+question (#6019 decisions 3 and 4).
 
 ## An acquisition gap computed at the COPY layer is not a gap
 

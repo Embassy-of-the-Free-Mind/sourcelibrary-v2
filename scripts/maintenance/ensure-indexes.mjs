@@ -99,6 +99,9 @@ export const INDEXES = [
   { collection: 'batch_jobs', key: { 'status': 1, 'created_at': 1 }, options: { 'name': 'batch_jobs_status_created_idx', 'background': true }, why: 'Cron reconciliation of pending/processing jobs sorted by created_at. Archived ensure-indexes route.' },
   { collection: 'batch_jobs', key: { 'book_id': 1, 'status': 1 }, options: { 'name': 'batch_jobs_book_status_idx', 'background': true }, why: 'Lookup by book + status. Archived ensure-indexes route.' },
   { collection: 'batch_jobs', key: { 'parent_job_id': 1, 'created_at': -1 }, options: { 'name': 'batch_jobs_parent_created_idx', 'background': true, 'sparse': true }, why: 'Filters out child jobs in the processing overview ({ parent_job_id: { $exists: false } }). Archived ensure-indexes route.' },
+  // ── book_relations ────────────────────────────────────────────
+  { collection: 'book_relations', key: { 'a': 1, 'b': 1, 'type': 1 }, options: { 'name': 'a_1_b_1_type_1', 'unique': true }, why: 'One row per pair and type. `a`/`b` are canonical book ids, sorted for the symmetric types, so a pair entered in either order (or by two sessions at once) lands on one key. Also serves the `a` half of relationsOfIds(). src/lib/book-relations.ts (#3102, #6019 decision 5).' },
+  { collection: 'book_relations', key: { 'b': 1 }, options: { 'name': 'b_1' }, why: 'The `b` half of relationsOfIds() ({ $or: [{ a: { $in } }, { b: { $in } }] }), which checkHoldings() runs on every lookup that finds a match. src/lib/book-relations.ts (#3102).' },
   // ── book_indexes ──────────────────────────────────────────────
   { collection: 'book_indexes', key: { 'book_id': 1 }, options: { 'name': 'book_id_1', 'unique': true }, why: 'Unique key for the dedicated per-book index collection split out of books.index.*. scripts/migration/migrate-book-indexes.mjs.' },
   // ── book_metadata_changelog ───────────────────────────────────
