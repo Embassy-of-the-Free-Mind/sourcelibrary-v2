@@ -57,6 +57,7 @@ export type HoldingReason =
   | 'same_edition_year_unknown'
   | 'other_edition'
   | 'same_work'
+  | 'same_work_same_year'
   | 'title_author_near_same_year'
   | 'title_author_near'
   | 'near_title';
@@ -73,6 +74,9 @@ export interface HoldingsInput {
   year?: number | null;
   /** Free-text imprint, e.g. "Amsterdam, 1682" — the year is parsed from it. */
   published?: string | null;
+  /** Page count of the copy about to be imported, when known. With the year it
+   *  tells a second copy of one edition from another edition of the work. */
+  pages?: number | null;
 }
 
 export interface HoldingCandidate {
@@ -119,6 +123,7 @@ const REASON_RANK: Record<HoldingReason, number> = {
   same_edition_year_unknown: 3,
   other_edition: 4,
   same_work: 5,
+  same_work_same_year: 3,
   title_author_near_same_year: 3,
   title_author_near: 5,
   near_title: 6,
@@ -132,6 +137,7 @@ const REASON_VERDICT: Record<HoldingReason, HoldingsVerdict> = {
   same_edition_year_unknown: 'possible_same_edition',
   other_edition: 'other_edition',
   same_work: 'other_edition',
+  same_work_same_year: 'possible_same_edition',
   title_author_near_same_year: 'possible_same_edition',
   title_author_near: 'other_edition',
   near_title: 'related_title',
@@ -391,8 +397,24 @@ export async function checkHoldings(
   const workIds = [...new Set([...found.values()].map((c) => c.work_id).filter((w): w is string => !!w))];
   if (workIds.length > 0) {
     const rows = await db.collection('books').find({ work_id: { $in: workIds } }, { projection: BOOK_PROJ }).limit(otherLimit * 2).toArray();
+    // Same work AND same year (and, when both are known, a page count within
+    // 2%) is a second copy of this edition far more often than another
+    // edition: the #6019 review found every live same-edition duplicate in its
+    // sample as the top candidate, half of them only as `same_work` (Mylius
+    // 1746: same author, same year, 678 vs 680 pp).
+    const refYear = candYear ?? (anchor ? editionYear(anchor as { year?: number | null; published?: string | null }) : null);
+    const refPages = input.pages ?? (anchor ? Number(anchor.pages_count) || null : null);
     for (const r of rows) {
-      if (!found.has(idOf(r))) add(toCandidate(r, 'books', 'same_work', 'Same work (work_id): another copy, edition or translation.'));
+      if (found.has(idOf(r))) continue;
+      const y = editionYear(r as { year?: number | null; published?: string | null });
+      const p = Number(r.pages_count) || null;
+      const pagesClose = refPages == null || p == null || Math.abs(p - refPages) <= Math.max(2, refPages * 0.02);
+      if (refYear != null && y === refYear && pagesClose) {
+        const pagesNote = refPages != null && p != null ? `, ${p} pp against ${refPages}` : ', page count not compared';
+        add(toCandidate(r, 'books', 'same_work_same_year', `Same work and year (${y})${pagesNote}: possibly another copy of this edition.`));
+      } else {
+        add(toCandidate(r, 'books', 'same_work', 'Same work (work_id): another copy, edition or translation.'));
+      }
     }
   }
 
@@ -407,8 +429,13 @@ export async function checkHoldings(
         // Same author and most of the title: the same work catalogued under a
         // different title form — another edition, or this one (#6019: Becher
         // "Weiszheit" vs "Weißheit" never shared an edition key).
-        if (h.sameAuthor && h.coverage >= 0.75) {
-          const y = editionYear(doc as { year?: number | null; published?: string | null });
+        const y = editionYear(doc as { year?: number | null; published?: string | null });
+        const p = Number(doc.pages_count) || null;
+        // Same author and year with matching page counts is the same-edition
+        // signature even when the title words only half overlap (a Latin
+        // title against the English one, #6019 review).
+        const pagesMatch = input.pages != null && p != null && Math.abs(p - input.pages) <= Math.max(2, input.pages * 0.02);
+        if (h.sameAuthor && (h.coverage >= 0.75 || (pagesMatch && candYear != null && y === candYear))) {
           const sameYear = candYear != null && y === candYear;
           add(toCandidate(doc, 'books', sameYear ? 'title_author_near_same_year' : 'title_author_near',
             sameYear
@@ -451,7 +478,7 @@ export function summarize(verdict: HoldingsVerdict, candidates: HoldingCandidate
   switch (verdict) {
     case 'same_object': return `We hold this scan: ${where}${more}.`;
     case 'same_edition': return `We hold this edition: ${where}${more}.`;
-    case 'possible_same_edition': return `Possibly this edition (a year is missing on one side): ${where}${more}.`;
+    case 'possible_same_edition': return `Possibly this edition (${top.reason_detail.replace(/\.$/, '')}): ${where}${more}.`;
     case 'other_edition': return `We hold another edition: ${where}${more}.`;
     case 'related_title': return `Not found as such; similar titles: ${where}${more}.`;
     default: return 'New: nothing in our holdings matches.';
