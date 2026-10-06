@@ -181,7 +181,7 @@ function Entry() {
         </figure>
         <div className="md:pb-10">
           <h1 className="font-serif text-4xl md:text-5xl tracking-tight text-stone-900 mb-5">Quality Center</h1>
-          <p className="text-lg text-stone-700 leading-relaxed mb-6">
+          <p className="font-body text-lg text-stone-700 leading-relaxed mb-6">
             Every page here was read by a machine first. This is where we show how good that reading is, what we are doing
             to improve it, and how you can help.
           </p>
@@ -221,7 +221,7 @@ export default function QualityCenterPage() {
       }
       bg="bg-cream"
     >
-      <article className="max-w-4xl text-stone-700">
+      <article className="max-w-4xl font-body text-stone-700">
         {/* ── 1. Where quality stands ── */}
         <Section id="stands" title="Where quality stands">
           <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
@@ -242,7 +242,8 @@ export default function QualityCenterPage() {
             }
           >
             <Row label="The scan">
-              <Crop box={LEAF.line} alt="The end of one printed line: natio. Quisquilias. i. vilissimas et abiectissimas, then an abbreviated word broken at the line end." />
+              <Crop box={LEAF.line} className="hidden sm:block" alt="The end of one printed line: natio. Quisquilias. i. vilissimas et abiectissimas, then an abbreviated word broken at the line end." />
+              <Crop box={LEAF.lineNarrow} className="sm:hidden" alt="The last words of one printed line: et abiectissimas, then an abbreviated word broken at the line end." />
             </Row>
             <Row label="Our text">
               <p className="font-mono text-sm leading-relaxed text-stone-800">
@@ -525,16 +526,16 @@ export default function QualityCenterPage() {
             title="A reader's note, and where yours would go"
             caption={
               <>
-                Left: the foot of the leaf above. As we read the hand: <i>De ea Endelechia plura doctissimus Budeus in libro
+                First, the foot of the leaf above. As we read the hand: <i>De ea Endelechia plura doctissimus Budeus in libro
                 de Asse primo</i>, &ldquo;more on this <i>endelechia</i> in the most learned Budé, in the first book of{' '}
-                <i>De Asse</i>&rdquo;. Right: blank paper from the same page. No reader has yet left a note here that we may
+                <i>De Asse</i>&rdquo;. Beside it, blank paper from the same page. No reader has yet left a note here that we may
                 show with their name; when one does, and agrees, it will stand in that margin.
               </>
             }
           >
             <div className="grid gap-4 sm:grid-cols-[minmax(0,7fr)_minmax(0,3fr)] sm:items-start">
               <Crop box={LEAF.note} alt="A line of ink handwriting at the foot of the printed page." />
-              <div className="relative">
+              <div className="relative max-w-[12rem] sm:max-w-none">
                 <Crop box={LEAF.margin} alt="Blank paper from the margin of the same page." />
                 <div className="absolute inset-3 border border-dashed border-stone-500/60 flex items-center justify-center p-3">
                   <span className="text-sm text-stone-600 text-center leading-snug">Your note would go here</span>
