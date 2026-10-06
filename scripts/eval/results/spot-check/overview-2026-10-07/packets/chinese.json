@@ -1,0 +1,366 @@
+[
+ {
+  "slot": 9,
+  "stratum": "chinese",
+  "book_id": "6a3c5f53879008ba7e154672",
+  "book_url": "https://sourcelibrary.org/book/6a3c5f53879008ba7e154672",
+  "tradition": "chinese",
+  "book": {
+   "id": "6a3c5f53879008ba7e154672",
+   "title": "續一切經音義(二) (vol 2)",
+   "display_title": null,
+   "author": "希麟",
+   "language": "Chinese",
+   "published": "Unknown",
+   "pages_count": 101,
+   "pages_ocr": 91,
+   "pages_translated": 82,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 101,
+   "distinct_page_numbers": 101,
+   "duplicate_records": 0,
+   "pages_with_ocr": 91,
+   "pages_translated": 82,
+   "with_printed_number": 22,
+   "printed_backsteps": 8,
+   "printed_repeats": 9,
+   "pages_count_field": 101,
+   "pages_translated_field": 82
+  },
+  "run": [
+   22,
+   50,
+   78,
+   100
+  ],
+  "pages": [
+   {
+    "page_number": 22,
+    "page_id": "6a3c5f53879008ba7e154688",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c5f53879008ba7e154672/22.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Classical Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>十一</page-num>\n<header>續一切經音義卷四</header>\n\n<margin>支那</margin>\n<margin>續一切經音義卷四</margin>\n\n萊·可·食·者·通·名·為·蔌·。又·云·雷·霆·上·魯·則·反·切·韻·雷\n仍·餼·為·荐·。郭·註·蓮·廣·不·熟·。陸·古·文·作·萬·。集·葉·上·初\n穿·也·。翰·衡·云·。陸·免·繫·成·聲·。古·文·作·也·。集·葉·恧·反\n下·狩·丁·反·。考·聲·云·。夷·留·也·。字·書·返·簡·也·。\n\n---\n\n字·書·纂·亦·奉·也·。韻·英·殺·也·。說·文·從·厶·。箕·降·厶·音·私\n其·音·笄·云·。奪·其·若·位·。事·不·敢·公·私·而·箕·也·。下·奪·字\n說·文·正·作·奞·。其·反·也·。云·手·持·一·鳥·。大·。走·。也·。從·寸\n亦·通·。無·從·木·省·。走·。徒·口·反·。字·書\n云·走·也·。避·也·。切·韻·臥·也·。亦·窟·也·。下·。七·。亂·反·。椰·子·上\n考·聲·叢·也·。說·文·云·。鼠·在·穴·中·則·為·竄·矣·。也·。榔\n差·反·。切·韻·。果·木·名·也·。出·交·州\n其·葉·。背·。面·。相·。類·。案·。食·。之·。止·。渴·。仆·面·上·。箭·老·反·。爾·雅\n云·。謂·。前·。覆·。也·。亦·。作·。踏·。案·。祂·。脣·。上·。神·氏·反·。切·韻·。以·。舌\n又·。作·。踣·。謂·。面·。覆·。於·。地·。也·。弛·。脣·。取·。物·。也·。說·文·作·韱·俗\n口·。脣·。也·。字·書·亦·作·脣·字·也·。拳·。手·上·。巨·國·反·。廣·雅\n韻·。屈·。手·也·。從·手·。卷·省·聲·。經·。文·。從·。足·。作·。齟·。拑·。上·。整·呂\n下·。盟·。野·。也·。字·。云·。跙·。跼·。行·。不·。進·。也·。奉·。拳·。手·。曰·。拳·。拳·。持·。也·。切\n莫·。到·。反·。即·。水·。床·。也·。案·。齟·。床·。即·。口·中·。齶·。床·。也·。\n\n<vocab>蔌, 荐, 奞, 椰子, 竄, 榔, 踣, 齟, 齶, 爾雅, 說文, 切韻</vocab>",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<header>Continued Sound and Meaning of All Scriptures, Volume 4</header>\n<margin>China</margin>\n<margin>Continued Sound and Meaning of All Scriptures, Volume 4</margin>\n\n...vegetables that can be eaten, commonly known as *su*. Also says: *leiting* (thunder), pronounced *lei* (upper, *ze*). *Qieyun* says: *lei*...\nStill, *xi* is *jian* (to present). *Guo* commentary: *Lian* (lotus) is not ripe. *Lu* ancient text written as *wan*. *Jiye* (leaf) pronounced *chu* (upper)...\nPierce. *Han-heng* says. *Lu* *mian-xi* become a phonetic. Ancient text written as... *Jiye* pronounced *ni*...\n*Shou* (lower, *ding*). *Kaosheng* says. *Yi-liu*. Character book: *fan-jian*.\n\n---\n\nCharacter book *zuan* is also *feng*. *Yunying*: To kill. *Shuowen*: From *si*. *Ji-jiang* *si* pronounced *si*.\nIts sound is *ji*. *Duo* its like position. Affairs dare not be public or private, so *ji*. The *duo* character below\n*Shuowen* correctly writes as 奞. Its pronunciation is *duo*. Says: Hand holding a bird. Big. Run. From *cun*.\nAlso *tong*. None from tree, abbreviated. Run. Pronounced *tu* (upper). Character book\nSays: To run. To avoid. *Qieyun*: To lie down. Also a cave. Pronounced *qi* (lower). *Yezi* (coconut) pronounced *ye* (upper).\n*Kaosheng*: To cluster. *Shuowen* says: Mouse in a hole is *cuan*. Lang.\nDifference. *Qieyun*. Fruit tree name. From Jiaozhou.\nIts leaves. Back. Face. Together. Kind. Note. Eat. Stop. Thirsty. Face *pu* (upper). Pronounced *jian*. *Erya*\nSays: Means front. Cover. Also. Written as. *Ta*. Note. *Tuo*. Lips pronounced *shen* (upper). *Qieyun*. Use tongue.\nAlso. Written as. *Po*. Means face. Cover. On the ground. Also. *Chi*. Lips. Take. Things. Also. *Shuowen* writes as *xian*, common.\nMouth. Lips. Character book also writes as *chun* character. Fist. Hand pronounced *ju* (upper). *Guangya*\n*Yun*. Clenched hand. From hand. *Juan* abbreviated phonetic. Scripture. Text. From foot. Written as. *Zu*. *Qian* pronounced *zheng* (upper).\n*Meng* (lower). Field. Character says: *Zu*. Crouching. Walk. Not. Advance. Also. *Feng*. Fist. Hand called *quan*. *Quan* holding. *Qieyun*\nPronounced *mo*. Is water bed. Note. *Zu* bed. Is mouth center. Palate bed.\n\n<summary>This page lists phonological and semantic explanations for various characters, including terms related to plants, physical actions, and household items, citing classical sources.</summary>\n<keywords>Vegetables, coconut, fist, philology, dictionary, Huilin</keywords>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 50,
+    "page_id": "6a3c5f53879008ba7e1546a4",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c5f53879008ba7e154672/50.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>2</columns>\n<header>撰述</header>\n<sig>一切經音義卷五</sig>\n\n不動使者陀羅尼祕密法一卷\n\n不動獸下足放反切韻守也國語云獸為群字林\n丑叔反經文作行龍激上力鍾反切韻君也禮記\n冬獵也非此用龍示畜也古有捕龍比若未畜安\n捕哉下即由反韻水神名也考聲激聚也謂不\n流水櫝字上從木反介雅日其子積郭註云今青\n頭牛牝日牝從牛字\n箆攬下上邊分反考聲竹手動\n覺摩也手指摩下稱華反三者云掌大指俱名掌也今經云\n<column-break/>\n八者謂三甜下牒兼反切韻美也甘也一字頂翁\n之梨也王經云三甜謂蘇乳酪也即西域所\n尚者機杼上居衣反下除族反方言云杼軸具\n也也\n\n<vocab>不動使者, 陀羅尼, 祕密法, 一切經音義, 蘇乳酪</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "Compilation\n\nEverything in the Sound and Meaning of the Sutras, Volume 5\n\nThe Secret Method of the Acala Envoy <term>Dharani</term> <gloss>incantation</gloss>, One Volume\n\nFor the character <term>Shou</term> <gloss>beast</gloss>, the fanqie <note>a system of indicating pronunciation by using two characters</note> is 'chou' and 'shu', reversed. The dictionary says it means to herd. The *Guoyu* <note>Discourses of the States</note> says \"beast\" means a group. The *Zilin* <note>Forest of Characters</note> says it is pronounced 'chou' and 'shu'. In the sutra text, the character 'hang' <gloss>row/path</gloss> is used. For 'ji', the fanqie is 'li' and 'zhong', meaning \"sovereign.\" The *Record of Rites* says it refers to winter hunting, but that is not the meaning here; it refers to domestic animals. Ancient texts mention catching dragons; if one cannot tame them, how can one catch them? For 'ji', the fanqie is 'you', referring to a water deity. The *Kaosheng* <note>Examination of Sounds</note> says 'ji' means to gather, referring to still water. The character 'du' <gloss>cabinet/case</gloss> is composed of 'mu' <gloss>wood</gloss>. The *Erya* <note>Approaching Elegance</note> says 'ji' <gloss>female animal</gloss> is the child of 'ji'. Guo's commentary says that today the female of a green-headed ox is called 'pin', which is formed with the 'niu' <gloss>ox</gloss> radical.\nFor 'pi' <gloss>comb</gloss>, the fanqie is 'bian' and 'fen'. The *Kaosheng* says it is a bamboo tool for moving things.\n'Mo' <gloss>to touch</gloss> means to rub. For 'cheng', the fanqie is 'hua' and 'fan'. The three parts refer to the palm and the thumb, both called 'zhang' <gloss>palm</gloss>. The sutra says:\n<column-break/>\nThe \"eight\" refers to the three sweet substances. For 'tian' <gloss>sweet</gloss>, the fanqie is 'die' and 'jian'. The dictionary says it means delicious or sweet. One word is 'ding-weng-zhi-li' <note>a transliteration of a foreign term</note>. The King's Sutra says the three sweet substances are ghee, milk, and curd, which are highly valued in the Western Regions. For 'ji-zhu' <gloss>loom shuttle</gloss>, the fanqie for 'ji' is 'ju' and 'yi', and for 'zhu' is 'chu' and 'zu'. The *Fangyan* <note>Regional Dialects</note> says it is a tool for weaving.\n\n<summary>This page provides phonetic and semantic glosses for various terms found in the Secret Method of the Acala Envoy Dharani, including definitions for terms related to animals, tools, and the \"three sweet substances\" used in Buddhist ritual practice.</summary>\n<keywords>Acala Envoy, Dharani, phonetics, fanqie, ritual offerings, ghee, linguistics</keywords>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 78,
+    "page_id": "6a3c5f53879008ba7e1546c0",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c5f53879008ba7e154672/78.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n\n真言中字。耳瑞下都郎反。考聲云。耳斷也。說文。\n不求訓解。\n蟄毒也。舒夏二反。皆得說文。\n切如來實印陀羅尼一卷。\n脊膳上力交反。註云。脊也。詩毛詩云。\n爻聲。音同上。下時戰反。玉篇。膳俗用字。非。\n肉善聲。經文二字並從食。作膳。\n上士聲。反字書作養。生也。考聲。小篆。\n土堆。下對雷反。今俗從楚。詞云。堆高也。古文作\n今時。泫然。上從水。玄聲。下然語詞也。字從肉。\n人音。下必以反。之鴞。上山有耕反。下其狀如武山。青羽。\n豚指前。役各兩爪。扶南外。出毛羽。五色者。亦有\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Decorative border surrounding the text block.</image-desc>\n\n<vocab>真言, 陀羅尼, 說文, 考聲, 玉篇, 膳, 堆, 鴞</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "真言 <gloss>mantra</gloss> middle character. <term>Er</term>, <term>rui</term>. Below, [fanqie] *du*, *lang*, and *fan*. The *Kaosheng* says: ear severed. *Shuowen*:\nDo not seek instruction or explanation.\n<term>Zhe</term> <gloss>hibernating</gloss>, poison. [Fanqie] *shu*, *xia*, and *fan*. Both are correct. *Shuowen*:\nCut. The Tathagata Real Seal Dharani, One Volume.\n<term>Ji</term> <gloss>spine</gloss>, <term>shan</term> <gloss>provisions</gloss>. Above, [fanqie] *li*, *jiao*, and *fan*. Commentary says: spine. The *Maoshi* <note>Mao's Book of Odes</note> says:\nThe <term>yao</term> sound. The sound is the same as above. Below, [fanqie] *shi*, *zhan*, and *fan*. *Yupian*: <term>shan</term> is a common character. Incorrect.\nMeat, <term>shan</term> sound. The sutra text: the two characters both follow the \"food\" radical, written as <term>shan</term>.\nAbove, scholar sound. The [fanqie] *fan* character in the book is written as <term>yang</term>. Life. *Kaosheng*. Small seal script.\nEarth mound. Below, [fanqie] *dui*, *lei*, and *fan*. Now commonly following <term>chu</term>. The lexicon says: <term>dui</term> <gloss>mound</gloss> is high. Ancient text written as\nCurrent times. <term>Xuan</term> <gloss>flowing</gloss>. Above, follows the \"water\" radical, <term>xuan</term> phonetic. Below, <term>ran</term> is a particle. The character follows the \"meat\" radical.\nHuman sound. Below, [fanqie] *bi*, *yi*, and *fan*. The <term>xiao</term> owl. Above, [fanqie] *shan*, *you*, *geng*, and *fan*. Below, its shape is like the Wu mountain. Blue feathers.\nThe pig points forward. Each foot has two claws. Fu'nan, outside.\nExtruding hair and feathers, five colors. There are also\n\n<note>The text is enclosed within a decorative border.</note>\n\n<summary>This page provides philological notes on Buddhist terms, including mantras and specific terminology found in the Tathagata Real Seal Dharani, with references to classical Chinese dictionary sources.</summary>\n<keywords>Dharani, mantra, philology, Shuowen, Yupian, dictionary</keywords>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 100,
+    "page_id": "6a3c5f53879008ba7e1546d6",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c5f53879008ba7e154672/100.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>17</page-num>\n<header>切韻指掌圖卷六</header>\n\n熾盛上尺志反聲歲亦也說文猛火也字書\n言云廣大也從火歲省聲下承政反切領長也一方\n多云廣大也說文羅睺下棚約反字方言云羅睺\n或云攝提此云暗星能計都亦梵語也\n唯日月之光前暗星能計都亦梵語也\n皆謂之蝕亦名羅睺計都二星也\n大浦設其形字似星為變輸郭璞注云星亦謂\n之下皆謂之初銜太白之五星一傍通祕訣云太白西方金\n有而楚庚反將軍之橫出一名長庚云太白西方金\n白而老明也合有兵其行一人循一伏是也以時將軍\n庚五功火星十一里其色赤光其火之年一周天去日不通\n犯也皆鎮星中黃土之精也十一名地一集一周天五星所守\n說文從晶作星色其行精也十二名年一集一周天五星所守\n文作星從晶音精物之精也古文上數下星里其字\n<margin>支那</margin>\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Printer's mark or page identifier in the left margin</image-desc>\n\n<vocab>天文, 羅睺, 計都, 太白, 鎮星, 五星, 說文解字</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "### Qieyun Zhizhang Tu (Guide to the Qieyun Phonology), Scroll 6\n\nBlazing (chi): upper [register], sound chi, zhi reverse-read <note>a method of indicating pronunciation by combining the initial of one character and the final of another</note>; implies intense. *Shuowen* says: fierce fire. *Zishu* says:\nimplies vast and great. Follows the fire radical, sui contracted sound; the lower [character] cheng, zheng reverse-read, implies leading or long. Regional dialects\noften say it means vast and great. *Shuowen* says: Rahu <term>Luo-hou</term> <gloss>a celestial body in Indian astronomy, often associated with eclipses</gloss>, lower [character] peng, yue reverse-read. *Zifangyan* says: Rahu\nor also called Sheti; this refers to the dark star. Ketu <term>Ji-du</term> <gloss>a celestial body, often the tail of Rahu</gloss> is also a Sanskrit term.\nOnly when the light of the sun and moon is obscured, these dark stars Ketu are also Sanskrit terms.\nAll are referred to as an eclipse; also called the two stars Rahu and Ketu.\nDapu sets their shapes; the characters resemble stars. For the changing variations, Guo Pu's commentary says: stars are also called\nall are called the beginning. The five stars of Venus <term>Taibai</term> <gloss>the planet Venus</gloss> contain the metal essence; one side connects. *Mijue* says: Venus is the metal of the west,\nthere is also a chu, geng reverse-read, the horizontal emergence of a general; one name is Changgeng. It says: Venus is the metal of the west,\nwhite and old, bright. It contains weapons; its movement is one cycle, one hidden. This is it. According to the time, the general\nGeng, five works. The fire star <term>Mars</term> is eleven li; its color is red, its light glows. The year of its fire is one full cycle; it does not pass through the sun.\nIt encroaches. All are the Saturn <term>Zhenxing</term> <gloss>the planet Saturn</gloss>, the essence of central yellow earth. Eleven, [it resides in] the earth for one collection, one cycle. The five stars guard [the constellations].\n*Shuowen* says: follows the crystal radical, made into star; its color, its movement is essence. Twelve, [it resides in] the year for one collection, one cycle. The five stars guard [the constellations].\n*Shuowen* writes as star, follows crystal, sound jing (essence); the essence of things. In ancient script, above is numbers, below is star, li (mile); the character...\n\n<margin>China <term>Zhina</term></margin>\n\n<note>Printer's mark or page identifier in the left margin.</note>\n\n<summary>This page defines astronomical terms from Buddhist and classical Chinese cosmology, focusing on Rahu and Ketu, the movement of the five visible planets, and their phonetic derivations.</summary>\n<keywords>Astronomy, Rahu, Ketu, Venus, Saturn, Five Planets, Shuowen Jiezi</keywords>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 10,
+  "stratum": "chinese",
+  "book_id": "6a3c679139b4508b04e370b1",
+  "book_url": "https://sourcelibrary.org/book/6a3c679139b4508b04e370b1",
+  "tradition": "chinese",
+  "book": {
+   "id": "6a3c679139b4508b04e370b1",
+   "title": "御定孝經衍義·卷八~卷十二 (vol 32)",
+   "display_title": null,
+   "author": "葉方藹",
+   "language": "Chinese",
+   "published": "Unknown",
+   "pages_count": 210,
+   "pages_ocr": 209,
+   "pages_translated": 208,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 210,
+   "distinct_page_numbers": 210,
+   "duplicate_records": 0,
+   "pages_with_ocr": 209,
+   "pages_translated": 208,
+   "with_printed_number": 52,
+   "printed_backsteps": 18,
+   "printed_repeats": 29,
+   "pages_count_field": 210,
+   "pages_translated_field": 208
+  },
+  "run": [
+   52,
+   75,
+   117,
+   163
+  ],
+  "pages": [
+   {
+    "page_number": 52,
+    "page_id": "6a3c679139b4508b04e370e5",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c679139b4508b04e370b1/52.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n\n國家之事曷濟之有\n泰象傳曰泰小往大來<ruby>陰陽<rt>大</rt></ruby>吉亨則是天地交而萬物\n通也上下交而其志同也<ruby>陰陽<rt>小</rt></ruby>上下指內陽而外陰內健而\n外順內君子而外小人君子道長小人道消也\n臣按天尊地卑為定位君臣卑為定分非氣與\n志之相交則懸隔而不通乖而不同矣泰交之\n世主臣賢眾正和衷羣小革而上下之間仁慈\n慇懃固結而不可解所謂分則君臣情猶父子也\n\n<image-desc size=\"small\" type=\"symbol\" significance=\"low\">Printer's mark or series title at bottom left</image-desc>\n<meta>御定孝經衍義</meta>\n\n<vocab>國家, 泰卦, 陰陽, 君子, 小人, 君臣, 仁慈</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "the affairs of the state, how can there be any benefit?\n\nThe commentary on the <term>Xiang</term> of the <term>Tai</term> <gloss>Peace hexagram</gloss> says: \"Peace: the small departs, the large arrives. This is auspicious and successful.\" This means that Heaven and Earth communicate, and all things flourish. The upper and lower communicate, and their wills are the same. \"Upper and lower\" refers to the inner presence of the positive <term>yang</term> and the outer presence of the negative <term>yin</term>; the inner is vigorous, the outer is compliant; the inner is the noble man, the outer is the small man. The way of the noble man grows, and the way of the small man fades.\n\nYour subject observes: Heaven is high and Earth is low, which establishes their positions; ruler and subject are inferior and superior, which establishes their order. If there is no communication of energy and will, then they are suspended in separation and do not connect; they are discordant and not united. In an age of peace where there is communication, the ruler and subjects are virtuous, the masses are harmonious and in accord, and the small men are reformed. Between the superior and the inferior, there is kindness and sincerity, bound together so tightly they cannot be separated. This is what is meant by saying that while their ranks are distinct, the affection between ruler and subject is like that of father and son.\n\n<note>A small printer's mark in the form of a stylized cloud or mountain.</note>\n<meta>Imperially Commissioned Elucidation of the Classic of Filial Piety</meta>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 75,
+    "page_id": "6a3c679139b4508b04e370fc",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c679139b4508b04e370b1/75.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<meta>欽定四庫全書</meta>\n\n事可考不待貶絕而惡自見也宣公享國九年于周纔一往聘其在齊則又再朝矣經于如齊毋行必至深罪之也\n\n臣按魯侯親朝於隣國而令大夫聘於京師京師惟一聘而齊則再三朝馬逆施倒置謂其父之尊不如其兄也甚於公子遂如京師遂如晉者矣此春秋此次其事所以正君臣之倫也\n\n秋天王定使王季子來聘\n\n<vocab>春秋, 魯侯, 京師, 君臣之倫, 王定</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "# Imperial-Commissioned Complete Library of the Four Treasuries\n\nThe events can be examined without needing to explicitly demote or reject them; the evil reveals itself naturally. Duke Xuan reigned for nine years, during which he went to Zhou only once to pay respects, yet he went to Qi to pay court twice. The *Annals* severely blames him for going to Qi without first fulfilling his duty to the king.\n\nThe subject observes: The Duke of Lu personally paid court to a neighboring state but ordered a high official to pay respects at the imperial capital. The capital received only one visit, while Qi received two or three. This is like reversing the order of things, asserting that the dignity of one’s father is inferior to that of one’s elder brother. This is even worse than the case of Gongzi Sui going to the imperial capital and then to Jin. This is how the *Spring and Autumn Annals* records these events to rectify the ethics of ruler and subject.\n\nIn autumn, the Heavenly King, Ding, sent Wang Jizi to pay a visit.\n\n<summary>This page examines Duke Xuan's failure to prioritize the Zhou King over neighboring states, framing this neglect of ceremonial hierarchy as a failure of ruler-subject ethics.</summary>\n<keywords>Duke Xuan of Lu, Zhou King, ceremonial hierarchy, ruler-subject ethics, Spring and Autumn Annals</keywords>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 117,
+    "page_id": "6a3c679139b4508b04e37126",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c679139b4508b04e370b1/117.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>卷十</page-num>\n\n或不致乎此也故穀梁傳曰向日公子招今日陳\n侯之弟招盡其親所以惡招也此所以正兄弟之\n倫亦所以正父子之倫也\n秋盜殺衛侯<note>靈公名元</note>之兄繁二十年\n\n臣按孟摯以惡疾故不得立衛侯之母兄也狎齊\n豹而奪之邑豹憤而殺之春秋書之曰盜故左傳\n明以為欲求不畏疆禦之名而不得也又按晉范\n甯曰諸侯之尊兄弟不得以屬通經不書衛公子\n\n<vocab>穀梁傳, 衛侯, 衛公子, 孟摯, 齊豹, 晉范甯, 春秋</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "perhaps would not have reached this point. Therefore, the *Guliang Commentary* says: Yesterday it was \"Prince Zhao,\" today it is \"The brother of the Marquis of Chen, Zhao.\" It exhausts the relationship of kin, which is why it expresses hatred for Zhao. This is how the ethical relations of brothers are rectified, and also how the relations between father and son are rectified.\n\nIn the autumn, thieves killed the elder brother of the Marquis of Wei <note>Duke Ling, personal name Yuan</note>, Fan. 20th year.\n\nThe Minister remarks: Meng Zhi could not be established because of a malignant illness; he was the elder brother of the Marquis of Wei. He became familiar with Qi Bao and took away his fief. Bao was enraged and killed him. The *Spring and Autumn Annals* records this as \"thieves.\" Thus, the *Zuo Zhuan* clearly assumes that he wanted to seek the name of \"not fearing the strong or the powerful\" but failed. Furthermore, Jin Fan Ning says: Given the nobility of the feudal lords, brothers should not be connected by rank; the classics do not write \"Prince of Wei,\"",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 163,
+    "page_id": "6a3c679139b4508b04e37154",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c679139b4508b04e370b1/163.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>卷十一</page-num>\n<header>御定孝經衍義卷十一</header>\n<meta>欽定四庫全書</meta>\n\n臣按敬身之義本禮記哀公問夫子之言釋禮記者因以經文愛親者不敢惡于人敬親者不敢慢于人為證據德秀之言又舉父母醮子送女之辭以實其義蓋使人念及于父母之訓苟或不敬斯獲罪于父母則夫婦相敬無有懈時也以上夫婦之道之要\n\n<vocab>孝經, 禮記, 夫婦之道, 敬身, 父母</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "<header>Imperial Edition of the Extended Meaning of the Classic of Filial Piety, Volume 11</header>\n<meta>Imperially Commissioned Complete Library of the Four Treasuries</meta>\n\nYour servant submits: The meaning of \"respecting one's person\" is rooted in the \"Duke Ai Questions the Master\" chapter of the <term>Liji</term> <gloss>Record of Rites</gloss>. The Master’s words explain the <term>Liji</term> by using the classic text's principle—that those who love their parents dare not hate others, and those who respect their parents dare not show contempt for others—as evidence. Zhen Dexiu’s words further cite the language used when parents provide the marriage cap for a son or send off a daughter to substantiate this meaning. It is intended to make one mindful of the teachings of one's parents. If one is ever disrespectful, then one commits a sin against one's parents. Thus, there will never be a time when there is negligence in the mutual respect between husband and wife. The above is the essence of the Way of husband and wife.",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 11,
+  "stratum": "chinese",
+  "book_id": "6a3c5f4c879008ba7e15428c",
+  "book_url": "https://sourcelibrary.org/book/6a3c5f4c879008ba7e15428c",
+  "tradition": "chinese",
+  "book": {
+   "id": "6a3c5f4c879008ba7e15428c",
+   "title": "續一切經音義(一) (vol 1)",
+   "display_title": null,
+   "author": "希麟",
+   "language": "Chinese",
+   "published": "Unknown",
+   "pages_count": 95,
+   "pages_ocr": 83,
+   "pages_translated": 77,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 95,
+   "distinct_page_numbers": 95,
+   "duplicate_records": 0,
+   "pages_with_ocr": 83,
+   "pages_translated": 77,
+   "with_printed_number": 23,
+   "printed_backsteps": 7,
+   "printed_repeats": 11,
+   "pages_count_field": 95,
+   "pages_translated_field": 77
+  },
+  "run": [
+   7,
+   29,
+   52,
+   79
+  ],
+  "pages": [
+   {
+    "page_number": 7,
+    "page_id": "6a3c5f4c879008ba7e154293",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c5f4c879008ba7e15428c/7.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<sig>音義 一 十一</sig>\n<vocab>沙門, 玄應, 慧苑, 華嚴音義, 唐梵, 順正理論</vocab>\n\n考畫點乃祇如模<gloss>以掞舒</gloss>乱於手木帳<gloss>知帳丑亮仗</gloss>\n雜於心巾仌<gloss>吳都</gloss>伋<gloss>直冉</gloss>著<gloss>瞻</gloss>不著人裸<gloss>古玩</gloss>裸<gloss>朔瓦</gloss>從衣\n從示謏<gloss>吐冉</gloss>諂<gloss>丑冉</gloss>不分舀<gloss>以音陷</gloss>壯<gloss>側亮</gloss>壯<gloss>莫后</gloss>岡辨\n牛<gloss>語求</gloss>舛<gloss>良疾</gloss>少斫昧於戌哉無點虧於寫富如斯\n之類謬誤寔繁若不討詳漸乖大義故唐初有\n沙門玄應者獨運先覺天縱生知明唐梵異言\n識古今音字首興厥志切務披詳始於古華嚴\n經終於順正理論撰成經音義二十五卷次有\n沙門慧苑撰新華嚴音義二卷復有沙門雲公",
+    "ocr_engine": "ai",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "Examining brush strokes and dots is just like copying <gloss>using extensions</gloss> and confusing hand and wood/tree <gloss>knowing account, clumsy, bright, staff</gloss> mixed in the heart/mind, cloth and ice <gloss>Wu Du</gloss>, <term>Qi</term> <gloss>Zhi Ran</gloss>, <term>Zhu</term> <gloss>Zhan</gloss>, not wearing the person, naked <gloss>Gu Wan</gloss>, naked <gloss>Shuo Wa</gloss>, from clothes, from omen/spirit, <term>Shao</term> <gloss>Tu Ran</gloss>, <term>Chan</term> <gloss>Chou Ran</gloss>, not separated, <term>Yao</term> <gloss>sound of Xian</gloss>, <term>Zhuang</term> <gloss>Ce Liang</gloss>, <term>Zhuang</term> <gloss>Mo Hou</gloss>, <term>Gang</term> distinguish, cow <gloss>Yu Qiu</gloss>, <term>Chuan</term> <gloss>Liang Ji</gloss>, <term>Shao</term>, cutting, dark at the time/place, without a dot, deficient in writing/wealth, like this. Errors of this kind are truly numerous. If one does not study them in detail, one will gradually deviate from the great meaning. Therefore, in the early Tang, there was a monk named Xuanying who alone possessed foresight and divine wisdom. He understood the differences between Tang and Sanskrit languages, identified ancient and modern sounds, and prioritized this effort, diligently explaining them in detail. He began with the ancient *Avatamsaka Sutra* and ended with the *Shun Zhengli Lun* (Treatise on the Correct Theory), compiling the *Scripture Sound and Meaning* in twenty-five volumes. Next, there was the monk Huiyuan, who wrote the *New Avatamsaka Sound and Meaning* in two volumes. Furthermore, there was the monk Yungong...\n\n<summary>This page addresses the prevalence of scribal errors in Buddhist texts and highlights the pioneering work of monks like Xuanying and Huiyuan in compiling phonetic and semantic glossaries.</summary>\n<keywords>Monk, Xuanying, Huiyuan, Avatamsaka Sound and Meaning, Tang and Sanskrit, Shun Zhengli Lun, Scripture Sound and Meaning</keywords>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 29,
+    "page_id": "6a3c5f4c879008ba7e1542a9",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c5f4c879008ba7e15428c/29.jpg",
+    "ocr": "卷第六\n\n其子者蜂或俗音蓬也旋嵐下嚴南反梵語也即\n談誰聲下香虐反野王云談言論也從言炎\n亦云戲聲也從虐反介雅正作諉言也從言委\n言虐形聲也枯槁木也古枯反說文枯木也\n乾也說文木槁也宇也眼睛下子盈反考聲云\n青木高聲有作精善也下傳息子也老考聲云\n使者正也非眼睛下傳云斷賤人也何休註公羊\n廣斯聲亦作衡從表也\n\n旃茶羅梵語也或名旃陀羅此譯云嚴熾謂\n其人者則搖鈴自標或一云主殺獄卒也西域記\n云竹若不行然王即與其罪也破頭梯登上體矣\n雅云階階也說文解之同從木也說文云從阜登鄧反註博語\n燈\n\n<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>6</page-num>\n<vocab>旃茶羅, 梵語, 說文, 聲韻, 訓詁</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "Volume Six\n\n\"Its children\" are bees <note>or colloquially pronounced 'peng'</note>. \"Swirling storms\" <term>xuanlan</term> <gloss>whirlwind</gloss>, the character below is pronounced 'yan' or 'nan'. This is a Sanskrit term.\n\"Discussing\" <term>tan</term>: the sound below is pronounced 'xiang' or 'nue'. The *Yawang* <note>a dictionary</note> says: 'tan' means speech or discussion. It is formed with 'speech' and 'yan' <note>flame</note>.\nAlso called \"playful sound\". Pronounced 'nue'. The correct form is 'wei', meaning speech or words. It is formed with 'speech' and 'wei'.\n'Nue' is a phonetic-semantic compound. \"Withered\" <term>ku</term>: dry wood. Pronounced 'ku'. The *Shuowen* <note>dictionary</note> says: withered wood.\n\"Dry\". The *Shuowen* says: wood that has dried up. \"Eyes\" <term>yu</term>: eyes. The character below is pronounced 'zi' or 'ying'. The *Kaosheng* <note>a phonology dictionary</note> says: blue, wood, high sound. Some write 'jing', meaning good. The character below is pronounced 'chuan' or 'zi', meaning son. *Kaosheng* says:\n\"Envoy\" <term>shi</term>: correct. Not 'eyes'. The character below says: to judge mean people. He Xiu's commentary on the *Gongyang Zhuan* says:\n\"Broad\" <term>guang</term>: this sound, also written as 'heng', follows 'biao'.\n\n<term>Chandala</term> <gloss>outcaste/untouchable</gloss> is a Sanskrit word. It is also called 'Chanduola'. This is translated as 'strictly fierce'. It refers to a person who rings a bell to mark themselves. Another version says: the executioner who kills. The *Records of the Western Regions* says: if the bamboo is not carried, the king will punish them. \"Broken head\", \"ladder\", \"climb\", \"body\", \"top\".\n*Guangya* <note>a dictionary</note> says: 'jie' is steps. *Shuowen* says: 'jie' is the same, follows 'mu' <note>wood</note>. *Shuowen* says: follows 'fu', pronounced 'deng'. A note on *Boyu* <note>dictionary</note>: lamp.",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 52,
+    "page_id": "6a3c5f4c879008ba7e1542c0",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c5f4c879008ba7e15428c/52.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<meta>The text is a page from a dictionary or philological work (likely the Kangxi Dictionary or similar), explaining the pronunciation and meaning of various characters using the fanqie system.</meta>\n\n<image-desc size=\"small\" type=\"symbol\" significance=\"low\">A small rectangular frame at the top center containing the characters 旨意 (zhǐyì).</image-desc>\n\n內甘反周禮家為鄉五鄰為里亦居也下頤\n良上以伊反下含惑反方言云領頁名也\n合集略云類也說文云輔車骨也從頁\n非聲也說文云夷也從骨上賢反\n冊博反說文云冊制也從冊羊五省聲\n冊博反說文云冊也從冊\n甲音傭圓也說文云均也從人庸聲\n廣俗胸臆上香下邑反說文云胃也從肉胃聲\n臆字省過膝下皆免反說文云胃也從肉胃聲\n億也從心意聲\n作用膝久有經綱下廣雅云補註也按納謂之\n來網指之全乘綱也下廣雅云雜也\n說文足跡復也間如鹿騰也上來谷反\n音鹿作騰頁也下端反\n鹿並同今從肉種種吳絲\n王身毛種造省聲\n\n<vocab>說文, 廣雅, 周禮, 方言, 反切, 漢字</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "<note>A small rectangular frame at the top center containing the characters 旨意 (zhǐyì).</note>\n\n*Nei* (內), *gan* (甘) and *fan* (反) in *fanqie*. *Zhouli* <gloss>Rites of Zhou</gloss>: \"Five families make a neighborhood, five neighborhoods make a village\" (*li* 里), also meaning to reside. Lower part, *yi* (頤) and *liang* (良) in *fanqie*. Upper, *yi* (以) and *yi* (伊) and *fan* (反) in *fanqie*. Lower, *han* (含) and *huo* (惑) and *fan* (反) in *fanqie*. *Fangyan* says: *ling* (領) and *ye* (頁) names.\n*He* (合) collection summary says: *lei* (類) meaning category. *Shuowen* says: *fu che gu* (輔車骨, jawbone). Derived from \"head\" (頁), with *fei* (非) as phonetic. *Shuowen* says: *yi* (夷) meaning. Derived from \"bone\" (骨), *xian* (賢) and *fan* (反) in *fanqie*.\n*Ce* (冊), *bo* (博) and *fan* (反) in *fanqie*. *Shuowen* says: *ce* (冊) means to control. Derived from \"tablet\" (冊), with *yang* (羊) and *wu* (五) as simplified phonetic.\n*Ce* (冊), *bo* (博) and *fan* (反) in *fanqie*. *Shuowen* says: *ce* (冊) means [entry incomplete]. Derived from \"tablet\" (冊).\n*Jia* (甲), sound *yong* (傭). Round. *Shuowen* says: *jun* (均) meaning equal. Derived from \"person\" (人), with *yong* (庸) as phonetic.\n*Guang* (廣) common, chest/heart (*xiong yi* 胸臆). Upper *xiang* (香), lower *yi* (邑) and *fan* (反) in *fanqie*. *Shuowen* says: *wei* (胃, stomach). Derived from \"flesh\" (肉), with *wei* (胃) as phonetic.\n*Yi* (臆) character, simplified. Past the knee (*xi* 膝). Lower, *mian* (皆) and *fan* (反) in *fanqie*. *Shuowen* says: *wei* (胃). Derived from \"flesh\" (肉), with *wei* (胃) as phonetic.\n*Yi* (億). Derived from \"heart\" (心), with *yi* (意) as phonetic.\nFunctioning as knee (*xi* 膝), long existence. *Jing gang* (經綱). Lower, *Guangya* says: supplementary annotation. According to *na* (納), it is called *lai* (來). *Wang* (網), *zhi* (指) of *quan cheng* (全乘). *Gang* (綱). Lower, *Guangya* says: mixed.\n*Shuowen* foot traces: return (*fu* 復). Intervals like a deer leaping (*teng* 騰). Upper, *lai* (來) and *gu* (谷) and *fan* (反) in *fanqie*.\nSound *lu* (鹿). Written as *teng* (騰) and *ye* (頁). Lower, *duan* (端) and *fan* (反) in *fanqie*.\n*Lu* (鹿) also the same. Now derived from \"flesh\" (肉), *zhong zhong* (種種), *wu* (吳) silk.\nKing/prince body hair, *zhong* (種), *zao* (造) simplified phonetic.\n\n<summary>This page provides lexicographical notes on characters relating to social structure (neighborhoods), anatomical terms (jawbone, stomach), and procedural terms, citing the Shuowen and Guangya.</summary>\n<keywords>lexicography, anatomy, social organization, Shuowen Jiezi</keywords>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 79,
+    "page_id": "6a3c5f4c879008ba7e1542db",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3c5f4c879008ba7e15428c/79.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>九</page-num>\n<header>卷第三十五</header>\n<meta>東方匯書卷三</meta>\n\n<image-desc size=\"small\" type=\"decorative\" significance=\"low\">Printer's mark at the top center.</image-desc>\n\n利鎌廉薄也從金廉形聲字也釋名從兼作鎌也俗通用\n\n或後下力作炎反音羊小上也說文胎之名也於此之類皆從\n\n反各字從夕在日也胎之音人諂於之也\n\n陷乃穿字書云陷也說文作陷從阜臽聲也\n\n五經文字云衣甲音古惠反案穿陷上附政也書云入也\n\n注國語云衣者謂言意也\n\n悲憂暨食者故借為喻言\n\n介欲下知肉有骨豐在矣云所介謂智更噎上加\n\n文作膞俗作膞\n\n也作縑梵語也此云所知謂智更噎上加\n\n也膞肉也\n\n也胖脹亮上反說文云又作胖切韻云胖也或作膞\n\n也草作積反俗字從青於下於棧反考聲云謂皮肉中\n\n也胖脹亮上反說文云又作胖切韻云胖也或作膞\n\n也草作積反俗字從青於下於棧反考聲云謂皮肉中\n\n<vocab>五經文字, 說文, 國語, 鎌, 陷, 胖, 膞</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "<header>Volume 35</header>\n\n[Regarding] 鐮 <gloss>sickle</gloss>: It is thin. It takes the metal radical. *Shiming* uses 兼 as a phonetic.\n\n[Regarding] 陷 <gloss>to trap/pit</gloss>: *Shuowen* says it takes the mound radical 阜 and the phonetic 臽. \n\n[Regarding] 膞 <gloss>meat/flesh</gloss>: It refers to meat. \n\n[Regarding] 胖 <gloss>fat/plump</gloss>: *Shuowen* says it is written as 胖. *Qieyun* says it means fat. \n\n<summary>This page defines various characters related to metal tools, physical features, and anatomy, citing traditional dictionaries.</summary>\n<keywords>Wujing Wenzi, Shuowen, Guoyu, Sickle, Anatomy</keywords>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   }
+  ]
+ },
+ {
+  "slot": 12,
+  "stratum": "chinese",
+  "book_id": "6a3ceb5195fcd455630555fc",
+  "book_url": "https://sourcelibrary.org/book/6a3ceb5195fcd455630555fc",
+  "tradition": "chinese",
+  "book": {
+   "id": "6a3ceb5195fcd455630555fc",
+   "title": "周易圖書質疑·卷十五~卷二十 (vol 6)",
+   "display_title": "Questioning the Diagrams and Books of the Book of Changes",
+   "author": "趙繼序",
+   "language": "Chinese",
+   "published": "1782",
+   "pages_count": 134,
+   "pages_ocr": 132,
+   "pages_translated": 128,
+   "catalog_metadata": {
+    "collections": [
+     "universallibrary"
+    ]
+   },
+   "image_source": {
+    "provider": "internet_archive"
+   },
+   "visible": true
+  },
+  "structure": {
+   "page_records": 134,
+   "distinct_page_numbers": 134,
+   "duplicate_records": 0,
+   "pages_with_ocr": 132,
+   "pages_translated": 128,
+   "with_printed_number": 38,
+   "printed_backsteps": 10,
+   "printed_repeats": 22,
+   "pages_count_field": 134,
+   "pages_translated_field": 128
+  },
+  "run": [
+   12,
+   61,
+   93,
+   113
+  ],
+  "pages": [
+   {
+    "page_number": 12,
+    "page_id": "6a3ceb5195fcd45563055608",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3ceb5195fcd455630555fc/12.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>卷十五</page-num>\n<header>金溪周氏全書</header>\n<meta>The page contains a circular diagram of the Eight Trigrams (Bagua) followed by explanatory text.</meta>\n\n<image-desc size=\"medium\" type=\"diagram\" significance=\"high\">\nA circular arrangement of the Fuxi Eight Trigrams (Earlier Heaven Bagua). The trigrams are arranged radially with their names written in Chinese characters next to the symbols: 乾 (Qian) at the top, 坤 (Kun) at the bottom, 離 (Li) at the left, 坎 (Kan) at the right, and the four corner trigrams 兌 (Dui), 巽 (Xun), 震 (Zhen), and 艮 (Gen) positioned in between.\n</image-desc>\n\n邵子以此為伏羲八卦方位今按圖中左旋自下而上由震之一陽以至乾之三陽右旋自上而下由巽之一陰以至坤之三陰蓋即分雷動風散雨潤日暄\n\n<vocab>伏羲, 八卦, 邵子, 乾, 坤, 震, 巽, 陽, 陰</vocab>",
+    "ocr_engine": "pipeline_preview",
+    "ocr_model": "gemini-3-flash-preview",
+    "translation": "<header>Complete Works of the Zhou Family of Jinxi</header>\n<note>A circular diagram of the Eight Trigrams is depicted here. The Fuxi Earlier Heaven Bagua arrangement places Qian at the top, Kun at the bottom, Li at the left, Kan at the right, with Dui, Xun, Zhen, and Gen filling the corner positions.</note>\n\nMaster Shao used this as the orientation for Fuxi’s Eight Trigrams. Now, looking at the diagram, the left rotation goes from bottom to top, from the one <term>Yang</term> of <term>Zhen</term> to the three <term>Yang</term> of <term>Qian</term>; the right rotation goes from top to bottom, from the one <term>Yin</term> of <term>Xun</term> to the three <term>Yin</term> of <term>Kun</term>. This is precisely the division: Thunder moves, wind disperses, rain moistens, sun warms.",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 61,
+    "page_id": "6a3ceb5195fcd45563055639",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3ceb5195fcd455630555fc/61.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<meta>欽定四庫全書 周易圖書質疑</meta>\n\n| 卦象 | 卦名 | 綜卦 | 錯卦 | 之卦 |\n| :--- | :--- | :--- | :--- | :--- |\n| ☶☵ | 山水蒙 | 綜坎之坎 | 錯坎之萃 | |\n| ☲☴ | 火風鼎 | 綜坎之革 | 錯坎之鼎 | |\n| ☲☲ | 離為火 | 綜離坎 | 錯坎 | |\n| ☲☷ | 地火明夷 | 綜離之晉 | 錯離之訟 | |\n| ☱☲ | 澤火革 | 綜離之鼎 | 錯離之蒙 | |\n| ☵☳ | 水雷屯 | 綜離之蒙 | 錯離之鼎 | |\n| ☵☵ | 坎為水 | 綜離 | 錯離 | |\n| ☶☳ | 山雷頤 | 綜震之大過 | 錯離 | |\n| ☴☵ | 風水渙 | 綜坎之節 | 錯坎之豐 | |\n| ☵☲ | 水火未濟 | 綜坎之既濟 | 錯坎之同人 | |\n| ☲☶ | 火山旅 | 綜坎之豐 | 錯坎之節 | |\n| ☷☵ | 地水師 | 綜離之同人 | 錯離之比 | |\n| ☲☳ | 火雷豐 | 綜離之旅 | 錯離之渙 | |\n| ☵☲ | 火水既濟 | 綜離之未濟 | 錯離之同人 | |\n| ☵☱ | 水澤節 | 綜離之旅 | 錯離之渙 | |\n| ☶☴ | 山風蠱 | 綜震之隨 | 錯離 | |\n\n<vocab>周易, 卦象, 綜卦, 錯卦, 之卦, 蒙, 鼎, 離, 明夷, 革, 屯, 坎, 頤, 渙, 未濟, 旅, 師, 豐, 既濟, 節, 蠱</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "# Imperial Approved Complete Library of the Four Treasures: Questioning the Diagrams and Books of the Book of Changes\n\n| Hexagram Image | Hexagram Name | Interwoven Hexagram | Misplaced Hexagram | Resulting Hexagram |\n| :--- | :--- | :--- | :--- | :--- |\n| ☶☵ | Mountain-Water Meng | Interwoven Kan of Kan | Misplaced Kan of Cui | |\n| ☲☴ | Fire-Wind Ding | Interwoven Kan of Ge | Misplaced Kan of Ding | |\n| ☲☲ | Li as Fire | Interwoven Li/Kan | Misplaced Kan | |\n| ☲☷ | Earth-Fire Ming Yi | Interwoven Li of Jin | Misplaced Li of Song | |\n| ☱☲ | Marsh-Fire Ge | Interwoven Li of Ding | Misplaced Li of Meng | |\n| ☵☳ | Water-Thunder Tun | Interwoven Li of Meng | Misplaced Li of Ding | |\n| ☵☵ | Kan as Water | Interwoven Li | Misplaced Li | |\n| ☶☳ | Mountain-Thunder Yi | Interwoven Zhen of Da Guo | Misplaced Li | |\n| ☴☵ | Wind-Water Huan | Interwoven Kan of Jie | Misplaced Kan of Feng | |\n| ☵☲ | Water-Fire Wei Ji | Interwoven Kan of Ji Ji | Misplaced Kan of Tong Ren | |\n| ☲☶ | Fire-Mountain Lü | Interwoven Kan of Feng | Misplaced Kan of Jie | |\n| ☷☵ | Earth-Water Shi | Interwoven Li of Tong Ren | Misplaced Li of Bi | |\n| ☲☳ | Fire-Thunder Feng | Interwoven Li of Lü | Misplaced Li of Huan | |\n| ☵☲ | Fire-Water Ji Ji | Interwoven Li of Wei Ji | Misplaced Li of Tong Ren | |\n| ☵☱ | Water-Marsh Jie | Interwoven Li of Lü | Misplaced Li of Huan | |\n| ☶☴ | Mountain-Wind Gu | Interwoven Zhen of Sui | Misplaced Li | |\n\n<summary>A reference table providing the categorical relationships for several key I Ching hexagrams.</summary>\n<keywords>I Ching, Hexagrams, Misplaced, Interwoven</keywords>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 93,
+    "page_id": "6a3ceb5195fcd45563055659",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3ceb5195fcd455630555fc/93.jpg",
+    "ocr": "為風以氣言在地為木以質言也坎之象于屯于需\n言雲雲者水之所升也于蒙言泉泉者水之原也于\n解言雨雨者水之所降也離之象于本卦言明于晉\n于明夷言明明者火之用也故日為大明于噬嗑于\n豐言雷電者火之麗于天也兌之象于草言水澤為\n水之所鍾也易之成象也由微而著雷風為無象之\n象水火為有象之象山澤為有形之象易之成數也\n由倍而加一生二為兩儀二生四為四象四生八為\n\n<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n<meta>周易圖書質疑</meta>\n<vocab>易經, 象數, 兩儀, 四象, 八卦</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "...as wind, speaking in terms of <term>qi</term> <gloss>vital energy</gloss>. When it is on the earth, it is wood, speaking in terms of material substance. Regarding the images of <term>Kan</term>, in <term>Tun</term> and <term>Xu</term> it speaks of clouds; clouds are what water rises into. In <term>Meng</term> it speaks of springs; springs are the source of water. In <term>Xie</term> it speaks of rain; rain is what water descends as. Regarding the images of <term>Li</term>, in its own hexagram it speaks of brilliance; in <term>Jin</term> and <term>Mingyi</term> it speaks of brilliance. Brilliance is the function of fire; therefore, the sun is called \"Great Brilliance.\" In <term>Shihe</term> and <term>Feng</term> it speaks of thunder and lightning, which is the splendor of fire in the sky. Regarding the images of <term>Dui</term>, in its aspect of marshes it speaks of water; it is where water gathers. When the <term>Yi</term> forms images, it proceeds from the subtle to the manifest. Thunder and wind are images without physical form. Water and fire are images with physical form. Mountain and lake are images with physical shape. The numbers of the <term>Yi</term> are formed by doubling and adding. One creates two, which are the two <term>yi</term> <gloss>polarities</gloss>. Two create four, which are the four <term>xiang</term> <gloss>emblems. Four create eight...</gloss>\n\n<summary>This page discusses the formation of images and numbers in the Book of Changes, moving from invisible forces like wind and thunder to physical elements like water, fire, mountains, and lakes.</summary>\n<keywords>Book of Changes, Images, Numbers, Two Polarities, Four Emblems, Eight Trigrams</keywords>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   },
+   {
+    "page_number": 113,
+    "page_id": "6a3ceb5195fcd4556305566d",
+    "image_url": "https://images.sourcelibrary.org/archived/6a3ceb5195fcd455630555fc/113.jpg",
+    "ocr": "<scan-quality>good</scan-quality>\n<language>Chinese</language>\n<script>printed</script>\n<page-type>text</page-type>\n\n以八卦分配天地之數則居中之五十不用東為震\n東南為巽屬三八南為離西南為坤屬二七西為兌\n西北為乾屬四九北為坎東北為良屬一六此連山\n之易夫子發明于說卦傳者也\n十干以戊己居中則甲乙丙丁之在東南為始庚辛\n壬癸之在西北為終盡有事終則有始故言甲甲子\n甲戌甲申為先甲三日甲午甲辰甲寅為後甲三日\n以卦畫準之先甲三日即盡內卦巽三爻也後甲三\n周易圖書質疑 二\n\n<vocab>八卦, 天地之數, 說卦傳, 十干, 連山易, 甲子</vocab>",
+    "ocr_engine": "batch_api",
+    "ocr_model": "gemini-3.1-flash-lite",
+    "translation": "Distributing the numbers of Heaven and Earth according to the eight trigrams, the 5 and 10 in the center are not used. The East is <term>Zhen</term> <gloss>Arousing</gloss>, and the Southeast is <term>Xun</term> <gloss>Gentle</gloss>, belonging to 3 and 8. The South is <term>Li</term> <gloss>Clinging</gloss>, and the Southwest is <term>Kun</term> <gloss>Receptive</gloss>, belonging to 2 and 7. The West is <term>Dui</term> <gloss>Joyous</gloss>, and the Northwest is <term>Qian</term> <gloss>Creative</gloss>, belonging to 4 and 9. The North is <term>Kan</term> <gloss>Abysmal</gloss>, and the Northeast is <term>Gen</term> <gloss>Keeping Still</gloss>, belonging to 1 and 6. This is the <term>Lianshan</term> <gloss>Mountain Range</gloss> version of the I Ching, which the Master elucidated in the <term>Shuogua Zhuan</term> <gloss>Discussion of the Trigrams</gloss>.\n\nWith the ten stems, when <term>Wu</term> and <term>Ji</term> occupy the center, <term>Jia</term>, <term>Yi</term>, <term>Bing</term>, and <term>Ding</term> in the Southeast are the beginning, while <term>Geng</term>, <term>Xin</term>, <term>Ren</term>, and <term>Gui</term> in the Northwest are the end. Everything that has an end must have a beginning. Thus, when we speak of <term>Jia</term>, <term>Jia-Zi</term>, <term>Jia-Xu</term>, and <term>Jia-Shen</term> are the three days before <term>Jia</term>, while <term>Jia-Wu</term>, <term>Jia-Chen</term>, and <term>Jia-Yin</term> are the three days after <term>Jia</term>. According to the hexagram lines, the three days before <term>Jia</term> complete the three lines of the inner <term>Xun</term> hexagram. The three days after <term>Jia</term>...\n\n<summary>This page explains the arrangement of the eight trigrams and their numerical associations, while beginning a discussion on the significance of the \"Jia\" and \"Geng\" days in cyclic time.</summary>\n<keywords>Eight Trigrams, Lianshan, Shuogua Zhuan, Heavenly Stems, Jia-day, Time Cycles</keywords>",
+    "translation_model": "gemini-3.1-flash-lite",
+    "translation_source": "ai"
+   }
+  ]
+ }
+]
