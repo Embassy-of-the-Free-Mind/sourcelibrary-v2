@@ -21,6 +21,8 @@ non-equal span is classified. Each class has a KIND:
   reference — a defect of the reference (TCP illegible-letter marks leave split words; the engine is right)
   alignment — an artefact of the window or the aligner (padding words, running heads, catchwords)
 Weights are characters of the affected words (word-weighted, so a ranking of classes, NOT a CER).
+  --pages=<jsonl>  per-page mode for ocr-cer-three-ways.mjs (#5939): classes follow the live OCR prompt's
+                   rules (classify_pair prompt_rules=True), output one JSON line per page.
 How it fails: a class is a heuristic. Examples are written out for reading by eye; quote a class only
 after reading its examples (the 2026-10-01 run found tag residue and page numbers inside 'other misread').
 """
@@ -175,8 +177,21 @@ def pick(examples, n):
     for e in examples: (rest if e['slug'] in seen else first).append(e); seen.add(e['slug'])
     return (first + rest)[:n]
 
+def pages_mode(path):
+    """--pages=<jsonl>: one {id, ref, hyp} per line in, one {id, ref_chars, classes, abbr_pairs, examples} per line
+    out (stdout), classified with prompt_rules=True. Used by ocr-cer-three-ways.mjs (#5939)."""
+    for line in open(path):
+        if not line.strip(): continue
+        p = json.loads(line)
+        chars, pages, ex = collections.Counter(), collections.defaultdict(set), collections.defaultdict(list)
+        total = classify_page(p['id'], p['ref'], p['hyp'], chars, pages, ex, prompt_rules=True)
+        pairs = [[e['ref'], e['engine']] for e in ex.get('abbreviation expanded as the prompt asks', [])]
+        print(json.dumps({'id': p['id'], 'ref_chars': total, 'classes': dict(chars), 'abbr_pairs': pairs,
+                          'examples': {c: v[:6] for c, v in ex.items()}}, ensure_ascii=False))
+
 def main():
   global args
+  if len(os.sys.argv) == 2 and os.sys.argv[1].startswith('--pages='): return pages_mode(os.sys.argv[1][8:])
   ap = argparse.ArgumentParser()
   ap.add_argument('--root', required=True)
   ap.add_argument('--stratum', required=True)
