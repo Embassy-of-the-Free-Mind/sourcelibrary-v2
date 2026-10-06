@@ -27,7 +27,7 @@
 //
 //   node scripts/eval/ground-truth-5935/model.mjs [--date=YYYY-MM-DD]
 // Reads /root/ground-truth-5935/{kanripo,cbeta,pali}.jsonl + floor.json; writes
-// scripts/eval/output/ground-truth-5935-<date>.jsonl (per page) and
+// scripts/eval/output/ground-truth-5935-<date>.jsonl.gz (per page) and
 // scripts/eval/output/ground-truth-5935-<date>.estimates.json (per stratum; read by #5918 at build time).
 
 import fs from 'node:fs';
@@ -174,7 +174,7 @@ for (const c of cells.values()) {
     script: c.script, language: c.language, kind: c.kind, engine: c.engine, period: c.period, corpus_books: c.books, corpus_pages: c.pages,
     support: supported ? 'estimated' : 'outside-what-we-can-estimate',
     support_reason: supported ? `${sk.books} referenced books in ${c.script} × ${c.kind}; estimate from cell ${node.key.join(' × ')}` : sk ? `only ${sk.books} referenced books in ${c.script} × ${c.kind} (< ${MIN_SUPPORT_BOOKS})` : `no typed-reference pages in ${c.script} × ${c.kind}`,
-    estimate: supported ? { ...cell(node, model.sigma2), basis: node.key.length >= 3 ? 'referenced pages from this engine' : 'pooled across engines (no referenced page from this engine; leave-one-out says this transfer held for Chinese)', measure: 'accuracy (typed reference, extrapolated by covariate cell)', floor: floorFor(c.script) } : null,
+    estimate: supported ? { ...cell(node, model.sigma2), basis: (model.nodes.get([c.script, c.kind, c.engine].join('|'))?.books || 0) >= MIN_SUPPORT_BOOKS ? `${model.nodes.get([c.script, c.kind, c.engine].join('|')).books} referenced books from this engine` : 'pooled across engines (no referenced page from this engine; leave-one-out says this transfer held for Chinese)', measure: 'accuracy (typed reference, extrapolated by covariate cell)', floor: floorFor(c.script) } : null,
   });
 }
 strata.sort((a, b) => b.corpus_pages - a.corpus_pages);
@@ -183,12 +183,17 @@ const totPages = strata.reduce((a, s) => a + s.corpus_pages, 0), estPages = stra
 // ── outputs ───────────────────────────────────────────────────────────────────
 fs.mkdirSync(OUTDIR, { recursive: true });
 const perPage = all.map((r) => ({ ...r, ...(r.status === 'scored' ? { script: scriptKey(r) } : {}) }));
-fs.writeFileSync(path.join(OUTDIR, `ground-truth-5935-${DATE}.jsonl`), perPage.map((r) => JSON.stringify(r)).join('\n') + '\n');
+// gzipped like the corpus profile beside it (7.7K rows, ~7 MB raw).
+fs.writeFileSync(path.join(OUTDIR, `ground-truth-5935-${DATE}.jsonl.gz`), zlib.gzipSync(perPage.map((r) => JSON.stringify(r)).join('\n') + '\n'));
 const byRef = Object.fromEntries(REFS.map((ref) => {
   const rs = pages.filter((r) => r.ref === ref);
   const allScored = all.filter((r) => r.ref === ref && r.status === 'scored');
   const k = rs.filter((r) => r.catastrophic).length;
-  return [ref, { books: rs.length, median_cer: r3(median(rs.map((r) => r.cer))), mean_cer: r3(mean(rs.map((r) => r.cer))), typical_cer: r3(typical(mean(rs.map((r) => r.y)))), catastrophic: `${k}/${rs.length}`, catastrophic_ci95: wilson(k, rs.length).map(r3), engines: rs.reduce((m, r) => ((m[r.engine] = (m[r.engine] || 0) + 1), m), {}), all_scored_pages: allScored.length, floor: floor[ref] || null }];
+  return [ref, { books: rs.length, median_cer: r3(median(rs.map((r) => r.cer))), mean_cer: r3(mean(rs.map((r) => r.cer))), typical_cer: r3(typical(mean(rs.map((r) => r.y)))), catastrophic: `${k}/${rs.length}`, catastrophic_ci95: wilson(k, rs.length).map(r3), engines: rs.reduce((m, r) => ((m[r.engine] = (m[r.engine] || 0) + 1), m), {}), all_scored_pages: allScored.length, floor: floor[ref] || null,
+    // Read beside the floor: the share of differences on the 30 worst pages that were ours, applied to the
+    // typical CER, and the catastrophic count scaled by the share of reviewed catastrophic pages that were ours.
+    // Approximate: the review sample is the WORST pages, where the mix differs from the median page.
+    floor_adjusted: floor[ref] ? { typical_cer_ours: r3(typical(mean(rs.map((r) => r.y))) * (1 - floor[ref].share_not_ours)), catastrophic_ours_est: floor[ref].catastrophic_reviewed ? r3((k / rs.length) * (floor[ref].catastrophic_ours / floor[ref].catastrophic_reviewed)) : null } : null }];
 }));
 const nodesOut = [...model.nodes.values()].filter((n) => n.depth).map((n) => ({ cell: Object.fromEntries(LEVELS.slice(0, n.depth).map((l, i) => [l, n.key[i]])), ...cell(n, model.sigma2) }));
 const est = {

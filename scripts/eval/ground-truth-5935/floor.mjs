@@ -55,7 +55,7 @@ if (cmd === 'packet') {
         Q = foldHan(bodyText(p.ocr.data));
       } else if (ref === 'cbeta') {
         const key = /X80n1565/.test(r.ref_edition) ? 'X80n1565.xml' : /X68n1319/.test(r.ref_edition) ? 'X68n1319.xml' : 'T47n1998A.xml';
-        if (!cbetaF[key]) cbetaF[key] = foldCbeta(extractTei(fs.readFileSync(`/root/cbeta-5566/xml/${key}`, 'utf8'), JSON.parse(fs.readFileSync('/root/cbeta-5566/gaiji.json', 'utf8')))).f;
+        if (!cbetaF[key]) cbetaF[key] = foldCbeta(extractTei(fs.readFileSync(`/root/cbeta-5566/xml/${key}`, 'utf8'), JSON.parse(fs.readFileSync('/root/cbeta-5566/gaiji.json', 'utf8'))).text).f;
         W = cbetaF[key].slice(Math.max(0, r.ref_span[0] - 40), r.ref_span[1] + 40).join('');
         const text = r.reading === 'served-ocr' ? p.ocr.data : JSON.parse(fs.readFileSync(`/root/cbeta-5566/${key === 'X80n1565.xml' ? 'X1565' : key === 'X68n1319.xml' ? 'X1319' : 'T1998L'}/page-reads.json`, 'utf8'))[r.page_id]?.text;
         Q = foldCbeta(bodyText(text)).f.join('');
@@ -94,7 +94,10 @@ if (cmd === 'packet') {
     const t = { ours: 0, theirs: 0, variant: 0, unclear: 0, misaligned: 0 };
     for (const p of pages) for (const k of Object.keys(t)) t[k] += p[k] || 0;
     const judged = t.ours + t.theirs + t.variant;
-    out[ref] = { pages: pages.length, ...t, share_not_ours: judged ? +((t.theirs + t.variant) / judged).toFixed(3) : null, share_misaligned_pages: +(pages.filter((p) => p.leaf_wrong).length / pages.length).toFixed(3) };
+    // A catastrophic page (CER > 0.5) counts as OURS only when our errors are most of what the review judged.
+    const cat = pages.filter((p) => p.cer > 0.5);
+    const catOurs = cat.filter((p) => !p.leaf_wrong && (p.ours || 0) >= ((p.ours || 0) + (p.theirs || 0) + (p.variant || 0)) / 2);
+    out[ref] = { pages: pages.length, ...t, catastrophic_reviewed: cat.length, catastrophic_ours: catOurs.length, share_not_ours: judged ? +((t.theirs + t.variant) / judged).toFixed(3) : null, share_misaligned_pages: +(pages.filter((p) => p.leaf_wrong).length / pages.length).toFixed(3) };
   }
   fs.writeFileSync(path.join(WORK, 'floor.json'), JSON.stringify(out, null, 1));
   console.log(JSON.stringify(out, null, 1));
