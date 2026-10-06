@@ -76,6 +76,9 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // A tenant-scoped review queue is a different feature, not a filter.
   '/review',
   '/volunteers',
+  // The public Quality Center (#5918): the whole library's quality figures, experiments and
+  // feedback themes, with doors into /review. Corpus-wide by construction, like /research.
+  '/quality',
   // Private spend & unit-cost report (#5225): Source Library's own vendor
   // bills, backlog projections and people. Nothing about it belongs on a
   // partner's domain, and the admin layout's role gate is not the right tool

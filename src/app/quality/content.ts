@@ -1,0 +1,85 @@
+// The hand-written parts of /quality (#5918). Everything else on the page is read from data
+// files at build time. Change the date below whenever you edit this file or page.tsx's prose:
+// scripts/audit/quality-center-freshness.mjs fails, and the weekly quality-center-watch
+// workflow files an issue, once this date is more than 30 days older than the newest
+// experiment write-up in scripts/eval/experiments/.
+
+/** ISO date the prose on /quality was last checked against the data. */
+export const PROSE_AS_OF = '2026-10-06';
+
+export type Door = { label: string; href: string };
+
+export type Way = {
+  name: string;
+  what: string;
+  leaves: string;
+  door: Door | null;
+  /** true when the way is not built yet; it is listed so nobody has to guess. */
+  planned?: boolean;
+};
+
+export const WAYS: Way[] = [
+  {
+    name: 'Report a problem on a page',
+    what: 'Use the Feedback button at the foot of any page, including every page of every book. Say what looks wrong.',
+    leaves: 'A note tied to that page. Someone checks it against the page image, then fixes the page or files a public issue.',
+    door: null,
+  },
+  {
+    name: 'Check pages',
+    what: 'Short review queues. In the translation check you read a page in a language you know and say whether our English says what the original says, and whether the transcription is right.',
+    leaves: 'An answer stored with that page. Answers from readers of the language are how we will learn how far our model judges agree with people.',
+    door: { label: 'Check pages', href: '/review' },
+  },
+  {
+    name: 'Correct a page',
+    what: 'Editors fix a transcription or a translation directly in the reader. Ask for editing access.',
+    leaves: 'A corrected page. The earlier text is kept as a revision, so every change can be traced and undone.',
+    door: { label: 'Ways to contribute', href: '/contribute' },
+  },
+  {
+    name: 'Introduce yourself',
+    what: 'After you sign in, a short form asks which languages you read and what you would like to help with. Everything is optional.',
+    leaves: 'A record of who reads what, so we can ask the right person about a page.',
+    door: { label: 'Introduce yourself', href: '/welcome' },
+  },
+  {
+    name: 'Paid review rounds',
+    what: 'For some collections we need specialists to read a defined sample, for example Tibetan scholars reading the Tengyur draft. These rounds are paid and planned one at a time.',
+    leaves: 'A judged sample, published with its method, like the experiments listed above.',
+    door: { label: 'team@sourcelibrary.org', href: 'mailto:team@sourcelibrary.org?subject=Paid%20review%20round' },
+  },
+  {
+    name: 'Reading groups',
+    what: 'Read one book together, closely. Write to us with the book and the group.',
+    leaves: 'Close reading of one text. What the group finds comes back through the Feedback button or as corrections.',
+    door: { label: 'Propose a group', href: 'mailto:team@sourcelibrary.org?subject=Study%20group%20idea' },
+  },
+  {
+    name: 'Your own project',
+    what: 'Use the texts in your own research, teaching or software, through the site or the public API.',
+    leaves: 'Your work, citing the pages it uses. Tell us about it at team@sourcelibrary.org.',
+    door: { label: 'For developers', href: '/developers' },
+  },
+  {
+    name: 'Highlight and comment',
+    what: 'Select a passage in the reader and attach a note that other readers can see.',
+    leaves: 'A note anchored to the words it is about.',
+    door: null,
+    planned: true,
+  },
+  {
+    name: 'Signed notes and a “reviewed by” credit',
+    what: 'A reviewer’s name shown on the pages they checked, and notes signed by the person who wrote them.',
+    leaves: 'Public credit, and a page a reader can trust because they can see who checked it.',
+    door: null,
+    planned: true,
+  },
+  {
+    name: 'Review on a recorded call',
+    what: 'A specialist reads pages with us on a video call, and the recording is kept with the review.',
+    leaves: 'A review that others can watch and check.',
+    door: null,
+    planned: true,
+  },
+];

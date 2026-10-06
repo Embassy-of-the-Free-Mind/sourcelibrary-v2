@@ -1,0 +1,94 @@
+name: Quality Center watch
+
+# /quality (#5918) reads its numbers and lists from committed files at build time, so they
+# refresh with every deploy. Its prose, its running/next list and its feedback synthesis do
+# not, and nobody notices a stale page. This checks them weekly:
+#
+#   1. scripts/audit/quality-center-freshness.mjs (no secrets): the prose and the open-work
+#      list may not lag the newest experiment write-up by more than 30 days, and the feedback
+#      synthesis may not be more than 30 days old.
+#   2. scripts/analytics/quality-feedback-themes.mjs --check (reads Mongo): how far the
+#      committed feedback counts are from the collection. Informational only: new feedback
+#      arrives most weeks, so a difference alone would file an issue nearly every week. It goes
+#      into the issue body when check 1 fires (which includes the JSON passing 30 days old).
+#
+# One tracking issue, commented on while it fails and CLOSED when a run passes. The fix is a
+# PR (edit the prose, or regenerate the JSON and review it): the feedback JSON is public copy
+# drawn from untrusted input, so this job never commits it.
+#
+# Exit 1 is a finding, exit 2 is the instrument (for example a missing MONGODB_URI). Only a
+# finding files the issue; an instrument failure fails the job instead, so a broken secret
+# can never read as "the page is stale" (.claude/docs/invariants/measurement-instruments.md).
+
+on:
+  schedule:
+    # Weekly, Mondays 07:50 UTC.
+    - cron: '50 7 * * 1'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  freshness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --ignore-scripts
+
+      - name: Prose, open-work list and feedback dates
+        id: dates
+        run: |
+          set +e
+          node scripts/audit/quality-center-freshness.mjs > dates.txt 2>&1
+          echo "code=$?" >> "$GITHUB_OUTPUT"
+          cat dates.txt
+
+      - name: Feedback counts against the collection
+        id: feedback
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        run: |
+          set +e
+          node scripts/analytics/quality-feedback-themes.mjs --check > feedback.txt 2>&1
+          echo "code=$?" >> "$GITHUB_OUTPUT"
+          cat feedback.txt
+
+      - name: File, update or close the tracking issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DATES: ${{ steps.dates.outputs.code }}
+          FEEDBACK: ${{ steps.feedback.outputs.code }}
+        run: |
+          TITLE="Quality Center (/quality) is out of date"
+          EXISTING=$(gh issue list --state open --search "\"$TITLE\" in:title" --json number --jq '.[0].number')
+          if [ "$DATES" = "1" ]; then
+            {
+              echo "The weekly check of /quality found something out of date (#5918)."
+              echo
+              echo '```'
+              cat dates.txt
+              echo
+              cat feedback.txt
+              echo '```'
+              echo
+              echo "Fix by PR: edit the prose and move PROSE_AS_OF in \`src/app/quality/content.ts\`, update \`src/app/research/quality/open/issues.ts\`, or regenerate \`src/data/quality-feedback-themes.json\` and check its \"what we did\" lines. This issue closes itself on the first weekly run that passes."
+            } > body.md
+            if [ -n "$EXISTING" ]; then
+              gh issue comment "$EXISTING" --body-file body.md
+            else
+              gh issue create --title "$TITLE" --body-file body.md
+            fi
+          elif [ "$DATES" = "0" ] && [ -n "$EXISTING" ]; then
+            gh issue close "$EXISTING" --comment "The weekly check passes again: /quality's prose, open-work list and feedback synthesis are current."
+          fi
+
+      - name: Fail if an instrument could not measure
+        if: steps.dates.outputs.code == '2' || steps.feedback.outputs.code == '2'
+        run: |
+          echo "::error::A check could not run (dates exit ${{ steps.dates.outputs.code }}, feedback exit ${{ steps.feedback.outputs.code }}). Nothing was measured; check MONGODB_URI and the CI database user's read grant on bookstore.feedback."
+          exit 1
