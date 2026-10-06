@@ -20,6 +20,10 @@ TYPE=${TYPE:-L4-1-24G}
 ZONE_FILE=$LANE_DIR/boxes/$BOX/zone
 ZONE=${ZONE:-$(cat "$ZONE_FILE" 2>/dev/null || echo pl-waw-2)}
 OWNER=${PADDLE_ZH_ISSUE:-5600}   # a later run of the lane (#5660) names its own issue on the box and its lease
+# the idle check reads lane WRITES; a bench box writes nothing to Mongo, so PROGRESS= (empty) leases it lease-only
+# (the on-box idle-poweroff.sh is then its idle guard)
+PROGRESS=${PROGRESS-mongo:paddle}
+PTAG=${PROGRESS:+,\"progress=$PROGRESS\"}
 NAME=sl-zh-paddle-$OWNER-$BOX
 D=$LANE_DIR/boxes/$BOX
 mkdir -p "$D"
@@ -46,7 +50,7 @@ create)
   IMAGE=${IMAGE:-$(TYPE=$TYPE image_for)}
   [ -n "$IMAGE" ] || { log "no GPU OS image for $TYPE in $ZONE"; exit 1; }
   until=$(date -u -d "+${LEASE_H} hours" +%FT%TZ)
-  body=$(printf '{"name":"%s","commercial_type":"%s","image":"%s","project":"%s","dynamic_ip_required":true,"tags":["lease-until=%s","owner=%s","progress=mongo:paddle"],"volumes":{"0":{"size":%s,"volume_type":"sbs_volume"}}}' "$NAME" "$TYPE" "$IMAGE" "$PROJECT" "$until" "$OWNER" "$((ROOT_GB*1000000000))")
+  body=$(printf '{"name":"%s","commercial_type":"%s","image":"%s","project":"%s","dynamic_ip_required":true,"tags":["lease-until=%s","owner=%s"%s],"volumes":{"0":{"size":%s,"volume_type":"sbs_volume"}}}' "$NAME" "$TYPE" "$IMAGE" "$PROJECT" "$until" "$OWNER" "$PTAG" "$((ROOT_GB*1000000000))")
   r=$(curl -s -X POST "${H[@]}" "$API/servers" -d "$body")
   echo "$r" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d["server"]["id"])' > "$D/server-id" 2>/dev/null || { log "create failed ($TYPE $ZONE): ${r:0:300}"; rm -f "$D/server-id"; exit 1; }
   echo "$ZONE" > "$ZONE_FILE"; echo "$TYPE" > "$D/type"
@@ -58,12 +62,12 @@ create)
   date -u +%s > "$D/created-at"
   [ $ok = 1 ] || { log "did not reach running ($(state)) — out of stock? deleting"; "$0" delete-now; exit 1; }
   log "running $(ip)"
-  (cd "$REPO" && node scripts/maintenance/gpu-lease-watchdog.mjs --lease "$(sid)" --zone "$ZONE" --hours "$LEASE_H" --owner "$OWNER" --progress mongo:paddle) 2>&1 | tail -1 | tee -a "$D/driver.log"
+  (cd "$REPO" && node scripts/maintenance/gpu-lease-watchdog.mjs --lease "$(sid)" --zone "$ZONE" --hours "$LEASE_H" --owner "$OWNER" ${PROGRESS:+--progress "$PROGRESS"}) 2>&1 | tail -1 | tee -a "$D/driver.log"
   # the GPU OS image puts user-data keys on `ubuntu` (disable_root); copy them to root
   for i in $(seq 1 90); do $SSH ubuntu@"$(ip)" "sudo bash -c 'cat /home/ubuntu/.ssh/authorized_keys >> /root/.ssh/authorized_keys'" 2>/dev/null && $SSH root@"$(ip)" true 2>/dev/null && { log SSH-OK; exit 0; }; sleep 10; done
   log SSH-FAIL; exit 1 ;;
 lease)
-  (cd "$REPO" && node scripts/maintenance/gpu-lease-watchdog.mjs --lease "$(sid)" --zone "$ZONE" --hours "${2:-$LEASE_H}" --owner "$OWNER" --progress mongo:paddle) 2>&1 | tail -1 | tee -a "$D/driver.log" ;;
+  (cd "$REPO" && node scripts/maintenance/gpu-lease-watchdog.mjs --lease "$(sid)" --zone "$ZONE" --hours "${2:-$LEASE_H}" --owner "$OWNER" ${PROGRESS:+--progress "$PROGRESS"}) 2>&1 | tail -1 | tee -a "$D/driver.log" ;;
 push)
   B=root@$(ip); M=${2:?manifest}
   $SSH "$B" 'mkdir -p /root/pz/code'
