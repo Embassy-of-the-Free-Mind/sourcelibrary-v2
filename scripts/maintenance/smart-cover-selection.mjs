@@ -2,17 +2,15 @@
  * Smart Cover Selection — batch re-evaluation with the book-level cover policy
  * (scripts/lib/cover-choice.mjs). OCR + gallery based, no API calls.
  *
- * Policy, in order: illustration-led titles wear their best plate; otherwise the
- * best opening page (decorated cover, title page, frontispiece); then a
- * representative plate; then the first non-junk page. Hand-picked covers
- * (thumbnail_source manual*) are NEVER touched.
+ * Policy, in order (scripts/lib/cover-choice.mjs): a decorated or pictorial
+ * front cover; for illustration-led titles an illustrated title page or the most
+ * representative plate; otherwise the title page; then a plate; then the first
+ * non-junk page. Hand-picked covers (thumbnail_source manual*) are NEVER touched.
  *
- * Default scope: books whose CURRENT cover is junk (blank, binding snapshot,
- * scanner insert, bookplate, hand in frame, bleed-through) or merely weak (scores
- * under the confident threshold, e.g. a stray text leaf), plus illustration-led
- * titles that are not wearing a plate. A weak-but-not-junk cover is only replaced
- * by a CONFIDENT pick, never by another ordinary page. `--force` re-evaluates
- * every book.
+ * Default scope: ONLY books whose current cover is junk — a blank leaf,
+ * bleed-through, a plain binding snapshot, a scanner card, a bookplate, a hand
+ * in frame. A cover that is acceptable is left alone, even when the policy would
+ * pick differently. `--force` re-evaluates every book.
  *
  * Cost: FREE
  *
@@ -35,10 +33,9 @@
 import fs from 'fs';
 import { MongoClient } from 'mongodb';
 import { buildCoverUpdate } from '../lib/cover-write.mjs';
-import { scorePageForCover } from '../lib/cover-scoring.mjs';
 import {
-  chooseCover, isManualCover, isJunkCover, isIllustratedTitle, currentCoverPageNumber,
-  COVER_WINDOW, MIN_PLATE_QUALITY, CONFIDENT_SCORE,
+  chooseCover, isManualCover, isJunkCover, currentCoverPageNumber,
+  COVER_WINDOW, MIN_PLATE_QUALITY,
 } from '../lib/cover-choice.mjs';
 
 const argv = process.argv;
@@ -127,7 +124,7 @@ const allBooks = (await db.collection('books')
   .filter(b => !isManualCover(b));
 
 console.log(`\n=== Smart Cover Selection (cover-choice policy) ===`);
-console.log(`Mode: ${APPLY_PLAN ? 'APPLY PLAN' : DRY_RUN ? 'DRY RUN' : 'LIVE'}${FORCE ? ' (force: all books)' : ' (junk covers + unplated illustrated titles)'}`);
+console.log(`Mode: ${APPLY_PLAN ? 'APPLY PLAN' : DRY_RUN ? 'DRY RUN' : 'LIVE'}${FORCE ? ' (force: all books)' : ' (junk covers only)'}`);
 console.log(`Books (manual covers excluded): ${allBooks.length}\n`);
 
 const changes = [];
@@ -174,12 +171,7 @@ for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
     const current = curNo === null ? null
       : bookPages.find(p => p.page_number === curNo) || platePages.get(curNo) || null;
     const currentJunk = !!current && isJunkCover(current, book);
-    const currentWeak = !current || currentJunk
-      || scorePageForCover(current, { bookTitle: book.title }).score < CONFIDENT_SCORE;
-    const illustrated = isIllustratedTitle(book);
-    const currentIsPlate = curNo !== null && bookPlates.some(g => g.page_number === curNo);
-
-    if (!FORCE && !currentWeak && !(illustrated && !currentIsPlate)) continue;
+    if (!FORCE && !currentJunk) continue;
 
     const choice = chooseCover(book, bookPages, bookPlates, platePages);
     if (!choice || choice.page.page_number === curNo) continue;
@@ -192,7 +184,6 @@ for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
       fromPage: curNo,
       fromSource: book.thumbnail_source || null,
       fromJunk: currentJunk,
-      fromWeak: currentWeak,
       toPage: choice.page.page_number,
       rule: choice.rule,
       reason: choice.reason,

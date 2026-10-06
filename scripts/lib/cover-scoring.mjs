@@ -36,6 +36,14 @@ function isDecoratedFrontCover(ocr) {
   return frontCover && DECORATED_COVER_RE.test(ocr) && !PLAIN_BINDING_RE.test(ocr);
 }
 
+/** Characters of transcribed text, tags and whitespace removed. */
+export function ocrBodyLength(ocrRaw) {
+  return String(ocrRaw || '')
+    .replace(/<([a-z-]+)[^>]*>[\s\S]*?<\/\1>/gi, '')
+    .replace(/<[^>]+>/g, '')
+    .replace(/\s+/g, '').length;
+}
+
 /**
  * Extract page type from <page-type> tags in OCR text.
  * Returns null if no tag found.
@@ -124,6 +132,13 @@ export function scorePageForCover(page, options = {}) {
       /the original of this book is in the .{0,60}library/.test(ocr) ||
       ocr.includes('no known copyright restrictions')) {
     return { score: -70, reason: 'digitizer insert' };
+  }
+
+  // Series wrapper: the Siku Quanshu's uniform printed board (四庫全書 label plus a
+  // volume number, the same on every volume). The OCR types it title-page, but it
+  // says nothing about the book. A real title leaf carries far more text.
+  if (/四庫全書|四库全书/.test(ocrRaw) && ocrBodyLength(ocrRaw) <= 40) {
+    return { score: -70, reason: 'series wrapper' };
   }
 
   // BPH pelican bookplate
@@ -219,6 +234,10 @@ export function scorePageForCover(page, options = {}) {
 
   if (pageType === 'dedication') { score += 15; reason = 'dedication'; }
   if (pageType === 'text' && score === 0) { score += 5; reason = 'text'; }
+
+  // Library furniture on an otherwise good page (stamps, shelfmarks, labels):
+  // still usable, but a clean title page or plate should win over it.
+  if (score > 0 && (hasExLibris || /library stamp|shelf ?mark|accession/.test(ocr))) score -= 15;
 
   // Position bonus — covers are usually in first 10 pages
   if (pageNum <= 5) score += 5;

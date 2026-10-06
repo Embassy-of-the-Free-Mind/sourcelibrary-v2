@@ -4,15 +4,19 @@
  * `scorePageForCover()` (cover-scoring.mjs) rates ONE page. This module decides
  * which page a BOOK should wear, in this order:
  *
- *   1. Illustration-led titles (Icones, Illustrations, Figures, Tafeln, Planches,
- *      圖譜 …) wear their best extracted plate. A book sold on its pictures
- *      should show one, even when a fine title page exists.
- *   2. Otherwise the best-scoring page in the opening window: a decorated cover,
- *      a decorated title page, a frontispiece, a plain title page.
- *   3. No confident page there → the book's best plate, if it has any.
- *   4. Still nothing → the first ordinary page that is not junk (a text page
- *      beats a blank leaf, a binding snapshot, a scanner insert or a shelfmark).
- *   5. Nothing usable at all → null; the caller keeps what it has.
+ *   1. A real cover worth showing: a decorated or pictorial front cover. A plain
+ *      leather binding or blank boards never count (the scorer marks those junk).
+ *   2. Illustration-led titles (Icones, Illustrations, Figures, Tafeln, Planches,
+ *      圖譜 …): an illustrated title page or frontispiece, else the book's most
+ *      representative plate.
+ *   3. Every other book: its title page.
+ *   4. No confident page → a representative plate, if the book has one.
+ *   5. Still nothing → the first ordinary page the OCR read that is not junk
+ *      (a text page beats a blank leaf, a binding snapshot or a scanner card).
+ *   6. Nothing usable at all → null; the caller keeps what it has.
+ *
+ * Plates must pass the same not-blank check as pages: a gallery entry whose page
+ * the OCR calls blank or bleed-through is never a cover.
  *
  * Hand-picked covers (`thumbnail_source` starting with "manual") are never
  * replaced — callers check `isManualCover()` before calling this.
@@ -74,11 +78,16 @@ export const ILLUSTRATED_TITLE_RE = new RegExp([
   '圖', '図', '畫', '画', '絵', '繪',
 ].join('|'), 'i');
 
+/** Scorer reasons for an illustrated title page or frontispiece. */
+const ILLUSTRATED_PAGE_REASONS = new Set([
+  'decorated title-page', 'frontispiece', 'frontispiece with engraving',
+]);
+
 /** Scorer reasons that must never front a book, even as a last resort. */
 const JUNK_REASONS = new Set([
   'blank', 'hidden', 'digitizer-notice', 'digitizer insert', 'physical book photo',
   'binding photo (mislabeled frontispiece)', 'hand in frame', 'BPH pelican bookplate',
-  'ex-libris/bookplate', 'bookplate illustration', 'bleed-through',
+  'ex-libris/bookplate', 'bookplate illustration', 'bleed-through', 'series wrapper',
 ]);
 
 export function isManualCover(book) {
@@ -105,38 +114,51 @@ export function chooseCover(book, pages, plates = [], platePages = new Map()) {
   // site CSP blocks it, so it would render as a blank card.
   const usable = p => p && !p.hidden && isRenderableCoverUrl(resolvePageCoverUrl(p));
 
+  const scoreOf = p => scorePageForCover(p, { bookTitle: book?.title });
   const goodPlates = plates
     .filter(isCoverWorthyPlate)
     .sort((a, b) => (b.gallery_quality - a.gallery_quality) || (a.page_number - b.page_number));
   const bestPlate = () => {
     for (const g of goodPlates) {
       const p = pageFor(g.page_number);
-      if (usable(p)) return { page: p, score: Math.round(g.gallery_quality * 100), reason: 'plate' };
+      // A detection on a page the OCR calls blank or bleed-through is a ghost.
+      if (usable(p) && !JUNK_REASONS.has(scoreOf(p).reason)) {
+        return { page: p, score: Math.round(g.gallery_quality * 100), reason: 'plate' };
+      }
     }
     return null;
   };
 
-  // 1. Illustration-led titles wear a plate.
+  const scored = pages
+    .filter(usable)
+    .map(p => ({ page: p, ...scoreOf(p) }))
+    .sort((a, b) => (b.score - a.score) || (a.page.page_number - b.page.page_number));
+  const confident = test => scored.find(s => s.score >= CONFIDENT_SCORE && test(s.reason));
+
+  // 1. A real cover worth showing.
+  const cover = confident(r => r === 'decorated cover');
+  if (cover) return { ...cover, rule: 'decorated-cover' };
+
+  // 2. Illustration-led titles: an illustrated title page / frontispiece, else a plate.
   if (isIllustratedTitle(book)) {
+    const illustratedTitle = confident(r => ILLUSTRATED_PAGE_REASONS.has(r));
+    if (illustratedTitle) return { ...illustratedTitle, rule: 'illustrated-title-page' };
     const plate = bestPlate();
     if (plate) return { ...plate, rule: 'illustrated-title-plate' };
   }
 
-  const scored = pages
-    .filter(usable)
-    .map(p => ({ page: p, ...scorePageForCover(p, { bookTitle: book?.title }) }))
-    .sort((a, b) => (b.score - a.score) || (a.page.page_number - b.page.page_number));
+  // 3. The title page.
+  const titlePage = confident(r => r.includes('title-page'));
+  if (titlePage) return { ...titlePage, rule: 'title-page' };
 
-  // 2. A confident page in the opening window.
-  if (scored[0] && scored[0].score >= CONFIDENT_SCORE) {
-    return { ...scored[0], rule: 'scored-page' };
-  }
+  // Any other confident page (frontispiece, full-page illustration).
+  if (scored[0] && scored[0].score >= CONFIDENT_SCORE) return { ...scored[0], rule: 'scored-page' };
 
-  // 3. A representative plate.
+  // 4. A representative plate.
   const plate = bestPlate();
   if (plate) return { ...plate, rule: 'representative-plate' };
 
-  // 4. The first ordinary page that is not junk.
+  // 5. The first ordinary page that is not junk.
   // Only pages the OCR model actually read: an unread page could be anything.
   const ordinary = scored
     .filter(s => !JUNK_REASONS.has(s.reason) && s.reason !== 'unknown' && s.score >= 0
