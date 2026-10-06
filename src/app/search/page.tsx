@@ -1304,8 +1304,10 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
         </div>
       </div>
 
-      {/* Results */}
-      <main className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-8">
+      {/* Results. With a query, reserve a viewport of height: results stream in
+          over ~3s, and an empty <main> let the footer and feedback band paint
+          at the top and then get shoved down (CLS 0.96 on desktop, #6092). */}
+      <main className={`max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-8 ${query.length >= 2 ? 'min-h-[100svh]' : ''}`}>
         {/* Anonymous free-search wall — shown after 10 searches/hour */}
         {signInRequired && (
           <div className="text-center py-16 max-w-lg mx-auto">
