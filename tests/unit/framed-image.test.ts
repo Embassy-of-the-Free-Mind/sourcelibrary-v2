@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { coverFrame, pageImageFrame, framedAspect, framedImageStyle } from '@/lib/framed-image';
 import { r2PageIdentity } from '@/lib/r2-page-identity';
 // @ts-expect-error — plain .mjs script, no types
-import { coverOf, fetchCandidates } from '../../scripts/maintenance/cover-frame-backfill.mjs';
+import { coverOf, fetchCandidates, same } from '../../scripts/maintenance/cover-frame-backfill.mjs';
 
 const B = '697d9c99f2b56306a9ec9626';
 const frame = { x: 0.1, y: 0, w: 0.8, h: 1, ar: 0.7, v: 3 };
@@ -94,5 +94,14 @@ describe('cover-frame-backfill — which cover is measured', () => {
     expect(fetchCandidates(`${R2}/archived/${B}/5.jpg`)).toEqual([`${R2}/pages/${B}/0005.jpg`, `${R2}/archived/${B}/5.jpg`]);
     expect(fetchCandidates(`${R2}/pages/${B}/0005-full.jpg`)).toEqual([`${R2}/pages/${B}/0005.jpg`, `${R2}/pages/${B}/0005-full.jpg`]);
     expect(fetchCandidates(`${R2}/cropped/${B}/abc.jpg`)).toEqual([`${R2}/cropped/${B}/abc.jpg`]);
+  });
+
+  it('keeps a stored frame a re-read only nudged, and replaces one for another cover', () => {
+    const stored = { x: 0, y: 0.05, w: 0.94, h: 0.91, ar: 0.69, v: 3, of: `${B}/5` };
+    expect(same({ ...stored, x: 0.03, w: 0.89 }, stored)).toBe(true);
+    expect(same({ ...stored, w: 0.8 }, stored)).toBe(false);
+    expect(same({ ...stored, of: `${B}/6` }, stored)).toBe(false);
+    expect(same({ ...stored, v: 4 }, stored)).toBe(false);
+    expect(same(stored, null)).toBe(false);
   });
 });

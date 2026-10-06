@@ -101,7 +101,13 @@ async function measure(url) {
   throw last;
 }
 
-const same = (a, b) => !!a && !!b && ['x', 'y', 'w', 'h', 'ar', 'v', 'of'].every(k => a[k] === b[k]);
+// Two reads of one cover do not always measure alike: 130 of 41,113 differed
+// between two runs on 2026-10-06, by up to a few percent on one side (the CDN
+// does not always return the same bytes). Both are valid frames, so a stored
+// frame this close to the new one is kept rather than rewritten on every run.
+const DRIFT = 0.06;
+export const same = (a, b) => !!a && !!b && a.of === b.of && a.v === b.v
+  && ['x', 'y', 'w', 'h'].every(k => Math.abs(a[k] - b[k]) <= DRIFT) && Math.abs(a.ar / b.ar - 1) <= 0.02;
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   const client = new MongoClient(process.env.MONGODB_URI);
