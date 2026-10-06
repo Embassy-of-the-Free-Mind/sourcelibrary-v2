@@ -42,16 +42,36 @@ describe('isIllustratedTitle', () => {
 });
 
 describe('chooseCover', () => {
-  it('gives an illustrated title its best plate even when a title page exists', () => {
+  it('gives an illustrated title its illustrated title page when it has one', () => {
     const c = chooseCover({ title: 'Icones Fungorum' }, [blank, insert, title, text], [plate], platePages);
+    expect(c.page.page_number).toBe(5);
+    expect(c.rule).toBe('illustrated-title-page');
+  });
+
+  it('gives an illustrated title its best plate when the title page is plain', () => {
+    const plain = page(5, '<page-type>title-page</page-type>\n# DE FUNGIS\n# LIBER\n# PRIMUS');
+    const c = chooseCover({ title: 'Icones Fungorum' }, [blank, insert, plain, text], [plate], platePages);
     expect(c.page.page_number).toBe(78);
     expect(c.rule).toBe('illustrated-title-plate');
+  });
+
+  it('puts a decorated front cover first', () => {
+    const cover = page(1, 'The front cover of the book in red morocco with ornate gold tooling.');
+    const c = chooseCover({ title: 'Icones Fungorum' }, [cover, title, text], [plate], platePages);
+    expect(c.page.page_number).toBe(1);
+    expect(c.rule).toBe('decorated-cover');
+  });
+
+  it('never fronts a book with a plate whose page reads as blank', () => {
+    const ghost = page(78, '<page-type>blank</page-type> Blank page with faint bleed-through.');
+    const c = chooseCover({ title: 'Icones Fungorum' }, [blank, insert, text], [plate], new Map([[78, ghost]]));
+    expect(c.rule).toBe('first-ordinary-page');
   });
 
   it('prefers the title page for an ordinary book', () => {
     const c = chooseCover({ title: 'De Fungis' }, [blank, insert, title, text], [plate], platePages);
     expect(c.page.page_number).toBe(5);
-    expect(c.rule).toBe('scored-page');
+    expect(c.rule).toBe('title-page');
   });
 
   it('falls back to a representative plate when no page scores', () => {
