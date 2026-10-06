@@ -7,14 +7,14 @@ export const metadata: Metadata = {
   description:
     'In 1689 a sea-captain set a sample of "bangue" on Robert Hooke\'s coffeehouse table, and the Royal Society met cannabis. But the plant had two lives, and the West had been forgetting one of them for two thousand years. A tour through sixty books in twelve languages.',
   openGraph: {
-    images: [{ url: 'https://images.sourcelibrary.org/archived/69ef286185daccce30f2ca01/390.jpg', alt: 'Botanical woodcut of the cannabis plant labelled \'Bangue\' in Cristóvão da Costa\'s Tractado de las Drogas y Medicinas de las Indias Orientales, 1578' }],
+    images: [{ url: 'https://images.sourcelibrary.org/archived/69ef286185daccce30f2ca01/389.jpg', alt: 'Botanical woodcut of the cannabis plant labelled \'Bangue\' in Cristóvão da Costa\'s Tractado de las Drogas y Medicinas de las Indias Orientales, 1578' }],
     title: 'Theire Soe Admirable Herbe: How the West Forgot, and Remembered, Cannabis',
     description:
       'A sea-captain, a coffeehouse, and the Royal Society\'s first account of cannabis — and the two-thousand-year history it forgot. Sixty books, twelve languages.',
   },
   twitter: {
     card: 'summary_large_image',
-    images: [{ url: 'https://images.sourcelibrary.org/archived/69ef286185daccce30f2ca01/390.jpg', alt: 'Botanical woodcut of the cannabis plant labelled \'Bangue\' in Cristóvão da Costa\'s Tractado de las Drogas y Medicinas de las Indias Orientales, 1578' }],
+    images: [{ url: 'https://images.sourcelibrary.org/archived/69ef286185daccce30f2ca01/389.jpg', alt: 'Botanical woodcut of the cannabis plant labelled \'Bangue\' in Cristóvão da Costa\'s Tractado de las Drogas y Medicinas de las Indias Orientales, 1578' }],
   },
   alternates: {
     canonical: '/blog/cannabis-bangue',
@@ -28,7 +28,7 @@ export default function CannabisBanguePage() {
         <ContentHeader
           title="Theire Soe Admirable Herbe"
           subtitle="How the West forgot, and remembered, cannabis"
-          image="https://images.sourcelibrary.org/archived/69ef286185daccce30f2ca01/390.jpg"
+          image="https://images.sourcelibrary.org/archived/69ef286185daccce30f2ca01/389.jpg"
           imageAlt="Botanical woodcut of the cannabis plant labelled 'Bangue' in Cristóvão da Costa's Tractado de las Drogas y Medicinas de las Indias Orientales, 1578"
         >
           <p className="text-stone-400 text-sm mt-4">19 June 2026 &middot; 9 min read</p>
@@ -71,7 +71,7 @@ export default function CannabisBanguePage() {
           <Link href="/book/tractado-de-las-drogas-y-medicinas-de-las-indias-orientales-costa/page/69ef286185daccce30f2cb87">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://images.sourcelibrary.org/archived/69ef286185daccce30f2ca01/390.jpg"
+              src="https://images.sourcelibrary.org/archived/69ef286185daccce30f2ca01/389.jpg"
               alt="Botanical woodcut of the cannabis plant from Cristóvão da Costa's 1578 Tractado, showing root, stem, serrated leaves, and flowering tops, labelled Bangue"
               className="w-full max-w-md mx-auto rounded-lg shadow-md"
             />

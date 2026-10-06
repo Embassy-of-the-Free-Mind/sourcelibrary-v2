@@ -52,6 +52,13 @@ export interface BlogPost {
   // Choosing one: the rules in .claude/skills/quote-background-image (calm area
   // where the words land, no printed text there, nothing grim). Then check it
   // with scripts/audit/blog-card-legibility.ts, which renders every lead crop.
+  // Where to look, in order: a plate or woodcut from a book the post is about
+  // (open the leaf: gallery records can be a leaf off); the ~24K museum works
+  // already mirrored under images.sourcelibrary.org/artwork/ (search_images);
+  // a new public-domain work brought in with scripts/import-*-artworks.mjs
+  // (Met, Rijks, AIC, Cleveland, NGA, Getty, Commons), never a hotlink.
+  // A printed text page only when the page is the post's evidence. Real works
+  // only: no generated pictures in a library of primary sources.
   image: string;
   imageAlt?: string;
   // CSS object-position for the crop, e.g. 'center 30%'. Set it when the
@@ -202,9 +209,8 @@ export const posts: BlogPost[] = [
     date: '9 August 2026',
     readTime: '6 min read',
     kind: 'counting',
-    image: 'https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/9.jpg',
-    imageAlt:
-      "Title page of a volume of Zwinger's Theatrum Humanae Vitae, the largest encyclopedia of its age.",
+    image: 'https://images.sourcelibrary.org/artwork/art-landsberg-ancienne-bibliotheque-municipale-strasbourg-1833.jpg',
+    imageAlt: 'The old municipal library of Strasbourg, drawn in 1833: shelves of books between columns.',
   },
   {
     slug: 'reciting-not-reading',
@@ -287,6 +293,7 @@ export const posts: BlogPost[] = [
     image: 'https://images.sourcelibrary.org/archived/6952d12e77f38f6761bc5bec/74.jpg',
     imageAlt:
       "The five Platonic solids — Kepler's figurae mundanae — from Harmonices Mundi, 1619.",
+    imagePosition: 'center 90%',
   },
   {
     slug: 'fish-voiced-priest',
@@ -340,8 +347,8 @@ export const posts: BlogPost[] = [
     date: '19 June 2026',
     readTime: '11 min read',
     kind: 'counting',
-    image: 'https://images.sourcelibrary.org/archived/69af0a0a4c57359b8d2d0f49/8.jpg',
-    imageAlt: "Title page of Athanasius Kircher's Arithmologia, 1665 — a genuine first English translation",
+    image: 'https://images.sourcelibrary.org/archived/69af0a0a4c57359b8d2d0f49/6.jpg',
+    imageAlt: "Engraved frontispiece of Athanasius Kircher's Arithmologia, 1665: a radiant triangle above a sphere, two scholars below. A genuine first English translation.",
   },
   {
     slug: 'cannabis-bangue',
@@ -351,7 +358,7 @@ export const posts: BlogPost[] = [
     date: '19 June 2026',
     readTime: '9 min read',
     kind: 'stories',
-    image: 'https://images.sourcelibrary.org/archived/69ef286185daccce30f2ca01/390.jpg',
+    image: 'https://images.sourcelibrary.org/archived/69ef286185daccce30f2ca01/389.jpg',
     imageAlt: "Botanical woodcut of the cannabis plant labelled 'Bangue' in Cristóvão da Costa's Tractado, 1578",
   },
   {
@@ -373,7 +380,7 @@ export const posts: BlogPost[] = [
     date: '2 June 2026',
     readTime: '14 min read',
     kind: 'library',
-    image: 'https://images.sourcelibrary.org/pages/69bd9e336120d54bd037bf37/0010.jpg',
+    image: 'https://images.sourcelibrary.org/pages/69bd9e336120d54bd037bf37/0009.jpg',
     imageAlt: "Engraved frontispiece of Michael Maier's Atalanta Fugiens (Oppenheim, 1617), digitized by e-rara and re-hosted on Source Library",
   },
   {
@@ -415,8 +422,8 @@ export const posts: BlogPost[] = [
     date: '30 May 2026',
     readTime: '3 min read',
     kind: 'reading',
-    image: 'https://images.sourcelibrary.org/archived/69e010c0c47b5c9f88213cee/7.jpg',
-    imageAlt: 'Title page of De Boeken des Ouden Verbonds, the Old Testament in Javanese, 1854',
+    image: 'https://images.sourcelibrary.org/artwork/nga-israhel-van-meckenem-ornament-with-the-tree-of-jesse.jpg',
+    imageAlt: 'Israhel van Meckenem, Ornament with the Tree of Jesse (15th century): the generations from Jesse to Christ in scrolling vines.',
   },
   {
     slug: 'did-an-ai-write-the-encyclical',
@@ -446,8 +453,9 @@ export const posts: BlogPost[] = [
     date: '18 May 2026',
     readTime: '8 min read',
     kind: 'counting',
-    image: 'https://images.sourcelibrary.org/archived/9cafe1ee-dd5a-4dcf-ac9a-803ca75f5bb4/12.jpg',
-    imageAlt: 'Title page of Cornelius Drebbel\'s Tractatus duo de Natura Elementorum (Hamburg, 1621)',
+    image: 'https://images.sourcelibrary.org/artwork/met-lucas-van-leyden-st-jerome-in-his-study.jpg',
+    imageAlt: 'Lucas van Leyden, St. Jerome in His Study, 1521: the scholar leans on a closed book beside a skull, his lion asleep at his feet.',
+    imagePosition: 'center 30%',
   },
   {
     slug: 'hogwarts-library',
