@@ -64,6 +64,13 @@ export const GROUPS: IssueGroup[] = [
     intro: 'Most of the worst pages start with a misread. The English that follows can be fluent and still wrong.',
     issues: [
       {
+        n: 5924,
+        title: 'Which engine reads Latin print best, century by century',
+        detail: 'Latin is the largest share of the pages still to read, about 7.5 million. Random runs of three pages from random books in each century are read by every candidate engine, including Gemini Pro and two open models, and scored against published transcriptions of the same editions. The most accurate engine for each century wins. Costs are in',
+        status: 'running',
+        example: { href: '/research/reading-plan', label: 'the reading plan' },
+      },
+      {
         n: 5813,
         title: 'Re-reading Greek print that the cheaper engine transcribed',
         detail: 'A 200-page pilot read printed Greek better on 9 of 15 pages checked by eye and worse on none. On manuscripts the engine invented text, so manuscripts are left out. The printed pages are being re-read now, and only pages whose text changed are retranslated.',
