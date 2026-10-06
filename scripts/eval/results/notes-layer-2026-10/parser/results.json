@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-06T10:42:41.487Z",
+ "generated": "2026-10-06T10:45:47.158Z",
  "issue": 5942,
  "measure": "exact string comparison of the reader pipeline output (prepareNotesMarkdown.processedText), today against text + annotations",
  "n": 800,

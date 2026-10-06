@@ -178,3 +178,12 @@ describe('a term-and-gloss line that is the book\'s own heading', () => {
     expect(layers.annotations[0].anchor).toMatchObject({ phrase: 'bite', offset: 0, occurrences: 1 });
   });
 });
+
+describe('annotation source', () => {
+  it('reads the stored prompt version however it was written', () => {
+    const page = 'A <note>b</note> c.';
+    expect(parseTranslationLayers(page, { promptVersion: 'v10' }).annotations[0].source).toBe('inline-v10');
+    expect(parseTranslationLayers(page, { promptVersion: '13' }).annotations[0].source).toBe('inline-v13');
+    expect(parseTranslationLayers(page).annotations[0].source).toBe('inline-vunknown');
+  });
+});

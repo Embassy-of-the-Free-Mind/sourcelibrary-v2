@@ -237,7 +237,8 @@ export function parseTranslationLayers(
   { promptVersion }: { promptVersion?: string | number | null } = {}
 ): TranslationLayers {
   if (!markup) return { text: markup || '', annotations: [], pageLevel: [], exact: true };
-  const source = `inline-v${promptVersion ?? 'unknown'}`;
+  // Stored prompt versions come as 13, "13" and "v10" alike.
+  const source = `inline-v${String(promptVersion ?? 'unknown').replace(/^v/i, '')}`;
 
   // Legacy bracket syntax for the same thing (`[[notes: …]]`), as the reader converts it.
   const legacy = markup.replace(/\[\[(notes?):\s*([\s\S]*?)\]\]/gi, '<note>$2</note>');
