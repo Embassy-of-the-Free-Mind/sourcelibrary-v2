@@ -47,8 +47,16 @@ export interface BlogPost {
   date: string;
   readTime: string;
   kind: BlogKind;
-  image?: string;
+  // Every post needs an image: any post can become a lead or the Latest card,
+  // where the title is set over the picture (tests/blog-posts.test.ts).
+  // Choosing one: the rules in .claude/skills/quote-background-image (calm area
+  // where the words land, no printed text there, nothing grim). Then check it
+  // with scripts/audit/blog-card-legibility.ts, which renders every lead crop.
+  image: string;
   imageAlt?: string;
+  // CSS object-position for the crop, e.g. 'center 30%'. Set it when the
+  // default centre crop cuts off what the picture is of.
+  imagePosition?: string;
 }
 
 // Pages under src/app/blog that are not posts in the list, and why.
@@ -70,6 +78,8 @@ export const posts: BlogPost[] = [
     date: '6 October 2026',
     readTime: '12 min read',
     kind: 'stories',
+    image: 'https://images.sourcelibrary.org/artwork/art-drebbel-clock.jpg',
+    imageAlt: 'Drebbel’s clock: a globe in armillary rings, held up by two sphinxes, in a coloured drawing.',
   },
   {
     slug: 'training-our-own-models',
@@ -384,6 +394,8 @@ export const posts: BlogPost[] = [
     date: '31 May 2026',
     readTime: '8 min read',
     kind: 'counting',
+    image: 'https://images.sourcelibrary.org/artwork/art-usa-national-gallery-of-art0.jpg',
+    imageAlt: 'Detail of El Greco’s Saint Jerome, translator of the Vulgate: his hand on an open book beside an inkwell.',
   },
   {
     slug: 'man-his-own-maker',
@@ -463,6 +475,8 @@ export const posts: BlogPost[] = [
     date: '15 May 2026',
     readTime: '13 min read',
     kind: 'library',
+    image: 'https://images.sourcelibrary.org/artwork/art-a-group-of-men-at-right-pushing-philosophers-toward-a-fire-with-burning-books-at.jpg',
+    imageAlt: 'Marco Dente, c. 1515: men push a group of philosophers toward a fire in which books are burning.',
   },
   {
     slug: 'confident-hallucinator',
@@ -501,6 +515,9 @@ export const posts: BlogPost[] = [
     date: '20 April 2026',
     readTime: '8 min read',
     kind: 'library',
+    image: 'https://images.sourcelibrary.org/archived/69e63c211bb6e8b1496accf9/44.jpg',
+    imageAlt: 'A cuneiform clay tablet on a stand in a museum case.',
+    imagePosition: 'center 85%',
   },
   {
     slug: 'translations-across-civilizations',
@@ -614,6 +631,7 @@ export const posts: BlogPost[] = [
     kind: 'library',
     image: 'https://images.sourcelibrary.org/blog/ficino-bust-laptop.jpg',
     imageAlt: 'Bronze bust of Marsilio Ficino with a laptop at the Embassy of the Free Mind',
+    imagePosition: 'center 30%',
   },
   {
     slug: 'hieroglyph-ocr',

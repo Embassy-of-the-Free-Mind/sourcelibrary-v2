@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BLOG_KINDS, KIND_INFO, type BlogKind, type BlogPost } from './posts';
+import { CARD_SCRIM, FADE_PX } from './card-scrim';
 
 // How many posts besides the lead each kind shows on the "All" view.
 const PREVIEW_COUNT = 3;
@@ -18,17 +19,6 @@ function newestFirst(a: BlogPost, b: BlogPost) {
   return (Date.parse(b.date) || 0) - (Date.parse(a.date) || 0);
 }
 
-// No scan: a typographic panel in the book-cover colours, like a cover without an image.
-function NoImage({ post }: { post: BlogPost }) {
-  return (
-    <div className="absolute inset-0 bg-cover-bg flex items-center justify-center p-3">
-      <span className="font-serif text-cover-title text-center leading-tight line-clamp-4 text-sm sm:text-base">
-        {post.title}
-      </span>
-    </div>
-  );
-}
-
 function Meta({ post }: { post: BlogPost }) {
   return (
     <span className="text-sm text-muted">
@@ -37,41 +27,42 @@ function Meta({ post }: { post: BlogPost }) {
   );
 }
 
+// The lead of a kind, and the Latest card: the title is set on the picture,
+// over CARD_SCRIM (see card-scrim.ts for why that is legible on any image);
+// the summary sits on white underneath. Tall on a phone, wide from `sm` up.
 function LeadCard({ post, priority = false }: { post: BlogPost; priority?: boolean }) {
   return (
     <Link
       href={`/blog/${post.slug}`}
       className="block bg-white rounded-xl overflow-hidden shadow-sm border border-border-light hover:shadow-lg transition-all group"
     >
-      <div className="md:flex md:min-h-[300px]">
-        <div className="md:w-[45%] shrink-0 overflow-hidden relative h-52 md:h-auto">
-          {post.image ? (
-            <Image
-              src={post.image}
-              alt={post.imageAlt || ''}
-              fill
-              sizes="(max-width: 768px) 100vw, 45vw"
-              className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
-              priority={priority}
-            />
-          ) : (
-            <NoImage post={post} />
-          )}
-        </div>
-        <div className="p-6 md:p-10 flex flex-col justify-center">
-          <span className="text-xs text-muted tracking-wide uppercase mb-3">
+      <div className="relative aspect-[4/5] sm:aspect-[16/9] md:aspect-[2/1] overflow-hidden bg-cover-bg">
+        <Image
+          src={post.image}
+          alt={post.imageAlt || ''}
+          fill
+          sizes="(max-width: 1024px) 100vw, 1024px"
+          className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+          style={post.imagePosition ? { objectPosition: post.imagePosition } : undefined}
+          priority={priority}
+        />
+        <div
+          className="absolute inset-x-0 bottom-0 px-6 pb-6 md:px-10 md:pb-8"
+          style={{ background: CARD_SCRIM, paddingTop: FADE_PX }}
+        >
+          <span className="block text-xs text-stone-300 tracking-wide uppercase mb-2">
             {post.date} &middot; {post.readTime}
           </span>
-          <h3 className="font-serif text-2xl md:text-3xl text-primary group-hover:text-accent-gold-dark transition-colors mb-3 leading-tight">
+          <h3 className="font-serif text-2xl sm:text-3xl md:text-4xl text-white leading-tight line-clamp-3 drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]">
             {post.title}
           </h3>
-          <p className="text-secondary leading-relaxed font-body md:text-lg line-clamp-4 md:line-clamp-none">
-            {post.subtitle}
-          </p>
-          <span className="inline-block mt-5 text-accent-rust text-sm font-medium group-hover:translate-x-1 transition-transform">
-            Read &rarr;
-          </span>
         </div>
+      </div>
+      <div className="px-6 py-5 md:px-10 md:py-6">
+        <p className="text-secondary leading-relaxed font-body md:text-lg line-clamp-3">{post.subtitle}</p>
+        <span className="inline-block mt-3 text-accent-rust text-sm font-medium group-hover:translate-x-1 transition-transform">
+          Read &rarr;
+        </span>
       </div>
     </Link>
   );
@@ -81,18 +72,15 @@ function LeadCard({ post, priority = false }: { post: BlogPost; priority?: boole
 function PostCard({ post }: { post: BlogPost }) {
   return (
     <Link href={`/blog/${post.slug}`} className="group flex gap-4 sm:block">
-      <div className="relative w-24 h-24 sm:w-full sm:h-auto sm:aspect-[4/3] shrink-0 rounded-lg overflow-hidden border border-border-light">
-        {post.image ? (
-          <Image
-            src={post.image}
-            alt={post.imageAlt || ''}
-            fill
-            sizes="(max-width: 640px) 96px, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover group-hover:scale-[1.04] transition-transform duration-500"
-          />
-        ) : (
-          <NoImage post={post} />
-        )}
+      <div className="relative w-24 h-24 sm:w-full sm:h-auto sm:aspect-[4/3] shrink-0 rounded-lg overflow-hidden border border-border-light bg-cover-bg">
+        <Image
+          src={post.image}
+          alt={post.imageAlt || ''}
+          fill
+          sizes="(max-width: 640px) 96px, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover group-hover:scale-[1.04] transition-transform duration-500"
+          style={post.imagePosition ? { objectPosition: post.imagePosition } : undefined}
+        />
       </div>
       <div className="min-w-0 sm:mt-3">
         <h3 className="font-serif text-lg md:text-xl text-primary group-hover:text-accent-gold-dark transition-colors leading-snug mb-1">
