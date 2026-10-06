@@ -136,6 +136,6 @@ All four allow bulk download and internal use. 1,574 DTA texts are NC or otherwi
 
 **Artifacts.**
 - Code: `scripts/eval/typed-refs-6012/` (`ingest.mjs`, `eebo-stream.mjs`, `meta.mjs`, `match.mjs`, `align.mjs`, `match-translations.mjs`, `translation-passage-probe.mjs`, `eye-packets.mjs`, `eye-score.mjs`, `summarise.mjs`, `lib.mjs`).
-- Rights: `scripts/eval/typed-refs-6012/rights.json`. By eye: `scripts/eval/typed-refs-6012/eye-verdicts.json`.
+- Rights: `scripts/eval/typed-refs-6012/rights.json`. By eye: `scripts/eval/typed-refs-6012/eye-verdicts.json`; the readers' instructions: `scripts/eval/typed-refs-6012/readers/`.
 - Packed rows: `scripts/eval/output/typed-refs-6012-2026-10-06.*` (manifests for DTA and CAMENA; for EEBO-TCP the 745 matched texts' rows; pairs; aligned pages; translations; translation passages; `summary.json`).
 - Private R2, bucket `sl-corpus-snapshots`, prefix `eval-refs/typed-refs-6012/`: `raw/` (three packages), `derived/<source>/tei-pages-v1/` (text by page), `manifests/` (full manifests, 60,326 EEBO rows; keys and hashes in `summary.json`).
