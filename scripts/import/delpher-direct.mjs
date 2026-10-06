@@ -162,8 +162,9 @@ try {
     const label = b.urn || b.gbid;
     if (!b.urn === !b.gbid) { console.log(`${label}: FAIL give exactly one of "urn" / "gbid"`); continue; }
     if (!b.license || !b.rights) { console.log(`${label}: FAIL no "license" + "rights" in the manifest — rights are recorded per item`); continue; }
-    const src = b.urn ? await kbSource(b) : await googleSource(b);
+    let src = null, insertedId = null;
     try {
+      src = b.urn ? await kbSource(b) : await googleSource(b);
       console.log(`${label}: ${src.pageCount ?? '?'} pages · "${b.title.slice(0, 60)}"`);
       console.log(`  Delpher terms: ${src.terms || '(not found on the object page)'}`);
       if (/auteursrechtelijk beschermd/i.test(src.terms || '')) { console.log('  FAIL Delpher marks this object as in copyright — not imported'); continue; }
@@ -196,7 +197,7 @@ try {
       const pages = (await src.prepare()) ?? src.pageCount;
       const res = await insertBookIfNew(db, fields(pages), { importer: IMPORTER, sourceIdentifier: src.identifier, sourceUrl: src.delpherUrl });
       if (!res.inserted) { console.log(`  GATE ${res.reason}: ${res.message}`); continue; }
-      const id = res.bookId;
+      const id = insertedId = res.bookId;
       if (HOLD_REASON) console.log('  hold:', (await holdBook(db, id, { reason: HOLD_REASON, source: IMPORTER,
         release: `Held at import by delpher-direct.mjs; pages are already on R2 — release with --to archive_complete.` })).outcome);
       if (src.sourcePdf) await put(`masters/${id}/source.pdf`, id, src.sourcePdf(), 'application/pdf');
@@ -220,9 +221,12 @@ try {
       await db.collection('pages').insertMany(docs, { ordered: false });
       await db.collection('books').updateOne({ id }, { $set: { thumbnail: docs[0].thumbnail, updated_at: new Date() } });
       await recountBook(db, id, { reason: 'delpher-direct' });
+      insertedId = null;
       console.log(`  OK → ${id} (${docs.length} pages on R2) /book/${slug}`);
     } catch (e) {
       console.log(`  FAIL ${e.message}`);
-    } finally { src.cleanup(); }
+      // The gate will decline a re-run while this record exists: it needs a human, not a retry.
+      if (insertedId) console.log(`  !! book ${insertedId} was inserted (hidden) but its pages were NOT written — report it before re-running`);
+    } finally { src?.cleanup(); }
   }
 } finally { await client.close(); }
