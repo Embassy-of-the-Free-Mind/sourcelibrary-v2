@@ -22,7 +22,9 @@ export const LEAF = {
   height: 1565,
   alt: 'A printed folio page of Latin commentary with a woodcut initial A. A reader has written notes in ink in the left margin and a full line at the foot of the page, and underlined words in the text.',
   /** The end of one printed line: the worked example of a check. */
-  line: { x: 630, y: 185, w: 370, h: 17 },
+  line: { x: 630, y: 185, w: 358, h: 17 },
+  /** The same line's last words, for narrow screens. */
+  lineNarrow: { x: 820, y: 185, w: 170, h: 17 },
   /** The reader's line at the foot of the page. */
   note: { x: 10, y: 1330, w: 680, h: 110 },
   /** Blank paper beside it: where a reader's note on our page would go. */
