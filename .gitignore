@@ -73,6 +73,7 @@ src/data/*
 !src/data/shwep-supplementary-works.ts
 !src/data/public-models.ts
 !src/data/model-usage-recent.json
+!src/data/quality-methods.json
 
 # User uploads and test files
 public/uploads/

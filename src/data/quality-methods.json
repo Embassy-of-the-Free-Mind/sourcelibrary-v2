@@ -1,0 +1,165 @@
+{
+  "_about": "The register behind /quality/methods (#5918, #5937). One entry per rule, instrument and known gap. Edit here, never in the page. Every number needs a source link; tests/unit/quality-methods.test.ts checks the shape.",
+  "as_of": "2026-10-06",
+  "rules": [
+    {
+      "id": "accuracy",
+      "rule": "Only accuracy against something people made counts as quality. Two models agreeing, or one model giving the same answer twice, is agreement or stability, and we label it so.",
+      "source": ".claude/docs/eval-design.md"
+    },
+    {
+      "id": "random-headline",
+      "rule": "Headline rates come from random draws of our own pages. A rate measured on passages chosen because a reference exists describes only those passages.",
+      "source": "scripts/eval/experiments/2026-10-06-random-book-spot-check-canon-shelves-5914.md"
+    },
+    {
+      "id": "unit-is-book",
+      "rule": "Sample books, not pages. Pages in one book share a scan, a hand and an engine, so they count as one observation.",
+      "source": ".claude/docs/eval-design.md"
+    },
+    {
+      "id": "paired",
+      "rule": "Compare two methods only on the same pages. Every comparison includes a run of a method against itself, to show how much changes by chance, and planted errors the judge must catch.",
+      "source": "scripts/eval/DECISIONS.md"
+    },
+    {
+      "id": "prereg",
+      "rule": "Write down what result would change our practice before reading any results, with a margin for chance.",
+      "source": "scripts/eval"
+    },
+    {
+      "id": "judge-is-instrument",
+      "rule": "An AI judge is an instrument under test. It is checked on the exact task, with planted errors that look like real ones, before its verdicts are used.",
+      "source": ".claude/docs/invariants/measurement-instruments.md"
+    },
+    {
+      "id": "typed-first",
+      "rule": "Where people have already typed a text and released it openly, we use their text rather than a machine reading, and the page image stays beside it so it can be checked.",
+      "source": "scripts/eval/DECISIONS.md"
+    },
+    {
+      "id": "withhold",
+      "rule": "What we cannot read reliably, we hold back rather than publish: a reading below its bar, a script with no tested reader, a page the pipeline cannot see.",
+      "source": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5915"
+    },
+    {
+      "id": "landing",
+      "rule": "Every measurement is written up where anyone can read it: an experiment entry, a row in the decision ledger, and a comment on its issue.",
+      "source": "scripts/eval/experiments/README.md"
+    }
+  ],
+  "instruments": [
+    {
+      "id": "monthly-audit",
+      "name": "Monthly corpus audit",
+      "question": "On a random page, does the English say what the transcription says?",
+      "kind": "judged",
+      "scope": "About 100 books drawn at random each month, one interior page each, all languages",
+      "cadence": "monthly",
+      "latest": { "date": "2026-09-30", "headline": "14.3% of pages have a major error (95% CI 7.4–22.3)", "source": "scripts/eval/experiments/_series-monthly-translation-corpus-audit.md" },
+      "on_finding": "Defect classes become issues. Pages are not held automatically.",
+      "blind_to": "The page image (a wrong leaf passes), page ends, and anything about the book as a whole",
+      "issue": 5301,
+      "status": "running"
+    },
+    {
+      "id": "image-book-check",
+      "name": "Image-and-book spot check",
+      "question": "Read against the page image: is it the right page, is the reading right, is the English right, does the book belong where it is filed, may we publish it?",
+      "kind": "judged",
+      "scope": "30 books drawn at random, 3 consecutive pages each, read against the images",
+      "cadence": "monthly (month 0 run 2026-10-06)",
+      "latest": { "date": "2026-10-06", "headline": "21 of 91 pages (23%) with a serious error; about 18 of 30 books with a defect visible on sight", "source": "scripts/eval/experiments/2026-10-06-random-book-spot-check-canon-shelves-5914.md" },
+      "on_finding": "Broken and in-copyright books are hidden the same day; each defect class becomes an issue.",
+      "blind_to": "Rates for single languages (30 books is too few)",
+      "issue": 5914,
+      "status": "running"
+    },
+    {
+      "id": "reference-translations",
+      "name": "Our English against published translations",
+      "question": "Where a person has published a translation of the same passage, how close is ours?",
+      "kind": "accuracy",
+      "scope": "321 pages in five language tracks (84000, SuttaCentral and others), two blind AI judges",
+      "cadence": "per study",
+      "latest": { "date": "2026-10-04", "headline": "Correcting the transcription lifts fidelity most (+0.65 to +1.77 on a 1–5 scale); the stronger model cuts reversed statements from 15 to 6 per 100 pages (Sanskrit, Pali, Chinese)", "source": "scripts/eval/experiments/2026-10-04-translation-vs-reference-synthesis-5695.md" },
+      "on_finding": "Ranks the levers in the decision ledger; changes to models and prompts must beat it.",
+      "blind_to": "Texts nobody has translated, which is most of what we hold",
+      "issue": 5695,
+      "status": "per-study"
+    },
+    {
+      "id": "typed-ground-truth",
+      "name": "Our reading against typed editions",
+      "question": "Where people have typed the same edition, how many characters did our reading get wrong, and what does that predict for pages with no typed edition?",
+      "kind": "accuracy",
+      "scope": "Kanripo (Chinese classics), CBETA, VRI (Pali); more editions to follow",
+      "cadence": "per study; phase 1 running",
+      "latest": { "date": "2026-10-05", "headline": "Kanripo screen on the PaddleOCR reading: 6.6% of 992,881 pages flagged as disagreeing", "source": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5600" },
+      "on_finding": "Flagged pages are listed; not yet held from translation (proposed in #5915).",
+      "blind_to": "Genuine textual variants between editions, until the by-eye floor is measured",
+      "issue": 5935,
+      "status": "running"
+    },
+    {
+      "id": "page-integrity",
+      "name": "Page-integrity walk",
+      "question": "Across every book: are pages missing, repeated or out of order, and is any translation cut short or a copy of the original?",
+      "kind": "screen",
+      "scope": "Every page in the corpus mirror, eight automatic checks",
+      "cadence": "per run",
+      "latest": { "date": "2026-09-24", "headline": "20,933 page-number breaks in 6,472 books, about 45% real by a read of 20", "source": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5059" },
+      "on_finding": "Repair lists only. Nothing yet holds a flagged book from view.",
+      "blind_to": "Scans spliced from different copies where the numbering still runs",
+      "issue": 5059,
+      "status": "per-run"
+    },
+    {
+      "id": "error-taxonomy",
+      "name": "Page-error taxonomy",
+      "question": "What kinds of thing go wrong on a page, named from pages opened and read?",
+      "kind": "by-eye",
+      "scope": "44 defect classes across image, reading and translation",
+      "cadence": "updated as classes are found",
+      "latest": null,
+      "on_finding": "Each class names its detector or issue.",
+      "blind_to": "How often each class occurs (that is the audits' job)",
+      "issue": 5700,
+      "status": "running",
+      "link": "/research/page-errors"
+    },
+    {
+      "id": "rights-screen",
+      "name": "Rights screen",
+      "question": "Is this edition still in copyright where we publish it?",
+      "kind": "screen",
+      "scope": "Title pages and imprints read from our own transcription; first run on the canon shelves",
+      "cadence": "per run; not yet at import",
+      "latest": { "date": "2026-10-06", "headline": "49 of 1,571 visible canon-shelf books found to be modern editions in copyright; all hidden", "source": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/4809" },
+      "on_finding": "The book is hidden, with a reason that stops it being republished in bulk.",
+      "blind_to": "Books with no transcribed front matter",
+      "issue": 4809,
+      "status": "per-run"
+    },
+    {
+      "id": "human-readers",
+      "name": "Readers of the original",
+      "question": "Asked of a person who reads the source language: does the English say what this page says?",
+      "kind": "accuracy",
+      "scope": "Pages from the monthly audit draw, one at a time, sent to volunteers who read the language",
+      "cadence": "continuous once started",
+      "latest": null,
+      "on_finding": "Checks the AI judge: where a reader and the judge disagree, the judge's rates are corrected.",
+      "blind_to": "Languages no volunteer reads",
+      "issue": 5406,
+      "status": "planned"
+    }
+  ],
+  "gaps": [
+    { "gap": "No person who reads the source language has yet checked our pages, so every judged rate rests on AI judges no human has calibrated.", "issue": 5406 },
+    { "gap": "High-precision flags (duplicate scans, a repeated page, a typed-edition disagreement) do not yet hold a public book or page from view.", "issue": 5915 },
+    { "gap": "There is no rights check at import: the importer treats every Internet Archive scan as public domain until someone looks.", "issue": 4809 },
+    { "gap": "Quality on texts with no typed edition and no human translation is unknown, not estimated.", "issue": 5935 },
+    { "gap": "Books are not checked as wholes: shelf membership and the wrong work under a title are found only by eye.", "issue": 5916 }
+  ]
+}
