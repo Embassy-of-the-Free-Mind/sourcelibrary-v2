@@ -78,6 +78,18 @@ export const UNLISTED_PAGES: Record<string, string> = {
 
 export const posts: BlogPost[] = [
   {
+    slug: 'what-the-models-cannot-name',
+    title: 'What the Models Cannot Name',
+    subtitle:
+      'A preregistered re-run of our May survey. For about half of the distinct works we hold, none of Gemini 3.1 Pro, Claude Opus 5.5 or GPT-5.6 can name the author from the title; by volumes it is about a third. That measures what models can recall, not what they were trained on.',
+    date: '7 October 2026',
+    readTime: '10 min read',
+    kind: 'counting',
+    image: 'https://images.sourcelibrary.org/artwork/art-raphael-raphael-after-heraclitus.jpg',
+    imageAlt: 'After Raphael, Heraclitus: a bearded philosopher leans on a stone block, his hand resting on a sheet of writing.',
+    imagePosition: 'center 30%',
+  },
+  {
     slug: 'drebbel',
     title: 'The Engraver Who Went Under the Thames',
     subtitle:
