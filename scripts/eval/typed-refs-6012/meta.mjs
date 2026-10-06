@@ -43,15 +43,17 @@ export function metaDta(h) {
 }
 
 export function metaCamena(h, coll, file) {
-  const short = first(h, /<title type=['"]short['"]>([\s\S]*?)<\/title>/);
-  const bibl = first(block(h, 'sourceDesc'), /<bibl[^>]*>([\s\S]*?)<\/bibl>/) || first(block(h, 'sourceDesc'), /<p>([\s\S]*?)<\/p>/);
-  const note = (t) => first(h, new RegExp(`<note type=["']${t}["']>([\\s\\S]*?)</note>`));
+  // Two header dialects: bare <title> / type='short', and the validated one with TEIform="…" on every tag.
+  const title = first(h, /<title(?![^>]*\stype=)[^>]*>([\s\S]*?)<\/title>/);
+  const short = first(h, /<title[^>]*\stype=['"]short['"][^>]*>([\s\S]*?)<\/title>/);
+  const bibl = first(block(h, 'sourceDesc'), /<bibl[^>]*>([\s\S]*?)<\/bibl>/) || first(block(h, 'sourceDesc'), /<p[^>]*>([\s\S]*?)<\/p>/);
+  const note = (t) => first(h, new RegExp(`<note[^>]*\\stype=["']${t}["'][^>]*>([\\s\\S]*?)</note>`));
   const place = (bibl || '').split(':')[0].trim();
   return {
-    title: first(h, /<title>([\s\S]*?)<\/title>/) || short, title_short: short,
+    title: title || short, title_short: short,
     author: first(h, /<author[^>]*>([\s\S]*?)<\/author>/), year: yearOf(bibl) || yearOf(short), date_raw: bibl,
     place: place && place.length < 40 ? place : null, printer: null, language: 'lat', citation: bibl, collection: coll,
-    ids: { camena_file: `${coll}/${file}`, camena_pathname: note('pathname'), camena_href: note('href'), camena_html: note('filename') },
+    ids: { camena_file: `${coll}/${file}`, camena_pathname: note('pathname'), camena_href: note('href'), camena_html: note('filename'), camena_srcfile: note('srcfile') },
   };
 }
 
