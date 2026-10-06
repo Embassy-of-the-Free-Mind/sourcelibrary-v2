@@ -38,6 +38,8 @@ const CITE = 'block text-sm text-muted mt-3 not-italic';
 const ISSUE = (n: number) => `https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/${n}`;
 
 const PRASANNAPADA = 'https://sourcelibrary.org/book/6a3067d0c4fd77fb5b9f8378?page=515';
+const RUYI_51 = 'https://sourcelibrary.org/book/69f1345d365e3fcae574e290?page=51';
+const HWAAMSA_40 = 'https://sourcelibrary.org/book/69e014d347b76785d4ec8145?page=40';
 const FIVE_LAMPS_152 = 'https://sourcelibrary.org/book/6a3cc1c2ec254ff6cae0ee53?page=152';
 const FIVE_LAMPS_153 = 'https://sourcelibrary.org/book/6a3cc1c2ec254ff6cae0ee53?page=153';
 const KNORR_164 = 'https://sourcelibrary.org/book/69804b901fb2ba7cf1d43a18?page=164';
@@ -157,9 +159,49 @@ export default function FourCommentariesOnNothingPage() {
         </section>
 
         <section className="mb-16">
-          <h2 className={H2}>2. A Chan master named Awakened-to-Emptiness</h2>
+          <h2 className={H2}>2. The Diamond Sutra, and a Chan master named Awakened-to-Emptiness</h2>
           <p className={P}>
-            Xiufu Wukong was a tenth-century Chan master at the Qingliang monastery, a temple founded by
+            In the <em>Diamond Sutra</em> the Buddha tells Subhūti that the Tathāgata knows every mind
+            of every being, because “all minds are not minds; they are called minds”, and then: “the
+            past mind cannot be grasped. The present mind cannot be grasped. The future mind cannot be
+            grasped.” A commentary on the sutra printed in 1787 at the Haizhuang monastery in
+            Guangzhou (金剛般若波羅蜜經如義) sets its comment above the sutra on every leaf. Above this
+            passage it warns the reader:
+          </p>
+          <blockquote className={QUOTE}>
+            The previous section emptied all phenomena, and this section empties all minds. If the skin
+            does not exist, where can the hair be attached? The language of this chapter is clever, and
+            its meaning is profound, like steep mountains and jagged peaks that suddenly project a
+            solitary summit ten thousand fathoms high, leaving the reader unable to find a hold.
+            <cite className={CITE}>
+              <em>Jingang bore boluomi jing ruyi</em> (Guangzhou, 1787).{' '}
+              <a href={RUYI_51} className={A}>Read the page</a>
+            </cite>
+          </blockquote>
+          <Page
+            src="https://images.sourcelibrary.org/pages/69f1345d365e3fcae574e290/0051.jpg"
+            alt="A leaf of the 1787 Guangzhou Diamond Sutra commentary: the commentary in small characters in the upper register, the sutra in large characters below."
+            caption={<>Commentary above, sutra below. Bavarian State Library copy.</>}
+            href={RUYI_51}
+          />
+          <p className={P}>
+            “Leaving the reader unable to find a hold” is the whole method in one phrase. The
+            commentator does not explain what the mind is instead; he tells the reader to stop
+            looking for somewhere to stand.
+          </p>
+          <p className={P}>
+            <strong>What the English gets wrong.</strong> On the same leaf, the sutra asks, 如來有佛眼不,
+            “Does the Tathāgata have the Buddha-eye?”, and Subhūti answers 如是世尊, “So it is,
+            World-Honored One.” The final 不 of the question is a question marker, not a “no”. Our
+            English reads it as a refusal: “No, World-Honored One, the Tathagata has the Buddha-eye.” It
+            does the same with the sand of the Ganges two lines later. The answer is reversed and the
+            sentence contradicts itself, and nothing on the page warns the reader. A 1496 Korean
+            woodblock of the same sutra, also in this library, gets the{' '}
+            <a href={HWAAMSA_40} className={A}>same sentence</a> right: “Indeed, World-Honored One, the
+            Tathāgata has the Buddha eye.” One character, read two ways by the same kind of machine.
+          </p>
+          <p className={P}>
+            Chan carried the same method into conversation. Xiufu Wukong was a tenth-century Chan master at the Qingliang monastery, a temple founded by
             the ruler of the Southern Tang. His name, 悟空 (Wukong), means “awakened to emptiness”. His
             exchanges with monks are preserved in the <em>Compendium of the Five Lamps</em> (五燈會元),
             compiled in 1252; ours is a Qing-dynasty print. A monk asks, “What is the Dao?” He answers
@@ -362,9 +404,10 @@ export default function FourCommentariesOnNothingPage() {
             checked against its image before anyone trusts what was made from it.
           </p>
           <p className={P}>
-            <strong>Who is speaking.</strong> These texts argue in dialogue: opponent and reply, monk
-            and master, verse and gloss. A machine is now good at the words. Its worst errors are about
-            whose words they are, and in a dialectical text that is where the meaning is.
+            <strong>Who is speaking, and whether they said yes.</strong> These texts argue in
+            dialogue: opponent and reply, monk and master, question and answer. A machine is now good
+            at the words. Its worst errors are about whose words they are, and about one small word,
+            a “not” that was a question mark. In a dialectical text that is where the meaning is.
           </p>
           <p className={P}>
             <strong>The commentary is part of the text.</strong> It is the part a machine is most
