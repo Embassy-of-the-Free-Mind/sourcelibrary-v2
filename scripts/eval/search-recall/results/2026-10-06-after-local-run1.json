@@ -1,6 +1,6 @@
 {
- "at": "2026-10-06T08:32:06.172Z",
- "source": "/tmp/sr5905/raw-cons1.json",
+ "at": "2026-10-06T08:49:22.523Z",
+ "source": "/tmp/sr5905/raw-after1.json",
  "ranking": "default",
  "rows": [
   {
@@ -9,7 +9,7 @@
    "query": "Drebbel",
    "r10": 0.8,
    "r20": 0.85,
-   "total": 31,
+   "total": 34,
    "ranking": "auto-ladder:words",
    "degraded": [],
    "error": null,
@@ -42,11 +42,9 @@
    "query": "Khunrath",
    "r10": 0.6,
    "r20": 0.65,
-   "total": 33,
+   "total": 39,
    "ranking": "auto-ladder:words",
-   "degraded": [
-    "semantic_page"
-   ],
+   "degraded": [],
    "error": null,
    "top": [
     "6a267d456c1f37c9c4f391d6",
@@ -77,7 +75,7 @@
    "query": "Basil Valentine",
    "r10": 0.2,
    "r20": 0.15,
-   "total": 57,
+   "total": 62,
    "ranking": "auto-ladder:words",
    "degraded": [],
    "error": null,
@@ -143,7 +141,7 @@
    "query": "Nagarjuna",
    "r10": 1,
    "r20": 0.85,
-   "total": 42,
+   "total": 47,
    "ranking": "auto-ladder:words",
    "degraded": [],
    "error": null,
@@ -211,9 +209,7 @@
    "r20": 0.55,
    "total": 41,
    "ranking": "auto-ladder:words",
-   "degraded": [
-    "semantic_page"
-   ],
+   "degraded": [],
    "error": null,
    "top": [
     "69b418d12b0edf3eaa2ddfbc",
@@ -310,7 +306,7 @@
    "query": "Paracelsus",
    "r10": 0,
    "r20": 0.1,
-   "total": 70,
+   "total": 72,
    "ranking": "auto-ladder:words",
    "degraded": [],
    "error": null,
@@ -343,11 +339,9 @@
    "query": "Drebbelius",
    "r10": 0.3,
    "r20": 0.25,
-   "total": 29,
+   "total": 39,
    "ranking": "auto-ladder:words",
-   "degraded": [
-    "semantic_page"
-   ],
+   "degraded": [],
    "error": null,
    "top": [
     "69b51ea6cf111105c42a2b3f",
@@ -378,11 +372,9 @@
    "query": "Raimundus Lullus",
    "r10": 0.4,
    "r20": 0.35,
-   "total": 52,
+   "total": 62,
    "ranking": "auto-ladder:words",
-   "degraded": [
-    "semantic_page"
-   ],
+   "degraded": [],
    "error": null,
    "top": [
     "69b51eb69a81ef7feb3d983f",
@@ -413,7 +405,7 @@
    "query": "Jabir",
    "r10": 0.6,
    "r20": 0.35,
-   "total": 43,
+   "total": 48,
    "ranking": "auto-ladder:words",
    "degraded": [],
    "error": null,
@@ -446,7 +438,7 @@
    "query": "Basilius Valentinus",
    "r10": 0.2,
    "r20": 0.3,
-   "total": 54,
+   "total": 57,
    "ranking": "auto-ladder:words",
    "degraded": [],
    "error": null,
@@ -503,7 +495,7 @@
     "6a100939f7172929509682cb",
     "69b51def768235dc65989bfa",
     "69b4c0e16248be021e02022e",
-    "698255f1861f3361ae3249e0",
+    "698420e0acbeea3119317587",
     "697d9ca25456cb07a7d28755",
     "697b079957403b932c4a76b3"
    ]
@@ -514,33 +506,31 @@
    "query": "self-regulating oven",
    "r10": 0,
    "r20": 0,
-   "total": 22,
+   "total": 33,
    "ranking": "auto-ladder:words",
-   "degraded": [
-    "semantic_page"
-   ],
+   "degraded": [],
    "error": null,
    "top": [
     "6980941f08ed39e7ae2ef412",
     "69a0278f0723f5e6c1715da5",
     "6991c5763074a1745a411600",
     "69b3f73ba107e55a0ee1c3d4",
+    "6a085ba249638a50931cbeec",
+    "6a08555049638a50931c1f9f",
     "69a5f6ba1cf742c3604140a8",
     "69e4121a937ee36cf27c7585",
     "6991d65e8c1030b12444ae97",
     "6953efdf1479a63c11088464",
     "695677fdbe7c607c5f03b2d9",
+    "69943cb1a668f66e6953c106",
     "69e8b24d2ff2a8dc09e77295",
+    "69a5eb4daa8e0e4092146d10",
+    "69a5ed3396d6dd816a569e2c",
+    "69a5eda496d6dd816a56ae46",
     "69e009cb846d79f28d566ff5",
-    "6a0ad1ddfa75eca1108056c5",
-    "695434db1479a63c1108a054",
-    "69a5537fbab4924e15759db4",
-    "69a5539aff280c3113d0acaf",
-    "69b51ee49a81ef7feb3dc51e",
-    "699246bbbc722ec0ee812477",
-    "699258005a81897d604b463c",
-    "695234ddab34727b1f044cd2",
-    "6991bd7170254d38471e5a9c"
+    "69943f7b338b1d7fd14de029",
+    "69943f85338b1d7fd14de391",
+    "6a0ad1ddfa75eca1108056c5"
    ]
   },
   {
@@ -584,9 +574,7 @@
    "r20": 0.3,
    "total": 59,
    "ranking": "auto-rrf:words",
-   "degraded": [
-    "book"
-   ],
+   "degraded": [],
    "error": null,
    "top": [
     "6953ea4a1479a63c1108696b",
@@ -650,11 +638,9 @@
    "query": "magnetism",
    "r10": 0,
    "r20": 0.1,
-   "total": 44,
+   "total": 49,
    "ranking": "auto-ladder:words",
-   "degraded": [
-    "semantic_page"
-   ],
+   "degraded": [],
    "error": null,
    "top": [
     "6991bd4070254d38471e34f3",
@@ -685,11 +671,9 @@
    "query": "loadstone",
    "r10": 0.9,
    "r20": 0.65,
-   "total": 31,
+   "total": 38,
    "ranking": "auto-ladder:words",
-   "degraded": [
-    "semantic_page"
-   ],
+   "degraded": [],
    "error": null,
    "top": [
     "6953e59677f38f6761bf0f90",
@@ -854,9 +838,7 @@
    "r20": 0.3,
    "total": 36,
    "ranking": "auto-rrf:words",
-   "degraded": [
-    "book"
-   ],
+   "degraded": [],
    "error": null,
    "top": [
     "6a0e56b7b8ad266ebed236a1",
