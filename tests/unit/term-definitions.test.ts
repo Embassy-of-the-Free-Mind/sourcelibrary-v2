@@ -106,6 +106,52 @@ describe('notes off hides the model definitions (#5895)', () => {
   });
 });
 
+/**
+ * #5942 phase 2 (7 of 800 pages lost a line with notes off): shape 2 relabelled a
+ * headword's <gloss> as a <note>, and the glossary-line rule then deleted the whole
+ * line as if it were the model's own glossary. Excerpts are stored translations:
+ *  - 6992cd5443713c66ea635d14 p.68 (plate heading)
+ *  - 69bda107f6d63c919748ca14 p.164 (register)
+ *  - 69b6c2e88566c8381465ccbb p.157 (index of prohibited books)
+ */
+describe('notes off keeps a headword written as term+gloss (#5942)', () => {
+  it('a line that is only a term and its gloss keeps the term', () => {
+    expect(applyNotesOff('<term>Abba</term> <gloss>father</gloss>')).toBe('Abba');
+    expect(applyNotesOff('Before.\n<term>Abba</term> <gloss>father</gloss>\nAfter.')).toBe('Before.\nAbba\nAfter.');
+  });
+
+  it('a heading written as term+gloss keeps its words', () => {
+    expect(applyNotesOff('## <term>Prima materia</term> <gloss>first matter</gloss>')).toBe('## Prima materia');
+  });
+
+  it('a trailing glossary line of term+note pairs is still dropped', () => {
+    expect(applyNotesOff('Real sentence.\n<term>bite</term> <note>original: "morsus."</note>')).toBe('Real sentence.');
+  });
+
+  it('the Silver sentence still reads without the gloss', () => {
+    expect(applyNotesOff(SILVER)).toBe('where Sulphur boils mixed with perennial Silver, fleeing');
+  });
+
+  it.each([
+    ['# <term>Shui Yang Mei</term> <gloss>Adina rubella / Chinese buttonbush</gloss>\n\n<note>A botanical woodblock illustration.</note>',
+      '# Shui Yang Mei'],
+    ['Magnesia is bismuth. 26. 46\n<term>Marez</term>, see <term>Arez</term> <gloss>Earth</gloss>.\n\nMa-',
+      'Marez, see Arez.'],
+    ['F. Hermenegildo de S. Pablo. see: Origen.\n<term>Hermetis Magi libri</term> <gloss>Books of Hermes the Magician</gloss>. see: <term>Libri Hermetis</term> <gloss>Books of Hermes</gloss>.\nHerold. see: Ioannes.',
+      'Hermetis Magi libri. see: Libri Hermetis.'],
+  ])('reader, notes off, keeps the page line: %s', (page, line) => {
+    const off = prepareNotesMarkdown(page, { showNotes: false }).processedText;
+    expect(off.split('\n')).toContain(line);
+    expect(off).not.toMatch(/Chinese buttonbush|Books of Hermes|>Earth</);
+    expect(markdownToHtml(page, { stripNotes: true })).toContain(line.replace(/^# /, ''));
+  });
+
+  it('notes on still shows the gloss as an editorial note', () => {
+    const on = prepareNotesMarkdown('<term>Abba</term> <gloss>father</gloss>', { showNotes: true }).processedText;
+    expect(on).toContain('<note>father</note>');
+  });
+});
+
 describe('a head the sentence already carries is not printed twice (#5901)', () => {
   // Excerpts: 6902ed49583dd7d2641408a5 p444 (God’s field), 59e68f94-49d0-4ed7-a610-b1f53e55b2f8 p652
   // (drachms), 6952727dab34727b1f0485f2 p44 (formal number), 695234baab34727b1f044b50 p34 (Cassia).
