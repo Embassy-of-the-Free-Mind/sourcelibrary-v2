@@ -1,7 +1,7 @@
 {
   "issue": 6056,
   "dir": "scripts/eval/results/spot-check/overview-2026-10-07",
-  "weighted_serious_page_rate": 0.2971218961625282,
+  "weighted_serious_page_rate": 0.28924345030439835,
   "weight_basis": "frame_size (books in stratum frame)",
   "strata": [
     {
@@ -224,15 +224,15 @@
       "desc": "Eternity shelf: Hebrew / Kabbalah (visible)",
       "frame_size": 15,
       "books": 4,
-      "pages": 16,
-      "serious_page_rate": 0.625,
+      "pages": 11,
+      "serious_page_rate": 0.45454545454545453,
       "serious_ci": [
-        0.25,
+        0.125,
         1
       ],
       "wrong_leaf_rate": 0,
-      "mean_ocr": 2.31,
-      "mean_tr": 2.13,
+      "mean_ocr": 2.82,
+      "mean_tr": 2.55,
       "on_sight_books": 4,
       "fit_to_show": {
         "do_not_show": 3,
@@ -274,15 +274,15 @@
       "desc": "Eternity shelf: Arabic and Persian (visible)",
       "frame_size": 28,
       "books": 4,
-      "pages": 16,
-      "serious_page_rate": 0.5,
+      "pages": 15,
+      "serious_page_rate": 0.4666666666666667,
       "serious_ci": [
         0.25,
-        0.8125
+        0.7692307692307693
       ],
       "wrong_leaf_rate": 0,
-      "mean_ocr": 3.31,
-      "mean_tr": 2.81,
+      "mean_ocr": 3.47,
+      "mean_tr": 2.93,
       "on_sight_books": 4,
       "fit_to_show": {
         "show_with_caveat": 3,

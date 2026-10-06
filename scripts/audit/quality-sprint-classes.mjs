@@ -20,7 +20,7 @@
  *            tr_placeholder  translation.recitation_blocked: the reader shows the "could not be translated" line
  *            dup_text        two consecutive pages with the same ocr.content_hash and > 200 chars: one leaf read
  *                            twice (I2), or one text written onto two leaves; either way a defect on sight
- *            nonpositive_page  page records numbered < 1 (unsplit spreads stored beside the split pages)
+ *            nonpositive_page  soft-hidden records (page_number < 1): information only, never rendered (#3293)
  *          Checkpointed to books.jsonl per book, so a rerun resumes. Summary: books affected with a Wilson 95% CI
  *          and the projection to the frame.
  * hijri  — public Arabic-script books whose stored year is 1200–1450 (a Hijri year read as CE: 1402 AH = 1982)
@@ -74,12 +74,16 @@ async function pagesMode() {
   for (const bookId of sample) {
     i++;
     if (done.has(bookId)) continue;
-    const rows = await db.collection('pages').aggregate([
+    let rows = await db.collection('pages').aggregate([
       { $match: { book_id: bookId } },
       { $project: { _id: 0, p: '$page_number', h: '$ocr.content_hash', n: strLen('$ocr.data'),
         rc: '$ocr.recitation_count', rb: '$ocr.recitation_blocked', skip: '$ocr.last_skip.reason', trb: '$translation.recitation_blocked' } },
       { $sort: { p: 1 } },
     ]).toArray();
+    // Reader-facing classes count only pages a reader can reach: page_number <= 0 is the soft-hide convention
+    // (scripts/lib/page-counts.mjs, #3293). Soft-hidden records are reported separately, as information, not a defect.
+    const all = rows;
+    rows = rows.filter((r) => typeof r.p === 'number' && r.p > 0);
     const refusal = rows.filter((r) => ((r.rc ?? 0) > 0 || r.rb === true || r.skip === 'recitation') && r.n < 20).map((r) => r.p);
     const trPlaceholder = rows.filter((r) => r.trb === true).map((r) => r.p);
     const dup = [];
@@ -87,9 +91,9 @@ async function pagesMode() {
       const a = rows[k - 1], b = rows[k];
       if (a.h && a.h === b.h && a.n > 200 && b.n > 200) dup.push(b.p);
     }
-    // Page records numbered < 1: in the 2026-10-07 overview these were unsplit two-page spreads stored beside the split
-    // pages (Pardes Rimmonim, Etz Hayyim, Ibn al-Baytar), so readers meet the same text twice and out of order.
-    const nonpos = rows.filter((r) => typeof r.p === 'number' && r.p < 1).map((r) => r.p);
+    // Soft-hidden records (page_number < 1): NOT a reader defect — the reader never renders them (#3293). Counted so a
+    // sampler that forgets the filter can be caught (the 2026-10-07 overview drew 6 of them).
+    const nonpos = all.filter((r) => typeof r.p === 'number' && r.p < 1).map((r) => r.p);
     const rec = { book_id: bookId, pages: rows.length, refusal_empty: refusal.length, tr_placeholder: trPlaceholder.length, dup_text: dup.length, nonpositive_page: nonpos.length,
       ex: { refusal_empty: refusal.slice(0, 5), tr_placeholder: trPlaceholder.slice(0, 5), dup_text: dup.slice(0, 5), nonpositive_page: nonpos.slice(0, 5) } };
     appendFileSync(ckpt, JSON.stringify(rec) + '\n');

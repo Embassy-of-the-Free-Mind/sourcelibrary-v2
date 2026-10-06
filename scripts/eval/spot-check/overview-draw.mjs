@@ -9,6 +9,9 @@
  *   node --env-file=.env.production.local scripts/eval/spot-check/overview-draw.mjs \
  *     --strata strata.json --out scripts/eval/results/spot-check/overview-<date> [--books 4] [--bins 4] [--seed N]
  *
+ * Only pages a reader can reach: page_number > 0 (≤ 0 is the soft-hide convention, scripts/lib/page-counts.mjs).
+ * The 2026-10-07 run predates this filter and drew 6 soft-hidden records; overview-score.mjs drops them.
+ *
  * strata.json: [{ name, desc, ids: [book ids] }] — the frame of each stratum, built by whoever runs it and copied
  * into the output (draw-log.json) so the weights travel with the result. Books need ≥ 2×bins translated pages.
  * Writes sample.json, packets/<stratum>.json (one reviewer per stratum), draw-log.json.
@@ -38,7 +41,7 @@ for (const st of STRATA) {
   const chosen = [];
   for (const id of shuffle(st.ids)) {
     if (chosen.length >= K) break;
-    const tr = (await db.collection('pages').find({ book_id: id, 'translation.data': { $regex: '\\S' } }, { projection: { _id: 0, page_number: 1 } }).toArray())
+    const tr = (await db.collection('pages').find({ book_id: id, page_number: { $gt: 0 }, 'translation.data': { $regex: '\\S' } }, { projection: { _id: 0, page_number: 1 } }).toArray())
       .map((p) => p.page_number).sort((a, b) => a - b);
     if (tr.length < 2 * BINS) continue;
     // One random translated page per quarter of the book's translated pages: start, two middles, end.

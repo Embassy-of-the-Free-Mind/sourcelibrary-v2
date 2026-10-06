@@ -34,7 +34,8 @@ const strata = [];
 for (const st of log.strata) {
   const f = join(dir, 'reviews', `${st.name}.json`);
   if (!existsSync(f)) { strata.push({ name: st.name, frame_size: st.frame_size, missing: true }); continue; }
-  const books = JSON.parse(readFileSync(f, 'utf8'));
+  // Soft-hidden records (page_number <= 0, page-counts.mjs) never render, so they are not part of what a reader meets.
+  const books = JSON.parse(readFileSync(f, 'utf8')).map((b) => ({ ...b, pages: b.pages.filter((p) => p.page_number > 0) }));
   const pages = books.flatMap((b) => b.pages);
   const ser = bootstrapRatioCI(books.map((b) => b.pages.filter(serious).length), books.map((b) => b.pages.length));
   const fit = books.reduce((m, b) => ({ ...m, [b.fit_to_show ?? 'unrecorded']: (m[b.fit_to_show ?? 'unrecorded'] || 0) + 1 }), {});

@@ -1,6 +1,6 @@
 # Shelf overview (overview-2026-10-07)
 
-Frame-weighted share of pages with a serious error: **30%** over 6 strata (weights = books in each stratum's frame).
+Frame-weighted share of pages with a serious error: **29%** over 6 strata (weights = books in each stratum's frame).
 
 | stratum | frame | books | pages | serious pages (95% CI, by book) | wrong leaf | OCR | EN | on-sight | show / caveat / don't |
 |---|---|---|---|---|---|---|---|---|---|
@@ -8,8 +8,8 @@ Frame-weighted share of pages with a serious error: **30%** over 6 strata (weigh
 | nalanda-sanskrit | 14 | 4 | 16 | 19% (6%–25%) | 0% | 4.19 | 3.81 | 4/4 | 0 / 3 / 1 |
 | chinese | 153 | 4 | 16 | 50% (13%–88%) | 0% | 3.06 | 2.94 | 3/4 | 0 / 2 / 2 |
 | pali | 20 | 4 | 16 | 13% (0%–38%) | 0% | 4.31 | 3.94 | 3/4 | 1 / 3 / 0 |
-| hebrew | 15 | 4 | 16 | 63% (25%–100%) | 0% | 2.31 | 2.13 | 4/4 | 0 / 1 / 3 |
-| arabic-persian | 28 | 4 | 16 | 50% (25%–81%) | 0% | 3.31 | 2.81 | 4/4 | 0 / 3 / 1 |
+| hebrew | 15 | 4 | 11 | 45% (13%–100%) | 0% | 2.82 | 2.55 | 4/4 | 0 / 1 / 3 |
+| arabic-persian | 28 | 4 | 15 | 47% (25%–77%) | 0% | 3.47 | 2.93 | 4/4 | 0 / 3 / 1 |
 
 ## Showcase pages
 
