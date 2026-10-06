@@ -43,6 +43,7 @@ import { createClient } from '@supabase/supabase-js';
 import { shouldBypassPause, hasScope, resolveScopeBookIds } from './lib/selective-unpause.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { buildPageTexts, attributeEntityPages, entityCounters } from '../lib/entity-page-match.mjs';
+import { isHeldSurname } from '../lib/shared-surname-hold.mjs';
 import { composeBookEmbeddingText } from '../lib/book-embedding-text.mjs';
 import { embedBookPages } from '../lib/embed-book-pages.mjs';
 import { computeEndPages } from '../lib/chapter-endpages.mjs';
@@ -832,6 +833,8 @@ async function syncBookEntities(db, bookId, bookTitle, bookAuthor, conceptIndex,
 
   async function syncEntity(term, type, entry) {
     const canonicalName = resolve(term, type);
+    // A surname several people share is attached to no person record (#5950).
+    if (isHeldSurname(canonicalName, type)) return;
     const bookEntry = {
       book_id: bookId,
       book_title: bookTitle,
