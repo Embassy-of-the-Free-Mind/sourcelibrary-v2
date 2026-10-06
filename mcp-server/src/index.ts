@@ -461,11 +461,15 @@ const TOOLS: Tool[] = [
     name: "check_duplicate",
     title: "Check Duplicate",
     description:
-      "Check if a book already exists in Source Library before importing. Uses 4-tier matching: source fingerprint, title+author normalization, keyword search, and semantic similarity. Returns confidence level, matches with URLs, and a suggestion (safe to import / review matches / likely duplicate). Use this BEFORE every import to avoid duplicates.",
+      "Do we already hold this book? Give a library URL (Internet Archive, Gallica, e-rara, BSB, a IIIF manifest) or a title + author + year. Matches the same scan, the same edition, other editions and the same work, plus near and cross-lingual titles. Returns a verdict (same_object / same_edition / possible_same_edition / other_edition / related_title / new), matches with reasons and URLs, a count of copies held but not yet public, and what the check could not search. A negative from a URL alone has not searched other editions. Use this BEFORE every import, and before saying the library lacks a work.",
     annotations: { title: "Check Duplicate", readOnlyHint: true },
     inputSchema: {
       type: "object" as const,
       properties: {
+        url: {
+          type: "string",
+          description: "A library URL or IIIF manifest for the copy you would import (title then optional)",
+        },
         title: {
           type: "string",
           description: "Book title (original language or English)",
@@ -491,7 +495,7 @@ const TOOLS: Tool[] = [
           description: "IIIF manifest URL (optional, for exact fingerprint match)",
         },
       },
-      required: ["title"],
+      required: [],
     },
   },
 
