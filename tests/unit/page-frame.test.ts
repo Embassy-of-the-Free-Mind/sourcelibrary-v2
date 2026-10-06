@@ -100,3 +100,30 @@ describe('framedImageBox', () => {
     expect(b.left + b.width * (0.1 + 0.86)).toBeCloseTo(500, 6);
   });
 });
+
+describe('detectPageFrame on a tilted page', () => {
+  // A page whose right edge slopes from x=88 at the top to x=82 at the bottom
+  // (about 2.5°), bed beyond it: the cut must clear the bed in every row.
+  const edge = (y: number) => 88 - Math.round((y / 139) * 6);
+
+  it('cuts at the innermost point of the edge, leaving no wedge of bed', () => {
+    const v = detectPageFrame(img(100, 140, (x, y) => (x >= edge(y) ? 22 : undefined)), 100, 140);
+    expect(v.kind).toBe('frame');
+    if (v.kind !== 'frame') return;
+    expect(v.box.x + v.box.w).toBeLessThanOrEqual(82);
+    expect(v.box.w).toBeGreaterThan(75);
+  });
+
+  it('keeps the mid-slope cut when the tighter one would trim ink', () => {
+    // 200×280, right edge sloping 176 → 164. A margin note near the top sits at x 166,
+    // with paper between it and the bed: the innermost cut would slice it off.
+    const e = (y: number) => 176 - Math.round((y / 279) * 12);
+    const v = detectPageFrame(
+      img(200, 280, (x, y) => (x >= e(y) ? 22 : x === 166 && y < 80 && y % 4 === 0 ? 40 : undefined)),
+      200, 280,
+    );
+    expect(v.kind).toBe('frame');
+    if (v.kind !== 'frame') return;
+    expect(v.box.x + v.box.w).toBeGreaterThan(166);
+  });
+});
