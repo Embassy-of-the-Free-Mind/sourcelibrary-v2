@@ -1774,7 +1774,20 @@ function createServer(reqContext: { ip: string; userAgent: string | null; identi
 
 // ── Next.js route handlers ─────────────────────────────────────────
 
-export async function GET() {
+export async function GET(req: Request) {
+  // A Streamable HTTP client opens GET with `Accept: text/event-stream` to get a
+  // server→client stream. The spec allows exactly two answers: an event stream
+  // or 405. We are stateless and have no stream, so 405 — the SDK reads it as
+  // "no stream offered" and stops. A 200 JSON banner instead reads as a stream
+  // that ended at once, and the client reconnects: 4.4M GETs in the week to
+  // 2026-10-06, 40% of every request that reached Vercel (#4753).
+  if (req.headers.get('accept')?.includes('text/event-stream')) {
+    return new Response(null, {
+      status: 405,
+      headers: { Allow: 'POST, DELETE, OPTIONS', 'Access-Control-Allow-Origin': '*' },
+    });
+  }
+  // Browsers and curl still get the banner.
   return new Response(JSON.stringify({
     name: 'source-library',
     version: SERVER_VERSION,
