@@ -207,3 +207,10 @@ describe('the head in another form, or a few words back (#5901 gate, second samp
       .toBe('**striated particles**. <note>original: "ibid."</note> <note>These are grooved, screw-like particles of matter.</note> 91.');
   });
 });
+
+describe('#5901 gate, third sample', () => {
+  it('leaves a chip whose colon belongs to a label after a semicolon (699439b66879ff0184cb8dac p443)', () => {
+    const t = 'But the stars called **fixed** <term>aplaneis; original: "ἀπλανεῖς"; literally "unwandering"</term> move with three motions';
+    expect(separateTermDefinitions(t)).toBe(t);
+  });
+});
