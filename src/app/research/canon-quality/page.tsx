@@ -687,7 +687,8 @@ export default function CanonQualityPage() {
         <p className="text-sm text-stone-500 mt-8">
           Prepared for the Eternity Foundation working session, October 2026. Every figure is copied from a published
           write-up of a measurement made between 30 September and 4 October 2026, and links to it. A companion to{' '}
-          <a href="/research/canon-gap" className="text-amber-800 underline underline-offset-2">The Open Canons</a>.
+          <a href="/research/canon-gap" className="text-amber-800 underline underline-offset-2">The Open Canons</a>. What is still open across
+          all languages is listed on <a href="/research/quality/open" className="text-amber-800 underline underline-offset-2">open quality work</a>.
         </p>
 
         <p className="mt-6">
