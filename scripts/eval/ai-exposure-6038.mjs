@@ -293,7 +293,7 @@ function stagePackets() {
   if (set === 'controls') real = [];
   else {
     const sample = readJsonl(path.join(OUT, 'sample.jsonl'));
-    real = set === 'sub500' ? sample.filter((s) => s.in_sub500) : sample;
+    real = set === 'sub500' ? sample.filter((s) => s.in_sub500) : set === 'strata' ? sample.filter((s) => s.strata?.length && !s.in_sub500) : sample;
   }
   const rng = makeRng(SEED + set.length);
   const order = real.map((b) => ({ b, r: rng() })).sort((x, y) => x.r - y.r).map((o) => o.b);
@@ -621,6 +621,53 @@ function stageReport() {
     const best = Object.keys(rep.arms).includes('lite_flash_prior') ? 'lite_flash_prior' : 'lite_prior';
     rep.by_disposition[d] = { n: rs.length, mean_prior: +(rs.reduce((s, r) => s + r.prior, 0) / rs.length).toFixed(3), [`mean_${best}`]: +(rs.filter((r) => r[best] != null).reduce((s, r) => s + r[best], 0) / Math.max(1, rs.filter((r) => r[best] != null).length)).toFixed(3) };
   }
+  // WORK RECOGNITION (added after the Pro and Haiku arms): does the model know OF the work at
+  // all? On the controls Pro and Haiku separate cleanly (canonical and known works 100% yes,
+  // invented decoys ~1%), while their "I saw the TEXT" answer denies famous works (Haiku 6/22
+  // known works) — so self-familiarity "no" is not evidence of absence, recognition "no" is.
+  const pct = (k, n) => ({ k, n, pct: n ? +(100 * k / n).toFixed(1) : null, wilson: n ? wilson(k, n).map((x) => +(100 * x).toFixed(1)) : null });
+  const ansOf = (id, m) => idx.get(id)?.get(m);
+  const recog = (id, m) => { const a = ansOf(id, m); if (!a || a.missing) return null; const v = a.opening && verifyMap.get(`${a.id}|${a.set}|${m}`)?.verified; return a.knows_of === 'yes' || a.self_familiar === 'yes' || !!v; };
+  const UNIDENT = (b) => { const t = fold(b.title); return t.length < 10 || /^[a-z]{0,3} ?\d+[a-z]?$/.test(t) || (/(^| )(texts?|manuscripts?|fragments?|untitled|collection|sammelband|miscellan)( |$)/.test(t) && !authorKey(b)); };
+  rep.recognition = { note: 'recognised = knows_of yes OR self_familiar yes OR a verified opening', controls: {}, groups: {} };
+  for (const m of modelsSeen) {
+    const c = {}; for (const kind of ['positive', 'known', 'decoy']) {
+      const rs = ans.filter((a) => a.model === m && ctlMeta.get(a.id)?.control === kind && !a.missing);
+      c[kind] = pct(rs.filter((a) => a.knows_of === 'yes' || a.self_familiar === 'yes').length, rs.length);
+    }
+    rep.recognition.controls[m] = c;
+  }
+  const PRO = 'gemini-3.1-pro-preview'; const HAIKU = 'claude-haiku';
+  const gsets = { main_all_held: sample.filter((s) => s.in_main), main_visible: sample.filter((s) => s.in_main && s.visible), main_hidden: sample.filter((s) => s.in_main && !s.visible),
+    sub500: sample.filter((s) => s.in_sub500), sub500_visible: sample.filter((s) => s.in_sub500 && s.visible), sub500_hidden: sample.filter((s) => s.in_sub500 && !s.visible),
+    ...Object.fromEntries(Object.keys(STRATA).map((k) => [`stratum_${k}`, sample.filter((s) => s.strata?.includes(k))])) };
+  for (const [g, rs] of Object.entries(gsets)) {
+    const row = { n: rs.length };
+    for (const m of modelsSeen) { const has = rs.filter((s) => recog(s.id, m) != null); row[`unrecognised_${m}`] = pct(has.filter((s) => !recog(s.id, m)).length, has.length); }
+    const four = rs.filter((s) => [PRO, HAIKU, 'gemini-3.1-flash-lite', 'gemini-3-flash-preview'].every((m) => recog(s.id, m) != null));
+    row.unrecognised_by_all_four = pct(four.filter((s) => [PRO, HAIKU, 'gemini-3.1-flash-lite', 'gemini-3-flash-preview'].every((m) => !recog(s.id, m))).length, four.length);
+    const ph = rs.filter((s) => recog(s.id, PRO) != null && recog(s.id, HAIKU) != null);
+    row.unrecognised_by_pro_and_haiku = pct(ph.filter((s) => !recog(s.id, PRO) && !recog(s.id, HAIKU)).length, ph.length);
+    const pg = rs.filter((s) => recog(s.id, PRO) != null);
+    row.pro_unrecognised_unidentifiable_record = pct(pg.filter((s) => !recog(s.id, PRO) && UNIDENT(s)).length, pg.length);
+    const pv = pg.filter((s) => !recog(s.id, PRO)).map((s) => s.n_editions || 1); const pw = pg.map((s) => s.n_editions || 1);
+    row.pro_unrecognised_edition_weighted_pct = pw.length ? +(100 * pv.reduce((a, b) => a + b, 0) / pw.reduce((a, b) => a + b, 0)).toFixed(1) : null;
+    rep.recognition.groups[g] = row;
+  }
+  rep.recognition.kappa_sub500 = {};
+  const subS = sample.filter((s) => s.in_sub500);
+  for (let i = 0; i < modelsSeen.length; i++) for (let j = i + 1; j < modelsSeen.length; j++) {
+    const a = modelsSeen[i], b = modelsSeen[j];
+    const pairs = subS.filter((s) => recog(s.id, a) != null && recog(s.id, b) != null).map((s) => [recog(s.id, a) ? 'yes' : 'no', recog(s.id, b) ? 'yes' : 'no']);
+    rep.recognition.kappa_sub500[`${a} vs ${b}`] = cohenKappa(pairs, ['yes', 'no']);
+  }
+  // Pro's three tiers on the random 500: unrecognised / knows of it only / says it saw the text.
+  const proRows = subS.map((s) => ansOf(s.id, PRO)).filter((a) => a && !a.missing);
+  rep.recognition.pro_tiers_sub500 = { unrecognised: pct(proRows.filter((a) => a.knows_of !== 'yes' && a.self_familiar !== 'yes').length, proRows.length), knows_of_only: pct(proRows.filter((a) => a.knows_of === 'yes' && a.self_familiar !== 'yes').length, proRows.length), says_text_seen: pct(proRows.filter((a) => a.self_familiar === 'yes').length, proRows.length) };
+  // Fused (lite+flash+prior) verdicts on the known-work tier: the headline estimator's false-"new" rate.
+  const knownIds = controls.filter((c) => c.control === 'known').map((c) => c.id);
+  const kf = knownIds.map((id) => { const m = idx.get(`ctl:${id}`); return m?.get('gemini-3.1-flash-lite') && m?.get('gemini-3-flash-preview') ? fuse(ctlMeta.get(id), m, ['gemini-3.1-flash-lite', 'gemini-3-flash-preview'], verifyMap).p : null; }).filter((p) => p != null);
+  rep.recognition.known_tier_fused_lite_flash = { n: kf.length, p_lt25: kf.filter((p) => p < 0.25).length, p_gt75: kf.filter((p) => p > 0.75).length };
   fs.writeFileSync(path.join(OUT, 'report.json'), JSON.stringify(rep, null, 1) + '\n');
   // Markdown table.
   const f = (c) => (c?.pct == null ? '—' : `${c.pct}% [${c.ci[0]}–${c.ci[1]}]`);
