@@ -71,6 +71,16 @@ function imageUrl(img: GalleryImage): string {
   return img.extracted_url || img.thumbnail_url || img.image_url || '';
 }
 
+// Grid tiles render ~200px cells. An R2 artwork (`images.sourcelibrary.org/artwork/x.jpg`, the
+// 1–2 MB 2000px variant) has a pre-made 600px `x-thumb.jpg`; serve that directly instead of
+// sending the original through /_next/image, whose cold transform left the Drebbel engravings
+// blank on first view (2026-10-06) and is the cost path #1727 avoids. Other sources unchanged.
+function gridTileSrc(src: string): { src: string; unoptimized: boolean } {
+  const m = src.match(/^(https:\/\/images\.sourcelibrary\.org\/artwork\/.+?)(?:-full|-thumb)?\.jpg$/);
+  if (m) return { src: `${m[1]}-thumb.jpg`, unoptimized: true };
+  return { src, unoptimized: false };
+}
+
 function imagePageHref(img: GalleryImage, embedHref: (href: string) => string): string {
   if (img.page_id) return embedHref(`/book/${img.book_id}/page/${img.page_id}`);
   return embedHref(`/book/${img.book_id}`);
@@ -660,7 +670,7 @@ function ThematicGalleryBlock({ clusters, books }: {
                     className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
                   >
                     <Image
-                      src={src}
+                      {...gridTileSrc(src)}
                       alt={img.museum_description || img.book_title || 'Illustration'}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -718,7 +728,7 @@ function GalleryGridBlock({ embeddedImages, fallbackImages, indices, title }: {
               title={img.museum_description}
             >
               <Image
-                src={src}
+                {...gridTileSrc(src)}
                 alt={img.museum_description || img.book_title || 'Illustration'}
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-300"
