@@ -32,6 +32,8 @@
  *                 would make a tag), and so do numeric entities for ASCII (they escape Markdown).
  *   hash          heading hashes that are not at the start of a line (`BOOK THREE ###`,
  *                 `25 ### That the cause…`): Markdown prints them.
+ *   hash_close    `### BOOK THREE ###` — a valid closing sequence, invisible in the reader, printed
+ *                 by the quote surfaces and the EPUB. Removing it changes no rendering.
  *
  * NOT here, on purpose: `<term>X: definition</term>` and a model-written `<gloss>` after a term
  * (src/lib/term-definitions.ts, #5895 — it runs after this on the reader and the exports); a
@@ -193,6 +195,7 @@ function trailingHashes(line) {
   if (h === end || end - h > 6 || h === 0 || !blank(h - 1)) return null;
   let keep = h;
   while (keep > 0 && blank(keep - 1)) keep--;
+  // Nothing but hashes after the heading marker: leave the line as it is.
   return keep === 0 ? null : line.slice(0, keep) + line.slice(end);
 }
 
@@ -206,10 +209,12 @@ function fixHashes(text, fired) {
     let rest = line.slice(head.length);
     if (!rest.includes('#')) return line;
     // Hashes closing a line that no heading opened ("THE WALDENSIANS: BOOK THREE ###").
-    if (!head) {
-      const cut = trailingHashes(rest);
-      if (cut) { rest = cut; count(fired, 'hash'); }
-    }
+    // Closing hashes. On a line no heading opened ("THE WALDENSIANS: BOOK THREE ###") Markdown
+    // prints them. On a real heading ("### BOOK THREE ###") they are a valid closing sequence
+    // the reader never shows — but the plain-text surfaces and the EPUB strip only the opening
+    // run, so they go too: the rendering is the same and every surface agrees.
+    const cut = trailingHashes(rest);
+    if (cut !== null) { rest = cut; count(fired, head ? 'hash_close' : 'hash'); }
     // A heading marker with something in front of it ("25 ### That the cause…", "| ### SECTION 3").
     rest = rest.replace(/(^|[^#\s][ \t]+|\|)#{2,6}[ \t]+(?=\S)/g, (_m, lead) => { count(fired, 'hash'); return lead; });
     // … or wrapped in a tag, where Markdown never reads it ("<center># Translation</center>").
@@ -218,7 +223,7 @@ function fixHashes(text, fired) {
   }).join('\n');
 }
 
-export const LEAK_RULES = ['break_tag', 'meta_attr', 'meta_label', 'tag_attr', 'dup_term', 'stutter', 'entity', 'hash'];
+export const LEAK_RULES = ['break_tag', 'meta_attr', 'meta_label', 'tag_attr', 'dup_term', 'stutter', 'entity', 'hash', 'hash_close'];
 
 /**
  * @param {string} text a page's stored translation or transcription

@@ -139,12 +139,23 @@ describe('repairLeakedMarkup — one rule per real page', () => {
 
   it('keeps real headings and a # that may be the source\'s own', () => {
     for (const s of [
-      '# Book One\n## Chapter 2 ##\n-># DIALOGUE<-\n> ## quoted heading\n- ### in a list',
+      '# Book One\n-># DIALOGUE<-\n> ## quoted heading\n- ### in a list\n###\n## C#',
       'C#. Scarcely used; as D♭ it has fullness of tone.',
       'It came to pass on a holy Sabbath <margin># 2</margin> in Poznań',
       'see https://example.org/page#anchor ### here',
       'the #dispositions of all realms#', // Esukhia note points: a stored-text repair, not this one
     ]) expect(repairLeakedMarkup(s)).toBe(s);
+  });
+
+  it('drops a closing hash sequence, which only the plain-text surfaces printed', () => {
+    // 697b079711cc8928b55ea3b2 p. 233 as stored today: the quote API served "WALDENSIANS BOOK THREE ###"
+    const page = '### WALDENSIANS BOOK THREE ###\n\n...they bestow them in order';
+    expect(repairLeakedMarkup(page)).toBe('### WALDENSIANS BOOK THREE\n\n...they bestow them in order');
+    expect(repairLeakedMarkup('-># OF THE SAGES #<-')).toBe('-># OF THE SAGES<-');
+    expect(stripEditorialWrappers(page)).toBe('WALDENSIANS BOOK THREE\n\n...they bestow them in order');
+    expect(stripMjs(page)).toBe(stripEditorialWrappers(page));
+    expect(markdownToHtml(page)).not.toContain('#');
+    expect(prepareNotesMarkdown(page, { showNotes: true }).processedText).toContain('### WALDENSIANS BOOK THREE\n');
   });
 
   it('is idempotent and returns clean text untouched', () => {
