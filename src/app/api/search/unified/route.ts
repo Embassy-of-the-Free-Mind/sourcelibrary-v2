@@ -23,6 +23,7 @@ import { assessMatchQuality } from '@/lib/search/match-quality';
 import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
 import { fetchWorkFanouts } from '@/lib/search/work-fanout';
 import { stemmedQueryRegex } from '@/lib/search/word-forms';
+import { findNameChoices, type NameChoices } from '@/lib/search/name-chooser';
 
 const ENTITIES_SEARCH_INDEX = 'entities_search';
 const GALLERY_SEARCH_INDEX = 'gallery_search';
@@ -236,6 +237,14 @@ export async function GET(request: NextRequest) {
           semanticSiteSearch(matchQuery, 6).then(results => ({ results })).catch(() => emptySite),
           emptySite, 'site', 4000,
         );
+
+    // "Which Bacon?" (#5950): the people a bare surname could mean. Main site only — the counts
+    // and the /author links are library-wide, which a tenant's reading room must not show. Started
+    // here so it runs beside the lanes; for anything but a one-word query it resolves at once,
+    // without a lookup.
+    const nameChoicesPromise: Promise<NameChoices | null> = tenantContext.id || isPhrase
+      ? Promise.resolve(null)
+      : withTimeout(findNameChoices(matchQuery).catch(() => null), null, 'name-chooser', 2000);
 
     const [booksResultRaw, indexResult, galleryResult, visualResult, semanticResultRaw, artworkResult, lexicalArtworkResult, collectionsResult] = await Promise.all([
       withTimeout(searchBooks(query, limit, searchFilters, library), emptyBooks, 'books'),
@@ -668,6 +677,7 @@ export async function GET(request: NextRequest) {
       artworks: filteredArtworks,
       collections: collectionsWithTenantSlug,
       site: siteResult,
+      people: await nameChoicesPromise,
     }, {
       headers: {
         'Cache-Control': 'no-store',
