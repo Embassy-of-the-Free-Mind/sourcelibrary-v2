@@ -52,11 +52,20 @@ describe('notes-off rule', () => {
   });
 
   it('flattens a note nested inside a page mark rather than keeping its text', () => {
-    expect(applyNotesOff('<margin>Chilon <note>a sage</note></margin>')).toBe('Chilon ');
+    expect(applyNotesOff('<margin>Chilon <note>a sage</note></margin>')).toBe('Chilon');
   });
 
   it('handles page-mark tags carrying attributes', () => {
     expect(unwrapPageMarks('<margin side="left">note text</margin>')).toBe('note text');
+  });
+
+  it('removes a paragraph-final note without eating the text up to the next note (#5895)', () => {
+    // Real shape, Paracelsus p.83: a note ends one paragraph, the next opens with a
+    // bold head and its own note. The space-taking rule must stop at the first close.
+    const text =
+      'what a [mere trick] performs. <note>The original "gar" is likely "Gauckler."</note>\n\n' +
+      '**Austromancy** <note>Divination by observing the winds.</note> is an art of the winds.';
+    expect(applyNotesOff(text)).toBe('what a [mere trick] performs.\n\n**Austromancy** is an art of the winds.');
   });
 
   it('collapses the blank-line pileup left by removed annotations', () => {

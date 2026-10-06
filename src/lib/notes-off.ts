@@ -72,7 +72,10 @@ export function stripAiAnnotations(text: string): string {
   return text
     // A mid-line note takes its leading space with it, so "Geomancy <note>…</note>,
     // an art" reads "Geomancy, an art" — not "Geomancy , an art" or a double space.
-    .replace(/[ \t]+<(note|image-desc)(?:\s[^>]*)?>[\s\S]*?<\/\1>(?=[ \t,.;:!?)\]])/gi, '')
+    // The body must not cross its own close tag: a lazy `[\s\S]*?` would, when the
+    // first note ends a paragraph, run on to the NEXT note's close and delete the
+    // page text between them (the paragraph break and "**Austromancy**", p.83).
+    .replace(/[ \t]+<(note|image-desc)(?:\s[^>]*)?>(?:(?!<\/\1>)[\s\S])*<\/\1>(?=[ \t,.;:!?)\]]|\n|$)/gi, '')
     .replace(/<(note|image-desc)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, '')
     .replace(/\n{3,}/g, '\n\n');
 }
