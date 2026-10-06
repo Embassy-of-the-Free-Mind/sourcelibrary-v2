@@ -136,6 +136,9 @@ every visible book. There were 106 merges to `main` in 30 days, each one a deplo
   when the later ones are scripts-only, a redeploy when one of them changed `src/`.
 - **A Production build showing Canceled after ~12s** is usually the *ignored build step* skipping a
   no-op (docs/scripts-only) merge — that owes no purge at all; check who canceled before diagnosing.
+  The step is `scripts/vercel-ignore-build.mjs`: it builds when `src/`, config, deps, OR any `scripts/`
+  file that `src/` imports (data JSON, shared `.mjs`) changed. Before it, a scripts-only data refresh
+  (#5889) was skipped and /research/canon-gap served stale figures for 17h.
 - **Pipeline/worker scripts (`scripts/**`) need no Vercel deploy** — the Hetzner box auto-pulls
   `main` hourly at :17 (its crontab: `17 * * * * … auto-pull.sh`), so a scripts-only merge missing
   from behaviour is usually waiting for that pull, not a failed deploy.
