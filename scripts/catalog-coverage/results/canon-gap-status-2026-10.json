@@ -1,6 +1,6 @@
 {
  "issue": 5513,
- "generated_at": "2026-10-05T23:04:31.483Z",
+ "generated_at": "2026-10-06T01:21:52.159Z",
  "script": "scripts/catalog-coverage/canon-gap-status.mjs",
  "gap_map": "scripts/catalog-coverage/results/canon-gap-map-2026-10.json",
  "fields": {
@@ -23,16 +23,16 @@
    "corpus": "Derge Tengyur",
    "status": "running",
    "owner_issue": 5497,
-   "done": "213 volumes imported hidden and held; 128,369 of 128,639 pages carry the Esukhia public-domain text, aligned folio by folio to the BDRC scans. 125,918 of 128,369 pages (210 of 213 volumes) have a draft English, made with gemini-3-flash-preview one page per request, for about $228. The last three volumes (miscellany and the catalogue, 2,404 pages) were left when the approved budget ran out. It is an unreviewed machine draft, with about 2 to 5 reversed statements per 100 pages measured against 84000.",
+   "done": "213 volumes imported hidden and held; 128,369 of 128,639 pages carry the Esukhia public-domain text, aligned folio by folio to the BDRC scans. 128,333 of 128,369 pages (all 213 volumes) have a draft English, made with gemini-3-flash-preview one page per request, for about $233. The other 36 pages are 26 that the translation filter skips as untranslatable and 10 that came back empty on every try. It is an unreviewed machine draft, with about 2 to 5 reversed statements per 100 pages measured against 84000.",
    "next_action": "Published as an unreviewed machine draft once the reader shows the licence and the draft label (#5571); Derek decides.",
    "cost_usd": 0,
    "held_books": 213,
    "live_books": 0,
    "pipeline_held": 213,
-   "readable_books": 209,
+   "readable_books": 210,
    "pages_with_text": 128369,
    "holdings_method": "language=Tibetan, title/source matches Derge Tengyur (bstan 'gyur + sde dge, BDRC W23703, Esukhia)",
-   "updated_at": "2026-10-05T23:04:31.483Z"
+   "updated_at": "2026-10-06T01:21:52.159Z"
   },
   {
    "id": "derge-kangyur",
@@ -48,7 +48,7 @@
    "readable_books": 0,
    "pages_with_text": 62375,
    "holdings_method": "language=Tibetan, title/source matches Derge Kangyur (bka' 'gyur + sde dge, BDRC W4CZ5369 / W22084, Esukhia)",
-   "updated_at": "2026-10-05T23:04:31.483Z"
+   "updated_at": "2026-10-06T01:21:52.159Z"
   },
   {
    "id": "cbeta",
@@ -57,13 +57,13 @@
    "owner_issue": 2554,
    "next_action": "Pair the whole CBETA canon with our scans once the Chan texts below are translated and published. CBETA's licence is non-commercial with attribution, so every page will show it (#5571).",
    "cost_usd": 306,
-   "held_books": 136,
-   "live_books": 133,
+   "held_books": 137,
+   "live_books": 134,
    "pipeline_held": 55,
-   "readable_books": 71,
-   "pages_with_text": 11885,
+   "readable_books": 72,
+   "pages_with_text": 12801,
    "holdings_method": "Chinese-language books in buddhist-canon / chinese-buddhist-texts / zen-chan, SAT Daizōkyō scans, metadata.cbeta_id, or works-catalog cbeta holdings",
-   "updated_at": "2026-10-05T23:04:31.483Z"
+   "updated_at": "2026-10-06T01:21:52.159Z"
   },
   {
    "id": "cbeta-chan",
@@ -79,7 +79,7 @@
    "readable_books": 16,
    "pages_with_text": 9985,
    "holdings_method": "Chinese-language books whose title contains 景德傳燈錄 / 祖堂集 / 五燈會元 / 語錄 / 廣錄 / 語要, or in zen-chan",
-   "updated_at": "2026-10-05T23:04:31.483Z"
+   "updated_at": "2026-10-06T01:21:52.159Z"
   },
   {
    "id": "pali-mula",
@@ -95,7 +95,7 @@
    "readable_books": 34,
    "pages_with_text": 16892,
    "holdings_method": "language=Pali (any edition; not matched to the VRI CSCD edition)",
-   "updated_at": "2026-10-05T23:04:31.483Z"
+   "updated_at": "2026-10-06T01:21:52.159Z"
   },
   {
    "id": "pali-atthakatha",
@@ -111,7 +111,7 @@
    "readable_books": 34,
    "pages_with_text": 16892,
    "holdings_method": "language=Pali (any edition; not matched to the VRI CSCD edition)",
-   "updated_at": "2026-10-05T23:04:31.483Z"
+   "updated_at": "2026-10-06T01:21:52.159Z"
   },
   {
    "id": "pali-tika",
@@ -126,7 +126,7 @@
    "readable_books": 34,
    "pages_with_text": 16892,
    "holdings_method": "language=Pali (any edition; not matched to the VRI CSCD edition)",
-   "updated_at": "2026-10-05T23:04:31.483Z"
+   "updated_at": "2026-10-06T01:21:52.159Z"
   },
   {
    "id": "gretil-buddhist",
@@ -142,7 +142,7 @@
    "readable_books": 35,
    "pages_with_text": 14681,
    "holdings_method": "Sanskrit books in buddhism collections or Buddhist title terms",
-   "updated_at": "2026-10-05T23:04:31.483Z"
+   "updated_at": "2026-10-06T01:21:52.159Z"
   },
   {
    "id": "gretil-vedanta",
@@ -156,9 +156,9 @@
    "live_books": 14,
    "pipeline_held": 0,
    "readable_books": 12,
-   "pages_with_text": 6053,
+   "pages_with_text": 6080,
    "holdings_method": "Sanskrit books in vedanta-darshana or Vedānta title terms",
-   "updated_at": "2026-10-05T23:04:31.483Z"
+   "updated_at": "2026-10-06T01:21:52.159Z"
   },
   {
    "id": "gretil-gaudiya",
@@ -174,7 +174,7 @@
    "readable_books": 1,
    "pages_with_text": 535,
    "holdings_method": "Sanskrit books with Gauḍīya author/title terms",
-   "updated_at": "2026-10-05T23:04:31.483Z"
+   "updated_at": "2026-10-06T01:21:52.159Z"
   },
   {
    "id": "sefaria-zohar",
@@ -190,7 +190,7 @@
    "readable_books": 10,
    "pages_with_text": 7582,
    "holdings_method": "Zohar / Tikkunei Zohar by title",
-   "updated_at": "2026-10-05T23:04:31.483Z"
+   "updated_at": "2026-10-06T01:21:52.159Z"
   },
   {
    "id": "sefaria-lurianic",
@@ -206,7 +206,7 @@
    "readable_books": 2,
    "pages_with_text": 2142,
    "holdings_method": "Lurianic corpus by title (Etz Chaim, Vital, Shemonah She`arim …)",
-   "updated_at": "2026-10-05T23:04:31.483Z"
+   "updated_at": "2026-10-06T01:21:52.159Z"
   },
   {
    "id": "sefaria-cordovero",
@@ -222,7 +222,7 @@
    "readable_books": 1,
    "pages_with_text": 658,
    "holdings_method": "Cordovero by title (Pardes Rimonim, Tomer Devorah, Or Ne`erav)",
-   "updated_at": "2026-10-05T23:04:31.483Z"
+   "updated_at": "2026-10-06T01:21:52.159Z"
   },
   {
    "id": "openiti-sufi",
@@ -237,7 +237,7 @@
    "readable_books": 132,
    "pages_with_text": 26418,
    "holdings_method": "Arabic/Persian books in sufism collections, Ibn ʿArabī title terms, or works-catalog openiti holdings",
-   "updated_at": "2026-10-05T23:04:31.483Z"
+   "updated_at": "2026-10-06T01:21:52.159Z"
   },
   {
    "id": "ganjoor",
@@ -253,7 +253,7 @@
    "readable_books": 22,
    "pages_with_text": 9909,
    "holdings_method": "Persian books in persian-literary-tradition or with classical poetry title terms (any edition)",
-   "updated_at": "2026-10-05T23:04:31.483Z"
+   "updated_at": "2026-10-06T01:21:52.159Z"
   },
   {
    "id": "mongolian-kanjur",
@@ -269,7 +269,7 @@
    "readable_books": 0,
    "pages_with_text": 0,
    "holdings_method": "language=Mongolian or Mongolian Kanjur by title/source",
-   "updated_at": "2026-10-05T23:04:31.483Z"
+   "updated_at": "2026-10-06T01:21:52.159Z"
   },
   {
    "id": "tripitaka-koreana",
@@ -285,7 +285,7 @@
    "readable_books": 0,
    "pages_with_text": 0,
    "holdings_method": "Korean/Chinese books with Tripitaka Koreana / 高麗 / 海印寺 title terms",
-   "updated_at": "2026-10-05T23:04:31.483Z"
+   "updated_at": "2026-10-06T01:21:52.159Z"
   },
   {
    "id": "kanripo",
@@ -300,7 +300,7 @@
    "readable_books": 155,
    "pages_with_text": 32306,
    "holdings_method": "works-catalog work_holdings for kanripo works (build-holdings.mjs title-auto match; a floor)",
-   "updated_at": "2026-10-05T23:04:31.483Z"
+   "updated_at": "2026-10-06T01:21:52.159Z"
   }
  ],
  "traditions": [
@@ -312,10 +312,10 @@
     "derge-kangyur"
    ],
    "books": 531,
-   "readable_books": 331,
+   "readable_books": 332,
    "pages_scanned": 290018,
    "pages_transcribed": 284232,
-   "pages_translated": 209830,
+   "pages_translated": 212240,
    "canon_page_equivalents": 132416,
    "ocr_engines": [
     [
@@ -350,7 +350,7 @@
    "translation_models": [
     [
      "gemini-3-flash-preview",
-     210273
+     212688
     ],
     [
      "gemini-3.1-flash-lite",
@@ -362,6 +362,14 @@
     ]
    ],
    "book_pages": [
+    [
+     "6abee585a43718d234bf3203",
+     "བསྟན་འགྱུར། སྡེ་དགེ། དཀར་ཆག (Derge Tengyur, vol. 213)",
+     false,
+     1006,
+     1005,
+     1005
+    ],
     [
      "6abee417a43718d234bf2288",
      "བསྟན་འགྱུར། སྡེ་དགེ། སྒྲ་མདོ། ཏོ (Derge Tengyur, vol. 208)",
@@ -473,6 +481,14 @@
      749,
      748,
      748
+    ],
+    [
+     "6abee4eaa43718d234bf2c6d",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། ནོ (Derge Tengyur, vol. 211)",
+     false,
+     771,
+     747,
+     746
     ],
     [
      "6abe8cd66a920ffd924d56d8",
@@ -883,6 +899,14 @@
      652
     ],
     [
+     "6abee53da43718d234bf2f73",
+     "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། པོ (Derge Tengyur, vol. 212)",
+     false,
+     653,
+     652,
+     652
+    ],
+    [
      "6abec767896ea18127c8a9dc",
      "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཙུ (Derge Tengyur, vol. 156)",
      false,
@@ -968,7 +992,7 @@
      false,
      635,
      634,
-     633
+     634
     ],
     [
      "6abeb11e896ea18127c82406",
@@ -1083,6 +1107,14 @@
      624
     ],
     [
+     "6abe98e76a920ffd924d82e0",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཐི (Derge Tengyur, vol. 41)",
+     false,
+     625,
+     624,
+     623
+    ],
+    [
      "6abe90fc6a920ffd924d66a3",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ལ (Derge Tengyur, vol. 27)",
      false,
@@ -1105,14 +1137,6 @@
      623,
      622,
      622
-    ],
-    [
-     "6abe98e76a920ffd924d82e0",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཐི (Derge Tengyur, vol. 41)",
-     false,
-     625,
-     624,
-     621
     ],
     [
      "6abe89c46a920ffd924d4b92",
@@ -1651,6 +1675,14 @@
      527
     ],
     [
+     "6abe8f0c6a920ffd924d5eab",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། འ (Derge Tengyur, vol. 24)",
+     false,
+     527,
+     526,
+     526
+    ],
+    [
      "6abed040896ea18127c8c1b8",
      "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། ཤུ (Derge Tengyur, vol. 166)",
      false,
@@ -1659,20 +1691,20 @@
      526
     ],
     [
-     "6abe8f0c6a920ffd924d5eab",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། འ (Derge Tengyur, vol. 24)",
-     false,
-     527,
-     526,
-     525
-    ],
-    [
      "6abecf09896ea18127c8bcf6",
      "བསྟན་འགྱུར། སྡེ་དགེ། འདུལ་བ། རུ (Derge Tengyur, vol. 164)",
      false,
      525,
      524,
      524
+    ],
+    [
+     "6abe8bab6a920ffd924d524c",
+     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཚ (Derge Tengyur, vol. 19)",
+     false,
+     523,
+     522,
+     522
     ],
     [
      "6abeb7ec896ea18127c85fd5",
@@ -1705,14 +1737,6 @@
      521,
      520,
      520
-    ],
-    [
-     "6abe8bab6a920ffd924d524c",
-     "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཚ (Derge Tengyur, vol. 19)",
-     false,
-     523,
-     522,
-     519
     ],
     [
      "69e7ab345f1a22ab19a94976",
@@ -3843,14 +3867,6 @@
      4
     ],
     [
-     "6abee585a43718d234bf3203",
-     "བསྟན་འགྱུར། སྡེ་དགེ། དཀར་ཆག (Derge Tengyur, vol. 213)",
-     false,
-     1006,
-     1005,
-     0
-    ],
-    [
      "6ac070adf427c9bb06926063",
      "བཀའ་འགྱུར། སྡེ་དགེ། ཕལ་ཆེན། ཁ (Derge Kangyur, vol. 36)",
      false,
@@ -3955,14 +3971,6 @@
      0
     ],
     [
-     "6abee4eaa43718d234bf2c6d",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། ནོ (Derge Tengyur, vol. 211)",
-     false,
-     771,
-     747,
-     0
-    ],
-    [
      "6ac0b0d3f427c9bb0692c476",
      "བཀའ་འགྱུར། སྡེ་དགེ། རྒྱུད་འབུམ། ཀ (Derge Kangyur, vol. 77)",
      false,
@@ -4032,14 +4040,6 @@
      false,
      655,
      654,
-     0
-    ],
-    [
-     "6abee53da43718d234bf2f73",
-     "བསྟན་འགྱུར། སྡེ་དགེ། སྣ་ཚོགས། པོ (Derge Tengyur, vol. 212)",
-     false,
-     653,
-     652,
      0
     ],
     [
@@ -4618,24 +4618,24 @@
    "gap_map_rows": [
     "cbeta"
    ],
-   "books": 170,
-   "readable_books": 79,
-   "pages_scanned": 21408,
-   "pages_transcribed": 17515,
-   "pages_translated": 10274,
+   "books": 171,
+   "readable_books": 80,
+   "pages_scanned": 22341,
+   "pages_transcribed": 18431,
+   "pages_translated": 11176,
    "canon_page_equivalents": 900484,
    "ocr_engines": [
+    [
+     "gemini-3.1-flash-lite",
+     5578
+    ],
     [
      "cbeta-xml-p5@dbdea41071",
      4937
     ],
     [
-     "gemini-3.1-flash-lite",
-     4687
-    ],
-    [
      "gemini-3-flash-preview",
-     3861
+     3886
     ],
     [
      "gemini-3.1-flash-lite-preview",
@@ -4649,7 +4649,7 @@
    "translation_models": [
     [
      "gemini-3.1-flash-lite",
-     5249
+     6150
     ],
     [
      "gemini-3.1-flash-lite-preview",
@@ -4657,11 +4657,11 @@
     ],
     [
      "gemini-3-flash-preview",
-     1406
+     1407
     ],
     [
      "unrecorded",
-     23
+     24
     ]
    ],
    "book_pages": [
@@ -4688,6 +4688,14 @@
      918,
      918,
      908
+    ],
+    [
+     "69b99f786ed9e0490990abcf",
+     "大正新脩大藏經 第08冊 (Taishō Shinshū Daizōkyō, Vol. 8)",
+     true,
+     933,
+     916,
+     902
     ],
     [
      "69bd0b0bb01b17638a098903",
@@ -7970,7 +7978,7 @@
    "books": 2100,
    "readable_books": 386,
    "pages_scanned": 351597,
-   "pages_transcribed": 162247,
+   "pages_transcribed": 162457,
    "pages_translated": 109583,
    "canon_page_equivalents": 48672,
    "ocr_engines": [
@@ -7980,7 +7988,7 @@
     ],
     [
      "gemini-3.1-flash-lite",
-     57975
+     58208
     ],
     [
      "gemini-3.1-flash-lite-preview",
@@ -11695,6 +11703,14 @@
      0
     ],
     [
+     "6a94cc4e8e2a2ffc91d26812",
+     "Manuscript 11 Suktani ( Vishnu, Brahma, Shiva, Yama , Pitru, Manuscript In Sharada)",
+     false,
+     66,
+     65,
+     0
+    ],
+    [
      "6a9422f939b196bfaa0445c1",
      "15 Prapancha Sara Sanskrit In Malayalam Script Tantra Palm Leaf Manuscript Unknown",
      false,
@@ -11739,6 +11755,14 @@
      "Spanda Nirnaya Ist Chapter And 1st Page Of Second Chapter Sharada Ram Shaiva Ashram 1",
      false,
      76,
+     63,
+     0
+    ],
+    [
+     "6a94cddd8e2a2ffc91d26e54",
+     "Manuscript 24 Panchayatana Puja",
+     false,
+     75,
      63,
      0
     ],
@@ -11903,6 +11927,14 @@
      0
     ],
     [
+     "6a94cbc88e2a2ffc91d26458",
+     "Manu 6 Laghu Vritti",
+     false,
+     150,
+     59,
+     0
+    ],
+    [
      "6a94d4a88e2a2ffc91d29c68",
      "Pancha Tantra Samvatsara Shraddha Shraddha Brahmana Ritu Naryana Vishnu Purana Sharada Man",
      false,
@@ -11931,6 +11963,14 @@
      "Partial Utpal Stotravali And Bhavani Sahasranama Sharada Manuscript From Baramula Trust",
      false,
      116,
+     58,
+     0
+    ],
+    [
+     "6a94e02db24b5a49c27daaab",
+     "Tantriki Shiva Puja Sharada RSkt S Jammu No 33",
+     false,
+     67,
      58,
      0
     ],
@@ -11971,6 +12011,14 @@
      "Various Vedic Stotras And Ritualistic Vidhans",
      false,
      504,
+     56,
+     0
+    ],
+    [
+     "6a94ce9c8e2a2ffc91d273a8",
+     "Manuscript 34 Saundarya Lahari ( Shankaracharya), Rudra Mantras, Bhagavad Gita And Others ",
+     false,
+     422,
      56,
      0
     ],
@@ -12095,14 +12143,6 @@
      0
     ],
     [
-     "6a94e02db24b5a49c27daaab",
-     "Tantriki Shiva Puja Sharada RSkt S Jammu No 33",
-     false,
-     67,
-     52,
-     0
-    ],
-    [
      "6a9489bf31b41d9c57444515",
      "4170 UPSS Sharada Annapurna Paddhati Kumbha Tara Tantra Folio 13 35",
      false,
@@ -12179,6 +12219,14 @@
      "Bhagavata Suprabhat Stotra Shauchachar Kram Vidhi Snan Vidhi Sandhyopasanam Sharada Manusc",
      false,
      255,
+     50,
+     0
+    ],
+    [
+     "6a94cd9a8e2a2ffc91d26d27",
+     "Manuscript 20 Upanayana Vidhi ( 1898 C E Research By Rajanaka Prasada) Sharada Manuscript ",
+     false,
+     179,
      50,
      0
     ],
@@ -12659,14 +12707,6 @@
      "480 Pancastavi Dharmacharya DAM Sharada Paper",
      false,
      72,
-     48,
-     0
-    ],
-    [
-     "6a94cc4e8e2a2ffc91d26812",
-     "Manuscript 11 Suktani ( Vishnu, Brahma, Shiva, Yama , Pitru, Manuscript In Sharada)",
-     false,
-     66,
      48,
      0
     ],
@@ -13287,6 +13327,14 @@
      0
     ],
     [
+     "6a94d0db8e2a2ffc91d28773",
+     "MN 003306 Partialy Destroyed Sharada Manuscripts At Kurukshetra University",
+     false,
+     95,
+     45,
+     0
+    ],
+    [
      "6a94c3bc56cac2f882c84d20",
      "Jaiminiya Sutra With Artha Sangraha Comm Mss No 71 Sharada Alm 1 Panjab Uni",
      false,
@@ -13395,6 +13443,14 @@
      "Sharada Manuscript Donated By C M Dhar With Illustrations Alakh Sahiba Trust",
      false,
      510,
+     44,
+     0
+    ],
+    [
+     "6a94d308c3eaca0630266876",
+     "Mokshopaya Sharada Manuscript 6",
+     false,
+     443,
      44,
      0
     ],
@@ -13867,14 +13923,6 @@
      "Muhurta Chintaman Of Ram Daivagya Second Text With Initials Nee. Taa Sharada Manuscript Wi",
      false,
      125,
-     41,
-     0
-    ],
-    [
-     "6a94cddd8e2a2ffc91d26e54",
-     "Manuscript 24 Panchayatana Puja",
-     false,
-     75,
      41,
      0
     ],
@@ -14631,18 +14679,18 @@
      0
     ],
     [
+     "6a94d0cd8e2a2ffc91d2851b",
+     "MN 003304 Atma Bodha Of Shankaracharya Sharada Manuscripts At Kurukshetra University",
+     false,
+     37,
+     37,
+     0
+    ],
+    [
      "6a94bfc056cac2f882c8203b",
      "Bhagavat Gita Ram Kantha Kashmirian Tika Partial",
      false,
      769,
-     36,
-     0
-    ],
-    [
-     "6a94ce9c8e2a2ffc91d273a8",
-     "Manuscript 34 Saundarya Lahari ( Shankaracharya), Rudra Mantras, Bhagavad Gita And Others ",
-     false,
-     422,
      36,
      0
     ],
@@ -14659,22 +14707,6 @@
      "Hari Vamsha Mss No 66 Sharada Alm 1 Panjab Uni",
      false,
      297,
-     36,
-     0
-    ],
-    [
-     "6a94cd9a8e2a2ffc91d26d27",
-     "Manuscript 20 Upanayana Vidhi ( 1898 C E Research By Rajanaka Prasada) Sharada Manuscript ",
-     false,
-     179,
-     36,
-     0
-    ],
-    [
-     "6a94cbc88e2a2ffc91d26458",
-     "Manu 6 Laghu Vritti",
-     false,
-     150,
      36,
      0
     ],
@@ -14943,6 +14975,14 @@
      0
     ],
     [
+     "6a94cf298e2a2ffc91d276e9",
+     "Matrika Tantra Sharada RSkt S Jammu No 72",
+     false,
+     35,
+     35,
+     0
+    ],
+    [
      "6a94da53b24b5a49c27d7ec0",
      "Sharada Almanac 5049 2030 1895 1973 74 Vijeshwar Panchang",
      false,
@@ -14963,6 +15003,14 @@
      "Vedant Sar Tika Sharada RSkt S Jammu No 42",
      false,
      147,
+     34,
+     0
+    ],
+    [
+     "6a94d31e8e2a2ffc91d2894e",
+     "Mokshopaya Utpatti Prakaran Left Side KECSS Photocopied",
+     false,
+     142,
      34,
      0
     ],
@@ -15047,14 +15095,6 @@
      0
     ],
     [
-     "6a94d0cd8e2a2ffc91d2851b",
-     "MN 003304 Atma Bodha Of Shankaracharya Sharada Manuscripts At Kurukshetra University",
-     false,
-     37,
-     34,
-     0
-    ],
-    [
      "6a94de56b24b5a49c27d9d2c",
      "Shiv Sutra Vimarshani Sharada RSkt S Jammu No 76",
      false,
@@ -15097,14 +15137,6 @@
     [
      "6a94a52fbf723b215d8be1c9",
      "Shiv Deep Shraddham Sharada Manuscript 3 Of 3 Residence Of Altaf Ahmed From Pulwama",
-     false,
-     35,
-     34,
-     0
-    ],
-    [
-     "6a94cf298e2a2ffc91d276e9",
-     "Matrika Tantra Sharada RSkt S Jammu No 72",
      false,
      35,
      34,
@@ -15227,6 +15259,14 @@
      "430 431 Bhairavaukaran Of Kshemaraja And Paramarthasar Of Abhinvagupta DAM Sharada Birch B",
      false,
      35,
+     33,
+     0
+    ],
+    [
+     "6a94cbbf8e2a2ffc91d2641f",
+     "Manu 5 Mahimna Para Stotram ( Shiva Mahimna Stotram By Pushpadanta) Shadakshara Mantram Ot",
+     false,
+     34,
      33,
      0
     ],
@@ -15367,14 +15407,6 @@
      0
     ],
     [
-     "6a94cbbf8e2a2ffc91d2641f",
-     "Manu 5 Mahimna Para Stotram ( Shiva Mahimna Stotram By Pushpadanta) Shadakshara Mantram Ot",
-     false,
-     34,
-     32,
-     0
-    ],
-    [
      "6a94d935b24b5a49c27d7b6e",
      "Sharada Almanac 5013 1937 38 Vijeshwar Panchang",
      false,
@@ -15411,6 +15443,14 @@
      "Pahari Lok Git 2004 Vol 24 Kashmiri Urdu Pahari Jk Academy",
      false,
      110,
+     31,
+     0
+    ],
+    [
+     "6a94cebd8e2a2ffc91d2757d",
+     "Manuscript 6 – Garuda Purana Saroddhara Tika ( Manuscript In Sharada)",
+     false,
+     103,
      31,
      0
     ],
@@ -15547,6 +15587,14 @@
      "Anargha Raghava Mss No 51 Sharada Alm 1 Panjab Uni",
      false,
      241,
+     30,
+     0
+    ],
+    [
+     "6a94d3d28e2a2ffc91d29288",
+     "Munshi Ahmad Ali Ghazi Hayat Te Khidmat Kashmiri Urdu Pahari Maqbool Sajid",
+     false,
+     186,
      30,
      0
     ],
@@ -15871,6 +15919,14 @@
      0
     ],
     [
+     "6a94d4318e2a2ffc91d29993",
+     "Nirvana Prakarana Purvardha Part II KECSS Photocopied",
+     false,
+     346,
+     28,
+     0
+    ],
+    [
      "6a94936e31b41d9c5744a29e",
      "Combo Of Original Handwritten And Handwritten To Digitally Transcribed Excel Catalog List ",
      false,
@@ -16159,6 +16215,14 @@
      0
     ],
     [
+     "6a94d02c8e2a2ffc91d28295",
+     "MN 003265 Agama Shastra Vivaran Shankararya Sharada Manuscripts At Kurukshetra University",
+     false,
+     29,
+     27,
+     0
+    ],
+    [
      "6a942ebb52baa7aee625ac62",
      "Kupwara 1 – Matrika Puja Trai Vidyakam",
      false,
@@ -16207,26 +16271,10 @@
      0
     ],
     [
-     "6a94d31e8e2a2ffc91d2894e",
-     "Mokshopaya Utpatti Prakaran Left Side KECSS Photocopied",
-     false,
-     142,
-     26,
-     0
-    ],
-    [
      "6a948c4431b41d9c57445695",
      "462 Garuda Purana DAM Sharada Paper",
      false,
      99,
-     26,
-     0
-    ],
-    [
-     "6a94d0db8e2a2ffc91d28773",
-     "MN 003306 Partialy Destroyed Sharada Manuscripts At Kurukshetra University",
-     false,
-     95,
      26,
      0
     ],
@@ -20151,14 +20199,6 @@
      0
     ],
     [
-     "6a94d308c3eaca0630266876",
-     "Mokshopaya Sharada Manuscript 6",
-     false,
-     443,
-     24,
-     0
-    ],
-    [
      "69c6667c5ee2cfa2f502ccdf",
      "Harshacharita — Life of Emperor Harsha",
      false,
@@ -20279,14 +20319,6 @@
      0
     ],
     [
-     "6a94cebd8e2a2ffc91d2757d",
-     "Manuscript 6 – Garuda Purana Saroddhara Tika ( Manuscript In Sharada)",
-     false,
-     103,
-     24,
-     0
-    ],
-    [
      "6a94997b31b41d9c5744d047",
      "Kupwara 2 Deepa Shraddha Vidhi (दीप श्राद्ध विधिः)",
      false,
@@ -20345,6 +20377,14 @@
     [
      "6a94940f31b41d9c5744a8b5",
      "Dina Nath Raina Jammu Sharada Manuscript 5 – Karma Kanda",
+     false,
+     27,
+     24,
+     0
+    ],
+    [
+     "6a94cdb68e2a2ffc91d26ddd",
+     "Manuscript 23 Adbhuta Shanti Vidhi Parna Purusha Vidhi",
      false,
      27,
      24,
@@ -20535,14 +20575,6 @@
      0
     ],
     [
-     "6a94d02c8e2a2ffc91d28295",
-     "MN 003265 Agama Shastra Vivaran Shankararya Sharada Manuscripts At Kurukshetra University",
-     false,
-     29,
-     23,
-     0
-    ],
-    [
      "6a94c7d48e2a2ffc91d25037",
      "Kulgam 9 Ga Karadi Shri Ganapati Nama Sahasram (गकारदि श्रीगणपतिनामसहस्रम्)",
      false,
@@ -20620,14 +20652,6 @@
      false,
      23,
      23,
-     0
-    ],
-    [
-     "6a94d4318e2a2ffc91d29993",
-     "Nirvana Prakarana Purvardha Part II KECSS Photocopied",
-     false,
-     346,
-     22,
      0
     ],
     [
@@ -20831,14 +20855,6 @@
      0
     ],
     [
-     "6a94d3d28e2a2ffc91d29288",
-     "Munshi Ahmad Ali Ghazi Hayat Te Khidmat Kashmiri Urdu Pahari Maqbool Sajid",
-     false,
-     186,
-     21,
-     0
-    ],
-    [
      "6a94cad28e2a2ffc91d25ded",
      "Mahartha Manjari With Parimal Sharada RSkt S Jammu No 75",
      false,
@@ -20875,14 +20891,6 @@
      "Panchang 3 In",
      false,
      30,
-     21,
-     0
-    ],
-    [
-     "6a94cdb68e2a2ffc91d26ddd",
-     "Manuscript 23 Adbhuta Shanti Vidhi Parna Purusha Vidhi",
-     false,
-     27,
      21,
      0
     ],
@@ -20937,6 +20945,14 @@
     [
      "6a94c47f56cac2f882c85144",
      "Jyotish Related Sharada Text From Kupwara Trust",
+     false,
+     22,
+     21,
+     0
+    ],
+    [
+     "6a94cd898e2a2ffc91d26cf4",
+     "Manuscript 20 – Asya Vamasya Palitasya Suktam ( Manuscript In Sharada)",
      false,
      22,
      21,
@@ -21119,6 +21135,14 @@
      0
     ],
     [
+     "6a94cc2e8e2a2ffc91d265fb",
+     "Manuscript 103 – Chanturmasa Vrata Udyapana Vidhi Dina Nath Raina",
+     false,
+     21,
+     21,
+     0
+    ],
+    [
      "6a94cce08e2a2ffc91d268a4",
      "Manuscript 119 – Narakottaaranam Stotram Hari Nama Mala Stotram Dina Nath Raina",
      false,
@@ -21129,6 +21153,14 @@
     [
      "6a94d0298e2a2ffc91d2827d",
      "MN 003264 Ashtavakra Sharada Manuscripts At Kurukshetra University",
+     false,
+     21,
+     21,
+     0
+    ],
+    [
+     "6a94d1b3c3eaca063026641c",
+     "MN 003345 Mala Nirnaya Sharada Manuscripts At Kurukshetra University",
      false,
      21,
      21,
@@ -21155,6 +21187,22 @@
      "Charaka Samhita: Chikitsa Sthanam Vol. 3 (Sanskrit Medical Text)",
      false,
      1492,
+     20,
+     0
+    ],
+    [
+     "6a94cc4a8e2a2ffc91d26649",
+     "Manuscript 11 – Vishnu Sahasra Naam Tika ( Padma Purana) And Bhagavad Geeta Gudhartha Dipi",
+     false,
+     454,
+     20,
+     0
+    ],
+    [
+     "6a94d42a8e2a2ffc91d298a0",
+     "Nirvana Prakarana Purvardha I KECSS Photocopied",
+     false,
+     240,
      20,
      0
     ],
@@ -21223,14 +21271,6 @@
      0
     ],
     [
-     "6a94cd898e2a2ffc91d26cf4",
-     "Manuscript 20 – Asya Vamasya Palitasya Suktam ( Manuscript In Sharada)",
-     false,
-     22,
-     20,
-     0
-    ],
-    [
      "6a94d0fc8e2a2ffc91d287f0",
      "MN 003308 Partially Damaged Sharada Manuscripts At Kurukshetra University",
      false,
@@ -21249,22 +21289,6 @@
     [
      "6a948dab31b41d9c57445f02",
      "Eka Chakra Rucha – Graha Shanti Gayathri Brahmanam",
-     false,
-     21,
-     20,
-     0
-    ],
-    [
-     "6a94cc2e8e2a2ffc91d265fb",
-     "Manuscript 103 – Chanturmasa Vrata Udyapana Vidhi Dina Nath Raina",
-     false,
-     21,
-     20,
-     0
-    ],
-    [
-     "6a94d1b3c3eaca063026641c",
-     "MN 003345 Mala Nirnaya Sharada Manuscripts At Kurukshetra University",
      false,
      21,
      20,
@@ -21663,8 +21687,24 @@
      0
     ],
     [
+     "6a94d043c3eaca0630266299",
+     "MN 003269 Kaivalyopanishad Deepika Sharada Manuscripts At Kurukshetra University",
+     false,
+     19,
+     18,
+     0
+    ],
+    [
      "6a94d1198e2a2ffc91d28809",
      "MN 003309 Ananta Katha Sara Sharada Manuscripts At Kurukshetra University",
+     false,
+     19,
+     18,
+     0
+    ],
+    [
+     "6a94d161c3eaca06302663a1",
+     "MN 003316 Partially Damaged Sharada Manuscripts At Kurukshetra University",
      false,
      19,
      18,
@@ -21783,6 +21823,14 @@
      0
     ],
     [
+     "6a94cf128e2a2ffc91d276a1",
+     "Marthanda Brahmana – Samvatsarika Shraaddha",
+     false,
+     20,
+     17,
+     0
+    ],
+    [
      "6a91e0d7051d1f3e8eaa1844",
      "MS Indic beta 353.",
      false,
@@ -21809,14 +21857,6 @@
     [
      "6a949b0a31b41d9c5744d98e",
      "Manu Kp Shraaddha ( Laugakshi) Indrakshi Nama Sahasram ( Rudrayamala) Asuri Mantra Sharada",
-     false,
-     19,
-     17,
-     0
-    ],
-    [
-     "6a94d043c3eaca0630266299",
-     "MN 003269 Kaivalyopanishad Deepika Sharada Manuscripts At Kurukshetra University",
      false,
      19,
      17,
@@ -22023,14 +22063,6 @@
      0
     ],
     [
-     "6a94d161c3eaca06302663a1",
-     "MN 003316 Partially Damaged Sharada Manuscripts At Kurukshetra University",
-     false,
-     19,
-     16,
-     0
-    ],
-    [
      "6a94958531b41d9c5744adc7",
      "Fragments Of Mantra Compilation 2 Of 2 Sharada Manuscript From Shopian Trust.pdf",
      false,
@@ -22231,14 +22263,6 @@
      0
     ],
     [
-     "6a94cf128e2a2ffc91d276a1",
-     "Marthanda Brahmana – Samvatsarika Shraaddha",
-     false,
-     20,
-     15,
-     0
-    ],
-    [
      "6a94e00bb24b5a49c27da9c6",
      "Stray Pages In Middle From 2nd Of 4 Texts From Composite Sharada Manuscript Found In Srina",
      false,
@@ -22388,22 +22412,6 @@
      false,
      15,
      15,
-     0
-    ],
-    [
-     "6a94cc4a8e2a2ffc91d26649",
-     "Manuscript 11 – Vishnu Sahasra Naam Tika ( Padma Purana) And Bhagavad Geeta Gudhartha Dipi",
-     false,
-     454,
-     14,
-     0
-    ],
-    [
-     "6a94d42a8e2a2ffc91d298a0",
-     "Nirvana Prakarana Purvardha I KECSS Photocopied",
-     false,
-     240,
-     14,
      0
     ],
     [
@@ -23047,6 +23055,14 @@
      0
     ],
     [
+     "6a94d4b48e2a2ffc91d29e50",
+     "Panchang 5 In",
+     false,
+     16,
+     11,
+     0
+    ],
+    [
      "6a948a8431b41d9c57444a1f",
      "4190 UPSS Griha Pratishtha Laugakshi Sharda 24 29",
      false,
@@ -23319,14 +23335,6 @@
      0
     ],
     [
-     "6a94d4b48e2a2ffc91d29e50",
-     "Panchang 5 In",
-     false,
-     16,
-     9,
-     0
-    ],
-    [
      "6a948b0f31b41d9c57444dab",
      "4207 UPSS SM Brihad Jatak Folio 15 12 Then 1 Then 1 Folio With No Num",
      false,
@@ -23591,6 +23599,14 @@
      0
     ],
     [
+     "6a94cdf18e2a2ffc91d26ea2",
+     "Manuscript 26 – Gayathri Japa Vidhi ( Manuscript In Sharada)",
+     false,
+     8,
+     8,
+     0
+    ],
+    [
      "6a94ce308e2a2ffc91d26f12",
      "Manuscript 30 – Parna Purusha Vidhi ( Manuscript In Sharada)",
      false,
@@ -23639,14 +23655,6 @@
      0
     ],
     [
-     "6a94cdf18e2a2ffc91d26ea2",
-     "Manuscript 26 – Gayathri Japa Vidhi ( Manuscript In Sharada)",
-     false,
-     8,
-     7,
-     0
-    ],
-    [
      "6a94ceb88e2a2ffc91d27572",
      "Manuscript 5 – Bala Bheemasena Ekaadashi Katha ( Padma Purana – Vasishta Dileepa Samvada, ",
      false,
@@ -23681,6 +23689,14 @@
     [
      "6a948b4f31b41d9c57444fde",
      "4217 UPPS Sangraha Utpala Deva",
+     false,
+     7,
+     7,
+     0
+    ],
+    [
+     "6a94cea38e2a2ffc91d27568",
+     "Manuscript 4 – Bheemasena Ekaadashi Katha ( Manuscript In Sharada)",
      false,
      7,
      7,
@@ -23737,14 +23753,6 @@
     [
      "6a94303dfc29dbd7ff1fb5ec",
      "Panchadashi ( By Shri Vidyaranya Muni)",
-     false,
-     7,
-     6,
-     0
-    ],
-    [
-     "6a94cea38e2a2ffc91d27568",
-     "Manuscript 4 – Bheemasena Ekaadashi Katha ( Manuscript In Sharada)",
      false,
      7,
      6,
@@ -23895,6 +23903,14 @@
      0
     ],
     [
+     "6a94cda0c3eaca0630266290",
+     "Manuscript 22 Avahana Mantras ( Manuscript In Sharada)",
+     false,
+     6,
+     5,
+     0
+    ],
+    [
      "6a919e251b85f2bf50ef0a48",
      "MS Indic gamma 45.",
      false,
@@ -23993,14 +24009,6 @@
     [
      "6a94c4c156cac2f882c851b5",
      "Jyotisha ( Raksha Mantra – Kalasha Puja)",
-     false,
-     6,
-     4,
-     0
-    ],
-    [
-     "6a94cda0c3eaca0630266290",
-     "Manuscript 22 Avahana Mantras ( Manuscript In Sharada)",
      false,
      6,
      4,
@@ -24151,6 +24159,14 @@
      0
     ],
     [
+     "6a94ccb58e2a2ffc91d26897",
+     "Manuscript 117– Puja Mantra ( Panchayatana) Dina Nath Raina",
+     false,
+     4,
+     3,
+     0
+    ],
+    [
      "6a94939131b41d9c5744a3dc",
      "Dehastha Devata Chakra Stotram Sharada RSkt S Jammu No 67",
      false,
@@ -24203,14 +24219,6 @@
      "Ishvar Pratyabhijna Vivritti Of Utpal First Two Third Of Sharada Manuscript Out Of 43 Foli",
      false,
      59,
-     2,
-     0
-    ],
-    [
-     "6a94ccb58e2a2ffc91d26897",
-     "Manuscript 117– Puja Mantra ( Panchayatana) Dina Nath Raina",
-     false,
-     4,
      2,
      0
     ],
@@ -24287,19 +24295,19 @@
      0
     ],
     [
-     "6a94ce878e2a2ffc91d27397",
-     "Manuscript 33 Mantras ( Manuscript In Sharada)",
+     "6a94ce218e2a2ffc91d26ec6",
+     "Manuscript 29 Puja Mantras ( Manuscript In Sharada)",
      false,
      2,
      2,
      0
     ],
     [
-     "6a94ce218e2a2ffc91d26ec6",
-     "Manuscript 29 Puja Mantras ( Manuscript In Sharada)",
+     "6a94ce878e2a2ffc91d27397",
+     "Manuscript 33 Mantras ( Manuscript In Sharada)",
      false,
      2,
-     1,
+     2,
      0
     ],
     [
@@ -32411,18 +32419,18 @@
   "readable": 225,
   "list": "scripts/catalog-coverage/eternity-shelf-5513.json",
   "owner_issue": 5513,
-  "counted_at": "2026-10-05T23:04:31.483Z"
+  "counted_at": "2026-10-06T01:21:52.159Z"
  },
  "tengyur_draft": {
   "owner_issue": 5497,
   "volumes": 213,
-  "volumes_translated": 210,
+  "volumes_translated": 213,
   "volumes_partly": 0,
   "pages_imaged": 128639,
   "pages_with_text": 128369,
-  "pages_translated": 125918,
-  "spend_usd": 227.68,
-  "usage_rows": 707,
+  "pages_translated": 128333,
+  "spend_usd": 232.92,
+  "usage_rows": 754,
   "usd_per_page": 0.00181,
   "model": "gemini-3-flash-preview, prompt v13, Batch API, one page per request without neighbour context (#5497 arm B); the 5-volume pilot used 8-page chained blocks",
   "per_volume": [
@@ -32509,7 +32517,7 @@
    [
     17,
     898,
-    895
+    897
    ],
    [
     18,
@@ -32519,7 +32527,7 @@
    [
     19,
     522,
-    519
+    522
    ],
    [
     20,
@@ -32544,7 +32552,7 @@
    [
     24,
     526,
-    525
+    526
    ],
    [
     25,
@@ -32564,7 +32572,7 @@
    [
     28,
     580,
-    578
+    579
    ],
    [
     29,
@@ -32619,7 +32627,7 @@
    [
     39,
     634,
-    633
+    634
    ],
    [
     40,
@@ -32629,7 +32637,7 @@
    [
     41,
     624,
-    621
+    623
    ],
    [
     42,
@@ -32674,7 +32682,7 @@
    [
     50,
     498,
-    494
+    496
    ],
    [
     51,
@@ -33479,19 +33487,19 @@
    [
     211,
     747,
-    0
+    746
    ],
    [
     212,
     652,
-    0
+    652
    ],
    [
     213,
     1005,
-    0
+    1005
    ]
   ],
-  "counted_at": "2026-10-05T23:04:31.483Z"
+  "counted_at": "2026-10-06T01:21:52.159Z"
  }
 }

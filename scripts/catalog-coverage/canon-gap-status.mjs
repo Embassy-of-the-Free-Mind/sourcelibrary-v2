@@ -41,7 +41,7 @@ const SHELF = 'scripts/catalog-coverage/eternity-shelf-5513.json';
 // status: done | running | next | blocked. cost_usd: the next action's cost where it has one.
 const STATUS = {
   'derge-tengyur': { status: 'running', owner_issue: 5497,
-    done: '213 volumes imported hidden and held; 128,369 of 128,639 pages carry the Esukhia public-domain text, aligned folio by folio to the BDRC scans. 125,918 of 128,369 pages (210 of 213 volumes) have a draft English, made with gemini-3-flash-preview one page per request, for about $228. The last three volumes (miscellany and the catalogue, 2,404 pages) were left when the approved budget ran out. It is an unreviewed machine draft, with about 2 to 5 reversed statements per 100 pages measured against 84000.',
+    done: '213 volumes imported hidden and held; 128,369 of 128,639 pages carry the Esukhia public-domain text, aligned folio by folio to the BDRC scans. 128,333 of 128,369 pages (all 213 volumes) have a draft English, made with gemini-3-flash-preview one page per request, for about $233. The other 36 pages are 26 that the translation filter skips as untranslatable and 10 that came back empty on every try. It is an unreviewed machine draft, with about 2 to 5 reversed statements per 100 pages measured against 84000.',
     next_action: 'Published as an unreviewed machine draft once the reader shows the licence and the draft label (#5571); Derek decides.',
     cost_usd: 0 },
   'derge-kangyur': { status: 'running', owner_issue: 5665,
