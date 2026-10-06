@@ -38,6 +38,16 @@ describe('quality-methods register', () => {
     }
   });
 
+  it('the improvement board names a sourced window and an owner for every item', () => {
+    expect(methods.board.window.date).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(sourceExists(methods.board.window.source)).toBe(true);
+    for (const b of methods.board.items) {
+      expect(Number.isInteger(b.issue), b.class).toBe(true);
+      expect(['open', 'in progress', 'fixed — rate fell', 'fixed — not yet re-measured'], b.class).toContain(b.status);
+      expect(b.next.length, b.class).toBeGreaterThan(5);
+    }
+  });
+
   it('every gap names its issue', () => {
     for (const g of methods.gaps) expect(Number.isInteger(g.issue)).toBe(true);
   });

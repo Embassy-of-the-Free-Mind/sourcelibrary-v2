@@ -99,6 +99,7 @@ export default function QualityMethodsPage() {
         <nav className="mt-6 text-base">
           <a href="#rules" className="text-amber-800 underline underline-offset-2 mr-5">The rules</a>
           <a href="#instruments" className="text-amber-800 underline underline-offset-2 mr-5">The instruments</a>
+          <a href="#board" className="text-amber-800 underline underline-offset-2 mr-5">What we are fixing</a>
           <a href="#gaps" className="text-amber-800 underline underline-offset-2 mr-5">What we cannot yet measure</a>
           <a href="#map" className="text-amber-800 underline underline-offset-2">Where things live</a>
         </nav>
@@ -161,6 +162,38 @@ export default function QualityMethodsPage() {
               </dl>
             </section>
           ))}
+        </div>
+
+        <H2 id="board">What we are fixing</H2>
+        <p>
+          Each review cycle draws books at random, reads their pages against the scans, and ranks what went wrong by how
+          often it appeared. A fix counts when the next window&rsquo;s rate falls, not when it ships. Latest window:{' '}
+          {methods.board.window.books} books, {methods.board.window.pages} pages ({methods.board.window.date}){' '}
+          <a href={href(methods.board.window.source)} className="text-xs text-amber-800 underline underline-offset-2 whitespace-nowrap">source</a>.
+        </p>
+        <div className="mt-4 overflow-x-auto">
+          <table className="w-full text-base border-collapse">
+            <thead>
+              <tr className="text-left text-stone-500 text-sm border-b border-stone-200">
+                <th className="py-2 pr-4 font-normal">What goes wrong</th>
+                <th className="py-2 pr-4 font-normal">How often</th>
+                <th className="py-2 pr-4 font-normal">Next step</th>
+                <th className="py-2 font-normal">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {methods.board.items.map((b) => (
+                <tr key={b.class} className="border-b border-stone-100 align-top">
+                  <td className="py-2 pr-4">{b.class}</td>
+                  <td className="py-2 pr-4 whitespace-nowrap sm:whitespace-normal">{b.seen}</td>
+                  <td className="py-2 pr-4">{b.next}</td>
+                  <td className="py-2 whitespace-nowrap">
+                    {b.status} &middot; <A to={`${ISSUE}${b.issue}`}>#{b.issue}</A>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
 
         <H2 id="gaps">What we cannot yet measure</H2>

@@ -43,6 +43,11 @@
       "source": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/5915"
     },
     {
+      "id": "closure",
+      "rule": "Every serious finding is closed by something that lasts: a test page that every later change must pass, an entry on the improvement board with an owner, and, for a book that is broken or not ours to publish, hiding it the same day. A detector's flags each have an action, or the detector is not finished.",
+      "source": ".claude/docs/eval-design.md"
+    },
+    {
       "id": "landing",
       "rule": "Every measurement is written up where anyone can read it: an experiment entry, a row in the decision ledger, and a comment on its issue.",
       "source": "scripts/eval/experiments/README.md"
@@ -155,6 +160,18 @@
       "status": "planned"
     }
   ],
+  "board": {
+    "_about": "The improvement board: defect classes ranked by how often the latest random check met them, each with its owner and status. Rewritten every review cycle (#5914); a fix counts when the next window's rate falls.",
+    "window": { "date": "2026-10-06", "books": 30, "pages": 91, "source": "scripts/eval/experiments/2026-10-06-random-book-spot-check-canon-shelves-5914.md" },
+    "items": [
+      { "class": "Wrong tradition shelf", "seen": "≈ 9 of 30 books", "status": "open", "next": "A membership rule per tradition, then a review of the doubtful books", "issue": 5916 },
+      { "class": "Reversed sense in the English", "seen": "7 of 30 books", "status": "in progress", "next": "Regression pages for each case; evidence on the cheaper model's share", "issue": 5913 },
+      { "class": "Broken book: splices, duplicates, the wrong work under a title", "seen": "6 of 30 books", "status": "in progress", "next": "Hold a public book on a high-precision flag", "issue": 5059 },
+      { "class": "Text that is not on the page", "seen": "5 of 30 books", "status": "in progress", "next": "Refuse to translate what the pipeline cannot read", "issue": 5915 },
+      { "class": "Modern edition still in copyright", "seen": "3 of 30 books; 49 of 1,571 on the canon shelves", "status": "in progress", "next": "All 49 hidden; a rights check at import", "issue": 4809 },
+      { "class": "Markup leaking into the reader's English", "seen": "4 of 30 books", "status": "in progress", "next": "Count what is left after the 4 October cleanup; fix at render time", "issue": 5700 }
+    ]
+  },
   "gaps": [
     { "gap": "No person who reads the source language has yet checked our pages, so every judged rate rests on AI judges no human has calibrated.", "issue": 5406 },
     { "gap": "High-precision flags (duplicate scans, a repeated page, a typed-edition disagreement) do not yet hold a public book or page from view.", "issue": 5915 },
