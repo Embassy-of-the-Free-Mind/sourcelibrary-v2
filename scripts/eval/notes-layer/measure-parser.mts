@@ -24,12 +24,15 @@ function classify(today: string, mine: string): string {
   const blank = (t: string) => t.replace(/\n{3,}/g, '\n\n').trim();
   if (blank(today) === blank(mine)) return 'blank-line-run';
   if (today.replace(/\s+/g, '') === mine.replace(/\s+/g, '')) return 'spacing-only';
+  // Today's notes-off deletes whole lines that the layered text keeps (a heading or headword written as term + gloss).
+  const kept = new Set(today.split('\n').map((l) => l.replace(/\s+/g, '')));
+  if (mine.split('\n').filter((l) => kept.has(l.replace(/\s+/g, ''))).join('').replace(/\s+/g, '') === today.replace(/\s+/g, '')) return 'line-kept-that-notes-off-deletes';
   return 'content';
 }
 
 const rows: any[] = []; const diffs: any[] = [];
 const tally = (o: Record<string, number>, k: string, n = 1) => { o[k] = (o[k] || 0) + n; };
-const sum = { n: pages.length, exact: 0, inexact: {} as Record<string, number>, on: {} as Record<string, number>, off: {} as Record<string, number>, off_ws: {} as Record<string, number>,
+const sum = { n: pages.length, exact: 0, inexact: {} as Record<string, number>, on: {} as Record<string, number>, off: {} as Record<string, number>,
   metadata_on_equal: 0, description_only_flag_differs: { on: 0, off: 0 }, annotations: 0, pages_with_annotations: 0, by_type: {} as Record<string, number>,
   anchors: {} as Record<string, Record<string, number>>, page_level: {} as Record<string, number>, pages_with_single_brackets: 0, pages_with_legacy_brackets: 0, by_prompt_version: {} as Record<string, any> };
 for (const p of pages) {

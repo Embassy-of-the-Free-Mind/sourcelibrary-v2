@@ -53,6 +53,8 @@ export interface InlineLayout {
   /** A glossary-line entry: the term chip that was removed with its note, and the gap between them. */
   term?: string;
   gap?: string;
+  /** Which glossary line the entry came from (its offset in the normalised page). */
+  line?: number;
 }
 
 export interface TranslationAnnotation {
@@ -95,6 +97,7 @@ interface Cut {
   page?: PageLevelBlock['kind'];
   /** An entry of a glossary line, with the line's own text around it (list marker, separators, the newline). */
   glossary?: boolean;
+  line?: number;
   lead?: string;
   trail?: string;
 }
@@ -164,7 +167,7 @@ function classify(cut: Cut, textBefore: string): AnnotationType {
   if (cut.tag === 'image-desc') return 'image';
   if (cut.kind === 'gloss') return 'gloss-model';
   if (/^\s*original\s*:/i.test(cut.body || '')) return 'original';
-  if (cut.kind === 'chip' || cut.glossary || /<\/term>\s*$/i.test(textBefore)) return 'definition';
+  if (cut.kind === 'chip' || cut.glossary || /<\/term>[ \t]*$/i.test(textBefore)) return 'definition';
   return 'note';
 }
 
@@ -179,28 +182,37 @@ const MAX_ANCHOR_WORDS = 12;
 const MIN_ANCHOR_WORDS = 3;
 
 /**
- * The phrase an annotation attaches to. A note after a `<term>` chip attaches to the term. Any
+ * The phrase an annotation attaches to. A note after a `<term>` chip attaches to the term (and
+ * one after a page mark to the marked words). Any
  * other inline note attaches to the words just before it on the same line (never across a tag),
  * taking as many as it needs — 3 to 12 — to be the only such run on the page. A note with no words
  * before it on its line stands alone.
  */
 function anchorFor(text: string, at: number, glossaryTerm?: string): AnnotationAnchor {
   if (glossaryTerm != null) {
+    // A glossary entry names its word; the word is in the sentence above, possibly capitalised.
     const phrase = glossaryTerm.trim();
-    const occurrences = phrase ? countOccurrences(text, phrase) : 0;
-    return { phrase: phrase || null, offset: occurrences ? text.indexOf(phrase) : null, occurrences };
+    if (!phrase) return { phrase: null, offset: at, occurrences: 0 };
+    const exact = countOccurrences(text, phrase);
+    if (exact) return { phrase, offset: text.indexOf(phrase), occurrences: exact };
+    const folded = text.toLowerCase();
+    const occurrences = folded.length === text.length ? countOccurrences(folded, phrase.toLowerCase()) : 0;
+    return { phrase, offset: occurrences ? folded.indexOf(phrase.toLowerCase()) : null, occurrences };
   }
   const before = text.slice(0, at);
-  const term = before.match(/<term>([^<]*)<\/term>\s*$/i);
-  if (term && term[1].trim()) {
-    const phrase = term[1].trim();
-    const offset = term.index! + term[0].indexOf(phrase, 6);
+  // Straight after a chip on the same line — a term, or a page mark — the note is about what the
+  // chip holds. A note in its own paragraph is not, whatever the paragraph above ended with.
+  const chip = before.match(/<(term|unclear|margin|gloss|insert)>([^<]*)<\/\1>[ \t]*$/i);
+  if (chip && chip[2].trim()) {
+    const phrase = chip[2].trim();
+    const offset = chip.index! + chip[0].indexOf(phrase, chip[1].length + 2);
     return { phrase, offset, occurrences: countOccurrences(text, phrase) };
   }
-  // Words before the note on its own line, back to the nearest tag.
+  // Words before the note on its own line, back to the nearest tag. Layout markers are not words:
+  // a heading's "#", the "->" and "<-" of a centred line.
   const line = before.slice(before.lastIndexOf('\n') + 1);
-  const run = line.slice(line.lastIndexOf('>') + 1).replace(/[\s*_,;:.!?"'’”)\]]+$/, '');
-  const words = [...run.matchAll(/\S+/g)];
+  const run = line.slice(line.lastIndexOf('>') + 1).replace(/(?:<-|[\s*_,;:.!?"'’”)\]])+$/, '');
+  const words = [...run.matchAll(/\S+/g)].filter(w => !/^(?:#+|->|<-)$/.test(w[0]));
   if (words.length === 0) return { phrase: null, offset: at, occurrences: 0 };
   const runStart = at - line.length + line.lastIndexOf('>') + 1;
   let take = Math.min(MIN_ANCHOR_WORDS, words.length);
@@ -233,6 +245,24 @@ export function parseTranslationLayers(
   if (!staged) return inexact(markup, 'provenance staging disagrees with separateTermDefinitions');
   const { canonical, kinds } = staged;
 
+  // A "glossary line" whose word appears nowhere else on the page is not a glossary: it is a
+  // heading or a dictionary headword that happens to be a term and its gloss. Notes-off deletes
+  // such a line today, the book's word with it. Here the word stays in the text and only the
+  // note is lifted, so the split is tried once with every glossary line out and again without
+  // the ones whose terms the text would lose.
+  const first = splitCanonical(markup, canonical, kinds, source, new Set());
+  if (!first.exact) return first;
+  const lost = new Set<number>();
+  const haystack = first.text.toLowerCase();
+  for (const a of first.annotations) {
+    if (a.layout.term === undefined || a.layout.line === undefined) continue;
+    const word = a.layout.term.trim().toLowerCase();
+    if (!word || !haystack.includes(word)) lost.add(a.layout.line);
+  }
+  return lost.size ? splitCanonical(markup, canonical, kinds, source, lost) : first;
+}
+
+function splitCanonical(markup: string, canonical: string, kinds: Kind[], source: string, keepLines: Set<number>): TranslationLayers {
   // 1. Everything that leaves the text, in page order.
   const allSpans = scanSpans(canonical);
   if (allSpans.filter(c => c.tag === 'note').length !== kinds.length) return inexact(markup, 'unbalanced <note> after normalisation');
@@ -244,7 +274,7 @@ export function parseTranslationLayers(
   let lineStart = 0;
   for (const line of canonical.split('\n')) {
     const lineEnd = lineStart + line.length;
-    if (isGlossaryLine(line)) glossary.push([lineStart, lineEnd]);
+    if (isGlossaryLine(line) && !keepLines.has(lineStart)) glossary.push([lineStart, lineEnd]);
     lineStart = lineEnd + 1;
   }
   const inGlossary = (at: number) => glossary.some(([s, e]) => at >= s && at < e);
@@ -261,7 +291,7 @@ export function parseTranslationLayers(
       const term = lead.match(/<term>([^\n]*?)<\/term>(\s*)$/i);
       const end = n === spans.length - 1 ? cutEnd : span.end;
       cuts.push({
-        ...span, start: cursor, end, glossary: true,
+        ...span, start: cursor, end, glossary: true, line: s,
         term: term ? term[1] : undefined, gap: term ? term[2] : undefined,
         lead: term ? lead.slice(0, term.index) : lead, trail: canonical.slice(span.end, end),
       });
@@ -348,6 +378,7 @@ export function parseTranslationLayers(
     if (cut.term !== undefined) {
       layout.term = cut.term;
       layout.gap = cut.gap || '';
+      layout.line = cut.line;
     }
     annotations.push({
       type: classify(cut, text.slice(0, e.at)),

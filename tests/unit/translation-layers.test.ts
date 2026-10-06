@@ -153,3 +153,28 @@ describe('parseTranslationLayers — cases the 800-page draw turned up', () => {
     expect(layers.text).toBe(applyNotesOff(odd));
   });
 });
+
+describe('a term-and-gloss line that is the book\'s own heading', () => {
+  // book 6992cd54… p.68: notes-off deletes this heading today, the plant's name with it.
+  const page = '# <term>Shui Yang Mei</term> <gloss>Adina rubella / Chinese buttonbush</gloss>\n\nIt grows beside streams and flowers in summer.';
+
+  it('keeps the heading word in the text and lifts only the gloss', () => {
+    const layers = parseTranslationLayers(page);
+    expect(layers.exact).toBe(true);
+    expect(layers.text).toBe('# <term>Shui Yang Mei</term>\n\nIt grows beside streams and flowers in summer.');
+    expect(layers.annotations[0]).toMatchObject({ type: 'gloss-model', body: 'Adina rubella / Chinese buttonbush' });
+    expect(layers.annotations[0].anchor).toMatchObject({ phrase: 'Shui Yang Mei', occurrences: 1 });
+    expect(renderTranslationLayers(layers, { notes: true })).toBe(canonical(page));
+  });
+
+  it('differs from today\'s notes-off, which loses the heading', () => {
+    expect(applyNotesOff(page)).not.toContain('Shui Yang Mei');
+    expect(applyNotesOff(parseTranslationLayers(page).text)).toContain('Shui Yang Mei');
+  });
+
+  it('still treats the line as a glossary when the word is in the text above, whatever its case', () => {
+    const layers = parseTranslationLayers('Bite marks were found.\n\n<term>bite</term> <note>original: "morsus"</note>');
+    expect(layers.text.trim()).toBe('Bite marks were found.');
+    expect(layers.annotations[0].anchor).toMatchObject({ phrase: 'bite', offset: 0, occurrences: 1 });
+  });
+});
