@@ -29,7 +29,7 @@
 import { MongoClient } from 'mongodb';
 import { mkdirSync, writeFileSync, appendFileSync, readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { translationReasoningLeak, translationOcrTalk, TRANSLATION_LEAK_PREFILTER } from '../lib/page-integrity.mjs';
+import { translationReasoningLeak, translationPipelineTalk, TRANSLATION_LEAK_PREFILTER } from '../lib/page-integrity.mjs';
 
 const [mode, ...args] = process.argv.slice(2);
 const opt = (k, d) => { const i = args.indexOf(`--${k}`); return i >= 0 ? args[i + 1] : d; };
@@ -104,7 +104,7 @@ if (mode === 'report') {
   const TO = opt('to', OUT);
   mkdirSync(TO, { recursive: true });
   const ck = JSON.parse(readFileSync(CKPT, 'utf8'));
-  const seen = new Set(), rows = [], ocrTalk = [];
+  const seen = new Set(), rows = [], talk = [];
   for (const line of readFileSync(CAND, 'utf8').split('\n')) {
     if (!line) continue;
     const r = JSON.parse(line);
@@ -112,7 +112,7 @@ if (mode === 'report') {
     seen.add(r._id);
     const v = translationReasoningLeak(r.text);
     if (v) rows.push({ ...r, text: undefined, kind: v.kind, phrase: v.phrase, reader_visible: v.readerVisible });
-    else if (translationOcrTalk(r.text)) ocrTalk.push({ book_id: r.book_id, page_number: r.page_number });
+    else if (translationPipelineTalk(r.text)) talk.push({ book_id: r.book_id, page_number: r.page_number });
   }
   const ids = [...new Set(rows.map((r) => r.book_id))];
   const books = new Map();
@@ -129,6 +129,9 @@ if (mode === 'report') {
   }
   const tally = (list, f) => list.reduce((m, r) => { const k = f(r) ?? 'none'; m[k] = (m[k] || 0) + 1; return m; }, {});
   const live = rows.filter((r) => r.live), shown = live.filter((r) => r.reader_visible);
+  // The headline: what a reader of a public book meets as the page's English.
+  const STRONG = new Set(['reasoning', 'assistant-reply']);
+  const head = shown.filter((r) => STRONG.has(r.kind));
   const summary = {
     issue: 6056, measured_at: new Date().toISOString(),
     walk_complete: ck.ranges.every((r) => r.done),
@@ -137,13 +140,16 @@ if (mode === 'report') {
     leaked_pages: rows.length, leaked_books: new Set(rows.map((r) => r.book_id)).size,
     live_leaked_pages: live.length, live_leaked_books: new Set(live.map((r) => r.book_id)).size,
     live_reader_visible_pages: shown.length, live_reader_visible_books: new Set(shown.map((r) => r.book_id)).size,
+    headline_pages: head.length, headline_books: new Set(head.map((r) => r.book_id)).size,
+    headline_by_kind: tally(head, (r) => r.kind), headline_by_language: tally(head, (r) => r.language),
+    headline_by_model: tally(head, (r) => r.model), headline_by_month: tally(head, (r) => (r.updated_at ? String(r.updated_at).slice(0, 7) : null)),
+    live_reader_visible_by_kind: tally(shown, (r) => r.kind),
     by_kind: tally(rows, (r) => r.kind), live_by_kind: tally(live, (r) => r.kind),
     by_model: tally(rows, (r) => r.model), by_prompt_version: tally(rows, (r) => String(r.prompt_version)),
     by_month: tally(rows, (r) => (r.updated_at ? String(r.updated_at).slice(0, 7) : null)),
-    live_by_language: tally(live, (r) => r.language),
-    // Not reasoning: a translator's note that cites "the OCR" in the page body. Counted, never listed.
-    side_ocr_talk_in_body: { pages: ocrTalk.length, books: new Set(ocrTalk.map((r) => r.book_id)).size },
-    note: 'A floor: phrase rule read off real hits. reader_visible = the phrase survives removal of <meta> blocks.',
+    // Not reasoning: a translator's note that cites "the OCR" or "the <gloss> tags" in the page body. Counted, never listed.
+    side_pipeline_talk_in_body: { pages: talk.length, books: new Set(talk.map((r) => r.book_id)).size },
+    note: 'A floor: phrase rules read off real hits. headline = reasoning or assistant-reply, in the page body, on a live book at page_number > 0. reader_visible = the phrase survives removal of the <meta>/<summary>/<keywords>/<vocab> blocks.',
   };
   rows.sort((a, b) => (b.live - a.live) || (b.reader_visible - a.reader_visible) || a.book_id.localeCompare(b.book_id) || a.page_number - b.page_number);
   writeFileSync(join(TO, 'summary.json'), JSON.stringify(summary, null, 1));

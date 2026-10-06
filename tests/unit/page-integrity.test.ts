@@ -16,7 +16,7 @@ import {
   truncationRatio, echoedSource, sourceLanguageCount, tokenMatches, readingLength, ocrReasoningLeak,
   parseVocab, vocabAbsent, repeatedBlocks, LOOP_MAX_TTR, LOOP_MIN_COPIES, REPEAT_MIN_CHARS,
   metaPayload, continuityMeta,
-  translationReasoningLeak, translationOcrTalk, TRANSLATION_LEAK_PREFILTER,
+  translationReasoningLeak, translationPipelineTalk, TRANSLATION_LEAK_PREFILTER,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/page-integrity.mjs';
@@ -292,8 +292,7 @@ describe('translationReasoningLeak', () => {
     'shall be changed to <term>ais</term>. <note>Wait, the text says "changed to bhir"</note> Example:',
     'I should translate it but keep it in the `<margin>` tag as requested.',
     '*Wait, the Greek in line 12:* nothing healthy',
-    'Please note: The provided text is in **Latin**, not Greek. I will translate the Latin text into English',
-    '5. **Include the required metadata, summary, and keywords.**\n\n**Please paste the text below to begin.**',
+    'Please note: The provided text is in Latin, not Greek. I will translate the Latin text into English, preserving the formatting and paragraph breaks as requested.',
   ];
   const NEGATIVE = [
     'by which they lie in* > *wait to deceive: and delighting to be deceived',
@@ -323,12 +322,27 @@ describe('translationReasoningLeak', () => {
   it('says whether a reader sees it: a phrase only inside <meta> sits in the metadata panel', () => {
     expect(translationReasoningLeak('<meta>The user wants "warm museum label" style.</meta>\nIn the beginning')).toMatchObject({ kind: 'reasoning', readerVisible: false });
   });
+  it('a chat reply to the requester is its own kind', () => {
+    for (const t of [
+      'Please provide the OCR transcription text you would like me to translate. The input you provided consists only of dots',
+      '5. **Include the required metadata, summary, and keywords.**\n\n**Please paste the text below to begin.**',
+    ]) {
+      expect(translationReasoningLeak(t), t).toMatchObject({ kind: 'assistant-reply', readerVisible: true });
+      expect(TRANSLATION_LEAK_PREFILTER.test(t), t).toBe(true);
+    }
+  });
+  it('the model naming its input is the mildest kind, and usually sits in <meta>', () => {
+    expect(translationReasoningLeak('<meta>Page 405 is missing from the provided transcription.</meta>\ndominion. But the daemon')).toMatchObject({ kind: 'input-talk', readerVisible: false });
+    expect(translationReasoningLeak('The provided text contains no content to modernize, as it consists only of a blank page.')).toMatchObject({ kind: 'input-talk', readerVisible: true });
+  });
   it('the bare thinking-channel label at the head of a page is its own kind', () => {
     expect(translationReasoningLeak('thought\n<meta>This page continues the legal analysis</meta>')).toMatchObject({ kind: 'thought-token' });
     expect(translationReasoningLeak('164  ST. AMBROSE.\nthought\nthat he was restored to us')).toBeNull();
   });
   it('a note that cites "the OCR" is pipeline talk, not reasoning', () => {
-    expect(translationOcrTalk('<note>The OCR reads "left" again</note>')).toBe(true);
-    expect(translationOcrTalk('<meta>the watermark mentioned in the OCR has been omitted</meta> In the beginning')).toBe(false);
+    expect(translationPipelineTalk('<note>The OCR reads "left" again</note>')).toBe(true);
+    expect(translationPipelineTalk('<note>The smaller characters in the <gloss> tags are pronunciation guides</note>')).toBe(true);
+    expect(translationReasoningLeak('<note>The smaller characters in the <gloss> tags are pronunciation guides</note>')).toBeNull();
+    expect(translationPipelineTalk('<meta>the watermark mentioned in the OCR has been omitted</meta> In the beginning')).toBe(false);
   });
 });

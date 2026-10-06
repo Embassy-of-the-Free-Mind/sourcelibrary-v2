@@ -680,39 +680,47 @@ const TRANSLATION_LEAK_RULE = new RegExp([
   '(?:^|[\\n*(])(?:final )?final (?:check|polish|output|plan|structure)\\b[^\\n]{0,20}:',
   '\\(ready\\)\\.? writing response',
   '(?:source|target) language:?\\*\\*',
-  '<(?:meta|note|vocab|term|gloss|summary|keywords)>`? tags?\\b',
+  '`<(?:meta|note|vocab|term|gloss|summary|keywords|margin)>` tags?\\b',
   'system prompt',
   "let(?:'s| me) re-?(?:check|read|verify|examine|evaluate|translate) (?:the (?:ocr|source|latin|greek|german|text|english|first|prompt|instructions?|translation)|carefully)",
   "i (?:will|should|need to|must|'ll) (?:translate|transcribe|add a note|output|wrap)[^.\\n]{0,100}(?:the ocr|the prompt|the user|`<|museum|xml|markdown|as requested)",
-  'please (?:paste|provide|share|supply) the (?:text|ocr|transcription|source|latin|page)',
-  'once you provide the (?:text|ocr|transcription)',
-  "the (?:text|input|transcription) (?:that )?you(?:'ve| have)? provided|the provided (?:ocr|transcription|input)\\b|the provided text (?:is|was|appears|contains|seems|has)",
 ].join('|'), 'i');
+/** The model answering whoever sent the request instead of translating: the whole page is a chat reply. */
+const TRANSLATION_REPLY_RULE = /please (?:paste|provide|share|supply) the (?:text|ocr|transcription|source|latin|page)|once you provide|(?:text|input|transcription|ocr) (?:that )?you(?:'ve| have)? provided/i;
+/** The model naming its input ("the provided OCR begins mid-word"). Mostly inside <meta>, where no reader sees it. */
+const TRANSLATION_INPUT_TALK = /the provided (?:ocr|transcription|input)\b|the provided text (?:is|was|appears|contains|seems|has)/i;
 /** What the reader's metadata panel holds and the page body does not (NotesRenderer, showMetadata=false). */
 const TRANSLATION_PANEL_BLOCKS = /<(meta|summary|keywords|vocab)>[\s\S]*?<\/\1>/gi;
-const TRANSLATION_OCR_TALK = /the ocr (?:has|says|reads|shows|provides|lists|includes|gives|text (?:has|says|reads|is))/i;
+const TRANSLATION_PIPELINE_TALK = /the ocr (?:has|says|reads|shows|provides|lists|includes|gives|text (?:has|says|reads|is))|<(?:meta|note|vocab|term|gloss|summary|keywords|margin)> tags?\b/i;
 
 /**
- * { kind, phrase, readerVisible } when a stored translation carries the model's reasoning, else null.
- *   kind 'reasoning'      one of TRANSLATION_LEAK_RULE's phrases
- *   kind 'thought-token'  the page opens with the bare word "thought" on its own line (the thinking channel's
- *                         label, with or without the thinking after it)
+ * { kind, phrase, readerVisible } when a stored translation carries the model talking about its job, else null.
+ * Kinds, strongest first; a page gets the first that matches:
+ *   'reasoning'        the scratchpad: one of TRANSLATION_LEAK_RULE's phrases
+ *   'assistant-reply'  a chat reply to the requester ("Please provide the OCR transcription you would like…")
+ *   'thought-token'    the page opens with the bare word "thought" on its own line (the thinking channel's label)
+ *   'input-talk'       "the provided OCR/transcription/text is …": the model naming its input
  * readerVisible: the phrase is in the page body, not only inside a block the reader keeps in its metadata panel.
  */
 export function translationReasoningLeak(text) {
   const t = String(text || '');
   const body = t.replace(TRANSLATION_PANEL_BLOCKS, ' ');
-  let m = body.match(TRANSLATION_LEAK_RULE);
-  if (m) return { kind: 'reasoning', phrase: m[0].replace(/\s+/g, ' ').trim(), readerVisible: true };
-  m = t.match(TRANSLATION_LEAK_RULE);
-  if (m) return { kind: 'reasoning', phrase: m[0].replace(/\s+/g, ' ').trim(), readerVisible: false };
+  const hit = (kind, m, readerVisible) => ({ kind, phrase: m[0].replace(/\s+/g, ' ').trim(), readerVisible });
+  let m;
+  if ((m = body.match(TRANSLATION_LEAK_RULE))) return hit('reasoning', m, true);
+  if ((m = body.match(TRANSLATION_REPLY_RULE))) return hit('assistant-reply', m, true);
   if (/^thought[ \t]*\n/.test(t)) return { kind: 'thought-token', phrase: 'thought', readerVisible: true };
+  if ((m = t.match(TRANSLATION_LEAK_RULE))) return hit('reasoning', m, false);
+  if ((m = t.match(TRANSLATION_REPLY_RULE))) return hit('assistant-reply', m, false);
+  if ((m = body.match(TRANSLATION_INPUT_TALK))) return hit('input-talk', m, true);
+  if ((m = t.match(TRANSLATION_INPUT_TALK))) return hit('input-talk', m, false);
   return null;
 }
-/** A milder, separate thing: a translator's note that tells the reader what "the OCR" reads. Not reasoning,
- *  but pipeline vocabulary in the page body. True only when it survives outside the metadata-panel blocks. */
-export function translationOcrTalk(text) {
-  return TRANSLATION_OCR_TALK.test(String(text || '').replace(TRANSLATION_PANEL_BLOCKS, ' '));
+/** A milder, separate thing: a translator's note that tells the reader what "the OCR" reads or what "the
+ *  <gloss> tags" hold. Not reasoning, but pipeline vocabulary in the page body. True only when it survives
+ *  outside the metadata-panel blocks. */
+export function translationPipelineTalk(text) {
+  return TRANSLATION_PIPELINE_TALK.test(String(text || '').replace(TRANSLATION_PANEL_BLOCKS, ' '));
 }
 export const DESCRIBED_PAGE = /^\W{0,3}(?:the image|this image|this page|the page (?:is|appears|shows|contains)|image (?:shows|of)|this (?:is a|appears)|a (?:blank|largely blank))/i;
 
