@@ -10,7 +10,10 @@
 #
 # Config: /etc/sourcelibrary/archive-lanes.conf (override with ARCHIVE_LANES_CONF). One lane per line:
 #   <name>|<page concurrency>|<archive-acquired args>
-#   vatican|1|--campaign acquisition-wave-2026-10 --hosts digi.vatlib.it --host-rate digi.vatlib.it=0.1
+#   vatican|1|--campaign acquisition-wave-2026-10 --provider vatican --hosts digi.vatlib.it --host-rate digi.vatlib.it=0.1
+# Give every campaign lane `--provider <image_source.provider>`. Without it, book mode scans only the
+# SCAN_CAP (batch×25) least-recently-touched books of the campaign. In a wave whose first 1,000 books share
+# one host, every other lane finds "0 book(s)" forever (seen 2026-10-06, Heidelberg + e-rara lanes).
 # Lines starting with # are ignored. No file means no lanes: the script is a no-op until a lane is listed.
 # To retire a lane, delete its line and `tmux kill-session -t lane-<name>`.
 #
