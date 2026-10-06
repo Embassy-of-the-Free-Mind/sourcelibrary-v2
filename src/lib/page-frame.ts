@@ -40,7 +40,7 @@ export interface PixelBox { x: number; y: number; w: number; h: number }
 export type FrameVerdict =
   | { kind: 'frame'; box: PixelBox }
   | { kind: 'clean' }
-  | { kind: 'skip'; reason: 'dark-page' | 'too-much' | 'multi-leaf' | 'tiny' };
+  | { kind: 'skip'; reason: 'dark-page' | 'too-much' | 'multi-leaf' | 'tiny' | 'not-a-page' };
 
 /** Below this fraction of the page's median brightness, an edge band is scanner bed. */
 const DARK_RATIO = 0.6;
@@ -58,6 +58,9 @@ const MIN_RUN = 0.02;
  *  white strips some scanners add are not page-like and do not count. */
 const MAX_GAP = 0.04;
 const PAGE_TOLERANCE = 0.12;
+/** An image narrower than this (w/h) is a spine or an edge, not a page; a tall
+ *  octavo is ~0.6. Its "bed" is the spine's own ends and label. */
+const MIN_PAGE_AR = 0.4;
 /** Trimming less than this fraction of the area is not worth a frame. */
 const MIN_TRIM_AREA = 0.02;
 /** Bands along each side, so a tilted page edge is found where it comes furthest in. */
@@ -180,6 +183,7 @@ function innermostCut(
  */
 export function detectPageFrame(lum: ArrayLike<number>, w: number, h: number): FrameVerdict {
   if (w < 16 || h < 16) return { kind: 'skip', reason: 'tiny' };
+  if (w / h < MIN_PAGE_AR) return { kind: 'skip', reason: 'not-a-page' };
   const col = new Array<number>(w).fill(0);
   const row = new Array<number>(h).fill(0);
   for (let y = 0; y < h; y++) {

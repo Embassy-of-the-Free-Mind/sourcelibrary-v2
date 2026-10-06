@@ -145,3 +145,11 @@ describe('detectPageFrame keeps printing behind a paper margin', () => {
     expect(v.box.y).toBeGreaterThanOrEqual(14);
   });
 });
+
+describe('detectPageFrame refuses a spine', () => {
+  it('leaves a photo of a spine whole', () => {
+    // 40×200: a spine on a dark ground (wave 1: IA and Gallica spine shots lost their ends).
+    expect(detectPageFrame(img(40, 200, (x, y) => (x < 6 || x > 33 || y > 180 ? 20 : undefined)), 40, 200))
+      .toEqual({ kind: 'skip', reason: 'not-a-page' });
+  });
+});
