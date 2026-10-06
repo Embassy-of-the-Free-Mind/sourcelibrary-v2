@@ -111,3 +111,45 @@ describe('parseTranslationLayers', () => {
     expect(parseTranslationLayers('')).toMatchObject({ text: '', annotations: [], exact: true });
   });
 });
+
+describe('parseTranslationLayers — cases the 800-page draw turned up', () => {
+  const exact = (markup: string) => {
+    const layers = parseTranslationLayers(markup);
+    expect(layers.exact).toBe(true);
+    expect(renderTranslationLayers(layers, { notes: true })).toBe(canonical(markup));
+    return layers;
+  };
+
+  it('keeps its offsets on a page with "İ", whose lower-case form is two characters', () => {
+    // book 699249f4a2d53df4853c1997 p.95
+    const layers = exact('Cilicia <note>A coastal region in southern Turkey</note>\nAdana\nAlexandretta <note>modern: İskenderun</note>\nCyprus');
+    expect(layers.text).toBe('Cilicia\nAdana\nAlexandretta\nCyprus');
+  });
+
+  it('lifts a note written inside a term chip without re-reading the chip as a definition', () => {
+    // book 697a3055d1756edbe38da50a p.479
+    const layers = exact('the goodwill of the <term>saints <note>original: "diuorum"; the cult of the saints</note></term>, or');
+    expect(layers.text).toBe('the goodwill of the <term>saints </term>, or');
+    expect(layers.annotations[0].type).toBe('original');
+  });
+
+  it('gives a heading note its blank line back', () => {
+    // book 6992cc14… p.69
+    exact('# Earth Melon\n<note>Historically identified as snake gourd.</note>\n\nThe **Erya** states: the *fei* is the *wu*.');
+  });
+
+  it('leaves a note inside <summary> with the summary', () => {
+    const layers = exact('Body text.\n\n<summary>A list of towns <note>all in Syria</note>.</summary>');
+    expect(layers.annotations).toEqual([]);
+    expect(layers.pageLevel).toHaveLength(1);
+    expect(layers.text.trim()).toBe('Body text.');
+  });
+
+  it('never throws and never loses the page when it cannot split exactly', () => {
+    const odd = 'Words  with a private-use character <note>and a note</note>.';
+    const layers = parseTranslationLayers(odd);
+    expect(layers.exact).toBe(false);
+    expect(layers.annotations).toEqual([]);
+    expect(layers.text).toBe(applyNotesOff(odd));
+  });
+});

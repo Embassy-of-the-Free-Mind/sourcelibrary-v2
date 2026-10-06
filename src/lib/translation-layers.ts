@@ -100,12 +100,13 @@ interface Cut {
 }
 
 // Private-use stand-ins, so the provenance of a `<note>` survives `separateTermDefinitions`
-// (which only ever writes the literal `<note>`).
-const WRITTEN_OPEN = 'n>';
-const WRITTEN_CLOSE = '/n>';
-const CHIP_OPEN = 'n>';
-const CHIP_CLOSE = '/n>';
-const GLOSS_MASK = 'gloss';
+// (which only ever writes the literal `<note>`). They keep the leading `<`, so its `[^<]` classes
+// stop at them exactly as they stop at the real tag.
+const WRITTEN_OPEN = '<\uE000n>';
+const WRITTEN_CLOSE = '<\uE000/n>';
+const CHIP_OPEN = '<\uE001n>';
+const CHIP_CLOSE = '<\uE001/n>';
+const GLOSS_MASK = '<\uE002gloss';
 
 /**
  * `separateTermDefinitions`, run so that each resulting `<note>` is known to be one the model
@@ -125,28 +126,32 @@ function separateWithProvenance(normalized: string): { canonical: string; kinds:
   // Stage 2: with glosses back, the only new <note>s are glosses that followed a term.
   const staged = separateTermDefinitions(chips);
   const kinds: Kind[] = [];
-  const restored = staged.replace(/(<note>|n>|n>)|(<\/note>|\/n>|\/n>)/g, (_m, open: string) => {
-    if (!open) return '</note>';
-    kinds.push(open === WRITTEN_OPEN ? 'written' : open === CHIP_OPEN ? 'chip' : 'gloss');
+  const restored = staged.replace(/<(?:note|\uE000n|\uE001n)>|<(?:\/note|\uE000\/n|\uE001\/n)>/g, (tag) => {
+    if (tag.includes('/')) return '</note>';
+    kinds.push(tag === WRITTEN_OPEN ? 'written' : tag === CHIP_OPEN ? 'chip' : 'gloss');
     return '<note>';
   });
   return restored === canonical ? { canonical, kinds } : null;
 }
 
 const SPAN_OPEN = /<(note|image-desc)((?:\s[^>]*)?)>/gi;
+const SPAN_CLOSE = { note: /<\/note>/gi, 'image-desc': /<\/image-desc>/gi };
 const PAGE_BLOCK = /<(summary|keywords|meta)>([\s\S]*?)<\/\1>/gi;
 
 /** The commentary spans of a normalised page: `<note>` and `<image-desc>`, open tag to its first close. */
-function scanSpans(text: string, from = 0, to = text.length): Cut[] {
+function scanSpans(text: string): Cut[] {
   const cuts: Cut[] = [];
-  SPAN_OPEN.lastIndex = from;
+  SPAN_OPEN.lastIndex = 0;
   let m: RegExpExecArray | null;
-  while ((m = SPAN_OPEN.exec(text)) !== null && m.index < to) {
+  while ((m = SPAN_OPEN.exec(text)) !== null) {
     const tag = m[1].toLowerCase() as 'note' | 'image-desc';
-    const close = text.toLowerCase().indexOf(`</${tag}>`, SPAN_OPEN.lastIndex);
-    if (close === -1 || close >= to) break;
-    const end = close + tag.length + 3;
-    cuts.push({ start: m.index, end, tag, open: m[0], body: text.slice(SPAN_OPEN.lastIndex, close) });
+    // Matched in place, never on a lower-cased copy: "İ".toLowerCase() is two characters long.
+    const closeRe = SPAN_CLOSE[tag];
+    closeRe.lastIndex = SPAN_OPEN.lastIndex;
+    const close = closeRe.exec(text);
+    if (!close) break;
+    const end = close.index + close[0].length;
+    cuts.push({ start: m.index, end, tag, open: m[0], body: text.slice(SPAN_OPEN.lastIndex, close.index) });
     SPAN_OPEN.lastIndex = end;
   }
   return cuts;
@@ -268,7 +273,10 @@ export function parseTranslationLayers(
   for (let m = PAGE_BLOCK.exec(canonical); m !== null; m = PAGE_BLOCK.exec(canonical)) {
     const start = m.index;
     const end = start + m[0].length;
-    if (cuts.some(c => start < c.end && end > c.start)) continue; // inside a note or a glossary line: it stays there
+    if (cuts.some(c => c.start <= start && c.end >= end)) continue; // inside a note or a glossary line: it stays there
+    // A note written inside the block goes with the block.
+    for (let n = cuts.length - 1; n >= 0; n--) if (cuts[n].start >= start && cuts[n].end <= end) cuts.splice(n, 1);
+    if (cuts.some(c => start < c.end && end > c.start)) return inexact(markup, 'a page-level block overlaps a note');
     cuts.push({ start, end, page: m[1].toLowerCase() as PageLevelBlock['kind'], body: m[2] });
   }
   cuts.sort((a, b) => a.start - b.start);
@@ -307,9 +315,12 @@ export function parseTranslationLayers(
     }
     if (i >= withoutBlocks.length) break;
     if (j < text.length && withoutBlocks[i] === text[j]) {
-      // Whitespace dropped away from any cut (a blank-line run collapsed) is not ours to keep.
-      pending = '';
-      last = null;
+      // Kept. Past the next word, dropped whitespace no longer belongs to the cut behind it; and
+      // whitespace dropped away from any cut (a blank-line run collapsed) is not ours to keep.
+      if (!/\s/.test(text[j])) {
+        pending = '';
+        last = null;
+      }
       i++;
       j++;
     } else if (/\s/.test(withoutBlocks[i])) {
