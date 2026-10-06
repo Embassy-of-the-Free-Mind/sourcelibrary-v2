@@ -30,6 +30,7 @@ import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
 import {
   getTranslateModelForBook as getModelForBook,
   sanitizeTranslationTags,
+  guardTranslationText,
   contentHash,
   SKIP_TRANSLATION_PAGE_TYPES,
   isBlankFromOcr,
@@ -522,7 +523,8 @@ async function writePageTranslation(db, page, text, book, promptRef, call) {
 // T3 (#5148): a translation the model wrapped whole in <meta>/<note> renders as an empty page
 // and reads to the health gate as collapsed. Open the wrapper BEFORE judging or storing.
 function unwrapForWrite(page, text, book) {
-  const u = unwrapHiddenTranslation({ ocr: page.ocr?.data, tr: text, type: page.page_type });
+  // #5902: the model's definitions inside or bracketed after a <term> are stored as <note>s.
+  const u = unwrapHiddenTranslation({ ocr: page.ocr?.data, tr: guardTranslationText(text), type: page.page_type });
   if (u.unwrapped) console.log(`  [unwrap] ${page.id} p${page.page_number}: translation was inside <${u.wrapper}> (${u.wrapperLen} chars, body ${u.body}) — unwrapped`);
   // #5734: the measured Korean 그-for-"that" is repaired here; any other stray script is refused
   // by assessTranslationHealth ('stray-script') in the health gate that follows.

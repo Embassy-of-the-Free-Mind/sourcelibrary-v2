@@ -16,7 +16,7 @@
 
 import { MongoClient } from 'mongodb';
 import { saveRevisionsBeforeOverwrite } from '../lib/page-revisions.mjs';
-import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate } from '../lib/translate-core.mjs';
+import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, guardTranslationText } from '../lib/translate-core.mjs';
 import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
 
 /** Provenance identity of this collector (#4613): recorded on every page it writes as `run.collected_by`. */
@@ -306,7 +306,7 @@ async function processOneJob(db, job) {
         // #5734 — same stray-script gate as batch-collector.mjs.
         const stray = await strayScriptGate(db, { id: pageId, book_id: job.book_id }, text, { language: job.language, jobId: jobIdStr, model: job.model, dryRun: DRY_RUN });
         if (stray.refused) { console.warn(`  STRAY SCRIPT: refusing page ${pageId}`); failCount++; continue; }
-        text = stray.text;
+        text = guardTranslationText(stray.text); // #5902: term definitions → <note>
         bulkOps.push({
           updateOne: {
             filter: { id: pageId },
