@@ -462,6 +462,7 @@
     "thumbnail",
     "thumbnail_blob",
     "thumbnail_confidence",
+    "thumbnail_frame",
     "thumbnail_page",
     "thumbnail_source",
     "title",

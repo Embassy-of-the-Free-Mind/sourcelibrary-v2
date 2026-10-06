@@ -496,7 +496,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     // The stamped rung (#5287): the FT badge gate, further-reading status and
     // card status line all read it; absent = unstamped, counters stand in.
     'translation_state.rung': 1, 'translation_state.english_original': 1,
-    photo: 1, categories: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, published: 1, read_count: 1,
+    photo: 1, categories: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, thumbnail_frame: 1, published: 1, read_count: 1,
     resource_type: 1, commons_width: 1, commons_height: 1,
     is_first_translation: 1,
     // What ftRenderProps needs to pick the claim register (#3726 Tier 3).
@@ -630,6 +630,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
           pages_count: b.pages_count, pages_ocr: b.pages_ocr,
           pages_translated: b.pages_translated, pages_blank: b.pages_blank,
           photo: b.photo, thumbnail: b.thumbnail, thumbnail_blob: b.thumbnail_blob,
+          thumbnail_frame: b.thumbnail_frame,
           published: b.published, read_count: b.read_count,
           is_first_translation: b.is_first_translation,
           categories: b.categories,

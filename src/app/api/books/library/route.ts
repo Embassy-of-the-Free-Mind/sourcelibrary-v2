@@ -218,6 +218,7 @@ export async function GET(request: NextRequest) {
       edition_key_quality: 1,
       thumbnail: 1, image_display: 1,
       thumbnail_blob: 1, image_thumb: 1,
+      thumbnail_frame: 1,
       language: 1,
       published: 1,
       pages_count: 1,

@@ -9,6 +9,8 @@ import { bookCoverResponsiveLoader } from '@/lib/book-cover-loader';
 import { isPublishedFirstTranslation } from '@/lib/book';
 import AuthorName from '@/components/AuthorName';
 import BookCoverPlaceholder from '@/components/BookCoverPlaceholder';
+import FramedImg from '@/components/FramedImg';
+import { coverFrame } from '@/lib/framed-image';
 import { getEffectiveByline } from '@/lib/byline';
 import { useEmbed, useEmbedHref } from '@/lib/EmbedContext';
 import PlaceholderCover from '@/components/book/PlaceholderCover';
@@ -48,6 +50,9 @@ export interface CollectionBook {
    *  silently falls back to the 2000px scan. */
   image_display?: string | null;
   image_card?: string | null;
+  /** Where the page sits inside the cover scan (#6010). Applied only while it
+   *  names the cover being drawn; a feed that does not project it changes nothing. */
+  thumbnail_frame?: unknown;
   language?: string;
   has_doi?: boolean;
   is_first_translation?: boolean;
@@ -208,7 +213,9 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
         )}
 
         {thumbnailUrl && !imageError ? (
-          <Image
+          <FramedImg
+            as={Image}
+            frame={coverFrame(book, thumbnailUrl)}
             src={thumbnailUrl}
             loader={bookCoverResponsiveLoader}
             alt={shownTitle}

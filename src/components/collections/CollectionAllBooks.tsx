@@ -27,6 +27,7 @@ interface BookItem {
   photo?: string;
   thumbnail?: string;
   thumbnail_blob?: string;
+  thumbnail_frame?: unknown;
   published?: string;
   read_count?: number;
   is_first_translation?: boolean;
@@ -466,6 +467,7 @@ export default function CollectionAllBooks({
                 pages_translated: book.pages_translated,
                 thumbnail: getBookThumbnailUrl(book) || book.photo || undefined,
                 thumbnail_blob: book.thumbnail_blob,
+                thumbnail_frame: book.thumbnail_frame,
                 language: book.language,
                 published: book.published,
                 translation_percent: book.pages_ocr && book.pages_translated
