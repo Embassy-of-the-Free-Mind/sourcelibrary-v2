@@ -4,7 +4,7 @@ import { getBatchJobStatus, getBatchJobResults } from '@/lib/gemini-batch';
 import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
 import { loopVerdict } from '@/lib/ocr-loop-guard';
-import { isTruncatedCandidate } from '@/lib/truncated-response';
+import { isTruncatedCandidate, candidateText } from '@/lib/truncated-response';
 import { outputTokensFrom } from '@/lib/gemini-logger';
 import { engineFromBatchJob, notRecorded, ocrProvenance, translationProvenance } from '@/lib/write-provenance';
 
@@ -106,7 +106,7 @@ export const POST = withAuth(async (request, session) => {
           }
 
           const candidate = result.response?.candidates?.[0];
-          let text = candidate?.content?.parts?.[0]?.text;
+          let text = candidateText(candidate);
           if (!text) {
             failed++;
             continue;
