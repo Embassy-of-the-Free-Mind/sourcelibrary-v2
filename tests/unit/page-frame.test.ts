@@ -127,3 +127,39 @@ describe('detectPageFrame on a tilted page', () => {
     expect(v.box.x + v.box.w).toBeGreaterThan(166);
   });
 });
+
+describe('detectPageFrame keeps printing behind a paper margin', () => {
+  it('does not take a dark headpiece below a top margin for bed', () => {
+    // Bed on the left; at the top, 10% of paper and then a dense ornament band
+    // (the Index Anglicus page in wave 1 of the sweep lost its headpiece this way).
+    // A frame must keep the band; refusing the page (it shows whole) is also safe.
+    const v = detectPageFrame(img(100, 140, (x, y) => (x < 8 ? 20 : y >= 14 && y < 19 ? 30 : undefined)), 100, 140);
+    if (v.kind === 'frame') expect(v.box.y).toBe(0);
+    else expect(v.kind).toBe('skip');
+  });
+
+  it('still trims bed behind a narrow bright sliver', () => {
+    const v = detectPageFrame(img(100, 140, (x, y) => (y < 2 ? 255 : y < 14 ? 20 : undefined)), 100, 140);
+    expect(v.kind).toBe('frame');
+    if (v.kind !== 'frame') return;
+    expect(v.box.y).toBeGreaterThanOrEqual(14);
+  });
+});
+
+describe('detectPageFrame refuses a spine', () => {
+  it('leaves a photo of a spine whole', () => {
+    // 40×200: a spine on a dark ground (wave 1: IA and Gallica spine shots lost their ends).
+    expect(detectPageFrame(img(40, 200, (x, y) => (x < 6 || x > 33 || y > 180 ? 20 : undefined)), 40, 200))
+      .toEqual({ kind: 'skip', reason: 'not-a-page' });
+  });
+});
+
+describe('detectPageFrame refuses printing mistaken for bed', () => {
+  it('shows a page whole when a text column sits just past the cut', () => {
+    // Bed on the left, then a dense text column (ink rows alternating with paper):
+    // its column means read as bed. Wave 1b cut a whole Latin column this way.
+    // Downsampled letters: strokes of ink three pixels wide with paper between.
+    const v = detectPageFrame(img(100, 140, x => (x < 4 ? 20 : x < 22 && x % 4 !== 3 ? 30 : undefined)), 100, 140);
+    expect(v.kind).not.toBe('frame');
+  });
+});
