@@ -12,6 +12,7 @@
  *   node scripts/eval/search-recall/run.mjs --base-url <preview> --out after.json
  *   node scripts/eval/search-recall/run.mjs --ranking rrf            # force a strategy
  *   node scripts/eval/search-recall/run.mjs --from raw.json          # score saved responses
+ *                                  (raw.json from local/route.harness.ts: this checkout's route, prod data)
  *   node scripts/eval/search-recall/run.mjs --compare before.json after.json
  *
  * recall@k = expected works in the top k results / min(k, expected works).

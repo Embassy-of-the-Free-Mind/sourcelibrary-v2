@@ -73,6 +73,11 @@ export interface LogSearchQueryInput {
   /** True if the page-content Atlas Search lane hit its hardcoded timeout and
    *  returned empty results. Used to size the quality-vs-latency tradeoff. */
   page_search_timed_out?: boolean;
+  /** Lanes that errored or timed out and returned nothing for this request
+   *  (`book`, `page`, `page_rollup`, `semantic_book`, `semantic_page`). The
+   *  response already says so (`partial`, `degraded_lanes`); without it here
+   *  there is no way to count how often a lane drops out (#5905). */
+  degraded_lanes?: string[];
 }
 
 export function logSearchQuery(input: LogSearchQueryInput): void {
@@ -121,5 +126,6 @@ async function writeEntry(input: LogSearchQueryInput) {
     filters,
     ...(input.stage_ms ? { stage_ms: input.stage_ms } : {}),
     ...(input.page_search_timed_out ? { page_search_timed_out: true } : {}),
+    ...(input.degraded_lanes && input.degraded_lanes.length > 0 ? { degraded_lanes: input.degraded_lanes.slice(0, 10) } : {}),
   });
 }
