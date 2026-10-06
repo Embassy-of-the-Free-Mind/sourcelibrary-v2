@@ -8,7 +8,7 @@ import ocrEvidence from '@/data/ocr-benchmark-evidence.json';
 import feedback from '@/data/quality-feedback-themes.json';
 import { listExperiments, latestCanonStatus, typedPages } from '@/lib/quality-center';
 import { AS_OF as OPEN_WORK_AS_OF, GROUPS } from '../research/quality/open/issues';
-import { LEAF, leafHref, PROSE_AS_OF, WAYS } from './content';
+import { LEAF, leafHref, PROSE_AS_OF, WAYS, WORKED_FIX } from './content';
 import ParetoCharts, { TRANSLATION } from './ParetoCharts';
 
 // The Quality Center (#5918): where text quality stands, what we are doing about it, and how
@@ -360,6 +360,43 @@ export default function QualityCenterPage() {
           <Source>
             Generated from the files above and from the open-work list on <A href="/research/quality/open">Open quality work</A>{' '}
             (status as of {OPEN_WORK_AS_OF}). Each item links to its public issue, which is the current record.
+          </Source>
+
+          <Sub>How a page will be graded, and which pages we check</Sub>
+          <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
+            The figures above use different scales, chosen study by study. We are replacing them with one grade per page,
+            built from published standards: the error severities of{' '}
+            <A href="https://arxiv.org/abs/2405.16969">MQM</A>, the scheme translation research uses to count errors, and
+            the transcription levels of the <A href="https://ocr-d.de/en/gt-guidelines/trans/trLevels.html">OCR-D guidelines</A>,
+            which keep the long s, u and v and abbreviation marks as printed. To these we add three checks of our own: is
+            it the right page, does the text contain words that are not on the page, and did the machine refuse to read it.
+          </p>
+          <dl className="max-w-3xl">
+            {GRADES.map(g => (
+              <div key={g.name} className="py-3 border-b border-stone-200 md:grid md:grid-cols-[12rem_1fr] md:gap-x-6">
+                <dt className="font-semibold text-stone-900 mb-1">{g.name}</dt>
+                <dd className="text-stone-700 leading-relaxed">
+                  <p>{g.means}</p>
+                  <p className="mt-1 text-sm text-stone-500">{g.rule}</p>
+                </dd>
+              </div>
+            ))}
+          </dl>
+          <p className="text-stone-700 leading-relaxed mt-4 mb-4 max-w-3xl">
+            Which pages: each month a random draw of books, one page per book, so that no single book counts twice. Every
+            language and period is drawn, with more books where we serve more pages and where errors have been more
+            common. Title pages, blank pages,
+            tables, pages in two scripts and damaged pages are drawn separately, because that is where machines most often
+            invent text, and then weighted back to their share of the library. Pages used to score a month are never used
+            to tune the next fix.
+          </p>
+          <p className="text-stone-700 leading-relaxed mb-4 max-w-3xl">
+            None of this has run yet. The first graded round, and a check of the grades by people who read each language,
+            come before any grade replaces the figures above.
+          </p>
+          <Source>
+            The rubric, the sampling plan, and a count of what is measured in each language and period today:{' '}
+            <A href={`${BLOB}.claude/docs/quality-rubric-and-sampling.md`}>quality-rubric-and-sampling.md</A> (<IssueLink num={5984} />).
           </Source>
 
           <Sub>By canon</Sub>

@@ -107,3 +107,31 @@ export const WAYS: Way[] = [
     planned: true,
   },
 ];
+
+/**
+ * The reader-facing page grade (#5984). The rule behind each grade, the severities, and the
+ * standards it is built from are in .claude/docs/quality-rubric-and-sampling.md §5; keep the two
+ * in step. Defined, not yet measured: no page has been graded under this rubric.
+ */
+export const GRADES: { name: string; means: string; rule: string }[] = [
+  {
+    name: 'Fit to quote',
+    means: 'You can cite these words, in the original and in English, without opening the scan.',
+    rule: 'The right page, and no serious error in the transcription or the English. At most two small slips in the transcription, none in a sentence you would quote.',
+  },
+  {
+    name: 'Fit to read',
+    means: 'The page says what the scan says. Check the scan before you quote it.',
+    rule: 'The right page, and no serious error. Small slips are allowed.',
+  },
+  {
+    name: 'Fit for search only',
+    means: 'It will help you find the page, but do not trust the reading.',
+    rule: 'The right page and the right script, with mostly the right words, but at least one error that changes the meaning.',
+  },
+  {
+    name: 'Not usable',
+    means: 'Do not rely on this page.',
+    rule: 'The text belongs to another page, contains words that are not on the page, is in the wrong script, leaves most of the page out, or is missing where the page has text.',
+  },
+];
