@@ -53,7 +53,10 @@ export function buildInputs(repo = process.cwd()) {
  * Previews are opt-in (Derek, 2026-10-06: "minimize vercel costs everywhere"; #5976). The project
  * builds one deployment at a time and production goes first, so ~20 previews per 3 h, mostly from
  * headless job branches nobody opens, queued for an hour and held up hand merges. A preview builds
- * only when the commit message contains [preview] or the branch starts with preview/. To check a page
+ * only when the commit message contains [preview] or the branch starts with preview/. Since #5976's
+ * follow-up, vercel.json `git.deploymentEnabled` stops every branch except main and preview/** from
+ * creating a deployment at all (a skip here still waited in the one-slot queue), so in practice a
+ * preview means pushing to preview/<name>; this check stays as the second line. To check a page
  * without one, run `next dev --webpack` locally (Turbopack rejects the worktree's symlinked
  * node_modules).
  */
