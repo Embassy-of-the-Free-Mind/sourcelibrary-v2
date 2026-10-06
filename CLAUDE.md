@@ -209,7 +209,7 @@ Detect the work domain from the user's prompt and load the right context automat
 
 ### Optional: code-review-graph
 
-If `code-review-graph` is installed (per-machine, see `.claude/docs/code-review-graph.md`), use it at **PR-open time** — `detect_changes_tool` + `get_review_context_tool` give a risk-scored summary with test-gap detection and "wide blast radius, consider splitting" warnings. Also useful for `get_impact_radius_tool` ("what does changing this file affect?") and `query_graph(callers_of=X)` when grep would be noisy. **Never trust `refactor_tool(mode="dead_code")` output as a deletion list** — measured on this repo it produced 2,509 "dead" functions including active Next.js `GET` route handlers (validated 2026-05-25, see doc). Memory files win for *why* questions (decisions, incidents, domain invariants). Always grep-verify before any destructive action the graph informed.
+If installed, use it at PR-open time → `.claude/docs/code-review-graph.md`. **Never treat its `dead_code` output as a deletion list** (2,509 "dead" functions, live `GET` handlers among them).
 
 ## System Map
 - **Interactive diagram:** https://sourcelibrary.org/platform/admin/system-map — click any node for details, key files, collections, gotchas (requires platform login)
