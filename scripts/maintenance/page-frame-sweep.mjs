@@ -127,7 +127,9 @@ for (const b of books) {
     .sort({ page_number: 1 }).toArray();
 
   // Probe a spread of pages; a book with no border on any of them is skipped whole.
-  if (!ONLY_PAGES && pages.length > PROBE) {
+  // A book that already carries frames (an earlier detector version) always gets
+  // the full pass, so frames the current detector would not write are cleared.
+  if (!ONLY_PAGES && pages.length > PROBE && !pages.some(p => p.page_frame)) {
     const probe = Array.from({ length: PROBE }, (_, k) => pages[Math.floor(((k + 0.5) * pages.length) / PROBE)]);
     // A failed probe is not a border.
     const hits = await Promise.all(probe.map(async p => {
