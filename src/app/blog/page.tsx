@@ -26,6 +26,18 @@ export interface BlogPost {
 // Exported so the RSS feed (/api/feed/blog) reads the same list — single source of truth.
 export const posts: BlogPost[] = [
   {
+    slug: 'training-our-own-models',
+    title: 'Should a library train its own AI models?',
+    subtitle:
+      'Gemini reads and translates almost every page here. We measured that work slice by slice: where it is good, it can train a smaller open model of our own; where it is weak, as in early Greek print, only human-made text helps. What we have tried, what it would save, who else is doing this, and how our first open translation model fell short.',
+    date: '4 October 2026',
+    readTime: '10 min read',
+    tag: 'Methodology',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/archived/69a99ce86c7545e2236e12de/100.jpg',
+    imageAlt: 'Page 88 of Bekker’s 1854 edition of the Suda: two columns of polytonic Greek.',
+  },
+  {
     slug: 'archive-ocr-against-proofread-pages',
     title: 'Checking the Archive\u2019s OCR against proofread pages',
     subtitle:

@@ -1,0 +1,657 @@
+{
+"6a22c153a71b5f5ffb2e4dc5:257": {
+"v": "mid"
+},
+"6a4cde4859e2a5b6929d8a99:21": {
+"v": "mid"
+},
+"6a4e39dcc030cbc5f406e03a:11": {
+"v": "closed"
+},
+"6a4d9f45167a618b2ad92361:13": {
+"v": "mid"
+},
+"6a4c51fa337431dba34fee72:13": {
+"v": "mid"
+},
+"6a42d0cfe76baa13aa85563c:18": {
+"v": "closed"
+},
+"6a4e4ed8f44db70c33889eb9:15": {
+"v": "mid"
+},
+"6a4a7d136d9363977ac2011e:11": {
+"v": "reject",
+"why": "\"sequens\" runs into the THEOREMA heading"
+},
+"6a4b9fe96da3482ddd3deef9:12": {
+"v": "mid"
+},
+"6a4ae2d19a3f4fa983d9abc1:17": {
+"v": "closed"
+},
+"6a42fdcb133c5a54b6996ae5:21": {
+"v": "mid"
+},
+"6a4ac619eecacd70e4714b67:18": {
+"v": "mid"
+},
+"6a4a3e23fefbe1f07f9de3db:22": {
+"v": "mid"
+},
+"6a4267d6aedf4c943f91dfff:16": {
+"v": "reject",
+"why": "semicolon in verse: cannot tell"
+},
+"6a4b8348998fdd30218fc5f5:8": {
+"v": "mid"
+},
+"6a43ae143c91e2a63d4da11a:13": {
+"v": "mid"
+},
+"6a4d65e890e0adc9f14b3a62:8": {
+"v": "mid"
+},
+"6a43b2493c91e2a63d4db6fb:20": {
+"v": "mid"
+},
+"6a4aa70c0a459d47e0cfe457:17": {
+"v": "closed"
+},
+"6a4a799bd1c07a59a751403b:15": {
+"v": "mid"
+},
+"6a4f3ac139ecc8e27dc65333:17": {
+"v": "mid"
+},
+"6a4bb3344c48754d768b9b0b:15": {
+"v": "mid"
+},
+"6a51e5fe2d94f05f3e408249:9": {
+"v": "mid"
+},
+"6a4c92b2dfe25276ee6725fd:17": {
+"v": "mid"
+},
+"6a4c07374f392afd49e44c13:13": {
+"v": "mid"
+},
+"6a4f67241cba01ec54e75998:5": {
+"v": "mid"
+},
+"6a4d60ebe91798b676b43a37:16": {
+"v": "closed"
+},
+"6a4c438222a2c197c6721b43:11": {
+"v": "mid"
+},
+"6a4a88380cf770dd0072144a:18": {
+"v": "mid"
+},
+"6a4ed93fdf0b2269c3dbdd8e:19": {
+"v": "closed"
+},
+"6a4b5e80c8fb186d83282c0a:11": {
+"v": "mid"
+},
+"6a4a8cd30cf770dd007223b9:11": {
+"v": "mid"
+},
+"6a4cb49819ae1031669618ba:11": {
+"v": "mid"
+},
+"6a42eb0606e6ead3ac5418e4:21": {
+"v": "mid"
+},
+"6a4b62593029d1cf3f8e86a5:14": {
+"v": "closed"
+},
+"69b51cfe261c58d636648405:194": {
+"v": "reject",
+"why": "\"perfectum | Cum\" ambiguous"
+},
+"6a4a63c23a479d44b00383b1:17": {
+"v": "reject",
+"why": "footnote apparatus"
+},
+"6a4b0a140d1fa55f9988eaca:17": {
+"v": "closed"
+},
+"6a4a509ba5a3467966758b33:19": {
+"v": "reject",
+"why": "N+1 not continuous with N"
+},
+"6a42b6455207af7c42f60482:12": {
+"v": "mid"
+},
+"6a4a07484ef72f5607b5d1d0:9": {
+"v": "mid"
+},
+"6a4ef8831a64e53b6a0a3265:11": {
+"v": "closed"
+},
+"6a4a078b4ef72f5607b5d1ea:14": {
+"v": "mid"
+},
+"6a4eeb115180d313013557dc:13": {
+"v": "closed"
+},
+"6a4bb3453828881918f94f43:12": {
+"v": "mid"
+},
+"6a4f1694dd60b16646cce209:16": {
+"v": "mid"
+},
+"6a4f2eafc41c57e8aff32f91:12": {
+"v": "mid"
+},
+"6a4f362996ab344c790a27c4:11": {
+"v": "reject",
+"why": "footnotes; N+1 not continuous"
+},
+"6a4ac33a33aff31aa523ee52:14": {
+"v": "mid"
+},
+"6a4bbb5a241e69221d26ef14:8": {
+"v": "mid"
+},
+"6a51e28d612243b27411a3f6:23": {
+"v": "reject",
+"why": "N+1 garbled fragment page"
+},
+"6a4bd0a87dacabf69cff6819:15": {
+"v": "mid"
+},
+"6a4bbee86a8b1dab563dce37:8": {
+"v": "closed"
+},
+"6a51264c3c7bd9ad413676a7:16": {
+"v": "mid"
+},
+"6a43b1593c91e2a63d4db091:14": {
+"v": "mid"
+},
+"6a4a795e7b720133514b4f2b:11": {
+"v": "mid"
+},
+"6a4afd0a19bd0084b1bf19ef:13": {
+"v": "mid"
+},
+"6a4a8968393655740c43b2df:11": {
+"v": "closed"
+},
+"6a4bac8adebad28d8e8e125f:13": {
+"v": "mid"
+},
+"6a4c0ab755f94b596d9b1fb3:17": {
+"v": "mid"
+},
+"6a4dead6a7fbe1b1dcb8d03e:11": {
+"v": "reject",
+"why": "item 18 unfinished, N+1 starts item 19"
+},
+"6a4aab5b14a573f4677175c0:21": {
+"v": "closed"
+},
+"6a4be5bc913003fb726ade8b:10": {
+"v": "mid"
+},
+"69aea7c2d9729ce38747e1a6:586": {
+"v": "reject",
+"why": "apparatus; N+1 other text"
+},
+"6a4a8c25eacde548ca4ed2dd:11": {
+"v": "reject",
+"why": "question/answer list"
+},
+"6a4ee7d21551ca1b5e58ae1e:11": {
+"v": "mid"
+},
+"6a4930ba1bbf4176e1e90166:10": {
+"v": "closed"
+},
+"6a4f1f10ce720e255f3c369b:11": {
+"v": "mid"
+},
+"6a4cc933c4f923e789991188:13": {
+"v": "closed"
+},
+"6a4c050a55f94b596d9b0bc7:13": {
+"v": "mid"
+},
+"6a4b60ae2ca154843e1af436:18": {
+"v": "mid"
+},
+"6a4d5fd0e91798b676b43057:11": {
+"v": "mid"
+},
+"6a4c5e60cfdd3c867783853b:12": {
+"v": "mid"
+},
+"6a43bdb03c91e2a63d4de56a:11": {
+"v": "mid"
+},
+"6a4b945ba25898ec8788a3e2:13": {
+"v": "mid"
+},
+"6a4a63b23a479d44b003802f:10": {
+"v": "mid"
+},
+"6a4bd9a5ce03c0929df13bf2:22": {
+"v": "mid"
+},
+"69e9c969625ec74a14473450:33": {
+"v": "mid"
+},
+"6a49f2c660a0c3556c217fb8:12": {
+"v": "mid"
+},
+"6a4c12066fcacb6a93788b3e:9": {
+"v": "mid"
+},
+"6a4c16ae2cba04c8d1690570:17": {
+"v": "mid"
+},
+"6a4f225a8afd506469a564bb:21": {
+"v": "mid"
+},
+"6a4ba774ee24ce21bf792571:21": {
+"v": "mid"
+},
+"6a4ba071debad28d8e8dccff:15": {
+"v": "mid"
+},
+"69b3f768a107e55a0ee1d359:16": {
+"v": "reject",
+"why": "garbled OCR"
+},
+"6a492ebb187213d999f6fa9e:13": {
+"v": "mid"
+},
+"69b631c71c1c21a37380a9d1:242": {
+"v": "reject",
+"why": "abbreviated, continuation unclear"
+},
+"6a4a5e9a3f0b4659d1bc256f:11": {
+"v": "mid"
+},
+"6a490eb4a9e39181572dc9ff:9": {
+"v": "mid"
+},
+"6a4bd850ce03c0929df138cc:15": {
+"v": "mid"
+},
+"6a4d9fd1057db0c85b10a6a3:13": {
+"v": "mid"
+},
+"6a425893860bea81c9456de3:21": {
+"v": "mid"
+},
+"6a4ead40246a9984f697904d:9": {
+"v": "mid"
+},
+"6a4a59093a479d44b0033e78:20": {
+"v": "mid"
+},
+"6a4b47a79f73a2728aaba06d:17": {
+"v": "mid"
+},
+"6a4b5cdd162167e7c1e5ca98:21": {
+"v": "mid"
+},
+"6a4ab479193f71077b4682a3:23": {
+"v": "mid"
+},
+"6a4df63eeda60b645dd197cf:20": {
+"v": "mid"
+},
+"6a4bcca0241e69221d270dbc:18": {
+"v": "mid"
+},
+"6a43782f9a1e0c918b687ef5:19": {
+"v": "mid"
+},
+"6a4bd0de7dacabf69cff6b11:6": {
+"v": "mid"
+},
+"6a4a05c64ef72f5607b5d1c2:9": {
+"v": "closed"
+},
+"6a4bcd91241e69221d270f25:18": {
+"v": "mid"
+},
+"6a42c9fae76baa13aa84c521:10": {
+"v": "mid"
+},
+"6a4a8533449c2c48ca6ee050:9": {
+"v": "mid"
+},
+"6a4ab368193f71077b467a5a:12": {
+"v": "mid"
+},
+"69b51e57cf111105c429b041:52": {
+"v": "mid"
+},
+"6a4a80e36d9363977ac21c40:10": {
+"v": "mid"
+},
+"6a4b4014413da11f4382e9b5:15": {
+"v": "closed"
+},
+"69bd93a22d11455793b3fae6:11": {
+"v": "mid"
+},
+"69b51e1defd8df28f2db0efa:226": {
+"v": "mid"
+},
+"6a4a629b3a479d44b0037bfc:20": {
+"v": "mid"
+},
+"6a4fd087e036985f1d57c061:13": {
+"v": "mid"
+},
+"6a08524849638a50931b9d75:87": {
+"v": "mid"
+},
+"6a4b82f7c0fa233644e30930:9": {
+"v": "mid"
+},
+"6a4b8327998fdd30218fc446:13": {
+"v": "mid"
+},
+"6a4f177ddd60b16646cce3c9:17": {
+"v": "mid"
+},
+"6a4f0caee39e71f6b6e3d31d:13": {
+"v": "mid"
+},
+"6a4a3d2c5d68ada16da9a933:17": {
+"v": "mid"
+},
+"6a4a3cfe5d68ada16da9a82e:11": {
+"v": "mid"
+},
+"6a4b0c7ee3f5ea0395c744fa:12": {
+"v": "mid"
+},
+"6a4a358acfff2cca9562d2a9:17": {
+"v": "mid"
+},
+"6a4a561e0deff67032eb0749:9": {
+"v": "mid"
+},
+"6a4afbf6ac252ba4d6bf28a9:3": {
+"v": "mid"
+},
+"6a4add20f16f8258b8adcdc6:12": {
+"v": "mid"
+},
+"6a4cbdb0a4a65af01ae26e70:9": {
+"v": "mid"
+},
+"6a4b75d7998fdd30218fb445:9": {
+"v": "mid"
+},
+"69b4c0af6248be021e01fa71:24": {
+"v": "mid"
+},
+"69b2f32b21208ea9dc277b5e:285": {
+"v": "mid"
+},
+"6a4e39abd66e9f5c751f6390:11": {
+"v": "mid"
+},
+"69aeacf466bcc9447837c066:15": {
+"v": "mid"
+},
+"6a4a3beaea90c8c8de394973:9": {
+"v": "mid"
+},
+"69dea2564d19ec2e9ba76384:119": {
+"v": "reject",
+"why": "music underlay"
+},
+"6a4aa88b14a573f46771609a:10": {
+"v": "mid"
+},
+"69b4c06a6248be021e01f03c:175": {
+"v": "mid"
+},
+"6a100903f7172929509675f0:249": {
+"v": "mid"
+},
+"6a48e2591e36bf8015227d14:14": {
+"v": "mid"
+},
+"6a4a5c623a479d44b0035016:13": {
+"v": "mid"
+},
+"6a4c11e02cba04c8d16903f3:20": {
+"v": "mid"
+},
+"6a4b4e4b6e19521562a5ddc4:16": {
+"v": "mid"
+},
+"6a4bea3aef49f280c10d96e3:12": {
+"v": "mid"
+},
+"6a439f81c3ccb765a984265d:15": {
+"v": "mid"
+},
+"6a4a7abfd1c07a59a7514776:16": {
+"v": "reject",
+"why": "N+1 head cropped/damaged"
+},
+"6a4ae6aa9a3f4fa983d9bc15:13": {
+"v": "mid"
+},
+"6a49f854521e227d52280ec8:10": {
+"v": "mid"
+},
+"6a4b2f0debdd5bdf63df0762:20": {
+"v": "mid"
+},
+"6a49f04d521e227d5227feca:18": {
+"v": "mid"
+},
+"6a4ad07b33aff31aa5241aa8:9": {
+"v": "mid"
+},
+"6a4b63c13029d1cf3f8e8f1d:11": {
+"v": "mid"
+},
+"6a4aaa6914a573f467717452:13": {
+"v": "reject",
+"why": "N+1 fragment \"stari\", damaged"
+},
+"6a4f13c7ce720e255f3bfd13:10": {
+"v": "mid"
+},
+"6a4da2317b4a0eb23602fe7f:12": {
+"v": "mid"
+},
+"6a4f2e73c41c57e8aff32f3f:19": {
+"v": "mid"
+},
+"6a4b4cd86e19521562a5db49:19": {
+"v": "mid"
+},
+"6a4b58eb162167e7c1e5c2fa:17": {
+"v": "reject",
+"why": "reference list"
+},
+"6a4b9d20a25898ec8788c2f3:16": {
+"v": "reject",
+"why": "footnote apparatus"
+},
+"6a4b10ba7622bb5aba128a3a:5": {
+"v": "mid"
+},
+"69b51cfc261c58d636648230:93": {
+"v": "mid"
+},
+"6a4c9c0e9e5143679f1d9d72:14": {
+"v": "mid"
+},
+"6a51eadbd5a6399e0c5751ca:11": {
+"v": "mid"
+},
+"6a4b67be8fe09ab0ff237bb4:10": {
+"v": "closed"
+},
+"6a4ade169a3f4fa983d97f95:15": {
+"v": "mid"
+},
+"69aea8241cbf28a363a4e1e4:674": {
+"v": "mid"
+},
+"6a4c97719c6f8cb186b8776d:10": {
+"v": "mid"
+},
+"6a4b75e0998fdd30218fb451:10": {
+"v": "mid"
+},
+"6a43bb493c91e2a63d4dd5e0:22": {
+"v": "mid"
+},
+"6a4c5258d4c93d1a8020593e:12": {
+"v": "mid"
+},
+"6a4be05dca2d01166b2cfc06:15": {
+"v": "reject",
+"why": "N+1 fragment \"met\", continuity unclear"
+},
+"6a4e5bf300c1250433dc2e6c:14": {
+"v": "closed"
+},
+"6a438ccc57a09c2c0fcca95c:17": {
+"v": "mid"
+},
+"6a4a62663f0b4659d1bc41b2:10": {
+"v": "mid"
+},
+"6a50edc0c39423579e0cdd91:15": {
+"v": "mid"
+},
+"6a42e0a07ec1a96fc1a02cf5:14": {
+"v": "mid"
+},
+"6a4b0f8c7622bb5aba128891:13": {
+"v": "mid"
+},
+"69b631a01c1c21a3738090b8:180": {
+"v": "mid"
+},
+"6a4f373972a0f5a8d38098b0:18": {
+"v": "mid"
+},
+"6a4a905deacde548ca4ed2eb:15": {
+"v": "mid"
+},
+"6a4c8dcb8e4c4eb7d2119d1d:16": {
+"v": "mid"
+},
+"6a491633ae20621d947e71ea:12": {
+"v": "mid"
+},
+"6a4c5d3c4f9f1be4c86c087f:16": {
+"v": "mid"
+},
+"6a4a043f74ee818c62e25683:15": {
+"v": "closed"
+},
+"6a4307d64e06bc233ed032db:13": {
+"v": "mid"
+},
+"6a4eae8e8112cac04007bc39:8": {
+"v": "closed"
+},
+"6a4c1fe96831c6094ae55bf4:10": {
+"v": "closed"
+},
+"6a4b878b004055948314309d:13": {
+"v": "reject",
+"why": "thesis list"
+},
+"6a4a582c3a479d44b0033a12:14": {
+"v": "closed"
+},
+"69e961652beefe2f6f72b4a8:485": {
+"v": "mid"
+},
+"6a4c120d2cba04c8d16904f4:16": {
+"v": "closed"
+},
+"6a4b7dcfc0fa233644e2fdd4:12": {
+"v": "closed"
+},
+"6a4ba12edebad28d8e8dddd7:10": {
+"v": "closed"
+},
+"6a4b47da9f73a2728aaba0a7:14": {
+"v": "reject",
+"why": "\"est. | Obligatio\u2026\" heading continues the sentence"
+},
+"6a4adce49a3f4fa983d97a7e:21": {
+"v": "mid"
+},
+"6a426315744db9e3105aef67:11": {
+"v": "mid"
+},
+"6a4a9f2f14a573f46771432f:14": {
+"v": "closed"
+},
+"6a4bdd38913003fb726ad0df:18": {
+"v": "reject",
+"why": "errata; N+1 fragment"
+},
+"6a4e5bddfe517e68536cbb34:4": {
+"v": "reject",
+"why": "N+1 continuity unclear"
+},
+"6a4f7ba72a450f51978cfabc:12": {
+"v": "mid"
+},
+"6a4e58d8fe517e68536cb9ee:17": {
+"v": "closed"
+},
+"6a4ca10492ae0395b8cd98dc:10": {
+"v": "reject",
+"why": "N+1 fragments"
+},
+"69af5966522dc3dfdf725c38:536": {
+"v": "reject",
+"why": "footnotes; N+1 continues a quotation"
+},
+"6a4ae501f16f8258b8ade13c:11": {
+"v": "closed"
+},
+"6a4a9b5d14a573f467713ac4:8": {
+"v": "mid"
+},
+"6a4b0f7f7622bb5aba12887e:12": {
+"v": "reject",
+"why": "numbered Greek verse"
+},
+"6a4d6ad4e91798b676b45ee4:10": {
+"v": "closed"
+},
+"6a5042f18b9a6870c42fcd68:18": {
+"v": "closed"
+},
+"6a4a3f076720cfc23da44115:11": {
+"v": "mid"
+},
+"6a49efd0521e227d5227f258:23": {
+"v": "closed"
+},
+"6a4a715f7b720133514b36aa:10": {
+"v": "mid"
+},
+"6a465aa01dbe3f47f0154447:19": {
+"v": "closed"
+},
+"6a4f1cdedd60b16646cceaa0:12": {
+"v": "mid"
+}
+}

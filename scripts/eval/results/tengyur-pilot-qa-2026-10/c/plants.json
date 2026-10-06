@@ -1,0 +1,7 @@
+{
+ "113:138": {"type": "inversion", "find": "This is not possible in a town because of the many immediate distractions.", "replace": "This is quite possible in a town, despite the many immediate distractions."},
+ "33:15": {"type": "inversion (swap)", "find": "\"Great\" refers to the relative truth. \"<term>Vajra</term> <gloss>adamantine/diamond</gloss>\" refers to the ultimate truth.", "replace": "\"Great\" refers to the ultimate truth. \"<term>Vajra</term> <gloss>adamantine/diamond</gloss>\" refers to the relative truth."},
+ "96:5": {"type": "inversion", "find": "It is not suitable to say that the motion and the goer are the same entity.", "replace": "It is suitable to say that the motion and the goer are the same entity."},
+ "174:23": {"type": "inversion", "find": "Those are not capable of [proving] impermanence.", "replace": "Those are fully capable of [proving] impermanence."},
+ "157:1": {"type": "added fact", "find": "To the Buddha, the Lord of Discipline, I prostrate,", "replace": "To the Buddha, the Lord of Discipline, who taught it on Vulture Peak, I prostrate,"}
+}

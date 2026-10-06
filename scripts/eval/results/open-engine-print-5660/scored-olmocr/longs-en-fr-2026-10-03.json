@@ -1,0 +1,2081 @@
+{
+  "summary": {
+    "stratum": "longs-en-fr",
+    "issue": 4800,
+    "date": "2026-10-03",
+    "refusal_source": "finishReason (meter) / inferred",
+    "cer_refusals": "ref.median_cer / mean_cer count a refusal as CER 1.0 (the pre-#5581 headline); *_answered exclude refused pages",
+    "n_pages": 20,
+    "n_with_ref": 0,
+    "ref_mismatch": [],
+    "textless": [],
+    "ref_engine": "gemini-3.1-flash-lite",
+    "engines": {
+      "gemini-3-flash-preview": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 1,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.039,
+          "catastrophic": 1,
+          "median_gap": 0,
+          "median_bow": 0.925,
+          "refused": 0,
+          "n_answered": 20,
+          "median_cer_answered": 0.039,
+          "mean_cer": 0.086,
+          "mean_cer_answered": 0.086
+        },
+        "invention": {
+          "median": 0.025,
+          "mean": 0.037,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "longs-en-fr-84dace-p128",
+            "title": "Medicina practica, or, practical physick. Shewing the method of curing the most usual diseases",
+            "year": 1692,
+            "cer": 0.736,
+            "gap": 0.355,
+            "invention": 0.008,
+            "has_ref": false,
+            "unsupported": [
+              "possetdrink"
+            ]
+          },
+          {
+            "slug": "longs-en-fr-80e1bd-p13",
+            "title": "Le reading del mon Seignior Coke, sur lestatute de 27. E. 1. appelle lestatute de Finibus Levatis.",
+            "year": 1662,
+            "cer": 0.265,
+            "gap": 0.067,
+            "invention": 0.113,
+            "has_ref": false,
+            "unsupported": [
+              "division",
+              "conusee",
+              "suer",
+              "mesme",
+              "descriptio",
+              "ascun",
+              "divisio",
+              "clamaverunt"
+            ]
+          },
+          {
+            "slug": "longs-en-fr-233d4f-p395",
+            "title": "Employment for the Microscope",
+            "year": 1753,
+            "cer": 0.195,
+            "gap": 0.039,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "longs-en-fr-a37a7b-p102",
+            "title": "Ars Conjectandi",
+            "year": 1713,
+            "cer": 0.08,
+            "gap": 0,
+            "invention": 0.097,
+            "has_ref": false,
+            "unsupported": [
+              "posteà",
+              "ingeniosisimo",
+              "occultiùs",
+              "præsens",
+              "propos",
+              "promiscuè",
+              "quæstiones",
+              "summæ"
+            ]
+          },
+          {
+            "slug": "longs-en-fr-58c0d1-p92",
+            "title": "A new light of alchymie. Of the nature of things. Chymicall dictionary",
+            "year": 1650,
+            "cer": 0.065,
+            "gap": 0,
+            "invention": 0.092,
+            "has_ref": false,
+            "unsupported": [
+              "subsistér",
+              "simpathie",
+              "causez",
+              "prêster",
+              "connoissance",
+              "prêstre",
+              "separoit",
+              "sepaf"
+            ]
+          }
+        ]
+      },
+      "gemini-3.1-flash-lite": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 0,
+          "median_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_bow": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer": null,
+          "mean_cer_answered": null
+        },
+        "invention": {
+          "median": 0.05,
+          "mean": 0.145,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "worst": [
+          {
+            "slug": "longs-en-fr-80e1bd-p13",
+            "title": "Le reading del mon Seignior Coke, sur lestatute de 27. E. 1. appelle lestatute de Finibus Levatis.",
+            "year": 1662,
+            "invention": 0.375,
+            "has_ref": false,
+            "unsupported": [
+              "fecunda",
+              "chefun",
+              "divifion",
+              "deftre",
+              "defcriptio",
+              "file",
+              "conufee",
+              "poffeffion"
+            ]
+          },
+          {
+            "slug": "longs-en-fr-a37a7b-p102",
+            "title": "Ars Conjectandi",
+            "year": 1713,
+            "invention": 0.339,
+            "has_ref": false,
+            "unsupported": [
+              "folutionem",
+              "dediffet",
+              "ipfemet",
+              "pofteà",
+              "lipf",
+              "fecuto",
+              "folutionis",
+              "ingeniofiffimo"
+            ]
+          },
+          {
+            "slug": "longs-en-fr-58c0d1-p92",
+            "title": "A new light of alchymie. Of the nature of things. Chymicall dictionary",
+            "year": 1650,
+            "invention": 0.326,
+            "has_ref": false,
+            "unsupported": [
+              "univerfel",
+              "pofé",
+              "fans",
+              "fubfifter",
+              "feul",
+              "preftre",
+              "fageffe",
+              "l'efprit"
+            ]
+          },
+          {
+            "slug": "longs-en-fr-f2d6ce-p178",
+            "title": "Traité de l'harmonie réduite à ses principes naturels",
+            "year": 1722,
+            "invention": 0.31,
+            "has_ref": false,
+            "unsupported": [
+              "felon",
+              "progreffion",
+              "baffe",
+              "forte",
+              "fans",
+              "fonger",
+              "enfeigne",
+              "compofition"
+            ]
+          },
+          {
+            "slug": "longs-en-fr-84dace-p128",
+            "title": "Medicina practica, or, practical physick. Shewing the method of curing the most usual diseases",
+            "year": 1692,
+            "invention": 0.302,
+            "has_ref": false,
+            "unsupported": [
+              "fuccefs",
+              "cafe",
+              "thefe",
+              "poffet",
+              "alfo",
+              "confour",
+              "fider",
+              "petus"
+            ]
+          }
+        ]
+      },
+      "olmocr-2-7b-fp8": {
+        "pages_run": 20,
+        "empty": 0,
+        "refused": 0,
+        "refused_inferred": 0,
+        "loop": 0,
+        "ref": {
+          "n": 0,
+          "median_cer": null,
+          "mean_cer": null,
+          "catastrophic": 0,
+          "median_gap": null,
+          "median_seq": null,
+          "refused": 0,
+          "n_answered": 0,
+          "median_cer_answered": null,
+          "mean_cer_answered": null,
+          "catastrophic_answered": 0
+        },
+        "proxy_vs_ref_engine": {
+          "n": 20,
+          "median_cer": 0.067,
+          "catastrophic": 2,
+          "median_gap": 0,
+          "median_bow": 0.809,
+          "refused": 0,
+          "n_answered": 20,
+          "median_cer_answered": 0.067,
+          "mean_cer": 0.146,
+          "mean_cer_answered": 0.146
+        },
+        "invention": {
+          "median": 0.09,
+          "mean": 0.135,
+          "n_engines": 3,
+          "ref_median": null,
+          "ref_mean": null
+        },
+        "paired_vs_ref": {
+          "n": 0,
+          "excluded_refused": 0,
+          "wins": 0,
+          "losses": 0,
+          "ties": 0,
+          "median_delta_cer": null,
+          "p_sign": null,
+          "invention_wins": 0,
+          "invention_losses": 0
+        },
+        "worst": [
+          {
+            "slug": "longs-en-fr-84dace-p128",
+            "title": "Medicina practica, or, practical physick. Shewing the method of curing the most usual diseases",
+            "year": 1692,
+            "cer": 0.746,
+            "gap": 0.36,
+            "invention": 0.008,
+            "has_ref": false,
+            "unsupported": [
+              "posset"
+            ]
+          },
+          {
+            "slug": "longs-en-fr-55aa53-p31",
+            "title": "Mercury, or The Secret and Swift Messenger",
+            "year": 1641,
+            "cer": 0.526,
+            "gap": 0.078,
+            "invention": 0.716,
+            "has_ref": false,
+            "unsupported": [
+              "messenger",
+              "ghosts",
+              "do'st",
+              "abide",
+              "visits",
+              "partake",
+              "same",
+              "disease"
+            ]
+          },
+          {
+            "slug": "longs-en-fr-233d4f-p395",
+            "title": "Employment for the Microscope",
+            "year": 1753,
+            "cer": 0.292,
+            "gap": 0.094,
+            "invention": 0,
+            "has_ref": false,
+            "unsupported": []
+          },
+          {
+            "slug": "longs-en-fr-80e1bd-p13",
+            "title": "Le reading del mon Seignior Coke, sur lestatute de 27. E. 1. appelle lestatute de Finibus Levatis.",
+            "year": 1662,
+            "cer": 0.258,
+            "gap": 0.014,
+            "invention": 0.185,
+            "has_ref": false,
+            "unsupported": [
+              "conussee",
+              "furer",
+              "meisme",
+              "aucun",
+              "praedictus",
+              "praditium",
+              "manervium",
+              "iudem"
+            ]
+          },
+          {
+            "slug": "longs-en-fr-13d8e0-p170",
+            "title": "Satyres et autres Oeuvres",
+            "year": 1642,
+            "cer": 0.234,
+            "gap": 0,
+            "invention": 0.092,
+            "has_ref": false,
+            "unsupported": [
+              "impvssance",
+              "matresse",
+              "l'allasie",
+              "avec",
+              "r'entre",
+              "l'espere"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "pages": [
+    {
+      "slug": "longs-en-fr-08696b-p475",
+      "substratum": "english-1600-1779",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Mathematical and Philosophical Works",
+      "year": 1708,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 884,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.05,
+          "acc": 0.95,
+          "seq": 0.948,
+          "bow": 0.989,
+          "gap": 0.041,
+          "len_ratio": 1.003,
+          "invention": 0.012,
+          "invention_indep": 0.012,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "polior"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.989,
+            "olmocr-2-7b-fp8": 0.943
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 881,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.024,
+          "invention_indep": 0.024,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "poway",
+            "lior"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.989,
+            "olmocr-2-7b-fp8": 0.935
+          }
+        },
+        "olmocr-2-7b-fp8": {
+          "n_content": 827,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.065,
+          "acc": 0.935,
+          "seq": 0.935,
+          "bow": 0.935,
+          "gap": 0,
+          "len_ratio": 0.939,
+          "invention": 0.013,
+          "invention_indep": 0.013,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "goliab"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.943,
+            "gemini-3.1-flash-lite": 0.935
+          }
+        }
+      }
+    },
+    {
+      "slug": "longs-en-fr-13d8e0-p170",
+      "substratum": "french-1600-1779",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Satyres et autres Oeuvres",
+      "year": 1642,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 627,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.054,
+          "acc": 0.946,
+          "seq": 0.788,
+          "bow": 0.788,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.065,
+          "invention_indep": 0.065,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "impvissance",
+            "mastresse",
+            "l'allasse",
+            "sçay",
+            "i'espere"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.788,
+            "olmocr-2-7b-fp8": 0.844
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 627,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.276,
+          "invention_indep": 0.276,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "fouuenez",
+            "caufent",
+            "voftre",
+            "affez",
+            "fuis",
+            "chaffeur",
+            "redreffer",
+            "feroit"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.788,
+            "olmocr-2-7b-fp8": 0.669
+          }
+        },
+        "olmocr-2-7b-fp8": {
+          "n_content": 517,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.234,
+          "acc": 0.766,
+          "seq": 0.669,
+          "bow": 0.669,
+          "gap": 0,
+          "len_ratio": 0.825,
+          "invention": 0.092,
+          "invention_indep": 0.092,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "impvssance",
+            "matresse",
+            "l'allasie",
+            "avec",
+            "r'entre",
+            "l'espere"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.844,
+            "gemini-3.1-flash-lite": 0.669
+          }
+        }
+      }
+    },
+    {
+      "slug": "longs-en-fr-17a9c9-p224",
+      "substratum": "english-1600-1779",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Pandaemonium, or the Devil's Cloyster",
+      "year": 1684,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 705,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0,
+          "acc": 1,
+          "seq": 1,
+          "bow": 1,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 1,
+            "olmocr-2-7b-fp8": 0.976
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 705,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 1,
+            "olmocr-2-7b-fp8": 0.976
+          }
+        },
+        "olmocr-2-7b-fp8": {
+          "n_content": 680,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.037,
+          "acc": 0.963,
+          "seq": 0.976,
+          "bow": 0.976,
+          "gap": 0,
+          "len_ratio": 0.965,
+          "invention": 0.014,
+          "invention_indep": 0.014,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "accomplish'd"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.976,
+            "gemini-3.1-flash-lite": 0.976
+          }
+        }
+      }
+    },
+    {
+      "slug": "longs-en-fr-233d4f-p395",
+      "substratum": "english-1600-1779",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Employment for the Microscope",
+      "year": 1753,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 130,
+          "empty": false,
+          "refused": false,
+          "loop": true,
+          "cer": 0.195,
+          "acc": 0.805,
+          "seq": 0.85,
+          "bow": 0.889,
+          "gap": 0.039,
+          "len_ratio": 1.15,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.889,
+            "olmocr-2-7b-fp8": 0.569
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 113,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.889,
+            "olmocr-2-7b-fp8": 0.646
+          }
+        },
+        "olmocr-2-7b-fp8": {
+          "n_content": 121,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.292,
+          "acc": 0.708,
+          "seq": 0.551,
+          "bow": 0.646,
+          "gap": 0.094,
+          "len_ratio": 1.071,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.569,
+            "gemini-3.1-flash-lite": 0.646
+          }
+        }
+      }
+    },
+    {
+      "slug": "longs-en-fr-55aa53-p31",
+      "substratum": "english-1600-1779",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Mercury, or The Secret and Swift Messenger",
+      "year": 1641,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 830,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.027,
+          "acc": 0.973,
+          "seq": 0.947,
+          "bow": 0.962,
+          "gap": 0.015,
+          "len_ratio": 1.006,
+          "invention": 0.065,
+          "invention_indep": 0.065,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "saith",
+            "applic",
+            "unawares",
+            "cajetan",
+            "philo"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.962,
+            "olmocr-2-7b-fp8": 0.45
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 825,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.052,
+          "invention_indep": 0.052,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "faith",
+            "unwares",
+            "continv",
+            "phil"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.962,
+            "olmocr-2-7b-fp8": 0.457
+          }
+        },
+        "olmocr-2-7b-fp8": {
+          "n_content": 709,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.526,
+          "acc": 0.474,
+          "seq": 0.379,
+          "bow": 0.457,
+          "gap": 0.078,
+          "len_ratio": 0.859,
+          "invention": 0.716,
+          "invention_indep": 0.716,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "messenger",
+            "ghosts",
+            "do'st",
+            "abide",
+            "visits",
+            "partake",
+            "same",
+            "disease"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.45,
+            "gemini-3.1-flash-lite": 0.457
+          }
+        }
+      }
+    },
+    {
+      "slug": "longs-en-fr-58c0d1-p92",
+      "substratum": "french-1600-1779",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "A new light of alchymie. Of the nature of things. Chymicall dictionary",
+      "year": 1650,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 831,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.065,
+          "acc": 0.935,
+          "seq": 0.749,
+          "bow": 0.749,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.092,
+          "invention_indep": 0.092,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "subsistér",
+            "simpathie",
+            "causez",
+            "prêster",
+            "connoissance",
+            "prêstre",
+            "separoit",
+            "sepaf"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.749,
+            "olmocr-2-7b-fp8": 0.863
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 831,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.326,
+          "invention_indep": 0.326,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "univerfel",
+            "pofé",
+            "fans",
+            "fubfifter",
+            "feul",
+            "preftre",
+            "fageffe",
+            "l'efprit"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.749,
+            "olmocr-2-7b-fp8": 0.654
+          }
+        },
+        "olmocr-2-7b-fp8": {
+          "n_content": 817,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.1,
+          "acc": 0.9,
+          "seq": 0.654,
+          "bow": 0.654,
+          "gap": 0,
+          "len_ratio": 0.983,
+          "invention": 0.235,
+          "invention_indep": 0.235,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "l'édifice",
+            "lumière",
+            "émané",
+            "qu'il",
+            "toutes",
+            "créations",
+            "extraordinaires",
+            "sympathie"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.863,
+            "gemini-3.1-flash-lite": 0.654
+          }
+        }
+      }
+    },
+    {
+      "slug": "longs-en-fr-7dddc9-p100",
+      "substratum": "english-1600-1779",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "The Principles of Natural and Politic Law, Vol. 1",
+      "year": 1763,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1281,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.034,
+          "acc": 0.966,
+          "seq": 0.973,
+          "bow": 0.993,
+          "gap": 0.02,
+          "len_ratio": 1,
+          "invention": 0.008,
+          "invention_indep": 0.008,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "preferour"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.993,
+            "olmocr-2-7b-fp8": 0.967
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1281,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.008,
+          "invention_indep": 0.008,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "preferbe"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.993,
+            "olmocr-2-7b-fp8": 0.967
+          }
+        },
+        "olmocr-2-7b-fp8": {
+          "n_content": 1215,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.052,
+          "acc": 0.948,
+          "seq": 0.967,
+          "bow": 0.967,
+          "gap": 0,
+          "len_ratio": 0.948,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.967,
+            "gemini-3.1-flash-lite": 0.967
+          }
+        }
+      }
+    },
+    {
+      "slug": "longs-en-fr-80e1bd-p13",
+      "substratum": "french-1600-1779",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Le reading del mon Seignior Coke, sur lestatute de 27. E. 1. appelle lestatute de Finibus Levatis.",
+      "year": 1662,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1034,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.265,
+          "acc": 0.735,
+          "seq": 0.678,
+          "bow": 0.745,
+          "gap": 0.067,
+          "len_ratio": 1.001,
+          "invention": 0.113,
+          "invention_indep": 0.113,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "division",
+            "conusee",
+            "suer",
+            "mesme",
+            "descriptio",
+            "ascun",
+            "divisio",
+            "clamaverunt"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.745,
+            "olmocr-2-7b-fp8": 0.834
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1033,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.375,
+          "invention_indep": 0.375,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "fecunda",
+            "chefun",
+            "divifion",
+            "deftre",
+            "defcriptio",
+            "file",
+            "conufee",
+            "poffeffion"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.745,
+            "olmocr-2-7b-fp8": 0.659
+          }
+        },
+        "olmocr-2-7b-fp8": {
+          "n_content": 868,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.258,
+          "acc": 0.742,
+          "seq": 0.645,
+          "bow": 0.659,
+          "gap": 0.014,
+          "len_ratio": 0.84,
+          "invention": 0.185,
+          "invention_indep": 0.185,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "conussee",
+            "furer",
+            "meisme",
+            "aucun",
+            "praedictus",
+            "praditium",
+            "manervium",
+            "iudem"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.834,
+            "gemini-3.1-flash-lite": 0.659
+          }
+        }
+      }
+    },
+    {
+      "slug": "longs-en-fr-84c46c-p50",
+      "substratum": "french-1600-1779",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Superstitions anciennes et modernes",
+      "year": 1733,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 3550,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.024,
+          "acc": 0.976,
+          "seq": 0.957,
+          "bow": 0.96,
+          "gap": 0.003,
+          "len_ratio": 0.999,
+          "invention": 0.042,
+          "invention_indep": 0.042,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "patenoftre",
+            "chevet",
+            "freres",
+            "rencontrit",
+            "gagnera",
+            "ordinairemet",
+            "deût",
+            "s'affiferont"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.96,
+            "olmocr-2-7b-fp8": 0.788
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 3552,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.047,
+          "invention_indep": 0.047,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "oraifon",
+            "cryphes",
+            "superfti",
+            "cher",
+            "au'chevet",
+            "rencontroit",
+            "gagne",
+            "deut"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.96,
+            "olmocr-2-7b-fp8": 0.787
+          }
+        },
+        "olmocr-2-7b-fp8": {
+          "n_content": 3480,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.094,
+          "acc": 0.906,
+          "seq": 0.775,
+          "bow": 0.787,
+          "gap": 0.012,
+          "len_ratio": 0.98,
+          "invention": 0.302,
+          "invention_indep": 0.302,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "prononçoi",
+            "deffin",
+            "sans",
+            "branlât",
+            "chose",
+            "plusieurs",
+            "personnes",
+            "sortes"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.788,
+            "gemini-3.1-flash-lite": 0.787
+          }
+        }
+      }
+    },
+    {
+      "slug": "longs-en-fr-84dace-p128",
+      "substratum": "english-1600-1779",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Medicina practica, or, practical physick. Shewing the method of curing the most usual diseases",
+      "year": 1692,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1420,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.736,
+          "acc": 0.264,
+          "seq": 0.482,
+          "bow": 0.837,
+          "gap": 0.355,
+          "len_ratio": 1,
+          "invention": 0.008,
+          "invention_indep": 0.008,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "possetdrink"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.837,
+            "olmocr-2-7b-fp8": 0.982
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1420,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.302,
+          "invention_indep": 0.302,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "fuccefs",
+            "cafe",
+            "thefe",
+            "poffet",
+            "alfo",
+            "confour",
+            "fider",
+            "petus"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.837,
+            "olmocr-2-7b-fp8": 0.83
+          }
+        },
+        "olmocr-2-7b-fp8": {
+          "n_content": 1405,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.746,
+          "acc": 0.254,
+          "seq": 0.47,
+          "bow": 0.83,
+          "gap": 0.36,
+          "len_ratio": 0.989,
+          "invention": 0.008,
+          "invention_indep": 0.008,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "posset"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.982,
+            "gemini-3.1-flash-lite": 0.83
+          }
+        }
+      }
+    },
+    {
+      "slug": "longs-en-fr-8a4789-p52",
+      "substratum": "french-1600-1779",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Phèdre et Hippolyte",
+      "year": 1677,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 616,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.05,
+          "acc": 0.95,
+          "seq": 0.812,
+          "bow": 0.812,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.07,
+          "invention_indep": 0.07,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "descenduë",
+            "sçaurois",
+            "vostre",
+            "paroistre",
+            "thesée"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.812,
+            "olmocr-2-7b-fp8": 0.897
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 616,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.254,
+          "invention_indep": 0.254,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "fuis",
+            "defcendue",
+            "affez",
+            "fçaurois",
+            "pouffer",
+            "foit",
+            "femble",
+            "offenfer"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.812,
+            "olmocr-2-7b-fp8": 0.757
+          }
+        },
+        "olmocr-2-7b-fp8": {
+          "n_content": 598,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.094,
+          "acc": 0.906,
+          "seq": 0.757,
+          "bow": 0.757,
+          "gap": 0,
+          "len_ratio": 0.971,
+          "invention": 0.141,
+          "invention_indep": 0.141,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "descendue",
+            "confondue",
+            "l'aurais",
+            "attrape",
+            "suit",
+            "aucels",
+            "déjà",
+            "votre"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.897,
+            "gemini-3.1-flash-lite": 0.757
+          }
+        }
+      }
+    },
+    {
+      "slug": "longs-en-fr-90a16a-p210",
+      "substratum": "english-1600-1779",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "The Grecian History, Vol. 1",
+      "year": 1774,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1175,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.032,
+          "acc": 0.968,
+          "seq": 0.852,
+          "bow": 0.852,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.009,
+          "invention_indep": 0.009,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "grosly"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.852,
+            "olmocr-2-7b-fp8": 0.981
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1175,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.259,
+          "invention_indep": 0.259,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "fciences",
+            "fuitable",
+            "progrefs",
+            "grofly",
+            "fuperftitious",
+            "weaknefs",
+            "obfervations",
+            "fort"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.852,
+            "olmocr-2-7b-fp8": 0.837
+          }
+        },
+        "olmocr-2-7b-fp8": {
+          "n_content": 1173,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.038,
+          "acc": 0.962,
+          "seq": 0.837,
+          "bow": 0.837,
+          "gap": 0,
+          "len_ratio": 0.998,
+          "invention": 0.034,
+          "invention_indep": 0.034,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "grossly",
+            "inquisitive",
+            "egyptian",
+            "darkness"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.981,
+            "gemini-3.1-flash-lite": 0.837
+          }
+        }
+      }
+    },
+    {
+      "slug": "longs-en-fr-90b005-p412",
+      "substratum": "english-1600-1779",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "The History of the Civil Wars of France, Vol. 1",
+      "year": 1758,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 2407,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.003,
+          "acc": 0.997,
+          "seq": 0.979,
+          "bow": 0.979,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.028,
+          "invention_indep": 0.028,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "advifed",
+            "bifhop",
+            "himfelf",
+            "eftablifhing",
+            "expences",
+            "fail"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.979,
+            "olmocr-2-7b-fp8": 0.828
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 2407,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.014,
+          "invention_indep": 0.014,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "eftablishing",
+            "pences",
+            "fembly"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.979,
+            "olmocr-2-7b-fp8": 0.84
+          }
+        },
+        "olmocr-2-7b-fp8": {
+          "n_content": 2382,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.048,
+          "acc": 0.952,
+          "seq": 0.84,
+          "bow": 0.84,
+          "gap": 0,
+          "len_ratio": 0.99,
+          "invention": 0.314,
+          "invention_indep": 0.314,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "sincerity",
+            "christendom",
+            "disposed",
+            "disorder",
+            "likewise",
+            "monsieur",
+            "counsellors",
+            "since"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.828,
+            "gemini-3.1-flash-lite": 0.84
+          }
+        }
+      }
+    },
+    {
+      "slug": "longs-en-fr-94c2c9-p348",
+      "substratum": "french-1600-1779",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Essais de theodicée sur la bonté de Dieu",
+      "year": 1734,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1487,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.043,
+          "acc": 0.957,
+          "seq": 0.819,
+          "bow": 0.819,
+          "gap": 0,
+          "len_ratio": 1.001,
+          "invention": 0.04,
+          "invention_indep": 0.04,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "penser",
+            "accusé",
+            "souvenu",
+            "sauroient",
+            "semblances",
+            "seroit"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.819,
+            "olmocr-2-7b-fp8": 0.911
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1486,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.262,
+          "invention_indep": 0.262,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "neceffaires",
+            "philofophes",
+            "l'effai",
+            "pefer",
+            "fans",
+            "chofes",
+            "fauroit",
+            "fatisfaire"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.819,
+            "olmocr-2-7b-fp8": 0.768
+          }
+        },
+        "olmocr-2-7b-fp8": {
+          "n_content": 1460,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.063,
+          "acc": 0.937,
+          "seq": 0.768,
+          "bow": 0.768,
+          "gap": 0,
+          "len_ratio": 0.983,
+          "invention": 0.12,
+          "invention_indep": 0.12,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "quer",
+            "mathe",
+            "matiques",
+            "manière",
+            "ordi",
+            "nairement",
+            "cusé",
+            "souve"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.911,
+            "gemini-3.1-flash-lite": 0.768
+          }
+        }
+      }
+    },
+    {
+      "slug": "longs-en-fr-a37a7b-p102",
+      "substratum": "french-1600-1779",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Ars Conjectandi",
+      "year": 1713,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1529,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.08,
+          "acc": 0.92,
+          "seq": 0.706,
+          "bow": 0.706,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.097,
+          "invention_indep": 0.097,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "posteà",
+            "ingeniosisimo",
+            "occultiùs",
+            "præsens",
+            "propos",
+            "promiscuè",
+            "quæstiones",
+            "summæ"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.706,
+            "olmocr-2-7b-fp8": 0.792
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1529,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.339,
+          "invention_indep": 0.339,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "folutionem",
+            "dediffet",
+            "ipfemet",
+            "pofteà",
+            "lipf",
+            "fecuto",
+            "folutionis",
+            "ingeniofiffimo"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.706,
+            "olmocr-2-7b-fp8": 0.634
+          }
+        },
+        "olmocr-2-7b-fp8": {
+          "n_content": 1517,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.079,
+          "acc": 0.921,
+          "seq": 0.634,
+          "bow": 0.634,
+          "gap": 0,
+          "len_ratio": 0.992,
+          "invention": 0.183,
+          "invention_indep": 0.183,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "tota",
+            "postea",
+            "ingeniosissimo",
+            "apertius",
+            "praesens",
+            "praeced",
+            "eademque",
+            "promiscue"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.792,
+            "gemini-3.1-flash-lite": 0.634
+          }
+        }
+      }
+    },
+    {
+      "slug": "longs-en-fr-aac370-p84",
+      "substratum": "english-1600-1779",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Ars pictoria: or An academy treating of drawing, painting, limning, and etching. To which are added thirty copper plates",
+      "year": 1669,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 1434,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.003,
+          "acc": 0.997,
+          "seq": 0.987,
+          "bow": 0.987,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.987,
+            "olmocr-2-7b-fp8": 0.983
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 1434,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.029,
+          "invention_indep": 0.029,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "pliable",
+            "sliffer",
+            "flower",
+            "fits"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.987,
+            "olmocr-2-7b-fp8": 0.97
+          }
+        },
+        "olmocr-2-7b-fp8": {
+          "n_content": 1413,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.02,
+          "acc": 0.98,
+          "seq": 0.97,
+          "bow": 0.97,
+          "gap": 0,
+          "len_ratio": 0.985,
+          "invention": 0.022,
+          "invention_indep": 0.022,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "were",
+            "steadfast",
+            "opprested"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.983,
+            "gemini-3.1-flash-lite": 0.97
+          }
+        }
+      }
+    },
+    {
+      "slug": "longs-en-fr-da2e27-p22",
+      "substratum": "french-1600-1779",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "L' Art Royal et maçon: Grade du Collège de Saint André d'Ecosse",
+      "year": 1760,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 839,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.01,
+          "acc": 0.99,
+          "seq": 0.977,
+          "bow": 0.977,
+          "gap": 0,
+          "len_ratio": 0.996,
+          "invention": 0.013,
+          "invention_indep": 0.013,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "offres"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.977,
+            "olmocr-2-7b-fp8": 0.846
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 842,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.025,
+          "invention_indep": 0.025,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "onfres",
+            "singularité"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.977,
+            "olmocr-2-7b-fp8": 0.848
+          }
+        },
+        "olmocr-2-7b-fp8": {
+          "n_content": 842,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.068,
+          "acc": 0.932,
+          "seq": 0.848,
+          "bow": 0.848,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.217,
+          "invention_indep": 0.217,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "ecossais",
+            "gastinfaux",
+            "siretto",
+            "oufres",
+            "ajouté",
+            "décence",
+            "esserrent",
+            "table"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.846,
+            "gemini-3.1-flash-lite": 0.848
+          }
+        }
+      }
+    },
+    {
+      "slug": "longs-en-fr-f2d6ce-p178",
+      "substratum": "french-1600-1779",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Traité de l'harmonie réduite à ses principes naturels",
+      "year": 1722,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 2150,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.049,
+          "acc": 0.951,
+          "seq": 0.804,
+          "bow": 0.804,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.049,
+          "invention_indep": 0.049,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "songer",
+            "sçavoir",
+            "connoissances",
+            "necessaires",
+            "connoissance",
+            "possederions",
+            "consommé",
+            "sentimens"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.804,
+            "olmocr-2-7b-fp8": 0.955
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 2150,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0.31,
+          "invention_indep": 0.31,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "felon",
+            "progreffion",
+            "baffe",
+            "forte",
+            "fans",
+            "fonger",
+            "enfeigne",
+            "compofition"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.804,
+            "olmocr-2-7b-fp8": 0.781
+          }
+        },
+        "olmocr-2-7b-fp8": {
+          "n_content": 2130,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.066,
+          "acc": 0.934,
+          "seq": 0.781,
+          "bow": 0.781,
+          "gap": 0,
+          "len_ratio": 0.991,
+          "invention": 0.087,
+          "invention_indep": 0.087,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "longer",
+            "savoir",
+            "connaissances",
+            "nécessaires",
+            "l'expérience",
+            "familières",
+            "connaissance",
+            "possèderions"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.955,
+            "gemini-3.1-flash-lite": 0.781
+          }
+        }
+      }
+    },
+    {
+      "slug": "longs-en-fr-f79405-p158",
+      "substratum": "french-1600-1779",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "Les Égarements du coeur et de l'esprit",
+      "year": 1779,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 928,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.001,
+          "acc": 0.999,
+          "seq": 0.988,
+          "bow": 0.988,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0.021,
+          "invention_indep": 0.021,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "repliquat",
+            "inconftants"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 0.988,
+            "olmocr-2-7b-fp8": 0.965
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 928,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.988,
+            "olmocr-2-7b-fp8": 0.978
+          }
+        },
+        "olmocr-2-7b-fp8": {
+          "n_content": 913,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.023,
+          "acc": 0.977,
+          "seq": 0.978,
+          "bow": 0.978,
+          "gap": 0,
+          "len_ratio": 0.984,
+          "invention": 0.021,
+          "invention_indep": 0.021,
+          "invention_ref": null,
+          "unsupported_sample": [
+            "inféfées",
+            "indécentment"
+          ],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.965,
+            "gemini-3.1-flash-lite": 0.978
+          }
+        }
+      }
+    },
+    {
+      "slug": "longs-en-fr-f8e791-p80",
+      "substratum": "english-1600-1779",
+      "script_class": null,
+      "leaf_language": null,
+      "title": "The Works of Dionysius Longinus, On the Sublime",
+      "year": 1712,
+      "has_ref": false,
+      "engines": {
+        "gemini-3-flash-preview": {
+          "n_content": 662,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0,
+          "acc": 1,
+          "seq": 1,
+          "bow": 1,
+          "gap": 0,
+          "len_ratio": 1,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3.1-flash-lite": 1,
+            "olmocr-2-7b-fp8": 0.986
+          }
+        },
+        "gemini-3.1-flash-lite": {
+          "n_content": 662,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 1,
+            "olmocr-2-7b-fp8": 0.986
+          }
+        },
+        "olmocr-2-7b-fp8": {
+          "n_content": 650,
+          "empty": false,
+          "refused": false,
+          "loop": false,
+          "cer": 0.018,
+          "acc": 0.982,
+          "seq": 0.986,
+          "bow": 0.986,
+          "gap": 0,
+          "len_ratio": 0.982,
+          "invention": 0,
+          "invention_indep": 0,
+          "invention_ref": null,
+          "unsupported_sample": [],
+          "invention_ref_sample": [],
+          "agree": {
+            "gemini-3-flash-preview": 0.986,
+            "gemini-3.1-flash-lite": 0.986
+          }
+        }
+      }
+    }
+  ]
+}

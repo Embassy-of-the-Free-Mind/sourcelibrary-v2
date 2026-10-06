@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA cera/hessus1",
+  "edition": "Libellus Alter, Epistolas Complectens Eobani Et Aliorum Quorundam Doctissimorum Virorum, Necnon Versus Varii Generis Atq — Leipzig: Officina Papae, 1557",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "13/13",
+    "pb_aligned_pages": "13/13"
+  },
+  "origin": "library",
+  "book_id": "6a909b5ab7feee6e9c429605",
+  "page_number": 18,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 10269,
+    "to_char": 11371,
+    "overlap": 0.718,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'Plectentes aut iucundas & nocentes nemini fabulas'; ends 'ipsi uiderint ne fal-'; ref's first line and 'fallantur. uel uiderint' are padding; ref's first word 'Plectentes' is dropped (initial P+ligature) but no loss beyond padding.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "many",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:55.246Z",
+  "text_location": "repo",
+  "text_sha256": "dd330d74055f253dd6318068973f044da29cfa49cbc55e03259bca8a7cd762c3",
+  "unit": {
+    "chars": 1102
+  },
+  "stratum": "latin-period-5126"
+}

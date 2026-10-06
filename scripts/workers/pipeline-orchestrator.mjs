@@ -30,6 +30,7 @@ import {
 import { VISIBLE_PAGE_MATCH, notBlockedForModel } from '../lib/page-counts.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { getTranslateModelForBook, SKIP_TRANSLATION_PAGE_TYPES, loadTranslationPrompts } from '../lib/translate-core.mjs';
+import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
 import { phase4Lane, phase4ExcludedBookIds, enrolForPhase4, PHASE4_MAX_OPEN, REALTIME_PRIORITY_FLOOR, MODE as CHAINED_MODE, TERMINAL_PHASES as CHAINED_TERMINAL } from '../lib/translate-batch-chained.mjs';
 import { RUNS_COLLECTION as TRANSLATE_RUNS_COLLECTION } from '../lib/translate-batch-seam.mjs';
 import { batchJobProvenance, contentHash } from '../lib/write-provenance.mjs';
@@ -5015,6 +5016,15 @@ Rules:
 
             const label = (book.title || '').substring(0, 50);
 
+            // #5700: a book in a stratum whose OCR was measured untrusted is not translated by
+            // EITHER lane until it is re-read (scripts/lib/ocr-trust-gate.mjs). Its status is
+            // left where it is — it is still owed translation — and the refusal is recorded.
+            const trust = await ocrTrustGate(db, book, { lane: 'orchestrator-phase4', record: !DRY_RUN });
+            if (!trust.ok) {
+              console.log(`  Not dispatched (${trust.reason}): ${label}`);
+              continue;
+            }
+
             if (phase4Lane(book) === 'chained') {
               if (chainedRoom <= 0) {
                 console.log(`  Chained lane full (${PHASE4_MAX_OPEN} open runs), waiting: ${label}`);
@@ -5738,11 +5748,16 @@ Rules:
     if (shouldRun(8.9) || shouldRun(9)) {
       console.log('\n--- Phase 8.9: Cover selection + page cleanup ---');
 
+      // Scoped mode raises the window (#4823, the #2713 idiom): with a literal 50 sorted
+      // visible-first, an allowlisted hidden book never reached it, the scope filter below
+      // returned nothing, and every envelope book stopped one step short of finalize.
+      // Cover selection makes no model call, so the wider window costs DB reads only.
+      const COVER_LIMIT = SCOPED_MODE ? 100000 : 50;
       let coverBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'images_complete' })
         .sort({ hidden: 1 })
         .project({ id: 1, title: 1, thumbnail: 1, thumbnail_source: 1 })
-        .limit(50)
+        .limit(COVER_LIMIT)
         .toArray();
       if (SCOPE_ACTIVE) coverBooks = await applyBookOverride(db, coverBooks, { id: 1, title: 1, thumbnail: 1, thumbnail_source: 1 });
 

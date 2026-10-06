@@ -1,0 +1,13 @@
+{
+ "model": "Qwen/Qwen3-8B",
+ "lora": false,
+ "quant": null,
+ "pages": 91,
+ "wall_s": 37.9,
+ "prompt_tokens": 80883,
+ "completion_tokens": 54499,
+ "out_tok_per_s": 1438.9,
+ "pages_per_hour": 8649.4,
+ "max_model_len": 24576,
+ "gpu": "NVIDIA H100 80GB HBM3"
+}

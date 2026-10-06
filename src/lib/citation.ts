@@ -12,9 +12,16 @@ import { citationYear, citationYearOrNd } from '@/lib/publication-date';
 import { getShortUrl } from '@/lib/shortlinks';
 import { readerPageUrl } from '@/lib/slugify';
 import { citationTitle } from '@/lib/title-provenance';
-import type { Book, TranslationEdition } from '@/lib/types';
+import type { Book, PrintedPage, TranslationEdition } from '@/lib/types';
 
 export interface Citation {
+  /**
+   * The page part of every format below (#4291): "p. 217 [scan 219]" where the leaf's
+   * printed number is known, else "p. 219" (the scan).
+   */
+  locator: string;
+  /** The printed page number, only when the locator uses it. */
+  printed_page?: string;
   inline: string;
   footnote: string;
   bibliography: string;
@@ -30,6 +37,24 @@ export interface Citation {
    * never filled with an aggregator or "unknown".
    */
   copy?: HoldingCopy;
+}
+
+/**
+ * Where on the book the citation points (#4291). A scan index is not a page a reader can
+ * find in the physical book: on Fludd's Utriusque cosmi (6952dac977f38f6761bc6cb0) scan 219
+ * is printed 217, so "p. 219" sent every reader two pages wrong. With a printed number the
+ * locator is the printed one, and the scan rides along in brackets so the link and the
+ * page the reader opens still agree: "p. 217 [scan 219]". Leaves read "fol. 12v [scan 30]",
+ * a two-page scan "pp. 12–13 [scan 7]". Without one, it stays "p. <scan>" as before.
+ * `note` is the Chicago-note form, which drops "p."/"pp.".
+ */
+export function pageLocator(scan: number, printed?: PrintedPage | null): { inline: string; note: string; printed?: string } {
+  const label = typeof printed?.label === 'string' ? printed.label.trim() : '';
+  if (!label) return { inline: `p. ${scan}`, note: `${scan}` };
+  const leaf = printed?.numbering === 'folio' || printed?.rate === 0.5;
+  const body = `${label} [scan ${scan}]`;
+  if (leaf) return { inline: `fol. ${body}`, note: `fol. ${body}`, printed: label };
+  return { inline: `${printed?.rate === 2 ? 'pp.' : 'p.'} ${body}`, note: body, printed: label };
 }
 
 function formatAccessedDate(): string {
@@ -54,6 +79,8 @@ export function generateCitations(
    * back to English, so callers pass it only when they served that edition.
    */
   lang?: string,
+  /** The leaf's printed page, when one was fitted (#4291). See pageLocator. */
+  printedPage?: PrintedPage | null,
 ): Citation {
   // `published` is free text: 23% of the corpus is not a year, and ~1,500 books
   // carry raw Wikidata QuickStatements ("1573date QS:P571,+1573-...Z/9"). That
@@ -138,12 +165,13 @@ export function generateCitations(
   // Inline citation. Carries the rendering credit when the English is ours —
   // this is the form that gets pasted into prose, and it was the only one that
   // said nothing.
+  const locator = pageLocator(pageNumber, printedPage);
   const inline = renderingCredit
-    ? `(${authorParts[0]} ${year}, p. ${pageNumber}, ${renderingCredit.short})`
-    : `(${authorParts[0]} ${year}, p. ${pageNumber})`;
+    ? `(${authorParts[0]} ${year}, ${locator.inline}, ${renderingCredit.short})`
+    : `(${authorParts[0]} ${year}, ${locator.inline})`;
 
   // Footnote (Chicago style note)
-  const footnote = `${authorFirstLast}, ${title}, ${imprintStr}${renderingCredit ? `${renderingCredit.short.replace(`Source Library ${translationYear}`, `Source Library (${translationYear})`)}, ` : ''}${pageNumber}${copy ? `. ${copy.statement}` : ''}${doi ? `. DOI: ${doi}` : ''}.`;
+  const footnote = `${authorFirstLast}, ${title}, ${imprintStr}${renderingCredit ? `${renderingCredit.short.replace(`Source Library ${translationYear}`, `Source Library (${translationYear})`)}, ` : ''}${locator.note}${copy ? `. ${copy.statement}` : ''}${doi ? `. DOI: ${doi}` : ''}.`;
 
   // Bibliography entry
   const bibliography = `${authorLastFirst}. ${title}. ${imprintStr}${renderingCredit ? `${renderingCredit.long} ` : ''}${copyStr}${doi ? `DOI: ${doi}.` : `Accessed ${accessed}.`}`;
@@ -196,6 +224,8 @@ export function generateCitations(
   const short_url = getShortUrl(bookId, pageNumber, pageId, baseUrl, lang);
 
   return {
+    locator: locator.inline,
+    ...(locator.printed ? { printed_page: locator.printed } : {}),
     inline,
     footnote,
     bibliography,

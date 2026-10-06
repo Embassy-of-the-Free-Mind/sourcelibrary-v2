@@ -14,7 +14,7 @@ import { isHiddenBook, findVisibleDuplicateKeeper } from '@/lib/book-access';
 import { artworkRedirectSlug } from '@/lib/artwork-slug';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail, browseBooks, getLanguageCounts, type CatalogBook } from '@/lib/books-catalog';
-import { Calendar, Globe, FileText, BookMarked, Images, BookOpen } from 'lucide-react';
+import { Calendar, Globe, FileText, BookMarked, Images, BookOpen, Paintbrush } from 'lucide-react';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import TextReader from '@/components/text/TextReader';
 import SearchPanel from '@/components/search/SearchPanel';
@@ -94,6 +94,7 @@ import CatalogueBreadcrumb from '@/components/book/CatalogueBreadcrumb';
 import type { TenantContext } from '@/lib/tenant-context';
 import { getEmbedUiPolicy, type EmbedUiPolicy } from '@/lib/embed-ui-policy';
 import { markPageForReader } from '@/lib/provenance';
+import { resolvePageIdsByNumber, pageNumberHref } from '@/lib/page-number-resolve';
 import { getBookIndexFields, type BookIndexProjectionField } from '@/lib/book-index';
 
 /**
@@ -535,7 +536,7 @@ interface AuthorEntityPreview {
   wikidata_death_date?: string;
 }
 
-async function getBook(id: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean; authorEntity: AuthorEntityPreview | null; translationCard: TranslationCard | null } | null> {
+async function getBook(id: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean; authorEntity: AuthorEntityPreview | null; translationCard: TranslationCard | null; pageIdByNumber: Record<number, string> } | null> {
   // Reuse the cached book lookup (shared with generateMetadata — saves a full DB round trip)
   // When Supabase serves the lookup (<50ms), we get the bookId instantly and can start
   // ALL Atlas queries in parallel — including a full book refetch for fields not in the catalog.
@@ -754,7 +755,15 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
 
   const serializedEntity = authorEntity ? JSON.parse(JSON.stringify(authorEntity)) : null;
 
-  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, galleryImages, galleryImageCount, bookCollections, matchedBySlug, authorEntity: serializedEntity, translationCard: translationCard ? JSON.parse(JSON.stringify(translationCard)) : null };
+  // One batched lookup: printed page number -> page id for every number the
+  // server HTML links to (chapters + index entries), so those links can point at
+  // the canonical /page/<id> instead of the robots-blocked /page-number/ redirect.
+  const pageIdByNumber = await resolvePageIdsByNumber(db, bookId, [
+    ...((serializedBook.chapters ?? []) as { pageNumber?: number }[]).map(c => c.pageNumber as number),
+    ...(((serializedBook.index?.entries ?? []) as { pages?: number[] }[]).flatMap(e => (e.pages ?? []).length >= 2 ? (e.pages as number[]).slice(0, 8) : [])),
+  ]);
+
+  return { book: serializedBook as Book, pages: serializedPages as Page[], pageIdByNumber, totalBooks, galleryImages, galleryImageCount, bookCollections, matchedBySlug, authorEntity: serializedEntity, translationCard: translationCard ? JSON.parse(JSON.stringify(translationCard)) : null };
 }
 
 // Skeleton for book info while loading
@@ -822,7 +831,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
     notFound();
   }
 
-  const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity, translationCard } = data;
+  const { book, pages, pageIdByNumber, totalBooks, galleryImages, galleryImageCount, bookCollections, authorEntity, translationCard } = data;
 
   // What we can honestly SAY about this book's first-translation status (#3459).
   // The flag decides whether a claim appears at all; this decides its register —
@@ -1134,7 +1143,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
       const firstChapterPageNumber = book.chapters?.length
         ? (book.chapters as { pageNumber?: number }[])[0]?.pageNumber
         : null;
-      if (typeof firstChapterPageNumber === 'number') return lp(`/book/${bookSlug}/page-number/${firstChapterPageNumber}`);
+      if (typeof firstChapterPageNumber === 'number') return lp(pageNumberHref(bookSlug, firstChapterPageNumber, pageIdByNumber));
       const skipTo = totalPages >= 20 ? 4 : totalPages >= 10 ? 2 : 0;
       const readPage = pages[skipTo] || pages[0];
       return readPage ? lp(`/book/${bookSlug}/page/${readPage.id}`) : null;
@@ -1532,7 +1541,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                 {(book.chapters as Array<{ title: string; titleEn?: string; pageNumber?: number; level?: number }>).map((ch, i) => (
                   <Link
                     key={i}
-                    href={lp(typeof ch.pageNumber === 'number' ? `/book/${bookSlug}/page-number/${ch.pageNumber}` : `/book/${bookSlug}`)}
+                    href={lp(typeof ch.pageNumber === 'number' ? pageNumberHref(bookSlug, ch.pageNumber, pageIdByNumber) : `/book/${bookSlug}`)}
                     className="flex items-baseline justify-between gap-4 py-2 border-b transition-colors hover:bg-[#f4efe6]"
                     style={{ borderColor: '#ece6da', paddingLeft: `${(ch.level || 0) * 14}px` }}
                   >
@@ -1552,7 +1561,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
           if (!allEntries || allEntries.length === 0) return null;
           const entries = allEntries.filter(e => e.pages.length >= 2);
           if (entries.length === 0) return null;
-          return <BookIndex entries={entries} bookSlug={bookSlug} totalPages={totalPages} isEmbedded={!embedPolicy.enableBookIndexNavigation} />;
+          return <BookIndex entries={entries} pageIdByNumber={pageIdByNumber} bookSlug={bookSlug} totalPages={totalPages} isEmbedded={!embedPolicy.enableBookIndexNavigation} />;
         })()}
 
         {/* Bibliographic information — the source's own record only. */}
@@ -1829,6 +1838,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   </AuthCheck>
                   <CiteButton bookId={book.slug || book.id} title={book.title} displayTitle={book.display_title} author={book.author} year={book.published} publisher={book.publisher} placePublished={resolveImprintPlace(book)?.display} format={book.format} ustcId={book.ustc_id} language={book.language} doi={book.doi} holdingLibrary={book.image_source?.contributing_library} shelfmark={book.image_source?.shelfmark} editionVersion={currentEdition?.version} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
                   <DownloadButton bookId={book.id} bookTitle={book.display_title || book.title} hasTranslations={hasTranslations} hasOcr={hasOcr} hasImages={pages.length > 0} imageRestricted={imageRestricted} imageAccess={imageAccess} variant="header" />
+                  {/* Cover maker (concepts, admin only): sourcelibrary.org only, never on a partner embed or tenant room. */}
+                  {!isEmbedded && !tenantSlug && pages.length > 0 && (
+                    <AuthCheck role="admin">
+                      <Link href={`/admin/covers/${book.id}`} className="flex items-center gap-1.5 px-3 py-1.5 text-[13px] text-stone-100 hover:text-white hover:bg-white/15 transition-colors" title="Admin: make a concept cover from this book's binding, title page and plates">
+                        <Paintbrush className="w-4 h-4" />Make a cover
+                      </Link>
+                    </AuthCheck>
+                  )}
                   <BookShare bookId={book.slug || book.id} title={book.display_title || book.title} author={book.author || ''} year={book.published} doi={book.doi} tenantSlug={tenantSlug || undefined} className="!text-stone-100 hover:!text-white hover:!bg-white/15" />
                   <span className="w-px h-5 mx-1" style={{ background: 'rgba(245,240,232,0.18)' }} />
                   <div className="flex items-center gap-2.5 px-2 py-1.5">
@@ -2219,7 +2236,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
                   return (
                     <div className="mt-5">
                       <Link
-                        href={lp(`/book/${bookSlug}/page-number/${firstChapterPageNumber}`)}
+                        href={lp(pageNumberHref(bookSlug, firstChapterPageNumber, pageIdByNumber))}
                         className="inline-flex items-center gap-2.5 px-6 py-3 bg-accent-rust hover:bg-accent-rust/90 text-white font-medium rounded-lg transition-colors text-base"
                       >
                         <BookOpen className="w-5 h-5" />
@@ -2474,6 +2491,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy, isEmbedded = fa
               return (
                 <BookIndex
                   entries={entries}
+                  pageIdByNumber={pageIdByNumber}
                   bookSlug={book.slug || book.id}
                   totalPages={pages.length}
                   isEmbedded={!embedPolicy.enableBookIndexNavigation}

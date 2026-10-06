@@ -1,0 +1,112 @@
+{
+ "generated": "2026-10-01T07:21:12.089Z",
+ "mirror": {
+  "books": 66240,
+  "translatedBooks": 19900,
+  "translatedPages": 4938717,
+  "scanErrors": 0
+ },
+ "continuityMeta": {
+  "pages": 247804,
+  "forms": {
+   "bare": 59805,
+   "text": 187343,
+   "descriptive": 656
+  }
+ },
+ "textPayload": {
+  "pages": 187343,
+  "underMinWords": 94659,
+  "judged": 92684,
+  "books": 6690,
+  "inVisibleBooks": 86517
+ },
+ "bySeverity": {
+  "opening (<20%)": 82250,
+  "part (20-50%)": 5664,
+  "half (50-80%)": 1552,
+  "whole-page (>=80%)": 3218
+ },
+ "byClass": {
+  "copied-previous": 37905,
+  "undecided": 37798,
+  "not-this-page": 1540,
+  "own-text": 10413,
+  "duplicate-of-body": 1888,
+  "description": 3140
+ },
+ "bySeverityAndClass": {
+  "opening (<20%)": {
+   "copied-previous": 35574,
+   "undecided": 36198,
+   "not-this-page": 1059,
+   "duplicate-of-body": 1815,
+   "description": 2565,
+   "own-text": 5039
+  },
+  "part (20-50%)": {
+   "own-text": 2367,
+   "copied-previous": 1615,
+   "undecided": 974,
+   "description": 259,
+   "not-this-page": 388,
+   "duplicate-of-body": 61
+  },
+  "half (50-80%)": {
+   "own-text": 790,
+   "undecided": 273,
+   "copied-previous": 325,
+   "description": 108,
+   "not-this-page": 44,
+   "duplicate-of-body": 12
+  },
+  "whole-page (>=80%)": {
+   "own-text": 2217,
+   "undecided": 353,
+   "copied-previous": 391,
+   "description": 208,
+   "not-this-page": 49
+  }
+ },
+ "hiddenWords": {
+  "total": 4253770,
+  "ownText": 1956184
+ },
+ "byLanguage": {
+  "latin": 42330,
+  "german": 12146,
+  "chinese": 5704,
+  "greek": 5550,
+  "english": 4800,
+  "french": 4786,
+  "sanskrit": 2787,
+  "dutch": 2756,
+  "italian": 2592,
+  "arabic": 1710,
+  "japanese": 1307,
+  "hebrew": 1161,
+  "tibetan": 847,
+  "persian": 553,
+  "spanish": 410
+ },
+ "lengthMedians": {
+  "german": 0.967,
+  "_all": 1.095,
+  "latin": 1.172,
+  "english": 1.004,
+  "french": 1.017,
+  "greek": 1.151,
+  "italian": 1.053,
+  "arabic": 1.7,
+  "sanskrit": 2.386,
+  "spanish": 1.082,
+  "hebrew": 1.972,
+  "dutch": 0.96,
+  "chinese": 5.578,
+  "armenian": 1.236,
+  "russian": 1.055,
+  "persian": 1.642,
+  "tibetan": 2.251,
+  "japanese": 2.858
+ }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "margin-v1",
+  "PRIOR ART": "scripts/eval/routing-eval/rules/hidden-flash-5795-registered.json — the same three checks with (b) read as a bare count (candidate ≤ baseline), which flipped on one page in 30; scripts/eval/benchmark-cost-lane.mjs — the source of the +1 slack on catastrophic counts. Only (b) differs here.",
+  "registered": "2026-10-04 (#5828). The default for runs sealed after this date. For #5795 it is POST HOC: the margin was chosen after that data was seen.",
+  "candidate": "flash",
+  "baseline": "lite",
+  "min_text_pages": 10,
+  "checks": [
+    { "id": "a", "rule": "labelPrecision", "min": 0.9, "use": "point", "on_fail": "relabel (#4884)" },
+    { "id": "b", "rule": "rateNonInferior", "slack": 1, "margin": 0.1, "seed": 5828, "iters": 4000 },
+    { "id": "c", "rule": "adjudication", "mode": "majority", "invention_max": 0 }
+  ],
+  "verdicts": { "pass": "route to flash", "fail": "stay on lite", "small_n": "undecided: n too small", "pending": "pending adjudication" }
+}

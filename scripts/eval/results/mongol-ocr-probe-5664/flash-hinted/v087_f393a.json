@@ -1,0 +1,45 @@
+{
+ "key": "v087_f393a",
+ "arm": "hinted",
+ "page": {
+  "key": "v087_f393a",
+  "vol": 87,
+  "book_id": "6ac02a3a9a86d56c1aa26869",
+  "page_number": 786,
+  "page_label": "f. 393a",
+  "bdrc_canvas": "I1PD1103550788.jpg",
+  "ligeti": "Mng1.1060",
+  "mng_span": "Sa Eldeb 392b–393b",
+  "toh": "D300",
+  "skt": "Kalyāṇamitrasevana-sūtra",
+  "derge_vol": 71,
+  "derge_file": "071_མདོ་སྡེ།_ཤ.txt"
+ },
+ "model": "gemini-3-flash-preview",
+ "ocr_prompt": {
+  "arm": "hinted",
+  "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "content_hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "translation_prompt": {
+  "name": "Standard Translation",
+  "version": "13",
+  "hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>25</columns>\n<page-num>93</page-num>\n<meta>Beijing Kanjur woodblock print. Margin contains Chinese text: 諸品經二十八卷上三百九十三 (Zhu pin jing, vol. 28, part 1, p. 393).</meta>\n\n<margin>\nᠪᠠ ᠂ ᠰᠢᠨᠳᠦ ᠂ ᠪᠠᠳᠮᠠ ᠂ ᠬᠠᠰ ᠂ ᠪᠠᠳᠮᠠ ᠂ ᠮᠢᠩᠭᠠᠨ\n</margin>\n\nᠪᠦᠭᠡᠳ ᠂ ᠲᠡᠭᠦᠨ ᠦ ᠭᠡᠷᠡᠯ ᠦᠨ ᠦᠵᠡᠭᠦᠷ ᠡᠴᠡ ᠂ ᠲᠡᠭᠦᠨ ᠴᠢᠯᠡᠨ ᠢᠷᠡᠭᠰᠡᠨ ᠪᠦᠷᠬᠠᠨ ᠪᠦᠭᠦ ᠂\nᠰᠠᠳᠤᠳ ᠤᠨ ᠴᠢᠭᠤᠯᠭᠠᠨ ᠢ ᠬᠠᠮᠲᠤ ᠪᠡᠷ ᠂ ᠪᠦᠷᠢᠨ ᠡ ᠭᠠᠷᠴᠤ ᠂ ᠪᠦᠬᠦ ᠶᠢᠷᠲᠢᠨᠴᠦ ᠶᠢᠨ ᠂\nᠠᠮᠢᠲᠠᠨ ᠤ ᠲᠤᠰᠠ ᠶᠢ ᠂ ᠦᠢᠯᠡᠳᠦᠨ ᠦᠢᠯᠡᠳᠦᠭᠰᠡᠨ ᠪᠦᠭᠡᠳ ᠂ ᠪᠦᠬᠦ ᠶᠢᠷᠲᠢᠨᠴᠦ ᠶᠢᠨ ᠂\nᠭᠡᠷᠡᠯ ᠦᠨ ᠦᠵᠡᠭᠦᠷ ᠦᠨ ᠂ ᠭᠡᠷᠡᠯ ᠦᠨ ᠪᠡᠶᠡ ᠪᠡᠷ ᠂ ᠪᠦᠬᠦ ᠶᠢᠷᠲᠢᠨᠴᠦ ᠶᠢ ᠂\nᠭᠡᠷᠡᠯ ᠲᠦ ᠪᠣᠯᠭᠠᠭᠰᠠᠨ ᠪᠦᠭᠡᠳ ᠂ ᠲᠡᠭᠦᠨ ᠦ ᠭᠡᠷᠡᠯ ᠦᠨ ᠦᠵᠡᠭᠦᠷ ᠡᠴᠡ ᠂\nᠪᠦᠷᠬᠠᠨ ᠪᠣᠳᠢ ᠰᠠᠳᠤ ᠨᠠᠷ ᠤᠨ ᠂ ᠪᠡᠶᠡ ᠪᠦᠭᠦᠨ ᠢ ᠂ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠪᠦᠭᠡᠳ ᠂\nᠲᠡᠭᠦᠨ ᠦ ᠭᠡᠷᠡᠯ ᠦᠨ ᠦᠵᠡᠭᠦᠷ ᠡᠴᠡ ᠂ ᠪᠦᠬᠦ ᠶᠢᠷᠲᠢᠨᠴᠦ ᠶᠢᠨ ᠂ ᠠᠮᠢᠲᠠᠨ ᠤ ᠂\nᠵᠢᠷᠭᠠᠯᠠᠩ ᠢ ᠂ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠪᠦᠭᠡᠳ ᠂ ᠲᠡᠭᠦᠨ ᠦ ᠭᠡᠷᠡᠯ ᠦᠨ ᠦᠵᠡᠭᠦᠷ ᠡᠴᠡ ᠂\nᠪᠦᠬᠦ ᠶᠢᠷᠲᠢᠨᠴᠦ ᠶᠢᠨ ᠂ ᠪᠦᠷᠬᠠᠨ ᠤ ᠂ ᠣᠷᠣᠨ ᠪᠦᠭᠦᠨ ᠢ ᠂ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠪᠦᠭᠡᠳ ᠂\nᠲᠡᠭᠦᠨ ᠦ ᠭᠡᠷᠡᠯ ᠦᠨ ᠦᠵᠡᠭᠦᠷ ᠡᠴᠡ ᠂ ᠪᠦᠬᠦ ᠶᠢᠷᠲᠢᠨᠴᠦ ᠶᠢᠨ ᠂ ᠪᠦᠷᠬᠠᠨ ᠤ ᠂\nᠪᠡᠶᠡ ᠪᠦᠭᠦᠨ ᠢ ᠂ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠪᠦᠭᠡᠳ ᠂ ᠲᠡᠭᠦᠨ ᠦ ᠭᠡᠷᠡᠯ ᠦᠨ ᠦᠵᠡᠭᠦᠷ ᠡᠴᠡ ᠂\nᠪᠦᠬᠦ ᠶᠢᠷᠲᠢᠨᠴᠦ ᠶᠢᠨ ᠂ ᠪᠦᠷᠬᠠᠨ ᠤ ᠂ ᠳᠠᠭᠤᠨ ᠪᠦᠭᠦᠨ ᠢ ᠂ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠪᠦᠭᠡᠳ ᠂\nᠲᠡᠭᠦᠨ ᠦ ᠭᠡᠷᠡᠯ ᠦᠨ ᠦᠵᠡᠭᠦᠷ ᠡᠴᠡ ᠂ ᠪᠦᠬᠦ ᠶᠢᠷᠲᠢᠨᠴᠦ ᠶᠢᠨ ᠂ ᠪᠦᠷᠬᠠᠨ ᠤ ᠂\nᠪᠦᠬᠦ ᠪᠣᠳᠢ ᠰᠠᠳᠤ ᠨᠠᠷ ᠤᠨ ᠂ ᠪᠡᠶᠡ ᠪᠦᠭᠦᠨ ᠢ ᠂ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠪᠦᠭᠡᠳ ᠂\nᠲᠡᠭᠦᠨ ᠦ ᠭᠡᠷᠡᠯ ᠦᠨ ᠦᠵᠡᠭᠦᠷ ᠡᠴᠡ ᠂ ᠪᠦᠬᠦ ᠶᠢᠷᠲᠢᠨᠴᠦ ᠶᠢᠨ ᠂ ᠪᠦᠷᠬᠠᠨ ᠤ ᠂\nᠪᠦᠬᠦ ᠪᠣᠳᠢ ᠰᠠᠳᠤ ᠨᠠᠷ ᠤᠨ ᠂ ᠳᠠᠭᠤᠨ ᠪᠦᠭᠦᠨ ᠢ ᠂ ᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠪᠦᠭᠡᠳ ᠂\nᠲᠡᠭᠦᠨ ᠦ ᠭᠡᠷᠡᠯ ᠦᠨ ᠦᠵᠡᠭᠦᠷ ᠡᠴᠡ ᠂ ᠪᠦᠬᠦ ᠶᠢᠷᠲᠢᠨᠴᠦ ᠶᠢᠨ ᠂ ᠪᠦᠷᠬᠠᠨ ᠤ ᠂\nᠪᠦᠬᠦ ᠪᠣᠳᠢ ᠰᠠᠳᠤ ᠨᠠᠷ ᠤᠨ ᠂ ᠪᠦᠬᠦ ᠪᠠᠷᠠᠮᠢᠳ ᠤᠨ ᠂ ᠳᠠᠭᠤᠨ ᠪᠦᠭᠦᠨ ᠢ ᠂\nᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠪᠦᠭᠡᠳ ᠂ ᠲᠡᠭᠦᠨ ᠦ ᠭᠡᠷᠡᠯ ᠦᠨ ᠦᠵᠡᠭᠦᠷ ᠡᠴᠡ ᠂ ᠪᠦᠬᠦ ᠶᠢᠷᠲᠢᠨᠴᠦ ᠶᠢᠨ ᠂\nᠪᠦᠷᠬᠠᠨ ᠤ ᠂ ᠪᠦᠬᠦ ᠪᠣᠳᠢ ᠰᠠᠳᠤ ᠨᠠᠷ ᠤᠨ ᠂ ᠪᠦᠬᠦ ᠪᠠᠷᠠᠮᠢᠳ ᠤᠨ ᠂ ᠳᠠᠭᠤᠨ ᠪᠦᠭᠦᠨ ᠢ ᠂\nᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠪᠦᠭᠡᠳ ᠂ ᠲᠡᠭᠦᠨ ᠦ ᠭᠡᠷᠡᠯ ᠦᠨ ᠦᠵᠡᠭᠦᠷ ᠡᠴᠡ ᠂ ᠪᠦᠬᠦ ᠶᠢᠷᠲᠢᠨᠴᠦ ᠶᠢᠨ ᠂\nᠪᠦᠷᠬᠠᠨ ᠤ ᠂ ᠪᠦᠬᠦ ᠪᠣᠳᠢ ᠰᠠᠳᠤ ᠨᠠᠷ ᠤᠨ ᠂ ᠪᠦᠬᠦ ᠪᠠᠷᠠᠮᠢᠳ ᠤᠨ ᠂ ᠳᠠᠭᠤᠨ ᠪᠦᠭᠦᠨ ᠢ ᠂\nᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠪᠦᠭᠡᠳ ᠂ ᠲᠡᠭᠦᠨ ᠦ ᠭᠡᠷᠡᠯ ᠦᠨ ᠦᠵᠡᠭᠦᠷ ᠡᠴᠡ ᠂ ᠪᠦᠬᠦ ᠶᠢᠷᠲᠢᠨᠴᠦ ᠶᠢᠨ ᠂\nᠪᠦᠷᠬᠠᠨ ᠤ ᠂ ᠪᠦᠬᠦ ᠪᠣᠳᠢ ᠰᠠᠳᠤ ᠨᠠᠷ ᠤᠨ ᠂ ᠪᠦᠬᠦ ᠪᠠᠷᠠᠮᠢᠳ ᠤᠨ ᠂ ᠳᠠᠭᠤᠨ ᠪᠦᠭᠦᠨ ᠢ ᠂\nᠦᠵᠡᠭᠦᠯᠦᠭᠰᠡᠨ ᠪᠦᠭᠡᠳ ᠂ ᠲᠡᠭᠦᠨ ᠦ ᠭᠡᠷᠡᠯ ᠦᠨ ᠦᠵᠡᠭᠦᠷ ᠡᠴᠡ ᠂ ᠪᠦᠬᠦ ᠶᠢᠷᠲᠢᠨᠴᠦ ᠶᠢᠨ ᠂\n\n<vocab>ᠪᠦᠷᠬᠠᠨ (Burqan/Buddha), ᠪᠣᠳᠢ ᠰᠠᠳᠤ (Bodhisattva), ᠭᠡᠷᠡᠯ (Gerel/Light), ᠶᠢᠷᠲᠢᠨᠴᠦ (Yirtincü/World), ᠪᠠᠷᠠᠮᠢᠳ (Baramid/Paramita)</vocab>",
+  "finishReason": "STOP",
+  "inputTokens": 4341,
+  "outputTokens": 3522,
+  "cost_usd": 0.0127365
+ },
+ "translation": {
+  "text": "<meta>This page is from the Beijing Kanjur, specifically the section containing various sutras. The text follows a repetitive litany structure common in Mahayana Buddhist literature, describing the miraculous effects emanating from the light of the Buddha.</meta>\n\n<margin>\nBa, Sindhu, Padma, Jade, Padma, Thousand\n</margin>\n\nFrom the tips of his rays of light, all the <term>Tathagatas</term> <gloss>those who have thus gone; Buddhas</gloss> and the assembly of <term>Bodhisattvas</term> <gloss>enlightened beings</gloss> emerged together, acting for the benefit of all living beings in the entire world. By the light-body of the tips of the light of the entire world, he made the entire world radiant. From the tips of his rays of light, he manifested all the bodies of the Buddhas and Bodhisattvas. From the tips of his rays of light, he manifested the happiness of all living beings in the entire world. From the tips of his rays of light, he manifested all the realms of the Buddhas of the entire world. From the tips of his rays of light, he manifested all the bodies of the Buddhas of the entire world. From the tips of his rays of light, he manifested all the voices of the Buddhas of the entire world. From the tips of his rays of light, he manifested all the bodies of all the Bodhisattvas of the Buddhas of the entire world. From the tips of his rays of light, he manifested all the voices of all the Bodhisattvas of the Buddhas of the entire world. From the tips of his rays of light, he manifested all the voices of all the <term>Paramitas</term> <gloss>perfections</gloss> of all the Bodhisattvas of the Buddhas of the entire world. From the tips of his rays of light, he manifested all the voices of all the <term>Paramitas</term> of all the Bodhisattvas of the Buddhas of the entire world. From the tips of his rays of light, he manifested all the voices of all the <term>Paramitas</term> of all the Bodhisattvas of the Buddhas of the entire world. From the tips of his rays of light, he manifested all the voices of all the <term>Paramitas</term> of all the Bodhisattvas of the Buddhas of the entire world. From the tips of his rays of light, of the entire world...\n\n<summary>This page describes a series of miraculous emanations from the light of the Buddha, which manifest Buddhas, Bodhisattvas, divine realms, and the teachings of the Perfections to benefit all beings.</summary>\n<keywords>Buddha, light rays, Bodhisattva, Paramita, world systems, Kanjur, Buddhist litany</keywords>",
+  "finishReason": "STOP",
+  "inputTokens": 5252,
+  "outputTokens": 608,
+  "cost_usd": 0.00445
+ }
+}

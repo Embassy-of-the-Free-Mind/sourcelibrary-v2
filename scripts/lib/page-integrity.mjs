@@ -17,6 +17,7 @@
  *
  *   1. catchwordBoundary()  — does page N+1 open with page N's catchword?
  *   2. pageNumberBreaks()   — is the printed number sequence monotone at the book's rate?
+ *      fitPrintedPages()    — the same fit, read the other way: which printed page is each scan?
  *   3. duplicateScan()      — is OCR N+1 (nearly) the same text as OCR N?
  *   4. truncationRatio()    — is the translation far shorter than its source?
  *   5. echoedSource()       — does the "translation" contain the source verbatim?
@@ -301,7 +302,10 @@ export function parsePageNum(ocr) {
 export const MAX_SCAN_GAP = 4;
 export const MAX_OUTLIER_RUN = 2;
 export const MIN_FIT_SHARE = 0.75;
-export function pageNumberBreaks(pages) {
+
+/** The numbered text pages of a book, split by numbering kind (shared by pageNumberBreaks and
+ *  fitPrintedPages, so both read one sequence). */
+function numberedByKind(pages) {
   const byKind = { arabic: [], roman: [], folio: [] };
   let tagged = 0, other = 0;
   pages.forEach((r, idx) => {
@@ -314,53 +318,72 @@ export function pageNumberBreaks(pages) {
     if (v.kind === 'other') { other++; return; }
     byKind[v.kind].push({ idx, p: r.p, value: v.value, span: v.span });
   });
-  const out = { tagged, other, kinds: {}, breaks: [], outliers: [] };
-  for (const [kind, seq] of Object.entries(byKind)) {
-    if (seq.length < 4) { if (seq.length) out.kinds[kind] = { n: seq.length, judged: false, why: 'too-few' }; continue; }
-    const ratios = [];
-    for (let k = 1; k < seq.length; k++) {
-      const ds = seq[k].p - seq[k - 1].p, dv = seq[k].value - seq[k - 1].value;
-      if (ds >= 1 && ds <= 2 && dv > 0 && dv <= 4) ratios.push(dv / ds);
-    }
-    if (ratios.length < 3) { out.kinds[kind] = { n: seq.length, judged: false, why: 'no-rate' }; continue; }
-    ratios.sort((a, b) => a - b);
-    const med = ratios[Math.floor(ratios.length / 2)];
-    const rate = [0.5, 1, 2].find(r => Math.abs(med - r) < 0.01);
-    if (rate == null) { out.kinds[kind] = { n: seq.length, judged: false, why: 'irregular', median: med }; continue; }
-    // Offset of each number from its scan position, in scan units: constant along a clean run.
-    const off = (e) => e.value / rate - e.p;
-    // A "page number" that is really a section, entry or plate number (10, 10, 10, 11, …) or
-    // two interleaved sequences fits its own rate on few adjacent pairs: not a pagination.
-    let near = 0, fit = 0;
-    for (let k = 1; k < seq.length; k++) {
-      if (seq[k].p - seq[k - 1].p > MAX_SCAN_GAP) continue;
-      near++; if (off(seq[k]) === off(seq[k - 1])) fit++;
-    }
-    const fitShare = near ? fit / near : 0;
-    if (fitShare < MIN_FIT_SHARE) { out.kinds[kind] = { n: seq.length, judged: false, why: 'irregular', rate, fitShare: +fitShare.toFixed(2) }; continue; }
-    // Runs of equal offset; a run of ≤ MAX_OUTLIER_RUN numbers whose neighbouring runs share one
-    // offset is a misprint or an OCR misread (…, 111, 118, 18, 114, …), not a leaf problem.
-    let runs = [];
-    for (const e of seq) {
-      const last = runs[runs.length - 1];
-      if (last && off(last[0]) === off(e)) last.push(e); else runs.push([e]);
-    }
-    for (let changed = true; changed;) {
-      changed = false;
-      for (let r = 1; r + 1 < runs.length && !changed; r++) {
-        // try the next 1..m runs together (two different misreads in a row are two runs)
-        for (let m = 1; r + m < runs.length; m++) {
-          const mid = runs.slice(r, r + m).flat();
-          if (mid.length > MAX_OUTLIER_RUN) break;
-          const prev = runs[r - 1], next = runs[r + m];
-          if (off(prev[0]) !== off(next[0]) || next[0].p - prev[prev.length - 1].p > MAX_SCAN_GAP + MAX_OUTLIER_RUN) continue;
-          for (const e of mid) out.outliers.push({ numbering: kind, p: e.p, value: e.value, expected: Math.round((off(prev[0]) + e.p) * rate) });
-          runs.splice(r - 1, m + 2, [...prev, ...next]);
-          changed = true;
-          break;
-        }
+  return { byKind, tagged, other };
+}
+
+/**
+ * Fit ONE numbering's sequence: its rate, then runs of constant offset with short off-line runs
+ * (misprints, misreads) merged away. Returns { judged:false, ... } for a sequence that is not a
+ * pagination, else { judged:true, rate, fitShare, off, runs, outliers }.
+ */
+function fitNumbering(kind, seq) {
+  if (seq.length < 4) return { info: { n: seq.length, judged: false, why: 'too-few' } };
+  const ratios = [];
+  for (let k = 1; k < seq.length; k++) {
+    const ds = seq[k].p - seq[k - 1].p, dv = seq[k].value - seq[k - 1].value;
+    if (ds >= 1 && ds <= 2 && dv > 0 && dv <= 4) ratios.push(dv / ds);
+  }
+  if (ratios.length < 3) return { info: { n: seq.length, judged: false, why: 'no-rate' } };
+  ratios.sort((a, b) => a - b);
+  const med = ratios[Math.floor(ratios.length / 2)];
+  const rate = [0.5, 1, 2].find(r => Math.abs(med - r) < 0.01);
+  if (rate == null) return { info: { n: seq.length, judged: false, why: 'irregular', median: med } };
+  // Offset of each number from its scan position, in scan units: constant along a clean run.
+  const off = (e) => e.value / rate - e.p;
+  // A "page number" that is really a section, entry or plate number (10, 10, 10, 11, …) or
+  // two interleaved sequences fits its own rate on few adjacent pairs: not a pagination.
+  let near = 0, fit = 0;
+  for (let k = 1; k < seq.length; k++) {
+    if (seq[k].p - seq[k - 1].p > MAX_SCAN_GAP) continue;
+    near++; if (off(seq[k]) === off(seq[k - 1])) fit++;
+  }
+  const fitShare = near ? fit / near : 0;
+  if (fitShare < MIN_FIT_SHARE) return { info: { n: seq.length, judged: false, why: 'irregular', rate, fitShare: +fitShare.toFixed(2) } };
+  // Runs of equal offset; a run of ≤ MAX_OUTLIER_RUN numbers whose neighbouring runs share one
+  // offset is a misprint or an OCR misread (…, 111, 118, 18, 114, …), not a leaf problem.
+  const outliers = [];
+  let runs = [];
+  for (const e of seq) {
+    const last = runs[runs.length - 1];
+    if (last && off(last[0]) === off(e)) last.push(e); else runs.push([e]);
+  }
+  for (let changed = true; changed;) {
+    changed = false;
+    for (let r = 1; r + 1 < runs.length && !changed; r++) {
+      // try the next 1..m runs together (two different misreads in a row are two runs)
+      for (let m = 1; r + m < runs.length; m++) {
+        const mid = runs.slice(r, r + m).flat();
+        if (mid.length > MAX_OUTLIER_RUN) break;
+        const prev = runs[r - 1], next = runs[r + m];
+        if (off(prev[0]) !== off(next[0]) || next[0].p - prev[prev.length - 1].p > MAX_SCAN_GAP + MAX_OUTLIER_RUN) continue;
+        for (const e of mid) outliers.push({ numbering: kind, p: e.p, value: e.value, expected: Math.round((off(prev[0]) + e.p) * rate) });
+        runs.splice(r - 1, m + 2, [...prev, ...next]);
+        changed = true;
+        break;
       }
     }
+  }
+  return { judged: true, rate, fitShare, off, runs, outliers };
+}
+
+export function pageNumberBreaks(pages) {
+  const { byKind, tagged, other } = numberedByKind(pages);
+  const out = { tagged, other, kinds: {}, breaks: [], outliers: [] };
+  for (const [kind, seq] of Object.entries(byKind)) {
+    const f = fitNumbering(kind, seq);
+    if (!f.judged) { if (seq.length) out.kinds[kind] = f.info; continue; }
+    const { rate, runs } = f;
+    out.outliers.push(...f.outliers);
     const keep = runs.flat();
     let judged = 0, nBreaks = 0;
     for (let k = 1; k < keep.length; k++) {
@@ -429,6 +452,104 @@ export function pageNumMisreads(pages) {
     else cause = 'misread';
     return { p: o.p, numbering: o.numbering, tag: raw, value: o.value, expected: o.expected, expectedPrinted, cause };
   });
+}
+
+// ── 2b. the printed page a reader holds (#4291) ───────────────────────────────────────────
+
+/**
+ * The running-head number of a page whose OCR predates the <page-num> tag. Those vintages
+ * transcribed the head as the first line ("DE TRIPL. ANIM. IN CORP. VISION. 217",
+ * "210 TRACT. I. SECT. I. LIB. X."). Returns the arabic number standing first or last on a
+ * short first line, else null. Tagged OCR never qualifies: there a missing <page-num> is the
+ * model saying the leaf carries none, and the first line is a tag. One head is trusted no more
+ * than one tag; fitPrintedPages keeps only numbers the book's own sequence corroborates.
+ */
+export function runningHeadNumber(ocr) {
+  const o = String(ocr || '');
+  if (/<(?:page-num|page-type|language|header)\b/i.test(o)) return null;
+  const line = o.split('\n').map(l => l.replace(/&nbsp;/g, ' ').replace(/^[\s#*_>|]+|[\s*_|]+$/g, '')).find(Boolean);
+  if (!line || line.length > 100) return null;
+  const toks = line.split(/\s+/);
+  for (const t of [toks[0], toks[toks.length - 1]]) {
+    const d = asciiDigits(t).replace(/^[[(]+|[\]).,:;]+$/g, '');
+    if (/^\d{1,4}$/.test(d)) return d;
+  }
+  return null;
+}
+
+/** A scan must sit in a run of at least this many numbers at one offset to be labelled. */
+export const PRINTED_MIN_RUN = 3;
+
+function printedLabel(kind, rate, value) {
+  const fmt = (v) => kind === 'roman' ? toRoman(v) : String(v);
+  if (kind === 'folio') return `${value >> 1}${value & 1 ? 'v' : 'r'}`;
+  if (rate === 0.5) return Number.isInteger(value) ? `${fmt(value)}r` : `${fmt(Math.floor(value))}v`; // numbered rectos: leaves
+  if (rate === 2) return `${fmt(value)}–${fmt(value + 1)}`; // one scan, two printed pages
+  return fmt(value);
+}
+
+/**
+ * The printed page number of every scan the book's own pagination vouches for (#4291): a
+ * per-book offset model, never one page's say-so. `pages` = rows in scan order {p, ocr, type}.
+ * Per numbering kind it runs the fit pageNumberBreaks uses, then labels a scan only when it
+ * sits in a run of ≥ PRINTED_MIN_RUN numbers at one offset:
+ *   method 'read'          its own number lies on the run's line
+ *   method 'interpolated'  it carries no number (a chapter opening, a plate inside the
+ *                          pagination) and lies between two run members ≤ MAX_SCAN_GAP scans
+ *                          apart, so the constant offset fixes it
+ * Never labelled: an outlier (a misread or a misprint; either way a citation from it is
+ * wrong), a member of a shorter run, a scan two numberings both claim.
+ * { head: true } also reads runningHeadNumber() on untagged OCR (source 'head', else 'tag').
+ *
+ * Returns { kinds, labels: Map<p, { label, numbering, rate, method, source, run_len,
+ * fit_share }>, skipped: { outlier, short_run, conflict } }. `label` is a string: romans
+ * ("xii"), leaves ("12v") and spreads ("12–13") are not integers.
+ */
+export function fitPrintedPages(pages, { head = false, minRun = PRINTED_MIN_RUN } = {}) {
+  const source = new Map();
+  const rows = pages.map((r) => {
+    if (/<page-num>/i.test(r.ocr || '')) { source.set(r.p, 'tag'); return r; }
+    const h = head ? runningHeadNumber(r.ocr) : null;
+    if (h == null) return r;
+    source.set(r.p, 'head');
+    return { ...r, ocr: `<page-num>${h}</page-num>` };
+  });
+  const { byKind } = numberedByKind(rows);
+  const kinds = {}, claims = new Map();
+  const skipped = { outlier: 0, short_run: 0, conflict: 0 };
+  for (const [kind, seq] of Object.entries(byKind)) {
+    const f = fitNumbering(kind, seq);
+    if (!f.judged) { if (seq.length) kinds[kind] = f.info; continue; }
+    const fitShare = +f.fitShare.toFixed(2);
+    kinds[kind] = { n: seq.length, judged: true, rate: f.rate, fitShare };
+    const outP = new Set(f.outliers.map(o => o.p));
+    const numberedP = new Set(seq.map(e => e.p));
+    skipped.outlier += outP.size;
+    for (const run of f.runs) {
+      if (run.length < minRun) { skipped.short_run += run.length; continue; }
+      const o = f.off(run[0]);
+      const claim = (p, method) => {
+        const value = (p + o) * f.rate;
+        if (!(value > 0)) return;
+        const c = { label: printedLabel(kind, f.rate, value), numbering: kind, rate: f.rate, method,
+          ...(method === 'read' ? { source: source.get(p) } : {}), run_len: run.length, fit_share: fitShare };
+        claims.set(p, [...(claims.get(p) || []), c]);
+      };
+      for (let k = 0; k < run.length; k++) {
+        claim(run[k].p, 'read');
+        const next = run[k + 1];
+        if (next && next.p - run[k].p <= MAX_SCAN_GAP) {
+          for (let p = run[k].p + 1; p < next.p; p++) if (!outP.has(p) && !numberedP.has(p)) claim(p, 'interpolated');
+        }
+      }
+    }
+  }
+  const labels = new Map();
+  for (const [p, cs] of claims) {
+    if (cs.length === 1) labels.set(p, cs[0]);
+    else skipped.conflict++;
+  }
+  return { kinds, labels, skipped };
 }
 
 /** Positive evidence that scan i+1 follows scan i: the catchword chains, or a word broken with

@@ -15,7 +15,7 @@
   ],
   "generated_from": "full-scan enumeration of bookstore.books; language family consolidated 2026-09-10",
   "generated_at": "2026-09-10",
-  "count": 424,
+  "count": 425,
   "retired": [
     "_language_backfill",
     "acquisition_priority",
@@ -119,6 +119,7 @@
     "berlpap_item_url",
     "berlpap_url_id",
     "bodleian_uuid",
+    "book_class",
     "book_collection_rank",
     "bph_catalog_link",
     "bph_match",

@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA thesaurus/thesaurus/Beze_icones.xml",
+  "edition": "Icones, id est Verae Imagines Virorum Doctrina Simul Et Pietate Illustrium... additis eorundem vitae et operae descripti — [Geneve]: Joannes Laonius, 1580.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "6/9",
+    "pb_aligned_pages": "6/6"
+  },
+  "origin": "library",
+  "book_id": "6a42ca0be76baa13aa84c734",
+  "page_number": 23,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 7798,
+    "to_char": 9325,
+    "overlap": 0.893,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'HIERONYMVS BOHEMVS PRAGENSIS. OPORTEBAT scilicet coniuratos' after ornamental band (page mark V); ends 'carceribus fui'; ref pads 'ITALIA, DIVINITVS SELECTI.' and 'in sordibus, in'; 3 paragraphs incl. italic Pogius heading; abbreviations are only q-nasal tildes (few).",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:16.648Z",
+  "text_location": "repo",
+  "text_sha256": "407083ba60b02aa1721020398d6219b871c48f3b0849c0246c2a6a9c7156dfcf",
+  "unit": {
+    "chars": 1527
+  },
+  "stratum": "latin-period-5126"
+}

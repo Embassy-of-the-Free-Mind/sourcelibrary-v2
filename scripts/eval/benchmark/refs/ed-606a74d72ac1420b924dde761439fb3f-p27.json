@@ -1,0 +1,46 @@
+{
+  "source": "la.wikisource Liber:Nicolai Copernici torinensis De revolutionibus orbium coelestium.djvu",
+  "edition": "Liber:Nicolai Copernici torinensis De revolutionibus orbium coelestium.djvu — ",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://la.wikisource.org/wiki/Liber%3ANicolai_Copernici_torinensis_De_revolutionibus_orbium_coelestium.djvu",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "4/59",
+    "pb_aligned_pages": "4/4"
+  },
+  "origin": "library",
+  "book_id": "606a74d7-2ac1-420b-924d-de761439fb3f",
+  "page_number": 27,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 40746,
+    "to_char": 43026,
+    "overlap": 0.659,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'quodq; fuerit in ipso, quamcunq; occupauerit magnitudinem'; ends 'Quandoquidem quae pondere suo' (catchword 'de'); printed p. 6, REVOLUTIONUM LIB. I.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "many",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:07.409Z",
+  "text_location": "repo",
+  "text_sha256": "3c831eb53f3e46f8229eaac25e83bc1f8691d482008c338320b4249031fb9462",
+  "unit": {
+    "chars": 2280
+  },
+  "stratum": "latin-period-5126"
+}

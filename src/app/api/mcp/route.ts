@@ -521,7 +521,7 @@ const QUOTE_TIP =
   'Copy the translation text exactly when quoting — do not paraphrase. ' +
   'Present the citation_link to the user alongside the quote. Render as:\n' +
   '> [exact translation text, verbatim]\n' +
-  '> — [Author], p. [N]. [citation_link]';
+  '> — [Author], [citation.locator]. [citation_link]';
 
 // Three-layer apparatus for non-Latin scripts (#3828). Only emitted when a
 // page actually carries a romanization, so a caller quoting a Latin book is
@@ -531,7 +531,7 @@ const ROMANIZED_TIP =
   '> [original, verbatim]\n' +
   '> [romanized]\n' +
   '> [translation, verbatim]\n' +
-  '> — [Author], p. [N]. [citation_link]\n' +
+  '> — [Author], [citation.locator]. [citation_link]\n' +
   'The `romanized` field is AI-generated reading apparatus, not a transcription — ' +
   'never present it as the text printed on the page, and quote from `original` or ' +
   '`translation` when quoting the source itself.';
@@ -569,6 +569,19 @@ function langFallback(result: Record<string, unknown>, requested: string): boole
   return requested !== 'en' && served !== requested;
 }
 
+/**
+ * Set when the leaf's printed page number is known (#4291). `page` is the scan index, and on
+ * many books it is not the number printed on the leaf (Fludd: scan 219 is printed 217).
+ */
+function printedPage(result: Record<string, unknown>): boolean {
+  const quote = result.quote as Record<string, unknown> | undefined;
+  return typeof quote?.printed_page === 'string' && quote.printed_page !== '';
+}
+const PRINTED_PAGE_TIP =
+  'PAGE NUMBER — quote.page is the SCAN index; quote.printed_page is the number printed on the leaf. ' +
+  'Cite the printed number with the scan in brackets, exactly as citation.locator gives it ' +
+  '(e.g. "p. 217 [scan 219]"), never "p. <scan>": a reader holding the book would turn to the wrong page.';
+
 function translationNote(result: Record<string, unknown>): string | null {
   const quote = result.quote as Record<string, unknown> | undefined;
   const note = quote?.translation_note;
@@ -585,7 +598,7 @@ const OCR_ORIGINAL_TIP =
   'text is in `original`. Copy it exactly and attribute it as the source\'s own words — never call it ' +
   'a translation. Render as:\n' +
   '> [exact original text, verbatim]\n' +
-  '> — [Author], p. [N]. [citation_link]\n' +
+  '> — [Author], [citation.locator]. [citation_link]\n' +
   'It is an uncorrected AI transcription, preserving period spelling, long-s (ſ) and printer marks: ' +
   'keep them as they stand, or say that any modernization is yours. Where the exact wording carries ' +
   'weight, call again with include_image: true and read the leaf.';
@@ -673,6 +686,7 @@ async function getQuote(args: Record<string, unknown>) {
   if (hasRomanized(result)) tips.push(ROMANIZED_TIP);
   if (translationNote(result)) tips.push(TRANSLATED_ORIGINAL_TIP);
   if (langFallback(result, quoteLang)) tips.push(LANG_FALLBACK_TIP(quoteLang));
+  if (printedPage(result)) tips.push(PRINTED_PAGE_TIP);
 
   // Copy clause (#4360) — same logic in mcp-server/src/api.ts; the two servers
   // each read their own copy of this guidance and fixes do not propagate.
@@ -779,6 +793,7 @@ async function getQuotes(args: Record<string, unknown>, opts?: { keepQuoteMarks?
   // across 17 books — so one fallback in the range is enough to warn about.
   if (settled.some((x) => langFallback(x as Record<string, unknown>, batchLang))) tips.push(LANG_FALLBACK_TIP(batchLang));
   if (anyTranslated) tips.push(TRANSLATED_ORIGINAL_TIP);
+  if (settled.some((x) => printedPage(x as Record<string, unknown>))) tips.push(PRINTED_PAGE_TIP);
 
   return {
     book_id: bookId,
@@ -1156,7 +1171,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_quote',
     title: 'Get Quote',
-    description: 'READ PIPELINE step 3 — CITE. Get the exact verbatim text of a single page plus its citation apparatus. ALWAYS use before putting text in quotation marks. The response headline is citation_link (the stable sourcelibrary.org/q/… shortlink) — present it to the user alongside the quote. Render as:\n> [exact translation text, verbatim]\n> — [Author], p. [N]. [citation_link]\nPAGE BREAKS: this corpus is paginated from physical leaves, and nearly one prose page-boundary in five has a sentence running across it — sometimes a word split by a hyphen ("…our move-" / "movements…"). A page that opens or breaks off mid-sentence still reads as complete prose and still carries a perfectly valid citation, so check the continuity field on every response BEFORE quoting: if continues_on_next or continues_from_previous is true, call again with context: true and quote the whole sentence. Quoting a fragment as though it were the author\'s complete thought is a misattribution even when the page number is right.\nNON-LATIN SCRIPTS: where the page is Greek, Hebrew, Arabic, Sanskrit, Cyrillic and so on, the response also carries romanized — the romanization of the original — so the citation can be shown in three layers: original → romanized → translation → citation_link. It is AI-generated reading apparatus, not a transcription; quote the source from original or translation, never from romanized. Absent on Latin-script pages and on non-Latin pages not yet romanized.\nENGLISH ORIGINALS: where the leaf is already English there is no translation and none is needed — the response omits `translation`, sets `text_source: "ocr_original"`, and the verbatim text is `original` (with a `transcription_note`). Quote it as the source\'s own words, never as a translation, and expect period spelling and long-s (ſ) — it is an uncorrected transcription of the scan. `text_source` is on every response (`translation` otherwise), so branch on it rather than guessing from pages_translated, which is 0 for an English-original book by construction.\nTRANSLATED EDITIONS: `original` means the text printed on this leaf, which on a translated edition is the TRANSLATOR\'s language, not the author\'s. When the response carries `translation_note`, the chain is stated there — attribute the wording to the translator and do not offer the passage as evidence of what the author wrote in their own tongue. Call list_editions to find an original-language witness of the same work.\nFor several pages of one book at once, use get_quotes.',
+    description: 'READ PIPELINE step 3 — CITE. Get the exact verbatim text of a single page plus its citation apparatus. ALWAYS use before putting text in quotation marks. The response headline is citation_link (the stable sourcelibrary.org/q/… shortlink) — present it to the user alongside the quote. Render as:\n> [exact translation text, verbatim]\n> — [Author], [citation.locator]. [citation_link]\nPAGE BREAKS: this corpus is paginated from physical leaves, and nearly one prose page-boundary in five has a sentence running across it — sometimes a word split by a hyphen ("…our move-" / "movements…"). A page that opens or breaks off mid-sentence still reads as complete prose and still carries a perfectly valid citation, so check the continuity field on every response BEFORE quoting: if continues_on_next or continues_from_previous is true, call again with context: true and quote the whole sentence. Quoting a fragment as though it were the author\'s complete thought is a misattribution even when the page number is right.\nNON-LATIN SCRIPTS: where the page is Greek, Hebrew, Arabic, Sanskrit, Cyrillic and so on, the response also carries romanized — the romanization of the original — so the citation can be shown in three layers: original → romanized → translation → citation_link. It is AI-generated reading apparatus, not a transcription; quote the source from original or translation, never from romanized. Absent on Latin-script pages and on non-Latin pages not yet romanized.\nENGLISH ORIGINALS: where the leaf is already English there is no translation and none is needed — the response omits `translation`, sets `text_source: "ocr_original"`, and the verbatim text is `original` (with a `transcription_note`). Quote it as the source\'s own words, never as a translation, and expect period spelling and long-s (ſ) — it is an uncorrected transcription of the scan. `text_source` is on every response (`translation` otherwise), so branch on it rather than guessing from pages_translated, which is 0 for an English-original book by construction.\nTRANSLATED EDITIONS: `original` means the text printed on this leaf, which on a translated edition is the TRANSLATOR\'s language, not the author\'s. When the response carries `translation_note`, the chain is stated there — attribute the wording to the translator and do not offer the passage as evidence of what the author wrote in their own tongue. Call list_editions to find an original-language witness of the same work.\nFor several pages of one book at once, use get_quotes.',
     annotations: { title: 'Get Quote', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -1451,7 +1466,7 @@ function collectImageAttachments(name: string, result: unknown): ImageAttachment
     if (typeof quote?.page_image_url === 'string') {
       return [{
         urls: [quote.page_image_url],
-        caption: `Scan of the cited leaf — p. ${quote.page}, ${quote.author || quote.book_title}`,
+        caption: `Scan of the cited leaf — ${(r.citation as { locator?: string } | undefined)?.locator ?? `p. ${quote.page}`}, ${quote.author || quote.book_title}`,
       }];
     }
     return [];
@@ -1459,13 +1474,15 @@ function collectImageAttachments(name: string, result: unknown): ImageAttachment
 
   if (name === 'get_quotes' && Array.isArray(r.quotes)) {
     return (r.quotes as Array<Record<string, unknown>>)
-      .map((entry) => entry.quote as Record<string, unknown> | undefined)
-      .filter((q): q is Record<string, unknown> => typeof q?.page_image_url === 'string')
+      .filter((entry) => typeof (entry.quote as Record<string, unknown> | undefined)?.page_image_url === 'string')
       .slice(0, MAX_INLINE_IMAGES)
-      .map((q) => ({
-        urls: [q.page_image_url as string | undefined],
-        caption: `Scan of the cited leaf — p. ${q.page}, ${q.author || q.book_title}`,
-      }));
+      .map((entry) => {
+        const q = entry.quote as Record<string, unknown>;
+        return {
+          urls: [q.page_image_url as string | undefined],
+          caption: `Scan of the cited leaf — ${(entry.citation as { locator?: string } | undefined)?.locator ?? `p. ${q.page}`}, ${q.author || q.book_title}`,
+        };
+      });
   }
 
   if (name === 'get_book' && typeof r.cover_thumb_url === 'string') {

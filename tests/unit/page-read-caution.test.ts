@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { pageReadCaution } from '@/lib/transcription-reliability';
+import { pageReadCaution, transcriptionReliability } from '@/lib/transcription-reliability';
 import { parsePageReport, pageReportMessage } from '@/lib/page-report';
 
 /**
@@ -78,5 +78,45 @@ describe('parsePageReport', () => {
     const r = parsePageReport({ book_id: 'abc', page_number: 4, kind: 'missing_text' })!;
     expect(pageReportMessage(r, '')).toBe('[page report] missing_text — book abc p. 4');
     expect(pageReportMessage(r, 'bottom lines gone')).toContain('bottom lines gone');
+  });
+});
+
+/**
+ * #5746: the Tibetan notice is chosen by the engine that read the page. The
+ * 09-01 "cannot read cursive Tibetan" warning described Gemini reads; on a
+ * page BDRC Yigdzin read it was false, and its own evidence named Yigdzin's
+ * family as the good reader.
+ */
+describe('transcriptionReliability', () => {
+  const kangyur = { language: 'Tibetan', title: 'Neyphug Kanjur rGyud Tsha' };
+  const nyingma = { language: 'Tibetan', title: 'rNying ma rgyud \'bum' };
+  const yig = { ocr: { model: 'bdrc-yigdzin-v1' } };
+
+  it('is silent outside Tibetan', () => {
+    expect(transcriptionReliability({ language: 'Latin' }, yig)).toBeNull();
+  });
+
+  it('keeps the strong warning for a Gemini-read page and for a book with no page', () => {
+    expect(transcriptionReliability(kangyur, { ocr: { model: 'gemini-3.1-flash-lite' } })?.level).toBe('unreliable');
+    expect(transcriptionReliability(kangyur)?.level).toBe('unreliable');
+  });
+
+  it('gives a Yigdzin page the measured caution on a Kangyur volume', () => {
+    const f = transcriptionReliability(kangyur, yig);
+    expect(f?.level).toBe('caution');
+    expect(f?.message).not.toMatch(/cannot read/);
+    expect(f?.evidence).toMatch(/95%/);
+  });
+
+  it('says accuracy is unknown where there is no reference text', () => {
+    const f = transcriptionReliability(nyingma, yig);
+    expect(f?.level).toBe('caution');
+    expect(f?.message).toMatch(/unknown/);
+  });
+
+  it('matches the Kangyur spellings in our titles', () => {
+    for (const title of ['Kangyur vol. 3', 'Neyphug Kanjur', 'bka\' \'gyur', 'Bka\'gyur']) {
+      expect(transcriptionReliability({ language: 'Tibetan', title }, yig)?.message).not.toMatch(/unknown/);
+    }
   });
 });

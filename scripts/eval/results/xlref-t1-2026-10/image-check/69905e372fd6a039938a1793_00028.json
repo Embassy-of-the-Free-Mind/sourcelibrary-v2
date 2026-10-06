@@ -1,0 +1,33 @@
+{
+ "id": "69905e372fd6a039938a1793_00028",
+ "image_legible": true,
+ "ocr_word_errors": 0,
+ "ocr_words_approx": 190,
+ "ocr_errors": [
+  {
+   "image": "Celōytes",
+   "ocr": "Chelōytes",
+   "effect_on_english": "none (spelling only; 'Chelonite')"
+  }
+ ],
+ "page_cause": "page_seam",
+ "causes": [
+  {
+   "finding": "minor: 'he grants the power of prophesying' and note guessing 'stone or spirit'; subject is the stone Esmundus (previous page)",
+   "cause": "page_seam",
+   "image": "rios: ꝛ ꝓphetizationez dat: ꝛ interpretationez omniuz somnioꝛuz",
+   "ocr": "rios: ꝛ ꝓphetizationez dat: ꝛ interpretationez om-niuz somnioꝛuz",
+   "english": "...ries: and he grants the power of prophesying"
+  },
+  {
+   "finding": "minor T7: 'and as the moon grows until it finally wanes' vs garbled 'crescens monoytes in vltia descendente'",
+   "cause": "translation",
+   "image": "nisi lueens prima cuz fuerit accēsa: ꝛ crescens monoytes in vltia descēdēte",
+   "ocr": "nisi lueens prima cuz fuerit accēsa: ꝛ crescens monoytes in vltia descē-dēte",
+   "english": "unless the first light has been kindled: and as the moon grows"
+  }
+ ],
+ "share_of_served_error_from_ocr": "none",
+ "fixed_transcription_written": false,
+ "note": "Large clear 1478 gothic; the OCR is a diplomatic transcription (abbreviations kept as signs, not expanded) and agrees with the image word for word, including the printer's own corrupt 'lueens ... monoytes' (the 16th-c. English reference leaves the same phrase in Latin). The two minor findings are the page-top sentence continued from the previous page and a smoothed rendering of text that is corrupt in the print itself."
+}

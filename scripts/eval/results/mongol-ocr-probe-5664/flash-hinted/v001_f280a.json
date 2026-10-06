@@ -1,0 +1,45 @@
+{
+ "key": "v001_f280a",
+ "arm": "hinted",
+ "page": {
+  "key": "v001_f280a",
+  "vol": 1,
+  "book_id": "6ac0295271182233c6fc40ab",
+  "page_number": 559,
+  "page_label": "f. 280a",
+  "bdrc_canvas": "I1PD1102690562.jpg",
+  "ligeti": "Mng1.9",
+  "mng_span": "Ka Dandr a 273b–311b",
+  "toh": "D417",
+  "skt": "Hevajratantrarāja-nāma",
+  "derge_vol": 80,
+  "derge_file": "080_རྒྱུད་འབུམ།_ང.txt"
+ },
+ "model": "gemini-3-flash-preview",
+ "ocr_prompt": {
+  "arm": "hinted",
+  "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "content_hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "translation_prompt": {
+  "name": "Standard Translation",
+  "version": "13",
+  "hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>559</page-num>\n<meta>Beijing Kanjur woodblock print. Margin contains Chinese text: 聖 第八十八卷 十八 (Sheng, Vol. 88, Folio 18).</meta>\n\n<margin>\n聖\n第八十八卷\n十八\n</margin>\n\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\nᠪᠡᠶ᠎ᠡ ᠮᠡᠳᠡᠷᠡᠯ ᠪᠦᠭᠦᠳᠡ ᠰᠡᠳᠭᠢᠯ ᠦ᠋ᠨ ᠪᠠᠢᠳᠠᠯ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠠᠷᠢᠵᠤ ᠃\n\n<vocab>ᠪᠡᠶ᠎ᠡ (body), ᠮᠡᠳᠡᠷᠡᠯ (sensation/consciousness), ᠰᠡᠳᠭᠢᠯ (mind), ᠪᠦᠭᠦᠳᠡ (all)</vocab>",
+  "finishReason": "STOP",
+  "inputTokens": 4341,
+  "outputTokens": 4022,
+  "cost_usd": 0.0142365
+ },
+ "translation": {
+  "text": "<margin>\nHoly\nVolume 88\n18\n</margin>\n\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\nAll sensations of the body and all states of the mind are held by the body.\n\n<summary>This page consists of a repetitive liturgical or meditative formula concerning the relationship between physical sensation, mental states, and the physical body. It likely serves as a mantra or a foundational philosophical statement within the Kanjur canon.</summary>\n<keywords>body, sensation, mind, consciousness, meditation, repetitive formula, Kanjur</keywords>",
+  "finishReason": "STOP",
+  "inputTokens": 5752,
+  "outputTokens": 539,
+  "cost_usd": 0.004493
+ }
+}
