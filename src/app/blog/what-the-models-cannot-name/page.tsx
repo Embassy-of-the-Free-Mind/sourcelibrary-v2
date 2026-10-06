@@ -9,9 +9,9 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 // 41f1da023). The language and genre intervals are Wilson intervals on the counts in the run-2
 // file. Nothing below was measured for this note; if a number is not in those, it does not belong here.
 
-const HERO = 'https://images.sourcelibrary.org/archived/69e7ab6f5f1a22ab19a989fc/2.jpg';
+const HERO = 'https://images.sourcelibrary.org/artwork/art-raphael-raphael-after-heraclitus.jpg';
 const HERO_ALT =
-  'Three folios of a Tibetan manuscript biography of bsTan ’dzin rab rgyas, from Thadrak Temple, Bhutan, photographed beside a colour card and a measuring tape.';
+  'After Raphael, Heraclitus: a bearded philosopher leans on a stone block, his hand resting on a sheet of writing.';
 
 const TITLE = 'What the Models Cannot Name';
 const DESCRIPTION =
