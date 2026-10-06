@@ -17,6 +17,11 @@
  * fabricated image — a different picture is not the picture the caption
  * describes — so we drop the embed and leave the prose.
  *
+ * A "grounding edit" replaces an exact span of the streamed text — a dropped
+ * sentence, an unsupported quote's quotation marks, an attached page citation,
+ * a rewritten image caption. The checks that produce them live in
+ * src/lib/embassy/grounding.ts (#5904).
+ *
  * Client-safe: no server imports.
  */
 
@@ -148,6 +153,27 @@ function isOwnImageHost(url: string): boolean {
   } catch {
     return false;
   }
+}
+
+/**
+ * Apply the grounding pass's edits (src/lib/embassy/grounding.ts, #5904): each
+ * `find` is an exact substring of the streamed text, the edits are in document
+ * order, and each is searched for only after the previous one — so an answer
+ * that repeats a sentence has each copy edited by its own edit, never twice.
+ * An edit whose text is not found is skipped. Apply BEFORE citation fixes and
+ * image removals: the edits were computed on the raw streamed text.
+ */
+export function applyGroundingEdits(text: string, edits: Array<{ find: string; replace: string }>): string {
+  let out = text;
+  let cursor = 0;
+  for (const edit of edits ?? []) {
+    if (!edit?.find) continue;
+    const at = out.indexOf(edit.find, cursor);
+    if (at === -1) continue;
+    out = out.slice(0, at) + edit.replace + out.slice(at + edit.find.length);
+    cursor = at + edit.replace.length;
+  }
+  return out;
 }
 
 export function applyImageRemovals(text: string, removeUrls: string[]): string {

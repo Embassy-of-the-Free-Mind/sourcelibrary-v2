@@ -1,5 +1,6 @@
 import { getDb } from '@/lib/mongodb';
 import {
+  applyGroundingEdits,
   findCitedArtworkSlugs,
   findCitedBookLinks,
   findCitedCollectionSlugs,
@@ -7,6 +8,14 @@ import {
   priorTurnImageUrls,
   type CitationFix,
 } from '@/lib/embassy/citation-fixes';
+import {
+  groundAnswer,
+  supportCitations,
+  type GroundingEdit,
+  type GroundingImage,
+  type GroundingPage,
+  type GroundingReport,
+} from '@/lib/embassy/grounding';
 import { PREFIXED_LOCALES, localePath, type Locale } from '@/lib/locale-path';
 import { semanticSiteSearch } from '@/lib/semantic-search';
 import { esCollectionSlugs } from '@/lib/es-collections';
@@ -57,6 +66,14 @@ const TEMPERATURE = 0.7;
 const MAX_REPAIR_SLUGS = 12;
 /** Wall-clock ceiling on the whole repair loop, guarding the turn's deadline. */
 const REPAIR_BUDGET_MS = 5000;
+/** Search hits whose ±1 neighbouring pages are handed over with the results (#5904). */
+const NEIGHBOUR_TOP_K = 3;
+/** Characters of each neighbouring page shown to the model. */
+const NEIGHBOUR_CHARS = 700;
+/** Pages loaded as support text for the grounding pass; the rest are not loaded. */
+const GROUNDING_MAX_PAGES = 150;
+/** Wall-clock ceiling on loading that support text; past it the pass judges nothing. */
+const GROUNDING_BUDGET_MS = 4000;
 
 // ── Types ─────────────────────────────────────────────────────────────
 
@@ -94,7 +111,7 @@ export interface ResearchNotebook {
 }
 
 export interface LibrarianStep {
-  type: 'thinking' | 'tool_call' | 'tool_result' | 'choices' | 'text' | 'sources' | 'notebook_update' | 'usage' | 'citation_fixes' | 'image_removals';
+  type: 'thinking' | 'tool_call' | 'tool_result' | 'choices' | 'text' | 'sources' | 'notebook_update' | 'usage' | 'citation_fixes' | 'image_removals' | 'grounding_edits';
   text?: string;
   // Link repairs computed after citation verification — the route and the
   // streaming clients apply these to the already-emitted text (see
@@ -102,6 +119,11 @@ export interface LibrarianStep {
   fixes?: CitationFix[];
   // Fabricated `![](url)` embeds to strip from the already-emitted text.
   removeUrls?: string[];
+  // Grounding edits (#5904): exact spans of the already-emitted text and their
+  // replacements, applied BEFORE fixes and removals (applyGroundingEdits).
+  edits?: GroundingEdit[];
+  // What the grounding pass found — server-side accounting, never sent to the client.
+  report?: GroundingReport;
   name?: string;
   query?: string;
   summary?: string;
@@ -242,7 +264,7 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
     parameters: {
       type: Type.OBJECT,
       properties: {
-        book_id: { type: Type.STRING, description: 'Book ID from a previous search result' },
+        book_id: { type: Type.STRING, description: 'The book\'s slug (the part after /book/ in a result URL) or its ID' },
         page_number: { type: Type.NUMBER, description: 'Page number to read' },
       },
       required: ['book_id', 'page_number'],
@@ -281,7 +303,7 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
     parameters: {
       type: Type.OBJECT,
       properties: {
-        book_id: { type: Type.STRING, description: 'Book ID' },
+        book_id: { type: Type.STRING, description: 'The book\'s slug (the part after /book/ in a result URL) or its ID' },
         center_page: { type: Type.NUMBER, description: 'The page number to center on' },
         range: { type: Type.NUMBER, description: 'Pages before and after to include (default 2, max 3)' },
       },
@@ -471,26 +493,49 @@ async function executeSearchWikipedia(query: string): Promise<{ title: string; s
   } catch { return null; }
 }
 
-async function executeGetBookPage(bookId: string, pageNumber: number, lang: Locale = 'en'): Promise<{
-  text: string; textLang: Locale; originalText?: string; bookTitle: string; bookAuthor: string; bookSlug?: string;
+/**
+ * The book a page tool was asked for. The model is handed SLUG urls
+ * (`/book/<slug>/page-number/N`) and never a bare id, so it passes the slug —
+ * and an id-only lookup answered "Page not found" to every one of the 7
+ * page-reading calls in the #5904 baseline. Resolves the way /book/<x> does:
+ * id, then slug, then slug alias.
+ */
+async function resolveBookRef(ref: string): Promise<{ id: string; title?: string; display_title?: string; author?: string; slug?: string } | null> {
+  if (!ref) return null;
+  const db = await getDb();
+  const projection = { id: 1, title: 1, display_title: 1, author: 1, slug: 1 };
+  const byId = await db.collection('books').findOne({ id: ref }, { projection });
+  if (byId) return byId as unknown as { id: string };
+  const bySlug = await db.collection('books').findOne({ $or: [{ slug: ref }, { slug_aliases: ref }] }, { projection });
+  return (bySlug as unknown as { id: string } | null) ?? null;
+}
+
+async function executeGetBookPage(bookRef: string, pageNumber: number, lang: Locale = 'en'): Promise<{
+  bookId: string; text: string; textLang: Locale; originalText?: string; bookTitle: string; bookAuthor: string; bookSlug?: string;
 } | null> {
+  const book = await resolveBookRef(bookRef);
+  if (!book) return null;
+  const bookId = book.id;
   const db = await getDb();
   const page = await db.collection('pages').findOne(
     { book_id: bookId, page_number: pageNumber },
     { projection: { 'translation.data': 1, 'ocr.data': 1 } },
   );
   if (!page) return null;
-  const book = await db.collection('books').findOne({ id: bookId }, { projection: { title: 1, display_title: 1, author: 1, slug: 1 } });
   const localized = (await loadLocalizedTexts(lang, [{ book_id: bookId, page_number: pageNumber }])).get(`${bookId}:${pageNumber}`);
   return {
+    bookId,
     text: localized ?? page.translation?.data ?? '', textLang: localized ? lang : 'en', originalText: page.ocr?.data?.slice(0, 800),
-    bookTitle: book?.display_title || book?.title || 'Unknown', bookAuthor: book?.author || 'Unknown', bookSlug: book?.slug,
+    bookTitle: book.display_title || book.title || 'Unknown', bookAuthor: book.author || 'Unknown', bookSlug: book.slug,
   };
 }
 
-async function executeReadNearbyPages(bookId: string, centerPage: number, range = 2, lang: Locale = 'en'): Promise<{
-  pages: Array<{ page_number: number; text: string; textLang: Locale }>; bookTitle: string; bookAuthor: string; bookSlug?: string;
+async function executeReadNearbyPages(bookRef: string, centerPage: number, range = 2, lang: Locale = 'en'): Promise<{
+  bookId?: string; pages: Array<{ page_number: number; text: string; textLang: Locale }>; bookTitle: string; bookAuthor: string; bookSlug?: string;
 }> {
+  const book = await resolveBookRef(bookRef);
+  if (!book) return { pages: [], bookTitle: 'Unknown', bookAuthor: 'Unknown' };
+  const bookId = book.id;
   const db = await getDb();
   const r = Math.min(range, 3);
   const pages = await db.collection('pages')
@@ -499,18 +544,56 @@ async function executeReadNearbyPages(bookId: string, centerPage: number, range 
     .sort({ page_number: 1 })
     .toArray();
 
-  const book = await db.collection('books').findOne({ id: bookId }, { projection: { title: 1, display_title: 1, author: 1, slug: 1 } });
   const localized = await loadLocalizedTexts(lang, pages.map(p => ({ book_id: bookId, page_number: p.page_number })));
 
   return {
+    bookId,
     pages: pages.map(p => {
       const local = localized.get(`${bookId}:${p.page_number}`);
       return { page_number: p.page_number, text: (local ?? p.translation?.data ?? '').slice(0, 1000), textLang: (local ? lang : 'en') as Locale };
     }),
-    bookTitle: book?.display_title || book?.title || 'Unknown',
-    bookAuthor: book?.author || 'Unknown',
-    bookSlug: book?.slug,
+    bookTitle: book.display_title || book.title || 'Unknown',
+    bookAuthor: book.author || 'Unknown',
+    bookSlug: book.slug,
   };
+}
+
+/**
+ * The ±1 pages around the top search hits (#5904). The answer that cited
+ * Monconys p.51 never saw p.52, "Explication du Fourneau" — the diagram and key
+ * of the very regulator it was describing. One query per book; pages already
+ * among the passages are skipped.
+ */
+async function loadNeighbourPages(
+  passages: Array<{ book_id: string; page_number: number }>,
+  lang: Locale,
+): Promise<Array<{ book_id: string; page_number: number; text: string }>> {
+  const have = new Set(passages.map(p => `${p.book_id}:${p.page_number}`));
+  const want = new Map<string, Set<number>>();
+  for (const p of passages.slice(0, NEIGHBOUR_TOP_K)) {
+    for (const n of [p.page_number - 1, p.page_number + 1]) {
+      if (n < 1 || have.has(`${p.book_id}:${n}`)) continue;
+      if (!want.has(p.book_id)) want.set(p.book_id, new Set());
+      want.get(p.book_id)!.add(n);
+    }
+  }
+  if (want.size === 0) return [];
+  const db = await getDb();
+  const rows = await db.collection('pages')
+    .find({ $or: [...want].map(([book_id, ps]) => ({ book_id, page_number: { $in: [...ps] } })) })
+    .project({ book_id: 1, page_number: 1, 'translation.data': 1 })
+    .maxTimeMS(3000)
+    .toArray()
+    .catch(() => [] as Document[]);
+  const localized = await loadLocalizedTexts(lang, rows.map(r => ({ book_id: r.book_id, page_number: r.page_number }))).catch(() => new Map<string, string>());
+  return rows
+    .map(r => ({
+      book_id: r.book_id as string,
+      page_number: r.page_number as number,
+      text: (localized.get(`${r.book_id}:${r.page_number}`) ?? r.translation?.data ?? '') as string,
+    }))
+    .filter(r => r.text.trim())
+    .sort((a, b) => a.book_id.localeCompare(b.book_id) || a.page_number - b.page_number);
 }
 
 // Terms that appear in virtually every gallery row (every entry IS an
@@ -525,7 +608,7 @@ const IMAGE_QUERY_NOISE = new Set([
 ]);
 
 async function executeSearchImages(query: string, bookId?: string): Promise<{
-  images: Array<{ id: string; imageUrl: string; description: string; bookTitle: string; bookAuthor: string; bookSlug?: string; pageNumber: number; type?: string }>;
+  images: Array<{ id: string; imageUrl: string; description: string; bookId?: string; bookTitle: string; bookAuthor: string; bookSlug?: string; pageNumber: number; type?: string }>;
   clipUnavailable: boolean;
 }> {
   // Use CLIP visual search via the gallery API for text-to-image matching
@@ -647,6 +730,7 @@ async function executeSearchImages(query: string, bookId?: string): Promise<{
       id: img.id || `${img.page_id}-${img.detection_index}`,
       imageUrl: img.image_url,
       description: (img.museum_description || img.description || '').slice(0, 300),
+      bookId: img.book_id,
       bookTitle: img.book_title || 'Unknown',
       bookAuthor: img.book_author || 'Unknown',
       bookSlug: img.book_slug,
@@ -936,7 +1020,15 @@ async function executeTool(
   threadId?: string,
   collectionContext?: string | null,
   lang: Locale = 'en',
-): Promise<{ result: unknown; step: LibrarianStep; sources?: SourceCard[] }> {
+): Promise<{
+  result: unknown;
+  step: LibrarianStep;
+  sources?: SourceCard[];
+  /** Pages whose text the model was shown, by resolved book id — the grounding support set. */
+  retrievedPages?: Array<{ bookId: string; page: number }>;
+  /** Images the model may embed, with their own book/page/description — the caption check reads these. */
+  images?: GroundingImage[];
+}> {
   const base = siteBase(lang);
   switch (name) {
     case 'search':
@@ -992,6 +1084,19 @@ async function executeTool(
           context += `\n--- ${p.bookTitle}${editionTag(p)} by ${p.bookAuthor}, Page ${p.page_number} (${url})${langTag} ---\n${p.text}\n`;
         }
       }
+      // The pages either side of the strongest hits: a passage often continues
+      // over the page break, and a plate's key is often the facing page.
+      const neighbours = data.passages.length > 0 ? await loadNeighbourPages(data.passages, lang).catch(() => []) : [];
+      if (neighbours.length > 0) {
+        const meta = new Map(data.passages.map(p => [p.book_id, p]));
+        context += '\nNeighbouring pages of the top passages (same books — read these before concluding a page lacks something):\n';
+        for (const n of neighbours) {
+          const m = meta.get(n.book_id);
+          const url = `${base}/book/${m?.bookSlug || n.book_id}/page-number/${n.page_number}`;
+          const text = n.text.length > NEIGHBOUR_CHARS ? `${n.text.slice(0, NEIGHBOUR_CHARS)}…` : n.text;
+          context += `\n--- ${m?.bookTitle ?? 'Same book'}, Page ${n.page_number} (${url}) ---\n${text}\n`;
+        }
+      }
       if (totalFound === 0) context = 'No results found for this query.';
 
       const sources: SourceCard[] = data.passages.map(p => ({
@@ -1005,6 +1110,7 @@ async function executeTool(
         step: { type: 'tool_result', name: 'search', query, found: totalFound,
           summary: totalFound > 0 ? `Found ${data.passages.length} passages across ${data.books.length} books${focusNote}` : `No results${focusNote}` },
         sources,
+        retrievedPages: neighbours.map(n => ({ bookId: n.book_id, page: n.page_number })),
       };
     }
 
@@ -1078,6 +1184,7 @@ async function executeTool(
         result: result ? { found: 1, text: result.text, textLanguage: LANG_NAMES[result.textLang], originalText: result.originalText, bookTitle: result.bookTitle } : { found: 0, text: 'Page not found.' },
         step: { type: 'tool_result', name: 'get_book_page', query: `p.${pageNumber}`, found: result ? 1 : 0,
           summary: result ? `Read page ${pageNumber} of ${result.bookTitle}` : 'Page not found' },
+        retrievedPages: result ? [{ bookId: result.bookId, page: Number(pageNumber) }] : [],
       };
     }
 
@@ -1095,6 +1202,7 @@ async function executeTool(
         result: { found: result.pages.length, context, bookTitle: result.bookTitle },
         step: { type: 'tool_result', name: 'read_nearby_pages', query: `pp.${centerPage - range}-${centerPage + range}`,
           found: result.pages.length, summary: `Read ${result.pages.length} pages from ${result.bookTitle}` },
+        retrievedPages: result.bookId ? result.pages.map(p => ({ bookId: result.bookId!, page: p.page_number })) : [],
       };
     }
 
@@ -1125,6 +1233,10 @@ async function executeTool(
         result: { found: images.length, clipUnavailable, context, images: images.map(i => ({ id: i.id, url: i.imageUrl, description: i.description.slice(0, 100), bookTitle: i.bookTitle })) },
         step: { type: 'tool_result', name: 'search_images', query, found: images.length,
           summary: images.length > 0 ? `Found ${images.length} illustrations` : (clipUnavailable ? 'Visual search unavailable' : 'No images found') },
+        images: images.filter(i => i.imageUrl).map(i => ({
+          url: i.imageUrl, bookId: i.bookId, bookSlug: i.bookSlug, bookTitle: i.bookTitle, bookAuthor: i.bookAuthor,
+          page: i.pageNumber, type: i.type, description: i.description,
+        })),
       };
     }
 
@@ -1195,6 +1307,12 @@ async function executeTool(
         result: { found: artworks.length, context, artworks: artworks.slice(0, 6).map(a => ({ title: a.display_title || a.title, author: a.author, thumbnail: imageFor(a), period: a.period, genre: a.genre })) },
         step: { type: 'tool_result', name: 'search_artworks', query, found: artworks.length,
           summary: artworks.length > 0 ? `Found ${artworks.length} artworks` : 'No artworks found' },
+        // An artwork is its own record: no book page to link, so its caption
+        // names the work and the artist (the title carries both forms).
+        images: artworks.flatMap(a => [imageFor(a), a.thumbnail_url].filter((u): u is string => !!u).map(url => ({
+          url, bookTitle: [a.display_title, a.title].filter(Boolean).join(' / ') || 'Untitled', bookAuthor: a.author || undefined,
+          description: a.summary_text?.split('\n').filter(l => l.trim() && !/^[A-Z][a-z]+:/.test(l)).slice(1, 3).join(' ') || undefined,
+        }))),
       };
     }
 
@@ -1392,7 +1510,10 @@ ${collectionSection}## Formatting
 - Link authors to their author pages ONLY with the author link supplied in the tool results — never a self-built /author/... URL. No tool-supplied link → plain text name.
 - Link books to their book pages: *[Book Title](https://sourcelibrary.org/book/slug)* — slug copied exactly from a tool result this turn, never built from the title
 - Link quotes to specific pages: [Page 42](https://sourcelibrary.org/book/slug?page=42)
-- Make clear when speaking from general knowledge vs. specific texts`;
+- Make clear when speaking from general knowledge vs. specific texts
+- Every paragraph or list item that reports what a book says ends with the link to the page it came from. A reader cannot tell a cited claim from an uncited one unless the link is there.
+- Quotation marks and numbers are claims about a page. Put words in quotation marks only if you read them on a page this turn, and give a measure, sum or count ("280 pounds", "twenty times an hour") only if a page or tool result gave it to you — otherwise paraphrase without quotation marks and leave the number out. Answers are checked against the pages you read after you write them; an unsupported quote loses its quotation marks and an unsupported number loses its sentence.
+- Under every embedded image, write one italic caption line saying what the image is and where it is from: its own book and page, as the tool gave them. Never caption a picture as illustrating something its own book does not say — an athanor from Khunrath's book is Khunrath's athanor, not Drebbel's oven, however closely it resembles it.`;
 }
 
 // ── Agentic Streaming ─────────────────────────────────────────────────
@@ -1484,6 +1605,11 @@ export async function* streamAgenticResponse(
   // (search hits + get_book_page + read_nearby_pages). Used to ground the
   // page citations in the final answer — see verifyCitations.
   const retrievedPageKeys = new Set<string>();
+  // Images a tool described this turn (url → own book/page/description), for
+  // the caption check, and the raw text of every tool result, for the number
+  // and quote checks (#5904).
+  const groundingImages = new Map<string, GroundingImage>();
+  const toolSupportText: string[] = [];
   // Every image URL any tool returned this turn, plus every embed that survived
   // an earlier answer in this thread (see priorTurnImageUrls). The model may
   // embed these and nothing else; anything else in an `![](...)` is fabricated.
@@ -1605,20 +1731,19 @@ export async function* streamAgenticResponse(
 
     for (let i = 0; i < functionCalls.length; i++) {
       const fc = (functionCalls[i] as { functionCall: { name: string; args: Record<string, unknown> } }).functionCall;
-      const { result, step, sources } = toolResults[i];
+      const { result, step, sources, retrievedPages, images } = toolResults[i];
 
       yield step;
       collectSources(sources);
       collectToolImageUrls(result);
-
-      // Pages read directly (not via search) also count as grounded.
-      if (fc.name === 'get_book_page' && fc.args?.book_id != null && fc.args?.page_number != null) {
-        retrievedPageKeys.add(`${fc.args.book_id}:${Number(fc.args.page_number)}`);
-      } else if (fc.name === 'read_nearby_pages' && fc.args?.book_id != null && fc.args?.center_page != null) {
-        const center = Number(fc.args.center_page);
-        const r = Math.min(Number(fc.args.range) || 2, 3);
-        for (let p = center - r; p <= center + r; p++) retrievedPageKeys.add(`${fc.args.book_id}:${p}`);
-      }
+      // Pages read directly (get_book_page, read_nearby_pages) and the
+      // neighbours handed over with search results also count as grounded —
+      // keyed by the RESOLVED book id, since the model passes slugs.
+      for (const p of retrievedPages ?? []) retrievedPageKeys.add(`${p.bookId}:${p.page}`);
+      for (const img of images ?? []) if (!groundingImages.has(img.url)) groundingImages.set(img.url, img);
+      // Everything else the model read this turn (catalogue counts, Wikipedia,
+      // site pages): a number or quote found here is not invented.
+      try { toolSupportText.push(JSON.stringify(result)); } catch { /* unserialisable: skip */ }
 
       responseParts.push({ functionResponse: { name: fc.name, response: result } });
 
@@ -1720,10 +1845,38 @@ export async function* streamAgenticResponse(
     yield { type: 'sources', sources: deduplicateSources(allSources) };
   }
 
+  // Grounding pass (#5904): quotes and quantities must be on a page the
+  // Librarian read, a factual paragraph gets the page it came from, and a
+  // caption says what its image is. The edits go out BEFORE citation fixes and
+  // image removals — they were computed on the raw streamed text, and the
+  // clients apply events in arrival order. Fails open: if the support text
+  // cannot be loaded in time, nothing is judged.
+  const rawText = generatedChunks.join('');
+  const supportPages = await withTimeout(
+    loadGroundingSupport(rawText, history, retrievedPageKeys, [...groundingImages.values()], lang).catch(err => {
+      console.warn('[Librarian] grounding support failed:', err instanceof Error ? err.message : err);
+      return null;
+    }),
+    GROUNDING_BUDGET_MS,
+    null,
+  );
+  const grounding = groundAnswer({
+    text: rawText,
+    pages: supportPages ?? [],
+    supportLoaded: supportPages !== null,
+    extraSupport: toolSupportText.join('\n'),
+    images: [...groundingImages.values()],
+    question: userMessage,
+    siteBase: siteBase(lang),
+  });
+  if (grounding.edits.length > 0) {
+    yield { type: 'grounding_edits', edits: grounding.edits, report: grounding.report };
+  }
+
   // Verify links against the DB — but only over what the model wrote THIS
-  // turn. Scanning the whole `contents` array would re-flag (and re-disclaim)
-  // every broken link from earlier answers in the thread.
-  const fullText = generatedChunks.join('');
+  // turn, as the reader now sees it. Scanning the whole `contents` array would
+  // re-flag (and re-disclaim) every broken link from earlier answers in the thread.
+  const fullText = applyGroundingEdits(rawText, grounding.edits);
 
   const { brokenBooks, hiddenBooks, unverifiedPages, brokenLinks } = await verifyCitations(fullText, retrievedPageKeys);
 
@@ -1783,6 +1936,12 @@ export async function* streamAgenticResponse(
       `${fabricatedImages.length === 1 ? 'an illustration I could not source, which I removed' : `${fabricatedImages.length} illustrations I could not source, which I removed`}`,
     );
   }
+  const removedStatements = grounding.report.sentencesDropped + grounding.report.blockquotesRemoved;
+  if (removedStatements > 0) {
+    clauses.push(
+      `${removedStatements === 1 ? 'a statement' : `${removedStatements} statements`} I could not find on any page I read, which I removed`,
+    );
+  }
   if (unverifiedPages.length > 0) {
     clauses.push(
       `${unverifiedPages.length === 1 ? 'a page citation' : `${unverifiedPages.length} page citations`} I couldn't confirm against the source (${unverifiedPages.map(p => `\`${p}\``).join(', ')}) — please open the linked page to check the quote before relying on it`,
@@ -1816,6 +1975,19 @@ export async function* streamAgenticResponse(
     } catch { /* best effort */ }
   }
 
+  if (grounding.edits.length > 0) {
+    console.warn('[Librarian] grounding edits', grounding.report);
+    try {
+      const db = await getDb();
+      await db.collection('embassy_errors').insertOne({
+        kind: 'grounding',
+        threadId: threadId ?? null,
+        report: grounding.report,
+        createdAt: new Date(),
+      });
+    } catch { /* best effort */ }
+  }
+
   // Persist AI cost for the librarian — the heaviest request-path AI feature
   // (agentic, several Gemini calls per turn). usage is already summed across
   // rounds; thinking tokens bill at the output rate, so fold them in for cost.
@@ -1829,6 +2001,81 @@ export async function* streamAgenticResponse(
   });
 
   yield { type: 'usage', usage };
+}
+
+/**
+ * The support text for the grounding pass (#5904): every page the Librarian
+ * read this turn, every page the answer cites, every page an EARLIER answer in
+ * the thread cites (thread scope — the model may quote on turn three what it
+ * read on turn one), and the page each described image sits on. Original text
+ * is included with the translation, so a Latin quotation can match its page;
+ * in a Spanish conversation the Spanish edition is included too.
+ *
+ * Returns null-free pages only; throws on a DB error (the caller fails open).
+ */
+async function loadGroundingSupport(
+  text: string,
+  history: ConversationMessage[],
+  retrievedPageKeys: Set<string>,
+  images: GroundingImage[],
+  lang: Locale,
+): Promise<GroundingPage[]> {
+  const db = await getDb();
+  const cited = supportCitations(text, history);
+  const slugs = [...new Set(cited.map(c => c.slug))];
+  const slugToId = new Map<string, string>();
+  if (slugs.length > 0) {
+    const rows = await db.collection('books')
+      .find({ $or: [{ slug: { $in: slugs } }, { slug_aliases: { $in: slugs } }, { id: { $in: slugs } }] })
+      .project({ id: 1, slug: 1, slug_aliases: 1 })
+      .maxTimeMS(3000)
+      .toArray();
+    for (const b of rows) {
+      for (const k of [b.slug, b.id, ...(Array.isArray(b.slug_aliases) ? b.slug_aliases : [])]) if (typeof k === 'string') slugToId.set(k, b.id);
+    }
+  }
+  const keys = new Set<string>(retrievedPageKeys);
+  for (const c of cited) {
+    const id = slugToId.get(c.slug);
+    if (id) keys.add(`${id}:${c.page}`);
+  }
+  for (const img of images) if (img.bookId && img.page) keys.add(`${img.bookId}:${img.page}`);
+
+  const byBook = new Map<string, number[]>();
+  for (const key of [...keys].slice(0, GROUNDING_MAX_PAGES)) {
+    const at = key.lastIndexOf(':');
+    const page = Number(key.slice(at + 1));
+    if (!Number.isFinite(page)) continue;
+    const bookId = key.slice(0, at);
+    byBook.set(bookId, [...(byBook.get(bookId) ?? []), page]);
+  }
+  if (byBook.size === 0) return [];
+
+  const localField = lang === 'en' ? null : `translations.${lang}.data`;
+  const [pages, books] = await Promise.all([
+    db.collection('pages')
+      .find({ $or: [...byBook].map(([book_id, ps]) => ({ book_id, page_number: { $in: ps } })) })
+      .project({ book_id: 1, page_number: 1, 'translation.data': 1, 'ocr.data': 1, ...(localField ? { [localField]: 1 } : {}) })
+      .maxTimeMS(3000)
+      .toArray(),
+    db.collection('books')
+      .find({ id: { $in: [...byBook.keys()] } })
+      .project({ id: 1, slug: 1, title: 1, display_title: 1 })
+      .maxTimeMS(3000)
+      .toArray(),
+  ]);
+  const meta = new Map(books.map(b => [b.id as string, b]));
+  return pages.map(p => {
+    const b = meta.get(p.book_id);
+    const local = localField ? (p.translations as Record<string, { data?: string }> | undefined)?.[lang]?.data : undefined;
+    return {
+      bookId: p.book_id as string,
+      bookSlug: (b?.slug || p.book_id) as string,
+      bookTitle: (b?.display_title || b?.title || '') as string,
+      page: p.page_number as number,
+      text: [p.translation?.data, p.ocr?.data, local].filter((t): t is string => typeof t === 'string').join('\n'),
+    };
+  });
 }
 
 /**

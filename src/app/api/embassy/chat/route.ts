@@ -4,7 +4,7 @@ import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { streamAgenticResponse, type LibrarianStep, type SourceCard } from '@/lib/embassy/librarian';
-import { applyCitationFixes, applyImageRemovals, type CitationFix } from '@/lib/embassy/citation-fixes';
+import { applyCitationFixes, applyGroundingEdits, applyImageRemovals, type CitationFix } from '@/lib/embassy/citation-fixes';
 import { checkRateLimitShared, getClientIp } from '@/lib/rate-limit';
 import { isBareGreeting, greetingReply, isKeepalivePing, pingReply, duplicateReply, sameMessage } from '@/lib/embassy/greeting';
 import { findReplayableAnswer, firstMessageKey, type ReplayableAnswer } from '@/lib/embassy/replay-cache';
@@ -39,6 +39,10 @@ const ANON_DAILY_CEILING = Number(process.env.LIBRARIAN_ANON_DAILY_CEILING) || 5
  *                    apply these rewrites to the streamed text
  *   image_removals — fabricated image embeds; clients strip them from the
  *                    streamed text
+ *   grounding_edits — span rewrites from the grounding pass (#5904): dropped
+ *                    unsupported sentences, unquoted paraphrases, attached
+ *                    page citations, corrected captions. Sent BEFORE
+ *                    citation_fixes / image_removals; clients apply in order
  *   done       — stream complete
  *   error      — something went wrong
  */
@@ -239,10 +243,12 @@ export async function POST(request: NextRequest) {
   let citationFixes: CitationFix[] = [];
   // Fabricated image embeds to strip, same round trip as citationFixes.
   let imageRemovals: string[] = [];
+  // Grounding edits (#5904), computed on the raw streamed text — applied first.
+  let groundingEdits: Array<{ find: string; replace: string }> = [];
 
-  /** The text as the reader should see it: links repaired, dead images dropped. */
+  /** The text as the reader should see it: grounded, links repaired, dead images dropped. */
   const finalizeText = (text: string) =>
-    applyImageRemovals(applyCitationFixes(text, citationFixes), imageRemovals);
+    applyImageRemovals(applyCitationFixes(applyGroundingEdits(text, groundingEdits), citationFixes), imageRemovals);
 
   /** One canned step in place of the agentic loop — greeting, ping, or duplicate. */
   const cannedText: string | null = bareGreeting
@@ -314,6 +320,8 @@ export async function POST(request: NextRequest) {
           citationFixes = step.fixes || [];
         } else if (step.type === 'image_removals') {
           imageRemovals = step.removeUrls || [];
+        } else if (step.type === 'grounding_edits') {
+          groundingEdits = step.edits || [];
         } else if (step.type === 'usage') {
           turnUsage = step.usage ?? null;
         }
@@ -433,6 +441,12 @@ export async function POST(request: NextRequest) {
           case 'image_removals':
             imageRemovals = step.removeUrls || [];
             await send({ type: 'image_removals', removeUrls: step.removeUrls });
+            break;
+
+          case 'grounding_edits':
+            // The report is server-side accounting; only the edits go out.
+            groundingEdits = step.edits || [];
+            await send({ type: 'grounding_edits', edits: (step.edits || []).map(e => ({ find: e.find, replace: e.replace })) });
             break;
 
           case 'notebook_update':
