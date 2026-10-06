@@ -30,6 +30,7 @@ import { illegibleGateEnabled, illegibleSourceVerdict } from './illegible-source
 import { stripMarkupTags } from './strip-markup-tags.mjs';
 import { repairAnnotationTags } from './annotation-tag-repair.mjs';
 import { guardStray, strayScriptVerdict, STRAY_SCRIPT_REASON } from './stray-script.mjs';
+import { guardTranslationText } from './translation-write-guard.mjs';
 export { STRAY_SCRIPT_REASON };
 import { CLEAR_STALE_UNSET } from './stale-translation.mjs';
 import { resolvePageBreak, lookaheadSnippet, LOOKAHEAD_CLAUSE } from './page-break-devices.mjs';
@@ -1021,6 +1022,8 @@ export async function recordRefusedTranslation(db, page, text, reason, { jobId, 
  * the caller does not hold it. With no OCR at all the gate does not judge.
  * @returns {Promise<{ text: string, refused: boolean, reason?: string }>}
  */
+export { guardTranslationText };
+
 export async function strayScriptGate(db, page, text, { ocr, language, jobId, model, dryRun = false } = {}) {
   if (!text || !guardStray(text).length) return { text, refused: false };
   let source = ocr ?? page?.ocr?.data;
@@ -1150,7 +1153,8 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
     response: call.response,
   });
   // T3 (#5148): a translation the model wrapped whole in <meta>/<note> renders as an empty page.
-  let clean = unwrapHiddenTranslation({ ocr: page?.ocr?.data, tr: sanitizeTranslationTags(text), type: page?.page_type }).text;
+  // #5902: the model's definitions inside or bracketed after a <term> are stored as <note>s.
+  let clean = unwrapHiddenTranslation({ ocr: page?.ocr?.data, tr: guardTranslationText(sanitizeTranslationTags(text)), type: page?.page_type }).text;
   // #5734: the measured Korean 그-for-"that" is repaired here; any other stray script is refused below.
   const stray = strayScriptVerdict(clean, { ocr: page?.ocr?.data, language: book?.language });
   clean = stray.text;

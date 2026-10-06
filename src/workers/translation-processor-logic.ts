@@ -8,6 +8,7 @@ import { classifyError } from '@/lib/errors';
 import { extractTranslationMetadata, propagateOcrWarnings } from '@/lib/translation-metadata';
 import { createRevision } from '@/lib/page-revisions';
 import { isHumanEditedTranslation, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate } from '@/lib/translate-write';
+import { guardTranslationText } from '@/lib/translation-write-guard';
 import { STRAY_SCRIPT_REASON } from '@/lib/stray-script';
 import { sendWriteResult } from '@/lib/sqs-client';
 import { retryDbWrite } from '@/lib/retry-utils';
@@ -301,7 +302,7 @@ export async function processTranslationPage(message: PageProcessingMessage) {
       });
       return;
     }
-    finalTranslation = stray.text;
+    finalTranslation = guardTranslationText(stray.text); // #5902: term definitions → <note>
 
     // DIRECT WRITE: Save translation to page — required for FIFO context chain.
     // The next page in the queue reads this translation for continuity.

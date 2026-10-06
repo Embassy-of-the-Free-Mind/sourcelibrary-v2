@@ -11,6 +11,7 @@ import { engineFromBatchJob, notRecorded, ocrProvenance, translationProvenance }
 /** Provenance identity of this route (#4613). */
 const ROUTE_CALL_SITE = 'src/app/api/batch-save/route.ts';
 import { CLEAR_STALE_UNSET, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate } from '@/lib/translate-write';
+import { guardTranslationText } from '@/lib/translation-write-guard';
 
 export const maxDuration = 300;
 
@@ -168,7 +169,7 @@ export const POST = withAuth(async (request, session) => {
               failed++;
               continue;
             }
-            text = stray.text;
+            text = guardTranslationText(stray.text); // #5902: term definitions → <note>
             await createRevision(pageId!, 'translation', job.id);
             await db.collection('pages').updateOne(
               { id: pageId },

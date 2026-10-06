@@ -10,6 +10,7 @@ import { PROMPT_VERSION, SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts
 import { createRevision } from '@/lib/page-revisions';
 import { isTruncatedCandidate } from '@/lib/truncated-response';
 import { findHumanEditedPageIds, findPendingBatchJob, CLEAR_STALE_UNSET, hasNoTranslatableBody, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate } from '@/lib/translate-write';
+import { guardTranslationText } from '@/lib/translation-write-guard';
 import { withAuth } from '@/lib/auth-helpers';
 import { batchJobProvenance, engineFromBatchJob, notRecorded, translationProvenance, contentHash, codeVersion, host } from '@/lib/write-provenance';
 
@@ -423,7 +424,7 @@ export const GET = withAuth(async (request, session, context) => {
               failCount++;
               continue;
             }
-            text = stray.text;
+            text = guardTranslationText(stray.text); // #5902: term definitions → <note>
           }
 
           if (text) {
