@@ -128,7 +128,8 @@ const ARCHAIC_NORMALIZE = {
   viennae: 'Vienna', viennæ: 'Vienna', viennaeaustriae: 'Vienna', viennæaustriæ: 'Vienna', pragae: 'Prague', pragæ: 'Prague',
   cracoviae: 'Kraków', cracoviæ: 'Kraków', antverpiae: 'Antwerp', antverpiæ: 'Antwerp', bruxellis: 'Brussels', duaci: 'Douai', lovanii: 'Leuven',
   coloniae: 'Cologne', coloniæ: 'Cologne', coloniaeagrippinae: 'Cologne', coloniæagrippinæ: 'Cologne', coloniaeubiorum: 'Cologne',
-  coloniaeallobrogum: 'Geneva', coloniæallobrogum: 'Geneva', genevae: 'Geneva', genevæ: 'Geneva', tiguri: 'Zurich', bernae: 'Bern',
+  coloniaebrandenburgicae: 'Berlin', coloniæbrandenburgicæ: 'Berlin', coloniaemarchicae: 'Berlin', coloniaadspream: 'Berlin', coloniaeadspream: 'Berlin',
+  coloniaemunatianae: 'Basel', coloniaeallobrogum: 'Geneva', coloniæallobrogum: 'Geneva', genevae: 'Geneva', genevæ: 'Geneva', tiguri: 'Zurich', bernae: 'Bern',
   romae: 'Rome', romæ: 'Rome', florentiae: 'Florence', florentiæ: 'Florence', mediolani: 'Milan', neapoli: 'Naples', bononiae: 'Bologna', bononiæ: 'Bologna',
   patavii: 'Padua', taurini: 'Turin', ticini: 'Pavia', matriti: 'Madrid', hispali: 'Seville', salmanticae: 'Salamanca', olisipone: 'Lisbon', ulyssipone: 'Lisbon',
   rothomagi: 'Rouen', tolosae: 'Toulouse', spirae: 'Speyer', heidelbergae: 'Heidelberg', herbornae: 'Herborn', hanoviae: 'Hanau',
@@ -423,6 +424,9 @@ for (const v of ['London', 'Paris', 'Amsterdam', 'Leipzig', 'Leiden', 'Venice', 
 TITLE_CITY.set('leipzig', 'Leipzig'); TITLE_CITY.set('nürnberg', 'Nuremberg'); TITLE_CITY.set('nurnberg', 'Nuremberg');
 TITLE_CITY.set('köln', 'Cologne'); TITLE_CITY.set('wien', 'Vienna'); TITLE_CITY.set('straßburg', 'Strasbourg'); TITLE_CITY.set('strassburg', 'Strasbourg');
 
+/** What may precede the city on an imprint line: "Gedruckt zu", "Printed at", "A", "In". */
+const LINE_LEAD = /^(?:(?:gedruckt|getruckt|gedrukt|printed|imprimé|imprime|impressum|impressa|excusum|stampat[ao]|impresso)\s+)?(?:(?:zu|zů|at|à|a|in|tot|te|en)\s+)?/i;
+
 const STRIP_BLOCKS = /<(image-desc|vocab|meta|note|warning|insert|header|footer|marginalia|gloss|footnote|scan-quality|language|script|page-type|page-num|sig|translator-note|annotation)\b[^>]*>[\s\S]*?<\/\1>/gi;
 
 /**
@@ -443,23 +447,38 @@ function titlePageImprint(ocr) {
   for (let c = 0; c < centred.length; c++) {
     const { i, text } = centred[c];
     if (NOT_AN_IMPRINT.test(text) || CITY_NOT_PRINTED.test(text)) continue;
-    const words = [...text.matchAll(/[\p{L}]+/gu)];
+    // The city must OPEN the line (after an optional imprint verb/preposition):
+    // a city mid-line is a bookseller's or patron's address ("Bibliopolae
+    // Lipsiae", "prostant apud … Londini"), and a line opening "&"/"et" is a
+    // co-publisher continuation, not the imprint (round-1 precision check, #6022).
+    const lead = text.replace(/^[^\p{L}&]+/u, '').match(LINE_LEAD);
+    const rest = text.replace(/^[^\p{L}&]+/u, '').slice(lead[0].length);
+    const words = [...rest.matchAll(/[\p{L}]+/gu)];
     let hit = null;
-    for (let w = 0; w < words.length && !hit; w++) {
-      for (let n = Math.min(3, words.length - w); n >= 1 && !hit; n--) {
-        const seq = words.slice(w, w + n);
+    if (words.length && words[0].index <= 1) {
+      for (let n = Math.min(3, words.length); n >= 1 && !hit; n--) {
+        const seq = words.slice(0, n);
         if (!/^\p{Lu}/u.test(seq[0][0])) continue; // a proper noun, capitalised
         const label = TITLE_CITY.get(placeKey(seq.map((x) => x[0]).join('')));
-        if (label) hit = { label, at: seq[0].index, word: seq.map((x) => x[0]).join(' ') };
+        if (label) hit = { label, at: lead[0].length + seq[0].index, word: seq.map((x) => x[0]).join(' ') };
       }
     }
     if (!hit) continue;
+    // Round 2: "[Leipzig?]" is the OCR model's guess, not print on the page; and a
+    // line continuing "…Bibliopolae" is the bookseller's address, not the press.
+    if (/^[^\p{L}]*\[/u.test(text) || rest.slice(0, words[0].index).includes('[')) continue;
+    const prev = centred[c - 1];
+    if (prev && Math.abs(prev.i - i) <= 2 && /bibliopol\w*[.,]?$/i.test(prev.text)) continue;
     // Keyword on this line, or the adjacent centred line (blank lines allowed).
     const near = [centred[c - 1], centred[c + 1]].filter((x) => x && Math.abs(x.i - i) <= 2);
     const sameLine = IMPRINT_KW.exec(text);
     let ok = sameLine && Math.abs(sameLine.index - hit.at) <= 120;
     if (!ok) ok = near.some((x) => !NOT_AN_IMPRINT.test(x.text) && IMPRINT_KW.test(x.text) && x.text.length + text.length <= 240);
     if (!ok) continue;
+    // Bare "Lugduni" is Lyon, unless "Batavorum" was broken onto the next line or
+    // the officina is the Elzeviers' (Leiden).
+    const around = centred.slice(Math.max(0, c - 1), c + 2).map((x) => x.text).join(' ');
+    if (hit.label === 'Lyon' && /^lugduni$/i.test(hit.word) && /batav|elzevir/i.test(around)) hit.label = 'Leiden';
     best = {
       city: hit.label, word: hit.word, line: text,
       context: centred.slice(Math.max(0, c - 2), c + 3).map((x) => x.text).join(' / '),
@@ -556,9 +575,10 @@ async function laneIa(db, resolver, placed) {
   const todo = books.filter((b) => !placed.has(b.id)).slice(0, LIMIT || undefined);
   const need = [...new Set(todo.map((b) => b.ia_identifier).filter((id) => !(id in iaCache) && /^[\w.-]+$/.test(id)))];
   console.log(`[ia] ${todo.length} candidates, ${need.length} identifiers to fetch (cache ${Object.keys(iaCache).length})`);
-  // Batch through advancedsearch (100 ids per call, ~2 req/s) rather than one
-  // /metadata call per item; ids it does not return are recorded as {} so the
-  // next run does not ask again.
+  // Batch through advancedsearch first (100 ids per call). Items the search
+  // index does not return (Google-Books uploads, many BNC items) still have
+  // metadata, so they get one /metadata call each (~2 req/s). Every answer,
+  // including "nothing", is cached so the next run does not ask again.
   for (let i = 0; i < need.length; i += 100) {
     const batch = need.slice(i, i + 100);
     const q = `identifier:(${batch.join(' OR ')})`;
@@ -575,9 +595,27 @@ async function laneIa(db, resolver, placed) {
     const got = new Map(docs.map((d) => [d.identifier, d]));
     for (const id of batch) {
       const d = got.get(id);
-      iaCache[id] = d ? { imprint: [d.imprint].flat()[0] || null, publisher: [d.publisher].flat()[0] || null } : {};
+      iaCache[id] = d ? { imprint: [d.imprint].flat()[0] || null, publisher: [d.publisher].flat()[0] || null, via: 'search' } : null;
     }
     if ((i / 100) % 20 === 19) { fs.mkdirSync(path.dirname(IA_CACHE), { recursive: true }); fs.writeFileSync(IA_CACHE, JSON.stringify(iaCache)); console.log(`  ${i + 100}/${need.length}`); }
+    await new Promise((res) => setTimeout(res, 500));
+  }
+  const meta = [...new Set(todo.map((b) => b.ia_identifier))].filter((id) => id in iaCache && !iaCache[id]?.via);
+  console.log(`[ia] ${meta.length} identifiers not in the search index → /metadata`);
+  const retried = new Set(); const statuses = {};
+  for (let i = 0; i < meta.length; i++) {
+    const id = meta[i];
+    try {
+      const r = await fetch(`https://archive.org/metadata/${encodeURIComponent(id)}/metadata`, { signal: AbortSignal.timeout(30000), headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)' } });
+      if (r.ok) {
+        const m = (await r.json()).result || {};
+        iaCache[id] = { imprint: [m.imprint].flat()[0] || null, publisher: [m.publisher].flat()[0] || null, via: 'metadata' };
+      } else if (r.status === 429 && !retried.has(id)) {
+        retried.add(id); console.log(`  429 at ${i}; backing off 30s`);
+        await new Promise((res) => setTimeout(res, 30000)); i--; continue;
+      } else statuses[r.status] = (statuses[r.status] || 0) + 1;
+    } catch { statuses.error = (statuses.error || 0) + 1; /* left uncached; retried next run */ }
+    if (i % 100 === 99) { fs.writeFileSync(IA_CACHE, JSON.stringify(iaCache)); console.log(`  ${i + 1}/${meta.length}`, JSON.stringify(statuses)); }
     await new Promise((res) => setTimeout(res, 500));
   }
   fs.mkdirSync(path.dirname(IA_CACHE), { recursive: true });
