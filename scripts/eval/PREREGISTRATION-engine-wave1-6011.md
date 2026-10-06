@@ -67,3 +67,10 @@ Spend is logged on #6011 after each arm. Before each arm the projection (spent +
 ## What this decides
 
 Nothing in production. It places the arms on the Pareto data (`results/engine-wave1-6011/scored`, fed to `build-ocr-pareto.mjs`) and names the wave-2 candidates by the issue's own conditions (Qwen3-VL-32B only if the 8B beats lite on Chinese; GPT-astra only where Opus or Sonnet shows a gain; a Chandra production lane would need the licence question settled).
+
+## Amendment 1 (2026-10-06, before any arm read a bench page)
+
+- **Claude route.** The `ANTHROPIC_API_KEY` on this box returns 401 (all six env-file copies). The Claude arms go through OpenRouter as provided for above (`anthropic/claude-opus-5.5`, `anthropic/claude-sonnet-5.5`, provider order `anthropic`, `allow_fallbacks: false`, OpenRouter's billed `usage.cost` per call). Smoke test on a non-bench image (`latin-1700s-242074-p6`): Opus answered via provider Anthropic, $0.026.
+- **Sonnet thinking.** OpenRouter rejects disabled reasoning on Sonnet 5.5 ("Reasoning is mandatory for this endpoint and cannot be disabled"), so `between_tools` cannot be sent. Sonnet runs adaptive thinking at effort `low`, like Opus; thinking tokens are metered and in $/page.
+- **GPU.** No L4 is obtainable (Scaleway reports L4 `shortage` in every zone that has them, 2026-10-06 16:20Z); the only available GPU is `H100-1-80G` in pl-waw-2 at €2.8665/h. The three GPU arms run there under the same lease watchdog and idle guard, with a hard **3 h** lease and a **$9.50** driver cap (the priced L4 session was $7.3), which keeps the job projection at ≤ $30.
+- **Mistral empty pages.** `runners.mjs` labelled an empty Mistral OCR page `refusal`; it is now `empty`, as this preregistration already counts it.
