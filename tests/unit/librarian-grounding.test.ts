@@ -80,6 +80,18 @@ describe('quotes', () => {
     const c = '> "Leo viridis: i.e., the [green] dragon of the sages."\n— [Page 320](https://sourcelibrary.org/book/pandora/page-number/320)';
     expect(ground(c, { pages: [pandora] }).report.blockquotesRemoved).toBe(1);
   });
+  it('keeps a quotation that runs over a page break, with a term/gloss rendered either way', () => {
+    // Drebbel, Ein kurtzer Tractat pp.17–18 (#5904 after-run): removed before this fix.
+    const p17: GroundingPage = { bookId: 'd', bookSlug: 'tractat', bookTitle: 'Tractat', page: 17,
+      text: 'for just as heat makes air and water subtle, thin, and coarse, so cold makes coarse, shrinks, and presses together, just as we see clearly when we hang an empty glass <term>Retortam</term> <gloss>retort</gloss> with the mouth into a vat with water and place a warm fire under' };
+    const p18: GroundingPage = { bookId: 'd', bookSlug: 'tractat', bookTitle: 'Tractat', page: 18,
+      text: 'So we will see, as soon as the air in the glass begins to become warm, that winds rise out of the mouth of the retort, and that the water becomes full of bubbles.' };
+    const text = '> "just as heat makes air and water subtle, thin, and coarse... we hang an empty glass Retort with the mouth into a vat with water... as soon as the air in the glass begins to become warm, winds rise out of the mouth of the retort"\n— [Page 17](https://sourcelibrary.org/book/tractat/page-number/17)';
+    expect(ground(text, { pages: [p17, p18] }).report.blockquotesRemoved).toBe(0);
+    // One invented fragment among real ones still fails.
+    const bad = '> "just as heat makes air and water subtle, thin, and coarse... and the oven may be opened twenty times an hour without losing its heat"\n— [Page 17](https://sourcelibrary.org/book/tractat/page-number/17)';
+    expect(ground(bad, { pages: [p17, p18] }).report.blockquotesRemoved).toBe(1);
+  });
   it('checks an elided quote fragment by fragment', () => {
     const ok = 'He saw "a furnace that I have seen … 280 pounds of bread in 24 hours" there — [Page 51](https://sourcelibrary.org/book/journal-des-voyages-monconys/page-number/51).';
     expect(ground(ok).report.quotesUnquoted).toBe(0);

@@ -197,8 +197,16 @@ interface SupportIndex {
 const ANNOTATION_ELEMENT = /<(note|margin|meta|summary|keywords|vocab|header|page-num|page-type|language|lang|sig|folio|warning|image-desc|scan-quality|script|columns)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi;
 const ANY_TAG = /<\/?[a-z][a-z-]*(?:\s[^>]*)?\/?>/gi;
 
+/** `<term>Retortam</term> <gloss>retort</gloss>`: a quoter writes one or the other. */
+const TERM_GLOSS = /<term>([\s\S]*?)<\/term>\s*<gloss>([\s\S]*?)<\/gloss>/gi;
+
 function pageReadings(text: string): string[] {
-  return [text.replace(ANY_TAG, ' '), text.replace(ANNOTATION_ELEMENT, ' ').replace(ANY_TAG, ' ')];
+  const bare = text.replace(ANNOTATION_ELEMENT, ' ');
+  return [
+    text.replace(ANY_TAG, ' '),
+    bare.replace(TERM_GLOSS, ' $2 ').replace(ANY_TAG, ' '),
+    bare.replace(TERM_GLOSS, ' $1 ').replace(ANY_TAG, ' '),
+  ];
 }
 
 function buildIndex(pages: GroundingPage[], extra: string): SupportIndex {
@@ -206,7 +214,7 @@ function buildIndex(pages: GroundingPage[], extra: string): SupportIndex {
   const extraWords = foldWords(extra.replace(ANY_TAG, ' '));
   return {
     pageSeqs: readings.flatMap(rs => rs.map(w => ` ${w.join(' ')} `)),
-    pageSets: readings.map(rs => new Set(rs[0])),
+    pageSets: readings.map(rs => new Set(rs.flat())),
     extraSeq: ` ${extraWords.join(' ')} `,
   };
 }
@@ -224,15 +232,25 @@ function checkQuote(quote: string, idx: SupportIndex): QuoteVerdict {
     .filter(f => f.length >= 2 || (f.length === 1 && f[0].length >= 5));
   if (frags.length === 0) return 'exact';
   const seqs = [...idx.pageSeqs, idx.extraSeq];
-  if (frags.every(f => seqs.some(s => s.includes(` ${f.join(' ')} `)))) return 'exact';
-  // A near-verbatim paraphrase only counts for a quote long enough that 80% of
-  // its words landing on ONE page means something. Three words of "a spirit
-  // within a body" are on almost any page — and on the pooled text of every
-  // tool result always (measured: the pooled bag let 3 such quotes through).
-  const words = [...new Set(frags.flat().filter(w => w.length >= 3))];
-  if (words.length < NEAR_MIN_WORDS) return 'unsupported';
-  if (idx.pageSets.some(set => words.filter(w => set.has(w)).length / words.length >= 0.8)) return 'near';
-  return 'unsupported';
+  // Each fragment on its own, the verdict is the weakest: a quotation that
+  // runs over a page break has its fragments on different pages, and one
+  // invented fragment among real ones must still fail.
+  let verdict: QuoteVerdict = 'exact';
+  for (const f of frags) {
+    if (seqs.some(s => s.includes(` ${f.join(' ')} `))) continue;
+    // A near-verbatim fragment (a dropped "that") only counts when it is long
+    // enough that 80% of its words landing on ONE page means something. Three
+    // words of "a spirit within a body" are on almost any page — and on the
+    // pooled text of every tool result always (measured: a pooled bag let 3
+    // such quotes through).
+    const words = [...new Set(f.filter(w => w.length >= 3))];
+    if (words.length >= NEAR_MIN_WORDS && idx.pageSets.some(set => words.filter(w => set.has(w)).length / words.length >= 0.8)) {
+      verdict = 'near';
+      continue;
+    }
+    return 'unsupported';
+  }
+  return verdict;
 }
 
 // ── Numbers ───────────────────────────────────────────────────────────
