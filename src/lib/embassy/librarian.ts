@@ -2052,12 +2052,15 @@ async function loadGroundingSupport(
       for (const k of [b.slug, b.id, ...(Array.isArray(b.slug_aliases) ? b.slug_aliases : [])]) if (typeof k === 'string') slugToId.set(k, b.id);
     }
   }
-  const keys = new Set<string>(retrievedPageKeys);
-  for (const c of cited) {
-    const id = slugToId.get(c.slug);
-    if (id) keys.add(`${id}:${c.page}`);
-  }
+  // Priority order, because the set is capped: the pages the answer cites,
+  // what was read, the pages under the images, then the pages either side of
+  // each cited page — a quotation often runs over the page break.
+  const keys = new Set<string>();
+  const citedIds = cited.map(c => ({ id: slugToId.get(c.slug), page: c.page })).filter((c): c is { id: string; page: number } => !!c.id);
+  for (const c of citedIds) keys.add(`${c.id}:${c.page}`);
+  for (const k of retrievedPageKeys) keys.add(k);
   for (const img of images) if (img.bookId && img.page) keys.add(`${img.bookId}:${img.page}`);
+  for (const c of citedIds) for (const n of [c.page - 1, c.page + 1]) if (n >= 1) keys.add(`${c.id}:${n}`);
 
   const byBook = new Map<string, number[]>();
   for (const key of [...keys].slice(0, GROUNDING_MAX_PAGES)) {
@@ -2101,6 +2104,7 @@ async function loadGroundingSupport(
       bookTitle: (b?.display_title || b?.title || '') as string,
       page: p.page_number as number,
       text: [p.translation?.data, p.ocr?.data, local].filter((t): t is string => typeof t === 'string').join('\n'),
+      parts: [p.translation?.data, p.ocr?.data, local].map(t => (typeof t === 'string' ? t : '')),
     };
   });
   return { pages: supportPages, images: groundedImages };

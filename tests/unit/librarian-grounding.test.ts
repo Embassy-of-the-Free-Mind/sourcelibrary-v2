@@ -92,6 +92,16 @@ describe('quotes', () => {
     const bad = '> "just as heat makes air and water subtle, thin, and coarse... and the oven may be opened twenty times an hour without losing its heat"\n— [Page 17](https://sourcelibrary.org/book/tractat/page-number/17)';
     expect(ground(bad, { pages: [p17, p18] }).report.blockquotesRemoved).toBe(1);
   });
+  it('reads a quotation across the page break, re-joining the hyphenated word', () => {
+    // Deutsches Theatrum Chemicum pp.193–194, the Latin Emerald Tablet (#5904 after-run).
+    const mk = (page: number, ocr: string): GroundingPage => ({ bookId: 't', bookSlug: 'theatrum', bookTitle: 'Theatrum', page, text: ocr, parts: ['', ocr] });
+    const p193 = mk(193, 'Es lautet aber besagte SMARAGDINA TABULA im Lateinischen wie folget:\n> Verum est sine mendacio, certum & verissimum: Quod est inferius, est sicut id quod est supe-');
+    const p194 = mk(194, 'rius, ad perpetranda miracula rei unius. Et sicut omnes res fuerunt ab uno');
+    const text = '> "Verum est sine mendacio, certum & verissimum: Quod est inferius, est sicut id quod est superius, ad perpetranda miracula rei unius."\n— [Page 193](https://sourcelibrary.org/book/theatrum/page-number/193)';
+    expect(ground(text, { pages: [p193, p194] }).report.blockquotesRemoved).toBe(0);
+    // Without the next page the tail is on no page read.
+    expect(ground(text, { pages: [p193] }).report.blockquotesRemoved).toBe(1);
+  });
   it('checks an elided quote fragment by fragment', () => {
     const ok = 'He saw "a furnace that I have seen … 280 pounds of bread in 24 hours" there — [Page 51](https://sourcelibrary.org/book/journal-des-voyages-monconys/page-number/51).';
     expect(ground(ok).report.quotesUnquoted).toBe(0);

@@ -66,6 +66,12 @@ export interface GroundingPage {
   page: number;
   /** Translation + original (+ localized) text of the page. */
   text: string;
+  /**
+   * The same texts kept apart (translation, original, localized), so a
+   * quotation that runs over the page break can be read against the end of
+   * this page joined to the start of the next in the SAME text.
+   */
+  parts?: string[];
 }
 
 export interface GroundingImage {
@@ -209,11 +215,36 @@ function pageReadings(text: string): string[] {
   ];
 }
 
+/** Characters from each side of a page break read as one spread. */
+const SPREAD_CHARS = 2000;
+
+/**
+ * A quotation that runs over the page break — p.193 ends "…quod est supe-",
+ * p.194 begins "rius, ad perpetranda…" — is on neither page alone. For every
+ * consecutive pair in the support set, read the end of one joined to the start
+ * of the next, text by text (translation to translation, original to
+ * original); the fold re-joins the hyphenated word.
+ */
+function spreadReadings(pages: GroundingPage[]): string[] {
+  const byKey = new Map(pages.map(p => [`${p.bookId}:${p.page}`, p]));
+  const out: string[] = [];
+  for (const p of pages) {
+    const next = byKey.get(`${p.bookId}:${p.page + 1}`);
+    if (!next || !p.parts || !next.parts) continue;
+    p.parts.forEach((a, i) => {
+      const b = next.parts?.[i];
+      if (a && b) out.push(...pageReadings(`${a.slice(-SPREAD_CHARS)}\n${b.slice(0, SPREAD_CHARS)}`));
+    });
+  }
+  return out;
+}
+
 function buildIndex(pages: GroundingPage[], extra: string): SupportIndex {
   const readings = pages.map(p => pageReadings(p.text).map(foldWords));
+  const spreads = spreadReadings(pages).map(foldWords);
   const extraWords = foldWords(extra.replace(ANY_TAG, ' '));
   return {
-    pageSeqs: readings.flatMap(rs => rs.map(w => ` ${w.join(' ')} `)),
+    pageSeqs: [...readings.flatMap(rs => rs.map(w => ` ${w.join(' ')} `)), ...spreads.map(w => ` ${w.join(' ')} `)],
     pageSets: readings.map(rs => new Set(rs.flat())),
     extraSeq: ` ${extraWords.join(' ')} `,
   };
