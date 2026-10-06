@@ -10,7 +10,9 @@ import json, glob, os, sys, re
 P, RES = sys.argv[1], sys.argv[2]
 RULE = json.load(open(os.path.join(os.path.dirname(__file__), 'rule.json')))
 # Quotas: the registered top-up, with the two deviations recorded before any arm (Pali: every book that aligns; hidden draw for Persian and Pali, 3 each).
-QUOTA = {'Persian': 18, 'Hebrew': 15, 'Arabic': 10, 'Pali': 99, 'Chinese': 6, 'Sanskrit': 2, 'Persian-hidden': 3, 'Pali-hidden': 3}
+# Hebrew 15 + 1: Lite refused one Hebrew page (Psalm 72, RECITATION, 4 of 4 requests), so it has no Flash - Lite pair; the next aligned
+# book in draw order replaces it (decided before any page was judged).
+QUOTA = {'Persian': 18, 'Hebrew': 16, 'Arabic': 10, 'Pali': 99, 'Chinese': 6, 'Sanskrit': 2, 'Persian-hidden': 3, 'Pali-hidden': 3}
 TRACK = {'Persian': 'T4-topup', 'Hebrew': 'T4-topup', 'Aramaic': 'T4-topup', 'Arabic': 'T4-topup', 'Pali': 'T5-topup', 'Sanskrit': 'T5-topup', 'Chinese': 'T5-topup'}
 STYLE = {'literal', 'free', 'early-modern'}
 records, log, problems = [], {}, []
