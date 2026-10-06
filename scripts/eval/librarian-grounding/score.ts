@@ -30,18 +30,23 @@
  *
  * Usage:
  *   npx tsx --env-file=/root/sourcelibrary/.env.production.local \
- *     scripts/eval/librarian-grounding/score.ts --label=before [--verbose]
+ *     scripts/eval/librarian-grounding/score.ts --label=before [--verbose] [--pre]
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
 import { normalizeNeedle } from '@/lib/align-text';
+import { applyCitationFixes, applyImageRemovals } from '@/lib/embassy/citation-fixes';
 
 const HERE = path.dirname(new URL(import.meta.url).pathname);
 const arg = (name: string) => process.argv.find(a => a.startsWith(`--${name}=`))?.slice(name.length + 3);
 const label = arg('label');
 if (!label) throw new Error('--label=<name> is required');
 const verbose = process.argv.includes('--verbose');
+// --pre: score the answer WITHOUT the grounding edits (link fixes and image
+// removals still applied) — separates what the prompt/tool changes did from
+// what the post-generation pass did.
+const pre = process.argv.includes('--pre');
 
 const fold = (s: string) => normalizeNeedle(s).replace(/\s+/g, ' ');
 const words = (s: string) => (fold(s).match(/[\p{L}\p{N}]+/gu) ?? []);
@@ -205,7 +210,7 @@ async function main() {
     totals.answers++;
     totals.promptTokens += row.usage?.promptTokens ?? 0;
     totals.cost += row.cost ?? 0;
-    const answer: string = row.final;
+    const answer: string = pre ? applyImageRemovals(applyCitationFixes(row.raw, row.fixes ?? []), row.removals ?? []) : row.final;
 
     // Support set: cited pages (±1) + source cards.
     const keys: Array<[string, number]> = [];
@@ -310,7 +315,7 @@ async function main() {
   }
   await client.close();
 
-  console.log(`\n== ${label} ==`);
+  console.log(`\n== ${label}${pre ? ' (pre-grounding)' : ''} ==`);
   console.log('id'.padEnd(20), 'claims uncited  quotes(✗/near)  qty(✗)  yrs(✗)  img(✗)  prompt');
   for (const q of perQ) {
     if (q.error) { console.log(String(q.id).padEnd(20), 'ERROR', q.error); continue; }
@@ -318,7 +323,7 @@ async function main() {
     if (verbose) for (const f of q.flags as string[]) console.log('    ', f);
   }
   console.log('\nTOTALS', JSON.stringify({ ...totals, cost: Number(totals.cost.toFixed(3)) }));
-  fs.writeFileSync(path.join(HERE, 'results', `${label}.score.json`), JSON.stringify({ label, totals, perQ }, null, 2));
+  fs.writeFileSync(path.join(HERE, 'results', `${label}${pre ? '.pre' : ''}.score.json`), JSON.stringify({ label, pre, totals, perQ }, null, 2));
 }
 
 main().catch(err => { console.error(err); process.exit(1); });

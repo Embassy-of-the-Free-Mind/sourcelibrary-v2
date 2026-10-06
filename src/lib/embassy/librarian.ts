@@ -722,8 +722,19 @@ async function executeSearchImages(query: string, bookId?: string): Promise<{
     }
   }
 
+  // The gallery row's book_slug is often empty or stale; the caption needs the
+  // book's live slug so the model can link the picture to its OWN book (#5904:
+  // handed only a title, it linked another edition in 21 of 33 captions).
+  const shown = images.slice(0, 6);
+  const liveSlugs = new Map<string, string>();
+  const ids = [...new Set(shown.map(img => img.book_id).filter((x): x is string => typeof x === 'string'))];
+  if (ids.length > 0) {
+    const rows = await db.collection('books').find({ id: { $in: ids } }).project({ id: 1, slug: 1 }).maxTimeMS(3000).toArray().catch(() => [] as Document[]);
+    for (const r of rows) if (r.slug) liveSlugs.set(r.id, r.slug);
+  }
+
   return {
-    images: images.slice(0, 6).map(img => ({
+    images: shown.map(img => ({
       // Viewer id is the compound `<pageId>-<detectionIndex>` (gallery_images.id),
       // NOT the Mongo ObjectId — /gallery/image/<objectIdHex> can't be parsed
       // by the viewer route and soft-404s.
@@ -733,7 +744,7 @@ async function executeSearchImages(query: string, bookId?: string): Promise<{
       bookId: img.book_id,
       bookTitle: img.book_title || 'Unknown',
       bookAuthor: img.book_author || 'Unknown',
-      bookSlug: img.book_slug,
+      bookSlug: liveSlugs.get(img.book_id) || img.book_slug || undefined,
       pageNumber: img.page_number,
       type: img.type,
     })),
@@ -1216,8 +1227,11 @@ async function executeTool(
         context = 'Images found:\n';
         for (const img of images) {
           const url = `https://sourcelibrary.org/gallery/image/${img.id}`;
+          const book = img.bookSlug || img.bookId;
           context += `\n- **${img.type || 'Image'}** from *${img.bookTitle}* by ${img.bookAuthor}, Page ${img.pageNumber}\n`;
           context += `  Description: ${img.description.slice(0, 300)}\n`;
+          // The picture's OWN book and page — the only book its caption may link.
+          if (book) context += `  Its book: ${base}/book/${book} — its page: ${base}/book/${book}/page-number/${img.pageNumber}\n`;
           context += `  Gallery: ${url}\n`;
           context += `  Image: ${img.imageUrl}\n`;
         }
