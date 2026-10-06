@@ -63,3 +63,19 @@ describe('ParetoCharts.tsx holds no figures', () => {
     expect(code.split('\n').filter(l => re.test(l)).map(l => l.trim().slice(0, 120))).toEqual([]);
   });
 });
+
+describe('the sentence under each chart (#5983)', async () => {
+  const { meaning } = await import('@/app/quality/ParetoCharts');
+  type P = Parameters<typeof meaning>[0];
+  const panels = charts.flatMap(c => c.panels.map(p => [c.id, p as unknown as P] as const));
+  it('says "too few" exactly where there is no frontier', () => {
+    for (const [id, p] of panels) expect(meaning(p).includes('too few to draw a frontier'), id).toBe(!p.frontier);
+  });
+  it('names an unplotted engine that reads better than every plotted one', () => {
+    for (const [id, p] of panels) {
+      const best = Math.max(...p.placed.map(x => x.accuracy!));
+      const better = p.no_cost.filter(x => x.accuracy != null && x.accuracy > best).sort((a, b) => b.accuracy! - a.accuracy!);
+      if (better.length) expect(meaning(p), id).toContain(better[0].label);
+    }
+  });
+});

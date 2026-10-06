@@ -422,7 +422,11 @@ export default function QualityCenterPage() {
             the 95% interval. The dashed ring grows with the share of words that appear nowhere in the reference
             (invented text). The teal line joins the engines no other engine beats on both cost and accuracy. Gemini
             costs are metered Batch spend. A hollow marker (<sup>c</sup> in the table) is a self-hosted engine
-            priced on its inference time alone, which assumes the machine does nothing else, so it reads low.
+            priced on its inference time alone, which assumes the machine does nothing else, so it reads low.{' '}
+            <Link href="/quality/pareto" className="text-amber-800 underline decoration-amber-800/30 underline-offset-2 hover:decoration-amber-800">
+              One per screen, for presenting
+            </Link>
+            .
           </p>
           <ParetoCharts />
           <Source>
