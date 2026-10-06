@@ -1,0 +1,28 @@
+{
+ "packet": 2,
+ "prompt_version": "ai-exposure-6038-v1",
+ "ids": [
+  "decoy-28",
+  "6953ce4d77f38f6761be36fb",
+  "decoy-06",
+  "15c5d8e4-cea3-4b5b-9859-f3528660ecc8",
+  "694f3d6cbe37f451a5324e10",
+  "69b221c408069e96e84310d0",
+  "decoy-25",
+  "6956953e8c9559f6c2db0b6d",
+  "69aec50d3b6ebce5e0ee87d0",
+  "69e8b24d2ff2a8dc09e77295",
+  "decoy-35",
+  "69e13a120dae29249d20b73f",
+  "decoy-32",
+  "6a3c5f3b879008ba7e153836",
+  "25dfd63a-8080-4864-aa79-a0fcb1c76102",
+  "decoy-31",
+  "decoy-39",
+  "69f331a6876dd827cbc4927d",
+  "694f45b610e4f9487722ec40",
+  "694fd600435f95fd0c9556d1",
+  "6970e3689b09d309d780a282"
+ ],
+ "prompt": "You are helping a library find out which of its historical books are already known to AI models. Answer each question from your own memory only. Be honest: \"no\" and \"unknown\" are good answers. Never invent a quotation.\n\nFor each numbered book below, give:\n- \"knows_of\": do you know OF this work — who wrote it and roughly what it is? \"yes\", \"no\" or \"unsure\".\n- \"self_familiar\": did you encounter the TEXT of this work in your training data, not just references to it? Distinguish knowing OF a book from having seen its text. \"yes\", \"no\" or \"unsure\".\n- \"opening\": one sentence from the opening of the work, verbatim, in its original language and script, exactly as you remember it — or the string \"unknown\" if you cannot quote it from memory. Do not translate, paraphrase or reconstruct.\n\nBooks:\n1. Title: رساله در خواص سنگ‌ها و فلزات | Author: میرزا حسن کرمانی | Year: 1650 | Language: Persian\n2. Title: Meditations of Marcus Aurelius (Communings with Himself) | Author: Marcus Aurelius | Year: 1916 | Language: Greek\n3. Title: Commentarius in Psalmum centesimum decimum nonum | Author: Ioannes Caspar Rötelius | Year: 1671 | Language: Latin\n4. Title: Philosophiae Naturalis Principia Mathematica | Author: Isaac Newton | Year: 1687 | Language: Latin\n5. Title: Mercurii Trismegisti Pimander (Ficino translation) | Author: Hermes Trismegistus; Ficino, Marsilio (translator) | Year: 1481 | Language: Latin\n6. Title: Caesar, Commentarii — De Bello Gallico and De Bello Civili (Aldine Press) | Author: Julius Caesar | Year: 1513 | Language: Latin\n7. Title: 金液還真論 | Author: 張道沖 | Year: 1610 | Language: Classical Chinese\n8. Title: The Rhetoric, Poetic, and Nicomachean Ethics of Aristotle | Author: Aristotle | Year: 1908 | Language: English\n9. Title: Ethical Writings of Cicero: De Officiis, De Senectute, De Amicitia | Author: Cicero (trans. Andrew P. Peabody) | Year: 1887 | Language: English\n10. Title: 論語 (Analects) — Chinese Classics Vol. 1 | Author: Confucius (ed. James Legge) | Year: 1861 | Language: Chinese\n11. Title: Tractatus de harmonia mundi interiori | Author: Fridericus Ottonius Brennerus | Year: 1661 | Language: Latin\n12. Title: Bhagavad-Gita, id est Thespesion Melos | Author: August Wilhelm von Schlegel, ed. | Year: 1823 | Language: Sanskrit\n13. Title: योगसारमञ्जरी | Author: वासुदेवभट्ट | Year: 1550 | Language: Sanskrit\n14. Title: 金剛般若波羅蜜經 (vol 1) | Author: 菩提流支 | Language: Chinese\n15. Title: Comento sopra la Commedia di Dante | Author: Cristoforo Landino | Year: 1481 | Language: Italian\n16. Title: रसतत्त्वप्रदीपिका | Author: श्रीकण्ठमिश्र | Year: 1600 | Language: Sanskrit\n17. Title: Annotationes in Picatricem | Author: Caspar Hornfeldius | Year: 1604 | Language: Latin\n18. Title: De imitatione Christi et contemptu omnium vanitatum mundi | Year: 1430 | Language: Latin\n19. Title: Elementa (Elements) | Author: Euclid | Year: 1482 | Language: Latin\n20. Title: Opera Omnia (Complete Works) | Author: Plato (Ficino translation) | Year: 1557 | Language: Latin\n21. Title: Alkoran | Author: Muhammad | Year: 1707 | Language: Dutch\n\nReturn ONLY a JSON array with one object per book, in order: [{\"i\":1,\"knows_of\":\"...\",\"self_familiar\":\"...\",\"opening\":\"...\"}, ...]"
+}

@@ -1,0 +1,24 @@
+{"id":"6953ce4d77f38f6761be36fb","set":"controls","model":"gemini-3.1-flash-lite","judgeable":false,"why":"quote too short","null_score":null,"verified":null}
+{"id":"15c5d8e4-cea3-4b5b-9859-f3528660ecc8","set":"controls","model":"gemini-3.1-flash-lite","judgeable":false,"why":"quote too short","null_score":null,"verified":null}
+{"id":"694f3d6cbe37f451a5324e10","set":"controls","model":"gemini-3.1-flash-lite","judgeable":true,"score":0.786,"qlen":32,"null_score":0.071,"verified":true}
+{"id":"69b221c408069e96e84310d0","set":"controls","model":"gemini-3.1-flash-lite","judgeable":true,"score":0.464,"qlen":32,"null_score":0.071,"verified":false}
+{"id":"6956953e8c9559f6c2db0b6d","set":"controls","model":"gemini-3.1-flash-lite","judgeable":true,"score":0.5,"qlen":152,"null_score":0,"verified":true}
+{"id":"69aec50d3b6ebce5e0ee87d0","set":"controls","model":"gemini-3.1-flash-lite","judgeable":true,"score":0.147,"qlen":204,"null_score":0.173,"verified":false}
+{"id":"69e8b24d2ff2a8dc09e77295","set":"controls","model":"gemini-3.1-flash-lite","judgeable":true,"score":0,"qlen":11,"null_score":0.2,"verified":false}
+{"id":"69e13a120dae29249d20b73f","set":"controls","model":"gemini-3.1-flash-lite","judgeable":true,"score":0,"qlen":22,"null_score":0,"verified":false}
+{"id":"6a3c5f3b879008ba7e153836","set":"controls","model":"gemini-3.1-flash-lite","judgeable":true,"score":1,"qlen":29,"null_score":0.036,"verified":true}
+{"id":"25dfd63a-8080-4864-aa79-a0fcb1c76102","set":"controls","model":"gemini-3.1-flash-lite","judgeable":true,"score":0.474,"qlen":82,"null_score":0.218,"verified":false}
+{"id":"69f331a6876dd827cbc4927d","set":"controls","model":"gemini-3.1-flash-lite","judgeable":true,"score":1,"qlen":45,"null_score":0.39,"verified":true}
+{"id":"694f45b610e4f9487722ec40","set":"controls","model":"gemini-3.1-flash-lite","judgeable":true,"score":0.667,"qlen":25,"null_score":0.429,"verified":true}
+{"id":"694fd600435f95fd0c9556d1","set":"controls","model":"gemini-3.1-flash-lite","judgeable":true,"score":0.808,"qlen":30,"null_score":0,"verified":true}
+{"id":"6970e3689b09d309d780a282","set":"controls","model":"gemini-3.1-flash-lite","judgeable":true,"score":0.73,"qlen":41,"null_score":0.081,"verified":true}
+{"id":"6952e4bc77f38f6761bc7db1","set":"controls","model":"gemini-3.1-flash-lite","judgeable":true,"score":0,"qlen":28,"null_score":0.125,"verified":false}
+{"id":"69937949b0a84a57639645df","set":"controls","model":"gemini-3.1-flash-lite","judgeable":true,"score":0,"qlen":33,"null_score":0.034,"verified":false}
+{"id":"69e8b25c2ff2a8dc09e7773b","set":"controls","model":"gemini-3.1-flash-lite","judgeable":false,"why":"quote too short","null_score":null,"verified":null}
+{"id":"69b3e5f9304c1c6b3950aace","set":"controls","model":"gemini-3.1-flash-lite","judgeable":true,"score":0.03,"qlen":37,"null_score":0.182,"verified":false}
+{"id":"697e23cbcb3f7c9faa3f06a8","set":"controls","model":"gemini-3.1-flash-lite","judgeable":true,"score":0,"qlen":29,"null_score":0,"verified":false}
+{"id":"69924f3609c5da0cf50d73fb","set":"controls","model":"gemini-3.1-flash-lite","judgeable":true,"score":0.188,"qlen":106,"null_score":0.129,"verified":false}
+{"id":"606a74d7-2ac1-420b-924d-de761439fb3f","set":"controls","model":"gemini-3.1-flash-lite","judgeable":true,"score":0.604,"qlen":145,"null_score":0.194,"verified":true}
+{"id":"6955943d7bd6d2cd1d61d196","set":"controls","model":"gemini-3.1-flash-lite","judgeable":true,"score":0.128,"qlen":82,"null_score":0.167,"verified":false}
+{"id":"69ac9bb499d9a0170d090bb2","set":"controls","model":"gemini-3.1-flash-lite","judgeable":true,"score":0.152,"qlen":73,"null_score":0.106,"verified":false}
+{"id":"69b2214608069e96e842f2a2","set":"controls","model":"gemini-3.1-flash-lite","judgeable":true,"score":0,"qlen":142,"null_score":0.19,"verified":false}

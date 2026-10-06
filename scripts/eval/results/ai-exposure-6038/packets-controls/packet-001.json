@@ -1,0 +1,28 @@
+{
+ "packet": 1,
+ "prompt_version": "ai-exposure-6038-v1",
+ "ids": [
+  "decoy-12",
+  "6952e4bc77f38f6761bc7db1",
+  "decoy-14",
+  "decoy-40",
+  "decoy-03",
+  "decoy-09",
+  "69937949b0a84a57639645df",
+  "decoy-30",
+  "69e8b25c2ff2a8dc09e7773b",
+  "69b3e5f9304c1c6b3950aace",
+  "decoy-23",
+  "decoy-27",
+  "decoy-26",
+  "697e23cbcb3f7c9faa3f06a8",
+  "decoy-15",
+  "decoy-16",
+  "decoy-24",
+  "decoy-21",
+  "decoy-34",
+  "decoy-07",
+  "69924f3609c5da0cf50d73fb"
+ ],
+ "prompt": "You are helping a library find out which of its historical books are already known to AI models. Answer each question from your own memory only. Be honest: \"no\" and \"unknown\" are good answers. Never invent a quotation.\n\nFor each numbered book below, give:\n- \"knows_of\": do you know OF this work — who wrote it and roughly what it is? \"yes\", \"no\" or \"unsure\".\n- \"self_familiar\": did you encounter the TEXT of this work in your training data, not just references to it? Distinguish knowing OF a book from having seen its text. \"yes\", \"no\" or \"unsure\".\n- \"opening\": one sentence from the opening of the work, verbatim, in its original language and script, exactly as you remember it — or the string \"unknown\" if you cannot quote it from memory. Do not translate, paraphrase or reconstruct.\n\nBooks:\n1. Title: Neu-eröffnetes Kunst-Cabinet der Natur | Author: Christian Ehrenfried Molitor | Year: 1734 | Language: German\n2. Title: Biblia Hebraica | Author: Various (ed. Michaelis) | Year: 1720 | Language: Hebrew\n3. Title: Trattato della pietra filosofale e delle sue virtù | Author: Giovan Battista Merlotti | Year: 1588 | Language: Italian\n4. Title: De arcanis numerorum Pythagoricis dialogus | Author: Ludovicus Vasselius | Year: 1574 | Language: Latin\n5. Title: Disputatio physica de igne coelesti et terrestri | Author: Henricus Altdorfius | Year: 1642 | Language: Latin\n6. Title: Von der verborgenen Krafft der Kräuter und Steine | Author: Johann Christoph Hellwig von Zeitz | Year: 1687 | Language: German\n7. Title: Homers Odyssey Books XIII-XXIV | Author: Homer | Year: 1890 | Language: Greek\n8. Title: שער הסודות הנעלמים | Author: ר׳ אברהם חיים מליוורנו | Year: 1685 | Language: Hebrew\n9. Title: 道德經 (Dào Dé Jīng) | Author: Laozi | Year: 1842 | Language: Chinese\n10. Title: Aeneid, with marginal glosses from Servius (11th century MS) | Author: Virgil | Year: 1050 | Language: Latin\n11. Title: 易理通微 | Author: 黃世瑾 | Year: 1705 | Language: Chinese\n12. Title: كتاب الأنوار في علم الأحجار | Author: شمس الدين الطرابلسي | Year: 1310 | Language: Arabic\n13. Title: رسالة في أسرار المعادن الخفية | Author: أبو الفضل بن يحيى الحرّاني | Year: 1240 | Language: Arabic\n14. Title: [Greek: Ilias kai Odysseia] Ilias et Ulyssea | Author: Homerus | Year: 1535 | Language: Greek-Latin\n15. Title: Traité de la lumière cachée des métaux | Author: Pierre de Vaucelles | Year: 1636 | Language: French\n16. Title: Le miroir des secrets de nature | Author: Jacques Ourlin | Year: 1611 | Language: French\n17. Title: 醫門鈎玄 | Author: 吳廷芳 | Year: 1663 | Language: Chinese\n18. Title: 養生玄珠集 | Author: 周懷素 | Year: 1592 | Language: Chinese\n19. Title: སྨན་དཔྱད་གསེར་གྱི་ཕྲེང་བ | Author: ཀུན་དགའ་རིན་ཆེན | Year: 1650 | Language: Tibetan\n20. Title: Oratio de laudibus geometriae habita Lipsiae | Author: Georgius Fabricius Pirnensis | Year: 1556 | Language: Latin\n21. Title: On the Nature of Things (De Rerum Natura) | Author: Lucretius (tr. H.A.J. Munro) | Year: 1864 | Language: English\n\nReturn ONLY a JSON array with one object per book, in order: [{\"i\":1,\"knows_of\":\"...\",\"self_familiar\":\"...\",\"opening\":\"...\"}, ...]"
+}
