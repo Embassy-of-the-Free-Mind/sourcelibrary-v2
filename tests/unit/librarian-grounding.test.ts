@@ -66,6 +66,20 @@ describe('quotes', () => {
     expect(ground(text, { extraSupport: extra }).report.quotesUnquoted).toBe(1);
     expect(ground(text, { extraSupport: '{"context":"a talisman is a spirit within a body, says the Picatrix"}' }).report.quotesUnquoted).toBe(0);
   });
+  it('matches a quote against page text that carries markup, ignoring the quoter\'s [brackets]', () => {
+    // Real shapes: Reusner's Pandora lexicon p.320 and Schott's Mechanica p.44 (#5904 after-run).
+    const pandora: GroundingPage = { bookId: 'p', bookSlug: 'pandora', bookTitle: 'Pandora', page: 320,
+      text: 'Lotici: i.e., <term>urina</term> <gloss>urine</gloss>. Leo viridis: i.e., <term>vitriolum</term> <gloss>vitriol</gloss>. Leo: i.e., <term>aurum</term>.' };
+    const schott: GroundingPage = { bookId: 's', bookSlug: 'schott', bookTitle: 'Mechanica', page: 44,
+      text: '<margin>Gaspar Ens</margin> Gaspar Ens, in his *Mathematical Wonder-worker* <note>Original: "Thaumaturgo suo Mathematico."</note>, brings examples from other writers.' };
+    const a = '> "Leo viridis: i.e., vitriolum [vitriol]."\n— [Page 320](https://sourcelibrary.org/book/pandora/page-number/320)';
+    const b = '> "Gaspar Ens, in his *Mathematical Wonder-worker* [Thaumaturgus Mathematicus], brings examples from other writers..."\n— [Page 44](https://sourcelibrary.org/book/schott/page-number/44)';
+    expect(ground(a, { pages: [pandora] }).report.blockquotesRemoved).toBe(0);
+    expect(ground(b, { pages: [schott] }).report.blockquotesRemoved).toBe(0);
+    // …and the bracket rule does not launder an invented quote.
+    const c = '> "Leo viridis: i.e., the [green] dragon of the sages."\n— [Page 320](https://sourcelibrary.org/book/pandora/page-number/320)';
+    expect(ground(c, { pages: [pandora] }).report.blockquotesRemoved).toBe(1);
+  });
   it('checks an elided quote fragment by fragment', () => {
     const ok = 'He saw "a furnace that I have seen … 280 pounds of bread in 24 hours" there — [Page 51](https://sourcelibrary.org/book/journal-des-voyages-monconys/page-number/51).';
     expect(ground(ok).report.quotesUnquoted).toBe(0);

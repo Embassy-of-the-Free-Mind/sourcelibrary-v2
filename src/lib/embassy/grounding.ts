@@ -185,12 +185,28 @@ interface SupportIndex {
   extraSeq: string;
 }
 
+/**
+ * Stored page text carries markup — `<term>vitriolum</term> <gloss>vitriol</gloss>`,
+ * a `<note>` or `<margin>` in mid-sentence. Tag names read as words and a note
+ * splits the sentence it annotates, so a faithful quote fails to match its own
+ * page (measured: 2 of 3 blockquotes removed in one run were exactly this).
+ * Two readings of each page: tags stripped with their content kept, and the
+ * annotation elements dropped whole. Same split as stripAnnotations in
+ * src/lib/semantic-alignment.ts, which is server-only.
+ */
+const ANNOTATION_ELEMENT = /<(note|margin|meta|summary|keywords|vocab|header|page-num|page-type|language|lang|sig|folio|warning|image-desc|scan-quality|script|columns)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi;
+const ANY_TAG = /<\/?[a-z][a-z-]*(?:\s[^>]*)?\/?>/gi;
+
+function pageReadings(text: string): string[] {
+  return [text.replace(ANY_TAG, ' '), text.replace(ANNOTATION_ELEMENT, ' ').replace(ANY_TAG, ' ')];
+}
+
 function buildIndex(pages: GroundingPage[], extra: string): SupportIndex {
-  const pageWords = pages.map(p => foldWords(p.text));
-  const extraWords = foldWords(extra);
+  const readings = pages.map(p => pageReadings(p.text).map(foldWords));
+  const extraWords = foldWords(extra.replace(ANY_TAG, ' '));
   return {
-    pageSeqs: pageWords.map(w => ` ${w.join(' ')} `),
-    pageSets: pageWords.map(w => new Set(w)),
+    pageSeqs: readings.flatMap(rs => rs.map(w => ` ${w.join(' ')} `)),
+    pageSets: readings.map(rs => new Set(rs[0])),
     extraSeq: ` ${extraWords.join(' ')} `,
   };
 }
@@ -201,8 +217,10 @@ type QuoteVerdict = 'exact' | 'near' | 'unsupported';
 const NEAR_MIN_WORDS = 6;
 
 function checkQuote(quote: string, idx: SupportIndex): QuoteVerdict {
+  // Square brackets inside a quotation are the quoter's own insertion
+  // ("vitriolum [vitriol]") — the scholarly convention — and are not checked.
   const frags = quote.split(/\s*(?:\.{3,}|…|\[\s*\.\.\.\s*\])\s*/)
-    .map(f => foldWords(f))
+    .map(f => foldWords(f.replace(/\[[^\]]*\]/g, ' ')))
     .filter(f => f.length >= 2 || (f.length === 1 && f[0].length >= 5));
   if (frags.length === 0) return 'exact';
   const seqs = [...idx.pageSeqs, idx.extraSeq];

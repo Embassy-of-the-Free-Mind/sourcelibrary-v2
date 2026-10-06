@@ -102,7 +102,8 @@ function units(answer: string): Unit[] {
           i++;
         }
         const quote = stripLinks(q.join(' ')).replace(/^[\s"“”«»*_]+|[\s"“”«»*_]+$/g, '');
-        if (quote.trim()) out.push({ kind: 'quote', text: quote, raw: raw.join('\n') });
+        // The grounding pass's own "quotation removed" note is not a quotation.
+        if (quote.trim() && !/^A quotation stood here that I could not find/.test(quote.trim())) out.push({ kind: 'quote', text: quote, raw: raw.join('\n') });
         continue;
       }
       // A list item, or a run of non-list lines, is one claim unit.
@@ -194,7 +195,11 @@ async function main() {
       const docs = await pages.find({ book_id: b, page_number: { $in: ps } }, { projection: { page_number: 1, 'translation.data': 1, 'ocr.data': 1 } }).toArray();
       for (const p of ps) pageCache.set(`${b}:${p}`, null);
       for (const d of docs) {
-        const text = `${d.translation?.data ?? ''}\n${d.ocr?.data ?? ''}`;
+        // Stored text carries markup (<term>, <gloss>, a <note> mid-sentence);
+        // read it with tags stripped AND with annotation elements dropped, or a
+        // faithful quote cannot match its own page.
+        const raw = `${d.translation?.data ?? ''}\n${d.ocr?.data ?? ''}`;
+        const text = `${raw.replace(/<\/?[a-z][a-z-]*(?:\s[^>]*)?\/?>/gi, ' ')}\n${raw.replace(/<(note|margin|meta|summary|keywords|vocab|header|page-num|page-type|language|lang|sig|folio|warning|image-desc|scan-quality|script|columns)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, ' ').replace(/<\/?[a-z][a-z-]*(?:\s[^>]*)?\/?>/gi, ' ')}`;
         const folded = fold(text);
         pageCache.set(`${b}:${d.page_number}`, { key: `${b}:${d.page_number}`, folded, wordSet: new Set(folded.match(/[\p{L}\p{N}]+/gu) ?? []) });
       }
@@ -228,7 +233,8 @@ async function main() {
     let uncited = 0, claimUnits = 0, qs = 0, qExact = 0, qNear = 0, qBad = 0, nums = 0, numBad = 0, quant = 0, quantBad = 0, yrs = 0, yrBad = 0, imgs = 0, capErr = 0;
 
     const quoteVerdict = (quote: string): 'exact' | 'near' | 'unsupported' => {
-      const frags = quote.split(/\s*(?:\.{3,}|…|\[\.\.\.\])\s*/).map(f => f.trim()).filter(f => f.length >= 4);
+      // [brackets] inside a quotation are the quoter's insertion, not the page's words.
+      const frags = quote.split(/\s*(?:\.{3,}|…|\[\.\.\.\])\s*/).map(f => f.replace(/\[[^\]]*\]/g, ' ').replace(/\s+/g, ' ').trim()).filter(f => f.length >= 4);
       if (frags.length && frags.every(f => { const ff = fold(f); return support.some(p => p.folded.includes(ff)); })) return 'exact';
       const ws = [...new Set(words(quote).filter(w => w.length >= 3))];
       if (ws.length && support.some(p => ws.filter(w => p.wordSet.has(w)).length / ws.length >= 0.8)) return 'near';
