@@ -39,6 +39,17 @@ describe('applyGroundingEdits', () => {
     const text = 'A b. A b.';
     expect(applyGroundingEdits(text, [{ find: 'A b.', replace: 'X.' }, { find: 'A b.', replace: 'Y.' }])).toBe('X. Y.');
   });
+  it('applies an edit at its own offset, not at an earlier identical span', () => {
+    const text = 'Salt, sulphur and mercury.\n\n- Salt';
+    const at = text.lastIndexOf('- Salt') + 2;
+    expect(applyGroundingEdits(text, [{ find: 'Salt', replace: 'SALT', at }])).toBe('Salt, sulphur and mercury.\n\n- SALT');
+    // Offsets shift with earlier edits that change length.
+    expect(applyGroundingEdits('aa bb aa', [{ find: 'aa', replace: 'xxxx', at: 0 }, { find: 'aa', replace: 'y', at: 6 }])).toBe('xxxx bb y');
+  });
+  it('keeps a $ in quoted text literal when removing quotation marks', () => {
+    const r = groundAnswer({ text: 'He priced it "at $1 and $& a pound" there.', pages: [MONCONYS_51], supportLoaded: true, images: [], question: 'q', siteBase: BASE });
+    expect(applyGroundingEdits('He priced it "at $1 and $& a pound" there.', r.edits)).toContain('at $1 and $& a pound there');
+  });
   it('skips an edit whose text is not there, and leaves text alone with no edits', () => {
     expect(applyGroundingEdits('hello', [{ find: 'absent', replace: 'z' }])).toBe('hello');
     expect(applyGroundingEdits('hello', [])).toBe('hello');

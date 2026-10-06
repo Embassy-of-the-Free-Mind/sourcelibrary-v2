@@ -93,6 +93,8 @@ export interface GroundingEdit {
   /** Exact substring of the streamed text. Edits are in document order. */
   find: string;
   replace: string;
+  /** Offset of `find` in the streamed text — where to apply it when the text still matches there. */
+  at: number;
   reasons: GroundingEditReason[];
 }
 
@@ -602,7 +604,7 @@ export function groundAnswer(input: GroundingInput): { edits: GroundingEdit[]; r
       if (!problem) return;
       const alt = shortTitle(img.description?.split(/(?<=[.!?])\s/)[0]?.replace(/[.!?]$/, '') || img.bookTitle).replace(/[[\]]/g, '');
       const newEmbed = e.line.replace(`![${e.alt}]`, `![${alt}]`);
-      edits.push({ find: u.raw, replace: `${newEmbed}\n${captionFor(img, siteBase)}`, reasons: ['caption'] });
+      edits.push({ find: u.raw, replace: `${newEmbed}\n${captionFor(img, siteBase)}`, at: u.start, reasons: ['caption'] });
       report.captionsRewritten++;
       report.details.push(`caption ${problem}: ${plainText(caption).slice(0, 120)}`);
       return;
@@ -619,7 +621,7 @@ export function groundAnswer(input: GroundingInput): { edits: GroundingEdit[]; r
       if (quote.split(/\s+/).length < 3 || !isMostlyLatin(quote)) return;
       report.quotesChecked++;
       if (checkQuote(quote, idx) !== 'unsupported') return;
-      edits.push({ find: u.raw, replace: `> ${REMOVED_QUOTE_NOTE}`, reasons: ['drop_blockquote'] });
+      edits.push({ find: u.raw, replace: `> ${REMOVED_QUOTE_NOTE}`, at: u.start, reasons: ['drop_blockquote'] });
       report.blockquotesRemoved++;
       report.details.push(`blockquote not on any page read: ${quote.slice(0, 120)}`);
       return;
@@ -649,7 +651,7 @@ export function groundAnswer(input: GroundingInput): { edits: GroundingEdit[]; r
       // The paragraph cites nothing, no page matches it, and the number it was
       // built around came from nowhere: what is left would hang on a sentence
       // that is gone ("The first eight are…"). It goes whole.
-      edits.push({ find: removal(), replace: '', reasons: ['drop_sentence'] });
+      edits.push({ find: removal(), replace: '', at: u.start, reasons: ['drop_sentence'] });
       return;
     }
     if (reasons.has('drop_sentence')) {
@@ -657,7 +659,7 @@ export function groundAnswer(input: GroundingInput): { edits: GroundingEdit[]; r
       next = kept.join('').replace(/\s+$/, '');
       // Nothing left but the list marker / bold lead-in → the unit goes.
       if (!plainText(next.slice(marker.length)).trim()) {
-        edits.push({ find: removal(), replace: '', reasons: ['drop_sentence'] });
+        edits.push({ find: removal(), replace: '', at: u.start, reasons: ['drop_sentence'] });
         return;
       }
       if (u.kind === 'list' && marker && !next.startsWith(marker.trim().slice(0, 1))) next = marker + next.trimStart();
@@ -669,7 +671,7 @@ export function groundAnswer(input: GroundingInput): { edits: GroundingEdit[]; r
       if (!isMostlyLatin(inner)) continue;
       report.quotesChecked++;
       if (checkQuote(inner, idx) !== 'unsupported') continue;
-      next = next.replace(q.full, q.inner);
+      next = next.replace(q.full, () => q.inner);
       reasons.add('unquote');
       report.quotesUnquoted++;
       report.details.push(`unquoted (not on any page read): ${inner.slice(0, 120)}`);
@@ -697,7 +699,7 @@ export function groundAnswer(input: GroundingInput): { edits: GroundingEdit[]; r
       }
     }
 
-    if (next !== u.raw) edits.push({ find: u.raw, replace: next, reasons: [...reasons] });
+    if (next !== u.raw) edits.push({ find: u.raw, replace: next, at: u.start, reasons: [...reasons] });
   });
 
   return { edits, report };

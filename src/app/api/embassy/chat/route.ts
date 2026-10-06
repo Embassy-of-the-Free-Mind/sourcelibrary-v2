@@ -244,7 +244,7 @@ export async function POST(request: NextRequest) {
   // Fabricated image embeds to strip, same round trip as citationFixes.
   let imageRemovals: string[] = [];
   // Grounding edits (#5904), computed on the raw streamed text — applied first.
-  let groundingEdits: Array<{ find: string; replace: string }> = [];
+  let groundingEdits: Array<{ find: string; replace: string; at?: number }> = [];
 
   /** The text as the reader should see it: grounded, links repaired, dead images dropped. */
   const finalizeText = (text: string) =>
@@ -446,7 +446,7 @@ export async function POST(request: NextRequest) {
           case 'grounding_edits':
             // The report is server-side accounting; only the edits go out.
             groundingEdits = step.edits || [];
-            await send({ type: 'grounding_edits', edits: (step.edits || []).map(e => ({ find: e.find, replace: e.replace })) });
+            await send({ type: 'grounding_edits', edits: (step.edits || []).map(e => ({ find: e.find, replace: e.replace, at: e.at })) });
             break;
 
           case 'notebook_update':
