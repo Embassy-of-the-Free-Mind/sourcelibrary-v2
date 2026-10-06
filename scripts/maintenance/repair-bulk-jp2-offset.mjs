@@ -33,6 +33,9 @@
  *   set -a; source .env.production.local; set +a
  *   node scripts/maintenance/repair-bulk-jp2-offset.mjs --book <id>            # dry run
  *   node scripts/maintenance/repair-bulk-jp2-offset.mjs --book <id> --apply
+ *   … --scandata-proof   also accept books whose shift is proven from IA scandata
+ *                        (retake-heavy scans drift by +2 per excluded leaf pair, so the
+ *                        shift+1 gate reads them as `ambiguous` and refuses them)
  */
 
 import { MongoClient } from 'mongodb';
@@ -42,7 +45,8 @@ import { fileURLToPath } from 'url';
 import { dirname, resolve } from 'path';
 import { uploadPageVariants } from '../workers/lib/display-image.mjs';
 import { preserveObjectVersion } from '../lib/r2-version.mjs';
-import { checkAlignment, hashBuffer, readerVisibleShift } from '../lib/page-alignment.mjs';
+import { checkAlignment, hashBuffer, readerVisibleShift, hammingHex, HASH_MATCH } from '../lib/page-alignment.mjs';
+import { fetchAccessLeaves } from '../lib/ia-access-leaves.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, '../..');
@@ -54,6 +58,8 @@ const APPLY = args.includes('--apply');
 const VERIFY_ONLY = args.includes('--verify-only');
 const FROM_AUDIT = flag('from-audit');       // JSONL from scripts/audit/bulk-archive-alignment.mjs
 const REOCR_ISSUE = flag('reocr-issue');    // issue that owns re-OCR of pages this repair strands (#5309)
+// Opt-in second proof for books whose drift is not a constant +1 (see scandataProvesDrift).
+const SCANDATA_PROOF = args.includes('--scandata-proof');
 const BOOKS = args.reduce((a, x, i) => (x === '--book' ? [...a, args[i + 1]] : a), []);
 // Page fetches per book, against archive.org. Kept modest deliberately: this
 // sweep pulls a quarter-million full-res images and a 429 storm helps nobody.
@@ -130,10 +136,53 @@ async function verifyRepair(db, bookId, { settleMs = 20_000 } = {}) {
   });
 }
 
+/**
+ * Gate 1b (--scandata-proof): prove the drift from the item's own scandata.
+ *
+ * The pre-fix archiver stored page pn as raw zip leaf pn-1, while `photo` is
+ * IIIF n{pn-1} = accessLeaves[pn-1]. In an item with operator retakes excluded
+ * from the access formats those differ by an amount that GROWS through the book
+ * (Apuleius Opera Omnia vol 1: +1 on pages 2-28, +35 by page 300), so the
+ * shift+1 test above votes neither way. Here we predict, per page, which IIIF
+ * image the archive should hold if the bug happened — the access index of raw
+ * leaf pn-1 — and require the archive to match that prediction and NOT the
+ * correct leaf. ≥3 predicted votes and 0 aligned votes, same bar as Gate 1.
+ */
+async function scandataProvesDrift(bulk, iaId, samples = 5) {
+  const access = await fetchAccessLeaves(iaId);
+  if (!access) return { proven: false, detail: 'no scandata' };
+  const accessIndexOf = new Map(access.map((leaf, i) => [leaf, i]));
+  const drifting = bulk.filter(p => {
+    const raw = p.page_number - 1;
+    return access[raw] !== raw && accessIndexOf.has(raw) && IA_LEAF_RE.test(String(p.photo_original || p.photo));
+  });
+  if (drifting.length < 3) return { proven: false, detail: `${drifting.length} pages where scandata predicts drift` };
+  const step = Math.max(1, Math.floor(drifting.length / (samples + 1)));
+  let predicted = 0, aligned = 0, checked = 0;
+  for (let k = 1; k <= samples && k * step < drifting.length; k++) {
+    const p = drifting[k * step];
+    const src = thumbnail(p.photo_original || p.photo);
+    const wrongLeafSrc = src.replace(IA_LEAF_RE, `/page/n${accessIndexOf.get(p.page_number - 1)}`);
+    try {
+      const archived = await hashUrl(p.archived_photo);
+      const dCorrect = hammingHex(archived, await hashUrl(src));
+      const dPredicted = hammingHex(archived, await hashUrl(wrongLeafSrc));
+      checked++;
+      if (dPredicted <= HASH_MATCH && dPredicted < dCorrect) predicted++;
+      else if (dCorrect <= HASH_MATCH && dCorrect < dPredicted) aligned++;
+    } catch { /* an unfetchable sample is no vote either way */ }
+  }
+  return {
+    proven: predicted >= 3 && aligned === 0,
+    detail: `scandata predicts ${drifting.length} drifted pages; sampled ${checked}: ${predicted} match the predicted wrong leaf, ${aligned} match the correct leaf`,
+  };
+}
+
 async function repairBook(db, bookId) {
   const book = await db.collection('books').findOne(
-    { $expr: { $eq: [{ $toString: '$_id' }, bookId] } },
-    { projection: { title: 1, id: 1, visible: 1 } },
+    // id OR _id: 16K books carry a re-minted _id and are invisible to an _id-only lookup.
+    { $or: [{ id: bookId }, { $expr: { $eq: [{ $toString: '$_id' }, bookId] } }] },
+    { projection: { title: 1, id: 1, visible: 1, ia_identifier: 1 } },
   );
   if (!book) return console.log(`[SKIP] ${bookId}: book not found`);
 
@@ -164,7 +213,13 @@ async function repairBook(db, bookId) {
   const v = before.votes || { aligned: 0, shift: 0, checked: 0 };
   const shiftedEnough = v.shift >= 2 && v.aligned === 0;
   if (!shiftedEnough) {
-    return console.log(`  [REFUSE] insufficient evidence of a shift (aligned=${v.aligned} shift=${v.shift} of ${v.checked}) — declining rather than risk rewriting a correct book`);
+    const iaId = book.ia_identifier
+      || String(bulk[0]?.photo_original || bulk[0]?.photo || '').match(/archive\.org\/download\/([^/]+)\/page\//)?.[1];
+    const proof = SCANDATA_PROOF && v.aligned === 0 && iaId ? await scandataProvesDrift(bulk, iaId) : null;
+    if (proof) console.log(`  scandata proof: ${proof.detail}`);
+    if (!proof?.proven) {
+      return console.log(`  [REFUSE] insufficient evidence of a shift (aligned=${v.aligned} shift=${v.shift} of ${v.checked})${SCANDATA_PROOF ? '' : ' — retake-heavy scan? try --scandata-proof'} — declining rather than risk rewriting a correct book`);
+    }
   }
 
   // Gate 2 — the independent witness must exist (see header).
