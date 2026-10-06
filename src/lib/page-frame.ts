@@ -62,6 +62,10 @@ const PAGE_TOLERANCE = 0.12;
 const CHECK_DEPTH = 0.04;
 /** Above this share of lines showing printing past a cut, the frame is refused. */
 const MAX_PRINTED_LINES = 0.15;
+/** The strip just inside each cut must be clean paper: above this share of lines
+ *  with ink in it, the cut is slicing letters (text that runs up to the bed). */
+const MAX_INKED_LINES = 0.1;
+const CUT_STRIP = 0.01;
 /** An image narrower than this (w/h) is a spine or an edge, not a page; a tall
  *  octavo is ~0.6. Its "bed" is the spine's own ends and label. */
 const MIN_PAGE_AR = 0.4;
@@ -248,7 +252,9 @@ export function detectPageFrame(lum: ArrayLike<number>, w: number, h: number): F
   for (let x = l; x <= r; x++) colsIn[x] /= box.h;
   if (inner(rowsIn, t, b) || inner(colsIn, l, r)) return { kind: 'skip', reason: 'multi-leaf' };
 
-  if (printingPastCut(lum, w, h, box, ref, thr)) return { kind: 'skip', reason: 'printing-at-edge' };
+  if (printingPastCut(lum, w, h, box, ref, thr) || inkAtCut(lum, w, h, box, thr)) {
+    return { kind: 'skip', reason: 'printing-at-edge' };
+  }
   return { kind: 'frame', box };
 }
 
@@ -330,4 +336,39 @@ export function frameForImage(f: PageFrame | null, naturalW: number, naturalH: n
 export function framedImageBox(clipW: number, clipH: number, f: PageFrame): { left: number; top: number; width: number; height: number } {
   const width = clipW / f.w, height = clipH / f.h;
   return { left: -f.x * width, top: -f.y * height, width, height };
+}
+
+/** True when the strip just inside a cut side holds ink on too many lines. */
+function inkAtCut(lum: ArrayLike<number>, w: number, h: number, box: PixelBox, thr: number): boolean {
+  const x0 = box.x, x1 = box.x + box.w - 1, y0 = box.y, y1 = box.y + box.h - 1;
+  const dx = Math.max(2, Math.round(w * CUT_STRIP)), dy = Math.max(2, Math.round(h * CUT_STRIP));
+  // [is this side cut, lines along it, pixel(line, depth inward)]
+  const sides: Array<[boolean, number, number, (j: number, d: number) => number]> = [
+    [x0 > 0, box.h, dx, (j, d) => lum[(y0 + j) * w + x0 + d]],
+    [x1 < w - 1, box.h, dx, (j, d) => lum[(y0 + j) * w + x1 - d]],
+    [y0 > 0, box.w, dy, (j, d) => lum[(y0 + d) * w + x0 + j]],
+    [y1 < h - 1, box.w, dy, (j, d) => lum[(y1 - d) * w + x0 + j]],
+  ];
+  for (const [cut, lines, depth, at] of sides) {
+    if (!cut) continue;
+    const dark: boolean[] = [];
+    for (let j = 0; j < lines; j++) {
+      let hit = false;
+      for (let d = 0; d < depth && !hit; d++) hit = at(j, d) < thr;
+      dark.push(hit);
+    }
+    // Sliced letters meet the cut in short dashes, one per line of text; leftover
+    // bed or its shadow runs along it unbroken. Count only the short runs.
+    const longRun = Math.max(3, Math.round(lines * 0.04));
+    let inked = 0;
+    for (let j = 0; j < lines;) {
+      if (!dark[j]) { j++; continue; }
+      let k = j;
+      while (k < lines && dark[k]) k++;
+      if (k - j < longRun) inked += k - j;
+      j = k;
+    }
+    if (inked > lines * MAX_INKED_LINES) return true;
+  }
+  return false;
 }
