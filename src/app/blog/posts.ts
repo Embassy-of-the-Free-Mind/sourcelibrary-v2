@@ -192,9 +192,9 @@ export const posts: BlogPost[] = [
     date: '9 August 2026',
     readTime: '6 min read',
     kind: 'counting',
-    image: 'https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/2.jpg',
+    image: 'https://images.sourcelibrary.org/archived/69b51d1f47b06ecd58183e84/9.jpg',
     imageAlt:
-      "Engraved title page of Zwinger's Theatrum Humanae Vitae, 1604 — the largest encyclopedia of its age.",
+      "Title page of a volume of Zwinger's Theatrum Humanae Vitae, the largest encyclopedia of its age.",
   },
   {
     slug: 'reciting-not-reading',
@@ -330,7 +330,7 @@ export const posts: BlogPost[] = [
     date: '19 June 2026',
     readTime: '11 min read',
     kind: 'counting',
-    image: 'https://images.sourcelibrary.org/archived/69af0a0a4c57359b8d2d0f49/1.jpg',
+    image: 'https://images.sourcelibrary.org/archived/69af0a0a4c57359b8d2d0f49/8.jpg',
     imageAlt: "Title page of Athanasius Kircher's Arithmologia, 1665 — a genuine first English translation",
   },
   {
