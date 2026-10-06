@@ -49,7 +49,26 @@ export function buildInputs(repo = process.cwd()) {
   return [...BASE_INPUTS, ...[...seen].sort()];
 }
 
+/**
+ * Previews are opt-in (Derek, 2026-10-06: "minimize vercel costs everywhere"; #5976). The project
+ * builds one deployment at a time and production goes first, so ~20 previews per 3 h, mostly from
+ * headless job branches nobody opens, queued for an hour and held up hand merges. A preview builds
+ * only when the commit message contains [preview] or the branch starts with preview/. To check a page
+ * without one, run `next dev --webpack` locally (Turbopack rejects the worktree's symlinked
+ * node_modules).
+ */
+export function previewWanted({ ref = '', message = '' } = {}) {
+  return /\[preview\]/i.test(message) || ref.startsWith('preview/');
+}
+
 function main() {
+  // Only git-triggered previews: a CLI `vercel` deploy has no VERCEL_GIT_COMMIT_REF and is always wanted.
+  if (process.env.VERCEL_ENV === 'preview' && process.env.VERCEL_GIT_COMMIT_REF && !previewWanted({
+    ref: process.env.VERCEL_GIT_COMMIT_REF, message: process.env.VERCEL_GIT_COMMIT_MESSAGE,
+  })) {
+    console.log('Skip: previews are opt-in — add [preview] to the commit message or push a preview/ branch (#5976)');
+    process.exit(0);
+  }
   const prev = process.env.VERCEL_GIT_PREVIOUS_SHA || 'HEAD^';
   try {
     execFileSync('git', ['cat-file', '-e', `${prev}^{commit}`]);
