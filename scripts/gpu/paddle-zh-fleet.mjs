@@ -68,7 +68,7 @@ const ISSUE = E('PADDLE_ZH_ISSUE', '5600'), HOLD = E('PADDLE_ZH_HOLD', 'paddle-z
 // WAVES: which of the three waves run (default all; "1,3" = never-read pages + their one retry, previews keep lite).
 // GATE_PAGES: stop cutting new chunks once this many rows are cut (a quality gate is read before it is raised);
 // a box with nothing queued and nothing left to cut is then deleted, not left idle on the meter.
-const WAVES = new Set(E('WAVES', '1,2,3').split(',').map(Number)), GATE_PAGES = +E('GATE_PAGES', 0);
+const WAVES = new Set(E('WAVES', '1,2,3').split(',').map(Number)), GATE_PAGES = +E('GATE_PAGES', 0), GATE_IDLE_MAX_MIN = +E('GATE_IDLE_MAX_MIN', 0);
 const cutRows = () => Object.values(S.chunks).reduce((s, c) => s + (c.rows_cut ?? c.rows ?? 0), 0);
 
 const log = (m) => { const l = `${new Date().toISOString()} [fleet] ${m}`; console.log(l); fs.appendFileSync(F.log, l + '\n'); };
@@ -237,7 +237,18 @@ function tend(box) {
   save();
   if ((b.stall || 0) >= STALL_CYCLES) return deleteBox(box, `no new output for ${b.stall} cycles`);
   feed(box);
-  if (!Object.values(S.chunks).some(c => c.box === box && c.status === 'assigned') && !Object.values(S.chunks).some(c => c.status === 'unassigned')) return deleteBox(box, GATE_PAGES && cutRows() >= GATE_PAGES ? `gate pause at ${GATE_PAGES} rows` : 'nothing left to read');
+  if (!Object.values(S.chunks).some(c => c.box === box && c.status === 'assigned') && !Object.values(S.chunks).some(c => c.status === 'unassigned')) {
+    // a gate pause keeps the box for GATE_IDLE_MAX_MIN (GPU stock can be gone when the gate is raised: 2026-10-06 every
+    // Scaleway L4/L40S zone said `shortage`); past that it is deleted like a finished box
+    if (GATE_PAGES && cutRows() >= GATE_PAGES) {
+      b.gate_idle_since ??= Date.now(); save();
+      const idleMin = (Date.now() - b.gate_idle_since) / 60000;
+      if (idleMin < GATE_IDLE_MAX_MIN) return log(`${box}: gate pause at ${GATE_PAGES} rows — kept idle ${idleMin.toFixed(0)}/${GATE_IDLE_MAX_MIN} min`);
+      return deleteBox(box, `gate pause at ${GATE_PAGES} rows, idle ${idleMin.toFixed(0)} min`);
+    }
+    return deleteBox(box, 'nothing left to read');
+  }
+  delete b.gate_idle_since;
   log(`${box}: ${n} pages out, stall ${b.stall || 0}`);
 }
 function zoneShort(zone) {
