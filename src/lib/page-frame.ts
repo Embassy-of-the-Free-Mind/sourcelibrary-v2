@@ -36,8 +36,9 @@ export interface PageFrame {
  *  page, so no wedge of bed shows beside it. 3: bed must reach the image edge, so
  *  a dark printed band behind a paper margin (a headpiece, a heavy rule) is kept.
  *  4: also trims flat pure-white canvas around a page with toned or textured paper.
- *  5: a stepped page edge no longer leaves a notch of canvas in a corner of the frame. */
-export const PAGE_FRAME_VERSION = 5;
+ *  5: a stepped page edge no longer leaves a notch of canvas in a corner of the frame.
+ *  6: a frame keeping less than MIN_KEEP_AREA of the image is refused. */
+export const PAGE_FRAME_VERSION = 6;
 
 /** Box in pixels of the analysed (usually downsampled) image. */
 export interface PixelBox { x: number; y: number; w: number; h: number }
@@ -53,6 +54,14 @@ const DARK_RATIO = 0.6;
 const INSET = 0.006;
 /** Never keep less than this fraction of either dimension: a dark plate is not a border. */
 const MIN_KEEP = 0.6;
+/** Never keep less than this fraction of the image's AREA. A box that hides
+ *  more is too often not a page with a border: in the 2026-10-06 sweep those were
+ *  a fold-out table cut at the bottom, an open spread cropped to one half, a torn
+ *  leaf with writing at the cut, bindings photographed at an angle, and (keeping
+ *  0.62) a plate of two engravings cut down the middle (#5876). By eye, about 1
+ *  in 13 was bad at 0.55-0.60 and 1 in 54 at 0.60-0.65. A refused frame costs a
+ *  strip of bed; a wrong one costs the content. */
+const MIN_KEEP_AREA = 0.65;
 /** How far in from each edge a border may reach. */
 const EDGE_ZONE = 0.3;
 /** A dark band narrower than this (fraction of the size) is a rule or shadow, not bed. */
@@ -306,6 +315,7 @@ function verdictFor(lum: ArrayLike<number>, w: number, h: number, cuts: Cuts, re
   if (cuts.inset[3]) b -= iy;
   const box = { x: l, y: t, w: r - l + 1, h: b - t + 1 };
   if (box.w < w * MIN_KEEP || box.h < h * MIN_KEEP) return { kind: 'skip', reason: 'too-much' };
+  if (box.w * box.h < w * h * MIN_KEEP_AREA) return { kind: 'skip', reason: 'too-much' };
   if ((box.w * box.h) / (w * h) > 1 - MIN_TRIM_AREA) return { kind: 'clean' };
 
   // Several leaves on one board (palm-leaf pothi frames), or a spread with a dark
@@ -490,6 +500,9 @@ export function usablePageFrame(f: unknown): PageFrame | null {
   const ok = (n: unknown): n is number => typeof n === 'number' && Number.isFinite(n);
   if (!ok(x) || !ok(y) || !ok(w) || !ok(h) || !ok(ar) || !ok(v) || ar <= 0) return null;
   if (x < 0 || y < 0 || w < MIN_KEEP || h < MIN_KEEP || x + w > 1.0001 || y + h > 1.0001) return null;
+  // The read-side half of the area floor: a frame an older detector stored is
+  // not applied either (0.001 of slack for the 4-decimal rounding in toPageFrame).
+  if (w * h < MIN_KEEP_AREA - 0.001) return null;
   return { x, y, w, h, ar, v };
 }
 
