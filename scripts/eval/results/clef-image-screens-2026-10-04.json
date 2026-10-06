@@ -1,0 +1,94 @@
+{
+ "script": {
+  "n": 720,
+  "image_fail": 0,
+  "clef-flash": {
+   "script_acc": "180/720 (25%)",
+   "lang_acc": "662/720 (92%)",
+   "spread_auc": 0.996,
+   "catalogue_lang_wrong": "78/720 (11%)",
+   "clef_right_where_catalogue_wrong": "23/78 (29%)",
+   "script_confusion": {
+    "manuscript→woodblock": 504,
+    "woodblock→woodblock": 18,
+    "illustration→woodblock": 10,
+    "typeset→woodblock": 2,
+    "textless→woodblock": 1,
+    "textless→textless": 5,
+    "typeset→typeset": 141,
+    "manuscript→manuscript": 16,
+    "typeset→manuscript": 20,
+    "manuscript→typeset": 3
+   }
+  },
+  "clef": {
+   "script_acc": "179/720 (25%)",
+   "lang_acc": "685/720 (95%)",
+   "spread_auc": 0.999,
+   "catalogue_lang_wrong": "78/720 (11%)",
+   "clef_right_where_catalogue_wrong": "48/78 (62%)",
+   "script_confusion": {
+    "manuscript→woodblock": 504,
+    "woodblock→woodblock": 18,
+    "illustration→woodblock": 10,
+    "typeset→woodblock": 2,
+    "textless→woodblock": 1,
+    "textless→textless": 5,
+    "typeset→typeset": 140,
+    "typeset→manuscript": 21,
+    "manuscript→manuscript": 16,
+    "manuscript→typeset": 3
+   }
+  }
+ },
+ "blank": {
+  "n": 161,
+  "image_fail": 0,
+  "clef-flash": {
+   "acc_3way": "95/161 (59%)",
+   "auc_ocr_realink_vs_rest": 0.701,
+   "confusion": {
+    "real-ink→show-through": 31,
+    "white→white": 52,
+    "show-through→show-through": 38,
+    "white→show-through": 22,
+    "real-ink→white": 9,
+    "real-ink→real-ink": 5,
+    "show-through→white": 4
+   }
+  },
+  "clef": {
+   "acc_3way": "123/161 (76%)",
+   "auc_ocr_realink_vs_rest": 0.736,
+   "confusion": {
+    "real-ink→real-ink": 16,
+    "white→white": 73,
+    "real-ink→show-through": 18,
+    "show-through→show-through": 34,
+    "show-through→real-ink": 2,
+    "show-through→white": 6,
+    "real-ink→white": 11,
+    "white→show-through": 1
+   }
+  }
+ },
+ "date": {
+  "n": 198,
+  "image_fail": 0,
+  "clef-flash": {
+   "auc_pre1900": 0.936,
+   "acc_decided": "148/173 (86%)",
+   "rule_acc_where_rule_decides": "132/137 (96%)",
+   "clef_acc_where_rule_unknown": "25/36 (69%)",
+   "clef_acc_where_rule_decides": "123/137 (90%)"
+  },
+  "clef": {
+   "auc_pre1900": 0.93,
+   "acc_decided": "147/173 (85%)",
+   "rule_acc_where_rule_decides": "132/137 (96%)",
+   "clef_acc_where_rule_unknown": "25/36 (69%)",
+   "clef_acc_where_rule_decides": "122/137 (89%)"
+  }
+ },
+ "cost_usd": 0.3992
+}

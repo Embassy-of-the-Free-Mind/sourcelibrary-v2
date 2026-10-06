@@ -47,7 +47,7 @@ const BASELINE: string[] = JSON.parse(
 ).files;
 
 /** Current size of the baseline. Lower it when a file leaves; never raise it. */
-const BASELINE_CEILING = 69;
+const BASELINE_CEILING = 68;
 
 function walk(dir: string, out: string[] = []): string[] {
   for (const e of readdirSync(dir)) {

@@ -1,0 +1,1251 @@
+{
+ "rule": "NFD, drop all combining marks, lowercase, Greek-block letters folded to Coptic twins, keep Coptic letters only (no spaces/punctuation/digits/Latin)",
+ "match_threshold": 0.25,
+ "spend_usd": 0.1834,
+ "summary": {
+  "all": {
+   "stored": {
+    "n": 13,
+    "letters": 9364,
+    "pooled_cer": 0.2198,
+    "ci95": [
+     0.0921,
+     0.3939
+    ],
+    "median": 0.0763,
+    "min": 0.0106,
+    "max": 1
+   },
+   "lite": {
+    "n": 15,
+    "letters": 10437,
+    "pooled_cer": 0.3224,
+    "ci95": [
+     0.2144,
+     0.4594
+    ],
+    "median": 0.2583,
+    "min": 0.0836,
+    "max": 0.9222
+   },
+   "flash": {
+    "n": 15,
+    "letters": 10437,
+    "pooled_cer": 0.1012,
+    "ci95": [
+     0.0657,
+     0.1491
+    ],
+    "median": 0.083,
+    "min": 0.0106,
+    "max": 0.3531
+   }
+  },
+  "manuscript": {
+   "stored": {
+    "n": 5,
+    "letters": 4194,
+    "pooled_cer": 0.4146,
+    "ci95": [
+     0.2071,
+     0.7256
+    ],
+    "median": 0.246,
+    "min": 0.1608,
+    "max": 1
+   },
+   "lite": {
+    "n": 7,
+    "letters": 5267,
+    "pooled_cer": 0.3835,
+    "ci95": [
+     0.2495,
+     0.591
+    ],
+    "median": 0.288,
+    "min": 0.2007,
+    "max": 0.9222
+   },
+   "flash": {
+    "n": 7,
+    "letters": 5267,
+    "pooled_cer": 0.1354,
+    "ci95": [
+     0.0778,
+     0.2134
+    ],
+    "median": 0.0857,
+    "min": 0.0663,
+    "max": 0.3531
+   }
+  },
+  "printed": {
+   "stored": {
+    "n": 8,
+    "letters": 5170,
+    "pooled_cer": 0.0617,
+    "ci95": [
+     0.0336,
+     0.0864
+    ],
+    "median": 0.0511,
+    "min": 0.0106,
+    "max": 0.1168
+   },
+   "lite": {
+    "n": 8,
+    "letters": 5170,
+    "pooled_cer": 0.2602,
+    "ci95": [
+     0.1364,
+     0.4427
+    ],
+    "median": 0.182,
+    "min": 0.0836,
+    "max": 0.7595
+   },
+   "flash": {
+    "n": 8,
+    "letters": 5170,
+    "pooled_cer": 0.0663,
+    "ci95": [
+     0.0386,
+     0.1031
+    ],
+    "median": 0.0402,
+    "min": 0.0106,
+    "max": 0.137
+   }
+  },
+  "shared (all three engines)": {
+   "stored": {
+    "n": 13,
+    "letters": 9364,
+    "pooled_cer": 0.2198,
+    "ci95": [
+     0.0938,
+     0.3895
+    ],
+    "median": 0.0763,
+    "min": 0.0106,
+    "max": 1
+   },
+   "lite": {
+    "n": 13,
+    "letters": 9364,
+    "pooled_cer": 0.3091,
+    "ci95": [
+     0.1948,
+     0.462
+    ],
+    "median": 0.2326,
+    "min": 0.0836,
+    "max": 0.9222
+   },
+   "flash": {
+    "n": 13,
+    "letters": 9364,
+    "pooled_cer": 0.0728,
+    "ci95": [
+     0.0544,
+     0.0919
+    ],
+    "median": 0.0714,
+    "min": 0.0106,
+    "max": 0.137
+   }
+  }
+ },
+ "pages": [
+  {
+   "id": "69cf7d86-p63",
+   "title": "Facsimile Edition of the Nag Hammadi Codices: Codex II",
+   "page_number": 63,
+   "stratum": "manuscript",
+   "unit": "page",
+   "corpus": "thomas.gospel",
+   "same_edition": true,
+   "arms": {
+    "stored": {
+     "model": "gemini-3.1-flash-lite-preview",
+     "dist": 208,
+     "cer": 0.23370786516853934,
+     "read_letters": 836,
+     "mix": {
+      "coptic": 0,
+      "greek": 836,
+      "latin": 25
+     }
+    },
+    "lite": {
+     "model": "gemini-3.1-flash-lite",
+     "finish_reason": "STOP",
+     "cost_usd": 0.00247225,
+     "dist": 207,
+     "cer": 0.23258426966292134,
+     "read_letters": 850,
+     "mix": {
+      "coptic": 0,
+      "greek": 850,
+      "latin": 47
+     }
+    },
+    "flash": {
+     "model": "gemini-3-flash-preview",
+     "finish_reason": "STOP",
+     "cost_usd": 0.0106055,
+     "dist": 59,
+     "cer": 0.06629213483146068,
+     "read_letters": 896,
+     "mix": {
+      "coptic": 896,
+      "greek": 0,
+      "latin": 0
+     }
+    }
+   },
+   "ref_letters": 890,
+   "ref_supplied_letters": 10
+  },
+  {
+   "id": "69cf7d86-p69",
+   "title": "Facsimile Edition of the Nag Hammadi Codices: Codex II",
+   "page_number": 69,
+   "stratum": "manuscript",
+   "unit": "page",
+   "corpus": "thomas.gospel",
+   "same_edition": true,
+   "arms": {
+    "stored": {
+     "model": "gemini-3.1-flash-lite-preview",
+     "dist": 137,
+     "cer": 0.1607981220657277,
+     "read_letters": 837,
+     "mix": {
+      "coptic": 31,
+      "greek": 806,
+      "latin": 0
+     }
+    },
+    "lite": {
+     "model": "gemini-3.1-flash-lite",
+     "finish_reason": "STOP",
+     "cost_usd": 0.00253225,
+     "dist": 171,
+     "cer": 0.2007042253521127,
+     "read_letters": 804,
+     "mix": {
+      "coptic": 36,
+      "greek": 768,
+      "latin": 40
+     }
+    },
+    "flash": {
+     "model": "gemini-3-flash-preview",
+     "finish_reason": "STOP",
+     "cost_usd": 0.0107105,
+     "dist": 73,
+     "cer": 0.08568075117370892,
+     "read_letters": 876,
+     "mix": {
+      "coptic": 876,
+      "greek": 0,
+      "latin": 0
+     }
+    }
+   },
+   "ref_letters": 852,
+   "ref_supplied_letters": 8
+  },
+  {
+   "id": "69cf7d86-p75",
+   "title": "Facsimile Edition of the Nag Hammadi Codices: Codex II",
+   "page_number": 75,
+   "stratum": "manuscript",
+   "unit": "page",
+   "corpus": "thomas.gospel",
+   "same_edition": true,
+   "arms": {
+    "stored": {
+     "model": "gemini-3.1-flash-lite-preview",
+     "dist": 326,
+     "cer": 0.42282749675745784,
+     "read_letters": 531,
+     "mix": {
+      "coptic": 0,
+      "greek": 531,
+      "latin": 234
+     }
+    },
+    "lite": {
+     "model": "gemini-3.1-flash-lite",
+     "finish_reason": "STOP",
+     "cost_usd": 0.00219475,
+     "dist": 711,
+     "cer": 0.9221789883268483,
+     "read_letters": 73,
+     "mix": {
+      "coptic": 0,
+      "greek": 73,
+      "latin": 665
+     }
+    },
+    "flash": {
+     "model": "gemini-3-flash-preview",
+     "finish_reason": "STOP",
+     "cost_usd": 0.0097715,
+     "dist": 64,
+     "cer": 0.08300907911802853,
+     "read_letters": 763,
+     "mix": {
+      "coptic": 763,
+      "greek": 0,
+      "latin": 0
+     }
+    }
+   },
+   "ref_letters": 771,
+   "ref_supplied_letters": 24
+  },
+  {
+   "id": "d882e2d7-p36",
+   "title": "Nag Hammadi Codex II",
+   "page_number": 36,
+   "stratum": "manuscript",
+   "unit": "page",
+   "corpus": "thomas.gospel",
+   "same_edition": true,
+   "arms": {
+    "stored": {
+     "model": "gemini-3.1-flash-lite",
+     "dist": 200,
+     "cer": 0.24600246002460024,
+     "read_letters": 737,
+     "mix": {
+      "coptic": 28,
+      "greek": 709,
+      "latin": 34
+     }
+    },
+    "lite": {
+     "model": "gemini-3.1-flash-lite",
+     "finish_reason": "STOP",
+     "cost_usd": 0.0023507500000000004,
+     "dist": 210,
+     "cer": 0.25830258302583026,
+     "read_letters": 732,
+     "mix": {
+      "coptic": 48,
+      "greek": 684,
+      "latin": 39
+     }
+    },
+    "flash": {
+     "model": "gemini-3-flash-preview",
+     "finish_reason": "STOP",
+     "cost_usd": 0.0102845,
+     "dist": 81,
+     "cer": 0.0996309963099631,
+     "read_letters": 829,
+     "mix": {
+      "coptic": 829,
+      "greek": 0,
+      "latin": 5
+     }
+    }
+   },
+   "ref_letters": 813,
+   "ref_supplied_letters": 5
+  },
+  {
+   "id": "d882e2d7-p43",
+   "title": "Nag Hammadi Codex II",
+   "page_number": 43,
+   "stratum": "manuscript",
+   "unit": "page",
+   "corpus": "thomas.gospel",
+   "same_edition": true,
+   "arms": {
+    "stored": {
+     "model": "gemini-3.1-flash-lite",
+     "dist": 868,
+     "cer": 1,
+     "read_letters": 0,
+     "mix": {
+      "coptic": 0,
+      "greek": 0,
+      "latin": 805
+     }
+    },
+    "lite": {
+     "model": "gemini-3.1-flash-lite",
+     "finish_reason": "STOP",
+     "cost_usd": 0.00244825,
+     "dist": 250,
+     "cer": 0.2880184331797235,
+     "read_letters": 732,
+     "mix": {
+      "coptic": 0,
+      "greek": 732,
+      "latin": 86
+     }
+    },
+    "flash": {
+     "model": "gemini-3-flash-preview",
+     "finish_reason": "STOP",
+     "cost_usd": 0.0105875,
+     "dist": 62,
+     "cer": 0.07142857142857142,
+     "read_letters": 883,
+     "mix": {
+      "coptic": 883,
+      "greek": 0,
+      "latin": 0
+     }
+    }
+   },
+   "ref_letters": 868,
+   "ref_supplied_letters": 19
+  },
+  {
+   "id": "6abe3e91-p3",
+   "title": "Borg.copt.109.cass.XXIX.fasc.167",
+   "page_number": 3,
+   "stratum": "manuscript",
+   "unit": "page",
+   "corpus": "lit.fragments",
+   "same_edition": true,
+   "arms": {
+    "stored": null,
+    "lite": {
+     "model": "gemini-3.1-flash-lite",
+     "finish_reason": "STOP",
+     "cost_usd": 0.003636,
+     "dist": 214,
+     "cer": 0.37809187279151946,
+     "read_letters": 522,
+     "mix": {
+      "coptic": 522,
+      "greek": 0,
+      "latin": 0
+     }
+    },
+    "flash": {
+     "model": "gemini-3-flash-preview",
+     "finish_reason": "STOP",
+     "cost_usd": 0.008304,
+     "dist": 195,
+     "cer": 0.34452296819787986,
+     "read_letters": 553,
+     "mix": {
+      "coptic": 553,
+      "greek": 0,
+      "latin": 0
+     }
+    }
+   },
+   "ref_letters": 566,
+   "ref_supplied_letters": 0
+  },
+  {
+   "id": "6abe3e91-p5",
+   "title": "Borg.copt.109.cass.XXIX.fasc.167",
+   "page_number": 5,
+   "stratum": "manuscript",
+   "unit": "page",
+   "corpus": "lit.fragments",
+   "same_edition": true,
+   "arms": {
+    "stored": null,
+    "lite": {
+     "model": "gemini-3.1-flash-lite",
+     "finish_reason": "STOP",
+     "cost_usd": 0.00198825,
+     "dist": 257,
+     "cer": 0.5069033530571992,
+     "read_letters": 433,
+     "mix": {
+      "coptic": 0,
+      "greek": 433,
+      "latin": 115
+     }
+    },
+    "flash": {
+     "model": "gemini-3-flash-preview",
+     "finish_reason": "STOP",
+     "cost_usd": 0.0080715,
+     "dist": 179,
+     "cer": 0.3530571992110454,
+     "read_letters": 533,
+     "mix": {
+      "coptic": 533,
+      "greek": 0,
+      "latin": 24
+     }
+    }
+   },
+   "ref_letters": 507,
+   "ref_supplied_letters": 0
+  },
+  {
+   "id": "69920b7d-p192",
+   "title": "Coptic New Testament, Bohairic Dialect (Vol. 1)",
+   "page_number": 192,
+   "stratum": "printed",
+   "unit": "verse",
+   "corpus": "bohairic.nt",
+   "same_edition": false,
+   "arms": {
+    "stored": {
+     "model": "gemini-3-flash-preview",
+     "dist": 5,
+     "cer": 0.010615711252653927,
+     "read_letters": 829,
+     "mix": {
+      "coptic": 825,
+      "greek": 4,
+      "latin": 102
+     },
+     "verse_cer": [
+      0,
+      0,
+      0.018,
+      0.019,
+      0,
+      0.014
+     ]
+    },
+    "lite": {
+     "model": "gemini-3.1-flash-lite",
+     "finish_reason": "STOP",
+     "cost_usd": 0.0027605,
+     "dist": 90,
+     "cer": 0.1910828025477707,
+     "read_letters": 812,
+     "mix": {
+      "coptic": 0,
+      "greek": 812,
+      "latin": 127
+     },
+     "verse_cer": [
+      0.136,
+      0.186,
+      0.2,
+      0.17,
+      0.214,
+      0.236
+     ]
+    },
+    "flash": {
+     "model": "gemini-3-flash-preview",
+     "finish_reason": "STOP",
+     "cost_usd": 0.009955,
+     "dist": 5,
+     "cer": 0.010615711252653927,
+     "read_letters": 786,
+     "mix": {
+      "coptic": 696,
+      "greek": 90,
+      "latin": 203
+     },
+     "verse_cer": [
+      0.023,
+      0.021,
+      0.009,
+      0.009,
+      0,
+      0
+     ]
+    }
+   },
+   "verses": [
+    "01_Matthew_06#17",
+    "01_Matthew_06#18",
+    "01_Matthew_06#19",
+    "01_Matthew_06#20",
+    "01_Matthew_06#21",
+    "01_Matthew_06#22"
+   ],
+   "ref_letters": 471
+  },
+  {
+   "id": "69920b7d-p498",
+   "title": "Coptic New Testament, Bohairic Dialect (Vol. 1)",
+   "page_number": 498,
+   "stratum": "printed",
+   "unit": "verse",
+   "corpus": "bohairic.nt",
+   "same_edition": false,
+   "arms": {
+    "stored": {
+     "model": "gemini-3-flash-preview",
+     "dist": 33,
+     "cer": 0.05108359133126935,
+     "read_letters": 729,
+     "mix": {
+      "coptic": 717,
+      "greek": 12,
+      "latin": 230
+     },
+     "verse_cer": [
+      0,
+      0,
+      0.056,
+      0.01,
+      0,
+      0.052,
+      0.171
+     ]
+    },
+    "lite": {
+     "model": "gemini-3.1-flash-lite",
+     "finish_reason": "STOP",
+     "cost_usd": 0.004893499999999999,
+     "dist": 54,
+     "cer": 0.08359133126934984,
+     "read_letters": 752,
+     "mix": {
+      "coptic": 744,
+      "greek": 8,
+      "latin": 116
+     },
+     "verse_cer": [
+      0.016,
+      0.032,
+      0.056,
+      0.071,
+      0.018,
+      0.138,
+      0.199
+     ]
+    },
+    "flash": {
+     "model": "gemini-3-flash-preview",
+     "finish_reason": "STOP",
+     "cost_usd": 0.005346999999999999,
+     "dist": 85,
+     "cer": 0.13157894736842105,
+     "read_letters": 739,
+     "mix": {
+      "coptic": 42,
+      "greek": 698,
+      "latin": 170
+     },
+     "verse_cer": [
+      0.114,
+      0.043,
+      0.141,
+      0.102,
+      0.123,
+      0.086,
+      0.24
+     ]
+    }
+   },
+   "verses": [
+    "02_Mark_06#14",
+    "02_Mark_06#15",
+    "02_Mark_06#16",
+    "02_Mark_06#17",
+    "02_Mark_06#18",
+    "02_Mark_06#19",
+    "02_Mark_06#20"
+   ],
+   "ref_letters": 646
+  },
+  {
+   "id": "69920b83-p154",
+   "title": "Coptic New Testament, Sahidic Dialect (Vol. 3)",
+   "page_number": 154,
+   "stratum": "printed",
+   "unit": "verse",
+   "corpus": "sahidica.nt",
+   "same_edition": false,
+   "arms": {
+    "stored": {
+     "model": "gemini-3-flash-preview",
+     "dist": 23,
+     "cer": 0.0575,
+     "read_letters": 629,
+     "mix": {
+      "coptic": 601,
+      "greek": 28,
+      "latin": 486
+     },
+     "verse_cer": [
+      0.083,
+      0.009,
+      0.1,
+      0.035,
+      0.078
+     ]
+    },
+    "lite": {
+     "model": "gemini-3.1-flash-lite",
+     "finish_reason": "STOP",
+     "cost_usd": 0.0030155,
+     "dist": 117,
+     "cer": 0.2925,
+     "read_letters": 674,
+     "mix": {
+      "coptic": 0,
+      "greek": 674,
+      "latin": 423
+     },
+     "verse_cer": [
+      0.266,
+      0.336,
+      0.3,
+      0.228,
+      0.313
+     ]
+    },
+    "flash": {
+     "model": "gemini-3-flash-preview",
+     "finish_reason": "STOP",
+     "cost_usd": 0.0064930000000000005,
+     "dist": 52,
+     "cer": 0.13,
+     "read_letters": 630,
+     "mix": {
+      "coptic": 52,
+      "greek": 578,
+      "latin": 477
+     },
+     "verse_cer": [
+      0.128,
+      0.127,
+      0.133,
+      0.105,
+      0.156
+     ]
+    }
+   },
+   "verses": [
+    "43_John_07#54",
+    "43_John_07#55",
+    "43_John_07#56",
+    "43_John_07#57",
+    "43_John_07#58"
+   ],
+   "ref_letters": 400
+  },
+  {
+   "id": "69920b83-p258",
+   "title": "Coptic New Testament, Sahidic Dialect (Vol. 3)",
+   "page_number": 258,
+   "stratum": "printed",
+   "unit": "verse",
+   "corpus": "sahidica.nt",
+   "same_edition": false,
+   "arms": {
+    "stored": {
+     "model": "gemini-3-flash-preview",
+     "dist": 39,
+     "cer": 0.07632093933463796,
+     "read_letters": 711,
+     "mix": {
+      "coptic": 702,
+      "greek": 9,
+      "latin": 286
+     },
+     "verse_cer": [
+      0.032,
+      0.052,
+      0.094,
+      0.02,
+      0.022,
+      0.166
+     ]
+    },
+    "lite": {
+     "model": "gemini-3.1-flash-lite",
+     "finish_reason": "STOP",
+     "cost_usd": 0.0033889999999999997,
+     "dist": 93,
+     "cer": 0.18199608610567514,
+     "read_letters": 869,
+     "mix": {
+      "coptic": 20,
+      "greek": 849,
+      "latin": 104
+     },
+     "verse_cer": [
+      0.177,
+      0.138,
+      0.189,
+      0.082,
+      0.181,
+      0.232
+     ]
+    },
+    "flash": {
+     "model": "gemini-3-flash-preview",
+     "finish_reason": "STOP",
+     "cost_usd": 0.007237,
+     "dist": 70,
+     "cer": 0.136986301369863,
+     "read_letters": 684,
+     "mix": {
+      "coptic": 51,
+      "greek": 661,
+      "latin": 286
+     },
+     "verse_cer": [
+      0.129,
+      0.103,
+      0.113,
+      0.061,
+      0.101,
+      0.219
+     ]
+    }
+   },
+   "verses": [
+    "43_John_15#11",
+    "43_John_15#12",
+    "43_John_15#13",
+    "43_John_15#14",
+    "43_John_15#15",
+    "43_John_15#16"
+   ],
+   "ref_letters": 511
+  },
+  {
+   "id": "69af55d3-p115",
+   "title": "Coptic Biblical Texts in the Dialect of Upper Egypt",
+   "page_number": 115,
+   "stratum": "printed",
+   "unit": "verse",
+   "corpus": "sahidic.ot",
+   "same_edition": false,
+   "arms": {
+    "stored": {
+     "model": "gemini-3-flash-preview",
+     "dist": 6,
+     "cer": 0.0108499095840868,
+     "read_letters": 637,
+     "mix": {
+      "coptic": 637,
+      "greek": 0,
+      "latin": 0
+     },
+     "verse_cer": [
+      0.016,
+      0,
+      0.018,
+      0.011,
+      0
+     ]
+    },
+    "lite": {
+     "model": "gemini-3.1-flash-lite",
+     "finish_reason": "STOP",
+     "cost_usd": 0.002267,
+     "dist": 420,
+     "cer": 0.759493670886076,
+     "read_letters": 141,
+     "mix": {
+      "coptic": 0,
+      "greek": 141,
+      "latin": 60
+     },
+     "verse_cer": [
+      0.772,
+      0.747,
+      0.776,
+      0.766,
+      0.713
+     ]
+    },
+    "flash": {
+     "model": "gemini-3-flash-preview",
+     "finish_reason": "STOP",
+     "cost_usd": 0.008824,
+     "dist": 8,
+     "cer": 0.014466546112115732,
+     "read_letters": 705,
+     "mix": {
+      "coptic": 653,
+      "greek": 52,
+      "latin": 18
+     },
+     "verse_cer": [
+      0.024,
+      0,
+      0.024,
+      0.011,
+      0
+     ]
+    }
+   },
+   "verses": [
+    "05_Deuteronomy_09#Deuteronomy 9:10",
+    "05_Deuteronomy_09#Deuteronomy 9:11",
+    "05_Deuteronomy_09#Deuteronomy 9:12",
+    "05_Deuteronomy_09#Deuteronomy 9:13",
+    "05_Deuteronomy_09#Deuteronomy 9:14"
+   ],
+   "ref_letters": 553
+  },
+  {
+   "id": "69af55d3-p216",
+   "title": "Coptic Biblical Texts in the Dialect of Upper Egypt",
+   "page_number": 216,
+   "stratum": "printed",
+   "unit": "verse",
+   "corpus": "sahidic.ot",
+   "same_edition": false,
+   "arms": {
+    "stored": {
+     "model": "gemini-3-flash-preview",
+     "dist": 21,
+     "cer": 0.03529411764705882,
+     "read_letters": 678,
+     "mix": {
+      "coptic": 678,
+      "greek": 0,
+      "latin": 23
+     },
+     "verse_cer": [
+      0.02,
+      0,
+      0.099,
+      0,
+      0.027,
+      0.034,
+      0
+     ]
+    },
+    "lite": {
+     "model": "gemini-3.1-flash-lite",
+     "finish_reason": "MAX_TOKENS",
+     "cost_usd": 0.013066999999999999,
+     "dist": 329,
+     "cer": 0.5529411764705883,
+     "read_letters": 186,
+     "mix": {
+      "coptic": 0,
+      "greek": 186,
+      "latin": 17
+     },
+     "verse_cer": [
+      0.284,
+      0.261,
+      0.69,
+      0.545,
+      0.716,
+      0.719,
+      0.711
+     ]
+    },
+    "flash": {
+     "model": "gemini-3-flash-preview",
+     "finish_reason": "STOP",
+     "cost_usd": 0.008755,
+     "dist": 20,
+     "cer": 0.03361344537815126,
+     "read_letters": 677,
+     "mix": {
+      "coptic": 653,
+      "greek": 24,
+      "latin": 23
+     },
+     "verse_cer": [
+      0.02,
+      0,
+      0.099,
+      0,
+      0.027,
+      0.022,
+      0
+     ]
+    }
+   },
+   "verses": [
+    "32_Jonah_01#Jonah 1:12",
+    "32_Jonah_01#Jonah 1:13",
+    "32_Jonah_01#Jonah 1:14",
+    "32_Jonah_01#Jonah 1:15",
+    "32_Jonah_01#Jonah 1:16",
+    "32_Jonah_02#Jonah 2:1",
+    "32_Jonah_02#Jonah 2:2"
+   ],
+   "ref_letters": 595
+  },
+  {
+   "id": "69e012c7-p77",
+   "title": "The Earliest Known Coptic Psalter",
+   "page_number": 77,
+   "stratum": "printed",
+   "unit": "verse",
+   "corpus": "sahidic.ot",
+   "same_edition": false,
+   "arms": {
+    "stored": {
+     "model": "gemini-3.1-flash-lite-preview",
+     "dist": 73,
+     "cer": 0.07487179487179488,
+     "read_letters": 1025,
+     "mix": {
+      "coptic": 1025,
+      "greek": 0,
+      "latin": 0
+     },
+     "verse_cer": [
+      0.05,
+      0.171,
+      0.03,
+      0,
+      0.157,
+      0.065,
+      0.062,
+      0.131,
+      0.073,
+      0.1,
+      0.071,
+      0.051,
+      0,
+      0.109,
+      0.036,
+      0.072,
+      0.095
+     ]
+    },
+    "lite": {
+     "model": "gemini-3.1-flash-lite",
+     "finish_reason": "STOP",
+     "cost_usd": 0.0059222499999999996,
+     "dist": 133,
+     "cer": 0.13641025641025642,
+     "read_letters": 1007,
+     "mix": {
+      "coptic": 957,
+      "greek": 50,
+      "latin": 1
+     },
+     "verse_cer": [
+      0.25,
+      0.22,
+      0.09,
+      0.129,
+      0.157,
+      0.113,
+      0.077,
+      0.18,
+      0.188,
+      0.125,
+      0.107,
+      0.089,
+      0.073,
+      0.188,
+      0.071,
+      0.108,
+      0.214
+     ]
+    },
+    "flash": {
+     "model": "gemini-3-flash-preview",
+     "finish_reason": "STOP",
+     "cost_usd": 0.0063785000000000005,
+     "dist": 62,
+     "cer": 0.06358974358974359,
+     "read_letters": 1007,
+     "mix": {
+      "coptic": 145,
+      "greek": 864,
+      "latin": 28
+     },
+     "verse_cer": [
+      0.025,
+      0.024,
+      0.06,
+      0.065,
+      0.02,
+      0.113,
+      0.108,
+      0.115,
+      0.083,
+      0.05,
+      0.036,
+      0.063,
+      0.073,
+      0.047,
+      0.054,
+      0.036,
+      0.071
+     ]
+    }
+   },
+   "verses": [
+    "19_Psalms_054#Psalms 54:5",
+    "19_Psalms_054#Psalms 54:6",
+    "19_Psalms_054#Psalms 54:7",
+    "19_Psalms_054#Psalms 54:8",
+    "19_Psalms_054#Psalms 54:9",
+    "19_Psalms_054#Psalms 54:10",
+    "19_Psalms_054#Psalms 54:11",
+    "19_Psalms_054#Psalms 54:12",
+    "19_Psalms_054#Psalms 54:13",
+    "19_Psalms_054#Psalms 54:14",
+    "19_Psalms_054#Psalms 54:15",
+    "19_Psalms_054#Psalms 54:16",
+    "19_Psalms_054#Psalms 54:17",
+    "19_Psalms_054#Psalms 54:18",
+    "19_Psalms_054#Psalms 54:19",
+    "19_Psalms_054#Psalms 54:20",
+    "19_Psalms_054#Psalms 54:21"
+   ],
+   "ref_letters": 975
+  },
+  {
+   "id": "69e012c7-p152",
+   "title": "The Earliest Known Coptic Psalter",
+   "page_number": 152,
+   "stratum": "printed",
+   "unit": "verse",
+   "corpus": "sahidic.ot",
+   "same_edition": false,
+   "arms": {
+    "stored": {
+     "model": "gemini-3.1-flash-lite-preview",
+     "dist": 119,
+     "cer": 0.11678115799803729,
+     "read_letters": 1020,
+     "mix": {
+      "coptic": 6,
+      "greek": 1014,
+      "latin": 1
+     },
+     "verse_cer": [
+      0.109,
+      0.146,
+      0.114,
+      0.128,
+      0.059,
+      0.1,
+      0.079,
+      0.086,
+      0.179,
+      0.13,
+      0.083,
+      0.091,
+      0.068,
+      0.235,
+      0.167,
+      0.077,
+      0.103,
+      0.122,
+      0.095,
+      0.065,
+      0.221,
+      0.091,
+      0.073
+     ]
+    },
+    "lite": {
+     "model": "gemini-3.1-flash-lite",
+     "finish_reason": "STOP",
+     "cost_usd": 0.0029927499999999998,
+     "dist": 109,
+     "cer": 0.1069676153091266,
+     "read_letters": 1023,
+     "mix": {
+      "coptic": 5,
+      "greek": 1018,
+      "latin": 1
+     },
+     "verse_cer": [
+      0.109,
+      0.146,
+      0.114,
+      0.128,
+      0.059,
+      0.1,
+      0.079,
+      0.086,
+      0.179,
+      0.13,
+      0.067,
+      0.091,
+      0.068,
+      0.216,
+      0.143,
+      0.077,
+      0.103,
+      0.095,
+      0.095,
+      0.022,
+      0.206,
+      0.068,
+      0.049
+     ]
+    },
+    "flash": {
+     "model": "gemini-3-flash-preview",
+     "finish_reason": "STOP",
+     "cost_usd": 0.0060995,
+     "dist": 41,
+     "cer": 0.040235525024533855,
+     "read_letters": 1025,
+     "mix": {
+      "coptic": 67,
+      "greek": 958,
+      "latin": 0
+     },
+     "verse_cer": [
+      0.065,
+      0.073,
+      0.068,
+      0.051,
+      0,
+      0.025,
+      0,
+      0.029,
+      0.103,
+      0,
+      0.05,
+      0,
+      0.045,
+      0.059,
+      0,
+      0.026,
+      0.026,
+      0.054,
+      0.048,
+      0,
+      0.059,
+      0.023,
+      0.073
+     ]
+    }
+   },
+   "verses": [
+    "19_Psalms_0118#Psalms 118:49",
+    "19_Psalms_0118#Psalms 118:50",
+    "19_Psalms_0118#Psalms 118:51",
+    "19_Psalms_0118#Psalms 118:52",
+    "19_Psalms_0118#Psalms 118:53",
+    "19_Psalms_0118#Psalms 118:54",
+    "19_Psalms_0118#Psalms 118:55",
+    "19_Psalms_0118#Psalms 118:56",
+    "19_Psalms_0118#Psalms 118:57",
+    "19_Psalms_0118#Psalms 118:58",
+    "19_Psalms_0118#Psalms 118:59",
+    "19_Psalms_0118#Psalms 118:60",
+    "19_Psalms_0118#Psalms 118:61",
+    "19_Psalms_0118#Psalms 118:62",
+    "19_Psalms_0118#Psalms 118:63",
+    "19_Psalms_0118#Psalms 118:64",
+    "19_Psalms_0118#Psalms 118:65",
+    "19_Psalms_0118#Psalms 118:66",
+    "19_Psalms_0118#Psalms 118:67",
+    "19_Psalms_0118#Psalms 118:68",
+    "19_Psalms_0118#Psalms 118:69",
+    "19_Psalms_0118#Psalms 118:70",
+    "19_Psalms_0118#Psalms 118:71"
+   ],
+   "ref_letters": 1019
+  }
+ ]
+}

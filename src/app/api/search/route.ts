@@ -4,6 +4,7 @@ import { textRoleRank } from '@/lib/text-role';
 import { Book } from '@/lib/types';
 import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search';
 import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
+import { expandNameQuery } from '@/lib/search/name-variants';
 import { CONTENT_LICENSE } from '@/lib/license-info';
 import { searchBookIds } from '@/lib/books-catalog';
 import { semanticBookSearch, semanticPageSearchGlobal, lexicalPageSearchLang } from '@/lib/semantic-search';
@@ -20,6 +21,8 @@ import { fetchWorkFanouts } from '@/lib/search/work-fanout';
 export const preferredRegion = 'fra1';
 
 const MAX_PAGE_RESULTS = 25;
+/** Extra page hits that print a queried person's name in another spelling (#5888). */
+const NAME_VARIANT_PAGE_RESULTS = 10;
 
 /**
  * Carry a book's identity fields onto a result as transients, so the
@@ -431,10 +434,10 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             }
           }
 
-          return await db.collection('pages').aggregate([
-            buildPageSearchStage(query, filteredBookIds),
+          const pagePipeline = (stage: ReturnType<typeof buildPageSearchStage>, max: number) => [
+            stage,
             { $match: { page_number: { $gt: 0 }, page_type: { $nin: NON_CONTENT_PAGE_TYPES } } },
-            { $limit: pageLimit },
+            { $limit: max },
             {
               $project: {
                 id: 1,
@@ -445,7 +448,33 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
                 'ocr.data': 1,
               },
             },
-          ], { maxTimeMS: 8000 }).toArray();
+          ];
+
+          // Pages that print the person's name in ANOTHER spelling (Drebbel → Drebelius;
+          // #5888), as a second query whose hits follow the main ones. Not OR'd into the main
+          // stage: it reads only `pageLimit` pages, and for any well-attested name those are
+          // all pages with the typed spelling, so OR'd variants would never be reached. No
+          // person in the query → no second query, and the lane is exactly what it was.
+          const { variants, topicWords } = await expandNameQuery(query);
+          const [mainPages, variantPages] = await Promise.all([
+            db.collection('pages')
+              .aggregate(pagePipeline(buildPageSearchStage(query, filteredBookIds), pageLimit), { maxTimeMS: 8000 })
+              .toArray(),
+            variants.length > 0
+              ? db.collection('pages')
+                  .aggregate(
+                    pagePipeline(
+                      buildPageSearchStage(query, filteredBookIds, { nameVariants: variants, requireNameVariant: true, requireWords: topicWords }),
+                      (bookId || pagesOnly) ? pageLimit : NAME_VARIANT_PAGE_RESULTS,
+                    ),
+                    { maxTimeMS: 8000 },
+                  )
+                  .toArray()
+                  .catch(() => [])
+              : Promise.resolve([]),
+          ]);
+          const seenPages = new Set(mainPages.map(p => `${p.book_id}:${p.page_number}`));
+          return [...mainPages, ...variantPages.filter(p => !seenPages.has(`${p.book_id}:${p.page_number}`))];
         })();
 
         // Hard timeout: Atlas Search $search ignores maxTimeMS, so race against a timer

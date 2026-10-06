@@ -1,0 +1,42 @@
+{
+ "key": "v049_f2a",
+ "page": {
+  "key": "v049_f2a",
+  "vol": 49,
+  "book_id": "6ac029e99a86d56c1aa1f863",
+  "page_number": 3,
+  "page_label": "f. 2a",
+  "bdrc_canvas": "I1PD1103170006.jpg",
+  "ligeti": "Mng1.797",
+  "mng_span": "Kha Erdeni dabqurliq 1b–90a",
+  "toh": "D50",
+  "skt": "Akṣobhyatathāgatasya vyūha (Ratnakūṭa 6)",
+  "derge_vol": 40,
+  "derge_file": "040_དཀོན་བརྩེགས།_ཁ.txt"
+ },
+ "model": "gemini-3-flash-preview",
+ "ocr_prompt": {
+  "name": "Standard OCR",
+  "version": "19.1",
+  "content_hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "translation_prompt": {
+  "name": "Standard Translation",
+  "version": "13",
+  "hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Mongolian</language>\n<script>handwritten</script>\n<page-type>text</page-type>\n<warning>Handwritten Mongolian vertical script (Hudum). The page also contains a Chinese title in the right margin. The transcription of the Mongolian script is provided in transliteration.</warning>\n\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">The text is enclosed within a rectangular border featuring a red-inked floral and vine pattern (arabesque style).</image-desc>\n\n<margin>\n大寶積經第二卷上三\n</margin>\n\n<unclear>21 lines of Mongolian vertical script, not transcribed</unclear>\n\n<meta>The Mongolian text is written in vertical columns, reading from left to right. The Chinese characters in the margin identify the work as the Mahāratnakūṭa Sūtra (大寶積經), Volume 2, Part 1, Page 3.</meta>\n\n<vocab>Mahāratnakūṭa Sūtra, Mongolian script, Buddhist manuscript</vocab>",
+  "finishReason": "STOP",
+  "inputTokens": 4279,
+  "outputTokens": 243,
+  "cost_usd": 0.0028685
+ },
+ "translation": {
+  "text": "<meta>The Mongolian text is written in vertical columns, reading from left to right. The Chinese characters in the margin identify the work as the Mahāratnakūṭa Sūtra (Great Heap of Jewels Sutra), Volume 2, Part 1, Page 3.</meta>\n\n<note>The text is enclosed within a rectangular border featuring a red-inked floral and vine pattern in the arabesque style.</note>\n\n<margin>\nThe Great Heap of Jewels Sutra <note>original: 大寶積經</note>, Volume Two, Part One, Page Three.\n</margin>\n\n<unclear>21 lines of Mongolian vertical script, not transcribed</unclear>\n\n<summary>This page contains a portion of the Mahāratnakūṭa Sūtra, a major collection of Mahayana Buddhist scriptures. The text is presented in a formal Mongolian manuscript format with identifying Chinese marginalia.</summary>\n<keywords>Maharatnakuta Sutra, Great Heap of Jewels, Mongolian Buddhism, Buddhist manuscript, vertical script</keywords>",
+  "finishReason": "STOP",
+  "inputTokens": 1973,
+  "outputTokens": 223,
+  "cost_usd": 0.0016555
+ }
+}

@@ -41,6 +41,14 @@
  *   --crisis-only              books with spread_translation_crisis: true
  *   --ia-only                  Internet Archive books (ia_identifier set) — see below
  *   --translated               books with at least one translated page
+ *   --pages-with-images        only re-archive pages that show an image: detected_images,
+ *                              OR the OCR tags the page as one (<page-type> illustration/
+ *                              diagram/map/frontispiece/mixed, or significance="high" —
+ *                              the same candidate rule image detection uses). Plates and
+ *                              figures are where zoom matters most. The book is NOT
+ *                              stamped image_resolution_upgraded_at, so a later
+ *                              full run still takes it; reruns skip pages already
+ *                              at master via the per-page held check.
  *   --random                   (--audit) draw --limit books at random instead of the
  *                              first N in natural order — the first N are the oldest
  *                              imports, and 200 of them audited 0 low-res while a
@@ -72,11 +80,18 @@
  *   --skip-upgraded            skip books already stamped image_resolution_upgraded_at
  *                              (resume flag for long interruptible runs; the stamp is
  *                              only written when a book completes with zero failures)
+ *   --skip-upgraded-pages      within a book, leave pages already carrying image_metadata.upgraded_at
+ *                              alone — the gap pass for books stamped while some pages had failed
+ *                              to fetch (counted as skips before 2026-10-04). Pages with no
+ *                              upgraded_at mark may already be at master (written by another
+ *                              archiver); the per-book eligibility check skips those.
  *   --concurrency N            books processed in parallel (default 2)
  *   --page-concurrency N       pages per book (default 4)
  *   --limit N                  max books
  *   --dry-run                  no writes
  *   --min-upgrade-ratio R      only refetch if maxres/current >= R (default 1.5)
+ *   --max-chunk N              tile-stitch stride ceiling (default 1024). Raise only for a
+ *                              host checked by hand to serve N×N regions (Manchester: 2000)
  *
  * Examples:
  *   set -a; source .env.production.local; set +a
@@ -121,6 +136,7 @@ const CRISIS_ONLY = FLAG('--crisis-only');
 const IA_ONLY = FLAG('--ia-only');
 const TRANSLATED = FLAG('--translated');
 const RANDOM = FLAG('--random');
+const PAGES_WITH_IMAGES = FLAG('--pages-with-images');
 const CONCURRENCY = parseInt(ARG('--concurrency', '2'));
 const PAGE_CONCURRENCY = parseInt(ARG('--page-concurrency', '4'));
 const LIMIT = parseInt(ARG('--limit', '0'));
@@ -128,6 +144,8 @@ const MIN_UPGRADE_RATIO = parseFloat(ARG('--min-upgrade-ratio', '1.5'));
 const SHARP_MAX_WIDTH = parseInt(ARG('--max-width', '6000'));
 const JPEG_QUALITY = parseInt(ARG('--jpeg-quality', '90'));
 const SKIP_UPGRADED = FLAG('--skip-upgraded');
+const MAX_CHUNK = parseInt(ARG('--max-chunk', '1024'));
+const SKIP_UPGRADED_PAGES = FLAG('--skip-upgraded-pages');
 // The consistency guard is ON by default and cannot be silently skipped — it is
 // the fix for the e-rara off-by-one incident (#3186). --no-guard exists only for
 // explicit, audited one-offs on a provider already proven aligned.
@@ -181,6 +199,14 @@ function isAlreadySplit(pages) {
   return pages.some(p => p.split_side === 'left' || p.split_side === 'right');
 }
 
+// The candidate rule image detection uses (see the image-extraction pipeline):
+// a page the OCR already tagged as carrying an image. Lets books that never
+// went through detection still get their plates re-archived.
+const OCR_IMAGE_TAG = /<page-type>\s*(?:illustration|diagram|map|frontispiece|mixed)\b|significance="high"/i;
+function showsAnImage(page) {
+  return Boolean(page.detected_images?.length) || OCR_IMAGE_TAG.test(String(page.ocr?.data || ''));
+}
+
 const IA_BOOKREADER = /^https:\/\/archive\.org\/download\/[^/?#]+\/page\/n\d+\//;
 function isIaBookReaderUrl(url) {
   return typeof url === 'string' && IA_BOOKREADER.test(url);
@@ -199,6 +225,18 @@ async function fetchSourceInfo(url) {
   } catch {
     return null;
   }
+}
+
+/**
+ * Did an earlier run already write this page at its master? `upgraded_at` alone
+ * is not enough (a plate can be upgraded to less than the book's median master),
+ * so compare the stored width with the master this script recorded for it,
+ * capped as the write was capped (--max-width).
+ */
+function pageAtRecordedMaster(page) {
+  const m = page.image_metadata;
+  if (!m?.upgraded_at || !m.width || !m.source_max_width) return false;
+  return m.width >= 0.95 * Math.min(m.source_max_width, SHARP_MAX_WIDTH);
 }
 
 async function jpegDims(buf) {
@@ -311,7 +349,12 @@ async function fetchUpgraded(url) {
         // lie as the tile size is what produced 64%-white masters in July 2026
         // (#4523). 1024 is the empirically safe stride; fetchIiifNativeRes probes
         // and shrinks further if even that is capped.
-        const maxChunk = Math.min(pageInfo.maxWidth || 1024, pageInfo.maxHeight || 1024, 1024);
+        // --max-chunk raises the 1024 ceiling for a host verified to serve full
+        // regions at its advertised cap (Manchester: 2000×2000, checked by hand
+        // 2026-10-04) — ~4× fewer requests under the same per-host rate limit.
+        // Still safe if wrong: the probe shrinks the stride and tileFits throws
+        // on any short tile, so the failure is a skipped page, not a gapped one.
+        const maxChunk = Math.min(pageInfo.maxWidth || MAX_CHUNK, pageInfo.maxHeight || MAX_CHUNK, MAX_CHUNK);
         ({ buffer: raw } = await fetchIiifNativeRes(url, { info: pageInfo, maxChunk, timeout: 60_000 }));
       } else if (upgraded === url) {
         // Nothing to gain: the URL already requests native AND this host honours
@@ -440,14 +483,43 @@ async function refetchOne(book) {
     // it arrives undefined and every regenerated display/thumb is written
     // WITHOUT the keyed watermark — unattributable in the wild (#2651). The
     // function logs that as a warning, so the only symptom was a line in a log.
-    { projection: { id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, split_side: 1, display_photo: 1, image_thumb: 1, thumbnail_blob: 1, image_metadata: 1 } },
+    { projection: { id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, split_side: 1, display_photo: 1, image_thumb: 1, thumbnail_blob: 1, image_metadata: 1, detected_images: { $slice: 1 }, ...(PAGES_WITH_IMAGES ? { 'ocr.data': 1 } : {}) } },
   ).sort({ page_number: 1 }).toArray();
 
   if (!pages.length) return { skipped: 'no-pages' };
+  let toWrite = PAGES_WITH_IMAGES ? pages.filter(showsAnImage) : pages;
+  if (SKIP_UPGRADED_PAGES) toWrite = toWrite.filter(p => !p.image_metadata?.upgraded_at);
+  if (!toWrite.length) return { skipped: 'no-image-pages' };
   if (isAlreadySplit(pages)) return { skipped: 'already-split (use --recover-split)' };
 
+  // Resume of an interrupted or partly failed book: pages an earlier run already
+  // wrote at their master are not fetched again. Fetching them only to discard
+  // them at the per-page held check cost Bodleian ~9 tile requests a page for 90
+  // minutes and wrote nothing (MS. Barocci 50.2, 2026-10-05).
+  const remaining = toWrite.filter(p => !pageAtRecordedMaster(p));
+  if (!remaining.length) {
+    if (!DRY_RUN && !PAGES_WITH_IMAGES && !book.image_resolution_upgraded_at) {
+      // Every page reached its master across earlier runs, but none of them
+      // finished clean, so the book was never stamped and has no provenance event.
+      const master = Math.max(...toWrite.map(p => p.image_metadata.source_max_width));
+      const firstSrc = pages.find(p => isIiifUrl(p.photo_original || p.photo));
+      const importCap = firstSrc ? getIiifSizeCap(firstSrc.photo_original || firstSrc.photo) : null;
+      await db.collection('books').updateOne(
+        { id: book.id },
+        { $set: { image_resolution_upgraded_at: new Date(), image_resolution_upgrade_source: master, updated_at: new Date() } },
+      );
+      await recordUpgradeEvent(book, { fromWidthCap: importCap, toMasterWidth: master, pagesUpdated: toWrite.length });
+      return { updated: 0, skipped: toWrite.length, failed: 0, completed: true };
+    }
+    return { skipped: 'all-pages-at-master' };
+  }
+  const resumed = remaining.length < toWrite.length;
+  toWrite = remaining;
+
   // Decide once per book, from the median of three interior pages (measureBook).
-  const iiifPages = pages.filter(p => isIiifUrl(p.photo_original || p.photo));
+  // On a gap pass or a resume, judge eligibility on the pages still to do:
+  // measured on the already-upgraded ones, a mostly-done book reads as "not low-res".
+  const iiifPages = (SKIP_UPGRADED_PAGES || resumed ? toWrite : pages).filter(p => isIiifUrl(p.photo_original || p.photo));
   if (!iiifPages.length) return { skipped: 'no-iiif-source' };
   const sourceUrl = iiifPages[0].photo_original || iiifPages[0].photo;
   const cap = getIiifSizeCap(sourceUrl);
@@ -481,13 +553,21 @@ async function refetchOne(book) {
     }
   }
 
-  console.log(`  ${(book.title || '').substring(0, 55)} — upgrading ${held}→${info.width}px (${pages.length} pages)`);
+  console.log(`  ${(book.title || '').substring(0, 55)} — upgrading ${held}→${info.width}px (${toWrite.length} pages)`);
 
   let updated = 0, skipped = 0, failed = 0;
-  await parallelMap(pages, async (page) => {
+  await parallelMap(toWrite, async (page) => {
     const url = page.photo_original || page.photo;
     if (!isIiifUrl(url)) { skipped++; return; }
     const result = await fetchUpgraded(url);
+    // A page we could not fetch is a FAILURE, not a skip: counted as a skip, the
+    // book was stamped upgraded with that page still low-res, and --skip-upgraded
+    // never came back for it (Pali MS 53, 6 pages, 2026-10-04).
+    if (result.skipped === 'fetch-fail' || result.skipped === 'sharp-fail') {
+      console.error(`    page ${page.page_number} ${result.skipped}: ${result.error?.substring(0, 120)}`);
+      failed++;
+      return;
+    }
     if (result.skipped) { skipped++; return; }
     // Per page, never replace with something no larger than what we hold. The
     // book-level decision is a median; individual leaves differ (an inserted
@@ -531,7 +611,7 @@ async function refetchOne(book) {
 
   // Stamp only fully-clean books: a partial failure (e.g. laptop sleep killed
   // in-flight fetches) must not look "done" to --skip-upgraded re-runs.
-  if (!DRY_RUN && updated > 0 && failed === 0) {
+  if (!DRY_RUN && !PAGES_WITH_IMAGES && updated > 0 && failed === 0) {
     await db.collection('books').updateOne(
       { id: book.id },
       { $set: {
@@ -593,7 +673,7 @@ async function recordUpgradeEvent(book, { fromWidthCap, toMasterWidth, pagesUpda
           flagged_at: now,
           ocr_input_width: fromWidthCap,
           new_width: toMasterWidth,
-          upgrade_ratio: Math.round((toMasterWidth / fromWidthCap) * 10) / 10,
+          upgrade_ratio: fromWidthCap ? Math.round((toMasterWidth / fromWidthCap) * 10) / 10 : null,
         },
       } },
     );
@@ -781,7 +861,7 @@ async function main() {
   }
 
   const books = await db.collection('books').find(buildBookQuery(), {
-    projection: { id: 1, slug: 1, title: 1, 'image_source.provider': 1 },
+    projection: { id: 1, slug: 1, title: 1, 'image_source.provider': 1, image_resolution_upgraded_at: 1 },
   }).limit(LIMIT || 0).toArray();
   console.log(`Found ${books.length} books to process\n`);
 
@@ -792,11 +872,15 @@ async function main() {
   await parallelMap(queue, async (book) => {
     try {
       const result = (MODE === 'recover-split') ? await recoverOne(book) : await refetchOne(book);
-      if (result.skipped) {
+      // refetchOne also returns a per-page skip COUNT under `skipped`; only a
+      // string is a book-level skip.
+      if (typeof result.skipped === 'string') {
         skipped++;
         console.log(`  skip: ${(book.title || '').substring(0, 55)} — ${result.skipped}`);
       } else {
         processed++;
+        if (result.completed) console.log(`  COMPLETED ${(book.title || '').substring(0, 50)} — every page already at master; stamped`);
+        if (result.failed) console.log(`  PARTIAL ${(book.title || '').substring(0, 50)} — ${result.updated} updated, ${result.failed} failed (not stamped; a re-run retries it)`);
       }
     } catch (e) {
       failed++;

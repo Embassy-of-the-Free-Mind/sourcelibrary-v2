@@ -1,0 +1,152 @@
+[
+  {
+    "slug": "pli-02",
+    "observed_script": "Sinhala (incised palm leaf, two leaves, three text columns each)",
+    "observed_language": "undetermined (Pali or Sinhala; cannot separate)",
+    "evidence": "0 words read securely. The tiles are only 1060x558 and 1000x558 px for two whole leaves; letter bodies are about 6-8 px tall, so vowel signs, al-lakuna and conjuncts cannot be resolved. Visible only at shape level: continuous scriptio continua with occasional long dash separators, folio number '61' in the right margin (modern Arabic numerals).",
+    "label_ok": "unsure",
+    "confidence": "low",
+    "legible_at_native": "no",
+    "note": "The source image itself is low resolution; the 'native' tiles add nothing over the 1500-px view. Needs a higher-resolution scan to decide Pali vs Sinhala vs sanna."
+  },
+  {
+    "slug": "pli-05",
+    "observed_script": "Sinhala (incised palm leaf, two leaves)",
+    "observed_language": "probably Pali (canonical, Abhidhamma-style formulae) - inferred from layout, not from read words",
+    "evidence": "Structure rather than words: the text is a long chain of short formula units separated by dashes, with an isolated two-glyph abbreviation between dashes recurring 20+ times that I read as පෙ (pe, the Pali peyyala 'repetition omitted' mark) - this one I am fairly, not fully, sure of. Many units end in the same 4-5 glyph group that looks like ...පච්චයා (paccaya) but I cannot read it securely at ~8 px letter height. Securely read whole words: 0; securely recognised recurring sign: 1 (පෙ).",
+    "label_ok": "yes",
+    "confidence": "low",
+    "legible_at_native": "no",
+    "note": "A peyyala-abbreviated formula chain is a feature of Pali canonical texts (Patthana-like), not of Sinhala prose or a sanna, which is why this is 'yes' rather than 'unsure'. It is an inference from page structure; treat as unsure if the rule needs read words."
+  },
+  {
+    "slug": "pli-09",
+    "observed_script": "Sinhala (incised palm leaf, two leaves)",
+    "observed_language": "undetermined",
+    "evidence": "0 words read securely. Frequent anusvara-like small circles after syllables and comma-like separators are visible, which is compatible with Pali accusatives/neuters in -ං but also occurs in Sinhala. Marginal note at right edge of lower leaf (two short lines) and folio number '31' not readable beyond the numeral.",
+    "label_ok": "unsure",
+    "confidence": "low",
+    "legible_at_native": "no",
+    "note": "Tiles 1060x534 / 1000x534 px for two leaves; letters ~8 px tall. Slight lean toward Pali from the density of anusvara-like marks, not enough to label."
+  },
+  {
+    "slug": "pli-11",
+    "observed_script": "Sinhala (incised palm leaf, single leaf)",
+    "observed_language": "undetermined",
+    "evidence": "0 words read securely. Short units separated by dashes, several units look like single compound words; one leaf only, 232 px tall in total for 8 lines of text (~7 px letters).",
+    "label_ok": "unsure",
+    "confidence": "low",
+    "legible_at_native": "no",
+    "note": "Lowest-resolution item of the set. The short dash-separated units could be a Pali word list or a sanna (word + gloss); cannot tell which."
+  },
+  {
+    "slug": "pli-14",
+    "observed_script": "Sinhala (incised palm leaf, two leaves)",
+    "observed_language": "undetermined",
+    "evidence": "0 words read securely. Continuous text with a few dash separators and parenthesis-like marks around short segments on the lower leaf; folio numeral '172' and a two-line marginal note at the right edge of the upper leaf, not readable.",
+    "label_ok": "unsure",
+    "confidence": "low",
+    "legible_at_native": "no",
+    "note": "Tiles 1060x558 / 1000x558 px; ink is faint as well as small."
+  },
+  {
+    "slug": "pli-19",
+    "observed_script": "Sinhala (incised palm leaf, two leaves)",
+    "observed_language": "undetermined - commentary or sanna layout",
+    "evidence": "0 words read securely. Clearly visible: about a dozen short segments are underlined, each followed by longer un-underlined text. That is the layout of quoted lemmata followed by explanation - either a Pali commentary (atthakatha/tika) or a Pali text with Sinhala sanna. The language of the explanatory portions cannot be read at this size.",
+    "label_ok": "unsure",
+    "confidence": "low",
+    "legible_at_native": "no",
+    "note": "This is the page where the Pali-vs-sanna question is most live: the underlined lemmata mean the leaf is not a bare canonical text. If the glosses are Sinhala the tag would be wrong on the 'at least half' rule. Needs a higher-resolution image."
+  },
+  {
+    "slug": "pli-25",
+    "observed_script": "Sinhala (incised palm leaf, two leaves; larger, rounder hand than the others)",
+    "observed_language": "undetermined",
+    "evidence": "0 words read securely. Many comma-like marks and dashes cut the text into short units of 2-5 syllables; an interlinear correction on the upper leaf. Folio marks '62' and a Sinhala letter-numeral in the left margins.",
+    "label_ok": "unsure",
+    "confidence": "low",
+    "legible_at_native": "no",
+    "note": "The short-unit segmentation with comma marks is compatible with a word-by-word sanna (Pali word, Sinhala gloss) as much as with a Pali list; I cannot resolve the endings (-යි / යනු vs Pali case endings) that would settle it."
+  },
+  {
+    "slug": "pli-26",
+    "observed_script": "Sinhala (incised palm leaf, two leaves)",
+    "observed_language": "probably Pali (leaning only)",
+    "evidence": "0 words read securely. A group of glyphs recurs many times across both leaves that looks like සංගහිත / අසංගහිත (sangahita / asangahita) alongside something like ඛන්ධ (khandha); a two-line marginal note at the right edge of the lower leaf ends in a numeral that looks like '8'. These are shape-level impressions at ~8 px letter height, not readings.",
+    "label_ok": "unsure",
+    "confidence": "low",
+    "legible_at_native": "no",
+    "note": "If the sangahita/asangahita reading is right this is the Dhatukatha or its commentary and the Pali tag holds, but I cannot confirm a single word, so not labelled yes."
+  },
+  {
+    "slug": "ara-10",
+    "observed_script": "Hebrew, Sephardic/Oriental cursive, brown ink; red Hebrew letters labelling diagram points; red Arabic-numeral proposition numbers 30, 31, 32; folio letter א at top",
+    "observed_language": "undetermined (Hebrew or Judeo-Arabic)",
+    "evidence": "0 words read securely. Secure non-linguistic observations: geometry text (parallel lines cut by a transversal, three diagrams), proposition numbers 30-32, groups of letters with dots above them inside the text (references to diagram points), enlarged initial words opening each proposition. I could not resolve the cursive letterforms into words well enough to see whether the article is אל- or ה-, or to find פי / מן / עלי versus Hebrew particles.",
+    "label_ok": "unsure",
+    "confidence": "low",
+    "legible_at_native": "partly",
+    "note": "Resolution is adequate here (both tiles were shown to me at full 1717 px width); the obstacle is the cursive hand, not the pixels. A reader trained in Sephardic cursive could probably decide this from these tiles. Content looks like Euclid, Elements I (props 30-32 are the parallel-line propositions), which exists in both Hebrew and Judeo-Arabic versions, so content does not settle the language."
+  },
+  {
+    "slug": "ara-29",
+    "observed_script": "Hebrew, Sephardic/Oriental cursive (black-and-white microfilm, two-page opening); Hebrew letters on diagrams; marginal Arabic numerals 30-33; one faint marginal note in a different, possibly Arabic-script, hand beside '32'",
+    "observed_language": "undetermined (Hebrew or Judeo-Arabic)",
+    "evidence": "0 words read securely. Same work and same hand family as ara-10 (same proposition numbering 30-33, same enlarged initial words, same dotted letter-groups for diagram points). Diagrams: triangles, rectangles with a diagonal, circles with inscribed lines.",
+    "label_ok": "unsure",
+    "confidence": "low",
+    "legible_at_native": "partly",
+    "note": "CAVEAT: these tiles are 1167x3152 px and were displayed to me downscaled to 740x2000 (factor 1.58), so I did not see them at native resolution. Tile t1 and t4 are mostly margin. Microfilm contrast is good; a trained reader could likely transcribe."
+  },
+  {
+    "slug": "ara-30",
+    "observed_script": "Hebrew, Sephardic/Oriental cursive, brown ink, dense prose (about 37 long lines, no diagrams)",
+    "observed_language": "undetermined, leaning Judeo-Arabic",
+    "evidence": "0 words read securely. One recurring feature: a short free-standing sign that looks like the aleph-lamed ligature occurs before a large share of the words on every line (several times per line), and short two-letter words resembling מן recur. A very high frequency of a detached article-like sign is what Judeo-Arabic אל- looks like in this kind of hand, and is not what Hebrew prose looks like. This is a pattern observation, not a reading.",
+    "label_ok": "unsure",
+    "confidence": "low",
+    "legible_at_native": "partly",
+    "note": "CAVEAT: tiles are 4041 px wide and were displayed to me at 2000 px (factor 2.02), i.e. roughly the resolution the first reader had. Tile t5 is blank lower margin with only descender tips. Re-tiling this page into pieces no larger than about 1500 px on the long side would let a second look actually use the native pixels."
+  },
+  {
+    "slug": "san-02",
+    "observed_script": "Sharada (lithographed), Sharada numerals; English watermark 'CC-0. Vijeshwar Panchang Jammu. Digitized by eGangotri'",
+    "observed_language": "Sanskrit (abbreviated almanac notes) - inferred from endings",
+    "evidence": "0 whole words read with full security (my Sharada reading is weak). What I can see reliably: the page is roughly two-thirds numeral tables; the lower right panel has about 15 short note lines mixing abbreviations and numerals. At least 8 note words end in a visarga (two stacked dots), e.g. the endings of lines 2, 3, 9 and 13 of the panel and two in tile t4; one phrase in t4 reads to me as ...संक्रांति पौषः (...sankranti pausah) with moderate confidence. A boxed diagonal stamp-like caption sits in t4.",
+    "label_ok": "yes",
+    "confidence": "low",
+    "legible_at_native": "yes",
+    "note": "Visarga nominatives are Sanskrit morphology; Kashmiri or Hindi notes would not carry them, which is the basis for 'yes'. Running text is thin (short abbreviated entries), so 'n/a' is arguable. Tiles were displayed downscaled 1.39x (2788 px tall shown at 2000), still clearly printed; a Sharada reader could transcribe."
+  },
+  {
+    "slug": "san-09",
+    "observed_script": "Sharada (lithographed), Sharada numerals; page number in Devanagari numerals at top (reads like 26)",
+    "observed_language": "Sanskrit (abbreviated almanac notes) - inferred from endings",
+    "evidence": "0 whole words read with full security. The band under the upper table reads to me as ...संवत् ५०४१ ... (...samvat 5041, an era year) with moderate confidence. The lower right panel has 14 note lines; at least 9 words end in visarga, several followed by a danda (lines 2, 3, 4, 7, 10, 12 of the panel in t2, and four more in t3). Upper third and lower left are numeral tables with single-letter weekday/nakshatra abbreviations.",
+    "label_ok": "yes",
+    "confidence": "low",
+    "legible_at_native": "yes",
+    "note": "Same reasoning as san-02: repeated visarga-final words plus danda punctuation point to Sanskrit rather than a vernacular. This is the clearest print of the four almanac pages; shown to me downscaled only slightly (1875 px tall)."
+  },
+  {
+    "slug": "san-24",
+    "observed_script": "Sharada (lithographed, worn and blurred), Sharada numerals; watermark 'CC-0. Kashmir Research Institute, Srinagar. Digitized by eGangotri'",
+    "observed_language": "undetermined (Sanskrit likely, not confirmed)",
+    "evidence": "0 words read securely. Two header bands under the upper table each appear to contain संवत् (samvat) followed by numerals - moderate confidence. The note panel (about 12 lines in t3, a few more in t4) shows 3-4 visarga-like endings and several dandas, but the print is smeared and I cannot distinguish visarga from stray dots reliably. Most of the page is numerals.",
+    "label_ok": "unsure",
+    "confidence": "low",
+    "legible_at_native": "partly",
+    "note": "Probably the same Sanskrit almanac register as san-02/09, but on this page the evidence is too degraded to say so. Displayed to me downscaled 1.41x."
+  },
+  {
+    "slug": "san-27",
+    "observed_script": "Sharada (lithographed, with what look like handwritten additions in the left margin), Sharada numerals; page numbers at top of both pages; watermark 'CC-0. Vijeshwar Panchang Jammu. Digitized by eGangotri'",
+    "observed_language": "undetermined (Sanskrit likely, not confirmed)",
+    "evidence": "0 words read securely. Header bands again appear to contain संवत् (samvat) + numerals on both facing pages - moderate confidence. Note panel of about 14 lines on the right page (t3) and about 10 on its continuation (t4): two clear visarga endings (line 9 of t3; one near the right edge of t4), the rest abbreviations interleaved with numerals. Left page is numeral table only.",
+    "label_ok": "unsure",
+    "confidence": "low",
+    "legible_at_native": "partly",
+    "note": "Fewer inflected words than san-02/09, so the visarga cue is too thin to carry a 'yes'. Nothing on the page looks like a vernacular, but that is absence of evidence. Displayed to me downscaled 1.42x."
+  }
+]

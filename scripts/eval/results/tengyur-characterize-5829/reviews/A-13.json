@@ -1,0 +1,203 @@
+[
+ {
+  "id": "P247I",
+  "score": 4,
+  "verdict": "light",
+  "errors": [
+   {
+    "type": "structure",
+    "confidence": "high",
+    "tibetan": "བཅོམ་ལྡན་འདས་དེ་ནི་མ་ལགས་སོ་ཞེས་བྱ་བ་ནི་འགོག་པ་ལ་རྗེས་སུ་ཤེས་པའི་བཟོད་པའོ།",
+    "english": "[note: This indicates the patience of subsequent realization regarding cessation.]",
+    "why": "The identification of Subhūti's reply with the subsequent-knowledge forbearance regarding cessation (nirodhe 'nvayajñānakṣānti) is the commentator's own statement in the text, not a translator's note.",
+    "fix": {
+     "find": "[note: This indicates the patience of subsequent realization regarding cessation.]",
+     "replace": "These words are the forbearance of subsequent knowledge with regard to cessation."
+    }
+   }
+  ],
+  "note": "A faithful rendering of the repetitive sūtra questions; the commentary's own gloss is demoted to a bracketed translator's note, and the opening adds a stray gloss about Subhūti."
+ },
+ {
+  "id": "P4TDS",
+  "score": 3,
+  "verdict": "light",
+  "errors": [
+   {
+    "type": "reversal",
+    "confidence": "high",
+    "tibetan": "དྲན་པ་གཅིག་པའི་ཏིང་ངེ་འཛིན་ཞེས་པ་ནི་དང་པོ་སྦྱོར་བའི་ཡན་ལག་ཏུ་གྱུར་པ་#རྣལ་འབྱོར་གྱི་ཏིང་ངེ་འཛིན་གྱི་མཚན་ཉིད་དོ།",
+    "english": "is not the defining characteristic of the meditative absorption of yoga",
+    "why": "The Tibetan says the samādhi of single recollection IS the characteristic of the yoga samādhi that is a limb of the first application; there is no negation.",
+    "fix": {
+     "find": "is not the defining characteristic of the meditative absorption of yoga",
+     "replace": "is the defining characteristic of the meditative absorption of yoga"
+    }
+   }
+  ],
+  "note": "Otherwise an accurate account of the sādhana sequence, but an added negation reverses the opening definition."
+ },
+ {
+  "id": "PHMXK",
+  "score": 4,
+  "verdict": "light",
+  "errors": [
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "ཕ་རོལ་ཏུ་ཕྱིན་པ་དང་ལྡན་པའི་མདོ་སྡེ་དུ་མ་དང་གསང་སྔགས་ཀྱི་ཚུལ་རྣམས་ལ་བལྟ་བ་དང་།",
+    "english": "This is found in many (sutras) discourses endowed with the (paramitas) perfections and should be viewed in the systems of (mantra) secret formula; tantra as well.",
+    "why": "The Tibetan begins a new clause about the commentator looking at many Pāramitā sūtras and mantra systems (continuing on the next side), not a claim that the quotation is found in them and should be viewed in tantra."
+   }
+  ],
+  "note": "The ten-entries passage is rendered faithfully; only the final transitional clause is recast."
+ },
+ {
+  "id": "PNH66",
+  "score": 4,
+  "verdict": "light",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ལས་ཞེས་པ་ནི་གྱུར་པའོ།",
+    "english": "Action refers to what has been transformed.",
+    "why": "ལས here is the ablative 'from' of the lemma ཧཱུཾ་དེར་གྱུར་པ་ལས ('from that HŪṂ transformed') begun on the previous side, not 'action' (karman)."
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ཐུགས་རྗེ་ཆེན་པོ་ཆགས་པས་ཡང་དག་པར་སྟོན་པའི་དོན་ཏོ།",
+    "english": "This signifies a perfect teaching arising from great compassion and attachment.",
+    "why": "The phrase means the (reddish) colour shows that he is attached through great compassion; སྟོན་པ is 'showing', not 'a perfect teaching'."
+   }
+  ],
+  "note": "Sound on the iconography and the third-yoga procedure, with two lemma glosses misread."
+ },
+ {
+  "id": "PTV2W",
+  "score": 3,
+  "verdict": "work",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "མ་ཡིན་ཏེ་སྔོན་ཉིད་སྣང་བའི་ཕྱིར་རོ། །སྔོན་གྱི་རང་བཞིན་ཉིད་དུ་སྣང་བ་ན་རྣམ་པ་གཞན་དེ་ཉིད་མི་གསལ་བ་ཡིན་ནོ།",
+    "english": "because the blue color [note: original: \"sngon\", often used as a standard example for sensory perception] has already appeared. When the nature of the blue itself appears, other aspects are precisely what are not clear.",
+    "why": "སྔོན here is 'earlier/before' (it appeared previously; when it appears in its earlier nature the other aspect is unclear), not 'blue' (སྔོན་པོ).",
+    "fix": {
+     "find": "because the blue color [note: original: \"sngon\", often used as a standard example for sensory perception] has already appeared. When the nature of the blue itself appears, other aspects are precisely what are not clear.",
+     "replace": "because it already appeared earlier. When it appears in its earlier nature, the other aspect is precisely what is not clear."
+    }
+   },
+   {
+    "type": "gloss",
+    "confidence": "medium",
+    "tibetan": "ཡི་གེ་སྣང་བའི་ཤེས་པ་ཉིད་ནི་ཁྲ་བོ་ལ་དམིགས་པ་མ་ཡིན་ཏེ",
+    "english": "[note: original: \"khra bo\", referring to a multicolored or complex pattern]",
+    "why": "ཁྲ་བོ is the 'dappled one', the standard example of an individual cow (śābaleya) from the preceding argument about the cognition 'this is a cow', not a multicoloured pattern."
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "རྣམ་པར་རྟོག་པ་གཞན་ཁོ་ན་ཡིན་ཏེ། དེས་ན་བར་དུ་གཅོད་དོ་ཞེ་ན།",
+    "english": "If those who claim there is no conceptualization in perception argue that conceptualization is something else entirely and thus causes an interruption",
+    "why": "The objection is put by the opponent against the proponent of non-conceptual perception: 'for one who holds perception non-conceptual, conceptualization is something else, so it interrupts'; the proponents themselves do not argue this."
+   }
+  ],
+  "note": "The dialectic is mostly followed, but a misread སྔོན ('earlier' taken as 'blue') derails one step of the argument and the cow example is lost."
+ },
+ {
+  "id": "PHYN5",
+  "score": 4,
+  "verdict": "light",
+  "errors": [
+   {
+    "type": "agent",
+    "confidence": "high",
+    "tibetan": "དེ་རྣམས་ཀྱི་སྐུ་དང་གསུང་དང་ཐུགས་རྡོ་རྗེ་ཀུན་དུ་སྐྲག་པར་བྱེད་པ་ནི། ཁྲོ་བོ་སྔགས་ཀྱི་བདག་ཉིད་ཅན་ཏེ།",
+    "english": "The Body, Speech, and Mind Vajra of those, which causes everyone to tremble, is the nature of the Wrathful Mantra",
+    "why": "The body, speech and mind vajra of 'those' (the beings to be accomplished) is what gets terrified; the terrifier is the one whose nature is the wrathful mantra.",
+    "fix": {
+     "find": "The Body, Speech, and Mind Vajra of those, which causes everyone to tremble, is the nature of the Wrathful Mantra",
+     "replace": "That which utterly terrifies the Body, Speech, and Mind Vajra of those is the one whose nature is the Wrathful Mantra"
+    }
+   }
+  ],
+  "note": "The coded commitments and the summary are well rendered; the terrifying clause has its object turned into the agent."
+ },
+ {
+  "id": "PBBKO",
+  "score": 5,
+  "verdict": "light",
+  "errors": [],
+  "note": "Faithful rendering of the five-similes verse, the two-truths gloss and the humoral timing of dreams."
+ },
+ {
+  "id": "P8I41",
+  "score": 4,
+  "verdict": "light",
+  "errors": [
+   {
+    "type": "addition",
+    "confidence": "high",
+    "tibetan": "འདི་ནི་མཆོག་ཏུ་བདེ་བ་ཆེན་པོ་ཞེས་པ་ནི་འདི་ནི་བདེ་བ་ཆེན་པོའི་མཆོག་ཉིད་དེ་ལྷན་ཅིག་སྐྱེས་པའི་དགའ་བ་",
+    "english": "The Apabhraṃśa phrase ehu so para­mamahāsuhau would be eṣo 'sau parama­mahā­sukhaḥ.",
+    "why": "The Tibetan has no remark on an Apabhraṃśa phrase and its Sanskrit equivalent; this comes from the Sanskrit commentary, not from this side.",
+    "fix": {
+     "find": " The Apabhraṃśa phrase ehu so para­mamahāsuhau would be eṣo 'sau parama­mahā­sukhaḥ.",
+     "replace": ""
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ལྷག་མ་ལྷན་ཅིག་སྐྱེས་དགའ་བ།",
+    "english": "While innate joy is cultivated through elimination.",
+    "why": "The Tibetan says the remaining (fourth) one is innate joy; there is nothing about cultivating it through elimination."
+   }
+  ],
+  "note": "A close, scholarly translation (apparently made from the Sanskrit) that tracks the Tibetan well apart from a Sanskrit-only aside and one verse line."
+ },
+ {
+  "id": "P4TD7",
+  "score": 4,
+  "verdict": "light",
+  "errors": [
+   {
+    "type": "omission",
+    "confidence": "medium",
+    "tibetan": "ཕ་མ་ནི་དེ་དག་གི་ལུས་མ་ཚང་བའི་བདག་པོར་འགྱུར་བའི་#ཕྱིར་དང་། བྱམས་\nཔ་ཆུང་བའི་ཕྱིར་ཕན་པ་ཆུང་བ་ཡིན་ནོ།",
+    "english": "Because the parents are the masters of the body's development, if there is little love, there is little benefit.",
+    "why": "The Tibetan says the parents of eunuchs etc. are responsible for their deficient (incomplete) body and have little love for them, hence their benefit is small; 'deficient' is lost and the causal pair becomes a vague conditional."
+   }
+  ],
+  "note": "A sound rendering of the Kośa discussion of the ānantarya acts, with the reasoning about eunuchs' parents blurred."
+ },
+ {
+  "id": "POK7J",
+  "score": 3,
+  "verdict": "light",
+  "errors": [
+   {
+    "type": "structure",
+    "confidence": "high",
+    "tibetan": "རྒྱུའམ། འབྲས་བུའམ། བྱེད་པ་ལ་སྐུར་པ་འདེབས་པ་ཡོད་པའི་དངོས་པོ་འཇིག་པ། ལོག་པར་ཡོངས་སུ་རྟོག་པ་གང་།",
+    "english": "it is the destruction of existing things by denigrating the cause, the effect, or the activity. This distorted conceptualization is characterized by functions that include:\n*   Engaging in patience, desire, intelligence, reflection, and vision that sever all roots of virtue.",
+    "why": "Wrong view is a list of alternatives (denying cause, effect or function; destroying an existing thing; wrong conceptualization), as the following explanation of each confirms, and acceptance/wish/intellect/conception/view are synonyms of the view itself, whose function is severing the roots of virtue.",
+    "fix": {
+     "find": "it is the destruction of existing things by denigrating the cause, the effect, or the activity. This distorted conceptualization is characterized by functions that include:\n*   Engaging in patience, desire, intelligence, reflection, and vision that sever all roots of virtue.",
+     "replace": "it is the acceptance, wish, intellect, conception, and view that denigrates the cause, the effect, or the activity, or destroys an existing thing, or wrongly conceptualizes. Its functions are:\n*   Severing all roots of virtue."
+    }
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "བཟོད་པ་དང་། འདོད་པ་དང་། བློ་གྲོས་དང་། རྟོག་པ་དང་། ལྟ་བ་ངལ་བ་ལ་འབྲས་བུ་མེད་པ་འབྱུང་བའི་རྟེན་གྱི་ལས་ཅན་ནོ།",
+    "english": "This view involves a functional basis where patience, desire, intelligence, reflection, and vision result only in fruitless exhaustion.",
+    "why": "Acceptance, wish, intellect, conception and view are the names of the view of holding ethics and observances supreme; its function is to be the basis of fruitless exertion, not that these five result in exhaustion."
+   }
+  ],
+  "note": "The examples of denigrating cause, effect and activity are rendered well, but the definitional formula is mis-segmented, merging the alternatives of wrong view."
+ }
+]

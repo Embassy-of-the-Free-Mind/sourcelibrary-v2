@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA poemata/bald10",
+  "edition": "De Eclipsi Solari Anno MDCLIV Die XII. Augusti, In Europa — 1662",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "4/8",
+    "pb_aligned_pages": "4/4"
+  },
+  "origin": "library",
+  "book_id": "6a48d782df05f7ea342b7309",
+  "page_number": 21,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 5982,
+    "to_char": 6978,
+    "overlap": 0.752,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'momenta sunt, quae posuit Pater in potestate sua'; ends 'Signum esse Romani Imperii, à Luna Tur-' + catchword 'cica'; running head 'An. 1654. 12. Aug.' + page 7, numbered theses 34-42; ref has padding 'pronuntiantes, quae utique tempora et' and 'obscurandi, frigidissime'.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:37.656Z",
+  "text_location": "repo",
+  "text_sha256": "1ee34a261a84b42dc9ac903d9147c9598519c7325df3039117de1b0e01287fcd",
+  "unit": {
+    "chars": 996
+  },
+  "stratum": "latin-period-5126"
+}

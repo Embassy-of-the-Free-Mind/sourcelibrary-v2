@@ -1,0 +1,3870 @@
+{
+ "issue": 5830,
+ "preregistration": "scripts/eval/PREREGISTRATION-ocr-tags-5830.md",
+ "measure": "agreement",
+ "at": "2026-10-04T16:42:50.450Z",
+ "model": "gemini-3.1-flash-lite",
+ "prompts": {
+  "R": {
+   "source": "prompts 6ac02220413a82637da889bb v19.1",
+   "content_hash": "9d8f959e053491362b2c4acec1e20c9a",
+   "md5": "9d8f959e053491362b2c4acec1e20c9a"
+  },
+  "T": {
+   "source": "scripts/eval/prompts/ocr-tags-only-5830.txt",
+   "md5": "f0727bf9ed1c1ef5456c14a3908067d4"
+  },
+  "L": {
+   "source": "scripts/eval/prompts/ocr-lowres-classify-5830.txt",
+   "md5": "11079d9f86b05a1c96a673b0ba1d98cc"
+  }
+ },
+ "generation": {
+  "R": {
+   "temperature": 0.1,
+   "maxOutputTokens": 16384,
+   "thinkingConfig": {
+    "thinkingBudget": 0
+   }
+  },
+  "T": {
+   "temperature": 0.1,
+   "maxOutputTokens": 4096,
+   "thinkingConfig": {
+    "thinkingBudget": 0
+   }
+  },
+  "L": {
+   "temperature": 0.1,
+   "maxOutputTokens": 256,
+   "thinkingConfig": {
+    "thinkingBudget": 0
+   },
+   "mediaResolution": "MEDIA_RESOLUTION_LOW"
+  }
+ },
+ "image": {
+  "R_T": "fit 1500 px when > 100 KB (production)",
+  "L": "fit 512 px always"
+ },
+ "pages": {
+  "drawn": 195,
+  "scored": 150
+ },
+ "run_outcomes": {
+  "R2:text": 154,
+  "R2:refusal": 41,
+  "T:text": 195,
+  "L:text": 195,
+  "R:text": 149,
+  "R:refusal": 45,
+  "R:truncated": 1,
+  "L2:text": 2
+ },
+ "reference_positive_pages": {
+  "page-num": 128,
+  "header": 102,
+  "sig": 24,
+  "meta": 16,
+  "margin": 24,
+  "gloss": 0,
+  "insert": 1,
+  "image-desc": 5,
+  "image-desc-high": 2,
+  "warning": 3,
+  "unclear": 1,
+  "term": 1,
+  "vocab": 149
+ },
+ "l2_pages": 2,
+ "arms": {
+  "R2": {
+   "n_pages": 144,
+   "labels": {
+    "page-type": {
+     "n": 144,
+     "accuracy": 1
+    },
+    "language": {
+     "n": 144,
+     "accuracy": 1
+    },
+    "script": {
+     "n": 144,
+     "accuracy": 1
+    },
+    "scan-quality": {
+     "n": 144,
+     "accuracy": 1
+    },
+    "page-type-not-text": {
+     "p": 1,
+     "r": 1,
+     "f1": 1,
+     "tp": 6,
+     "fp": 0,
+     "fn": 0
+    },
+    "columns-multi": {
+     "p": 1,
+     "r": 1,
+     "f1": 1,
+     "tp": 6,
+     "fp": 0,
+     "fn": 0
+    }
+   },
+   "presence": {
+    "page-num": {
+     "p": 0.9919,
+     "r": 0.9919,
+     "f1": 0.9919,
+     "tp": 123,
+     "fp": 1,
+     "fn": 1
+    },
+    "header": {
+     "p": 1,
+     "r": 1,
+     "f1": 1,
+     "tp": 98,
+     "fp": 0,
+     "fn": 0
+    },
+    "sig": {
+     "p": 0.96,
+     "r": 1,
+     "f1": 0.9796,
+     "tp": 24,
+     "fp": 1,
+     "fn": 0
+    },
+    "meta": {
+     "p": 0.9375,
+     "r": 1,
+     "f1": 0.9677,
+     "tp": 15,
+     "fp": 1,
+     "fn": 0
+    },
+    "margin": {
+     "p": 0.9167,
+     "r": 1,
+     "f1": 0.9565,
+     "tp": 22,
+     "fp": 2,
+     "fn": 0
+    },
+    "gloss": {
+     "p": null,
+     "r": null,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 0
+    },
+    "insert": {
+     "p": 1,
+     "r": 1,
+     "f1": 1,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    },
+    "image-desc": {
+     "p": 1,
+     "r": 1,
+     "f1": 1,
+     "tp": 4,
+     "fp": 0,
+     "fn": 0
+    },
+    "image-desc-high": {
+     "p": 1,
+     "r": 1,
+     "f1": 1,
+     "tp": 2,
+     "fp": 0,
+     "fn": 0
+    },
+    "warning": {
+     "p": 0.75,
+     "r": 1,
+     "f1": 0.8571,
+     "tp": 3,
+     "fp": 1,
+     "fn": 0
+    },
+    "unclear": {
+     "p": 1,
+     "r": 1,
+     "f1": 1,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    },
+    "term": {
+     "p": 1,
+     "r": 1,
+     "f1": 1,
+     "tp": 1,
+     "fp": 0,
+     "fn": 0
+    },
+    "vocab": {
+     "p": 0.9931,
+     "r": 1,
+     "f1": 0.9965,
+     "tp": 143,
+     "fp": 1,
+     "fn": 0
+    }
+   },
+   "instances": {
+    "page-num": {
+     "p": 0.9839,
+     "r": 0.9839,
+     "matched": 122,
+     "n_arm": 124,
+     "n_ref": 124
+    },
+    "header": {
+     "p": 1,
+     "r": 1,
+     "matched": 98,
+     "n_arm": 98,
+     "n_ref": 98
+    },
+    "sig": {
+     "p": 0.96,
+     "r": 1,
+     "matched": 24,
+     "n_arm": 25,
+     "n_ref": 24
+    },
+    "margin": {
+     "p": 0.9388,
+     "r": 1,
+     "matched": 46,
+     "n_arm": 49,
+     "n_ref": 46
+    },
+    "insert": {
+     "p": 1,
+     "r": 1,
+     "matched": 1,
+     "n_arm": 1,
+     "n_ref": 1
+    }
+   },
+   "value_accuracy": {
+    "header": 0.9898,
+    "sig": 1,
+    "margin": 0.9783,
+    "insert": 1
+   },
+   "image_desc": {
+    "p": 1,
+    "r": 1,
+    "n_arm": 4,
+    "n_ref": 4,
+    "type_agree": 1,
+    "significance_agree": 1
+   },
+   "anchors": {}
+  },
+  "D": {
+   "n_pages": 150,
+   "labels": {
+    "page-type": {
+     "n": 150,
+     "accuracy": 0.96
+    },
+    "language": {
+     "n": 150,
+     "accuracy": 1
+    },
+    "script": {
+     "n": 150,
+     "accuracy": 0.98
+    },
+    "scan-quality": {
+     "n": 0,
+     "accuracy": null
+    },
+    "page-type-not-text": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 6
+    },
+    "columns-multi": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 6
+    }
+   },
+   "presence": {
+    "page-num": {
+     "p": 0.875,
+     "r": 0.1094,
+     "f1": 0.1944,
+     "tp": 14,
+     "fp": 2,
+     "fn": 114
+    },
+    "header": {
+     "p": 0.5,
+     "r": 0.0686,
+     "f1": 0.1207,
+     "tp": 7,
+     "fp": 7,
+     "fn": 95
+    },
+    "sig": {
+     "p": 0.8333,
+     "r": 0.2083,
+     "f1": 0.3333,
+     "tp": 5,
+     "fp": 1,
+     "fn": 19
+    },
+    "meta": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 16
+    },
+    "margin": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 24
+    },
+    "gloss": {
+     "p": null,
+     "r": null,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 0
+    },
+    "insert": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
+    },
+    "image-desc": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 5
+    },
+    "image-desc-high": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 2
+    },
+    "warning": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 3
+    },
+    "unclear": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
+    },
+    "term": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
+    },
+    "vocab": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 149
+    }
+   },
+   "instances": {
+    "page-num": {
+     "p": 0.1875,
+     "r": 0.0234,
+     "matched": 3,
+     "n_arm": 16,
+     "n_ref": 128
+    },
+    "header": {
+     "p": 0.2857,
+     "r": 0.0392,
+     "matched": 4,
+     "n_arm": 14,
+     "n_ref": 102
+    },
+    "sig": {
+     "p": 0.8333,
+     "r": 0.2083,
+     "matched": 5,
+     "n_arm": 6,
+     "n_ref": 24
+    },
+    "margin": {
+     "p": null,
+     "r": 0,
+     "matched": 0,
+     "n_arm": 0,
+     "n_ref": 55
+    },
+    "insert": {
+     "p": null,
+     "r": 0,
+     "matched": 0,
+     "n_arm": 0,
+     "n_ref": 1
+    }
+   },
+   "value_accuracy": {
+    "header": 1,
+    "sig": 1,
+    "margin": null,
+    "insert": null
+   },
+   "image_desc": {
+    "p": null,
+    "r": 0,
+    "n_arm": 0,
+    "n_ref": 5,
+    "type_agree": null,
+    "significance_agree": null
+   },
+   "anchors": {}
+  },
+  "L": {
+   "n_pages": 150,
+   "labels": {
+    "page-type": {
+     "n": 150,
+     "accuracy": 0.9733
+    },
+    "language": {
+     "n": 0,
+     "accuracy": null
+    },
+    "script": {
+     "n": 0,
+     "accuracy": null
+    },
+    "scan-quality": {
+     "n": 0,
+     "accuracy": null
+    },
+    "page-type-not-text": {
+     "p": 0.625,
+     "r": 0.8333,
+     "f1": 0.7143,
+     "tp": 5,
+     "fp": 3,
+     "fn": 1
+    },
+    "columns-multi": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 6
+    }
+   },
+   "presence": {
+    "page-num": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 128
+    },
+    "header": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 102
+    },
+    "sig": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 24
+    },
+    "meta": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 16
+    },
+    "margin": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 24
+    },
+    "gloss": {
+     "p": null,
+     "r": null,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 0
+    },
+    "insert": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
+    },
+    "image-desc": {
+     "p": 0.2,
+     "r": 0.8,
+     "f1": 0.32,
+     "tp": 4,
+     "fp": 16,
+     "fn": 1
+    },
+    "image-desc-high": {
+     "p": 1,
+     "r": 0.5,
+     "f1": 0.6667,
+     "tp": 1,
+     "fp": 0,
+     "fn": 1
+    },
+    "warning": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 3
+    },
+    "unclear": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
+    },
+    "term": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
+    },
+    "vocab": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 149
+    }
+   },
+   "instances": {
+    "page-num": {
+     "p": null,
+     "r": 0,
+     "matched": 0,
+     "n_arm": 0,
+     "n_ref": 128
+    },
+    "header": {
+     "p": null,
+     "r": 0,
+     "matched": 0,
+     "n_arm": 0,
+     "n_ref": 102
+    },
+    "sig": {
+     "p": null,
+     "r": 0,
+     "matched": 0,
+     "n_arm": 0,
+     "n_ref": 24
+    },
+    "margin": {
+     "p": null,
+     "r": 0,
+     "matched": 0,
+     "n_arm": 0,
+     "n_ref": 55
+    },
+    "insert": {
+     "p": null,
+     "r": 0,
+     "matched": 0,
+     "n_arm": 0,
+     "n_ref": 1
+    }
+   },
+   "value_accuracy": {
+    "header": null,
+    "sig": null,
+    "margin": null,
+    "insert": null
+   },
+   "image_desc": {
+    "p": 0.2,
+    "r": 0.8,
+    "n_arm": 20,
+    "n_ref": 5,
+    "type_agree": 0,
+    "significance_agree": 0.75
+   },
+   "anchors": {}
+  },
+  "L+L2": {
+   "n_pages": 150,
+   "labels": {
+    "page-type": {
+     "n": 150,
+     "accuracy": 0.9733
+    },
+    "language": {
+     "n": 0,
+     "accuracy": null
+    },
+    "script": {
+     "n": 0,
+     "accuracy": null
+    },
+    "scan-quality": {
+     "n": 0,
+     "accuracy": null
+    },
+    "page-type-not-text": {
+     "p": 0.625,
+     "r": 0.8333,
+     "f1": 0.7143,
+     "tp": 5,
+     "fp": 3,
+     "fn": 1
+    },
+    "columns-multi": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 6
+    }
+   },
+   "presence": {
+    "page-num": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 128
+    },
+    "header": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 102
+    },
+    "sig": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 24
+    },
+    "meta": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 16
+    },
+    "margin": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 24
+    },
+    "gloss": {
+     "p": null,
+     "r": null,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 0
+    },
+    "insert": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
+    },
+    "image-desc": {
+     "p": 1,
+     "r": 0.2,
+     "f1": 0.3333,
+     "tp": 1,
+     "fp": 0,
+     "fn": 4
+    },
+    "image-desc-high": {
+     "p": 1,
+     "r": 0.5,
+     "f1": 0.6667,
+     "tp": 1,
+     "fp": 0,
+     "fn": 1
+    },
+    "warning": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 3
+    },
+    "unclear": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
+    },
+    "term": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 1
+    },
+    "vocab": {
+     "p": null,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 0,
+     "fn": 149
+    }
+   },
+   "instances": {
+    "page-num": {
+     "p": null,
+     "r": 0,
+     "matched": 0,
+     "n_arm": 0,
+     "n_ref": 128
+    },
+    "header": {
+     "p": null,
+     "r": 0,
+     "matched": 0,
+     "n_arm": 0,
+     "n_ref": 102
+    },
+    "sig": {
+     "p": null,
+     "r": 0,
+     "matched": 0,
+     "n_arm": 0,
+     "n_ref": 24
+    },
+    "margin": {
+     "p": null,
+     "r": 0,
+     "matched": 0,
+     "n_arm": 0,
+     "n_ref": 55
+    },
+    "insert": {
+     "p": null,
+     "r": 0,
+     "matched": 0,
+     "n_arm": 0,
+     "n_ref": 1
+    }
+   },
+   "value_accuracy": {
+    "header": null,
+    "sig": null,
+    "margin": null,
+    "insert": null
+   },
+   "image_desc": {
+    "p": 1,
+    "r": 0.2,
+    "n_arm": 1,
+    "n_ref": 5,
+    "type_agree": 1,
+    "significance_agree": 1
+   },
+   "anchors": {}
+  },
+  "T": {
+   "n_pages": 150,
+   "labels": {
+    "page-type": {
+     "n": 150,
+     "accuracy": 0.9667
+    },
+    "language": {
+     "n": 150,
+     "accuracy": 0
+    },
+    "script": {
+     "n": 150,
+     "accuracy": 0.9867
+    },
+    "scan-quality": {
+     "n": 150,
+     "accuracy": 0.9667
+    },
+    "page-type-not-text": {
+     "p": 0.5556,
+     "r": 0.8333,
+     "f1": 0.6667,
+     "tp": 5,
+     "fp": 4,
+     "fn": 1
+    },
+    "columns-multi": {
+     "p": 1,
+     "r": 0.5,
+     "f1": 0.6667,
+     "tp": 3,
+     "fp": 0,
+     "fn": 3
+    }
+   },
+   "presence": {
+    "page-num": {
+     "p": 0.9481,
+     "r": 1,
+     "f1": 0.9734,
+     "tp": 128,
+     "fp": 7,
+     "fn": 0
+    },
+    "header": {
+     "p": 0.9273,
+     "r": 1,
+     "f1": 0.9623,
+     "tp": 102,
+     "fp": 8,
+     "fn": 0
+    },
+    "sig": {
+     "p": 0.8519,
+     "r": 0.9583,
+     "f1": 0.902,
+     "tp": 23,
+     "fp": 4,
+     "fn": 1
+    },
+    "meta": {
+     "p": 0.1744,
+     "r": 0.9375,
+     "f1": 0.2941,
+     "tp": 15,
+     "fp": 71,
+     "fn": 1
+    },
+    "margin": {
+     "p": 0.4889,
+     "r": 0.9167,
+     "f1": 0.6377,
+     "tp": 22,
+     "fp": 23,
+     "fn": 2
+    },
+    "gloss": {
+     "p": 0,
+     "r": null,
+     "f1": null,
+     "tp": 0,
+     "fp": 1,
+     "fn": 0
+    },
+    "insert": {
+     "p": 0,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 5,
+     "fn": 1
+    },
+    "image-desc": {
+     "p": 0.2353,
+     "r": 0.8,
+     "f1": 0.3636,
+     "tp": 4,
+     "fp": 13,
+     "fn": 1
+    },
+    "image-desc-high": {
+     "p": 1,
+     "r": 1,
+     "f1": 1,
+     "tp": 2,
+     "fp": 0,
+     "fn": 0
+    },
+    "warning": {
+     "p": 0.0909,
+     "r": 0.3333,
+     "f1": 0.1429,
+     "tp": 1,
+     "fp": 10,
+     "fn": 2
+    },
+    "unclear": {
+     "p": 0,
+     "r": 0,
+     "f1": null,
+     "tp": 0,
+     "fp": 4,
+     "fn": 1
+    },
+    "term": {
+     "p": 0.0286,
+     "r": 1,
+     "f1": 0.0556,
+     "tp": 1,
+     "fp": 34,
+     "fn": 0
+    },
+    "vocab": {
+     "p": 0.9933,
+     "r": 1,
+     "f1": 0.9967,
+     "tp": 149,
+     "fp": 1,
+     "fn": 0
+    }
+   },
+   "instances": {
+    "page-num": {
+     "p": 0.9259,
+     "r": 0.9766,
+     "matched": 125,
+     "n_arm": 135,
+     "n_ref": 128
+    },
+    "header": {
+     "p": 0.9273,
+     "r": 1,
+     "matched": 102,
+     "n_arm": 110,
+     "n_ref": 102
+    },
+    "sig": {
+     "p": 0.8519,
+     "r": 0.9583,
+     "matched": 23,
+     "n_arm": 27,
+     "n_ref": 24
+    },
+    "margin": {
+     "p": 0.3889,
+     "r": 0.8909,
+     "matched": 49,
+     "n_arm": 126,
+     "n_ref": 55
+    },
+    "insert": {
+     "p": 0,
+     "r": 0,
+     "matched": 0,
+     "n_arm": 10,
+     "n_ref": 1
+    }
+   },
+   "value_accuracy": {
+    "header": 0.9706,
+    "sig": 1,
+    "margin": 0.9592,
+    "insert": null
+   },
+   "image_desc": {
+    "p": 0.1818,
+    "r": 0.8,
+    "n_arm": 22,
+    "n_ref": 5,
+    "type_agree": 1,
+    "significance_agree": 1
+   },
+   "anchors": {
+    "n": 53,
+    "found": 1,
+    "correct": 0.6226
+   }
+  }
+ },
+ "zero_cost_bound": {
+  "header": {
+   "in_glm": 33,
+   "of": 102,
+   "share": 0.3235
+  },
+  "page-num": {
+   "in_glm": 9,
+   "of": 128,
+   "share": 0.0703
+  },
+  "sig": {
+   "in_glm": 3,
+   "of": 24,
+   "share": 0.125
+  },
+  "margin": {
+   "in_glm": 13,
+   "of": 55,
+   "share": 0.2364
+  }
+ },
+ "t_language_values": {
+  "en": 134,
+  "la": 15,
+  "en, he, de, fr, nl": 1
+ },
+ "cost": {
+  "R": {
+   "job": "batches/8njrrrslo2z0oubxqd3uz16cdb5e6aiy95ma",
+   "requests": 195,
+   "in_tokens": 846891,
+   "out_tokens": 96034,
+   "mean_in": 4343.0308,
+   "mean_out": 492.4821,
+   "cost_usd": 0.1779,
+   "usd_per_1000_requests": 0.9122,
+   "usd_per_1000_pages": 0.9122
+  },
+  "R2": {
+   "job": "batches/32m8ectca6t1luq1jkn34wd6jna7dee7uv7s",
+   "requests": 195,
+   "in_tokens": 846891,
+   "out_tokens": 82458,
+   "mean_in": 4343.0308,
+   "mean_out": 422.8615,
+   "cost_usd": 0.1677,
+   "usd_per_1000_requests": 0.86,
+   "usd_per_1000_pages": 0.86
+  },
+  "T": {
+   "job": "batches/cfc394msonh91y0pkqgikpdagj19gc9wxpxv",
+   "requests": 195,
+   "in_tokens": 459486,
+   "out_tokens": 35296,
+   "mean_in": 2356.3385,
+   "mean_out": 181.0051,
+   "cost_usd": 0.0839,
+   "usd_per_1000_requests": 0.4303,
+   "usd_per_1000_pages": 0.4303
+  },
+  "L": {
+   "job": "batches/v2yft1fmu7s1e52jejiy8bi1zo641hs467cq",
+   "requests": 195,
+   "in_tokens": 92621,
+   "out_tokens": 4292,
+   "mean_in": 474.9795,
+   "mean_out": 22.0103,
+   "cost_usd": 0.0148,
+   "usd_per_1000_requests": 0.0759,
+   "usd_per_1000_pages": 0.0759
+  },
+  "L2": {
+   "job": "batches/o0rulnx2tuuilabuskfq14woelfkz6idsr5u",
+   "requests": 2,
+   "in_tokens": 2494,
+   "out_tokens": 153,
+   "mean_in": 1247,
+   "mean_out": 76.5,
+   "cost_usd": 0.0004,
+   "usd_per_1000_requests": 0.2133,
+   "usd_per_1000_pages": 0.0022
+  }
+ },
+ "spend_usd": 0.4447,
+ "eye": {
+  "n": 20,
+  "label": "read from image",
+  "fields": {
+   "page_type": {
+    "R": {
+     "n": 20,
+     "correct": 1
+    },
+    "T": {
+     "n": 20,
+     "correct": 1
+    },
+    "D": {
+     "n": 20,
+     "correct": 0.95
+    }
+   },
+   "page_num": {
+    "R": {
+     "n": 20,
+     "correct": 1
+    },
+    "T": {
+     "n": 20,
+     "correct": 1
+    },
+    "D": {
+     "n": 20,
+     "correct": 0.2
+    }
+   },
+   "header": {
+    "R": {
+     "n": 20,
+     "correct": 0.95
+    },
+    "T": {
+     "n": 20,
+     "correct": 0.95
+    },
+    "D": {
+     "n": 20,
+     "correct": 0.45
+    }
+   },
+   "sig": {
+    "R": {
+     "n": 20,
+     "correct": 0.95
+    },
+    "T": {
+     "n": 20,
+     "correct": 0.95
+    },
+    "D": {
+     "n": 20,
+     "correct": 0.9
+    }
+   },
+   "margin_count": {
+    "R": {
+     "n": 20,
+     "correct": 0.95
+    },
+    "T": {
+     "n": 20,
+     "correct": 0.75
+    },
+    "D": {
+     "n": 20,
+     "correct": 0.95
+    }
+   },
+   "illustration": {
+    "R": {
+     "n": 20,
+     "correct": 1
+    },
+    "T": {
+     "n": 20,
+     "correct": 1
+    },
+    "D": {
+     "n": 20,
+     "correct": 1
+    }
+   },
+   "multi_column": {
+    "R": {
+     "n": 20,
+     "correct": 1
+    },
+    "T": {
+     "n": 20,
+     "correct": 1
+    },
+    "D": {
+     "n": 20,
+     "correct": 0.95
+    }
+   },
+   "catchword": {
+    "R": {
+     "n": 20,
+     "correct": 0.5
+    },
+    "T": {
+     "n": 20,
+     "correct": 0.8
+    },
+    "D": {
+     "n": 20,
+     "correct": 0.45
+    }
+   }
+  },
+  "errors": [
+   {
+    "arm": "R",
+    "uid": "ed-6990619a3d9181cce82fb669-p17",
+    "field": "header",
+    "arm_value": false,
+    "image": true,
+    "note": "header 'at Northampton.'; sig C 2; catchword 'and'"
+   },
+   {
+    "arm": "T",
+    "uid": "ed-69aebfeb36a4ffb2dcfb62e3-p100",
+    "field": "header",
+    "arm_value": true,
+    "image": false,
+    "note": "'[ 74 ]' is the page number only (T also emits it as a header)"
+   },
+   {
+    "arm": "R",
+    "uid": "ed-6a08fd2e25e3a402b23b3bca-p26",
+    "field": "sig",
+    "arm_value": true,
+    "image": false,
+    "note": "'Act. ij.' is an act heading, not a signature (both R and T call it a sig); the letters at the right edge are the facing page; small decorative initial T"
+   },
+   {
+    "arm": "T",
+    "uid": "ed-6a08fd2e25e3a402b23b3bca-p26",
+    "field": "sig",
+    "arm_value": true,
+    "image": false,
+    "note": "'Act. ij.' is an act heading, not a signature (both R and T call it a sig); the letters at the right edge are the facing page; small decorative initial T"
+   },
+   {
+    "arm": "R",
+    "uid": "ed-6a8f6267e408ab73f484d28b-p15",
+    "field": "margin_count",
+    "arm_value": 2,
+    "image": 1,
+    "note": "one handwritten 'nota' in the right margin; the letters at the left edge are the facing page's line-ends"
+   },
+   {
+    "arm": "T",
+    "uid": "ed-6a08fd2e25e3a402b23b3bca-p26",
+    "field": "margin_count",
+    "arm_value": 1,
+    "image": 0,
+    "note": "'Act. ij.' is an act heading, not a signature (both R and T call it a sig); the letters at the right edge are the facing page; small decorative initial T"
+   },
+   {
+    "arm": "T",
+    "uid": "ed-69905e152fd6a039938a0ebe-p46",
+    "field": "margin_count",
+    "arm_value": 3,
+    "image": 0,
+    "note": "three footnotes (i)(k)(l) at the foot: footnotes, not margins (T tags them as margins); pencil '24' top right"
+   },
+   {
+    "arm": "T",
+    "uid": "en-69c666-ws88",
+    "field": "margin_count",
+    "arm_value": 2,
+    "image": 0,
+    "note": "two footnotes (T tags them as margins); 'Digitized by Google' stamp"
+   },
+   {
+    "arm": "T",
+    "uid": "en-69ee4f-pg54620p285",
+    "field": "margin_count",
+    "arm_value": 2,
+    "image": 0,
+    "note": "footnotes set in two columns; body single column; no catchword ('after' is the body's last word)"
+   },
+   {
+    "arm": "T",
+    "uid": "en-69aebf-ws469",
+    "field": "margin_count",
+    "arm_value": 2,
+    "image": 0,
+    "note": "page number at the foot; footnotes"
+   },
+   {
+    "arm": "R",
+    "uid": "ed-6991d6648c1030b12444b0ec-p351",
+    "field": "catchword",
+    "arm_value": false,
+    "image": true,
+    "note": "catchword 'vine' (completes 'Di-')"
+   },
+   {
+    "arm": "R",
+    "uid": "ed-6990619a3d9181cce82fb669-p17",
+    "field": "catchword",
+    "arm_value": false,
+    "image": true,
+    "note": "header 'at Northampton.'; sig C 2; catchword 'and'"
+   },
+   {
+    "arm": "R",
+    "uid": "ed-6a08fd2e25e3a402b23b3bca-p26",
+    "field": "catchword",
+    "arm_value": false,
+    "image": true,
+    "note": "'Act. ij.' is an act heading, not a signature (both R and T call it a sig); the letters at the right edge are the facing page; small decorative initial T"
+   },
+   {
+    "arm": "R",
+    "uid": "ed-695595ec7bd6d2cd1d620aba-p26",
+    "field": "catchword",
+    "arm_value": false,
+    "image": true,
+    "note": "catchword 'Dr. Pappins' (T tags it as an insert)"
+   },
+   {
+    "arm": "R",
+    "uid": "ed-69ac7f0f20878c5c9ba524b5-p366",
+    "field": "catchword",
+    "arm_value": false,
+    "image": true,
+    "note": "small decorative initial Y"
+   },
+   {
+    "arm": "R",
+    "uid": "ed-69905e152fd6a039938a0ebe-p46",
+    "field": "catchword",
+    "arm_value": false,
+    "image": true,
+    "note": "three footnotes (i)(k)(l) at the foot: footnotes, not margins (T tags them as margins); pencil '24' top right"
+   },
+   {
+    "arm": "R",
+    "uid": "ed-69aebfdea41a7e10e5a71d19-p27",
+    "field": "catchword",
+    "arm_value": false,
+    "image": true,
+    "note": null
+   },
+   {
+    "arm": "R",
+    "uid": "ed-69aebfeb36a4ffb2dcfb62e3-p100",
+    "field": "catchword",
+    "arm_value": false,
+    "image": true,
+    "note": "'[ 74 ]' is the page number only (T also emits it as a header)"
+   },
+   {
+    "arm": "R",
+    "uid": "en-69e783-pg74741p305",
+    "field": "catchword",
+    "arm_value": false,
+    "image": true,
+    "note": "sig X; catchword 'Notches,'"
+   },
+   {
+    "arm": "R",
+    "uid": "en-6a499d-ws169",
+    "field": "catchword",
+    "arm_value": false,
+    "image": true,
+    "note": "sig L 2; catchword 'Were'"
+   },
+   {
+    "arm": "T",
+    "uid": "ed-695595ec7bd6d2cd1d620aba-p26",
+    "field": "catchword",
+    "arm_value": false,
+    "image": true,
+    "note": "catchword 'Dr. Pappins' (T tags it as an insert)"
+   },
+   {
+    "arm": "T",
+    "uid": "en-69ee4f-pg54620p285",
+    "field": "catchword",
+    "arm_value": true,
+    "image": false,
+    "note": "footnotes set in two columns; body single column; no catchword ('after' is the body's last word)"
+   },
+   {
+    "arm": "T",
+    "uid": "en-69aebf-ws469",
+    "field": "catchword",
+    "arm_value": true,
+    "image": false,
+    "note": "page number at the foot; footnotes"
+   },
+   {
+    "arm": "T",
+    "uid": "en-69b99f-ws176",
+    "field": "catchword",
+    "arm_value": true,
+    "image": false,
+    "note": "page number at the foot"
+   }
+  ],
+  "margins": {
+   "R": {
+    "emitted": 2,
+    "on_page": 1
+   },
+   "T": {
+    "emitted": 11,
+    "on_page": 1
+   }
+  }
+ },
+ "per_page": [
+  {
+   "uid": "ed-0425b5da276941ae93dd76624ba8236a-p86",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "0425b5da-2769-41ae-93dd-76624ba8236a",
+   "page_number": 86,
+   "glm_chars": 743,
+   "R": {
+    "page-type": "text",
+    "page-num": "84",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-69526046ab34727b1f04660c-p342",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "69526046ab34727b1f04660c",
+   "page_number": 342,
+   "glm_chars": 3531,
+   "R": {
+    "page-type": "text",
+    "page-num": "336",
+    "header": "Gen. 22. The figure of Abrahams Ch. 48.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 3,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-695595ec7bd6d2cd1d620aba-p26",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "695595ec7bd6d2cd1d620aba",
+   "page_number": 26,
+   "glm_chars": 1319,
+   "R": {
+    "page-type": "text",
+    "page-num": "24",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6955d3d828a09ca65927ed03-p93",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6955d3d828a09ca65927ed03",
+   "page_number": 93,
+   "glm_chars": 907,
+   "R": {
+    "page-type": "text",
+    "page-num": "69",
+    "header": null,
+    "sig": "G 2",
+    "language": "English"
+   },
+   "R_margins": 1,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6970e37d9b09d309d780a2c2-p61",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6970e37d9b09d309d780a2c2",
+   "page_number": 61,
+   "glm_chars": 1284,
+   "R": {
+    "page-type": "text",
+    "page-num": "43",
+    "header": "Theomagica.",
+    "sig": "E 3",
+    "language": "English, Latin"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-69905cfcaaa7f10ed4cfd289-p588",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "69905cfcaaa7f10ed4cfd289",
+   "page_number": 588,
+   "glm_chars": 1549,
+   "R": {
+    "page-type": "text",
+    "page-num": "94",
+    "header": "The Description of a New World.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-69905e152fd6a039938a0ebe-p46",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "69905e152fd6a039938a0ebe",
+   "page_number": 46,
+   "glm_chars": 1214,
+   "R": {
+    "page-type": "text",
+    "page-num": "39",
+    "header": "concerning Witchcrafts 39",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-69906059ef12272ffdc8cef1-p22",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "69906059ef12272ffdc8cef1",
+   "page_number": 22,
+   "glm_chars": 2384,
+   "R": {
+    "page-type": "text",
+    "page-num": "16",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-699061933d9181cce82fb5aa-p55",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "699061933d9181cce82fb5aa",
+   "page_number": 55,
+   "glm_chars": 1553,
+   "R": {
+    "page-type": "text",
+    "page-num": null,
+    "header": "of Witches at Lancaster.",
+    "sig": "G",
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6990619a3d9181cce82fb669-p17",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6990619a3d9181cce82fb669",
+   "page_number": 17,
+   "glm_chars": 1523,
+   "R": {
+    "page-type": "text",
+    "page-num": null,
+    "header": null,
+    "sig": "C 2",
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6990619d3d9181cce82fb688-p9",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6990619d3d9181cce82fb688",
+   "page_number": 9,
+   "glm_chars": 974,
+   "R": {
+    "page-type": "text",
+    "page-num": "31",
+    "header": "of a Sorcerer.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-69906319ef12272ffdc8f380-p107",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "69906319ef12272ffdc8f380",
+   "page_number": 107,
+   "glm_chars": 1201,
+   "R": {
+    "page-type": "text",
+    "page-num": "71",
+    "header": "World Discovered.",
+    "sig": "F 3",
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-69906537726f64800c10a08c-p8",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "69906537726f64800c10a08c",
+   "page_number": 8,
+   "glm_chars": 1280,
+   "R": {
+    "page-type": "preface",
+    "page-num": null,
+    "header": "To the Reader.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6990668a2ec9f7db5717ab11-p28",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6990668a2ec9f7db5717ab11",
+   "page_number": 28,
+   "glm_chars": 1265,
+   "R": {
+    "page-type": "text",
+    "page-num": "22",
+    "header": null,
+    "sig": null,
+    "language": "English, Latin"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6991d6508c1030b12444acd8-p26",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6991d6508c1030b12444acd8",
+   "page_number": 26,
+   "glm_chars": 1679,
+   "R": {
+    "page-type": "text",
+    "page-num": "22",
+    "header": null,
+    "sig": null,
+    "language": "English, Greek"
+   },
+   "R_margins": 2,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6991d65e8c1030b12444ae97-p118",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6991d65e8c1030b12444ae97",
+   "page_number": 118,
+   "glm_chars": 1083,
+   "R": {
+    "page-type": "text",
+    "page-num": "88",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6991d6648c1030b12444b0ec-p351",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6991d6648c1030b12444b0ec",
+   "page_number": 351,
+   "glm_chars": 1169,
+   "R": {
+    "page-type": "text",
+    "page-num": "315",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6991d66e8c1030b12444b4a3-p26",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6991d66e8c1030b12444b4a3",
+   "page_number": 26,
+   "glm_chars": 2784,
+   "R": {
+    "page-type": "text",
+    "page-num": "18",
+    "header": "A communion between the Saints above,",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6991d6778c1030b12444b4d4-p43",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6991d6778c1030b12444b4d4",
+   "page_number": 43,
+   "glm_chars": 742,
+   "R": {
+    "page-type": "text",
+    "page-num": "35",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6991d67a8c1030b12444b537-p26",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6991d67a8c1030b12444b537",
+   "page_number": 26,
+   "glm_chars": 1977,
+   "R": {
+    "page-type": "text",
+    "page-num": "22",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6991e175b53cae6bb602470e-p28",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6991e175b53cae6bb602470e",
+   "page_number": 28,
+   "glm_chars": 799,
+   "R": {
+    "page-type": "text",
+    "page-num": "16",
+    "header": "Of the Value,",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6991e194339ebc850994a230-p98",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6991e194339ebc850994a230",
+   "page_number": 98,
+   "glm_chars": 1029,
+   "R": {
+    "page-type": "text",
+    "page-num": "74",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6991e7dec91ce7d733e50228-p17",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6991e7dec91ce7d733e50228",
+   "page_number": 17,
+   "glm_chars": 1792,
+   "R": {
+    "page-type": "text",
+    "page-num": "17",
+    "header": null,
+    "sig": "C",
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6992017d7c226bdd25f99444-p9",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6992017d7c226bdd25f99444",
+   "page_number": 9,
+   "glm_chars": 1265,
+   "R": {
+    "page-type": "text",
+    "page-num": null,
+    "header": "The forbidden Fruit,",
+    "sig": "A 3",
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-699fcd429ff0f1d2c4517fff-p28",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "699fcd429ff0f1d2c4517fff",
+   "page_number": 28,
+   "glm_chars": 494,
+   "R": {
+    "page-type": "text",
+    "page-num": null,
+    "header": "The Philosophers game.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 1
+  },
+  {
+   "uid": "ed-69ac7f0f20878c5c9ba524b5-p366",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "69ac7f0f20878c5c9ba524b5",
+   "page_number": 366,
+   "glm_chars": 2660,
+   "R": {
+    "page-type": "text",
+    "page-num": "44",
+    "header": "A Letter, to the King, &c.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-69aebe60c0472fef6455a8f2-p14",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "69aebe60c0472fef6455a8f2",
+   "page_number": 14,
+   "glm_chars": 2285,
+   "R": {
+    "page-type": "text",
+    "page-num": null,
+    "header": "TUBA STENTORO-PHONICA.",
+    "sig": "A 2",
+    "language": "English, Latin"
+   },
+   "R_margins": 1,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-69aebfdea41a7e10e5a71d19-p27",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "69aebfdea41a7e10e5a71d19",
+   "page_number": 27,
+   "glm_chars": 1145,
+   "R": {
+    "page-type": "text",
+    "page-num": "19",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-69aebfeb36a4ffb2dcfb62e3-p100",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "69aebfeb36a4ffb2dcfb62e3",
+   "page_number": 100,
+   "glm_chars": 1924,
+   "R": {
+    "page-type": "text",
+    "page-num": "74",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-69b18619c4be2cdd0edc524e-p6",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "69b18619c4be2cdd0edc524e",
+   "page_number": 6,
+   "glm_chars": 965,
+   "R": {
+    "page-type": "preface",
+    "page-num": null,
+    "header": "The Preface to the Reader.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-69b18625c4be2cdd0edc549e-p137",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "69b18625c4be2cdd0edc549e",
+   "page_number": 137,
+   "glm_chars": 1222,
+   "R": {
+    "page-type": "text",
+    "page-num": "133",
+    "header": "upon the Revelations.",
+    "sig": "I 2",
+    "language": "English"
+   },
+   "R_margins": 2,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-69bf60fd065df5d87d778bb3-p153",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "69bf60fd065df5d87d778bb3",
+   "page_number": 153,
+   "glm_chars": 825,
+   "R": {
+    "page-type": "text",
+    "page-num": "135",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-69cfa93f80eb0ccd3e739280-p101",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "69cfa93f80eb0ccd3e739280",
+   "page_number": 101,
+   "glm_chars": 3103,
+   "R": {
+    "page-type": "text",
+    "page-num": "53",
+    "header": "MICROGRAPHIA.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-69de0cf180210ba13d79fa39-p98",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "69de0cf180210ba13d79fa39",
+   "page_number": 98,
+   "glm_chars": 1335,
+   "R": {
+    "page-type": "text",
+    "page-num": "94",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-69e7833a0fc6fc955e36317c-p94",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "69e7833a0fc6fc955e36317c",
+   "page_number": 94,
+   "glm_chars": 1248,
+   "R": {
+    "page-type": "text",
+    "page-num": null,
+    "header": "Aprills husbandry.",
+    "sig": "Der",
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-69ee46ef6dd925d126f40e22-p581",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "69ee46ef6dd925d126f40e22",
+   "page_number": 581,
+   "glm_chars": 2346,
+   "R": {
+    "page-type": "text",
+    "page-num": "567",
+    "header": "West-SAXONS.",
+    "sig": "Dddd 2",
+    "language": "English"
+   },
+   "R_margins": 3,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a08fd2e25e3a402b23b3bca-p26",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a08fd2e25e3a402b23b3bca",
+   "page_number": 26,
+   "glm_chars": 1407,
+   "R": {
+    "page-type": "text",
+    "page-num": null,
+    "header": "CATILINE:",
+    "sig": "A ij.",
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a08fd6325e3a402b23b3e15-p27",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a08fd6325e3a402b23b3e15",
+   "page_number": 27,
+   "glm_chars": 1412,
+   "R": {
+    "page-type": "text",
+    "page-num": null,
+    "header": "The Iew of Malta",
+    "sig": "A",
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a3d29e1af872ba37a51ab17-p22",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a3d29e1af872ba37a51ab17",
+   "page_number": 22,
+   "glm_chars": 824,
+   "R": {
+    "page-type": "text",
+    "page-num": "24",
+    "header": "A Sermon Preached",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 1,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a425310343d756d34e34ea7-p15",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a425310343d756d34e34ea7",
+   "page_number": 15,
+   "glm_chars": 1296,
+   "R": {
+    "page-type": "text",
+    "page-num": null,
+    "header": "S E M I T A. 15",
+    "sig": null,
+    "language": "Latin"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a425634dfbbb4d07aa5382e-p15",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a425634dfbbb4d07aa5382e",
+   "page_number": 15,
+   "glm_chars": 1078,
+   "R": {
+    "page-type": "text",
+    "page-num": null,
+    "header": null,
+    "sig": null,
+    "language": "Latin"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a426869aedf4c943f91eac4-p14",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a426869aedf4c943f91eac4",
+   "page_number": 14,
+   "glm_chars": 1190,
+   "R": {
+    "page-type": "text",
+    "page-num": "12",
+    "header": null,
+    "sig": null,
+    "language": "Latin"
+   },
+   "R_margins": 1,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a4270ed62d175ca9e4e1aa5-p15",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a4270ed62d175ca9e4e1aa5",
+   "page_number": 15,
+   "glm_chars": 1118,
+   "R": {
+    "page-type": "text",
+    "page-num": "15",
+    "header": null,
+    "sig": null,
+    "language": "Latin"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a42aecb5207af7c42f5333c-p17",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a42aecb5207af7c42f5333c",
+   "page_number": 17,
+   "glm_chars": 1174,
+   "R": {
+    "page-type": "text",
+    "page-num": "3",
+    "header": "Dissertatio.",
+    "sig": "B 2",
+    "language": "Latin"
+   },
+   "R_margins": 5,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a42d56d1894955eb725e97f-p22",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a42d56d1894955eb725e97f",
+   "page_number": 22,
+   "glm_chars": 952,
+   "R": {
+    "page-type": "text",
+    "page-num": null,
+    "header": "IGNATI. 7",
+    "sig": null,
+    "language": "Latin"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a42ec4006e6ead3ac544b8f-p14",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a42ec4006e6ead3ac544b8f",
+   "page_number": 14,
+   "glm_chars": 1333,
+   "R": {
+    "page-type": "text",
+    "page-num": "6",
+    "header": "Poëmata varii argumenti.",
+    "sig": null,
+    "language": "Latin"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a42eff906e6ead3ac54bab4-p16",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a42eff906e6ead3ac54bab4",
+   "page_number": 16,
+   "glm_chars": 1055,
+   "R": {
+    "page-type": "text",
+    "page-num": null,
+    "header": "Endimion and Phœbe.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 1,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a43001a4e06bc233ecf5ef6-p16",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a43001a4e06bc233ecf5ef6",
+   "page_number": 16,
+   "glm_chars": 499,
+   "R": {
+    "page-type": "text",
+    "page-num": "8",
+    "header": null,
+    "sig": null,
+    "language": "Latin"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a4300764e06bc233ecf660a-p15",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a4300764e06bc233ecf660a",
+   "page_number": 15,
+   "glm_chars": 1646,
+   "R": {
+    "page-type": "text",
+    "page-num": "13",
+    "header": "De Causis Errorum.",
+    "sig": "B 3",
+    "language": "Latin"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a4308144e06bc233ed03513-p15",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a4308144e06bc233ed03513",
+   "page_number": 15,
+   "glm_chars": 1567,
+   "R": {
+    "page-type": "text",
+    "page-num": null,
+    "header": null,
+    "sig": "B4",
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a430a2a22c0c8edb0f8c8d4-p16",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a430a2a22c0c8edb0f8c8d4",
+   "page_number": 16,
+   "glm_chars": 1498,
+   "R": {
+    "page-type": "text",
+    "page-num": "12",
+    "header": null,
+    "sig": null,
+    "language": "Latin"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a4376a3e296c55144956689-p15",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a4376a3e296c55144956689",
+   "page_number": 15,
+   "glm_chars": 2298,
+   "R": {
+    "page-type": "text",
+    "page-num": "5",
+    "header": "COMPENDIUM.",
+    "sig": null,
+    "language": "Latin"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a43851557a09c2c0fcc0005-p17",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a43851557a09c2c0fcc0005",
+   "page_number": 17,
+   "glm_chars": 1644,
+   "R": {
+    "page-type": "text",
+    "page-num": "13",
+    "header": null,
+    "sig": null,
+    "language": "Latin"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a48d985df05f7ea342b77fb-p16",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a48d985df05f7ea342b77fb",
+   "page_number": 16,
+   "glm_chars": 952,
+   "R": {
+    "page-type": "text",
+    "page-num": "8",
+    "header": "Ecclesiastæ Paraphrasis. Cap. 2.",
+    "sig": null,
+    "language": "Latin"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a4a26ba9dda7124b26753a5-p38",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a4a26ba9dda7124b26753a5",
+   "page_number": 38,
+   "glm_chars": 1976,
+   "R": {
+    "page-type": "text",
+    "page-num": "30",
+    "header": "A Letter concerning Toleration.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 1,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a4ad920d6371d99e766879c-p83",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a4ad920d6371d99e766879c",
+   "page_number": 83,
+   "glm_chars": 1098,
+   "R": {
+    "page-type": "text",
+    "page-num": "67",
+    "header": null,
+    "sig": "F 2",
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a4f71ca1cba01ec54e763c3-p15",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a4f71ca1cba01ec54e763c3",
+   "page_number": 15,
+   "glm_chars": 632,
+   "R": {
+    "page-type": "text",
+    "page-num": "69",
+    "header": null,
+    "sig": null,
+    "language": "Latin"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a506fd980b7658fae261d6e-p16",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a506fd980b7658fae261d6e",
+   "page_number": 16,
+   "glm_chars": 1435,
+   "R": {
+    "page-type": "text",
+    "page-num": null,
+    "header": null,
+    "sig": null,
+    "language": "Latin"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a58ec9ac6cd8f987106886f-p6",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a58ec9ac6cd8f987106886f",
+   "page_number": 6,
+   "glm_chars": 2675,
+   "R": {
+    "page-type": "text",
+    "page-num": "6",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a58ecbfc6cd8f98710688e0-p15",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a58ecbfc6cd8f98710688e0",
+   "page_number": 15,
+   "glm_chars": 2161,
+   "R": {
+    "page-type": "preface",
+    "page-num": "15",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 1
+  },
+  {
+   "uid": "ed-6a58ecd0c6cd8f987106893f-p9",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a58ecd0c6cd8f987106893f",
+   "page_number": 9,
+   "glm_chars": 2324,
+   "R": {
+    "page-type": "text",
+    "page-num": "91",
+    "header": null,
+    "sig": "B",
+    "language": "English"
+   },
+   "R_margins": 1,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a8f6229ddd2f57fe0f810c4-p16",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a8f6229ddd2f57fe0f810c4",
+   "page_number": 16,
+   "glm_chars": 775,
+   "R": {
+    "page-type": "text",
+    "page-num": "8",
+    "header": "Englands Treasure",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6a8f6267e408ab73f484d28b-p15",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6a8f6267e408ab73f484d28b",
+   "page_number": 15,
+   "glm_chars": 884,
+   "R": {
+    "page-type": "text",
+    "page-num": "11",
+    "header": "of Englands common wealth.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 2,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6ab5a4019e89e2a1f4139282-p94",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6ab5a4019e89e2a1f4139282",
+   "page_number": 94,
+   "glm_chars": 978,
+   "R": {
+    "page-type": "text",
+    "page-num": "86",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "ed-6ab5a4089e89e2a1f4139348-p26",
+   "stratum": "eebo-tcp-5488",
+   "book_id": "6ab5a4089e89e2a1f4139348",
+   "page_number": 26,
+   "glm_chars": 2127,
+   "R": {
+    "page-type": "text",
+    "page-num": "8",
+    "header": "Digging, Setting, and Howing.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 1,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6aa1d4-ws78",
+   "stratum": "english-ia-5124",
+   "book_id": "6aa1d46077169abff161f4d7",
+   "page_number": 78,
+   "glm_chars": 1013,
+   "R": {
+    "page-type": "text",
+    "page-num": "62",
+    "header": "OCCULT JAPAN.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69b99f-ws176",
+   "stratum": "english-ia-5124",
+   "book_id": "69b99fb06ed9e0490990af9e",
+   "page_number": 176,
+   "glm_chars": 1425,
+   "R": {
+    "page-type": "text",
+    "page-num": "150",
+    "header": "THE ELDER EDDA OF SAEMUND",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69e41e-ws298",
+   "stratum": "english-ia-5124",
+   "book_id": "69e41ef4d0364cb0bcf79b7b",
+   "page_number": 298,
+   "glm_chars": 1173,
+   "R": {
+    "page-type": "text",
+    "page-num": "280",
+    "header": "ST. DOROTHY.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69e806-ws11",
+   "stratum": "english-ia-5124",
+   "book_id": "69e806bcfdad300064da0065",
+   "page_number": 11,
+   "glm_chars": 1282,
+   "R": {
+    "page-type": "text",
+    "page-num": "9",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69ae66-ws159",
+   "stratum": "english-ia-5124",
+   "book_id": "69ae66b74b74f168e0c14f12",
+   "page_number": 155,
+   "glm_chars": 2641,
+   "R": {
+    "page-type": "text",
+    "page-num": "145",
+    "header": "HERAKLEITOS OF EPHESOS 145",
+    "sig": null,
+    "language": "English, Greek"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6ab22e-ws55",
+   "stratum": "english-ia-5124",
+   "book_id": "6ab22e0d4ac37d55a212e9e8",
+   "page_number": 55,
+   "glm_chars": 1190,
+   "R": {
+    "page-type": "text",
+    "page-num": "45",
+    "header": "There is no Matter.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69de0c-ws74",
+   "stratum": "english-ia-5124",
+   "book_id": "69de0cca80210ba13d79f63a",
+   "page_number": 75,
+   "glm_chars": 1522,
+   "R": {
+    "page-type": "text",
+    "page-num": "58",
+    "header": "The Perfumed Garden",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6a0e56-ws18",
+   "stratum": "english-ia-5124",
+   "book_id": "6a0e5681b8ad266ebed235d3",
+   "page_number": 24,
+   "glm_chars": 2192,
+   "R": {
+    "page-type": "text",
+    "page-num": null,
+    "header": "SCIENCE OF BREATH.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69d149-ws303",
+   "stratum": "english-ia-5124",
+   "book_id": "69d149ce1c2a66dc094b30c3",
+   "page_number": 304,
+   "glm_chars": 1349,
+   "R": {
+    "page-type": "text",
+    "page-num": "271",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6a4a3f-ws54",
+   "stratum": "english-ia-5124",
+   "book_id": "6a4a3f10f0f4a3b75e91055b",
+   "page_number": 55,
+   "glm_chars": 943,
+   "R": {
+    "page-type": "text",
+    "page-num": "32",
+    "header": "POLITICAL LIBERTY.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6ab22a-ws62",
+   "stratum": "english-ia-5124",
+   "book_id": "6ab22ae3277b509c83e9179a",
+   "page_number": 62,
+   "glm_chars": 981,
+   "R": {
+    "page-type": "text",
+    "page-num": "50",
+    "header": "The Turba Philosophorum.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69d14b-ws199",
+   "stratum": "english-ia-5124",
+   "book_id": "69d14b0b1c2a66dc094b4a1d",
+   "page_number": 199,
+   "glm_chars": 1562,
+   "R": {
+    "page-type": "text",
+    "page-num": "177",
+    "header": null,
+    "sig": null,
+    "language": "English, Greek"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6ab244-ws38",
+   "stratum": "english-ia-5124",
+   "book_id": "6ab2441b87d2180b7f5e508d",
+   "page_number": 38,
+   "glm_chars": 1022,
+   "R": {
+    "page-type": "text",
+    "page-num": "28",
+    "header": "The Praises of Amida.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6952d1-ws139",
+   "stratum": "english-ia-5124",
+   "book_id": "6952d13377f38f6761bc5e29",
+   "page_number": 139,
+   "glm_chars": 990,
+   "R": {
+    "page-type": "text",
+    "page-num": "67",
+    "header": "The Humid Path.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69905c-ws309",
+   "stratum": "english-ia-5124",
+   "book_id": "69905c87aaa7f10ed4cfbefb",
+   "page_number": 309,
+   "glm_chars": 2467,
+   "R": {
+    "page-type": "text",
+    "page-num": "305",
+    "header": "DISEASE AND HEALING",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6ab247-ws49",
+   "stratum": "english-ia-5124",
+   "book_id": "6ab2470687d2180b7f5e95f1",
+   "page_number": 49,
+   "glm_chars": 1272,
+   "R": {
+    "page-type": "text",
+    "page-num": null,
+    "header": "THE BUDDHIST PHILOSOPHY OF LIFE 47",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6991eb-ws75",
+   "stratum": "english-ia-5124",
+   "book_id": "6991eb102f801130a473f7be",
+   "page_number": 75,
+   "glm_chars": 897,
+   "R": {
+    "page-type": "text",
+    "page-num": "39",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 3,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69e749-ws70",
+   "stratum": "english-ia-5124",
+   "book_id": "69e7494d85f786e884a4e5c1",
+   "page_number": 70,
+   "glm_chars": 516,
+   "R": {
+    "page-type": "text",
+    "page-num": "44",
+    "header": null,
+    "sig": null,
+    "language": "English, Chinese"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6aa1d5-ws52",
+   "stratum": "english-ia-5124",
+   "book_id": "6aa1d52577169abff162258b",
+   "page_number": 52,
+   "glm_chars": 1493,
+   "R": {
+    "page-type": "text",
+    "page-num": "32",
+    "header": "THE ETHICS OF MAIMONIDES",
+    "sig": null,
+    "language": "English, Hebrew, Yiddish, German, Dutch"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69e748-ws60",
+   "stratum": "english-ia-5124",
+   "book_id": "69e748c949abba5e982817d2",
+   "page_number": 60,
+   "glm_chars": 530,
+   "R": {
+    "page-type": "text",
+    "page-num": "52",
+    "header": "POEMS.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69dea2-ws88",
+   "stratum": "english-ia-5124",
+   "book_id": "69dea20a4d19ec2e9ba75cf1",
+   "page_number": 88,
+   "glm_chars": 1550,
+   "R": {
+    "page-type": "text",
+    "page-num": "52",
+    "header": "ACT THE THIRD",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6a08f9-ws194",
+   "stratum": "english-ia-5124",
+   "book_id": "6a08f9349c1b82475e159a8d",
+   "page_number": 194,
+   "glm_chars": 679,
+   "R": {
+    "page-type": "text",
+    "page-num": "126",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69ad66-ws43",
+   "stratum": "english-ia-5124",
+   "book_id": "69ad66130b6018c6ed17a683",
+   "page_number": 43,
+   "glm_chars": 2465,
+   "R": {
+    "page-type": "text",
+    "page-num": "33",
+    "header": "JASTROW-CLAY · OLD BABYLONIAN GILGAMESH EPIC",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69afd2-ws125",
+   "stratum": "english-ia-5124",
+   "book_id": "69afd2019a8092f06abf0c54",
+   "page_number": 125,
+   "glm_chars": 5664,
+   "R": {
+    "page-type": "text",
+    "page-num": "83",
+    "header": "BOOK IV.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69aebf-ws469",
+   "stratum": "english-ia-5124",
+   "book_id": "69aebfdcbd67a8dbe182a6cf",
+   "page_number": 472,
+   "glm_chars": 1683,
+   "R": {
+    "page-type": "text",
+    "page-num": "413",
+    "header": "AQUEDUCTS OF ROME, II. 82-84",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6ab6d1-ws63",
+   "stratum": "english-ia-5124",
+   "book_id": "6ab6d1bb8a91de9cd82fc7fc",
+   "page_number": 63,
+   "glm_chars": 925,
+   "R": {
+    "page-type": "text",
+    "page-num": "45",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 1
+  },
+  {
+   "uid": "en-69aea6-ws321",
+   "stratum": "english-ia-5124",
+   "book_id": "69aea6e729b07b134d10e7c9",
+   "page_number": 321,
+   "glm_chars": 1773,
+   "R": {
+    "page-type": "text",
+    "page-num": "315",
+    "header": "THE POND IN WINTER.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6a499d-ws169",
+   "stratum": "english-ia-5124",
+   "book_id": "6a499d15d702014d1ddf80dc",
+   "page_number": 170,
+   "glm_chars": 1446,
+   "R": {
+    "page-type": "text",
+    "page-num": "163",
+    "header": "RIGHTS OF WOMAN.",
+    "sig": "L 2",
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69b9a2-ws132",
+   "stratum": "english-ia-5124",
+   "book_id": "69b9a2d46ed9e0490990b9f9",
+   "page_number": 133,
+   "glm_chars": 2107,
+   "R": {
+    "page-type": "text",
+    "page-num": "104",
+    "header": "JOURNEY TO LHASA AND CENTRAL TIBET.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69a565-ws83",
+   "stratum": "english-ia-5124",
+   "book_id": "69a565d15a8a09c1b325e728",
+   "page_number": 83,
+   "glm_chars": 1829,
+   "R": {
+    "page-type": "text",
+    "page-num": "65",
+    "header": "THE NIHONGI",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69c666-ws88",
+   "stratum": "english-ia-5124",
+   "book_id": "69c666895ee2cfa2f502ce90",
+   "page_number": 88,
+   "glm_chars": 1241,
+   "R": {
+    "page-type": "text",
+    "page-num": "69",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69e419-ws163",
+   "stratum": "english-ia-5124",
+   "book_id": "69e419cb8a8dae1074c518e6",
+   "page_number": 166,
+   "glm_chars": 1871,
+   "R": {
+    "page-type": "text",
+    "page-num": "157",
+    "header": "MURASAKI",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69ee64-ws183",
+   "stratum": "english-ia-5124",
+   "book_id": "69ee64617b983848aff570b0",
+   "page_number": 183,
+   "glm_chars": 1124,
+   "R": {
+    "page-type": "text",
+    "page-num": "137",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69d8ca-ws596",
+   "stratum": "english-ia-5124",
+   "book_id": "69d8ca3fa09828f83ddca25f",
+   "page_number": 597,
+   "glm_chars": 1251,
+   "R": {
+    "page-type": "text",
+    "page-num": null,
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-695910-ws125",
+   "stratum": "english-ia-5124",
+   "book_id": "69591077ecb01322b30679d5",
+   "page_number": 123,
+   "glm_chars": 2992,
+   "R": {
+    "page-type": "text",
+    "page-num": "53",
+    "header": "Chap. III. The History of JAPAN. 53",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 2,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6ab233-ws84",
+   "stratum": "english-ia-5124",
+   "book_id": "6ab233994ac37d55a213923f",
+   "page_number": 84,
+   "glm_chars": 1133,
+   "R": {
+    "page-type": "text",
+    "page-num": "51",
+    "header": "CHURCH BY-LAWS",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6a58ed-ws52",
+   "stratum": "english-ia-5124",
+   "book_id": "6a58ed15c6cd8f9871068c9e",
+   "page_number": 52,
+   "glm_chars": 672,
+   "R": {
+    "page-type": "text",
+    "page-num": "48",
+    "header": "Heavenly Bridegrooms",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69af0b-ws324",
+   "stratum": "english-ia-5124",
+   "book_id": "69af0bc5be1c789306eb8ede",
+   "page_number": 324,
+   "glm_chars": 1688,
+   "R": {
+    "page-type": "text",
+    "page-num": "294",
+    "header": "THE SUSHRUTA SAMHITÁ. [Chap. XLVII.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-699066-ws261",
+   "stratum": "english-ia-5124",
+   "book_id": "69906623ef12272ffdc952c7",
+   "page_number": 261,
+   "glm_chars": 3133,
+   "R": {
+    "page-type": "text",
+    "page-num": "243",
+    "header": "Part. 3. COMMON-WEALTH. Chap. 38.",
+    "sig": "I i",
+    "language": "English"
+   },
+   "R_margins": 3,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6955d3-pg14504p344",
+   "stratum": "english-ia-5124",
+   "book_id": "6955d3d528a09ca65927eb28",
+   "page_number": 390,
+   "glm_chars": 1026,
+   "R": {
+    "page-type": "text",
+    "page-num": "344",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6a5837-pg44895p100",
+   "stratum": "english-ia-5124",
+   "book_id": "6a5837eb6701425b993055d0",
+   "page_number": 112,
+   "glm_chars": 1894,
+   "R": {
+    "page-type": "text",
+    "page-num": "100",
+    "header": "NO CROSS, NO CROWN.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6aa1d5-pg78248p612",
+   "stratum": "english-ia-5124",
+   "book_id": "6aa1d54c77169abff1622a16",
+   "page_number": 644,
+   "glm_chars": 2263,
+   "R": {
+    "page-type": "text",
+    "page-num": "612",
+    "header": "Orphic Eschatology [CH.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-699069-pg31511p363",
+   "stratum": "english-ia-5124",
+   "book_id": "699069ec1cf6ed5fbc8f43b5",
+   "page_number": 381,
+   "glm_chars": 2158,
+   "R": {
+    "page-type": "text",
+    "page-num": "363",
+    "header": "APPENDICES",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6ab6d5-pg35460p78",
+   "stratum": "english-ia-5124",
+   "book_id": "6ab6d532b393fe0e2d471b55",
+   "page_number": 86,
+   "glm_chars": 1395,
+   "R": {
+    "page-type": "text",
+    "page-num": "78",
+    "header": "APOLLONIUS OF TYANA.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6aa734-pg70461p44",
+   "stratum": "english-ia-5124",
+   "book_id": "6aa7349b38e15c149514cd4e",
+   "page_number": 72,
+   "glm_chars": 1050,
+   "R": {
+    "page-type": "text",
+    "page-num": "44",
+    "header": "ROADS LEADING TO THE OASIS",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6a477c-pg53023p193",
+   "stratum": "english-ia-5124",
+   "book_id": "6a477cdd1874da9b1a9a5140",
+   "page_number": 212,
+   "glm_chars": 2091,
+   "R": {
+    "page-type": "text",
+    "page-num": "193",
+    "header": "THE ASSASSINS.",
+    "sig": "R",
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69e72c-pg48511p144",
+   "stratum": "english-ia-5124",
+   "book_id": "69e72c97a409200ea79f50e9",
+   "page_number": 182,
+   "glm_chars": 1340,
+   "R": {
+    "page-type": "text",
+    "page-num": "144",
+    "header": "VIKRAM AND THE VAMPIRE.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6a0b25-pg77434p155",
+   "stratum": "english-ia-5124",
+   "book_id": "6a0b251a620b66ad8f233312",
+   "page_number": 225,
+   "glm_chars": 3546,
+   "R": {
+    "page-type": "text",
+    "page-num": "155",
+    "header": "Book IV. of Leaves. 155",
+    "sig": "Cc 2",
+    "language": "English"
+   },
+   "R_margins": 5,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6ab237-pg67996p297",
+   "stratum": "english-ia-5124",
+   "book_id": "6ab2371161b5fd3232b81187",
+   "page_number": 301,
+   "glm_chars": 549,
+   "R": {
+    "page-type": "text",
+    "page-num": "297",
+    "header": "THE ANGEL AND THE DEMON.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6ab245-pg35895p272",
+   "stratum": "english-ia-5124",
+   "book_id": "6ab2456387d2180b7f5e6e86",
+   "page_number": 300,
+   "glm_chars": 2631,
+   "R": {
+    "page-type": "text",
+    "page-num": "272",
+    "header": null,
+    "sig": null,
+    "language": "English, Latin"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6a08f8-pg53597p115",
+   "stratum": "english-ia-5124",
+   "book_id": "6a08f8bf9c1b82475e15802a",
+   "page_number": 139,
+   "glm_chars": 2632,
+   "R": {
+    "page-type": "text",
+    "page-num": "115",
+    "header": "EVLIYA EFENDI. 115",
+    "sig": "Q 2",
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69a552-pg38870p391",
+   "stratum": "english-ia-5124",
+   "book_id": "69a552e542054c7ce7176515",
+   "page_number": 461,
+   "glm_chars": 865,
+   "R": {
+    "page-type": "text",
+    "page-num": "391",
+    "header": "XVI PAVING-STONES FOR HELL 391",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69ad65-pg64037p436",
+   "stratum": "english-ia-5124",
+   "book_id": "69ad65e775811c30866e252a",
+   "page_number": 441,
+   "glm_chars": 3897,
+   "R": {
+    "page-type": "text",
+    "page-num": "436",
+    "header": "PART II. CHAPTER IX. § 93.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6a09ff-pg43519p227",
+   "stratum": "english-ia-5124",
+   "book_id": "6a09ff94fa20006dbaba9ecb",
+   "page_number": 186,
+   "glm_chars": 1785,
+   "R": {
+    "page-type": "text",
+    "page-num": null,
+    "header": "DRESDEN CODEX. 227",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6ab241-pg51880p24",
+   "stratum": "english-ia-5124",
+   "book_id": "6ab2412c87d2180b7f5de4ff",
+   "page_number": 140,
+   "glm_chars": 1975,
+   "R": {
+    "page-type": "text",
+    "page-num": "24",
+    "header": "THE NIDĀNAKATHĀ.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 1,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69ee4f-pg54620p285",
+   "stratum": "english-ia-5124",
+   "book_id": "69ee4f376dd925d126f4338c",
+   "page_number": 311,
+   "glm_chars": 2453,
+   "R": {
+    "page-type": "text",
+    "page-num": "285",
+    "header": "CHAP. VII. LONG BARROWS. 285",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6991be-ws97",
+   "stratum": "english-ia-5124",
+   "book_id": "6991be07df9a711e30db88ce",
+   "page_number": 97,
+   "glm_chars": 2311,
+   "R": {
+    "page-type": "text",
+    "page-num": "85",
+    "header": "CHAPTER III. VER. 1",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-699063-ws82",
+   "stratum": "english-ia-5124",
+   "book_id": "6990630de7b7642c081de2b2",
+   "page_number": 82,
+   "glm_chars": 400,
+   "R": {
+    "page-type": "text",
+    "page-num": "26",
+    "header": "ALBERUNI'S INDIA.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-699249-ws289",
+   "stratum": "english-ia-5124",
+   "book_id": "699249b1a2d53df4853be918",
+   "page_number": 289,
+   "glm_chars": 1622,
+   "R": {
+    "page-type": "index",
+    "page-num": "257",
+    "header": "INDEX",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69b63f-ws390",
+   "stratum": "english-ia-5124",
+   "book_id": "69b63f17a85a63b8ab1954d5",
+   "page_number": 390,
+   "glm_chars": 4809,
+   "R": {
+    "page-type": "text",
+    "page-num": "90",
+    "header": "REPLY TO GELLIUS FABER.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-699259-ws306",
+   "stratum": "english-ia-5124",
+   "book_id": "699259178812793469fe2127",
+   "page_number": 306,
+   "glm_chars": 2338,
+   "R": {
+    "page-type": "text",
+    "page-num": "290",
+    "header": "KOREAN HISTORY.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69924f-ws365",
+   "stratum": "english-ia-5124",
+   "book_id": "69924f2909c5da0cf50d6e51",
+   "page_number": 365,
+   "glm_chars": 1731,
+   "R": {
+    "page-type": "text",
+    "page-num": "855",
+    "header": "METAMORPHOSES BOOK XIV",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69afe5-ws137",
+   "stratum": "english-ia-5124",
+   "book_id": "69afe509da5fa12b664a70f2",
+   "page_number": 137,
+   "glm_chars": 2495,
+   "R": {
+    "page-type": "text",
+    "page-num": "cxxxiii",
+    "header": "CUBIC EQUATIONS.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6ab243-ws214",
+   "stratum": "english-ia-5124",
+   "book_id": "6ab2437787d2180b7f5e379c",
+   "page_number": 214,
+   "glm_chars": 2000,
+   "R": {
+    "page-type": "text",
+    "page-num": "130",
+    "header": "BUDDHA.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6aa1d2-ws352",
+   "stratum": "english-ia-5124",
+   "book_id": "6aa1d28877169abff161c815",
+   "page_number": 352,
+   "glm_chars": 1373,
+   "R": {
+    "page-type": "text",
+    "page-num": "316",
+    "header": "RELIGION.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69aec1-ws406",
+   "stratum": "english-ia-5124",
+   "book_id": "69aec1f00767ad23dd0affb0",
+   "page_number": 406,
+   "glm_chars": 3246,
+   "R": {
+    "page-type": "text",
+    "page-num": "372",
+    "header": "Concerning Natural Grammar. Part III.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 6,
+   "R_images": 1
+  },
+  {
+   "uid": "en-69ae66-ws266",
+   "stratum": "english-ia-5124",
+   "book_id": "69ae6681b3b0e7bf712d6201",
+   "page_number": 266,
+   "glm_chars": 2287,
+   "R": {
+    "page-type": "text",
+    "page-num": "266b, 267a",
+    "header": "PHYSICA",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69a553-ws153",
+   "stratum": "english-ia-5124",
+   "book_id": "69a553210aade5c1d01ff134",
+   "page_number": 153,
+   "glm_chars": 1199,
+   "R": {
+    "page-type": "text",
+    "page-num": "137",
+    "header": "THE FORTUNES OF YOO 137",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69e63b-ws487",
+   "stratum": "english-ia-5124",
+   "book_id": "69e63bfcd932f2d58adbdf0f",
+   "page_number": 487,
+   "glm_chars": 1641,
+   "R": {
+    "page-type": "text",
+    "page-num": null,
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 1,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69de0c-ws58",
+   "stratum": "english-ia-5124",
+   "book_id": "69de0cdb80210ba13d79f741",
+   "page_number": 58,
+   "glm_chars": 1368,
+   "R": {
+    "page-type": "text",
+    "page-num": "38",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69bd9b-ws28",
+   "stratum": "english-ia-5124",
+   "book_id": "69bd9b4246b01553e33be21a",
+   "page_number": 28,
+   "glm_chars": 1025,
+   "R": {
+    "page-type": "text",
+    "page-num": "16",
+    "header": "THE THEORY OF PSYCHOANALYSIS",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-699258-ws83",
+   "stratum": "english-ia-5124",
+   "book_id": "699258bd8812793469fdd0e1",
+   "page_number": 83,
+   "glm_chars": 1267,
+   "R": {
+    "page-type": "text",
+    "page-num": "47",
+    "header": "THE DIAMOND SUTRA",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 2,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6952db-ws150",
+   "stratum": "english-ia-5124",
+   "book_id": "6952db2477f38f6761bc70c4",
+   "page_number": 150,
+   "glm_chars": 2085,
+   "R": {
+    "page-type": "text",
+    "page-num": "36",
+    "header": "The true Notion of a Spirit.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6ab22a-ws164",
+   "stratum": "english-ia-5124",
+   "book_id": "6ab22ade277b509c83e915f3",
+   "page_number": 164,
+   "glm_chars": 3936,
+   "R": {
+    "page-type": "text",
+    "page-num": "142",
+    "header": "The Hermetic and Alchemical Writings of Paracelsus.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6ab242-ws205",
+   "stratum": "english-ia-5124",
+   "book_id": "6ab242e387d2180b7f5e240f",
+   "page_number": 205,
+   "glm_chars": 2289,
+   "R": {
+    "page-type": "text",
+    "page-num": "135",
+    "header": "RULES ON GIVING MEDICINE. 135",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-695434-ws146",
+   "stratum": "english-ia-5124",
+   "book_id": "6954344c1479a63c110890f8",
+   "page_number": 146,
+   "glm_chars": 913,
+   "R": {
+    "page-type": "toc",
+    "page-num": "10",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6ab243-ws476",
+   "stratum": "english-ia-5124",
+   "book_id": "6ab243e287d2180b7f5e46b9",
+   "page_number": 476,
+   "glm_chars": 1301,
+   "R": {
+    "page-type": "text",
+    "page-num": "330",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 1,
+   "R_images": 0
+  },
+  {
+   "uid": "en-699063-ws165",
+   "stratum": "english-ia-5124",
+   "book_id": "6990636bef12272ffdc914a5",
+   "page_number": 164,
+   "glm_chars": 2461,
+   "R": {
+    "page-type": "text",
+    "page-num": "116",
+    "header": "ALL EXISTENCE A DOMINION OF REASON.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-695926-pg60766p151",
+   "stratum": "english-ia-5124",
+   "book_id": "695926cc15b4070cb1e80050",
+   "page_number": 247,
+   "glm_chars": 1824,
+   "R": {
+    "page-type": "text",
+    "page-num": null,
+    "header": "of Witchcraft. Chap. 10. 151",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 6,
+   "R_images": 1
+  },
+  {
+   "uid": "en-699079-pg41110p268",
+   "stratum": "english-ia-5124",
+   "book_id": "699079eadb8b55d19ec685b8",
+   "page_number": 288,
+   "glm_chars": 2245,
+   "R": {
+    "page-type": "index",
+    "page-num": "268",
+    "header": "INDEX.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69e413-pg37386p101",
+   "stratum": "english-ia-5124",
+   "book_id": "69e413352d8eeae8614a0309",
+   "page_number": 113,
+   "glm_chars": 2598,
+   "R": {
+    "page-type": "text",
+    "page-num": "101",
+    "header": "BIBLIOGRAPHY. 101",
+    "sig": null,
+    "language": "English, French"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-6a9f34-pg71129p258",
+   "stratum": "english-ia-5124",
+   "book_id": "6a9f346b9a132af3854466d6",
+   "page_number": 362,
+   "glm_chars": 1925,
+   "R": {
+    "page-type": "text",
+    "page-num": "258",
+    "header": "GOZ EL FUNNYE.",
+    "sig": null,
+    "language": "English, Arabic"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69920a-pg70338p112",
+   "stratum": "english-ia-5124",
+   "book_id": "69920a28edefb8c8e756f325",
+   "page_number": 140,
+   "glm_chars": 1357,
+   "R": {
+    "page-type": "text",
+    "page-num": "112",
+    "header": "PAPER AND PAPER MAKING.",
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69e783-pg74741p305",
+   "stratum": "english-ia-5124",
+   "book_id": "69e7834dd93c1f60075067bf",
+   "page_number": 327,
+   "glm_chars": 1893,
+   "R": {
+    "page-type": "text",
+    "page-num": "305",
+    "header": "Chap. XIX. The Four-coulter'd Plough.",
+    "sig": "X",
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  },
+  {
+   "uid": "en-69d14b-pg75184p74",
+   "stratum": "english-ia-5124",
+   "book_id": "69d14b331c2a66dc094b4c37",
+   "page_number": 94,
+   "glm_chars": 419,
+   "R": {
+    "page-type": "text",
+    "page-num": "74",
+    "header": null,
+    "sig": null,
+    "language": "English"
+   },
+   "R_margins": 0,
+   "R_images": 0
+  }
+ ]
+}

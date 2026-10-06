@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA poemata/naogeorg1",
+  "edition": "Tragoedia nova Pammachius. — Wittenberg: Johann Luft, 1538.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "11/12",
+    "pb_aligned_pages": "11/11"
+  },
+  "origin": "library",
+  "book_id": "6a909914b7feee6e9c427a2a",
+  "page_number": 21,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 13753,
+    "to_char": 14451,
+    "overlap": 0.807,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'Lucem (irato quamuis tenebrarum Principe)'; ends 'FINIS.' with signature 'B ii' and catchword 'Prologus.'; a marginal manuscript annotation (not in ref) at right; lower half blank; ref padded with 'Aegyptiacis, in hanc clarissimam' and 'PROLOGUS Quid'.",
+    "leaf_language": "lat",
+    "page_type": "verse",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:20.178Z",
+  "text_location": "repo",
+  "text_sha256": "385ff98b5101d23940e6e31b09efd64723f79b480429fd858d1af01f237b74a1",
+  "unit": {
+    "chars": 698
+  },
+  "stratum": "latin-period-5126"
+}

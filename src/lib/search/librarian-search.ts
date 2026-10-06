@@ -21,9 +21,12 @@ import {
   semanticPageSearchGlobal,
 } from '@/lib/semantic-search';
 import { buildBookSearchStage, buildPageSearchStage } from '@/lib/atlas-search';
+import { expandNameQuery, expandPersonNames } from '@/lib/search/name-variants';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { authorSlug as toAuthorSlug } from '@/lib/slugify';
 import { editionYear } from '@/lib/dedup';
+import { resolveQuoteText } from '@/lib/quote-text';
+import type { Page } from '@/lib/types';
 
 // ── Types ────────────────────────────────────────────────────────────
 
@@ -35,7 +38,7 @@ export interface SearchPassage {
   page_number: number;
   text: string;
   score: number;
-  source: string; // 'kw' | 'btp' | 'gp' | 'rrf(...)' — for diagnostics + UI
+  source: string; // 'kw' | 'kwv' | 'btp' | 'gp' | 'rrf(...)' — for diagnostics + UI
   /**
    * Edition metadata, so a consumer can tell a 1591 original from a 1928
    * compendium quoting it. Without these the Librarian cited Manly P. Hall
@@ -167,6 +170,52 @@ async function keywordSource(query: string, _opts: HybridSearchOptions): Promise
   return out;
 }
 
+// ── Source 1b: keyword over the name's OTHER spellings (#5888) ───────
+
+/**
+ * Pages that print a person's name in a spelling the reader did not type — "Drebbel" as
+ * Drebelius, Drebelii, Drebel. Translations keep the source's spelling, so these are the
+ * period Latin and German pages the main keyword lane cannot reach.
+ *
+ * A lane of its own, not extra terms in `keywordSource`: that lane reads only its top 48, and
+ * for any well-attested name those are all pages printing the typed spelling, so OR'd-in
+ * variants would never be seen. Empty (and no query is run) when the query names no person.
+ */
+async function nameVariantSource(query: string): Promise<RawHit[]> {
+  try {
+    const { variants, topicWords } = await expandNameQuery(query);
+    if (variants.length === 0) return [];
+    const db = await getDb();
+    const rows = await db.collection('pages')
+      .aggregate([
+        // "Paracelsus on the plague": a Paracelsi page must also be about the plague, or the
+        // lane fills with pages that merely name him.
+        buildPageSearchStage(query, undefined, { nameVariants: variants, requireNameVariant: true, requireWords: topicWords }),
+        { $limit: 24 },
+        { $project: { book_id: 1, page_number: 1, 'translation.data': 1, score: { $meta: 'searchScore' } } },
+      ])
+      .toArray();
+    const perBook = new Map<string, number>();
+    const out: RawHit[] = [];
+    for (const r of rows) {
+      const n = (perBook.get(r.book_id) || 0) + 1;
+      if (n > 2) continue;
+      perBook.set(r.book_id, n);
+      out.push({
+        book_id: r.book_id,
+        page_number: r.page_number,
+        text: (r.translation?.data || '').slice(0, 1200),
+        score: r.score,
+        source: 'kwv',
+      });
+      if (out.length >= 6) break;
+    }
+    return out;
+  } catch {
+    return [];
+  }
+}
+
 // ── Source 2: book-then-page (book discovery → page drill-down) ──────
 
 async function bookThenPageSource(query: string, opts: HybridSearchOptions): Promise<RawHit[]> {
@@ -242,11 +291,12 @@ async function collectionScopedSources(
 ): Promise<{ scopedKeyword: RawHit[]; scopedSemantic: RawHit[] }> {
   if (bookIds.length === 0) return { scopedKeyword: [], scopedSemantic: [] };
   const db = await getDb();
+  const nameVariants = await expandPersonNames(query);
 
   const [kwRows, semRows] = await Promise.all([
     db.collection('pages')
       .aggregate([
-        buildPageSearchStage(query, bookIds),
+        buildPageSearchStage(query, bookIds, { nameVariants }),
         { $limit: 24 },
         { $project: { book_id: 1, page_number: 1, 'translation.data': 1, score: { $meta: 'searchScore' } } },
       ])
@@ -289,6 +339,17 @@ async function collectionScopedSources(
  * k=60 is the canonical default. Eval showed k=20 vs k=60 produce identical
  * rankings on the current golden set — stick with 60 for posterity.
  */
+/**
+ * RRF weight of the name-variant keyword list, against 1 for the other global lists (#5888).
+ *
+ * Just under 1 on purpose. At rank r a list contributes weight / (60 + r), so at 0.98 the best
+ * variant page scores between another list's 2nd and 3rd hit: a page printing the spelling the
+ * reader typed always beats the variant page of the same rank, and one uncorroborated variant
+ * page still reaches a top-8. At 0.5 it scored below every other list's 20th hit, so a variant
+ * page surfaced only when a semantic lane had found it anyway — which is not the gap.
+ */
+export const NAME_VARIANT_WEIGHT = 0.98;
+
 /** A book printed or written in or before this year counts as a period edition. */
 export const PERIOD_EDITION_YEAR = 1800;
 /** Multiplier on the fused score of a period-edition hit. */
@@ -483,6 +544,44 @@ function stripAnnotations(text: string): string {
 
 // ── Public API ───────────────────────────────────────────────────────
 
+const pageKey = (bookId: string, pageNumber: number) => `${bookId}:${pageNumber}`;
+
+/**
+ * The page text the Librarian should read for each hit, from Mongo (#5867).
+ *
+ * The semantic lanes carry `page_translations.translation`, which is EMPTY by
+ * design whenever a page was embedded without a translation — every
+ * English-original page (its OCR is the reading text) and any page embedded
+ * before its translation landed (scripts/lib/page-embedding-text.mjs). The
+ * vector still ranks, so the hit arrives with no words in it. It is also cut to
+ * 300 chars. `resolveQuoteText` is the one place that decides what a page's
+ * quotable English is, so use it rather than the lane's copy.
+ */
+async function loadPassageTexts(hits: RawHit[]): Promise<Map<string, string>> {
+  const out = new Map<string, string>();
+  if (hits.length === 0) return out;
+  try {
+    const db = await getDb();
+    const pages = await db.collection('pages')
+      .find({ $or: hits.map(h => ({ book_id: h.book_id, page_number: h.page_number })) })
+      .project({ book_id: 1, page_number: 1, 'translation.data': 1, 'ocr.data': 1 })
+      .toArray();
+    for (const p of pages) {
+      const resolved = resolveQuoteText(p as unknown as Page, p.book_id, 'en', { mark: false });
+      if (resolved) out.set(pageKey(p.book_id, p.page_number), resolved.text);
+    }
+  } catch {
+    // Fall back to the lanes' own text — degraded, never broken.
+  }
+  return out;
+}
+
+/** Mongo text when it resolved, else the lane's own; cleaned and capped. */
+export function passageText(hit: Pick<RawHit, 'book_id' | 'page_number' | 'text'>, pageTexts: Map<string, string>): string {
+  const raw = pageTexts.get(pageKey(hit.book_id, hit.page_number)) || hit.text || '';
+  return stripAnnotations(raw).slice(0, 1200);
+}
+
 /**
  * Hybrid search. Fans out to keyword + book-then-page + global-page in
  * parallel, RRF-merges, optionally cross-encoder reranks, and resolves
@@ -507,8 +606,9 @@ export async function hybridSearch(
 
   // Fan out to all three global sources + book-level Atlas + (optionally) the
   // collection-scoped sources, all in parallel.
-  const [kw, btp, gp, books, scoped] = await Promise.all([
+  const [kw, kwv, btp, gp, books, scoped] = await Promise.all([
     keywordSource(query, opts),
+    nameVariantSource(query),
     bookThenPageSource(query, opts),
     globalPageSource(query, opts),
     findBooks(query, opts, bookLimit),
@@ -522,11 +622,18 @@ export async function hybridSearch(
   // collection outranks an equally-relevant page from elsewhere — without
   // excluding the elsewhere page. Collection hits also tend to appear in the
   // global lists too, compounding the lean.
+  // The name-variant list votes just under 1 (see NAME_VARIANT_WEIGHT).
   let merged = rrfMerge(
-    [kw, btp, gp, scoped.scopedKeyword, scoped.scopedSemantic],
+    [kw, kwv, btp, gp, scoped.scopedKeyword, scoped.scopedSemantic],
     60,
-    [1, 1, 1, collectionWeight, collectionWeight],
+    [1, NAME_VARIANT_WEIGHT, 1, 1, collectionWeight, collectionWeight],
   );
+
+  // Real page text for the head of the list BEFORE the rerank reads it — an
+  // English-original page would otherwise be scored on an empty string (#5867).
+  // The window covers the rerank's top 20 and the passage build's limit * 3.
+  const pageTexts = await loadPassageTexts(merged.slice(0, Math.max(20, limit * 3)));
+  merged = merged.map(h => ({ ...h, text: passageText(h, pageTexts) }));
 
   // Optional cross-encoder rerank (no-op without API key)
   merged = await maybeRerank(query, merged);
@@ -556,6 +663,8 @@ export async function hybridSearch(
   for (const hit of merged) {
     const book = bookMap.get(hit.book_id);
     if (!book) continue; // tenant-foreign or hidden
+    const text = hit.text;
+    if (!text) continue; // nothing quotable on the page — an empty passage only misleads the model
     passages.push({
       book_id: hit.book_id,
       bookTitle: book.display_title || book.title || 'Unknown',
@@ -565,7 +674,7 @@ export async function hybridSearch(
       language: typeof book.language === 'string' ? book.language : undefined,
       textRole: typeof book.text_role === 'string' ? book.text_role : undefined,
       page_number: hit.page_number,
-      text: stripAnnotations(hit.text || '').slice(0, 1200),
+      text,
       score: hit.score,
       source: hit.source,
     });

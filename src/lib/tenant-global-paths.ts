@@ -64,6 +64,11 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // list, so listing it here also removes the button on tenant hosts.
   '/give',
   '/sponsors',
+  // How to connect Claude/ChatGPT to Source Library (#5265). It is about the
+  // whole library's MCP endpoint and links a non-BPH book (Chrysopoea of
+  // Cleopatra); the nightly leak audit flagged it on bph.sourcelibrary.org the
+  // day it shipped (2026-09-30).
+  '/connect',
   // Volunteer review queues. Items are drawn from `review_candidates`, a pool
   // built across every visible book in the corpus, so a partner reading room
   // would hand its visitors other libraries' pages to judge — the same content
