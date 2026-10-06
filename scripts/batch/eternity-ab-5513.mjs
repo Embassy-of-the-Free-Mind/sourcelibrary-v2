@@ -269,9 +269,16 @@ function translationOwedPages(s) {
 }
 
 // ── OCR ────────────────────────────────────────────────────────────────────
-/** The book's pages still without text, minus any page a live OCR job (any submitter) carries. */
-async function ocrTargets(db, b) {
-  const still = await db.collection('pages').find({ id: { $in: b.page_ids }, $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] }, { projection: { _id: 0, id: 1 } }).toArray();
+/**
+ * The book's pages still without text, minus any page a live OCR job (any submitter) carries.
+ * `submit`: the pages worth SENDING. A page the collector has given up on (`ocr.fail_blocked`, three
+ * failures) is never sent; and the one retry is for requests Batch dropped without an answer, so it
+ * skips a page with a recorded failure (`truncated:MAX_TOKENS`, a repetition loop): the same model
+ * fails the same way and bills the full output again (#6109: 13 of a manuscript's 15 residual pages).
+ */
+async function ocrTargets(db, b, { submit = false } = {}) {
+  const sendable = !submit ? {} : b.retries >= 1 ? { 'ocr.fail_count': { $not: { $gt: 0 } } } : { 'ocr.fail_blocked': { $ne: true } };
+  const still = await db.collection('pages').find({ id: { $in: b.page_ids }, ...sendable, $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }] }, { projection: { _id: 0, id: 1 } }).toArray();
   const live = await db.collection('batch_jobs').find({ book_id: b.id, type: 'ocr', status: { $in: ACTIVE_JOB } }, { projection: { _id: 0, page_ids: 1 } }).toArray();
   const inFlight = new Set(live.flatMap((j) => j.page_ids || []));
   return still.map((p) => p.id).filter((id) => !inFlight.has(id));
@@ -318,7 +325,7 @@ async function ocr(db) {
   const logFile = path.join(LOG_DIR, `ocr-${stamp}.log`);
   let quota = false, submittedBooks = 0;
   for (const b of picks) {
-    const ids = await ocrTargets(db, b);
+    const ids = await ocrTargets(db, b, { submit: true });
     const sp = await spend(db, s);
     const openTr = await openTranslationUsd(db, s);
     const add = ids.length * OCR_RATE;
@@ -355,7 +362,7 @@ async function ocr(db) {
     b.ocr_models = [...new Set([...(b.ocr_models || []), ...ok.map((j) => j.model)])];
     b.ocr_submitted = (b.ocr_submitted || 0) + ok.reduce((n, j) => n + (j.page_ids?.length || 0), 0);
     b.ocr_submitted_at = b.ocr_submitted_at || t0.toISOString();
-    const left = (await ocrTargets(db, b)).length;
+    const left = (await ocrTargets(db, b, { submit: true })).length;
     if (left === 0) { b.phase = 'ocr_submitted'; submittedBooks++; }
     else if (!quota) { b.submit_attempts = (b.submit_attempts || 0) + 1; if (b.submit_attempts >= 3 && ok.length === 0) b.phase = 'ocr_submit_failed'; }
     await recordSweepAction(db, { sweep: SWEEP, book_id: b.id, action: 'ocr-submitted', detail: { pages: ok.reduce((n, j) => n + (j.page_ids?.length || 0), 0), jobs: ok.length, left, models: b.ocr_models } });
@@ -371,7 +378,7 @@ async function ocr(db) {
 async function reconcile(db, s = loadState()) {
   let fixed = 0;
   for (const b of s.books.filter((x) => x.phase === 'pending' && (x.ocr_submitted || x.submit_attempts))) {
-    if ((await ocrTargets(db, b)).length) continue;
+    if ((await ocrTargets(db, b, { submit: true })).length) continue;
     const jobs = await db.collection('batch_jobs').find({ book_id: b.id, type: 'ocr', submitted_by: OCR_CALL_SITE, created_at: { $gte: new Date(s.created_at) }, child_job_ids: { $exists: false }, status: { $ne: 'submit_failed' } }, { projection: { id: 1 } }).toArray();
     b.ocr_jobs = [...new Set([...(b.ocr_jobs || []), ...jobs.map((j) => j.id)])];
     b.phase = 'ocr_submitted'; b.ocr_submitted_at = b.ocr_submitted_at || new Date().toISOString(); fixed++;
