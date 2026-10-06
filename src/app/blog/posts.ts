@@ -78,6 +78,19 @@ export const UNLISTED_PAGES: Record<string, string> = {
 
 export const posts: BlogPost[] = [
   {
+    slug: 'four-commentaries-on-nothing',
+    title: 'Four Commentaries on Nothing',
+    subtitle:
+      'Nāgārjuna with Candrakīrti, a Chan master named Awakened-to-Emptiness, a Latin dictionary of Kabbalah, and Dionysius with Johann Eck: four commentaries that try to stop the reader from turning nothing into a thing. What our machine translations of them get right, and where they fail.',
+    date: '7 October 2026',
+    readTime: '12 min read',
+    kind: 'stories',
+    // A printed page because the page is the evidence: the Greek column's τῶν λόγων.
+    image: 'https://images.sourcelibrary.org/pages/69c87ff96c6f3cc53c858fd5/0066.jpg',
+    imageAlt: 'A page of Johann Eck’s 1519 Dionysius: the Greek and three Latin translations in four columns, with commentary below.',
+    imagePosition: 'center 15%',
+  },
+  {
     slug: 'what-the-models-cannot-name',
     title: 'What the Models Cannot Name',
     subtitle:
