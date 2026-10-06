@@ -633,6 +633,87 @@ export function ocrReasoningLeak(ocr) {
   // Not a line merely starting with the English word "thought" — 19 of 20 such hits were prose.
   return /the user wants (?:a|me to|the)\b|\*\*\d\.\s*identify (?:the )?language|^\s*thought\s*\n+\s*(?:the user|okay|ok,|let me|i need|i will|\*\*)/i.test(head);
 }
+/**
+ * The TRANSLATION model's reasoning stored as the page's English (#6056, taxonomy T-side twin of O15):
+ * "*Wait, the prompt says:* Style: warm museum label", drafts and re-drafts, a checklist of its own rules.
+ * A reader meets it as plain English under the book's title.
+ *
+ * TRANSLATION_LEAK_PREFILTER is the wide net the corpus walk hands to the server
+ * (scripts/audit/translation-reasoning-leak.mjs); it must match every text translationReasoningLeak() matches,
+ * and the unit test pins that on the fixtures. Change the two together, and re-walk after widening the net.
+ */
+export const TRANSLATION_LEAK_PREFILTER = new RegExp([
+  'the prompt (?:says|asks|states|specifies|requires|wants|mentions|said|tells)',
+  'wait, (?:the|i need|i should|i must|i missed|i see|let me|actually|looking at|no,)',
+  '\\*\\(?wait[,:]',
+  'warm museum',
+  'the user (?:wants|asked|has provided|provided|is asking|says|said)',
+  '[*(] ?self-correction|self-correction\\)?\\*?:',
+  "let(?:'s| me) re-?(?:check|read|verify|examine|evaluate|think|translate)",
+  '\\*revised (?:translation|note)',
+  '(?:^|[\\n*(])(?:final )?final (?:check|polish|output|plan|structure)\\b',
+  'writing response',
+  '(?:^|\\n)thought\\n',
+  "i (?:will|should|need to|must|'ll) (?:translate|transcribe|add a note|output|treat the|wrap)",
+  'system prompt',
+  '\\*[^*\\n]{0,50}\\b(?:check|correction|polish|drafting|refinement|formatting|constraints?)\\b[^*\\n]{0,40}:\\*',
+  '(?:source|target) language:?\\*\\*',
+  'the ocr (?:has|says|reads|shows|provides|lists|includes|gives|text (?:has|says|reads|is))',
+  '<(?:meta|note|vocab|term|gloss|summary|keywords)>`? tags?\\b',
+  'please (?:paste|provide|share|supply) the',
+  'once you provide',
+  "(?:text|input|transcription|ocr) (?:that )?you(?:'ve| have)? provided|the provided (?:text|ocr|transcription|input)",
+  'ready to translate',
+].join('|'), 'i');
+/** The phrases that are the model talking to itself about the job, read off the corpus walk's candidates
+ *  (2026-10-06). Each names the prompt, the user, the OCR as an input, a tag as a tag, or is a markdown
+ *  scratchpad label. Bare first-person lines ("I will translate…", "Wait, I…") are NOT here: sermons, dialogues
+ *  and translators' prefaces say them. */
+const TRANSLATION_LEAK_RULE = new RegExp([
+  'warm museum',
+  'the prompt (?:says|asks|states|specifies|requires|wants|mentions|said|tells)',
+  'the user (?:wants|asked|has provided|provided|is asking)',
+  '[*(] ?self-correction',
+  '\\*\\(?wait, (?:the (?:prompt|ocr|greek|latin|text|source|original|input|instructions?)\\b|looking at|i need|i should|i must|i missed|actually|let me)',
+  'wait, (?:the (?:prompt|ocr|source|input|instructions?|user)\\b|the (?:text|original) (?:says|has|reads)|looking at the (?:ocr|source|image|text|prompt))',
+  '\\*[^*\\n]{3,50} check:\\*|\\*(?:final )?(?:polish|formatting|drafting|refinement|constraints?)\\b[^*\\n]{0,40}:\\*',
+  '(?:^|[\\n*(])(?:final )?final (?:check|polish|output|plan|structure)\\b[^\\n]{0,20}:',
+  '\\(ready\\)\\.? writing response',
+  '(?:source|target) language:?\\*\\*',
+  '<(?:meta|note|vocab|term|gloss|summary|keywords)>`? tags?\\b',
+  'system prompt',
+  "let(?:'s| me) re-?(?:check|read|verify|examine|evaluate|translate) (?:the (?:ocr|source|latin|greek|german|text|english|first|prompt|instructions?|translation)|carefully)",
+  "i (?:will|should|need to|must|'ll) (?:translate|transcribe|add a note|output|wrap)[^.\\n]{0,100}(?:the ocr|the prompt|the user|`<|museum|xml|markdown|as requested)",
+  'please (?:paste|provide|share|supply) the (?:text|ocr|transcription|source|latin|page)',
+  'once you provide the (?:text|ocr|transcription)',
+  "the (?:text|input|transcription) (?:that )?you(?:'ve| have)? provided|the provided (?:ocr|transcription|input)\\b|the provided text (?:is|was|appears|contains|seems|has)",
+].join('|'), 'i');
+/** What the reader's metadata panel holds and the page body does not (NotesRenderer, showMetadata=false). */
+const TRANSLATION_PANEL_BLOCKS = /<(meta|summary|keywords|vocab)>[\s\S]*?<\/\1>/gi;
+const TRANSLATION_OCR_TALK = /the ocr (?:has|says|reads|shows|provides|lists|includes|gives|text (?:has|says|reads|is))/i;
+
+/**
+ * { kind, phrase, readerVisible } when a stored translation carries the model's reasoning, else null.
+ *   kind 'reasoning'      one of TRANSLATION_LEAK_RULE's phrases
+ *   kind 'thought-token'  the page opens with the bare word "thought" on its own line (the thinking channel's
+ *                         label, with or without the thinking after it)
+ * readerVisible: the phrase is in the page body, not only inside a block the reader keeps in its metadata panel.
+ */
+export function translationReasoningLeak(text) {
+  const t = String(text || '');
+  const body = t.replace(TRANSLATION_PANEL_BLOCKS, ' ');
+  let m = body.match(TRANSLATION_LEAK_RULE);
+  if (m) return { kind: 'reasoning', phrase: m[0].replace(/\s+/g, ' ').trim(), readerVisible: true };
+  m = t.match(TRANSLATION_LEAK_RULE);
+  if (m) return { kind: 'reasoning', phrase: m[0].replace(/\s+/g, ' ').trim(), readerVisible: false };
+  if (/^thought[ \t]*\n/.test(t)) return { kind: 'thought-token', phrase: 'thought', readerVisible: true };
+  return null;
+}
+/** A milder, separate thing: a translator's note that tells the reader what "the OCR" reads. Not reasoning,
+ *  but pipeline vocabulary in the page body. True only when it survives outside the metadata-panel blocks. */
+export function translationOcrTalk(text) {
+  return TRANSLATION_OCR_TALK.test(String(text || '').replace(TRANSLATION_PANEL_BLOCKS, ' '));
+}
 export const DESCRIBED_PAGE = /^\W{0,3}(?:the image|this image|this page|the page (?:is|appears|shows|contains)|image (?:shows|of)|this (?:is a|appears)|a (?:blank|largely blank))/i;
 
 /**

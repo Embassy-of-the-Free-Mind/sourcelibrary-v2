@@ -16,6 +16,7 @@ import {
   truncationRatio, echoedSource, sourceLanguageCount, tokenMatches, readingLength, ocrReasoningLeak,
   parseVocab, vocabAbsent, repeatedBlocks, LOOP_MAX_TTR, LOOP_MIN_COPIES, REPEAT_MIN_CHARS,
   metaPayload, continuityMeta,
+  translationReasoningLeak, translationOcrTalk, TRANSLATION_LEAK_PREFILTER,
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore — plain-JS module, no declarations
 } from '../../scripts/lib/page-integrity.mjs';
@@ -275,5 +276,59 @@ describe('text hidden in the continuity <meta>', () => {
   it('does not judge a payload with no previous translation to compare', () => {
     const r = metaPayload({ tr: '<meta>continues from previous page: and so the work of the furnace went on through the night</meta> Then', prevTr: null });
     expect(r).toMatchObject({ judged: false, why: 'no-previous-translation' });
+  });
+});
+
+// Fixtures are phrases from real pages in the 2026-10-06 corpus walk (#6056): the positives are the model's
+// scratchpad stored as the English; the negatives are book text the first, wider net caught.
+describe('translationReasoningLeak', () => {
+  const POSITIVE = [
+    '    *   *Wait, the prompt says:* "Style: warm museum label - explain rather than assume knowledge."\n    *   I will add a note',
+    'The user provided a Latin text and asked for an English translation, preserving the formatting',
+    '*   *Self-Correction during drafting:* The first sentence in the OCR is a fragment',
+    '* The prompt mentions red staining on the left edge. I\'ll include that in the `<meta>` tag.',
+    '*Formatting check:*\n- Header: # THE FIRST ALCIBIADES.',
+    '*   **Target Language:** Accessible English',
+    'shall be changed to <term>ais</term>. <note>Wait, the text says "changed to bhir"</note> Example:',
+    'I should translate it but keep it in the `<margin>` tag as requested.',
+    '*Wait, the Greek in line 12:* nothing healthy',
+    'Please note: The provided text is in **Latin**, not Greek. I will translate the Latin text into English',
+    '5. **Include the required metadata, summary, and keywords.**\n\n**Please paste the text below to begin.**',
+  ];
+  const NEGATIVE = [
+    'by which they lie in* > *wait to deceive: and delighting to be deceived',
+    'you still would not have fulfilled my instructions for a Hearer.',
+    'He says: Wait, I will tell you what praying is, and that one may not pray without faith.',
+    'through the prompt instruction of theologians. But to him who has bestowed his labor',
+    'For the present, I will translate his words thus: *Aristotle and his followers',
+    'A Revised Translation, with an Introduction, by C. BIGG, D.D.',
+    'in my opinion, this is the final decision: that the world stands in a place',
+    'require no self-correction</note>. There are three types of these.',
+    '**SALV.** *Wait, I pray you, Signor Sagredo, for just now a way occurs to me',
+    '**Wait:** that Virgil should wait for him because inferior reason',
+    'then I will treat the **Archeal ideas** <note>The *Archeus* is the internal "master workman"</note>',
+    'I will transcribe the words of Aristotle himself from the book I mentioned: <term>The study of truth',
+    '<note>The OCR reads "māhī prāpta", but the commentary glosses it as "do not delay".</note>',
+  ];
+  it('flags the scratchpad phrases', () => {
+    for (const t of POSITIVE) expect(translationReasoningLeak(t), t).toMatchObject({ kind: 'reasoning', readerVisible: true });
+  });
+  it('leaves book text alone', () => {
+    for (const t of NEGATIVE) expect(translationReasoningLeak(t), t).toBeNull();
+  });
+  it('the wide net the walk sends to the server catches everything the rule does', () => {
+    for (const t of POSITIVE) expect(TRANSLATION_LEAK_PREFILTER.test(t), t).toBe(true);
+    expect(TRANSLATION_LEAK_PREFILTER.test('thought\n<meta>This page continues</meta>')).toBe(true);
+  });
+  it('says whether a reader sees it: a phrase only inside <meta> sits in the metadata panel', () => {
+    expect(translationReasoningLeak('<meta>The user wants "warm museum label" style.</meta>\nIn the beginning')).toMatchObject({ kind: 'reasoning', readerVisible: false });
+  });
+  it('the bare thinking-channel label at the head of a page is its own kind', () => {
+    expect(translationReasoningLeak('thought\n<meta>This page continues the legal analysis</meta>')).toMatchObject({ kind: 'thought-token' });
+    expect(translationReasoningLeak('164  ST. AMBROSE.\nthought\nthat he was restored to us')).toBeNull();
+  });
+  it('a note that cites "the OCR" is pipeline talk, not reasoning', () => {
+    expect(translationOcrTalk('<note>The OCR reads "left" again</note>')).toBe(true);
+    expect(translationOcrTalk('<meta>the watermark mentioned in the OCR has been omitted</meta> In the beginning')).toBe(false);
   });
 });
