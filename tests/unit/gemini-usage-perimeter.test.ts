@@ -12,7 +12,6 @@
  * `classifyFile()` is pure, so these drive it with source text, not a tree.
  */
 import { describe, it, expect } from 'vitest';
-// @ts-expect-error — .mjs script without types
 import { classifyFile } from '../../scripts/audit/gemini-usage-perimeter.mjs';
 
 const REST = "await fetch('https://generativelanguage.googleapis.com/v1beta/models/x:generateContent')";
