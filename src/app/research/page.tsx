@@ -39,6 +39,7 @@ const QUESTIONS: { title: string; refs: Ref[] }[] = [
     refs: [
       { slug: 'confident-hallucinator' },
       { slug: 'did-the-ai-read-this' },
+      { slug: 'what-the-models-cannot-name' },
     ],
   },
   {
