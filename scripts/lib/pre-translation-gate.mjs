@@ -112,6 +112,9 @@ export function imageFingerprint(page) {
 /** Skip types never reach the model, so they are not part of the book this gate measures. */
 const NEVER_TRANSLATED = new Set(['blank', 'exlibris', 'bookplate', 'digitizer-notice', 'digitizer-insert']);
 
+/** `has_ocr` as loadBookStructure projects it; a full page document is read directly. */
+const hasTranscription = (p) => p?.has_ocr ?? (typeof p?.ocr?.data === 'string' && p.ocr.data !== '' && p.ocr.unreadable !== true);
+
 /** Pages a book must have before its read share is judged; a pamphlet is read whole or not at all. */
 export const BOOK_MIN_PAGES = 20;
 /** Share of a book's translatable pages that must carry a transcription before it is translated. */
@@ -135,7 +138,7 @@ export function bookStructure(lightPages) {
   positive.forEach((p, i) => { byId.set(p.id, p); if (i > 0) previous.set(p.id, positive[i - 1]); });
   for (const p of pages) if (!byId.has(p.id)) byId.set(p.id, p);
   const translatable = positive.filter((p) => !NEVER_TRANSLATED.has(p.page_type));
-  return { duplicateNumbers, previous, byId, translatable: translatable.length, read: translatable.filter((p) => p.has_ocr).length };
+  return { duplicateNumbers, previous, byId, translatable: translatable.length, read: translatable.filter(hasTranscription).length };
 }
 
 /**
