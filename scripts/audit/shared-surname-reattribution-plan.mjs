@@ -5,12 +5,19 @@
 // prints the name, never whose name it is. scripts/audit/person-entity-name-collisions.mjs — counts
 // colliding names. None splits one catch-all record's mentions between the people who share it.
 /**
- * READ-ONLY DRY RUN: which person does each mention on a bare-surname record belong to? (#5950)
+ * Which person does each mention on a bare-surname record belong to? (#5950)
  *
  * Takes the bare record ("Bacon") and, for every book entry and every page it claims, proposes
- * a move to one of the configured bearers of the name — or leaves it. It writes NOTHING to Mongo:
- * the output is a plan file and counts. Applying it is a hold-list decision (an `entities` write,
- * and a sweep over `entities` blocks production builds — deploy-and-caching.md).
+ * a move to one of the configured bearers of the name — or leaves it. Without `--apply` it writes
+ * NOTHING to Mongo: the output is a plan file and counts.
+ *
+ * `--apply --undo-out <file>` (Derek, #5950, 2026-10-06: Bacon only) moves the proposed mentions
+ * from the bare record to each person's full-name record. It writes three `entities` documents in
+ * one transaction, after: the old `books[]` of each is in the undo file; the entities interlock
+ * (scripts/audit/entities-sweep-active.mjs) exits 0; none of the three changed since it was read.
+ * Counters come from `entityCounters`. One `sweep_log` row per book and person records what moved
+ * and why. `--undo <file>` puts the three `books[]` back. Check that no production build is
+ * running before either (deploy-and-caching.md): this script cannot see Vercel.
  *
  * Evidence, strongest first; a page is decided by the first tier that names exactly one person:
  *   1 printed    the page's own text has a cue for one person only ("Rogerius", "Verulam", a
@@ -26,9 +33,17 @@
  *
  * Usage:
  *   node --env-file=.env.production.local scripts/audit/shared-surname-reattribution-plan.mjs --surname Bacon [--out plan.json] [--check verdicts.tsv --sample sample.jsonl]
+ *   … --surname Bacon --apply --undo-out undo.json [--out plan.json]
+ *   … --undo undo.json
  */
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import fs from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+import { entityCounters } from '../lib/entity-page-match.mjs';
+import { recordSweepActions } from '../lib/sweep-log.mjs';
+
+const SWEEP = 'shared-surname-reattribution-5950';
 
 const arg = (flag, dflt) => { const i = process.argv.indexOf(flag); return i > 0 ? process.argv[i + 1] : dflt; };
 
@@ -98,13 +113,184 @@ export function decidePage(rule, { printed, editorial, bookYear, sameBook }) {
   return { person: null, tier: sb.length > 1 || t4.length > 1 ? 'both-in-book' : 'no-evidence' };
 }
 
+/**
+ * Turn the plan's rows into the new `books[]` of the bare record and of each target. Pure.
+ *
+ * A moved page leaves the bare entry and joins the person's entry for the same book; a bare entry
+ * with no page left is dropped. A section-precision entry moves whole. On the target, verified
+ * pages join an entry that is already page-precise and REPLACE a section range (as
+ * `dedupeEntityBooks` does). An unmarked legacy entry with pages is refused: merging into it would
+ * mark its unverified pages as verified (entity-page-attribution.md).
+ *
+ * @param {{ bareBooks: object[], targetBooks: Record<string, object[]>, rows: object[] }} input
+ * @returns {{ bare: object[], targets: Record<string, object[]>, moves: object[] }}
+ */
+export function applyPlanToBooks({ bareBooks, targetBooks, rows }) {
+  const seen = new Set();
+  for (const b of bareBooks) {
+    if (seen.has(b.book_id)) throw new Error(`bare record lists book ${b.book_id} twice: dedupe it first`);
+    seen.add(b.book_id);
+  }
+  const byBook = new Map();
+  for (const r of rows) {
+    if (!r.person) continue;
+    if (!(r.person in targetBooks)) throw new Error(`no target record for "${r.person}"`);
+    const perPerson = byBook.get(r.book_id) ?? new Map();
+    const m = perPerson.get(r.person) ?? { pages: new Set(), whole: false, tiers: new Set() };
+    if (r.page === null) m.whole = true; else m.pages.add(r.page);
+    m.tiers.add(r.tier);
+    perPerson.set(r.person, m);
+    byBook.set(r.book_id, perPerson);
+  }
+
+  const targets = Object.fromEntries(Object.entries(targetBooks).map(([k, list]) => [k, list.map(b => ({ ...b }))]));
+  const bare = [];
+  const moves = [];
+  for (const entry of bareBooks) {
+    const perPerson = byBook.get(entry.book_id);
+    if (!perPerson) { bare.push(entry); continue; }
+    const whole = [...perPerson].filter(([, m]) => m.whole);
+    if (whole.length > 0 && (perPerson.size > 1 || (entry.pages || []).length > 0)) {
+      throw new Error(`book ${entry.book_id}: a whole-entry move beside page moves`);
+    }
+    const gone = new Set();
+    for (const [person, m] of perPerson) {
+      const pages = m.whole ? [] : [...m.pages].filter(n => (entry.pages || []).includes(n)).sort((a, b) => a - b);
+      if (!m.whole && pages.length === 0) continue;
+      for (const n of pages) gone.add(n);
+      const list = targets[person];
+      const at = list.findIndex(b => b.book_id === entry.book_id);
+      const { pages: _p, page_precision: _pp, page_range: _pr, ...meta } = entry;
+      if (m.whole) {
+        // A section claim adds nothing to an entry the person already has for this book.
+        if (at === -1) list.push({ ...entry });
+      } else if (at === -1) {
+        list.push({ ...meta, pages, page_precision: 'page' });
+      } else {
+        const cur = list[at];
+        if (cur.page_precision === 'page') {
+          list[at] = { ...cur, pages: [...new Set([...(cur.pages || []), ...pages])].sort((a, b) => a - b) };
+        } else if (cur.page_precision === 'section' || (cur.pages || []).length === 0) {
+          const { page_range: _r, ...rest } = cur;
+          list[at] = { ...rest, pages, page_precision: 'page' };
+        } else {
+          throw new Error(`book ${entry.book_id}: the ${person} record has an unmarked legacy entry with pages; repair it first`);
+        }
+      }
+      moves.push({ book_id: entry.book_id, person, pages, whole: m.whole, tiers: [...m.tiers].sort(), bare_entry_before: entry });
+    }
+    const left = (entry.pages || []).filter(n => !gone.has(n));
+    if (whole.length === 0 && left.length > 0) bare.push({ ...entry, pages: left });
+  }
+  return { bare, targets, moves };
+}
+
+const toId = (s) => (typeof s === 'string' && ObjectId.isValid(s) ? new ObjectId(s) : s);
+/** `_id` is an ObjectId on most `entities` rows and a string on some. */
+const byAnyId = (id) => ({ _id: { $in: [toId(String(id)), String(id)] } });
+
+/** Exit code of the entities interlock, run bare (a piped exit code was misread twice, #5711). */
+function interlockClear() {
+  const script = fileURLToPath(new URL('./entities-sweep-active.mjs', import.meta.url));
+  const res = spawnSync(process.execPath, [script], { stdio: 'inherit', env: process.env });
+  return res.status === 0;
+}
+
+async function applyPlan({ client, db, surname, rule, bare, targets, rows, undoOut }) {
+  const entities = db.collection('entities');
+  const targetDocs = {};
+  for (const p of rule.persons) {
+    const named = (targets.get(p.key) || []).filter(t => fold(t.name) === fold(p.name));
+    if (named.length !== 1) throw new Error(`expected one record named "${p.name}" with ${p.wikidata_id}, found ${named.length}`);
+    targetDocs[p.key] = await entities.findOne(byAnyId(named[0]._id));
+    if (targetDocs[p.key]?.wikidata_id !== p.wikidata_id) throw new Error(`"${p.name}" no longer carries ${p.wikidata_id}`);
+  }
+  const next = applyPlanToBooks({
+    bareBooks: bare.books || [],
+    targetBooks: Object.fromEntries(rule.persons.map(p => [p.key, targetDocs[p.key].books || []])),
+    rows,
+  });
+  const now = new Date();
+  const writes = [
+    { doc: bare, books: next.bare },
+    ...rule.persons.map(p => ({ doc: targetDocs[p.key], books: next.targets[p.key] })),
+  ].map(w => ({ ...w, counters: entityCounters(w.books) }));
+
+  // The undo file exists before anything is written.
+  fs.writeFileSync(undoOut, JSON.stringify({
+    sweep: SWEEP, surname, applied_at: now.toISOString(),
+    docs: writes.map(w => ({
+      _id: String(w.doc._id), name: w.doc.name, updated_at_after: now.toISOString(),
+      before: { books: w.doc.books || [], book_count: w.doc.book_count ?? null, total_mentions: w.doc.total_mentions ?? null, updated_at: w.doc.updated_at ?? null },
+      after: w.counters,
+    })),
+  }, null, 1) + '\n');
+  console.log(`undo file: ${undoOut}`);
+
+  if (!interlockClear()) throw new Error('entities interlock is not clear (exit != 0): nothing written');
+
+  const session = client.startSession();
+  try {
+    await session.withTransaction(async () => {
+      for (const w of writes) {
+        // Unchanged since it was read, or nothing is written: an index writer may have added a book.
+        const res = await entities.updateOne(
+          { _id: w.doc._id, updated_at: w.doc.updated_at },
+          { $set: { books: w.books, ...w.counters, updated_at: now } },
+          { session },
+        );
+        if (res.matchedCount !== 1) throw new Error(`"${w.doc.name}" changed since it was read: nothing written, run again`);
+      }
+    });
+  } finally {
+    await session.endSession();
+  }
+
+  const targetOf = Object.fromEntries(rule.persons.map(p => [p.key, { _id: String(targetDocs[p.key]._id), name: p.name, wikidata_id: p.wikidata_id }]));
+  await recordSweepActions(db, next.moves.map(m => ({
+    sweep: SWEEP, book_id: m.book_id, action: 'entity-mention-moved',
+    detail: { surname, from: { _id: String(bare._id), name: bare.name }, to: targetOf[m.person], pages: m.pages, whole_entry: m.whole, tiers: m.tiers, bare_entry_before: m.bare_entry_before },
+  })));
+  for (const w of writes) {
+    console.log(`  ${w.doc.name}: books ${w.doc.books?.length ?? 0} -> ${w.counters.book_count}, mentions ${w.doc.total_mentions ?? '?'} -> ${w.counters.total_mentions}`);
+  }
+  console.log(`APPLIED: ${next.moves.length} book moves, ${next.moves.reduce((n, m) => n + (m.whole ? 1 : m.pages.length), 0)} mentions; ${next.moves.length} sweep_log rows (${SWEEP}).`);
+}
+
+/** Put back each document's `books[]` from an undo file, unless it changed after the apply. */
+async function undo(file) {
+  const saved = JSON.parse(fs.readFileSync(file, 'utf8'));
+  const client = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 15000 });
+  try {
+    await client.connect();
+    const db = client.db(process.env.MONGODB_DB || 'bookstore');
+    if (!interlockClear()) throw new Error('entities interlock is not clear (exit != 0): nothing written');
+    const force = process.argv.includes('--force');
+    for (const d of saved.docs) {
+      const filter = { ...byAnyId(d._id), ...(force ? {} : { updated_at: new Date(d.updated_at_after) }) };
+      const res = await db.collection('entities').updateOne(filter, {
+        $set: { books: d.before.books, ...entityCounters(d.before.books), updated_at: new Date() },
+      });
+      console.log(`${d.name}: ${res.matchedCount === 1 ? `restored ${d.before.books.length} book entries` : 'NOT restored: changed since the apply (re-run with --force to overwrite)'}`);
+    }
+  } finally {
+    await client.close();
+  }
+}
+
 async function main() {
+  const undoFile = arg('--undo', null);
+  if (undoFile) return undo(undoFile);
+  const apply = process.argv.includes('--apply');
+  const undoOut = arg('--undo-out', null);
+  if (apply && !undoOut) { console.error('--apply needs --undo-out <file>: the old books[] are saved before any write'); process.exit(2); }
   const surname = arg('--surname', 'Bacon');
   const rule = SURNAMES[surname];
   if (!rule) { console.error(`no rule block for "${surname}" — cues are written by hand, per surname`); process.exit(2); }
   const uri = process.env.MONGODB_URI;
   if (!uri) { console.error('Missing MONGODB_URI.'); process.exit(2); }
-  const client = new MongoClient(uri, { serverSelectionTimeoutMS: 15000, readPreference: 'secondaryPreferred' });
+  // A transaction reads from the primary, so the apply run does too.
+  const client = new MongoClient(uri, { serverSelectionTimeoutMS: 15000, readPreference: apply ? 'primary' : 'secondaryPreferred' });
   try {
     await client.connect();
     const db = client.db(process.env.MONGODB_DB || 'bookstore');
@@ -197,6 +383,9 @@ async function main() {
       }
       console.log(`against ${sample.length} by-eye verdicts: ${agree} agree, ${wrong} wrong, ${undecided} left in place`);
     }
+
+    if (apply) await applyPlan({ client, db, surname, rule, bare, targets, rows, undoOut });
+    else console.log('DRY RUN: nothing was written.');
   } finally {
     await client.close();
   }
