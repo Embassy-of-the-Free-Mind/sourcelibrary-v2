@@ -10,7 +10,7 @@ import type { BookSearchFilters } from '@/lib/atlas-search';
 import type { SearchResult } from '@/lib/api-client/types/search';
 import { searchBooksCatalog } from '@/lib/books-catalog';
 import { searchBookIds } from '@/lib/books-catalog';
-import { semanticBookSearch, semanticArtworkSearch, semanticSiteSearch, type SemanticSiteResult } from '@/lib/semantic-search';
+import { semanticBookSearch, semanticArtworkSearch, semanticSiteSearch, navSiteSearch, type SemanticSiteResult, type NavSiteResult } from '@/lib/semantic-search';
 import { filterVisibleArtworks } from '@/lib/artwork-visibility';
 import { isArtworkRecord } from '@/lib/artwork-record';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
@@ -24,6 +24,7 @@ import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
 import { fetchWorkFanouts } from '@/lib/search/work-fanout';
 import { stemmedQueryRegex } from '@/lib/search/word-forms';
 import { findNameChoices, type NameChoices } from '@/lib/search/name-chooser';
+import { rankNavMatches } from '@/lib/search/site-nav';
 
 const ENTITIES_SEARCH_INDEX = 'entities_search';
 const GALLERY_SEARCH_INDEX = 'gallery_search';
@@ -222,7 +223,7 @@ export async function GET(request: NextRequest) {
       slug?: string | null;
     }
     const emptyArtworks = { results: [] as ArtworkSearchResult[], total: 0 };
-    const emptyCollections = { results: [] as CollectionResult[] };
+    const emptyCollections = { results: [] as CollectionResult[], nameCoverage: 0 };
 
     const emptyLexicalArtworks: ArtworkSearchResult[] = [];
 
@@ -236,6 +237,19 @@ export async function GET(request: NextRequest) {
       : withTimeout(
           semanticSiteSearch(matchQuery, 6).then(results => ({ results })).catch(() => emptySite),
           emptySite, 'site', 4000,
+        );
+    // Navigational match (#5945): pages, tools, essays and author pages whose
+    // NAME the query spells ("timeline", "check pages", "Huygens"). One indexed
+    // lookup on site_pages.name_tokens. Main site only, like the site lane.
+    const emptyNav: { results: NavSiteResult[] } = { results: [] };
+    const navResultPromise = tenantContext.id
+      ? Promise.resolve(emptyNav)
+      : withTimeout(
+          navSiteSearch(matchQuery, 3).then(results => ({ results })).catch((err) => {
+            console.error('Site name match error:', err);
+            return emptyNav;
+          }),
+          emptyNav, 'site-nav', 2000,
         );
 
     // "Which Bacon?" (#5950): the people a bare surname could mean. Main site only — the counts
@@ -395,7 +409,6 @@ export async function GET(request: NextRequest) {
     };
 
     const collectionsWithTenantSlug = {
-      ...collectionsResult,
       results: collectionsResult.results.map((collection: any) => ({
         ...collection,
         tenant_slug: collection.tenantId ? tenantSlugById.get(collection.tenantId) || null : null,
@@ -651,8 +664,19 @@ export async function GET(request: NextRequest) {
     // any lane contains ALL the query's tokens, say so instead of bluffing.
     // A collection already shown as a card is not repeated as a site link.
     const shownCollectionUrls = new Set(collectionsWithTenantSlug.results.map((c: any) => `/collections/${c.slug}`));
-    const siteResult = {
-      results: (await siteResultPromise).results.filter(r => !shownCollectionUrls.has(r.url)).slice(0, 3),
+    // Pages the query NAMES come first and are marked `match: 'name'`, so the
+    // page can show them above everything else; then up to three by meaning.
+    // A collection named exactly outranks a page that only shares the word:
+    // "kabbalah" is the Kabbalah collection, not the Jewish Kabbalah category.
+    const navResults = (await navResultPromise).results
+      .filter(r => r.coverage === 1 || collectionsResult.nameCoverage < 1)
+      .map(({ coverage: _coverage, ...r }) => r);
+    const navUrls = new Set(navResults.map(r => r.url));
+    const siteResult: { results: Array<Omit<NavSiteResult, 'coverage'> | SemanticSiteResult> } = {
+      results: [
+        ...navResults,
+        ...(await siteResultPromise).results.filter(r => !shownCollectionUrls.has(r.url) && !navUrls.has(r.url)).slice(0, 3),
+      ],
     };
 
     const matchQuality = assessMatchQuality(query, [
@@ -1171,13 +1195,34 @@ async function lexicalArtworkSearch(
 /**
  * Search collections by name/description.
  * ~300 docs, fast regex on a small collection.
+ *
+ * A collection the query NAMES comes first (#5945): the regex matches the
+ * whole phrase in order, so "Drebbel collection" found nothing for the
+ * collection called "Cornelis Drebbel", and "alchemy" ranked by size, not by
+ * which collection is called Alchemy. Same rule as the site name match
+ * (rankNavMatches), over the collection's name and the words of its slug.
  */
-async function searchCollections(db: any, queryRegex: RegExp, query: string): Promise<{ results: CollectionResult[] }> {
-  const cols = await db.collection('collections')
+async function searchCollections(db: any, queryRegex: RegExp, query: string): Promise<{ results: CollectionResult[]; nameCoverage: number }> {
+  const live = { visible: { $ne: false }, book_count: { $gt: 0 } };
+  const all = await db.collection('collections')
+    .find(live)
+    .project({ slug: 1, name: 1, book_count: 1 })
+    .maxTimeMS(2000)
+    .toArray();
+  const named = rankNavMatches(query, all.filter((c: any) => c.slug && c.name).map((c: any) => ({
+    url: c.slug,
+    page_type: 'collection' as const,
+    title: c.name,
+    names: [c.name, String(c.slug).replace(/-/g, ' ')],
+    weight: c.book_count || 0,
+  })), 3);
+  const namedSlugs: string[] = named.map(m => m.candidate.url);
+
+  const found = await db.collection('collections')
     .find({
-      visible: { $ne: false },
-      book_count: { $gt: 0 },
+      ...live,
       $or: [
+        { slug: { $in: namedSlugs } },
         { name: queryRegex },
         { description: queryRegex },
         { slug: queryRegex },
@@ -1185,11 +1230,16 @@ async function searchCollections(db: any, queryRegex: RegExp, query: string): Pr
     })
     .project({ slug: 1, tenantId: 1, name: 1, description: 1, book_count: 1, featured_image: 1, hero_image: 1, card_framing: 1, featured_images: { $slice: 1 } })
     .sort({ book_count: -1 })
-    .limit(3)
+    .limit(3 + namedSlugs.length)
     .maxTimeMS(2000)
     .toArray();
+  const rank = (c: any) => { const i = namedSlugs.indexOf(c.slug); return i === -1 ? namedSlugs.length : i; };
+  // Stable sort: named collections in match order, the rest still by size.
+  const cols = [...found].sort((a: any, b: any) => rank(a) - rank(b)).slice(0, 3);
 
   return {
+    // How fully the best-named collection that made the cards is named (0 = none).
+    nameCoverage: named.find(m => cols.some((c: any) => c.slug === m.candidate.url))?.coverage ?? 0,
     results: cols.map((c: any) => {
       // A curated hero_image (set per collection in Mongo, cut for a 4:3 card)
       // beats the first auto-featured plate — the same rule the collections
