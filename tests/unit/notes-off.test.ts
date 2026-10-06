@@ -29,7 +29,7 @@ describe('notes-off rule', () => {
 
   it('removes AI commentary and its content', () => {
     expect(applyNotesOff('Body text <note>original: "corpus."</note> continues'))
-      .toBe('Body text  continues');
+      .toBe('Body text continues');
     expect(applyNotesOff('<image-desc>An engraving of a lion</image-desc>')).toBe('');
   });
 

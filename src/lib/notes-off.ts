@@ -24,6 +24,8 @@
  * than hand-rolling the regexes again.
  */
 
+import { separateTermDefinitions } from '@/lib/term-definitions';
+
 /** Tags marking text physically on the page, as opposed to AI commentary. */
 export const PAGE_MARK_TAGS = 'margin|gloss|insert|unclear';
 
@@ -68,14 +70,19 @@ export function unwrapPageMarks(text: string): string {
  */
 export function stripAiAnnotations(text: string): string {
   return text
+    // A mid-line note takes its leading space with it, so "Geomancy <note>…</note>,
+    // an art" reads "Geomancy, an art" — not "Geomancy , an art" or a double space.
+    .replace(/[ \t]+<(note|image-desc)(?:\s[^>]*)?>[\s\S]*?<\/\1>(?=[ \t,.;:!?)\]])/gi, '')
     .replace(/<(note|image-desc)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, '')
     .replace(/\n{3,}/g, '\n\n');
 }
 
 /**
  * The full notes-off transform, in the order the reader applies it. Whatever
- * survives is page text.
+ * survives is page text. Model definitions are first moved out of `<term>`
+ * chips into `<note>`s (#5895), so the toggle hides them with the rest of the
+ * commentary instead of unwrapping them into the book's text.
  */
 export function applyNotesOff(text: string): string {
-  return stripAiAnnotations(unwrapPageMarks(preprocessTerms(text)));
+  return stripAiAnnotations(unwrapPageMarks(preprocessTerms(separateTermDefinitions(text))));
 }
