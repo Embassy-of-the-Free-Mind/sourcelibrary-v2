@@ -16,9 +16,11 @@ on this shelf carry a serious error* (per shelf, with an honest interval). It al
 - Comment "taking this: shelf overview of <shelves>" on #6056 (or the partner's issue).
 - **Done already, don't redo** (`scripts/eval/results/spot-check/overview-2026-10-07/`): Tengyur, Nālandā Sanskrit,
   Chinese (Eternity shelf), Pali, Hebrew (Eternity shelf), Arabic and Persian.
-- **Open strata for Eternity:** Hindu, Vedanta and Bhakti Sanskrit; Greek and Latin classics ("Alexandria");
-  Korean; Japanese; Mongolian; Kabbalah beyond the 15 Hebrew shelf books (the Latin Kabbala Denudata, Reuchlin and
-  Pico); Chinese Chan and Zen masters specifically (Francis reads them daily).
+- **Also done** (`overview-2026-10-07-eternity2/`): Hindu/Vedanta/Bhakti Sanskrit, Greek+Latin classics, Chan/Zen,
+  Latin Kabbalah, Korean, Japanese. Their keyword frames are in that run's `draw-log.json` (`desc` + `frame_ids`).
+- **Mongolian has nothing to read** (2026-10-07: 108 Kanjur volumes, all hidden, 0 OCR pages). Re-check before drawing.
+- A keyword frame drags in false positives (an author named in a title, a Reuchlin dictionary). Read 15 random
+  titles from each frame before you draw, and tighten the frame rather than redraw after.
 
 ## 1. Define strata → `strata.json`
 `[{ "name", "desc", "ids": [book ids] }]`, one entry per shelf. Build the id lists with a Mongo query and write them
