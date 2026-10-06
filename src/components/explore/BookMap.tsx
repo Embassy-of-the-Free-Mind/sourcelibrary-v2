@@ -24,6 +24,8 @@ const TYPE_BY_PRIORITY: LocationType[] = ['publication', 'author_birth', 'author
  * /api/explore/map/city on click.
  */
 export interface BookLocation {
+  /** Place key (src/lib/map-place.ts) — what the city list is fetched by. */
+  key: string;
   city: string;
   country: string | null;
   lat: number;
@@ -39,9 +41,13 @@ export interface CityBook {
   author: string;
   year: number | null;
   slug: string;
+  thumb: string | null;
+  /** Share of pages translated into English, 0–1. */
+  translated: number;
 }
 
 interface SelectedCity {
+  key: string;
   city: string;
   country: string | null;
   type: LocationType;
@@ -73,6 +79,10 @@ export default function BookMap({ locations }: BookMapProps) {
   const mapRef = useRef<L.Map | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const markersRef = useRef<L.LayerGroup | null>(null);
+  // One canvas for all pins. It belongs to ONE map instance: reset it whenever
+  // that map is torn down (React dev mode mounts twice), or pins draw onto a
+  // canvas attached to a removed map and the map shows none.
+  const rendererRef = useRef<L.Canvas | null>(null);
 
   const [selected, setSelected] = useState<SelectedCity | null>(null);
   const [cityBooks, setCityBooks] = useState<CityBook[]>([]);
@@ -110,7 +120,7 @@ export default function BookMap({ locations }: BookMapProps) {
   // already deduped per city server-side, so each is counted once.
   const cityPins = useMemo(() => {
     const result: Array<{
-      city: string; country: string | null; lat: number; lng: number;
+      key: string; city: string; country: string | null; lat: number; lng: number;
       totalBooks: number; dominantType: LocationType; roles: LocationType[];
     }> = [];
 
@@ -128,7 +138,7 @@ export default function BookMap({ locations }: BookMapProps) {
       if (count === 0) continue;
       const roles = TYPE_BY_PRIORITY.filter((t) => orMask & TYPE_BIT[t]);
       result.push({
-        city: loc.city, country: loc.country, lat: loc.lat, lng: loc.lng,
+        key: loc.key, city: loc.city, country: loc.country, lat: loc.lat, lng: loc.lng,
         totalBooks: count, dominantType: roles[0] ?? 'origin', roles,
       });
     }
@@ -142,7 +152,13 @@ export default function BookMap({ locations }: BookMapProps) {
     const map = L.map(containerRef.current, {
       center: [46, 10], zoom: 5,
       zoomControl: false, attributionControl: false,
+      // The map sits below a tall header, so a wheel-zooming map traps a reader
+      // scrolling down the page. Wheel zoom turns on after a click into the map
+      // and off again when the pointer leaves; +/− and pinch always work.
+      scrollWheelZoom: false,
     });
+    map.on('click', () => map.scrollWheelZoom.enable());
+    map.on('mouseout', () => map.scrollWheelZoom.disable());
     L.control.zoom({ position: 'bottomright' }).addTo(map);
     L.control.attribution({ position: 'bottomleft', prefix: false }).addTo(map);
     // Esri's light-gray canvas: keyless, and close to the old CARTO light_all
@@ -156,7 +172,7 @@ export default function BookMap({ locations }: BookMapProps) {
     }).addTo(map);
     mapRef.current = map;
     markersRef.current = L.layerGroup().addTo(map);
-    return () => { map.remove(); mapRef.current = null; markersRef.current = null; };
+    return () => { map.remove(); mapRef.current = null; markersRef.current = null; rendererRef.current = null; };
   }, []);
 
   const handleSelect = useCallback((city: SelectedCity) => setSelected(city), []);
@@ -169,8 +185,7 @@ export default function BookMap({ locations }: BookMapProps) {
     const ctrl = new AbortController();
     setBooksLoading(true);
     const params = new URLSearchParams({
-      city: selected.city,
-      country: selected.country ?? '',
+      place: selected.key,
       from: String(filters.yearFrom),
       to: String(filters.yearTo),
       types: [...filters.types].join(','),
@@ -190,7 +205,6 @@ export default function BookMap({ locations }: BookMapProps) {
   // Render city pins — drawn on ONE shared canvas, not ~3,000 DOM nodes. With
   // DOM markers every pan/zoom moved thousands of elements; canvas circles keep
   // tooltips and clicks (Leaflet hit-tests the canvas) at a fraction of the cost.
-  const rendererRef = useRef<L.Canvas | null>(null);
   useEffect(() => {
     const map = mapRef.current;
     const layerGroup = markersRef.current;
@@ -219,7 +233,7 @@ export default function BookMap({ locations }: BookMapProps) {
 
       marker.on('click', () => {
         handleSelect({
-          city: pin.city, country: pin.country,
+          key: pin.key, city: pin.city, country: pin.country,
           type: dominantType, count: pin.totalBooks,
         });
       });
@@ -356,17 +370,30 @@ export default function BookMap({ locations }: BookMapProps) {
 
             <div className="px-5 py-3 space-y-0.5">
               {booksLoading && cityBooks.length === 0 ? (
-                <p className="text-[11px] px-2.5 py-2" style={{ color: 'var(--text-muted)' }}>Loading\u2026</p>
+                <p className="text-[11px] px-2.5 py-2" style={{ color: 'var(--text-muted)' }}>Loading…</p>
               ) : (
                 <>
                   {cityBooks.slice(0, 50).map((book, i) => (
-                    <a key={i} href={`/book/${book.slug || book.id}`} className="block px-2.5 py-2 -mx-2.5 rounded-lg hover:bg-black/[0.03] transition-colors">
-                      <div className="text-[13px] leading-snug font-medium" style={{ color: 'var(--text-primary)' }}>
-                        {(() => { const t = book.display_title || book.title; return t.length > 65 ? t.substring(0, 65) + '\u2026' : t; })()}
+                    <a key={i} href={`/book/${book.slug || book.id}`} className="flex gap-3 px-2.5 py-2 -mx-2.5 rounded-lg hover:bg-black/[0.03] transition-colors">
+                      <div className="w-9 h-12 shrink-0 rounded overflow-hidden" style={{ background: 'rgba(0,0,0,0.05)' }}>
+                        {book.thumb && (
+                          // eslint-disable-next-line @next/next/no-img-element -- tiny R2 thumb variant; /_next/image costs more than it saves here (#1727)
+                          <img src={book.thumb} alt="" loading="lazy" className="w-full h-full object-cover" />
+                        )}
                       </div>
-                      <div className="text-[11px] mt-0.5" style={{ color: 'var(--text-muted)' }}>
-                        {book.author.length > 40 ? book.author.substring(0, 40) + '\u2026' : book.author}
-                        {book.year ? `, ${book.year}` : ''}
+                      <div className="min-w-0">
+                        <div className="text-[13px] leading-snug font-medium" style={{ color: 'var(--text-primary)' }}>
+                          {(() => { const t = book.display_title || book.title; return t.length > 65 ? t.substring(0, 65) + '\u2026' : t; })()}
+                        </div>
+                        <div className="text-[11px] mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                          {book.author.length > 40 ? book.author.substring(0, 40) + '\u2026' : book.author}
+                          {book.year ? `, ${book.year}` : ''}
+                        </div>
+                        {book.translated >= 0.5 && (
+                          <div className="text-[10px] mt-1 uppercase tracking-wide" style={{ color: TYPE_CONFIG.origin.color }}>
+                            Read in English
+                          </div>
+                        )}
                       </div>
                     </a>
                   ))}
