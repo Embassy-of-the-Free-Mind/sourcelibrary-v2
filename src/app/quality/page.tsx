@@ -50,7 +50,7 @@ const threeWaysOf = (row: LangRow | null) => ((row?.ocr ?? null) as { three_ways
 const twMeta = (byLanguage as { ocr_three_ways?: { hand_check?: { file: string; examples: number; reference_wrong: number } | null } }).ocr_three_ways;
 const twSource = (byLanguage.sources as { ocr_three_ways?: string }).ocr_three_ways;
 const TW_KINDS: [keyof NonNullable<ThreeWays['kinds']>, string][] = [
-  ['long_s_as_f', 'ſ read as f'],
+  ['long_s_as_f', 'long s read as f'],
   ['refusals', 'refused'],
   ['modernised', 'spelling modernised'],
   ['reference_wrong', 'published text wrong'],
