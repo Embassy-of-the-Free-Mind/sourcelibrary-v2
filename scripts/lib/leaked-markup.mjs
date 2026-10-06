@@ -44,27 +44,39 @@ const NAMED_ENTITY = {
   amp: '&', quot: '"', apos: "'", mdash: '—', ndash: '–', hellip: '…',
   lsquo: '‘', rsquo: '’', ldquo: '“', rdquo: '”', sect: '§', para: '¶', middot: '·', shy: '',
 };
-const WS_ENTITY_RUN = /[ \t]*(?:&(?:nbsp|ensp|emsp|thinsp);[ \t]*)+/gi;
+const WS_ENTITY_RUN = /(?:&(?:nbsp|ensp|emsp|thinsp);[ \t]*)+/gi;
 const ENTITY = /&(?:([a-zA-Z]{2,8})|#(\d{2,6})|#[xX]([0-9a-fA-F]{2,5}));/g;
 
 /** The continuity label the translation prompt asks for, as the model writes it. */
 const CONT_LABEL = /^[ \t]*continue[sd]?[ \t]+from[ \t]+(?:the[ \t]+)?(?:previous[ \t]+page|page[ \t]+\d+)[ \t]*[:.…—–-]*[ \t]*/i;
 const BARE_LABEL = /^(\s*)continues from (?:the )?previous page[ \t]*[:.…—–-]*[ \t]*/;
 const PARAGRAPH_BREAK = /\n[ \t]*\n/;
-const WORD_CHAR = /[\p{L}\p{N}]/u;
+/** How far a note's closer is looked for. A note is a sentence or two; unbounded, a junk page goes quadratic. */
+const NOTE_LOOKAHEAD = 4000;
+// What may stand before a repeated word: a space or opening punctuation. Not a letter (a longer
+// word) and not `>` (the tail of a word a tag runs through: `<unclear>k</unclear>ai`).
+const WORD_EDGE = /[\s(\["“‘'*_—–-]/;
 
 function count(fired, rule, n = 1) { if (fired && n) fired[rule] = (fired[rule] || 0) + n; }
 
 function fixMeta(text, fired) {
   if (!/<meta\b/i.test(text) && !BARE_LABEL.test(text)) return text;
-  let out = text.replace(/<meta\s[^<>]*>/gi, () => { count(fired, 'meta_attr'); return '<meta>'; });
+  // `<meta catchword="Return"/>` has no content and no closer: as an opener it would pair with
+  // the NEXT `</meta>` and hide the page text between them.
+  let out = text.replace(/<meta(?:\s[^<>]*)?\/>/gi, () => { count(fired, 'meta_attr'); return ''; })
+    .replace(/<meta\s[^<>]*>/gi, () => { count(fired, 'meta_attr'); return '<meta>'; });
   // An opener that carries the label and meets another opener, or the end, before any closer.
-  out = out.replace(/<meta>([^<]*)/gi, (whole, body, at, all) => {
+  // `lastClose` keeps this linear: past it nothing can close, so nothing is searched.
+  const lower = out.toLowerCase();
+  const lastClose = lower.lastIndexOf('</meta>');
+  out = out.replace(/<meta>([^<]*)/gi, (whole, body, at) => {
     const label = CONT_LABEL.exec(body);
     if (!label) return whole;
-    const rest = all.slice(at + whole.length);
-    const close = rest.search(/<\/meta>/i), next = rest.search(/<meta>/i);
-    if (close !== -1 && (next === -1 || close < next)) return whole;
+    const from = at + whole.length;
+    if (from <= lastClose) {
+      const close = lower.indexOf('</meta>', from), next = lower.indexOf('<meta>', from);
+      if (next === -1 || close < next) return whole;
+    }
     count(fired, 'meta_label');
     return body.slice(label[0].length);
   });
@@ -79,7 +91,7 @@ function fixMeta(text, fired) {
 function fixTagAttrs(text, fired) {
   return text.replace(/<(note|gloss|margin|term|insert|unclear)[ \t]+(original:[^<>]*?)[ \t]*>/gi, (_m, tag, words, at, all) => {
     count(fired, 'tag_attr');
-    const rest = all.slice(at + _m.length);
+    const rest = all.slice(at + _m.length, at + _m.length + NOTE_LOOKAHEAD);
     const brk = rest.search(PARAGRAPH_BREAK);
     const para = brk === -1 ? rest : rest.slice(0, brk);
     const close = para.search(new RegExp(`</${tag}>`, 'i')), next = para.search(new RegExp(`<${tag}[\\s>]`, 'i'));
@@ -95,14 +107,15 @@ function fixTagAttrs(text, fired) {
  */
 function fixDupTerms(text, fired) {
   if (!/<term>/i.test(text)) return text;
-  const RE = /[ \t]+<term>([^<>\n]{3,60})<\/term>/gi;
+  const RE = /<term>([^<>\n]{3,60})<\/term>/gi;
   let res = '', cursor = 0, m;
   while ((m = RE.exec(text)) !== null) {
     const term = m[1];
-    const start = m.index - term.length;
-    if (start <= cursor || text[start - 1] === '\n') continue;
-    const same = text.slice(start, m.index);
-    if (same.toLowerCase() !== term.toLowerCase() || WORD_CHAR.test(text[start - 1])) continue;
+    const gap = gapStart(text, m.index);
+    const start = gap - term.length;
+    if (gap === m.index || start <= cursor || text[start - 1] === '\n') continue;
+    const same = text.slice(start, gap);
+    if (same.toLowerCase() !== term.toLowerCase() || !WORD_EDGE.test(text[start - 1])) continue;
     res += text.slice(cursor, start) + `<term>${same}</term>`;
     cursor = RE.lastIndex;
     count(fired, 'dup_term');
@@ -110,17 +123,30 @@ function fixDupTerms(text, fired) {
   return cursor ? res + text.slice(cursor) : text;
 }
 
+/** Index where the run of spaces and tabs ending at `at` begins (`at` itself when there is none). */
+function gapStart(text, at) {
+  let i = at;
+  while (i > 0 && (text[i - 1] === ' ' || text[i - 1] === '\t')) i--;
+  return i;
+}
+
 /** `inches <gloss>in</gloss>ches` → `inches`. */
 function fixStutter(text, fired) {
   if (!/<\/(?:gloss|term|unclear|insert)>\p{L}/u.test(text)) return text;
-  return text.replace(/([ \t]+)<(gloss|term|unclear|insert)>(\p{L}{1,20})<\/\2>(\p{L}{1,20})/giu, (whole, _gap, _tag, a, b, at, all) => {
-    const word = a + b;
-    const before = all.slice(Math.max(0, at - word.length - 1), at);
-    if (before.slice(-word.length).toLowerCase() !== word.toLowerCase()) return whole;
-    if (before.length > word.length && WORD_CHAR.test(before[0])) return whole;
+  const RE = /<(gloss|term|unclear|insert)>(\p{L}{1,20})<\/\1>(\p{L}{1,20})/giu;
+  let res = '', cursor = 0, m;
+  while ((m = RE.exec(text)) !== null) {
+    const word = m[2] + m[3];
+    const gap = gapStart(text, m.index);
+    const start = gap - word.length;
+    if (gap === m.index || start < cursor) continue;
+    if (text.slice(start, gap).toLowerCase() !== word.toLowerCase()) continue;
+    if (start > 0 && !WORD_EDGE.test(text[start - 1])) continue;
+    res += text.slice(cursor, gap);
+    cursor = RE.lastIndex;
     count(fired, 'stutter');
-    return '';
-  });
+  }
+  return cursor ? res + text.slice(cursor) : text;
 }
 
 function fixEntities(text, fired, plain) {
@@ -130,7 +156,8 @@ function fixEntities(text, fired, plain) {
     // Plain text has no indent to keep: a run of spacing entities is one space, none at a line start.
     out = out.replace(WS_ENTITY_RUN, (run, at, all) => {
       count(fired, 'entity');
-      return at === 0 || all[at - 1] === '\n' ? '' : ' ';
+      const prev = at === 0 ? '\n' : all[at - 1];
+      return prev === '\n' || prev === ' ' || prev === '\t' ? '' : ' ';
     });
   }
   return out.replace(ENTITY, (whole, name, dec, hex) => {
@@ -151,6 +178,20 @@ function fixEntities(text, fired, plain) {
 }
 
 // A heading may sit in a blockquote or a list item, or behind the reader's centring arrow.
+/** `TITLE ###` or `TITLE ### <-` without its hashes, or null. By hand: a regex here is quadratic on a long run of spaces. */
+function trailingHashes(line) {
+  let end = line.length;
+  const blank = (i) => line[i] === ' ' || line[i] === '\t';
+  while (end > 0 && blank(end - 1)) end--;
+  if (end >= 2 && line[end - 2] === '<' && line[end - 1] === '-') { end -= 2; while (end > 0 && blank(end - 1)) end--; }
+  let h = end;
+  while (h > 0 && line[h - 1] === '#') h--;
+  if (h === end || end - h > 6 || h === 0 || !blank(h - 1)) return null;
+  let keep = h;
+  while (keep > 0 && blank(keep - 1)) keep--;
+  return keep === 0 ? null : line.slice(0, keep) + line.slice(end);
+}
+
 const HEADING_START = /^[ \t]*(?:>[ \t]*)*(?:[-*+][ \t]+)?(?:->[ \t]*)?#{1,6}(?:[ \t]|$)/;
 
 function fixHashes(text, fired) {
@@ -161,7 +202,10 @@ function fixHashes(text, fired) {
     let rest = line.slice(head.length);
     if (!rest.includes('#')) return line;
     // Hashes closing a line that no heading opened ("THE WALDENSIANS: BOOK THREE ###").
-    if (!head) rest = rest.replace(/[ \t]+#{1,6}([ \t]*(?:<-)?[ \t]*)$/, (_m, tail) => { count(fired, 'hash'); return tail; });
+    if (!head) {
+      const cut = trailingHashes(rest);
+      if (cut) { rest = cut; count(fired, 'hash'); }
+    }
     // A heading marker with something in front of it ("25 ### That the cause…", "| ### SECTION 3").
     rest = rest.replace(/(^|[^#\s][ \t]+|\|)#{2,6}[ \t]+(?=\S)/g, (_m, lead) => { count(fired, 'hash'); return lead; });
     // … or wrapped in a tag, where Markdown never reads it ("<center># Translation</center>").

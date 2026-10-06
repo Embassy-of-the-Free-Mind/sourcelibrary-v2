@@ -88,7 +88,8 @@ describe('repairLeakedMarkup — one rule per real page', () => {
   it('removes the tagged echo of a word', () => {
     expect(repairLeakedMarkup(SATCHAKRA)).toBe('"In the middle of that, two inches above, is the **Vajra** and also the **Chitrini**."');
     // a mark INSIDE a word is transcription (an uncertain syllable, a drop capital) and stays
-    for (const s of ['through the al<unclear>ter</unclear>ation of', '<insert>H</insert>ere he has', 'at two <gloss>in</gloss>ches']) {
+    // 69cf7d11e721f92aaa5b891e p. 274 — a papyrus read letter by letter: `kai ai`, two words
+    for (const s of ['through the al<unclear>ter</unclear>ation of', '<insert>H</insert>ere he has', 'at two <gloss>in</gloss>ches', '<unclear>k</unclear>ai <unclear>a</unclear>i <unclear>y</unclear>ph']) {
       expect(repairLeakedMarkup(s)).toBe(s);
     }
   });
@@ -110,6 +111,10 @@ describe('repairLeakedMarkup — one rule per real page', () => {
       '<meta>This page describes a diagram\n\nBody text here.', // not a label: left for a human
     ]) expect(repairLeakedMarkup(s)).toBe(s);
     expect(repairLeakedMarkup('<meta type="continuity">continues from previous page</meta>\n\nbody')).toBe('<meta>continues from previous page</meta>\n\nbody');
+    // 697e23c3eae9ff63cff4df70 p. 463: the catchword printed as body text
+    expect(prepareNotesMarkdown('all their hands together: There-\n\n<meta type="catchword">fore</meta>', { showNotes: true }).processedText).toBe('all their hands together: There-');
+    // 6984e84e45b45b78e8d48ab4 p. 126: self-closing — as an opener it would swallow text up to the next </meta>
+    expect(repairLeakedMarkup('beneath the Kingdom.\n\n<meta catchword="Return"/>\n\nIn the *Book of Clarity* <meta>x</meta>')).toBe('beneath the Kingdom.\n\n\n\nIn the *Book of Clarity* <meta>x</meta>');
   });
 
   it('rewrites a break marker written as a closing tag', () => {
@@ -156,10 +161,17 @@ describe('repairLeakedMarkup — one rule per real page', () => {
   });
 
   it('stays linear on a junk page', () => {
-    const junk = ('word <term>word</term> &nbsp; # ' + ' '.repeat(40) + '<meta>continues from previous page: x ').repeat(4000);
+    // Each shape once made a rule rescan the page: an unclosed <meta> per line, a note with
+    // attribute words and no paragraph break, and very long runs of spaces before a tag or a #.
+    const junk = [
+      ('word <term>word</term> &nbsp; # ' + ' '.repeat(40) + '<meta>continues from previous page: x ').repeat(8000),
+      '<note original: "x"> y '.repeat(20000),
+      ('a' + ' '.repeat(20000) + '<term>abc</term>' + ' '.repeat(20000) + '#\n').repeat(4),
+    ];
     const t0 = Date.now();
-    repairLeakedMarkup(junk);
-    expect(Date.now() - t0).toBeLessThan(2000);
+    for (const j of junk) { repairLeakedMarkup(j); repairLeakedMarkup(j, { plain: true }); }
+    // ~100 ms when linear; any of the three quadratic forms takes tens of seconds.
+    expect(Date.now() - t0).toBeLessThan(5000);
   });
 
   it('reports what it did — the census counts with the repair itself', () => {

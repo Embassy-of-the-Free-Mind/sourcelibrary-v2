@@ -10,7 +10,7 @@
  * The fixable classes are counted by the repair itself (`repairLeakedMarkup(text, { fired })`),
  * so the census and the fix cannot disagree. The watch classes are counted and left alone.
  *
- *   node --env-file=.env.production.local scripts/audit/leaked-markup-census.mjs [--dir D] [--conc 4] [--limit-books N]
+ *   node --env-file=.env.production.local scripts/audit/leaked-markup-census.mjs [--dir D] [--conc 4] [--limit-books N] [--books-file F]
  *   node scripts/audit/leaked-markup-census.mjs --summary [--dir D]
  *
  * Resumable by book (books-done.txt under --dir). Prints counts; excerpts go to examples.jsonl.
@@ -89,7 +89,9 @@ async function scan() {
     .map((b) => ({ id: b.id || String(b._id), canon: /Derge (?:Tengyur|Kangyur)/i.test(b.title || '') })).sort((a, b) => (a.id < b.id ? -1 : 1));
   const donePath = path.join(DIR, 'books-done.txt');
   const done = new Set(fs.existsSync(donePath) ? fs.readFileSync(donePath, 'utf8').split('\n').filter(Boolean) : []);
-  const todo = books.filter((b) => !done.has(b.id));
+  // --books-file: one book id per line — recount a subset after a rule changes.
+  const only = arg('--books-file') ? new Set(fs.readFileSync(arg('--books-file'), 'utf8').split('\n').filter(Boolean)) : null;
+  const todo = books.filter((b) => !done.has(b.id) && (!only || only.has(b.id)));
   const limit = Number(arg('--limit-books', 0));
   if (limit) todo.length = Math.min(todo.length, limit);
   console.error(`census: ${books.length} live translated books, ${done.size} done, ${todo.length} to do`);
