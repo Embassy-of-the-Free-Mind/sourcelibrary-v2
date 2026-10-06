@@ -14,7 +14,7 @@ import { semanticBookSearch, semanticArtworkSearch, semanticSiteSearch, type Sem
 import { filterVisibleArtworks } from '@/lib/artwork-visibility';
 import { isArtworkRecord } from '@/lib/artwork-record';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
-import { anonSearchGate, SIGNIN_URL } from '@/lib/anon-gate';
+import { anonSearchGate, ANON_SEARCHES_PER_HOUR, SIGNIN_URL } from '@/lib/anon-gate';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { CLIP_URL } from '@/lib/clip';
 import { getBookThumbnailUrl } from '@/lib/utils';
@@ -101,7 +101,7 @@ export async function GET(request: NextRequest) {
     const tenantContext = getTenantContextFromRequest(request.headers);
     const query = searchParams.get('q') || '';
 
-    // Anonymous visitors get 5 distinct searches/hour, then a sign-in prompt.
+    // Anonymous visitors get ANON_SEARCHES_PER_HOUR (10, Derek 2026-10-06; was 5) distinct searches/hour, then a sign-in prompt.
     // Counts distinct query strings (not raw requests) so typeahead and filter
     // refinement of one search don't burn the allowance. Signed-in users, SEO
     // crawlers, and internal warmers are exempt (see anon-gate.ts).
@@ -109,7 +109,7 @@ export async function GET(request: NextRequest) {
     if (!gate.allowed) {
       return NextResponse.json(
         {
-          error: 'You\'ve used your 5 free searches this hour. Sign in (free) to keep searching.',
+          error: `You've used your ${ANON_SEARCHES_PER_HOUR} free searches this hour. Sign in (free) to keep searching.`,
           code: 'SIGNIN_REQUIRED',
           sign_in: SIGNIN_URL,
         },
