@@ -43,6 +43,25 @@
  *   --limit N     Stop after N pages
  *   --dry-run     Count pages without embedding
  *
+ * Batch API (#5729) — same model, same 768 dims, same text and row, half the price:
+ *   --batch       With --books-file: instead of calling batchEmbedContents, write
+ *                 the pages into Gemini Batch API embedding jobs
+ *                 (asyncBatchEmbedContent, --job-pages N per job, default 20000)
+ *                 and exit. Each job is recorded in Mongo `embed_batch_jobs` and
+ *                 priced AT SUBMIT on gemini_usage (mode 'batch', status
+ *                 'submitted', endpoint worker/embed-gemini, one row per book) so
+ *                 the dial and the scope envelope see committed spend (#4567).
+ *                 The spend gate is re-asked before every job. Pages already in an
+ *                 uncollected job are skipped, so a re-run resumes. Exit 3 = the
+ *                 Batch API refused a job (quota); re-run later.
+ *   --collect     Collect finished jobs: stream each results file, re-read the
+ *                 page from Mongo, rebuild its text with the same composer, and
+ *                 upsert the row only when the text still hashes to what was
+ *                 submitted (a page re-OCR'd in between is left for the next run).
+ *                 Closes the submit-time usage rows with the BILLED tokens (batch
+ *                 results carry usageMetadata; realtime ones do not). Free: it
+ *                 runs whatever the dial says. --collect-concurrency N (default 3).
+ *
  * Env: MONGODB_URI, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, SUPABASE_DB_URL,
  *      GEMINI_API_KEY_TIER3 (preferred, no training opt-in) or GEMINI_API_KEY
  *
@@ -54,10 +73,13 @@
 import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
 import fs from 'node:fs';
-import { cleanPageText, buildPageEmbeddingRow } from '../lib/page-embedding-text.mjs';
+import crypto from 'node:crypto';
+import { cleanPageText, buildPageEmbeddingRow, PAGE_EMBEDDING_COLUMNS } from '../lib/page-embedding-text.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
-import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, estimateUsd, FLUSH_EVERY_TEXTS } from '../lib/embedding-usage.mjs';
+import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, estimateUsd, estimateTextTokens, usdForTokens, FLUSH_EVERY_TEXTS } from '../lib/embedding-usage.mjs';
 import { pageSourceTs, incrementalSourceFilter, nextWatermark, readWatermark, writeWatermark } from '../lib/embed-watermark.mjs';
+import { createThenDeleteInput, uploadBatchInputFile, streamBatchResponses } from '../lib/gemini-batch-input-file.mjs';
+import { logUsage, completeBatchUsage, calculateUsageCost } from './lib/supabase-usage-logger.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -100,6 +122,16 @@ const TRANSLATED_ONLY = args.includes('--translated-only');
 const LIMIT = parseInt(args.find((_, i, a) => a[i - 1] === '--limit') || '0') || 0;
 const WORKER_ID = parseInt(args.find((_, i, a) => a[i - 1] === '--worker-id') || '0');
 const WORKER_COUNT = parseInt(args.find((_, i, a) => a[i - 1] === '--worker-count') || '1');
+const BATCH_MODE = args.includes('--batch');
+const COLLECT_MODE = args.includes('--collect');
+const JOB_PAGES = parseInt(args.find((_, i, a) => a[i - 1] === '--job-pages') || '20000');
+const COLLECT_CONCURRENCY = parseInt(args.find((_, i, a) => a[i - 1] === '--collect-concurrency') || '3');
+if (BATCH_MODE && !BOOKS_FILE) {
+  // A batch job is priced and attributed per book; an open-ended batch --full
+  // would enqueue the whole corpus' spend in one go. Name the books.
+  console.error('--batch needs --books-file');
+  process.exit(1);
+}
 
 // Text composition and row shape are SHARED with the pipeline-side writer
 // (scripts/lib/embed-book-pages.mjs, called from enrich-worker Phase 6). Two
@@ -262,6 +294,290 @@ function cleanText(text) {
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
+/** Fields every mode reads from a page — the stream and the batch collector alike. */
+const PAGE_PROJECTION = {
+  id: 1,
+  book_id: 1,
+  page_number: 1,
+  'ocr.data': 1,
+  'translation.data': 1,
+  'translation.updated_at': 1,
+  'ocr.updated_at': 1,
+  updated_at: 1, // fallback for the mongo_updated_at watermark when sub-doc timestamps are missing
+  translation_summary: 1,
+  translation_keywords: 1,
+};
+
+/**
+ * The text this worker embeds for a page, or null when it has none worth
+ * embedding. Translation (or OCR) plus the compact, high-signal summary and
+ * keywords that sharpen the vector for concept-level matching. ONE function
+ * for the realtime stream and the batch collector, which rebuilds the text to
+ * check it still matches what was submitted.
+ */
+function composeEmbedText(page) {
+  const ocrText = cleanText(page.ocr?.data);
+  const translationText = cleanText(page.translation?.data);
+  if (ocrText.length < 20 && translationText.length < 20) return null;
+  let text = translationText.length >= 20 ? translationText : ocrText;
+  const meta = [];
+  if (page.translation_summary) meta.push(page.translation_summary);
+  if (page.translation_keywords?.length) meta.push(`Keywords: ${page.translation_keywords.join(', ')}`);
+  if (meta.length) text = meta.join('\n') + '\n\n' + text;
+  return { text, hasTranslation: translationText.length >= 20 };
+}
+
+// Book metadata cache
+const bookCache = new Map();
+async function getBook(bookId) {
+  if (bookCache.has(bookId)) return bookCache.get(bookId);
+  const book = await db.collection('books').findOne(
+    { id: bookId },
+    { projection: { title: 1, display_title: 1, author: 1, language: 1, year: 1 } }
+  );
+  const meta = book ? {
+    title: book.display_title || book.title || 'Untitled',
+    author: book.author || null,
+    language: book.language || null,
+    year: typeof book.year === 'number' ? book.year : null,
+  } : { title: 'Unknown', author: null, language: null, year: null };
+  bookCache.set(bookId, meta);
+  return meta;
+}
+
+// ── Batch API lane (#5729) ──────────────────────────────────────────
+//
+// The same request the realtime path sends (model, text, outputDimensionality
+// 768, no taskType), through asyncBatchEmbedContent at half the price. Positive
+// control 2026-10-07: batch vs realtime vectors for the same text, cosine ≥ 0.99
+// (see #5729). PRIOR ART: scripts/workers/lib/enrich-batch-lane.mjs — the REST
+// batch shape and the price-at-submit / completeBatchUsage-at-collect metering.
+
+const EMBED_JOBS = 'embed_batch_jobs';
+const BATCH_API = 'https://generativelanguage.googleapis.com/v1beta';
+const BATCH_MAX_JOB_BYTES = 150 * 1024 * 1024;
+const BATCH_ENDPOINT = 'worker/embed-gemini'; // same lane as realtime: envelope meters count both
+let embedJob = newEmbedJob();
+let batchStop = null; // why submission stopped early: 'gate' | 'quota' | 'error'
+const batchSubmitted = [];
+
+function newEmbedJob() { return { lines: [], bytes: 0, pageIds: [], books: new Map() }; }
+function textHash(text) { return crypto.createHash('sha1').update(text).digest('hex').slice(0, 12); }
+
+async function addToEmbedJob(item) {
+  // Key: book|page|text-hash. The book attributes billed tokens without a
+  // Mongo read; the hash lets the collector refuse a vector for changed text.
+  const line = JSON.stringify({
+    key: `${item.page.book_id}|${item.page.id}|${textHash(item.text)}`,
+    request: { content: { parts: [{ text: item.text }] }, outputDimensionality: DIMS },
+  });
+  embedJob.lines.push(line);
+  embedJob.bytes += Buffer.byteLength(line) + 1;
+  embedJob.pageIds.push(item.page.id);
+  const b = embedJob.books.get(item.page.book_id) || { pages: 0, tokens: 0 };
+  b.pages++;
+  b.tokens += estimateTextTokens(item.text);
+  embedJob.books.set(item.page.book_id, b);
+  if (embedJob.lines.length >= JOB_PAGES || embedJob.bytes >= BATCH_MAX_JOB_BYTES) await submitEmbedJob();
+}
+
+async function submitEmbedJob() {
+  const job = embedJob;
+  embedJob = newEmbedJob();
+  if (!job.lines.length || batchStop) return;
+  // Re-ask the gate for every job: a long run can outlive its envelope.
+  const gate = await budgetAllowsDispatchScoped(db, 'embed-gemini');
+  if (!gate.allowed || (gate.envelopeIds && [...job.books.keys()].some(id => !gate.envelopeIds.has(id)))) {
+    batchStop = 'gate';
+    console.log(`[embed-gemini] batch: spend gate closed for this job's books — no new dispatch (${job.lines.length} pages not submitted).`);
+    return;
+  }
+  const jobId = `embed-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
+  const estUsd = [...job.books.values()].reduce((t, b) => t + usdForTokens(b.tokens, { batch: true }), 0);
+  const jobs = db.collection(EMBED_JOBS);
+  await jobs.insertOne({
+    _id: jobId, status: 'creating', model: MODEL, dims: DIMS, books_file: BOOKS_FILE || null,
+    book_ids: [...job.books.keys()], page_ids: job.pageIds, requests: job.lines.length, bytes: job.bytes,
+    est_usd: +estUsd.toFixed(4), created_at: new Date(),
+  });
+  let created;
+  try {
+    const fileName = await uploadBatchInputFile(job.lines.join('\n') + '\n', jobId, GEMINI_KEY);
+    created = await createThenDeleteInput({
+      fileName, apiKey: GEMINI_KEY,
+      create: async () => {
+        for (let attempt = 0; ; attempt++) {
+          const r = await fetch(`${BATCH_API}/models/${MODEL}:asyncBatchEmbedContent?key=${GEMINI_KEY}`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ batch: { display_name: jobId, input_config: { file_name: fileName } } }),
+          });
+          const body = await r.json().catch(() => ({}));
+          if (r.ok && body.name) return body;
+          if (r.status === 429 && attempt < 2) { await sleep(60000 * (attempt + 1)); continue; }
+          const err = new Error(`batch create ${r.status}: ${JSON.stringify(body).slice(0, 300)}`);
+          err.status = r.status;
+          throw err;
+        }
+      },
+    });
+  } catch (e) {
+    await jobs.updateOne({ _id: jobId }, { $set: { status: 'create_failed', error: e.message.slice(0, 500) } });
+    batchStop = e.status === 429 || /RESOURCE_EXHAUSTED|quota/i.test(e.message) ? 'quota' : 'error';
+    console.error(`[embed-gemini] batch: ${jobId} not submitted (${batchStop}): ${e.message}`);
+    return;
+  }
+  await jobs.updateOne({ _id: jobId }, { $set: { status: 'submitted', gemini_name: created.name, submitted_at: new Date() } });
+  // Priced at submit so the dial and the envelope see committed spend (#4567);
+  // completeBatchUsage replaces each estimate with billed tokens at collect.
+  for (const [bookId, b] of job.books) {
+    await logUsage({
+      type: 'embedding', mode: 'batch', model: MODEL, book_id: bookId, page_count: b.pages,
+      batch_job_id: `${jobId}:${bookId}`, input_tokens: 0, output_tokens: 0, status: 'submitted',
+      cost_usd: Math.round(usdForTokens(b.tokens, { batch: true }) * 1e6) / 1e6, endpoint: BATCH_ENDPOINT,
+    }, db);
+  }
+  batchSubmitted.push({ jobId, name: created.name, pages: job.lines.length, books: job.books.size, estUsd });
+  console.log(`[embed-gemini] batch: submitted ${jobId} → ${created.name}: ${job.lines.length.toLocaleString()} pages, ${job.books.size} books, est $${estUsd.toFixed(4)}`);
+}
+
+const UPSERT_SQL_HEAD = `INSERT INTO page_translations (${PAGE_EMBEDDING_COLUMNS.join(', ')}) VALUES `;
+const UPSERT_SQL_TAIL = ` ON CONFLICT (page_id) DO UPDATE SET ${PAGE_EMBEDDING_COLUMNS.filter(c => c !== 'page_id').map(c => `${c} = EXCLUDED.${c}`).join(', ')}`;
+
+/** Multi-row upsert, the same columns and conflict rule as upsertToSupabase. */
+async function upsertManyPg(client, rows) {
+  for (let i = 0; i < rows.length; i += 25) {
+    const chunk = rows.slice(i, i + 25);
+    const params = [];
+    const tuples = chunk.map((row) => `(${PAGE_EMBEDDING_COLUMNS.map((c) => { params.push(row[c]); return `$${params.length}`; }).join(', ')})`);
+    await client.query(UPSERT_SQL_HEAD + tuples.join(', ') + UPSERT_SQL_TAIL, params);
+  }
+}
+
+async function openPg() {
+  const { default: pg } = await import('pg');
+  const client = new pg.Client({ connectionString: SUPABASE_DB_URL, ssl: { rejectUnauthorized: false } });
+  await client.connect();
+  await client.query('SET statement_timeout = 60000');
+  return client;
+}
+
+async function collectEmbedJobs() {
+  if (!SUPABASE_DB_URL) { console.error('--collect needs SUPABASE_DB_URL'); process.exit(1); }
+  const jobs = db.collection(EMBED_JOBS);
+  const staleClaim = new Date(Date.now() - 2 * 3600e3);
+  const todo = await jobs.find(
+    { $or: [{ status: 'submitted' }, { status: 'collecting', collecting_at: { $lt: staleClaim } }] },
+    { projection: { page_ids: 0 } },
+  ).sort({ created_at: 1 }).toArray();
+  console.log(`[collect] ${todo.length} job(s) to check`);
+  const report = { pending: 0, collected: 0, failed: 0, written: 0, changed: 0, failedRequests: 0, errored: 0 };
+  let next = 0;
+  await Promise.all(Array.from({ length: Math.max(1, COLLECT_CONCURRENCY) }, async () => {
+    while (next < todo.length) {
+      const job = todo[next++];
+      try { await collectEmbedJob(job, report); } catch (e) { report.errored++; console.error(`[collect] ${job._id}: ${e.message}`); }
+    }
+  }));
+  const open = await jobs.countDocuments({ status: { $in: ['submitted', 'collecting'] } });
+  console.log(`[collect] ${JSON.stringify(report)} — ${open} job(s) still open`);
+}
+
+async function collectEmbedJob(job, report) {
+  const jobs = db.collection(EMBED_JOBS);
+  const r = await (await fetch(`${BATCH_API}/${job.gemini_name}?key=${GEMINI_KEY}`)).json();
+  const state = r.metadata?.state || r.state || 'UNKNOWN';
+  if (/FAILED|CANCELLED|EXPIRED/.test(state)) {
+    await jobs.updateOne({ _id: job._id }, { $set: { status: 'failed', state, collected_at: new Date() } });
+    for (const id of job.book_ids) {
+      await completeBatchUsage({ batch_job_id: `${job._id}:${id}`, model: job.model, input_tokens: 0, output_tokens: 0, status: 'failed', error_message: state, insertIfMissing: false }, db);
+    }
+    report.failed++;
+    console.log(`  ${job._id}: ${state} — its pages go back to the pool`);
+    return;
+  }
+  if (!/SUCCEEDED/.test(state)) {
+    report.pending++;
+    console.log(`  ${job._id}: ${state} ${JSON.stringify(r.metadata?.batchStats || {})}`);
+    return;
+  }
+  const responsesFile = r.response?.responsesFile || r.metadata?.output?.responsesFile;
+  if (!responsesFile) throw new Error(`${state} with no responsesFile`);
+  const claim = await jobs.updateOne(
+    { _id: job._id, status: job.status, collecting_at: job.collecting_at ?? { $exists: false } },
+    { $set: { status: 'collecting', collecting_at: new Date(), state } },
+  );
+  if (!claim.modifiedCount) return; // another collector took it
+
+  const client = await openPg();
+  const perBook = new Map(); // bookId → { tokens, pages }
+  const counts = { responses: 0, written: 0, changed: 0, failedRequests: 0, missing: 0 };
+  let buf = [];
+  const flush = async () => {
+    if (!buf.length) return;
+    const lines = buf;
+    buf = [];
+    const parsed = lines.map((line) => {
+      const [bookId, pageId, hash] = String(line.key ?? line.metadata?.key ?? '').split('|');
+      return { bookId, pageId, hash, line };
+    });
+    const pages = await db.collection('pages').find({ id: { $in: parsed.map(p => p.pageId) } }).project(PAGE_PROJECTION).toArray();
+    const byId = new Map(pages.map(p => [p.id, p]));
+    const rows = new Map();
+    for (const { bookId, pageId, hash, line } of parsed) {
+      const b = perBook.get(bookId) || { tokens: 0, pages: 0 };
+      perBook.set(bookId, b);
+      b.tokens += line.response?.usageMetadata?.promptTokenCount || 0; // billed whatever we keep
+      const values = line.response?.embedding?.values;
+      if (line.error || !values) { counts.failedRequests++; continue; }
+      if (values.length !== DIMS) throw new Error(`${pageId}: ${values.length}-dim vector, expected ${DIMS}`);
+      const page = byId.get(pageId);
+      if (!page) { counts.missing++; continue; }
+      const composed = composeEmbedText(page);
+      if (!composed || textHash(composed.text) !== hash) { counts.changed++; continue; }
+      const book = await getBook(page.book_id);
+      rows.set(pageId, buildPageEmbeddingRow({ page, book, text: composed.text, hasTranslation: composed.hasTranslation, embedding: values }));
+      b.pages++;
+    }
+    for (let attempt = 1; ; attempt++) {
+      try { await upsertManyPg(client, [...rows.values()]); break; } catch (e) {
+        if (attempt >= 4) throw new Error(`upsert failed 4×: ${e.message}`);
+        console.warn(`  ${job._id}: upsert error (${e.message}) — retry ${attempt} in ${attempt * 15}s`);
+        await sleep(attempt * 15000);
+      }
+    }
+    counts.written += rows.size;
+  };
+  try {
+    for await (const line of streamBatchResponses(responsesFile, GEMINI_KEY)) {
+      counts.responses++;
+      buf.push(line);
+      if (buf.length >= 200) await flush();
+      if (counts.responses % 5000 === 0) console.log(`  ${job._id}: ${counts.responses.toLocaleString()} responses, ${counts.written.toLocaleString()} rows written`);
+    }
+    await flush();
+  } finally {
+    await client.end().catch(() => {});
+  }
+
+  let billedTokens = 0;
+  for (const id of job.book_ids) {
+    const b = perBook.get(id) || { tokens: 0, pages: 0 };
+    billedTokens += b.tokens;
+    await completeBatchUsage({
+      batch_job_id: `${job._id}:${id}`, model: job.model, input_tokens: b.tokens, output_tokens: 0,
+      status: b.tokens ? 'success' : 'failed', type: 'embedding', mode: 'batch', book_id: id,
+      page_count: b.pages, endpoint: BATCH_ENDPOINT,
+    }, db);
+  }
+  const actualUsd = calculateUsageCost(job.model, billedTokens, 0, true);
+  await jobs.updateOne({ _id: job._id }, { $set: { status: 'collected', collected_at: new Date(), counts, billed_tokens: billedTokens, actual_usd: +actualUsd.toFixed(4) } });
+  report.collected++;
+  report.written += counts.written;
+  report.changed += counts.changed;
+  report.failedRequests += counts.failedRequests;
+  console.log(`  ${job._id}: collected — ${counts.written.toLocaleString()} rows, ${counts.changed} changed since submit, ${counts.failedRequests} failed requests, ${counts.missing} pages gone; ${billedTokens.toLocaleString()} tokens ≈ $${actualUsd.toFixed(4)} (est $${(job.est_usd || 0).toFixed(4)})`);
+}
+
 // Legacy mark: max(updated_at) over every writer's rows. Used ONCE, to seed the
 // worker-owned watermark when none exists yet; never as the selection rule
 // (#5869 — other writers advance it past pages this worker never read).
@@ -289,6 +605,13 @@ const RUN_STARTED_AT = new Date();
 const mongoClient = new MongoClient(MONGODB_URI, { maxPoolSize: 3 });
 await mongoClient.connect();
 const db = mongoClient.db('bookstore');
+
+// Collecting finished Batch jobs is free — it runs whatever the dial says.
+if (COLLECT_MODE) {
+  await collectEmbedJobs();
+  await mongoClient.close();
+  process.exit(0);
+}
 
 // Pause + dial gate (#3826). This worker had NEITHER check — the reason its
 // cron line is hard-disabled (#PAUSED-3826#). Unattended runs (no explicit
@@ -405,6 +728,18 @@ if (BOOK_ID) {
       if (!data || data.length < 1000) break;
       from += 1000;
     }
+  }
+  if (BATCH_MODE) {
+    // Pages already in a Batch job that has not been collected yet: skip them,
+    // so a re-run resumes instead of paying twice. A job stuck in 'creating'
+    // for over an hour never reached Gemini; its pages are fair game again.
+    const inflight = db.collection(EMBED_JOBS).find(
+      { book_ids: { $in: targetIds }, $or: [{ status: { $in: ['submitted', 'collecting'] } }, { status: 'creating', created_at: { $gt: new Date(Date.now() - 3600e3) } }] },
+      { projection: { page_ids: 1 } },
+    );
+    let n = 0;
+    for await (const j of inflight) for (const id of j.page_ids || []) { existing.add(id); n++; }
+    console.log(`${n.toLocaleString()} pages are in uncollected Batch jobs — skipping those too.`);
   }
   globalThis.SKIP_PAGE_IDS = existing;
   pageQuery.book_id = { $in: targetIds };
@@ -539,23 +874,6 @@ if (DRY_RUN) {
   process.exit(0);
 }
 
-// Book metadata cache
-const bookCache = new Map();
-async function getBook(bookId) {
-  if (bookCache.has(bookId)) return bookCache.get(bookId);
-  const book = await db.collection('books').findOne(
-    { id: bookId },
-    { projection: { title: 1, display_title: 1, author: 1, language: 1, year: 1 } }
-  );
-  const meta = book ? {
-    title: book.display_title || book.title || 'Untitled',
-    author: book.author || null,
-    language: book.language || null,
-    year: typeof book.year === 'number' ? book.year : null,
-  } : { title: 'Unknown', author: null, language: null, year: null };
-  bookCache.set(bookId, meta);
-  return meta;
-}
 
 // Watermark bookkeeping (#5869). Anything that confines the book set makes the
 // run "scoped": it may read new pages, but it cannot vouch for the pages it
@@ -567,18 +885,7 @@ let maxReadTs = null;
 // Stream pages
 const cursor = db.collection('pages')
   .find(pageQuery)
-  .project({
-    id: 1,
-    book_id: 1,
-    page_number: 1,
-    'ocr.data': 1,
-    'translation.data': 1,
-    'translation.updated_at': 1,
-    'ocr.updated_at': 1,
-    updated_at: 1, // fallback for the mongo_updated_at watermark when sub-doc timestamps are missing
-    translation_summary: 1,
-    translation_keywords: 1,
-  })
+  .project(PAGE_PROJECTION)
   .batchSize(EMBED_BATCH_SIZE * 2);
 
 let processed = 0;
@@ -611,33 +918,26 @@ for await (const page of cursor) {
     continue;
   }
 
-  const ocrText = cleanText(page.ocr?.data);
-  const translationText = cleanText(page.translation?.data);
-
   // Skip pages with no usable text
-  if (ocrText.length < 20 && translationText.length < 20) {
+  const composed = composeEmbedText(page);
+  if (!composed) {
     skipped++;
     processed++;
     continue;
   }
 
   const book = await getBook(page.book_id);
+  const item = { page, book, ...composed };
 
-  // Compose embedding text: translation (or OCR) + structured metadata
-  // The summary and keywords sharpen the vector for concept-level matching
-  let textToEmbed = translationText.length >= 20 ? translationText : ocrText;
-
-  // Prepend metadata if available (compact, high-signal)
-  const meta = [];
-  if (page.translation_summary) meta.push(page.translation_summary);
-  if (page.translation_keywords?.length) meta.push(`Keywords: ${page.translation_keywords.join(', ')}`);
-  if (meta.length) textToEmbed = meta.join('\n') + '\n\n' + textToEmbed;
-
-  batch.push({ page, text: textToEmbed, book, hasTranslation: translationText.length >= 20 });
-
-  if (batch.length >= EMBED_BATCH_SIZE) {
-    await processBatch(batch);
-    batch = [];
+  if (BATCH_MODE) {
+    await addToEmbedJob(item);
+    if (batchStop) break;
+  } else {
+    batch.push(item);
+    if (batch.length >= EMBED_BATCH_SIZE) {
+      await processBatch(batch);
+      batch = [];
+    }
   }
 
   processed++;
@@ -649,6 +949,7 @@ for await (const page of cursor) {
 }
 
 if (batch.length > 0) await processBatch(batch);
+if (BATCH_MODE) await submitEmbedJob();
 
 // Record the tail. Without this, everything since the last flush is spend that
 // happened and was never written down — the exact hole #4162 is about.
@@ -676,6 +977,13 @@ if (pgClient) await pgClient.end();
 const elapsed = ((Date.now() - start) / 1000).toFixed(1);
 console.log(`\nDone: ${embedded.toLocaleString()} embedded, ${skipped} skipped, ${errors} errors, ${elapsed}s`);
 console.log(`Embedding spend recorded: ~$${estimateUsd(usageTotalChars).toFixed(2)} across ${usageRows} gemini_usage row(s) (estimated from characters — see scripts/lib/embedding-usage.mjs)`);
+if (BATCH_MODE) {
+  const pages = batchSubmitted.reduce((t, j) => t + j.pages, 0);
+  const usd = batchSubmitted.reduce((t, j) => t + j.estUsd, 0);
+  console.log(`Batch: ${batchSubmitted.length} job(s) submitted, ${pages.toLocaleString()} pages, est $${usd.toFixed(4)}${batchStop ? ` — stopped early: ${batchStop}` : ''}. Collect with --collect.`);
+  if (batchStop === 'quota') process.exit(3);
+  if (batchStop === 'error') process.exit(1);
+}
 
 // After a large full backfill, rebuild the HNSW index if it's missing
 if (FULL_MODE && embedded > 10000) {

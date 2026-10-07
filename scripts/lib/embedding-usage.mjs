@@ -45,6 +45,21 @@ import { logUsage } from '../workers/lib/supabase-usage-logger.mjs';
  */
 export const EMBED_CHARS_PER_TOKEN = 4.29;
 
+/**
+ * Han, kana and hangul are NOT 4.29 chars/token: countTokens on 71 OCR pages from
+ * the #5729 Chinese chunks (2026-10-07) measured 1.09–1.10 chars/token at 92% CJK
+ * share, so the flat ratio under-read those pages ~4×. Count each CJK character
+ * as one token and the rest at the flat ratio.
+ */
+const CJK_RE = /[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uac00-\ud7af\uf900-\ufaff]/g;
+
+/** Estimated input tokens for one text, script-aware. */
+export function estimateTextTokens(text) {
+  if (!text) return 0;
+  const cjk = (text.match(CJK_RE) || []).length;
+  return Math.round(cjk + (text.length - cjk) / EMBED_CHARS_PER_TOKEN);
+}
+
 /** gemini-embedding-2-preview, paid tier, text input. Output tokens: none. */
 export const EMBED_USD_PER_1M_TOKENS = 0.20;
 
@@ -53,14 +68,17 @@ export const FLUSH_EVERY_TEXTS = 5000;
 
 /** A fresh accumulator. */
 export function newEmbedUsage() {
-  return { texts: 0, chars: 0 };
+  return { texts: 0, chars: 0, tokens: 0 };
 }
 
 /** Record one successful batch against an accumulator. */
 export function addEmbedUsage(usage, texts) {
   if (!usage || !texts?.length) return;
   usage.texts += texts.length;
-  for (const t of texts) usage.chars += t.length;
+  for (const t of texts) {
+    usage.chars += t.length;
+    usage.tokens = (usage.tokens || 0) + estimateTextTokens(t);
+  }
 }
 
 /** Estimated input tokens for a character count. */
@@ -68,9 +86,14 @@ export function estimateTokens(chars) {
   return Math.round(chars / EMBED_CHARS_PER_TOKEN);
 }
 
-/** Estimated USD for a character count. */
-export function estimateUsd(chars) {
-  return estimateTokens(chars) / 1e6 * EMBED_USD_PER_1M_TOKENS;
+/** USD for a token count. The Batch API bills half (#5729). */
+export function usdForTokens(tokens, { batch = false } = {}) {
+  return tokens / 1e6 * EMBED_USD_PER_1M_TOKENS * (batch ? 0.5 : 1);
+}
+
+/** Estimated USD for a character count (flat ratio — prefer estimateTextTokens when you hold the text). */
+export function estimateUsd(chars, { batch = false } = {}) {
+  return usdForTokens(estimateTokens(chars), { batch });
 }
 
 /**
@@ -90,8 +113,10 @@ export function estimateUsd(chars) {
 export async function logEmbeddingUsage(usage, { model, bookId, endpoint, db } = {}) {
   if (!usage || usage.texts === 0) return;
   const { texts, chars } = usage;
+  const tokens = usage.tokens || estimateTokens(chars);
   usage.texts = 0;
   usage.chars = 0;
+  usage.tokens = 0;
   try {
     await logUsage({
       type: 'embedding',
@@ -99,18 +124,18 @@ export async function logEmbeddingUsage(usage, { model, bookId, endpoint, db } =
       model,
       book_id: bookId || null,
       page_count: texts,
-      input_tokens: estimateTokens(chars),
+      input_tokens: tokens,
       // Embeddings return a vector, not tokens. Zero is the true value here,
       // not a missing one.
       output_tokens: 0,
       // Passed explicitly: the logger's MODEL_PRICING table falls back to
       // gemini-3-flash-preview for anything it does not know, which would
       // overstate embedding input by 2.5x.
-      cost_usd: Math.round(estimateUsd(chars) * 1e6) / 1e6,
+      cost_usd: Math.round(usdForTokens(tokens) * 1e6) / 1e6,
       status: 'success',
       endpoint,
     }, db || null);
   } catch (e) {
-    console.warn(`[embedding-usage] could not record ${texts} texts (~$${estimateUsd(chars).toFixed(4)}): ${e.message}`);
+    console.warn(`[embedding-usage] could not record ${texts} texts (~$${usdForTokens(tokens).toFixed(4)}): ${e.message}`);
   }
 }
