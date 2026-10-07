@@ -8,7 +8,10 @@ import { expandNameQuery } from '@/lib/search/name-variants';
 import { CONTENT_LICENSE } from '@/lib/license-info';
 import { searchBookIds } from '@/lib/books-catalog';
 import { stemmedQueryRegex } from '@/lib/search/word-forms';
-import { semanticBookSearch, semanticPageSearchGlobal, lexicalPageSearchLang } from '@/lib/semantic-search';
+import { semanticBookSearch, lexicalPageSearchLang } from '@/lib/semantic-search';
+import { conceptPageSearch } from '@/lib/search/concept-search';
+import { defaultDiversity, diversify, parseDiversityParam } from '@/lib/search/diversity';
+import { loadBookFacets } from '@/lib/search/diversity-facets';
 import { rrfScores } from '@/lib/search/rrf';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { resolveSearchScope } from '@/lib/tenant-search-scope';
@@ -198,6 +201,17 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // Strip surrounding quotes for matching (phrase detection handled by subsystems)
     const isPhrase = /^".*"$/.test(query.trim());
     const matchQuery = isPhrase ? query.trim().slice(1, -1) : query;
+
+    // Result diversity (#3514, #3895): `tradition`, `author` or `off`.
+    //  - The semantic page lane is spread by tradition unless the query is an
+    //    exact phrase, a known item (navigational/verbatim intent, a year) or
+    //    a search inside one book.
+    //  - The keyword lanes answer for the words typed, so the final list is
+    //    re-ordered only when a caller asks (`pages_only` passage search).
+    const diversityParam = parseDiversityParam(searchParams.get('diversity'));
+    const semanticDiversity = diversityParam
+      ?? defaultDiversity(matchQuery, { phrase: isPhrase, intent: llmIntent, bookScoped: !!bookId });
+    let untranslatedLane: string = 'off';
 
     // Resolve the ranking strategy for 'auto': prefer the LLM intent when the
     // client passed one (navigational → ladder, else → RRF); otherwise fall back
@@ -610,10 +624,15 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       timed(async () => {
         if (bookId || !searchContent) return [];
         try {
-          const pages = await semanticPageSearchGlobal(matchQuery, 15, {
+          // Spread across traditions and works, with the original-text lane
+          // beside the English one when it is on (#3514, #5729).
+          const concept = await conceptPageSearch(matchQuery, 15, {
             scope,
             textLang,
+            diversity: semanticDiversity,
           });
+          untranslatedLane = concept.lanes.untranslated;
+          const pages = concept.rows;
           if (pages.length === 0) return pages;
           // Drop semantic matches on non-content pages (cover/blank/illustration/etc.).
           // The Supabase embedding table has these — they pollute conceptual queries.
@@ -903,7 +922,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           categories: book.categories,
           page_number: sp.page_number,
           snippet: sp.snippet,
-          snippet_type: 'translation' as const,
+          // An original-text row's snippet is the page's own language (#5729).
+          snippet_type: sp.snippet_type === 'ocr' ? 'ocr' as const : 'translation' as const,
           thumbnail: book.thumbnail,
           thumbnail_blob: book.thumbnail_blob,
         };
@@ -1078,7 +1098,17 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // Shared with the unified and semantic lanes — one definition, so a new
     // lane can't reintroduce the copies (src/lib/search/work-grouping.ts).
     const collapsed = collapseByWork(results, { getIdentity: identityOf });
-    const dedupedResults: SearchResult[] = collapsed.results;
+    let dedupedResults: SearchResult[] = collapsed.results;
+
+    // Asked-for diversity on a passage list (MCP search_translations, #3895):
+    // re-order, never drop. No score is passed: the list is fused from lanes
+    // whose scores do not compare, so the caps are absolute.
+    if (pagesOnly && diversityParam && diversityParam !== 'off' && sortBy === 'relevance' && dedupedResults.length > 2) {
+      const lookup = await loadBookFacets(dedupedResults.map(r => r.book_id));
+      if (lookup.ok) {
+        dedupedResults = diversify(dedupedResults, { mode: diversityParam, bookId: r => r.book_id, facets: lookup.facets });
+      }
+    }
 
     // "N editions of this work →" for rows that replaced siblings. The number
     // is what /work/[id] renders (fetchWorkFanouts calls that page's own
@@ -1171,6 +1201,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         languages, exclude_languages: excludeLanguages,
         has_doi: hasDoi, has_translation: hasTranslation, first_translation: firstTranslation, library, book_id: bookId,
         pages_only: pagesOnly, sort: sortBy, ranking: rankingApplied,
+        diversity: semanticDiversity, untranslated_lane: untranslatedLane,
       },
       degraded_lanes: degradedLanes,
     });
@@ -1187,6 +1218,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       limit,
       sort: sortBy,
       ranking: rankingApplied,
+      // What the semantic page lane was spread by; `diversity=off` returns its own order.
+      diversity: semanticDiversity,
       license: CONTENT_LICENSE,
       results: paginatedResults,
       ...(nearby.length > 0 && { nearby, nearby_range: `${parseInt(year!) - 5}-${parseInt(year!) + 5}` }),

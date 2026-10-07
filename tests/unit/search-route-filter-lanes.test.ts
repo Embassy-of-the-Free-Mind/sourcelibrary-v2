@@ -85,6 +85,7 @@ vi.mock('@/lib/semantic-search', () => ({
   // Vector lanes carry no metadata predicate: they propose every book.
   semanticBookSearch: async () => BOOKS.map(b => ({ book_id: b.id, similarity: 0.9, summary_text: 's', title: b.title, author: b.author, language: b.language, year: b.year })),
   semanticPageSearchGlobal: async () => BOOKS.map(b => ({ page_id: `${b.id}:9`, book_id: b.id, page_number: 9, snippet: 'sem', book_year: b.year })),
+  semanticPageSearchUntranslated: async () => ({ rows: [], state: 'off' }),
   lexicalPageSearchLang: async () => [],
 }));
 vi.mock('@/lib/search/work-fanout', () => ({ fetchWorkFanouts: async () => new Map() }));
