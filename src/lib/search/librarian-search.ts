@@ -15,6 +15,7 @@
 
 import { getDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
+import { GLOBAL_SCOPE, tenantSearchScope, type SearchScope } from '@/lib/tenant-search-scope';
 import {
   semanticBookSearch,
   semanticPageSearchScoped,
@@ -285,17 +286,20 @@ async function nameVariantSource(query: string): Promise<RawHit[]> {
   }
 }
 
+function scopeFor(opts: HybridSearchOptions): Promise<SearchScope> | SearchScope {
+  return opts.tenantId ? tenantSearchScope(opts.tenantId) : GLOBAL_SCOPE;
+}
+
 // ── Source 2: book-then-page (book discovery → page drill-down) ──────
 
 async function bookThenPageSource(query: string, opts: HybridSearchOptions): Promise<RawHit[]> {
-  // semanticBookSearch on main typed as tenantId?: string; PR C extends to
-  // accept null. Until C lands, convert null → undefined at the boundary.
-  // semanticPageSearchScoped on main doesn't accept tenant opts — drop it.
-  // Tenant scoping still happens via the Mongo book-metadata join below the
-  // RRF merge, so a stray tenant page can't survive into the final passages.
-  const tenantId = opts.tenantId ?? undefined;
+  // The vector lanes rank inside the caller's scope (#4330): a tenant id means
+  // that tenant's book set, none means the whole index. The Mongo
+  // book-metadata join below the RRF merge still applies `tenantBookFilter`,
+  // so a stray page cannot survive into the final passages either way.
   try {
-    const books = await semanticBookSearch(query, 12, { tenantId });
+    const scope = await scopeFor(opts);
+    const books = await semanticBookSearch(query, 12, { scope });
     if (books.length === 0) return [];
     const bookIds = books.map(b => b.book_id);
     const pages = await semanticPageSearchScoped(query, bookIds, 20);
@@ -314,11 +318,8 @@ async function bookThenPageSource(query: string, opts: HybridSearchOptions): Pro
 // ── Source 3: global page semantic ───────────────────────────────────
 
 async function globalPageSource(query: string, opts: HybridSearchOptions): Promise<RawHit[]> {
-  // semanticPageSearchGlobal accepts tenantId in its opts already (main).
-  // Convert null → undefined for type compat; the RPC still defaults to NULL.
-  const tenantId = opts.tenantId ?? undefined;
   try {
-    const pages = await semanticPageSearchGlobal(query, 20, { tenantId, maxPerBook: 2 });
+    const pages = await semanticPageSearchGlobal(query, 20, { scope: await scopeFor(opts), maxPerBook: 2 });
     return pages.map(p => ({
       book_id: p.book_id,
       page_number: p.page_number,

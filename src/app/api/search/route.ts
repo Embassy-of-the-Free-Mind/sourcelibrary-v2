@@ -11,6 +11,7 @@ import { stemmedQueryRegex } from '@/lib/search/word-forms';
 import { semanticBookSearch, semanticPageSearchGlobal, lexicalPageSearchLang } from '@/lib/semantic-search';
 import { rrfScores } from '@/lib/search/rrf';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { resolveSearchScope } from '@/lib/tenant-search-scope';
 import { withApiAuth } from '@/lib/api-auth';
 import { expandLanguages } from '@/lib/language-utils';
 import { logSearchQuery } from '@/lib/search-log';
@@ -220,6 +221,14 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // Read tenant context resolved by proxy.ts
     const { slug: tenantSlug, id: tenantId } = getTenantContextFromRequest(request.headers);
     if (tenantSlug && !tenantId) {
+      return NextResponse.json({ results: [], total: 0 });
+    }
+    // The book set the vector lanes are confined to (#4330). They used to rank
+    // the whole library and rely on the Mongo materialization below to drop
+    // foreign books — pure, but a tenant got whatever of its shelf happened to
+    // sit in the global top-N, usually nothing.
+    const scope = await resolveSearchScope(request.headers);
+    if (scope.kind === 'closed') {
       return NextResponse.json({ results: [], total: 0 });
     }
 
@@ -561,8 +570,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         if (bookId || !searchContent) return [];
         try {
           const books = await semanticBookSearch(matchQuery, MAX_PAGE_RESULTS, {
+            scope,
             language: language || undefined,
-            tenantId: tenantId || undefined,
           });
           return books.filter(b => yearInRange(b.year)).map(b => ({
             page_id: '',
@@ -588,7 +597,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         if (bookId || !searchContent) return [];
         try {
           const pages = await semanticPageSearchGlobal(matchQuery, 15, {
-            tenantId: tenantId || undefined,
+            scope,
             textLang,
           });
           if (pages.length === 0) return pages;
@@ -768,9 +777,10 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       if (semanticBookIds.length > 0) {
         const semBooks = await db.collection('books')
           .find(
-            // match_books_semantic is GLOBAL (book_embeddings has no tenant
-            // or metadata predicate), so every book-level filter is applied
-            // here, with the object the keyword lanes use: tenant scope
+            // The lane above is confined to the tenant's book set (`scope`,
+            // #4330) but book_embeddings has no metadata predicate, so every
+            // book-level filter is applied here, with the object the keyword
+            // lanes use: tenant scope again as a second line of defence
             // (Tenant Subdomain Lockdown), the localized-edition counter,
             // language / languages / exclude_languages, and since #5921
             // category, has_doi, has_translation, first_translation, library.

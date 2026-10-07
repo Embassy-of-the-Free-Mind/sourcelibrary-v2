@@ -21,6 +21,7 @@ import { logAiUsage } from '@/lib/log-ai-usage';
 // Atlas keyword + Supabase semantic are now combined in @/lib/search/librarian-search.
 // Atlas-search builders no longer imported here directly.
 import { supabase } from '@/lib/supabase';
+import { GLOBAL_SCOPE, matchClip } from '@/lib/tenant-search-scope';
 import { ObjectId, type Document, type WithId } from 'mongodb';
 import { stripAnnotations } from '@/lib/semantic-alignment';
 import { authorSlug } from '@/lib/slugify';
@@ -546,12 +547,10 @@ async function executeSearchImages(query: string, bookId?: string): Promise<{
     if (resp.ok) {
       const { embedding } = await resp.json();
       if (embedding) {
-        const { data } = await supabase.rpc('match_clip_images', {
-          query_embedding: embedding,
-          match_threshold: 0.20,
-          match_count: 8,
-        });
-        if (data) {
+        // GLOBAL_SCOPE: the Librarian is main-site only (tenantVisibilityFilter
+        // above); a per-tenant Librarian would pass that tenant's scope here.
+        const { rows: data } = await matchClip(embedding, { scope: GLOBAL_SCOPE, threshold: 0.20, count: 8 });
+        if (data.length > 0) {
           for (const match of data) {
             if (match.source_type === 'gallery_image' && match.id) {
               clipIds.set(match.id, match.similarity);
@@ -1138,7 +1137,7 @@ async function executeTool(
       const { semanticArtworkSearch } = await import('@/lib/semantic-search');
       const { filterVisibleArtworks } = await import('@/lib/artwork-visibility');
       const artworkDb = await getDb();
-      const rawArtworks = await semanticArtworkSearch(query, 8, { genre, period, culture, collection });
+      const rawArtworks = await semanticArtworkSearch(query, 8, { scope: GLOBAL_SCOPE, genre, period, culture, collection });
       const artworks = await filterVisibleArtworks(artworkDb, rawArtworks);
 
       // The Supabase `thumbnail_url` is a stale 150px `book-thumbnails/{id}-thumb.jpg`
