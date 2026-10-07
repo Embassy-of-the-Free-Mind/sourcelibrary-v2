@@ -76,7 +76,7 @@ import fs from 'node:fs';
 import crypto from 'node:crypto';
 import { cleanPageText, buildPageEmbeddingRow, PAGE_EMBEDDING_COLUMNS } from '../lib/page-embedding-text.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
-import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, estimateUsd, FLUSH_EVERY_TEXTS } from '../lib/embedding-usage.mjs';
+import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, estimateUsd, estimateTextTokens, usdForTokens, FLUSH_EVERY_TEXTS } from '../lib/embedding-usage.mjs';
 import { pageSourceTs, incrementalSourceFilter, nextWatermark, readWatermark, writeWatermark } from '../lib/embed-watermark.mjs';
 import { createThenDeleteInput, uploadBatchInputFile, streamBatchResponses } from '../lib/gemini-batch-input-file.mjs';
 import { logUsage, completeBatchUsage, calculateUsageCost } from './lib/supabase-usage-logger.mjs';
@@ -374,9 +374,9 @@ async function addToEmbedJob(item) {
   embedJob.lines.push(line);
   embedJob.bytes += Buffer.byteLength(line) + 1;
   embedJob.pageIds.push(item.page.id);
-  const b = embedJob.books.get(item.page.book_id) || { pages: 0, chars: 0 };
+  const b = embedJob.books.get(item.page.book_id) || { pages: 0, tokens: 0 };
   b.pages++;
-  b.chars += item.text.length;
+  b.tokens += estimateTextTokens(item.text);
   embedJob.books.set(item.page.book_id, b);
   if (embedJob.lines.length >= JOB_PAGES || embedJob.bytes >= BATCH_MAX_JOB_BYTES) await submitEmbedJob();
 }
@@ -393,7 +393,7 @@ async function submitEmbedJob() {
     return;
   }
   const jobId = `embed-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
-  const estUsd = [...job.books.values()].reduce((t, b) => t + estimateUsd(b.chars, { batch: true }), 0);
+  const estUsd = [...job.books.values()].reduce((t, b) => t + usdForTokens(b.tokens, { batch: true }), 0);
   const jobs = db.collection(EMBED_JOBS);
   await jobs.insertOne({
     _id: jobId, status: 'creating', model: MODEL, dims: DIMS, books_file: BOOKS_FILE || null,
@@ -433,7 +433,7 @@ async function submitEmbedJob() {
     await logUsage({
       type: 'embedding', mode: 'batch', model: MODEL, book_id: bookId, page_count: b.pages,
       batch_job_id: `${jobId}:${bookId}`, input_tokens: 0, output_tokens: 0, status: 'submitted',
-      cost_usd: Math.round(estimateUsd(b.chars, { batch: true }) * 1e6) / 1e6, endpoint: BATCH_ENDPOINT,
+      cost_usd: Math.round(usdForTokens(b.tokens, { batch: true }) * 1e6) / 1e6, endpoint: BATCH_ENDPOINT,
     }, db);
   }
   batchSubmitted.push({ jobId, name: created.name, pages: job.lines.length, books: job.books.size, estUsd });
