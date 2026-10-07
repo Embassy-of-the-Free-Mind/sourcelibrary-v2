@@ -1,6 +1,6 @@
 {
  "issue": 5513,
- "generated_at": "2026-10-07T16:20:25.908Z",
+ "generated_at": "2026-10-07T22:06:38.131Z",
  "script": "scripts/catalog-coverage/canon-gap-status.mjs",
  "gap_map": "scripts/catalog-coverage/results/canon-gap-map-2026-10.json",
  "fields": {
@@ -33,7 +33,7 @@
    "readable_books": 213,
    "pages_with_text": 128369,
    "holdings_method": "language=Tibetan, title/source matches Derge Tengyur (bstan 'gyur + sde dge, BDRC W23703, Esukhia)",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   },
   {
    "id": "derge-kangyur",
@@ -49,7 +49,7 @@
    "readable_books": 0,
    "pages_with_text": 62375,
    "holdings_method": "language=Tibetan, title/source matches Derge Kangyur (bka' 'gyur + sde dge, BDRC W4CZ5369 / W22084, Esukhia)",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   },
   {
    "id": "cbeta",
@@ -60,11 +60,11 @@
    "cost_usd": 306,
    "held_books": 137,
    "live_books": 127,
-   "pipeline_held": 3,
-   "readable_books": 72,
+   "pipeline_held": 4,
+   "readable_books": 73,
    "pages_with_text": 13790,
    "holdings_method": "Chinese-language books in buddhist-canon / chinese-buddhist-texts / zen-chan, SAT Daizōkyō scans, metadata.cbeta_id, or works-catalog cbeta holdings",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   },
   {
    "id": "cbeta-chan",
@@ -76,11 +76,11 @@
    "cost_usd": 9,
    "held_books": 99,
    "live_books": 92,
-   "pipeline_held": 13,
-   "readable_books": 16,
+   "pipeline_held": 14,
+   "readable_books": 17,
    "pages_with_text": 10974,
    "holdings_method": "Chinese-language books whose title contains 景德傳燈錄 / 祖堂集 / 五燈會元 / 語錄 / 廣錄 / 語要, or in zen-chan",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   },
   {
    "id": "pali-mula",
@@ -96,7 +96,7 @@
    "readable_books": 34,
    "pages_with_text": 16892,
    "holdings_method": "language=Pali (any edition; not matched to the VRI CSCD edition)",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   },
   {
    "id": "pali-atthakatha",
@@ -112,7 +112,7 @@
    "readable_books": 34,
    "pages_with_text": 16892,
    "holdings_method": "language=Pali (any edition; not matched to the VRI CSCD edition)",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   },
   {
    "id": "pali-tika",
@@ -127,7 +127,7 @@
    "readable_books": 34,
    "pages_with_text": 16892,
    "holdings_method": "language=Pali (any edition; not matched to the VRI CSCD edition)",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   },
   {
    "id": "gretil-buddhist",
@@ -143,7 +143,7 @@
    "readable_books": 35,
    "pages_with_text": 14681,
    "holdings_method": "Sanskrit books in buddhism collections or Buddhist title terms",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   },
   {
    "id": "gretil-vedanta",
@@ -159,7 +159,7 @@
    "readable_books": 12,
    "pages_with_text": 6080,
    "holdings_method": "Sanskrit books in vedanta-darshana or Vedānta title terms",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   },
   {
    "id": "gretil-gaudiya",
@@ -175,7 +175,7 @@
    "readable_books": 1,
    "pages_with_text": 535,
    "holdings_method": "Sanskrit books with Gauḍīya author/title terms",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   },
   {
    "id": "sefaria-zohar",
@@ -191,7 +191,7 @@
    "readable_books": 10,
    "pages_with_text": 9477,
    "holdings_method": "Zohar / Tikkunei Zohar by title",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   },
   {
    "id": "sefaria-lurianic",
@@ -207,7 +207,7 @@
    "readable_books": 4,
    "pages_with_text": 2548,
    "holdings_method": "Lurianic corpus by title (Etz Chaim, Vital, Shemonah She`arim …)",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   },
   {
    "id": "sefaria-cordovero",
@@ -223,7 +223,7 @@
    "readable_books": 1,
    "pages_with_text": 658,
    "holdings_method": "Cordovero by title (Pardes Rimonim, Tomer Devorah, Or Ne`erav)",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   },
   {
    "id": "openiti-sufi",
@@ -234,11 +234,11 @@
    "cost_usd": 29,
    "held_books": 161,
    "live_books": 116,
-   "pipeline_held": 2,
-   "readable_books": 131,
+   "pipeline_held": 3,
+   "readable_books": 132,
    "pages_with_text": 26471,
    "holdings_method": "Arabic/Persian books in sufism collections, Ibn ʿArabī title terms, or works-catalog openiti holdings",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   },
   {
    "id": "ganjoor",
@@ -254,7 +254,7 @@
    "readable_books": 22,
    "pages_with_text": 9909,
    "holdings_method": "Persian books in persian-literary-tradition or with classical poetry title terms (any edition)",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   },
   {
    "id": "mongolian-kanjur",
@@ -270,7 +270,7 @@
    "readable_books": 0,
    "pages_with_text": 0,
    "holdings_method": "language=Mongolian or Mongolian Kanjur by title/source",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   },
   {
    "id": "tripitaka-koreana",
@@ -286,7 +286,7 @@
    "readable_books": 0,
    "pages_with_text": 0,
    "holdings_method": "Korean/Chinese books with Tripitaka Koreana / 高麗 / 海印寺 title terms",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   },
   {
    "id": "kanripo",
@@ -301,7 +301,7 @@
    "readable_books": 155,
    "pages_with_text": 33242,
    "holdings_method": "works-catalog work_holdings for kanripo works (build-holdings.mjs title-auto match; a floor)",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   },
   {
    "id": "patrologia-latina",
@@ -316,7 +316,7 @@
    "readable_books": 2,
    "pages_with_text": 1844,
    "holdings_method": "language=Latin with Patrologia / Migne in the title or source (any volume; not matched to Corpus Corporum's texts)",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   },
   {
    "id": "camena-poemata",
@@ -331,7 +331,7 @@
    "readable_books": 0,
    "pages_with_text": 0,
    "holdings_method": "language=Latin with a CAMENA / MATEO (Mannheim) source URL",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   },
   {
    "id": "perseus-latin",
@@ -343,10 +343,10 @@
    "held_books": 1875,
    "live_books": 1292,
    "pipeline_held": 1,
-   "readable_books": 1171,
+   "readable_books": 1174,
    "pages_with_text": 476166,
    "holdings_method": "language=Latin in classical-philosophy, literature, stoicism, ancient-historiography, ancient-epic-drama, school-of-athens (any edition; not matched to Perseus works)",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   },
   {
    "id": "perseus-greek",
@@ -358,10 +358,10 @@
    "held_books": 4566,
    "live_books": 1098,
    "pipeline_held": 163,
-   "readable_books": 990,
+   "readable_books": 991,
    "pages_with_text": 489506,
    "holdings_method": "language=Greek or Ancient Greek (any edition; not matched to Perseus or First1KGreek works)",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   },
   {
    "id": "first1k-greek",
@@ -373,10 +373,10 @@
    "held_books": 4566,
    "live_books": 1098,
    "pipeline_held": 163,
-   "readable_books": 990,
+   "readable_books": 991,
    "pages_with_text": 489506,
    "holdings_method": "language=Greek or Ancient Greek (any edition; not matched to Perseus or First1KGreek works)",
-   "updated_at": "2026-10-07T16:20:25.908Z"
+   "updated_at": "2026-10-07T22:06:38.131Z"
   }
  ],
  "traditions": [
@@ -388,10 +388,10 @@
     "derge-kangyur"
    ],
    "books": 531,
-   "readable_books": 335,
+   "readable_books": 338,
    "pages_scanned": 290018,
    "pages_transcribed": 284149,
-   "pages_translated": 213663,
+   "pages_translated": 213926,
    "canon_page_equivalents": 131633,
    "ocr_engines": [
     [
@@ -426,7 +426,7 @@
    "translation_models": [
     [
      "gemini-3-flash-preview",
-     214275
+     214369
     ],
     [
      "gemini-3.1-flash-lite",
@@ -2167,6 +2167,14 @@
      465
     ],
     [
+     "69e7ab5d5f1a22ab19a976c1",
+     "Thadrak Kanjur Nyi khri Ka",
+     false,
+     540,
+     466,
+     464
+    ],
+    [
      "6abe8add6a920ffd924d507a",
      "བསྟན་འགྱུར། སྡེ་དགེ། རྒྱུད་འགྲེལ། ཙ (Derge Tengyur, vol. 18)",
      true,
@@ -2364,6 +2372,14 @@
      true,
      493,
      453,
+     440
+    ],
+    [
+     "69e7ab125f1a22ab19a926ba",
+     "Thadrak Kanjur mDo sde A",
+     false,
+     447,
+     445,
      440
     ],
     [
@@ -3007,6 +3023,14 @@
      399
     ],
     [
+     "69e7ac2f5f1a22ab19aa502e",
+     "Kanjur Khri brgyad stong pa Kha",
+     false,
+     435,
+     410,
+     397
+    ],
+    [
      "69e7abac5f1a22ab19a9c16c",
      "Neyphug Kanjur mDo sde Ba",
      true,
@@ -3543,36 +3567,12 @@
      348
     ],
     [
-     "69e7ac2f5f1a22ab19aa502e",
-     "Kanjur Khri brgyad stong pa Kha",
-     false,
-     435,
-     410,
-     347
-    ],
-    [
-     "69e7ab5d5f1a22ab19a976c1",
-     "Thadrak Kanjur Nyi khri Ka",
-     false,
-     540,
-     466,
-     346
-    ],
-    [
      "69e7abf05f1a22ab19aa0a8f",
      "Neyphug Kanjur Myang 'das Kha",
      true,
      368,
      357,
      346
-    ],
-    [
-     "69e7ab125f1a22ab19a926ba",
-     "Thadrak Kanjur mDo sde A",
-     false,
-     447,
-     445,
-     345
     ],
     [
      "69e7ac385f1a22ab19aa5a27",
@@ -4695,10 +4695,10 @@
     "cbeta"
    ],
    "books": 171,
-   "readable_books": 80,
+   "readable_books": 81,
    "pages_scanned": 23334,
    "pages_transcribed": 19420,
-   "pages_translated": 15088,
+   "pages_translated": 15176,
    "canon_page_equivalents": 766864,
    "ocr_engines": [
     [
@@ -4725,7 +4725,7 @@
    "translation_models": [
     [
      "gemini-3-flash-preview",
-     6368
+     6400
     ],
     [
      "gemini-3.1-flash-lite",
@@ -4956,6 +4956,14 @@
      106,
      106,
      106
+    ],
+    [
+     "699356cb8ed86e583b7b86cc",
+     "Compendium of the Five Lamps",
+     false,
+     106,
+     106,
+     104
     ],
     [
      "6992cf72f5b4f75c1a4c8e92",
@@ -5844,14 +5852,6 @@
      17,
      17,
      17
-    ],
-    [
-     "699356cb8ed86e583b7b86cc",
-     "Compendium of the Five Lamps",
-     false,
-     106,
-     106,
-     16
     ],
     [
      "69f13438365e3fcae574dfe1",
@@ -24909,10 +24909,10 @@
     "sefaria-cordovero"
    ],
    "books": 627,
-   "readable_books": 373,
+   "readable_books": 378,
    "pages_scanned": 170162,
    "pages_transcribed": 142052,
-   "pages_translated": 126688,
+   "pages_translated": 129692,
    "canon_page_equivalents": 8669,
    "ocr_engines": [
     [
@@ -24963,7 +24963,7 @@
     ],
     [
      "gemini-3.1-flash-lite",
-     26543
+     29401
     ],
     [
      "gemini-3.1-flash-lite-preview",
@@ -24998,6 +24998,14 @@
      1671,
      1671,
      1650
+    ],
+    [
+     "69b51e5eff09e4fe943ad5a3",
+     "Zohar Symeonis Ben Jochai interprete Gulielmo Postello - BSB Clm 7428",
+     true,
+     2055,
+     1970,
+     1214
     ],
     [
      "697b079923ddbe14e3d73c46",
@@ -25096,6 +25104,14 @@
      919
     ],
     [
+     "69b51ea1ff09e4fe943b2498",
+     "The Works of Ramon Llull on the Universal Art of Sciences",
+     true,
+     1234,
+     1218,
+     915
+    ],
+    [
      "6974b642457dd8909910b9e5",
      "Three Books on the Art of Kabbalah by Petrus Galatinus, a Work on the Secrets of Catholic ",
      true,
@@ -25120,6 +25136,22 @@
      895
     ],
     [
+     "69b51ea2cf111105c42a1ef5",
+     "Opera ea quae ad adinventam ab ipso artem universalem, scientiarum artiumque omnium brevi ",
+     true,
+     1196,
+     1191,
+     881
+    ],
+    [
+     "69b51e3bcf111105c4298b05",
+     "Petri Galatini Opus de arcanis catholicae veritatis : hoc est, in omnia difficilia loca ve",
+     true,
+     956,
+     955,
+     835
+    ],
+    [
      "695259b3ab34727b1f045d8e",
      "A collection of several philosophical writings of Dr Henry More fellow of Christ's Colledg",
      true,
@@ -25142,6 +25174,14 @@
      842,
      832,
      821
+    ],
+    [
+     "69b51e9547b06ecd58193b99",
+     "Mysterium Magnum, Oder Erklärung über das Erste Buch Mosis, Von der Offenbahrung Göttliche",
+     true,
+     828,
+     827,
+     815
     ],
     [
      "697c8e0f150e68b9f4070204",
@@ -25176,12 +25216,36 @@
      779
     ],
     [
+     "69b4cc4dd2bf9b45ea47a455",
+     "Omnia quae extant opera",
+     true,
+     1538,
+     1529,
+     759
+    ],
+    [
+     "69b51e4147b06ecd5818c44d",
+     "Joannis Pici Opera omnia et Joannis Franc. Pici opera in volumine secundo. 1",
+     true,
+     1064,
+     1051,
+     749
+    ],
+    [
      "6984e84db96022f6fa69b4c8",
      "Magico-Cabbalistic and Theosophical Work",
      true,
      794,
      794,
      747
+    ],
+    [
+     "69b51e3eff09e4fe943aa31a",
+     "Opera Omnia Ioannis Pici, Mirandvlae Concordiaeque comitis, Theologorum & Philosophorum, s",
+     true,
+     964,
+     952,
+     731
     ],
     [
      "6953e33477f38f6761bebf10",
@@ -25240,20 +25304,20 @@
      714
     ],
     [
-     "69b51e5eff09e4fe943ad5a3",
-     "Zohar Symeonis Ben Jochai interprete Gulielmo Postello - BSB Clm 7428",
-     true,
-     2055,
-     1970,
-     710
-    ],
-    [
      "69b51e1c47b06ecd5818a033",
      "Henrici Cornelii Agrippae Ab Nettesheym Armatae Militiae Eqvitis Avrati ... Opera : In Dvo",
      true,
      722,
      722,
      707
+    ],
+    [
+     "69b51e41ff09e4fe943aa79c",
+     "Opera Omnia, Ioannis Pici, Mirandvlae Concordiaeqve Comitis, Theologorvm Et Philosophorvm,",
+     true,
+     1058,
+     1052,
+     702
     ],
     [
      "69b51e3f47b06ecd5818c17c",
@@ -25368,14 +25432,6 @@
      638
     ],
     [
-     "69b51ea1ff09e4fe943b2498",
-     "The Works of Ramon Llull on the Universal Art of Sciences",
-     true,
-     1234,
-     1218,
-     633
-    ],
-    [
      "695258ceab34727b1f0457c2",
      "Magical-Kabbalistic and Theosophical Work (Opus Mago-Cabbalisticum et Theosophicum)",
      true,
@@ -25398,6 +25454,14 @@
      628,
      628,
      627
+    ],
+    [
+     "69b51e80cf111105c429e48e",
+     "Athanasii Kircheri E Soc. Iesv, Oedipvs Aegyptiacvs, Hoc Est Vniuersalis Hieroglyphicae Ve",
+     true,
+     630,
+     627,
+     622
     ],
     [
      "69b51e15261c58d63664f304",
@@ -25432,28 +25496,12 @@
      601
     ],
     [
-     "69b51e9547b06ecd58193b99",
-     "Mysterium Magnum, Oder Erklärung über das Erste Buch Mosis, Von der Offenbahrung Göttliche",
-     true,
-     828,
-     827,
-     600
-    ],
-    [
      "6990633def12272ffdc907b0",
      "The Book of Splendor",
      true,
      612,
      612,
      600
-    ],
-    [
-     "69b51e80cf111105c429e48e",
-     "Athanasii Kircheri E Soc. Iesv, Oedipvs Aegyptiacvs, Hoc Est Vniuersalis Hieroglyphicae Ve",
-     true,
-     630,
-     627,
-     599
     ],
     [
      "69593291b91a6184ea943bbe",
@@ -25472,14 +25520,6 @@
      596
     ],
     [
-     "69b51ea2cf111105c42a1ef5",
-     "Opera ea quae ad adinventam ab ipso artem universalem, scientiarum artiumque omnium brevi ",
-     true,
-     1196,
-     1191,
-     590
-    ],
-    [
      "69b51e809a81ef7feb3d65e1",
      "Athanasii Kircheri E Soc. Iesv, Oedipvs Aegyptiacvs, Hoc Est Vniuersalis Hieroglyphicae Ve",
      true,
@@ -25494,14 +25534,6 @@
      585,
      583,
      578
-    ],
-    [
-     "69b51e3bcf111105c4298b05",
-     "Petri Galatini Opus de arcanis catholicae veritatis : hoc est, in omnia difficilia loca ve",
-     true,
-     956,
-     955,
-     570
     ],
     [
      "69b3e5b5304c1c6b395099fd",
@@ -25592,20 +25624,20 @@
      523
     ],
     [
+     "69b51e35ff09e4fe943a9e86",
+     "Opera omnia",
+     true,
+     532,
+     529,
+     522
+    ],
+    [
      "69b4cc3fbb3208142d7bc86d",
      "Agrippa — De Occulta Philosophia, Book III (1531)",
      true,
      526,
      525,
      516
-    ],
-    [
-     "69b51e4147b06ecd5818c44d",
-     "Joannis Pici Opera omnia et Joannis Franc. Pici opera in volumine secundo. 1",
-     true,
-     1064,
-     1051,
-     514
     ],
     [
      "6952861eab34727b1f04c3df",
@@ -25638,14 +25670,6 @@
      511,
      511,
      506
-    ],
-    [
-     "69b51e3eff09e4fe943aa31a",
-     "Opera Omnia Ioannis Pici, Mirandvlae Concordiaeque comitis, Theologorum & Philosophorum, s",
-     true,
-     964,
-     952,
-     502
     ],
     [
      "69b51e799a81ef7feb3d5c60",
@@ -25696,20 +25720,20 @@
      489
     ],
     [
+     "69b51e4547b06ecd5818caed",
+     "Opera quae extant omnia. 1.",
+     true,
+     586,
+     576,
+     483
+    ],
+    [
      "694bf8d2343422769f237558",
      "Three Books on Occult Philosophy. A Spurious Book on Magical Ceremonies, Which is Consider",
      true,
      626,
      626,
      482
-    ],
-    [
-     "69b4cc4dd2bf9b45ea47a455",
-     "Omnia quae extant opera",
-     true,
-     1538,
-     1529,
-     475
     ],
     [
      "699246d2bc722ec0ee8144e6",
@@ -25750,14 +25774,6 @@
      463,
      463,
      463
-    ],
-    [
-     "69b51e41ff09e4fe943aa79c",
-     "Opera Omnia, Ioannis Pici, Mirandvlae Concordiaeqve Comitis, Theologorvm Et Philosophorvm,",
-     true,
-     1058,
-     1052,
-     462
     ],
     [
      "69d66645bf5afe33937f92af",
@@ -26168,14 +26184,6 @@
      338
     ],
     [
-     "69b51e35ff09e4fe943a9e86",
-     "Opera omnia",
-     true,
-     532,
-     529,
-     336
-    ],
-    [
      "6955962b7bd6d2cd1d620ef7",
      "The Doctrine and Literature of the Kabalah",
      true,
@@ -26240,20 +26248,20 @@
      324
     ],
     [
+     "69b51e3e9a81ef7feb3d2398",
+     "Ioannis Pici Opera omnia : ... cum comment. in psalm. XV",
+     true,
+     336,
+     328,
+     324
+    ],
+    [
      "69a5e3f5006a409842216b6c",
      "Syriac Gospel Lectionary",
      true,
      328,
      328,
      321
-    ],
-    [
-     "69b51e4547b06ecd5818caed",
-     "Opera quae extant omnia. 1.",
-     true,
-     586,
-     576,
-     320
     ],
     [
      "6955d95d8407b7c9ae212d38",
@@ -26646,14 +26654,6 @@
      246,
      246,
      238
-    ],
-    [
-     "69b51e3e9a81ef7feb3d2398",
-     "Ioannis Pici Opera omnia : ... cum comment. in psalm. XV",
-     true,
-     336,
-     328,
-     237
     ],
     [
      "6970e3729b09d309d780a2a0",
@@ -30008,10 +30008,10 @@
     "openiti-sufi"
    ],
    "books": 161,
-   "readable_books": 131,
+   "readable_books": 132,
    "pages_scanned": 28324,
    "pages_transcribed": 26471,
-   "pages_translated": 24937,
+   "pages_translated": 25025,
    "canon_page_equivalents": 62415,
    "ocr_engines": [
     [
@@ -30050,7 +30050,7 @@
     ],
     [
      "gemini-3-flash-preview",
-     9801
+     9833
     ],
     [
      "gemini-3.1-flash-lite",
@@ -30667,6 +30667,14 @@
      106
     ],
     [
+     "699356cb8ed86e583b7b86cc",
+     "Compendium of the Five Lamps",
+     false,
+     106,
+     106,
+     104
+    ],
+    [
      "6992cb50d4d545ae73feee35",
      "Eighty-four Manifestations of the Great Compassion Mantra",
      true,
@@ -31057,14 +31065,6 @@
      22,
      22,
      17
-    ],
-    [
-     "699356cb8ed86e583b7b86cc",
-     "Compendium of the Five Lamps",
-     false,
-     106,
-     106,
-     16
     ],
     [
      "6a20330018654bf8e1903fdc",
@@ -32729,11 +32729,11 @@
     "perseus-latin"
    ],
    "books": 9808,
-   "readable_books": 2115,
+   "readable_books": 2122,
    "pages_scanned": 3404008,
    "pages_transcribed": 727287,
-   "pages_translated": 515073,
-   "canon_page_equivalents": 400420,
+   "pages_translated": 519599,
+   "canon_page_equivalents": 411425,
    "ocr_engines": [
     [
      "gemini-3-flash-preview",
@@ -32779,7 +32779,7 @@
     ],
     [
      "gemini-3.1-flash-lite",
-     106840
+     111116
     ],
     [
      "unrecorded",
@@ -32813,7 +32813,7 @@
      true,
      4198,
      4157,
-     2578
+     2878
     ],
     [
      "69804b901fb2ba7cf1d43a18",
@@ -32872,6 +32872,14 @@
      1326
     ],
     [
+     "69b4cc34d2bf9b45ea478d30",
+     "Auriferae Artis, quam Chemiam vocant, Antiquissimi Authores",
+     true,
+     1340,
+     1339,
+     1280
+    ],
+    [
      "69ac7f2d20878c5c9ba528cd",
      "The Moral and Civil Works of Francis Bacon",
      true,
@@ -32894,6 +32902,14 @@
      1248,
      1248,
      1244
+    ],
+    [
+     "69b51e5eff09e4fe943ad5a3",
+     "Zohar Symeonis Ben Jochai interprete Gulielmo Postello - BSB Clm 7428",
+     true,
+     2055,
+     1970,
+     1214
     ],
     [
      "6991ec3e7cafcbc1b0209a73",
@@ -33152,6 +33168,14 @@
      984
     ],
     [
+     "69b51db3cf111105c428e55e",
+     "Theatrvm Chemicvm : Praecipvos Selectorvm Avctorvm Tractatvs De Chemiae Et Lapidis Philoso",
+     true,
+     1024,
+     1019,
+     979
+    ],
+    [
      "69528662ab34727b1f04c6f8",
      "Three Songs on the Harmony of the Whole World",
      true,
@@ -33264,6 +33288,14 @@
      936
     ],
     [
+     "69b32cf95a396b236494ba29",
+     "Three Books on Ancient Germany",
+     true,
+     1040,
+     1030,
+     935
+    ],
+    [
      "69b2ff315545150b61b46fdf",
      "Natural History",
      true,
@@ -33318,6 +33350,14 @@
      928,
      926,
      919
+    ],
+    [
+     "69b51ea1ff09e4fe943b2498",
+     "The Works of Ramon Llull on the Universal Art of Sciences",
+     true,
+     1234,
+     1218,
+     915
     ],
     [
      "6958e964813ea03889c32667",
@@ -33414,6 +33454,14 @@
      889,
      889,
      884
+    ],
+    [
+     "69b51ea2cf111105c42a1ef5",
+     "Opera ea quae ad adinventam ab ipso artem universalem, scientiarum artiumque omnium brevi ",
+     true,
+     1196,
+     1191,
+     881
     ],
     [
      "6ff1a28b-f7cd-4fcd-8d08-77d2f7818be1",
@@ -33528,6 +33576,14 @@
      843
     ],
     [
+     "69b51e3bcf111105c4298b05",
+     "Petri Galatini Opus de arcanis catholicae veritatis : hoc est, in omnia difficilia loca ve",
+     true,
+     956,
+     955,
+     835
+    ],
+    [
      "69520176ab34727b1f04136b",
      "Metaphysical, Physical and Technical History of the Greater and Lesser Cosmos",
      true,
@@ -33574,14 +33630,6 @@
      833,
      833,
      826
-    ],
-    [
-     "69b4cc34d2bf9b45ea478d30",
-     "Auriferae Artis, quam Chemiam vocant, Antiquissimi Authores",
-     true,
-     1340,
-     1339,
-     824
     ],
     [
      "69942cdab2f6748db4abea3f",
@@ -33808,20 +33856,20 @@
      763
     ],
     [
+     "69b4cc4dd2bf9b45ea47a455",
+     "Omnia quae extant opera",
+     true,
+     1538,
+     1529,
+     759
+    ],
+    [
      "a5d0c381-d4ea-42cd-8864-44457e7fda33",
      "Great Art of Light and Shadow",
      true,
      760,
      760,
      757
-    ],
-    [
-     "69b32cf95a396b236494ba29",
-     "Three Books on Ancient Germany",
-     true,
-     1040,
-     1030,
-     756
     ],
     [
      "69af21d4f98f6eff774cb8bf",
@@ -33838,6 +33886,14 @@
      767,
      767,
      756
+    ],
+    [
+     "69b51e4147b06ecd5818c44d",
+     "Joannis Pici Opera omnia et Joannis Franc. Pici opera in volumine secundo. 1",
+     true,
+     1064,
+     1051,
+     749
     ],
     [
      "69b303855facc83a9a3d9b8f",
@@ -33918,6 +33974,14 @@
      740,
      740,
      732
+    ],
+    [
+     "69b51e3eff09e4fe943aa31a",
+     "Opera Omnia Ioannis Pici, Mirandvlae Concordiaeque comitis, Theologorum & Philosophorum, s",
+     true,
+     964,
+     952,
+     731
     ],
     [
      "69ade7b66a6b945bbdfa3098",
@@ -34048,14 +34112,6 @@
      711
     ],
     [
-     "69b51e5eff09e4fe943ad5a3",
-     "Zohar Symeonis Ben Jochai interprete Gulielmo Postello - BSB Clm 7428",
-     true,
-     2055,
-     1970,
-     710
-    ],
-    [
      "1a8485e5-5331-41df-bfc1-6efd65238f55",
      "Natural Magic in Twenty Books",
      true,
@@ -34078,6 +34134,14 @@
      708,
      708,
      703
+    ],
+    [
+     "69b51e41ff09e4fe943aa79c",
+     "Opera Omnia, Ioannis Pici, Mirandvlae Concordiaeqve Comitis, Theologorvm Et Philosophorvm,",
+     true,
+     1058,
+     1052,
+     702
     ],
     [
      "69b51e3f47b06ecd5818c17c",
@@ -34464,14 +34528,6 @@
      638
     ],
     [
-     "69b51db3cf111105c428e55e",
-     "Theatrvm Chemicvm : Praecipvos Selectorvm Avctorvm Tractatvs De Chemiae Et Lapidis Philoso",
-     true,
-     1024,
-     1019,
-     637
-    ],
-    [
      "69af54146011c40e7176ac3d",
      "Unpublished Works of Roger Bacon (Opus Tertium, Opus Minus, Compendium Studii)",
      true,
@@ -34494,14 +34550,6 @@
      645,
      645,
      636
-    ],
-    [
-     "69b51ea1ff09e4fe943b2498",
-     "The Works of Ramon Llull on the Universal Art of Sciences",
-     true,
-     1234,
-     1218,
-     633
     ],
     [
      "6953eab81479a63c1108770c",
@@ -34560,11 +34608,27 @@
      625
     ],
     [
+     "69b51dc0efd8df28f2daa62a",
+     "The Complete Mystery of Diseases",
+     true,
+     1040,
+     1033,
+     624
+    ],
+    [
      "695910caecb01322b3068085",
      "On the Natural and Medical Aspects of the Two Indies",
      true,
      636,
      636,
+     622
+    ],
+    [
+     "69b51e80cf111105c429e48e",
+     "Athanasii Kircheri E Soc. Iesv, Oedipvs Aegyptiacvs, Hoc Est Vniuersalis Hieroglyphicae Ve",
+     true,
+     630,
+     627,
      622
     ],
     [
@@ -34686,14 +34750,6 @@
      618,
      616,
      600
-    ],
-    [
-     "69b51e80cf111105c429e48e",
-     "Athanasii Kircheri E Soc. Iesv, Oedipvs Aegyptiacvs, Hoc Est Vniuersalis Hieroglyphicae Ve",
-     true,
-     630,
-     627,
-     599
     ],
     [
      "69b00f96e485bbb15c6b3357",
@@ -34822,14 +34878,6 @@
      600,
      600,
      591
-    ],
-    [
-     "69b51ea2cf111105c42a1ef5",
-     "Opera ea quae ad adinventam ab ipso artem universalem, scientiarum artiumque omnium brevi ",
-     true,
-     1196,
-     1191,
-     590
     ],
     [
      "69dbc80b1040d1d5e2096737",
@@ -35000,11 +35048,11 @@
      571
     ],
     [
-     "69b51e3bcf111105c4298b05",
-     "Petri Galatini Opus de arcanis catholicae veritatis : hoc est, in omnia difficilia loca ve",
+     "6953ab1077f38f6761bd67aa",
+     "The Hermetic Corpus",
      true,
-     956,
-     955,
+     634,
+     573,
      570
     ],
     [
@@ -35376,6 +35424,14 @@
      522
     ],
     [
+     "69b51e35ff09e4fe943a9e86",
+     "Opera omnia",
+     true,
+     532,
+     529,
+     522
+    ],
+    [
      "69b18593c4be2cdd0edc37c9",
      "Six Books of Optics",
      true,
@@ -35446,14 +35502,6 @@
      784,
      525,
      515
-    ],
-    [
-     "69b51e4147b06ecd5818c44d",
-     "Joannis Pici Opera omnia et Joannis Franc. Pici opera in volumine secundo. 1",
-     true,
-     1064,
-     1051,
-     514
     ],
     [
      "6952861eab34727b1f04c3df",
@@ -35590,14 +35638,6 @@
      506,
      506,
      503
-    ],
-    [
-     "69b51e3eff09e4fe943aa31a",
-     "Opera Omnia Ioannis Pici, Mirandvlae Concordiaeque comitis, Theologorum & Philosophorum, s",
-     true,
-     964,
-     952,
-     502
     ],
     [
      "69ac7ff0f3d0d9e513808f9b",
@@ -35776,6 +35816,14 @@
      483
     ],
     [
+     "69b51e4547b06ecd5818caed",
+     "Opera quae extant omnia. 1.",
+     true,
+     586,
+     576,
+     483
+    ],
+    [
      "6958de4ecf7070242ed412dc",
      "New Research on Plants: An Easy Investigation and Lucid Addition to Medical Materia of Anc",
      true,
@@ -35846,14 +35894,6 @@
      487,
      487,
      476
-    ],
-    [
-     "69b4cc4dd2bf9b45ea47a455",
-     "Omnia quae extant opera",
-     true,
-     1538,
-     1529,
-     475
     ],
     [
      "69b51e1847b06ecd58189d59",
@@ -36062,14 +36102,6 @@
      463,
      463,
      463
-    ],
-    [
-     "69b51e41ff09e4fe943aa79c",
-     "Opera Omnia, Ioannis Pici, Mirandvlae Concordiaeqve Comitis, Theologorvm Et Philosophorvm,",
-     true,
-     1058,
-     1052,
-     462
     ],
     [
      "6990700f245959b9547d6544",
@@ -36936,14 +36968,6 @@
      380
     ],
     [
-     "69b51dc0efd8df28f2daa62a",
-     "The Complete Mystery of Diseases",
-     true,
-     1040,
-     1033,
-     379
-    ],
-    [
      "69b3041b5facc83a9a3dbe06",
      "Description of Switzerland",
      true,
@@ -37184,14 +37208,6 @@
      360
     ],
     [
-     "6953ab1077f38f6761bd67aa",
-     "The Hermetic Corpus",
-     true,
-     634,
-     573,
-     359
-    ],
-    [
      "69804b9019712623cff10895",
      "Kabbalistic Prayers and Glorifications of the Divine Name",
      true,
@@ -37336,6 +37352,14 @@
      344
     ],
     [
+     "69b51eb747b06ecd58195d39",
+     "Jamblichus De mysteriis Aegyptiorum, Chaldaeorum, Assyriorum",
+     true,
+     364,
+     358,
+     343
+    ],
+    [
      "6a20570abf38605d952c55a2",
      "De Alchimia Opuscula Complura Veterum Philosophorum [Pars 1]",
      true,
@@ -37384,14 +37408,6 @@
      340
     ],
     [
-     "69b51eb747b06ecd58195d39",
-     "Jamblichus De mysteriis Aegyptiorum, Chaldaeorum, Assyriorum",
-     true,
-     364,
-     358,
-     339
-    ],
-    [
      "698420e332feb5c8a34dbc42",
      "Four Books on the Hidden Characters of Letters or the Art of Secretly Signifying the Sense",
      true,
@@ -37438,14 +37454,6 @@
      344,
      344,
      337
-    ],
-    [
-     "69b51e35ff09e4fe943a9e86",
-     "Opera omnia",
-     true,
-     532,
-     529,
-     336
     ],
     [
      "6953ea151479a63c11085e66",
@@ -37704,6 +37712,14 @@
      324
     ],
     [
+     "69b51e3e9a81ef7feb3d2398",
+     "Ioannis Pici Opera omnia : ... cum comment. in psalm. XV",
+     true,
+     336,
+     328,
+     324
+    ],
+    [
      "69bd9db86120d54bd0379102",
      "Philosophiae chymicae IV vetustissima scripta : Tabula chymica",
      true,
@@ -37798,14 +37814,6 @@
      322,
      322,
      321
-    ],
-    [
-     "69b51e4547b06ecd5818caed",
-     "Opera quae extant omnia. 1.",
-     true,
-     586,
-     576,
-     320
     ],
     [
      "69b51e82768235dc65994672",
@@ -39157,14 +39165,6 @@
      true,
      660,
      649,
-     237
-    ],
-    [
-     "69b51e3e9a81ef7feb3d2398",
-     "Ioannis Pici Opera omnia : ... cum comment. in psalm. XV",
-     true,
-     336,
-     328,
      237
     ],
     [
@@ -111281,10 +111281,10 @@
     "first1k-greek"
    ],
    "books": 4566,
-   "readable_books": 990,
+   "readable_books": 991,
    "pages_scanned": 2208410,
    "pages_transcribed": 489506,
-   "pages_translated": 451097,
+   "pages_translated": 451253,
    "canon_page_equivalents": 119127,
    "ocr_engines": [
     [
@@ -111327,7 +111327,7 @@
     ],
     [
      "gemini-3-flash-preview",
-     134857
+     134965
     ],
     [
      "gemini-3.1-flash-lite",
@@ -112776,6 +112776,14 @@
      674
     ],
     [
+     "6a2198e4f012c50712d32f49",
+     "Philonis Judaei opera omnia",
+     true,
+     689,
+     689,
+     673
+    ],
+    [
      "6a097473f14f992996681366",
      "5: Aristotelous Ta Ethika megala, kai ethika eydem. Kai ethika nikomax. Kai oikonomika kai",
      true,
@@ -114070,14 +114078,6 @@
      546,
      523,
      518
-    ],
-    [
-     "6a2198e4f012c50712d32f49",
-     "Philonis Judaei opera omnia",
-     true,
-     689,
-     689,
-     517
     ],
     [
      "69c7978d6a0f3d112fafa0cf",
@@ -147886,10 +147886,10 @@
  "eternity_shelf": {
   "listed": 278,
   "found": 278,
-  "readable": 224,
+  "readable": 226,
   "list": "scripts/catalog-coverage/eternity-shelf-5513.json",
   "owner_issue": 5513,
-  "counted_at": "2026-10-07T16:20:25.908Z"
+  "counted_at": "2026-10-07T22:06:38.131Z"
  },
  "tengyur_draft": {
   "owner_issue": 5497,
@@ -148970,6 +148970,6 @@
     1005
    ]
   ],
-  "counted_at": "2026-10-07T16:20:25.908Z"
+  "counted_at": "2026-10-07T22:06:38.131Z"
  }
 }
