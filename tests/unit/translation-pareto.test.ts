@@ -12,6 +12,8 @@ import xlate from '@/data/translation-pareto.json';
  *  4. the generator reproduces the write-ups' own paired Flash − Lite differences (#5695 synthesis);
  *  5. every figure says "Model-judged, not human-scored" on its face, and the sentence names an
  *     off-plot engine that beats production on its own pages.
+ *  6. the Tibetan #6121 packets are their own panels (never pooled with #5497), reproduce each packet's
+ *     refjudge/scores.json, and keep Opus off the plot.
  * Negative controls (run 2026-10-06): editing one fidelity in the JSON turns (1) red; giving the Opus
  * point a cost turns (3) red; dropping the badge from TRANSLATION turns (5) red.
  */
@@ -55,6 +57,28 @@ describe('translation-pareto.json', () => {
       for (const a of p.no_cost) expect(a.cost, `${c.id}/${a.engine}`).toBeNull();
       expect(p.placed.some(a => /claude/i.test(a.engine)), c.id).toBe(false);
     }
+  });
+
+  it('gives each #6121 Tengyur packet its own Tibetan panel, matching its scores.json', () => {
+    const tib = (xlate as unknown as { charts: { id: string; panels: (Panel & { kind: string; references: { pages: number }[] })[] }[] }).charts.find(c => c.id === 'tibetan')!;
+    for (const [kind, dir, arms] of [
+      ['tengyur-6121-r1', 'tengyur-levers-6121', { A: 'gemini-3-flash-preview', P: 'gemini-3.1-pro-preview+thinking128' }],
+      ['tengyur-6121-r2', 'tengyur-models-6121', { A: 'gemini-3-flash-preview', G35: 'gemini-3.5-flash', G38: 'gemini-3.8-flash', O: 'claude-opus' }],
+    ] as const) {
+      const p = tib.panels.find(x => x.kind === kind)!;
+      expect(p, kind).toBeDefined();
+      expect(p.n_pages).toBe(58);
+      expect(p.references.reduce((s, r) => s + r.pages, 0)).toBe(58);
+      const own = JSON.parse(fs.readFileSync(`scripts/eval/results/${dir}/refjudge/scores.json`, 'utf8')).all;
+      for (const [arm, engine] of Object.entries(arms)) {
+        const pt = [...p.placed, ...p.no_cost].find(x => x.engine === engine)!;
+        expect(pt, `${kind}/${arm}`).toBeDefined();
+        expect(Math.abs(pt.fidelity - own[arm].fidelity_mean), `${kind}/${arm}`).toBeLessThanOrEqual(0.005);
+      }
+      expect(p.no_cost.map(x => x.engine)).toEqual(kind === 'tengyur-6121-r2' ? ['claude-opus'] : []);
+    }
+    // The #5497 panel stays first and unchanged in kind.
+    expect(tib.panels[0].kind).toBe('most-pages');
   });
 
   it("reproduces the #5695 synthesis' Flash − Lite differences", () => {
