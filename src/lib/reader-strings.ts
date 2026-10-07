@@ -1039,7 +1039,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     },
     tengyurNote: {
       rated: ({ section, n, date, light, work, specialist }) =>
-        `In a check of ${n} random ${section} pages against the Tibetan by AI reviewers (${date}; no scholar has reviewed them yet), ${light}% needed only light edits${work ? `, ${work}% real work` : ''}${specialist ? ` and ${specialist}% a specialist` : ''}.`,
+        `In a check of ${n} random ${section} pages against the Tibetan by AI reviewers (${date}), ${light}% needed only light edits${work ? `, ${work}% real work` : ''}${specialist ? ` and ${specialist}% a specialist` : ''}.`,
       faults: ({ kinds, revAgent, voice }) =>
         `They flagged about ${revAgent} reversed statements or wrong speakers per 100 pages${voice ? ", including an opponent's objection given as the author's view" : ''}${kinds.length ? `; other common errors are ${kinds.join(' and ')}` : ''}.`,
       tooFew: ({ section, n, of, date, light, revAgent }) =>
@@ -1542,7 +1542,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     },
     tengyurNote: {
       rated: ({ section, n, date, light, work, specialist }) =>
-        `En una revisión de ${n} páginas al azar de ${section}, cotejadas con el tibetano por revisores de IA (${date}; ningún especialista las ha revisado aún), el ${light} % necesitaba solo retoques${work ? `, el ${work} % trabajo real` : ''}${specialist ? ` y el ${specialist} % un especialista` : ''}.`,
+        `En una revisión de ${n} páginas al azar de ${section}, cotejadas con el tibetano por revisores de IA (${date}), el ${light} % necesitaba solo retoques${work ? `, el ${work} % trabajo real` : ''}${specialist ? ` y el ${specialist} % un especialista` : ''}.`,
       faults: ({ kinds, revAgent, voice }) =>
         `Señalaron unas ${revAgent} afirmaciones invertidas o hablantes equivocados por cada 100 páginas${voice ? ', entre ellas la objeción de un oponente presentada como la opinión del autor' : ''}${kinds.length ? `; otros errores frecuentes son ${kinds.join(' y ')}` : ''}.`,
       tooFew: ({ section, n, of, date, light, revAgent }) =>

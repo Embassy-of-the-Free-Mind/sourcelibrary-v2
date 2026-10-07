@@ -716,9 +716,37 @@ function TengyurSectionTable() {
   const unsampled = Object.entries(TQ.sections).filter(([, q]) => q.n === 0).map(([name]) => name);
   const th = 'text-left font-body text-[11px] uppercase tracking-wider text-stone-500 font-normal py-2 pr-4 align-bottom';
   const td = 'py-2.5 pr-4 align-top border-t border-stone-100';
+  const rate = (q: (typeof rows)[number][1]) =>
+    q.rated
+      ? `${Math.round(q.light!)}% / ${Math.round(q.work!)}% / ${Math.round(q.specialist!)}% · ${Math.round(q.rev_agent_per100!)} per 100${ci(q.rev_agent_ci)}`
+      : 'Too few pages measured to give a rate.';
   return (
-    <div className="overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
-      <table className="w-full min-w-[40rem] text-base text-stone-700 tabular-nums">
+    <>
+    {/* Phones: one block per section; five columns do not fit in 390px. */}
+    <dl className="md:hidden text-base text-stone-700 tabular-nums">
+      {rows.map(([name, q]) => (
+        <div key={name} className="py-2.5 border-t border-stone-100">
+          <dt className="text-stone-900">
+            {name} <span className="text-xs text-stone-500">· {q.n} pages read of {n0(q.corpus_pages)}</span>
+          </dt>
+          <dd className={q.rated ? '' : 'text-stone-500'}>{rate(q)}</dd>
+          {q.rated && <dd className="text-sm text-stone-500">{namedKinds(q).map((k) => KIND_WORDS[k]).join(', ')}</dd>}
+        </div>
+      ))}
+      <div className="py-2.5 border-t border-stone-100">
+        <dt className="font-semibold text-stone-900">All sections <span className="text-xs text-stone-500 font-normal">· {TQ.sample.n} pages read</span></dt>
+        <dd>
+          {Math.round(TQ.sample.light)}% / {Math.round(TQ.sample.work)}% / {Math.round(TQ.sample.specialist)}% ·{' '}
+          {Math.round(TQ.sample.rev_agent_per100_adjusted)} per 100{ci(TQ.sample.rev_agent_ci_adjusted)}, adjusted for
+          findings that did not hold up
+        </dd>
+      </div>
+      <p className="text-sm text-stone-500 pt-2">
+        Read as: light / work / specialist · reversed statements or wrong speakers per 100 pages [95% interval].
+      </p>
+    </dl>
+    <div className="hidden md:block">
+      <table className="w-full text-base text-stone-700 tabular-nums">
         <thead>
           <tr>
             <th className={th}>Section</th>
@@ -769,10 +797,11 @@ function TengyurSectionTable() {
           </tr>
         </tbody>
       </table>
+    </div>
       {unsampled.length > 0 && (
         <p className="text-sm text-stone-500 mt-2">No sample page fell in: {unsampled.join(', ')}.</p>
       )}
-    </div>
+    </>
   );
 }
 
