@@ -8,11 +8,11 @@ import type { FontKey } from './types';
  * the cover maker. Canvas needs the real family name, which next/font hashes,
  * so we read it from `.style.fontFamily`.
  */
-const fell = IM_Fell_English({ weight: '400', style: ['normal', 'italic'], subsets: ['latin'], display: 'swap' });
-const garamond = EB_Garamond({ weight: ['400', '700'], style: ['normal', 'italic'], subsets: ['latin', 'latin-ext'], display: 'swap' });
-const fraktur = UnifrakturMaguntia({ weight: '400', subsets: ['latin'], display: 'swap' });
-const cinzel = Cinzel({ weight: ['400', '700'], subsets: ['latin', 'latin-ext'], display: 'swap' });
-const sans = Inter({ weight: ['400', '700'], subsets: ['latin', 'latin-ext'], display: 'swap' });
+const fell = IM_Fell_English({ weight: '400', style: ['normal', 'italic'], subsets: ['latin'], display: 'swap', preload: false });
+const garamond = EB_Garamond({ weight: ['400', '700'], style: ['normal', 'italic'], subsets: ['latin', 'latin-ext'], display: 'swap', preload: false });
+const fraktur = UnifrakturMaguntia({ weight: '400', subsets: ['latin'], display: 'swap', preload: false });
+const cinzel = Cinzel({ weight: ['400', '700'], subsets: ['latin', 'latin-ext'], display: 'swap', preload: false });
+const sans = Inter({ weight: ['400', '700'], subsets: ['latin', 'latin-ext'], display: 'swap', preload: false });
 
 export const FONTS: Record<FontKey, { label: string; family: string; className: string; bold: boolean }> = {
   cardo: { label: 'Cardo (Aldine revival)', family: cardo.style.fontFamily, className: cardo.className, bold: true },
