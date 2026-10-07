@@ -263,7 +263,7 @@ async function gateOpen(db, bookIds) {
   const g = await budgetAllowsDispatchScoped(db, `${GATE_LABEL} submit`);
   if (!g.allowed) return false;
   if (!g.envelopeIds) return true; // the global dial has room
-  const allowed = new Set(g.envelopeIds.map(String));
+  const allowed = new Set([...g.envelopeIds].map(String));
   const outside = bookIds.filter((id) => !allowed.has(id));
   if (outside.length) console.log(`  gate: ${outside.length} of this job's books are outside every open envelope`);
   return outside.length === 0;
