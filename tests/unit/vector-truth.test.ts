@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
-  assertStoreVector, vectorShapeProblems, e5Signature, cosineClass, wilson, GEMINI_TEXT_MODEL,
+  assertStoreVector, vectorShapeProblems, e5Signature, cosineClass, wilson, GEMINI_TEXT_MODEL, GEMINI_TEXT_MODELS,
 } from '../../scripts/lib/vector-truth.mjs';
 import { buildPageEmbeddingRow, buildPageTextRow } from '../../scripts/lib/page-embedding-text.mjs';
 
@@ -29,6 +29,14 @@ describe('assertStoreVector', () => {
   });
   it('refuses a vector whose writer names no model', () => {
     expect(() => assertStoreVector(ok, {} as any)).toThrow(/no model/);
+  });
+  it('accepts the GA and preview labels for one another (bit-identical vectors, #6170)', () => {
+    expect(GEMINI_TEXT_MODEL).toBe('gemini-embedding-2');
+    for (const model of GEMINI_TEXT_MODELS) {
+      expect(() => assertStoreVector(ok, { model })).not.toThrow();
+      expect(() => assertStoreVector(ok, { model: GEMINI_TEXT_MODEL, storeModel: model })).not.toThrow();
+    }
+    expect(() => assertStoreVector(ok, { model: 'gemini-embedding-001' })).toThrow(/store holds/);
   });
   it('refuses another model', () => {
     expect(() => assertStoreVector(ok, { model: 'multilingual-e5-base' })).toThrow(/store holds/);

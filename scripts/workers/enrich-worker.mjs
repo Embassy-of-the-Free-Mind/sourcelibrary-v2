@@ -53,7 +53,7 @@ import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { buildPageTexts, attributeEntityPages, entityCounters } from '../lib/entity-page-match.mjs';
 import { composeBookEmbeddingText } from '../lib/book-embedding-text.mjs';
 import { embedBookPages } from '../lib/embed-book-pages.mjs';
-import { assertStoreVector } from '../lib/vector-truth.mjs';
+import { assertStoreVector, GEMINI_TEXT_MODEL } from '../lib/vector-truth.mjs';
 import { computeEndPages } from '../lib/chapter-endpages.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { loadConfirmedCopies, copyGuard } from '../lib/confirmed-copies.mjs';
@@ -251,7 +251,7 @@ const supabaseClient = SUPABASE_URL && SUPABASE_SERVICE_KEY
   ? createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, { auth: { persistSession: false } })
   : null;
 
-const EMBED_MODEL = 'gemini-embedding-2-preview';
+const EMBED_MODEL = GEMINI_TEXT_MODEL; // gemini-embedding-2 since #6170
 const EMBED_DIMS = 768;
 
 /**
