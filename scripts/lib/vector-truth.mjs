@@ -168,16 +168,6 @@ export function cosineClass(c) {
   return 'ok';
 }
 
-/**
- * The text the page writer embedded BEFORE 2026-05-30 (#2232): tags stripped, but the prose
- * INSIDE editorial wrappers (<meta>, <summary>, <image-desc>, …) kept. Rows written then still
- * carry that vector; `backfill-clean-snippets.mjs` later re-derived their snippet column with the
- * current cleaner and deliberately left the vector alone. Used to EXPLAIN drift, never to write.
- */
-export function legacyTagStripText(text) {
-  return typeof text === 'string' ? text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 8000) : '';
-}
-
 /** Wilson 95% interval for k of n, as [lo, hi] proportions. */
 export function wilson(k, n, z = 1.96) {
   if (!n) return [0, 0];
