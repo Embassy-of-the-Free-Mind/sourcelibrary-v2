@@ -414,17 +414,13 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           if (bookId) {
             pageFilter.book_id = bookId;
           } else if (hasBookLevelFilters) {
-            const bookIdFilter: Record<string, unknown> = { visible: true };
-            if (tenantId) bookIdFilter.tenantId = tenantId;
-            if (languages.length > 0) bookIdFilter.language = { $in: languages };
-            else if (excludeLanguages.length > 0) bookIdFilter.language = { $nin: excludeLanguages };
-            else if (language) bookIdFilter.language = language;
-            if (category) bookIdFilter.categories = category;
-            applyYearFilter(bookIdFilter);
-            if (hasDoi === 'true') bookIdFilter.doi = { $exists: true, $ne: null };
-
+            // The SAME filter object as the book lane (#5921). This lane used to
+            // build its own from visible, tenant, language, category, year and
+            // has_doi, so `library`, `has_translation` and `first_translation`
+            // were read, lit up in the UI, and never applied: an impossible
+            // library still returned passages.
             const filteredBooks = await db.collection('books')
-              .find(bookIdFilter)
+              .find(buildBookFilters())
               .project({ id: 1 })
               .toArray();
             const allowedBookIds = filteredBooks.map(b => b.id);
@@ -661,7 +657,11 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       if (pageBookIds.length > 0) {
         const pageBooks = await db.collection('books')
           .find(
-            { id: { $in: pageBookIds }, ...(tenantId ? { tenantId } : {}) },
+            // Filters again at the join, so every row this lane emits (main
+            // pages, name-variant pages, roll-up pages) is from a book the
+            // filters admit, whatever the search stage was handed (#5921).
+            // A `book_id` search names its one book and keeps the old lookup.
+            { id: { $in: pageBookIds }, ...(bookId ? (tenantId ? { tenantId } : {}) : buildBookFilters()) },
             { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1 } }
           )
           .toArray();
@@ -760,25 +760,13 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       if (semanticBookIds.length > 0) {
         const semBooks = await db.collection('books')
           .find(
-            {
-              id: { $in: semanticBookIds }, visible: true, pages_count: { $gt: 0 },
-              ...(isLocalizedSearch ? { [editionCounter]: { $gt: 0 } } : {}),
-              // Tenant scope: match_books_semantic is GLOBAL (book_embeddings has
-              // no tenant_id column, so the RPC can't filter), so a tenant request
-              // must re-apply the tenant filter here or global books leak into the
-              // partner reading room (Tenant Subdomain Lockdown). See keyword
-              // page-lane materialization which already does this.
-              ...(tenantId ? { tenantId } : {}),
-              // Honor the singular `language` param too — not just the `languages`
-              // array. buildBookFilters() (keyword lane) checks all three, but these
-              // semantic lanes only checked the array, so `?language=Sanskrit` leaked
-              // English-edition translations of Sanskrit works through semantic
-              // promotion (the search-eval "Sanskrit filter" failure). Mirror the
-              // keyword-lane precedence: languages → excludeLanguages → language.
-              ...(languages.length > 0 ? { language: { $in: languages } }
-                : excludeLanguages.length > 0 ? { language: { $nin: excludeLanguages } }
-                : language ? { language } : {}),
-            },
+            // match_books_semantic is GLOBAL (book_embeddings has no tenant
+            // or metadata predicate), so every book-level filter is applied
+            // here, with the object the keyword lanes use: tenant scope
+            // (Tenant Subdomain Lockdown), the localized-edition counter,
+            // language / languages / exclude_languages, and since #5921
+            // category, has_doi, has_translation, first_translation, library.
+            { id: { $in: semanticBookIds }, ...buildBookFilters() },
             { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, summary: 1, reading_summary: 1, text_role: 1 } }
           )
           .maxTimeMS(3000)
@@ -844,23 +832,9 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       if (pageBookIds.length > 0) {
         const semPageBooks = await db.collection('books')
           .find(
-            {
-              id: { $in: pageBookIds }, visible: true, pages_count: { $gt: 0 },
-              ...(isLocalizedSearch ? { [editionCounter]: { $gt: 0 } } : {}),
-              // match_semantic already filters by filter_tenant_id, so this is
-              // defense-in-depth — but keep it consistent with the book lane so a
-              // future RPC change can't silently leak cross-tenant pages.
-              ...(tenantId ? { tenantId } : {}),
-              // Honor the singular `language` param too — not just the `languages`
-              // array. buildBookFilters() (keyword lane) checks all three, but these
-              // semantic lanes only checked the array, so `?language=Sanskrit` leaked
-              // English-edition translations of Sanskrit works through semantic
-              // promotion (the search-eval "Sanskrit filter" failure). Mirror the
-              // keyword-lane precedence: languages → excludeLanguages → language.
-              ...(languages.length > 0 ? { language: { $in: languages } }
-                : excludeLanguages.length > 0 ? { language: { $nin: excludeLanguages } }
-                : language ? { language } : {}),
-            },
+            // Same object as every other lane (#5921): a vector lane has no
+            // metadata predicate, so what is not re-applied here leaks.
+            { id: { $in: pageBookIds }, ...buildBookFilters() },
             { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1 } }
           )
           .maxTimeMS(3000)
@@ -1101,12 +1075,12 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         let nearbyBooks: Record<string, unknown>[];
         const matchingIds = await searchBookIds(query, { limit: 50 });
         if (matchingIds.length > 0) {
+          // Every book-level filter but the year, which this list widens (#5921).
           const nearbyFilter: Record<string, unknown> = {
+            ...buildBookFilters(),
             id: { $in: matchingIds.filter(id => !seenBooks.has(id)) },
             year: { $gte: yearNum - 5, $lte: yearNum + 5, $ne: yearNum },
           };
-          if (language) nearbyFilter.language = language;
-          if (category) nearbyFilter.categories = category;
 
           nearbyBooks = await db.collection('books')
             .find(nearbyFilter)
@@ -1149,7 +1123,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       filters: {
         language, category, year, year_from: yearFrom, year_to: yearTo,
         languages, exclude_languages: excludeLanguages,
-        has_doi: hasDoi, has_translation: hasTranslation, book_id: bookId,
+        has_doi: hasDoi, has_translation: hasTranslation, first_translation: firstTranslation, library, book_id: bookId,
         pages_only: pagesOnly, sort: sortBy, ranking: rankingApplied,
       },
       degraded_lanes: degradedLanes,
@@ -1180,6 +1154,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         year_to: yearTo,
         has_doi: hasDoi,
         has_translation: hasTranslation,
+        first_translation: firstTranslation,
+        library,
         book_id: bookId,
       },
     }, {
