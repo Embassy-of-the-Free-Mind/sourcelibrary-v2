@@ -17,7 +17,7 @@
 
 These are AI judges and reviewers (Opus), with a by-eye check by Claude. They are not a human review. O is the same model family as every judge (see Threats). G38 is not, and its result does not depend on that.
 
-**Design** (preregistered at `33c2558fa`, `scripts/eval/tengyur-levers/PREREG-R2.md`, before any round-2 arm output on the sample or the reference sides).
+**Design** (preregistered at `1e92837cd` (first pushed as `33c2558fa`, re-signed for DCO), `scripts/eval/tengyur-levers/PREREG-R2.md`, before any round-2 arm output on the sample or the reference sides).
 - **Reused from round 1, not redrawn:**
   - the 60-page sample (30 Pramāṇa, 10 each of Madhyamaka, Vinaya and Jātaka);
   - the 58 sides aligned to the published translations (28 of D4231, 30 of D3862);
