@@ -30,7 +30,7 @@ export function bookIdFromImageUrl(url: string | null | undefined): string | nul
 interface BookLike { id?: string }
 interface ShowcaseItemLike { slug: string; imageCandidates: string[]; leadImageCandidates: string[] }
 interface FeaturedLike { collection: { hero_image: string | null }; books: BookLike[]; heroCandidates?: string[] }
-interface PlateLike { src: string; fallback?: string }
+interface PlateLike { src: string; fallback?: string | string[] }
 
 export interface HomeSections<B extends BookLike, L extends BookLike, S extends ShowcaseItemLike, F extends FeaturedLike, P extends PlateLike> {
   recentlyTranslated: B[];
@@ -84,7 +84,7 @@ export function dedupeHomeSections<B extends BookLike, L extends BookLike, S ext
 
   // 4. Gallery wall: drop plates from books shown above.
   const minPlates = opts.minPlates ?? 20;
-  const plates = s.galleryPlates.filter((p) => !isClaimed(bookIdFromImageUrl(p.src) ?? bookIdFromImageUrl(p.fallback)));
+  const plates = s.galleryPlates.filter((p) => !isClaimed(bookIdFromImageUrl(p.src) ?? bookIdFromImageUrl([p.fallback ?? []].flat()[0])));
   const galleryPlates = plates.length >= minPlates ? plates : s.galleryPlates;
 
   return { recentlyTranslated: s.recentlyTranslated, mostLiked, showcaseItems, featuredItems, galleryPlates };
