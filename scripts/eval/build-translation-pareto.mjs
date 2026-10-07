@@ -394,6 +394,59 @@ for (const [lang, trackId] of LANGS) {
   tib.not_tested = tib.not_tested.filter(t => !/Gemini 3\.1 Pro/.test(t));
 }
 
+// #6182, every language but Tibetan: eight Gemini models on the same #5695/#5873 reference pages (one per
+// book), all arms of a page in one blinded item, two blind Opus judges (J2 on a preregistered quarter of
+// the pages; a page's fidelity is the mean of the judges that read it), production's one-page request
+// with no context, Batch. A separate read from the track's own, so it is its own panel. Cost is each
+// response's billed Batch dollars, thinking included. O is the track's own Opus run, which was given
+// the previous page as context: listed under the chart, never placed.
+{
+  const X = { writeup: 'scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md', file: 'pareto-6182/xljudge/scores.json' };
+  const L35 = 'gemini-3.5-flash-lite', G36 = 'gemini-3.6-flash', G37 = 'gemini-3.7-flash';
+  Object.assign(LABEL, { [L35]: 'Gemini 3.5 Flash-Lite', [G36]: 'Gemini 3.6 Flash', [G37]: 'Gemini 3.7 Flash' });
+  const engine = { L31: LITE, L35, FP: FLASH, G35, G36, G37, G38, PRO };
+  const sc = JSON.parse(fs.readFileSync(path.join(RES, X.file), 'utf8'));
+  const fid = (r, a) => avg(Object.values(r.J).map(j => j[a].fid));
+  const rev = (r, a) => Object.values(r.J).some(j => j[a].rev > 0);
+  for (const chart of charts) {
+    const lr = sc.rows.filter(r => r.lang === chart.title && Object.keys(engine).every(a => r.arms.includes(a)));
+    if (lr.length < MIN_PAGES) continue;
+    const production = chart.production_engine;
+    const pt = (a, rs, key) => ({ engine: engine[a] || OPUS, label: LABEL[engine[a] || OPUS], production: engine[a] === production,
+      ...stats(rs.map(r => ({ fidelity: fid(r, a), reversal: rev(r, a) })), hash(`${chart.title}|6182|${key}|${a}`)) });
+    const placed = Object.keys(engine).map(a => {
+      const own = sc.languages[chart.title].stratum.arms[a];
+      const p = pt(a, lr, 'panel');
+      if (own.pages !== lr.length || Math.abs(p.fidelity - own.fidelity) > 0.0005) throw new Error(`${X.file}: parse does not reproduce ${chart.title} ${a}`);
+      return { ...p, cost: { usd_per_1k: r3(avg(lr.map(r => r.usd[a])) * 1000), basis: 'metered',
+        detail: `billed tokens of this run at the Batch rate, thinking included; averaged over these ${lr.length} pages`, source: X.writeup } };
+    });
+    for (const a of placed) a.on_frontier = !placed.some(b => b !== a
+      && b.cost.usd_per_1k <= a.cost.usd_per_1k && b.fidelity >= a.fidelity && (b.cost.usd_per_1k < a.cost.usd_per_1k || b.fidelity > a.fidelity));
+    placed.sort((a, b) => a.cost.usd_per_1k - b.cost.usd_per_1k || a.engine.localeCompare(b.engine));
+    const noCost = [];
+    const ro = sc.rows.filter(r => r.lang === chart.title && r.arms.includes('O') && r.arms.includes('PROD'));
+    if (ro.length >= 5) noCost.push({ ...pt('O', ro, 'subset'), cost: null,
+      subset: { n_pages: ro.length, production_label: LABEL[production], production_fidelity: r3(avg(ro.map(r => fid(r, 'PROD')))) },
+      note: "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it" });
+    const date = dateOf(X.writeup);
+    chart.panels.push({
+      kind: 'gemini-models-6182', heading: 'Eight Gemini models, 7 Oct 2026 (#6182)', n_pages: lr.length, n_books: new Set(lr.map(r => r.book)).size,
+      frontier: true, frontier_note: null, judges: 2,
+      references: [{ stratum: '6182', reference: REFERENCE.default, pages: lr.length, date }],
+      date, files: [X.writeup],
+      notes: [
+        'A separate read from the panel above, with other judges and every engine in one item, so its scores are compared only within this panel',
+        `The second judge read ${lr.filter(r => r.judges.length === 2).length} of these pages (a preregistered quarter); the rest are one judge's score`,
+        'Every engine got the page alone, without the previous page that production sends',
+      ],
+      placed, no_cost: noCost,
+    });
+    chart.not_tested = chart.not_tested.filter(t => !/Gemini 3\.1 Pro/.test(t));
+  }
+  TRACKS.push({ id: 'pareto-6182', writeup: X.writeup, judges: 2 });
+}
+
 const out = {
   issue: 5983,
   generated_by: 'scripts/eval/build-translation-pareto.mjs',

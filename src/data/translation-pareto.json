@@ -37,6 +37,10 @@
   {
    "track": "tengyur-6121-r2",
    "writeup": "scripts/eval/experiments/2026-10-07-tengyur-newer-models-6121.md"
+  },
+  {
+   "track": "pareto-6182",
+   "writeup": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
   }
  ],
  "charts": [
@@ -123,6 +127,279 @@
       }
      ],
      "no_cost": []
+    },
+    {
+     "kind": "gemini-models-6182",
+     "heading": "Eight Gemini models, 7 Oct 2026 (#6182)",
+     "n_pages": 70,
+     "n_books": 70,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 70,
+       "date": "2026-10-07"
+      }
+     ],
+     "date": "2026-10-07",
+     "files": [
+      "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+     ],
+     "notes": [
+      "A separate read from the panel above, with other judges and every engine in one item, so its scores are compared only within this panel",
+      "The second judge read 16 of these pages (a preregistered quarter); the rest are one judge's score",
+      "Every engine got the page alone, without the previous page that production sends"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "fidelity": 4.214,
+       "fidelity_ci95": [
+        4.036,
+        4.386
+       ],
+       "share_ge4": 0.843,
+       "reversals": {
+        "pages": 9,
+        "n": 70,
+        "per_100": 12.9,
+        "ci95": [
+         6.9,
+         22.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.813,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 70 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.5-flash-lite",
+       "label": "Gemini 3.5 Flash-Lite",
+       "production": false,
+       "fidelity": 4.064,
+       "fidelity_ci95": [
+        3.85,
+        4.264
+       ],
+       "share_ge4": 0.757,
+       "reversals": {
+        "pages": 13,
+        "n": 70,
+        "per_100": 18.6,
+        "ci95": [
+         11.2,
+         29.2
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.211,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 70 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": false,
+       "fidelity": 4.371,
+       "fidelity_ci95": [
+        4.236,
+        4.514
+       ],
+       "share_ge4": 0.929,
+       "reversals": {
+        "pages": 4,
+        "n": 70,
+        "per_100": 5.7,
+        "ci95": [
+         2.2,
+         13.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.717,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 70 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.7-flash",
+       "label": "Gemini 3.7 Flash",
+       "production": false,
+       "fidelity": 4.686,
+       "fidelity_ci95": [
+        4.55,
+        4.807
+       ],
+       "share_ge4": 0.957,
+       "reversals": {
+        "pages": 2,
+        "n": 70,
+        "per_100": 2.9,
+        "ci95": [
+         0.8,
+         9.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.21,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 70 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.629,
+       "fidelity_ci95": [
+        4.5,
+        4.75
+       ],
+       "share_ge4": 0.971,
+       "reversals": {
+        "pages": 2,
+        "n": 70,
+        "per_100": 2.9,
+        "ci95": [
+         0.8,
+         9.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.21,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 70 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.6-flash",
+       "label": "Gemini 3.6 Flash",
+       "production": false,
+       "fidelity": 4.479,
+       "fidelity_ci95": [
+        4.314,
+        4.636
+       ],
+       "share_ge4": 0.9,
+       "reversals": {
+        "pages": 6,
+        "n": 70,
+        "per_100": 8.6,
+        "ci95": [
+         4,
+         17.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.236,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 70 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.5-flash",
+       "label": "Gemini 3.5 Flash",
+       "production": false,
+       "fidelity": 4.414,
+       "fidelity_ci95": [
+        4.257,
+        4.564
+       ],
+       "share_ge4": 0.9,
+       "reversals": {
+        "pages": 4,
+        "n": 70,
+        "per_100": 5.7,
+        "ci95": [
+         2.2,
+         13.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 5.211,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 70 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-pro-preview+thinking128",
+       "label": "Gemini 3.1 Pro, thinking budget 128",
+       "production": false,
+       "fidelity": 4.607,
+       "fidelity_ci95": [
+        4.479,
+        4.721
+       ],
+       "share_ge4": 0.971,
+       "reversals": {
+        "pages": 2,
+        "n": 70,
+        "per_100": 2.9,
+        "ci95": [
+         0.8,
+         9.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 16.83,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 70 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-opus",
+       "label": "Claude Opus",
+       "production": false,
+       "fidelity": 4.825,
+       "fidelity_ci95": [
+        4.65,
+        4.95
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 20,
+        "per_100": 0,
+        "ci95": [
+         0,
+         16.1
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 20,
+        "production_label": "Gemini 3.1 Flash-Lite",
+        "production_fidelity": 4.125
+       },
+       "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
     }
    ],
    "not_on_shared_pages": [
@@ -146,7 +423,6 @@
     }
    ],
    "not_tested": [
-    "Gemini 3.1 Pro (as the translator)",
     "Claude through the metered API",
     "GPT"
    ]
@@ -264,11 +540,283 @@
        "note": "run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
       }
      ]
+    },
+    {
+     "kind": "gemini-models-6182",
+     "heading": "Eight Gemini models, 7 Oct 2026 (#6182)",
+     "n_pages": 69,
+     "n_books": 69,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 69,
+       "date": "2026-10-07"
+      }
+     ],
+     "date": "2026-10-07",
+     "files": [
+      "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+     ],
+     "notes": [
+      "A separate read from the panel above, with other judges and every engine in one item, so its scores are compared only within this panel",
+      "The second judge read 17 of these pages (a preregistered quarter); the rest are one judge's score",
+      "Every engine got the page alone, without the previous page that production sends"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": false,
+       "fidelity": 3.609,
+       "fidelity_ci95": [
+        3.391,
+        3.804
+       ],
+       "share_ge4": 0.609,
+       "reversals": {
+        "pages": 13,
+        "n": 69,
+        "per_100": 18.8,
+        "ci95": [
+         11.4,
+         29.6
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.941,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 69 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.5-flash-lite",
+       "label": "Gemini 3.5 Flash-Lite",
+       "production": false,
+       "fidelity": 3.529,
+       "fidelity_ci95": [
+        3.348,
+        3.717
+       ],
+       "share_ge4": 0.551,
+       "reversals": {
+        "pages": 18,
+        "n": 69,
+        "per_100": 26.1,
+        "ci95": [
+         17.2,
+         37.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.412,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 69 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 3.949,
+       "fidelity_ci95": [
+        3.725,
+        4.174
+       ],
+       "share_ge4": 0.754,
+       "reversals": {
+        "pages": 6,
+        "n": 69,
+        "per_100": 8.7,
+        "ci95": [
+         4,
+         17.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.922,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 69 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.6-flash",
+       "label": "Gemini 3.6 Flash",
+       "production": false,
+       "fidelity": 3.993,
+       "fidelity_ci95": [
+        3.783,
+        4.188
+       ],
+       "share_ge4": 0.754,
+       "reversals": {
+        "pages": 4,
+        "n": 69,
+        "per_100": 5.8,
+        "ci95": [
+         2.3,
+         14
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.577,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 69 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.7-flash",
+       "label": "Gemini 3.7 Flash",
+       "production": false,
+       "fidelity": 4.232,
+       "fidelity_ci95": [
+        4.014,
+        4.428
+       ],
+       "share_ge4": 0.797,
+       "reversals": {
+        "pages": 5,
+        "n": 69,
+        "per_100": 7.2,
+        "ci95": [
+         3.1,
+         15.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.579,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 69 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.29,
+       "fidelity_ci95": [
+        4.08,
+        4.486
+       ],
+       "share_ge4": 0.812,
+       "reversals": {
+        "pages": 7,
+        "n": 69,
+        "per_100": 10.1,
+        "ci95": [
+         5,
+         19.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.63,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 69 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.5-flash",
+       "label": "Gemini 3.5 Flash",
+       "production": false,
+       "fidelity": 3.92,
+       "fidelity_ci95": [
+        3.717,
+        4.123
+       ],
+       "share_ge4": 0.739,
+       "reversals": {
+        "pages": 7,
+        "n": 69,
+        "per_100": 10.1,
+        "ci95": [
+         5,
+         19.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 6.099,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 69 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-pro-preview+thinking128",
+       "label": "Gemini 3.1 Pro, thinking budget 128",
+       "production": false,
+       "fidelity": 4.196,
+       "fidelity_ci95": [
+        3.964,
+        4.399
+       ],
+       "share_ge4": 0.826,
+       "reversals": {
+        "pages": 4,
+        "n": 69,
+        "per_100": 5.8,
+        "ci95": [
+         2.3,
+         14
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 18.286,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 69 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-opus",
+       "label": "Claude Opus",
+       "production": false,
+       "fidelity": 4.556,
+       "fidelity_ci95": [
+        4.111,
+        5
+       ],
+       "share_ge4": 0.889,
+       "reversals": {
+        "pages": 0,
+        "n": 9,
+        "per_100": 0,
+        "ci95": [
+         0,
+         29.9
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 9,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 3.889
+       },
+       "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
     }
    ],
    "not_on_shared_pages": [],
    "not_tested": [
-    "Gemini 3.1 Pro (as the translator)",
     "Claude through the metered API",
     "GPT"
    ]
@@ -411,11 +959,283 @@
        "note": "run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
       }
      ]
+    },
+    {
+     "kind": "gemini-models-6182",
+     "heading": "Eight Gemini models, 7 Oct 2026 (#6182)",
+     "n_pages": 22,
+     "n_books": 22,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 22,
+       "date": "2026-10-07"
+      }
+     ],
+     "date": "2026-10-07",
+     "files": [
+      "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+     ],
+     "notes": [
+      "A separate read from the panel above, with other judges and every engine in one item, so its scores are compared only within this panel",
+      "The second judge read 4 of these pages (a preregistered quarter); the rest are one judge's score",
+      "Every engine got the page alone, without the previous page that production sends"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "fidelity": 4.432,
+       "fidelity_ci95": [
+        4.205,
+        4.659
+       ],
+       "share_ge4": 0.955,
+       "reversals": {
+        "pages": 0,
+        "n": 22,
+        "per_100": 0,
+        "ci95": [
+         0,
+         14.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.58,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 22 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.5-flash-lite",
+       "label": "Gemini 3.5 Flash-Lite",
+       "production": false,
+       "fidelity": 4.295,
+       "fidelity_ci95": [
+        4.068,
+        4.523
+       ],
+       "share_ge4": 0.955,
+       "reversals": {
+        "pages": 1,
+        "n": 22,
+        "per_100": 4.5,
+        "ci95": [
+         0.8,
+         21.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.857,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 22 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": false,
+       "fidelity": 4.727,
+       "fidelity_ci95": [
+        4.545,
+        4.886
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 22,
+        "per_100": 0,
+        "ci95": [
+         0,
+         14.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.219,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 22 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.6-flash",
+       "label": "Gemini 3.6 Flash",
+       "production": false,
+       "fidelity": 4.727,
+       "fidelity_ci95": [
+        4.545,
+        4.909
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 22,
+        "per_100": 0,
+        "ci95": [
+         0,
+         14.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.611,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 22 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.7-flash",
+       "label": "Gemini 3.7 Flash",
+       "production": false,
+       "fidelity": 4.727,
+       "fidelity_ci95": [
+        4.545,
+        4.909
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 22,
+        "per_100": 0,
+        "ci95": [
+         0,
+         14.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.621,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 22 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.909,
+       "fidelity_ci95": [
+        4.773,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 22,
+        "per_100": 0,
+        "ci95": [
+         0,
+         14.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.637,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 22 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.5-flash",
+       "label": "Gemini 3.5 Flash",
+       "production": false,
+       "fidelity": 4.864,
+       "fidelity_ci95": [
+        4.727,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 22,
+        "per_100": 0,
+        "ci95": [
+         0,
+         14.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 3.628,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 22 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-pro-preview+thinking128",
+       "label": "Gemini 3.1 Pro, thinking budget 128",
+       "production": false,
+       "fidelity": 4.909,
+       "fidelity_ci95": [
+        4.773,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 22,
+        "per_100": 0,
+        "ci95": [
+         0,
+         14.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 16.541,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 22 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-opus",
+       "label": "Claude Opus",
+       "production": false,
+       "fidelity": 5,
+       "fidelity_ci95": [
+        5,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 7,
+        "per_100": 0,
+        "ci95": [
+         0,
+         35.4
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 7,
+        "production_label": "Gemini 3.1 Flash-Lite",
+        "production_fidelity": 4.714
+       },
+       "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
     }
    ],
    "not_on_shared_pages": [],
    "not_tested": [
-    "Gemini 3.1 Pro (as the translator)",
     "Claude through the metered API",
     "GPT"
    ]
@@ -558,11 +1378,283 @@
        "note": "run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
       }
      ]
+    },
+    {
+     "kind": "gemini-models-6182",
+     "heading": "Eight Gemini models, 7 Oct 2026 (#6182)",
+     "n_pages": 14,
+     "n_books": 14,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 14,
+       "date": "2026-10-07"
+      }
+     ],
+     "date": "2026-10-07",
+     "files": [
+      "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+     ],
+     "notes": [
+      "A separate read from the panel above, with other judges and every engine in one item, so its scores are compared only within this panel",
+      "The second judge read 3 of these pages (a preregistered quarter); the rest are one judge's score",
+      "Every engine got the page alone, without the previous page that production sends"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "fidelity": 4.821,
+       "fidelity_ci95": [
+        4.571,
+        5
+       ],
+       "share_ge4": 0.929,
+       "reversals": {
+        "pages": 1,
+        "n": 14,
+        "per_100": 7.1,
+        "ci95": [
+         1.3,
+         31.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.598,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 14 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.5-flash-lite",
+       "label": "Gemini 3.5 Flash-Lite",
+       "production": false,
+       "fidelity": 4.464,
+       "fidelity_ci95": [
+        4.036,
+        4.786
+       ],
+       "share_ge4": 0.857,
+       "reversals": {
+        "pages": 1,
+        "n": 14,
+        "per_100": 7.1,
+        "ci95": [
+         1.3,
+         31.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.865,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 14 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": false,
+       "fidelity": 4.786,
+       "fidelity_ci95": [
+        4.571,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 14,
+        "per_100": 0,
+        "ci95": [
+         0,
+         21.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.243,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 14 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.7-flash",
+       "label": "Gemini 3.7 Flash",
+       "production": false,
+       "fidelity": 4.929,
+       "fidelity_ci95": [
+        4.786,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 14,
+        "per_100": 0,
+        "ci95": [
+         0,
+         21.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.648,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 14 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.786,
+       "fidelity_ci95": [
+        4.571,
+        4.964
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 14,
+        "per_100": 0,
+        "ci95": [
+         0,
+         21.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.653,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 14 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.6-flash",
+       "label": "Gemini 3.6 Flash",
+       "production": false,
+       "fidelity": 4.714,
+       "fidelity_ci95": [
+        4.357,
+        5
+       ],
+       "share_ge4": 0.929,
+       "reversals": {
+        "pages": 1,
+        "n": 14,
+        "per_100": 7.1,
+        "ci95": [
+         1.3,
+         31.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.654,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 14 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.5-flash",
+       "label": "Gemini 3.5 Flash",
+       "production": false,
+       "fidelity": 4.893,
+       "fidelity_ci95": [
+        4.75,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 14,
+        "per_100": 0,
+        "ci95": [
+         0,
+         21.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 3.713,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 14 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-pro-preview+thinking128",
+       "label": "Gemini 3.1 Pro, thinking budget 128",
+       "production": false,
+       "fidelity": 4.714,
+       "fidelity_ci95": [
+        4.5,
+        4.929
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 14,
+        "per_100": 0,
+        "ci95": [
+         0,
+         21.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 16.7,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 14 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-opus",
+       "label": "Claude Opus",
+       "production": false,
+       "fidelity": 5,
+       "fidelity_ci95": [
+        5,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 5,
+        "per_100": 0,
+        "ci95": [
+         0,
+         43.4
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 5,
+        "production_label": "Gemini 3.1 Flash-Lite",
+        "production_fidelity": 4.8
+       },
+       "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
     }
    ],
    "not_on_shared_pages": [],
    "not_tested": [
-    "Gemini 3.1 Pro (as the translator)",
     "Claude through the metered API",
     "GPT"
    ]
@@ -677,6 +1769,251 @@
       }
      ],
      "no_cost": []
+    },
+    {
+     "kind": "gemini-models-6182",
+     "heading": "Eight Gemini models, 7 Oct 2026 (#6182)",
+     "n_pages": 10,
+     "n_books": 10,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 10,
+       "date": "2026-10-07"
+      }
+     ],
+     "date": "2026-10-07",
+     "files": [
+      "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+     ],
+     "notes": [
+      "A separate read from the panel above, with other judges and every engine in one item, so its scores are compared only within this panel",
+      "The second judge read 2 of these pages (a preregistered quarter); the rest are one judge's score",
+      "Every engine got the page alone, without the previous page that production sends"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "fidelity": 4.15,
+       "fidelity_ci95": [
+        3.65,
+        4.6
+       ],
+       "share_ge4": 0.7,
+       "reversals": {
+        "pages": 3,
+        "n": 10,
+        "per_100": 30,
+        "ci95": [
+         10.8,
+         60.3
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.673,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 10 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.5-flash-lite",
+       "label": "Gemini 3.5 Flash-Lite",
+       "production": false,
+       "fidelity": 4.4,
+       "fidelity_ci95": [
+        4,
+        4.8
+       ],
+       "share_ge4": 0.9,
+       "reversals": {
+        "pages": 2,
+        "n": 10,
+        "per_100": 20,
+        "ci95": [
+         5.7,
+         51
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.988,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 10 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": false,
+       "fidelity": 4.65,
+       "fidelity_ci95": [
+        4.3,
+        4.9
+       ],
+       "share_ge4": 0.9,
+       "reversals": {
+        "pages": 1,
+        "n": 10,
+        "per_100": 10,
+        "ci95": [
+         1.8,
+         40.4
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.419,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 10 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.7-flash",
+       "label": "Gemini 3.7 Flash",
+       "production": false,
+       "fidelity": 4.8,
+       "fidelity_ci95": [
+        4.5,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 10,
+        "per_100": 0,
+        "ci95": [
+         0,
+         27.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.855,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 10 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.75,
+       "fidelity_ci95": [
+        4.4,
+        5
+       ],
+       "share_ge4": 0.9,
+       "reversals": {
+        "pages": 1,
+        "n": 10,
+        "per_100": 10,
+        "ci95": [
+         1.8,
+         40.4
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.862,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 10 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.6-flash",
+       "label": "Gemini 3.6 Flash",
+       "production": false,
+       "fidelity": 4.45,
+       "fidelity_ci95": [
+        4.1,
+        4.8
+       ],
+       "share_ge4": 0.9,
+       "reversals": {
+        "pages": 1,
+        "n": 10,
+        "per_100": 10,
+        "ci95": [
+         1.8,
+         40.4
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.867,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 10 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.5-flash",
+       "label": "Gemini 3.5 Flash",
+       "production": false,
+       "fidelity": 4.75,
+       "fidelity_ci95": [
+        4.4,
+        5
+       ],
+       "share_ge4": 0.9,
+       "reversals": {
+        "pages": 1,
+        "n": 10,
+        "per_100": 10,
+        "ci95": [
+         1.8,
+         40.4
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 4.225,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 10 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-pro-preview+thinking128",
+       "label": "Gemini 3.1 Pro, thinking budget 128",
+       "production": false,
+       "fidelity": 4.8,
+       "fidelity_ci95": [
+        4.5,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 1,
+        "n": 10,
+        "per_100": 10,
+        "ci95": [
+         1.8,
+         40.4
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 19.688,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 10 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": []
     }
    ],
    "not_on_shared_pages": [
@@ -688,7 +2025,6 @@
     }
    ],
    "not_tested": [
-    "Gemini 3.1 Pro (as the translator)",
     "Claude through the metered API",
     "GPT"
    ]
@@ -831,11 +2167,283 @@
        "note": "run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
       }
      ]
+    },
+    {
+     "kind": "gemini-models-6182",
+     "heading": "Eight Gemini models, 7 Oct 2026 (#6182)",
+     "n_pages": 28,
+     "n_books": 28,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 28,
+       "date": "2026-10-07"
+      }
+     ],
+     "date": "2026-10-07",
+     "files": [
+      "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+     ],
+     "notes": [
+      "A separate read from the panel above, with other judges and every engine in one item, so its scores are compared only within this panel",
+      "The second judge read 6 of these pages (a preregistered quarter); the rest are one judge's score",
+      "Every engine got the page alone, without the previous page that production sends"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": false,
+       "fidelity": 3.982,
+       "fidelity_ci95": [
+        3.679,
+        4.286
+       ],
+       "share_ge4": 0.714,
+       "reversals": {
+        "pages": 3,
+        "n": 28,
+        "per_100": 10.7,
+        "ci95": [
+         3.7,
+         27.2
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.037,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 28 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.5-flash-lite",
+       "label": "Gemini 3.5 Flash-Lite",
+       "production": false,
+       "fidelity": 3.732,
+       "fidelity_ci95": [
+        3.357,
+        4.107
+       ],
+       "share_ge4": 0.607,
+       "reversals": {
+        "pages": 7,
+        "n": 28,
+        "per_100": 25,
+        "ci95": [
+         12.7,
+         43.4
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.724,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 28 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.375,
+       "fidelity_ci95": [
+        4.071,
+        4.625
+       ],
+       "share_ge4": 0.893,
+       "reversals": {
+        "pages": 2,
+        "n": 28,
+        "per_100": 7.1,
+        "ci95": [
+         2,
+         22.6
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.138,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 28 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.7-flash",
+       "label": "Gemini 3.7 Flash",
+       "production": false,
+       "fidelity": 4.429,
+       "fidelity_ci95": [
+        4.143,
+        4.679
+       ],
+       "share_ge4": 0.929,
+       "reversals": {
+        "pages": 2,
+        "n": 28,
+        "per_100": 7.1,
+        "ci95": [
+         2,
+         22.6
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.879,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 28 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.536,
+       "fidelity_ci95": [
+        4.25,
+        4.786
+       ],
+       "share_ge4": 0.929,
+       "reversals": {
+        "pages": 2,
+        "n": 28,
+        "per_100": 7.1,
+        "ci95": [
+         2,
+         22.6
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.92,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 28 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.6-flash",
+       "label": "Gemini 3.6 Flash",
+       "production": false,
+       "fidelity": 4.304,
+       "fidelity_ci95": [
+        3.946,
+        4.589
+       ],
+       "share_ge4": 0.857,
+       "reversals": {
+        "pages": 3,
+        "n": 28,
+        "per_100": 10.7,
+        "ci95": [
+         3.7,
+         27.2
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.959,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 28 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.5-flash",
+       "label": "Gemini 3.5 Flash",
+       "production": false,
+       "fidelity": 4.25,
+       "fidelity_ci95": [
+        3.964,
+        4.536
+       ],
+       "share_ge4": 0.893,
+       "reversals": {
+        "pages": 3,
+        "n": 28,
+        "per_100": 10.7,
+        "ci95": [
+         3.7,
+         27.2
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 7.144,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 28 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-pro-preview+thinking128",
+       "label": "Gemini 3.1 Pro, thinking budget 128",
+       "production": false,
+       "fidelity": 4.411,
+       "fidelity_ci95": [
+        4.089,
+        4.696
+       ],
+       "share_ge4": 0.857,
+       "reversals": {
+        "pages": 4,
+        "n": 28,
+        "per_100": 14.3,
+        "ci95": [
+         5.7,
+         31.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 17.38,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 28 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-opus",
+       "label": "Claude Opus",
+       "production": false,
+       "fidelity": 4.333,
+       "fidelity_ci95": [
+        3.667,
+        4.833
+       ],
+       "share_ge4": 0.833,
+       "reversals": {
+        "pages": 0,
+        "n": 6,
+        "per_100": 0,
+        "ci95": [
+         0,
+         39
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 6,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 4
+       },
+       "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
     }
    ],
    "not_on_shared_pages": [],
    "not_tested": [
-    "Gemini 3.1 Pro (as the translator)",
     "Claude through the metered API",
     "GPT"
    ]
@@ -978,11 +2586,283 @@
        "note": "run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
       }
      ]
+    },
+    {
+     "kind": "gemini-models-6182",
+     "heading": "Eight Gemini models, 7 Oct 2026 (#6182)",
+     "n_pages": 24,
+     "n_books": 24,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 24,
+       "date": "2026-10-07"
+      }
+     ],
+     "date": "2026-10-07",
+     "files": [
+      "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+     ],
+     "notes": [
+      "A separate read from the panel above, with other judges and every engine in one item, so its scores are compared only within this panel",
+      "The second judge read 8 of these pages (a preregistered quarter); the rest are one judge's score",
+      "Every engine got the page alone, without the previous page that production sends"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": false,
+       "fidelity": 4.125,
+       "fidelity_ci95": [
+        3.75,
+        4.458
+       ],
+       "share_ge4": 0.75,
+       "reversals": {
+        "pages": 1,
+        "n": 24,
+        "per_100": 4.2,
+        "ci95": [
+         0.7,
+         20.2
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.811,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 24 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.5-flash-lite",
+       "label": "Gemini 3.5 Flash-Lite",
+       "production": false,
+       "fidelity": 3.833,
+       "fidelity_ci95": [
+        3.5,
+        4.167
+       ],
+       "share_ge4": 0.625,
+       "reversals": {
+        "pages": 4,
+        "n": 24,
+        "per_100": 16.7,
+        "ci95": [
+         6.7,
+         35.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.226,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 24 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.292,
+       "fidelity_ci95": [
+        4,
+        4.542
+       ],
+       "share_ge4": 0.875,
+       "reversals": {
+        "pages": 1,
+        "n": 24,
+        "per_100": 4.2,
+        "ci95": [
+         0.7,
+         20.2
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.703,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 24 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.7-flash",
+       "label": "Gemini 3.7 Flash",
+       "production": false,
+       "fidelity": 4.396,
+       "fidelity_ci95": [
+        4.125,
+        4.625
+       ],
+       "share_ge4": 0.917,
+       "reversals": {
+        "pages": 0,
+        "n": 24,
+        "per_100": 0,
+        "ci95": [
+         0,
+         13.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.233,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 24 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.521,
+       "fidelity_ci95": [
+        4.25,
+        4.75
+       ],
+       "share_ge4": 0.917,
+       "reversals": {
+        "pages": 0,
+        "n": 24,
+        "per_100": 0,
+        "ci95": [
+         0,
+         13.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.263,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 24 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.6-flash",
+       "label": "Gemini 3.6 Flash",
+       "production": false,
+       "fidelity": 4.292,
+       "fidelity_ci95": [
+        4.021,
+        4.521
+       ],
+       "share_ge4": 0.875,
+       "reversals": {
+        "pages": 2,
+        "n": 24,
+        "per_100": 8.3,
+        "ci95": [
+         2.3,
+         25.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.298,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 24 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.5-flash",
+       "label": "Gemini 3.5 Flash",
+       "production": false,
+       "fidelity": 4.208,
+       "fidelity_ci95": [
+        3.917,
+        4.479
+       ],
+       "share_ge4": 0.833,
+       "reversals": {
+        "pages": 1,
+        "n": 24,
+        "per_100": 4.2,
+        "ci95": [
+         0.7,
+         20.2
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 5.245,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 24 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-pro-preview+thinking128",
+       "label": "Gemini 3.1 Pro, thinking budget 128",
+       "production": false,
+       "fidelity": 4.438,
+       "fidelity_ci95": [
+        4.167,
+        4.688
+       ],
+       "share_ge4": 0.917,
+       "reversals": {
+        "pages": 0,
+        "n": 24,
+        "per_100": 0,
+        "ci95": [
+         0,
+         13.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 17.255,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 24 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-opus",
+       "label": "Claude Opus",
+       "production": false,
+       "fidelity": 5,
+       "fidelity_ci95": [
+        5,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 6,
+        "per_100": 0,
+        "ci95": [
+         0,
+         39
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 6,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 4.167
+       },
+       "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
     }
    ],
    "not_on_shared_pages": [],
    "not_tested": [
-    "Gemini 3.1 Pro (as the translator)",
     "Claude through the metered API",
     "GPT"
    ]
@@ -1125,11 +3005,283 @@
        "note": "run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
       }
      ]
+    },
+    {
+     "kind": "gemini-models-6182",
+     "heading": "Eight Gemini models, 7 Oct 2026 (#6182)",
+     "n_pages": 23,
+     "n_books": 23,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 23,
+       "date": "2026-10-07"
+      }
+     ],
+     "date": "2026-10-07",
+     "files": [
+      "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+     ],
+     "notes": [
+      "A separate read from the panel above, with other judges and every engine in one item, so its scores are compared only within this panel",
+      "The second judge read 7 of these pages (a preregistered quarter); the rest are one judge's score",
+      "Every engine got the page alone, without the previous page that production sends"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": false,
+       "fidelity": 3.283,
+       "fidelity_ci95": [
+        2.935,
+        3.652
+       ],
+       "share_ge4": 0.304,
+       "reversals": {
+        "pages": 9,
+        "n": 23,
+        "per_100": 39.1,
+        "ci95": [
+         22.2,
+         59.2
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.89,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 23 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.5-flash-lite",
+       "label": "Gemini 3.5 Flash-Lite",
+       "production": false,
+       "fidelity": 3.348,
+       "fidelity_ci95": [
+        2.978,
+        3.739
+       ],
+       "share_ge4": 0.391,
+       "reversals": {
+        "pages": 6,
+        "n": 23,
+        "per_100": 26.1,
+        "ci95": [
+         12.5,
+         46.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.465,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 23 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.152,
+       "fidelity_ci95": [
+        3.804,
+        4.457
+       ],
+       "share_ge4": 0.826,
+       "reversals": {
+        "pages": 3,
+        "n": 23,
+        "per_100": 13,
+        "ci95": [
+         4.5,
+         32.1
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.906,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 23 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.6-flash",
+       "label": "Gemini 3.6 Flash",
+       "production": false,
+       "fidelity": 3.848,
+       "fidelity_ci95": [
+        3.522,
+        4.174
+       ],
+       "share_ge4": 0.652,
+       "reversals": {
+        "pages": 5,
+        "n": 23,
+        "per_100": 21.7,
+        "ci95": [
+         9.7,
+         41.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.372,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 23 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.7-flash",
+       "label": "Gemini 3.7 Flash",
+       "production": false,
+       "fidelity": 4.326,
+       "fidelity_ci95": [
+        4.022,
+        4.587
+       ],
+       "share_ge4": 0.957,
+       "reversals": {
+        "pages": 0,
+        "n": 23,
+        "per_100": 0,
+        "ci95": [
+         0,
+         14.3
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.451,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 23 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.217,
+       "fidelity_ci95": [
+        3.957,
+        4.478
+       ],
+       "share_ge4": 0.957,
+       "reversals": {
+        "pages": 1,
+        "n": 23,
+        "per_100": 4.3,
+        "ci95": [
+         0.8,
+         21
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.57,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 23 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.5-flash",
+       "label": "Gemini 3.5 Flash",
+       "production": false,
+       "fidelity": 4.043,
+       "fidelity_ci95": [
+        3.696,
+        4.348
+       ],
+       "share_ge4": 0.783,
+       "reversals": {
+        "pages": 4,
+        "n": 23,
+        "per_100": 17.4,
+        "ci95": [
+         7,
+         37.1
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 5.757,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 23 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-pro-preview+thinking128",
+       "label": "Gemini 3.1 Pro, thinking budget 128",
+       "production": false,
+       "fidelity": 4.043,
+       "fidelity_ci95": [
+        3.696,
+        4.391
+       ],
+       "share_ge4": 0.739,
+       "reversals": {
+        "pages": 3,
+        "n": 23,
+        "per_100": 13,
+        "ci95": [
+         4.5,
+         32.1
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 14.3,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 23 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-opus",
+       "label": "Claude Opus",
+       "production": false,
+       "fidelity": 4.8,
+       "fidelity_ci95": [
+        4.4,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 5,
+        "per_100": 0,
+        "ci95": [
+         0,
+         43.4
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 5,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 3.8
+       },
+       "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
     }
    ],
    "not_on_shared_pages": [],
    "not_tested": [
-    "Gemini 3.1 Pro (as the translator)",
     "Claude through the metered API",
     "GPT"
    ]
@@ -1245,6 +3397,279 @@
        "note": "run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
       }
      ]
+    },
+    {
+     "kind": "gemini-models-6182",
+     "heading": "Eight Gemini models, 7 Oct 2026 (#6182)",
+     "n_pages": 30,
+     "n_books": 30,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 30,
+       "date": "2026-10-07"
+      }
+     ],
+     "date": "2026-10-07",
+     "files": [
+      "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+     ],
+     "notes": [
+      "A separate read from the panel above, with other judges and every engine in one item, so its scores are compared only within this panel",
+      "The second judge read 10 of these pages (a preregistered quarter); the rest are one judge's score",
+      "Every engine got the page alone, without the previous page that production sends"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": false,
+       "fidelity": 3.35,
+       "fidelity_ci95": [
+        3.083,
+        3.567
+       ],
+       "share_ge4": 0.433,
+       "reversals": {
+        "pages": 7,
+        "n": 30,
+        "per_100": 23.3,
+        "ci95": [
+         11.8,
+         40.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.958,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 30 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.5-flash-lite",
+       "label": "Gemini 3.5 Flash-Lite",
+       "production": false,
+       "fidelity": 3.283,
+       "fidelity_ci95": [
+        3,
+        3.533
+       ],
+       "share_ge4": 0.433,
+       "reversals": {
+        "pages": 8,
+        "n": 30,
+        "per_100": 26.7,
+        "ci95": [
+         14.2,
+         44.4
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.597,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 30 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 3.867,
+       "fidelity_ci95": [
+        3.667,
+        4.033
+       ],
+       "share_ge4": 0.833,
+       "reversals": {
+        "pages": 3,
+        "n": 30,
+        "per_100": 10,
+        "ci95": [
+         3.5,
+         25.6
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.089,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 30 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.6-flash",
+       "label": "Gemini 3.6 Flash",
+       "production": false,
+       "fidelity": 3.933,
+       "fidelity_ci95": [
+        3.733,
+        4.133
+       ],
+       "share_ge4": 0.8,
+       "reversals": {
+        "pages": 2,
+        "n": 30,
+        "per_100": 6.7,
+        "ci95": [
+         1.8,
+         21.3
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.785,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 30 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.267,
+       "fidelity_ci95": [
+        4.033,
+        4.483
+       ],
+       "share_ge4": 0.867,
+       "reversals": {
+        "pages": 3,
+        "n": 30,
+        "per_100": 10,
+        "ci95": [
+         3.5,
+         25.6
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.822,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 30 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.7-flash",
+       "label": "Gemini 3.7 Flash",
+       "production": false,
+       "fidelity": 4.15,
+       "fidelity_ci95": [
+        3.9,
+        4.383
+       ],
+       "share_ge4": 0.867,
+       "reversals": {
+        "pages": 3,
+        "n": 30,
+        "per_100": 10,
+        "ci95": [
+         3.5,
+         25.6
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.867,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 30 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.5-flash",
+       "label": "Gemini 3.5 Flash",
+       "production": false,
+       "fidelity": 3.767,
+       "fidelity_ci95": [
+        3.5,
+        4.033
+       ],
+       "share_ge4": 0.7,
+       "reversals": {
+        "pages": 6,
+        "n": 30,
+        "per_100": 20,
+        "ci95": [
+         9.5,
+         37.3
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 6.533,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 30 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-pro-preview+thinking128",
+       "label": "Gemini 3.1 Pro, thinking budget 128",
+       "production": false,
+       "fidelity": 4.317,
+       "fidelity_ci95": [
+        4.067,
+        4.55
+       ],
+       "share_ge4": 0.9,
+       "reversals": {
+        "pages": 2,
+        "n": 30,
+        "per_100": 6.7,
+        "ci95": [
+         1.8,
+         21.3
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 17.264,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 30 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-opus",
+       "label": "Claude Opus",
+       "production": false,
+       "fidelity": 4.857,
+       "fidelity_ci95": [
+        4.571,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 7,
+        "per_100": 0,
+        "ci95": [
+         0,
+         35.4
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 7,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 4.143
+       },
+       "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
     }
    ],
    "not_on_shared_pages": [
@@ -1256,7 +3681,6 @@
     }
    ],
    "not_tested": [
-    "Gemini 3.1 Pro (as the translator)",
     "Claude through the metered API",
     "GPT"
    ]
@@ -1372,6 +3796,279 @@
        "note": "run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
       }
      ]
+    },
+    {
+     "kind": "gemini-models-6182",
+     "heading": "Eight Gemini models, 7 Oct 2026 (#6182)",
+     "n_pages": 29,
+     "n_books": 29,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 29,
+       "date": "2026-10-07"
+      }
+     ],
+     "date": "2026-10-07",
+     "files": [
+      "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+     ],
+     "notes": [
+      "A separate read from the panel above, with other judges and every engine in one item, so its scores are compared only within this panel",
+      "The second judge read 9 of these pages (a preregistered quarter); the rest are one judge's score",
+      "Every engine got the page alone, without the previous page that production sends"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": false,
+       "fidelity": 3.879,
+       "fidelity_ci95": [
+        3.586,
+        4.172
+       ],
+       "share_ge4": 0.655,
+       "reversals": {
+        "pages": 6,
+        "n": 29,
+        "per_100": 20.7,
+        "ci95": [
+         9.8,
+         38.4
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.829,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 29 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.5-flash-lite",
+       "label": "Gemini 3.5 Flash-Lite",
+       "production": false,
+       "fidelity": 3.914,
+       "fidelity_ci95": [
+        3.569,
+        4.241
+       ],
+       "share_ge4": 0.655,
+       "reversals": {
+        "pages": 6,
+        "n": 29,
+        "per_100": 20.7,
+        "ci95": [
+         9.8,
+         38.4
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.283,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 29 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.293,
+       "fidelity_ci95": [
+        4.069,
+        4.517
+       ],
+       "share_ge4": 0.966,
+       "reversals": {
+        "pages": 1,
+        "n": 29,
+        "per_100": 3.4,
+        "ci95": [
+         0.6,
+         17.2
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.809,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 29 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.7-flash",
+       "label": "Gemini 3.7 Flash",
+       "production": false,
+       "fidelity": 4.621,
+       "fidelity_ci95": [
+        4.448,
+        4.776
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 29,
+        "per_100": 0,
+        "ci95": [
+         0,
+         11.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.318,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 29 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.638,
+       "fidelity_ci95": [
+        4.466,
+        4.793
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 29,
+        "per_100": 0,
+        "ci95": [
+         0,
+         11.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.401,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 29 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.6-flash",
+       "label": "Gemini 3.6 Flash",
+       "production": false,
+       "fidelity": 4.448,
+       "fidelity_ci95": [
+        4.259,
+        4.638
+       ],
+       "share_ge4": 0.966,
+       "reversals": {
+        "pages": 1,
+        "n": 29,
+        "per_100": 3.4,
+        "ci95": [
+         0.6,
+         17.2
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.405,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 29 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.5-flash",
+       "label": "Gemini 3.5 Flash",
+       "production": false,
+       "fidelity": 4.31,
+       "fidelity_ci95": [
+        4.121,
+        4.5
+       ],
+       "share_ge4": 0.966,
+       "reversals": {
+        "pages": 1,
+        "n": 29,
+        "per_100": 3.4,
+        "ci95": [
+         0.6,
+         17.2
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 5.494,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 29 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-pro-preview+thinking128",
+       "label": "Gemini 3.1 Pro, thinking budget 128",
+       "production": false,
+       "fidelity": 4.741,
+       "fidelity_ci95": [
+        4.569,
+        4.897
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 29,
+        "per_100": 0,
+        "ci95": [
+         0,
+         11.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 17.933,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 29 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-opus",
+       "label": "Claude Opus",
+       "production": false,
+       "fidelity": 5,
+       "fidelity_ci95": [
+        5,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 6,
+        "per_100": 0,
+        "ci95": [
+         0,
+         39
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 6,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 4
+       },
+       "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
     }
    ],
    "not_on_shared_pages": [
@@ -1383,7 +4080,6 @@
     }
    ],
    "not_tested": [
-    "Gemini 3.1 Pro (as the translator)",
     "Claude through the metered API",
     "GPT"
    ]
@@ -1499,6 +4195,279 @@
        "note": "run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
       }
      ]
+    },
+    {
+     "kind": "gemini-models-6182",
+     "heading": "Eight Gemini models, 7 Oct 2026 (#6182)",
+     "n_pages": 25,
+     "n_books": 25,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "6182",
+       "reference": "a published English translation of the same passage",
+       "pages": 25,
+       "date": "2026-10-07"
+      }
+     ],
+     "date": "2026-10-07",
+     "files": [
+      "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+     ],
+     "notes": [
+      "A separate read from the panel above, with other judges and every engine in one item, so its scores are compared only within this panel",
+      "The second judge read 5 of these pages (a preregistered quarter); the rest are one judge's score",
+      "Every engine got the page alone, without the previous page that production sends"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": false,
+       "fidelity": 3.54,
+       "fidelity_ci95": [
+        3.28,
+        3.82
+       ],
+       "share_ge4": 0.52,
+       "reversals": {
+        "pages": 7,
+        "n": 25,
+        "per_100": 28,
+        "ci95": [
+         14.3,
+         47.6
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 0.702,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 25 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.5-flash-lite",
+       "label": "Gemini 3.5 Flash-Lite",
+       "production": false,
+       "fidelity": 3.52,
+       "fidelity_ci95": [
+        3.28,
+        3.76
+       ],
+       "share_ge4": 0.52,
+       "reversals": {
+        "pages": 6,
+        "n": 25,
+        "per_100": 24,
+        "ci95": [
+         11.5,
+         43.4
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.116,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 25 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.18,
+       "fidelity_ci95": [
+        3.94,
+        4.4
+       ],
+       "share_ge4": 0.88,
+       "reversals": {
+        "pages": 3,
+        "n": 25,
+        "per_100": 12,
+        "ci95": [
+         4.2,
+         30
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.469,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 25 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.38,
+       "fidelity_ci95": [
+        4.2,
+        4.58
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 25,
+        "per_100": 0,
+        "ci95": [
+         0,
+         13.3
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.911,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 25 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.7-flash",
+       "label": "Gemini 3.7 Flash",
+       "production": false,
+       "fidelity": 4.34,
+       "fidelity_ci95": [
+        4.12,
+        4.56
+       ],
+       "share_ge4": 0.96,
+       "reversals": {
+        "pages": 1,
+        "n": 25,
+        "per_100": 4,
+        "ci95": [
+         0.7,
+         19.5
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.928,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 25 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.6-flash",
+       "label": "Gemini 3.6 Flash",
+       "production": false,
+       "fidelity": 4.22,
+       "fidelity_ci95": [
+        4,
+        4.44
+       ],
+       "share_ge4": 0.92,
+       "reversals": {
+        "pages": 2,
+        "n": 25,
+        "per_100": 8,
+        "ci95": [
+         2.2,
+         25
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.937,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 25 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.5-flash",
+       "label": "Gemini 3.5 Flash",
+       "production": false,
+       "fidelity": 4.04,
+       "fidelity_ci95": [
+        3.8,
+        4.28
+       ],
+       "share_ge4": 0.8,
+       "reversals": {
+        "pages": 2,
+        "n": 25,
+        "per_100": 8,
+        "ci95": [
+         2.2,
+         25
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 4.496,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 25 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-pro-preview+thinking128",
+       "label": "Gemini 3.1 Pro, thinking budget 128",
+       "production": false,
+       "fidelity": 4.32,
+       "fidelity_ci95": [
+        4.04,
+        4.6
+       ],
+       "share_ge4": 0.84,
+       "reversals": {
+        "pages": 2,
+        "n": 25,
+        "per_100": 8,
+        "ci95": [
+         2.2,
+         25
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 11.061,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, thinking included; averaged over these 25 pages",
+        "source": "scripts/eval/experiments/2026-10-07-other-languages-pareto-6182.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-opus",
+       "label": "Claude Opus",
+       "production": false,
+       "fidelity": 4.857,
+       "fidelity_ci95": [
+        4.571,
+        5
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 0,
+        "n": 7,
+        "per_100": 0,
+        "ci95": [
+         0,
+         35.4
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 7,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 3.714
+       },
+       "note": "the track's own Opus run, given the previous page as context; run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
+     ]
     }
    ],
    "not_on_shared_pages": [
@@ -1510,7 +4479,6 @@
     }
    ],
    "not_tested": [
-    "Gemini 3.1 Pro (as the translator)",
     "Claude through the metered API",
     "GPT"
    ]
