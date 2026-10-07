@@ -255,7 +255,7 @@ export default function IdentifyPage() {
         try {
           data = await res.json();
         } catch {
-          setError(`Server error (${res.status}) — try again`);
+          setError(`Server error (${res.status}). Try again`);
           return;
         }
         if (!res.ok) {
@@ -330,10 +330,10 @@ export default function IdentifyPage() {
         }
       }
       if (!sawTerminal) {
-        setError('Connection interrupted — try again');
+        setError('Connection interrupted. Try again');
       }
     } catch {
-      setError('Network error — check your connection and try again');
+      setError('Network error. Check your connection and try again');
     } finally {
       clearTimers();
       setStageMessage(null);
@@ -470,8 +470,8 @@ export default function IdentifyPage() {
                 Every picture here comes from a book.
               </h1>
               <p className="text-white/85 mt-4 max-w-xl text-base sm:text-lg leading-relaxed">
-                Photograph any print or engraving — on this wall, or on a page in
-                your hands — and we&apos;ll open the book it comes from.
+                Photograph any print or engraving, on this wall or on a page in
+                your hands, and we&apos;ll open the book it comes from.
               </p>
 
               {/* Signature: the viewfinder CTA — one more frame on a wall of frames */}
@@ -706,7 +706,7 @@ export default function IdentifyPage() {
                         className="mx-auto max-h-72 w-auto h-auto rounded shadow-sm bg-white group-hover:shadow-md transition-shadow"
                       />
                       <p className="text-center text-xs text-muted mt-2 group-hover:text-accent-rust transition-colors">
-                        {c.page_number != null ? `Scan page ${c.page_number}` : 'The scan page'} — open in the reader
+                        {c.page_number != null ? `Scan page ${c.page_number}` : 'The scan page'}: open in the reader
                       </p>
                     </Link>
                   </div>

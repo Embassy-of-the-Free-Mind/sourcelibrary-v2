@@ -81,7 +81,7 @@ export function TenantSignIn({
         setEmailSent(true);
       } else if (res.status === 429) {
         setError(
-          'Too many sign-in requests from your network in the last hour. Wait a little and try again — this limit is shared by everyone on the same connection.',
+          'Too many sign-in requests from your network in the last hour. Wait a little and try again. This limit is shared by everyone on the same connection.',
         );
       } else {
         setError('Could not send sign-in link. Please try again.');
