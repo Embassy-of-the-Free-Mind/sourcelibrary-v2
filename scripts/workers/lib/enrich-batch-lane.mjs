@@ -267,7 +267,9 @@ async function collectBook(o, job, bookId, got, report) {
   const { db, phases } = o;
   const states = db.collection(BOOKS_COLL);
   const state = await states.findOne({ _id: bookId });
-  if (!state) return;
+  // Idempotent re-collect: a run killed mid-job leaves the job `submitted` with some books already
+  // applied. Those have moved past `<stage>_submitted`; only the rest are applied again.
+  if (!state || state.stage !== `${job.stage}_submitted`) return;
   const why = await stillEligible(db, bookId);
   if (why) {
     await states.updateOne({ _id: bookId }, { $set: { stage: 'dropped', error: why, updated_at: new Date() } });
