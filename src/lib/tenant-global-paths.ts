@@ -103,6 +103,12 @@ export const GLOBAL_ONLY_TENANT_PAGE_PATHS = [
   // museum QR use case points at sourcelibrary.org/identify, not a subdomain,
   // so nothing tenant-facing is lost. (#4232)
   '/identify',
+  // The Librarian (#4330, decided 2026-10-07). It answers from the whole
+  // library: its tools search, quote and link any book, and its threads and
+  // rooms belong to the global site. A partner reading room that wants an
+  // assistant over its own shelf needs a different feature, not this one on
+  // its domain. The header and footer filter on this list, so the link goes too.
+  '/librarian',
 ] as const;
 
 /**
@@ -145,6 +151,10 @@ export const GLOBAL_ONLY_TENANT_API_PATHS = [
   // /identify posts the photo from the client, so blocking only the page would
   // leave corpus-wide visual search callable from a tenant host.
   '/api/identify',
+  // Everything behind the Librarian: chat, voice, voice-search, threads, rooms.
+  // Blocking only the page would leave the whole-library agent callable from
+  // the partner host.
+  '/api/embassy',
 ] as const;
 
 const ALL_GLOBAL_ONLY_PATHS: readonly string[] = [
