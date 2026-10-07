@@ -2,6 +2,7 @@
 // Build the ground-truth slot list (#6184 reader diversity): disputed tokens from the tie-break (gate table + by-eye sample)
 // and seeded random control tokens where lite = Flash. Print readings are filled in BY EYE afterwards (gt.json).
 import fs from 'node:fs';
+import { makeRng } from '../lib/paired-stats.mjs';
 const T = JSON.parse(fs.readFileSync('texts.json', 'utf8'));
 const dec = JSON.parse(fs.readFileSync('/root/tattva-6184/decisions.json', 'utf8'));
 const eye = JSON.parse(fs.readFileSync('/root/tattva-6184/eye2.json', 'utf8'));
@@ -21,7 +22,10 @@ for (const [b, p, needle] of GATE) {
 for (const e of [...eye, ...log.filter((l) => l.applied && [[ 'eddd', 174], ['eddd', 284], ['f107', 284], ['eddd', 521], ['eddd', 752]].some(([b, p]) => l.book.endsWith(b) && l.page === p))])
   add('disputed', { book: e.book, page: e.page, page_id: e.page_id, flash: e.from, lite: e.to, src: 'eye-sample' });
 // controls: seeded, one per page, a word with a mark that carries negation/length (ā sign, virāma, म, न), identical in lite and Flash.
-let s = 6184; const rnd = () => ((s = (s * 1103515245 + 12345) % 2147483648) / 2147483648);
+// The control words in the committed results/reader-diversity-6184/slots-final.json were drawn and read by eye on 2026-10-07
+// with an earlier generator (the double-arithmetic LCG that #5373 retired). That file is the record of the judged draw;
+// a re-run of this script picks different control words.
+const rnd = makeRng(6184);
 const words = (t) => t.replace(/<[^>]+>/g, ' ').replace(/-\s*\n\s*/g, '').split(/[\s।॥,;:()'‘’"\-—\[\]0-9०-९?]+/).filter(Boolean);
 const disputedWords = new Set(dec.flatMap((d) => [d.flash, d.lite]));
 for (const t of T) {
