@@ -465,7 +465,7 @@ Output as JSON:
   "people": ["Person Name 1", "Person Name 2"],
   "places": ["Place Name 1", "Place Name 2"],
   "concepts": ["Key concept 1", "Technical term 2"],
-  "summary": "2-3 sentence summary of what these pages cover and their key arguments. No em-dashes. No filler like 'delves into' or 'rich tapestry'. Short, direct sentences."
+  "summary": "2-3 sentence summary of what these pages cover and their key arguments. No em-dashes (—). No filler like 'delves into', 'rich tapestry', 'profound', 'pivotal', 'meticulous', 'intricate', 'vibrant', 'interplay', 'showcases', 'landscape of', 'a testament to', 'not only X but also Y'. Short, direct sentences."
 }
 
 CRITICAL for quotes:

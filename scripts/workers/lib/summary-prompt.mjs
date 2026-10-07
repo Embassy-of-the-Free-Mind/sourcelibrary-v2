@@ -13,7 +13,7 @@
  * marketing copy. See PR (fix/about-book-prompt) for the before/after rationale.
  */
 
-export const SUMMARY_PROMPT_VERSION = '2026-05-29-plain-encyclopedic';
+export const SUMMARY_PROMPT_VERSION = '2026-10-07-no-ai-vocabulary';
 
 // Low temperature keeps the prose factual. At the default (~1.0) flash-lite
 // reaches for grand register ("seminal", "delineates the trajectory of...")
@@ -86,7 +86,7 @@ ${titleRule}
 - Significance must be concrete and specific. Drop empty praise adjectives: no "seminal", "important", "fascinating", "remarkable", "essential", "profound", "rich", "masterful", "groundbreaking", "radical", "bold", "urgent". Say what the text did or preserves, not how impressive it is.
 
 **Style:**
-- Also avoid these AI tells: "delves into", "rich tapestry", "sheds light on", "offers a window into", "pulls back the curtain", "comprehensive", "intricate", "nuanced", "multifaceted", and stiff verbs like "delineates", "elucidates", "utilizes" (write "uses"), "explores the trajectory of".
+- Also avoid these AI tells: "delves into", "rich tapestry", "sheds light on", "offers a window into", "pulls back the curtain", "comprehensive", "intricate", "nuanced", "multifaceted", "meticulous", "pivotal", "vibrant", "interplay", "showcases", "landscape of", "a testament to", "serves as", "not only X but also Y", "not merely X but Y", and stiff verbs like "delineates", "elucidates", "utilizes" (write "uses"), "explores the trajectory of".
 - No em-dashes (—). Use commas, colons, semicolons, or separate sentences.
 - Short, concrete sentences. Plain words over Latinate ones. Name people, places, and specifics instead of gesturing at them.
 
