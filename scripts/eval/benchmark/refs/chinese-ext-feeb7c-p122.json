@@ -12,5 +12,9 @@
   "url": "https://github.com/kanripo/KR5f0019/blob/master/KR5f0019_006.txt",
   "etext_chars": 3484,
   "window_chars": 184,
-  "overlap": 0.823
+  "overlap": 0.823,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
 }

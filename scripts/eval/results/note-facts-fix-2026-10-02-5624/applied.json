@@ -1,0 +1,200 @@
+[
+ {
+  "nid": "N018",
+  "book_id": "69e7abc95f1a22ab19a9e04a",
+  "page": 53,
+  "before": "The king or deity Musulundha/Mucilinda acting as a teacher",
+  "after": "Musulundha, king of the gods of the Heaven Free from Strife, acting as a teacher",
+  "page_id": "69e7abc95f1a22ab19a9e07f",
+  "status": "written",
+  "before_hash": "0a4d39b87c6c85ba",
+  "after_hash": "a65ce46f7b726013"
+ },
+ {
+  "nid": "N030",
+  "book_id": "69e7aae65f1a22ab19a8f3de",
+  "page": 171,
+  "before": "likely a phonetic rendering of a Sanskrit name",
+  "after": "a Tibetan translation of the Sanskrit name Raivata",
+  "page_id": "69e7aae65f1a22ab19a8f489",
+  "status": "written",
+  "before_hash": "82afbb61ca22d740",
+  "after_hash": "8b2bc9dd37a9e014"
+ },
+ {
+  "nid": "N050",
+  "book_id": "69e7ac145f1a22ab19aa33d0",
+  "page": 149,
+  "before": "Tibetan: ngo bo nyid stong pa nyid; Sanskrit: prakṛti-śūnyatā",
+  "after": "Tibetan: ngo bo nyid stong pa nyid; Sanskrit: svabhāva-śūnyatā",
+  "page_id": "69e7ac145f1a22ab19aa3465",
+  "status": "written",
+  "before_hash": "f8287387152a76f1",
+  "after_hash": "d9ea5554d040f557"
+ },
+ {
+  "nid": "N057",
+  "book_id": "69e786b24a6785cfd60c8e7b",
+  "page": 123,
+  "before": "likely Garab Dorje's father or a master in the lineage",
+  "after": "a master in the lineage",
+  "page_id": "69e786b24a6785cfd60c8ef6",
+  "status": "written",
+  "before_hash": "00e51ac51548d531",
+  "after_hash": "a42c79bdb597e4f5"
+ },
+ {
+  "nid": "N063",
+  "book_id": "69e7aabb80b52390feb19b6e",
+  "page": 106,
+  "before": "referring to Sanskrit as 'mleccha' in this specific context or a non-Tibetan dialect",
+  "after": "Sanskrit 'mleccha': a foreign, non-Sanskrit language",
+  "page_id": "69e7aabb80b52390feb19bd8",
+  "status": "written",
+  "before_hash": "a729d89e1b417d9c",
+  "after_hash": "61e01f51dc3a10a2"
+ },
+ {
+  "nid": "N075",
+  "book_id": "69e7ac245f1a22ab19aa444c",
+  "page": 92,
+  "before": "The personal name of the disciple Shariputra",
+  "after": "Another name of the disciple Shariputra, meaning 'son of Śāradvatī'",
+  "page_id": "69e7ac245f1a22ab19aa44a8",
+  "status": "written",
+  "before_hash": "cc1bb8c7a98e062c",
+  "after_hash": "9de62f12d6af8e2c"
+ },
+ {
+  "nid": "N093",
+  "book_id": "69e7ac905f1a22ab19aa9269",
+  "page": 55,
+  "before": "Pema Lingpa (1450–1521) was a major Treasure Revealer (terton) and an incarnation of Guru Rinpoche",
+  "after": "Pema Lingpa (1450–1521) was a major Treasure Revealer (terton), traditionally regarded as an incarnation of Longchenpa and of Princess Pema Sel",
+  "page_id": "69e7ac905f1a22ab19aa92a0",
+  "status": "written",
+  "before_hash": "9237daa37e365791",
+  "after_hash": "1aa141b5d7728fb1"
+ },
+ {
+  "nid": "N186",
+  "book_id": "69e7aba15f1a22ab19a9b381",
+  "page": 23,
+  "before": "Tibetan: Blo gros brtan pa; Sanskrit: Sthiramati",
+  "after": "Tibetan: Blo gros brtan pa; Sanskrit: Dṛḍhamati",
+  "page_id": "69e7aba15f1a22ab19a9b398",
+  "status": "written",
+  "before_hash": "7dc7b80830205dc4",
+  "after_hash": "1e757afca282a744"
+ },
+ {
+  "nid": "N193",
+  "book_id": "69e7abb55f1a22ab19a9cb7e",
+  "page": 76,
+  "before": "Tibetan: 'Jig rten 'dzin; Sanskrit: Lokeshvara or Jagaddhara",
+  "after": "Tibetan: 'Jig rten 'dzin; Sanskrit: Lokadhara",
+  "page_id": "69e7abb55f1a22ab19a9cbca",
+  "status": "written",
+  "before_hash": "d7dc4be4c2899e6a",
+  "after_hash": "6f61638649e35211"
+ },
+ {
+  "nid": "N216",
+  "book_id": "69e7abec5f1a22ab19aa0707",
+  "page": 3,
+  "before": "referring to Vishnu or a specific lineage",
+  "after": "Maitreya, also called Ajita, 'the Invincible'",
+  "page_id": "69e7abec5f1a22ab19aa070a",
+  "status": "written",
+  "before_hash": "ac83446abc7d4564",
+  "after_hash": "f6c33dd2115891a7"
+ },
+ {
+  "nid": "N221",
+  "book_id": "69e7ab285f1a22ab19a93de3",
+  "page": 26,
+  "before": "term: \"Me-skyes\" gloss: Fire-born, referring to Jivaka Kumarabhritya",
+  "after": "term: \"Me-skyes\" gloss: Fire-born; Sanskrit: Jyotiṣka (not Jīvaka)",
+  "page_id": "69e7ab285f1a22ab19a93dfd",
+  "status": "written",
+  "before_hash": "a41feb7700c772f8",
+  "after_hash": "165634a75afe032f"
+ },
+ {
+  "nid": "N222",
+  "book_id": "69e7ab285f1a22ab19a93de3",
+  "page": 23,
+  "before": "term: \"Mi-skyes\" gloss: \"Ajata; literally 'unborn' or 'not produced'\"",
+  "after": "term: \"Me-skyes\" (the scan reads \"Mi-skyes\") gloss: Fire-born; Sanskrit: Jyotiṣka",
+  "page_id": "69e7ab285f1a22ab19a93dfa",
+  "status": "written",
+  "before_hash": "645cd78e63c6ecac",
+  "after_hash": "18f1dbb676dccafc"
+ },
+ {
+  "nid": "N232",
+  "book_id": "69e7ac955f1a22ab19aa9713",
+  "page": 24,
+  "before": "Tibetan: dGa' ba'i sde; Sanskrit: Harisena",
+  "after": "Tibetan: dGa' ba'i sde; Sanskrit: Nandasena",
+  "page_id": "69e7ac955f1a22ab19aa972b",
+  "status": "written",
+  "before_hash": "6e8c9505ec2159d4",
+  "after_hash": "04395ad9cc6946c2"
+ },
+ {
+  "nid": "N255",
+  "book_id": "69e7965680b52390feb195ab",
+  "page": 23,
+  "before": "This is the \"Sealed Command of Auspiciousness\" composed by the Great Siddha Drubchen Nyungpo.",
+  "after": "This is the \"Sealed Command of Auspiciousness\" composed by the Great Siddha Khyungpo (Khyungpo Naljor).",
+  "page_id": "69e7965680b52390feb195c2",
+  "status": "written",
+  "before_hash": "27911fcf240463d6",
+  "after_hash": "5d33ccaca4a720bb"
+ },
+ {
+  "nid": "N287",
+  "book_id": "69e761e6cc48e59ad74f220f",
+  "page": 84,
+  "before": "literally: China, but often used for Sanskrit in these contexts",
+  "after": "Tibetan: rgya gar, India; that is, Sanskrit",
+  "page_id": "69e761e6cc48e59ad74f2263",
+  "status": "written",
+  "before_hash": "5a2f058e8f393d97",
+  "after_hash": "000b0d214a9d4b37"
+ },
+ {
+  "nid": "N295",
+  "book_id": "69e7619acc48e59ad74f091b",
+  "page": 202,
+  "before": "Taurus, Aquarius, Capricorn - though Vessel usually denotes Aquarius, here it refers to the container category",
+  "after": "Taurus, Virgo, Capricorn",
+  "page_id": "69e7619acc48e59ad74f09e5",
+  "status": "written",
+  "before_hash": "22161a77f414d05f",
+  "after_hash": "9cd129a6dd46947d"
+ },
+ {
+  "nid": "N298",
+  "book_id": "69e76218cc48e59ad74f3470",
+  "page": 114,
+  "before": "A major school of Tibetan Buddhism founded by Atisha",
+  "after": "A major school of Tibetan Buddhism, founded by Dromtön on the basis of Atisha's teachings",
+  "page_id": "69e76218cc48e59ad74f34e2",
+  "status": "written",
+  "before_hash": "a5019c1154b41773",
+  "after_hash": "0b69e64257fe3683"
+ },
+ {
+  "nid": "N332",
+  "book_id": "69e761a2cc48e59ad74f0c93",
+  "page": 227,
+  "before": "Minling Terchen Gyurme Dorje, 1646-1714.",
+  "after": "(note removed)",
+  "page_id": "69e761a2cc48e59ad74f0d76",
+  "status": "written",
+  "before_hash": "9a37d3ba48f845a3",
+  "after_hash": "e5547d6f5ada4f8b"
+ }
+]

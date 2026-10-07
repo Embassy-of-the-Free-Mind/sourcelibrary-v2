@@ -1,0 +1,21 @@
+{
+ "id": "6a3c61ec40c88a541d8f0f4a_00018",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "->Stainless, pure light,<-\n->The sun of wisdom breaks through all darkness,<-\n->Able to subdue disasters of wind and fire,<-\n->Universally illuminating the world.<-\n->The body of compassion is like the peal of thunder from the precepts,<-\n->The mind of kindness is like a wondrous great cloud,<-\n->Pouring down the dharma rain of sweet dew,<-\n->Extinguishing the flames of vexation.<-\n->In disputes before officials,<-\n->Or in the fear of military battles,<-\n->If one contemplates the power of Avalokiteshvara,<-\n->All enemies will retreat and scatter.<-\n->Wondrous voice, voice of the world-observer,<-\n->Brahma voice, voice of the rising tide,<-\n->Surpassing the voices of the world,<-\n->Therefore, you must always keep it in mind.<-\n->In every thought, do not harbor doubt,<-\n->Avalokiteshvara, the pure and holy one,<-\n->In the misery, distress, and deathly perils,<-\n->Is able to act as a refuge and protector.<-\n->Possessing all merits,<-\n->Viewing living beings with eyes of compassion,<-\n->Gathering a sea of blessings without measure,<-\n->Therefore, one should bow in reverence.<-\n\n---\n\n->At that time, the Bodhisattva Earth-Holder rose from his seat, stepped forward, and said to the Buddha, \"World-Honored One! If there are living beings who hear of this chapter on the free and unfettered deeds of Bodhisattva Avalokiteshvara, and of his power to manifest his <term>pumena</term> <gloss>universal gate</gloss> and supernatural strength, you should know that the merits of these people are not small.\" When the Buddha spoke this chapter on the Universal Gate, eighty-four thousand living beings in the assembly all brought forth the <term>anuttara-samyak-sambodhi</term> <gloss>unsurpassed, complete, and perfect enlightenment</gloss> heart.<-\n\n<summary>This passage concludes the verses praising the protective powers of Avalokiteshvara and records the reaction of the Bodhisattva Earth-Holder and the assembly to the teaching of the Universal Gate.</summary>\n<keywords>Avalokiteshvara, Universal Gate, Earth-Holder Bodhisattva, compassion, enlightenment, merits</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2142,
+ "outputTokens": 525,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.0006615,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 533,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

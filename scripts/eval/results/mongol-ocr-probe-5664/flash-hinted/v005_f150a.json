@@ -1,0 +1,45 @@
+{
+ "key": "v005_f150a",
+ "arm": "hinted",
+ "page": {
+  "key": "v005_f150a",
+  "vol": 5,
+  "book_id": "6ac029849a86d56c1aa16dca",
+  "page_number": 299,
+  "page_label": "f. 150a",
+  "bdrc_canvas": "I1PD1102730302.jpg",
+  "ligeti": "Mng1.80",
+  "mng_span": "Ca dandr a 121b–194b",
+  "toh": "D442",
+  "skt": "Guhyasamāja-tantra",
+  "derge_vol": 81,
+  "derge_file": "081_རྒྱུད་འབུམ།_ཅ.txt"
+ },
+ "model": "gemini-3-flash-preview",
+ "ocr_prompt": {
+  "arm": "hinted",
+  "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "content_hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "translation_prompt": {
+  "name": "Standard Translation",
+  "version": "13",
+  "hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Classical Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<page-num>150</page-num>\n<header>秘 密 經 第 五 卷 上 一 百 五 十</header>\n<meta>Beijing Kanjur (1718-1720), Woodblock print. Margin contains Chinese text: 秘密經第五卷上一百五十 (Secret Sutra, Volume 5, Part 1, Page 150).</meta>\n\n<margin>\nᠬᠠ\nᠭᠤᠷ\nᠳᠤᠭᠠᠷ\nᠪᠥᠯᠦᠭ\n</margin>\n\nᠪᠠᠰᠠ ᠪᠥᠭᠡᠳ ᠲᠡᠭᠦᠨ ᠴᠢᠯᠡᠨ ᠠᠳᠠᠯᠢ ᠪᠤᠰᠤ ᠪᠡᠶ᠎ᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠄ ᠪᠤᠰᠤᠳ ᠤᠨ ᠪᠡᠶ᠎ᠡ ᠪᠡᠷ ᠪᠤᠰᠤᠳ ᠤᠨ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠄ ᠪᠤᠰᠤᠳ ᠤᠨ ᠪᠡᠶ᠎ᠡ ᠪᠡᠷ ᠥᠪᠡᠷ ᠤᠨ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠄ ᠥᠪᠡᠷ ᠤᠨ ᠪᠡᠶ᠎ᠡ ᠪᠡᠷ ᠪᠤᠰᠤᠳ ᠤᠨ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠄ ᠪᠡᠶ᠎ᠡ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠄ ᠪᠡᠶ᠎ᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠦᠭᠡᠢ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠄ ᠪᠡᠶ᠎ᠡ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠄ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠄ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠄ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠄ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠄ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠄ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠄ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠄ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠄ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠄ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠄ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠄ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠡᠶ᠎ᠡ ᠪᠡᠨ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠬᠦ ᠦᠭᠡᠢ ᠪᠡᠷ ᠪᠦᠲᠦᠭᠡᠵᠦ ᠄\n\n<vocab>ᠪᠦᠲᠦᠭᠡᠬᠦ (to accomplish/create), ᠪᠡᠶ᠎ᠡ (body), ᠥᠪᠡᠷ (self), ᠪᠤᠰᠤᠳ (others), ᠦᠭᠡᠢ (without/not)</vocab>",
+  "finishReason": "STOP",
+  "inputTokens": 4341,
+  "outputTokens": 5156,
+  "cost_usd": 0.0176385
+ },
+ "translation": {
+  "text": "<meta>continues from previous page: Beijing Kanjur, Secret Sutra, Volume 5, Part 1, Page 150</meta>\n\n<margin>\nTwenty-second Chapter\n</margin>\n\nFurthermore, in the same way, one accomplishes one's own body through a body that is not the same; accomplishes the bodies of others through the bodies of others; accomplishes one's own body through the bodies of others; accomplishes the bodies of others through one's own body; accomplishes one's own body through non-body; accomplishes non-body through the body; accomplishes one's own body by not accomplishing the body; accomplishes one's own body by not accomplishing one's own body; accomplishes by not accomplishing one's own body, by not accomplishing one's own body; accomplishes by not accomplishing one's own body, by not accomplishing one's own body, by not accomplishing; accomplishes by not accomplishing one's own body, by not accomplishing one's own body, by not accomplishing, by not accomplishing; accomplishes by not accomplishing one's own body, by not accomplishing one's own body, by not accomplishing, by not accomplishing, by not accomplishing; accomplishes by not accomplishing one's own body, by not accomplishing one's own body, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing; accomplishes by not accomplishing one's own body, by not accomplishing one's own body, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing; accomplishes by not accomplishing one's own body, by not accomplishing one's own body, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing; accomplishes by not accomplishing one's own body, by not accomplishing one's own body, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing; accomplishes by not accomplishing one's own body, by not accomplishing one's own body, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing; accomplishes by not accomplishing one's own body, by not accomplishing one's own body, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing; accomplishes by not accomplishing one's own body, by not accomplishing one's own body, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing, by not accomplishing.\n\n<summary>This page contains a repetitive tantric formula from the Twenty-second Chapter regarding the non-dual nature of the body and the process of accomplishment. It uses a recursive linguistic structure to exhaust the conceptual possibilities of creating or realizing the self and others through various states of being and non-being.</summary>\n<keywords>body, self, others, non-body, accomplishment, tantric logic, recursive formula, emptiness</keywords>",
+  "finishReason": "STOP",
+  "inputTokens": 6886,
+  "outputTokens": 671,
+  "cost_usd": 0.005456
+ }
+}

@@ -57,10 +57,17 @@ const writerKey = (sub) => sub?.engine?.call_site || `${sub?.source || 'no-sourc
 
 async function checkField(db, field) {
   const clock = `${field}.updated_at`;
-  const cursor = db.collection('pages').find(
-    { [clock]: { $gte: SINCE } },
-    { projection: { id: 1, book_id: 1, [field]: 1 }, sort: { [clock]: -1 }, limit: SCAN },
-  );
+  // The record is checked, never the text: `.data` only decides whether this was a text write.
+  // Shipping it cost ~254 MB of Atlas egress per run (measured 2026-10-06, #5189), so the
+  // server reduces it to a stand-in — 'x' for a non-empty string, else unchanged.
+  const data = `$${field}.data`;
+  const cursor = db.collection('pages').aggregate([
+    { $match: { [clock]: { $gte: SINCE } } },
+    { $sort: { [clock]: -1 } },
+    { $limit: SCAN },
+    { $project: { id: 1, book_id: 1, [field]: 1 } },
+    { $set: { [`${field}.data`]: { $cond: [{ $and: [{ $eq: [{ $type: data }, 'string'] }, { $gt: [{ $strLenBytes: data }, 0] }] }, 'x', data] } } },
+  ]);
   const byWriter = new Map();
   let scanned = 0;
   for await (const p of cursor) {

@@ -89,6 +89,29 @@ describe('runaway page', () => {
       .toEqual({ healthy: false, reason: 'runaway' });
   });
 
+  it('a Han-dominant source is judged at 16x, not 3x (CJK→English runs p50 6.6x, max 12.75x on healthy pages, #5566)', () => {
+    const han = '師云大眾且置作麼生是法身僧無對'.repeat(30);           // 450 Han chars
+    expect(isExcess(han, 'x'.repeat(450 * 7))).toBe(false);          // an ordinary classical-Chinese page
+    expect(isExcess(han, 'x'.repeat(450 * 12))).toBe(false);
+    expect(isExcess(han, 'x'.repeat(450 * 16 + 1))).toBe(true);      // still a runaway past 16x
+    expect(isExcess(han, 'x'.repeat(20001))).toBe(true);             // and past the absolute cap
+  });
+
+  it('a mixed page that is not Han-dominant keeps the 3x ratio', () => {
+    const mixed = 'Lorem ipsum dolor sit amet '.repeat(20) + '師云大眾';   // ~540 Latin + 4 Han
+    expect(isExcess(mixed, 'x'.repeat(mixed.length * 4))).toBe(true);
+  });
+
+  it('Han terms in a metadata block do not tip a Latin page into the Han ratio', () => {
+    const latin = 'Lorem ipsum dolor sit amet '.repeat(15) + '<vocab>' + '師云大眾且置作麼生'.repeat(60) + '</vocab>';
+    expect(isExcess(latin, 'x'.repeat(405 * 4))).toBe(true);
+  });
+
+  it('OCR markup tags do not count toward the Han share', () => {
+    const tagged = '<language>Classical Chinese</language>\n' + '師云大眾且置'.repeat(60);
+    expect(isExcess(tagged, 'x'.repeat(360 * 7))).toBe(false);
+  });
+
   it('low-OCR pages (headers, image-only) are exempt from the ratio', () => {
     expect(assessTranslationHealth('x'.repeat(299), 'x'.repeat(5000)).healthy).toBe(true);
   });

@@ -1,0 +1,30 @@
+{
+ "about": "Stamp capture (PREREGISTRATION-ocr-v19-1-stamps.md, Amendment 1). The 20 S3 'real ink + show-through' pages of the v19 run: S3 pages labelled real-ink in the v19 labels whose note matches /mirror|show-?through|bleed|reversed|behind|other side|verso|recto/i (this reproduces the v19 RESULTS table row exactly: n 20, A .200 A2 .217 B .283 C .400). Words are copied from each page's label note only, written 2026-10-02 before any v19.1 call. A run captures the mark if its BODY contains any listed phrase as whole tokens (lowercased, accents stripped, non-alphanumerics folded to one space). null = the note names no legible word, so the page is excluded from the share.",
+ "pages": {
+  "69c1139837989a445aea2331": ["schmersow", "kirchhain", "baendel", "762"],
+  "69937716b0a84a5763962d59": ["161495"],
+  "69ac5f82ebeb54840de0f324": ["a9"],
+  "69af55d3ec9e6c278212dcf9": ["bs 100", "cop 2"],
+  "69b20f7baed0c6181c6c67c1": ["325"],
+  "69d7e15ee9e5e67989c37608": null,
+  "69b1deb4ca46fa60ea1ee1ac": ["xiv 2"],
+  "69a97a56f3f3d2fb7de2792e": ["wellcome"],
+  "69aea399484fa5533b660e2e": ["ερμηνεια", "ζωγραφικης", "ανεκδοτοι"],
+  "6a3f023d97e91e1768f669b2": ["typis"],
+  "69d7e15ee9e5e67989c37604": ["b"],
+  "699389e574305116d72d2cae": ["vii", "clviii"],
+  "6a26befc0e247ebad6dea063": ["s m b"],
+  "69aea5c30fefd7831dcdb052": ["institute of fine arts", "dt57", "washington square"],
+  "69d5ac20d0bd3547a5655510": ["215", "211"],
+  "69e7478d85f786e884a48a8d": ["digitized by google"],
+  "69b51e44768235dc6598e75d": ["monacensis"],
+  "69af23357c27d4b637feefba": ["22464"],
+  "69c26cb0b82ba5d5beda1d33": ["26", "25", "36", "18"],
+  "69c7ffc96c6f3cc53c843cbf": ["156", "finis", "f i n i s", "brahmin", "kshatri"]
+ },
+ "notes": {
+  "69ac5f82ebeb54840de0f324": "'1888' left out: the mirrored title page of this volume may carry the same year",
+  "6a3f023d97e91e1768f669b2": "'lipsiae' and 'teubneri' left out: the mirrored Teubner title page likely carries them too; 'typis' is the imprint line's own word",
+  "69d7e15ee9e5e67989c37608": "the note reads the mark only as 'F'/'V'-like"
+ }
+}

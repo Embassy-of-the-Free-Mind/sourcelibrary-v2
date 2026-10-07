@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.7.0 (2026-10-06)
+
+### `check_duplicate` answers "do we hold this?" (#6019)
+
+- New `url` param: paste a library URL or IIIF manifest. `title` is no longer required.
+- Backed by `checkHoldings()`, the same function as the admin form and CLI. It matches the same scan, the same edition, other editions (edition key), the same work (`work_id`), and near titles catalogued differently. The semantic cross-lingual tier is kept.
+- New fields: `verdict`, `held_not_public` (the count and strongest reason for copies held but not yet public; never their titles), and `limits` (what the check could not search). Each match carries a `reason`.
+
 ## 4.6.0 (2026-08-18)
 
 ### Images are first-class (parity with the remote server, #3937)

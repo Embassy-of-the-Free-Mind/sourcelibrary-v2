@@ -31,8 +31,10 @@
  *   … --apply             write (default is a dry run that prints the text head)
  *   … --force             restore even though the page is still stale
  */
+import { execFileSync } from 'node:child_process';
 import { MongoClient } from 'mongodb';
 import { staleTranslationReason, restoreUpdate, WITHHOLD_REVISION_SOURCE } from '../lib/stale-translation.mjs';
+import { recountBook } from '../lib/page-counts.mjs';
 
 const ARG = (n, d) => process.argv.find((a) => a.startsWith(`${n}=`))?.split('=').slice(1).join('=') ?? d;
 const APPLY = process.argv.includes('--apply');
@@ -52,6 +54,7 @@ if (!docs.length) { console.error('no matching pages'); await mongo.close(); pro
 
 let restored = 0;
 let skipped = 0;
+const touchedBooks = new Set();
 for (const page of docs) {
   if (!page.translation_withheld) { console.log(`${page.id}: nothing withheld — skipping`); skipped++; continue; }
 
@@ -82,9 +85,23 @@ for (const page of docs) {
   if (!APPLY) { console.log('  dry run — pass --apply to write'); continue; }
 
   const res = await pages.updateOne({ id: page.id }, update);
-  if (res.modifiedCount === 1) { restored++; console.log('  restored'); }
+  if (res.modifiedCount === 1) { restored++; touchedBooks.add(page.book_id); console.log('  restored'); }
   else console.log(`  NOT WRITTEN (modifiedCount ${res.modifiedCount})`);
 }
 
-console.log(`\n${APPLY ? 'restored' : 'would restore'}: ${restored} · skipped: ${skipped}`);
+// The withhold recounts the book and re-syncs the Supabase `pages` mirror
+// (withhold-stale-translations.mjs); the way back has to as well. Without it,
+// `pages_translated` stays one short per page and the mirror keeps serving no
+// English: its 5-minute worker selects by `translation.updated_at`, and a
+// restored translation carries its ORIGINAL timestamp, so it is never picked up
+// (#5593, 53 pages restored with both steps run by hand).
+for (const bookId of touchedBooks) {
+  try { await recountBook(db, bookId, { reason: 'restore-withheld-translation' }); }
+  catch (e) { console.log(`${bookId}: counter recount FAILED — ${e.message?.slice(0, 120)}`); }
+  try {
+    execFileSync(process.execPath, ['scripts/workers/sync-pages-content.mjs', `--book=${bookId}`], { stdio: 'pipe', timeout: 300000, env: process.env });
+  } catch (e) { console.log(`${bookId}: Supabase pages mirror sync FAILED — ${String(e.message).slice(0, 120)}`); }
+}
+
+console.log(`\n${APPLY ? 'restored' : 'would restore'}: ${restored} · skipped: ${skipped}${touchedBooks.size ? ` · books recounted + mirror re-synced: ${touchedBooks.size}` : ''}`);
 await mongo.close();

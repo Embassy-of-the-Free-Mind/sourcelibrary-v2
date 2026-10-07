@@ -1,0 +1,21 @@
+{
+ "id": "6a3c6191879008ba7e15f0b2_00070",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "Second: The phase of continuity. This relies on the function of intellectual cognition <term>zhi</term> <gloss>the wisdom that distinguishes</gloss>. It generates the feeling-mind of suffering and pleasure, giving rise to thoughts that are associated and uninterrupted.\n\nRegarding the explanation of this continuity as relying on intellectual cognition: this clarifies that which the continuity depends upon for its arising. Specifically, it relies on the previous discrimination between desirable objects, which gives rise to the perception of pleasure, and undesirable objects, which gives rise to the perception of suffering. These thoughts arise repeatedly, appearing one after another in a continuous stream. This explains the internal continuity of the self. Furthermore, it can give rise to afflictions <term>huo</term> <gloss>klesha or delusions</gloss> which nourish karma and sustain the cycle of birth and death <term>shengsi</term> <gloss>samsara</gloss>. This causes the continuity of the other <note>referring to the chain of future rebirths</note>. As the later text states: it maintains and supports suffering and pleasure. Therefore, the text says it generates feelings up to the point of being uninterrupted.\n\nThird: The phase of grasping. This refers to the aforementioned realms of suffering and pleasure. Because one does not understand that these objects are empty and non-existent, a deep attachment and grasping arises.\n\n<summary>This page explains the second and third phases of the development of the deluded mind, focusing on how intellectual discrimination leads to a continuous cycle of pleasure, pain, and rebirth. It details the transition from simple perception to the deep-seated attachment that binds sentient beings to samsara.</summary>\n<keywords>continuity, intellectual cognition, suffering and pleasure, karma, birth and death, grasping, emptiness, Buddhist psychology</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 1967,
+ "outputTokens": 375,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.00105425,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 301,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

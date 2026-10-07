@@ -216,6 +216,18 @@ export const STRATA = {
     { name: 'english-1600-1779', n: 10, columns: 3, filter: { language: /^(English|eng)$/i, pages_count: { $gt: 5 } }, pick: b => inRange(1600, 1780)(b) && !MS_RE.test(b.title || ''), reference: 'agreement + invention' },
     { name: 'french-1600-1779', n: 10, columns: 2, filter: { language: /^(French|fre|fra)$/i, pages_count: { $gt: 5 } }, pick: b => inRange(1600, 1780)(b) && !MS_RE.test(b.title || ''), reference: 'agreement + invention' },
   ] },
+  // Not drawn: the stratum IS the set of leaf-checked EEBO-TCP page references (one page per book, the page
+  // chosen when the reference was built — #5488). The engines read the exact image that was checked.
+  'eebo-tcp-5488': { issue: 5488, seed: 5488, fromRefs: { source: /^EEBO-TCP / }, subs: [
+    { name: 'by language × period', n: null, reference: 'EEBO-TCP same-edition transcription (CC0), leaf-checked' },
+  ] },
+  // Latin print by century (#5126): the leaf-checked same-edition references built by
+  // latin-period-refs-5126.mjs (CAMENA, EEBO-TCP, la.wikisource), selected by the record's own `stratum`
+  // field because their sources overlap eebo-tcp-5488's. The #5695 T1 corrected transcriptions ride along
+  // in their own sub-strata: they are corrections of a served read and never enter a century cell.
+  'latin-period-5126': { issue: 5126, seed: 5126, fromRefs: { stratum: 'latin-period-5126', substratum: (r, base) => (r.reference_kind === 'corrected-served-ocr' ? `${base} (corrected-OCR reference)` : base) }, subs: [
+    { name: 'Latin by century of the edition', n: null, reference: 'same-edition transcription (CAMENA CC BY-SA, EEBO-TCP CC0, la.wikisource CC BY-SA), leaf-checked' },
+  ] },
 };
 
 const letters = s => ((s || '').match(/\p{L}/gu) || []).length;
@@ -321,6 +333,31 @@ async function drawScreened(db, stratum, sub, rand, books) {
   return out;
 }
 
+// A reference-defined stratum: every benchmark/refs record from cfg.fromRefs.source whose leaf_check is ok
+// becomes a page, keeping the reference's slug (so benchmark-score finds the text) and the image the leaf
+// check opened (pages.photo, the source leaf — not a derived R2 copy, which could differ).
+async function pagesFromRefs(db, stratum, cfg) {
+  const refsDir = path.join(REG_DIR, 'refs');
+  const recs = fs.readdirSync(refsDir).filter(f => f.endsWith('.json')).map(f => ({ slug: f.slice(0, -5), ...JSON.parse(fs.readFileSync(path.join(refsDir, f), 'utf8')) }))
+    .filter(r => (cfg.fromRefs.stratum ? r.stratum === cfg.fromRefs.stratum : cfg.fromRefs.source.test(r.source || '') && !r.stratum) && r.leaf_check?.status === 'ok').sort((a, b) => a.slug.localeCompare(b.slug));
+  const pages = [];
+  for (const r of recs) {
+    const book = await db.collection('books').findOne({ $or: [{ id: r.book_id }, { _id: r.book_id }] }, { projection: { id: 1, title: 1, published: 1, language: 1, contributing_library: 1, image_source: 1 } });
+    const page = await db.collection('pages').findOne({ book_id: r.book_id, page_number: r.page_number });
+    if (!book || !page) { console.log(`  ! ${r.slug}: ${book ? 'page' : 'book'} not found — left out`); continue; }
+    const year = yearOf(book.published); const language = String(book.language || '').split(/[;,]/)[0].trim() || null;
+    const base = `${language} ${year ? `${Math.floor(year / 100)}00s` : 'undated'}`;
+    pages.push({
+      slug: r.slug, book_id: r.book_id, page_number: r.page_number, substratum: cfg.fromRefs.substratum ? cfg.fromRefs.substratum(r, base) : base,
+      title: (book.title || '').slice(0, 120), year, published: book.published || null, language,
+      provider: book.contributing_library || book.image_source?.provider || null,
+      image_url: page.photo || getPageSource(page), stored_ocr_chars: page.ocr?.data ? page.ocr.data.length : 0,
+      reference_plan: `${r.source} (${r.licence}), leaf_check ok by ${r.leaf_check.by} ${r.leaf_check.at}`, spare: false,
+    });
+  }
+  return pages;
+}
+
 async function sealStratum(stratum) {
   const cfg = STRATA[stratum];
   if (!cfg) throw new Error(`unknown stratum ${stratum}; known: ${Object.keys(STRATA).join(', ')}`);
@@ -335,10 +372,11 @@ async function sealStratum(stratum) {
     // One PRNG per sub-stratum (seed + index): a sub-stratum's draw must not shift when the
     // one before it consumes a different number of random numbers (spares, skipped pages).
     const pages = [];
-    for (const [i, sub] of cfg.subs.entries()) pages.push(...await drawSub(db, stratum, cfg.screen ? { ...sub, screen: cfg.screen } : sub, mulberry32(cfg.seed * 100 + i)));
+    if (cfg.fromRefs) pages.push(...await pagesFromRefs(db, stratum, cfg));
+    else for (const [i, sub] of cfg.subs.entries()) pages.push(...await drawSub(db, stratum, cfg.screen ? { ...sub, screen: cfg.screen } : sub, mulberry32(cfg.seed * 100 + i)));
     reg = {
       stratum, issue: cfg.issue, seed: cfg.seed, sealed_at: new Date().toISOString(),
-      draw_rule: 'one page per book; books Fisher–Yates-shuffled with Mulberry32(seed*100+substratum index) over the id-sorted eligible list; page uniform over interior 10–90%; skip if no usable image or stored OCR < 120 letters; multi-column quota from pages whose stored OCR carries a <columns>N≥2 tag. The draw is reproducible only against the eligible id list AS OF THE SEAL DATE (imports keep adding books, which reshuffles everything) — this file, not the script, is the seal.',
+      draw_rule: cfg.fromRefs ? 'not drawn: every leaf_check-ok reference record of this source, one page per book, image = the leaf the check opened (pages.photo). Pages were chosen when the references were built (build-edition-refs seeded draw of 8, middle accepted page; alternates recorded in results/edition-refs/leaf-check-*.json).' : 'one page per book; books Fisher–Yates-shuffled with Mulberry32(seed*100+substratum index) over the id-sorted eligible list; page uniform over interior 10–90%; skip if no usable image or stored OCR < 120 letters; multi-column quota from pages whose stored OCR carries a <columns>N≥2 tag. The draw is reproducible only against the eligible id list AS OF THE SEAL DATE (imports keep adding books, which reshuffles everything) — this file, not the script, is the seal.',
       ...(cfg.screen_rule ? { screen_rule: cfg.screen_rule } : {}),
       max_width: MAX_WIDTH, n: pages.filter(p => !p.spare).length, spares: pages.filter(p => p.spare).length,
       spare_rule: 'a sealed page that every engine returns textless (<30 letters) is replaced by the first unused spare of its sub-stratum; the replacement is recorded in the results file',

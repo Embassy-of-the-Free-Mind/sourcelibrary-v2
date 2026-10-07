@@ -1,0 +1,113 @@
+{
+  "summary": {
+    "book_id": "6a4f71ca1cba01ec54e763c3",
+    "title": "Inquisitio in fidem Christianorum hujus sæculi. Authore Rogero Boyle, S.T.D. Dec. Corc.",
+    "published": "1665",
+    "source": "EEBO-TCP A29060",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 6,
+    "skips": {
+      "probe-too-short": 1,
+      "guard-refused": 1
+    },
+    "median_char_acc": 0.9232,
+    "median_char_acc_windowed": 0.9232,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a4f71ca-p2",
+      "page": 2,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a4f71ca-p6",
+      "page": 6,
+      "overlap": 0.918,
+      "probe_words": 74,
+      "ref_chars": 519,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.203,
+      "char_acc": 0.9323,
+      "char_acc_windowed": 0.9323
+    },
+    {
+      "slug": "ed-6a4f71ca-p9",
+      "page": 9,
+      "overlap": 0.909,
+      "probe_words": 67,
+      "ref_chars": 509,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.303,
+      "char_acc": 0.9311,
+      "char_acc_windowed": 0.9286
+    },
+    {
+      "slug": "ed-6a4f71ca-p14",
+      "page": 14,
+      "overlap": 0.662,
+      "probe_words": 72,
+      "ref_chars": 537,
+      "engine": "gemini-2.5-flash",
+      "aligned": true,
+      "guard_wer": 0.325,
+      "char_acc": 0.8926,
+      "char_acc_windowed": 0.8592
+    },
+    {
+      "slug": "ed-6a4f71ca-p15",
+      "page": 15,
+      "overlap": 0.976,
+      "probe_words": 85,
+      "ref_chars": 708,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.194,
+      "char_acc": 0.9023,
+      "char_acc_windowed": 0.9023
+    },
+    {
+      "slug": "ed-6a4f71ca-p16",
+      "page": 16,
+      "overlap": 0.94,
+      "probe_words": 103,
+      "ref_chars": 741,
+      "engine": "gemini-2.5-flash",
+      "aligned": true,
+      "guard_wer": 0.241,
+      "char_acc": 0.9156,
+      "char_acc_windowed": 0.9156
+    },
+    {
+      "slug": "ed-6a4f71ca-p17",
+      "page": 17,
+      "overlap": 0.943,
+      "probe_words": 108,
+      "ref_chars": 744,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.265,
+      "char_acc": 0.9232,
+      "char_acc_windowed": 0.9232
+    },
+    {
+      "slug": "ed-6a4f71ca-p22",
+      "page": 22,
+      "overlap": 0.646,
+      "probe_words": 87,
+      "ref_chars": 689,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.376,
+      "char_acc": 0.8527,
+      "char_acc_windowed": 0.814,
+      "skipped": "guard-refused"
+    }
+  ]
+}

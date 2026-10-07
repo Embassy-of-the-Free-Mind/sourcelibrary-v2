@@ -1,0 +1,21 @@
+{
+ "id": "69b99d043a4a443c39c00775_00147",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "IV. 3. 5.] UPARIPAÑCA-VAGGA 3. 127\n\n19. Then Ragâ, the daughter of Mâra, spoke this verse in the presence of the Blessed One:\nHaving severed the craving, the crowd, and the current,\nTruly many beings will pass over.\nIndeed, this homeless one\nWill sever and carry away the multitude to the King of Death.\n\n20. The great heroes, the Tathâgatas,\nLead by the true doctrine.\nOf those being led by the doctrine,\nWhat envy can the wise have?\n\n21. Then Taṇhâ, Arati, and Ragâ, the daughters of Mâra, approached Mâra the Evil One.\n\n22. Mâra the Evil One saw Taṇhâ, Arati, and Ragâ, the daughters of Mâra, coming from afar. Seeing them, he spoke in verses:\nFools, you crush a mountain with lotus stalks,\nYou dig a mountain with your fingernails,\nYou bite iron with your teeth.\nStriking your head against a rock,\nYou seek footing in the abyss.\nLike crashing your chest against a post,\nYou return disheartened from Gotama.\n\n23. Shaking with agitation, Taṇhâ, Arati, and Ragâ came.\nThe Teacher dispelled them there,\nAs the wind blows away a heap of cotton.\n\n->The Third Chapter<-\n->Summary of this chapter<-\nSambahula, Samiddhi, Godhika, the Seven Years,\nThe daughters, taught by the Buddha-teacher, this is the Mâra Group of Five.\nThe Connected Discourses on Mâra is concluded.\n\n<summary>This page recounts the unsuccessful attempts of Mâra's daughters to distract the Buddha, culminating in their retreat and a concluding summary of the Mâra section.</summary>\n<keywords>Mâra, Taṇhâ, Arati, Ragâ, Gotama, Tathâgata, Mara-samyutta, temptation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2584,
+ "outputTokens": 445,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.00065675,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1776,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

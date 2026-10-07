@@ -1,0 +1,21 @@
+{
+ "id": "6a3c61b1879008ba7e15fba1_00068",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "In terms of the relative importance of the root and the branch, if we speak of action, then action is heavy. Therefore, in this chapter, action comes first, while the subsequent text puts the root before the branch. If we speak in terms of the sequence of knowledge and action, then literature <note>or \"the study of texts\"</note> comes first. Therefore, the chapter on the four teachings places literature first, followed by action. By examining these two chapters together, it can be seen that literature and action must be pursued in parallel.\n\n○ Zixia said: To appreciate the virtuous as we appreciate beauty, to exert one's full strength in serving one's parents, to be willing to sacrifice one's life in serving one's ruler, and to be sincere in one's words when interacting with friends—even if one says this person has not yet learned, I would certainly call them learned.\n\nZixia was a disciple of Confucius, surnamed Bu, named Shang, and a man of Wei. To \"appreciate the virtuous as we appreciate beauty\" means to change one's heart, which prefers physical beauty, to instead prefer virtue with sincerity. The *Collected Commentaries* <note>original: \"集註\" referring to the *Collected Commentaries on the Analects*</note> ask: How should we interpret this? Seeing the virtuous and changing one’s tendency toward beauty is a matter of turning one's love of beauty toward a love of virtue. Master Zhu <note>Zhu Xi</note> said: The two passages regarding \"not having seen one who loves virtue as much as one loves beauty\" and the *Doctrine of the Mean* both treat distancing oneself from physical beauty as the way to virtue. \"Exert\" means to relinquish. \"Relinquishing one's life\" means not to hold on to one's own body or life. This is the sincerity of changing one's love of beauty. Therefore, Master Fan’s explanation is the superior one.\n\n<margin>Collected Commentaries on the Analects</margin>\n<margin>Determining the Punctuation</margin>\n\n<summary>This page discusses the balance between \"literature\" (study) and \"action\" in Confucian practice, while providing a commentary on Zixia’s criteria for a learned person.</summary>\n<keywords>Zixia, Zhu Xi, virtue, learning, Confucian ethics, root and branch</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2073,
+ "outputTokens": 513,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.000643875,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 453,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

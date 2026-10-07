@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA cera/witzel1",
+  "edition": "Epistolarum, Quae Inter Aliquot Centurias videbantur partim profuturae Theologicarum literarum studiosis, partim innocen — Leipzig: Nikolaus Wolrab, 1537.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "11/12",
+    "pb_aligned_pages": "11/11"
+  },
+  "origin": "library",
+  "book_id": "6a90991fb7feee6e9c427bf0",
+  "page_number": 18,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 15234,
+    "to_char": 16655,
+    "overlap": 0.854,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'iterum o utinam illic quae sunt Ecclesiae'; ends 'Bene uale. Nymeciae. Anno, M. D. XXX. / Non' (catchword); ref's trailing 'I. VV. S. P. NON MOROR' is next page padding.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:01.462Z",
+  "text_location": "repo",
+  "text_sha256": "f3e8bcf578acfc2a21665bab0378aea4cb3207558ed1453564dcbaf492290219",
+  "unit": {
+    "chars": 1421
+  },
+  "stratum": "latin-period-5126"
+}

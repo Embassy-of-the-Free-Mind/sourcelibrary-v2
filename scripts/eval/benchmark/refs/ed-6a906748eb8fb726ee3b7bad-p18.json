@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA cera/scaliger1",
+  "edition": "Epistolae omnes quae reperiri potuerunt : Caeteris praefixa est ea quae est De Gente Scaligera [...] / nunc primum colle — Leiden: Elzevir, 1627.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "same-text",
+    "text_match_pages": "14/20",
+    "pb_aligned_pages": "4/14"
+  },
+  "origin": "library",
+  "book_id": "6a906748eb8fb726ee3b7bad",
+  "page_number": 18,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 10801,
+    "to_char": 12357,
+    "overlap": 0.8,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'Illic principia & nascentis semina mundi' ends 'Tartareum virus, spinosaq; verbera cauda / Inten-' (catchword); ref pads 'multoque illuserat auro.' and 'Intentantem oculis'. Italic Latin hexameters, 37 lines, brown paper (Google scan).",
+    "leaf_language": "lat",
+    "page_type": "verse",
+    "abbreviations": "many",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:17.637Z",
+  "text_location": "repo",
+  "text_sha256": "07ac3d4c3914c4937b29cb0a18d58c6fd842b62386606caa2382ab425ffc20cc",
+  "unit": {
+    "chars": 1556
+  },
+  "stratum": "latin-period-5126"
+}

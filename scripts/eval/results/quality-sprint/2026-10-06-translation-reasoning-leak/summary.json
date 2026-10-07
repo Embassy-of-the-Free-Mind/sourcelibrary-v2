@@ -1,0 +1,127 @@
+{
+ "issue": 6056,
+ "measured_at": "2026-10-06T23:32:54.222Z",
+ "walk_complete": true,
+ "pages_scanned": {
+  "string": 282178,
+  "objectId": 28684947
+ },
+ "prefilter_candidates": 9274,
+ "leaked_pages": 1327,
+ "leaked_books": 763,
+ "live_leaked_pages": 1151,
+ "live_leaked_books": 680,
+ "live_reader_visible_pages": 738,
+ "live_reader_visible_books": 397,
+ "headline_pages": 549,
+ "headline_books": 269,
+ "headline_by_kind": {
+  "reasoning": 352,
+  "assistant-reply": 197
+ },
+ "headline_by_language": {
+  "Latin": 138,
+  "English": 176,
+  "Italian": 6,
+  "German": 28,
+  "Greek": 50,
+  "Latin/English": 1,
+  "Arabic-English": 1,
+  "Chinese-Latin": 1,
+  "Latin-German": 16,
+  "French": 28,
+  "Irish/English": 3,
+  "Greek/Latin": 1,
+  "Chinese": 7,
+  "Japanese": 3,
+  "Dutch": 63,
+  "Latin-Dutch": 1,
+  "Sanskrit": 5,
+  "Persian": 4,
+  "Greek-Latin": 1,
+  "Hebrew": 2,
+  "Armenian": 1,
+  "Russian": 2,
+  "Arabic": 1,
+  "Judeo-Arabic and Hebrew": 1,
+  "Tibetan": 8,
+  "Korean": 1
+ },
+ "headline_by_model": {
+  "gemini-3-flash-preview": 330,
+  "gemini-3.1-flash-lite-preview": 190,
+  "gemini-2.5-flash": 18,
+  "gemini-3.1-flash-lite": 11
+ },
+ "headline_by_month": {
+  "2026-02": 125,
+  "2026-03": 160,
+  "2026-04": 171,
+  "2026-01": 19,
+  "2026-06": 25,
+  "2026-10": 14,
+  "2026-05": 18,
+  "2026-09": 11,
+  "2026-08": 3,
+  "2026-07": 3
+ },
+ "live_reader_visible_by_kind": {
+  "reasoning": 352,
+  "assistant-reply": 197,
+  "input-talk": 177,
+  "thought-token": 12
+ },
+ "by_kind": {
+  "thought-token": 14,
+  "reasoning": 534,
+  "assistant-reply": 255,
+  "input-talk": 524
+ },
+ "live_by_kind": {
+  "reasoning": 485,
+  "assistant-reply": 197,
+  "input-talk": 457,
+  "thought-token": 12
+ },
+ "by_model": {
+  "gemini-3-flash-preview": 822,
+  "gemini-3.1-flash-lite-preview": 347,
+  "gemini-2.5-flash": 48,
+  "gemini-3.1-flash-lite": 110
+ },
+ "by_prompt_version": {
+  "1": 4,
+  "2": 16,
+  "11": 75,
+  "12": 13,
+  "13": 104,
+  "v2": 445,
+  "v1": 57,
+  "null": 86,
+  "v10": 389,
+  "v5.2026-02": 76,
+  "v11": 1,
+  "v5.1.2026-03c": 2,
+  "v5.1.2026-03b": 25,
+  "v6": 6,
+  "v12": 20,
+  "v11-retx": 8
+ },
+ "by_month": {
+  "2026-10": 91,
+  "2026-02": 278,
+  "2026-03": 369,
+  "2026-04": 354,
+  "2026-01": 56,
+  "2026-05": 54,
+  "2026-06": 53,
+  "2026-08": 31,
+  "2026-07": 8,
+  "2026-09": 33
+ },
+ "side_pipeline_talk_in_body": {
+  "pages": 5337,
+  "books": 2451
+ },
+ "note": "A floor: phrase rules read off real hits. headline = reasoning or assistant-reply, in the page body, on a live book at page_number > 0. reader_visible = the phrase survives removal of the <meta>/<summary>/<keywords>/<vocab> blocks."
+}

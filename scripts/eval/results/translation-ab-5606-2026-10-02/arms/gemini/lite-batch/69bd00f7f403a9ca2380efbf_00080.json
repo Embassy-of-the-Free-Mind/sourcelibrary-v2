@@ -1,0 +1,21 @@
+{
+ "id": "69bd00f7f403a9ca2380efbf_00080",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "132 Dīghanikāya, Sīlakkhandhavagga, Sāmaññaphalasutta\n\nIn this same way, Great King, the monk saturates, drenches, fills, and suffuses this very body with this pleasure born of seclusion <note>referring to the rapture and physical ease attained in the preceding meditative states</note>. There is no part of his entire body that is not suffused with this pleasure born of seclusion.\n\nThis, too, Great King, is a visible fruit of recluseship, more excellent and sublime than the previous visible fruits of recluseship.\n\n68. Furthermore, Great King, with the abandoning of pleasure and pain, and with the previous passing away of joy and sorrow, the monk enters and remains in the fourth jhāna <note>meditative absorption</note>, which is neither painful nor pleasant and is purified by equanimity. He sits having suffused this very body with a pure, bright mind. There is no part of his entire body that is not suffused with this pure, bright mind.\n\nJust as if, Great King, a man were sitting having covered himself from head to foot with a white cloth, such that there would be no part of his entire body not covered by the white cloth, in the same way, Great King, the monk sits having suffused this very body with a pure, bright mind. There is no part of his entire body that is not suffused with this pure, bright mind.\n\nThis, too, Great King, is a visible fruit of recluseship, more excellent and sublime than the previous visible fruits of recluseship.\n\n69. Furthermore, Great King, when his mind is thus composed, purified, bright, unblemished, rid of impurities, pliant, workable, established, and attained to imperturbability, the monk directs and inclines his mind toward knowledge and vision. He understands thus: \"This body of mine is material, composed of the four great elements, born of mother and father, nourished by boiled rice and porridge, subject to impermanence, to being rubbed and pressed, to breaking up and destruction. And this consciousness of mine is bound to it, dependent on it.\"\n\n70. Just as if, Great King, there were a beryl gem, beautiful, natural, eight-faceted, well-cut, clear, limpid, unclouded, and perfect in all its qualities, through which a thread was strung—blue, yellow, red, white, or brown. A person with eyes, taking it in their hand, would reflect upon it: \"This is a beryl gem, beautiful, natural, eight-faceted, well-cut, clear, limpid, unclouded, and perfect in all its qualities. And through it is strung a thread—blue, yellow, red, white, or brown.\"\n\n<summary>This passage describes the attainment of the fourth meditative absorption and the subsequent development of insight into the material nature of the body and its relationship with consciousness.</summary>\n<keywords>Sāmaññaphalasutta, fourth jhāna, equanimity, consciousness, material body, meditation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2939,
+ "outputTokens": 664,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.000865375,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1922,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

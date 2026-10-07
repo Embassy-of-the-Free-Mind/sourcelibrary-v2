@@ -1,0 +1,125 @@
+{
+  "summary": {
+    "book_id": "6a43851557a09c2c0fcc0005",
+    "title": "Bibliotheca Tillotsoniana: or A catalogue of the curious library of Dr. John Tillotson late Lord Archbishop of Canterbury. Containing, a collection of Greek and Latin fathers, councils, historians (ecclesiastical and civil) philosophers, poets, orators, lexicographers, &c. all of the best editions and neatly bound. Together with the library of Mr. Seth-Mountley Buncle, late master of Mercers school, London. Consisting of Hebrew, Chaldaick, Syriack, Persick,",
+    "published": "1695",
+    "source": "EEBO-TCP A62554",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 1,
+    "skips": {
+      "guard-refused": 7
+    },
+    "median_char_acc": 0.9503,
+    "median_char_acc_windowed": 0.9503,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a438515-p5",
+      "page": 5,
+      "overlap": 0.571,
+      "probe_words": 165,
+      "ref_chars": 1359,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.445,
+      "char_acc": 0.9336,
+      "char_acc_windowed": 0.6394,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-6a438515-p6",
+      "page": 6,
+      "overlap": 0.5,
+      "probe_words": 210,
+      "ref_chars": 1892,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.554,
+      "char_acc": 0.9269,
+      "char_acc_windowed": 0.6591,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-6a438515-p7",
+      "page": 7,
+      "overlap": 0.567,
+      "probe_words": 233,
+      "ref_chars": 1841,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.506,
+      "char_acc": 0.9498,
+      "char_acc_windowed": 0.6243,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-6a438515-p13",
+      "page": 13,
+      "overlap": 0.472,
+      "probe_words": 187,
+      "ref_chars": 1784,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.483,
+      "char_acc": 0.9464,
+      "char_acc_windowed": 0.7186,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-6a438515-p14",
+      "page": 14,
+      "overlap": 0.492,
+      "probe_words": 181,
+      "ref_chars": 1713,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.49,
+      "char_acc": 0.947,
+      "char_acc_windowed": 0.7237,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-6a438515-p17",
+      "page": 17,
+      "overlap": 1,
+      "probe_words": 192,
+      "ref_chars": 1744,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.068,
+      "char_acc": 0.9503,
+      "char_acc_windowed": 0.9503
+    },
+    {
+      "slug": "ed-6a438515-p18",
+      "page": 18,
+      "overlap": 0.414,
+      "probe_words": 202,
+      "ref_chars": 1858,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.578,
+      "char_acc": 0.9598,
+      "char_acc_windowed": 0.6524,
+      "skipped": "guard-refused"
+    },
+    {
+      "slug": "ed-6a438515-p19",
+      "page": 19,
+      "overlap": 0.456,
+      "probe_words": 184,
+      "ref_chars": 1714,
+      "engine": "gemini-3-flash-preview",
+      "aligned": false,
+      "guard_wer": 0.38,
+      "char_acc": 0.9602,
+      "char_acc_windowed": 0.6705,
+      "skipped": "guard-refused"
+    }
+  ]
+}

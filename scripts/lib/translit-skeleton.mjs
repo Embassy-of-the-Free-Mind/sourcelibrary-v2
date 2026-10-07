@@ -36,6 +36,7 @@
  * Hangul; a Latin quote against those stays `script`. Follows non-latin-text-operations.md:
  * nothing here is a storage or display key — it exists only to compare.
  */
+import { stripMarkupTags } from './strip-markup-tags.mjs';
 
 const VOWEL_RUN = /[aeiou]+/g;
 
@@ -292,7 +293,7 @@ const UNCOVERED_RE = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Sc
  */
 export function pageSkeleton(name, ocrText, i = 0) {
   const s = SCRIPTS[name];
-  const foreign = String(ocrText || '').replace(/<[^>]+>/g, ' ').replace(/[\p{Script=Latin}\d]+/gu, ' ');
+  const foreign = stripMarkupTags(ocrText).replace(/[\p{Script=Latin}\d]+/gu, ' ');
   const starts = new Set();
   let str = '';
   for (const word of s.page(foreign).split(/[\s\p{P}]+/u)) {

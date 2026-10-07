@@ -1,0 +1,1288 @@
+{
+ "n_pages": 59,
+ "strata_served": {
+  "lang": {
+   "Dutch": {
+    "fidelity": [
+     4.429,
+     4.143,
+     4.857,
+     7
+    ],
+    "fid_ge4": [
+     1,
+     1,
+     1,
+     7
+    ],
+    "omission": [
+     0,
+     0,
+     0,
+     7
+    ],
+    "reversal": [
+     0,
+     0,
+     0,
+     7
+    ]
+   },
+   "French": {
+    "fidelity": [
+     4.536,
+     4.25,
+     4.786,
+     14
+    ],
+    "fid_ge4": [
+     0.929,
+     0.786,
+     1,
+     14
+    ],
+    "omission": [
+     0.036,
+     0,
+     0.107,
+     14
+    ],
+    "reversal": [
+     0,
+     0,
+     0,
+     14
+    ]
+   },
+   "German": {
+    "fidelity": [
+     4.432,
+     4.136,
+     4.705,
+     22
+    ],
+    "fid_ge4": [
+     0.955,
+     0.864,
+     1,
+     22
+    ],
+    "omission": [
+     0.114,
+     0.023,
+     0.227,
+     22
+    ],
+    "reversal": [
+     0,
+     0,
+     0,
+     22
+    ]
+   },
+   "Italian": {
+    "fidelity": [
+     4.25,
+     4.0,
+     4.55,
+     10
+    ],
+    "fid_ge4": [
+     0.9,
+     0.7,
+     1,
+     10
+    ],
+    "omission": [
+     0.2,
+     0,
+     0.5,
+     10
+    ],
+    "reversal": [
+     0.05,
+     0,
+     0.15,
+     10
+    ]
+   },
+   "Spanish": {
+    "fidelity": [
+     4.083,
+     3.333,
+     4.75,
+     6
+    ],
+    "fid_ge4": [
+     0.667,
+     0.333,
+     1,
+     6
+    ],
+    "omission": [
+     0,
+     0,
+     0,
+     6
+    ],
+    "reversal": [
+     0,
+     0,
+     0,
+     6
+    ]
+   }
+  },
+  "period": {
+   "16c or earlier": {
+    "fidelity": [
+     4.385,
+     4.192,
+     4.615,
+     13
+    ],
+    "fid_ge4": [
+     1,
+     1,
+     1,
+     13
+    ],
+    "omission": [
+     0.115,
+     0,
+     0.308,
+     13
+    ],
+    "reversal": [
+     0,
+     0,
+     0,
+     13
+    ]
+   },
+   "17c": {
+    "fidelity": [
+     4.262,
+     3.976,
+     4.548,
+     21
+    ],
+    "fid_ge4": [
+     0.81,
+     0.619,
+     0.952,
+     21
+    ],
+    "omission": [
+     0.095,
+     0,
+     0.214,
+     21
+    ],
+    "reversal": [
+     0.024,
+     0,
+     0.071,
+     21
+    ]
+   },
+   "18c": {
+    "fidelity": [
+     4.533,
+     4.067,
+     4.867,
+     15
+    ],
+    "fid_ge4": [
+     0.933,
+     0.8,
+     1,
+     15
+    ],
+    "omission": [
+     0.067,
+     0,
+     0.2,
+     15
+    ],
+    "reversal": [
+     0,
+     0,
+     0,
+     15
+    ]
+   },
+   "19c": {
+    "fidelity": [
+     4.45,
+     4.15,
+     4.75,
+     10
+    ],
+    "fid_ge4": [
+     1,
+     1,
+     1,
+     10
+    ],
+    "omission": [
+     0.05,
+     0,
+     0.15,
+     10
+    ],
+    "reversal": [
+     0,
+     0,
+     0,
+     10
+    ]
+   }
+  },
+  "style": {
+   "early-modern": {
+    "fidelity": [
+     4.5,
+     4.261,
+     4.717,
+     23
+    ],
+    "fid_ge4": [
+     0.957,
+     0.87,
+     1,
+     23
+    ],
+    "omission": [
+     0.087,
+     0,
+     0.196,
+     23
+    ],
+    "reversal": [
+     0,
+     0,
+     0,
+     23
+    ]
+   },
+   "free": {
+    "fidelity": [
+     4.188,
+     3.812,
+     4.562,
+     16
+    ],
+    "fid_ge4": [
+     0.875,
+     0.688,
+     1,
+     16
+    ],
+    "omission": [
+     0.062,
+     0,
+     0.188,
+     16
+    ],
+    "reversal": [
+     0,
+     0,
+     0,
+     16
+    ]
+   },
+   "literal": {
+    "fidelity": [
+     4.425,
+     4.2,
+     4.625,
+     20
+    ],
+    "fid_ge4": [
+     0.9,
+     0.75,
+     1,
+     20
+    ],
+    "omission": [
+     0.1,
+     0,
+     0.225,
+     20
+    ],
+    "reversal": [
+     0.025,
+     0,
+     0.075,
+     20
+    ]
+   }
+  },
+  "indirect": {
+   "direct": {
+    "fidelity": [
+     4.415,
+     4.236,
+     4.585,
+     53
+    ],
+    "fid_ge4": [
+     0.906,
+     0.83,
+     0.981,
+     53
+    ],
+    "omission": [
+     0.085,
+     0.019,
+     0.16,
+     53
+    ],
+    "reversal": [
+     0.009,
+     0,
+     0.028,
+     53
+    ]
+   },
+   "indirect": {
+    "fidelity": [
+     4.167,
+     4,
+     4.5,
+     6
+    ],
+    "fid_ge4": [
+     1,
+     1,
+     1,
+     6
+    ],
+    "omission": [
+     0.083,
+     0,
+     0.25,
+     6
+    ],
+    "reversal": [
+     0,
+     0,
+     0,
+     6
+    ]
+   }
+  },
+  "served_model": {
+   "flash": {
+    "fidelity": [
+     4.66,
+     4.46,
+     4.84,
+     25
+    ],
+    "fid_ge4": [
+     0.96,
+     0.88,
+     1,
+     25
+    ],
+    "omission": [
+     0.02,
+     0,
+     0.06,
+     25
+    ],
+    "reversal": [
+     0,
+     0,
+     0,
+     25
+    ]
+   },
+   "lite": {
+    "fidelity": [
+     4.191,
+     3.956,
+     4.412,
+     34
+    ],
+    "fid_ge4": [
+     0.882,
+     0.765,
+     0.971,
+     34
+    ],
+    "omission": [
+     0.132,
+     0.044,
+     0.235,
+     34
+    ],
+    "reversal": [
+     0.015,
+     0,
+     0.044,
+     34
+    ]
+   }
+  },
+  "script": {
+   "fraktur": {
+    "fidelity": [
+     4.294,
+     3.912,
+     4.618,
+     17
+    ],
+    "fid_ge4": [
+     0.941,
+     0.824,
+     1,
+     17
+    ],
+    "omission": [
+     0.118,
+     0,
+     0.265,
+     17
+    ],
+    "reversal": [
+     0,
+     0,
+     0,
+     17
+    ]
+   },
+   "gothic": {
+    "fidelity": [
+     4.5,
+     4,
+     5,
+     3
+    ],
+    "fid_ge4": [
+     1,
+     1,
+     1,
+     3
+    ],
+    "omission": [
+     0.167,
+     0,
+     0.5,
+     3
+    ],
+    "reversal": [
+     0,
+     0,
+     0,
+     3
+    ]
+   },
+   "handwritten": {
+    "fidelity": [
+     5,
+     5,
+     5,
+     1
+    ],
+    "fid_ge4": [
+     1,
+     1,
+     1,
+     1
+    ],
+    "omission": [
+     0,
+     0,
+     0,
+     1
+    ],
+    "reversal": [
+     0,
+     0,
+     0,
+     1
+    ]
+   },
+   "italic": {
+    "fidelity": [
+     4.375,
+     4,
+     4.75,
+     4
+    ],
+    "fid_ge4": [
+     1,
+     1,
+     1,
+     4
+    ],
+    "omission": [
+     0.25,
+     0,
+     0.75,
+     4
+    ],
+    "reversal": [
+     0,
+     0,
+     0,
+     4
+    ]
+   },
+   "mixed": {
+    "fidelity": [
+     5,
+     5,
+     5,
+     1
+    ],
+    "fid_ge4": [
+     1,
+     1,
+     1,
+     1
+    ],
+    "omission": [
+     0,
+     0,
+     0,
+     1
+    ],
+    "reversal": [
+     0,
+     0,
+     0,
+     1
+    ]
+   },
+   "roman": {
+    "fidelity": [
+     4.394,
+     4.182,
+     4.591,
+     33
+    ],
+    "fid_ge4": [
+     0.879,
+     0.758,
+     0.97,
+     33
+    ],
+    "omission": [
+     0.045,
+     0,
+     0.121,
+     33
+    ],
+    "reversal": [
+     0.015,
+     0,
+     0.045,
+     33
+    ]
+   }
+  },
+  "all": {
+   "all": {
+    "fidelity": [
+     4.39,
+     4.22,
+     4.551,
+     59
+    ],
+    "fid_ge4": [
+     0.915,
+     0.847,
+     0.983,
+     59
+    ],
+    "omission": [
+     0.085,
+     0.025,
+     0.153,
+     59
+    ],
+    "reversal": [
+     0.008,
+     0,
+     0.025,
+     59
+    ]
+   }
+  }
+ },
+ "arms": {
+  "served": {
+   "n": 59,
+   "fidelity": [
+    4.39,
+    4.22,
+    4.542,
+    59
+   ],
+   "fid_ge4": [
+    0.915,
+    0.847,
+    0.983,
+    59
+   ],
+   "omission_per100": [
+    8.475,
+    2.542,
+    15.254,
+    59
+   ],
+   "reversal_per100": [
+    0.847,
+    0,
+    2.542,
+    59
+   ],
+   "unreadable_fill_per100": 5.1,
+   "boundary_per100": 18.6,
+   "usd_per_page": null,
+   "thinking_tokens_per_page": null
+  },
+  "L1": {
+   "n": 59,
+   "fidelity": [
+    4.364,
+    4.212,
+    4.517,
+    59
+   ],
+   "fid_ge4": [
+    0.898,
+    0.814,
+    0.966,
+    59
+   ],
+   "omission_per100": [
+    3.39,
+    0,
+    7.627,
+    59
+   ],
+   "reversal_per100": [
+    7.627,
+    1.695,
+    15.254,
+    59
+   ],
+   "unreadable_fill_per100": 6.8,
+   "boundary_per100": 25.4,
+   "usd_per_page": 0.00151,
+   "thinking_tokens_per_page": 0
+  },
+  "L2": {
+   "n": 59,
+   "fidelity": [
+    4.331,
+    4.178,
+    4.483,
+    59
+   ],
+   "fid_ge4": [
+    0.881,
+    0.797,
+    0.949,
+    59
+   ],
+   "omission_per100": [
+    2.542,
+    0,
+    6.78,
+    59
+   ],
+   "reversal_per100": [
+    8.475,
+    2.542,
+    15.254,
+    59
+   ],
+   "unreadable_fill_per100": 8.5,
+   "boundary_per100": 22.0,
+   "usd_per_page": 0.00151,
+   "thinking_tokens_per_page": 0
+  },
+  "F0": {
+   "n": 59,
+   "fidelity": [
+    4.576,
+    4.432,
+    4.712,
+    59
+   ],
+   "fid_ge4": [
+    0.949,
+    0.881,
+    1,
+    59
+   ],
+   "omission_per100": [
+    0,
+    0,
+    0,
+    59
+   ],
+   "reversal_per100": [
+    5.085,
+    0,
+    11.864,
+    59
+   ],
+   "unreadable_fill_per100": 6.8,
+   "boundary_per100": 25.4,
+   "usd_per_page": 0.00315,
+   "thinking_tokens_per_page": 0
+  },
+  "FT": {
+   "n": 59,
+   "fidelity": [
+    4.644,
+    4.517,
+    4.763,
+    59
+   ],
+   "fid_ge4": [
+    0.983,
+    0.949,
+    1,
+    59
+   ],
+   "omission_per100": [
+    2.542,
+    0,
+    6.78,
+    59
+   ],
+   "reversal_per100": [
+    1.695,
+    0,
+    5.085,
+    59
+   ],
+   "unreadable_fill_per100": 8.5,
+   "boundary_per100": 44.1,
+   "usd_per_page": 0.01081,
+   "thinking_tokens_per_page": 2504
+  },
+  "NC": {
+   "n": 59,
+   "fidelity": [
+    4.153,
+    3.983,
+    4.322,
+    59
+   ],
+   "fid_ge4": [
+    0.797,
+    0.695,
+    0.898,
+    59
+   ],
+   "omission_per100": [
+    8.475,
+    2.542,
+    15.254,
+    59
+   ],
+   "reversal_per100": [
+    8.475,
+    2.542,
+    15.254,
+    59
+   ],
+   "unreadable_fill_per100": 6.8,
+   "boundary_per100": 16.9,
+   "usd_per_page": 0.00138,
+   "thinking_tokens_per_page": 0
+  },
+  "O": {
+   "n": 20,
+   "fidelity": [
+    4.975,
+    4.925,
+    5,
+    20
+   ],
+   "fid_ge4": [
+    1,
+    1,
+    1,
+    20
+   ],
+   "omission_per100": [
+    0,
+    0,
+    0,
+    20
+   ],
+   "reversal_per100": [
+    0,
+    0,
+    0,
+    20
+   ],
+   "unreadable_fill_per100": 0,
+   "boundary_per100": 15.0,
+   "usd_per_page": null,
+   "thinking_tokens_per_page": null
+  }
+ },
+ "paired": {
+  "L2 minus L1": {
+   "fidelity": [
+    -0.034,
+    -0.153,
+    0.085,
+    59
+   ],
+   "omission_per100": [
+    -0.847,
+    -4.237,
+    1.695,
+    59
+   ],
+   "reversal_per100": [
+    0.847,
+    -5.085,
+    6.78,
+    59
+   ],
+   "pages_abs_fid_diff_ge1": 7
+  },
+  "F0 minus L1": {
+   "fidelity": [
+    0.212,
+    0.068,
+    0.356,
+    59
+   ],
+   "omission_per100": [
+    -3.39,
+    -7.627,
+    0,
+    59
+   ],
+   "reversal_per100": [
+    -2.542,
+    -10.169,
+    4.237,
+    59
+   ],
+   "pages_abs_fid_diff_ge1": 17
+  },
+  "FT minus L1": {
+   "fidelity": [
+    0.28,
+    0.119,
+    0.458,
+    59
+   ],
+   "omission_per100": [
+    -0.847,
+    -5.085,
+    4.237,
+    59
+   ],
+   "reversal_per100": [
+    -5.932,
+    -13.559,
+    0,
+    59
+   ],
+   "pages_abs_fid_diff_ge1": 17
+  },
+  "FT minus F0": {
+   "fidelity": [
+    0.068,
+    -0.068,
+    0.203,
+    59
+   ],
+   "omission_per100": [
+    2.542,
+    0,
+    6.78,
+    59
+   ],
+   "reversal_per100": [
+    -3.39,
+    -8.475,
+    0,
+    59
+   ],
+   "pages_abs_fid_diff_ge1": 9
+  },
+  "NC minus L1": {
+   "fidelity": [
+    -0.212,
+    -0.356,
+    -0.068,
+    59
+   ],
+   "omission_per100": [
+    5.085,
+    -0.847,
+    11.864,
+    59
+   ],
+   "reversal_per100": [
+    0.847,
+    -4.237,
+    5.085,
+    59
+   ],
+   "pages_abs_fid_diff_ge1": 17
+  },
+  "L1 minus served": {
+   "fidelity": [
+    -0.025,
+    -0.212,
+    0.169,
+    59
+   ],
+   "omission_per100": [
+    -5.085,
+    -12.712,
+    1.695,
+    59
+   ],
+   "reversal_per100": [
+    6.78,
+    1.695,
+    13.559,
+    59
+   ],
+   "pages_abs_fid_diff_ge1": 18
+  },
+  "O minus L1": {
+   "fidelity": [
+    0.5,
+    0.225,
+    0.825,
+    20
+   ],
+   "omission_per100": [
+    0,
+    0,
+    0,
+    20
+   ],
+   "reversal_per100": [
+    -7.5,
+    -20.0,
+    0,
+    20
+   ],
+   "pages_abs_fid_diff_ge1": 6
+  },
+  "O minus F0": {
+   "fidelity": [
+    0.425,
+    0.175,
+    0.725,
+    20
+   ],
+   "omission_per100": [
+    0,
+    0,
+    0,
+    20
+   ],
+   "reversal_per100": [
+    -10,
+    -25,
+    0,
+    20
+   ],
+   "pages_abs_fid_diff_ge1": 4
+  },
+  "O minus FT": {
+   "fidelity": [
+    0.375,
+    0.125,
+    0.65,
+    20
+   ],
+   "omission_per100": [
+    -5,
+    -15,
+    0,
+    20
+   ],
+   "reversal_per100": [
+    -5,
+    -15,
+    0,
+    20
+   ],
+   "pages_abs_fid_diff_ge1": 6
+  },
+  "O minus served": {
+   "fidelity": [
+    0.65,
+    0.325,
+    1.025,
+    20
+   ],
+   "omission_per100": [
+    -10,
+    -25,
+    0,
+    20
+   ],
+   "reversal_per100": [
+    -2.5,
+    -7.5,
+    0,
+    20
+   ],
+   "pages_abs_fid_diff_ge1": 9
+  }
+ },
+ "dimensions": {
+  "Dutch": {
+   "n": 7,
+   "served": {
+    "fidelity": 4.43,
+    "readability": 3.86,
+    "register": 3.71,
+    "terminology": 4.14,
+    "ambiguity": 4.43,
+    "transparency": 4.43
+   },
+   "reference": {
+    "readability": 3.57,
+    "register": 4.57,
+    "terminology": 3.43,
+    "ambiguity": 4,
+    "transparency": 2.29
+   },
+   "stance_served": {
+    "literal": 4,
+    "balanced": 3
+   },
+   "stance_reference": {
+    "balanced": 2,
+    "free": 5
+   }
+  },
+  "French": {
+   "n": 14,
+   "served": {
+    "fidelity": 4.54,
+    "readability": 4.14,
+    "register": 3.93,
+    "terminology": 4.64,
+    "ambiguity": 4.86,
+    "transparency": 4.36
+   },
+   "reference": {
+    "readability": 4.57,
+    "register": 4.86,
+    "terminology": 3.79,
+    "ambiguity": 4.07,
+    "transparency": 2.71
+   },
+   "stance_served": {
+    "balanced": 5,
+    "literal": 9
+   },
+   "stance_reference": {
+    "free": 5,
+    "balanced": 9
+   }
+  },
+  "German": {
+   "n": 22,
+   "served": {
+    "fidelity": 4.43,
+    "readability": 3.73,
+    "register": 3.68,
+    "terminology": 4.09,
+    "ambiguity": 4.59,
+    "transparency": 4.27
+   },
+   "reference": {
+    "readability": 4.32,
+    "register": 4.82,
+    "terminology": 3.95,
+    "ambiguity": 4.18,
+    "transparency": 2.59
+   },
+   "stance_served": {
+    "balanced": 8,
+    "literal": 14
+   },
+   "stance_reference": {
+    "balanced": 10,
+    "literal": 1,
+    "free": 11
+   }
+  },
+  "Italian": {
+   "n": 10,
+   "served": {
+    "fidelity": 4.25,
+    "readability": 3.5,
+    "register": 3.5,
+    "terminology": 3.9,
+    "ambiguity": 4.5,
+    "transparency": 4.4
+   },
+   "reference": {
+    "readability": 4.3,
+    "register": 4.6,
+    "terminology": 3.7,
+    "ambiguity": 4.4,
+    "transparency": 2.7
+   },
+   "stance_served": {
+    "literal": 7,
+    "balanced": 3
+   },
+   "stance_reference": {
+    "free": 5,
+    "balanced": 3,
+    "literal": 2
+   }
+  },
+  "Spanish": {
+   "n": 6,
+   "served": {
+    "fidelity": 4.08,
+    "readability": 3.33,
+    "register": 3.33,
+    "terminology": 3.83,
+    "ambiguity": 4.67,
+    "transparency": 3.33
+   },
+   "reference": {
+    "readability": 4.17,
+    "register": 4.67,
+    "terminology": 3.5,
+    "ambiguity": 4.17,
+    "transparency": 2.33
+   },
+   "stance_served": {
+    "literal": 5,
+    "balanced": 1
+   },
+   "stance_reference": {
+    "balanced": 3,
+    "free": 3
+   }
+  },
+  "ALL": {
+   "n": 59,
+   "served": {
+    "fidelity": 4.39,
+    "readability": 3.76,
+    "register": 3.68,
+    "terminology": 4.17,
+    "ambiguity": 4.63,
+    "transparency": 4.24
+   },
+   "reference": {
+    "readability": 4.27,
+    "register": 4.75,
+    "terminology": 3.76,
+    "ambiguity": 4.17,
+    "transparency": 2.58
+   },
+   "stance_served": {
+    "literal": 39,
+    "balanced": 20
+   },
+   "stance_reference": {
+    "free": 29,
+    "balanced": 27,
+    "literal": 3
+   }
+  }
+ },
+ "threats": {
+  "pages_ours_right_reference_wrong": 42,
+  "pages_reference_right_ours_wrong": 22,
+  "n_dims": 59,
+  "reference_fit": {
+   "wider": 92,
+   "narrower": 4,
+   "exact": 20,
+   "offset": 2
+  },
+  "canonical_pages": 0,
+  "indirect_pages": 6,
+  "draw_pages": 59,
+  "agreement": {
+   "judges": [
+    "j1",
+    "j2"
+   ],
+   "n": 374,
+   "fidelity_exact": 0.848,
+   "within_1": 1,
+   "weighted_kappa": 0.814
+  }
+ },
+ "image_check": {
+  "low": {
+   "n": 10,
+   "primary_cause_served": {
+    "translation": 7,
+    "ocr_misread": 1,
+    "page_seam": 2
+   },
+   "primary_cause_L1": {
+    "translation": 6,
+    "page_seam": 1,
+    "none": 2,
+    "ocr_misread": 1
+   },
+   "defect_causes_served": {
+    "translation": 22,
+    "not_a_defect": 1,
+    "ocr_misread": 5,
+    "page_seam": 2
+   },
+   "defect_causes_L1": {
+    "translation": 17,
+    "page_seam": 1,
+    "not_a_defect": 1,
+    "ocr_misread": 9
+   },
+   "pages_with_ocr_meaning_error": 4
+  },
+  "random": {
+   "n": 10,
+   "primary_cause_served": {
+    "none": 7,
+    "translation": 3
+   },
+   "primary_cause_L1": {
+    "translation": 5,
+    "none": 3,
+    "page_seam": 2
+   },
+   "defect_causes_served": {
+    "translation": 9,
+    "not_a_defect": 2,
+    "page_seam": 2,
+    "ocr_misread": 1
+   },
+   "defect_causes_L1": {
+    "translation": 12,
+    "page_seam": 3,
+    "not_a_defect": 2,
+    "ocr_misread": 3,
+    "reading_order": 1
+   },
+   "pages_with_ocr_meaning_error": 2
+  }
+ }
+}

@@ -134,6 +134,8 @@ describe('the lossy LCG is not pasted into another script', () => {
     'scripts/eval/nalanda-readiness/pull_tr.mjs',
     'scripts/eval/nalanda-readiness/sample_skt.mjs',
     'scripts/eval/nalanda-readiness/sample_tib.mjs',
+    // Persian OCR vs Ganjoor (#5525): page draw made and scored 2026-10-01; sample + scores committed under results/.
+    'scripts/eval/persian-ganjoor/sample.mjs',
   ]);
   const LOSSY = /[\w)\]]\s*\*\s*1103515245|1103515245\s*\*\s*[\w(]/;
   const root = path.resolve(__dirname, '../..');

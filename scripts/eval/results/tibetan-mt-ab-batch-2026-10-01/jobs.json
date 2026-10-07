@@ -1,0 +1,14 @@
+{
+ "gemini-3.1-flash-lite": {
+  "name": "batches/crx0ckdkigsuckrtbv86iaudz41zfwz4k307",
+  "keyIndex": 1,
+  "submitted_at": "2026-10-01T08:01:18.559Z",
+  "requests": 22
+ },
+ "gemini-3-flash-preview": {
+  "name": "batches/m3tgb80kdfd0p59ncbwgvg1drix1ghy12b7v",
+  "keyIndex": 1,
+  "submitted_at": "2026-10-01T08:03:08.591Z",
+  "requests": 22
+ }
+}

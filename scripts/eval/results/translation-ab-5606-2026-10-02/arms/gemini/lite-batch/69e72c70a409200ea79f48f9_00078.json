@@ -1,0 +1,21 @@
+{
+ "id": "69e72c70a409200ea79f48f9_00078",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<margin>\n<note>Implies a sense of leading or drawing forth.</note>\n</margin>\n<margin>\n<note>He also knows that I know him; this is a method of character analysis.</note>\n</margin>\n<margin>\n<note>Method of character analysis.</note>\n</margin>\n<margin>\n<note>Zhi took his wife and departed.</note>\n</margin>\n<margin>\n<note>A place name; the person who guards the border.</note>\n</margin>\n<margin>\n<note>Mou is a disciple of Confucius.</note>\n</margin>\n<margin>\n<note>Where the soil clods are large and the grass roots are abundant.</note>\n</margin>\n<margin>\n<note>Lu.</note>\n</margin>\n<margin>\n<note>Perhaps a good kind of person, or a place with thin soil.</note>\n</margin>\n\nZilu asked to go and summon him. Confucius said: \"Desist. He knows that I am preoccupied with him. He knows that I am traveling to Chu, and he assumes that I will surely have the King of Chu summon him. He will regard me as a flatterer <note>original: 佞人 <term>nìngrén</term> <gloss>flatterer; sycophant</gloss></note>. If that is the case, he would be ashamed even to hear the words of a flatterer, let alone see the man himself. How could he remain there?\" Zilu went to check, and the room was indeed empty. The border guard of Changwu asked Zimu: \"When you govern, do not be rash. When you rule the people, do not be destructive. In the past...\"\n\n<summary>Confucius explains to Zilu why a certain recluse refuses to meet him, followed by a dialogue between a border guard and Zimu regarding the principles of governance.</summary>\n<keywords>Confucius, Zilu, governance, reclusion, moral integrity, Zimu, Changwu</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2161,
+ "outputTokens": 452,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.0006091250000000001,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 622,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

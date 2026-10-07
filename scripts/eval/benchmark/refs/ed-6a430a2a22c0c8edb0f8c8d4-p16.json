@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A42256",
+  "edition": "EEBO-TCP A42256 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "6a430a2a22c0c8edb0f8c8d4",
+  "page_number": 16,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 19705,
+    "to_char": 21319,
+    "overlap": 0.906,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "One extra verse before Principio; ends at Rarescunt tenebrae",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:33.721Z",
+  "text_location": "repo",
+  "text_sha256": "4e4bdcdb25099f00eb0f7079e1006b9f021b88c86d0df9423d39bf5d9af79b0e",
+  "unit": {
+    "chars": 1614
+  }
+}

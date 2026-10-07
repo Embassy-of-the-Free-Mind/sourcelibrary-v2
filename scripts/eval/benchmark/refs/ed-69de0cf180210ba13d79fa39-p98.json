@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A57495",
+  "edition": "EEBO-TCP A57495 (same EEBO microfilm as our bim_ scan)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "69de0cf180210ba13d79fa39",
+  "page_number": 98,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 110635,
+    "to_char": 112089,
+    "overlap": 0.872,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "Poem on Greenhill; starts The Famous Greenhills Dead, ends little Angels rest.",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T15:55:47.048Z",
+  "text_location": "repo",
+  "text_sha256": "6fed659f0a4c87316e625cc9519e93b270a3a8aa1948fdf02cec496b07308cdb",
+  "unit": {
+    "chars": 1454
+  }
+}

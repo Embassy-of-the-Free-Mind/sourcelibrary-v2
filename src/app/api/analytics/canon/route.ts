@@ -4,6 +4,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { supabase } from '@/lib/supabase';
 import { withAuth } from '@/lib/auth-helpers';
+import { READABLE_IN_ENGLISH_EXPR, READABLE_IN_ENGLISH_FILTER } from '@/lib/page-counts';
 
 export const maxDuration = 60;
 
@@ -15,7 +16,7 @@ const CACHE_TTL_MS = 5 * 60 * 1000;
  * GET /api/analytics/canon
  *
  * Mission-critical metrics for Source Library's canon:
- * - Books readable (fully translated) vs total
+ * - Books readable in English (the `readable_in_english` view) vs total
  * - Books translated for the first time (non-English originals with translation)
  * - Translation velocity and coverage by language/tradition
  * - Cost per translated page
@@ -62,19 +63,13 @@ export const GET = withAuth(async (request: NextRequest) => {
         },
       ]).toArray(),
 
-      // 2. Books that are "readable" — >=90% of translatable pages translated
-      //    Denominator: pages_ocr - pages_blank (blank pages don't need translation)
+      // 2. Books "readable" — the named view `readable_in_english`
+      //    (.claude/docs/translation-state.md § Named views), from the stored rung.
       db.collection('books').countDocuments({
         tenantId,
         visible: true,
         pages_count: { $gt: 0 },
-        pages_ocr: { $gte: 1 },
-        $expr: {
-          $gte: [
-            '$pages_translated',
-            { $multiply: [{ $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] }, 0.9] },
-          ],
-        },
+        ...READABLE_IN_ENGLISH_FILTER,
       }),
 
       // 3. "First translations" — uses verified is_first_translation flag from metadata enrichment
@@ -93,15 +88,7 @@ export const GET = withAuth(async (request: NextRequest) => {
             count: { $sum: 1 },
             complete: {
               $sum: {
-                $cond: [
-                  {
-                    $and: [
-                      { $gte: ['$pages_ocr', 10] },
-                      { $gte: ['$pages_translated', { $multiply: [{ $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] }, 0.9] }] },
-                    ],
-                  },
-                  1, 0,
-                ],
+                $cond: [READABLE_IN_ENGLISH_EXPR, 1, 0],
               },
             },
             pages: { $sum: { $ifNull: ['$pages_translated', 0] } },
@@ -121,15 +108,7 @@ export const GET = withAuth(async (request: NextRequest) => {
             translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
             readable: {
               $sum: {
-                $cond: [
-                  {
-                    $and: [
-                      { $gte: ['$pages_ocr', 1] },
-                      { $gte: ['$pages_translated', { $multiply: [{ $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] }, 0.9] }] },
-                    ],
-                  },
-                  1, 0,
-                ],
+                $cond: [READABLE_IN_ENGLISH_EXPR, 1, 0],
               },
             },
           },
@@ -149,15 +128,7 @@ export const GET = withAuth(async (request: NextRequest) => {
             translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
             readable: {
               $sum: {
-                $cond: [
-                  {
-                    $and: [
-                      { $gte: ['$pages_ocr', 1] },
-                      { $gte: ['$pages_translated', { $multiply: [{ $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] }, 0.9] }] },
-                    ],
-                  },
-                  1, 0,
-                ],
+                $cond: [READABLE_IN_ENGLISH_EXPR, 1, 0],
               },
             },
           },

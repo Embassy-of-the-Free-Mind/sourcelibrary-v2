@@ -119,8 +119,35 @@ export function buildBookSearchStage(query: string, filters: BookSearchFilters =
  * Build a $search aggregation stage for the pages collection.
  * Searches translation.data (boosted 2x) and ocr.data.
  * Optionally filters by book_id (single or array via $in).
+ *
+ * `opts.nameVariants` (from `expandPersonNames`, src/lib/search/name-variants.ts) are other
+ * spellings of a person the query names — Drebbel → Drebelius, Drebelii. They are OR'd in as
+ * their own clauses. Ignored for a quoted phrase. Absent or empty, the stage is exactly what
+ * it was before (#5888).
  */
-export function buildPageSearchStage(query: string, bookIds?: string | string[]): Document {
+export interface PageSearchOptions {
+  nameVariants?: string[];
+  /**
+   * Match ONLY pages that print one of `nameVariants`; the query's own words still score, so
+   * "Paracelsus plague" ranks a Paracelsi page about plague above one that is not. For a lane
+   * that wants the other spellings on their own (the Librarian's). No effect without variants.
+   */
+  requireNameVariant?: boolean;
+  /** With `requireNameVariant`: the page must also print at least one of these words. */
+  requireWords?: string[];
+}
+
+/**
+ * Boost on the variant clauses (ocr; translation gets twice this, as the original clauses do).
+ * It is this small on purpose. A variant is a rarer word than the name it varies, so BM25
+ * scores it HIGHER: at a quarter of the original boost, "Plato" came back with 0 of its 48 top
+ * pages unchanged — all displaced by "Platone"/"Platon" (measured 2026-10-05). At 1/40 the
+ * pages printing the reader's own spelling keep their order and the variant pages follow,
+ * ranked among themselves.
+ */
+export const NAME_VARIANT_BOOST = 0.025;
+
+export function buildPageSearchStage(query: string, bookIds?: string | string[], opts: PageSearchOptions = {}): Document {
   // Detect quoted phrase: "venus humanitas" → exact phrase match
   const isPhrase = /^".*"$/.test(query.trim());
   const searchQuery = isPhrase ? query.trim().slice(1, -1) : query;
@@ -142,6 +169,14 @@ export function buildPageSearchStage(query: string, bookIds?: string | string[])
         { text: { query: searchQuery, path: 'ocr.data', ...(fuzzy && { fuzzy }) } },
       ];
 
+  const nameVariants = isPhrase ? [] : (opts.nameVariants ?? []).filter(Boolean);
+  if (nameVariants.length > 0) {
+    should.push(
+      { text: { query: nameVariants, path: 'translation.data', score: { boost: { value: NAME_VARIANT_BOOST * 2 } } } },
+      { text: { query: nameVariants, path: 'ocr.data', score: { boost: { value: NAME_VARIANT_BOOST } } } },
+    );
+  }
+
   const filter: Document[] = [];
   // Hidden / deduped pages live at page_number ≤ 0. Exclude them from search.
   filter.push({ range: { path: 'page_number', gt: 0 } });
@@ -158,6 +193,31 @@ export function buildPageSearchStage(query: string, bookIds?: string | string[])
       // impossible equals sentinel. (#2760)
       filter.push({ equals: { path: 'book_id', value: ' __no_match__' } });
     }
+  }
+
+  if (opts.requireNameVariant && nameVariants.length > 0) {
+    const [original, variant] = [should.slice(0, -2), should.slice(-2)];
+    const requireWords = (opts.requireWords ?? []).filter(Boolean);
+    for (const clause of variant) delete clause.text.score; // their own lane: no discount
+    variant[0].text.score = { boost: { value: 2 } };
+    return {
+      $search: {
+        index: PAGE_SEARCH_INDEX,
+        compound: {
+          must: [
+            { compound: { should: variant, minimumShouldMatch: 1 } },
+            ...(requireWords.length > 0 ? [{ text: { query: requireWords, path: ['translation.data', 'ocr.data'] } }] : []),
+          ],
+          should: original,
+          filter,
+        },
+        highlight: {
+          path: ['translation.data', 'ocr.data'],
+          maxCharsToExamine: 100000,
+          maxNumPassages: 2,
+        },
+      },
+    };
   }
 
   return {

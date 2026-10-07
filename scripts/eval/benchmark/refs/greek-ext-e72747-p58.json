@@ -35,5 +35,8 @@
     "reads_used": [],
     "letters_after": 401,
     "kept": "whole window (no aligning read, or window over the cap)"
-  }
+  },
+  "licence": "CC-BY-SA-4.0",
+  "licence_url": "https://github.com/PerseusDL/canonical-greekLit",
+  "licence_checked": "2026-10-01"
 }

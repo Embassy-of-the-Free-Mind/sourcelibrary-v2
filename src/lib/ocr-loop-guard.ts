@@ -10,6 +10,8 @@
  * two in lockstep — `tests/unit/ocr-loop-guard.test.ts` pins their parity.
  */
 
+import { stripMarkupTags } from './strip-markup-tags';
+
 export const DEFAULT_MIN_BODY = 300;
 export const DEFAULT_MIN_RUN = 240;
 export const DEFAULT_MIN_SHARE = 0.5;
@@ -30,7 +32,7 @@ export function transcriptionBody(data: string): string {
     out = out.replace(new RegExp(`<${t}[^>]*>[\\s\\S]*?</${t}>`, 'gi'), ' ');
     out = out.replace(new RegExp(`<${t}[^>]*/?>`, 'gi'), ' ');
   }
-  return out.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  return stripMarkupTags(out).replace(/\s+/g, ' ').trim();
 }
 
 function normalise(body: string): string[] {

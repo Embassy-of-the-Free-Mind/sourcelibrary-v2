@@ -1,0 +1,485 @@
+{
+  "engine": "gemini-3-flash-preview",
+  "ref": "gemini-3.1-flash-lite",
+  "repeat": "gemini-3.1-flash-lite-b",
+  "min_n": 50,
+  "rule": {
+    "margin": 0.02,
+    "ci_max": 0.05,
+    "noise": 0.02
+  },
+  "sources": [
+    {
+      "stratum": "chinese-cohort-5547",
+      "file": "chinese-cohort-5547-2026-10-01.json",
+      "n_pages": 526,
+      "n_with_ref": 441
+    }
+  ],
+  "classes": {
+    "illustration": {
+      "prereg": {
+        "decidable": false,
+        "note": "directional (n=2 < 50) — rule (e): no routing decision",
+        "a_lite": "inadequate",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0.5,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": null,
+          "repeat_pages_identical": 0,
+          "n": 0,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "gemini-3-flash-preview": 0.048,
+          "gemini-3.1-flash-lite": 0.158
+        },
+        "invention_indep": {
+          "gemini-3-flash-preview": 0.048,
+          "gemini-3.1-flash-lite": 0.158
+        },
+        "invention_ref": {
+          "gemini-3-flash-preview": 0.179,
+          "gemini-3.1-flash-lite": 0.274
+        }
+      },
+      "n_pages": 4,
+      "n_referenced": 2,
+      "n_paired": 2,
+      "n_by_stratum": {
+        "chinese-cohort-5547": 2
+      },
+      "median_cer": {
+        "gemini-3-flash-preview": 0.161,
+        "gemini-3.1-flash-lite": 0.52,
+        "gemini-3.1-flash-lite-b": null
+      },
+      "ref_median_cer_ci95": [
+        0.103,
+        0.937
+      ],
+      "delta": {
+        "median": -0.36,
+        "ci95": [
+          -0.713,
+          -0.006
+        ],
+        "wins": 2,
+        "losses": 0,
+        "ties": 0,
+        "untied": 2,
+        "p_sign": 0.5,
+        "share_le_minus_005": 0.5
+      },
+      "noise_floor": {
+        "n": 0,
+        "median_delta0": null,
+        "ci95": null
+      },
+      "catastrophic": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 1
+      },
+      "invention_median": {
+        "gemini-3-flash-preview": 0.179,
+        "gemini-3.1-flash-lite": 0.274
+      },
+      "loops": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": false,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": true,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "directional (n=2 < 50) — no lane decision"
+    },
+    "manuscript-regular": {
+      "prereg": {
+        "decidable": true,
+        "note": null,
+        "a_lite": "inadequate",
+        "b_preferred_over_lite": {
+          "core": true,
+          "with_invention_literal": true,
+          "with_invention_indep": true,
+          "with_invention_ref": true
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0.277,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": null,
+          "repeat_pages_identical": 0,
+          "n": 0,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "gemini-3-flash-preview": 0.028,
+          "gemini-3.1-flash-lite": 0.064
+        },
+        "invention_indep": {
+          "gemini-3-flash-preview": 0.028,
+          "gemini-3.1-flash-lite": 0.064
+        },
+        "invention_ref": {
+          "gemini-3-flash-preview": 0.14,
+          "gemini-3.1-flash-lite": 0.184
+        }
+      },
+      "n_pages": 499,
+      "n_referenced": 433,
+      "n_paired": 433,
+      "n_by_stratum": {
+        "chinese-cohort-5547": 433
+      },
+      "median_cer": {
+        "gemini-3-flash-preview": 0.205,
+        "gemini-3.1-flash-lite": 0.258,
+        "gemini-3.1-flash-lite-b": null
+      },
+      "ref_median_cer_ci95": [
+        0.24,
+        0.282
+      ],
+      "delta": {
+        "median": -0.013,
+        "ci95": [
+          -0.016,
+          -0.011
+        ],
+        "wins": 327,
+        "losses": 54,
+        "ties": 52,
+        "untied": 381,
+        "p_sign": 0,
+        "share_le_minus_005": 0.277
+      },
+      "noise_floor": {
+        "n": 0,
+        "median_delta0": null,
+        "ci95": null
+      },
+      "catastrophic": {
+        "gemini-3-flash-preview": 16,
+        "gemini-3.1-flash-lite": 46
+      },
+      "invention_median": {
+        "gemini-3-flash-preview": 0.14,
+        "gemini-3.1-flash-lite": 0.184
+      },
+      "loops": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 1
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": false,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": true,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "engine noise exceeds the margin — no lane decision"
+    },
+    "textless": {
+      "prereg": {
+        "decidable": false,
+        "note": "directional (n=0 < 50) — rule (e): no routing decision",
+        "a_lite": null,
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": null,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": null,
+          "repeat_pages_identical": 0,
+          "n": 0,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "gemini-3-flash-preview": null,
+          "gemini-3.1-flash-lite": null
+        },
+        "invention_indep": {
+          "gemini-3-flash-preview": null,
+          "gemini-3.1-flash-lite": null
+        },
+        "invention_ref": {
+          "gemini-3-flash-preview": null,
+          "gemini-3.1-flash-lite": null
+        }
+      },
+      "n_pages": 0,
+      "n_referenced": 0,
+      "n_paired": 0,
+      "n_by_stratum": {
+        "chinese-cohort-5547": 0
+      },
+      "median_cer": {
+        "gemini-3-flash-preview": null,
+        "gemini-3.1-flash-lite": null,
+        "gemini-3.1-flash-lite-b": null
+      },
+      "ref_median_cer_ci95": null,
+      "delta": {
+        "median": null,
+        "ci95": null,
+        "wins": 0,
+        "losses": 0,
+        "ties": 0,
+        "untied": 0,
+        "p_sign": null,
+        "share_le_minus_005": null
+      },
+      "noise_floor": {
+        "n": 0,
+        "median_delta0": null,
+        "ci95": null
+      },
+      "catastrophic": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "invention_median": {
+        "gemini-3-flash-preview": null,
+        "gemini-3.1-flash-lite": null
+      },
+      "loops": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": false,
+        "ci_upper_le_max": false,
+        "noise_floor_below_margin": false,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": false,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "directional (n=0 < 50) — no lane decision"
+    },
+    "typeset": {
+      "prereg": {
+        "decidable": false,
+        "note": "directional (n=2 < 50) — rule (e): no routing decision",
+        "a_lite": "inadequate",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0.5,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": null,
+          "repeat_pages_identical": 0,
+          "n": 0,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "gemini-3-flash-preview": 0.073,
+          "gemini-3.1-flash-lite": 0.523
+        },
+        "invention_indep": {
+          "gemini-3-flash-preview": 0.073,
+          "gemini-3.1-flash-lite": 0.523
+        },
+        "invention_ref": {
+          "gemini-3-flash-preview": 0.153,
+          "gemini-3.1-flash-lite": 0.589
+        }
+      },
+      "n_pages": 2,
+      "n_referenced": 2,
+      "n_paired": 2,
+      "n_by_stratum": {
+        "chinese-cohort-5547": 2
+      },
+      "median_cer": {
+        "gemini-3-flash-preview": 0.342,
+        "gemini-3.1-flash-lite": 0.582,
+        "gemini-3.1-flash-lite-b": null
+      },
+      "ref_median_cer_ci95": [
+        0.29,
+        0.873
+      ],
+      "delta": {
+        "median": -0.24,
+        "ci95": [
+          -0.466,
+          -0.014
+        ],
+        "wins": 2,
+        "losses": 0,
+        "ties": 0,
+        "untied": 2,
+        "p_sign": 0.5,
+        "share_le_minus_005": 0.5
+      },
+      "noise_floor": {
+        "n": 0,
+        "median_delta0": null,
+        "ci95": null
+      },
+      "catastrophic": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 1
+      },
+      "invention_median": {
+        "gemini-3-flash-preview": 0.153,
+        "gemini-3.1-flash-lite": 0.589
+      },
+      "loops": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": true,
+        "noise_floor_below_margin": false,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": true,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "directional (n=2 < 50) — no lane decision"
+    },
+    "woodblock": {
+      "prereg": {
+        "decidable": false,
+        "note": "directional (n=4 < 50) — rule (e): no routing decision",
+        "a_lite": "inadequate",
+        "b_preferred_over_lite": {
+          "core": false,
+          "with_invention_literal": false,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "c_better_reader": {
+          "core": false,
+          "share_le_minus_005": 0,
+          "with_invention_indep": false,
+          "with_invention_ref": false
+        },
+        "d_noise_floor": {
+          "median_delta0": null,
+          "repeat_pages_identical": 0,
+          "n": 0,
+          "caveat": "arms run at temperature 0: Δ₀ measures API nondeterminism only, so this check cannot fail by design"
+        }
+      },
+      "invention_three_ways": {
+        "invention": {
+          "gemini-3-flash-preview": 0.074,
+          "gemini-3.1-flash-lite": 0.054
+        },
+        "invention_indep": {
+          "gemini-3-flash-preview": 0.074,
+          "gemini-3.1-flash-lite": 0.054
+        },
+        "invention_ref": {
+          "gemini-3-flash-preview": 0.126,
+          "gemini-3.1-flash-lite": 0.158
+        }
+      },
+      "n_pages": 11,
+      "n_referenced": 4,
+      "n_paired": 4,
+      "n_by_stratum": {
+        "chinese-cohort-5547": 4
+      },
+      "median_cer": {
+        "gemini-3-flash-preview": 0.377,
+        "gemini-3.1-flash-lite": 0.349,
+        "gemini-3.1-flash-lite-b": null
+      },
+      "ref_median_cer_ci95": [
+        0.097,
+        0.433
+      ],
+      "delta": {
+        "median": 0,
+        "ci95": [
+          -0.025,
+          0.102
+        ],
+        "wins": 1,
+        "losses": 1,
+        "ties": 2,
+        "untied": 2,
+        "p_sign": 1,
+        "share_le_minus_005": 0
+      },
+      "noise_floor": {
+        "n": 0,
+        "median_delta0": null,
+        "ci95": null
+      },
+      "catastrophic": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "invention_median": {
+        "gemini-3-flash-preview": 0.126,
+        "gemini-3.1-flash-lite": 0.158
+      },
+      "loops": {
+        "gemini-3-flash-preview": 0,
+        "gemini-3.1-flash-lite": 0
+      },
+      "checks": {
+        "median_delta_le_margin": true,
+        "ci_upper_le_max": false,
+        "noise_floor_below_margin": false,
+        "catastrophic_le_ref_plus_1": true,
+        "invention_le_ref": true,
+        "loops_le_ref": true
+      },
+      "better_reader": false,
+      "verdict": "directional (n=4 < 50) — no lane decision"
+    }
+  }
+}

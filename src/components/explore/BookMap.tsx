@@ -15,17 +15,22 @@ export const TYPE_BIT: Record<LocationType, number> = {
 const TYPE_BY_PRIORITY: LocationType[] = ['publication', 'author_birth', 'author_death', 'origin'];
 
 /**
- * Lightweight per-city record shipped to the client. To keep the initial payload
- * small (~0.4 MB vs the old ~7 MB), each book is just its year (`y`, null if
- * undated) and a role bitmask (`m`); the full book list loads lazily from
- * /api/explore/map/city on click. Books are already deduped per city server-side.
+ * Lightweight per-city record shipped to the client. The filters only need each
+ * book's year and role bitmask, so a city ships those as COUNTED triples rather
+ * than one object per book: `b = [year, mask, count, year, mask, count, …]`,
+ * year 0 = undated. Books are deduped per city server-side before counting.
+ * Measured 2026-10-06: one `{y, m}` object per book was 36,026 objects and
+ * 1.1 MB of page HTML. The full book list still loads lazily from
+ * /api/explore/map/city on click.
  */
 export interface BookLocation {
+  /** Place key (src/lib/map-place.ts) — what the city list is fetched by. */
+  key: string;
   city: string;
   country: string | null;
   lat: number;
   lng: number;
-  books: Array<{ y: number | null; m: number }>;
+  b: number[];
 }
 
 /** Full book record, fetched lazily for the clicked city's sidebar. */
@@ -36,9 +41,13 @@ export interface CityBook {
   author: string;
   year: number | null;
   slug: string;
+  thumb: string | null;
+  /** Share of pages translated into English, 0–1. */
+  translated: number;
 }
 
 interface SelectedCity {
+  key: string;
   city: string;
   country: string | null;
   type: LocationType;
@@ -61,27 +70,19 @@ const TYPE_CONFIG: Record<string, { color: string; label: string; lightBg: strin
   origin:       { color: '#6a8a5a', label: 'Tradition origin', lightBg: 'rgba(106,138,90,0.1)' },
 };
 
-function createLocationIcon(type: string, bookCount: number) {
-  const config = TYPE_CONFIG[type] || { color: '#999' };
-  const size = Math.max(8, Math.min(22, 6 + Math.log2(bookCount + 1) * 3));
-  return L.divIcon({
-    className: 'book-marker',
-    html: `<div style="
-      width: ${size}px; height: ${size}px; border-radius: 50%;
-      background: ${config.color}; opacity: 0.85;
-      border: 1.5px solid rgba(255,255,255,0.9);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-      cursor: pointer;
-    "></div>`,
-    iconSize: [size, size],
-    iconAnchor: [size / 2, size / 2],
-  });
+function pinRadius(bookCount: number) {
+  // Same diameter curve as the old DOM pins (8–22px), as a radius.
+  return Math.max(8, Math.min(22, 6 + Math.log2(bookCount + 1) * 3)) / 2;
 }
 
 export default function BookMap({ locations }: BookMapProps) {
   const mapRef = useRef<L.Map | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const markersRef = useRef<L.LayerGroup | null>(null);
+  // One canvas for all pins. It belongs to ONE map instance: reset it whenever
+  // that map is torn down (React dev mode mounts twice), or pins draw onto a
+  // canvas attached to a removed map and the map shows none.
+  const rendererRef = useRef<L.Canvas | null>(null);
 
   const [selected, setSelected] = useState<SelectedCity | null>(null);
   const [cityBooks, setCityBooks] = useState<CityBook[]>([]);
@@ -119,23 +120,25 @@ export default function BookMap({ locations }: BookMapProps) {
   // already deduped per city server-side, so each is counted once.
   const cityPins = useMemo(() => {
     const result: Array<{
-      city: string; country: string | null; lat: number; lng: number;
+      key: string; city: string; country: string | null; lat: number; lng: number;
       totalBooks: number; dominantType: LocationType; roles: LocationType[];
     }> = [];
 
     for (const loc of locations) {
       let count = 0;
       let orMask = 0;
-      for (const b of loc.books) {
-        if (!(b.m & selectedMask)) continue;
-        if (b.y != null && (b.y < filters.yearFrom || b.y > filters.yearTo)) continue;
-        count++;
-        orMask |= b.m & selectedMask;
+      const b = loc.b;
+      for (let i = 0; i < b.length; i += 3) {
+        const y = b[i], m = b[i + 1];
+        if (!(m & selectedMask)) continue;
+        if (y !== 0 && (y < filters.yearFrom || y > filters.yearTo)) continue;
+        count += b[i + 2];
+        orMask |= m & selectedMask;
       }
       if (count === 0) continue;
       const roles = TYPE_BY_PRIORITY.filter((t) => orMask & TYPE_BIT[t]);
       result.push({
-        city: loc.city, country: loc.country, lat: loc.lat, lng: loc.lng,
+        key: loc.key, city: loc.city, country: loc.country, lat: loc.lat, lng: loc.lng,
         totalBooks: count, dominantType: roles[0] ?? 'origin', roles,
       });
     }
@@ -149,16 +152,27 @@ export default function BookMap({ locations }: BookMapProps) {
     const map = L.map(containerRef.current, {
       center: [46, 10], zoom: 5,
       zoomControl: false, attributionControl: false,
+      // The map sits below a tall header, so a wheel-zooming map traps a reader
+      // scrolling down the page. Wheel zoom turns on after a click into the map
+      // and off again when the pointer leaves; +/− and pinch always work.
+      scrollWheelZoom: false,
     });
+    map.on('click', () => map.scrollWheelZoom.enable());
+    map.on('mouseout', () => map.scrollWheelZoom.disable());
     L.control.zoom({ position: 'bottomright' }).addTo(map);
     L.control.attribution({ position: 'bottomleft', prefix: false }).addTo(map);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
-      maxZoom: 18,
+    // Esri's light-gray canvas: keyless, and close to the old CARTO light_all
+    // look. CARTO's basemaps now require an API key and served a watermark
+    // tile ("API KEY REQUIRED") in place of every map tile — dots on a blank
+    // page. If this host ever does the same, the tell is a uniform tile image
+    // across zoom levels; curl one tile and look at it.
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; <a href="https://www.esri.com/">Esri</a> &mdash; Esri, HERE, Garmin, &copy; OpenStreetMap contributors',
+      maxNativeZoom: 16, maxZoom: 18,
     }).addTo(map);
     mapRef.current = map;
     markersRef.current = L.layerGroup().addTo(map);
-    return () => { map.remove(); mapRef.current = null; markersRef.current = null; };
+    return () => { map.remove(); mapRef.current = null; markersRef.current = null; rendererRef.current = null; };
   }, []);
 
   const handleSelect = useCallback((city: SelectedCity) => setSelected(city), []);
@@ -171,8 +185,7 @@ export default function BookMap({ locations }: BookMapProps) {
     const ctrl = new AbortController();
     setBooksLoading(true);
     const params = new URLSearchParams({
-      city: selected.city,
-      country: selected.country ?? '',
+      place: selected.key,
       from: String(filters.yearFrom),
       to: String(filters.yearTo),
       types: [...filters.types].join(','),
@@ -185,21 +198,31 @@ export default function BookMap({ locations }: BookMapProps) {
     return () => ctrl.abort();
   }, [selected, filters.types, filters.yearFrom, filters.yearTo]);
 
-  // Render city pins
+  // Small cities hide when zoomed out. Only the THRESHOLD is a dependency of the
+  // pin effect, so zooming within a band no longer rebuilds every pin.
+  const minBooksForZoom = zoom <= 3 ? 20 : zoom <= 4 ? 5 : 1;
+
+  // Render city pins — drawn on ONE shared canvas, not ~3,000 DOM nodes. With
+  // DOM markers every pan/zoom moved thousands of elements; canvas circles keep
+  // tooltips and clicks (Leaflet hit-tests the canvas) at a fraction of the cost.
   useEffect(() => {
     const map = mapRef.current;
     const layerGroup = markersRef.current;
     if (!map || !layerGroup) return;
+    if (!rendererRef.current) rendererRef.current = L.canvas({ padding: 0.5 });
+    const renderer = rendererRef.current;
     layerGroup.clearLayers();
-
-    const minBooksForZoom = zoom <= 3 ? 20 : zoom <= 4 ? 5 : 1;
 
     for (const pin of cityPins) {
       if (pin.totalBooks < minBooksForZoom) continue;
       const dominantType = pin.dominantType;
+      const color = TYPE_CONFIG[dominantType]?.color || '#999';
 
-      const marker = L.marker([pin.lat, pin.lng], {
-        icon: createLocationIcon(dominantType, pin.totalBooks),
+      const marker = L.circleMarker([pin.lat, pin.lng], {
+        renderer,
+        radius: pinRadius(pin.totalBooks),
+        fillColor: color, fillOpacity: 0.85,
+        color: 'rgba(255,255,255,0.9)', weight: 1.5,
       });
 
       const typeLabels = pin.roles.map(t => TYPE_CONFIG[t]?.label || t).join(' · ');
@@ -210,13 +233,13 @@ export default function BookMap({ locations }: BookMapProps) {
 
       marker.on('click', () => {
         handleSelect({
-          city: pin.city, country: pin.country,
+          key: pin.key, city: pin.city, country: pin.country,
           type: dominantType, count: pin.totalBooks,
         });
       });
       layerGroup.addLayer(marker);
     }
-  }, [cityPins, zoom, handleSelect]);
+  }, [cityPins, minBooksForZoom, handleSelect]);
 
   // Track zoom
   useEffect(() => {
@@ -347,17 +370,30 @@ export default function BookMap({ locations }: BookMapProps) {
 
             <div className="px-5 py-3 space-y-0.5">
               {booksLoading && cityBooks.length === 0 ? (
-                <p className="text-[11px] px-2.5 py-2" style={{ color: 'var(--text-muted)' }}>Loading\u2026</p>
+                <p className="text-[11px] px-2.5 py-2" style={{ color: 'var(--text-muted)' }}>Loading…</p>
               ) : (
                 <>
                   {cityBooks.slice(0, 50).map((book, i) => (
-                    <a key={i} href={`/book/${book.slug || book.id}`} className="block px-2.5 py-2 -mx-2.5 rounded-lg hover:bg-black/[0.03] transition-colors">
-                      <div className="text-[13px] leading-snug font-medium" style={{ color: 'var(--text-primary)' }}>
-                        {(() => { const t = book.display_title || book.title; return t.length > 65 ? t.substring(0, 65) + '\u2026' : t; })()}
+                    <a key={i} href={`/book/${book.slug || book.id}`} className="flex gap-3 px-2.5 py-2 -mx-2.5 rounded-lg hover:bg-black/[0.03] transition-colors">
+                      <div className="w-9 h-12 shrink-0 rounded overflow-hidden" style={{ background: 'rgba(0,0,0,0.05)' }}>
+                        {book.thumb && (
+                          // eslint-disable-next-line @next/next/no-img-element -- tiny R2 thumb variant; /_next/image costs more than it saves here (#1727)
+                          <img src={book.thumb} alt="" loading="lazy" className="w-full h-full object-cover" />
+                        )}
                       </div>
-                      <div className="text-[11px] mt-0.5" style={{ color: 'var(--text-muted)' }}>
-                        {book.author.length > 40 ? book.author.substring(0, 40) + '\u2026' : book.author}
-                        {book.year ? `, ${book.year}` : ''}
+                      <div className="min-w-0">
+                        <div className="text-[13px] leading-snug font-medium" style={{ color: 'var(--text-primary)' }}>
+                          {(() => { const t = book.display_title || book.title; return t.length > 65 ? t.substring(0, 65) + '\u2026' : t; })()}
+                        </div>
+                        <div className="text-[11px] mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                          {book.author.length > 40 ? book.author.substring(0, 40) + '\u2026' : book.author}
+                          {book.year ? `, ${book.year}` : ''}
+                        </div>
+                        {book.translated >= 0.5 && (
+                          <div className="text-[10px] mt-1 uppercase tracking-wide" style={{ color: TYPE_CONFIG.origin.color }}>
+                            Read in English
+                          </div>
+                        )}
                       </div>
                     </a>
                   ))}

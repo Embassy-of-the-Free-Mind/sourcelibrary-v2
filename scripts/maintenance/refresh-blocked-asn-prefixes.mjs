@@ -46,6 +46,7 @@ const ASNS = [
   { asn: 150436, name: 'Byteplus (ByteDance)', evidence: '22,997 reads / 27 rotating /24s over 4 days' },
   { asn: 45090, name: 'Tencent Cloud', evidence: '34,522 reads / 371 rotating /24s over 4 days' },
   { asn: 132203, name: 'Tencent Cloud Singapore', evidence: '354,997 reads / 7 days / 8,047 books (July 2026, #3438)' },
+  { asn: 401560, name: 'OneCable Network (leased /24s)', evidence: '14,867 reads / 12 of its 23 /24s / one Linux Chrome/146 UA, ~1,000 books per /24 at ~1.5 pages each, 2026-09-17 → 10-06' },
 ];
 
 /**

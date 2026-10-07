@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic';
 
+import { withAuth } from '@/lib/auth-helpers';
 import { NextRequest, NextResponse } from 'next/server';
 import { performOCRWithBuffer } from '@/lib/ai';
 
@@ -14,7 +15,7 @@ Only include the page itself, not the desk/background.
 If the page fills the entire image, return [[0,0],[1,0],[1,1],[0,1]].
 Return ONLY the JSON object, no markdown fences.`;
 
-export async function POST(request: NextRequest) {
+async function handlePOST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const file = formData.get('file') as File;
@@ -57,3 +58,7 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+// Admin only (#6032), matching the /scan pages (scan/layout.tsx requireAdmin): this
+// route writes books/R2 or reaches a paid model, and was open to anonymous callers.
+export const POST = withAuth(async (request) => handlePOST(request), { minRole: 'admin' });

@@ -1,0 +1,28 @@
+{
+ "label": "read from image",
+ "by": "Claude (job ocr-tags-5830), 2026-10-04",
+ "sample": "seed 5830, 10 per stratum, pages whose R read returned text (scripts/eval/ocr-tags-5830.mjs --eye)",
+ "fields": "page_type; page_num (printed number or null); header / sig / catchword (present on this side of the leaf); margin_count (notes in the side margins of THIS page, not the facing page's edge, not footnotes); illustration (an illustration that is medium/large or high-significance; small decorative initials do not count); multi_column (body set in 2+ columns)",
+ "pages": [
+  {"uid": "ed-6a8f6267e408ab73f484d28b-p15", "page_type": "text", "page_num": "11", "header": true, "sig": false, "catchword": false, "margin_count": 1, "illustration": false, "multi_column": false, "note": "one handwritten 'nota' in the right margin; the letters at the left edge are the facing page's line-ends"},
+  {"uid": "ed-6991d6648c1030b12444b0ec-p351", "page_type": "text", "page_num": "315", "header": false, "sig": false, "catchword": true, "margin_count": 0, "illustration": false, "multi_column": false, "note": "catchword 'vine' (completes 'Di-')"},
+  {"uid": "ed-6990619a3d9181cce82fb669-p17", "page_type": "text", "page_num": null, "header": true, "sig": true, "catchword": true, "margin_count": 0, "illustration": false, "multi_column": false, "note": "header 'at Northampton.'; sig C 2; catchword 'and'"},
+  {"uid": "ed-6991d6778c1030b12444b4d4-p43", "page_type": "text", "page_num": "35", "header": false, "sig": false, "catchword": true, "margin_count": 0, "illustration": false, "multi_column": false},
+  {"uid": "ed-6a08fd2e25e3a402b23b3bca-p26", "page_type": "text", "page_num": null, "header": true, "sig": false, "catchword": true, "margin_count": 0, "illustration": false, "multi_column": false, "note": "'Act. ij.' is an act heading, not a signature (both R and T call it a sig); the letters at the right edge are the facing page; small decorative initial T"},
+  {"uid": "ed-695595ec7bd6d2cd1d620aba-p26", "page_type": "text", "page_num": "24", "header": false, "sig": false, "catchword": true, "margin_count": 0, "illustration": false, "multi_column": false, "note": "catchword 'Dr. Pappins' (T tags it as an insert)"},
+  {"uid": "ed-69ac7f0f20878c5c9ba524b5-p366", "page_type": "text", "page_num": "44", "header": true, "sig": false, "catchword": true, "margin_count": 0, "illustration": false, "multi_column": false, "note": "small decorative initial Y"},
+  {"uid": "ed-69905e152fd6a039938a0ebe-p46", "page_type": "text", "page_num": "39", "header": true, "sig": false, "catchword": true, "margin_count": 0, "illustration": false, "multi_column": false, "note": "three footnotes (i)(k)(l) at the foot: footnotes, not margins (T tags them as margins); pencil '24' top right"},
+  {"uid": "ed-69aebfdea41a7e10e5a71d19-p27", "page_type": "text", "page_num": "19", "header": false, "sig": false, "catchword": true, "margin_count": 0, "illustration": false, "multi_column": false},
+  {"uid": "ed-69aebfeb36a4ffb2dcfb62e3-p100", "page_type": "text", "page_num": "74", "header": false, "sig": false, "catchword": true, "margin_count": 0, "illustration": false, "multi_column": false, "note": "'[ 74 ]' is the page number only (T also emits it as a header)"},
+  {"uid": "en-699079-pg41110p268", "page_type": "index", "page_num": "268", "header": true, "sig": false, "catchword": false, "margin_count": 0, "illustration": false, "multi_column": true},
+  {"uid": "en-6ab233-ws84", "page_type": "text", "page_num": "51", "header": true, "sig": false, "catchword": false, "margin_count": 0, "illustration": false, "multi_column": false},
+  {"uid": "en-69e783-pg74741p305", "page_type": "text", "page_num": "305", "header": true, "sig": true, "catchword": true, "margin_count": 0, "illustration": false, "multi_column": false, "note": "sig X; catchword 'Notches,'"},
+  {"uid": "en-6a58ed-ws52", "page_type": "text", "page_num": "48", "header": true, "sig": false, "catchword": false, "margin_count": 0, "illustration": false, "multi_column": false, "note": "footnotes"},
+  {"uid": "en-6a499d-ws169", "page_type": "text", "page_num": "163", "header": true, "sig": true, "catchword": true, "margin_count": 0, "illustration": false, "multi_column": false, "note": "sig L 2; catchword 'Were'"},
+  {"uid": "en-69e72c-pg48511p144", "page_type": "text", "page_num": "144", "header": true, "sig": false, "catchword": false, "margin_count": 0, "illustration": false, "multi_column": false},
+  {"uid": "en-69c666-ws88", "page_type": "text", "page_num": "69", "header": false, "sig": false, "catchword": false, "margin_count": 0, "illustration": false, "multi_column": false, "note": "two footnotes (T tags them as margins); 'Digitized by Google' stamp"},
+  {"uid": "en-69ee4f-pg54620p285", "page_type": "text", "page_num": "285", "header": true, "sig": false, "catchword": false, "margin_count": 0, "illustration": false, "multi_column": false, "note": "footnotes set in two columns; body single column; no catchword ('after' is the body's last word)"},
+  {"uid": "en-69aebf-ws469", "page_type": "text", "page_num": "413", "header": true, "sig": false, "catchword": false, "margin_count": 0, "illustration": false, "multi_column": false, "note": "page number at the foot; footnotes"},
+  {"uid": "en-69b99f-ws176", "page_type": "text", "page_num": "150", "header": true, "sig": false, "catchword": false, "margin_count": 0, "illustration": false, "multi_column": false, "note": "page number at the foot"}
+ ]
+}

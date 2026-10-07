@@ -1,0 +1,43 @@
+{
+ "at": "2026-10-02T11:57:15.146Z",
+ "model": "gemini-3.1-flash-lite",
+ "requests": 1692,
+ "in_tokens": 6813363,
+ "out_tokens_assumed": 1522800,
+ "price": {
+  "input": 0.25,
+  "output": 1.5
+ },
+ "batch_multiplier": 0.5,
+ "usd": 1.9938,
+ "pages_built": 188,
+ "fetch_failed": [],
+ "prompts": {
+  "A": {
+   "source": "prompts 6a98b8a075660c6a8b09a8f8 v16",
+   "content_hash": "0203c2641e253ffbf17772ae1b30bf16",
+   "sent_hash_no_context": "360c5a076090bf07"
+  },
+  "A2": {
+   "source": "prompts 6a98b8a075660c6a8b09a8f8 v16",
+   "content_hash": "0203c2641e253ffbf17772ae1b30bf16",
+   "sent_hash_no_context": "360c5a076090bf07"
+  },
+  "B": {
+   "source": "prompts/ocr/standard-ocr-v18-candidate.md",
+   "content_hash": "e6e57ce95956d4bc05c4ee9660502085",
+   "sent_hash_no_context": "971e5f545659a340"
+  }
+ },
+ "generation": {
+  "temperature": 0.1,
+  "maxOutputTokens": 16384,
+  "thinkingConfig": {
+   "thinkingBudget": 0
+  }
+ },
+ "image": {
+  "field": "getPageSource(page)",
+  "resized_to_px": 1500
+ }
+}

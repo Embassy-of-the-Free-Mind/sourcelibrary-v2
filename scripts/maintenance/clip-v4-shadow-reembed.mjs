@@ -21,7 +21,7 @@
  *   set -a; source .env.production.local; set +a
  *   nice -n 10 node scripts/maintenance/clip-v4-shadow-reembed.mjs \
  *     [--clip-url=http://localhost:3458] [--concurrency=2] [--limit=N] [--dry-run] [--from-start] \
- *     [--state-dir=/var/log/sourcelibrary/clip-v4]
+ *     [--state-dir=/var/log/sourcelibrary/clip-v4] [--only-url=S | --exclude-url=S] [--pause-ms=N]
  *
  * Needs the shadow columns (scripts/migration/clip-embeddings-v4-shadow.sql).
  * Next: scripts/audit/clip-v4-shadow-verify.mjs, then the cutover SQL.
@@ -43,11 +43,18 @@ const LIMIT = parseInt(opt('limit', '0')) || 0;
 const DRY_RUN = process.argv.includes('--dry-run');
 const FROM_START = process.argv.includes('--from-start');
 const STATE_DIR = opt('state-dir', '/var/log/sourcelibrary/clip-v4');
+// Some IIIF hosts rate-limit hard: MDZ (api.digitale-sammlungen.de) returned 429
+// for ~20K of 21.7K rows at concurrency 6. Re-run those alone and slowly:
+//   --only-url=digitale-sammlungen --concurrency=1 --pause-ms=2000
+// and the rest with --exclude-url=digitale-sammlungen.
+const ONLY_URL = opt('only-url', '');
+const EXCLUDE_URL = opt('exclude-url', '');
+const PAUSE_MS = parseInt(opt('pause-ms', '0')) || 0;
 const BATCH = 10;   // urls per /embed-images call
 const PAGE = 200;   // rows per keyset page
 
 fs.mkdirSync(STATE_DIR, { recursive: true });
-const CHECKPOINT = path.join(STATE_DIR, 'checkpoint.txt');
+const CHECKPOINT = path.join(STATE_DIR, `checkpoint${opt('only-url', '') ? '-only-' + opt('only-url', '').replace(/\W+/g, '_') : ''}${opt('exclude-url', '') ? '-excl-' + opt('exclude-url', '').replace(/\W+/g, '_') : ''}.txt`);
 const FAILURES = path.join(STATE_DIR, 'failures.jsonl');
 const log = (...a) => console.log(new Date().toISOString().slice(0, 19), ...a);
 
@@ -61,7 +68,10 @@ log(`v4 server ok: ${health.embedding_model}`);
 const db = new pg.Client({ connectionString: process.env.SUPABASE_DB_URL.replace(':6543/', ':5432/'), ssl: { rejectUnauthorized: false } });
 await db.connect();
 
-const DUE = `(embedding_v4 IS NULL OR embedding_v4_url IS DISTINCT FROM image_url)`;
+const DUE = `(embedding_v4 IS NULL OR embedding_v4_url IS DISTINCT FROM image_url)`
+  + (ONLY_URL ? ` AND strpos(image_url, ${pgLiteral(ONLY_URL)}) > 0` : '')
+  + (EXCLUDE_URL ? ` AND strpos(image_url, ${pgLiteral(EXCLUDE_URL)}) = 0` : '');
+function pgLiteral(s) { return `'${s.replace(/'/g, "''")}'`; }
 const { rows: [c] } = await db.query(`SELECT count(*)::int AS total, count(*) FILTER (WHERE ${DUE})::int AS due FROM clip_embeddings`);
 log(`clip_embeddings: ${c.total} rows, ${c.due} due for a v4 vector`);
 if (DRY_RUN) { await db.end(); process.exit(0); }
@@ -109,6 +119,7 @@ while (true) {
       failed += b.length;
       for (const r of b) fs.appendFileSync(FAILURES, JSON.stringify({ id: r.id, url: r.image_url, reason: `batch: ${e.message}`, at: new Date().toISOString() }) + '\n');
     })));
+    if (PAUSE_MS) await new Promise(r => setTimeout(r, PAUSE_MS));
   }
   cursor = rows[rows.length - 1].id;
   fs.writeFileSync(CHECKPOINT, cursor);

@@ -1,0 +1,20 @@
+{
+ "id": "69e7ab5f5f1a22ab19a978df_00538",
+ "arm": "gemini-3-flash-preview",
+ "text": "The <term>Bodhisattva</term> <gloss>heroic being dedicated to awakening</gloss> <term>Mahasattva</term> <gloss>great being</gloss> also brings the six <term>paramitas</term> <gloss>perfections</gloss> to complete fulfillment. Such a being also draws near to <term>sarvakara-jnata</term> <gloss>all-encompassing knowledge or omniscience</gloss>.\n\nFurthermore, Subhuti, when a Bodhisattva Mahasattva practices the six perfections, if they see sentient beings born in the four ways—born from an egg, born from a womb, born from heat and moisture, or born miraculously—they should reflect in this way: \n\nIn whatever way I manifest complete and perfect awakening in the unexcelled state of a Buddha, in that Buddha-field, the three modes of birth—from an egg, from a womb, and from heat and moisture—shall not occur and shall not exist. Instead, all sentient beings shall be born miraculously. In that manner, I shall practice the six perfections. I shall completely purify the Buddha-field. I shall bring sentient beings to full maturity. \n\nSubhuti, a Bodhisattva Mahasattva who practices in this way also brings the six perfections to complete fulfillment. They also draw near to all-encompassing knowledge.\n\nFurthermore, Subhuti, when a Bodhisattva Mahasattva practices the six perfections, if they see sentient beings who do not possess the five <term>abhijna</term> <gloss>higher cognitions or clairvoyant powers</gloss>, they should reflect in this way: In whatever way I\n\n<summary>This page describes the Bodhisattva's vow to eliminate inferior modes of birth in their future Buddha-field, ensuring all beings are born miraculously. It emphasizes that such compassionate aspirations lead the practitioner toward complete omniscience.</summary>\n<keywords>Bodhisattva, six perfections, four types of birth, miraculous birth, Buddha-field, Subhuti, omniscience, higher cognitions</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2571,
+ "outputTokens": 442,
+ "thinkingTokens": 0,
+ "ms": 203757,
+ "cost_usd": 0.00130575,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1120,
+ "job": "batches/m3tgb80kdfd0p59ncbwgvg1drix1ghy12b7v"
+}

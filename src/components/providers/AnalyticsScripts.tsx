@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Script from 'next/script';
 import { getConsent, type ConsentState } from '@/lib/consent';
+import { usePathname } from 'next/navigation';
 import { useIsEmbedded } from '@/hooks/useEmbedContext';
 
 // GA4 measurement ID, sourced from env so we can point at a Source
@@ -38,6 +39,9 @@ const POSTHOG_HOST = 'https://eu.i.posthog.com';
  */
 export default function AnalyticsScripts() {
   const isEmbedded = useIsEmbedded();
+  // The offline desk reader (/local, SL_LOCAL=1 only — a 404 everywhere else)
+  // must not reach off the machine; it is read on planes, with no one to measure.
+  const isLocalReader = usePathname()?.startsWith('/local/') ?? false;
   const [consent, setConsentState] = useState<ConsentState>(null);
 
   useEffect(() => {
@@ -99,7 +103,7 @@ export default function AnalyticsScripts() {
 
   // Closed partner reading rooms get no Source Library analytics (and no
   // third-party-iframe pings to Google from inside a partner's site).
-  if (isEmbedded) return null;
+  if (isEmbedded || isLocalReader) return null;
 
   return (
     <>

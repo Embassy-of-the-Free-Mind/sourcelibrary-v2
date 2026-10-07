@@ -1,0 +1,21 @@
+{
+ "id": "6a09ff5dfa20006dbaba9200_00274",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "172.\n\n1. Monks, the unrighteous <term>adhamma</term> <gloss>contrary to the teaching</gloss> must be understood and the righteous <term>dhamma</term> <gloss>the teaching</gloss> must be understood; the harmful <term>anattha</term> <gloss>contrary to the goal</gloss> must be understood and the beneficial <term>attha</term> <gloss>the goal</gloss> must be understood. Having known the unrighteous and the righteous, and having known the harmful and the beneficial, one should practice according to what is righteous and what is beneficial. This is what the Blessed One <term>Bhagava</term> said. Having said this, the Well-Gone One <term>Sugato</term> rose from his seat and entered his dwelling.\n\n2. Then, not long after the Blessed One had departed, those monks thought: Friends, the Blessed One has given us this brief teaching <term>uddesa</term> without explaining the meaning in detail <term>vitthara</term>, saying: Monks, the unrighteous must be understood and the righteous must be understood; the harmful must be understood and the beneficial must be understood. Having known the unrighteous and the righteous, and having known the harmful and the beneficial, one should practice according to what is righteous and what is beneficial. Now, who could explain in detail the meaning of this brief teaching given by the Blessed One? Then those monks thought: This Venerable Mahakaccana is praised by the Teacher and esteemed by his wise fellow monks. The Venerable Mahakaccana is capable of explaining in detail the meaning of this brief teaching given by the Blessed One. Suppose we go to the Venerable Mahakaccana and ask him about this matter. As the Venerable Mahakaccana explains it to us, so we shall remember it.\n\n3. Then those monks went to the Venerable Mahakaccana and exchanged greetings with him. After exchanging polite and friendly words, they sat down to one side. Sitting there, those monks said to the Venerable Mahakaccana: Friend Kaccana, the Blessed One has given us this brief teaching without explaining the meaning in detail, and has entered his dwelling, saying: Monks, the unrighteous must be understood and the righteous must be understood; the harmful must be understood and the beneficial \n\n<margin>Manuscript variations: S. vatvana; Ph. vatva ca.</margin>\n<margin>Missing text: * omitted by T. † S. ay* ‡ T. *reyyama.</margin>\n\n<summary>The Buddha gives a brief instruction on distinguishing between righteousness and unrighteousness but retires before explaining it. The monks decide to approach the elder Mahakaccana to provide a detailed analysis of the teaching.</summary>\n<keywords>Buddha, Mahakaccana, Dhamma, Adhamma, Attha, Anattha, brief teaching, detailed explanation</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2586,
+ "outputTokens": 628,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.0015885,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2094,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

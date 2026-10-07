@@ -1,0 +1,21 @@
+{
+ "id": "69920bd5e0a548a13d886144_00793",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "<meta>continues from previous page: ...to the root 'hve' (to call), with the suffix 'ap' and the process of 'samprasarana' (vowel substitution). 'Suktani' (well-spoken): formed from 'su' (well) and 'vakti' (to speak) with the 'nishtha' suffix indicating the past participle. By the rule 'supamanat ktah' (the suffix 'kta' after a word indicating a good standard), the final syllable is accented. 'Haryatam': from the root 'hary' (to desire or shine), belonging to the 'bhaunadika' class.</meta>\n\nWhen the deity of the 'upanshu-yaja' (silent sacrifice) on the full moon is Agni and Soma, then the verse beginning 'Agni-Soma yo adya' serves as the 'anuvakya' (invitation verse). This is indicated in the section titled 'Ukta Devata' (The stated deities). As stated: \"O Agni and Soma, he who today...\", etc. <note>Aitareya Brahmana 1.6</note>. He now declares this second verse.\n\n## Hymn Text\n\n**O Agni and Soma, he who today offers this speech to you two,**\n**Bestow upon him great heroic power, prosperity of cattle, and good horses. <note>Verse 2</note>**\n\n->Pada-patha<-\n**Agni-Soma | He who | today | to you two | this | speech | honors.**\n**To him | bestow | good-heroic-power | of cows | prosperity | good-horsed.**\n\n## Commentary (Sayana)\n\nO **Agni and Soma**, the **sacrificer who today, in this ritual, offers this speech** (in the form of a hymn) **to you two**—that is, for your sake—honors you. **Bestow upon that sacrificer prosperity** (growth) **of cows** (cattle). What kind of prosperity? One possessing **good heroic power**, accompanied by excellent strength, and **possessing good horses**. Regarding the word *gavam* (of cows), the accent on the case-ending—which would normally occur due to the rule 'savekach'—is prevented by the rule 'na goshvan savavarnai' (accent is not shifted in certain forms of 'go' and 'ashva').\n\n---\n\n->He now declares the third verse.<-\n\n---\n\n## Hymn Text\n\n**O Agni and Soma, he who would give an offering to you, he who would give a sacrifice prepared with oblations,**\n**He, with progeny and heroic power, shall attain a full life. <note>Verse 3</note>**\n\n->Pada-patha<-\n**Agni-Soma | He who | offering | he who | to you two | would give | oblation-preparation.**\n**He | with progeny | good-heroic-power | all | life | attains.**\n\n## Commentary (Sayana)\n\nO **Agni and Soma**, **the sacrificer who offers an oblation** (such as clarified butter) **to you two**, or **who offers an oblation prepared with** ritual materials like *charu* (sacrificial porridge) and *purudasha* (sacrificial cake), **that sacrificer**, endowed **with progeny** (sons and grandsons) and **good heroic power**, shall **attain a full life** (the entire span of existence). Regarding the word *ahutim* (offering): by the rule 'juhoteh ktini tadau cha', the radical accent is retained. Regarding *dashat* (would give): from the root *dash* (to give); it takes the 'let' (Vedic subjunctive) augment 'at'. Because it is connected to a relative pronoun, it is not subject to the 'anighata' (lack of accent) rule. Regarding *havishkritim* (oblation-preparation): the act of preparing the oblation. In a *bahuvrihi* compound, the first member retains its original accent.\n\n<margin>VOL. I. 9 F</margin>\n\n<summary>This page contains verses 2 and 3 of Rig-Veda Sukta 93, dedicated to Agni and Soma, accompanied by Sayana's grammatical and ritual commentary.</summary>\n<keywords>Agni-Soma, Rig-Veda, Sayana, ritual sacrifice, heroic power, oblations</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2899,
+ "outputTokens": 972,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.0010913750000000001,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2456,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

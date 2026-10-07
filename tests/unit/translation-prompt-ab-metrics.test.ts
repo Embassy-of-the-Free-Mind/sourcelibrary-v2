@@ -169,3 +169,19 @@ describe('body length and em-dashes', () => {
     expect(scoreTranslation('Water, the first matter, is all.', OCR).emdashes).toBe(0);
   });
 });
+
+describe('interpretive notes (Amendment 2, the outcome v15 lost)', () => {
+  it('counts every note that is not an original-note, including image descriptions', () => {
+    const s = scoreTranslation(
+      'The Nuncio <note>the Papal Ambassador</note> spoke of water <note>original: "aqua"</note>.\n<note>A woodcut of a furnace.</note>',
+      OCR,
+    );
+    expect(s.interp_notes).toBe(2);
+    expect(s.notes_emitted).toBe(1);
+  });
+
+  it('is zero on a page whose only note is an original-note', () => {
+    const s = scoreTranslation('water <note>original: "aqua"</note>.', OCR);
+    expect(s.interp_notes).toBe(0);
+  });
+});

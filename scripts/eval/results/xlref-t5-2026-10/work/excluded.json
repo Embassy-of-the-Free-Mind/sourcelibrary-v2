@@ -1,0 +1,15 @@
+[
+ {
+  "book_id": "69dea7a3914eeed04ca4b2e4",
+  "why": "unlocated: All six candidates are table-of-contents pages listing chapter-title couplets (回目) of the Li Zhuowu edition of Xiyouji; no candidate carries narrative root text, and neither Richard (1913) nor Hayes ("
+ },
+ {
+  "book_id": "69e8b2562ff2a8dc09e774b0",
+  "page_number": 128,
+  "why": "the page prints Legge's English beside the Chinese (bilingual page; #5606 excluded these)"
+ },
+ {
+  "book_id": "69905f4440bc3a0478efb9b2",
+  "why": "unlocated: Every served candidate is mostly Bhaṭṭotpala commentary and Hindi bhāṣā; none carries more than one root verse (~10-15% of the page), and the T5 brief says to skip mostly-commentary pages. The root ve"
+ }
+]

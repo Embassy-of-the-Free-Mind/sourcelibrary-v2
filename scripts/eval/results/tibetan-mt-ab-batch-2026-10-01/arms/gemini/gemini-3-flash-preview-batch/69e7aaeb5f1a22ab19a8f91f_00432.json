@@ -1,0 +1,20 @@
+{
+ "id": "69e7aaeb5f1a22ab19a8f91f_00432",
+ "arm": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nNoble son, those two are the practices of the <term>Bodhisattvas</term> <gloss>heroic beings striving for enlightenment</gloss>, the great beings. Furthermore, noble son, there are two practices of the Bodhisattvas, the great beings. What are these two? They are as follows: the practice of completely abandoning the faults of the <term>bhumis</term> <gloss>spiritual levels or stages of realization</gloss>, and the practice of perfecting the skill of progressing from one level to the next. Noble son, those two are the practices of the Bodhisattvas, the great beings.\n\nFurthermore, noble son, there are two practices of the Bodhisattvas, the great beings. What are these two? They are as follows: the practice of showing the path of the <term>Shravakas</term> <gloss>pious listeners or disciples</gloss> and <term>Pratyekabuddhas</term> <gloss>solitary realizers</gloss>, and the practice of skill in never turning back from the enlightenment of a Buddha. Noble son, those two are the practices of the Bodhisattvas, the great beings.\n\nNoble son, these are the practices of the Bodhisattvas, the great beings. In these, the Bodhisattvas, the great beings, should exert effort. Noble son, for those Bodhisattvas, the great beings, who practice in such a way, supreme and perfectly complete enlightenment is not difficult to find. Then, the <term>Bhagavan</term> <gloss>Blessed One or Buddha</gloss> spoke to <term>Manjushri</term> <gloss>the Youthful Prince and Bodhisattva of Wisdom</gloss>.\n\n<summary>This page outlines specific pairs of spiritual practices for Bodhisattvas, focusing on progressing through spiritual levels and maintaining the resolve for full Buddhahood. It concludes with the Buddha addressing Manjushri regarding the accessibility of enlightenment through these methods.</summary>\n<keywords>Bodhisattva, bhumi, Shravaka, Pratyekabuddhas, Manjushri, enlightenment, spiritual stages, non-retrogression</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2511,
+ "outputTokens": 472,
+ "thinkingTokens": 0,
+ "ms": 203757,
+ "cost_usd": 0.0013357500000000001,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1016,
+ "job": "batches/m3tgb80kdfd0p59ncbwgvg1drix1ghy12b7v"
+}

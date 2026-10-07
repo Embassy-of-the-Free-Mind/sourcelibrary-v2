@@ -11,6 +11,7 @@ Source Library has **six embedding stores** in Supabase, indexing different thin
 | `artwork_embeddings` | **3072 (halfvec)** | `gemini-embedding-2-preview` | One row per artwork (title + author + summary + subjects + figures + symbols) | `scripts/migration/backfill-artwork-embeddings.mjs` + `scripts/workers/image-embeddings-cron.mjs` | `match_artworks_semantic` | `src/lib/semantic-search.ts` artwork retrieval |
 | `gallery_text_embeddings` | 768 (vector) | `gemini-embedding-2-preview` | One row per gallery image (museum description text) | `scripts/workers/image-embeddings-cron.mjs` | `match_gallery_text` | `src/lib/embeddings.ts`, `src/app/api/gallery/{route,similar/route}.ts` |
 | `clip_embeddings` | 512 (vector) | CLIP visual | One row per image (artwork covers, gallery extractions) | `scripts/backfill-clip-embeddings.mjs` + `scripts/workers/image-embeddings-cron.mjs` | `match_gallery_text` (CLIP text→image) | gallery similar-image queries |
+| `site_pages` | 768 (vector) | `gemini-embedding-2-preview` | One row per ~1,600-char chunk of the site's OWN writing: blog essays, collection intros (from Mongo), editorial pages (#1180) | `scripts/workers/embed-site-pages.mjs` (hash-diffed; prunes vanished pages, refuses a >20% prune) | `match_site_pages` (best chunk per URL; NULL tenant = main site only) | "From the site" lane in `/api/search/unified` → `/search` |
 | `page_texts` | 768 (vector) | `gemini-embedding-2-preview` | One row per translated page **per language** (`page_id, lang`) | `scripts/workers/embed-page-texts.mjs --lang=<iso>` (bulk) + `es-translate-worker.mjs` (inline) | `match_page_texts`, `match_page_texts_in_books`, `search_page_texts` (lexical) | Spanish/localized page search: `/api/search?lang=es`, `/api/books/:id/search?lang=es` |
 
 Approximate current row counts (May 2026): pages ~3.9M, books 33,828, artworks 19,731, gallery_text 116,641, clip 151,957.
@@ -180,6 +181,45 @@ which keeps walking the graph until enough rows survive the filter. A
 fenced exact pre-filter (`OFFSET 0` + `enable_indexscan = off`) is correct on any
 version but costs a scan of everything the predicate admits — 47.6s measured for
 an `exclude_languages` query. Migration: `scripts/migration/fix-semantic-language-prefilter.sql`.
+
+### Tenant scope: a book set, decided once (#4330, #2753)
+
+**No embedding table has a tenant column**, and `match_semantic` accepts
+`filter_tenant_id` and ignores it. Until 2026-10-06 every vector lane ranked the
+whole library and each caller filtered afterwards in Mongo — except
+`/api/search/semantic`, `/api/gallery?visual=true` and `?semantic=true`, which
+did not filter at all and served the global corpus on partner subdomains. The
+lanes that did filter were pure and starved: BPH got 20% of its true top-15
+pages, and nothing at all for 2 of 5 queries.
+
+The scope is now a value. `resolveSearchScope(request)` in
+`src/lib/tenant-search-scope.ts` returns `global`, `tenant` (the tenant's
+visible book ids, from `books.tenantId`) or `closed` (a tenant signal that
+could not be resolved — returns nothing, never global). The `semantic*Search`
+functions and `matchClip` / `matchGalleryText` REQUIRE one; a raw
+`.rpc('match_…')` anywhere else fails `tests/unit/embedding-rpc-scope-guard.test.ts`.
+
+Under a tenant the wrappers call the `*_in_books` functions in
+`scripts/migration/add-scoped-embedding-rpcs.sql`, which select by `book_id`
+first and rank inside a fenced subquery, so the vector index cannot turn the
+scope into a post-filter. Three things to know:
+
+- **`match_pages_in_books` is not safe for a large id list.** Given a tenant's
+  ~2,000 ids the planner answers it through HNSW and filters afterwards: 10 rows
+  in 150 ms on-topic, ZERO off-topic. It is fine for the one-book case it was
+  written for. Tenant page search uses `match_pages_in_scope`.
+- **Pages are bounded work, not exact.** An exact scan of a tenant's 226K–830K
+  page vectors did not finish in 90 s. `match_pages_in_scope` ranks the pages of
+  the nearest few books in scope exactly and unions one HNSW pass. Measured
+  recall@15 against exact truth: Bhutan 67%, BPH 84%
+  (`scripts/audit/scoped-page-recall.mjs`). Exact recall needs a tenant column
+  plus a partial index per tenant — ~1.05M updates on `page_translations`.
+- **A missing function or a statement timeout falls back** to the global RPC
+  cut to the book set. Closed either way; the migration is what buys recall.
+
+Purity is checked over HTTP, per route, with a control arm:
+`scripts/audit/search-tenant-purity.mjs <slug>` (the real subdomain) or
+`--local=http://localhost:3111` (before a merge).
 
 ### Index health
 The HNSW index has to be present and the planner has to choose it — `CREATE INDEX` succeeds silently even when it produces an unusable index above the dim cap. Always `EXPLAIN ANALYZE` a real `match_*` query after touching a vector column or index. See `lesson_pgvector_hnsw_dim_cap.md` and `lesson_silent_probe_failures.md`.

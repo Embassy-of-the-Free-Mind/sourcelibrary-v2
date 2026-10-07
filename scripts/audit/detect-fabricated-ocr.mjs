@@ -42,12 +42,50 @@
  *   --min-body=N     characters of OCR body text that make a claim worth testing (default 300)
  *   --max-images=N   safety cap on page images downloaded (default 400)
  *   --no-images      screen only; skip the authoritative image check
+ *
+ * RULE `self_declared_blank` (#4149, 2026-10-02) — `--self-declared-blank`
+ * ---------------------------------------------------------------------
+ * The language screen above is blind to a page invented in the book's OWN
+ * language. A second, independent signal: the model often SAYS the leaf is
+ * blank — `<page-type>blank</page-type>`, or a `<warning>`/`<meta>`/
+ * `<image-desc>` reading "blank", "show-through", "mirrored" — and then
+ * transcribes a body anyway. Measured on the 409 confirmed fabrications vs 409
+ * `has_ink` controls (pages still holding the scored text, 305 / 276): any such
+ * tag on 46.6% of fabrications vs 4.7% of controls. The rule fires when body
+ * letters (outside the apparatus tags) exceed 20 AND one of those tags fires.
+ *
+ * It matters most for SHOW-THROUGH leaves: bleed-through measures as ink, so
+ * the write-time pixel guard (#4184) and the quarantine tool both let them pass.
+ *
+ * MEASURED, CORPUS-WIDE (2026-10-02) — DO NOT QUARANTINE ON THIS RULE ALONE.
+ * It flags 166,077 pages (122,688 on live books); 82% fire only on a
+ * show-through word, which is mostly a routine quality note on a real page
+ * ("some bleed-through from the reverse, text legible"). Of 20 flagged pages
+ * read by eye, 0 were a blank or show-through leaf carrying invented text
+ * (Wilson 95% 0–16%): 16 had real ink, 4 were blank leaves whose "body" was a
+ * stamp or digitiser caption. The 46.6%-vs-4.7% contrast above is real but
+ * drowned by base rate. Use it as a supporting signal that sharpens another
+ * screen. Also: of the 305 confirmed fabrications, 139 have <=20 body letters
+ * by this measure — their prose is in <unclear>/<insert>/<note>, i.e. honest
+ * declines the first screen's `body()` counted as text. Positive control for
+ * the rule is therefore 41/166 (24.7%) of fabrications WITH a body, vs 6/261
+ * (2.3%) of controls. Write-up: scripts/eval/experiments/2026-10-02-self-declared-blank-4149.md
+ *
+ * The walk covers the whole `pages` collection with a server-side regex
+ * prefilter and a checkpoint, one phase per `_id` BSON type (see
+ * backfill-script-type-4195.mjs for why). Read-only; writes a JSONL of
+ * flagged pages, never the database.
+ *
+ *   node --env-file=.env.production.local scripts/audit/detect-fabricated-ocr.mjs \
+ *     --self-declared-blank [--out=scripts/output/self-declared-blank-<date>.jsonl] \
+ *     [--checkpoint=F] [--reset] [--limit=N]
  */
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import fs from 'node:fs';
 import path from 'node:path';
 import sharp from 'sharp';
 import { parseLanguageField, languageFamily } from '../lib/language-normalize.mjs';
+import { bodyText } from '../eval/blank-page-study.mjs';
 
 const arg = (n, d) => {
   const hit = process.argv.find((a) => a.startsWith(`--${n}=`));
@@ -105,6 +143,133 @@ export async function inkCoverage(buf) {
   } catch {
     return null;
   }
+}
+
+/** What a tag says when the model itself thinks the leaf carries nothing of its own. */
+const BLANK_WORDS = /\b(blank|empty|no (visible )?text|no content|unprinted|nothing (is )?(written|printed))\b/i;
+const SHOWTHROUGH_WORDS = /\b(show-?through|bleed-?through|mirror(ed)?|reversed|offset)\b/i;
+/** The rule's full vocabulary: the union of the two classes above. */
+export const BLANKISH = new RegExp(`${BLANK_WORDS.source}|${SHOWTHROUGH_WORDS.source}`, 'i');
+/**
+ * Server-side prefilter for the corpus walk. Must stay a SUPERSET of
+ * `selfDeclaredBlank` (a term missing here is a page silently never scored) —
+ * hence unanchored stems. It only sees tag contents up to the first `<`.
+ */
+export const SELF_DECLARED_PREFILTER =
+  '<(page-type|warning|meta|image-desc)[^>]*>[^<]*(blank|empty|no (visible )?text|no content|unprinted|nothing|show-?through|bleed-?through|mirror|reversed|offset)';
+const SELF_DECLARED_MIN_LETTERS = 20;
+
+const tagContents = (t, n) => (t.match(new RegExp(`<${n}[^>]*>([\\s\\S]*?)</${n}>`, 'gi')) || [])
+  .map((m) => m.replace(/<[^>]+>/g, ' ').trim());
+
+/**
+ * Rule `self_declared_blank`: the page's own tags say blank, its body has text.
+ * Returns `{ signals, bodyLetters, body }` when it fires, else null.
+ */
+export function selfDeclaredBlank(data) {
+  if (typeof data !== 'string') return null;
+  const body = bodyText(data);
+  const bodyLetters = (body.match(/\p{L}/gu) || []).length;
+  if (bodyLetters <= SELF_DECLARED_MIN_LETTERS) return null;
+  const signals = [];
+  if (tagContents(data, 'page-type').some((v) => v.toLowerCase() === 'blank')) signals.push('page_type_blank');
+  // Each tag signal is recorded with the CLASS of word that fired it. On the first
+  // 3,000 prefiltered pages the show-through class was dominated by routine quality
+  // notes on real pages ("some bleed-through from the reverse, text legible"), so
+  // the two classes must be measured separately or the blank class drowns.
+  for (const t of ['warning', 'meta', 'image-desc']) {
+    const vals = tagContents(data, t);
+    const name = t.replace('-', '_');
+    if (vals.some((v) => BLANK_WORDS.test(v))) signals.push(`${name}:blank`);
+    if (vals.some((v) => SHOWTHROUGH_WORDS.test(v))) signals.push(`${name}:showthrough`);
+  }
+  return signals.length ? { signals, bodyLetters, body } : null;
+}
+
+/**
+ * Frozen fixtures (measurement-instruments.md: a positive control the corpus
+ * can repair out from under you is not a control). The first is the shape of a
+ * confirmed #4149 fabrication; the second a CORRECT blank declaration (no body,
+ * must not fire); the third a real page whose tags say nothing blank.
+ */
+const SELF_DECLARED_FIXTURES = [
+  ['<language>Latin</language><page-type>blank</page-type><warning>Page is blank; faint show-through of the verso text.</warning>Quod autem in hoc negotio, & in aliis omnibus, quæ ad salutem animarum pertinent', ['page_type_blank', 'warning:blank', 'warning:showthrough']],
+  ['<page-type>blank</page-type><warning>Blank page with show-through.</warning>', null],
+  ['<page-type>text</page-type><warning>Some foxing in the lower margin.</warning>Quod autem in hoc negotio, & in aliis omnibus, quæ ad salutem', null],
+];
+function selfTestSelfDeclared() {
+  for (const [text, want] of SELF_DECLARED_FIXTURES) {
+    const got = selfDeclaredBlank(text)?.signals ?? null;
+    if (JSON.stringify(got) !== JSON.stringify(want)) throw new Error(`self_declared_blank fixture failed: want ${JSON.stringify(want)}, got ${JSON.stringify(got)}`);
+    if (want && !new RegExp(SELF_DECLARED_PREFILTER, 'i').test(text)) throw new Error('prefilter misses a fixture the rule fires on');
+  }
+}
+
+async function walkSelfDeclaredBlank() {
+  selfTestSelfDeclared();
+  const date = new Date().toISOString().slice(0, 10);
+  const out = arg('out', `scripts/output/self-declared-blank-${date}.jsonl`);
+  const checkpoint = arg('checkpoint', out.replace(/\.jsonl$/, '.checkpoint.json'));
+  const limit = Number(arg('limit', '0'));
+  const PHASES = ['string', 'objectId'];
+  const cp = (!flag('reset') && fs.existsSync(checkpoint))
+    ? JSON.parse(fs.readFileSync(checkpoint, 'utf8'))
+    : { phase: 0, last_id: null, prefiltered: 0, flagged: 0, by_signal: {} };
+  const save = () => fs.writeFileSync(checkpoint, JSON.stringify(cp));
+  fs.mkdirSync(path.dirname(out), { recursive: true });
+  // Resume appends. The checkpoint lags the sink by up to 2,000 pages, so a crash
+  // can re-emit rows on resume: dedupe on page_id before counting.
+  const sink = fs.createWriteStream(out, { flags: cp.last_id == null && cp.phase === 0 ? 'w' : 'a' });
+
+  const client = new MongoClient(process.env.MONGODB_URI);
+  await client.connect();
+  const pages = client.db('bookstore').collection('pages');
+  const started = Date.now();
+  let thisRun = 0;
+  try {
+    while (cp.phase < PHASES.length) {
+      const phase = PHASES[cp.phase];
+      const filter = { 'ocr.data': { $regex: SELF_DECLARED_PREFILTER, $options: 'i' } };
+      // `$gt` compares within one BSON type only, so each phase keeps its native type.
+      filter._id = cp.last_id == null ? { $type: phase }
+        : { $type: phase, $gt: phase === 'objectId' ? new ObjectId(cp.last_id) : cp.last_id };
+      const cursor = pages.find(filter, {
+        projection: { _id: 1, book_id: 1, page_number: 1, 'ocr.data': 1, 'ocr.model': 1, 'ocr.prompt_version': 1, 'ocr.source': 1 },
+      }).sort({ _id: 1 }).batchSize(500).maxTimeMS(14400000);
+      let n = 0;
+      for await (const d of cursor) {
+        n++; thisRun++; cp.prefiltered++;
+        const hit = selfDeclaredBlank(d.ocr?.data);
+        if (hit) {
+          cp.flagged++;
+          for (const s of hit.signals) cp.by_signal[s] = (cp.by_signal[s] || 0) + 1;
+          sink.write(JSON.stringify({
+            page_id: String(d._id), book_id: d.book_id, page_number: d.page_number,
+            signals: hit.signals, body_letters: hit.bodyLetters,
+            model: d.ocr?.model ?? null, prompt_version: d.ocr?.prompt_version ?? null, source: d.ocr?.source ?? null,
+            opening: hit.body.slice(0, 140),
+          }) + '\n');
+        }
+        cp.last_id = String(d._id);
+        if (n % 2000 === 0) {
+          save();
+          if (n % 20000 === 0) {
+            const rate = Math.round(thisRun / ((Date.now() - started) / 1000));
+            console.log(`  [${phase}] prefiltered ${cp.prefiltered} (${rate}/s) · flagged ${cp.flagged} · ${JSON.stringify(cp.by_signal)} · at ${cp.last_id}`);
+          }
+        }
+        if (limit && thisRun >= limit) break;
+      }
+      if (limit && thisRun >= limit) break;
+      cp.phase++; cp.last_id = null; save();
+    }
+  } finally {
+    save();
+    await new Promise((r) => sink.end(r));
+    await client.close();
+  }
+  console.log(JSON.stringify({ complete: cp.phase >= PHASES.length, ...cp, out, checkpoint }, null, 2));
+  console.log('\nNothing was written to the database (#4149).');
 }
 
 /** Weak signals. Any one of them makes a page worth photographing. */
@@ -175,6 +340,7 @@ async function main() {
     process.exit(2);
   }
   if (!process.env.MONGODB_URI) { console.error('MONGODB_URI not set.'); process.exit(1); }
+  if (flag('self-declared-blank')) return walkSelfDeclaredBlank();
   fs.mkdirSync(path.dirname(OUT), { recursive: true });
   const client = new MongoClient(process.env.MONGODB_URI);
   await client.connect();

@@ -1,0 +1,111 @@
+{
+  "summary": {
+    "book_id": "6a4300764e06bc233ecf660a",
+    "title": "De causis errorum. Pars prima. Opus Edoardi Baronis Herbert de Cherbury et Castri insulæ de Kerry.",
+    "published": "1645",
+    "source": "EEBO-TCP A43366",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "probe-too-short": 1
+    },
+    "median_char_acc": 0.9593,
+    "median_char_acc_windowed": 0.9512,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a430076-p2",
+      "page": 2,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a430076-p6",
+      "page": 6,
+      "overlap": 0.838,
+      "probe_words": 239,
+      "ref_chars": 1836,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.178,
+      "char_acc": 0.9696,
+      "char_acc_windowed": 0.969
+    },
+    {
+      "slug": "ed-6a430076-p9",
+      "page": 9,
+      "overlap": 0.945,
+      "probe_words": 223,
+      "ref_chars": 1680,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.153,
+      "char_acc": 0.9603,
+      "char_acc_windowed": 0.9567
+    },
+    {
+      "slug": "ed-6a430076-p14",
+      "page": 14,
+      "overlap": 0.779,
+      "probe_words": 183,
+      "ref_chars": 1442,
+      "engine": "gemini-2.5-flash",
+      "aligned": true,
+      "guard_wer": 0.199,
+      "char_acc": 0.9495,
+      "char_acc_windowed": 0.9487
+    },
+    {
+      "slug": "ed-6a430076-p15",
+      "page": 15,
+      "overlap": 0.918,
+      "probe_words": 247,
+      "ref_chars": 1751,
+      "engine": "gemini-2.5-flash",
+      "aligned": true,
+      "guard_wer": 0.2,
+      "char_acc": 0.9497,
+      "char_acc_windowed": 0.9175
+    },
+    {
+      "slug": "ed-6a430076-p16",
+      "page": 16,
+      "overlap": 0.938,
+      "probe_words": 231,
+      "ref_chars": 1657,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.111,
+      "char_acc": 0.971,
+      "char_acc_windowed": 0.8872
+    },
+    {
+      "slug": "ed-6a430076-p17",
+      "page": 17,
+      "overlap": 0.914,
+      "probe_words": 261,
+      "ref_chars": 1824,
+      "engine": "gemini-2.5-flash",
+      "aligned": true,
+      "guard_wer": 0.158,
+      "char_acc": 0.9538,
+      "char_acc_windowed": 0.9512
+    },
+    {
+      "slug": "ed-6a430076-p22",
+      "page": 22,
+      "overlap": 0.855,
+      "probe_words": 245,
+      "ref_chars": 1851,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.166,
+      "char_acc": 0.9593,
+      "char_acc_windowed": 0.9586
+    }
+  ]
+}

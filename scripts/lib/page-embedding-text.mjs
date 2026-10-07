@@ -25,9 +25,11 @@
  */
 
 import { stripEditorialWrappers } from './strip-editorial-wrappers.mjs';
+import { stripMarkupTags } from './strip-markup-tags.mjs';
 import { addEmbedUsage } from './embedding-usage.mjs';
+import { assertStoreVector, GEMINI_TEXT_MODEL } from './vector-truth.mjs';
 
-export const EMBED_MODEL = 'gemini-embedding-2-preview';
+export const EMBED_MODEL = GEMINI_TEXT_MODEL;
 export const EMBED_DIMS = 768;
 
 /** Gemini embedding-2 supports 8192 tokens; 8000 chars is a safe floor. */
@@ -60,9 +62,8 @@ const MAX_TEXT_CHARS = 50000;
  */
 export function cleanPageText(text, { maxChars = MAX_CHARS } = {}) {
   if (!text || typeof text !== 'string') return '';
-  return stripEditorialWrappers(text)
-    .replace(/<(header|catchword|sig|page-num)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ')
+  return stripMarkupTags(stripEditorialWrappers(text)
+    .replace(/<(header|catchword|sig|page-num)(?:\s[^>]*)?>[\s\S]*?<\/\1>/gi, ' '))
     .replace(/\s+/g, ' ')
     .trim()
     .slice(0, maxChars);
@@ -86,8 +87,15 @@ export function pageEmbeddingInput(page) {
 /**
  * Build the `page_translations` row. Every column the table has, in one place,
  * so the two writers cannot disagree about the shape.
+ *
+ * `model` is REQUIRED and is the model the writer actually called — normally
+ * `vectors.model` from `embedTexts`. The row's `embedding_model` is that value,
+ * never a default, and `assertStoreVector` refuses a vector whose shape or
+ * e5 signature says another model made it (#6175: 2026-04 e5-base vectors
+ * labelled Gemini by a column DEFAULT, unreachable by search).
  */
-export function buildPageEmbeddingRow({ page, book, text, hasTranslation, embedding }) {
+export function buildPageEmbeddingRow({ page, book, text, hasTranslation, embedding, model }) {
+  assertStoreVector(embedding, { model });
   const mongoTs = page.translation?.updated_at || page.ocr?.updated_at || page.updated_at;
   return {
     page_id: page.id,
@@ -101,7 +109,7 @@ export function buildPageEmbeddingRow({ page, book, text, hasTranslation, embedd
     book_language: book?.language ?? null,
     book_year: book?.year ?? null,
     updated_at: mongoTs || new Date(),
-    embedding_model: EMBED_MODEL,
+    embedding_model: model,
     // Freshness watermark of the Mongo source at embed time. `--restale`
     // compares it against current Mongo updated_at to catch drift — a re-OCR or
     // re-translation in Mongo that never got re-embedded.
@@ -173,8 +181,12 @@ export function pageTextForLang(page, lang, { nativeEdition = false } = {}) {
   return text ? { text, embedText: text.slice(0, MAX_CHARS) } : null;
 }
 
-/** Build the `page_texts` row. Every column the table has, in one place. */
-export function buildPageTextRow({ page, book, lang, text, embedding }) {
+/**
+ * Build the `page_texts` row. Every column the table has, in one place.
+ * `model` is required for the same reason as in `buildPageEmbeddingRow`.
+ */
+export function buildPageTextRow({ page, book, lang, text, embedding, model }) {
+  assertStoreVector(embedding, { model });
   const t = page?.translations?.[lang] ?? (lang === 'es' ? page?.translation_es : null);
   // For a native edition the text came from OCR, so the staleness watermark has
   // to track the OCR's timestamp — keying on a translation that will never
@@ -192,7 +204,7 @@ export function buildPageTextRow({ page, book, lang, text, embedding }) {
     book_language: book?.language ?? null,
     book_year: book?.year ?? null,
     updated_at: mongoTs || new Date(),
-    embedding_model: EMBED_MODEL,
+    embedding_model: model,
     mongo_updated_at: mongoTs || null,
   };
 }
@@ -229,6 +241,9 @@ export function pageTextUpsertValues(row) {
 /**
  * Embed a batch of texts. Retries on 429 with a growing backoff, because the
  * caller is usually a long-running loop that should slow down rather than die.
+ * The returned array carries `.model` — the model that produced it — which the
+ * row builders above require, so a vector from anywhere else has no label to
+ * borrow.
  */
 export async function embedTexts(texts, apiKey, { signal, usage } = {}) {
   if (!texts.length) return [];
@@ -264,7 +279,9 @@ export async function embedTexts(texts, apiKey, { signal, usage } = {}) {
     // Counted only on SUCCESS. A 429 that retried was not billed for a result,
     // and a throw above never produced one.
     addEmbedUsage(usage, texts);
-    return data.embeddings.map((e) => e.values);
+    const vectors = data.embeddings.map((e) => e.values);
+    vectors.model = EMBED_MODEL;
+    return vectors;
   }
   throw new Error('Gemini rate limit did not clear after 6 attempts');
 }

@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "book_id": "69de0cf180210ba13d79fa39",
+    "title": "Poems on Several Occasions",
+    "published": "1680",
+    "source": "EEBO-TCP A57495",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 8,
+    "skips": {},
+    "median_char_acc": 0.9566,
+    "median_char_acc_windowed": 0.9477,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-69de0cf1-p51",
+      "page": 51,
+      "overlap": 0.91,
+      "probe_words": 218,
+      "ref_chars": 1359,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.086,
+      "char_acc": 0.9637,
+      "char_acc_windowed": 0.9607
+    },
+    {
+      "slug": "ed-69de0cf1-p52",
+      "page": 52,
+      "overlap": 0.9,
+      "probe_words": 236,
+      "ref_chars": 1392,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.083,
+      "char_acc": 0.9645,
+      "char_acc_windowed": 0.9576
+    },
+    {
+      "slug": "ed-69de0cf1-p65",
+      "page": 65,
+      "overlap": 0.746,
+      "probe_words": 167,
+      "ref_chars": 813,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.189,
+      "char_acc": 0.9458,
+      "char_acc_windowed": 0.5036
+    },
+    {
+      "slug": "ed-69de0cf1-p76",
+      "page": 76,
+      "overlap": 0.786,
+      "probe_words": 198,
+      "ref_chars": 1247,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.146,
+      "char_acc": 0.9499,
+      "char_acc_windowed": 0.9477
+    },
+    {
+      "slug": "ed-69de0cf1-p98",
+      "page": 98,
+      "overlap": 0.872,
+      "probe_words": 229,
+      "ref_chars": 1467,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.104,
+      "char_acc": 0.9566,
+      "char_acc_windowed": 0.9382
+    },
+    {
+      "slug": "ed-69de0cf1-p103",
+      "page": 103,
+      "overlap": 0.874,
+      "probe_words": 250,
+      "ref_chars": 1535,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.097,
+      "char_acc": 0.9458,
+      "char_acc_windowed": 0.9353
+    },
+    {
+      "slug": "ed-69de0cf1-p111",
+      "page": 111,
+      "overlap": 0.81,
+      "probe_words": 214,
+      "ref_chars": 1413,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.134,
+      "char_acc": 0.934,
+      "char_acc_windowed": 0.9039
+    },
+    {
+      "slug": "ed-69de0cf1-p116",
+      "page": 116,
+      "overlap": 0.908,
+      "probe_words": 209,
+      "ref_chars": 1339,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.09,
+      "char_acc": 0.9573,
+      "char_acc_windowed": 0.9533
+    }
+  ]
+}

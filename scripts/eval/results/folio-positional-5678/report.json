@@ -1,0 +1,130 @@
+{
+  "at": "2026-10-03T20:13:04.200Z",
+  "seam_ab": {
+    "pagebreak/B": {
+      "blocks": 100,
+      "readings": {
+        "literal": 79,
+        "renumbered": 11,
+        "opener-missing": 9,
+        "partial": 1
+      },
+      "parse_fail_old": 17,
+      "parse_fail_new": 1,
+      "spans_differ_from_judged": 2,
+      "real_defects_old_parse": 28,
+      "real_defects_new_parse": 15,
+      "defects_removed_by_parse": 13
+    },
+    "pagebreak/C": {
+      "blocks": 100,
+      "readings": {
+        "renumbered": 11,
+        "literal": 89
+      },
+      "parse_fail_old": 11,
+      "parse_fail_new": 0,
+      "spans_differ_from_judged": 0,
+      "real_defects_old_parse": 18,
+      "real_defects_new_parse": 8,
+      "defects_removed_by_parse": 10
+    },
+    "control/B": {
+      "blocks": 20,
+      "readings": {
+        "opener-missing": 2,
+        "literal": 15,
+        "renumbered": 3
+      },
+      "parse_fail_old": 5,
+      "parse_fail_new": 0,
+      "spans_differ_from_judged": 0,
+      "real_defects_old_parse": 5,
+      "real_defects_new_parse": 0,
+      "defects_removed_by_parse": 5
+    },
+    "control/C": {
+      "blocks": 20,
+      "readings": {
+        "literal": 18,
+        "renumbered": 2
+      },
+      "parse_fail_old": 2,
+      "parse_fail_new": 0,
+      "spans_differ_from_judged": 0,
+      "real_defects_old_parse": 2,
+      "real_defects_new_parse": 0,
+      "defects_removed_by_parse": 2
+    }
+  },
+  "tengyur": [
+    {
+      "block": "v113-p116-123",
+      "reading": "literal",
+      "missing": [],
+      "pages_differing_from_stored": []
+    },
+    {
+      "block": "v113-p124-126",
+      "reading": "literal",
+      "missing": [],
+      "pages_differing_from_stored": []
+    },
+    {
+      "block": "v113-p224-231",
+      "reading": "literal",
+      "missing": [],
+      "pages_differing_from_stored": []
+    },
+    {
+      "block": "v113-p232-234",
+      "reading": "literal",
+      "missing": [],
+      "pages_differing_from_stored": []
+    },
+    {
+      "block": "v33-p170-177",
+      "reading": "literal",
+      "missing": [],
+      "pages_differing_from_stored": []
+    },
+    {
+      "block": "v33-p178-180",
+      "reading": "literal",
+      "missing": [],
+      "pages_differing_from_stored": []
+    },
+    {
+      "block": "v96-p113-120",
+      "reading": "literal",
+      "missing": [],
+      "pages_differing_from_stored": []
+    },
+    {
+      "block": "v96-p121-124",
+      "reading": "partial",
+      "missing": [
+        123
+      ],
+      "pages_differing_from_stored": []
+    },
+    {
+      "block": "v96-p28-35",
+      "reading": "literal",
+      "missing": [],
+      "pages_differing_from_stored": []
+    },
+    {
+      "block": "v96-p36-37",
+      "reading": "literal",
+      "missing": [],
+      "pages_differing_from_stored": []
+    },
+    {
+      "block": "v96-p39-43",
+      "reading": "literal",
+      "missing": [],
+      "pages_differing_from_stored": []
+    }
+  ]
+}

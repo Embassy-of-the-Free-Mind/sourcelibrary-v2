@@ -1,0 +1,109 @@
+{
+ "id": "699062f5ef12272ffdc8e9d5_00505",
+ "image_legible": true,
+ "ocr_word_errors": 16,
+ "ocr_words_approx": 560,
+ "ocr_errors": [
+  {
+   "image": "hebreoꝝ ēt celestib' sanctis angelis (ēt = etiam)",
+   "ocr": "hebreo℞ et celestib' sanctis angelis",
+   "effect_on_english": "'and the holy heavenly angels ... forbids sacrifice to any other' — loses 'forbids sacrifice EVEN TO the angels'"
+  },
+  {
+   "image": "deū solez credat eē (solem, the sun)",
+   "ocr": "deū soluz credat eē",
+   "effect_on_english": "'think there is only one God to whom sacrifice is due' + wrong note; makes the following 'non ita' senseless"
+  },
+  {
+   "image": "obstrusa uel rara sūt",
+   "ocr": "obstruŝa uel raza sūt",
+   "effect_on_english": "'not hidden or erased' (should be 'abstruse or rare')"
+  },
+  {
+   "image": "inq̄sitionem de ipso. Inq̄sitio eim purgat (inquisitio, twice)",
+   "ocr": "institūtionem de ipso. Institūtio eīm purgat",
+   "effect_on_english": "'instruction' twice instead of 'inquiry'"
+  },
+  {
+   "image": "fatū nō ꝯcessit a dijs dona obtiere",
+   "ocr": "fatū nō pcessit a dño dona obtiere",
+   "effect_on_english": "'fate did not truly proceed from the Lord' (should be: fate has not granted to obtain gifts from the gods)"
+  },
+  {
+   "image": "idocti ⁊ ipie nature (impie)",
+   "ocr": "idocti ⁊ ipse nature",
+   "effect_on_english": "'those of such a nature' — 'impious' lost"
+  },
+  {
+   "image": "sꝫ ēt reuereri (sed etiam)",
+   "ocr": "sʒ et reuereri",
+   "effect_on_english": "none (rendered 'but even')"
+  },
+  {
+   "image": "dicit mīmos uł minores (minimos)",
+   "ocr": "dicit mimos uł minores",
+   "effect_on_english": "none (served guessed 'least'; other models wrote 'mimes')"
+  },
+  {
+   "image": "oracula icrepueꝛt (increpuerunt)",
+   "ocr": "oracula itepuerūt",
+   "effect_on_english": "none (served 'thundered'; other models wrote 'interpreted')"
+  },
+  {
+   "image": "ne sacrificet̃ eē preceptū: qꝛ ⁊ i scripturis (sacrificetur ... quia)",
+   "ocr": "ne sacrificer' eē preceptū: q' ⁊ i scripturis",
+   "effect_on_english": "none in served ('who are themselves called gods' for 'because they too')"
+  },
+  {
+   "image": "deos quidē oēs recusauerūt",
+   "ocr": "deos quidē oēs reculauerūt",
+   "effect_on_english": "none"
+  },
+  {
+   "image": "quod euidēter / nulli ōnino / rei mysteriū / tā excellēter(?)",
+   "ocr": "quod cuidēter / nulli ōniuo / rei mysteriā / tā excellētē",
+   "effect_on_english": "none"
+  }
+ ],
+ "page_cause": "translation",
+ "causes": [
+  {
+   "finding": "'That it should be understood this way' drops the negation in 'nō ita eē itelligēdum' (major, reversal)",
+   "cause": "translation",
+   "image": "Quod nō ita eē itelligēdum i scripturis grecis facillie repit̃",
+   "ocr": "Quod nō ita eē itelligēdum i scripturis grecis facillie repť",
+   "english": "That it should be understood this way is very easily found"
+  },
+  {
+   "finding": "Note 'the Lord refers to the specific God of the Bible' misreads the soli/Solem warning",
+   "cause": "ocr_misread",
+   "image": "ne forte ꝙ ait dño soli: deū solez credat eē",
+   "ocr": "ne forte q' ait dño soli: deū soluz credat eē",
+   "english": "think there is only one God to whom sacrifice is due"
+  },
+  {
+   "finding": "'and the holy heavenly angels ...' blurs that sacrifice is forbidden even to angels",
+   "cause": "ocr_abbrev",
+   "image": "sapiētes hebreoꝝ ēt celestib' sanctis angelis ... sacrificari uetat",
+   "ocr": "sapiētes hebreo℞ et celestib' sanctis angelis",
+   "english": "and the holy heavenly angels ... forbids sacrifice to any other"
+  },
+  {
+   "finding": "'not hidden or erased' for 'obstruŝa uel raza' (not abstruse or rare)",
+   "cause": "ocr_misread",
+   "image": "Non eim obstrusa uel rara sūt",
+   "ocr": "Non eim obstruŝa uel raza sūt",
+   "english": "for they are not hidden or erased"
+  },
+  {
+   "finding": "Term note on 'fatum' attributes Porphyry's quoted oracle text to Augustine's critique",
+   "cause": "translation",
+   "image": "qbus uere fatū nō ꝯcessit a dijs dona obtiere",
+   "ocr": "qbus uere fatū nō pcessit a dño dona obtiere",
+   "english": "to whom fate did not truly proceed from the Lord"
+  }
+ ],
+ "share_of_served_error_from_ocr": "most",
+ "fixed_transcription_written": true,
+ "note": "Worst error (dropped 'non' in 'Quod non ita esse intelligendum') sits where the OCR is right, but one line above the OCR has 'soluz' for the printed 'solez' (solem, the sun), which makes the negated sentence unintelligible and likely provoked the flip. All the minor findings trace to OCR: ēt (etiam) read as et, rara as raza, inquisitio as institutio, concessit a dijs as pcessit a dño, impie as ipse. 'tm̄ erat' (= tantum errat) is the printer's own spelling and is kept. One reading is uncertain: 'excellēteſ' is written as excellenter in the fixed file."
+}

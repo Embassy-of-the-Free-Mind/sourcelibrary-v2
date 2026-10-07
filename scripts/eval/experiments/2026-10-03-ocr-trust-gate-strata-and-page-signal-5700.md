@@ -1,0 +1,13 @@
+## 2026-10-03 · Which untranslated pages sit on OCR we already know is bad, and can a cheap page signal find the rest? (#5700)
+<!-- PRIOR ART: scripts/lib/ocr-garble-score.mjs + ocr-garble-verdict.mjs (#5313: the features, reused; tuned against a judge's "garbled" label, never against an image-checked cause); scripts/eval/quality-census-score.mjs (#5707: sampled served defects, not pending pages per stratum); the #5695 track results under scripts/eval/results/xlref-t*-2026-10 (the cause labels this calibrates on). -->
+
+- **Question.** #5695 found the OCR is the primary cause of most low English in four strata. (1) How many pages in those strata are still untranslated and would be translated next? (2) Can a cheap signal on a page's OCR text identify "the OCR is why this English is wrong", well enough to refuse the page?
+- **Design.** $0, read-only Mongo, no model calls. (1) Exact page-by-page count over every live book a stratum could take, using the gate's own classifier (`scripts/lib/ocr-trust-gate.mjs`). (2) The 135 pages of #5695 whose image was opened and whose defects were attributed (T1–T5); positive = OCR named as primary cause (48). Seven signals swept over thresholds. Bar fixed in the job brief before the run: precision ≥ 0.8 at a useful recall, else record the numbers and wire nothing.
+- **Spend.** $0.
+- **Result.**
+  - **Pending in the gated strata: 10,005 pages in 703 books** (Greek manuscripts 2,242; Greek print 1450–1599 2,393; Persian 584; Latin incunabula 4,786). Auto-eligible today: 3,207 pages in 10 books. Open chained runs on them: 0 of 68.
+  - **No page signal meets the bar.** Doubt-marker density: P 0.60, R 0.06. Script mismatch: P 0.42, R 0.58. Greek dictionary miss touches it at P 0.80 on five flagged pages (CI 0.38–0.96), R 0.24. `ocrSelfCaution` never fires. Fluent wrong OCR looks like clean OCR to every text-only feature.
+- **Decision it feeds.** The translate-side gate is per stratum (book level), not per page: "Translate only where the OCR is trusted" in `scripts/eval/DECISIONS.md`.
+- **Caveats.** The calibration set is enriched for low pages; thresholds were swept on the pages they are scored on; 16 pages were re-read after the eval (result unchanged without them); the lexicon is built from our own OCR. 351 Greek books have no script tag and no date in the gated window, so a manuscript among them is not seen.
+- *Replicated?* No. Both scripts are deterministic and re-run at $0.
+- **Artifact.** `scripts/eval/results/ocr-trust-gate-2026-10/` (`README.md`, `census.json`, `census-books.jsonl`, `page-signal-calibration.json`, `page-signal-rows.jsonl`).

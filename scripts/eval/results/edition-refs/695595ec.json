@@ -1,0 +1,112 @@
+{
+  "summary": {
+    "book_id": "695595ec7bd6d2cd1d620aba",
+    "title": "Lectures de Potentia Restitutiva, or of Spring",
+    "published": "1678",
+    "source": "EEBO-TCP A44322",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "no-window": 1
+    },
+    "median_char_acc": 0.9784,
+    "median_char_acc_windowed": 0.9757,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-695595ec-p2",
+      "page": 2,
+      "skipped": "no-window",
+      "overlap": 0.153
+    },
+    {
+      "slug": "ed-695595ec-p9",
+      "page": 9,
+      "overlap": 1,
+      "probe_words": 305,
+      "ref_chars": 1877,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.087,
+      "char_acc": 0.977,
+      "char_acc_windowed": 0.9757
+    },
+    {
+      "slug": "ed-695595ec-p16",
+      "page": 16,
+      "overlap": 1,
+      "probe_words": 194,
+      "ref_chars": 1310,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.111,
+      "char_acc": 0.9679,
+      "char_acc_windowed": 0.9669
+    },
+    {
+      "slug": "ed-695595ec-p17",
+      "page": 17,
+      "overlap": 1,
+      "probe_words": 340,
+      "ref_chars": 1198,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.073,
+      "char_acc": 0.9895,
+      "char_acc_windowed": 0.8452
+    },
+    {
+      "slug": "ed-695595ec-p26",
+      "page": 26,
+      "overlap": 1,
+      "probe_words": 216,
+      "ref_chars": 1374,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.083,
+      "char_acc": 0.9752,
+      "char_acc_windowed": 0.9743
+    },
+    {
+      "slug": "ed-695595ec-p28",
+      "page": 28,
+      "overlap": 1,
+      "probe_words": 332,
+      "ref_chars": 1854,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.092,
+      "char_acc": 0.9784,
+      "char_acc_windowed": 0.9777
+    },
+    {
+      "slug": "ed-695595ec-p43",
+      "page": 43,
+      "overlap": 1,
+      "probe_words": 326,
+      "ref_chars": 1815,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.064,
+      "char_acc": 0.9806,
+      "char_acc_windowed": 0.9799
+    },
+    {
+      "slug": "ed-695595ec-p48",
+      "page": 48,
+      "overlap": 1,
+      "probe_words": 366,
+      "ref_chars": 1982,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.046,
+      "char_acc": 0.985,
+      "char_acc_windowed": 0.9818
+    }
+  ]
+}

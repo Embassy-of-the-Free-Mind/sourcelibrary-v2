@@ -69,10 +69,13 @@ export function findCitedArtworkSlugs(text: string): string[] {
  * real route; `/collection/<slug>` (singular) is not a route at all and always
  * 404s, so it needs no lookup.
  */
-export function findCitedCollectionSlugs(text: string): { plural: string[]; singular: string[] } {
+export function findCitedCollectionSlugs(text: string): { plural: string[]; singular: string[]; spanish: string[] } {
   const plural = [...text.matchAll(new RegExp(`${SITE_HOST_PATTERN}\\/collections\\/([a-z0-9-]+)`, 'g'))].map(m => m[1]);
   const singular = [...text.matchAll(new RegExp(`${SITE_HOST_PATTERN}\\/collection\\/([a-z0-9-]+)`, 'g'))].map(m => m[1]);
-  return { plural, singular };
+  // The /es twin has a stricter existence rule than the English page
+  // (esCollectionSlugs), so links cited under /es are checked separately.
+  const spanish = [...text.matchAll(/(?<![\w.-])sourcelibrary\.org\/es\/collections\/([a-z0-9-]+)/g)].map(m => m[1]);
+  return { plural, singular, spanish };
 }
 
 /**

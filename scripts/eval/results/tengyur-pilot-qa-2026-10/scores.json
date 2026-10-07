@@ -1,0 +1,947 @@
+{
+ "C": {
+  "controls": {
+   "NEG_pass": "10/10",
+   "PLANT_pass": "10/10",
+   "DUP_same_fidelity": "8/10",
+   "DUP_same_inversion": "9/10",
+   "DUP_same_omission": "10/10",
+   "detail": {
+    "NEG": [
+     {
+      "judge": "A",
+      "vol": 113,
+      "fidelity": 1,
+      "pass": true
+     },
+     {
+      "judge": "B",
+      "vol": 113,
+      "fidelity": 1,
+      "pass": true
+     },
+     {
+      "judge": "A",
+      "vol": 33,
+      "fidelity": 1,
+      "pass": true
+     },
+     {
+      "judge": "B",
+      "vol": 33,
+      "fidelity": 1,
+      "pass": true
+     },
+     {
+      "judge": "A",
+      "vol": 96,
+      "fidelity": 1,
+      "pass": true
+     },
+     {
+      "judge": "B",
+      "vol": 96,
+      "fidelity": 1,
+      "pass": true
+     },
+     {
+      "judge": "A",
+      "vol": 174,
+      "fidelity": 1,
+      "pass": true
+     },
+     {
+      "judge": "B",
+      "vol": 174,
+      "fidelity": 1,
+      "pass": true
+     },
+     {
+      "judge": "A",
+      "vol": 157,
+      "fidelity": 1,
+      "pass": true
+     },
+     {
+      "judge": "B",
+      "vol": 157,
+      "fidelity": 1,
+      "pass": true
+     }
+    ],
+    "PLANT": [
+     {
+      "judge": "A",
+      "vol": 113,
+      "type": "inversion",
+      "caught_flag": true,
+      "plant_quoted": true,
+      "fid_plant": 3,
+      "fid_orig": 5,
+      "pass": true
+     },
+     {
+      "judge": "B",
+      "vol": 113,
+      "type": "inversion",
+      "caught_flag": true,
+      "plant_quoted": true,
+      "fid_plant": 4,
+      "fid_orig": 5,
+      "pass": true
+     },
+     {
+      "judge": "A",
+      "vol": 33,
+      "type": "inversion (swap)",
+      "caught_flag": true,
+      "plant_quoted": true,
+      "fid_plant": 3,
+      "fid_orig": 5,
+      "pass": true
+     },
+     {
+      "judge": "B",
+      "vol": 33,
+      "type": "inversion (swap)",
+      "caught_flag": true,
+      "plant_quoted": true,
+      "fid_plant": 4,
+      "fid_orig": 5,
+      "pass": true
+     },
+     {
+      "judge": "A",
+      "vol": 96,
+      "type": "inversion",
+      "caught_flag": true,
+      "plant_quoted": true,
+      "fid_plant": 3,
+      "fid_orig": 4,
+      "pass": true
+     },
+     {
+      "judge": "B",
+      "vol": 96,
+      "type": "inversion",
+      "caught_flag": true,
+      "plant_quoted": true,
+      "fid_plant": 4,
+      "fid_orig": 4,
+      "pass": true
+     },
+     {
+      "judge": "A",
+      "vol": 174,
+      "type": "inversion",
+      "caught_flag": true,
+      "plant_quoted": true,
+      "fid_plant": 3,
+      "fid_orig": 4,
+      "pass": true
+     },
+     {
+      "judge": "B",
+      "vol": 174,
+      "type": "inversion",
+      "caught_flag": true,
+      "plant_quoted": true,
+      "fid_plant": 3,
+      "fid_orig": 3,
+      "pass": true
+     },
+     {
+      "judge": "A",
+      "vol": 157,
+      "type": "added fact",
+      "caught_flag": true,
+      "plant_quoted": true,
+      "fid_plant": 3,
+      "fid_orig": 4,
+      "pass": true
+     },
+     {
+      "judge": "B",
+      "vol": 157,
+      "type": "added fact",
+      "caught_flag": true,
+      "plant_quoted": true,
+      "fid_plant": 4,
+      "fid_orig": 4,
+      "pass": true
+     }
+    ],
+    "DUP": [
+     {
+      "judge": "A",
+      "vol": 113,
+      "fid_dup": 5,
+      "fid_orig": 5,
+      "same_fid": true,
+      "same_inversion": true,
+      "same_omission": true
+     },
+     {
+      "judge": "B",
+      "vol": 113,
+      "fid_dup": 5,
+      "fid_orig": 5,
+      "same_fid": true,
+      "same_inversion": true,
+      "same_omission": true
+     },
+     {
+      "judge": "A",
+      "vol": 33,
+      "fid_dup": 5,
+      "fid_orig": 4,
+      "same_fid": false,
+      "same_inversion": true,
+      "same_omission": true
+     },
+     {
+      "judge": "B",
+      "vol": 33,
+      "fid_dup": 5,
+      "fid_orig": 5,
+      "same_fid": true,
+      "same_inversion": true,
+      "same_omission": true
+     },
+     {
+      "judge": "A",
+      "vol": 96,
+      "fid_dup": 3,
+      "fid_orig": 4,
+      "same_fid": false,
+      "same_inversion": true,
+      "same_omission": true
+     },
+     {
+      "judge": "B",
+      "vol": 96,
+      "fid_dup": 4,
+      "fid_orig": 4,
+      "same_fid": true,
+      "same_inversion": false,
+      "same_omission": true
+     },
+     {
+      "judge": "A",
+      "vol": 174,
+      "fid_dup": 4,
+      "fid_orig": 4,
+      "same_fid": true,
+      "same_inversion": true,
+      "same_omission": true
+     },
+     {
+      "judge": "B",
+      "vol": 174,
+      "fid_dup": 4,
+      "fid_orig": 4,
+      "same_fid": true,
+      "same_inversion": true,
+      "same_omission": true
+     },
+     {
+      "judge": "A",
+      "vol": 157,
+      "fid_dup": 5,
+      "fid_orig": 5,
+      "same_fid": true,
+      "same_inversion": true,
+      "same_omission": true
+     },
+     {
+      "judge": "B",
+      "vol": 157,
+      "fid_dup": 5,
+      "fid_orig": 5,
+      "same_fid": true,
+      "same_inversion": true,
+      "same_omission": true
+     }
+    ]
+   }
+  },
+  "real_pages": 40,
+  "per_judge": {
+   "A": {
+    "n": 40,
+    "cant_tell": 0,
+    "median": 4.0,
+    "share_ge4": 0.85,
+    "dist": {
+     "3": 6,
+     "4": 19,
+     "5": 15
+    }
+   },
+   "B": {
+    "n": 40,
+    "cant_tell": 0,
+    "median": 4.0,
+    "share_ge4": 0.95,
+    "dist": {
+     "3": 2,
+     "4": 21,
+     "5": 17
+    }
+   }
+  },
+  "agreement": {
+   "exact": 28,
+   "within1": 40,
+   "n": 40,
+   "omission_agree": 39,
+   "inversion_agree": 38
+  },
+  "combined": {
+   "median": 4.0,
+   "share_ge4": 0.825,
+   "n": 40
+  },
+  "by_volume": {
+   "33": {
+    "n": 8,
+    "median_mean_fid": 4.5,
+    "share_ge4": 0.875,
+    "omission_either": 1,
+    "inversion_either": 0,
+    "inversion_both": 0
+   },
+   "96": {
+    "n": 8,
+    "median_mean_fid": 4.5,
+    "share_ge4": 0.875,
+    "omission_either": 0,
+    "inversion_either": 3,
+    "inversion_both": 1
+   },
+   "113": {
+    "n": 8,
+    "median_mean_fid": 4.75,
+    "share_ge4": 1.0,
+    "omission_either": 1,
+    "inversion_either": 0,
+    "inversion_both": 0
+   },
+   "157": {
+    "n": 8,
+    "median_mean_fid": 4.0,
+    "share_ge4": 0.875,
+    "omission_either": 2,
+    "inversion_either": 1,
+    "inversion_both": 1
+   },
+   "174": {
+    "n": 8,
+    "median_mean_fid": 3.75,
+    "share_ge4": 0.5,
+    "omission_either": 4,
+    "inversion_either": 0,
+    "inversion_both": 0
+   }
+  },
+  "omission_pages": {
+   "A": 8,
+   "B": 7
+  },
+  "omission_either": 8,
+  "inversion_pages": {
+   "A": 3,
+   "B": 3
+  },
+  "inversion_either": 4,
+  "inversion_both": 2,
+  "invention_mentions": {
+   "A": {
+    "boundary": 11,
+    "gloss": 3,
+    "added_fact": 2
+   },
+   "B": {
+    "boundary": 8,
+    "added_fact": 1,
+    "gloss": 2
+   }
+  },
+  "pages_with_invention_type": {
+   "A": {
+    "boundary": 9,
+    "unreadable_fill": 0,
+    "added_fact": 2,
+    "gloss": 3
+   },
+   "B": {
+    "boundary": 8,
+    "unreadable_fill": 0,
+    "added_fact": 1,
+    "gloss": 1
+   }
+  },
+  "markup": {
+   "A": {
+    "ignored": 35,
+    "n/a": 3,
+    "leaked": 2
+   },
+   "B": {
+    "ignored": 38,
+    "leaked": 2
+   }
+  },
+  "inversions": [
+   {
+    "cid": "C619",
+    "judge": "B",
+    "vol": 96,
+    "page": 5,
+    "folio": "f. 3a",
+    "url": "https://sourcelibrary.org/book/6abeb158896ea18127c82682?page=5",
+    "english": "Because motion does not exist prior to the goer, who would go where?",
+    "tibetan": "གང་ཕྱིར་འགྲོ་བའི་སྔ་རོལ་མེད།",
+    "should_be": "Because [the goer] does not exist prior to the going",
+    "other_judge_flagged": false
+   },
+   {
+    "cid": "C804",
+    "judge": "A",
+    "vol": 96,
+    "page": 6,
+    "folio": "f. 3b",
+    "url": "https://sourcelibrary.org/book/6abeb158896ea18127c82682?page=6",
+    "english": "Without the act of seeing, the viewer does not exist; the same applies even if the act of seeing is abandoned.",
+    "tibetan": "མ་སྤངས་ལྟ་པོ་ཡོད་མིན་ཏེ། །ལྟ་བ་སྤངས་པར་གྱུར་ཀྱང་ངོ་།",
+    "should_be": "There is no seer not separated from seeing, nor one separated from seeing.",
+    "other_judge_flagged": false
+   },
+   {
+    "cid": "C315",
+    "judge": "A",
+    "vol": 96,
+    "page": 115,
+    "folio": "f. 58b",
+    "url": "https://sourcelibrary.org/book/6abeb158896ea18127c82682?page=115",
+    "english": "An entity with a personal inherent nature does not exist.",
+    "tibetan": "ཆོས་ཀྱི་ངོ་བོ་ཉིད་མེད་པའི་དངོས་པོ་ནི་མེད་དོ།",
+    "should_be": "There is no entity lacking the inherent nature of dharmas.",
+    "other_judge_flagged": true
+   },
+   {
+    "cid": "C315",
+    "judge": "B",
+    "vol": 96,
+    "page": 115,
+    "folio": "f. 58b",
+    "url": "https://sourcelibrary.org/book/6abeb158896ea18127c82682?page=115",
+    "english": "An entity with a personal inherent nature does not exist.",
+    "tibetan": "ཆོས་ཀྱི་ངོ་བོ་ཉིད་མེད་པའི་དངོས་པོ་ནི་མེད་དོ",
+    "should_be": "An entity lacking the inherent nature of phenomena does not exist.",
+    "other_judge_flagged": true
+   },
+   {
+    "cid": "C566",
+    "judge": "A",
+    "vol": 157,
+    "page": 26,
+    "folio": "f. 14a",
+    "url": "https://sourcelibrary.org/book/6abec7fa896ea18127c8ac69?page=26",
+    "english": "\"Having previously established the foundation of training\"",
+    "tibetan": "སྔར་བསླབ་པའི་གཞི་མ་བཅས་ཤིང་",
+    "should_be": "\"The basis of training had not yet been laid down\"",
+    "other_judge_flagged": true
+   },
+   {
+    "cid": "C566",
+    "judge": "A",
+    "vol": 157,
+    "page": 26,
+    "folio": "f. 14a",
+    "url": "https://sourcelibrary.org/book/6abec7fa896ea18127c8ac69?page=26",
+    "english": "therefore, the foundation of training was established previously",
+    "tibetan": "དེའི་ཕྱིར་སྔར་བསླབ་པའི་གཞི་མ་བཅས་སོ།",
+    "should_be": "therefore the basis of training had not previously been laid down",
+    "other_judge_flagged": true
+   },
+   {
+    "cid": "C566",
+    "judge": "B",
+    "vol": 157,
+    "page": 26,
+    "folio": "f. 14a",
+    "url": "https://sourcelibrary.org/book/6abec7fa896ea18127c8ac69?page=26",
+    "english": "\"Having previously established the foundation of training\" ... therefore, the foundation of training was established previously",
+    "tibetan": "སྔར་བསླབ་པའི་གཞི་མ་བཅས་ཤིང་ ... དེའི་ཕྱིར་སྔར་བསླབ་པའི་གཞི་མ་བཅས་སོ།",
+    "should_be": "the training rule had NOT previously been laid down ... therefore it had not previously been laid down",
+    "other_judge_flagged": true
+   }
+  ],
+  "omissions": [
+   {
+    "cid": "C781",
+    "judge": "A",
+    "vol": 113,
+    "page": 226,
+    "omission": "བྱ་བས་གསུངས་སོ།"
+   },
+   {
+    "cid": "C257",
+    "judge": "A",
+    "vol": 33,
+    "page": 178,
+    "omission": "ཞལ་གསུམ་ཕྱག་དྲུག་པ་སྤྱན་གསུམ་པ་གཡོན་བརྐྱང་པ"
+   },
+   {
+    "cid": "C257",
+    "judge": "A",
+    "vol": 33,
+    "page": 178,
+    "omission": "འཕགས་པ་རྟ་མགྲིན་དུ་"
+   },
+   {
+    "cid": "C257",
+    "judge": "A",
+    "vol": 33,
+    "page": 178,
+    "omission": "ཁྲོད་ཀྱི་གོས་ལ་སོགས་པ་ལ"
+   },
+   {
+    "cid": "C257",
+    "judge": "B",
+    "vol": 33,
+    "page": 178,
+    "omission": "ཞལ་གསུམ་ཕྱག་དྲུག་པ་སྤྱན་གསུམ་པ"
+   },
+   {
+    "cid": "C257",
+    "judge": "B",
+    "vol": 33,
+    "page": 178,
+    "omission": "གཡོན་བརྐྱང་པ་ལ་གནས་པ་འཕགས་པ་རྟ་མགྲིན་དུ་"
+   },
+   {
+    "cid": "C257",
+    "judge": "B",
+    "vol": 33,
+    "page": 178,
+    "omission": "ཁྲོད་ཀྱི་གོས་ལ་སོགས་པ་ལ"
+   },
+   {
+    "cid": "C171",
+    "judge": "A",
+    "vol": 174,
+    "page": 46,
+    "omission": "གི་རྗེས་སུ་ཞུགས་ནས་འཛིན་པ་ནི་མ་མཐོང་ངོ་"
+   },
+   {
+    "cid": "C171",
+    "judge": "B",
+    "vol": 174,
+    "page": 46,
+    "omission": {
+     "tibetan": "གི་རྗེས་སུ་ཞུགས་ནས་འཛིན་པ་ནི་མ་མཐོང་ངོ་།"
+    }
+   },
+   {
+    "cid": "C568",
+    "judge": "A",
+    "vol": 174,
+    "page": 208,
+    "omission": "པ་ན། །རྗོད་བྱེད་ཇི་ལྟར་ཐོས་པ་ཡིན།"
+   },
+   {
+    "cid": "C568",
+    "judge": "B",
+    "vol": 174,
+    "page": 208,
+    "omission": {
+     "tibetan": "པ་ན། །རྗོད་བྱེད་ཇི་ལྟར་ཐོས་པ་ཡིན།"
+    }
+   },
+   {
+    "cid": "C808",
+    "judge": "A",
+    "vol": 174,
+    "page": 219,
+    "omission": "གནས། །མེ་དང་ཟངས་མའི་ཞུ་ཉིད་བཞིན།"
+   },
+   {
+    "cid": "C808",
+    "judge": "B",
+    "vol": 174,
+    "page": 219,
+    "omission": "གནས། །མེ་དང་ཟངས་མའི་ཞུ་ཉིད་བཞིན།"
+   },
+   {
+    "cid": "C808",
+    "judge": "B",
+    "vol": 174,
+    "page": 219,
+    "omission": "གཞན་ཡིན་ན་ཡང་དེ་རྒྱུ་ཉིད།"
+   },
+   {
+    "cid": "C896",
+    "judge": "A",
+    "vol": 174,
+    "page": 232,
+    "omission": "འདོགས་ཉིད་ནི་ཀུན་ལ་ཡོད།"
+   },
+   {
+    "cid": "C896",
+    "judge": "B",
+    "vol": 174,
+    "page": 232,
+    "omission": {
+     "tibetan": "འདོགས་ཉིད་ནི་ཀུན་ལ་ཡོད།"
+    }
+   },
+   {
+    "cid": "C286",
+    "judge": "A",
+    "vol": 157,
+    "page": 28,
+    "omission": "ཀྱང་ཆེས་ཤས་ཆེ་བར་གྱུར་ཏེ་ཞེས་གསུངས་པ་ཡིན་ནོ།"
+   },
+   {
+    "cid": "C286",
+    "judge": "B",
+    "vol": 157,
+    "page": 28,
+    "omission": {
+     "tibetan": "ཀྱང་ཆེས་ཤས་ཆེ་བར་གྱུར་ཏེ་ཞེས་གསུངས་པ་ཡིན་ནོ།"
+    }
+   },
+   {
+    "cid": "C386",
+    "judge": "A",
+    "vol": 157,
+    "page": 77,
+    "omission": "གནས་པ་དག་གོ།"
+   },
+   {
+    "cid": "C386",
+    "judge": "B",
+    "vol": 157,
+    "page": 77,
+    "omission": "གནས་པ་དག་གོ།"
+   }
+  ],
+  "lowest_pages": [
+   {
+    "cid": "C566",
+    "vol": 157,
+    "page": 26,
+    "folio": "f. 14a",
+    "url": "https://sourcelibrary.org/book/6abec7fa896ea18127c8ac69?page=26",
+    "A": 3,
+    "B": 3,
+    "reasonA": "Word-glosses of fascicle 1 are rendered correctly, but the fascicle-2 lemma སྔར་བསླབ་པའི་གཞི་མ་བཅས (not yet laid down) is read as 'established previously' throughout, reversing the point of the passage (the English body itself says the rules 'had not been spoken'); བམ་པོ as 'Chapter' is a minor slip.",
+    "reasonB": "Word glosses of the first half are accurate, but the fascicle-two lemma མ་བཅས (not laid down) is rendered as 'established' three times, reversing the argument about why no rule existed yet."
+   },
+   {
+    "cid": "C257",
+    "vol": 33,
+    "page": 178,
+    "folio": "f. 90a",
+    "url": "https://sourcelibrary.org/book/6abe932b6a920ffd924d73b0?page=178",
+    "A": 3,
+    "B": 4,
+    "reasonA": "Middle (axe rite, castes, rain-stopping, mandala portents, Gaṇapati obstacles) is faithful, but the side's last clause — Hayagrīva with three faces, six arms, three eyes in ālīḍha — is dropped, the charnel-cloth opening is garbled, and the note interprets ལྔ་པ་ཉིད་དུ་འགྱུར without source support.",
+    "reasonB": "Axe rite, the four castes gloss, the pañcatva ('becoming the fifth' = death) note, the rain-stopping visualisation and the mandala obstacles are correct, but the side's final clause (Amitābha transforming into three-faced six-armed Hayagrīva in ālīḍha) is cut off at 'imagine—', and 'charnel-ground cloth' is reduced to '—tery'."
+   },
+   {
+    "cid": "C315",
+    "vol": 96,
+    "page": 115,
+    "folio": "f. 58b",
+    "url": "https://sourcelibrary.org/book/6abeb158896ea18127c82682?page=115",
+    "A": 3,
+    "B": 4,
+    "reasonA": "Change/milk-curd/emptiness argument (MMK 13.3–7 with commentary) rendered well, but the opponent's opening gloss is reversed ('with' for མེད་པའི) and ཆོས་ཀྱི mistranslated as 'personal'; final verse line completed from the next side (ཡོད་པར་ག་ལ་འགྱུར).",
+    "reasonB": "Change argument (youth/old, milk/curd) and the emptiness verse are faithful, but the opening commentary sentence turns 'without dharma-svabhāva' into 'with a personal inherent nature' and the second sentence adds 'personal'; the last verse line completes 'ya yod par ga la 'gyur' from the next side."
+   },
+   {
+    "cid": "C919",
+    "vol": 174,
+    "page": 23,
+    "folio": "f. 12a",
+    "url": "https://sourcelibrary.org/book/6abed3fc896ea18127c8d272?page=23",
+    "A": 4,
+    "B": 3,
+    "reasonA": "Every verse of the side (end of PS ch.5 apoha, colophon, opening of ch.6 on jāti: prāpti/aprāpti, anutpatti-sama, kārya-sama, sādharmya-sama) has a line-by-line counterpart. Terse verses rendered very literally and a few muddled (མ་གྲུབ་ལྟར་སྣང་ཉུང་ལྟར་སྣང as 'pseudo-unestablished is the pseudo-diminished'), but nothing added or dropped.",
+    "reasonB": "End of the apoha chapter and colophon are correct and every verse line of the jāti section has a counterpart, but many lines are word-for-word and garbled ('expressed by this side' for phyogs 'dis, 'pseudo-diminished' for nyung ltar snang, 'The mark of the object is the pseudo-unestablished'), so the logic of the futile-rejoinder verses is hard to recover."
+   },
+   {
+    "cid": "C171",
+    "vol": 174,
+    "page": 46,
+    "folio": "f. 23b",
+    "url": "https://sourcelibrary.org/book/6abed3fc896ea18127c8d272?page=46",
+    "A": 3,
+    "B": 4,
+    "reasonA": "Opening clause (grasping by following [one shape] is not seen) dropped. སྔོན་གྱི་སེར་སྐྱ་པའི་ལུགས་ལ་འདས་པར་སྨྲ་བ…མ་རྡུམ་པ (Mādhava, who deviated from the old Kapila system) garbled into 'an ancient follower of Kapila'; rest broadly tracks the source.",
+    "reasonB": "Opening clause (grasping by following [a single shape] is not seen) dropped; the Samkhya argument about the gunas, pradhana particles and the senses is otherwise present though stiff and partly garbled (the Madhava sentence)."
+   },
+   {
+    "cid": "C568",
+    "vol": 174,
+    "page": 208,
+    "folio": "f. 104b",
+    "url": "https://sourcelibrary.org/book/6abed3fc896ea18127c8d272?page=208",
+    "A": 3,
+    "B": 4,
+    "reasonA": "Body of the side (ཡང་ན་ནུས་པ་ངེས་པའི་ཕྱིར ... ཇི་ལྟར་གཞན་ནི་གཞན་འཇིག) rendered acceptably, but the opening clause ending the previous verse is dropped, and ~8 lines of the next side (བླ་སྟེ་ཅི་ཕྱིར་ཤིང་མི་སྣང་ onward, incl. nag pa as 'Devadatta') are appended.",
+    "reasonB": "Verses on sound, letter sequence, manifestation and momentary destruction rendered literally in order, but the first half-verse is dropped and the last eight lines translate the next side (and beyond: 'Devadatta', 'killer is not actually killed')."
+   },
+   {
+    "cid": "C896",
+    "vol": 174,
+    "page": 232,
+    "folio": "f. 116b",
+    "url": "https://sourcelibrary.org/book/6abed3fc896ea18127c8d272?page=232",
+    "A": 3,
+    "B": 4,
+    "reasonA": "Most verses present, but several garbled: the opening clause (ཕན་)འདོགས་ཉིད་ནི་ཀུན་ལ་ཡོད is dropped; སྡུག་བསྔལ་བསྐྱེད་ཕྱིར་སོར་མོ་བཞིན། །རང་གི་བློ་ནི་མི་འགྱུར་ན is turned into a clause about not regarding as 'mine'; བསམ་མེད་བདག་ལ་ཆགས་པ as 'self that is not understood'; ཇི་ལྟར་བདག་འདོད་པ as 'as I assert it'.",
+    "reasonB": "Pramanavarttika verses on attachment to self rendered in order; opening half-line dropped, the 'reversed support of experience' verse is garbled, and 'regard something as mine' is an interpretive addition to the finger verse."
+   },
+   {
+    "cid": "C781",
+    "vol": 113,
+    "page": 226,
+    "folio": "f. 114a",
+    "url": "https://sourcelibrary.org/book/6abeb583896ea18127c84e6f?page=226",
+    "A": 4,
+    "B": 4,
+    "reasonA": "Daśabhūmika commentary on the Vajragarbha request verses rendered closely (two purifications, three faults envy/stinginess/laziness-without-confidence, praise of listeners verse); only the opening fragment ending the previous sentence (…བྱ་བས་གསུངས་སོ) is dropped.",
+    "reasonB": "Verse on purified conceptions, the two factors (remedy, freedom from faults) and the faults of envy, stinginess, laziness/lack of confidence all present; weak opening (ཕལ་ཆེར་དུབ་པས as 'mostly for the weary') and 'what perform the action' are loose."
+   }
+  ]
+ },
+ "B": {
+  "pages": [
+   {
+    "judge": "judge1",
+    "page": 130,
+    "real": {
+     "fidelity": 4,
+     "omission": false,
+     "invention": false,
+     "inversion": false
+    },
+    "plant": {
+     "fidelity": 3,
+     "omission": false,
+     "invention": false,
+     "inversion": true
+    },
+    "dup": {
+     "fidelity": 4,
+     "omission": false,
+     "invention": false,
+     "inversion": false
+    },
+    "ranking": [
+     [
+      "real",
+      "dup"
+     ],
+     [
+      "plant"
+     ]
+    ],
+    "plant_caught": true,
+    "dup_tied_with_real": true,
+    "reason": "T1 and T2 are identical and match the reference throughout, with two small slips: 'confused about how to correctly enter the Mahayana' (the source says those who have entered and are confused about the means), and 'prevent those who do not wish to listen ... from giving up' (the reference has 'abandon any resistance to listening'). The pre-{D3990} colophon of the Six Gates dharani is rendered correctly against the source. T3 is the same text except that it reverses the last sentence: 'One can realize enlightenment even with ignorance or minor diligence', where the source has བྱང་ཆུབ་རྟོགས་པར་མི་ནུས་སོ and the reference 'Awakening cannot be realized where there is a lack of knowledge or through minimal effort'.",
+    "inversion_quotes": [
+     {
+      "label": "T3",
+      "english": "One can realize enlightenment even with ignorance or minor diligence.",
+      "reference": "Awakening cannot be realized where there is a lack of knowledge or through minimal effort."
+     }
+    ]
+   },
+   {
+    "judge": "judge1",
+    "page": 131,
+    "real": {
+     "fidelity": 5,
+     "omission": false,
+     "invention": false,
+     "inversion": false
+    },
+    "plant": {
+     "fidelity": 3,
+     "omission": false,
+     "invention": false,
+     "inversion": true
+    },
+    "dup": {
+     "fidelity": 5,
+     "omission": false,
+     "invention": false,
+     "inversion": false
+    },
+    "ranking": [
+     [
+      "real",
+      "dup"
+     ],
+     [
+      "plant"
+     ]
+    ],
+    "plant_caught": true,
+    "dup_tied_with_real": true,
+    "reason": "T1 and T3 are identical and match the reference throughout, from 'as long as one lives' to the colophon: all four sets of four, the two kinds of accomplishment, the light-maker (rendered 'the sun'), and the Blessed One's summary. T2 is the same text except that it turns the third obstructive factor into its opposite: 'Being oriented toward sentient beings', where the source has སེམས་ཅན་ལ་མི་ཕྱོགས་པ and the reference 'a lack of concern for sentient beings'.",
+    "inversion_quotes": [
+     {
+      "label": "T2",
+      "english": "3. Being oriented toward sentient beings.",
+      "reference": "(3) a lack of concern for sentient beings"
+     }
+    ]
+   },
+   {
+    "judge": "judge2",
+    "page": 131,
+    "real": {
+     "fidelity": 5,
+     "omission": false,
+     "invention": false,
+     "inversion": false
+    },
+    "plant": {
+     "fidelity": 4,
+     "omission": false,
+     "invention": false,
+     "inversion": true
+    },
+    "dup": {
+     "fidelity": 5,
+     "omission": false,
+     "invention": false,
+     "inversion": false
+    },
+    "ranking": [
+     [
+      "real",
+      "dup"
+     ],
+     [
+      "plant"
+     ]
+    ],
+    "plant_caught": true,
+    "dup_tied_with_real": true,
+    "reason": "T1 and T3 are identical and match the reference throughout (four obstructing factors, the alternative fours, the difficult path, the light-maker, colophon); T2 is the same text except obstructing factor 3, which it gives as 'Being oriented toward sentient beings' where the source has སེམས་ཅན་ལ་མི་ཕྱོགས་པ་ཉིད and the reference has 'a lack of concern for sentient beings': an inversion",
+    "inversion_quotes": [
+     {
+      "label": "T2",
+      "english": "3. Being oriented toward sentient beings.",
+      "reference": "(3) a lack of concern for sentient beings"
+     }
+    ]
+   },
+   {
+    "judge": "judge2",
+    "page": 130,
+    "real": {
+     "fidelity": 5,
+     "omission": false,
+     "invention": false,
+     "inversion": false
+    },
+    "plant": {
+     "fidelity": 3,
+     "omission": false,
+     "invention": false,
+     "inversion": true
+    },
+    "dup": {
+     "fidelity": 5,
+     "omission": false,
+     "invention": false,
+     "inversion": false
+    },
+    "ranking": [
+     [
+      "real",
+      "dup"
+     ],
+     [
+      "plant"
+     ]
+    ],
+    "plant_caught": true,
+    "dup_tied_with_real": true,
+    "reason": "T1 and T2 are identical; the Toh 3989 tail and colophon match the source, and the Toh 3990 part matches the reference (four purposes, why 'four', tolerance and gentleness, the two names by interest/practice/comprehension, the two powers); T3 is the same text except the last sentence, 'One can realize enlightenment even with ignorance or minor diligence', where the source has བྱང་ཆུབ་རྟོགས་པར་མི་ནུས་སོ and the reference has 'Awakening cannot be realized where there is a lack of knowledge or through minimal effort': a whole sentence negated, an inversion",
+    "inversion_quotes": [
+     {
+      "label": "T3",
+      "english": "One can realize enlightenment even with ignorance or minor diligence.",
+      "reference": "Awakening cannot be realized where there is a lack of knowledge or through minimal effort."
+     }
+    ]
+   }
+  ]
+ },
+ "D": {
+  "seeds": {
+   "D43": {
+    "truth": "mngon sum = pratyakṣa; anumāna is inference",
+    "verdicts": [
+     "wrong"
+    ]
+   },
+   "D41": {
+    "truth": "Dignāga c. 480–540 CE, founder of the Buddhist pramāṇa tradition; Yogācāra is traced to Asaṅga/Maitreya",
+    "verdicts": [
+     "correct",
+     "wrong"
+    ]
+   },
+   "D44": {
+    "truth": "Āryadeva was Nāgārjuna's student",
+    "verdicts": [
+     "wrong"
+    ]
+   },
+   "D42": {
+    "truth": "mdo sde pa = Sautrāntika",
+    "verdicts": [
+     "wrong"
+    ]
+   }
+  },
+  "seeds_caught": "4/4",
+  "notes": 40,
+  "claims": 40,
+  "by_note_worst": {
+   "correct": 32,
+   "unverifiable": 5,
+   "no-claim": 2,
+   "wrong": 1
+  },
+  "by_claim": {
+   "correct": 32,
+   "unverifiable": 5,
+   "no-claim": 2,
+   "wrong": 1
+  },
+  "missing_url": 0,
+  "wrong_rows": [
+   {
+    "cid": "D35",
+    "claim": "shed las skyes pa ('person') = Sanskrit puruṣa",
+    "verdict": "wrong",
+    "correction": "The Tibetan is shed las skyes pa = manuja ('born of Manu'); puruṣa would be skyes bu.",
+    "source_url": "https://scholar.84000.co/authority/entity-1575",
+    "evidence": "84000: Tibetan shed las skyes pa / shed las skyes; Sanskrit mānava, manuja; 'born of Manu'.",
+    "ocr_or_source_driven": false,
+    "tool_calls_used": 3
+   }
+  ]
+ }
+}

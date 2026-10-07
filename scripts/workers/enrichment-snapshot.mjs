@@ -7,6 +7,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { READABLE_IN_ENGLISH_EXPR, READABLE_IN_ENGLISH_FILTER } from '../lib/page-counts.mjs';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
@@ -50,17 +51,21 @@ async function run() {
       has_quality_score: { $sum: { $cond: [{ $ifNull: ['$quality_score', false] }, 1, 0] } },
       has_faceted_tags: { $sum: { $cond: [{ $ifNull: ['$faceted_tags', false] }, 1, 0] } },
       has_author_entity: { $sum: { $cond: [{ $ifNull: ['$author_entity_id', false] }, 1, 0] } },
-      fully_translated: { $sum: { $cond: [{ $eq: ['$is_fully_translated', true] }, 1, 0] } },
+      // Named views over translation_state (#5286, translation-state.md § Named views).
+      readable: { $sum: { $cond: [READABLE_IN_ENGLISH_EXPR, 1, 0] } },
+      fully_translated: { $sum: { $cond: [{ $eq: ['$translation_state.rung', 'complete'] }, 1, 0] } },
       pipeline_complete: { $sum: { $cond: [{ $eq: ['$pipeline_auto.status', 'complete'] }, 1, 0] } },
     }}
   ]).toArray();
   console.log(`  enrichment: ${enrichment.total} books with pages`);
 
-  // 3. Milestones (all use indexed fields — no $expr)
+  // 3. Milestones (all use indexed fields — no $expr). `over_90_pct` is the
+  // `readable_in_english` view and `fully_translated` the `complete` rung
+  // (#5286); both read translation_state via translation_state_rung_english.
   const first_translations = await db.collection('books').countDocuments({ is_first_translation: true });
-  const over_90_pct = await db.collection('books').countDocuments({ over_90_translated: true });
-  const fully_translated = await db.collection('books').countDocuments({ is_fully_translated: true });
-  console.log(`  milestones: ${first_translations} first translations, ${over_90_pct} >90%, ${fully_translated} fully translated`);
+  const over_90_pct = await db.collection('books').countDocuments(READABLE_IN_ENGLISH_FILTER);
+  const fully_translated = await db.collection('books').countDocuments({ 'translation_state.rung': 'complete' });
+  console.log(`  milestones: ${first_translations} first translations, ${over_90_pct} readable in English, ${fully_translated} fully translated`);
 
   // 4. Gallery
   const books_with_images = (await db.collection('gallery_images').distinct('book_id')).length;
@@ -131,6 +136,7 @@ async function run() {
       quality_score: enrichment.has_quality_score,
       faceted_tags: enrichment.has_faceted_tags,
       author_entity: enrichment.has_author_entity,
+      readable: enrichment.readable,
       fully_translated: enrichment.fully_translated,
       pipeline_complete: enrichment.pipeline_complete,
     },

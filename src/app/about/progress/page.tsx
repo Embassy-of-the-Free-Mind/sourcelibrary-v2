@@ -1,14 +1,18 @@
 import { Metadata } from 'next';
+import type { ObjectId } from 'mongodb';
 import { getReadDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import { getSiteStats } from '@/lib/site-stats';
-import Link from 'next/link';
-import ContentPageLayout, { SubPageHeader } from '@/components/layout/ContentPageLayout';
-import { BarChart3, BookOpen, Languages, Globe2, Scan, Sparkles, Library } from 'lucide-react';
+import { READABLE_IN_ENGLISH_FILTER } from '@/lib/page-counts';
+import ContentPageLayout from '@/components/layout/ContentPageLayout';
+import { Bars, HBars, Legend, Panel } from '@/app/admin/DashboardCharts';
+import { Grid2, Section, Tiles } from '@/app/admin/dashboard-layout';
+import { SERIES } from '@/app/admin/dashboard-format';
+import { LIBRARY_DASHBOARD_ID, RATES, type LibraryDashboard } from '@/lib/library-dashboard';
 
 export const metadata: Metadata = {
   title: 'Progress | Source Library',
-  description: 'Tracking progress toward scanning and translating every book printed in Europe between 1450 and 1700.',
+  description: 'How much of Source Library can be read in English, by book, century and language — and how much of early modern European print has been scanned and translated.',
   alternates: { canonical: '/about/progress' },
 };
 
@@ -71,7 +75,9 @@ async function getCoverageData(): Promise<CoverageData | null> {
     }), { editions: 0, scanned: 0, translated: 0, in_sl: 0 });
 
     return {
-      built_at: new Date().toISOString(),
+      // The RPC aggregates ustc_editions at request time, but the rows are only
+      // as fresh as the last catalog-coverage build — "now" would lie (#5501).
+      built_at: await getCoverageBuiltAt(),
       total_editions: totals.editions,
       total_works: 0,
       total_scanned: totals.scanned,
@@ -84,6 +90,24 @@ async function getCoverageData(): Promise<CoverageData | null> {
     };
   } catch {
     return getCoverageDataFallback();
+  }
+}
+
+/**
+ * When scripts/catalog-coverage/build.mjs last loaded ustc_editions (it stamps
+ * catalog_coverage_meta in the same run). '' renders as "Unknown".
+ */
+async function getCoverageBuiltAt(): Promise<string> {
+  try {
+    const db = await getReadDb();
+    const meta = await db.collection('catalog_coverage_meta').findOne(
+      { _id: 'latest_build' as any },
+      { projection: { built_at: 1, updatedAt: 1 }, maxTimeMS: 5000 },
+    );
+    const at = meta?.built_at || meta?.updatedAt;
+    return at ? new Date(at).toISOString() : '';
+  } catch {
+    return '';
   }
 }
 
@@ -135,346 +159,195 @@ async function getCoverageDataFallback(): Promise<CoverageData | null> {
 
 // ── Live Source Library Stats ─────────────────────────────────────────
 
-interface LanguageProgress {
-  language: string;
-  total: number;
-  translated: number;
-  over_90: number;
-  first_trans: number;
-}
-
-interface CenturyProgress {
-  century_start: number;
-  total: number;
-  translated: number;
-  over_90: number;
-  first_trans: number;
-}
-
-interface LiveStats {
-  total_books: number;
-  translated_by_sl: number;
-  english_digitized: number;
-  books_over_90: number;
-  first_translations: number;
-  by_language: LanguageProgress[];
-  by_century: CenturyProgress[];
-}
-
-async function getLiveStats(): Promise<LiveStats | null> {
+/**
+ * Headline book counts from the translation ladder's named views
+ * (.claude/docs/translation-state.md): `readable_in_english` — the same view
+ * as the homepage, /census and /admin — and `complete`. Live books only.
+ * Both counts are backed by the translation_state_rung_english index.
+ */
+async function getLadderCounts(): Promise<{ readable: number; complete: number } | null> {
   try {
-    const { data, error } = await supabase.rpc('get_sl_progress');
-    if (error || !data) return null;
+    const books = (await getReadDb()).collection('books');
+    const live = { visible: true, pages_count: { $gt: 0 } };
+    const [readable, complete] = await Promise.all([
+      books.countDocuments({ ...live, ...READABLE_IN_ENGLISH_FILTER }, { maxTimeMS: 10000 }),
+      books.countDocuments({ ...live, 'translation_state.rung': 'complete' }, { maxTimeMS: 10000 }),
+    ]);
+    return { readable, complete };
+  } catch {
+    return null;
+  }
+}
 
-    const d = data as any;
+/**
+ * Per-book completion from the nightly library snapshot
+ * (scripts/analytics/snapshot-library-dashboard.mjs → system_config.library_dashboard).
+ * One projected findOne, no aggregation on request. Null when the snapshot
+ * predates the completion fields, so the section is left out rather than
+ * drawn with zeros.
+ */
+async function getCompletion() {
+  try {
+    const doc = await (await getReadDb()).collection('system_config').findOne(
+      { _id: LIBRARY_DASHBOARD_ID as unknown as ObjectId },
+      { projection: { completion: 1, byCentury: 1, languagesAll: 1, finish: 1, works: 1, 'totals.readableLive': 1, 'totals.live': 1 }, maxTimeMS: 5000 },
+    ) as Partial<LibraryDashboard> | null;
+    if (!doc?.completion?.books || !doc.languagesAll?.length || !doc.totals?.live?.books) return null;
     return {
-      total_books: Number(d.totals?.total_books || 0),
-      translated_by_sl: Number(d.totals?.translated_by_sl || 0),
-      english_digitized: Number(d.totals?.english_digitized || 0),
-      books_over_90: Number(d.totals?.over_90_translated || 0),
-      first_translations: Number(d.totals?.first_translations || 0),
-      by_language: (d.by_language || []).map((l: any) => ({
-        language: l.language,
-        total: Number(l.total),
-        translated: Number(l.translated),
-        over_90: Number(l.over_90),
-        first_trans: Number(l.first_trans),
-      })),
-      by_century: (d.by_century || []).map((c: any) => ({
-        century_start: Number(c.century_start),
-        total: Number(c.total),
-        translated: Number(c.translated_by_sl ?? c.translated ?? 0),
-        over_90: Number(c.over_90),
-        first_trans: Number(c.first_trans),
-      })),
+      completion: doc.completion,
+      century: doc.byCentury ?? [],
+      languages: doc.languagesAll,
+      liveBooks: doc.totals.live.books,
+      livePages: doc.totals.live.pages,
+      liveTranslatedPages: doc.totals.live.translated,
+      readable: doc.totals.readableLive,
+      finish: doc.finish ?? null,
+      works: doc.works ?? null,
     };
   } catch {
     return null;
   }
 }
 
-// ── Components ────────────────────────────────────────────────────────
-
-function ProgressBar({ value, max, color = 'bg-amber-600' }: { value: number; max: number; color?: string }) {
-  const pct = max > 0 ? Math.min((value / max) * 100, 100) : 0;
-  return (
-    <div className="w-full bg-stone-200 rounded-full h-3 overflow-hidden">
-      <div
-        className={`h-full rounded-full transition-all duration-500 ${color}`}
-        style={{ width: `${pct}%` }}
-      />
-    </div>
-  );
-}
-
-function StatCard({ icon: Icon, label, value, sub }: {
-  icon: React.ElementType;
-  label: string;
-  value: string;
-  sub?: string;
-}) {
-  return (
-    <div className="bg-white rounded-xl border border-border-light p-5">
-      <div className="flex items-center gap-2 mb-2">
-        <Icon className="w-4 h-4 text-stone-400" />
-        <span className="text-xs uppercase tracking-wider text-stone-500 font-medium">{label}</span>
-      </div>
-      <div className="text-2xl font-semibold text-primary">{value}</div>
-      {sub && <div className="text-sm text-secondary mt-1">{sub}</div>}
-    </div>
-  );
-}
-
-function fmt(n: number): string {
-  return n.toLocaleString('en-US');
-}
-
 // ── Page ──────────────────────────────────────────────────────────────
+// Laid out like /admin (#5757): number tiles first, then one titled section per
+// question, each chart in a Panel with a one-line note. Same chart components.
 
-export default async function ProgressPage() {
-  const [data, live, siteStats] = await Promise.all([getCoverageData(), getLiveStats(), getSiteStats()]);
-  // One FT number site-wide (#3015): the get_sl_progress RPC re-derives the raw
-  // is_first_translation flag, which drifts above the verified public count.
-  // Always show the canonical homepage_stats figure instead.
-  if (live) live.first_translations = siteStats.firstTranslationCount;
+const fmt = (n: number) => n.toLocaleString('en-US');
+const pct = (part: number, whole: number) => (whole > 0 ? Math.round((100 * part) / whole) : 0);
+const millions = (n: number) => (n >= 1e6 ? `${(n / 1e6).toFixed(1)}M` : fmt(n));
+const usd = (n: number) => (n >= 1000 ? `$${(n / 1000).toFixed(1)}K` : `$${Math.round(n)}`);
+/** Model cost of transcribing `o` pages and translating `t`, low to high, at the September 2026 rates. */
+const costRange = (o: number, t: number) => `${usd(o * RATES.ocr[0] + t * RATES.tr[0])} – ${usd(o * RATES.ocr[1] + t * RATES.tr[1])}`;
 
-  if (!data) {
-    return (
-      <ContentPageLayout maxWidth="narrow" bg="bg-stone-50">
-        <SubPageHeader title="Progress" subtitle="Coverage data not yet available" />
-        <div className="bg-white rounded-xl border border-border-light p-6">
-          <p className="text-secondary">
-            The catalog coverage database hasn&apos;t been built yet. Check back soon.
-          </p>
-        </div>
-      </ContentPageLayout>
-    );
-  }
+type CompletionData = NonNullable<Awaited<ReturnType<typeof getCompletion>>>;
 
-  const topLanguages = data.languages.filter(l => l.editions >= 1000).slice(0, 12);
-  const scannedNotTranslated = data.total_scanned - data.total_translated;
-
+function LibrarySections({ c, readable, complete, firstTranslations }: { c: CompletionData; readable: number; complete: number | null; firstTranslations: number }) {
+  const C = c.completion, n = C.bins;
+  const binLabel = (i: number) => (i === 0 ? '0–5' : i === n - 1 ? '95–100' : `${(100 * i) / n}`);
+  const trNone = C.translated[0], trFull = C.translated[n - 1], trMid = C.books - trNone - trFull;
+  const ocrNone = C.ocr[0], ocrFull = C.ocr[n - 1];
+  const cents = c.century.filter(r => r.books > 0 && r.meanTrPct != null);
+  const datedBooks = cents.reduce((a, r) => a + r.books, 0);
+  const lagging = cents.filter(r => r.books >= datedBooks / 10).sort((a, b) => (a.meanTrPct ?? 0) - (b.meanTrPct ?? 0))[0];
+  const langs = c.languages.filter(l => l.name !== '(none)' && l.name !== 'Unknown');
+  const bigTwo = langs.slice(0, 2);
+  const th = 'py-1 px-2 font-medium whitespace-nowrap';
   return (
-    <ContentPageLayout maxWidth="narrow" bg="bg-stone-50">
-      <SubPageHeader
-        title="Scanning the Renaissance"
-        subtitle="Tracking progress toward scanning and translating every book printed in Europe between 1450 and 1700"
-      />
+    <>
+      <Section id="glance" title="At a glance" intro={<>Counted by pages, {pct(c.liveTranslatedPages, c.livePages)}% of the library is translated. Counted by books it looks different: a book tends to be translated all at once or not at all, so {fmt(readable)} of {fmt(c.liveBooks)} books can be read in English today.</>}>
+        <Tiles tiles={[
+          { l: 'Books', v: fmt(c.liveBooks), n: `${millions(c.livePages)} pages` },
+          { l: 'Pages translated', v: `${pct(c.liveTranslatedPages, c.livePages)}%`, n: `${millions(c.liveTranslatedPages)} pages` },
+          { l: 'Readable in English', v: fmt(readable), n: `${pct(readable, c.liveBooks)}% of books` },
+          ...(complete != null ? [{ l: 'Fully translated', v: fmt(complete), n: 'every page' }] : []),
+          { l: 'First English translations', v: fmt(firstTranslations), n: 'never before in English' },
+          ...(c.works ? [{ l: 'Distinct works', v: fmt(c.works.works), n: `${fmt(c.works.readable)} readable in English` }] : []),
+        ]} />
+      </Section>
 
-      {/* Hero stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <StatCard icon={BookOpen} label="Editions catalogued" value={fmt(data.total_editions)} sub="from the Universal Short Title Catalogue" />
-        <StatCard icon={Scan} label="Digitally scanned" value={`${data.pct_scanned.toFixed(1)}%`} sub={`${fmt(data.total_scanned)} editions`} />
-        <StatCard icon={Languages} label="Translated" value={`${data.pct_translated.toFixed(1)}%`} sub={`${fmt(data.total_translated)} editions`} />
-        <StatCard icon={Globe2} label="In Source Library" value={fmt(data.total_in_sl)} sub="OCR&apos;d and translated" />
-      </div>
+      <Section id="books" title="How complete each book is">
+        <Panel title="Share of each book's pages done" note={<>Each bar is a 5% band. Translated: <b className="text-stone-900">{fmt(trNone)}</b> books are under 5%, <b className="text-stone-900">{fmt(trMid)}</b> are in between, and <b className="text-stone-900">{fmt(trFull)}</b> are at 95% or more. Transcribed: {fmt(ocrNone)} under 5%, {fmt(ocrFull)} at 95% or more.</>}>
+          <Grid2>
+            <div className="min-w-0 grid gap-1">
+              <div className="text-xs text-stone-600">Pages transcribed, per book ({fmt(C.books)} books)</div>
+              <Bars labels={C.ocr.map((_, i) => binLabel(i))} series={[{ name: 'Books', data: C.ocr, color: SERIES[2] }]} height={220} ariaLabel="Histogram of the share of each book's pages transcribed" />
+            </div>
+            <div className="min-w-0 grid gap-1">
+              <div className="text-xs text-stone-600">Pages translated, per book</div>
+              <Bars labels={C.translated.map((_, i) => binLabel(i))} series={[{ name: 'Books', data: C.translated, color: SERIES[1] }]} height={220} ariaLabel="Histogram of the share of each book's pages translated" />
+            </div>
+          </Grid2>
+        </Panel>
+      </Section>
 
-      {/* The opportunity */}
-      <section className="bg-white rounded-xl border border-border-light p-6 mb-6">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="p-2 bg-amber-100 rounded-lg">
-            <BarChart3 className="w-5 h-5 text-amber-700" />
-          </div>
-          <h2 className="text-xl font-semibold text-primary">The Opportunity</h2>
-        </div>
-
-        <p className="text-secondary mb-6">
-          Of the {fmt(data.total_editions)} editions printed in Europe before 1700,
-          only {data.pct_scanned.toFixed(1)}% have known digital scans and {data.pct_translated.toFixed(1)}% have
-          English translations. That means roughly {fmt(scannedNotTranslated)} works have been
-          scanned but never translated — waiting to be read for the first time in centuries.
-        </p>
-
-        <div className="space-y-4">
-          <div>
-            <div className="flex justify-between text-sm mb-1">
-              <span className="text-secondary">Scanned</span>
-              <span className="font-medium text-primary">{data.pct_scanned.toFixed(1)}%</span>
-            </div>
-            <ProgressBar value={data.total_scanned} max={data.total_editions} color="bg-amber-600" />
-          </div>
-          <div>
-            <div className="flex justify-between text-sm mb-1">
-              <span className="text-secondary">Translated to English</span>
-              <span className="font-medium text-primary">{data.pct_translated.toFixed(1)}%</span>
-            </div>
-            <ProgressBar value={data.total_translated} max={data.total_editions} color="bg-emerald-600" />
-          </div>
-          <div>
-            <div className="flex justify-between text-sm mb-1">
-              <span className="text-secondary">In Source Library</span>
-              <span className="font-medium text-primary">{fmt(data.total_in_sl)}</span>
-            </div>
-            <ProgressBar value={data.total_in_sl} max={data.total_editions} color="bg-purple-600" />
-          </div>
-        </div>
-      </section>
-
-      {/* Source Library contribution */}
-      {live && (
-        <section className="bg-white rounded-xl border border-border-light p-6 mb-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-purple-100 rounded-lg">
-              <Sparkles className="w-5 h-5 text-purple-700" />
-            </div>
-            <h2 className="text-xl font-semibold text-primary">Source Library&apos;s Contribution</h2>
-          </div>
-
-          <p className="text-secondary mb-6">
-            Source Library translates historical texts into English — many for the first time ever.
-            Using AI-assisted OCR and translation, we&apos;re making texts readable that have waited
-            centuries to be understood outside their original languages.
-          </p>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div className="text-center">
-              <div className="text-2xl font-semibold text-amber-700">{fmt(live.first_translations)}</div>
-              <div className="text-xs text-stone-500 mt-1">First English translations</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-semibold text-primary">{fmt(live.translated_by_sl)}</div>
-              <div className="text-xs text-stone-500 mt-1">Books translated</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-semibold text-primary">{fmt(live.books_over_90)}</div>
-              <div className="text-xs text-stone-500 mt-1">Over 90% complete</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-semibold text-stone-400">{fmt(live.english_digitized)}</div>
-              <div className="text-xs text-stone-500 mt-1">English books digitized</div>
-            </div>
-          </div>
-
-          {/* By Language */}
-          {live.by_language.length > 0 && (
-            <div className="border-t border-stone-100 pt-4">
-              <h3 className="text-sm font-medium text-stone-500 mb-3 flex items-center gap-2">
-                <Library className="w-3.5 h-3.5" />
-                By source language
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-stone-200 text-left">
-                      <th className="py-1.5 pr-3 font-medium text-stone-400 text-xs">Language</th>
-                      <th className="py-1.5 pr-3 font-medium text-stone-400 text-xs text-right">Books</th>
-                      <th className="py-1.5 pr-3 font-medium text-stone-400 text-xs text-right">Translated</th>
-                      <th className="py-1.5 font-medium text-stone-400 text-xs text-right">First English</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {live.by_language.filter(l => l.total >= 10 && l.language !== 'Unknown').map(l => (
-                      <tr key={l.language} className="border-b border-stone-50">
-                        <td className="py-1.5 pr-3 text-primary">{l.language}</td>
-                        <td className="py-1.5 pr-3 text-right text-secondary">{fmt(l.total)}</td>
-                        <td className="py-1.5 pr-3 text-right text-secondary">{fmt(l.translated)}</td>
-                        <td className="py-1.5 text-right font-medium text-amber-700">{fmt(l.first_trans)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
-
-          {/* By Century */}
-          {live.by_century.length > 0 && (
-            <div className="border-t border-stone-100 pt-4 mt-4">
-              <h3 className="text-sm font-medium text-stone-500 mb-3 flex items-center gap-2">
-                <BarChart3 className="w-3.5 h-3.5" />
-                By century
-              </h3>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-stone-200 text-left">
-                      <th className="py-1.5 pr-3 font-medium text-stone-400 text-xs">Period</th>
-                      <th className="py-1.5 pr-3 font-medium text-stone-400 text-xs text-right">Books</th>
-                      <th className="py-1.5 pr-3 font-medium text-stone-400 text-xs text-right">Translated</th>
-                      <th className="py-1.5 font-medium text-stone-400 text-xs text-right">First English</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {live.by_century.filter(c => c.total >= 5).map(c => {
-                      const label = c.century_start < 0
-                        ? `${Math.abs(c.century_start)}s BCE`
-                        : c.century_start < 100
-                          ? '1st century'
-                          : `${c.century_start}s`;
-                      return (
-                        <tr key={c.century_start} className="border-b border-stone-50">
-                          <td className="py-1.5 pr-3 text-primary">{label}</td>
-                          <td className="py-1.5 pr-3 text-right text-secondary">{fmt(c.total)}</td>
-                          <td className="py-1.5 pr-3 text-right text-secondary">{fmt(c.translated)}</td>
-                          <td className="py-1.5 text-right font-medium text-amber-700">{fmt(c.first_trans)}</td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
-        </section>
+      {cents.length > 0 && (
+        <Section id="century" title="By century">
+          <Panel title="Average book, by century of publication" note={<>The {fmt(datedBooks)} books with a known year.{lagging && ` The ${lagging.label.replace(/ c\.$/, '')} century is furthest behind: on average ${Math.round(lagging.meanTrPct ?? 0)}% of a book's pages are translated.`} Hover a century for its numbers.</>}>
+            <Legend names={['Pages transcribed', 'Pages translated', 'Books readable in English']} colors={[SERIES[2], SERIES[1], SERIES[0]]} />
+            <Bars grouped unit="pct" w={1100} height={240} labels={cents.map(r => r.label)} series={[
+              { name: 'Pages transcribed, mean per book', color: SERIES[2], data: cents.map(r => r.meanOcrPct ?? 0) },
+              { name: 'Pages translated, mean per book', color: SERIES[1], data: cents.map(r => r.meanTrPct ?? 0) },
+              { name: 'Books readable in English', color: SERIES[0], data: cents.map(r => (r.books ? (100 * (r.readable ?? 0)) / r.books : 0)) },
+            ]} ariaLabel="Completion by century" />
+          </Panel>
+        </Section>
       )}
 
-      {/* Language breakdown */}
-      <section className="bg-white rounded-xl border border-border-light p-6 mb-6">
-        <h2 className="text-xl font-semibold text-primary mb-4">By Language</h2>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-stone-200 text-left">
-                <th className="py-2 pr-4 font-medium text-stone-500">Language</th>
-                <th className="py-2 pr-4 font-medium text-stone-500 text-right">Editions</th>
-                <th className="py-2 pr-4 font-medium text-stone-500 text-right">Scanned</th>
-                <th className="py-2 pr-4 font-medium text-stone-500 text-right">Translated</th>
-                <th className="py-2 font-medium text-stone-500 text-right">In SL</th>
-              </tr>
-            </thead>
-            <tbody>
-              {topLanguages.map(lang => (
-                <tr key={lang.language} className="border-b border-stone-100">
-                  <td className="py-2 pr-4 font-medium text-primary">{lang.language}</td>
-                  <td className="py-2 pr-4 text-right text-secondary">{fmt(lang.editions)}</td>
-                  <td className="py-2 pr-4 text-right">
-                    <span className="text-secondary">{fmt(lang.with_scan)}</span>
-                    <span className="text-stone-400 ml-1">({lang.pct_scanned.toFixed(1)}%)</span>
-                  </td>
-                  <td className="py-2 pr-4 text-right">
-                    <span className="text-secondary">{fmt(lang.with_translation)}</span>
-                    <span className="text-stone-400 ml-1">({lang.pct_translated.toFixed(1)}%)</span>
-                  </td>
-                  <td className="py-2 text-right text-secondary">{fmt(lang.in_source_library)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
+      {langs.length > 0 && (
+        <Section id="languages" title="By language" intro={bigTwo.length === 2 ? `${bigTwo[0].name} and ${bigTwo[1].name} make up ${pct(bigTwo[0].books + bigTwo[1].books, C.books)}% of the library, so they decide most of the total. Books written in English count as readable once transcribed.` : undefined}>
+          <Panel title="Pages translated, average book" note={`The ${Math.min(20, langs.length)} largest languages. The grey line under each name is how many of its books can be read in English.`}>
+            <HBars labelWidth={200} sub suffix="%" colors={[SERIES[1]]} rows={langs.slice(0, 20).map(l => ({ label: l.name, sub: `${fmt(l.readable)} of ${fmt(l.books)} readable`, values: [l.meanTrPct], title: `${l.name}: on average ${l.meanTrPct}% of a book's pages translated; ${fmt(l.readable)} of ${fmt(l.books)} books readable in English` }))} />
+            <details className="text-sm">
+              <summary className="cursor-pointer text-stone-700">Every language ({fmt(langs.length)})</summary>
+              <div className="overflow-x-auto mt-2"><table className="text-xs min-w-[560px] w-full">
+                <thead><tr className="text-[11px] uppercase tracking-wider text-stone-500 text-right"><th className={`${th} text-left`}>Language</th><th className={th}>Books</th><th className={th}>Pages</th><th className={th}>Pages translated</th><th className={th}>Readable in English</th></tr></thead>
+                <tbody>{langs.map(l => (
+                  <tr key={l.name} className="border-t border-stone-100 text-right tabular-nums"><td className="py-0.5 px-2 text-left">{l.name}</td><td className="py-0.5 px-2">{fmt(l.books)}</td><td className="py-0.5 px-2">{fmt(l.pages)}</td><td className="py-0.5 px-2">{pct(l.translated, l.pages)}%</td><td className="py-0.5 px-2">{fmt(l.readable)}</td></tr>
+                ))}</tbody>
+              </table></div>
+            </details>
+          </Panel>
+        </Section>
+      )}
 
-      {/* Census link */}
-      <section className="bg-amber-50 rounded-xl border border-amber-200/50 p-6 mb-6">
-        <p className="text-secondary text-sm">
-          Want to know which specific works have been translated?{' '}
-          <Link href="/census" className="text-amber-700 font-medium hover:underline">
-            Search the Translation Census
-          </Link>{' '}
-          &mdash; the first comprehensive record of the Renaissance translation gap.
-        </p>
-      </section>
+      {c.finish && c.works && (
+        <Section id="left" title="What finishing would cost" intro={<>Leaving artworks aside, the {fmt(c.works.editions)} books hold about {fmt(c.works.works)} distinct works, and {fmt(c.works.readable)} ({pct(c.works.readable, c.works.works)}%) can already be read in English in at least one edition.</>}>
+          <Tiles tiles={[
+            { l: 'One readable edition of every work', v: costRange(c.works.toOpenOcrPages, c.works.toOpenTrPages), n: `${fmt(c.works.toOpen)} works · ${millions(c.works.toOpenOcrPages)} pages to transcribe, ${millions(c.works.toOpenTrPages)} to translate` },
+            { l: 'Every page of every book', v: costRange(c.finish.ocrPages, c.finish.trPages), n: `${fmt(c.finish.books)} books · ${millions(c.finish.ocrPages)} pages to transcribe, ${millions(c.finish.trPages)} to translate` },
+          ]} />
+          <p className="text-xs text-stone-500 max-w-3xl leading-snug">
+            Model costs only, at the rates paid per page in September 2026: ${RATES.ocr[0]} to ${RATES.ocr[1]} to transcribe, ${RATES.tr[0]} to ${RATES.tr[1]} to translate. Review, storage and staff time are not included. Editions are grouped into works automatically, which misses some matches, so the number of works is an upper bound.
+            {c.finish.blockedBooks > 0 && ` ${fmt(c.finish.blockedBooks)} ${c.finish.blockedBooks === 1 ? 'book whose source can no longer be reached is' : 'books whose source can no longer be reached are'} left out.`}
+          </p>
+        </Section>
+      )}
+    </>
+  );
+}
 
-      {/* Data sources */}
-      <section className="bg-white rounded-xl border border-border-light p-6 mb-6">
-        <h2 className="text-xl font-semibold text-primary mb-3">Data Sources</h2>
-        <p className="text-secondary text-sm mb-3">
-          Coverage data is compiled from the <a href="https://www.ustc.ac.uk" className="text-amber-700 hover:underline" target="_blank" rel="noopener">Universal Short Title Catalogue</a> (bibliographic
-          records), {data.source_count} digital library scan sources, and scholarly translation catalogs.
-        </p>
-        <p className="text-stone-400 text-xs">
-          Last updated: {data.built_at ? new Date(data.built_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Unknown'}
-        </p>
-      </section>
+function RenaissanceSection({ data }: { data: CoverageData }) {
+  const top = data.languages.filter(l => l.editions >= 1000).slice(0, 12);
+  const th = 'py-1 px-2 font-medium whitespace-nowrap';
+  return (
+    <Section id="renaissance" title="Europe in print, 1450–1700" link={{ href: '/census', label: 'Translation Census' }} intro={<>Beyond our own shelves: of the {fmt(data.total_editions)} editions printed in Europe before 1700, {data.pct_scanned.toFixed(1)}% have a known digital scan and {data.pct_translated.toFixed(1)}% have an English translation. About {fmt(data.total_scanned - data.total_translated)} have been scanned but never translated.</>}>
+      <Tiles tiles={[
+        { l: 'Editions catalogued', v: fmt(data.total_editions), n: 'Universal Short Title Catalogue' },
+        { l: 'Digitally scanned', v: `${data.pct_scanned.toFixed(1)}%`, n: `${fmt(data.total_scanned)} editions` },
+        { l: 'Translated to English', v: `${data.pct_translated.toFixed(1)}%`, n: `${fmt(data.total_translated)} editions` },
+        { l: 'In Source Library', v: fmt(data.total_in_sl), n: 'editions' },
+      ]} />
+      <Panel title="By language of printing" note={<>From the <a href="https://www.ustc.ac.uk" className="underline" target="_blank" rel="noopener">Universal Short Title Catalogue</a>, {data.source_count} digital-library scan sources and scholarly translation catalogues.{data.built_at && ` Updated ${new Date(data.built_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}.`}</>}>
+        <div className="overflow-x-auto"><table className="text-xs min-w-[520px] w-full">
+          <thead><tr className="text-[11px] uppercase tracking-wider text-stone-500 text-right"><th className={`${th} text-left`}>Language</th><th className={th}>Editions</th><th className={th}>Scanned</th><th className={th}>Translated</th><th className={th}>In Source Library</th></tr></thead>
+          <tbody>{top.map(l => (
+            <tr key={l.language} className="border-t border-stone-100 text-right tabular-nums"><td className="py-1 px-2 text-left">{l.language}</td><td className="py-1 px-2">{fmt(l.editions)}</td><td className="py-1 px-2">{l.pct_scanned.toFixed(1)}%</td><td className="py-1 px-2">{l.pct_translated.toFixed(1)}%</td><td className="py-1 px-2">{fmt(l.in_source_library)}</td></tr>
+          ))}</tbody>
+        </table></div>
+      </Panel>
+    </Section>
+  );
+}
+
+export default async function ProgressPage() {
+  const [data, siteStats, ladder, completion] = await Promise.all([getCoverageData(), getSiteStats(), getLadderCounts(), getCompletion()]);
+  return (
+    <ContentPageLayout maxWidth="wide" className="grid gap-10">
+      <header className="grid gap-1.5">
+        <h1 className="text-3xl font-semibold text-stone-900">Progress</h1>
+        <p className="text-sm text-stone-600 max-w-3xl">How much of Source Library can be read in English, by book, century and language, and how much of early modern European print has been scanned and translated anywhere. Updated daily.</p>
+      </header>
+      {completion && (
+        <LibrarySections
+          c={completion}
+          readable={ladder?.readable ?? completion.readable}
+          complete={ladder?.complete ?? null}
+          firstTranslations={siteStats.firstTranslationCount}
+        />
+      )}
+      {data && <RenaissanceSection data={data} />}
+      {!completion && !data && <p className="text-sm text-stone-600">Progress figures are not available right now. Check back soon.</p>}
     </ContentPageLayout>
   );
 }

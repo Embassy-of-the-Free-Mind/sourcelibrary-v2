@@ -1,0 +1,21 @@
+{
+ "id": "6a09ff4ffa20006dbaba901a_00263",
+ "arm": "lite-rerun",
+ "model": "gemini-3.1-flash-lite",
+ "text": "Anguttara-Nikāya. CC.5—6\n\n5. Furthermore, monks, when a monk reflects on form <note>original: \"rūpa\"</note>, his mind does not leap forward, does not grow clear, does not stand firm, and is not liberated regarding form. However, when he reflects on the formless <note>original: \"arūpa\"</note>, his mind leaps forward, grows clear, stands firm, and is liberated regarding the formless. That mind of his is well-developed, well-cultivated, well-risen, well-liberated, and well-detached from forms. And the <term>āsavā</term> <gloss>influences/corruptions</gloss> <note>original: \"ye ca rūpapaccayā uppajjanti āsavā vighātapariḷāhā\"</note>, the vexations and burning fevers that arise based on form, from those he is liberated, and he does not experience that feeling. This is called the escape from forms.\n\n6. Furthermore, monks, when a monk reflects on the personality <note>original: \"sakkāya\"</note>, his mind does not leap forward, does not grow clear, does not stand firm, and is not liberated regarding the personality. However, when he reflects on the cessation of personality <note>original: \"sakkāyanirodha\"</note>, his mind leaps forward, grows clear, stands firm, and is liberated regarding the cessation of personality. That mind of his is well-developed, well-cultivated, well-risen, well-liberated, and well-detached from the personality. And the <term>āsavā</term> <gloss>influences/corruptions</gloss>, the vexations and burning fevers that arise based on the personality, from those he is liberated, and he does not experience that feeling. This is called the escape from the personality.\n\nFor him, the delight in sense-desire does not lie dormant, the delight in ill-will does not lie dormant, the delight in harming does not lie dormant, the delight in form does not lie dormant, and the delight in personality does not lie dormant. Because the delight in sense-desire does not lie dormant for him, nor the delight in ill-will, nor the delight in harming, nor the delight in form, nor the delight in personality, this monk, monks, is called one who has no latent tendencies. He has cut off craving <note>original: \"taṇha\"</note>, he has unrolled the fetter <note>original: \"samyojana\"</note>, and through the complete penetration of conceit, he has made an end to suffering <note>original: \"dukkhassa\"</note>.\n\nThese, monks, are the five elements of escape.\n\n->The Chapter on Brahmins, the twentieth.<-\n\n<meta>Footnote translations:\n1. S. reads 'rūpe'.\n2. S. reads 'rūpesu'.\n3. T. reads 'ºnandī'.\n4. Omitted by T.\n5. Omitted by M6.\n6. M. Ph. read 'bhikkhuno'.\n7. M. reads 'nirānusayo'; M. Ph. read 'ananusayo'; S. reads 'nirālayo'.\n8. T. M6 read 'acchecchi'; the reading of M is completely corrupt.\n9. T. M6 read 'vivattayi'; M. reads 'vivattayi'; Ph. reads 'vivaṭayi'.\n10. T. reads 'nissaraṇā'.\n11. T. M6 read 'Mahāvaggo'; all the rest is missing in T. M6. M; Ph. adds 'niṭṭhito' (finished).\n12. Ph. reads 'vīsatimaṃ', although it has 'ºvaggo'; omitted by M.; S. has 'pañcamo'; M. Ph. S. insert before the Table of Contents: 'Catuttho paṇṇāsako' (The Fourth Fifty, S. adds 'niṭṭhito').</meta>\n\n<summary>This page concludes a series of teachings on the five elements of escape from suffering, specifically detailing the meditative process of detaching the mind from perceptions of form and personality to reach a state free of latent tendencies and craving.</summary>\n\n<keywords>Escape, Form, Formless, Personality, Cessation, Latent Tendencies, Craving, Fetters, Meditation, Suffering</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2714,
+ "outputTokens": 973,
+ "thinkingTokens": 0,
+ "ms": 123133,
+ "cost_usd": 0.001069,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2240,
+ "job": "batches/kj3hgmgz9z2sx7rbmoycd01k4k1jpenxgsp5"
+}

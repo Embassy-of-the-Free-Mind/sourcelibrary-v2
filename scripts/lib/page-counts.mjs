@@ -355,6 +355,36 @@ export function initialPageCounters(n) {
 }
 
 /**
+ * Stored counters vs a recount, for one book. `book` is the stored document (or any
+ * object carrying the six fields), `stats` an aggregation row or null for a book with
+ * no visible pages. A MISSING counter is a mismatch, not a zero: that is how the
+ * reconciler fills `pages_translatable` on the books created without it (#5326).
+ */
+export function diffPageCounters(book, stats) {
+  const after = pageCountersFromStats(stats);
+  const before = Object.fromEntries(PAGE_COUNTERS.map(c => [c, book?.[c] ?? null]));
+  const changed = PAGE_COUNTERS.filter(c => before[c] !== after[c]);
+  return { before, after, changed };
+}
+
+/**
+ * The `$set` body for a recount: all six counters together, plus `page_counts_at`.
+ * Shared by recountBook() and the reconciler (sync-worker.mjs), so neither can write
+ * a subset. Literal keys, so the field audits see every counter written here.
+ */
+export function recountSet(after, now) {
+  return {
+    pages_count: after.pages_count,
+    pages_ocr: after.pages_ocr,
+    pages_translated: after.pages_translated,
+    pages_translatable: after.pages_translatable,
+    pages_blank: after.pages_blank,
+    pages_archived: after.pages_archived,
+    page_counts_at: now,
+  };
+}
+
+/**
  * THE writer of a book's page counters (#5325, `.claude/docs/page-counts.md`).
  *
  * Recounts the book's visible pages with buildVisiblePageCountPipeline() and
@@ -386,12 +416,10 @@ export async function recountBook(db, bookId, { reason, now = new Date() } = {})
   const projection = Object.fromEntries(PAGE_COUNTERS.map(c => [c, 1]));
   const book = await books.findOne({ id: bookId }, { projection });
   const [row] = await db.collection('pages').aggregate(buildVisiblePageCountPipeline(bookId)).toArray();
-  const after = pageCountersFromStats(row);
+  const { before, after, changed } = diffPageCounters(book, row);
   if (!book) return { matched: false, reason, before: null, after, changed: [] };
 
-  const before = Object.fromEntries(PAGE_COUNTERS.map(c => [c, book[c] ?? null]));
-  const changed = PAGE_COUNTERS.filter(c => before[c] !== after[c]);
-  const $set = { ...after, page_counts_at: now };
+  const $set = recountSet(after, now);
   if (changed.length) $set.updated_at = now;
   await books.updateOne({ id: bookId }, { $set });
   return { matched: true, reason, before, after, changed };
@@ -578,4 +606,58 @@ export function computeTranslationState(counts, { language, content_type } = {})
     exact,
     version: TRANSLATION_STATE_VERSION,
   };
+}
+
+// ── Named views over the ladder (#5286, translation-state.md § Named views) ──
+// Every headline count reads one of these BY NAME; never re-type the rule in a
+// caller. Mirror: src/lib/page-counts.ts (parity-tested). Both forms read the
+// stored `translation_state`, so a book sync-worker has not stamped yet is in
+// no view — translationStateStampCoverage() is the read-side check for that.
+
+/** `readable_in_english` rungs for a non-English edition. */
+export const READABLE_RUNGS = Object.freeze(['readable', 'complete']);
+/** Extra rungs at which an English original is already readable (its text IS English). */
+export const ENGLISH_ORIGINAL_READABLE_RUNGS = Object.freeze(['transcribed', 'translating']);
+
+/** `readable_in_english` as a Mongo query filter (spread it beside `visible`/`pages_count`). */
+export const READABLE_IN_ENGLISH_FILTER = Object.freeze({
+  $or: [
+    { 'translation_state.rung': { $in: [...READABLE_RUNGS] } },
+    { 'translation_state.english_original': true, 'translation_state.rung': { $in: [...ENGLISH_ORIGINAL_READABLE_RUNGS] } },
+  ],
+});
+
+/** `readable_in_english` as an aggregation boolean (for `$cond` inside a `$group`). */
+export const READABLE_IN_ENGLISH_EXPR = Object.freeze({
+  $or: [
+    { $in: [{ $ifNull: ['$translation_state.rung', null] }, [...READABLE_RUNGS]] },
+    {
+      $and: [
+        { $eq: ['$translation_state.english_original', true] },
+        { $in: [{ $ifNull: ['$translation_state.rung', null] }, [...ENGLISH_ORIGINAL_READABLE_RUNGS]] },
+      ],
+    },
+  ],
+});
+
+/** True iff a stored state is in `readable_in_english` (the JS form of the filter above). */
+export function isReadableInEnglish(state) {
+  if (!state?.rung) return false;
+  return READABLE_RUNGS.includes(state.rung) ||
+    (state.english_original === true && ENGLISH_ORIGINAL_READABLE_RUNGS.includes(state.rung));
+}
+
+/**
+ * Share of books matching `filter` that carry a stamped `translation_state`.
+ * A view counted before sync-worker has stamped the corpus reads as a collapse
+ * (0 on 2026-10-01, the morning step 1 merged), so a headline writer checks
+ * this and refuses to publish a view below `min` instead of writing the hole.
+ */
+export async function translationStateStampCoverage(books, filter, { min = 0.99 } = {}) {
+  const [total, stamped] = await Promise.all([
+    books.countDocuments(filter),
+    books.countDocuments({ ...filter, 'translation_state.rung': { $type: 'string' } }),
+  ]);
+  const share = total ? stamped / total : 1;
+  return { total, stamped, share, ok: share >= min };
 }

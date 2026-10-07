@@ -40,6 +40,7 @@
  */
 import sharp from 'sharp';
 import { randomBytes } from 'node:crypto';
+import { stripMarkupTags } from './strip-markup-tags.mjs';
 
 /** Fraction of pixels darker than the page ground below which a leaf is blank. */
 export const DEFAULT_INK_MAX = 0.004;
@@ -59,7 +60,7 @@ export function transcriptionBody(data) {
     out = out.replace(new RegExp(`<${t}[^>]*>[\\s\\S]*?</${t}>`, 'gi'), ' ');
     out = out.replace(new RegExp(`<${t}[^>]*/?>`, 'gi'), ' ');
   }
-  return out.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  return stripMarkupTags(out).replace(/\s+/g, ' ').trim();
 }
 
 /**

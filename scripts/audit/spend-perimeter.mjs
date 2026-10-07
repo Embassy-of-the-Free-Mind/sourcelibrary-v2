@@ -107,6 +107,8 @@ const UNATTENDED = [
     pauseKey: 'images', pausePath: [{ file: 'scripts/workers/image-extract-worker.mjs', fn: 'main' }] },
   { match: 'image-embeddings-cron.mjs', spends: true, gated: true, note: 'crontab.production; pause + scoped dial (#3826)',
     pauseKey: 'embeddings', pausePath: [{ file: 'scripts/workers/image-embeddings-cron.mjs', fn: 'main' }] },
+  { match: 'embed-site-pages.mjs', spends: true, gated: true, note: 'dial via budgetAllowsDispatchScoped; weekly, fractions of a cent (#1180)',
+    pauseKey: 'embeddings', pausePath: [{ file: 'scripts/workers/embed-site-pages.mjs', fn: 'main' }] },
   { match: 'batch-collector.mjs', spends: false, gated: false,
     note: 'collects finished batches; writes results, submits nothing' },
   // Free, so outside the dial — but `archive` is a pause key, and a key nothing reads is the
@@ -125,8 +127,20 @@ const UNATTENDED = [
   { match: 'pipeline-health-alert.mjs', spends: false, gated: false, note: 'reads control, alerts' },
   { match: 'status-output-drift.mjs', spends: false, gated: false,
     note: 'read-only counts over books; no model call, no write (#4890)' },
+  { match: 'backfill-printed-page-4291.mjs', spends: false, gated: false,
+    note: 'daily refit of pages.printed_page from stored OCR text; Mongo only, no model call (#4291)' },
   { match: 'clip-index-integrity.mjs', spends: false, gated: false,
     note: 'read-only join of clip_embeddings to gallery_images; no model call, no write (#5195)' },
+  { match: 'paid-vs-got.mjs', spends: false, gated: false,
+    note: 'daily paid-vs-got ledger: reads usage stores, batch_jobs, pages and the billing export; writes one ops_reports row; no model call (#5499)' },
+  { match: 'spend-daily.mjs', spends: false, gated: false,
+    note: 'daily spend check: reads ops_reports, usage stores, pages, envelopes, the billing export and RunPod/Scaleway/Vercel billing APIs; writes one ops_reports row, emails on FAIL; no model call (#5743)' },
+  { match: 'spend-weekly-brief.md', spends: false, gated: false,
+    note: 'weekly cut list: a headless claude job (Claude subscription, no Gemini/API spend) that runs spend-daily.mjs --week and posts one issue comment; changes nothing (#5743)' },
+  { match: 'vercel-prod-watch.mjs', spends: false, gated: false,
+    note: 'production-deploy watch: reads the Vercel REST API + origin/main; files/closes one GitHub issue, pages ntfy; no model call, no Vercel function invocation (#5708)' },
+  { match: 'model-usage-snapshot.mjs', spends: false, gated: false,
+    note: '/about/models counts: checkpointed walk over pages + gallery_images, Supabase count estimates; writes one ops_reports row; no model call (#5601)' },
   { match: 'warm-author-pages.mjs', spends: false, gated: false, note: 'HTTP warm' },
   { match: 'prewarm-browse.mjs', spends: false, gated: false, note: 'HTTP warm' },
   { match: 'catalog-csv-snapshot.mjs', spends: false, gated: false, note: 'reads only' },
@@ -233,6 +247,8 @@ for (const u of UNATTENDED.filter((x) => x.mainGate)) {
 const BRAKES = [
   { file: 'scripts/lib/translate-batch-seam.mjs', fn: 'translateSubmitBrake', key: 'translate' },
   { file: 'scripts/workers/translate-worker.mjs', fn: 'translatePausedMidRun', key: 'translate' },
+  // Under a pause the --batch run still collects (already paid) and submits nothing (#5496 B2).
+  { file: 'scripts/workers/lib/enrich-batch-lane.mjs', fn: 'enrichPauseMode', key: 'enrich' },
 ];
 
 /** The body of `function NAME(...) { … }` in a source text, or null. Brace-counted. */

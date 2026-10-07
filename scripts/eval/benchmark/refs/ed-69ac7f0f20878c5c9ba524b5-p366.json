@@ -1,0 +1,35 @@
+{
+  "source": "EEBO-TCP A28378",
+  "edition": "EEBO-TCP A28378 (same edition by Wing/STC; scan copy unconfirmed)",
+  "licence": "CC0-1.0",
+  "kind": "ocr-same-text",
+  "canonical": false,
+  "memorization_risk": "low",
+  "origin": "library",
+  "book_id": "69ac7f0f20878c5c9ba524b5",
+  "page_number": 366,
+  "script": "latin",
+  "reference_kind": "ocr-same-text",
+  "window": {
+    "from_char": 884540,
+    "to_char": 887273,
+    "overlap": 1,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "model-eye",
+    "at": "2026-10-01",
+    "note": "lead checker read from image: ref opens with 7 words of prior letter's close, ends at catchword 'of' +3; another copy, same edition",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-01T16:08:51.487Z",
+  "text_location": "repo",
+  "text_sha256": "814a35b8ede14312ea78ca34a46d815019bec41904d607c320169b0892d54023",
+  "unit": {
+    "chars": 2733
+  }
+}

@@ -32,8 +32,17 @@ import { MongoClient } from 'mongodb';
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-// Dedup-key normalizers: ONE implementation, shared with src/lib/dedup.ts (#4444).
-import { normalizeTitle, normalizeAuthor } from '../lib/dedup-normalize.mjs';
+// Dedup-key normalizers: ONE implementation, shared with src/lib (#4444).
+import { normalizeAuthor } from '../lib/dedup-normalize.mjs';
+import { buildEditionKey } from '../lib/identity-fields.mjs';
+
+// Title key: the edition key's own title part, on both sides. The stored ASCII
+// `normalized_title` is '' for every title not in Latin script. '' when the
+// title is too short or too generic to key on.
+function titleKey(title) {
+  const built = buildEditionKey({ title });
+  return built.key ? built.parts.title : '';
+}
 
 const __dir = dirname(fileURLToPath(import.meta.url));
 const OUT = join(__dir, 'output');
@@ -143,19 +152,19 @@ async function diff(docs) {
   const db = client.db('bookstore');
   // preload our catalog's normalized keys (fast in-memory diff)
   const ours = await db.collection('books')
-    .find({}, { projection: { title: 1, author: 1, normalized_title: 1, normalized_author: 1 } }).toArray();
+    .find({}, { projection: { title: 1, author: 1, normalized_author: 1 } }).toArray();
   await client.close();
 
   const titleSet = new Set();          // normalized title -> have it
   const titleAuthorSet = new Set();    // normalized "title|author" -> have it
   for (const b of ours) {
-    const nt = b.normalized_title || normalizeTitle(b.title || '');
+    const nt = titleKey(b.title || '');
     const na = b.normalized_author || normalizeAuthor(b.author || '');
     if (nt) { titleSet.add(nt); titleAuthorSet.add(nt + '|' + na); }
   }
 
   for (const d of docs) {
-    const nt = normalizeTitle(d.title || '');
+    const nt = titleKey(d.title || '');
     const na = normalizeAuthor(d.creator || '');
     d._nt = nt;
     if (titleAuthorSet.has(nt + '|' + na)) d.match = 'title_author';

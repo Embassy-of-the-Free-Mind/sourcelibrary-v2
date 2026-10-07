@@ -1,0 +1,73 @@
+{
+  "at": "2026-09-30T09:42:28.382Z",
+  "arms": {
+    "L1": "gemini-3.1-flash-lite",
+    "L2": "gemini-3.1-flash-lite",
+    "F": "gemini-3-flash-preview"
+  },
+  "pages": 305,
+  "excluded_wrong_leaf": [
+    "02ec073c0c",
+    "05b1da1988",
+    "134c51dfa7",
+    "40d19cba36",
+    "4b4d01bf24",
+    "d9f45e5b0a"
+  ],
+  "prompts": {
+    "translation": {
+      "id": "6a98b8a175660c6a8b09a8f9",
+      "name": "Standard Translation",
+      "version": 13,
+      "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+    },
+    "english_modernization": {
+      "id": "6ab143756295624338df3ed9",
+      "name": "English Modernization",
+      "version": 2,
+      "content_hash": "45790074eec996e8055b1462f36a62ea"
+    }
+  },
+  "generation": {
+    "thinkingBudget": 0,
+    "maxOutputTokens": "translate-batch-seam maxOutputTokensFor",
+    "temperature": "model default",
+    "page_break": "PAGE_BREAK_SCOPED"
+  },
+  "notes": {
+    "language_differs": [],
+    "no_prev_translation": 10,
+    "no_prev_ocr": 5,
+    "no_next_ocr": 5,
+    "ocr_changed_since_audit": 0,
+    "page_break_applied": 92,
+    "production_model": {
+      "gemini-3.1-flash-lite": 240,
+      "gemini-3-flash-preview": 65
+    }
+  },
+  "estimate": {
+    "gemini-3.1-flash-lite": {
+      "requests": 610,
+      "in_tokens": 1974454,
+      "out_tokens": 847144,
+      "price": {
+        "input": 0.25,
+        "output": 1.5
+      },
+      "usd": 0.8822
+    },
+    "gemini-3-flash-preview": {
+      "requests": 305,
+      "in_tokens": 987227,
+      "out_tokens": 423572,
+      "price": {
+        "input": 0.5,
+        "output": 3
+      },
+      "usd": 0.8822
+    },
+    "usd": 1.7643,
+    "basis": "Batch API, 50% of list price"
+  }
+}

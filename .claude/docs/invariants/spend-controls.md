@@ -129,6 +129,7 @@ an emergency stop that validates keys, sets every key, and parks open
   on runaway-heavy days, and ~110 rows/day carry no `cost_usd` at all — the guard
   prints that count every cycle. **A $5 computed dial is not a $5 invoice.**
   Treat the ceiling as a strong brake, not an accounting system.
-- **Phase 2's cross-book pool routes every small book to flash-lite regardless of
-  script** — the defect #4436 fixed for preview only. See `language-fields.md`
-  for why that matters on non-Latin scripts.
+- **Phase 2's cross-book pool used to route every small book to flash-lite regardless
+  of script** (#4436 fixed preview first). Since #5575 Pass 1 partitions by
+  `getOcrModelForBook` like Pass 2; any new pool must do the same. See
+  `language-fields.md` for why that matters on non-Latin scripts.

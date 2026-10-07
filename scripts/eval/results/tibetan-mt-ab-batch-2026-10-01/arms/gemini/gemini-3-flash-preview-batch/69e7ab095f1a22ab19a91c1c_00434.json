@@ -1,0 +1,20 @@
+{
+ "id": "69e7ab095f1a22ab19a91c1c_00434",
+ "arm": "gemini-3-flash-preview",
+ "text": "Through the knowledge derived from hearing <note>original: \"thos pa las byung ba'i shes pa\", referring to wisdom gained through listening to teachings</note>, one understands that in the realm of animals, there are animals that live on the food of joy which is entirely afflicted. In the depths of the forest, there is the great serpent called the <term>Ajagara</term> <gloss>python or \"goat-swallower\"</gloss> which lives by consuming the food of joy and wind. There are also creatures such as the <term>Golgoli-ka</term> <gloss>lizard or gecko</gloss> and those known as the Dwellers of the Mountain Slopes.\n\nRegarding this, the food of joy of the gods of Clear Light <note>original: \"od gsal gyi lha\", the Abhasvara gods</note> is a life sustained by the food of joy free from malice. However, the food of joy of animals is possessed by a view of enmity and a mind that holds tightly to resentment. One might wonder: which of these causes leads to rebirth there?\n\nWhen examining this through the knowledge derived from hearing, it is seen that those who are dominated by hatred or possess a nature of hatred, who are in accord with the causes of enmity, and who commit the act of killing while dominated by ignorance, will, upon parting from the body, fall into the evil migrations and be born among the beings in the hells.\n\nIf one has the basis of enmity and that specific joy, and is born among the animals, one will consume the food of joy and wind. If one is born as a human with a fortune equal to other humans, then as a result consistent with that cause, one is seen to be constantly and suddenly involved in quarreling with others without any immediate reason.\n\nFurthermore, the monk who understands the ripening of the results of karma investigates the infinite world of animals in another way. He wonders: how are those who move within the water born? When he examines this through the knowledge derived from hearing, he sees that those with weak intellects and weak consciousness, who die while tormented by thirst, will, upon parting from the body, fall into the evil migrations and be born as those who move within the water.\n\n<summary>This page explains the karmic causes for rebirth as specific animals or in the hells, contrasting the pure joy of gods with the afflicted joy of resentful beings. It describes how hatred and ignorance lead to lower rebirths and how specific traits like thirst at death lead to aquatic rebirth.</summary>\n<keywords>karma, rebirth, animal realm, Ajagara, Clear Light gods, hatred, ignorance, aquatic beings</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2664,
+ "outputTokens": 564,
+ "thinkingTokens": 0,
+ "ms": 203757,
+ "cost_usd": 0.001512,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1329,
+ "job": "batches/m3tgb80kdfd0p59ncbwgvg1drix1ghy12b7v"
+}

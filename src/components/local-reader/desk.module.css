@@ -1,0 +1,400 @@
+/*
+ * The desk reader. Scoped to /local — a CSS module, not globals.css, because
+ * globals.css ships on every page of sourcelibrary.org and none of this should.
+ *
+ * Palette and proportions are the reading-page specimen's
+ * (~/sourcelibrary-ops/design/2026-09-12-reading-page-specimen.html): a cream
+ * leaf lying in a room. Dark mode darkens the ROOM; the leaf stays paper,
+ * because a page does not invert.
+ *
+ * The six grid rules of the three-rooms vision, and where each lives here:
+ *  1. One column, shared edges — every row (rail, opening, footer) is centred in
+ *     the same --page-w, so all three begin and end on the same two lines.
+ *  2. Eight-pixel rhythm — every gap, pad and height below is a multiple of 8.
+ *  3. Furniture at the edges — chrome lives in .rail (top) and .foot (bottom);
+ *     nothing is positioned over the text except the ⌘K drawer, which is the
+ *     one thing the vision asks to sit over the translation.
+ *  4. An empty pane doesn't exist — .single collapses the opening to one leaf.
+ *  5. Group by job — page turning (.turn) and reading options (.opts) are
+ *     separate clusters with different shapes.
+ *  6. Measure before beauty — the text is capped at 64ch; below 1180px the two
+ *     leaves cannot both hold it, so the opening shows one leaf at a time.
+ */
+
+.desk {
+  --room: #e5ddcd;
+  --room-edge: #d8cfbb;
+  --leaf: #f7f2e6;
+  --leaf-shade: #ece5d4;
+  --ink: #2b241c;
+  --ink-soft: #5c5145;
+  --ink-faint: #8d8375;
+  --rubric: #9e4a3a;
+  --gold: #a8894e;
+  --hair: #ded5c2;
+  --chrome: #5c5145;
+
+  /* The one width every row shares (rule 1). */
+  --page-w: min(1360px, calc(100vw - 48px));
+  /* One line for both leaves, so their baselines share a grid. 32 = 4 × 8. */
+  --line: 32px;
+  --measure: 64ch;
+  --text-size: 17px;
+
+  position: fixed;
+  inset: 0;
+  /* Above the site footer and the cookie banner (z 9999): the desk owns the
+     viewport, and neither has anything to say to a reader on a plane. */
+  z-index: 10000;
+  display: grid;
+  grid-template-rows: 48px 1fr 48px;
+  background: var(--room);
+  color: var(--ink);
+  font-family: ui-sans-serif, -apple-system, 'Segoe UI', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-color-scheme: dark) {
+  .desk {
+    --room: #1c1814;
+    --room-edge: #2a241e;
+    --chrome: #b3a999;
+  }
+}
+
+/* ---------- rails ---------- */
+
+.rail,
+.foot {
+  width: var(--page-w);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+  font-size: 12px;
+  color: var(--chrome);
+}
+.rail { border-bottom: 1px solid var(--room-edge); }
+.foot { border-top: 1px solid var(--room-edge); }
+
+.brand {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--rubric);
+  white-space: nowrap;
+}
+@media (prefers-color-scheme: dark) {
+  .brand { color: #c9a86c; }
+}
+.meta {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.meta i { font-style: italic; }
+.spacer { flex: 1 1 auto; min-width: 8px; }
+
+/* Reading options: quiet outlined keys (rule 5 — not the page-turn shape). */
+.opts { display: flex; gap: 8px; align-items: center; }
+.key {
+  height: 24px;
+  padding: 0 8px;
+  border: 1px solid var(--room-edge);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--chrome);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.key:hover { color: var(--ink); border-color: var(--ink-faint); }
+@media (prefers-color-scheme: dark) {
+  .key:hover { color: #efe8da; }
+}
+.key[aria-pressed='true'] { border-color: var(--gold); color: var(--ink); }
+@media (prefers-color-scheme: dark) {
+  .key[aria-pressed='true'] { color: #efe8da; }
+}
+.key kbd { font: inherit; opacity: 0.7; margin-right: 4px; }
+.select {
+  height: 24px;
+  max-width: 240px;
+  border: 1px solid var(--room-edge);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--chrome);
+  font: inherit;
+  font-size: 12px;
+}
+
+/* Page turning: bare arrows, then the folio — a different shape from .key. */
+.turn { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.arrow {
+  width: 24px;
+  height: 24px;
+  display: inline-grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: var(--chrome);
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.arrow[aria-disabled='true'] { opacity: 0.3; pointer-events: none; }
+.folio { font-variant-numeric: tabular-nums; }
+.progress {
+  flex: 1 1 120px;
+  min-width: 48px;
+  height: 2px;
+  background: var(--room-edge);
+  position: relative;
+}
+.progress i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--gold);
+}
+.status { display: flex; gap: 16px; white-space: nowrap; overflow: hidden; }
+
+/* ---------- the room and the opening ---------- */
+
+.room {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-block: 24px 48px;
+}
+.opening {
+  width: var(--page-w);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100%;
+  background: var(--leaf);
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(43, 36, 28, 0.1), 0 16px 48px -16px rgba(43, 36, 28, 0.38);
+  position: relative;
+}
+/* The gutter: both leaves fall into the binding. */
+.opening::after {
+  content: '';
+  position: absolute;
+  inset: 0 calc(50% - 24px);
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(43, 36, 28, 0) 0%, rgba(43, 36, 28, 0.07) 42%, rgba(43, 36, 28, 0.13) 50%, rgba(43, 36, 28, 0.07) 58%, rgba(43, 36, 28, 0) 100%);
+}
+.single { grid-template-columns: 1fr; }
+.single::after { display: none; }
+
+.leaf {
+  min-width: 0;
+  padding: 48px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.verso { padding-right: 48px; }
+.recto { padding-left: 48px; }
+.single .leaf { padding-inline: 48px; }
+
+/* Narrow window: the measure wins over the second leaf (rule 6). */
+@media (max-width: 1180px) {
+  .opening { grid-template-columns: 1fr; }
+  .opening::after { display: none; }
+  .leaf { padding-inline: 32px; }
+  .opening:not(.single) .leaf[data-hidden-narrow='true'] { display: none; }
+}
+.narrowOnly { display: none; }
+@media (max-width: 1180px) {
+  .narrowOnly { display: inline-block; }
+}
+
+.column { width: 100%; max-width: var(--measure); }
+
+.label {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  height: var(--line);
+  margin: 0 0 var(--line);
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+.running { font-style: italic; letter-spacing: 0.08em; text-transform: none; }
+
+/* ---------- the two texts ---------- */
+
+.text strong { font-weight: 600; }
+
+.text p {
+  margin: 0 0 var(--line);
+  font-size: var(--text-size);
+  line-height: var(--line);
+  text-wrap: pretty;
+  hyphens: none;
+}
+.original { font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif; }
+/* Aldine's x-height is 0.424 em against the reading face's ~0.44 — the 4% bump
+   production uses (globals.css, #4083). Same --line, so baselines still share. */
+.aldine {
+  font-family: var(--font-aldine-aetna), 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  font-feature-settings: 'liga' 1, 'calt' 1;
+}
+.aldine p { font-size: calc(var(--text-size) * 1.04); }
+.english { font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif; }
+
+/* `->…<-`: centred small capitals in the rubricator's red. One line tall, so it
+   costs the baseline grid exactly one line. */
+.centred {
+  display: block;
+  /* Speaker marks are one line; a proposition heading can be three. Wrap it,
+     never truncate it — hiding printed words is worse than a looser grid. */
+  min-height: var(--line);
+  line-height: 16px;
+  padding-block: 8px;
+  margin: 0 0 var(--line);
+  text-align: center;
+  text-wrap: balance;
+  font-family: ui-sans-serif, -apple-system, system-ui, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--rubric);
+}
+
+/* `<margin>`: a note the printer set in the margin. Indented and quieter. */
+.marginalia {
+  margin: 0 0 var(--line);
+  padding-left: 16px;
+  border-left: 1px solid var(--hair);
+  font-size: 14px;
+  line-height: 24px;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.columnBreak { height: 1px; background: var(--hair); margin: 0 0 var(--line); }
+
+.anchor {
+  text-decoration: underline dotted var(--gold);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1.5px;
+  cursor: help;
+}
+.anchor[data-active='true'] { background: rgba(168, 137, 78, 0.16); }
+.unclear { color: var(--ink-faint); }
+.unclear::before { content: '['; }
+.unclear::after { content: '?]'; }
+
+/* Glosses: keyed to their word, set at the foot of the leaf behind a gold rule. */
+.glosses { margin: 0; padding: 0; list-style: none; }
+.gloss {
+  font-size: 13px;
+  line-height: 24px;
+  color: var(--ink-faint);
+  border-left: 2px solid var(--gold);
+  padding-left: 8px;
+  margin-bottom: 8px;
+}
+.gloss b { color: var(--ink-soft); font-weight: 600; }
+.gloss[data-active='true'] { color: var(--ink-soft); background: rgba(168, 137, 78, 0.12); }
+
+.caption {
+  margin: 0 0 var(--line);
+  font-family: ui-sans-serif, -apple-system, system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 24px;
+  color: var(--ink-faint);
+  text-align: center;
+}
+
+.quiet {
+  font-size: 14px;
+  line-height: var(--line);
+  color: var(--ink-faint);
+  font-style: italic;
+  text-align: center;
+  margin: 0;
+}
+
+/* ---------- the scan ---------- */
+
+.scan {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: var(--measure);
+  /* The box is reserved from the manifest's stored proportions before the file
+     decodes, so the page never jumps when the image lands. */
+  background: var(--leaf-shade);
+  border: 1px solid var(--hair);
+}
+
+/* ---------- the librarian drawer ---------- */
+
+.drawer {
+  position: fixed;
+  /* Level with the leaf's top edge (rail 48 + the room's 24 of padding), so the
+     drawer lies on the page rather than beside it. */
+  top: 72px;
+  bottom: 48px;
+  right: calc((100vw - var(--page-w)) / 2);
+  width: calc(var(--page-w) / 2);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 32px;
+  background: var(--leaf);
+  border-left: 2px solid var(--gold);
+  box-shadow: -16px 0 32px -24px rgba(43, 36, 28, 0.45);
+  overflow-y: auto;
+}
+@media (max-width: 1180px) {
+  .drawer { width: var(--page-w); }
+}
+.drawerHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.drawerInput {
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--hair);
+  border-radius: 2px;
+  background: #fffdf8;
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px;
+}
+.drawerInput:focus { outline: 2px solid var(--gold); outline-offset: 0; }
+.drawerNote { font-size: 12px; line-height: 16px; color: var(--ink-faint); margin: 0; }
+.hits { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.hit {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 8px 16px;
+  border: 1px solid var(--hair);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+.hit:hover,
+.hit[data-current='true'] { border-color: var(--gold); }
+.hitHead { display: block; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 4px; }
+.hitText { display: block; font-family: 'Iowan Old Style', Palatino, Georgia, serif; font-size: 15px; line-height: 24px; }

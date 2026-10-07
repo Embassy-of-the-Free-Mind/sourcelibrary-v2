@@ -7,7 +7,9 @@ import {
   priorTurnImageUrls,
   type CitationFix,
 } from '@/lib/embassy/citation-fixes';
-import { PREFIXED_LOCALES, type Locale } from '@/lib/locale-path';
+import { PREFIXED_LOCALES, localePath, type Locale } from '@/lib/locale-path';
+import { semanticSiteSearch } from '@/lib/semantic-search';
+import { esCollectionSlugs } from '@/lib/es-collections';
 import {
   localizedTitle,
   localizedEditionFilter,
@@ -19,6 +21,7 @@ import { logAiUsage } from '@/lib/log-ai-usage';
 // Atlas keyword + Supabase semantic are now combined in @/lib/search/librarian-search.
 // Atlas-search builders no longer imported here directly.
 import { supabase } from '@/lib/supabase';
+import { GLOBAL_SCOPE, matchClip } from '@/lib/tenant-search-scope';
 import { ObjectId, type Document, type WithId } from 'mongodb';
 import { stripAnnotations } from '@/lib/semantic-alignment';
 import { authorSlug } from '@/lib/slugify';
@@ -38,6 +41,7 @@ import collectionRedirects from '@/lib/collection-redirects.json';
  *   - search: Hybrid keyword + semantic via RRF (replaces the prior
  *             search_collection and search_semantic; both old names accepted
  *             as aliases for one release)
+ *   - search_site: the site's own writing — essays, collection intros, tools (site_pages)
  *   - search_wikipedia: Wikipedia REST API for context
  *   - get_book_page: Read a specific translated page
  *   - read_nearby_pages: Read a range of pages around a finding
@@ -209,6 +213,17 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
         sort: { type: Type.STRING, description: 'oldest (default) | newest | title | most_translated' },
         limit: { type: Type.NUMBER, description: 'How many books to list back, 1-30 (default 15). The total count is exact no matter how few are listed.' },
       },
+    },
+  },
+  {
+    name: 'search_site',
+    description: 'Search Source Library\'s OWN pages — the essays on its blog, the introductions to its collections, its tools (identify an artwork from a photo, the ngram viewer, the map, the translation census, the dataset and API), and pages about the project (how to support it, how OCR and translation quality are measured, how first translations are counted). Use when the reader asks about Source Library itself, how something here works, where to find a feature, or what the project has written on a topic. `search` does NOT cover these pages — it only searches books. Returns page titles, the passage that matched, and the exact URL to link.',
+    parameters: {
+      type: Type.OBJECT,
+      properties: {
+        query: { type: Type.STRING, description: 'What the reader wants, in plain English (e.g. "identify an engraving from a photo", "how do you measure OCR quality", "how can I donate").' },
+      },
+      required: ['query'],
     },
   },
   {
@@ -387,11 +402,12 @@ const LANG_NAMES: Record<Locale, string> = { en: 'English', es: 'Spanish' };
 // Replaces the prior executeSearchCollection (keyword-only) and
 // executeSearchSemantic (book-then-page only) with a single unified path.
 async function executeSearch(query: string, collection?: string | null): Promise<{
-  passages: Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; text: string; score: number; source: string; year?: number; language?: string; textRole?: string }>;
+  passages: Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; text: string; score: number; source: string; year?: number; language?: string; textRole?: string; untranslated?: boolean; tradition?: string[] }>;
   books: Array<{ id: string; title: string; author?: string; authorSlug?: string; year?: number; slug?: string }>;
   collectionUsed: string | null;
 }> {
   const { hybridSearch } = await import('@/lib/search/librarian-search');
+  const { defaultDiversity } = await import('@/lib/search/diversity');
   // The model may pass a slug, a name, or a loose topic phrase — normalize it to
   // a real slug (or null → plain global search). Weighting is soft, so a missed
   // resolution just searches the whole library unweighted.
@@ -404,6 +420,10 @@ async function executeSearch(query: string, collection?: string | null): Promise
     // Ad fontes: at comparable relevance, hand the model the 1591 imprint
     // before the 1928 handbook that paraphrases it (#4704).
     preferPeriodEditions: true,
+    // A concept question gets passages from several traditions, not one
+    // tradition's ten nearest pages; a quoted phrase or a dated item keeps
+    // the fused order (#3514).
+    diversity: defaultDiversity(query),
     // collectionWeight defaults to 2 in hybridSearch.
   });
   return { passages, books, collectionUsed };
@@ -532,12 +552,10 @@ async function executeSearchImages(query: string, bookId?: string): Promise<{
     if (resp.ok) {
       const { embedding } = await resp.json();
       if (embedding) {
-        const { data } = await supabase.rpc('match_clip_images', {
-          query_embedding: embedding,
-          match_threshold: 0.20,
-          match_count: 8,
-        });
-        if (data) {
+        // GLOBAL_SCOPE: the Librarian is main-site only (tenantVisibilityFilter
+        // above); a per-tenant Librarian would pass that tenant's scope here.
+        const { rows: data } = await matchClip(embedding, { scope: GLOBAL_SCOPE, threshold: 0.20, count: 8 });
+        if (data.length > 0) {
           for (const match of data) {
             if (match.source_type === 'gallery_image' && match.id) {
               clipIds.set(match.id, match.similarity);
@@ -860,7 +878,10 @@ async function executeBrowseCatalog(args: BrowseArgs, lang: Locale): Promise<{
   const base = siteBase(lang);
   let browseUrl: string | null = null;
   if (linkable?.kind === 'collection') {
-    browseUrl = `${base}/collections/${linkable.value}`;
+    // Not every collection has a Spanish page (esCollectionSlugs); fall back
+    // to the English one rather than hand over an /es link that 404s.
+    const hasTwin = lang === 'en' || (await esCollectionSlugs(db, [linkable.value])).has(linkable.value);
+    browseUrl = `${hasTwin ? base : siteBase('en')}/collections/${linkable.value}`;
   } else if (linkable?.kind === 'readable' && linkable.value === 'es') {
     browseUrl = `${base}/collections/en-espanol`;
   } else if (linkable?.kind === 'language') {
@@ -972,7 +993,14 @@ async function executeTool(
           // model cannot prefer the source over the compendium quoting it
           // unless it can see which is which (#4704: 35% of page citations
           // landed on 1850–1949 English compendia).
-          context += `\n--- ${p.bookTitle}${editionTag(p)} by ${p.bookAuthor}, Page ${p.page_number} (${url})${langTag} ---\n${p.text}\n`;
+          // An original-text hit (#5729): the page has no English yet, and the
+          // text below is the page's own. Say so, or the model quotes Latin as
+          // if it were our translation, or "translates" it inside quote marks.
+          const untranslatedTag = p.untranslated && !/^english$/i.test(p.language || '')
+            ? ` [untranslated: the text below is the original ${p.language || 'language'}, not an English translation. Quote it only in the original; any English you give is your own paraphrase and must be labelled as such]`
+            : '';
+          const traditionTag = p.tradition?.length ? ` [tradition: ${p.tradition.join(', ')}]` : '';
+          context += `\n--- ${p.bookTitle}${editionTag(p)} by ${p.bookAuthor}, Page ${p.page_number} (${url})${langTag}${traditionTag}${untranslatedTag} ---\n${p.text}\n`;
         }
       }
       if (totalFound === 0) context = 'No results found for this query.';
@@ -1005,6 +1033,42 @@ async function executeTool(
         result: { found: data.total, context },
         step: { type: 'tool_result', name: 'browse_catalog', query: data.filterLabel, found: data.total,
           summary: `${data.total} books — ${data.filterLabel}` },
+      };
+    }
+
+    case 'search_site': {
+      // The site's own writing (#1180), from `site_pages` (main site only, like
+      // the Librarian). Every URL is final: absolute, and locale-prefixed only
+      // where the page has a twin (localePath) — LINK_PATTERNS in
+      // citation-fixes.ts verifies /book links only, so nothing repairs a bad
+      // /blog or /collections link after the fact (agent-tool-results.md).
+      const query = args.query as string;
+      const hits = await semanticSiteSearch(query, 5).catch(() => null);
+      const kind = (t: string) => (t === 'blog' ? 'Essay' : t === 'collection' ? 'Collection' : t === 'feature' ? 'Tool' : 'Page');
+      let context: string;
+      if (hits === null) {
+        context = 'The site-page search is unavailable right now. Do not link any Source Library page from memory — say you could not check.\n';
+      } else if (hits.length === 0) {
+        context = `No page on Source Library's own site matches "${query}". Do not write a link to a page for it — any URL you compose will not exist.\n`;
+      } else {
+        const site = 'https://sourcelibrary.org';
+        // localePath knows route shapes, not which collections have an /es
+        // page — ask the store, and keep the English URL where there is none.
+        const collectionSlug = (u: string) => u.match(/^\/collections\/([^/?#]+)$/)?.[1];
+        const wanted = lang === 'en' ? [] : hits.map(h => collectionSlug(h.url)).filter((s): s is string => !!s);
+        const esLive = wanted.length > 0 ? await esCollectionSlugs(await getDb(), wanted).catch(() => new Set<string>()) : new Set<string>();
+        const link = (u: string) => {
+          const slug = collectionSlug(u);
+          return `${site}${slug && !esLive.has(slug) ? u : localePath(u, lang)}`;
+        };
+        context = `Source Library's own pages matching "${query}" (best first). Link a page with EXACTLY the URL given; these pages are in English.\n\n`
+          + hits.map((h, i) => `${i + 1}. [${kind(h.page_type)}] ${h.title}\n   URL: ${link(h.url)}\n   Passage: ${h.snippet}`).join('\n\n')
+          + '\n';
+      }
+      return {
+        result: { found: hits?.length ?? 0, context },
+        step: { type: 'tool_result', name: 'search_site', query, found: hits?.length ?? 0,
+          summary: hits === null ? 'Site search unavailable' : hits.length === 0 ? 'No site pages' : `${hits.length} site page${hits.length === 1 ? '' : 's'}: ${hits[0].title}` },
       };
     }
 
@@ -1085,7 +1149,7 @@ async function executeTool(
       const { semanticArtworkSearch } = await import('@/lib/semantic-search');
       const { filterVisibleArtworks } = await import('@/lib/artwork-visibility');
       const artworkDb = await getDb();
-      const rawArtworks = await semanticArtworkSearch(query, 8, { genre, period, culture, collection });
+      const rawArtworks = await semanticArtworkSearch(query, 8, { scope: GLOBAL_SCOPE, genre, period, culture, collection });
       const artworks = await filterVisibleArtworks(artworkDb, rawArtworks);
 
       // The Supabase `thumbnail_url` is a stale 150px `book-thumbnails/{id}-thumb.jpg`
@@ -1218,7 +1282,7 @@ The library is organized into thematic collections. The **search** tool takes an
 ${collectionContext ? `\n**This conversation started inside the "${collectionContext}" collection.** Unless the user clearly shifts to a different subject, pass \`collection: "${collectionContext}"\` on your searches so results stay focused there.\n` : ''}
 Available collection slugs (slug — name):
 ${catalog}
-
+${lang !== 'en' ? `\nThese slugs are arguments for the tools, not links. Not every collection has a ${lang === 'es' ? 'Spanish' : 'localized'} page, so never build a \`/${lang}/collections/<slug>\` URL yourself — link a collection only with a URL a tool returned this turn (browse_catalog, search_site).\n` : ''}
 `
     : '';
 
@@ -1284,6 +1348,8 @@ Once you have a direction (from a choice or a specific question), search strateg
 For visual or symbolic topics (emblems, alchemical apparatus, diagrams, seals, planetary symbols, anatomical illustrations), proactively call search_images (for illustrations extracted from book pages) or search_artworks (for standalone museum artworks — paintings, prints, sculptures from Met, Rijksmuseum, Wikimedia Commons). The collection includes 23,000+ artworks spanning all cultures and periods. search_artworks supports filtering by genre, period, culture, and collection. Use it when users ask about visual art, specific artists, or when showing a painting/print would contextualize a text.
 
 **Catalogue questions are a different tool.** "What do you have in Spanish?", "how many books from before 1600?", "list everything in the astrology collection", "how many first translations are there?" are questions about the SHELF, not about passages. \`search\` ranks passages and returns only the strongest handful, so counting books from its results undercounts the library by orders of magnitude — asked for "all the books published in Spanish" it once answered with the 5 books its 8 passages happened to come from, out of 74. Call **browse_catalog** for anything of the form how many / what do you have / list them all / everything by X, report the exact total it returns, show a representative handful with their links, and link the browse URL it hands you so the reader can see the rest — and when it tells you there is no such page, write no browse link at all, because a URL you compose for a filter (\`/books?year_to=1599\`) does not exist. If a question is both ("what do you have in Spanish about alchemy?"), browse for the count and search for the passages.
+
+**Questions about Source Library itself are a third tool.** "How do I identify an engraving?", "is there an ngram viewer?", "how do you measure OCR quality?", "how can I support the project?", "what have you written about first translations?" are answered by the site's own pages, not by the books. Call **search_site**, answer from the passage it returns, and link the page with the exact URL it gives. \`search\` cannot find these pages. When search_site finds nothing, link no Source Library page for it.
 
 **Step 5: Save and cite with links.**
 Use add_to_notebook for quotes directly relevant to the research question. The notebook persists across messages.
@@ -1878,12 +1944,12 @@ export async function verifyCitations(
  * so it is always dead, no lookup needed.
  */
 async function verifyNonBookLinks(text: string): Promise<string[]> {
-  const { plural, singular } = findCitedCollectionSlugs(text);
+  const { plural, singular, spanish } = findCitedCollectionSlugs(text);
   const artworkSlugs = new Set(findCitedArtworkSlugs(text));
   const collectionSlugs = new Set(plural);
   const dead: string[] = singular.map(s => `/collection/${s}`);
 
-  if (artworkSlugs.size === 0 && collectionSlugs.size === 0) return dead;
+  if (artworkSlugs.size === 0 && collectionSlugs.size === 0 && spanish.length === 0) return dead;
   const db = await getDb();
 
   if (artworkSlugs.size > 0) {
@@ -1908,6 +1974,14 @@ async function verifyNonBookLinks(text: string): Promise<string[]> {
     const live = new Set(found.map(c => c.slug as string));
     const redirects = collectionRedirects as Record<string, string>;
     for (const s of wanted) if (!live.has(s) && !redirects[s]) dead.push(`/collections/${s}`);
+  }
+
+  // A slug live in English can still 404 under /es (esCollectionSlugs).
+  const spanishWanted = [...new Set(spanish)].filter(s => !dead.includes(`/collections/${s}`));
+  if (spanishWanted.length > 0) {
+    const redirects = collectionRedirects as Record<string, string>;
+    const esLive = await esCollectionSlugs(db, spanishWanted.map(s => redirects[s] ?? s));
+    for (const s of spanishWanted) if (!esLive.has(redirects[s] ?? s)) dead.push(`/es/collections/${s}`);
   }
 
   return dead;

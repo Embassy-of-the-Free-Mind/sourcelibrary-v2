@@ -1,0 +1,111 @@
+{
+  "summary": {
+    "book_id": "6a08fd2e25e3a402b23b3bca",
+    "title": "Catiline, his Conspiracy",
+    "published": "1611",
+    "source": "EEBO-TCP A04640",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "probe-too-short": 1
+    },
+    "median_char_acc": 0.9687,
+    "median_char_acc_windowed": 0.9677,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a08fd2e-p2",
+      "page": 2,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a08fd2e-p9",
+      "page": 9,
+      "overlap": 0.973,
+      "probe_words": 233,
+      "ref_chars": 1452,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.05,
+      "char_acc": 0.9557,
+      "char_acc_windowed": 0.9557
+    },
+    {
+      "slug": "ed-6a08fd2e-p16",
+      "page": 16,
+      "overlap": 0.628,
+      "probe_words": 300,
+      "ref_chars": 2060,
+      "engine": "mineru-pipeline",
+      "aligned": true,
+      "guard_wer": 0.264,
+      "char_acc": 0.9399,
+      "char_acc_windowed": 0.9282
+    },
+    {
+      "slug": "ed-6a08fd2e-p17",
+      "page": 17,
+      "overlap": 0.808,
+      "probe_words": 279,
+      "ref_chars": 1861,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.136,
+      "char_acc": 0.9509,
+      "char_acc_windowed": 0.9502
+    },
+    {
+      "slug": "ed-6a08fd2e-p26",
+      "page": 26,
+      "overlap": 0.929,
+      "probe_words": 249,
+      "ref_chars": 1653,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.083,
+      "char_acc": 0.9687,
+      "char_acc_windowed": 0.9677
+    },
+    {
+      "slug": "ed-6a08fd2e-p28",
+      "page": 28,
+      "overlap": 0.997,
+      "probe_words": 309,
+      "ref_chars": 1957,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.042,
+      "char_acc": 0.9775,
+      "char_acc_windowed": 0.9738
+    },
+    {
+      "slug": "ed-6a08fd2e-p43",
+      "page": 43,
+      "overlap": 0.993,
+      "probe_words": 281,
+      "ref_chars": 1772,
+      "engine": "gemini-3.1-flash-lite",
+      "aligned": true,
+      "guard_wer": 0.038,
+      "char_acc": 0.9765,
+      "char_acc_windowed": 0.9757
+    },
+    {
+      "slug": "ed-6a08fd2e-p48",
+      "page": 48,
+      "overlap": 1,
+      "probe_words": 302,
+      "ref_chars": 1826,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.026,
+      "char_acc": 0.9811,
+      "char_acc_windowed": 0.9796
+    }
+  ]
+}

@@ -1,0 +1,712 @@
+{
+  "arabic_script_public": 420,
+  "year_1200_1450": 70,
+  "by_class": {
+    "hijri_bracketed": 20,
+    "modern_published": 3,
+    "modern_imprint": 3,
+    "unproven": 44
+  },
+  "rows": [
+    {
+      "id": "6953b56577f38f6761bd979d",
+      "class": "modern_imprint",
+      "year": 1400,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "c. 1400 (Jalayirid Baghdad)",
+      "title": "Kitab al-Bulhan Bodleian Library MS. Bodl. Or. 133",
+      "url": "https://sourcelibrary.org/book/6953b56577f38f6761bd979d"
+    },
+    {
+      "id": "6953dd3e77f38f6761be722c",
+      "class": "unproven",
+      "year": 1220,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "Unknown",
+      "title": "Awrad Ibn Arabi (Daily Prayers)",
+      "url": "https://sourcelibrary.org/book/6953dd3e77f38f6761be722c"
+    },
+    {
+      "id": "6958ea069659a6529d577c98",
+      "class": "unproven",
+      "year": 1245,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "Unknown",
+      "title": "Traite des medicaments (Jami al-Mufradat)",
+      "url": "https://sourcelibrary.org/book/6958ea069659a6529d577c98"
+    },
+    {
+      "id": "695931cbb91a6184ea94337c",
+      "class": "unproven",
+      "year": 1225,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "Unknown",
+      "title": "Al-Lum'a al-nuraniyya (Radiant Sparks)",
+      "url": "https://sourcelibrary.org/book/695931cbb91a6184ea94337c"
+    },
+    {
+      "id": "695931c4b91a6184ea9432e3",
+      "class": "modern_imprint",
+      "year": 1225,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "Unknown | Cairo",
+      "title": "Shams al-Ma'arif (Sun of Knowledge) - Talismans & Magic Squares",
+      "url": "https://sourcelibrary.org/book/695931c4b91a6184ea9432e3"
+    },
+    {
+      "id": "695931d4b91a6184ea9433a8",
+      "class": "unproven",
+      "year": 1225,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "1601-1700",
+      "title": "Amulette composée par Al-Buni",
+      "url": "https://sourcelibrary.org/book/695931d4b91a6184ea9433a8"
+    },
+    {
+      "id": "69907bd95f855ec553e7160b",
+      "class": "unproven",
+      "year": 1390,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "1390",
+      "title": "Kitab al-Bulhan (Book of Wonders)",
+      "url": "https://sourcelibrary.org/book/69907bd95f855ec553e7160b"
+    },
+    {
+      "id": "69908ac1c0656c0b3bcc0813",
+      "class": "unproven",
+      "year": 1300,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "1300",
+      "title": "Kalila wa-Dimna",
+      "url": "https://sourcelibrary.org/book/69908ac1c0656c0b3bcc0813"
+    },
+    {
+      "id": "69908ad8285673ff8cb80bac",
+      "class": "unproven",
+      "year": 1400,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "1400",
+      "title": "Merveilles des pays",
+      "url": "https://sourcelibrary.org/book/69908ad8285673ff8cb80bac"
+    },
+    {
+      "id": "69a5ea0d815633a563894d0e",
+      "class": "unproven",
+      "year": 1257,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "1257",
+      "title": "Kitāb fī al-shaṭranj wa-manṣūbātihi wa-mulaḥih",
+      "url": "https://sourcelibrary.org/book/69a5ea0d815633a563894d0e"
+    },
+    {
+      "id": "69a5efb5bfd8cafd91e44089",
+      "class": "unproven",
+      "year": 1450,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "15th century",
+      "title": "'Umdat al-muhtajj fi hukm al-shatranj (On the Legal Ruling of Chess)",
+      "url": "https://sourcelibrary.org/book/69a5efb5bfd8cafd91e44089"
+    },
+    {
+      "id": "69b3e596c94a4ff7cce22d4f",
+      "class": "unproven",
+      "year": 1325,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "early 14th century",
+      "title": "Collection of magical and other treatises ascribed to Hermes Trismegistus",
+      "url": "https://sourcelibrary.org/book/69b3e596c94a4ff7cce22d4f"
+    },
+    {
+      "id": "69b3e598c94a4ff7cce22dfc",
+      "class": "unproven",
+      "year": 1350,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "14th century",
+      "title": "Kyranides",
+      "url": "https://sourcelibrary.org/book/69b3e598c94a4ff7cce22dfc"
+    },
+    {
+      "id": "69b3e5db304c1c6b3950a6a1",
+      "class": "unproven",
+      "year": 1350,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "14th century",
+      "title": "Sirr al-asrar (Secret of Secrets)",
+      "url": "https://sourcelibrary.org/book/69b3e5db304c1c6b3950a6a1"
+    },
+    {
+      "id": "69b3e5fb304c1c6b3950aad2",
+      "class": "unproven",
+      "year": 1450,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "15th century",
+      "title": "al-Qanun (Canon of Medicine)",
+      "url": "https://sourcelibrary.org/book/69b3e5fb304c1c6b3950aad2"
+    },
+    {
+      "id": "69c1b7affe4b8f25b92010a5",
+      "class": "unproven",
+      "year": 1362,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "950",
+      "title": "al-Fusul al-Hikmiyya (Philosophical Aphorisms)",
+      "url": "https://sourcelibrary.org/book/69c1b7affe4b8f25b92010a5"
+    },
+    {
+      "id": "69c1b7b48522835be8448cf5",
+      "class": "unproven",
+      "year": 1300,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "1300",
+      "title": "Fourteen Texts on Geometry, Cosmology, Philosophy and the Qur'an",
+      "url": "https://sourcelibrary.org/book/69c1b7b48522835be8448cf5"
+    },
+    {
+      "id": "69c1b7bd8522835be844902a",
+      "class": "unproven",
+      "year": 1275,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "1275",
+      "title": "Athar al-Bilad (Cosmography and Wonders of Creation)",
+      "url": "https://sourcelibrary.org/book/69c1b7bd8522835be844902a"
+    },
+    {
+      "id": "69c1b8c38522835be844b11b",
+      "class": "unproven",
+      "year": 1350,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "mid-14th century",
+      "title": "Kitāb shudhūr al-dhahab",
+      "url": "https://sourcelibrary.org/book/69c1b8c38522835be844b11b"
+    },
+    {
+      "id": "69d5abbf4dc55b8478ddcfa6",
+      "class": "unproven",
+      "year": 1229,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "1229",
+      "title": "Fusus al-Hikam",
+      "url": "https://sourcelibrary.org/book/69d5abbf4dc55b8478ddcfa6"
+    },
+    {
+      "id": "69d5abce4dc55b8478ddd014",
+      "class": "unproven",
+      "year": 1231,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "1231",
+      "title": "Al-Futuhat al-Makkiyya",
+      "url": "https://sourcelibrary.org/book/69d5abce4dc55b8478ddd014"
+    },
+    {
+      "id": "69d5ac52d0bd3547a5656002",
+      "class": "unproven",
+      "year": 1237,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "1237",
+      "title": "Maqamat al-Hariri",
+      "url": "https://sourcelibrary.org/book/69d5ac52d0bd3547a5656002"
+    },
+    {
+      "id": "69d5ac5f4dc55b8478ddd6b6",
+      "class": "unproven",
+      "year": 1400,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "1400",
+      "title": "Alf Layla wa-Layla",
+      "url": "https://sourcelibrary.org/book/69d5ac5f4dc55b8478ddd6b6"
+    },
+    {
+      "id": "69d66592daca889caf92725b",
+      "class": "unproven",
+      "year": 1381,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "1381",
+      "title": "Kitab al-Majisti",
+      "url": "https://sourcelibrary.org/book/69d66592daca889caf92725b"
+    },
+    {
+      "id": "69b87c580d6083c38e2e9db0",
+      "class": "unproven",
+      "year": 1446,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "1446",
+      "title": "أنموذج القتال في نقل العوال (Unmūdhaj al-Qitāl fī Naql al-Awāl)",
+      "url": "https://sourcelibrary.org/book/69b87c580d6083c38e2e9db0"
+    },
+    {
+      "id": "69e41138f41cc469d6880160",
+      "class": "unproven",
+      "year": 1220,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "1220",
+      "title": "Kalila wa-Dimna (BnF Arabe 3465, c. 1220, 98 miniatures)",
+      "url": "https://sourcelibrary.org/book/69e41138f41cc469d6880160"
+    },
+    {
+      "id": "69e80657fdad300064d9ece7",
+      "class": "unproven",
+      "year": 1269,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "1269",
+      "title": "شرح طبيعة الإنسان (Commentary on Anatomy)",
+      "url": "https://sourcelibrary.org/book/69e80657fdad300064d9ece7"
+    },
+    {
+      "id": "69e8b2a72ff2a8dc09e7860d",
+      "class": "modern_imprint",
+      "year": 1402,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "Beirut (بيروت): Dār al-Maʿrifah (دار المعرفة) | 1402",
+      "title": "إحياء علوم الدين (Iḥyāʾ ʿUlūm al-Dīn)",
+      "url": "https://sourcelibrary.org/book/69e8b2a72ff2a8dc09e7860d"
+    },
+    {
+      "id": "69e96123390d3ed634590b97",
+      "class": "unproven",
+      "year": 1355,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "1355",
+      "title": "رحلة ابن بطوطة (Riḥlat Ibn Baṭṭūṭa)",
+      "url": "https://sourcelibrary.org/book/69e96123390d3ed634590b97"
+    },
+    {
+      "id": "69ef332b72c1376fdf2afcf2",
+      "class": "unproven",
+      "year": 1245,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "1245",
+      "title": "Kitab al-Jami li-Mufradat al-Adwiya wa-l-Aghdhiya, Tome 1 (Compendium of Simple ",
+      "url": "https://sourcelibrary.org/book/69ef332b72c1376fdf2afcf2"
+    },
+    {
+      "id": "69f325c852a77bb28fdb5cd7",
+      "class": "unproven",
+      "year": 1200,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "Unknown",
+      "title": "Kitāb al-Tabṣirah fī ʻilm al-hayʼah",
+      "url": "https://sourcelibrary.org/book/69f325c852a77bb28fdb5cd7"
+    },
+    {
+      "id": "69f32832aeeee0fa38c63cc0",
+      "class": "unproven",
+      "year": 1353,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "1353",
+      "title": "Sharḥ Qānūn Āmulī",
+      "url": "https://sourcelibrary.org/book/69f32832aeeee0fa38c63cc0"
+    },
+    {
+      "id": "6a06cddfc749b698e5b2cb29",
+      "class": "unproven",
+      "year": 1253,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "1253",
+      "title": "نزهة الألباب فيما لا يوجد في كتاب Nuzhat al-Albāb — Promenade of Hearts",
+      "url": "https://sourcelibrary.org/book/6a06cddfc749b698e5b2cb29"
+    },
+    {
+      "id": "6a08c0da9b57265ed7f10cf3",
+      "class": "unproven",
+      "year": 1265,
+      "ce_year": null,
+      "language": "Arabic",
+      "where": "1265",
+      "title": "Al-Iḥāṭa (The Comprehensive Treatise)",
+      "url": "https://sourcelibrary.org/book/6a08c0da9b57265ed7f10cf3"
+    },
+    {
+      "id": "6a20329b18654bf8e190326e",
+      "class": "hijri_bracketed",
+      "year": 1303,
+      "ce_year": 1885,
+      "language": "Arabic",
+      "where": "[Place of manufacture not identified], 1303 [1885]",
+      "title": "Nubdhah fī ṛadd ahl al-Ṭarīqah fī singgapūrah sanat 1269 Or. 6982",
+      "url": "https://sourcelibrary.org/book/6a20329b18654bf8e190326e"
+    },
+    {
+      "id": "6a2032a018654bf8e19032e5",
+      "class": "hijri_bracketed",
+      "year": 1261,
+      "ce_year": 1845,
+      "language": "Arabic",
+      "where": "[Place of manufacture not identified], 1261 [1845 or 1847]",
+      "title": "[Fragmentary texts in prose and poetry about disputes in the Ḥaḍramawt] Or. 70",
+      "url": "https://sourcelibrary.org/book/6a2032a018654bf8e19032e5"
+    },
+    {
+      "id": "6a2032a718654bf8e190335f",
+      "class": "hijri_bracketed",
+      "year": 1219,
+      "ce_year": 1804,
+      "language": "Arabic",
+      "where": "[Place of manufacture not identified], 1219 [1804]",
+      "title": "Minhāj al-ʿAbidīn Or. 7024",
+      "url": "https://sourcelibrary.org/book/6a2032a718654bf8e190335f"
+    },
+    {
+      "id": "6a2032b118654bf8e1903571",
+      "class": "hijri_bracketed",
+      "year": 1306,
+      "ce_year": 1889,
+      "language": "Arabic",
+      "where": "[Place of manufacture not identified], 1306 [1889]",
+      "title": "Dhikr Or. 7065",
+      "url": "https://sourcelibrary.org/book/6a2032b118654bf8e1903571"
+    },
+    {
+      "id": "6a2032b518654bf8e19035c4",
+      "class": "hijri_bracketed",
+      "year": 1237,
+      "ce_year": 1822,
+      "language": "Arabic",
+      "where": "[Place of manufacture not identified], 1237 [1822]",
+      "title": "Kifāyat al-Mabādiʾ ʿalá ʿAqīdah al-Mubtadiʾ Or. 7074",
+      "url": "https://sourcelibrary.org/book/6a2032b518654bf8e19035c4"
+    },
+    {
+      "id": "6a2032c318654bf8e1903736",
+      "class": "hijri_bracketed",
+      "year": 1296,
+      "ce_year": 1879,
+      "language": "Arabic",
+      "where": "[Place of manufacture not identified], 1296 [1879]",
+      "title": "Wird Or. 7097",
+      "url": "https://sourcelibrary.org/book/6a2032c318654bf8e1903736"
+    },
+    {
+      "id": "6a2032c818654bf8e19037bb",
+      "class": "hijri_bracketed",
+      "year": 1312,
+      "ce_year": 1895,
+      "language": "Arabic",
+      "where": "[Place of manufacture not identified], 1312 [1895]",
+      "title": "[Three schematical tables for the division of heritages] Or. 7130",
+      "url": "https://sourcelibrary.org/book/6a2032c818654bf8e19037bb"
+    },
+    {
+      "id": "6a2032d218654bf8e1903805",
+      "class": "modern_published",
+      "year": 1309,
+      "ce_year": 1892,
+      "language": "Arabic",
+      "where": "[Place of manufacture not identified], 1309 [before 1892]",
+      "title": "[Copy of a book of prayers; Duʿāʾ; and litanies; some parts with Malay interlin",
+      "url": "https://sourcelibrary.org/book/6a2032d218654bf8e1903805"
+    },
+    {
+      "id": "6a2032e518654bf8e1903b96",
+      "class": "hijri_bracketed",
+      "year": 1296,
+      "ce_year": 1879,
+      "language": "Arabic",
+      "where": "[Place of manufacture not identified], 1296 [1879]",
+      "title": "[Wird. A collection of Awrād for the seven days of 7 days of the week. With Mal",
+      "url": "https://sourcelibrary.org/book/6a2032e518654bf8e1903b96"
+    },
+    {
+      "id": "6a2032ed18654bf8e1903d4f",
+      "class": "hijri_bracketed",
+      "year": 1288,
+      "ce_year": 1872,
+      "language": "Arabic",
+      "where": "[Place of manufacture not identified], 1288 [1872]",
+      "title": "[Jumlah min Taṣrīf al-Afʿāl. Anonymous grammatical tract much used in Indones",
+      "url": "https://sourcelibrary.org/book/6a2032ed18654bf8e1903d4f"
+    },
+    {
+      "id": "6a2032f118654bf8e1903de6",
+      "class": "hijri_bracketed",
+      "year": 1308,
+      "ce_year": 1820,
+      "language": "Arabic",
+      "where": "[Place of manufacture not identified], 1308 [1820]",
+      "title": "[Collection of prayers, Duʿāʾ in Arabic, with Qur'anic quotations, apparently a",
+      "url": "https://sourcelibrary.org/book/6a2032f118654bf8e1903de6"
+    },
+    {
+      "id": "6a2032f218654bf8e1903e24",
+      "class": "hijri_bracketed",
+      "year": 1320,
+      "ce_year": 1902,
+      "language": "Arabic",
+      "where": "[Place of manufacture not identified], 1320 [1902]",
+      "title": "Injāz al-Waʿd fī Iṭtāʿ al-Raʿd Or. 7205",
+      "url": "https://sourcelibrary.org/book/6a2032f218654bf8e1903e24"
+    },
+    {
+      "id": "6a2032f418654bf8e1903e54",
+      "class": "hijri_bracketed",
+      "year": 1230,
+      "ce_year": 1815,
+      "language": "Arabic",
+      "where": "[Place of manufacture not identified], 1230-1240 [1815 or 1825]",
+      "title": "Qaṭr al-Nada̓ wa-Ball al-Ṣaḍa̓ Or. 7206",
+      "url": "https://sourcelibrary.org/book/6a2032f418654bf8e1903e54"
+    },
+    {
+      "id": "6a2032ff18654bf8e1903fa3",
+      "class": "hijri_bracketed",
+      "year": 1304,
+      "ce_year": 1887,
+      "language": "Arabic",
+      "where": "[Place of manufacture not identified], 1304 [1887]",
+      "title": "[Six flags from Western Java : Copies on paper of the Arabic inscriptions on fou",
+      "url": "https://sourcelibrary.org/book/6a2032ff18654bf8e1903fa3"
+    },
+    {
+      "id": "6a20330718654bf8e1904042",
+      "class": "hijri_bracketed",
+      "year": 1304,
+      "ce_year": 1887,
+      "language": "Arabic",
+      "where": "[Place of manufacture not identified], 1304 [1887]",
+      "title": "Dhikr Rifāʿī :a copy entiteld Kitāb Pangdikiran Or. 7617",
+      "url": "https://sourcelibrary.org/book/6a20330718654bf8e1904042"
+    },
+    {
+      "id": "6a20330818654bf8e1904060",
+      "class": "hijri_bracketed",
+      "year": 1304,
+      "ce_year": 1887,
+      "language": "Arabic",
+      "where": "[Place of manufacture not identified], 1304 [1887]",
+      "title": "Dhikr Rifāʿī; the Javanese title Kitāb pangdikiran. Or. 7618",
+      "url": "https://sourcelibrary.org/book/6a20330818654bf8e1904060"
+    },
+    {
+      "id": "6a20331318654bf8e1904192",
+      "class": "hijri_bracketed",
+      "year": 1292,
+      "ce_year": 1875,
+      "language": "Arabic",
+      "where": "[Place of manufacture not identified], 1292 [1875]",
+      "title": "[A book of prayers and litanies; some parts with Malay interinear translation] O",
+      "url": "https://sourcelibrary.org/book/6a20331318654bf8e1904192"
+    },
+    {
+      "id": "6a20331b18654bf8e19042bf",
+      "class": "hijri_bracketed",
+      "year": 1282,
+      "ce_year": 1866,
+      "language": "Arabic",
+      "where": "[Place of manufacture not identified], 1282 [1866]",
+      "title": "Qādiriyah Silsilah Or. 8458",
+      "url": "https://sourcelibrary.org/book/6a20331b18654bf8e19042bf"
+    },
+    {
+      "id": "69c1b8958522835be844ad89",
+      "class": "unproven",
+      "year": 1250,
+      "ce_year": null,
+      "language": "Arabic and Coptic",
+      "where": "13th century",
+      "title": "Calendar of the Coptic Church",
+      "url": "https://sourcelibrary.org/book/69c1b8958522835be844ad89"
+    },
+    {
+      "id": "69c1bc2f8522835be8461c0f",
+      "class": "unproven",
+      "year": 1350,
+      "ce_year": null,
+      "language": "Hebrew, Judeo-Arabic, and Aramaic",
+      "where": "14th-15th century",
+      "title": "Fragments from Leviticus and from Al'Madari's supercommentary on Isaac's Alfasi'",
+      "url": "https://sourcelibrary.org/book/69c1bc2f8522835be8461c0f"
+    },
+    {
+      "id": "69c1baee8522835be845b7b6",
+      "class": "unproven",
+      "year": 1350,
+      "ce_year": null,
+      "language": "Hebrew, Judeo-Arabic, and Ladino",
+      "where": "14th or 15th century",
+      "title": "Festival prayer book",
+      "url": "https://sourcelibrary.org/book/69c1baee8522835be845b7b6"
+    },
+    {
+      "id": "69c1bb358522835be845d64b",
+      "class": "unproven",
+      "year": 1350,
+      "ce_year": null,
+      "language": "Judeo-Arabic and Hebrew",
+      "where": "14th-15th century",
+      "title": "Composite manuscript: Judeo-Arabic text on Esther and Muḳadimat on weekly readin",
+      "url": "https://sourcelibrary.org/book/69c1bb358522835be845d64b"
+    },
+    {
+      "id": "69c1bb638522835be845f5c7",
+      "class": "unproven",
+      "year": 1450,
+      "ce_year": null,
+      "language": "Judeo-Arabic and Hebrew",
+      "where": "15th century",
+      "title": "Composite manuscript: fragments of commentaries on the Torah and on the Song of ",
+      "url": "https://sourcelibrary.org/book/69c1bb638522835be845f5c7"
+    },
+    {
+      "id": "6a20326518654bf8e1902c19",
+      "class": "hijri_bracketed",
+      "year": 1269,
+      "ce_year": 1853,
+      "language": "Malay",
+      "where": "Many places in Indonesia : Van der Tuuk, 1269 H [1853]",
+      "title": "[Collective volume with texts in Malay (I-VIII) The first story only of the Hika",
+      "url": "https://sourcelibrary.org/book/6a20326518654bf8e1902c19"
+    },
+    {
+      "id": "6a20327118654bf8e1902d6e",
+      "class": "hijri_bracketed",
+      "year": 1268,
+      "ce_year": 1852,
+      "language": "Malay",
+      "where": "Barus, 1268 H. [1852]",
+      "title": "[Collective volume with texts in Malay and Acehnese (I-VII) : A fragment on omin",
+      "url": "https://sourcelibrary.org/book/6a20327118654bf8e1902d6e"
+    },
+    {
+      "id": "6a20327718654bf8e1902de7",
+      "class": "hijri_bracketed",
+      "year": 1269,
+      "ce_year": 1853,
+      "language": "Malay",
+      "where": "Barus : [producer not identified], 1269 H. [1853]",
+      "title": "Hikayat Bayan Budiman Or. 3208",
+      "url": "https://sourcelibrary.org/book/6a20327718654bf8e1902de7"
+    },
+    {
+      "id": "69b63e602a1dde00d5a9d059",
+      "class": "modern_published",
+      "year": 1257,
+      "ce_year": 2015,
+      "language": "Persian",
+      "where": "2015",
+      "title": "The Bustan (Garden of Fragrance)",
+      "url": "https://sourcelibrary.org/book/69b63e602a1dde00d5a9d059"
+    },
+    {
+      "id": "69b63e99535439aaa4891686",
+      "class": "modern_published",
+      "year": 1248,
+      "ce_year": 2014,
+      "language": "Persian",
+      "where": "2014",
+      "title": "Maqalat-i Shams-i Tabrizi (Discourses)",
+      "url": "https://sourcelibrary.org/book/69b63e99535439aaa4891686"
+    },
+    {
+      "id": "69d5abb0f5e2a1273d900fd6",
+      "class": "unproven",
+      "year": 1307,
+      "ce_year": null,
+      "language": "Persian",
+      "where": "1307",
+      "title": "Jami' al-Tawarikh",
+      "url": "https://sourcelibrary.org/book/69d5abb0f5e2a1273d900fd6"
+    },
+    {
+      "id": "69e748bd49abba5e982816d3",
+      "class": "unproven",
+      "year": 1258,
+      "ce_year": null,
+      "language": "Persian",
+      "where": "1258",
+      "title": "گلستان (Golestān)",
+      "url": "https://sourcelibrary.org/book/69e748bd49abba5e982816d3"
+    },
+    {
+      "id": "69e74ef95cf1eaf3ad80e04c",
+      "class": "unproven",
+      "year": 1200,
+      "ce_year": null,
+      "language": "Persian",
+      "where": "1200",
+      "title": "شرفنامه (Sharafnāma)",
+      "url": "https://sourcelibrary.org/book/69e74ef95cf1eaf3ad80e04c"
+    },
+    {
+      "id": "69e7934980b52390feb1853b",
+      "class": "unproven",
+      "year": 1200,
+      "ce_year": null,
+      "language": "Persian",
+      "where": "1200",
+      "title": "الهی نامه (Ilāhī-Nāma)",
+      "url": "https://sourcelibrary.org/book/69e7934980b52390feb1853b"
+    },
+    {
+      "id": "69f32865aeeee0fa38c6447c",
+      "class": "unproven",
+      "year": 1376,
+      "ce_year": null,
+      "language": "Persian",
+      "where": "1376",
+      "title": "Mihr va Mushtarī",
+      "url": "https://sourcelibrary.org/book/69f32865aeeee0fa38c6447c"
+    },
+    {
+      "id": "6a08a3a28fae3d3f19b789cd",
+      "class": "unproven",
+      "year": 1370,
+      "ce_year": null,
+      "language": "Persian",
+      "where": "1370",
+      "title": "منتخب لطائف نظام الدین مولانا عبید زاکانی (Muntakhab-i Laṭā'if)",
+      "url": "https://sourcelibrary.org/book/6a08a3a28fae3d3f19b789cd"
+    },
+    {
+      "id": "6a08a3a88fae3d3f19b78a66",
+      "class": "unproven",
+      "year": 1370,
+      "ce_year": null,
+      "language": "Persian",
+      "where": "1370",
+      "title": "موش و گربه (Mūsh-u-Gurba / The Mouse and the Cat)",
+      "url": "https://sourcelibrary.org/book/6a08a3a88fae3d3f19b78a66"
+    },
+    {
+      "id": "6a08c5ffe4e4b7b8793e97a9",
+      "class": "unproven",
+      "year": 1350,
+      "ce_year": null,
+      "language": "Persian",
+      "where": "1350",
+      "title": "Hajviyaat o Hazaliyaat — satirical and erotic verse (Ubaid Zakani, Persian)",
+      "url": "https://sourcelibrary.org/book/6a08c5ffe4e4b7b8793e97a9"
+    }
+  ]
+}

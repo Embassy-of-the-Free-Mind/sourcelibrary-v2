@@ -1,0 +1,44 @@
+{
+ "v17-study": {
+  "n": 40,
+  "notes_per_page": 8.075,
+  "typed_share": 0.8544891640866873,
+  "term_in_note": 41,
+  "term_tags": 200,
+  "by_type": {
+   "n_original": 109,
+   "n_clarification": 137,
+   "n_context": 14,
+   "n_alternative": 9,
+   "n_image": 7,
+   "n_untyped": 47
+  },
+  "verified": "106/107",
+  "alt_pages": 8,
+  "looped": 0,
+  "body_chars": 100987,
+  "emdashes": 32,
+  "cost": 0.21324099999999999
+ },
+ "v17-study-fix": {
+  "n": 40,
+  "notes_per_page": 6.425,
+  "typed_share": 0.8988326848249028,
+  "term_in_note": 18,
+  "term_tags": 207,
+  "by_type": {
+   "n_original": 82,
+   "n_clarification": 117,
+   "n_context": 13,
+   "n_alternative": 12,
+   "n_image": 7,
+   "n_untyped": 26
+  },
+  "verified": "79/82",
+  "alt_pages": 10,
+  "looped": 0,
+  "body_chars": 99340,
+  "emdashes": 11,
+  "cost": 0.210885
+ }
+}

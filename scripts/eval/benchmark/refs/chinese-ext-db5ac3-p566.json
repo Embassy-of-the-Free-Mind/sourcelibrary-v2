@@ -12,5 +12,9 @@
   "url": "https://github.com/kanripo/KR1b0048/blob/WYG/KR1b0048_007.txt",
   "etext_chars": 27549,
   "window_chars": 468,
-  "overlap": 0.79
+  "overlap": 0.79,
+  "licence": "CC-BY-SA",
+  "licence_url": "https://www.kanripo.org/about",
+  "licence_note": "version not stated by the source",
+  "licence_checked": "2026-10-01"
 }

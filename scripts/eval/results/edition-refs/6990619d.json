@@ -1,0 +1,111 @@
+{
+  "summary": {
+    "book_id": "6990619d3d9181cce82fb688",
+    "title": "The Examination of John Walsh",
+    "published": "1566",
+    "source": "EEBO-TCP A14696",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "probe-too-short": 1
+    },
+    "median_char_acc": 0.9491,
+    "median_char_acc_windowed": 0.9451,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6990619d-p2",
+      "page": 2,
+      "overlap": 0.6,
+      "probe_words": 56,
+      "ref_chars": 401,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.328,
+      "char_acc": 0.8489,
+      "char_acc_windowed": 0.8328
+    },
+    {
+      "slug": "ed-6990619d-p6",
+      "page": 6,
+      "overlap": 0.863,
+      "probe_words": 218,
+      "ref_chars": 1422,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.159,
+      "char_acc": 0.9519,
+      "char_acc_windowed": 0.9466
+    },
+    {
+      "slug": "ed-6990619d-p7",
+      "page": 7,
+      "overlap": 0.905,
+      "probe_words": 123,
+      "ref_chars": 826,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.194,
+      "char_acc": 0.9352,
+      "char_acc_windowed": 0.929
+    },
+    {
+      "slug": "ed-6990619d-p9",
+      "page": 9,
+      "overlap": 1,
+      "probe_words": 182,
+      "ref_chars": 1035,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.104,
+      "char_acc": 0.9467,
+      "char_acc_windowed": 0.9407
+    },
+    {
+      "slug": "ed-6990619d-p14",
+      "page": 14,
+      "overlap": 1,
+      "probe_words": 187,
+      "ref_chars": 1003,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.104,
+      "char_acc": 0.9621,
+      "char_acc_windowed": 0.9545
+    },
+    {
+      "slug": "ed-6990619d-p15",
+      "page": 15,
+      "overlap": 0.969,
+      "probe_words": 171,
+      "ref_chars": 943,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.114,
+      "char_acc": 0.9491,
+      "char_acc_windowed": 0.9451
+    },
+    {
+      "slug": "ed-6990619d-p16",
+      "page": 16,
+      "overlap": 1,
+      "probe_words": 87,
+      "ref_chars": 449,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.089,
+      "char_acc": 0.9623,
+      "char_acc_windowed": 0.9536
+    },
+    {
+      "slug": "ed-6990619d-p17",
+      "page": 17,
+      "skipped": "probe-too-short"
+    }
+  ]
+}

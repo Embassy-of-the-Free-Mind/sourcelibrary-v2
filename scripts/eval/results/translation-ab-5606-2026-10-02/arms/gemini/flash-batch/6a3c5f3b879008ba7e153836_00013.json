@@ -1,0 +1,21 @@
+{
+ "id": "6a3c5f3b879008ba7e153836_00013",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "Therefore, one should not grasp onto <term>dharma</term> <gloss>laws or phenomena</gloss>, nor should one grasp onto what is not dharma. For this reason, the <term>Tathagata</term> <gloss>Thus Come One</gloss> often says: \"You <term>bhiksus</term> <gloss>monks</gloss>, know that my teaching of the law is like the analogy of a raft. Even the dharma should be abandoned, how much more so that which is not dharma.\"\n\n### Section 7: Nothing Attained, Nothing Spoken\n\n<term>Subhuti</term> <gloss>a senior disciple of the Buddha</gloss>! What do you think? Has the Tathagata attained <term>Anuttara-Samyak-Sambodhi</term> <gloss>unexcelled, complete, and perfect enlightenment</gloss>? Does the Tathagata have a law that he has taught?\n\nSubhuti said: As I understand the meaning of what the Buddha has said, there is no fixed law called Unexcelled, Complete, and Perfect Enlightenment, nor is there any fixed law that the Tathagata can teach. Why is this? The laws taught by the Tathagata can neither be grasped nor spoken. They are neither dharma nor non-dharma. Why is this? Because all worthy ones and sages are distinguished by <term>wuwei</term> <gloss>unconditioned or non-striving</gloss> laws.\n\n### Section 8: Arising from the Dharma\n\nSubhuti! What do you think? If a person filled three thousand great thousand-fold worlds <note>a Buddhist cosmological term for a vast universe</note> with the seven treasures <note>traditionally gold, silver, lapis lazuli, seashell, agate, pearl, and carnelian</note> to use for <term>dana</term> <gloss>charitable giving</gloss>, would the <term>punya</term> <gloss>merit and virtue</gloss> obtained by this person be great?\n\nSubhuti said: Very great, World-Honored One! Why is this? Because this merit is not merit by its own nature; therefore, the Tathagata says the merit is great.\n\nIf there is another person who receives and maintains even as little as a four-line verse from this sutra and explains it to others, their blessing would surpass the former. Why is this? Subhuti! All Buddhas and the laws of Unexcelled, Complete, and Perfect Enlightenment of all Buddhas come forth from this sutra. Subhuti! What is called the <term>Buddha-dharma</term> <gloss>Buddha's teachings</gloss> is not, in fact, the Buddha-dharma.\n\n### Section 9: One Appearance is No Appearance\n\n<summary>The Buddha explains that his teachings are like a raft to be discarded after use and that true enlightenment cannot be captured in fixed words. He emphasizes that the spiritual merit of sharing even a small portion of this sutra exceeds vast material charity.</summary>\n<keywords>Subhuti, Tathagata, Raft Analogy, Enlightenment, Unconditioned Law, Merit, Seven Treasures, Four-line Verse, Buddha-dharma</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2171,
+ "outputTokens": 692,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.0015807500000000001,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 533,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

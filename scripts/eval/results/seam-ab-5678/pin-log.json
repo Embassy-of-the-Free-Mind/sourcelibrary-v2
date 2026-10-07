@@ -1,0 +1,29 @@
+{
+  "by": {
+    "pagebreak": 100,
+    "control": 20
+  },
+  "langs": {
+    "latin": 117,
+    "german": 2,
+    "french": 1
+  },
+  "screen_tally": {
+    "pagebreak:mid": 133,
+    "control:closed": 27,
+    "control:mid": 19,
+    "pagebreak:reject": 11,
+    "pagebreak:closed": 6,
+    "control:reject": 14
+  },
+  "estimate": {
+    "calls": 480,
+    "usd": 1.5693857499999981,
+    "byArm": {
+      "A2": 0.3111,
+      "A": 0.3111,
+      "B": 0.3158,
+      "C": 0.6314
+    }
+  }
+}

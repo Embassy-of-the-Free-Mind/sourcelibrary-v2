@@ -1,0 +1,21 @@
+{
+ "id": "6a09ff5dfa20006dbaba9200_00274",
+ "arm": "lite",
+ "model": "gemini-3.1-flash-lite",
+ "text": "CLXXII.—The Jātaka Chapter. 255\n\nCLXXII.\n\n1. Monks, one should understand what is unrighteous and what is righteous, what is unprofitable and what is profitable. Having understood both the unrighteous and the righteous, and having understood both the unprofitable and the profitable, one should practice according to what is righteous and what is profitable. The Blessed One said this. Having said this, the Well-Farer rose from his seat and entered his dwelling.\n\n2. Soon after the Blessed One had departed, it occurred to those monks: The Blessed One has given us a brief teaching, and without analyzing the meaning in detail, he has risen from his seat and entered his dwelling, saying, \"Monks, one should understand what is unrighteous and what is righteous, what is unprofitable and what is profitable. Having understood both the unrighteous and the righteous, and having understood both the unprofitable and the profitable, one should practice according to what is righteous and what is profitable.\" Who now can analyze in detail the meaning of this brief teaching given by the Blessed One, which has not been analyzed in detail? Then it occurred to those monks: This Venerable Mahākaccāna is praised by the Teacher and honored by the wise among his fellow practitioners. The Venerable Mahākaccāna is capable of analyzing in detail the meaning of this brief teaching given by the Blessed One. Suppose we go to the Venerable Mahākaccāna and ask him about this matter. Whatever the Venerable Mahākaccāna explains to us, that we shall remember.\n\n3. Then those monks went to the Venerable Mahākaccāna. Having approached him, they exchanged greetings with him. After the exchange of greetings and courteous conversation, they sat down to one side. Sitting to one side, those monks said to the Venerable Mahākaccāna: Venerable Kaccāna, the Blessed One gave us a brief teaching, and without analyzing the meaning in detail, he has risen from his seat and entered his dwelling, saying, \"Monks, one should understand what is unrighteous and what is righteous, what is unprofitable and what is profitable. Having understood the unrighteous\n\n<note>M.S. reading \"vatvana\" or \"vatva ca\" for \"vatva\".</note>\n<note>Asterisks and daggers indicate textual variations in the source editions.</note>\n\n<summary>The Blessed One provides a concise teaching on distinguishing righteousness from unrighteousness and profit from loss, prompting the monks to seek a detailed explanation from the elder Mahākaccāna.</summary>\n<keywords>righteousness, profit, teaching, Mahākaccāna, interpretation, monastic practice</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2586,
+ "outputTokens": 556,
+ "thinkingTokens": 0,
+ "ms": 102783,
+ "cost_usd": 0.00074025,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 2094,
+ "job": "batches/cg9d6sgt10o74qm6w12p4y0yorfoqy30ud3d"
+}

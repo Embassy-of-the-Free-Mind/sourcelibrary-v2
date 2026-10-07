@@ -1,0 +1,45 @@
+{
+ "key": "v061_f2a",
+ "arm": "hinted",
+ "page": {
+  "key": "v061_f2a",
+  "vol": 61,
+  "book_id": "6ac02a0a9a86d56c1aa219a0",
+  "page_number": 3,
+  "page_label": "f. 2a",
+  "bdrc_canvas": "I1PD1103290006.jpg",
+  "ligeti": "Mng1.850",
+  "mng_span": "Kha Eldeb 1b–312a",
+  "toh": "D95",
+  "skt": "Lalitavistara",
+  "derge_vol": 46,
+  "derge_file": "046_མདོ་སྡེ།_ཁ.txt"
+ },
+ "model": "gemini-3-flash-preview",
+ "ocr_prompt": {
+  "arm": "hinted",
+  "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "content_hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "translation_prompt": {
+  "name": "Standard Translation",
+  "version": "13",
+  "hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>24</columns>\n<page-num>二</page-num>\n<header>諸品經第二卷上</header>\n\n<image-desc size=\"large\" type=\"decorative\" significance=\"low\">A rectangular red woodblock border featuring intricate floral and vine patterns (rinceau) surrounding the main text area.</image-desc>\n\n<margin>\nᠳ᠋ᠠ\nᠰᠢᠳ᠋ᠳ᠋ᠢ\nᠳ᠋ᠤᠮᠳᠠ\nᠵᠢᠷᠭᠤᠭᠠᠨ\n</margin>\n\nᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ ᠪᠤᠷᠬᠠᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ᠄\nᠦᠨᠳᠦᠰᠦᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ᠄\nᠪᠤᠷᠬᠠᠨ ᠪᠥᠭᠡᠳ ᠪᠣᠳ᠋ᠢ ᠰᠠᠳ᠋ᠤᠸᠠ ᠳ᠋ᠤ᠄\nᠪᠥᠭᠡᠳ ᠪᠤᠷᠬᠠᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ᠄\nᠪᠤᠷᠬᠠᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ᠄\nᠪᠤᠷᠬᠠᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ᠄\nᠪᠤᠷᠬᠠᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ᠄\nᠪᠤᠷᠬᠠᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ᠄\nᠪᠤᠷᠬᠠᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ᠄\nᠪᠤᠷᠬᠠᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ᠄\nᠪᠤᠷᠬᠠᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ᠄\nᠪᠤᠷᠬᠠᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ᠄\nᠪᠤᠷᠬᠠᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ᠄\nᠪᠤᠷᠬᠠᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ᠄\nᠪᠤᠷᠬᠠᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ᠄\nᠪᠤᠷᠬᠠᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ᠄\nᠪᠤᠷᠬᠠᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ᠄\nᠪᠤᠷᠬᠠᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ᠄\nᠪᠤᠷᠬᠠᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ᠄\nᠪᠤᠷᠬᠠᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ᠄\nᠪᠤᠷᠬᠠᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ᠄\nᠪᠤᠷᠬᠠᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ᠄\nᠪᠤᠷᠬᠠᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ᠄\nᠪᠤᠷᠬᠠᠨ ᠪᠠᠭᠰᠢ ᠳ᠋ᠤ ᠮᠥᠷᠭᠦᠮᠦᠢ ᠪᠢ᠄\n\n<vocab>ᠮᠥᠷᠭᠦᠮᠦᠢ (prostrate/bow), ᠪᠤᠷᠬᠠᠨ (Buddha), ᠪᠠᠭᠰᠢ (Teacher/Guru), ᠪᠣᠳ᠋ᠢ ᠰᠠᠳ᠋ᠤᠸᠠ (Bodhisattva)</vocab>",
+  "finishReason": "STOP",
+  "inputTokens": 4341,
+  "outputTokens": 1748,
+  "cost_usd": 0.0074145
+ },
+ "translation": {
+  "text": "# Collected Sutras, Volume Two, Upper Part\n\n<note>A rectangular red woodblock border featuring intricate floral and vine patterns surrounds the main text area.</note>\n\n<margin>\nDa\nSiddhi\nMiddle\nSix\n</margin>\n\nI prostrate to the Buddha Teacher:\nI prostrate to the Root Teacher:\nTo the Buddhas and <term>Bodhisattvas</term> <gloss>enlightened beings</gloss>:\nAnd I prostrate to the Buddha Teacher:\nI prostrate to the Buddha Teacher:\nI prostrate to the Buddha Teacher:\nI prostrate to the Buddha Teacher:\nI prostrate to the Buddha Teacher:\nI prostrate to the Buddha Teacher:\nI prostrate to the Buddha Teacher:\nI prostrate to the Buddha Teacher:\nI prostrate to the Buddha Teacher:\nI prostrate to the Buddha Teacher:\nI prostrate to the Buddha Teacher:\nI prostrate to the Buddha Teacher:\nI prostrate to the Buddha Teacher:\nI prostrate to the Buddha Teacher:\nI prostrate to the Buddha Teacher:\nI prostrate to the Buddha Teacher:\nI prostrate to the Buddha Teacher:\nI prostrate to the Buddha Teacher:\nI prostrate to the Buddha Teacher:\nI prostrate to the Buddha Teacher:\nI prostrate to the Buddha Teacher:\n\n<summary>This page contains a series of repetitive devotional prostrations to the Buddha, the Root Teacher, and Bodhisattvas. It serves as an opening litany for the second volume of the collected sutras.</summary>\n<keywords>prostration, Buddha Teacher, Root Teacher, Bodhisattva, devotion, litany</keywords>",
+  "finishReason": "STOP",
+  "inputTokens": 3478,
+  "outputTokens": 357,
+  "cost_usd": 0.00281
+ }
+}

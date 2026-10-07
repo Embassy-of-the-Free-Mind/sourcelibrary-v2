@@ -20,10 +20,10 @@ import { MongoClient } from 'mongodb';
 import { getPageSource as getPageImageUrl } from '../lib/page-image-url.mjs';
 import { saveRevisionBeforeOverwrite } from '../lib/page-revisions.mjs';
 import { geminiEngine, imageInput, ocrProvenance, codeVersion, host } from '../lib/write-provenance.mjs';
-import { extractPageType, extractColumns, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
+import { liftOcrTags, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { outputTokensFrom } from '../workers/lib/supabase-usage-logger.mjs';
 import { loopVerdict, recordLoopRefusal } from '../lib/ocr-loop-guard.mjs';
-import { isTruncatedCandidate, truncationFailReason } from '../lib/truncated-response.mjs';
+import { isTruncatedCandidate, truncationFailReason, candidateText } from '../lib/truncated-response.mjs';
 
 // --- Config ---
 const TARGET_MODEL = 'gemini-3-flash-preview';
@@ -148,7 +148,7 @@ async function callGemini(imageBase64, mimeType, promptText, apiKey) {
 
   const result = await response.json();
   const candidate = result.candidates?.[0];
-  const text = candidate?.content?.parts?.[0]?.text || '';
+  const text = candidateText(candidate) || '';
   const usage = result.usageMetadata || {};
   return {
     text,
@@ -210,8 +210,7 @@ async function processPage(page, ocrPrompt, db) {
     }
 
     // Extract metadata
-    const pageType = extractPageType(result.text);
-    const columns = extractColumns(result.text);
+    const tags = liftOcrTags(result.text);
     const detectedImages = parseDetectedImages(result.text);
 
     // Retain existing OCR as a revision before overwriting (#3240)
@@ -241,8 +240,7 @@ async function processPage(page, ocrPrompt, db) {
             prompt_version: TARGET_PROMPT,
             ...ocrProvenance(result.text, engine),
           },
-          ...(pageType && { page_type: pageType }),
-          ...(columns && { columns }),
+          ...tags, // page_type, columns, script_type — whichever parsed
           ...(detectedImages.length > 0 && { detected_images: detectedImages }),
           updated_at: new Date(),
         },

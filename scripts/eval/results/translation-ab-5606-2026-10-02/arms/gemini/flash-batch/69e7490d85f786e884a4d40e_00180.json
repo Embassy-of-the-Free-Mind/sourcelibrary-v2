@@ -1,0 +1,21 @@
+{
+ "id": "69e7490d85f786e884a4d40e_00180",
+ "arm": "flash",
+ "model": "gemini-3-flash-preview",
+ "text": "<meta>continues from the previous section describing the bridal preparations of Parvati</meta>\n\nYou shall receive the undivided love of your husband. Thus addressed by those faithful women <note>the seven celestial matrons or wives of the sages</note>, Uma bowed low in humility. But she, who was destined to share half of his body <note>referring to the Ardhanarishvara form where Shiva and Parvati are joined as one</note>, soon surpassed even the blessings of her beloved kin.\n\n<note>Commentary: The bowing Uma was told by the virtuous women, \"Obtain the unbroken, perfect love of your husband Shiva.\" The word \"shastra\" used with \"sma\" denotes the past tense. Because she came to possess half of Hara's body, Gauri rendered the blessings of her affectionate relatives secondary. The implication is that she attained a fruit far greater than what their words had even envisioned.</note>\n\n## Verse 29\n\nHaving completed every duty for her according to his desire and his vast wealth, the accomplished Mountain King <note>Himavat, the father of Parvati</note>, a noble man among the assembly, remained in the hall surrounded by friends, awaiting the arrival of the Bull-Bannered Lord <note>Shiva</note>.\n\n<note>Commentary: The skillful Himavat, acting in a manner worthy of his intent and his royal power, left no part of Parvati's marriage rites unfinished. Having completed them, he waited in the assembly of kinsmen for the arrival of the one who bears the bull as his emblem. The term \"sabhya\" indicates his refined and righteous character within the courtly gathering.</note>\n\n## Verse 30\n\nMeanwhile, upon the mountain of Kubera <note>Mount Kailash</note>, the ornaments for the Wedding of the First Lord were placed before the Destroyer of Cities <note>Shiva</note> by the Divine Mothers, who had been summoned with great honor.\n\n<note>Commentary: At the same time that Gauri's preparations were being made, the adornments suitable for that foremost marriage were laid out on Mount Kailash. These materials were presented before Bhava <note>Shiva</note> by the Seven Mothers, including Brahmi and others, who had arrived with reverence. Shiva is called the \"Destroyer of Cities\" here, referencing his victory over Tripura.</note>\n\n<summary>Parvati receives blessings of eternal love from matrons while her father Himavat prepares the wedding hall. Simultaneously on Mount Kailash, the Divine Mothers prepare the bridal ornaments for Shiva.</summary>\n<keywords>Kumārasambhava, Kālidāsa, Shiva, Parvati, Himavat, Divine Mothers, Ardhanarishvara, Mount Kailash, wedding rites</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2525,
+ "outputTokens": 585,
+ "thinkingTokens": 0,
+ "ms": 143409,
+ "cost_usd": 0.00150875,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1788,
+ "job": "batches/dmrzzfkavs341wesshgc1suufr63284go2hh"
+}

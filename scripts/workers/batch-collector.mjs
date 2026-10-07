@@ -26,16 +26,16 @@ import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
 import { isTrivialGalleryDetection } from '../lib/gallery-image-types.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { buildVisiblePageCountPipeline } from '../lib/page-counts.mjs';
-import { findHumanEditedPageIds } from '../lib/translate-core.mjs';
+import { findHumanEditedPageIds, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate, STRAY_SCRIPT_REASON, guardTranslationText } from '../lib/translate-core.mjs';
 import { engineFromBatchJob, imageInput, notRecorded, ocrProvenance, translationProvenance } from '../lib/write-provenance.mjs';
 
 /** Provenance identity of this collector (#4613): recorded on every page it writes as `run.collected_by`. */
 const COLLECTOR_CALL_SITE = 'scripts/workers/batch-collector.mjs';
 import { shouldRefuseOcrWrite, recordRefusal, guardEnabled } from '../lib/blank-page-guard.mjs';
 import { loopVerdict, recordLoopRefusal, guardEnabled as loopGuardEnabled } from '../lib/ocr-loop-guard.mjs';
-import { isTruncatedCandidate, truncationFailReason } from '../lib/truncated-response.mjs';
+import { isTruncatedCandidate, truncationFailReason, candidateText } from '../lib/truncated-response.mjs';
 import { repairTexGreek, texGreekRepairEnabled } from '../lib/tex-greek.mjs';
-import { extractPageType, extractColumns, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
+import { liftOcrTags, parseMultiPageOcr, parseDetectedImages } from '../lib/ocr-result-parse.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { resolvePreviewStub, previewStubGuardEnforced, recordPreviewStubRefusal, GUARD_PROJECTION } from '../lib/preview-stub-guard.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
@@ -43,6 +43,7 @@ import { normalizeBbox, normalizeRotation } from '../lib/bbox.mjs';
 import { SCAN_QUALITY_VERSION, parseImageExtractionResponse, computeBookScanQualityRollup } from '../lib/image-extraction-request.mjs';
 import { reconcileBatchState as reconcileBatchStateLib, probeBatchJob, GHOST_ERROR } from './lib/batch-reconcile.mjs';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
+import { LONG_S_GLYPH_VARIANT, foldLongS } from '../lib/ocr-long-s-retry.mjs';
 
 // Announce the code version this process loaded (#5442) — read by scripts/audit/worker-code-drift.mjs.
 startWorkerBeacon(import.meta.url);
@@ -329,7 +330,7 @@ async function processOneJob(db, job) {
         if (r.error) { failCount++; noteFail(`error:${String(r.error?.status || r.error?.code || r.error).slice(0, 60)}`); continue; }
         const candidate = r.response?.candidates?.[0];
         if (candidate?.finishReason === 'RECITATION') { recitationCount++; failCount++; noteFail('RECITATION'); continue; }
-        const text = candidate?.content?.parts?.[0]?.text;
+        const text = candidateText(candidate);
         if (!text) { failCount++; noteFail(`no-text:${candidate?.finishReason || 'no-candidate'}`); continue; }
         const parsed = parseMultiPageOcr(text, { lenient: true });
         // A truncated generation cuts the LAST page mid-word; every page before
@@ -380,7 +381,7 @@ async function processOneJob(db, job) {
           const reason = `error:${String(r.error?.status || r.error?.code || r.error).slice(0, 60)}`;
           failCount++; noteFail(reason); failedPageIds.set(pageId, reason); continue;
         }
-        const text = candidate?.content?.parts?.[0]?.text;
+        const text = candidateText(candidate);
         if (!text) {
           const reason = `no-text:${candidate?.finishReason || 'no-candidate'}`;
           failCount++; noteFail(reason); failedPageIds.set(pageId, reason); continue;
@@ -550,7 +551,14 @@ async function processOneJob(db, job) {
       }
     }
 
-    for (const { pageId, text, usage } of pageResults) {
+    // ── Long-s retry fold (#5521) ───────────────────────────────────────────
+    // A RECITATION retry asks for the printed long s (ſ); the house convention stores it as s.
+    if (job.type === 'ocr' && job.prompt_variant === LONG_S_GLYPH_VARIANT) {
+      for (const r of pageResults) r.text = foldLongS(r.text);
+    }
+
+    for (const { pageId, text: resultText, usage } of pageResults) {
+      let text = resultText;
       if (staleDropPages?.has(pageId)) { continue; } // generation guard (#2449)
       if (humanEditedIds.has(pageId)) {
         console.log(`  PROTECTED: page ${pageId} has a human-edited ${job.type === 'ocr' ? 'ocr' : 'translation'} — skipping (#3749)`);
@@ -608,8 +616,7 @@ async function processOneJob(db, job) {
         // the current vocabulary rather than the 14-value set it had frozen at.
         // That set had lost `digitizer-insert`, so this collector could not
         // record the one page type the digitizer guards downstream read (#4443).
-        const pageType = extractPageType(text);
-        const columns = extractColumns(text);
+        const tags = liftOcrTags(text);
         const detectedImages = parseDetectedImages(text);
 
         const setObj = {
@@ -627,6 +634,7 @@ async function processOneJob(db, job) {
           'ocr.prompt_id': job.prompt_id,
           'ocr.prompt_hash': job.prompt_hash,
           'ocr.prompt_name': job.prompt_name,
+          ...(job.prompt_variant ? { 'ocr.prompt_variant': job.prompt_variant } : {}),
           'ocr.batch_job_id': jobIdStr,
           'ocr.input_tokens': inputTokens,
           'ocr.output_tokens': outputTokens,
@@ -650,8 +658,7 @@ async function processOneJob(db, job) {
         setObj['ocr.content_hash'] = prov.content_hash;
         setObj['ocr.engine'] = prov.engine;
         if (isMultiPage) setObj['ocr.pages_per_request'] = job.pages_per_request;
-        if (pageType) setObj.page_type = pageType;
-        if (columns) setObj.columns = columns;
+        Object.assign(setObj, tags); // page_type, columns, script_type — whichever parsed
         if (detectedImages.length > 0) setObj.detected_images = detectedImages;
 
         // A page that reads clears its failure history: the counter below must
@@ -755,6 +762,18 @@ async function processOneJob(db, job) {
           });
         }
       } else {
+        // The page's text inside its continuity <meta> is text no reader sees (#5376): write
+        // nothing, stamp the page with the reason and keep the refused text as evidence.
+        if (hidesPageInMeta(text)) {
+          if (!DRY_RUN) await recordRefusedTranslation(db, { id: pageId, book_id: job.book_id }, text, HIDDEN_META_REASON, { jobId: jobIdStr, model: job.model });
+          failCount++; noteFail(HIDDEN_META_REASON); failedPageIds.set(pageId, HIDDEN_META_REASON);
+          continue;
+        }
+        // #5734: Korean 그-for-"that" repaired; any other script in the English that is in neither
+        // the source nor the book's language (outside note/term/gloss…) is refused the same way.
+        const stray = await strayScriptGate(db, { id: pageId, book_id: job.book_id }, text, { language: job.language, jobId: jobIdStr, model: job.model, dryRun: DRY_RUN });
+        if (stray.refused) { failCount++; noteFail(STRAY_SCRIPT_REASON); failedPageIds.set(pageId, STRAY_SCRIPT_REASON); continue; }
+        text = guardTranslationText(stray.text); // #5902: term definitions → <note>
         bulkOps.push({
           updateOne: {
             filter: { id: pageId },
@@ -1251,6 +1270,9 @@ async function advancePipelineStatus(db, bookId, jobType) {
             detected_images_count: imgCount,
             ...(scanQualityRollup ? { scan_quality: scanQualityRollup } : {}),
             ...statusSet,
+            // The `images` input of pipeline_next (#5477): extraction ran for this book, whatever the
+            // status guard decided above.
+            'pipeline_auto.images_done_at': new Date(),
             'pipeline_auto.last_updated': new Date(),
             updated_at: new Date(),
           },

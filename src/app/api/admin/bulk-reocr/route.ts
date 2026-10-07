@@ -9,6 +9,7 @@ import { createBatchJobInline, type BatchRequest } from '@/lib/gemini-batch';
 import { PROMPT_VERSION } from '@/lib/types/prompts/defaults';
 import { getModelForBook, type RoutableBook } from '@/lib/types/ai-models';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { assertLaneGuards } from '@/lib/lane-guards';
 import type { Page } from '@/lib/types/page';
 
 export const maxDuration = 300;
@@ -96,6 +97,9 @@ export async function GET(request: NextRequest) {
     }> = [];
     const skipped: string[] = [];
     let booksExamined = 0;
+
+    // Observe only (#5480): records a held book or an active pause in audit_log, never refuses.
+    if (!dryRun) await assertLaneGuards(db, { route: '/api/admin/bulk-reocr', bookIds: books.map((b) => String(b.id)) });
 
     for (const book of books) {
       if (submitted.length >= limit) break;

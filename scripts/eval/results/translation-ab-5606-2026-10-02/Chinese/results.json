@@ -1,0 +1,1571 @@
+{
+ "generated": "2026-10-02T11:14:58.084Z",
+ "seed": 5606,
+ "pages": 20,
+ "test_pages": 19,
+ "judges": {
+  "opus": {
+   "file": "/root/tab5606/judge/verdicts-opus-Chinese.jsonl",
+   "pages_scored": 20,
+   "missing": []
+  },
+  "sonnet": {
+   "file": "/root/tab5606/judge/verdicts-sonnet-Chinese.jsonl",
+   "pages_scored": 20,
+   "missing": []
+  }
+ },
+ "controls": {
+  "positive": {
+   "opus": {
+    "fidelity": 3,
+    "invention": true,
+    "omission": false,
+    "rank": 2,
+    "pass": false
+   },
+   "sonnet": {
+    "fidelity": 4,
+    "invention": true,
+    "omission": false,
+    "rank": 1,
+    "pass": false
+   }
+  },
+  "same_arm": {
+   "opus": {
+    "pairs": [
+     {
+      "id": "69935b692c63944063133f67_00112",
+      "engine": "lite",
+      "fidelity": [
+       4,
+       4
+      ],
+      "rank": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "6a3c5f05879008ba7e15291d_00045",
+      "engine": "lite",
+      "fidelity": [
+       4,
+       4
+      ],
+      "rank": [
+       1,
+       1
+      ],
+      "tie": true
+     },
+     {
+      "id": "6a3c61ec40c88a541d8f0f4a_00018",
+      "engine": "lite-rerun",
+      "fidelity": [
+       4,
+       4
+      ],
+      "rank": [
+       2,
+       2
+      ],
+      "tie": true
+     }
+    ],
+    "n": 3,
+    "ties": 3,
+    "tie_rate": 1
+   },
+   "sonnet": {
+    "pairs": [
+     {
+      "id": "69935b692c63944063133f67_00112",
+      "engine": "lite",
+      "fidelity": [
+       4,
+       4
+      ],
+      "rank": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "6a3c5f05879008ba7e15291d_00045",
+      "engine": "lite",
+      "fidelity": [
+       4,
+       4
+      ],
+      "rank": [
+       0,
+       0
+      ],
+      "tie": true
+     },
+     {
+      "id": "6a3c61ec40c88a541d8f0f4a_00018",
+      "engine": "lite-rerun",
+      "fidelity": [
+       4,
+       4
+      ],
+      "rank": [
+       1,
+       1
+      ],
+      "tie": true
+     }
+    ],
+    "n": 3,
+    "ties": 3,
+    "tie_rate": 1
+   }
+  },
+  "positive_supplementary": {}
+ },
+ "engines": {
+  "flash": {
+   "by_judge": {
+    "opus": {
+     "n": 19,
+     "fidelity_median": 4,
+     "fidelity_mean": 4.158,
+     "omission_rate": 0.105,
+     "invention_rate": 0.158,
+     "inversion_rate": 0.105,
+     "rank_mean": 1.263,
+     "first_place": 15,
+     "list_collapse_count": 0,
+     "term_misparse_count": 3,
+     "inversion_count": 2,
+     "omission_count": 2,
+     "invention_count": 3,
+     "list_collapse_rate": 0,
+     "term_misparse_rate": 0.158
+    },
+    "sonnet": {
+     "n": 19,
+     "fidelity_median": 4,
+     "fidelity_mean": 4.053,
+     "omission_rate": 0.053,
+     "invention_rate": 0.368,
+     "inversion_rate": 0,
+     "rank_mean": 1.421,
+     "first_place": 12,
+     "list_collapse_count": 0,
+     "term_misparse_count": 3,
+     "inversion_count": 0,
+     "omission_count": 1,
+     "invention_count": 7,
+     "list_collapse_rate": 0,
+     "term_misparse_rate": 0.158
+    }
+   },
+   "pooled": {
+    "n": 38,
+    "fidelity_median": 4,
+    "fidelity_mean": 4.105,
+    "invention_rate": 0.263,
+    "omission_rate": 0.079,
+    "inversion_rate": 0.053,
+    "list_collapse_count": 0,
+    "term_misparse_count": 6,
+    "inversion_count": 2,
+    "omission_count": 3,
+    "invention_count": 10,
+    "list_collapse_rate": 0,
+    "term_misparse_rate": 0.158
+   },
+   "run": {
+    "pages": 19,
+    "ms_mean": 143409,
+    "in_tokens_mean": 2145.263,
+    "out_tokens_mean": 615.158,
+    "usd_per_page_batch": 0.001459,
+    "usd_per_page_realtime": 0.002918,
+    "finish": {
+     "STOP": 19
+    }
+   }
+  },
+  "lite": {
+   "by_judge": {
+    "opus": {
+     "n": 19,
+     "fidelity_median": 4,
+     "fidelity_mean": 3.842,
+     "omission_rate": 0.263,
+     "invention_rate": 0.053,
+     "inversion_rate": 0.105,
+     "rank_mean": 1.737,
+     "first_place": 6,
+     "list_collapse_count": 1,
+     "term_misparse_count": 9,
+     "inversion_count": 2,
+     "omission_count": 5,
+     "invention_count": 1,
+     "list_collapse_rate": 0.053,
+     "term_misparse_rate": 0.474
+    },
+    "sonnet": {
+     "n": 19,
+     "fidelity_median": 4,
+     "fidelity_mean": 3.895,
+     "omission_rate": 0.211,
+     "invention_rate": 0.053,
+     "inversion_rate": 0,
+     "rank_mean": 1.632,
+     "first_place": 9,
+     "list_collapse_count": 1,
+     "term_misparse_count": 8,
+     "inversion_count": 0,
+     "omission_count": 4,
+     "invention_count": 1,
+     "list_collapse_rate": 0.053,
+     "term_misparse_rate": 0.421
+    }
+   },
+   "pooled": {
+    "n": 38,
+    "fidelity_median": 4,
+    "fidelity_mean": 3.868,
+    "invention_rate": 0.053,
+    "omission_rate": 0.237,
+    "inversion_rate": 0.053,
+    "list_collapse_count": 2,
+    "term_misparse_count": 17,
+    "inversion_count": 2,
+    "omission_count": 9,
+    "invention_count": 2,
+    "list_collapse_rate": 0.053,
+    "term_misparse_rate": 0.447
+   },
+   "run": {
+    "pages": 19,
+    "ms_mean": 102783,
+    "in_tokens_mean": 2145.263,
+    "out_tokens_mean": 553.211,
+    "usd_per_page_batch": 0.000683,
+    "usd_per_page_realtime": 0.001366,
+    "finish": {
+     "STOP": 19
+    }
+   }
+  },
+  "lite-rerun": {
+   "by_judge": {
+    "opus": {
+     "n": 19,
+     "fidelity_median": 4,
+     "fidelity_mean": 3.579,
+     "omission_rate": 0.316,
+     "invention_rate": 0.105,
+     "inversion_rate": 0.211,
+     "rank_mean": 2.211,
+     "first_place": 3,
+     "list_collapse_count": 2,
+     "term_misparse_count": 10,
+     "inversion_count": 4,
+     "omission_count": 6,
+     "invention_count": 2,
+     "list_collapse_rate": 0.105,
+     "term_misparse_rate": 0.526
+    },
+    "sonnet": {
+     "n": 19,
+     "fidelity_median": 4,
+     "fidelity_mean": 3.579,
+     "omission_rate": 0.158,
+     "invention_rate": 0.158,
+     "inversion_rate": 0.158,
+     "rank_mean": 2.158,
+     "first_place": 4,
+     "list_collapse_count": 2,
+     "term_misparse_count": 9,
+     "inversion_count": 3,
+     "omission_count": 3,
+     "invention_count": 3,
+     "list_collapse_rate": 0.105,
+     "term_misparse_rate": 0.474
+    }
+   },
+   "pooled": {
+    "n": 38,
+    "fidelity_median": 4,
+    "fidelity_mean": 3.579,
+    "invention_rate": 0.132,
+    "omission_rate": 0.237,
+    "inversion_rate": 0.184,
+    "list_collapse_count": 4,
+    "term_misparse_count": 19,
+    "inversion_count": 7,
+    "omission_count": 9,
+    "invention_count": 5,
+    "list_collapse_rate": 0.105,
+    "term_misparse_rate": 0.5
+   },
+   "run": {
+    "pages": 19,
+    "ms_mean": 123133,
+    "in_tokens_mean": 2145.263,
+    "out_tokens_mean": 532.316,
+    "usd_per_page_batch": 0.000667,
+    "usd_per_page_realtime": 0.001335,
+    "finish": {
+     "STOP": 19
+    }
+   }
+  }
+ },
+ "rules": {
+  "handoff": {
+   "rule": "cheapest engine whose median fidelity is within 0.5 of the best AND invention rate <= best + 5pp (pooled over judges)",
+   "cost_order": [
+    "lite",
+    "lite-rerun",
+    "flash"
+   ],
+   "best_fidelity_engine": "flash",
+   "eligible": [
+    "lite"
+   ],
+   "pick": "lite"
+  }
+ },
+ "agreement": {
+  "judges": [
+   "opus",
+   "sonnet"
+  ],
+  "fidelity_exact": 0.754,
+  "fidelity_within_1": 0.982,
+  "fidelity_mean_abs_diff": 0.263,
+  "top_rank_shared": 0.789,
+  "n_cells": 57,
+  "n_pages": 19
+ },
+ "pairs": {
+  "flash:lite": {
+   "by_judge": {
+    "opus": {
+     "rank": {
+      "a_wins": 13,
+      "ties": 2,
+      "b_wins": 4
+     },
+     "fidelity": {
+      "a_wins": 9,
+      "ties": 7,
+      "b_wins": 3
+     },
+     "untied": [
+      {
+       "id": "69935b692c63944063133f67_00112",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "69e72c60a409200ea79f46f6_00141",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "69e72c65a409200ea79f47bd_00106",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        4
+       ]
+      },
+      {
+       "id": "69e72c6ba409200ea79f484e_00102",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "69e72c70a409200ea79f48f9_00078",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        4
+       ]
+      },
+      {
+       "id": "69e72c75a409200ea79f4976_00100",
+       "winner": "flash",
+       "fidelity": [
+        3,
+        3
+       ]
+      },
+      {
+       "id": "69e7494885f786e884a4e57a_00024",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "69e8b2642ff2a8dc09e778a1_00439",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "6a3c5f05879008ba7e15291d_00045",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "6a3c5f3c879008ba7e153862_00029",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "6a3c6191879008ba7e15f0b2_00070",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "6a3c6192879008ba7e15f12e_00065",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "6a3c61b1879008ba7e15fba1_00068",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "6a3c61b3879008ba7e15fc71_00112",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "6a3c61b5879008ba7e15fd28_00117",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "6a3c61db40c88a541d8f091d_00083",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "6a3c61ec40c88a541d8f0f4a_00018",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        5
+       ]
+      }
+     ]
+    },
+    "sonnet": {
+     "rank": {
+      "a_wins": 8,
+      "ties": 5,
+      "b_wins": 6
+     },
+     "fidelity": {
+      "a_wins": 5,
+      "ties": 11,
+      "b_wins": 3
+     },
+     "untied": [
+      {
+       "id": "69935b692c63944063133f67_00112",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "69e72c60a409200ea79f46f6_00141",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        2
+       ]
+      },
+      {
+       "id": "69e72c65a409200ea79f47bd_00106",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        4
+       ]
+      },
+      {
+       "id": "69e72c6ba409200ea79f484e_00102",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "69e72c75a409200ea79f4976_00100",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        3
+       ]
+      },
+      {
+       "id": "69e7494885f786e884a4e57a_00024",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "69e8b2642ff2a8dc09e778a1_00439",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "69e8b26b2ff2a8dc09e77afc_00118",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "6a3c5f05879008ba7e15291d_00045",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        4
+       ]
+      },
+      {
+       "id": "6a3c5f3c879008ba7e153862_00029",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "6a3c61b1879008ba7e15fba1_00068",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "6a3c61b3879008ba7e15fc71_00112",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "6a3c61b5879008ba7e15fd28_00117",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        4
+       ]
+      },
+      {
+       "id": "6a3c61db40c88a541d8f091d_00083",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        4
+       ]
+      }
+     ]
+    }
+   },
+   "pooled": {
+    "rank": {
+     "a_wins": 21,
+     "ties": 7,
+     "b_wins": 10
+    },
+    "fidelity": {
+     "a_wins": 14,
+     "ties": 18,
+     "b_wins": 6
+    }
+   }
+  },
+  "lite-rerun:lite": {
+   "by_judge": {
+    "opus": {
+     "rank": {
+      "a_wins": 3,
+      "ties": 6,
+      "b_wins": 10
+     },
+     "fidelity": {
+      "a_wins": 1,
+      "ties": 12,
+      "b_wins": 6
+     },
+     "untied": [
+      {
+       "id": "69935b692c63944063133f67_00112",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        4
+       ]
+      },
+      {
+       "id": "69e72c60a409200ea79f46f6_00141",
+       "winner": "lite-rerun",
+       "fidelity": [
+        3,
+        3
+       ]
+      },
+      {
+       "id": "69e72c6ba409200ea79f484e_00102",
+       "winner": "lite-rerun",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "69e72c70a409200ea79f48f9_00078",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "69e72c75a409200ea79f4976_00100",
+       "winner": "lite",
+       "fidelity": [
+        2,
+        3
+       ]
+      },
+      {
+       "id": "69e7494885f786e884a4e57a_00024",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        4
+       ]
+      },
+      {
+       "id": "69e8b26b2ff2a8dc09e77afc_00118",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "6a3c5f3b879008ba7e153836_00013",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        5
+       ]
+      },
+      {
+       "id": "6a3c5f3c879008ba7e153862_00029",
+       "winner": "lite-rerun",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "6a3c61b1879008ba7e15fba1_00068",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        4
+       ]
+      },
+      {
+       "id": "6a3c61b5879008ba7e15fd28_00117",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        3
+       ]
+      },
+      {
+       "id": "6a3c61db40c88a541d8f091d_00083",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "6a3c61ec40c88a541d8f0f4a_00018",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        5
+       ]
+      }
+     ]
+    },
+    "sonnet": {
+     "rank": {
+      "a_wins": 4,
+      "ties": 3,
+      "b_wins": 12
+     },
+     "fidelity": {
+      "a_wins": 2,
+      "ties": 9,
+      "b_wins": 8
+     },
+     "untied": [
+      {
+       "id": "69935b692c63944063133f67_00112",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "69e72c60a409200ea79f46f6_00141",
+       "winner": "lite-rerun",
+       "fidelity": [
+        3,
+        2
+       ]
+      },
+      {
+       "id": "69e72c6ba409200ea79f484e_00102",
+       "winner": "lite-rerun",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "69e72c70a409200ea79f48f9_00078",
+       "winner": "lite-rerun",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "69e72c75a409200ea79f4976_00100",
+       "winner": "lite",
+       "fidelity": [
+        2,
+        3
+       ]
+      },
+      {
+       "id": "69e7494885f786e884a4e57a_00024",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        3
+       ]
+      },
+      {
+       "id": "69e8b2642ff2a8dc09e778a1_00439",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        3
+       ]
+      },
+      {
+       "id": "69e8b26b2ff2a8dc09e77afc_00118",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        4
+       ]
+      },
+      {
+       "id": "6a3c5f3b879008ba7e153836_00013",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        5
+       ]
+      },
+      {
+       "id": "6a3c5f3c879008ba7e153862_00029",
+       "winner": "lite-rerun",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "6a3c6191879008ba7e15f0b2_00070",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        5
+       ]
+      },
+      {
+       "id": "6a3c6192879008ba7e15f12e_00065",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        5
+       ]
+      },
+      {
+       "id": "6a3c61b1879008ba7e15fba1_00068",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        4
+       ]
+      },
+      {
+       "id": "6a3c61b3879008ba7e15fc71_00112",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        3
+       ]
+      },
+      {
+       "id": "6a3c61b5879008ba7e15fd28_00117",
+       "winner": "lite",
+       "fidelity": [
+        3,
+        4
+       ]
+      },
+      {
+       "id": "6a3c61ec40c88a541d8f0f4a_00018",
+       "winner": "lite",
+       "fidelity": [
+        4,
+        5
+       ]
+      }
+     ]
+    }
+   },
+   "pooled": {
+    "rank": {
+     "a_wins": 7,
+     "ties": 9,
+     "b_wins": 22
+    },
+    "fidelity": {
+     "a_wins": 3,
+     "ties": 21,
+     "b_wins": 14
+    }
+   }
+  },
+  "flash:lite-rerun": {
+   "by_judge": {
+    "opus": {
+     "rank": {
+      "a_wins": 15,
+      "ties": 2,
+      "b_wins": 2
+     },
+     "fidelity": {
+      "a_wins": 13,
+      "ties": 4,
+      "b_wins": 2
+     },
+     "untied": [
+      {
+       "id": "69935b692c63944063133f67_00112",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "69e72c60a409200ea79f46f6_00141",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "69e72c65a409200ea79f47bd_00106",
+       "winner": "lite-rerun",
+       "fidelity": [
+        3,
+        4
+       ]
+      },
+      {
+       "id": "69e72c70a409200ea79f48f9_00078",
+       "winner": "lite-rerun",
+       "fidelity": [
+        3,
+        4
+       ]
+      },
+      {
+       "id": "69e72c75a409200ea79f4976_00100",
+       "winner": "flash",
+       "fidelity": [
+        3,
+        2
+       ]
+      },
+      {
+       "id": "69e7494885f786e884a4e57a_00024",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "69e8b2642ff2a8dc09e778a1_00439",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "69e8b26b2ff2a8dc09e77afc_00118",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "6a3c5f05879008ba7e15291d_00045",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "6a3c5f3b879008ba7e153836_00013",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "6a3c6191879008ba7e15f0b2_00070",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "6a3c6192879008ba7e15f12e_00065",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "6a3c61b1879008ba7e15fba1_00068",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "6a3c61b3879008ba7e15fc71_00112",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "6a3c61b5879008ba7e15fd28_00117",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "6a3c61db40c88a541d8f091d_00083",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "6a3c61ec40c88a541d8f0f4a_00018",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        4
+       ]
+      }
+     ]
+    },
+    "sonnet": {
+     "rank": {
+      "a_wins": 14,
+      "ties": 1,
+      "b_wins": 4
+     },
+     "fidelity": {
+      "a_wins": 12,
+      "ties": 4,
+      "b_wins": 3
+     },
+     "untied": [
+      {
+       "id": "69935b692c63944063133f67_00112",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "69e72c60a409200ea79f46f6_00141",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "69e72c65a409200ea79f47bd_00106",
+       "winner": "lite-rerun",
+       "fidelity": [
+        3,
+        4
+       ]
+      },
+      {
+       "id": "69e72c6ba409200ea79f484e_00102",
+       "winner": "lite-rerun",
+       "fidelity": [
+        4,
+        5
+       ]
+      },
+      {
+       "id": "69e72c70a409200ea79f48f9_00078",
+       "winner": "lite-rerun",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "69e72c75a409200ea79f4976_00100",
+       "winner": "flash",
+       "fidelity": [
+        3,
+        2
+       ]
+      },
+      {
+       "id": "69e7494885f786e884a4e57a_00024",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "69e8b2642ff2a8dc09e778a1_00439",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "69e8b26b2ff2a8dc09e77afc_00118",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "6a3c5f05879008ba7e15291d_00045",
+       "winner": "lite-rerun",
+       "fidelity": [
+        3,
+        4
+       ]
+      },
+      {
+       "id": "6a3c5f3b879008ba7e153836_00013",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "6a3c5f3c879008ba7e153862_00029",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "6a3c6191879008ba7e15f0b2_00070",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "6a3c6192879008ba7e15f12e_00065",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      },
+      {
+       "id": "6a3c61b1879008ba7e15fba1_00068",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "6a3c61b3879008ba7e15fc71_00112",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        3
+       ]
+      },
+      {
+       "id": "6a3c61db40c88a541d8f091d_00083",
+       "winner": "flash",
+       "fidelity": [
+        4,
+        4
+       ]
+      },
+      {
+       "id": "6a3c61ec40c88a541d8f0f4a_00018",
+       "winner": "flash",
+       "fidelity": [
+        5,
+        4
+       ]
+      }
+     ]
+    }
+   },
+   "pooled": {
+    "rank": {
+     "a_wins": 29,
+     "ties": 3,
+     "b_wins": 6
+    },
+    "fidelity": {
+     "a_wins": 25,
+     "ties": 8,
+     "b_wins": 5
+    }
+   }
+  }
+ },
+ "per_page": [
+  {
+   "id": "69935b692c63944063133f67_00112",
+   "opus": {
+    "flash": "4X",
+    "lite": "4X",
+    "lite-rerun": "3OXT"
+   },
+   "sonnet": {
+    "flash": "4I",
+    "lite": "4",
+    "lite-rerun": "4T"
+   },
+   "reasons": {
+    "opus": "T2=T4 identical; T2/T4/T3 render Su 其心見於外而物安之 as \"not revealed\" (source has no 不) and T2 garbles 而妄之不猶存; T1 turns Huang 無所不為 into \"doing nothing\" (inverting the key claim); T3 also reads 經 as \"the classics\" and drops 取天下常以無為 from Lü, recasting the conclusion",
+    "sonnet": "T2 and T4 identical and track source and Legge ch.49; T1 adds biographical notes (dates, Xizhai identified as Li Daochun) the source does not carry; T3 misreads 取天下常以無為 as those who govern by constant calculated action fall short"
+   }
+  },
+  {
+   "id": "69e72c60a409200ea79f46f6_00141",
+   "opus": {
+    "flash": "4I",
+    "lite": "3OXT",
+    "lite-rerun": "3XT"
+   },
+   "sonnet": {
+    "flash": "4I",
+    "lite": "2IOT",
+    "lite-rerun": "3T"
+   },
+   "reasons": {
+    "opus": "T2 recovers the OCR-garbled 刖者之屨 (shoes of the footless, as Legge) and renders 取妻者止於外不得復使 as the husband freed from service, but appends 而況全德之人乎 which is past the page; T1 reads 胎者之屢 as a fetus and makes the wives stopped at the gates; T3 makes the opening \"one feeds a child\", collapses the shoes clause into a vague \"failure to act\" sentence, and also makes the wife the one kept outside",
+    "sonnet": "T2 reads the amputee-shoes clause as in Legge but appends a how-much-more-complete-Virtue clause beyond the source; T1 renders the shoes clause as a fetus with no intention; T3 drops the shoes clause, invents a lost original nature sentence and turns those who take wives into she"
+   }
+  },
+  {
+   "id": "69e72c65a409200ea79f47bd_00106",
+   "opus": {
+    "flash": "3IT",
+    "lite": "4",
+    "lite-rerun": "4"
+   },
+   "sonnet": {
+    "flash": "3I",
+    "lite": "4",
+    "lite-rerun": "4"
+   },
+   "reasons": {
+    "opus": "T1 and T2 render the dialogue and the eleven marginal glosses alike (inheriting the OCR 飲 for 斂); T3 reads the gloss 字法○ (character-technique mark) as \"the word stopped/method\", adds a note that 飲無崖 means immersion in the Tao, and makes 避影 \"avoiding his own reflection\" rather than Laozi's shadow",
+    "sonnet": "T1 and T2 follow source and Legge (ox/horse, refusing the name brings disaster, side-step avoiding shadow); T3 adds a note on drinking as immersion in the Tao and meta text, and misreads Shicheng Qi moving like a shadow avoiding his reflection"
+   }
+  },
+  {
+   "id": "69e72c6ba409200ea79f484e_00102",
+   "opus": {
+    "flash": "4",
+    "lite": "4T",
+    "lite-rerun": "4"
+   },
+   "sonnet": {
+    "flash": "4I",
+    "lite": "4T",
+    "lite-rerun": "5"
+   },
+   "reasons": {
+    "opus": "All three render the retreat to the marsh, the birds/beasts and the five calamities of 吾再逐於魯…圍於陳蔡 as Legge; all mishandle the fragment 責焉 (T2 \"Regarding this responsibility\", T3 \"blamed him\"); T1 additionally splits 辭其交遊 into Confucius saying \"You have declined it\" before the narrative \"gave up social associations\"",
+    "sonnet": "T3 matches source and Legge throughout; T1 misreads 辭其交遊 by having Confucius say You have declined it before also giving up associates; T2 mistranslates 責焉 as Regarding this responsibility and adds a Mountain Tree chapter meta not on the page, plus a summary claiming Zi Sanghu explains"
+   }
+  },
+  {
+   "id": "69e72c70a409200ea79f48f9_00078",
+   "opus": {
+    "flash": "3T",
+    "lite": "4T",
+    "lite-rerun": "4"
+   },
+   "sonnet": {
+    "flash": "4T",
+    "lite": "4T",
+    "lite-rerun": "4"
+   },
+   "reasons": {
+    "opus": "T2 follows the source/Legge through 知丘之適楚也以丘為必使楚王之召己 and 羞聞其言, slipping only on the gloss 摯妻 (\"Zhi took his wife\", 摯 read as a name); T1 merges the Chu journey and the summons into one cause, softens 羞聞其言 to \"the very thought\", and renders 滅裂 \"overly simplistic\"; T3 reads 著於己 as \"famous for my ambitions\" against Legge's \"understand him well\"",
+    "sonnet": "T2 reads 摯 in 摯妻之而去 as a personal name (Zhi); T3 renders 著於己 as I am famous for my ambitions where Legge has he knows I understand him; T1 stays closest to source and Legge"
+   }
+  },
+  {
+   "id": "69e72c75a409200ea79f4976_00100",
+   "opus": {
+    "flash": "3IXT",
+    "lite": "3IOT",
+    "lite-rerun": "2IOLT"
+   },
+   "sonnet": {
+    "flash": "3IOT",
+    "lite": "3OT",
+    "lite-rerun": "2OXLT"
+   },
+   "reasons": {
+    "opus": "Source 如而夫者 = 'an ordinary man' (Legge 'one of those ordinary men'): T2 renders it, T1 and T3 read it as 'if one acts like him' and invent a duplicate humble-walking passage; T3 also reads 呂鉅 (haughty stride) as a person 'Lü Ju', losing the first of the three arrogant steps, and garbles 孰協唐許 as 'Agreement or harm?'; T1 drops the Xu You comparison from the main text; T2 keeps all three steps and Xu You but misparses 孰協唐許 as 'Tang and Xu said' and fuses glosses into the main text",
+    "sonnet": "T3 makes the ordinary men's first appointment a bowed, wall-hugging one (reference: haughty stride), drops the first-grade step and reads 呂鉅 as a name; T2 invents 'Tang and Xu said' from garbled 唐許 and adds 'High Minister'; T1 duplicates the Kaofu clause around 如而夫者 but keeps the three grades and the proud/dance/call-by-name triplet."
+   }
+  },
+  {
+   "id": "69e7494885f786e884a4e57a_00024",
+   "opus": {
+    "flash": "4",
+    "lite": "4T",
+    "lite-rerun": "3XT"
+   },
+   "sonnet": {
+    "flash": "4",
+    "lite": "3T",
+    "lite-rerun": "3IXT"
+   },
+   "reasons": {
+    "opus": "俾也可忘 (Legge 'would he then allow me to be forgotten?'): T1 inverts it to 'How can I ever forget him?'; 報我不述 ('respond to me contrary to all reason'): T3 'repays me without following the proper way' is right, T1 'does not report back to me' and T2 'you do not mention a response' misread it; T1 also turns the three fanqie glosses (冒从目 / 呼到反 / 報反) into one spelling of 冒",
+    "sonnet": "Stanza 3 俾也可忘 = 'allow me to be forgotten' (reference): T1 reverses it to 'How can I ever forget him', T3/T2 keep it near; stanza 4 報我不述: T3 'repays me without proper way' matches reference, T2 'you do not mention a response' and T1 'does not report back' drift; T1 invents a fanqie reading from the 冒从目 gloss (initial of 目, final of 呼), T2 mis-glosses it as 'read as mu', T3 renders it correctly."
+   }
+  },
+  {
+   "id": "69e8b2642ff2a8dc09e778a1_00439",
+   "opus": {
+    "flash": "4",
+    "lite": "3OL",
+    "lite-rerun": "3OL"
+   },
+   "sonnet": {
+    "flash": "4T",
+    "lite": "3OLT",
+    "lite-rerun": "3OLT"
+   },
+   "reasons": {
+    "opus": "Three-year mourning list 君與父母妻後子 (Legge/Mei 'ruler, parents, wife, and the first-born son'): T1 and T2 drop 後子, T3 keeps it; Motse's closing 國之治…治之廢則國之治亦廢 ('orderly because governed; when government is abandoned order disappears') is rendered by T3, while T1 and T2 make it a tautology ('if governance is abandoned, governance is abandoned'); all three garble the opening 不能為禍福執無祥不祥 similarly",
+    "sonnet": "T3 alone keeps the mourning list's 後子/嗣子 (eldest son; reference: first-born son), T1 and T2 drop it; opening 不能為禍福執無祥不祥: T1 is incoherent ('good or bad fortune is without omen or lack of omen'), T2 at least links denying omens to chaos, T3 misassigns the subject ('they cannot distinguish'); all three read 丌 as a character or person, not the Chitse book; T1/T2 also cut off the final clause."
+   }
+  },
+  {
+   "id": "69e8b26b2ff2a8dc09e77afc_00118",
+   "opus": {
+    "flash": "4",
+    "lite": "4",
+    "lite-rerun": "4XT"
+   },
+   "sonnet": {
+    "flash": "4",
+    "lite": "4T",
+    "lite-rerun": "3T"
+   },
+   "reasons": {
+    "opus": "安(能)誅之, which the page's own note glosses 安猶則 ('then'; Dubs 'then if he should seek out and kill'): T1 'then that lord must punish them' and T2 'how then can one not punish it' keep the affirmation, T3 'how could he punish them?' turns it into doubt; T3 also makes the heir 'the ancestors of the imperial lineage' (天下之宗室); otherwise all three follow the root text and the six notes",
+    "sonnet": "For 安[能]誅之 (reference: the worthy lord would punish the tyrant without harming the innocent) T1 'that lord must punish them' is right, T2 'how then can one not punish it' is loosely right, T3 'how could he punish them' reads as an objection and breaks the argument; at the end T2 'exhausted those beneath them' and T3 'brought ruin upon their subjects' mistake 全其下 (full measure of evil, reference 'completed their evil destiny') and T3 mismatches the note 天下自去 (world left of its own accord)."
+   }
+  },
+  {
+   "id": "6a3c5f05879008ba7e15291d_00045",
+   "opus": {
+    "flash": "5",
+    "lite": "4",
+    "lite-rerun": "4"
+   },
+   "sonnet": {
+    "flash": "3I",
+    "lite": "4",
+    "lite-rerun": "4"
+   },
+   "reasons": {
+    "opus": "T3 alone renders 非約隨眠以留惑故 correctly ('not latent tendencies, as the bodhisattva retains delusions'); T1/T2/T4 collapse it into 'not regarding keeping/remaining seeds'; T1 renders 上心 as 'coarse mind', T2=T4 identical, split 四住人執 and read 生起 as 'birth and death'; all carry the three defiled minds and commentary",
+    "sonnet": "T1/T2/T4 track the source throughout (T2=T4 identical; all render 上心 as higher/coarse mind and 五意 as 'consciousnesses', minor); T3 adds glosses not in source (Arhatship, Second/Seventh Bhumi, Dashabhumika), misplaces the commentary citation as an intro, and calls 法執修惑 a 'subtle delusion'."
+   }
+  },
+  {
+   "id": "6a3c5f3b879008ba7e153836_00013",
+   "opus": {
+    "flash": "5",
+    "lite": "5",
+    "lite-rerun": "4"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "5",
+    "lite-rerun": "4O"
+   },
+   "reasons": {
+    "opus": "All carry §6 end, §7, §8 and the §9 heading as in source and Gemmell; T2 turns 如來有所說法耶 into 'any fixed teaching' (importing 定 from the answer) and drops 法 in 諸佛阿耨多羅三藐三菩提法; T1 and T3 = source throughout",
+    "sonnet": "T1 and T3 render every clause of 6-8 incl. 皆從此經出 with 阿耨多羅三藐三菩提法; T2 drops 法 in 諸佛阿耨多羅三藐三菩提法 and renders 不可取 as 'intangible', a slight drift."
+   }
+  },
+  {
+   "id": "6a3c5f3c879008ba7e153862_00029",
+   "opus": {
+    "flash": "5",
+    "lite": "4",
+    "lite-rerun": "5"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "4T",
+    "lite-rerun": "4"
+   },
+   "reasons": {
+    "opus": "All render the Sakridagamin and Anagamin passages as in source and Gemmell ('no going and coming', 'no not-coming'); T2 turns the truncated 色聲香味觸法是名須陀洹 into 'forms, sounds... are called stream-enterers', equating the sense objects with the stream-enterer; T1 and T3 keep it as the fragment it is",
+    "sonnet": "Source opens on the fragment 色聲香味觸法是名須陀洹 (reference: one who avoids these is a Srotapanna); T1 reads 'this is why one is called' (matches reference), T3 'this is what is called' is ambiguous, T2 states flatly that the sense objects 'are called stream-enterers'; Sakrdagamin/Anagamin passages equivalent in all three."
+   }
+  },
+  {
+   "id": "6a3c6191879008ba7e15f0b2_00070",
+   "opus": {
+    "flash": "5",
+    "lite": "4",
+    "lite-rerun": "4"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "5",
+    "lite-rerun": "4T"
+   },
+   "reasons": {
+    "opus": "T3 keeps the root 依於智故生其苦樂覺心起念相應不斷 with 相應 ('associated and uninterrupted') and the commentary's 明起所依; T1 renders 智 as 'consciousness' and drops 相應; T2 drops 相應 and 明起所依; all carry the self/other continuity and the start of 執取相",
+    "sonnet": "T2 and T3 follow the source clause by clause (依於智, 惑潤業, 他相續, 執取 = not understanding emptiness); T1 renders 智 as 'consciousness' and recasts the opening 依於智故...相應不斷 as the mind 'remaining in constant flow', losing the 智 basis."
+   }
+  },
+  {
+   "id": "6a3c6192879008ba7e15f12e_00065",
+   "opus": {
+    "flash": "5",
+    "lite": "4",
+    "lite-rerun": "4"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "5",
+    "lite-rerun": "4T"
+   },
+   "reasons": {
+    "opus": "All carry the question, the eight-fold answer, reason 1 (= Suzuki/Richard) and Fazang's 三苦二死 / 無上菩提大涅槃 gloss; T3 alone reads 總通兼正 as 'primary and secondary' and treats 非求世間名利等者 as a lemma ('Regarding not seeking...'); T1 and T2 turn the lemma into an assertion, T1 loosens 兼正 and glosses the two deaths wrongly, T2 renders 兼正 as 'the upright and the specific'",
+    "sonnet": "All three carry question, eight 因緣, 總/別 split, 三苦二死, 無上菩提/大涅槃, first of two readings of 非求世間名利; T2 renders 總通兼正 as 'covers both the upright and the specific', misreading 正 (principal intent), while T1 and T3 get it right."
+   }
+  },
+  {
+   "id": "6a3c61b1879008ba7e15fba1_00068",
+   "opus": {
+    "flash": "4",
+    "lite": "4T",
+    "lite-rerun": "3T"
+   },
+   "sonnet": {
+    "flash": "4",
+    "lite": "4",
+    "lite-rerun": "3"
+   },
+   "reasons": {
+    "opus": "Source 此章先行而後文先本而後末: T2 renders action first, culture after; T1 and T3 misread 後文 as \"subsequent text/later sections\"; T3 also fuses 見其致 with 致猶委也 into \"reaching for virtue is like yielding oneself\", where T1/T2 gloss 致 as relinquish/devote; T1 renders 賢賢易色 as \"as we appreciate beauty\" against its own gloss 易其好色之心",
+    "sonnet": "Root text I.7 matches Legge in all three; in the commentary T3 garbles 致猶委 as reaching for virtue is like yielding oneself and renders 范說為長 as most comprehensive; T1 renders 致 as Exert/relinquish (slip); T2 has 致 as devote/commit, closest to the source"
+   }
+  },
+  {
+   "id": "6a3c61b3879008ba7e15fc71_00112",
+   "opus": {
+    "flash": "4",
+    "lite": "3OT",
+    "lite-rerun": "3IOT"
+   },
+   "sonnet": {
+    "flash": "4",
+    "lite": "3O",
+    "lite-rerun": "3IX"
+   },
+   "reasons": {
+    "opus": "Root 其爭也君子: T1 renders it (cf. Legge \"in his contention he is still the Chun-tsze\"); T2 and T3 cut 君子 off the sentence and attach it to the 聲去 tone note; T2 drops 哀痛 and reads 滅 as \"reasons for their destruction\"; T3 adds \"the Master says\", has the loser retrieve \"arrows\" where 升取 introduces taking the cup to drink, and misreads 位耦卒射亦如之 as \"the position for the pairs\"",
+    "sonnet": "Root III.7 sound in all (Legge); T3 has the Master say the Ba Yi to Mount Tai passages are about mourning (source 其哀痛 is the commentator, wrong speaker) and mangles the 勝者揖不勝者升取 step; T2 leaves truncated ellipsis fragments and drops text; T1 follows the source throughout"
+   }
+  },
+  {
+   "id": "6a3c61b5879008ba7e15fd28_00117",
+   "opus": {
+    "flash": "4O",
+    "lite": "3OT",
+    "lite-rerun": "3OT"
+   },
+   "sonnet": {
+    "flash": "3I",
+    "lite": "4",
+    "lite-rerun": "3IT"
+   },
+   "reasons": {
+    "opus": "T1 alone reads the Mencius allusion 惠而不知為政 (\"kind but did not know how to govern\") and 我子弟 as \"our children and brothers\", and renders 久而敬之 as respect maintained (= Legge), though it drops 及其卒也; T2 and T3 misparse 惠而不知為政 as \"did not know that when he began to govern\", turn 子弟 into \"disciples\" and inflate 久而敬之 to \"the more he respected them\"; T2 also drops 義 from 使民義; T3 drops 一時 and reads 未盡者誠 as \"unsaid regarding his integrity\"",
+    "sonnet": "Root V.16 correct in all; T1 adds helping people cross the river to 濟人 (not in source) and leaves 一言 untranslated; T3 reads 誠 as integrity and adds an identification note (Feng Jue) the source lacks; T2 tracks the source"
+   }
+  },
+  {
+   "id": "6a3c61db40c88a541d8f091d_00083",
+   "opus": {
+    "flash": "5",
+    "lite": "4T",
+    "lite-rerun": "4T"
+   },
+   "sonnet": {
+    "flash": "4",
+    "lite": "4",
+    "lite-rerun": "4"
+   },
+   "reasons": {
+    "opus": "Source 離色離相分第二十 三身具足: T3 numbers the section 20; T1 and T2 fold 三 into the title (\"Twenty-Third\") while also keeping \"three bodies\"; T1 also reverses 故受之以離色離相分 into \"this section follows the Chapter on Parting\"; all three render §19 = Gemmell (merit not real, therefore \"much\") and the §20 opening question",
+    "sonnet": "All three render the Diamond Sutra root text correctly (Gemmell); T1 and T2 give the section as Twenty-Third where the source heading reads 第二十, T3 correctly Section 20"
+   }
+  },
+  {
+   "id": "6a3c61ec40c88a541d8f0f4a_00018",
+   "opus": {
+    "flash": "4O",
+    "lite": "5",
+    "lite-rerun": "4OT"
+   },
+   "sonnet": {
+    "flash": "5",
+    "lite": "5",
+    "lite-rerun": "4"
+   },
+   "reasons": {
+    "opus": "All four render the six stanzas and 持地菩薩 speech (cf. Soothill/Kern). Only T4 keeps 無等等 (\"peerless\", = Soothill \"with which nothing can compare\"); T2 drops it within \"unsurpassed, equal, and correct\"; T1 and T3 are identical, drop 無等等 and gloss 普門 with the spurious term \"pumena\"",
+    "sonnet": "All six stanzas and the coda present in every candidate; T1/T3 (identical) drop 無等等 peerless and mistranscribe 普門 as pumena; T2 and T4 keep unsurpassed/equal-to-the-unequalled and match source and Soothill"
+   }
+  }
+ ]
+}

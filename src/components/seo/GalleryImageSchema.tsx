@@ -70,7 +70,8 @@ export default function GalleryImageSchema({
   const artwork = {
     '@type': ['VisualArtwork', 'ImageObject'],
     '@id': `${pageUrl}#artwork`,
-    name: desc,
+    name: `${desc} \u2014 ${bookTitle}`,
+    caption: `${desc}. From ${bookTitle}${book?.author && book.author !== 'Various' ? `, by ${formatAuthor(book.author).name || book.author}` : ''}${book?.published ? ` (${book.published})` : ''}.`,
     ...(museumDescription && { description: museumDescription }),
     ...(imageUrl && { contentUrl: imageUrl }),
     ...(imageUrl && { url: imageUrl }),
@@ -116,7 +117,11 @@ export default function GalleryImageSchema({
     isPartOf: {
       '@type': 'Book',
       '@id': book ? `${BASE_URL}/book/${book.slug || book.id}` : undefined,
+      ...(book ? { url: `${BASE_URL}/book/${book.slug || book.id}` } : {}),
       name: bookTitle,
+      ...(book?.author && book.author !== 'Various'
+        ? { author: { '@type': institutionalByline(book.author) ? 'Organization' : 'Person', name: formatAuthor(book.author).name || book.author } }
+        : {}),
     },
   };
 

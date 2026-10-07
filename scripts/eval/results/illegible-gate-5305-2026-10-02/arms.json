@@ -1,0 +1,22 @@
+{
+  "base": {
+    "version": 13,
+    "hash": "51651014"
+  },
+  "model": "gemini-3.1-flash-lite",
+  "contract": "**Illegible pages (CRITICAL):**\n- If you cannot read one complete sentence of the source — the OCR holds only lacuna markers or <unclear> spans, its own <warning> says the page is illegible, or its text is a string of letters and fragments that make no sense in the source language — output exactly <warning>Illegible: one-line reason</warning> and NOTHING else: no <meta>, no <summary>, no <keywords>, no <note>.\n- Where only part of the page is unreadable, translate the readable part and reproduce each unreadable stretch inside <unclear>…</unclear> as it stands in the OCR. Never write a sentence whose words you could not read in the source.",
+  "arms": {
+    "A": {
+      "sha": "02272eeeeb72",
+      "chars": 7233
+    },
+    "A2": {
+      "sha": "02272eeeeb72",
+      "chars": 7233
+    },
+    "C": {
+      "sha": "3c0cb1e5125f",
+      "chars": 7881
+    }
+  }
+}

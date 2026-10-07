@@ -1,0 +1,469 @@
+[
+  {
+    "book_id": "6abed5db896ea18127c8e188",
+    "slot": 1,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། དེ (Derge Tengyur, vol. 180)",
+    "tradition": "pramana",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge Tengyur, Tshad ma section, vol. De. All four pages are Indian pramāṇa commentary in Tibetan, apparently on Dharmakīrti's Pramāṇavārttika: perception and conceptual thought, the logical reason, the next world, and self, hatred and compassion. The record names no author or work, so a reader cannot tell which commentary this is.",
+    "rights_flag": null,
+    "structure_note": "729 records, 729 distinct page numbers, no duplicates; 728 have OCR and translation (one leaf without, likely a cover or blank). No printed numbers are parsed. The scan sheets carry a separate number outside the frame, which is not a defect. All four sampled images match their text line for line.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 166,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "བྱེ་བྲག་ཏུ་རབ་ཏུ་མ་གྲུབ་པ་ལ་སོགས་པ་རྣམས་ཀྱིས་དམིགས་པར་བྱ་བ་མ་ཡིན་ནོ",
+            "english": "not something to be perceived by those such as the <term>Vaisheshika</term> <gloss>an ancient school of Indian philosophy emphasizing atomism and logic</gloss> who have not thoroughly established the distinctions",
+            "problem": "བྱེ་བྲག་ཏུ ('specifically') is adverbial and does not mean the Vaiśeṣika school (བྱེ་བྲག་པ). The phrase refers to kinds of unestablished reason ('specifically unestablished' and so on). The English invents an opponent school with a confident gloss, and the page summary repeats it ('challenges Vaisheshika views').",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "རེ་ཞིག་དོན་ནི་མེད་པ་ཡིན་ལ",
+            "english": "For a moment, the object does not exist",
+            "problem": "རེ་ཞིག here means 'first of all' and sets up an argument. 'For a moment' makes it a claim about time.",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "The translation ends '<unclear>one line of text regarding the relationship between proof and the proven</unclear>'. The page simply breaks mid-sentence ('སྒྲུབ་བྱེད་ཀྱིས་ནི་བསྒྲུབ་བྱ་ལ་'), but the reader is told a line is missing or illegible.",
+            "severity": "moderate",
+            "class": "T6"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 327,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "གལ་ཏེ་ཇི་ལྟར་ཞེས་བྱ་བ་སྟེ། དོན་ལ་སྟེ།",
+            "english": "if one asks \"how,\" it means: in reality",
+            "problem": "This is commentary glossing the root-text words 'gal te ji ltar' and 'don la'. The English makes it a question and answer.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "སྒྲའི་ཡོན་ཏན་གྱིས་ཡོན་ཏན་མ་ཡིན་པར་བསྟན་པ་ནི",
+            "english": "To show that a lack of quality is not caused by the quality of the word",
+            "problem": "The source means 'to show that it is not a merit by virtue of the word's merit'. 'A lack of quality' garbles the claim.",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "The OCR panel shows the e-text variant apparatus 'སྒྲུབ་(བྱད་,བྱེད་)' inline.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 403,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "རྣམ་པར་རྟོག་པ་ལས་དེ་རྗེས་སུ་བསྒྲུབ་པར་འགྱུར་བ་ཡིན་གྱི",
+            "english": "subsequent realization arises from conceptualizations",
+            "problem": "རྗེས་སུ་བསྒྲུབ་པ means 'pursuing / acting upon', not 'subsequent realization'.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "ཉེ་བར་བསླད་པ",
+            "english": "<term>upalepa</term> <gloss>affliction or staining</gloss>",
+            "problem": "The Sanskrit equivalent supplied is doubtful (upapluta, 'corrupted', is expected).",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 673,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "མི་རྟག་པ་ཉིད་དུ་ལྟ་བར་འཁྲུལ་པ་དང་འགལ་བར་བསྟན་པ་ནི",
+            "english": "To show the contradiction between the error of viewing things as impermanent and the truth",
+            "problem": "The source says that seeing things as impermanent contradicts error. The English calls seeing impermanence 'the error', which reverses a basic doctrinal point.",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "གནས་པ་མ་ཡིན་པ་ནི་སེམས་ཅན་གྱི་དོན་གྱིས་སྟོང་པ་ཉིད་དུའོ",
+            "english": "Not abiding refers to the state of emptiness regarding the welfare of sentient beings",
+            "problem": "The source means 'not abiding [in] emptiness, for the sake of beings'. The English reads as if emptiness is empty of beings' welfare.",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "The translation ends '<unclear>one line of text following this is not transcribed or cuts off at the margin</unclear>'. The last line is fully transcribed and the sentence continues on the next leaf, so the claim of missing text is false.",
+            "severity": "moderate",
+            "class": "T6"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "The transcription is a faithful e-text of the right Derge leaves. The English is a usable working draft of dense commentary, but two of four pages carry a meaning-changing error: an invented Vaiśeṣika opponent, and seeing impermanence called an 'error'. Both pages also end with a false note that a line is missing.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      327,
+      403
+    ],
+    "reader_summary": "This is a Derge Tengyur pramāṇa volume holding Indian commentary, apparently on Dharmakīrti's Pramāṇavārttika. The record does not name the work. The Tibetan is the right text for each leaf. The English follows the argument closely enough to find a passage, but it sometimes misparses the commentary's glosses on root-text words and occasionally reverses a point, so check it against the Tibetan before quoting."
+  },
+  {
+    "book_id": "6abed3fc896ea18127c8d272",
+    "slot": 2,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཅེ (Derge Tengyur, vol. 174)",
+    "tradition": "pramana",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge Tengyur, Tshad ma vol. Ce, the volume of root texts. The sampled pages are the end of the svārthānumāna chapter of Dignāga's Pramāṇasamuccaya(vṛtti) (arthāpatti, abhāva, Caitra not in the house), Pramāṇavārttika verses refuting real universals (ཀྱེ་མ་ཕོངས་པའི་རྒྱུ་ཉིད་ཡིན), a passage with antaraślokas on non-perception, and a passage on non-perception and the Veda. This is the core of the shelf, but the record names none of the works.",
+    "rights_flag": null,
+    "structure_note": "730 records, no duplicates; 723 have OCR and translation (7 without, presumably covers or blanks). No printed numbers parsed. A 'Best Possible Image' scanner stamp sits under p.79; it is furniture, not a licence. All four images match their text.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 79,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ནག་པ་ཁྱིམ་ན་མེད་པ་ལས། །ཕྱི་ན་ཡོད་པ་མཚོན་པ་མིན།",
+            "english": "The absence of Nagpa in the house / Does not indicate that he is outside.",
+            "problem": "ནག་པ renders Caitra, the stock name in this Indian example. 'Nagpa' as a proper name will puzzle a reader, and the keywords list 'Nagpa'.",
+            "severity": "minor"
+          },
+          {
+            "source": "དེ་འཚོད་པ་ལས་སྣོད་དང་རྟེན་ལ་སོགས་པའི་དོན་འཛིན་པ",
+            "english": "perceiving the purpose of a vessel or a support from the act of cooking",
+            "problem": "The source says apprehending a vessel, a support and so on from the cooking. It says nothing of their 'purpose'.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The OCR panel carries stray e-text markers: '#' after many syllables ('མེད་དོ#། །', 'འདི་ཡང་#བཀག་པར་རིག་#པར') and the variant pair '{བརྫུན,རྫུན}'. The translation then wraps the word in '<insert>is false</insert>', as if it were an addition.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 200,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "མི་འགྲོ་དེ་ན་ཡོད་པའང་མིན། །ཕྱིས་ཡོད་ཆ་དང་ལྡན་པའང་མིན།",
+            "english": "It does not go there, nor does it exist there. / It does not possess parts that exist later.",
+            "problem": "In the famous verse the universal 'does not go, was not there, yet is there afterwards, and has no parts'. The English merges 'is there afterwards' into 'parts that exist later' and loses the claim that the absurdity turns on.",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "འབྲེལ་པ་མེད་ཕྱིར་སྒྲ་ཡི་རྒྱུ། །སྤྱི་#ཡིན་མི་རིགས་མིན་པ་མིན།",
+            "english": "Because there is no connection, it is not that the universal / Is not unreasonable as the cause of the word.",
+            "problem": "A stacked double negative that an English reader cannot parse.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "There are '#' markers in the OCR verse text ('ཡོད་པའང་མིན#', 'གསལ་#བས').",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 411,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "གཏན་ཚིགས་རབ་དབྱེ་བཤད་པ་ལས། །ཐ་དད་པར་ནི་དཔེར་མ་བརྗོད།",
+            "english": "Because it was explained in the \"Classification of Reasons,\" / It was not cited as a separate example.",
+            "problem": "The English turns 'in explaining the division of reasons' into a quoted work title.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The verses are wrapped in ->…<- centring marks, and one stanza closes with '<--', which may leave a stray hyphen in the rendered text. There are '#' markers throughout the OCR.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 700,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "མ་བྱས་པ་དང་ལོག་པའི་དོན་ཅན་དུ་འགྱུར་བ་ཞེས་བྱ་བ་འགལ་བ་མ་མཐོང་ངོ",
+            "english": "no contradiction is seen in the idea that something uncreated becomes something with a reversed meaning",
+            "problem": "The point is that being unauthored (the Veda) and having a false meaning are not contradictory. 'Something uncreated becomes something with a reversed meaning' hides this.",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "These are the right leaves of the Tengyur volume of pramāṇa root texts, with a clean e-text apart from stray '#' markers. The English is literal and mostly sound, with one moderate slip on the most famous verse sampled.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      79,
+      200,
+      700
+    ],
+    "reader_summary": "This volume holds the root works of Dignāga and Dharmakīrti (Pramāṇasamuccaya, Pramāṇavārttika and others), though the record names none of them. The Tibetan is the right text, with some stray '#' marks from the source e-text. The English is a close, literal draft that a reader can follow verse by verse, but it should be checked before quoting."
+  },
+  {
+    "book_id": "6abed724896ea18127c8ec34",
+    "slot": 3,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། བེ (Derge Tengyur, vol. 184)",
+    "tradition": "pramana",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge Tengyur, Tshad ma vol. Be. The sampled pages are a commentary on the Pramāṇasiddhi chapter of the Pramāṇavārttika: the refutation of Īśvara, atoms and the composite whole, the leaping analogy for limitless habituation, and craving and the truth of origin. The commentator is not named in the record.",
+    "rights_flag": null,
+    "structure_note": "521 records, no duplicates; 520 have OCR and translation. No printed numbers parsed. The scan sheet numbers outside the frame run one ahead of page_number (71 for p.70, 254 for p.253, 302 for p.301, 420 for p.419). That is a constant offset in the image file numbering, not a misalignment: each image matches its text.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 70,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ལན་མ་ཡིན་ཏེ་ཞེས་བྱ་བ་ལ་སོགས་པས་སོ",
+            "english": "The response begins with \"It is not an answer.\"",
+            "problem": "The source says the answer is given by the words 'it is not…' and what follows. The English invents the phrase 'It is not an answer'.",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [
+          {
+            "note": "The OCR shows the variant pair '{ཡི་དགས་,ཡི་དྭགས་}' inline.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 253,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "བར་མཚམས་མེད་པ་ཉིད་ལས་སྐྱབས་ལ་སོགས་པར་འགྲུབ་པའི་ཕྱིར་རོ",
+            "english": "because there are no gaps, things like protection and covering are established",
+            "problem": "This rendering is uncertain. སྐྱབས here is probably 'obstruction/shelter' in the atom debate; the sense is roughly preserved.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The OCR shows the variant pair 'ལྡན་པ་གཞན་(ན་མ་,ནམ་)' inline.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 301,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "དེ་ཡང་ཞེས་བྱ་བ་ནི་མཆོང་བ་ཡང་ངོ་",
+            "english": "it refers to \"leaping\" <note>likely referring to a sudden or vast advancement in spiritual capacity</note>",
+            "problem": "Leaping here is Dharmakīrti's physical counter-example (a jump cannot grow without limit, compassion can). The note makes it a spiritual attainment and inverts the role of the analogy. The page summary carries the confusion too.",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "The OCR shows the variant pair 'བརྩེ་{སྩོགས་,སོགས་}' inline, and the translation renders it 'compassion <insert>etc.</insert>', marking a word on the page as an addition.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 419,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "འཇུག་པའི་དབྱེ་བ་ལམ་རྣམ་པ་གསུམ་དུ་གཞག་པ་ཡིན་ནོ",
+            "english": "they are established as three types of paths according to the distinctions in how they function",
+            "problem": "'Paths' is doubtful in this context (three modes of craving). The rest of the page is faithful.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "These are the right leaves, with a faithful e-text. The English is a sound literal draft of a hard sub-commentary; the main fault is one misleading explanatory note on the leaping analogy.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      70,
+      419
+    ],
+    "reader_summary": "A Tengyur commentary on the Pramāṇasiddhi chapter of Dharmakīrti's Pramāṇavārttika, covering the critique of a creator god, atoms, compassion through habituation, and craving. The record does not name the commentator. The Tibetan is the right text, and the English tracks it phrase by phrase. Its explanatory notes are less reliable than the translation itself."
+  },
+  {
+    "book_id": "6abed7ad896ea18127c8f0d2",
+    "slot": 4,
+    "title": "བསྟན་འགྱུར། སྡེ་དགེ། ཚད་མ། ཙེ (Derge Tengyur, vol. 186)",
+    "tradition": "pramana",
+    "shelf_fit": "fits",
+    "shelf_note": "Derge Tengyur, Tshad ma vol. Tse. The sampled pages are commentary on pervasion and conceptual determination (fire and smoke), the authority of one's own words with Dignāga cited by name ('all speech is false', the laddu fallen in filth), inferring another's mind from facial expression, and non-perception of the pot. This is pramāṇa commentary throughout. The record names no work or author.",
+    "rights_flag": null,
+    "structure_note": "501 records, no duplicates; 500 have OCR and translation. No printed numbers parsed. The scan sheet numbers outside the frame run one ahead of page_number (91 for p.90, 131 for p.130, 357 for p.356, 460 for p.459), a constant offset. Each image matches its text.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 90,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ལྷག་པར་ཞེན་པ",
+            "english": "<term>adhimukti</term> <gloss>intense focus or conceptual adherence</gloss>",
+            "problem": "The standard equivalent of ལྷག་པར་ཞེན་པ in pramāṇa is adhyavasāya (determination). Adhimukti (ལྷག་པར་མོས་པ) is a different technical term, and a specialist will notice.",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "སྲེག་པ་ལ་སོགས་པར་བྱེད་པ་དང་མཚུལ་དུ་བརྐུ་བ་ལ་སོགས་པར་བྱེད་པར་ལྷག་པར་ཞེན་པར་བྱེད་པ",
+            "english": "when one adheres to the burning quality of fire and smoke, and their capacity to burn is just as it appears",
+            "problem": "The second member of the pair (smoke's own function) is replaced by an invented paraphrase.",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 130,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "སྔ་མ་པའི་བསམ་པའོ",
+            "english": "This is the perspective of the earlier <term>scholars</term>",
+            "problem": "སྔ་མ་པ is 'the former [party / statement]' in the debate, not 'earlier scholars'.",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "The OCR shows the variant pair '{བརྫུན་,རྫུན་}' twice inline. Two interpretive <note>s (the Liar Paradox, 'a humorous analogy') are editorial voice rather than the text, though they are harmless.",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 356,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཤིང་ལ་གནས་པའི་བཞིན་རྒྱས་པ་ལ་སོགས་པའི་རྣམ་པར་འགྱུར་བ",
+            "english": "from the transformation of a brightening face residing in a tree <note>This likely refers to a spirit or being associated with a tree, or a metaphorical placeholder in a logical syllogism</note>",
+            "problem": "The note invents a tree spirit to explain a phrase in an argument about inferring another person's mind from facial expression.",
+            "severity": "moderate",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "The opening note '...manifestation. <note>The text continues a technical analysis of how an object or thought is made present to the mind.</note>' is filler in the reading flow.",
+            "severity": "minor",
+            "class": "T15"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 459,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 5,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "These are the right leaves with a faithful e-text. The English is the cleanest of the four volumes, and p.459 on non-perception of the pot is a model page. The faults are in notes and glosses (a wrong Sanskrit equivalent, an invented tree spirit), not in the running translation.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      130,
+      459
+    ],
+    "reader_summary": "A Tengyur pramāṇa commentary on Dharmakīrti's logic (pervasion, the authority of one's own statements, inference of other minds, non-perception) that quotes Dignāga by name. The record does not identify the work. The Tibetan is the right text, and the English is a careful literal rendering that can be read with profit. Treat its Sanskrit glosses and explanatory notes with suspicion."
+  }
+]

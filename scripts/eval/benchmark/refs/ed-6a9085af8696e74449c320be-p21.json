@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA historicapolitica/fritsch02",
+  "edition": "Advocatus Peccans, Sive Tractatus De Peccatis Advocatorum Et Procuratorum. — Breslau, 1678.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "9/14",
+    "pb_aligned_pages": "9/9"
+  },
+  "origin": "library",
+  "book_id": "6a9085af8696e74449c320be",
+  "page_number": 21,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 14961,
+    "to_char": 16304,
+    "overlap": 0.725,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'di, & culpam contrahere'; ends 'ſæpe namque' then catchword 'bre-'. Margin numerals 5, 6, 7 are not in ref (fine); printed section number 'II.' present.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:05:00.009Z",
+  "text_location": "repo",
+  "text_sha256": "4ec16d7e70f778f8764a3ff7be10df46169cd33ddb4dbc5f7c35814bcbe0c64e",
+  "unit": {
+    "chars": 1343
+  },
+  "stratum": "latin-period-5126"
+}

@@ -16,6 +16,8 @@ interface IndexEntry {
 interface BookIndexProps {
   entries: IndexEntry[];
   bookSlug: string;
+  /** printed page number -> page id, so SSR links the canonical /page/<id> (not the robots-blocked /page-number/ redirect). */
+  pageIdByNumber?: Record<number, string>;
   totalPages: number;
   isEmbedded?: boolean;
 }
@@ -24,7 +26,7 @@ const THEME_THRESHOLD = 0.15; // >15% of pages = theme
 const MAX_INDEX_VISIBLE = 40;
 const MAX_PAGES_INLINE = 8;
 
-export default function BookIndex({ entries, bookSlug, totalPages, isEmbedded = false }: BookIndexProps) {
+export default function BookIndex({ entries, bookSlug, pageIdByNumber, totalPages, isEmbedded = false }: BookIndexProps) {
   const [filter, setFilter] = useState('');
   const params = useParams<{ tenant: string }>();
   const tenantPrefix = params?.tenant ? `/${params.tenant}` : '';
@@ -122,7 +124,7 @@ export default function BookIndex({ entries, bookSlug, totalPages, isEmbedded = 
                       </span>
                     ) : (
                       <Link
-                        href={localePath(`${tenantPrefix}/book/${bookSlug}/page-number/${p}`)}
+                        href={localePath(pageIdByNumber?.[p] ? `${tenantPrefix}/book/${bookSlug}/page/${pageIdByNumber[p]}` : `${tenantPrefix}/book/${bookSlug}/page-number/${p}`)}
                         className="text-accent-rust hover:text-accent-gold-dark hover:underline"
                       >
                         p.&thinsp;{p}

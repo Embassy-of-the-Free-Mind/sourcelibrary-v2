@@ -1,0 +1,111 @@
+{
+  "summary": {
+    "book_id": "6a42c12297284560a2b0a9e3",
+    "title": "Tractatus de succo pancreatico",
+    "published": "1676",
+    "source": "EEBO-TCP A41730",
+    "licence": "CC0-1.0",
+    "script": "latin",
+    "pages_tried": 8,
+    "referenced": 7,
+    "skips": {
+      "probe-too-short": 1
+    },
+    "median_char_acc": 0.9662,
+    "median_char_acc_windowed": 0.965,
+    "note": "OCR error + edition variance until reference_error_rate is measured; leaf_check unchecked",
+    "written": false,
+    "private_dir": null
+  },
+  "rows": [
+    {
+      "slug": "ed-6a42c122-p2",
+      "page": 2,
+      "skipped": "probe-too-short"
+    },
+    {
+      "slug": "ed-6a42c122-p6",
+      "page": 6,
+      "overlap": 0.984,
+      "probe_words": 264,
+      "ref_chars": 1609,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.104,
+      "char_acc": 0.972,
+      "char_acc_windowed": 0.965
+    },
+    {
+      "slug": "ed-6a42c122-p9",
+      "page": 9,
+      "overlap": 1,
+      "probe_words": 235,
+      "ref_chars": 1383,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.066,
+      "char_acc": 0.9662,
+      "char_acc_windowed": 0.9653
+    },
+    {
+      "slug": "ed-6a42c122-p14",
+      "page": 14,
+      "overlap": 0.988,
+      "probe_words": 171,
+      "ref_chars": 1028,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.067,
+      "char_acc": 0.9557,
+      "char_acc_windowed": 0.9507
+    },
+    {
+      "slug": "ed-6a42c122-p15",
+      "page": 15,
+      "overlap": 0.978,
+      "probe_words": 141,
+      "ref_chars": 941,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.124,
+      "char_acc": 0.9546,
+      "char_acc_windowed": 0.9359
+    },
+    {
+      "slug": "ed-6a42c122-p16",
+      "page": 16,
+      "overlap": 1,
+      "probe_words": 250,
+      "ref_chars": 1564,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.074,
+      "char_acc": 0.9715,
+      "char_acc_windowed": 0.9691
+    },
+    {
+      "slug": "ed-6a42c122-p17",
+      "page": 17,
+      "overlap": 0.995,
+      "probe_words": 244,
+      "ref_chars": 1518,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.124,
+      "char_acc": 0.9695,
+      "char_acc_windowed": 0.9671
+    },
+    {
+      "slug": "ed-6a42c122-p22",
+      "page": 22,
+      "overlap": 1,
+      "probe_words": 107,
+      "ref_chars": 735,
+      "engine": "gemini-3-flash-preview",
+      "aligned": true,
+      "guard_wer": 0.147,
+      "char_acc": 0.9114,
+      "char_acc_windowed": 0.9078
+    }
+  ]
+}

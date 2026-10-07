@@ -1,0 +1,20 @@
+{
+ "id": "69e7ab5b5f1a22ab19a974bf_00508",
+ "arm": "gemini-3-flash-preview",
+ "text": "<meta>continues from previous page</meta>\nBy which fruits are the designations of persons established, such as the <term>Srotapanna</term> <gloss>Stream-enterer</gloss>, the <term>Sakridagamin</term> <gloss>Once-returner</gloss>, the <term>Anagamin</term> <gloss>Non-returner</gloss>, the <term>Arhat</term> <gloss>Foe-destroyer</gloss>, the <term>Pratyekabuddha</term> <gloss>Solitary Realizer</gloss>, and even the <term>Tathagata</term> <gloss>Thus Gone One</gloss>, the Arhat, the perfectly completed Buddha? Are these phenomena also emanations?\n\nThe Blessed One replied: Subhuti, all phenomena are emanations. Among them, some are emanations of the <term>Shravakas</term> <gloss>Hearers</gloss>. Some are emanations of the Solitary Realizers. Some are emanations of the <term>Bodhisattvas</term> <gloss>Enlightenment-beings</gloss>. Some are emanations of the Thus Gone Ones. Some are emanations of the <term>kleshas</term> <gloss>mental afflictions</gloss>. Some are emanations of <term>karma</term> <gloss>intentional action</gloss>. Subhuti, by this enumeration, all phenomena are emanations.\n\nSubhuti asked: Blessed One, regarding that which is called \"abandonment,\" are the fruit of the Stream-enterer, the fruit of the Once-returner, the fruit of the Non-returner, the state of the Non-returner itself, the level of the Solitary Realizer, the level of the Buddha, and all those phenomena where every connection to habitual tendencies has been abandoned—are all these also emanations?\n\nThe Blessed One replied: Subhuti, whatever phenomena are produced or ceased, all of them are emanations.\n\nSubhuti asked: Blessed One, what then is a phenomenon that is not an emanation?\n\nThe Blessed One replied: Any phenomenon that has neither birth nor cessation is not an emanation.\n\nSubhuti asked: What is that?\n\nThe Blessed One replied: It is the incomparable <term>Nirvana</term> <gloss>transcendence of suffering</gloss>. That phenomenon is not an emanation.\n\n<summary>The Buddha explains to Subhuti that all conditioned phenomena and spiritual attainments are emanations, while only Nirvana, being beyond birth and cessation, is not an emanation.</summary>\n<keywords>Subhuti, emanation, Nirvana, spiritual fruits, Stream-enterer, Arhat, Buddha, conditioned phenomena</keywords>",
+ "finishReason": "STOP",
+ "inputTokens": 2637,
+ "outputTokens": 591,
+ "thinkingTokens": 0,
+ "ms": 203757,
+ "cost_usd": 0.0015457500000000002,
+ "cost_basis": "usageMetadata × batch rate",
+ "prompt_ref": {
+  "id": "6a98b8a175660c6a8b09a8f9",
+  "name": "Standard Translation",
+  "version": 13,
+  "content_hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "src_chars": 1206,
+ "job": "batches/m3tgb80kdfd0p59ncbwgvg1drix1ghy12b7v"
+}

@@ -36,6 +36,9 @@ import {
   TRANSLATION_RUNGS as TRANSLATION_RUNGS_MJS,
   TRANSLATION_STATE_VERSION as TRANSLATION_STATE_VERSION_MJS,
   READABLE_MIN_TRANSLATED as READABLE_MIN_TRANSLATED_MJS,
+  READABLE_IN_ENGLISH_FILTER as READABLE_IN_ENGLISH_FILTER_MJS,
+  READABLE_IN_ENGLISH_EXPR as READABLE_IN_ENGLISH_EXPR_MJS,
+  isReadableInEnglish as isReadableInEnglishMjs,
 } from '../../scripts/lib/page-counts.mjs';
 import {
   NEVER_TRANSLATED_PAGE_TYPES as NEVER_TRANSLATED_TS,
@@ -44,6 +47,9 @@ import {
   TRANSLATION_STATE_VERSION as TRANSLATION_STATE_VERSION_TS,
   FULL_TRANSLATION_MIN_OCR_COVERAGE as FULL_TRANSLATION_MIN_OCR_COVERAGE_TS,
   READABLE_MIN_TRANSLATED as READABLE_MIN_TRANSLATED_TS,
+  READABLE_IN_ENGLISH_FILTER as READABLE_IN_ENGLISH_FILTER_TS,
+  READABLE_IN_ENGLISH_EXPR as READABLE_IN_ENGLISH_EXPR_TS,
+  isReadableInEnglish as isReadableInEnglishTs,
 } from '../../src/lib/page-counts';
 
 describe('page-counts convention (#3293)', () => {
@@ -553,5 +559,42 @@ describe('computeTranslationState: one ladder, one denominator (#5284)', () => {
     expect(TRANSLATION_STATE_VERSION_TS).toBe(TRANSLATION_STATE_VERSION_MJS);
     expect(FULL_TRANSLATION_MIN_OCR_COVERAGE_TS).toBe(FULL_TRANSLATION_MIN_OCR_COVERAGE);
     expect(READABLE_MIN_TRANSLATED_TS).toBe(READABLE_MIN_TRANSLATED_MJS);
+  });
+});
+
+describe('readable_in_english: the named headline view (#5286)', () => {
+  // translation-state.md § Named views: rung ∈ {readable, complete}
+  // ∪ (english_original ∧ rung ∈ {transcribed, translating}).
+  const expected: Record<string, [boolean, boolean]> = {
+    //            [non-English, English original]
+    no_pages: [false, false],
+    no_text: [false, false],
+    transcribing: [false, false], // a preview is never readable, English or not (#5063)
+    transcribed: [false, true],
+    translating: [false, true],
+    readable: [true, true],
+    complete: [true, true],
+  };
+
+  it('matches the design table on every rung, in both twins', () => {
+    expect(Object.keys(expected).sort()).toEqual([...TRANSLATION_RUNGS_MJS].sort());
+    for (const rung of TRANSLATION_RUNGS_MJS) {
+      for (const [i, english_original] of [false, true].entries()) {
+        const state = { rung, english_original };
+        expect(isReadableInEnglishMjs(state), JSON.stringify(state)).toBe(expected[rung][i]);
+        expect(isReadableInEnglishTs(state as never), JSON.stringify(state)).toBe(expected[rung][i]);
+      }
+    }
+  });
+
+  it('an unstamped book is in no view', () => {
+    expect(isReadableInEnglishMjs(undefined)).toBe(false);
+    expect(isReadableInEnglishMjs({})).toBe(false);
+    expect(isReadableInEnglishTs(null)).toBe(false);
+  });
+
+  it('the Mongo filter and aggregation forms are identical across twins', () => {
+    expect(READABLE_IN_ENGLISH_FILTER_TS).toEqual(READABLE_IN_ENGLISH_FILTER_MJS);
+    expect(READABLE_IN_ENGLISH_EXPR_TS).toEqual(READABLE_IN_ENGLISH_EXPR_MJS);
   });
 });
