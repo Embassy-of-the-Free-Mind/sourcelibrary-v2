@@ -25,7 +25,7 @@ export const metadata: Metadata = { title: 'Dashboard', robots: { index: false, 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-const pct = (a: number, b: number) => (b ? `${((100 * a) / b).toFixed(1)}%` : '—');
+const pct = (a: number, b: number) => (b ? `${((100 * a) / b).toFixed(1)}%` : '–');
 const signed = (n: number) => `${n >= 0 ? '+' : '−'}${fmtK(Math.abs(n))}`;
 const ago = (ms: number) => ms < 3600e3 ? `${Math.max(1, Math.round(ms / 60e3))} min ago` : ms < 48 * 3600e3 ? `${Math.round(ms / 3600e3)} h ago` : `${Math.round(ms / 86400e3)} days ago`;
 const RUNG_NAME: Record<Rung, string> = { no_text: 'No text', transcribing: 'Transcribing', transcribed: 'Transcribed', translating: 'Translating', readable: 'Readable', complete: 'Complete' };
@@ -102,10 +102,10 @@ export default async function AdminDashboard() {
             { l: 'Transcribed', v: pct(live.ocr, live.pages), n: lastDay && monthAgo && lastDay.ocr != null && monthAgo.ocr != null ? `${fmtK(live.ocr)} live pages · ${signed(lastDay.ocr - monthAgo.ocr)} in 30 days (all books)` : `${fmtK(live.ocr)} live pages` },
             { l: 'Translated', v: pct(live.translated, live.pages), n: lastDay && monthAgo && lastDay.translated != null && monthAgo.translated != null ? (lastDay.translated < monthAgo.translated ? `${fmtK(live.translated)} live pages · ${fmtK(monthAgo.translated - lastDay.translated)} withheld in 30 days` : `${fmtK(live.translated)} live pages · ${signed(lastDay.translated - monthAgo.translated)} in 30 days (all books)`) : `${fmtK(live.translated)} live pages` },
             { l: 'First translations', v: fmtFull(home?.firstTranslationCount ?? snap?.data.canon.first_translations ?? 0), n: home?.firstTranslatedWorksProvisional ? `${fmtFull(home.firstTranslatedWorksProvisional)} provisional` : undefined },
-            { l: 'Languages', v: String(home?.languageCount ?? '—'), n: home ? `${fmtFull(home.authorCount)} authors` : undefined },
+            { l: 'Languages', v: String(home?.languageCount ?? '–'), n: home ? `${fmtFull(home.authorCount)} authors` : undefined },
             { l: 'Collections', v: fmtFull(L.totals.visibleCollections), n: home ? `${fmtK(home.illustrationCount)} illustrations · ${fmtK(home.artworkCount)} artworks` : undefined },
-            { l: 'Readers, 30 days', v: metrics ? fmtK(metrics.engagement.mau) : '—', n: metrics ? `${fmtFull(metrics.engagement.avgDau)} a day on average` : undefined },
-            { l: 'Accounts', v: metrics ? fmtFull(metrics.users.total) : '—', n: metrics ? `${signed(metrics.users.new7)} in 7 days` : undefined, up: !!metrics && metrics.users.new7 > 0 },
+            { l: 'Readers, 30 days', v: metrics ? fmtK(metrics.engagement.mau) : '–', n: metrics ? `${fmtFull(metrics.engagement.avgDau)} a day on average` : undefined },
+            { l: 'Accounts', v: metrics ? fmtFull(metrics.users.total) : '–', n: metrics ? `${signed(metrics.users.new7)} in 7 days` : undefined, up: !!metrics && metrics.users.new7 > 0 },
             { l: latestSpendMonth ? `Spend, ${monthLabel(latestSpendMonth.month)}` : 'Spend', v: latestSpendMonth ? fmtUsd(monthTotal(latestSpendMonth)) : 'allow-listed', n: latestSpendMonth ? 'vendors, before people' : 'see /admin/spend' },
             { l: 'Open feedback', v: fmtFull(L.totals.feedbackOpen), n: metrics?.social ? `${metrics.social.feedbackUnread} unread` : undefined },
           ]} />
@@ -142,7 +142,7 @@ export default async function AdminDashboard() {
               <div className="overflow-x-auto"><table className="text-sm min-w-full">
                 <thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 pr-2 font-medium">Collection</th><th className="text-right py-1 px-2 font-medium">Texts</th><th className="text-right py-1 px-2 font-medium">Readable</th><th className="text-right py-1 pl-2 font-medium">Artworks</th></tr></thead>
                 <tbody>{L.collections.map(c => (
-                  <tr key={c.slug} className="border-t border-stone-100"><td className="py-1 pr-2"><Link href={`/collections/${c.slug}`} className="hover:underline">{c.name}</Link></td><td className="text-right py-1 px-2 tabular-nums">{fmtFull(c.texts)}</td><td className="text-right py-1 px-2 tabular-nums">{fmtFull(c.readable)}</td><td className="text-right py-1 pl-2 tabular-nums">{c.art ? fmtFull(c.art) : '—'}</td></tr>
+                  <tr key={c.slug} className="border-t border-stone-100"><td className="py-1 pr-2"><Link href={`/collections/${c.slug}`} className="hover:underline">{c.name}</Link></td><td className="text-right py-1 px-2 tabular-nums">{fmtFull(c.texts)}</td><td className="text-right py-1 px-2 tabular-nums">{fmtFull(c.readable)}</td><td className="text-right py-1 pl-2 tabular-nums">{c.art ? fmtFull(c.art) : '–'}</td></tr>
                 ))}</tbody>
               </table></div>
             </Panel>
@@ -266,7 +266,7 @@ export default async function AdminDashboard() {
               { l: 'Images on R2', v: `${(s.r2_bytes / 1e12).toFixed(1)} TB`, n: `${fmtK(s.r2_objects)} objects` },
               { l: 'Text held', v: `${(s.text_bytes_est / 1e9).toFixed(0)} GB`, n: `OCR and translation, ${fmtK(s.pages_total)} page records` },
               { l: 'Held books', v: fmtFull(L.totals.held), n: 'kept out of every lane on purpose' },
-              { l: 'Enriched', v: snap ? fmtFull(snap.data.enrichment.with_summary) : '—', n: snap ? `summaries · ${fmtFull(snap.data.enrichment.with_index)} indexes · ${fmtFull(snap.data.enrichment.with_images)} with images` : undefined },
+              { l: 'Enriched', v: snap ? fmtFull(snap.data.enrichment.with_summary) : '–', n: snap ? `summaries · ${fmtFull(snap.data.enrichment.with_index)} indexes · ${fmtFull(snap.data.enrichment.with_images)} with images` : undefined },
             ]} />
           ) : null; })()}
           <Grid2>
@@ -342,7 +342,7 @@ function Completion({ L }: { L: LibraryDashboard }) {
             <div className="overflow-x-auto mt-2"><table className="text-xs min-w-[760px] w-full">
               <thead><tr className="text-[11px] uppercase tracking-wider text-stone-500 text-right"><th className={`${th} text-left`}>Language</th><th className={th}>Books</th><th className={th}>Pages</th><th className={th}>Pages transcribed</th><th className={th}>Pages translated</th><th className={th}>Mean book transcribed</th><th className={th}>Mean book translated</th><th className={th}>Readable</th><th className={th}>Readable share</th><th className={th}>English originals</th></tr></thead>
               <tbody>{langs.map(l => (
-                <tr key={l.name} className="border-t border-stone-100 text-right tabular-nums"><td className="py-0.5 px-2 text-left">{l.name}</td><td className="py-0.5 px-2">{fmtFull(l.books)}</td><td className="py-0.5 px-2">{fmtFull(l.pages)}</td><td className="py-0.5 px-2">{pct(l.ocr, l.pages)}</td><td className="py-0.5 px-2">{pct(l.translated, l.pages)}</td><td className="py-0.5 px-2">{l.meanOcrPct}%</td><td className="py-0.5 px-2">{l.meanTrPct}%</td><td className="py-0.5 px-2">{fmtFull(l.readable)}</td><td className="py-0.5 px-2">{pct(l.readable, l.books)}</td><td className="py-0.5 px-2">{l.english ? fmtFull(l.english) : '—'}</td></tr>
+                <tr key={l.name} className="border-t border-stone-100 text-right tabular-nums"><td className="py-0.5 px-2 text-left">{l.name}</td><td className="py-0.5 px-2">{fmtFull(l.books)}</td><td className="py-0.5 px-2">{fmtFull(l.pages)}</td><td className="py-0.5 px-2">{pct(l.ocr, l.pages)}</td><td className="py-0.5 px-2">{pct(l.translated, l.pages)}</td><td className="py-0.5 px-2">{l.meanOcrPct}%</td><td className="py-0.5 px-2">{l.meanTrPct}%</td><td className="py-0.5 px-2">{fmtFull(l.readable)}</td><td className="py-0.5 px-2">{pct(l.readable, l.books)}</td><td className="py-0.5 px-2">{l.english ? fmtFull(l.english) : '–'}</td></tr>
               ))}</tbody>
             </table></div>
           </details>
@@ -391,7 +391,7 @@ function Backlog({ L }: { L: LibraryDashboard }) {
             <div className="overflow-x-auto"><table className="text-sm min-w-[640px] w-full">
               <thead><tr className="text-[11px] uppercase tracking-wider text-stone-500"><th className="text-left py-1 pr-2 font-medium">Step</th><th className="text-right py-1 px-2 font-medium">Books</th><th className="text-right py-1 px-2 font-medium">Pages</th><th className="text-right py-1 px-2 font-medium">Cost at today’s rates</th><th className="text-left py-1 pl-2 font-medium">Who does it</th></tr></thead>
               <tbody>{rendered.map(r => (
-                <tr key={r.name} className="border-t border-stone-100 align-top"><td className="py-1.5 pr-2">{r.name}<span className="block text-xs text-stone-500">{r.sub}</span></td><td className="py-1.5 px-2 text-right tabular-nums">{r.b != null ? fmtFull(r.b) : '—'}</td><td className="py-1.5 px-2 text-right tabular-nums">{r.pages ? fmtFull(r.pages) : '—'}</td><td className="py-1.5 px-2 text-right tabular-nums whitespace-nowrap">{r.c ? usdRange(r.c[0], r.c[1]) : r.key === 'archive' ? 'unmetered' : r.key === 'enrich' ? 'small' : '—'}</td><td className="py-1.5 pl-2 text-stone-700">{r.lane}</td></tr>
+                <tr key={r.name} className="border-t border-stone-100 align-top"><td className="py-1.5 pr-2">{r.name}<span className="block text-xs text-stone-500">{r.sub}</span></td><td className="py-1.5 px-2 text-right tabular-nums">{r.b != null ? fmtFull(r.b) : '–'}</td><td className="py-1.5 px-2 text-right tabular-nums">{r.pages ? fmtFull(r.pages) : '–'}</td><td className="py-1.5 px-2 text-right tabular-nums whitespace-nowrap">{r.c ? usdRange(r.c[0], r.c[1]) : r.key === 'archive' ? 'unmetered' : r.key === 'enrich' ? 'small' : '–'}</td><td className="py-1.5 pl-2 text-stone-700">{r.lane}</td></tr>
               ))}</tbody>
               <tfoot><tr className="border-t border-stone-300 font-semibold"><td className="py-1.5 pr-2">All steps that spend money</td><td className="py-1.5 px-2 text-right tabular-nums">{fmtFull(tb)}</td><td className="py-1.5 px-2 text-right tabular-nums">{fmtFull(tp)} model pages</td><td className="py-1.5 px-2 text-right tabular-nums whitespace-nowrap">{usdRange(lo, hi)}</td><td /></tr></tfoot>
             </table></div>

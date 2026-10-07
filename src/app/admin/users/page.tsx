@@ -38,16 +38,16 @@ type SortKey =
   | 'pages_viewed';
 
 function fmtDate(s: string | null) {
-  if (!s) return '—';
+  if (!s) return '–';
   const d = new Date(s);
-  if (isNaN(d.getTime())) return '—';
+  if (isNaN(d.getTime())) return '–';
   return d.toLocaleDateString();
 }
 
 function fmtAgo(s: string | null) {
-  if (!s) return '—';
+  if (!s) return '–';
   const ms = Date.now() - new Date(s).getTime();
-  if (isNaN(ms)) return '—';
+  if (isNaN(ms)) return '–';
   const days = Math.floor(ms / 86_400_000);
   if (days < 1) return 'today';
   if (days < 30) return `${days}d ago`;
@@ -182,7 +182,7 @@ export default function AdminUsersPage() {
         <div className="mb-6">
           <h1 className="text-3xl text-stone-900 mb-1 font-display font-normal">Users</h1>
           <p className="text-sm text-stone-600 font-sans">
-            Everyone who has signed up or subscribed to Source Library — with their reading activity.
+            Everyone who has signed up or subscribed to Source Library, with their reading activity.
           </p>
         </div>
 
@@ -275,17 +275,17 @@ export default function AdminUsersPage() {
                             {r.email?.[0]?.toUpperCase() || '?'}
                           </div>
                         )}
-                        <span className="text-stone-900 font-medium">{r.name || <span className="text-stone-400 font-normal">—</span>}</span>
+                        <span className="text-stone-900 font-medium">{r.name || <span className="text-stone-400 font-normal">–</span>}</span>
                       </div>
                     </td>
                     <td className={`${cellBase} font-mono text-xs text-stone-600`}>
-                      {r.email || '—'}
+                      {r.email || '–'}
                     </td>
                     <td className={cellBase}>
-                      <span className="text-stone-500 text-xs">{r.source?.replace(/_/g, ' ') || '—'}</span>
+                      <span className="text-stone-500 text-xs">{r.source?.replace(/_/g, ' ') || '–'}</span>
                     </td>
                     <td className={cellBase}>
-                      <span className="text-stone-600 text-xs">{r.country || '—'}</span>
+                      <span className="text-stone-600 text-xs">{r.country || '–'}</span>
                     </td>
                     <td className={`${cellBase} text-stone-600 text-xs`} title={r.created_at || ''}>{fmtDate(r.created_at)}</td>
                     <td className={`${cellBase} text-stone-600 text-xs`} title={r.last_active || ''}>{fmtAgo(r.last_active)}</td>
@@ -304,7 +304,7 @@ export default function AdminUsersPage() {
                           EFM
                         </span>
                       ) : (
-                        <span className="text-stone-300">—</span>
+                        <span className="text-stone-300">–</span>
                       )}
                     </td>
                   </tr>
