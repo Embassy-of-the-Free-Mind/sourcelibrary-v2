@@ -3174,7 +3174,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
     });
   }, [citation]);
 
-  const pageNum = r.currentPage?.page_number ?? '—';
+  const pageNum = r.currentPage?.page_number ?? '–';
   const scan = resolveScanUrls(r.currentPage);
   // Corpus editions (#4350): no scan exists, so a CDLI tablet-witness
   // photograph stands in — clearly captioned as a witness, not the source of
@@ -3737,7 +3737,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 {deepzoomManifest && (
                   <PageDeepZoomButton
                     manifest={deepzoomManifest}
-                    title={`${r.book.display_title || r.book.title} — ${t.search.pageLabel(r.currentPage.page_number)}`}
+                    title={`${r.book.display_title || r.book.title}, ${t.search.pageLabel(r.currentPage.page_number)}`}
                   />
                 )}
               </div>
@@ -4139,7 +4139,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 {deepzoomManifest && (
                   <PageDeepZoomButton
                     manifest={deepzoomManifest}
-                    title={`${r.book.display_title || r.book.title} — ${t.search.pageLabel(r.currentPage.page_number)}`}
+                    title={`${r.book.display_title || r.book.title}, ${t.search.pageLabel(r.currentPage.page_number)}`}
                   />
                 )}
               </div>
