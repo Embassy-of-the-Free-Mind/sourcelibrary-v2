@@ -1,0 +1,4878 @@
+{
+ "gate": {
+  "J1": {
+   "plant_caught": 8,
+   "plants": 8,
+   "dup_tie": 4,
+   "dups": 4,
+   "pass": true
+  },
+  "J2": {
+   "plant_caught": 8,
+   "plants": 8,
+   "dup_tie": 4,
+   "dups": 4,
+   "pass": true
+  }
+ },
+ "date": "2026-10-07",
+ "packet": "companion (PREREG-open-arms.md), build-open-packet.py, JUDGE-PROMPT-REF-R3.md, 2 Opus judges",
+ "all": {
+  "sides": 171,
+  "GM31": {
+   "model": "gemma-4-31b-it",
+   "fidelity": 3.27,
+   "fidelity_ci": [
+    3.2,
+    3.36
+   ],
+   "delta_vs_FP": -1.46,
+   "delta_vs_FP_ci": [
+    -1.55,
+    -1.36
+   ],
+   "inversion_pages_per100_either": 35.1,
+   "inversions_total": 102,
+   "omission_pages_either": 74,
+   "mean_rank": 2.95,
+   "usd_per_1k": 0.483,
+   "billed_per_1k": 0.024,
+   "basis": "OpenRouter list price on measured tokens (billed $0 on the Gemini API)",
+   "providers": [
+    "CoreWeave",
+    "DeepInfra",
+    "gemini-api"
+   ],
+   "format_fail": 0,
+   "pages": 171,
+   "mean_in": 2899,
+   "mean_out": 638,
+   "thinking": 0,
+   "per_provider_per_1k": {
+    "gemini-api": 0.0,
+    "CoreWeave": 0.593,
+    "DeepInfra": 0.526,
+    "ModelRun": 2.344
+   }
+  },
+  "GM26": {
+   "model": "gemma-4-26b-a4b-it",
+   "fidelity": 2.81,
+   "fidelity_ci": [
+    2.72,
+    2.89
+   ],
+   "delta_vs_FP": -1.93,
+   "delta_vs_FP_ci": [
+    -2.04,
+    -1.82
+   ],
+   "inversion_pages_per100_either": 50.9,
+   "inversions_total": 165,
+   "omission_pages_either": 112,
+   "mean_rank": 3.78,
+   "usd_per_1k": 0.461,
+   "billed_per_1k": 0.016,
+   "basis": "OpenRouter list price on measured tokens (billed $0 on the Gemini API)",
+   "providers": [
+    "Cloudflare",
+    "Darkbloom",
+    "Io Net",
+    "Makora",
+    "gemini-api"
+   ],
+   "format_fail": 1,
+   "pages": 171,
+   "mean_in": 2899,
+   "mean_out": 682,
+   "thinking": 0,
+   "per_provider_per_1k": {
+    "gemini-api": 0.0,
+    "Io Net": 0.295,
+    "Makora": 0.461,
+    "Darkbloom": 0.316,
+    "Cloudflare": 0.721
+   }
+  },
+  "QMX": {
+   "model": "qwen/qwen3.6-max-preview",
+   "fidelity": 3.91,
+   "fidelity_ci": [
+    3.81,
+    4.01
+   ],
+   "delta_vs_FP": -0.82,
+   "delta_vs_FP_ci": [
+    -0.94,
+    -0.71
+   ],
+   "inversion_pages_per100_either": 26.9,
+   "inversions_total": 84,
+   "omission_pages_either": 52,
+   "mean_rank": 1.77,
+   "usd_per_1k": 7.838,
+   "billed_per_1k": 7.838,
+   "basis": "OpenRouter billed usage.cost, realtime (no Batch tier)",
+   "providers": [
+    "Alibaba"
+   ],
+   "format_fail": 0,
+   "pages": 171,
+   "mean_in": 4172,
+   "mean_out": 577,
+   "thinking": 0,
+   "per_provider_per_1k": {
+    "Alibaba": 7.838
+   }
+  },
+  "QPL": {
+   "model": "qwen/qwen3.6-plus",
+   "fidelity": 3.83,
+   "fidelity_ci": [
+    3.75,
+    3.92
+   ],
+   "delta_vs_FP": -0.9,
+   "delta_vs_FP_ci": [
+    -1.0,
+    -0.8
+   ],
+   "inversion_pages_per100_either": 26.3,
+   "inversions_total": 88,
+   "omission_pages_either": 55,
+   "mean_rank": 1.9,
+   "usd_per_1k": 2.435,
+   "billed_per_1k": 2.435,
+   "basis": "OpenRouter billed usage.cost, realtime (no Batch tier)",
+   "providers": [
+    "Alibaba"
+   ],
+   "format_fail": 1,
+   "pages": 171,
+   "mean_in": 4137,
+   "mean_out": 559,
+   "thinking": 0,
+   "per_provider_per_1k": {
+    "Alibaba": 2.355
+   }
+  },
+  "Q27": {
+   "model": "qwen/qwen3.6-27b",
+   "fidelity": 2.55,
+   "fidelity_ci": [
+    2.46,
+    2.64
+   ],
+   "delta_vs_FP": -2.19,
+   "delta_vs_FP_ci": [
+    -2.29,
+    -2.08
+   ],
+   "inversion_pages_per100_either": 45.6,
+   "inversions_total": 165,
+   "omission_pages_either": 126,
+   "mean_rank": 4.23,
+   "usd_per_1k": 3.589,
+   "billed_per_1k": 3.589,
+   "basis": "OpenRouter billed usage.cost, realtime (no Batch tier)",
+   "providers": [
+    "Alibaba"
+   ],
+   "format_fail": 2,
+   "pages": 171,
+   "mean_in": 4137,
+   "mean_out": 640,
+   "thinking": 0,
+   "per_provider_per_1k": {
+    "Alibaba": 3.589
+   }
+  },
+  "DSP": {
+   "model": "deepseek/deepseek-v4-pro",
+   "fidelity": 4.02,
+   "fidelity_ci": [
+    3.88,
+    4.15
+   ],
+   "delta_vs_FP": -0.71,
+   "delta_vs_FP_ci": [
+    -0.87,
+    -0.56
+   ],
+   "inversion_pages_per100_either": 16.4,
+   "inversions_total": 53,
+   "omission_pages_either": 33,
+   "mean_rank": 1.5,
+   "usd_per_1k": 1.554,
+   "billed_per_1k": 1.554,
+   "basis": "OpenRouter billed usage.cost, realtime (no Batch tier)",
+   "providers": [
+    "Cloudflare",
+    "Novita",
+    "StreamLake"
+   ],
+   "format_fail": 15,
+   "pages": 171,
+   "mean_in": 3609,
+   "mean_out": 763,
+   "thinking": 0,
+   "per_provider_per_1k": {
+    "StreamLake": 0.446,
+    "Novita": 7.358,
+    "Cloudflare": 5.475
+   }
+  },
+  "FP": {
+   "model": "gemini-3-flash-preview",
+   "fidelity": 4.73,
+   "fidelity_ci": [
+    4.67,
+    4.8
+   ],
+   "delta_vs_FP": 0.0,
+   "delta_vs_FP_ci": [
+    0,
+    0
+   ],
+   "inversion_pages_per100_either": 4.7,
+   "inversions_total": 14,
+   "omission_pages_either": 7,
+   "mean_rank": 0.42,
+   "usd_per_1k": 1.78,
+   "basis": "Batch, billed in pareto-6182 (stage-2 comment, 2026-10-07)"
+  },
+  "G38": {
+   "model": "gemini-3.8-flash",
+   "fidelity": 4.87,
+   "fidelity_ci": [
+    4.83,
+    4.92
+   ],
+   "delta_vs_FP": 0.14,
+   "delta_vs_FP_ci": [
+    0.08,
+    0.2
+   ],
+   "inversion_pages_per100_either": 2.3,
+   "inversions_total": 6,
+   "omission_pages_either": 5,
+   "mean_rank": 0.14,
+   "usd_per_1k": 2.34,
+   "basis": "Batch, billed in pareto-6182 (stage-2 comment, 2026-10-07)"
+  }
+ },
+ "by_set": {
+  "tib-ref58": {
+   "sides": 58,
+   "GM31": {
+    "model": "gemma-4-31b-it",
+    "fidelity": 3.19,
+    "fidelity_ci": [
+     3.05,
+     3.32
+    ],
+    "delta_vs_FP": -1.51,
+    "delta_vs_FP_ci": [
+     -1.68,
+     -1.34
+    ],
+    "inversion_pages_per100_either": 37.9,
+    "inversions_total": 34,
+    "omission_pages_either": 23,
+    "mean_rank": 2.87,
+    "usd_per_1k": 0.483,
+    "billed_per_1k": 0.024,
+    "basis": "OpenRouter list price on measured tokens (billed $0 on the Gemini API)",
+    "providers": [
+     "CoreWeave",
+     "DeepInfra",
+     "gemini-api"
+    ],
+    "format_fail": 0,
+    "pages": 171,
+    "mean_in": 2899,
+    "mean_out": 638,
+    "thinking": 0,
+    "per_provider_per_1k": {
+     "gemini-api": 0.0,
+     "CoreWeave": 0.593,
+     "DeepInfra": 0.526,
+     "ModelRun": 2.344
+    }
+   },
+   "GM26": {
+    "model": "gemma-4-26b-a4b-it",
+    "fidelity": 2.59,
+    "fidelity_ci": [
+     2.47,
+     2.72
+    ],
+    "delta_vs_FP": -2.1,
+    "delta_vs_FP_ci": [
+     -2.26,
+     -1.95
+    ],
+    "inversion_pages_per100_either": 56.9,
+    "inversions_total": 66,
+    "omission_pages_either": 34,
+    "mean_rank": 4.09,
+    "usd_per_1k": 0.461,
+    "billed_per_1k": 0.016,
+    "basis": "OpenRouter list price on measured tokens (billed $0 on the Gemini API)",
+    "providers": [
+     "Cloudflare",
+     "Darkbloom",
+     "Io Net",
+     "Makora",
+     "gemini-api"
+    ],
+    "format_fail": 1,
+    "pages": 171,
+    "mean_in": 2899,
+    "mean_out": 682,
+    "thinking": 0,
+    "per_provider_per_1k": {
+     "gemini-api": 0.0,
+     "Io Net": 0.295,
+     "Makora": 0.461,
+     "Darkbloom": 0.316,
+     "Cloudflare": 0.721
+    }
+   },
+   "QMX": {
+    "model": "qwen/qwen3.6-max-preview",
+    "fidelity": 3.82,
+    "fidelity_ci": [
+     3.63,
+     4.01
+    ],
+    "delta_vs_FP": -0.88,
+    "delta_vs_FP_ci": [
+     -1.09,
+     -0.67
+    ],
+    "inversion_pages_per100_either": 31.0,
+    "inversions_total": 31,
+    "omission_pages_either": 18,
+    "mean_rank": 1.84,
+    "usd_per_1k": 7.838,
+    "billed_per_1k": 7.838,
+    "basis": "OpenRouter billed usage.cost, realtime (no Batch tier)",
+    "providers": [
+     "Alibaba"
+    ],
+    "format_fail": 0,
+    "pages": 171,
+    "mean_in": 4172,
+    "mean_out": 577,
+    "thinking": 0,
+    "per_provider_per_1k": {
+     "Alibaba": 7.838
+    }
+   },
+   "QPL": {
+    "model": "qwen/qwen3.6-plus",
+    "fidelity": 3.73,
+    "fidelity_ci": [
+     3.58,
+     3.89
+    ],
+    "delta_vs_FP": -0.97,
+    "delta_vs_FP_ci": [
+     -1.12,
+     -0.81
+    ],
+    "inversion_pages_per100_either": 22.4,
+    "inversions_total": 22,
+    "omission_pages_either": 22,
+    "mean_rank": 1.89,
+    "usd_per_1k": 2.435,
+    "billed_per_1k": 2.435,
+    "basis": "OpenRouter billed usage.cost, realtime (no Batch tier)",
+    "providers": [
+     "Alibaba"
+    ],
+    "format_fail": 1,
+    "pages": 171,
+    "mean_in": 4137,
+    "mean_out": 559,
+    "thinking": 0,
+    "per_provider_per_1k": {
+     "Alibaba": 2.355
+    }
+   },
+   "Q27": {
+    "model": "qwen/qwen3.6-27b",
+    "fidelity": 2.55,
+    "fidelity_ci": [
+     2.4,
+     2.72
+    ],
+    "delta_vs_FP": -2.15,
+    "delta_vs_FP_ci": [
+     -2.33,
+     -1.96
+    ],
+    "inversion_pages_per100_either": 48.3,
+    "inversions_total": 55,
+    "omission_pages_either": 39,
+    "mean_rank": 4.05,
+    "usd_per_1k": 3.589,
+    "billed_per_1k": 3.589,
+    "basis": "OpenRouter billed usage.cost, realtime (no Batch tier)",
+    "providers": [
+     "Alibaba"
+    ],
+    "format_fail": 2,
+    "pages": 171,
+    "mean_in": 4137,
+    "mean_out": 640,
+    "thinking": 0,
+    "per_provider_per_1k": {
+     "Alibaba": 3.589
+    }
+   },
+   "DSP": {
+    "model": "deepseek/deepseek-v4-pro",
+    "fidelity": 4.03,
+    "fidelity_ci": [
+     3.87,
+     4.18
+    ],
+    "delta_vs_FP": -0.67,
+    "delta_vs_FP_ci": [
+     -0.85,
+     -0.49
+    ],
+    "inversion_pages_per100_either": 25.9,
+    "inversions_total": 27,
+    "omission_pages_either": 13,
+    "mean_rank": 1.53,
+    "usd_per_1k": 1.554,
+    "billed_per_1k": 1.554,
+    "basis": "OpenRouter billed usage.cost, realtime (no Batch tier)",
+    "providers": [
+     "Cloudflare",
+     "Novita",
+     "StreamLake"
+    ],
+    "format_fail": 15,
+    "pages": 171,
+    "mean_in": 3609,
+    "mean_out": 763,
+    "thinking": 0,
+    "per_provider_per_1k": {
+     "StreamLake": 0.446,
+     "Novita": 7.358,
+     "Cloudflare": 5.475
+    }
+   },
+   "FP": {
+    "model": "gemini-3-flash-preview",
+    "fidelity": 4.7,
+    "fidelity_ci": [
+     4.58,
+     4.82
+    ],
+    "delta_vs_FP": 0.0,
+    "delta_vs_FP_ci": [
+     0,
+     0
+    ],
+    "inversion_pages_per100_either": 6.9,
+    "inversions_total": 6,
+    "omission_pages_either": 2,
+    "mean_rank": 0.46,
+    "usd_per_1k": 1.78,
+    "basis": "Batch, billed in pareto-6182 (stage-2 comment, 2026-10-07)"
+   },
+   "G38": {
+    "model": "gemini-3.8-flash",
+    "fidelity": 4.89,
+    "fidelity_ci": [
+     4.81,
+     4.96
+    ],
+    "delta_vs_FP": 0.19,
+    "delta_vs_FP_ci": [
+     0.08,
+     0.3
+    ],
+    "inversion_pages_per100_either": 1.7,
+    "inversions_total": 2,
+    "omission_pages_either": 2,
+    "mean_rank": 0.15,
+    "usd_per_1k": 2.34,
+    "basis": "Batch, billed in pareto-6182 (stage-2 comment, 2026-10-07)"
+   }
+  },
+  "tib-ref113": {
+   "sides": 113,
+   "GM31": {
+    "model": "gemma-4-31b-it",
+    "fidelity": 3.32,
+    "fidelity_ci": [
+     3.21,
+     3.42
+    ],
+    "delta_vs_FP": -1.43,
+    "delta_vs_FP_ci": [
+     -1.55,
+     -1.32
+    ],
+    "inversion_pages_per100_either": 33.6,
+    "inversions_total": 68,
+    "omission_pages_either": 51,
+    "mean_rank": 3.0,
+    "usd_per_1k": 0.483,
+    "billed_per_1k": 0.024,
+    "basis": "OpenRouter list price on measured tokens (billed $0 on the Gemini API)",
+    "providers": [
+     "CoreWeave",
+     "DeepInfra",
+     "gemini-api"
+    ],
+    "format_fail": 0,
+    "pages": 171,
+    "mean_in": 2899,
+    "mean_out": 638,
+    "thinking": 0,
+    "per_provider_per_1k": {
+     "gemini-api": 0.0,
+     "CoreWeave": 0.593,
+     "DeepInfra": 0.526,
+     "ModelRun": 2.344
+    }
+   },
+   "GM26": {
+    "model": "gemma-4-26b-a4b-it",
+    "fidelity": 2.92,
+    "fidelity_ci": [
+     2.81,
+     3.04
+    ],
+    "delta_vs_FP": -1.84,
+    "delta_vs_FP_ci": [
+     -1.97,
+     -1.7
+    ],
+    "inversion_pages_per100_either": 47.8,
+    "inversions_total": 99,
+    "omission_pages_either": 78,
+    "mean_rank": 3.62,
+    "usd_per_1k": 0.461,
+    "billed_per_1k": 0.016,
+    "basis": "OpenRouter list price on measured tokens (billed $0 on the Gemini API)",
+    "providers": [
+     "Cloudflare",
+     "Darkbloom",
+     "Io Net",
+     "Makora",
+     "gemini-api"
+    ],
+    "format_fail": 1,
+    "pages": 171,
+    "mean_in": 2899,
+    "mean_out": 682,
+    "thinking": 0,
+    "per_provider_per_1k": {
+     "gemini-api": 0.0,
+     "Io Net": 0.295,
+     "Makora": 0.461,
+     "Darkbloom": 0.316,
+     "Cloudflare": 0.721
+    }
+   },
+   "QMX": {
+    "model": "qwen/qwen3.6-max-preview",
+    "fidelity": 3.96,
+    "fidelity_ci": [
+     3.85,
+     4.06
+    ],
+    "delta_vs_FP": -0.8,
+    "delta_vs_FP_ci": [
+     -0.92,
+     -0.67
+    ],
+    "inversion_pages_per100_either": 24.8,
+    "inversions_total": 53,
+    "omission_pages_either": 34,
+    "mean_rank": 1.74,
+    "usd_per_1k": 7.838,
+    "billed_per_1k": 7.838,
+    "basis": "OpenRouter billed usage.cost, realtime (no Batch tier)",
+    "providers": [
+     "Alibaba"
+    ],
+    "format_fail": 0,
+    "pages": 171,
+    "mean_in": 4172,
+    "mean_out": 577,
+    "thinking": 0,
+    "per_provider_per_1k": {
+     "Alibaba": 7.838
+    }
+   },
+   "QPL": {
+    "model": "qwen/qwen3.6-plus",
+    "fidelity": 3.88,
+    "fidelity_ci": [
+     3.77,
+     4.0
+    ],
+    "delta_vs_FP": -0.87,
+    "delta_vs_FP_ci": [
+     -1.0,
+     -0.74
+    ],
+    "inversion_pages_per100_either": 28.3,
+    "inversions_total": 66,
+    "omission_pages_either": 33,
+    "mean_rank": 1.91,
+    "usd_per_1k": 2.435,
+    "billed_per_1k": 2.435,
+    "basis": "OpenRouter billed usage.cost, realtime (no Batch tier)",
+    "providers": [
+     "Alibaba"
+    ],
+    "format_fail": 1,
+    "pages": 171,
+    "mean_in": 4137,
+    "mean_out": 559,
+    "thinking": 0,
+    "per_provider_per_1k": {
+     "Alibaba": 2.355
+    }
+   },
+   "Q27": {
+    "model": "qwen/qwen3.6-27b",
+    "fidelity": 2.54,
+    "fidelity_ci": [
+     2.43,
+     2.66
+    ],
+    "delta_vs_FP": -2.21,
+    "delta_vs_FP_ci": [
+     -2.34,
+     -2.07
+    ],
+    "inversion_pages_per100_either": 44.2,
+    "inversions_total": 110,
+    "omission_pages_either": 87,
+    "mean_rank": 4.32,
+    "usd_per_1k": 3.589,
+    "billed_per_1k": 3.589,
+    "basis": "OpenRouter billed usage.cost, realtime (no Batch tier)",
+    "providers": [
+     "Alibaba"
+    ],
+    "format_fail": 2,
+    "pages": 171,
+    "mean_in": 4137,
+    "mean_out": 640,
+    "thinking": 0,
+    "per_provider_per_1k": {
+     "Alibaba": 3.589
+    }
+   },
+   "DSP": {
+    "model": "deepseek/deepseek-v4-pro",
+    "fidelity": 4.02,
+    "fidelity_ci": [
+     3.84,
+     4.19
+    ],
+    "delta_vs_FP": -0.73,
+    "delta_vs_FP_ci": [
+     -0.93,
+     -0.54
+    ],
+    "inversion_pages_per100_either": 11.5,
+    "inversions_total": 26,
+    "omission_pages_either": 20,
+    "mean_rank": 1.48,
+    "usd_per_1k": 1.554,
+    "billed_per_1k": 1.554,
+    "basis": "OpenRouter billed usage.cost, realtime (no Batch tier)",
+    "providers": [
+     "Cloudflare",
+     "Novita",
+     "StreamLake"
+    ],
+    "format_fail": 15,
+    "pages": 171,
+    "mean_in": 3609,
+    "mean_out": 763,
+    "thinking": 0,
+    "per_provider_per_1k": {
+     "StreamLake": 0.446,
+     "Novita": 7.358,
+     "Cloudflare": 5.475
+    }
+   },
+   "FP": {
+    "model": "gemini-3-flash-preview",
+    "fidelity": 4.75,
+    "fidelity_ci": [
+     4.68,
+     4.82
+    ],
+    "delta_vs_FP": 0.0,
+    "delta_vs_FP_ci": [
+     0,
+     0
+    ],
+    "inversion_pages_per100_either": 3.5,
+    "inversions_total": 8,
+    "omission_pages_either": 5,
+    "mean_rank": 0.4,
+    "usd_per_1k": 1.78,
+    "basis": "Batch, billed in pareto-6182 (stage-2 comment, 2026-10-07)"
+   },
+   "G38": {
+    "model": "gemini-3.8-flash",
+    "fidelity": 4.87,
+    "fidelity_ci": [
+     4.81,
+     4.92
+    ],
+    "delta_vs_FP": 0.12,
+    "delta_vs_FP_ci": [
+     0.04,
+     0.19
+    ],
+    "inversion_pages_per100_either": 2.7,
+    "inversions_total": 4,
+    "omission_pages_either": 3,
+    "mean_rank": 0.14,
+    "usd_per_1k": 2.34,
+    "basis": "Batch, billed in pareto-6182 (stage-2 comment, 2026-10-07)"
+   }
+  }
+ },
+ "judge_fid_agree_within_1": 1.0,
+ "per_page": [
+  {
+   "page_id": "6abe825259b86b7d32a65b4c",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.5,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.5,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a9980e1",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.5,
+    "QMX": 3.5,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 3.5,
+    "FP": 5.0,
+    "G38": 4.5
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7ab",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 5.0,
+    "Q27": 4.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": true,
+    "QPL": false,
+    "Q27": false,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b31",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 3.0,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 3.0,
+    "FP": 4.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": true,
+    "QPL": false,
+    "Q27": true,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c823b6",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.5,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 4.0,
+    "G38": 4.5
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abee362a43718d234bf220f",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.0,
+    "QMX": 3.5,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": true,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c823a0",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.5,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c821fc",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 4.0,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": false,
+    "QMX": true,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b44",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 2.0,
+    "GM26": 2.0,
+    "QMX": 3.0,
+    "QPL": 3.0,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c822df",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 3.5,
+    "DSP": 1.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": false,
+    "QMX": false,
+    "QPL": true,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997cfd",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.5,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": true,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7c0",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.5,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 3.5,
+    "FP": 4.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7b0",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 4.5,
+    "QPL": 3.0,
+    "Q27": 3.0,
+    "DSP": 3.5,
+    "FP": 4.0,
+    "G38": 4.5
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c8223a",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 2.5,
+    "GM26": 2.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 4.5
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a9980c3",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.5,
+    "GM26": 4.0,
+    "QMX": 3.0,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": false,
+    "QMX": true,
+    "QPL": true,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeb58b896ea18127c84ef3",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.0,
+    "QMX": 3.0,
+    "QPL": 5.0,
+    "Q27": 3.0,
+    "DSP": 2.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": true,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abee362a43718d234bf225a",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.5,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c8226c",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.5,
+    "GM26": 2.0,
+    "QMX": 4.0,
+    "QPL": 4.5,
+    "Q27": 2.0,
+    "DSP": 4.5,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": true,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b39",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 3.0,
+    "QPL": 3.0,
+    "Q27": 3.0,
+    "DSP": 3.5,
+    "FP": 4.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": false,
+    "QMX": true,
+    "QPL": false,
+    "Q27": false,
+    "DSP": true,
+    "FP": true,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82330",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.5,
+    "QMX": 4.0,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": true,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82355",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.5,
+    "QMX": 4.0,
+    "QPL": 4.5,
+    "Q27": 3.5,
+    "DSP": 4.5,
+    "FP": 4.5,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a9980bf",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.5,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.5,
+    "DSP": 4.5,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997d0d",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 2.5,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.5,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c821b0",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 5.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 5.0,
+    "FP": 4.5,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b3b",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.5,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a9980e3",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.5,
+    "QMX": 3.5,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7c2",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 2.5,
+    "GM26": 2.5,
+    "QMX": 3.5,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 3.5,
+    "FP": 5.0,
+    "G38": 4.5
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c822d0",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 3.5,
+    "QPL": 3.5,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 3.5,
+    "G38": 4.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": true,
+    "QPL": true,
+    "Q27": false,
+    "DSP": false,
+    "FP": true,
+    "G38": true
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c823a4",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 4.0,
+    "QPL": 4.5,
+    "Q27": 2.0,
+    "DSP": 1.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997cb3",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b45",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.0,
+    "QMX": 5.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 4.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b4b",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 4.0,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 3.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": true,
+    "QPL": true,
+    "Q27": true,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b3e",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82383",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997ce5",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 3.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 4.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c823ca",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 5.0,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 5.0,
+    "FP": 4.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": false,
+    "QPL": true,
+    "Q27": true,
+    "DSP": false,
+    "FP": true,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b37",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 3.0,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 3.5,
+    "G38": 4.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": true,
+    "QPL": true,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997d22",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.5,
+    "GM26": 2.0,
+    "QMX": 4.0,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 1.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82217",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.0,
+    "QMX": 5.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 5.0,
+    "FP": 4.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b38",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a9980e8",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 5.0,
+    "FP": 4.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": true,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c8223e",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": true,
+    "QPL": true,
+    "Q27": true,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82220",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 2.5,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 3.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": true,
+    "QPL": true,
+    "Q27": true,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c822c4",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 2.5,
+    "GM26": 2.0,
+    "QMX": 3.5,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": true,
+    "QPL": true,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82314",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 4.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 4.5,
+    "G38": 4.5
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c8221e",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 5.0,
+    "FP": 4.5,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": false,
+    "QMX": false,
+    "QPL": true,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7ae",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.5,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 3.5,
+    "FP": 4.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b4a",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 3.0,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 3.5,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": false,
+    "QMX": true,
+    "QPL": true,
+    "Q27": true,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7ad",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 4.0,
+    "QMX": 4.5,
+    "QPL": 5.0,
+    "Q27": 4.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997ce8",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 4.0,
+    "QMX": 4.5,
+    "QPL": 4.0,
+    "Q27": 3.5,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7be",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 2.5,
+    "GM26": 2.0,
+    "QMX": 3.5,
+    "QPL": 3.5,
+    "Q27": 2.5,
+    "DSP": 2.5,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c821d8",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.5,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": true,
+    "QPL": true,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c822b7",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.5,
+    "GM26": 3.5,
+    "QMX": 4.0,
+    "QPL": 5.0,
+    "Q27": 3.0,
+    "DSP": 3.5,
+    "FP": 4.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c821c7",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b49",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 2.0,
+    "GM26": 2.0,
+    "QMX": 4.5,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 3.5,
+    "FP": 4.5,
+    "G38": 4.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": true,
+    "FP": true,
+    "G38": true
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c822e7",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.5,
+    "QMX": 4.5,
+    "QPL": 3.5,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 4.5,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": false,
+    "QPL": true,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a99814a",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.5,
+    "DSP": 3.5,
+    "FP": 5.0,
+    "G38": 4.5
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997d10",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": false,
+    "QPL": true,
+    "Q27": false,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7b7",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 2.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 3.5,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c8235c",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.0,
+    "QMX": 3.0,
+    "QPL": 2.5,
+    "Q27": 3.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": true,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe9be46a920ffd924d915c",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 2.0,
+    "GM26": 2.0,
+    "QMX": 3.0,
+    "QPL": 3.5,
+    "Q27": 2.0,
+    "DSP": 3.0,
+    "FP": 4.0,
+    "G38": 4.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": true,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": true
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997d23",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.5,
+    "DSP": 1.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997cbc",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.5,
+    "Q27": 3.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 4.5
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abee362a43718d234bf2259",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.5,
+    "QMX": 3.0,
+    "QPL": 3.5,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": true,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7bc",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.5,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7bb",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 4.5,
+    "QPL": 4.5,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a9980b5",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 4.0,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997cd2",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 2.0,
+    "GM26": 3.0,
+    "QMX": 3.5,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82216",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 4.0,
+    "QMX": 5.0,
+    "QPL": 4.5,
+    "Q27": 3.0,
+    "DSP": 5.0,
+    "FP": 4.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7aa",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeb58b896ea18127c84ef4",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.5,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a9980c8",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.5,
+    "GM26": 3.0,
+    "QMX": 3.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 1.0,
+    "FP": 4.5,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b48",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe914d6a920ffd924d6b35",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 2.0,
+    "GM26": 2.0,
+    "QMX": 3.0,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 3.0,
+    "FP": 4.0,
+    "G38": 4.5
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": false,
+    "QPL": true,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997cea",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.5,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997cbf",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.5,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7bd",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 3.0,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 4.5,
+    "FP": 4.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": true,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": true,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7b5",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.0,
+    "QMX": 5.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.5,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7b8",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.5,
+    "QPL": 4.5,
+    "Q27": 3.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82256",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 4.0,
+    "QMX": 4.5,
+    "QPL": 4.5,
+    "Q27": 4.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 4.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": true,
+    "QPL": true,
+    "Q27": true,
+    "DSP": true,
+    "FP": true,
+    "G38": true
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b47",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 5.0,
+    "FP": 4.5,
+    "G38": 4.5
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7ba",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.5,
+    "GM26": 3.0,
+    "QMX": 5.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a998130",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.5,
+    "QMX": 1.0,
+    "QPL": 3.5,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c8239a",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.5,
+    "QMX": 4.5,
+    "QPL": 4.0,
+    "Q27": 2.5,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b32",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.5,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 4.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c821ce",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 4.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 3.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997cc1",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 4.0,
+    "QPL": 3.5,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b4e",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.5,
+    "QMX": 3.0,
+    "QPL": 4.0,
+    "Q27": 2.5,
+    "DSP": 3.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": true,
+    "QPL": true,
+    "Q27": true,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a998126",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 3.5,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 4.0,
+    "G38": 4.5
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": true,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a9980ca",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 2.0,
+    "GM26": 2.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.5,
+    "FP": 4.5,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c8225b",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.5,
+    "GM26": 2.0,
+    "QMX": 4.0,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 4.5,
+    "FP": 4.5,
+    "G38": 4.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": false,
+    "QPL": true,
+    "Q27": true,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997cfe",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 3.5,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": true,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7af",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.5,
+    "QMX": 4.0,
+    "QPL": 3.5,
+    "Q27": 4.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": true,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b42",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.0,
+    "QMX": 3.0,
+    "QPL": 3.0,
+    "Q27": 2.5,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c822ee",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 3.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": true,
+    "QPL": true,
+    "Q27": true,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82283",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 4.0,
+    "QMX": 4.0,
+    "QPL": 5.0,
+    "Q27": 4.0,
+    "DSP": 4.5,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82365",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 3.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 4.5,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": true,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997d1b",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 2.5,
+    "GM26": 2.5,
+    "QMX": 3.5,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 4.5,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": true,
+    "Q27": false,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b35",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 4.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": true,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c8224b",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 3.0,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 1.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": true,
+    "QPL": true,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7b3",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.5,
+    "GM26": 2.5,
+    "QMX": 5.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997cdc",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.5,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 4.5,
+    "FP": 4.5,
+    "G38": 4.5
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": true,
+    "QPL": true,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a9980b8",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.5,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 3.5,
+    "Q27": 2.0,
+    "DSP": 4.5,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": true,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a99811a",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.0,
+    "QMX": 5.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82207",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 4.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": true,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82223",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 5.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 4.0,
+    "DSP": 1.0,
+    "FP": 5.0,
+    "G38": 4.5
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c8231b",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 4.0,
+    "QMX": 4.0,
+    "QPL": 3.0,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a9980fe",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.5,
+    "QPL": 4.0,
+    "Q27": 2.5,
+    "DSP": 4.5,
+    "FP": 4.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abee362a43718d234bf2212",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 5.0,
+    "QPL": 5.0,
+    "Q27": 2.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a99811f",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82200",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.5,
+    "GM26": 3.5,
+    "QMX": 4.5,
+    "QPL": 4.5,
+    "Q27": 4.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b43",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 2.5,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 3.5,
+    "FP": 4.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": false,
+    "QMX": true,
+    "QPL": true,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a998127",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 4.5,
+    "G38": 4.5
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a9980c9",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 3.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 4.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997cfa",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 3.5,
+    "Q27": 3.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 4.5
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b36",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.5,
+    "QMX": 3.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": true,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7bf",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 3.0,
+    "QPL": 3.5,
+    "Q27": 2.0,
+    "DSP": 3.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": true,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c8238e",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 2.5,
+    "GM26": 2.0,
+    "QMX": 4.0,
+    "QPL": 3.5,
+    "Q27": 2.0,
+    "DSP": 3.5,
+    "FP": 4.5,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abee362a43718d234bf220e",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 4.5,
+    "FP": 4.5,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997ce1",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 5.0,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": true,
+    "QPL": false,
+    "Q27": true,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997d25",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 3.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c822af",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.5,
+    "GM26": 4.0,
+    "QMX": 4.0,
+    "QPL": 5.0,
+    "Q27": 4.0,
+    "DSP": 1.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": true,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82240",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 4.0,
+    "QPL": 2.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": false,
+    "QPL": true,
+    "Q27": true,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c8239f",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 3.0,
+    "Q27": 3.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": false,
+    "QPL": true,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997cfc",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.5,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a998114",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.5,
+    "FP": 4.5,
+    "G38": 4.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997cf0",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 5.0,
+    "Q27": 1.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7b1",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 2.5,
+    "GM26": 3.0,
+    "QMX": 1.0,
+    "QPL": 3.5,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": false,
+    "QMX": false,
+    "QPL": true,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7c1",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.5,
+    "QMX": 3.5,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 4.0,
+    "G38": 4.5
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": true,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997d02",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 4.0,
+    "QMX": 5.0,
+    "QPL": 5.0,
+    "Q27": 4.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997cc6",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 4.0,
+    "QPL": 4.5,
+    "Q27": 2.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b33",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.5,
+    "GM26": 3.0,
+    "QMX": 3.5,
+    "QPL": 4.5,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 4.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": true,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7b2",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 4.0,
+    "QPL": 5.0,
+    "Q27": 4.0,
+    "DSP": 4.5,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a998101",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.5,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 3.0,
+    "Q27": 3.0,
+    "DSP": 5.0,
+    "FP": 4.0,
+    "G38": 4.5
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": true,
+    "QPL": true,
+    "Q27": true,
+    "DSP": false,
+    "FP": true,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b3f",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.5,
+    "QMX": 4.0,
+    "QPL": 3.5,
+    "Q27": 2.0,
+    "DSP": 4.5,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7b4",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 3.0,
+    "QPL": 3.0,
+    "Q27": 2.5,
+    "DSP": 3.5,
+    "FP": 4.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": true,
+    "Q27": false,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7c3",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.5,
+    "GM26": 3.0,
+    "QMX": 5.0,
+    "QPL": 4.5,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b3c",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 3.0,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": false,
+    "QPL": true,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b34",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 5.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c823bd",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 3.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": true,
+    "QPL": true,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a9980eb",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.5,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 4.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b3d",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 4.5,
+    "GM26": 2.0,
+    "QMX": 5.0,
+    "QPL": 2.5,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": true,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a9980e4",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.5,
+    "GM26": 3.0,
+    "QMX": 5.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 4.5,
+    "FP": 5.0,
+    "G38": 4.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b4d",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.5,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": true,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7b9",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.5,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 4.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": false,
+    "QMX": true,
+    "QPL": false,
+    "Q27": false,
+    "DSP": true,
+    "FP": true,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7b6",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 3.5,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 3.5,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": true,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c8235d",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 2.5,
+    "QMX": 4.5,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 5.0,
+    "FP": 4.5,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": true,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b40",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997d21",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.5,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82398",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 3.0,
+    "QPL": 3.5,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 4.5
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": true,
+    "QPL": true,
+    "Q27": true,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abee362a43718d234bf2211",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.5,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 5.0,
+    "FP": 4.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a998125",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.0,
+    "QMX": 5.0,
+    "QPL": 5.0,
+    "Q27": 4.0,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c823cd",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 4.5,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c8239b",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 4.0,
+    "QMX": 4.0,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 5.0,
+    "FP": 4.5,
+    "G38": 4.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": false,
+    "QMX": false,
+    "QPL": true,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a9980b9",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.5,
+    "GM26": 3.0,
+    "QMX": 4.5,
+    "QPL": 4.0,
+    "Q27": 2.5,
+    "DSP": 5.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": true,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a99813b",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.5,
+    "GM26": 3.0,
+    "QMX": 5.0,
+    "QPL": 4.0,
+    "Q27": 2.5,
+    "DSP": 4.0,
+    "FP": 4.5,
+    "G38": 4.5
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b46",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.5,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82268",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 2.0,
+    "QMX": 5.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": true,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe8368433559215a997d0b",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 5.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abee362a43718d234bf220d",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 5.0,
+    "Q27": 3.0,
+    "DSP": 5.0,
+    "FP": 4.5,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82351",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 3.5,
+    "QPL": 4.5,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": true,
+    "QPL": true,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7a9",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 2.0,
+    "QMX": 3.0,
+    "QPL": 3.0,
+    "Q27": 2.0,
+    "DSP": 3.5,
+    "FP": 4.5,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": true,
+    "QPL": true,
+    "Q27": true,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abee362a43718d234bf2210",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 3.5,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 3.5,
+    "FP": 4.5,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": true,
+    "QPL": false,
+    "Q27": true,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7ac",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 4.5,
+    "FP": 4.0,
+    "G38": 4.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abed8d1896ea18127c8f7a8",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 4.5,
+    "GM26": 3.0,
+    "QMX": 4.5,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 4.5,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c82363",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 3.5,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 4.5,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b41",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 2.5,
+    "GM26": 2.0,
+    "QMX": 3.0,
+    "QPL": 2.5,
+    "Q27": 3.0,
+    "DSP": 3.0,
+    "FP": 4.0,
+    "G38": 4.5
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": true,
+    "QMX": true,
+    "QPL": true,
+    "Q27": true,
+    "DSP": true,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abee362a43718d234bf225b",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.5,
+    "DSP": 4.5,
+    "FP": 4.5,
+    "G38": 4.5
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe825259b86b7d32a65b3a",
+   "set": "tib-ref58",
+   "fid": {
+    "GM31": 4.0,
+    "GM26": 2.5,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 3.0,
+    "DSP": 5.0,
+    "FP": 4.5,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": true,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abe83c2433559215a998147",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.5,
+    "GM26": 3.5,
+    "QMX": 4.0,
+    "QPL": 4.5,
+    "Q27": 3.0,
+    "DSP": 3.0,
+    "FP": 4.5,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": false,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": true,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  },
+  {
+   "page_id": "6abeafd9896ea18127c8222e",
+   "set": "tib-ref113",
+   "fid": {
+    "GM31": 3.0,
+    "GM26": 3.0,
+    "QMX": 4.0,
+    "QPL": 4.0,
+    "Q27": 2.0,
+    "DSP": 4.0,
+    "FP": 5.0,
+    "G38": 5.0
+   },
+   "inv_either": {
+    "GM31": true,
+    "GM26": false,
+    "QMX": false,
+    "QPL": false,
+    "Q27": false,
+    "DSP": false,
+    "FP": false,
+    "G38": false
+   }
+  }
+ ],
+ "frontier": [
+  "GM26",
+  "GM31",
+  "DSP",
+  "FP",
+  "G38"
+ ],
+ "dominated": {
+  "QMX": "DSP",
+  "QPL": "DSP",
+  "Q27": "GM26"
+ },
+ "best": "G38",
+ "inside_margin": [
+  "FP",
+  "G38"
+ ]
+}

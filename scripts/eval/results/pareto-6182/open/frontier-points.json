@@ -1,0 +1,186 @@
+[
+ {
+  "stratum": "Tibetan",
+  "set": "tib-ref58+tib-ref113",
+  "arm": "GM31",
+  "model": "gemma-4-31b-it",
+  "open_weights": true,
+  "fidelity": 3.27,
+  "fidelity_ci": [
+   3.2,
+   3.36
+  ],
+  "delta_vs_production": -1.46,
+  "delta_ci": [
+   -1.55,
+   -1.36
+  ],
+  "reversal_pages_per100": 35.1,
+  "usd_per_1k": 0.483,
+  "cost_basis": "OpenRouter list price on measured tokens (billed $0 on the Gemini API)",
+  "sides": 171,
+  "packet": "companion (open arms + FP/G38 anchors)",
+  "date": "2026-10-07"
+ },
+ {
+  "stratum": "Tibetan",
+  "set": "tib-ref58+tib-ref113",
+  "arm": "GM26",
+  "model": "gemma-4-26b-a4b-it",
+  "open_weights": true,
+  "fidelity": 2.81,
+  "fidelity_ci": [
+   2.72,
+   2.89
+  ],
+  "delta_vs_production": -1.93,
+  "delta_ci": [
+   -2.04,
+   -1.82
+  ],
+  "reversal_pages_per100": 50.9,
+  "usd_per_1k": 0.461,
+  "cost_basis": "OpenRouter list price on measured tokens (billed $0 on the Gemini API)",
+  "sides": 171,
+  "packet": "companion (open arms + FP/G38 anchors)",
+  "date": "2026-10-07"
+ },
+ {
+  "stratum": "Tibetan",
+  "set": "tib-ref58+tib-ref113",
+  "arm": "QMX",
+  "model": "qwen/qwen3.6-max-preview",
+  "open_weights": false,
+  "fidelity": 3.91,
+  "fidelity_ci": [
+   3.81,
+   4.01
+  ],
+  "delta_vs_production": -0.82,
+  "delta_ci": [
+   -0.94,
+   -0.71
+  ],
+  "reversal_pages_per100": 26.9,
+  "usd_per_1k": 7.838,
+  "cost_basis": "OpenRouter billed usage.cost, realtime (no Batch tier)",
+  "sides": 171,
+  "packet": "companion (open arms + FP/G38 anchors)",
+  "date": "2026-10-07"
+ },
+ {
+  "stratum": "Tibetan",
+  "set": "tib-ref58+tib-ref113",
+  "arm": "QPL",
+  "model": "qwen/qwen3.6-plus",
+  "open_weights": false,
+  "fidelity": 3.83,
+  "fidelity_ci": [
+   3.75,
+   3.92
+  ],
+  "delta_vs_production": -0.9,
+  "delta_ci": [
+   -1.0,
+   -0.8
+  ],
+  "reversal_pages_per100": 26.3,
+  "usd_per_1k": 2.435,
+  "cost_basis": "OpenRouter billed usage.cost, realtime (no Batch tier)",
+  "sides": 171,
+  "packet": "companion (open arms + FP/G38 anchors)",
+  "date": "2026-10-07"
+ },
+ {
+  "stratum": "Tibetan",
+  "set": "tib-ref58+tib-ref113",
+  "arm": "Q27",
+  "model": "qwen/qwen3.6-27b",
+  "open_weights": true,
+  "fidelity": 2.55,
+  "fidelity_ci": [
+   2.46,
+   2.64
+  ],
+  "delta_vs_production": -2.19,
+  "delta_ci": [
+   -2.29,
+   -2.08
+  ],
+  "reversal_pages_per100": 45.6,
+  "usd_per_1k": 3.589,
+  "cost_basis": "OpenRouter billed usage.cost, realtime (no Batch tier)",
+  "sides": 171,
+  "packet": "companion (open arms + FP/G38 anchors)",
+  "date": "2026-10-07"
+ },
+ {
+  "stratum": "Tibetan",
+  "set": "tib-ref58+tib-ref113",
+  "arm": "DSP",
+  "model": "deepseek/deepseek-v4-pro",
+  "open_weights": true,
+  "fidelity": 4.02,
+  "fidelity_ci": [
+   3.88,
+   4.15
+  ],
+  "delta_vs_production": -0.71,
+  "delta_ci": [
+   -0.87,
+   -0.56
+  ],
+  "reversal_pages_per100": 16.4,
+  "usd_per_1k": 1.554,
+  "cost_basis": "OpenRouter billed usage.cost, realtime (no Batch tier)",
+  "sides": 171,
+  "packet": "companion (open arms + FP/G38 anchors)",
+  "date": "2026-10-07"
+ },
+ {
+  "stratum": "Tibetan",
+  "set": "tib-ref58+tib-ref113",
+  "arm": "FP",
+  "model": "gemini-3-flash-preview",
+  "open_weights": false,
+  "fidelity": 4.73,
+  "fidelity_ci": [
+   4.67,
+   4.8
+  ],
+  "delta_vs_production": 0.0,
+  "delta_ci": [
+   0,
+   0
+  ],
+  "reversal_pages_per100": 4.7,
+  "usd_per_1k": 1.78,
+  "cost_basis": "Batch, billed in pareto-6182 (stage-2 comment, 2026-10-07)",
+  "sides": 171,
+  "packet": "companion (open arms + FP/G38 anchors)",
+  "date": "2026-10-07"
+ },
+ {
+  "stratum": "Tibetan",
+  "set": "tib-ref58+tib-ref113",
+  "arm": "G38",
+  "model": "gemini-3.8-flash",
+  "open_weights": false,
+  "fidelity": 4.87,
+  "fidelity_ci": [
+   4.83,
+   4.92
+  ],
+  "delta_vs_production": 0.14,
+  "delta_ci": [
+   0.08,
+   0.2
+  ],
+  "reversal_pages_per100": 2.3,
+  "usd_per_1k": 2.34,
+  "cost_basis": "Batch, billed in pareto-6182 (stage-2 comment, 2026-10-07)",
+  "sides": 171,
+  "packet": "companion (open arms + FP/G38 anchors)",
+  "date": "2026-10-07"
+ }
+]
