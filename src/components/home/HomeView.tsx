@@ -43,7 +43,10 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   };
 
   return (
-    <div className="min-h-screen">
+    // `lang` on the wrapper, as the book page does: the root layout's <html> is
+    // always "en", and a screen reader or a translator needs to know this page
+    // is Spanish or Latin.
+    <div className="min-h-screen" lang={lang === 'en' ? undefined : lang}>
       <HomePageSchema books={discoverBooks} bookCount={counts.totalBooks} translatedCount={counts.readableInEnglish} />
 
       {/* Video Hero */}

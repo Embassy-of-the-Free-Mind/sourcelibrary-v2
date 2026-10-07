@@ -159,6 +159,8 @@ export interface ReaderStrings {
     /** ViewToggleGroup chip labels. */
     viewScan: string;
     viewOcr: string;
+    /** Header of the transcription pane; `language` is the stored `books.language`. */
+    ocrPaneHeader: (language: string) => string;
     viewRoman: string;
     viewEnglish: string;
     visiblePanesAria: string;
@@ -692,6 +694,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     panes: {
       viewScan: 'Scan',
       viewOcr: 'OCR',
+      ocrPaneHeader: (language) => `${language} · OCR`,
       viewRoman: 'Roman',
       viewEnglish: 'English',
       visiblePanesAria: 'Visible panes',
@@ -1117,6 +1120,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
     panes: {
       viewScan: 'Escaneo',
       viewOcr: 'OCR',
+      ocrPaneHeader: (language) => `${language} · OCR`,
       // Short chip label (matches "Roman" width); the fuller
       // "romanisedTranscription" string below spells it out.
       viewRoman: 'Latina',
@@ -1555,6 +1559,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       // The transcription IS the reading text on `/la`, so the pane is named for
       // what it holds rather than for how it was made.
       viewOcr: 'Latine',
+      ocrPaneHeader: () => 'Textus Latinus',
       viewRoman: 'Litteris Latinis',
       viewEnglish: 'Anglice',
       visiblePanesAria: 'Tabulae quae ostenduntur',

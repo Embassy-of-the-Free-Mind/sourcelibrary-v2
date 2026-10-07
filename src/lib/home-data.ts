@@ -853,7 +853,7 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
     lang === 'en'
       ? Promise.resolve({} as Record<string, number>)
       : withTimeout(getLocalizedCollectionCounts(lang), 8000, {} as Record<string, number>),
-    lang === 'la' ? withTimeout(getLatinShelf(), 8000, [] as CatalogBook[]) : Promise.resolve([] as CatalogBook[]),
+    lang === 'la' ? withTimeout(getLatinShelf(), 20000, [] as CatalogBook[]) : Promise.resolve([] as CatalogBook[]),
   ]);
 
   // One book, one appearance: see src/lib/home-dedupe.ts.

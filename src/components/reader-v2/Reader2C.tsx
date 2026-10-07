@@ -4,7 +4,7 @@ import { Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, use
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { localeHref, localeFromPathname, useLocale, type Locale } from '@/lib/i18n';
-import { isNativeEdition } from '@/lib/localized';
+import { isNativeEdition, localizedTitle } from '@/lib/localized';
 import { getReaderStrings, type ReaderStrings } from '@/lib/reader-strings';
 import { transcriptionReliability } from '@/lib/transcription-reliability';
 import { useSession, signOut } from 'next-auth/react';
@@ -2491,6 +2491,11 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
   const r = useReaderV2('2c', initialBook, initialPage, initialPageList, { scan: true, ocr: true, en: siteLocale !== 'la', translit: false });
   const browserTranslated = useBrowserTranslation();
   const t = getReaderStrings(siteLocale);
+  // The title in the reader's bar follows the page's language, as it does on
+  // the book page: English shows the English gloss, a localized reader shows
+  // that language's gloss or else the ORIGINAL title, never an English title
+  // over Spanish or Latin chrome (.claude/docs/i18n.md rule 4).
+  const headerTitle = localizedTitle(r.book, siteLocale);
 
   const [leftPanel, setLeftPanel] = useState<LeftPanel>(null);
   const togglePanel = useCallback((p: Exclude<LeftPanel, null>) => {
@@ -3514,7 +3519,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 className="font-body text-[15.5px] leading-none truncate shrink min-w-0 group-hover:underline"
                 style={{ color: '#fdfcf9', textUnderlineOffset: '3px', textDecorationColor: onInk(0.45) }}
               >
-                {r.book.display_title || r.book.title}
+                {headerTitle}
               </span>
               {/* Hidden below xl rather than truncated: at 1024 a long title
                   left it exactly one character wide, which reads as a bug. */}
@@ -3779,7 +3784,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
                 </div>
               ) : undefined}>
                 <CapsLabel as="h2" style={{ color: 'var(--text-muted)', letterSpacing: '0.16em' }}>
-                  {paired ? 'Greek · Berthelot' : `${r.book.language || t.panes.originalFallback} · ${t.panes.viewOcr}`}
+                  {paired ? 'Greek · Berthelot' : t.panes.ocrPaneHeader(r.book.language || t.panes.originalFallback)}
                 </CapsLabel>
                 {paired ? <PairedBadgeRow paired={paired} /> : <TranscriptProvenanceChip page={r.currentPage} />}
                 {editing && <CapsLabel style={{ color: 'var(--accent-rust)' }}>Editing</CapsLabel>}
@@ -4031,7 +4036,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
               {/* Title only: the author lives on the book page, and the phone
                   bar has no room to stack two lines */}
               <div className="font-body text-[15px] truncate" style={{ color: '#fdfcf9' }}>
-                {r.book.display_title || r.book.title}
+                {headerTitle}
               </div>
             </BackToBook>
             {/* One button rather than a bare avatar: the account, Support and
@@ -4052,7 +4057,9 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
           <PhonePanePicker
             views={r.views}
             onPick={pickPane}
-            language={r.book.language || t.panes.originalFallback}
+            // On the Latin site the stored value is the English word "Latin";
+            // name the pane as the desktop toggle does (#6254).
+            language={siteLocale === 'la' ? t.panes.viewOcr : (r.book.language || t.panes.originalFallback)}
             hasScan={!!(scan.display || witness)}
             showTranslit={translitEligible}
             translationLabel={showingSpanish ? 'Español' : t.panes.viewEnglish}
@@ -4168,7 +4175,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
             <section data-reader-section="ocr" className="relative border-t" style={{ background: SURFACE.ocr, borderColor: 'var(--border-medium)' }}>
               <div className="h-[34px] flex items-center justify-between px-4 border-b" style={{ borderColor: 'var(--border-medium)' }}>
                 <CapsLabel style={{ color: 'var(--text-muted)' }}>
-                  {paired ? 'Greek · Berthelot' : `${r.book.language || t.panes.originalFallback} · ${t.panes.viewOcr}`}
+                  {paired ? 'Greek · Berthelot' : t.panes.ocrPaneHeader(r.book.language || t.panes.originalFallback)}
                 </CapsLabel>
                 {paired ? <PairedBadgeRow paired={paired} /> : <TranscriptProvenanceChip page={r.currentPage} />}
                 <div className="flex items-center gap-1">
