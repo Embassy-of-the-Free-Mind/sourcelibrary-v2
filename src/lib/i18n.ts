@@ -90,6 +90,7 @@ export interface FooterStrings {
   favorites: string;
   // About column
   about: string;
+  howItWorks: string;
   vision: string;
   census: string;
   progress: string;
@@ -217,6 +218,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     search: 'Search',
     favorites: 'Favorites',
     about: 'About',
+    howItWorks: 'How it works',
     vision: 'Our Vision',
     census: 'Translation Census',
     progress: 'Progress',
@@ -251,6 +253,7 @@ export const FOOTER_STRINGS: Record<Locale, FooterStrings> = {
     search: 'Buscar',
     favorites: 'Favoritos',
     about: 'Acerca de',
+    howItWorks: 'Cómo funciona',
     vision: 'Nuestra visión',
     census: 'Censo de traducciones',
     progress: 'Progreso',

@@ -33,7 +33,7 @@ function pageParam(raw: string | undefined): number {
 const getJourney = (id: string, page: number) =>
   unstable_cache(
     async () => loadJourney(await getReadDb(), id, page),
-    ['book-journey-v1', id, String(page)],
+    ['book-journey-v2', id, String(page)],
     { revalidate: 86400 },
   )();
 
@@ -57,8 +57,11 @@ export default async function BookJourneyPage({ params, searchParams }: Props) {
   const [found, tenant] = await Promise.all([getJourney(id, page), getTenantContext()]);
   if (!found) notFound();
   // The proxy admits this book on a partner host (tenant-lockdown.md), but the
-  // shelf of covers is drawn from the whole library — leave it out there.
-  const data = tenant && (tenant.id || tenant.slug) ? { ...found, shelf: [], shelfLabel: undefined } : found;
+  // shelf of covers and the Connect links (editions, the index, search results)
+  // are drawn from the whole library — leave them out there.
+  const data = tenant && (tenant.id || tenant.slug)
+    ? { ...found, shelf: [], shelfLabel: undefined, connect: { index: [], editions: [] } }
+    : found;
 
   return (
     <main className="bg-cream">

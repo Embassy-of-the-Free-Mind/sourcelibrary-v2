@@ -36,6 +36,7 @@ export const FOOTER_NAV_COLUMNS: ReadonlyArray<FooterNavColumn> = [
     titleKey: 'colAbout',
     links: [
       { key: 'about', href: '/about' },
+      { key: 'howItWorks', href: '/how-it-works' },
       { key: 'vision', href: '/vision' },
       { key: 'census', href: '/census' },
       { key: 'progress', href: '/about/progress' },
