@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { withAdminAuth } from '@/lib/auth-helpers';
 import { getDb } from '@/lib/mongodb';
 import { purgeAIQueues } from '@/lib/sqs-client';
+import { collectableBatchJobsFilter, unsubmittedBatchJobsFilter } from '../../../../../scripts/lib/batch-job-filters.mjs';
 
 export const maxDuration = 60;
 
@@ -13,7 +14,8 @@ export const maxDuration = 60;
  *
  * Actions:
  * 1. Cancel all pending/processing Lambda jobs
- * 2. Cancel all pending/processing batch jobs
+ * 2. Cancel batch jobs that were never submitted to Gemini (no job name).
+ *    Submitted ones are paid work and are LEFT for the collector (#5492).
  * 3. Clear book.job references
  * 4. Set system_config.paused = true (crons check this)
  *
@@ -53,6 +55,7 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
   const result = {
     lambda_jobs_cancelled: 0,
     batch_jobs_cancelled: 0,
+    batch_jobs_left_for_collector: 0,
     book_refs_cleared: 0,
     dry_run: dryRun,
   };
@@ -78,12 +81,17 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
     );
   }
 
-  // 2. Count/cancel active batch jobs (batch_jobs collection)
-  const activeBatchFilter = {
-    status: { $in: ['pending', 'processing'] },
-  };
+  // 2. Count/cancel batch jobs that never reached Gemini.
+  // A batch_jobs row is inserted AFTER its job is submitted, with the job's name.
+  // Such a row is paid work: marking it 'cancelled' here (Mongo only — nothing is
+  // cancelled at Gemini) took it out of batch-collector's selection for good,
+  // resume never restored it, and Phase 8.5 rolled the book back after 48 h into
+  // a second paid dispatch (#4839, #5492). A stop must never abandon paid work,
+  // so submitted rows stay as they are and keep being collected.
+  const activeBatchFilter = unsubmittedBatchJobsFilter();
   const activeBatchCount = await db.collection('batch_jobs').countDocuments(activeBatchFilter);
   result.batch_jobs_cancelled = activeBatchCount;
+  result.batch_jobs_left_for_collector = await db.collection('batch_jobs').countDocuments(collectableBatchJobsFilter());
 
   if (!dryRun && activeBatchCount > 0) {
     await db.collection('batch_jobs').updateMany(
@@ -153,6 +161,6 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
     ...(pausedPhases ? { paused_phases: pausedPhases } : {}),
     message: dryRun
       ? 'Dry run — no changes made'
-      : `Emergency stop activated. ${activeJobCount} jobs + ${activeBatchCount} batch jobs cancelled.${queuesPurged ? ` Queues purged: ${queuesPurged.purged.join(', ') || 'none'}.` : ''} Call with ?resume=true to re-enable.`,
+      : `Emergency stop activated. ${activeJobCount} jobs + ${activeBatchCount} unsubmitted batch jobs cancelled; ${result.batch_jobs_left_for_collector} submitted batch jobs left for the collector.${queuesPurged ? ` Queues purged: ${queuesPurged.purged.join(', ') || 'none'}.` : ''} Call with ?resume=true to re-enable.`,
   });
 });
