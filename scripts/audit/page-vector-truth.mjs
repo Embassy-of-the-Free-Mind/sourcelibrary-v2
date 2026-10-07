@@ -19,7 +19,7 @@
  * PER SAMPLED ROW (default 3 rows per book, chosen by md5(page_id || seed)):
  *   model-free  dims / NaN / zero / norm, e5 signature (vector-truth.mjs), the Mongo page exists,
  *               same book_id, same page_number, source newer than mongo_updated_at (stale),
- *               snippet present but Mongo translation gone, snippet starting with the page's AI
+ *               a snippet still served after the Mongo translation was removed, snippet starting with the page's AI
  *               summary (the #2232 misquote class), duplicate vectors within the sample and,
  *               with --dup-probe N, against the whole table through the HNSW index.
  *   paid        a fresh embed of what a writer would compose NOW (pageEmbeddingInput) and the
@@ -239,7 +239,13 @@ function freeChecks(r, page) {
   if (page.page_number !== r.page_number) r.flags.push('page-number-drift');
   const src = page.translation?.updated_at || page.ocr?.updated_at || page.updated_at;
   if (src && (!r.mongo_updated_at || new Date(src) > new Date(r.mongo_updated_at))) r.flags.push('stale');
-  if (r.translation && !(typeof page.translation?.data === 'string' && page.translation.data.trim())) r.flags.push('snippet-without-translation');
+  if (r.translation && !(typeof page.translation?.data === 'string' && page.translation.data.trim())) {
+    // The translation is gone from Mongo but the row still carries a snippet. Harmless when the
+    // snippet IS the page's own text (an English original whose self-"translation" was dropped);
+    // a defect when it is not — search keeps quoting a translation the book no longer has.
+    const own = cleanPageText(page.ocr?.data, { maxChars: 50000 });
+    r.flags.push(own && r.translation === own ? 'snippet-is-ocr' : 'removed-translation-served');
+  }
   const sum = typeof page.translation_summary === 'string' ? page.translation_summary.trim() : '';
   if (sum.length >= 20 && r.translation && r.translation.startsWith(sum.slice(0, 40))) r.flags.push('summary-in-snippet');
   const input = pageEmbeddingInput(page);
@@ -569,7 +575,7 @@ function fileIssue(code, fails, report) {
       .filter(i => i.title.startsWith(ISSUE_PREFIX));
     if (code === 1) {
       fs.writeFileSync(body, `Weekly \`scripts/audit/page-vector-truth.mjs\` sample (seed ${report.seed}): **${fails.join('; ')}**.\n\n` +
-        `Each class and its repair: off-space / e5-signature → re-embed (\`embed-gemini.mjs --pages-file\` via the Batch path); summary-in-snippet → the embed-gemini composer (#6175); wrong-book / duplicate → investigate the writer first. Rule: \`.claude/docs/embeddings.md\` "Vector truth".\n\n${block}\n`);
+        `Each class and its repair: off-space / e5-signature → \`page-vector-truth.mjs --e5-scan\` for the page list, then \`embed-gemini.mjs --pages-file <list> --batch\`; summary-in-snippet → the same re-embed (the composer was fixed in #6194); wrong-book / duplicate → investigate the writer first. Background and classes: #6175, \`scripts/eval/experiments/2026-10-07-embedding-vector-truth.md\`.\n\n${block}\n`);
       execFileSync('bash', ['.github/scripts/file-or-update-issue.sh', ISSUE_PREFIX, `${ISSUE_PREFIX}${fails[0]} (${day})`, body, 'search'], { stdio: 'inherit' });
     } else {
       for (const i of open) {
