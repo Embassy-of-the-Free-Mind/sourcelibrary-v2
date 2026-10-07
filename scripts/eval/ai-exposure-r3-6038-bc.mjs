@@ -268,7 +268,8 @@ async function metsFulltext(metsUrl, label) {
 }
 async function providerOcr(b, w) {
   const p = w.provider; const url = b.url || '';
-  if (b.ia) return iaRawOcr(b.ia);
+  const iaId = b.ia || url.match(/archive\.org\/details\/([^/?#]+)/)?.[1] || url.match(/iiif\.archive\.org\/iiif\/([^/]+)\/manifest/)?.[1];
+  if (iaId) return iaRawOcr(iaId);
   if (p === 'mdz' || p === 'bsb') return mdzRawOcr(url);
   if (p === 'e-rara') { const id = url.match(/\/(\d+)\/manifest/)?.[1]; return id ? metsFulltext(`https://www.e-rara.ch/oai?verb=GetRecord&metadataPrefix=mets&identifier=${id}`, 'e-rara') : { status: 'unknown', how: 'no e-rara id' }; }
   if (p === 'goettingen') { const id = url.match(/PPN[0-9X]+/)?.[0]; return id ? metsFulltext(`https://gdz.sub.uni-goettingen.de/mets/${id}.mets.xml`, 'Göttingen') : { status: 'unknown', how: 'no PPN' }; }
@@ -280,7 +281,8 @@ async function providerOcr(b, w) {
 async function wikisourceCandidates(w) {
   const wiki = WIKI[w.lang] || 'mul'; const words = titleWords(w.title); const sur = surnameOf(w.author);
   const q = [sur, ...words].filter(Boolean).join(' '); if (!q) return { queried: false, wiki, candidates: [] };
-  const j = await ctx.fetchText(`https://${wiki}.wikisource.org/w/api.php?action=query&list=search&format=json&srlimit=10&srsearch=${encodeURIComponent(q)}`, true);
+  const host = wiki === "mul" ? "wikisource.org" : `${wiki}.wikisource.org`;
+  const j = await ctx.fetchText(`https://${host}/w/api.php?action=query&list=search&format=json&srlimit=10&srsearch=${encodeURIComponent(q)}`, true);
   if (!j?.query) return { queried: false, wiki, q, candidates: [] };
   const stems = words.map((x) => x.slice(0, 5));
   const cands = j.query.search.filter((r) => { const t = fold(r.title); const nw = stems.filter((s) => t.includes(s)).length; return (sur && t.includes(sur.slice(0, 5)) && nw >= 1) || nw >= 2; }).map((r) => ({ title: r.title, snippet: ctx.htmlToText(r.snippet).replace(/\s+/g, ' ').slice(0, 200) }));
@@ -370,6 +372,9 @@ function layerBControls() {
 
 function layerC() {
   const raw = lastBy(readJsonl(P('c-raw.jsonl')));
+  // public copies: per-work statuses and the by-eye verdicts (ids, statuses, notes; no query strings)
+  writeJsonl(path.join(OUT, 'c-per-work.jsonl'), raw.map((r) => ({ id: r.id, provider_ocr: r.prov.status, how: r.prov.how, wikisource_queried: !!r.ws?.queried, wikisource_candidates: r.ws?.candidates?.length || 0, kanripo: r.kanripo?.status || null, sefaria_queried: r.sefaria?.queried ?? null, gretil_candidates: r.gretil?.candidates?.length ?? null })));
+  for (const f of ['c-eye.jsonl', 'c-eye40.jsonl', 'b-eye-labels.jsonl']) if (fs.existsSync(P(f))) fs.copyFileSync(P(f), path.join(OUT, f.replace('b-eye-labels', 'b-eye-judge')));
   const eye = new Map(readJsonl(P('c-eye.jsonl')).map((r) => [r.id, r])); // by-eye verdicts on candidates
   return new Map(raw.map((r) => {
     const e = eye.get(r.id);
@@ -411,7 +416,7 @@ async function stageReport() {
   };
   const ps = A.sens.pours['any (completed indexes)']?.works;
   presence.adjusted_upper = ps?.p ? Math.min(1, presence.of_500_with_passages.p / ps.p) : null;
-  const eC = { any: share(rows, (x) => x.C_any), curated: share(rows, (x) => x.C_curated), raw_only: share(rows, (x) => x.C_raw && !x.C_curated), prov_unknown: share(rows, (x) => x.C_prov_unknown), of_W: share(W, (x) => x.C_any), by_provider: by(rows, (x) => x.pg, (x) => x.C_any), by_lang: by(rows, (x) => x.lg, (x) => x.C_any) };
+  const eC = { manuscripts_with_raw_ocr: rows.filter((x) => x.genre === 'manuscript' && x.C_raw).length, any: share(rows, (x) => x.C_any), curated: share(rows, (x) => x.C_curated), raw_only: share(rows, (x) => x.C_raw && !x.C_curated), prov_unknown: share(rows, (x) => x.C_prov_unknown), of_W: share(W, (x) => x.C_any), by_provider: by(rows, (x) => x.pg, (x) => x.C_any), by_lang: by(rows, (x) => x.lg, (x) => x.C_any) };
   const agree = { R_vs_Aplus_W: kappa2(W.filter((x) => x.has_passages).map((x) => [!!x.R, x.A_plus])), R_vs_C_W: kappa2(W.map((x) => [!!x.R, x.C_any])), Aplus_vs_C_500: kappa2(rows.filter((x) => x.has_passages).map((x) => [x.A_plus, x.C_any])) };
   const fused = {
     primary_W: units(W, offer), conservative_W: units(W, offerCons), without_A_W: units(W, offerNoA), unrestricted_500: units(rows, (x) => !x.R_any && !(A_broken ? false : Aflag(x)) && !x.C_any),
