@@ -188,6 +188,11 @@
 # "spend check" line on /admin/work; emails only on FAIL (7-day cooldown per failure set). Exit 1 = FAIL, 2 = a
 # source unreadable. No model call. Runs after paid-vs-got (06:10), whose row it reads.
 0 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/spend-daily.mjs ] && flock -n /tmp/sl-spend-daily.lock bash -c "set -a; source .env.production.local; set +a; GOOGLE_SERVICE_ACCOUNT_JSON=/root/.gcp/spend-reconcile.json node scripts/audit/spend-daily.mjs --apply" >> /var/log/sourcelibrary/spend-daily.log 2>&1
+# Morning ntfy digest (#6181): the ONE default-priority message of the day — jobs landed / not landed on both boxes,
+# yesterday's spend vs the dial + envelopes near cap, decisions waiting, stuck jobs, tier:hold count. Read-only.
+# 06:00 UTC = 08:00 Europe/Amsterdam in summer (CEST). After the clocks go back (last Sunday of October) it arrives
+# at 07:00 CET — move it to 07:00 UTC for winter if Derek wants 08:00 local year-round. Crontab here is UTC.
+0 6 * * * cd /root/sourcelibrary && [ -f scripts/maintenance/ntfy-morning-digest.mjs ] && flock -n /tmp/sl-morning-digest.lock node --env-file=/root/sourcelibrary/.env.production.local scripts/maintenance/ntfy-morning-digest.mjs >> /var/log/sourcelibrary/morning-digest.log 2>&1
 # Weekly spend cut list (#5743), Mondays 06:30: a headless claude job (subscription; no API spend) runs
 # spend-daily.mjs --week and posts ONE comment on #5743, at most 5 numbered cuts with recommended defaults, which
 # /admin/work lists under WAITING ON YOU. It never stops, deletes or changes anything. Brief: scripts/audit/spend-weekly-brief.md
