@@ -19,6 +19,10 @@
  *
  *   node --env-file=.env.production.local scripts/eval/orig-lang-recall/untranslated-lane.mjs \
  *     --dir /root/claude-jobs/librarian-orig-5867 [--spot 5] [--out result.json]
+ *
+ * On the job box the #5729 work directory is gone, but the #6170 eval kept the same 40
+ * query vectors (production request, `preview-plain`), so either source works:
+ *   --format-queries /data/scratch/sl/claude-jobs/embed-format-eval-work/queries.json
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -28,12 +32,17 @@ import pg from 'pg';
 const args = process.argv.slice(2);
 const val = (n) => { const i = args.indexOf(`--${n}`); return i >= 0 ? args[i + 1] : null; };
 const DIR = val('dir');
-if (!DIR) { console.error('--dir required (holds q-gemini.json)'); process.exit(1); }
+const FORMAT_QUERIES = val('format-queries');
+if (!DIR && !FORMAT_QUERIES) { console.error('--dir (holds q-gemini.json) or --format-queries <queries.json of the #6170 eval> required'); process.exit(1); }
 const SPOT = Number(val('spot') || 0);
 const OUT = val('out');
 const here = path.dirname(fileURLToPath(import.meta.url));
 const gold = JSON.parse(fs.readFileSync(path.join(here, 'gold.json'), 'utf8')).queries;
-const qv = JSON.parse(fs.readFileSync(path.join(DIR, 'q-gemini.json'), 'utf8'));
+// The #6170 file holds 3072-d vectors; the first 768 are what production stores
+// and queries with (`outputDimensionality: 768`), and cosine ignores the length.
+const qv = FORMAT_QUERIES
+  ? Object.fromEntries(Object.entries(JSON.parse(fs.readFileSync(FORMAT_QUERIES, 'utf8')).A['preview-plain']).map(([k, v]) => [k, v.slice(0, 768)]))
+  : JSON.parse(fs.readFileSync(path.join(DIR, 'q-gemini.json'), 'utf8'));
 
 // --spot N: N queries spread across the languages (round-robin), not the first N of one.
 let queries = gold;
