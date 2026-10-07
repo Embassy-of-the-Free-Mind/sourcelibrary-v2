@@ -516,13 +516,38 @@ export interface ReaderStrings {
       invented_text: string;
       wrong_image: string;
       wrong_language: string;
+      translation_error: string;
     };
     commentPlaceholder: string;
+    /** The three fields a `translation_error` report adds (#6120). */
+    passageLabel: string;
+    correctionLabel: string;
+    sourceLabel: string;
     send: string;
     sending: string;
     cancel: string;
     thanks: string;
     failed: string;
+  };
+
+  /**
+   * The Derge Tengyur section note under the machine-draft line (#6120). Every number comes from
+   * src/data/tengyur-section-quality.json; these are only the sentences around them.
+   */
+  tengyurNote: {
+    /** How good: the section's measured light/work/specialist split, who judged it and when. */
+    rated: (a: { section: string; n: number; date: string; light: number; work: number; specialist: number }) => string;
+    /** What goes wrong: the commonest kinds, then reversal/agent findings per 100 pages. */
+    faults: (a: { kinds: string[]; revAgent: number; voice: boolean }) => string;
+    /** n below the threshold: no rate of its own, the whole-Tengyur figures instead. */
+    tooFew: (a: { section: string; n: number; of: number; date: string; light: number; revAgent: number }) => string;
+    kinds: { term: string; structure: string; gloss: string; omission: string; addition: string; reversal: string; agent: string };
+    /** Section-specific failure the reviewers named (#5829 Result 2, Result 5). */
+    /** The Vinaya's term kind, naming the Pali offence-class names (#5829 Result 6). */
+    vinayaTerms: (pct: number) => string;
+    methodLink: string;
+    /** Section names as a reader of this locale says them; Sanskrit names stay. */
+    sectionNames: Record<string, string>;
   };
 
   /** Revision history panel (public; the Restore action itself stays
@@ -1000,13 +1025,45 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         invented_text: 'Translation adds things',
         wrong_image: 'Wrong page image',
         wrong_language: 'Wrong language',
+        translation_error: 'The English is wrong here',
       },
       commentPlaceholder: 'Anything else? (optional)',
+      passageLabel: 'The English as it reads now',
+      correctionLabel: 'What it should say',
+      sourceLabel: 'The original words (optional)',
       send: 'Send report',
       sending: 'Sending…',
       cancel: 'Cancel',
       thanks: 'Thank you. We will look at this page.',
       failed: 'That did not send. Try again in a moment.',
+    },
+    tengyurNote: {
+      rated: ({ section, n, date, light, work, specialist }) =>
+        `In a check of ${n} random ${section} pages against the Tibetan by AI reviewers (${date}; no scholar has reviewed them yet), ${light}% needed only light edits${work ? `, ${work}% real work` : ''}${specialist ? ` and ${specialist}% a specialist` : ''}.`,
+      faults: ({ kinds, revAgent, voice }) =>
+        `They flagged about ${revAgent} reversed statements or wrong speakers per 100 pages${voice ? ", including an opponent's objection given as the author's view" : ''}${kinds.length ? `; other common errors are ${kinds.join(' and ')}` : ''}.`,
+      tooFew: ({ section, n, of, date, light, revAgent }) =>
+        `${section[0].toUpperCase()}${section.slice(1)}: too few pages measured to give a rate (${n ? `${n} of ${of}` : `none of ${of}`} random pages in an AI review, ${date}). Across the whole Tengyur, ${light}% of pages needed only light edits, with about ${revAgent} reversed statements or wrong speakers per 100 pages.`,
+      kinds: {
+        term: 'wrong technical terms',
+        structure: 'misread structure',
+        gloss: 'misleading notes',
+        omission: 'omitted phrases',
+        addition: 'added content',
+        reversal: 'reversed statements',
+        agent: 'wrong speakers',
+      },
+      vinayaTerms: (pct) => `wrong technical terms (Pali names for the offence classes on ${pct}% of Vinaya pages)`,
+      methodLink: 'How this was measured',
+      sectionNames: {
+        'Tantra commentary': 'tantra commentary',
+        'Sūtra commentary': 'sūtra commentary',
+        'Grammar & sciences': 'grammar and sciences',
+        Praises: 'praises',
+        Letters: 'letters',
+        Miscellaneous: 'miscellaneous',
+        Catalogue: 'catalogue',
+      },
     },
     history: {
       title: 'Revision history',
@@ -1471,13 +1528,45 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         invented_text: 'La traducción añade cosas',
         wrong_image: 'Imagen de página equivocada',
         wrong_language: 'Idioma equivocado',
+        translation_error: 'La traducción está mal aquí',
       },
       commentPlaceholder: '¿Algo más? (opcional)',
+      passageLabel: 'La traducción tal como se lee ahora',
+      correctionLabel: 'Lo que debería decir',
+      sourceLabel: 'Las palabras del original (opcional)',
       send: 'Enviar',
       sending: 'Enviando…',
       cancel: 'Cancelar',
       thanks: 'Gracias. Revisaremos esta página.',
       failed: 'No se ha enviado. Inténtalo de nuevo en un momento.',
+    },
+    tengyurNote: {
+      rated: ({ section, n, date, light, work, specialist }) =>
+        `En una revisión de ${n} páginas al azar de ${section}, cotejadas con el tibetano por revisores de IA (${date}; ningún especialista las ha revisado aún), el ${light} % necesitaba solo retoques${work ? `, el ${work} % trabajo real` : ''}${specialist ? ` y el ${specialist} % un especialista` : ''}.`,
+      faults: ({ kinds, revAgent, voice }) =>
+        `Señalaron unas ${revAgent} afirmaciones invertidas o hablantes equivocados por cada 100 páginas${voice ? ', entre ellas la objeción de un oponente presentada como la opinión del autor' : ''}${kinds.length ? `; otros errores frecuentes son ${kinds.join(' y ')}` : ''}.`,
+      tooFew: ({ section, n, of, date, light, revAgent }) =>
+        `${section[0].toUpperCase()}${section.slice(1)}: se midieron muy pocas páginas para dar una tasa (${n ? `${n} de ${of}` : `ninguna de ${of}`} páginas al azar en una revisión por IA, ${date}). En todo el Tengyur, el ${light} % de las páginas necesitaba solo retoques, con unas ${revAgent} afirmaciones invertidas o hablantes equivocados por cada 100 páginas.`,
+      kinds: {
+        term: 'términos técnicos equivocados',
+        structure: 'estructura mal leída',
+        gloss: 'notas engañosas',
+        omission: 'frases omitidas',
+        addition: 'contenido añadido',
+        reversal: 'afirmaciones invertidas',
+        agent: 'hablantes equivocados',
+      },
+      vinayaTerms: (pct) => `términos técnicos equivocados (nombres pali para las clases de faltas en el ${pct} % de las páginas del Vinaya)`,
+      methodLink: 'Cómo se midió',
+      sectionNames: {
+        'Tantra commentary': 'comentario tántrico',
+        'Sūtra commentary': 'comentario de sūtras',
+        'Grammar & sciences': 'gramática y ciencias',
+        Praises: 'himnos de alabanza',
+        Letters: 'cartas',
+        Miscellaneous: 'miscelánea',
+        Catalogue: 'catálogo',
+      },
     },
     history: {
       title: 'Historial de revisiones',
