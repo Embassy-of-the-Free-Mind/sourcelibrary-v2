@@ -53,6 +53,7 @@ import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { buildPageTexts, attributeEntityPages, entityCounters } from '../lib/entity-page-match.mjs';
 import { composeBookEmbeddingText } from '../lib/book-embedding-text.mjs';
 import { embedBookPages } from '../lib/embed-book-pages.mjs';
+import { assertStoreVector } from '../lib/vector-truth.mjs';
 import { computeEndPages } from '../lib/chapter-endpages.mjs';
 import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { loadConfirmedCopies, copyGuard } from '../lib/confirmed-copies.mjs';
@@ -333,6 +334,8 @@ async function upsertBookEmbedding(book, indexData) {
     const data = await res.json();
     const embedding = data?.embeddings?.[0]?.values;
     if (!embedding) return;
+    // The request above called EMBED_MODEL; refuse a vector that does not look like it (#6175).
+    assertStoreVector(embedding, { model: EMBED_MODEL });
 
     const yearMatch = (book.published || '').match(/\d{3,4}/);
     const { error } = await supabaseClient.from('book_embeddings').upsert({

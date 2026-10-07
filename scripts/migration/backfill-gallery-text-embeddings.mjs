@@ -23,6 +23,7 @@
 import { MongoClient } from 'mongodb';
 import pg from 'pg';
 import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, estimateUsd } from '../lib/embedding-usage.mjs';
+import { assertStoreVector } from '../lib/vector-truth.mjs';
 
 const BATCH_SIZE = 50;
 /**
@@ -34,6 +35,8 @@ const BATCH_SIZE = 50;
 const USAGE_FLUSH_EVERY = 1000;
 const GEMINI_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_MODEL = 'gemini-embedding-2-preview';
+// Both label columns are written on insert AND on re-embed (#6175): the re-embed used to update the
+// vector and keep whatever `model` the row had, and `embedding_model` came from a column DEFAULT.
 const DIMS = 768;
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
@@ -120,13 +123,14 @@ async function main() {
       try {
         const texts = batch.map(composeEmbedText);
         const embeddings = await embedBatch(texts);
+        for (const e of embeddings) assertStoreVector(e, { model: GEMINI_MODEL });
 
         for (let i = 0; i < batch.length; i++) {
           const b = batch[i];
           await pgClient.query(
-            `INSERT INTO gallery_text_embeddings (id, page_id, book_id, detection_index, embedding, text_source, model, generated_at)
-             VALUES ($1, $2, $3, $4, $5, $6, $7, now())
-             ON CONFLICT (id) DO UPDATE SET embedding = EXCLUDED.embedding, generated_at = now()`,
+            `INSERT INTO gallery_text_embeddings (id, page_id, book_id, detection_index, embedding, text_source, model, embedding_model, generated_at)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $7, now())
+             ON CONFLICT (id) DO UPDATE SET embedding = EXCLUDED.embedding, model = EXCLUDED.model, embedding_model = EXCLUDED.embedding_model, generated_at = now()`,
             [b._id_str, b.page_id, b.book_id, b.detection_index, `[${embeddings[i].join(',')}]`, 'description+metadata', GEMINI_MODEL]
           );
         }
@@ -161,12 +165,13 @@ async function main() {
     try {
       const texts = batch.map(composeEmbedText);
       const embeddings = await embedBatch(texts);
+      for (const e of embeddings) assertStoreVector(e, { model: GEMINI_MODEL });
       for (let i = 0; i < batch.length; i++) {
         const b = batch[i];
         await pgClient.query(
-          `INSERT INTO gallery_text_embeddings (id, page_id, book_id, detection_index, embedding, text_source, model, generated_at)
-           VALUES ($1, $2, $3, $4, $5, $6, $7, now())
-           ON CONFLICT (id) DO UPDATE SET embedding = EXCLUDED.embedding, generated_at = now()`,
+          `INSERT INTO gallery_text_embeddings (id, page_id, book_id, detection_index, embedding, text_source, model, embedding_model, generated_at)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $7, now())
+           ON CONFLICT (id) DO UPDATE SET embedding = EXCLUDED.embedding, model = EXCLUDED.model, embedding_model = EXCLUDED.embedding_model, generated_at = now()`,
           [b._id_str, b.page_id, b.book_id, b.detection_index, `[${embeddings[i].join(',')}]`, 'description+metadata', GEMINI_MODEL]
         );
       }
