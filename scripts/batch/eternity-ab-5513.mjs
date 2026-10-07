@@ -28,6 +28,7 @@
  *   hold | envelope | dryrun | ocr [--books N] | reconcile | check | enrol | runs | release | status
  *   run --interval 180 --wave 10 [--shard k/n] [--ocr-only]   loop check → runs → enrol → ocr until done or cap
  * Every command takes --state F and --cap 230 (and --tag/--issue when not the Eternity run).
+ * --approve-rate R is the per-page approval each chained run is enrolled with (default 0.003).
  * --tr-reserve R holds back $R per page still to translate on every book whose OCR is already submitted, so a
  * book is only sent to OCR when the cap can also pay for its English (default 0: OCR may use the whole cap).
  */
@@ -71,6 +72,7 @@ const OCR_CALL_SITE = 'scripts/batch/bulk-reocr-local.mjs';
 const ACTIVE_JOB = ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'];
 const CAP = Number(val('cap', IS_ETERNITY ? '230' : 'NaN'));
 if (!(CAP > 0)) throw new Error(`--cap is required with --tag ${TAG}: the $230 default belongs to the Eternity run only`);
+const APPROVE_RATE = Number(val('approve-rate', '0.003'));   // per-run approval, $/page; the lane refuses a run whose estimate is above it (dense folio pages estimate ~$0.004)
 const TR_RESERVE = Number(val('tr-reserve', '0'));   // $/page kept back for the English of pages already sent to OCR
 const OCR_RATE = Number(val('ocr-rate', '0.00225'));   // supabase-usage-logger's lite batch ceiling
 const TR_RATE = 0.0012;                                  // chained AUTO_APPROVAL_USD_PER_PAGE (2× measured)
@@ -482,7 +484,7 @@ async function enrol(db) {
     }
     const pf = path.join(LOG_DIR, `tr-pages-${b.id}.json`);
     fs.writeFileSync(pf, JSON.stringify({ [b.id]: ids }));
-    const approved = Math.max(0.05, +(n * 0.003).toFixed(2));
+    const approved = Math.max(0.05, +(n * APPROVE_RATE).toFixed(2));
     let out = '';
     try {
       out = execFileSync(process.execPath, ['scripts/workers/translate-batch-worker.mjs', '--chained', '--enrol', `--pages-file=${pf}`, `--approved-usd=${approved}`],
