@@ -153,6 +153,11 @@ export const POST = withCuratorAuth(async (request, session) => {
       },
       status: 'draft',
       hidden: true, visible: false,
+      // museumsofindia hosts only a handful of page images per object (usually
+      // 2-3) where the physical manuscript has many more. Mark every import as a
+      // preview/partial scan so the "Preview" badge shows once the book is
+      // promoted public. Cleared if/when a fuller scan is added.
+      preview: true,
       source_fingerprint: `museumsofindia:${recordIdentifier}`,
       source_fingerprints: gate.fingerprints,
       normalized_title: normalizeTitle(title),
