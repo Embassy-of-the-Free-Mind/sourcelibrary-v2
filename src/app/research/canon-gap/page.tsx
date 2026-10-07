@@ -418,9 +418,9 @@ export default function CanonGapPage() {
           </p>
           <p>
             A draft English translation of every canon here would cost about ${fmt(gapMap.total_draft_usd)} in model
-            fees. Scholarly review costs far more. A draft lets a reader search a text and follow it in outline; it
-            does not replace a translator. Review money goes furthest on canons that are openly licensed, typed, paired
-            with scans, and have little English.
+            fees. Scholarly review costs far more. With a draft, a reader can search a text and follow its outline,
+            but a translator is still needed. Review is cheapest to start on canons that are openly licensed, typed,
+            paired with scans, and have little English.
           </p>
           <RoutesDiagram n={5} />
         </Section>
@@ -429,9 +429,9 @@ export default function CanonGapPage() {
           <p>
             The Tengyur is the Tibetan canon of Indian commentaries and treatises. <A href={L.esukhia}>Esukhia&rsquo;s
             typed text</A> is in the public domain, <A href={L.bdrcTengyur}>BDRC holds open scans</A> of the same
-            woodblock edition, and less than 1% of it is published in English by <A href={L.k84000}>84000</A>. So we
-            started there: all 213 volumes are imported, each typed folio is paired with its page image, and every
-            page is being drafted in English for scholars to review beside the woodblock.{' '}
+            woodblock edition, and less than 1% of it is published in English by <A href={L.k84000}>84000</A>. We
+            started there. All 213 volumes are imported, each typed folio is paired with its page image, and every
+            page has a draft English translation, public and labelled as not yet reviewed by a scholar.{' '}
             <A href={TENGYUR.url}>Work log #{TENGYUR.owner_issue}</A>
           </p>
           <TengyurProgress
@@ -499,7 +499,7 @@ export default function CanonGapPage() {
               estimates differ by about 25%.
             </li>
             <li>
-              <strong>Licences are quoted, not assumed.</strong> GRETIL&rsquo;s files say they are for reference only,
+              <strong>We quote each licence.</strong> GRETIL&rsquo;s files say they are for reference only,
               so we do not publish their text; we read our own scans of the printed editions instead. Ganjoor and the
               K-Tripitaka state no licence we could find. Sefaria&rsquo;s main Zohar Hebrew text is marked
               &ldquo;unknown&rdquo;.
