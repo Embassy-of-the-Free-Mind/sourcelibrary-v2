@@ -43,7 +43,7 @@ const HWAAMSA_40 = 'https://sourcelibrary.org/book/69e014d347b76785d4ec8145?page
 const FIVE_LAMPS_152 = 'https://sourcelibrary.org/book/6a3cc1c2ec254ff6cae0ee53?page=152';
 const FIVE_LAMPS_153 = 'https://sourcelibrary.org/book/6a3cc1c2ec254ff6cae0ee53?page=153';
 const KNORR_164 = 'https://sourcelibrary.org/book/69804b901fb2ba7cf1d43a18?page=164';
-const KNORR_165 = 'https://sourcelibrary.org/book/69804b901fb2ba7cf1d43a18?page=165';
+const KNORR_163 = 'https://sourcelibrary.org/book/69804b901fb2ba7cf1d43a18?page=163';
 const ECK_65 = 'https://sourcelibrary.org/book/69c87ff96c6f3cc53c858fd5?page=65';
 const ECK_66 = 'https://sourcelibrary.org/book/69c87ff96c6f3cc53c858fd5?page=66';
 
@@ -304,9 +304,9 @@ export default function FourCommentariesOnNothingPage() {
           />
           <p className={P}>
             Ayin is not an absence. It is the Crown, Kether, the highest of the ten sefirot, called
-            “nothing” because nothing that is understood of it is it. Then the entry turns to the
+            “nothing” because nothing that is understood of it is it. The entry also turns to the
             letters. On the{' '}
-            <a href={KNORR_165} className={A}>next page</a> Knorr draws out that אין, <em>ayin</em>,
+            <a href={KNORR_163} className={A}>page before</a> Knorr draws out that אין, <em>ayin</em>,
             “nothing”, and אני, <em>ani</em>, “I”, are the same three letters, the first sefirah and the
             last: the Crown flows down through the channels to the “I” that receives it. In this
             tradition the commentary does not take the negation back. It shows that the negation and the
