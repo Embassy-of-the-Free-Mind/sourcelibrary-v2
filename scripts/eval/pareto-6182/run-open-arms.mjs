@@ -72,11 +72,16 @@ async function viaGemini(model, prompt, maxOut) {
 // The one prompt-wrapper fix the job allows (#6182 open arms): a system line for the arms that echoed the source
 // on the 2026-10-07 format probe (DSF, DSP, QMX). The user message — production's prompt — is unchanged.
 export const WRAPPER = 'Return only what the instructions below ask for: the English translation of the page, with the tags they define. Do not reproduce the source-language text.';
+// Qwen 3.6 27B is pinned to Alibaba, its first-party (unquantized) host; the others serve fp8.
+const PROVIDER = { 'deepseek/deepseek-v4-pro': 'StreamLake', 'qwen/qwen3.6-27b': 'Alibaba', 'qwen/qwen3.6-plus': 'Alibaba', 'qwen/qwen3.6-max-preview': 'Alibaba' };
 const WRAPPED = new Set((process.env.PO_WRAPPED ?? 'DSF,DSP,QMX').split(',').filter(Boolean));
 
 async function viaOpenRouter(model, prompt, maxOut, reasoning, wrap) {
   const body = { model, messages: [...(wrap ? [{ role: 'system', content: WRAPPER }] : []), { role: 'user', content: prompt }], temperature: 1.0, max_tokens: maxOut, usage: { include: true } };
   if (reasoning) body.reasoning = reasoning;
+  // Provider pin. OpenRouter's providers for one model bill very different prices: on the Tengyur run (2026-10-07)
+  // deepseek-v4-pro cost $0.00048 a page at StreamLake and $0.00736 at Novita (15x). PROVIDER[label] pins one.
+  if (PROVIDER[model]) body.provider = { order: [PROVIDER[model]], allow_fallbacks: false };
   const resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
     method: 'POST', headers: { 'content-type': 'application/json', Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`, 'X-Title': 'sourcelibrary eval #6182' },
     body: JSON.stringify(body),
@@ -107,7 +112,7 @@ async function call(label, u) {
       last = e;
       if (String(e.message).startsWith('CAP') || e.status === 402) throw e;
       // Gemma: fall back to OpenRouter's google/gemma-4-* after repeated Gemini API refusals (quota).
-      if (via === 'gemini' && attempt >= 2 && a.fallback) { via = 'openrouter'; model = a.fallback; }
+      if (via === 'gemini' && attempt >= 2 && a.fallback && orSpent() < OR_CAP) { via = 'openrouter'; model = a.fallback; }
       await sleep((e.status === 429 ? 20000 : 4000) * (attempt + 1));
     }
   }
