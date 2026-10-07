@@ -13,6 +13,7 @@ import type { CdliWitness } from '@/lib/types/book';
 import { transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation, type CorpusInfo } from '@/lib/text-provenance';
 import type { ReaderSettings } from './useReaderV2';
 import { PaneEmptyState, GatedPane } from './PaneEmptyState';
+import { displayTranscription } from '@/lib/esukhia-apparatus';
 
 // Shared presentational pieces for the v2 reader design previews. All values
 // map to existing Source Library tokens (globals.css) — no new primitives.
@@ -271,7 +272,8 @@ export function ReaderProse({
    */
   suppressBlockquote?: boolean;
 }) {
-  const raw = kind === 'ocr' ? (page.ocr?.data || '') : (page.translation?.data || '');
+  // Esukhia pages (#5497) carry their e-text apparatus verbatim; the pane shows the block reading.
+  const raw = kind === 'ocr' ? displayTranscription(page.ocr) : (page.translation?.data || '');
   const text = suppressBlockquote ? raw.replace(/^[ \t]*>[ \t]?/gm, '') : raw;
   const lang = kind === 'ocr' ? book.language : 'English';
 

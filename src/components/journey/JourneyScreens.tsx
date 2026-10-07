@@ -4,11 +4,12 @@
  * drift from the data. Non-interactive; the film moves and highlights them.
  *
  * They follow the reader's layout and labels (scan · original · English, the
- * Trace toggle, the machine-draft line, the Cite panel) but are not the
- * reader's components, which are bound to live reader state.
+ * Trace toggle, the not-yet-reviewed line, the Cite panel) but are not the
+ * reader's components, which are bound to live reader state. The Connect and
+ * Check panes show only what the loader found for this page.
  */
 import { useEffect, useState, type ReactNode } from 'react';
-import type { JourneyData } from '@/lib/journey/types';
+import { checkSentences, connectSentences, editionName, type JourneyData } from '@/lib/journey/types';
 import type { ScreenKey } from './journey-timeline';
 import { READER_UI_STRINGS } from '@/lib/reader-strings';
 import { trimImage } from '@/lib/journey/page-trim';
@@ -161,9 +162,103 @@ function CitePane({ d, originalFont }: { d: JourneyData; originalFont: string })
   );
 }
 
+function SearchPane({ d }: { d: JourneyData }) {
+  const q = d.connect.search;
+  if (!q) return null;
+  return (
+    <div className={s.pane}>
+      <div className={s.list}>
+        <div className={s.searchBox}>
+          <span className={s.listHead}>Search by meaning · whole library</span>
+          <span className={s.searchQuery}>{q.query}</span>
+        </div>
+        <ol className={s.results}>
+          {q.results.map((r, i) => (
+            <li key={i} className={r.here ? s.hl : undefined} data-hl={r.here ? '' : undefined}>
+              <span className={s.rank}>{i + 1}</span>
+              <span className={s.resultBody}>
+                <span className={s.resultTitle}>{r.title}</span>
+                <span className={s.resultPage}>page {r.page}</span>
+                {r.here && <span className={s.tag}>This page</span>}
+                {r.sameWork && <span className={s.tagSoft}>Same work, another edition</span>}
+              </span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  );
+}
+
+/** Names shown on the pane; the rest are counted, so the editions stay in view on a phone. */
+const INDEX_SHOWN = 5;
+
+function LinksPane({ d }: { d: JourneyData }) {
+  const { index, editions } = d.connect;
+  return (
+    <div className={s.pane}>
+      <div className={s.paneBar}>
+        <span className={s.paneTitle}>{d.displayTitle || d.title}</span>
+        <span>{d.citation.locator}</span>
+      </div>
+      <div className={s.links}>
+        {index.length > 0 && (
+          <section className={`${s.hl}`} data-hl="">
+            <div className={s.listHead}>In the book’s index, on this page</div>
+            <div className={s.names}>
+              {index.slice(0, INDEX_SHOWN).map(x => (
+                <span key={x.name} className={s.name}>{x.name}<i>{x.type}</i></span>
+              ))}
+              {index.length > INDEX_SHOWN && <span className={s.name}>+{index.length - INDEX_SHOWN} more</span>}
+            </div>
+          </section>
+        )}
+        {editions.length > 0 && (
+          <section className={`${s.hl}`} data-hl="">
+            <div className={s.listHead}>Other editions of this work</div>
+            <ul className={s.editions}>
+              {editions.map(e => (
+                <li key={e.href}><span className={s.resultTitle}>{e.title}</span><span className={s.resultPage}>{editionName(e).replace(/^the /, '')}</span></li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ChecksPane({ d }: { d: JourneyData }) {
+  const k = checkSentences(d);
+  const rows: { head: string; body: ReactNode; hl?: boolean }[] = [
+    ...(d.config.checks || []).map(c => ({ head: 'Checked', body: c.text })),
+    { head: d.revisions.count ? 'Corrected' : 'Corrections', body: k.revisions, hl: d.revisions.count > 0 },
+    { head: 'Review queue', body: k.queue },
+  ];
+  return (
+    <div className={s.pane}>
+      <div className={s.paneBar}>
+        <span className={s.paneTitle}>{d.displayTitle || d.title}</span>
+        <span>{d.citation.locator}</span>
+        <span className={`${s.chip} ${s.chipOn}`}>Revision history</span>
+      </div>
+      <dl className={s.checks} data-scroll="fit">
+        {rows.map((r, i) => (
+          <div key={i} className={r.hl ? s.hl : undefined} data-hl={r.hl ? '' : undefined}>
+            <dt className={s.listHead}>{r.head}</dt>
+            <dd>{r.body}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  );
+}
+
 export function screenUrl(d: JourneyData, key: ScreenKey): string {
   const reader = `sourcelibrary.org${d.readerPath}`;
   if (key === 'overview') return `sourcelibrary.org${d.bookPath}`;
+  if (key === 'search') return 'sourcelibrary.org · search by meaning';
+  if (key === 'checks') return `${reader} · Revision history`;
   if (key === 'trace') return `${reader} · Trace`;
   if (key === 'cite') return `${reader} · Cite`;
   return reader;
@@ -172,6 +267,9 @@ export function screenUrl(d: JourneyData, key: ScreenKey): string {
 export function ScreenContent({ d, k, originalFont }: { d: JourneyData; k: ScreenKey; originalFont: string }) {
   if (k === 'overview') return <OverviewPane d={d} />;
   if (k === 'cite') return <CitePane d={d} originalFont={originalFont} />;
+  if (k === 'search') return <SearchPane d={d} />;
+  if (k === 'links') return <LinksPane d={d} />;
+  if (k === 'checks') return <ChecksPane d={d} />;
   return <ReaderPane d={d} variant={k} originalFont={originalFont} />;
 }
 
@@ -182,6 +280,7 @@ export interface ScreenText {
 
 /** Caption for each screen; plain, sequential, only what this page shows. */
 export function screenText(d: JourneyData, k: ScreenKey): ScreenText {
+  const c = connectSentences(d);
   switch (k) {
     case 'ocr':
       return { title: `The ${d.language}, as read`, body: 'In the reader, the transcription sits beside the scan, with any notes on the page kept with it.' };
@@ -192,13 +291,24 @@ export function screenText(d: JourneyData, k: ScreenKey): ScreenText {
           ? 'The translation keeps the verse as a verse, line for line.'
           : 'The English sits beside the original, page for page.',
       };
-    case 'trace':
-      return { title: 'Tracing each line', body: 'With Trace on, clicking a phrase shows its partner in the other language. Here one phrase is matched to its English.' };
-    case 'draft':
-      return { title: 'Saying what is checked', body: 'Until a scholar has reviewed it, every translated page carries this label. Readers can report a problem on any page.' };
+    case 'search':
+      return { title: 'Found by what it says', body: c.search || '' };
+    case 'links':
+      return { title: 'Tied to the rest of the library', body: [c.index, c.editions].filter(Boolean).join(' ') };
     case 'overview':
       return { title: 'The book online', body: `The edition, its ${d.pagesCount.toLocaleString('en-US')} scans, the ${d.language} text and the English are at one address, free to read.` };
     case 'cite':
       return { title: 'Citing it', body: 'The Cite button gives a reference to this exact page, with a link that will keep working.' };
+    case 'trace':
+      return { title: 'Tracing each line', body: 'Checks run on pages that are already published. With Trace on, clicking a phrase shows its partner in the other language, so a reader can check a line against the original.' };
+    case 'checks':
+      return {
+        title: 'Checked, and corrected where it stands',
+        body: d.revisions.count
+          ? 'What has been checked on this book, and the correction this page has had. Every revision is kept.'
+          : 'What has been checked on this book. A correction would be kept here as a revision.',
+      };
+    case 'draft':
+      return { title: 'Saying what is checked', body: 'Until a scholar has reviewed it, every translated page carries this label. Readers can report a problem on any page.' };
   }
 }

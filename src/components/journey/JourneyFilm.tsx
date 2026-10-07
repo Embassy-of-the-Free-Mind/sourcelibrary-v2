@@ -1,8 +1,9 @@
 'use client';
 
 /**
- * The journey film (#5861): one translated page, from the scan to a citable
- * English page, in four parts. Ported from the approved prototype
+ * The journey film (#5861, #6074): one translated page, from the scan to a
+ * citable English page and the checks that run on it once it is published,
+ * in the six steps of Figure 1 on /how-it-works. Ported from the approved prototype
  * (feat/journey-film-prototype, docs/prototypes/journey-film/) and driven by
  * `JourneyData`, so the same component renders any translated page.
  *
@@ -28,7 +29,7 @@ const tiro = Tiro_Devanagari_Sanskrit({ weight: '400', subsets: ['devanagari', '
 
 const ICON_PLAY = <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" /></svg>;
 const ICON_PAUSE = <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 2h3v12h-3zm6 0h3v12h-3z" /></svg>;
-const SCREEN_KEYS: ScreenKey[] = ['ocr', 'english', 'trace', 'draft', 'overview', 'cite'];
+const SCREEN_KEYS: ScreenKey[] = ['ocr', 'english', 'search', 'links', 'overview', 'cite', 'trace', 'checks', 'draft'];
 
 const fmt = (x: number) => `${Math.floor(x / 60)}:${String(Math.floor(x % 60)).padStart(2, '0')}`;
 
@@ -118,7 +119,13 @@ export default function JourneyFilm({ data }: { data: JourneyData }) {
         col.style.transform = 'none';
         const anchor = col.querySelector<HTMLElement>('[data-hl]') || col.querySelector<HTMLElement>('[data-anchor]');
         const colH = col.parentElement?.clientHeight || H;
-        if (anchor) col.style.transform = `translateY(${-Math.max(0, anchor.offsetTop - colH * .3)}px)`;
+        if (!anchor) return;
+        // "fit": move only as far as it takes to bring the highlight into view (lists);
+        // otherwise set the highlight a third of the way down (running text).
+        const shift = col.dataset.scroll === 'fit'
+          ? anchor.offsetTop + anchor.offsetHeight - colH * .92
+          : anchor.offsetTop - colH * .3;
+        col.style.transform = `translateY(${-Math.max(0, shift)}px)`;
       });
       const base = el.getBoundingClientRect();
       let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
@@ -195,7 +202,10 @@ export default function JourneyFilm({ data }: { data: JourneyData }) {
         const tx = screenText(data, g.screen);
         setCaption(`s:${g.screen}`, `Chapter ${g.ch + 1} · ${step.short}`, tx.title, tx.body);
       } else if (!g.card && !g.end) {
-        setCaption(`c:${g.ch}`, `Chapter ${g.ch + 1} · ${step.short}`, step.title, step.body);
+        // Connect's full text is spread over the two screens that follow; over the
+        // scene, the one-line summary keeps the orbit of cards in view on a phone.
+        const body = step.key === 'connect' ? parts.find(p => p.steps.includes('connect'))?.body ?? step.body : step.body;
+        setCaption(`c:${g.ch}`, `Chapter ${g.ch + 1} · ${step.short}`, step.title, body);
       }
       if (screenRef.current) {
         screenRef.current.style.opacity = String(so);

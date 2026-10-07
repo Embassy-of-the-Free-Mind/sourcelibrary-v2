@@ -1,7 +1,8 @@
 /**
  * The diagrams on /how-it-works (#5861), written for a library or a partner project
- * deciding whether to work with Source Library: how the whole line runs, the two ways
- * a page gets its text, what is recorded with every page, and where people come in.
+ * deciding whether to work with Source Library: how the whole line runs (and the checks
+ * that loop over published pages), the two ways a page gets its text, what is recorded
+ * with every page, and where people come in.
  *
  * Server components, HTML + CSS only: they read at phone width, need no client JS,
  * and every value shown is passed in from a record or a results file by the page.
@@ -23,87 +24,108 @@ export function Figure({ n, title, caption, children }: { n: number; title: stri
   );
 }
 
-/* ── Figure 1: the line ─────────────────────────────────────────────────────── */
+/* ── Figure 1: the line, then the loop ─────────────────────────────────────── */
 
-type Stage = { name: string; does: string; out: string; theirs: string; pending?: boolean };
+type Stage = { name: string; does: string; out: string; theirs?: string; pending?: boolean };
 
-const STAGES: Stage[] = [
+const LINE: Stage[] = [
   {
-    name: 'Scan',
+    name: 'Find',
     does: 'We take each page image from the library that holds the book, through IIIF or the archive’s own download, and keep a copy on our storage.',
     out: 'Page images, credited to the holding library',
     theirs: 'Pre-processing',
   },
   {
-    name: 'Text',
+    name: 'Read',
     does: 'Where people have already typed the text, we fit their typing to our scans. Where not, a model reads each page image.',
     out: 'A transcription beside every page',
     theirs: 'Semantic Alignment',
   },
   {
-    name: 'English',
-    does: 'A model drafts an English translation of each page from its transcription, in batches.',
+    name: 'Translate',
+    does: 'A model translates each page into English from its transcription, in batches.',
     out: 'English beside every page, marked as not yet reviewed',
     theirs: 'Draft Translation',
   },
   {
-    name: 'Checks',
-    does: 'Our text is scored against typed editions and our English against published translations. Pages that fail are repaired, re-run or withheld.',
-    out: 'Measured error rates, per canon and language',
-    theirs: 'Automated Critique',
+    name: 'Connect',
+    does: 'Each page is indexed by meaning; the people, places and ideas on it go into the book’s index; other editions of the same work are linked.',
+    out: 'A page that can be found by what it says',
   },
   {
-    name: 'Scholars',
-    does: 'A person who reads the source language reads our pages. Each correction is saved as a revision of the page.',
-    out: 'Not yet: no scholar has reviewed pages in the Eternity canons',
-    theirs: 'Human Review',
-    pending: true,
-  },
-  {
-    name: 'Readers',
+    name: 'Publish',
     does: 'Scan, text and English side by side; full-text search; a stable link to every page; DOIs for editions; an AI-assistant connector.',
     out: 'A page anyone can read, quote and cite',
     theirs: 'Publication',
   },
 ];
 
+const CHECK: Stage = {
+  name: 'Check and correct',
+  does: 'Checks run over the published pages, again and again. Our text is scored against typed editions and our English against published translations; detectors sweep for known faults. Pages that fail are repaired, run again or taken down, and each correction is kept as a revision.',
+  out: 'Measured error rates, per canon and language',
+  theirs: 'Automated Critique',
+};
+
+const SCHOLARS: Stage = {
+  name: 'Scholars',
+  does: 'A person who reads the source language reads our pages. Each correction is saved as a revision of the page.',
+  out: 'Not yet: no scholar has reviewed pages in the Eternity canons',
+  theirs: 'Human Review',
+  pending: true,
+};
+
+function StageBox({ s, n, fill }: { s: Stage; n?: number; fill?: boolean }) {
+  return (
+    <div
+      className={`${fill ? 'h-full ' : ''}rounded-sm border px-4 py-4 md:px-3 ${
+        s.pending ? 'border-dashed border-border-medium bg-transparent' : 'border-border-light bg-white'
+      }`}
+    >
+      {n !== undefined && <div className="font-sans text-xs text-accent-rust tabular-nums">{n}</div>}
+      <div className="font-serif text-xl text-primary leading-tight mb-2">{s.name}</div>
+      <p className="font-sans text-[13px] text-secondary leading-snug mb-3">{s.does}</p>
+      <p className={`font-sans text-[13px] leading-snug font-medium ${s.pending ? 'text-accent-rust' : 'text-primary'}`}>{s.out}</p>
+      {s.theirs && <p className="font-sans text-[11px] uppercase tracking-[0.08em] text-muted mt-3">{s.theirs}</p>}
+    </div>
+  );
+}
+
 export function LineFigure({ books, readable, languages }: { books: number; readable: number; languages: number }) {
   return (
     <Figure
       n={1}
-      title="The line every book goes through"
+      title="The line every book goes through, and the loop after it"
       caption={
         <>
-          The grey label under each step is the name the Eternity Foundation’s Nālandā Restored programme uses for the same
-          step. Today the library holds {fmt(books)} books in {fmt(languages)} languages; {fmt(readable)} of them can be read
-          in English.
+          A book is published as soon as it is through the line; the checks run on published pages. Before that, each
+          translation is checked once as it is written: one that is far too short or too long, that copies the original, or
+          that slips into a third script is refused and kept aside. A partner can hold its books until they are checked, as
+          the Derge Tengyur is held now. The grey label under each step is the name the Eternity Foundation’s Nālandā
+          Restored programme uses for the same step. Today the library holds {fmt(books)} books in {fmt(languages)}{' '}
+          languages; {fmt(readable)} of them can be read in English.
         </>
       }
     >
-      <ol className="grid gap-3 md:grid-cols-6 md:gap-2">
-        {STAGES.map((s, i) => (
-          <li key={s.name} className="relative flex md:flex-col">
-            <div
-              className={`flex-1 rounded-sm border px-4 py-4 md:px-3 ${
-                s.pending ? 'border-dashed border-border-medium bg-transparent' : 'border-border-light bg-white'
-              }`}
-            >
-              <div className="font-sans text-xs text-accent-rust tabular-nums">{i + 1}</div>
-              <div className="font-serif text-xl text-primary leading-tight mb-2">{s.name}</div>
-              <p className="font-sans text-[13px] text-secondary leading-snug mb-3">{s.does}</p>
-              <p className={`font-sans text-[13px] leading-snug font-medium ${s.pending ? 'text-accent-rust' : 'text-primary'}`}>
-                {s.out}
-              </p>
-              <p className="font-sans text-[11px] uppercase tracking-[0.08em] text-muted mt-3">{s.theirs}</p>
-            </div>
-            {i < STAGES.length - 1 && (
-              <span aria-hidden className="hidden md:block absolute -right-[7px] top-8 z-10 text-muted text-sm">
-                ›
-              </span>
+      <ol className="grid gap-3 md:grid-cols-5 md:gap-2">
+        {LINE.map((s, i) => (
+          <li key={s.name} className="relative">
+            <StageBox s={s} n={i + 1} fill />
+            {i < LINE.length - 1 && (
+              <span aria-hidden className="hidden md:block absolute -right-[7px] top-8 z-10 text-muted text-sm">›</span>
             )}
           </li>
         ))}
       </ol>
+      <div className="mt-3 rounded-sm border border-accent-rust/40 px-3 pt-2 pb-3 md:px-2">
+        <p className="font-sans text-xs font-semibold uppercase tracking-[0.1em] text-accent-rust mb-2 md:px-1">
+          <span aria-hidden>↻ </span>Then, on every published page, again and again
+        </p>
+        <div className="grid gap-3 md:grid-cols-[3fr_1fr] md:gap-2 items-start">
+          <StageBox s={CHECK} n={LINE.length + 1} />
+          <StageBox s={SCHOLARS} />
+        </div>
+      </div>
     </Figure>
   );
 }

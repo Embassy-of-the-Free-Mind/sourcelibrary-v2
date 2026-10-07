@@ -129,7 +129,7 @@ export const OCR: Measure = {
   yColumn: 'accuracy', ringColumn: 'invented', ringTitle: "share of the engine's words absent from the reference",
   ringLegend: 'Dashed ring: share of words found nowhere in the reference (bigger ring, more invented text).',
   verb: 'read', unit: 'script',
-  more: 'reads more accurately', less: 'reads less accurately', most: 'reads most accurately', mostAdj: 'most accurate', better: 'reads better still', scoreWord: 'accuracy',
+  more: 'reads more accurately', less: 'reads less accurately', most: 'reads most accurately', mostAdj: 'most accurate', better: 'reads better', scoreWord: 'accuracy',
   judgesNote: () => '',
   extraLegend: 'Hollow dot: self-hosted, priced on inference time alone, so it reads low.',
   charts: ocrData.charts.map(c => ({ ...c, panels: c.panels.map(ocrPanel) })),
@@ -508,13 +508,15 @@ function Anchor({ chart, m, base }: { chart: Chart; m: Measure; base: string }) 
   );
 }
 
-/** One script or language per screen, for presenting (/quality/pareto). Each panel takes its own screen. */
+/** One script or language per screen, for presenting (/quality/pareto). Each panel takes its own screen.
+ *  The first one is top-aligned: centred in a full screen, a short first chart left a blank band under the
+ *  section heading that read as a chart failing to load (#6011). */
 export function ParetoPresentation({ m = OCR }: { m?: Measure }) {
   return (
     <div>
       {m.charts.map(chart => chart.panels.map((panel, i) => (
         <figure key={`${chart.id}-${panel.kind}`} id={anchorOf(m, chart, panel)}
-          className="min-h-screen flex flex-col justify-center py-8 border-b border-stone-200 scroll-mt-0">
+          className="min-h-screen flex flex-col justify-center first:justify-start py-8 border-b border-stone-200 scroll-mt-0">
           <div className="font-serif text-3xl md:text-4xl text-stone-900">
             {m.title(chart)}<Anchor chart={chart} m={m} base="/quality/pareto" />
           </div>

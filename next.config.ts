@@ -293,6 +293,15 @@ const nextConfig: NextConfig = {
         missing: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
+      // /catalog is dynamic (it reads ?collection=) and was the only main-nav page
+      // with no edge rule: every visit was a ~3.6s full render (#6092). Nothing
+      // in it is per-user; Cloudflare keys the cache on the query string. Exact
+      // path only — /catalog/scholar and /catalog/complete are not covered.
+      {
+        source: '/catalog',
+        missing: [{ type: 'header', key: 'rsc' }],
+        headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
+      },
       {
         source: '/author/:path*',
         missing: [{ type: 'header', key: 'rsc' }],
@@ -397,6 +406,13 @@ const nextConfig: NextConfig = {
         destination: `/collections/${to}`,
         permanent: true,
       })),
+      // The processing page described the same steps as /how-it-works and drifted from
+      // it; one page now tells it (#6074).
+      {
+        source: '/about/processing',
+        destination: '/how-it-works',
+        permanent: true,
+      },
       {
         source: '/translation/:bookId/:pageId',
         destination: '/book/:bookId',
@@ -522,9 +538,15 @@ const nextConfig: NextConfig = {
         destination: '/search',
         permanent: false,
       },
+      // The authors index exists now (/browse/authors) — a better landing than search.
       {
         source: '/author',
-        destination: '/search',
+        destination: '/browse/authors',
+        permanent: false,
+      },
+      {
+        source: '/authors',
+        destination: '/browse/authors',
         permanent: false,
       },
       {

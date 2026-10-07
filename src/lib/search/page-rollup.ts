@@ -148,9 +148,16 @@ export async function bestPagePerBook(
   bookIds: string[],
   concurrency = 10,
 ): Promise<Document[]> {
-  const out: Document[] = [];
-  for (let i = 0; i < bookIds.length; i += concurrency) {
-    const batch = await Promise.all(bookIds.slice(i, i + concurrency).map(async id => {
+  // A rolling pool, not fixed batches: a batch waits for its slowest search
+  // before the next starts. Same `concurrency`, same load on Atlas — measured
+  // 2026-10-07 for 30 books: batches 1.4s ('alchemy') / 2.8s ('prima
+  // materia'), pool 0.8s / 1.1s (#6092). Slots keep `bookIds` order.
+  const slots: (Document | undefined)[] = new Array(bookIds.length);
+  let next = 0;
+  const worker = async () => {
+    while (next < bookIds.length) {
+      const i = next++;
+      const id = bookIds[i];
       const [page] = await db.collection('pages').aggregate([
         buildBestPageStage(terms, id),
         { $match: { page_type: { $nin: NON_CONTENT_PAGE_TYPES } } },
@@ -166,11 +173,11 @@ export async function bestPagePerBook(
           },
         },
       ]).toArray();
-      return page;
-    }));
-    for (const page of batch) if (page) out.push(page);
-  }
-  return out;
+      slots[i] = page;
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(concurrency, bookIds.length) }, worker));
+  return slots.filter((p): p is Document => !!p);
 }
 
 /**

@@ -51,6 +51,7 @@ import {
 import { pageTextCorpus, pageTextSource, translationCorpus, transcriptProvenance, transcriptProvenanceLabel, isUnreviewedMachineTranslation } from '@/lib/text-provenance';
 import type { CdliWitness } from '@/lib/types/book';
 import { translationVerdict, type TranslationStateSource } from '@/lib/translation-completeness';
+import { displayTranscription } from '@/lib/esukhia-apparatus';
 
 // ─── Variant 2c: "Study Desk" ────────────────────────────────────────────────
 // The scholarly reader: scan, OCR and translation side by side, a left tool
@@ -302,9 +303,12 @@ function PhonePanePicker({
   transition: string;
 }) {
   const t = getReaderStrings(useLocale()).panes;
+  // An English book's transcription and translation would both read "English"
+  // (#6092) — name the transcription segment "Original" instead.
+  const sameName = language.trim().toLowerCase() === translationLabel.trim().toLowerCase();
   const items: Array<{ key: 'scan' | 'ocr' | 'en' | 'translit'; label: string }> = [
     ...(hasScan ? [{ key: 'scan' as const, label: t.viewScan }] : []),
-    { key: 'ocr', label: language },
+    { key: 'ocr', label: sameName ? t.originalFallback : language },
     ...(showTranslit ? [{ key: 'translit' as const, label: t.viewRoman }] : []),
     { key: 'en', label: translationLabel },
   ];
@@ -1457,7 +1461,7 @@ function TraceToggle({ on, onToggle, language, disabledReason }: {
 function CopyTextButton({ page, kind }: { page: Page; kind: 'ocr' | 'translation' }) {
   const [copied, setCopied] = useState(false);
   const t = getReaderStrings(useLocale()).panes;
-  const text = (kind === 'ocr' ? page.ocr?.data : page.translation?.data) || '';
+  const text = (kind === 'ocr' ? displayTranscription(page.ocr) : page.translation?.data) || '';
   if (!text) return null;
   const label = kind === 'ocr' ? t.copyTranscription : t.copyTranslation;
   return (

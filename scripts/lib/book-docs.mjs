@@ -118,6 +118,13 @@ export const BOOK_FIELDS = Object.freeze([
   // Derived from page images and the OCR's own tags by scripts/eval/book-class-5768.mjs,
   // never imported; read by OCR routing (#5737) and the translate-side OCR trust gate
   // (#5700). Registered in books-known-fields.json for the $set lint.
+  // NOT here either: `tradition` — string[], 0–2 of the 31 map labels in
+  // src/lib/taxonomy/traditions.json (#4773): the tradition the WORK belongs to (a German
+  // Bhagavad Gita is "Indian"). Derived from the book's metadata by
+  // scripts/maintenance/tradition-4773.mjs (flash-lite, Batch), never imported; `[]`
+  // means read and none discernible, absent means never read. Read by the search
+  // diversity re-rank (src/lib/search/diversity.ts). One sweep_log row per write.
+  // Registered in books-known-fields.json for the $set lint.
   // pages carrying a Spanish edition (translations.es / legacy translation_es);
   // synced by scripts/maintenance/sync-pages-translated-es.mjs, read by /es
   'pages_translated_es',

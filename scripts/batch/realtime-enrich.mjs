@@ -28,6 +28,7 @@ import { MongoClient } from 'mongodb';
 // --- Config ---
 const BASE_URL = 'https://sourcelibrary.org';
 const REQUEST_TIMEOUT = 120000; // 2 min per request (Vercel maxDuration)
+const GENERATE_TIMEOUT = 900000; // 15 min: the index GET reads every page of a long book
 
 // --- Parse args ---
 const args = process.argv.slice(2);
@@ -73,7 +74,17 @@ async function enrichBook(bookId) {
     throw new Error(`Index ${response.status}: ${text.substring(0, 200)}`);
   }
 
-  return response.json();
+  // POST only CLEARS the cached index, summary and reading_summary; the GET regenerates them. Stopping
+  // after the POST deleted a book's enrichment and reported "ok" (#6099, 2026-10-07). Generation of a long
+  // book takes minutes, so the GET gets its own longer timeout, and the result must carry generatedAt.
+  const gen = await fetch(url, { headers: authHeaders, signal: AbortSignal.timeout(GENERATE_TIMEOUT) });
+  if (!gen.ok) {
+    const text = await gen.text();
+    throw new Error(`Index generate ${gen.status}: ${text.substring(0, 200)}`);
+  }
+  const index = await gen.json();
+  if (!index?.generatedAt) throw new Error('Index generate returned no generatedAt — summary not written');
+  return index;
 }
 
 async function extractChapters(bookId) {

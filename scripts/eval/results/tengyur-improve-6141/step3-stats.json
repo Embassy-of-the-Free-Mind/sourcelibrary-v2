@@ -1,0 +1,38 @@
+{
+ "verses": 50,
+ "renderings": 259,
+ "drafter": {
+  "misaligned": 28,
+  "ok": 131,
+  "weak": 83,
+  "wrong": 17
+ },
+ "blind": {
+  "ok": 103,
+  "weak": 73,
+  "wrong": 55
+ },
+ "agreement": {
+  "ok|ok": 86,
+  "weak|weak": 39,
+  "ok|weak": 33,
+  "weak|wrong": 28,
+  "weak|ok": 16,
+  "wrong|wrong": 15,
+  "ok|wrong": 12,
+  "wrong|ok": 1,
+  "wrong|weak": 1
+ },
+ "references_blind_ok": 46,
+ "references_blind_best": 39,
+ "references_pass": 46,
+ "sanskrit_located": 18,
+ "proposals": {
+  "candidates_both_readers_weak_or_wrong": 77,
+  "proposed": 40,
+  "skipped": {
+   "block_line_count": 29,
+   "note_in_span": 8
+  }
+ }
+}

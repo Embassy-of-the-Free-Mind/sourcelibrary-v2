@@ -1,0 +1,835 @@
+[
+  {
+    "book_id": "69f325ae52a77bb28fdb58e9",
+    "slot": 17,
+    "title": "Yŏja sanghaeng pʻyŏn",
+    "tradition": "korean",
+    "shelf_fit": "fits",
+    "shelf_note": "Vernacular Hangul manuscript of conduct instruction for women; belongs on a Korean shelf.",
+    "rights_flag": null,
+    "structure_note": "62 pages, all with OCR, only 33 translated; page 48 carries a refusal placeholder instead of a translation. No printed page numbers. The OCR on three of four sampled pages ends in a repetition loop, so the 'translated' count overstates readable text.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "녀자상행편",
+            "image": "녀ᄌᆞ ᄉᆡᆼ힝편 발 (heading ends with 발, i.e. a postface)",
+            "problem": "heading normalised and the final 발 dropped, so the reader is not told this is the postface",
+            "severity": "moderate",
+            "class": "O8"
+          },
+          {
+            "ocr": "대개 현제 가풍을 익히어 마음을 현하 품행이 바른 것을 가",
+            "image": "대개 현ᄎᆡ ... ᄆᆞᄋᆞᆷ은 현하 ... (archaic spelling, different words)",
+            "problem": "lines are a modern-spelling paraphrase, partly confabulated (가풍, 품행 not visible); only scattered words match the cursive",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "녀 도부 부모를 효도하고 부모를 섬기어 효를 지키는",
+            "image": "녀ᄌᆞ 부모 ... ᄌᆞ식을 ...",
+            "problem": "line content not legible as transcribed; fluent filler",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "을 품을 제하여 남을 돕는 그릇",
+            "english": "remove the vessel of helping others <note>likely a metaphor for selfish interference</note>",
+            "problem": "garbled OCR rendered as fluent advice with a speculative gloss",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "현제 가풍",
+            "english": "family traditions of a wise mother",
+            "problem": "'wise mother' not in the transcription",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "low"
+      },
+      {
+        "page_number": 18,
+        "right_page": "yes",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "됴흔 됴흔 됴흔 ... (about 10 lines)",
+            "image": "12 columns of varied running text (e.g. 'ᄌᆡ모를 잇지 말지', '방으로 ... 그릇', '나ᄅᆞ와 ...')",
+            "problem": "after two partly right lines the OCR loops on one word for the rest of the page; the page's text is lost",
+            "severity": "serious",
+            "class": "O4"
+          },
+          {
+            "ocr": "<note>The text appears to be a repetitive instructional or practice manuscript ...</note>",
+            "image": "ordinary continuous text, no repetition",
+            "problem": "OCR invents an explanation for its own loop",
+            "severity": "serious",
+            "class": "O15"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "됴흔 됴흔 ...",
+            "english": "fine, fine, fine, ... (ten lines)",
+            "problem": "loop carried into the English",
+            "severity": "serious",
+            "class": "O4"
+          },
+          {
+            "source": "(loop)",
+            "english": "<note>... this page served as a calligraphy practice sheet ...</note> and summary 'transitioning into a repetitive calligraphy exercise'",
+            "problem": "invents a fact about the manuscript to explain a machine error",
+            "severity": "serious",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta>continues from previous page: the scheme of the rice, the hundred schemes ...</meta> nonsense continuity line",
+            "severity": "moderate",
+            "class": "T15"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 30,
+        "right_page": "yes",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "흔히 자식 때어지면 못 촌 맏으려 하되 / 남의 자식이라도 내 자식과 같이 사랑하고 ... (block repeated five times)",
+            "image": "begins 'ᄒᆞᆫ치라 ᄯᅢ여 그어지 ...'; 13 columns of different text, no repetition",
+            "problem": "a short homily on children not visible on the leaf, then the same block repeated five times",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "남의 자식을 내 자식과 같이 사랑하면 ... 도리라 (x5)",
+            "image": "not present",
+            "problem": "block-level repetition",
+            "severity": "serious",
+            "class": "O4"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "내 자식이라 하여 사랑하면 남의 자식도 남이 사랑할 것이니",
+            "english": "If you love your child only because they are your own, then others will treat your child as a stranger.",
+            "problem": "sense reversed against the transcription",
+            "severity": "serious",
+            "class": "T8"
+          },
+          {
+            "source": "(repeated block)",
+            "english": "same paragraph five times",
+            "problem": "repetition carried into English",
+            "severity": "moderate",
+            "class": "O4"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 48,
+        "right_page": "yes",
+        "ocr_score": 1,
+        "ocr_errors": [
+          {
+            "ocr": "출가한 부모를 섬기는 예는 그와 같으니라 / 비록 비록 비록 ...",
+            "image": "begins 'ᄃᆞᆯ ᄋᆞ라 ...'; 15 columns of varied text",
+            "problem": "first line not on the page, then a one-word loop for the rest",
+            "severity": "serious",
+            "class": "O4"
+          }
+        ],
+        "tr_score": null,
+        "tr_errors": [],
+        "other": [
+          {
+            "note": "translation pane reads '[This page could not be translated due to content recitation restrictions.]'",
+            "severity": "moderate",
+            "class": "other:refusal-placeholder"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "do_not_show",
+    "showcase_pages": [],
+    "reader_summary": "A Hangul manuscript of conduct instruction for women (the sampled page 7 is headed as its postface). On three of four sampled pages the transcription is not this leaf's text: it loops one word or one paragraph, and the English renders the loop and invents a 'calligraphy practice' story to explain it. Neither pane can be trusted.",
+    "book_verdict": "Cursive vernacular Korean defeated the lite OCR: repetition loops and confabulated text on 3/4 pages, carried into fluent English with invented explanations. Needs re-OCR by a capable reader before anyone sees it."
+  },
+  {
+    "book_id": "69f327ea52a77bb28fdb8163",
+    "slot": 18,
+    "title": "Hanʾgwa",
+    "tradition": "korean",
+    "shelf_fit": "fits",
+    "shelf_note": "Korean manuscript anthology of model examination compositions (memorials and congratulations on set historical topics) in Classical Chinese, with red/blue reading marks; Korean exam culture. Language field says Korean but the text is Classical Chinese.",
+    "rights_flag": null,
+    "structure_note": "150 pages, 135 translated; one printed-number repeat is too few to mean anything. Language metadata should be Classical Chinese (I7, minor).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 13,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "鄭聲臣賀二公相繼為周司徒",
+            "image": "鄭羣臣賀二公相繼爲周司徒",
+            "problem": "羣 misread as 聲; the title becomes two personal names",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "玉翱襲爵詩人旌余矣之章",
+            "image": "王朝襲爵詩人擬余矣之章",
+            "problem": "several characters misread",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "侯服于基",
+            "image": "侯服承基",
+            "problem": "misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "鄭聲臣賀二公",
+            "english": "Zheng Shengchen and He Ergong <note>two legendary virtuous officials</note>",
+            "problem": "'The ministers of Zheng congratulate the two lords' turned into two invented people with an invented note; title wrong",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "周司徒",
+            "english": "Zhou Sitiao",
+            "problem": "romanisation wrong (situ)",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "<meta>continues from previous page: the internal strife and worry that plagued the administration.</meta> continuity line unrelated to this composition",
+            "severity": "minor",
+            "class": "T15"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 57,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "木卜平九首",
+            "image": "large later-hand blue tally in the margin (木卜?九首)",
+            "problem": "a later hand's marginal tally read as body text",
+            "severity": "moderate",
+            "class": "O13"
+          },
+          {
+            "ocr": "名登寶墨者甚多仍題",
+            "image": "名登宝墨荷其句之仍題",
+            "problem": "misread",
+            "severity": "moderate"
+          },
+          {
+            "ocr": "何昌齡心之由中",
+            "image": "何嵩甸心之由中 (uncertain)",
+            "problem": "name possibly misread",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "木卜平九首",
+            "english": "Nine poems by Mu Bopping.",
+            "problem": "a marginal tally rendered as an attribution to an invented author",
+            "severity": "moderate",
+            "class": "T10"
+          },
+          {
+            "source": "及媄楊炯居盧前之榮",
+            "english": "He reached the glory of Bo Yangjing and Lu Qian.",
+            "problem": "allusion to Yang Jiong ranking 'before Lu (Zhaolin)' turned into two invented names",
+            "severity": "moderate"
+          },
+          {
+            "source": "御筆書春城無處不飛花之韓翊",
+            "english": "the Emperor Wrote the Poem",
+            "problem": "misses the point of the title (the emperor wrote the poem's line to identify which Han Hong he meant); 翊 for 翃",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 95,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "何為章，春律，日，日，南家，遠，以，無，家，客，僅，以信 ...",
+            "image": "何者章春律之日 日南家遠 客無寄客從之信 ...",
+            "problem": "the second half of the page is single characters separated by commas, out of order and padded",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "此學初志，仍作何著之內十年旅食",
+            "image": "此学初志 仍作何著之内十年旅食",
+            "problem": "first paragraph roughly right",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "契，福，以暑，如，深，衣，無，到 ...",
+            "english": "The blessing of these summer clothes is profound. Without them, how could I handle the summer heat? ...",
+            "problem": "fluent prose built over a comma-separated character jumble; the last four paragraphs do not translate the page",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 133,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "其各淫于逸視將佃",
+            "image": "其毋淫于逸視游佃 (cf. Shujing 無逸)",
+            "problem": "毋 read as 各, 游 as 將",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "祚鬯二首",
+            "image": "秬鬯二卣",
+            "problem": "two characters misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "白魚火為之瑞",
+            "image": "白魚火烏之瑞",
+            "problem": "烏 (the fire-crow omen) read as 為",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "漢董仲舒",
+            "image": "large 漢 dynasty divider, then 董仲舒",
+            "problem": "section divider merged into the line",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "白魚火為之瑞",
+            "english": "presented a white fish; the fire was taken as an auspicious omen",
+            "problem": "the fire-crow omen lost through the misread",
+            "severity": "moderate"
+          },
+          {
+            "source": "作丹命於豐",
+            "english": "composed the \"Dan Ming\" <gloss>Order to Dan</gloss>",
+            "problem": "冊命 read as a title 'Dan Ming'",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      133
+    ],
+    "reader_summary": "A Korean manuscript anthology of model examination compositions in Classical Chinese, on topics from Zhou to Ming history. The transcription is of the right text but has misreadings, and on dense parallel-prose pages it breaks down into strings of single characters. The English is loose and sometimes turns phrases into invented people (title of p.13) or covers garbled OCR with fluent prose (p.95).",
+    "book_verdict": "Real and interesting exam-composition anthology; topic lists read acceptably, but the dense parallel prose is weakly transcribed and the English invents names and sense. Show only with a warning that the English is a rough draft."
+  },
+  {
+    "book_id": "69f33f58876dd827cbc618c2",
+    "slot": 19,
+    "title": "Tʻonggam chu, Sŏhan chi odae",
+    "tradition": "korean",
+    "shelf_fit": "fits",
+    "shelf_note": "Korean manuscript glossary to the Zizhi tongjian (Western Han to Five Dynasties); headwords with small glosses and red dynasty labels (西漢, 唐). Text is Classical Chinese though language says Korean.",
+    "rights_flag": null,
+    "structure_note": "126 pages, 118 translated. Printed backsteps (3) and repeats (9) most likely come from misread leaf numerals or year headwords taken as page numbers, not from a disorder I could see; the sampled pages run in order (Han → Jin → Tang). Page 23 is heavily overwritten with large brush characters over the glossary, which makes it largely unreadable.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 23,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "外婦胡姬也",
+            "image": "外婦謂與旁通者",
+            "problem": "gloss invented: says the outside wife was a Hu (foreign) woman",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "<margin>高帝諸子。皆以母貴。而肥以長。故皆欲立之。呂后欲立趙王如意 ...</margin>",
+            "image": "no such gloss legible on the leaf",
+            "problem": "confabulated commentary in the right register",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "(omitted)",
+            "image": "headwords 左右, 擊韓王, 不治垣屋, 相梁, 魯元",
+            "problem": "several headwords and glosses dropped",
+            "severity": "moderate",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "外婦之子肥",
+            "english": "the son of a concubine, who was well-fed",
+            "problem": "the name Fei (Liu Fei, King Daohui of Qi) translated as 'well-fed'",
+            "severity": "moderate",
+            "class": "T8"
+          },
+          {
+            "source": "外婦胡姬也",
+            "english": "This 'woman from outside' was a lady of the Hu people.",
+            "problem": "carries the invented gloss",
+            "severity": "serious",
+            "class": "O1"
+          }
+        ],
+        "other": [
+          {
+            "note": "leaf is overwritten with large brush characters across the glossary; the page cannot be read reliably and no warning is given",
+            "severity": "moderate",
+            "class": "other:overwritten-leaf"
+          }
+        ],
+        "confidence": "low"
+      },
+      {
+        "page_number": 38,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "先武詔鄭昌為侯",
+            "image": "光武詔鄧禹為侯 (uncertain on 鄧禹)",
+            "problem": "光 read as 先",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "紀唐後丁丹教言",
+            "image": "紀唐後丁丑 ... 敷言",
+            "problem": "headword 丁丑 misread",
+            "severity": "minor"
+          },
+          {
+            "ocr": "(omitted)",
+            "image": "headwords 春陵子弟, 壬午",
+            "problem": "headwords dropped",
+            "severity": "moderate",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "書穎濱巢父",
+            "english": "Writing about Yingbin <gloss>Su Che</gloss> and Chaofu",
+            "problem": "the bank of the Ying river (where Xu You washed his ears) glossed as the Song writer Su Che",
+            "severity": "serious",
+            "class": "T10"
+          },
+          {
+            "source": "龍共鮑魚守死",
+            "english": "Longgong <gloss>Dragon-Shared</gloss> and Baoyu <gloss>Dried Fish</gloss> stayed faithful until death",
+            "problem": "invented names and glosses",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "通 音度甚",
+            "english": "The sound of the Tong <gloss>the Comprehensive Mirror</gloss> is very clear",
+            "problem": "a pronunciation note made into a statement about the Tongjian",
+            "severity": "moderate"
+          },
+          {
+            "source": "先武詔",
+            "english": "the Wudi <gloss>Martial Emperor</gloss> decreed",
+            "problem": "Guangwu misnamed via the OCR misread",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 79,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "吾越楊廿分",
+            "image": "吳越揚州分",
+            "problem": "吳 read as 吾",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "蕭詵",
+            "image": "蕭衍 (likely)",
+            "problem": "headword name misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "(interleaved)",
+            "image": "headword + small double-line gloss per entry",
+            "problem": "glosses from adjacent entries run together in places",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "星填",
+            "english": "The Year Star has moved ...",
+            "problem": "填星 is Saturn, not the Year Star (Jupiter)",
+            "severity": "moderate"
+          },
+          {
+            "source": "吾越楊廿分",
+            "english": "My region, Yang province, twenty parts.",
+            "problem": "carries the misread; should be the Wu-Yue / Yangzhou field-allocation",
+            "severity": "moderate"
+          },
+          {
+            "source": "耗 七志切 楷 音皆",
+            "english": "The 'Seven Records' is pronounced 'Kai.'",
+            "problem": "fanqie and pronunciation notes rendered as nonsense",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 98,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "崔莽 崔莽居莽音姆宿",
+            "image": "雈葦 雈葦屬 葦音姆 宿草也",
+            "problem": "headword misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "神通之第",
+            "image": "神符 神通之弟",
+            "problem": "弟 (younger brother) read as 第 (residence); headword 神符 dropped",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "岳志五百里",
+            "image": "兵志五百里",
+            "problem": "兵 read as 岳",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "崔莽 崔莽居",
+            "english": "Cui Mang. Cui Mang resided there.",
+            "problem": "a gloss on a plant word turned into a person",
+            "severity": "moderate"
+          },
+          {
+            "source": "徵憂以目疾辭位",
+            "english": "Zheng Yu resigned from his position due to an eye ailment.",
+            "problem": "Wei Zheng renamed 'Zheng Yu'",
+            "severity": "moderate"
+          },
+          {
+            "source": "岳志",
+            "english": "The records of the mountains",
+            "problem": "should be the Treatise on Military Affairs",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [],
+    "reader_summary": "A Korean manuscript glossary of words and names from the Comprehensive Mirror (Zizhi tongjian), headword plus short gloss, arranged by dynasty. The transcription is of the right leaves but misreads many headwords and on one overwritten leaf invents glosses; the English treats the glossary as prose and turns words into invented people and places.",
+    "book_verdict": "A real reader's aid to the Tongjian, but the OCR misreads headwords and the English invents names (Su Che, 'Zheng Yu', 'Cui Mang'). Useful as images with the Chinese text as a rough finding aid; the English should not be relied on."
+  },
+  {
+    "book_id": "69f33bc1876dd827cbc593cd",
+    "slot": 20,
+    "title": "Sinpʻyŏn Sanhak kyemong",
+    "tradition": "korean",
+    "shelf_fit": "fits",
+    "shelf_note": "Korean copy of Zhu Shijie's Suanxue qimeng (1299), the arithmetic primer used in Joseon government mathematics; firmly on a Korean shelf. Text is Classical Chinese, not Korean.",
+    "rights_flag": null,
+    "structure_note": "168 pages, 167 with OCR, 154 translated. Printed numbers (17 read, 4 backsteps) are sparse; page 81 carries a leaf number (三九) correctly, so the backsteps are most likely misread numerals. OCR self-tags pages 38 and 124 as 'printed'; they are handwritten (O16, minor).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 38,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "答曰三十三碩七斗三升",
+            "image": "答曰三十二碩七斗三升",
+            "problem": "answer numeral wrong (1759.24 jin / 5.375 = 327.3 dou = 32 shuo 7 dou 3 sheng)",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "...為六兩蜀數也為法除之問撥麻幾何",
+            "image": "...乃六兩留數也 為法除之合問 / 今有細一万尺每尺一二分四厘撥麻一斤問撥麻幾何",
+            "problem": "the whole statement of the hemp problem dropped and the two problems spliced; 留 read as 蜀",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "萱秣",
+            "image": "荳粉 (likely)",
+            "problem": "commodity misread",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "答曰三十三碩",
+            "english": "Answer: 33 shuo, 7 dou, and 3 sheng",
+            "problem": "wrong answer carried into English",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "source": "為六兩蜀數也",
+            "english": "which represents the 6 liang according to the Shu counting system",
+            "problem": "invented 'Shu counting system' from a misread",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "萱秣",
+            "english": "day-lily fodder",
+            "problem": "speculative gloss on a misread commodity",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 81,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "上鄉二百二十八戶共五千二百上等每戶二十六碩五十六戶共一千中等 ... 下等每戶二十五石六升九十八戶共二千三百六十二石八升",
+            "image": "上鄉二百二十八戶共五千二百五十一碩四斗八升 ... 下等每戶二十一石六升 九十八戶共二千六十三石八斗八升",
+            "problem": "the double-line small-type totals are truncated or misread throughout the answer block (二十五 for 二十一, 二千三百六十二 for 二千六十三)",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "中鄉三百六十二戶共三千八百八十二石 ... 上等每戶二十三石",
+            "image": "中鄉 ... 上等每戶一十三石 八十二戶共一千六十六石",
+            "problem": "middle-township rows garbled",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "(omitted)",
+            "image": "下鄉 中等每戶四石五斗五升 一百七十一戶共七百八十二石 ...",
+            "problem": "lower-township middle grade row dropped",
+            "severity": "moderate",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "中鄉三百六十二戶",
+            "english": "The 352 households of the Middle township",
+            "problem": "362 given as 352",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "source": "(the English recomputes many figures that the OCR garbled)",
+            "english": "Grade 3 households receive 21 dan 6 sheng each; 98 households total 2,063 dan 8 sheng",
+            "problem": "English figures closer to the image than to its own transcription; the two panes disagree on numbers",
+            "severity": "moderate",
+            "class": "T14"
+          },
+          {
+            "source": "下鄉 中等 (missing)",
+            "english": "(lower township grade 2 absent)",
+            "problem": "one answer row missing",
+            "severity": "moderate",
+            "class": "O5"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 83,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "中鄉上等每戶粟二石碩",
+            "image": "中鄉上等每戶粟一十三碩",
+            "problem": "numeral wrong",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "三碩二斗八升五合",
+            "image": "三碩一斗八升五合",
+            "problem": "numeral wrong",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "七斗得四碩五斗五升",
+            "image": "七因得四碩五斗五升",
+            "problem": "因 (multiply) read as 斗",
+            "severity": "minor"
+          },
+          {
+            "ocr": "商功修門十三問",
+            "image": "商功修築門十三問",
+            "problem": "築 dropped from the chapter title",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "三碩二斗八升五合",
+            "english": "3 dan 1 dou 8.5 sheng <note>original text says 2 dou 8 sheng 5 ge</note>",
+            "problem": "the note blames the original for the OCR's misreading; the leaf says 一斗",
+            "severity": "moderate"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 124,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "答曰鷄一十五兩兔一斤六兩",
+            "image": "答曰鷄一十五兩 一十一分兩之三 兔一斤六兩 一十一分兩之十",
+            "problem": "the fractional parts of both answers (3/11 and 10/11 liang) dropped",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "ocr": "| 川 | 一 | Ⅲ | ... | 1 | 川 | Ⅲ |",
+            "image": "counting-rod arrays: chicken 4, rabbit 1, weight 84; chicken 1, rabbit 3, weight 84",
+            "problem": "rod array misread (weights read as 3)",
+            "severity": "moderate",
+            "class": "O17"
+          },
+          {
+            "ocr": "(omitted)",
+            "image": "乃四鷄一兔重八十四兩 一鷄三兔亦重八十四兩",
+            "problem": "second clause dropped",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "國布等",
+            "image": "圖布籌",
+            "problem": "'lay out the rods as in the diagram' misread",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "共重十斤半",
+            "english": "weighing a total of 10 jin",
+            "problem": "the half jin dropped; the problem no longer works",
+            "severity": "serious",
+            "class": "T9"
+          },
+          {
+            "source": "答曰鷄一十五兩",
+            "english": "A chicken weighs 15 liang.",
+            "problem": "answer given without its fraction (15 3/11 liang)",
+            "severity": "serious",
+            "class": "O7"
+          },
+          {
+            "source": "國布等",
+            "english": "Use the arrangement of the national cloth <note>likely a reference to the standard counting board layout</note>",
+            "problem": "misread rendered literally with a guess",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [],
+    "reader_summary": "A Korean manuscript copy of Zhu Shijie's Suanxue qimeng, the Yuan arithmetic primer studied in Joseon. The transcription is of the right text and the English follows the method sentences well, but numbers are often wrong or missing in both panes: answers, small-type totals and fractions. A reader cannot check a problem against the English without the image.",
+    "book_verdict": "Right work, clear handwriting, and the method prose is translated well, but numerals are misread or dropped on every sampled page, which in a mathematics book is the content. Show only with a warning to check every figure against the image."
+  }
+]

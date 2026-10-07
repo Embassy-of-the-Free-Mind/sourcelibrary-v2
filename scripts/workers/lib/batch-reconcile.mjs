@@ -233,6 +233,20 @@ export async function reconcileBatchState(db, deps) {
       if (k.job_name) knownNames.add(k.job_name);
       if (k.gemini_job_name) knownNames.add(k.gemini_job_name);
     }
+    // The chained translation lane (scripts/lib/translate-batch-chained.mjs) records its
+    // Gemini jobs in translate_batch_runs, never in batch_jobs: the in-flight one at
+    // `round.job.name`, past ones at `rounds[].job`. Unlisted here, every in-flight round
+    // looked like an orphan and was cancelled (471 cancels on 2026-10-04 alone); each
+    // cancel is a strike, and three park the run for good — 300 runs, 53,614 pages
+    // parked by 2026-10-07 (#6122).
+    const chained = await db.collection('translate_batch_runs').find(
+      { $or: [{ 'round.job.name': { $in: orphanCandidates } }, { 'rounds.job': { $in: orphanCandidates } }] },
+    ).project({ 'round.job.name': 1, 'rounds.job': 1 }).toArray();
+    const candidateSet = new Set(orphanCandidates);
+    for (const r of chained) {
+      if (r.round?.job?.name) knownNames.add(r.round.job.name);
+      for (const x of r.rounds || []) if (x?.job && candidateSet.has(x.job)) knownNames.add(x.job);
+    }
     result.orphansSparedKnownToDb = orphanCandidates.filter(n => knownNames.has(n)).length;
     if (result.orphansSparedKnownToDb > 0) {
       log(`[batch-health] ${result.orphansSparedKnownToDb} Gemini-active jobs are known to the DB in a non-active status — NOT cancelling (a failed row is not an orphan)`);

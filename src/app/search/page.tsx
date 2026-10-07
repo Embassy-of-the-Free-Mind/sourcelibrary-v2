@@ -17,6 +17,7 @@ import { artworkTypeLabel } from '@/lib/artwork-record';
 import { localizedCollection } from '@/lib/localized';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { useEmbed } from '@/lib/EmbedContext';
+import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { useDebouncedCallback } from 'use-debounce';
 import { reportError } from '@/components/providers/ErrorReporter';
 import {
@@ -107,6 +108,9 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   const currentPathname = usePathname();
   const embedFromContext = useEmbed();
   const embed = forceEmbedded || embedFromContext;
+  // Host-based, unlike `embed`: true on a partner subdomain whichever route
+  // rendered this page. The Librarian is refused there (tenant-global-paths).
+  const isTenantSurface = useIsEmbedded();
 
   // The locale comes from the URL prefix; the `lang` prop that the `/es/search`
   // twin passes is the explicit form of the same answer. Defaulting to the
@@ -1066,7 +1070,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
           </div>
 
           {/* Mode tabs */}
-          <div className="mt-3 flex gap-1 border-b border-border-light -mx-4 px-4">
+          <div className="mt-3 flex gap-1 border-b border-border-light -mx-4 px-4 overflow-x-auto">
             {(isBrowseMode
               ? [
                 { mode: defaultMode, label: t.tabBooks, icon: Book },
@@ -1304,8 +1308,10 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
         </div>
       </div>
 
-      {/* Results */}
-      <main className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-8">
+      {/* Results. With a query, reserve a viewport of height: results stream in
+          over ~3s, and an empty <main> let the footer and feedback band paint
+          at the top and then get shoved down (CLS 0.96 on desktop, #6092). */}
+      <main className={`max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-8 ${query.length >= 2 ? 'min-h-[100svh]' : ''}`}>
         {/* Anonymous free-search wall — shown after 10 searches/hour */}
         {signInRequired && (
           <div className="text-center py-16 max-w-lg mx-auto">
@@ -1994,7 +2000,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
           </>
         )}
         {/* Ask the Librarian — bottom CTA */}
-        {!noResults && !loading && query.length >= 3 && viewMode === defaultMode && (
+        {!noResults && !loading && query.length >= 3 && viewMode === defaultMode && !embed && !isTenantSurface && (
           <section className="mt-8 pt-6 border-t border-border-light">
             <Link
               href={`${lp('/librarian')}?q=${encodeURIComponent(query)}`}

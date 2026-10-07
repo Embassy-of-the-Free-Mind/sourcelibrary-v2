@@ -8,9 +8,12 @@
 Direction: Kraken arms were run with -d horizontal-rl / --base-dir R (logical order); nothing is reversed here.
 """
 import os, glob, json, unicodedata, re, math, statistics as st, sys
-ROOT = '/root/ocr-bench/images'; R = '/root/ocr-bench/syriac-retest'
+ROOT = os.environ.get('SYRIAC_IMAGES', '/root/ocr-bench/images'); R = '/root/ocr-bench/syriac-retest'
 GT = f'{R}/gt-text'
 SETS = {'syriac-gt': f'{ROOT}/syriac-gt', 'syriac': f'{ROOT}/syriac', 'print-loop': f'{R}/print-loop'}
+# SYRIAC_IMAGES / SYRIAC_SCORE_OUT (#6011 wave 2): score another engine tree against the same ground truth
+# without overwriting the committed retest; unset, the script behaves exactly as before.
+SCORE_OUT = os.environ.get('SYRIAC_SCORE_OUT', f'{R}/score.json')
 PUNCT = re.compile(r'[܀-܍\.\,\:\;\!\?\(\)\[\]«»"\'\-–—…·•]+')
 POINTS = re.compile(r'[ܰ-݊̀-ͯ݀-݊]')
 def n1(s):
@@ -113,5 +116,5 @@ for setname, d in SETS.items():
         for e, v in summ.items(): out.append(f"| {e} | {v['run']} | {v['empty']} | {v['loops']} | {v.get('median_loop')} | {v.get('median_dice_vs_served', '—')} |")
         for s in slugs:
             out.append(f'\n  {s}: ' + ' | '.join(f"{e[:14]} loop={rows[s][e].get('loop')} chars={rows[s][e].get('chars')}" for e in engs if not rows[s][e].get('missing')))
-json.dump(report, open(f'{R}/score.json', 'w'), ensure_ascii=False, indent=1)
+json.dump(report, open(SCORE_OUT, 'w'), ensure_ascii=False, indent=1)
 print('\n'.join(out))
