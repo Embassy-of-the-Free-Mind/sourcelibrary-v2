@@ -214,7 +214,7 @@ function duringBuild(): boolean {
  *    (rendering-and-seo.md);
  *  - during a build it drops the claim. A throw there fails the whole deploy:
  *    on 2026-10-07 `match_semantic` was answering in 4–7 s on a cold cache
- *    against the app role's 3 s limit, and six production builds in a row
+ *    against the app role's 3 s limit, and five production builds in a row
  *    died on this one optional panel (#6204). The page revalidates daily, so
  *    the panel comes back with the first render that finds the index awake.
  */
