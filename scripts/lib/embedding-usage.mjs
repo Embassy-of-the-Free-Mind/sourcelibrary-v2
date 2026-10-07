@@ -68,9 +68,9 @@ export function estimateTokens(chars) {
   return Math.round(chars / EMBED_CHARS_PER_TOKEN);
 }
 
-/** Estimated USD for a character count. */
-export function estimateUsd(chars) {
-  return estimateTokens(chars) / 1e6 * EMBED_USD_PER_1M_TOKENS;
+/** Estimated USD for a character count. The Batch API bills half (#5729). */
+export function estimateUsd(chars, { batch = false } = {}) {
+  return estimateTokens(chars) / 1e6 * EMBED_USD_PER_1M_TOKENS * (batch ? 0.5 : 1);
 }
 
 /**
