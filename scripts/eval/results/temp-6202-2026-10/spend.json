@@ -1,0 +1,141 @@
+{
+ "cap_usd": 10,
+ "ledger_usd": 6.7713,
+ "ledger_calls": 2405,
+ "metered": {
+  "usd": 6.7717,
+  "rows": 2748,
+  "meterError": null
+ },
+ "mode": "realtime (Batch-equivalent is half)",
+ "by_arm": {
+  "lite-T1a": {
+   "calls": 150,
+   "usd": 0.2821,
+   "in": 469027,
+   "out": 109873,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "lite-T1b": {
+   "calls": 150,
+   "usd": 0.28,
+   "in": 469027,
+   "out": 108505,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "lite-T1c": {
+   "calls": 150,
+   "usd": 0.2815,
+   "in": 469027,
+   "out": 109491,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "lite-T02a": {
+   "calls": 150,
+   "usd": 0.2811,
+   "in": 469027,
+   "out": 109245,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "lite-T02b": {
+   "calls": 150,
+   "usd": 0.2802,
+   "in": 469027,
+   "out": 108611,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "lite-T0a": {
+   "calls": 150,
+   "usd": 0.2776,
+   "in": 469027,
+   "out": 106924,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "lite-T0b": {
+   "calls": 150,
+   "usd": 0.2776,
+   "in": 469027,
+   "out": 106924,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "flash-T1a": {
+   "calls": 150,
+   "usd": 0.5905,
+   "in": 469027,
+   "out": 118652,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "flash-T1b": {
+   "calls": 150,
+   "usd": 0.5899,
+   "in": 469027,
+   "out": 118447,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "flash-T1c": {
+   "calls": 150,
+   "usd": 0.5914,
+   "in": 469027,
+   "out": 118949,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "flash-T02a": {
+   "calls": 155,
+   "usd": 0.6003,
+   "in": 488500,
+   "out": 118688,
+   "thinking": 0,
+   "empty_or_nonstop": 5
+  },
+  "flash-T02b": {
+   "calls": 150,
+   "usd": 0.5876,
+   "in": 469027,
+   "out": 117706,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "flash-T0a": {
+   "calls": 150,
+   "usd": 0.5931,
+   "in": 469027,
+   "out": 119518,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "flash-T0b": {
+   "calls": 150,
+   "usd": 0.5924,
+   "in": 469027,
+   "out": 119282,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "lite-BO3-pick": {
+   "calls": 150,
+   "usd": 0.3261,
+   "in": 518615,
+   "out": 22277,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  },
+  "flash-BO3-pick": {
+   "calls": 150,
+   "usd": 0.34,
+   "in": 546792,
+   "out": 22200,
+   "thinking": 0,
+   "empty_or_nonstop": 0
+  }
+ }
+}
