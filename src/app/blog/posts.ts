@@ -81,7 +81,7 @@ export const posts: BlogPost[] = [
     slug: 'four-commentaries-on-nothing',
     title: 'Four Commentaries on Nothing',
     subtitle:
-      'Nāgārjuna with Candrakīrti, a Chan master named Awakened-to-Emptiness, a Latin dictionary of Kabbalah, and Dionysius with Johann Eck: four commentaries that try to stop the reader from turning nothing into a thing. What our machine translations of them get right, and where they fail.',
+      'Nāgārjuna with Candrakīrti, the Diamond Sutra and the Chan master Wukong, a Latin dictionary of Kabbalah, and Dionysius with Johann Eck: four commentaries that warn readers not to turn “nothing” into a doctrine. What our machine translations of them got right and wrong, and what we fixed.',
     date: '7 October 2026',
     readTime: '12 min read',
     kind: 'stories',
