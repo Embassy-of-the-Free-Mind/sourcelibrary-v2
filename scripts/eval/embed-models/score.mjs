@@ -150,8 +150,18 @@ function discoverArms(dir, prefix) {
     { name: 'gemini-trans', vecs: [trans], q },
     { name: 'gemini-orig', vecs: [ocr], q },
     { name: 'gemini-fuse', vecs: [trans, ocr], q },
-    ...discoverArms(DIR, 't'),
   ];
+  // Control: the same model re-embedding exactly the stored text (gemini-dual.mjs --fresh).
+  const freshFile = path.join(DIR, 'vec-t-gemini-fresh.jsonl');
+  if (fs.existsSync(freshFile)) {
+    const fresh = loadVecs([freshFile]);
+    arms.push({ name: 'gemini-fresh', vecs: [fresh], q }, { name: 'gemini-fresh+orig', vecs: [fresh, ocr], q });
+    const cos = [...trans].map(([i, v]) => dot(v, fresh.get(i))).sort((a, b) => a - b);
+    const below = (t) => cos.filter((c) => c < t).length;
+    out.storedVsFresh = { n: cos.length, p01: cos[Math.floor(cos.length * 0.01)], median: cos[Math.floor(cos.length / 2)], below099: below(0.99), below09: below(0.9), below05: below(0.5) };
+    console.log(`\nstored vs fresh Gemini vector of the same text: n ${cos.length}, median ${out.storedVsFresh.median.toFixed(4)}, p1 ${out.storedVsFresh.p01.toFixed(3)}, <0.99: ${below(0.99)}, <0.9: ${below(0.9)}, <0.5: ${below(0.5)}`);
+  }
+  arms.push(...discoverArms(DIR, 't'));
   const all = poolT.map((_, i) => i);
 
   const golden = JSON.parse(fs.readFileSync(path.join(here, '../librarian-search/golden-set.json'), 'utf8')).queries;

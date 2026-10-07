@@ -58,12 +58,17 @@ if (!fs.existsSync(qFile)) {
   console.log(`queries embedded: ${all.length}`);
 }
 
-// Original-text vectors for translated pool-T pages.
+// Original-text vectors for translated pool-T pages — or, with --fresh, a
+// re-embed of EXACTLY the text each stored vector was made from (the `trans`
+// field), for every page: a control that separates "a new model" from "a
+// re-embed with the same model" (stored vectors can be out of sync with their text).
+const FRESH = args.includes('--fresh');
 const pool = fs.readFileSync(path.join(DIR, 'pool-t.jsonl'), 'utf8').trim().split('\n').map((l) => JSON.parse(l));
-const outFile = path.join(DIR, 'vec-t-gemini-ocr.jsonl');
+const outFile = path.join(DIR, FRESH ? 'vec-t-gemini-fresh.jsonl' : 'vec-t-gemini-ocr.jsonl');
+const field = FRESH ? 'trans' : 'ocr';
 const done = new Set(fs.existsSync(outFile) ? fs.readFileSync(outFile, 'utf8').trim().split('\n').filter(Boolean).map((l) => JSON.parse(l).i) : []);
-const todo = pool.map((r, i) => (r.translated && !done.has(i) ? i : -1)).filter((i) => i >= 0);
-console.log(`ocr vectors: ${done.size} done, ${todo.length} to embed`);
+const todo = pool.map((r, i) => ((FRESH || r.translated) && !done.has(i) ? i : -1)).filter((i) => i >= 0);
+console.log(`${field} vectors: ${done.size} done, ${todo.length} to embed`);
 const chunks = [];
 for (let k = 0; k < todo.length; k += 50) chunks.push(todo.slice(k, k + 50));
 let next = 0;
@@ -72,7 +77,7 @@ const t0 = Date.now();
 async function worker() {
   while (next < chunks.length) {
     const idx = chunks[next++];
-    const texts = idx.map((i) => pool[i].ocr.slice(0, 8000));
+    const texts = idx.map((i) => pool[i][field].slice(0, 8000));
     const vecs = await embedBatch(texts);
     addEmbedUsage(usage, texts);
     fs.appendFileSync(outFile, idx.map((i, j) => JSON.stringify({ i, v: vecs[j].map((x) => +x.toFixed(6)) })).join('\n') + '\n');
