@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
     const firstIssue = parsed.error.issues[0]?.message;
     const friendly = firstIssue && firstIssue !== 'Required'
       ? firstIssue
-      : 'I couldn\'t read that request — please refresh the page and try again.';
+      : 'I couldn\'t read that request. Please refresh the page and try again.';
     try {
       const db = await getDb();
       await db.collection('embassy_errors').insertOne({
@@ -473,7 +473,7 @@ export async function POST(request: NextRequest) {
         });
       } catch { /* best effort */ }
       try {
-        await send({ type: 'error', message: 'I’m sorry — I lost my train of thought mid-search. Try again?', debug: errMsg });
+        await send({ type: 'error', message: 'I’m sorry, I lost my train of thought mid-search. Try again?', debug: errMsg });
         await writer.close();
       } catch { /* already closed */ }
     }
