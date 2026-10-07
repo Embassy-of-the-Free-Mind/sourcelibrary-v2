@@ -30,6 +30,7 @@ import { hashAlignmentText, WORD_ALIGNMENT_VERSION, type WordAlignmentData } fro
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { IMPRINT_PLACE_PROJECTION } from '@/lib/imprint';
 import { semanticPageSearchGlobal } from '@/lib/semantic-search';
+import { GLOBAL_SCOPE } from '@/lib/tenant-search-scope';
 import type { Book, Page, TranslationEdition } from '@/lib/types';
 import {
   cleanPageLines, paneText, pickFilmLines,
@@ -207,7 +208,9 @@ async function loadSearch(
   query: string,
   here: { bookId: string; pageId: string; workId?: string },
 ): Promise<JourneyConnect['search']> {
-  const rows = await semanticPageSearchGlobal(query, 20);
+  // Whole-library scope on purpose: the only config with a search is
+  // /how-it-works, which the proxy refuses on partner hosts (tenant-global-paths).
+  const rows = await semanticPageSearchGlobal(query, 20, { scope: GLOBAL_SCOPE });
   if (!rows.length) throw new Error(`journey: the search "${query}" returned nothing`);
   const books = await db.collection('books').find(
     { id: { $in: [...new Set(rows.map(r => r.book_id))] } },
