@@ -462,8 +462,9 @@ async function pool(items, conc, fn) { let i = 0; await Promise.all(Array.from({
 
 // ---------- stage: a-prov ----------
 async function stageAProv() {
-  const counts = new Map(readJsonl(path.join(OUT, 'counts.jsonl')).map((r) => [r.h, r.counts]));
-  const hits = allQueries().filter((q) => q.set === 'main').filter((q) => { const c = counts.get(q.h); return c && Object.values(c).some((n) => n > 0); });
+  // counts from the long file (works while a-query is still running); the sample is drawn from CC 2025-30 hits
+  const counts = new Map(); for (const r of readJsonl(path.join(OUT, 'counts-long.jsonl'))) { if (r.count < 0) continue; const c = counts.get(r.h) || {}; c[r.index] = r.count; counts.set(r.h, c); }
+  const hits = allQueries().filter((q) => q.set === 'main').filter((q) => (counts.get(q.h)?.['v2_cc-2025-30'] || 0) > 0);
   const byWork = new Map(); for (const h of hits) if (!byWork.has(h.id)) byWork.set(h.id, h); // one hit per work
   const pick = shuffle([...byWork.values()].sort((a, b) => a.h.localeCompare(b.h)), '6038-PROV').slice(0, Number(args.n || 40));
   const out = path.join(PRIVATE, 'prov-docs.jsonl'); const done = new Set(readJsonl(out).map((x) => x.h));
@@ -479,7 +480,9 @@ async function stageAProv() {
       const seg = (f.segment_by_shard || []).findIndex(([a, b]) => (MINI_ALL.includes(ix) ? b > a : b >= a));
       if (seg >= 0) {
         const rank = f.segment_by_shard[seg][0];
-        const d = MINI_ALL.includes(ix) ? await post({ index: ix, query_type: 'get_doc_by_rank', s: seg, rank, max_ctx_len: 600 }) : await post({ index: ix, query_type: 'get_doc_by_rank', s: seg, rank, max_disp_len: 400, query: q.text });
+        // mini cuts the context at a byte offset: a multi-byte character split there fails to decode, so try nearby lengths
+        let d = {};
+        for (const len of [600, 601, 602, 603]) { d = MINI_ALL.includes(ix) ? await post({ index: ix, query_type: 'get_doc_by_rank', s: seg, rank, max_ctx_len: len, query: q.text }) : await post({ index: ix, query_type: 'get_doc_by_rank', s: seg, rank, max_disp_len: 400, query: q.text }); if (!d.error) break; }
         const text = d.text || (Array.isArray(d.spans) ? d.spans.map((x) => x[0]).join('') : '');
         doc = { text: String(text).slice(0, 2000), meta: String(d.metadata || d.doc_meta || '').slice(0, 600), keys: Object.keys(d) };
       }

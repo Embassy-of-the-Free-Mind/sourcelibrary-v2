@@ -414,12 +414,16 @@ async function stageReport() {
     by_R_in_W: by(W.filter((x) => x.has_passages), (x) => (x.R ? 'recalled' : 'not recalled'), (x) => x.A_plus),
     per_index_family: Object.fromEntries(Object.entries(A.sens.main).map(([k, v]) => [k, v?.works?.s || '—'])),
   };
+  const prov = readJsonl(P('a-prov-labels.jsonl')); if (prov.length) fs.copyFileSync(P('a-prov-labels.jsonl'), path.join(OUT, 'a-prov-labels.jsonl'));
+  const provL = prov.filter((r) => r.label !== 'doc not retrieved'); const provCounts = {}; for (const r of prov) provCounts[r.label] = (provCounts[r.label] || 0) + 1;
+  presence.provenance = { counts: provCounts, same_work_share: wil(provL.filter((r) => r.label === 'same work').length, provL.length) };
+  presence.same_work_adjusted = presence.provenance.same_work_share.p != null ? presence.of_500_with_passages.p * presence.provenance.same_work_share.p : null;
   const ps = A.sens.pours['any (completed indexes)']?.works;
   presence.adjusted_upper = ps?.p ? Math.min(1, presence.of_500_with_passages.p / ps.p) : null;
   const eC = { manuscripts_with_raw_ocr: rows.filter((x) => x.genre === 'manuscript' && x.C_raw).length, any: share(rows, (x) => x.C_any), curated: share(rows, (x) => x.C_curated), raw_only: share(rows, (x) => x.C_raw && !x.C_curated), prov_unknown: share(rows, (x) => x.C_prov_unknown), of_W: share(W, (x) => x.C_any), by_provider: by(rows, (x) => x.pg, (x) => x.C_any), by_lang: by(rows, (x) => x.lg, (x) => x.C_any) };
   const agree = { R_vs_Aplus_W: kappa2(W.filter((x) => x.has_passages).map((x) => [!!x.R, x.A_plus])), R_vs_C_W: kappa2(W.map((x) => [!!x.R, x.C_any])), Aplus_vs_C_500: kappa2(rows.filter((x) => x.has_passages).map((x) => [x.A_plus, x.C_any])) };
   const fused = {
-    primary_W: units(W, offer), conservative_W: units(W, offerCons), without_A_W: units(W, offerNoA), unrestricted_500: units(rows, (x) => !x.R_any && !(A_broken ? false : Aflag(x)) && !x.C_any),
+    primary_W: units(W, offer), conservative_W: units(W, offerCons), without_A_W: units(W, offerNoA), posthoc_notR_notA_W: units(W, (x) => !x.R && !Aflag(x)), posthoc_notR_notA_noCurated_W: units(W, (x) => !x.R && !Aflag(x) && !x.C_curated), unrestricted_500: units(rows, (x) => !x.R_any && !(A_broken ? false : Aflag(x)) && !x.C_any),
     by_lang: by(W, (x) => x.lg, offer), by_visible: by(W, (x) => (x.visible ? 'visible' : 'held'), offer), by_provider: by(W, (x) => x.pg, offer), by_genre: by(W, (x) => x.genre, offer),
   };
   const report = { generated: new Date().toISOString(), gates: { A: { pweb: gates.A_pweb_sensitivity, neg: gates.A_neg_rate, broken: A_broken, strict_headline: A_strict }, B: { broken: B.broken, gate: B.gate } }, A: { complete: A.complete, sens: A.sens, presence }, B, C: eC, agree, fused };
@@ -435,6 +439,7 @@ async function stageReport() {
   md.push('| index family | P-web works | P-ours works | P-IA works | negatives (passages) | the 500 (works) |', '|---|---|---|---|---|---|');
   for (const k of Object.keys(A.sens.main)) md.push(`| ${k} | ${A.sens.pweb[k]?.works?.s || '—'} | ${A.sens.pours[k]?.works?.s || '—'} | ${A.sens.pia[k]?.works?.s || '—'} | ${A.sens.neg[k]?.passages?.s || '—'} | ${A.sens.main[k]?.works?.s || '—'} |`);
   md.push('', '## Layer A presence (the 500)', '', `- A+ (≥1 passage): ${presence.of_500_with_passages.s}; A++: ${presence.strict_500.s}; of W: ${presence.of_W.s}; sensitivity-adjusted upper bound ${pct(presence.adjusted_upper)}`);
+  md.push(`- provenance (by eye, seeded hits on CC 2025-30): ${JSON.stringify(presence.provenance?.counts || {})}; same-work share ${presence.provenance?.same_work_share?.s || '—'}; A+ discounted to same-work ${pct(presence.same_work_adjusted)}`);
   for (const [k, v] of Object.entries({ language: presence.by_lang, provider: presence.by_provider, 'visible/held': presence.by_visible, century: presence.by_century, genre: presence.by_genre, 'run-2 recall (W)': presence.by_R_in_W })) md.push(`- by ${k}: ` + Object.entries(v).map(([a, b]) => `${a} ${b.s}`).join('; '));
   md.push('', '## Layer B (content knowledge)', '', `Broken: **${B.broken}**. Famous controls: valid ${B.famous_valid}; guessable ${B.famous_guessable.s}; closed-book all ${B.famous_closed_all.s}; closed-book non-guessable ${B.famous_closed_nonguessable.s}. Gate ${JSON.stringify(B.gate)}. Judge vs eye: ${B.judge_eye ? `${(100 * B.judge_eye.agree).toFixed(0)}% κ ${B.judge_eye.kappa.toFixed(2)} (n ${B.judge_eye.n})` : '—'}. Open-book valid ${B.open_book_valid.s}.`, '');
   md.push('## Layer C (public e-text)', '', `- any ${eC.any.s}; curated ${eC.curated.s}; raw OCR only ${eC.raw_only.s}; provider OCR unknown ${eC.prov_unknown.s}; of W ${eC.of_W.s}`);
@@ -443,7 +448,7 @@ async function stageReport() {
   md.push('## Agreement', '');
   for (const [k, v] of Object.entries(agree)) md.push(`- ${k}: n ${v.n}, both ${v.both}, only first ${v.onlyA}, only second ${v.onlyB}, neither ${v.neither}, agree ${pct(v.agree)}, κ ${v.kappa?.toFixed(2)}`);
   md.push('', '## Fused: strongest offer', '');
-  for (const [k, v] of Object.entries({ 'primary (W)': fused.primary_W, 'conservative (W, provider OCR unknown excluded)': fused.conservative_W, 'without A (W)': fused.without_A_W, 'unrestricted (500)': fused.unrestricted_500 })) md.push(`- ${k}: works ${v.works.s}; volumes ${fmtB(v.volumes)}; pages ${fmtB(v.pages)}`);
+  for (const [k, v] of Object.entries({ 'primary (W)': fused.primary_W, 'conservative (W, provider OCR unknown excluded)': fused.conservative_W, 'without A (W)': fused.without_A_W, 'unrestricted (500)': fused.unrestricted_500, 'POST HOC: not recalled and not in crawl (W)': fused.posthoc_notR_notA_W, 'POST HOC: not recalled, not in crawl, no curated e-text (W)': fused.posthoc_notR_notA_noCurated_W })) md.push(`- ${k}: works ${v.works.s}; volumes ${fmtB(v.volumes)}; pages ${fmtB(v.pages)}`);
   for (const [k, v] of Object.entries({ language: fused.by_lang, 'visible/held': fused.by_visible, provider: fused.by_provider, genre: fused.by_genre })) md.push(`- by ${k}: ` + Object.entries(v).map(([a, b]) => `${a} ${b.s}`).join('; '));
   md.push('', `Gemini spend: $${spent().toFixed(2)} (endpoint ${ENDPOINT}).`);
   fs.writeFileSync(path.join(OUT, 'report.md'), md.join('\n') + '\n');
