@@ -12,6 +12,8 @@
  * Reads only committed files, calls no model:
  *   #5695 T1–T5  results/xlref-t{1..5}-2026-10/ (per-page rows: fidelity per judge, reversal, billed cost)
  *   #5497        results/tengyur-arms-2026-10/ (judge families F1, F2 and the metered cost.json)
+ *   #6121        results/tengyur-levers-6121/ (round 1) and results/tengyur-models-6121/ (round 2):
+ *                refjudge/scores.json per-side rows and arms/ledger.jsonl billed cost; one panel each
  *   production   scripts/lib/translate-core.mjs getTranslateModelForBook, the router for new pages
  * Writes src/data/translation-pareto.json. No timestamps: unchanged inputs give an identical file.
  *   node scripts/eval/build-translation-pareto.mjs           # write
@@ -46,8 +48,8 @@ const rel = p => path.relative(REPO, p);
 
 const LITE = 'gemini-3.1-flash-lite', FLASH = 'gemini-3-flash-preview', THINK = 'gemini-3-flash-preview+thinking', THINK_DYN = 'gemini-3-flash-preview+dynamic-thinking', OPUS = 'claude-opus';
 const LABEL = { [LITE]: 'Gemini 3.1 Flash-Lite', [FLASH]: 'Gemini 3 Flash', [THINK]: 'Gemini 3 Flash, thinking on', [THINK_DYN]: 'Gemini 3 Flash, dynamic thinking', [OPUS]: 'Claude Opus' };
-// Never run as the translator on any of these pages. (Gemini 3.1 Pro ran on Tibetan only as a
-// find-and-replace pass over flagged reversals, #5497 arm E — not a translation.)
+// Never run as the translator on any of these pages. (Gemini 3.1 Pro ran as the Tibetan translator in
+// #6121 round 1 only, so the Tibetan chart drops it from this list.)
 const NOT_TESTED = ['Gemini 3.1 Pro (as the translator)', 'Claude through the metered API', 'GPT'];
 
 // ── small statistics, seeded so the file is byte-stable (as build-ocr-pareto.mjs) ─────────────
@@ -169,6 +171,61 @@ const TIB_WRITEUP = 'scripts/eval/experiments/2026-10-03-tengyur-quality-arms-54
 }
 TRACKS.push({ id: 'Tib', writeup: TIB_WRITEUP, judges: 2 });
 
+// Tibetan (#6121): two later packets on the Tengyur's weak sections, each read by two blind Opus judges
+// against two published translations on the same 58 aligned sides. Each is its own panel, never pooled
+// with #5497 or with each other: the judges, the pages and the references differ, and the write-up
+// warns the scale is relative (the stored English scored 4.41 in round 1 and 4.27 in round 2).
+// S is the stored English (an earlier Gemini 3 Flash run) and C is a context lever: neither is an engine
+// run, so both go in the notes. A is production re-run; round 2 re-judged round 1's A outputs, so A is
+// priced from round 1's ledger. O (Opus) ran on the subscription and has no metered cost.
+const G35 = 'gemini-3.5-flash', G38 = 'gemini-3.8-flash', PRO = 'gemini-3.1-pro-preview+thinking128';
+Object.assign(LABEL, { [G35]: 'Gemini 3.5 Flash', [G38]: 'Gemini 3.8 Flash', [PRO]: 'Gemini 3.1 Pro, thinking budget 128' });
+const TIB_REF_REFERENCES = [
+  { toh: 'D4231', reference: "Stcherbatsky's English (1930) of Dharmottara's Nyāyabinduṭīkā, D4231" },
+  { toh: 'D3862', reference: "La Vallée Poussin's French (1907) of Candrakīrti's Madhyamakāvatārabhāṣya, D3862" },
+];
+const TIB_REF = [
+  { kind: 'tengyur-6121-r1', heading: 'Weak sections, round 1, 7 Oct 2026: a stronger model', dir: 'tengyur-levers-6121', writeup: 'scripts/eval/experiments/2026-10-07-tengyur-weak-section-levers-6121.md',
+    engine: { A: FLASH, P: PRO }, ledger: { A: 'tengyur-levers-6121', P: 'tengyur-levers-6121' }, levers: { C: 'Gemini 3 Flash given the title and the two previous sides as context (a lever, not an engine)' } },
+  { kind: 'tengyur-6121-r2', heading: 'Weak sections, round 2, 7 Oct 2026: newer models', dir: 'tengyur-models-6121', writeup: 'scripts/eval/experiments/2026-10-07-tengyur-newer-models-6121.md',
+    engine: { A: FLASH, G35, G38, O: OPUS }, ledger: { A: 'tengyur-levers-6121', G35: 'tengyur-models-6121', G38: 'tengyur-models-6121' }, levers: {} },
+];
+const tibRefRows = [];
+for (const pk of TIB_REF) {
+  const sc = JSON.parse(fs.readFileSync(path.join(RES, pk.dir, 'refjudge', 'scores.json'), 'utf8'));
+  // Billed realtime cost per page from each arm's ledger, summed over retries.
+  const perPage = {};
+  for (const [arm, dir] of Object.entries(pk.ledger)) {
+    perPage[arm] = new Map();
+    for (const l of jsonl(path.join(RES, dir, 'arms', 'ledger.jsonl')).filter(l => l.arm === arm)) {
+      const c = perPage[arm].get(l.page_id) || { usd: 0, thinking: 0 };
+      perPage[arm].set(l.page_id, { usd: c.usd + l.usd, thinking: c.thinking + (l.thinking || 0) });
+    }
+  }
+  pk.stored = sc.all.S.fidelity_mean;
+  for (const r of sc.rows) {
+    for (const arm of Object.keys(pk.engine)) {
+      const j = Object.values(r.J).map(x => x[arm]);
+      if (j.length !== 2 || j.some(x => !x)) throw new Error(`${pk.dir} ${r.id} ${arm}: ${j.length} judges`);
+      const c = perPage[arm]?.get(r.page_id);
+      if (pk.ledger[arm] && !c) throw new Error(`${pk.dir} ${r.id} ${arm}: no ledger row for page ${r.page_id}`);
+      tibRefRows.push({
+        packet: pk.kind, arm, engine: pk.engine[arm], page: r.page_id, book: r.toh,
+        fidelity: avg(j.map(x => x.fid)), reversal: j.some(x => x.inv > 0),
+        usd_batch: c ? c.usd * BATCH : null, thinking: c ? c.thinking : 0,
+      });
+    }
+  }
+  // Check the parse against the packet's own scorer, arm by arm.
+  for (const arm of Object.keys(pk.engine)) {
+    const mine = tibRefRows.filter(r => r.packet === pk.kind && r.arm === arm), own = sc.all[arm];
+    if (mine.length !== sc.all.sides || Math.abs(avg(mine.map(r => r.fidelity)) - own.fidelity_mean) > 0.005 || mine.filter(r => r.reversal).length !== own.inversion_sides_either) {
+      throw new Error(`${pk.dir}: parse does not reproduce refjudge/scores.json for ${arm}`);
+    }
+  }
+  TRACKS.push({ id: pk.kind, writeup: pk.writeup, judges: 2 });
+}
+
 // ── panels ───────────────────────────────────────────────────────────────────────────────────
 const LANGS = [
   ['Latin', 'T1'], ['Greek', 'T2'], ['German', 'T3'], ['French', 'T3'], ['Italian', 'T3'], ['Dutch', 'T3'], ['Spanish', 'T3'],
@@ -286,6 +343,55 @@ for (const [lang, trackId] of LANGS) {
     not_on_shared_pages: excluded.map(x => ({ engine: x.label, label: x.label, pages: x.pages, why: x.why })),
     not_tested: NOT_TESTED,
   });
+}
+
+// The #6121 Tibetan panels: every arm read every side, so all engines are on the same 58 pages.
+{
+  const tib = charts.find(c => c.id === 'tibetan');
+  if (!tib) throw new Error('no Tibetan chart for the #6121 panels');
+  tib.panels[0].heading = "84000's texts, 3 Oct 2026 (#5497)";
+  for (const pk of TIB_REF) {
+    const pr = tibRefRows.filter(r => r.packet === pk.kind);
+    const pages = [...new Set(pr.map(r => r.page))];
+    const pick = e => pr.filter(r => r.engine === e);
+    const production = tib.production_engine;
+    const pt = e => ({ engine: e, label: LABEL[e], production: e === production, ...stats(pick(e), hash(`Tibetan|${pk.kind}|${e}`)) });
+    const placed = [], noCost = [];
+    for (const e of Object.values(pk.engine)) {
+      const rs = pick(e);
+      if (rs.every(r => typeof r.usd_batch === 'number')) {
+        const thinking = avg(rs.map(r => r.thinking));
+        placed.push({ ...pt(e), cost: {
+          usd_per_1k: r3(avg(rs.map(r => r.usd_batch)) * 1000), basis: 'metered',
+          detail: `billed tokens of this run at the Batch rate${thinking ? `, ${Math.round(thinking).toLocaleString('en-US')} thinking tokens per page` : ''}; averaged over these ${rs.length} pages`,
+          source: pk.writeup,
+        } });
+      } else {
+        noCost.push({ ...pt(e), cost: null,
+          subset: { n_pages: rs.length, production_label: LABEL[production], production_fidelity: r3(avg(pick(production).map(r => r.fidelity))) },
+          note: e === OPUS ? 'run on the subscription, so no metered cost; the judges are also Opus, which may flatter it' : 'no metered cost' });
+      }
+    }
+    for (const a of placed) a.on_frontier = placed.length >= FRONTIER_MIN && !placed.some(b => b !== a
+      && b.cost.usd_per_1k <= a.cost.usd_per_1k && b.fidelity >= a.fidelity && (b.cost.usd_per_1k < a.cost.usd_per_1k || b.fidelity > a.fidelity));
+    placed.sort((a, b) => a.cost.usd_per_1k - b.cost.usd_per_1k || a.engine.localeCompare(b.engine));
+    const date = dateOf(pk.writeup);
+    tib.panels.push({
+      kind: pk.kind, heading: pk.heading, n_pages: pages.length, n_books: new Set(pr.map(r => r.book)).size,
+      frontier: placed.length >= FRONTIER_MIN,
+      frontier_note: placed.length >= FRONTIER_MIN ? null : `too few for a frontier: ${placed.length} engine${placed.length === 1 ? '' : 's'} with a measured cost on these pages`,
+      judges: 2,
+      references: TIB_REF_REFERENCES.map(x => ({ stratum: x.toh, reference: x.reference, pages: new Set(pr.filter(r => r.book === x.toh).map(r => r.page)).size, date })),
+      date, files: [pk.writeup],
+      notes: [
+        `A separate read from the other Tibetan panels, with other pages, judges and references, so its scores are compared only within this panel`,
+        `The stored English, an earlier ${LABEL[FLASH]} run, scores ${pk.stored.toFixed(2)} on these pages`,
+        ...Object.values(pk.levers).map(l => `Also judged, not plotted: ${l}`),
+      ],
+      placed, no_cost: noCost,
+    });
+  }
+  tib.not_tested = tib.not_tested.filter(t => !/Gemini 3\.1 Pro/.test(t));
 }
 
 const out = {

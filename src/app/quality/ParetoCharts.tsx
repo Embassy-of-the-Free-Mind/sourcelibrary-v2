@@ -38,6 +38,8 @@ type Point = {
 };
 type Panel = {
   kind: string; n_pages: number; n_books: number; frontier: boolean; frontier_note: string | null;
+  /** a panel that is its own read (another packet) names itself; otherwise the heading follows `kind` */
+  heading?: string;
   references: { stratum: string; reference: string; pages: number; date: string }[]; date: string;
   judges?: number; notes?: string[];
   placed: Point[]; no_cost: Point[];
@@ -169,7 +171,7 @@ const usd = (x: number) => `$${x < 0.1 ? x.toFixed(3) : x.toFixed(2)}`;
 const plural = (n: number, w: string) => `${n} ${w}${n === 1 ? '' : 's'}`;
 const listOf = (xs: string[]) => (xs.length <= 1 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`);
 
-const panelHeading = (p: Panel) => (p.kind === 'most-pages' ? 'The engines read on the most pages' : 'The most engines read on the same pages');
+const panelHeading = (p: Panel) => p.heading ?? (p.kind === 'most-pages' ? 'The engines read on the most pages' : 'The most engines read on the same pages');
 
 /** "28 pages from 28 books" — always on the face of the figure. */
 function sample(p: Panel) {

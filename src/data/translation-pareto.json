@@ -29,6 +29,14 @@
   {
    "track": "Tib",
    "writeup": "scripts/eval/experiments/2026-10-03-tengyur-quality-arms-5497.md"
+  },
+  {
+   "track": "tengyur-6121-r1",
+   "writeup": "scripts/eval/experiments/2026-10-07-tengyur-weak-section-levers-6121.md"
+  },
+  {
+   "track": "tengyur-6121-r2",
+   "writeup": "scripts/eval/experiments/2026-10-07-tengyur-newer-models-6121.md"
   }
  ],
  "charts": [
@@ -1618,12 +1626,244 @@
        },
        "note": "run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
       }
+     ],
+     "heading": "84000's texts, 3 Oct 2026 (#5497)"
+    },
+    {
+     "kind": "tengyur-6121-r1",
+     "heading": "Weak sections, round 1, 7 Oct 2026: a stronger model",
+     "n_pages": 58,
+     "n_books": 2,
+     "frontier": false,
+     "frontier_note": "too few for a frontier: 2 engines with a measured cost on these pages",
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "D4231",
+       "reference": "Stcherbatsky's English (1930) of Dharmottara's Nyāyabinduṭīkā, D4231",
+       "pages": 28,
+       "date": "2026-10-07"
+      },
+      {
+       "stratum": "D3862",
+       "reference": "La Vallée Poussin's French (1907) of Candrakīrti's Madhyamakāvatārabhāṣya, D3862",
+       "pages": 30,
+       "date": "2026-10-07"
+      }
+     ],
+     "date": "2026-10-07",
+     "files": [
+      "scripts/eval/experiments/2026-10-07-tengyur-weak-section-levers-6121.md"
+     ],
+     "notes": [
+      "A separate read from the other Tibetan panels, with other pages, judges and references, so its scores are compared only within this panel",
+      "The stored English, an earlier Gemini 3 Flash run, scores 4.41 on these pages",
+      "Also judged, not plotted: Gemini 3 Flash given the title and the two previous sides as context (a lever, not an engine)"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.397,
+       "fidelity_ci95": [
+        4.259,
+        4.534
+       ],
+       "share_ge4": 0.914,
+       "reversals": {
+        "pages": 6,
+        "n": 58,
+        "per_100": 10.3,
+        "ci95": [
+         4.8,
+         20.8
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.692,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 58 pages",
+        "source": "scripts/eval/experiments/2026-10-07-tengyur-weak-section-levers-6121.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-pro-preview+thinking128",
+       "label": "Gemini 3.1 Pro, thinking budget 128",
+       "production": false,
+       "fidelity": 4.448,
+       "fidelity_ci95": [
+        4.302,
+        4.586
+       ],
+       "share_ge4": 0.931,
+       "reversals": {
+        "pages": 5,
+        "n": 58,
+        "per_100": 8.6,
+        "ci95": [
+         3.7,
+         18.6
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 9.464,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate, 225 thinking tokens per page; averaged over these 58 pages",
+        "source": "scripts/eval/experiments/2026-10-07-tengyur-weak-section-levers-6121.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": []
+    },
+    {
+     "kind": "tengyur-6121-r2",
+     "heading": "Weak sections, round 2, 7 Oct 2026: newer models",
+     "n_pages": 58,
+     "n_books": 2,
+     "frontier": true,
+     "frontier_note": null,
+     "judges": 2,
+     "references": [
+      {
+       "stratum": "D4231",
+       "reference": "Stcherbatsky's English (1930) of Dharmottara's Nyāyabinduṭīkā, D4231",
+       "pages": 28,
+       "date": "2026-10-07"
+      },
+      {
+       "stratum": "D3862",
+       "reference": "La Vallée Poussin's French (1907) of Candrakīrti's Madhyamakāvatārabhāṣya, D3862",
+       "pages": 30,
+       "date": "2026-10-07"
+      }
+     ],
+     "date": "2026-10-07",
+     "files": [
+      "scripts/eval/experiments/2026-10-07-tengyur-newer-models-6121.md"
+     ],
+     "notes": [
+      "A separate read from the other Tibetan panels, with other pages, judges and references, so its scores are compared only within this panel",
+      "The stored English, an earlier Gemini 3 Flash run, scores 4.27 on these pages"
+     ],
+     "placed": [
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": true,
+       "fidelity": 4.267,
+       "fidelity_ci95": [
+        4.121,
+        4.405
+       ],
+       "share_ge4": 0.914,
+       "reversals": {
+        "pages": 7,
+        "n": 58,
+        "per_100": 12.1,
+        "ci95": [
+         6,
+         22.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 1.692,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 58 pages",
+        "source": "scripts/eval/experiments/2026-10-07-tengyur-newer-models-6121.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.8-flash",
+       "label": "Gemini 3.8 Flash",
+       "production": false,
+       "fidelity": 4.655,
+       "fidelity_ci95": [
+        4.526,
+        4.767
+       ],
+       "share_ge4": 0.983,
+       "reversals": {
+        "pages": 2,
+        "n": 58,
+        "per_100": 3.4,
+        "ci95": [
+         1,
+         11.7
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 2.244,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 58 pages",
+        "source": "scripts/eval/experiments/2026-10-07-tengyur-newer-models-6121.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.5-flash",
+       "label": "Gemini 3.5 Flash",
+       "production": false,
+       "fidelity": 4.259,
+       "fidelity_ci95": [
+        4.121,
+        4.397
+       ],
+       "share_ge4": 0.879,
+       "reversals": {
+        "pages": 8,
+        "n": 58,
+        "per_100": 13.8,
+        "ci95": [
+         7.2,
+         24.9
+        ]
+       },
+       "cost": {
+        "usd_per_1k": 5.095,
+        "basis": "metered",
+        "detail": "billed tokens of this run at the Batch rate; averaged over these 58 pages",
+        "source": "scripts/eval/experiments/2026-10-07-tengyur-newer-models-6121.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "claude-opus",
+       "label": "Claude Opus",
+       "production": false,
+       "fidelity": 4.905,
+       "fidelity_ci95": [
+        4.836,
+        4.966
+       ],
+       "share_ge4": 1,
+       "reversals": {
+        "pages": 1,
+        "n": 58,
+        "per_100": 1.7,
+        "ci95": [
+         0.3,
+         9.1
+        ]
+       },
+       "cost": null,
+       "subset": {
+        "n_pages": 58,
+        "production_label": "Gemini 3 Flash",
+        "production_fidelity": 4.267
+       },
+       "note": "run on the subscription, so no metered cost; the judges are also Opus, which may flatter it"
+      }
      ]
     }
    ],
    "not_on_shared_pages": [],
    "not_tested": [
-    "Gemini 3.1 Pro (as the translator)",
     "Claude through the metered API",
     "GPT"
    ]
