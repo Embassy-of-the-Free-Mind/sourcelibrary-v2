@@ -1,5 +1,7 @@
 # #6182 amendment: Claude arms via OpenRouter (job pareto-claude-6182)
 
+**Amended 2026-10-07 (job pareto-claude-sub-6182; Derek: "only use claude through subscription. ONLY."): the route is now Claude Code subagents on the subscription (`sonnet` = CS, `haiku` = CH, ≤ 6 at a time, each unit's `prompt` byte-for-byte as the task, output written to a file, no OpenRouter or API key); CO is dropped (pareto-6182's `O` is the subscription Opus arm); cost is plotted at the Anthropic API list price from the tokens used ("subscription; API-list-equivalent", $0 billed); everything else below is unchanged.**
+
 PRIOR ART: `PREREG.md` (this directory; the pages, the request, both rules, the judges and the margin, all
 unchanged here) and `PREREG-open-arms.md` if present (the open-model arms added the same way). Written
 2026-10-07, committed before any Claude output on a judged page exists. Derek, 2026-10-07: "we have an
