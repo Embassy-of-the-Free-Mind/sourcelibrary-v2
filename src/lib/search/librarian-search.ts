@@ -20,12 +20,13 @@ import {
   semanticPageSearchScoped,
   semanticPageSearchGlobal,
 } from '@/lib/semantic-search';
-import { buildBookSearchStage, buildPageSearchStage } from '@/lib/atlas-search';
+import { buildBookSearchStage, buildPageSearchStage, PAGE_SEARCH_INDEX } from '@/lib/atlas-search';
 import { expandNameQuery, expandPersonNames } from '@/lib/search/name-variants';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { authorSlug as toAuthorSlug } from '@/lib/slugify';
 import { editionYear } from '@/lib/dedup';
 import { resolveQuoteText } from '@/lib/quote-text';
+import { isEnglishOriginalPage } from '@/lib/english-page-language';
 import type { Page } from '@/lib/types';
 
 // ── Types ────────────────────────────────────────────────────────────
@@ -38,7 +39,7 @@ export interface SearchPassage {
   page_number: number;
   text: string;
   score: number;
-  source: string; // 'kw' | 'kwv' | 'btp' | 'gp' | 'rrf(...)' — for diagnostics + UI
+  source: string; // 'kw' | 'eo' | 'kwv' | 'btp' | 'gp' | 'rrf(...)' — for diagnostics + UI
   /**
    * Edition metadata, so a consumer can tell a 1591 original from a 1928
    * compendium quoting it. Without these the Librarian cited Manly P. Hall
@@ -165,6 +166,74 @@ async function keywordSource(query: string, _opts: HybridSearchOptions): Promise
       score: r.score,
       source: 'kw',
     });
+    if (out.length >= 20) break;
+  }
+  return out;
+}
+
+// ── Source 1a: keyword over English-original leaves (#5867) ──────────
+
+/**
+ * Pages whose printed text is English and that carry no translation: Birch's
+ * *History of the Royal Society*, Pepys, Evelyn. Their reading text is the OCR.
+ *
+ * `keywordSource` cannot reach them for any name a translated book also prints.
+ * It scores `translation.data` at 2× and `ocr.data` at 1×, so a translated page
+ * matches twice (its translation and its OCR) and outscores an English
+ * original, which can only match once. Measured 2026-10-07: "Kuffler" put 60
+ * translated pages above Birch's Kuffler minutes (p.463, score 8.4 against a
+ * top-48 floor of 13.4), so the Librarian never saw them. Here they compete
+ * only with each other.
+ *
+ * The `mustNot` also admits untranslated FOREIGN pages; those are dropped by
+ * `isEnglishOriginalPage`, the same test `resolveQuoteText` applies, so no hit
+ * survives that the passage build would later throw away.
+ */
+async function englishOriginalSource(query: string): Promise<RawHit[]> {
+  try {
+    const isPhrase = /^".*"$/.test(query.trim());
+    const q = isPhrase ? query.trim().slice(1, -1) : query;
+    const db = await getDb();
+    const rows = await db.collection('pages')
+      .aggregate([
+        {
+          $search: {
+            index: PAGE_SEARCH_INDEX,
+            compound: {
+              must: [isPhrase ? { phrase: { query: q, path: 'ocr.data' } } : { text: { query: q, path: 'ocr.data' } }],
+              mustNot: [{ exists: { path: 'translation.data' } }],
+              filter: [{ range: { path: 'page_number', gt: 0 } }],
+            },
+          },
+        },
+        { $limit: 48 },
+        { $project: { book_id: 1, page_number: 1, 'ocr.data': 1, score: { $meta: 'searchScore' } } },
+      ])
+      .toArray();
+    return selectEnglishOriginalHits(rows as EnglishOriginalRow[]);
+  } catch {
+    return [];
+  }
+}
+
+interface EnglishOriginalRow {
+  book_id: string;
+  page_number: number;
+  ocr?: { data?: string };
+  score: number;
+}
+
+/** English-original leaves only, two per book, twenty in all — the kw lane's caps. */
+export function selectEnglishOriginalHits(rows: EnglishOriginalRow[]): RawHit[] {
+  const perBook = new Map<string, number>();
+  const out: RawHit[] = [];
+  for (const r of rows) {
+    const ocr = r.ocr?.data || '';
+    if (!isEnglishOriginalPage(ocr)) continue;
+    const n = (perBook.get(r.book_id) || 0) + 1;
+    if (n > 2) continue;
+    perBook.set(r.book_id, n);
+    out.push({ book_id: r.book_id, page_number: r.page_number, text: ocr.slice(0, 1200), score: r.score, source: 'eo' });
     if (out.length >= 20) break;
   }
   return out;
@@ -576,10 +645,57 @@ async function loadPassageTexts(hits: RawHit[]): Promise<Map<string, string>> {
   return out;
 }
 
-/** Mongo text when it resolved, else the lane's own; cleaned and capped. */
-export function passageText(hit: Pick<RawHit, 'book_id' | 'page_number' | 'text'>, pageTexts: Map<string, string>): string {
+const PASSAGE_CHARS = 1200;
+const WINDOW_LEAD = 300;
+const HEAD_CHARS = 60;
+const WINDOW_STOPWORDS = new Set(['about', 'what', 'which', 'with', 'from', 'that', 'this', 'there', 'their', 'were', 'have', 'does', 'into', 'than', 'they', 'when', 'where', 'who', 'whom', 'whose']);
+
+/**
+ * The PASSAGE_CHARS of `text` that hold the most distinct query terms. A page
+ * runs to 3,000+ characters and the matching sentence is often past the first
+ * 1,200: Birch's Kuffler minutes start at character 1,928 of p.463, under a
+ * running head that matches "Royal Society" — so the head of the page, and the
+ * window at the first match, both omit the sentence the passage was found for.
+ *
+ * So a term counts 1/(times it occurs on the page): the word a page repeats is
+ * what the page is about anyway, the word it prints once is what the reader
+ * came for. Matches in the first HEAD_CHARS are the running head and do not
+ * vote. Ties go to the earlier window; no match keeps the start of the page.
+ */
+export function passageWindow(text: string, query: string): string {
+  if (text.length <= PASSAGE_CHARS) return text;
+  const terms = [...new Set((query.toLowerCase().match(/[\p{L}\p{N}]+/gu) || [])
+    .filter(t => t.length >= 4 && !WINDOW_STOPWORDS.has(t)))];
+  const lower = text.toLowerCase();
+  const hits: { at: number; term: number }[] = [];
+  const weight: number[] = [];
+  terms.forEach((t, i) => {
+    let n = 0;
+    for (let at = lower.indexOf(t); at !== -1; at = lower.indexOf(t, at + t.length)) {
+      n++;
+      if (at >= HEAD_CHARS) hits.push({ at, term: i });
+    }
+    weight[i] = n ? 1 / n : 0;
+  });
+  let best = 0;
+  let bestScore = 0;
+  for (const h of hits.sort((a, b) => a.at - b.at)) {
+    const start = Math.max(0, h.at - WINDOW_LEAD);
+    const covered = new Set(hits.filter(x => x.at >= start && x.at < start + PASSAGE_CHARS - 20).map(x => x.term));
+    const score = [...covered].reduce((sum, t) => sum + weight[t], 0);
+    if (score > bestScore + 1e-9) { bestScore = score; best = start; }
+  }
+  if (best === 0) return text.slice(0, PASSAGE_CHARS);
+  // Start on a word boundary, and say that the page began earlier.
+  const space = text.indexOf(' ', best);
+  const from = space !== -1 && space - best < 40 ? space + 1 : best;
+  return '… ' + text.slice(from, from + PASSAGE_CHARS - 2);
+}
+
+/** Mongo text when it resolved, else the lane's own; cleaned and cut to the query's window. */
+export function passageText(hit: Pick<RawHit, 'book_id' | 'page_number' | 'text'>, pageTexts: Map<string, string>, query = ''): string {
   const raw = pageTexts.get(pageKey(hit.book_id, hit.page_number)) || hit.text || '';
-  return stripAnnotations(raw).slice(0, 1200);
+  return passageWindow(stripAnnotations(raw), query);
 }
 
 /**
@@ -604,10 +720,11 @@ export async function hybridSearch(
     ? await collectionBookIds(opts.collection, opts)
     : [];
 
-  // Fan out to all three global sources + book-level Atlas + (optionally) the
+  // Fan out to the global page sources + book-level Atlas + (optionally) the
   // collection-scoped sources, all in parallel.
-  const [kw, kwv, btp, gp, books, scoped] = await Promise.all([
+  const [kw, eo, kwv, btp, gp, books, scoped] = await Promise.all([
     keywordSource(query, opts),
+    englishOriginalSource(query),
     nameVariantSource(query),
     bookThenPageSource(query, opts),
     globalPageSource(query, opts),
@@ -624,16 +741,16 @@ export async function hybridSearch(
   // global lists too, compounding the lean.
   // The name-variant list votes just under 1 (see NAME_VARIANT_WEIGHT).
   let merged = rrfMerge(
-    [kw, kwv, btp, gp, scoped.scopedKeyword, scoped.scopedSemantic],
+    [kw, eo, kwv, btp, gp, scoped.scopedKeyword, scoped.scopedSemantic],
     60,
-    [1, NAME_VARIANT_WEIGHT, 1, 1, collectionWeight, collectionWeight],
+    [1, 1, NAME_VARIANT_WEIGHT, 1, 1, collectionWeight, collectionWeight],
   );
 
   // Real page text for the head of the list BEFORE the rerank reads it — an
   // English-original page would otherwise be scored on an empty string (#5867).
   // The window covers the rerank's top 20 and the passage build's limit * 3.
   const pageTexts = await loadPassageTexts(merged.slice(0, Math.max(20, limit * 3)));
-  merged = merged.map(h => ({ ...h, text: passageText(h, pageTexts) }));
+  merged = merged.map(h => ({ ...h, text: passageText(h, pageTexts, query) }));
 
   // Optional cross-encoder rerank (no-op without API key)
   merged = await maybeRerank(query, merged);
