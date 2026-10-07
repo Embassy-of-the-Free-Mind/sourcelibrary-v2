@@ -5363,6 +5363,7 @@ Rules:
           if (remainingSlots > 0) {
             const catchUp = await db.collection('books')
               .find({
+                ...NOT_HELD,
                 'pipeline_auto.status': { $exists: false },
                 pages_ocr: { $gt: 0 },
                 $or: [
@@ -5482,6 +5483,7 @@ Rules:
           if (remainingSlots > 0) {
             const catchUp = await db.collection('books')
               .find({
+                ...NOT_HELD,
                 'pipeline_auto.status': { $exists: false },
                 pages_ocr: { $gt: 0 },
                 $or: [
