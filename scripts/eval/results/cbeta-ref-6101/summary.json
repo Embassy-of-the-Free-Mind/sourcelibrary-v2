@@ -1,6 +1,6 @@
 {
  "issue": 6101,
- "generated_at": "2026-10-06",
+ "generated_at": "2026-10-07",
  "stratum": "chinese-print-cbeta",
  "n_sealed": 200,
  "n_books": 54,
@@ -157,5 +157,88 @@
   },
   "textless": []
  },
- "all_pages": null
+ "all_pages": {
+  "engine": "paddleocr-vl-1.6",
+  "pages_read": 2048,
+  "not_reached": 2239,
+  "order": "sealed 200, then the other print pages in a seeded shuffle (seed 6102), manuscript last; read until the 5-hour box deadline",
+  "timeouts": 52,
+  "by_class": {
+   "woodblock": {
+    "n_pages": 1883,
+    "n_books": 47,
+    "scored": 1596,
+    "median_cer": 0.113,
+    "median_cer_ci95": [
+     0.108,
+     0.119
+    ],
+    "cer_over_0_5_or_misfit": 177,
+    "no_text_on_text_page": 110,
+    "of_which_timeout": 50,
+    "textless_both": 0,
+    "failure_rate": 0.152,
+    "failure_ci95": [
+     0.137,
+     0.169
+    ],
+    "loops": 0
+   },
+   "typeset": {
+    "n_pages": 165,
+    "n_books": 7,
+    "scored": 160,
+    "median_cer": 0.166,
+    "median_cer_ci95": [
+     0.13,
+     0.21
+    ],
+    "cer_over_0_5_or_misfit": 2,
+    "no_text_on_text_page": 3,
+    "of_which_timeout": 2,
+    "textless_both": 0,
+    "failure_rate": 0.03,
+    "failure_ci95": [
+     0.013,
+     0.069
+    ],
+    "loops": 0
+   },
+   "manuscript-regular": {
+    "n_pages": 0,
+    "n_books": 0,
+    "scored": 0,
+    "median_cer": null,
+    "median_cer_ci95": null,
+    "cer_over_0_5_or_misfit": 0,
+    "no_text_on_text_page": 0,
+    "of_which_timeout": 0,
+    "textless_both": 0,
+    "failure_rate": null,
+    "failure_ci95": null,
+    "loops": 0
+   },
+   "all": {
+    "n_pages": 2048,
+    "n_books": 54,
+    "scored": 1756,
+    "median_cer": 0.117,
+    "median_cer_ci95": [
+     0.111,
+     0.123
+    ],
+    "cer_over_0_5_or_misfit": 179,
+    "no_text_on_text_page": 113,
+    "of_which_timeout": 52,
+    "textless_both": 0,
+    "failure_rate": 0.143,
+    "failure_ci95": [
+     0.128,
+     0.158
+    ],
+    "loops": 0
+   }
+  },
+  "note": "one engine: the misfit guard cannot separate a misread from a misfitted reference, so CER > 0.5 pages are counted together as cer_over_0_5_or_misfit; no_text_on_text_page = Paddle returned < 30 characters (timeout, empty, or the NDL label only) on a page whose reference has ≥ 30; failure = either"
+ }
 }

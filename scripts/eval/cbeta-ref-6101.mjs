@@ -280,21 +280,33 @@ function report() {
       paired: [paired('gemini-3.1-flash-lite', 'paddleocr-vl-1.6'), paired('gemini-3.1-flash-lite', 'gemini-3-flash-preview'), paired('gemini-3-flash-preview', 'paddleocr-vl-1.6')].map(x => ({ ...x, reading: `Δ = CER(${x.b}) − CER(${x.a}); negative = ${x.b} better` })),
       by_class: byClass, textless: shared.summary.textless };
   }
-  const allDir = path.join(DIR, 'scored-all');
-  const all = !TAG && fs.existsSync(allDir) ? latestScored(allDir, `${STRATUM}-all`) : null;
+  const allDir = argOf('scored-all', path.join(DIR, 'scored-all'));
+  const all = fs.existsSync(allDir) ? latestScored(allDir, `${STRATUM}-all`) : null;
   if (all) {
     const cls = classes(); const fr = readFrame(); const sha = new Map(fr.pages.map(p => [`${STRATUM}-all${p.slug.slice(STRATUM.length)}`, p]));
-    const rows = all.pages.map(p => { const e = p.engines[ENGINE_PADDLE] || {}; const f = sha.get(p.slug); return { slug: p.slug.replace(`${STRATUM}-all`, STRATUM), book: f.book_id, pn: f.page_number, class: cls[f.book_id]?.script_class, has_ref: p.has_ref, misfit_or_cat: !!p.ref_mismatch, cer: p.has_ref ? e.cer : null, loop: !!e.loop, empty: !!e.empty, ref_sha256: f.ref_sha256 }; });
+    // The scorer drops a page as TEXTLESS when every engine returns < 30 content characters; with Paddle alone that is
+    // Paddle's own failure (a 90 s timeout, an empty read, or the NDL label strip read instead of the page) on a page whose
+    // reference has text. Those pages are put back here as failures, never left out of n.
+    const meterAll = new Map(); const mf = path.join(DIR, 'bench-all', `${STRATUM}-all`, 'out', ENGINE_PADDLE, '_meter.jsonl');
+    if (fs.existsSync(mf)) for (const l of fs.readFileSync(mf, 'utf8').split('\n').filter(Boolean)) { const m = JSON.parse(l); meterAll.set(m.slug, m); }
+    const base = (slug, f) => ({ slug: slug.replace(`${STRATUM}-all`, STRATUM), book: f.book_id, pn: f.page_number, class: cls[f.book_id]?.script_class, ref_chars: f.ref_chars, timeout: !!meterAll.get(slug)?.error, ref_sha256: f.ref_sha256 });
+    const rows = [
+      ...all.pages.map(p => { const e = p.engines[ENGINE_PADDLE] || {}; return { ...base(p.slug, sha.get(p.slug)), has_ref: p.has_ref, failed_no_text: false, misfit_or_cat: !!p.ref_mismatch, cer: p.has_ref ? e.cer : null, loop: !!e.loop, empty: !!e.empty }; }),
+      ...all.summary.textless.filter(slug => meterAll.has(slug)).map(slug => ({ ...base(slug, sha.get(slug)), has_ref: false, failed_no_text: sha.get(slug).ref_chars >= 30, misfit_or_cat: false, cer: null, loop: false, empty: true })),
+    ];
     const summ = {};
     for (const c of ['woodblock', 'typeset', 'manuscript-regular', 'all']) {
       const rs = rows.filter(r => c === 'all' || r.class === c); const ref = rs.filter(r => r.has_ref);
       summ[c] = { n_pages: rs.length, n_books: new Set(rs.map(r => r.book)).size, scored: ref.length, median_cer: r3(median(ref.map(r => r.cer))), median_cer_ci95: clusterCI(ref, s => median(s.map(r => r.cer))),
-        cer_over_0_5_or_misfit: rs.filter(r => r.misfit_or_cat).length, rate_ci95: wilson(rs.filter(r => r.misfit_or_cat).length, rs.filter(r => r.has_ref || r.misfit_or_cat).length), loops: rs.filter(r => r.loop).length, empty: rs.filter(r => r.empty).length };
+        cer_over_0_5_or_misfit: rs.filter(r => r.misfit_or_cat).length, no_text_on_text_page: rs.filter(r => r.failed_no_text).length, of_which_timeout: rs.filter(r => r.failed_no_text && r.timeout).length,
+        textless_both: rs.filter(r => r.empty && !r.failed_no_text && !r.has_ref).length,
+        failure_rate: r3(rs.filter(r => r.misfit_or_cat || r.failed_no_text).length / rs.filter(r => r.has_ref || r.misfit_or_cat || r.failed_no_text).length),
+        failure_ci95: wilson(rs.filter(r => r.misfit_or_cat || r.failed_no_text).length, rs.filter(r => r.has_ref || r.misfit_or_cat || r.failed_no_text).length), loops: rs.filter(r => r.loop).length };
     }
-    res.all_pages = { engine: ENGINE_PADDLE, textless: all.summary.textless.length, by_class: summ, note: 'one engine: the misfit guard cannot separate a misread from a misfitted reference, so CER > 0.5 pages are counted together as cer_over_0_5_or_misfit' };
-    fs.writeFileSync(path.join(OUT, 'paddle-all-pages.jsonl'), rows.map(r => JSON.stringify(r)).join('\n') + '\n');
+    res.all_pages = { engine: ENGINE_PADDLE, pages_read: rows.length, not_reached: fr.pages.length - rows.length, order: 'sealed 200, then the other print pages in a seeded shuffle (seed 6102), manuscript last; read until the 5-hour box deadline', timeouts: rows.filter(r => r.timeout).length, by_class: summ, note: 'one engine: the misfit guard cannot separate a misread from a misfitted reference, so CER > 0.5 pages are counted together as cer_over_0_5_or_misfit; no_text_on_text_page = Paddle returned < 30 characters (timeout, empty, or the NDL label only) on a page whose reference has ≥ 30; failure = either' };
+    fs.writeFileSync(path.join(OUT, `paddle-all-pages${TAG ? `-${TAG}` : ''}.jsonl`), rows.sort((a, b) => a.slug.localeCompare(b.slug)).map(r => JSON.stringify(r)).join('\n') + '\n');
   }
-  if (TAG) { delete res.all_pages; res.variant = TAG; }
+  if (TAG) res.variant = TAG;
   fs.writeFileSync(path.join(OUT, TAG ? `summary-${TAG}.json` : 'summary.json'), JSON.stringify(res, null, 1) + '\n');
   console.log(JSON.stringify(res, null, 1));
 }
