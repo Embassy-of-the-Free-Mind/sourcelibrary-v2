@@ -14,7 +14,8 @@
  *   - the verdict: show | caveat | fix;
  *   - where the evidence is: evidence_path (repo-relative, or `ops:<path>` for the private ops repo);
  *   - the text it read: text_provenance, one entry per page read, with the OCR and translation model ids at read
- *     time. A model id may be null only with an unknown_reason. A later re-OCR makes the check stale BY CONSTRUCTION
+ *     time. Text no model made (a typed e-text such as Esukhia's Derge) is `source:<label>`. A model id may be null
+ *     only with an unknown_reason. A later re-OCR makes the check stale BY CONSTRUCTION
  *     (compare *_updated_at with the page's), so a verdict is never silently carried over onto new text.
  * Optional: run_id, frame, classes, note, verdict_source, api_usd, subscription_usd_eq.
  *
@@ -165,7 +166,7 @@ export async function pageProvenance(db, bookId, pageNumbers) {
 export function provenanceFromPage(r, source) {
   const e = {
     page_number: r.page_number, page_id: r.id ?? null,
-    ocr_model: r.ocr?.model ?? null, ocr_source: r.ocr?.source ?? null, ocr_prompt_version: r.ocr?.prompt_version ?? null,
+    ocr_model: r.ocr?.model ?? (r.ocr?.source ? `source:${r.ocr.source}` : null), ocr_source: r.ocr?.source ?? null, ocr_prompt_version: r.ocr?.prompt_version ?? null,
     ocr_updated_at: r.ocr?.updated_at ?? null,
     translation_model: r.translation?.model ?? null, translation_source: r.translation?.source ?? null,
     translation_updated_at: r.translation?.updated_at ?? null, translation_content_hash: r.translation?.content_hash ?? null,
