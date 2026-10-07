@@ -28,8 +28,17 @@
  *     never supplied by a column default.
  */
 
-/** The only model the Gemini text stores (page_translations, page_texts, site_pages) hold. */
-export const GEMINI_TEXT_MODEL = 'gemini-embedding-2-preview';
+/** The model the Gemini text stores (page_translations, page_texts, site_pages) are written with. */
+export const GEMINI_TEXT_MODEL = 'gemini-embedding-2';
+
+/**
+ * Labels that name the SAME vector space as GEMINI_TEXT_MODEL. The GA id returns vectors
+ * bit-identical to the preview's (#6170), so rows written as -2-preview before the switch, and
+ * batch jobs submitted under it, stay valid. Readers and the write gate accept any of these.
+ */
+export const GEMINI_TEXT_MODELS = Object.freeze([GEMINI_TEXT_MODEL, 'gemini-embedding-2-preview']);
+const SAME_SPACE = [GEMINI_TEXT_MODELS];
+const sameSpace = (a, b) => a === b || SAME_SPACE.some((s) => s.includes(a) && s.includes(b));
 
 /** Above this cosine to the e5 centroid a vector is e5-shaped. Gemini measured ≤ 0.07, e5 ≥ 0.75. */
 export const E5_SIGNATURE_THRESHOLD = 0.4;
@@ -154,7 +163,7 @@ export function vectorShapeProblems(v, { dims = 768 } = {}) {
  */
 export function assertStoreVector(v, { model, dims = 768, storeModel = GEMINI_TEXT_MODEL } = {}) {
   if (!model) throw new Error('vector-truth: refusing a vector with no model named by its writer');
-  if (model !== storeModel) throw new Error(`vector-truth: store holds ${storeModel}; refusing a ${model} vector`);
+  if (!sameSpace(model, storeModel)) throw new Error(`vector-truth: store holds ${storeModel}; refusing a ${model} vector`);
   const vec = parseVector(v);
   const problems = vectorShapeProblems(vec, { dims });
   if (problems.length) throw new Error(`vector-truth: refusing a ${model} vector (${problems.join(', ')})`);

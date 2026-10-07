@@ -34,7 +34,7 @@ const BATCH_SIZE = 50;
  */
 const USAGE_FLUSH_EVERY = 1000;
 const GEMINI_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_MODEL = 'gemini-embedding-2-preview';
+const GEMINI_MODEL = 'gemini-embedding-2'; // bit-identical to -2-preview (#6170)
 // Both label columns are written on insert AND on re-embed (#6175): the re-embed used to update the
 // vector and keep whatever `model` the row had, and `embedding_model` came from a column DEFAULT.
 const DIMS = 768;

@@ -9,7 +9,7 @@
  * The Gemini model is much better for Latin, Greek, Arabic, Sanskrit.
  *
  * COST — THIS IS BILLED, AND AT THIS SCALE IT IS THE LARGEST SINGLE EMBEDDING
- * SPEND IN THE REPO. gemini-embedding-2-preview is $0.20 per 1M input tokens on
+ * SPEND IN THE REPO. gemini-embedding-2 is $0.20 per 1M input tokens on
  * the paid tier, and every GEMINI_API_KEY* in the env is a paid key. At the
  * measured 4.29 chars/token (see .claude/docs/embeddings.md) a FULL 3.9M-page
  * pass is roughly **$180**. This header used to say "Cost: $0 (free tier)";
@@ -88,6 +88,7 @@ import { newEmbedUsage, addEmbedUsage, logEmbeddingUsage, estimateUsd, estimateT
 import { pageSourceTs, incrementalSourceFilter, nextWatermark, readWatermark, writeWatermark } from '../lib/embed-watermark.mjs';
 import { createThenDeleteInput, uploadBatchInputFile, streamBatchResponses } from '../lib/gemini-batch-input-file.mjs';
 import { logUsage, completeBatchUsage, calculateUsageCost } from './lib/supabase-usage-logger.mjs';
+import { GEMINI_TEXT_MODEL, GEMINI_TEXT_MODELS } from '../lib/vector-truth.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -150,7 +151,8 @@ if (BATCH_MODE && !BOOKS_FILE) {
 const EMBED_BATCH_SIZE = 50; // Gemini batchEmbedContents limit is 100, use 50 for safety
 const UPSERT_BATCH_SIZE = 10; // Small batches for Supabase — HNSW index updates are expensive
 const DIMS = 768;
-const MODEL = 'gemini-embedding-2-preview';
+// gemini-embedding-2 since #6170 (bit-identical to -2-preview; see GEMINI_TEXT_MODELS).
+const MODEL = GEMINI_TEXT_MODEL;
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:batchEmbedContents?key=${GEMINI_KEY}`;
 
 // Circuit breaker: abort if too many consecutive Supabase failures
@@ -394,7 +396,7 @@ async function addToEmbedJob(item) {
 
 /** Embedding jobs still queued or running at Gemini (submitted, not yet finished). */
 async function runningEmbedJobs() {
-  const open = await db.collection(EMBED_JOBS).find({ status: 'submitted', model: MODEL }, { projection: { gemini_name: 1 } }).toArray();
+  const open = await db.collection(EMBED_JOBS).find({ status: 'submitted', model: { $in: GEMINI_TEXT_MODELS } }, { projection: { gemini_name: 1 } }).toArray();
   let running = 0;
   for (const j of open) {
     const r = await (await fetch(`${BATCH_API}/${j.gemini_name}?key=${GEMINI_KEY}`)).json().catch(() => ({}));

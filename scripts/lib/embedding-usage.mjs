@@ -60,7 +60,7 @@ export function estimateTextTokens(text) {
   return Math.round(cjk + (text.length - cjk) / EMBED_CHARS_PER_TOKEN);
 }
 
-/** gemini-embedding-2-preview, paid tier, text input. Output tokens: none. */
+/** gemini-embedding-2 (and -2-preview), paid tier, text input. Output tokens: none. */
 export const EMBED_USD_PER_1M_TOKENS = 0.20;
 
 /** Flush the streaming accumulator this often, to bound rows per run. */

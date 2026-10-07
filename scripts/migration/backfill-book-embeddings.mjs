@@ -50,7 +50,7 @@ const LIMIT = parseInt(args.find((_, i, a) => a[i - 1] === '--limit') || '0') ||
 
 const BATCH_SIZE = 50; // Gemini batchEmbedContents limit is 100
 const DIMS = 768;
-const MODEL = 'gemini-embedding-2-preview';
+const MODEL = 'gemini-embedding-2'; // bit-identical to -2-preview (#6170)
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:batchEmbedContents?key=${GEMINI_KEY}`;
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } });
