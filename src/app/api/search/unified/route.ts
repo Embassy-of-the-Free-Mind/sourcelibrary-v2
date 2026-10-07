@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { readCardFraming } from '@/lib/collection-card-image';
 import { textRoleRank } from '@/lib/text-role';
 import { getDb } from '@/lib/mongodb';
-import { supabase } from '@/lib/supabase';
 
 /** book_indexes fields the index-term lane reads (#5184). */
 const SEARCH_INDEX_PROJECTION = { _id: 0, book_id: 1, concepts: 1, people: 1, places: 1, keywords: 1 } as const;
@@ -16,6 +15,7 @@ import { isArtworkRecord } from '@/lib/artwork-record';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 import { anonSearchGate, ANON_SEARCHES_PER_HOUR, SIGNIN_URL } from '@/lib/anon-gate';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { resolveSearchScope, matchClip, type SearchScope } from '@/lib/tenant-search-scope';
 import { CLIP_URL } from '@/lib/clip';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { logSearchEvent } from '@/lib/search-event-log';
@@ -161,6 +161,18 @@ export async function GET(request: NextRequest) {
         visual: { results: [], total: 0 },
       });
     }
+    // The book set the vector lanes (semantic books, artworks, CLIP) rank
+    // inside (#4330). The Mongo "defense-in-depth" filter further down stays.
+    const scope = await resolveSearchScope(request.headers);
+    if (scope.kind === 'closed') {
+      return NextResponse.json({
+        query,
+        books: { results: [], total: 0 },
+        index: { results: [], total: 0 },
+        gallery: { results: [], total: 0 },
+        visual: { results: [], total: 0 },
+      });
+    }
 
     const db = await getDb();
     // Strip surrounding quotes for regex/semantic matching (phrase detection handled by each subsystem)
@@ -259,10 +271,10 @@ export async function GET(request: NextRequest) {
         emptyIndex, 'index',
       ),
       withTimeout(searchGallery(db, matchQuery, queryRegex, galleryLimit, tenantContext.id || undefined, yearRange), emptyGallery, 'gallery'),
-      withTimeout(searchVisual(db, matchQuery, galleryLimit, yearRange), emptyGallery, 'visual', 5000),
+      withTimeout(searchVisual(db, matchQuery, galleryLimit, scope, yearRange), emptyGallery, 'visual', 5000),
       // Semantic search: book-level discovery via book_embeddings (HNSW, ~17K rows)
       withTimeout(
-        semanticBookSearch(matchQuery, 12, { tenantId: tenantContext.id || undefined })
+        semanticBookSearch(matchQuery, 12, { scope })
           .then(books => {
             const results = books.map(b => {
               // Extract clean summary (strip metadata lines like "Topics:", "People:", etc.)
@@ -300,7 +312,7 @@ export async function GET(request: NextRequest) {
       ),
       // Artwork semantic search: dedicated artwork_embeddings table (3072 dims)
       withTimeout(
-        semanticArtworkSearch(matchQuery, 4)
+        semanticArtworkSearch(matchQuery, 4, { scope })
           // Drop hidden artworks — these RPC rows are returned to the client
           // directly (title/thumbnail), not re-resolved against Mongo below.
           .then(raw => filterVisibleArtworks(db, raw, yearRange))
@@ -1037,7 +1049,7 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
  * CLIP visual search: encode text query via CLIP, search against image embeddings.
  * Finds images by what they look like, not just their metadata.
  */
-async function searchVisual(db: any, query: string, limit: number, yearRange?: { min?: number; max?: number }): Promise<{ results: GalleryResult[]; total: number }> {
+async function searchVisual(db: any, query: string, limit: number, scope: SearchScope, yearRange?: { min?: number; max?: number }): Promise<{ results: GalleryResult[]; total: number }> {
   try {
     // Encode text via CLIP text encoder
     const clipResp = await fetch(`${CLIP_URL}/embed-text`, {
@@ -1051,15 +1063,16 @@ async function searchVisual(db: any, query: string, limit: number, yearRange?: {
     if (!embedding) return { results: [], total: 0 };
 
     // Search Supabase CLIP embeddings
-    const { data, error } = await supabase.rpc('match_clip_text', {
-      query_embedding: embedding,
+    const { rows: data, error } = await matchClip(embedding, {
+      scope,
+      rpc: 'match_clip_text',
       // 0.22 → 0.26 (#4338): below ~0.26 CLIP hands back plausible-looking
       // junk (unrelated instruments, screenshots) that the client blends into
       // the image grid as if it matched the query.
-      match_threshold: 0.26,
-      match_count: limit * 2,
+      threshold: 0.26,
+      count: limit * 2,
     });
-    if (error || !data) return { results: [], total: 0 };
+    if (error) return { results: [], total: 0 };
 
     // Keep only gallery-image rows and strip the clip_embeddings id prefix.
     // The clip table mixes three id namespaces: `gallery-<pageId>-<n>`,

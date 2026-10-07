@@ -24,20 +24,20 @@ describe('semantic search: an RPC error is not an empty result', () => {
     const { semanticPageSearchGlobal, SemanticSearchError } = await import('@/lib/semantic-search');
     rpc.mockResolvedValue({ data: null, error: { message: 'function match_semantic does not exist' } });
 
-    await expect(semanticPageSearchGlobal('anything', 5)).rejects.toBeInstanceOf(SemanticSearchError);
+    await expect(semanticPageSearchGlobal('anything', 5, { scope: { kind: 'global' } })).rejects.toBeInstanceOf(SemanticSearchError);
   });
 
   it('names the failing RPC in the message, so the log identifies the fault', async () => {
     const { semanticPageSearchGlobal } = await import('@/lib/semantic-search');
     rpc.mockResolvedValue({ data: null, error: { message: 'statement timeout' } });
 
-    await expect(semanticPageSearchGlobal('anything', 5)).rejects.toThrow(/match_semantic failed: statement timeout/);
+    await expect(semanticPageSearchGlobal('anything', 5, { scope: { kind: 'global' } })).rejects.toThrow(/match_semantic failed: statement timeout/);
   });
 
   it('still returns [] for a genuinely empty result — an empty answer is an answer', async () => {
     const { semanticPageSearchGlobal } = await import('@/lib/semantic-search');
     rpc.mockResolvedValue({ data: [], error: null });
 
-    await expect(semanticPageSearchGlobal('anything', 5)).resolves.toEqual([]);
+    await expect(semanticPageSearchGlobal('anything', 5, { scope: { kind: 'global' } })).resolves.toEqual([]);
   });
 });

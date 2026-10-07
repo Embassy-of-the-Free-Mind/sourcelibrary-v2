@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import { expandLanguages } from '@/lib/language-utils';
+import { scopedMatch, type SearchScope } from '@/lib/tenant-search-scope';
 
 /**
  * Thrown when a semantic-search RPC fails. Do NOT swallow this into an empty
@@ -104,26 +105,37 @@ export interface SemanticBookResult {
 /**
  * Semantic book discovery via book_embeddings table (HNSW, ~17K rows).
  * Replaces the broken hybrid_search on 3M+ page_translations.
+ *
+ * `scope` is REQUIRED (#4330). This function took a `tenantId` for months and
+ * passed it nowhere — `book_embeddings` has no tenant column — so "tenant
+ * scoped" callers ranked the whole library. A scope is a book set the ranker is
+ * confined to; main-site callers pass `GLOBAL_SCOPE` and say so.
  */
 export async function semanticBookSearch(
   query: string,
-  limit: number = 20,
-  opts?: { language?: string; yearMin?: number; yearMax?: number; threshold?: number; tenantId?: string }
+  limit: number,
+  opts: { scope: SearchScope; language?: string; yearMin?: number; yearMax?: number; threshold?: number }
 ): Promise<SemanticBookResult[]> {
+  if (opts.scope.kind === 'closed') return [];
   const queryEmbedding = await getQueryEmbedding(query);
   if (!queryEmbedding) return [];
 
-  const { data, error } = await supabase.rpc('match_books_semantic', {
+  const args = {
     query_embedding: JSON.stringify(queryEmbedding),
-    match_threshold: opts?.threshold ?? 0.3,
+    match_threshold: opts.threshold ?? 0.3,
     match_count: limit,
-    filter_language: opts?.language ?? null,
-    filter_year_min: opts?.yearMin ?? null,
-    filter_year_max: opts?.yearMax ?? null,
+    filter_language: opts.language ?? null,
+    filter_year_min: opts.yearMin ?? null,
+    filter_year_max: opts.yearMax ?? null,
+  };
+  const { rows: data, error, rpc } = await scopedMatch<any>(opts.scope, {
+    global: { fn: 'match_books_semantic', args },
+    scoped: { fn: 'match_books_semantic_in_books', args },
+    fallbackMaxCount: 200,
   });
 
   if (error) {
-    throw new SemanticSearchError('match_books_semantic', error.message);
+    throw new SemanticSearchError(rpc, error);
   }
 
   return (data || []).map((row: any) => ({
@@ -246,24 +258,30 @@ async function getQueryEmbeddingFull(query: string): Promise<number[] | null> {
  */
 export async function semanticArtworkSearch(
   query: string,
-  limit: number = 20,
-  opts?: { genre?: string; period?: string; culture?: string; collection?: string; threshold?: number }
+  limit: number,
+  opts: { scope: SearchScope; genre?: string; period?: string; culture?: string; collection?: string; threshold?: number }
 ): Promise<SemanticArtworkResult[]> {
+  if (opts.scope.kind === 'closed') return [];
   const queryEmbedding = await getQueryEmbeddingFull(query);
   if (!queryEmbedding) return [];
 
-  const { data, error } = await supabase.rpc('match_artworks_semantic', {
+  const args = {
     query_embedding: JSON.stringify(queryEmbedding),
-    match_threshold: opts?.threshold ?? 0.3,
+    match_threshold: opts.threshold ?? 0.3,
     match_count: limit,
-    filter_genre: opts?.genre ?? null,
-    filter_period: opts?.period ?? null,
-    filter_culture: opts?.culture ?? null,
-    filter_collection: opts?.collection ?? null,
+    filter_genre: opts.genre ?? null,
+    filter_period: opts.period ?? null,
+    filter_culture: opts.culture ?? null,
+    filter_collection: opts.collection ?? null,
+  };
+  const { rows: data, error, rpc } = await scopedMatch<any>(opts.scope, {
+    global: { fn: 'match_artworks_semantic', args },
+    scoped: { fn: 'match_artworks_semantic_in_books', args },
+    fallbackMaxCount: 200,
   });
 
   if (error) {
-    throw new SemanticSearchError('match_artworks_semantic', error.message);
+    throw new SemanticSearchError(rpc, error);
   }
 
   return (data || []).map((row: any) => ({
@@ -321,10 +339,14 @@ function stripContinuityPrefix(text: string): { snippet: string; type: 'translat
 }
 
 export interface SemanticPageSearchOptions {
+  /**
+   * The book set this search is confined to (#4330). Required: the `tenantId`
+   * this used to take went to an RPC that ignores it.
+   */
+  scope: SearchScope;
   yearMin?: number;
   yearMax?: number;
   maxPerBook?: number;
-  tenantId?: string;
   language?: string;
   languages?: string[];
   excludeLanguages?: string[];
@@ -364,18 +386,20 @@ export function usesLangStore(textLang: string | undefined | null): boolean {
  * (3x the requested limit, capped at 50 — the RPC's hard ceiling) so that
  * filtering still yields close to the requested count when filters are tight.
  *
- * The `tenantId` parameter is accepted as the 2nd positional arg for backward
- * compatibility with earlier callers that passed (query, limit, tenantId).
+ * Under a tenant scope the search runs INSIDE the tenant's book set
+ * (`searchPagesInBookSet` below) — the global RPC is never consulted.
  */
 export async function semanticPageSearchGlobal(
   query: string,
-  limit: number = 15,
-  optsOrTenantId?: SemanticPageSearchOptions | string,
+  limit: number,
+  opts: SemanticPageSearchOptions,
 ): Promise<SemanticPageResult[]> {
-  const opts: SemanticPageSearchOptions =
-    typeof optsOrTenantId === 'string' ? { tenantId: optsOrTenantId } : (optsOrTenantId || {});
+  if (opts.scope.kind === 'closed') return [];
   const queryEmbedding = await getQueryEmbedding(query);
   if (!queryEmbedding) return [];
+  if (opts.scope.kind === 'tenant') {
+    return searchPagesInBookSet(queryEmbedding, limit, opts, opts.scope);
+  }
 
   // Over-request only for maxPerBook (JS post-hoc). Language filters (singular,
   // plural, exclude) now resolve in SQL via the seq-scan branch in match_semantic,
@@ -387,9 +411,9 @@ export async function semanticPageSearchGlobal(
 
   // The language-keyed store lives in its own table with its own RPC; the two
   // return identical column names on purpose, so only the call differs.
-  // `page_texts` carries no tenant column — neither does `page_translations`,
-  // whose RPC accepts filter_tenant_id and ignores it — so tenant scoping stays
-  // where it actually happens: the books join in the caller.
+  // Neither table carries a tenant column, and `match_semantic` accepts
+  // filter_tenant_id and ignores it — which is why a tenant request never
+  // reaches this point (see the scope branch above).
   const rpc = usesLangStore(opts.textLang) ? 'match_page_texts' : 'match_semantic';
   const { data, error } = usesLangStore(opts.textLang)
     ? await supabase.rpc('match_page_texts', {
@@ -407,7 +431,7 @@ export async function semanticPageSearchGlobal(
       query_embedding: JSON.stringify(queryEmbedding),
       match_threshold: 0.3,
       match_count: overRequest,
-      filter_tenant_id: opts.tenantId ?? null,
+      filter_tenant_id: null,
       filter_language: opts.language ?? null,
       filter_year_min: opts.yearMin ?? null,
       filter_year_max: opts.yearMax ?? null,
@@ -419,14 +443,16 @@ export async function semanticPageSearchGlobal(
     throw new SemanticSearchError(rpc, error.message);
   }
 
-  let rows = (data || []) as any[];
+  return shapePageRows((data || []) as any[], limit, opts.maxPerBook);
+}
 
-  if ((opts.maxPerBook ?? 0) > 0) {
+function shapePageRows(rows: any[], limit: number, maxPerBook?: number): SemanticPageResult[] {
+  if ((maxPerBook ?? 0) > 0) {
     const perBook = new Map<string, number>();
     rows = rows.filter(r => {
       const n = (perBook.get(r.book_id) || 0) + 1;
       perBook.set(r.book_id, n);
-      return n <= opts.maxPerBook!;
+      return n <= maxPerBook!;
     });
   }
 
@@ -445,6 +471,82 @@ export async function semanticPageSearchGlobal(
       book_year: row.book_year,
     };
   });
+}
+
+/**
+ * Page search confined to a tenant's book set.
+ *
+ * English text: `match_pages_in_scope` — nearest books INSIDE the set, their
+ * pages ranked exactly, plus one HNSW pass. Not the deployed
+ * `match_pages_in_books`: given a tenant-sized id list the planner answers it
+ * through the vector index and filters afterwards, which returned ZERO rows on
+ * BPH for a query its shelf answers at 0.70 (measured 2026-10-06; the migration
+ * header has the numbers). Until the migration is applied this falls back to
+ * the global RPC filtered against the set — closed, and starved.
+ *
+ * Other languages: `match_page_texts_in_books`, which exists. Partner rooms
+ * have no localized surface (`i18n.md`), so this arm is correctness only.
+ *
+ * Language and year filters are applied to the returned rows. The scoped RPCs
+ * take none, and the over-request below is what keeps a tight filter from
+ * emptying the page; it is a post-filter and is not exact.
+ */
+async function searchPagesInBookSet(
+  queryEmbedding: number[],
+  limit: number,
+  opts: SemanticPageSearchOptions,
+  scope: Extract<SearchScope, { kind: 'tenant' }>,
+): Promise<SemanticPageResult[]> {
+  if (scope.bookIds.length === 0) return [];
+
+  const languages = (opts.languages?.length ?? 0) > 0 ? new Set(expandLanguages(opts.languages!)) : null;
+  const excluded = (opts.excludeLanguages?.length ?? 0) > 0 ? new Set(expandLanguages(opts.excludeLanguages!)) : null;
+  const postFiltered = !!(opts.language || languages || excluded
+    || opts.yearMin !== undefined || opts.yearMax !== undefined || (opts.maxPerBook ?? 0) > 0);
+  const count = postFiltered ? Math.min(limit * 3, 50) : limit;
+  const embedding = JSON.stringify(queryEmbedding);
+
+  let rows: any[];
+  if (usesLangStore(opts.textLang)) {
+    const { data, error } = await supabase.rpc('match_page_texts_in_books', {
+      query_embedding: embedding,
+      filter_lang: opts.textLang!,
+      book_ids: scope.bookIds,
+      match_threshold: 0.3,
+      match_count: count,
+    });
+    if (error) throw new SemanticSearchError('match_page_texts_in_books', error.message);
+    rows = ((data || []) as any[]).filter(r => scope.has(r.book_id));
+  } else {
+    const result = await scopedMatch<any>(scope, {
+      global: {
+        fn: 'match_semantic',
+        args: {
+          query_embedding: embedding, match_threshold: 0.3, match_count: count,
+          filter_tenant_id: null, filter_language: null, filter_year_min: null, filter_year_max: null,
+          filter_languages: null, filter_exclude_languages: null,
+        },
+      },
+      scoped: {
+        fn: 'match_pages_in_scope',
+        args: { query_embedding: embedding, match_threshold: 0.3, match_count: count },
+      },
+      // match_semantic's hard ceiling.
+      fallbackMaxCount: 50,
+    });
+    if (result.error) throw new SemanticSearchError(result.rpc, result.error);
+    rows = result.rows;
+  }
+
+  rows = rows.filter(r => {
+    if (opts.language && r.book_language !== opts.language) return false;
+    if (languages && !languages.has(r.book_language)) return false;
+    if (excluded && r.book_language && excluded.has(r.book_language)) return false;
+    if (opts.yearMin !== undefined && (r.book_year == null || r.book_year < opts.yearMin)) return false;
+    if (opts.yearMax !== undefined && (r.book_year == null || r.book_year > opts.yearMax)) return false;
+    return true;
+  });
+  return shapePageRows(rows, limit, opts.maxPerBook);
 }
 
 // ── Page-level scoped search (step 2: within specific books) ────────
