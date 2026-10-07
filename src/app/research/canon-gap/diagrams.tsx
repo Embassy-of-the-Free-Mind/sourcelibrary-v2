@@ -594,9 +594,9 @@ export function QualityLoop({ n, adopted, tested, issueUrl, resultsHref }: { n: 
         <>
           The same four steps run for each language and script, and again after every change. A change becomes the
           default only when it beats the old method on the same pages;{' '}
-          <a href={resultsHref} className="text-amber-800 underline underline-offset-2">each result is charted here</a>. AI judges find
-          errors quickly and cheaply, but they are not scholars: a scholar&rsquo;s reading is the test the machine
-          checks are calibrated against, and the first one, on the Tengyur draft, is planned.{' '}
+          <a href={resultsHref} className="text-amber-800 underline underline-offset-2">each result is charted here</a>. The
+          judges are AI models. Their scores will be compared with a scholar&rsquo;s reading of the same pages; the
+          first scholar review, on the Tengyur draft, is planned.{' '}
           <a href={`${issueUrl}5800`} className="text-amber-800 underline underline-offset-2">#5800</a>
         </>
       }
