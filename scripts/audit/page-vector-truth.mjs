@@ -61,6 +61,7 @@ import { uploadBatchInputFile, createThenDeleteInput, streamBatchResponses } fro
 import { logUsage } from '../workers/lib/supabase-usage-logger.mjs';
 import {
   parseVector, cosine, e5Signature, vectorShapeProblems, cosineClass, wilson, e5CentroidLiteral, E5_SIGNATURE_MAX_DISTANCE,
+  GEMINI_TEXT_MODELS,
 } from '../lib/vector-truth.mjs';
 
 const args = process.argv.slice(2);
@@ -233,7 +234,7 @@ function freeChecks(r, page) {
   delete r.e;
   for (const p of vectorShapeProblems(r.vec, { dims: EMBED_DIMS })) r.flags.push(p === 'e5-signature' ? 'e5-signature' : `shape:${p}`);
   r.e5sig = r.vec && r.vec.length === EMBED_DIMS ? +e5Signature(r.vec).toFixed(3) : null;
-  if (r.embedding_model !== EMBED_MODEL) r.flags.push(`label:${r.embedding_model}`);
+  if (!GEMINI_TEXT_MODELS.includes(r.embedding_model)) r.flags.push(`label:${r.embedding_model}`); // GA and preview: one space (#6170)
   if (!page) { r.flags.push('page-missing'); return; }
   if (String(page.book_id) !== String(r.book_id)) r.flags.push('wrong-book');
   if (page.page_number !== r.page_number) r.flags.push('page-number-drift');
@@ -300,9 +301,8 @@ function plant(rows) {
   const src = (s) => { const v = new Array(EMBED_DIMS).fill(0); v[s % EMBED_DIMS] = 1; return v; };
   // An e5-shaped vector: the donor moved onto the e5 mean direction, as every e5-base row is.
   const e5Like = (() => {
-    const real = rows.find(r => r.e5sig > 0.4);
-    if (real) return real.vec;
-    // No real e5 row in this sample: synthesise one from the signature itself.
+    // Always synthesised, never a real e5 row's vector: copying one would make that real row a
+    // "duplicate" of the planted copy and put a false finding into the real counts.
     const g = donors[0].vec, out = new Array(EMBED_DIMS);
     let lo = 0, hi = 1;
     for (let it = 0; it < 30; it++) { const m = (lo + hi) / 2; mixInto(out, g, m); if (e5Signature(out) > 0.85) hi = m; else lo = m; }
