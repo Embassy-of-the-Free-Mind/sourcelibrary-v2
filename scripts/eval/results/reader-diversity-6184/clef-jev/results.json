@@ -1,0 +1,344 @@
+{
+ "arms": {
+  "clef-crop": {
+   "disputed 36": {
+    "right": 22,
+    "n": 36
+   },
+   "controls 27": {
+    "right": 19,
+    "n": 27
+   },
+   "all 63": {
+    "right": 41,
+    "n": 63
+   },
+   "Gemini split (F0/L1/P0)": {
+    "right": 20,
+    "n": 31
+   },
+   "flips": {
+    "k": 14,
+    "n": 63
+   },
+   "saysA": 0.53,
+   "phi": {
+    "F0": {
+     "phi": -0.15,
+     "both": 4,
+     "onlyX": 18,
+     "onlyY": 13
+    },
+    "Flash stored": {
+     "phi": 0.11,
+     "both": 10,
+     "onlyX": 12,
+     "onlyY": 14
+    },
+    "lite stored": {
+     "phi": 0.18,
+     "both": 8,
+     "onlyX": 14,
+     "onlyY": 8
+    },
+    "F1": {
+     "phi": 0.12,
+     "both": 9,
+     "onlyX": 13,
+     "onlyY": 12
+    },
+    "L1": {
+     "phi": 0.14,
+     "both": 9,
+     "onlyX": 13,
+     "onlyY": 11
+    },
+    "P0": {
+     "phi": -0.05,
+     "both": 2,
+     "onlyX": 20,
+     "onlyY": 5
+    },
+    "Pro-3 maj": {
+     "phi": 0.08,
+     "both": 2,
+     "onlyX": 20,
+     "onlyY": 2
+    }
+   }
+  },
+  "clef-flash-crop": {
+   "disputed 36": {
+    "right": 15,
+    "n": 36
+   },
+   "controls 27": {
+    "right": 23,
+    "n": 27
+   },
+   "all 63": {
+    "right": 38,
+    "n": 63
+   },
+   "Gemini split (F0/L1/P0)": {
+    "right": 14,
+    "n": 31
+   },
+   "flips": {
+    "k": 18,
+    "n": 63
+   },
+   "saysA": 0.56,
+   "phi": {
+    "F0": {
+     "phi": 0.16,
+     "both": 9,
+     "onlyX": 16,
+     "onlyY": 8
+    },
+    "Flash stored": {
+     "phi": 0.17,
+     "both": 12,
+     "onlyX": 13,
+     "onlyY": 12
+    },
+    "lite stored": {
+     "phi": 0.5,
+     "both": 13,
+     "onlyX": 12,
+     "onlyY": 3
+    },
+    "F1": {
+     "phi": -0.02,
+     "both": 8,
+     "onlyX": 17,
+     "onlyY": 13
+    },
+    "L1": {
+     "phi": 0.28,
+     "both": 12,
+     "onlyX": 13,
+     "onlyY": 8
+    },
+    "P0": {
+     "phi": 0.23,
+     "both": 5,
+     "onlyX": 20,
+     "onlyY": 2
+    },
+    "Pro-3 maj": {
+     "phi": 0.19,
+     "both": 3,
+     "onlyX": 22,
+     "onlyY": 1
+    }
+   }
+  },
+  "clef-page": {
+   "disputed 36": {
+    "right": 19,
+    "n": 36
+   },
+   "controls 27": {
+    "right": 19,
+    "n": 27
+   },
+   "all 63": {
+    "right": 38,
+    "n": 63
+   },
+   "Gemini split (F0/L1/P0)": {
+    "right": 15,
+    "n": 31
+   },
+   "flips": {
+    "k": 16,
+    "n": 63
+   },
+   "saysA": 0.58,
+   "phi": {
+    "F0": {
+     "phi": 0.02,
+     "both": 7,
+     "onlyX": 18,
+     "onlyY": 10
+    },
+    "Flash stored": {
+     "phi": 0.1,
+     "both": 11,
+     "onlyX": 14,
+     "onlyY": 13
+    },
+    "lite stored": {
+     "phi": 0.27,
+     "both": 10,
+     "onlyX": 15,
+     "onlyY": 6
+    },
+    "F1": {
+     "phi": 0.11,
+     "both": 10,
+     "onlyX": 15,
+     "onlyY": 11
+    },
+    "L1": {
+     "phi": 0.21,
+     "both": 11,
+     "onlyX": 14,
+     "onlyY": 9
+    },
+    "P0": {
+     "phi": 0.13,
+     "both": 4,
+     "onlyX": 21,
+     "onlyY": 3
+    },
+    "Pro-3 maj": {
+     "phi": 0.19,
+     "both": 3,
+     "onlyX": 22,
+     "onlyY": 1
+    }
+   }
+  },
+  "clef-tight": {
+   "disputed 36": {
+    "right": 20,
+    "n": 36
+   },
+   "controls 27": {
+    "right": 20,
+    "n": 27
+   },
+   "all 63": {
+    "right": 40,
+    "n": 63
+   },
+   "Gemini split (F0/L1/P0)": {
+    "right": 19,
+    "n": 31
+   },
+   "flips": {
+    "k": 13,
+    "n": 63
+   },
+   "saysA": 0.54,
+   "phi": {
+    "F0": {
+     "phi": -0.09,
+     "both": 5,
+     "onlyX": 18,
+     "onlyY": 12
+    },
+    "Flash stored": {
+     "phi": 0.22,
+     "both": 12,
+     "onlyX": 11,
+     "onlyY": 12
+    },
+    "lite stored": {
+     "phi": 0.16,
+     "both": 8,
+     "onlyX": 15,
+     "onlyY": 8
+    },
+    "F1": {
+     "phi": 0.09,
+     "both": 9,
+     "onlyX": 14,
+     "onlyY": 12
+    },
+    "L1": {
+     "phi": 0.12,
+     "both": 9,
+     "onlyX": 14,
+     "onlyY": 11
+    },
+    "P0": {
+     "phi": -0.06,
+     "both": 2,
+     "onlyX": 21,
+     "onlyY": 5
+    },
+    "Pro-3 maj": {
+     "phi": 0.07,
+     "both": 2,
+     "onlyX": 21,
+     "onlyY": 2
+    }
+   }
+  },
+  "jev": {
+   "disputed 36": {
+    "right": 14,
+    "n": 36
+   },
+   "controls 27": {
+    "right": 24,
+    "n": 27
+   },
+   "all 63": {
+    "right": 38,
+    "n": 63
+   },
+   "Gemini split (F0/L1/P0)": {
+    "right": 15,
+    "n": 31
+   },
+   "flips": {
+    "k": 16,
+    "n": 63
+   },
+   "saysA": 0.5,
+   "phi": {
+    "F0": {
+     "phi": 0.16,
+     "both": 9,
+     "onlyX": 16,
+     "onlyY": 8
+    },
+    "Flash stored": {
+     "phi": 0.37,
+     "both": 15,
+     "onlyX": 10,
+     "onlyY": 9
+    },
+    "lite stored": {
+     "phi": 0.2,
+     "both": 9,
+     "onlyX": 16,
+     "onlyY": 7
+    },
+    "F1": {
+     "phi": 0.11,
+     "both": 10,
+     "onlyX": 15,
+     "onlyY": 11
+    },
+    "L1": {
+     "phi": 0.21,
+     "both": 11,
+     "onlyX": 14,
+     "onlyY": 9
+    },
+    "P0": {
+     "phi": 0.23,
+     "both": 5,
+     "onlyX": 20,
+     "onlyY": 2
+    },
+    "Pro-3 maj": {
+     "phi": 0.19,
+     "both": 3,
+     "onlyX": 22,
+     "onlyY": 1
+    }
+   }
+  }
+ },
+ "gemini": {},
+ "cost": 0.0864,
+ "calls": 630,
+ "errors": 0,
+ "skips": 0
+}
