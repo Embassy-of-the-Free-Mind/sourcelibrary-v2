@@ -167,6 +167,8 @@ export async function GET(request: NextRequest) {
     const isPhrase = /^".*"$/.test(query.trim());
     const matchQuery = isPhrase ? query.trim().slice(1, -1) : query;
     const queryRegex = new RegExp(matchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+    // The same, plus each word's related forms (#5517). A quoted phrase is matched as typed.
+    const wordFormRegex = isPhrase ? queryRegex : stemmedQueryRegex(matchQuery);
 
     // Build Atlas Search filters
     const searchFilters: BookSearchFilters = {};
@@ -324,14 +326,15 @@ export async function GET(request: NextRequest) {
       // cards exist but vector search surfaced 4. This lane fuses in every artwork
       // that literally contains the term (#2735).
       withTimeout(
-        lexicalArtworkSearch(db, queryRegex, 24, tenantContext.id || undefined, yearRange)
+        // Related word forms too (#5517): "herbal" matched no artwork, "herbs" nine.
+        lexicalArtworkSearch(db, wordFormRegex, 24, tenantContext.id || undefined, yearRange)
           .catch(() => emptyLexicalArtworks),
         emptyLexicalArtworks, 'artworks-lexical', 3000,
       ),
       // Collection search: match collection names/descriptions (~300 docs, fast).
       // Stemmed so "botanical" finds the Botany collection (#5517).
       withTimeout(
-        searchCollections(db, stemmedQueryRegex(matchQuery), matchQuery).catch(() => emptyCollections),
+        searchCollections(db, wordFormRegex, matchQuery).catch(() => emptyCollections),
         emptyCollections, 'collections', 2000,
       ),
     ]);
@@ -1171,9 +1174,15 @@ async function lexicalArtworkSearch(
 /**
  * Search collections by name/description.
  * ~300 docs, fast regex on a small collection.
+ *
+ * `queryRegex` also matches related word forms (#5517), which is many more
+ * collections than the three shown. A collection NAMED for the word (or one of
+ * its forms) comes before one that only mentions it, largest first within
+ * each. Ordered by size alone, "poetic" lost the Poetry collection to three
+ * larger ones whose descriptions mention a poet.
  */
 async function searchCollections(db: any, queryRegex: RegExp, query: string): Promise<{ results: CollectionResult[] }> {
-  const cols = await db.collection('collections')
+  const matched = await db.collection('collections')
     .find({
       visible: { $ne: false },
       book_count: { $gt: 0 },
@@ -1185,9 +1194,17 @@ async function searchCollections(db: any, queryRegex: RegExp, query: string): Pr
     })
     .project({ slug: 1, tenantId: 1, name: 1, description: 1, book_count: 1, featured_image: 1, hero_image: 1, card_framing: 1, featured_images: { $slice: 1 } })
     .sort({ book_count: -1 })
-    .limit(3)
+    .limit(60)
     .maxTimeMS(2000)
     .toArray();
+
+  const rank = (c: any) => (queryRegex.test(c.name || '') || queryRegex.test(c.slug || '') ? 0 : 1);
+  // Stable sort: within a rank the order stays largest first.
+  const cols = matched
+    .map((c: any) => ({ c, r: rank(c) }))
+    .sort((x: any, y: any) => x.r - y.r)
+    .slice(0, 3)
+    .map((x: any) => x.c);
 
   return {
     results: cols.map((c: any) => {
