@@ -18,7 +18,8 @@
  *
  * --dir also records one `book_checks` row per reviewed book (#6174, method fortnightly-spot-check) when MONGODB_URI is
  * set: the verdict derived by the method's rule (REVIEWER.md asks for none), the sample's model ids as the text read,
- * and the book's share of its packet's `claude -p` cost when run-reviewers.sh launched it. --no-record skips it.
+ * and the book's share of its packet's `claude -p` cost when run-reviewers.sh launched it (--meta <its out_dir>/meta;
+ * default <dir>/meta). --no-record skips it.
  */
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
@@ -84,6 +85,7 @@ const client = await MongoClient.connect(process.env.MONGODB_URI);
 const db = client.db('bookstore');
 await ensureBookCheckIndexes(db);
 const version = readMethod('fortnightly-spot-check').version;
+const metaDir = opt('meta') ?? join(dir, 'meta');
 // Which packet each book was reviewed in, for its share of that packet's cost.
 const packetOf = new Map(), packetSize = new Map();
 if (existsSync(join(dir, 'reviews'))) for (const f of readdirSync(join(dir, 'reviews')).filter((x) => x.endsWith('.json'))) {
@@ -97,7 +99,7 @@ for (const book of results) {
   const pagesRead = book.pages.map((p) => p.page_number);
   const now = await pageRecords(db, book.book_id, pagesRead, { withText: true });
   const pk = packetOf.get(book.book_id);
-  const cost = pk ? runCost(dir, pk) : null;
+  const cost = pk ? runCost(metaDir, pk) : null;
   let r;
   try { r = await recordBookCheck(db, {
     book_id: book.book_id, checked_at: checkedAt, method_id: 'fortnightly-spot-check', method_version: version, run_id: round,

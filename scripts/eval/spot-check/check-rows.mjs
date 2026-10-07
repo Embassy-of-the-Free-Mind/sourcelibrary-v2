@@ -90,13 +90,13 @@ export function packetProvenance({ pagesRead, packetPages, now, checkedAt, prove
 }
 
 /**
- * Cost and model of one packet's reviewer call(s) from run-reviewers.sh: Σ total_cost_usd over meta/<packet>.json and
+ * Cost and model of one packet's reviewer call(s) from run-reviewers.sh's meta dir (`<out_dir>/meta`, which the skill
+ * keeps in the scratchpad; writers take it as --meta): Σ total_cost_usd over meta/<packet>.json and
  * meta/<packet>.retry.json (a call that wrote nothing still cost money), and the Opus model id from modelUsage. Null
  * when the run was not launched by run-reviewers.sh (a session's subagents leave no meta).
  */
-export function runCost(dir, packet) {
-  const meta = join(dir, 'meta');
-  if (!existsSync(meta)) return null;
+export function runCost(meta, packet) {
+  if (!meta || !existsSync(meta)) return null;
   let usd = 0, n = 0, model = null;
   for (const f of readdirSync(meta).filter((x) => x === `${packet}.json` || x === `${packet}.retry.json`)) {
     let r;

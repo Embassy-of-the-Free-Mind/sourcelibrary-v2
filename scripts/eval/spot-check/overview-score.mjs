@@ -19,7 +19,8 @@
  *
  * Then, with MONGODB_URI set, one `book_checks` row per reviewed book (#6174, method shelf-overview): the reviewer's
  * fit_to_show as the verdict, the packet's model ids as the text read, and the book's share of its packet's
- * `claude -p` cost when run-reviewers.sh launched it (meta/<stratum>.json). A rerun of the same dir adds nothing.
+ * `claude -p` cost when run-reviewers.sh launched it (--meta <its out_dir>/meta; default <dir>/meta). A rerun of the
+ * same dir adds nothing.
  * --no-record skips it; without MONGODB_URI it says so and records nothing.
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
@@ -79,6 +80,7 @@ const client = await MongoClient.connect(process.env.MONGODB_URI);
 const db = client.db('bookstore');
 await ensureBookCheckIndexes(db);
 const version = readMethod('shelf-overview').version;
+const metaDir = args.includes('--meta') ? args[args.indexOf('--meta') + 1] : join(dir, 'meta');
 const runId = dir.replace(/\/+$/, '').split('/').slice(-1)[0];
 let ins = 0, dup = 0, skip = 0;
 for (const st of log.strata) {
@@ -87,7 +89,7 @@ for (const st of log.strata) {
   const checkedAt = checkedAtOf(f);
   const packets = JSON.parse(readFileSync(join(dir, 'packets', `${st.name}.json`), 'utf8'));
   const reviews = JSON.parse(readFileSync(f, 'utf8'));
-  const cost = runCost(dir, st.name);
+  const cost = runCost(metaDir, st.name);
   for (const b of reviews) {
     const verdict = FIT[b.fit_to_show];
     if (!verdict) { console.error(`book_checks: ${b.book_id} has no fit_to_show — not recorded`); skip++; continue; }
