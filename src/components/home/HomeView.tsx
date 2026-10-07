@@ -25,7 +25,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   // catalog, browse, podcast, blog…) are returned untouched by localePath and go
   // to their English page rather than a 404. See .claude/docs/i18n.md rule 5.
   const lp = (href: string) => localePath(href, lang);
-  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, blogPosts, spanishCollection, localizedCollectionCounts } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, blogPosts, spanishCollection, localizedCollectionCounts, latinShelf } = data;
   const hasShowcase = curatedShowcase.items.length > 0;
   const nf = (n: number) => n.toLocaleString(t.locale);
   // The subject index's count. On /es it also says how many of the collection's
@@ -72,6 +72,33 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 <p className="text-sm text-secondary">{nf(spanishCollection.bookCount)} {t.booksLabel} &rarr;</p>
               </div>
             </Link>
+          </div>
+        </section>
+      )}
+
+      {/* Libri Latini — the first thing under the hero on /la, for the same
+          reason the Spanish card leads /es: it is the one section whose BOOKS
+          are in the visitor's language (#6254). Every card opens `/la/book/…`,
+          where the reader shows the Latin text first. Empty, so unrendered, on
+          the other homepages. */}
+      {latinShelf.length > 0 && (
+        <section className="bg-white py-10 md:py-14">
+          <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
+            <div className="flex items-end justify-between gap-4 mb-3">
+              <h2 className="text-3xl md:text-4xl text-primary font-display">
+                {t.nativeShelfHeading}
+              </h2>
+              <Link
+                href="/search?language=Latin"
+                className="text-sm text-muted hover:text-accent-rust transition-colors whitespace-nowrap hidden sm:inline-flex"
+              >
+                {t.nativeShelfAll} &rarr;
+              </Link>
+            </div>
+            <p className="text-muted mb-6 max-w-2xl">
+              {t.nativeShelfSubtitle}
+            </p>
+            <BookSlider books={latinShelf as unknown as MiniBook[]} lang={lang} />
           </div>
         </section>
       )}

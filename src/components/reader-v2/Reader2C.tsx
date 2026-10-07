@@ -3,7 +3,8 @@
 import { Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { localeHref, useLocale } from '@/lib/i18n';
+import { localeHref, localeFromPathname, useLocale, type Locale } from '@/lib/i18n';
+import { isNativeEdition } from '@/lib/localized';
 import { getReaderStrings, type ReaderStrings } from '@/lib/reader-strings';
 import { transcriptionReliability } from '@/lib/transcription-reliability';
 import { useSession, signOut } from 'next-auth/react';
@@ -829,16 +830,26 @@ function SearchHighlighter() {
  * collapsing address bar cannot push the last row under the fold, and only
  * the middle column scrolls.
  */
-function ReaderSiteMenu({ onClose, spanishAvailable }: {
+/** Each language's own name for itself, for the reader menu's site-language links. */
+const SITE_LANGUAGE_LABEL: Record<Locale, string> = { en: 'English', es: 'Español', la: 'Latine' };
+
+function ReaderSiteMenu({ onClose, spanishAvailable, latinAvailable = false }: {
   onClose: () => void;
   /** Whether THIS page has Spanish text, not merely a Spanish interface. */
   spanishAvailable: boolean;
+  /** The book is written in Latin, so its `/la` page exists (#6254). */
+  latinAvailable?: boolean;
 }) {
   const { data: session } = useSession();
   const pathname = usePathname();
   const strings = getReaderStrings(useLocale());
   const t = strings.accountMenu;
-  const isSpanishSite = !!pathname?.startsWith('/es');
+  const siteLocale = localeFromPathname(pathname);
+  // A language is offered only where this page exists in it, or when it is the
+  // one being read; nothing is offered that the route would 307 away from.
+  const siteLanguages: Locale[] = ['en'];
+  if (spanishAvailable || siteLocale === 'es') siteLanguages.push('es');
+  if (latinAvailable || siteLocale === 'la') siteLanguages.push('la');
   const signedIn = !!session?.user;
   const [imgError, setImgError] = useState(false);
 
@@ -864,7 +875,7 @@ function ReaderSiteMenu({ onClose, spanishAvailable }: {
   // Every link is written through localeHref, so the menu keeps you on the
   // language you are reading in. Hard-coding '/collections' here is how a
   // Spanish reader gets silently dropped back onto the English site.
-  const href = (path: string) => localeHref(isSpanishSite ? 'es' : 'en', path);
+  const href = (path: string) => localeHref(siteLocale, path);
 
   const initials = session?.user?.name
     ?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
@@ -1008,12 +1019,14 @@ function ReaderSiteMenu({ onClose, spanishAvailable }: {
               nothing bounces, because nothing is offered that cannot be kept.
               109 books of 22,073 have Spanish text today; the control appears
               on those, and on the rest the site stays in one language. */}
-          {(spanishAvailable || isSpanishSite) && (
+          {siteLanguages.length > 1 && (
           <div className="rv2-menu-item pt-7" style={{ animationDelay: '290ms' }}>
             <CapsLabel className="block pb-2.5" style={{ color: 'var(--text-faint)' }}>{t.siteLanguage}</CapsLabel>
             <div className="flex gap-2">
-              {([['English', localeHref('en', pathname)], ['Español', localeHref('es', pathname)]] as Array<[string, string]>).map(([label, target]) => {
-                const active = (label === 'Español') === isSpanishSite;
+              {siteLanguages.map((code) => {
+                const label = SITE_LANGUAGE_LABEL[code];
+                const target = localeHref(code, pathname);
+                const active = code === siteLocale;
                 return (
                   <Link
                     key={target}
@@ -2471,9 +2484,13 @@ function PanelContent({
 }
 
 export default function Reader2C({ initialBook, initialPage, initialPageList }: Reader2CProps) {
-  const r = useReaderV2('2c', initialBook, initialPage, initialPageList, { scan: true, ocr: true, en: true, translit: false });
+  const siteLocale = useLocale();
+  // On the Latin site the Latin text is what the reader came for: open on the
+  // scan and the transcription, with the English translation off until asked
+  // for (#6254). Everywhere else all three panes start on.
+  const r = useReaderV2('2c', initialBook, initialPage, initialPageList, { scan: true, ocr: true, en: siteLocale !== 'la', translit: false });
   const browserTranslated = useBrowserTranslation();
-  const t = getReaderStrings(useLocale());
+  const t = getReaderStrings(siteLocale);
 
   const [leftPanel, setLeftPanel] = useState<LeftPanel>(null);
   const togglePanel = useCallback((p: Exclude<LeftPanel, null>) => {
@@ -3444,6 +3461,7 @@ export default function Reader2C({ initialBook, initialPage, initialPageList }: 
         <ReaderSiteMenu
           onClose={() => setSiteMenuOpen(false)}
           spanishAvailable={spanishEligible(r.currentPage)}
+          latinAvailable={isNativeEdition(r.book as unknown as Record<string, unknown>, 'la')}
         />
       )}
       <Suspense fallback={null}>

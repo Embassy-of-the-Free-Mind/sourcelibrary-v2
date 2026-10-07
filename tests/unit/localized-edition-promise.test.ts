@@ -81,3 +81,32 @@ describe('hasLocalizedEdition', () => {
     expect(hasLocalizedEdition({ pages_translated_es: '445', language: 'Latin' }, 'es')).toBe(false);
   });
 });
+
+// Latin (#6254): nothing is translated INTO it, so there is no counter. A book
+// has a `/la` page only by being WRITTEN in Latin, and the stored `language`
+// value is the whole answer.
+describe('a /la URL exists only for a book written in Latin', () => {
+  it('accepts the stored spellings of Latin', () => {
+    for (const language of ['Latin', 'latin', ' Latin ', 'lat', 'Latina']) {
+      expect(hasLocalizedEdition({ language }, 'la')).toBe(true);
+    }
+  });
+
+  it('refuses bilingual and other-language books (real stored values)', () => {
+    for (const language of ['Latin-German', 'Greek-Latin', 'Latin/English', 'Chinese, Latin', 'Spanish / Latin', 'German', 'Latvian']) {
+      expect(hasLocalizedEdition({ language }, 'la')).toBe(false);
+    }
+  });
+
+  it('a Spanish translation does not make a book Latin, nor the reverse', () => {
+    expect(hasLocalizedEdition({ language: 'German', pages_translated_es: 40 }, 'la')).toBe(false);
+    expect(hasLocalizedEdition({ language: 'Latin', pages_translated_es: 0 }, 'es')).toBe(false);
+    expect(hasLocalizedEdition({ language: 'Latin', pages_translated_es: 0 }, 'la')).toBe(true);
+  });
+
+  it('cannot answer without `language`, and says so rather than saying no', () => {
+    // null, never false: false would 307 a Latin book off its own Latin page.
+    expect(hasLocalizedEdition({}, 'la')).toBeNull();
+    expect(hasLocalizedEdition({ pages_translated_es: 3 }, 'la')).toBeNull();
+  });
+});

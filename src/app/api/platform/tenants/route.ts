@@ -29,6 +29,9 @@ export const POST = withSuperadminAuth(async (req: NextRequest, session) => {
     'unauthorized', 'design-options', 'experiments', 'ficino-society',
     'contribute', 'census', 'oauth', 'developers', 'founding-donors',
     'libraries', 'blog', 'not-found', 'admin', 'search', 'analytics',
+    // Locale prefixes (`/es/…`, `/la/…`): a tenant with one of these slugs would
+    // be shadowed by the locale routes. Keep in step with PREFIXED_LOCALES.
+    'es', 'la',
   ]);
   if (RESERVED_SLUGS.has(slug)) {
     return NextResponse.json({ error: 'This slug is reserved and cannot be used' }, { status: 400 });

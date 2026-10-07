@@ -88,6 +88,7 @@ async function loadScan(url: string): Promise<{ src: string; ratio: number | nul
 export const PAGE_OG_ALT: Record<Locale, string> = {
   en: 'Page from Source Library',
   es: 'Página de Source Library',
+  la: 'Pagina ex Source Library',
 };
 
 /** Card chrome, per locale. Excerpt labels name the language of the TEXT. */
@@ -111,6 +112,13 @@ const CARD_STRINGS: Record<Locale, {
     unknownAuthor: 'Autor desconocido',
     englishExcerpt: 'Traducción al inglés',
     ownExcerpt: 'Traducción al español',
+  },
+  la: {
+    page: (n) => `Pagina ${n}`,
+    unknownTitle: 'Titulus ignotus',
+    unknownAuthor: 'Auctor ignotus',
+    englishExcerpt: 'Conversio Anglica',
+    ownExcerpt: 'Textus Latinus',
   },
 };
 
@@ -176,7 +184,11 @@ export async function renderPageOgImage(id: string, pageId: string, lang: Locale
 
   // Excerpt this locale's own text where the page has it; otherwise the English
   // pivot, labelled as English so the card never passes one off as the other.
-  const localizedText = lang === 'en' || !page ? null : getTranslation(page, lang)?.data || null;
+  // Latin is never a translation here: a `/la` page exists only for a book
+  // WRITTEN in Latin, so its own text is the transcription (#6254).
+  const localizedText = lang === 'en' || !page ? null
+    : lang === 'la' ? ((page as any)?.ocr?.data as string | undefined) || null
+    : getTranslation(page, lang)?.data || null;
   const excerptLabel = localizedText ? t.ownExcerpt : t.englishExcerpt;
   const rawTranslation = localizedText || (page as any)?.translation?.data || '';
   // stripEditorialWrappers first: it removes the page-DESCRIBING blocks

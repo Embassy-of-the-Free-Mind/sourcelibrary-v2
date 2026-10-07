@@ -448,6 +448,36 @@ async function getRecentlyTranslated(): Promise<CatalogBook[]> {
   return out;
 }
 
+// ---------- The Latin shelf (the /la "Libri Latini" band, #6254) ----------
+
+const LATIN_SHELF_COUNT = 15;
+
+/**
+ * The most-read books WRITTEN in Latin, for the band under the `/la` hero: the
+ * one section of that page whose books are in the visitor's language.
+ *
+ * `language: 'Latin'` is the exact stored spelling 15,771 of the 15,776 live
+ * Latin books carry (measured 2026-10-07); it is a subset of
+ * `NATIVE_EDITION_LANGUAGE.la`, so every card here has a working `/la/book/…`
+ * page. Transcribed books only — a Latin shelf of scans nobody can read as
+ * text would break the promise the heading makes. Real covers, one card per work.
+ */
+async function getLatinShelf(): Promise<CatalogBook[]> {
+  const { books } = await browseBooks({ language: 'Latin', sort: 'popular', limit: 200, skipCount: true });
+  const seen = new Set<string>();
+  const out: CatalogBook[] = [];
+  for (const b of books) {
+    if (!hasRenderableCover(b)) continue;
+    if (!b.pages_ocr) continue;
+    const key = workKey(b);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(b);
+    if (out.length >= LATIN_SHELF_COUNT) break;
+  }
+  return out;
+}
+
 // ---------- Most liked ----------
 
 const MOST_LIKED_COUNT = 15;
@@ -792,6 +822,8 @@ export interface HomeData {
   /** The four curated exhibitions the Collections section leads with. */
   curatedShowcase: CuratedShowcase;
   blogPosts: HomeBlogPost[];
+  /** Popular books written in Latin, for the `/la` shelf (#6254). Empty on every other homepage. */
+  latinShelf: CatalogBook[];
   /** The `en-espanol` collection card. Null on the English homepage. */
   spanishCollection: EsSpanishCollectionCard | null;
   /**
@@ -808,7 +840,7 @@ export interface HomeData {
 // this file).
 export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
   const emptyShowcase: CuratedShowcase = { items: [], total: 0 };
-  const [featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts] = await Promise.all([
+  const [featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, spanishCollection, localizedCollectionCounts, latinShelf] = await Promise.all([
     withTimeout(getFeaturedCollections(), 20000, [] as FeaturedItem[]),
     withTimeout(getDiscoverBooks(), 20000, FALLBACK_DISCOVER_BOOKS),
     withTimeout(getRecentlyTranslated(), 20000, [] as CatalogBook[]),
@@ -821,6 +853,7 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
     lang === 'en'
       ? Promise.resolve({} as Record<string, number>)
       : withTimeout(getLocalizedCollectionCounts(lang), 8000, {} as Record<string, number>),
+    lang === 'la' ? withTimeout(getLatinShelf(), 8000, [] as CatalogBook[]) : Promise.resolve([] as CatalogBook[]),
   ]);
 
   // One book, one appearance: see src/lib/home-dedupe.ts.
@@ -846,5 +879,6 @@ export async function getHomeData(lang: HomeLang = 'en'): Promise<HomeData> {
     blogPosts: BLOG_POSTS,
     spanishCollection,
     localizedCollectionCounts,
+    latinShelf,
   };
 }
