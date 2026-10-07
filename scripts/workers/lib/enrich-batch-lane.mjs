@@ -187,11 +187,11 @@ function responseText(line) {
  */
 export async function runEnrichBatchLane(o) {
   const { db, phases, model, dryRun } = o;
-  const books = db.collection(BOOKS_COLL);
+  const states = db.collection(BOOKS_COLL);
   const jobs = db.collection(JOBS_COLL);
   const report = { collected: 0, written: 0, chaptersWritten: 0, admitted: 0, admittedUsd: 0, submitted: [], pending: 0, failed: 0, dropped: 0, errors: [] };
   if (!dryRun) {
-    await books.createIndex({ stage: 1 }).catch(() => {});
+    await states.createIndex({ stage: 1 }).catch(() => {});
     await jobs.createIndex({ status: 1 }).catch(() => {});
   }
 
@@ -202,7 +202,7 @@ export async function runEnrichBatchLane(o) {
     if (/FAILED|CANCELLED|EXPIRED/.test(res.state)) {
       if (!dryRun) {
         await jobs.updateOne({ _id: job._id }, { $set: { status: 'failed', state: res.state, collected_at: new Date() } });
-        await books.updateMany({ [`${job.stage}_job`]: job._id }, { $set: { stage: 'failed', error: `${job.stage} job ${res.state}`, updated_at: new Date() }, $inc: { attempts: 1 } });
+        await states.updateMany({ [`${job.stage}_job`]: job._id }, { $set: { stage: 'failed', error: `${job.stage} job ${res.state}`, updated_at: new Date() }, $inc: { attempts: 1 } });
         for (const id of job.book_ids) {
           await completeBatchUsage({ batch_job_id: `${job._id}:${id}`, model: job.model, input_tokens: 0, output_tokens: 0, status: 'failed', error_message: res.state, insertIfMissing: false }, db);
         }
@@ -240,7 +240,7 @@ export async function runEnrichBatchLane(o) {
         await collectBook(o, job, bookId, got, report);
       } catch (e) {
         report.errors.push(`${bookId} (${job.stage}): ${e.message}`);
-        await books.updateOne({ _id: bookId }, { $set: { stage: 'failed', error: `${job.stage}: ${e.message}`.slice(0, 500), updated_at: new Date() }, $inc: { attempts: 1 } });
+        await states.updateOne({ _id: bookId }, { $set: { stage: 'failed', error: `${job.stage}: ${e.message}`.slice(0, 500), updated_at: new Date() }, $inc: { attempts: 1 } });
       }
     }
     await jobs.updateOne({ _id: job._id }, { $set: { status: 'collected', state: res.state, collected_at: new Date(), actual_usd: +actualUsd.toFixed(4) } });
@@ -262,12 +262,12 @@ export async function runEnrichBatchLane(o) {
 /** Apply one book's responses from a collected job. */
 async function collectBook(o, job, bookId, got, report) {
   const { db, phases } = o;
-  const books = db.collection(BOOKS_COLL);
-  const state = await books.findOne({ _id: bookId });
+  const states = db.collection(BOOKS_COLL);
+  const state = await states.findOne({ _id: bookId });
   if (!state) return;
   const why = await stillEligible(db, bookId);
   if (why) {
-    await books.updateOne({ _id: bookId }, { $set: { stage: 'dropped', error: why, updated_at: new Date() } });
+    await states.updateOne({ _id: bookId }, { $set: { stage: 'dropped', error: why, updated_at: new Date() } });
     report.dropped++;
     return;
   }
@@ -282,7 +282,7 @@ async function collectBook(o, job, bookId, got, report) {
     });
     const useful = extractions.filter(e => e.summary || e.themes.length || e.people.length || e.concepts.length).length;
     if (!useful) throw new Error(`no usable extractions (${got.length}/${state.page_ranges.length} responses)`);
-    await books.updateOne({ _id: bookId }, { $set: { stage: 'index_collected', extractions, updated_at: new Date() } });
+    await states.updateOne({ _id: bookId }, { $set: { stage: 'index_collected', extractions, updated_at: new Date() } });
     return;
   }
 
@@ -299,7 +299,7 @@ async function collectBook(o, job, bookId, got, report) {
     await phases.finishEnrichBook(db, book, inputs, state.extractions, generated, { mode: 'batch' });
     phases.revalidateBookPage(bookId).catch(() => {});
     report.written++;
-    await books.updateOne({ _id: bookId }, {
+    await states.updateOne({ _id: bookId }, {
       $set: { stage: state.need_chapters ? 'indexed' : 'done', indexed_at: new Date(), updated_at: new Date() },
       $unset: { extractions: '' },
     });
@@ -313,7 +313,7 @@ async function collectBook(o, job, bookId, got, report) {
     const chapters = await phases.applyChapterExtraction(db, bookId, prep, responseText(line));
     phases.revalidateBookPage(bookId).catch(() => {});
     report.chaptersWritten++;
-    await books.updateOne({ _id: bookId }, { $set: { stage: 'done', chapters: chapters.length, updated_at: new Date() } });
+    await states.updateOne({ _id: bookId }, { $set: { stage: 'done', chapters: chapters.length, updated_at: new Date() } });
   }
 }
 
