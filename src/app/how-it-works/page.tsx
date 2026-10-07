@@ -11,6 +11,8 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import JourneyFilm from '@/components/journey/JourneyFilm';
 import JourneyProse from '@/components/journey/JourneyProse';
 import {
+  ConnectFigure,
+  ExchangeFigure,
   LineFigure,
   PeopleFigure,
   RecordFigure,
@@ -249,28 +251,18 @@ export default async function HowItWorksPage() {
       </div>
 
       <div className="max-w-[var(--container-standard)] mx-auto px-6 pb-8">
+        <ConnectFigure pageLabel={PAGE_LABEL} readerUrl={data.readerPath} connect={data.connect} />
         <RecordFigure r={record} />
         <PeopleFigure draftLabel={READER_UI_STRINGS.en.info.machineDraftNotice} />
       </div>
 
+      <div className="max-w-[var(--container-standard)] mx-auto px-6">
+        <h2 className={`${H2} pt-4`}>Working with us</h2>
+        <ExchangeFigure />
+      </div>
+
       <div className="max-w-[var(--container-narrow)] mx-auto px-6 pb-20">
-        <h2 className={H2}>Working with us</h2>
         <ul className="space-y-5 mb-10">
-          <li className={P}>
-            <strong className="text-primary">Your library is credited.</strong> The holding institution is named on every book
-            and its pages link back to the original scan. All contributing libraries are listed on{' '}
-            <Link href="/libraries" className={A}>Libraries</Link>.
-          </li>
-          <li className={P}>
-            <strong className="text-primary">A reading room of your own.</strong> A partner’s books can have their own site on
-            a Source Library address, as the Embassy of the Free Mind’s{' '}
-            <a href="https://bph.sourcelibrary.org" className={A}>Bibliotheca Philosophica Hermetica</a> does.
-          </li>
-          <li className={P}>
-            <strong className="text-primary">Nothing is locked in.</strong> Every book has a IIIF manifest and a full-text
-            download, every page a stable link, and finished editions can get a DOI. AI assistants can search and quote the
-            library through our <Link href="/connect" className={A}>connector</Link>.
-          </li>
           <li className={P}>
             <strong className="text-primary">What a draft costs.</strong> The English draft of the Derge Tengyur cost{' '}
             ${TENGYUR.spend_usd.toLocaleString('en-US')} for {TENGYUR.pages_translated.toLocaleString('en-US')} pages, about $
