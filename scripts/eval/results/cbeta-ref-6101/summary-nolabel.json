@@ -1,0 +1,161 @@
+{
+ "issue": 6101,
+ "generated_at": "2026-10-06",
+ "stratum": "chinese-print-cbeta",
+ "n_sealed": 200,
+ "n_books": 54,
+ "note": "CER against CBETA fitted to the page, Han only. CIs: book-cluster bootstrap (2,000 resamples, seed 6101) for medians and paired deltas; Wilson for rates (page-level, so slightly narrow).",
+ "shared": {
+  "scored_file": "/root/cbeta-ref-6101/scored-nolabel/chinese-print-cbeta-2026-10-06.json (Hetzner; not committed)",
+  "n_pages_scored": 200,
+  "reference_misfit": [
+   "chinese-print-cbeta-5595ab-p45"
+  ],
+  "n_all_three_answered": 198,
+  "n_books_answered": 54,
+  "engines": {
+   "paddleocr-vl-1.6": {
+    "n": 198,
+    "median_cer": 0.067,
+    "median_cer_ci95": [
+     0.062,
+     0.078
+    ],
+    "mean_cer": 0.199,
+    "catastrophic": 28,
+    "catastrophic_rate": 0.141,
+    "catastrophic_ci95": [
+     0.1,
+     0.197
+    ],
+    "invention_ref_median": 0.151,
+    "loops": 0,
+    "refused": 0,
+    "empty": 16
+   },
+   "gemini-3.1-flash-lite": {
+    "n": 198,
+    "median_cer": 0.067,
+    "median_cer_ci95": [
+     0.06,
+     0.085
+    ],
+    "mean_cer": 0.183,
+    "catastrophic": 3,
+    "catastrophic_rate": 0.015,
+    "catastrophic_ci95": [
+     0.005,
+     0.044
+    ],
+    "invention_ref_median": 0.152,
+    "loops": 2,
+    "refused": 0,
+    "empty": 0
+   },
+   "gemini-3-flash-preview": {
+    "n": 198,
+    "median_cer": 0.052,
+    "median_cer_ci95": [
+     0.045,
+     0.06
+    ],
+    "mean_cer": 0.061,
+    "catastrophic": 0,
+    "catastrophic_rate": 0,
+    "catastrophic_ci95": [
+     0,
+     0.019
+    ],
+    "invention_ref_median": 0.12,
+    "loops": 0,
+    "refused": 1,
+    "empty": 0
+   }
+  },
+  "paired": [
+   {
+    "a": "gemini-3.1-flash-lite",
+    "b": "paddleocr-vl-1.6",
+    "n": 198,
+    "a_wins": 107,
+    "a_losses": 86,
+    "ties": 5,
+    "median_delta_b_minus_a": 0.006,
+    "ci95": [
+     -0.002,
+     0.013
+    ],
+    "p_sign": 0.15,
+    "reading": "Δ = CER(paddleocr-vl-1.6) − CER(gemini-3.1-flash-lite); negative = paddleocr-vl-1.6 better"
+   },
+   {
+    "a": "gemini-3.1-flash-lite",
+    "b": "gemini-3-flash-preview",
+    "n": 198,
+    "a_wins": 31,
+    "a_losses": 160,
+    "ties": 7,
+    "median_delta_b_minus_a": -0.017,
+    "ci95": [
+     -0.024,
+     -0.013
+    ],
+    "p_sign": 0,
+    "reading": "Δ = CER(gemini-3-flash-preview) − CER(gemini-3.1-flash-lite); negative = gemini-3-flash-preview better"
+   },
+   {
+    "a": "gemini-3-flash-preview",
+    "b": "paddleocr-vl-1.6",
+    "n": 198,
+    "a_wins": 143,
+    "a_losses": 48,
+    "ties": 7,
+    "median_delta_b_minus_a": 0.016,
+    "ci95": [
+     0.013,
+     0.021
+    ],
+    "p_sign": 0,
+    "reading": "Δ = CER(paddleocr-vl-1.6) − CER(gemini-3-flash-preview); negative = paddleocr-vl-1.6 better"
+   }
+  ],
+  "by_class": {
+   "woodblock": {
+    "n": 172,
+    "engines": {
+     "paddleocr-vl-1.6": {
+      "median_cer": 0.066,
+      "catastrophic": 28
+     },
+     "gemini-3.1-flash-lite": {
+      "median_cer": 0.067,
+      "catastrophic": 3
+     },
+     "gemini-3-flash-preview": {
+      "median_cer": 0.05,
+      "catastrophic": 0
+     }
+    }
+   },
+   "typeset": {
+    "n": 26,
+    "engines": {
+     "paddleocr-vl-1.6": {
+      "median_cer": 0.091,
+      "catastrophic": 0
+     },
+     "gemini-3.1-flash-lite": {
+      "median_cer": 0.069,
+      "catastrophic": 0
+     },
+     "gemini-3-flash-preview": {
+      "median_cer": 0.057,
+      "catastrophic": 0
+     }
+    }
+   }
+  },
+  "textless": []
+ },
+ "variant": "nolabel"
+}

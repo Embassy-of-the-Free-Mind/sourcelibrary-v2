@@ -30,6 +30,7 @@ import path from 'path';
 import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import { getPageSource } from '../lib/page-image-url.mjs';
+import { binomTwoSided } from './lib/paired-stats.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const argOf = (n, d) => { const a = process.argv.find(x => x.startsWith(`--${n}=`)); return a ? a.slice(n.length + 3) : d; };
@@ -229,6 +230,97 @@ function controls() {
   console.log(`controls: ${rows.map(r => `${r.slug} (neighbour ${r.neighbour})`).join(', ')}`);
 }
 
-const CMDS = { frame, fetch: fetchAll, seal, all, paddle, controls };
+// ── report: the scorer's page rows → intervals that respect the draw (3–4 pages per book), and the committed files ──
+const median = xs => { const s = [...xs].sort((a, b) => a - b); if (!s.length) return null; const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
+const r3 = x => (x == null || Number.isNaN(x) ? null : Math.round(x * 1000) / 1000);
+function wilson(k, n, z = 1.96) { if (!n) return null; const p = k / n, d = 1 + z * z / n, c = (p + z * z / (2 * n)) / d, h = z * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / d; return [r3(c - h), r3(c + h)]; }
+/** Book-cluster bootstrap: resample BOOKS with replacement, take every page of each drawn book, apply stat. */
+function clusterCI(rows, stat, seed = SEED, B = 2000) {
+  const books = [...new Set(rows.map(r => r.book))]; const by = new Map(books.map(b => [b, rows.filter(r => r.book === b)]));
+  const rnd = mulberry32(seed); const vals = [];
+  for (let i = 0; i < B; i++) { const s = []; for (let j = 0; j < books.length; j++) s.push(...by.get(books[Math.floor(rnd() * books.length)])); const v = stat(s); if (v != null) vals.push(v); }
+  vals.sort((a, b) => a - b); return vals.length ? [r3(vals[Math.floor(0.025 * vals.length)]), r3(vals[Math.floor(0.975 * vals.length)])] : null;
+}
+const latestScored = (dir, st) => { const f = fs.readdirSync(dir).filter(x => new RegExp(`^${st}-\\d{4}-\\d{2}-\\d{2}\\.json$`).test(x)).sort().at(-1); return f ? JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')) : null; };
+
+function report() {
+  const OUT = path.join(__dirname, 'results', 'cbeta-ref-6101'); fs.mkdirSync(OUT, { recursive: true });
+  const reg = JSON.parse(fs.readFileSync(REG, 'utf8')); const bookOf = new Map(reg.pages.map(p => [p.slug, p.book_id]));
+  // --scored=<dir> --tag=<name>: the same report over another scoring of the same pages (the label-stripped sensitivity run)
+  const SCORED = argOf('scored', path.join(__dirname, 'results', 'benchmark')); const TAG = argOf('tag', '');
+  const shared = latestScored(SCORED, STRATUM);
+  const ENGINES = ['paddleocr-vl-1.6', 'gemini-3.1-flash-lite', 'gemini-3-flash-preview'];
+  const res = { issue: 6101, generated_at: new Date().toISOString().slice(0, 10), stratum: STRATUM, n_sealed: reg.pages.length, n_books: new Set(reg.pages.map(p => p.book_id)).size,
+    note: 'CER against CBETA fitted to the page, Han only. CIs: book-cluster bootstrap (2,000 resamples, seed 6101) for medians and paired deltas; Wilson for rates (page-level, so slightly narrow).', shared: null, all_pages: null };
+  if (shared) {
+    const pages = shared.pages;
+    const misfit = pages.filter(p => p.ref_mismatch).map(p => p.slug);
+    const scorable = pages.filter(p => p.has_ref && ENGINES.every(e => p.engines[e] && !p.engines[e].missing));
+    const answered = scorable.filter(p => ENGINES.every(e => !p.engines[e].refused));
+    const per = {};
+    for (const e of ENGINES) {
+      const rows = answered.map(p => ({ book: bookOf.get(p.slug), cer: p.engines[e].cer, inv: p.engines[e].invention_ref, loop: p.engines[e].loop }));
+      const cat = rows.filter(r => r.cer > 0.5).length; const ran = pages.filter(p => p.engines[e] && !p.engines[e].missing);
+      per[e] = { n: rows.length, median_cer: r3(median(rows.map(r => r.cer))), median_cer_ci95: clusterCI(rows, s => median(s.map(r => r.cer))), mean_cer: r3(rows.reduce((a, r) => a + r.cer, 0) / rows.length),
+        catastrophic: cat, catastrophic_rate: r3(cat / rows.length), catastrophic_ci95: wilson(cat, rows.length), invention_ref_median: r3(median(rows.map(r => r.inv).filter(x => x != null))),
+        loops: rows.filter(r => r.loop).length, refused: ran.filter(p => p.engines[e].refused).length, empty: ran.filter(p => p.engines[e].empty && !p.engines[e].refused).length };
+    }
+    const paired = (a, b) => {   // Δ = CER(b) − CER(a): positive means a reads better
+      const rows = answered.map(p => ({ book: bookOf.get(p.slug), d: p.engines[b].cer - p.engines[a].cer }));
+      const w = rows.filter(r => r.d > 1e-9).length, l = rows.filter(r => r.d < -1e-9).length;
+      return { a, b, n: rows.length, a_wins: w, a_losses: l, ties: rows.length - w - l, median_delta_b_minus_a: r3(median(rows.map(r => r.d))), ci95: clusterCI(rows, s => median(s.map(r => r.d))), p_sign: r3(binomTwoSided(Math.max(w, l), w + l)) };
+    };
+    const byClass = {};
+    for (const c of ['woodblock', 'typeset']) {
+      const cp = answered.filter(p => p.script_class === c); byClass[c] = { n: cp.length, engines: {} };
+      for (const e of ENGINES) { const v = cp.map(p => p.engines[e].cer); byClass[c].engines[e] = { median_cer: r3(median(v)), catastrophic: v.filter(x => x > 0.5).length }; }
+    }
+    res.shared = { scored_file: TAG ? `${SCORED}/${STRATUM}-${shared.summary.date}.json (Hetzner; not committed)` : `scripts/eval/results/benchmark/${STRATUM}-${shared.summary.date}.json`, n_pages_scored: pages.length, reference_misfit: misfit, n_all_three_answered: answered.length,
+      n_books_answered: new Set(answered.map(p => bookOf.get(p.slug))).size, engines: per,
+      paired: [paired('gemini-3.1-flash-lite', 'paddleocr-vl-1.6'), paired('gemini-3.1-flash-lite', 'gemini-3-flash-preview'), paired('gemini-3-flash-preview', 'paddleocr-vl-1.6')].map(x => ({ ...x, reading: `Δ = CER(${x.b}) − CER(${x.a}); negative = ${x.b} better` })),
+      by_class: byClass, textless: shared.summary.textless };
+  }
+  const allDir = path.join(DIR, 'scored-all');
+  const all = !TAG && fs.existsSync(allDir) ? latestScored(allDir, `${STRATUM}-all`) : null;
+  if (all) {
+    const cls = classes(); const fr = readFrame(); const sha = new Map(fr.pages.map(p => [`${STRATUM}-all${p.slug.slice(STRATUM.length)}`, p]));
+    const rows = all.pages.map(p => { const e = p.engines[ENGINE_PADDLE] || {}; const f = sha.get(p.slug); return { slug: p.slug.replace(`${STRATUM}-all`, STRATUM), book: f.book_id, pn: f.page_number, class: cls[f.book_id]?.script_class, has_ref: p.has_ref, misfit_or_cat: !!p.ref_mismatch, cer: p.has_ref ? e.cer : null, loop: !!e.loop, empty: !!e.empty, ref_sha256: f.ref_sha256 }; });
+    const summ = {};
+    for (const c of ['woodblock', 'typeset', 'manuscript-regular', 'all']) {
+      const rs = rows.filter(r => c === 'all' || r.class === c); const ref = rs.filter(r => r.has_ref);
+      summ[c] = { n_pages: rs.length, n_books: new Set(rs.map(r => r.book)).size, scored: ref.length, median_cer: r3(median(ref.map(r => r.cer))), median_cer_ci95: clusterCI(ref, s => median(s.map(r => r.cer))),
+        cer_over_0_5_or_misfit: rs.filter(r => r.misfit_or_cat).length, rate_ci95: wilson(rs.filter(r => r.misfit_or_cat).length, rs.filter(r => r.has_ref || r.misfit_or_cat).length), loops: rs.filter(r => r.loop).length, empty: rs.filter(r => r.empty).length };
+    }
+    res.all_pages = { engine: ENGINE_PADDLE, textless: all.summary.textless.length, by_class: summ, note: 'one engine: the misfit guard cannot separate a misread from a misfitted reference, so CER > 0.5 pages are counted together as cer_over_0_5_or_misfit' };
+    fs.writeFileSync(path.join(OUT, 'paddle-all-pages.jsonl'), rows.map(r => JSON.stringify(r)).join('\n') + '\n');
+  }
+  if (TAG) { delete res.all_pages; res.variant = TAG; }
+  fs.writeFileSync(path.join(OUT, TAG ? `summary-${TAG}.json` : 'summary.json'), JSON.stringify(res, null, 1) + '\n');
+  console.log(JSON.stringify(res, null, 1));
+}
+
+// SENSITIVITY (not preregistered; found while reading the worst pages): every NDL image carries the library's label strip
+// under the book (国立国会図書館 / タイトル『…』 / 請求記号 … / ガラス使用). Paddle transcribes it on 193 of 200 sealed pages,
+// Gemini on ≤ 6; the reference has no label, so it costs Paddle ~25 Han characters a page that are not page text.
+// `nolabel` copies a bench tree with those lines removed from EVERY engine's output, for a second scoring.
+const LABEL_LINE = /国立国会図書館|國立國會圖書館|請求記号|ガラス使用/;
+function nolabel() {
+  const src = argOf('from', path.join(DIR, 'bench')); const dst = argOf('to', path.join(DIR, 'bench-nolabel')); const st = argOf('stratum', STRATUM);
+  const s = path.join(src, st), d = path.join(dst, st); fs.mkdirSync(d, { recursive: true });
+  for (const f of fs.readdirSync(s).filter(f => f.endsWith('.jpg') || f === 'manifest.json')) if (!fs.existsSync(path.join(d, f))) fs.symlinkSync(path.join(s, f), path.join(d, f));
+  let changed = 0;
+  for (const e of fs.readdirSync(path.join(s, 'out'))) {
+    fs.mkdirSync(path.join(d, 'out', e), { recursive: true });
+    for (const f of fs.readdirSync(path.join(s, 'out', e))) {
+      const t = fs.readFileSync(path.join(s, 'out', e, f), 'utf8');
+      const o = f.endsWith('.txt') ? t.split('\n').filter(l => !LABEL_LINE.test(l)).join('\n') : t;
+      if (o !== t) changed++;
+      fs.writeFileSync(path.join(d, 'out', e, f), o);
+    }
+  }
+  console.log(`nolabel: ${st} → ${d}; ${changed} outputs had label lines removed`);
+}
+
+const CMDS = { frame, fetch: fetchAll, seal, all, paddle, controls, report, nolabel };
 if (!CMDS[CMD]) { console.error(`usage: ${Object.keys(CMDS).join(' | ')}`); process.exit(2); }
 await CMDS[CMD]();
