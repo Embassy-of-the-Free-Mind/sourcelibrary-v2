@@ -2,24 +2,33 @@ import type { ReactNode } from 'react';
 import pareto from '@/data/ocr-pareto.json';
 import xlate from '@/data/translation-pareto.json';
 import ParetoDownload from './ParetoDownload';
+import ParetoTips from './ParetoTips';
 
 // Cost against quality, one figure per script (OCR) or per language (translation) (#5983).
-// Server-rendered SVG; the only client code is the download button. Exact values ride on <title>
-// tooltips and on the table under each plot, which is the table view. Engines are told apart by
-// NUMBER (keyed in the table), not by colour, so identity never depends on hue and labels cannot
-// collide at 390 px. Colours are the house pair from /research/canon-gap/diagrams.tsx (validated
-// there): teal for the frontier, amber for production. Every number comes from
-// src/data/ocr-pareto.json (scripts/eval/build-ocr-pareto.mjs) or src/data/translation-pareto.json
-// (scripts/eval/build-translation-pareto.mjs); the "what it means" sentence is composed from it.
+// Server-rendered SVG; the only client code is the download button and the tooltip layer
+// (ParetoTips). Engines are named on the face of the plot where a label fits without colliding
+// (the in-use engine and the frontier first), numbered where it does not, and the number keys the
+// table under each plot, which is the table view. Every dot has a tooltip with its numbers (#6217).
+// Colour follows the engine's role, never its rank: amber for the engine in use, teal for the
+// frontier line (the house pair from /research/canon-gap/diagrams.tsx, validated there), stone for
+// everything else. Colours are hex rather than var(--…) because the download serialises the SVG
+// outside the page's CSS; each one is a Tailwind token the page already uses (named beside it).
+// The public site has no dark theme, so the figures draw on their own white card in both schemes.
+// Every number comes from src/data/ocr-pareto.json (scripts/eval/build-ocr-pareto.mjs) or
+// src/data/translation-pareto.json (scripts/eval/build-translation-pareto.mjs); the "what it
+// means" sentence is composed from it.
 //
 // Used twice: the grids on /quality (anchors #pareto-<id>, #pareto-translation-<id>) and the
-// presenting page /quality/pareto, one panel per screen. Type is sized to read at 14 px or more
-// when the page is 1280 px wide.
+// presenting page /quality/pareto, one panel per screen. Each plot is drawn twice, for a phone and
+// for a wider screen, at close to 1:1 scale, so type reads at 12 px on a phone and 14 px at 1280.
 
-const FRONTIER = '#0b9488';
-const PRODUCTION = '#b45309';
-const INK = '#44403c';
-const MUTED = '#57534e';
+const FRONTIER = '#0b9488'; // teal-600
+const PRODUCTION = '#b45309'; // amber-700
+const INK = '#44403c'; // stone-700
+const MUTED = '#57534e'; // stone-600
+const FAINT = '#a8a29e'; // stone-400
+const GRID = '#e7e5e4'; // stone-200
+const SURFACE = '#ffffff'; // the card
 const FONT = 'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif';
 const GH = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/';
 // Below this many books, a figure says on its face that it is provisional.
@@ -70,7 +79,8 @@ export type Measure = {
   yColumn: string;
   ringColumn: string;
   ringTitle: string;
-  ringLegend: string;
+  /** the ring's rate in a dot's tooltip */
+  ringTip: (text: string) => string;
   verb: string;
   unit: string;
   more: string;
@@ -85,7 +95,7 @@ export type Measure = {
   noChart: NoChartRow[];
 };
 
-const pctOf = (x: number | null | undefined, d = 1) => (x == null ? '–' : `${(x * 100).toFixed(d)}%`);
+const pctOf = (x: number | null | undefined, d = 1) => (x == null ? '—' : `${(x * 100).toFixed(d)}%`);
 
 // ── adapters: each data file to the renderer's shape ─────────────────────────────────────────
 type OcrPoint = { engine: string; label: string; production: boolean; accuracy: number | null; accuracy_ci95: number[] | null; invented: { median: number | null } | null; cost: Cost | null; on_frontier?: boolean };
@@ -119,15 +129,16 @@ type XData = { charts: (Omit<Chart, 'panels'> & { panels: XPanel[] })[]; no_char
 const ocrData = pareto as unknown as OcrData;
 const xData = xlate as unknown as XData;
 
-const score = (v: number | null | undefined, d = 2) => (v == null ? '–' : v.toFixed(d));
+const score = (v: number | null | undefined, d = 2) => (v == null ? '—' : v.toFixed(d));
 
 export const OCR: Measure = {
   key: 'ocr', anchor: 'pareto-',
   title: c => c.title,
   exportTitle: c => `${c.title}: what it costs to read, against how well it reads`,
   explain:
-    'Each dot is a reading engine. Further right costs more per 1,000 pages; higher reads more accurately. ' +
-    'The line joins the engines that nothing else beats on both. The one we use now is amber.',
+    'Each dot is a reading engine. Further right costs more per 1,000 pages; higher reads more accurately, and the ' +
+    'thin whisker is its 95% interval. The line joins the engines that nothing else beats on both. The one we use now ' +
+    'is amber. Hover over or tap a dot for its numbers.',
   badge: null,
   yAxis: '↑ accuracy against a typed edition',
   yTick: v => `${Math.round(v * 100)}%`,
@@ -135,7 +146,7 @@ export const OCR: Measure = {
   yRange: [0, 1],
   step: span => (span > 0.5 ? 0.2 : span > 0.2 ? 0.1 : span > 0.08 ? 0.05 : span > 0.03 ? 0.02 : 0.01),
   yColumn: 'accuracy', ringColumn: 'invented', ringTitle: "share of the engine's words absent from the reference",
-  ringLegend: 'Dashed ring: share of words found nowhere in the reference (bigger ring, more invented text).',
+  ringTip: t => `words found nowhere in the reference: ${t}`,
   verb: 'read', unit: 'script',
   more: 'reads more accurately', less: 'reads less accurately', most: 'reads most accurately', mostAdj: 'most accurate', better: 'reads better', scoreWord: 'accuracy',
   judgesNote: () => '',
@@ -150,9 +161,9 @@ export const TRANSLATION: Measure = {
   exportTitle: c => `${c.title} into English: translation cost against fidelity`,
   explain:
     'Each dot is a translation engine. Further right costs more per 1,000 pages; higher, the closer its English keeps ' +
-    'to the meaning of a published human translation of the same page, scored from 1 to 5 by blind AI judges. ' +
-    'The line joins the engines that nothing else beats on both. The one we use now is amber. ' +
-    'The dashed ring grows with the share of pages where the English reverses a statement.',
+    'to the meaning of a published human translation of the same page, scored from 1 to 5 by blind AI judges; the ' +
+    'thin whisker is its 95% interval. The line joins the engines that nothing else beats on both. The one we use now ' +
+    'is amber. Hover over or tap a dot for its numbers, including how often the English reverses a statement.',
   badge: 'Model-judged, not human-scored',
   yAxis: '↑ fidelity to a published translation (1–5)',
   yTick: v => v.toFixed(1),
@@ -160,7 +171,7 @@ export const TRANSLATION: Measure = {
   yRange: [1, 5],
   step: span => (span > 0.8 ? 0.5 : span > 0.3 ? 0.2 : 0.1),
   yColumn: 'fidelity, 1–5', ringColumn: 'reversed per 100 pages', ringTitle: 'pages where either judge quoted a reversed statement, per 100 pages',
-  ringLegend: 'Dashed ring: pages where the English reverses a statement, per 100 (bigger ring, more reversals).',
+  ringTip: t => `pages reversing a statement: ${t} per 100`,
   verb: 'translated', unit: 'language',
   more: 'scores higher', less: 'scores lower', most: 'scores highest', mostAdj: 'highest-scoring', better: 'scores higher', scoreWord: 'fidelity',
   judgesNote: p => `Fidelity is the mean of ${p.judges === 1 ? 'one blind judge' : 'two blind judges'}, AI models reading our English beside the published one; it is not a human score and not accuracy against the page.`,
@@ -238,17 +249,60 @@ export function meaning(p: Panel, m: Measure = OCR): string {
 }
 
 // ── geometry ─────────────────────────────────────────────────────────────────
-// Font sizes are in viewBox units. The grid figure is 300 wide and shows at ≈ 400 px on /quality at
-// 1280, so 11 units ≈ 14.7 px; at 390 px it shows at ≈ 310 px, so 11 units ≈ 11.4 px.
+// Font sizes are in viewBox units, and each plot is drawn at close to 1:1 (see PanelView), so f is
+// the type size in CSS pixels.
 const X_TICKS = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
 
-/** The plot itself, drawn into a W×H box: header lines (sample, badge, caution), axes, frontier, points. */
-function PlotBody({ panel, m, W, H, f }: { panel: Panel; m: Measure; W: number; H: number; f: number }) {
+type Box = { x0: number; y0: number; x1: number; y1: number };
+const collide = (a: Box, b: Box) => a.x0 < b.x1 && b.x0 < a.x1 && a.y0 < b.y1 && b.y0 < a.y1;
+const inside = (a: Box, b: Box) => a.x0 >= b.x0 && a.x1 <= b.x1 && a.y0 >= b.y0 && a.y1 <= b.y1;
+/** Width of a label, by character count: the server cannot measure text, so this errs wide. */
+const textW = (s: string, fs: number, bold: boolean) => s.length * fs * (bold ? 0.6 : 0.56);
+
+type Label = { text: string; x: number; y: number; anchor: 'start' | 'middle' | 'end'; leader: number[] | null };
+
+/** Greedy label placement. The dots that must be named (the engine in use, then the frontier) go
+ *  first and may sit further out on a leader line; every other dot gets its name only where it fits
+ *  next to the dot, else its table number, else nothing (the tooltip still names it). A label never
+ *  covers a dot, another label, or the axes' tick labels. */
+function placeLabels(dots: { x: number; y: number; name: string; num: string; must: boolean }[], r: number, fs: number, area: Box): (Label | null)[] {
+  const taken: Box[] = dots.map(d => ({ x0: d.x - r - 1, y0: d.y - r - 1, x1: d.x + r + 1, y1: d.y + r + 1 }));
+  const out: (Label | null)[] = dots.map(() => null);
+  const tryAt = (d: { x: number; y: number }, text: string, bold: boolean, far: number): Label | null => {
+    const w = textW(text, fs, bold), g = r + fs * (far || 0.3), asc = fs * 0.75, desc = fs * 0.25;
+    // [anchor, x, baseline]; further out, the diagonals too, since a dense row leaves no room straight up
+    const spots: [Label['anchor'], number, number][] = far
+      ? [['middle', d.x, d.y - g - desc], ['middle', d.x, d.y + g + asc], ['start', d.x + g, d.y + fs * 0.35], ['end', d.x - g, d.y + fs * 0.35],
+        ['start', d.x + g * 0.5, d.y - g - desc], ['end', d.x - g * 0.5, d.y - g - desc], ['start', d.x + g * 0.5, d.y + g + asc], ['end', d.x - g * 0.5, d.y + g + asc]]
+      : [['start', d.x + g, d.y + fs * 0.35], ['end', d.x - g, d.y + fs * 0.35], ['middle', d.x, d.y - g - desc], ['middle', d.x, d.y + g + asc],
+        ['start', d.x + r * 0.6, d.y - g - desc], ['start', d.x + r * 0.6, d.y + g + asc], ['end', d.x - r * 0.6, d.y - g - desc], ['end', d.x - r * 0.6, d.y + g + asc]];
+    for (const [anchor, x, base] of spots) {
+      const x0 = anchor === 'start' ? x : anchor === 'end' ? x - w : x - w / 2;
+      const box = { x0: x0 - 2, y0: base - asc - 1, x1: x0 + w + 2, y1: base + desc + 1 };
+      if (!inside(box, area) || taken.some(t => collide(t, box))) continue;
+      taken.push(box);
+      // the leader runs from the dot's edge to the near side of the label
+      const lx = Math.min(Math.max(d.x, box.x0), box.x1), ly = Math.min(Math.max(d.y, box.y0), box.y1);
+      const len = Math.hypot(lx - d.x, ly - d.y) || 1;
+      return { text, x, y: base, anchor, leader: far ? [d.x + ((lx - d.x) * (r + 1)) / len, d.y + ((ly - d.y) * (r + 1)) / len, lx, ly] : null };
+    }
+    return null;
+  };
+  const order = dots.map((d, i) => i).sort((a, b) => Number(dots[b].must) - Number(dots[a].must));
+  for (const i of order) {
+    const d = dots[i];
+    out[i] = tryAt(d, d.name, d.must, 0)
+      ?? (d.must ? tryAt(d, d.name, true, 1.6) ?? tryAt(d, d.name, true, 3) ?? tryAt(d, d.name, true, 4.5) : null)
+      ?? tryAt(d, d.num, false, 0);
+  }
+  return out;
+}
+
+/** The plot itself, drawn into a W×H box: header lines (sample, badge, caution, axis note), axes,
+ *  frontier, whiskers, dots, labels; with `tips`, a tooltip per dot. */
+function PlotBody({ panel, m, W, H, f, tips }: { panel: Panel; m: Measure; W: number; H: number; f: number; tips?: boolean }) {
   const pts = panel.placed;
   const warn = caution(panel);
-  const heads = [m.badge, warn].filter(Boolean) as string[];
-  // The y-axis title sits horizontally above the plot: rotated, it outgrows a short axis.
-  const M = { l: f * 3.6, r: f * 1.2, t: f * (3.7 + heads.length * 1.3), b: f * 3.4 };
   const costs = pts.map(p => p.cost!.usd_per_1k);
   const x0 = Math.log10(Math.min(...costs) / 1.8), x1 = Math.log10(Math.max(...costs) * 1.8);
   const lows = pts.map(p => p.y_ci95?.[0] ?? p.y ?? m.yRange[1]);
@@ -257,63 +311,112 @@ function PlotBody({ panel, m, W, H, f }: { panel: Panel; m: Measure; W: number; 
   const step = m.step(Math.max(...highs) - Math.min(...lows));
   const y0 = Math.max(m.yRange[0], Math.floor((Math.min(...lows) - step / 4) / step) * step);
   const y1 = Math.min(m.yRange[1], Math.ceil((Math.max(...highs) + step / 4) / step) * step);
-  const sx = (c: number) => M.l + ((Math.log10(c) - x0) / (x1 - x0)) * (W - M.l - M.r);
-  const sy = (a: number) => H - M.b - ((a - y0) / (y1 - y0 || 1)) * (H - M.t - M.b);
+  // A cut axis says so on its face: a 3-point gap on a 90–98% axis looks like a chasm.
+  const cut = y0 > m.yRange[0] + 1e-9 ? `Axis starts at ${m.yTick(y0)}, not ${m.yTick(m.yRange[0])}` : null;
+  const heads = [m.badge, warn].filter(Boolean) as string[];
+  const nHead = 1 + heads.length + (cut ? 1 : 0);
+  // The y-axis title sits horizontally above the plot: rotated, it outgrows a short axis.
+  const M = { l: f * 3.2, r: f * 0.8, t: f * (2.6 + nHead * 1.35), b: f * 3.2 };
+  // Inner padding, so a dot at the bottom of the range never sits on the cost labels.
+  const pad = f * 0.9;
+  const sx = (c: number) => M.l + pad + ((Math.log10(c) - x0) / (x1 - x0)) * (W - M.l - M.r - pad);
+  const sy = (a: number) => H - M.b - pad - ((a - y0) / (y1 - y0 || 1)) * (H - M.t - M.b - pad * 1.5);
   const yTicks: number[] = [];
   for (let v = y0; v <= y1 + 1e-9; v += step) yTicks.push(Math.round(v * 1000) / 1000);
   const xTicks = X_TICKS.filter(t => Math.log10(t) >= x0 && Math.log10(t) <= x1);
   const frontier = panel.frontier ? pts.filter(p => p.on_frontier) : [];
-  const r = f * 0.62;
+  const r = Math.max(4, f * 0.32);
+  const fs = f * 0.9;
+  const at = pts.map(p => ({ x: sx(p.cost!.usd_per_1k), y: sy(p.y!) }));
+  const labels = placeLabels(
+    pts.map((p, i) => ({ ...at[i], name: p.label, num: String(i + 1), must: p.production || (frontier.length >= 2 && !!p.on_frontier) })),
+    r, fs, { x0: M.l + 2, y0: M.t - f * 0.2, x1: W, y1: H - M.b },
+  );
+  const lines = [
+    { t: sample(panel), fill: MUTED, w: 400 },
+    ...heads.map(h => ({ t: h, fill: h === warn ? PRODUCTION : INK, w: 700 })),
+    ...(cut ? [{ t: cut, fill: MUTED, w: 400 }] : []),
+  ];
 
   return (
     <g fontFamily={FONT}>
-      <text x={0} y={f} fontSize={f} fill={MUTED}>{sample(panel)}</text>
-      {heads.map((h, i) => (
-        <text key={h} x={0} y={f * (2.3 + i * 1.3)} fontSize={f} fontWeight={700} fill={h === warn ? PRODUCTION : INK}>{h}</text>
+      {lines.map((l, i) => (
+        <text key={l.t} x={0} y={f * (1 + i * 1.35)} fontSize={f} fontWeight={l.w} fill={l.fill}>{l.t}</text>
       ))}
 
       {/* grid + axes: recessive */}
       {yTicks.map(v => (
         <g key={`y${v}`}>
-          <line x1={M.l} x2={W - M.r} y1={sy(v)} y2={sy(v)} stroke="#e7e5e4" strokeWidth={1} />
-          <text x={M.l - f * 0.5} y={sy(v)} dy="0.32em" textAnchor="end" fontSize={f} fill={MUTED}>{m.yTick(v)}</text>
+          <line x1={M.l} x2={W - M.r} y1={sy(v)} y2={sy(v)} stroke={GRID} strokeWidth={1} />
+          <text x={M.l - f * 0.4} y={sy(v)} dy="0.32em" textAnchor="end" fontSize={fs} fill={MUTED}>{m.yTick(v)}</text>
         </g>
       ))}
+      <line x1={M.l} x2={W - M.r} y1={H - M.b} y2={H - M.b} stroke={FAINT} strokeWidth={1} />
       {xTicks.map(t => (
         <g key={`x${t}`}>
-          <line x1={sx(t)} x2={sx(t)} y1={M.t} y2={H - M.b} stroke="#f5f5f4" strokeWidth={1} />
-          <text x={sx(t)} y={H - M.b + f * 1.3} textAnchor="middle" fontSize={f} fill={MUTED}>${t}</text>
+          <line x1={sx(t)} x2={sx(t)} y1={H - M.b} y2={H - M.b + f * 0.3} stroke={FAINT} strokeWidth={1} />
+          <text x={sx(t)} y={H - M.b + f * 1.3} textAnchor="middle" fontSize={fs} fill={MUTED}>${t}</text>
         </g>
       ))}
-      <text x={(M.l + W - M.r) / 2} y={H - f * 0.4} textAnchor="middle" fontSize={f} fill={INK}>cost per 1,000 pages →</text>
+      <text x={(M.l + W - M.r) / 2} y={H - f * 0.4} textAnchor="middle" fontSize={f} fill={INK}>cost per 1,000 pages, log scale →</text>
       <text x={0} y={M.t - f * 0.9} fontSize={f} fill={INK}>{m.yAxis}</text>
 
       {/* frontier */}
       {frontier.length >= 2 && (
-        <polyline points={frontier.map(p => `${sx(p.cost!.usd_per_1k)},${sy(p.y!)}`).join(' ')} fill="none" stroke={FRONTIER} strokeWidth={f * 0.2} strokeLinejoin="round" />
+        <polyline points={frontier.map(p => `${sx(p.cost!.usd_per_1k)},${sy(p.y!)}`).join(' ')} fill="none" stroke={FRONTIER} strokeWidth={Math.max(1.5, f * 0.14)} strokeLinejoin="round" />
       )}
 
-      {pts.map((p, i) => {
-        const cx = sx(p.cost!.usd_per_1k), cy = sy(p.y!);
-        const ring = p.ring != null ? r + f * 0.2 + p.ring * f * 3 : null;
+      {/* 95% intervals: thin, behind every dot */}
+      {pts.map((p, i) => p.y_ci95 && (
+        <g key={`ci-${p.engine}`} stroke={FAINT} strokeWidth={1}>
+          <line x1={at[i].x} x2={at[i].x} y1={sy(Math.max(p.y_ci95[0], y0))} y2={sy(Math.min(p.y_ci95[1], y1))} />
+          <line x1={at[i].x - 2} x2={at[i].x + 2} y1={sy(Math.max(p.y_ci95[0], y0))} y2={sy(Math.max(p.y_ci95[0], y0))} />
+          <line x1={at[i].x - 2} x2={at[i].x + 2} y1={sy(Math.min(p.y_ci95[1], y1))} y2={sy(Math.min(p.y_ci95[1], y1))} />
+        </g>
+      ))}
+
+      {/* dots, each on a 2 px ring of the card colour so a cluster stays countable; the one in use last, on top */}
+      {pts.map((p, i) => [p, i] as const).sort(([a], [b]) => Number(a.production) - Number(b.production)).map(([p, i]) => {
         const compute = p.cost!.basis === 'compute';
-        const tip = `${p.label}${p.production ? ' (in production)' : ''}: ${m.scoreWord} ${m.fmtY(p.y)}${p.y_ci95 ? ` [${m.fmtY(p.y_ci95[0])}–${m.fmtY(p.y_ci95[1])}]` : ''}, ${usd(p.cost!.usd_per_1k)} per 1,000 pages (${p.cost!.basis})${p.ring_text ? `, ${m.ringColumn}: ${p.ring_text}` : ''}${p.on_frontier ? ', on the frontier' : ''}`;
+        const c = p.production ? PRODUCTION : INK;
         return (
           <g key={p.engine}>
-            <title>{tip}</title>
-            {p.y_ci95 && (
-              <line x1={cx} x2={cx} y1={sy(p.y_ci95[0])} y2={sy(p.y_ci95[1])} stroke="#a8a29e" strokeWidth={f * 0.2} strokeLinecap="round" />
-            )}
-            {ring && <circle cx={cx} cy={cy} r={ring} fill="none" stroke="#a8a29e" strokeWidth={1} strokeDasharray="2 2" />}
-            <circle cx={cx} cy={cy} r={r} fill={compute ? '#fff' : p.production ? PRODUCTION : INK} stroke={p.production ? PRODUCTION : INK} strokeWidth={compute ? 1.2 : 1.5} />
-            <text x={cx} y={cy} dy="0.35em" textAnchor="middle" fontSize={f * 0.78} fontWeight={600} fill={compute ? INK : '#fff'}>{i + 1}</text>
-            {/* a hit target bigger than the mark */}
-            <circle cx={cx} cy={cy} r={r * 1.6} fill="transparent" />
+            {!tips && <title>{tipLines(p, panel, m).join('; ')}</title>}
+            <circle cx={at[i].x} cy={at[i].y} r={r + 2} fill={SURFACE} />
+            <circle cx={at[i].x} cy={at[i].y} r={compute ? r - 0.75 : r} fill={compute ? SURFACE : c} stroke={c} strokeWidth={compute ? 1.5 : 0} />
           </g>
         );
       })}
+
+      {/* labels, on a halo of the card colour so a line or whisker under them does not cut the type */}
+      {labels.map((l, i) => l && (
+        <g key={`l-${pts[i].engine}`}>
+          {l.leader && <line x1={l.leader[0]} y1={l.leader[1]} x2={l.leader[2]} y2={l.leader[3]} stroke={FAINT} strokeWidth={1} />}
+          <text x={l.x} y={l.y} textAnchor={l.anchor} fontSize={fs} fontWeight={pts[i].production || (pts[i].on_frontier && frontier.length >= 2) ? 600 : 400}
+            fill={pts[i].production ? PRODUCTION : l.text === pts[i].label ? INK : MUTED}
+            stroke={SURFACE} strokeWidth={3} strokeLinejoin="round" paintOrder="stroke">{l.text}</text>
+        </g>
+      ))}
+
+      {tips && (
+        <ParetoTips tips={pts.map((p, i) => ({ ...at[i], lines: tipLines(p, panel, m) }))} W={W} H={H} f={f} hit={Math.max(12, f * 1.1)}
+          ink={INK} muted={MUTED} surface={SURFACE} border={FAINT} />
+      )}
     </g>
   );
+}
+
+/** A dot's tooltip: who it is, its score with interval, its cost, its rate, and the sample. */
+function tipLines(p: Point, panel: Panel, m: Measure): string[] {
+  const d = m.key === 'ocr' ? 0 : 2;
+  const tags = [p.production ? 'in use now' : '', p.on_frontier && panel.frontier ? 'on the frontier' : ''].filter(Boolean).join(', ');
+  return [
+    `${p.label}${tags ? ` (${tags})` : ''}`,
+    `${m.scoreWord} ${m.fmtY(p.y)}${p.y_ci95 ? `, 95% interval ${m.fmtY(p.y_ci95[0], d)}–${m.fmtY(p.y_ci95[1], d)}` : ''}`,
+    `${usd(p.cost!.usd_per_1k)} per 1,000 pages${p.cost!.basis === 'compute' ? ' (inference time only)' : ''}`,
+    ...(p.ring_text ? [m.ringTip(p.ring_text)] : []),
+    sample(panel),
+  ];
 }
 
 /** Greedy word wrap for SVG text, by character count. */
@@ -358,7 +461,7 @@ function ExportSvg({ chart, panel, m }: { chart: Chart; panel: Panel; m: Measure
   }
   const nKey = lines.length;
   const notes = [
-    `Bar: 95% interval. ${m.ringLegend}${m.extraLegend ? ` ${m.extraLegend}` : ''}`,
+    `Whisker: 95% interval.${m.extraLegend ? ` ${m.extraLegend}` : ''}`,
     `${sample(panel)}, ${m.verb} by every engine shown.${panel.n_books < panel.n_pages ? ' Pages of one book are not independent, so the intervals are too narrow.' : ''}${caution(panel) ? ` ${caution(panel)}.` : ''}`,
     ...(m.judgesNote(panel) ? [m.judgesNote(panel)] : []),
     ...(panel.notes || []).map(n => `${n}.`),
@@ -388,19 +491,23 @@ function Tag({ color, children }: { color: string; children: ReactNode }) {
 function PanelView({ chart, panel, m, present }: { chart: Chart; panel: Panel; m: Measure; present?: boolean }) {
   const refs = panel.references;
   const ciDigits = m.key === 'ocr' ? 0 : 2;
-  // The figure scales to its column, so text and marks grow with it. Presenting, the column is
-  // ≈ 680 px at 1280: a 480-unit viewBox keeps 11 units ≈ 15 px there (340 gave ≈ 22 px; 560, ≈ 13 px,
-  // left the dot numbers unreadable). On a phone that box would shrink text to ≈ 8 px, so below md the
-  // presenting view falls back to the 300-unit grid geometry.
+  // Drawn twice at close to 1:1, so the type holds its size: a phone's column (≈ 310–340 px) and a
+  // wider one (the presenting page's left column is ≈ 660 px at 1280; a /quality card is ≈ 400 there,
+  // two across, and wider when it is one across below lg). Presenting is shorter for its width, so the
+  // plot and its table fit one 1280×800 screen.
+  const sizes: [string, number, number, number][] = [
+    ['sm:hidden', present ? 342 : 310, 330, 12],
+    ['hidden sm:block', present ? 660 : 420, present ? 420 : 340, present ? 14 : 13],
+  ];
   const label = `${m.title(chart)}: ${m.scoreWord} against cost per 1,000 pages for ${panel.placed.length} engines. ${sample(panel)}.${m.badge ? ` ${m.badge}.` : ''}${caution(panel) ? ` ${caution(panel)}.` : ''}`;
-  const svg = ([W, H, f]: number[], className: string) => (
-    <svg viewBox={`0 0 ${W} ${H}`} className={`w-full h-auto ${className}`} role="img" aria-label={label}>
-      <PlotBody panel={panel} m={m} W={W} H={H} f={f} />
-    </svg>
-  );
-  const plot = present
-    ? <>{svg([300, 250, 11], 'md:hidden')}{svg([480, 310, 11], 'hidden md:block')}</>
-    : svg([300, 250, 11], '');
+  const plot = (<>
+    {sizes.map(([cls, W, H, f]) => (
+      <svg key={cls} viewBox={`0 0 ${W} ${H}`} className={`w-full h-auto ${cls}`} role="img" aria-label={label}>
+        <PlotBody panel={panel} m={m} W={W} H={H} f={f} tips />
+      </svg>
+    ))}
+    <Key panel={panel} />
+  </>);
   const table = (
     <div className="overflow-x-auto"><table className="w-full tabular-nums text-sm">
       <thead>
@@ -432,7 +539,7 @@ function PanelView({ chart, panel, m, present }: { chart: Chart; panel: Panel; m
                 </a>
               ) : <span className="text-stone-600">not measured</span>}
             </td>
-            <td className="py-1 text-right text-stone-700">{p.ring_text ?? '–'}</td>
+            <td className="py-1 text-right text-stone-700">{p.ring_text ?? '—'}</td>
           </tr>
         ))}
         {panel.no_cost.map(p => (
@@ -449,7 +556,7 @@ function PanelView({ chart, panel, m, present }: { chart: Chart; panel: Panel; m
                 {p.y_ci95 && <span className="text-stone-600 whitespace-nowrap"> [{m.fmtY(p.y_ci95[0], ciDigits)}–{m.fmtY(p.y_ci95[1], ciDigits)}]</span>}
               </td>
               <td className="py-1 pr-2 text-right whitespace-nowrap"><span className="text-stone-600">not measured</span></td>
-              <td className="py-1 text-right text-stone-700">{p.ring_text ?? '–'}</td>
+              <td className="py-1 text-right text-stone-700">{p.ring_text ?? '—'}</td>
             </>)}
           </tr>
         ))}
@@ -508,8 +615,23 @@ function PanelView({ chart, panel, m, present }: { chart: Chart; panel: Panel; m
   );
 }
 
+/** The one-line key under each plot: what the marks mean. */
+function Key({ panel }: { panel: Panel }) {
+  const compute = panel.placed.some(p => p.cost?.basis === 'compute');
+  const frontier = panel.frontier && panel.placed.filter(p => p.on_frontier).length >= 2;
+  const item = 'inline-flex items-center gap-1 whitespace-nowrap';
+  return (
+    <p className="text-sm text-stone-600 mt-1 mb-2 flex flex-wrap gap-x-4 gap-y-1">
+      <span className={item}><svg width="10" height="10" aria-hidden="true"><circle cx="5" cy="5" r="4" fill={PRODUCTION} /></svg>in use now</span>
+      {frontier && <span className={item}><svg width="16" height="10" aria-hidden="true"><line x1="1" x2="15" y1="5" y2="5" stroke={FRONTIER} strokeWidth="2" /></svg>frontier</span>}
+      {compute && <span className={item}><svg width="10" height="10" aria-hidden="true"><circle cx="5" cy="5" r="3.5" fill="none" stroke={INK} strokeWidth="1.5" /></svg>self-hosted, inference time only</span>}
+      <span className={item}><svg width="8" height="12" aria-hidden="true"><g stroke={FAINT} strokeWidth="1"><line x1="4" x2="4" y1="1" y2="11" /><line x1="2" x2="6" y1="1" y2="1" /><line x1="2" x2="6" y1="11" y2="11" /></g></svg>95% interval</span>
+    </p>
+  );
+}
+
 function Explain({ m, present }: { m: Measure; present?: boolean }) {
-  return <p className={`text-stone-700 leading-snug ${present ? 'text-lg max-w-4xl' : 'text-sm mb-3'}`}>{m.explain}</p>;
+  return <p className={`text-stone-700 leading-relaxed max-w-3xl ${present ? 'text-lg mt-4' : 'text-base mb-4'}`}>{m.explain}</p>;
 }
 
 function Caption({ chart, m, present }: { chart: Chart; m: Measure; present?: boolean }) {
@@ -537,6 +659,7 @@ function Anchor({ chart, m, base }: { chart: Chart; m: Measure; base: string }) 
 export function ParetoPresentation({ m = OCR }: { m?: Measure }) {
   return (
     <div>
+      <Explain m={m} present />
       {m.charts.map(chart => chart.panels.map((panel, i) => (
         <figure key={`${chart.id}-${panel.kind}`} id={anchorOf(m, chart, panel)}
           className="min-h-screen flex flex-col justify-center first:justify-start py-8 border-b border-stone-200 scroll-mt-0">
@@ -544,7 +667,6 @@ export function ParetoPresentation({ m = OCR }: { m?: Measure }) {
             {m.title(chart)}<Anchor chart={chart} m={m} base="/quality/pareto" />
           </div>
           <div className="text-base text-stone-600 mb-2">In use now: {chart.production_label}</div>
-          <Explain m={m} present />
           <div className="mt-4"><PanelView chart={chart} panel={panel} m={m} present /></div>
           {i === chart.panels.length - 1 && <Caption chart={chart} m={m} present />}
         </figure>
@@ -572,12 +694,12 @@ function NoChart({ m }: { m: Measure }) {
 export default function ParetoCharts({ m = OCR }: { m?: Measure }) {
   return (
     <div>
-      <div className="grid gap-6 md:grid-cols-2">
+      {/* Two across only from lg: below that a card is too narrow for the wider plot's type. */}
+      <div className="grid gap-6 lg:grid-cols-2">
         {m.charts.map(chart => (
           <figure key={chart.id} id={anchorOf(m, chart)} className="rounded-sm border border-stone-200 bg-white px-4 py-5 min-w-0 scroll-mt-24">
             <div className="font-serif text-xl text-stone-900">{m.title(chart)}<Anchor chart={chart} m={m} base="" /></div>
             <div className="text-sm text-stone-600 mb-2">In use now: {chart.production_label}</div>
-            <Explain m={m} />
             {chart.panels.map(p => <PanelView key={p.kind} chart={chart} panel={p} m={m} />)}
             <Caption chart={chart} m={m} />
           </figure>
