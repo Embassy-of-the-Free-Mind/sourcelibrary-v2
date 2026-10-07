@@ -27,7 +27,7 @@
  * the page record, and only when the page's text predates checked_at — else the model ids are null with the reason.
  * Rights notes (rights_flag, rights_note) are never copied: this record is not where rights suspicions live.
  */
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
@@ -161,7 +161,8 @@ const db = client.db('bookstore');
 
 // Book identity: rows key on books.id; a few reviews may carry a re-minted _id (book-deletion-and-identity.md).
 const ids = [...new Set(cands.map((c) => c.book_id))];
-const books = await db.collection('books').find({ $or: [{ id: { $in: ids } }, { _id: { $in: ids } }] }, { projection: { id: 1, hidden_reason: 1, hidden_at: 1 } }).toArray();
+const oids = ids.filter((x) => ObjectId.isValid(x) && /^[0-9a-f]{24}$/i.test(x)).map((x) => new ObjectId(x));
+const books = await db.collection('books').find({ $or: [{ id: { $in: ids } }, { _id: { $in: [...ids, ...oids] } }] }, { projection: { id: 1, hidden_reason: 1, hidden_at: 1 } }).toArray();
 const canon = new Map();
 for (const b of books) { canon.set(b.id, b.id); canon.set(String(b._id), b.id); }
 for (const c of cands) {
@@ -215,12 +216,15 @@ function provenance(c) {
   });
 }
 
-// Build every row first (a refusal throws before anything is written), then write.
+// Build every row first, then write. A source row the helper refuses (a tier outside 1–3, a page with no number) is
+// listed as skipped with the helper's reason, never written and never fatal to the rest.
 const rows = [];
 for (const c of cands) {
   if (c.drop) { skipped.push(`${c.source} ${c.book_id}: ${c.drop}`); continue; }
   const { source, packetPages, serious, drop, ...input } = c;
-  rows.push({ source, row: buildBookCheck({ ...input, method_version: V[c.method_id], text_provenance: provenance(c) }) });
+  try {
+    rows.push({ source, row: buildBookCheck({ ...input, method_version: V[c.method_id], text_provenance: provenance(c) }) });
+  } catch (e) { skipped.push(`${source} ${c.book_id}: ${e.message}`); }
 }
 
 const tally = {};

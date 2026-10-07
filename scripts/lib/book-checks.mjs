@@ -17,7 +17,9 @@
  *     time. Text no model made (a typed e-text such as Esukhia's Derge) is `source:<label>`. A model id may be null
  *     only with an unknown_reason. A later re-OCR makes the check stale BY CONSTRUCTION
  *     (compare *_updated_at with the page's), so a verdict is never silently carried over onto new text.
- * Optional: run_id, frame, classes, note, verdict_source, api_usd, subscription_usd_eq.
+ *   - which run: run_id, the run's own id (a results dir, a hide reason). Required, because {book_id, method_id, run_id}
+ *     is the write-once key: with an optional run_id every later run-less check would collide with the first.
+ * Optional: frame, classes, note, verdict_source, api_usd, subscription_usd_eq.
  *
  * Not a field on `books` (.claude/docs/invariants/field-sprawl.md). There is no update or delete here: a correction
  * is a new row. {book_id, method_id, run_id} is unique, so re-running a backfill or a writer cannot double a run.
@@ -68,6 +70,7 @@ export function buildBookCheck(input = {}, { methodsDir = METHODS_DIR } = {}) {
   const at = checked_at instanceof Date ? checked_at : (nonEmpty(checked_at) ? new Date(checked_at) : null);
   if (!at || Number.isNaN(at.getTime())) p.push('checked_at (a date)');
   if (!nonEmpty(method_id)) p.push('method_id');
+  if (!nonEmpty(run_id)) p.push('run_id');
   if (method_version === undefined || method_version === null || String(method_version).trim() === '') p.push('method_version');
   if (nonEmpty(method_id) && method_version != null) {
     try {
@@ -104,7 +107,7 @@ export function buildBookCheck(input = {}, { methodsDir = METHODS_DIR } = {}) {
 
   return {
     book_id, checked_at: at, method_id, method_version: String(method_version),
-    run_id: run_id ?? null,
+    run_id,
     ...(frame !== undefined ? { frame } : {}),
     pages_read: [...pages_read],
     reader: { kind: reader.kind, ...(reader.model ? { model: reader.model } : {}), ...(reader.role ? { role: reader.role } : {}), image_opened: reader.image_opened },

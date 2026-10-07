@@ -43,6 +43,7 @@ describe('buildBookCheck', () => {
   it.each([
     ['method_id', { method_id: undefined }],
     ['method_version', { method_version: undefined }],
+    ['run_id', { run_id: undefined }],
     ['pages_read', { pages_read: [] }],
     ['reader', { reader: undefined }],
     ['reader.image_opened', { reader: { kind: 'model', model: 'opus' } }],
