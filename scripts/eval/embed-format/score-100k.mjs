@@ -85,6 +85,11 @@ function loadFormat(format) {
   return { m, have };
 }
 const D = { plain: loadFormat('plain'), prefix: loadFormat('prefix') };
+// EXPLORATORY, added after the bar was scored (not part of it): the prefix only on
+// OCR-only documents (src 'ocr'), translated documents left plain — the shape of a
+// re-embed limited to the untranslated rows of page_translations.
+D.mixed = { m: new Float32Array(D.plain.m), have: D.plain.have };
+for (const r of rows) if (r.src === 'ocr') D.mixed.m.set(D.prefix.m.subarray(r.i * DIMS, (r.i + 1) * DIMS), r.i * DIMS);
 const cand = [];
 for (let i = 0; i < N; i++) if (D.plain.have[i] && D.prefix.have[i]) cand.push(i);
 console.log(`pool ${N} rows; ${cand.length} with a vector in both formats`);
@@ -105,6 +110,8 @@ const ARMS = [
   ['2 query prefix, plain docs', 'search', 'plain'],
   ['2d plain query, prefixed docs', 'plain', 'prefix'],
   ['4 prefix both sides', 'search', 'prefix'],
+  ['x1 (exploratory) plain query, prefix on OCR-only docs', 'plain', 'mixed'],
+  ['x2 (exploratory) query prefix, prefix on OCR-only docs', 'search', 'mixed'],
 ];
 const BASE = ARMS[0][0];
 function summarise(per) {

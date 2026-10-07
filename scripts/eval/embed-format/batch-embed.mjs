@@ -38,8 +38,9 @@ const DIR = arg('--dir');
 if (!DIR) { console.error('--dir D required'); process.exit(1); }
 const MODEL = 'gemini-embedding-2-preview';
 const DIMS = 768;
-// One running job per PROJECT: a 20K-row job is ~7M tokens and the enqueued
-// embedding limit is ~12M per project, so a second job 429s. Keys 8 and 9
+// One running job per PROJECT, 10K rows each: a second 20K-row job 429'd at
+// create (enqueued-token limit), and a lone 20K-row job came back with every
+// request "The operation was cancelled" (unbilled). #5729 ran 10K-page jobs. Keys 8 and 9
 // are separate projects (none is #5729's or the concept lane's; key 1's project 429s on upload).
 const KEY_NAMES = ['GEMINI_API_KEY_8', 'GEMINI_API_KEY_9'];
 const keyOf = (name) => process.env[name];
@@ -59,12 +60,18 @@ const committed = () => readJobs().reduce((s, j) => s + (j.actual_usd ?? j.est_u
 async function submit(db) {
   const format = arg('--format');
   if (!DOC_FORMS[format]) { console.error('--format plain|prefix'); process.exit(1); }
-  const jobRows = Number(arg('--job-rows', 17000));
+  const jobRows = Number(arg('--job-rows', 10000));
   const maxUsd = Number(arg('--max-usd', 9.5));
   const maxRunning = Number(arg('--max-running', 3));
-  // Rows already in a live or collected job of this format (any job size).
-  const covered = readJobs().filter((j) => j.format === format && !/failed/.test(j.status)).map((j) => [j.start, j.start + j.rows]);
-  const isCovered = (i) => covered.some(([a, b]) => i >= a && i < b);
+  // Rows already in a live job of this format, or collected with a vector.
+  // Cancelled or failed requests ("The operation was cancelled", unbilled) go back in.
+  const covered = new Set();
+  for (const j of readJobs().filter((x) => x.format === format)) {
+    const idx = j.idx || Array.from({ length: j.rows }, (_, k) => j.start + k);
+    if (j.status === 'submitted') idx.forEach((i) => covered.add(i));
+    else if (j.status === 'collected') { const bad = new Set(j.failed_rows || (j.vectors ? [] : idx)); idx.forEach((i) => { if (!bad.has(i)) covered.add(i); }); }
+  }
+  const isCovered = (i) => covered.has(i);
   let buf = []; let start = 0;
   const flush = async () => {
     if (!buf.length) return true;
@@ -110,15 +117,13 @@ async function submit(db) {
       await logUsage({ type: 'embedding', mode: 'batch', model: MODEL, book_id: bookId, page_count: b.pages, batch_job_id: `${jobId}:${bookId}`, input_tokens: 0, output_tokens: 0, status: 'submitted', endpoint: ENDPOINT, cost_usd: +usdForTokens(b.tokens, { batch: true }).toFixed(6) }, db);
     }
     const jobs = readJobs();
-    jobs.push({ id: jobId, name: created.name, key: keyName, format, start: s0, rows: chunk.length, books: [...perBook.keys()], est_usd: +est.toFixed(4), status: 'submitted', at: new Date() });
+    jobs.push({ id: jobId, name: created.name, key: keyName, format, start: s0, rows: chunk.length, idx: chunk.map((r) => r.i), books: [...perBook.keys()], est_usd: +est.toFixed(4), status: 'submitted', at: new Date() });
     writeJobs(jobs);
     console.log(`submitted ${jobId} → ${created.name}: ${chunk.length} rows, ${perBook.size} books, est $${est.toFixed(3)}`);
     return true;
   };
   for await (const r of rows()) {
     if (isCovered(r.i)) continue;
-    // A job is a contiguous run of rows (collect reads it back by [start, start + rows)).
-    if (buf.length && r.i !== buf[buf.length - 1].i + 1 && !(await flush())) return;
     buf.push(r);
     if (buf.length >= jobRows && !(await flush())) return;
   }
@@ -141,14 +146,16 @@ async function collect(db) {
     const vdir = path.join(DIR, `vec-${job.format}`); fs.mkdirSync(vdir, { recursive: true });
     const idx = []; const parts = []; let failed = 0;
     const bookOf = new Map();
-    for await (const row of rows()) if (row.i >= job.start && row.i < job.start + job.rows) bookOf.set(row.i, row.book_id);
+    const want = new Set(job.idx || Array.from({ length: job.rows }, (_, k) => job.start + k));
+    for await (const row of rows()) if (want.has(row.i)) bookOf.set(row.i, row.book_id);
+    const failedRows = [];
     const perBook = new Map(job.books.map((id) => [id, { tokens: 0, pages: 0 }]));
     for await (const line of streamBatchResponses(file, KEY)) {
       const i = Number(line.key ?? line.metadata?.key);
       const b = perBook.get(bookOf.get(i));
       if (b) b.tokens += line.response?.usageMetadata?.promptTokenCount || 0;
       const v = line.response?.embedding?.values;
-      if (line.error || !v || v.length !== DIMS) { failed++; continue; }
+      if (line.error || !v || v.length !== DIMS) { failed++; failedRows.push(i); continue; }
       const nrm = Math.hypot(...v) || 1;
       idx.push(i); parts.push(Float32Array.from(v, (x) => x / nrm));
       if (b) b.pages++;
@@ -162,7 +169,7 @@ async function collect(db) {
       actual += usdForTokens(b.tokens, { batch: true }); tokens += b.tokens;
       await completeBatchUsage({ batch_job_id: `${job.id}:${id}`, model: MODEL, input_tokens: b.tokens, output_tokens: 0, cost_usd: +usdForTokens(b.tokens, { batch: true }).toFixed(6), status: b.tokens ? 'success' : 'failed', type: 'embedding', mode: 'batch', book_id: id, page_count: b.pages, endpoint: ENDPOINT }, db);
     }
-    Object.assign(job, { status: 'collected', state, vectors: idx.length, failed, tokens, actual_usd: +actual.toFixed(4) });
+    Object.assign(job, { status: 'collected', state, vectors: idx.length, failed, failed_rows: failedRows, tokens, actual_usd: +actual.toFixed(4) });
     writeJobs(jobs);
     console.log(`${job.id}: ${idx.length} vectors, ${failed} failed, ${tokens} billed tokens, $${actual.toFixed(4)}`);
   }
