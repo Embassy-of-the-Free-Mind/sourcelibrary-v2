@@ -38,6 +38,7 @@ put more traditions into the first ten. `page_concepts` is that lane:
   `conceptPageSearch(..., { abstractLane: true })` (`src/lib/search/concept-search.ts`),
   so hidden books are dropped and `diversity=tradition` applies as on the page lane.
   The Librarian reads it as one more RRF source only when `LIBRARIAN_CONCEPT_LANE=on`.
+- **Stage 1 result (2026-10-07):** on the same 1,216 books with the tradition spread on, relevant traditions in the first ten are 4.36 for this lane against 3.76 for the page vectors (+0.60, CI [0.16, 1.00]); P@10 is level. `scripts/eval/experiments/2026-10-07-concept-lane-stage1.md`.
 - **Stage 1 holds 1,216 books, 325,308 embedded pages** (343,347 abstracts; 18,039
   are `NONE` and are stored on the page but never embedded).
 - **The writer's `--dir` is rebuildable.** `concept-abstracts.mjs rebuild` restores
