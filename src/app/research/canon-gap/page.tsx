@@ -387,7 +387,7 @@ export default function CanonGapPage() {
                 </div>
                 <div className="tabular-nums text-stone-900 font-semibold">{pctEnglish(a.english.fraction)}</div>
                 <div className="text-sm text-stone-600">
-                  {a.english.note} <A href={a.english.source.split(' ')[0]}>source</A>
+                  {a.english.note} <A href={a.url}>source</A>
                 </div>
               </li>
             ))}

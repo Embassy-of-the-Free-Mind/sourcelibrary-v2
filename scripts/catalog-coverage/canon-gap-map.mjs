@@ -606,16 +606,16 @@ async function alreadyInEnglish(sc) {
   const bavli = await sefariaCategory(['Talmud', 'Bavli']);
   const sutta = sc.by_pitaka.sutta;
   return [
-    { id: 'bible', corpus: 'Bible (Hebrew Bible and New Testament)', tradition: 'Jewish and Christian scripture', english: { fraction: 1, complete_translations: 'many; e.g. the King James Version, public domain',
-      source: 'https://ebible.org/find/details.php?id=eng-kjv2006', quote: /public domain/.test(eb) ? 'King James (Authorized) Version … public domain' : null, note: 'eBible.org lists the KJV, Old and New Testament, as public domain' } },
-    { id: 'quran', corpus: "Qur'an", tradition: 'Islamic scripture', english: { fraction: 1, complete_translations: tanzilEnglish || null,
-      source: 'https://tanzil.net/trans/', note: `Tanzil lists ${tanzilEnglish} complete English translations of the whole Qur'an (Arberry, Pickthall, Saheeh International and others)` } },
-    { id: 'mishnah', corpus: 'Mishnah', tradition: 'Rabbinic Judaism', english: { fraction: mishnah.fraction, titles: mishnah.titles, he_segments: mishnah.he_segments, en_segments: mishnah.en_segments,
-      source: 'https://www.sefaria.org/api/counts/{title} for every tractate under Mishnah in https://www.sefaria.org/api/index', note: 'segments with English ÷ segments with Hebrew, summed over tractates' } },
-    { id: 'talmud-bavli', corpus: 'Babylonian Talmud', tradition: 'Rabbinic Judaism', english: { fraction: bavli.fraction, titles: bavli.titles, he_segments: bavli.he_segments, en_segments: bavli.en_segments,
-      source: 'https://www.sefaria.org/api/counts/{title} for every tractate under Talmud › Bavli in https://www.sefaria.org/api/index', note: 'segments with English ÷ segments with Hebrew/Aramaic; the English is mainly the William Davidson (Steinsaltz) translation' } },
-    { id: 'pali-suttas', corpus: 'Pali suttas (Sutta Piṭaka)', tradition: 'Theravāda', english: { fraction: round(sutta.en_bytes / sutta.bytes, 3), files: sutta.files, en_files: sutta.en_files,
-      source: sc.source, note: 'SuttaCentral English only; the Pali canon row above prices the Vinaya and Abhidhamma remainder of the root texts' } },
+    { id: 'bible', corpus: 'Bible (Hebrew Bible and New Testament)', tradition: 'Jewish and Christian scripture', url: 'https://ebible.org/find/details.php?id=eng-kjv2006', english: { fraction: 1, complete_translations: 'many; e.g. the King James Version, public domain',
+      source: 'https://ebible.org/find/details.php?id=eng-kjv2006', quote: /public domain/.test(eb) ? 'King James (Authorized) Version … public domain' : null, note: 'Complete English translations exist; eBible.org lists the King James Version as public domain.' } },
+    { id: 'quran', corpus: "Qur'an", tradition: 'Islamic scripture', url: 'https://tanzil.net/trans/', english: { fraction: 1, complete_translations: tanzilEnglish || null,
+      source: 'https://tanzil.net/trans/', note: `Tanzil lists ${tanzilEnglish} complete English translations, among them Arberry, Pickthall and Saheeh International.` } },
+    { id: 'mishnah', corpus: 'Mishnah', tradition: 'Rabbinic Judaism', url: 'https://www.sefaria.org/texts/Mishnah', english: { fraction: mishnah.fraction, titles: mishnah.titles, he_segments: mishnah.he_segments, en_segments: mishnah.en_segments,
+      source: 'https://www.sefaria.org/api/counts/{title} for every tractate under Mishnah in https://www.sefaria.org/api/index', note: `Share of Sefaria's passages that have English, over all ${mishnah.titles} tractates.` } },
+    { id: 'talmud-bavli', corpus: 'Babylonian Talmud', tradition: 'Rabbinic Judaism', url: 'https://www.sefaria.org/texts/Talmud', english: { fraction: bavli.fraction, titles: bavli.titles, he_segments: bavli.he_segments, en_segments: bavli.en_segments,
+      source: 'https://www.sefaria.org/api/counts/{title} for every tractate under Talmud › Bavli in https://www.sefaria.org/api/index', note: `Share of Sefaria's passages that have English, over all ${bavli.titles} tractates, mainly the William Davidson translation.` } },
+    { id: 'pali-suttas', corpus: 'Pali suttas (Sutta Piṭaka)', tradition: 'Theravāda', url: 'https://suttacentral.net', english: { fraction: round(sutta.en_bytes / sutta.bytes, 3), files: sutta.files, en_files: sutta.en_files,
+      source: sc.source, note: 'Share of the Pali sutta text on SuttaCentral that has an English translation there; printed translations are not counted. The untranslated rest is priced in the Pali canon rows.' } },
   ];
 }
 
