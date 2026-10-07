@@ -25,7 +25,7 @@ export interface BookCheck {
   checked_at: Date;
   method_id: string;
   method_version: string;
-  run_id: string | null;
+  run_id: string;
   frame?: Record<string, unknown>;
   pages_read: number[];
   reader: { kind: 'model' | 'human' | 'detector'; model?: string; role?: string; image_opened: boolean | 'unrecorded' };
