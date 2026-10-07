@@ -224,5 +224,14 @@
 # lock, so a manual --loop run under `flock /tmp/sl-translate-chained.lock` pauses them.
 */5 * * * * cd /root/sourcelibrary && [ -f scripts/lib/translate-batch-chained.mjs ] && flock -n /tmp/sl-translate-chained.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/translate-batch-worker.mjs --chained --tick" >> /var/log/sourcelibrary/translate-batch-chained.log 2>&1
 23 * * * * cd /root/sourcelibrary && [ -f scripts/lib/translate-batch-chained.mjs ] && flock -w 240 /tmp/sl-translate-chained.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/translate-batch-worker.mjs --chained --enrol-auto --limit=40 --max-open=60" >> /var/log/sourcelibrary/translate-batch-chained.log 2>&1
+# Batch API enrichment backfill (#2141): summary + index + chapters for live translated books that are
+# already PAST the realtime enrich lane's statuses (5,631 such books on 2026-10-07 — translation outran
+# enrichment because the scheduler's enrich-worker only selects translate_complete). Every 15 min a
+# collect-only tick (--limit=0) writes finished rounds and submits each book's next round; every 6 h up to
+# 40 new books are admitted, all three rounds priced up front, capped at $2.50 per admission ($10/day).
+# Submission asks the dial / scope envelopes under label 'enrich-worker-batch'; collecting is free.
+# Both lines share one lock. Guarded on the lane module so the lines are inert until #6129 is on main.
+*/15 * * * * cd /root/sourcelibrary && [ -f scripts/workers/lib/enrich-batch-lane.mjs ] && flock -n /tmp/sl-enrich-batch.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrich-worker.mjs --batch --limit=0" >> /var/log/sourcelibrary/enrich-batch.log 2>&1
+40 */6 * * * cd /root/sourcelibrary && [ -f scripts/workers/lib/enrich-batch-lane.mjs ] && flock -w 600 /tmp/sl-enrich-batch.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrich-worker.mjs --batch --limit=40 --max-usd=2.5" >> /var/log/sourcelibrary/enrich-batch.log 2>&1
 # #5705 work board (/admin/work): push this box's claude-job state + the GitHub side to ops_reports every 10 min. Script lands on main with the #5705 PR; until then this logs 'Cannot find module'.
 */10 * * * * flock -n /tmp/sl-work-board.lock bash -c 'cd /root/sourcelibrary && node --env-file=.env.production.local scripts/maintenance/work-board-push.mjs --box hetzner; node --env-file=.env.production.local scripts/maintenance/work-board-push.mjs --github' >> /var/log/sourcelibrary/work-board.log 2>&1
