@@ -1174,9 +1174,15 @@ async function lexicalArtworkSearch(
 /**
  * Search collections by name/description.
  * ~300 docs, fast regex on a small collection.
+ *
+ * `queryRegex` also matches related word forms (#5517), which is many more
+ * collections than the three shown. A collection NAMED for the word (or one of
+ * its forms) comes before one that only mentions it, largest first within
+ * each. Ordered by size alone, "poetic" lost the Poetry collection to three
+ * larger ones whose descriptions mention a poet.
  */
 async function searchCollections(db: any, queryRegex: RegExp, query: string): Promise<{ results: CollectionResult[] }> {
-  const cols = await db.collection('collections')
+  const matched = await db.collection('collections')
     .find({
       visible: { $ne: false },
       book_count: { $gt: 0 },
@@ -1188,9 +1194,17 @@ async function searchCollections(db: any, queryRegex: RegExp, query: string): Pr
     })
     .project({ slug: 1, tenantId: 1, name: 1, description: 1, book_count: 1, featured_image: 1, hero_image: 1, card_framing: 1, featured_images: { $slice: 1 } })
     .sort({ book_count: -1 })
-    .limit(3)
+    .limit(60)
     .maxTimeMS(2000)
     .toArray();
+
+  const rank = (c: any) => (queryRegex.test(c.name || '') || queryRegex.test(c.slug || '') ? 0 : 1);
+  // Stable sort: within a rank the order stays largest first.
+  const cols = matched
+    .map((c: any) => ({ c, r: rank(c) }))
+    .sort((x: any, y: any) => x.r - y.r)
+    .slice(0, 3)
+    .map((x: any) => x.c);
 
   return {
     results: cols.map((c: any) => {
