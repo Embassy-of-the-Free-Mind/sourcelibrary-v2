@@ -1,0 +1,750 @@
+{
+ "R001": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b0",
+  "toh": "D4231",
+  "labels": {
+   "T1": "A",
+   "T2": "C",
+   "T3": "S",
+   "T4": "P"
+  }
+ },
+ "R002": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b40",
+  "toh": "D3862",
+  "labels": {
+   "T1": "A",
+   "T2": "S",
+   "T3": "P",
+   "T4": "C"
+  }
+ },
+ "R003": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7c1",
+  "toh": "D4231",
+  "labels": {
+   "T1": "C",
+   "T2": "S",
+   "T3": "P",
+   "T4": "A"
+  }
+ },
+ "R004": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b49",
+  "toh": "D3862",
+  "labels": {
+   "T1": "C",
+   "T2": "A",
+   "T3": "S",
+   "T4": "P"
+  }
+ },
+ "R005": {
+  "kind": "PLANT",
+  "page_id": "6abe825259b86b7d32a65b3a",
+  "labels": {
+   "T1": "A",
+   "T2": "A_PLANT"
+  },
+  "plant": {
+   "old": "Furthermore, awakening has no characteristics, as it is devoid of the nature of characteristics.",
+   "new": "Furthermore, awakening has no characteristics, as it is not devoid of the nature of characteristics.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "R006": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ae",
+  "toh": "D4231",
+  "labels": {
+   "T1": "A",
+   "T2": "C",
+   "T3": "S",
+   "T4": "P"
+  }
+ },
+ "R007": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b5",
+  "toh": "D4231",
+  "labels": {
+   "T1": "A",
+   "T2": "C",
+   "T3": "P",
+   "T4": "S"
+  }
+ },
+ "R008": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4d",
+  "toh": "D3862",
+  "labels": {
+   "T1": "S",
+   "T2": "P",
+   "T3": "C",
+   "T4": "A"
+  }
+ },
+ "R009": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4a",
+  "toh": "D3862",
+  "labels": {
+   "T1": "S",
+   "T2": "C",
+   "T3": "P",
+   "T4": "A"
+  }
+ },
+ "R010": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b32",
+  "toh": "D3862",
+  "labels": {
+   "T1": "S",
+   "T2": "C",
+   "T3": "A",
+   "T4": "P"
+  }
+ },
+ "R011": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b3",
+  "toh": "D4231",
+  "labels": {
+   "T1": "A",
+   "T2": "C",
+   "T3": "S",
+   "T4": "P"
+  }
+ },
+ "R012": {
+  "kind": "DUP",
+  "page_id": "6abed8d1896ea18127c8f7bb",
+  "labels": {
+   "T1": "S",
+   "T2": "S_DUP"
+  }
+ },
+ "R013": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7be",
+  "toh": "D4231",
+  "labels": {
+   "T1": "A",
+   "T2": "C",
+   "T3": "P",
+   "T4": "S"
+  }
+ },
+ "R014": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b41",
+  "toh": "D3862",
+  "labels": {
+   "T1": "A",
+   "T2": "S",
+   "T3": "C",
+   "T4": "P"
+  }
+ },
+ "R015": {
+  "kind": "DUP",
+  "page_id": "6abe825259b86b7d32a65b49",
+  "labels": {
+   "T1": "S_DUP",
+   "T2": "S"
+  }
+ },
+ "R016": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7a8",
+  "toh": "D4231",
+  "labels": {
+   "T1": "P",
+   "T2": "A",
+   "T3": "C",
+   "T4": "S"
+  }
+ },
+ "R017": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7bb",
+  "toh": "D4231",
+  "labels": {
+   "T1": "A",
+   "T2": "P",
+   "T3": "C",
+   "T4": "S"
+  }
+ },
+ "R018": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7bc",
+  "toh": "D4231",
+  "labels": {
+   "T1": "S",
+   "T2": "P",
+   "T3": "C",
+   "T4": "A"
+  }
+ },
+ "R019": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b31",
+  "toh": "D3862",
+  "labels": {
+   "T1": "C",
+   "T2": "S",
+   "T3": "P",
+   "T4": "A"
+  }
+ },
+ "R020": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7aa",
+  "toh": "D4231",
+  "labels": {
+   "T1": "S",
+   "T2": "A",
+   "T3": "C",
+   "T4": "P"
+  }
+ },
+ "R021": {
+  "kind": "DUP",
+  "page_id": "6abed8d1896ea18127c8f7ba",
+  "labels": {
+   "T1": "S",
+   "T2": "S_DUP"
+  }
+ },
+ "R022": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ad",
+  "toh": "D4231",
+  "labels": {
+   "T1": "A",
+   "T2": "S",
+   "T3": "P",
+   "T4": "C"
+  }
+ },
+ "R023": {
+  "kind": "PLANT",
+  "page_id": "6abed8d1896ea18127c8f7b5",
+  "labels": {
+   "T1": "A",
+   "T2": "A_PLANT"
+  },
+  "plant": {
+   "old": "All of these are both the mind and its mental factors.",
+   "new": "All of these are not both the mind and its mental factors.",
+   "how": "\\bare\\b → are not"
+  }
+ },
+ "R024": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3c",
+  "toh": "D3862",
+  "labels": {
+   "T1": "C",
+   "T2": "P",
+   "T3": "A",
+   "T4": "S"
+  }
+ },
+ "R025": {
+  "kind": "PLANT",
+  "page_id": "6abe825259b86b7d32a65b33",
+  "labels": {
+   "T1": "A",
+   "T2": "A_PLANT"
+  },
+  "plant": {
+   "old": "While that is true, Bodhisattvas are the cause of the Buddha Bhagavans for two reasons: due to the distinction of developmental stages, and due to causing others to adopt the path.",
+   "new": "While that is not true, Bodhisattvas are the cause of the Buddha Bhagavans for two reasons: due to the distinction of developmental stages, and due to causing others to adopt the path.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "R026": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b47",
+  "toh": "D3862",
+  "labels": {
+   "T1": "A",
+   "T2": "S",
+   "T3": "C",
+   "T4": "P"
+  }
+ },
+ "R027": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7c0",
+  "toh": "D4231",
+  "labels": {
+   "T1": "S",
+   "T2": "C",
+   "T3": "A",
+   "T4": "P"
+  }
+ },
+ "R028": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7bd",
+  "toh": "D4231",
+  "labels": {
+   "T1": "S",
+   "T2": "C",
+   "T3": "P",
+   "T4": "A"
+  }
+ },
+ "R029": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4c",
+  "toh": "D3862",
+  "labels": {
+   "T1": "S",
+   "T2": "P",
+   "T3": "A",
+   "T4": "C"
+  }
+ },
+ "R030": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b7",
+  "toh": "D4231",
+  "labels": {
+   "T1": "C",
+   "T2": "P",
+   "T3": "S",
+   "T4": "A"
+  }
+ },
+ "R031": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b36",
+  "toh": "D3862",
+  "labels": {
+   "T1": "S",
+   "T2": "P",
+   "T3": "C",
+   "T4": "A"
+  }
+ },
+ "R032": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b6",
+  "toh": "D4231",
+  "labels": {
+   "T1": "P",
+   "T2": "A",
+   "T3": "C",
+   "T4": "S"
+  }
+ },
+ "R033": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7c3",
+  "toh": "D4231",
+  "labels": {
+   "T1": "A",
+   "T2": "P",
+   "T3": "C",
+   "T4": "S"
+  }
+ },
+ "R034": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7c2",
+  "toh": "D4231",
+  "labels": {
+   "T1": "A",
+   "T2": "S",
+   "T3": "P",
+   "T4": "C"
+  }
+ },
+ "R035": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ab",
+  "toh": "D4231",
+  "labels": {
+   "T1": "S",
+   "T2": "P",
+   "T3": "C",
+   "T4": "A"
+  }
+ },
+ "R036": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7af",
+  "toh": "D4231",
+  "labels": {
+   "T1": "P",
+   "T2": "C",
+   "T3": "S",
+   "T4": "A"
+  }
+ },
+ "R037": {
+  "kind": "PLANT",
+  "page_id": "6abed8d1896ea18127c8f7ae",
+  "labels": {
+   "T1": "A",
+   "T2": "A_PLANT"
+  },
+  "plant": {
+   "old": "Just as direct perception is a valid cognition because it meets with the object since it cannot arise without the object, similarly, inference is also a valid cognition because it meets with the determined object since it cannot arise in the absence of the object.",
+   "new": "Just as direct perception is a valid cognition because it meets with the object since it can arise without the object, similarly, inference is also a valid cognition because it meets with the determined object since it cannot arise in the absence of the object.",
+   "how": "\\bcannot\\b → can"
+  }
+ },
+ "R038": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4e",
+  "toh": "D3862",
+  "labels": {
+   "T1": "C",
+   "T2": "A",
+   "T3": "P",
+   "T4": "S"
+  }
+ },
+ "R039": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b35",
+  "toh": "D3862",
+  "labels": {
+   "T1": "A",
+   "T2": "C",
+   "T3": "S",
+   "T4": "P"
+  }
+ },
+ "R040": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7bf",
+  "toh": "D4231",
+  "labels": {
+   "T1": "S",
+   "T2": "P",
+   "T3": "C",
+   "T4": "A"
+  }
+ },
+ "R041": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b4",
+  "toh": "D4231",
+  "labels": {
+   "T1": "S",
+   "T2": "P",
+   "T3": "C",
+   "T4": "A"
+  }
+ },
+ "R042": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b48",
+  "toh": "D3862",
+  "labels": {
+   "T1": "C",
+   "T2": "S",
+   "T3": "A",
+   "T4": "P"
+  }
+ },
+ "R043": {
+  "kind": "PLANT",
+  "page_id": "6abed8d1896ea18127c8f7c3",
+  "labels": {
+   "T1": "A_PLANT",
+   "T2": "A"
+  },
+  "plant": {
+   "old": "Staying in a distant place or time means one is separated from both.",
+   "new": "Staying in a distant place or time means one is not separated from both.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "R044": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3e",
+  "toh": "D3862",
+  "labels": {
+   "T1": "A",
+   "T2": "S",
+   "T3": "C",
+   "T4": "P"
+  }
+ },
+ "R045": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b39",
+  "toh": "D3862",
+  "labels": {
+   "T1": "C",
+   "T2": "S",
+   "T3": "A",
+   "T4": "P"
+  }
+ },
+ "R046": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b38",
+  "toh": "D3862",
+  "labels": {
+   "T1": "A",
+   "T2": "C",
+   "T3": "P",
+   "T4": "S"
+  }
+ },
+ "R047": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3f",
+  "toh": "D3862",
+  "labels": {
+   "T1": "P",
+   "T2": "C",
+   "T3": "A",
+   "T4": "S"
+  }
+ },
+ "R048": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b1",
+  "toh": "D4231",
+  "labels": {
+   "T1": "S",
+   "T2": "A",
+   "T3": "C",
+   "T4": "P"
+  }
+ },
+ "R049": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3a",
+  "toh": "D3862",
+  "labels": {
+   "T1": "C",
+   "T2": "P",
+   "T3": "A",
+   "T4": "S"
+  }
+ },
+ "R050": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b2",
+  "toh": "D4231",
+  "labels": {
+   "T1": "A",
+   "T2": "P",
+   "T3": "C",
+   "T4": "S"
+  }
+ },
+ "R051": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b42",
+  "toh": "D3862",
+  "labels": {
+   "T1": "S",
+   "T2": "P",
+   "T3": "A",
+   "T4": "C"
+  }
+ },
+ "R052": {
+  "kind": "DUP",
+  "page_id": "6abe825259b86b7d32a65b4d",
+  "labels": {
+   "T1": "S",
+   "T2": "S_DUP"
+  }
+ },
+ "R053": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ba",
+  "toh": "D4231",
+  "labels": {
+   "T1": "P",
+   "T2": "A",
+   "T3": "S",
+   "T4": "C"
+  }
+ },
+ "R054": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b37",
+  "toh": "D3862",
+  "labels": {
+   "T1": "A",
+   "T2": "S",
+   "T3": "C",
+   "T4": "P"
+  }
+ },
+ "R055": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3b",
+  "toh": "D3862",
+  "labels": {
+   "T1": "C",
+   "T2": "A",
+   "T3": "P",
+   "T4": "S"
+  }
+ },
+ "R056": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b4b",
+  "toh": "D3862",
+  "labels": {
+   "T1": "C",
+   "T2": "P",
+   "T3": "S",
+   "T4": "A"
+  }
+ },
+ "R057": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b33",
+  "toh": "D3862",
+  "labels": {
+   "T1": "A",
+   "T2": "S",
+   "T3": "C",
+   "T4": "P"
+  }
+ },
+ "R058": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b9",
+  "toh": "D4231",
+  "labels": {
+   "T1": "S",
+   "T2": "C",
+   "T3": "A",
+   "T4": "P"
+  }
+ },
+ "R059": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b43",
+  "toh": "D3862",
+  "labels": {
+   "T1": "A",
+   "T2": "P",
+   "T3": "S",
+   "T4": "C"
+  }
+ },
+ "R060": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7a9",
+  "toh": "D4231",
+  "labels": {
+   "T1": "A",
+   "T2": "C",
+   "T3": "P",
+   "T4": "S"
+  }
+ },
+ "R061": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7ac",
+  "toh": "D4231",
+  "labels": {
+   "T1": "P",
+   "T2": "A",
+   "T3": "S",
+   "T4": "C"
+  }
+ },
+ "R062": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b3d",
+  "toh": "D3862",
+  "labels": {
+   "T1": "P",
+   "T2": "A",
+   "T3": "C",
+   "T4": "S"
+  }
+ },
+ "R063": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b46",
+  "toh": "D3862",
+  "labels": {
+   "T1": "A",
+   "T2": "P",
+   "T3": "S",
+   "T4": "C"
+  }
+ },
+ "R064": {
+  "kind": "ARMS",
+  "page_id": "6abed8d1896ea18127c8f7b8",
+  "toh": "D4231",
+  "labels": {
+   "T1": "S",
+   "T2": "C",
+   "T3": "P",
+   "T4": "A"
+  }
+ },
+ "R065": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b44",
+  "toh": "D3862",
+  "labels": {
+   "T1": "P",
+   "T2": "A",
+   "T3": "C",
+   "T4": "S"
+  }
+ },
+ "R066": {
+  "kind": "PLANT",
+  "page_id": "6abe825259b86b7d32a65b3c",
+  "labels": {
+   "T1": "A_PLANT",
+   "T2": "A"
+  },
+  "plant": {
+   "old": "In the same way, the Bodhisattva who first develops the mind of awakening is born into the lineage of the Great King of Garudas, the Tathagata.",
+   "new": "In the same way, the Bodhisattva who first develops the mind of awakening is not born into the lineage of the Great King of Garudas, the Tathagata.",
+   "how": "\\bis\\b → is not"
+  }
+ },
+ "R067": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b45",
+  "toh": "D3862",
+  "labels": {
+   "T1": "S",
+   "T2": "C",
+   "T3": "A",
+   "T4": "P"
+  }
+ },
+ "R068": {
+  "kind": "ARMS",
+  "page_id": "6abe825259b86b7d32a65b34",
+  "toh": "D3862",
+  "labels": {
+   "T1": "C",
+   "T2": "A",
+   "T3": "P",
+   "T4": "S"
+  }
+ }
+}

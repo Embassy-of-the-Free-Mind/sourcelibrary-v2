@@ -1,0 +1,63 @@
+[
+{"id": "QHQ6U", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "ཤེས་པར་བྱེད་པ་ལས་ཏེ། དམིགས་པ་འབྲེལ་ཏོ།", "english": "this refers to the cause of cognition, and it is connected to the object of observation", "why": "The gloss says 'from which cause' means 'from the indicating (jñāpaka) [cause]' and is construed with the root-text verb 'is observed'; it does not mean a cause of cognition or an object of observation."},
+  {"type": "term", "confidence": "medium", "tibetan": "གང་གི་སྒྲ་ལ་ལྟོས་ཀྱང་རྒྱུ་དེ་ལས་ཞེས་ཁོང་ནས་ཕྱུང་སྟེ།", "english": "No matter which word it depends on, the meaning is extracted from that cause.", "why": "This is a grammatical gloss: in relation to the word 'which' (yad), the correlative 'from that cause' is to be supplied; it is not 'no matter which word'."},
+  {"type": "agent", "confidence": "medium", "tibetan": "ངེས་པའི་ཁྱད་པར་གྱི་ལྷན་ཅིག་བྱེད་པ་ཅན་ཡིན་པའི་ཕྱིར་རོ་ཞེས་དོགས་པ་བསུ་བ་ནི", "english": "One must infer this because a certain result is seen at all times.", "why": "The sentences from 'Even if any particular state of wind...' to 'because it has a specific cooperating cause' are all the content of the anticipated objection, but the English presents them as the commentator's own assertion."},
+  {"type": "structure", "confidence": "medium", "tibetan": "རྒྱུ་གཞན་རྟོག་ན་ནི་དུ་བ་ཡང་མེའི་རྒྱུ་ཅན་དུ་མི་འགྲུབ་པོ་ཞེས་ལན་འདེབས་པ་ནི", "english": "The response to this is the phrase just as smoke where no fire is seen.", "why": "The statement 'if another cause is imagined, smoke too would not be established as fire-caused' is itself the reply that the root phrase gives; it is not a statement that the root phrase then responds to."},
+  {"type": "addition", "confidence": "high", "tibetan": "མ་ཡིན་ཏེ་ཞེས་དོགས་པ་", "english": "raising a doubt one or two words at page break", "why": "The Tibetan says 'not so' rejects the doubt (the verb 'refutes' comes on the next side); 'raising a doubt one or two words at page break' is a garbled artifact.", "fix": {"find": "raising a doubt one or two words at page break", "replace": "rejecting this doubt"}}
+ ],
+ "note": "The broad argument (habituation, not humours, explains differences in passions) comes through, but the grammatical glosses are garbled, the objection is merged with the reply, and the side ends in a leaked artifact."},
+{"id": "QFV9O", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "medium", "tibetan": "ཁྱད་པར་ཅན་གྱི་སྦྱོར་བ་པོས་སྔགས་ཀྱི་འབྲས་བུ་ཐོབ་བོ་", "english": "a practitioner achieves the result of a mantra through a specific application", "why": "Here 'special' qualifies the practitioner (a special practitioner obtains the mantra's fruit), which sets up the Brahmin vs. śūdra point; the English moves it onto the application."}
+ ],
+ "note": "A sound rendering of the argument against the efficacy of mantras; it has only a small misplacement."},
+{"id": "QJ07D", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "དེ་བཞིན་དུ་གྲངས་དང་ལྡན་པ་ཡང་མི་སྲིད་དེ་དེ་གཉིས་ནི་ཡོན་ཏན་གྱི་དངོས་པོ་ཡིན་པ་ཉིད་ཀྱིས", "english": "Likewise, it is impossible for them to possess number, because both number and \"possession\" are quality-entities", "why": "ལྡན་པ here is the Vaiśeṣika quality of conjunction (saṃyoga); the text says number and conjunction are both impossible for the six categories, since both are qualities and so reside only in substances.", "fix": {"find": "Likewise, it is impossible for them to possess number, because both number and \"possession\" are quality-entities", "replace": "Likewise, number and conjunction (saṃyoga) are also impossible for them, because both of these are qualities"}},
+  {"type": "term", "confidence": "high", "tibetan": "ཁང་{བཟངས་,བཟང་}ལ་སོགས་པའི་ཕྲེང་བ", "english": "it refers to things like a palace or a garland", "why": "The example is 'a row of palaces' (a collective expression), not a palace and a garland.", "fix": {"find": "it refers to things like a palace or a garland", "replace": "it includes expressions like \"a row of palaces\""}}
+ ],
+ "note": "The infinite-regress argument on space is handled adequately, but the Vaiśeṣika category passage mistranslates the examples and the quality of conjunction."},
+{"id": "Q4U7V", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "གསལ་བ་བརྗོད་པར་འདོད་པས་མང་པོའི་ཚིག་གོ", "english": "is a plural term used because clarity is desired to be expressed", "why": "གསལ་བ here is vyakti, the individual instances: the plural is used because the individuals are meant.", "fix": {"find": "is a plural term used because clarity is desired to be expressed", "replace": "is a plural term used because the individual instances (vyakti) are meant"}},
+  {"type": "term", "confidence": "high", "tibetan": "ཉེ་བར་ལེན་པ་དང་ཉེ་བར་ལེན་པ་ལས་བྱུང་བ", "english": "the appropriated and the result of appropriation", "why": "ཉེ་བར་ལེན་པ is upādāna in the sense of material cause; the lamp and its light are the material cause and what arises from it.", "fix": {"find": "the appropriated and the result of appropriation", "replace": "the material cause and what arises from the material cause"}},
+  {"type": "reversal", "confidence": "medium", "tibetan": "འཇིག་པར་བྱེད་པ་མི་གནས་པ་ནི་རང་ཉིད་གནས་པའི་ཕྱིར་རོ།", "english": "Since the destroyer does not endure, it endures by itself.", "why": "The point is that when the destroying cause is absent the thing abides on its own, so a cause of duration is pointless; the English garbles the argument."},
+  {"type": "term", "confidence": "medium", "tibetan": "མཚམས་སྦྱོར་བར་བྱེད་པའི་ཡིད་ཀྱི་རྣམ་པར་ཤེས་པ", "english": "the mental consciousness that connects", "why": "This is the rebirth-linking (pratisandhi) mental consciousness, a technical term."}
+ ],
+ "note": "The thread of the argument (refuting the support and abiding, the lamp and light analogy) is recognisable, but several technical terms are wrong or flattened."},
+{"id": "QVSDX", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "A faithful and well-structured rendering of the general and specific characteristics of the Truths and the two kinds of seekers of liberation."},
+{"id": "QRBGZ", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "དོན་གཅིག་ལ་འཕྲོད་པ་འདུ་བ་ཞེས་བྱ་བར་རིགས་ན", "english": "then it is reasonable to call it a collection that meets in a single object", "why": "འདུ་བ is the Vaiśeṣika samavāya (inherence), and the expression is ekārthasamavāya, 'inherence in a single object', not a collection.", "fix": {"find": "then it is reasonable to call it a collection that meets in a single object", "replace": "then it is reasonable to call it inherence in a single object (ekārthasamavāya)"}}
+ ],
+ "note": "The refutation of the variegated whole and of sequential superimposition is rendered well overall, but 'inherence' is consistently given as 'collection'."},
+{"id": "QRZQG", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "omission", "confidence": "high", "tibetan": "པ་ཁྱད་འཕགས་གསལ་བྱེད་ཅིང་། །", "english": "For the benefit of others,", "why": "The verse (continuing སྦྱིན་ from the previous side) says 'making clear the excellence of giving'; 'for the benefit of others' is not in the text.", "fix": {"find": "For the benefit of others,", "replace": "Making clear the excellence of giving,"}},
+  {"type": "agent", "confidence": "high", "tibetan": "སུ་ཞིག་ཀྱང་ནི་རབ་ཏུ་གསལ་བ་རུ། །བདེ་བར་འགྲོ་བ་སྐྱེས་བུ་རིན་ཆེན་སྐྱེས།", "english": "anyone who is truly manifest as a jewel among men is born into the world of the Sugata One Gone to Bliss", "why": "The verse says that a certain jewel among men, the Sugata, is born, clearly manifest; the Sugata is the subject, not the world into which 'anyone' is born.", "fix": {"find": "anyone who is truly manifest as a jewel among men is born into the world of the Sugata One Gone to Bliss", "replace": "a certain jewel among men, the Sugata, is born, clearly manifest"}},
+  {"type": "omission", "confidence": "medium", "tibetan": "བ་གམ་འོད་ཚོགས་ག་བུར་གྱིས།", "english": "white and radiant like a mass of camphor light", "why": "The city is white with the camphor-like mass of light from its mansions (བ་གམ, saudha); the mansions are dropped."}
+ ],
+ "note": "The colophon and the opening verses on Sāketa are roughly right, but the first verse line and the Sugata verse are mistranslated."},
+{"id": "QRC5U", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "high", "tibetan": "འགྲོ་བར་ཕན་མིན་ཟད་ཕྱིར་བརྩོན་པའི་བདག་ཉིད་ཅན།", "english": "possess an essence of diligence because the benefit of beings is never exhausted", "why": "The text says they strive in order to exhaust what is harmful (non-beneficial) to beings.", "fix": {"find": "possess an essence of diligence because the benefit of beings is never exhausted", "replace": "are by nature diligent in order to exhaust what harms beings"}},
+  {"type": "term", "confidence": "high", "tibetan": "ཁྱེད་ཅག་ལྟ་བུའི་འབྱུང་བ་རྙེད་སླ་མིན་པ་ཉིད།", "english": "finders of the elements [note: essential qualities] like yourselves are not easily found", "why": "འབྱུང་བ here is 'appearance/arising': the appearance of such as you is hard to find; 'elements' and the note are wrong.", "fix": {"find": "finders of the elements [note: essential qualities] like yourselves are not easily found", "replace": "the appearance of ones like yourselves is not easily found"}},
+  {"type": "structure", "confidence": "medium", "tibetan": "ཐོབ་པར་མ་བྱས་པར་ནི་ཇི་ལྟར་བརྟན་པར་བྱེད་པར་འགྱུར།", "english": "Until you have attained it, how could you remain so stable?", "why": "The rhetorical question is how that state could remain unattained by one of such conduct, which means he will surely attain it."},
+  {"type": "agent", "confidence": "medium", "tibetan": "གང་ལ་འདི་ཡི་བློ་གྲོས་འབྱུང་བ་ནི། །དེ་ཉིད་དེ་དག་ལ་ནི་རྟེན་པར་བྱེད།", "english": "The wisdom that arises toward them\nDepends entirely upon them.", "why": "The person in whom this understanding arises is the one who serves and relies on the parents."},
+  {"type": "term", "confidence": "medium", "tibetan": "འདི་ལྟར་རྗེས་སུ་ཐོས་ཏེ།", "english": "Thus have I heard", "why": "This is the jātaka formula anuśrūyate ('it is handed down'), not the sūtra opening evaṃ mayā śrutam."},
+  {"type": "gloss", "confidence": "medium", "tibetan": "དྲན་པ་དང་རིག་བྱེད་ཀྱི་དེ་ཁོ་ན་ཤེས་པ", "english": "(Smriti) mindfulness/scripture", "why": "Paired with the Vedas, smṛti here is the traditional law literature, not mindfulness."}
+ ],
+ "note": "The narrative frame is clear, but the hermit's verses contain a reversal and several misreadings."},
+{"id": "QQJUF", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "དགེ་འདུན་ལྷག་མ་", "english": "the thirteen (sanghadisesa) rules requiring an assembly of the community", "why": "In this Mūlasarvāstivāda text the Sanskrit term saṅghāvaśeṣa is meant; sanghadisesa is the Pali form.", "fix": {"find": "the thirteen (sanghadisesa) rules requiring an assembly of the community", "replace": "the thirteen (saṅghāvaśeṣa) rules requiring an assembly of the community"}},
+  {"type": "term", "confidence": "high", "tibetan": "གསོ་སྦྱོང་བྱས་ལ", "english": "should perform the (uposatha) the bimonthly purification ritual", "why": "The Sanskrit-tradition term is poṣadha; uposatha is Pali.", "fix": {"find": "should perform the (uposatha) the bimonthly purification ritual", "replace": "should perform the (poṣadha) the bimonthly purification ritual"}},
+  {"type": "term", "confidence": "medium", "tibetan": "སེམས་ཀྱིས་བྱིན་གྱིས་བརླབ་པར་བྱའོ", "english": "This mental resolve is the blessing.", "why": "བྱིན་གྱིས་བརླབ here is the Vinaya act of mental resolution (adhiṣṭhāna): he should resolve in mind, not 'the blessing'."}
+ ],
+ "note": "An accurate account of the five modes of Prātimokṣa recitation and the reciter's and elder's duties, with Pali forms and one Vinaya term to correct."},
+{"id": "QMAKD", "score": 5, "verdict": "light", "span": "ok", "errors": [],
+ "note": "A faithful rendering of the Tibetan verses on the Buddha honouring Śuddhodana's body and the monks' question."}
+]

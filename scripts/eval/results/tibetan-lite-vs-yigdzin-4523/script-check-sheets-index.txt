@@ -1,0 +1,41 @@
+1 699249bca2d53df4853bf2a0 Tibet's Great Yogi Milarepa
+2 6a379f816b84dd3f2ea5ab0d the collected ritual texts used in the rgyud-stod 
+3 6a379f956b84dd3f2ea5f179 detailed comparisons of the textual variations bet
+4 6a37c22f63d3f620b49f0c8f selected works of gter-ston 'bar-ba'i-rdo-rje
+5 6a37c23a63d3f620b49f2906 rdza stod rdzong sde dgon lo rgyus/
+6 6a37c23e63d3f620b49f4870 yul shul rdzong : dgon sde'i lo rgyus mdor bsdus/
+7 6a37c25063d3f620b49f7618 gsung 'bum/ kun dga' ye shes/
+8 6a37c27263d3f620b49fd0bd the earth shaking thunder of true word
+9 6a37c9cf06d55b107dabe9e1 gdung sel gser gyi mchod sdong /
+10 6a37c9d106d55b107dabec1b bod kyi gso ba rig pa'i lo rgyus kyi bang mdzod g.
+11 6a37ca2106d55b107dad479d byang chub sems kyi 'grel ba bshad pa/
+12 6a37ca2206d55b107dad4816 lta spyod rnam dag gi man ngag
+13 6a37ca2306d55b107dad4819 pradz+nyA de wI swa ra swa ti stro tra paN+Di ta m
+14 6a37ca5f06d55b107dad8d06 gsang ba 'dus pa'i dkyil 'khor du dbang bskur ba'i
+15 6a37ca6b06d55b107dad9f18 dpal dus kyi 'khor lo'i phyogs bzhi'i gsol gdab da
+16 6a37d6eed07939943b23d34f a journey into the culture of tibetan nomads
+17 6a37d709d07939943b23ec96 a brief introduction of thupten dorje dark monaste
+18 6a37d70cd07939943b23ecf7 同仁县志
+19 6a37d719d07939943b23fc75 the inscription of the sino-tibetan treaty of 821-
+20 6a37d719d07939943b23fcd9 the mu tsung/khri gtsug lde brtsan treaty of a.d. 
+21 6a37d736d07939943b2438c8 history of the monastic university se ra theg chen
+22 6a37d777d07939943b2474b0 tibetan compendia written for csoma de koros by th
+23 6a37d778d07939943b247645 the autobiography and diaries of situ panchen
+24 6a37d779d07939943b247942 Bkaʾ brgyad bde gshegs ʾdus pa :a collection of ra
+25 6a37d7b8d07939943b24c85e Pañcarakṣā
+26 6a37d7bbd07939943b24c8f2 Kāraṇḍavyūha
+27 6a37d7cfd07939943b24c95d Saddharmapuṇḍarīka
+28 6a37d7e3d07939943b24cb97 Mūlamadhyamakakārikā
+29 6a37d7e3d07939943b24cb9e Buddhapālita-mūlamadhyamaka-vṛtti
+30 6a37d7edd07939943b24cbb8 Bhūtaḍāmaratantram
+31 6a37d881d07939943b24cc07 Taishō Tripitaka
+32 6a37d979d07939943b250d77 THE OLDEST BLOCK PRINT OF KLONG-CHEN RAB-'BYAMS-PA
+33 6a37da18d07939943b26226d a collection of sadhanas for invoking the various 
+34 6a37da1ad07939943b2626d2 Rang grol skor gsum and :Byang chub kyi sems Kun b
+35 6a37da4dd07939943b266b78 gsung 'bum/_blo bzang thugs rje/
+36 69c4392c2de785d8a2265fcd 1919,0101,0.169*
+37 69c395f12de785d8a2263cb5 1919,0101,0.18
+38 69bc814094dea89ce157048d A Tibetan-English Dictionary
+39 69c392ea2de785d8a22637a6 1919,0101,0.32
+40 69c395592de785d8a2263bea 1919,0101,0.103
+41 6aa474674ad7f6ccf09bc4a9 Itivuttaka

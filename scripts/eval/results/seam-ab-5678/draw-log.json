@@ -1,0 +1,23 @@
+{
+  "seed": 5678,
+  "frame": {
+    "call_site": "scripts/lib/translate-batch-chained.mjs",
+    "runs_mode": "chained",
+    "served_books": 4777
+  },
+  "skipped": {
+    "no_next_ocr": 60,
+    "prior_sample_book": 22,
+    "book_language": 311,
+    "no_seeded_lane_page": 42,
+    "page_language": 10,
+    "short_ocr": 12,
+    "next_excluded_type": 4,
+    "control_pool_full": 81
+  },
+  "visited": 419,
+  "pools": {
+    "pagebreak": 150,
+    "control": 60
+  }
+}

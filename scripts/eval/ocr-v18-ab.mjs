@@ -23,6 +23,9 @@
  *   --score                outcomes, noise floor, decision rule       → scripts/eval/results/ocr-v18-ab-2026-10.json
  *
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/ocr-v18-ab.mjs --draw
+ *
+ * scripts/eval/ocr-v19-ab.mjs (#4195 confirmatory run) imports the build / submit / poll stages and the scoring
+ * helpers below with its own config (work dir, arms, k, job name); the defaults are this run's, unchanged.
  *   until node --env-file=… scripts/eval/ocr-v18-ab.mjs --poll; do sleep 120; done
  */
 import fs from 'node:fs';
@@ -41,10 +44,10 @@ const argv = process.argv.slice(2);
 const flag = (n) => argv.includes(`--${n}`);
 const opt = (n, d) => (argv.find((a) => a.startsWith(`--${n}=`)) || '').slice(n.length + 3) || d;
 
-const SEED = 4195;
-const K = 3;
-const ARMS = ['A', 'A2', 'B'];
-const MODEL = OCR_MODEL_LITE; // gemini-3.1-flash-lite: the production lite OCR model
+export const SEED = 4195;
+export const K = 3;
+export const ARMS = ['A', 'A2', 'B'];
+export const MODEL = OCR_MODEL_LITE; // gemini-3.1-flash-lite: the production lite OCR model
 const V16_ID = '6a98b8a075660c6a8b09a8f8';
 const V16_HASH = '0203c2641e253ffbf17772ae1b30bf16';
 const CANDIDATE = path.join(__dirname, '../../prompts/ocr/standard-ocr-v18-candidate.md');
@@ -53,17 +56,17 @@ const WORK = opt('work', '/root/claude-jobs/ocr-v18-ab-work');
 const RESULTS_DIR = path.join(__dirname, 'results/ocr-v18-ab-2026-10');
 const RESULTS_JSON = path.join(__dirname, 'results/ocr-v18-ab-2026-10.json');
 const CORPUS_4149 = opt('corpus', '/root/claude-jobs/fabricated-ocr-corpus-2026-08-21.jsonl');
-const V04 = path.join(__dirname, 'dataset/v0.4-difficulty/pages.jsonl');
-const REF_5250 = opt('ref5250', '/mnt/HC_Volume_105839809/root-moved/pp5250/gemini/pages.jsonl');
+export const V04 = path.join(__dirname, 'dataset/v0.4-difficulty/pages.jsonl');
+export const REF_5250 = opt('ref5250', '/mnt/HC_Volume_105839809/root-moved/pp5250/gemini/pages.jsonl');
 const RES_5250 = path.join(__dirname, 'results/ocr-preprocessing-2026-09-29.json');
 const API = 'https://generativelanguage.googleapis.com';
 
 // pipeline-orchestrator.mjs: OCR_GENERATION_CONFIG, OCR_IMAGE_MAX_PX, the cross-book safety settings,
 // and getOcrPromptFromDb's language instruction (same text as eval/lib/production-prompt.mjs).
-const OCR_GENERATION_CONFIG = Object.freeze({ temperature: 0.1, maxOutputTokens: 16384, thinkingConfig: { thinkingBudget: 0 } });
+export const OCR_GENERATION_CONFIG = Object.freeze({ temperature: 0.1, maxOutputTokens: 16384, thinkingConfig: { thinkingBudget: 0 } });
 const OCR_IMAGE_MAX_PX = 1500;
-const SAFETY = ['HARASSMENT', 'HATE_SPEECH', 'SEXUALLY_EXPLICIT', 'DANGEROUS_CONTENT', 'CIVIC_INTEGRITY'].map((c) => ({ category: `HARM_CATEGORY_${c}`, threshold: 'BLOCK_NONE' }));
-const LANGUAGE_INSTRUCTION = '**Source language:** Detect the primary language from the text. Pages may contain multiple languages — transcribe all of them. Report the primary language in the <language> tag (e.g. <language>Latin</language>).';
+export const SAFETY = ['HARASSMENT', 'HATE_SPEECH', 'SEXUALLY_EXPLICIT', 'DANGEROUS_CONTENT', 'CIVIC_INTEGRITY'].map((c) => ({ category: `HARM_CATEGORY_${c}`, threshold: 'BLOCK_NONE' }));
+export const LANGUAGE_INSTRUCTION = '**Source language:** Detect the primary language from the text. Pages may contain multiple languages — transcribe all of them. Report the primary language in the <language> tag (e.g. <language>Latin</language>).';
 
 // prompt-ab.mjs BULHAN cases (#3591): real content that must NOT be read as blank.
 const NAMED_S3 = [
@@ -73,18 +76,53 @@ const NAMED_S3 = [
 ];
 
 const F = (n) => path.join(WORK, n);
-const readJsonl = (f) => fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
-const writeJsonl = (f, rows) => fs.writeFileSync(f, rows.map((r) => JSON.stringify(r)).join('\n') + (rows.length ? '\n' : ''));
-const sha = (s) => crypto.createHash('sha256').update(s || '').digest('hex').slice(0, 16);
-const md5 = (s) => crypto.createHash('md5').update(s).digest('hex');
-const r4 = (x) => (x == null || Number.isNaN(x) ? null : Math.round(x * 1e4) / 1e4);
-const BAD_LANG = /tibet|syriac|^bo$|^bod$|^syr$|^syc$/i;
-const letters = (s) => (s.match(/\p{L}/gu) || []).length;
+/** This run's config. ocr-v19-ab.mjs passes its own to stageBuild / stageSubmit / stagePoll. */
+const V18 = { work: WORK, arms: ARMS, k: K, jobName: 'ocr-v18-ab-4195', endpoint: 'eval/ocr-v18-ab-4195', capUsd: HARD_CAP_USD };
+export const readJsonl = (f) => fs.readFileSync(f, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
+export const writeJsonl = (f, rows) => fs.writeFileSync(f, rows.map((r) => JSON.stringify(r)).join('\n') + (rows.length ? '\n' : ''));
+export const sha = (s) => crypto.createHash('sha256').update(s || '').digest('hex').slice(0, 16);
+export const md5 = (s) => crypto.createHash('md5').update(s).digest('hex');
+export const r4 = (x) => (x == null || Number.isNaN(x) ? null : Math.round(x * 1e4) / 1e4);
+export const BAD_LANG = /tibet|syriac|^bo$|^bod$|^syr$|^syc$/i;
+export const letters = (s) => (s.match(/\p{L}/gu) || []).length;
 
-function shuffle(arr, rng) {
+export function shuffle(arr, rng) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
   return a;
+}
+
+/** book_id + page_number (or page_id) → a stratum row, or null with the reason passed to skip(). Excludes Tibetan / Syriac books. */
+export function makeResolver(db, skip) {
+  const bookCache = new Map();
+  async function book(id) {
+    if (!bookCache.has(id)) {
+      let b = await db.collection('books').findOne({ id }, { projection: { id: 1, title: 1, author: 1, year: 1, language: 1, original_language: 1, languages: 1 } });
+      if (!b && /^[0-9a-f]{24}$/.test(id)) {
+        const { ObjectId } = await import('mongodb');
+        b = await db.collection('books').findOne({ _id: new ObjectId(id) }, { projection: { id: 1, title: 1, author: 1, year: 1, language: 1, original_language: 1, languages: 1 } });
+      }
+      bookCache.set(id, b);
+    }
+    return bookCache.get(id);
+  }
+  const langs = (b) => [b.language, b.original_language, ...(Array.isArray(b.languages) ? b.languages : [])].filter((x) => typeof x === 'string');
+  const PAGE_PROJ = { id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, split_from_spread: 1 };
+  /** Resolve one candidate → a stratum row, or null with the reason logged. */
+  async function resolve(stratum, { book_id, page_number, page_id }, extra) {
+    const b = await book(book_id);
+    if (!b) { skip(stratum, 'book-not-found', { book_id, page_number }); return null; }
+    if (langs(b).some((x) => BAD_LANG.test(x.trim()))) { skip(stratum, 'tibetan-or-syriac', { book_id, page_number, langs: langs(b) }); return null; }
+    const q = page_id ? { id: page_id } : { book_id: b.id || book_id, page_number };
+    const ps = await db.collection('pages').find(q, { projection: PAGE_PROJ }).sort({ id: 1 }).toArray();
+    if (!ps.length) { skip(stratum, 'page-not-found', { book_id, page_number, page_id }); return null; }
+    const p = ps[0];
+    const image = getPageSource(p);
+    if (!image) { skip(stratum, 'no-image-url', { book_id, page_number }); return null; }
+    return { uid: p.id, stratum, book_id: b.id || book_id, page_id: p.id, page_number: p.page_number, pages_matched: ps.length,
+      image, language: b.language || null, title: b.title || null, author: b.author || null, year: b.year || null, ...extra };
+  }
+  return resolve;
 }
 
 // ───────────────────────────── draw ─────────────────────────────
@@ -105,34 +143,7 @@ async function stageDraw() {
 
   const out = [];
   await withMongo(async (db) => {
-    const bookCache = new Map();
-    async function book(id) {
-      if (!bookCache.has(id)) {
-        let b = await db.collection('books').findOne({ id }, { projection: { id: 1, title: 1, author: 1, year: 1, language: 1, original_language: 1, languages: 1 } });
-        if (!b && /^[0-9a-f]{24}$/.test(id)) {
-          const { ObjectId } = await import('mongodb');
-          b = await db.collection('books').findOne({ _id: new ObjectId(id) }, { projection: { id: 1, title: 1, author: 1, year: 1, language: 1, original_language: 1, languages: 1 } });
-        }
-        bookCache.set(id, b);
-      }
-      return bookCache.get(id);
-    }
-    const langs = (b) => [b.language, b.original_language, ...(Array.isArray(b.languages) ? b.languages : [])].filter((x) => typeof x === 'string');
-    const PAGE_PROJ = { id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, enhanced_photo: 1, split_from_spread: 1 };
-    /** Resolve one candidate → a stratum row, or null with the reason logged. */
-    async function resolve(stratum, { book_id, page_number, page_id }, extra) {
-      const b = await book(book_id);
-      if (!b) { skip(stratum, 'book-not-found', { book_id, page_number }); return null; }
-      if (langs(b).some((x) => BAD_LANG.test(x.trim()))) { skip(stratum, 'tibetan-or-syriac', { book_id, page_number, langs: langs(b) }); return null; }
-      const q = page_id ? { id: page_id } : { book_id: b.id || book_id, page_number };
-      const ps = await db.collection('pages').find(q, { projection: PAGE_PROJ }).sort({ id: 1 }).toArray();
-      if (!ps.length) { skip(stratum, 'page-not-found', { book_id, page_number, page_id }); return null; }
-      const p = ps[0];
-      const image = getPageSource(p);
-      if (!image) { skip(stratum, 'no-image-url', { book_id, page_number }); return null; }
-      return { uid: p.id, stratum, book_id: b.id || book_id, page_id: p.id, page_number: p.page_number, pages_matched: ps.length,
-        image, language: b.language || null, title: b.title || null, author: b.author || null, year: b.year || null, ...extra };
-    }
+    const resolve = makeResolver(db, skip);
     /** One row per book, books in seeded order, until n are accepted. */
     async function drawPerBook(stratum, rows, n, toCand, exclude = new Set()) {
       const rng = makeRng(SEED);
@@ -200,25 +211,26 @@ async function stageDraw() {
 }
 
 // ───────────────────────────── build ─────────────────────────────
-async function loadPrompts() {
+export async function loadPrompts(candidates = { B: CANDIDATE }) {
   const { withMongo } = await import('../lib/mongo.mjs');
   const { ObjectId } = await import('mongodb');
   let v16;
   await withMongo(async (db) => { v16 = await db.collection('prompts').findOne({ _id: new ObjectId(V16_ID) }); });
   if (!v16?.content) throw new Error(`v16 prompt row ${V16_ID} not found`);
   if (v16.content_hash !== V16_HASH || md5(v16.content) !== V16_HASH) throw new Error(`v16 content_hash mismatch: row ${v16.content_hash}, md5 ${md5(v16.content)}`);
-  const cand = fs.readFileSync(CANDIDATE, 'utf8');
-  // getOcrPromptFromDb's substitution, applied identically to both prompts
+  // getOcrPromptFromDb's substitution, applied identically to every prompt
   const sub = (t) => t.replace('{language_instruction}', LANGUAGE_INSTRUCTION).replace('{language}', '');
-  return {
-    A: { text: sub(v16.content), source: `prompts ${V16_ID} v${v16.version}`, content_hash: v16.content_hash },
-    A2: { text: sub(v16.content), source: `prompts ${V16_ID} v${v16.version}`, content_hash: v16.content_hash },
-    B: { text: sub(cand), source: 'prompts/ocr/standard-ocr-v18-candidate.md', content_hash: md5(cand) },
-  };
+  const v16Arm = { text: sub(v16.content), source: `prompts ${V16_ID} v${v16.version}`, content_hash: v16.content_hash };
+  const out = { A: v16Arm, A2: v16Arm };
+  for (const [arm, file] of Object.entries(candidates)) {
+    const cand = fs.readFileSync(file, 'utf8');
+    out[arm] = { text: sub(cand), source: path.relative(path.join(__dirname, '../..'), file), content_hash: md5(cand) };
+  }
+  return out;
 }
 
 /** pipeline-orchestrator.mjs fetchImageBase64: resize to fit 1500 px (JPEG q80) only when over 100 KB. */
-async function fetchImageBase64(url) {
+export async function fetchImageBase64(url) {
   const sharp = (await import('sharp')).default;
   const res = await fetch(url, { signal: AbortSignal.timeout(60000), headers: { 'User-Agent': 'SourceLibrary-eval/0.1 (OCR prompt A/B #4195; library@sourcelibrary.org)' } });
   if (!res.ok) throw new Error(`http ${res.status}`);
@@ -231,15 +243,16 @@ async function fetchImageBase64(url) {
   return { data: buf.toString('base64'), mimeType, bytes: buf.length };
 }
 
-const docContext = (p) => {
+export const docContext = (p) => {
   const yearStr = p.year ? `Published ${p.year}.` : '';
   const pd = p.year && p.year < 1930 ? 'This work is in the public domain.' : '';
   return yearStr || p.title ? `\n\n**Document context:** "${p.title || 'Unknown'}" by ${p.author || 'Unknown'}. ${yearStr} ${pd}`.trim() : '';
 };
 
-async function stageBuild() {
+export async function stageBuild(cfg = V18) {
+  const { arms: ARMS, k: K } = cfg; const F = (n) => path.join(cfg.work, n);
   const pages = readJsonl(F('pages.jsonl'));
-  const prompts = await loadPrompts();
+  const prompts = cfg.prompts || await loadPrompts();
   const streams = Object.fromEntries(ARMS.map((a) => [a, fs.createWriteStream(F(`requests-${a}.jsonl`))]));
   const meta = []; const tok = { in: 0, n: 0 };
   let i = 0;
@@ -275,7 +288,8 @@ async function stageBuild() {
 }
 
 // ───────────────────────────── submit ─────────────────────────────
-async function stageSubmit() {
+export async function stageSubmit(cfg = V18) {
+  const { arms: ARMS, capUsd: HARD_CAP_USD } = cfg; const F = (n) => path.join(cfg.work, n);
   const est = JSON.parse(fs.readFileSync(F('estimate.json'), 'utf8'));
   const approved = Number(opt('approved-usd', 0));
   if (est.usd > HARD_CAP_USD) { console.error(`REFUSING: estimate $${est.usd} is over the $${HARD_CAP_USD} cap`); process.exit(2); }
@@ -288,7 +302,7 @@ async function stageSubmit() {
     if (rec.jobs.some((j) => j.arm === arm)) { console.log(`${arm}: already submitted`); continue; }
     const file = F(`requests-${arm}.jsonl`); const bytes = fs.statSync(file).size;
     const lines = fs.readFileSync(file, 'utf8').split('\n').filter(Boolean).length;
-    const name = `ocr-v18-ab-4195-${arm}`;
+    const name = `${cfg.jobName}-${arm}`;
     const start = await fetch(`${API}/upload/v1beta/files?key=${key}`, { method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-Goog-Upload-Protocol': 'resumable', 'X-Goog-Upload-Command': 'start', 'X-Goog-Upload-Header-Content-Length': String(bytes), 'X-Goog-Upload-Header-Content-Type': 'text/plain' },
       body: JSON.stringify({ file: { displayName: name } }) });
@@ -316,7 +330,7 @@ async function stageSubmit() {
 
 // ───────────────────────────── poll / collect ─────────────────────────────
 /** One Batch response line → an outcome (eval-design §5.1: an enum, never inferred from the text alone). Same as two-read-garble-5313. */
-function outcomeOf(r) {
+export function outcomeOf(r) {
   const resp = r.response;
   if (r.error || !resp) return { outcome: 'error', error: JSON.stringify(r.error || 'no response').slice(0, 300) };
   const cand = resp.candidates?.[0], finish = cand?.finishReason || null;
@@ -326,7 +340,8 @@ function outcomeOf(r) {
   return { outcome: finish === 'MAX_TOKENS' ? 'truncated' : finish && finish !== 'STOP' ? 'refusal' : 'text', finish, raw };
 }
 
-async function stagePoll() {
+export async function stagePoll(cfg = V18) {
+  const F = (n) => path.join(cfg.work, n);
   const bf = F('batch.json');
   const rec = JSON.parse(fs.readFileSync(bf, 'utf8')); const key = process.env[rec.key_env];
   const { priceFor, BATCH_MULTIPLIER } = await import('../lib/model-pricing.mjs');
@@ -356,38 +371,41 @@ async function stagePoll() {
     console.log(`collected ${j.arm}: ${rows.length} ${JSON.stringify(outcomes)} $${j.cost_usd.toFixed(4)}`);
     try {
       const { logUsage } = await import('../workers/lib/supabase-usage-logger.mjs');
-      await logUsage({ type: 'eval', mode: 'batch', model: j.model, page_count: rows.length, input_tokens: inTok, output_tokens: outTok, batch_job_id: j.job_name, endpoint: 'eval/ocr-v18-ab-4195', triggered_by: 'manual', prompt_version: `eval-4195-${j.arm}` });
+      await logUsage({ type: 'eval', mode: 'batch', model: j.model, page_count: rows.length, input_tokens: inTok, output_tokens: outTok, batch_job_id: j.job_name, endpoint: cfg.endpoint, triggered_by: 'manual', prompt_version: `eval-4195-${cfg.jobName}-${j.arm}` });
       j.usage_logged = true;
     } catch (e) { j.usage_logged = false; console.warn(`logUsage failed: ${e.message}`); }
     fs.writeFileSync(bf, JSON.stringify(rec, null, 1));
   }
   const total = rec.jobs.reduce((s, j) => s + (j.cost_usd || 0), 0);
-  if (pending) { console.log(`${pending} job(s) pending; collected so far $${total.toFixed(4)}`); process.exit(1); }
+  if (pending) { console.log(`${pending} job(s) pending; collected so far $${total.toFixed(4)}`); return false; }
   console.log(`all jobs terminal; actual $${total.toFixed(4)}`);
-  process.exit(0);
+  return true;
 }
 
 // ───────────────────────────── score ─────────────────────────────
-const quantile = (xs, q) => { const s = [...xs].sort((a, b) => a - b); return s.length ? s[Math.min(s.length - 1, Math.floor(q * s.length))] : null; };
-const median = (xs) => { const s = [...xs].sort((a, b) => a - b); const n = s.length; return n ? (n % 2 ? s[(n - 1) / 2] : (s[n / 2 - 1] + s[n / 2]) / 2) : null; };
-const sd = (xs) => { if (xs.length < 2) return 0; const m = mean(xs); return Math.sqrt(xs.reduce((s, x) => s + (x - m) ** 2, 0) / (xs.length - 1)); };
-function wilson(k, n, z = 1.96) {
+export const quantile = (xs, q) => { const s = [...xs].sort((a, b) => a - b); return s.length ? s[Math.min(s.length - 1, Math.floor(q * s.length))] : null; };
+export const median = (xs) => { const s = [...xs].sort((a, b) => a - b); const n = s.length; return n ? (n % 2 ? s[(n - 1) / 2] : (s[n / 2 - 1] + s[n / 2]) / 2) : null; };
+export const sd = (xs) => { if (xs.length < 2) return 0; const m = mean(xs); return Math.sqrt(xs.reduce((s, x) => s + (x - m) ** 2, 0) / (xs.length - 1)); };
+export function wilson(k, n, z = 1.96) {
   if (!n) return { rate: null, lo: null, hi: null, k, n };
   const p = k / n, d = 1 + z * z / n, c = (p + z * z / (2 * n)) / d, h = (z * Math.sqrt(p * (1 - p) / n + z * z / (4 * n * n))) / d;
   return { rate: r4(p), lo: r4(Math.max(0, c - h)), hi: r4(Math.min(1, c + h)), k, n };
 }
 const TAG_TEXT = (t, names) => { let n = 0; const re = new RegExp(`<(${names})\\b[^>]*>([\\s\\S]*?)<\\/\\1>`, 'gi'); let m; while ((m = re.exec(t))) n += m[2].trim().length; return n; };
-const pageType = (t) => ((t || '').match(/<page-type>\s*([^<]*?)\s*<\/page-type>/i) || [, null])[1];
+export const pageType = (t) => ((t || '').match(/<page-type>\s*([^<]*?)\s*<\/page-type>/i) || [, null])[1];
+
+/** Strata whose correct output is blank. W and T are ocr-v19-ab.mjs's white / show-through strata. */
+const BLANK_STRATA = new Set(['S1', 'S2', 'W', 'T']);
 
 /** Per-run outcome values. null = not scoreable for that outcome (amendment 6). */
-function runOutcomes(page, run) {
+export function runOutcomes(page, run) {
   if (run.outcome === 'error' || (run.outcome === 'refusal' && !run.text)) return null;
   const t = run.text || '';
   const body = bodyText(t);
   const L = letters(body);
   const fabricated = L > 20 ? 1 : 0;
   const o = { body_letters: L, body_chars: body.length, loop: loopCoverage(body) > 0.5 ? 1 : 0, page_type: pageType(t), declared_blank: declaredBlank(t) ? 1 : 0 };
-  if (page.stratum === 'S1' || page.stratum === 'S2') { o.fabricated = fabricated; o.blank_recall = declaredBlank(t) && !fabricated ? 1 : 0; }
+  if (BLANK_STRATA.has(page.stratum)) { o.fabricated = fabricated; o.blank_recall = declaredBlank(t) && !fabricated ? 1 : 0; }
   if (page.stratum === 'S3') o.false_blank = declaredBlank(t) || L === 0 ? 1 : 0;
   if (page.stratum === 'S4') {
     const cap = TAG_TEXT(t, 'insert|margin|gloss'), desc = TAG_TEXT(t, 'note|image-desc');
@@ -541,7 +559,9 @@ function stageScore() {
   console.log(`\nexamples: ${examples.length} (${JSON.stringify(examples.reduce((a, e) => ((a[e.kind] = (a[e.kind] || 0) + 1), a), {}))})`);
 }
 
-const STAGES = { draw: stageDraw, build: stageBuild, submit: stageSubmit, poll: stagePoll, score: stageScore };
-const stage = Object.keys(STAGES).find((s) => flag(s));
-if (!stage) { console.error(`usage: --${Object.keys(STAGES).join(' | --')}`); process.exit(2); }
-await STAGES[stage]();
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const STAGES = { draw: stageDraw, build: () => stageBuild(), submit: () => stageSubmit(), poll: async () => process.exit((await stagePoll()) ? 0 : 1), score: stageScore };
+  const stage = Object.keys(STAGES).find((s) => flag(s));
+  if (!stage) { console.error(`usage: --${Object.keys(STAGES).join(' | --')}`); process.exit(2); }
+  await STAGES[stage]();
+}

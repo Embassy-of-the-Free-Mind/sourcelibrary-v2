@@ -1,0 +1,46 @@
+{
+  "source": "EEBO-TCP A16626",
+  "edition": "Thomæ Bradwardini Archiepiscopi olim Cantuariensis, De causa Dei, contra Pelagium, et De virtute cau — 3534 (1618)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/textcreationpartnership/A16626",
+  "same_edition": {
+    "evidence": "catalogue-number",
+    "text_match_pages": "13/14",
+    "pb_aligned_pages": "12/13"
+  },
+  "origin": "library",
+  "book_id": "6a42f62b3ad4d80da1237aed",
+  "page_number": 18,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 25956,
+    "to_char": 28657,
+    "overlap": 0.917,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'volatu mentis corruptela corporis aggrauatae'; ends 'quamplurimum' (catchword-like last line); header PRAEFATIO, marginal notes (Boetius de consol., Iob 21, axiomatibus) are included inline in ref; ref has padding 'vniuerſitatē harū cauſarū,' at start and 'queritur vniuerſa' at end; edge of next page visible at right but single page.",
+    "leaf_language": "lat",
+    "page_type": "front-matter",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:29.508Z",
+  "text_location": "repo",
+  "text_sha256": "8e7257c33f422564a654c06ae2ecc2f96b5633c4b47d9a4c5ed1194b9df0244a",
+  "unit": {
+    "chars": 2701
+  },
+  "stratum": "latin-period-5126"
+}

@@ -1,0 +1,64 @@
+[
+{"id": "Q0W3R", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "བདག་གི་རྣམ་པའི་སྐྱེད་བྱེད་དུ་མངོན་པར་སེམས་པ་ཡིན་ནོ", "english": "is intended to be the producer of its own aspect", "why": "mngon par sems pa is the cognition's conceiving/imputing (abhimāna) the isolated nature as the producer of its own form, not something being 'intended'; the same misreading recurs in 'nothing other than what is intended'."},
+  {"type": "gloss", "confidence": "medium", "tibetan": "སྐྱེས་མོས་ཀྱིས", "english": "(Kumarila) [note: refers to the Mimamsa scholar Kumarila Bhatta]", "why": "Nothing in the Tibetan names Kumārila; the identification is inserted into the text as if it were there and is unsupported."}
+ ],
+ "note": "Follows the dream/waking argument broadly, but the closing passage on the cognition's conceiving of its object is blurred and an opponent's name is supplied without basis."},
+{"id": "QOUCU", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "high", "tibetan": "དེ་ལྟར་ཁྱད་པར་དུ་མ་བྱས་པ་ནི་ཇི་ལྟ་བ་བཞིན་དུ་མི་སྒྲུབ་པའི་ཕྱིར་ཁྱད་པར་དུ་བྱ་བའོ", "english": "Not making it a particular in that way is for the sake of making it a particular because it does not prove it as it is.", "why": "The Tibetan says: if it is not qualified in that way it does not prove [the thesis] as it is, therefore it must be qualified.", "fix": {"find": "Not making it a particular in that way is for the sake of making it a particular because it does not prove it as it is.", "replace": "If it is not qualified in that way, it does not prove [the thesis] as it is; therefore it must be qualified."}}
+ ],
+ "note": "The objection-and-reply sequence is broadly followed, but the wording is stiff and opaque, and one sentence comes out as nonsense."},
+{"id": "QPVCM", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "medium", "tibetan": "དབེན་པར་བདག་ནི་ལག་པས་སྐེ་རགས་ལྷོད་པར་བྱེད་པ་ཀུན་ནས་འགེགས་པ་ནི", "english": "I would loosen my girdle with my hands, yet she would completely restrain me", "why": "The lover imagines her, in private, stopping his hand as it loosens her girdle; it is not his own girdle."},
+  {"type": "agent", "confidence": "medium", "tibetan": "མི་དགེ་བའི་ལས་བྱེད་པ་རྣམས་ཀྱིས་སྡུག་བསྔལ་བའི་", "english": "those who do non-virtuous deeds are embraced by thousands of various blazing fires", "why": "The instrumental makes the evil-doers (the hell tormentors) the cause of the adulterers' suffering, and the ones embraced by fires are those who sought a little pleasure, not the evil-doers."}
+ ],
+ "note": "The verses on lust are paraphrased with a fair grasp of the sense, but the roles of the lovers and of the hell scene are confused."},
+{"id": "QBHSR", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "addition", "confidence": "high", "tibetan": "ཟླ་བ་ཡིད་འཕྲོག་དང་རྣམ་པར་བྲལ་", "english": "his captivating mind one line of text regarding the King's reaction", "why": "The words 'one line of text regarding the King's reaction' are stray translator notes with no basis in the Tibetan.", "fix": {"find": "his captivating mind one line of text regarding the King's reaction", "replace": "his captivating mind"}},
+  {"type": "agent", "confidence": "medium", "tibetan": "ཡོ་བྱད་ཐམས་ཅད་མཐོང་ནས་སྨྲས་པ", "english": "they said:", "why": "The subject of this clause is Moon (zla ba); it is he who sees the equipment and speaks, while the youths answer in the next sentence."}
+ ],
+ "note": "The narrative is followed, but stray editorial text is left in, the speaker is confused, and the verses are only approximate."},
+{"id": "QWDRP", "score": 3, "verdict": "work", "span": "extra", "span_why": "The English opens by translating the previous side's last sentence ('If one refutes this by falsely attributing \"arising immediately after effort\"... Because it arises immediately after effort'), which is not on this side.",
+ "errors": [
+  {"type": "reversal", "confidence": "medium", "tibetan": "མི་རྟག་པ་ཉིད་ལ་བརྩལ་མ་ཐག་ཅན་གྱིས་ནི་མ་ཡིན་ནོ", "english": "This is because impermanence is not established by the property of being produced immediately after effort", "why": "The Tibetan says the reason deviates only with respect to the other probandum (permanence), not with respect to impermanence; the English, and its note on lightning, turn this into a claim that the reason fails to establish impermanence."},
+  {"type": "term", "confidence": "medium", "tibetan": "གཞན་བསྒྲུབ་བྱ་ཉིད་ལ་འཁྲུལ་པ", "english": "\"The error regarding the predicate itself\"", "why": "The lemma means 'deviating with respect to another probandum', which the comment then glosses as permanence, i.e. something other than impermanence."}
+ ],
+ "note": "The jāti and pseudo-reason vocabulary is mostly sound, but it begins with the previous side and garbles the passage on the uncertain reason."},
+{"id": "QNPME", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "high", "tibetan": "དོན་གཞན་གྱི་ངོ་བོ་ཉིད་དོན་གཞན་དང་གཞན་ཡིན་པར་རིགས་པ་ནི་མ་ཡིན་ནོ", "english": "because it is logical that the essence of one distinct entity is separate from another distinct entity", "why": "The Tibetan says it is NOT reasonable that the nature of one distinct thing be another distinct thing; the subject is the qualities such as pervasiveness, which cannot be space's nature, not space 'possessing a nature'.", "fix": {"find": "because it is logical that the essence of one distinct entity is separate from another distinct entity", "replace": "because it is not logical that the nature of one distinct entity should be another distinct entity"}},
+  {"type": "term", "confidence": "medium", "tibetan": "ཇི་ལྟར་དྲུག་པར་འགྱུར", "english": "how there can be six categories", "why": "In this grammatical argument about 'the nature of space', drug pa is the sixth (genitive) case: how could the genitive apply without difference? It is not a question about how there can be six categories."},
+  {"type": "term", "confidence": "medium", "tibetan": "གྲངས་དང་ལྡན་པ་ཡང་མི་སྲིད་དེ་དེ་གཉིས་ནི་ཡོན་ཏན་", "english": "possess number, because those two [note: referring to number and collection]", "why": "grangs dang ldan pa is 'number and conjunction' (saṃkhyā and saṃyoga), the two Vaiśeṣika qualities that inhere only in substances; it does not mean 'possessing number', and the note's 'collection' is wrong."}
+ ],
+ "note": "The infinite-regress argument is rendered well, but the opening sentence is reversed and the grammatical point about the genitive is lost."},
+{"id": "Q9QW0", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "high", "tibetan": "འགྲོ་བར་ཕན་མིན་ཟད་ཕྱིར་བརྩོན་པའི་བདག་ཉིད་ཅན", "english": "and not just for the benefit of wandering beings, you possess the nature of diligence for the sake of exhausting faults", "why": "phan min is what is harmful to beings: 'diligent by nature to bring to an end what harms beings'; there is no 'not just for their benefit'.", "fix": {"find": "and not just for the benefit of wandering beings, you possess the nature of diligence for the sake of exhausting faults", "replace": "you possess the nature of diligence for the sake of ending what is harmful to wandering beings"}},
+  {"type": "term", "confidence": "high", "tibetan": "དྲན་པ་དང་རིག་བྱེད་ཀྱི་དེ་ཁོ་ན་ཤེས་པ", "english": "the reality of mindfulness and the Vedas", "why": "Paired with the Vedas, dran pa is Smṛti, the traditional law-books, not mindfulness.", "fix": {"find": "the reality of mindfulness and the Vedas", "replace": "the true meaning of the Smṛti and the Vedas"}},
+  {"type": "agent", "confidence": "medium", "tibetan": "འཆི་མེད་བདག་པོ་ལྷའི་བླ་མ་དང་", "english": "He was the lord of the deathless ones, the guru of the gods", "why": "The phrase, completed by 'dra ba on the next side, compares the king to Bṛhaspati, the guru of the lord of the immortals (Indra); it does not say he was the lord of the gods."},
+  {"type": "term", "confidence": "medium", "tibetan": "འདི་ལྟར་རྗེས་སུ་ཐོས་ཏེ", "english": "Thus I have heard", "why": "This is the jātaka opening anuśrūyate, 'it is handed down / tradition relates', not the sūtra formula evaṃ mayā śrutam."}
+ ],
+ "note": "The verses and the transition to the next jātaka are followed, but there are several meaning errors, including a reversed line and Smṛti rendered as mindfulness."},
+{"id": "QPWYD", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high", "tibetan": "བདེ་བར་འགྲོ་བ་སྐྱེས་བུ་རིན་ཆེན་སྐྱེས", "english": "the Jewel among Men born for the sake of the world's happiness", "why": "bde bar 'gro ba is Sugata (Skt. sugataiḥ): a jewel among men is born, made manifest by the Sugatas; it does not mean 'for the world's happiness'.", "fix": {"find": "the Jewel among Men born for the sake of the world's happiness", "replace": "a Jewel among Men is born, made manifest by the Sugatas"}},
+  {"type": "addition", "confidence": "high", "tibetan": "ལེགས་བྱས་སྐྱེད་ཚལ་དགའ་སྟེར་དུ། །གྲོང་ཁྱེར་", "english": "the city ends mid-sentence", "why": "'ends mid-sentence' is a stray editorial remark, not part of the translation.", "fix": {"find": "Nandana grove [note: the celestial garden of Indra], the city ends mid-sentence", "replace": "Nandana grove [note: the celestial garden of Indra], the city"}},
+  {"type": "term", "confidence": "medium", "tibetan": "དཔལ་གྱི་སྡེའི་རྟོགས་པ་བརྗོད་པ", "english": "the Noble Sena", "why": "dpal gyi sde is the proper name Śrīsena; it is not 'Noble Sena'."}
+ ],
+ "note": "Kṣemendra's colophon and opening verses are paraphrased adequately, but the Sugata is lost, the hero's name is mangled, and a stray editorial remark is left in."},
+{"id": "QJ26K", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "high", "tibetan": "ཉེ་བ་འཁོར་སྦྱིན་པར་བྱའོ་ཞེས་གསུངས་སོ", "english": "Upali [note: The foremost expert on monastic discipline among the Buddha's disciples] replied, \"It should be given.\"", "why": "Upāli asks the question ('btsun pa ... bgyi'am'), and the Buddha answers, addressing him in the vocative: 'Upāli, it should be given.'", "fix": {"find": "Upali [note: The foremost expert on monastic discipline among the Buddha's disciples] replied, \"It should be given.\"", "replace": "[The Buddha] replied, \"Upāli, it should be given.\""}},
+  {"type": "reversal", "confidence": "medium", "tibetan": "བུ་དེ་ཕའི་ཁྱིམ་གྱི་བདག་པོ་ལས་ཕྱིར་མི་ལྡོག་པའི་ཕྱིར", "english": "This is intended with the thought that the son will not return to being the master of the father's house", "why": "The reason given is that the banished son does not cease to be an owner of his father's house, so it is proper to accept from him."}
+ ],
+ "note": "The Vinaya commentary is followed passably, but Upāli's question is given to him as the answer and the rationale about the banished son is inverted."},
+{"id": "Q1OWF", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium", "tibetan": "སྒྲའི་ཡུལ་ལྡན་པ་སྣ་ཚོགས་པའི་ངོ་བོ་མ་ཡིན་པ", "english": "the object of sound", "why": "sgra'i yul here is the referent of the word ('variegated'), namely conjunction; it is not the auditory object, sound."}
+ ],
+ "note": "A sound rendering of the argument against a variegated composite whole and against conjunction as its basis, with the Vaiśeṣika terms mostly correct."}
+]

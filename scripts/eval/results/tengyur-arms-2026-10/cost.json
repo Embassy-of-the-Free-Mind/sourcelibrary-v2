@@ -1,0 +1,53 @@
+{
+ "C|gemini-3-flash-preview": {
+  "calls": 6,
+  "usd": 0.0221,
+  "in": 21740,
+  "out": 3729,
+  "think": 0,
+  "usd_per_call": 0.00368,
+  "batch_usd_per_call": 0.00184,
+  "think_per_call": 0
+ },
+ "D|gemini-3-flash-preview": {
+  "calls": 114,
+  "usd": 0.4283,
+  "in": 370378,
+  "out": 81053,
+  "think": 0,
+  "usd_per_call": 0.00376,
+  "batch_usd_per_call": 0.00188,
+  "think_per_call": 0
+ },
+ "B2|gemini-3-flash-preview": {
+  "calls": 113,
+  "usd": 0.4006,
+  "in": 326698,
+  "out": 79093,
+  "think": 0,
+  "usd_per_call": 0.00355,
+  "batch_usd_per_call": 0.00177,
+  "think_per_call": 0
+ },
+ "X2|gemini-3-flash-preview": {
+  "calls": 113,
+  "usd": 0.458,
+  "in": 326698,
+  "out": 98222,
+  "think": 18452,
+  "usd_per_call": 0.00405,
+  "batch_usd_per_call": 0.00203,
+  "think_per_call": 163
+ },
+ "E|gemini-3.1-pro-preview": {
+  "calls": 29,
+  "usd": 1.4785,
+  "in": 64983,
+  "out": 87735,
+  "think": 86197,
+  "usd_per_call": 0.05098,
+  "batch_usd_per_call": 0.02549,
+  "think_per_call": 2972
+ },
+ "total_usd": 2.788
+}

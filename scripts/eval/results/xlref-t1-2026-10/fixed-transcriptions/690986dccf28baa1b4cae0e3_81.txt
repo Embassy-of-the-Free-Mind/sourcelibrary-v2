@@ -1,0 +1,10 @@
+<language>la</language>
+<script>printed</script>
+<page-type>text</page-type>
+<page-num>77</page-num>
+<header>DE MERCVRIO.</header>
+<sig>D 3</sig>
+
+res, à Neptuno una Solaris Arbor, & altera Lunaris. Et quamvis in hac insula omnia ad nutum essent, unicum tamen ipsi deerat. Aqua non habebatur, nisi magna cum difficultate: Erant quidem multi, qui partim tentabant illuc Aquam Fontis per canales deducere: partim etiam ex varijs rebus eliciebant: sed frustraneus erat attentatus labor, quia illic locorum nullo poterat haberi medio: & si habebatur, inutilis tamen fuit & venenosa, nisi è radijs Solis vel Lunæ, quod pauci præstare potuerunt, & qui in hoc perficiendo fortunam habuit propitiam, nunquam ultra decem partes potuit attrahere: erat enim eiusmodi Aqua mirabilis; & crede mihi, quod oculis meis viderim & palparim Aquæ illius niveum candorem, & dum illam aquam contemplarer, valdè miratus sum: Interim fatigatus illa consideratione, evanuit coram oculis meis Neptunus, & apparet mihi vir magnus, cuius fronti, nomen Saturni erat inscriptum. Hic accepto vase hauriebat Aquæ partes decem, & statim de fru-
+
+<vocab>Solaris Arbor, Lunaris, Aqua Fontis, Solis, Lunae, Saturni</vocab>

@@ -6,7 +6,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 // DRAFT. Every value in DATA marked `pending` is a placeholder for a number the
 // #4523 quality pass has not produced yet. The page renders a draft banner and
 // `[pending]` markers while any remain. Do NOT add this post to the /blog index
-// (src/app/blog/page.tsx) or flip DRAFT to false until every field is filled
+// (src/app/blog/posts.ts) or flip DRAFT to false until every field is filled
 // from /root/tibetan-reocr/quality-report-*.md and issue #4523.
 // ─────────────────────────────────────────────────────────────────────────────
 const DRAFT = true;

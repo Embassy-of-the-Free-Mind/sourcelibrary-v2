@@ -1,0 +1,1872 @@
+[
+ {
+  "file": "fit-69938921ce15387065946912-schneider-flash-v2.json",
+  "book": "69938921ce15387065946912",
+  "at": "2026-10-04T10:33:19.053Z",
+  "reads": "flash",
+  "editions": [
+   {
+    "spec": "held:69942ffcbb14908bbd9a1123",
+    "label": "Proclus Commentarius in Platonis Timaeum Graece (Schneider 1847) (1847, 69942ffcbb14908bbd9a1123)",
+    "licence": {
+     "scan": "http://creativecommons.org/publicdomain/mark/1.0/",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 883
+   }
+  ],
+  "edition_letters": 1658684,
+  "rules": {
+   "version": 2,
+   "edgeLetters": 90,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.05,
+   "null_pages": 0,
+   "null_p99": null,
+   "null_max": null
+  },
+  "pages": 93,
+  "text_pages": 46,
+  "above_threshold": 31,
+  "located": 17,
+  "located_share_of_text": 0.37,
+  "located_strict": 15,
+  "located_strict_share": 0.326,
+  "with_start_edge": 13,
+  "with_end_edge": 13,
+  "boundaries": {
+   "n": 7,
+   "letters_per_line": 23,
+   "median_abs_gap": 1,
+   "within_150": 1,
+   "within_1_line": 1,
+   "gaps": 0,
+   "overlaps": 0
+  },
+  "neighbour_method": {
+   "n": 5,
+   "verdicts": {
+    "verified": 4,
+    "edges": 1
+   },
+   "verdicts_k6": {
+    "verified": 4,
+    "edges": 1
+   },
+   "edge_err_median": 4,
+   "edge_err_within_1_line": 1
+  },
+  "drift": {
+   "k1": {
+    "n": 8,
+    "within_half_page": 0.875,
+    "median_err_pages": 0.2
+   },
+   "k5": {
+    "n": 3,
+    "within_half_page": 0.667,
+    "median_err_pages": 0.2
+   },
+   "k20": {
+    "n": 5,
+    "within_half_page": 0,
+    "median_err_pages": 147
+   }
+  },
+  "median_advance_letters": 320,
+  "page_to_text_ratio": 0.87
+ },
+ {
+  "file": "fit-69938921ce15387065946912-schneider-kraken.json",
+  "book": "69938921ce15387065946912",
+  "at": "2026-10-04T10:33:11.561Z",
+  "reads": "kraken",
+  "editions": [
+   {
+    "spec": "held:69942ffcbb14908bbd9a1123",
+    "label": "Proclus Commentarius in Platonis Timaeum Graece (Schneider 1847) (1847, 69942ffcbb14908bbd9a1123)",
+    "licence": {
+     "scan": "http://creativecommons.org/publicdomain/mark/1.0/",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 883
+   }
+  ],
+  "edition_letters": 1658684,
+  "rules": {
+   "version": 2,
+   "edgeLetters": 90,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.05,
+   "null_pages": 0,
+   "null_p99": null,
+   "null_max": null
+  },
+  "pages": 93,
+  "text_pages": 22,
+  "above_threshold": 15,
+  "located": 9,
+  "located_share_of_text": 0.409,
+  "located_strict": 8,
+  "located_strict_share": 0.364,
+  "with_start_edge": 7,
+  "with_end_edge": 6,
+  "boundaries": {
+   "n": 2,
+   "letters_per_line": 22,
+   "median_abs_gap": 5,
+   "within_150": 0.5,
+   "within_1_line": 0.5,
+   "gaps": 1,
+   "overlaps": 0
+  },
+  "neighbour_method": {
+   "n": 1,
+   "verdicts": {
+    "coverage": 1
+   },
+   "verdicts_k6": {
+    "coverage": 1
+   },
+   "edge_err_median": 242,
+   "edge_err_within_1_line": 0
+  },
+  "drift": {
+   "k1": {
+    "n": 2,
+    "within_half_page": 1,
+    "median_err_pages": 0
+   },
+   "k5": {
+    "n": 1,
+    "within_half_page": 1,
+    "median_err_pages": 0.5
+   },
+   "k20": {
+    "n": 1,
+    "within_half_page": 0,
+    "median_err_pages": 20.83
+   }
+  },
+  "median_advance_letters": 384,
+  "page_to_text_ratio": 0.54
+ },
+ {
+  "file": "fit-69938921ce15387065946912-wrongcaag-flash-v2.json",
+  "book": "69938921ce15387065946912",
+  "at": "2026-10-04T10:33:21.267Z",
+  "reads": "flash",
+  "editions": [
+   {
+    "spec": "held:6994383a6879ff0184cb803a",
+    "label": "Collection des anciens alchimistes grecs, Vols. 2-3 (1887, 6994383a6879ff0184cb803a)",
+    "licence": {
+     "scan": "publicdomain",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 518
+   }
+  ],
+  "edition_letters": 457756,
+  "rules": {
+   "version": 2,
+   "edgeLetters": 90,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.05,
+   "null_pages": 0,
+   "null_p99": null,
+   "null_max": null
+  },
+  "pages": 93,
+  "text_pages": 46,
+  "above_threshold": 6,
+  "located": 1,
+  "located_share_of_text": 0.022,
+  "located_strict": 0,
+  "located_strict_share": 0,
+  "with_start_edge": 0,
+  "with_end_edge": 0,
+  "boundaries": {
+   "n": 0,
+   "letters_per_line": 23,
+   "median_abs_gap": null,
+   "within_150": null,
+   "within_1_line": null,
+   "gaps": 0,
+   "overlaps": 0
+  },
+  "neighbour_method": {
+   "n": 0,
+   "verdicts": {},
+   "verdicts_k6": {},
+   "edge_err_median": null,
+   "edge_err_within_1_line": null
+  },
+  "drift": {
+   "k1": {
+    "n": 0,
+    "within_half_page": null,
+    "median_err_pages": null
+   },
+   "k5": {
+    "n": 0,
+    "within_half_page": null,
+    "median_err_pages": null
+   },
+   "k20": {
+    "n": 0,
+    "within_half_page": null,
+    "median_err_pages": null
+   }
+  },
+  "median_advance_letters": null,
+  "page_to_text_ratio": null
+ },
+ {
+  "file": "fit-69938921ce15387065946912-wrongcaag-kraken.json",
+  "book": "69938921ce15387065946912",
+  "at": "2026-10-04T10:33:14.022Z",
+  "reads": "kraken",
+  "editions": [
+   {
+    "spec": "held:6994383a6879ff0184cb803a",
+    "label": "Collection des anciens alchimistes grecs, Vols. 2-3 (1887, 6994383a6879ff0184cb803a)",
+    "licence": {
+     "scan": "publicdomain",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 518
+   }
+  ],
+  "edition_letters": 457756,
+  "rules": {
+   "version": 2,
+   "edgeLetters": 90,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.05,
+   "null_pages": 0,
+   "null_p99": null,
+   "null_max": null
+  },
+  "pages": 93,
+  "text_pages": 22,
+  "above_threshold": 0,
+  "located": 5,
+  "located_share_of_text": 0.227,
+  "located_strict": 0,
+  "located_strict_share": 0,
+  "with_start_edge": 0,
+  "with_end_edge": 0,
+  "boundaries": {
+   "n": 0,
+   "letters_per_line": 22,
+   "median_abs_gap": null,
+   "within_150": null,
+   "within_1_line": null,
+   "gaps": 0,
+   "overlaps": 0
+  },
+  "neighbour_method": {
+   "n": 0,
+   "verdicts": {},
+   "verdicts_k6": {},
+   "edge_err_median": null,
+   "edge_err_within_1_line": null
+  },
+  "drift": {
+   "k1": {
+    "n": 0,
+    "within_half_page": null,
+    "median_err_pages": null
+   },
+   "k5": {
+    "n": 0,
+    "within_half_page": null,
+    "median_err_pages": null
+   },
+   "k20": {
+    "n": 0,
+    "within_half_page": null,
+    "median_err_pages": null
+   }
+  },
+  "median_advance_letters": null,
+  "page_to_text_ratio": null
+ },
+ {
+  "file": "fit-69a5e5e385fa13e734e41894-schneider-flash-v2.json",
+  "book": "69a5e5e385fa13e734e41894",
+  "at": "2026-10-06T03:42:42.464Z",
+  "reads": "flash",
+  "editions": [
+   {
+    "spec": "held:69942ffcbb14908bbd9a1123",
+    "label": "Proclus Commentarius in Platonis Timaeum Graece (Schneider 1847) (1847, 69942ffcbb14908bbd9a1123)",
+    "licence": {
+     "scan": "http://creativecommons.org/publicdomain/mark/1.0/",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 883
+   }
+  ],
+  "edition_letters": 1658684,
+  "rules": {
+   "version": 2,
+   "edgeLetters": 90,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.05,
+   "null_pages": 0,
+   "null_p99": null,
+   "null_max": null
+  },
+  "pages": 1060,
+  "text_pages": 1043,
+  "above_threshold": 1025,
+  "located": 1027,
+  "located_share_of_text": 0.985,
+  "located_strict": 1020,
+  "located_strict_share": 0.978,
+  "with_start_edge": 986,
+  "with_end_edge": 994,
+  "boundaries": {
+   "n": 970,
+   "letters_per_line": 50,
+   "median_abs_gap": 1,
+   "within_150": 0.915,
+   "within_1_line": 0.902,
+   "gaps": 93,
+   "overlaps": 2
+  },
+  "neighbour_method": {
+   "n": 944,
+   "verdicts": {
+    "verified": 889,
+    "weak": 52,
+    "coverage": 3
+   },
+   "verdicts_k6": {
+    "verified": 938,
+    "uninformative": 4,
+    "weak": 1,
+    "coverage": 1
+   },
+   "edge_err_median": 3,
+   "edge_err_within_1_line": 0.811
+  },
+  "drift": {
+   "k1": {
+    "n": 1013,
+    "within_half_page": 0.984,
+    "median_err_pages": 0.08
+   },
+   "k5": {
+    "n": 1006,
+    "within_half_page": 0.768,
+    "median_err_pages": 0.28
+   },
+   "k20": {
+    "n": 991,
+    "within_half_page": 0.345,
+    "median_err_pages": 0.8
+   }
+  },
+  "median_advance_letters": 1600,
+  "page_to_text_ratio": 0.88
+ },
+ {
+  "file": "fit-69a5e5e385fa13e734e41894-schneider-kraken.json",
+  "book": "69a5e5e385fa13e734e41894",
+  "at": "2026-10-06T03:41:48.954Z",
+  "reads": "kraken",
+  "editions": [
+   {
+    "spec": "held:69942ffcbb14908bbd9a1123",
+    "label": "Proclus Commentarius in Platonis Timaeum Graece (Schneider 1847) (1847, 69942ffcbb14908bbd9a1123)",
+    "licence": {
+     "scan": "http://creativecommons.org/publicdomain/mark/1.0/",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 883
+   }
+  ],
+  "edition_letters": 1658684,
+  "rules": {
+   "version": 2,
+   "edgeLetters": 90,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.05,
+   "null_pages": 0,
+   "null_p99": null,
+   "null_max": null
+  },
+  "pages": 1060,
+  "text_pages": 1043,
+  "above_threshold": 1028,
+  "located": 1029,
+  "located_share_of_text": 0.987,
+  "located_strict": 1023,
+  "located_strict_share": 0.981,
+  "with_start_edge": 990,
+  "with_end_edge": 996,
+  "boundaries": {
+   "n": 974,
+   "letters_per_line": 49,
+   "median_abs_gap": 8,
+   "within_150": 0.931,
+   "within_1_line": 0.79,
+   "gaps": 78,
+   "overlaps": 127
+  },
+  "neighbour_method": {
+   "n": 948,
+   "verdicts": {
+    "verified": 940,
+    "weak": 2,
+    "coverage": 5,
+    "edges": 1
+   },
+   "verdicts_k6": {
+    "verified": 941,
+    "weak": 1,
+    "coverage": 2,
+    "edges": 1,
+    "uninformative": 3
+   },
+   "edge_err_median": 35,
+   "edge_err_within_1_line": 0.609
+  },
+  "drift": {
+   "k1": {
+    "n": 1017,
+    "within_half_page": 0.983,
+    "median_err_pages": 0.08
+   },
+   "k5": {
+    "n": 1010,
+    "within_half_page": 0.759,
+    "median_err_pages": 0.28
+   },
+   "k20": {
+    "n": 995,
+    "within_half_page": 0.349,
+    "median_err_pages": 0.8
+   }
+  },
+  "median_advance_letters": 1600,
+  "page_to_text_ratio": 0.88
+ },
+ {
+  "file": "fit-69a5e5e385fa13e734e41894-wrongcaag-flash-v2.json",
+  "book": "69a5e5e385fa13e734e41894",
+  "at": "2026-10-06T03:42:55.169Z",
+  "reads": "flash",
+  "editions": [
+   {
+    "spec": "held:6994383a6879ff0184cb803a",
+    "label": "Collection des anciens alchimistes grecs, Vols. 2-3 (1887, 6994383a6879ff0184cb803a)",
+    "licence": {
+     "scan": "publicdomain",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 518
+   }
+  ],
+  "edition_letters": 457756,
+  "rules": {
+   "version": 2,
+   "edgeLetters": 90,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.05,
+   "null_pages": 0,
+   "null_p99": null,
+   "null_max": null
+  },
+  "pages": 1060,
+  "text_pages": 1043,
+  "above_threshold": 0,
+  "located": 141,
+  "located_share_of_text": 0.135,
+  "located_strict": 0,
+  "located_strict_share": 0,
+  "with_start_edge": 0,
+  "with_end_edge": 1,
+  "boundaries": {
+   "n": 0,
+   "letters_per_line": 50,
+   "median_abs_gap": null,
+   "within_150": null,
+   "within_1_line": null,
+   "gaps": 0,
+   "overlaps": 0
+  },
+  "neighbour_method": {
+   "n": 0,
+   "verdicts": {},
+   "verdicts_k6": {},
+   "edge_err_median": null,
+   "edge_err_within_1_line": null
+  },
+  "drift": {
+   "k1": {
+    "n": 42,
+    "within_half_page": 0.262,
+    "median_err_pages": 0.98
+   },
+   "k5": {
+    "n": 10,
+    "within_half_page": 0,
+    "median_err_pages": 4.94
+   },
+   "k20": {
+    "n": 24,
+    "within_half_page": 0,
+    "median_err_pages": 20.26
+   }
+  },
+  "median_advance_letters": 57152,
+  "page_to_text_ratio": 0.02
+ },
+ {
+  "file": "fit-69a5e5e385fa13e734e41894-wrongcaag-kraken.json",
+  "book": "69a5e5e385fa13e734e41894",
+  "at": "2026-10-06T03:41:55.282Z",
+  "reads": "kraken",
+  "editions": [
+   {
+    "spec": "held:6994383a6879ff0184cb803a",
+    "label": "Collection des anciens alchimistes grecs, Vols. 2-3 (1887, 6994383a6879ff0184cb803a)",
+    "licence": {
+     "scan": "publicdomain",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 518
+   }
+  ],
+  "edition_letters": 457756,
+  "rules": {
+   "version": 2,
+   "edgeLetters": 90,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.05,
+   "null_pages": 0,
+   "null_p99": null,
+   "null_max": null
+  },
+  "pages": 1060,
+  "text_pages": 1043,
+  "above_threshold": 0,
+  "located": 139,
+  "located_share_of_text": 0.133,
+  "located_strict": 0,
+  "located_strict_share": 0,
+  "with_start_edge": 0,
+  "with_end_edge": 1,
+  "boundaries": {
+   "n": 0,
+   "letters_per_line": 49,
+   "median_abs_gap": null,
+   "within_150": null,
+   "within_1_line": null,
+   "gaps": 0,
+   "overlaps": 0
+  },
+  "neighbour_method": {
+   "n": 0,
+   "verdicts": {},
+   "verdicts_k6": {},
+   "edge_err_median": null,
+   "edge_err_within_1_line": null
+  },
+  "drift": {
+   "k1": {
+    "n": 40,
+    "within_half_page": 0.175,
+    "median_err_pages": 1.07
+   },
+   "k5": {
+    "n": 8,
+    "within_half_page": 0,
+    "median_err_pages": 3.43
+   },
+   "k20": {
+    "n": 12,
+    "within_half_page": 0,
+    "median_err_pages": 18.62
+   }
+  },
+  "median_advance_letters": 53440,
+  "page_to_text_ratio": 0.03
+ },
+ {
+  "file": "fit-69a5e5e985fa13e734e41cba-schneider-flash-v2.json",
+  "book": "69a5e5e985fa13e734e41cba",
+  "at": "2026-10-03T20:37:26.670Z",
+  "reads": "flash",
+  "editions": [
+   {
+    "spec": "held:69942ffcbb14908bbd9a1123",
+    "label": "Proclus Commentarius in Platonis Timaeum Graece (Schneider 1847) (1847, 69942ffcbb14908bbd9a1123)",
+    "licence": {
+     "scan": "http://creativecommons.org/publicdomain/mark/1.0/",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 883
+   }
+  ],
+  "edition_letters": 1658684,
+  "rules": {
+   "version": 2,
+   "edgeLetters": 90,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.05,
+   "null_pages": 0,
+   "null_p99": null,
+   "null_max": null
+  },
+  "pages": 355,
+  "text_pages": 349,
+  "above_threshold": 10,
+  "located": 267,
+  "located_share_of_text": 0.765,
+  "located_strict": 10,
+  "located_strict_share": 0.029,
+  "with_start_edge": 94,
+  "with_end_edge": 113,
+  "boundaries": {
+   "n": 50,
+   "letters_per_line": 52,
+   "median_abs_gap": 4,
+   "within_150": 0.82,
+   "within_1_line": 0.78,
+   "gaps": 9,
+   "overlaps": 2
+  },
+  "neighbour_method": {
+   "n": 46,
+   "verdicts": {
+    "weak": 38,
+    "coverage": 6,
+    "edges": 2
+   },
+   "verdicts_k6": {
+    "uninformative": 16,
+    "weak": 22,
+    "coverage": 1,
+    "verified": 5,
+    "edges": 2
+   },
+   "edge_err_median": 6,
+   "edge_err_within_1_line": 0.714
+  },
+  "drift": {
+   "k1": {
+    "n": 237,
+    "within_half_page": 0.937,
+    "median_err_pages": 0.07
+   },
+   "k5": {
+    "n": 220,
+    "within_half_page": 0.745,
+    "median_err_pages": 0.25
+   },
+   "k20": {
+    "n": 212,
+    "within_half_page": 0.259,
+    "median_err_pages": 1.18
+   }
+  },
+  "median_advance_letters": 4608,
+  "page_to_text_ratio": 0.82
+ },
+ {
+  "file": "fit-69a5e5e985fa13e734e41cba-schneider-kraken.json",
+  "book": "69a5e5e985fa13e734e41cba",
+  "at": "2026-10-03T20:36:48.113Z",
+  "reads": "kraken",
+  "editions": [
+   {
+    "spec": "held:69942ffcbb14908bbd9a1123",
+    "label": "Proclus Commentarius in Platonis Timaeum Graece (Schneider 1847) (1847, 69942ffcbb14908bbd9a1123)",
+    "licence": {
+     "scan": "http://creativecommons.org/publicdomain/mark/1.0/",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 883
+   }
+  ],
+  "edition_letters": 1658684,
+  "rules": {
+   "version": 2,
+   "edgeLetters": 90,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.05,
+   "null_pages": 0,
+   "null_p99": null,
+   "null_max": null
+  },
+  "pages": 355,
+  "text_pages": 348,
+  "above_threshold": 348,
+  "located": 340,
+  "located_share_of_text": 0.977,
+  "located_strict": 340,
+  "located_strict_share": 0.977,
+  "with_start_edge": 320,
+  "with_end_edge": 326,
+  "boundaries": {
+   "n": 310,
+   "letters_per_line": 55,
+   "median_abs_gap": 0,
+   "within_150": 0.906,
+   "within_1_line": 0.887,
+   "gaps": 31,
+   "overlaps": 4
+  },
+  "neighbour_method": {
+   "n": 299,
+   "verdicts": {
+    "verified": 232,
+    "weak": 51,
+    "coverage": 6,
+    "edges": 10
+   },
+   "verdicts_k6": {
+    "verified": 283,
+    "uninformative": 1,
+    "edges": 10,
+    "coverage": 5
+   },
+   "edge_err_median": 2,
+   "edge_err_within_1_line": 0.8
+  },
+  "drift": {
+   "k1": {
+    "n": 333,
+    "within_half_page": 0.946,
+    "median_err_pages": 0.07
+   },
+   "k5": {
+    "n": 327,
+    "within_half_page": 0.688,
+    "median_err_pages": 0.31
+   },
+   "k20": {
+    "n": 311,
+    "within_half_page": 0.158,
+    "median_err_pages": 1.31
+   }
+  },
+  "median_advance_letters": 4800,
+  "page_to_text_ratio": 0.85
+ },
+ {
+  "file": "fit-69a5e5e985fa13e734e41cba-wrongcaag-flash-v2.json",
+  "book": "69a5e5e985fa13e734e41cba",
+  "at": "2026-10-03T20:37:42.351Z",
+  "reads": "flash",
+  "editions": [
+   {
+    "spec": "held:6994383a6879ff0184cb803a",
+    "label": "Collection des anciens alchimistes grecs, Vols. 2-3 (1887, 6994383a6879ff0184cb803a)",
+    "licence": {
+     "scan": "publicdomain",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 518
+   }
+  ],
+  "edition_letters": 457756,
+  "rules": {
+   "version": 2,
+   "edgeLetters": 90,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.05,
+   "null_pages": 0,
+   "null_p99": null,
+   "null_max": null
+  },
+  "pages": 355,
+  "text_pages": 349,
+  "above_threshold": 1,
+  "located": 38,
+  "located_share_of_text": 0.109,
+  "located_strict": 0,
+  "located_strict_share": 0,
+  "with_start_edge": 0,
+  "with_end_edge": 0,
+  "boundaries": {
+   "n": 0,
+   "letters_per_line": 54,
+   "median_abs_gap": null,
+   "within_150": null,
+   "within_1_line": null,
+   "gaps": 0,
+   "overlaps": 0
+  },
+  "neighbour_method": {
+   "n": 0,
+   "verdicts": {},
+   "verdicts_k6": {},
+   "edge_err_median": null,
+   "edge_err_within_1_line": null
+  },
+  "drift": {
+   "k1": {
+    "n": 9,
+    "within_half_page": 0.111,
+    "median_err_pages": 4.01
+   },
+   "k5": {
+    "n": 1,
+    "within_half_page": 0,
+    "median_err_pages": 0.74
+   },
+   "k20": {
+    "n": 2,
+    "within_half_page": 0,
+    "median_err_pages": 11.8
+   }
+  },
+  "median_advance_letters": 38272,
+  "page_to_text_ratio": 0.02
+ },
+ {
+  "file": "fit-69a5e5e985fa13e734e41cba-wrongcaag-kraken.json",
+  "book": "69a5e5e985fa13e734e41cba",
+  "at": "2026-10-03T20:36:59.609Z",
+  "reads": "kraken",
+  "editions": [
+   {
+    "spec": "held:6994383a6879ff0184cb803a",
+    "label": "Collection des anciens alchimistes grecs, Vols. 2-3 (1887, 6994383a6879ff0184cb803a)",
+    "licence": {
+     "scan": "publicdomain",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 518
+   }
+  ],
+  "edition_letters": 457756,
+  "rules": {
+   "version": 2,
+   "edgeLetters": 90,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.05,
+   "null_pages": 0,
+   "null_p99": null,
+   "null_max": null
+  },
+  "pages": 355,
+  "text_pages": 348,
+  "above_threshold": 0,
+  "located": 48,
+  "located_share_of_text": 0.138,
+  "located_strict": 0,
+  "located_strict_share": 0,
+  "with_start_edge": 0,
+  "with_end_edge": 0,
+  "boundaries": {
+   "n": 0,
+   "letters_per_line": 55,
+   "median_abs_gap": null,
+   "within_150": null,
+   "within_1_line": null,
+   "gaps": 0,
+   "overlaps": 0
+  },
+  "neighbour_method": {
+   "n": 0,
+   "verdicts": {},
+   "verdicts_k6": {},
+   "edge_err_median": null,
+   "edge_err_within_1_line": null
+  },
+  "drift": {
+   "k1": {
+    "n": 13,
+    "within_half_page": 0.308,
+    "median_err_pages": 7.97
+   },
+   "k5": {
+    "n": 6,
+    "within_half_page": 0,
+    "median_err_pages": 43.42
+   },
+   "k20": {
+    "n": 2,
+    "within_half_page": 0,
+    "median_err_pages": 26.39
+   }
+  },
+  "median_advance_letters": 2432,
+  "page_to_text_ratio": 0.27
+ },
+ {
+  "file": "fit-69b4c04d978ca9526eda33f7-caag-flash-v2.json",
+  "book": "69b4c04d978ca9526eda33f7",
+  "at": "2026-10-04T18:32:43.577Z",
+  "reads": "flash",
+  "editions": [
+   {
+    "spec": "held:6994383a6879ff0184cb803a",
+    "label": "Collection des anciens alchimistes grecs, Vols. 2-3 (1887, 6994383a6879ff0184cb803a)",
+    "licence": {
+     "scan": "publicdomain",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 518
+   }
+  ],
+  "edition_letters": 457756,
+  "rules": {
+   "version": 2,
+   "edgeLetters": 90,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.05,
+   "null_pages": 0,
+   "null_p99": null,
+   "null_max": null
+  },
+  "pages": 660,
+  "text_pages": 631,
+  "above_threshold": 413,
+  "located": 307,
+  "located_share_of_text": 0.487,
+  "located_strict": 269,
+  "located_strict_share": 0.426,
+  "with_start_edge": 237,
+  "with_end_edge": 243,
+  "boundaries": {
+   "n": 196,
+   "letters_per_line": 35,
+   "median_abs_gap": 2,
+   "within_150": 0.786,
+   "within_1_line": 0.745,
+   "gaps": 50,
+   "overlaps": 0
+  },
+  "neighbour_method": {
+   "n": 178,
+   "verdicts": {
+    "uninformative": 11,
+    "verified": 126,
+    "coverage": 40,
+    "weak": 1
+   },
+   "verdicts_k6": {
+    "uninformative": 12,
+    "verified": 126,
+    "coverage": 39,
+    "weak": 1
+   },
+   "edge_err_median": 8,
+   "edge_err_within_1_line": 0.583
+  },
+  "drift": {
+   "k1": {
+    "n": 252,
+    "within_half_page": 0.873,
+    "median_err_pages": 0.22
+   },
+   "k5": {
+    "n": 186,
+    "within_half_page": 0.478,
+    "median_err_pages": 0.56
+   },
+   "k20": {
+    "n": 177,
+    "within_half_page": 0.13,
+    "median_err_pages": 95.17
+   }
+  },
+  "median_advance_letters": 1152,
+  "page_to_text_ratio": 0.7
+ },
+ {
+  "file": "fit-69b4c04d978ca9526eda33f7-caag-kraken.json",
+  "book": "69b4c04d978ca9526eda33f7",
+  "at": "2026-10-04T18:31:46.838Z",
+  "reads": "kraken",
+  "editions": [
+   {
+    "spec": "held:6994383a6879ff0184cb803a",
+    "label": "Collection des anciens alchimistes grecs, Vols. 2-3 (1887, 6994383a6879ff0184cb803a)",
+    "licence": {
+     "scan": "publicdomain",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 518
+   }
+  ],
+  "edition_letters": 457756,
+  "rules": {
+   "version": 2,
+   "edgeLetters": 90,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.05,
+   "null_pages": 0,
+   "null_p99": null,
+   "null_max": null
+  },
+  "pages": 660,
+  "text_pages": 631,
+  "above_threshold": 391,
+  "located": 307,
+  "located_share_of_text": 0.487,
+  "located_strict": 269,
+  "located_strict_share": 0.426,
+  "with_start_edge": 244,
+  "with_end_edge": 238,
+  "boundaries": {
+   "n": 197,
+   "letters_per_line": 33,
+   "median_abs_gap": 3,
+   "within_150": 0.766,
+   "within_1_line": 0.706,
+   "gaps": 58,
+   "overlaps": 0
+  },
+  "neighbour_method": {
+   "n": 179,
+   "verdicts": {
+    "verified": 105,
+    "coverage": 62,
+    "uninformative": 11,
+    "weak": 1
+   },
+   "verdicts_k6": {
+    "verified": 105,
+    "coverage": 61,
+    "uninformative": 12,
+    "weak": 1
+   },
+   "edge_err_median": 12,
+   "edge_err_within_1_line": 0.54
+  },
+  "drift": {
+   "k1": {
+    "n": 251,
+    "within_half_page": 0.876,
+    "median_err_pages": 0.22
+   },
+   "k5": {
+    "n": 192,
+    "within_half_page": 0.479,
+    "median_err_pages": 0.61
+   },
+   "k20": {
+    "n": 183,
+    "within_half_page": 0.142,
+    "median_err_pages": 95.22
+   }
+  },
+  "median_advance_letters": 1152,
+  "page_to_text_ratio": 0.66
+ },
+ {
+  "file": "fit-69b4c04d978ca9526eda33f7-wrongschneider-flash-v2.json",
+  "book": "69b4c04d978ca9526eda33f7",
+  "at": "2026-10-04T18:32:59.326Z",
+  "reads": "flash",
+  "editions": [
+   {
+    "spec": "held:69942ffcbb14908bbd9a1123",
+    "label": "Proclus Commentarius in Platonis Timaeum Graece (Schneider 1847) (1847, 69942ffcbb14908bbd9a1123)",
+    "licence": {
+     "scan": "http://creativecommons.org/publicdomain/mark/1.0/",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 883
+   }
+  ],
+  "edition_letters": 1658684,
+  "rules": {
+   "version": 2,
+   "edgeLetters": 90,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.05,
+   "null_pages": 0,
+   "null_p99": null,
+   "null_max": null
+  },
+  "pages": 660,
+  "text_pages": 631,
+  "above_threshold": 0,
+  "located": 80,
+  "located_share_of_text": 0.127,
+  "located_strict": 0,
+  "located_strict_share": 0,
+  "with_start_edge": 0,
+  "with_end_edge": 2,
+  "boundaries": {
+   "n": 0,
+   "letters_per_line": 35,
+   "median_abs_gap": null,
+   "within_150": null,
+   "within_1_line": null,
+   "gaps": 0,
+   "overlaps": 0
+  },
+  "neighbour_method": {
+   "n": 0,
+   "verdicts": {},
+   "verdicts_k6": {},
+   "edge_err_median": null,
+   "edge_err_within_1_line": null
+  },
+  "drift": {
+   "k1": {
+    "n": 14,
+    "within_half_page": 0.214,
+    "median_err_pages": 0.95
+   },
+   "k5": {
+    "n": 4,
+    "within_half_page": 0,
+    "median_err_pages": 5.03
+   },
+   "k20": {
+    "n": 13,
+    "within_half_page": 0,
+    "median_err_pages": 19.64
+   }
+  },
+  "median_advance_letters": 241472,
+  "page_to_text_ratio": 0
+ },
+ {
+  "file": "fit-69b4c04d978ca9526eda33f7-wrongschneider-kraken.json",
+  "book": "69b4c04d978ca9526eda33f7",
+  "at": "2026-10-04T18:32:16.373Z",
+  "reads": "kraken",
+  "editions": [
+   {
+    "spec": "held:69942ffcbb14908bbd9a1123",
+    "label": "Proclus Commentarius in Platonis Timaeum Graece (Schneider 1847) (1847, 69942ffcbb14908bbd9a1123)",
+    "licence": {
+     "scan": "http://creativecommons.org/publicdomain/mark/1.0/",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 883
+   }
+  ],
+  "edition_letters": 1658684,
+  "rules": {
+   "version": 2,
+   "edgeLetters": 90,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.05,
+   "null_pages": 0,
+   "null_p99": null,
+   "null_max": null
+  },
+  "pages": 660,
+  "text_pages": 631,
+  "above_threshold": 0,
+  "located": 81,
+  "located_share_of_text": 0.128,
+  "located_strict": 0,
+  "located_strict_share": 0,
+  "with_start_edge": 0,
+  "with_end_edge": 0,
+  "boundaries": {
+   "n": 0,
+   "letters_per_line": 33,
+   "median_abs_gap": null,
+   "within_150": null,
+   "within_1_line": null,
+   "gaps": 0,
+   "overlaps": 0
+  },
+  "neighbour_method": {
+   "n": 0,
+   "verdicts": {},
+   "verdicts_k6": {},
+   "edge_err_median": null,
+   "edge_err_within_1_line": null
+  },
+  "drift": {
+   "k1": {
+    "n": 23,
+    "within_half_page": 0.217,
+    "median_err_pages": 0.95
+   },
+   "k5": {
+    "n": 7,
+    "within_half_page": 0.143,
+    "median_err_pages": 2.01
+   },
+   "k20": {
+    "n": 15,
+    "within_half_page": 0,
+    "median_err_pages": 19.65
+   }
+  },
+  "median_advance_letters": 163200,
+  "page_to_text_ratio": 0
+ },
+ {
+  "file": "fit-6a45298cc6d95bc278fbc8c3-caag-flash-v2.json",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "at": "2026-10-04T09:48:28.176Z",
+  "reads": "flash",
+  "editions": [
+   {
+    "spec": "held:6994383a6879ff0184cb803a",
+    "label": "Collection des anciens alchimistes grecs, Vols. 2-3 (1887, 6994383a6879ff0184cb803a)",
+    "licence": {
+     "scan": "publicdomain",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 518
+   }
+  ],
+  "edition_letters": 457756,
+  "rules": {
+   "version": 2,
+   "edgeLetters": 90,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.05,
+   "null_pages": 0,
+   "null_p99": null,
+   "null_max": null
+  },
+  "pages": 432,
+  "text_pages": 387,
+  "above_threshold": 216,
+  "located": 180,
+  "located_share_of_text": 0.465,
+  "located_strict": 157,
+  "located_strict_share": 0.406,
+  "with_start_edge": 139,
+  "with_end_edge": 147,
+  "boundaries": {
+   "n": 118,
+   "letters_per_line": 40,
+   "median_abs_gap": 2,
+   "within_150": 0.814,
+   "within_1_line": 0.788,
+   "gaps": 25,
+   "overlaps": 0
+  },
+  "neighbour_method": {
+   "n": 104,
+   "verdicts": {
+    "verified": 83,
+    "coverage": 12,
+    "uninformative": 7,
+    "weak": 2
+   },
+   "verdicts_k6": {
+    "verified": 84,
+    "coverage": 12,
+    "uninformative": 7,
+    "weak": 1
+   },
+   "edge_err_median": 7,
+   "edge_err_within_1_line": 0.685
+  },
+  "drift": {
+   "k1": {
+    "n": 146,
+    "within_half_page": 0.863,
+    "median_err_pages": 0.16
+   },
+   "k5": {
+    "n": 111,
+    "within_half_page": 0.396,
+    "median_err_pages": 0.96
+   },
+   "k20": {
+    "n": 90,
+    "within_half_page": 0.222,
+    "median_err_pages": 65.24
+   }
+  },
+  "median_advance_letters": 1600,
+  "page_to_text_ratio": 0.75
+ },
+ {
+  "file": "fit-6a45298cc6d95bc278fbc8c3-caag-kraken.json",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "at": "2026-10-04T09:48:08.007Z",
+  "reads": "kraken",
+  "editions": [
+   {
+    "spec": "held:6994383a6879ff0184cb803a",
+    "label": "Collection des anciens alchimistes grecs, Vols. 2-3 (1887, 6994383a6879ff0184cb803a)",
+    "licence": {
+     "scan": "publicdomain",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 518
+   }
+  ],
+  "edition_letters": 457756,
+  "rules": {
+   "version": 2,
+   "edgeLetters": 90,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.05,
+   "null_pages": 0,
+   "null_p99": null,
+   "null_max": null
+  },
+  "pages": 432,
+  "text_pages": 385,
+  "above_threshold": 207,
+  "located": 183,
+  "located_share_of_text": 0.475,
+  "located_strict": 155,
+  "located_strict_share": 0.403,
+  "with_start_edge": 145,
+  "with_end_edge": 145,
+  "boundaries": {
+   "n": 122,
+   "letters_per_line": 39,
+   "median_abs_gap": 8,
+   "within_150": 0.803,
+   "within_1_line": 0.689,
+   "gaps": 25,
+   "overlaps": 13
+  },
+  "neighbour_method": {
+   "n": 104,
+   "verdicts": {
+    "verified": 83,
+    "coverage": 13,
+    "uninformative": 7,
+    "weak": 1
+   },
+   "verdicts_k6": {
+    "verified": 83,
+    "coverage": 13,
+    "uninformative": 7,
+    "weak": 1
+   },
+   "edge_err_median": 48,
+   "edge_err_within_1_line": 0.453
+  },
+  "drift": {
+   "k1": {
+    "n": 146,
+    "within_half_page": 0.863,
+    "median_err_pages": 0.16
+   },
+   "k5": {
+    "n": 112,
+    "within_half_page": 0.393,
+    "median_err_pages": 0.92
+   },
+   "k20": {
+    "n": 90,
+    "within_half_page": 0.244,
+    "median_err_pages": 55.76
+   }
+  },
+  "median_advance_letters": 1600,
+  "page_to_text_ratio": 0.74
+ },
+ {
+  "file": "fit-6a45298cc6d95bc278fbc8c3-wrongschneider-flash-v2.json",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "at": "2026-10-04T09:48:37.803Z",
+  "reads": "flash",
+  "editions": [
+   {
+    "spec": "held:69942ffcbb14908bbd9a1123",
+    "label": "Proclus Commentarius in Platonis Timaeum Graece (Schneider 1847) (1847, 69942ffcbb14908bbd9a1123)",
+    "licence": {
+     "scan": "http://creativecommons.org/publicdomain/mark/1.0/",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 883
+   }
+  ],
+  "edition_letters": 1658684,
+  "rules": {
+   "version": 2,
+   "edgeLetters": 90,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.05,
+   "null_pages": 0,
+   "null_p99": null,
+   "null_max": null
+  },
+  "pages": 432,
+  "text_pages": 387,
+  "above_threshold": 0,
+  "located": 55,
+  "located_share_of_text": 0.142,
+  "located_strict": 0,
+  "located_strict_share": 0,
+  "with_start_edge": 0,
+  "with_end_edge": 0,
+  "boundaries": {
+   "n": 0,
+   "letters_per_line": 40,
+   "median_abs_gap": null,
+   "within_150": null,
+   "within_1_line": null,
+   "gaps": 0,
+   "overlaps": 0
+  },
+  "neighbour_method": {
+   "n": 0,
+   "verdicts": {},
+   "verdicts_k6": {},
+   "edge_err_median": null,
+   "edge_err_within_1_line": null
+  },
+  "drift": {
+   "k1": {
+    "n": 15,
+    "within_half_page": 0.133,
+    "median_err_pages": 0.98
+   },
+   "k5": {
+    "n": 3,
+    "within_half_page": 0,
+    "median_err_pages": 4.62
+   },
+   "k20": {
+    "n": 4,
+    "within_half_page": 0,
+    "median_err_pages": 18.49
+   }
+  },
+  "median_advance_letters": 70528,
+  "page_to_text_ratio": 0.01
+ },
+ {
+  "file": "fit-6a45298cc6d95bc278fbc8c3-wrongschneider-kraken.json",
+  "book": "6a45298cc6d95bc278fbc8c3",
+  "at": "2026-10-04T09:48:17.730Z",
+  "reads": "kraken",
+  "editions": [
+   {
+    "spec": "held:69942ffcbb14908bbd9a1123",
+    "label": "Proclus Commentarius in Platonis Timaeum Graece (Schneider 1847) (1847, 69942ffcbb14908bbd9a1123)",
+    "licence": {
+     "scan": "http://creativecommons.org/publicdomain/mark/1.0/",
+     "text": "our OCR of a public-domain print edition"
+    },
+    "segments": 883
+   }
+  ],
+  "edition_letters": 1658684,
+  "rules": {
+   "version": 2,
+   "edgeLetters": 90,
+   "edgeAgree": 150,
+   "minTextLetters": 300,
+   "minStripLetters": 200,
+   "minMonotoneShare": 0.2,
+   "anchorIdentity": 0.45,
+   "anchorMargin": 0.12,
+   "spanRatio": [
+    0.5,
+    1.8
+   ],
+   "minReadLetters": 300,
+   "informativeFloor": 0.12,
+   "minMargin": 0.08,
+   "minRatio": 1.8,
+   "readSpanRatio": [
+    0.6,
+    1.6
+   ],
+   "locate_k": 7,
+   "locate_threshold": 0.05,
+   "null_pages": 0,
+   "null_p99": null,
+   "null_max": null
+  },
+  "pages": 432,
+  "text_pages": 385,
+  "above_threshold": 0,
+  "located": 41,
+  "located_share_of_text": 0.106,
+  "located_strict": 0,
+  "located_strict_share": 0,
+  "with_start_edge": 2,
+  "with_end_edge": 0,
+  "boundaries": {
+   "n": 0,
+   "letters_per_line": 38,
+   "median_abs_gap": null,
+   "within_150": null,
+   "within_1_line": null,
+   "gaps": 0,
+   "overlaps": 0
+  },
+  "neighbour_method": {
+   "n": 0,
+   "verdicts": {},
+   "verdicts_k6": {},
+   "edge_err_median": null,
+   "edge_err_within_1_line": null
+  },
+  "drift": {
+   "k1": {
+    "n": 8,
+    "within_half_page": 0.375,
+    "median_err_pages": 0.52
+   },
+   "k5": {
+    "n": 3,
+    "within_half_page": 0,
+    "median_err_pages": 4.19
+   },
+   "k20": {
+    "n": 5,
+    "within_half_page": 0,
+    "median_err_pages": 17.36
+   }
+  },
+  "median_advance_letters": 206208,
+  "page_to_text_ratio": 0
+ }
+]

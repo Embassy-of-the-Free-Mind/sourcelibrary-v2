@@ -1,0 +1,43 @@
+{
+  "seed": 56782,
+  "pool_scale": 1,
+  "pool_scale_nonlatin": 2,
+  "frame": {
+    "call_site": "scripts/lib/translate-batch-chained.mjs",
+    "runs_mode": "chained",
+    "served_books": 4797,
+    "prior_books_excluded": 466
+  },
+  "skipped": {
+    "no_seeded_lane_page": 114,
+    "latin_script_other_language": 52,
+    "no_seed_now": 25,
+    "prior_sample_book": 385,
+    "no_ocr": 41,
+    "short_next_ocr": 9,
+    "mixed_or_unread_script": 99,
+    "short_ocr": 31,
+    "control_latin_pool_full": 64,
+    "control_tibetan_pool_full": 3,
+    "next_excluded_type": 5,
+    "group_pools_full_by_book_language": 3649,
+    "english_book": 11,
+    "control_other_pool_full": 37,
+    "control_han_pool_full": 3
+  },
+  "visited": 752,
+  "pools": {
+    "pagebreak": {
+      "latin": 95,
+      "tibetan": 36,
+      "han": 36,
+      "other": 30
+    },
+    "control": {
+      "latin": 36,
+      "tibetan": 12,
+      "han": 12,
+      "other": 12
+    }
+  }
+}

@@ -347,6 +347,14 @@ export interface ReaderStrings {
     transcriptChipIaTitle: (agreement: number | null) => string;
     transcriptChipManual: string;
     transcriptChipCorpus: (shortName: string) => string;
+    /** Open e-text fitted to the scan (#5571): "Text: CBETA, CC BY-NC-SA 4.0". The pane line passes the full name. */
+    transcriptChipTextSource: (shortName: string, license: string) => string;
+    /** Drawer form: full source name, version when known, licence. */
+    textSourceTranscript: (name: string, license: string, version: string | null) => string;
+    /** Translation pane line and drawer line for an unreviewed machine translation (#5571). */
+    machineDraftNotice: string;
+    licenceLink: string;
+    sourceLink: string;
     corpusTranslation: (name: string) => string;
     corpusNotice: string;
     corpusAiNotice: (name: string) => string;
@@ -831,6 +839,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         (agreement != null ? ` · agrees with our sample reading on ${Math.round(agreement * 100)}% of words` : ''),
       transcriptChipManual: 'Manual',
       transcriptChipCorpus: (shortName) => `Corpus: ${shortName}`,
+      transcriptChipTextSource: (shortName, license) => `Text: ${shortName}, ${license}`,
+      textSourceTranscript: (name, license, version) => `Text: ${name}${version ? ` (${version})` : ''}, ${license}`,
+      machineDraftNotice: 'AI translation, not yet reviewed by a scholar.',
+      licenceLink: 'licence',
+      sourceLink: 'source',
       corpusTranslation: (name) => `Scholarly translation from the ${name} — not machine-made`,
       corpusNotice: 'This page reproduces a scholarly corpus edition: the transliteration and translation are the work of its editors, not of AI. The page divisions are ours — the corpus divides the text by lines, not pages.',
       corpusAiNotice: (name) => `The transliteration follows the ${name}; the English is a machine translation of it and may contain errors.`,
@@ -1258,6 +1271,11 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
         (agreement != null ? ` · coincide con nuestra lectura de muestra en el ${Math.round(agreement * 100)}% de las palabras` : ''),
       transcriptChipManual: 'Manual',
       transcriptChipCorpus: (shortName) => `Corpus: ${shortName}`,
+      transcriptChipTextSource: (shortName, license) => `Texto: ${shortName}, ${license === 'public domain' ? 'dominio público' : license}`,
+      textSourceTranscript: (name, license, version) => `Texto: ${name}${version ? ` (${version})` : ''}, ${license === 'public domain' ? 'dominio público' : license}`,
+      machineDraftNotice: 'Traducción por IA, aún no revisada por un especialista.',
+      licenceLink: 'licencia',
+      sourceLink: 'fuente',
       corpusTranslation: (name) => `Traducción académica procedente de ${name} — no es obra de una máquina`,
       corpusNotice: 'Esta página reproduce una edición académica de corpus: la transliteración y la traducción son obra de sus editores, no de la IA. La división en páginas es nuestra — el corpus divide el texto por líneas, no por páginas.',
       corpusAiNotice: (name) => `La transliteración sigue ${name}; el inglés es una traducción automática de ella y puede contener errores.`,

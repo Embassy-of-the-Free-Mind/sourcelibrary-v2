@@ -1,0 +1,68 @@
+{
+ "at": "2026-10-06T08:02:30.562Z",
+ "by_language": {
+  "Arabic": {
+   "books": 493,
+   "live_books": 279,
+   "live_translated_books": 276,
+   "pages": 113564,
+   "pages_translated": 60963,
+   "pages_untranslated": 52601,
+   "flash_minus_lite_batch_usd": 49
+  },
+  "Aramaic": {
+   "books": 1,
+   "live_books": 1,
+   "live_translated_books": 1,
+   "pages": 437,
+   "pages_translated": 365,
+   "pages_untranslated": 72,
+   "flash_minus_lite_batch_usd": 0
+  },
+  "Chinese": {
+   "books": 13429,
+   "live_books": 12891,
+   "live_translated_books": 2071,
+   "pages": 2059181,
+   "pages_translated": 280017,
+   "pages_untranslated": 1779164,
+   "flash_minus_lite_batch_usd": 1672
+  },
+  "Hebrew": {
+   "books": 411,
+   "live_books": 284,
+   "live_translated_books": 283,
+   "pages": 120703,
+   "pages_translated": 71495,
+   "pages_untranslated": 49208,
+   "flash_minus_lite_batch_usd": 46
+  },
+  "Pali": {
+   "books": 59,
+   "live_books": 26,
+   "live_translated_books": 26,
+   "pages": 20583,
+   "pages_translated": 13423,
+   "pages_untranslated": 7160,
+   "flash_minus_lite_batch_usd": 7
+  },
+  "Persian": {
+   "books": 245,
+   "live_books": 62,
+   "live_translated_books": 62,
+   "pages": 88837,
+   "pages_translated": 14760,
+   "pages_untranslated": 74077,
+   "flash_minus_lite_batch_usd": 70
+  },
+  "Sanskrit": {
+   "books": 2102,
+   "live_books": 395,
+   "live_translated_books": 393,
+   "pages": 351867,
+   "pages_translated": 109838,
+   "pages_untranslated": 242029,
+   "flash_minus_lite_batch_usd": 228
+  }
+ }
+}

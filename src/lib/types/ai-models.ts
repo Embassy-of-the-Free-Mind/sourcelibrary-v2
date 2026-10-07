@@ -115,7 +115,9 @@ export function getModelForBook(book: RoutableBook | null): string {
  *
  * - BPH books: full flash.
  * - Tibetan: full flash (#4742, measured on 21 Kanjur pages against 84000).
- * - Everything else, INCLUDING other non-Latin scripts: flash-lite.
+ * - Greek, Hebrew/Aramaic, Arabic, Persian, Sanskrit, Pali, Chinese: full
+ *   flash (#5695, measured against published human translations).
+ * - Everything else (Latin-script, and unmeasured non-Latin scripts): flash-lite.
  *
  * Why this differs from getModelForBook (issue #4759): #1726 carved non-Latin
  * scripts out to full flash on evidence that was entirely about visual
@@ -132,6 +134,10 @@ export function getTranslateModelForBook(book: RoutableBook | null): string {
   // Tibetan is the one measured exception (#4742) — see isTibetanBook in
   // scripts/lib/translate-core.mjs for the evidence.
   if (/^\s*tibetan\b/i.test(String(book?.language ?? ''))) {
+    return DEFAULT_MODEL;
+  }
+  // #5695 — see isFlashMeasuredLanguage in scripts/lib/translate-core.mjs.
+  if (/^\s*(ancient\s+)?(greek|hebrew|heb|aramaic|arabic|persian|sanskrit|pali|chinese|classical\s+chinese)\b/i.test(String(book?.language ?? ''))) {
     return DEFAULT_MODEL;
   }
   return DEFAULT_LITE_MODEL;

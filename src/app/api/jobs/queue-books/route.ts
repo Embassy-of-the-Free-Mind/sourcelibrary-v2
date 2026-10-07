@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { nanoid } from 'nanoid';
 import { getModelForBook, getTranslateModelForBook, type RoutableBook } from '@/lib/types/ai-models';
+import { ocrTrustGate } from '../../../../../scripts/lib/ocr-trust-gate.mjs';
 import type { JobStatus, JobType } from '@/lib/types/job';
 import { enqueuePagesForJob } from '@/lib/queue-utils';
 import { withAuth } from '@/lib/auth-helpers';
@@ -78,6 +79,19 @@ export const POST = withAuth(async (request, session) => {
         { error: 'Book not found' },
         { status: 404 }
       );
+    }
+
+    // #5700: a book in a stratum whose OCR was measured untrusted is not translated until it
+    // has been re-read — a fluent translation of a misread hides the error from the reader.
+    // The Lambda processor consumes whatever this route queues, so this is its gate.
+    if (action === 'translation') {
+      const trust = await ocrTrustGate(db, book, { lane: 'queue-books' });
+      if (!trust.ok) {
+        return NextResponse.json(
+          { error: `Translation refused: this book's transcription is not trusted yet (${trust.reason}). Re-OCR it first.` },
+          { status: 409 }
+        );
+      }
     }
 
     // Check for active job (exclude terminal statuses: completed, failed, cancelled, partial)

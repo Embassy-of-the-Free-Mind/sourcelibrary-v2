@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA cera/p1",
+  "edition": "Epistolarum Syntagmata Duo una cum Responsis. Praemissa Conringii Vita, Scriptorum Index, et de his Doctorum Virorum Jud — Helmstedt: Georg-Wolfgang Hamm, 1694.",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "9/12",
+    "pb_aligned_pages": "9/9"
+  },
+  "origin": "library",
+  "book_id": "6a90ce1d2efcf696ead70a9b",
+  "page_number": 23,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 13042,
+    "to_char": 14598,
+    "overlap": 0.892,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'bus: Nempe undecim liberorum ex ea pater factus' (running head 'CONRINGII'); ends 'sed cum quartae partis augmento / ei' (catchword); ref pads 'non liberis minus quam opibus:' and 'ei statim est'. Google scan with stained/dark blotches, still legible.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:18:15.948Z",
+  "text_location": "repo",
+  "text_sha256": "cd44d16ae79820c0dd249e9d0960a019ff27f8b1d7e46bb509040e8f95059b29",
+  "unit": {
+    "chars": 1556
+  },
+  "stratum": "latin-period-5126"
+}

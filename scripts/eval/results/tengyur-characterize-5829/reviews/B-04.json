@@ -1,0 +1,81 @@
+[
+{"id": "PX2FB", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "ཡེ་ཤེས་གང་ཡིན་པ་དང་།", "english": "what his faith is",
+   "why": "ཡེ་ཤེས is wisdom/gnosis (jñāna), not faith; the list item is 'what his wisdom is'.",
+   "fix": {"find": "what his faith is", "replace": "what his wisdom is"}},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "སྦྱིན་པ་ལ་སོགས་པ་བསོད་ནམས་ཐམས་ཅད་རྒྱུ་མཐུན་པའི་འབྲས་བུ་འབྱུང་བར་བྱ་བའི་ཆེད་དུ་སྦྱིན་པ་ཡང་ཁྱད་པར་དུ་འགྱུར་ཞིང་སྦྱིན་པ་མི་ཟད་པར་གྱུར་ཅིག", "english": "\"May all merits, such as generosity, become concordant causes and may my generosity become inexhaustible.\"",
+   "why": "The purpose clause (so that all merits produce concordant results) is outside the dedication, and the dedication itself reads 'may the giving become distinguished and inexhaustible'; 'distinguished' is dropped and the purpose is put into the quoted wish."}
+ ],
+ "note": "Accurate commentary on the Buddhānusmṛti epithets apart from rendering ཡེ་ཤེས as 'faith' and a reshaped dedication formula."},
+{"id": "PWPCY", "score": 3, "verdict": "light",
+ "errors": [
+  {"type": "reversal", "confidence": "high",
+   "tibetan": "བརྟན་པར་བྱེད་པའི་མཚན་མ་རྙེད་ནས", "english": "Once the sign of stability is not found",
+   "why": "The Tibetan says 'having found the sign of stability', parallel to the other families; the negation is invented.",
+   "fix": {"find": "Once the sign of stability is not found", "replace": "Once the sign of stability is found"}}
+ ],
+ "note": "The subtle-yoga and recitation sequence is followed closely, but one inserted negation inverts the instruction for the Jewel family."},
+{"id": "PFWZX", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "དེའི་ཚེ་འཁོར་ལོ་དུས་ཀྱི་བདག་ཉིད་ཅན།", "english": "At that time, it is said that the wheel has the nature of time.",
+   "why": "འཁོར་ལོ་དུས་ here is most likely the Kālacakra (wheel of time) as a name/lemma ('having the nature of Kālacakra'), not 'the wheel has the nature of time'."}
+ ],
+ "note": "A technical death-sign computation passage rendered serviceably, with the corrupt 'ten' in the number series rightly read as thirty."},
+{"id": "PPXFE", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "gloss", "confidence": "medium",
+   "tibetan": "དེ་ཉིད་རྣམ་སྤངས་ཞེས་བྱ་བ་ནི་སྐྱེ་བ་མེད་པའི་བསྒོམ་པ་དང་བྲལ་བ་ཞེས་སོ། །དངོས་གྲུབ་ནི་རྡོ་རྗེ་འཆང་གི་གོ་འཕང་སྟེ། རྙེད་པར་མི་འགྱུར་རོ", "english": "will not be attained [note: if one remains attached to worldly appearances]",
+   "why": "The condition for not attaining siddhi is being devoid of the meditation on non-arising ('abandoning that'), not attachment to worldly appearances."}
+ ],
+ "note": "The sixteen emptinesses, four māras and generation/completion-stage purities are rendered faithfully; one closing note misstates the condition."},
+{"id": "PV0DI", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "omission", "confidence": "high",
+   "tibetan": "དེ་དག་གི་ཡང་གསུང་དབྱངས་མི་ཟད་ལ། །བློ་ཡི་སྟོབས་ཀྱིས་བདག་ཀྱང་རབ་ཏུ་འཇུག །", "english": "Who are turning the wheel in various ways.",
+   "why": "The two lines 'May I too, by the power of intellect, enter their inexhaustible melodious speech' are not translated.",
+   "fix": {"find": "Who are turning the wheel in various ways.", "replace": "Who are turning the wheel in various ways,\nMay I too, through the power of my intellect, enter\nTheir inexhaustible melodious speech."}}
+ ],
+ "note": "A sound rendering of the Bhadracarī verses except for one dropped couplet at the top of the side."},
+{"id": "P2M2I", "score": 3, "verdict": "work",
+ "errors": [
+  {"type": "omission", "confidence": "high",
+   "tibetan": "ཆུ་ལ་སོགས་པའི་མངོན་པར་དབང་བསྐུར་བ་གཉིས་གཉིས་སོ།", "english": "two initiations such as the water initiation are granted at the northern, southern, and eastern gates",
+   "why": "གཉིས་གཉིས is distributive: two initiations at EACH of the three gates (six, plus the permission at the west = the seven initiations named below).",
+   "fix": {"find": "two initiations such as the water initiation are granted at the northern, southern, and eastern gates", "replace": "two initiations each, beginning with the water initiation, are granted at the northern, southern, and eastern gates"}},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "གཞན་པ་ཞེས་པ་ནི། ལུས་ལ་སོགས་པའི་དག་པ་རྣམས་ལས་ཏེ། ཁམས་དང་ཕུང་པོ་ལ་སོགས་པ་རྣམས་ཀྱི་དག་པ་གཞན་ནོ།", "english": "this refers to the purifications of the body and so forth; it is the different purification of the (dhatus) elements and (skandhas) aggregates",
+   "why": "ལས here is comparative: 'other' means other than the purities of body etc., namely the purities of the elements and aggregates."},
+  {"type": "addition", "confidence": "medium",
+   "tibetan": "ནུབ་ཀྱི་སྒོར་ནི་རྗེས་སུ་གནང་བའི་མངོན་པར་དབང་བསྐུར་བའོ།", "english": "authorizing the student to practice a specific deity",
+   "why": "Unmarked explanatory addition not in the Tibetan, and misleading for the Kālacakra permission initiation."}
+ ],
+ "note": "The Kālacakra initiation sequence is broadly right, but the distributive count, the 'other than' comparison and an unmarked gloss need correction."},
+{"id": "PEAGP", "score": 5, "verdict": "light",
+ "errors": [],
+ "note": "A careful 84000-style rendering of the sixteen forsakings and the emptiness-not-joined-to-emptiness commentary."},
+{"id": "PON55", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "agent", "confidence": "high",
+   "tibetan": "བཏང་པ་དེ་ནི་རིངས་པས་འཁྲུགས།", "english": "though she was agitated by the haste of his departure",
+   "why": "It is the son, once sent off, who is flustered by haste (Skt. visṛṣṭas tvarākulaḥ), not the mother.",
+   "fix": {"find": "though she was agitated by the haste of his departure", "replace": "and, sent off, he went flustered by haste"}},
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "ཆོས་བཟང་གིས་ཀྱང་གནས་སྐབས་དེར། །བུ་ནི་གསང་ནས་བོས་བྱས་ཏེ།", "english": "called his son in secret",
+   "why": "Sudharmā is the mother (the next sentences use 'she'/'his mother'), so it is her son."}
+ ],
+ "note": "The Tibetan verses of this bilingual jātaka page are followed well, with one subject switched and the pronoun of the queen confused."},
+{"id": "P8KH3", "score": 4, "verdict": "light",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "འཇིག་རྟེན་པ་ཞེས་པ་ནི་ཁམས་གསུམ་པ་སྟེ་ཉོན་མོངས་པ་ལ་ངེས་པར་འབྱུང་བ་ཉིད་ཀྱི་ཕྱིར་རོ།", "english": "as it is from these that one must emerge from afflictive emotions",
+   "why": "The reason contrasts with the transcendent (emerging from afflictions): the worldly belongs to the three realms because it arises in/with the afflictions, not because one must emerge from them."}
+ ],
+ "note": "A faithful word-commentary on the tantric practices, with one muddled reason in the worldly/transcendent contrast."},
+{"id": "P1TAS", "score": 5, "verdict": "light",
+ "errors": [],
+ "note": "A faithful rendering of the rain verses and Śakra's praise closing the Fish jātaka."}
+]

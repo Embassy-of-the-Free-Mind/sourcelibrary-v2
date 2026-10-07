@@ -1,0 +1,44 @@
+{
+  "source": "la.wikisource Liber:Sphaera Ioannis de Sacrobosco emendata. Elia Vineti Santonis scholia in eandem Sphaeram, ab ipso authore restituta. Adiunximus huic libro compendium in Sphaeram (IA bub gb hZh9BYVGr7wC 3).pdf",
+  "edition": "Sphaera Ioannis de Sacro Bosco emendata : Eliae Vineti Santonis scholia in eandem sphaeram ab ipso auctore restituta : Adiunximus huic libro compendium in sphaeram per Pierium Valerianum Bellunensem: et Petri Nonii Salaciensis demonstrationem eorum, quae in extremo capite de climatibus Sacroboscus s",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://la.wikisource.org/wiki/Pagina%3ASphaera_Ioannis_de_Sacrobosco_emendata._Elia_Vineti_Santonis_scholia_in_eandem_Sphaeram%2C_ab_ipso_authore_restituta._Adiunximus_huic_libro_compendium_in_Sphaeram_(IA_bub_gb_hZh9BYVGr7wC_3).pdf%2F25?oldid=281764",
+  "same_edition": {
+    "evidence": "page-unit-by-eye",
+    "text_match_pages": null,
+    "pb_aligned_pages": null
+  },
+  "origin": "library",
+  "book_id": "69b660aeb3f4fc0441533e16",
+  "page_number": 29,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "unit": "transcription-page",
+    "page_break_index": 23,
+    "probe": "none (located by eye)"
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-period-refs-5126.mjs",
+  "built_at": "2026-10-04T16:05:10.909Z",
+  "text_location": "repo",
+  "text_sha256": "a7837f2f4f1b570d0449780ea7266f7c1c5d7a7d662dffd4119bce911b86da53",
+  "unit": {
+    "chars": 749
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts at 'Vigintique duo productum deinde secuto' (top of page, after running head 'De sacro Bosco. Cap. 2.'); ends at 'de aequinoctiali' (page ends there; catchword DE omitted). Page boundaries match exactly. Defects: drop-cap H of 'Horum' missing ('Orum'); stray markup 'inline|left|300px' at the end for the woodcut; '&amp;' entity left; running head, signature and catchword omitted. Scan is a single page, printed leaf ~28/29. Searched pages 25 (printed 21, ch.1 end) then 29.",
+    "leaf_language": "Latin",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "stratum": "latin-period-5126"
+}

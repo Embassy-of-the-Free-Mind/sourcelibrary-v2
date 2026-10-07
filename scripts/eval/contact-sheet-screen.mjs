@@ -40,7 +40,7 @@
  *   --book-ids a,b,c (pin the sample — REQUIRED when comparing arms; see the note at the query)
  */
 import { MongoClient } from 'mongodb';
-import sharp from 'sharp';
+import { sheetFor as buildSheet } from './lib/contact-sheet.mjs';
 import fs from 'node:fs';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 // This eval spends real money, so it records what it spent in the same attribution table as
@@ -95,26 +95,8 @@ Answer with JSON only: {"cells":[{"n":1,"picture":true,"what":"portrait"},...]} 
 
 const PROMPT = args.includes('--prompt-v2') ? PROMPT_V2 : PROMPT_V1;
 
-async function sheetFor(pages, db) {
-  const cols = Math.ceil(Math.sqrt(PER_SHEET));
-  const rows = Math.ceil(pages.length / cols);
-  const tiles = [];
-  for (let i = 0; i < pages.length; i++) {
-    const url = pages[i].archived_photo || pages[i].photo;
-    try {
-      const r = await fetch(url, { signal: AbortSignal.timeout(60000) });
-      if (!r.ok) { tiles.push(null); continue; }
-      const buf = Buffer.from(await r.arrayBuffer());
-      tiles.push(await sharp(buf).resize(CELL_PX, CELL_PX, { fit: 'contain', background: '#fff' }).jpeg({ quality: 78 }).toBuffer());
-    } catch { tiles.push(null); }
-  }
-  const blank = await sharp({ create: { width: CELL_PX, height: CELL_PX, channels: 3, background: '#fff' } }).jpeg().toBuffer();
-  const composites = tiles.map((t, i) => ({
-    input: t || blank, left: (i % cols) * CELL_PX, top: Math.floor(i / cols) * CELL_PX,
-  }));
-  return sharp({ create: { width: cols * CELL_PX, height: rows * CELL_PX, channels: 3, background: '#fff' } })
-    .composite(composites).jpeg({ quality: 80 }).toBuffer();
-}
+// The grid builder lives in lib/contact-sheet.mjs so other screens reuse it (#5768).
+const sheetFor = (pages) => buildSheet(pages, { perSheet: PER_SHEET, cellPx: CELL_PX });
 
 // A sheet that fails to answer MUST NOT read as a sheet with no pictures in it. The first
 // version of this script returned `parsed = null` on any bad response and the caller then scored

@@ -1,0 +1,222 @@
+[
+ {
+  "cid": "D40",
+  "claim": "don gcig la 'du ba = Sanskrit ekārthasamavāya",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://www.wisdomlib.org/hinduism/essay/philosophy-of-charaka-samhita/d/doc369669.html",
+  "evidence": "'the inherence of many entities in the same locus (ekārthasamavāyasaṃbandha)' — matches inherence of colour and touch in one object.",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 2
+ },
+ {
+  "cid": "D37",
+  "claim": "khyad par du bya ba ('qualificand') = Sanskrit viśeṣya",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://www.wisdomlib.org/definition/visheshya",
+  "evidence": "viśeṣya: 'the word qualified... Substantive, as opposed to viśeṣaṇa'; paired here with khyad par du byed pa = viśeṣaṇa.",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 3
+ },
+ {
+  "cid": "D34",
+  "claim": "bare transliteration of dka' thub",
+  "verdict": "no-claim",
+  "correction": null,
+  "source_url": null,
+  "evidence": null,
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 0
+ },
+ {
+  "cid": "D22",
+  "claim": "rtsa bal ba dza = Sanskrit balbaja (a grass)",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://www.wisdomlib.org/definition/balbaja",
+  "evidence": "'Balbaja is the name of the grass called Eleusine indica'; coarse grass, also ropes made of it.",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 2
+ },
+ {
+  "cid": "D28",
+  "claim": "mthun phyogs ('similar class') = Sanskrit sapakṣa",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://glossaries.dila.edu.tw/search?locale=en&term=mthun+phyogs",
+  "evidence": "Hopkins via DILA: mthun phyogs = sapakṣa, 'similar class'.",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 1
+ },
+ {
+  "cid": "D26",
+  "claim": "dpyod pa ba = Mīmāṃsakas, followers of the school of Vedic interpretation",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://glossaries.dila.edu.tw/search?locale=en&term=dpyod+pa+ba",
+  "evidence": "Hopkins: dpyod pa ba = Mīmāṃsaka; Wikipedia: Mīmāṃsā 'reflected on the meanings of certain Vedic texts'.",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 2
+ },
+ {
+  "cid": "D30",
+  "claim": "rjes su 'gro ba = Sanskrit anvaya",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://glossaries.dila.edu.tw/search?locale=en&term=rjes+su+%27gro+ba",
+  "evidence": "Mahāvyutpatti: anvayaḥ | rjes su 'gro ba; Hopkins: concomitance.",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 1
+ },
+ {
+  "cid": "D31",
+  "claim": "chos mthun pa ('similarity of properties') = Sanskrit sādharmya",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://glossaries.dila.edu.tw/search?locale=en&term=chos+mthun+pa",
+  "evidence": "Hopkins: chos mthun pa = sādharmya, 'qualitative similarity'.",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 1
+ },
+ {
+  "cid": "D44",
+  "claim": "Āryadeva was the teacher of Nāgārjuna",
+  "verdict": "wrong",
+  "correction": "Āryadeva was the student (disciple) of Nāgārjuna, not his teacher.",
+  "source_url": "https://en.wikipedia.org/wiki/Aryadeva",
+  "evidence": "'a Buddhist monk who became a student of Nagarjuna'; 'became his most gifted student'.",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 1
+ },
+ {
+  "cid": "D36",
+  "claim": "dngos po'i rkyen = Sanskrit bhāva-pratyaya (abstract suffix)",
+  "verdict": "unverifiable",
+  "correction": null,
+  "source_url": null,
+  "evidence": "No glossary or study fetched confirming dngos po'i rkyen = bhāvapratyaya; plausible (rkyen = pratyaya, suffix) but unconfirmed.",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 3
+ },
+ {
+  "cid": "D38",
+  "claim": "blo = Sanskrit buddhi",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://glossaries.dila.edu.tw/search?locale=en&term=buddhi",
+  "evidence": "Mahāvyutpatti: buddhiḥ = blo.",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 1
+ },
+ {
+  "cid": "D27",
+  "claim": "gangs can pa ('Himalayans') = a school of Tibetan or North Indian logic",
+  "verdict": "unverifiable",
+  "correction": null,
+  "source_url": null,
+  "evidence": "gangs can = himavān (DILA); passage quotes a Sāṃkhya-type inference definition, but no fetched source identifying the school; 'Tibetan' is anachronistic for Dignāga's opponents.",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 4
+ },
+ {
+  "cid": "D42",
+  "claim": "mdo sde pa ('Sūtra followers') = Sanskrit Vaibhāṣika",
+  "verdict": "wrong",
+  "correction": "mdo sde pa = Sautrāntika; Vaibhāṣikas hold that past and future exist, the view denied here.",
+  "source_url": "https://tibetanbuddhistencyclopedia.com/en/index.php?title=Sautrantika",
+  "evidence": "Sautrantika — Tibetan མདོ་སྡེ་པ (mdo sde pa); Vaibhāṣika held past, present, future phenomena exist (Wikipedia).",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 4
+ },
+ {
+  "cid": "D39",
+  "claim": "kun 'byung refers to the Second Noble Truth, the origin (samudaya)",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://en.wikipedia.org/wiki/Four_Noble_Truths",
+  "evidence": "Second truth samudaya; Tibetan kun 'byung corresponds to samudaya.",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 1
+ },
+ {
+  "cid": "D29",
+  "claim": "nye bar 'jal ba = Sanskrit upanaya",
+  "verdict": "unverifiable",
+  "correction": null,
+  "source_url": "https://glossaries.dila.edu.tw/search?locale=en&term=nye+bar+%27jal",
+  "evidence": "Mahāvyutpatti gives nye bar 'jal ba = upamānam (comparison), not upanaya; context (Nyāya members) may still intend upanaya here.",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 3
+ },
+ {
+  "cid": "D35",
+  "claim": "shed las skyes pa ('person') = Sanskrit puruṣa",
+  "verdict": "wrong",
+  "correction": "The Tibetan is shed las skyes pa = manuja ('born of Manu'); puruṣa would be skyes bu.",
+  "source_url": "https://scholar.84000.co/authority/entity-1575",
+  "evidence": "84000: Tibetan shed las skyes pa / shed las skyes; Sanskrit mānava, manuja; 'born of Manu'.",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 3
+ },
+ {
+  "cid": "D24",
+  "claim": "phung po = Sanskrit skandha",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://en.wikipedia.org/wiki/Skandha",
+  "evidence": "'skandha is ཕུང་པོ། in Classical Tibetan'.",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 1
+ },
+ {
+  "cid": "D32",
+  "claim": "Ḍittha is a standard Sanskrit example of an arbitrary proper name (yadṛcchā-śabda)",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://www.wisdomlib.org/definition/dittha",
+  "evidence": "Ḍittha: 'Name of a man' (Pāṇini 5.1.119, Kāśikā); cited as arbitrary proper name.",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 2
+ },
+ {
+  "cid": "D23",
+  "claim": "lung ma bstan = Sanskrit avyākṛta",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://glossaries.dila.edu.tw/search?locale=en&term=lung+ma+bstan",
+  "evidence": "Hopkins: lung ma bstan = avyākaraṇa / avyākṛta, 'neutral'.",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 2
+ },
+ {
+  "cid": "D25",
+  "claim": "'the six' refers to the six categories (padārtha) of the Vaiśeṣika school",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://en.wikipedia.org/wiki/Vaisheshika",
+  "evidence": "'All objects of experience can be classified into six categories' (dravya, guṇa, karma, sāmānya, viśeṣa, samavāya).",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 1
+ },
+ {
+  "cid": "D21",
+  "claim": "mtshan nyid = Sanskrit lakṣaṇa",
+  "verdict": "correct",
+  "correction": null,
+  "source_url": "https://glossaries.dila.edu.tw/search?locale=en&term=mtshan+nyid",
+  "evidence": "mtshan nyid = lakṣaṇa (MV, Hopkins); lakṣaṇa-lakṣya 'definition and definiendum'.",
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 1
+ },
+ {
+  "cid": "D33",
+  "claim": "bare transliteration of sā lu",
+  "verdict": "no-claim",
+  "correction": null,
+  "source_url": null,
+  "evidence": null,
+  "ocr_or_source_driven": false,
+  "tool_calls_used": 0
+ }
+]

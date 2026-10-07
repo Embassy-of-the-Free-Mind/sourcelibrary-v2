@@ -1,0 +1,34 @@
+{
+ "id": "69520185ab34727b1f0416bc_00029",
+ "image_legible": true,
+ "ocr_word_errors": 0,
+ "ocr_words_approx": 190,
+ "ocr_errors": [],
+ "page_cause": "translation",
+ "causes": [
+  {
+   "finding": "minor: 'can truly be fixed the very least' garbles 'minimè figi potest'",
+   "cause": "translation",
+   "image": "arsenicum sanè minimè figi potest, nisi operator artista",
+   "ocr": "arsenicum sanè minimè figi potest, nisi operator artista",
+   "english": "arsenic can truly be fixed the very least unless"
+  },
+  {
+   "finding": "minor: 'twice as much of their own Moon' for 'sui duplo ... lunæ' (twice its weight)",
+   "cause": "translation",
+   "image": "sui duplo admiscuerunt lunæ",
+   "ocr": "sui duplo admiscuerunt lunæ",
+   "english": "with twice as much of their own Moon"
+  },
+  {
+   "finding": "minor: meta says previous page was mercury and alum-water; it was arsenic and oil of tartar",
+   "cause": "translation",
+   "image": "se tulit. Etenim, arsenicum (page opens mid-sentence)",
+   "ocr": "se tulit. Etenim, arsenicum",
+   "english": "attempted to \"fix\" mercury using alum-water (invented in <meta>)"
+  }
+ ],
+ "share_of_served_error_from_ocr": "none",
+ "fixed_transcription_written": false,
+ "note": "Random page; only minor defects, all translator-side. OCR matches the image (bitonal scan, text in strips 1-3; s4-s5 blank). Only differences: catchword 'rium,' not transcribed and a long &nbsp; run after 'mercu-'; print has 'arcerrimis' (sic) which OCR normalised to 'acerrimis'."
+}

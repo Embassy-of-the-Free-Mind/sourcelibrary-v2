@@ -1,0 +1,574 @@
+{
+  "description": "Production builds of sourcelibrary-v2 around the 2026-10-02 freeze (#5708): every production build after f718cdd (13:28Z, the last READY) until 96b89df (21:54Z, the #5662 fix) ended ERROR at the ignore step.",
+  "provenance": "main_commits: real first-parent history of origin/main; touches_inputs = git diff <sha>^ <sha> -- the vercel.json ignoreCommand paths. deployments: RECONSTRUCTED, not recorded (no Vercel API read was available when this was written) — one production deployment per merge (createdAt = merge + 20s); ERROR inside the window with the first error line quoted from the #5708 issue body; READY for build-input commits and CANCELED (ignore-step skip) for the rest outside it; uids and urls are synthetic; readyAt is the settle time --fixture replay uses.",
+  "build_inputs": [
+    "src/",
+    "public/",
+    "next.config.ts",
+    "vercel.json",
+    "package.json",
+    "package-lock.json"
+  ],
+  "main_commits": [
+    {
+      "sha": "c47e31753eb0eecb23a9fd6f0e0cc193ee73fd01",
+      "date": "2026-10-02T12:49:32Z",
+      "subject": "research/quality/summary: manuscript vs print, holding library, page content + image-only page descriptor (#5623) (#5631)",
+      "touches_inputs": true
+    },
+    {
+      "sha": "aa988492f8028a20598498440e275692141db9fa",
+      "date": "2026-10-02T12:59:34Z",
+      "subject": "eval(#5624): fact-check the facts translation notes add — Tibetan run 6/40 notes wrong or partly wrong (#5632)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "f718cdd8be92fe6f2ea15317e8d264e93b352198",
+      "date": "2026-10-02T13:28:30Z",
+      "subject": "perf(collections): store the hero collage on R2 instead of rebuilding it (#5641)",
+      "touches_inputs": true
+    },
+    {
+      "sha": "1f2c1a613aae03cd1113f1f0523b402951ae18e1",
+      "date": "2026-10-02T13:39:10Z",
+      "subject": "eval(translation-paired-arm): lite vs flash on the same pages — flash invents more, fidelity and omission not shown to differ (#5274) (#5372)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "444e61dfdeb275ae13f092aa6bf96e1a4675d8f8",
+      "date": "2026-10-02T13:49:07Z",
+      "subject": "Where translation invention lives + hidden-meta-text detector (#5305 tq9) (#5363)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "e9b1bafcf6fa07c1a997411572133068b5019e7a",
+      "date": "2026-10-02T13:59:11Z",
+      "subject": "Translate: no English-to-English in any lane — batch lanes skip English pages, English books refused (#5154) (#5384)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "6eadfc94778cf54b35f8d25c179d53330ef7ded8",
+      "date": "2026-10-02T14:09:13Z",
+      "subject": "Syriac lane: per-stratum preprocessing flag, OFF — library transfer check REJECTS it (#5277) (#5394)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "7b2d20c9785ac7ab6b9ca70ca3423bc33a99f4aa",
+      "date": "2026-10-02T14:19:12Z",
+      "subject": "eval(ocr): IA OCR error taxonomy — what the Archive's text gets wrong, class by class (#5186) (#5402)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "08c909ae1045dabe4732d26efdfe8f7181fef8fb",
+      "date": "2026-10-02T14:29:16Z",
+      "subject": "eval(persian): served Persian OCR vs Ganjoor — manuscripts fail the Stage-2 gate (#5525) (#5533)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "f2d77c359afc7dc90ce36614c7db5c084ccbc3f3",
+      "date": "2026-10-02T14:39:21Z",
+      "subject": "stale-translation: add Samaritan as an unverified script for cohort withholds (#5645) (#5649)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "c22a68003b8e26dbe1e951e1062932bb6b25d82a",
+      "date": "2026-10-02T14:49:25Z",
+      "subject": "Translation writers repair <note> at write (#5644); 18 note corrections (#5624) + 78-page tag repair (#5651)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "340e6346cae9b830b6001622b7fc7150d0ff7111",
+      "date": "2026-10-02T14:59:45Z",
+      "subject": "eval(#4149): self_declared_blank rule, measured corpus-wide — 166K flags, 0/20 invented-on-blank (#5652)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "003e6d674bf914297aec0d09b8e471f1cc5f3c6f",
+      "date": "2026-10-02T15:05:37Z",
+      "subject": "eval(#5643): corpus page profile — printed/handwritten, typeface, page type, one page per book (#5656)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "e88435db4f1ab4e5ee993ab911095b699835a0ee",
+      "date": "2026-10-02T15:16:14Z",
+      "subject": "tibetan step 2 (#5320): gate --release lifts leaf-unmarked only where marked or one leaf; backfill records its real seam source (#5654)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "72d93b4ae8650e4bfc7de8cd6b5f4ff12f9a2cd1",
+      "date": "2026-10-02T15:26:19Z",
+      "subject": "eval: OCR prompt v19.1 — passes all five clauses, beats v18 on W∪T, costs real pages on S3 (#4195) (#5655)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "01b49c5356e3e3273cedd5c33f9cc37b5211eb82",
+      "date": "2026-10-02T15:36:16Z",
+      "subject": "import(maya): decipherment manifest, 16 PD sources imported hidden (#5653) (#5657)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "10cd0536838bb64d6d4a4afe3deba56529f0eda8",
+      "date": "2026-10-02T15:52:11Z",
+      "subject": "fix(#5560): Sefaria fit rules v2 — read-confirmed outer edges (#5637)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "b5b30a8066de33f442954d1faf482314b25e731e",
+      "date": "2026-10-02T20:17:55Z",
+      "subject": "eval(#5643): typeface for every book — descriptor on 31K more picked pages ($16.03) (#5658)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "a05d5e3542ee26cf07879550c521a308bfec77d0",
+      "date": "2026-10-02T21:08:47Z",
+      "subject": "eval: Loghi (GLOBALISE model) vs Gemini on VOC handwriting + baseline omission screen (#5648) (#5659)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "60d3b315e2b1fd65d7ed340f8df71e5795323e53",
+      "date": "2026-10-02T21:30:44Z",
+      "subject": "quality paper: are the facts translation notes add right? (#5624) (#5646)",
+      "touches_inputs": true
+    },
+    {
+      "sha": "144f23af189c78a3690897de5127cbfe6ae2e417",
+      "date": "2026-10-02T21:30:57Z",
+      "subject": "batch(#5309): driver for the stranded-text repair (hold → batch re-OCR → withhold → chained re-translate → clear → release) (#5408)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "96b89df74f5e6f8505daf315619df853587045b2",
+      "date": "2026-10-02T21:54:02Z",
+      "subject": "vercel: build when the last deployed commit isn't in the shallow clone (prod builds failing since 13:28Z) (#5662)",
+      "touches_inputs": true
+    },
+    {
+      "sha": "371b82da4e4f1cacd8e0e8942fd8b2e97e8b2136",
+      "date": "2026-10-02T22:02:53Z",
+      "subject": "audit(hidden-meta): full-mirror count, classes, live re-check and repair plan for text hidden in the continuity <meta> (#5376 tq11) (#5633)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "6f8e3ba19d53d7a55f9b10fb05458f888554bb62",
+      "date": "2026-10-02T22:13:12Z",
+      "subject": "audit: translation-page-boundary — text from the adjacent page, measured by lane (#3918) (#5636)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "8c54a4ed6720d1ba1bfb83df0d4b0e3ac15d366c",
+      "date": "2026-10-02T22:23:05Z",
+      "subject": "eval: collect linkable examples for the 2026-10-01/02 OCR findings (#5488, #5564, #5593, #5621) (#5639)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "ee1d85cf5d750ff3dc645fc44f3cfede8278ec5c",
+      "date": "2026-10-02T22:33:02Z",
+      "subject": "eval(#5624): every candidate note in the Tibetan run fact-checked — 18/359 wrong or partly wrong (#5640)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "d7f8c7355462af25e4a23d526c43c041657d5292",
+      "date": "2026-10-02T22:42:54Z",
+      "subject": "ops: seed + promote OCR prompt v19.1 as default (#4195) (#5661)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "cfbd0eb79eb27494cb7bb93f103cbcf63182cd3e",
+      "date": "2026-10-02T22:52:44Z",
+      "subject": "feat(#5664): bdrc-scans-import — generic scans-only BDRC importer (held + hidden, no text) (#5667)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "ccc4212fa72863fc5d0c92de8c8e7882a00310f3",
+      "date": "2026-10-02T23:02:25Z",
+      "subject": "eval(#5305): prompt v14 vs v13 A/B + Tibetan multi-leaf stratum (#4523) — measured, not flipped (#5669)",
+      "touches_inputs": false
+    },
+    {
+      "sha": "d4fb028bcb88f00d3977a46ae05168b3fcd71aaa",
+      "date": "2026-10-02T23:55:19Z",
+      "subject": "feat(#5665): Derge Kangyur import (generalised Derge importer) + canon-gap status file (#5513) (#5671)",
+      "touches_inputs": false
+    }
+  ],
+  "deployments": [
+    {
+      "uid": "dpl_fixture_d4fb028",
+      "url": "sourcelibrary-v2-d4fb028.vercel.app",
+      "target": "production",
+      "readyState": "CANCELED",
+      "createdAt": 1790985339000,
+      "readyAt": 1790985351000,
+      "meta": {
+        "githubCommitSha": "d4fb028bcb88f00d3977a46ae05168b3fcd71aaa",
+        "githubCommitMessage": "feat(#5665): Derge Kangyur import (generalised Derge importer) + canon-gap status file (#5513) (#5671)"
+      }
+    },
+    {
+      "uid": "dpl_fixture_ccc4212",
+      "url": "sourcelibrary-v2-ccc4212.vercel.app",
+      "target": "production",
+      "readyState": "CANCELED",
+      "createdAt": 1790982165000,
+      "readyAt": 1790982177000,
+      "meta": {
+        "githubCommitSha": "ccc4212fa72863fc5d0c92de8c8e7882a00310f3",
+        "githubCommitMessage": "eval(#5305): prompt v14 vs v13 A/B + Tibetan multi-leaf stratum (#4523) — measured, not flipped (#5669)"
+      }
+    },
+    {
+      "uid": "dpl_fixture_cfbd0eb",
+      "url": "sourcelibrary-v2-cfbd0eb.vercel.app",
+      "target": "production",
+      "readyState": "CANCELED",
+      "createdAt": 1790981584000,
+      "readyAt": 1790981596000,
+      "meta": {
+        "githubCommitSha": "cfbd0eb79eb27494cb7bb93f103cbcf63182cd3e",
+        "githubCommitMessage": "feat(#5664): bdrc-scans-import — generic scans-only BDRC importer (held + hidden, no text) (#5667)"
+      }
+    },
+    {
+      "uid": "dpl_fixture_d7f8c73",
+      "url": "sourcelibrary-v2-d7f8c73.vercel.app",
+      "target": "production",
+      "readyState": "CANCELED",
+      "createdAt": 1790980994000,
+      "readyAt": 1790981006000,
+      "meta": {
+        "githubCommitSha": "d7f8c7355462af25e4a23d526c43c041657d5292",
+        "githubCommitMessage": "ops: seed + promote OCR prompt v19.1 as default (#4195) (#5661)"
+      }
+    },
+    {
+      "uid": "dpl_fixture_ee1d85c",
+      "url": "sourcelibrary-v2-ee1d85c.vercel.app",
+      "target": "production",
+      "readyState": "CANCELED",
+      "createdAt": 1790980402000,
+      "readyAt": 1790980414000,
+      "meta": {
+        "githubCommitSha": "ee1d85cf5d750ff3dc645fc44f3cfede8278ec5c",
+        "githubCommitMessage": "eval(#5624): every candidate note in the Tibetan run fact-checked — 18/359 wrong or partly wrong (#5640)"
+      }
+    },
+    {
+      "uid": "dpl_fixture_8c54a4e",
+      "url": "sourcelibrary-v2-8c54a4e.vercel.app",
+      "target": "production",
+      "readyState": "CANCELED",
+      "createdAt": 1790979805000,
+      "readyAt": 1790979817000,
+      "meta": {
+        "githubCommitSha": "8c54a4ed6720d1ba1bfb83df0d4b0e3ac15d366c",
+        "githubCommitMessage": "eval: collect linkable examples for the 2026-10-01/02 OCR findings (#5488, #5564, #5593, #5621) (#5639)"
+      }
+    },
+    {
+      "uid": "dpl_fixture_6f8e3ba",
+      "url": "sourcelibrary-v2-6f8e3ba.vercel.app",
+      "target": "production",
+      "readyState": "CANCELED",
+      "createdAt": 1790979212000,
+      "readyAt": 1790979224000,
+      "meta": {
+        "githubCommitSha": "6f8e3ba19d53d7a55f9b10fb05458f888554bb62",
+        "githubCommitMessage": "audit: translation-page-boundary — text from the adjacent page, measured by lane (#3918) (#5636)"
+      }
+    },
+    {
+      "uid": "dpl_fixture_371b82d",
+      "url": "sourcelibrary-v2-371b82d.vercel.app",
+      "target": "production",
+      "readyState": "CANCELED",
+      "createdAt": 1790978593000,
+      "readyAt": 1790978605000,
+      "meta": {
+        "githubCommitSha": "371b82da4e4f1cacd8e0e8942fd8b2e97e8b2136",
+        "githubCommitMessage": "audit(hidden-meta): full-mirror count, classes, live re-check and repair plan for text hidden in the continuity <meta> (#5376 tq11) (#5633)"
+      }
+    },
+    {
+      "uid": "dpl_fixture_96b89df",
+      "url": "sourcelibrary-v2-96b89df.vercel.app",
+      "target": "production",
+      "readyState": "READY",
+      "createdAt": 1790978062000,
+      "readyAt": 1790978422000,
+      "meta": {
+        "githubCommitSha": "96b89df74f5e6f8505daf315619df853587045b2",
+        "githubCommitMessage": "vercel: build when the last deployed commit isn't in the shallow clone (prod builds failing since 13:28Z) (#5662)"
+      }
+    },
+    {
+      "uid": "dpl_fixture_144f23a",
+      "url": "sourcelibrary-v2-144f23a.vercel.app",
+      "target": "production",
+      "readyState": "ERROR",
+      "createdAt": 1790976677000,
+      "readyAt": 1790976717000,
+      "meta": {
+        "githubCommitSha": "144f23af189c78a3690897de5127cbfe6ae2e417",
+        "githubCommitMessage": "batch(#5309): driver for the stranded-text repair (hold → batch re-OCR → withhold → chained re-translate → clear → release) (#5408)"
+      },
+      "errorMessage": "fatal: bad object f718cdd8be92fe6f2ea15317e8d264e93b352198"
+    },
+    {
+      "uid": "dpl_fixture_60d3b31",
+      "url": "sourcelibrary-v2-60d3b31.vercel.app",
+      "target": "production",
+      "readyState": "ERROR",
+      "createdAt": 1790976664000,
+      "readyAt": 1790976704000,
+      "meta": {
+        "githubCommitSha": "60d3b315e2b1fd65d7ed340f8df71e5795323e53",
+        "githubCommitMessage": "quality paper: are the facts translation notes add right? (#5624) (#5646)"
+      },
+      "errorMessage": "fatal: bad object f718cdd8be92fe6f2ea15317e8d264e93b352198"
+    },
+    {
+      "uid": "dpl_fixture_a05d5e3",
+      "url": "sourcelibrary-v2-a05d5e3.vercel.app",
+      "target": "production",
+      "readyState": "ERROR",
+      "createdAt": 1790975347000,
+      "readyAt": 1790975387000,
+      "meta": {
+        "githubCommitSha": "a05d5e3542ee26cf07879550c521a308bfec77d0",
+        "githubCommitMessage": "eval: Loghi (GLOBALISE model) vs Gemini on VOC handwriting + baseline omission screen (#5648) (#5659)"
+      },
+      "errorMessage": "fatal: bad object f718cdd8be92fe6f2ea15317e8d264e93b352198"
+    },
+    {
+      "uid": "dpl_fixture_b5b30a8",
+      "url": "sourcelibrary-v2-b5b30a8.vercel.app",
+      "target": "production",
+      "readyState": "ERROR",
+      "createdAt": 1790972295000,
+      "readyAt": 1790972335000,
+      "meta": {
+        "githubCommitSha": "b5b30a8066de33f442954d1faf482314b25e731e",
+        "githubCommitMessage": "eval(#5643): typeface for every book — descriptor on 31K more picked pages ($16.03) (#5658)"
+      },
+      "errorMessage": "fatal: bad object f718cdd8be92fe6f2ea15317e8d264e93b352198"
+    },
+    {
+      "uid": "dpl_fixture_10cd053",
+      "url": "sourcelibrary-v2-10cd053.vercel.app",
+      "target": "production",
+      "readyState": "ERROR",
+      "createdAt": 1790956351000,
+      "readyAt": 1790956391000,
+      "meta": {
+        "githubCommitSha": "10cd0536838bb64d6d4a4afe3deba56529f0eda8",
+        "githubCommitMessage": "fix(#5560): Sefaria fit rules v2 — read-confirmed outer edges (#5637)"
+      },
+      "errorMessage": "fatal: bad object f718cdd8be92fe6f2ea15317e8d264e93b352198"
+    },
+    {
+      "uid": "dpl_fixture_01b49c5",
+      "url": "sourcelibrary-v2-01b49c5.vercel.app",
+      "target": "production",
+      "readyState": "ERROR",
+      "createdAt": 1790955396000,
+      "readyAt": 1790955436000,
+      "meta": {
+        "githubCommitSha": "01b49c5356e3e3273cedd5c33f9cc37b5211eb82",
+        "githubCommitMessage": "import(maya): decipherment manifest, 16 PD sources imported hidden (#5653) (#5657)"
+      },
+      "errorMessage": "fatal: bad object f718cdd8be92fe6f2ea15317e8d264e93b352198"
+    },
+    {
+      "uid": "dpl_fixture_72d93b4",
+      "url": "sourcelibrary-v2-72d93b4.vercel.app",
+      "target": "production",
+      "readyState": "ERROR",
+      "createdAt": 1790954799000,
+      "readyAt": 1790954839000,
+      "meta": {
+        "githubCommitSha": "72d93b4ae8650e4bfc7de8cd6b5f4ff12f9a2cd1",
+        "githubCommitMessage": "eval: OCR prompt v19.1 — passes all five clauses, beats v18 on W∪T, costs real pages on S3 (#4195) (#5655)"
+      },
+      "errorMessage": "fatal: bad object f718cdd8be92fe6f2ea15317e8d264e93b352198"
+    },
+    {
+      "uid": "dpl_fixture_e88435d",
+      "url": "sourcelibrary-v2-e88435d.vercel.app",
+      "target": "production",
+      "readyState": "ERROR",
+      "createdAt": 1790954194000,
+      "readyAt": 1790954234000,
+      "meta": {
+        "githubCommitSha": "e88435db4f1ab4e5ee993ab911095b699835a0ee",
+        "githubCommitMessage": "tibetan step 2 (#5320): gate --release lifts leaf-unmarked only where marked or one leaf; backfill records its real seam source (#5654)"
+      },
+      "errorMessage": "fatal: bad object f718cdd8be92fe6f2ea15317e8d264e93b352198"
+    },
+    {
+      "uid": "dpl_fixture_003e6d6",
+      "url": "sourcelibrary-v2-003e6d6.vercel.app",
+      "target": "production",
+      "readyState": "ERROR",
+      "createdAt": 1790953557000,
+      "readyAt": 1790953597000,
+      "meta": {
+        "githubCommitSha": "003e6d674bf914297aec0d09b8e471f1cc5f3c6f",
+        "githubCommitMessage": "eval(#5643): corpus page profile — printed/handwritten, typeface, page type, one page per book (#5656)"
+      },
+      "errorMessage": "fatal: bad object f718cdd8be92fe6f2ea15317e8d264e93b352198"
+    },
+    {
+      "uid": "dpl_fixture_340e634",
+      "url": "sourcelibrary-v2-340e634.vercel.app",
+      "target": "production",
+      "readyState": "ERROR",
+      "createdAt": 1790953205000,
+      "readyAt": 1790953245000,
+      "meta": {
+        "githubCommitSha": "340e6346cae9b830b6001622b7fc7150d0ff7111",
+        "githubCommitMessage": "eval(#4149): self_declared_blank rule, measured corpus-wide — 166K flags, 0/20 invented-on-blank (#5652)"
+      },
+      "errorMessage": "fatal: bad object f718cdd8be92fe6f2ea15317e8d264e93b352198"
+    },
+    {
+      "uid": "dpl_fixture_c22a680",
+      "url": "sourcelibrary-v2-c22a680.vercel.app",
+      "target": "production",
+      "readyState": "ERROR",
+      "createdAt": 1790952585000,
+      "readyAt": 1790952625000,
+      "meta": {
+        "githubCommitSha": "c22a68003b8e26dbe1e951e1062932bb6b25d82a",
+        "githubCommitMessage": "Translation writers repair <note> at write (#5644); 18 note corrections (#5624) + 78-page tag repair (#5651)"
+      },
+      "errorMessage": "fatal: bad object f718cdd8be92fe6f2ea15317e8d264e93b352198"
+    },
+    {
+      "uid": "dpl_fixture_f2d77c3",
+      "url": "sourcelibrary-v2-f2d77c3.vercel.app",
+      "target": "production",
+      "readyState": "ERROR",
+      "createdAt": 1790951981000,
+      "readyAt": 1790952021000,
+      "meta": {
+        "githubCommitSha": "f2d77c359afc7dc90ce36614c7db5c084ccbc3f3",
+        "githubCommitMessage": "stale-translation: add Samaritan as an unverified script for cohort withholds (#5645) (#5649)"
+      },
+      "errorMessage": "fatal: bad object f718cdd8be92fe6f2ea15317e8d264e93b352198"
+    },
+    {
+      "uid": "dpl_fixture_08c909a",
+      "url": "sourcelibrary-v2-08c909a.vercel.app",
+      "target": "production",
+      "readyState": "ERROR",
+      "createdAt": 1790951376000,
+      "readyAt": 1790951416000,
+      "meta": {
+        "githubCommitSha": "08c909ae1045dabe4732d26efdfe8f7181fef8fb",
+        "githubCommitMessage": "eval(persian): served Persian OCR vs Ganjoor — manuscripts fail the Stage-2 gate (#5525) (#5533)"
+      },
+      "errorMessage": "fatal: bad object f718cdd8be92fe6f2ea15317e8d264e93b352198"
+    },
+    {
+      "uid": "dpl_fixture_7b2d20c",
+      "url": "sourcelibrary-v2-7b2d20c.vercel.app",
+      "target": "production",
+      "readyState": "ERROR",
+      "createdAt": 1790950772000,
+      "readyAt": 1790950812000,
+      "meta": {
+        "githubCommitSha": "7b2d20c9785ac7ab6b9ca70ca3423bc33a99f4aa",
+        "githubCommitMessage": "eval(ocr): IA OCR error taxonomy — what the Archive's text gets wrong, class by class (#5186) (#5402)"
+      },
+      "errorMessage": "fatal: bad object f718cdd8be92fe6f2ea15317e8d264e93b352198"
+    },
+    {
+      "uid": "dpl_fixture_6eadfc9",
+      "url": "sourcelibrary-v2-6eadfc9.vercel.app",
+      "target": "production",
+      "readyState": "ERROR",
+      "createdAt": 1790950173000,
+      "readyAt": 1790950213000,
+      "meta": {
+        "githubCommitSha": "6eadfc94778cf54b35f8d25c179d53330ef7ded8",
+        "githubCommitMessage": "Syriac lane: per-stratum preprocessing flag, OFF — library transfer check REJECTS it (#5277) (#5394)"
+      },
+      "errorMessage": "fatal: bad object f718cdd8be92fe6f2ea15317e8d264e93b352198"
+    },
+    {
+      "uid": "dpl_fixture_e9b1baf",
+      "url": "sourcelibrary-v2-e9b1baf.vercel.app",
+      "target": "production",
+      "readyState": "ERROR",
+      "createdAt": 1790949571000,
+      "readyAt": 1790949611000,
+      "meta": {
+        "githubCommitSha": "e9b1bafcf6fa07c1a997411572133068b5019e7a",
+        "githubCommitMessage": "Translate: no English-to-English in any lane — batch lanes skip English pages, English books refused (#5154) (#5384)"
+      },
+      "errorMessage": "fatal: bad object f718cdd8be92fe6f2ea15317e8d264e93b352198"
+    },
+    {
+      "uid": "dpl_fixture_444e61d",
+      "url": "sourcelibrary-v2-444e61d.vercel.app",
+      "target": "production",
+      "readyState": "ERROR",
+      "createdAt": 1790948967000,
+      "readyAt": 1790949007000,
+      "meta": {
+        "githubCommitSha": "444e61dfdeb275ae13f092aa6bf96e1a4675d8f8",
+        "githubCommitMessage": "Where translation invention lives + hidden-meta-text detector (#5305 tq9) (#5363)"
+      },
+      "errorMessage": "fatal: bad object f718cdd8be92fe6f2ea15317e8d264e93b352198"
+    },
+    {
+      "uid": "dpl_fixture_1f2c1a6",
+      "url": "sourcelibrary-v2-1f2c1a6.vercel.app",
+      "target": "production",
+      "readyState": "ERROR",
+      "createdAt": 1790948370000,
+      "readyAt": 1790948410000,
+      "meta": {
+        "githubCommitSha": "1f2c1a613aae03cd1113f1f0523b402951ae18e1",
+        "githubCommitMessage": "eval(translation-paired-arm): lite vs flash on the same pages — flash invents more, fidelity and omission not shown to differ (#5274) (#5372)"
+      },
+      "errorMessage": "fatal: bad object f718cdd8be92fe6f2ea15317e8d264e93b352198"
+    },
+    {
+      "uid": "dpl_fixture_f718cdd",
+      "url": "sourcelibrary-v2-f718cdd.vercel.app",
+      "target": "production",
+      "readyState": "READY",
+      "createdAt": 1790947730000,
+      "readyAt": 1790948090000,
+      "meta": {
+        "githubCommitSha": "f718cdd8be92fe6f2ea15317e8d264e93b352198",
+        "githubCommitMessage": "perf(collections): store the hero collage on R2 instead of rebuilding it (#5641)"
+      }
+    },
+    {
+      "uid": "dpl_fixture_aa98849",
+      "url": "sourcelibrary-v2-aa98849.vercel.app",
+      "target": "production",
+      "readyState": "CANCELED",
+      "createdAt": 1790945994000,
+      "readyAt": 1790946006000,
+      "meta": {
+        "githubCommitSha": "aa988492f8028a20598498440e275692141db9fa",
+        "githubCommitMessage": "eval(#5624): fact-check the facts translation notes add — Tibetan run 6/40 notes wrong or partly wrong (#5632)"
+      }
+    },
+    {
+      "uid": "dpl_fixture_c47e317",
+      "url": "sourcelibrary-v2-c47e317.vercel.app",
+      "target": "production",
+      "readyState": "READY",
+      "createdAt": 1790945392000,
+      "readyAt": 1790945752000,
+      "meta": {
+        "githubCommitSha": "c47e31753eb0eecb23a9fd6f0e0cc193ee73fd01",
+        "githubCommitMessage": "research/quality/summary: manuscript vs print, holding library, page content + image-only page descriptor (#5623) (#5631)"
+      }
+    }
+  ]
+}

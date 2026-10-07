@@ -30,6 +30,8 @@ import { getDb } from './mongodb';
 import { createRevision } from './page-revisions';
 import { stripMarkupTags } from './strip-markup-tags';
 import { contentHash, missingProvenance, isNotRecorded, GEMINI_SOURCES, type GeminiEngine, type NotRecorded } from './write-provenance'; // 16-hex hash + the provenance contract (#4613)
+import { guardStray, strayScriptVerdict, STRAY_SCRIPT_REASON } from './stray-script';
+import { guardTranslationText } from './translation-write-guard';
 
 /**
  * `$unset` fragment every translation writer includes (#4927). `translation_stale`
@@ -282,10 +284,42 @@ export interface WritePageTranslationArgs {
   engine?: GeminiEngine | NotRecorded;
 }
 
+/**
+ * The stray-script gate (#5734), TS twin of `strayScriptGate` in scripts/lib/translate-core.mjs:
+ * every app-side writer of model translation text asks it before storing a page. Repairs the
+ * measured Korean 그-for-"that"; refuses — stamp + evidence, via recordRefusedTranslation — an
+ * English translation that still carries a script belonging to neither the page's OCR nor the
+ * book's language, outside the tags that carry original-script words. A page with no non-Latin
+ * letter outside those tags costs nothing; otherwise the OCR (and the book's language, when not
+ * given) are read. With no OCR the gate does not judge. Never throws on its own account.
+ */
+export async function strayScriptGate(
+  db: Db,
+  page: { id: string; book_id?: string },
+  text: string,
+  opts: { ocr?: string | null; language?: string | null; targetLanguage?: string | null; jobId?: string; model?: string } = {}
+): Promise<{ text: string; refused: boolean; reason?: string }> {
+  if (!text || !guardStray(text).length) return { text, refused: false };
+  let { ocr, language } = opts;
+  let bookId = page.book_id;
+  if (ocr == null) {
+    const p = await db.collection('pages').findOne({ id: page.id }, { projection: { 'ocr.data': 1, book_id: 1 } });
+    ocr = (p?.ocr as { data?: string } | undefined)?.data ?? null;
+    bookId = bookId || (p?.book_id as string | undefined);
+  }
+  if (language === undefined && bookId) {
+    language = ((await db.collection('books').findOne({ id: bookId }, { projection: { language: 1 } }))?.language as string | undefined) ?? null;
+  }
+  const v = strayScriptVerdict(text, { ocr, language, targetLanguage: opts.targetLanguage });
+  if (!v.refuse) return { text: v.text, refused: false };
+  await recordRefusedTranslation(db, { id: page.id, book_id: bookId }, v.text, STRAY_SCRIPT_REASON, { jobId: opts.jobId, model: opts.model });
+  return { text: v.text, refused: true, reason: STRAY_SCRIPT_REASON };
+}
+
 export interface WritePageTranslationResult {
   written: boolean;
   protected: boolean;
-  /** Set when the text was refused (e.g. 'hidden-meta', #5376): nothing was written, the reason is on the page. */
+  /** Set when the text was refused (e.g. 'hidden-meta', #5376; 'stray-script', #5734): nothing was written, the reason is on the page. */
   refused?: string;
   /**
    * When protected, the EXISTING human translation (use it for previous-page
@@ -335,6 +369,15 @@ export async function writePageTranslation(
     return { written: false, protected: false, refused: HIDDEN_META_REASON, text };
   }
 
+  // A script in the English that is in neither the source nor the book's language (#5734): the
+  // measured Korean 그-for-"that" is repaired, anything else refused like the hidden page.
+  let finalText = text;
+  if (GEMINI_SOURCES.has(source)) {
+    const stray = await strayScriptGate(db, { id: pageId, book_id: current?.book_id as string | undefined }, text, { targetLanguage: language, jobId, model });
+    if (stray.refused) return { written: false, protected: false, refused: STRAY_SCRIPT_REASON, text: stray.text };
+    finalText = guardTranslationText(stray.text); // #5902: term definitions → <note>
+  }
+
   // Promise 2: snapshot existing content first (non-fatal — createRevision
   // catches its own errors and never blocks the write path).
   await createRevision(pageId, 'translation', jobId);
@@ -346,8 +389,8 @@ export async function writePageTranslation(
     {
       $set: {
         translation: {
-          data: text,
-          content_hash: contentHash(text),
+          data: finalText,
+          content_hash: contentHash(finalText),
           language,
           ...(model && { model }),
           updated_at: now,
@@ -367,7 +410,7 @@ export async function writePageTranslation(
       $unset: CLEAR_STALE_UNSET,
     }
   );
-  return { written: true, protected: false, text };
+  return { written: true, protected: false, text: finalText };
 }
 
 /**

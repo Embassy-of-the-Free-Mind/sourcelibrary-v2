@@ -25,7 +25,7 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   // catalog, browse, podcast, blog…) are returned untouched by localePath and go
   // to their English page rather than a 404. See .claude/docs/i18n.md rule 5.
   const lp = (href: string) => localePath(href, lang);
-  const { featuredItems, discoverBooks, recentlyTranslated, galleryPlates, counts, collections, curatedShowcase, blogPosts, spanishCollection, localizedCollectionCounts } = data;
+  const { featuredItems, discoverBooks, recentlyTranslated, mostLiked, galleryPlates, counts, collections, curatedShowcase, blogPosts, spanishCollection, localizedCollectionCounts } = data;
   const hasShowcase = curatedShowcase.items.length > 0;
   const nf = (n: number) => n.toLocaleString(t.locale);
   // The subject index's count. On /es it also says how many of the collection's
@@ -268,6 +268,27 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
                 </Link>
               </div>
             )}
+          </div>
+        </section>
+      )}
+
+      {/* Readers' favorites — the most-liked books, each card showing its ♥
+          count, with an invitation to like. Placed after the gallery, not
+          beside "Recently translated", so two book sliders never stack. Hidden
+          until at least a few books clear the minimum (MOST_LIKED_MIN in
+          home-data.ts), so the shelf never shows a row of lonely single votes. */}
+      {mostLiked.length >= 5 && (
+        <section className="bg-white py-16 md:py-24">
+          <div className="px-6 md:px-12 max-w-[1500px] mx-auto">
+            <div className="flex items-end justify-between gap-4 mb-3">
+              <h2 className="text-3xl md:text-4xl text-primary font-display">
+                {t.mostLikedHeading}
+              </h2>
+            </div>
+            <p className="text-muted mb-6 max-w-2xl">
+              {t.mostLikedSubtitle}
+            </p>
+            <BookSlider books={mostLiked as unknown as MiniBook[]} lang={lang} />
           </div>
         </section>
       )}

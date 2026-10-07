@@ -171,6 +171,12 @@ const PROJECTS = [
   // every project holding a generativelanguage key, not to list the ones you use.
   { id: 'gen-lang-client-0181126711', name: 'sourcelibrary2', note: 'GEMINI_API_KEY_FREE lives here' },
   { id: 'gen-lang-client-0101787750', name: 'Gemini API', note: 'holds 2 keys; no traffic in September, listed so silence is a reading' },
+  // Added 2026-10-06 (#4599): first billed 2026-10-01 and $386 by 10-05, in no list
+  // here. The invoice section below saw them (it reads the whole billing account);
+  // this token section did not. The spend-reconcile service account has NO Monitoring
+  // role on either yet — they print UNREADABLE until one is granted, never zero.
+  { id: 'sl-gemini-batch-8', name: 'SL Gemini batch 8', note: 'first billed 2026-10-01' },
+  { id: 'sl-gemini-batch-9', name: 'SL Gemini batch 9', note: 'first billed 2026-10-01' },
 ];
 
 // Vercel production holds GEMINI_API_KEY (= booksplit "smartpaper", the key the
@@ -942,17 +948,34 @@ async function main() {
 
     const billedOut = {}, billedIn = {}, billedOutByDay = {};
     let googleCalls = 0, searchRequests = 0;
+    const unreadableProjects = [];
     for (const p of PROJECTS) {
-      const [o, i, c, sq] = await Promise.all([
-        billedOutput(token, p.id), billedInput(token, p.id), googleCallCount(token, p.id),
-        billedSearchRequests(token, p.id),
-      ]);
+      // One project we cannot read must not blank the other five (trap E: name
+      // it, never skip it silently, and never let it read as $0).
+      let o, i, c, sq;
+      try {
+        [o, i, c, sq] = await Promise.all([
+          billedOutput(token, p.id), billedInput(token, p.id), googleCallCount(token, p.id),
+          billedSearchRequests(token, p.id),
+        ]);
+      } catch (err) {
+        unreadableProjects.push({ project: p.name, id: p.id, error: err.message });
+        continue;
+      }
       searchRequests += sq.count;
       for (const [m, v] of Object.entries(o.byModel)) billedOut[m] = (billedOut[m] || 0) + v;
       for (const [d, v] of Object.entries(o.byDay)) billedOutByDay[d] = (billedOutByDay[d] || 0) + v;
       for (const [m, v] of Object.entries(i)) billedIn[m] = (billedIn[m] || 0) + v;
       googleCalls += c;
     }
+
+    out.unreadableProjects = unreadableProjects;
+    for (const u of unreadableProjects) {
+      log(`!! UNREADABLE project ${u.project} (${u.id}): ${u.error}`);
+      log('   Its tokens are MISSING from the estimate and the gap check below — not zero.');
+      log(`   Grant (human step): roles/monitoring.viewer on ${u.id} for the spend-reconcile service account.`);
+    }
+    if (unreadableProjects.length) log('');
 
     // Positive control: a month with no series at all is a broken query, not a
     // quiet month. Say which, rather than reporting $0.

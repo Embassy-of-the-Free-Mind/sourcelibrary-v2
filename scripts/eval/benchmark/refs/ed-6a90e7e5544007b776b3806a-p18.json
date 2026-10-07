@@ -1,0 +1,46 @@
+{
+  "source": "EEBO-TCP A04814",
+  "edition": "Disputatio theologia, de vero discrimine peccati mortalis & venialis deq[ue] impossibilitate implend — 1495 (1633)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/textcreationpartnership/A04814",
+  "same_edition": {
+    "evidence": "catalogue-number",
+    "text_match_pages": "11/14",
+    "pb_aligned_pages": "11/11"
+  },
+  "origin": "library",
+  "book_id": "6a90e7e5544007b776b3806a",
+  "page_number": 18,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 19209,
+    "to_char": 20855,
+    "overlap": 0.811,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'quia Scriptura generaliter'; ends 'non advertere'; printed p.12 'Disputatio Theologica'; ref pads 'Probatur pars prior assertionis, Primò.' (which is a preceding heading) and 'hoc multos decepit'; high-contrast B&W scan with binding at left.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:42.059Z",
+  "text_location": "repo",
+  "text_sha256": "48c5e86112e9e820cb59e0c3c1e66762df6e05468d018e311dec1bec7efa9dcc",
+  "unit": {
+    "chars": 1646
+  },
+  "stratum": "latin-period-5126"
+}

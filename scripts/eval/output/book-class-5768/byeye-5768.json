@@ -1,0 +1,646 @@
+{
+ "method": "9 spread pages per book at 420 px, read by eye (Claude), 2026-10-04. \"dev\" was read BEFORE the rules were final and shaped them (tiers, 四庫全書, v2 definitions); \"validation\" is a fresh seeded draw from the classes as decided, stratified by class with 10 Greek.",
+ "definitions": "printed: type, woodblock or engraving, occasional notes allowed. handwritten: written by hand, including a photographic/lithographic/engraved facsimile of handwriting. mixed: substantial printed AND substantial handwritten text (annotation on most pages, MS + print bound together, facsimile plates with printed text).",
+ "books": [
+  {
+   "set": "dev",
+   "book_id": "6993895574305116d72d1471",
+   "title": "Euripides, Phoinissae (The Phoenician Women)",
+   "language": "Greek",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "census",
+   "read_from_image": "handwritten",
+   "note": null
+  },
+  {
+   "set": "dev",
+   "book_id": "69942f75b2f6748db4ac1125",
+   "title": "Maximus Confessor Quaestiones, Epistles, Mystagogia",
+   "language": "Greek",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "census",
+   "read_from_image": "handwritten",
+   "note": null
+  },
+  {
+   "set": "dev",
+   "book_id": "699388f30f04c37dcfa60530",
+   "title": "Greek Siege Warfare Compendium",
+   "language": "Greek",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "census",
+   "read_from_image": "handwritten",
+   "note": null
+  },
+  {
+   "set": "dev",
+   "book_id": "6a089bbe2b703903f58e7814",
+   "title": "Dio's Roman History, Vol. VII (Loeb 175)",
+   "language": "Greek",
+   "claim_when_sampled": "printed",
+   "claim_source_when_sampled": "tags",
+   "read_from_image": "printed",
+   "note": null
+  },
+  {
+   "set": "dev",
+   "book_id": "6a089bb72b703903f58e770b",
+   "title": "Dio's Roman History, Vol. VI (Loeb 83)",
+   "language": "Greek",
+   "claim_when_sampled": "printed",
+   "claim_source_when_sampled": "tags",
+   "read_from_image": "printed",
+   "note": null
+  },
+  {
+   "set": "dev",
+   "book_id": "69938e11d5a98fd66f430393",
+   "title": "Opera et Dies, Theogonia (Editio Princeps)",
+   "language": "Greek",
+   "claim_when_sampled": "mixed",
+   "claim_source_when_sampled": "census",
+   "read_from_image": "printed",
+   "note": "printed Greek with a few marginal notes (Theocritus ed. princeps)"
+  },
+  {
+   "set": "dev",
+   "book_id": "6a3c691739b4508b04e3c0c6",
+   "title": "普濟方·卷一百十五 (vol 73)",
+   "language": "Chinese",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "tags",
+   "read_from_image": "handwritten",
+   "note": null
+  },
+  {
+   "set": "dev",
+   "book_id": "69906ed58a353648e1ed05e7",
+   "title": "Astronomische Sammelhandschrift",
+   "language": "Latin",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "census",
+   "read_from_image": "handwritten",
+   "note": null
+  },
+  {
+   "set": "dev",
+   "book_id": "6a3c78e601fe4f593c20bd48",
+   "title": "紺珠集·卷七~卷八 (vol 4)",
+   "language": "Chinese",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "tags",
+   "read_from_image": "handwritten",
+   "note": null
+  },
+  {
+   "set": "dev",
+   "book_id": "6a3c5f90879008ba7e155f91",
+   "title": "圖書編·卷六十 (vol 48)",
+   "language": "Chinese",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "tags",
+   "read_from_image": "handwritten",
+   "note": null
+  },
+  {
+   "set": "dev",
+   "book_id": "6a3cbc8ff9474f825c1613f5",
+   "title": "讀禮通考·卷七十~卷七十二 (vol 35)",
+   "language": "Chinese",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "tags",
+   "read_from_image": "handwritten",
+   "note": null
+  },
+  {
+   "set": "dev",
+   "book_id": "6a3c7aa501fe4f593c218fcc",
+   "title": "朱子語類·卷十九~卷二十 (vol 10)",
+   "language": "Chinese",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "tags",
+   "read_from_image": "handwritten",
+   "note": null
+  },
+  {
+   "set": "dev",
+   "book_id": "6a4a7fd66d9363977ac2149f",
+   "title": "Apologia Meri Imperii, Inclyto Senatui Civitatis Spirensis In Camerales Competentis",
+   "language": "Latin",
+   "claim_when_sampled": "printed",
+   "claim_source_when_sampled": "census",
+   "read_from_image": "printed",
+   "note": null
+  },
+  {
+   "set": "dev",
+   "book_id": "6a3ce6d80a0011cb4bc075a2",
+   "title": "尚書全解·卷三十~卷三十一 (vol 17)",
+   "language": "Chinese",
+   "claim_when_sampled": "printed",
+   "claim_source_when_sampled": "tags",
+   "read_from_image": "handwritten",
+   "note": "四庫全書 hand copy"
+  },
+  {
+   "set": "dev",
+   "book_id": "69b52c6b963cd7f9bde5bd54",
+   "title": "Collectanea Chemica",
+   "language": "English",
+   "claim_when_sampled": "printed",
+   "claim_source_when_sampled": "tags",
+   "read_from_image": "printed",
+   "note": null
+  },
+  {
+   "set": "dev",
+   "book_id": "6a3cb7aa57c1f37219c51eed",
+   "title": "欽定禮記義疏·卷六十九~卷七十 (vol 45)",
+   "language": "Chinese",
+   "claim_when_sampled": "printed",
+   "claim_source_when_sampled": "tags",
+   "read_from_image": "handwritten",
+   "note": "四庫全書 hand copy"
+  },
+  {
+   "set": "dev",
+   "book_id": "69c6613f01a26ccff09f4f81",
+   "title": "Yuelü Quanshu (樂律全書) Vols. 2-3",
+   "language": "Chinese",
+   "claim_when_sampled": "printed",
+   "claim_source_when_sampled": "tags",
+   "read_from_image": "handwritten",
+   "note": "四庫全書 hand copy; 欽定四庫全書 header visible (moderate confidence)"
+  },
+  {
+   "set": "dev",
+   "book_id": "6a26bef90e247ebad6de9f62",
+   "title": "Sphaera emendata : aucta et illustrata",
+   "language": "Latin",
+   "claim_when_sampled": "printed",
+   "claim_source_when_sampled": "census",
+   "read_from_image": "printed",
+   "note": null
+  },
+  {
+   "set": "dev",
+   "book_id": "69f33ccc876dd827cbc5adf2",
+   "title": "Hwangdan chʻuhyang sasil",
+   "language": "Korean",
+   "claim_when_sampled": "mixed",
+   "claim_source_when_sampled": "tags",
+   "read_from_image": "mixed",
+   "note": "printed with two densely handwritten leaves"
+  },
+  {
+   "set": "dev",
+   "book_id": "6a9446c07ec53276be45bf92",
+   "title": "Horatius de arte poetica.",
+   "language": "Latin",
+   "claim_when_sampled": "mixed",
+   "claim_source_when_sampled": "tags",
+   "read_from_image": "printed",
+   "note": "printed, no visible handwriting"
+  },
+  {
+   "set": "dev",
+   "book_id": "6a4b60982ca154843e1af31e",
+   "title": "Speculum Trinitatis",
+   "language": "German",
+   "claim_when_sampled": "mixed",
+   "claim_source_when_sampled": "tags",
+   "read_from_image": "printed",
+   "note": "printed blackletter + woodcuts"
+  },
+  {
+   "set": "dev",
+   "book_id": "69dbc98f1040d1d5e20a4422",
+   "title": "De oratore",
+   "language": "Latin",
+   "claim_when_sampled": "mixed",
+   "claim_source_when_sampled": "tags",
+   "read_from_image": "mixed",
+   "note": "incunable, heavy marginalia on every page"
+  },
+  {
+   "set": "dev",
+   "book_id": "6a427b01da827ceee625c738",
+   "title": "Rudimentorum cosmographicum libri III cum tabellis geographicis",
+   "language": "Latin",
+   "claim_when_sampled": "mixed",
+   "claim_source_when_sampled": "tags",
+   "read_from_image": "printed",
+   "note": "printed; one handwritten flyleaf"
+  },
+  {
+   "set": "dev",
+   "book_id": "69e4131d2d8eeae86149fbf8",
+   "title": "Papyrus de Turin (Facsimile)",
+   "language": "French",
+   "claim_when_sampled": "mixed",
+   "claim_source_when_sampled": "tags",
+   "read_from_image": "handwritten",
+   "note": "facsimile plates of hieratic handwriting"
+  },
+  {
+   "set": "validation",
+   "book_id": "69b3e609304c1c6b3950af5d",
+   "title": "Michael Psellus, works; Philosophical and theological works",
+   "language": "Greek",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "contact-sheet",
+   "read_from_image": "handwritten",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "69bfcca98ab50eb88e8c5d36",
+   "title": "Bodleian Library MS. Barocci 229",
+   "language": "Greek",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "contact-sheet",
+   "read_from_image": "handwritten",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "69920bbfe0a548a13d885514",
+   "title": "Codex Sinaiticus: New Testament (Facsimile)",
+   "language": "Greek",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "contact-sheet",
+   "read_from_image": "handwritten",
+   "note": "photographic facsimile of Codex Sinaiticus"
+  },
+  {
+   "set": "validation",
+   "book_id": "6993881f74305116d72cf3c3",
+   "title": "Plato, Republic and Timaeus",
+   "language": "Greek",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "ocr-script-tags",
+   "read_from_image": "handwritten",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "6a508c1378825bd7fdeb1bcb",
+   "title": "Dicta notabilia sive illustriores sententiae ad excolendos mortalium mores vitas recte instituendas",
+   "language": "Greek",
+   "claim_when_sampled": "printed",
+   "claim_source_when_sampled": "clip-knn",
+   "read_from_image": "printed",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "6a505b5778825bd7fddcdeaf",
+   "title": "Metaphysica",
+   "language": "Greek",
+   "claim_when_sampled": "printed",
+   "claim_source_when_sampled": "clip-knn",
+   "read_from_image": "printed",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "6aa1d4be77169abff1620cc4",
+   "title": "Greek papyri in the British Museum ..",
+   "language": "Greek",
+   "claim_when_sampled": "printed",
+   "claim_source_when_sampled": "clip-knn",
+   "read_from_image": "printed",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "69e7929c80b52390feb166c3",
+   "title": "Scriptores Erotici Graeci (Heliodorus), Vol. 3",
+   "language": "Greek",
+   "claim_when_sampled": "printed",
+   "claim_source_when_sampled": "ocr-script-tags",
+   "read_from_image": "printed",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "6a5081b378825bd7fde4d001",
+   "title": "Quaestiones venerabilis domini Johannis Versoris super vetere[m] et noua[m] logicam Arestotilis :[1-",
+   "language": "Greek",
+   "claim_when_sampled": "mixed",
+   "claim_source_when_sampled": "contact-sheet",
+   "read_from_image": "mixed",
+   "note": "incunable annotated on 6 of 9 pages"
+  },
+  {
+   "set": "validation",
+   "book_id": "69938dbad5a98fd66f42e937",
+   "title": "Homeri Ilias, Odyssea, Batrachomyomachia, Hymni XXXII (Aldine)",
+   "language": "Greek",
+   "claim_when_sampled": "mixed",
+   "claim_source_when_sampled": "contact-sheet",
+   "read_from_image": "mixed",
+   "note": "printed, heavy annotation throughout"
+  },
+  {
+   "set": "validation",
+   "book_id": "69e7ac955f1a22ab19aa9713",
+   "title": "Phurdrup Gonpa Thor bu dPag bsam khri shing",
+   "language": "Tibetan",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "clip-knn",
+   "read_from_image": "handwritten",
+   "note": "Tibetan pecha, manuscript (moderate confidence)"
+  },
+  {
+   "set": "validation",
+   "book_id": "69b4c11e861dc065b07a7b59",
+   "title": "Manly Palmer Hall Box 18 Ms 102 V 15",
+   "language": "English",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "clip-knn",
+   "read_from_image": "handwritten",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "6992cdf481c9d7efb84d0fa3",
+   "title": "本草綱目·卷五十上~卷五十下",
+   "language": "Chinese",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "siku-header",
+   "read_from_image": "handwritten",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "6a3c6e2201fe4f593c1c003d",
+   "title": "讀詩質疑·卷首十~卷首十五 (vol 3)",
+   "language": "Chinese",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "siku-header",
+   "read_from_image": "handwritten",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "69f33aec876dd827cbc584a0",
+   "title": "The life and death of Sir Thomas Moore knight, sometimes Lord Chancellour of Englande",
+   "language": "English",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "ocr-script-tags",
+   "read_from_image": "handwritten",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "69f33300876dd827cbc4a600",
+   "title": "Book of hours",
+   "language": "Latin",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "ocr-script-tags",
+   "read_from_image": "handwritten",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "6992cdab43713c66ea637dca",
+   "title": "本草綱目·卷十八上~十八下",
+   "language": "Chinese",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "siku-header",
+   "read_from_image": "handwritten",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "6a3c6d4a01fe4f593c1b992a",
+   "title": "春秋事義全考·卷十一~卷十二 (vol 8)",
+   "language": "Chinese",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "ocr-script-tags",
+   "read_from_image": "handwritten",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "69e77a410fc6fc955e35ed3d",
+   "title": "Bla ma nor bu rgya mtsho'i skor (EAP039-1-4-181)",
+   "language": "Tibetan",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "ocr-script-tags",
+   "read_from_image": "handwritten",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "6a948fb931b41d9c57446ce3",
+   "title": "Anargha Raghava Mss No 51 Sharada Alm 1 Panjab Uni",
+   "language": "Sanskrit",
+   "claim_when_sampled": "handwritten",
+   "claim_source_when_sampled": "contact-sheet",
+   "read_from_image": "handwritten",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "69aea7f6d9729ce38747ed55",
+   "title": "In Calumniatorem Platonis Libri Quatuor",
+   "language": "Latin",
+   "claim_when_sampled": "printed",
+   "claim_source_when_sampled": "contact-sheet",
+   "read_from_image": "printed",
+   "note": "printed, annotated on 4 of 9 pages (borderline)"
+  },
+  {
+   "set": "validation",
+   "book_id": "6952b0a077f38f6761bc27e9",
+   "title": "Opere vol. 2",
+   "language": "Italian",
+   "claim_when_sampled": "printed",
+   "claim_source_when_sampled": "contact-sheet",
+   "read_from_image": "printed",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "93c0e5f5-40e5-4f9a-b07b-1d67ed2d05a2",
+   "title": "Orbis Sensualium Pictus",
+   "language": "Latin/English",
+   "claim_when_sampled": "printed",
+   "claim_source_when_sampled": "contact-sheet",
+   "read_from_image": "printed",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "6a267b356c1f37c9c4f30f05",
+   "title": "Michaelis Sendivogi[i] Poloni Lumen Chymicum Novum",
+   "language": "Latin",
+   "claim_when_sampled": "printed",
+   "claim_source_when_sampled": "contact-sheet",
+   "read_from_image": "printed",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "6a4938ae1bbf4176e1e96c2e",
+   "title": "Regina omnium scientiarum qua duce ad omnes scientias et artes qui literis delectantur facilè consce",
+   "language": "Latin",
+   "claim_when_sampled": "printed",
+   "claim_source_when_sampled": "clip-knn",
+   "read_from_image": "printed",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "6a3ceb2195fcd45563053bd0",
+   "title": "墨池編·卷六 (vol 6)",
+   "language": "Chinese",
+   "claim_when_sampled": "printed",
+   "claim_source_when_sampled": "contact-sheet",
+   "read_from_image": "handwritten",
+   "note": "四庫全書 hand copy; 欽定四庫全書 header visible"
+  },
+  {
+   "set": "validation",
+   "book_id": "69b6820970c69d645a725e5d",
+   "title": "M. Valerii Martialis Epigrammata : ab omni rerum obscoenitate, verborumque turpitudine vindicata",
+   "language": "Latin",
+   "claim_when_sampled": "printed",
+   "claim_source_when_sampled": "clip-knn",
+   "read_from_image": "printed",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "69ac5f2c8efc70d517608170",
+   "title": "Oeuvres complètes, Tome 1: Correspondance 1638-1656",
+   "language": "French",
+   "claim_when_sampled": "printed",
+   "claim_source_when_sampled": "contact-sheet",
+   "read_from_image": "printed",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "69b51e8ecf111105c429fd76",
+   "title": "Dr. Thomas Arnolds Beobachtungen über Natur, Arten, Ursachen und Verhütung des Wahnsinns oder der To",
+   "language": "German",
+   "claim_when_sampled": "printed",
+   "claim_source_when_sampled": "contact-sheet",
+   "read_from_image": "printed",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "6a426672dfbbb4d07aa6eba6",
+   "title": "Iohannis Buridani philosophi trecentis retro annis celeberrimi Quæstiones in octo libros politicorum",
+   "language": "Latin",
+   "claim_when_sampled": "printed",
+   "claim_source_when_sampled": "contact-sheet",
+   "read_from_image": "printed",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "69b51e8acf111105c429f5eb",
+   "title": "Bibliotheca universal de la Polygraphia Española",
+   "language": "Latin",
+   "claim_when_sampled": "mixed",
+   "claim_source_when_sampled": "contact-sheet",
+   "read_from_image": "mixed",
+   "note": "printed + engraved facsimile plates of historical hands"
+  },
+  {
+   "set": "validation",
+   "book_id": "69c22719b82ba5d5bed9a50b",
+   "title": "Loge Carl zum aufgehenden Lichte zu Frankfurt a.M. : Zweyte Fehde veranlasst durch das Circular dies",
+   "language": "German",
+   "claim_when_sampled": "mixed",
+   "claim_source_when_sampled": "ocr-script-tags",
+   "read_from_image": "mixed",
+   "note": "letters bound with printed pieces"
+  },
+  {
+   "set": "validation",
+   "book_id": "69b6e454f8a84d859cdd97f3",
+   "title": "Nova plantarum genera : iuxta Tournefortii methodum disposita",
+   "language": "Latin",
+   "claim_when_sampled": "mixed",
+   "claim_source_when_sampled": "contact-sheet",
+   "read_from_image": "printed",
+   "note": "printed text + engraved botanical plates, no handwriting"
+  },
+  {
+   "set": "validation",
+   "book_id": "69c283cab82ba5d5beda6062",
+   "title": "Moeglichst vollständige Sammlung aller von der Loge zur Einigkeit in Druck, Stich, Stahl und Stein s",
+   "language": "German",
+   "claim_when_sampled": "mixed",
+   "claim_source_when_sampled": "ocr-script-tags",
+   "read_from_image": "mixed",
+   "note": "printed pieces + handwritten papers"
+  },
+  {
+   "set": "validation",
+   "book_id": "69b6316c1c1c21a373807498",
+   "title": "[Iustiniani Institutiones] : ; [mit der Glossa ordinaria des Franciscus Accursius]",
+   "language": "Latin",
+   "claim_when_sampled": "mixed",
+   "claim_source_when_sampled": "ocr-script-tags",
+   "read_from_image": "mixed",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "6a4d6f9690e0adc9f14b526a",
+   "title": "Modus epistolandi. Viginti genera epistolarum completens castigatissime impressus, mensdis quibusdam",
+   "language": "Latin",
+   "claim_when_sampled": "mixed",
+   "claim_source_when_sampled": "ocr-script-tags",
+   "read_from_image": "mixed",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "6a4af703ac252ba4d6bf1da8",
+   "title": "Disputatio Theologica De Jesu Christo , Quam In ... Societatis Jesu Gymnasio Praeside Leodegario Her",
+   "language": "Latin",
+   "claim_when_sampled": "mixed",
+   "claim_source_when_sampled": "ocr-script-tags",
+   "read_from_image": "printed",
+   "note": "printed; one shelfmark note only"
+  },
+  {
+   "set": "validation",
+   "book_id": "6a3eb52f3b700246315d808d",
+   "title": "Herculanensium Voluminum quae Supersunt, Tomus VI",
+   "language": "Latin",
+   "claim_when_sampled": "mixed",
+   "claim_source_when_sampled": "contact-sheet",
+   "read_from_image": "mixed",
+   "note": "printed + engraved papyrus facsimiles"
+  },
+  {
+   "set": "validation",
+   "book_id": "69b51e3547b06ecd5818be65",
+   "title": "Gravissime et copiosissime Epistolae",
+   "language": "Latin",
+   "claim_when_sampled": "mixed",
+   "claim_source_when_sampled": "ocr-script-tags",
+   "read_from_image": "mixed",
+   "note": null
+  },
+  {
+   "set": "validation",
+   "book_id": "69c1c1d0b82ba5d5bed97201",
+   "title": "Chevalier de la Palestine, ou Chevalier de la Triple Croix",
+   "language": "French",
+   "claim_when_sampled": "mixed",
+   "claim_source_when_sampled": "contact-sheet",
+   "read_from_image": "mixed",
+   "note": "handwritten notes + annotated printed clippings"
+  }
+ ]
+}

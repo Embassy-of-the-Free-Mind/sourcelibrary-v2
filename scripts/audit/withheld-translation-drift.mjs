@@ -60,18 +60,36 @@ try {
 const db = mongo.db('bookstore');
 const pages = db.collection('pages');
 
+// Every check below asks only "is there text, and is it a placeholder?" — never what the
+// text says. Shipping it cost ~1.47 GB of Atlas egress per run (measured 2026-10-06, #5189).
+// The server keeps a string of up to `keepCp` code points (a placeholder is `[…]` with ≤200
+// chars inside, PLACEHOLDER_RE) and swaps anything longer for a one-character stand-in: still
+// a non-empty string, never a placeholder. The one input this can misread is a bracketed note
+// padded with >800 whitespace characters, which would be read as real text.
+const shrinkText = (path, keepCp) => ({
+  $cond: [
+    { $and: [{ $eq: [{ $type: `$${path}` }, 'string'] }, { $gt: [{ $strLenCP: `$${path}` }, keepCp] }] },
+    'x',
+    `$${path}`,
+  ],
+});
+
 const out = { leaked: 0, orphaned: 0, unbacked: 0, onPage: 0, resolved: 0, withheld: 0, byReason: {}, leakedBooks: [], supabase: null };
 
 // ── LEAKED ───────────────────────────────────────────────────────────────────
 log('scanning candidates …');
-const cursor = pages.find(STALE_CANDIDATE_FILTER, {
-  projection: {
-    id: 1, book_id: 1, page_number: 1,
-    'ocr.pipeline': 1, 'ocr.updated_at': 1, 'ocr.unreadable': 1,
-    'translation.updated_at': 1, 'translation.edited_at': 1, 'translation.data': 1,
-    'translation_withheld.reason': 1,
+const cursor = pages.aggregate([
+  { $match: STALE_CANDIDATE_FILTER },
+  {
+    $project: {
+      id: 1, book_id: 1, page_number: 1,
+      'ocr.pipeline': 1, 'ocr.updated_at': 1, 'ocr.unreadable': 1,
+      'translation.updated_at': 1, 'translation.edited_at': 1, 'translation.data': 1,
+      'translation_withheld.reason': 1,
+    },
   },
-});
+  { $set: { 'translation.data': shrinkText('translation.data', 1024) } },
+]);
 const leakedBooks = new Set();
 for await (const p of cursor) {
   const reason = staleTranslationReason(p);
@@ -84,16 +102,18 @@ for await (const p of cursor) {
 out.leakedBooks = [...leakedBooks];
 
 // ── ORPHANED / RESOLVED / withheld total ─────────────────────────────────────
-const withheldCursor = pages.find(
-  { 'translation_withheld.reason': { $exists: true } },
+// Here only non-emptiness matters, so every non-empty string becomes the stand-in.
+const withheldCursor = pages.aggregate([
+  { $match: { 'translation_withheld.reason': { $exists: true } } },
   {
-    projection: {
+    $project: {
       id: 1, book_id: 1, 'translation.data': 1, 'translation.updated_at': 1,
       'translation_withheld.reason': 1, 'translation_withheld.withheld_at': 1,
       'translation_withheld.data': 1,
     },
   },
-);
+  { $set: { 'translation.data': shrinkText('translation.data', 0), 'translation_withheld.data': shrinkText('translation_withheld.data', 0) } },
+]);
 const withheldIds = [];
 for await (const p of withheldCursor) {
   out.withheld++;
