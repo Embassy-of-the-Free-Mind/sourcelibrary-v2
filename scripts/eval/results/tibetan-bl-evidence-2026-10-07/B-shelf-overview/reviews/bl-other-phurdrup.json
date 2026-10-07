@@ -1,0 +1,412 @@
+[
+  {
+    "book_id": "69e7ac685f1a22ab19aa72f0",
+    "slot": 25,
+    "title": "Phurdrup Gonpa bKa' brgyad Ca",
+    "tradition": "bl-other-phurdrup",
+    "shelf_fit": "fits",
+    "shelf_note": "Nyingma ritual manuscript (empowerment, homa, stupa consecration and death-rite liturgies, with terma ༔ punctuation) from the Phurdrup Gonpa collection that BL EAP310 digitised; it belongs on this shelf.",
+    "rights_flag": null,
+    "structure_note": "Every image is a board of three loose pecha leaves (I5). Pages 45, 97 and 117 show three rectos with yig-mgo; p.195 shows three versos, so reading order runs recto A,B,C then verso A,B,C. The served text carries <leaf-break/> markers at every seam. Left-margin volume letter and folio numerals are not transcribed, hence with_printed_number=2. The pages_ocr field (185) lags the 212 pages that carry OCR, a stale counter. 168/212 pages translated.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 45,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "མེ་གསུར་ལ",
+            "english": "Bring the fire.",
+            "problem": "'light/kindle the fire' given loosely",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 97,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "སུ་མེད་པར་བྱང་ཆུབ་སེམས་སུ་བསམ་སྟེ",
+            "english": "Imagine them as bodhicitta without any <unclear>...</unclear>.",
+            "problem": "leaf opens mid-word ('[gnyis] su med par', non-dual); the seam becomes a visible <unclear> gap where 'non-dually' belongs",
+            "severity": "minor",
+            "class": "T6"
+          },
+          {
+            "source": "྾ (repetition marks)",
+            "english": "<note>repeat</note>",
+            "problem": "abbreviation marks shown to the reader as bare 'repeat' notes instead of the refrain being supplied",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 117,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "(leaf 1 ends) …ཆེ་གེས་གཙོ་བྱས་པའི་སེམས <leaf-break/>",
+            "english": "…may all beings headed by the one named <unclear>Name</unclear> prostrate and take refuge. Please bless them with great compassion. Please bestow empowerment. Please show the path… Regarding the closing of the doors to birth in the six realms: Hum. Listen, child of noble family. In the abodes of hell beings… Om daha daha sarva naraka ghati hedun hum phat… Pretas… Om patsa patsa sarva preta ka… animals… Om matha matha sarva—",
+            "problem": "about 200 words of English (the end of the refuge prayer, then the closing of the hell, preta and animal doors with their mantras) have no source in this page's OCR or on any of its three leaves. Leaf 1 ends at 'sems'. The passage is the verso of leaf 1, imported from the next image in the translation block and given to the reader as this page's text",
+            "severity": "serious",
+            "class": "T5"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 195,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "ཨཱོཾ་བདེ་བ ། ཨཱོཾ་སྟོང་པ ། ཧཱུཾ…; ཨཱོཾ་ཨཱཾ ༔ ཧཱུཾ (passim)",
+            "image": "ཨོཾ་བདེ་བ། ཨཱཿ་སྟོང་པ། ཧཱུྃ…; ཨོཾ་ཨཱཿཧཱུྃ",
+            "problem": "the syllable ĀḤ is read again and again as OM or as ཨཱཾ (anusvara for visarga). This is a teaching on the three syllables, so the syllable is the content",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཐུགས་རྣམ་པ་གསུམ",
+            "english": "the three types of Mind <note>referring to the three Kayas</note>",
+            "problem": "the gloss imposes an interpretation the text does not make",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [
+          {
+            "note": "'<note>OCR reads OM</note>' appears three times in the reader's English: pipeline commentary in the reading text (the translator correctly restored AH)",
+            "severity": "moderate",
+            "class": "other:pipeline-note-in-translation"
+          }
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Clean BDRC transcription of a Nyingma ritual manuscript with mostly faithful English. However, p.117's translation carries a whole passage (the six-realm door-closing and its mantras) from the next leaf that is not on the page, and p.195 shows pipeline notes in the reader text.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      45,
+      97
+    ],
+    "reader_summary": "A Nyingma ritual collection: empowerment, fire offering, stupa consecration and rites for the dead, copied as loose pecha leaves photographed three to a frame. The Tibetan transcription is of the right leaves and largely accurate apart from ĀḤ/OM confusions in mantra passages. The English is usable but not safe page by page: at least one page carries a passage from the following leaf, and some pages show notes addressed to the pipeline."
+  },
+  {
+    "book_id": "69e7ac955f1a22ab19aa9713",
+    "slot": 26,
+    "title": "Phurdrup Gonpa Thor bu dPag bsam khri shing",
+    "tradition": "bl-other-phurdrup",
+    "shelf_fit": "fits",
+    "shelf_note": "A Tibetan manuscript of Kṣemendra's Avadānakalpalatā (dPag bsam 'khri shing; the colophon on p.178 names 'dge ba'i dbang po' and the 65th pallava, the Ekaśṛṅga story). It is not a Nyingma work but is part of the Phurdrup Gonpa holdings, which is what this shelf groups.",
+    "rights_flag": null,
+    "structure_note": "Boards of three leaves per image, 7–8 lines each, in small dbu-med (I5). The seams are marked with <leaf-break/>, and line counts per leaf match the images on p.44 and p.104. 227/242 translated. The pages_ocr field (239) lags the 242 pages with OCR.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 44,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "དགེ་མ་དོགས་པ་མ་ (leaf ends mid-phrase)",
+            "english": "Virtuous woman, do not doubt!",
+            "problem": "a sentence cut at the leaf seam is completed as an invented exclamation",
+            "severity": "minor",
+            "class": "T6"
+          },
+          {
+            "source": "འཕགས་སྐྱེས་པོ",
+            "english": "Virudhaka <note>original: \"aphags skyes po\"</note>",
+            "problem": "notes are addressed to the editor, and the Wylie transliteration is malformed",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 104,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "སྲོང་ནའི་ཕ་རོལ་འགྲམ་ཞེས་ཡུལ",
+            "english": "the land called the Other Shore of the Shrona",
+            "problem": "the place name Śroṇāparāntaka is calqued, not identified",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 178,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "གྲོང་འཛིན་མ",
+            "image": "unclear at this size; the translation's 'Drakzinma' implies གྲགས་འཛིན་མ (Yaśodharā)",
+            "problem": "possible misread of a proper name",
+            "severity": "minor"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "རུས་ལ་སྡོད་ཅིང",
+            "english": "dwelled in his bones <note>firmly stayed</note>",
+            "problem": "idiom translated literally and then patched with a note",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 210,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "…མཚན་ཐོས་ཉིད་ན་སེམས་ཅན་གྱི། །གངས་བའི་དཔལ་ལྡན་རིན་ཆེན་གྱིས། །ཁེངས་ཤིང་དགེ་བ་ལྡན་པ་ཀུན། །མཉན་ཡོད་དུ་ནི་རྣམ་པར་ཞུ། (leaf 1, end of line 4)",
+            "image": "…མཚན་ཐོས་ཉིད་ན་སེམས་ཅན་གྱི། །ཉེ་བར་འཚེ་བ་…། །དལ་བུ་ཡིས་ནི་ཉམས་པར་གྱུར། །…",
+            "problem": "the second half of line 4 (the sea-monster's harm slowly subsiding when it hears the Buddha's name) is replaced by a copy of the end of line 5, so the 'entered Śrāvastī' couplet appears twice and the real verse is lost",
+            "severity": "serious",
+            "class": "O4"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "གངས་བའི་དཔལ་ལྡན་རིན་ཆེན་གྱིས། །ཁེངས་ཤིང་…མཉན་ཡོད་དུ་ནི་རྣམ་པར་ཞུ།",
+            "english": "all those who were filled with the glorious jewels of the snow-land and possessed virtue entered Shravasti",
+            "problem": "the duplicated, garbled OCR line is translated fluently ('snow-land'). The merchants enter Śrāvastī twice, before and after the ship escapes, and the verse about the monster calming is missing",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A good read of a hard dbu-med manuscript of the Avadānakalpalatā with readable verse English, but p.210 carries an OCR line repetition that drops a verse and duplicates another, and the English translates it smoothly.",
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      44,
+      104
+    ],
+    "reader_summary": "Kṣemendra's Avadānakalpalatā, the verse avadāna cycle, in a Tibetan dbu-med manuscript, here the stories of Mallikā and Virūḍhaka, Pūrṇa, Ekaśṛṅga and Dharmaruci. The transcription is of the right leaves and mostly accurate. The English follows the verse closely, but it can carry an OCR repetition as if it were text, and its notes speak to the editor."
+  },
+  {
+    "book_id": "69e7ac655f1a22ab19aa70de",
+    "slot": 27,
+    "title": "Phurdrup Gonpa bKa' brgyad Ga",
+    "tradition": "bl-other-phurdrup",
+    "shelf_fit": "fits",
+    "shelf_note": "A Nyingma bKa' brgyad / Ma mo terma volume (Mamo tantra colophon naming Padmasambhava and Vairocana, worldly-protector praises, Dzogchen view texts) from Phurdrup Gonpa.",
+    "rights_flag": null,
+    "structure_note": "A multi-text volume: p.158 is a single short leaf holding only the colophon of the Ma mo 'bum tantra (end of one text). The other images are three-leaf boards with marked seams. Only 88 of 274 pages are translated, so most of the volume has no English. The pages_ocr field (102) is far below the 274 pages that carry OCR.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 158,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "མ་མོ་འབུམ་གྱི་ཏི་ཀ་བསྡུས་པའི་རྩ་བའི་རྒྱུད",
+            "english": "the Root Tantra, the Collected Commentary on the Hundred Thousand Mothers",
+            "problem": "Ma mo (a class of wrathful goddesses) rendered 'Mothers', which obscures the title of the Mamo cycle",
+            "severity": "moderate",
+            "class": "other:title-mistranslated"
+          },
+          {
+            "source": "ཤོག་སེར",
+            "english": "yellow parchment",
+            "problem": "terma yellow scroll (paper), not parchment",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 188,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ར་དཀར་གནམ་རུ",
+            "english": "a white goat of the sky",
+            "problem": "'white goat with sky(-blue) horns' misparsed",
+            "severity": "minor"
+          }
+        ],
+        "other": [
+          {
+            "note": "nested '<note>original: <term>Bhan dha</term></note>' annotations in the reading text",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 238,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ནས ༏ དང་པོའི་ལས་ཀྱི་ལམ་མཆོག་ཡིན",
+            "english": "Therefore, it is the supreme path of the initial activity.",
+            "problem": "a word fragment at the seam is turned into an invented 'Therefore'",
+            "severity": "minor",
+            "class": "T6"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 267,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "Sound transcription and careful English for the pages that have it: the Mamo colophon, protector praises, and Dzogchen view and doxography. Only a third of the volume is translated.",
+    "fit_to_show": "show",
+    "showcase_pages": [
+      188,
+      238,
+      267
+    ],
+    "reader_summary": "A volume of the Eight Herukas (bKa' brgyad) and Ma mo terma cycle: tantra colophons attributed to Padmasambhava and Vairocana, praises of the worldly chieftains, and Great Perfection view texts. The Tibetan is of the right leaves and reads accurately. The English is faithful where it exists, but about two thirds of the volume is untranslated."
+  },
+  {
+    "book_id": "69e7ac925f1a22ab19aa935f",
+    "slot": 28,
+    "title": "Phurdrup Gonpa Thor bu Nor rgyam chos skor (EAP310-3-3-12)",
+    "tradition": "bl-other-phurdrup",
+    "shelf_fit": "fits",
+    "shelf_note": "A miscellany (thor bu) of Nyingma Guru Rinpoche material: Padmasambhava's answers to Prince Mutig Tsenpo, a Padmasambhava hagiography and guru-yoga, an eight-manifestations empowerment, consecration liturgy.",
+    "rights_flag": null,
+    "structure_note": "A miscellany in several hands (p.190 opens each leaf with ༄༅ and is in a different hand from pp.13–114), so it is several texts bound as one record. Three-leaf boards with marked seams. printed_backsteps=2 out of only 4 printed numbers: probably the folio numerals of different texts in the miscellany restarting, or misread margin numerals, not a scan splice. A run of stray marks '༢ ༔ ༔ ༔ …' closes p.71's OCR. 126/240 translated. The pages_ocr field (134) lags the 240 pages with OCR.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 13,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "སེར་ཡོད་ས་ལ་འཚལ་ཡོད་ཇི་བཞིན་དུ",
+            "english": "is like one who seeks where there is gold",
+            "problem": "a loose rendering of an obscure simile, stated with confidence",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 71,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "༢ ༔ ༔ ༔ ༔ ༔ ༔ ༔ ༔",
+            "image": "nothing: leaf 3 has six lines, the last ending 'ངག་ཟླ'",
+            "problem": "a spurious line of marks at the end of the transcription",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 114,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "ཤན་ཏིང་གར་པའི་དབང་བསྐུར་བས ༔…དྷེ་ཝ་ཙནྟི་ཨ་བྷི",
+            "english": "…Shantigarbha… DEVACHANDRA ABHI… HUM. Fortunate one… the empowerment of Shantigarbha…",
+            "problem": "the manuscript's own abbreviation is reproduced faithfully; it reads as a stutter to a reader without a note",
+            "severity": "minor"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 190,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "སརྦ་ཏཐཱགྷ་ཏ་ཧྲི་དྷ་ཡཱ་༔ གརྦེ་ཛ་ལ་…",
+            "english": "<note>Heart of all Tathagatas. Womb of the water of the Dharma realm. Gather life. Purify…</note>",
+            "problem": "glosses on corrupt mantras given with false precision",
+            "severity": "minor",
+            "class": "T10"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "book_verdict": "A Guru Rinpoche miscellany with accurate transcription and plain, faithful English on all four pages. Only minor slips.",
+    "fit_to_show": "show",
+    "showcase_pages": [
+      13,
+      71,
+      114,
+      190
+    ],
+    "reader_summary": "A miscellany of Padmasambhava texts: dialogues with Prince Mutig Tsenpo on deviations in meditation, the story of the Guru's invitation to Tibet with his daily-practice advice, an eight-manifestations empowerment, and a consecration rite. The transcription is of the right leaves and reliable. The English can be trusted for sense, with mantra glosses to be taken lightly."
+  }
+]

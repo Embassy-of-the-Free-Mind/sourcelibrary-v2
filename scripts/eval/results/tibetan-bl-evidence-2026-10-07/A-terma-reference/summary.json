@@ -1,0 +1,877 @@
+{
+ "groups": {
+  "dgongs-dus": {
+   "reference": {
+    "files": 299,
+    "pages": 13223,
+    "collections": [
+     "DharmaDownload",
+     "DrikungChetsang",
+     "Shechen",
+     "UCB-OCR"
+    ],
+    "w": [
+     "W1KG14",
+     "W1KG5988",
+     "W1PD96682",
+     "W3JT13348"
+    ],
+    "licence": [
+     "CC-BY-4.0 (Zenodo 821218 deposit; no per-file statement)",
+     "http://creativecommons.org/licenses/by/3.0/"
+    ]
+   },
+   "books": 42,
+   "books_with_witness": 4,
+   "positive_noise05": {
+    "n": 50,
+    "median": 0.973,
+    "q1": 0.965,
+    "q3": 0.984,
+    "ge09": 49,
+    "lt05": 0
+   },
+   "chance_shuffle": {
+    "n": 97,
+    "median": 0.143,
+    "q1": 0.053,
+    "q3": 0.19,
+    "ge09": 0,
+    "lt05": 97
+   },
+   "negative_kanjur": {
+    "n": 20,
+    "median": 0.236,
+    "q1": 0.179,
+    "q3": 0.276,
+    "ge09": 0,
+    "lt05": 20,
+    "off_index": 20,
+    "share_off_index": 1.0
+   },
+   "by_verdict": {
+    "MARK_UNRELIABLE": {
+     "n": 42,
+     "median": 0.172,
+     "q1": 0.013,
+     "q3": 0.245,
+     "ge09": 0,
+     "lt05": 41,
+     "off_index": 42,
+     "share_off_index": 1.0
+    },
+    "NO_VERDICT": {
+     "n": 15,
+     "median": 0.0,
+     "q1": 0.0,
+     "q3": 0.0,
+     "ge09": 0,
+     "lt05": 15,
+     "off_index": 15,
+     "share_off_index": 1.0
+    },
+    "SERVE": {
+     "n": 40,
+     "median": 0.172,
+     "q1": 0.111,
+     "q3": 0.204,
+     "ge09": 0,
+     "lt05": 37,
+     "off_index": 39,
+     "share_off_index": 0.975
+    }
+   },
+   "serve_with_witness": {
+    "n": 4,
+    "median": 0.208,
+    "q1": 0.145,
+    "q3": 0.729,
+    "ge09": 0,
+    "lt05": 3,
+    "off_index": 3,
+    "share_off_index": 0.75
+   },
+   "serve_without_witness": {
+    "n": 36,
+    "median": 0.17,
+    "q1": 0.101,
+    "q3": 0.199,
+    "ge09": 0,
+    "lt05": 34,
+    "off_index": 36,
+    "share_off_index": 1.0
+   }
+  },
+  "kun-bzang-dgongs-dus": {
+   "reference": {
+    "files": 114,
+    "pages": 4021,
+    "collections": [
+     "Shechen",
+     "UCB-OCR"
+    ],
+    "w": [
+     "W1KG14",
+     "W1KG818"
+    ],
+    "licence": [
+     "CC-BY-4.0 (Zenodo 821218 deposit; no per-file statement)",
+     "http://creativecommons.org/licenses/by/3.0/"
+    ]
+   },
+   "books": 12,
+   "books_with_witness": 2,
+   "positive_noise05": {
+    "n": 50,
+    "median": 0.971,
+    "q1": 0.96,
+    "q3": 0.984,
+    "ge09": 49,
+    "lt05": 1
+   },
+   "chance_shuffle": {
+    "n": 25,
+    "median": 0.131,
+    "q1": 0.091,
+    "q3": 0.188,
+    "ge09": 0,
+    "lt05": 25
+   },
+   "negative_kanjur": {
+    "n": 20,
+    "median": 0.0,
+    "q1": 0.0,
+    "q3": 0.053,
+    "ge09": 0,
+    "lt05": 20,
+    "off_index": 20,
+    "share_off_index": 1.0
+   },
+   "by_verdict": {
+    "MARK_UNRELIABLE": {
+     "n": 12,
+     "median": 0.124,
+     "q1": 0.0,
+     "q3": 0.249,
+     "ge09": 0,
+     "lt05": 12,
+     "off_index": 12,
+     "share_off_index": 1.0
+    },
+    "NO_VERDICT": {
+     "n": 2,
+     "median": 0.0,
+     "q1": 0.0,
+     "q3": 0.0,
+     "ge09": 0,
+     "lt05": 2,
+     "off_index": 2,
+     "share_off_index": 1.0
+    },
+    "SERVE": {
+     "n": 11,
+     "median": 0.102,
+     "q1": 0.0,
+     "q3": 0.161,
+     "ge09": 0,
+     "lt05": 11,
+     "off_index": 11,
+     "share_off_index": 1.0
+    }
+   },
+   "serve_with_witness": {
+    "n": 2,
+    "median": 0.125,
+    "q1": 0.07,
+    "q3": 0.18,
+    "ge09": 0,
+    "lt05": 2,
+    "off_index": 2,
+    "share_off_index": 1.0
+   },
+   "serve_without_witness": {
+    "n": 9,
+    "median": 0.102,
+    "q1": 0.0,
+    "q3": 0.153,
+    "ge09": 0,
+    "lt05": 9,
+    "off_index": 9,
+    "share_off_index": 1.0
+   }
+  },
+  "mani-bka-bum": {
+   "reference": {
+    "files": 3,
+    "pages": 1465,
+    "collections": [
+     "UCB-OCR"
+    ],
+    "w": [
+     "W00KG09730",
+     "W1PD90704",
+     "W7499"
+    ],
+    "licence": [
+     "CC-BY-4.0 (Zenodo 821218 deposit; no per-file statement)"
+    ]
+   },
+   "books": 1,
+   "books_with_witness": 1,
+   "positive_noise05": {
+    "n": 50,
+    "median": 0.971,
+    "q1": 0.965,
+    "q3": 0.978,
+    "ge09": 50,
+    "lt05": 0
+   },
+   "chance_shuffle": {
+    "n": 2,
+    "median": 0.172,
+    "q1": 0.159,
+    "q3": 0.185,
+    "ge09": 0,
+    "lt05": 2
+   },
+   "negative_kanjur": {
+    "n": 20,
+    "median": 0.189,
+    "q1": 0.034,
+    "q3": 0.218,
+    "ge09": 0,
+    "lt05": 20,
+    "off_index": 20,
+    "share_off_index": 1.0
+   },
+   "by_verdict": {
+    "MARK_UNRELIABLE": {
+     "n": 1,
+     "median": 0.0,
+     "q1": 0.0,
+     "q3": 0.0,
+     "ge09": 0,
+     "lt05": 1,
+     "off_index": 1,
+     "share_off_index": 1.0
+    },
+    "SERVE": {
+     "n": 1,
+     "median": 0.148,
+     "q1": 0.148,
+     "q3": 0.148,
+     "ge09": 0,
+     "lt05": 1,
+     "off_index": 1,
+     "share_off_index": 1.0
+    }
+   },
+   "serve_with_witness": {
+    "n": 1,
+    "median": 0.148,
+    "q1": 0.148,
+    "q3": 0.148,
+    "ge09": 0,
+    "lt05": 1,
+    "off_index": 1,
+    "share_off_index": 1.0
+   },
+   "serve_without_witness": {
+    "n": 0
+   }
+  },
+  "milarepa": {
+   "reference": {
+    "files": 1,
+    "pages": 1049,
+    "collections": [
+     "UCB-OCR"
+    ],
+    "w": [
+     "W1KG4276"
+    ],
+    "licence": [
+     "CC-BY-4.0 (Zenodo 821218 deposit; no per-file statement)"
+    ]
+   },
+   "books": 7,
+   "books_with_witness": 5,
+   "positive_noise05": {
+    "n": 50,
+    "median": 0.972,
+    "q1": 0.963,
+    "q3": 0.982,
+    "ge09": 50,
+    "lt05": 0
+   },
+   "chance_shuffle": {
+    "n": 14,
+    "median": 0.095,
+    "q1": 0.078,
+    "q3": 0.124,
+    "ge09": 0,
+    "lt05": 14
+   },
+   "negative_kanjur": {
+    "n": 20,
+    "median": 0.0,
+    "q1": 0.0,
+    "q3": 0.0,
+    "ge09": 0,
+    "lt05": 20,
+    "off_index": 20,
+    "share_off_index": 1.0
+   },
+   "by_verdict": {
+    "MARK_UNRELIABLE": {
+     "n": 7,
+     "median": 0.0,
+     "q1": 0.0,
+     "q3": 0.117,
+     "ge09": 0,
+     "lt05": 7,
+     "off_index": 7,
+     "share_off_index": 1.0
+    },
+    "SERVE": {
+     "n": 7,
+     "median": 0.18,
+     "q1": 0.0,
+     "q3": 0.381,
+     "ge09": 0,
+     "lt05": 7,
+     "off_index": 6,
+     "share_off_index": 0.857
+    }
+   },
+   "serve_with_witness": {
+    "n": 5,
+    "median": 0.344,
+    "q1": 0.132,
+    "q3": 0.437,
+    "ge09": 0,
+    "lt05": 5,
+    "off_index": 4,
+    "share_off_index": 0.8
+   },
+   "serve_without_witness": {
+    "n": 2,
+    "median": 0.0,
+    "q1": 0.0,
+    "q3": 0.0,
+    "ge09": 0,
+    "lt05": 2,
+    "off_index": 2,
+    "share_off_index": 1.0
+   }
+  },
+  "namthar": {
+   "reference": {
+    "files": 18,
+    "pages": 10783,
+    "collections": [
+     "DharmaDownload",
+     "GuruLamaWorks",
+     "UCB-OCR",
+     "VajraVidya"
+    ],
+    "w": [
+     "W10736",
+     "W1KG4306",
+     "W1PD107937",
+     "W1PD95844",
+     "W1PD96682",
+     "W30541",
+     "W3JT13306",
+     "W3JT13344"
+    ],
+    "licence": [
+     "CC-BY-4.0 (Zenodo 821218 deposit; no per-file statement)",
+     "http://creativecommons.org/licenses/by/3.0/"
+    ]
+   },
+   "books": 49,
+   "books_with_witness": 10,
+   "positive_noise05": {
+    "n": 50,
+    "median": 0.969,
+    "q1": 0.963,
+    "q3": 0.976,
+    "ge09": 50,
+    "lt05": 0
+   },
+   "chance_shuffle": {
+    "n": 103,
+    "median": 0.182,
+    "q1": 0.141,
+    "q3": 0.23,
+    "ge09": 0,
+    "lt05": 103
+   },
+   "negative_kanjur": {
+    "n": 20,
+    "median": 0.276,
+    "q1": 0.241,
+    "q3": 0.364,
+    "ge09": 0,
+    "lt05": 18,
+    "off_index": 18,
+    "share_off_index": 0.9
+   },
+   "by_verdict": {
+    "MARK_UNRELIABLE": {
+     "n": 47,
+     "median": 0.177,
+     "q1": 0.0,
+     "q3": 0.302,
+     "ge09": 0,
+     "lt05": 46,
+     "off_index": 46,
+     "share_off_index": 0.979
+    },
+    "NO_VERDICT": {
+     "n": 8,
+     "median": 0.11,
+     "q1": 0.0,
+     "q3": 0.333,
+     "ge09": 0,
+     "lt05": 7,
+     "off_index": 8,
+     "share_off_index": 1.0
+    },
+    "SERVE": {
+     "n": 46,
+     "median": 0.144,
+     "q1": 0.0,
+     "q3": 0.279,
+     "ge09": 2,
+     "lt05": 42,
+     "off_index": 42,
+     "share_off_index": 0.913
+    },
+    "UNREADABLE_OTHER": {
+     "n": 2,
+     "median": 0.269,
+     "q1": 0.115,
+     "q3": 0.423,
+     "ge09": 0,
+     "lt05": 2,
+     "off_index": 2,
+     "share_off_index": 1.0
+    }
+   },
+   "serve_with_witness": {
+    "n": 9,
+    "median": 0.485,
+    "q1": 0.285,
+    "q3": 0.814,
+    "ge09": 2,
+    "lt05": 5,
+    "off_index": 5,
+    "share_off_index": 0.556
+   },
+   "serve_without_witness": {
+    "n": 37,
+    "median": 0.0,
+    "q1": 0.0,
+    "q3": 0.194,
+    "ge09": 0,
+    "lt05": 37,
+    "off_index": 37,
+    "share_off_index": 1.0
+   }
+  },
+  "zhi-khro-bardo": {
+   "reference": {
+    "files": 220,
+    "pages": 6435,
+    "collections": [
+     "DharmaDownload",
+     "KarmaDelek",
+     "Shechen",
+     "UCB-OCR"
+    ],
+    "w": [
+     "W1KG14",
+     "W1KG4884",
+     "W1KG6161",
+     "W1KG8928",
+     "W1PD45150",
+     "W3JT13340"
+    ],
+    "licence": [
+     "CC-BY-4.0 (Zenodo 821218 deposit; no per-file statement)",
+     "http://creativecommons.org/licenses/by/3.0/"
+    ]
+   },
+   "books": 20,
+   "books_with_witness": 6,
+   "positive_noise05": {
+    "n": 50,
+    "median": 0.973,
+    "q1": 0.966,
+    "q3": 0.981,
+    "ge09": 50,
+    "lt05": 0
+   },
+   "chance_shuffle": {
+    "n": 42,
+    "median": 0.154,
+    "q1": 0.099,
+    "q3": 0.189,
+    "ge09": 0,
+    "lt05": 42
+   },
+   "negative_kanjur": {
+    "n": 20,
+    "median": 0.16,
+    "q1": 0.0,
+    "q3": 0.211,
+    "ge09": 0,
+    "lt05": 20,
+    "off_index": 20,
+    "share_off_index": 1.0
+   },
+   "by_verdict": {
+    "MARK_UNRELIABLE": {
+     "n": 19,
+     "median": 0.0,
+     "q1": 0.0,
+     "q3": 0.229,
+     "ge09": 0,
+     "lt05": 19,
+     "off_index": 19,
+     "share_off_index": 1.0
+    },
+    "NO_VERDICT": {
+     "n": 5,
+     "median": 0.106,
+     "q1": 0.0,
+     "q3": 0.247,
+     "ge09": 0,
+     "lt05": 5,
+     "off_index": 5,
+     "share_off_index": 1.0
+    },
+    "SERVE": {
+     "n": 18,
+     "median": 0.188,
+     "q1": 0.042,
+     "q3": 0.257,
+     "ge09": 0,
+     "lt05": 17,
+     "off_index": 18,
+     "share_off_index": 1.0
+    }
+   },
+   "serve_with_witness": {
+    "n": 6,
+    "median": 0.211,
+    "q1": 0.042,
+    "q3": 0.366,
+    "ge09": 0,
+    "lt05": 5,
+    "off_index": 6,
+    "share_off_index": 1.0
+   },
+   "serve_without_witness": {
+    "n": 12,
+    "median": 0.184,
+    "q1": 0.02,
+    "q3": 0.237,
+    "ge09": 0,
+    "lt05": 12,
+    "off_index": 12,
+    "share_off_index": 1.0
+   }
+  }
+ },
+ "pooled": {
+  "MARK_UNRELIABLE|no-witness": {
+   "n": 100,
+   "median": 0.154,
+   "q1": 0.0,
+   "q3": 0.248,
+   "ge09": 0,
+   "lt05": 98,
+   "off_index": 99,
+   "share_off_index": 0.99
+  },
+  "MARK_UNRELIABLE|witness": {
+   "n": 28,
+   "median": 0.148,
+   "q1": 0.0,
+   "q3": 0.26,
+   "ge09": 0,
+   "lt05": 28,
+   "off_index": 28,
+   "share_off_index": 1.0
+  },
+  "NO_VERDICT|no-witness": {
+   "n": 24,
+   "median": 0.0,
+   "q1": 0.0,
+   "q3": 0.08,
+   "ge09": 0,
+   "lt05": 24,
+   "off_index": 24,
+   "share_off_index": 1.0
+  },
+  "NO_VERDICT|witness": {
+   "n": 6,
+   "median": 0.0,
+   "q1": 0.0,
+   "q3": 0.324,
+   "ge09": 0,
+   "lt05": 5,
+   "off_index": 6,
+   "share_off_index": 1.0
+  },
+  "SERVE|no-witness": {
+   "n": 96,
+   "median": 0.144,
+   "q1": 0.0,
+   "q3": 0.2,
+   "ge09": 0,
+   "lt05": 94,
+   "off_index": 96,
+   "share_off_index": 1.0
+  },
+  "SERVE|witness": {
+   "n": 27,
+   "median": 0.257,
+   "q1": 0.161,
+   "q3": 0.493,
+   "ge09": 2,
+   "lt05": 21,
+   "off_index": 21,
+   "share_off_index": 0.778
+  },
+  "UNREADABLE_OTHER|no-witness": {
+   "n": 1,
+   "median": 0.372,
+   "q1": 0.372,
+   "q3": 0.372,
+   "ge09": 0,
+   "lt05": 1,
+   "off_index": 1,
+   "share_off_index": 1.0
+  },
+  "UNREADABLE_OTHER|witness": {
+   "n": 1,
+   "median": 0.166,
+   "q1": 0.166,
+   "q3": 0.166,
+   "ge09": 0,
+   "lt05": 1,
+   "off_index": 1,
+   "share_off_index": 1.0
+  }
+ },
+ "pooled_by_verdict": {
+  "MARK_UNRELIABLE": {
+   "n": 128,
+   "median": 0.154,
+   "q1": 0.0,
+   "q3": 0.249,
+   "ge09": 0,
+   "lt05": 126,
+   "off_index": 127,
+   "share_off_index": 0.992
+  },
+  "NO_VERDICT": {
+   "n": 30,
+   "median": 0.0,
+   "q1": 0.0,
+   "q3": 0.135,
+   "ge09": 0,
+   "lt05": 29,
+   "off_index": 30,
+   "share_off_index": 1.0
+  },
+  "SERVE": {
+   "n": 123,
+   "median": 0.169,
+   "q1": 0.0,
+   "q3": 0.227,
+   "ge09": 2,
+   "lt05": 115,
+   "off_index": 117,
+   "share_off_index": 0.951
+  },
+  "UNREADABLE_OTHER": {
+   "n": 2,
+   "median": 0.269,
+   "q1": 0.115,
+   "q3": 0.423,
+   "ge09": 0,
+   "lt05": 2,
+   "off_index": 2,
+   "share_off_index": 1.0
+  }
+ },
+ "serve_witness_pages": [
+  [
+   0.0,
+   0.0,
+   "https://sourcelibrary.org/book/69e788244a6785cfd60cf651?page=39",
+   "zab chos zhi khro dgongs pa rang grol spros bcas bum dbang chen mo sogs"
+  ],
+  [
+   0.0566,
+   0.0031,
+   "https://sourcelibrary.org/book/69e77a630fc6fc955e35f941?page=76",
+   "Zab chos zhi khro dgongs pa rang grol"
+  ],
+  [
+   0.0833,
+   0.0014,
+   "https://sourcelibrary.org/book/69e7613ccc48e59ad74ee65d?page=129",
+   "Ras chung rnam thar"
+  ],
+  [
+   0.088,
+   0.0021,
+   "https://sourcelibrary.org/book/69e787e44a6785cfd60ce12b?page=246",
+   "kun bzang dgongs pa kun 'dus kyi skor"
+  ],
+  [
+   0.1346,
+   0.0011,
+   "https://sourcelibrary.org/book/69e77a6c0fc6fc955e35fc9b?page=130",
+   "Bla ma dgongs 'dus brgyud pa'i gsol 'debs"
+  ],
+  [
+   0.1481,
+   0.0017,
+   "https://sourcelibrary.org/book/69e76137cc48e59ad74ee43d?page=212",
+   "Mani bKa’ ‘bum"
+  ],
+  [
+   0.1614,
+   0.0025,
+   "https://sourcelibrary.org/book/69e76156cc48e59ad74ef30f?page=120",
+   "Kun bzang dgongs 'dus sngon 'gro"
+  ],
+  [
+   0.1743,
+   0.0033,
+   "https://sourcelibrary.org/book/69e7ac705f1a22ab19aa7951?page=306",
+   "Phurdrup Gonpa dGongs 'dus Ka"
+  ],
+  [
+   0.1771,
+   0.0015,
+   "https://sourcelibrary.org/book/69e77a8a0fc6fc955e360764?page=47",
+   "Zab chos zhi khro dgongs pa rang grol lo rgyus sogs"
+  ],
+  [
+   0.1801,
+   0.0193,
+   "https://sourcelibrary.org/book/69e788674a6785cfd60d0e5b?page=16",
+   "mi la ras pa/ ras chung pa/ mgon po rdo rje bcas kyi rnam thar"
+  ],
+  [
+   0.242,
+   0.0032,
+   "https://sourcelibrary.org/book/69e7ac785f1a22ab19aa809b?page=258",
+   "Phurdrup Gonpa dGongs 'dus Ja"
+  ],
+  [
+   0.2451,
+   0.004,
+   "https://sourcelibrary.org/book/69e78a6d4a6785cfd60d340a?page=9",
+   "zhi khro lta ba klong yangs kyi cho ga 'khro ba dong sprugs"
+  ],
+  [
+   0.2569,
+   0.0037,
+   "https://sourcelibrary.org/book/6a14e16e311a9edd4622113d?page=206",
+   "Thor bu Thub dbang rnam thar Ka"
+  ],
+  [
+   0.2573,
+   0.0112,
+   "https://sourcelibrary.org/book/69e77ae20fc6fc955e362dd3?page=47",
+   "Sangs rgyas kyi skyes rabs"
+  ],
+  [
+   0.2927,
+   0.0369,
+   "https://sourcelibrary.org/book/69e789124a6785cfd60d2a48?page=52",
+   "Zab chos zhi khro dgongs pa rang grol"
+  ],
+  [
+   0.3131,
+   0.0129,
+   "https://sourcelibrary.org/book/6a14e170311a9edd46221253?page=132",
+   "Thor bu Thub dbang rnam thar Kha"
+  ],
+  [
+   0.3442,
+   0.0288,
+   "https://sourcelibrary.org/book/69e77ab60fc6fc955e3618ce?page=147",
+   "Mi la'i rnam thar"
+  ],
+  [
+   0.3519,
+   0.0449,
+   "https://sourcelibrary.org/book/69e788414a6785cfd60d00c6?page=9",
+   "mkhan chen bsod nam 'od kyi rnam thar sogs"
+  ],
+  [
+   0.3812,
+   0.0527,
+   "https://sourcelibrary.org/book/69e788164a6785cfd60cf086?page=74",
+   "rnal 'byor gyi dbang chen po rje btsun bzhad pa rdo rje'i rnam thar rgyas par phye ba mgur 'bum"
+  ],
+  [
+   0.4855,
+   0.0535,
+   "https://sourcelibrary.org/book/69e7883c4a6785cfd60cffe3?page=71",
+   "chos 'byung bstan pa'i padma rgyas pa'i nyin byed dang/ rgyal rab rnam thar dad pa'i rlabs phreng"
+  ],
+  [
+   0.4929,
+   0.0493,
+   "https://sourcelibrary.org/book/69e76139cc48e59ad74ee568?page=39",
+   "Mi la ras pa’l rnam thar"
+  ],
+  [
+   0.5875,
+   0.0458,
+   "https://sourcelibrary.org/book/69e7880a4a6785cfd60cebda?page=68",
+   "zab chos zhi khro dgongs pa rang drol"
+  ],
+  [
+   0.6767,
+   0.0395,
+   "https://sourcelibrary.org/book/6a14e18c311a9edd462221b2?page=143",
+   "Thor bu sTon pa'i skyes rabs"
+  ],
+  [
+   0.7188,
+   0.0983,
+   "https://sourcelibrary.org/book/69e78a744a6785cfd60d3566?page=11",
+   "rgyal po do ha'i ti ka 'bring po sems kyi rnam thar ston pa'i me long"
+  ],
+  [
+   0.8908,
+   0.0886,
+   "https://sourcelibrary.org/book/69e78a084a6785cfd60d2f2b?page=2",
+   "rtsa gsum dgongs 'dus zab mo gter gyi mdzod las/ rig 'dzin rgyun gyi phrin las"
+  ],
+  [
+   0.9098,
+   0.0713,
+   "https://sourcelibrary.org/book/69e7ac515f1a22ab19aa682a?page=16",
+   "Neyphug Thor bu rNam thar lo rgyus dang mtshan brjod 'grel pa"
+  ],
+  [
+   0.9716,
+   0.0877,
+   "https://sourcelibrary.org/book/69e788a14a6785cfd60d13f3?page=65",
+   "ston pa tham cad mkhyen pa'i 'khrung rabs kyi 'phreng ba'am skyes rabs"
+  ]
+ ]
+}
