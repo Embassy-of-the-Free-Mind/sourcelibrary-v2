@@ -37,11 +37,10 @@ one random stratum (Phurdrup). $26.08 API-equivalent on subscription ($0 API): 1
   verdict agreement 3/4. Above the 0.7 floor, but the CI is wide (4 books).
 
 **Reading.**
-1. **The no-reference stratum is not the #4523 failure.** No page served another leaf or invented Tibetan; the
-   OCR scores 3.6–4.4 of 5. That failure class (lite OCR inventing text) is gone from the pages read: 111 of 112 serve
+1. **The no-reference stratum is mostly not the #4523 failure.** No page served another leaf; the OCR scores
+   3.6–4.4 of 5. Four pages still carry invented OCR (three repeated blocks, O4; one confabulated title page, O1). That failure class (lite OCR inventing text) is gone from the pages read: 111 of 112 serve
    the Yigdzin read (one Ogyen Choling page still serves a Gemini read).
-2. **What remains is an English-quality problem at roughly the rate of the reference-scored strata** — 9%
-   serious pages, every book "show with caveat". Re-translating from the Yigdzin read (step C) is what fixes the
+2. **What remains is mainly an English-quality problem** — 9% serious pages, every book "show with caveat". Re-translating from the Yigdzin read (step C) is what fixes the
    English. These rates describe the CURRENT English; they are the baseline the re-translation must beat.
 3. With 4 books per collection, quote the CIs, not the points. Gangtey (largest cursive share, 3.63 OCR) is the
    weakest collection; Drametse the strongest.
