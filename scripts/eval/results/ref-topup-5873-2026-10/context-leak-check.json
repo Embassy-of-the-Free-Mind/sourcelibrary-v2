@@ -1,0 +1,947 @@
+[
+ {
+  "id": "6a08c5ffe4e4b7b8793e97a9_24",
+  "lang": "Persian",
+  "book_title": "Hajviyaat o Hazaliyaat — satirical and erotic verse (Ubaid Zakani, Persian)",
+  "translator": "Edward G. Browne",
+  "latin_share_page": 0.02,
+  "latin_share_neighbours": {
+   "-2": 0.02,
+   "-1": 0.03,
+   "+1": 0.02,
+   "+2": null
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "6a09fcc5edaf0f8bef57ba2f_22",
+  "lang": "Persian",
+  "book_title": "Aʾīn-i Akbarī (Vol. 1, Part 2)",
+  "translator": "H. S. Jarrett",
+  "latin_share_page": 0.03,
+  "latin_share_neighbours": {
+   "-2": 0.03,
+   "-1": 0.01,
+   "+1": 0.05,
+   "+2": 0.02
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69d5ac2ed0bd3547a5655830_63",
+  "lang": "Persian",
+  "book_title": "Rubaiyat",
+  "translator": "Edward Heron-Allen",
+  "latin_share_page": 0.23,
+  "latin_share_neighbours": {
+   "-2": 0.43,
+   "-1": 0.46,
+   "+1": 0.23,
+   "+2": 0.45
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69f3285baeeee0fa38c6445e_6",
+  "lang": "Persian",
+  "book_title": "[Muraqqaʻāt]",
+  "translator": "H. Wilberforce Clarke",
+  "latin_share_page": 0.44,
+  "latin_share_neighbours": {
+   "-2": 0.75,
+   "-1": 0.42,
+   "+1": 0.95,
+   "+2": 0.5
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "69e748b385f786e884a4cbdb_137",
+  "lang": "Persian",
+  "book_title": "The Book of Kings",
+  "translator": "Arthur George Warner and Edmond Warner",
+  "latin_share_page": 0.12,
+  "latin_share_neighbours": {
+   "-2": 0.14,
+   "-1": 0.12,
+   "+1": 0.09,
+   "+2": 0.08
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69e748cd49abba5e98281879_199",
+  "lang": "Persian",
+  "book_title": "مخزن الاسرار (Makhzan al-Asrār)",
+  "translator": "Gholām Hosein Dārāb",
+  "latin_share_page": 0.02,
+  "latin_share_neighbours": {
+   "-2": 0.04,
+   "-1": 0.02,
+   "+1": 0.1,
+   "+2": 0.02
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69d5ac26d0bd3547a5655542_560",
+  "lang": "Persian",
+  "book_title": "خمسه (Quintet — Illuminated manuscript, 1582-84, 746pp)",
+  "translator": "H. Wilberforce Clarke",
+  "latin_share_page": 0.03,
+  "latin_share_neighbours": {
+   "-2": 0.05,
+   "-1": 0.05,
+   "+1": 0.11,
+   "+2": 0.04
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "6a08a3a28fae3d3f19b789cd_22",
+  "lang": "Persian",
+  "book_title": "Muntakhab-i Laṭā'if (Selection of Anecdotes)",
+  "translator": "Edward G. Browne",
+  "latin_share_page": 0.08,
+  "latin_share_neighbours": {
+   "-2": 0.02,
+   "-1": 0.1,
+   "+1": 0.19,
+   "+2": 0.03
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69d5abb0f5e2a1273d900fd6_536",
+  "lang": "Persian",
+  "book_title": "جامع التواريخ (Compendium of Chronicles — First World History)",
+  "translator": "W. M. Thackston",
+  "latin_share_page": 0.04,
+  "latin_share_neighbours": {
+   "-2": 0.03,
+   "-1": 0.06,
+   "+1": 0.03,
+   "+2": 0.02
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69e748bd49abba5e982816d3_76",
+  "lang": "Persian",
+  "book_title": "گلستان (Golestān)",
+  "translator": "Edward Rehatsek",
+  "latin_share_page": 0.02,
+  "latin_share_neighbours": {
+   "-2": 0.01,
+   "-1": 0.07,
+   "+1": 0.02,
+   "+2": 0.01
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69f33d92876dd827cbc5c190_121",
+  "lang": "Persian",
+  "book_title": "Kitāb-i Ṭūṭīʹnāmah",
+  "translator": "B. Gerrans",
+  "latin_share_page": 0.06,
+  "latin_share_neighbours": {
+   "-2": 0.03,
+   "-1": 0.07,
+   "+1": 0.07,
+   "+2": 0.03
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69b632b166ab51b501d93b92_182",
+  "lang": "Persian",
+  "book_title": "Persian Bayán",
+  "translator": "Habib Taherzadeh, with the assistance of a committee at the Bahá'í World Centre",
+  "latin_share_page": 0.01,
+  "latin_share_neighbours": {
+   "-2": 0.01,
+   "-1": 0.01,
+   "+1": 0.01,
+   "+2": 0.01
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69e7934980b52390feb1853b_367",
+  "lang": "Persian",
+  "book_title": "الهی نامه (Ilāhī-Nāma)",
+  "translator": "John Andrew Boyle",
+  "latin_share_page": 0.06,
+  "latin_share_neighbours": {
+   "-2": 0.08,
+   "-1": 0.04,
+   "+1": 0.08,
+   "+2": 0.05
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "6a09fcbaedaf0f8bef57b987_24",
+  "lang": "Persian",
+  "book_title": "Aʾīn-i Akbarī (Vol. 1, Part 1) — incl. Pachisi/Chaupar at Akbar's court",
+  "translator": "H. Blochmann",
+  "latin_share_page": 0.01,
+  "latin_share_neighbours": {
+   "-2": 0.01,
+   "-1": 0.04,
+   "+1": 0.01,
+   "+2": null
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69b63e602a1dde00d5a9d059_42",
+  "lang": "Persian",
+  "book_title": "The Bustan (Garden of Fragrance)",
+  "translator": "H. Wilberforce Clarke",
+  "latin_share_page": 0.01,
+  "latin_share_neighbours": {
+   "-2": 0.01,
+   "-1": 0.01,
+   "+1": 0.06,
+   "+2": 0.01
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69c1bb1c8522835be845cf19_160",
+  "lang": "Hebrew",
+  "book_title": "Penitential prayers and poems for the Indian rite (Gaster Hebrew MS 742)",
+  "translator": "Simeon Singer",
+  "latin_share_page": 0.34,
+  "latin_share_neighbours": {
+   "-2": 0.41,
+   "-1": 0.13,
+   "+1": 0.96,
+   "+2": 0.31
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "69c1bad18522835be845aabc_251",
+  "lang": "Hebrew",
+  "book_title": "Hebrew Bible (Writings) (Gaster Hebrew MS 86)",
+  "translator": "Jewish Publication Society of America (editor-in-chief Max L. Margolis)",
+  "latin_share_page": 0.23,
+  "latin_share_neighbours": {
+   "-2": 1,
+   "-1": 0.04,
+   "+1": 0.27,
+   "+2": 0.11
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "69c1bc788522835be84637be_3",
+  "lang": "Hebrew",
+  "book_title": "Song of Songs scroll (Gaster Hebrew MS Add 19b)",
+  "translator": "Jewish Publication Society of America (editor-in-chief Max L. Margolis)",
+  "latin_share_page": 0.03,
+  "latin_share_neighbours": {
+   "-2": 0.09,
+   "-1": 0.06,
+   "+1": 0.24,
+   "+2": null
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69c1bbd28522835be8460a78_32",
+  "lang": "Hebrew",
+  "book_title": "Liturgical booklet relating to Shavuot (Gaster Hebrew MS 1635)",
+  "translator": "Jewish Publication Society of America (editor-in-chief Max L. Margolis)",
+  "latin_share_page": 0.06,
+  "latin_share_neighbours": {
+   "-2": 0.2,
+   "-1": 0.21,
+   "+1": 0.15,
+   "+2": 0.17
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69b525b56be6046083030af0_213",
+  "lang": "Hebrew",
+  "book_title": "Seder ha-tefilot : mi-kol ha-šanah ʻim peruš bi-lešon ʾAškenaz.",
+  "translator": "Jewish Publication Society of America (editor-in-chief Max L. Margolis)",
+  "latin_share_page": 0.07,
+  "latin_share_neighbours": {
+   "-2": 0.18,
+   "-1": 0,
+   "+1": 0.08,
+   "+2": 0.06
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69c1ba738522835be8458e8d_72",
+  "lang": "Hebrew",
+  "book_title": "The Rylands Ashkenazi Haggadah (Hebrew MS 7)",
+  "translator": "Jewish Publication Society of America board of editors (Max L. Margolis, editor-in-chief)",
+  "latin_share_page": 0.54,
+  "latin_share_neighbours": {
+   "-2": 0.33,
+   "-1": 0.64,
+   "+1": 0.25,
+   "+2": 0.37
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "69c79f1492b884e4f817372f_31",
+  "lang": "Hebrew",
+  "book_title": "[Hebrew: Sefer ha-bahir]",
+  "translator": "Aryeh Kaplan",
+  "latin_share_page": 0.21,
+  "latin_share_neighbours": {
+   "-2": 0.01,
+   "-1": 0.01,
+   "+1": 0.03,
+   "+2": 0.01
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69c1bc6b8522835be8463238_270",
+  "lang": "Hebrew",
+  "book_title": "Yemenite prayer book for the whole year (Tikhlal) (Gaster Hebrew MS Add 5)",
+  "translator": "Israel Zangwill",
+  "latin_share_page": 0.01,
+  "latin_share_neighbours": {
+   "-2": 0.02,
+   "-1": 0.01,
+   "+1": 0.07,
+   "+2": 0.11
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69c1bc708522835be84634e8_67",
+  "lang": "Hebrew",
+  "book_title": "Kabbalistic texts (Gaster Hebrew MS Add 11)",
+  "translator": "Jewish Publication Society of America board of editors (Max L. Margolis, editor-in-chief)",
+  "latin_share_page": 0.1,
+  "latin_share_neighbours": {
+   "-2": 0.07,
+   "-1": 0.11,
+   "+1": 0.26,
+   "+2": 0.32
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69c1bac18522835be845a172_225",
+  "lang": "Hebrew",
+  "book_title": "Yemenite prayer book (Gaster Hebrew MS 4)",
+  "translator": "Dr. Joshua Kulp",
+  "latin_share_page": 0.06,
+  "latin_share_neighbours": {
+   "-2": 0.06,
+   "-1": 0.08,
+   "+1": 0.05,
+   "+2": 0.07
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "697711607e1d5a07ae945879_73",
+  "lang": "Hebrew",
+  "book_title": "The Five Books of Moses",
+  "translator": "Jewish Publication Society of America board of editors (Max L. Margolis, editor-in-chief)",
+  "latin_share_page": 0.1,
+  "latin_share_neighbours": {
+   "-2": 0.13,
+   "-1": 0.09,
+   "+1": 0.03,
+   "+2": 0.03
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69c1bb558522835be845f021_73",
+  "lang": "Hebrew",
+  "book_title": "ʿAvodat ha-Leṿi by R. Aaron ben Moses Horowitz ha-Levi of Starosielce (Gaster Hebrew MS 1354)",
+  "translator": "Jewish Publication Society of America translation committee (Max L. Margolis, editor-in-chief)",
+  "latin_share_page": 0.01,
+  "latin_share_neighbours": {
+   "-2": 0.03,
+   "-1": 0.01,
+   "+1": 0,
+   "+2": 0.01
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69c1bb998522835be8460578_1",
+  "lang": "Hebrew",
+  "book_title": "Ḳav ha-yashar (Gaster Hebrew MS 1511A)",
+  "translator": "Rabbi Avraham Davis (Metsudah edition); the Sefaria version title names only 'Metsudah Publications'",
+  "latin_share_page": 0.24,
+  "latin_share_neighbours": {
+   "-2": null,
+   "-1": null,
+   "+1": 0.09,
+   "+2": null
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69c1bae08522835be845b1f6_67",
+  "lang": "Hebrew",
+  "book_title": "Composite manuscript: Karaite prayer book for Passover and Shavuot in Hebrew and Judeo-Arabic (Gaster Hebrew MS 146)",
+  "translator": "Jewish Publication Society of America translation committee (Max L. Margolis, editor-in-chief)",
+  "latin_share_page": 0.17,
+  "latin_share_neighbours": {
+   "-2": 0.31,
+   "-1": 0.1,
+   "+1": 0.05,
+   "+2": 0.11
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69c1ba9b8522835be8459ac5_42",
+  "lang": "Hebrew",
+  "book_title": "Psalms 45:16-78:46 (Hebrew MS 38)",
+  "translator": "Jewish Publication Society of America translation committee (Max L. Margolis, editor-in-chief)",
+  "latin_share_page": 0.27,
+  "latin_share_neighbours": {
+   "-2": 0.27,
+   "-1": 0.2,
+   "+1": 0.25,
+   "+2": 0.19
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "6a20331018654bf8e19040d0_57",
+  "lang": "Arabic",
+  "book_title": "Duʿāʾ : prayer Or. 8202",
+  "translator": "J. M. Rodwell",
+  "latin_share_page": 0.57,
+  "latin_share_neighbours": {
+   "-2": 0.59,
+   "-1": 0.49,
+   "+1": 0.09,
+   "+2": 0.26
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "69d665abdaca889caf927527_106",
+  "lang": "Arabic",
+  "book_title": "القانون في الطب (Canon of Medicine — c.1100, Andalusian provenance)",
+  "translator": "O. Cameron Gruner",
+  "latin_share_page": 0.08,
+  "latin_share_neighbours": {
+   "-2": 0.04,
+   "-1": 0.08,
+   "+1": 0.02,
+   "+2": 0.09
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "6a20331318654bf8e1904192_49",
+  "lang": "Arabic",
+  "book_title": "[A book of prayers and litanies; some parts with Malay interinear translation] Or. 8207",
+  "translator": "J. M. Rodwell",
+  "latin_share_page": 0.41,
+  "latin_share_neighbours": {
+   "-2": 0.55,
+   "-1": 0.49,
+   "+1": 0.44,
+   "+2": 0.39
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "6a2032d218654bf8e1903805_19",
+  "lang": "Arabic",
+  "book_title": "[Copy of a book of prayers; Duʿāʾ; and litanies; some parts with Malay interlinear translation. Probably from Aceh]. Or. 7178",
+  "translator": "J. M. Rodwell",
+  "latin_share_page": 0.11,
+  "latin_share_neighbours": {
+   "-2": 0.09,
+   "-1": 0.18,
+   "+1": 0.14,
+   "+2": 0.16
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69c1b7b48522835be8448cf5_90",
+  "lang": "Arabic",
+  "book_title": "Fourteen texts on geometry, cosmology, philosophy and the Qur'an, by Ibn Sina (d. 1037), `Umar al-Khayyam (d. 1123), al-Sijzi (d. c.1020) and others",
+  "translator": "Swami Govinda Tirtha",
+  "latin_share_page": 0.01,
+  "latin_share_neighbours": {
+   "-2": 0.06,
+   "-1": 0.1,
+   "+1": 0.15,
+   "+2": 0.35
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69c1b7a6fe4b8f25b9200a17_46",
+  "lang": "Arabic",
+  "book_title": "Folios from a Hijazi Qur'an",
+  "translator": "J. M. Rodwell",
+  "latin_share_page": 0.1,
+  "latin_share_neighbours": {
+   "-2": 0.09,
+   "-1": 0.11,
+   "+1": 0.1,
+   "+2": 0.1
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "6a9f344c9a132af385446258_374",
+  "lang": "Arabic",
+  "book_title": "كتاب الأعلاق النفيسة; كتاب البلدان",
+  "translator": "Paul M. Cobb (section, Leiden pp. 308-373); eds. Matthew S. Gordon, Chase F. Robinson, Everett K. Rowson, Michael Fishbein",
+  "latin_share_page": 0.11,
+  "latin_share_neighbours": {
+   "-2": 0.19,
+   "-1": 0.24,
+   "+1": 0.43,
+   "+2": 0.29
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69b3043d1d880408995dff3d_167",
+  "lang": "Arabic",
+  "book_title": "Life and Deeds of Tamerlane",
+  "translator": "J. H. Sanders",
+  "latin_share_page": 0.02,
+  "latin_share_neighbours": {
+   "-2": 0.02,
+   "-1": 0.04,
+   "+1": 0.07,
+   "+2": 0.03
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69d5abbf4dc55b8478ddcfa6_105",
+  "lang": "Arabic",
+  "book_title": "فصوص الحكم (Bezels of Wisdom)",
+  "translator": "Khaja Khan",
+  "latin_share_page": 0.03,
+  "latin_share_neighbours": {
+   "-2": 0.04,
+   "-1": 0.03,
+   "+1": 0.41,
+   "+2": 0.02
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "6a2032e518654bf8e1903b96_25",
+  "lang": "Arabic",
+  "book_title": "[Wird. A collection of Awrād for the seven days of 7 days of the week. With Malay titles] Or. 7191",
+  "translator": "J. M. Rodwell",
+  "latin_share_page": 0.16,
+  "latin_share_neighbours": {
+   "-2": 0.27,
+   "-1": 0.38,
+   "+1": 0.25,
+   "+2": 0.29
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69b99ef86ed9e0490990a8ac_79",
+  "lang": "Pali",
+  "book_title": "Puggala-Paññatti (Pali Text)",
+  "translator": "Bimala Charan Law",
+  "latin_share_page": 1,
+  "latin_share_neighbours": {
+   "-2": 1,
+   "-1": 1,
+   "+1": 1,
+   "+2": null
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "69b99f111b6f70482c00d17c_94",
+  "lang": "Pali",
+  "book_title": "History of the Buddhas and the Basket of Conduct",
+  "translator": "Bhikkhu Sujato",
+  "latin_share_page": 1,
+  "latin_share_neighbours": {
+   "-2": 1,
+   "-1": 0.9,
+   "+1": 1,
+   "+2": 0.98
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "6a09ff3dfa20006dbaba8b4d_427",
+  "lang": "Pali",
+  "book_title": "Atthasālinī (Buddhaghosa's commentary on the Dhammasaṅgaṇī) — PTS Pali",
+  "translator": "Pe Maung Tin (edited and revised by Mrs Rhys Davids)",
+  "latin_share_page": 0.93,
+  "latin_share_neighbours": {
+   "-2": 0.92,
+   "-1": 0.92,
+   "+1": 0.97,
+   "+2": 0.91
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "69b99ec16ed9e0490990a6f2_195",
+  "lang": "Pali",
+  "book_title": "Paramatthadīpanī: Dhammapāla's Commentary on the Therīgāthā (Pali Text)",
+  "translator": "C. A. F. Rhys Davids",
+  "latin_share_page": 0.96,
+  "latin_share_neighbours": {
+   "-2": 0.96,
+   "-1": 0.97,
+   "+1": 0.96,
+   "+2": 0.97
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "69b99eae6ed9e0490990a486_510",
+  "lang": "Pali",
+  "book_title": "The Jātaka Together With Its Commentary (Pali Text)",
+  "translator": "W. H. D. Rouse (volume translated by E. B. Cowell and W. H. D. Rouse; Rouse's preface assigns p. 338 to the end to himself)",
+  "latin_share_page": 0.94,
+  "latin_share_neighbours": {
+   "-2": 0.95,
+   "-1": 0.93,
+   "+1": 0.95,
+   "+2": 0.94
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "69b99f1a1b6f70482c00d1fa_189",
+  "lang": "Pali",
+  "book_title": "Tipiṭaka (Pali Text)",
+  "translator": "Bhikkhu Sujato",
+  "latin_share_page": 0.03,
+  "latin_share_neighbours": {
+   "-2": 0.03,
+   "-1": 0.03,
+   "+1": 0.09,
+   "+2": 0.03
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69b99f0b6ed9e0490990a92b_94",
+  "lang": "Pali",
+  "book_title": "Netti-Pakaraṇa (Pali Text)",
+  "translator": "Bhikkhu Sujato",
+  "latin_share_page": 0.86,
+  "latin_share_neighbours": {
+   "-2": 0.96,
+   "-1": 0.91,
+   "+1": 0.94,
+   "+2": 0.9
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "69de99071b234a773e439b52_236",
+  "lang": "Pali",
+  "book_title": "Jatakatthavannana (Jataka with Commentary), Vol. 1",
+  "translator": "Robert Chalmers",
+  "latin_share_page": 0.97,
+  "latin_share_neighbours": {
+   "-2": 0.97,
+   "-1": 0.97,
+   "+1": 1,
+   "+2": 0.99
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "69b99eea76b9bab2de21a3d4_76",
+  "lang": "Pali",
+  "book_title": "Kathāvatthu (Pali Text)",
+  "translator": "Shwe Zan Aung and C. A. F. Rhys Davids",
+  "latin_share_page": 1,
+  "latin_share_neighbours": {
+   "-2": 0.98,
+   "-1": 1,
+   "+1": 1,
+   "+2": 0.99
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "69b99e9576b9bab2de21a0bc_280",
+  "lang": "Pali",
+  "book_title": "The Jātaka Together With Its Commentary, Vol. II (Pali Text)",
+  "translator": "W. H. D. Rouse",
+  "latin_share_page": 0.95,
+  "latin_share_neighbours": {
+   "-2": 1,
+   "-1": 0.95,
+   "+1": 0.93,
+   "+2": 0.92
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "69b99ec86ed9e0490990a85d_35",
+  "lang": "Pali",
+  "book_title": "Jinacarita (Pali Text)",
+  "translator": "W. H. D. Rouse",
+  "latin_share_page": 0.98,
+  "latin_share_neighbours": {
+   "-2": 0.99,
+   "-1": 0.98,
+   "+1": 0.98,
+   "+2": 1
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "6992cdb643713c66ea6381da_111",
+  "lang": "Chinese",
+  "book_title": "Compendium of Materia Medica, Vols. 24-25",
+  "translator": "Luo Xiwen",
+  "latin_share_page": 0.17,
+  "latin_share_neighbours": {
+   "-2": 0.44,
+   "-1": 0.13,
+   "+1": 0.34,
+   "+2": 0.81
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "6992cdd381c9d7efb84d06ab_178",
+  "lang": "Chinese",
+  "book_title": "Bencao Gangmu (Compendium of Materia Medica) (Vol. 35, Parts 1-2)",
+  "translator": "Luo Xiwen",
+  "latin_share_page": 0.25,
+  "latin_share_neighbours": {
+   "-2": 0.29,
+   "-1": 0.19,
+   "+1": 0.05,
+   "+2": 0.08
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "6958e9ac538549809db82aee_70",
+  "lang": "Chinese",
+  "book_title": "Compendium of Materia Medica, Vol. 7",
+  "translator": "Luo Xiwen",
+  "latin_share_page": 0.17,
+  "latin_share_neighbours": {
+   "-2": 0.03,
+   "-1": 0.04,
+   "+1": 0.04,
+   "+2": 0.03
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "6a3c5f3b879008ba7e1537d3_17",
+  "lang": "Chinese",
+  "book_title": "金剛般若波羅蜜經.難字注音. (vol 2)",
+  "translator": "William Gemmell",
+  "latin_share_page": 0.2,
+  "latin_share_neighbours": {
+   "-2": 0.97,
+   "-1": 0.1,
+   "+1": 0.12,
+   "+2": 0.09
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "6a40efd67f8d954eada8b8ab_85",
+  "lang": "Chinese",
+  "book_title": "儒林外史(二十) — The Scholars, vol 20",
+  "translator": "Yang Hsien-yi and Gladys Yang",
+  "latin_share_page": 0.35,
+  "latin_share_neighbours": {
+   "-2": 0.39,
+   "-1": 0.36,
+   "+1": 0.2,
+   "+2": 0.21
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "6a40ef403a63957730efebb0_26",
+  "lang": "Chinese",
+  "book_title": "儒林外史(二) — The Scholars, vol 2",
+  "translator": "Yang Hsien-yi and Gladys Yang",
+  "latin_share_page": 0.19,
+  "latin_share_neighbours": {
+   "-2": 0.18,
+   "-1": 0.57,
+   "+1": 0.24,
+   "+2": 0.62
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "69e8b28a2ff2a8dc09e77ff4_36",
+  "lang": "Sanskrit",
+  "book_title": "Fundamental Verses on the Middle Way",
+  "translator": "Th. Stcherbatsky",
+  "latin_share_page": 0.08,
+  "latin_share_neighbours": {
+   "-2": 0.2,
+   "-1": 0.15,
+   "+1": 0.06,
+   "+2": 0.03
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69de101d5cedf736edb85346_27",
+  "lang": "Sanskrit",
+  "book_title": "Anangaranga (Sanskrit)",
+  "translator": "F. F. Arbuthnot and Richard F. Burton (signed A. F. F. and B. F. R.)",
+  "latin_share_page": 0.29,
+  "latin_share_neighbours": {
+   "-2": 0.3,
+   "-1": 0.07,
+   "+1": 0.12,
+   "+2": 0.6
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "69935b198e28d8f4c5d3c249_406",
+  "lang": "Persian",
+  "book_title": "Mathnawī-yi Maʿnawī (Persian Critical Edition, Books I-II)",
+  "translator": "Reynold A. Nicholson",
+  "latin_share_page": 0.08,
+  "latin_share_neighbours": {
+   "-2": null,
+   "-1": null,
+   "+1": null,
+   "+2": null
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": false
+ },
+ {
+  "id": "6a09fef929abf62080bbd82a_206",
+  "lang": "Pali",
+  "book_title": "Dhammasaṅgaṇī (PTS Pali edition)",
+  "translator": "Caroline A. F. Rhys Davids",
+  "latin_share_page": 1,
+  "latin_share_neighbours": {
+   "-2": 1,
+   "-1": 1,
+   "+1": 1,
+   "+2": 1
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "6a308280558372a29b371088_158",
+  "lang": "Pali",
+  "book_title": "Visuddhimagga of Buddhaghosa (Pali, PTS)",
+  "translator": "Pe Maung Tin",
+  "latin_share_page": 0.95,
+  "latin_share_neighbours": {
+   "-2": 0.98,
+   "-1": 0.96,
+   "+1": 0.97,
+   "+2": 0.94
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ },
+ {
+  "id": "6a30904dd8c6b8a005c7bea9_324",
+  "lang": "Pali",
+  "book_title": "Atthasālinī — Buddhaghosa’s commentary on the Dhammasaṅgaṇī (Pali, PTS)",
+  "translator": "Pe Maung Tin (edited and revised by Mrs. Rhys Davids)",
+  "latin_share_page": 0.95,
+  "latin_share_neighbours": {
+   "-2": 0.93,
+   "-1": 0.89,
+   "+1": 0.94,
+   "+2": 0.94
+  },
+  "page_has_printed_english": false,
+  "facing_translation_suspect": true
+ }
+]

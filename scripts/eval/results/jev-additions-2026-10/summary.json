@@ -1,0 +1,72 @@
+{
+ "n_calls": 174,
+ "input_tokens": 291301,
+ "cost_usd_gateway": 0.01223,
+ "cost_usd_at_0.042_per_M": 0.01223,
+ "max_chars_each": 6000,
+ "aa": {
+  "w1": 0.017,
+  "w2": 0.0115,
+  "n": 20
+ },
+ "w1": {
+  "threshold": 0.72,
+  "controls": {
+   "auc": 0.964,
+   "n_pos": 37,
+   "n_neg": 57,
+   "recall": 0.865,
+   "clean_flagged": 6
+  },
+  "live": {
+   "auc": 0.803,
+   "n_true": 22,
+   "n_not": 38,
+   "flagged": 30,
+   "true_among_flagged": 16,
+   "precision": 0.533,
+   "recall": 0.727,
+   "unflagged_group_flagged_by_jev": 4
+  }
+ },
+ "w2": {
+  "threshold": 0.83,
+  "controls": {
+   "auc": 0.959,
+   "n_pos": 37,
+   "n_neg": 57,
+   "recall": 0.865,
+   "clean_flagged": 5
+  },
+  "live": {
+   "auc": 0.76,
+   "n_true": 22,
+   "n_not": 38,
+   "flagged": 31,
+   "true_among_flagged": 15,
+   "precision": 0.484,
+   "recall": 0.682,
+   "unflagged_group_flagged_by_jev": 4
+  }
+ },
+ "mean": {
+  "threshold": 0.75,
+  "controls": {
+   "auc": 0.96,
+   "n_pos": 37,
+   "n_neg": 57,
+   "recall": 0.865,
+   "clean_flagged": 6
+  },
+  "live": {
+   "auc": 0.807,
+   "n_true": 22,
+   "n_not": 38,
+   "flagged": 32,
+   "true_among_flagged": 16,
+   "precision": 0.5,
+   "recall": 0.727,
+   "unflagged_group_flagged_by_jev": 5
+  }
+ }
+}

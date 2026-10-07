@@ -43,3 +43,20 @@ export function isTruncatedCandidate(candidate: { finishReason?: string | null }
 export function truncationFailReason(candidate: { finishReason?: string | null } | null | undefined): string {
   return `truncated:${String(candidate?.finishReason || 'unknown').toUpperCase()}`;
 }
+
+/**
+ * The whole text of a candidate: every text part, joined in order. Twin of `candidateText`
+ * in scripts/lib/truncated-response.mjs — read the note there. Gemini 3 sometimes answers
+ * one request in two text parts; a writer that reads `parts[0].text` stores the page cut off
+ * (#5813). Thought parts are left out. '' when there is no text.
+ */
+export function candidateText(
+  candidate: { content?: { parts?: Array<{ text?: string; thought?: boolean } | null> | null } | null } | null | undefined,
+): string {
+  const parts = candidate?.content?.parts;
+  if (!Array.isArray(parts)) return '';
+  return parts
+    .filter((p): p is { text: string; thought?: boolean } => !!p && typeof p.text === 'string' && p.thought !== true)
+    .map((p) => p.text)
+    .join('');
+}

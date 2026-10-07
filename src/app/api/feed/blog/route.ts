@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { posts } from '@/app/blog/page';
+import { posts, KIND_INFO } from '@/app/blog/posts';
 
 // Atom feed for the Research Notes blog. Reads the same `posts` array the index
 // renders, so the feed never drifts from the site.
@@ -55,7 +55,7 @@ export async function GET() {
     <published>${post.iso}</published>
     <summary type="text">${escapeXml(post.subtitle)}</summary>
     <content type="html"><![CDATA[${image}<p>${escapeXml(post.subtitle)}</p><p><a href="${url}">Read the full note &rarr;</a></p>]]></content>
-    ${post.tag ? `<category term="${escapeXml(post.tag)}"/>` : ''}
+    <category term="${escapeXml(KIND_INFO[post.kind].label)}"/>
     <author><name>Source Library</name></author>
   </entry>`;
   });

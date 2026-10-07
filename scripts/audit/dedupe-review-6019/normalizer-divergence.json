@@ -1,0 +1,2289 @@
+{
+ "seed": 6023,
+ "live": 42078,
+ "sample": 2000,
+ "twins": {
+  "dedup.normalizeTitle ts vs scripts/lib/dedup-normalize.mjs": {
+   "compared": 42078,
+   "differ": 0
+  },
+  "normalizeEditionTitle ts vs scripts/lib/identity-fields.mjs": {
+   "compared": 42078,
+   "differ": 0
+  },
+  "dedup.normalizeAuthor ts vs scripts/lib/dedup-normalize.mjs": {
+   "compared": 42078,
+   "differ": 0
+  },
+  "editionSurname ts vs scripts/lib/identity-fields.mjs": {
+   "compared": 42078,
+   "differ": 0
+  }
+ },
+ "title": {
+  "per_normalizer": {
+   "dedup.normalizeTitle (src/lib/dedup.ts)": {
+    "empty_key": 552,
+    "has_same_in_live_corpus": 137,
+    "distinct_keys_in_live": 28141
+   },
+   "normalizeEditionTitle (src/lib/edition-key.ts)": {
+    "empty_key": 0,
+    "has_same_in_live_corpus": 261,
+    "distinct_keys_in_live": 39142
+   },
+   "normaliseTitle (scripts/lib/work-identity-match.mjs)": {
+    "empty_key": 21,
+    "has_same_in_live_corpus": 594,
+    "distinct_keys_in_live": 29922
+   },
+   "normalizeTitle (scripts/lib/artwork-work-resolver.mjs)": {
+    "empty_key": 552,
+    "has_same_in_live_corpus": 137,
+    "distinct_keys_in_live": 28141
+   },
+   "norm (scripts/lib/work-identity-util.mjs)": {
+    "empty_key": 21,
+    "has_same_in_live_corpus": 594,
+    "distinct_keys_in_live": 29922
+   },
+   "rankingTokens (src/lib/holdings-check.ts, #6028)": {
+    "empty_key": 0,
+    "has_same_in_live_corpus": 330,
+    "distinct_keys_in_live": 38201
+   }
+  },
+  "pairs": [
+   {
+    "a": "dedup.normalizeTitle (src/lib/dedup.ts)",
+    "b": "normalizeEditionTitle (src/lib/edition-key.ts)",
+    "disagree": 166,
+    "rate": "166/2000 = 8.3% [7.2, 9.6]",
+    "only_first_says_same": 26,
+    "only_second_says_same": 140
+   },
+   {
+    "a": "dedup.normalizeTitle (src/lib/dedup.ts)",
+    "b": "normaliseTitle (scripts/lib/work-identity-match.mjs)",
+    "disagree": 587,
+    "rate": "587/2000 = 29.4% [27.4, 31.4]",
+    "only_first_says_same": 66,
+    "only_second_says_same": 521
+   },
+   {
+    "a": "dedup.normalizeTitle (src/lib/dedup.ts)",
+    "b": "normalizeTitle (scripts/lib/artwork-work-resolver.mjs)",
+    "disagree": 2,
+    "rate": "2/2000 = 0.1% [0.0, 0.4]",
+    "only_first_says_same": 1,
+    "only_second_says_same": 1
+   },
+   {
+    "a": "dedup.normalizeTitle (src/lib/dedup.ts)",
+    "b": "norm (scripts/lib/work-identity-util.mjs)",
+    "disagree": 587,
+    "rate": "587/2000 = 29.4% [27.4, 31.4]",
+    "only_first_says_same": 66,
+    "only_second_says_same": 521
+   },
+   {
+    "a": "dedup.normalizeTitle (src/lib/dedup.ts)",
+    "b": "rankingTokens (src/lib/holdings-check.ts, #6028)",
+    "disagree": 240,
+    "rate": "240/2000 = 12.0% [10.6, 13.5]",
+    "only_first_says_same": 26,
+    "only_second_says_same": 215
+   },
+   {
+    "a": "normalizeEditionTitle (src/lib/edition-key.ts)",
+    "b": "normaliseTitle (scripts/lib/work-identity-match.mjs)",
+    "disagree": 587,
+    "rate": "587/2000 = 29.4% [27.4, 31.4]",
+    "only_first_says_same": 195,
+    "only_second_says_same": 527
+   },
+   {
+    "a": "normalizeEditionTitle (src/lib/edition-key.ts)",
+    "b": "normalizeTitle (scripts/lib/artwork-work-resolver.mjs)",
+    "disagree": 166,
+    "rate": "166/2000 = 8.3% [7.2, 9.6]",
+    "only_first_says_same": 140,
+    "only_second_says_same": 26
+   },
+   {
+    "a": "normalizeEditionTitle (src/lib/edition-key.ts)",
+    "b": "norm (scripts/lib/work-identity-util.mjs)",
+    "disagree": 587,
+    "rate": "587/2000 = 29.4% [27.4, 31.4]",
+    "only_first_says_same": 195,
+    "only_second_says_same": 527
+   },
+   {
+    "a": "normalizeEditionTitle (src/lib/edition-key.ts)",
+    "b": "rankingTokens (src/lib/holdings-check.ts, #6028)",
+    "disagree": 75,
+    "rate": "75/2000 = 3.8% [3.0, 4.7]",
+    "only_first_says_same": 0,
+    "only_second_says_same": 75
+   },
+   {
+    "a": "normaliseTitle (scripts/lib/work-identity-match.mjs)",
+    "b": "normalizeTitle (scripts/lib/artwork-work-resolver.mjs)",
+    "disagree": 585,
+    "rate": "585/2000 = 29.3% [27.3, 31.3]",
+    "only_first_says_same": 520,
+    "only_second_says_same": 65
+   },
+   {
+    "a": "normaliseTitle (scripts/lib/work-identity-match.mjs)",
+    "b": "norm (scripts/lib/work-identity-util.mjs)",
+    "disagree": 0,
+    "rate": "0/2000 = 0.0% [0.0, 0.2]",
+    "only_first_says_same": 0,
+    "only_second_says_same": 0
+   },
+   {
+    "a": "normaliseTitle (scripts/lib/work-identity-match.mjs)",
+    "b": "rankingTokens (src/lib/holdings-check.ts, #6028)",
+    "disagree": 658,
+    "rate": "658/2000 = 32.9% [30.9, 35.0]",
+    "only_first_says_same": 527,
+    "only_second_says_same": 267
+   },
+   {
+    "a": "normalizeTitle (scripts/lib/artwork-work-resolver.mjs)",
+    "b": "norm (scripts/lib/work-identity-util.mjs)",
+    "disagree": 585,
+    "rate": "585/2000 = 29.3% [27.3, 31.3]",
+    "only_first_says_same": 65,
+    "only_second_says_same": 520
+   },
+   {
+    "a": "normalizeTitle (scripts/lib/artwork-work-resolver.mjs)",
+    "b": "rankingTokens (src/lib/holdings-check.ts, #6028)",
+    "disagree": 240,
+    "rate": "240/2000 = 12.0% [10.6, 13.5]",
+    "only_first_says_same": 26,
+    "only_second_says_same": 215
+   },
+   {
+    "a": "norm (scripts/lib/work-identity-util.mjs)",
+    "b": "rankingTokens (src/lib/holdings-check.ts, #6028)",
+    "disagree": 658,
+    "rate": "658/2000 = 32.9% [30.9, 35.0]",
+    "only_first_says_same": 527,
+    "only_second_says_same": 267
+   }
+  ],
+  "examples": {
+   "dedup.normalizeTitle (src/lib/dedup.ts) | normalizeEditionTitle (src/lib/edition-key.ts)": [
+    {
+     "only": "second",
+     "a": "儀禮集說·卷九~卷十 (vol 42)",
+     "b": "儀禮集說·卷九~卷十 (vol 8)",
+     "a_id": "6a3c700301fe4f593c1cfca6",
+     "b_id": "6a3c6fe301fe4f593c1cea09"
+    },
+    {
+     "only": "second",
+     "a": "論衡·卷四~卷六 (vol 22)",
+     "b": "論衡·卷四~卷六 (vol 3)",
+     "a_id": "6a3c6c6239b4508b04e491a1",
+     "b_id": "6a3c6c5039b4508b04e486ab"
+    },
+    {
+     "only": "second",
+     "a": "儀禮集說·卷三~卷四 (vol 2)",
+     "b": "儀禮集說·卷三~卷四 (vol 17)",
+     "a_id": "6a3c6fde01fe4f593c1ce6a6",
+     "b_id": "6a3c6fed01fe4f593c1cefa4"
+    },
+    {
+     "only": "first",
+     "a": "儒林外史(九) — The Scholars, vol 9",
+     "b": "儒林外史(一) — The Scholars, vol 1",
+     "a_id": "6a40ef5c3a63957730efee33",
+     "b_id": "6a40ef3c3a63957730efeb4b"
+    },
+    {
+     "only": "second",
+     "a": "御定佩文韻府·卷二十一之五 (vol 89)",
+     "b": "御定佩文韻府·卷二十一之五 (vol 388)",
+     "a_id": "6a3c62a040c88a541d8f5226",
+     "b_id": "6a3c63d1af3c49b59c5c8d88"
+    },
+    {
+     "only": "second",
+     "a": "御定淵鑑類函·卷三百四十八~卷三百四十九 (vol 337)",
+     "b": "御定淵鑑類函·卷三百四十八~卷三百四十九 (vol 193)",
+     "a_id": "6a3cef1b8642f0445b160c94",
+     "b_id": "6a3cee844701a906f10e9ff7"
+    },
+    {
+     "only": "second",
+     "a": "御定佩文韻府·卷二十六之三 (vol 126)",
+     "b": "御定佩文韻府·卷二十六之三 (vol 429)",
+     "a_id": "6a3c62c640c88a541d8f602f",
+     "b_id": "6a3c63fdaf3c49b59c5ca286"
+    },
+    {
+     "only": "first",
+     "a": "弘明集·卷八~卷九 — Hong Ming Ji (vol 4)",
+     "b": "弘明集·卷一~卷二 — Hong Ming Ji (vol 1)",
+     "a_id": "6a3c753139b4508b04e5bf35",
+     "b_id": "6a3c752f39b4508b04e5bdf7"
+    },
+    {
+     "only": "second",
+     "a": "三命通會·卷九 (vol 9)",
+     "b": "三命通會·卷九 (vol 21)",
+     "a_id": "6a3c6cb801fe4f593c1b4135",
+     "b_id": "6a3c6cc401fe4f593c1b4cdc"
+    },
+    {
+     "only": "second",
+     "a": "春秋經筌·卷二 (vol 13)",
+     "b": "春秋經筌·卷二 (vol 2)",
+     "a_id": "6a3c72b001fe4f593c1e1be2",
+     "b_id": "6a3c72a501fe4f593c1e1464"
+    },
+    {
+     "only": "second",
+     "a": "御定佩文韻府·卷九十八之一 (vol 680)",
+     "b": "御定佩文韻府·卷九十八之一 (vol 245)",
+     "a_id": "6a3c64f539b4508b04e2b692",
+     "b_id": "6a3c63404daf85677d17084b"
+    },
+    {
+     "only": "second",
+     "a": "御定佩文韻府·卷九十七 (vol 244)",
+     "b": "御定佩文韻府·卷九十七 (vol 679)",
+     "a_id": "6a3c63494daf85677d170b89",
+     "b_id": "6a3c64f339b4508b04e2b54c"
+    }
+   ],
+   "dedup.normalizeTitle (src/lib/dedup.ts) | normaliseTitle (scripts/lib/work-identity-match.mjs)": [
+    {
+     "only": "second",
+     "a": "黃氏日抄·卷二十五 (vol 20)",
+     "b": "御定康熙字典·卷二十一 (vol 20)",
+     "a_id": "6a3c6d2601fe4f593c1b82ed",
+     "b_id": "6a3c5e8040c88a541d8e2b75"
+    },
+    {
+     "only": "second",
+     "a": "普濟方·卷一百二十二 (vol 78)",
+     "b": "圖書編·卷九十七~卷九十八 (vol 78)",
+     "a_id": "6a3c691d39b4508b04e3c415",
+     "b_id": "6a3c5fb4879008ba7e157140"
+    },
+    {
+     "only": "second",
+     "a": "喻林·卷九十九~卷一百一 (vol 35)",
+     "b": "御定康熙字典·卷三十六 (vol 35)",
+     "a_id": "6a3c79ba01fe4f593c211e77",
+     "b_id": "6a3c5e9140c88a541d8e36f9"
+    },
+    {
+     "only": "second",
+     "a": "九章錄要·卷九~卷十二 (vol 3)",
+     "b": "古音駢字續編·卷五 (vol 3)",
+     "a_id": "6a3ceda34701a906f10e2004",
+     "b_id": "6a3c5e17879008ba7e151a3d"
+    },
+    {
+     "only": "second",
+     "a": "重訂詩經疑問·卷二 (vol 2)",
+     "b": "古音駢字續編·卷三~卷四 (vol 2)",
+     "a_id": "6a3ce8390a0011cb4bc0cb8d",
+     "b_id": "6a3c5e1640c88a541d8e0525"
+    },
+    {
+     "only": "second",
+     "a": "儀禮集說·卷九~卷十 (vol 42)",
+     "b": "御定康熙字典·卷七 (vol 42)",
+     "a_id": "6a3c700301fe4f593c1cfca6",
+     "b_id": "6a3c5e9840c88a541d8e3bb5"
+    },
+    {
+     "only": "first",
+     "a": "Euripidis Tragoediae (Vol. 2)",
+     "b": "Euripidis Tragoediae",
+     "a_id": "6993797ab0a84a5763964ff1",
+     "b_id": "699376d8b0a84a5763961ccb"
+    },
+    {
+     "only": "second",
+     "a": "古今姓氏書辯證·卷十三~卷十五 (vol 5)",
+     "b": "聊齋志異 Vol. 5",
+     "a_id": "6a3cec4c8642f0445b15b4ce",
+     "b_id": "69e7287aa409200ea79efea0"
+    },
+    {
+     "only": "second",
+     "a": "尚書注疏·卷一~卷二 (vol 23)",
+     "b": "御定康熙字典·卷二十四 (vol 23)",
+     "a_id": "6a3cb62257c1f37219c48f43",
+     "b_id": "6a3c5e8540c88a541d8e2e68"
+    },
+    {
+     "only": "second",
+     "a": "玉海·卷八十二~卷八十三 (vol 44)",
+     "b": "御定康熙字典·卷九 (vol 44)",
+     "a_id": "6a3cecb14701a906f10da645",
+     "b_id": "6a3c5e9a40c88a541d8e3cdf"
+    },
+    {
+     "only": "first",
+     "a": "The Oxyrhynchus Papyri, Part 12",
+     "b": "The Oxyrhynchus Papyri, Part 1",
+     "a_id": "69cf7c17878f40c5945f2700",
+     "b_id": "69cf7b9e878f40c5945f1c42"
+    },
+    {
+     "only": "second",
+     "a": "禮記注疏·卷六十一 (vol 96)",
+     "b": "圖書編·卷一百二十六 (vol 96)",
+     "a_id": "6a3cbc20ec254ff6cadeddcc",
+     "b_id": "6a3c5fc4879008ba7e157c93"
+    }
+   ],
+   "dedup.normalizeTitle (src/lib/dedup.ts) | normalizeTitle (scripts/lib/artwork-work-resolver.mjs)": [
+    {
+     "only": "first",
+     "a": "Полное собраніе сочиненій И.С. Тургенева. Тома 4-5",
+     "b": "海國圖志(45)",
+     "a_id": "69af39b1102120ca71f01750",
+     "b_id": "6992cffdf5b4f75c1a4c9e79"
+    },
+    {
+     "only": "second",
+     "a": "De Sulphure tractatus medico chymicus",
+     "b": "De Sulphure Tractatus Medico-Chymicus",
+     "a_id": "6a26c182aad44c98627c03be",
+     "b_id": "6a267ba26c1f37c9c4f3309e"
+    }
+   ],
+   "dedup.normalizeTitle (src/lib/dedup.ts) | norm (scripts/lib/work-identity-util.mjs)": [
+    {
+     "only": "second",
+     "a": "黃氏日抄·卷二十五 (vol 20)",
+     "b": "御定康熙字典·卷二十一 (vol 20)",
+     "a_id": "6a3c6d2601fe4f593c1b82ed",
+     "b_id": "6a3c5e8040c88a541d8e2b75"
+    },
+    {
+     "only": "second",
+     "a": "普濟方·卷一百二十二 (vol 78)",
+     "b": "圖書編·卷九十七~卷九十八 (vol 78)",
+     "a_id": "6a3c691d39b4508b04e3c415",
+     "b_id": "6a3c5fb4879008ba7e157140"
+    },
+    {
+     "only": "second",
+     "a": "喻林·卷九十九~卷一百一 (vol 35)",
+     "b": "御定康熙字典·卷三十六 (vol 35)",
+     "a_id": "6a3c79ba01fe4f593c211e77",
+     "b_id": "6a3c5e9140c88a541d8e36f9"
+    },
+    {
+     "only": "second",
+     "a": "九章錄要·卷九~卷十二 (vol 3)",
+     "b": "古音駢字續編·卷五 (vol 3)",
+     "a_id": "6a3ceda34701a906f10e2004",
+     "b_id": "6a3c5e17879008ba7e151a3d"
+    },
+    {
+     "only": "second",
+     "a": "重訂詩經疑問·卷二 (vol 2)",
+     "b": "古音駢字續編·卷三~卷四 (vol 2)",
+     "a_id": "6a3ce8390a0011cb4bc0cb8d",
+     "b_id": "6a3c5e1640c88a541d8e0525"
+    },
+    {
+     "only": "second",
+     "a": "儀禮集說·卷九~卷十 (vol 42)",
+     "b": "御定康熙字典·卷七 (vol 42)",
+     "a_id": "6a3c700301fe4f593c1cfca6",
+     "b_id": "6a3c5e9840c88a541d8e3bb5"
+    },
+    {
+     "only": "first",
+     "a": "Euripidis Tragoediae (Vol. 2)",
+     "b": "Euripidis Tragoediae",
+     "a_id": "6993797ab0a84a5763964ff1",
+     "b_id": "699376d8b0a84a5763961ccb"
+    },
+    {
+     "only": "second",
+     "a": "古今姓氏書辯證·卷十三~卷十五 (vol 5)",
+     "b": "聊齋志異 Vol. 5",
+     "a_id": "6a3cec4c8642f0445b15b4ce",
+     "b_id": "69e7287aa409200ea79efea0"
+    },
+    {
+     "only": "second",
+     "a": "尚書注疏·卷一~卷二 (vol 23)",
+     "b": "御定康熙字典·卷二十四 (vol 23)",
+     "a_id": "6a3cb62257c1f37219c48f43",
+     "b_id": "6a3c5e8540c88a541d8e2e68"
+    },
+    {
+     "only": "second",
+     "a": "玉海·卷八十二~卷八十三 (vol 44)",
+     "b": "御定康熙字典·卷九 (vol 44)",
+     "a_id": "6a3cecb14701a906f10da645",
+     "b_id": "6a3c5e9a40c88a541d8e3cdf"
+    },
+    {
+     "only": "first",
+     "a": "The Oxyrhynchus Papyri, Part 12",
+     "b": "The Oxyrhynchus Papyri, Part 1",
+     "a_id": "69cf7c17878f40c5945f2700",
+     "b_id": "69cf7b9e878f40c5945f1c42"
+    },
+    {
+     "only": "second",
+     "a": "禮記注疏·卷六十一 (vol 96)",
+     "b": "圖書編·卷一百二十六 (vol 96)",
+     "a_id": "6a3cbc20ec254ff6cadeddcc",
+     "b_id": "6a3c5fc4879008ba7e157c93"
+    }
+   ],
+   "dedup.normalizeTitle (src/lib/dedup.ts) | rankingTokens (src/lib/holdings-check.ts, #6028)": [
+    {
+     "only": "second",
+     "a": "Thucydides: History of the Peloponnesian War I (Books 1-2, Loeb)",
+     "b": "Thucydides: History of the Peloponnesian War III (Books 5-6, Loeb)",
+     "a_id": "69937a31b0a84a5763967a35",
+     "b_id": "69937a3bb0a84a5763967c0f"
+    },
+    {
+     "only": "second",
+     "a": "儀禮集說·卷九~卷十 (vol 42)",
+     "b": "儀禮集說·卷九~卷十 (vol 8)",
+     "a_id": "6a3c700301fe4f593c1cfca6",
+     "b_id": "6a3c6fe301fe4f593c1cea09"
+    },
+    {
+     "only": "second",
+     "a": "A Treatise of Human Nature - Volume 3",
+     "b": "A Treatise of Human Nature - Volume 1",
+     "a_id": "695690aaaeb4b980d9ebdbfa",
+     "b_id": "695690a6aeb4b980d9ebd8c2"
+    },
+    {
+     "only": "second",
+     "a": "Война и мир, Том III",
+     "b": "Война и мир, Том II",
+     "a_id": "69e7926580b52390feb15c02",
+     "b_id": "69e7925b80b52390feb15a90"
+    },
+    {
+     "only": "second",
+     "a": "論衡·卷四~卷六 (vol 22)",
+     "b": "論衡·卷四~卷六 (vol 3)",
+     "a_id": "6a3c6c6239b4508b04e491a1",
+     "b_id": "6a3c6c5039b4508b04e486ab"
+    },
+    {
+     "only": "second",
+     "a": "儀禮集說·卷三~卷四 (vol 2)",
+     "b": "儀禮集說·卷三~卷四 (vol 17)",
+     "a_id": "6a3c6fde01fe4f593c1ce6a6",
+     "b_id": "6a3c6fed01fe4f593c1cefa4"
+    },
+    {
+     "only": "first",
+     "a": "儒林外史(九) — The Scholars, vol 9",
+     "b": "儒林外史(一) — The Scholars, vol 1",
+     "a_id": "6a40ef5c3a63957730efee33",
+     "b_id": "6a40ef3c3a63957730efeb4b"
+    },
+    {
+     "only": "second",
+     "a": "御定佩文韻府·卷二十一之五 (vol 89)",
+     "b": "御定佩文韻府·卷二十一之五 (vol 388)",
+     "a_id": "6a3c62a040c88a541d8f5226",
+     "b_id": "6a3c63d1af3c49b59c5c8d88"
+    },
+    {
+     "only": "second",
+     "a": "Galeni Opera Omnia, Vol. 1 (BIU Santé)",
+     "b": "Galeni Opera Omnia, Vol. 11 (BIU Santé)",
+     "a_id": "69b00a62c42435fcd0cf9ee0",
+     "b_id": "69b00ab2c42435fcd0cfa2a2"
+    },
+    {
+     "only": "second",
+     "a": "De re dialectica",
+     "b": "Dialectica",
+     "a_id": "69aec7942bb3df12d9b41b5c",
+     "b_id": "6a42f7774608523d8ceb5fc8"
+    },
+    {
+     "only": "second",
+     "a": "Bodleian Library MS. Arch. Selden. B. 54",
+     "b": "Bodleian Library MS. Arch. Selden. B. 56",
+     "a_id": "69bfcdfd8ab50eb88e8c83c8",
+     "b_id": "69bfccff8ab50eb88e8c769f"
+    },
+    {
+     "only": "second",
+     "a": "御定淵鑑類函·卷三百四十八~卷三百四十九 (vol 337)",
+     "b": "御定淵鑑類函·卷三百四十八~卷三百四十九 (vol 193)",
+     "a_id": "6a3cef1b8642f0445b160c94",
+     "b_id": "6a3cee844701a906f10e9ff7"
+    }
+   ],
+   "normalizeEditionTitle (src/lib/edition-key.ts) | normaliseTitle (scripts/lib/work-identity-match.mjs)": [
+    {
+     "only": "second",
+     "a": "黃氏日抄·卷二十五 (vol 20)",
+     "b": "御定康熙字典·卷二十一 (vol 20)",
+     "a_id": "6a3c6d2601fe4f593c1b82ed",
+     "b_id": "6a3c5e8040c88a541d8e2b75"
+    },
+    {
+     "only": "second",
+     "a": "普濟方·卷一百二十二 (vol 78)",
+     "b": "圖書編·卷九十七~卷九十八 (vol 78)",
+     "a_id": "6a3c691d39b4508b04e3c415",
+     "b_id": "6a3c5fb4879008ba7e157140"
+    },
+    {
+     "only": "second",
+     "a": "喻林·卷九十九~卷一百一 (vol 35)",
+     "b": "御定康熙字典·卷三十六 (vol 35)",
+     "a_id": "6a3c79ba01fe4f593c211e77",
+     "b_id": "6a3c5e9140c88a541d8e36f9"
+    },
+    {
+     "only": "second",
+     "a": "九章錄要·卷九~卷十二 (vol 3)",
+     "b": "古音駢字續編·卷五 (vol 3)",
+     "a_id": "6a3ceda34701a906f10e2004",
+     "b_id": "6a3c5e17879008ba7e151a3d"
+    },
+    {
+     "only": "second",
+     "a": "重訂詩經疑問·卷二 (vol 2)",
+     "b": "古音駢字續編·卷三~卷四 (vol 2)",
+     "a_id": "6a3ce8390a0011cb4bc0cb8d",
+     "b_id": "6a3c5e1640c88a541d8e0525"
+    },
+    {
+     "only": "first",
+     "a": "儀禮集說·卷九~卷十 (vol 42)",
+     "b": "儀禮集說·卷九~卷十 (vol 8)",
+     "a_id": "6a3c700301fe4f593c1cfca6",
+     "b_id": "6a3c6fe301fe4f593c1cea09"
+    },
+    {
+     "only": "first",
+     "a": "Euripidis Tragoediae (Vol. 2)",
+     "b": "Euripidis Tragoediae",
+     "a_id": "6993797ab0a84a5763964ff1",
+     "b_id": "699376d8b0a84a5763961ccb"
+    },
+    {
+     "only": "second",
+     "a": "古今姓氏書辯證·卷十三~卷十五 (vol 5)",
+     "b": "聊齋志異 Vol. 5",
+     "a_id": "6a3cec4c8642f0445b15b4ce",
+     "b_id": "69e7287aa409200ea79efea0"
+    },
+    {
+     "only": "second",
+     "a": "尚書注疏·卷一~卷二 (vol 23)",
+     "b": "御定康熙字典·卷二十四 (vol 23)",
+     "a_id": "6a3cb62257c1f37219c48f43",
+     "b_id": "6a3c5e8540c88a541d8e2e68"
+    },
+    {
+     "only": "second",
+     "a": "玉海·卷八十二~卷八十三 (vol 44)",
+     "b": "御定康熙字典·卷九 (vol 44)",
+     "a_id": "6a3cecb14701a906f10da645",
+     "b_id": "6a3c5e9a40c88a541d8e3cdf"
+    },
+    {
+     "only": "first",
+     "a": "The Oxyrhynchus Papyri, Part 12",
+     "b": "The Oxyrhynchus Papyri, Part 1",
+     "a_id": "69cf7c17878f40c5945f2700",
+     "b_id": "69cf7b9e878f40c5945f1c42"
+    },
+    {
+     "only": "second",
+     "a": "禮記注疏·卷六十一 (vol 96)",
+     "b": "圖書編·卷一百二十六 (vol 96)",
+     "a_id": "6a3cbc20ec254ff6cadeddcc",
+     "b_id": "6a3c5fc4879008ba7e157c93"
+    }
+   ],
+   "normalizeEditionTitle (src/lib/edition-key.ts) | normalizeTitle (scripts/lib/artwork-work-resolver.mjs)": [
+    {
+     "only": "first",
+     "a": "儀禮集說·卷九~卷十 (vol 42)",
+     "b": "儀禮集說·卷九~卷十 (vol 8)",
+     "a_id": "6a3c700301fe4f593c1cfca6",
+     "b_id": "6a3c6fe301fe4f593c1cea09"
+    },
+    {
+     "only": "first",
+     "a": "論衡·卷四~卷六 (vol 22)",
+     "b": "論衡·卷四~卷六 (vol 3)",
+     "a_id": "6a3c6c6239b4508b04e491a1",
+     "b_id": "6a3c6c5039b4508b04e486ab"
+    },
+    {
+     "only": "first",
+     "a": "儀禮集說·卷三~卷四 (vol 2)",
+     "b": "儀禮集說·卷三~卷四 (vol 17)",
+     "a_id": "6a3c6fde01fe4f593c1ce6a6",
+     "b_id": "6a3c6fed01fe4f593c1cefa4"
+    },
+    {
+     "only": "second",
+     "a": "儒林外史(九) — The Scholars, vol 9",
+     "b": "儒林外史(一) — The Scholars, vol 1",
+     "a_id": "6a40ef5c3a63957730efee33",
+     "b_id": "6a40ef3c3a63957730efeb4b"
+    },
+    {
+     "only": "first",
+     "a": "御定佩文韻府·卷二十一之五 (vol 89)",
+     "b": "御定佩文韻府·卷二十一之五 (vol 388)",
+     "a_id": "6a3c62a040c88a541d8f5226",
+     "b_id": "6a3c63d1af3c49b59c5c8d88"
+    },
+    {
+     "only": "first",
+     "a": "御定淵鑑類函·卷三百四十八~卷三百四十九 (vol 337)",
+     "b": "御定淵鑑類函·卷三百四十八~卷三百四十九 (vol 193)",
+     "a_id": "6a3cef1b8642f0445b160c94",
+     "b_id": "6a3cee844701a906f10e9ff7"
+    },
+    {
+     "only": "first",
+     "a": "御定佩文韻府·卷二十六之三 (vol 126)",
+     "b": "御定佩文韻府·卷二十六之三 (vol 429)",
+     "a_id": "6a3c62c640c88a541d8f602f",
+     "b_id": "6a3c63fdaf3c49b59c5ca286"
+    },
+    {
+     "only": "second",
+     "a": "弘明集·卷八~卷九 — Hong Ming Ji (vol 4)",
+     "b": "弘明集·卷一~卷二 — Hong Ming Ji (vol 1)",
+     "a_id": "6a3c753139b4508b04e5bf35",
+     "b_id": "6a3c752f39b4508b04e5bdf7"
+    },
+    {
+     "only": "first",
+     "a": "三命通會·卷九 (vol 9)",
+     "b": "三命通會·卷九 (vol 21)",
+     "a_id": "6a3c6cb801fe4f593c1b4135",
+     "b_id": "6a3c6cc401fe4f593c1b4cdc"
+    },
+    {
+     "only": "first",
+     "a": "春秋經筌·卷二 (vol 13)",
+     "b": "春秋經筌·卷二 (vol 2)",
+     "a_id": "6a3c72b001fe4f593c1e1be2",
+     "b_id": "6a3c72a501fe4f593c1e1464"
+    },
+    {
+     "only": "first",
+     "a": "御定佩文韻府·卷九十八之一 (vol 680)",
+     "b": "御定佩文韻府·卷九十八之一 (vol 245)",
+     "a_id": "6a3c64f539b4508b04e2b692",
+     "b_id": "6a3c63404daf85677d17084b"
+    },
+    {
+     "only": "first",
+     "a": "御定佩文韻府·卷九十七 (vol 244)",
+     "b": "御定佩文韻府·卷九十七 (vol 679)",
+     "a_id": "6a3c63494daf85677d170b89",
+     "b_id": "6a3c64f339b4508b04e2b54c"
+    }
+   ],
+   "normalizeEditionTitle (src/lib/edition-key.ts) | norm (scripts/lib/work-identity-util.mjs)": [
+    {
+     "only": "second",
+     "a": "黃氏日抄·卷二十五 (vol 20)",
+     "b": "御定康熙字典·卷二十一 (vol 20)",
+     "a_id": "6a3c6d2601fe4f593c1b82ed",
+     "b_id": "6a3c5e8040c88a541d8e2b75"
+    },
+    {
+     "only": "second",
+     "a": "普濟方·卷一百二十二 (vol 78)",
+     "b": "圖書編·卷九十七~卷九十八 (vol 78)",
+     "a_id": "6a3c691d39b4508b04e3c415",
+     "b_id": "6a3c5fb4879008ba7e157140"
+    },
+    {
+     "only": "second",
+     "a": "喻林·卷九十九~卷一百一 (vol 35)",
+     "b": "御定康熙字典·卷三十六 (vol 35)",
+     "a_id": "6a3c79ba01fe4f593c211e77",
+     "b_id": "6a3c5e9140c88a541d8e36f9"
+    },
+    {
+     "only": "second",
+     "a": "九章錄要·卷九~卷十二 (vol 3)",
+     "b": "古音駢字續編·卷五 (vol 3)",
+     "a_id": "6a3ceda34701a906f10e2004",
+     "b_id": "6a3c5e17879008ba7e151a3d"
+    },
+    {
+     "only": "second",
+     "a": "重訂詩經疑問·卷二 (vol 2)",
+     "b": "古音駢字續編·卷三~卷四 (vol 2)",
+     "a_id": "6a3ce8390a0011cb4bc0cb8d",
+     "b_id": "6a3c5e1640c88a541d8e0525"
+    },
+    {
+     "only": "first",
+     "a": "儀禮集說·卷九~卷十 (vol 42)",
+     "b": "儀禮集說·卷九~卷十 (vol 8)",
+     "a_id": "6a3c700301fe4f593c1cfca6",
+     "b_id": "6a3c6fe301fe4f593c1cea09"
+    },
+    {
+     "only": "first",
+     "a": "Euripidis Tragoediae (Vol. 2)",
+     "b": "Euripidis Tragoediae",
+     "a_id": "6993797ab0a84a5763964ff1",
+     "b_id": "699376d8b0a84a5763961ccb"
+    },
+    {
+     "only": "second",
+     "a": "古今姓氏書辯證·卷十三~卷十五 (vol 5)",
+     "b": "聊齋志異 Vol. 5",
+     "a_id": "6a3cec4c8642f0445b15b4ce",
+     "b_id": "69e7287aa409200ea79efea0"
+    },
+    {
+     "only": "second",
+     "a": "尚書注疏·卷一~卷二 (vol 23)",
+     "b": "御定康熙字典·卷二十四 (vol 23)",
+     "a_id": "6a3cb62257c1f37219c48f43",
+     "b_id": "6a3c5e8540c88a541d8e2e68"
+    },
+    {
+     "only": "second",
+     "a": "玉海·卷八十二~卷八十三 (vol 44)",
+     "b": "御定康熙字典·卷九 (vol 44)",
+     "a_id": "6a3cecb14701a906f10da645",
+     "b_id": "6a3c5e9a40c88a541d8e3cdf"
+    },
+    {
+     "only": "first",
+     "a": "The Oxyrhynchus Papyri, Part 12",
+     "b": "The Oxyrhynchus Papyri, Part 1",
+     "a_id": "69cf7c17878f40c5945f2700",
+     "b_id": "69cf7b9e878f40c5945f1c42"
+    },
+    {
+     "only": "second",
+     "a": "禮記注疏·卷六十一 (vol 96)",
+     "b": "圖書編·卷一百二十六 (vol 96)",
+     "a_id": "6a3cbc20ec254ff6cadeddcc",
+     "b_id": "6a3c5fc4879008ba7e157c93"
+    }
+   ],
+   "normalizeEditionTitle (src/lib/edition-key.ts) | rankingTokens (src/lib/holdings-check.ts, #6028)": [
+    {
+     "only": "second",
+     "a": "Thucydides: History of the Peloponnesian War I (Books 1-2, Loeb)",
+     "b": "Thucydides: History of the Peloponnesian War III (Books 5-6, Loeb)",
+     "a_id": "69937a31b0a84a5763967a35",
+     "b_id": "69937a3bb0a84a5763967c0f"
+    },
+    {
+     "only": "second",
+     "a": "A Treatise of Human Nature - Volume 3",
+     "b": "A Treatise of Human Nature - Volume 1",
+     "a_id": "695690aaaeb4b980d9ebdbfa",
+     "b_id": "695690a6aeb4b980d9ebd8c2"
+    },
+    {
+     "only": "second",
+     "a": "Война и мир, Том III",
+     "b": "Война и мир, Том II",
+     "a_id": "69e7926580b52390feb15c02",
+     "b_id": "69e7925b80b52390feb15a90"
+    },
+    {
+     "only": "second",
+     "a": "Galeni Opera Omnia, Vol. 1 (BIU Santé)",
+     "b": "Galeni Opera Omnia, Vol. 11 (BIU Santé)",
+     "a_id": "69b00a62c42435fcd0cf9ee0",
+     "b_id": "69b00ab2c42435fcd0cfa2a2"
+    },
+    {
+     "only": "second",
+     "a": "De re dialectica",
+     "b": "Dialectica",
+     "a_id": "69aec7942bb3df12d9b41b5c",
+     "b_id": "6a42f7774608523d8ceb5fc8"
+    },
+    {
+     "only": "second",
+     "a": "Bodleian Library MS. Arch. Selden. B. 54",
+     "b": "Bodleian Library MS. Arch. Selden. B. 56",
+     "a_id": "69bfcdfd8ab50eb88e8c83c8",
+     "b_id": "69bfccff8ab50eb88e8c769f"
+    },
+    {
+     "only": "second",
+     "a": "A prayer for Samsu-iluna (Samsu-iluna C)",
+     "b": "A prayer for Samsu-iluna (Samsu-iluna B)",
+     "a_id": "69aff08357adc49dbfc423a0",
+     "b_id": "69aff08257adc49dbfc4239b"
+    },
+    {
+     "only": "second",
+     "a": "Enquiry into Plants, Vol. 1 (Loeb)",
+     "b": "Enquiry into Plants, Vol. 2 (Loeb)",
+     "a_id": "69ae907014cd71fa8cd87edc",
+     "b_id": "69ae907714cd71fa8cd880e8"
+    },
+    {
+     "only": "second",
+     "a": "Bodleian Library MS. Auct. T. inf. 1. 10",
+     "b": "Bodleian Library MS. Auct. D. inf. 2. 15",
+     "a_id": "69bfcc958ab50eb88e8c5566",
+     "b_id": "69bfcc908ab50eb88e8c5411"
+    },
+    {
+     "only": "second",
+     "a": "Gilgameš and Ḫuwawa (Version A)",
+     "b": "Gilgameš and Ḫuwawa (Version B)",
+     "a_id": "69afe26557adc49dbfc41c2c",
+     "b_id": "69afe25857adc49dbfc41c14"
+    },
+    {
+     "only": "second",
+     "a": "Le Système du Monde: Histoire des doctrines cosmologiques de Platon à Copernic, Tome V",
+     "b": "Le Système du Monde: Histoire des doctrines cosmologiques de Platon à Copernic, Tome I",
+     "a_id": "69af5966522dc3dfdf725c38",
+     "b_id": "69af5946522dc3dfdf725a23"
+    },
+    {
+     "only": "second",
+     "a": "The Century Illustrated Monthly Magazine, Vol. Vol. 43, no. 2",
+     "b": "The Century Illustrated Monthly Magazine, Vol. Vol. 40, no. 1",
+     "a_id": "6a3e6ee26493e2d21129b502",
+     "b_id": "6a3e6ec76493e2d21129afc5"
+    }
+   ],
+   "normaliseTitle (scripts/lib/work-identity-match.mjs) | normalizeTitle (scripts/lib/artwork-work-resolver.mjs)": [
+    {
+     "only": "first",
+     "a": "黃氏日抄·卷二十五 (vol 20)",
+     "b": "御定康熙字典·卷二十一 (vol 20)",
+     "a_id": "6a3c6d2601fe4f593c1b82ed",
+     "b_id": "6a3c5e8040c88a541d8e2b75"
+    },
+    {
+     "only": "first",
+     "a": "普濟方·卷一百二十二 (vol 78)",
+     "b": "圖書編·卷九十七~卷九十八 (vol 78)",
+     "a_id": "6a3c691d39b4508b04e3c415",
+     "b_id": "6a3c5fb4879008ba7e157140"
+    },
+    {
+     "only": "first",
+     "a": "喻林·卷九十九~卷一百一 (vol 35)",
+     "b": "御定康熙字典·卷三十六 (vol 35)",
+     "a_id": "6a3c79ba01fe4f593c211e77",
+     "b_id": "6a3c5e9140c88a541d8e36f9"
+    },
+    {
+     "only": "first",
+     "a": "九章錄要·卷九~卷十二 (vol 3)",
+     "b": "古音駢字續編·卷五 (vol 3)",
+     "a_id": "6a3ceda34701a906f10e2004",
+     "b_id": "6a3c5e17879008ba7e151a3d"
+    },
+    {
+     "only": "first",
+     "a": "重訂詩經疑問·卷二 (vol 2)",
+     "b": "古音駢字續編·卷三~卷四 (vol 2)",
+     "a_id": "6a3ce8390a0011cb4bc0cb8d",
+     "b_id": "6a3c5e1640c88a541d8e0525"
+    },
+    {
+     "only": "first",
+     "a": "儀禮集說·卷九~卷十 (vol 42)",
+     "b": "御定康熙字典·卷七 (vol 42)",
+     "a_id": "6a3c700301fe4f593c1cfca6",
+     "b_id": "6a3c5e9840c88a541d8e3bb5"
+    },
+    {
+     "only": "second",
+     "a": "Euripidis Tragoediae (Vol. 2)",
+     "b": "Euripidis Tragoediae",
+     "a_id": "6993797ab0a84a5763964ff1",
+     "b_id": "699376d8b0a84a5763961ccb"
+    },
+    {
+     "only": "first",
+     "a": "古今姓氏書辯證·卷十三~卷十五 (vol 5)",
+     "b": "聊齋志異 Vol. 5",
+     "a_id": "6a3cec4c8642f0445b15b4ce",
+     "b_id": "69e7287aa409200ea79efea0"
+    },
+    {
+     "only": "first",
+     "a": "尚書注疏·卷一~卷二 (vol 23)",
+     "b": "御定康熙字典·卷二十四 (vol 23)",
+     "a_id": "6a3cb62257c1f37219c48f43",
+     "b_id": "6a3c5e8540c88a541d8e2e68"
+    },
+    {
+     "only": "first",
+     "a": "玉海·卷八十二~卷八十三 (vol 44)",
+     "b": "御定康熙字典·卷九 (vol 44)",
+     "a_id": "6a3cecb14701a906f10da645",
+     "b_id": "6a3c5e9a40c88a541d8e3cdf"
+    },
+    {
+     "only": "second",
+     "a": "The Oxyrhynchus Papyri, Part 12",
+     "b": "The Oxyrhynchus Papyri, Part 1",
+     "a_id": "69cf7c17878f40c5945f2700",
+     "b_id": "69cf7b9e878f40c5945f1c42"
+    },
+    {
+     "only": "first",
+     "a": "禮記注疏·卷六十一 (vol 96)",
+     "b": "圖書編·卷一百二十六 (vol 96)",
+     "a_id": "6a3cbc20ec254ff6cadeddcc",
+     "b_id": "6a3c5fc4879008ba7e157c93"
+    }
+   ],
+   "normaliseTitle (scripts/lib/work-identity-match.mjs) | norm (scripts/lib/work-identity-util.mjs)": [],
+   "normaliseTitle (scripts/lib/work-identity-match.mjs) | rankingTokens (src/lib/holdings-check.ts, #6028)": [
+    {
+     "only": "first",
+     "a": "黃氏日抄·卷二十五 (vol 20)",
+     "b": "御定康熙字典·卷二十一 (vol 20)",
+     "a_id": "6a3c6d2601fe4f593c1b82ed",
+     "b_id": "6a3c5e8040c88a541d8e2b75"
+    },
+    {
+     "only": "first",
+     "a": "普濟方·卷一百二十二 (vol 78)",
+     "b": "圖書編·卷九十七~卷九十八 (vol 78)",
+     "a_id": "6a3c691d39b4508b04e3c415",
+     "b_id": "6a3c5fb4879008ba7e157140"
+    },
+    {
+     "only": "second",
+     "a": "Thucydides: History of the Peloponnesian War I (Books 1-2, Loeb)",
+     "b": "Thucydides: History of the Peloponnesian War III (Books 5-6, Loeb)",
+     "a_id": "69937a31b0a84a5763967a35",
+     "b_id": "69937a3bb0a84a5763967c0f"
+    },
+    {
+     "only": "first",
+     "a": "喻林·卷九十九~卷一百一 (vol 35)",
+     "b": "御定康熙字典·卷三十六 (vol 35)",
+     "a_id": "6a3c79ba01fe4f593c211e77",
+     "b_id": "6a3c5e9140c88a541d8e36f9"
+    },
+    {
+     "only": "first",
+     "a": "九章錄要·卷九~卷十二 (vol 3)",
+     "b": "古音駢字續編·卷五 (vol 3)",
+     "a_id": "6a3ceda34701a906f10e2004",
+     "b_id": "6a3c5e17879008ba7e151a3d"
+    },
+    {
+     "only": "first",
+     "a": "重訂詩經疑問·卷二 (vol 2)",
+     "b": "古音駢字續編·卷三~卷四 (vol 2)",
+     "a_id": "6a3ce8390a0011cb4bc0cb8d",
+     "b_id": "6a3c5e1640c88a541d8e0525"
+    },
+    {
+     "only": "first",
+     "a": "儀禮集說·卷九~卷十 (vol 42)",
+     "b": "御定康熙字典·卷七 (vol 42)",
+     "a_id": "6a3c700301fe4f593c1cfca6",
+     "b_id": "6a3c5e9840c88a541d8e3bb5"
+    },
+    {
+     "only": "second",
+     "a": "Euripidis Tragoediae (Vol. 2)",
+     "b": "Euripidis Tragoediae",
+     "a_id": "6993797ab0a84a5763964ff1",
+     "b_id": "699376d8b0a84a5763961ccb"
+    },
+    {
+     "only": "second",
+     "a": "A Treatise of Human Nature - Volume 3",
+     "b": "A Treatise of Human Nature - Volume 1",
+     "a_id": "695690aaaeb4b980d9ebdbfa",
+     "b_id": "695690a6aeb4b980d9ebd8c2"
+    },
+    {
+     "only": "second",
+     "a": "Война и мир, Том III",
+     "b": "Война и мир, Том II",
+     "a_id": "69e7926580b52390feb15c02",
+     "b_id": "69e7925b80b52390feb15a90"
+    },
+    {
+     "only": "first",
+     "a": "古今姓氏書辯證·卷十三~卷十五 (vol 5)",
+     "b": "聊齋志異 Vol. 5",
+     "a_id": "6a3cec4c8642f0445b15b4ce",
+     "b_id": "69e7287aa409200ea79efea0"
+    },
+    {
+     "only": "first",
+     "a": "尚書注疏·卷一~卷二 (vol 23)",
+     "b": "御定康熙字典·卷二十四 (vol 23)",
+     "a_id": "6a3cb62257c1f37219c48f43",
+     "b_id": "6a3c5e8540c88a541d8e2e68"
+    }
+   ],
+   "normalizeTitle (scripts/lib/artwork-work-resolver.mjs) | norm (scripts/lib/work-identity-util.mjs)": [
+    {
+     "only": "second",
+     "a": "黃氏日抄·卷二十五 (vol 20)",
+     "b": "御定康熙字典·卷二十一 (vol 20)",
+     "a_id": "6a3c6d2601fe4f593c1b82ed",
+     "b_id": "6a3c5e8040c88a541d8e2b75"
+    },
+    {
+     "only": "second",
+     "a": "普濟方·卷一百二十二 (vol 78)",
+     "b": "圖書編·卷九十七~卷九十八 (vol 78)",
+     "a_id": "6a3c691d39b4508b04e3c415",
+     "b_id": "6a3c5fb4879008ba7e157140"
+    },
+    {
+     "only": "second",
+     "a": "喻林·卷九十九~卷一百一 (vol 35)",
+     "b": "御定康熙字典·卷三十六 (vol 35)",
+     "a_id": "6a3c79ba01fe4f593c211e77",
+     "b_id": "6a3c5e9140c88a541d8e36f9"
+    },
+    {
+     "only": "second",
+     "a": "九章錄要·卷九~卷十二 (vol 3)",
+     "b": "古音駢字續編·卷五 (vol 3)",
+     "a_id": "6a3ceda34701a906f10e2004",
+     "b_id": "6a3c5e17879008ba7e151a3d"
+    },
+    {
+     "only": "second",
+     "a": "重訂詩經疑問·卷二 (vol 2)",
+     "b": "古音駢字續編·卷三~卷四 (vol 2)",
+     "a_id": "6a3ce8390a0011cb4bc0cb8d",
+     "b_id": "6a3c5e1640c88a541d8e0525"
+    },
+    {
+     "only": "second",
+     "a": "儀禮集說·卷九~卷十 (vol 42)",
+     "b": "御定康熙字典·卷七 (vol 42)",
+     "a_id": "6a3c700301fe4f593c1cfca6",
+     "b_id": "6a3c5e9840c88a541d8e3bb5"
+    },
+    {
+     "only": "first",
+     "a": "Euripidis Tragoediae (Vol. 2)",
+     "b": "Euripidis Tragoediae",
+     "a_id": "6993797ab0a84a5763964ff1",
+     "b_id": "699376d8b0a84a5763961ccb"
+    },
+    {
+     "only": "second",
+     "a": "古今姓氏書辯證·卷十三~卷十五 (vol 5)",
+     "b": "聊齋志異 Vol. 5",
+     "a_id": "6a3cec4c8642f0445b15b4ce",
+     "b_id": "69e7287aa409200ea79efea0"
+    },
+    {
+     "only": "second",
+     "a": "尚書注疏·卷一~卷二 (vol 23)",
+     "b": "御定康熙字典·卷二十四 (vol 23)",
+     "a_id": "6a3cb62257c1f37219c48f43",
+     "b_id": "6a3c5e8540c88a541d8e2e68"
+    },
+    {
+     "only": "second",
+     "a": "玉海·卷八十二~卷八十三 (vol 44)",
+     "b": "御定康熙字典·卷九 (vol 44)",
+     "a_id": "6a3cecb14701a906f10da645",
+     "b_id": "6a3c5e9a40c88a541d8e3cdf"
+    },
+    {
+     "only": "first",
+     "a": "The Oxyrhynchus Papyri, Part 12",
+     "b": "The Oxyrhynchus Papyri, Part 1",
+     "a_id": "69cf7c17878f40c5945f2700",
+     "b_id": "69cf7b9e878f40c5945f1c42"
+    },
+    {
+     "only": "second",
+     "a": "禮記注疏·卷六十一 (vol 96)",
+     "b": "圖書編·卷一百二十六 (vol 96)",
+     "a_id": "6a3cbc20ec254ff6cadeddcc",
+     "b_id": "6a3c5fc4879008ba7e157c93"
+    }
+   ],
+   "normalizeTitle (scripts/lib/artwork-work-resolver.mjs) | rankingTokens (src/lib/holdings-check.ts, #6028)": [
+    {
+     "only": "second",
+     "a": "Thucydides: History of the Peloponnesian War I (Books 1-2, Loeb)",
+     "b": "Thucydides: History of the Peloponnesian War III (Books 5-6, Loeb)",
+     "a_id": "69937a31b0a84a5763967a35",
+     "b_id": "69937a3bb0a84a5763967c0f"
+    },
+    {
+     "only": "second",
+     "a": "儀禮集說·卷九~卷十 (vol 42)",
+     "b": "儀禮集說·卷九~卷十 (vol 8)",
+     "a_id": "6a3c700301fe4f593c1cfca6",
+     "b_id": "6a3c6fe301fe4f593c1cea09"
+    },
+    {
+     "only": "second",
+     "a": "A Treatise of Human Nature - Volume 3",
+     "b": "A Treatise of Human Nature - Volume 1",
+     "a_id": "695690aaaeb4b980d9ebdbfa",
+     "b_id": "695690a6aeb4b980d9ebd8c2"
+    },
+    {
+     "only": "second",
+     "a": "Война и мир, Том III",
+     "b": "Война и мир, Том II",
+     "a_id": "69e7926580b52390feb15c02",
+     "b_id": "69e7925b80b52390feb15a90"
+    },
+    {
+     "only": "second",
+     "a": "論衡·卷四~卷六 (vol 22)",
+     "b": "論衡·卷四~卷六 (vol 3)",
+     "a_id": "6a3c6c6239b4508b04e491a1",
+     "b_id": "6a3c6c5039b4508b04e486ab"
+    },
+    {
+     "only": "second",
+     "a": "儀禮集說·卷三~卷四 (vol 2)",
+     "b": "儀禮集說·卷三~卷四 (vol 17)",
+     "a_id": "6a3c6fde01fe4f593c1ce6a6",
+     "b_id": "6a3c6fed01fe4f593c1cefa4"
+    },
+    {
+     "only": "first",
+     "a": "儒林外史(九) — The Scholars, vol 9",
+     "b": "儒林外史(一) — The Scholars, vol 1",
+     "a_id": "6a40ef5c3a63957730efee33",
+     "b_id": "6a40ef3c3a63957730efeb4b"
+    },
+    {
+     "only": "second",
+     "a": "御定佩文韻府·卷二十一之五 (vol 89)",
+     "b": "御定佩文韻府·卷二十一之五 (vol 388)",
+     "a_id": "6a3c62a040c88a541d8f5226",
+     "b_id": "6a3c63d1af3c49b59c5c8d88"
+    },
+    {
+     "only": "second",
+     "a": "Galeni Opera Omnia, Vol. 1 (BIU Santé)",
+     "b": "Galeni Opera Omnia, Vol. 11 (BIU Santé)",
+     "a_id": "69b00a62c42435fcd0cf9ee0",
+     "b_id": "69b00ab2c42435fcd0cfa2a2"
+    },
+    {
+     "only": "second",
+     "a": "De re dialectica",
+     "b": "Dialectica",
+     "a_id": "69aec7942bb3df12d9b41b5c",
+     "b_id": "6a42f7774608523d8ceb5fc8"
+    },
+    {
+     "only": "second",
+     "a": "Bodleian Library MS. Arch. Selden. B. 54",
+     "b": "Bodleian Library MS. Arch. Selden. B. 56",
+     "a_id": "69bfcdfd8ab50eb88e8c83c8",
+     "b_id": "69bfccff8ab50eb88e8c769f"
+    },
+    {
+     "only": "second",
+     "a": "御定淵鑑類函·卷三百四十八~卷三百四十九 (vol 337)",
+     "b": "御定淵鑑類函·卷三百四十八~卷三百四十九 (vol 193)",
+     "a_id": "6a3cef1b8642f0445b160c94",
+     "b_id": "6a3cee844701a906f10e9ff7"
+    }
+   ],
+   "norm (scripts/lib/work-identity-util.mjs) | rankingTokens (src/lib/holdings-check.ts, #6028)": [
+    {
+     "only": "first",
+     "a": "黃氏日抄·卷二十五 (vol 20)",
+     "b": "御定康熙字典·卷二十一 (vol 20)",
+     "a_id": "6a3c6d2601fe4f593c1b82ed",
+     "b_id": "6a3c5e8040c88a541d8e2b75"
+    },
+    {
+     "only": "first",
+     "a": "普濟方·卷一百二十二 (vol 78)",
+     "b": "圖書編·卷九十七~卷九十八 (vol 78)",
+     "a_id": "6a3c691d39b4508b04e3c415",
+     "b_id": "6a3c5fb4879008ba7e157140"
+    },
+    {
+     "only": "second",
+     "a": "Thucydides: History of the Peloponnesian War I (Books 1-2, Loeb)",
+     "b": "Thucydides: History of the Peloponnesian War III (Books 5-6, Loeb)",
+     "a_id": "69937a31b0a84a5763967a35",
+     "b_id": "69937a3bb0a84a5763967c0f"
+    },
+    {
+     "only": "first",
+     "a": "喻林·卷九十九~卷一百一 (vol 35)",
+     "b": "御定康熙字典·卷三十六 (vol 35)",
+     "a_id": "6a3c79ba01fe4f593c211e77",
+     "b_id": "6a3c5e9140c88a541d8e36f9"
+    },
+    {
+     "only": "first",
+     "a": "九章錄要·卷九~卷十二 (vol 3)",
+     "b": "古音駢字續編·卷五 (vol 3)",
+     "a_id": "6a3ceda34701a906f10e2004",
+     "b_id": "6a3c5e17879008ba7e151a3d"
+    },
+    {
+     "only": "first",
+     "a": "重訂詩經疑問·卷二 (vol 2)",
+     "b": "古音駢字續編·卷三~卷四 (vol 2)",
+     "a_id": "6a3ce8390a0011cb4bc0cb8d",
+     "b_id": "6a3c5e1640c88a541d8e0525"
+    },
+    {
+     "only": "first",
+     "a": "儀禮集說·卷九~卷十 (vol 42)",
+     "b": "御定康熙字典·卷七 (vol 42)",
+     "a_id": "6a3c700301fe4f593c1cfca6",
+     "b_id": "6a3c5e9840c88a541d8e3bb5"
+    },
+    {
+     "only": "second",
+     "a": "Euripidis Tragoediae (Vol. 2)",
+     "b": "Euripidis Tragoediae",
+     "a_id": "6993797ab0a84a5763964ff1",
+     "b_id": "699376d8b0a84a5763961ccb"
+    },
+    {
+     "only": "second",
+     "a": "A Treatise of Human Nature - Volume 3",
+     "b": "A Treatise of Human Nature - Volume 1",
+     "a_id": "695690aaaeb4b980d9ebdbfa",
+     "b_id": "695690a6aeb4b980d9ebd8c2"
+    },
+    {
+     "only": "second",
+     "a": "Война и мир, Том III",
+     "b": "Война и мир, Том II",
+     "a_id": "69e7926580b52390feb15c02",
+     "b_id": "69e7925b80b52390feb15a90"
+    },
+    {
+     "only": "first",
+     "a": "古今姓氏書辯證·卷十三~卷十五 (vol 5)",
+     "b": "聊齋志異 Vol. 5",
+     "a_id": "6a3cec4c8642f0445b15b4ce",
+     "b_id": "69e7287aa409200ea79efea0"
+    },
+    {
+     "only": "first",
+     "a": "尚書注疏·卷一~卷二 (vol 23)",
+     "b": "御定康熙字典·卷二十四 (vol 23)",
+     "a_id": "6a3cb62257c1f37219c48f43",
+     "b_id": "6a3c5e8540c88a541d8e2e68"
+    }
+   ]
+  }
+ },
+ "author": {
+  "per_normalizer": {
+   "dedup.normalizeAuthor (src/lib/dedup.ts)": {
+    "empty_key": 579,
+    "has_same_in_live_corpus": 947,
+    "distinct_keys_in_live": 13559
+   },
+   "editionSurname (src/lib/edition-key.ts)": {
+    "empty_key": 579,
+    "has_same_in_live_corpus": 1121,
+    "distinct_keys_in_live": 10363
+   },
+   "authorKey (scripts/lib/artwork-work-resolver.mjs)": {
+    "empty_key": 580,
+    "has_same_in_live_corpus": 949,
+    "distinct_keys_in_live": 13589
+   },
+   "canonicalKey (scripts/lib/author-name-key.mjs)": {
+    "empty_key": 7,
+    "has_same_in_live_corpus": 1544,
+    "distinct_keys_in_live": 13603
+   },
+   "surname (scripts/lib/work-identity-util.mjs)": {
+    "empty_key": 579,
+    "has_same_in_live_corpus": 1304,
+    "distinct_keys_in_live": 4973
+   }
+  },
+  "pairs": [
+   {
+    "a": "dedup.normalizeAuthor (src/lib/dedup.ts)",
+    "b": "editionSurname (src/lib/edition-key.ts)",
+    "disagree": 676,
+    "rate": "676/2000 = 33.8% [31.8, 35.9]",
+    "only_first_says_same": 29,
+    "only_second_says_same": 665
+   },
+   {
+    "a": "dedup.normalizeAuthor (src/lib/dedup.ts)",
+    "b": "authorKey (scripts/lib/artwork-work-resolver.mjs)",
+    "disagree": 53,
+    "rate": "53/2000 = 2.6% [2.0, 3.4]",
+    "only_first_says_same": 46,
+    "only_second_says_same": 12
+   },
+   {
+    "a": "dedup.normalizeAuthor (src/lib/dedup.ts)",
+    "b": "canonicalKey (scripts/lib/author-name-key.mjs)",
+    "disagree": 828,
+    "rate": "828/2000 = 41.4% [39.3, 43.6]",
+    "only_first_says_same": 50,
+    "only_second_says_same": 827
+   },
+   {
+    "a": "dedup.normalizeAuthor (src/lib/dedup.ts)",
+    "b": "surname (scripts/lib/work-identity-util.mjs)",
+    "disagree": 1091,
+    "rate": "1091/2000 = 54.5% [52.4, 56.7]",
+    "only_first_says_same": 173,
+    "only_second_says_same": 1047
+   },
+   {
+    "a": "editionSurname (src/lib/edition-key.ts)",
+    "b": "authorKey (scripts/lib/artwork-work-resolver.mjs)",
+    "disagree": 678,
+    "rate": "678/2000 = 33.9% [31.9, 36.0]",
+    "only_first_says_same": 671,
+    "only_second_says_same": 25
+   },
+   {
+    "a": "editionSurname (src/lib/edition-key.ts)",
+    "b": "canonicalKey (scripts/lib/author-name-key.mjs)",
+    "disagree": 1317,
+    "rate": "1317/2000 = 65.8% [63.7, 67.9]",
+    "only_first_says_same": 698,
+    "only_second_says_same": 800
+   },
+   {
+    "a": "editionSurname (src/lib/edition-key.ts)",
+    "b": "surname (scripts/lib/work-identity-util.mjs)",
+    "disagree": 995,
+    "rate": "995/2000 = 49.8% [47.6, 51.9]",
+    "only_first_says_same": 505,
+    "only_second_says_same": 830
+   },
+   {
+    "a": "authorKey (scripts/lib/artwork-work-resolver.mjs)",
+    "b": "canonicalKey (scripts/lib/author-name-key.mjs)",
+    "disagree": 838,
+    "rate": "838/2000 = 41.9% [39.8, 44.1]",
+    "only_first_says_same": 47,
+    "only_second_says_same": 838
+   },
+   {
+    "a": "authorKey (scripts/lib/artwork-work-resolver.mjs)",
+    "b": "surname (scripts/lib/work-identity-util.mjs)",
+    "disagree": 1081,
+    "rate": "1081/2000 = 54.0% [51.9, 56.2]",
+    "only_first_says_same": 146,
+    "only_second_says_same": 1047
+   },
+   {
+    "a": "canonicalKey (scripts/lib/author-name-key.mjs)",
+    "b": "surname (scripts/lib/work-identity-util.mjs)",
+    "disagree": 1739,
+    "rate": "1739/2000 = 87.0% [85.4, 88.4]",
+    "only_first_says_same": 939,
+    "only_second_says_same": 1087
+   }
+  ],
+  "examples": {
+   "dedup.normalizeAuthor (src/lib/dedup.ts) | editionSurname (src/lib/edition-key.ts)": [
+    {
+     "only": "second",
+     "a": "Bona, Giovanni",
+     "b": "Bona, Theophilus",
+     "a_id": "6a42ddd1e76baa13aa86241f",
+     "b_id": "6a4d646ce91798b676b450c9"
+    },
+    {
+     "only": "second",
+     "a": "Shihāb al-Dīn Aḥmad al-Tīfāshī (التيفاشي)",
+     "b": "Aḥmad al-Tīfāshī",
+     "a_id": "6a06cddfc749b698e5b2cb29",
+     "b_id": "6a29d583c0df82e562e4c4cd"
+    },
+    {
+     "only": "second",
+     "a": "Unknown; Yamada Takao (ed.)",
+     "b": "Lazarus Zetzner (ed.)",
+     "a_id": "69dfedea8d34461cbe7f4efb",
+     "b_id": "695286c8ab34727b1f04c98d"
+    },
+    {
+     "only": "first",
+     "a": "Aristotle / Theophrastus",
+     "b": "Theophrastus; Aristotle",
+     "a_id": "69b21d4fddb4fa7c305b4ccb",
+     "b_id": "6993895674305116d72d1515"
+    },
+    {
+     "only": "second",
+     "a": "Euripides",
+     "b": "Sophocles; Euripides",
+     "a_id": "6993797ab0a84a5763964ff1",
+     "b_id": "69938a835d28b693146cea03"
+    },
+    {
+     "only": "second",
+     "a": "James Legge (trans.)",
+     "b": "Plotinus; Marsilio Ficino (trans.)",
+     "a_id": "69920bbde0a548a13d885302",
+     "b_id": "69526a50ab34727b1f046dc5"
+    },
+    {
+     "only": "second",
+     "a": "David Hume",
+     "b": "Hume, Alexander, schoolmaster.",
+     "a_id": "695690aaaeb4b980d9ebdbfa",
+     "b_id": "6a4fbae56c11f99c0e427aee"
+    },
+    {
+     "only": "second",
+     "a": "Mira Roy (ed.)",
+     "b": "Lazarus Zetzner (ed.)",
+     "a_id": "69d006e57d7491182a232833",
+     "b_id": "695286c8ab34727b1f04c98d"
+    },
+    {
+     "only": "second",
+     "a": "Virdung, Johann",
+     "b": "Virdung, Johannes",
+     "a_id": "69b51e18261c58d63664f6f9",
+     "b_id": "69dbccde0f8c5edf20f4f665"
+    },
+    {
+     "only": "second",
+     "a": "Lucius Annaeus Seneca",
+     "b": "Seneca",
+     "a_id": "6a08558315c643eb1af56111",
+     "b_id": "6953ce6377f38f6761be3e63"
+    },
+    {
+     "only": "second",
+     "a": "Michael Psellos",
+     "b": "Proclus; Michael Psellos",
+     "a_id": "69942f6ab2f6748db4ac0b46",
+     "b_id": "699389e50f04c37dcfa6246c"
+    },
+    {
+     "only": "second",
+     "a": "Vitruvius Pollio",
+     "b": "Pollio, Lucas",
+     "a_id": "6949af986ef4a68b726b7fa9",
+     "b_id": "6a491639ae20621d947e71fc"
+    }
+   ],
+   "dedup.normalizeAuthor (src/lib/dedup.ts) | authorKey (scripts/lib/artwork-work-resolver.mjs)": [
+    {
+     "only": "first",
+     "a": "John Chrysostom",
+     "b": "John Chrysostom, Saint, -407",
+     "a_id": "69bfcd4a8ab50eb88e8c808f",
+     "b_id": "69f33718876dd827cbc51705"
+    },
+    {
+     "only": "first",
+     "a": "Theophrastus (trans. Sir Arthur Hort)",
+     "b": "Theophrastus; Arthur Hort (trans.)",
+     "a_id": "69ae907014cd71fa8cd87edc",
+     "b_id": "69ef215db3e2d3a0927f2bb3"
+    },
+    {
+     "only": "first",
+     "a": "Boethius",
+     "b": "Boethius, -524",
+     "a_id": "69dbc8c11040d1d5e209c4dd",
+     "b_id": "69f32fb6876dd827cbc45c56"
+    },
+    {
+     "only": "first",
+     "a": "Boethius",
+     "b": "Boethius, -524",
+     "a_id": "69dbc8aa1040d1d5e209b3d5",
+     "b_id": "69f32fb6876dd827cbc45c56"
+    },
+    {
+     "only": "second",
+     "a": "G.R.S. Mead",
+     "b": "G. R. S. Mead",
+     "a_id": "6a1aa8afc8638d1ea5c81982",
+     "b_id": "699249eba2d53df4853c11a9"
+    },
+    {
+     "only": "first",
+     "a": "Marsilio Ficino",
+     "b": "Ficino, Marsilio, 1433-1499",
+     "a_id": "696926374fa3b04c6de874c4",
+     "b_id": "6948856a2f9c70e60597cb30"
+    },
+    {
+     "only": "first",
+     "a": "Ramon Llull",
+     "b": "Llull, Ramon (1232-1316)",
+     "a_id": "69b418de2b0edf3eaa2de13f",
+     "b_id": "6a0a3433ca5d395c86126f54"
+    },
+    {
+     "only": "first",
+     "a": "Manuzio, Aldo",
+     "b": "Manuzio, Aldo (1547-1597).",
+     "a_id": "6a06d1ac9a48d5139995fd4b",
+     "b_id": "6a084ecf15c643eb1af42b94"
+    },
+    {
+     "only": "first",
+     "a": "Albertus Magnus",
+     "b": "Albertus, Magnus, Saint, 1193?-1280",
+     "a_id": "69dbc62137db7bc4b2eb2e19",
+     "b_id": "69f33257876dd827cbc49efc"
+    },
+    {
+     "only": "first",
+     "a": "Albertus Magnus",
+     "b": "Albertus, Magnus, Saint, 1193?-1280",
+     "a_id": "69dbc52637db7bc4b2eb262d",
+     "b_id": "69f33257876dd827cbc49efc"
+    },
+    {
+     "only": "first",
+     "a": "Albertus Magnus",
+     "b": "Albertus, Magnus, Saint, 1193?-1280",
+     "a_id": "69dbc7ba1040d1d5e209391e",
+     "b_id": "69f33257876dd827cbc49efc"
+    },
+    {
+     "only": "first",
+     "a": "Paracelsus",
+     "b": "Paracelsus (1493-1541)",
+     "a_id": "6a26bcf5d6b178e5aad872c8",
+     "b_id": "6a100962f717292950969011"
+    }
+   ],
+   "dedup.normalizeAuthor (src/lib/dedup.ts) | canonicalKey (scripts/lib/author-name-key.mjs)": [
+    {
+     "only": "second",
+     "a": "黃震",
+     "b": "黃震",
+     "a_id": "6a3c6d2601fe4f593c1b82ed",
+     "b_id": "6a3c6d0f01fe4f593c1b7706"
+    },
+    {
+     "only": "second",
+     "a": "朱橚",
+     "b": "朱橚",
+     "a_id": "6a3c691d39b4508b04e3c415",
+     "b_id": "6a3c68caaf3c49b59c5dc755"
+    },
+    {
+     "only": "second",
+     "a": "Thucydides",
+     "b": "Thucydides (ed. Henri II Estienne)",
+     "a_id": "69937a31b0a84a5763967a35",
+     "b_id": "69b2f30ba9a500a45e5e7ac4"
+    },
+    {
+     "only": "second",
+     "a": "徐元太",
+     "b": "徐元太",
+     "a_id": "6a3c79ba01fe4f593c211e77",
+     "b_id": "6a3c798f01fe4f593c210933"
+    },
+    {
+     "only": "second",
+     "a": "屠文漪",
+     "b": "屠文漪",
+     "a_id": "6a3ceda34701a906f10e2004",
+     "b_id": "6a3ceda24701a906f10e1eda"
+    },
+    {
+     "only": "second",
+     "a": "姚舜牧",
+     "b": "姚舜牧",
+     "a_id": "6a3ce8390a0011cb4bc0cb8d",
+     "b_id": "6a3ce8380a0011cb4bc0cafe"
+    },
+    {
+     "only": "second",
+     "a": "Aristotle / Theophrastus",
+     "b": "Pseudo-Aristotle; Theophrastus",
+     "a_id": "69b21d4fddb4fa7c305b4ccb",
+     "b_id": "69b52cd2b3537347e51e33af"
+    },
+    {
+     "only": "second",
+     "a": "敖繼公",
+     "b": "敖繼公",
+     "a_id": "6a3c700301fe4f593c1cfca6",
+     "b_id": "6a3c6fda01fe4f593c1ce522"
+    },
+    {
+     "only": "first",
+     "a": "Unknown",
+     "b": "(unknown)",
+     "a_id": "69f33f3c876dd827cbc6148a",
+     "b_id": "69b52589cced70d8e6d72791"
+    },
+    {
+     "only": "first",
+     "a": "Unknown",
+     "b": "(unknown)",
+     "a_id": "69c71ed5da9771c716316ac8",
+     "b_id": "69b52589cced70d8e6d72791"
+    },
+    {
+     "only": "second",
+     "a": "James Legge (trans.)",
+     "b": "James Legge",
+     "a_id": "69920bbde0a548a13d885302",
+     "b_id": "6953e27477f38f6761be8d28"
+    },
+    {
+     "only": "second",
+     "a": "Lucius Annaeus Seneca",
+     "b": "Seneca, Lucius Annaeus (Philosophus)",
+     "a_id": "6a08558315c643eb1af56111",
+     "b_id": "6a50b35db5e5291460a64899"
+    }
+   ],
+   "dedup.normalizeAuthor (src/lib/dedup.ts) | surname (scripts/lib/work-identity-util.mjs)": [
+    {
+     "only": "second",
+     "a": "Bona, Giovanni",
+     "b": "Pico della Mirandola, Giovanni",
+     "a_id": "6a42ddd1e76baa13aa86241f",
+     "b_id": "6952b01b77f38f6761bc1cc9"
+    },
+    {
+     "only": "second",
+     "a": "Ochsentrit, Martin",
+     "b": "Stiller, Johann Martin",
+     "a_id": "6a4efadab19783974a52acd2",
+     "b_id": "6978f4c3eb0dcfd39912341a"
+    },
+    {
+     "only": "second",
+     "a": "Liebentantz, Michael",
+     "b": "Faust, Johannes Michael",
+     "a_id": "6a4f3e7139ecc8e27dc657b2",
+     "b_id": "6909d208cf28baa1b4cb003b"
+    },
+    {
+     "only": "second",
+     "a": "Shihāb al-Dīn Aḥmad al-Tīfāshī (التيفاشي)",
+     "b": "Aḥmad al-Tīfāshī",
+     "a_id": "6a06cddfc749b698e5b2cb29",
+     "b_id": "6a29d583c0df82e562e4c4cd"
+    },
+    {
+     "only": "second",
+     "a": "Unknown; Yamada Takao (ed.)",
+     "b": "Lazarus Zetzner (ed.)",
+     "a_id": "69dfedea8d34461cbe7f4efb",
+     "b_id": "695286c8ab34727b1f04c98d"
+    },
+    {
+     "only": "first",
+     "a": "Aristotle / Theophrastus",
+     "b": "Theophrastus; Aristotle",
+     "a_id": "69b21d4fddb4fa7c305b4ccb",
+     "b_id": "6993895674305116d72d1515"
+    },
+    {
+     "only": "second",
+     "a": "Lord, Henry",
+     "b": "More, Henry",
+     "a_id": "69c7a31192b884e4f81738fd",
+     "b_id": "697936168e450bc779a9cad9"
+    },
+    {
+     "only": "second",
+     "a": "Euripides",
+     "b": "Sophocles; Euripides",
+     "a_id": "6993797ab0a84a5763964ff1",
+     "b_id": "69938a835d28b693146cea03"
+    },
+    {
+     "only": "second",
+     "a": "Fuentidueña, Pedro de",
+     "b": "Saint-Martin, Louis Claude de",
+     "a_id": "6a46849b563a27b6e4fb3875",
+     "b_id": "6909b0a0cf28baa1b4caf0e9"
+    },
+    {
+     "only": "second",
+     "a": "James Legge (trans.)",
+     "b": "Plotinus; Marsilio Ficino (trans.)",
+     "a_id": "69920bbde0a548a13d885302",
+     "b_id": "69526a50ab34727b1f046dc5"
+    },
+    {
+     "only": "first",
+     "a": "David Hume",
+     "b": "Hume, David",
+     "a_id": "695690aaaeb4b980d9ebdbfa",
+     "b_id": "6a4f9370d7f4f9119ff22e51"
+    },
+    {
+     "only": "second",
+     "a": "Mira Roy (ed.)",
+     "b": "Lazarus Zetzner (ed.)",
+     "a_id": "69d006e57d7491182a232833",
+     "b_id": "695286c8ab34727b1f04c98d"
+    }
+   ],
+   "editionSurname (src/lib/edition-key.ts) | authorKey (scripts/lib/artwork-work-resolver.mjs)": [
+    {
+     "only": "first",
+     "a": "Bona, Giovanni",
+     "b": "Bona, Theophilus",
+     "a_id": "6a42ddd1e76baa13aa86241f",
+     "b_id": "6a4d646ce91798b676b450c9"
+    },
+    {
+     "only": "first",
+     "a": "Shihāb al-Dīn Aḥmad al-Tīfāshī (التيفاشي)",
+     "b": "Aḥmad al-Tīfāshī",
+     "a_id": "6a06cddfc749b698e5b2cb29",
+     "b_id": "6a29d583c0df82e562e4c4cd"
+    },
+    {
+     "only": "first",
+     "a": "Unknown; Yamada Takao (ed.)",
+     "b": "Lazarus Zetzner (ed.)",
+     "a_id": "69dfedea8d34461cbe7f4efb",
+     "b_id": "695286c8ab34727b1f04c98d"
+    },
+    {
+     "only": "first",
+     "a": "Aristotle / Theophrastus",
+     "b": "Theophrastus",
+     "a_id": "69b21d4fddb4fa7c305b4ccb",
+     "b_id": "6957ef2a54176f1f03e06e7d"
+    },
+    {
+     "only": "first",
+     "a": "Euripides",
+     "b": "Sophocles; Euripides",
+     "a_id": "6993797ab0a84a5763964ff1",
+     "b_id": "69938a835d28b693146cea03"
+    },
+    {
+     "only": "first",
+     "a": "James Legge (trans.)",
+     "b": "Plotinus; Marsilio Ficino (trans.)",
+     "a_id": "69920bbde0a548a13d885302",
+     "b_id": "69526a50ab34727b1f046dc5"
+    },
+    {
+     "only": "first",
+     "a": "David Hume",
+     "b": "Hume, Alexander, schoolmaster.",
+     "a_id": "695690aaaeb4b980d9ebdbfa",
+     "b_id": "6a4fbae56c11f99c0e427aee"
+    },
+    {
+     "only": "first",
+     "a": "Mira Roy (ed.)",
+     "b": "Lazarus Zetzner (ed.)",
+     "a_id": "69d006e57d7491182a232833",
+     "b_id": "695286c8ab34727b1f04c98d"
+    },
+    {
+     "only": "first",
+     "a": "Virdung, Johann",
+     "b": "Virdung, Johannes",
+     "a_id": "69b51e18261c58d63664f6f9",
+     "b_id": "69dbccde0f8c5edf20f4f665"
+    },
+    {
+     "only": "first",
+     "a": "Lucius Annaeus Seneca",
+     "b": "Seneca",
+     "a_id": "6a08558315c643eb1af56111",
+     "b_id": "6953ce6377f38f6761be3e63"
+    },
+    {
+     "only": "first",
+     "a": "Michael Psellos",
+     "b": "Proclus; Michael Psellos",
+     "a_id": "69942f6ab2f6748db4ac0b46",
+     "b_id": "699389e50f04c37dcfa6246c"
+    },
+    {
+     "only": "first",
+     "a": "Vitruvius Pollio",
+     "b": "Pollio, Lucas",
+     "a_id": "6949af986ef4a68b726b7fa9",
+     "b_id": "6a491639ae20621d947e71fc"
+    }
+   ],
+   "editionSurname (src/lib/edition-key.ts) | canonicalKey (scripts/lib/author-name-key.mjs)": [
+    {
+     "only": "second",
+     "a": "黃震",
+     "b": "黃震",
+     "a_id": "6a3c6d2601fe4f593c1b82ed",
+     "b_id": "6a3c6d0f01fe4f593c1b7706"
+    },
+    {
+     "only": "first",
+     "a": "Bona, Giovanni",
+     "b": "Bona, Theophilus",
+     "a_id": "6a42ddd1e76baa13aa86241f",
+     "b_id": "6a4d646ce91798b676b450c9"
+    },
+    {
+     "only": "second",
+     "a": "朱橚",
+     "b": "朱橚",
+     "a_id": "6a3c691d39b4508b04e3c415",
+     "b_id": "6a3c68caaf3c49b59c5dc755"
+    },
+    {
+     "only": "first",
+     "a": "Shihāb al-Dīn Aḥmad al-Tīfāshī (التيفاشي)",
+     "b": "Aḥmad al-Tīfāshī",
+     "a_id": "6a06cddfc749b698e5b2cb29",
+     "b_id": "6a29d583c0df82e562e4c4cd"
+    },
+    {
+     "only": "second",
+     "a": "Thucydides",
+     "b": "Thucydides (ed. Henri II Estienne)",
+     "a_id": "69937a31b0a84a5763967a35",
+     "b_id": "69b2f30ba9a500a45e5e7ac4"
+    },
+    {
+     "only": "second",
+     "a": "徐元太",
+     "b": "徐元太",
+     "a_id": "6a3c79ba01fe4f593c211e77",
+     "b_id": "6a3c798f01fe4f593c210933"
+    },
+    {
+     "only": "second",
+     "a": "屠文漪",
+     "b": "屠文漪",
+     "a_id": "6a3ceda34701a906f10e2004",
+     "b_id": "6a3ceda24701a906f10e1eda"
+    },
+    {
+     "only": "first",
+     "a": "Unknown; Yamada Takao (ed.)",
+     "b": "Lazarus Zetzner (ed.)",
+     "a_id": "69dfedea8d34461cbe7f4efb",
+     "b_id": "695286c8ab34727b1f04c98d"
+    },
+    {
+     "only": "second",
+     "a": "姚舜牧",
+     "b": "姚舜牧",
+     "a_id": "6a3ce8390a0011cb4bc0cb8d",
+     "b_id": "6a3ce8380a0011cb4bc0cafe"
+    },
+    {
+     "only": "first",
+     "a": "Aristotle / Theophrastus",
+     "b": "Theophrastus",
+     "a_id": "69b21d4fddb4fa7c305b4ccb",
+     "b_id": "6957ef2a54176f1f03e06e7d"
+    },
+    {
+     "only": "second",
+     "a": "敖繼公",
+     "b": "敖繼公",
+     "a_id": "6a3c700301fe4f593c1cfca6",
+     "b_id": "6a3c6fda01fe4f593c1ce522"
+    },
+    {
+     "only": "first",
+     "a": "Unknown",
+     "b": "(unknown)",
+     "a_id": "69f33f3c876dd827cbc6148a",
+     "b_id": "69b52589cced70d8e6d72791"
+    }
+   ],
+   "editionSurname (src/lib/edition-key.ts) | surname (scripts/lib/work-identity-util.mjs)": [
+    {
+     "only": "first",
+     "a": "Bona, Giovanni",
+     "b": "Bona, Theophilus",
+     "a_id": "6a42ddd1e76baa13aa86241f",
+     "b_id": "6a4d646ce91798b676b450c9"
+    },
+    {
+     "only": "second",
+     "a": "Ochsentrit, Martin",
+     "b": "Stiller, Johann Martin",
+     "a_id": "6a4efadab19783974a52acd2",
+     "b_id": "6978f4c3eb0dcfd39912341a"
+    },
+    {
+     "only": "second",
+     "a": "Liebentantz, Michael",
+     "b": "Faust, Johannes Michael",
+     "a_id": "6a4f3e7139ecc8e27dc657b2",
+     "b_id": "6909d208cf28baa1b4cb003b"
+    },
+    {
+     "only": "second",
+     "a": "Unknown; Yamada Takao (ed.)",
+     "b": "Kelly, Edward | Waite, A.E. (ed.)",
+     "a_id": "69dfedea8d34461cbe7f4efb",
+     "b_id": "6952d13377f38f6761bc5e29"
+    },
+    {
+     "only": "second",
+     "a": "Aristotle / Theophrastus",
+     "b": "Paracelsus, Theophrastus",
+     "a_id": "69b21d4fddb4fa7c305b4ccb",
+     "b_id": "6867bf5a009d20a23245ac0d"
+    },
+    {
+     "only": "second",
+     "a": "Lord, Henry",
+     "b": "More, Henry",
+     "a_id": "69c7a31192b884e4f81738fd",
+     "b_id": "697936168e450bc779a9cad9"
+    },
+    {
+     "only": "second",
+     "a": "Fuentidueña, Pedro de",
+     "b": "Saint-Martin, Louis Claude de",
+     "a_id": "6a46849b563a27b6e4fb3875",
+     "b_id": "6909b0a0cf28baa1b4caf0e9"
+    },
+    {
+     "only": "second",
+     "a": "James Legge (trans.)",
+     "b": "Plotinus | Ficino, Marsilio (trans.)",
+     "a_id": "69920bbde0a548a13d885302",
+     "b_id": "6952c9c777f38f6761bc2ffd"
+    },
+    {
+     "only": "first",
+     "a": "David Hume",
+     "b": "Hume, David",
+     "a_id": "695690aaaeb4b980d9ebdbfa",
+     "b_id": "6a4f9370d7f4f9119ff22e51"
+    },
+    {
+     "only": "second",
+     "a": "Mira Roy (ed.)",
+     "b": "Kelly, Edward | Waite, A.E. (ed.)",
+     "a_id": "69d006e57d7491182a232833",
+     "b_id": "6952d13377f38f6761bc5e29"
+    },
+    {
+     "only": "first",
+     "a": "Virdung, Johann",
+     "b": "Virdung, Johannes",
+     "a_id": "69b51e18261c58d63664f6f9",
+     "b_id": "69dbccde0f8c5edf20f4f665"
+    },
+    {
+     "only": "first",
+     "a": "Lucius Annaeus Seneca",
+     "b": "Seneca, Lucius Annaeus",
+     "a_id": "6a08558315c643eb1af56111",
+     "b_id": "69c82cb86c6f3cc53c84cf6e"
+    }
+   ],
+   "authorKey (scripts/lib/artwork-work-resolver.mjs) | canonicalKey (scripts/lib/author-name-key.mjs)": [
+    {
+     "only": "second",
+     "a": "黃震",
+     "b": "黃震",
+     "a_id": "6a3c6d2601fe4f593c1b82ed",
+     "b_id": "6a3c6d0f01fe4f593c1b7706"
+    },
+    {
+     "only": "second",
+     "a": "朱橚",
+     "b": "朱橚",
+     "a_id": "6a3c691d39b4508b04e3c415",
+     "b_id": "6a3c68caaf3c49b59c5dc755"
+    },
+    {
+     "only": "second",
+     "a": "Thucydides",
+     "b": "Thucydides (ed. Henri II Estienne)",
+     "a_id": "69937a31b0a84a5763967a35",
+     "b_id": "69b2f30ba9a500a45e5e7ac4"
+    },
+    {
+     "only": "second",
+     "a": "徐元太",
+     "b": "徐元太",
+     "a_id": "6a3c79ba01fe4f593c211e77",
+     "b_id": "6a3c798f01fe4f593c210933"
+    },
+    {
+     "only": "second",
+     "a": "屠文漪",
+     "b": "屠文漪",
+     "a_id": "6a3ceda34701a906f10e2004",
+     "b_id": "6a3ceda24701a906f10e1eda"
+    },
+    {
+     "only": "second",
+     "a": "姚舜牧",
+     "b": "姚舜牧",
+     "a_id": "6a3ce8390a0011cb4bc0cb8d",
+     "b_id": "6a3ce8380a0011cb4bc0cafe"
+    },
+    {
+     "only": "second",
+     "a": "Aristotle / Theophrastus",
+     "b": "Pseudo-Aristotle; Theophrastus",
+     "a_id": "69b21d4fddb4fa7c305b4ccb",
+     "b_id": "69b52cd2b3537347e51e33af"
+    },
+    {
+     "only": "second",
+     "a": "敖繼公",
+     "b": "敖繼公",
+     "a_id": "6a3c700301fe4f593c1cfca6",
+     "b_id": "6a3c6fda01fe4f593c1ce522"
+    },
+    {
+     "only": "first",
+     "a": "Unknown",
+     "b": "(unknown)",
+     "a_id": "69f33f3c876dd827cbc6148a",
+     "b_id": "69b52589cced70d8e6d72791"
+    },
+    {
+     "only": "first",
+     "a": "Unknown",
+     "b": "(unknown)",
+     "a_id": "69c71ed5da9771c716316ac8",
+     "b_id": "69b52589cced70d8e6d72791"
+    },
+    {
+     "only": "second",
+     "a": "James Legge (trans.)",
+     "b": "James Legge",
+     "a_id": "69920bbde0a548a13d885302",
+     "b_id": "6953e27477f38f6761be8d28"
+    },
+    {
+     "only": "second",
+     "a": "Lucius Annaeus Seneca",
+     "b": "Seneca, Lucius Annaeus (Philosophus)",
+     "a_id": "6a08558315c643eb1af56111",
+     "b_id": "6a50b35db5e5291460a64899"
+    }
+   ],
+   "authorKey (scripts/lib/artwork-work-resolver.mjs) | surname (scripts/lib/work-identity-util.mjs)": [
+    {
+     "only": "second",
+     "a": "Bona, Giovanni",
+     "b": "Pico della Mirandola, Giovanni",
+     "a_id": "6a42ddd1e76baa13aa86241f",
+     "b_id": "6952b01b77f38f6761bc1cc9"
+    },
+    {
+     "only": "second",
+     "a": "Ochsentrit, Martin",
+     "b": "Stiller, Johann Martin",
+     "a_id": "6a4efadab19783974a52acd2",
+     "b_id": "6978f4c3eb0dcfd39912341a"
+    },
+    {
+     "only": "second",
+     "a": "Liebentantz, Michael",
+     "b": "Faust, Johannes Michael",
+     "a_id": "6a4f3e7139ecc8e27dc657b2",
+     "b_id": "6909d208cf28baa1b4cb003b"
+    },
+    {
+     "only": "second",
+     "a": "Shihāb al-Dīn Aḥmad al-Tīfāshī (التيفاشي)",
+     "b": "Aḥmad al-Tīfāshī",
+     "a_id": "6a06cddfc749b698e5b2cb29",
+     "b_id": "6a29d583c0df82e562e4c4cd"
+    },
+    {
+     "only": "second",
+     "a": "Unknown; Yamada Takao (ed.)",
+     "b": "Lazarus Zetzner (ed.)",
+     "a_id": "69dfedea8d34461cbe7f4efb",
+     "b_id": "695286c8ab34727b1f04c98d"
+    },
+    {
+     "only": "first",
+     "a": "Aristotle / Theophrastus",
+     "b": "Theophrastus; Aristotle",
+     "a_id": "69b21d4fddb4fa7c305b4ccb",
+     "b_id": "6993895674305116d72d1515"
+    },
+    {
+     "only": "second",
+     "a": "Lord, Henry",
+     "b": "More, Henry",
+     "a_id": "69c7a31192b884e4f81738fd",
+     "b_id": "697936168e450bc779a9cad9"
+    },
+    {
+     "only": "second",
+     "a": "Euripides",
+     "b": "Sophocles; Euripides",
+     "a_id": "6993797ab0a84a5763964ff1",
+     "b_id": "69938a835d28b693146cea03"
+    },
+    {
+     "only": "second",
+     "a": "Fuentidueña, Pedro de",
+     "b": "Saint-Martin, Louis Claude de",
+     "a_id": "6a46849b563a27b6e4fb3875",
+     "b_id": "6909b0a0cf28baa1b4caf0e9"
+    },
+    {
+     "only": "second",
+     "a": "James Legge (trans.)",
+     "b": "Plotinus; Marsilio Ficino (trans.)",
+     "a_id": "69920bbde0a548a13d885302",
+     "b_id": "69526a50ab34727b1f046dc5"
+    },
+    {
+     "only": "first",
+     "a": "David Hume",
+     "b": "Hume, David",
+     "a_id": "695690aaaeb4b980d9ebdbfa",
+     "b_id": "6a4f9370d7f4f9119ff22e51"
+    },
+    {
+     "only": "second",
+     "a": "Mira Roy (ed.)",
+     "b": "Lazarus Zetzner (ed.)",
+     "a_id": "69d006e57d7491182a232833",
+     "b_id": "695286c8ab34727b1f04c98d"
+    }
+   ],
+   "canonicalKey (scripts/lib/author-name-key.mjs) | surname (scripts/lib/work-identity-util.mjs)": [
+    {
+     "only": "first",
+     "a": "黃震",
+     "b": "黃震",
+     "a_id": "6a3c6d2601fe4f593c1b82ed",
+     "b_id": "6a3c6d0f01fe4f593c1b7706"
+    },
+    {
+     "only": "second",
+     "a": "Bona, Giovanni",
+     "b": "Pico della Mirandola, Giovanni",
+     "a_id": "6a42ddd1e76baa13aa86241f",
+     "b_id": "6952b01b77f38f6761bc1cc9"
+    },
+    {
+     "only": "second",
+     "a": "Ochsentrit, Martin",
+     "b": "Stiller, Johann Martin",
+     "a_id": "6a4efadab19783974a52acd2",
+     "b_id": "6978f4c3eb0dcfd39912341a"
+    },
+    {
+     "only": "first",
+     "a": "朱橚",
+     "b": "朱橚",
+     "a_id": "6a3c691d39b4508b04e3c415",
+     "b_id": "6a3c68caaf3c49b59c5dc755"
+    },
+    {
+     "only": "second",
+     "a": "Liebentantz, Michael",
+     "b": "Faust, Johannes Michael",
+     "a_id": "6a4f3e7139ecc8e27dc657b2",
+     "b_id": "6909d208cf28baa1b4cb003b"
+    },
+    {
+     "only": "second",
+     "a": "Shihāb al-Dīn Aḥmad al-Tīfāshī (التيفاشي)",
+     "b": "Aḥmad al-Tīfāshī",
+     "a_id": "6a06cddfc749b698e5b2cb29",
+     "b_id": "6a29d583c0df82e562e4c4cd"
+    },
+    {
+     "only": "first",
+     "a": "Thucydides",
+     "b": "Thucydides (ed. Henri II Estienne)",
+     "a_id": "69937a31b0a84a5763967a35",
+     "b_id": "69b2f30ba9a500a45e5e7ac4"
+    },
+    {
+     "only": "first",
+     "a": "徐元太",
+     "b": "徐元太",
+     "a_id": "6a3c79ba01fe4f593c211e77",
+     "b_id": "6a3c798f01fe4f593c210933"
+    },
+    {
+     "only": "first",
+     "a": "屠文漪",
+     "b": "屠文漪",
+     "a_id": "6a3ceda34701a906f10e2004",
+     "b_id": "6a3ceda24701a906f10e1eda"
+    },
+    {
+     "only": "second",
+     "a": "Unknown; Yamada Takao (ed.)",
+     "b": "Lazarus Zetzner (ed.)",
+     "a_id": "69dfedea8d34461cbe7f4efb",
+     "b_id": "695286c8ab34727b1f04c98d"
+    },
+    {
+     "only": "first",
+     "a": "姚舜牧",
+     "b": "姚舜牧",
+     "a_id": "6a3ce8390a0011cb4bc0cb8d",
+     "b_id": "6a3ce8380a0011cb4bc0cafe"
+    },
+    {
+     "only": "first",
+     "a": "Aristotle / Theophrastus",
+     "b": "Theophrastus; Aristotle",
+     "a_id": "69b21d4fddb4fa7c305b4ccb",
+     "b_id": "6993895674305116d72d1515"
+    }
+   ]
+  }
+ }
+}

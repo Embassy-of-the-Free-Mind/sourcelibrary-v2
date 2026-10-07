@@ -1,0 +1,779 @@
+[
+  {
+    "book_id": "6a3c5f53879008ba7e154672",
+    "slot": 9,
+    "title": "續一切經音義(二) (vol 2)",
+    "tradition": "chinese",
+    "shelf_fit": "fits",
+    "shelf_note": "Xilin's Continued Sounds and Meanings of All the Sutras (Liao), a Buddhist lexicon. The scan is a Japanese typeset reprint with the margin mark 支那撰述 (Zokuzōkyō-type series). It fits a Chinese shelf.",
+    "rights_flag": null,
+    "structure_note": "91 of 101 pages have OCR and 82 are translated, so 10 pages have no text and 19 have no English. The 8 printed backsteps among 22 read numbers look like misread folio numerals, not a splice: p22 reads <page-num>十一</page-num> where the image shows 十二. On p100 the running header was misread as another work's title (see page).",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 22,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "穿·也·。翰·衡·云·。陸·免·繫·成·聲·。古·文·作·也",
+            "image": "穿也、論衡云、陰陽氣激成聲、古文作靁",
+            "problem": "Lunheng quotation on thunder garbled into nonsense",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "考·聲·云·。夷·留·也",
+            "image": "考聲云、疾雷也",
+            "problem": "gloss misread",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "萊·可·食·者·通·名·為·蔌·。又·云·雷·霆·上·魯·則·反",
+            "image": "菜可食者通名為蔌、又云 雷霆 上魯回反",
+            "problem": "fanqie speller misread (則 for 回)",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "其·。葉·。背·。面·。相·。類·。案·。食·。之·。止·。渴·。",
+            "image": "其葉背面相類、案食之止渴",
+            "problem": "a stop (· 。) inserted after almost every character across the page; the text cannot be read as running text",
+            "severity": "moderate",
+            "class": "other:punctuation flood"
+          },
+          {
+            "ocr": "<page-num>十一</page-num>",
+            "image": "十二",
+            "problem": "folio numeral misread",
+            "severity": "minor",
+            "class": "O7"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "其·。葉·。背·。面·。相·。類·。案·。食·。之·。止·。渴",
+            "english": "Its leaves. Back. Face. Together. Kind. Note. Eat. Stop. Thirsty.",
+            "problem": "the English is a word-by-word list that follows the garbled OCR; most of the page cannot be read as English",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "翰·衡·云·。陸·免·繫·成·聲",
+            "english": "Han-heng says. Lu mian-xi become a phonetic.",
+            "problem": "Lunheng (論衡) not recognised; the thunder gloss is lost",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 50,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "冬獵也非此用龍示畜也古有捕龍比若未畜安捕哉",
+            "image": "冬獵也非此用 龍湫 上力鍾反…云龜龍麟鳳四瑞也 易曰雲從龍 …龍亦畜也 古有豢龍氏 若未畜安擒哉",
+            "problem": "the headword entry 龍湫 is scrambled and the 'four auspicious beasts' / Yijing quotation is dropped",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "不動獸下足放反…國語云獸為群",
+            "image": "惡獸 下舒救反…國語云獸三為群",
+            "problem": "headword 惡獸 misread as 不動獸; fanqie 舒救 misread as 足放; 三 dropped from 'three beasts make a herd'",
+            "severity": "moderate",
+            "class": "O7"
+          },
+          {
+            "ocr": "title 不動使者陀羅尼祕密法一卷 placed first, then 八者謂三甜… after <column-break/>",
+            "image": "the four right-hand columns (八者謂三甜…機杼) come before the title in vertical reading order",
+            "problem": "reading order reversed: the tail of the previous entry is put after the new sutra heading",
+            "severity": "moderate",
+            "class": "other:reading order"
+          },
+          {
+            "ocr": "<sig>一切經音義卷五</sig>",
+            "image": "續一切經音義卷五",
+            "problem": "續 dropped from the running title",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "禮記冬獵也非此用",
+            "english": "The Record of Rites says it refers to winter hunting",
+            "problem": "the gloss on 狩 (winter hunt) is attached to 龍; the dragon entry is rendered as invented prose ('if one cannot tame them, how can one catch them')",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "介雅日其子積",
+            "english": "The Erya says 'ji' <gloss>female animal</gloss> is the child of 'ji'",
+            "problem": "the translation follows garbled OCR and produces nonsense",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 78,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "切如來實印陀羅尼一卷",
+            "image": "一切如來寶篋印陀羅尼經一卷",
+            "problem": "sutra title mangled (寶篋 'precious casket' becomes 實 'real'; 一 and 經 dropped)",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "耳瑞下都郎反考聲云耳斷也",
+            "image": "耳璫 下都郎反 考聲云 耳飾也",
+            "problem": "'ear ornament' misread as 'ear severed'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "之鴞上山有耕反下其狀如武山青羽豚指前",
+            "image": "鸚鵡 上厄耕反 下音武 山海經云 黃山有鳥 其狀如鴞 青羽赤喙…腳指前後各兩爪",
+            "problem": "the headword 鸚鵡 (parrot) and the Shanhaijing citation are lost; the columns are scrambled",
+            "severity": "serious",
+            "class": "O5"
+          },
+          {
+            "ocr": "(no entry for 藥草, much of 螫毒, 脊膳)",
+            "image": "藥草 entry and the full 螫毒 / 脊膳 glosses",
+            "problem": "several entries dropped or merged",
+            "severity": "moderate",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "切如來實印陀羅尼一卷",
+            "english": "The Tathagata Real Seal Dharani, One Volume",
+            "problem": "wrong sutra name; it should be the Precious Casket Seal Dharani of All Tathagatas",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "耳斷也",
+            "english": "ear severed",
+            "problem": "inherits the misread; the source glosses an ear ornament",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "source": "之鴞…其狀如武山青羽豚指前",
+            "english": "The xiao owl… its shape is like the Wu mountain. Blue feathers. The pig points forward.",
+            "problem": "invented nonsense; the source describes the parrot (feet with two claws front and back)",
+            "severity": "serious",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 100,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "<header>切韻指掌圖卷六</header>",
+            "image": "續一切經音義卷六 (margin)",
+            "problem": "running title replaced by a different work's title (Qieyun zhizhang tu)",
+            "severity": "serious",
+            "class": "O3"
+          },
+          {
+            "ocr": "羅睺下棚約反",
+            "image": "羅睺 下胡鉤反? (reading uncertain)",
+            "problem": "fanqie misread",
+            "severity": "minor",
+            "class": "O7"
+          },
+          {
+            "ocr": "火星十一里其色赤光",
+            "image": "火星 十一名熒惑 南方火之精 一名罰星…其色赤",
+            "problem": "names of Mars (熒惑, 罰星) dropped; numbers spliced",
+            "severity": "moderate",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "<header>切韻指掌圖卷六</header>",
+            "english": "### Qieyun Zhizhang Tu (Guide to the Qieyun Phonology), Scroll 6",
+            "problem": "the page is headed with the name of a different book",
+            "severity": "serious",
+            "class": "O3"
+          },
+          {
+            "source": "火星十一里",
+            "english": "The fire star <term>Mars</term> is eleven li",
+            "problem": "invented measurement from spliced text",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "太白之五星一傍通祕訣",
+            "english": "The five stars of Venus contain the metal essence; one side connects. Mijue says",
+            "problem": "garble rendered as fluent prose",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "do_not_show",
+    "showcase_pages": [],
+    "reader_summary": "This is the Liao monk Xilin's continuation of the Buddhist sound-and-meaning lexicon, from a Japanese typeset reprint. The transcription keeps the headwords in places but scrambles or drops much of the small-print glosses and fanqie. One page is headed with the title of a different book. Most of the English follows the garble or invents its own sense, and a reader cannot rely on it.",
+    "book_verdict": "Right text, but none of the four pages has usable OCR: glosses are garbled, entries dropped, a page carries another work's title, and the English is word salad or invents meaning. Not fit to show."
+  },
+  {
+    "book_id": "6a3c679139b4508b04e370b1",
+    "slot": 10,
+    "title": "御定孝經衍義·卷八~卷十二 (vol 32)",
+    "tradition": "chinese",
+    "shelf_fit": "fits",
+    "shelf_note": "The Kangxi-era imperial Elaboration of the Classic of Filial Piety, in its Siku Quanshu manuscript copy. It fits a Chinese classics shelf.",
+    "rights_flag": null,
+    "structure_note": "209 of 210 pages have OCR and 208 are translated. The 18 backsteps and 29 repeats among 52 printed numbers are probably an artefact: the page-num tag holds the juan number (卷十, 卷十一), which repeats across many leaves, not a folio. Pages seen are in juan 9–11, which matches the title.",
+    "on_sight_defect": false,
+    "pages": [
+      {
+        "page_number": 52,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<ruby>陰陽<rt>大</rt></ruby>…<ruby>陰陽<rt>小</rt></ruby>上下指內陽",
+            "image": "小往大來(陽大陰小)…其志同也(上下指君臣言)",
+            "problem": "the interlinear notes are mangled into ruby markup, and the note 'upper and lower refers to ruler and minister' is dropped",
+            "severity": "moderate",
+            "class": "O12"
+          },
+          {
+            "ocr": "君臣卑為定分",
+            "image": "君尊臣卑為定分",
+            "problem": "尊 dropped",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "世主臣賢",
+            "image": "世主聖臣賢",
+            "problem": "聖 dropped",
+            "severity": "minor",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "上下交而其志同也(上下指君臣言)",
+            "english": "\"Upper and lower\" refers to the inner presence of the positive yang",
+            "problem": "without the note, the English makes 'upper and lower' refer to yang/yin rather than to ruler and minister",
+            "severity": "moderate",
+            "class": "T13"
+          }
+        ],
+        "other": [
+          {
+            "note": "<note>A small printer's mark in the form of a stylized cloud or mountain.</note> describes a mark that is a library seal / margin title",
+            "severity": "minor",
+            "class": "O15"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 75,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "經于如齊毋行必",
+            "image": "經于如齊每行必",
+            "problem": "每 'every' read as 毋 'do not'",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "秋天王定使王季子來聘",
+            "image": "秋天王(定王)使王季子(王之母弟)來聘 十年",
+            "problem": "interlinear notes merged or dropped, including the year '10th year'",
+            "severity": "moderate",
+            "class": "O12"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "經于如齊毋行必至深罪之也",
+            "english": "The Annals severely blames him for going to Qi without first fulfilling his duty to the king",
+            "problem": "the source says the Classic records every trip to Qi, censuring it deeply; 'without first fulfilling his duty' is invented from the misread",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [
+          {
+            "note": "Margin title 欽定四庫全書 rendered as an H1 heading at the top of the English",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 117,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "之兄繁",
+            "image": "之兄縶",
+            "problem": "personal name 縶 misread as 繁",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "孟摯",
+            "image": "孟縶",
+            "problem": "name misread (homophone)",
+            "severity": "minor",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "盜殺衛侯之兄繁",
+            "english": "thieves killed the elder brother of the Marquis of Wei…, Fan",
+            "problem": "the brother's name is Zhi (縶), the same man as Meng Zhi below; the reader sees two people",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 163,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "本禮記哀公問夫子之言釋禮記者因以經文…為證據",
+            "english": "The Master's words explain the Liji by using the classic text's principle… as evidence",
+            "problem": "the commentators on the Liji (釋禮記者) are made into 'the Master'",
+            "severity": "moderate",
+            "class": "T8"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      117,
+      163
+    ],
+    "reader_summary": "This is the Qing imperial Elaboration of the Classic of Filial Piety (juan 9–11), from the Siku Quanshu manuscript. The transcription is of the right text and mostly accurate, but interlinear small-print notes are sometimes merged or dropped and a few names are misread. The English is a readable, generally faithful rendering. Check names and notes against the image.",
+    "book_verdict": "A sound page-by-page reading of the main text with moderate slips (dropped interlinear notes, a misread name, one invented clause from a misread character). Usable with a caveat."
+  },
+  {
+    "book_id": "6a3c5f4c879008ba7e15428c",
+    "slot": 11,
+    "title": "續一切經音義(一) (vol 1)",
+    "tradition": "chinese",
+    "shelf_fit": "fits",
+    "shelf_note": "Volume 1 of Xilin's Continued Sounds and Meanings (preface and juan 1–3), from the same Japanese typeset reprint as slot 9.",
+    "rights_flag": null,
+    "structure_note": "83 of 95 pages have OCR and 77 are translated, so 12 pages have no text. The backsteps (7 of 23 read numbers) are likely misread folio and juan numbers: p29 has page-num '6' taken from the heading 卷第六, and p79 has a meta title 東方匯書卷三 not found on the leaf. Both this book and slot 9 are volumes of one work, recorded separately.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 7,
+        "right_page": "yes",
+        "ocr_score": 3,
+        "ocr_errors": [
+          {
+            "ocr": "巾仌<gloss>吳都</gloss>伋<gloss>直冉</gloss>著<gloss>瞻</gloss>不著人裸",
+            "image": "巾、伭(吳都)伭(直尼) 著(舒贍)不著人、裸(古玩)裸(朔瓦)",
+            "problem": "the list of confusable characters, each with small fanqie, is misread and the glosses misattached",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 3,
+        "tr_errors": [
+          {
+            "source": "巾仌<gloss>吳都</gloss>伋<gloss>直冉</gloss>…",
+            "english": "cloth and ice <gloss>Wu Du</gloss>, Qi <gloss>Zhi Ran</gloss>, Zhu <gloss>Zhan</gloss>, not wearing the person, naked…",
+            "problem": "a list of graphic confusions is rendered as meaningless phrases with fanqie spellers as glosses; the reader cannot see that this lists scribal confusions",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 29,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "其子者蜂或俗音蓬也",
+            "image": "其子者也介雅正作蠭今俗作蜂或俗音蓬也",
+            "problem": "text dropped and spliced",
+            "severity": "moderate",
+            "class": "O5"
+          },
+          {
+            "ocr": "下傳息子也…下傳云斷賤人也",
+            "image": "廝下 上息貲反…傳云廝賤人也",
+            "problem": "headword 廝 (menial) misread as 斷 'cut/judge'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "青木高聲有作精善也",
+            "image": "考聲云目珠子也… (眼睛 entry)",
+            "problem": "the gloss for 'eyeball' is replaced by a different string",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "<page-num>6</page-num>",
+            "image": "卷第六 heading; no folio number",
+            "problem": "chapter heading taken as page number",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "下傳云斷賤人也",
+            "english": "The character below says: to judge mean people",
+            "problem": "nonsense from the misread; the source glosses 廝 as 'a menial person'",
+            "severity": "serious",
+            "class": "T7"
+          },
+          {
+            "source": "青木高聲",
+            "english": "The Kaosheng says: blue, wood, high sound",
+            "problem": "garble rendered as a definition",
+            "severity": "moderate",
+            "class": "T7"
+          },
+          {
+            "source": "破頭梯登上體矣",
+            "english": "\"Broken head\", \"ladder\", \"climb\", \"body\", \"top\".",
+            "problem": "word list instead of translation",
+            "severity": "moderate",
+            "class": "T7"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 52,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "冊博反說文云冊制也從冊羊五省聲",
+            "image": "肩髆 / 胛 entries (…說文云肩髆也從骨博省聲…)",
+            "problem": "the shoulder-blade entries are rewritten as entries on 冊 'tablet'; text not on the page",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "ocr": "胸臆…說文云胃也從肉胃聲",
+            "image": "胸臆…說文胷骨也",
+            "problem": "'chest bone' becomes 'stomach'",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "<meta>The text is a page from a dictionary or philological work (likely the Kangxi Dictionary or similar)…</meta>",
+            "image": "—",
+            "problem": "model commentary in the OCR, and a wrong identification (Kangxi Dictionary)",
+            "severity": "moderate",
+            "class": "O15"
+          },
+          {
+            "ocr": "內甘反周禮家為鄉五鄰為里",
+            "image": "內寂半空地謂之廛…良甘反 周禮五家為鄰五鄰為里",
+            "problem": "entry opening scrambled",
+            "severity": "moderate",
+            "class": "O5"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "冊制也",
+            "english": "Shuowen says: ce (冊) means to control",
+            "problem": "translates text not on the page",
+            "severity": "serious",
+            "class": "O1"
+          },
+          {
+            "source": "說文云胃也",
+            "english": "Shuowen says: wei (胃, stomach)",
+            "problem": "the anatomy is wrong",
+            "severity": "serious",
+            "class": "O6"
+          }
+        ],
+        "other": [
+          {
+            "note": "Note in the English reports a frame containing '旨意 (zhǐyì)'; the boxed marginal note on the leaf reads otherwise (about 皆非 / 白字, uncertain)",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 79,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "也胖脹亮上反說文云又作胖切韻云胖也或作膞 / 也草作積反俗字從青於下於棧反考聲云謂皮肉中 (each twice)",
+            "image": "each line appears once",
+            "problem": "lines repeated; the page is scrambled",
+            "severity": "moderate",
+            "class": "O4"
+          },
+          {
+            "ocr": "<meta>東方匯書卷三</meta>",
+            "image": "續一切經音義卷三 (margin)",
+            "problem": "running title replaced by a non-existent title",
+            "severity": "moderate",
+            "class": "O11"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "the whole page (青瘀, 介談, 哽噎, 擐甲, 穽陷, 利鐮 …)",
+            "english": "four short entries only (sickle, pit, meat, fat)",
+            "problem": "most of the page is silently omitted",
+            "severity": "serious",
+            "class": "T9"
+          }
+        ],
+        "other": [],
+        "confidence": "medium"
+      }
+    ],
+    "fit_to_show": "do_not_show",
+    "showcase_pages": [],
+    "reader_summary": "This is the preface and opening juan of Xilin's Continued Sounds and Meanings, from a Japanese typeset reprint. The preface prose is transcribed fairly well. The dictionary pages are scrambled: entries are rewritten as words not on the page, and lines are repeated. The English either mirrors the garble or leaves out most of a page.",
+    "book_verdict": "The preface prose is mostly right, but the lexicon pages carry invented entries, wrong glosses (stomach for chest bone), model commentary in the OCR, and a translation that drops most of a page. Not fit to show."
+  },
+  {
+    "book_id": "6a3ceb5195fcd455630555fc",
+    "slot": 12,
+    "title": "周易圖書質疑·卷十五~卷二十 (vol 6)",
+    "tradition": "chinese",
+    "shelf_fit": "fits",
+    "shelf_note": "Zhao Jixu's Doubts on the Yijing Diagrams (preface dated 1782), Siku Quanshu manuscript. A Yijing diagram commentary fits a Chinese classics/cosmology shelf.",
+    "rights_flag": null,
+    "structure_note": "132 of 134 pages have OCR and 128 are translated. The page-num tag carries the juan (卷十五) rather than a folio, which is likely why repeats (22) and backsteps (10) show up. Nothing suggests a splice.",
+    "on_sight_defect": true,
+    "pages": [
+      {
+        "page_number": 12,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "<header>金溪周氏全書</header>",
+            "image": "欽定四庫全書 (margin)",
+            "problem": "running title replaced by an invented work title",
+            "severity": "moderate",
+            "class": "O3"
+          },
+          {
+            "ocr": "日暄",
+            "image": "日晅",
+            "problem": "variant character normalised",
+            "severity": "minor",
+            "class": "O8"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "<header>金溪周氏全書</header>",
+            "english": "Complete Works of the Zhou Family of Jinxi",
+            "problem": "page is headed with a work that does not exist on the leaf",
+            "severity": "moderate",
+            "class": "O3"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      },
+      {
+        "page_number": 61,
+        "right_page": "yes",
+        "ocr_score": 2,
+        "ocr_errors": [
+          {
+            "ocr": "| 山水蒙 | 綜坎之坎 | 錯坎之萃 |",
+            "image": "山水蒙 錯坎之革 綜坎之屯",
+            "problem": "both relations wrong",
+            "severity": "serious",
+            "class": "O17"
+          },
+          {
+            "ocr": "| 山雷頤 | 綜震之大過 | 錯離 |; | 坎為水 | 綜離 | 錯離 |; | 離為火 | 綜離坎 | 錯坎 |",
+            "image": "山雷頤 錯震之大過; 坎為水 錯離; 離為火 錯坎",
+            "problem": "relations swapped and entries invented where the page has only one",
+            "severity": "serious",
+            "class": "O17"
+          },
+          {
+            "ocr": "火水既濟 / 水火未濟 / 火雷豐",
+            "image": "水火既濟 / 火水未濟 / 雷火豐",
+            "problem": "hexagram names inverted (既濟 and 未濟 swapped trigram order)",
+            "severity": "serious",
+            "class": "O6"
+          },
+          {
+            "ocr": "| 錯離之同人 | (既濟, 未濟)",
+            "image": "綜同 (no 同人)",
+            "problem": "invented relations",
+            "severity": "serious",
+            "class": "O17"
+          },
+          {
+            "ocr": "column header 之卦 (empty column)",
+            "image": "no such column",
+            "problem": "invented table column",
+            "severity": "minor",
+            "class": "O17"
+          }
+        ],
+        "tr_score": 2,
+        "tr_errors": [
+          {
+            "source": "綜 / 錯",
+            "english": "Interwoven / Misplaced",
+            "problem": "'misplaced' misrepresents 錯 (the complementary or inverse hexagram); the table's terms mislead",
+            "severity": "moderate",
+            "class": "other:term"
+          },
+          {
+            "source": "OCR table",
+            "english": "English table",
+            "problem": "faithfully carries the wrong relations, so most rows are false to the leaf",
+            "severity": "serious",
+            "class": "O17"
+          }
+        ],
+        "other": [
+          {
+            "note": "Margin title rendered as an H1 heading",
+            "severity": "minor",
+            "class": "O11"
+          }
+        ],
+        "confidence": "high"
+      },
+      {
+        "page_number": 93,
+        "right_page": "yes",
+        "ocr_score": 5,
+        "ocr_errors": [],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "兌之象于草言水澤為水之所鍾也",
+            "english": "Regarding the images of Dui, in its aspect of marshes it speaks of water",
+            "problem": "the character after 于 is probably the hexagram 萃 (Cui), parallel to the other hexagram names; the English drops the hexagram reference",
+            "severity": "minor",
+            "class": "O6"
+          }
+        ],
+        "other": [
+          {
+            "note": "Final sentence placed inside a gloss: '<gloss>emblems. Four create eight...</gloss>'",
+            "severity": "minor",
+            "class": "D1"
+          }
+        ],
+        "confidence": "medium"
+      },
+      {
+        "page_number": 113,
+        "right_page": "yes",
+        "ocr_score": 4,
+        "ocr_errors": [
+          {
+            "ocr": "盡有事終則有始 … 即盡內卦巽三爻也",
+            "image": "蠱有事終則有始 … 即蠱內卦巽三爻也",
+            "problem": "the hexagram name 蠱 (Gu) misread as 盡 twice",
+            "severity": "moderate",
+            "class": "O6"
+          },
+          {
+            "ocr": "東北為良",
+            "image": "東北為艮",
+            "problem": "艮 misread",
+            "severity": "minor",
+            "class": "O6"
+          }
+        ],
+        "tr_score": 4,
+        "tr_errors": [
+          {
+            "source": "盡有事終則有始",
+            "english": "Everything that has an end must have a beginning",
+            "problem": "the Gu hexagram (whose judgment carries 先甲三日) disappears from the argument",
+            "severity": "moderate",
+            "class": "O6"
+          }
+        ],
+        "other": [],
+        "confidence": "high"
+      }
+    ],
+    "fit_to_show": "show_with_caveat",
+    "showcase_pages": [
+      93,
+      113
+    ],
+    "reader_summary": "This is Zhao Jixu's Qing-era critique of Yijing diagrams, juan 15–20, from the Siku Quanshu manuscript. The prose pages are transcribed accurately and translated reliably, apart from a misread hexagram name. The hexagram-relation tables are not reliable: relations are swapped, invented or inverted. One page carries an invented running title.",
+    "book_verdict": "Prose pages are good and showable. The table page (p61) is seriously wrong against the image, and headers are sometimes invented, so show it with a warning about tables."
+  }
+]

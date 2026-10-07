@@ -1,0 +1,174 @@
+{
+ "seed": 5873,
+ "at": "2026-10-06T08:45:36.580Z",
+ "pages_per_book": 6,
+ "eligible": {
+  "Persian": {
+   "live_translated_books": 9,
+   "already_tried": 1,
+   "drawable": 8
+  },
+  "Pali": {
+   "live_translated_books": 13,
+   "already_tried": 7,
+   "drawable": 6
+  }
+ },
+ "books": {
+  "Persian": [
+   {
+    "order": 1,
+    "book_id": "6a09ea953ca4edcd1ef0210b",
+    "eligible_pages": 0,
+    "candidates": []
+   },
+   {
+    "order": 2,
+    "book_id": "69935b198e28d8f4c5d3c249",
+    "eligible_pages": 3,
+    "candidates": [
+     406,
+     389,
+     393
+    ]
+   },
+   {
+    "order": 3,
+    "book_id": "69afd049ae982b9d51d6df20",
+    "eligible_pages": 175,
+    "candidates": [
+     91,
+     178,
+     165,
+     106,
+     75,
+     39
+    ]
+   },
+   {
+    "order": 4,
+    "book_id": "6a08fd1d9c1b82475e15be68",
+    "eligible_pages": 0,
+    "candidates": []
+   },
+   {
+    "order": 5,
+    "book_id": "69b6329a66ab51b501d93a2c",
+    "eligible_pages": 154,
+    "candidates": [
+     167,
+     107,
+     171,
+     100,
+     41,
+     168
+    ]
+   },
+   {
+    "order": 6,
+    "book_id": "69afcfc25115a4fae488e18c",
+    "eligible_pages": 432,
+    "candidates": [
+     184,
+     362,
+     290,
+     389,
+     437,
+     426
+    ]
+   },
+   {
+    "order": 7,
+    "book_id": "6a08fd129c1b82475e15bd60",
+    "eligible_pages": 0,
+    "candidates": []
+   },
+   {
+    "order": 8,
+    "book_id": "6a0900e2cba2f4fe3ad83a0b",
+    "eligible_pages": 0,
+    "candidates": []
+   }
+  ],
+  "Pali": [
+   {
+    "order": 1,
+    "book_id": "6a09fef929abf62080bbd82a",
+    "eligible_pages": 241,
+    "candidates": [
+     206,
+     245,
+     200,
+     212,
+     153,
+     193
+    ]
+   },
+   {
+    "order": 2,
+    "book_id": "6a308280558372a29b371088",
+    "eligible_pages": 589,
+    "candidates": [
+     158,
+     414,
+     360,
+     623,
+     311,
+     285
+    ]
+   },
+   {
+    "order": 3,
+    "book_id": "6a30904dd8c6b8a005c7bea9",
+    "eligible_pages": 353,
+    "candidates": [
+     324,
+     152,
+     386,
+     180,
+     274,
+     128
+    ]
+   },
+   {
+    "order": 4,
+    "book_id": "6a31c88a4400787ae5a9d5e4",
+    "eligible_pages": 349,
+    "candidates": [
+     298,
+     71,
+     109,
+     321,
+     165,
+     113
+    ]
+   },
+   {
+    "order": 5,
+    "book_id": "6a09ff0029abf62080bbd95f",
+    "eligible_pages": 398,
+    "candidates": [
+     352,
+     119,
+     205,
+     163,
+     442,
+     396
+    ]
+   },
+   {
+    "order": 6,
+    "book_id": "6a09ff23fa20006dbaba89ae",
+    "eligible_pages": 324,
+    "candidates": [
+     190,
+     268,
+     313,
+     96,
+     118,
+     196
+    ]
+   }
+  ]
+ }
+}

@@ -70,6 +70,7 @@ import { codeVersion, host, NOT_RECORDED } from './write-provenance.mjs';
 import { stripMarkupTags } from './strip-markup-tags.mjs';
 import { isHeld, NOT_HELD } from './pipeline-hold.mjs';
 import { ocrTrustGate, isOcrTrustRefusal } from './ocr-trust-gate.mjs';
+import { preGateBookReason, isPreGateBookRefusal } from './pre-translation-gate.mjs';
 import { dropDriftedPages } from './block-drift.mjs';
 import { sumBatchResponseUsage } from '../workers/lib/supabase-usage-logger.mjs';
 import { costOf, BATCH_MULTIPLIER } from './model-pricing.mjs';
@@ -338,7 +339,9 @@ export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, 
   if (book.pipeline_auto?.status === 'translate_submitted') return { ok: false, reason: 'realtime-lane-owns-book (pipeline_auto.status=translate_submitted)', book };
   const open = await db.collection(RUNS_COLLECTION).findOne({ book_id: bookId, phase: { $nin: [...TERMINAL_PHASES, 'written', 'shadow_complete', 'failed'] } });
   if (open) return { ok: false, reason: `open-run ${open.id} (${open.phase})`, book };
-  const { pages, excluded } = await selectPages(db, bookId, { limit, pageIds, excludeWithheld });
+  // #5915: the pre-translation gate judges the queue here; a dry run records nothing.
+  const { pages, excluded, gate } = await selectPages(db, bookId, { limit, pageIds, excludeWithheld, recordGate: !dryRun, lane: 'chained-enrol' });
+  if (gate?.book) return { ok: false, reason: preGateBookReason(gate.book), book, excluded };
   if (pages.length === 0) return { ok: false, reason: 'nothing-to-translate', book, excluded };
   const model = getTranslateModelForBook(book);
   const estimate = estimateChainedUsd({ prompts, book, pages, model, noContext });
@@ -845,7 +848,8 @@ export async function enrolForPhase4(db, book, { prompts, pageCount, deps = {} }
   const first = await enrolChainedRun(db, book.id, deps, { prompts, approvedUsd: +(owed * AUTO_APPROVAL_USD_PER_PAGE).toFixed(4), submit: false });
   if (first.ok) return { lane: 'chained', run: first.run };
   // An untrusted-OCR refusal is a skip, never a hand-off: the realtime lane would translate the same bad text.
-  if (/^(book-held|open-run|realtime-lane-owns-book)/.test(first.reason) || isOcrTrustRefusal(first.reason)) return { lane: 'skip', reason: first.reason };
+  // Nor is a book the pre-translation gate refused whole (#5915): the realtime worker would refuse it too.
+  if (/^(book-held|open-run|realtime-lane-owns-book)/.test(first.reason) || isOcrTrustRefusal(first.reason) || isPreGateBookRefusal(first.reason)) return { lane: 'skip', reason: first.reason };
   const ceiling = +(owed * REALTIME_USD_PER_PAGE).toFixed(4);
   if (first.estimate != null && first.estimate <= ceiling) {
     const second = await enrolChainedRun(db, book.id, deps, { prompts, approvedUsd: first.estimate, submit: false });

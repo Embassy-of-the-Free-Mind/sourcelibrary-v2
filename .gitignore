@@ -64,6 +64,9 @@ src/data/*
 !src/data/image-subjects.json
 !src/data/image-subject-map.json
 !src/data/ocr-benchmark-evidence.json
+!src/data/ocr-pareto.json
+!src/data/translation-pareto.json
+!src/data/quality-feedback-themes.json
 !src/data/carbon-ledger/
 !src/data/carbon-ledger/*.json
 !src/data/cite/
@@ -73,6 +76,7 @@ src/data/*
 !src/data/shwep-supplementary-works.ts
 !src/data/public-models.ts
 !src/data/model-usage-recent.json
+!src/data/quality-methods.json
 
 # User uploads and test files
 public/uploads/

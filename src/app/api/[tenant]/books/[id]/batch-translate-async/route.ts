@@ -7,8 +7,9 @@ import { getTriggerSource } from '@/lib/cron-auth';
 import { getTranslationPrompt } from '@/lib/prompts';
 import { PROMPT_VERSION, SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { createRevision } from '@/lib/page-revisions';
-import { isTruncatedCandidate } from '@/lib/truncated-response';
+import { isTruncatedCandidate, candidateText } from '@/lib/truncated-response';
 import { findHumanEditedPageIds, findPendingBatchJob, CLEAR_STALE_UNSET, hasNoTranslatableBody, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON, strayScriptGate } from '@/lib/translate-write';
+import { guardTranslationText } from '@/lib/translation-write-guard';
 import { withAuth } from '@/lib/auth-helpers';
 import { batchJobProvenance, engineFromBatchJob, notRecorded, translationProvenance, contentHash, codeVersion, host } from '@/lib/write-provenance';
 
@@ -403,7 +404,7 @@ export const GET = withAuth(async (request, session, context) => {
 
           // Extract text from nested response structure
           const candidate = response.response?.candidates?.[0];
-          let text = candidate?.content?.parts?.[0]?.text;
+          let text = candidateText(candidate);
 
           // The provider says this answer was cut off. A truncated translation
           // has text and a non-refusal finishReason, so it matched no branch
@@ -434,7 +435,7 @@ export const GET = withAuth(async (request, session, context) => {
               failCount++;
               continue;
             }
-            text = stray.text;
+            text = guardTranslationText(stray.text); // #5902: term definitions → <note>
           }
 
           if (text) {

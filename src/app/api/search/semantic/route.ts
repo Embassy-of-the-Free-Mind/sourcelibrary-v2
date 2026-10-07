@@ -4,6 +4,7 @@ import { searchBooksCatalog } from '@/lib/books-catalog';
 import { getDb } from '@/lib/mongodb';
 import { logSearchQuery } from '@/lib/search-log';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { resolveSearchScope, isScoped, scopeAdmits } from '@/lib/tenant-search-scope';
 import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
 import { fetchWorkFanouts } from '@/lib/search/work-fanout';
 
@@ -28,7 +29,19 @@ export const dynamic = 'force-dynamic';
  *   year_min      — filter by minimum year (book + page level)
  *   year_max      — filter by maximum year (book + page level)
  *   max_per_book  — page-level only: cap on passages from any single book
+ *
+ * TENANT SCOPE (#4330). On a partner subdomain this endpoint returned the
+ * global corpus — it had no notion of a tenant, and /search renders it as
+ * "conceptual matches" ABOVE the correctly-scoped keyword results. Every lane
+ * below (book vectors, page vectors, the lexical fallback) now runs inside the
+ * request's `SearchScope`; a tenant signal that cannot be resolved returns
+ * nothing rather than everything. Scoped responses are never shared-cached:
+ * tenant context can arrive by header, which the URL-keyed CDN cannot see (the
+ * same reasoning as /api/gallery's `galleryCacheControl`).
  */
+const SHARED_CACHE = 'public, max-age=0, s-maxage=300, stale-while-revalidate=600';
+const NO_STORE = 'private, no-store';
+
 export async function GET(request: NextRequest) {
   const _searchStart = Date.now();
   const { searchParams } = new URL(request.url);
@@ -57,9 +70,18 @@ export async function GET(request: NextRequest) {
   // Strip surrounding quotes for semantic search (embedding doesn't need them)
   const searchQuery = /^".*"$/.test(query) ? query.slice(1, -1) : query;
 
+  const scope = await resolveSearchScope(request.headers);
+  const cacheControl = isScoped(scope) ? NO_STORE : SHARED_CACHE;
+  if (scope.kind === 'closed') {
+    return NextResponse.json(
+      { results: [], query, total: 0, mode: 'semantic', level, lang: level === 'page' ? textLang : 'en' },
+      { headers: { 'Cache-Control': NO_STORE } },
+    );
+  }
+
   if (level === 'page') {
     try {
-      const pages = await semanticPageSearchGlobal(searchQuery, limit, { language, languages, excludeLanguages, yearMin, yearMax, maxPerBook, textLang });
+      const pages = await semanticPageSearchGlobal(searchQuery, limit, { scope, language, languages, excludeLanguages, yearMin, yearMax, maxPerBook, textLang });
       const bookIds = [...new Set(pages.map(p => p.book_id))];
       let slugMap: Record<string, string> = {};
       // Books hidden from the public reader (visible:false OR hidden:true). Embeddings
@@ -93,6 +115,7 @@ export async function GET(request: NextRequest) {
         } catch { /* slug enrichment is best-effort */ }
       }
       const enriched = pages
+        .filter(p => scopeAdmits(scope, p.book_id))
         .filter(p => !hiddenBookIds.has(p.book_id))
         .filter(p => !mongoOk || liveBookIds.has(p.book_id))
         .map(p => ({
@@ -113,7 +136,7 @@ export async function GET(request: NextRequest) {
         // Which text store answered. Snippets are in THIS language.
         lang: textLang,
       }, {
-        headers: { 'Cache-Control': 'public, max-age=0, s-maxage=300, stale-while-revalidate=600' },
+        headers: { 'Cache-Control': cacheControl },
       });
     } catch (error) {
       console.error('[semantic-search] page-level error:', error);
@@ -130,6 +153,7 @@ export async function GET(request: NextRequest) {
 
   try {
     const books = await semanticBookSearch(searchQuery, limit, {
+      scope,
       language,
       yearMin,
       yearMax,
@@ -185,6 +209,7 @@ export async function GET(request: NextRequest) {
     const SEMANTIC_SIM_FLOOR = 0.55;
     const enriched = books
       .filter(b => b.similarity >= SEMANTIC_SIM_FLOOR)
+      .filter(b => scopeAdmits(scope, b.book_id))
       .filter(b => !hiddenBookIds.has(b.book_id))
       .filter(b => !mongoOk || liveBookIds.has(b.book_id))
       .map(b => ({
@@ -207,7 +232,11 @@ export async function GET(request: NextRequest) {
     let mode: 'semantic' | 'lexical' = 'semantic';
     if (enriched.length === 0) {
       try {
-        const lexical = await searchBooksCatalog(searchQuery, { limit, language });
+        // books_catalog has no tenant column (tenant-browse.ts), so under a
+        // scope the match is over-fetched and cut to the scope's book set here.
+        const lexical = (await searchBooksCatalog(searchQuery, { limit: isScoped(scope) ? 200 : limit, language }))
+          .filter(b => scopeAdmits(scope, b.id))
+          .slice(0, limit);
         const filtered = lexical.filter(b => {
           const y = typeof b.year === 'number' ? b.year : undefined;
           if (yearMin !== undefined && (y === undefined || y < yearMin)) return false;
@@ -263,7 +292,7 @@ export async function GET(request: NextRequest) {
         const db = await getDb();
         const tenant = getTenantContextFromRequest(request.headers);
         const fanouts = await fetchWorkFanouts(db, collapsedByKey, {
-          tenantScoped: !!tenant.id || !!tenant.slug || tenant.isEmbedded,
+          tenantScoped: isScoped(scope) || !!tenant.id || !!tenant.slug || tenant.isEmbedded,
         });
         if (fanouts.size > 0) {
           const keyByBookId = new Map<string, string>();
@@ -298,7 +327,7 @@ export async function GET(request: NextRequest) {
       lang: 'en',
       ...(textLang !== 'en' ? { lang_note: `Book-level semantic search has only English embeddings; use level=page for ${textLang} passages.` } : {}),
     }, {
-      headers: { 'Cache-Control': 'public, max-age=0, s-maxage=300, stale-while-revalidate=600' },
+      headers: { 'Cache-Control': cacheControl },
     });
   } catch (error) {
     console.error('[semantic-search] Error:', error);

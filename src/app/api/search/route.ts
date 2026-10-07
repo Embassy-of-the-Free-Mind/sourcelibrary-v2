@@ -4,11 +4,14 @@ import { textRoleRank } from '@/lib/text-role';
 import { Book } from '@/lib/types';
 import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search';
 import { buildPageSearchStage, NON_CONTENT_PAGE_TYPES } from '@/lib/atlas-search';
+import { expandNameQuery } from '@/lib/search/name-variants';
 import { CONTENT_LICENSE } from '@/lib/license-info';
 import { searchBookIds } from '@/lib/books-catalog';
+import { stemmedQueryRegex } from '@/lib/search/word-forms';
 import { semanticBookSearch, semanticPageSearchGlobal, lexicalPageSearchLang } from '@/lib/semantic-search';
 import { rrfScores } from '@/lib/search/rrf';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { resolveSearchScope } from '@/lib/tenant-search-scope';
 import { withApiAuth } from '@/lib/api-auth';
 import { expandLanguages } from '@/lib/language-utils';
 import { logSearchQuery } from '@/lib/search-log';
@@ -16,10 +19,25 @@ import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
 import { logSearchEvent } from '@/lib/search-event-log';
 import { collapseByWork, type WorkGroupable } from '@/lib/search/work-grouping';
 import { fetchWorkFanouts } from '@/lib/search/work-fanout';
+import { rollupTerms, countMatchingPagesByBook, bestPagePerBook, compareEvidence } from '@/lib/search/page-rollup';
 
 export const preferredRegion = 'fra1';
 
 const MAX_PAGE_RESULTS = 25;
+/** Extra page hits that print a queried person's name in another spelling (#5888). */
+const NAME_VARIANT_PAGE_RESULTS = 10;
+/**
+ * Books the page lane may add beyond its 25 best pages, chosen by how many of
+ * their pages print the query (src/lib/search/page-rollup.ts). Each costs one
+ * single-document search, so this is the lane's fan-out bound.
+ */
+const MAX_ROLLUP_BOOKS = 30;
+/**
+ * The roll-up's whole budget, counted from the start of the page lane. Past it
+ * the lane returns its 25 pages as they are. It must stay well under the lane's
+ * own 8 s cut-off, which discards everything the lane found.
+ */
+const ROLLUP_BUDGET_MS = 4000;
 
 /**
  * Carry a book's identity fields onto a result as transients, so the
@@ -205,6 +223,14 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     if (tenantSlug && !tenantId) {
       return NextResponse.json({ results: [], total: 0 });
     }
+    // The book set the vector lanes are confined to (#4330). They used to rank
+    // the whole library and rely on the Mongo materialization below to drop
+    // foreign books — pure, but a tenant got whatever of its shelf happened to
+    // sit in the global top-N, usually nothing.
+    const scope = await resolveSearchScope(request.headers);
+    if (scope.kind === 'closed') {
+      return NextResponse.json({ results: [], total: 0 });
+    }
 
     // Helper: build common book-level filters (language, category, year, etc.)
     function buildBookFilters(): Record<string, unknown> {
@@ -278,6 +304,9 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // `lanesDegraded`, surfaced as `partial: true` so callers know the count is
     // incomplete rather than silently smaller.
     const degradedLanes: string[] = [];
+    // book id → pages of that book printing every query word. Filled by the
+    // page lane's roll-up; read by the ladder as evidence (#5905).
+    const matchPagesByBook = new Map<string, number>();
 
     const [bookResult, pageResult, semanticResult, semanticPageResult] = await Promise.all([
       // --- Book search via Supabase trigram (fast, no cold-start penalty) ---
@@ -304,7 +333,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             const STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
             const words = matchQuery.trim().split(/\s+/).filter((w: string) => w.length >= 3 && !STOPWORDS.has(w.toLowerCase()));
             if (words.length >= 2) {
-              const wordRegexes = words.map((w: string) => new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'));
+              // Each word with its related forms (#5517): "botanical gardens" reaches books keyed "botany".
+              const wordRegexes = words.map((w: string) => stemmedQueryRegex(w));
               books = await db.collection('books')
                 .find({
                   $and: wordRegexes.map(rx => ({
@@ -395,17 +425,13 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           if (bookId) {
             pageFilter.book_id = bookId;
           } else if (hasBookLevelFilters) {
-            const bookIdFilter: Record<string, unknown> = { visible: true };
-            if (tenantId) bookIdFilter.tenantId = tenantId;
-            if (languages.length > 0) bookIdFilter.language = { $in: languages };
-            else if (excludeLanguages.length > 0) bookIdFilter.language = { $nin: excludeLanguages };
-            else if (language) bookIdFilter.language = language;
-            if (category) bookIdFilter.categories = category;
-            applyYearFilter(bookIdFilter);
-            if (hasDoi === 'true') bookIdFilter.doi = { $exists: true, $ne: null };
-
+            // The SAME filter object as the book lane (#5921). This lane used to
+            // build its own from visible, tenant, language, category, year and
+            // has_doi, so `library`, `has_translation` and `first_translation`
+            // were read, lit up in the UI, and never applied: an impossible
+            // library still returned passages.
             const filteredBooks = await db.collection('books')
-              .find(bookIdFilter)
+              .find(buildBookFilters())
               .project({ id: 1 })
               .toArray();
             const allowedBookIds = filteredBooks.map(b => b.id);
@@ -431,10 +457,10 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
             }
           }
 
-          return await db.collection('pages').aggregate([
-            buildPageSearchStage(query, filteredBookIds),
+          const pagePipeline = (stage: ReturnType<typeof buildPageSearchStage>, max: number) => [
+            stage,
             { $match: { page_number: { $gt: 0 }, page_type: { $nin: NON_CONTENT_PAGE_TYPES } } },
-            { $limit: pageLimit },
+            { $limit: max },
             {
               $project: {
                 id: 1,
@@ -445,7 +471,87 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
                 'ocr.data': 1,
               },
             },
-          ], { maxTimeMS: 8000 }).toArray();
+          ];
+
+          // Pages that print the person's name in ANOTHER spelling (Drebbel → Drebelius;
+          // #5888), as a second query whose hits follow the main ones. Not OR'd into the main
+          // stage: it reads only `pageLimit` pages, and for any well-attested name those are
+          // all pages with the typed spelling, so OR'd variants would never be reached. No
+          // person in the query → no second query, and the lane is exactly what it was.
+          // Roll-up (#5905). The 25 best pages of a name sit in a handful of
+          // books, so in parallel count matching pages per book and give the
+          // best-evidenced books the lane did not reach one page each.
+          // Not for `book_id` (one book) or `pages_only` (the MCP passage
+          // contract: best passages, in score order). It counts the spelling
+          // typed; name variants (#5888) arrive through the second query.
+          const terms = (bookId || pagesOnly) ? null : rollupTerms(query);
+          const rollupDeadline = Date.now() + ROLLUP_BUDGET_MS;
+          /** Resolves `null` if `work` is not done by the roll-up's deadline. */
+          const withinBudget = <T,>(work: Promise<T>): Promise<T | null> => Promise.race([
+            work,
+            new Promise<null>(resolve => setTimeout(() => resolve(null), Math.max(0, rollupDeadline - Date.now()))),
+          ]);
+          const countsPromise = terms
+            ? withinBudget(countMatchingPagesByBook(db, terms, Array.isArray(filteredBookIds) ? filteredBookIds : undefined)).catch(() => null)
+            : Promise.resolve([]);
+          // The liveness check needs only the counts, so it starts as soon as
+          // they land — alongside the main page search, not after it (#6092).
+          // Every book-level filter applies here, as it does in the book
+          // lane: a filter is only as strong as its weakest lane
+          // (search-filters-and-lanes.md). Rejects on a Mongo error.
+          const livePromise = countsPromise.then(counts => (counts && counts.length > 0)
+            ? withinBudget(db.collection('books')
+                .find({ id: { $in: counts.map(c => c.book_id) }, ...buildBookFilters(), hidden: { $ne: true } })
+                .project({ id: 1 })
+                .maxTimeMS(3000)
+                .toArray())
+            : null);
+          livePromise.catch(() => {}); // handled below; never an unhandled rejection
+
+          const { variants, topicWords } = await expandNameQuery(query);
+          const [mainPages, variantPages, counts] = await Promise.all([
+            db.collection('pages')
+              .aggregate(pagePipeline(buildPageSearchStage(query, filteredBookIds), pageLimit), { maxTimeMS: 8000 })
+              .toArray(),
+            variants.length > 0
+              ? db.collection('pages')
+                  .aggregate(
+                    pagePipeline(
+                      buildPageSearchStage(query, filteredBookIds, { nameVariants: variants, requireNameVariant: true, requireWords: topicWords }),
+                      (bookId || pagesOnly) ? pageLimit : NAME_VARIANT_PAGE_RESULTS,
+                    ),
+                    { maxTimeMS: 8000 },
+                  )
+                  .toArray()
+                  .catch(() => [])
+              : Promise.resolve([]),
+            countsPromise,
+          ]);
+          const seenPages = new Set(mainPages.map(p => `${p.book_id}:${p.page_number}`));
+          const pages = [...mainPages, ...variantPages.filter(p => !seenPages.has(`${p.book_id}:${p.page_number}`))];
+          if (!terms) return pages;
+          if (counts === null) { degradedLanes.push('page_rollup'); return pages; }
+          if (counts.length === 0) return pages;
+
+          try {
+            const live = await livePromise;
+            if (live === null) { degradedLanes.push('page_rollup'); return pages; }
+            const liveIds = new Set(live.map(b => b.id as string));
+            for (const c of counts) if (liveIds.has(c.book_id)) matchPagesByBook.set(c.book_id, c.pages);
+
+            const reached = new Set(pages.map(p => p.book_id as string));
+            const toAdd = counts
+              .filter(c => liveIds.has(c.book_id) && !reached.has(c.book_id))
+              .slice(0, MAX_ROLLUP_BOOKS)
+              .map(c => c.book_id);
+            const extra = await withinBudget(bestPagePerBook(db, terms, toAdd));
+            if (extra === null) { degradedLanes.push('page_rollup'); return pages; }
+            return [...pages, ...extra];
+          } catch (err) {
+            console.warn('[search] Page roll-up failed:', err instanceof Error ? err.message : String(err));
+            degradedLanes.push('page_rollup');
+            return pages;
+          }
         })();
 
         // Hard timeout: Atlas Search $search ignores maxTimeMS, so race against a timer
@@ -464,8 +570,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         if (bookId || !searchContent) return [];
         try {
           const books = await semanticBookSearch(matchQuery, MAX_PAGE_RESULTS, {
+            scope,
             language: language || undefined,
-            tenantId: tenantId || undefined,
           });
           return books.filter(b => yearInRange(b.year)).map(b => ({
             page_id: '',
@@ -491,7 +597,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         if (bookId || !searchContent) return [];
         try {
           const pages = await semanticPageSearchGlobal(matchQuery, 15, {
-            tenantId: tenantId || undefined,
+            scope,
             textLang,
           });
           if (pages.length === 0) return pages;
@@ -537,9 +643,16 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // several lanes gets summed reciprocal-rank credit. Only used when
     // ?ranking=rrf — computed unconditionally (cheap, pure) so it's available
     // to log/compare even on ladder requests.
+    // The keyword page lane votes in order of how many pages of the book print
+    // the query, not in page-score order: the roll-up's added books sit after
+    // the 25 best pages, and at ranks 26+ a reciprocal-rank vote is worth
+    // little however strong the book. Stable sort, so with no counts (roll-up
+    // skipped or abstained) the order is the lane's own.
+    const pagesOf = (p: { book_id?: unknown }) => matchPagesByBook.get(p.book_id as string) ?? 0;
+    const rrfPageDocs = [...pageDocs].sort((a, b) => pagesOf(b) - pagesOf(a));
     const rrf = rrfScores([
       bookDocs.map(b => (b as any).id as string),                              // keyword book lane
-      pageDocs.map(p => `${p.book_id}-p${p.page_number}`),                     // keyword page lane
+      rrfPageDocs.map(p => `${p.book_id}-p${p.page_number}`),                     // keyword page lane
       semanticDocs.map(s => (s as any).book_id as string),                    // semantic book lane
       semanticPageDocs.map(s => `${(s as any).book_id}-p${(s as any).page_number}`), // semantic page lane
     ], rrfK);
@@ -550,15 +663,22 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       seenBooks.add((book as any).id);
     }
 
-    // Process page results (skip if book results already fill the limit)
-    if (pageDocs.length > 0 && (bookId || results.length < limit)) {
+    // Process page results. This used to be skipped once the book lane filled
+    // `limit` — but those rows are then collapsed to one per work (20 Khunrath
+    // rows are 11 works), so the first page went out short and every passage
+    // was dropped, the page after it included (#5905).
+    if (pageDocs.length > 0) {
       const pageBookIds = [...new Set(pageDocs.map(p => p.book_id as string))];
       const bookMap = new Map<string, Book>();
 
       if (pageBookIds.length > 0) {
         const pageBooks = await db.collection('books')
           .find(
-            { id: { $in: pageBookIds }, ...(tenantId ? { tenantId } : {}) },
+            // Filters again at the join, so every row this lane emits (main
+            // pages, name-variant pages, roll-up pages) is from a book the
+            // filters admit, whatever the search stage was handed (#5921).
+            // A `book_id` search names its one book and keeps the old lookup.
+            { id: { $in: pageBookIds }, ...(bookId ? (tenantId ? { tenantId } : {}) : buildBookFilters()) },
             { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1 } }
           )
           .toArray();
@@ -628,6 +748,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         };
         attachIdentity(pageResult, book as unknown as Record<string, unknown>);
         if ((book as any).text_role) (pageResult as any)._text_role = (book as any).text_role;
+        (pageResult as any)._match_pages = matchPagesByBook.get(book.id);
         results.push(pageResult);
       }
     }
@@ -656,25 +777,14 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       if (semanticBookIds.length > 0) {
         const semBooks = await db.collection('books')
           .find(
-            {
-              id: { $in: semanticBookIds }, visible: true, pages_count: { $gt: 0 },
-              ...(isLocalizedSearch ? { [editionCounter]: { $gt: 0 } } : {}),
-              // Tenant scope: match_books_semantic is GLOBAL (book_embeddings has
-              // no tenant_id column, so the RPC can't filter), so a tenant request
-              // must re-apply the tenant filter here or global books leak into the
-              // partner reading room (Tenant Subdomain Lockdown). See keyword
-              // page-lane materialization which already does this.
-              ...(tenantId ? { tenantId } : {}),
-              // Honor the singular `language` param too — not just the `languages`
-              // array. buildBookFilters() (keyword lane) checks all three, but these
-              // semantic lanes only checked the array, so `?language=Sanskrit` leaked
-              // English-edition translations of Sanskrit works through semantic
-              // promotion (the search-eval "Sanskrit filter" failure). Mirror the
-              // keyword-lane precedence: languages → excludeLanguages → language.
-              ...(languages.length > 0 ? { language: { $in: languages } }
-                : excludeLanguages.length > 0 ? { language: { $nin: excludeLanguages } }
-                : language ? { language } : {}),
-            },
+            // The lane above is confined to the tenant's book set (`scope`,
+            // #4330) but book_embeddings has no metadata predicate, so every
+            // book-level filter is applied here, with the object the keyword
+            // lanes use: tenant scope again as a second line of defence
+            // (Tenant Subdomain Lockdown), the localized-edition counter,
+            // language / languages / exclude_languages, and since #5921
+            // category, has_doi, has_translation, first_translation, library.
+            { id: { $in: semanticBookIds }, ...buildBookFilters() },
             { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, summary: 1, reading_summary: 1, text_role: 1 } }
           )
           .maxTimeMS(3000)
@@ -715,6 +825,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
           };
           attachIdentity(semResult, book as unknown as Record<string, unknown>);
           if ((book as any).text_role) (semResult as any)._text_role = (book as any).text_role;
+          (semResult as any)._match_pages = matchPagesByBook.get(book.id as string);
           results.push(semResult);
         }
       }
@@ -739,23 +850,9 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       if (pageBookIds.length > 0) {
         const semPageBooks = await db.collection('books')
           .find(
-            {
-              id: { $in: pageBookIds }, visible: true, pages_count: { $gt: 0 },
-              ...(isLocalizedSearch ? { [editionCounter]: { $gt: 0 } } : {}),
-              // match_semantic already filters by filter_tenant_id, so this is
-              // defense-in-depth — but keep it consistent with the book lane so a
-              // future RPC change can't silently leak cross-tenant pages.
-              ...(tenantId ? { tenantId } : {}),
-              // Honor the singular `language` param too — not just the `languages`
-              // array. buildBookFilters() (keyword lane) checks all three, but these
-              // semantic lanes only checked the array, so `?language=Sanskrit` leaked
-              // English-edition translations of Sanskrit works through semantic
-              // promotion (the search-eval "Sanskrit filter" failure). Mirror the
-              // keyword-lane precedence: languages → excludeLanguages → language.
-              ...(languages.length > 0 ? { language: { $in: languages } }
-                : excludeLanguages.length > 0 ? { language: { $nin: excludeLanguages } }
-                : language ? { language } : {}),
-            },
+            // Same object as every other lane (#5921): a vector lane has no
+            // metadata predicate, so what is not re-applied here leaks.
+            { id: { $in: pageBookIds }, ...buildBookFilters() },
             { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, editor: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, work_id_aliases: 1, duplicate_of: 1, text_role: 1 } }
           )
           .maxTimeMS(3000)
@@ -796,6 +893,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         };
         attachIdentity(spResult, book as Record<string, unknown>);
         if ((book as any).text_role) (spResult as any)._text_role = (book as any).text_role;
+        (spResult as any)._match_pages = matchPagesByBook.get(sp.book_id);
         results.push(spResult);
       }
     }
@@ -885,6 +983,19 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         const bTitleExact = bTitle.includes(queryLower);
         if (aTitleExact !== bTitleExact) return aTitleExact ? -1 : 1;
 
+        // 2d. Evidence (#5905): the book that prints the query on more pages.
+        // Only where neither row matched in title or author — two passages,
+        // or two books the semantic lane proposed. Without it passages fell
+        // straight to "closeness to the source" and "older first", which put
+        // a 1650 book with one passing mention of Drebbel above a 51-page
+        // study of him. Title/author matches are left to the source rungs.
+        // With no query word of 3+ letters there is nothing to tell a title
+        // match by, so the rung abstains (e.g. "Zhu Xi", CJK queries).
+        if (queryWords.length > 0 && aWordHits === 0) {
+          const byEvidence = compareEvidence((a as any)._match_pages, (b as any)._match_pages);
+          if (byEvidence !== 0) return byEvidence;
+        }
+
         // 3. Closeness to the source (#2395): original-language texts beat
         // period translations beat modern translations. text_role is the
         // classified signal; language is the fallback proxy for pages and
@@ -968,7 +1079,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // Apply offset and strip transient fields
     const paginatedResults = dedupedResults.slice(offset, offset + limit)
       .map(r => {
-        const { _work_id, _work_id_aliases, _duplicate_of, _text_role, ...clean } = r as any;
+        const { _work_id, _work_id_aliases, _duplicate_of, _text_role, _match_pages, ...clean } = r as any;
         const fanout = fanoutByResultId.get(r.id);
         return (fanout ? { ...clean, work_group: fanout } : clean) as SearchResult;
       });
@@ -982,12 +1093,12 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         let nearbyBooks: Record<string, unknown>[];
         const matchingIds = await searchBookIds(query, { limit: 50 });
         if (matchingIds.length > 0) {
+          // Every book-level filter but the year, which this list widens (#5921).
           const nearbyFilter: Record<string, unknown> = {
+            ...buildBookFilters(),
             id: { $in: matchingIds.filter(id => !seenBooks.has(id)) },
             year: { $gte: yearNum - 5, $lte: yearNum + 5, $ne: yearNum },
           };
-          if (language) nearbyFilter.language = language;
-          if (category) nearbyFilter.categories = category;
 
           nearbyBooks = await db.collection('books')
             .find(nearbyFilter)
@@ -1030,9 +1141,10 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
       filters: {
         language, category, year, year_from: yearFrom, year_to: yearTo,
         languages, exclude_languages: excludeLanguages,
-        has_doi: hasDoi, has_translation: hasTranslation, book_id: bookId,
+        has_doi: hasDoi, has_translation: hasTranslation, first_translation: firstTranslation, library, book_id: bookId,
         pages_only: pagesOnly, sort: sortBy, ranking: rankingApplied,
       },
+      degraded_lanes: degradedLanes,
     });
     return NextResponse.json({
       query,
@@ -1060,6 +1172,8 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
         year_to: yearTo,
         has_doi: hasDoi,
         has_translation: hasTranslation,
+        first_translation: firstTranslation,
+        library,
         book_id: bookId,
       },
     }, {

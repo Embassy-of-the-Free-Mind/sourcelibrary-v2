@@ -28,7 +28,7 @@ export default function ProgressStudiesPage() {
           title="The Deeper Roots"
           subtitle="How 2,500 newly translated books confirm what progress studies predicted &mdash; innovation didn&rsquo;t begin with the Industrial Revolution"
           image="https://images.sourcelibrary.org/archived/695230c6ab34727b1f044784/9.jpg"
-          imageAlt="Mechanical diagrams from Hero of Alexandria's Pneumatica"
+          imageAlt="The opening of Hero of Alexandria's Pneumatica in a 16th-century Greek manuscript: a red interlace headpiece and initial over Greek minuscule"
         >
           <p className="text-stone-400 text-sm mt-4">8 March 2026 &middot; 15 min read</p>
         </ContentHeader>
