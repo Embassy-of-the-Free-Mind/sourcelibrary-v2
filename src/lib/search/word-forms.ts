@@ -22,14 +22,15 @@
  * failed. "magical" found 35 books where "magic" finds 176, "optical" 1 where
  * "optics" finds 51, "witches" 27 of 52, "astronomer" 2 of 295. Added: -ical
  * over a short root keeps the -ic ("magical" → "magic"), -es after a sibilant,
- * -istic, -ian, the -nomer/-loger/-sopher/-grapher agent nouns, and a short
+ * -istic, -ician, the -nomer/-loger/-sopher/-grapher agent nouns, and a short
  * table of families no suffix rule can join (medical/medicine, herbal/herbs,
  * poetic/poetry/poems, surgical/surgery, chemical/chymical, witchcraft).
- * A general -al or -er rule was NOT added: "general" → "gener", "silver" → "silv".
+ * A general -al, -er or -ian rule was NOT added: "general" → "gener",
+ * "silver" → "silv", "Herodian" → "herod".
  */
 
 /** Longest first: the first suffix that leaves a long-enough stem wins. */
-const DERIVATIONAL_SUFFIXES = ['ically', 'istic', 'ical', 'isms', 'ism', 'ists', 'ist', 'ics', 'ies', 'ian', 'ic', 'y'];
+const DERIVATIONAL_SUFFIXES = ['ically', 'istic', 'ical', 'isms', 'ism', 'ists', 'ist', 'ics', 'ies', 'ic', 'y'];
 const MIN_STEM = 5;
 /** Plain plurals may leave a 4-letter stem ("roses" → "rose"). */
 const MIN_PLURAL_STEM = 4;
@@ -85,8 +86,11 @@ export function matchStem(word: string): string {
   }
   // -ical over a four-letter root: keep the -ic ("magical" → "magic", "optical" → "optic").
   if (base.endsWith('ical') && base.length - 2 >= MIN_STEM) return base.slice(0, -2);
-  // Agent nouns of the -nomy / -logy / -sophy / -graphy words only.
-  if (/(nom|log|soph|graph)er$/.test(base)) return base.slice(0, -2);
+  // Agent nouns, two shapes only. -ician ("magician" → "magic", "physician" → "physic"): a
+  // general -ian rule folds names ("Herodian" → "herod", "Christian" → "christ").
+  if (base.endsWith('ician') && base.length - 3 >= MIN_STEM) return base.slice(0, -3);
+  // And those of the -nomy / -logy / -sophy / -graphy words.
+  if (/(nom|log|soph|graph)er$/.test(base) && base.length - 2 >= MIN_STEM) return base.slice(0, -2);
   return base;
 }
 

@@ -57,16 +57,24 @@ describe('matchStem', () => {
     for (const [a, b] of pairs) expect(matchStem(a), `${a} / ${b}`).toBe(matchStem(b));
   });
 
-  it('has no general -al or -er rule', () => {
+  it('has no general -al, -er or -ian rule', () => {
     expect(matchStem('general')).toBe('general');
     expect(matchStem('silver')).toBe('silver');
     expect(matchStem('Luther')).toBe('luther');
     expect(matchStem('Kepler')).toBe('kepler');
+    // Names: Herodian is not Herod(otus), Christian is not Christ(opher).
+    expect(matchStem('Herodian')).toBe('herodian');
+    expect(matchStem('Christian')).toBe('christian');
+    expect(matchStem('Justinian')).toBe('justinian');
+    // The agent rules need a real root in front of them.
+    expect(matchStem('loger')).toBe('loger');
+    expect(matchStem('physician')).toBe('physic');
   });
 
   it('is always a prefix of the word', () => {
     const words = ['botanical', 'witches', 'prophecies', 'studies', 'astronomers', 'magicians', 'kabbalistic',
-      'churches', 'classes', 'boxes', 'Moses', 'species', 'Christian', 'surgical', 'poetry', 'Hermes', 'optics'];
+      'churches', 'classes', 'boxes', 'Moses', 'species', 'Christian', 'surgical', 'poetry', 'Hermes', 'optics',
+      'physician', 'mathematicians', 'philosophers', 'loger'];
     for (const w of words) expect(w.toLowerCase().startsWith(matchStem(w)), w).toBe(true);
   });
 });
