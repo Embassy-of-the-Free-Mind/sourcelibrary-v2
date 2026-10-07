@@ -556,13 +556,16 @@ async function getHomeGalleryPlates(): Promise<Plate[]> {
     if (n >= 2) continue;
     const thumb = g.thumbnail_url as string | undefined;
     const full = (g.extracted_url as string) || (g.image_url as string) || undefined;
-    const src = (thumb && toGalleryCardUrl(thumb)) || thumb || full;
+    const card = thumb ? toGalleryCardUrl(thumb) : null;
+    const src = card || thumb || full;
     if (!src) continue;
+    // Many plates have no -card.jpg yet; step down to the thumb before the original.
+    const fallback = [card ? thumb : null, full].filter((u): u is string => !!u && u !== src);
     const id = g.page_id != null && g.detection_index != null ? `${g.page_id}-${g.detection_index}` : undefined;
     perBook.set(bookId, n + 1);
     pool.push({
       src,
-      fallback: full || thumb,
+      fallback,
       href: id ? `/gallery/image/${id}` : undefined,
       label: (g.museum_description as string) || (g.book_title as string) || 'Illustration',
       w: g.extracted_width as number | undefined,

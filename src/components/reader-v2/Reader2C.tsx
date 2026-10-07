@@ -303,9 +303,12 @@ function PhonePanePicker({
   transition: string;
 }) {
   const t = getReaderStrings(useLocale()).panes;
+  // An English book's transcription and translation would both read "English"
+  // (#6092) — name the transcription segment "Original" instead.
+  const sameName = language.trim().toLowerCase() === translationLabel.trim().toLowerCase();
   const items: Array<{ key: 'scan' | 'ocr' | 'en' | 'translit'; label: string }> = [
     ...(hasScan ? [{ key: 'scan' as const, label: t.viewScan }] : []),
-    { key: 'ocr', label: language },
+    { key: 'ocr', label: sameName ? t.originalFallback : language },
     ...(showTranslit ? [{ key: 'translit' as const, label: t.viewRoman }] : []),
     { key: 'en', label: translationLabel },
   ];
