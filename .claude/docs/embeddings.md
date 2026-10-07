@@ -33,6 +33,7 @@ put more traditions into the first ten. `page_concepts` is that lane:
   the page text and leaves the abstract describing the old one. Detect it by
   comparing `concept_abstract.engine.input.source_text_hash` with the hash of the
   page's current composed text (`abstractInputText(pageEmbeddingInput(page).text)`).
+- **A partner's scope is ranked two ways** (`match_page_concepts_in_books`): exactly when the set holds 20,000 rows or fewer, and through the HNSW index with pgvector's iterative scan when it holds more (BPH holds 78,230 of 325,308). The exact plan on a share that large is a scan of the whole table, 4 s cold against the anon role's 3 s, and the lane answered "Search failed" on the BPH host until 2026-10-07. Recall@40 of the index walk against exact: 0.96 over 6 queries.
 - **Not public.** No default search reads it; it is reached only by the
   `lane=concept` flag until stage 1 is judged. All three flag paths go through
   `conceptPageSearch(..., { abstractLane: true })` (`src/lib/search/concept-search.ts`),

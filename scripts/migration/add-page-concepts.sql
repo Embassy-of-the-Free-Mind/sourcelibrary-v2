@@ -34,8 +34,10 @@
 -- for the main site only; `src/lib/semantic-search.ts` calls the `_in_books`
 -- function under a tenant scope and returns nothing under a closed one. That
 -- function selects by book_id first and ranks inside a subquery fenced with
--- OFFSET 0, so the HNSW index cannot turn the scope into a post-filter. Stage 1
--- is ~0.4M rows, so an exact scan of a tenant's share of it is cheap.
+-- OFFSET 0, so the HNSW index cannot turn the scope into a post-filter. That
+-- holds for a small share of the lane; a large share (BPH holds a quarter of
+-- stage 1) is walked through the index with the scope as a filter. See the
+-- function.
 --
 -- Idempotent. Apply with:
 --   psql "$SUPABASE_DB_URL" -f scripts/migration/add-page-concepts.sql
@@ -102,6 +104,18 @@ END;
 $function$;
 
 -- ── Inside a book set (tenant scope, or a caller's own book list) ────────
+-- Two plans, chosen by how much of the lane the set holds (measured 2026-10-07):
+--   - a SMALL share is ranked exactly, inside a subquery fenced with OFFSET 0,
+--     so the HNSW index cannot turn the scope into a post-filter and starve it;
+--   - a LARGE share cannot be ranked exactly in time. BPH's 2,360 books hold
+--     78,230 of the 325,308 rows; the exact plan is a sequential scan of the
+--     whole table (4.2 s cold, 0.5 s warm) against the anon role's 3 s limit, and
+--     the lane answered "Search failed" on bph.sourcelibrary.org. For those the
+--     HNSW index is walked with pgvector's iterative scan and the scope as a
+--     filter (12 ms warm): at a share that large the walk meets 40 in-scope rows
+--     within a few hundred tuples, which is the case iterative scan is for.
+-- The threshold is rows in scope, counted from the book_id index.
+-- Not STABLE: the large-share plan sets hnsw.* (transaction-local).
 CREATE OR REPLACE FUNCTION public.match_page_concepts_in_books(
   query_embedding vector(768),
   book_ids text[],
@@ -111,29 +125,61 @@ CREATE OR REPLACE FUNCTION public.match_page_concepts_in_books(
 RETURNS TABLE(page_id text, book_id text, page_number integer, translation text,
               book_title text, book_author text, book_language text, book_year integer,
               similarity double precision)
-LANGUAGE plpgsql STABLE
+LANGUAGE plpgsql
 AS $function$
+DECLARE
+  in_scope bigint;
+  exact_max CONSTANT bigint := 20000;
 BEGIN
+  SELECT count(*) INTO in_scope FROM (
+    SELECT 1 FROM page_concepts c WHERE c.book_id = ANY(book_ids) LIMIT exact_max + 1
+  ) n;
+
+  IF in_scope <= exact_max THEN
+    RETURN QUERY
+    WITH ranked AS (
+      SELECT s.page_id, s.book_id, s.page_number, s.dist
+      FROM (
+        SELECT c.page_id, c.book_id, c.page_number, (c.embedding <=> query_embedding::halfvec(768)) AS dist
+        FROM page_concepts c
+        WHERE c.book_id = ANY(book_ids)
+        OFFSET 0
+      ) s
+      WHERE 1 - s.dist > match_threshold
+      ORDER BY s.dist
+      LIMIT LEAST(GREATEST(match_count, 1), 100)
+    )
+    SELECT r.page_id, r.book_id, r.page_number, p.translation, p.book_title,
+           p.book_author, p.book_language, p.book_year, (1 - r.dist)::double precision AS similarity
+    FROM ranked r
+    LEFT JOIN page_translations p ON p.page_id = r.page_id
+    -- Re-assert the scope on what is returned.
+    WHERE r.book_id = ANY(book_ids)
+    ORDER BY r.dist;
+    RETURN;
+  END IF;
+
+  PERFORM set_config('hnsw.iterative_scan', 'relaxed_order', true);
+  PERFORM set_config('hnsw.max_scan_tuples', '50000', true);
+  PERFORM set_config('hnsw.ef_search', '100', true);
   RETURN QUERY
-  WITH ranked AS (
-    SELECT s.page_id, s.book_id, s.page_number, s.dist
-    FROM (
-      SELECT c.page_id, c.book_id, c.page_number, (c.embedding <=> query_embedding::halfvec(768)) AS dist
-      FROM page_concepts c
-      WHERE c.book_id = ANY(book_ids)
-      OFFSET 0
-    ) s
-    WHERE 1 - s.dist > match_threshold
-    ORDER BY s.dist
+  -- MATERIALIZED and `+ 0`: a relaxed-order scan returns rows slightly out of
+  -- order, and the planner drops a final ORDER BY it believes the index already
+  -- satisfied (measured: 1 to 2 of 40 rows out of order without these).
+  WITH near AS MATERIALIZED (
+    SELECT c.page_id, c.book_id, c.page_number, (c.embedding <=> query_embedding::halfvec(768)) AS dist
+    FROM page_concepts c
+    WHERE c.book_id = ANY(book_ids)
+    ORDER BY c.embedding <=> query_embedding::halfvec(768)
     LIMIT LEAST(GREATEST(match_count, 1), 100)
   )
-  SELECT r.page_id, r.book_id, r.page_number, p.translation, p.book_title,
-         p.book_author, p.book_language, p.book_year, (1 - r.dist)::double precision AS similarity
-  FROM ranked r
-  LEFT JOIN page_translations p ON p.page_id = r.page_id
+  SELECT n.page_id, n.book_id, n.page_number, p.translation, p.book_title,
+         p.book_author, p.book_language, p.book_year, (1 - n.dist)::double precision AS similarity
+  FROM near n
+  LEFT JOIN page_translations p ON p.page_id = n.page_id
   -- Re-assert the scope on what is returned.
-  WHERE r.book_id = ANY(book_ids)
-  ORDER BY r.dist;
+  WHERE n.book_id = ANY(book_ids) AND 1 - n.dist > match_threshold
+  ORDER BY n.dist + 0;
 END;
 $function$;
 
