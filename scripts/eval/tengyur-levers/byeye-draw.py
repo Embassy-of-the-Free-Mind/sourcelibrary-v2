@@ -6,18 +6,19 @@ byeye-draw.py — $0. Seeded (6121) draw of 20 reversal/agent findings from roun
 union of the two reviews. Writes results/.../r1/byeye-draw.json (finding + page id) and prints each with
 the Tibetan of its item, for reading by eye.
 """
-import glob, json, os, random
+import glob, json, os, random, sys
 
-B = "scripts/eval/results/tengyur-levers-6121/r1"
+M = "--models" in sys.argv  # #6121 round 2: 5 each of S, G38, G35, O (PREREG-R2.md)
+B = "scripts/eval/results/tengyur-models-6121/r1" if M else "scripts/eval/results/tengyur-levers-6121/r1"
 key = json.load(open(f"{B}/key.json"))
-items = {json.loads(l)["id"]: json.loads(l) for l in open("/root/tlev/r1/items.jsonl")}
+items = {json.loads(l)["id"]: json.loads(l) for l in open("/root/tlev2/r1/items.jsonl" if M else "/root/tlev/r1/items.jsonl")}
 rev = {"A": {}, "B": {}}
 for f in glob.glob(f"{B}/reviews/*.json"):
     for x in json.load(open(f)):
         rev[os.path.basename(f)[0]][x["id"]] = x
 rng = random.Random(6121)
 draw = []
-for arm in ["S", "A", "C", "P"]:
+for arm in (["S", "G38", "G35", "O"] if M else ["S", "A", "C", "P"]):
     pool = []
     for iid, k in sorted(key.items()):
         if k["arm"] != arm:

@@ -8,6 +8,8 @@
  *
  *   node scripts/eval/tengyur-levers/build-packet.mjs --round 1 --arms S,A,C,P
  *   node scripts/eval/tengyur-levers/build-packet.mjs --round 2 --arms S,PC     (only if PC is triggered)
+ *   node scripts/eval/tengyur-levers/build-packet.mjs --models --arms S,A,G38,G35,O --controls /root/tlev2/controls-1.jsonl
+ *        (#6121 round 2, newer models: writes /root/tlev2/r1/ and results/tengyur-models-6121/r1/)
  *
  * Writes /root/tlev/r<round>/items.jsonl, /root/tlev/r<round>/batches/{A,B}-NN.jsonl and
  * <out>/r<round>/key.json (id → arm, page, plant). The key never goes to a reviewer.
@@ -19,13 +21,14 @@ import { rng as mkRng, shuffle, renderEnglish } from '../tengyur-characterize/co
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > 0 ? process.argv[i + 1] : d; };
 const ROUND = Number(arg('round', 1));
 const ARMS = arg('arms', 'S,A,C,P').split(',');
-const out = path.join('scripts/eval/results/tengyur-levers-6121', `r${ROUND}`);
-const work = path.join('/root/tlev', `r${ROUND}`);
+const MODELS = process.argv.includes('--models');
+const out = path.join(MODELS ? 'scripts/eval/results/tengyur-models-6121' : 'scripts/eval/results/tengyur-levers-6121', `r${ROUND}`);
+const work = path.join(MODELS ? '/root/tlev2' : '/root/tlev', `r${ROUND}`);
 fs.mkdirSync(path.join(work, 'batches'), { recursive: true }); fs.mkdirSync(out, { recursive: true });
 const read = (p) => fs.readFileSync(p, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
 const sample = read('/root/tlev/sample-pages.jsonl');
 const armText = Object.fromEntries(ARMS.filter((a) => a !== 'S').map((a) => [a, new Map(read(`/root/tlev/arms/${a}.jsonl`).map((x) => [x.page_id, x.text]))]));
-const controls = read('/root/tlev/controls.jsonl');
+const controls = read(arg('controls', '/root/tlev/controls.jsonl'));
 
 const all = [];
 for (const p of sample) {
@@ -37,7 +40,7 @@ for (const p of sample) {
 }
 for (const x of ROUND === 1 ? controls : controls.slice(0, 10)) all.push({ ...x, arm: 'PLANT' });
 
-const R = mkRng(6121 + ROUND);
+const R = mkRng(6121 + ROUND + (MODELS ? 200 : 0));
 const mixed = shuffle(all, R);
 const ids = new Set();
 const opaque = () => { for (;;) { const id = 'Q' + Math.floor(R() * 36 ** 4).toString(36).toUpperCase().padStart(4, '0'); if (!ids.has(id)) { ids.add(id); return id; } } };
@@ -74,7 +77,7 @@ function partition(seed) {
 const strip = ({ page_id, ...rest }) => rest;
 fs.writeFileSync(path.join(work, 'items.jsonl'), items.map((x) => JSON.stringify(strip(x))).join('\n') + '\n');
 fs.writeFileSync(path.join(out, 'key.json'), JSON.stringify(key, null, 1));
-for (const [rev, seed] of [['A', 6121 * 11 + ROUND], ['B', 6121 * 13 + ROUND]]) {
+for (const [rev, seed] of [['A', 6121 * 11 + ROUND + (MODELS ? 200 : 0)], ['B', 6121 * 13 + ROUND + (MODELS ? 200 : 0)]]) {
   partition(seed).forEach((b, i) => fs.writeFileSync(path.join(work, 'batches', `${rev}-${String(i + 1).padStart(2, '0')}.jsonl`), b.map((x) => JSON.stringify(strip(x))).join('\n') + '\n'));
 }
 const t = Object.values(key).reduce((m, k) => ((m[k.arm] = (m[k.arm] || 0) + 1), m), {});

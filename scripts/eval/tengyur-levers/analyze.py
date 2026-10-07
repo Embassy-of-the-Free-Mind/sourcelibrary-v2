@@ -15,7 +15,7 @@ import collections, glob, itertools, json, math, os, random, re, sys
 
 arg = lambda k, d: sys.argv[sys.argv.index(f"--{k}") + 1] if f"--{k}" in sys.argv else d
 ROUND = int(arg("round", "1"))
-BASE = "scripts/eval/results/tengyur-levers-6121"
+BASE = "scripts/eval/results/tengyur-models-6121" if "--models" in sys.argv else "scripts/eval/results/tengyur-levers-6121"  # --models: #6121 round 2
 OUT = f"{BASE}/r{ROUND}"
 key = json.load(open(f"{OUT}/key.json"))
 rev = {"A": {}, "B": {}}
