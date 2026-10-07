@@ -54,7 +54,8 @@ Rules:
 - `cp <scratchpad>/overview/*.json <dir>/reviews/`.
 - **Rights notes stay out of the public repo:** first copy the unredacted files to ops `quality-sprint/<dir name>/`,
   then run `node scripts/eval/spot-check/redact-rights.mjs <dir>/reviews/*.json`.
-- `node scripts/eval/spot-check/overview-score.mjs --dir <dir>` writes `report.md` and `report.json`.
+- `node --env-file=.env.production.local scripts/eval/spot-check/overview-score.mjs --dir <dir>` writes `report.md` and
+  `report.json`, and records one `book_checks` row per book (method `shelf-overview`, #6174).
 - The report gives, per stratum: serious-page rate (95% CI resampled by BOOK), wrong-leaf rate, mean OCR and English
   scores, books with an on-sight defect, show / caveat / don't, showcase URLs, and a total weighted by frame size.
 - With 4 books a stratum, quote the CI, not the point estimate. Never pool strata into one number without saying

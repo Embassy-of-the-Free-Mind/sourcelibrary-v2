@@ -16,10 +16,17 @@
  *   fit_to_show         show / show_with_caveat / do_not_show counts
  * Weighted total: each stratum's rate × its frame size / Σ frame sizes. With 4 books a stratum, read a stratum's CI
  * before its point estimate.
+ *
+ * Then, with MONGODB_URI set, one `book_checks` row per reviewed book (#6174, method shelf-overview): the reviewer's
+ * fit_to_show as the verdict, the packet's model ids as the text read, and the book's share of its packet's
+ * `claude -p` cost when run-reviewers.sh launched it (meta/<stratum>.json). A rerun of the same dir adds nothing.
+ * --no-record skips it; without MONGODB_URI it says so and records nothing.
  */
-import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { bootstrapRatioCI, resetSeed } from '../lib/paired-stats.mjs';
+import { recordBookCheck, ensureBookCheckIndexes, provenanceFromPage, readMethod } from '../../lib/book-checks.mjs';
+import { seriousPage, seriousClasses, FIT, pageRecords, packetProvenance, runCost } from './check-rows.mjs';
 
 const args = process.argv.slice(2);
 const dir = args[args.indexOf('--dir') + 1];
@@ -28,7 +35,7 @@ const log = JSON.parse(readFileSync(join(dir, 'draw-log.json'), 'utf8'));
 if (log.mode === 'picked') { console.error(`${dir} is a hand-picked curation check: no rates. Its verdicts go to a private shelf with curation-shelf.mjs.`); process.exit(1); }
 resetSeed(log.seed);
 
-const serious = (p) => [...(p.ocr_errors || []), ...(p.tr_errors || []), ...(p.other || [])].some((e) => e.severity === 'serious') || p.right_page === 'no';
+const serious = seriousPage;
 const avg = (xs) => { const v = xs.filter((x) => typeof x === 'number'); return v.length ? +(v.reduce((s, x) => s + x, 0) / v.length).toFixed(2) : null; };
 const pct = (x) => (x == null ? '—' : `${Math.round(100 * x)}%`);
 
@@ -63,3 +70,40 @@ const md = [`# Shelf overview (${dir.split('/').pop()})`, '',
   '', '## Per book', '', ...done.flatMap((s) => s.verdicts.map((v) => `- **${s.name}** · ${v.fit ?? '—'} · [${String(v.title).slice(0, 60)}](https://sourcelibrary.org/book/${v.book_id}) — ${v.summary}`))];
 writeFileSync(join(dir, 'report.md'), md.join('\n') + '\n');
 console.log(md.slice(0, 12).join('\n'));
+
+// ── the record (#6174) ──
+if (args.includes('--no-record')) process.exit(0);
+if (!process.env.MONGODB_URI) { console.error('book_checks: MONGODB_URI not set, no rows recorded (run with --env-file, or pass --no-record)'); process.exit(0); }
+const { MongoClient } = await import('mongodb');
+const client = await MongoClient.connect(process.env.MONGODB_URI);
+const db = client.db('bookstore');
+await ensureBookCheckIndexes(db);
+const version = readMethod('shelf-overview').version;
+const runId = dir.replace(/\/+$/, '').split('/').slice(-1)[0];
+let ins = 0, dup = 0, skip = 0;
+for (const st of log.strata) {
+  const f = join(dir, 'reviews', `${st.name}.json`);
+  if (!existsSync(f)) continue;
+  const checkedAt = statSync(f).mtime;
+  const packets = JSON.parse(readFileSync(join(dir, 'packets', `${st.name}.json`), 'utf8'));
+  const reviews = JSON.parse(readFileSync(f, 'utf8'));
+  const cost = runCost(dir, st.name);
+  for (const b of reviews) {
+    const verdict = FIT[b.fit_to_show];
+    if (!verdict) { console.error(`book_checks: ${b.book_id} has no fit_to_show — not recorded`); skip++; continue; }
+    const pagesRead = b.pages.map((p) => p.page_number);
+    const now = await pageRecords(db, b.book_id, pagesRead);
+    const r = await recordBookCheck(db, {
+      book_id: b.book_id, checked_at: checkedAt, method_id: 'shelf-overview', method_version: version, run_id: runId,
+      frame: { stratum: st.name, seed: log.seed, draw: runId, checked_at_source: 'reviews file mtime' },
+      pages_read: pagesRead, reader: { kind: 'model', model: cost?.model ?? 'opus', image_opened: true },
+      verdict, verdict_source: 'reader', classes: seriousClasses(b.pages), note: b.reader_summary ?? b.book_verdict,
+      evidence_path: f,
+      text_provenance: packetProvenance({ pagesRead, packetPages: packets.find((x) => x.book_id === b.book_id)?.pages, now, checkedAt, provenanceFromPage }),
+      ...(cost ? { subscription_usd_eq: +(cost.usd / reviews.length).toFixed(4) } : {}),
+    });
+    r.inserted ? ins++ : dup++;
+  }
+}
+console.log(`book_checks: ${ins} recorded, ${dup} already present, ${skip} without a verdict`);
+await client.close();

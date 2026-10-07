@@ -15,9 +15,15 @@
  * read off the images by whoever registers the round. Reviewer verdicts are copied, never edited.
  * --cluster reads findings.json in every sprint- run dir and lists, per class (serious only), instances and distinct books;
  * a class with ≥ 3 instances in ≥ 2 books is a general candidate.
+ *
+ * --dir also records one `book_checks` row per reviewed book (#6174, method fortnightly-spot-check) when MONGODB_URI is
+ * set: the verdict derived by the method's rule (REVIEWER.md asks for none), the sample's model ids as the text read,
+ * and the book's share of its packet's `claude -p` cost when run-reviewers.sh launched it. --no-record skips it.
  */
-import { readFileSync, writeFileSync, readdirSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join } from 'node:path';
+import { recordBookCheck, ensureBookCheckIndexes, provenanceFromPage, readMethod } from '../../lib/book-checks.mjs';
+import { seriousClasses, derivedFortnightly, pageRecords, packetProvenance, runCost } from './check-rows.mjs';
 
 const args = process.argv.slice(2);
 const opt = (k, d) => { const i = args.indexOf(`--${k}`); return i >= 0 ? args[i + 1] : d; };
@@ -69,3 +75,39 @@ for (const book of results) {
 }
 writeFileSync(join(dir, 'findings.json'), JSON.stringify(rows, null, 2));
 console.log(`${round}: ${rows.length} findings (${rows.filter((r) => r.severity === 'serious').length} serious) → ${join(dir, 'findings.json')}`);
+
+// ── the record (#6174) ──
+if (args.includes('--no-record')) process.exit(0);
+if (!process.env.MONGODB_URI) { console.error('book_checks: MONGODB_URI not set, no rows recorded (run with --env-file, or pass --no-record)'); process.exit(0); }
+const { MongoClient } = await import('mongodb');
+const client = await MongoClient.connect(process.env.MONGODB_URI);
+const db = client.db('bookstore');
+await ensureBookCheckIndexes(db);
+const version = readMethod('fortnightly-spot-check').version;
+// Which packet each book was reviewed in, for its share of that packet's cost.
+const packetOf = new Map(), packetSize = new Map();
+if (existsSync(join(dir, 'reviews'))) for (const f of readdirSync(join(dir, 'reviews')).filter((x) => x.endsWith('.json'))) {
+  const books = JSON.parse(readFileSync(join(dir, 'reviews', f), 'utf8'));
+  for (const b of books) packetOf.set(b.book_id, f.replace(/\.json$/, ''));
+  packetSize.set(f.replace(/\.json$/, ''), books.length);
+}
+const checkedAt = statSync(join(dir, 'results.json')).mtime;
+let ins = 0, dup = 0;
+for (const book of results) {
+  const pagesRead = book.pages.map((p) => p.page_number);
+  const now = await pageRecords(db, book.book_id, pagesRead);
+  const pk = packetOf.get(book.book_id);
+  const cost = pk ? runCost(dir, pk) : null;
+  const r = await recordBookCheck(db, {
+    book_id: book.book_id, checked_at: checkedAt, method_id: 'fortnightly-spot-check', method_version: version, run_id: round,
+    frame: { draw: round, frame, checked_at_source: 'results.json mtime' },
+    pages_read: pagesRead, reader: { kind: 'model', model: cost?.model ?? 'opus', image_opened: true },
+    verdict: derivedFortnightly(book), verdict_source: 'derived:fortnightly-v1', classes: seriousClasses(book.pages), note: book.book_verdict,
+    evidence_path: join(dir, 'results.json'),
+    text_provenance: packetProvenance({ pagesRead, packetPages: sampleBooks.find((b) => b.book_id === book.book_id)?.pages, now, checkedAt, provenanceFromPage }),
+    ...(cost ? { subscription_usd_eq: +(cost.usd / packetSize.get(pk)).toFixed(4) } : {}),
+  });
+  r.inserted ? ins++ : dup++;
+}
+console.log(`book_checks: ${ins} recorded, ${dup} already present`);
+await client.close();
