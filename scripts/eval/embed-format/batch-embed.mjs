@@ -13,14 +13,15 @@
  *           Splits D/pool.jsonl into Batch jobs, asks the spend gate (label
  *           'embed-prefix-test') for each, records the job in D/jobs.json and
  *           a submit-time usage row per book (endpoint eval/embed-prefix-100k).
+ *           At most --max-running (3) jobs in flight: more than ~3 embedding
+ *           jobs per project get their requests cancelled (#5729).
  *   collect --dir D  Writes each finished job to D/vec-<format>/<job>.f32
  *           (768-d Float32, rows in the job's order) + <job>.rows.json, and
  *           closes its usage rows with billed tokens.
  *   status  --dir D
  *
- * Runs on GEMINI_API_KEY_8's project: the #5729 backfill holds TIER3's project
- * (more than ~3 embedding jobs per project get cancelled) and the concept lane
- * holds key 3's.
+ * Runs on the projects of keys 8 and 9, one job each at a time: the #5729
+ * backfill holds TIER3's project and the concept lane holds key 3's.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -37,7 +38,11 @@ const DIR = arg('--dir');
 if (!DIR) { console.error('--dir D required'); process.exit(1); }
 const MODEL = 'gemini-embedding-2-preview';
 const DIMS = 768;
-const KEY = process.env.GEMINI_API_KEY_8;
+// One running job per PROJECT: a 20K-row job is ~7M tokens and the enqueued
+// embedding limit is ~12M per project, so a second job 429s. Keys 8 and 9
+// are separate projects (none is #5729's or the concept lane's; key 1's project 429s on upload).
+const KEY_NAMES = ['GEMINI_API_KEY_8', 'GEMINI_API_KEY_9'];
+const keyOf = (name) => process.env[name];
 const API = 'https://generativelanguage.googleapis.com/v1beta';
 const ENDPOINT = 'eval/embed-prefix-100k';
 const JOBS_FILE = path.join(DIR, 'jobs.json');
@@ -54,15 +59,21 @@ const committed = () => readJobs().reduce((s, j) => s + (j.actual_usd ?? j.est_u
 async function submit(db) {
   const format = arg('--format');
   if (!DOC_FORMS[format]) { console.error('--format plain|prefix'); process.exit(1); }
-  const jobRows = Number(arg('--job-rows', 20000));
+  const jobRows = Number(arg('--job-rows', 17000));
   const maxUsd = Number(arg('--max-usd', 9.5));
-  const done = new Set(readJobs().filter((j) => j.format === format && !/failed/.test(j.status)).map((j) => j.start));
+  const maxRunning = Number(arg('--max-running', 3));
+  // Rows already in a live or collected job of this format (any job size).
+  const covered = readJobs().filter((j) => j.format === format && !/failed/.test(j.status)).map((j) => [j.start, j.start + j.rows]);
+  const isCovered = (i) => covered.some(([a, b]) => i >= a && i < b);
   let buf = []; let start = 0;
   const flush = async () => {
     if (!buf.length) return true;
     const chunk = buf; buf = [];
     const s0 = chunk[0].i;
-    if (done.has(s0)) return true;
+    const busy = new Set(readJobs().filter((j) => j.status === 'submitted').map((j) => j.key));
+    const keyName = KEY_NAMES.find((k) => !busy.has(k) && keyOf(k));
+    if (!keyName || busy.size >= maxRunning) { console.log(`STOP: ${busy.size} jobs running (one per project, --max-running ${maxRunning}); collect, then submit again`); return false; }
+    const KEY = keyOf(keyName);
     const perBook = new Map();
     const lines = chunk.map((r) => {
       const t = docText(format, r);
@@ -99,12 +110,15 @@ async function submit(db) {
       await logUsage({ type: 'embedding', mode: 'batch', model: MODEL, book_id: bookId, page_count: b.pages, batch_job_id: `${jobId}:${bookId}`, input_tokens: 0, output_tokens: 0, status: 'submitted', endpoint: ENDPOINT, cost_usd: +usdForTokens(b.tokens, { batch: true }).toFixed(6) }, db);
     }
     const jobs = readJobs();
-    jobs.push({ id: jobId, name: created.name, format, start: s0, rows: chunk.length, books: [...perBook.keys()], est_usd: +est.toFixed(4), status: 'submitted', at: new Date() });
+    jobs.push({ id: jobId, name: created.name, key: keyName, format, start: s0, rows: chunk.length, books: [...perBook.keys()], est_usd: +est.toFixed(4), status: 'submitted', at: new Date() });
     writeJobs(jobs);
     console.log(`submitted ${jobId} → ${created.name}: ${chunk.length} rows, ${perBook.size} books, est $${est.toFixed(3)}`);
     return true;
   };
   for await (const r of rows()) {
+    if (isCovered(r.i)) continue;
+    // A job is a contiguous run of rows (collect reads it back by [start, start + rows)).
+    if (buf.length && r.i !== buf[buf.length - 1].i + 1 && !(await flush())) return;
     buf.push(r);
     if (buf.length >= jobRows && !(await flush())) return;
   }
@@ -114,6 +128,7 @@ async function submit(db) {
 async function collect(db) {
   const jobs = readJobs();
   for (const job of jobs.filter((j) => j.status === 'submitted')) {
+    const KEY = keyOf(job.key || 'GEMINI_API_KEY_8');
     const r = await (await fetch(`${API}/${job.name}?key=${KEY}`)).json();
     const state = r.metadata?.state || r.state || 'UNKNOWN';
     if (/FAILED|CANCELLED|EXPIRED/.test(state)) {
