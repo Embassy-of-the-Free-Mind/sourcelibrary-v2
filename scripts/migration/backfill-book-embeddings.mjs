@@ -28,6 +28,7 @@ import {
   composeBookEmbeddingText as composeEmbeddingText,
   BOOK_INDEX_EMBEDDING_PROJECTION,
 } from '../lib/book-embedding-text.mjs';
+import { assertStoreVector } from '../lib/vector-truth.mjs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
@@ -245,7 +246,8 @@ async function main() {
         year: yearMatch ? parseInt(yearMatch[0]) : null,
         language: book.language || null,
         summary_text: item.text,
-        embedding: JSON.stringify(embeddings[idx]),
+        embedding: JSON.stringify(assertStoreVector(embeddings[idx], { model: MODEL })),
+        embedding_model: MODEL, // asserted by the writer, never a column default (#6175)
         metadata: {
           has_index: !!item.indexData,
           categories: book.categories || [],

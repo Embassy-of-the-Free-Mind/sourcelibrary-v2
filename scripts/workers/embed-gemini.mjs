@@ -287,7 +287,9 @@ async function embedBatch(items) {
   // Counted only on success — a 429 retried above was not billed for a result.
   recordUsage(items);
   await flushEmbedUsage();
-  return data.embeddings.map(e => e.values);
+  const vectors = data.embeddings.map(e => e.values);
+  vectors.model = MODEL; // the model this request called — buildPageEmbeddingRow requires it (#6175)
+  return vectors;
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────
@@ -566,7 +568,7 @@ async function collectEmbedJob(job, report) {
       const composed = composeEmbedText(page);
       if (!composed || textHash(composed.text) !== hash) { counts.changed++; continue; }
       const book = await getBook(page.book_id);
-      rows.set(pageId, buildPageEmbeddingRow({ page, book, text: composed.text, hasTranslation: composed.hasTranslation, embedding: values }));
+      rows.set(pageId, buildPageEmbeddingRow({ page, book, text: composed.text, hasTranslation: composed.hasTranslation, embedding: values, model: job.model }));
       b.pages++;
     }
     for (let attempt = 1; ; attempt++) {
@@ -1124,6 +1126,7 @@ async function processBatch(items) {
       text: item.text,
       hasTranslation: item.hasTranslation,
       embedding: embeddings[i],
+      model: embeddings.model,
     }));
 
     // Upsert in small sub-batches to avoid overwhelming Supabase
