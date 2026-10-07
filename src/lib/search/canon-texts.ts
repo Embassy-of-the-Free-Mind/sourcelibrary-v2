@@ -37,7 +37,7 @@ export function canonQueryWords(query: string): string[] {
   return [...new Set(q.split(/[\s,;:]+/).map(foldKey).filter((w) => (w.length >= 3 || /^\d+$/.test(w)) && !STOP.has(w)))];
 }
 
-interface CanonPerson { name?: string | null; name_ewts?: string | null }
+interface CanonPerson { name?: string | null; name_ewts?: string | null; author_id?: string | null }
 interface CanonChapter {
   title: string; titleEn?: string; pageNumber: number; endPage?: number;
   catalogue: { tohoku: string; title_sa?: string | null; title_ewts?: string | null; authors?: CanonPerson[]; translators?: CanonPerson[]; search_keys?: string[]; continued_from_previous_volume?: boolean };
@@ -56,6 +56,19 @@ export function wordPattern(w: string): string {
 const personName = (p: CanonPerson) => p.name || p.name_ewts || '';
 
 /**
+ * Is the query the NAME of one of this text's authors in the `authors` thesaurus? BDRC splits
+ * Dharmakīrti into I/II/III, and all three match "dharmakirti" as a word; the thesaurus resolves
+ * the bare name to one person — the doc whose id IS the name (`dharmakirti` = Dharmakīrti I; his
+ * namesakes are `dharmakirti-iii`, `dharmakirti-of-suvarnadvipa-…`). So the author_id, folded,
+ * equal to the whole folded query picks the person a reader means by the bare name (#6145).
+ */
+export function queryNamesAuthor(words: string[], authors: CanonPerson[] | undefined): boolean {
+  if (!words.length) return false;
+  const whole = new RegExp(`^${words.map(wordPattern).join('')}$`);
+  return (authors || []).some((p) => Boolean(p.author_id) && whole.test(foldKey(p.author_id as string)));
+}
+
+/**
  * Texts in canon volumes matching every word of the query.
  * `bookFilter` is the caller's book-level filter (visible, pages_count, language, year, tenant…) —
  * applied here so this lane obeys the same filters as every other (search-filters-and-lanes.md).
@@ -72,6 +85,7 @@ export async function searchCanonTexts(db: Db, query: string, bookFilter: Record
   ], { maxTimeMS: 4000 }).toArray();
 
   // Rank, strongest first: every word is in an AUTHOR's name (not a translator's, not a title word);
+  // the query is the thesaurus name of an author (Dharmakīrti I before II/III);
   // more words that are whole keys (a name, the Tohoku number); we hold the Sanskrit original;
   // longer texts (the treatises before the short ritual pieces); then canonical order.
   const whole = words.map((w) => new RegExp(`^${wordPattern(w)}$`));
@@ -79,11 +93,12 @@ export async function searchCanonTexts(db: Db, query: string, bookFilter: Record
     .filter(Boolean).flatMap((n) => [foldKey(n as string), ...String(n).split(/[\s\-/_]+/).map(foldKey)]);
   const byAuthor = (ch: CanonChapter) => { const ks = authorKeys(ch); return words.every((w) => ks.some((k) => new RegExp(wordPattern(w)).test(k))) ? 1 : 0; };
   const exact = (ch: CanonChapter) => whole.filter((re) => (ch.catalogue.search_keys || []).some((k) => re.test(k))).length;
+  const named = (ch: CanonChapter) => (queryNamesAuthor(words, ch.catalogue.authors) ? 1 : 0);
   const held = (ch: CanonChapter) => ((ch.catalogue as { sanskrit_held?: string }).sanskrit_held ? 1 : 0);
   const length = (ch: CanonChapter) => (ch.endPage ?? ch.pageNumber) - ch.pageNumber;
   const ranked = rows
     .map((r) => ({ r, ch: r.chapters as CanonChapter }))
-    .sort((a, b) => byAuthor(b.ch) - byAuthor(a.ch) || exact(b.ch) - exact(a.ch) || held(b.ch) - held(a.ch)
+    .sort((a, b) => byAuthor(b.ch) - byAuthor(a.ch) || named(b.ch) - named(a.ch) || exact(b.ch) - exact(a.ch) || held(b.ch) - held(a.ch)
       || length(b.ch) - length(a.ch)
       || String(a.r.slug).localeCompare(String(b.r.slug), undefined, { numeric: true }) || a.ch.pageNumber - b.ch.pageNumber)
     .slice(0, limit);
