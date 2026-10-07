@@ -1,17 +1,20 @@
 // Run the #6077 comparison questions against a deploy; check every URL (HTTP
 // status) and every quote (against the page it links). Writes JSON, prints one
 // line per turn. Anonymous turns are capped at 5/hour per IP: one full run.
-// usage: node --env-file=.env.production.local scripts/librarian/compare-traditions-turns.mjs <base-url> <out.json> [startIdx]
+// usage: node --env-file=.env.production.local scripts/librarian/compare-traditions-turns.mjs <base-url> <out.json> [startIdx] [endIdx]
+// The limiter buckets by UTC clock hour (rate-limit.ts), so the 5 slots reopen at :00.
 import { MongoClient } from 'mongodb';
 import fs from 'node:fs';
 
-const [base, outPath, startArg] = process.argv.slice(2);
+const [base, outPath, startArg, endArg] = process.argv.slice(2);
 const QUESTIONS = [
   'How do Chan, Sufi and Kabbalist texts describe the annihilation of the self?',
   'What does the Zhuangzi say about the heavenly and the human, and is there a parallel in the Ikhwān al-Ṣafāʾ?',
   'Using only the books on the eternity-spot-check shelf, how do Buddhist and Sufi texts describe the stages of the path?',
   'Compare what the Hermetica and the Neoplatonists say about the soul\'s ascent and return to the One.',
   'How do Daoist and Vedantic texts speak of the source that is beyond names?',
+  // Added once the Chan canon (cbeta-chan-2026-10) and Tsongkhapa's Mind-Only section were translated.
+  'Is the world only mind? Compare Yogācāra in Tsongkhapa, Śaṅkara\'s Advaita, and Chan records.',
 ];
 
 const norm = s => s.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
@@ -97,7 +100,8 @@ const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
 const db = c.db(process.env.MONGODB_DB || 'bookstore');
 const prior = fs.existsSync(outPath) ? JSON.parse(fs.readFileSync(outPath, 'utf8')) : [];
 const start = Number(startArg || 0);
-for (let i = start; i < QUESTIONS.length; i++) {
+const end = endArg === undefined ? QUESTIONS.length - 1 : Number(endArg);
+for (let i = start; i <= end; i++) {
   const q = QUESTIONS[i];
   const t0 = Date.now();
   const turn = await runTurn(q);

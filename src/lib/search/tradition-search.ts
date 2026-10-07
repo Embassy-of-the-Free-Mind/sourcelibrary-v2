@@ -19,6 +19,7 @@ import { scopedPassageSearch, MAX_SCOPED_BOOKS, type SearchPassage } from '@/lib
 import { resolveCollectionSlug } from '@/lib/embassy/collection-catalog';
 import { READABLE_IN_ENGLISH_EXPR } from '@/lib/page-counts';
 import { stripEditorialWrappers } from '@/lib/strip-editorial-wrappers';
+import { authorSlug as toAuthorSlug } from '@/lib/slugify';
 
 /**
  * A tradition = the union of its collections and its `faceted_tags.tradition`
@@ -166,11 +167,27 @@ export interface TraditionResult {
   held: number;
   /** Of those, readable in English (translation-state.md `readable_in_english`). */
   readable: number;
-  passages: Array<SearchPassage & { original?: string; shelfNote?: string }>;
+  passages: Array<SearchPassage & { original?: string; shelfNote?: string; taggedAs?: string[]; authorSlug?: string }>;
 }
 
-async function traditionBooks(t: ResolvedTradition, scope: Scope | null): Promise<{ ids: string[]; held: number; readable: number }> {
-  if (t.collections.length === 0 && t.facets.length === 0) return { ids: [], held: 0, readable: 0 };
+/**
+ * A tradition's shelves also hold its later readers: on the Kabbalah shelf,
+ * Crowley's Magick and Blavatsky's Theosophical Glossary sit beside the Zohar,
+ * and in the first #6077 preview run they were all three Kabbalah passages. When
+ * a book's own tradition tags are set and none of them is this tradition's, the
+ * tags say where it belongs; return them so the answer can name the passage as
+ * a reading from outside instead of as the tradition's own voice. Null = no
+ * signal (untagged book, or a tradition with no facet to compare against).
+ */
+export function taggedOutside(bookFacets: unknown, laneFacets: string[]): string[] | null {
+  if (laneFacets.length === 0 || !Array.isArray(bookFacets)) return null;
+  const tags = bookFacets.filter((f): f is string => typeof f === 'string' && f.length > 0);
+  if (tags.length === 0 || tags.some(f => laneFacets.includes(f))) return null;
+  return tags;
+}
+
+async function traditionBooks(t: ResolvedTradition, scope: Scope | null): Promise<{ ids: string[]; held: number; readable: number; facets: Map<string, unknown>; authors: Map<string, string | undefined> }> {
+  if (t.collections.length === 0 && t.facets.length === 0) return { ids: [], held: 0, readable: 0, facets: new Map(), authors: new Map() };
   const or: Record<string, unknown>[] = [];
   if (t.collections.length) or.push({ collections: { $in: t.collections } });
   if (t.facets.length) or.push({ 'faceted_tags.tradition': { $in: t.facets } });
@@ -179,7 +196,7 @@ async function traditionBooks(t: ResolvedTradition, scope: Scope | null): Promis
   const db = await getDb();
   const rows = await db.collection('books').aggregate([
     { $match: match },
-    { $project: { id: 1, readable: READABLE_IN_ENGLISH_EXPR, pages_count: 1 } },
+    { $project: { id: 1, readable: READABLE_IN_ENGLISH_EXPR, pages_count: 1, 'faceted_tags.tradition': 1, author: 1, author_id: 1 } },
     // Readable books first: only they have English pages for the lanes to
     // rank, and the scoped lanes take at most MAX_SCOPED_BOOKS ids.
     { $sort: { readable: -1, pages_count: -1 } },
@@ -188,6 +205,11 @@ async function traditionBooks(t: ResolvedTradition, scope: Scope | null): Promis
     ids: rows.map(r => r.id as string).filter(Boolean).slice(0, MAX_SCOPED_BOOKS),
     held: rows.length,
     readable: rows.filter(r => r.readable).length,
+    facets: new Map(rows.map(r => [r.id as string, r.faceted_tags?.tradition])),
+    // Same rule as librarian-search's authorSlug: thesaurus id, else the slug of
+    // the stored name. Without it the model built /author/<name> itself and three
+    // of six preview turns linked a 404 (#6077).
+    authors: new Map(rows.map(r => [r.id as string, r.author ? (r.author_id || toAuthorSlug(r.author)) : undefined])),
   };
 }
 
@@ -222,7 +244,7 @@ export async function compareTraditions(
   const resolved = await Promise.all(asked.map(resolveTradition));
 
   const results = await Promise.all(resolved.map(async (t): Promise<TraditionResult> => {
-    const { ids, held, readable } = await traditionBooks(t, scope);
+    const { ids, held, readable, facets, authors } = await traditionBooks(t, scope);
     // One page per book: three passages from three books says more about a
     // tradition than three pages of one treatise.
     const passages = ids.length > 0
@@ -237,6 +259,8 @@ export async function compareTraditions(
         ...p,
         original: originals.get(`${p.book_id}:${p.page_number}`),
         shelfNote: scope?.notes.get(p.book_id),
+        taggedAs: taggedOutside(facets.get(p.book_id), t.facets) ?? undefined,
+        authorSlug: authors.get(p.book_id),
       })),
     };
   }));

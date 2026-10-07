@@ -3,7 +3,7 @@ import { describe, it, expect, vi } from 'vitest';
 vi.mock('@/lib/mongodb', () => ({ getDb: vi.fn() }));
 vi.mock('@/lib/embassy/collection-catalog', () => ({ resolveCollectionSlug: vi.fn(async () => null) }));
 
-import { shelfVerdicts, resolveTradition } from '@/lib/search/tradition-search';
+import { shelfVerdicts, resolveTradition, taggedOutside } from '@/lib/search/tradition-search';
 
 // compare_traditions with `scope` (#6077): on a review shelf only books a
 // by-eye check marked SHOW may be quoted. A book that sits on the shelf so it
@@ -43,5 +43,26 @@ describe('resolveTradition', () => {
     const t = await resolveTradition('martian');
     expect(t.key).toBeNull();
     expect(t.collections).toEqual([]);
+  });
+});
+
+// The Kabbalah shelf holds Crowley and Blavatsky beside the Zohar; in the
+// first preview run (#6077) all three Kabbalah passages were theirs and the
+// answer presented Crowley as Kabbalah. A book whose own tags exclude the
+// lane's tradition must come back flagged.
+describe('taggedOutside', () => {
+  it('flags a book tagged only with other traditions', () => {
+    expect(taggedOutside(['theosophical'], ['kabbalistic'])).toEqual(['theosophical']);
+    expect(taggedOutside(['hermetic', 'alchemical'], ['kabbalistic'])).toEqual(['hermetic', 'alchemical']);
+  });
+
+  it('keeps a book that carries the lane tradition among others', () => {
+    expect(taggedOutside(['hermetic', 'kabbalistic'], ['kabbalistic'])).toBeNull();
+  });
+
+  it('gives no signal for an untagged book or a lane with no facet', () => {
+    expect(taggedOutside(undefined, ['kabbalistic'])).toBeNull();
+    expect(taggedOutside([], ['kabbalistic'])).toBeNull();
+    expect(taggedOutside(['hermetic'], [])).toBeNull();
   });
 });
