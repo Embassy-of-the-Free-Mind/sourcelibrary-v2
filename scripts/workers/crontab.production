@@ -205,7 +205,7 @@
 # provenance coverage audit (#4613): every page written in the window carries its engine block + content_hash
 40 7 * * * cd /root/sourcelibrary && flock -n /tmp/sl-provenance.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/provenance-coverage.mjs --days=2" >> /var/log/sourcelibrary/provenance-coverage.log 2>&1
 # pipeline-hold drift audit (committed in crontab.production since #4919 but never installed; installed 2026-09-28)
-55 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/pipeline-hold-drift.mjs ] && flock -n /tmp/sl-hold-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/pipeline-hold-drift.mjs" >> /var/log/sourcelibrary/pipeline-hold.log 2>&1
+55 7 * * * cd /root/sourcelibrary && [ -f scripts/audit/pipeline-hold-drift.mjs ] && flock -n /tmp/sl-hold-drift.lock bash -c "set -a; source .env.production.local; set +a; node scripts/audit/pipeline-hold-drift.mjs --alert" >> /var/log/sourcelibrary/pipeline-hold.log 2>&1
 # pipeline_next daily audit + flow snapshot (#5478): recompute nextStep() over every book with pages_count > 0,
 # compare with the stored books.pipeline_next and pipeline_auto.status, write ops_reports pipeline-next-<day>
 # (type pipeline_next_daily, read by /admin/pipeline). Runs after the 06:00 sync-worker stamp pass. Read-only on
