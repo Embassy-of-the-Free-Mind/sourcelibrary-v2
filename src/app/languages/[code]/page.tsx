@@ -80,14 +80,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: { canonical: `/languages/${code}` },
   };
 
-  const description = `Browse ${count} ${langName} texts in Source Library — digitized and translated from original manuscripts and early printed books.`;
+  const description = `Browse ${count} ${langName} texts in Source Library, digitized and translated from original manuscripts and early printed books.`;
 
   return {
     title: `${langName} Texts | Source Library`,
     description,
     alternates: { canonical: `/languages/${code}` },
     openGraph: {
-      images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library — Digitizing and translating ancient texts' }],
+      images: [{ url: 'https://sourcelibrary.org/og-image.jpg', alt: 'Source Library: Digitizing and translating ancient texts' }],
       title: `${langName} Texts | Source Library`,
       description,
       type: 'website',
