@@ -36,7 +36,7 @@ import path from 'node:path';
 import { MongoClient } from 'mongodb';
 import {
   volumeTexts, openingTitles, parseOutline, parseWork, parsePerson, displayIast, ewtsName,
-  AUTHOR_ROLES, TRANSLATOR_ROLES, matchAuthor, buildAuthorIndex, fold,
+  AUTHOR_ROLES, TRANSLATOR_ROLES, matchAuthor, buildAuthorIndex, fold, searchKeys,
 } from '../lib/tengyur-catalogue.mjs';
 import { recordSweepActions } from '../lib/sweep-log.mjs';
 import { parseVolume } from '../lib/derge-tengyur.mjs';
@@ -338,6 +338,7 @@ async function main() {
           work_id: workId,
           bdrc: { part: cat?.part || null, work: cat?.work || null, indic_work: cat?.indic_work || null, rkts: cat?.rkts || null },
           ...(heldLink ? { sanskrit_held: heldLink.book } : {}),
+          search_keys: searchKeys({ toh: t.toh, title_sa: cat?.title_sa, title_ewts: cat?.title_ewts, people: [...(cat?.authors || []), ...(cat?.translators || [])] }),
           source: METHOD,
         },
       });

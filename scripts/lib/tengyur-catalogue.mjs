@@ -215,3 +215,22 @@ export function buildAuthorIndex(docs) {
   }
   return index;
 }
+
+/**
+ * Folded match keys for one text (read by src/lib/search/canon-texts.ts, which matches every query
+ * word as a SUBSTRING of some key): whole strings and their words, for the Sanskrit and EWTS titles
+ * and every author/translator name, plus the Tohoku number as "toh3824" and "3824".
+ */
+export function searchKeys({ toh, title_sa, title_ewts, people = [] }) {
+  const keys = new Set();
+  const add = (s) => {
+    if (!s) return;
+    const whole = fold(s); if (whole.length >= 3) keys.add(whole);
+    for (const w of String(s).split(/[\s\-/_]+/)) { const f = fold(w); if (f.length >= 3) keys.add(f); }
+  };
+  add(title_sa); add(title_ewts);
+  for (const p of people) { add(p.name); add(p.name_ewts); }
+  const n = String(toh || '').replace(/^D/, '');
+  if (n) { keys.add(`toh${n.toLowerCase()}`); keys.add(n.toLowerCase()); }
+  return [...keys];
+}

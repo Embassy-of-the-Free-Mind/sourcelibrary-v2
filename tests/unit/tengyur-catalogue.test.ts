@@ -76,3 +76,12 @@ describe('parseWork', () => {
     expect(w.iast).toEqual(['prajñā-nāma-mūlamadhyamakakārikā']);
   });
 });
+
+describe('searchKeys', () => {
+  it('folds names and titles, whole and by word, and carries the Tohoku number', async () => {
+    const { searchKeys } = await import('../../scripts/lib/tengyur-catalogue.mjs');
+    const k = searchKeys({ toh: 'D3824', title_sa: 'Prajñā-nāma-mūlamadhyamakakārikā', title_ewts: "dbu ma rtsa ba", people: [{ name: 'Nāgārjuna', name_ewts: 'slob dpon klu sgrub' }] });
+    expect(k).toEqual(expect.arrayContaining(['nagarjuna', 'mulamadhyamakakarika', 'prajnanamamulamadhyamakakarika', 'slobdponklusgrub', 'sgrub', 'toh3824', '3824']));
+    expect(k).not.toContain('ma'); // words under 3 letters are not keys
+  });
+});
