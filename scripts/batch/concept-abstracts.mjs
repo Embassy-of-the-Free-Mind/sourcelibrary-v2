@@ -527,7 +527,7 @@ async function embedCollect(db) {
       actual += usdForTokens(b.tokens, { batch: true });
       await completeBatchUsage({ batch_job_id: `${job._id}:${id}`, model: EMBED_MODEL, input_tokens: b.tokens, output_tokens: 0, cost_usd: +usdForTokens(b.tokens, { batch: true }).toFixed(6), status: b.tokens ? 'success' : 'failed', type: 'embedding', mode: 'batch', book_id: id, page_count: b.pages, endpoint: `${ENDPOINT}/embed` }, db);
     }
-    await jobs.updateOne({ _id: job._id }, { $set: { status: 'embedded', state: st.state, collected_at: new Date(), actual_usd: +actual.toFixed(4), counts: { vectors: ids.length, failed } }, $unset: { page_ids: '' } });
+    await jobs.updateOne({ _id: job._id }, { $set: { status: 'embedded', state: st.state, collected_at: new Date(), actual_usd: +actual.toFixed(4), counts: { vectors: ids.length, failed }, page_ids: [] } });
     console.log(`${job._id}: ${ids.length} vectors, ${failed} failed, billed $${actual.toFixed(4)}`);
   }
 }

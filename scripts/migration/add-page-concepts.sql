@@ -67,7 +67,8 @@ BEGIN
     CREATE POLICY page_concepts_read ON public.page_concepts FOR SELECT TO anon, authenticated USING (true);
   END IF;
 END $$;
-REVOKE INSERT, UPDATE, DELETE, TRUNCATE ON public.page_concepts FROM anon, authenticated;
+-- Read-only for the public roles: start from nothing, grant SELECT.
+REVOKE ALL ON public.page_concepts FROM anon, authenticated;
 GRANT SELECT ON public.page_concepts TO anon, authenticated;
 
 -- ── Global (main site only) ──────────────────────────────────────────────
