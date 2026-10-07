@@ -23,7 +23,8 @@
  *
  * checked_at is the author time of the commit that added the evidence file: an upper bound on when it was read
  * (frame.checked_at_source = 'commit'). Text provenance: from the packet where the run froze one (model ids as read;
- * the page's current *_updated_at added only when the text has not been rewritten since); otherwise reconstructed from
+ * the packet's text compared with the page's text now, and the page's *_updated_at added only when they are equal);
+ * otherwise reconstructed from
  * the page record, and only when the page's text predates checked_at — else the model ids are null with the reason.
  * Rights notes (rights_flag, rights_note) are never copied: this record is not where rights suspicions live.
  */
@@ -32,6 +33,7 @@ import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { buildBookCheck, recordBookCheck, ensureBookCheckIndexes, provenanceFromPage, readMethod } from '../lib/book-checks.mjs';
+import { seriousPage, seriousClasses, FIT, derivedFortnightly, pageRecords, packetProvenance } from '../eval/spot-check/check-rows.mjs';
 
 const args = process.argv.slice(2);
 const opt = (k, d) => { const i = args.indexOf(`--${k}`); return i >= 0 ? args[i + 1] : d; };
@@ -51,19 +53,6 @@ function addedAt(path, { cwd, ref } = {}) {
   return new Date(out);
 }
 const showAt = (ref, path) => JSON.parse(execFileSync('git', ['show', `${ref}:${path}`], { encoding: 'utf8', maxBuffer: 64 << 20 }));
-
-const allErrors = (p) => [...(p.ocr_errors || []), ...(p.tr_errors || []), ...(p.other || [])].filter((e) => e && typeof e === 'object');
-const seriousPage = (p) => allErrors(p).some((e) => e.severity === 'serious') || p.right_page === 'no';
-const seriousClasses = (pages) => [...new Set(pages.flatMap((p) => allErrors(p).filter((e) => e.severity === 'serious' && e.class).map((e) => String(e.class))))];
-const FIT = { show: 'show', show_with_caveat: 'caveat', do_not_show: 'fix' };
-
-/** The fortnightly rule (methods/fortnightly-spot-check.md): stricter than a reviewer's own book verdict. */
-function derivedFortnightly(b) {
-  if (b.pages.some(seriousPage)) return 'fix';
-  const onSight = 'on_sight_defect' in b ? b.on_sight_defect === true
-    : !['yes', 'fits'].includes(b.shelf_fit) || b.pages.some((p) => allErrors(p).some((e) => e.severity === 'moderate'));
-  return onSight ? 'caveat' : 'show';
-}
 
 // ── candidates: { source, book_id, checked_at, method_id, run_id, frame, pages_read, reader, verdict, …, packetPages }
 const cands = [];
@@ -187,34 +176,8 @@ for (const h of hidden) {
 const want = new Map();
 for (const c of cands.filter((x) => !x.drop)) { const s = want.get(c.book_id) ?? new Set(); c.pages_read.forEach((n) => s.add(n)); want.set(c.book_id, s); }
 const pageRec = new Map();
-for (const [bookId, nums] of want) {
-  const rows = await db.collection('pages').find({ book_id: bookId, page_number: { $in: [...nums] } }, {
-    projection: { _id: 0, id: 1, page_number: 1, 'ocr.model': 1, 'ocr.source': 1, 'ocr.updated_at': 1, 'ocr.prompt_version': 1,
-      'translation.model': 1, 'translation.source': 1, 'translation.updated_at': 1, 'translation.content_hash': 1 } }).toArray();
-  for (const r of rows) pageRec.set(`${bookId}:${r.page_number}`, r);
-}
-const after = (d, at) => d && new Date(d) > at;
-function provenance(c) {
-  return c.pages_read.map((n) => {
-    const now = pageRec.get(`${c.book_id}:${n}`);
-    const rewritten = now && (after(now.ocr?.updated_at, c.checked_at) || after(now.translation?.updated_at, c.checked_at));
-    const pk = c.packetPages?.find((p) => p.page_number === n);
-    if (pk) {
-      const e = { page_number: n, page_id: pk.page_id ?? null, ocr_model: pk.ocr_model ?? (pk.ocr_engine ? `source:${pk.ocr_engine}` : null), ocr_source: pk.ocr_engine ?? null,
-        translation_model: pk.translation_model ?? null, translation_source: pk.translation_source ?? null, source: 'packet',
-        changed_since_check: !now || !!rewritten };
-      if (now && !rewritten) Object.assign(e, { ocr_updated_at: now.ocr?.updated_at ?? null, ocr_prompt_version: now.ocr?.prompt_version ?? null,
-        translation_updated_at: now.translation?.updated_at ?? null, translation_content_hash: now.translation?.content_hash ?? null });
-      const miss = [!e.ocr_model && 'packet has no ocr_model', !e.translation_model && 'packet has no translation_model'].filter(Boolean);
-      if (miss.length) e.unknown_reason = miss.join('; ');
-      return e;
-    }
-    if (!now) return { page_number: n, ocr_model: null, translation_model: null, source: 'reconstructed', unknown_reason: 'no page record now and no packet' };
-    if (rewritten) return { page_number: n, page_id: now.id ?? null, ocr_model: null, translation_model: null, source: 'reconstructed', changed_since_check: true,
-      unknown_reason: `text rewritten after the check (ocr ${now.ocr?.updated_at?.toISOString?.() ?? '-'}, translation ${now.translation?.updated_at?.toISOString?.() ?? '-'}) and no packet froze it` };
-    return { ...provenanceFromPage(now, 'reconstructed'), changed_since_check: false };
-  });
-}
+for (const [bookId, nums] of want) pageRec.set(bookId, await pageRecords(db, bookId, nums, { withText: true }));
+const provenance = (c) => packetProvenance({ pagesRead: c.pages_read, packetPages: c.packetPages, now: pageRec.get(c.book_id), checkedAt: c.checked_at, provenanceFromPage });
 
 // Build every row first, then write. A source row the helper refuses (a tier outside 1–3, a page with no number) is
 // listed as skipped with the helper's reason, never written and never fatal to the rest.
