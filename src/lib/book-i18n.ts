@@ -683,8 +683,8 @@ export const READER_STRINGS: Record<Locale, ReaderStrings> = {
   la: {
     previousPage: 'Pagina prior',
     nextPage: 'Pagina sequens',
-    jumpToPage: 'Ad paginam i',
-    jumpToPageAria: (total) => `Ad paginam i (1 ad ${total})`,
+    jumpToPage: 'Paginam pete',
+    jumpToPageAria: (total) => `Paginam pete (1 ad ${total})`,
     pageOfAria: (n, total) => `Pagina ${n} ex ${total}. Preme ut ad paginam eas`,
     arrowKeysHint: 'Sagittis ← → naviga',
     swipeHint: 'Laevorsum vel dextrorsum trahe ut naviges',

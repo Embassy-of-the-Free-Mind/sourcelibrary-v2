@@ -1484,7 +1484,7 @@ export const READER_UI_STRINGS: Record<Locale, ReaderStrings> = {
       previous: 'Prior',
       next: 'Sequens',
       close: 'Claude',
-      jumpToPage: 'Ad paginam i',
+      jumpToPage: 'Paginam pete',
       backToTheBook: 'Ad librum redi',
       backToTheBookPage: 'Ad paginam libri redi',
       backToTheReader: 'Ad lectionem redi',

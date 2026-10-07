@@ -34,12 +34,21 @@ export default function HomeView({ data, lang }: { data: HomeData; lang: HomeLan
   // suffix on `/`, where every book is already in the page's language. A
   // collection of artworks rather than books (Leonardo's notebooks) counts
   // its artworks instead of reading "0 books".
-  const indexCount = (col: { slug: string; book_count: number; artwork_count?: number }) => {
-    const base = col.book_count > 0
-      ? `${nf(col.book_count)} ${t.booksLabel}`
-      : (col.artwork_count ?? 0) > 0 ? `${nf(col.artwork_count ?? 0)} ${t.artworksLabel}` : '';
+  const indexCount = (col: { slug: string; book_count: number; total_book_count?: number; artwork_count?: number }) => {
     const localized = localizedCollectionCounts[col.slug] ?? 0;
-    return localized > 0 ? `${base} · ${nf(localized)} ${t.inThisLanguage}` : base;
+    // `book_count` is the books READABLE IN ENGLISH; `total_book_count` is every
+    // visible member (visibility-and-stats.md). A Spanish edition is made from
+    // the English, so its count is a part of `book_count`. A Latin book is
+    // Latin whether or not it has been translated, so on /la the whole it is a
+    // part of is every member: against `book_count` the line read "1,730 libri
+    // · 2,839 Latine" (#6254).
+    const books = lang === 'la' ? Math.max(col.total_book_count ?? 0, col.book_count) : col.book_count;
+    const base = books > 0
+      ? `${nf(books)} ${t.booksLabel}`
+      : (col.artwork_count ?? 0) > 0 ? `${nf(col.artwork_count ?? 0)} ${t.artworksLabel}` : '';
+    // A part larger than its whole means the stored counter is stale; show the
+    // whole alone rather than a line that contradicts itself.
+    return localized > 0 && localized <= books ? `${base} · ${nf(localized)} ${t.inThisLanguage}` : base;
   };
 
   return (
