@@ -10,8 +10,13 @@
  * English, the shape a context arm produces when it re-translates the side before).
  *
  *   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/tengyur-levers/build-controls.mjs
+ *   ... build-controls.mjs --round 2 [--attempt 1]        # round 2: fresh plants, defects filtered
+ *   ... build-controls.mjs --round 2 --attempt 2 --calib  # a re-plant: 12 reversal/agent plants + 8 unplanted pages
  *
- * Writes /root/tlev/controls.jsonl and <out>/controls-log.json.
+ * Writes /root/tlev/controls.jsonl and <out>/controls-log.json (round 2: /root/tlev2/controls-<attempt>.jsonl and
+ * results/tengyur-models-6121/controls-log-<attempt>.json). Round 2 skips every page used by round 1's controls
+ * or an earlier attempt, and drops two planter defects seen in round 1: a plant that leaves the sentence
+ * unchanged, and "the opponent → we", which yields ungrammatical English ("we argues").
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -19,12 +24,22 @@ import { MongoClient } from 'mongodb';
 import { rng as mkRng, shuffle, sectionOf } from '../tengyur-characterize/common.mjs';
 import { makePlanters } from '../tengyur-characterize/plants.mjs';
 
+const argv = process.argv.slice(2);
+const opt = (k, d) => { const i = argv.indexOf(`--${k}`); return i >= 0 ? argv[i + 1] : d; };
+const R2 = opt('round', '1') === '2';
+const ATTEMPT = Number(opt('attempt', 1));
+const CALIB = argv.includes('--calib');
 const out = 'scripts/eval/results/tengyur-levers-6121';
 const work = '/root/tlev';
-const R = mkRng(6121 * 7 + 2);
+const SEED = R2 ? 6121 * 7 + 100 + ATTEMPT : 6121 * 7 + 2;
+const R = mkRng(SEED);
 const { plantReversal, plantAgent, plantTerm, bodySentences } = makePlanters(R);
 const sample = JSON.parse(fs.readFileSync(path.join(out, 'sample.json'), 'utf8'));
 const used = new Set(sample.pages.map((p) => p.page_id));
+if (R2) {
+  const prior = ['/root/tlev/controls.jsonl', ...Array.from({ length: ATTEMPT - 1 }, (_, i) => `/root/tlev2/controls-${i + 1}.jsonl`)];
+  for (const f of prior.filter((f) => fs.existsSync(f))) for (const l of fs.readFileSync(f, 'utf8').split('\n').filter(Boolean)) used.add(JSON.parse(l).page_id);
+}
 const SECTIONS = Object.keys(sample.plan);
 
 const HAS_EN = { 'translation.data': { $type: 'string', $nin: [''] } };
@@ -60,7 +75,9 @@ function plantSpan(f) {
 }
 
 const items = [], log = [];
-const plan = [...Array(6).fill('reversal'), ...Array(6).fill('agent'), ...Array(4).fill('term'), ...Array(4).fill('span')];
+const plan = CALIB ? [...Array(6).fill('reversal'), ...Array(6).fill('agent'), ...Array(8).fill('none')]
+  : [...Array(6).fill('reversal'), ...Array(6).fill('agent'), ...Array(4).fill('term'), ...Array(4).fill('span')];
+const defect = (p) => R2 && p && (p.old === p.new || /the opponent/.test(p.how));
 for (const kind of plan) {
   for (let tries = 0; ; tries++) {
     if (tries > 200) throw new Error('ran out of plant candidates');
@@ -70,8 +87,17 @@ for (const kind of plan) {
     const [pg] = await pages.find({ book_id: v.book_id, ...HAS_EN }, { projection: { id: 1, page_number: 1 } }).sort({ page_number: 1 }).skip(k).limit(1).toArray();
     if (used.has(pg.id)) continue;
     const f = await full(v.book_id, pg.page_number);
+    if (kind === 'none') {
+      if (!f.en || f.en.length < 400) continue;
+      used.add(pg.id);
+      const { prev_en, ...rest } = f;
+      items.push({ ctype: 'REAL', plant_kind: 'none', vol: v.vol, section: v.section, book_id: v.book_id, page_number: pg.page_number, ...rest, plant: null });
+      log.push({ page_id: pg.id, vol: v.vol, section: v.section, page_number: pg.page_number, kind });
+      break;
+    }
     const p = kind === 'reversal' ? plantReversal(f.en) : kind === 'agent' ? plantAgent(f.en) : kind === 'term' ? plantTerm(f.en) : plantSpan(f);
     if (!p) { log.push({ skipped: pg.id, kind, why: 'no plantable sentence' }); continue; }
+    if (defect(p)) { log.push({ skipped: pg.id, kind, why: 'planter defect (no-op or "the opponent → we")', how: p.how }); continue; }
     used.add(pg.id);
     const en = kind === 'span' ? p.en : f.en.replace(p.old, p.new);
     delete p.en;
@@ -81,7 +107,10 @@ for (const kind of plan) {
     break;
   }
 }
-fs.writeFileSync(path.join(work, 'controls.jsonl'), shuffle(items, R).map((x) => JSON.stringify(x)).join('\n') + '\n');
-fs.writeFileSync(path.join(out, 'controls-log.json'), JSON.stringify({ seed: 6121 * 7 + 2, plants: log }, null, 1));
+const cFile = R2 ? `/root/tlev2/controls-${ATTEMPT}.jsonl` : path.join(work, 'controls.jsonl');
+const lFile = R2 ? `scripts/eval/results/tengyur-models-6121/controls-log-${ATTEMPT}.json` : path.join(out, 'controls-log.json');
+fs.mkdirSync(path.dirname(cFile), { recursive: true }); fs.mkdirSync(path.dirname(lFile), { recursive: true });
+fs.writeFileSync(cFile, shuffle(items, R).map((x) => JSON.stringify(x)).join('\n') + '\n');
+fs.writeFileSync(lFile, JSON.stringify({ seed: SEED, calib: CALIB, plants: log }, null, 1));
 console.log(`controls: ${items.length}`, items.reduce((m, x) => ((m[x.plant_kind] = (m[x.plant_kind] || 0) + 1), m), {}));
 await c.close();
