@@ -160,6 +160,20 @@ export async function GET(request: NextRequest) {
     // modes returned before any tenant filter was built and served the global
     // gallery on a partner subdomain.
     const searchScope = await resolveSearchScope(request);
+    // A tenant signal that resolves to no tenant is answered with nothing. It
+    // used to fall through to `tenantFilter = {}` — the whole gallery.
+    if (searchScope.kind === 'closed') {
+      return NextResponse.json(
+        { items: [], total: 0, hasMore: false, limit: 0, offset: 0, bookInfo: null, filters: { types: [], subjects: [], yearRange: {} } },
+        { headers: { 'Cache-Control': NO_STORE } },
+      );
+    }
+    // The tenant's books, as a filter on `gallery_images.book_id`. NOT
+    // `gallery_images.tenantId`: only 7,788 of 234,560 rows carry it (measured
+    // 2026-10-06 — BPH has 6,814 tagged rows against ~25,000 images in its
+    // books), and the keyword lane below did not filter on it at all, so
+    // `?q=dragon` on bhutan.sourcelibrary.org returned 65 foreign books.
+    const tenantBooks = searchScope.kind === 'tenant' ? [{ book_id: { $in: searchScope.bookIds } }] : null;
     if (visual && searchQuery) {
       return NextResponse.json(await clipGallerySearch(searchParams, searchQuery, searchScope), {
         headers: { 'Cache-Control': NO_STORE },
@@ -377,6 +391,7 @@ export async function GET(request: NextRequest) {
           book_visible: true,
           extracted_url: { $ne: null },
           image_url: { $ne: null },
+          ...(tenantBooks ? { $and: tenantBooks } : {}),
           ...(!bookId && maxPerBook < 100 ? { book_rank: { $lte: maxPerBook } } : {}),
           ...(bookId ? { book_id: bookId } : {}),
           ...(collectionBookIds && libraryBookIds
@@ -517,7 +532,7 @@ export async function GET(request: NextRequest) {
         const clipDocs = await db.collection('gallery_images')
           .find({
             id: { $in: clipOnlyIds },
-            ...(tenantId ? { tenantId } : {}),
+            ...(tenantBooks ? { $and: tenantBooks } : {}),
             gallery_quality: { $gte: minQuality },
             book_visible: true,
             extracted_url: { $ne: null },

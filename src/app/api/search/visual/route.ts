@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { CLIP_URL } from '@/lib/clip';
-import { resolveSearchScope, matchClip } from '@/lib/tenant-search-scope';
+import { resolveSearchScope, matchClip, isScoped } from '@/lib/tenant-search-scope';
 
 export const maxDuration = 15;
 
@@ -144,7 +144,9 @@ export async function GET(request: NextRequest) {
       offset,
       mode: 'visual',
     }, {
-      headers: { 'Cache-Control': 'public, max-age=0, s-maxage=300, stale-while-revalidate=600' },
+      // A scoped body must not be stored under a URL the global site shares:
+      // tenant context can arrive by header, which the CDN key cannot see.
+      headers: { 'Cache-Control': isScoped(scope) ? 'private, no-store' : 'public, max-age=0, s-maxage=300, stale-while-revalidate=600' },
     });
   } catch (error) {
     const msg = error instanceof Error ? error.message : String(error);

@@ -44,6 +44,12 @@ export async function GET(request: NextRequest) {
     if (!tenantId && tenantCtx.slug) {
       tenantId = await resolveTenantId(tenantCtx.slug);
     }
+    // A tenant signal that resolves to no tenant gets nothing — it used to
+    // leave `tenantScope` empty and serve every artwork (#4330).
+    const scope = await resolveSearchScope(request);
+    if (scope.kind === 'closed') {
+      return NextResponse.json({ total: 0, showing: 0, items: [], artist: null }, { headers: { 'Cache-Control': 'private, no-store' } });
+    }
 
     const q = searchParams.get('q');
     const typeFilter = searchParams.get('type');
@@ -91,7 +97,6 @@ export async function GET(request: NextRequest) {
       const semanticLimit = Math.min(limit + offset + 30, 120);
       // Rank inside the tenant's book set (#4330); the Mongo `tenantScope`
       // below stays as the second check.
-      const scope = await resolveSearchScope(request);
       const semanticResults = await semanticArtworkSearch(q, semanticLimit, {
         scope,
         period: period ?? undefined,

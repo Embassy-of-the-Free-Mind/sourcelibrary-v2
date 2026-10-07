@@ -36,8 +36,30 @@
 -- librarian already does by hand: pick the nearest books INSIDE the scope from
 -- `book_embeddings` (exact, a few thousand rows), rank their pages exactly, and
 -- union that with one ordinary HNSW pass for pages whose book summary did not
--- rank. It is bounded work, not exact recall — measure it with
--- `scripts/audit/search-tenant-purity.mjs --recall`.
+-- rank. It is bounded work, not exact recall. Measured 2026-10-06 against an
+-- exact scan of every page vector in the tenant
+-- (`scripts/audit/scoped-page-recall.mjs`), recall@15 over 5 queries each:
+--
+--              before (global top-15, post-filtered)   match_pages_in_scope
+--   bhutan     37%  (3 of 5 queries returned 0 rows)   67%  (no query empty)
+--   bph        20%  (2 of 5 queries returned 0 rows)   84%  (no query empty)
+--
+-- Both rows are the defaults below (probe_books 12, near_candidates 400).
+-- `probe_books` 12, 24 and 40 scored the same on Bhutan and 4, 8 and 12 the
+-- same on BPH — but 4 on Bhutan fell to 48%, and its first call was no faster,
+-- so 12 it is. `near_candidates` 400 beat 200 by two points. The
+-- miss it leaves: "alchemy" on Bhutan returned 15 pages (best 0.666) and none
+-- of the true top 15 (best 0.728) — they sit in books whose summary is about
+-- something else and outside the index's nearest 400.
+--
+-- COST. The first call for a query reads its probe books' vectors from disk:
+-- 1.5–10 s measured (probe_books 4–12, on a database busy with an autovacuum of
+-- `page_translations` and other jobs), against the anon
+-- role's 3 s statement timeout; a repeat is ~150 ms. On a timeout the app falls
+-- back to the global ranking cut to the book set (closed, starved) rather than
+-- failing the lane. The exact fix is a tenant column and a partial HNSW index
+-- per tenant — ~1.05M row updates on `page_translations` at ~235 ms each, a
+-- separate decision (#2753).
 --
 -- Idempotent. Apply with:
 --   psql "$SUPABASE_DB_URL" -f scripts/migration/add-scoped-embedding-rpcs.sql
@@ -191,7 +213,7 @@ CREATE OR REPLACE FUNCTION public.match_pages_in_scope(
   match_threshold double precision DEFAULT 0.3,
   match_count integer DEFAULT 15,
   probe_books integer DEFAULT 12,
-  near_candidates integer DEFAULT 200
+  near_candidates integer DEFAULT 400
 )
 RETURNS TABLE(page_id text, book_id text, page_number integer, translation text,
               book_title text, book_author text, book_language text, book_year integer,
