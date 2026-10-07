@@ -190,7 +190,7 @@ export function PaneEmptyState({ page, book, kind, unreadable, withheld }: { pag
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          message: `Translation requested for "${book.display_title || book.title}" (${book.language || 'unknown language'}) — page ${page.page_number}`,
+          message: `Translation requested for "${book.display_title || book.title}" (${book.language || 'unknown language'}), page ${page.page_number}`,
           page: `/book/${book.id}/page/${page.id}`,
           email: sessionEmail && sessionEmail.includes('@') ? sessionEmail : null,
         }),

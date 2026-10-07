@@ -77,7 +77,7 @@ export function useReviewQueue<T extends QueueItem>(opts: {
           setError(data.message || 'No more items.');
         }
       } catch {
-        setError('Network error — try refreshing.');
+        setError('Network error. Try refreshing.');
       } finally {
         setLoading(false);
       }
@@ -115,7 +115,7 @@ export function useReviewQueue<T extends QueueItem>(opts: {
           }),
         });
         if (!res.ok) {
-          setError('Submit failed — try again.');
+          setError('Submit failed. Try again.');
           return false;
         }
         if (rating) {
@@ -126,7 +126,7 @@ export function useReviewQueue<T extends QueueItem>(opts: {
         if (advance) fetchNext(volunteerId);
         return true;
       } catch {
-        setError('Submit failed — try again.');
+        setError('Submit failed. Try again.');
         return false;
       } finally {
         setSubmitting(false);
