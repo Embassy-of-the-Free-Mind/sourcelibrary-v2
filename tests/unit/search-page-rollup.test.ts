@@ -135,6 +135,17 @@ describe('bestPagePerBook', () => {
     expect(pages.map(p => p.book_id)).toEqual(['c', 'a', 'b']);
   });
 
+  it('keeps the order asked even when searches finish out of order (rolling pool)', async () => {
+    const delay: Record<string, number> = { a: 30, b: 1, c: 15, d: 5 };
+    const { db } = fakeDb(async pipeline => {
+      const id = bookOf(pipeline);
+      await new Promise(r => setTimeout(r, delay[id]));
+      return [{ id: `${id}-page`, book_id: id, page_number: 1 }];
+    });
+    const pages = await bestPagePerBook(db, ['Drebbel'], ['a', 'b', 'c', 'd'], 2);
+    expect(pages.map(p => p.book_id)).toEqual(['a', 'b', 'c', 'd']);
+  });
+
   it('reads one content page per book: limit 1, after non-content pages are dropped', async () => {
     const { db, pipelines } = fakeDb(() => []);
     await bestPagePerBook(db, ['Drebbel'], ['a']);

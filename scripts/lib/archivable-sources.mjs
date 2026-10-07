@@ -40,6 +40,10 @@ export const ARCHIVABLE_SOURCE_HOSTS = [
   'stacks.stanford.edu',
   // — verified 200 (576KB JPEG, 2.2s) from the Hetzner datacenter IP, 2026-09-15 —
   'bl.digirati.io',
+  // — verified 200 (image/jpeg, 275KB-1.3MB) from a residential IP, 2026-09-29 —
+  // PENDING: probe a REAL page url from the `pages` collection against the
+  // Hetzner datacenter IP before relying on this in production.
+  'museumsofindia.gov.in',
 ];
 
 /** Dot-boundary match: `archive.org` matches `ia1.us.archive.org`, never `evilarchive.org`. */

@@ -59,7 +59,7 @@ const EXTS = ['.ts', '.tsx', '.mjs', '.js'];
 const BASELINE_PATH = join(ROOT, 'scripts/audit/gemini-usage-perimeter.baseline.txt');
 
 /** A file that calls Gemini's generation API. */
-const CALLS_GEMINI = /generateContent|generateContentStream|embedContent|generativelanguage\.googleapis\.com/;
+const CALLS_GEMINI = /generateContent|generateContentStream|embedContent|batchEmbedContents|batchGenerateContent|batches\.create\s*\(|generativelanguage\.googleapis\.com/;
 /**
  * A file that writes a usage row, in any spelling across the three stores.
  *
@@ -99,6 +99,48 @@ function walk(dir, out = []) {
   return out;
 }
 
+/**
+ * A file that COLLECTS Batch API results — reads the response file or the inline
+ * responses. It generates nothing, but it is where a batch's tokens become known,
+ * so it is where the usage row is closed out (completeBatchUsage). It may NOT
+ * carry a `usage-ok` waiver instead: `collect-batch-results.mjs` did, with a comment
+ * claiming the close-out happened, and every job that cron collected kept its
+ * submit-time estimate forever — 3,072 rows, 2026-08-01..10-04 (#4599).
+ */
+const COLLECTS_BATCH = /responsesFile|inlinedResponses/;
+/** ...and writes what it collected into pages. A library that only RETURNS results
+ *  (src/lib/gemini-batch.ts) leaves the close-out to its caller, which is checked. */
+const WRITES_PAGES = /collection\(\s*['"]pages['"]\s*\)\s*\.\s*(bulkWrite|updateOne|updateMany)|bulkWrite\s*\(/;
+
+/** Block comments and `//` line comments (not `://` inside a URL). Approximate, on purpose. */
+export function stripComments(src) {
+  return src.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:\\'"`])\/\/.*$/gm, '$1');
+}
+
+/**
+ * Classify one file. Pure, so the rules can be driven by tests without a tree.
+ * Returns 'hard' (src SDK construction outside the chokepoint), 'collector-waived'
+ * (a batch collector that waives instead of logging — never baselined), 'logged',
+ * 'exempt', 'unlogged', or null for a file that does not call Gemini.
+ */
+export function classifyFile(rel, src) {
+  // Calls and logger calls are read from CODE; only the waiver is read from comments.
+  // A comment that NAMES the logger is not a call to it — collect-batch-results.mjs
+  // passed as "logs" for months on the strength of a comment saying it did.
+  const code = stripComments(src);
+  if (rel !== CHOKEPOINT && rel.startsWith('src/') && DIRECT_CONSTRUCTION.test(code)) return 'hard';
+  if (!CALLS_GEMINI.test(code)) return null;
+  const inSrc = rel.startsWith('src/');
+  if (LOGS_USAGE.test(code) || (inSrc && USES_METERED_CLIENT.test(code))) return 'logged';
+  if (COLLECTS_BATCH.test(code) && WRITES_PAGES.test(code) && WAIVER.test(src)) return 'collector-waived';
+  if (WAIVER.test(src)) return 'exempt';
+  return 'unlogged';
+}
+
+const invokedDirectly = process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).href;
+if (invokedDirectly) main();
+
+function main() {
 const files = SCAN_DIRS.flatMap((d) => walk(join(ROOT, d)));
 
 const baseline = new Set(
@@ -108,21 +150,16 @@ const baseline = new Set(
 );
 
 const hard = [];      // check A — never baselined
+const collectorWaived = []; // check D — never baselined
 const unlogged = [];  // check B
 const exempt = [];
 const logged = [];
+const bucket = { hard, 'collector-waived': collectorWaived, unlogged, exempt, logged };
 
 for (const f of files) {
   const rel = relative(ROOT, f);
-  const src = readFileSync(f, 'utf8');
-  const constructsDirectly = rel !== CHOKEPOINT && rel.startsWith('src/') && DIRECT_CONSTRUCTION.test(src);
-  if (constructsDirectly) { hard.push(rel); continue; }
-  if (!CALLS_GEMINI.test(src)) continue;
-
-  const inSrc = rel.startsWith('src/');
-  if (LOGS_USAGE.test(src) || (inSrc && USES_METERED_CLIENT.test(src))) { logged.push(rel); continue; }
-  if (WAIVER.test(src)) { exempt.push(rel); continue; }
-  unlogged.push(rel);
+  const kind = classifyFile(rel, readFileSync(f, 'utf8'));
+  if (kind) bucket[kind].push(rel);
 }
 
 if (UPDATE) {
@@ -160,6 +197,13 @@ if (hard.length) {
   console.log('  getUnmeteredGeminiClient(key) when the key is not ours.');
 }
 
+if (collectorWaived.length) {
+  console.log('\n  FAIL — a Batch API result collector waives metering instead of closing out the row:');
+  for (const f of collectorWaived) console.log(`    ${f}`);
+  console.log('  Call completeBatchUsage({ batch_job_id, input_tokens, output_tokens, ... }) with the');
+  console.log('  summed usageMetadata of every response (sumBatchResponseUsage). See #4599.');
+}
+
 if (fresh.length) {
   console.log('\n  NEW unlogged Gemini call sites:');
   for (const f of fresh) console.log(`    ${f}`);
@@ -171,6 +215,7 @@ if (fixed.length) {
   for (const f of fixed.slice(0, 20)) console.log(`    ${f}`);
 }
 
-const failing = hard.length + fresh.length;
+const failing = hard.length + collectorWaived.length + fresh.length;
 if (!failing) console.log('\n✔ No new findings.');
 process.exit(CI && failing ? 1 : 0);
+}

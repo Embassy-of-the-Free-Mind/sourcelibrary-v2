@@ -1,0 +1,1060 @@
+{
+ "round": 1,
+ "gate": {
+  "by_reviewer": {
+   "A": {
+    "rev_agent_found": 11,
+    "rev_agent_of": 12,
+    "term_found": 3,
+    "term_of": 4
+   },
+   "B": {
+    "rev_agent_found": 10,
+    "rev_agent_of": 12,
+    "term_found": 3,
+    "term_of": 4
+   }
+  },
+  "span": {
+   "marked_either": 4,
+   "of": 4,
+   "span_field_either": 4
+  },
+  "pass": true
+ },
+ "pool": {
+  "label": "pool (all 60)",
+  "pages": 60,
+  "arms": {
+   "A": {
+    "rev_agent_per100_either": 80.0,
+    "ci": [
+     58.3,
+     105.0
+    ],
+    "rev_agent_per100_both": 40.0,
+    "pages_with_rev_agent": 32,
+    "reversal_per100": 28.3,
+    "agent_per100": 51.7,
+    "all_per100": 305.0,
+    "term_per100": 116.7,
+    "omission_per100": 6.7,
+    "span_error_pages": 0,
+    "span_kinds": {},
+    "score_mean": 3.51,
+    "light_share": 50.0
+   },
+   "G35": {
+    "rev_agent_per100_either": 58.3,
+    "ci": [
+     41.7,
+     78.3
+    ],
+    "rev_agent_per100_both": 31.7,
+    "pages_with_rev_agent": 28,
+    "reversal_per100": 20.0,
+    "agent_per100": 38.3,
+    "all_per100": 240.0,
+    "term_per100": 95.0,
+    "omission_per100": 8.3,
+    "span_error_pages": 0,
+    "span_kinds": {},
+    "score_mean": 3.68,
+    "light_share": 59.2
+   },
+   "G38": {
+    "rev_agent_per100_either": 41.7,
+    "ci": [
+     26.7,
+     56.7
+    ],
+    "rev_agent_per100_both": 18.3,
+    "pages_with_rev_agent": 22,
+    "reversal_per100": 10.0,
+    "agent_per100": 31.7,
+    "all_per100": 163.3,
+    "term_per100": 76.7,
+    "omission_per100": 5.0,
+    "span_error_pages": 0,
+    "span_kinds": {},
+    "score_mean": 4.04,
+    "light_share": 80.0
+   },
+   "O": {
+    "rev_agent_per100_either": 30.0,
+    "ci": [
+     18.3,
+     43.3
+    ],
+    "rev_agent_per100_both": 13.3,
+    "pages_with_rev_agent": 17,
+    "reversal_per100": 10.0,
+    "agent_per100": 20.0,
+    "all_per100": 85.0,
+    "term_per100": 26.7,
+    "omission_per100": 5.0,
+    "span_error_pages": 0,
+    "span_kinds": {},
+    "score_mean": 4.44,
+    "light_share": 98.3
+   },
+   "S": {
+    "rev_agent_per100_either": 85.0,
+    "ci": [
+     61.7,
+     110.0
+    ],
+    "rev_agent_per100_both": 33.3,
+    "pages_with_rev_agent": 33,
+    "reversal_per100": 18.3,
+    "agent_per100": 66.7,
+    "all_per100": 308.3,
+    "term_per100": 95.0,
+    "omission_per100": 11.7,
+    "span_error_pages": 0,
+    "span_kinds": {},
+    "score_mean": 3.56,
+    "light_share": 52.5
+   }
+  },
+  "floor_per100": 5.0,
+  "span_floor_pages": 0,
+  "rule": {
+   "G35": {
+    "gain_per100_vs_S": 26.7,
+    "gain_ci": [
+     5.0,
+     48.3
+    ],
+    "pages_better": 21,
+    "pages_worse": 9,
+    "p_one_sided": 0.0166,
+    "beats_floor": true,
+    "p_lt_0.10": true,
+    "span_ok": true,
+    "adopt": true,
+    "card_min_effect_8": true
+   },
+   "G38": {
+    "gain_per100_vs_S": 43.3,
+    "gain_ci": [
+     21.7,
+     66.7
+    ],
+    "pages_better": 23,
+    "pages_worse": 5,
+    "p_one_sided": 0.0003,
+    "beats_floor": true,
+    "p_lt_0.10": true,
+    "span_ok": true,
+    "adopt": true,
+    "card_min_effect_8": true
+   },
+   "O": {
+    "gain_per100_vs_S": 55.0,
+    "gain_ci": [
+     33.3,
+     78.3
+    ],
+    "pages_better": 28,
+    "pages_worse": 5,
+    "p_one_sided": 0.0001,
+    "beats_floor": true,
+    "p_lt_0.10": true,
+    "span_ok": true,
+    "adopt": true,
+    "card_min_effect_8": true
+   },
+   "A": {
+    "gain_per100_vs_S": 5.0,
+    "gain_ci": [
+     -20.0,
+     30.0
+    ],
+    "pages_better": 18,
+    "pages_worse": 17,
+    "p_one_sided": 0.3933,
+    "beats_floor": false,
+    "p_lt_0.10": false,
+    "span_ok": true,
+    "adopt": null,
+    "card_min_effect_8": false
+   }
+  }
+ },
+ "by_section": {
+  "Jātaka": {
+   "label": "Jātaka",
+   "pages": 10,
+   "arms": {
+    "A": {
+     "rev_agent_per100_either": 100.0,
+     "ci": [
+      40.0,
+      170.0
+     ],
+     "rev_agent_per100_both": 50.0,
+     "pages_with_rev_agent": 6,
+     "reversal_per100": 20.0,
+     "agent_per100": 80.0,
+     "all_per100": 300.0,
+     "term_per100": 100.0,
+     "omission_per100": 10.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 3.65,
+     "light_share": 60.0
+    },
+    "G35": {
+     "rev_agent_per100_either": 70.0,
+     "ci": [
+      30.0,
+      110.0
+     ],
+     "rev_agent_per100_both": 60.0,
+     "pages_with_rev_agent": 6,
+     "reversal_per100": 30.0,
+     "agent_per100": 40.0,
+     "all_per100": 220.0,
+     "term_per100": 60.0,
+     "omission_per100": 10.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 3.75,
+     "light_share": 70.0
+    },
+    "G38": {
+     "rev_agent_per100_either": 60.0,
+     "ci": [
+      20.0,
+      100.0
+     ],
+     "rev_agent_per100_both": 20.0,
+     "pages_with_rev_agent": 5,
+     "reversal_per100": 10.0,
+     "agent_per100": 50.0,
+     "all_per100": 160.0,
+     "term_per100": 50.0,
+     "omission_per100": 10.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 4.25,
+     "light_share": 90.0
+    },
+    "O": {
+     "rev_agent_per100_either": 30.0,
+     "ci": [
+      0.0,
+      80.0
+     ],
+     "rev_agent_per100_both": 10.0,
+     "pages_with_rev_agent": 2,
+     "reversal_per100": 10.0,
+     "agent_per100": 20.0,
+     "all_per100": 70.0,
+     "term_per100": 0.0,
+     "omission_per100": 10.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 4.55,
+     "light_share": 95.0
+    },
+    "S": {
+     "rev_agent_per100_either": 80.0,
+     "ci": [
+      40.0,
+      130.0
+     ],
+     "rev_agent_per100_both": 30.0,
+     "pages_with_rev_agent": 6,
+     "reversal_per100": 20.0,
+     "agent_per100": 60.0,
+     "all_per100": 330.0,
+     "term_per100": 70.0,
+     "omission_per100": 10.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 3.45,
+     "light_share": 45.0
+    }
+   },
+   "floor_per100": 20.0,
+   "span_floor_pages": 0,
+   "rule": {
+    "G35": {
+     "gain_per100_vs_S": 10.0,
+     "gain_ci": [
+      -50.0,
+      60.0
+     ],
+     "pages_better": 4,
+     "pages_worse": 2,
+     "p_one_sided": 0.5,
+     "beats_floor": false,
+     "p_lt_0.10": false,
+     "span_ok": true,
+     "adopt": false,
+     "card_min_effect_8": true
+    },
+    "G38": {
+     "gain_per100_vs_S": 20.0,
+     "gain_ci": [
+      -20.0,
+      60.0
+     ],
+     "pages_better": 3,
+     "pages_worse": 1,
+     "p_one_sided": 0.3125,
+     "beats_floor": false,
+     "p_lt_0.10": false,
+     "span_ok": true,
+     "adopt": false,
+     "card_min_effect_8": true
+    },
+    "O": {
+     "gain_per100_vs_S": 50.0,
+     "gain_ci": [
+      0.0,
+      100.0
+     ],
+     "pages_better": 5,
+     "pages_worse": 1,
+     "p_one_sided": 0.0938,
+     "beats_floor": true,
+     "p_lt_0.10": true,
+     "span_ok": true,
+     "adopt": true,
+     "card_min_effect_8": true
+    },
+    "A": {
+     "gain_per100_vs_S": -20.0,
+     "gain_ci": [
+      -60.0,
+      30.0
+     ],
+     "pages_better": 2,
+     "pages_worse": 4,
+     "p_one_sided": 0.8906,
+     "beats_floor": false,
+     "p_lt_0.10": false,
+     "span_ok": true,
+     "adopt": null,
+     "card_min_effect_8": false
+    }
+   }
+  },
+  "Madhyamaka": {
+   "label": "Madhyamaka",
+   "pages": 10,
+   "arms": {
+    "A": {
+     "rev_agent_per100_either": 60.0,
+     "ci": [
+      20.0,
+      100.0
+     ],
+     "rev_agent_per100_both": 50.0,
+     "pages_with_rev_agent": 5,
+     "reversal_per100": 30.0,
+     "agent_per100": 30.0,
+     "all_per100": 190.0,
+     "term_per100": 60.0,
+     "omission_per100": 20.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 3.95,
+     "light_share": 80.0
+    },
+    "G35": {
+     "rev_agent_per100_either": 30.0,
+     "ci": [
+      0.0,
+      70.0
+     ],
+     "rev_agent_per100_both": 0.0,
+     "pages_with_rev_agent": 2,
+     "reversal_per100": 10.0,
+     "agent_per100": 20.0,
+     "all_per100": 100.0,
+     "term_per100": 30.0,
+     "omission_per100": 10.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 4.45,
+     "light_share": 100.0
+    },
+    "G38": {
+     "rev_agent_per100_either": 30.0,
+     "ci": [
+      0.0,
+      60.0
+     ],
+     "rev_agent_per100_both": 10.0,
+     "pages_with_rev_agent": 3,
+     "reversal_per100": 10.0,
+     "agent_per100": 20.0,
+     "all_per100": 100.0,
+     "term_per100": 30.0,
+     "omission_per100": 10.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 4.4,
+     "light_share": 95.0
+    },
+    "O": {
+     "rev_agent_per100_either": 30.0,
+     "ci": [
+      10.0,
+      60.0
+     ],
+     "rev_agent_per100_both": 10.0,
+     "pages_with_rev_agent": 3,
+     "reversal_per100": 10.0,
+     "agent_per100": 20.0,
+     "all_per100": 60.0,
+     "term_per100": 10.0,
+     "omission_per100": 0.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 4.65,
+     "light_share": 100.0
+    },
+    "S": {
+     "rev_agent_per100_either": 50.0,
+     "ci": [
+      10.0,
+      90.0
+     ],
+     "rev_agent_per100_both": 10.0,
+     "pages_with_rev_agent": 4,
+     "reversal_per100": 10.0,
+     "agent_per100": 40.0,
+     "all_per100": 140.0,
+     "term_per100": 40.0,
+     "omission_per100": 20.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 4.3,
+     "light_share": 100.0
+    }
+   },
+   "floor_per100": 10.0,
+   "span_floor_pages": 0,
+   "rule": {
+    "G35": {
+     "gain_per100_vs_S": 20.0,
+     "gain_ci": [
+      -20.0,
+      70.0
+     ],
+     "pages_better": 2,
+     "pages_worse": 1,
+     "p_one_sided": 0.375,
+     "beats_floor": true,
+     "p_lt_0.10": false,
+     "span_ok": true,
+     "adopt": false,
+     "card_min_effect_8": true
+    },
+    "G38": {
+     "gain_per100_vs_S": 20.0,
+     "gain_ci": [
+      0.0,
+      60.0
+     ],
+     "pages_better": 1,
+     "pages_worse": 0,
+     "p_one_sided": 0.5,
+     "beats_floor": true,
+     "p_lt_0.10": false,
+     "span_ok": true,
+     "adopt": false,
+     "card_min_effect_8": true
+    },
+    "O": {
+     "gain_per100_vs_S": 20.0,
+     "gain_ci": [
+      -20.0,
+      50.0
+     ],
+     "pages_better": 3,
+     "pages_worse": 1,
+     "p_one_sided": 0.3125,
+     "beats_floor": true,
+     "p_lt_0.10": false,
+     "span_ok": true,
+     "adopt": false,
+     "card_min_effect_8": true
+    },
+    "A": {
+     "gain_per100_vs_S": -10.0,
+     "gain_ci": [
+      -70.0,
+      50.0
+     ],
+     "pages_better": 2,
+     "pages_worse": 4,
+     "p_one_sided": 0.7344,
+     "beats_floor": false,
+     "p_lt_0.10": false,
+     "span_ok": true,
+     "adopt": null,
+     "card_min_effect_8": false
+    }
+   }
+  },
+  "Pramāṇa": {
+   "label": "Pramāṇa",
+   "pages": 30,
+   "arms": {
+    "A": {
+     "rev_agent_per100_either": 76.7,
+     "ci": [
+      46.7,
+      110.0
+     ],
+     "rev_agent_per100_both": 30.0,
+     "pages_with_rev_agent": 16,
+     "reversal_per100": 30.0,
+     "agent_per100": 46.7,
+     "all_per100": 343.3,
+     "term_per100": 123.3,
+     "omission_per100": 3.3,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 3.42,
+     "light_share": 40.0
+    },
+    "G35": {
+     "rev_agent_per100_either": 60.0,
+     "ci": [
+      40.0,
+      83.3
+     ],
+     "rev_agent_per100_both": 26.7,
+     "pages_with_rev_agent": 16,
+     "reversal_per100": 20.0,
+     "agent_per100": 40.0,
+     "all_per100": 286.7,
+     "term_per100": 106.7,
+     "omission_per100": 10.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 3.47,
+     "light_share": 46.7
+    },
+    "G38": {
+     "rev_agent_per100_either": 43.3,
+     "ci": [
+      23.3,
+      63.3
+     ],
+     "rev_agent_per100_both": 23.3,
+     "pages_with_rev_agent": 12,
+     "reversal_per100": 13.3,
+     "agent_per100": 30.0,
+     "all_per100": 180.0,
+     "term_per100": 83.3,
+     "omission_per100": 0.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 3.88,
+     "light_share": 73.3
+    },
+    "O": {
+     "rev_agent_per100_either": 33.3,
+     "ci": [
+      16.7,
+      50.0
+     ],
+     "rev_agent_per100_both": 16.7,
+     "pages_with_rev_agent": 10,
+     "reversal_per100": 13.3,
+     "agent_per100": 20.0,
+     "all_per100": 90.0,
+     "term_per100": 26.7,
+     "omission_per100": 3.3,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 4.38,
+     "light_share": 98.3
+    },
+    "S": {
+     "rev_agent_per100_either": 86.7,
+     "ci": [
+      60.0,
+      113.3
+     ],
+     "rev_agent_per100_both": 36.7,
+     "pages_with_rev_agent": 18,
+     "reversal_per100": 16.7,
+     "agent_per100": 70.0,
+     "all_per100": 340.0,
+     "term_per100": 110.0,
+     "omission_per100": 6.7,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 3.37,
+     "light_share": 38.3
+    }
+   },
+   "floor_per100": 10.0,
+   "span_floor_pages": 0,
+   "rule": {
+    "G35": {
+     "gain_per100_vs_S": 26.7,
+     "gain_ci": [
+      -3.3,
+      56.7
+     ],
+     "pages_better": 12,
+     "pages_worse": 6,
+     "p_one_sided": 0.0765,
+     "beats_floor": true,
+     "p_lt_0.10": true,
+     "span_ok": true,
+     "adopt": true,
+     "card_min_effect_8": true
+    },
+    "G38": {
+     "gain_per100_vs_S": 43.3,
+     "gain_ci": [
+      16.7,
+      70.0
+     ],
+     "pages_better": 14,
+     "pages_worse": 3,
+     "p_one_sided": 0.0046,
+     "beats_floor": true,
+     "p_lt_0.10": true,
+     "span_ok": true,
+     "adopt": true,
+     "card_min_effect_8": true
+    },
+    "O": {
+     "gain_per100_vs_S": 53.3,
+     "gain_ci": [
+      23.3,
+      83.3
+     ],
+     "pages_better": 15,
+     "pages_worse": 3,
+     "p_one_sided": 0.002,
+     "beats_floor": true,
+     "p_lt_0.10": true,
+     "span_ok": true,
+     "adopt": true,
+     "card_min_effect_8": true
+    },
+    "A": {
+     "gain_per100_vs_S": 10.0,
+     "gain_ci": [
+      -23.3,
+      46.7
+     ],
+     "pages_better": 10,
+     "pages_worse": 7,
+     "p_one_sided": 0.3576,
+     "beats_floor": false,
+     "p_lt_0.10": false,
+     "span_ok": true,
+     "adopt": null,
+     "card_min_effect_8": true
+    }
+   }
+  },
+  "Vinaya": {
+   "label": "Vinaya",
+   "pages": 10,
+   "arms": {
+    "A": {
+     "rev_agent_per100_either": 90.0,
+     "ci": [
+      30.0,
+      140.0
+     ],
+     "rev_agent_per100_both": 50.0,
+     "pages_with_rev_agent": 5,
+     "reversal_per100": 30.0,
+     "agent_per100": 60.0,
+     "all_per100": 310.0,
+     "term_per100": 170.0,
+     "omission_per100": 0.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 3.2,
+     "light_share": 40.0
+    },
+    "G35": {
+     "rev_agent_per100_either": 70.0,
+     "ci": [
+      20.0,
+      130.0
+     ],
+     "rev_agent_per100_both": 50.0,
+     "pages_with_rev_agent": 4,
+     "reversal_per100": 20.0,
+     "agent_per100": 50.0,
+     "all_per100": 260.0,
+     "term_per100": 160.0,
+     "omission_per100": 0.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 3.5,
+     "light_share": 45.0
+    },
+    "G38": {
+     "rev_agent_per100_either": 30.0,
+     "ci": [
+      0.0,
+      80.0
+     ],
+     "rev_agent_per100_both": 10.0,
+     "pages_with_rev_agent": 2,
+     "reversal_per100": 0.0,
+     "agent_per100": 30.0,
+     "all_per100": 180.0,
+     "term_per100": 130.0,
+     "omission_per100": 10.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 3.95,
+     "light_share": 75.0
+    },
+    "O": {
+     "rev_agent_per100_either": 20.0,
+     "ci": [
+      0.0,
+      50.0
+     ],
+     "rev_agent_per100_both": 10.0,
+     "pages_with_rev_agent": 2,
+     "reversal_per100": 0.0,
+     "agent_per100": 20.0,
+     "all_per100": 110.0,
+     "term_per100": 70.0,
+     "omission_per100": 10.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 4.3,
+     "light_share": 100.0
+    },
+    "S": {
+     "rev_agent_per100_either": 120.0,
+     "ci": [
+      40.0,
+      210.0
+     ],
+     "rev_agent_per100_both": 50.0,
+     "pages_with_rev_agent": 5,
+     "reversal_per100": 30.0,
+     "agent_per100": 90.0,
+     "all_per100": 360.0,
+     "term_per100": 130.0,
+     "omission_per100": 20.0,
+     "span_error_pages": 0,
+     "span_kinds": {},
+     "score_mean": 3.5,
+     "light_share": 55.0
+    }
+   },
+   "floor_per100": 30.0,
+   "span_floor_pages": 0,
+   "rule": {
+    "G35": {
+     "gain_per100_vs_S": 50.0,
+     "gain_ci": [
+      0.0,
+      100.0
+     ],
+     "pages_better": 3,
+     "pages_worse": 0,
+     "p_one_sided": 0.125,
+     "beats_floor": true,
+     "p_lt_0.10": false,
+     "span_ok": true,
+     "adopt": false,
+     "card_min_effect_8": true
+    },
+    "G38": {
+     "gain_per100_vs_S": 90.0,
+     "gain_ci": [
+      0.0,
+      190.0
+     ],
+     "pages_better": 5,
+     "pages_worse": 1,
+     "p_one_sided": 0.0938,
+     "beats_floor": true,
+     "p_lt_0.10": true,
+     "span_ok": true,
+     "adopt": true,
+     "card_min_effect_8": true
+    },
+    "O": {
+     "gain_per100_vs_S": 100.0,
+     "gain_ci": [
+      30.0,
+      180.0
+     ],
+     "pages_better": 5,
+     "pages_worse": 0,
+     "p_one_sided": 0.0312,
+     "beats_floor": true,
+     "p_lt_0.10": true,
+     "span_ok": true,
+     "adopt": true,
+     "card_min_effect_8": true
+    },
+    "A": {
+     "gain_per100_vs_S": 30.0,
+     "gain_ci": [
+      -40.0,
+      100.0
+     ],
+     "pages_better": 4,
+     "pages_worse": 2,
+     "p_one_sided": 0.3125,
+     "beats_floor": false,
+     "p_lt_0.10": false,
+     "span_ok": true,
+     "adopt": null,
+     "card_min_effect_8": true
+    }
+   }
+  }
+ },
+ "verse_pages_ge_0.3": {
+  "label": "verse share ≥ 0.3",
+  "pages": 7,
+  "arms": {
+   "A": {
+    "rev_agent_per100_either": 100.0,
+    "ci": [
+     42.9,
+     171.4
+    ],
+    "rev_agent_per100_both": 85.7,
+    "pages_with_rev_agent": 5,
+    "reversal_per100": 28.6,
+    "agent_per100": 71.4,
+    "all_per100": 328.6,
+    "term_per100": 128.6,
+    "omission_per100": 14.3,
+    "span_error_pages": 0,
+    "span_kinds": {},
+    "score_mean": 3.5,
+    "light_share": 57.1
+   },
+   "G35": {
+    "rev_agent_per100_either": 85.7,
+    "ci": [
+     42.9,
+     128.6
+    ],
+    "rev_agent_per100_both": 71.4,
+    "pages_with_rev_agent": 5,
+    "reversal_per100": 28.6,
+    "agent_per100": 57.1,
+    "all_per100": 242.9,
+    "term_per100": 57.1,
+    "omission_per100": 14.3,
+    "span_error_pages": 0,
+    "span_kinds": {},
+    "score_mean": 3.57,
+    "light_share": 57.1
+   },
+   "G38": {
+    "rev_agent_per100_either": 57.1,
+    "ci": [
+     14.3,
+     114.3
+    ],
+    "rev_agent_per100_both": 14.3,
+    "pages_with_rev_agent": 3,
+    "reversal_per100": 14.3,
+    "agent_per100": 42.9,
+    "all_per100": 157.1,
+    "term_per100": 71.4,
+    "omission_per100": 14.3,
+    "span_error_pages": 0,
+    "span_kinds": {},
+    "score_mean": 4.14,
+    "light_share": 92.9
+   },
+   "O": {
+    "rev_agent_per100_either": 14.3,
+    "ci": [
+     0.0,
+     42.9
+    ],
+    "rev_agent_per100_both": 0.0,
+    "pages_with_rev_agent": 1,
+    "reversal_per100": 14.3,
+    "agent_per100": 0.0,
+    "all_per100": 57.1,
+    "term_per100": 14.3,
+    "omission_per100": 0.0,
+    "span_error_pages": 0,
+    "span_kinds": {},
+    "score_mean": 4.64,
+    "light_share": 100.0
+   },
+   "S": {
+    "rev_agent_per100_either": 71.4,
+    "ci": [
+     28.6,
+     128.6
+    ],
+    "rev_agent_per100_both": 28.6,
+    "pages_with_rev_agent": 4,
+    "reversal_per100": 14.3,
+    "agent_per100": 57.1,
+    "all_per100": 385.7,
+    "term_per100": 85.7,
+    "omission_per100": 14.3,
+    "span_error_pages": 0,
+    "span_kinds": {},
+    "score_mean": 3.29,
+    "light_share": 35.7
+   }
+  },
+  "floor_per100": 28.599999999999994,
+  "span_floor_pages": 0,
+  "rule": {
+   "G35": {
+    "gain_per100_vs_S": -14.3,
+    "gain_ci": [
+     -85.7,
+     57.1
+    ],
+    "pages_better": 2,
+    "pages_worse": 2,
+    "p_one_sided": 0.75,
+    "beats_floor": false,
+    "p_lt_0.10": false,
+    "span_ok": true,
+    "adopt": false,
+    "card_min_effect_8": false
+   },
+   "G38": {
+    "gain_per100_vs_S": 14.3,
+    "gain_ci": [
+     -28.6,
+     57.1
+    ],
+    "pages_better": 2,
+    "pages_worse": 1,
+    "p_one_sided": 0.5,
+    "beats_floor": false,
+    "p_lt_0.10": false,
+    "span_ok": true,
+    "adopt": false,
+    "card_min_effect_8": true
+   },
+   "O": {
+    "gain_per100_vs_S": 57.1,
+    "gain_ci": [
+     -14.3,
+     114.3
+    ],
+    "pages_better": 4,
+    "pages_worse": 1,
+    "p_one_sided": 0.1562,
+    "beats_floor": true,
+    "p_lt_0.10": false,
+    "span_ok": true,
+    "adopt": false,
+    "card_min_effect_8": true
+   },
+   "A": {
+    "gain_per100_vs_S": -28.6,
+    "gain_ci": [
+     -85.7,
+     42.9
+    ],
+    "pages_better": 2,
+    "pages_worse": 4,
+    "p_one_sided": 0.8906,
+    "beats_floor": false,
+    "p_lt_0.10": false,
+    "span_ok": true,
+    "adopt": null,
+    "card_min_effect_8": false
+   }
+  }
+ },
+ "agreement": {
+  "rev_agent_page_flag_A": 108,
+  "rev_agent_page_flag_B": 112,
+  "rev_agent_page_flag_both": 80,
+  "verdict_agree": 0.833
+ },
+ "cost": {
+  "G35-ref": {
+   "pages": 58,
+   "usd": 0.591,
+   "per_1000_realtime": 10.19,
+   "per_1000_batch_equiv": 5.09,
+   "thinking_tokens_mean": 0,
+   "thinking_pages": 0
+  },
+  "G35": {
+   "pages": 60,
+   "usd": 0.606,
+   "per_1000_realtime": 10.1,
+   "per_1000_batch_equiv": 5.05,
+   "thinking_tokens_mean": 0,
+   "thinking_pages": 0
+  },
+  "G38-ref": {
+   "pages": 58,
+   "usd": 0.2603,
+   "per_1000_realtime": 4.49,
+   "per_1000_batch_equiv": 2.24,
+   "thinking_tokens_mean": 0,
+   "thinking_pages": 0
+  },
+  "G38": {
+   "pages": 60,
+   "usd": 0.2613,
+   "per_1000_realtime": 4.35,
+   "per_1000_batch_equiv": 2.18,
+   "thinking_tokens_mean": 0,
+   "thinking_pages": 0
+  },
+  "O-ref": {
+   "pages": 58,
+   "usd": 0,
+   "per_1000_realtime": 0.0,
+   "per_1000_batch_equiv": 0.0,
+   "thinking_tokens_mean": 0,
+   "thinking_pages": 0
+  },
+  "O": {
+   "pages": 60,
+   "usd": 0,
+   "per_1000_realtime": 0.0,
+   "per_1000_batch_equiv": 0.0,
+   "thinking_tokens_mean": 0,
+   "thinking_pages": 0
+  },
+  "probe-G35": {
+   "pages": 2,
+   "usd": 0.0238,
+   "per_1000_realtime": 11.9,
+   "per_1000_batch_equiv": 5.95,
+   "thinking_tokens_mean": 0,
+   "thinking_pages": 0
+  },
+  "probe-G38": {
+   "pages": 2,
+   "usd": 0.0102,
+   "per_1000_realtime": 5.08,
+   "per_1000_batch_equiv": 2.54,
+   "thinking_tokens_mean": 0,
+   "thinking_pages": 0
+  }
+ },
+ "spend_total_usd": 1.7525
+}

@@ -7,6 +7,7 @@ import { withAuth } from '@/lib/auth-helpers';
 import { assertLaneGuards } from '@/lib/lane-guards';
 import { createRevision } from '@/lib/page-revisions';
 import { isHumanEditedTranslation, hidesPageInMeta, recordRefusedTranslation, HIDDEN_META_REASON } from '@/lib/translate-write';
+import { guardTranslationText } from '@/lib/translation-write-guard';
 import { strayScriptVerdict, STRAY_SCRIPT_REASON } from '@/lib/stray-script';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { getTriggerSource } from '@/lib/cron-auth';
@@ -312,7 +313,7 @@ export const POST = withAuth(async (request: NextRequest) => {
       // #5734: the Korean 그-for-"that" is repaired; any other script in the English that is in
       // neither the source nor the book's language is refused below, like the hidden page.
       const stray = strayScriptVerdict(results.translation, { ocr: textToTranslate, language, targetLanguage });
-      results.translation = stray.text;
+      results.translation = guardTranslationText(stray.text); // #5902: term definitions → <note>
       strayRefused = stray.refuse;
       totalUsage.inputTokens += translationResult.usage.inputTokens;
       totalUsage.outputTokens += translationResult.usage.outputTokens;

@@ -961,9 +961,12 @@ export function prepareNotesMarkdown(
   // notes break every lazy pairing regex below — AI description then renders
   // indistinguishable from the book's own text. Must run before any helper that
   // pairs tags with `<note>[\s\S]*?<\/note>`-style regexes.
-  // The model's own definitions, written inside <term> or as a <gloss> after one,
-  // become <note>s so they are labelled — and hidden — as commentary (#5895).
-  const withNormalizedSpans = separateTermDefinitions(normalizeAnnotationSpans(withBracketTags));
+  const withNormalizedSpans = normalizeAnnotationSpans(withBracketTags);
+  // Notes on: the model's own definitions, written inside <term> or as a <gloss>
+  // after one, become <note>s so they are labelled as commentary (#5895). Notes off
+  // takes the spans BEFORE this pass — applyNotesOff does its own inside-the-chip
+  // split, and relabelling a headword's <gloss> would get the line deleted (#5942).
+  const withTermNotes = separateTermDefinitions(withNormalizedSpans);
   // For non-text page types (frontispiece, illustration, etc.), all content is AI description.
   // Check the prop and the model's own <page-type> tag (captured into metadata) — but only
   // treat the page as description-only when no genuine transcribed text survives outside the
@@ -973,10 +976,10 @@ export function prepareNotesMarkdown(
   const isDescriptionOnly =
     (DESCRIPTION_ONLY_PAGE_TYPES.has(pageType ?? '') ||
       DESCRIPTION_ONLY_PAGE_TYPES.has(metadata.pageType ?? '')) &&
-    !hasBodyTextOutsideNotes(withNormalizedSpans);
+    !hasBodyTextOutsideNotes(withTermNotes);
   // Notes off: drop dangling vocabulary chips, keep transcribed page marks, drop
   // only the AI's commentary. One shared definition — see @/lib/notes-off.
-  const withPageMarks = showNotes ? withNormalizedSpans : applyNotesOff(withNormalizedSpans);
+  const withPageMarks = showNotes ? withTermNotes : applyNotesOff(withNormalizedSpans);
   // On description-only pages, render the whole AI description uniformly (no half-highlighting).
   const withDescription = isDescriptionOnly && showNotes ? unwrapDescriptionNotes(withPageMarks) : withPageMarks;
   const withGreek = preprocessLatexGreek(withDescription);

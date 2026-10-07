@@ -17,6 +17,7 @@ import { artworkTypeLabel } from '@/lib/artwork-record';
 import { localizedCollection } from '@/lib/localized';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { useEmbed } from '@/lib/EmbedContext';
+import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import { useDebouncedCallback } from 'use-debounce';
 import { reportError } from '@/components/providers/ErrorReporter';
 import {
@@ -33,6 +34,7 @@ import {
 } from '@/lib/api-client';
 import { tenantBookUrl } from '@/lib/slugify';
 import { matchKnownEntity } from '@/lib/known-entities';
+import type { NameChoices } from '@/lib/search/name-chooser';
 import { assessMatchQuality } from '@/lib/search/match-quality';
 import HighlightedText from '@/components/search/HighlightedText';
 import SearchWebMCP from '@/components/search/SearchWebMCP';
@@ -106,6 +108,9 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   const currentPathname = usePathname();
   const embedFromContext = useEmbed();
   const embed = forceEmbedded || embedFromContext;
+  // Host-based, unlike `embed`: true on a partner subdomain whichever route
+  // rendered this page. The Librarian is refused there (tenant-global-paths).
+  const isTenantSurface = useIsEmbedded();
 
   // The locale comes from the URL prefix; the `lang` prop that the `/es/search`
   // twin passes is the explicit form of the same answer. Defaulting to the
@@ -140,7 +145,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   const [query, setQuery] = useState(searchParams.get('q') || '');
   const [viewMode, setViewMode] = useState<ViewMode>(initialMode);
   const [loading, setLoading] = useState(false);
-  // Anonymous visitors get 5 free searches/hour; past that the API 401s and we
+  // Anonymous visitors get 10 free searches/hour (ANON_SEARCHES_PER_HOUR); past that the API 401s and we
   // show a sign-in wall instead of results.
   const [signInRequired, setSignInRequired] = useState(false);
 
@@ -165,6 +170,8 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   // Honest-failure flag from /api/search/unified (#4281): 'weak' = results
   // exist but none contains all the query's words. null = strong or unjudged.
   const [matchQuality, setMatchQuality] = useState<'strong' | 'weak' | null>(null);
+  // "Which Bacon?" (#5950): the people a one-word name query could mean. All tab only.
+  const [nameChoices, setNameChoices] = useState<NameChoices | null>(null);
 
   // Page-content passage results (for quoted phrase searches)
   const [passageResults, setPassageResults] = useState<SearchResult[]>([]);
@@ -458,6 +465,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
       setImageResults([]); setImageTotal(0);
       setCatalogResults([]); setCatalogTotal(0);
       setMatchQuality(null);
+      setNameChoices(null);
       return;
     }
     setLoading(true);
@@ -477,6 +485,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
           setImageTotal(cached.imageTotal);
           setMatchQuality(cached.matchQuality ?? null);
           setSiteResults(cached.site ?? []);
+          setNameChoices(cached.people ?? null);
           setLoading(false);
           return;
         }
@@ -593,6 +602,8 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
           const mq = ((data as any).match_quality === 'weak' || (data as any).match_quality === 'strong')
             ? (data as any).match_quality : null;
           setMatchQuality(mq);
+          const people: NameChoices | null = (data as any).people?.choices?.length >= 2 ? (data as any).people : null;
+          setNameChoices(people);
           displayHintLocked.current = true; // lock layout once results render
 
           // Cache the result
@@ -603,6 +614,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             images, imageTotal: imTotal,
             matchQuality: mq,
             site: (data as any).site?.results || [],
+            people,
           });
           // Evict old cache entries
           if (searchCache.current.size > 50) {
@@ -624,6 +636,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
             setIndexResults([]); setIndexTotal(0);
             setImageResults([]); setImageTotal(0);
             setMatchQuality(null);
+            setNameChoices(null);
             setCollectionResults([]); setSiteResults([]); setSemanticResults([]); setSemanticDegraded(false);
             // Stop the parallel AI-expand stream so nothing leaks past the wall.
             aiAbortRef.current?.();
@@ -809,7 +822,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
   }, [router, currentPathname, tenant, defaultMode, indexType, language, category, collection, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, browseSortBy, resultsPerPage]);
 
   // Client-side search cache — avoids re-fetching on backspace/retype
-  const searchCache = useRef(new Map<string, { ts: number; books: SearchResult[]; bookTotal: number; index: IndexSearchResult[]; indexTotal: number; images: GalleryItem[]; imageTotal: number; matchQuality?: 'strong' | 'weak' | null; site?: typeof siteResults }>());
+  const searchCache = useRef(new Map<string, { ts: number; books: SearchResult[]; bookTotal: number; index: IndexSearchResult[]; indexTotal: number; images: GalleryItem[]; imageTotal: number; matchQuality?: 'strong' | 'weak' | null; site?: typeof siteResults; people?: NameChoices | null }>());
   const CACHE_TTL = 60_000; // 1 minute
 
   const debouncedSearch = useDebouncedCallback((value: string) => {
@@ -1057,7 +1070,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
           </div>
 
           {/* Mode tabs */}
-          <div className="mt-3 flex gap-1 border-b border-border-light -mx-4 px-4">
+          <div className="mt-3 flex gap-1 border-b border-border-light -mx-4 px-4 overflow-x-auto">
             {(isBrowseMode
               ? [
                 { mode: defaultMode, label: t.tabBooks, icon: Book },
@@ -1295,9 +1308,11 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
         </div>
       </div>
 
-      {/* Results */}
-      <main className="max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-8">
-        {/* Anonymous free-search wall — shown after 5 searches/hour */}
+      {/* Results. With a query, reserve a viewport of height: results stream in
+          over ~3s, and an empty <main> let the footer and feedback band paint
+          at the top and then get shoved down (CLS 0.96 on desktop, #6092). */}
+      <main className={`max-w-[var(--container-wide)] mx-auto px-6 md:px-12 py-8 ${query.length >= 2 ? 'min-h-[100svh]' : ''}`}>
+        {/* Anonymous free-search wall — shown after 10 searches/hour */}
         {signInRequired && (
           <div className="text-center py-16 max-w-lg mx-auto">
             <Search className="w-16 h-16 text-border-medium mx-auto mb-4" />
@@ -1508,6 +1523,36 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
               <p className="text-sm text-muted line-clamp-2">{knownEntity.description}</p>
             </div>
           </Link>
+        )}
+
+        {/* "Which Bacon?" (#5950): a one-word name that several people bear. The results below
+            mix them; each row goes to one person. Library-wide and English, so not shown in
+            embeds or on localized surfaces. */}
+        {nameChoices && viewMode === 'unified' && !embed && !localized && !signInRequired && !loading && query.length >= 2
+          && nameChoices.surname.toLowerCase() === query.trim().toLowerCase() && (
+          <section aria-labelledby="which-name-heading" className="mb-6 px-4 py-3 bg-warm rounded-lg border border-border-light">
+            <h2 id="which-name-heading" className="font-serif font-medium text-primary">{t.whichName(nameChoices.surname)}</h2>
+            <p className="text-sm text-muted">{t.whichNameBody}</p>
+            <ul className="mt-2 grid gap-2 sm:grid-cols-2">
+              {nameChoices.choices.map(c => (
+                <li key={c.wikidata_id}>
+                  <Link
+                    href={c.href}
+                    className="group block h-full px-3 py-2 bg-white rounded-lg border border-border-light hover:border-accent-rust/40 transition-colors"
+                  >
+                    <span className="block font-serif font-medium text-primary group-hover:text-accent-rust transition-colors">
+                      {c.name}
+                      {c.dates && <span className="font-sans font-normal text-sm text-muted"> · {c.dates}</span>}
+                    </span>
+                    {c.who && <span className="block text-sm text-secondary line-clamp-2">{c.who}</span>}
+                    <span className="block text-xs text-muted mt-0.5">
+                      {t.namedInBooks(c.book_count)}{c.href_kind === 'author' ? ` · ${t.whichNameAuthor}` : ''} <span aria-hidden>→</span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
         )}
 
         {/* Loading */}
@@ -1930,7 +1975,7 @@ export default function SearchPage({ defaultLibrary, forceEmbedded = false, lang
           </>
         )}
         {/* Ask the Librarian — bottom CTA */}
-        {!noResults && !loading && query.length >= 3 && viewMode === defaultMode && (
+        {!noResults && !loading && query.length >= 3 && viewMode === defaultMode && !embed && !isTenantSurface && (
           <section className="mt-8 pt-6 border-t border-border-light">
             <Link
               href={`${lp('/librarian')}?q=${encodeURIComponent(query)}`}

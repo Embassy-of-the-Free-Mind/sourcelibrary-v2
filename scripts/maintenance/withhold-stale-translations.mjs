@@ -247,6 +247,11 @@ async function stripTextFromWithheldObjects(bookId) {
   rec({ book: bookId, status: 'stripped-withheld-text', stripped: res.modifiedCount, skipped: carrying.length - ops.length });
 }
 
+// Server-side twin of `translationText(p.translation) !== ''`: the legacy bare string, or the
+// object's `data`. $cond guards each $strLenBytes, which throws on a non-string.
+const nonEmptyString = (path) => ({ $cond: [{ $eq: [{ $type: path }, 'string'] }, { $gt: [{ $strLenBytes: path }, 0] }, false] });
+const HAS_TRANSLATION_TEXT = { $or: [nonEmptyString('$translation'), nonEmptyString('$translation.data')] };
+
 const T = {
   books: 0, booksChanged: 0, pendingBooks: 0, candidates: 0, stale: 0, withheld: 0,
   quotesWithdrawn: 0, stripped: 0, stripSkipped: 0, keptOtherScript: 0,
@@ -255,10 +260,16 @@ const T = {
 
 for (const bookId of bookIds) {
   T.books++;
-  const candidates = await pages.find(
-    { book_id: bookId, ...CANDIDATE_FILTER },
-    { projection: { id: 1, book_id: 1, page_number: 1, page_type: 1, ocr: 1, translation: 1, translation_withheld: 1 } },
-  ).toArray();
+  const candidates = await pages.aggregate([
+    { $match: { book_id: bookId, ...CANDIDATE_FILTER } },
+    { $project: { id: 1, book_id: 1, page_number: 1, page_type: 1, ocr: 1, translation: 1, translation_withheld: 1 } },
+    // A page with no translation text cannot be a target: staleTranslationReason() returns
+    // before it reads the OCR, and nothing else here touches `ocr.data` for it. Most
+    // candidates are already-withheld pages in exactly that state, and shipping their OCR
+    // every hour was ~2.3 GB of a ~5.3 GB run (measured 2026-10-07, #5189). Pages that DO
+    // carry English keep their full OCR: the loop arm reads it.
+    { $set: { 'ocr.data': { $cond: [HAS_TRANSLATION_TEXT, '$ocr.data', '$$REMOVE'] } } },
+  ]).toArray();
   T.candidates += candidates.length;
 
   const targets = [];

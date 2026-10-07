@@ -40,10 +40,10 @@ const SHELF = 'scripts/catalog-coverage/eternity-shelf-5513.json';
 
 // status: done | running | next | blocked. cost_usd: the next action's cost where it has one.
 const STATUS = {
-  'derge-tengyur': { status: 'running', owner_issue: 5497,
-    done: '213 volumes imported hidden and held; 128,369 of 128,639 pages carry the Esukhia public-domain text, aligned folio by folio to the BDRC scans. The full run drafted English for 110,952 pages (187 volumes) with gemini-3-flash-preview, one page per request, for about $195; an unreviewed machine draft, with about 2 to 5 reversed statements per 100 pages measured against 84000.',
-    next_action: 'Drafting the last 26 volumes (17,400 pages: the end of the tantra commentaries, grammar, medicine, miscellany and the catalogue; about $31, approved 4 October). The volumes are published as an unreviewed machine draft only once the reader shows the licence and the draft label (#5571).',
-    cost_usd: 31 },
+  'derge-tengyur': { status: 'running', owner_issue: 5800,
+    done: 'All 213 volumes are public as an AI translation not yet reviewed by a scholar, with the licence on every page (#5497). 128,369 of 128,639 pages carry the Esukhia public-domain text, aligned folio by folio to the BDRC scans, and 128,333 of them have draft English from gemini-3-flash-preview, one page per request, for about $233. About 2 to 5 statements per 100 pages are reversed, measured against 84000. 721 invented heading lines were removed from 569 pages, and each volume lists its texts with Tohoku numbers (3,363 texts).',
+    next_action: 'Tibetologists read 30 pages of the draft through Eternity, the first scholar review (#5800).',
+    cost_usd: 0 },
   'derge-kangyur': { status: 'running', owner_issue: 5665,
     done: '103 volumes imported from BDRC (W4CZ5369, the copy the Esukhia text transcribes), held and hidden; 62,375 pages carry the Esukhia public-domain text, aligned folio by folio, in every volume but one. The 40 texts 84000 lists as not begun have a draft English (1,835 pages, $3.39).',
     next_action: 'Fill the Prajñāpāramitā volumes still short of text (vol. 20 and parts of vols. 15, 16, 19 and 24, about 2,600 pages), which needs a new alignment rule; correct the stored 84000 field for texts that run across volumes before pricing a draft English for the rest of what 84000 has not translated. Publication waits on the reader showing the licence and draft label (#5571).',

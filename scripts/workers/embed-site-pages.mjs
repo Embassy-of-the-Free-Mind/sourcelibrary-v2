@@ -54,6 +54,7 @@ import { fileURLToPath } from 'node:url';
 import pg from 'pg';
 import { MongoClient } from 'mongodb';
 import { embedTexts, EMBED_MODEL } from '../lib/page-embedding-text.mjs';
+import { assertStoreVector } from '../lib/vector-truth.mjs';
 import { newEmbedUsage, logEmbeddingUsage, estimateUsd } from '../lib/embedding-usage.mjs';
 import { budgetAllowsDispatchScoped } from '../lib/spend-guard.mjs';
 import { classifyVariant } from '../lib/variant-shape.mjs';
@@ -435,7 +436,7 @@ async function main() {
 
     if (DRY_RUN) return;
 
-    const upsert = (r, vector) => client.query(
+    const upsert = (r, vector, model) => client.query(
       `INSERT INTO site_pages (id, url, chunk, page_type, title, text, tenant_id, content_hash, embedding, embedding_model, names, name_tokens, weight, indexed_at)
        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13, now())
        ON CONFLICT (id) DO UPDATE SET url = EXCLUDED.url, chunk = EXCLUDED.chunk, page_type = EXCLUDED.page_type,
@@ -443,7 +444,7 @@ async function main() {
          embedding = EXCLUDED.embedding, embedding_model = EXCLUDED.embedding_model,
          names = EXCLUDED.names, name_tokens = EXCLUDED.name_tokens, weight = EXCLUDED.weight, indexed_at = now()`,
       [r.id, r.url, r.chunk, r.page_type, r.title, r.text, r.tenant_id, r.content_hash,
-        vector ? JSON.stringify(vector) : null, vector ? EMBED_MODEL : null, r.names, r.name_tokens, r.weight],
+        vector ? JSON.stringify(vector) : null, vector ? model : null, r.names, r.name_tokens, r.weight],
     );
 
     const usage = newEmbedUsage();
@@ -451,7 +452,11 @@ async function main() {
     for (let i = 0; i < todo.length; i += 50) {
       const batch = todo.slice(i, i + 50);
       const vectors = await embedTexts(batch.map((r) => `${r.title}\n\n${r.text}`), apiKey, { usage });
-      for (let j = 0; j < batch.length; j++) { await upsert(batch[j], vectors[j]); written++; }
+      for (let j = 0; j < batch.length; j++) {
+        assertStoreVector(vectors[j], { model: vectors.model }); // #6175: the label is the writer's, never a default
+        await upsert(batch[j], vectors[j], vectors.model);
+        written++;
+      }
     }
     await logEmbeddingUsage(usage, { model: EMBED_MODEL, endpoint: 'embed-site-pages', db });
     for (const r of plain) await upsert(r, null);

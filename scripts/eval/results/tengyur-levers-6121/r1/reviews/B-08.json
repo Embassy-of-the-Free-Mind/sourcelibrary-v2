@@ -1,0 +1,113 @@
+[
+{"id": "Q5UUZ", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "high",
+   "tibetan": "གདུང་མ་འདེགས་པ་དེ་ལ་སོ་སོར་ནུས་པ་མེད་པ་དེ་རྣམས",
+   "english": "those beams, which individually lack the capacity to support the pillar",
+   "why": "The Tibetan speaks of those (bearers) who individually lack the capacity to lift the beam; the beam is the patient, not the agent, and there is no pillar.",
+   "fix": {"find": "those beams, which individually lack the capacity to support the pillar", "replace": "those [bearers], who individually lack the capacity to lift the beam"}},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "ཡན་ལག་གཞན་ངེས་པར་བྱེད་པའི་རྗེས་སུ་དཔག་པ་ནི་མངོན་སུམ་གྱིས་འབྲེལ་པ་གྲུབ་པའི་རྟགས་",
+   "english": "the inference that determines the other parts is a sign established by direct perception",
+   "why": "The inference is not itself the sign; it arises (next side) from a sign whose relation (sambandha) is established by perception, and the 'relation' is dropped."}
+ ],
+ "note": "Follows the commentary's lemma-gloss pattern reasonably, but the beam example is garbled and the closing doctrinal statement is misconstrued."},
+{"id": "Q0X3Q", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "high",
+   "tibetan": "ཆོས་འདི་དག་ནི་ཉོན་མོངས་པ་མེད་པ་འདི་དག་ནི་ཉོན་མོངས་པ་དང་བཅས་པ་མ་ཡིན་པའོ",
+   "english": "these phenomena are neither without afflictions nor are they possessed of afflictions",
+   "why": "The sutra says these dharmas ARE free of afflictions; they are not afflicted.",
+   "fix": {"find": "these phenomena are neither without afflictions nor are they possessed of afflictions", "replace": "these phenomena are without afflictions; they are not possessed of afflictions"}}
+ ],
+ "note": "Good rendering of the Akṣayamati quotation apart from one inverted statement."},
+{"id": "QASA0", "score": 3, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "high",
+   "tibetan": "དེས་ན་དམིགས་པ་ཙམ་ལས་རང་གི་མཚན་ཉིད་ཀྱི་སྐྱེ་བ་མི་འཐད་པས་སོ",
+   "english": "Therefore, since arising through an intrinsic nature is not illogical, it is merely an object of observation.",
+   "why": "The Tibetan says arising by own-character is NOT tenable merely on the ground that something is observed.",
+   "fix": {"find": "Therefore, since arising through an intrinsic nature is not illogical, it is merely an object of observation.", "replace": "Therefore, arising by way of an intrinsic character is not tenable merely because something is observed."}}
+ ],
+ "note": "Generally sound Madhyamaka commentary translation with one sentence whose sense is inverted."},
+{"id": "QXDE0", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "ཇི་སྐད་བསྟན་པ་ཉིད་",
+   "english": "This is exactly as it has been taught.",
+   "why": "These words open the prose commentary on the verse (by the very meditation as taught...), not a third line of the quoted verse."}
+ ],
+ "note": "Faithful rendering of the Akṣayamati quotation and the vāsanā argument; only the side-final segment is mis-framed."},
+{"id": "Q2CLG", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "མཐོང་བའི་ལམ་དུ་འགྲོ་བ་མ་ཡིན་ཏེ",
+   "english": "does not become an object of the path of seeing",
+   "why": "In this Sāṃkhya verse (guṇānāṃ paramaṃ rūpaṃ na dṛṣṭipatham ṛcchati) mthong ba'i lam is dṛṣṭipatha, 'range of sight', not the Buddhist darśanamārga; same error recurs for the gardens.",
+   "fix": {"find": "does not become an object of the path of seeing", "replace": "does not come within the range of sight"}},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "མཐོང་བའི་ལམ་དུ་\nགང་གྱུར་པ་དེ་ནི་གཙོ་བོ་ཡང་ཤིན་ཏུ་གསོག་པ",
+   "english": "is the Primal Nature [note: Sanskrit: (Prakṛti)], yet it is also extremely hollow",
+   "why": "The Tibetan does not identify the visible gardens with Prakṛti; it says what comes within sight is extremely hollow (and so too, by implication, the pradhāna)."}
+ ],
+ "note": "The argument about manifest effects and capacity is followed well; the verse's 'range of sight' is mistranslated as a Buddhist path term."},
+{"id": "QF8IQ", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "པ་དེས་མི་བདག་ནི། །བཞིན་གྱི་ཆུ་སྐྱེས་མཛེས་བྲལ་ཞིང་།",
+   "english": "Through the pride of the lord of men [note: original Sanskrit: \"na vi mā nena\", referring to a king]",
+   "why": "Continuing ma bkur pa (Skt. vimānena) from the previous side: through that humiliation the king's face lost its beauty; it is not the king's pride, and the note misreads the Sanskrit.",
+   "fix": {"find": "Through the pride of the lord of men [note: original Sanskrit: \"na vi mā nena\", referring to a king]", "replace": "Through that humiliation (Skt. vimānena), the lord of men"}}
+ ],
+ "note": "Readable and largely accurate verse rendering, opening line misconstrued."},
+{"id": "QCQQI", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "ཞེས་བརྡ་བྱེད་པ་དེ་ལྟར་མངོན་པར་འདོད་པ་ལས་སོ",
+   "english": "It is because one intends to communicate in such a way",
+   "why": "brda byed pa is the convention-maker, i.e. the maker of the mantra (glossed so on the previous side); it is his intention that fixes the result, not a generic 'one's' intent to communicate."},
+  {"type": "gloss", "confidence": "medium",
+   "tibetan": "རྒྱུད་ཡོངས་སུ་འགྱུར་བ",
+   "english": "transforming the mental continuum [note: original: (saṃtāna) the stream of consciousness]",
+   "why": "The continuum transformed is that of the mantra (successive distinctions produced in it), not a mental stream of consciousness."},
+  {"type": "reversal", "confidence": "medium",
+   "tibetan": "འོན་ཀྱང་སྔགས་མངོན་པར་གསལ་བ་མ་ཡིན་པ",
+   "english": "rather, the mantras are unmanifest",
+   "why": "The clause sets up the alternative that the application manifests the mantras (taken up in the next sentence), not a claim that mantras are unmanifest."}
+ ],
+ "note": "Argument against Mīmāṃsā mantra efficacy is mostly followed; a few referents in the mantra discussion are misidentified."},
+{"id": "Q8SBC", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "addition", "confidence": "high",
+   "tibetan": "གཉི་ག་ལ་ནི་མི་",
+   "english": "it would not reside in both one line of text partially obscured or broken at the margin.",
+   "why": "The Tibetan ends simply 'not ... in both'; the remark about an obscured line is unmarked editorial text inserted into the translation.",
+   "fix": {"find": "it would not reside in both one line of text partially obscured or broken at the margin.", "replace": "it would not reside in both"}},
+  {"type": "term", "confidence": "high",
+   "tibetan": "ལྡན་པ་ཅན་ལ་སོགས་པ་ལས་བསྒྲུབ་པར་བྱ་བ་ལས་ཐ་དད་པའི་ཕྱིར",
+   "english": "the possessor of conjunction (shaktimat) the entity characterized by the quality",
+   "why": "ldan pa can is saṃyogin, the possessor of conjunction; śaktimat ('possessor of capacity') is a different term.",
+   "fix": {"find": "the possessor of conjunction (shaktimat) the entity characterized by the quality", "replace": "the possessor of conjunction (saṃyogin)"}}
+ ],
+ "note": "Sound handling of the svabhāva/kārya restriction and the saṃyogin objection, marred by a wrong Sanskrit equivalent and an intruding apparatus remark."},
+{"id": "QEC4C", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "དུམ་བུ་འཛིན་པའི་མིང་གིས་མཚན་པའི་ཡོ་བྱད་",
+   "english": "the regional governor [note: literally: \"the one who holds the portion,\" likely referring to a local official or the previous ruler]",
+   "why": "Dum bu 'dzin pa is the proper name of the brahmin antagonist (the Khaṇḍahāla figure of the Candrakumāra story), not a title for a governor or previous ruler.",
+   "fix": {"find": "the regional governor [note: literally: \"the one who holds the portion,\" likely referring to a local official or the previous ruler]", "replace": "Khaṇḍadhara [note: Tib. dum bu 'dzin pa, a proper name]"}},
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "སྐྱེས་པར་གྱུར་ཏོ།",
+   "english": "He was born.",
+   "why": "The verb completes the previous side's sentence about sons being born to the thirty-four other queens; plural sons, not Moon."},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "གང་ཕྱིར་མི་རྣམས་རིགས་\nཆེན་ལས་ནི་སྐྱེས་ཀྱང་ཁྱི་དང་མཉམ་པ་མཐོང་བར་འགྱུར་བ་སྟེ། །",
+   "english": "For though men may be born of a great lineage, some are seen to be equal to dogs;",
+   "why": "The inserted gnomic stanzas (long-metre and four-line verses) are run together as prose, losing the verse boundaries."}
+ ],
+ "note": "Narrative is followable but the antagonist's name is turned into a title, and the verses are flattened into prose."},
+{"id": "QP9EC", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Accurate rendering of the pseudo-proof and asiddha discussion, including the Digambara tree example."}
+]

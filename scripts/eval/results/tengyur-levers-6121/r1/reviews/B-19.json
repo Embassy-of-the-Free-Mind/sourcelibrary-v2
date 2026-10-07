@@ -1,0 +1,101 @@
+[
+{"id": "Q8STY", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "ཆོས་ཅན་གྱི་རང་གི་ངོ་བོ་དང་འབྲེལ་བ", "english": "With regard to the nature of the property-possessor and its connection",
+   "why": "Parallel to the preceding 'contradiction with the nature of the property', this is the fallacy of a thesis contradicting the nature of the property-possessor (dharmisvarūpaviruddha); 'and its connection' misreads the heading."},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "འདི་དག་ནི་འདུས་པ་མ་ཡིན་པའི་ཡུལ་ཅན་གཞན་གྱི་དོན་བྱེད་པ་ཡིན་ནོ", "english": "\"The object-possessors of the uncompounded are useful for others\"",
+   "why": "The example says 'these [eyes etc.] serve the purpose of another, an uncompounded subject (viṣayin)', not that object-possessors of the uncompounded serve others."},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "རང་ཉིད་ཀྱི་སྒྲའི་དོན་ནི་བདག་ཉིད་ཅེས་བྱ་བ་ཡིན་ཏེ", "english": "The meaning of the word \"oneself\" is \"nature.\"",
+   "why": "bdag nyid here glosses svayam as 'oneself' (ātman, i.e. the proponent himself), not 'nature'."}
+ ],
+ "note": "Generally follows the commentary on svayam iṣṭaḥ, with a few slips in the examples of thesis fallacies and one gloss."},
+{"id": "QC72M", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "དེ་བཞིན་གཤེགས་དག་མཆོག་ཏུ་གསལ་མཛད་པ", "english": "the Tathagatas [note: the Buddhas]",
+   "why": "The referent is the one Tathāgata, the Buddha, honouring his father Śuddhodana's body; the plural with the note 'the Buddhas' misidentifies who acts."}
+ ],
+ "note": "Faithful rendering of the Avadānakalpalatā verses; only the plural Tathāgatas misleads."},
+{"id": "QVG93", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Accurate rendering of the Vinaya commentary on the five kinds of seed, bhūtagrāma and the pāyantika definition."},
+{"id": "QBATP", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "high",
+   "tibetan": "ཡན་ལག་ཅན་རྟོགས་པ་སྐྱེད་དོ", "english": "The text states that the \"possessor of limbs\" (avayavin) the whole composed of parts produces the cognition.",
+   "why": "The objector says recognition and the parts produce the cognition OF the whole; the whole is the object of the cognition, not its producer.",
+   "fix": {"find": "The text states that the \"possessor of limbs\" (avayavin) the whole composed of parts produces the cognition.", "replace": "That is, recognition and the parts produce the cognition of the \"possessor of limbs\" (avayavin), the whole composed of parts."}},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "གྱུར་བ་ནི་ཡོད་པ་མ་ཡིན་ནོ", "english": "transformation does not exist",
+   "why": "This completes 'nus pa tha dad par gyur ba' from the previous side: there is no coming-to-be of a distinct capacity; gyur ba is not 'transformation' here."},
+  {"type": "omission", "confidence": "medium",
+   "tibetan": "མངོན་སུམ་གྱིས་འབྲེལ་པ་གྲུབ་པའི་རྟགས་", "english": "is a sign established by direct perception",
+   "why": "The sign is one whose relation (sambandha) is established by perception; 'relation' is dropped, changing the point about how the inference works."}
+ ],
+ "note": "The Nyāya avayavin debate is broadly followed, but the objector's claim about what produces the cognition of the whole is inverted."},
+{"id": "QEC01", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "གྲངས་ཅན་ཉེ་བར་འགོད་པ་སྟེ", "english": "introduces the Sāṃkhya [note: original: གྲངས་ཅན་, a school of Hindu philosophy] position",
+   "why": "Glossed as 'namely colour etc.', this says the 'etc.' sets out the enumerated items (colour and the rest), not a Sāṃkhya position."},
+  {"type": "gloss", "confidence": "medium",
+   "tibetan": "ཅི་ལྟར་རྗེས་སུ་འགྲོ་བ་མེད་སྙམ་ན", "english": "[note: original: རྗེས་སུ་འགྲོ་བ་, Sanskrit: anvaya; the presence of a property in similar cases]",
+   "why": "Here rjes su 'gro ba is the universal's recurrence through its individuals (anugama), not anvaya as positive concomitance with similar cases."},
+  {"type": "gloss", "confidence": "medium",
+   "tibetan": "ཅི་ཙམ་ཡང་ཡིན་ལ་བསལ་བ་ཡང་ཡིན་པ", "english": "It refers to seeing however many things there are that are being excluded [note: original: བསལ་བ་, Sanskrit: apoha; the theory that words function by excluding what they are not]",
+   "why": "Glossing 'how many individuals', bsal ba stands for gsal ba (individual, vyakti): seeing as many individuals as there are; apoha is not in question."}
+ ],
+ "note": "The thread of the argument on universals is mostly kept, but several glosses import the wrong technical frame."},
+{"id": "Q5D0D", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "དོན་གཅིག་ལ་འཕྲོད་པ་འདུ་བ", "english": "is considered to be included in trees that have blooming flowers, then it is reasonable to call this inclusion \"meeting in one object.\"",
+   "why": "'du ba is the Vaiśeṣika category of inherence (samavāya): the number 'many' inheres in the trees, which is called inherence in a single object.",
+   "fix": {"find": "is considered to be included in trees that have blooming flowers, then it is reasonable to call this inclusion \"meeting in one object.\"", "replace": "inheres in trees that have blooming flowers, then it is reasonable to call this \"inherence in a single object.\""}},
+  {"type": "term", "confidence": "high",
+   "tibetan": "ལྡན་པ་ཡོད་པའི་ཡན་ལག་ཅན་ཉིད་ལ་འདུ་བ་མ་ཡིན་ནོ", "english": "\"variegated\" does not include the limbs that are present here",
+   "why": "yan lag can is the whole (avayavin), not the limbs: variegatedness does not inhere in the whole in which conjunction is present; the following verse line 'because each is not variegated' is the root text supporting this.",
+   "fix": {"find": "\"variegated\" does not include the limbs that are present here", "replace": "variegatedness does not inhere in the whole (avayavin) in which conjunction is present here"}},
+  {"type": "omission", "confidence": "medium",
+   "tibetan": "འདི་གཉིས་ནི་མི་མཚུངས་སོ", "english": "If a forest of a multitude of numbers",
+   "why": "The side opens with the verdict 'these two are not alike' (the forest example and variegatedness), which is not translated."},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "དེ་ཕྱིར་གཅིག་དོན་དུ་མ་ཅན", "english": "Therefore one object has many objects.",
+   "why": "The verse says one [cognition] has many objects."}
+ ],
+ "note": "The later argument on superimposition is serviceable, but the opening on inherence and the whole misrenders the key Vaiśeṣika terms."},
+{"id": "QXS58", "score": 4, "verdict": "light", "span": "extra",
+ "span_why": "The opening ('The husband replied, \"Good lady, what you say is not wrong...\" ... \"Dear girl, be joyful...\"') translates the previous side's last line.",
+ "errors": [
+  {"type": "addition", "confidence": "high",
+   "tibetan": "ཞིང་ལས་བྱོས་ཤིག", "english": "\"Go and work in the fields!\"",
+   "why": "With 'bu mo dga'' from the previous side this is 'dga' zhing las byos shig', 'do your work gladly'; there are no fields.",
+   "fix": {"find": "\"Go and work in the fields!\"", "replace": "\"...and do your work gladly!\""}}
+ ],
+ "note": "The Upananda narrative is rendered faithfully apart from the misparsed command and the material carried over from the previous side."},
+{"id": "QBES8", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "A sound rendering of the body-consciousness argument; some phrasing (the milk example) is loose but not wrong enough to correct with confidence."},
+{"id": "QZHIW", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "addition", "confidence": "high",
+   "tibetan": "རང་བཞིན་གཞན་", "english": "one line of text follows",
+   "why": "Stray editorial words not in the Tibetan; the side simply ends mid-sentence at 'another nature'.",
+   "fix": {"find": " one line of text follows", "replace": ""}}
+ ],
+ "note": "Faithful on the two kinds of destruction and the causes of diminution; only a stray artifact at the end."},
+{"id": "QYWJY", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "གསལ་བ་བརྗོད་པར་འདོད་པས་མང་པོའི་ཚིག་གོ", "english": "with the intention of expressing clarity",
+   "why": "gsal ba here is 'individual instances' (vyakti): the plural is used to express the individuals.",
+   "fix": {"find": "with the intention of expressing clarity", "replace": "with the intention of expressing the individual instances (vyakti)"}},
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "རྟེན་གྱིས་འཇིག་པའི་གནས་བྱེད་ན", "english": "If the support causes the destruction of staying by itself or through another",
+   "why": "The Tibetan says the support makes the perishing thing stay, not that it destroys staying."}
+ ],
+ "note": "The refutation of the support is followable, but a technical term and the role of the support are misrendered."}
+]
