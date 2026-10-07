@@ -51,7 +51,7 @@ import { resolvePreviewStub, previewStubGuardEnforced, recordPreviewStubRefusal 
 import { findTrailingDupes, applyHide } from './lib/trailing-dedup.mjs';
 import { getScopeConfig, shouldBypassPause } from './lib/selective-unpause.mjs';
 import { drainStalledImageJobs, countNoResultDispatches, MAX_NO_RESULT_DISPATCHES } from './lib/image-job-drain.mjs';
-import { holdViolation } from '../lib/pipeline-hold.mjs';
+import { holdViolation, NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { setPublication } from '../lib/publication.mjs';
 import { iaOcrMinAgreement } from '../lib/ia-ocr-gate.mjs';
 import { interiorSpread } from '../lib/interior-sample.mjs';
@@ -436,15 +436,15 @@ async function probeDbHealth(db) {
         console.log(`[health] Cancelled ${result.modifiedCount} pending jobs`);
         // Clear book.job references AND roll back pipeline status so books can be re-submitted
         await db.collection('books').updateMany(
-          { 'pipeline_auto.status': 'translate_submitted' },
+          { ...NOT_HELD, 'pipeline_auto.status': 'translate_submitted' },
           { $set: { 'pipeline_auto.status': 'ocr_complete', updated_at: new Date() }, $unset: { job: '' } },
         );
         await db.collection('books').updateMany(
-          { 'pipeline_auto.status': 'ocr_submitted' },
+          { ...NOT_HELD, 'pipeline_auto.status': 'ocr_submitted' },
           { $set: { 'pipeline_auto.status': 'archive_complete', updated_at: new Date() }, $unset: { job: '' } },
         );
         await db.collection('books').updateMany(
-          { 'pipeline_auto.status': 'images_submitted' },
+          { ...NOT_HELD, 'pipeline_auto.status': 'images_submitted' },
           { $set: { 'pipeline_auto.status': 'chapters_complete', updated_at: new Date() }, $unset: { job: '' } },
         );
       }
@@ -952,8 +952,11 @@ async function setPipelineStatus(db, bookId, status, extra = {}) {
   const prevStatus = book?.pipeline_auto?.status;
 
   // A HELD book accepts no status from a worker (#4790). The hold is a decision with a reason and
-  // a release condition (scripts/lib/pipeline-hold.mjs); every phase already skips `held` books
-  // by selection, and this refusal is what stops a rollback or a retry from lifting it by accident.
+  // a release condition (scripts/lib/pipeline-hold.mjs); every phase skips `held` books by
+  // selection, and this refusal is what stops a rollback or a retry from lifting it by accident.
+  // Every phase's candidate filter ALSO carries NOT_HELD, because selecting on status alone trusts
+  // every writer outside this function: archive-erara wrote `archive_complete` over 329 held books
+  // with a raw $set and Phase 2 OCR'd 30 of them (#6122). The marker, not the status, is the test.
   // Always enforced — unlike the output guard below there is no observe mode, because a hold is
   // explicit and rare, and advancing past one is the exact failure it exists to prevent.
   const holdRefusal = book ? holdViolation(book, status) : null;
@@ -2668,6 +2671,7 @@ async function run() {
         // Catch artwork at ANY pre-terminal stage, not just early ones. Some slip all the way
         // to finalize where Phase 9 mis-flags them "Empty book: 0 pages" (single-object
         // artworks legitimately have 0 pages).
+        ...NOT_HELD,
         'pipeline_auto.status': { $nin: ['complete', 'needs_attention', 'failed', 'parked'] },
         ...ARTWORK_MATCH,
       }).project({ id: 1, title: 1 }).toArray();
@@ -2691,7 +2695,7 @@ async function run() {
       const ENGLISH_VARIANTS_P1 = ['english', 'eng', 'en'];
       let queuedBooks = await db.collection('books')
         .aggregate([
-          { $match: { 'pipeline_auto.status': 'queued', content_type: { $ne: 'artwork' }, $or: [{ content_type: 'book' }, { resource_type: { $nin: ARTWORK_TYPES } }] } },
+          { $match: { ...NOT_HELD, 'pipeline_auto.status': 'queued', content_type: { $ne: 'artwork' }, $or: [{ content_type: 'book' }, { resource_type: { $nin: ARTWORK_TYPES } }] } },
           { $addFields: {
             _priority: {
               $switch: {
@@ -2724,7 +2728,7 @@ async function run() {
       // Priority: confirmed first translations > non-English > English
       let archivingBooks = await db.collection('books')
         .aggregate([
-          { $match: { 'pipeline_auto.status': 'archiving' } },
+          { $match: { ...NOT_HELD, 'pipeline_auto.status': 'archiving' } },
           { $addFields: {
             _priority: {
               $switch: {
@@ -2885,6 +2889,7 @@ async function run() {
       // Find archive_complete books that haven't been split-checked yet
       let candidates = await db.collection('books')
         .find({
+          ...NOT_HELD,
           'pipeline_auto.status': 'archive_complete',
           'pipeline_auto.split_checked': { $ne: true },
         })
@@ -3096,6 +3101,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
 
       let readyForPreSplit = await db.collection('books')
         .find({
+          ...NOT_HELD,
           'pipeline_auto.status': 'archive_complete',
           'pipeline_auto.split_checked': true,
           needs_splitting: true,
@@ -3178,6 +3184,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
       const iaRefProjection = { id: 1, title: 1, author: 1, year: 1, language: 1, visible: 1, created_at: 1, needs_splitting: 1, 'image_source.provider': 1 };
       let iaCandidates = await db.collection('books')
         .find({
+          ...NOT_HELD,
           'pipeline_auto.status': 'archive_complete',
           'pipeline_auto.split_checked': true,
           'pipeline_auto.preview_ocr_done': { $ne: true },
@@ -3299,6 +3306,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
       const previewProjection = { id: 1, title: 1, author: 1, year: 1, language: 1, visible: 1, created_at: 1, needs_splitting: 1, 'image_source.provider': 1 };
       let readyForPreview = await db.collection('books')
         .find({
+          ...NOT_HELD,
           'pipeline_auto.status': 'archive_complete',
           'pipeline_auto.split_checked': true,
           'pipeline_auto.preview_ocr_done': { $ne: true },
@@ -3431,6 +3439,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
       // Find books with preview OCR done but no AI metadata yet
       let readyForMetadata = await db.collection('books')
         .find({
+          ...NOT_HELD,
           'pipeline_auto.status': 'archive_complete',
           'pipeline_auto.preview_ocr_done': true,
           'ai_metadata.enriched_at': { $exists: false },
@@ -3897,6 +3906,7 @@ Rules:
       const DEDUP_LIMIT = SCOPED_MODE ? 100000 : 50;  // per tick — bounds runtime (~30+ R2 HEADs/book); drains backlog across ticks. Scoped mode raises the window so allowlisted books behind the backlog aren't stranded (work confined by the scope filter below).
       const DEDUP_MAX_ATTEMPTS = 3;  // transient-failure giveup; release the book so Phase 2 isn't blocked forever
       let candidates = await db.collection('books').find({
+        ...NOT_HELD,
         'pipeline_auto.status': 'archive_complete',
         'pipeline_auto.dedup_complete': { $ne: true },
       }).project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.dedup_attempts': 1 })
@@ -4021,6 +4031,7 @@ Rules:
         let previewCandidates = await db.collection('books')
           .aggregate([
             { $match: {
+              ...NOT_HELD,
               'pipeline_auto.status': 'archive_complete',
               'pipeline_auto.split_checked': true,
               'pipeline_auto.recitation_blocked': { $ne: true },
@@ -4152,6 +4163,7 @@ Rules:
       let readyForOcr = ocrLimit > 0 ? await db.collection('books')
         .aggregate([
           { $match: {
+            ...NOT_HELD,
             'pipeline_auto.status': 'archive_complete',
             'pipeline_auto.split_checked': true,
             'pipeline_auto.recitation_blocked': { $ne: true },
@@ -4362,7 +4374,7 @@ Rules:
       console.log('\n--- Phase 3: OCR completion check ---');
 
       let ocrPending = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'ocr_submitted' })
+        .find({ ...NOT_HELD, 'pipeline_auto.status': 'ocr_submitted' })
         // thumbnail_source must survive the projection: the early-cover guard
         // below reads it, and a missing field made "!== 'manual'" always true —
         // silently overwriting human-chosen covers on every run.
@@ -4521,6 +4533,7 @@ Rules:
 
       let readyForSplit = await db.collection('books')
         .find({
+          ...NOT_HELD,
           'pipeline_auto.status': 'ocr_complete',
           needs_splitting: true,
           split_completed: { $ne: true },
@@ -4592,7 +4605,7 @@ Rules:
       console.log('\n--- Phase 3.5: OCR quality gate ---');
 
       let readyBooks = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'ocr_complete' })
+        .find({ ...NOT_HELD, 'pipeline_auto.status': 'ocr_complete' })
         .sort({ hidden: 1 })
         .project({ id: 1, title: 1, pages_count: 1, pages_ocr: 1 })
         .limit(METADATA_ENRICH_LIMIT)
@@ -4621,6 +4634,7 @@ Rules:
       // Find ocr_complete books with non-Latin languages
       let nonLatinBooks = await db.collection('books')
         .find({
+          ...NOT_HELD,
           'pipeline_auto.status': 'ocr_complete',
           language: { $regex: new RegExp(`^(${[...NON_LATIN_LANGUAGES].join('|')})$`, 'i') },
         })
@@ -4743,7 +4757,7 @@ Rules:
           };
           for (const [from, to] of Object.entries(rollbackMap)) {
             await db.collection('books').updateMany(
-              { id: { $in: zombieBookIds }, 'pipeline_auto.status': from },
+              { id: { $in: zombieBookIds }, ...NOT_HELD, 'pipeline_auto.status': from },
               { $set: { 'pipeline_auto.status': to, updated_at: new Date() }, $unset: { job: '' } },
             );
           }
@@ -4769,6 +4783,7 @@ Rules:
         ];
         for (const { from, to } of orphanStates) {
           const orphans = await db.collection('books').find({
+            ...NOT_HELD,
             'pipeline_auto.status': from,
             $or: [{ job: { $exists: false } }, { job: null }],
             // A Batch API image book has no `jobs` row and no book.job — its work is in
@@ -4808,7 +4823,7 @@ Rules:
             });
             if (activeJobCount === 0) {
               await db.collection('books').updateMany(
-                { id: { $in: orphanIds }, 'pipeline_auto.status': from },
+                { id: { $in: orphanIds }, ...NOT_HELD, 'pipeline_auto.status': from },
                 { $set: { 'pipeline_auto.status': to, updated_at: new Date() } },
               );
               console.log(`  Orphan detector: rolled back ${orphanIds.length} books from ${from} to ${to}`);
@@ -4857,6 +4872,7 @@ Rules:
           // Spread guard (#2449): unsplit spread books must wait for Phase 3.1 —
           // translating them produces two-page texts the split then discards.
           { $match: {
+            ...NOT_HELD,
             'pipeline_auto.status': { $in: ['ocr_complete'] },
             $or: [{ needs_splitting: { $ne: true } }, { split_completed: true }],
             ...(chainedGuard.length ? { $and: chainedGuard } : {}),
@@ -4947,6 +4963,7 @@ Rules:
         if (freshBooks.length === 0 && effectiveLimit > 0) {
           partialBooks = await db.collection('books').aggregate([
             { $match: {
+              ...NOT_HELD,
               'pipeline_auto.status': { $in: ['translate_partial', 'translate_complete', 'chapters_complete', 'complete'] },
               pages_ocr: { $gt: 0 },
               // Spread guard (#2449)
@@ -5106,7 +5123,7 @@ Rules:
       console.log('\n--- Phase 5: Legacy translation completion check ---');
 
       let translatePending = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'translate_submitted' })
+        .find({ ...NOT_HELD, 'pipeline_auto.status': 'translate_submitted' })
         .project({ id: 1, title: 1, 'pipeline_auto.translate_job_id': 1, 'pipeline_auto.translate_job_name': 1 })
         .toArray();
       if (SCOPE_ACTIVE) translatePending = await applyBookOverride(db, translatePending, { id: 1, title: 1, pipeline_auto: 1 });
@@ -5166,7 +5183,7 @@ Rules:
       console.log('\n--- Phase 6: Summary + Index ---');
 
       let readyForEnrich = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'translate_complete' })
+        .find({ ...NOT_HELD, 'pipeline_auto.status': 'translate_complete' })
         .sort({ hidden: 1 })
         .project({ id: 1, title: 1, 'pipeline_auto.retry_count': 1 })
         .limit(ENRICH_LIMIT)
@@ -5235,7 +5252,7 @@ Rules:
       console.log('\n--- Phase 7: Chapter extraction ---');
 
       let readyForChapters = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'summary_indexed' })
+        .find({ ...NOT_HELD, 'pipeline_auto.status': 'summary_indexed' })
         .sort({ hidden: 1 })
         .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 })
         .limit(CHAPTER_LIMIT)
@@ -5334,7 +5351,7 @@ Rules:
           const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed', 'title-page'];
 
           let readyForImages = await db.collection('books')
-            .find({ 'pipeline_auto.status': 'chapters_complete' })
+            .find({ ...NOT_HELD, 'pipeline_auto.status': 'chapters_complete' })
             .sort({ processing_priority: -1, hidden: 1, ...NEWEST_FIRST })
             .project({ id: 1, title: 1, author: 1, year: 1, language: 1, subjects: 1 })
             .limit(IMAGE_SUBMIT_LIMIT)
@@ -5454,7 +5471,7 @@ Rules:
           const sqsClient = new SQSClient({ region: process.env.AWS_REGION || 'eu-central-1' });
 
           let readyForImages = await db.collection('books')
-            .find({ 'pipeline_auto.status': 'chapters_complete' })
+            .find({ ...NOT_HELD, 'pipeline_auto.status': 'chapters_complete' })
             .sort({ processing_priority: -1, hidden: 1, ...NEWEST_FIRST })
             .project({ id: 1, title: 1 })
             .limit(IMAGE_SUBMIT_LIMIT)
@@ -5594,7 +5611,7 @@ Rules:
     if (shouldRun(8)) {
       // Check completed image extraction — both batch API and Lambda/SQS paths
       let imagesPending = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'images_submitted' })
+        .find({ ...NOT_HELD, 'pipeline_auto.status': 'images_submitted' })
         .project({ id: 1, pipeline_auto: 1 })
         .toArray();
       if (SCOPE_ACTIVE) imagesPending = await applyBookOverride(db, imagesPending, { id: 1, pipeline_auto: 1 });
@@ -5673,6 +5690,7 @@ Rules:
       const staleThreshold = new Date(Date.now() - 48 * 60 * 60 * 1000);
       let staleBooks = await db.collection('books')
         .find({
+          ...NOT_HELD,
           'pipeline_auto.status': { $in: ['ocr_submitted', 'translate_submitted', 'images_submitted', 'summarizing', 'chapters'] },
           'pipeline_auto.last_updated': { $lt: staleThreshold },
         })
@@ -5754,7 +5772,7 @@ Rules:
       // Cover selection makes no model call, so the wider window costs DB reads only.
       const COVER_LIMIT = SCOPED_MODE ? 100000 : 50;
       let coverBooks = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'images_complete' })
+        .find({ ...NOT_HELD, 'pipeline_auto.status': 'images_complete' })
         .sort({ hidden: 1 })
         .project({ id: 1, title: 1, thumbnail: 1, thumbnail_source: 1 })
         .limit(COVER_LIMIT)
@@ -5833,7 +5851,7 @@ Rules:
       console.log('\n--- Phase 9: Finalize ---');
 
       let readyToFinalize = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'cover_selected' })
+        .find({ ...NOT_HELD, 'pipeline_auto.status': 'cover_selected' })
         .sort({ hidden: 1 })
         // pipeline_auto must survive the projection: the untranslated-finalize
         // guard below reads finalize_requeues off it, and a projected-away field
