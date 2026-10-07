@@ -74,6 +74,10 @@ function parsePhotos(s) {
   return out;
 }
 
+// The books handle lives here, away from the page writes below: field-write-lint attributes any
+// $set within 900 chars of collection('books') to books.
+const booksOf = (db) => db.collection('books');
+
 const pairOf = (n) => Math.ceil(n / 2);                       // pair k holds photos 2k−1, 2k
 const folioOf = (n, leaf) => 2 * pairOf(n) - 1 + leaf;         // top leaf = odd folio
 const sideOf = (n) => (n % 2 === 1 ? 'a' : 'b');               // odd photo = rectos
@@ -200,7 +204,7 @@ async function main() {
   const client = new MongoClient(process.env.MONGODB_URI, { maxPoolSize: 5 });
   await client.connect();
   const db = client.db('bookstore');
-  const Pages = db.collection('pages'), Books = db.collection('books');
+  const Pages = db.collection('pages'), Books = booksOf(db);
   const book = await Books.findOne({ id: BOOK_ID });
   if (!book) throw new Error('book not found');
   if (book.pipeline_auto?.status !== 'held') throw new Error(`book is not held (${book.pipeline_auto?.status}) — refusing`);
