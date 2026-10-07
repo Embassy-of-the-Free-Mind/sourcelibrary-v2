@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // PRIOR ART: scripts/eval/xlref-t1 — reused (the metered, files-only arm runner). scripts/eval/kraken-refused-4686/ sealed the 20 RECITATION-refused pages used here (benchmark/refused-en-4686.json) and scored non-Gemini engines on them; #4686 reports the refusal at temperature 0 and 1 from a 5-page probe. No script has run a rising-temperature ladder over a sealed refused set.
 /** Optional OCR arm of #6202: does a rising temperature (0, 0.4, 0.8) get an answer out of pages Gemini refuses as RECITATION? Files only; metered as temp-6202. */
-//   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/temp-6202/ocr-retry.mjs [--work /data/scratch/sl/temp-6202] [--models lite,flash] [--cap-usd 1]
+//   node --env-file=/root/sourcelibrary/.env.production.local scripts/eval/temp-6202/ocr-retry.mjs [--work /data/scratch/sl/temp-6202] [--models lite,flash] [--cap-usd 1] [--temps 0,0.4,0.8]
 import fs from 'node:fs';
 import path from 'node:path';
 import { MongoClient } from 'mongodb';
@@ -14,7 +14,7 @@ const args = process.argv.slice(2);
 const opt = (n, d) => { const i = args.indexOf(`--${n}`); return i >= 0 && args[i + 1] != null ? args[i + 1] : d; };
 const WORK = opt('work', '/data/scratch/sl/temp-6202'); const CAP = Number(opt('cap-usd', 1));
 const MODELS = opt('models', 'lite,flash').split(','); const MODEL = { lite: OCR_MODEL_LITE, flash: OCR_MODEL_FLASH };
-const LADDER = [0, 0.4, 0.8];
+const LADDER = opt('temps', '0,0.4,0.8').split(',').map(Number); // registered ladder; --temps 0.1 is the post-hoc production control
 const pages = JSON.parse(fs.readFileSync('scripts/eval/benchmark/refused-en-4686.json', 'utf8')).pages;
 const c = new MongoClient(process.env.MONGODB_URI); await c.connect();
 const p = await c.db(process.env.MONGODB_DB || 'bookstore').collection('prompts').findOne({ type: 'ocr', is_default: true }, { sort: { version: -1 } });

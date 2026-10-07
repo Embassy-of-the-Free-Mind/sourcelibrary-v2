@@ -21,6 +21,9 @@ const meta = Object.fromEntries(recs.map((r) => [`${r.book_id}_${r.page_number}`
 const armFile = (m, a, id) => { const f = path.join(WORK, 'arms', `${m}-${a}`, `${id}.json`); return fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : null; };
 
 // page[m][id] = { arm: { fid, rev, om, j: [f1, f2], cost, identicalTo } }
+// from <work>/ledger.jsonl: pages with two consecutive empty answers (RECITATION / blank) in one arm
+const EMPTY_TWICE = {};
+{ const seen = {}; for (const r of readJsonl(path.join(WORK, 'ledger.jsonl')).filter((x) => x.kind === 'arm')) { const k = `${r.model}|${r.arm}|${r.id}`; const e = r.finish !== 'STOP' && r.finish !== 'MAX_TOKENS'; seen[k] = e ? (seen[k] || 0) + 1 : (seen[k] >= 2 ? seen[k] : 0); if (seen[k] === 2 && !(EMPTY_TWICE[r.model] ||= []).includes(r.id)) EMPTY_TWICE[r.model].push(r.id); } }
 const page = {}; const gate = {}; const agreement = {}; const dropped = {}; const rows = [];
 for (const m of MODELS) {
   const res = JSON.parse(fs.readFileSync(path.join(WORK, `results-${m}.json`), 'utf8'));
@@ -30,6 +33,8 @@ for (const m of MODELS) {
   const pp = Object.fromEntries(res.per_page.map((p) => [p.id, p]));
   page[m] = {};
   for (const [id, al] of Object.entries(aliases)) {
+    // registered rule: a page whose answer was empty twice in any arm of a model leaves that model's analysis (complete cases)
+    if (EMPTY_TWICE[m]?.includes(id) && !args.includes('--keep-empty-twice')) { (dropped[m] ||= []).push({ id, set: meta[id].set, missing: ['empty twice (registered exclusion)'] }); continue; }
     const p = pp[meta[id].pid]; if (!p) continue;
     const o = {};
     for (const a of DRAWS) {
@@ -69,8 +74,9 @@ function pool(cells) {
   const floor = { fid: Math.abs(mean(d('T1b', 'T1a', 'fid'))), rev: Math.abs(mean(d('T1b', 'T1a', 'rev'))), fid_signed: est(d('T1b', 'T1a', 'fid')), rev_signed_per_100: est(d('T1b', 'T1a', 'rev'), 100) };
   const contrast = (dF, dR) => {
     const F = est(dF); const R = est(dR);
-    const beatsFid = F.mean > floor.fid && F.ci[0] > 0 && R.ci[1] <= REV_MARGIN;
-    const beatsRev = -R.mean > floor.rev && R.ci[1] < 0 && F.ci[0] >= -FID_MARGIN;
+    // compare UNROUNDED means with the floor (a gain equal to the floor does not exceed it); 1e-9 absorbs float noise
+    const beatsFid = mean(dF) > floor.fid + 1e-9 && F.ci[0] > 0 && R.ci[1] <= REV_MARGIN;
+    const beatsRev = -mean(dR) > floor.rev + 1e-9 && R.ci[1] < 0 && F.ci[0] >= -FID_MARGIN;
     const notWorse = F.ci[0] >= -FID_MARGIN && R.ci[1] <= REV_MARGIN;
     return { d_fidelity: F, d_reversals_per_100: { n: R.n, mean: r2(R.mean * 100), ci: R.ci.map((x) => r2(x * 100)) }, pages: sign(dF), beats_production: beatsFid || beatsRev, by: beatsFid ? 'fidelity' : beatsRev ? 'reversals' : null, not_worse: notWorse };
   };
@@ -90,7 +96,7 @@ function pool(cells) {
 }
 
 const SETS = ['tengyur', 't4', 'latin'];
-const summary = { generated: new Date().toISOString(), rule: { seed: SEED, resamples: ITERS, fid_margin: FID_MARGIN, rev_margin: REV_MARGIN }, judges: 'two blind Opus judges (claude -p --model opus, subscription), translation-vs-reference harness unchanged', gate, agreement, dropped, by_model: {}, production_routed: {}, transfer: {} };
+const summary = { generated: new Date().toISOString(), empty_twice_excluded: EMPTY_TWICE, rule: { seed: SEED, resamples: ITERS, fid_margin: FID_MARGIN, rev_margin: REV_MARGIN }, judges: 'two blind Opus judges (claude -p --model opus, subscription), translation-vs-reference harness unchanged', gate, agreement, dropped, by_model: {}, production_routed: {}, transfer: {} };
 for (const m of MODELS) {
   const cells = Object.entries(page[m]).map(([id, o]) => ({ id, o }));
   summary.by_model[m] = { all: pool(cells), ...Object.fromEntries(SETS.map((s) => [s, pool(cells.filter((c) => meta[c.id].set === s))])) };

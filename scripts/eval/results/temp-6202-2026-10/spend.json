@@ -1,10 +1,10 @@
 {
  "cap_usd": 10,
- "ledger_usd": 6.7713,
- "ledger_calls": 2405,
+ "ledger_usd": 7.2907,
+ "ledger_calls": 2597,
  "metered": {
-  "usd": 6.7717,
-  "rows": 2748,
+  "usd": 7.291,
+  "rows": 2952,
   "meterError": null
  },
  "mode": "realtime (Batch-equivalent is half)",
@@ -136,6 +136,70 @@
    "out": 22200,
    "thinking": 0,
    "empty_or_nonstop": 0
+  },
+  "lite-OCR-T0": {
+   "calls": 24,
+   "usd": 0.042,
+   "in": 103122,
+   "out": 10822,
+   "thinking": 0,
+   "empty_or_nonstop": 6
+  },
+  "lite-OCR-T0.4": {
+   "calls": 24,
+   "usd": 0.04,
+   "in": 103122,
+   "out": 9486,
+   "thinking": 0,
+   "empty_or_nonstop": 9
+  },
+  "lite-OCR-T0.8": {
+   "calls": 24,
+   "usd": 0.0437,
+   "in": 103122,
+   "out": 11923,
+   "thinking": 0,
+   "empty_or_nonstop": 6
+  },
+  "flash-OCR-T0": {
+   "calls": 24,
+   "usd": 0.0926,
+   "in": 103122,
+   "out": 13672,
+   "thinking": 0,
+   "empty_or_nonstop": 3
+  },
+  "flash-OCR-T0.4": {
+   "calls": 24,
+   "usd": 0.092,
+   "in": 103122,
+   "out": 13464,
+   "thinking": 0,
+   "empty_or_nonstop": 4
+  },
+  "flash-OCR-T0.8": {
+   "calls": 24,
+   "usd": 0.0859,
+   "in": 103122,
+   "out": 11456,
+   "thinking": 0,
+   "empty_or_nonstop": 6
+  },
+  "lite-OCR-T0.1": {
+   "calls": 24,
+   "usd": 0.0391,
+   "in": 103122,
+   "out": 8887,
+   "thinking": 0,
+   "empty_or_nonstop": 10
+  },
+  "flash-OCR-T0.1": {
+   "calls": 24,
+   "usd": 0.0841,
+   "in": 103122,
+   "out": 10832,
+   "thinking": 0,
+   "empty_or_nonstop": 7
   }
  }
 }
