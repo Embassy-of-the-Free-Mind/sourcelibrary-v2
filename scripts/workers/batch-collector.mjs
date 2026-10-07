@@ -21,7 +21,6 @@ import { MongoClient } from 'mongodb';
 import { GoogleGenAI } from '@google/genai';
 import { completeBatchUsage, sumBatchResponseUsage, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
 import { syncPageBatch } from './lib/supabase-page-writer.mjs';
-import { hasScope } from './lib/selective-unpause.mjs';
 import { buildGalleryDoc } from '../lib/gallery-doc.mjs';
 import { isTrivialGalleryDetection } from '../lib/gallery-image-types.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
@@ -1312,20 +1311,16 @@ async function run() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // Check processing_control pause.
-  // Selective unpause: if a scope is configured (allow_book_ids / allow_collections),
-  // keep collecting — pulling already-generated batch results costs no Gemini spend,
-  // and the scoped books the orchestrator submitted while paused need their results
-  // ingested or the OCR/translation text never lands. Empty scope = full stop.
+  // A pause never stops collection (#5492, #5496 review N1). Every row this collector selects
+  // was already submitted to Gemini and is paid for; pulling the results costs no Gemini spend.
+  // Exiting under a pause used to leave every in-flight OCR, translation and image batch
+  // uncollected until resume — and past 48 h Gemini expires it and Phase 8.5 re-dispatches the
+  // book (#4839). Pauses stop SUBMISSION, in the orchestrator and the workers; this file
+  // submits nothing. (The scheduler also launches this worker, but skips it under a pause; the
+  // hetzner-crontab line every 10 minutes is the path that keeps collecting.)
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
-  const _scopeActive = hasScope(control);
-  if (control?.paused && !_scopeActive) {
-    console.log(`[batch-collector] Pipeline paused. Exiting.`);
-    await client.close();
-    process.exit(0);
-  }
-  if (control?.paused && _scopeActive) {
-    console.log(`[batch-collector] Paused, but selective-unpause scope is active — collecting results (free) for in-flight jobs.`);
+  if (control?.paused) {
+    console.log(`[batch-collector] Pipeline paused — collecting anyway: results of already-submitted jobs are free and already paid for.`);
   }
 
   // ── Batch Health Probe: reconcile DB vs Gemini state ──
