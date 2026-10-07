@@ -116,3 +116,7 @@ call from usageMetadata and stops issuing calls past $2.80. Usage is logged by
 
 `results/reader-diversity-6184/` (reads as JSONL, `results.json`, the table), one file in
 `experiments/`, and a comment on #6184.
+
+## Addendum 2026-10-07 (plain-prompt arm, written before its first call)
+
+**Arms:** FP = `gemini-3-flash-preview` and LP = `gemini-3.1-flash-lite`, each with Pro's exact plain prompt (`PRO_PROMPT` in `run-arms.mjs`), T 0.1, thinking budget 0, BLOCK_NONE, ×3 per page on the same 30 pages; scored by the same `score-lib.mjs` on the same 63 slots; cap $0.50 (stop past $0.48). **Decision rule:** if FP's pooled per-read accuracy on all 63 slots is ≥ 85 % (the lower bound of Pro's 171/189 CI) the lever is the PROMPT; otherwise it is the MODEL and "Pro decides" stands. Also reported: FP vs F0 (prompt effect at fixed model), and phi of FP errors vs Pro errors against the 0.09 F1-vs-Pro baseline (does the prompt change also decorrelate?).
