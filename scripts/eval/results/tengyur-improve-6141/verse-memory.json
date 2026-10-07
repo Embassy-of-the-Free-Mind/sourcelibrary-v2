@@ -1,0 +1,1551 @@
+[
+ {
+  "vid": "v1287",
+  "pages": 69,
+  "divergence": 0.536,
+  "span_padas": [
+   "དཀོན་མཆོག་གསུམ་ལ་སྐྱབས་སུ་མཆི",
+   "སྡིག་པ་ཐམས་ཅད་སོ་སོར་བཤགས"
+  ],
+  "verse_padas": [
+   "དཀོན་མཆོག་གསུམ་ལ་སྐྱབས་སུ་མཆི",
+   "སྡིག་པ་ཐམས་ཅད་སོ་སོར་བཤགས",
+   "འགྲོ་བའི་དགེ་ལ་རྗེས་ཡི་རང",
+   "སངས་རྒྱས་བྱང་ཆུབ་ཡིད་ཀྱིས་གཟུང"
+  ],
+  "reference": [
+   "I take refuge in the Three Jewels.",
+   "I confess every misdeed, one by one."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "high",
+  "why": "r3 folds the prose 'Then' into the verse; so sor bshags is rendered as confessing each misdeed individually.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "a08580c9415b06df",
+  "renderings": 7,
+  "misaligned": 2
+ },
+ {
+  "vid": "v1189",
+  "pages": 45,
+  "divergence": 0.786,
+  "span_padas": [
+   "ས་དང་ཕ་རོལ་ཕྱིན་པ་ལ",
+   "ལྷ་མོ་ཁྱོད་ནི་དཔང་དུ་གྱུར"
+  ],
+  "verse_padas": [
+   "སྐྱོབ་པ་སངས་རྒྱས་ཐམས་ཅད་ཀྱི",
+   "སྤྱོད་པའི་ཚུལ་དང་ཁྱད་པར་དང",
+   "ས་དང་ཕ་རོལ་ཕྱིན་པ་ལ",
+   "ལྷ་མོ་ཁྱོད་ནི་དཔང་དུ་གྱུར"
+  ],
+  "reference": [
+   "To the grounds and the perfections",
+   "You, Goddess, have been witness."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "high",
+  "why": "gyur is a past witness (the earth goddess who witnessed the Buddhas' conduct), not a request, so r3's 'please be my witness' is loosened and r2 moves the witness line out of this span.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "255ef21e4fde4221",
+  "renderings": 3,
+  "misaligned": 1
+ },
+ {
+  "vid": "v972",
+  "pages": 53,
+  "divergence": 0.538,
+  "span_padas": [
+   "གལ་ཏེ་ཚུལ་འདི་སྨྲས་ན་ནི",
+   "དེ་མ་ཐག་ཏུ་དྲལ་ཏེ་གཤེགས"
+  ],
+  "verse_padas": [
+   "རྡོ་རྗེའི་མིག་ནི་བླ་ན་མེད",
+   "སྙིང་ལ་ཡང་དག་ཞུགས་པ་ནི",
+   "གལ་ཏེ་ཚུལ་འདི་སྨྲས་ན་ནི",
+   "དེ་མ་ཐག་ཏུ་དྲལ་ཏེ་གཤེགས"
+  ],
+  "reference": [
+   "If you speak of this way,",
+   "He will tear it open at once and depart."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "high",
+  "why": "dral te gshegs: Vajrasattva, who has entered the heart, rends it and leaves; 'it' keeps the heart of the previous line without naming the disciple's body.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "36db4e0bfff9ca90",
+  "renderings": 5,
+  "misaligned": 1
+ },
+ {
+  "vid": "v1233",
+  "pages": 55,
+  "divergence": 0.503,
+  "span_padas": [
+   "རྗེས་སུ་མཐུན་པའི་དངོས་གྲུབ་སྩོལ",
+   "སངས་རྒྱས་ཡུལ་དུ་གཤེགས་ནས་ཀྱང",
+   "སླར་ཡང་འབྱོན་པར་མཛད་དུ་གསོལ"
+  ],
+  "verse_padas": [
+   "ཁྱེད་ཀྱིས་སེམས་ཅན་དོན་ཀུན་མཛད",
+   "རྗེས་སུ་མཐུན་པའི་དངོས་གྲུབ་སྩོལ",
+   "སངས་རྒྱས་ཡུལ་དུ་གཤེགས་ནས་ཀྱང",
+   "སླར་ཡང་འབྱོན་པར་མཛད་དུ་གསོལ"
+  ],
+  "reference": [
+   "Grant the appropriate accomplishments,",
+   "And even after you depart for the Buddha realm,",
+   "Please come back once again."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "high",
+  "why": "gshegs nas kyang is 'even after departing', so r6's 'even as you depart' is loose.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "02c21bc037b5334b",
+  "renderings": 6,
+  "misaligned": 1
+ },
+ {
+  "vid": "v1081",
+  "pages": 61,
+  "divergence": 0.4,
+  "span_padas": [
+   "བྱང་ཆུབ་ཆེན་པོའི་ཚུལ་བསྟན་པ",
+   "མགོན་པོ་ཆེན་པོ་བདག་འཚལ་ལོ"
+  ],
+  "verse_padas": [
+   "བྱང་ཆུབ་ཆེན་པོའི་ཚུལ་བསྟན་པ",
+   "མགོན་པོ་ཆེན་པོ་བདག་འཚལ་ལོ",
+   "དམ་ཚིག་དེ་ཉིད་སྩལ་དུ་གསོལ",
+   "བྱང་ཆུབ་སེམས་ཀྱང་བདག་ལ་སྩོལ"
+  ],
+  "reference": [
+   "You who show the way of great awakening,",
+   "Great Protector, I make my request."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "high",
+  "why": "bdag 'tshal lo is 'I request', not 'I bow' (r2), and the Protector is the one who shows the way, not the thing sought (r3).",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": false,
+  "pass": true,
+  "ref_hash": "79af269cffd8587b",
+  "renderings": 4,
+  "misaligned": 0
+ },
+ {
+  "vid": "v758",
+  "pages": 41,
+  "divergence": 0.584,
+  "span_padas": [
+   "དབང་ཕྱུག་དང་ནི་གཟུགས་བཟང་དང",
+   "དཔལ་དང་གྲགས་དང་ཡེ་ཤེས་དང",
+   "བརྩོན་འགྲུས་ཕུན་སུམ་ཚོགས་པ་སྟེ",
+   "དྲུག་པོ་དེ་ལ་ལྡན་ཞེས་བྱ"
+  ],
+  "verse_padas": [
+   "དབང་ཕྱུག་དང་ནི་གཟུགས་བཟང་དང",
+   "དཔལ་དང་གྲགས་དང་ཡེ་ཤེས་དང",
+   "བརྩོན་འགྲུས་ཕུན་སུམ་ཚོགས་པ་སྟེ",
+   "དྲུག་པོ་དེ་ལ་ལྡན་ཞེས་བྱ",
+   "བརྩོན་འགྲུས་ཕུན་སུམ་ཚོགས་ལྡན་པ",
+   "དྲུག་པོ་དེ་ལ་ལྡན་ཞེས་བརྗོད",
+   "གྲགས་དང་དཔལ་དང་ཡེ་ཤེས་དང",
+   "དྲུག་པོ་རྣམས་ལ་སྐལ་ཞེས་བྱ"
+  ],
+  "reference": [
+   "Sovereignty and fine form,",
+   "Glory, fame, primordial wisdom,",
+   "And perfect diligence:",
+   "These six are what 'endowed' means."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "medium",
+  "why": "The verse glosses ldan in bcom ldan 'das (Skt. bhaga), so the last line names the six as the meaning of 'endowed' rather than r2's 'fortunes', which is the page's own term.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "83f36e2df9eb91ba",
+  "renderings": 6,
+  "misaligned": 1
+ },
+ {
+  "vid": "v977",
+  "pages": 64,
+  "divergence": 0.337,
+  "span_padas": [
+   "འདི་ནི་ཁྱོད་ཀྱི་དམྱལ་བའི་ཆུ",
+   "དམ་ཚིག་འདས་ན་སྲེག་པར་བྱེད"
+  ],
+  "verse_padas": [
+   "འདི་ནི་ཁྱོད་ཀྱི་དམྱལ་བའི་ཆུ",
+   "དམ་ཚིག་འདས་ན་སྲེག་པར་བྱེད",
+   "དམ་ཚིག་བསྲུངས་ན་དངོས་གྲུབ་ནི",
+   "རྡོ་རྗེ་བདུད་རྩིའི་ཆུ་འདིས་འགྲུབ"
+  ],
+  "reference": [
+   "This is your water of hell;",
+   "If you transgress the pledge, it will burn you."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "high",
+  "why": "r3 adds a prose line and pushes the burning line out of the span.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "00479e34e72c9cd9",
+  "renderings": 9,
+  "misaligned": 0
+ },
+ {
+  "vid": "v759",
+  "pages": 45,
+  "divergence": 0.457,
+  "span_padas": [
+   "དེ་བཞིན་གཤེགས་པ་ཀུན་ཞི་བ",
+   "དེ་བཞིན་གཤེགས་པ་ཀུན་གྱི་གནས"
+  ],
+  "verse_padas": [
+   "དེ་བཞིན་གཤེགས་པ་ཀུན་ཞི་བ",
+   "དེ་བཞིན་གཤེགས་པ་ཀུན་གྱི་གནས",
+   "ཆོས་ཀུན་བདག་མེད་པ་ཡི་མཆོག",
+   "དཀྱིལ་འཁོར་དམ་པ་བཤད་དུ་གསོལ"
+  ],
+  "reference": [
+   "Peace of all the Tathagatas,",
+   "Abode of all the Tathagatas,"
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "high",
+  "why": "Both lines are epithets addressed to the deity, so r4's predicate 'All Tathagatas are peaceful' is loose; r3 is shifted by one line.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "2d5294a43bad3db1",
+  "renderings": 4,
+  "misaligned": 0
+ },
+ {
+  "vid": "v1171",
+  "pages": 62,
+  "divergence": 0.331,
+  "span_padas": [
+   "ཐོག་མཐའ་མེད་པའི་སེམས་དཔའ་ནི",
+   "རྡོ་རྗེ་སེམས་དཔའ་དགའ་བ་ཆེ",
+   "ཀུན་དུ་བཟང་པོ་ཀུན་བདག་ཉིད"
+  ],
+  "verse_padas": [
+   "ཐོག་མཐའ་མེད་པའི་སེམས་དཔའ་ནི",
+   "རྡོ་རྗེ་སེམས་དཔའ་དགའ་བ་ཆེ",
+   "ཀུན་དུ་བཟང་པོ་ཀུན་བདག་ཉིད",
+   "རྡོ་རྗེ་སྙེམས་ཚུལ་བདག་པོའི་བདག"
+  ],
+  "reference": [
+   "The being without beginning or end",
+   "Is Vajrasattva, the great joy,",
+   "Samantabhadra, the self of all,"
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "high",
+  "why": "dga' ba che stands in apposition to Vajrasattva, so r4's 'the great joy of Vajrasattva' invents a genitive.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "e6f6134189951b18",
+  "renderings": 7,
+  "misaligned": 1
+ },
+ {
+  "vid": "v148",
+  "pages": 50,
+  "divergence": 0.387,
+  "span_padas": [
+   "བདག་ལས་མ་ཡིན་གཞན་ལས་མིན",
+   "གཉིས་ལས་མ་ཡིན་རྒྱུ་མེད་མིན",
+   "དངོས་པོ་གང་དག་གང་ན་ཡང",
+   "སྐྱེས་པ་ནམ་ཡང་ཡོད་མ་ཡིན"
+  ],
+  "verse_padas": [
+   "བདག་ལས་མ་ཡིན་གཞན་ལས་མིན",
+   "གཉིས་ལས་མ་ཡིན་རྒྱུ་མེད་མིན",
+   "དངོས་པོ་གང་དག་གང་ན་ཡང",
+   "སྐྱེས་པ་ནམ་ཡང་ཡོད་མ་ཡིན"
+  ],
+  "reference": [
+   "Not from self, not from another,",
+   "Not from both, nor without a cause:",
+   "Whatever entities there are, anywhere,",
+   "None has ever arisen at any time."
+  ],
+  "sanskrit_locus": "MMK 1.1",
+  "sanskrit_page_url": "https://sourcelibrary.org/book/6a3067d0c4fd77fb5b9f8378?page=22",
+  "confidence": "high",
+  "why": "The Tibetan says arisen entities never exist anywhere, so renderings that make the things exist and only their arising unfound, or that add 'in any way', shift the claim.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": false,
+  "pass": true,
+  "ref_hash": "8587eac0ddd0685f",
+  "renderings": 12,
+  "misaligned": 0
+ },
+ {
+  "vid": "v11",
+  "pages": 40,
+  "divergence": 0.46,
+  "span_padas": [
+   "ཡང་དག་ཉིད་ལ་ཡང་དག་ལྟ",
+   "ཡང་དག་མཐོང་ན་རྣམ་པར་གྲོལ"
+  ],
+  "verse_padas": [
+   "འདི་ལ་བསལ་བྱ་ཅི་ཡང་མེད",
+   "གཞག་པར་བྱ་བ་ཅུང་ཟད་མེད",
+   "ཡང་དག་ཉིད་ལ་ཡང་དག་ལྟ",
+   "ཡང་དག་མཐོང་ན་རྣམ་པར་གྲོལ"
+  ],
+  "reference": [
+   "Look truly upon truth itself;",
+   "When truth is seen, one is liberated."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "high",
+  "why": "Kept the majority's 'truth' for yang dag over 'the authentic', and restored the seen object that one rendering drops.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": false,
+  "pass": true,
+  "ref_hash": "ae614c00830dc5f4",
+  "renderings": 10,
+  "misaligned": 0
+ },
+ {
+  "vid": "v814",
+  "pages": 36,
+  "divergence": 0.475,
+  "span_padas": [
+   "ཇི་ལྟར་བལྟམས་པ་ཙམ་གྱིས་ནི",
+   "དེ་བཞིན་གཤེགས་ཀུན་ཁྲུས་གསོལ་ལྟར",
+   "ལྷ་ཡི་ཆུ་ནི་དག་པ་ཡིས"
+  ],
+  "verse_padas": [
+   "ཇི་ལྟར་བལྟམས་པ་ཙམ་གྱིས་ནི",
+   "དེ་བཞིན་གཤེགས་ཀུན་ཁྲུས་གསོལ་ལྟར",
+   "ལྷ་ཡི་ཆུ་ནི་དག་པ་ཡིས",
+   "དེ་བཞིན་བདག་གིས་ཁྲུས་གསོལ་ལོ"
+  ],
+  "reference": [
+   "Just as, at the very moment of their birth,",
+   "All the Tathagatas were bathed,",
+   "Likewise, with the pure water of the gods,"
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "medium",
+  "why": "de bzhin gshegs kun carries no ergative and khrus gsol is the honorific for bathing a superior, so the Tathagatas are the ones bathed at birth, not the bathers; 'likewise' is moved into line 3 so the unchanged fourth line still follows.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "85f36944e9fe7ed3",
+  "renderings": 5,
+  "misaligned": 1
+ },
+ {
+  "vid": "v1673",
+  "pages": 36,
+  "divergence": 0.406,
+  "span_padas": [
+   "དེ་ཉིད་ཀྱིས་ནི་རྡོ་རྗེ་གཟུང",
+   "ཆོས་ཀྱི་དྲིལ་བུ་དཀྲོལ་བར་བྱ",
+   "དམ་ཚིག་གི་ནི་ཕྱག་རྒྱ་ཆེར",
+   "བྱིན་གྱིས་བརླབས་ནས་སྙིང་པོ་བཟླ"
+  ],
+  "verse_padas": [
+   "དེ་ཉིད་ཀྱིས་ནི་རྡོ་རྗེ་གཟུང",
+   "ཆོས་ཀྱི་དྲིལ་བུ་དཀྲོལ་བར་བྱ",
+   "དམ་ཚིག་གིས་ནི་ཕྱག་རྒྱ་ཆེར",
+   "བྱིན་གྱིས་བརླབས་ནས་སྙིང་པོ་བཟླ",
+   "དེ་ཉིད་ཀྱིས་ནི་རྡོ་རྗེ་བཟུང",
+   "དམ་ཚིག་གི་ནི་ཕྱག་རྒྱ་ཆེར",
+   "བྱིན་གྱིས་བརླབས་ནས་སྙིང་པོ་བཟླས"
+  ],
+  "reference": [
+   "That very one should hold the vajra",
+   "And ring the bell of the Dharma;",
+   "Having blessed with the great seal of the commitment,",
+   "Let him recite the heart mantra."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "medium",
+  "why": "de nyid kyis is read as the agent (the same person holds the vajra and rings the bell), which the commentary's 'connect the bell with \"that very one holds\"' supports; the stored renderings take it as an instrument ('means', 'state', 'that itself').",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "2b227bf3c7a80afd",
+  "renderings": 3,
+  "misaligned": 0
+ },
+ {
+  "vid": "v993",
+  "pages": 20,
+  "divergence": 0.721,
+  "span_padas": [
+   "མཆོད་པ་ཆེན་པོ་འདོད་ཆགས་ཆེ",
+   "སེམས་ཅན་ཐམས་ཅད་དགའ་བར་བྱེད"
+  ],
+  "verse_padas": [
+   "མཆོད་པ་ཆེན་པོ་འདོད་ཆགས་ཆེ",
+   "སེམས་ཅན་ཐམས་ཅད་དགའ་བར་བྱེད",
+   "མཆོད་པ་ཆེན་པོ་ཞེ་སྡང་ཆེ",
+   "ཉོན་མོངས་ཀུན་གྱི་དགྲ་ཆེ་བ",
+   "མཆོད་པ་ཆེན་པོ་གཏི་མུག་ཆེ",
+   "གཏི་མུག་བློ་སྟེ་གཏི་མུག་སེལ"
+  ],
+  "reference": [
+   "The great offering is great passion;",
+   "It makes all sentient beings joyful."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "high",
+  "why": "",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "fb68d4453bc80e09",
+  "renderings": 3,
+  "misaligned": 1
+ },
+ {
+  "vid": "v1326",
+  "pages": 39,
+  "divergence": 0.367,
+  "span_padas": [
+   "ཐམས་ཅད་ནམ་མཁའི་མཚན་ཉིད་དེ",
+   "ནམ་མཁའ་ལ་ཡང་མཚན་ཉིད་མེད"
+  ],
+  "verse_padas": [
+   "ཐམས་ཅད་ནམ་མཁའི་མཚན་ཉིད་དེ",
+   "ནམ་མཁའ་ལ་ཡང་མཚན་ཉིད་མེད",
+   "ནམ་མཁའ་དང་མཉམ་སྦྱོར་བ་ཡིས",
+   "ཀུན་མཆོག་མཉམ་པ་ཉིད་དུ་གསལ"
+  ],
+  "reference": [
+   "All things have the characteristic of space,",
+   "And space itself has no characteristic."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "high",
+  "why": "mtshan nyid is rendered the same way in both lines, as 'characteristic', because the verse plays on the one word.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "d92dc050c5b4cd91",
+  "renderings": 6,
+  "misaligned": 1
+ },
+ {
+  "vid": "v1038",
+  "pages": 27,
+  "divergence": 0.528,
+  "span_padas": [
+   "ཆུ་ཁམས་གསེར་དང་ནམ་མཁའ་རྣམས",
+   "དག་པ་བཞིན་དུ་དག་པར་འདོད"
+  ],
+  "verse_padas": [
+   "ཆུ་ཁམས་གསེར་དང་ནམ་མཁའ་བཞིན",
+   "དག་པ་བཞིན་དུ་དག་པར་འདོད",
+   "ཆུ་ཁམས་གསེར་དང་ནམ་མཁའ་རྣམས"
+  ],
+  "reference": [
+   "Like the element of water, gold, and space,",
+   "It is held to be pure, just as they are pure."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "high",
+  "why": "'dod here means 'is held to be', not 'desired', and dag pa bzhin du compares natural purity, not a process of becoming pure.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "ee3dac524651b210",
+  "renderings": 5,
+  "misaligned": 1
+ },
+ {
+  "vid": "v785",
+  "pages": 62,
+  "divergence": 0.222,
+  "span_padas": [
+   "ཆོས་རྣམས་གཟུགས་བརྙན་ལྟ་བུ་སྟེ",
+   "དག་ཅིང་གསལ་ལ་རྙོག་པ་མེད",
+   "གཟུང་དུ་མེད་ཅིང་བརྗོད་དུ་མེད"
+  ],
+  "verse_padas": [
+   "ཆོས་རྣམས་གཟུགས་བརྙན་ལྟ་བུ་སྟེ",
+   "དག་ཅིང་གསལ་ལ་རྙོག་པ་མེད",
+   "གཟུང་དུ་མེད་ཅིང་བརྗོད་དུ་མེད",
+   "རྒྱུ་དང་ལས་ལས་ཀུན་དུ་འབྱུང"
+  ],
+  "reference": [
+   "Phenomena are like reflections,",
+   "Pure, clear, and without turbidity,",
+   "Ungraspable and inexpressible,"
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "high",
+  "why": "",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": false,
+  "pass": true,
+  "ref_hash": "eebb446b6595270e",
+  "renderings": 7,
+  "misaligned": 0
+ },
+ {
+  "vid": "v315",
+  "pages": 15,
+  "divergence": 0.917,
+  "span_padas": [
+   "གལ་ཏེ་ངོ་བོ་ཉིད་མེད་ན",
+   "གཞན་དངོས་ཡོད་པར་ཇི་ལྟར་འགྱུར"
+  ],
+  "verse_padas": [
+   "གལ་ཏེ་ངོ་བོ་ཉིད་མེད་ན",
+   "གཞན་དུ་འགྱུར་བ་གང་གི་ཡིན",
+   "རང་བཞིན་ཡོད་པ་མ་ཡིན་ན",
+   "གཞན་དངོས་ཡོད་པར་ཇི་ལྟར་འགྱུར"
+  ],
+  "reference": [
+   "If there is no essence,",
+   "How could the entity of another exist?"
+  ],
+  "sanskrit_locus": "MMK 22.4",
+  "sanskrit_page_url": "https://sourcelibrary.org/book/6a3067d0c4fd77fb5b9f8378?page=449",
+  "confidence": "high",
+  "why": "The span is pādas a and d of the packet verse, but the pages quote it as the couplet that opens MMK 22.4 (the Tathagata chapter), so it is rendered as that couplet.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "a710eb03fca75b9e",
+  "renderings": 3,
+  "misaligned": 2
+ },
+ {
+  "vid": "v1325",
+  "pages": 49,
+  "divergence": 0.276,
+  "span_padas": [
+   "ཇི་ལྟར་མིག་མཁན་རྒྱལ་པོ་ཡིས",
+   "འཇིག་རྟེན་ལིང་ཏོག་བསལ་བ་ལྟར",
+   "བུ་ཁྱོད་ཀྱིས་ནི་མི་ཤེས་པའི",
+   "རབ་རིབ་རྒྱལ་བ་རྣམས་ཀྱིས་བསལ"
+  ],
+  "verse_padas": [
+   "ཇི་ལྟར་མིག་མཁན་རྒྱལ་པོ་ཡིས",
+   "འཇིག་རྟེན་ལིང་ཏོག་བསལ་བ་ལྟར",
+   "བུ་ཁྱོད་ཀྱིས་ནི་མི་ཤེས་པའི",
+   "རབ་རིབ་རྒྱལ་བ་རྣམས་ཀྱིས་བསལ",
+   "ལིང་ཏོག་རྒྱལ་བ་རྣམས་ཀྱིས་བསལ",
+   "འཇིག་རྟེན་རབ་རིབ་བསལ་བ་ལྟར",
+   "བུ་ཁྱོད་ཀྱི་ནི་མི་ཤེས་པའི",
+   "འཇིག་རྟེན་ལིང་ཐོག་བསལ་བ་ལྟར"
+  ],
+  "reference": [
+   "Just as the king of eye physicians",
+   "Removes the cataracts of the world,",
+   "So, my child, the film of your ignorance",
+   "Has been removed by the Victors."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "high",
+  "why": "The Victors (rgyal ba rnams kyis) are the agents who remove the child's film of ignorance, and bu 'my child' is a vocative several renderings drop; r4 and r6 also swallow the following mantra into the span.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "45e3381c7d8d3cf5",
+  "renderings": 6,
+  "misaligned": 0
+ },
+ {
+  "vid": "v152",
+  "pages": 30,
+  "divergence": 0.436,
+  "span_padas": [
+   "ནམ་མཁའི་མཚན་ཉིད་སྔ་རོལ་ན",
+   "ནམ་མཁའ་ཅུང་ཟད་ཡོད་མ་ཡིན"
+  ],
+  "verse_padas": [
+   "ནམ་མཁའི་མཚན་ཉིད་སྔ་རོལ་ན",
+   "ནམ་མཁའ་ཅུང་ཟད་ཡོད་མ་ཡིན",
+   "གལ་ཏེ་མཚན་ལས་སྔར་གྱུར་ན",
+   "མཚན་ཉིད་མེད་པར་ཐལ་བར་འགྱུར",
+   "མཚན་ཉིད་མེད་པའི་དངོས་པོ་ནི",
+   "འགའ་ཡང་གང་ནའང་ཡོད་མ་ཡིན",
+   "གལ་ཏེ་མཚན་ལས་སྔ་གྱུར་ན",
+   "འགའ་ཡང་གང་ན་ཡོད་མ་ཡིན"
+  ],
+  "reference": [
+   "Prior to the characteristic of space,",
+   "Not the slightest bit of space exists."
+  ],
+  "sanskrit_locus": "MMK 5.1",
+  "sanskrit_page_url": "https://sourcelibrary.org/book/6a3067d0c4fd77fb5b9f8378?page=141",
+  "confidence": "high",
+  "why": "r1 and r4 carry a line of the commentator's framing prose inside the span, which the reference leaves out.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "d2fdaf5cd118e6e5",
+  "renderings": 6,
+  "misaligned": 0
+ },
+ {
+  "vid": "v496",
+  "pages": 20,
+  "divergence": 0.636,
+  "span_padas": [
+   "སངས་རྒྱས་རྣམས་ཀྱིས་ཆོས་བསྟན་པ",
+   "བདེན་པ་གཉིས་ལ་ཡང་དག་བརྟེན",
+   "འཇིག་རྟེན་ཀུན་རྫོབ་བདེན་པ་དང"
+  ],
+  "verse_padas": [
+   "སངས་རྒྱས་རྣམས་ཀྱིས་ཆོས་བསྟན་པ",
+   "བདེན་པ་གཉིས་ལ་ཡང་དག་བརྟེན",
+   "འཇིག་རྟེན་ཀུན་རྫོབ་བདེན་པ་དང",
+   "རིམ་པ་གཉིས་ལ་ཡང་དག་གནས"
+  ],
+  "reference": [
+   "The Dharma taught by the Buddhas",
+   "Rests wholly on two truths:",
+   "The conventional truth of the world"
+  ],
+  "sanskrit_locus": "MMK 24.8",
+  "sanskrit_page_url": "https://sourcelibrary.org/book/6a3067d0c4fd77fb5b9f8378?page=504",
+  "confidence": "high",
+  "why": "The span stops before the fourth pada, which differs between quotations, so the 'and' of line three is left for the pages' existing 'And the ultimate truth' line.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "068fa96e31d15b87",
+  "renderings": 3,
+  "misaligned": 1
+ },
+ {
+  "vid": "v1080",
+  "pages": 45,
+  "divergence": 0.273,
+  "span_padas": [
+   "དགའ་ཆེན་ཁྱོད་བདག་སྟོན་པ་བས",
+   "སློབ་དཔོན་ཁྱོད་ནི་དགོངས་སུ་གསོལ"
+  ],
+  "verse_padas": [
+   "མ་གྲོལ་བ་ནི་དགྲོལ་བར་བགྱི",
+   "མ་བསྒྲལ་བ་ནི་བསྒྲལ་བར་བགྱི",
+   "དགའ་ཆེན་ཁྱོད་བདག་སྟོན་པ་བས",
+   "སློབ་དཔོན་ཁྱོད་ནི་དགོངས་སུ་གསོལ"
+  ],
+  "reference": [
+   "O Great Joy, since you are my teacher,",
+   "Master, please turn your attention to me."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "medium",
+  "why": "The particle bas is read as causal ('since'), as r3 and r5 do; the others leave it as plain apposition, which is not wrong.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "096acdea1686ef39",
+  "renderings": 6,
+  "misaligned": 0
+ },
+ {
+  "vid": "v3592",
+  "pages": 33,
+  "divergence": 0.343,
+  "span_padas": [
+   "གཟུགས་ནི་རྡུལ་ཕྲན་གཞིགས་པ་ན",
+   "རྡུལ་ཕྲན་ཆ་ནི་མེད་པ་སྟེ"
+  ],
+  "verse_padas": [
+   "གཟུགས་ནི་རྡུལ་ཕྲན་གཞིགས་པ་ན",
+   "རྡུལ་ཕྲན་ཆ་ནི་མེད་པ་སྟེ",
+   "ཕྱི་ཡི་དངོས་པོ་མེད་པར་ཡང",
+   "སེམས་ནི་རྣམ་པ་གཉིས་སུ་སྣང",
+   "རྡུལ་ཕྲན་ཆ་ནི་ཡོད་པ་མིན"
+  ],
+  "reference": [
+   "When form is broken down into atoms,",
+   "No atomic part is found to exist."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "medium",
+  "why": "The commentary around the quotations (D4018) says that even the subtle atoms do not exist and rejects the Sravaka view of partless atoms, so 'the atom has no parts', which the stored renderings use, misleads; rdul phran cha med is read as 'no atomic part exists'.",
+  "blind_grade_of_reference": "weak",
+  "reference_blind_best": false,
+  "pass": false,
+  "ref_hash": "02a1267260a97978",
+  "renderings": 7,
+  "misaligned": 0
+ },
+ {
+  "vid": "v1213",
+  "pages": 34,
+  "divergence": 0.281,
+  "span_padas": [
+   "ཁྱོད་ཀྱིས་ཀྱང་ནི་རྟག་ཏུ་བཅང",
+   "བྱང་ཆུབ་མཆོག་ཏུ་རྒྱལ་བ་བཞེད"
+  ],
+  "verse_padas": [
+   "འདི་ནི་རྣལ་འབྱོར་མ་ཀུན་གྱི",
+   "ཤེས་རབ་དབྱངས་ཀྱི་རྗེས་འགྲོར་བཤད",
+   "ཁྱོད་ཀྱིས་ཀྱང་ནི་རྟག་ཏུ་བཅང",
+   "བྱང་ཆུབ་མཆོག་ཏུ་རྒྱལ་བ་བཞེད"
+  ],
+  "reference": [
+   "You too must always hold it;",
+   "The Victors deem it supreme awakening."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "medium",
+  "why": "byang chub mchog tu rgyal ba bzhed states what the Victors hold the bell to be, supreme awakening, not what they 'intend' for the student, as all three renderings have it.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "4d45ff751660f9b2",
+  "renderings": 3,
+  "misaligned": 0
+ },
+ {
+  "vid": "v180",
+  "pages": 24,
+  "divergence": 0.383,
+  "span_padas": [
+   "མེད་དམ་ཡོད་པའི་དོན་ལ་ཡང",
+   "རྐྱེན་ནི་རུང་བ་མ་ཡིན་ཏེ"
+  ],
+  "verse_padas": [
+   "མེད་དམ་ཡོད་པའི་དོན་ལ་ཡང",
+   "རྐྱེན་ནི་རུང་བ་མ་ཡིན་ཏེ",
+   "མེད་ན་གང་གི་རྐྱེན་དུ་འགྱུར",
+   "ཡོད་ན་རྐྱེན་གྱིས་ཅི་ཞིག་བྱ"
+  ],
+  "reference": [
+   "For a thing either nonexistent or existent,",
+   "A condition is not appropriate."
+  ],
+  "sanskrit_locus": "MMK 1.6",
+  "sanskrit_page_url": "https://sourcelibrary.org/book/6a3067d0c4fd77fb5b9f8378?page=92",
+  "confidence": "high",
+  "why": "The negation sits in the second pada (ma yin), so the line order is kept; r2, r3 and r8 swap the two lines.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "06fa596f4aaa6ccd",
+  "renderings": 8,
+  "misaligned": 1
+ },
+ {
+  "vid": "v2910",
+  "pages": 13,
+  "divergence": 0.705,
+  "span_padas": [
+   "འདི་ཡི་དམིགས་པ་དངོས་མེད་དེ",
+   "བདག་པོ་དྲན་པ་ཡིན་པར་བཞེད"
+  ],
+  "verse_padas": [
+   "འདི་ཡི་དམིགས་པ་དངོས་མེད་དེ",
+   "བདག་པོ་དྲན་པ་ཡིན་པར་བཞེད",
+   "རྣམ་པ་ཞི་ཉིད་འདི་ལ་ནི",
+   "རབ་ཏུ་སྨྲ་རྣམས་བརྒྱུད་མར་རྒོལ"
+  ],
+  "reference": [
+   "Its object is the absence of entities;",
+   "Its sovereign condition is held to be mindfulness."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "high",
+  "why": "bdag po is the sovereign (adhipati) condition, as the D3903 commentary glosses it (bdag po'i rkyen); r2 also runs on into the next pada.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "49b6ecd67b2be149",
+  "renderings": 3,
+  "misaligned": 1
+ },
+ {
+  "vid": "v144",
+  "pages": 15,
+  "divergence": 0.556,
+  "span_padas": [
+   "ཐ་དད་དོན་མིན་དོན་གཅིག་མིན",
+   "སྤྲོས་པ་ཉེར་ཞི་ཞི་བསྟན་པ",
+   "རྫོགས་པའི་སངས་རྒྱས་སྨྲ་རྣམས་ཀྱི",
+   "དམ་པ་དེ་ལ་ཕྱག་འཚལ་ལོ"
+  ],
+  "verse_padas": [
+   "ཐ་དད་དོན་མིན་དོན་གཅིག་མིན",
+   "སྤྲོས་པ་ཉེར་ཞི་ཞི་བསྟན་པ",
+   "རྫོགས་པའི་སངས་རྒྱས་སྨྲ་རྣམས་ཀྱི",
+   "དམ་པ་དེ་ལ་ཕྱག་འཚལ་ལོ"
+  ],
+  "reference": [
+   "Not different in meaning, not one in meaning,",
+   "Who taught it as peace, the stilling of conceptual elaboration:",
+   "To that perfect Buddha, the best of speakers,",
+   "I pay homage."
+  ],
+  "sanskrit_locus": "MMK mangala verse 2",
+  "sanskrit_page_url": "https://sourcelibrary.org/book/6a3067d0c4fd77fb5b9f8378?page=21",
+  "confidence": "medium",
+  "why": "Six pages moved the homage to the front of the stanza (it sits in their preceding English), so their matched lines render padas 3-6. The reference keeps the Tibetan order, and on those pages it would repeat the homage unless the lines before it are rewritten too.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "694202e37e4739d1",
+  "renderings": 8,
+  "misaligned": 6
+ },
+ {
+  "vid": "v1666",
+  "pages": 16,
+  "divergence": 0.519,
+  "span_padas": [
+   "སྲིད་པའི་བདེ་བ་ཤིན་ཏུ་ཆུང",
+   "སྡུག་བསྔལ་ཆེན་པོ་དག་བྱའི་ཕྱིར",
+   "ཤིན་ཏུ་བདེ་བ་དམ་པའི་ཐབས"
+  ],
+  "verse_padas": [
+   "སྲིད་པའི་བདེ་བ་ཤིན་ཏུ་ཆུང",
+   "སྡུག་བསྔལ་ཆེན་པོ་དག་བྱའི་ཕྱིར",
+   "ཤིན་ཏུ་བདེ་བ་དམ་པའི་ཐབས",
+   "དམ་ཚིག་འདི་ནི་རྟག་ཏུ་བསྐྱེད"
+  ],
+  "reference": [
+   "The pleasures of existence are very slight;",
+   "To purify great suffering,",
+   "This is the sublime means to utmost bliss."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "medium",
+  "why": "Line 3 is in apposition to the samaya of the next line, which varies between quotations (guard, keep, attain), so it is rendered as a standalone statement rather than r2's imperative 'employ'.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "28ab7577945b4b25",
+  "renderings": 3,
+  "misaligned": 1
+ },
+ {
+  "vid": "v982",
+  "pages": 32,
+  "divergence": 0.252,
+  "span_padas": [
+   "དབང་བསྐུར་རྡོ་རྗེ་ཆེན་པོ་ནི",
+   "ཁམས་གསུམ་པ་ཡིས་ཕྱག་བྱས་པ",
+   "སངས་རྒྱས་ཀུན་གྱི་གསང་གསུམ་གྱི",
+   "གནས་ལས་བྱུང་བ་སྦྱིན་པར་བྱ"
+  ],
+  "verse_padas": [
+   "དབང་བསྐུར་རྡོ་རྗེ་ཆེན་པོ་ནི",
+   "ཁམས་གསུམ་པ་ཡིས་ཕྱག་བྱས་པ",
+   "སངས་རྒྱས་ཀུན་གྱི་གསང་གསུམ་གྱི",
+   "གནས་ལས་བྱུང་བ་སྦྱིན་པར་བྱ"
+  ],
+  "reference": [
+   "The great vajra empowerment,",
+   "Venerated by the three realms,",
+   "Arising from the source of the three secrets",
+   "Of all the Buddhas, I shall now bestow."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "high",
+  "why": "The genitive of line 3 runs into the 'place' of line 4, so 'of all the Buddhas' moves down; sbyin par bya is the officiant's own declaration, so it is rendered in the first person.",
+  "blind_grade_of_reference": "weak",
+  "reference_blind_best": false,
+  "pass": false,
+  "ref_hash": "1875e0ee3568ffa2",
+  "renderings": 4,
+  "misaligned": 0
+ },
+ {
+  "vid": "v611",
+  "pages": 17,
+  "divergence": 0.469,
+  "span_padas": [
+   "ཡེ་ཤེས་མིག་གཅིག་དྲི་མ་མེད",
+   "ཡེ་ཤེས་ལུས་ཅན་དེ་བཞིན་གཤེགས"
+  ],
+  "verse_padas": [
+   "སངས་རྒྱས་ཐོག་མ་ཐ་མ་མེད",
+   "དང་པོའི་སངས་རྒྱས་རྒྱུ་མེད་པ",
+   "ཡེ་ཤེས་མིག་གཅིག་དྲི་མ་མེད",
+   "ཡེ་ཤེས་ལུས་ཅན་དེ་བཞིན་གཤེགས",
+   "དང་པོའི་སངས་རྒྱས་རིགས་མེད་པ"
+  ],
+  "reference": [
+   "The single eye of wisdom, stainless,",
+   "The Tathagata whose body is wisdom."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "high",
+  "why": "Both lines are epithets of Manjushri, so the predicative readings ('is stainless', 'possesses the body') in r3 are avoided.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "4a2f4e624aa4e314",
+  "renderings": 3,
+  "misaligned": 0
+ },
+ {
+  "vid": "v2108",
+  "pages": 19,
+  "divergence": 0.405,
+  "span_padas": [
+   "རྒྱུ་མེད་གཞན་ལ་མི་ལྟོས་ཕྱིར",
+   "རྟག་ཏུ་ཡོད་པའམ་མེད་པར་འགྱུར"
+  ],
+  "verse_padas": [
+   "རྒྱུ་མེད་གཞན་ལ་མི་ལྟོས་ཕྱིར",
+   "རྟག་ཏུ་ཡོད་པའམ་མེད་པར་འགྱུར",
+   "དངོས་པོ་རྣམས་ནི་རེས་འགའ་ཞིག",
+   "འབྱུང་བ་ལྟོས་པ་ལས་ཡིན་ནོ",
+   "རྟག་ཏུ་ཡོད་པའང་མེད་པར་འགྱུར"
+  ],
+  "reference": [
+   "Since what has no cause depends on nothing else,",
+   "It would either always exist or never exist."
+  ],
+  "sanskrit_locus": "PV svārthānumāna 35 (also pramāṇasiddhi 182)",
+  "sanskrit_page_url": "https://sourcelibrary.org/book/6a30909cbec66f86487f2e8d?page=298",
+  "confidence": "high",
+  "why": "rgyu med (causeless) is the subject of the reason, not 'any other cause' as r1 has it, and r3 pushes it into a note.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "624821bfdc3a0abf",
+  "renderings": 3,
+  "misaligned": 0
+ },
+ {
+  "vid": "v161",
+  "pages": 21,
+  "divergence": 0.365,
+  "span_padas": [
+   "གང་ཚེ་ཆོས་ནི་ཡོད་པ་དང",
+   "མེད་དང་ཡོད་མེད་མི་སྒྲུབ་པ"
+  ],
+  "verse_padas": [
+   "གང་ཚེ་ཆོས་ནི་ཡོད་པ་དང",
+   "མེད་དང་ཡོད་མེད་མི་སྒྲུབ་པ",
+   "ཇི་ལྟར་སྒྲུབ་བྱེད་རྒྱུ་ཞེས་བྱ",
+   "དེ་ལྟ་ཡིན་ན་མི་རིགས་སོ",
+   "མེད་དང་ཡོད་མེད་མི་འགྲུབ་པ",
+   "དེ་ལྟར་ཡིན་ན་མི་རིགས་སོ",
+   "མེད་དང་ཡོད་མེད་མི་བསྒྲུབ་པ"
+  ],
+  "reference": [
+   "When a phenomenon is not produced as existent,",
+   "Nonexistent, or both existent and nonexistent,"
+  ],
+  "sanskrit_locus": "MMK 1.7",
+  "sanskrit_page_url": "https://sourcelibrary.org/book/6a3067d0c4fd77fb5b9f8378?page=41",
+  "confidence": "medium",
+  "why": "The phenomenon is what is (not) produced, not the agent that establishes, as r1 has it (Sanskrit nirvartate confirms), and r4 drops the verb, turning a claim about production into one about being.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "99237022a51ac027",
+  "renderings": 4,
+  "misaligned": 0
+ },
+ {
+  "vid": "v207",
+  "pages": 18,
+  "divergence": 0.425,
+  "span_padas": [
+   "ལྟ་བས་ཉན་དང་སྣོམ་པ་དང",
+   "མྱོང་བར་བྱེད་དང་རེག་བྱེད་ཡིད",
+   "ཉན་པ་པོ་དང་མཉན་ལ་སོགས",
+   "རྣམ་པར་བཤད་པར་ཤེས་པར་བྱ"
+  ],
+  "verse_padas": [
+   "ལྟ་དང་ཉན་དང་སྣོམ་པ་དང",
+   "མྱོང་བར་བྱེད་དང་རེག་བྱེད་ཡིད",
+   "ཉན་པ་པོ་དང་མཉན་ལ་སོགས",
+   "རྣམ་པར་བཤད་པར་ཤེས་པར་བྱ",
+   "ལྟ་བ་ཉིད་ཀྱིས་ལྟ་བ་པོའང",
+   "ལྟ་བས་ཉན་དང་སྣོམ་པ་དང",
+   "དབང་པོ་དྲུག་པོ་དེ་དག་གི",
+   "སྤྱོད་ཡུལ་བལྟ་བར་བྱ་ལ་སོགས"
+  ],
+  "reference": [
+   "As with seeing, so hearing and smelling,",
+   "Tasting, touching and the mind,",
+   "The hearer, the heard and so forth",
+   "Should be understood as explained."
+  ],
+  "sanskrit_locus": "MMK 3.9",
+  "sanskrit_page_url": "https://sourcelibrary.org/book/6a3067d0c4fd77fb5b9f8378?page=132",
+  "confidence": "high",
+  "why": "lta bas is instrumental (explained by way of the analysis of seeing, Sanskrit darśanenaiva), so seeing is the model and not one more item on the list, as r2 and r4 make it.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "119e959aca4f4788",
+  "renderings": 5,
+  "misaligned": 1
+ },
+ {
+  "vid": "v381",
+  "pages": 17,
+  "divergence": 0.444,
+  "span_padas": [
+   "མ་སྐྱེས་པ་དང་མ་འགགས་པ",
+   "ཆོས་ཉིད་མྱ་ངན་འདས་དང་མཚུངས"
+  ],
+  "verse_padas": [
+   "མ་སྐྱེས་པ་དང་མ་འགགས་པ",
+   "ཆོས་ཉིད་མྱ་ངན་འདས་དང་མཚུངས"
+  ],
+  "reference": [
+   "Unarisen and unceasing,",
+   "The nature of phenomena is like nirvana."
+  ],
+  "sanskrit_locus": "MMK 18.7",
+  "sanskrit_page_url": "https://sourcelibrary.org/book/6a3067d0c4fd77fb5b9f8378?page=376",
+  "confidence": "high",
+  "why": "",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "10fac5722c1fc2db",
+  "renderings": 7,
+  "misaligned": 1
+ },
+ {
+  "vid": "v429",
+  "pages": 19,
+  "divergence": 0.394,
+  "span_padas": [
+   "འབྲས་བུ་མི་སྟོང་སྐྱེ་མི་འགྱུར",
+   "མི་སྟོང་འགག་པར་མི་འགྱུར་རོ",
+   "མི་སྟོང་དེ་ནི་མ་འགགས་དང",
+   "མ་སྐྱེས་པར་ཡང་འགྱུར་བ་ཡིན"
+  ],
+  "verse_padas": [
+   "འབྲས་བུ་མི་སྟོང་སྐྱེ་མི་འགྱུར",
+   "མི་སྟོང་འགག་པར་མི་འགྱུར་རོ",
+   "མི་སྟོང་དེ་ནི་མ་འགགས་དང",
+   "མ་སྐྱེས་པར་ཡང་འགྱུར་བ་ཡིན",
+   "སྟོང་པ་ཇི་ལྟར་སྐྱེ་འགྱུར་ཞིང",
+   "སྟོང་པ་ཇི་ལྟར་འགག་པར་འགྱུར",
+   "སྟོང་པ་དེ་ཡང་མ་འགགས་དང",
+   "མ་སྐྱེས་པར་ཡང་ཐལ་བར་འགྱུར"
+  ],
+  "reference": [
+   "A result that is not empty will not arise;",
+   "What is not empty will not cease.",
+   "That which is not empty would be",
+   "Both unceasing and unarisen."
+  ],
+  "sanskrit_locus": "MMK 20.17",
+  "sanskrit_page_url": "https://sourcelibrary.org/book/6a3067d0c4fd77fb5b9f8378?page=414",
+  "confidence": "high",
+  "why": "",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "1526f791c25669cd",
+  "renderings": 3,
+  "misaligned": 0
+ },
+ {
+  "vid": "v227",
+  "pages": 11,
+  "divergence": 0.678,
+  "span_padas": [
+   "དངོས་པོ་ཡོད་པ་མ་ཡིན་ན",
+   "དངོས་མེད་གང་གི་ཡིན་པར་འགྱུར"
+  ],
+  "verse_padas": [
+   "དངོས་པོ་ཡོད་པ་མ་ཡིན་ན",
+   "དངོས་མེད་གང་གི་ཡིན་པར་འགྱུར",
+   "ལྟ་བ་ལ་སོགས་ཇི་ལྟར་འགྱུར"
+  ],
+  "reference": [
+   "If an entity does not exist,",
+   "To what would a non-entity belong?"
+  ],
+  "sanskrit_locus": "MMK 5.6",
+  "sanskrit_page_url": "https://sourcelibrary.org/book/6a3067d0c4fd77fb5b9f8378?page=144",
+  "confidence": "high",
+  "why": "gang gi asks what the non-entity would belong to, so it is 'what' and not r4's 'whom', and dngos med is a non-entity, not 'its non-existence'.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "c71f0ba9cc409c60",
+  "renderings": 4,
+  "misaligned": 1
+ },
+ {
+  "vid": "v162",
+  "pages": 17,
+  "divergence": 0.433,
+  "span_padas": [
+   "བདག་གི་དངོས་པོ་ཡོད་མིན་ན",
+   "གཞན་གྱི་དངོས་པོ་ཡོད་མ་ཡིན"
+  ],
+  "verse_padas": [
+   "དངོས་པོ་རྣམས་ཀྱི་རང་བཞིན་ནི",
+   "རྐྱེན་ལ་སོགས་པ་ཡོད་མ་ཡིན",
+   "བདག་གི་དངོས་པོ་ཡོད་མིན་ན",
+   "གཞན་གྱི་དངོས་པོ་ཡོད་མ་ཡིན",
+   "རྐྱེན་ལ་སོགས་ལ་ཡོད་མ་ཡིན"
+  ],
+  "reference": [
+   "If its own entity does not exist,",
+   "The entity of another does not exist."
+  ],
+  "sanskrit_locus": "MMK 1.3",
+  "sanskrit_page_url": "https://sourcelibrary.org/book/6a3067d0c4fd77fb5b9f8378?page=88",
+  "confidence": "high",
+  "why": "The particle na is conditional, so 'if' rather than r2's 'since'; bdag gi / gzhan gyi dngos po are the own-entity and other-entity of the verse.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "b507a3186edf946b",
+  "renderings": 4,
+  "misaligned": 0
+ },
+ {
+  "vid": "v1399",
+  "pages": 24,
+  "divergence": 0.302,
+  "span_padas": [
+   "དེ་བཞིན་གཤེགས་པའི་རིགས་སུ་ནི",
+   "དེང་བདག་སྐྱེ་བར་ཐེ་ཚོམ་མེད"
+  ],
+  "verse_padas": [
+   "བྱང་ཆུབ་སེམས་དང་སེམས་གཅིག་ལས",
+   "མི་ལྡོག་པར་ནི་བདག་གྱུར་ཏེ",
+   "དེ་བཞིན་གཤེགས་པའི་རིགས་སུ་ནི",
+   "དེང་བདག་སྐྱེ་བར་ཐེ་ཚོམ་མེད"
+  ],
+  "reference": [
+   "Into the family of the Tathagatas",
+   "I am born today, without a doubt."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "high",
+  "why": "",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "3a3d4ab2c834829b",
+  "renderings": 6,
+  "misaligned": 0
+ },
+ {
+  "vid": "v208",
+  "pages": 22,
+  "divergence": 0.327,
+  "span_padas": [
+   "ལྟ་བ་རང་གི་བདག་ཉིད་ན",
+   "དེ་ནི་དེ་ལ་མི་ལྟ་ཉིད",
+   "གང་ཚེ་བདག་ལ་མི་ལྟ་བ",
+   "དེ་གཞན་དག་ལ་ཇི་ལྟར་ལྟ"
+  ],
+  "verse_padas": [
+   "གང་ཞིག་བདག་ལ་མི་ལྟ་བ",
+   "དེ་གཞན་དག་ལ་ཇི་ལྟར་ལྟ",
+   "ལྟ་བ་རང་གི་བདག་ཉིད་ན",
+   "དེ་ནི་དེ་ལ་མི་ལྟ་ཉིད",
+   "གང་ཚེ་བདག་ལ་མི་ལྟ་བ",
+   "དེ་ཡིས་དེ་ནི་མི་མཐོང་ཉིད",
+   "གང་ཚེ་བདག་ཉིད་མི་མཐོང་བ",
+   "དེ་ཡིས་གཞན་ནི་ཇི་ལྟར་མཐོང"
+  ],
+  "reference": [
+   "Seeing, as to its own self,",
+   "Does not see that very self.",
+   "When it does not see itself,",
+   "How could it see others?"
+  ],
+  "sanskrit_locus": "MMK 3.2",
+  "sanskrit_page_url": "https://sourcelibrary.org/book/6a3067d0c4fd77fb5b9f8378?page=125",
+  "confidence": "high",
+  "why": "The first pāda names seeing and its own self as topic (the Sanskrit svam ātmānaṃ darśanaṃ), not a condition, so r6's 'If seeing were its own self' reverses the claim.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "c89770a072d0e703",
+  "renderings": 6,
+  "misaligned": 0
+ },
+ {
+  "vid": "v1898",
+  "pages": 10,
+  "divergence": 0.704,
+  "span_padas": [
+   "ཡི་གེ་གང་ཞིག་སྔར་བཤད་དང",
+   "གང་ཡང་མངོན་པར་ཕྱོགས་པ་རྣམས"
+  ],
+  "verse_padas": [
+   "ར་ལ་སོགས་པ་གསུམ་ཉིད་ཀྱིས",
+   "འགྲོ་བའི་དོན་ལ་རབ་ཏུ་འཇུག",
+   "ཡི་གེ་གང་ཞིག་སྔར་བཤད་དང",
+   "གང་ཡང་མངོན་པར་ཕྱོགས་པ་རྣམས"
+  ],
+  "reference": [
+   "Whatever letters were explained before,",
+   "And whatever ones are manifest,"
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "medium",
+  "why": "mngon par phyogs pa literally means 'turned toward'; kept 'manifest' as both aligned renderings use it and it fits the following line on the genders of letters.",
+  "blind_grade_of_reference": "weak",
+  "reference_blind_best": false,
+  "pass": false,
+  "ref_hash": "b57845c69a752fda",
+  "renderings": 3,
+  "misaligned": 1
+ },
+ {
+  "vid": "v485",
+  "pages": 33,
+  "divergence": 0.213,
+  "span_padas": [
+   "གལ་ཏེ་འདི་དག་ཀུན་སྟོང་ན",
+   "འབྱུང་བ་མེད་ཅིང་འཇིག་པ་མེད"
+  ],
+  "verse_padas": [
+   "གལ་ཏེ་འདི་དག་ཀུན་སྟོང་ན",
+   "འབྱུང་བ་མེད་ཅིང་འཇིག་པ་མེད",
+   "འཕགས་པའི་བདེན་པ་བཞི་པོ་རྣམས",
+   "ཁྱོད་ལ་མེད་པར་ཐལ་བར་འགྱུར"
+  ],
+  "reference": [
+   "If all these things are empty,",
+   "There is no arising and no ceasing."
+  ],
+  "sanskrit_locus": "MMK 24.1",
+  "sanskrit_page_url": "https://sourcelibrary.org/book/6a3067d0c4fd77fb5b9f8378?page=487",
+  "confidence": "high",
+  "why": "r4 is the English of the page's framing phrase and paraphrase, not of the quoted pādas.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": false,
+  "pass": true,
+  "ref_hash": "53baf656d3f2f6f0",
+  "renderings": 7,
+  "misaligned": 1
+ },
+ {
+  "vid": "v1974",
+  "pages": 26,
+  "divergence": 0.266,
+  "span_padas": [
+   "སེམས་བསྐྱེད་པ་ནི་གཞན་དོན་ཕྱིར",
+   "ཡང་དག་རྫོགས་པའི་བྱང་ཆུབ་འདོད"
+  ],
+  "verse_padas": [
+   "སེམས་བསྐྱེད་པ་ནི་གཞན་དོན་ཕྱིར",
+   "ཡང་དག་རྫོགས་པའི་བྱང་ཆུབ་འདོད",
+   "དེ་དང་དེ་ནི་མདོ་བཞིན་དུ",
+   "བསྡུས་དང་རྒྱས་པའི་སྒོ་ནས་བརྗོད"
+  ],
+  "reference": [
+   "The generation of the mind, for the sake of others,",
+   "Is the desire for perfect, complete awakening."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "high",
+  "why": "",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "af0e040278d15406",
+  "renderings": 6,
+  "misaligned": 0
+ },
+ {
+  "vid": "v205",
+  "pages": 15,
+  "divergence": 0.461,
+  "span_padas": [
+   "འགྲོ་བ་གང་གིས་འགྲོ་པོར་མངོན",
+   "འགྲོ་བ་དེ་ནི་དེ་འགྲོ་མིན"
+  ],
+  "verse_padas": [
+   "འགྲོ་བ་གང་གིས་འགྲོ་པོར་མངོན",
+   "འགྲོ་བ་དེ་ནི་དེ་འགྲོ་མིན",
+   "དེ་ལས་གཞན་པ་དེ་འགྲོ་མིན"
+  ],
+  "reference": [
+   "The motion by which one is shown to be a goer,",
+   "That motion is not what the goer goes."
+  ],
+  "sanskrit_locus": "MMK 2.22",
+  "sanskrit_page_url": "https://sourcelibrary.org/book/6a3067d0c4fd77fb5b9f8378?page=115",
+  "confidence": "high",
+  "why": "In 'gro ba de ni de 'gro min the second de is the goer as agent who does not go that motion, so 'that motion is not the goer' (r2, r5) is wrong.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "e7cd01529574ae37",
+  "renderings": 5,
+  "misaligned": 0
+ },
+ {
+  "vid": "v1008",
+  "pages": 26,
+  "divergence": 0.265,
+  "span_padas": [
+   "སེམས་དཔའ་སངས་རྒྱས་ཀུན་གྱི་དངོས",
+   "རྡོ་རྗེ་སེམས་དཔའ་བདེ་བའི་མཆོག",
+   "གསང་བ་མཆོག་གི་དགྱེས་པ་ན",
+   "ཐམས་ཅད་བདག་ཉིད་རྟག་ཏུ་བཞུགས"
+  ],
+  "verse_padas": [
+   "སེམས་དཔའ་སངས་རྒྱས་ཀུན་གྱི་དངོས",
+   "རྡོ་རྗེ་སེམས་དཔའ་བདེ་བའི་མཆོག",
+   "གསང་བ་མཆོག་གི་དགྱེས་པ་ན",
+   "ཐམས་ཅད་བདག་ཉིད་རྟག་ཏུ་བཞུགས",
+   "སངས་རྒྱས་ཀུན་དངོས་སེམས་དཔའ་ནི",
+   "མཁའ་འགྲོ་ཀུན་དངོས་སེམས་དཔའ་ནི"
+  ],
+  "reference": [
+   "The Being who is the substance of all Buddhas,",
+   "Vajrasattva, the supreme bliss,",
+   "Within the delight of the supreme secret,",
+   "Always abides as the self of all."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "medium",
+  "why": "Read the first two pādas as appositive epithets of the one who abides, as the majority do, rather than as separate copular claims.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "5d7aff7964c35c8a",
+  "renderings": 6,
+  "misaligned": 0
+ },
+ {
+  "vid": "v257",
+  "pages": 13,
+  "divergence": 0.52,
+  "span_padas": [
+   "གང་ཞིག་འགག་བཞིན་མ་ཡིན་པ",
+   "དེ་ནི་དངོས་པོར་མི་འཐད་དོ"
+  ],
+  "verse_padas": [
+   "གང་ཞིག་འགག་བཞིན་མ་ཡིན་པ",
+   "དེ་ནི་དངོས་པོར་མི་འཐད་དོ"
+  ],
+  "reference": [
+   "Whatever is not in the process of ceasing",
+   "Is not tenable as an entity."
+  ],
+  "sanskrit_locus": "MMK 7.21 (same half-verse in 7.23)",
+  "sanskrit_page_url": "https://sourcelibrary.org/book/6a3067d0c4fd77fb5b9f8378?page=175",
+  "confidence": "high",
+  "why": "The half-verse closes both MMK 7.21 (arising) and 7.23 (abiding), so the reference names neither process.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "3ec3c5f9028a83e5",
+  "renderings": 4,
+  "misaligned": 0
+ },
+ {
+  "vid": "v190",
+  "pages": 12,
+  "divergence": 0.548,
+  "span_padas": [
+   "བགོམ་ལ་འགྲོ་བ་ཡོད་ན་ནི",
+   "འགྲོ་བ་གཉིས་སུ་ཐལ་འགྱུར་ཏེ",
+   "གང་གིས་བགོམ་པ་དེ་དང་ནི",
+   "དེ་ལ་འགྲོ་བ་གང་ཡིན་པའོ"
+  ],
+  "verse_padas": [
+   "བགོམ་ལ་འགྲོ་བ་ཡོད་ན་ནི",
+   "འགྲོ་བ་གཉིས་སུ་ཐལ་འགྱུར་ཏེ",
+   "གང་གིས་འགྲོ་པོར་མངོན་པ་དང",
+   "འགྲོ་པོར་གྱུར་ནས་གང་འགྲོ་བའོ",
+   "གལ་ཏེ་འགྲོ་པོ་འགྲོ་འགྱུར་ན",
+   "གལ་ཏེ་འགྲོ་པོ་འགྲོ་གྱུར་ན",
+   "གང་གིས་བགོམ་པ་དེ་དང་ནི",
+   "དེ་ལ་འགྲོ་བ་གང་ཡིན་པའོ"
+  ],
+  "reference": [
+   "If going exists in what is being traversed,",
+   "It follows that there would be two goings:",
+   "The one by which it is what is being traversed,",
+   "And the going that exists in it."
+  ],
+  "sanskrit_locus": "MMK 2.5",
+  "sanskrit_page_url": "https://sourcelibrary.org/book/6a3067d0c4fd77fb5b9f8378?page=105",
+  "confidence": "high",
+  "why": "The aligned renderings differ only in how they name bgom pa (stepping, path being traversed, presently being traversed); 'what is being traversed' keeps the sense of the Sanskrit gamyamana and fits all three pages, and r1 is graded wrong only because its span carries an extra prose sentence before the four verse lines.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "2a965e5c50a68ab4",
+  "renderings": 3,
+  "misaligned": 0
+ },
+ {
+  "vid": "v743",
+  "pages": 18,
+  "divergence": 0.365,
+  "span_padas": [
+   "ཆགས་བྲལ་དང་པོ་ཆགས་པ་ཆེ",
+   "ཁ་དོག་སྣ་ཚོགས་འབར་བའི་འོད"
+  ],
+  "verse_padas": [
+   "རྡོ་རྗེ་ཉི་མ་སྣང་བ་ཆེ",
+   "རྡོ་རྗེ་ཟླ་བ་དྲི་མེད་འོད",
+   "ཆགས་བྲལ་དང་པོ་ཆགས་པ་ཆེ",
+   "ཁ་དོག་སྣ་ཚོགས་འབར་བའི་འོད"
+  ],
+  "reference": [
+   "Primordially free of attachment, yet of great attachment,",
+   "Light blazing with various colors,"
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "medium",
+  "why": "The Namasamgiti epithet chags bral dang po chags pa che pairs two attributes of one subject, so it is rendered neither as an equation (r2) nor as a sequence in time (r3).",
+  "blind_grade_of_reference": "weak",
+  "reference_blind_best": false,
+  "pass": false,
+  "ref_hash": "86db8dab104fe983",
+  "renderings": 3,
+  "misaligned": 0
+ },
+ {
+  "vid": "v3594",
+  "pages": 19,
+  "divergence": 0.343,
+  "span_padas": [
+   "ལུས་དང་ལོངས་སྤྱོད་གནས་སྣང་བ",
+   "ཀུན་གཞི་ཀུན་ཏུ་འབྱུང་བ་སྟེ",
+   "རྣམ་བརྒྱད་རྣམ་དགུ་དེ་བཞིན་དུ"
+  ],
+  "verse_padas": [
+   "ལུས་དང་ལོངས་སྤྱོད་གནས་སྣང་བ",
+   "ཀུན་གཞི་ཀུན་ཏུ་འབྱུང་བ་སྟེ",
+   "རྣམ་བརྒྱད་རྣམ་དགུ་དེ་བཞིན་དུ",
+   "ཀུན་གཞི་ཀུན་དུ་འབྱུང་བ་སྟེ"
+  ],
+  "reference": [
+   "Appearing as body, enjoyments and abode,",
+   "The Alaya arises everywhere;",
+   "Eightfold and ninefold, likewise,"
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "medium",
+  "why": "In the Tibetan kun gzhi is the subject that arises as these appearances (Lankavatara: alayam khyayate), not the source the appearances arise from, so the reference keeps the Alaya as subject; all stored renderings shift it to 'from the Alaya'.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": true,
+  "pass": true,
+  "ref_hash": "baf3204babc2ad5a",
+  "renderings": 4,
+  "misaligned": 0
+ },
+ {
+  "vid": "v1450",
+  "pages": 36,
+  "divergence": 0.18,
+  "span_padas": [
+   "རྡོ་རྗེ་མི་ཕྱེད་གསུམ་བསྒོམས་པས",
+   "དེང་བདག་བྱིན་གྱིས་བརླབས་ནས་སུ"
+  ],
+  "verse_padas": [
+   "བྱིན་བརླབས་གནས་སུ་དེང་བདག་མཛོད",
+   "ཕྱོགས་བཅུར་བཞུགས་པའི་སངས་རྒྱས་རྣམས",
+   "རྡོ་རྗེ་མི་ཕྱེད་གསུམ་བསྒོམས་པས",
+   "དེང་བདག་བྱིན་གྱིས་བརླབས་ནས་སུ"
+  ],
+  "reference": [
+   "Through meditation on the three indivisible vajras,",
+   "Having blessed me this day,"
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "high",
+  "why": "The two lines recur unchanged in the body, speech and mind versions of the prayer, so the reference avoids any word tied to one of the three vajras.",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": false,
+  "pass": true,
+  "ref_hash": "887d7c7c62d2f152",
+  "renderings": 8,
+  "misaligned": 0
+ },
+ {
+  "vid": "v987",
+  "pages": 26,
+  "divergence": 0.248,
+  "span_padas": [
+   "སྒྱུ་མ་དག་ནི་ཐམས་ཅད་ལས",
+   "བུད་མེད་སྒྱུ་མ་ཁྱད་པར་འཕགས",
+   "ཡེ་ཤེས་གསུམ་གྱི་དབྱེ་བ་ནི",
+   "གསལ་བར་འདི་ལས་མཚོན་པར་འགྱུར"
+  ],
+  "verse_padas": [
+   "སྒྱུ་མ་རྣམས་ནི་ཐམས་ཅད་ལས",
+   "བུད་མེད་སྒྱུ་མ་ཁྱད་པར་འཕགས",
+   "ཡེ་ཤེས་གསུམ་གྱི་དབྱེ་བ་ནི",
+   "གསལ་བར་འདི་ལས་མཚོན་པར་འགྱུར",
+   "སྒྱུ་མ་དག་ནི་ཐམས་ཅད་ལས",
+   "ཡེ་ཤེས་གསུམ་གྱི་དབྱེ་བ་འདི"
+  ],
+  "reference": [
+   "Of all illusions,",
+   "The illusion of woman is supreme.",
+   "The division of the three wisdoms",
+   "Is clearly illustrated by this."
+  ],
+  "sanskrit_locus": null,
+  "sanskrit_page_url": null,
+  "confidence": "high",
+  "why": "",
+  "blind_grade_of_reference": "ok",
+  "reference_blind_best": false,
+  "pass": true,
+  "ref_hash": "9a1129de4fb1f8f8",
+  "renderings": 3,
+  "misaligned": 0
+ }
+]
