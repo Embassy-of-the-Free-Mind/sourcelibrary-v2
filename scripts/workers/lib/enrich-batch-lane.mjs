@@ -99,6 +99,9 @@ async function stillEligible(db, bookId) {
   return null;
 }
 
+/** The lane only READS `books` here; its own writes go to BOOKS_COLL / JOBS_COLL. */
+const booksOf = (db) => db.collection('books');
+
 // ── Gemini Batch REST ──
 
 function apiKey() {
@@ -287,7 +290,7 @@ async function collectBook(o, job, bookId, got, report) {
   }
 
   if (job.stage === 'summary') {
-    const book = await db.collection('books').findOne({ id: bookId });
+    const book = await booksOf(db).findOne({ id: bookId });
     let generated = null;
     const line = got[0]?.line;
     if (line) {
@@ -323,7 +326,7 @@ async function admit(o, report) {
   const stateColl = db.collection(BOOKS_COLL);
   const filter = gapFilter(o.scopeFilter);
   if (o.bookIds?.length) filter.id = { $in: o.bookIds };
-  const cursor = db.collection('books').find(filter)
+  const cursor = booksOf(db).find(filter)
     .sort({ read_count: -1, pages_translated: -1 })
     .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, summary: { $cond: [{ $ifNull: ['$summary', false] }, 1, 0] }, chapters: 1, chapters_extracted_at: 1, pages_count: 1, read_count: 1, pages_translated: 1 });
 
@@ -405,7 +408,7 @@ async function advance(o, report) {
   if (toSummarize.length) {
     const lines = [], entries = [];
     for (const s of toSummarize) {
-      const book = await db.collection('books').findOne({ id: s._id }, { projection: { id: 1, title: 1, display_title: 1, author: 1, language: 1, chapters: 1 } });
+      const book = await booksOf(db).findOne({ id: s._id }, { projection: { id: 1, title: 1, display_title: 1, author: 1, language: 1, chapters: 1 } });
       if (!book) continue;
       const chapters = (book.chapters || []).map(c => ({ title: c.title, pageNumber: c.pageNumber, level: c.level || 1 }));
       const prompt = phases.buildBookSummaryRequest(
