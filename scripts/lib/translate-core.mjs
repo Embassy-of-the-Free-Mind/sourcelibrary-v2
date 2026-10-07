@@ -26,7 +26,12 @@ import { createHash, randomBytes } from 'crypto';
 import { buildVisiblePageCountPipeline } from './page-counts.mjs';
 import { saveRevisionBeforeOverwrite } from './page-revisions.mjs';
 import { loopVerdict } from './ocr-loop-guard.mjs';
+import { illegibleGateEnabled, illegibleSourceVerdict } from './illegible-source-gate.mjs';
 import { stripMarkupTags } from './strip-markup-tags.mjs';
+import { repairAnnotationTags } from './annotation-tag-repair.mjs';
+import { guardStray, strayScriptVerdict, STRAY_SCRIPT_REASON } from './stray-script.mjs';
+import { guardTranslationText } from './translation-write-guard.mjs';
+export { STRAY_SCRIPT_REASON };
 import { CLEAR_STALE_UNSET } from './stale-translation.mjs';
 import { resolvePageBreak, lookaheadSnippet, LOOKAHEAD_CLAUSE } from './page-break-devices.mjs';
 import { echoedSource } from './page-integrity.mjs';
@@ -104,7 +109,11 @@ export function isLatinScriptLanguage(language) {
  *
  * - BPH books: full flash (partner institution's manuscripts).
  * - Tibetan: full flash (#4742 — measured exception, see isTibetanBook).
- * - Everything else, INCLUDING other non-Latin scripts: flash-lite.
+ * - Greek, Hebrew/Aramaic, Arabic, Persian, Sanskrit, Pali, Chinese: full
+ *   flash (#5695, measured against published human translations — see
+ *   isFlashMeasuredLanguage).
+ * - Everything else (Latin-script languages, and non-Latin scripts nobody has
+ *   measured yet — Syriac, Japanese, Armenian, Russian, …): flash-lite.
  *
  * OCR keeps its non-Latin carve-out because flash-lite hallucinates when
  * VISUAL decoding is hard (#1726: a Bhutanese astrological text read as a
@@ -119,7 +128,26 @@ export function isLatinScriptLanguage(language) {
 export function getTranslateModelForBook(book) {
   if (book?.image_source?.provider === 'bph') return MODEL_FLASH;
   if (isTibetanBook(book)) return MODEL_FLASH;
+  if (isFlashMeasuredLanguage(book)) return MODEL_FLASH;
   return MODEL_LITE;
+}
+
+/**
+ * Languages where flash measurably beats lite at TRANSLATION, judged blind
+ * against published human translations (#5695, 2026-10-03; two Opus judges,
+ * controls passed, A-vs-A lite floor ≈ 0). Flash − lite fidelity on a 1–5
+ * scale: Greek +0.32 (75 pages; print +0.38, manuscripts 0.00 — there the
+ * OCR is the problem), Hebrew/Aramaic/Arabic/Persian +0.53 (52), Sanskrit/
+ * Pali/classical Chinese +0.40 (64; reversed statements 15 → 6 per 100 pages).
+ * Latin (+0.22) and the Latin-script vernaculars (+0.21) also gained, but
+ * stay on lite pending Derek's cost call (scripts/eval/DECISIONS.md).
+ * Matches the book's FIRST language label, so "Greek-Latin" and
+ * "Hebrew and Aramaic" route here and "Latin; Greek" does not.
+ */
+const FLASH_MEASURED_LANGUAGE = /^\s*(ancient\s+)?(greek|hebrew|heb|aramaic|arabic|persian|sanskrit|pali|chinese|classical\s+chinese)\b/i;
+
+export function isFlashMeasuredLanguage(book) {
+  return FLASH_MEASURED_LANGUAGE.test(String(book?.language ?? ''));
 }
 
 /**
@@ -420,6 +448,23 @@ export function buildTranslationPrompt({ prompts, book, ocrText, previousTransla
 }
 
 /**
+ * Folio markers (#5678) — OFF by default; with `folioMarkers` absent the block prompt is
+ * byte-identical to production. On: instead of one self-contained `<translation page="N">` per
+ * page (which makes the model END each page, so a sentence that runs over the turn is completed
+ * on one side and dropped or repeated on the other — vol 96 p35 showed 7 of ~21 verses), the
+ * block comes back as ONE continuous English text with `<pb n="N"/>` where each source page
+ * begins. scripts/lib/folio-markers.mjs splits it into page spans. Measured on the Tengyur pilot
+ * only (scripts/eval/folio-markers-5678.mjs); not adopted by any lane.
+ */
+export const FOLIO_MARKER_RULE = `**IMPORTANT: The pages below are consecutive pages of ONE continuous text. Translate them as one continuous English text inside a single <translation> wrapper, and mark every page turn inside it:**
+- Write <pb n="N"/> at the exact point in the English where source page N begins: before page N's first translated word, in the middle of a sentence or clause if the page turns there. Every page gets exactly one marker, in page order; the first page's marker opens the text, before its first word.
+- N is the number from that page's "--- Page N ---" line below, never a printed page, folio or signature number from the page itself (<page-num>, <header>, <sig>, a number in the text): if the "--- Page 21 ---" page shows the printed number 97, its marker is <pb n="21"/>.
+- Keep the English continuous: a sentence or verse that runs across a page turn is translated once, as one sentence, with the marker inside it. Do not end a page early, and do not restart, summarize or repeat at a marker.
+- Render every source word exactly once, on the side of the marker where it stands in the source: never move words from one page to another, never complete a sentence the source leaves unfinished, never omit anything. Where English word order differs from the source, place the marker at the nearest word boundary that keeps each page's words on its own side.
+- If the first page begins mid-sentence, the English begins mid-sentence too: no invented lead-in.
+- After </translation>, give ONE <summary> and ONE <keywords> for the whole block.`;
+
+/**
  * THE block prompt: production translates BATCH_SIZE (8) consecutive pages in one call
  * (translate-worker.mjs translateBatch), the previous block's last translation as continuity, each
  * page wrapped in `<translation page="N">`. Moved here from the worker's inline assembly (2026-09-25)
@@ -437,7 +482,7 @@ export function buildTranslationPrompt({ prompts, book, ocrText, previousTransla
  * 18, and a hyphen at the foot of 16 must not be "completed" from the head of 18. `prevOcrText` /
  * `nextOcrText` are the caller's promise of the pages adjacent to the block's ends.
  */
-export function buildBlockTranslationPrompt({ prompts, book, pages, previousTranslation, prevOcrText, nextOcrText, pageBreak }) {
+export function buildBlockTranslationPrompt({ prompts, book, pages, previousTranslation, prevOcrText, nextOcrText, pageBreak, folioMarkers = false }) {
   const { prompt: header, promptRef, isEnglish } = translationPromptHeader({ prompts, book });
   const ocrOf = (p) => (typeof p.ocr === 'string' ? p.ocr : p.ocr?.data) || '';
   const adjacent = (a, b) => a?.page_number == null || b?.page_number == null || Number(a.page_number) + 1 === Number(b.page_number);
@@ -457,8 +502,13 @@ export function buildBlockTranslationPrompt({ prompts, book, pages, previousTran
   if (applied && per.some((r) => r.meta.leafSeams)) prompt += `\n\n${LEAF_BREAK_RULE}`;
 
   const verb = isEnglish ? 'modernize' : 'translate';
-  prompt += `\n\n**IMPORTANT: You will receive ${pages.length} consecutive pages. ${isEnglish ? 'Modernize' : 'Translate'} each one separately. Wrap each translation in XML tags with the page number:**\n`;
-  prompt += `\`\`\`\n${pages.map((p) => `<translation page="${p.page_number}">...${verb}d text...</translation>`).join('\n')}\n\`\`\`\n`;
+  if (folioMarkers) {
+    prompt += `\n\n${FOLIO_MARKER_RULE}\n`;
+    prompt += `\`\`\`\n<translation>\n${pages.map((p) => `<pb n="${p.page_number}"/>...${verb}d text of page ${p.page_number}...`).join(' ')}\n</translation>\n<summary>...</summary>\n<keywords>...</keywords>\n\`\`\`\n`;
+  } else {
+    prompt += `\n\n**IMPORTANT: You will receive ${pages.length} consecutive pages. ${isEnglish ? 'Modernize' : 'Translate'} each one separately. Wrap each translation in XML tags with the page number:**\n`;
+    prompt += `\`\`\`\n${pages.map((p) => `<translation page="${p.page_number}">...${verb}d text...</translation>`).join('\n')}\n\`\`\`\n`;
+  }
   prompt += `\n**Pages to ${verb}:**\n`;
   pages.forEach((p, i) => {
     prompt += `\n--- Page ${p.page_number} ---\n${applied ? per[i].text : ocrOf(p)}\n`;
@@ -468,8 +518,10 @@ export function buildBlockTranslationPrompt({ prompts, book, pages, previousTran
   return { prompt, promptRef, isEnglish, pageBreak: pageBreak ? { applied, pages: per.map((r) => ({ ...r.meta, fired: r.fired })) } : null };
 }
 
-/** Close unterminated inline tags the model sometimes emits mid-stream, then hold the
- *  result to the closed tag vocabulary (validateTranslationTags). */
+/** Close unterminated inline tags the model sometimes emits mid-stream, repair malformed,
+ *  nested and unclosed annotation tags — <note> included (repairAnnotationTags, the twin of
+ *  the app's src/lib/sanitize-translation-tags.ts; #5644) — then hold the result to the closed
+ *  tag vocabulary (validateTranslationTags). */
 export function sanitizeTranslationTags(text) {
   if (!text) return text;
   const closed = text
@@ -477,7 +529,7 @@ export function sanitizeTranslationTags(text) {
       (_, tag, content) => `<${tag}>${content}</${tag}>`)
     .replace(/<\/(margin|gloss|insert|unclear|term|heading|footnote|caption)>\s*<\/\1>/g,
       (_, tag) => `</${tag}>`);
-  return validateTranslationTags(closed).text;
+  return validateTranslationTags(repairAnnotationTags(closed)).text;
 }
 
 // ────────────────────────────────────────────────────────────────────────────
@@ -766,12 +818,16 @@ export const isExcess = (ocr, tr) => {
  * guards run PER LEAF (`leaf-drift` = the translation of one leaf absorbed the next leaf's
  * opening). A page without the marker takes exactly the path it took before.
  *
- * @returns {{healthy: boolean, reason: 'hidden-meta'|'collapsed'|'runaway'|'echo'|'leaf-seam'|'leaf-drift'|null}}
+ * @returns {{healthy: boolean, reason: 'hidden-meta'|'collapsed'|'runaway'|'stray-script'|'echo'|'leaf-seam'|'leaf-drift'|null}}
  */
 export function assessTranslationHealth(ocrText, translationText, { lang } = {}) {
   if (hidesPageInMeta(translationText)) return { healthy: false, reason: HIDDEN_META_REASON };
   if (isCollapsed(ocrText, translationText)) return { healthy: false, reason: 'collapsed' };
   if (isExcess(ocrText, translationText)) return { healthy: false, reason: 'runaway' };
+  // #5734: a script in the English that is in neither the source nor the book's language, outside
+  // the tags that carry original-script words (Korean 그 for "that" in the Tibetan run). Judged only
+  // with the source in hand — without it a Greek quotation in a Latin page would read as stray.
+  if (ocrText && guardStray(translationText, { ocr: ocrText, language: lang }).length) return { healthy: false, reason: STRAY_SCRIPT_REASON };
   if (lang && !echoExempt(ocrText, lang)) {
     const e = echoedSource({ ocr: ocrText, tr: translationText, lang });
     if (e.judged && e.wholePage) return { healthy: false, reason: 'echo' };
@@ -957,6 +1013,27 @@ export async function recordRefusedTranslation(db, page, text, reason, { jobId, 
   await persistRefusedTranslation(db, page, text, reason, { jobId, model });
 }
 
+/**
+ * The stray-script gate for a writer that does not go through `writePageTranslation` (the batch
+ * collectors, #5734). Repairs the measured Korean 그-for-"that"; refuses (stamp + evidence, via
+ * `recordRefusedTranslation`) an English translation that still has a script belonging to neither
+ * the page's OCR nor the book's language outside the carrier tags. A page whose text has no
+ * non-Latin letter outside those tags costs nothing; otherwise the OCR is read from the page when
+ * the caller does not hold it. With no OCR at all the gate does not judge.
+ * @returns {Promise<{ text: string, refused: boolean, reason?: string }>}
+ */
+export { guardTranslationText };
+
+export async function strayScriptGate(db, page, text, { ocr, language, jobId, model, dryRun = false } = {}) {
+  if (!text || !guardStray(text).length) return { text, refused: false };
+  let source = ocr ?? page?.ocr?.data;
+  if (source == null && page?.id) source = (await db.collection('pages').findOne({ id: page.id }, { projection: { 'ocr.data': 1 } }))?.ocr?.data;
+  const v = strayScriptVerdict(text, { ocr: source, language });
+  if (!v.refuse) return { text: v.text, refused: false };
+  if (!dryRun) await recordRefusedTranslation(db, page, v.text, STRAY_SCRIPT_REASON, { jobId, model });
+  return { text: v.text, refused: true, reason: STRAY_SCRIPT_REASON };
+}
+
 /** The reason value stamped on `translation.health_blocked` for a looping source. */
 export const SOURCE_LOOP_REASON = 'source_loop';
 
@@ -966,12 +1043,16 @@ export const SOURCE_LOOP_REASON = 'source_loop';
  *
  * Reasons: 'soft-hidden' (page_number <= 0 — never renders, #3293),
  * 'skip-type', 'no-ocr', 'ocr-unreadable', 'blank-ocr', 'no-body', 'ocr-loop',
- * 'recitation-blocked', 'safety-blocked'.
+ * 'illegible-source' (only with the #5305 gate on), 'recitation-blocked', 'safety-blocked'.
  *
  * opts.extraSkipTypes extends (never replaces) the canonical list — e.g.
  * retranslate-stale deliberately also skips illustrations and title pages.
+ * opts.illegibleGate (default: TRANSLATE_ILLEGIBLE_GATE=1 in the environment, i.e. OFF) refuses a
+ * page whose OCR has no legible body or reports itself illegible (#5305) — see
+ * illegible-source-gate.mjs. The verdict object rides along as `illegible` so a caller can stamp
+ * the contract's `<warning>Illegible: …</warning>`.
  */
-export function isTranslatablePage(page, { extraSkipTypes = [] } = {}) {
+export function isTranslatablePage(page, { extraSkipTypes = [], illegibleGate = illegibleGateEnabled() } = {}) {
   if ((page?.page_number ?? 0) <= 0) return { ok: false, reason: 'soft-hidden' };
   const skip = new Set([...SKIP_TRANSLATION_PAGE_TYPES, ...extraSkipTypes]);
   if (page?.page_type && skip.has(page.page_type)) return { ok: false, reason: 'skip-type' };
@@ -990,6 +1071,13 @@ export function isTranslatablePage(page, { extraSkipTypes = [] } = {}) {
   // A looping transcription is not a text to translate — it is the input that
   // produces a fabricated translation (#4765/#4850).
   if (isDegenerateSource(ocr)) return { ok: false, reason: 'ocr-loop' };
+  // An illegible page (#5305): the OCR read nothing, or says it could not read the page. Checked
+  // after no-body because the no-body gate lets a described picture through, and a papyrus with
+  // "[...]" and a described library stamp is not a picture — it is an unread page.
+  if (illegibleGate) {
+    const illegible = illegibleSourceVerdict(ocr, { pageType: page?.page_type });
+    if (illegible.illegible) return { ok: false, reason: 'illegible-source', illegible };
+  }
   if (page?.translation?.recitation_blocked) return { ok: false, reason: 'recitation-blocked' };
   if (page?.translation?.safety_blocked) return { ok: false, reason: 'safety-blocked' };
   return { ok: true };
@@ -1065,7 +1153,11 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
     response: call.response,
   });
   // T3 (#5148): a translation the model wrapped whole in <meta>/<note> renders as an empty page.
-  const clean = unwrapHiddenTranslation({ ocr: page?.ocr?.data, tr: sanitizeTranslationTags(text), type: page?.page_type }).text;
+  // #5902: the model's definitions inside or bracketed after a <term> are stored as <note>s.
+  let clean = unwrapHiddenTranslation({ ocr: page?.ocr?.data, tr: guardTranslationText(sanitizeTranslationTags(text)), type: page?.page_type }).text;
+  // #5734: the measured Korean 그-for-"that" is repaired here; any other stray script is refused below.
+  const stray = strayScriptVerdict(clean, { ocr: page?.ocr?.data, language: book?.language });
+  clean = stray.text;
 
   // Opt-in semantic health gate (#3756): never persist an obviously collapsed
   // or runaway translation to pages. The refused text IS kept as evidence in
@@ -1100,6 +1192,13 @@ export async function writePageTranslation(db, { page, book, text, promptRef, mo
   if (hidesPageInMeta(clean)) {
     await recordRefusedTranslation(db, page, clean, HIDDEN_META_REASON, { jobId, model: resolvedModel });
     return { written: false, protected: false, unhealthy: true, reason: HIDDEN_META_REASON, text: clean };
+  }
+
+  // Always on too (#5734): an English translation with a script that belongs to neither the source
+  // nor the book's language, in running text, is refused, stamped and kept, like the hidden page.
+  if (stray.refuse) {
+    await recordRefusedTranslation(db, page, clean, STRAY_SCRIPT_REASON, { jobId, model: resolvedModel });
+    return { written: false, protected: false, unhealthy: true, reason: STRAY_SCRIPT_REASON, text: clean };
   }
 
   // Promise 3 delegates to the blessed revision helper (scripts/lib/

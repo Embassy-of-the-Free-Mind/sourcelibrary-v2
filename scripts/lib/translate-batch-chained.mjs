@@ -69,6 +69,8 @@ import {
 import { codeVersion, host, NOT_RECORDED } from './write-provenance.mjs';
 import { stripMarkupTags } from './strip-markup-tags.mjs';
 import { isHeld, NOT_HELD } from './pipeline-hold.mjs';
+import { ocrTrustGate, isOcrTrustRefusal } from './ocr-trust-gate.mjs';
+import { preGateBookReason, isPreGateBookRefusal } from './pre-translation-gate.mjs';
 import { dropDriftedPages } from './block-drift.mjs';
 import { sumBatchResponseUsage } from '../workers/lib/supabase-usage-logger.mjs';
 import { costOf, BATCH_MULTIPLIER } from './model-pricing.mjs';
@@ -164,9 +166,19 @@ export function planNextRound(run, pageDocs) {
   return { kind: block.length === 1 ? 'single' : 'block', pages: block, dropped };
 }
 
-/** Conservative batch-price estimate for the whole queue, seeds included (~1 page of context per block). */
-export function estimateChainedUsd({ prompts, book, pages, model }) {
+/**
+ * Conservative batch-price estimate for the whole queue, seeds included (~1 page of context per block).
+ * noContext: one request per page with no seed and no adjacent OCR (the run's context_mode 'none').
+ */
+export function estimateChainedUsd({ prompts, book, pages, model, noContext = false }) {
   let inChars = 0, outChars = 0;
+  if (noContext) {
+    for (const p of pages) {
+      inChars += buildTranslationPrompt({ prompts, book, ocrText: p.ocr?.data || '', pageBreak: PAGE_BREAK_SCOPED }).prompt.length;
+      outChars += (p.ocr?.data || '').length;
+    }
+    return +(costOf(model, inChars / 3.5, outChars / 2.5) * BATCH_MULTIPLIER).toFixed(4);
+  }
   for (const block of planBlocks(pages)) {
     inChars += buildBlockTranslationPrompt({ prompts, book, pages: block }).prompt.length + 2400;
     outChars += block.reduce((n, p) => n + (p.ocr?.data || '').length, 0);
@@ -207,18 +219,24 @@ async function loadPageDocs(db, ids) {
   return new Map(docs.map((d) => [d.id, d]));
 }
 
-/** The exact request the realtime worker would build for these pages, from the same builders. */
-export async function buildRoundRequest(db, { prompts, book, pages, kind }) {
+/**
+ * The exact request the realtime worker would build for these pages, from the same builders.
+ * noContext (a run enrolled with context_mode 'none'): the page alone — no stored translation of
+ * the page before, no adjacent OCR. Measured on the Derge Tengyur (#5497, PR #5704): the page's
+ * own e-text is exact, and the English beside each woodblock covered the wrong span on 1 side in
+ * 113 against the chained lane's 15, at the same fidelity.
+ */
+export async function buildRoundRequest(db, { prompts, book, pages, kind, noContext = false }) {
   const first = pages[0].page_number, last = pages[pages.length - 1].page_number;
-  const previousTranslation = await seedFor(db, book.id, first);
-  const { prevOcrText, nextOcrText } = await adjacentOcr(db, book.id, first, last);
+  const previousTranslation = noContext ? null : await seedFor(db, book.id, first);
+  const { prevOcrText, nextOcrText } = noContext ? {} : await adjacentOcr(db, book.id, first, last);
   const built = kind === 'block'
     ? buildBlockTranslationPrompt({ prompts, book, pages, previousTranslation, prevOcrText, nextOcrText, pageBreak: PAGE_BREAK_SCOPED })
     : buildTranslationPrompt({ prompts, book, ocrText: pages[0].ocr.data, previousTranslation, prevOcrText, nextOcrText, pageBreak: PAGE_BREAK_SCOPED });
   const maxOutputTokens = maxOutputTokensFor(pages);
   return {
     prompt: built.prompt, promptRef: built.promptRef, maxOutputTokens,
-    context: { previous_translation: !!previousTranslation, prev_ocr: !!prevOcrText, next_ocr: !!nextOcrText, page_break: 'scoped', ...(kind === 'block' ? { block: { pages: pages.length, first_page: first } } : {}) },
+    context: { previous_translation: !!previousTranslation, prev_ocr: !!prevOcrText, next_ocr: !!nextOcrText, page_break: 'scoped', ...(noContext ? { mode: 'none' } : {}), ...(kind === 'block' ? { block: { pages: pages.length, first_page: first } } : {}) },
   };
 }
 
@@ -276,6 +294,19 @@ async function parkForHold(db, run, book, deps, extra = {}) {
   return reason;
 }
 
+/**
+ * Park a run because its book's OCR is not trusted (#5700, ocr-trust-gate.mjs): the book entered a
+ * gated stratum after the run was enrolled. `parked_for_ocr_trust` names the stratum, so the
+ * auto-selectors treat it like a hold park — re-enrolable once the gate releases the book.
+ * Nothing already written is touched.
+ */
+async function parkForOcrTrust(db, run, trust, deps) {
+  const log = deps.log || console.log;
+  await setRun(db, run, { phase: PHASE.PARKED, round: null, claimed_at: null, parked_reason: trust.reason, parked_for_ocr_trust: trust.stratum }, deps);
+  log(`[translate-batch-chained] ${run.book_id}: PARKED — ${trust.reason}; nothing further sent or written`);
+  return trust.reason;
+}
+
 /** READY → SUBMITTING, atomically. False when another ticker holds (or just took) the run. */
 async function claimRun(db, run, deps) {
   if (run.phase !== PHASE.READY) return false;
@@ -288,23 +319,32 @@ async function claimRun(db, run, deps) {
 
 /**
  * Enrol one book: the pages the realtime worker would translate become the queue, and the first
- * round is submitted. Refuses (sends nothing) on a held book, a book the realtime lane owns
+ * round is submitted. Refuses (sends nothing) on a held book, a book whose OCR is not trusted
+ * (`ocr-untrusted (<stratum>…)`, recorded in book_events — #5700), a book the realtime lane owns
  * (`translate_submitted`), an open run, nothing to translate, an estimate over `approvedUsd`, or
  * a closed dial. Returns { ok, reason?, run?, estimate? }.
  */
-export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, limit = MAX_PAGES_PER_RUN, submit = true, pageIds = null, excludeWithheld = false, dryRun = false } = {}) {
+export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, limit = MAX_PAGES_PER_RUN, submit = true, pageIds = null, excludeWithheld = false, dryRun = false, noContext = false, allowUntrustedOcr = false } = {}) {
   const log = deps.log || console.log;
   const book = await db.collection('books').findOne({ id: bookId });
   if (!book) return { ok: false, reason: 'book-not-found' };
   if (isHeld(book)) return { ok: false, reason: `book-held (${book.pipeline_auto.hold.reason})`, book };
   if (sameLanguageReason({ book })) return { ok: false, reason: 'english-book (not translated, #5154)', book };
+  // Fluent wrong OCR cannot be seen page by page; the strata where it was measured are refused
+  // here, with the reason recorded (a dry run records nothing). `allowUntrustedOcr` is the
+  // operator's override for a named pilot (re-read pages re-translated before the book as a whole
+  // is released); it is stamped on the run so the per-round check honours it. Never set by a selector.
+  const trust = await ocrTrustGate(db, book, { lane: 'chained-enrol', record: !dryRun, allow: allowUntrustedOcr });
+  if (!trust.ok) return { ok: false, reason: trust.reason, book };
   if (book.pipeline_auto?.status === 'translate_submitted') return { ok: false, reason: 'realtime-lane-owns-book (pipeline_auto.status=translate_submitted)', book };
   const open = await db.collection(RUNS_COLLECTION).findOne({ book_id: bookId, phase: { $nin: [...TERMINAL_PHASES, 'written', 'shadow_complete', 'failed'] } });
   if (open) return { ok: false, reason: `open-run ${open.id} (${open.phase})`, book };
-  const { pages, excluded } = await selectPages(db, bookId, { limit, pageIds, excludeWithheld });
+  // #5915: the pre-translation gate judges the queue here; a dry run records nothing.
+  const { pages, excluded, gate } = await selectPages(db, bookId, { limit, pageIds, excludeWithheld, recordGate: !dryRun, lane: 'chained-enrol' });
+  if (gate?.book) return { ok: false, reason: preGateBookReason(gate.book), book, excluded };
   if (pages.length === 0) return { ok: false, reason: 'nothing-to-translate', book, excluded };
   const model = getTranslateModelForBook(book);
-  const estimate = estimateChainedUsd({ prompts, book, pages, model });
+  const estimate = estimateChainedUsd({ prompts, book, pages, model, noContext });
   // dryRun: every refusal above, then stop — the queue and price an enrol would make, nothing written.
   if (dryRun) return { ok: true, dryRun: true, book, model, pages, excluded, estimate };
   if (!(Number(approvedUsd) >= estimate)) return { ok: false, reason: `estimate $${estimate} exceeds approved $${approvedUsd ?? 0}`, book, estimate };
@@ -313,7 +353,11 @@ export async function enrolChainedRun(db, bookId, deps, { prompts, approvedUsd, 
   const run = {
     id: newRunId(), book_id: bookId, model, mode: MODE, shadow: false,
     phase: PHASE.READY, prompt_ref: null,
-    queue: pages.map(ref), cursor: 0, pending_single: [],
+    // context_mode 'none' (opt-in per enrol, --no-context): every page is a pending single from
+    // the start, so each round sends every page still owed, one request each, unseeded.
+    queue: pages.map(ref), cursor: noContext ? pages.length : 0, pending_single: noContext ? pages.map(ref) : [],
+    ...(noContext ? { context_mode: 'none' } : {}),
+    ...(trust.overridden ? { ocr_trust_override: trust.stratum } : {}),
     round: null, rounds: [], strikes: 0, dropped: [],
     counts: { written: 0, unhealthy: 0, protected: 0, blocked: 0, dropped: 0, single_fallbacks: 0 },
     page_count: pages.length, excluded, estimate, approved_usd: Number(approvedUsd), spent_est_usd: 0,
@@ -357,6 +401,9 @@ async function prepareRound(db, run, deps, { prompts }) {
   // stop the run here, before anything is planned or sent.
   const book = await db.collection('books').findOne({ id: run.book_id });
   if (isHeld(book)) return { submitted: false, note: `parked: ${await parkForHold(db, run, book, deps)}` };
+  // Likewise the OCR trust gate: a run enrolled before its stratum was gated parks at its next round.
+  const trust = await ocrTrustGate(db, book, { lane: 'chained-round', allow: !!run.ocr_trust_override });
+  if (!trust.ok) return { submitted: false, note: `parked: ${await parkForOcrTrust(db, run, trust, deps)}` };
   const ids = [...(run.pending_single || []).map((r) => r.id), ...(run.queue || []).slice(run.cursor || 0).map((r) => r.id)];
   const pageDocs = await loadPageDocs(db, ids);
   const plan = planNextRound(run, pageDocs);
@@ -381,7 +428,7 @@ async function prepareRound(db, run, deps, { prompts }) {
   for (const pages of groups) {
     // Seeded from the STORED translation of the page before, as the worker seeds: a fallback page
     // whose predecessor is in this same round goes unseeded (context.previous_translation false).
-    const req = await buildRoundRequest(db, { prompts, book, pages, kind: plan.kind });
+    const req = await buildRoundRequest(db, { prompts, book, pages, kind: plan.kind, noContext: run.context_mode === 'none' });
     est += roundEstimateUsd({ model: run.model, prompt: req.prompt, pages });
     // The key names the run as well as the round (and the page, for singles): a shared job's
     // responses are told apart by it.
@@ -782,7 +829,7 @@ export async function phase4ExcludedBookIds(db, { now = new Date() } = {}) {
   const since = new Date(now.getTime() - 24 * 3600 * 1000);
   return db.collection(RUNS_COLLECTION).distinct('book_id', { $or: [
     { phase: { $nin: [...TERMINAL_PHASES, 'written', 'shadow_complete', 'failed'] } },
-    { mode: MODE, phase: PHASE.PARKED, parked_for_hold: { $exists: false } },
+    { mode: MODE, phase: PHASE.PARKED, parked_for_hold: { $exists: false }, parked_for_ocr_trust: { $exists: false } },
     { mode: MODE, updated_at: { $gte: since }, $expr: { $lt: [{ $ifNull: ['$counts.written', 0] }, { $ifNull: ['$page_count', 0] }] } },
   ] });
 }
@@ -800,7 +847,9 @@ export async function enrolForPhase4(db, book, { prompts, pageCount, deps = {} }
   const owed = Math.max(1, Math.min(MAX_PAGES_PER_RUN, pageCount || 0));
   const first = await enrolChainedRun(db, book.id, deps, { prompts, approvedUsd: +(owed * AUTO_APPROVAL_USD_PER_PAGE).toFixed(4), submit: false });
   if (first.ok) return { lane: 'chained', run: first.run };
-  if (/^(book-held|open-run|realtime-lane-owns-book)/.test(first.reason)) return { lane: 'skip', reason: first.reason };
+  // An untrusted-OCR refusal is a skip, never a hand-off: the realtime lane would translate the same bad text.
+  // Nor is a book the pre-translation gate refused whole (#5915): the realtime worker would refuse it too.
+  if (/^(book-held|open-run|realtime-lane-owns-book)/.test(first.reason) || isOcrTrustRefusal(first.reason) || isPreGateBookRefusal(first.reason)) return { lane: 'skip', reason: first.reason };
   const ceiling = +(owed * REALTIME_USD_PER_PAGE).toFixed(4);
   if (first.estimate != null && first.estimate <= ceiling) {
     const second = await enrolChainedRun(db, book.id, deps, { prompts, approvedUsd: first.estimate, submit: false });
@@ -821,14 +870,16 @@ const CHINESE = /chinese|^zh(-|$)/i;
  *
  * Skips: held books, books with any open translate_batch_runs run, English, reader requests,
  * previews whose OCR is under 90% of the book (Chinese previews are the common case), unsplit
- * spreads, and, with `visibleOnly` (default), hidden books.
+ * spreads, books whose OCR is not trusted (#5700 — refused here so they take no slot, recorded,
+ * and reported through `onRefused`; a dry run passes `recordRefusals: false`), and, with
+ * `visibleOnly` (default), hidden books.
  *
  * `statuses` narrows AUTO_STATUSES. Under a scope ENVELOPE pass the terminal ones only
  * (`complete`, `images_complete`): an envelope is a permission on a set of BOOKS, and every worker
  * that asks the scoped gate may spend it on them — the first chained cohort's envelope paid
  * image extraction more than translation on its non-terminal books (2026-09-30).
  */
-export async function selectAutoCandidates(db, { limit = 40, zeroOnly = false, minPages = 0, visibleOnly = true, excludeChinese = false, statuses = AUTO_STATUSES } = {}) {
+export async function selectAutoCandidates(db, { limit = 40, zeroOnly = false, minPages = 0, visibleOnly = true, excludeChinese = false, statuses = AUTO_STATUSES, onRefused = null, recordRefusals = true } = {}) {
   // Not picked: a book with an open run of any lane; one this lane PARKED (re-enrol by hand,
   // --chained --enrol, once the cause is known) other than for a hold (NOT_HELD below covers that); and one whose chained run ended in the last day —
   // a run takes at most MAX_PAGES_PER_RUN pages, so a longer book comes back for its next slice,
@@ -836,7 +887,7 @@ export async function selectAutoCandidates(db, { limit = 40, zeroOnly = false, m
   const since = new Date(Date.now() - 24 * 3600 * 1000);
   const excludedBookIds = await db.collection(RUNS_COLLECTION).distinct('book_id', { $or: [
     { phase: { $nin: [...TERMINAL_PHASES, 'written', 'shadow_complete', 'failed'] } },
-    { mode: MODE, phase: PHASE.PARKED, parked_for_hold: { $exists: false } },
+    { mode: MODE, phase: PHASE.PARKED, parked_for_hold: { $exists: false }, parked_for_ocr_trust: { $exists: false } },
     { mode: MODE, updated_at: { $gte: since } },
   ] });
   const match = {
@@ -861,7 +912,7 @@ export async function selectAutoCandidates(db, { limit = 40, zeroOnly = false, m
         { $gte: ['$pages_ocr', { $multiply: [0.9, { $ifNull: ['$pages_count', 0] }] }] },
       ] },
     } },
-    { $project: { id: 1, title: 1, language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, processing_priority: 1, created_at: 1, 'pipeline_auto.status': 1 } },
+    { $project: { id: 1, title: 1, language: 1, year: 1, published: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, processing_priority: 1, created_at: 1, 'pipeline_auto.status': 1 } },
     // Reader-wanted first, then books already under way (finishing one beats starting another).
     { $sort: { processing_priority: -1, pages_translated: -1, created_at: -1 } },
     { $limit: Math.max(limit * 4, limit + 20) },
@@ -870,6 +921,8 @@ export async function selectAutoCandidates(db, { limit = 40, zeroOnly = false, m
   const out = [];
   for (const b of rows) {
     if (out.length >= limit) break;
+    const trust = await ocrTrustGate(db, b, { lane: 'chained-enrol-auto', record: recordRefusals });
+    if (!trust.ok) { onRefused?.(b, trust); continue; }
     if (zeroOnly) {
       const translated = await db.collection('pages').countDocuments({ book_id: b.id, 'translation.data': { $exists: true, $nin: [null, ''] } }, { limit: 1 });
       if (translated > 0) continue;

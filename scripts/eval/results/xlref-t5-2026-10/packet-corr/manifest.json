@@ -1,0 +1,948 @@
+{
+ "built": "2026-10-03T20:30:33.002Z",
+ "seed": 56951,
+ "input": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/work/records-corr.jsonl",
+ "input_sha": "5d1d347cff791c9a",
+ "any_private": false,
+ "n_items": 27,
+ "n_gate": 3,
+ "n_main": 24,
+ "chunk": 4,
+ "judges": [
+  "j1",
+  "j2"
+ ],
+ "chunks": [
+  {
+   "judge": "j1",
+   "phase": "gate",
+   "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/packets/j1/gate-01.jsonl",
+   "verdicts": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/verdicts/j1/gate-01.jsonl",
+   "n": 3
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/packets/j1/main-01.jsonl",
+   "verdicts": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/verdicts/j1/main-01.jsonl",
+   "n": 4
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/packets/j1/main-02.jsonl",
+   "verdicts": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/verdicts/j1/main-02.jsonl",
+   "n": 4
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/packets/j1/main-03.jsonl",
+   "verdicts": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/verdicts/j1/main-03.jsonl",
+   "n": 4
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/packets/j1/main-04.jsonl",
+   "verdicts": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/verdicts/j1/main-04.jsonl",
+   "n": 4
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/packets/j1/main-05.jsonl",
+   "verdicts": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/verdicts/j1/main-05.jsonl",
+   "n": 4
+  },
+  {
+   "judge": "j1",
+   "phase": "main",
+   "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/packets/j1/main-06.jsonl",
+   "verdicts": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/verdicts/j1/main-06.jsonl",
+   "n": 4
+  },
+  {
+   "judge": "j2",
+   "phase": "gate",
+   "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/packets/j2/gate-01.jsonl",
+   "verdicts": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/verdicts/j2/gate-01.jsonl",
+   "n": 3
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/packets/j2/main-01.jsonl",
+   "verdicts": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/verdicts/j2/main-01.jsonl",
+   "n": 4
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/packets/j2/main-02.jsonl",
+   "verdicts": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/verdicts/j2/main-02.jsonl",
+   "n": 4
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/packets/j2/main-03.jsonl",
+   "verdicts": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/verdicts/j2/main-03.jsonl",
+   "n": 4
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/packets/j2/main-04.jsonl",
+   "verdicts": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/verdicts/j2/main-04.jsonl",
+   "n": 4
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/packets/j2/main-05.jsonl",
+   "verdicts": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/verdicts/j2/main-05.jsonl",
+   "n": 4
+  },
+  {
+   "judge": "j2",
+   "phase": "main",
+   "packet": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/packets/j2/main-06.jsonl",
+   "verdicts": "/data/scratch/sl/sourcelibrary/.claude/worktrees/job-xlref-t5/scripts/eval/results/xlref-t5-2026-10/packet-corr/verdicts/j2/main-06.jsonl",
+   "n": 4
+  }
+ ],
+ "warnings": [],
+ "records": [
+  {
+   "id": "69b99e681f30176bf4d3798a_00155",
+   "track": "T5",
+   "lang": "Pali",
+   "book_id": "69b99e681f30176bf4d3798a",
+   "page_number": 155,
+   "reference_meta": {
+    "title": "Aṅguttara-Nikāya (Pali Text)",
+    "translator": "Bhikkhu Sujato",
+    "year": null,
+    "licence": "CC0 1.0 (bilara-data LICENSE.md: \"All translations created in Bilara … dedicated to the Public Domain by means of CC0\")",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "an10.73:2.1 – an10.73:3.3",
+    "url": "https://github.com/suttacentral/bilara-data/tree/published/translation/en/sujato/sutta/an/an10/an10.73_translation-en-sujato.json translation/en/sujato/sutta/an/an10/an10.74_translation-en-sujato.json",
+    "coverage_note": "automatic segment alignment (align-pali.py): coverage 0.94, shingle density 0.666; lines marked [context] are outside the located span",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "pali canon (sutta/vinaya)",
+    "publishable": true
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69b99e856ed9e0490990a0b5_00301",
+   "track": "T5",
+   "lang": "Pali",
+   "book_id": "69b99e856ed9e0490990a0b5",
+   "page_number": 301,
+   "reference_meta": {
+    "title": "Aṅguttara-Nikāya, Part V (Pali Text)",
+    "translator": "Bhikkhu Sujato",
+    "year": null,
+    "licence": "CC0 1.0 (bilara-data LICENSE.md: \"All translations created in Bilara … dedicated to the Public Domain by means of CC0\")",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "an10.211:2.1 – an10.211:21.2",
+    "url": "https://github.com/suttacentral/bilara-data/tree/published/translation/en/sujato/sutta/an/an10/an10.211_translation-en-sujato.json translation/en/sujato/sutta/an/an10/an10.212_translation-en-sujato.json",
+    "coverage_note": "automatic segment alignment (align-pali.py): coverage 2.409, shingle density 0.85; lines marked [context] are outside the located span",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "pali canon (sutta/vinaya)",
+    "publishable": true
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69b99e8b6ed9e0490990a274_00179",
+   "track": "T5",
+   "lang": "Pali",
+   "book_id": "69b99e8b6ed9e0490990a274",
+   "page_number": 179,
+   "reference_meta": {
+    "title": "Sutta-Nipāta (Pali Text)",
+    "translator": "Bhikkhu Sujato",
+    "year": null,
+    "licence": "CC0 1.0 (bilara-data LICENSE.md: \"All translations created in Bilara … dedicated to the Public Domain by means of CC0\")",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "snp4.9:2.1 – snp4.9:6.5",
+    "url": "https://github.com/suttacentral/bilara-data/tree/published/translation/en/sujato/sutta/kn/snp/vagga4/snp4.9_translation-en-sujato.json",
+    "coverage_note": "automatic segment alignment (align-pali.py): coverage 1.074, shingle density 0.54; lines marked [context] are outside the located span",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "pali canon (sutta/vinaya)",
+    "publishable": true
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "6a31c8b74400787ae5a9d7a7_00042",
+   "track": "T5",
+   "lang": "Pali",
+   "book_id": "6a31c8b74400787ae5a9d7a7",
+   "page_number": 42,
+   "reference_meta": {
+    "title": "Dhammapada (Pali text with aṭṭhakathā references)",
+    "translator": "Bhikkhu Sujato",
+    "year": null,
+    "licence": "CC0 1.0 (bilara-data LICENSE.md: \"All translations created in Bilara … dedicated to the Public Domain by means of CC0\")",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "dhp249:6 – dhp255:4",
+    "url": "https://github.com/suttacentral/bilara-data/tree/published/translation/en/sujato/sutta/kn/dhp/dhp235-255_translation-en-sujato.json translation/en/sujato/sutta/kn/dhp/dhp256-272_translation-en-sujato.json",
+    "coverage_note": "automatic segment alignment (align-pali.py): coverage 0.923, shingle density 0.342; lines marked [context] are outside the located span",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "pali canon (sutta/vinaya)",
+    "publishable": true
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69bc7a3f8888fef520b73c1e_00217",
+   "track": "T5",
+   "lang": "Pali",
+   "book_id": "69bc7a3f8888fef520b73c1e",
+   "page_number": 217,
+   "reference_meta": {
+    "title": "The Vinaya Pitakam, Vol. I",
+    "translator": "Bhikkhu Brahmali",
+    "year": null,
+    "licence": "CC0 1.0 (bilara-data LICENSE.md: \"All translations created in Bilara … dedicated to the Public Domain by means of CC0\")",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "pli-tv-kd3:14.5.3 – pli-tv-kd3:14.11.52",
+    "url": "https://github.com/suttacentral/bilara-data/tree/published/translation/en/brahmali/vinaya/pli-tv-kd/pli-tv-kd3_translation-en-brahmali.json",
+    "coverage_note": "automatic segment alignment (align-pali.py): coverage 4.196, shingle density 0.615; lines marked [context] are outside the located span",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "pali canon (sutta/vinaya)",
+    "publishable": true
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69bd014bf403a9ca2380f091_00054",
+   "track": "T5",
+   "lang": "Pali",
+   "book_id": "69bd014bf403a9ca2380f091",
+   "page_number": 54,
+   "reference_meta": {
+    "title": "Buddha Jayanti Tripiṭaka — Vinaya Piṭaka (Complete, Sinhala Script)",
+    "translator": "Bhikkhu Brahmali",
+    "year": null,
+    "licence": "CC0 1.0 (bilara-data LICENSE.md: \"All translations created in Bilara … dedicated to the Public Domain by means of CC0\")",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "pli-tv-bu-vb-pj1:8.2.47 – pli-tv-bu-vb-pj1:8.3.20",
+    "url": "https://github.com/suttacentral/bilara-data/tree/published/translation/en/brahmali/vinaya/pli-tv-bu-vb/pli-tv-bu-vb-pj/pli-tv-bu-vb-pj1_translation-en-brahmali.json",
+    "coverage_note": "automatic segment alignment (align-pali.py): coverage 2.295, shingle density 0.414; lines marked [context] are outside the located span",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "pali canon (sutta/vinaya)",
+    "publishable": true
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "699258c28812793469fdd6be_00160",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "699258c28812793469fdd6be",
+   "page_number": 160,
+   "reference_meta": {
+    "title": "Commentary on the Brahma Sutras (Brahma Sutra Bhashya)",
+    "translator": "George Thibaut",
+    "year": 1896,
+    "licence": "public domain (published 1896)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Brahmasūtra III.2.5 (sūtra + whole bhāṣya), III.2.6 (sūtra + whole bhāṣya), III.2.7 (sūtra, the scriptural passages on deep sleep, and the opening of the pūrvapakṣa up to 'na hi ekārthānāṃ kvacit parasparasāpekṣatvaṃ')",
+    "url": "https://archive.org/download/vedntasutrastr02bdar/vedntasutrastr02bdar_djvu.txt",
+    "coverage_note": "Reference covers the whole page span and ends exactly where the page breaks off ('...are never seen to be dependent on each other.'). Thibaut's footnotes and footnote markers dropped. The archive.org OCR mangles some transliterations and a few letters (e.g. 'na^is' = nâdîs, '5ruti' = Sruti, '5vet.' = Svet., 'pov^ers', 'froni', 'pra^/^a'); these are left as fetched.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "sastra / sutra + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69935b4d8e28d8f4c5d3cfaa_00177",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69935b4d8e28d8f4c5d3cfaa",
+   "page_number": 177,
+   "reference_meta": {
+    "title": "Yoga-Sūtra with Three Classical Commentaries (Sanskrit)",
+    "translator": "James Haughton Woods",
+    "year": 1914,
+    "licence": "public domain (published 1914)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Yogasūtra III.48 (sūtra + whole Vyāsa bhāṣya) and III.49 (sūtra + bhāṣya up to 'sarvātmāno guṇā vyavasāyavya-', page break); lower half: Vācaspati's Tattvavaiśāradī on III.48 (whole) and on III.49 up to 'etad eva vivṛṇoti — sarvātmāna iti'",
+    "url": "https://archive.org/download/yogasystemofpata00wooduoft/yogasystemofpata00wooduoft_djvu.txt",
+    "coverage_note": "Woods translates all three layers, so the reference covers the whole page, arranged in Woods's order (sūtra 48, bhāṣya 48, Vācaspati on 48, sūtra 49, bhāṣya 49, Vācaspati on 49) rather than the page's (sūtra+bhāṣya above, Vācaspati below). The bhāṣya on 49 continues past the page break to its end ('...takes his recreation as having mastery.') as boundary context; the Vācaspati on 49 is cut exactly where the page ends ('This same he explains by the words «essence of all things.»'). Woods's footnotes and markers dropped; guillemet quote marks around the last lemma restored from OCR '^'. Some OCR noise left as fetched (e.g. 'rnadhupratika', '<one who knows alb'). The variant-reading apparatus has no reference.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "sastra / sutra + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69b99f256ed9e0490990aa8a_00185",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69b99f256ed9e0490990aa8a",
+   "page_number": 185,
+   "reference_meta": {
+    "title": "Lotus Sutra",
+    "translator": "H. Kern",
+    "year": 1884,
+    "licence": "public domain (published 1884)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "ch. 13 Sukhavihāraparivarta, opening prose (Kern ch. XIII 'Peaceful Life', SBE 21 pp. 262-264): from Mañjuśrī's question through the 'proper sphere' and the start of the first proper sphere (page ends mid-sentence at 'sa nāntaśo dharmasaṃrāgeṇāpi dharmaṃ', = Kern 'he does not do so by passionate attachment to the law')",
+    "url": "https://archive.org/download/saddharmapundark0021unse/saddharmapundark0021unse_djvu.txt",
+    "coverage_note": "Reference covers the whole page from the chapter opening; it continues past the page's last (broken) sentence to the end of that paragraph ('...first proper sphere of a Bodhisattva Mahasattva.') as boundary context. Kern translated from Nepalese MSS (Cambridge MS), not Vaidya's text, so small wording differences are expected. The footnote apparatus has no reference. The archive.org OCR garbles diacritics (e.g. 'Mazgusri', 'Ma#gusri', 'Mahdsattva' for Mañgusrî/Mahâsattva, 'Aarakas', 'KAndalas'); these are left as fetched; only Kern's footnote markers and one stray quote mark were dropped.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "buddhist sutra / sastra",
+    "publishable": true
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69d91e423a50087f7bd9afc5_00214",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69d91e423a50087f7bd9afc5",
+   "page_number": 214,
+   "reference_meta": {
+    "title": "The Atharva Veda",
+    "translator": "William Dwight Whitney",
+    "year": 1905,
+    "licence": "public domain (published 1905)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Book XIX, hymn 58, verses 5-6 (preceded by the tail of Sāyaṇa on 58.4; followed by the colophon and the viniyoga introduction to XIX.59)",
+    "url": "https://archive.org/download/atharvavedasainh02whit/atharvavedasainh02whit_djvu.txt",
+    "coverage_note": "reference covers the root text XIX.58.5-6 plus verse 58.4 as context (the page opens with the end of Sāyaṇa's comment on 58.4). Sāyaṇa's commentary, the padapāṭha and the viniyoga note on XIX.59 have no reference. Whitney's notes after each verse omitted. OCR of Whitney's italic Sanskrit glosses normalised (vrajá, várman, ádhṛṣṭa, ā-i, ṛtvij, havyá, yā́vant).",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "veda",
+    "publishable": true
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e3ff61b142e5dd9d6b0095_00128",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69e3ff61b142e5dd9d6b0095",
+   "page_number": 128,
+   "reference_meta": {
+    "title": "Gita Govinda",
+    "translator": "Edwin Arnold",
+    "year": 1875,
+    "licence": "public domain (first published 1875; this impression 1904)",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "located": "Sarga 7: closing signature stanza (v. 8) of song 14 (aṣṭapadī 'smara-samarocita-viracita-veśā', the Haririmitacampakaśekhara prabandha), then the following śloka 'virahapāṇḍu-murāri-mukhāmbuja-dyutir ayaṃ' (Rādhā to the moon)",
+    "url": "https://www.gutenberg.org/cache/epub/25965/pg25965.txt",
+    "coverage_note": "Arnold is a free verse paraphrase. Mapping: stanza 'Till at length, a fatal victress ... my Pain!' = song 14 v. 7 (context, not on the page); the italic 'But may Radha's fond annoy ... evil age' = song 14 v. 8 (the Jayadeva signature couplet on the page); 'O Moon! (she sang) ... I have striven in vain.' = the śloka virahapāṇḍu... (on the page; Arnold expands 2 Sanskrit lines to 6 English lines and adds the apostrophe to Krishna). Reference stops before Arnold's next line, which opens song 15. Italic underscores removed. The commentaries (about 95% of the page) have no reference; consider this a weak page for the A/B because the root text is short.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "kavya",
+    "publishable": true
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e7490585f786e884a4d1aa_00097",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69e7490585f786e884a4d1aa",
+   "page_number": 97,
+   "reference_meta": {
+    "title": "The Cloud Messenger",
+    "translator": "Arthur W. Ryder",
+    "year": 1912,
+    "licence": "public domain (published 1912)",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "located": "Uttaramegha: end of Mallinātha's commentary on v. 40 (this edition's numbering), v. 41 'tām āyuṣman mama ca vacanād' (whole, with commentary), and the first two pādas of v. 42 'aṅgenāṅgaṃ pratanu tanunā'. = Ryder's Latter Cloud stanzas XXXVII (end) - XXXIX",
+    "url": "https://www.gutenberg.org/cache/epub/16659/pg16659.txt",
+    "coverage_note": "Reference covers the root text only: XXXVIII = v. 41 (whole, on page); XXXIX = v. 42 (only its first two pādas are on the page; the rest is on the next page); XXXVII = v. 40 (context: on this page only the tail of its commentary appears). Ryder's italic marginal analyses (his own additions, drawn from Mallinātha) were removed, as were the stanza-gloss lines; his Roman stanza numbers are kept. Ryder renders each 4-line Sanskrit stanza as a rhymed 5-line English stanza and is free in places. Mallinātha's commentary (most of the page) has no reference.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "kavya",
+    "publishable": true
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e7490d85f786e884a4d40e_00180",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69e7490d85f786e884a4d40e",
+   "page_number": 180,
+   "reference_meta": {
+    "title": "कुमारसम्भव (Kumārasambhava)",
+    "translator": "Ralph T. H. Griffith",
+    "year": 1879,
+    "licence": "public domain (published 1879)",
+    "private": false,
+    "style": "free",
+    "canonical": false,
+    "located": "Canto VII, verses 28-30 (whole)",
+    "url": "https://www.gutenberg.org/cache/epub/31968/pg31968.txt",
+    "coverage_note": "Reference covers the three root verses only; Mallinātha's commentary and the variant footnotes have no reference. Griffith's 1879 version is a free rhymed paraphrase, not verse-for-verse. Mapping: 'Then at her mother's hest ... reverend feet' = VII.27 (context); 'They raised the maiden ... perfect bliss' = VII.28; 'Well-pleased HIMÁLAYA ... monarch's state' = VII.29; 'Meanwhile by heavenly matrons' care ... the bridegroom wore' = VII.30; 'He laid his hand ... wish to wear' = VII.31 (context; Griffith's couplet is loose). PG markup ['S]IVA rendered as ŚIVA.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "kavya",
+    "publishable": true
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e7491a85f786e884a4d6f9_00789",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69e7491a85f786e884a4d6f9",
+   "page_number": 789,
+   "reference_meta": {
+    "title": "श्रीमद्वाल्मीकिरामायण (Rāmāyaṇa)",
+    "translator": "Manmatha Nath Dutt",
+    "year": 1893,
+    "licence": "public domain (published 1893)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Yuddhakāṇḍa sarga 39 (Laṅkādarśana) vv. 17–29 (end of sarga) and sarga 40 (Rāvaṇa–Sugrīva duel) vv. 1–7; printed page 730",
+    "url": "https://archive.org/download/in.ernet.dli.2015.217238/2015.217238.The-Ramayana_djvu.txt (cross-checked against https://archive.org/download/india.history.resource.78269/78269_djvu.txt)",
+    "coverage_note": "Dutt's prose = Yuddha Kandam Section XXXIX end and Section XL opening. Context added: one sentence before (v. 16, the dust cloud) and one after (sarga 40 v. 8, Sugriva bounds to the gateway). Dutt's text gives Lanka as 'ten yojanas in width and twenty in length' whereas this edition reads 100 x 30 yojanas (v. 21). Text taken from two archive.org OCRs of the same 1893 print, used to correct single-witness OCR errors (e.g. 'moiinlains'); diacritics flattened (Rāma -> Rama, chāmaras -> chamaras), 'yoyanas' kept as both OCRs read it; translator's footnotes (on Trikuta, Vishnu's middle step) and footnote markers dropped. Section XXXIX heading is not on this page.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "epic",
+    "publishable": true
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e7491f85f786e884a4dc2f_00182",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69e7491f85f786e884a4dc2f",
+   "page_number": 182,
+   "reference_meta": {
+    "title": "महाभारत (Mahābhārata) — BORI Critical Edition",
+    "translator": "Kisari Mohan Ganguli",
+    "year": 1883,
+    "licence": "public domain (published 1883–96)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Karṇaparvan 8.22.58–61 (end of adhyāya 22: Karṇa's boast; Duryodhana grants the carts and cars; turns to Śalya) and 8.23.1–2ab (Duryodhana humbly approaches Śalya); printed page 174; edition's concordance line: Calcutta 8.1318, Bombay 8.31.68, Kumbhakonam 8.22.72",
+    "url": "https://www.gutenberg.org/cache/epub/15476/pg15476.txt",
+    "coverage_note": "Ganguli follows the vulgate (Bombay/Calcutta) numbering: BORI 8.22 = Ganguli Karna Parva Section XXXI, BORI 8.23 = Ganguli Section XXXII (offset of 9 adhyāyas here). Context added: one sentence before 8.22.58 ('Thou wilt then see...') and the rest of Duryodhana's vocative string after 8.23.2ab (to '...hostile troops with fear,'). Ganguli's 'The very gods and Asuras are not able to advance against me... of human origin?' after 8.22.58 has no counterpart on this page (vulgate-only lines, not in the critical text); Ganguli also expands 8.22.59–60 (cars with steeds, vulturine feathers). The critical apparatus has no reference. The Project Gutenberg text prints section headings as bare numerals ('32' = Section XXXII), kept as printed.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "epic",
+    "publishable": true
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e8b27f2ff2a8dc09e77ed7_00048",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69e8b27f2ff2a8dc09e77ed7",
+   "page_number": 48,
+   "reference_meta": {
+    "title": "श्रीमद्भगवद्गीता (Bhagavad Gita, 1492 MS)",
+    "translator": "K. T. Telang",
+    "year": 1882,
+    "licence": "public domain (published 1882)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "folio 45 recto: 11.21b to 11.25a; verso (from the image): 11.25b to about 11.29a",
+    "url": "https://archive.org/download/bhagavadgtwi00tela/bhagavadgtwi00tela_djvu.txt",
+    "coverage_note": "the stored OCR reads the recto reasonably well but the verso badly (it mostly repeats invented strings). I located the verso by viewing the page image (images.sourcelibrary.org/archived/69e8b27f2ff2a8dc09e77ed7/48.jpg). The reference runs from the start of 11.21 to the end of 11.30, so the page's exact end inside 11.29 or 11.30 is covered; the first half of 11.21 is context (the page begins mid-verse). Telang prints the chapter as running prose without verse numbers. Djvu OCR artefacts normalised: 'Vi^vas' → 'Visvas', 'A^vins' → 'Asvins', 'Vish;Ai'/'Vish;ai' → 'Vishnu', 'Dhr/tarash/ra' → 'Dhritarâshtra', 'Dro;/a' → 'Drona', 'recog-- nise' rejoined. Footnote markers dropped. A judge whose machine translation runs from the OCR will find the verso weakly supported.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "gita",
+    "publishable": true
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69ea3e63300d991d0f1d3186_00160",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69ea3e63300d991d0f1d3186",
+   "page_number": 160,
+   "reference_meta": {
+    "title": "अर्थशास्त्र (Arthaśāstra)",
+    "translator": "R. Shamasastry",
+    "year": 1915,
+    "licence": "public domain (published 1915)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "Book II, ch. 27 (Gaṇikādhyakṣa, prakaraṇa 44), from 'rājājñayā puruṣam anabhigacchantī gaṇikā…' to the end of the chapter (colophon: 27th chapter of Adhyakṣapracāra, 48th from the beginning)",
+    "url": "https://en.wikisource.org/w/index.php?title=Arthashastra/Book_II&action=raw",
+    "coverage_note": "reference covers the whole page; the first paragraph (graded punishments for repeat offences) is one paragraph of context from before the page; the edition's variant footnotes have no reference. Wikisource transcription of the 1915 Bangalore edition used because the archive.org scans are 4th-8th editions (1951-1967).",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "sastra (polity)",
+    "publishable": true
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69935b692c63944063133f67_00112",
+   "track": "T5",
+   "lang": "Chinese",
+   "book_id": "69935b692c63944063133f67",
+   "page_number": 112,
+   "reference_meta": {
+    "title": "Tao Te Ching with Commentary",
+    "translator": "James Legge",
+    "year": 1891,
+    "licence": "public domain (published 1891)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "commentaries on ch. 48 (蘇註, 呂註, 黃茂材註, 息齋註), then root text of ch. 49 from 聖人無常心 to 聖人 (breaks off before the final 皆孩之)",
+    "url": "https://www.gutenberg.org/cache/epub/216/pg216.txt",
+    "coverage_note": "reference = Legge ch. 48 §3 (the opening paragraph numbered '3.'; context: the last clause discussed by the ch. 48 commentaries) + ch. 49 whole. Ch. 49 §3's last clause ('and he deals with them all as his children', 皆孩之) lies past the page break. The ch. 48 commentaries (about 80% of the page) have no reference.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "daoist classic + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e72c60a409200ea79f46f6_00141",
+   "track": "T5",
+   "lang": "Chinese",
+   "book_id": "69e72c60a409200ea79f46f6",
+   "page_number": 141,
+   "reference_meta": {
+    "title": "莊子旁注 (Zhuangzi with Commentary), Vol. 1",
+    "translator": "James Legge",
+    "year": 1891,
+    "licence": "public domain (published 1891)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Bk V, Ai-thâi Tho story, from 子食於其死母者 to 形全猶足以為爾 (Legge SBE 39 pp. 230–231)",
+    "url": "https://archive.org/download/sacredbooksofchi01oxfo/sacredbooksofchi01oxfo_djvu.txt",
+    "coverage_note": "reference covers the root text; the marginal 旁注 glosses have no reference. Opens with the start of the sentence the page enters mid-way (the page begins at 子食), and ends with one extra clause ('how much greater results…', 而況全德之人乎) beyond the page. Romanised names were garbled in the archive.org OCR (e.g. \"AT/m\", \"Shih-/c/iang Kh\\\\\") and are given in Legge's printed forms; Legge's special z-glyph is rendered \"ȝ\"; footnote markers dropped, spacing before punctuation normalised.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "daoist classic + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e72c6ba409200ea79f484e_00102",
+   "track": "T5",
+   "lang": "Chinese",
+   "book_id": "69e72c6ba409200ea79f484e",
+   "page_number": 102,
+   "reference_meta": {
+    "title": "莊子旁注 (Zhuangzi with Commentary), Vol. 3",
+    "translator": "James Legge",
+    "year": 1891,
+    "licence": "public domain (published 1891)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Bk XX end of §4 (大公任 to Confucius: 至人不聞…; Confucius retires to the marsh) and start of §5 (Confucius asks 子桑雽), Legge SBE 40 pp. 23–24",
+    "url": "https://archive.org/download/sacredbooksofchi02oxfo/sacredbooksofchi02oxfo_djvu.txt",
+    "coverage_note": "reference covers the root text; marginal glosses have no reference. Begins with the sentence containing 責焉 (the page's first words) and ends at the end of Confucius's question; Ȝze-sang Hû's reply begins on the next page. Romanised names were garbled in the archive.org OCR (e.g. \"AT/m\", \"Shih-/c/iang Kh\\\\\") and are given in Legge's printed forms; Legge's special z-glyph is rendered \"ȝ\"; footnote markers dropped, spacing before punctuation normalised.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "daoist classic + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e72c75a409200ea79f4976_00100",
+   "track": "T5",
+   "lang": "Chinese",
+   "book_id": "69e72c75a409200ea79f4976",
+   "page_number": 100,
+   "reference_meta": {
+    "title": "莊子旁注 (Zhuangzi with Commentary), Vol. 5",
+    "translator": "James Legge",
+    "year": 1891,
+    "licence": "public domain (published 1891)",
+    "private": false,
+    "style": "literal",
+    "canonical": true,
+    "located": "Book XXXII (列御寇) par. 10, from 「（醉之以）酒而觀其則」 (the drunkenness test) to the end of par. 10 (九徵至不肖人得矣); par. 11 正考父… through 「凶德有五中德（為首）」 ('This evil quality has five forms, and the chief of them is that which is the central')",
+    "url": "https://archive.org/download/sacredbooksofchi02oxfo/sacredbooksofchi02oxfo_djvu.txt",
+    "coverage_note": "Reference covers the whole root text on the page. Context added: the beginning of par. 10 (Confucius on the nine tests; on the previous page) and the next sentence after the page break ('What do we mean by the central quality?...'). The page ends at 中德 mid-sentence. Marginal glosses (旁注) have no reference. Legge's translator's footnotes and markers dropped; diacritics in 'Hsü (Yû)' and 'Yâo' restored from garbled OCR ('Hsli (Yii)').",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "daoist classic + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": true
+  },
+  {
+   "id": "69e8b2642ff2a8dc09e778a1_00439",
+   "track": "T5",
+   "lang": "Chinese",
+   "book_id": "69e8b2642ff2a8dc09e778a1",
+   "page_number": 439,
+   "reference_meta": {
+    "title": "墨子 (Mòzǐ)",
+    "translator": "Y. P. Mei",
+    "year": 1929,
+    "licence": "public domain in the US (published 1929; entered US public domain 1 Jan 2025)",
+    "private": false,
+    "style": "literal",
+    "canonical": false,
+    "located": "ch. 48 公孟 (Kung Meng): second half of the 'no propitiousness' exchange, the mourning/Three Hundred Odes exchange, ending mid-sentence in Motse's reply (治之廢則國之治亦廢國之...)",
+    "url": "https://archive.org/download/in.ernet.dli.2015.283868/2015.283868.The-Works_djvu.txt",
+    "coverage_note": "page begins mid-paragraph (不能為禍福...); the start of that paragraph is included as context. Page ends mid-sentence at 'A country [may be rich]'; the reference runs to the end of that sentence group. Bi Yuan's small editorial notes have no reference. Obvious OCR errors in the archive.org text were corrected to the printed reading (tlie->the, he->be, moiixning->mourning, Ghitse->Chitse, curly-quote debris); Mei's footnotes omitted.",
+    "origin": "translation-ab-5606-2026-10-02",
+    "genre": "philosophy (Mozi)",
+    "publishable": true
+   },
+   "arms": [
+    "flash",
+    "lite",
+    "served",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e72698a409200ea79ef8c3_00129",
+   "track": "T5",
+   "lang": "Chinese",
+   "book_id": "69e72698a409200ea79ef8c3",
+   "page_number": 129,
+   "reference_meta": {
+    "title": "Liaozhai zhiyi 聊齋志異, tale 曾友于 (Zeng Youyu) = Giles 'The Quarrelsome Brothers'",
+    "translator": "Herbert A. Giles",
+    "year": 1880,
+    "licence": "public domain (published 1880)",
+    "private": false,
+    "style": "free",
+    "style_note": "Victorian literary prose; follows the narrative sentence by sentence but smooths, condenses and occasionally glosses details",
+    "located": "曾友于, mid-tale: from ……共出田宅居成 (the younger brothers give the returned eldest brother Cheng a share) through 成不聽刻期 (Cheng ignores Youyu and fixes a day for the reburial)",
+    "url": "https://www.gutenberg.org/cache/epub/43629/pg43629.txt",
+    "coverage_note": "Page begins mid-sentence (共出田宅居成); reference starts at the beginning of Giles's paragraph ('One day the eldest brother, Ch‘êng…'), so Cheng's return, Jen and Yi inviting him and sending for Yu-yü precede the page as context; it ends with the sentence that completes 刻期 ('fixed a day for her interment in the family vault'). Giles condenses a few details (e.g. 以石投孝 'threw a stone at Hsiao and knocked him down'; 使七分相準 'divided equally among the seven brothers'). Translator's footnote markers removed.",
+    "page_content": "Root narrative text only (no commentary on this page); reference covers ~100% of it",
+    "confidence": 0.9,
+    "origin": "xlref-t5 additions 2026-10-03",
+    "source": "Herbert A. Giles, Strange Stories from a Chinese Studio, 2 vols, London: Thos. De La Rue, 1880 (Project Gutenberg #43629, transcribed from the 1880 edition)",
+    "canonical": false,
+    "genre": "fiction (tales)",
+    "publishable": true
+   },
+   "arms": [
+    "served",
+    "lite",
+    "flash",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e792f880b52390feb17389_00344",
+   "track": "T5",
+   "lang": "Chinese",
+   "book_id": "69e792f880b52390feb17389",
+   "page_number": 344,
+   "reference_meta": {
+    "title": "Honglou meng (Dream of the Red Chamber), 120-chapter edition",
+    "translator": "H. Bencraft Joly",
+    "year": 1893,
+    "licence": "public domain (published 1893)",
+    "private": false,
+    "style": "literal",
+    "style_note": "Victorian consular-interpreter prose, very close to the Chinese, rendering idioms and politeness formulas word for word",
+    "located": "ch. 48: end of Ping'er's account of Jia She beating Jia Lian over the antique fans, through Xiangling asking Daiyu to teach her verse, Daiyu's reading list (Wang Wei, Du Fu, Li Bai), and Xiangling returning the Wang Wei volume ('Let me tell you')",
+    "url": "https://www.gutenberg.org/cache/epub/9604/pg9604.txt",
+    "coverage_note": "reference is exactly the page span with no context (the span itself is ~6,400 chars, over the 6,000 guide, so context dropped per the brief); Joly's version is complete for this passage, no omissions found; the Lu You couplet is kept as two verse lines",
+    "page_content": "narrative prose of ch. 48 only (no commentary); the page begins mid-sentence in Ping'er's speech (倒用板子棍子) and ends with Xiangling's '說給你聽聽'",
+    "confidence": 0.95,
+    "origin": "xlref-t5 additions 2026-10-03",
+    "source": "H. Bencraft Joly, Hung Lou Meng, or, The Dream of the Red Chamber, a Chinese Novel, Book II (Hong Kong: Kelly & Walsh, 1893), ch. XLVIII; Project Gutenberg eBook #9604",
+    "canonical": false,
+    "genre": "fiction (novel)",
+    "publishable": true
+   },
+   "arms": [
+    "served",
+    "lite",
+    "flash",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69906a861cf6ed5fbc8f5d21_00078",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69906a861cf6ed5fbc8f5d21",
+   "page_number": 78,
+   "reference_meta": {
+    "title": "Līlāvatī of Bhāskara II (with Sanskrit anvaya and Hindi commentary)",
+    "translator": "Henry Thomas Colebrooke",
+    "year": 1817,
+    "licence": "public domain (published 1817)",
+    "private": false,
+    "style": "literal",
+    "style_note": "Regency-era scholarly translation, close to the Sanskrit, with Bhāskara's statements rendered as worked arithmetic",
+    "located": "Līlāvatī, Miscellaneous rules (guṇakarma, root-multiplier problems): example verse 3 of this edition = Colebrooke ch. III sect. V §66 (the flock of geese, answer 144)",
+    "url": "https://archive.org/download/algebrawitharith00brahuoft/algebrawitharith00brahuoft_djvu.txt",
+    "coverage_note": "Colebrooke translates the verse and Bhāskara's statement/solution; he has no equivalent of the Sanskrit anvaya or the modern Hindi explanation. Colebrooke printed the fractions stacked; all four archive.org OCRs of the 1817 book garble them (e.g. 'i', '%^', 'y'), so each is marked '[fraction illegible in OCR]' rather than supplied (true values per the page: 1/8; 7/8; 80/7 and 48/7; 40/7). OCR letter errors corrected: 'M&nasa' -> 'Mánasa' (as in https://archive.org/download/1817-henry-colebrooke-algebra-with-arithmetic-and-mensuration-from-the-sanskrit-of-br/1817-HCOLEBROOKE_Algebra_with_Arithmetic_and_Mensuration_from_the_Sanskrit_of_Brahmagupta_and_Bhaskara_djvu.txt), 'coefiicient' -> 'coefficient'; footnote markers dropped. No neighbouring examples included (they carry further garbled fractions).",
+    "page_content": "Example verse (flock of geese; ten times the square root to the Mānasa lake, an eighth to the sthalapadminī forest, three pairs remain), Sanskrit anvaya, Hindi artha, Sanskrit nyāsa (statement and working: 7/8, 48/7, 80/7, 40/7, 1600/49, 1936/49, 44/7, 144), and the start of a Hindi worked explanation (phailāv) cut off at page foot. The reference covers the verse, anvaya, artha and nyāsa (~60% of the page); the Hindi phailāv (~40%) has no reference beyond the matching steps in Colebrooke's solution.",
+    "confidence": 0.85,
+    "origin": "xlref-t5 additions 2026-10-03",
+    "source": "H. T. Colebrooke, Algebra, with Arithmetic and Mensuration, from the Sanscrit of Brahmegupta and Bháscara, London: John Murray 1817, Líláwatí ch. III sect. V §66 (p. 30)",
+    "canonical": false,
+    "genre": "mathematics + commentary",
+    "publishable": true
+   },
+   "arms": [
+    "served",
+    "lite",
+    "flash",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e7267ca409200ea79ef51d_00353",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69e7267ca409200ea79ef51d",
+   "page_number": 353,
+   "reference_meta": {
+    "title": "Hitopadeśa",
+    "translator": "Francis Johnson",
+    "year": 1848,
+    "licence": "public domain (published 1848)",
+    "private": false,
+    "style": "literal",
+    "style_note": "Victorian scholarly crib, numbered verses, supplied words italicised; close to the Sanskrit",
+    "located": "Book III (Vigraha, War), the Chakravāka's counsel after the Parrot's arrival: from 'vigrahas tāvat samupasthitaḥ' (King: war is now settled) through Johnson's verses III.41-45 and the prose 'kiṃ tu vigraham upasthitaṃ vilokya ... yataḥ' that introduces III.46",
+    "url": "https://archive.org/download/hitopadeaorsalu00johngoog/page/n92_w1200.jpg (page image; djvu text at https://archive.org/download/hitopadeaorsalu00johngoog/hitopadeaorsalu00johngoog_djvu.txt)",
+    "coverage_note": "Context: one sentence before the span (the porter withdrawing with the Parrot) and verse III.46 after it. Text transcribed from the page image of Johnson p. 81 (the archive.org djvu OCR of this page is garbled, e.g. 'fiuicAHi«ry ({/'timber' for 'machinery of timber'); italics (Johnson's supplied words) dropped. The printed Sanskrit OCR is noisy (e.g. 'prayate cārīn' for 'prayatetārīn'), but the verse sequence matches Johnson's 41-45 exactly.",
+    "page_content": "Sanskrit root text (prose + verses III.41-45, ~55% of the page) followed by a Bengali prose rendering (~45%) that covers the same passage only up to the start of verse 44. Reference covers 100% of the Sanskrit root; the Bengali block is a parallel translation of part of the same span, so it is also covered.",
+    "confidence": 0.85,
+    "origin": "xlref-t5 additions 2026-10-03",
+    "source": "Francis Johnson, Hitopadeśa, or Salutary Counsels of Vishnu Śarman, in a series of connected fables ... literally translated, London 1848, Book III (War), p. 81",
+    "canonical": false,
+    "genre": "fable (didactic)",
+    "publishable": true
+   },
+   "arms": [
+    "served",
+    "lite",
+    "flash",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": false
+  },
+  {
+   "id": "69e80662fdad300064d9ed7c_00171",
+   "track": "T5",
+   "lang": "Sanskrit",
+   "book_id": "69e80662fdad300064d9ed7c",
+   "page_number": 171,
+   "reference_meta": {
+    "title": "Suśruta Saṃhitā (Sūtrasthāna), Sanskrit text with Hindi bhāṣā-ṭīkā of Paṇḍit Muralīdhara Śarmā",
+    "translator": "Kaviraj Kunja Lal Bhishagratna",
+    "year": 1907,
+    "licence": "public domain (published 1907)",
+    "private": false,
+    "style": "literal",
+    "style_note": "Edwardian scholarly-medical prose, close to the Sanskrit with parenthetical glosses and Sanskrit terms kept",
+    "located": "Sūtrasthāna ch. 18 (Vraṇālepana-bandha-vidhi) vv. 39-43 (end of chapter; vv. 39-41 only in the Hindi rendering, vv. 42-43 Sanskrit + Hindi) and ch. 19 (Vraṇitopāsanīya) opening + vv. 1-4 (Sanskrit only)",
+    "url": "https://archive.org/download/englishtranslati01susruoft/englishtranslati01susruoft_djvu.txt",
+    "coverage_note": "Reference starts one sentence before the page (ch. 18 'All secreting measures...', context) and ends one sentence after ch. 19 v. 4 ('Thus the patient shall lie...', likely v. 5, context). Bhishagratna follows the Sanskrit closely but treats some verses as 'Metrical Text' blocks; his ch. 18 v. 40 adds a parenthetical gloss. The ch. 19 vv. 1-4 Sanskrit on the page has no Hindi on this page; the reference gives Bhishagratna's English for them. Obvious OCR glyph errors in the archive.org djvu text were corrected to the printed reading (b}- -> by, bod}' -> body, lielp -> help, IVIetrical -> Metrical, Sutrasth^nam -> Sutrasthanam, Siishruta -> Sushruta, Vranito-pa^saniya-madhyaryam -> Vranito-pasaniya-madhyayam); the translator's footnote (interpolation note) and page headers were dropped.",
+    "page_content": "Printed p. 143. Root Sanskrit verses (ch. 18 vv. 42-43, ch. 19 vv. 1-4) plus a Hindi translation of ch. 18 vv. 39-43 (the Hindi is a close rendering of the root, not independent commentary); one-line Sanskrit/Hindi footnote. The reference covers essentially the whole page (~95%); only the footnote '(सूत्र ४२) वधयुक्त व्रण' and the two colophons' Hindi-commentator naming have no counterpart.",
+    "confidence": 0.8,
+    "origin": "xlref-t5 additions 2026-10-03",
+    "source": "Kaviraj Kunja Lal Bhishagratna, An English Translation of the Sushruta Samhita, Vol. I (Sutrasthanam), Calcutta 1907, pp. 174-177",
+    "canonical": false,
+    "genre": "medicine",
+    "publishable": true
+   },
+   "arms": [
+    "served",
+    "lite",
+    "flash",
+    "lite-corr",
+    "flash-corr"
+   ],
+   "canonical": false
+  }
+ ]
+}

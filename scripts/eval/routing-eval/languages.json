@@ -1,0 +1,193 @@
+{
+ "PRIOR ART": "none — looked in scripts/eval/benchmark/*.json (sealed page registries, per stratum), src/data/quality-by-language.json (served quality by language, no page totals for hidden books) and scripts/lib/lanes.mjs (lanes by pipeline stage, not by language). This file is the page-count snapshot and the specialist-lane column of the generated routing table; `languages` is written by build-routing-table.mjs --refresh-pages, `specialist_lanes` and `aliases` by hand.",
+ "specialist_lanes": {
+  "syc": "Kraken (`syriac-kraken-lane`, #4883); never Gemini",
+  "bod": "BDRC Yigdzin (`reocr_bdrc_4523`, #4523)",
+  "jpn": "NDL v3 for cursive pre-1868 (`ndl-koten-lane`, pilot, #5100)",
+  "zho": "PaddleOCR-VL for Siku Quanshu (being built, #5600)"
+ },
+ "aliases": {
+  "heb": [
+   "Hebrew/Aramaic"
+  ],
+  "gez": [
+   "Ge’ez"
+  ],
+  "zho": [
+   "Chinese manuscript-regular",
+   "Chinese woodblock"
+  ]
+ },
+ "snapshot_at": "2026-10-04",
+ "languages": [
+  {
+   "family": "lat",
+   "name": "Latin",
+   "books": 50597,
+   "pages": 14038470,
+   "hidden_ocr_owed": 10503238
+  },
+  {
+   "family": "grc",
+   "name": "Greek",
+   "books": 5176,
+   "pages": 2339546,
+   "hidden_ocr_owed": 1797544
+  },
+  {
+   "family": "zho",
+   "name": "Chinese",
+   "books": 13429,
+   "pages": 2059181,
+   "hidden_ocr_owed": 104825
+  },
+  {
+   "family": "eng",
+   "name": "English",
+   "books": 5573,
+   "pages": 1795824,
+   "hidden_ocr_owed": 506615
+  },
+  {
+   "family": "deu",
+   "name": "German",
+   "books": 6106,
+   "pages": 1597226,
+   "hidden_ocr_owed": 677249
+  },
+  {
+   "family": "bod",
+   "name": "Tibetan",
+   "books": 2339,
+   "pages": 926852,
+   "hidden_ocr_owed": 47033
+  },
+  {
+   "family": "fra",
+   "name": "French",
+   "books": 1743,
+   "pages": 466207,
+   "hidden_ocr_owed": 98381
+  },
+  {
+   "family": "und",
+   "name": "und / unknown",
+   "books": 1907,
+   "pages": 425825,
+   "hidden_ocr_owed": 381704
+  },
+  {
+   "family": "san",
+   "name": "Sanskrit",
+   "books": 2099,
+   "pages": 355463,
+   "hidden_ocr_owed": 187816
+  },
+  {
+   "family": "ita",
+   "name": "Italian",
+   "books": 731,
+   "pages": 239510,
+   "hidden_ocr_owed": 40242
+  },
+  {
+   "family": "nld",
+   "name": "Dutch",
+   "books": 638,
+   "pages": 155452,
+   "hidden_ocr_owed": 8183
+  },
+  {
+   "family": "rus",
+   "name": "Russian",
+   "books": 338,
+   "pages": 141398,
+   "hidden_ocr_owed": 34766
+  },
+  {
+   "family": "heb",
+   "name": "Hebrew",
+   "books": 426,
+   "pages": 125578,
+   "hidden_ocr_owed": 37571
+  },
+  {
+   "family": "ara",
+   "name": "Arabic",
+   "books": 491,
+   "pages": 113395,
+   "hidden_ocr_owed": 44835
+  },
+  {
+   "family": "fas",
+   "name": "Persian",
+   "books": 257,
+   "pages": 89142,
+   "hidden_ocr_owed": 59108
+  },
+  {
+   "family": "mon",
+   "name": "Mongolian",
+   "books": 108,
+   "pages": 83090,
+   "hidden_ocr_owed": 83090
+  },
+  {
+   "family": "syc",
+   "name": "Syriac",
+   "books": 164,
+   "pages": 72503,
+   "hidden_ocr_owed": 18257
+  },
+  {
+   "family": "kor",
+   "name": "Korean",
+   "books": 312,
+   "pages": 70409,
+   "hidden_ocr_owed": 6056
+  },
+  {
+   "family": "spa",
+   "name": "Spanish",
+   "books": 172,
+   "pages": 69543,
+   "hidden_ocr_owed": 36176
+  },
+  {
+   "family": "jav",
+   "name": "Javanese",
+   "books": 317,
+   "pages": 56161,
+   "hidden_ocr_owed": 51956
+  },
+  {
+   "family": "jpn",
+   "name": "Japanese",
+   "books": 401,
+   "pages": 51033,
+   "hidden_ocr_owed": 22787
+  },
+  {
+   "family": "hye",
+   "name": "Armenian",
+   "books": 83,
+   "pages": 35981,
+   "hidden_ocr_owed": 2670
+  },
+  {
+   "family": "pli",
+   "name": "Pali",
+   "books": 59,
+   "pages": 20583,
+   "hidden_ocr_owed": 3222
+  },
+  {
+   "family": "gez",
+   "name": "Ge'ez",
+   "books": 46,
+   "pages": 18455,
+   "hidden_ocr_owed": 4520
+  }
+ ],
+ "min_pages": 15000
+}

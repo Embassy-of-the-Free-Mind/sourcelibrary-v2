@@ -18,6 +18,7 @@ import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { nanoid } from 'nanoid';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 import { getTranslateModelForBook } from '../lib/translate-core.mjs';
+import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
 
 const TRANSLATION_QUEUE_URL = process.env.SQS_PAGE_TRANSLATION_QUEUE_URL;
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -95,6 +96,13 @@ async function main() {
     }, { projection: { id: 1, page_number: 1 } }).sort({ page_number: 1 }).toArray();
 
     if (untranslated.length === 0) continue;
+
+    // #5700: untrusted OCR is not translated until re-read (scripts/lib/ocr-trust-gate.mjs).
+    const trust = await ocrTrustGate(db, book, { lane: 'queue-translations-to-80pct', record: !DRY_RUN });
+    if (!trust.ok) {
+      console.log(`  REFUSED "${(book.title || '').substring(0, 60)}": ${trust.reason}`);
+      continue;
+    }
 
     // Only queue enough pages to reach 80%
     const pagesToQueue = untranslated.slice(0, book.pagesNeeded);

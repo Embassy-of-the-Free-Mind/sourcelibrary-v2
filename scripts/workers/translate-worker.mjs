@@ -26,9 +26,11 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { createHash, randomBytes } from 'crypto';
 import { nanoid } from 'nanoid';
 import { logUsage, outputTokensFrom } from './lib/supabase-usage-logger.mjs';
+import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
 import {
   getTranslateModelForBook as getModelForBook,
   sanitizeTranslationTags,
+  guardTranslationText,
   contentHash,
   SKIP_TRANSLATION_PAGE_TYPES,
   isBlankFromOcr,
@@ -45,6 +47,7 @@ import {
 } from '../lib/translate-core.mjs';
 import { leafSeamsPreserved } from '../lib/leaf-break.mjs';
 import { unwrapHiddenTranslation } from '../lib/hidden-translation.mjs';
+import { strayScriptVerdict } from '../lib/stray-script.mjs';
 import { saveRevisionBeforeOverwrite as saveRevisionShared } from '../lib/page-revisions.mjs';
 import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
 import { englishSource, sameLanguageTranslation } from '../lib/same-language.mjs';
@@ -54,6 +57,8 @@ import { NOT_HELD } from '../lib/pipeline-hold.mjs';
 import { phase4Lane, REALTIME_PRIORITY_FLOOR } from '../lib/translate-batch-chained.mjs';
 import { openRunBookIds, notInOpenRun } from './lib/self-dispatch-lane.mjs';
 import { CLEAR_STALE_UNSET } from '../lib/stale-translation.mjs';
+import { illegibleGateEnabled, illegibleSourceVerdict, ILLEGIBLE_SOURCE_REASON } from '../lib/illegible-source-gate.mjs';
+import { applyPreTranslationGate } from '../lib/pre-translation-gate.mjs';
 import { geminiEngine, translationInput, translationProvenance, codeVersion, host } from '../lib/write-provenance.mjs';
 import { dropDriftedPages } from '../lib/block-drift.mjs';
 import { startWorkerBeacon } from './lib/worker-heartbeat.mjs';
@@ -474,7 +479,7 @@ function engineFor(page, book, promptRef, call) {
 // Falls back to PROMPT_VERSION constant for callers that pre-date the
 // prompt-reference threading (none in this file after the audit, but safe).
 async function writePageTranslation(db, page, text, book, promptRef, call) {
-  text = unwrapForWrite(page, text);
+  text = unwrapForWrite(page, text, book);
   // Health gate (2026-08-08 relight incident): on the first live cohort, flash
   // looped on 42% of the loop-prone manuscript pages (211k chars from a 20k
   // OCR) and the worker wrote every one. Never persist a collapsed/runaway
@@ -517,15 +522,19 @@ async function writePageTranslation(db, page, text, book, promptRef, call) {
 // Reduces write amplification: 1 bulkWrite triggers fewer index updates than N updateOne calls
 // T3 (#5148): a translation the model wrapped whole in <meta>/<note> renders as an empty page
 // and reads to the health gate as collapsed. Open the wrapper BEFORE judging or storing.
-function unwrapForWrite(page, text) {
-  const u = unwrapHiddenTranslation({ ocr: page.ocr?.data, tr: text, type: page.page_type });
-  if (!u.unwrapped) return text;
-  console.log(`  [unwrap] ${page.id} p${page.page_number}: translation was inside <${u.wrapper}> (${u.wrapperLen} chars, body ${u.body}) — unwrapped`);
-  return u.text;
+function unwrapForWrite(page, text, book) {
+  // #5902: the model's definitions inside or bracketed after a <term> are stored as <note>s.
+  const u = unwrapHiddenTranslation({ ocr: page.ocr?.data, tr: guardTranslationText(text), type: page.page_type });
+  if (u.unwrapped) console.log(`  [unwrap] ${page.id} p${page.page_number}: translation was inside <${u.wrapper}> (${u.wrapperLen} chars, body ${u.body}) — unwrapped`);
+  // #5734: the measured Korean 그-for-"that" is repaired here; any other stray script is refused
+  // by assessTranslationHealth ('stray-script') in the health gate that follows.
+  const s = strayScriptVerdict(u.text, { ocr: page.ocr?.data, language: book?.language });
+  if (s.repaired) console.log(`  [stray-script] ${page.id} p${page.page_number}: ${s.repaired}× Korean 그 → "that"`);
+  return s.text;
 }
 
 async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
-  entries = entries.map((e) => ({ ...e, text: unwrapForWrite(e.page, e.text) }));
+  entries = entries.map((e) => ({ ...e, text: unwrapForWrite(e.page, e.text, book) }));
   // Health gate: filter unhealthy entries out and stamp them (see writePageTranslation).
   const unhealthy = [];
   entries = entries.filter(({ page, text }) => {
@@ -607,6 +616,9 @@ async function bulkWritePageTranslations(db, entries, book, promptRef, call) {
   })));
 }
 
+// Pages the pre-translation gate refused this run, by reason (#5915) — reported in cron_runs.
+const preGateRefusals = {};
+
 // ── Process one book (sequential batches for context) ──
 async function processBook(db, book, job, globalCounter, deadline) {
   const label = (book.title || book.id).substring(0, 50);
@@ -671,6 +683,55 @@ async function processBook(db, book, job, globalCounter, deadline) {
     console.log(`  [${label}] LOOP SOURCE: refusing to translate ${loopSources.length} page(s) whose OCR is a repetition loop (#4850)`);
     const loopIds = new Set(loopSources.map(p => p.id));
     pages.splice(0, pages.length, ...pages.filter(p => !loopIds.has(p.id)));
+  }
+
+  // ── Pre-translation gate (#5915) — ON unless TRANSLATE_PRE_GATE=0 ─────────
+  // Pages the pipeline could not have read are refused before the call: an image too small for
+  // the text it is said to hold, a transcription that is word fragments, a page with no place in
+  // the book (duplicate number, the previous page's image again). Each refusal is stamped with
+  // its reason and measurement (`translation.refusal_reason`, `translation.refusal`) and with
+  // `translation.health_blocked`, which this query already excludes; a refused page is judged
+  // again whenever its book comes back, and released if its OCR or image has changed. A book
+  // under half transcribed stamps nothing: its job is cancelled and the book is parked, because
+  // "nothing left to translate" below would otherwise mark an unread book translate_complete.
+  const preGate = await applyPreTranslationGate(db, book.id, pages, { lane: `translate-worker (${job?.initiated_by || 'job'})` });
+  for (const [reason, n] of Object.entries(preGate.counts)) preGateRefusals[reason] = (preGateRefusals[reason] || 0) + n;
+  if (preGate.book) {
+    const { read, translatable, share } = preGate.book.detail;
+    const why = `pre-translation gate: ${preGate.book.reason} (${read} of ${translatable} pages transcribed, ${(100 * share).toFixed(1)}%; #5915)`;
+    console.log(`  [${label}] BOOK REFUSED: ${why}`);
+    await db.collection('jobs').updateOne({ id: job.id }, { $set: { status: 'cancelled', cancelled_at: new Date(), cancel_reason: why, updated_at: new Date() } });
+    await db.collection('books').updateOne(
+      { id: book.id, ...NOT_HELD },
+      { $set: { 'pipeline_auto.status': 'needs_attention', 'pipeline_auto.error': why, updated_at: new Date() }, $unset: { job: '' } },
+    );
+    return { translated: 0, failed: 0, completed: 0, inputTokens: 0, outputTokens: 0 };
+  }
+  if (preGate.refused.length > 0) {
+    console.log(`  [${label}] PRE-TRANSLATION GATE: refusing ${preGate.refused.length} page(s) — ${Object.entries(preGate.counts).map(([r, n]) => `${r} ${n}`).join(', ')} (#5915)`);
+    pages.splice(0, pages.length, ...preGate.pages);
+  }
+
+  // ── Illegible sources (#5305) — OFF unless TRANSLATE_ILLEGIBLE_GATE=1 ─────
+  // The OCR read nothing, or says it could not read the page. Handed that, the model writes
+  // fluent prose anyway (Herculanensium p.328: a paragraph of Epicurean theology over "[...]").
+  // Refused before the call and stamped like a loop source. The contract's output, the single
+  // `<warning>Illegible: …</warning>`, is NOT written to translation.data (every counter reads a
+  // non-empty data as "translated") and gets no field of its own: illegibleWarning(verdict) derives
+  // it from the OCR wherever a reader surface wants to say why there is no English.
+  if (illegibleGateEnabled()) {
+    const illegible = pages.filter(p => illegibleSourceVerdict(p.ocr?.data, { pageType: p.page_type }).illegible);
+    if (illegible.length > 0) {
+      await db.collection('pages').bulkWrite(illegible.map(p => ({
+        updateOne: {
+          filter: { id: p.id },
+          update: { $set: { 'translation.health_blocked': ILLEGIBLE_SOURCE_REASON, 'translation.health_blocked_at': new Date(), updated_at: new Date() } },
+        },
+      })), { ordered: false }).catch(() => {});
+      console.log(`  [${label}] ILLEGIBLE SOURCE: refusing to translate ${illegible.length} page(s) whose OCR has no legible text (#5305)`);
+      const ids = new Set(illegible.map(p => p.id));
+      pages.splice(0, pages.length, ...pages.filter(p => !ids.has(p.id)));
+    }
   }
 
   // ── Same-language pages (#5154) ──────────────────────────────────────────
@@ -1306,6 +1367,14 @@ async function selfDispatch(db, limit) {
     const label = (book.title || '').substring(0, 50);
     const pageIds = pages.map(p => p.id);
 
+    // #5700: untrusted OCR is not translated until re-read (scripts/lib/ocr-trust-gate.mjs).
+    // Checked before the claim, so the book's status is never moved for a refusal.
+    const trust = await ocrTrustGate(db, book, { lane: 'translate-worker-self-dispatch' });
+    if (!trust.ok) {
+      console.log(`[TRANSLATE] Not dispatched (${trust.reason}): ${label}`);
+      continue;
+    }
+
     // Atomic claim (#3826): concurrent selfDispatch calls (each finishing book
     // triggers a backfill) all read the same candidates before any of them
     // flipped a status, so one book got 3-4 jobs within seconds — quadruple
@@ -1586,6 +1655,20 @@ async function main() {
       );
       return zero;
     }
+    // #5700: THE consumer-side check. Every job-creating script and route ends here, so a
+    // creator this gate was never wired into still cannot get a gated book translated. The job
+    // is cancelled with the reason and the book goes back to ocr_complete (still owed, never
+    // "translated"); nothing already written is touched.
+    const trust = await ocrTrustGate(db, book, { lane: `translate-worker (${job.initiated_by || 'job'})` });
+    if (!trust.ok) {
+      console.log(`  [${(book.title || '').substring(0, 40)}] Job ${jobId} cancelled: ${trust.reason}`);
+      await db.collection('jobs').updateOne({ id: jobId }, { $set: { status: 'cancelled', cancelled_at: new Date(), cancel_reason: trust.reason, updated_at: new Date() } });
+      await db.collection('books').updateOne(
+        { id: book.id, ...NOT_HELD },
+        { $set: { 'pipeline_auto.status': 'ocr_complete', updated_at: new Date() }, $unset: { job: '' } },
+      );
+      return zero;
+    }
     return processBook(db, book, job, globalCounter, deadline);
   }
 
@@ -1729,6 +1812,8 @@ async function main() {
         output_tokens: totalOutputTokens,
         cost_usd: totalCost,
         rate_per_hour: rate,
+        pages_refused_pre_gate: Object.values(preGateRefusals).reduce((a, n) => a + n, 0),
+        pre_gate_refusals: preGateRefusals,
       },
       errors: [],
       error_count: totalFailed,

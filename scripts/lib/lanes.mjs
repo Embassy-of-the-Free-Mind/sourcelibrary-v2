@@ -146,6 +146,9 @@ export const LANES = [
   { name: 'enrich-worker', serves: 'enrich', files: ['scripts/workers/enrich-worker.mjs'],
     selects: '`translate_complete` → summary, chapters, quality, collections', trigger: 'scheduler, 5 min',
     budget: 'dial (scoped)', respectsHold: 'marker', pause: 'paused_phases:enrichment' },
+  { name: 'enrich-worker-batch', serves: 'enrich', files: ['scripts/workers/enrich-worker.mjs', 'scripts/workers/lib/enrich-batch-lane.mjs'],
+    selects: 'live translated books past the realtime statuses with no summary / index / chapters (#2141), reads then translated pages', trigger: 'cron, 15 min collect + 6 h admit',
+    budget: 'dial (scoped)', respectsHold: 'marker', pause: 'paused_phases:enrichment' },
 
   // ── images ─────────────────────────────────────────────────────────────────────────────────────
   { name: 'orchestrator-images', serves: 'images', files: [ORCH],

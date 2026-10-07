@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import { posts } from '@/app/blog/page';
+import { posts } from '@/app/blog/posts';
 
 export const revalidate = false;
 
@@ -39,6 +39,7 @@ const QUESTIONS: { title: string; refs: Ref[] }[] = [
     refs: [
       { slug: 'confident-hallucinator' },
       { slug: 'did-the-ai-read-this' },
+      { slug: 'what-the-models-cannot-name' },
     ],
   },
   {
@@ -86,7 +87,9 @@ const QUESTIONS: { title: string; refs: Ref[] }[] = [
   {
     title: 'Can you trust the translation you are reading?',
     refs: [
+      { href: '/quality', label: 'Quality Center: where quality stands, experiments, and how to take part' },
       { href: '/research/quality', label: 'How page quality is measured (draft paper)' },
+      { href: '/research/quality/open', label: 'Open quality work: known defects and what is being measured now' },
       { href: '/research/page-errors', label: 'What goes wrong on a page (draft paper)' },
       { slug: 'translation-collapse' },
       { slug: 'word-alignment' },

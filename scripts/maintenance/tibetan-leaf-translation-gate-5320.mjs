@@ -20,12 +20,17 @@
  *   --lift      unset the stamps that judged text no longer on the page: reasons runaway / collapsed /
  *               source_loop / leaf-drift whose `health_blocked_at` is older than `ocr.updated_at`. The write
  *               gate re-judges every translation on the new text, so a page that is still bad is stamped again.
+ *   --release   the narrow inverse of --exclude, for after a per-leaf read is applied (#5320 step 2): unset
+ *               `leaf-unmarked` only on pages that are now safe by the --exclude rule itself — the text carries
+ *               a `<leaf-break/>`, or --ledger shows the page as one leaf. Every other stamp stays. Books come
+ *               from the held cohort PLUS the ledger's books, because a book enrolled in a run is released
+ *               from the hold while its stamped pages wait.
  *
  * Cohort = books held with reason `tibetan-retranslation-awaits-derek`. Default is DRY RUN; --apply writes.
  * Every write records a sweep_log row per book and the page ids go to the report (the undo list).
  *
  *   node --env-file=.env.production.local scripts/maintenance/tibetan-leaf-translation-gate-5320.mjs \
- *     --ledger=/root/tibetan-reocr/leaf-run-logs/pages.jsonl (--exclude | --unexclude | --lift) [--book=<id>] [--apply]
+ *     --ledger=/root/tibetan-reocr/leaf-run-logs/pages.jsonl (--exclude | --unexclude | --lift | --release) [--book=<id>] [--apply]
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -36,7 +41,7 @@ import { LEAF_BREAK_RE } from '../lib/leaf-break.mjs';
 const ARG = (n, d) => { const a = process.argv.find((x) => x.startsWith(`${n}=`)); return a ? a.slice(n.length + 1) : d; };
 const has = (f) => process.argv.includes(f);
 const APPLY = has('--apply');
-const MODE = has('--exclude') ? 'exclude' : has('--unexclude') ? 'unexclude' : has('--lift') ? 'lift' : null;
+const MODE = has('--exclude') ? 'exclude' : has('--unexclude') ? 'unexclude' : has('--lift') ? 'lift' : has('--release') ? 'release' : null;
 const LEDGER = ARG('--ledger', null);
 const ONLY_BOOK = ARG('--book', null);   // one book (a pilot), else the whole held cohort
 const HOLD_REASON = 'tibetan-retranslation-awaits-derek';
@@ -44,15 +49,17 @@ const STAMP = 'leaf-unmarked';
 const LIFTABLE = ['runaway', 'collapsed', 'source_loop', 'leaf-drift'];
 const SWEEP = `tibetan-leaf-gate-5320-${MODE}`;
 const REPORT = ARG('--report', `scripts/output/tibetan-leaf-gate-5320-${MODE}-${new Date().toISOString().slice(0, 10)}${APPLY ? '' : '.dry'}.jsonl`);
-if (!MODE) { console.error('one of --exclude, --unexclude, --lift'); process.exit(1); }
-if (MODE === 'exclude' && !LEDGER) { console.error('--exclude needs --ledger=<pages.jsonl>'); process.exit(1); }
+if (!MODE) { console.error('one of --exclude, --unexclude, --lift, --release'); process.exit(1); }
+if ((MODE === 'exclude' || MODE === 'release') && !LEDGER) { console.error(`--${MODE} needs --ledger=<pages.jsonl>`); process.exit(1); }
 
 // Pages the per-leaf detector saw as ONE leaf: safe to translate without a marker.
 const singleLeaf = new Set();
+const ledgerBooks = new Set();
 if (LEDGER) {
   for (const line of fs.readFileSync(LEDGER, 'utf8').split('\n')) {
     if (!line.startsWith('{')) continue;
     const r = JSON.parse(line);
+    ledgerBooks.add(r.id.split('_')[0]);
     if (r.nb === 1 && r.path === 'detected' && !(Array.isArray(r.leaf) && r.leaf.length >= 2)) singleLeaf.add(r.id);
   }
 }
@@ -62,8 +69,9 @@ await mongo.connect();
 const db = mongo.db('bookstore');
 fs.mkdirSync(path.dirname(REPORT), { recursive: true });
 const report = fs.createWriteStream(REPORT, { flags: 'a' });
-const books = (await db.collection('books').find({ 'pipeline_auto.hold.reason': HOLD_REASON }, { projection: { id: 1 } }).toArray()).map((b) => b.id).filter((id) => !ONLY_BOOK || id === ONLY_BOOK).sort();
-console.log(`${books.length} held cohort books — ${MODE}${APPLY ? ' APPLY' : ' dry run'}`);
+const held = (await db.collection('books').find({ 'pipeline_auto.hold.reason': HOLD_REASON }, { projection: { id: 1 } }).toArray()).map((b) => b.id);
+const books = [...new Set(MODE === 'release' ? [...held, ...ledgerBooks] : held)].filter((id) => !ONLY_BOOK || id === ONLY_BOOK).sort();
+console.log(`${books.length} ${MODE === 'release' ? 'cohort + ledger' : 'held cohort'} books — ${MODE}${APPLY ? ' APPLY' : ' dry run'}`);
 const t = { pages: 0, books: 0, reasons: {} };
 const now = new Date();
 
@@ -83,6 +91,17 @@ for (const bookId of books) {
       ids.push(p.id);
     }
     filter = { id: { $in: ids }, 'translation.health_blocked': { $exists: false } };
+  } else if (MODE === 'release') {
+    const pages = await db.collection('pages').find({ book_id: bookId, 'translation.health_blocked': STAMP },
+      { projection: { id: 1, page_number: 1, 'ocr.data': 1 } }).toArray();
+    for (const p of pages) {
+      const d = typeof p.ocr?.data === 'string' ? p.ocr.data : '';
+      const marked = LEAF_BREAK_RE.test(d); LEAF_BREAK_RE.lastIndex = 0;
+      const why = marked ? 'marked' : singleLeaf.has(`${bookId}_${String(p.page_number).padStart(5, '0')}`) ? 'single-leaf' : null;
+      if (!why) { t.reasons['kept:unmarked'] = (t.reasons['kept:unmarked'] || 0) + 1; continue; }
+      ids.push(p.id); t.reasons[why] = (t.reasons[why] || 0) + 1;
+    }
+    filter = { id: { $in: ids }, 'translation.health_blocked': STAMP };
   } else if (MODE === 'unexclude') {
     filter = { book_id: bookId, 'translation.health_blocked': STAMP };
     ids.push(...(await db.collection('pages').find(filter, { projection: { id: 1 } }).toArray()).map((p) => p.id));

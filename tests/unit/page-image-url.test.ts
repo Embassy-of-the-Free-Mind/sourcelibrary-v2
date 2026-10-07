@@ -250,3 +250,31 @@ describe('CSP renderability invariant', () => {
     expect(getPageImageUrl(fixtures.iiif, 'thumb')).not.toContain('/api/image');
   });
 });
+
+describe('hires: Internet Archive master (#5679)', () => {
+  const ia = (extra: Partial<PageImageFields> = {}): PageImageFields => ({
+    photo: 'https://archive.org/download/06080597.cn/page/n9/full/pct:50/0/default.jpg',
+    archived_photo: `${R2}/archived/${BOOK}/10.jpg`,
+    ...extra,
+  });
+  const MASTER = 'https://archive.org/download/06080597.cn/page/n9/full/full/0/default.jpg';
+
+  it('serves IA\'s full master for zoom, from the same BookReader leaf as photo', () => {
+    // Never iiif.archive.org/<id>$<n>: its index is offset from n by 0 or 1 per item.
+    expect(getPageImageUrl(ia(), 'hires')).toBe(MASTER);
+  });
+  it('only for hires — smaller tiers never pull the master', () => {
+    for (const size of ['thumb', 'display'] as const) {
+      expect(getPageImageUrl(ia(), size)).not.toContain('archive.org/download');
+    }
+  });
+  it('not for a page that is an edit of the leaf (split, cropped, enhanced, crop box)', () => {
+    expect(getPageImageUrl(ia({ split_from_spread: true }), 'hires')).not.toBe(MASTER);
+    expect(getPageImageUrl(ia({ cropped_photo: `${R2}/cropped/${BOOK}/x.jpg` }), 'hires')).not.toBe(MASTER);
+    expect(getPageImageUrl(ia({ enhanced_photo: `${R2}/enhanced/${BOOK}/10.jpg` }), 'hires')).not.toBe(MASTER);
+    expect(getPageImageUrl(ia({ crop: { xStart: 0, xEnd: 500 } }), 'hires')).not.toBe(MASTER);
+  });
+  it('the redirect host is in the CSP but stays non-renderable for other resolvers', () => {
+    expect(isBrowserRenderableImageUrl('https://ia803101.us.archive.org/BookReader/BookReaderImages.php?id=x')).toBe(false);
+  });
+});

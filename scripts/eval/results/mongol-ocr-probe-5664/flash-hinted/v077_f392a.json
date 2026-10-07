@@ -1,0 +1,45 @@
+{
+ "key": "v077_f392a",
+ "arm": "hinted",
+ "page": {
+  "key": "v077_f392a",
+  "vol": 77,
+  "book_id": "6ac02a299a86d56c1aa2491b",
+  "page_number": 783,
+  "page_label": "f. 392a",
+  "bdrc_canvas": "I1PD1103450786.jpg",
+  "ligeti": "Mng1.956",
+  "mng_span": "Tsha Eldeb 389a–396a",
+  "toh": "D200",
+  "skt": "Lokānusamāvatāra",
+  "derge_vol": 61,
+  "derge_file": "061_མདོ་སྡེ།_ཙ.txt"
+ },
+ "model": "gemini-3-flash-preview",
+ "ocr_prompt": {
+  "arm": "hinted",
+  "language_instruction": "**Source language:** Classical (literary) Mongolian in the traditional Uighur-Mongol vertical script, printed from woodblocks (Beijing Kanjur, 1718–20). It is NOT Manchu. Columns run top to bottom and are read from LEFT to RIGHT. Transcribe in Mongolian script (Unicode U+1800 block), one source column per line, in reading order. The margin carries a Chinese section/volume/folio label. Report the primary language in the <language> tag.",
+  "name": "Standard OCR",
+  "version": "19.1",
+  "content_hash": "9d8f959e053491362b2c4acec1e20c9a"
+ },
+ "translation_prompt": {
+  "name": "Standard Translation",
+  "version": "13",
+  "hash": "516510147237b6a79d9d3f6e797bba7f"
+ },
+ "ocr": {
+  "text": "<scan-quality>good</scan-quality>\n<language>Mongolian</language>\n<script>printed</script>\n<page-type>text</page-type>\n<columns>25</columns>\n<page-num>392</page-num>\n<header>ᠳᠠᠩᠵᠤᠷ ᠂ ᠭᠤᠸᠠᠨ ᠂ ᠭᠤᠷᠪᠠᠨ ᠵᠠᠭᠤᠨ ᠶᠢᠷᠡᠨ ᠬᠣᠶᠠᠷ</header>\n<meta>Beijing Kanjur/Tanjur woodblock print. Marginal Chinese text: 丹 卷 上 三百九十二 (Dan, Volume Upper, 392)</meta>\n\nᠪᠠᠷᠠᠭᠤᠨ ᠵᠦᠭ ᠦᠨ ᠪᠤᠷᠬᠠᠨ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠳᠡᠭᠡᠳᠦ ᠪᠡᠶᠡ ᠪᠡᠷ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃ ᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\nᠪᠦᠭᠦᠳᠡ ᠪᠡᠷ ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ ᠪᠣᠯᠤᠭᠰᠠᠨ ᠪᠣᠯᠪᠠ ᠃\n\n<vocab>ᠪᠤᠷᠬᠠᠨ, ᠪᠠᠶᠠᠰᠬᠠᠯᠠᠨ, ᠪᠠᠷᠠᠭᠤᠨ ᠵᠦᠭ, ᠳᠠᠩᠵᠤᠷ</vocab>",
+  "finishReason": "STOP",
+  "inputTokens": 4341,
+  "outputTokens": 3688,
+  "cost_usd": 0.0132345
+ },
+ "translation": {
+  "text": "Tanjur, Volume: Guan, Three Hundred Ninety-Two\n\nAll the Buddhas of the western direction became joyful.\nAll those with supreme bodies became joyful.\nAll became joyful. All became joyful.\nAll became joyful. All became joyful.\nAll became joyful. All became joyful.\nAll became joyful. All became joyful.\nAll became joyful. All became joyful.\nAll became joyful. All became joyful.\nAll became joyful. All became joyful.\nAll became joyful. All became joyful.\nAll became joyful. All became joyful.\nAll became joyful. All became joyful.\nAll became joyful. All became joyful.\nAll became joyful. All became joyful.\nAll became joyful. All became joyful.\nAll became joyful. All became joyful.\nAll became joyful. All became joyful.\nAll became joyful. All became joyful.\nAll became joyful. All became joyful.\nAll became joyful. All became joyful.\nAll became joyful. All became joyful.\nAll became joyful. All became joyful.\nAll became joyful. All became joyful.\nAll became joyful. All became joyful.\nAll became joyful.\n\n<summary>This page contains a repetitive liturgical or ritualistic chant from the Tanjur, celebrating the joy of the Buddhas, specifically mentioning the western direction.</summary>\n<keywords>Buddha, western direction, joy, Tanjur, liturgy, Buddhist chant</keywords>",
+  "finishReason": "STOP",
+  "inputTokens": 5418,
+  "outputTokens": 294,
+  "cost_usd": 0.003591
+ }
+}

@@ -1,0 +1,1718 @@
+{
+ "key": {
+  "6ee75e06ff": {
+   "unit": "69c1bad58522835be845ae24:45",
+   "stratum": "control",
+   "group": "other",
+   "versions": {
+    "P": "A",
+    "Q": "B",
+    "R": "A2",
+    "S": "C",
+    "T": "D"
+   }
+  },
+  "0bdf7c8bff": {
+   "unit": "6a4de2016aec9da58ec0b0dc:10",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A",
+    "Q": "B",
+    "R": "D",
+    "S": "PLANT_DUP",
+    "T": "A2",
+    "U": "C"
+   }
+  },
+  "e7161a70ff": {
+   "unit": "6a4eb182ccea9baa4f4951f3:11",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "PLANT_CLOSURE",
+    "Q": "A",
+    "R": "C",
+    "S": "A2",
+    "T": "D",
+    "U": "B"
+   }
+  },
+  "3975bd48ff": {
+   "unit": "69b51cd098963ba069532757:138",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A2",
+    "Q": "A",
+    "R": "B",
+    "S": "D",
+    "T": "PLANT_CLOSURE",
+    "U": "C"
+   }
+  },
+  "b6026f08ff": {
+   "unit": "6a4bff434f392afd49e42d9f:17",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "D",
+    "Q": "B",
+    "R": "C",
+    "S": "A",
+    "T": "A2"
+   }
+  },
+  "5ae63a10ff": {
+   "unit": "6a4aebf5241e7e67cf5b8f9b:9",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A2",
+    "Q": "B",
+    "R": "PLANT_DUP",
+    "S": "A",
+    "T": "D",
+    "U": "C"
+   }
+  },
+  "5b105573ff": {
+   "unit": "6a4f1694dd60b16646cce208:12",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "C",
+    "Q": "D",
+    "R": "A",
+    "S": "B",
+    "T": "A2"
+   }
+  },
+  "9bd722d5ff": {
+   "unit": "6a4be1b2913003fb726ad5bc:10",
+   "stratum": "control",
+   "group": "latin",
+   "versions": {
+    "P": "A",
+    "Q": "D",
+    "R": "C",
+    "S": "A2",
+    "T": "B"
+   }
+  },
+  "8f54cda5ff": {
+   "unit": "6a76d59ff28570a9bf4e8a6a:19",
+   "stratum": "pagebreak",
+   "group": "other",
+   "versions": {
+    "P": "C",
+    "Q": "D",
+    "R": "B",
+    "S": "A2",
+    "T": "A"
+   }
+  },
+  "98095684ff": {
+   "unit": "6a4a027747372efd8614c84d:10",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A2",
+    "Q": "A",
+    "R": "C",
+    "S": "D",
+    "T": "B"
+   }
+  },
+  "07c68936ff": {
+   "unit": "6a49e437270a95c6e45cac0f:13",
+   "stratum": "control",
+   "group": "latin",
+   "versions": {
+    "P": "B",
+    "Q": "A2",
+    "R": "D",
+    "S": "C",
+    "T": "A"
+   }
+  },
+  "8c3241ceff": {
+   "unit": "6a4be2ff913003fb726adaa7:10",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "D",
+    "Q": "B",
+    "R": "C",
+    "S": "A",
+    "T": "A2"
+   }
+  },
+  "2d6367c2ff": {
+   "unit": "6a4bfcac4f392afd49e42c9a:15",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "D",
+    "Q": "B",
+    "R": "C",
+    "S": "A2",
+    "T": "A"
+   }
+  },
+  "894cad6fff": {
+   "unit": "6a4e5623fe517e68536ca217:16",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "B",
+    "Q": "A",
+    "R": "D",
+    "S": "C",
+    "T": "A2"
+   }
+  },
+  "5fb927c9ff": {
+   "unit": "6a440b95ca094c9a811b65bd:19",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "C",
+    "Q": "A2",
+    "R": "A",
+    "S": "D",
+    "T": "B"
+   }
+  },
+  "794d550cff": {
+   "unit": "69b62fca1c1c21a3737fa7b0:195",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "D",
+    "Q": "A",
+    "R": "C",
+    "S": "B",
+    "T": "PLANT_DUP",
+    "U": "A2"
+   }
+  },
+  "44f10c17ff": {
+   "unit": "6a4cc92ea9f864a5d7dd4d68:12",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "PLANT_CLOSURE",
+    "Q": "C",
+    "R": "A",
+    "S": "B",
+    "T": "A2",
+    "U": "D"
+   }
+  },
+  "34de3500ff": {
+   "unit": "6a4a4a7e547be098cf67e9ab:3",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A",
+    "Q": "PLANT_DUP",
+    "R": "B",
+    "S": "C",
+    "T": "D",
+    "U": "A2"
+   }
+  },
+  "a2c1cb99ff": {
+   "unit": "6a76d4ed6ba8d6d1d3f8e9e5:21",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A",
+    "Q": "PLANT_CLOSURE",
+    "R": "C",
+    "S": "A2",
+    "T": "D",
+    "U": "B"
+   }
+  },
+  "629f6dadff": {
+   "unit": "69af387a143a56abe6550c6e:533",
+   "stratum": "pagebreak",
+   "group": "other",
+   "versions": {
+    "P": "C",
+    "Q": "A2",
+    "R": "D",
+    "S": "A",
+    "T": "B"
+   }
+  },
+  "ac5b52c3ff": {
+   "unit": "6a4c435e22a2c197c6721a74:13",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A2",
+    "Q": "C",
+    "R": "A",
+    "S": "B",
+    "T": "D"
+   }
+  },
+  "ce2336a9ff": {
+   "unit": "6a439be5c3ccb765a9841a96:23",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "D",
+    "Q": "A",
+    "R": "C",
+    "S": "A2",
+    "T": "B"
+   }
+  },
+  "884b16f7ff": {
+   "unit": "69e7ab1d5f1a22ab19a93200:88",
+   "stratum": "pagebreak",
+   "group": "tibetan",
+   "versions": {
+    "P": "B",
+    "Q": "A2",
+    "R": "C",
+    "S": "A",
+    "T": "D"
+   }
+  },
+  "5dcba49dff": {
+   "unit": "6a3ceb5195fcd455630555fc:120",
+   "stratum": "pagebreak",
+   "group": "han",
+   "versions": {
+    "P": "A2",
+    "Q": "C",
+    "R": "B",
+    "S": "D",
+    "T": "A"
+   }
+  },
+  "9c4a2bb0ff": {
+   "unit": "6a4bc5ae6a8b1dab563dfbbf:18",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A",
+    "Q": "D",
+    "R": "C",
+    "S": "A2",
+    "T": "B"
+   }
+  },
+  "f536891aff": {
+   "unit": "6a4bb3343828881918f94f27:13",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "C",
+    "Q": "A",
+    "R": "B",
+    "S": "A2",
+    "T": "D"
+   }
+  },
+  "0b2b093aff": {
+   "unit": "6a20331a18654bf8e19042ab:15",
+   "stratum": "pagebreak",
+   "group": "other",
+   "versions": {
+    "P": "C",
+    "Q": "D",
+    "R": "A2",
+    "S": "B",
+    "T": "A"
+   }
+  },
+  "d78ba9dcff": {
+   "unit": "6a4ab4ab193f71077b468593:9",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A",
+    "Q": "A2",
+    "R": "D",
+    "S": "C",
+    "T": "B"
+   }
+  },
+  "d8cf2ad2ff": {
+   "unit": "69bd9f3df6d63c919747ff4d:18",
+   "stratum": "control",
+   "group": "latin",
+   "versions": {
+    "P": "A",
+    "Q": "A2",
+    "R": "D",
+    "S": "B",
+    "T": "C"
+   }
+  },
+  "0c3c4d61ff": {
+   "unit": "6a4eb336ccea9baa4f4953d4:13",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A",
+    "Q": "A2",
+    "R": "D",
+    "S": "C",
+    "T": "B"
+   }
+  },
+  "839235adff": {
+   "unit": "69e787654a6785cfd60cbaaf:198",
+   "stratum": "pagebreak",
+   "group": "tibetan",
+   "versions": {
+    "P": "D",
+    "Q": "A",
+    "R": "PLANT_DUP",
+    "S": "B",
+    "T": "C",
+    "U": "A2"
+   }
+  },
+  "6c27658dff": {
+   "unit": "6a4c8ba79c6f8cb186b8451a:18",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "D",
+    "Q": "C",
+    "R": "A2",
+    "S": "A",
+    "T": "PLANT_DUP",
+    "U": "B"
+   }
+  },
+  "d635d01cff": {
+   "unit": "6a4ef76c1a64e53b6a0a2c53:9",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "B",
+    "Q": "A2",
+    "R": "A",
+    "S": "C",
+    "T": "D",
+    "U": "PLANT_CLOSURE"
+   }
+  },
+  "f24c9612ff": {
+   "unit": "6a4bb7dfdf01eead78d6e3be:12",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A2",
+    "Q": "A",
+    "R": "PLANT_CLOSURE",
+    "S": "C",
+    "T": "D",
+    "U": "B"
+   }
+  },
+  "32c5dd49ff": {
+   "unit": "69b62fe11c1c21a3737fb8a0:24",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A2",
+    "Q": "D",
+    "R": "A",
+    "S": "C",
+    "T": "B"
+   }
+  },
+  "1ada911dff": {
+   "unit": "6a4c0e0c91354761b78005af:12",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "C",
+    "Q": "A2",
+    "R": "D",
+    "S": "A",
+    "T": "B"
+   }
+  },
+  "e511bf2aff": {
+   "unit": "6a3c5e4f40c88a541d8e0d0e:47",
+   "stratum": "control",
+   "group": "han",
+   "versions": {
+    "P": "A",
+    "Q": "D",
+    "R": "C",
+    "S": "B",
+    "T": "A2"
+   }
+  },
+  "dac00043ff": {
+   "unit": "6a3c5e5140c88a541d8e0e80:61",
+   "stratum": "pagebreak",
+   "group": "han",
+   "versions": {
+    "P": "A",
+    "Q": "A2",
+    "R": "B",
+    "S": "D",
+    "T": "C"
+   }
+  },
+  "7f270b70ff": {
+   "unit": "6a4a5c204107674feb04d3df:11",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "D",
+    "Q": "A",
+    "R": "C",
+    "S": "A2",
+    "T": "B"
+   }
+  },
+  "c8bddc0fff": {
+   "unit": "6a4b17aa527d049617b1cf4f:20",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A2",
+    "Q": "C",
+    "R": "D",
+    "S": "B",
+    "T": "A"
+   }
+  },
+  "81889895ff": {
+   "unit": "6a0eb384283b678bc95b96ca:183",
+   "stratum": "pagebreak",
+   "group": "other",
+   "versions": {
+    "P": "D",
+    "Q": "C",
+    "R": "B",
+    "S": "A",
+    "T": "A2"
+   }
+  },
+  "64bdd9e5ff": {
+   "unit": "69e75e57cc48e59ad74ec5c1:105",
+   "stratum": "pagebreak",
+   "group": "han",
+   "versions": {
+    "P": "C",
+    "Q": "D",
+    "R": "B",
+    "S": "A2",
+    "T": "A"
+   }
+  },
+  "6974d844ff": {
+   "unit": "69e7aad45f1a22ab19a8e058:386",
+   "stratum": "pagebreak",
+   "group": "tibetan",
+   "versions": {
+    "P": "C",
+    "Q": "A",
+    "R": "A2",
+    "S": "D",
+    "T": "B"
+   }
+  },
+  "1889b343ff": {
+   "unit": "6a08570a49638a50931c3597:54",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "C",
+    "Q": "A2",
+    "R": "B",
+    "S": "D",
+    "T": "A"
+   }
+  },
+  "52b5ba4aff": {
+   "unit": "6a4a3f076720cfc23da44114:14",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A2",
+    "Q": "C",
+    "R": "A",
+    "S": "B",
+    "T": "D"
+   }
+  },
+  "3d7cf715ff": {
+   "unit": "6a42697f175f31ca3ec5240e:20",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "B",
+    "Q": "C",
+    "R": "D",
+    "S": "A2",
+    "T": "PLANT_CLOSURE",
+    "U": "A"
+   }
+  },
+  "08f8726bff": {
+   "unit": "6a3c61de40c88a541d8f0994:124",
+   "stratum": "pagebreak",
+   "group": "han",
+   "versions": {
+    "P": "A",
+    "Q": "B",
+    "R": "C",
+    "S": "PLANT_DUP",
+    "T": "A2",
+    "U": "D"
+   }
+  },
+  "bbef35c8ff": {
+   "unit": "69aec410a1e0be599604e152:613",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "D",
+    "Q": "A2",
+    "R": "PLANT_DUP",
+    "S": "C",
+    "T": "B",
+    "U": "A"
+   }
+  },
+  "e12e0e31ff": {
+   "unit": "6a49e434267dd367e203e24a:15",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "D",
+    "Q": "A2",
+    "R": "PLANT_CLOSURE",
+    "S": "B",
+    "T": "C",
+    "U": "A"
+   }
+  },
+  "e8eabfe3ff": {
+   "unit": "6a4e38729e3c95fd7a7c18d7:12",
+   "stratum": "control",
+   "group": "latin",
+   "versions": {
+    "P": "B",
+    "Q": "A2",
+    "R": "A",
+    "S": "C",
+    "T": "D"
+   }
+  },
+  "4124fcf6ff": {
+   "unit": "6a3cc135ec254ff6cae0a587:134",
+   "stratum": "pagebreak",
+   "group": "han",
+   "versions": {
+    "P": "A",
+    "Q": "C",
+    "R": "A2",
+    "S": "D",
+    "T": "B"
+   }
+  },
+  "eecaded4ff": {
+   "unit": "6a4f8eb67b6f4abea6601269:20",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A2",
+    "Q": "A",
+    "R": "B",
+    "S": "D",
+    "T": "C"
+   }
+  },
+  "ef97c03eff": {
+   "unit": "6a21994b4b61907ea5ffb7e5:54",
+   "stratum": "pagebreak",
+   "group": "other",
+   "versions": {
+    "P": "D",
+    "Q": "A",
+    "R": "B",
+    "S": "C",
+    "T": "A2"
+   }
+  },
+  "a86a14afff": {
+   "unit": "6a3c5fcd879008ba7e157eb9:10",
+   "stratum": "pagebreak",
+   "group": "han",
+   "versions": {
+    "P": "D",
+    "Q": "A",
+    "R": "A2",
+    "S": "B",
+    "T": "C"
+   }
+  },
+  "4a9a6f18ff": {
+   "unit": "6a4bd30a7dacabf69cff6d61:15",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A",
+    "Q": "D",
+    "R": "B",
+    "S": "A2",
+    "T": "C"
+   }
+  },
+  "6e09c274ff": {
+   "unit": "6a4beafeef49f280c10d98fa:16",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "B",
+    "Q": "A2",
+    "R": "A",
+    "S": "D",
+    "T": "C"
+   }
+  },
+  "33cb0eb5ff": {
+   "unit": "69af434690e0b4696e62cf15:551",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "D",
+    "Q": "A2",
+    "R": "A",
+    "S": "B",
+    "T": "C"
+   }
+  },
+  "823523f8ff": {
+   "unit": "6a4e3749778700796a952db4:9",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "B",
+    "Q": "A2",
+    "R": "D",
+    "S": "A",
+    "T": "C"
+   }
+  },
+  "33eb6f9fff": {
+   "unit": "6a4ae6a29a3f4fa983d9bbfa:14",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A2",
+    "Q": "B",
+    "R": "A",
+    "S": "D",
+    "T": "C"
+   }
+  },
+  "6889f06dff": {
+   "unit": "6a4aefc6ad5997453c8daab7:7",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "C",
+    "Q": "A",
+    "R": "D",
+    "S": "B",
+    "T": "A2"
+   }
+  },
+  "db403645ff": {
+   "unit": "6a3c61b3879008ba7e15fc71:50",
+   "stratum": "pagebreak",
+   "group": "han",
+   "versions": {
+    "P": "PLANT_DUP",
+    "Q": "D",
+    "R": "A2",
+    "S": "A",
+    "T": "B",
+    "U": "C"
+   }
+  },
+  "5c119957ff": {
+   "unit": "6a2032ba18654bf8e1903672:13",
+   "stratum": "pagebreak",
+   "group": "other",
+   "versions": {
+    "P": "D",
+    "Q": "C",
+    "R": "B",
+    "S": "A",
+    "T": "PLANT_DUP",
+    "U": "A2"
+   }
+  },
+  "7bc9ac67ff": {
+   "unit": "69e78b254a6785cfd60d509d:10",
+   "stratum": "pagebreak",
+   "group": "tibetan",
+   "versions": {
+    "P": "PLANT_CLOSURE",
+    "Q": "A",
+    "R": "C",
+    "S": "B",
+    "T": "D",
+    "U": "A2"
+   }
+  },
+  "b84e35a0ff": {
+   "unit": "6a4a4d79b5dd4074593fc730:18",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "D",
+    "Q": "PLANT_CLOSURE",
+    "R": "A2",
+    "S": "A",
+    "T": "B",
+    "U": "C"
+   }
+  },
+  "844922f8ff": {
+   "unit": "69e7882d4a6785cfd60cfa2f:102",
+   "stratum": "control",
+   "group": "tibetan",
+   "versions": {
+    "P": "A2",
+    "Q": "C",
+    "R": "B",
+    "S": "A",
+    "T": "D"
+   }
+  },
+  "be579ee1ff": {
+   "unit": "6a4e483cdc886f1f5abb69d0:12",
+   "stratum": "control",
+   "group": "latin",
+   "versions": {
+    "P": "A",
+    "Q": "A2",
+    "R": "C",
+    "S": "B",
+    "T": "D"
+   }
+  },
+  "cc046b54ff": {
+   "unit": "6a14e151311a9edd4621f0ca:262",
+   "stratum": "pagebreak",
+   "group": "tibetan",
+   "versions": {
+    "P": "A2",
+    "Q": "D",
+    "R": "A",
+    "S": "B",
+    "T": "C"
+   }
+  },
+  "91fa1607ff": {
+   "unit": "6a4b7f6fc0fa233644e301af:11",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "B",
+    "Q": "D",
+    "R": "A2",
+    "S": "C",
+    "T": "A"
+   }
+  },
+  "390b42b6ff": {
+   "unit": "6a4a966feacde548ca4edd7d:23",
+   "stratum": "control",
+   "group": "latin",
+   "versions": {
+    "P": "A2",
+    "Q": "D",
+    "R": "B",
+    "S": "C",
+    "T": "A"
+   }
+  },
+  "e0548f40ff": {
+   "unit": "6a4a9bd814a573f467713d32:14",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "B",
+    "Q": "D",
+    "R": "A",
+    "S": "C",
+    "T": "A2"
+   }
+  },
+  "188e19dbff": {
+   "unit": "6a50903011d0aadb17200a70:19",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "C",
+    "Q": "A2",
+    "R": "B",
+    "S": "A",
+    "T": "D"
+   }
+  },
+  "07671d4bff": {
+   "unit": "6a4bd1e77dacabf69cff6c37:21",
+   "stratum": "control",
+   "group": "latin",
+   "versions": {
+    "P": "C",
+    "Q": "A",
+    "R": "D",
+    "S": "A2",
+    "T": "B"
+   }
+  },
+  "876e64b1ff": {
+   "unit": "6a4a4b88547be098cf67ef0e:12",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A",
+    "Q": "B",
+    "R": "C",
+    "S": "A2",
+    "T": "D"
+   }
+  },
+  "97e97712ff": {
+   "unit": "69d5ac17d0bd3547a565520e:56",
+   "stratum": "pagebreak",
+   "group": "other",
+   "versions": {
+    "P": "D",
+    "Q": "C",
+    "R": "B",
+    "S": "A",
+    "T": "A2"
+   }
+  },
+  "8a34a2eeff": {
+   "unit": "6a49f738521e227d52280387:17",
+   "stratum": "control",
+   "group": "latin",
+   "versions": {
+    "P": "A2",
+    "Q": "A",
+    "R": "C",
+    "S": "B",
+    "T": "D"
+   }
+  },
+  "77a3d658ff": {
+   "unit": "6a4accdeeecacd70e47189f1:14",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "D",
+    "Q": "A",
+    "R": "B",
+    "S": "A2",
+    "T": "PLANT_CLOSURE",
+    "U": "C"
+   }
+  },
+  "0f3d7cf4ff": {
+   "unit": "6a4c3cecc76e9337c3b9794e:17",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "B",
+    "Q": "A",
+    "R": "PLANT_DUP",
+    "S": "A2",
+    "T": "D",
+    "U": "C"
+   }
+  },
+  "585eb823ff": {
+   "unit": "6a4ad55f02f968641aca2a58:19",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "B",
+    "Q": "PLANT_DUP",
+    "R": "C",
+    "S": "D",
+    "T": "A2",
+    "U": "A"
+   }
+  },
+  "d76090eeff": {
+   "unit": "6a4b787a998fdd30218fbc5a:18",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "D",
+    "Q": "B",
+    "R": "C",
+    "S": "A2",
+    "T": "A",
+    "U": "PLANT_CLOSURE"
+   }
+  },
+  "6b4b4428ff": {
+   "unit": "6a4a5ea73a479d44b00363b3:14",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "C",
+    "Q": "B",
+    "R": "D",
+    "S": "A",
+    "T": "A2"
+   }
+  },
+  "4c663952ff": {
+   "unit": "6a4f05fee39e71f6b6e3baa8:12",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "C",
+    "Q": "A2",
+    "R": "B",
+    "S": "A",
+    "T": "D"
+   }
+  },
+  "995b418cff": {
+   "unit": "6a49f9cf60a0c3556c21bcac:12",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A2",
+    "Q": "C",
+    "R": "D",
+    "S": "A",
+    "T": "B"
+   }
+  },
+  "a4759043ff": {
+   "unit": "6a0f06c5900fb4799cef25f2:62",
+   "stratum": "control",
+   "group": "other",
+   "versions": {
+    "P": "A",
+    "Q": "D",
+    "R": "B",
+    "S": "C",
+    "T": "A2"
+   }
+  },
+  "6ab033c5ff": {
+   "unit": "6a4eb182cea570aa4cbfe2c7:18",
+   "stratum": "control",
+   "group": "latin",
+   "versions": {
+    "P": "A2",
+    "Q": "A",
+    "R": "C",
+    "S": "D",
+    "T": "B"
+   }
+  },
+  "a325ad0fff": {
+   "unit": "69af49974a5e5a377fef9e6c:534",
+   "stratum": "pagebreak",
+   "group": "other",
+   "versions": {
+    "P": "D",
+    "Q": "A2",
+    "R": "C",
+    "S": "A",
+    "T": "B"
+   }
+  },
+  "7aadddfaff": {
+   "unit": "69e7490485f786e884a4d186:26",
+   "stratum": "pagebreak",
+   "group": "other",
+   "versions": {
+    "P": "D",
+    "Q": "B",
+    "R": "C",
+    "S": "A",
+    "T": "A2"
+   }
+  },
+  "4c7ffb7cff": {
+   "unit": "6a4b9648a25898ec8788add0:10",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A2",
+    "Q": "D",
+    "R": "C",
+    "S": "A",
+    "T": "B"
+   }
+  },
+  "fb0dfe5eff": {
+   "unit": "6a3c6192879008ba7e15f12e:52",
+   "stratum": "control",
+   "group": "han",
+   "versions": {
+    "P": "A",
+    "Q": "C",
+    "R": "A2",
+    "S": "D",
+    "T": "B"
+   }
+  },
+  "f410c631ff": {
+   "unit": "6a4ee2dac02b4791c6cf5f65:18",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "B",
+    "Q": "A",
+    "R": "D",
+    "S": "A2",
+    "T": "C"
+   }
+  },
+  "fb795adeff": {
+   "unit": "6a0eb388283b678bc95b97a9:61",
+   "stratum": "control",
+   "group": "other",
+   "versions": {
+    "P": "C",
+    "Q": "B",
+    "R": "D",
+    "S": "A",
+    "T": "A2"
+   }
+  },
+  "6da7a049ff": {
+   "unit": "69e7abd15f1a22ab19a9eb6b:352",
+   "stratum": "pagebreak",
+   "group": "tibetan",
+   "versions": {
+    "P": "A",
+    "Q": "D",
+    "R": "B",
+    "S": "C",
+    "T": "A2"
+   }
+  },
+  "527f825eff": {
+   "unit": "6a4c8f7c9c6f8cb186b84bb2:13",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "B",
+    "Q": "PLANT_DUP",
+    "R": "D",
+    "S": "A2",
+    "T": "C",
+    "U": "A"
+   }
+  },
+  "494451daff": {
+   "unit": "6a4a000e2781c5f4d4f2090e:9",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "D",
+    "Q": "B",
+    "R": "A",
+    "S": "PLANT_DUP",
+    "T": "C",
+    "U": "A2"
+   }
+  },
+  "30bc5255ff": {
+   "unit": "6a4b557e0a16719d49320a0d:10",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "B",
+    "Q": "A2",
+    "R": "D",
+    "S": "C",
+    "T": "A"
+   }
+  },
+  "f587b59fff": {
+   "unit": "69e7ab425f1a22ab19a95749:214",
+   "stratum": "pagebreak",
+   "group": "tibetan",
+   "versions": {
+    "P": "A",
+    "Q": "A2",
+    "R": "B",
+    "S": "D",
+    "T": "C",
+    "U": "PLANT_CLOSURE"
+   }
+  },
+  "14384847ff": {
+   "unit": "6a4a05884ef72f5607b5cf12:6",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A",
+    "Q": "B",
+    "R": "A2",
+    "S": "C",
+    "T": "D"
+   }
+  },
+  "9b4c7225ff": {
+   "unit": "6a4acc08eecacd70e47183e8:9",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A",
+    "Q": "C",
+    "R": "A2",
+    "S": "PLANT_CLOSURE",
+    "T": "D",
+    "U": "B"
+   }
+  },
+  "d6843ef9ff": {
+   "unit": "69e786c96846fc56c490ed72:19",
+   "stratum": "pagebreak",
+   "group": "tibetan",
+   "versions": {
+    "P": "D",
+    "Q": "A",
+    "R": "C",
+    "S": "A2",
+    "T": "B"
+   }
+  },
+  "14ea9e72ff": {
+   "unit": "6a4f19c2ce720e255f3c1e18:15",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A2",
+    "Q": "A",
+    "R": "D",
+    "S": "B",
+    "T": "C"
+   }
+  },
+  "cf0c8582ff": {
+   "unit": "6a2032bc18654bf8e1903687:12",
+   "stratum": "pagebreak",
+   "group": "other",
+   "versions": {
+    "P": "D",
+    "Q": "A",
+    "R": "C",
+    "S": "A2",
+    "T": "B"
+   }
+  },
+  "197f9319ff": {
+   "unit": "6a4cb38e19ae103166961324:13",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "B",
+    "Q": "A",
+    "R": "D",
+    "S": "A2",
+    "T": "C"
+   }
+  },
+  "eaa2c078ff": {
+   "unit": "6a4cde77eda8dae4124a2556:11",
+   "stratum": "control",
+   "group": "latin",
+   "versions": {
+    "P": "A",
+    "Q": "B",
+    "R": "A2",
+    "S": "D",
+    "T": "C"
+   }
+  },
+  "779bab6eff": {
+   "unit": "6a085a4149638a50931c8e2a:196",
+   "stratum": "control",
+   "group": "latin",
+   "versions": {
+    "P": "B",
+    "Q": "A",
+    "R": "A2",
+    "S": "C",
+    "T": "D"
+   }
+  },
+  "520c6e92ff": {
+   "unit": "6a4b2a857c38d5e8eb9be66e:13",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "B",
+    "Q": "A",
+    "R": "D",
+    "S": "A2",
+    "T": "C"
+   }
+  },
+  "cd7ccbd0ff": {
+   "unit": "69c6612d01a26ccff09f4e6e:80",
+   "stratum": "pagebreak",
+   "group": "han",
+   "versions": {
+    "P": "A",
+    "Q": "C",
+    "R": "D",
+    "S": "A2",
+    "T": "B"
+   }
+  },
+  "2408c4abff": {
+   "unit": "69e72895a409200ea79f01ff:165",
+   "stratum": "pagebreak",
+   "group": "han",
+   "versions": {
+    "P": "D",
+    "Q": "A2",
+    "R": "C",
+    "S": "B",
+    "T": "A"
+   }
+  },
+  "1b69cd39ff": {
+   "unit": "69e78b644a6785cfd60d5639:14",
+   "stratum": "pagebreak",
+   "group": "tibetan",
+   "versions": {
+    "P": "C",
+    "Q": "A",
+    "R": "A2",
+    "S": "D",
+    "T": "B"
+   }
+  },
+  "8c18e26aff": {
+   "unit": "6a4adf9c9a3f4fa983d99b16:11",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "D",
+    "Q": "PLANT_DUP",
+    "R": "B",
+    "S": "C",
+    "T": "A",
+    "U": "A2"
+   }
+  },
+  "164679cfff": {
+   "unit": "6a425e46dfbbb4d07aa63dc7:13",
+   "stratum": "control",
+   "group": "latin",
+   "versions": {
+    "P": "A",
+    "Q": "A2",
+    "R": "C",
+    "S": "B",
+    "T": "D"
+   }
+  },
+  "5c0a082fff": {
+   "unit": "6a49ed85521e227d5227eb98:9",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "B",
+    "Q": "C",
+    "R": "A",
+    "S": "A2",
+    "T": "D",
+    "U": "PLANT_DUP"
+   }
+  },
+  "68dc323bff": {
+   "unit": "6a4c26436b3a9024729f7178:10",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A",
+    "Q": "B",
+    "R": "C",
+    "S": "D",
+    "T": "A2"
+   }
+  },
+  "535d169bff": {
+   "unit": "6a3c618f879008ba7e15f063:24",
+   "stratum": "pagebreak",
+   "group": "han",
+   "versions": {
+    "P": "C",
+    "Q": "D",
+    "R": "B",
+    "S": "A",
+    "T": "PLANT_CLOSURE",
+    "U": "A2"
+   }
+  },
+  "984592e7ff": {
+   "unit": "69e7abe75f1a22ab19aa00d4:107",
+   "stratum": "pagebreak",
+   "group": "tibetan",
+   "versions": {
+    "P": "D",
+    "Q": "C",
+    "R": "A",
+    "S": "B",
+    "T": "A2",
+    "U": "PLANT_CLOSURE"
+   }
+  },
+  "c611ae52ff": {
+   "unit": "6aaaa170e77fda33e8d3f3fd:682",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "D",
+    "Q": "B",
+    "R": "C",
+    "S": "A2",
+    "T": "A"
+   }
+  },
+  "7c391d05ff": {
+   "unit": "6a4a05b44ef72f5607b5d1af:11",
+   "stratum": "control",
+   "group": "latin",
+   "versions": {
+    "P": "A2",
+    "Q": "D",
+    "R": "B",
+    "S": "C",
+    "T": "A"
+   }
+  },
+  "6f89a415ff": {
+   "unit": "6a4a043e74ee818c62e2533e:9",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A",
+    "Q": "D",
+    "R": "B",
+    "S": "C",
+    "T": "A2"
+   }
+  },
+  "4f4ae372ff": {
+   "unit": "6a49ed1c6296ec469f3a3cfb:14",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "B",
+    "Q": "A",
+    "R": "A2",
+    "S": "D",
+    "T": "C"
+   }
+  },
+  "6ae6cbb5ff": {
+   "unit": "6a4f2043ce720e255f3c42c9:22",
+   "stratum": "control",
+   "group": "latin",
+   "versions": {
+    "P": "A",
+    "Q": "D",
+    "R": "B",
+    "S": "A2",
+    "T": "C"
+   }
+  },
+  "7e7ea3f5ff": {
+   "unit": "6a4a82ca449c2c48ca6ed269:17",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "B",
+    "Q": "A",
+    "R": "D",
+    "S": "A2",
+    "T": "C"
+   }
+  },
+  "33b6f2a2ff": {
+   "unit": "6a4a52aeebb4286ff3059889:11",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "B",
+    "Q": "A",
+    "R": "C",
+    "S": "D",
+    "T": "A2"
+   }
+  },
+  "74773851ff": {
+   "unit": "69c1bad58522835be845ae24:45",
+   "stratum": "control",
+   "group": "other",
+   "versions": {
+    "P": "B",
+    "Q": "D",
+    "R": "A",
+    "S": "C",
+    "T": "A2"
+   },
+   "repeat_of_unit": "69c1bad58522835be845ae24:45"
+  },
+  "e479974eff": {
+   "unit": "6a4bff434f392afd49e42d9f:17",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A2",
+    "Q": "A",
+    "R": "B",
+    "S": "C",
+    "T": "D"
+   },
+   "repeat_of_unit": "6a4bff434f392afd49e42d9f:17"
+  },
+  "7a7daf07ff": {
+   "unit": "69af387a143a56abe6550c6e:533",
+   "stratum": "pagebreak",
+   "group": "other",
+   "versions": {
+    "P": "D",
+    "Q": "C",
+    "R": "A",
+    "S": "A2",
+    "T": "B"
+   },
+   "repeat_of_unit": "69af387a143a56abe6550c6e:533"
+  },
+  "66ab2e71ff": {
+   "unit": "6a4c435e22a2c197c6721a74:13",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A",
+    "Q": "C",
+    "R": "A2",
+    "S": "D",
+    "T": "B"
+   },
+   "repeat_of_unit": "6a4c435e22a2c197c6721a74:13"
+  },
+  "6f8a85ddff": {
+   "unit": "69b62fe11c1c21a3737fb8a0:24",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "D",
+    "Q": "A",
+    "R": "C",
+    "S": "B",
+    "T": "A2"
+   },
+   "repeat_of_unit": "69b62fe11c1c21a3737fb8a0:24"
+  },
+  "18f25026ff": {
+   "unit": "6a4c0e0c91354761b78005af:12",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "D",
+    "Q": "A2",
+    "R": "A",
+    "S": "C",
+    "T": "B"
+   },
+   "repeat_of_unit": "6a4c0e0c91354761b78005af:12"
+  },
+  "48a95c33ff": {
+   "unit": "6a4e38729e3c95fd7a7c18d7:12",
+   "stratum": "control",
+   "group": "latin",
+   "versions": {
+    "P": "B",
+    "Q": "A2",
+    "R": "C",
+    "S": "A",
+    "T": "D"
+   },
+   "repeat_of_unit": "6a4e38729e3c95fd7a7c18d7:12"
+  },
+  "fa9f0a69ff": {
+   "unit": "6a3cc135ec254ff6cae0a587:134",
+   "stratum": "pagebreak",
+   "group": "han",
+   "versions": {
+    "P": "C",
+    "Q": "B",
+    "R": "D",
+    "S": "A",
+    "T": "A2"
+   },
+   "repeat_of_unit": "6a3cc135ec254ff6cae0a587:134"
+  },
+  "6ee733dcff": {
+   "unit": "69e7882d4a6785cfd60cfa2f:102",
+   "stratum": "control",
+   "group": "tibetan",
+   "versions": {
+    "P": "B",
+    "Q": "A2",
+    "R": "A",
+    "S": "D",
+    "T": "C"
+   },
+   "repeat_of_unit": "69e7882d4a6785cfd60cfa2f:102"
+  },
+  "fc2c2cb5ff": {
+   "unit": "6a4e483cdc886f1f5abb69d0:12",
+   "stratum": "control",
+   "group": "latin",
+   "versions": {
+    "P": "D",
+    "Q": "A",
+    "R": "A2",
+    "S": "B",
+    "T": "C"
+   },
+   "repeat_of_unit": "6a4e483cdc886f1f5abb69d0:12"
+  },
+  "7769e39bff": {
+   "unit": "6a4a5ea73a479d44b00363b3:14",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "C",
+    "Q": "A2",
+    "R": "D",
+    "S": "A",
+    "T": "B"
+   },
+   "repeat_of_unit": "6a4a5ea73a479d44b00363b3:14"
+  },
+  "25d331b2ff": {
+   "unit": "6a4f05fee39e71f6b6e3baa8:12",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "D",
+    "Q": "A2",
+    "R": "B",
+    "S": "A",
+    "T": "C"
+   },
+   "repeat_of_unit": "6a4f05fee39e71f6b6e3baa8:12"
+  },
+  "7688931aff": {
+   "unit": "69e7abd15f1a22ab19a9eb6b:352",
+   "stratum": "pagebreak",
+   "group": "tibetan",
+   "versions": {
+    "P": "A2",
+    "Q": "B",
+    "R": "D",
+    "S": "A",
+    "T": "C"
+   },
+   "repeat_of_unit": "69e7abd15f1a22ab19a9eb6b:352"
+  },
+  "ef84ae62ff": {
+   "unit": "6a4b557e0a16719d49320a0d:10",
+   "stratum": "pagebreak",
+   "group": "latin",
+   "versions": {
+    "P": "A",
+    "Q": "C",
+    "R": "B",
+    "S": "D",
+    "T": "A2"
+   },
+   "repeat_of_unit": "6a4b557e0a16719d49320a0d:10"
+  },
+  "eae8746aff": {
+   "unit": "69e72895a409200ea79f01ff:165",
+   "stratum": "pagebreak",
+   "group": "han",
+   "versions": {
+    "P": "A2",
+    "Q": "B",
+    "R": "C",
+    "S": "D",
+    "T": "A"
+   },
+   "repeat_of_unit": "69e72895a409200ea79f01ff:165"
+  },
+  "97e95687ff": {
+   "unit": "69e78b644a6785cfd60d5639:14",
+   "stratum": "pagebreak",
+   "group": "tibetan",
+   "versions": {
+    "P": "B",
+    "Q": "C",
+    "R": "A",
+    "S": "D",
+    "T": "A2"
+   },
+   "repeat_of_unit": "69e78b644a6785cfd60d5639:14"
+  }
+ },
+ "plants": {
+  "6a4de2016aec9da58ec0b0dc:10": "PLANT_DUP",
+  "6a4eb182ccea9baa4f4951f3:11": "PLANT_CLOSURE",
+  "69b51cd098963ba069532757:138": "PLANT_CLOSURE",
+  "6a4aebf5241e7e67cf5b8f9b:9": "PLANT_DUP",
+  "69b62fca1c1c21a3737fa7b0:195": "PLANT_DUP",
+  "6a4cc92ea9f864a5d7dd4d68:12": "PLANT_CLOSURE",
+  "6a4a4a7e547be098cf67e9ab:3": "PLANT_DUP",
+  "6a76d4ed6ba8d6d1d3f8e9e5:21": "PLANT_CLOSURE",
+  "69e787654a6785cfd60cbaaf:198": "PLANT_DUP",
+  "6a4c8ba79c6f8cb186b8451a:18": "PLANT_DUP",
+  "6a4ef76c1a64e53b6a0a2c53:9": "PLANT_CLOSURE",
+  "6a4bb7dfdf01eead78d6e3be:12": "PLANT_CLOSURE",
+  "6a42697f175f31ca3ec5240e:20": "PLANT_CLOSURE",
+  "6a3c61de40c88a541d8f0994:124": "PLANT_DUP",
+  "69aec410a1e0be599604e152:613": "PLANT_DUP",
+  "6a49e434267dd367e203e24a:15": "PLANT_CLOSURE",
+  "6a3c61b3879008ba7e15fc71:50": "PLANT_DUP",
+  "6a2032ba18654bf8e1903672:13": "PLANT_DUP",
+  "69e78b254a6785cfd60d509d:10": "PLANT_CLOSURE",
+  "6a4a4d79b5dd4074593fc730:18": "PLANT_CLOSURE",
+  "6a4accdeeecacd70e47189f1:14": "PLANT_CLOSURE",
+  "6a4c3cecc76e9337c3b9794e:17": "PLANT_DUP",
+  "6a4ad55f02f968641aca2a58:19": "PLANT_DUP",
+  "6a4b787a998fdd30218fbc5a:18": "PLANT_CLOSURE",
+  "6a4c8f7c9c6f8cb186b84bb2:13": "PLANT_DUP",
+  "6a4a000e2781c5f4d4f2090e:9": "PLANT_DUP",
+  "69e7ab425f1a22ab19a95749:214": "PLANT_CLOSURE",
+  "6a4acc08eecacd70e47183e8:9": "PLANT_CLOSURE",
+  "6a4adf9c9a3f4fa983d99b16:11": "PLANT_DUP",
+  "6a49ed85521e227d5227eb98:9": "PLANT_DUP",
+  "6a3c618f879008ba7e15f063:24": "PLANT_CLOSURE",
+  "69e7abe75f1a22ab19aa00d4:107": "PLANT_CLOSURE"
+ }
+}

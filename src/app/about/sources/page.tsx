@@ -753,10 +753,10 @@ export default function SourcesPage() {
               About Source Library
             </Link>
             <Link
-              href="/about/processing"
+              href="/how-it-works"
               className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
             >
-              How Processing Works
+              How it works
             </Link>
           </div>
         </div>

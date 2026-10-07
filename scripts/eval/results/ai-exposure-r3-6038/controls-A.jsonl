@@ -1,0 +1,28 @@
+{"work":"Iliad","ours":"697e23cbcb3f7c9faa3f06a8","src":"perseus","url":"https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/master/data/tlg0012/tlg001/tlg0012.tlg001.perseus-grc2.xml","wiki":null,"pages":null}
+{"work":"Odyssey","ours":"69937949b0a84a57639645df","src":"perseus","url":"https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/master/data/tlg0012/tlg002/tlg0012.tlg002.perseus-grc2.xml","wiki":null,"pages":null}
+{"work":"Phaedo","ours":"69937767b0a84a57639639fe","src":"perseus","url":"https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/master/data/tlg0059/tlg004/tlg0059.tlg004.perseus-grc2.xml","wiki":null,"pages":null}
+{"work":"Euclid, Elements","ours":"6993881574305116d72cef37","src":"perseus","url":"https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/master/data/tlg1799/tlg001/tlg1799.tlg001.perseus-grc2.xml","wiki":null,"pages":null}
+{"work":"Marcus Aurelius","ours":"6953ce4d77f38f6761be36fb","src":"perseus","url":"https://raw.githubusercontent.com/PerseusDL/canonical-greekLit/master/data/tlg0562/tlg001/tlg0562.tlg001.perseus-grc2.xml","wiki":null,"pages":null}
+{"work":"Genesis (Hebrew)","ours":"6952e4bc77f38f6761bc7db1","src":"sefaria","url":null,"wiki":null,"pages":["Genesis.1","Genesis.2","Genesis.3","Genesis.4","Genesis.5","Genesis.6"]}
+{"work":"Vulgate Genesis","ours":"6952e4c677f38f6761bc882d","src":"html","url":"https://www.thelatinlibrary.com/bible/genesis.shtml","wiki":null,"pages":null}
+{"work":"Aeneid","ours":"69b3e5f9304c1c6b3950aace","src":"html","url":"https://www.thelatinlibrary.com/vergil/aen1.shtml","wiki":null,"pages":null}
+{"work":"Ovid, Metamorphoses","ours":"69b2214608069e96e842f2a2","src":"html","url":"https://www.thelatinlibrary.com/ovid/ovid.met1.shtml","wiki":null,"pages":null}
+{"work":"Caesar, De bello Gallico","ours":"69b221c408069e96e84310d0","src":"html","url":"https://www.thelatinlibrary.com/caesar/gall1.shtml","wiki":null,"pages":null}
+{"work":"Cicero, De officiis","ours":"69aec50d3b6ebce5e0ee87d0","src":"html","url":"https://www.thelatinlibrary.com/cicero/off1.shtml","wiki":null,"pages":null}
+{"work":"Bacon, Novum organum","ours":"69529492b184004c526a1963","src":"html","url":"https://www.thelatinlibrary.com/bacon/bacon.liber1.shtml","wiki":null,"pages":null}
+{"work":"De imitatione Christi","ours":"69f331a6876dd827cbc4927d","src":"wiki","url":null,"wiki":"la","pages":["De imitatione Christi/I"]}
+{"work":"Newton, Principia","ours":"15c5d8e4-cea3-4b5b-9859-f3528660ecc8","src":"wiki","url":null,"wiki":"la","pages":["Philosophiae Naturalis Principia Mathematica/Definitiones","Philosophiae Naturalis Principia Mathematica/Axiomata, sive Leges Motus","Philosophiae Naturalis Principia Mathematica/Liber I/Sect. I. DE Methodo rationum primarum & ultima rum."]}
+{"work":"Chymische Hochzeit","ours":"695933aab282844d7b277612","src":"wiki","url":null,"wiki":"de","pages":null}
+{"work":"Il Principe","ours":"69aea59e57ed98c21d25a62a","src":"wiki","url":null,"wiki":"it","pages":["Il Principe/Capitolo I","Il Principe/Capitolo II","Il Principe/Capitolo III","Il Principe/Capitolo XVIII"]}
+{"work":"Divina Commedia","ours":"69b2212608069e96e842ec85","src":"wiki","url":null,"wiki":"it","pages":["Divina Commedia/Inferno/Canto I","Divina Commedia/Inferno/Canto III","Divina Commedia/Inferno/Canto V"]}
+{"work":"Bhagavad Gita","ours":"69e13a120dae29249d20b73f","src":"wiki","url":null,"wiki":"sa","pages":["भगवद्गीता/अर्जुनविषादयोगः","भगवद्गीता/साङ्ख्ययोगः","भगवद्गीता/कर्मयोगः"]}
+{"work":"Analects","ours":"69e8b24d2ff2a8dc09e77295","src":"wiki","url":null,"wiki":"zh","pages":["論語/學而第一","論語/爲政第二","論語/里仁第四","論語/述而第七"]}
+{"work":"Daodejing","ours":"69e8b25c2ff2a8dc09e7773b","src":"wiki","url":null,"wiki":"zh","pages":["道德經 (王弼本)"]}
+{"work":"Mencius","ours":"69e8b2562ff2a8dc09e774b0","src":"wiki","url":null,"wiki":"zh","pages":["孟子/梁惠王下","孟子/告子上","孟子/離婁上"]}
+{"work":"Zhuangzi","ours":"69e72c60a409200ea79f46f6","src":"wiki","url":null,"wiki":"zh","pages":["莊子/逍遙遊","莊子/齊物論"]}
+{"work":"Augustine, Confessions","ours":"69ac9bb499d9a0170d090bb2","src":"gutenberg","url":"https://www.gutenberg.org/cache/epub/3296/pg3296.txt","wiki":null,"pages":null}
+{"work":"Boethius (tr. I.T.)","ours":"6955943d7bd6d2cd1d61d196","src":"gutenberg","url":"https://www.gutenberg.org/cache/epub/14328/pg14328.txt","wiki":null,"pages":null}
+{"work":"Descartes, Discours","ours":"6953e51c77f38f6761befc93","src":"gutenberg","url":"https://www.gutenberg.org/cache/epub/13846/pg13846.txt","wiki":null,"pages":null}
+{"work":"Hobbes, Leviathan","ours":"69906623ef12272ffdc952c7","src":"gutenberg","url":"https://www.gutenberg.org/cache/epub/3207/pg3207.txt","wiki":null,"pages":null}
+{"work":"More, Utopia","ours":"c01d8a64-b9de-4012-9af9-e4a85e340722","src":"gutenberg","url":"https://www.gutenberg.org/cache/epub/2130/pg2130.txt","wiki":null,"pages":null}
+{"work":"Lucretius","ours":"69924f3609c5da0cf50d73fb","src":"gutenberg","url":"https://www.gutenberg.org/cache/epub/785/pg785.txt","wiki":null,"pages":null}

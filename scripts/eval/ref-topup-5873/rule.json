@@ -1,0 +1,36 @@
+{
+  "id": "ref-topup-5873-v1",
+  "PRIOR ART": "scripts/eval/routing-eval/rules/translation-lift-v1.json — non-inferiority of the English made from two OCR reads (an OCR-engine question, margin 0.25, min 6 pairs); scripts/eval/routing-eval/rules/margin-v1.json — failure counts and by-eye wins with no reference. Neither states the routing card's three-part effect test for a COSTLIER translation model per language with a registered pool. This file is that test as data; the functions are cardVerdict / effectBeyondFloor / heterogeneity in scripts/eval/lib/routing-rules.mjs.",
+  "registered": "2026-10-06, before the book draw, before any arm ran and before any page was judged (#5873 option b). The first-run pages (T4, T5) were already scored and all point the same way; that is why guard G1 exists.",
+  "card": "routing",
+  "question": "Per language: does Flash instead of Lite for translation (#5740, live) keep its place under the routing card once the language has 30 referenced books?",
+  "measure": "judged_vs_reference",
+  "metric": "fidelity (1-5), mean of two blind Opus judges per page; effect = Flash minus Lite, paired by page",
+  "candidate": "flash", "baseline": "lite", "a_vs_a": "lite2 minus lite, same pages, same run",
+  "min_effect": 0.25,
+  "ci": { "method": "percentile bootstrap over pages (lib/paired-stats.mjs bootstrapCI)", "level": 0.95, "iters": 10000, "seed": 5873 },
+  "floor": "per pool: the A-vs-A interval over the pool's combined pages (first run + top-up)",
+  "pools": {
+    "HAP": { "languages": ["Hebrew", "Aramaic", "Arabic", "Persian"], "first_run": "xlref-t4-2026-10 (52 books; lite = prod-A, lite2 = prod-B, flash = flash-0, packet 1)" },
+    "SPC": { "languages": ["Sanskrit", "Pali", "Chinese"], "first_run": "xlref-t5-2026-10 (68 books; lite, lite2, flash)" }
+  },
+  "pooling": "first run + top-up pooled per language and per pool; registered here, before the second draw. A pool is used only if heterogeneity() passes (every language with >= 10 books has the pool's sign and the pooled effect lies inside its 95% interval) and the pool reaches 50 books and passes the effect test.",
+  "targets": { "Persian": { "have": 12, "add": 18 }, "Hebrew": { "have": 15, "add": 15 }, "Arabic": { "have": 20, "add": 10 }, "Pali": { "have": 16, "add": 9, "census_of": 26 }, "Chinese": { "have": 24, "add": 6 }, "Sanskrit": { "have": 28, "add": 2 } },
+  "language_is": "the language of the PAGE (eval-design 3.2), as the alignment agent records it; Aramaic pages found in Hebrew-labelled books count as Aramaic and are reported, not decided (n < 30)",
+  "stake_usd": { "source": "results/ref-topup-5873-2026-10/census.json (2026-10-06): untranslated pages x $0.00094 (T5 Batch: Flash $0.00178 - Lite $0.00084)", "Persian": 70, "Hebrew": 46, "Arabic": 49, "Pali": 7, "Sanskrit": 228, "Chinese": 1672 },
+  "tier": { "Persian": "medium", "Hebrew": "medium", "Arabic": "medium", "Sanskrit": "medium", "Pali": "small", "Chinese": "large" },
+  "small_corpus": "Pali has 26 live books. If every live Pali book has been tried, its cell is a census k of 26, is treated as directional, and decides a small or medium tier only (card, small-corpus rule).",
+  "verdicts": {
+    "keeps": "n >= 30 (or the census), and the language's line on the card clears: its own Flash-Lite effect has a 95% interval excluding 0, a point estimate outside the pool's A-vs-A interval and >= 0.25; or the pool is usable and the language's own point estimate is >= 0.25. And guard G1 holds.",
+    "reverses": "n >= 30 (or the census), and either the upper 95% bound of Flash-Lite is under 0.25 (the data exclude the minimum effect) or the point estimate is <= 0. The proposal is then to return that language's translation to Lite; it goes to Derek as a DECISION line and is never applied here.",
+    "still_insufficient": "anything else: n short of 30 with no census, or an effect neither shown nor excluded, or G1 fails. The verdict names what is missing."
+  },
+  "guards": {
+    "G1_fresh_pages": "a language with >= 10 top-up pages whose top-up-only point estimate is <= 0 cannot be 'keeps', whatever the combined set says (the first run's sign was known when this rule was written)",
+    "gate": "wrong-page, planted-change and duplicate controls pass for both judges (score.mjs --gate-only), or no verdict is issued",
+    "exclusions": "a page enters a language's effect when lite and flash both returned text and both judges scored both; a page whose reference cut both judges call 'wrong' is dropped and listed. Nothing else is dropped."
+  },
+  "tier_note": "A 'keeps' verdict says the per-language line is met. What the tier still owes is reported beside it and not waived: medium needs the registered pool at decision grade (or a replication); large (Chinese) needs decision grade, a replication on >= 30 fresh books and a judge calibrated against readers, none of which this top-up can supply.",
+  "replication_of_pool": "The HAP top-up is 43 fresh books. If its own pooled effect passes the effect test alone, it is reported as a replication of the T4 pool. The SPC top-up (17 books) cannot be one.",
+  "secondary_not_in_rule": ["served fidelity with CI per language (an absolute judged number: reported, decides nothing without human calibration)", "reversals per 100 pages, omission", "canonical vs non-canonical", "top-up-only effect per language"]
+}

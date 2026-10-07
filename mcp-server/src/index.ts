@@ -376,7 +376,7 @@ const TOOLS: Tool[] = [
     name: "get_quote",
     title: "Get Quote",
     description:
-      "Get the exact translated text of a single page for quoting. Returns the verbatim translation, original OCR text, and a formatted citation. ALWAYS use this tool before putting text in quotation marks — copy the exact text from the response, do not paraphrase or reconstruct from memory. The response headline is citation_link (the stable sourcelibrary.org/q/… shortlink) — present it to the user alongside the quote and its page number. Render as:\n> [exact translation text, verbatim]\n> — [Author], p. [N]. [citation_link]\nNON-LATIN SCRIPTS: where the page is Greek, Hebrew, Arabic, Sanskrit, Cyrillic and so on, the response also carries romanized — the romanization of the original — so the citation can be shown in three layers: original → romanized → translation → citation_link. It is AI-generated reading apparatus, not a transcription; quote the source from original or translation, never from romanized. Absent on Latin-script pages and on non-Latin pages not yet romanized.\nENGLISH ORIGINALS: where the leaf is already English there is no translation and none is needed — the response omits `translation`, sets `text_source: \"ocr_original\"`, and the verbatim text is `original`. Quote it as the source's own words, never as a translation, and expect period spelling and long-s (ſ). `text_source` is on every response (`translation` otherwise), so branch on it rather than inferring from pages_translated, which is 0 for an English-original book by construction.",
+      "Get the exact translated text of a single page for quoting. Returns the verbatim translation, original OCR text, and a formatted citation. ALWAYS use this tool before putting text in quotation marks — copy the exact text from the response, do not paraphrase or reconstruct from memory. The response headline is citation_link (the stable sourcelibrary.org/q/… shortlink) — present it to the user alongside the quote and its page number. Render as:\n> [exact translation text, verbatim]\n> — [Author], [citation.locator]. [citation_link]\nNON-LATIN SCRIPTS: where the page is Greek, Hebrew, Arabic, Sanskrit, Cyrillic and so on, the response also carries romanized — the romanization of the original — so the citation can be shown in three layers: original → romanized → translation → citation_link. It is AI-generated reading apparatus, not a transcription; quote the source from original or translation, never from romanized. Absent on Latin-script pages and on non-Latin pages not yet romanized.\nENGLISH ORIGINALS: where the leaf is already English there is no translation and none is needed — the response omits `translation`, sets `text_source: \"ocr_original\"`, and the verbatim text is `original`. Quote it as the source's own words, never as a translation, and expect period spelling and long-s (ſ). `text_source` is on every response (`translation` otherwise), so branch on it rather than inferring from pages_translated, which is 0 for an English-original book by construction.",
     annotations: { title: "Get Quote", readOnlyHint: true },
     inputSchema: {
       type: "object" as const,
@@ -461,11 +461,15 @@ const TOOLS: Tool[] = [
     name: "check_duplicate",
     title: "Check Duplicate",
     description:
-      "Check if a book already exists in Source Library before importing. Uses 4-tier matching: source fingerprint, title+author normalization, keyword search, and semantic similarity. Returns confidence level, matches with URLs, and a suggestion (safe to import / review matches / likely duplicate). Use this BEFORE every import to avoid duplicates.",
+      "Do we already hold this book? Give a library URL (Internet Archive, Gallica, e-rara, BSB, a IIIF manifest) or a title + author + year. Matches the same scan, the same edition, other editions and the same work, plus near and cross-lingual titles. Returns a verdict (same_object / same_edition / possible_same_edition / other_edition / related_title / new), matches with reasons and URLs, a count of copies held but not yet public, and what the check could not search. A negative from a URL alone has not searched other editions. Use this BEFORE every import, and before saying the library lacks a work.",
     annotations: { title: "Check Duplicate", readOnlyHint: true },
     inputSchema: {
       type: "object" as const,
       properties: {
+        url: {
+          type: "string",
+          description: "A library URL or IIIF manifest for the copy you would import (title then optional)",
+        },
         title: {
           type: "string",
           description: "Book title (original language or English)",
@@ -491,7 +495,7 @@ const TOOLS: Tool[] = [
           description: "IIIF manifest URL (optional, for exact fingerprint match)",
         },
       },
-      required: ["title"],
+      required: [],
     },
   },
 
@@ -592,7 +596,7 @@ Feedback: submit_feedback. Partnerships: team@sourcelibrary.org.`;
 const server = new Server(
   {
     name: "source-library",
-    version: "4.5.0",
+    version: "4.7.0",
   },
   {
     capabilities: {
@@ -671,7 +675,7 @@ function collectImageAttachments(name: string, result: unknown): ImageAttachment
     if (typeof quote?.page_image_url === "string") {
       return [{
         urls: [quote.page_image_url],
-        caption: `Scan of the cited leaf — p. ${quote.page}, ${quote.author || quote.book_title}`,
+        caption: `Scan of the cited leaf — ${(r.citation as { locator?: string } | undefined)?.locator ?? `p. ${quote.page}`}, ${quote.author || quote.book_title}`,
       }];
     }
     return [];
@@ -786,7 +790,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error(`Source Library MCP server v4.6.0 running (${TOOLS.length} tools)`);
+  console.error(`Source Library MCP server v4.7.0 running (${TOOLS.length} tools)`);
 }
 
 main().catch((error) => {

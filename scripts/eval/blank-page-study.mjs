@@ -52,7 +52,7 @@ const ARMS = {
 };
 
 /** Tags whose contents are legitimately not body text. */
-const TAGGED = /<(language|page-type|columns|page-num|header|sig|meta|warning|vocab|margin|gloss|insert|unclear|note|term|image-desc|detected-images|scan-quality|script|column-break)[^>]*>[\s\S]*?<\/\1>/gi;
+export const TAGGED = /<(language|page-type|columns|page-num|header|sig|meta|warning|vocab|margin|gloss|insert|unclear|note|term|image-desc|detected-images|scan-quality|script|column-break)[^>]*>[\s\S]*?<\/\1>/gi;
 
 /** Body text = what would render to a reader as the page's own words. */
 export function bodyText(out) {

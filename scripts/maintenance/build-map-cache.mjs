@@ -22,7 +22,9 @@
 import { MongoClient } from 'mongodb';
 
 const DRY_RUN = process.argv.includes('--dry-run');
-const MAX_BOOKS_PER_GROUP = 200;
+// Was 200: Venice, Basel, Leipzig, Paris… exceeded it, so their pins and lists
+// were silently capped (2026-10-06). Keep in step with explore/map/page.tsx.
+const MAX_BOOKS_PER_GROUP = 2000;
 
 async function main() {
   console.log(`Build Map Cache — ${DRY_RUN ? 'DRY RUN' : 'LIVE'}`);
@@ -33,7 +35,7 @@ async function main() {
 
   const books = await db.collection('books').find(
     { visible: true, 'locations.0': { $exists: true } },
-    { projection: { id: 1, title: 1, display_title: 1, author: 1, year: 1, slug: 1, locations: 1 } },
+    { projection: { id: 1, year: 1, locations: 1 } },
   ).toArray();
 
   const groups = new Map();
@@ -56,14 +58,10 @@ async function main() {
       }
       const group = groups.get(key);
       if (group.books.length < MAX_BOOKS_PER_GROUP) {
-        group.books.push({
-          id: book.id,
-          title: book.title || 'Untitled',
-          display_title: book.display_title || undefined,
-          author: book.author || 'Unknown',
-          year: book.year ?? null,
-          slug: book.slug || '',
-        });
+        // id + year only: titles, covers and translation state are looked up
+        // per clicked place by /api/explore/map/city. Carrying titles here put
+        // the snapshot at 14.5 MB of Mongo's 16 MB document limit (2026-10-06).
+        group.books.push({ id: book.id, year: book.year ?? null });
       }
       byType[loc.type] = (byType[loc.type] || 0) + 1;
       totalBooks++;
@@ -80,6 +78,16 @@ async function main() {
   console.log('Plotted points by type:');
   for (const [t, n] of Object.entries(byType).sort((a, b) => b[1] - a[1])) {
     console.log(`  ${t.padEnd(14)} ${n}`);
+  }
+
+  // One Mongo document holds the whole snapshot; the BSON limit is 16 MB. Fail
+  // loudly well before it, rather than let the write reject and the map freeze
+  // on yesterday's cache.
+  const bytes = Buffer.byteLength(JSON.stringify(data));
+  console.log(`Snapshot size:                ${(bytes / 1e6).toFixed(1)} MB`);
+  if (bytes > 14e6) {
+    console.error('Snapshot exceeds 14 MB — lower MAX_BOOKS_PER_GROUP or split the doc. Not written.');
+    process.exit(1);
   }
 
   if (!DRY_RUN) {

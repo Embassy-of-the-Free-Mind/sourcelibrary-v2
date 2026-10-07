@@ -1,0 +1,44 @@
+{
+  "source": "CAMENA poemata/gwalt1",
+  "edition": "Monomachia Davidis et Goliae, et allegorica eiusdem expositio, heroico carmine descripta. — Zuerich: Christoph. Froschauer, [1541?].",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-unit-by-eye",
+    "text_match_pages": null,
+    "pb_aligned_pages": null
+  },
+  "origin": "library",
+  "book_id": "69b63e841c1c21a3738655d6",
+  "page_number": 40,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "unit": "transcription-page",
+    "page_break_index": 38,
+    "probe": "none (located by eye)"
+  },
+  "reference_error_rate": null,
+  "built_by": "latin-period-refs-5126.mjs",
+  "built_at": "2026-10-04T16:05:10.905Z",
+  "text_location": "repo",
+  "text_sha256": "efb698e09522b41ec0b0f4b5f2acdfe00163302c49d7728e1657d9e930a1aab8",
+  "unit": {
+    "chars": 1150
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'Conscendunt celeres' = first verse under running head; ends 'Gethaei.' = last verse (catchword 'Di' dropped). 30 lines match one-to-one in content. Guess page 39 was previous leaf (verso ends 'monteis', recto 'Ipse metu dubius'). Same page boundaries and wording -> same edition. 'Gethaei' printed; one transcription variant 'Tyrannum' not applicable. Heavy -q; abbreviation (que) and nasal tilde ('agatue', 'sinatue') on the preceding page; on this page main abbreviation is q; = que, expanded silently. Show-through of the facing page visible. No marginal notes on this page (the 'Fuga Israelitarum' note is on page 39).",
+    "leaf_language": "la",
+    "page_type": "verse (hexameter)",
+    "abbreviations": "many",
+    "human_spot_check": null
+  },
+  "stratum": "latin-period-5126"
+}

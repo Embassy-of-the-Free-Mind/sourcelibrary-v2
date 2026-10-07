@@ -1,0 +1,214 @@
+[
+ {
+  "toh": "toh1183",
+  "vol": 3,
+  "folio": "61a",
+  "cover_ours": 0.237,
+  "cover_theirs": 1.0,
+  "syl_ours": 418,
+  "syl_theirs": 99,
+  "reason": "84000 Tibetan covers only 24% of our page (shared side or misalignment)"
+ },
+ {
+  "toh": "toh1189",
+  "vol": 4,
+  "folio": "292a",
+  "cover_ours": 1.0,
+  "cover_theirs": 1.0,
+  "syl_ours": 431,
+  "syl_theirs": 431,
+  "root_verses_stripped": 5,
+  "en_words_per_syl": 0.1,
+  "reason": "English cut length off (words/syllable 0.10, outside 0.4–1.6: folio mention misplaced or interpolation)"
+ },
+ {
+  "toh": "toh1189",
+  "vol": 4,
+  "folio": "296b",
+  "cover_ours": 1.0,
+  "cover_theirs": 1.0,
+  "syl_ours": 545,
+  "syl_theirs": 545,
+  "root_verses_stripped": 47,
+  "en_words_per_syl": 1.66,
+  "reason": "English cut length off (words/syllable 1.66, outside 0.4–1.6: folio mention misplaced or interpolation)"
+ },
+ {
+  "toh": "toh1189",
+  "vol": 4,
+  "folio": "297a",
+  "reason": "no English folio mention for this side"
+ },
+ {
+  "toh": "toh1777",
+  "vol": 28,
+  "folio": "271b",
+  "cover_ours": 0.558,
+  "cover_theirs": 1.0,
+  "syl_ours": 414,
+  "syl_theirs": 231,
+  "reason": "84000 Tibetan covers only 56% of our page (shared side or misalignment)"
+ },
+ {
+  "toh": "toh1996",
+  "vol": 47,
+  "folio": "192b",
+  "cover_ours": 0.36,
+  "cover_theirs": 1.0,
+  "syl_ours": 400,
+  "syl_theirs": 144,
+  "reason": "84000 Tibetan covers only 36% of our page (shared side or misalignment)"
+ },
+ {
+  "toh": "toh1996",
+  "vol": 47,
+  "folio": "193b",
+  "cover_ours": 0.589,
+  "cover_theirs": 1.0,
+  "syl_ours": 423,
+  "syl_theirs": 249,
+  "reason": "84000 Tibetan covers only 59% of our page (shared side or misalignment)"
+ },
+ {
+  "toh": "toh2006",
+  "vol": 47,
+  "folio": "213b",
+  "cover_ours": 0.287,
+  "cover_theirs": 1.0,
+  "syl_ours": 401,
+  "syl_theirs": 115,
+  "reason": "84000 Tibetan covers only 29% of our page (shared side or misalignment)"
+ },
+ {
+  "toh": "toh2006",
+  "vol": 47,
+  "folio": "214a",
+  "cover_ours": 0.625,
+  "cover_theirs": 1.0,
+  "syl_ours": 405,
+  "syl_theirs": 253,
+  "reason": "84000 Tibetan covers only 62% of our page (shared side or misalignment)"
+ },
+ {
+  "toh": "toh3156",
+  "vol": 75,
+  "folio": "178a",
+  "cover_ours": 0.504,
+  "cover_theirs": 1.0,
+  "syl_ours": 407,
+  "syl_theirs": 205,
+  "reason": "84000 Tibetan covers only 50% of our page (shared side or misalignment)"
+ },
+ {
+  "toh": "toh3808",
+  "vol": 93,
+  "folio": "292b",
+  "cover_ours": 0.369,
+  "cover_theirs": 1.0,
+  "syl_ours": 398,
+  "syl_theirs": 147,
+  "reason": "84000 Tibetan covers only 37% of our page (shared side or misalignment)"
+ },
+ {
+  "toh": "toh4377",
+  "vol": 207,
+  "folio": "303b",
+  "cover_ours": 0.373,
+  "cover_theirs": 1.0,
+  "syl_ours": 346,
+  "syl_theirs": 129,
+  "reason": "84000 Tibetan covers only 37% of our page (shared side or misalignment)"
+ },
+ {
+  "toh": "toh4378",
+  "vol": 207,
+  "folio": "303b",
+  "reason": "no English folio mention for this side"
+ },
+ {
+  "toh": "toh4378",
+  "vol": 207,
+  "folio": "304a",
+  "reason": "no English folio mention for this side"
+ },
+ {
+  "toh": "toh4378",
+  "vol": 207,
+  "folio": "304b",
+  "reason": "no English folio mention for this side"
+ },
+ {
+  "toh": "toh4400a",
+  "vol": 207,
+  "folio": "338a",
+  "cover_ours": 0.113,
+  "cover_theirs": 1.0,
+  "syl_ours": 399,
+  "syl_theirs": 45,
+  "reason": "84000 Tibetan covers only 11% of our page (shared side or misalignment)"
+ },
+ {
+  "toh": "toh4410",
+  "vol": 207,
+  "folio": "346a",
+  "reason": "no English folio mention for this side"
+ },
+ {
+  "toh": "toh4410",
+  "vol": 207,
+  "folio": "346b",
+  "reason": "no English folio mention for this side"
+ },
+ {
+  "toh": "toh4410",
+  "vol": 207,
+  "folio": "347a",
+  "reason": "no English folio mention for this side"
+ },
+ {
+  "toh": "toh4413",
+  "vol": 207,
+  "folio": "349b",
+  "reason": "no English folio mention for this side"
+ },
+ {
+  "toh": "toh4414",
+  "vol": 207,
+  "folio": "349b",
+  "cover_ours": 0.037,
+  "cover_theirs": 1.0,
+  "syl_ours": 375,
+  "syl_theirs": 14,
+  "reason": "84000 Tibetan covers only 4% of our page (shared side or misalignment)"
+ },
+ {
+  "toh": "toh4414",
+  "vol": 207,
+  "folio": "350a",
+  "cover_ours": 0.444,
+  "cover_theirs": 1.0,
+  "syl_ours": 365,
+  "syl_theirs": 162,
+  "reason": "84000 Tibetan covers only 44% of our page (shared side or misalignment)"
+ },
+ {
+  "toh": "toh4417",
+  "vol": 207,
+  "folio": "350b",
+  "cover_ours": 0.393,
+  "cover_theirs": 1.0,
+  "syl_ours": 384,
+  "syl_theirs": 151,
+  "reason": "84000 Tibetan covers only 39% of our page (shared side or misalignment)"
+ },
+ {
+  "toh": "toh4418",
+  "vol": 207,
+  "folio": "350b",
+  "cover_ours": 0.346,
+  "cover_theirs": 1.0,
+  "syl_ours": 384,
+  "syl_theirs": 133,
+  "reason": "84000 Tibetan covers only 35% of our page (shared side or misalignment)"
+ }
+]

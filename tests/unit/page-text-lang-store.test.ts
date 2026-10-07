@@ -7,6 +7,7 @@ import {
   PAGE_TEXT_UPSERT_SQL,
   pageEmbeddingInput,
 } from '../../scripts/lib/page-embedding-text.mjs';
+import { GEMINI_TEXT_MODEL } from '../../scripts/lib/vector-truth.mjs';
 import { usesLangStore, DEFAULT_TEXT_LANG } from '../../src/lib/semantic-search';
 
 // `page_texts` rows carry the SNIPPET that gets quoted, not only the vector, so
@@ -73,13 +74,16 @@ describe('pageTextForLang — a language-keyed row promises that language', () =
 });
 
 describe('buildPageTextRow / the upsert', () => {
+  // A unit 768-dim vector: the builder refuses anything a Gemini writer could not have produced (#6175).
+  const vec = Array.from({ length: 768 }, (_, i) => (i === 0 ? 1 : 0));
+  const model = GEMINI_TEXT_MODEL;
   const page = {
     id: 'p1', book_id: 'b1', page_number: 4,
     translations: { es: { data: 'El esplendor del sol.', updated_at: new Date('2026-08-20T10:00:00Z') } },
   };
 
   it('keys the row by (page_id, lang)', () => {
-    const row = buildPageTextRow({ page, book, lang: 'es', text: 'El esplendor del sol.', embedding: [0.1, 0.2] });
+    const row = buildPageTextRow({ page, book, lang: 'es', text: 'El esplendor del sol.', embedding: vec, model });
     expect(row.page_id).toBe('p1');
     expect(row.lang).toBe('es');
     expect(row.book_title).toBe('Splendor Solis');
@@ -89,12 +93,12 @@ describe('buildPageTextRow / the upsert', () => {
   });
 
   it('takes the watermark from the translation, not from the page', () => {
-    const row = buildPageTextRow({ page, book, lang: 'es', text: 'x', embedding: [] });
+    const row = buildPageTextRow({ page, book, lang: 'es', text: 'x', embedding: vec, model });
     expect(row.mongo_updated_at).toEqual(new Date('2026-08-20T10:00:00Z'));
   });
 
   it('emits exactly as many values as the upsert has placeholders, in order', () => {
-    const row = buildPageTextRow({ page, book, lang: 'es', text: 'x', embedding: [0.1] });
+    const row = buildPageTextRow({ page, book, lang: 'es', text: 'x', embedding: vec, model });
     const values = pageTextUpsertValues(row);
     expect(values.length).toBe(PAGE_TEXT_COLUMNS.length);
     const placeholders = new Set(PAGE_TEXT_UPSERT_SQL.match(/\$\d+/g));

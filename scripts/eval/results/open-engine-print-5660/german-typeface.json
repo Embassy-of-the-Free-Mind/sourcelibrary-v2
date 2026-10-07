@@ -1,0 +1,41 @@
+{
+ "by": "model-eye (Sonnet subagent, read-from-image)",
+ "at": "2026-10-03",
+ "low_confidence": [
+  "ws-de-ah-ca-ira-pdf-p2",
+  "ws-de-anmerkungen-bers-theater-pdf-p15",
+  "ws-de-actenst-kke-die-verbesserung-des-b-rgerlichen-zu-p15"
+ ],
+ "pages": {
+  "ws-de-95-thesen-pdf-p3": "fraktur",
+  "ws-de-abschied-der-casselaner-vom-koenig-von-westphale-p6": "fraktur",
+  "ws-de-acht-umrisse-zu-schillers-fridolin-oder-der-gang-p4": "fraktur",
+  "ws-de-actenst-kke-die-verbesserung-des-b-rgerlichen-zu-p15": "antiqua",
+  "ws-de-adolf-gla-brenner-der-weihnachtsmarkt-djvu-p3": "fraktur",
+  "ws-de-agrumi-august-kopisch-1838-pdf-p3": "fraktur",
+  "ws-de-ah-ca-ira-pdf-p2": "fraktur",
+  "ws-de-allemannischegedichte-hebel-pdf-p179": "fraktur",
+  "ws-de-allgemeine-musikalische-zeitung1823-90-93-pdf-p2": "antiqua",
+  "ws-de-allgemeine-musikalische-zeitung-92-94-97-98-159-p3": "antiqua",
+  "ws-de-allgemeine-naturgeschichte-und-theorie-des-himme-p19": "fraktur",
+  "ws-de-allgemeine-revision-des-gesammten-schul-und-erzi-p354": "fraktur",
+  "ws-de-allgemeiner-litterarischer-anzeiger-gem-hldeauss-p2": "antiqua",
+  "ws-de-allgemeines-handlungs-adress-handbuch-f-r-das-he-p26": "fraktur",
+  "ws-de-allgemeines-verzeichnis-derer-b-cher-ostermesse-p43": "mixed",
+  "ws-de-andenken-an-die-verdienste-des-durchlauchtigsten-p3": "fraktur",
+  "ws-de-anette-von-droste-h-lshoff-des-arztes-verm-chtni-p3": "fraktur",
+  "ws-de-anmerkungen-bers-theater-pdf-p15": "fraktur",
+  "ws-de-annalen-der-physik-und-chemie-bd-63-1844-pdf-p26": "antiqua",
+  "ws-de-ansichten-l-beck-marienkirche-pdf-p2": "antiqua",
+  "ws-de-antrag-auf-befreiung-des-kandidaten-der-theologi-p2": "other",
+  "ws-de-apolls-gericht-1769-pdf-p3": "fraktur",
+  "ws-de-archiv-f-r-k-nstler-und-kunstliebhaber-1805-101-p2": "antiqua",
+  "ws-de-artistisches-notizenblatt-1824-kunstausstellung-p2": "fraktur",
+  "ws-de-artistisches-notizenblatt-1834-dresdener-kustaus-p4": "fraktur",
+  "ws-de-aufdeckung-eines-liter-rischen-betruges-in-der-p-p4": "fraktur",
+  "ws-de-aus-dem-leben-eines-taugenichts-und-das-marmorbi-p19": "fraktur",
+  "ws-de-bartolom-de-las-casas-die-verheerung-westindiens-p17": "fraktur",
+  "ws-de-bechstein-th-ringische-volksm-hrchen-1823-pdf-p151": "fraktur",
+  "ws-de-beethoven-s-neunte-symphonie-pdf-p2": "fraktur"
+ }
+}

@@ -1,0 +1,46 @@
+{
+  "source": "EEBO-TCP A33731",
+  "edition": "De secretione animali cogitata authore Gulielmo Cole, M.D. — C5041 (1674)",
+  "licence": "CC0-1.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/textcreationpartnership/A33731",
+  "same_edition": {
+    "evidence": "catalogue-number",
+    "text_match_pages": "11/12",
+    "pb_aligned_pages": "11/11"
+  },
+  "origin": "library",
+  "book_id": "6a42d91f1894955eb72629fe",
+  "page_number": 18,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 8066,
+    "to_char": 8579,
+    "overlap": 0.548,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'mulus [Solis aemulus], denegabis; maxime cum eo ad te properant'; ends 'hasce pagel-'. Poor-contrast black-and-white scan with ghosting from the verso; ref covers it.",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:57.502Z",
+  "text_location": "repo",
+  "text_sha256": "5e5090762a65dfb5a74114f1cf4ae45181b1afc74f27d61b44612f9182f8f083",
+  "unit": {
+    "chars": 513
+  },
+  "stratum": "latin-period-5126"
+}

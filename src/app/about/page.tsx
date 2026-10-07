@@ -126,6 +126,10 @@ export default async function AboutPage() {
             </p>
           </div>
         </div>
+        <p className="text-lg text-secondary -mt-10 mb-16">
+          Every step, followed on one real page from the scan to the checks that run after it is published:{' '}
+          <Link href="/how-it-works" className="text-accent-rust hover:underline">How Source Library works</Link>.
+        </p>
 
         {/* Historical Context */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -322,6 +326,12 @@ export default async function AboutPage() {
 
       {/* Secondary links */}
       <div className="flex flex-wrap gap-4 pt-8 border-t border-border-light">
+        <Link
+          href="/how-it-works"
+          className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
+        >
+          How it works
+        </Link>
         <Link
           href="/census"
           className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"

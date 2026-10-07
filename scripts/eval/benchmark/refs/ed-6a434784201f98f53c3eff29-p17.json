@@ -1,0 +1,46 @@
+{
+  "source": "CAMENA poemata/camer1",
+  "edition": "Poemata — Leipzig, 1568",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://github.com/nevenjovanovic/camena-neolatinlit (commit 771bb7f)",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "8/10",
+    "pb_aligned_pages": "8/8"
+  },
+  "origin": "library",
+  "book_id": "6a434784201f98f53c3eff29",
+  "page_number": 17,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 14104,
+    "to_char": 15321,
+    "overlap": 0.889,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Starts 'Querela siue Agelaeus, εἰς ποτηριοκλέπτην. ECLOGA III.'; ends 'fidum Pastorem.'; page number 7; ref has 'Primo hoc pecudes' padding after.",
+    "leaf_language": "mixed (Latin with a Greek title phrase)",
+    "page_type": "verse",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:35.210Z",
+  "text_location": "repo",
+  "text_sha256": "268c4cb3ea298b049288f28fda6e8d19d48f50c98e9fbf991b0483089d532bca",
+  "unit": {
+    "chars": 1217
+  },
+  "stratum": "latin-period-5126"
+}

@@ -1,0 +1,90 @@
+[
+{"id": "Q733X", "score": 5, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "Faithful rendering of the seed classes, the 'dwelling of beings', the gloss on pāyattika and the actual-offence clause; only a typo ('spliting')."},
+{"id": "QZW6D", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "འདིར་གཞུང་ནི་ཞུ་བ་ལས", "english": "the *Sub-commentary on the Requests* [note: original: \"Zhu ba\" / Vinayaupayika]",
+   "why": "Zhu ba is the canonical Vinaya 'Questions' (Vinayapṛcchā/Upāli's questions in the Uttaragrantha), the scriptural source (gzhung) being cited, not a sub-commentary.",
+   "fix": {"find": "the *Sub-commentary on the Requests* [note: original: \"Zhu ba\" / Vinayaupayika]", "replace": "the *Questions* [note: original: \"Zhu ba\", the Vinaya's book of questions (pṛcchā) in the Uttaragrantha]"}},
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "ད་ལྟར་ཁྱིམ་ལ་དབང་བ་ཞེས་བྱ་བ་བྱེ་བྲག་མ་སྨོས་པའི་ཕྱིར", "english": "Since there is no specific distinction made, it is understood that the monastery is currently under the authority of the household",
+   "why": "The point is that because the qualification 'belonging to a householder' (as in the preceding rule) is not specified here, 'all' is understood to include a monastery too; it does not say the monastery is under a household's authority."},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "སྤང་ལེབ་དག་གིས་གཡོགས་#པར་བྱེད་ན", "english": "If it is covered with **planks**, there is no downfall. If it is covered with **shingles**",
+   "why": "spang leb are turf/sod slabs and shing leb are wooden planks; the materials are shifted."}
+ ],
+ "note": "Mostly sound commentary rendering, but the cited source text is misidentified and one gloss on 'all' is misread."},
+{"id": "QW88F", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "high",
+   "tibetan": "ནིའི་སྒྲ་ནི་ཡང་གི་སྒྲའི་དོན་ལ་ཡིན་ཏེ", "english": "The word \"self\" [note: original: \"rang nyid\"] is used in the sense of \"also.\"",
+   "why": "It is the particle 'ni' (in 'rang nyid kyi sgra ni') that is said to carry the sense of 'also', not the word 'self'.",
+   "fix": {"find": "The word \"self\" [note: original: \"rang nyid\"] is used in the sense of \"also.\"", "replace": "The particle \"ni\" [note: in \"rang nyid kyi sgra ni\"] is used in the sense of \"also.\""}},
+  {"type": "omission", "confidence": "medium",
+   "tibetan": "ཁས་བླངས་པར་གྱུར་ཀྱང་", "english": "a treatise as such is not necessarily what is accepted; rather, whatever one intends for oneself is what is to be proven",
+   "why": "The Tibetan says that at debate time a treatise is not to be adopted at all, and even if it has been adopted only what one oneself intends is the probandum; the concessive clause is lost and 'not at all' weakened to 'not necessarily'."}
+ ],
+ "note": "Argument on 'rang nyid' in the thesis definition is followed well, except for the particle 'ni' being mistaken for 'self'."},
+{"id": "QBC3D", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "reversal", "confidence": "high",
+   "tibetan": "ངེས་པའི་ཕྱིར་ནི་འཇུག་པ་མིན", "english": "it does not function because of certainty",
+   "why": "The verse says that, though three-moded, this reason does not operate to produce certainty (it is not a gamaka), not that it fails because of certainty.",
+   "fix": {"find": "it does not function because of certainty", "replace": "it does not serve to produce certainty"}},
+  {"type": "agent", "confidence": "medium",
+   "tibetan": "ནམ་ཡང་ཚུལ་གསུམ་ལ་ཡོད་མིན", "english": "it is never the case that the three modes exist independently",
+   "why": "The verse says the avinābhāva relation never resides in the three modes [as such], but is seen in what is 'otherwise impossible'; 'independently' is not in the text and makes the three modes the subject."},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "འདི་ནི་མཚན་ཉིད་གཉིས་པའོ", "english": "This is the second characteristic.",
+   "why": "Most likely 'this is [a reason] with two characteristics' (dvilakṣaṇa), continuing the classification by number of characteristics, not 'the second characteristic'."}
+ ],
+ "note": "The Pātrasvāmin verses are mostly followed, but key logical statements about the three modes are distorted, one of them inverted."},
+{"id": "QZHIW", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "addition", "confidence": "medium",
+   "tibetan": "རང་བཞིན་གཞན་", "english": "its other nature one line of text follows",
+   "why": "The words 'one line of text follows' are a stray editorial remark with no counterpart in the Tibetan."}
+ ],
+ "note": "Sound rendering of the two kinds of destruction and the contradiction typology; only a stray phrase at the end."},
+{"id": "QVF9I", "score": 3, "verdict": "work", "span": "ok",
+ "errors": [
+  {"type": "agent", "confidence": "high",
+   "tibetan": "བརྗོད་ཕྱོགས་མཐར་རྒྱུ་བའི་ཚེ", "english": "The King uttered a cry of praise.",
+   "why": "It is the sky-going gods' cry of 'Well done, O king!' (nṛpa sādhuvāde) that spreads to the ends of the directions; the king says nothing.",
+   "fix": {"find": "The King uttered a cry of praise.", "replace": "As the gods' cry of \"Well done, O king!\" spread to the ends of the directions,"}},
+  {"type": "agent", "confidence": "high",
+   "tibetan": "ཤིང་གཅོད་འགའ་ཡིས་སྙིང་རྗེས་བརླན་ལྡན་ཞིང་", "english": "With some wielding axes, though their hearts were moist with compassion, this shady tree—straight, well-formed, and relied upon by all seekers—was cruelly cut down by those wretched ones intent on their own selfish gain.",
+   "why": "The tree (the king) is moist with compassion; a single wicked woodcutter intent on his own gain cut it down.",
+   "fix": {"find": "With some wielding axes, though their hearts were moist with compassion, this shady tree—straight, well-formed, and relied upon by all seekers—was cruelly cut down by those wretched ones intent on their own selfish gain.", "replace": "Alas, a woodcutter, wicked and intent on his own gain, has cruelly cut down this cool-shaded tree—moist with compassion, straight, well-conducted, and relied upon by all seekers."}},
+  {"type": "term", "confidence": "medium",
+   "tibetan": "ཡང་དག་མིན་དོན་རྣམ་རྟོག་བརྗོད་པར་གྱུར", "english": "began to speak of the unreal nature of things",
+   "why": "The people broke into laments full of fanciful imaginings (abhūtārthavikalpa-jalpa), as the following verses show; it is not a discourse on the unreality of things."}
+ ],
+ "note": "The verse sense is partly captured, but the opening misassigns the cry of praise and the tree simile gives the woodcutters the king's compassion."},
+{"id": "Q6XOH", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "གཙོ་བོའི་སྒྲ་ལས", "english": "from the primary sound",
+   "why": "This is the word 'pradhāna' (the Sāṃkhya primordial nature) used by those who hold that subject, not a 'primary sound'."}
+ ],
+ "note": "A literal but largely accurate rendering of a dense apoha passage; one technical word missed."},
+{"id": "Q4BA7", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [],
+ "note": "A terse lemma-by-lemma commentary rendered literally and on the whole correctly; some lemma glosses stay opaque but none is clearly wrong."},
+{"id": "QD45U", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "structure", "confidence": "medium",
+   "tibetan": "བག་ཆགས་ཀྱི་མཚན་ཉིད་རྒྱུ་མི་མཐུན་པ་སྐྱེད་པ་ལས", "english": "through producing a cause that is incompatible with the characteristic of the latent tendency",
+   "why": "The non-entity cognition produces an incompatible cause that is itself characterized as a latency; the latency is the cause, not what it is incompatible with."}
+ ],
+ "note": "Literal but generally faithful treatment of the 'not abiding together' contradiction; one compound misparsed."},
+{"id": "QBMUX", "score": 4, "verdict": "light", "span": "ok",
+ "errors": [
+  {"type": "term", "confidence": "medium",
+   "tibetan": "ཤིན་ཏུ་གཏན་ལ་ཕེབས་པར་བྱ", "english": "be very composed",
+   "why": "He must have the sūtra thoroughly settled (mastered), not be composed in demeanour."}
+ ],
+ "note": "Accurate account of the five modes of Prātimokṣa recitation and the reciter's and elder's duties."}
+]

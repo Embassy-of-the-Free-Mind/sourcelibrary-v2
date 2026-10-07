@@ -1,0 +1,299 @@
+[
+ {
+  "id": "PDJD9",
+  "score": 4,
+  "verdict": "light",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "དེ་ཉིད་དུ་ན་ཞེས་སྨོས་སོ",
+    "english": "To this, he says: \"in that very context.\"",
+    "why": "The lemma de nyid du (tattvataḥ) means 'in reality', which is the point of the Buddhist reply (in reality the pervader is not apprehended), not 'in that very context'."
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "དེ་ལྟ་ན་ནི་ཞེས་བྱ་བ་ནི་གྲུབ་པའི་མཐའོ",
+    "english": "If that were the case, he says: \"Thus is the established conclusion.\"",
+    "why": "The Tibetan says that the lemma 'If that is so' introduces the siddhānta (the author's reply); the English turns the lemma into a conditional and the commentator's label into a quoted phrase."
+   }
+  ],
+  "note": "The argument about the fire-universal and its instances is followed correctly on the whole; two lemmas are misread."
+ },
+ {
+  "id": "PPXFE",
+  "score": 4,
+  "verdict": "light",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "དེ་ཉིད་རྣམ་སྤངས་ཞེས་བྱ་བ་ནི་སྐྱེ་བ་མེད་པའི་བསྒོམ་པ་དང་བྲལ་བ་ཞེས་སོ",
+    "english": "The phrase \"abandoning that\" means to be devoid of the meditation on the unproduced state.",
+    "why": "The root lemma is 'devoid of reality' (tattva-vivarjita, de nyid = reality), not 'abandoning that'."
+   },
+   {
+    "type": "gloss",
+    "confidence": "medium",
+    "tibetan": "དངོས་གྲུབ་ནི་རྡོ་རྗེ་འཆང་གི་གོ་འཕང་སྟེ། རྙེད་པར་མི་འགྱུར་རོ",
+    "english": "[note: if one remains attached to worldly appearances]",
+    "why": "In the commentary the condition for not attaining siddhi is being devoid of the meditation on non-arising, not attachment to worldly appearances."
+   }
+  ],
+  "note": "The sixteen emptinesses, the four māras and the shift to the completion stage are accurate; the closing lemma is misread and the final note misplaces the condition."
+ },
+ {
+  "id": "P202B",
+  "score": 3,
+  "verdict": "work",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "འགྲོ་བ་གང་ཡིན་པ་བྱིངས་དེ་ལས་ངིཏ་སྟེ",
+    "english": "From a verbal root that involves (ngayik) movement or a specific grammatical marker, and is marked as (ngit),",
+    "why": "'gro ba here means that the letter ṅa drops away as an indicatory marker (anubandha), which is what makes a root ṅit; it does not mean that the root denotes movement.",
+    "fix": {
+     "find": "that involves (ngayik) movement or a specific grammatical marker, and is marked as (ngit)",
+     "replace": "from which the letter ṅa is dropped as an indicatory marker, that is, which is (ngit)"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "འགྲོ་བ་གང་ཡིན་པ་བྱིངས་དེ་ལས་ངིཏ་སྟེ",
+    "english": "(vyatilunanti) they cut each other",
+    "why": "The rule prescribes ātmanepada endings for reciprocal action, so the example is vyatilunate (as the parallel vyatipunate shows); the parasmaipada vyatilunanti contradicts the rule."
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "གཙོ་བོར་འགྲོ་བ་སོགས་ཀྱི་དོན་རྣམས་བཟུང་བར་འདོད་དོ། །དེས་ན། བྱ་ཏི་བ་ཧ་ཏེ་བྷཱ་རཾ",
+    "english": "It is intended that the primary meanings of movement and such be preserved.",
+    "why": "The Tibetan says the exclusion covers only roots whose primary meaning is motion and so on, which is why vyativahate and saṃpraharante still take ātmanepada; nothing is said about preserving meanings."
+   }
+  ],
+  "note": "The paradigms and terminology are mostly right, but the ṅit definition is mistranslated and the reciprocal-action section is muddled."
+ },
+ {
+  "id": "PUPWI",
+  "score": 3,
+  "verdict": "work",
+  "errors": [
+   {
+    "type": "addition",
+    "confidence": "high",
+    "tibetan": "དེ་བཞིན་གཤེགས་པ་ཐམས་ཅད་ཀྱི་སྐུ་དང་གསུང་དང་ཐུགས་རྡོ་རྗེ་བཙུན་མོའི་བྷ་ག་ལའོ",
+    "english": "‍—referring to Locanā and so forth‍—",
+    "why": "Nothing on this side mentions Locanā or the other goddesses.",
+    "fix": {
+     "find": "women‍—referring to Locanā and so forth‍—are",
+     "replace": "women are"
+    }
+   },
+   {
+    "type": "omission",
+    "confidence": "medium",
+    "tibetan": "དེ་བཞིན་གཤེགས་པ་ཡང་ཡིན་པས་དེ་བཞིན་གཤེགས་པ་ཐམས་ཅད་དེ། དེ་དག་གི་སྐུ་དང་གསུང་དང་ཐུགས་ཞེས་ཞེས་པ་ནི་གསང་བ་གསུམ་བསྡུས་པ་ལ།",
+    "english": "The bhagas of the vajra women",
+    "why": "The gloss explaining 'all tathāgatas' (it is all of them and also the tathāgata) and 'their body, speech, and mind' as the three secrets combined is not translated."
+   }
+  ],
+  "note": "The nidāna glosses are rendered acceptably, but the last sentence adds goddesses that are not in the text and leaves out the explanation of 'all tathāgatas'."
+ },
+ {
+  "id": "PPHZK",
+  "score": 4,
+  "verdict": "light",
+  "errors": [
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "རྗེས་སུ་དཔག་པ་ཡང་ཇི་ལྟར་སྦྱོར་བར་བྱེད་པའི་རང་བཞིན་དུ་སྐྱེ་བ་ཡིན་ཞེས་བྱ་བའོ",
+    "english": "\"Inference also arises with a nature that functions to join things.\"",
+    "why": "The pūrvapakṣa asks how inference could arise with a joining nature; the English turns the challenge into an assertion."
+   }
+  ],
+  "note": "This is a careful rendering of a dense lemma commentary on perception, inference and memory; one objection is flattened."
+ },
+ {
+  "id": "PHFZE",
+  "score": 4,
+  "verdict": "light",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "ཁོ་བོ་ནི་བྱེད་པ་པོ་དང་ལས་དག་བརྟེན་ནས་གདགས་པར་འདོད་དེ",
+    "english": "I maintain that agent and action are established dependently.",
+    "why": "gdags pa means designation (prajñapti): agent and action are dependently designated, not 'established', which is precisely the Madhyamaka point.",
+    "fix": {
+     "find": "agent and action are established dependently",
+     "replace": "agent and action are designated dependently"
+    }
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "ཁྱོད་ཀྱིས་རྒྱུ་མེད་པའི་སྐྱོན་དུ་ཐལ་བར་འགྱུར་རོ། །ཞེས་གང་དག་བསྟན་པ་དེ་དག་ཐམས་ཅད་ཁྱོད་ལ་རྗེས་སུ་འབྲེལ་བར་མི་འགྱུར་རམ",
+    "english": "would you not fall into the fault of asserting that things arise without a cause? Would all those criticisms not then apply to you?",
+    "why": "The opponent turns back the faults that the Mādhyamika himself had shown ('it follows that it is causeless'); the English presents them as the opponent's own new charge."
+   }
+  ],
+  "note": "The six alternatives and the verse are correct; 'designated' is rendered as 'established' at the crucial point."
+ },
+ {
+  "id": "PD5AS",
+  "score": 3,
+  "verdict": "work",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "བྱའི་སྙིང་གར་རྡོ་རྗེ་བསམ་པར་བྱ་སྟེ",
+    "english": "at the heart of the bird",
+    "why": "bya completes bsgrub bya from the previous side: the vajra is visualized at the heart of the sādhya (the person to be acted upon); there is no bird.",
+    "fix": {
+     "find": "at the heart of the bird",
+     "replace": "at the heart of the person to be subjugated (sādhya)"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "ཐམས་ཅད་དབབ་པ་ནི་རྒྱུ་བ་དང་མི་རྒྱུ་བ་ཐམས་ཅད་དབབ་པའོ",
+    "english": "As for summoning all beings, it refers to summoning all that is mobile and immobile.",
+    "why": "dbab pa (āveśa) means causing a descent or possession, as the English itself renders it later ('descent of the vajra'), not summoning."
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "དེའི་དབུས་མའི་རྩེ་མོ་རང་གི་སྙིང་ག་ལས་བསྟོད་པས",
+    "english": "By praising the tip of its central prong from one's own heart",
+    "why": "bstod must be read as bskyod ('moving' the central prong out from the heart), as in the parallel lines that follow; 'praising a prong' makes no sense."
+   }
+  ],
+  "note": "The ritual sequence is followed, but the sādhya is misread as 'bird' and the key verb āveśa is rendered as 'summoning'."
+ },
+ {
+  "id": "PSDKL",
+  "score": 3,
+  "verdict": "work",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "སེམས་ཅན་སྨན་པར་འཇུག་པར་དགའ་བས་ན་རི་",
+    "english": "because of the joy of engaging in medicine for sentient beings",
+    "why": "sman pa here is the verb 'to benefit': it delights in setting about the welfare of beings, not in medicine.",
+    "fix": {
+     "find": "because of the joy of engaging in medicine for sentient beings",
+     "replace": "because it delights in setting about benefiting sentient beings"
+    }
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "དབང་གཉིས་དགའ་བའི་སྙོམས་ཞུགས་ཤིང་",
+    "english": "Absorbed in the union of the two empowerments of joy",
+    "why": "dbang gnyis here means the two organs (indriya) joined in blissful union, not two empowerments."
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "དེར་ནི་རྡོ་རྗེ་སེམས་ཆེན་གྱིས།",
+    "english": "There, through the great (Vajrasattva) Vajra Being, a single supreme deity resided.",
+    "why": "The great Vajrasattva is himself the one supreme deity who dwelt there; the English makes him an instrument and the deity someone else."
+   }
+  ],
+  "note": "The iconographic verse is mostly well rendered, but there are three misreadings of key words."
+ },
+ {
+  "id": "P8GP9",
+  "score": 2,
+  "verdict": "specialist",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "མཆོད་#པ་",
+    "english": "Whatever the nature of the object and the subject may be",
+    "why": "In this argument about whether the universal resides in places, yul and yul can mean place (deśa) and what occupies it, not object and subject; the same error recurs in 'resides in its object' and 'different objects' (yul tha dad pa = different places).",
+    "fix": {
+     "find": "Whatever the nature of the object and the subject may be",
+     "replace": "Whatever the nature of a place and of what is located in it may be"
+    }
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "གྲུབ་པ་དག་ལ་ནི་ལྡན་པ་དང་འདུ་བའི་འབྲེལ་པ་དག་གོ་ཞེས་བྱ་བ་ནི་བསྟན་བཅོས་ཀྱི་ཡང་རྣམ་པར་གཞག་པ་ཡིན་ནོ",
+    "english": "The establishment of whether things are proven to be separate or non-separate is based on the relationships of (samyoga) conjunction or contact and (samavaya) inherence",
+    "why": "The Vaiśeṣika rule says that conjunction holds between things established separately and inherence between things established inseparably; the English reverses the dependence."
+   },
+   {
+    "type": "agent",
+    "confidence": "medium",
+    "tibetan": "བྱ་བ་མེད་པ་གཅིག་དང་འབྲེལ་པ་ཅན་སྔོན་དེ་ན་མེད་པ་ན#། ཡུལ་གཞན་དུ་སྔ་ན་མེད་པ་ནི་གསལ་#བ་",
+    "english": "If something previously absent in a location is related to a single thing that lacks action, it is impossible for it to be related to that when the (vyakti) manifestation or individual instance arises",
+    "why": "The motionless single thing (the universal) cannot become related to an individual newly arisen in another place where it was not before; the English mixes up which item is motionless and which is newly present."
+   },
+   {
+    "type": "term",
+    "confidence": "medium",
+    "tibetan": "མཆོད་#པ་",
+    "english": "lacking (puja) offering or respect",
+    "why": "In a list of conditions for perceptibility (not distant, visible nature, contact with the sense faculty), mchod pa must be read as chod pa, 'obstructed' (vyavahita); 'offering' is meaningless here."
+   }
+  ],
+  "note": "The anti-Vaiśeṣika argument about the location of universals is obscured by the systematic 'object/subject' rendering of yul and several garbled clauses."
+ },
+ {
+  "id": "PRPUI",
+  "score": 2,
+  "verdict": "work",
+  "errors": [
+   {
+    "type": "term",
+    "confidence": "high",
+    "tibetan": "དེ་བཞིན་དུ་རྫོགས་པའི་རིམ་པའི་ཕྱོགས་ལ་ཡང་",
+    "english": "in the context of the stage of the arisen",
+    "why": "rdzogs pa'i rim pa is the completion stage (utpannakrama/sampannakrama), not the generation stage.",
+    "fix": {
+     "find": "in the context of the stage of the arisen",
+     "replace": "in the context of the completion stage"
+    }
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "རྒྱུད་རྣམས་མཉན་པ་དང་བསྒོམ་པ་ལ་སོགས་པ་ལ་དབང་བར་བྱ་བའི་ཕྱིར་སློབ་དཔོན་གྱི་དབང་བསྐུར་བ་ཉིད་ཀྱིས་དབང་བསྐུར་བར་བྱའོ",
+    "english": "That is why this initiation is given first in Yoginī tantras such as the Hevajra Tantra and the like. One is initiated with the master initiation in order to become qualified for study, reflection, and meditation.",
+    "why": "The yoginī tantras such as Hevajra are what the disciple is to be qualified to hear and meditate on; they are not where the initiation 'is given', and 'reflection' is not in the text."
+   },
+   {
+    "type": "structure",
+    "confidence": "medium",
+    "tibetan": "ཡང་དེ་ནི་མངོན་པར་རྟོགས་པ་ཇི་ལྟ་བ་བཞིན་དུ་སློབ་དཔོན་དང་གསང་བ་དང་ཤེས་རབ་དང་བཞི་པའི་མཚན་ཉིད་ཀྱིས་ཉེ་བར་མཚོན་པ་ཡིན་པར་རིག་པར་བྱའོ",
+    "english": "Depending on the realization that ensues, one will be able to recognize what is pointed out during the master initiation, and the secret, wisdom, and fourth initiations.",
+    "why": "The text says the initiation is to be understood, in accordance with the abhisamaya (ritual manual), as characterized by the master, secret, wisdom and fourth; it says nothing about a realization that ensues."
+   },
+   {
+    "type": "addition",
+    "confidence": "medium",
+    "tibetan": "རྣམ་པར་ཤེས་པ་གསུམ་གྱི་ངོ་བོ་བསྡུས་པའི་གཟུགས་ཅན་སྙིང་གི་ནོར་བུར་",
+    "english": "intrinsically related to the confluence of the three subtle channels",
+    "why": "The Tibetan speaks of the heart-jewel whose form gathers the nature of the three consciousnesses; 'three subtle channels' and the causal 'because it involves an external seal' are not in the text."
+   },
+   {
+    "type": "omission",
+    "confidence": "medium",
+    "tibetan": "དེ་ཞེས་པ་ནི་ཤེས་རབ་ཡེ་ཤེས་སོ། །དེ་བཞིན་ཞེས་བྱ་བ་ནི་དེ་བཞིན་ཉིད་དེ",
+    "english": "We also have the statement \"followed by the fourth in the same way.\"",
+    "why": "The glosses on the lemma ('that' = wisdom-gnosis; 'thus' = thusness) are not translated."
+   }
+  ],
+  "note": "This reads like a paraphrase of a related text rather than of this side: it confuses the completion stage with the generation stage and reshapes several clauses about the four initiations."
+ }
+]

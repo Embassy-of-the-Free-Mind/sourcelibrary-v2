@@ -207,6 +207,17 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
                 >
                   Progress
                 </Link>
+                {/* The canons for the Eternity working session: what we hold,
+                    each canon, and how we check quality (#5513). Unlisted, so
+                    the menu is the way back to it. */}
+                <Link
+                  href="/research/canon-gap"
+                  className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+                  style={{ color: 'var(--text-primary)' }}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Open Canons
+                </Link>
                 {/* People first. Introductions is what readers WROTE about
                     themselves and who offered to help — it lived only inside
                     AdminNav, which renders on /admin/* pages, so you could only
@@ -238,6 +249,16 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
                   onClick={() => setIsOpen(false)}
                 >
                   Feedback
+                </Link>
+                {/* What the headless jobs are doing, which died, and what is
+                    waiting on a decision (#5705). Same admin gate as the page. */}
+                <Link
+                  href="/admin/work"
+                  className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+                  style={{ color: 'var(--text-primary)' }}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Work in flight
                 </Link>
                 {/* Spend (#5225) is allow-listed on the server, narrower than
                     "admin". The JWT can't see that list, but a superadmin role

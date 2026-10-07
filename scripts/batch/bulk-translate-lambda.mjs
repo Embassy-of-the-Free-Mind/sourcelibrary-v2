@@ -33,6 +33,7 @@ import { nanoid } from 'nanoid';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { SKIP_TRANSLATION_PAGE_TYPES, getTranslateModelForBook } from '../lib/translate-core.mjs';
+import { ocrTrustGate } from '../lib/ocr-trust-gate.mjs';
 import { parseInitiatedReason, initiatedReasonFields } from '../lib/initiated-reason.mjs';
 
 // Load .env.production.local for MONGODB_URI + SQS URLs
@@ -213,6 +214,13 @@ async function main() {
 
     if (pages.length === 0) {
       console.log(`${prefix} ${book.title?.substring(0, 50)} — no untranslated pages, skipping`);
+      continue;
+    }
+
+    // #5700: untrusted OCR is not translated until re-read (scripts/lib/ocr-trust-gate.mjs).
+    const trust = await ocrTrustGate(db, book, { lane: 'bulk-translate-lambda', record: !DRY_RUN });
+    if (!trust.ok) {
+      console.log(`${prefix} ${book.title?.substring(0, 50)} — REFUSED: ${trust.reason}`);
       continue;
     }
 

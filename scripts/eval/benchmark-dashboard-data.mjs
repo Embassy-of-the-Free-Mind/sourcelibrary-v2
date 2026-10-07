@@ -15,6 +15,8 @@
  *   node scripts/eval/benchmark-dashboard-data.mjs            # writes src/data/ocr-benchmark-evidence.json
  * Slices: sealed stratum, period substratum, observed script class, and — pooled across strata
  * and reference tiers — script, language, period (catalogue year), script × period, language × period.
+ * Also carried, as their own `measure` and never mixed into a CER cell: image-preprocessing arms (#5250) and
+ * translation-fidelity cells (#5695 served English vs published translations; #5700 A5 re-read lift).
  * How it fails: loudly. A results file it cannot parse, or a cell whose recomputed numbers
  * disagree with the scorer's own summary, is an error — never a silently thinner table.
  *
@@ -27,7 +29,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { API_ENGINE } from './lib/refusals.mjs';
+import { execFileSync } from 'node:child_process';
+import { readBenchmarkRows } from './lib/benchmark-rows.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DIR = path.join(__dirname, 'results', 'benchmark');
@@ -64,83 +67,8 @@ function binomTwoSided(k, n) { // exact sign test, k = max(wins, losses)
 }
 const hash = s => { let h = 2166136261; for (const c of s) { h ^= c.charCodeAt(0); h = Math.imul(h, 16777619); } return h >>> 0; };
 
-// ── read: one row per page × engine ──────────────────────────────────────────
-const files = fs.readdirSync(DIR).filter(f => /^[a-z0-9-]+-\d{4}-\d{2}-\d{2}\.json$/.test(f) && !f.startsWith('summary-')).sort();
-if (!files.length) throw new Error(`no scored benchmark files in ${DIR}`);
-// Latest file per stratum wins; older dates stay on disk as history.
-const latest = new Map();
-for (const f of files) latest.set(f.replace(/-\d{4}-\d{2}-\d{2}\.json$/, ''), f);
-
-// The sealed registry (scripts/eval/benchmark/<stratum>.json) carries what the result files drop:
-// catalogue year, language, provider. Joined by slug.
-const REGISTRY_DIR = path.join(__dirname, 'benchmark');
-const registry = new Map();
-for (const f of fs.readdirSync(REGISTRY_DIR).filter(f => f.endsWith('.json'))) {
-  // Not every file here is a page registry: numbers-en-5224.json keeps `pages` as a COUNT.
-  const pages = JSON.parse(fs.readFileSync(path.join(REGISTRY_DIR, f), 'utf8')).pages;
-  for (const p of Array.isArray(pages) ? pages : []) registry.set(p.slug, p);
-}
-// First named language only: "Japanese; Chinese" → Japanese, "Ancient Greek" → Greek.
-const cleanLanguage = l => { if (!l) return null; const first = String(l).split(/[;,]/)[0].trim().replace(/^Ancient /, ''); return first || null; };
-const SCRIPT_OF = { Latin: 'Latin', English: 'Latin', French: 'Latin', Italian: 'Latin', Spanish: 'Latin', Dutch: 'Latin', German: 'Latin', Greek: 'Greek', Hebrew: 'Hebrew', Armenian: 'Armenian', Syriac: 'Syriac', Chinese: 'Han', Japanese: 'Japanese (kana + kanji)' };
-// German is Latin SCRIPT; the Fraktur stratum is a typeface class within it, kept visible as its own level.
-const scriptOf = (language, stratum) => (stratum === 'german-fraktur' ? 'Latin (Fraktur)' : SCRIPT_OF[language] || null);
-// CATALOGUE year: for a reprint or a modern edition this is the WORK's date, not the scan's
-// (#4884 — a "1716" Hagakure was a typeset reprint). Read period cells with that in mind.
-const periodOf = y => (typeof y !== 'number' || !Number.isFinite(y) ? null : y < 1500 ? 'before 1500' : y < 1600 ? '1500–1599' : y < 1700 ? '1600–1699' : y < 1800 ? '1700–1799' : y < 1900 ? '1800–1899' : '1900 on');
-
-// REFUSALS (#5581): a page the engine declined (Gemini RECITATION …) is not a misread. Three sources,
-// best first: the result file's own `refused` (scored after #5581); the refusal record
-// benchmark-score.mjs --refusals-only reads off the run meters (results/benchmark/refusals/), for
-// result files scored earlier; else an API engine with no content on a referenced page, labelled
-// inferred. Never inferred on an unreferenced page: Gemini returns genuinely empty STOP outputs.
-const REFUSAL_DIR = path.join(DIR, 'refusals');
-const refusalFiles = fs.existsSync(REFUSAL_DIR) ? fs.readdirSync(REFUSAL_DIR).filter(f => /^refusals-\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort() : [];
-const refusalRecord = refusalFiles.length ? JSON.parse(fs.readFileSync(path.join(REFUSAL_DIR, refusalFiles.at(-1)), 'utf8')) : null;
-function refusalOfRow(stratum, slug, engine, e, referenced, isTier) {
-  if (typeof e.refused === 'boolean') return e.refused ? (e.refusal_source || 'finishReason') : null;
-  const rec = refusalRecord?.strata?.[stratum]?.[engine];
-  if (rec?.meter) return rec.refused?.[slug] ? 'finishReason' : (rec.inferred?.includes(slug) ? 'inferred' : null);
-  if (!referenced || !API_ENGINE.test(engine)) return null;
-  return (isTier ? e.chars === 0 : e.n_content === 0) ? 'inferred' : null;
-}
-
-const rows = [];
-const sources = [];
-for (const [stratum, file] of latest) {
-  const j = JSON.parse(fs.readFileSync(path.join(DIR, file), 'utf8'));
-  if (!Array.isArray(j.pages) || !j.summary) throw new Error(`${file}: expected {summary, pages[]}`);
-  const isTier = stratum.startsWith('ref-');
-  sources.push({ stratum, file, date: j.summary.date, n_pages: j.pages.length, issue: j.summary.issue ?? null });
-  for (const p of j.pages) {
-    for (const [engine, e] of Object.entries(p.engines)) {
-      if (e.missing) continue; // the engine was never run on this page — not a failure of the engine
-      const referenced = isTier ? true : !!p.has_ref;
-      const refusal = refusalOfRow(stratum, p.slug, engine, e, referenced, isTier);
-      // In a reference tier an unaligned page has no CER: the engine ran and could not be placed
-      // against the reference. That is COVERAGE, and it must not vanish into a smaller n.
-      const aligned = isTier ? !!e.aligned : true;
-      const reg = registry.get(p.slug) || {};
-      const language = cleanLanguage(p.language ?? reg.language);
-      const year = p.year ?? reg.year ?? null;
-      rows.push({
-        stratum, slug: p.slug, engine, referenced, aligned,
-        substratum: p.substratum ?? null,
-        script_class: p.script_class ?? null,
-        language, year,
-        script: scriptOf(language, stratum),
-        period: periodOf(year),
-        // vs reference if `referenced`, else vs the proxy engine. Unchanged by #5581: a sealed stratum
-        // scores a refusal as CER 1.0, a reference tier leaves it unplaced (coverage). The
-        // answered-only median below drops it either way.
-        cer: aligned && typeof e.cer === 'number' ? e.cer : null,
-        refused: !!refusal, refusal_inferred: refusal === 'inferred',
-        loop: e.loop === true, empty: e.empty === true,
-        invention: typeof e.invention_ref === 'number' ? e.invention_ref : (typeof e.invention === 'number' ? e.invention : null),
-      });
-    }
-  }
-}
+// ── read: one row per page × engine (scripts/eval/lib/benchmark-rows.mjs) ─────
+const { rows, sources, latest, refusalRecord, refusalFile } = readBenchmarkRows(DIR);
 
 // ── cells ────────────────────────────────────────────────────────────────────
 // A cell = one factor level × one engine. Factors available in the data today:
@@ -286,20 +214,69 @@ for (const f of fs.readdirSync(path.join(__dirname, 'results')).filter(f => /^oc
   sources.push({ file: `results/${f}` });
 }
 
+// ── Translation fidelity (#5695, #5700 A5; added by #5828). ──
+// The OCR table above stops at the transcription. Two studies measured what the reader gets: the served
+// English against published human translations, per language, with the paired flash − lite difference
+// (xlref-synthesis-2026-10/summary.json), and what a fresh flash OCR re-read does to that English, by the
+// engine that made the served read (reocr-lift-2026-10/lift.json). Read as written, nothing recomputed.
+// Their `measure` is their own — a judge's 1–5 rating against a human reference, on one page per book —
+// and is never mixed into a CER cell. Graded by books on the same thresholds as the OCR cells.
+const translationFidelity = [];
+{
+  const RES = path.join(__dirname, 'results');
+  const ci = c => (Array.isArray(c) ? c : null);
+  const served = path.join(RES, 'xlref-synthesis-2026-10', 'summary.json');
+  if (fs.existsSync(served)) {
+    const j = JSON.parse(fs.readFileSync(served, 'utf8'));
+    for (const l of j.languages) translationFidelity.push({
+      cell_id: `translation-fidelity/served/${l.lang}`, measure: 'translation-fidelity', measure_note: j.measure, kind: 'served',
+      run_id: 'xlref-synthesis-2026-10', issue: j.issue, track: l.track, language: l.lang, n: l.n,
+      fidelity_mean: l.mean, fidelity_ci95: ci(l.mean_ci), share_ge4: l.ge4_pct == null ? null : l.ge4_pct / 100,
+      reversals_per_100: l.reversals_per_100 ?? null,
+      flash_minus_lite: l.flash_minus_lite ? { n: l.flash_minus_lite.n, delta: l.flash_minus_lite.delta, ci95: ci(l.flash_minus_lite.ci), better: l.flash_minus_lite.better, worse: l.flash_minus_lite.worse } : null,
+      grade: grade(l.n),
+    });
+    sources.push({ file: 'results/xlref-synthesis-2026-10/summary.json' });
+  }
+  const lift = path.join(RES, 'reocr-lift-2026-10', 'lift.json');
+  if (fs.existsSync(lift)) {
+    const j = JSON.parse(fs.readFileSync(lift, 'utf8'));
+    for (const [level, v] of Object.entries(j.by_script_and_engine)) {
+      const [language, servedBy] = level.split(' | ');
+      translationFidelity.push({
+        cell_id: `translation-fidelity/reocr-lift/${language}/${servedBy.replace(/^served /, '')}`, measure: 'translation-fidelity', measure_note: j.measure, kind: 'reocr_lift',
+        run_id: j.run_id, issue: 5700, language, served_ocr_engine: servedBy.replace(/^served /, ''), n: v.n,
+        // fidelity of the lite translation on the served OCR, then on a fresh flash re-read of the same page
+        fidelity_served_ocr: v.lite_ocr ?? null, fidelity_reread: v.lite_reocr ?? null,
+        reread_lift: v.lift_lite ? { mean: v.lift_lite.mean, ci95: ci(v.lift_lite.ci), better: v.lift_lite.better, same: v.lift_lite.same, worse: v.lift_lite.worse } : null,
+        a_vs_a_floor: j.a_vs_a?.lite ? { n: j.a_vs_a.lite.n, mean: j.a_vs_a.lite.mean, ci95: ci(j.a_vs_a.lite.ci) } : null,
+        grade: grade(v.n),
+      });
+    }
+    sources.push({ file: 'results/reocr-lift-2026-10/lift.json' });
+  }
+  for (const c of translationFidelity) if (!c.measure || typeof c.n !== 'number') throw new Error(`translation-fidelity cell ${c.cell_id} has no measure or n`);
+}
+
 const gradeCount = cells.reduce((m, c) => ((m[c.grade] = (m[c.grade] || 0) + 1), m), {});
 const out = {
   generated_from: sources,
   production_engine: PRODUCTION_ENGINE,
   thresholds: { catastrophic_cer: CATASTROPHIC_CER, directional_n: N_DIRECTIONAL, decision_n: N_DECISION, rate_n: N_RATE },
-  refusals_from: refusalRecord ? `results/benchmark/refusals/${refusalFiles.at(-1)}` : null,
+  refusals_from: refusalRecord ? `results/benchmark/refusals/${refusalFile}` : null,
   totals: { page_engine_rows: rows.length, refused_rows: rows.filter(r => r.refused).length, refused_inferred_rows: rows.filter(r => r.refusal_inferred).length, pages: new Set(rows.map(r => `${r.stratum}|${r.slug}`)).size, cells: cells.length, cells_by_grade: gradeCount },
   sufficiency,
   cells,
   image_arms: imageArms,
+  translation_fidelity: translationFidelity,
 };
 fs.writeFileSync(OUT, JSON.stringify(out) + '\n');
 console.log(`rows ${rows.length} · pages ${out.totals.pages} · cells ${cells.length} · ${JSON.stringify(gradeCount)}`);
 console.log(`self-check vs scorer summary: OK · wrote ${path.relative(process.cwd(), OUT)}`);
+
+// The /quality cost/accuracy charts read the same rows (#5983). Rebuilt here, in the same commit as this
+// table, because the Vercel build cannot: .vercelignore drops scripts/eval/results. CI refuses a stale one.
+execFileSync(process.execPath, [path.join(__dirname, 'build-ocr-pareto.mjs')], { stdio: 'inherit' });
 
 // --html=<path>: inline the table into the dashboard template (a single self-contained page).
 const htmlArg = process.argv.find(a => a.startsWith('--html='));

@@ -1,0 +1,46 @@
+{
+  "source": "la.wikisource Liber:Athanasius Kircher - Turris Babel - 1679.djvu",
+  "edition": "Liber:Athanasius Kircher - Turris Babel - 1679.djvu — Internet Archive, https://archive.org/details/turrisbabelsivea00kirc/page/n6/mode/2up; the scanned copy is part of [https://archive.org/details/rogerwagner the collection of Roger Wagner]",
+  "licence": "CC-BY-SA-4.0",
+  "kind": "same-edition-transcription",
+  "canonical": false,
+  "memorization_risk": "low",
+  "acquired": "open e-text, fetched 2026-10-04",
+  "source_url": "https://la.wikisource.org/wiki/Liber%3AAthanasius_Kircher_-_Turris_Babel_-_1679.djvu",
+  "same_edition": {
+    "evidence": "page-breaks",
+    "text_match_pages": "11/13",
+    "pb_aligned_pages": "10/11"
+  },
+  "origin": "library",
+  "book_id": "6990505e7d19f3f2aac1e2b7",
+  "page_number": 72,
+  "script": "latin",
+  "reference_kind": "same-edition-transcription",
+  "window": {
+    "from_char": 168113,
+    "to_char": 171690,
+    "overlap": 0.748,
+    "probe": "production-ocr",
+    "pad_words": 3
+  },
+  "leaf_check": {
+    "status": "ok",
+    "by": "subagent (Sonnet)",
+    "at": "2026-10-04",
+    "note": "Single two-column page (printed 44, Kircher Turris Babel, with marginal note 'Nembrod primus in orbe architectus'); starts 'ex Diodori Siculi verbis luculenter patet'; ends 'generatio-/ne' (ref stops at 'generatio-').",
+    "leaf_language": "lat",
+    "page_type": "text",
+    "abbreviations": "few",
+    "human_spot_check": null
+  },
+  "reference_error_rate": null,
+  "built_by": "build-edition-refs.mjs",
+  "built_at": "2026-10-04T16:04:02.594Z",
+  "text_location": "repo",
+  "text_sha256": "5a31f676b64a65669877e5c0320e3e392559ad8f88c2efac42e21ba54985ba32",
+  "unit": {
+    "chars": 3577
+  },
+  "stratum": "latin-period-5126"
+}

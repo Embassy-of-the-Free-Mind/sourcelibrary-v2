@@ -1,0 +1,6 @@
+# Caches (labels, CLIP vectors, page plans) are hundreds of MB and rebuildable; only results are tracked.
+*
+!.gitignore
+!*.summary.json
+!classes.jsonl.gz
+!byeye-*.json

@@ -31,9 +31,10 @@ import type { Book, Page } from '@/lib/types';
 
 export function ReadCautionNote({ page, book }: { page: Page; book: Book }) {
   const t = getReaderStrings(useLocale()).readCaution;
-  // A book-level "we cannot read this script" notice already covers every page
-  // of such a book; a second, page-level line under it reads as boilerplate.
-  if (transcriptionReliability(book)) return null;
+  // A "we cannot read this script" notice already covers the page; a second,
+  // page-level line under it reads as boilerplate. A specialist-engine
+  // `caution` is about the engine in general, so this page's own signal still shows.
+  if (transcriptionReliability(book, page)?.level === 'unreliable') return null;
   if (!page.translation?.data || page.gated) return null;
   const caution = pageReadCaution(page);
   if (!caution) return null;

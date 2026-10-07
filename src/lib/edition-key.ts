@@ -147,6 +147,28 @@ export function normalizeEditionTitle(title?: string | null): string {
 }
 
 /**
+ * Role designations a catalogue appends to a name: "Lazarus Zetzner (ed.)",
+ * "James Legge (trans.)", "Kanton Bern [Hrsg.]". Taken as the last word they
+ * became the surname, so the same printing catalogued as "Zetzner, Lazarus"
+ * got a different key and passed the import gate as a new book. Measured
+ * 2026-10-06 (#6019 review, #4444): dropping them changes 1,275 keys across
+ * `books` and `books_warehouse`, 805 of them on live books.
+ *
+ * Matched after diacritics are stripped ("Übers." arrives as `ubers`). Only a
+ * role with NO name after it is dropped: "Thucydides (ed. Henri II Estienne)"
+ * still keys as `estienne`, which is a different fault (#4444).
+ */
+const ROLE_WORDS =
+  'edd?|eds|editors?|edited|hrsg|hg|herausgeber|bearb|mitarb|' +
+  'trans|transl|tr|translators?|translated|translation|ubers|ubersetzer|trad|' +
+  'comm|commentary|commentators?|attr|attrib|attributed|pseudo|pseudonym|' +
+  'comp|compilers?|compiled|collector|ill|illus|illustrator|engraver|printer|publ?|publisher|' +
+  'intro|pref|vorr|rev|authors?|adr|verf|verfasserin';
+/** One or more trailing "( … role.)" / "[ … role.]" groups: "(ed./trans.)", "(German trans.)", "[Sammler] [Hrsg.]". */
+const ROLE_GROUP_TAIL = new RegExp(`(?:\\s*[(\\[][^()\\[\\]]*\\b(?:${ROLE_WORDS})[.\\-]*\\s*[)\\]])+\\s*$`);
+const ROLE_WORD = new RegExp(`^(?:${ROLE_WORDS})$`);
+
+/**
  * Author surname, for keying.
  *
  * Surname-only rather than `normalizeAuthor()` (which sorts every token) because
@@ -163,11 +185,16 @@ export function editionSurname(author?: string | null): string {
     .toLowerCase()
     // life dates in parens: "Author (1500-1560)"
     .replace(/\s*\([\d\s\-–,?.]+\)\s*/g, '')
+    .replace(ROLE_GROUP_TAIL, '')
     .replace(/[^\w\s,]/g, '')
     .trim();
   if (!cleaned) return '';
   // "Surname, Forename" is the catalogue norm; otherwise take the last token.
-  return cleaned.includes(',') ? cleaned.split(',')[0].trim() : cleaned.split(/\s+/).pop() || '';
+  if (cleaned.includes(',')) return cleaned.split(',')[0].trim();
+  // An unbracketed role word ("Guo Pu commentary", "Various Authors") is not a name either.
+  const words = cleaned.split(/\s+/);
+  while (words.length && ROLE_WORD.test(words[words.length - 1])) words.pop();
+  return words.pop() || '';
 }
 
 /**
