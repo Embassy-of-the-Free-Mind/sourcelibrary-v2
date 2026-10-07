@@ -400,7 +400,7 @@ export function TengyurProgress({
     <Figure
       n={n}
       title="The Derge Tengyur, volume by volume"
-      caption={`Each square is one of the ${perVolume.length} volumes we imported, in volume order. All are held from public view until their English has been checked. ${drafted} have a draft English translation for the whole volume${partly ? ` and ${partly} for part of it` : ''}.`}
+      caption={`Each square is one of the ${perVolume.length} volumes we imported, in volume order. All have been public since 7 October 2026, labelled as AI translations not yet reviewed by a scholar. ${drafted} have a draft English translation for the whole volume${partly ? ` and ${partly} for part of it` : ''}.`}
     >
       <div className="grid grid-cols-[repeat(auto-fill,minmax(14px,1fr))] gap-[3px] max-w-xl" role="img" aria-label={`${perVolume.length} volumes, ${drafted} drafted in English${partly ? `, ${partly} in part` : ''}`}>
         {perVolume.map((v) => (
