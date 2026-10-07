@@ -145,6 +145,15 @@
     "basis": "metered-api",
     "detail": "Claude Sonnet 5.5 via OpenRouter (Anthropic), effort low; metered API spend, realtime prices, measured 2026-10-06",
     "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+   },
+   {
+    "charts": [
+     "chinese-print"
+    ],
+    "usd_per_1k": 12.32,
+    "basis": "metered-api",
+    "detail": "Claude Sonnet 5.5 via OpenRouter (Anthropic), effort low; metered API spend, realtime prices, measured 2026-10-07",
+    "source": "scripts/eval/experiments/2026-10-07-ocr-engines-full-sets-wave2-6011.md"
    }
   ],
   "claude-opus-5-5": [
@@ -184,56 +193,88 @@
    "panels": [
     {
      "kind": "most-pages",
-     "n_pages": 158,
-     "n_books": 158,
-     "frontier": false,
-     "frontier_note": "too few for a frontier: 2 engines with a measured cost on these pages",
+     "n_pages": 147,
+     "n_books": 147,
+     "frontier": true,
+     "frontier_note": null,
      "references": [
       {
        "stratum": "latin-period-5126",
        "reference": "Wikisource and corrected transcriptions matched to the leaf",
        "pages": 82,
-       "date": "2026-10-04"
+       "date": "2026-10-07"
       },
       {
        "stratum": "ref-ws",
        "reference": "Wikisource transcriptions",
-       "pages": 53,
-       "date": "2026-09-16"
+       "pages": 45,
+       "date": "2026-10-07"
       },
       {
        "stratum": "eebo-tcp-5488",
        "reference": "EEBO-TCP keyed transcriptions",
        "pages": 14,
-       "date": "2026-10-01"
+       "date": "2026-10-07"
       },
       {
        "stratum": "ref-pinned",
        "reference": "published e-texts pinned to the leaf",
-       "pages": 9,
-       "date": "2026-09-16"
+       "pages": 6,
+       "date": "2026-10-07"
       }
      ],
-     "date": "2026-10-04",
+     "date": "2026-10-07",
      "files": [
       "scripts/eval/results/benchmark/eebo-tcp-5488-2026-10-01.json",
       "scripts/eval/results/benchmark/latin-period-5126-2026-10-04.json",
       "scripts/eval/results/benchmark/ref-pinned-2026-09-16.json",
-      "scripts/eval/results/benchmark/ref-ws-2026-09-16.json"
+      "scripts/eval/results/benchmark/ref-ws-2026-09-16.json",
+      "scripts/eval/results/engine-wave1-6011/scored/eebo-tcp-5488-2026-10-06.json",
+      "scripts/eval/results/engine-wave1-6011/scored/latin-period-5126-2026-10-06.json",
+      "scripts/eval/results/engine-wave2-6011/scored/eebo-tcp-5488-2026-10-07.json",
+      "scripts/eval/results/engine-wave2-6011/scored/latin-period-5126-2026-10-07.json",
+      "scripts/eval/results/engine-wave2-6011/scored/ref-pinned-2026-10-07.json",
+      "scripts/eval/results/engine-wave2-6011/scored/ref-ws-2026-10-07.json"
      ],
      "placed": [
+      {
+       "engine": "deepseek-ocr",
+       "label": "DeepSeek-OCR",
+       "production": false,
+       "median_cer": 0.096,
+       "cer_ci95": [
+        0.089,
+        0.107
+       ],
+       "accuracy": 0.904,
+       "accuracy_ci95": [
+        0.893,
+        0.911
+       ],
+       "invented": {
+        "median": 0.338,
+        "n": 96
+       },
+       "cost": {
+        "usd_per_1k": 0.96,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": true
+      },
       {
        "engine": "gemini-3.1-flash-lite",
        "label": "Gemini 3.1 Flash-Lite",
        "production": true,
-       "median_cer": 0.068,
+       "median_cer": 0.067,
        "cer_ci95": [
         0.061,
-        0.076
+        0.075
        ],
        "accuracy": 0.933,
        "accuracy_ci95": [
-        0.924,
+        0.925,
         0.939
        ],
        "invented": {
@@ -246,180 +287,25 @@
         "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
         "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
        },
-       "on_frontier": false
+       "on_frontier": true
       },
       {
        "engine": "gemini-3-flash-preview",
        "label": "Gemini 3 Flash",
        "production": false,
-       "median_cer": 0.056,
+       "median_cer": 0.053,
        "cer_ci95": [
-        0.046,
-        0.062
+        0.045,
+        0.061
        ],
-       "accuracy": 0.944,
+       "accuracy": 0.947,
        "accuracy_ci95": [
-        0.938,
-        0.954
+        0.939,
+        0.955
        ],
        "invented": {
         "median": 0.121,
         "n": 96
-       },
-       "cost": {
-        "usd_per_1k": 2.709,
-        "basis": "metered",
-        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
-        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
-       },
-       "on_frontier": false
-      }
-     ],
-     "no_cost": []
-    },
-    {
-     "kind": "most-engines",
-     "n_pages": 10,
-     "n_books": 10,
-     "frontier": true,
-     "frontier_note": null,
-     "references": [
-      {
-       "stratum": "eebo-tcp-5488",
-       "reference": "EEBO-TCP keyed transcriptions",
-       "pages": 10,
-       "date": "2026-10-06"
-      }
-     ],
-     "date": "2026-10-06",
-     "files": [
-      "scripts/eval/results/benchmark/eebo-tcp-5488-2026-10-01.json",
-      "scripts/eval/results/engine-wave1-6011/scored/eebo-tcp-5488-2026-10-06.json",
-      "scripts/eval/results/open-engine-print-5660/scored-olmocr/eebo-tcp-5488-2026-10-03.json",
-      "scripts/eval/results/open-engine-print-5660/scored/eebo-tcp-5488-2026-10-03.json"
-     ],
-     "placed": [
-      {
-       "engine": "paddleocr-vl-1.6",
-       "label": "PaddleOCR-VL 1.6",
-       "production": false,
-       "median_cer": 0.139,
-       "cer_ci95": [
-        0.111,
-        0.207
-       ],
-       "accuracy": 0.861,
-       "accuracy_ci95": [
-        0.793,
-        0.889
-       ],
-       "invented": {
-        "median": 0.383,
-        "n": 10
-       },
-       "cost": {
-        "usd_per_1k": 0.091,
-        "basis": "compute",
-        "detail": "Hetzner GEX45 ($249/month), 0.96 s/page with 8 clients; inference time only, measured 2026-10-03",
-        "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md"
-       },
-       "on_frontier": true
-      },
-      {
-       "engine": "olmocr-2-7b-fp8",
-       "label": "olmOCR 2 7B",
-       "production": false,
-       "median_cer": 0.095,
-       "cer_ci95": [
-        0.055,
-        0.109
-       ],
-       "accuracy": 0.905,
-       "accuracy_ci95": [
-        0.891,
-        0.945
-       ],
-       "invented": {
-        "median": 0.145,
-        "n": 10
-       },
-       "cost": {
-        "usd_per_1k": 0.26,
-        "basis": "compute",
-        "detail": "Hetzner GEX45 ($249/month), 2.71 s/page with 8 clients; inference time only, measured 2026-10-03",
-        "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md"
-       },
-       "on_frontier": true
-      },
-      {
-       "engine": "deepseek-ocr",
-       "label": "DeepSeek-OCR",
-       "production": false,
-       "median_cer": 0.122,
-       "cer_ci95": [
-        0.096,
-        0.148
-       ],
-       "accuracy": 0.878,
-       "accuracy_ci95": [
-        0.852,
-        0.904
-       ],
-       "invented": {
-        "median": 0.326,
-        "n": 10
-       },
-       "cost": {
-        "usd_per_1k": 0.96,
-        "basis": "billed",
-        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
-       },
-       "on_frontier": false
-      },
-      {
-       "engine": "gemini-3.1-flash-lite",
-       "label": "Gemini 3.1 Flash-Lite",
-       "production": true,
-       "median_cer": 0.104,
-       "cer_ci95": [
-        0.077,
-        0.119
-       ],
-       "accuracy": 0.897,
-       "accuracy_ci95": [
-        0.881,
-        0.923
-       ],
-       "invented": {
-        "median": 0.241,
-        "n": 10
-       },
-       "cost": {
-        "usd_per_1k": 1.279,
-        "basis": "metered",
-        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
-        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
-       },
-       "on_frontier": false
-      },
-      {
-       "engine": "gemini-3-flash-preview",
-       "label": "Gemini 3 Flash",
-       "production": false,
-       "median_cer": 0.086,
-       "cer_ci95": [
-        0.048,
-        0.098
-       ],
-       "accuracy": 0.914,
-       "accuracy_ci95": [
-        0.902,
-        0.952
-       ],
-       "invented": {
-        "median": 0.092,
-        "n": 10
        },
        "cost": {
         "usd_per_1k": 2.709,
@@ -433,19 +319,19 @@
        "engine": "qwen3-vl-8b",
        "label": "Qwen3-VL 8B",
        "production": false,
-       "median_cer": 0.1,
+       "median_cer": 0.08,
        "cer_ci95": [
-        0.074,
-        0.116
+        0.067,
+        0.085
        ],
-       "accuracy": 0.901,
+       "accuracy": 0.92,
        "accuracy_ci95": [
-        0.884,
-        0.926
+        0.915,
+        0.933
        ],
        "invented": {
-        "median": 0.179,
-        "n": 10
+        "median": 0.226,
+        "n": 96
        },
        "cost": {
         "usd_per_1k": 3.43,
@@ -459,19 +345,19 @@
        "engine": "mistral-ocr-4-1",
        "label": "Mistral OCR 4.1",
        "production": false,
-       "median_cer": 0.093,
+       "median_cer": 0.071,
        "cer_ci95": [
-        0.06,
-        0.119
+        0.057,
+        0.084
        ],
-       "accuracy": 0.907,
+       "accuracy": 0.929,
        "accuracy_ci95": [
-        0.881,
-        0.94
+        0.916,
+        0.943
        ],
        "invented": {
-        "median": 0.146,
-        "n": 10
+        "median": 0.2,
+        "n": 96
        },
        "cost": {
         "usd_per_1k": 4,
@@ -485,19 +371,19 @@
        "engine": "chandra-ocr-2",
        "label": "Chandra OCR 2",
        "production": false,
-       "median_cer": 0.089,
+       "median_cer": 0.067,
        "cer_ci95": [
-        0.063,
-        0.113
+        0.059,
+        0.078
        ],
-       "accuracy": 0.911,
+       "accuracy": 0.933,
        "accuracy_ci95": [
-        0.887,
-        0.937
+        0.922,
+        0.941
        ],
        "invented": {
-        "median": 0.159,
-        "n": 10
+        "median": 0.178,
+        "n": 96
        },
        "cost": {
         "usd_per_1k": 7.55,
@@ -511,19 +397,19 @@
        "engine": "claude-sonnet-5-5",
        "label": "Claude Sonnet 5.5",
        "production": false,
-       "median_cer": 0.077,
+       "median_cer": 0.06,
        "cer_ci95": [
-        0.048,
-        0.096
+        0.051,
+        0.072
        ],
-       "accuracy": 0.924,
+       "accuracy": 0.94,
        "accuracy_ci95": [
-        0.904,
-        0.952
+        0.928,
+        0.949
        ],
        "invented": {
-        "median": 0.092,
-        "n": 10
+        "median": 0.149,
+        "n": 96
        },
        "cost": {
         "usd_per_1k": 16.89,
@@ -531,29 +417,303 @@
         "detail": "Claude Sonnet 5.5 via OpenRouter (Anthropic), effort low; metered API spend, realtime prices, measured 2026-10-06",
         "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
-       "on_frontier": true
+       "on_frontier": false
       }
      ],
      "no_cost": []
-    }
-   ],
-   "not_on_shared_pages": [
-    {
-     "engine": "kraken-catmus",
-     "label": "Kraken (CATMuS)",
-     "pages": 67
     },
     {
-     "engine": "surya2",
-     "label": "Surya 2",
-     "pages": 66
-    },
-    {
-     "engine": "tesseract-lat",
-     "label": "Tesseract (lat)",
-     "pages": 30
+     "kind": "most-engines",
+     "n_pages": 28,
+     "n_books": 28,
+     "frontier": true,
+     "frontier_note": null,
+     "references": [
+      {
+       "stratum": "ref-ws",
+       "reference": "Wikisource transcriptions",
+       "pages": 28,
+       "date": "2026-10-07"
+      }
+     ],
+     "date": "2026-10-07",
+     "files": [
+      "scripts/eval/results/benchmark/ref-ws-2026-09-16.json",
+      "scripts/eval/results/engine-wave2-6011/scored/ref-ws-2026-10-07.json",
+      "scripts/eval/results/open-engine-print-5660/scored-olmocr/ref-ws-2026-10-03.json",
+      "scripts/eval/results/open-engine-print-5660/scored/ref-ws-2026-10-03.json"
+     ],
+     "placed": [
+      {
+       "engine": "paddleocr-vl-1.6",
+       "label": "PaddleOCR-VL 1.6",
+       "production": false,
+       "median_cer": 0.021,
+       "cer_ci95": [
+        0.014,
+        0.034
+       ],
+       "accuracy": 0.98,
+       "accuracy_ci95": [
+        0.966,
+        0.986
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.091,
+        "basis": "compute",
+        "detail": "Hetzner GEX45 ($249/month), 0.96 s/page with 8 clients; inference time only, measured 2026-10-03",
+        "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "olmocr-2-7b-fp8",
+       "label": "olmOCR 2 7B",
+       "production": false,
+       "median_cer": 0.01,
+       "cer_ci95": [
+        0.008,
+        0.015
+       ],
+       "accuracy": 0.99,
+       "accuracy_ci95": [
+        0.985,
+        0.992
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.26,
+        "basis": "compute",
+        "detail": "Hetzner GEX45 ($249/month), 2.71 s/page with 8 clients; inference time only, measured 2026-10-03",
+        "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "deepseek-ocr",
+       "label": "DeepSeek-OCR",
+       "production": false,
+       "median_cer": 0.012,
+       "cer_ci95": [
+        0.008,
+        0.014
+       ],
+       "accuracy": 0.988,
+       "accuracy_ci95": [
+        0.986,
+        0.992
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.96,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "surya2",
+       "label": "Surya 2",
+       "production": false,
+       "median_cer": 0.006,
+       "cer_ci95": [
+        0.003,
+        0.01
+       ],
+       "accuracy": 0.995,
+       "accuracy_ci95": [
+        0.99,
+        0.997
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 1.094,
+        "basis": "compute",
+        "detail": "1 × Scaleway L4, €0.79/h, 4.3 s/page; inference time only, measured 2026-09-03",
+        "source": "scripts/eval/experiments/2026-09-03-bench-2-complete-can-self-hosted-ocr-replace-gemini.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "median_cer": 0.003,
+       "cer_ci95": [
+        0.002,
+        0.006
+       ],
+       "accuracy": 0.997,
+       "accuracy_ci95": [
+        0.994,
+        0.998
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "metered",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": false,
+       "median_cer": 0.003,
+       "cer_ci95": [
+        0.001,
+        0.004
+       ],
+       "accuracy": 0.997,
+       "accuracy_ci95": [
+        0.996,
+        0.999
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 2.709,
+        "basis": "metered",
+        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "qwen3-vl-8b",
+       "label": "Qwen3-VL 8B",
+       "production": false,
+       "median_cer": 0.01,
+       "cer_ci95": [
+        0.005,
+        0.021
+       ],
+       "accuracy": 0.99,
+       "accuracy_ci95": [
+        0.979,
+        0.995
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 3.43,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "mistral-ocr-4-1",
+       "label": "Mistral OCR 4.1",
+       "production": false,
+       "median_cer": 0.004,
+       "cer_ci95": [
+        0.001,
+        0.006
+       ],
+       "accuracy": 0.997,
+       "accuracy_ci95": [
+        0.994,
+        0.999
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 4,
+        "basis": "metered-api",
+        "detail": "Mistral /v1/ocr, $4 / 1,000 pages; metered API spend, realtime prices, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "chandra-ocr-2",
+       "label": "Chandra OCR 2",
+       "production": false,
+       "median_cer": 0.01,
+       "cer_ci95": [
+        0.005,
+        0.014
+       ],
+       "accuracy": 0.991,
+       "accuracy_ci95": [
+        0.986,
+        0.995
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 7.55,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "claude-sonnet-5-5",
+       "label": "Claude Sonnet 5.5",
+       "production": false,
+       "median_cer": 0.003,
+       "cer_ci95": [
+        0.001,
+        0.004
+       ],
+       "accuracy": 0.997,
+       "accuracy_ci95": [
+        0.996,
+        0.999
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 16.89,
+        "basis": "metered-api",
+        "detail": "Claude Sonnet 5.5 via OpenRouter (Anthropic), effort low; metered API spend, realtime prices, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "kraken-catmus",
+       "label": "Kraken (CATMuS)",
+       "production": false,
+       "median_cer": 0.005,
+       "cer_ci95": [
+        0.003,
+        0.007
+       ],
+       "accuracy": 0.995,
+       "accuracy_ci95": [
+        0.993,
+        0.997
+       ],
+       "invented": null,
+       "cost": null
+      },
+      {
+       "engine": "tesseract-lat",
+       "label": "Tesseract (lat)",
+       "production": false,
+       "median_cer": 0.04,
+       "cer_ci95": [
+        0.024,
+        0.067
+       ],
+       "accuracy": 0.96,
+       "accuracy_ci95": [
+        0.933,
+        0.976
+       ],
+       "invented": null,
+       "cost": null
+      }
+     ]
     }
    ],
+   "not_on_shared_pages": [],
    "not_tested": [
     "dots.mocr",
     "MinerU",
@@ -856,12 +1016,13 @@
        "stratum": "ref-ws",
        "reference": "Wikisource transcriptions",
        "pages": 23,
-       "date": "2026-10-03"
+       "date": "2026-10-07"
       }
      ],
-     "date": "2026-10-03",
+     "date": "2026-10-07",
      "files": [
       "scripts/eval/results/benchmark/ref-ws-2026-09-16.json",
+      "scripts/eval/results/engine-wave2-6011/scored/ref-ws-2026-10-07.json",
       "scripts/eval/results/open-engine-print-5660/scored-olmocr/ref-ws-2026-10-03.json",
       "scripts/eval/results/open-engine-print-5660/scored/ref-ws-2026-10-03.json"
      ],
@@ -911,6 +1072,29 @@
         "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md"
        },
        "on_frontier": true
+      },
+      {
+       "engine": "deepseek-ocr",
+       "label": "DeepSeek-OCR",
+       "production": false,
+       "median_cer": 0.048,
+       "cer_ci95": [
+        0.029,
+        0.058
+       ],
+       "accuracy": 0.952,
+       "accuracy_ci95": [
+        0.942,
+        0.971
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.96,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
       },
       {
        "engine": "surya2",
@@ -980,6 +1164,98 @@
         "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
        },
        "on_frontier": true
+      },
+      {
+       "engine": "qwen3-vl-8b",
+       "label": "Qwen3-VL 8B",
+       "production": false,
+       "median_cer": 0.012,
+       "cer_ci95": [
+        0.008,
+        0.022
+       ],
+       "accuracy": 0.988,
+       "accuracy_ci95": [
+        0.978,
+        0.992
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 3.43,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "mistral-ocr-4-1",
+       "label": "Mistral OCR 4.1",
+       "production": false,
+       "median_cer": 0.007,
+       "cer_ci95": [
+        0.004,
+        0.013
+       ],
+       "accuracy": 0.993,
+       "accuracy_ci95": [
+        0.987,
+        0.996
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 4,
+        "basis": "metered-api",
+        "detail": "Mistral /v1/ocr, $4 / 1,000 pages; metered API spend, realtime prices, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "chandra-ocr-2",
+       "label": "Chandra OCR 2",
+       "production": false,
+       "median_cer": 0.012,
+       "cer_ci95": [
+        0.009,
+        0.015
+       ],
+       "accuracy": 0.988,
+       "accuracy_ci95": [
+        0.985,
+        0.991
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 7.55,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "claude-sonnet-5-5",
+       "label": "Claude Sonnet 5.5",
+       "production": false,
+       "median_cer": 0.003,
+       "cer_ci95": [
+        0.001,
+        0.006
+       ],
+       "accuracy": 0.997,
+       "accuracy_ci95": [
+        0.994,
+        0.999
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 16.89,
+        "basis": "metered-api",
+        "detail": "Claude Sonnet 5.5 via OpenRouter (Anthropic), effort low; metered API spend, realtime prices, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
       }
      ],
      "no_cost": [
@@ -1013,12 +1289,13 @@
        "stratum": "ref-ws",
        "reference": "Wikisource transcriptions",
        "pages": 6,
-       "date": "2026-10-03"
+       "date": "2026-10-07"
       }
      ],
-     "date": "2026-10-03",
+     "date": "2026-10-07",
      "files": [
       "scripts/eval/results/benchmark/ref-ws-2026-09-16.json",
+      "scripts/eval/results/engine-wave2-6011/scored/ref-ws-2026-10-07.json",
       "scripts/eval/results/open-engine-print-5660/scored-olmocr/ref-ws-2026-10-03.json",
       "scripts/eval/results/open-engine-print-5660/scored/ref-ws-2026-10-03.json"
      ],
@@ -1068,6 +1345,29 @@
         "source": "scripts/eval/experiments/2026-10-03-open-engine-print-5660.md"
        },
        "on_frontier": true
+      },
+      {
+       "engine": "deepseek-ocr",
+       "label": "DeepSeek-OCR",
+       "production": false,
+       "median_cer": 0.04,
+       "cer_ci95": [
+        0.01,
+        0.062
+       ],
+       "accuracy": 0.961,
+       "accuracy_ci95": [
+        0.938,
+        0.99
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.96,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
       },
       {
        "engine": "surya2",
@@ -1137,6 +1437,98 @@
         "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
        },
        "on_frontier": true
+      },
+      {
+       "engine": "qwen3-vl-8b",
+       "label": "Qwen3-VL 8B",
+       "production": false,
+       "median_cer": 0.008,
+       "cer_ci95": [
+        0.003,
+        0.013
+       ],
+       "accuracy": 0.992,
+       "accuracy_ci95": [
+        0.987,
+        0.997
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 3.43,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "mistral-ocr-4-1",
+       "label": "Mistral OCR 4.1",
+       "production": false,
+       "median_cer": 0.006,
+       "cer_ci95": [
+        0.003,
+        0.01
+       ],
+       "accuracy": 0.994,
+       "accuracy_ci95": [
+        0.99,
+        0.997
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 4,
+        "basis": "metered-api",
+        "detail": "Mistral /v1/ocr, $4 / 1,000 pages; metered API spend, realtime prices, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "chandra-ocr-2",
+       "label": "Chandra OCR 2",
+       "production": false,
+       "median_cer": 0.01,
+       "cer_ci95": [
+        0.007,
+        0.014
+       ],
+       "accuracy": 0.991,
+       "accuracy_ci95": [
+        0.986,
+        0.993
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 7.55,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "claude-sonnet-5-5",
+       "label": "Claude Sonnet 5.5",
+       "production": false,
+       "median_cer": 0,
+       "cer_ci95": [
+        0,
+        0
+       ],
+       "accuracy": 1,
+       "accuracy_ci95": [
+        1,
+        1
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 16.89,
+        "basis": "metered-api",
+        "detail": "Claude Sonnet 5.5 via OpenRouter (Anthropic), effort low; metered API spend, realtime prices, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
       }
      ],
      "no_cost": [
@@ -1203,12 +1595,7 @@
    ],
    "not_tested": [
     "MinerU",
-    "DeepSeek-OCR",
-    "Qwen3-VL 8B",
-    "Chandra OCR 2",
-    "Mistral OCR 4.1",
     "Claude Opus 5.5",
-    "Claude Sonnet 5.5",
     "Qwen3-VL 32B",
     "GPT (vision)",
     "Google Cloud Vision"
@@ -1231,33 +1618,38 @@
        "stratum": "greek-ext",
        "reference": "First1KGreek / Perseus / el.wikisource TEI",
        "pages": 95,
-       "date": "2026-10-03"
+       "date": "2026-10-07"
       },
       {
        "stratum": "ref-ws",
        "reference": "Wikisource transcriptions",
        "pages": 13,
-       "date": "2026-10-03"
+       "date": "2026-10-07"
       },
       {
        "stratum": "greek",
        "reference": "First1KGreek / Perseus TEI",
        "pages": 11,
-       "date": "2026-10-03"
+       "date": "2026-10-06"
       },
       {
        "stratum": "greek-ext2",
        "reference": "First1KGreek / Perseus / el.wikisource TEI",
        "pages": 8,
-       "date": "2026-10-03"
+       "date": "2026-10-07"
       }
      ],
-     "date": "2026-10-03",
+     "date": "2026-10-07",
      "files": [
       "scripts/eval/results/benchmark/greek-2026-09-21.json",
       "scripts/eval/results/benchmark/greek-ext-2026-09-21.json",
       "scripts/eval/results/benchmark/greek-ext2-2026-09-21.json",
       "scripts/eval/results/benchmark/ref-ws-2026-09-16.json",
+      "scripts/eval/results/engine-wave1-6011/scored/greek-2026-10-06.json",
+      "scripts/eval/results/engine-wave1-6011/scored/greek-ext-2026-10-06.json",
+      "scripts/eval/results/engine-wave2-6011/scored/greek-ext-2026-10-07.json",
+      "scripts/eval/results/engine-wave2-6011/scored/greek-ext2-2026-10-07.json",
+      "scripts/eval/results/engine-wave2-6011/scored/ref-ws-2026-10-07.json",
       "scripts/eval/results/open-engine-print-5660/scored-olmocr/greek-2026-10-03.json",
       "scripts/eval/results/open-engine-print-5660/scored-olmocr/greek-ext-2026-10-03.json",
       "scripts/eval/results/open-engine-print-5660/scored-olmocr/greek-ext2-2026-10-03.json",
@@ -1321,6 +1713,32 @@
        "on_frontier": true
       },
       {
+       "engine": "deepseek-ocr",
+       "label": "DeepSeek-OCR",
+       "production": false,
+       "median_cer": 0.879,
+       "cer_ci95": [
+        0.554,
+        1
+       ],
+       "accuracy": 0.121,
+       "accuracy_ci95": [
+        0,
+        0.446
+       ],
+       "invented": {
+        "median": 0.765,
+        "n": 74
+       },
+       "cost": {
+        "usd_per_1k": 0.96,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
+      },
+      {
        "engine": "gemini-3.1-flash-lite",
        "label": "Gemini 3.1 Flash-Lite",
        "production": false,
@@ -1371,6 +1789,84 @@
         "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
        },
        "on_frontier": true
+      },
+      {
+       "engine": "qwen3-vl-8b",
+       "label": "Qwen3-VL 8B",
+       "production": false,
+       "median_cer": 0.288,
+       "cer_ci95": [
+        0.226,
+        0.321
+       ],
+       "accuracy": 0.712,
+       "accuracy_ci95": [
+        0.679,
+        0.774
+       ],
+       "invented": {
+        "median": 0.615,
+        "n": 114
+       },
+       "cost": {
+        "usd_per_1k": 3.43,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "mistral-ocr-4-1",
+       "label": "Mistral OCR 4.1",
+       "production": false,
+       "median_cer": 0.253,
+       "cer_ci95": [
+        0.202,
+        0.297
+       ],
+       "accuracy": 0.747,
+       "accuracy_ci95": [
+        0.703,
+        0.798
+       ],
+       "invented": {
+        "median": 0.543,
+        "n": 114
+       },
+       "cost": {
+        "usd_per_1k": 4,
+        "basis": "metered-api",
+        "detail": "Mistral /v1/ocr, $4 / 1,000 pages; metered API spend, realtime prices, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "chandra-ocr-2",
+       "label": "Chandra OCR 2",
+       "production": false,
+       "median_cer": 0.25,
+       "cer_ci95": [
+        0.207,
+        0.282
+       ],
+       "accuracy": 0.75,
+       "accuracy_ci95": [
+        0.718,
+        0.793
+       ],
+       "invented": {
+        "median": 0.512,
+        "n": 114
+       },
+       "cost": {
+        "usd_per_1k": 7.55,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
       }
      ],
      "no_cost": [
@@ -1789,28 +2285,59 @@
        "stratum": "chinese-cohort-5547",
        "reference": "Kanripo Siku Quanshu witnesses",
        "pages": 432,
-       "date": "2026-10-01"
+       "date": "2026-10-07"
       },
       {
        "stratum": "chinese-ext",
        "reference": "Kanripo (Siku Quanshu) and CBETA",
        "pages": 50,
-       "date": "2026-09-18"
+       "date": "2026-10-07"
       },
       {
        "stratum": "chinese",
        "reference": "Kanripo (Siku Quanshu) and CBETA",
        "pages": 21,
-       "date": "2026-09-18"
+       "date": "2026-10-07"
       }
      ],
-     "date": "2026-10-01",
+     "date": "2026-10-07",
      "files": [
       "scripts/eval/results/benchmark/chinese-2026-09-18.json",
       "scripts/eval/results/benchmark/chinese-cohort-5547-2026-10-01.json",
-      "scripts/eval/results/benchmark/chinese-ext-2026-09-18.json"
+      "scripts/eval/results/benchmark/chinese-ext-2026-09-18.json",
+      "scripts/eval/results/engine-wave1-6011/scored/chinese-2026-10-06.json",
+      "scripts/eval/results/engine-wave1-6011/scored/chinese-cohort-5547-2026-10-06.json",
+      "scripts/eval/results/engine-wave2-6011/scored/chinese-2026-10-07.json",
+      "scripts/eval/results/engine-wave2-6011/scored/chinese-cohort-5547-2026-10-07.json",
+      "scripts/eval/results/engine-wave2-6011/scored/chinese-ext-2026-10-07.json"
      ],
      "placed": [
+      {
+       "engine": "deepseek-ocr",
+       "label": "DeepSeek-OCR",
+       "production": false,
+       "median_cer": 0.429,
+       "cer_ci95": [
+        0.391,
+        0.472
+       ],
+       "accuracy": 0.571,
+       "accuracy_ci95": [
+        0.528,
+        0.609
+       ],
+       "invented": {
+        "median": 0.256,
+        "n": 503
+       },
+       "cost": {
+        "usd_per_1k": 0.96,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": true
+      },
       {
        "engine": "paddleocr-vl-1.6",
        "label": "PaddleOCR-VL 1.6",
@@ -1888,151 +2415,24 @@
         "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
        },
        "on_frontier": false
-      }
-     ],
-     "no_cost": []
-    },
-    {
-     "kind": "most-engines",
-     "n_pages": 60,
-     "n_books": 60,
-     "frontier": true,
-     "frontier_note": null,
-     "references": [
-      {
-       "stratum": "chinese-cohort-5547",
-       "reference": "Kanripo Siku Quanshu witnesses",
-       "pages": 60,
-       "date": "2026-10-06"
-      }
-     ],
-     "date": "2026-10-06",
-     "files": [
-      "scripts/eval/results/benchmark/chinese-cohort-5547-2026-10-01.json",
-      "scripts/eval/results/engine-wave1-6011/scored/chinese-cohort-5547-2026-10-06.json"
-     ],
-     "placed": [
-      {
-       "engine": "deepseek-ocr",
-       "label": "DeepSeek-OCR",
-       "production": false,
-       "median_cer": 0.435,
-       "cer_ci95": [
-        0.336,
-        0.593
-       ],
-       "accuracy": 0.565,
-       "accuracy_ci95": [
-        0.407,
-        0.664
-       ],
-       "invented": {
-        "median": 0.257,
-        "n": 60
-       },
-       "cost": {
-        "usd_per_1k": 0.96,
-        "basis": "billed",
-        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
-        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
-       },
-       "on_frontier": true
-      },
-      {
-       "engine": "paddleocr-vl-1.6",
-       "label": "PaddleOCR-VL 1.6",
-       "production": false,
-       "median_cer": 0.184,
-       "cer_ci95": [
-        0.147,
-        0.237
-       ],
-       "accuracy": 0.816,
-       "accuracy_ci95": [
-        0.763,
-        0.853
-       ],
-       "invented": {
-        "median": 0.133,
-        "n": 60
-       },
-       "cost": {
-        "usd_per_1k": 1.036,
-        "basis": "billed",
-        "detail": "1 × Scaleway L4 (pl-waw-2), €0.7875/h; whole billed rental, measured 2026-10-01",
-        "source": "scripts/eval/experiments/2026-10-01-chinese-ocr-cohort-5547.md"
-       },
-       "on_frontier": true
-      },
-      {
-       "engine": "gemini-3.1-flash-lite",
-       "label": "Gemini 3.1 Flash-Lite",
-       "production": true,
-       "median_cer": 0.255,
-       "cer_ci95": [
-        0.174,
-        0.339
-       ],
-       "accuracy": 0.746,
-       "accuracy_ci95": [
-        0.661,
-        0.826
-       ],
-       "invented": {
-        "median": 0.203,
-        "n": 60
-       },
-       "cost": {
-        "usd_per_1k": 1.279,
-        "basis": "metered",
-        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
-        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
-       },
-       "on_frontier": false
-      },
-      {
-       "engine": "gemini-3-flash-preview",
-       "label": "Gemini 3 Flash",
-       "production": false,
-       "median_cer": 0.196,
-       "cer_ci95": [
-        0.163,
-        0.267
-       ],
-       "accuracy": 0.804,
-       "accuracy_ci95": [
-        0.733,
-        0.837
-       ],
-       "invented": {
-        "median": 0.147,
-        "n": 60
-       },
-       "cost": {
-        "usd_per_1k": 2.709,
-        "basis": "metered",
-        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
-        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
-       },
-       "on_frontier": false
       },
       {
        "engine": "qwen3-vl-8b",
        "label": "Qwen3-VL 8B",
        "production": false,
-       "median_cer": 0.175,
+       "median_cer": 0.183,
        "cer_ci95": [
-        0.15,
-        0.239
+        0.169,
+        0.199
        ],
-       "accuracy": 0.825,
+       "accuracy": 0.817,
        "accuracy_ci95": [
-        0.761,
-        0.85
+        0.801,
+        0.831
        ],
        "invented": {
-        "median": 0.09,
-        "n": 60
+        "median": 0.103,
+        "n": 503
        },
        "cost": {
         "usd_per_1k": 3.43,
@@ -2040,25 +2440,25 @@
         "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
         "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
-       "on_frontier": true
+       "on_frontier": false
       },
       {
        "engine": "mistral-ocr-4-1",
        "label": "Mistral OCR 4.1",
        "production": false,
-       "median_cer": 0.241,
+       "median_cer": 0.264,
        "cer_ci95": [
-        0.218,
-        0.317
+        0.244,
+        0.281
        ],
-       "accuracy": 0.76,
+       "accuracy": 0.736,
        "accuracy_ci95": [
-        0.683,
-        0.782
+        0.719,
+        0.756
        ],
        "invented": {
         "median": 0.274,
-        "n": 60
+        "n": 503
        },
        "cost": {
         "usd_per_1k": 4,
@@ -2072,19 +2472,19 @@
        "engine": "claude-sonnet-5-5",
        "label": "Claude Sonnet 5.5",
        "production": false,
-       "median_cer": 0.226,
+       "median_cer": 0.218,
        "cer_ci95": [
-        0.163,
-        0.294
+        0.196,
+        0.245
        ],
-       "accuracy": 0.775,
+       "accuracy": 0.782,
        "accuracy_ci95": [
-        0.706,
-        0.837
+        0.755,
+        0.804
        ],
        "invented": {
-        "median": 0.164,
-        "n": 60
+        "median": 0.153,
+        "n": 503
        },
        "cost": {
         "usd_per_1k": 4.62,
@@ -2098,19 +2498,19 @@
        "engine": "chandra-ocr-2",
        "label": "Chandra OCR 2",
        "production": false,
-       "median_cer": 0.207,
+       "median_cer": 0.21,
        "cer_ci95": [
-        0.163,
-        0.261
+        0.192,
+        0.225
        ],
-       "accuracy": 0.794,
+       "accuracy": 0.79,
        "accuracy_ci95": [
-        0.739,
-        0.837
+        0.775,
+        0.808
        ],
        "invented": {
-        "median": 0.171,
-        "n": 60
+        "median": 0.165,
+        "n": 503
        },
        "cost": {
         "usd_per_1k": 7.55,
@@ -2122,35 +2522,360 @@
       }
      ],
      "no_cost": []
+    },
+    {
+     "kind": "most-engines",
+     "n_pages": 21,
+     "n_books": 21,
+     "frontier": true,
+     "frontier_note": null,
+     "references": [
+      {
+       "stratum": "chinese",
+       "reference": "Kanripo (Siku Quanshu) and CBETA",
+       "pages": 21,
+       "date": "2026-10-07"
+      }
+     ],
+     "date": "2026-10-07",
+     "files": [
+      "scripts/eval/results/benchmark/chinese-2026-09-18.json",
+      "scripts/eval/results/engine-wave1-6011/scored/chinese-2026-10-06.json",
+      "scripts/eval/results/engine-wave2-6011/scored/chinese-2026-10-07.json"
+     ],
+     "placed": [
+      {
+       "engine": "deepseek-ocr",
+       "label": "DeepSeek-OCR",
+       "production": false,
+       "median_cer": 0.264,
+       "cer_ci95": [
+        0.209,
+        0.619
+       ],
+       "accuracy": 0.736,
+       "accuracy_ci95": [
+        0.381,
+        0.791
+       ],
+       "invented": {
+        "median": 0.259,
+        "n": 21
+       },
+       "cost": {
+        "usd_per_1k": 0.96,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "paddleocr-vl-1.6",
+       "label": "PaddleOCR-VL 1.6",
+       "production": false,
+       "median_cer": 0.144,
+       "cer_ci95": [
+        0.129,
+        0.195
+       ],
+       "accuracy": 0.856,
+       "accuracy_ci95": [
+        0.805,
+        0.871
+       ],
+       "invented": {
+        "median": 0.138,
+        "n": 21
+       },
+       "cost": {
+        "usd_per_1k": 1.036,
+        "basis": "billed",
+        "detail": "1 × Scaleway L4 (pl-waw-2), €0.7875/h; whole billed rental, measured 2026-10-01",
+        "source": "scripts/eval/experiments/2026-10-01-chinese-ocr-cohort-5547.md"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "surya2",
+       "label": "Surya 2",
+       "production": false,
+       "median_cer": 0.174,
+       "cer_ci95": [
+        0.153,
+        0.276
+       ],
+       "accuracy": 0.826,
+       "accuracy_ci95": [
+        0.724,
+        0.847
+       ],
+       "invented": {
+        "median": 0.189,
+        "n": 21
+       },
+       "cost": {
+        "usd_per_1k": 1.094,
+        "basis": "compute",
+        "detail": "1 × Scaleway L4, €0.79/h, 4.3 s/page; inference time only, measured 2026-09-03",
+        "source": "scripts/eval/experiments/2026-09-03-bench-2-complete-can-self-hosted-ocr-replace-gemini.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "ndlkotenocr-v3",
+       "label": "NDL Koten OCR v3",
+       "production": false,
+       "median_cer": 0.234,
+       "cer_ci95": [
+        0.201,
+        0.259
+       ],
+       "accuracy": 0.766,
+       "accuracy_ci95": [
+        0.741,
+        0.799
+       ],
+       "invented": {
+        "median": 0.325,
+        "n": 21
+       },
+       "cost": {
+        "usd_per_1k": 1.178,
+        "basis": "billed",
+        "detail": "1 × Scaleway L4 (pl-waw-2); whole billed rental, measured 2026-09-30",
+        "source": "scripts/eval/experiments/2026-09-30-ndl-classical-ocr-lane-20-book-pilot-written-and-4925.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3.1-flash-lite",
+       "label": "Gemini 3.1 Flash-Lite",
+       "production": true,
+       "median_cer": 0.174,
+       "cer_ci95": [
+        0.138,
+        0.284
+       ],
+       "accuracy": 0.826,
+       "accuracy_ci95": [
+        0.716,
+        0.862
+       ],
+       "invented": {
+        "median": 0.175,
+        "n": 21
+       },
+       "cost": {
+        "usd_per_1k": 1.279,
+        "basis": "metered",
+        "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "gemini-3-flash-preview",
+       "label": "Gemini 3 Flash",
+       "production": false,
+       "median_cer": 0.151,
+       "cer_ci95": [
+        0.13,
+        0.185
+       ],
+       "accuracy": 0.849,
+       "accuracy_ci95": [
+        0.815,
+        0.87
+       ],
+       "invented": {
+        "median": 0.139,
+        "n": 21
+       },
+       "cost": {
+        "usd_per_1k": 2.709,
+        "basis": "metered",
+        "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
+        "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "qwen3-vl-8b",
+       "label": "Qwen3-VL 8B",
+       "production": false,
+       "median_cer": 0.147,
+       "cer_ci95": [
+        0.125,
+        0.196
+       ],
+       "accuracy": 0.853,
+       "accuracy_ci95": [
+        0.804,
+        0.875
+       ],
+       "invented": {
+        "median": 0.126,
+        "n": 21
+       },
+       "cost": {
+        "usd_per_1k": 3.43,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "mistral-ocr-4-1",
+       "label": "Mistral OCR 4.1",
+       "production": false,
+       "median_cer": 0.231,
+       "cer_ci95": [
+        0.194,
+        0.277
+       ],
+       "accuracy": 0.769,
+       "accuracy_ci95": [
+        0.723,
+        0.806
+       ],
+       "invented": {
+        "median": 0.327,
+        "n": 21
+       },
+       "cost": {
+        "usd_per_1k": 4,
+        "basis": "metered-api",
+        "detail": "Mistral /v1/ocr, $4 / 1,000 pages; metered API spend, realtime prices, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "claude-sonnet-5-5",
+       "label": "Claude Sonnet 5.5",
+       "production": false,
+       "median_cer": 0.163,
+       "cer_ci95": [
+        0.136,
+        0.211
+       ],
+       "accuracy": 0.837,
+       "accuracy_ci95": [
+        0.789,
+        0.864
+       ],
+       "invented": {
+        "median": 0.128,
+        "n": 21
+       },
+       "cost": {
+        "usd_per_1k": 4.62,
+        "basis": "metered-api",
+        "detail": "Claude Sonnet 5.5 via OpenRouter (Anthropic), effort low; metered API spend, realtime prices, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "chandra-ocr-2",
+       "label": "Chandra OCR 2",
+       "production": false,
+       "median_cer": 0.166,
+       "cer_ci95": [
+        0.141,
+        0.217
+       ],
+       "accuracy": 0.834,
+       "accuracy_ci95": [
+        0.783,
+        0.859
+       ],
+       "invented": {
+        "median": 0.165,
+        "n": 21
+       },
+       "cost": {
+        "usd_per_1k": 7.55,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "claude-opus-5-5",
+       "label": "Claude Opus 5.5",
+       "production": false,
+       "median_cer": 0.147,
+       "cer_ci95": [
+        0.128,
+        0.178
+       ],
+       "accuracy": 0.853,
+       "accuracy_ci95": [
+        0.822,
+        0.872
+       ],
+       "invented": {
+        "median": 0.144,
+        "n": 21
+       },
+       "cost": {
+        "usd_per_1k": 49.12,
+        "basis": "metered-api",
+        "detail": "Claude Opus 5.5 via OpenRouter (Anthropic), effort low; metered API spend, realtime prices, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
+      }
+     ],
+     "no_cost": [
+      {
+       "engine": "dots-mocr",
+       "label": "dots.mocr",
+       "production": false,
+       "median_cer": 0.172,
+       "cer_ci95": [
+        0.129,
+        0.203
+       ],
+       "accuracy": 0.828,
+       "accuracy_ci95": [
+        0.797,
+        0.871
+       ],
+       "invented": {
+        "median": 0.15,
+        "n": 21
+       },
+       "cost": null
+      },
+      {
+       "engine": "tesseract-chi_tra_vert",
+       "label": "Tesseract (chi_tra_vert)",
+       "production": false,
+       "median_cer": 0.722,
+       "cer_ci95": [
+        0.667,
+        0.799
+       ],
+       "accuracy": 0.278,
+       "accuracy_ci95": [
+        0.201,
+        0.333
+       ],
+       "invented": {
+        "median": 0.92,
+        "n": 21
+       },
+       "cost": null
+      }
+     ]
     }
    ],
-   "not_on_shared_pages": [
-    {
-     "engine": "claude-opus-5-5",
-     "label": "Claude Opus 5.5",
-     "pages": 21
-    },
-    {
-     "engine": "dots-mocr",
-     "label": "dots.mocr",
-     "pages": 21
-    },
-    {
-     "engine": "ndlkotenocr-v3",
-     "label": "NDL Koten OCR v3",
-     "pages": 21
-    },
-    {
-     "engine": "surya2",
-     "label": "Surya 2",
-     "pages": 21
-    },
-    {
-     "engine": "tesseract-chi_tra_vert",
-     "label": "Tesseract (chi_tra_vert)",
-     "pages": 21
-    }
-   ],
+   "not_on_shared_pages": [],
    "not_tested": [
     "olmOCR 2 7B",
     "MinerU",
@@ -2176,21 +2901,23 @@
        "stratum": "chinese-ext",
        "reference": "Kanripo (Siku Quanshu) and CBETA",
        "pages": 12,
-       "date": "2026-10-06"
+       "date": "2026-10-07"
       },
       {
        "stratum": "chinese",
        "reference": "Kanripo (Siku Quanshu) and CBETA",
        "pages": 7,
-       "date": "2026-10-06"
+       "date": "2026-10-07"
       }
      ],
-     "date": "2026-10-06",
+     "date": "2026-10-07",
      "files": [
       "scripts/eval/results/benchmark/chinese-2026-09-18.json",
       "scripts/eval/results/benchmark/chinese-ext-2026-09-18.json",
       "scripts/eval/results/engine-wave1-6011/scored/chinese-2026-10-06.json",
-      "scripts/eval/results/engine-wave1-6011/scored/chinese-ext-2026-10-06.json"
+      "scripts/eval/results/engine-wave1-6011/scored/chinese-ext-2026-10-06.json",
+      "scripts/eval/results/engine-wave2-6011/scored/chinese-2026-10-07.json",
+      "scripts/eval/results/engine-wave2-6011/scored/chinese-ext-2026-10-07.json"
      ],
      "placed": [
       {
@@ -2376,6 +3103,32 @@
        "on_frontier": false
       },
       {
+       "engine": "claude-sonnet-5-5",
+       "label": "Claude Sonnet 5.5",
+       "production": false,
+       "median_cer": 0.278,
+       "cer_ci95": [
+        0.15,
+        0.372
+       ],
+       "accuracy": 0.722,
+       "accuracy_ci95": [
+        0.628,
+        0.85
+       ],
+       "invented": {
+        "median": 0.105,
+        "n": 19
+       },
+       "cost": {
+        "usd_per_1k": 12.32,
+        "basis": "metered-api",
+        "detail": "Claude Sonnet 5.5 via OpenRouter (Anthropic), effort low; metered API spend, realtime prices, measured 2026-10-07",
+        "source": "scripts/eval/experiments/2026-10-07-ocr-engines-full-sets-wave2-6011.md"
+       },
+       "on_frontier": false
+      },
+      {
        "engine": "claude-opus-5-5",
        "label": "Claude Opus 5.5",
        "production": false,
@@ -2415,13 +3168,14 @@
        "stratum": "chinese",
        "reference": "Kanripo (Siku Quanshu) and CBETA",
        "pages": 7,
-       "date": "2026-10-06"
+       "date": "2026-10-07"
       }
      ],
-     "date": "2026-10-06",
+     "date": "2026-10-07",
      "files": [
       "scripts/eval/results/benchmark/chinese-2026-09-18.json",
-      "scripts/eval/results/engine-wave1-6011/scored/chinese-2026-10-06.json"
+      "scripts/eval/results/engine-wave1-6011/scored/chinese-2026-10-06.json",
+      "scripts/eval/results/engine-wave2-6011/scored/chinese-2026-10-07.json"
      ],
      "placed": [
       {
@@ -2659,6 +3413,32 @@
        "on_frontier": false
       },
       {
+       "engine": "claude-sonnet-5-5",
+       "label": "Claude Sonnet 5.5",
+       "production": false,
+       "median_cer": 0.276,
+       "cer_ci95": [
+        0.124,
+        0.372
+       ],
+       "accuracy": 0.724,
+       "accuracy_ci95": [
+        0.628,
+        0.876
+       ],
+       "invented": {
+        "median": 0.068,
+        "n": 7
+       },
+       "cost": {
+        "usd_per_1k": 12.32,
+        "basis": "metered-api",
+        "detail": "Claude Sonnet 5.5 via OpenRouter (Anthropic), effort low; metered API spend, realtime prices, measured 2026-10-07",
+        "source": "scripts/eval/experiments/2026-10-07-ocr-engines-full-sets-wave2-6011.md"
+       },
+       "on_frontier": false
+      },
+      {
        "engine": "claude-opus-5-5",
        "label": "Claude Opus 5.5",
        "production": false,
@@ -2733,7 +3513,6 @@
    "not_tested": [
     "olmOCR 2 7B",
     "MinerU",
-    "Claude Sonnet 5.5",
     "Qwen3-VL 32B",
     "GPT (vision)",
     "Google Cloud Vision"
@@ -2756,12 +3535,13 @@
        "stratum": "ref-pinned",
        "reference": "published e-texts pinned to the leaf",
        "pages": 5,
-       "date": "2026-09-16"
+       "date": "2026-10-07"
       }
      ],
-     "date": "2026-09-16",
+     "date": "2026-10-07",
      "files": [
-      "scripts/eval/results/benchmark/ref-pinned-2026-09-16.json"
+      "scripts/eval/results/benchmark/ref-pinned-2026-09-16.json",
+      "scripts/eval/results/engine-wave2-6011/scored/ref-pinned-2026-10-07.json"
      ],
      "placed": [
       {
@@ -2832,6 +3612,29 @@
         "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
        },
        "on_frontier": true
+      },
+      {
+       "engine": "chandra-ocr-2",
+       "label": "Chandra OCR 2",
+       "production": false,
+       "median_cer": 0.045,
+       "cer_ci95": [
+        0.023,
+        0.064
+       ],
+       "accuracy": 0.955,
+       "accuracy_ci95": [
+        0.936,
+        0.977
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 7.55,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
       }
      ],
      "no_cost": [
@@ -2855,17 +3658,28 @@
      ]
     }
    ],
-   "not_on_shared_pages": [],
+   "not_on_shared_pages": [
+    {
+     "engine": "claude-sonnet-5-5",
+     "label": "Claude Sonnet 5.5",
+     "pages": 4
+    },
+    {
+     "engine": "deepseek-ocr",
+     "label": "DeepSeek-OCR",
+     "pages": 3
+    },
+    {
+     "engine": "mistral-ocr-4-1",
+     "label": "Mistral OCR 4.1",
+     "pages": 3
+    }
+   ],
    "not_tested": [
     "PaddleOCR-VL 1.6",
     "olmOCR 2 7B",
     "MinerU",
-    "DeepSeek-OCR",
-    "Qwen3-VL 8B",
-    "Chandra OCR 2",
-    "Mistral OCR 4.1",
     "Claude Opus 5.5",
-    "Claude Sonnet 5.5",
     "Qwen3-VL 32B",
     "GPT (vision)",
     "Google Cloud Vision"
@@ -2881,21 +3695,45 @@
      "kind": "most-pages",
      "n_pages": 40,
      "n_books": 2,
-     "frontier": false,
-     "frontier_note": "too few for a frontier: 2 engines with a measured cost on these pages",
+     "frontier": true,
+     "frontier_note": null,
      "references": [
       {
        "stratum": "syriac-gt",
        "reference": "line-by-line ground truth for two manuscripts",
        "pages": 40,
-       "date": "2026-09-16"
+       "date": "2026-10-07"
       }
      ],
-     "date": "2026-09-16",
+     "date": "2026-10-07",
      "files": [
-      "scripts/eval/results/benchmark/syriac-retest-2026-09-16/score.json"
+      "scripts/eval/results/benchmark/syriac-retest-2026-09-16/score.json",
+      "scripts/eval/results/engine-wave2-6011/syriac-gt-score.json"
      ],
      "placed": [
+      {
+       "engine": "deepseek-ocr",
+       "label": "DeepSeek-OCR",
+       "production": false,
+       "median_cer": 1,
+       "cer_ci95": [
+        1,
+        1
+       ],
+       "accuracy": 0,
+       "accuracy_ci95": [
+        0,
+        0
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 0.96,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": true
+      },
       {
        "engine": "gemini-3.1-flash-lite",
        "label": "Gemini 3.1 Flash-Lite",
@@ -2917,7 +3755,7 @@
         "detail": "Gemini Batch, 678,562 pages metered 2026-09-06 to 2026-10-06",
         "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
        },
-       "on_frontier": false
+       "on_frontier": true
       },
       {
        "engine": "gemini-3-flash-preview",
@@ -2939,6 +3777,75 @@
         "basis": "metered",
         "detail": "Gemini Batch, 97,135 pages metered 2026-09-06 to 2026-10-06",
         "source": "scripts/eval/results/ocr-cost/ocr-cost-2026-10-06.json"
+       },
+       "on_frontier": true
+      },
+      {
+       "engine": "qwen3-vl-8b",
+       "label": "Qwen3-VL 8B",
+       "production": false,
+       "median_cer": 1,
+       "cer_ci95": [
+        1,
+        1
+       ],
+       "accuracy": 0,
+       "accuracy_ci95": [
+        0,
+        0
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 3.43,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "mistral-ocr-4-1",
+       "label": "Mistral OCR 4.1",
+       "production": false,
+       "median_cer": 0.964,
+       "cer_ci95": [
+        0.938,
+        1
+       ],
+       "accuracy": 0.036,
+       "accuracy_ci95": [
+        0,
+        0.062
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 4,
+        "basis": "metered-api",
+        "detail": "Mistral /v1/ocr, $4 / 1,000 pages; metered API spend, realtime prices, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
+       },
+       "on_frontier": false
+      },
+      {
+       "engine": "chandra-ocr-2",
+       "label": "Chandra OCR 2",
+       "production": false,
+       "median_cer": 1,
+       "cer_ci95": [
+        0.907,
+        1
+       ],
+       "accuracy": 0,
+       "accuracy_ci95": [
+        0,
+        0.093
+       ],
+       "invented": null,
+       "cost": {
+        "usd_per_1k": 7.55,
+        "basis": "billed",
+        "detail": "1 × Scaleway H100-1-80G (pl-waw-2), €2.8665/h, 1.37 h lease shared by three engines by inference time; whole billed rental, measured 2026-10-06",
+        "source": "scripts/eval/experiments/2026-10-06-untried-ocr-engines-wave1-6011.md"
        },
        "on_frontier": false
       }
@@ -3022,10 +3929,6 @@
     "Surya 2",
     "dots.mocr",
     "MinerU",
-    "DeepSeek-OCR",
-    "Qwen3-VL 8B",
-    "Chandra OCR 2",
-    "Mistral OCR 4.1",
     "Claude Opus 5.5",
     "Claude Sonnet 5.5",
     "Qwen3-VL 32B",
