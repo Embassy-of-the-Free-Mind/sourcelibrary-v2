@@ -169,10 +169,10 @@ export default function FourCommentariesOnNothingPage() {
             passage it warns the reader:
           </p>
           <blockquote className={QUOTE}>
-            The previous section emptied all phenomena, and this section empties all minds. If the skin
-            does not exist, where can the hair be attached? The language of this chapter is clever, and
-            its meaning is profound, like steep mountains and jagged peaks that suddenly project a
-            solitary summit ten thousand fathoms high, leaving the reader unable to find a hold.
+            Previously, all external appearances were emptied; here, the mind itself is emptied. As the
+            saying goes, “If the skin no longer exists, where can the hair attach itself?” The writing in
+            this chapter is ingenious and the meaning is profound, like a range of peaks where a single
+            mountain top suddenly rises ten thousand feet high, making it difficult for people to grasp.
             <cite className={CITE}>
               <em>Jingang bore boluomi jing ruyi</em> (Guangzhou, 1787).{' '}
               <a href={RUYI_51} className={A}>Read the page</a>
@@ -185,20 +185,33 @@ export default function FourCommentariesOnNothingPage() {
             href={RUYI_51}
           />
           <p className={P}>
-            “Leaving the reader unable to find a hold” is the whole method in one phrase. The
-            commentator does not explain what the mind is instead; he tells the reader to stop
-            looking for somewhere to stand.
+            The last clause is the whole method. The Chinese, 使人扳攬不及, says the peak rises so that
+            no one can reach up and take hold of it. The commentator does not explain what the mind is
+            instead; he tells the reader to stop looking for a handhold. Our English, “making it
+            difficult for people to grasp”, keeps the sense and loses the cliff.
           </p>
           <p className={P}>
-            <strong>What the English gets wrong.</strong> On the same leaf, the sutra asks, 如來有佛眼不,
-            “Does the Tathāgata have the Buddha-eye?”, and Subhūti answers 如是世尊, “So it is,
-            World-Honored One.” The final 不 of the question is a question marker, not a “no”. Our
-            English reads it as a refusal: “No, World-Honored One, the Tathagata has the Buddha-eye.” It
-            does the same with the sand of the Ganges two lines later. The answer is reversed and the
-            sentence contradicts itself, and nothing on the page warns the reader. A 1496 Korean
-            woodblock of the same sutra, also in this library, gets the{' '}
+            <strong>What the English got wrong, and how we fixed it.</strong> On the same leaf, the
+            sutra asks, 如來有佛眼不, “Does the Tathāgata have the Buddha-eye?”, and Subhūti answers
+            如是世尊, “So it is, World-Honored One.” The final 不 of the question is a question marker,
+            not a “no”. Our first English read it as a refusal: “No, World-Honored One, the Tathagata
+            has the Buddha-eye.” It did the same with the sand of the Ganges two lines later, and with
+            the flesh-eye and heaven-eye on the facing leaf. The answer was reversed and the sentence
+            contradicted itself, and nothing on the page warned the reader. A 1496 Korean woodblock of
+            the same sutra, also in this library, got the{' '}
             <a href={HWAAMSA_40} className={A}>same sentence</a> right: “Indeed, World-Honored One, the
-            Tathāgata has the Buddha eye.” One character, read two ways by the same kind of machine.
+            Tathāgata has the Buddha eye.”
+          </p>
+          <p className={P}>
+            So we tested it. We translated the affected pages again, three times each, with the cheaper
+            model that had made the error and with the stronger one we have used for Chinese since
+            early October. The stronger model answered “Yes” or “It is so” in every run. The cheaper
+            one reversed the answer on the same pages every time, and once went further: “No,
+            World-Honored One, the Tathagata does not possess the Buddha-eye.” We then searched every
+            Chinese, Japanese and Korean book in the library for the same self-contradicting shape and
+            found it on three pages, all made by the cheaper model with the same prompt. Those three pages have
+            been translated again (<Issue n={6116} />). The page now reads: “It is so, World-Honored
+            One. The Tathagata possesses the Buddha-eye.”
           </p>
           <p className={P}>
             Chan carried the same method into conversation. Xiufu Wukong was a tenth-century Chan master at the Qingliang monastery, a temple founded by
