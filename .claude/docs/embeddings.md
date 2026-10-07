@@ -34,7 +34,16 @@ put more traditions into the first ten. `page_concepts` is that lane:
   comparing `concept_abstract.engine.input.source_text_hash` with the hash of the
   page's current composed text (`abstractInputText(pageEmbeddingInput(page).text)`).
 - **Not public.** No default search reads it; it is reached only by the
-  `lane=concept` flag until stage 1 is judged.
+  `lane=concept` flag until stage 1 is judged. All three flag paths go through
+  `conceptPageSearch(..., { abstractLane: true })` (`src/lib/search/concept-search.ts`),
+  so hidden books are dropped and `diversity=tradition` applies as on the page lane.
+  The Librarian reads it as one more RRF source only when `LIBRARIAN_CONCEPT_LANE=on`.
+- **Stage 1 holds 1,216 books, 325,308 embedded pages** (343,347 abstracts; 18,039
+  are `NONE` and are stored on the page but never embedded).
+- **The writer's `--dir` is rebuildable.** `concept-abstracts.mjs rebuild` restores
+  `abstracts.jsonl` from Mongo and re-reads finished embedding jobs' result files
+  (free). `pages.jsonl` is not rebuildable: requests that errored inside a finished
+  generation job (about 2,000 pages in the first run) are not re-sent by it.
 
 ## `page_texts` — the language-keyed store (#4095)
 

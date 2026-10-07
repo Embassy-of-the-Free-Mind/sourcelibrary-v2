@@ -5,6 +5,8 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 const state = {
   english: [] as any[],
+  abstracts: [] as any[],
+  abstractScopes: [] as any[],
   original: { rows: [] as any[], state: 'off' as string },
   books: [] as any[],
   pages: [] as any[],
@@ -23,6 +25,7 @@ const db = {
 vi.mock('@/lib/mongodb', () => ({ getDb: async () => db }));
 vi.mock('@/lib/semantic-search', () => ({
   semanticPageSearchGlobal: async () => state.english,
+  semanticConceptSearch: async (_q: string, _n: number, o: any) => { state.abstractScopes.push(o.scope); return state.abstracts; },
   semanticPageSearchUntranslated: async () => state.original,
 }));
 
@@ -32,7 +35,7 @@ const book = (id: string, tradition: string[], extra: Record<string, unknown> = 
 const GLOBAL = { kind: 'global' as const };
 
 beforeEach(() => {
-  state.english = []; state.original = { rows: [], state: 'off' }; state.books = []; state.pages = []; state.mongoFails = false;
+  state.english = []; state.abstracts = []; state.abstractScopes = []; state.original = { rows: [], state: 'off' }; state.books = []; state.pages = []; state.mongoFails = false;
 });
 
 describe('conceptPageSearch', () => {
@@ -46,6 +49,27 @@ describe('conceptPageSearch', () => {
     expect(out.traditions).toEqual({ 'medieval-europe': 2, 'east-asian': 1, islamic: 1 });
     expect(out.diversity).toBe('tradition');
     expect(out.lanes.untranslated).toBe('off');
+  });
+
+  it('abstractLane reads the concept-abstract lane only, in the caller\'s scope (#6173)', async () => {
+    const { conceptPageSearch } = await import('@/lib/search/concept-search');
+    state.english = [en('l1', 1, 0.9)];
+    state.original = { rows: [orig('gr', 1, 0.9)], state: 'ok' };
+    state.abstracts = [en('zh', 3, 0.7), en('hid', 1, 0.69), en('ar', 2, 0.68)];
+    state.books = [book('l1', ['Medieval Latin']), book('zh', ['Chinese']), book('ar', ['Arabic']), book('hid', ['Arabic'], { hidden: true })];
+    const out = await conceptPageSearch('q', 10, { scope: GLOBAL, diversity: 'off', abstractLane: true });
+    expect(out.rows.map((r) => r.book_id)).toEqual(['zh', 'ar']);
+    expect(out.rows[0].snippet).toBe('en zh 3');
+    expect(out.lanes.untranslated).toBe('off');
+    expect(state.abstractScopes).toEqual([GLOBAL]);
+  });
+
+  it('abstractLane under a closed scope asks nothing', async () => {
+    const { conceptPageSearch } = await import('@/lib/search/concept-search');
+    state.abstracts = [en('zh', 3, 0.7)];
+    const out = await conceptPageSearch('q', 10, { scope: { kind: 'closed' } as any, diversity: 'off', abstractLane: true });
+    expect(out.rows).toEqual([]);
+    expect(state.abstractScopes).toEqual([]);
   });
 
   it('off keeps the lane order', async () => {

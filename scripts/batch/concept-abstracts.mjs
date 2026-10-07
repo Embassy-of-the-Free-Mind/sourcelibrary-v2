@@ -54,6 +54,10 @@
  *   load     --dir D [--rows-per-sec 40]   Insert vectors into page_concepts at a
  *            capped rate (Supabase writes are the shared bottleneck).
  *   status   --dir D   Counts, money committed and billed.
+ *   rebuild  --dir D   Recover a lost --dir from the stores (free): abstracts.jsonl
+ *            from `pages.concept_abstract` of this run, and vectors/ by reading the
+ *            finished embedding jobs' result files again. The first stage-1 run's
+ *            directory died with its host (2026-10-07); nothing was paid twice.
  *
  *   node --env-file=.env.production.local scripts/batch/concept-abstracts.mjs <cmd> --dir D
  */
@@ -593,6 +597,57 @@ async function load(db) {
   await client.end();
 }
 
+// ── rebuild a lost --dir from Mongo and the Batch API (no spend) ─────────────
+async function rebuild(db) {
+  const jobs = db.collection(JOBS);
+  const af = path.join(DIR, 'abstracts.jsonl');
+  if (!fs.existsSync(af)) {
+    const bookIds = [...new Set((await jobs.find({ run: RUN, kind: 'generate' }).project({ book_ids: 1 }).toArray()).flatMap((j) => j.book_ids || []))];
+    const out = fs.createWriteStream(af + '.tmp');
+    let n = 0; let none = 0;
+    for (let i = 0; i < bookIds.length; i += 20) {
+      const cur = pagesOf(db).find({ book_id: { $in: bookIds.slice(i, i + 20) }, 'concept_abstract.run': RUN })
+        .project({ id: 1, book_id: 1, page_number: 1, 'concept_abstract.data': 1, 'concept_abstract.none': 1, 'concept_abstract.content_hash': 1, 'concept_abstract.engine.batch_job_id': 1 });
+      for await (const p of cur) {
+        const ca = p.concept_abstract;
+        out.write(JSON.stringify({ page_id: String(p.id), book_id: p.book_id, page_number: p.page_number, abstract: ca.data, none: !!ca.none, content_hash: ca.content_hash, job: ca.engine?.batch_job_id ?? null }) + '\n');
+        n++; if (ca.none) none++;
+      }
+    }
+    await new Promise((r) => out.end(r));
+    fs.renameSync(af + '.tmp', af);
+    console.log(`abstracts.jsonl: ${n} abstracts (${none} NONE) from ${bookIds.length} books`);
+  } else console.log('abstracts.jsonl exists; left as is');
+
+  const vdir = path.join(DIR, 'vectors');
+  fs.mkdirSync(vdir, { recursive: true });
+  let got = 0; let gone = 0;
+  for (const job of await jobs.find({ run: RUN, kind: 'embed', status: 'embedded' }).sort({ created_at: 1 }).toArray()) {
+    if (fs.existsSync(path.join(vdir, `${job._id}.ids.json`)) || !(job.counts?.vectors > 0)) continue;
+    const KEY = keyOf(job.key_project);
+    const st = await batchState(job.gemini_name, KEY).catch(() => ({ state: 'UNREADABLE' }));
+    if (!/SUCCEEDED/.test(st.state) || !st.responsesFile) { console.log(`${job._id}: ${st.state}, result not readable; its pages go back to embed`); gone++; continue; }
+    const ids = []; const vecs = [];
+    try {
+      for await (const line of streamBatchResponses(st.responsesFile, KEY)) {
+        const [pageId, hash] = String(line.key ?? line.metadata?.key ?? '').split('|');
+        const v = line.response?.embedding?.values;
+        if (line.error || !v || v.length !== EMBED_DIMS) continue;
+        const n = Math.hypot(...v) || 1;
+        ids.push({ page_id: pageId, content_hash: hash });
+        vecs.push(Float32Array.from(v, (x) => x / n));
+      }
+    } catch (e) { console.log(`${job._id}: result file unreadable (${e.message}); its pages go back to embed`); gone++; continue; }
+    const buf = Buffer.alloc(vecs.length * EMBED_DIMS * 4);
+    vecs.forEach((v, i) => Buffer.from(v.buffer).copy(buf, i * EMBED_DIMS * 4));
+    fs.writeFileSync(path.join(vdir, `${job._id}.f32`), buf);
+    fs.writeFileSync(path.join(vdir, `${job._id}.ids.json`), JSON.stringify(ids));
+    got += ids.length;
+    console.log(`${job._id}: ${ids.length} vectors read again (the job recorded ${job.counts.vectors})`);
+  }
+  console.log(`vectors recovered: ${got}; jobs whose result is gone: ${gone}`);
+}
+
 async function status(db) {
   const rows = await db.collection(JOBS).find({ run: RUN }).project({ page_ids: 0, provenance: 0, book_ids: 0 }).sort({ created_at: 1 }).toArray();
   const sum = (k, f) => rows.filter(f).reduce((s, j) => s + (j[k] || 0), 0);
@@ -608,6 +663,7 @@ await withMongo(async (db) => {
   if (CMD === 'embed-collect') return embedCollect(db);
   if (CMD === 'load') return load(db);
   if (CMD === 'status') return status(db);
-  console.error('usage: select | submit | collect | embed | embed-collect | load | status  --dir D');
+  if (CMD === 'rebuild') return rebuild(db);
+  console.error('usage: select | submit | collect | embed | embed-collect | load | status | rebuild  --dir D');
   process.exit(1);
 }, { timeoutMs: 7_200_000 });
