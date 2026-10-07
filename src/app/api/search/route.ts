@@ -309,6 +309,19 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // page lane's roll-up; read by the ladder as evidence (#5905).
     const matchPagesByBook = new Map<string, number>();
 
+    // Canon texts (#6145): the texts inside multi-text canon volumes (Derge Tengyur), matched on their
+    // catalogue entries (author, Sanskrit/Tibetan title, Tohoku number) and returned as the text's
+    // opening page. Not a passage, so not on the MCP passage contract (pages_only) or one book.
+    // Same book filters as the keyword lane, applied in the query. Started here so it runs beside
+    // the four lanes below rather than after them.
+    const canonPromise: Promise<SearchResult[]> = (!bookId && !pagesOnly && !isLocalizedSearch)
+      ? searchCanonTexts(db as any, matchQuery, buildBookFilters(), 5).catch((err) => {
+        console.warn('[search] Canon text lane failed:', err instanceof Error ? err.message : String(err));
+        degradedLanes.push('canon');
+        return [];
+      })
+      : Promise.resolve([]);
+
     const [bookResult, pageResult, semanticResult, semanticPageResult] = await Promise.all([
       // --- Book search via Supabase trigram (fast, no cold-start penalty) ---
       timed(async () => {
@@ -651,20 +664,7 @@ export const GET = withApiAuth(async (request: NextRequest, _ctx, identity) => {
     // skipped or abstained) the order is the lane's own.
     const pagesOf = (p: { book_id?: unknown }) => matchPagesByBook.get(p.book_id as string) ?? 0;
     const rrfPageDocs = [...pageDocs].sort((a, b) => pagesOf(b) - pagesOf(a));
-
-    // Canon texts (#6145): the texts inside multi-text canon volumes (Derge Tengyur), matched on their
-    // catalogue entries (author, Sanskrit/Tibetan title, Tohoku number) and returned as the text's
-    // opening page. Not a passage, so not on the MCP passage contract (pages_only) or one book.
-    // Same book filters as the keyword lane, applied in the query.
-    let canonDocs: SearchResult[] = [];
-    if (!bookId && !pagesOnly && !isLocalizedSearch) {
-      try {
-        canonDocs = await searchCanonTexts(db as any, matchQuery, buildBookFilters(), 5);
-      } catch (err) {
-        console.warn('[search] Canon text lane failed:', err instanceof Error ? err.message : String(err));
-        degradedLanes.push('canon');
-      }
-    }
+    const canonDocs = await canonPromise;
     const rrf = rrfScores([
       bookDocs.map(b => (b as any).id as string),                              // keyword book lane
       rrfPageDocs.map(p => `${p.book_id}-p${p.page_number}`),                     // keyword page lane
