@@ -71,7 +71,7 @@ export function alignRunsToBlocks(runs, blocks) {
 
 /** What an English rendering says, for comparison: notes out, tags out, lower case, letters only. */
 export function normEn(s) {
-  return s.replace(/<note\b[^>]*>[\s\S]*?<\/note>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/->|<-/g, ' ')
+  return s.replace(/->|<-/g, ' ').replace(/<note\b[^>]*>[\s\S]*?<\/note>/g, ' ').replace(/<[^>]+>/g, ' ')
     .toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z\s]/g, ' ').replace(/\s+/g, ' ').trim();
 }
 function grams(s) { const m = new Map(); const t = ` ${s} `; for (let i = 0; i + 3 <= t.length; i++) { const g = t.slice(i, i + 3); m.set(g, (m.get(g) || 0) + 1); } return m; }
