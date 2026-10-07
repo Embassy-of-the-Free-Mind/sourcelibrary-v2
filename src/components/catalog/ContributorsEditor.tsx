@@ -245,7 +245,7 @@ function AuthorLink({
 
       {searched && !loading && results.length === 0 && (
         <p className="mt-2 text-xs text-muted italic">
-          No match in our index — leave it as a typed name, or it&rsquo;ll be created as a canonical author later.
+          No match in our index. Leave it as a typed name, or it&rsquo;ll be created as a canonical author later.
         </p>
       )}
 
